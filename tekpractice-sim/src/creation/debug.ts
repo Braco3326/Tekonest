@@ -102,9 +102,15 @@ export interface CreationDebug {
   transformNodeCount(): number
   /** Stabilisation A: .glb loads still in flight (0 = every model that will arrive has been applied or dropped). */
   modelsPending(): number
-  /** Task 26: a port's hit radius on screen in CSS px (>= 12 = a 24 px target at any distance); 0 for an unknown port. */
+  /**
+   * Task 26 + final review: the radius a FIRST click gets on a port over its device's body, in CSS px, for the state as it is now:
+   * >= 12 (a 24 px target) on the selected device or while a cable is in hand, tight (6, or the connector's own size when closer)
+   * on an unselected device. 0 for an unknown port.
+   */
   portHitRadiusPx(ref: PortRef): number
-  /** Task 26: the port under a canvas-relative point (CSS px), proxies included. */
+  /** Final review: a port's pick proxy radius in CSS px, always >= 12 at any distance and after any resize (the guard); 0 for an unknown port. */
+  portProxyRadiusPx(ref: PortRef): number
+  /** Task 26: the port under a canvas-relative point (CSS px), proxies included, for the state as it is now (selection, cable in hand). */
   portAtPoint(x: number, y: number): PortRef | null
   /** Task 26: the ports of a device (ids), [] when unknown. */
   devicePorts(instanceId: string): string[]
@@ -114,12 +120,6 @@ export interface CreationDebug {
   setCameraRadius(radius: number): void
   /** Task 27: turn the orbit camera about its target by this many radians at once (a cut). */
   turnCamera(dAlpha: number): void
-  /**
-   * Task 26: the page point on a device's body nearest its centre that is outside EVERY port's hit area (at least
-   * `minPx` CSS px from it, and its real proxy radius + 2 px when that is bigger: a close camera makes big targets); a click
-   * there selects the body. Null when the body has no such point.
-   */
-  bodyPointAway(id: string, minPx: number): { x: number; y: number } | null
   /** Task 26: the first port clicked while a cable is in hand, or null. */
   patchPending(): PortRef | null
   /** Task 24: the raw floor point under a page point (CSS px), as the placement pick finds it; null off the floor. */

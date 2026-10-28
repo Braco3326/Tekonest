@@ -79,7 +79,7 @@ describe('PortProxies on a real (headless) scene', () => {
     g.document = saved.document
   })
 
-  function setup(distance: number) {
+  function setup(distance: number, selected: { id: string | null } = { id: null }) {
     const scene = new Scene(new NullEngine({ renderWidth: 1000, renderHeight: H } as never)) // render size = the canvas stand-in's, so px mean px
     const camera = new ArcRotateCamera('cam', Math.PI / 2, 1.05, distance, new Vector3(0, 1, 0), scene)
     camera.fov = FOV
@@ -89,8 +89,8 @@ describe('PortProxies on a real (headless) scene', () => {
     const instances = new Map([['ql1', inst]])
     const canvas = { clientHeight: H, clientWidth: 1000 } as unknown as HTMLElement
     const bag = new DisposableBag()
-    const proxies = new PortProxies({ scene, camera, canvas, instance: (id) => instances.get(id), instances: () => instances.values() }, bag)
-    return { scene, camera, inst, instances, proxies, bag }
+    const proxies = new PortProxies({ scene, camera, canvas, instance: (id) => instances.get(id), instances: () => instances.values(), selected: () => selected.id }, bag)
+    return { scene, camera, inst, instances, proxies, bag, selected }
   }
 
   it('every port gets a hit area of at least 12 px radius at the default camera distance', () => {
@@ -210,5 +210,117 @@ describe('PortProxies on a real (headless) scene', () => {
     expect(hits).toBeGreaterThan(3)
     expect(proxies.portAt(1, 1)).toBeNull()
     scene.dispose()
+  })
+
+  // ── Final review 3 (controller ruling): the first-click radius depends on the state ──────────────
+  /** Canvas px of every port of ql1, and what is under a point. */
+  function screens(setupResult: ReturnType<typeof setup>) {
+    const { scene, camera, inst } = setupResult
+    scene.render()
+    camera.getViewMatrix(true)
+    setupResult.proxies.refresh()
+    for (const m of scene.meshes) m.computeWorldMatrix(true)
+    const engine = scene.getEngine()
+    const vp = camera.viewport.toGlobal(engine.getRenderWidth(), engine.getRenderHeight())
+    const at = [...inst.portMarkers.keys()].map((port) => {
+      const c = Vector3.Project(inst.portMarkers.get(port)!.getAbsolutePosition(), Matrix.Identity(), scene.getTransformMatrix(), vp)
+      return { port, x: c.x, y: c.y }
+    })
+    const bodyAt = (x: number, y: number): string | null => {
+      const hit = scene.pick(x, y, (m) => m.metadata?.isDeviceBody === true && m.isEnabled() && m.isVisible)
+      return hit?.hit ? (hit.pickedMesh?.metadata?.instanceId as string) : null
+    }
+    return { at, bodyAt }
+  }
+  /** A port, and a point 9 px from it that is over the body and at least 8 px from every other port: only a 12 px radius reaches the port. */
+  function nineOff(s: ReturnType<typeof screens>) {
+    for (const p of s.at)
+      for (const [dx, dy] of [[9, 0], [-9, 0], [0, 9], [0, -9]]) {
+        const x = p.x + dx
+        const y = p.y + dy
+        if (s.bodyAt(x, y) !== 'ql1') continue
+        if (s.at.some((q) => q !== p && Math.hypot(q.x - x, q.y - y) < 8)) continue
+        return { port: p, x, y }
+      }
+    return null
+  }
+
+  it('over an UNSELECTED device body a first click 9 px off a connector does not take the port; ON the connector (<= 3 px) it is; selected, or with a cable in hand, 9 px is (12 px radius)', () => {
+    const t = setup(5)
+    const s = screens(t)
+    const plan = nineOff(s)
+    expect(plan, 'a ql1 connector with a 9 px point on the body, 8+ px from every other port').not.toBeNull()
+    const want = { instance: 'ql1', port: plan!.port.port }
+    expect(t.proxies.portAt(plan!.x, plan!.y)).toBeNull() // tight (6 px) over an unselected body
+    expect(t.proxies.portAt(plan!.port.x + 3, plan!.port.y)).toEqual(want) // the connector itself still patches
+    expect(t.proxies.portAt(plan!.x, plan!.y, true)).toEqual(want) // a cable in hand: 12 px
+    t.selected.id = 'ql1'
+    expect(t.proxies.portAt(plan!.x, plan!.y)).toEqual(want) // the selected device: 12 px
+    t.scene.dispose()
+  })
+
+  it('the radius reported is the one a first click gets: tight (6 <= r < 12) on an unselected body, >= 12 selected or with a cable in hand; the proxy (hitRadiusPx) stays >= 12', () => {
+    const t = setup(5)
+    const s = screens(t)
+    const onBody = s.at.filter((p) => s.bodyAt(p.x, p.y) === 'ql1')
+    expect(onBody.length).toBeGreaterThan(0)
+    for (const p of onBody) {
+      const ref = { instance: 'ql1', port: p.port }
+      const tight = t.proxies.firstClickRadiusPx(ref)
+      expect(tight, p.port).toBeGreaterThanOrEqual(6 - 1e-6)
+      expect(tight, p.port).toBeLessThan(12)
+      expect(t.proxies.firstClickRadiusPx(ref, true), p.port).toBeGreaterThanOrEqual(12 - 1e-6)
+      expect(t.proxies.hitRadiusPx(ref), p.port).toBeGreaterThanOrEqual(12 - 1e-6)
+    }
+    t.selected.id = 'ql1'
+    for (const p of onBody) expect(t.proxies.firstClickRadiusPx({ instance: 'ql1', port: p.port }), p.port).toBeGreaterThanOrEqual(12 - 1e-6)
+    t.scene.dispose()
+  })
+
+  it('a port with no body behind the pointer keeps the 12 px radius even on an unselected device (empty space around a connector that sticks out)', () => {
+    const t = setup(5)
+    const mic = new DeviceSpawner(t.scene, registry, CREATION_DEVICE_THEME).spawn('shure-sm58', new Vector3(-1.5, 0, 0.5), 'm')
+    t.instances.set('m', mic)
+    t.scene.render()
+    t.camera.getViewMatrix(true)
+    t.proxies.refresh()
+    for (const m of t.scene.meshes) m.computeWorldMatrix(true)
+    const engine = t.scene.getEngine()
+    const vp = t.camera.viewport.toGlobal(engine.getRenderWidth(), engine.getRenderHeight())
+    const c = Vector3.Project(mic.portMarkers.get('out-xlr')!.getAbsolutePosition(), Matrix.Identity(), t.scene.getTransformMatrix(), vp)
+    const bodyAt = (x: number, y: number): boolean => !!t.scene.pick(x, y, (m) => m.metadata?.isDeviceBody === true && m.isEnabled() && m.isVisible)?.hit
+    const off = [[9, 0], [-9, 0], [0, 9], [0, -9]].map(([dx, dy]) => ({ x: c.x + dx, y: c.y + dy })).filter((q) => !bodyAt(q.x, q.y))
+    expect(off.length, 'a point 9 px from the mic connector that is off every body').toBeGreaterThan(0)
+    for (const q of off) expect(t.proxies.portAt(q.x, q.y), `${q.x},${q.y}`).toEqual({ instance: 'm', port: 'out-xlr' })
+    // (the radius reported is the one OVER the body, where the connector sits: tight; off the body the port keeps its 12 px, as just checked)
+    expect(t.proxies.firstClickRadiusPx({ instance: 'm', port: 'out-xlr' })).toBeLessThan(12)
+    t.scene.dispose()
+  })
+
+  it('where proxies overlap in depth, the NEAREST port wins over a rear one that is closer to the ray', () => {
+    const t = setup(8)
+    const mic = new DeviceSpawner(t.scene, registry, CREATION_DEVICE_THEME).spawn('shure-sm58', new Vector3(0.6, 0, 0.4), 'front')
+    const rear = new DeviceSpawner(t.scene, registry, CREATION_DEVICE_THEME).spawn('shure-sm58', new Vector3(0.6, 0, -1.6), 'rear')
+    t.instances.set('front', mic)
+    t.instances.set('rear', rear)
+    t.scene.render()
+    t.camera.getViewMatrix(true)
+    t.proxies.refresh()
+    for (const m of t.scene.meshes) m.computeWorldMatrix(true)
+    const engine = t.scene.getEngine()
+    const vp = t.camera.viewport.toGlobal(engine.getRenderWidth(), engine.getRenderHeight())
+    const front = Vector3.Project(mic.portMarkers.get('out-xlr')!.getAbsolutePosition(), Matrix.Identity(), t.scene.getTransformMatrix(), vp)
+    const qx = front.x + 4
+    const qy = front.y
+    // slide the rear mic so ITS port sits exactly on the ray through the pointer, 2.5 m behind the front one
+    const ray = t.scene.createPickingRay(qx, qy, null, t.camera)
+    const want = ray.origin.add(ray.direction.scale(Vector3.Distance(ray.origin, mic.portMarkers.get('out-xlr')!.getAbsolutePosition()) + 2.5))
+    rear.root.position.addInPlace(want.subtract(rear.portMarkers.get('out-xlr')!.getAbsolutePosition()))
+    for (const m of t.scene.meshes) m.computeWorldMatrix(true)
+    t.proxies.refresh()
+    for (const m of t.scene.meshes) m.computeWorldMatrix(true)
+    t.selected.id = 'front'
+    expect(t.proxies.portAt(qx, qy)).toEqual({ instance: 'front', port: 'out-xlr' })
+    t.scene.dispose()
   })
 })

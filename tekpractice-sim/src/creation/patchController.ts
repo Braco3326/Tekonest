@@ -29,8 +29,8 @@ type Pt = { x: number; y: number }
 export interface PatchHost {
   readonly canvasElement: HTMLElement
   readonly walking: boolean
-  /** The port under a canvas point (CSS px, canvas-relative), proxies included (one radius, >= 12 px). */
-  portAtPoint(x: number, y: number): PortRef | null
+  /** The port under a canvas point (CSS px, canvas-relative), proxies included: 12 px, tight over an unselected body unless a cable is in hand (`inHand`). */
+  portAtPoint(x: number, y: number, inHand?: boolean): PortRef | null
   /** A port's page position (CSS px), for the labels' anchors. */
   portScreen(ref: PortRef): Pt | null
   /** Restyle the markers: hover + the patch glow (null, null = back to normal). */
@@ -167,7 +167,7 @@ export class PatchController {
 
   /** The port a click at (x, y) would patch: none while inert. */
   private portUnder(x: number, y: number): PortRef | null {
-    return this.inert() ? null : this.host.portAtPoint(x, y)
+    return this.inert() ? null : this.host.portAtPoint(x, y, this._pending !== null)
   }
 
   /** The state machine. False (nothing done) while inert. */

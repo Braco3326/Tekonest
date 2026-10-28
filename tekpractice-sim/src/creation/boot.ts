@@ -1265,7 +1265,7 @@ export async function bootCreation(): Promise<void> {
     const x = e.offsetX
     const y = e.offsetY
     // The device test is the body's; the port test is the patching's own (the enlarged proxies the click-to-patch takes, not only the marker).
-    if (pickDevice(scene, x, y) || host.portAtPoint(x, y) || patch.wouldTake(x, y)) return
+    if (pickDevice(scene, x, y) || host.portAtPoint(x, y, patch.pending !== null) || patch.wouldTake(x, y)) return
     const p = floorPointAt(scene, x, y, host.camera!)
     if (!p) return
     host.rig!.repivot(Vector3.FromArray(p))
@@ -1784,37 +1784,10 @@ export async function bootCreation(): Promise<void> {
       return inst ? screen(bodyCentreOf(inst)) : null
     },
     portScreen: (ref) => screen(host.portWorld(ref)),
-    portHitRadiusPx: (ref) => host.portHitRadiusPx(ref),
-    portAtPoint: (x, y) => host.portAtPoint(x, y),
+    portHitRadiusPx: (ref) => host.portHitRadiusPx(ref, patch.pending !== null),
+    portProxyRadiusPx: (ref) => host.portProxyRadiusPx(ref),
+    portAtPoint: (x, y) => host.portAtPoint(x, y, patch.pending !== null),
     patchPending: () => patch.pending,
-    bodyPointAway: (id, minPx) => {
-      const inst = host.instance(id)
-      const centre = inst ? screen(bodyCentreOf(inst)) : null
-      if (!centre) return null
-      const rect = canvas.getBoundingClientRect()
-      // Outside every port's REAL hit area (its proxy radius, bigger than minPx when the camera is close) plus a 2 px margin.
-      const ports = store.design().rig.instances.flatMap((i) =>
-        [...(host.instance(i.instanceId)?.portMarkers.keys() ?? [])].flatMap((port) => {
-          const ref = { instance: i.instanceId, port }
-          const at = screen(host.portWorld(ref))
-          return at ? [{ ...at, r: Math.max(minPx, host.portHitRadiusPx(ref) + 2) }] : []
-        })
-      )
-      let best: { x: number; y: number } | null = null
-      let bestD = Infinity
-      for (let dx = -120; dx <= 120; dx += 2)
-        for (let dy = -80; dy <= 80; dy += 2) {
-          const x = centre.x + dx
-          const y = centre.y + dy
-          const d = Math.hypot(dx, dy)
-          if (d >= bestD || pickDevice(host.scene, x - rect.left, y - rect.top) !== id) continue
-          if (ports.every((q) => Math.hypot(q.x - x, q.y - y) >= q.r)) {
-            best = { x, y }
-            bestD = d
-          }
-        }
-      return best
-    },
     devicePorts: (id) => [...(host.instance(id)?.portMarkers.keys() ?? [])],
     visiblePortLabels: () => host.scene?.meshes.filter((m) => m.name.startsWith('portlabel:') && m.isEnabled() && m.isVisible).length ?? 0,
     setCameraRadius: (r) => {

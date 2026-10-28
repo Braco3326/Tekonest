@@ -440,9 +440,12 @@ export class SceneHost {
     for (const fn of [...this.viewListeners]) fn()
   }
 
-  /** The port under a canvas point (CSS px, canvas-relative), proxies included; null in the walk view. */
-  portAtPoint(x: number, y: number): PortRef | null {
-    return this.walking ? null : (this.proxies?.portAt(x, y) ?? null)
+  /**
+   * The port under a canvas point (CSS px, canvas-relative), proxies included; null in the walk view. The radius depends on
+   * the state (portProxies.ts): tight over an unselected body with no cable in hand (`inHand`), 12 px otherwise.
+   */
+  portAtPoint(x: number, y: number, inHand = false): PortRef | null {
+    return this.walking ? null : (this.proxies?.portAt(x, y, inHand) ?? null)
   }
 
   /**
@@ -454,8 +457,13 @@ export class SceneHost {
     this.notifyView()
   }
 
-  /** A port's hit radius on screen (CSS px); 0 for an unknown port. */
-  portHitRadiusPx(ref: PortRef): number {
+  /** The radius a first click gets on a port now, over its device's body (CSS px; tight on an unselected device, >= 12 selected or with a cable in hand); 0 for an unknown port. */
+  portHitRadiusPx(ref: PortRef, inHand = false): number {
+    return this.proxies?.firstClickRadiusPx(ref, inHand) ?? 0
+  }
+
+  /** A port's pick proxy radius on screen (CSS px, always >= 12: the resize guard); 0 for an unknown port. */
+  portProxyRadiusPx(ref: PortRef): number {
     return this.proxies?.hitRadiusPx(ref) ?? 0
   }
 
@@ -944,7 +952,7 @@ export class SceneHost {
     this.spawner = new DeviceSpawner(scene, this.registry, CREATION_DEVICE_THEME)
     // Disposed first with the place's other controllers (its camera observer goes before the camera does).
     this.proxies = new PortProxies(
-      { scene, camera, canvas: this.canvas, instance: (id) => this.instances.get(id), instances: () => this.instances.values() },
+      { scene, camera, canvas: this.canvas, instance: (id) => this.instances.get(id), instances: () => this.instances.values(), selected: () => this.selected },
       this.controllers,
       () => this.notifyView()
     )

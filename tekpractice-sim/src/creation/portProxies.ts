@@ -4,6 +4,12 @@
  * them big enough to hit: at least 24 CSS px across (a 12 px radius) at ANY camera distance, so a
  * 2 px connector is as easy to click on a far view as on a close one.
  *
+ * The FIRST-CLICK radius depends on the state (final review, controller ruling): over an UNSELECTED device body
+ * with no cable in hand it is TIGHT (`TIGHT_PX` = 6 px, or the connector's own size when closer): the body is
+ * the click's, the connector itself still patches. On the SELECTED device, while a cable is in hand, or off any
+ * body (a connector that sticks out) it is the full 12 px. The 24 px-everywhere reading made the reference QL1
+ * unselectable by clicking its body. The proxy spheres themselves always stay >= 12 px (`hitRadiusPx`).
+ *
  * - No new meshes, no per-frame work: the spheres are rescaled by an observer on the camera's
  *   `onViewMatrixChangedObservable` (it fires only when the camera moved) and after a scene
  *   reconcile (a device spawned or moved). An idle page rescales nothing.
@@ -24,6 +30,7 @@ import {
   type ArcRotateCamera,
   type Material,
   type Mesh,
+  type Ray,
   type Scene,
   type TransformNode,
 } from '@babylonjs/core'
@@ -34,6 +41,10 @@ import { CREATION_TOKENS } from '../design/creationTokens'
 
 /** C18: a port's hit area is at least 24 CSS px across. */
 export const HIT_MIN_PX = 24
+/** The first-click radius over an unselected device body, with no cable in hand (px; or the connector's own size when larger). */
+export const TIGHT_PX = 6
+/** Ports whose centres are within this many metres of the nearest candidate's depth compete on closeness to the ray; farther ones are behind. */
+const DEPTH_TIE_M = 0.1
 /** A highlighted marker (hover, patch glow) reads as about this many CSS px across. */
 export const HIGHLIGHT_PX = 14
 /** A marker's own diameter (m): DeviceSpawner's cylinder. */
@@ -77,6 +88,8 @@ export interface ProxyHost {
   canvas: HTMLElement
   instance(id: string): DeviceInstance | undefined
   instances(): Iterable<DeviceInstance>
+  /** The selected device (its ports keep the full radius). */
+  selected?(): string | null
 }
 
 interface Entry {
@@ -143,32 +156,74 @@ export class PortProxies {
   }
 
   /**
-   * The port aimed at on a canvas point (CSS px, canvas-relative), or null. Closest centre to the ray wins. ONE radius,
-   * over a device's body or not: what `hitRadiusPx` reports (>= 12 px) is what a first click gets (C18).
+   * The port aimed at on a canvas point (CSS px, canvas-relative), or null. The state decides the radius: 12 px
+   * (the proxy), or TIGHT over an unselected body with no cable in hand (`inHand`). Among the ports reached, the
+   * NEAREST to the eye wins (a rear port never takes the click of a front one); ports at about the same depth
+   * compete on closeness to the ray.
    */
-  portAt(x: number, y: number): PortRef | null {
-    const { scene } = this.host
+  portAt(x: number, y: number, inHand = false): PortRef | null {
+    const { scene, camera, canvas } = this.host
     const cam = scene.activeCamera
     if (!cam) return null
     const hits = scene.multiPick(x, y, (m: AbstractMesh) => m.metadata?.isPortMarker === true && m.isEnabled())
     if (!hits?.length) return null
     const ray = scene.createPickingRay(x, y, null, cam)
-    let best: PortRef | null = null
-    let bestD = Infinity
+    const tight = !inHand && this.overUnselectedBody(ray)
+    const h = canvas.clientHeight
+    const near: { ref: PortRef; d: number; depth: number }[] = []
     for (const hit of hits) {
       const mesh = hit.pickedMesh
       const ref = mesh?.metadata?.portRef as PortRef | undefined
       if (!mesh || !ref) continue
-      const d = ray.direction.cross(mesh.getAbsolutePosition().subtract(ray.origin)).length()
-      if (d < bestD) {
-        bestD = d
-        best = { instance: ref.instance, port: ref.port }
-      }
+      const centre = mesh.getAbsolutePosition()
+      const d = ray.direction.cross(centre.subtract(ray.origin)).length()
+      const depth = Vector3.Distance(ray.origin, centre)
+      if (tight && d > this.tightWorld(depth, camera.fov, h)) continue
+      near.push({ ref: { instance: ref.instance, port: ref.port }, d, depth })
+    }
+    if (!near.length) return null
+    const front = Math.min(...near.map((c) => c.depth))
+    // "Same layer": within the proxy's own world radius of the nearest (far views have big proxies), at least DEPTH_TIE_M.
+    const tie = Math.max(DEPTH_TIE_M, proxyRadius(front, camera.fov, h))
+    let best: PortRef | null = null
+    let bestD = Infinity
+    for (const c of near) {
+      if (c.depth > front + tie || c.d >= bestD) continue
+      bestD = c.d
+      best = c.ref
     }
     return best
   }
 
-  /** The port's hit radius on screen, in CSS px (>= 12 at any distance; null-safe: 0 for an unknown port). */
+  /**
+   * The radius, in CSS px, a FIRST click gets on this port in the state as it is now, OVER the device's body (where a
+   * connector sits): the proxy's (>= 12) on the selected device or while a cable is in hand (`inHand`), TIGHT on an
+   * unselected one. Off the body (a connector that sticks out) every port keeps the proxy's radius: `portAt` decides
+   * that per point. 0 for an unknown port.
+   */
+  firstClickRadiusPx(ref: PortRef, inHand = false): number {
+    const wide = this.hitRadiusPx(ref)
+    if (wide === 0 || inHand || ref.instance === (this.host.selected?.() ?? null)) return wide
+    const marker = this.host.instance(ref.instance)?.portMarkers.get(ref.port)
+    const { camera, canvas } = this.host
+    if (!marker || marker.isDisposed()) return wide
+    const depth = Vector3.Distance(camera.position, marker.getAbsolutePosition())
+    return Math.min(wide, Math.max(TIGHT_PX, screenRadiusPx(MARKER_DIAMETER_M / 2, depth, camera.fov, canvas.clientHeight)))
+  }
+
+  /** The tight radius, in world metres at `depth`: TIGHT_PX, or the connector's own radius when that is bigger (a close view). */
+  private tightWorld(depth: number, fov: number, h: number): number {
+    return Math.max(TIGHT_PX * worldPerPx(depth, fov, h), MARKER_DIAMETER_M / 2)
+  }
+
+  /** A device body that is not the selected one lies along this ray (the nearest body decides). */
+  private overUnselectedBody(ray: Ray): boolean {
+    const hit = this.host.scene.pickWithRay(ray, (m: AbstractMesh) => m.metadata?.isDeviceBody === true && m.isEnabled() && m.isVisible)
+    const id = hit?.hit ? hit.pickedMesh?.metadata?.instanceId : undefined
+    return typeof id === 'string' && id !== (this.host.selected?.() ?? null)
+  }
+
+  /** The port's proxy radius on screen, in CSS px (>= 12 at any distance; null-safe: 0 for an unknown port). Not the first-click radius: see `firstClickRadiusPx`. */
   hitRadiusPx(ref: PortRef): number {
     const inst = this.host.instance(ref.instance)
     const { camera, canvas } = this.host

@@ -54,6 +54,27 @@ const clickPort = async (page: Page, ref: Ref): Promise<void> => {
   const p = await screenOf(page, ref)
   await page.mouse.click(p.x, p.y)
 }
+/** Select this device from the keyboard (`]`), and wait for the camera to settle on it. */
+const selectDevice = async (page: Page, id: string): Promise<void> => {
+  await page.locator('#renderCanvas').focus()
+  for (let i = 0; i < 8 && (await page.evaluate(() => window.__creation!.selection())) !== id; i++) await page.keyboard.press(']')
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe(id)
+  await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+  await settle(page)
+}
+/** Every port of the rig: its pick proxy radius (the >= 12 px floor) and the radius a first click gets over its body now. */
+const proxyRadii = (page: Page) =>
+  page.evaluate(() => {
+    const c = window.__creation!
+    return c.design().rig.instances.flatMap((i) =>
+      c.devicePorts(i.instanceId).map((port) => ({
+        ref: `${i.instanceId}.${port}`,
+        dev: i.instanceId,
+        r: c.portProxyRadiusPx({ instance: i.instanceId, port }),
+        first: c.portHitRadiusPx({ instance: i.instanceId, port }),
+      }))
+    )
+  })
 const visibleLabels = (page: Page) => page.locator('[data-testid="port-label"]:not([hidden])')
 
 test('click sm58 out-xlr then ql1 in-mic-2: connected as ONE undo entry (a cabled port first offers « Débrancher »)', async ({ page }) => {
@@ -141,17 +162,22 @@ test('hovering a port shows exactly one label, leaving hides it; at rest there i
   expect(shown).toBe(0)
 })
 
-test('every port is a >= 24 px target at the default camera distance, and a click 10 px off the connector still hits it', async ({ page }) => {
+test('every port is a >= 24 px target on the selected device (and while a cable is in hand); over an unselected body the first click is tight; the proxies are >= 12 px at any distance', async ({ page }) => {
   await boot(page)
-  const radii = await page.evaluate(() => {
-    const c = window.__creation!
-    return c.design().rig.instances.flatMap((i) => {
-      const dev = i.deviceId
-      return c.devicePorts(i.instanceId).map((port) => ({ ref: `${i.instanceId}.${port}`, r: c.portHitRadiusPx({ instance: i.instanceId, port }), dev }))
-    })
-  })
+  // The proxies themselves: >= 12 px radius for every port of every device, selected or not (the floor).
+  const radii = await proxyRadii(page)
   expect(radii.length).toBeGreaterThan(10)
   for (const x of radii) expect(x.r, x.ref).toBeGreaterThanOrEqual(12 - 1e-6)
+  // Unselected devices (nothing is selected yet): a first click over the body is TIGHT, never under 6 px and under 12.
+  for (const x of radii) {
+    expect(x.first, `${x.ref} unselected`).toBeGreaterThanOrEqual(6 - 1e-6)
+    expect(x.first, `${x.ref} unselected`).toBeLessThan(12)
+  }
+  // Selected (the focus distance): the mic's ports are full 24 px targets; the others stay tight.
+  await selectDevice(page, 'sm58')
+  const sel = await proxyRadii(page)
+  for (const x of sel.filter((q) => q.dev === 'sm58')) expect(x.first, x.ref).toBeGreaterThanOrEqual(12 - 1e-6)
+  for (const x of sel.filter((q) => q.dev !== 'sm58')) expect(x.first, `${x.ref} still unselected`).toBeLessThan(12)
   // the lone port of the mic: 10 px away on screen still picks it
   const p = await screenOf(page, SM58)
   const r = await page.locator('#renderCanvas').boundingBox()
@@ -165,8 +191,8 @@ test('every port is a >= 24 px target at the default camera distance, and a clic
     const c = window.__creation!
     c.setCameraRadius(c.camera()!.radius * 1.8)
   })
-  const far = await page.evaluate((ref) => window.__creation!.portHitRadiusPx(ref), SM58)
-  expect(far).toBeGreaterThanOrEqual(12)
+  expect(await page.evaluate((ref) => window.__creation!.portProxyRadiusPx(ref), SM58)).toBeGreaterThanOrEqual(12)
+  expect(await page.evaluate((ref) => window.__creation!.portHitRadiusPx(ref), SM58)).toBeGreaterThanOrEqual(12)
 })
 
 test('a click on a port is not a miss (no toast) and does not select; a click on nothing while a cable is in hand toasts but keeps it', async ({ page }) => {
@@ -336,26 +362,25 @@ test('a press-and-drag that starts on a port of the SELECTED device moves it; a 
   expect(await pending(page)).toBeNull()
 })
 
-test("a first click 8 px off a connector that sits on a device body is the PORT's (no selection, camera still); 16+ px off on the body selects it", async ({ page }) => {
-  await boot(page)
-  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
-  const box = (await page.locator('#renderCanvas').boundingBox())!
-  // Where, in canvas px: a ql1 connector drawn over the body with an 8 px neighbour point also over the body and nearest to that connector;
-  // and a body point 16+ px from EVERY port of the rig.
-  const plan = await page.evaluate(() => {
+/**
+ * Where, in canvas px: a ql1 connector drawn over the body, an 8 px neighbour point also over the body whose nearest port is that connector,
+ * and a body point 16+ px from EVERY port of the rig (the camera must be settled).
+ */
+const ql1Plan = (page: Page) =>
+  page.evaluate(() => {
     const c = window.__creation!
     const rect = document.querySelector('#renderCanvas')!.getBoundingClientRect()
     const all = c.design().rig.instances.flatMap((i) => c.devicePorts(i.instanceId).map((port) => ({ instance: i.instanceId, port })))
     const at = all.map((r) => ({ r, p: c.portScreen(r)! })).map(({ r, p }) => ({ r, x: p.x - rect.left, y: p.y - rect.top }))
     const nearest = (x: number, y: number) => at.reduce((a, b) => (Math.hypot(a.x - x, a.y - y) <= Math.hypot(b.x - x, b.y - y) ? a : b))
-    let eight: { ref: { instance: string; port: string }; x: number; y: number } | null = null
+    let eight: { ref: { instance: string; port: string }; x: number; y: number; cx: number; cy: number } | null = null
     for (const q of at.filter((a) => a.r.instance === 'ql1')) {
       if (c.pickAt(q.x, q.y) !== 'ql1') continue
       for (const [dx, dy] of [[8, 0], [-8, 0], [0, 8], [0, -8]]) {
         const x = q.x + dx
         const y = q.y + dy
         const n = nearest(x, y)
-        if (c.pickAt(x, y) === 'ql1' && n.r.port === q.r.port && n.r.instance === q.r.instance) eight ??= { ref: q.r, x, y }
+        if (c.pickAt(x, y) === 'ql1' && n.r.port === q.r.port && n.r.instance === q.r.instance) eight ??= { ref: q.r, x, y, cx: q.x, cy: q.y }
       }
     }
     const centre = c.deviceScreen('ql1')!
@@ -368,20 +393,61 @@ test("a first click 8 px off a connector that sits on a device body is the PORT'
       }
     return { eight, far }
   })
+
+test('over an UNSELECTED device body a first click 8 px off a connector selects the body; ON the connector it starts the patch (final review 3)', async ({ page }) => {
+  await boot(page)
+  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
+  const box = (await page.locator('#renderCanvas').boundingBox())!
+  const plan = await ql1Plan(page)
   expect(plan.eight, 'a ql1 connector on its body with an 8 px point on the body').not.toBeNull()
   expect(plan.far, 'a ql1 body point 16+ px from every port').not.toBeNull()
+  // the radius a first click gets here is under the 8 px of the neighbour point (tight, >= 6), and the proxy is still >= 12
+  const ref = plan.eight!.ref
+  const first = await page.evaluate((r) => window.__creation!.portHitRadiusPx(r), ref)
+  expect(first).toBeGreaterThanOrEqual(6 - 1e-6)
+  expect(first).toBeLessThan(8)
+  expect(await page.evaluate((r) => window.__creation!.portProxyRadiusPx(r), ref)).toBeGreaterThanOrEqual(12 - 1e-6)
+  expect(await page.evaluate(({ x, y }) => window.__creation!.portAtPoint(x, y), { x: plan.eight!.x, y: plan.eight!.y })).toBeNull()
+  // ON the connector: the port takes it, nothing is selected
+  expect(await page.evaluate(({ x, y }) => window.__creation!.portAtPoint(x, y), { x: plan.eight!.cx, y: plan.eight!.cy })).toEqual(ref)
+  await page.mouse.click(box.x + plan.eight!.cx, box.y + plan.eight!.cy)
+  expect(await pending(page)).toEqual(ref)
+  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
+  await page.keyboard.press('Escape')
+  expect(await pending(page)).toBeNull()
+  // 8 px off: the BODY selects (no cable in hand)
+  await page.mouse.click(box.x + plan.eight!.x, box.y + plan.eight!.y)
+  expect(await pending(page)).toBeNull()
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1')
+})
+
+test("on the SELECTED device a first click 8 px off a connector is still the PORT's (camera still)", async ({ page }) => {
+  await boot(page)
+  await selectDevice(page, 'ql1')
+  const box = (await page.locator('#renderCanvas').boundingBox())!
+  const plan = await ql1Plan(page)
+  expect(plan.eight, 'a ql1 connector on its body with an 8 px point on the body').not.toBeNull()
+  expect(await page.evaluate((r) => window.__creation!.portHitRadiusPx(r), plan.eight!.ref)).toBeGreaterThanOrEqual(12 - 1e-6)
   const cam0 = await page.evaluate(() => window.__creation!.camera())
   await page.mouse.click(box.x + plan.eight!.x, box.y + plan.eight!.y)
   expect(await pending(page)).toEqual(plan.eight!.ref) // the port took it
-  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull() // and nothing was selected
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1')
   expect(await page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
   await settle(page)
   expect(await page.evaluate(() => window.__creation!.camera())).toEqual(cam0)
   await page.keyboard.press('Escape')
   expect(await pending(page)).toBeNull()
-  await page.mouse.click(box.x + plan.far!.x, box.y + plan.far!.y)
-  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1') // far from every port: the body
-  expect(await pending(page)).toBeNull()
+})
+
+test('with a cable in hand every port is a full 12 px target, on a device that is not selected too', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }))
+  await clickPort(page, SM58) // a cable in hand (the connector itself always patches)
+  expect(await pending(page)).toEqual(SM58)
+  expect(await page.evaluate((r) => window.__creation!.portHitRadiusPx(r), MIC1)).toBeGreaterThanOrEqual(12 - 1e-6) // ql1 is not selected, but a cable is in hand
+  const plan = await ql1Plan(page) // a point 8 px from a ql1 connector, that connector the nearest port
+  expect(plan.eight, 'a ql1 connector with an 8 px point on its body').not.toBeNull()
+  expect(await page.evaluate(({ x, y }) => window.__creation!.portAtPoint(x, y), { x: plan.eight!.x, y: plan.eight!.y })).toEqual(plan.eight!.ref)
 })
 
 test('a pinned refusal follows its port through a camera cut and a window resize (within a few px of the independently projected port)', async ({ page }) => {
@@ -422,24 +488,26 @@ test('a pinned refusal follows its port through a camera cut and a window resize
   await near('after a resize')
 })
 
-test('after a window resize (shrink AND grow) every port is still a >= 12 px radius target and a click 11 px off a connector still takes it', async ({ page }) => {
+test('after a window resize (shrink AND grow) every proxy is still >= 12 px, the selected device keeps 12 px first clicks and unselected ones stay tight', async ({ page }) => {
   await boot(page)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }))
-  const radii = () =>
-    page.evaluate(() => {
-      const c = window.__creation!
-      return c.design().rig.instances.flatMap((i) => c.devicePorts(i.instanceId).map((port) => ({ ref: `${i.instanceId}.${port}`, r: c.portHitRadiusPx({ instance: i.instanceId, port }) })))
-    })
+  await selectDevice(page, 'sm58')
   for (const size of [{ width: 1300, height: 560 }, { width: 1500, height: 900 }, { width: 1366, height: 768 }]) {
+    const at = `${size.width}x${size.height}`
     await page.setViewportSize(size)
     await settle(page)
-    const all = await radii()
+    const all = await proxyRadii(page)
     expect(all.length).toBeGreaterThan(10)
-    for (const x of all) expect(x.r, `${x.ref} at ${size.width}x${size.height}`).toBeGreaterThanOrEqual(12 - 1e-6)
-    // a real click 11 px off the lone mic connector is still the port's (starts a cable)
+    for (const x of all) expect(x.r, `${x.ref} proxy at ${at}`).toBeGreaterThanOrEqual(12 - 1e-6)
+    for (const x of all.filter((q) => q.dev === 'sm58')) expect(x.first, `${x.ref} selected at ${at}`).toBeGreaterThanOrEqual(12 - 1e-6)
+    for (const x of all.filter((q) => q.dev !== 'sm58')) {
+      expect(x.first, `${x.ref} unselected at ${at}`).toBeGreaterThanOrEqual(6 - 1e-6)
+      expect(x.first, `${x.ref} unselected at ${at}`).toBeLessThan(12)
+    }
+    // a real click 11 px off the selected mic's connector is still the port's (starts a cable)
     const p = await screenOf(page, SM58)
     await page.mouse.click(p.x + 11, p.y)
-    expect(await pending(page), `11 px off at ${size.width}x${size.height}`).toEqual(SM58)
+    expect(await pending(page), `11 px off at ${at}`).toEqual(SM58)
     await page.keyboard.press('Escape')
     expect(await pending(page)).toBeNull()
   }
@@ -465,7 +533,7 @@ test('the FIRST scene after a reload (placeholders only, no .glb re-anchor) has 
   await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
   const radii = await page.evaluate(() => {
     const c = window.__creation!
-    return c.design().rig.instances.flatMap((i) => c.devicePorts(i.instanceId).map((port) => ({ ref: `${i.instanceId}.${port}`, r: c.portHitRadiusPx({ instance: i.instanceId, port }) })))
+    return c.design().rig.instances.flatMap((i) => c.devicePorts(i.instanceId).map((port) => ({ ref: `${i.instanceId}.${port}`, r: c.portProxyRadiusPx({ instance: i.instanceId, port }) })))
   })
   expect(radii.length).toBeGreaterThan(5)
   for (const { ref, r } of radii) expect(r, ref).toBeGreaterThanOrEqual(12 - 1e-6)
@@ -486,7 +554,7 @@ test('a place change drops the cable in hand and the labels; the new scene has i
   expect(await page.evaluate(() => window.__creation!.scenes())).toBe(1)
   // spawn in the new scene: its proxies are sized
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm', position: [0, 0, 0] }))
-  expect(await page.evaluate(() => window.__creation!.portHitRadiusPx({ instance: 'm', port: 'out-xlr' }))).toBeGreaterThanOrEqual(12)
+  expect(await page.evaluate(() => window.__creation!.portProxyRadiusPx({ instance: 'm', port: 'out-xlr' }))).toBeGreaterThanOrEqual(12)
 })
 
 test('idle after patching renders nothing, and nothing leaks across place changes', async ({ page }) => {

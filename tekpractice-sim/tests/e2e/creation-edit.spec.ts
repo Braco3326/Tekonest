@@ -298,10 +298,10 @@ test('a click on a device selects it and shows no message; the click that drops 
   await boot(page)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 4], rotationY: 180 })) // facing the audience as in the reference template: its connectors are on the far side
   await settle(page)
-  // A port's hit area is >= 12 px (Task 26): click a body point outside every port's hit area, so the click is the body's.
-  // (Facing the stage, the QL1's seven connectors cover its whole body at the default camera distance: no such point exists.)
-  const at = (await page.evaluate(() => window.__creation!.bodyPointAway('ql1', 14)))!
-  expect(at, 'a QL1 body point outside every port hit area').not.toBeNull()
+  // Over an unselected body a port's first-click area is tight (final review 3): a plain click on the body's centre selects it,
+  // even with the QL1 facing the camera and its connectors on the far side.
+  const at = (await page.evaluate(() => window.__creation!.deviceScreen('ql1')))!
+  expect(at, 'the QL1 centre is on screen').not.toBeNull()
   await page.mouse.click(at.x, at.y)
   expect(await selection(page)).toBe('ql1')
   await expect(page.getByTestId('toast')).toBeHidden()

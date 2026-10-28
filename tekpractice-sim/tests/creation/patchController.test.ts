@@ -21,6 +21,7 @@ const K12_POWER: PortRef = { instance: 'k12', port: 'power-in' }
 
 /** Points on the fake canvas: the pointer's px map to a port through `at`. */
 function setup(over: { busy?: () => boolean } = {}) {
+  const asked: (boolean | undefined)[] = [] // the `inHand` flag each portAtPoint was asked with
   const store = new CreationStore(registry, creationEvaluator(registry))
   const history = new History(store)
   history.do({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [0, 0, 0] })
@@ -37,7 +38,7 @@ function setup(over: { busy?: () => boolean } = {}) {
     get walking() {
       return walking
     },
-    portAtPoint: (x, y) => hits.get(`${x},${y}`) ?? null,
+    portAtPoint: (x, y, inHand) => (asked.push(inHand), hits.get(`${x},${y}`) ?? null),
     portScreen: (r) => ({ x: 100 + r.port.length, y: 50 }),
     markPorts: (hover, m) => void marks.push({ hover, marks: m }),
     onPortViewChange: null,
@@ -76,7 +77,7 @@ function setup(over: { busy?: () => boolean } = {}) {
     announce,
     undoLabel: () => 'Ctrl+Z',
   })
-  return { store, history, canvas, host, ui, calls, marks, ctrl, announce, aim, scheduler, bag, setWalking: (w: boolean) => (walking = w) }
+  return { asked, store, history, canvas, host, ui, calls, marks, ctrl, announce, aim, scheduler, bag, setWalking: (w: boolean) => (walking = w) }
 }
 
 const lastMarks = (s: ReturnType<typeof setup>) => s.marks[s.marks.length - 1]?.marks ?? null
@@ -111,6 +112,20 @@ describe('click a first port: pending + green / dim', () => {
     expect(m.get(portKey(K12_POWER))).toBe('dim') // a mains inlet is not a mic input
     expect(m.get(portKey({ instance: 'ql1', port: 'out-main-l' }))).toBe('dim') // out -> out (R3)
     expect(s.announce).toHaveBeenCalledWith(expect.stringContaining('sm58 · out-xlr'))
+  })
+
+  it('the port lookup is told whether a cable is in hand (a first click is tight over an unselected body, the second is not)', () => {
+    const s = setup()
+    s.aim(10, 10, SM58_OUT)
+    s.aim(20, 20, QL_MIC1)
+    s.ctrl.wouldTake(10, 10)
+    expect(s.asked.at(-1)).toBe(false)
+    s.ctrl.click(SM58_OUT)
+    s.ctrl.wouldTake(20, 20)
+    expect(s.asked.at(-1)).toBe(true)
+    s.ctrl.cancel()
+    s.ctrl.wouldTake(10, 10)
+    expect(s.asked.at(-1)).toBe(false)
   })
 
   it('a second click on the pending port cancels the cable (no history entry)', () => {
