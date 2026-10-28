@@ -22,6 +22,25 @@ function snapshot() {
   return out;
 }
 
+/** mtime of every file snapshot() covers. */
+function mtimes() {
+  const out = {};
+  const walk = (dir) => { for (const name of readdirSync(dir)) { const p = join(dir, name); statSync(p).isDirectory() ? walk(p) : (out[relative(ROOT, p)] = statSync(p).mtimeMs); } };
+  walk(join(ROOT, "assets"));
+  for (const name of readdirSync(ROOT)) if (name.endsWith(".html")) out[name] = statSync(join(ROOT, name)).mtimeMs;
+  return out;
+}
+
+test("build:all never rewrites an up-to-date file (other tests read these files in parallel)", { timeout: 120000 }, () => {
+  const before = mtimes();
+  for (const tool of ["build.mjs", "build-visuals.mjs", "render-assets.mjs"]) {
+    execFileSync(process.execPath, [join(ROOT, "tools", tool)], { cwd: ROOT, stdio: "pipe" });
+  }
+  const after = mtimes();
+  const touched = Object.keys(before).filter((f) => before[f] !== after[f]);
+  assert.deepEqual(touched, [], `rewritten although unchanged: ${touched.join(", ")}`);
+});
+
 test("build:all regenerates nothing new", { timeout: 120000 }, () => {
   const before = snapshot();
   for (const tool of ["build.mjs", "build-visuals.mjs", "render-assets.mjs"]) {

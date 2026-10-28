@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Bundle the panel code (visuals/lib/*.js and the hero bootstrap) into one script for the home page.
 // Usage: node tools/build-visuals.mjs   (writes assets/js/panel.js)
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
+import { writeIfChanged } from "./write-if-changed.mjs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -17,6 +18,6 @@ export function bundle() {
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  writeFileSync(OUT, bundle(), "utf8");
+  writeIfChanged(OUT, bundle());
   console.log(`wrote ${OUT}`);
 }

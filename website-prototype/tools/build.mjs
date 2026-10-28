@@ -3,7 +3,8 @@
 // Node port of the former src/build.py (no dependencies). Run: node tools/build.mjs
 // French typography: a narrow no-break space (U+202F) is inserted before ; : ! ? and inside « »
 // in text content (never inside tags).
-import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync } from "node:fs";
+import { writeIfChanged } from "./write-if-changed.mjs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -119,7 +120,7 @@ export function build({ outDir = ROOT } = {}) {
       footer_date: FOOTER_DATE,
     });
     const [head, body] = [html.slice(0, html.indexOf("<body>")), html.slice(html.indexOf("<body>") + 6)];
-    writeFileSync(join(outDir, name), `${head}<body>${frenchTypography(body)}`, "utf8");
+    writeIfChanged(join(outDir, name), `${head}<body>${frenchTypography(body)}`);
     built.push(name);
   }
   return built;

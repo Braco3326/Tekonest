@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Render the site's static images (posters, dividers, textures, seal) from the same code that draws the animation.
 // Usage: node tools/render-assets.mjs [outDir]   (default: assets/img/panel/)
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync } from "node:fs";
+import { writeIfChanged } from "./write-if-changed.mjs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { chromium } from "@playwright/test";
@@ -25,7 +26,7 @@ export async function renderAssets(outDir = DEFAULT_OUT) {
       const url = await page.evaluate((n) => window.renderAsset(n), name);
       if (!url.startsWith("data:image/webp;base64,")) throw new Error(`${name}: the browser did not produce a WebP (${url.slice(0, 30)})`);
       const bytes = Buffer.from(url.split(",")[1], "base64");
-      writeFileSync(join(outDir, name), bytes);
+      writeIfChanged(join(outDir, name), bytes);
       written.push({ name, bytes: bytes.length });
     }
     if (errors.length) throw new Error(`page errors while rendering: ${errors.join("; ")}`);
