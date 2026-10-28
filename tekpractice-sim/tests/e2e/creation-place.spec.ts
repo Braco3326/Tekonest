@@ -31,17 +31,18 @@ const history = (page: Page) => page.evaluate(() => window.__creation!.historySi
 const camera = (page: Page) => page.evaluate(() => window.__creation!.camera()!)
 const poseOf = async (page: Page, id: string): Promise<V3> =>
   (await design(page)).placements.find((p) => p.instanceId === id)!.position_m
-/** The cable's centre once the .glb models have re-anchored the ports (it moves while they load): two equal reads 300 ms apart. */
+/** Every .glb that will arrive has been applied or dropped (the product's own count of loads in flight). */
+const modelsSettled = (page: Page) => expect.poll(() => page.evaluate(() => window.__creation!.modelsPending()), { timeout: 20_000 }).toBe(0)
+/**
+ * The first cable's centre once its .glb models have re-anchored the ports (the cable moves when they arrive: placeholder
+ * port positions first, the modelled connectors after). Waits on the loads in flight, not on a quiet period: under load a
+ * model can take longer than any pause.
+ */
 const settledCable = async (page: Page): Promise<V3> => {
-  const read = async (): Promise<V3> => (await page.evaluate(() => window.__creation!.cableCenters()))[0]!
-  let prev = await read()
-  for (let i = 0; i < 40; i++) {
-    await page.waitForTimeout(300)
-    const now = await read()
-    if (now.every((v, k) => Math.abs(v - prev[k]) < 1e-6)) return now
-    prev = now
-  }
-  throw new Error('the cable never settled')
+  const read = (): Promise<V3 | null> => page.evaluate(() => window.__creation!.cableCenters()[0] ?? null)
+  await expect.poll(read, { message: 'the cable is drawn' }).not.toBeNull() // reconciled: its devices are spawned, their loads counted
+  await modelsSettled(page)
+  return (await read())!
 }
 const onGrid = (v: number): boolean => Math.abs(v / 0.25 - Math.round(v / 0.25)) < 1e-6
 
@@ -269,13 +270,20 @@ test('choosing a device and cancelling leaves no transform node behind (the glb 
   await boot(page)
   const count = () => page.evaluate(() => window.__creation!.transformNodeCount())
   const baseline = await count()
-  for (let i = 0; i < 3; i++) {
+  // Cancelled at three moments of the .glb import: before anything exists, once its nodes exist but the import has not
+  // resolved (they are in the scene, unparented to the ghost, until it does), and once the model is applied.
+  for (const when of ['at once', 'nodes created', 'model applied'] as const) {
     await choose(page, 'yamaha-ql1', 'Consoles')
-    // wait for the .glb to arrive (the ghost then owns more than its root node)
-    await expect.poll(count, { timeout: 15_000 }).toBeGreaterThan(baseline + 1)
+    if (when === 'nodes created') await expect.poll(count, { timeout: 15_000 }).toBeGreaterThan(baseline + 1)
+    if (when === 'model applied') {
+      await modelsSettled(page)
+      expect(await count(), 'the ghost owns the glb nodes').toBeGreaterThan(baseline + 1)
+    }
     await page.keyboard.press('Escape')
     expect(await page.evaluate(() => window.__creation!.placing())).toBe(false)
-    expect(await count()).toBe(baseline)
+    // a cancelled import removes its own nodes when it resolves: wait for that, not for a pause
+    await modelsSettled(page)
+    expect(await count(), `cancelled ${when}`).toBe(baseline)
   }
 })
 

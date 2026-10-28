@@ -100,6 +100,8 @@ export interface CreationDebug {
   placing(): boolean
   /** Task 24: `scene.transformNodes.length` (a ghost must not leave the glb's nodes behind). */
   transformNodeCount(): number
+  /** Stabilisation A: .glb loads still in flight (0 = every model that will arrive has been applied or dropped). */
+  modelsPending(): number
   /** Task 26: a port's hit radius on screen in CSS px (>= 12 = a 24 px target at any distance); 0 for an unknown port. */
   portHitRadiusPx(ref: PortRef): number
   /** Task 26: the port under a canvas-relative point (CSS px), proxies included. */

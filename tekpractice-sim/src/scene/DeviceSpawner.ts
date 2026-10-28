@@ -239,9 +239,23 @@ export class DeviceSpawner {
     // Async .glb replacement — assets NEVER block gameplay: the placeholder is
     // live immediately, the model swaps in (and re-anchors the ports) when (and
     // only when) it loads. Engine + interaction depend only on marker metadata.
-    instance.modelReady = this.tryLoadModel(device, instanceId, root, portMarkers, instance)
+    this.pending++
+    instance.modelReady = this.tryLoadModel(device, instanceId, root, portMarkers, instance).finally(() => {
+      this.pending-- // after the model applied (or, for a dead root, was dropped): runs before any `modelReady.then`
+    })
 
     return instance
+  }
+
+  private pending = 0
+
+  /**
+   * .glb loads still in flight (spawned, not yet applied, dropped or failed). Zero = every model that will arrive has
+   * arrived: the one signal a test (or a loader) can wait on, a nodes-in-the-scene count is not (a load creates its
+   * nodes before it resolves, and a cancelled one removes them only when it does).
+   */
+  get pendingModels(): number {
+    return this.pending
   }
 
   /**

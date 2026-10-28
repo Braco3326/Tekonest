@@ -1838,6 +1838,7 @@ export async function bootCreation(): Promise<void> {
     },
     placing: () => placement.placing,
     transformNodeCount: () => host.scene?.transformNodes.length ?? 0,
+    modelsPending: () => host.pendingModels,
     floorPoint: (x, y) => {
       const { scene, camera } = host
       const r = canvas.getBoundingClientRect()

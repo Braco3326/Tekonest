@@ -339,6 +339,11 @@ export class SceneHost {
   /** The place changed under a ghost (its meshes went with the scene): the placement controller ends the placement. */
   onGhostLost: (() => void) | null = null
 
+  /** .glb models of this place still loading (devices and ghosts); 0 once everything that will arrive has. */
+  get pendingModels(): number {
+    return this.spawner?.pendingModels ?? 0
+  }
+
   /** A ghost is on screen (false after a place change took it down). */
   get hasGhost(): boolean {
     return this.ghost !== null

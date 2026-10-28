@@ -4,7 +4,7 @@
  * NullEngine + spy window/canvas, as tests/scene/dispose.test.ts.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Matrix, MeshBuilder, NullEngine, TransformNode, Vector3 } from '@babylonjs/core'
+import { Matrix, Mesh, MeshBuilder, NullEngine, Scene, SceneLoader, TransformNode, Vector3 } from '@babylonjs/core'
 import { SIGNAL_STYLE } from '../../src/creation/cableStyle'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
@@ -432,6 +432,64 @@ describe('SceneHost view decor (Task 9): selection outline and hidden objects', 
       host.hideGhost()
       expect(scene.transformNodes.length).toBe(nodes)
       expect(scene.meshes.length).toBe(meshes)
+      host.dispose()
+    })
+
+    /**
+     * A controlled-delay .glb import (stabilisation A): the loader has ALREADY created its nodes in the scene when the
+     * promise is still pending (that is what a slow machine shows); `arrive()` resolves it.
+     */
+    function slowGlb(scene: Scene) {
+      const pending: Array<() => void> = []
+      const spy = vi.spyOn(SceneLoader, 'ImportMeshAsync').mockImplementation(((_n: unknown, _r: unknown, file: string) => {
+        const id = String(file).replace(/\.glb$/, '')
+        const root = new Mesh('__root__', scene)
+        const body = MeshBuilder.CreateBox(`${id}:body`, {}, scene)
+        body.parent = root
+        const empty = new TransformNode('port_out-1', scene)
+        empty.parent = root
+        new TransformNode('port_out-2', scene).parent = empty
+        return new Promise((resolve) => {
+          pending.push(() => resolve({ meshes: [root, body], transformNodes: [empty, ...empty.getChildTransformNodes(true)] }))
+        })
+      }) as unknown as typeof SceneLoader.ImportMeshAsync)
+      return { spy, arrive: async () => { pending.splice(0).forEach((f) => f()); await settle(); await settle() } }
+    }
+
+    it('a .glb that arrives after hideGhost leaves no mesh, transform node or material behind (cancel during the import)', async () => {
+      const { host } = makeHost()
+      await host.load(placeFromKey('blank'), emptyIn('blank'))
+      const scene = host.scene!
+      const glb = slowGlb(scene)
+      const nodes = scene.transformNodes.length
+      const meshes = scene.meshes.length
+      host.showGhost('yamaha-ql1', [0, 0, 0], 0)
+      expect(glb.spy).toHaveBeenCalledTimes(1)
+      expect(host.pendingModels).toBe(1)
+      host.hideGhost() // the learner cancelled; the glb nodes already exist, unparented to the dead ghost
+      expect(scene.transformNodes.length).toBeGreaterThan(nodes) // still there: the import has not resolved yet
+      expect(host.pendingModels).toBe(1) // the one signal that says "nothing more will arrive or go"
+      await glb.arrive()
+      expect(host.pendingModels).toBe(0)
+      expect(scene.transformNodes.length).toBe(nodes)
+      expect(scene.meshes.length).toBe(meshes)
+      host.dispose()
+    })
+
+    it('a .glb that arrives for a ghost that was replaced is dropped too; the live one still gets its model', async () => {
+      const { host } = makeHost()
+      await host.load(placeFromKey('blank'), emptyIn('blank'))
+      const scene = host.scene!
+      const glb = slowGlb(scene)
+      host.showGhost('yamaha-ql1', [0, 0, 0], 0)
+      host.showGhost('shure-sm58', [0, 0, 0], 0)
+      expect(host.pendingModels).toBe(2)
+      await glb.arrive()
+      expect(host.pendingModels).toBe(0)
+      expect(scene.meshes.filter((m) => m.name === 'yamaha-ql1:body')).toHaveLength(0)
+      expect(scene.meshes.filter((m) => m.name === 'shure-sm58:body')).toHaveLength(1) // the live ghost kept its model
+      host.hideGhost()
+      expect(scene.transformNodes.filter((n) => n.name.startsWith('port_'))).toHaveLength(0)
       host.dispose()
     })
 
