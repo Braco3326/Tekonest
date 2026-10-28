@@ -1,5 +1,7 @@
 # Tekonest generated visuals: production brief
 
+> **Superseded (28 Oct 2026, night).** The circle shot list below was replaced by the marquetry panel built from the Damascene research; see section 8 of [`2026-10-28-tekonest-two-doors-design.md`](2026-10-28-tekonest-two-doors-design.md). This file is kept as a record of the earlier direction.
+
 Date: 2026-10-28. Status: **draft for founder review**. Companion to [`2026-10-28-tekonest-two-doors-design.md`](2026-10-28-tekonest-two-doors-design.md), section 7. Claude Motion builds animations as code (shapes, text, images) and exports MP4; it does not generate realistic footage, so every shot below is circles and patterns, which suits it. The same shots can be made as canvas animations in `visuals/` (G1 is done: `visuals/g1-cercle-se-pose.html`).
 
 ## 1. How to use it
