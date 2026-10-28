@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
 import catalogJson from '../../content/catalog.json'
 import { Acoustic, Catalog, Device, Port, PortFlag, Route, Rule, Sourced } from '../../tools/schemas'
+import type { AcousticT, SourcedT } from '../../tools/schemas'
 
 /** Task 29 (C17, CA-15): every catalog rule carries its French title and teaching text. */
 const rule = () => structuredClone(catalogJson.rules[0]) as Record<string, unknown>
@@ -338,6 +339,17 @@ describe('Sourced / Acoustic schema (Task 35, C12)', () => {
     expect(Object.keys(sourced.source.shape!).sort()).toEqual(['kind', 'ref', 'retrieved'])
     for (const [k, v] of Object.entries(sourced.source.shape!)) expect(v.description, k).toMatch(/\S/)
   })
+  it('says in the description of `retrieved` that for kind nominal the date is an entry / check date, not a retrieval (honesty about the date)', () => {
+    const d = (Sourced(z.number()).shape.source.shape.retrieved as unknown as { description: string }).description
+    expect(d).toContain('nominal')
+    expect(d).toContain('entered')
+    expect(d).toContain('not a retrieval')
+  })
+  it('exports the AcousticT / SourcedT types (Task 36 builds its sources from them)', () => {
+    const s: SourcedT<number> = { value: 1, source: { kind: 'kb', ref: 'x', retrieved: '2026-10-22' } }
+    const a: AcousticT = { coverage_h_deg: s, coverage_v_deg: s }
+    expect(a.coverage_h_deg.source.kind).toBe('kb')
+  })
   it('Device.acoustic is optional, and the parsed device keeps it', () => {
     const d = structuredClone(catalogJson.devices.find((x) => x.id === 'shure-sm58')!) as Record<string, unknown>
     expect(Device.safeParse(d).success).toBe(true)
@@ -404,6 +416,16 @@ describe('Acoustic data of the speakers (Task 35, C12)', () => {
     expect(a.max_spl_db, '« > 104 dB SPL » is a lower bound').toBeUndefined()
     expect(a.sensitivity_db).toBeUndefined()
   })
+  it('the K12.2 vertical angle says it is DEDUCED (the KB states one angle, « axisymmetric »); the horizontal one does not, and the quotation stays the KB text', () => {
+    const a = ac('qsc-k12-2')
+    const NOTE = '(V déduit de « axisymmetric » : même angle dans les deux plans)'
+    expect(a.coverage_v_deg.source.ref.endsWith(` » ${NOTE}`), 'the note follows the closing quote, in the V ref only').toBe(true)
+    expect(a.coverage_h_deg.source.ref).not.toContain('déduit')
+    expect(a.coverage_v_deg.source.ref.startsWith(a.coverage_h_deg.source.ref), 'same cited field and quotation as H').toBe(true)
+    expect(quoted(a.coverage_v_deg.source.ref)).toBe(loud.devices.find((d) => d.id === 'qsc-k12-2')!.key_specs.coverage)
+    for (const [id, f] of [['qsc-k12-2', 'max_spl_db'], ['yamaha-dbr12', 'coverage_v_deg'], ['yamaha-dbr12', 'coverage_h_deg'], ['yamaha-dbr12', 'max_spl_db']] as const)
+      expect((ac(id)[f] as Sv).source.ref, `${id}.${f}: only the K12.2 vertical angle is deduced`).not.toContain('déduit')
+  })
   it('only the three speakers carry acoustic', () => {
     expect(devices.filter((d) => d.acoustic !== undefined).map((d) => d.id).sort()).toEqual(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12'])
   })
@@ -440,7 +462,10 @@ describe('Acoustic data of the speakers (Task 35, C12)', () => {
     expect(JSON.stringify(e)).not.toMatch(/coverage|directivity|dispersion/i)
     expect(e.key_specs.max_spl_short_term_sine).toBe('> 104 dB SPL @ 1 m (half space, 100 Hz - 3 kHz)')
     expect(e.key_specs.max_spl_long_term).toBe('> 96 dB SPL @ 1 m (IEC weighted noise)')
-    expect(ac('genelec-8030c').coverage_h_deg.source.retrieved).toBe(mon.generated)
+    // Deliberate re-verify prompt: for a nominal value the date is when the absence of data was checked against the KB, so it is tied to the
+    // KB note date; a `sync:kb` regeneration will fail this on purpose, to make someone re-check that the KB still has no 8030C coverage.
+    for (const f of ['coverage_h_deg', 'coverage_v_deg'] as const)
+      expect(ac('genelec-8030c')[f].source.retrieved, `${f}: coupled to the KB date on purpose (re-verify prompt, not a retrieval)`).toBe(mon.generated)
   })
 })
 

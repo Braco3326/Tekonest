@@ -92,7 +92,7 @@ export const Sourced = <T extends z.ZodTypeAny>(v: T) => z.object({
     ref: z.string().min(1).describe(
       'Where to check it: the knowledge-base note path + entry id + field (and the quoted text when the value is copied from it), or the manufacturer document. For kind nominal: « valeur nominale » and why.',
     ),
-    retrieved: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).describe('Date the source was read (YYYY-MM-DD): the date of the KB note for kind kb.'),
+    retrieved: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).describe('Date the source was read (YYYY-MM-DD): the date of the KB note for kind kb. For kind nominal there is no source document: the date is when the value was entered / checked against the KB (the absence of data), not a retrieval.'),
   }).strict().describe('Provenance of the value (decision C12): every acoustic value has one.'),
 }).strict()
 
@@ -269,6 +269,8 @@ export const Onboarding = z.object({
   cta: z.string().min(1),
 }).passthrough()
 
+export type SourcedT<T> = { value: T; source: z.infer<ReturnType<typeof Sourced>>['source'] }
+export type AcousticT = z.infer<typeof Acoustic>
 export type CatalogT = z.infer<typeof Catalog>
 export type LevelT = z.infer<typeof Level>
 export type ReadinessT = z.infer<typeof Readiness>

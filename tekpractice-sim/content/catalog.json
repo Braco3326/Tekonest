@@ -158,7 +158,7 @@
       ],
       "acoustic": {
         "coverage_h_deg": { "value": 75, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.coverage « 75° nominal, axisymmetric »", "retrieved": "2026-10-22" } },
-        "coverage_v_deg": { "value": 75, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.coverage « 75° nominal, axisymmetric »", "retrieved": "2026-10-22" } },
+        "coverage_v_deg": { "value": 75, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.coverage « 75° nominal, axisymmetric » (V déduit de « axisymmetric » : même angle dans les deux plans)", "retrieved": "2026-10-22" } },
         "max_spl_db": { "value": 132, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.max_spl « 132 dB @ 1 m peak; 126 dB @ 1 m continuous »", "retrieved": "2026-10-22" } }
       }
     },
