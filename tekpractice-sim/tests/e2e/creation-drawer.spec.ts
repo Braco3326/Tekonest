@@ -280,20 +280,35 @@ test('screenshot (on demand)', async ({ page }) => {
   await page.screenshot({ path: 'docs/creative/screens/task-23-drawer-1366.png' })
 })
 
-test('a held Space opens it once and leaves it open (auto-repeat never flickers it), then Space closes', async ({ page }) => {
+test('a held Space toggles the drawer exactly once (auto-repeat never flickers it): open stays open, then closed stays closed', async ({ page }) => {
   await boot(page)
+  // Count the drawer's open / close transitions page-side (it is created lazily, so watch the viewport's subtree).
+  await page.evaluate(() => {
+    const log: string[] = []
+    ;(window as unknown as { __drawerLog: string[] }).__drawerLog = log
+    new MutationObserver((records) => {
+      for (const r of records) {
+        const v = (r.target as HTMLElement).dataset.open
+        if (v !== undefined && v !== r.oldValue) log.push(v)
+      }
+    }).observe(document.querySelector('[data-testid="viewport"]')!, { subtree: true, attributes: true, attributeFilter: ['data-open'], attributeOldValue: true })
+  })
+  const transitions = (): Promise<string[]> => page.evaluate(() => [...(window as unknown as { __drawerLog: string[] }).__drawerLog])
+  // An EVEN number of keydowns (1 press + 3 auto-repeats, Playwright sets repeat on a key already down):
+  // code that toggled on every keydown would end in the wrong state, so the end state proves the guard.
+  const hold = async (): Promise<void> => {
+    await page.keyboard.down('Space')
+    for (let i = 0; i < 3; i++) await page.keyboard.down('Space')
+    await page.keyboard.up('Space')
+    await page.waitForTimeout(400)
+  }
   await page.locator('#renderCanvas').focus()
-  await page.keyboard.down('Space')
-  for (let i = 0; i < 4; i++) await page.keyboard.down('Space') // repeats: e.repeat = true
-  await page.keyboard.up('Space')
-  await page.waitForTimeout(400)
+  await hold()
   await expect(drawer(page)).toBeVisible()
   await expect(page.getByRole('tab', { selected: true })).toBeFocused()
-  // held while it is open: one close, no re-open
-  await page.keyboard.down('Space')
-  for (let i = 0; i < 4; i++) await page.keyboard.down('Space')
-  await page.keyboard.up('Space')
-  await page.waitForTimeout(400)
+  expect(await transitions()).toEqual(['true']) // opened once, never closed and re-opened
+  await hold() // from inside the drawer: the first keydown closes it, the repeats land on the canvas
   await expect(drawer(page)).toBeHidden()
   await expect(page.locator('#renderCanvas')).toBeFocused()
+  expect(await transitions()).toEqual(['true', 'false'])
 })
