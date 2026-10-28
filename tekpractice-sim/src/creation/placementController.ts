@@ -118,7 +118,14 @@ export class PlacementController {
     bag.listen(canvas, 'lostpointercapture', (e: PointerEvent) => {
       if (this.drag && e.pointerId === this.drag.pointerId) this.endDrag(false)
     })
-    if (typeof window !== 'undefined') bag.listen(window, 'blur', () => this.endDrag(false))
+    if (typeof window !== 'undefined') {
+      bag.listen(window, 'blur', () => this.endDrag(false))
+      // Alt is the « free » modifier while a device is placed or dragged: a bare Alt tap would also toggle the menu bar in
+      // Firefox on Windows. Claiming its keyup (only then) keeps the menu bar shut; any other time Alt is the browser's.
+      bag.listen(window, 'keyup', (e: KeyboardEvent) => {
+        if ((e.key === 'Alt' || e.code === 'AltLeft' || e.code === 'AltRight') && (this.placing || this.dragging)) e.preventDefault()
+      })
+    }
     host.onGhostLost = () => this.onHostLostGhost()
     bag.add(() => {
       host.onGhostLost = null

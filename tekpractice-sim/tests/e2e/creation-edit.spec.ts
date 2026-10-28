@@ -78,6 +78,30 @@ test('R turns the selected device +15 deg as ONE undo entry; Maj+R -15; Alt+R +1
   expect(await selection(page)).toBe('ql1')
 })
 
+test('the keyup of Alt is claimed (preventDefault) while a device follows the pointer, and left to the browser otherwise (Firefox menu bar)', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => {
+    const w = window as unknown as { __altUps: boolean[] }
+    w.__altUps = []
+    // registered after the controller's: it sees the event once the controller has had its say
+    window.addEventListener('keyup', (e) => e.key === 'Alt' && w.__altUps.push(e.defaultPrevented))
+  })
+  const ups = () => page.evaluate(() => [...(window as unknown as { __altUps: boolean[] }).__altUps])
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Alt') // nothing placed: the browser's
+  expect(await ups()).toEqual([false])
+  await page.keyboard.press('Space')
+  await page.getByRole('tab', { name: 'Consoles' }).click()
+  await page.locator('[data-testid="inventory-item"][data-device-id="yamaha-ql1"]').click()
+  expect(await page.evaluate(() => window.__creation!.placing())).toBe(true)
+  await page.keyboard.press('Alt') // placing: claimed
+  expect(await ups()).toEqual([false, true])
+  await page.keyboard.press('Escape')
+  expect(await page.evaluate(() => window.__creation!.placing())).toBe(false)
+  await page.keyboard.press('Alt') // placement over: the browser's again
+  expect(await ups()).toEqual([false, true, false])
+})
+
 test('R turns the ghost while placing; the drop uses that yaw', async ({ page }) => {
   await boot(page)
   await page.locator('#renderCanvas').focus()
@@ -98,26 +122,36 @@ test('R turns the ghost while placing; the drop uses that yaw', async ({ page })
 
 test('Ctrl+D (QWERTY and AZERTY events) copies the device: a new id, the same controls, +0.5 m on x, the copy selected, ONE entry per press', async ({ page }) => {
   await boot(page)
-  await withQl1(page)
-  // give the original a changed control, so "the same controls" means something
-  const ctl = Object.entries((await design(page)).rig.controls.ql1 ?? {}).find(([, v]) => typeof v === 'boolean')
-  if (ctl) await page.evaluate(([c, v]) => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: c as string, value: !v }), ctl)
+  // A device WITH controls (the QL1 has none: « the same controls » would compare {} with {} and could never fail).
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'axia-iq', instanceId: 'axia', position: [0, 0, 4] }))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press(']')
+  expect(await selection(page)).toBe('axia')
+  await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+  // give the original a control changed from its default (monitor-mute defaults to false), so "the same controls" means something
+  const set = await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'axia', control: 'monitor-mute', value: true }))
+  expect(set.ok).toBe(true)
+  const ctl = (await design(page)).rig.controls.axia
+  expect(ctl, 'the original has controls').toBeDefined()
+  expect(ctl['monitor-mute'], 'a non-default control value').toBe(true)
   const before = await design(page)
   const base = await history(page)
-  const orig = before.placements.find((p) => p.instanceId === 'ql1')!
+  const orig = before.placements.find((p) => p.instanceId === 'axia')!
 
   await page.keyboard.press('Control+d') // QWERTY
   let d = await design(page)
   expect(d.rig.instances).toHaveLength(2)
-  const copy = d.rig.instances.find((i) => i.instanceId !== 'ql1')!
-  expect(copy.deviceId).toBe('yamaha-ql1')
-  expect(d.rig.controls[copy.instanceId] ?? {}).toEqual(d.rig.controls.ql1 ?? {})
+  const copy = d.rig.instances.find((i) => i.instanceId !== 'axia')!
+  expect(copy.deviceId).toBe('axia-iq')
+  expect(d.rig.controls[copy.instanceId], 'the copy has the controls').toBeDefined()
+  expect(d.rig.controls[copy.instanceId]).toEqual(ctl)
+  expect(d.rig.controls[copy.instanceId]['monitor-mute']).toBe(true)
   const cp = d.placements.find((p) => p.instanceId === copy.instanceId)!
   expect(cp.position_m).toEqual([orig.position_m[0] + 0.5, orig.position_m[1], orig.position_m[2]])
   expect(cp.yawDeg).toBe(orig.yawDeg)
   expect(await history(page)).toBe(base + 1)
   expect(await selection(page)).toBe(copy.instanceId)
-  await expect(page.getByTestId('status-bar')).toContainText('Dupliqué : Yamaha QL1')
+  await expect(page.getByTestId('status-bar')).toContainText('Dupliqué : Axia iQ')
 
   // AZERTY: the key printed D is the physical D; and a layout where it sits on another code (the labelled key wins)
   await keydown(page, { code: 'KeyD', key: 'd', ctrlKey: true })
@@ -137,7 +171,7 @@ test('Ctrl+D (QWERTY and AZERTY events) copies the device: a new id, the same co
   await page.keyboard.press('Control+z')
   expect((await design(page)).rig.instances).toHaveLength(3)
   d = await design(page)
-  expect(d.rig.instances.some((i) => i.instanceId === 'ql1')).toBe(true)
+  expect(d.rig.instances.some((i) => i.instanceId === 'axia')).toBe(true)
 })
 
 const WIRED = async (page: Page): Promise<void> => {

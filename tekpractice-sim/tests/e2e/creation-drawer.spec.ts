@@ -220,6 +220,9 @@ test('slide ≤ 200 ms; 0 s under reduced motion; the drawer buttons and tabs ne
   await open(reduced)
   const r = await drawer(reduced).evaluate((e) => getComputedStyle(e).transitionDuration)
   expect(seconds(r)).toBeLessThanOrEqual(0.0001) // the legacy reduced-motion rule makes « none » read 0.01 ms
+  // That 0.01 ms comes from index.html's `transition-duration: 0.01ms !important` and would read the same with the drawer's own
+  // slide still declared: the property is what proves the drawer's media query took (the slide itself is gone, not just shortened).
+  expect(await drawer(reduced).evaluate((e) => getComputedStyle(e).transitionProperty)).toBe('none')
   await reduced.close()
 })
 

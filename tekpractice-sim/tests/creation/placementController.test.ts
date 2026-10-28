@@ -529,3 +529,47 @@ describe('edit actions while a drag is open (Task 24 deferred finding)', () => {
     expect(s.history.peekUndo()!.forward.map((i) => i.type)).toEqual(['SET_POSE', 'REMOVE'])
   })
 })
+
+describe('the Alt tap (final review 8): its keyup is claimed while a device is placed or dragged', () => {
+  /** A keyup on the stand-in window: `defaultPrevented` tells whether the controller claimed it. */
+  const keyup = (s: ReturnType<typeof setup>, key: string, code: string) => {
+    const e = new Event('keyup', { cancelable: true })
+    Object.defineProperty(e, 'key', { value: key })
+    Object.defineProperty(e, 'code', { value: code })
+    s.win.dispatchEvent(e)
+    return e.defaultPrevented
+  }
+
+  it('placing: Alt (either side) is preventDefault-ed, so Firefox on Windows does not open its menu bar; any other key is not touched', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    expect(keyup(s, 'Alt', 'AltLeft')).toBe(true)
+    expect(keyup(s, 'Alt', 'AltRight')).toBe(true)
+    expect(keyup(s, 'r', 'KeyR')).toBe(false)
+    expect(keyup(s, 'Shift', 'ShiftLeft')).toBe(false)
+  })
+
+  it('dragging: claimed as well', () => {
+    const s = setup()
+    s.spawn('ql1', [2, 0, 3])
+    s.viewState.set({ selection: 'ql1' })
+    s.under('ql1')
+    s.fire('pointerdown', 200, 300)
+    expect(s.ctrl.dragging).toBe(true)
+    expect(keyup(s, 'Alt', 'AltLeft')).toBe(true)
+    s.fire('pointerup', 200, 300, { buttons: 0 })
+    expect(keyup(s, 'Alt', 'AltLeft')).toBe(false)
+  })
+
+  it('neither placing nor dragging, after the placement ends, or once the bag is disposed: the browser keeps its Alt', () => {
+    const s = setup()
+    expect(keyup(s, 'Alt', 'AltLeft')).toBe(false)
+    s.ctrl.startPlacement('yamaha-ql1')
+    expect(keyup(s, 'Alt', 'AltLeft')).toBe(true)
+    s.ctrl.cancel()
+    expect(keyup(s, 'Alt', 'AltLeft')).toBe(false)
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.bag.dispose()
+    expect(keyup(s, 'Alt', 'AltLeft')).toBe(false)
+  })
+})
