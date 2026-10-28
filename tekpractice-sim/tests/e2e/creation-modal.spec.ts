@@ -32,6 +32,21 @@ test('Projet name dialog: a press on its title, its padding or the backdrop keep
   await expect(dialog).toHaveCount(0)
 })
 
+test('a focusable ancestor ABOVE the dialog (an app container with a tabindex) does not take the focus on a press on the title', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => document.body.setAttribute('tabindex', '-1'))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Control+s')
+  const dialog = page.getByTestId('cr-name-dialog')
+  await expect(dialog).toBeVisible()
+  await dialog.locator('.cr-dialog-title').click()
+  expect(await inDialog(page), 'after a press on the title').toBe(true)
+  await page.mouse.click(5, 400) // the backdrop
+  expect(await inDialog(page), 'after a press on the backdrop').toBe(true)
+  await page.keyboard.press('Escape')
+  await expect(dialog).toHaveCount(0)
+})
+
 test('« Ouvrir… » dialog: a press on its text keeps focus in it; Échap closes it', async ({ page }) => {
   await boot(page)
   await page.getByRole('menuitem', { name: 'Projet' }).click()

@@ -30,6 +30,24 @@ export interface ModalOptions<T> {
   parent?: HTMLElement
 }
 
+/** What a press can focus: a control, a label of one, or anything a dialog made focusable. */
+const FOCUSABLE = 'input, button, select, textarea, a, label, summary, [tabindex]'
+
+/**
+ * A press on this target moves focus on purpose (a control, or a custom widget of the dialog with a tabindex) and keeps its
+ * default. Scoped to the dialog's box: an ancestor ABOVE it (the overlay, <body>, an app container with a tabindex) does not count,
+ * or a press on the title would blur the dialog to that ancestor. Structural (no DOM classes) so it runs headless.
+ */
+export function pressTakesFocus(
+  target: unknown,
+  box: { contains(node: unknown): boolean }
+): boolean {
+  const t = target as { closest?: (sel: string) => unknown } | null
+  if (!t || typeof t.closest !== 'function') return false
+  const hit = t.closest(FOCUSABLE)
+  return hit !== null && hit !== undefined && box.contains(hit)
+}
+
 export function openModal<T>(o: ModalOptions<T>): Promise<T> {
   const parent = o.parent ?? document.body
   open?.close()
@@ -93,8 +111,7 @@ export function openModal<T>(o: ModalOptions<T>): Promise<T> {
     // document-level Échap listener because it touches no key routing and changes nothing for a control; its one cost is that
     // a press on plain text no longer starts a text selection.
     overlay.addEventListener('mousedown', (e) => {
-      const t = e.target
-      if (!(t instanceof Element) || !t.closest('input, button, select, textarea, a, label, summary, [tabindex], [contenteditable]')) e.preventDefault()
+      if (!pressTakesFocus(e.target, box)) e.preventDefault()
     })
     parent.appendChild(overlay)
     // Everything behind the dialog: the overlay's siblings up to <body>.

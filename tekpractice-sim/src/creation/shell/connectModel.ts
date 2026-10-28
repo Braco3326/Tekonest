@@ -232,7 +232,18 @@ export type FocusTarget = 'opener' | 'row' | 'title' | 'canvas'
  *   else the Propriétés title (focusable), else the canvas.
  */
 export function focusPlan(reason: CloseReason, openerSame: boolean): FocusTarget[] {
-  if (reason === 'place') return ['canvas']
-  if (reason === 'connected') return ['row', 'title', 'canvas']
-  return openerSame ? ['opener', 'title', 'canvas'] : ['title', 'canvas']
+  switch (reason) {
+    case 'place':
+      return ['canvas']
+    case 'connected':
+      return ['row', 'title', 'canvas']
+    case 'cancelled':
+    case 'stale':
+      return openerSame ? ['opener', 'title', 'canvas'] : ['title', 'canvas']
+    default: {
+      // A new CloseReason is a type error here, not a silent fall-through to the « cancelled » plan.
+      const _never: never = reason
+      return _never
+    }
+  }
 }
