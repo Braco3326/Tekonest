@@ -200,6 +200,8 @@ test('double-click on the floor re-pivots there; angle and distance are kept (de
   expect(angleDiff(after.beta, before.beta)).toBeLessThan(0.01)
   expect(Math.abs(after.radius - before.radius)).toBeLessThan(0.01)
   expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
+  await expect(page.getByTestId('toast')).toBeHidden() // a double-click is no miss: no « Rien ici »
+  await expect(page.getByTestId('toast')).toHaveText('')
   expect(await idleRenders(page)).toBe(0)
 })
 
@@ -244,4 +246,44 @@ test('a camera request during a listening-point flight ends « on the point »: 
   expect(Math.abs(c.beta - open.beta)).toBeLessThan(0.01)
   expect(Math.abs(c.radius - open.radius)).toBeLessThan(0.05)
   expect(dist(c.target, open.target)).toBeLessThan(0.05)
+})
+
+test('a double-click on the floor shows no « Rien ici » toast and keeps the selection; the re-pivot still happens (final review 2)', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press(']')
+  await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBe('ql1')
+  const before = await settled(page)
+  const dev = (await page.evaluate(() => window.__creation!.deviceScreen('ql1')))!
+  const at = { x: dev.x, y: dev.y + 150 } // the floor in front of the selected device (the camera is framed on it)
+  expect(await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.id, at)).toBe('renderCanvas')
+  expect(await page.evaluate(({ x, y }) => window.__creation!.pickAt(x, y), at)).toBeNull()
+  const toast = page.getByTestId('toast')
+  await page.mouse.dblclick(at.x, at.y)
+  const after = await settled(page)
+  expect(dist(after.target, before.target)).toBeGreaterThan(0.1) // it re-pivoted
+  await page.waitForTimeout(400) // past the 100 ms before a message is set
+  await expect(toast).toBeHidden()
+  await expect(toast).toHaveText('')
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1') // the first click's miss cleared it; the double-click gives it back
+})
+
+test('a double-click event while a device follows the pointer (the drop already happened elsewhere) does not re-pivot', async ({ page }) => {
+  await boot(page, false) // not reduced motion: the drawer takes focus on open only then (see the final report)
+  const before = await settled(page)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Space')
+  await expect(page.getByTestId('inventory-drawer')).toBeVisible()
+  await expect(page.getByRole('tab', { selected: true })).toBeFocused() // the drawer has taken focus: now move to the first item
+  await page.keyboard.press('Tab')
+  await expect(page.getByRole('tabpanel').getByTestId('inventory-item').first()).toBeFocused()
+  await page.keyboard.press('Enter') // the first device: it follows the pointer
+  await expect.poll(() => page.evaluate(() => window.__creation!.placing())).toBe(true)
+  const at = (await page.evaluate((p) => window.__creation!.worldScreen(p), [3, 0, 2] as [number, number, number]))!
+  await page.evaluate(({ x, y }) => {
+    document.getElementById('renderCanvas')!.dispatchEvent(new MouseEvent('dblclick', { clientX: x, clientY: y, button: 0, bubbles: true }))
+  }, at)
+  expect(await page.evaluate(() => window.__creation!.placing())).toBe(true)
+  expect(dist((await settled(page)).target, before.target)).toBeLessThan(1e-6)
 })

@@ -69,6 +69,10 @@ export function createSelection(d: SelectionDeps): Selection {
 
 type Press = { x: number; y: number; t: number }
 
+/** Two clicks within this time and distance are a double-click (a double-click is never a miss). */
+const DOUBLE_CLICK_MS = 500
+const DOUBLE_CLICK_PX = 5
+
 /** A click on the canvas, not an orbit drag: moved ≤ 5 px, released within 500 ms. */
 export function isClick(down: Press, up: Press): boolean {
   return Math.hypot(up.x - down.x, up.y - down.y) <= 5 && up.t - down.t <= 500
@@ -84,12 +88,6 @@ export function pickDevice(scene: Scene | null, x: number, y: number): string | 
   )
   const id = hit?.hit ? hit.pickedMesh?.metadata?.instanceId : undefined
   return typeof id === 'string' ? id : null
-}
-
-/** A port (its marker or its invisible enlarged pick proxy) is under a canvas point. */
-export function portAt(scene: Scene | null, x: number, y: number): boolean {
-  if (!scene) return false
-  return !!scene.pick(x, y, (m) => m.metadata?.isPortMarker === true && m.isEnabled())?.hit
 }
 
 /**
@@ -113,8 +111,8 @@ export function attachCanvasHover(
 
 /**
  * A primary-button click on a device body selects it and flies to it; a click that hits none
- * (empty floor, sky, a hidden device) is a miss: `onMiss` gets the canvas point (Task 25, CA-12;
- * the shell decides whether it counts, e.g. not while a device follows the pointer).
+ * (empty floor, sky, a hidden device) is a miss: `onMiss` gets the canvas point and the click count (1, or 2 for the
+ * second click of a double-click: Task 25, CA-12; the shell decides whether it counts, e.g. not while a device follows the pointer).
  * DOM listeners on the canvas (in `bag`), independent of the place's scene.
  */
 export function attachCanvasPicking(
@@ -122,9 +120,11 @@ export function attachCanvasPicking(
   bag: DisposableBag,
   pick: (x: number, y: number) => string | null,
   sel: Selection,
-  onMiss?: (x: number, y: number) => void
+  onMiss?: (x: number, y: number, clicks: number) => void
 ): void {
   let down: Press | null = null
+  /** The previous click (for the click count: PointerEvent.detail is always 0, so it is counted here). */
+  let prev: Press | null = null
   bag.listen(canvas, 'pointerdown', (e: PointerEvent) => {
     down = e.button === 0 && e.isPrimary ? { x: e.offsetX, y: e.offsetY, t: e.timeStamp } : null
   })
@@ -133,8 +133,12 @@ export function attachCanvasPicking(
     down = null
     if (!from || e.button !== 0 || !isClick(from, { x: e.offsetX, y: e.offsetY, t: e.timeStamp }))
       return
+    const at = { x: e.offsetX, y: e.offsetY, t: e.timeStamp }
+    // A second click close to the first in time and space is the second of a double-click (a third starts a new count).
+    const clicks = prev && at.t - prev.t <= DOUBLE_CLICK_MS && Math.hypot(at.x - prev.x, at.y - prev.y) <= DOUBLE_CLICK_PX ? 2 : 1
+    prev = clicks === 2 ? null : at
     const id = pick(e.offsetX, e.offsetY)
     if (id) sel.select(id)
-    else onMiss?.(e.offsetX, e.offsetY)
+    else onMiss?.(e.offsetX, e.offsetY, clicks)
   })
 }

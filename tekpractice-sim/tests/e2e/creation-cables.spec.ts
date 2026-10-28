@@ -272,3 +272,22 @@ test('a mains-power entry is drawn dashed with its « pointillés » note, a sol
   await page.evaluate(() => window.__creation!.legendPreview([]))
   await expect(legend(page)).toBeHidden()
 })
+
+test('a click on the hovered cable is no missed click: no « Rien ici » toast, the selection is kept (final review, minor)', async ({ page }) => {
+  await boot(page)
+  await page.locator('#renderCanvas').focus()
+  for (let i = 0; i < 6 && (await page.evaluate(() => window.__creation!.selection())) !== 'sm58'; i++) await page.keyboard.press(']') // the mic: the framed view shows its cable
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('sm58') // a miss would clear it
+  await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+  await settle(page)
+  const sel = await page.evaluate(() => window.__creation!.selection())
+  const p = await freePoint(page, MIC_KEY)
+  await page.mouse.move(p.x, p.y)
+  await expect(hoverLabel(page)).toBeVisible()
+  expect(await page.evaluate(() => window.__creation!.cableHovered())).toBe(MIC_KEY)
+  await page.mouse.click(p.x, p.y)
+  await page.waitForTimeout(300) // past the 100 ms before a message would be set
+  await expect(page.getByTestId('toast')).toBeHidden()
+  await expect(page.getByTestId('toast')).toHaveText('')
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe(sel)
+})

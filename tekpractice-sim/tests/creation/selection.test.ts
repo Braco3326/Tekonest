@@ -67,6 +67,26 @@ describe('selection (Task 9): one selection state for tree, canvas and [ ]', () 
     expect(isClick({ x: 10, y: 10, t: 0 }, { x: 30, y: 10, t: 200 })).toBe(false)
     expect(isClick({ x: 10, y: 10, t: 0 }, { x: 10, y: 10, t: 900 })).toBe(false)
   })
+  it('onMiss gets the click count: two clicks within 500 ms and 5 px are 1 then 2; slow or far apart ones are 1 again (a double-click is never a miss)', () => {
+    const fns = new Map<string, (e: unknown) => void>()
+    const canvas = { addEventListener: (t: string, fn: (e: unknown) => void) => void fns.set(t, fn), removeEventListener: (t: string) => void fns.delete(t) }
+    const { sel } = fakes()
+    const counts: number[] = []
+    const bag = new DisposableBag()
+    attachCanvasPicking(canvas as never, bag, () => null, sel, (_x, _y, clicks) => void counts.push(clicks))
+    const click = (x: number, t: number) => {
+      fns.get('pointerdown')!({ offsetX: x, offsetY: 20, button: 0, isPrimary: true, timeStamp: t })
+      fns.get('pointerup')!({ offsetX: x, offsetY: 20, button: 0, timeStamp: t + 30 })
+    }
+    click(10, 0)
+    click(12, 200) // second of a double-click
+    click(12, 400) // a third click is a new count
+    click(12, 1500) // slow
+    click(100, 1700) // far from the previous
+    click(10, 1800) // far again
+    expect(counts).toEqual([1, 2, 1, 1, 1, 1])
+    bag.dispose()
+  })
   it('a click that hits no device is a miss (onMiss with the point); a hit selects; drags, other buttons and unprimary pointers are neither (Task 25)', () => {
     const fns = new Map<string, (e: unknown) => void>()
     const canvas = { addEventListener: (t: string, fn: (e: unknown) => void) => void fns.set(t, fn), removeEventListener: (t: string) => void fns.delete(t) }
@@ -74,6 +94,7 @@ describe('selection (Task 9): one selection state for tree, canvas and [ ]', () 
     const misses: [number, number][] = []
     const bag = new DisposableBag()
     attachCanvasPicking(canvas as never, bag, (x) => (x > 50 ? 'ql1' : null), sel, (x, y) => void misses.push([x, y]))
+    // (the miss handler also gets the click count: see the test above)
     const press = (x: number, y: number, up: { x?: number; y?: number; t?: number } = {}, extra: Record<string, unknown> = {}) => {
       fns.get('pointerdown')!({ offsetX: x, offsetY: y, button: 0, isPrimary: true, timeStamp: 0, ...extra })
       fns.get('pointerup')!({ offsetX: up.x ?? x, offsetY: up.y ?? y, button: 0, timeStamp: up.t ?? 100 })

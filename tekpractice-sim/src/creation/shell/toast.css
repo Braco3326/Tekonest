@@ -21,3 +21,5 @@
   transition: none;
 }
 .cr-toast[hidden] { display: none; }
+/* Rendered but empty (the ~100 ms before the text is set, so a polite live region notices the change): no box to see. */
+.cr-toast:empty { opacity: 0; }

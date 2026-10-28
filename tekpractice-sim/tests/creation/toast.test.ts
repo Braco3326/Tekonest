@@ -48,20 +48,49 @@ describe('toast (Task 25, CA-12)', () => {
     ])
   })
 
-  it('a second miss restarts the 2.5 s and says the same text again', () => {
+  it('a second miss with the same text still on screen restarts the 2.5 s and does NOT re-announce (final review: no flicker, no repeat)', () => {
     const el = fakeEl()
+    const writes: (string | null)[] = []
+    let text: string | null = ''
+    Object.defineProperty(el, 'textContent', { get: () => text, set: (v) => void writes.push((text = v)) })
     const t = createToast(el, new DisposableBag())
     t.show('Rien ici')
     vi.advanceTimersByTime(2000)
+    writes.length = 0
     t.show('Rien ici')
-    expect(el.textContent).toBe('') // cleared, then set again: re-announced
-    vi.advanceTimersByTime(REANNOUNCE_MS)
-    expect(el.textContent).toBe('Rien ici')
-    vi.advanceTimersByTime(TOAST_MS - REANNOUNCE_MS - 1)
+    expect(el.textContent).toBe('Rien ici') // never cleared: the box does not flicker, a screen reader hears it once
+    vi.advanceTimersByTime(TOAST_MS - 1)
     expect(el.hidden).toBe(false) // 2.5 s from the SECOND show, not the first
     vi.advanceTimersByTime(1)
     expect(el.hidden).toBe(true)
+    expect(writes).toEqual(['']) // only the end of the toast wrote
     expect(vi.getTimerCount()).toBe(0)
+  })
+
+  it('the same text after the toast ended is announced again; a different text while it is up replaces it and is announced', () => {
+    const el = fakeEl()
+    const t = createToast(el, new DisposableBag())
+    t.show('Rien ici')
+    vi.advanceTimersByTime(TOAST_MS)
+    expect(el.hidden).toBe(true)
+    t.show('Rien ici')
+    expect(el.textContent).toBe('')
+    vi.advanceTimersByTime(REANNOUNCE_MS)
+    expect(el.textContent).toBe('Rien ici')
+    t.show('Autre')
+    expect(el.textContent).toBe('') // cleared, then set: announced
+    vi.advanceTimersByTime(REANNOUNCE_MS)
+    expect(el.textContent).toBe('Autre')
+  })
+
+  it('a message still waiting to be set (within the first 100 ms) and asked again is kept, not restarted', () => {
+    const el = fakeEl()
+    const t = createToast(el, new DisposableBag())
+    t.show('Rien ici')
+    vi.advanceTimersByTime(40)
+    t.show('Rien ici')
+    vi.advanceTimersByTime(REANNOUNCE_MS - 40)
+    expect(el.textContent).toBe('Rien ici') // set at the FIRST show's 100 ms
   })
 
   it('dismiss hides it at once and leaves no timer', () => {

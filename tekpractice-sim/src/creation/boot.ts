@@ -47,7 +47,7 @@ import { mountNotes } from './shell/notes'
 import { bodyCentreOf } from './debug'
 import { debugBodyCenter } from '../scene/debugBody'
 import { cableKey } from './sceneDiff'
-import { attachCanvasHover, attachCanvasPicking, createSelection, pickDevice, portAt } from './selection'
+import { attachCanvasHover, attachCanvasPicking, createSelection, pickDevice } from './selection'
 import { floorPointAt } from '../scene/pivotPick'
 import { rotate90 } from '../camera/viewCube'
 import { mountProjectTree } from './shell/projectTree'
@@ -1256,16 +1256,23 @@ export async function bootCreation(): Promise<void> {
   })
   // Double-click on the floor re-pivots there (Task 21 review, brief §3, council T2.5): angle and
   // distance kept, the target moves (a cut under reduced motion). Never on a device or a port (their
-  // click is theirs), never on the cube (its own layer gets those events), never while walking.
+  // click is theirs), never on the cube (its own layer gets those events), never while walking, never while a device
+  // follows the pointer. The first click of the pair was a miss (it cleared the selection and may have toasted):
+  // the double-click is not one, so the message goes and the selection comes back (final review 2).
   shellBag.listen(canvas, 'dblclick', (e: MouseEvent) => {
     const scene = host.scene
-    if (e.button !== 0 || !scene || viewLocked() || host.walking) return
+    if (e.button !== 0 || !scene || viewLocked() || host.walking || placement.placing || placement.dragging) return
     const x = e.offsetX
     const y = e.offsetY
-    if (pickDevice(scene, x, y) || portAt(scene, x, y)) return
+    // The device test is the body's; the port test is the patching's own (the enlarged proxies the click-to-patch takes, not only the marker).
+    if (pickDevice(scene, x, y) || host.portAtPoint(x, y) || patch.wouldTake(x, y)) return
     const p = floorPointAt(scene, x, y, host.camera!)
     if (!p) return
     host.rig!.repivot(Vector3.FromArray(p))
+    toast.dismiss()
+    if (clearedByMiss !== null && viewState.get().selection === null && deviceIds().includes(clearedByMiss.id) && e.timeStamp - clearedByMiss.t <= 1000)
+      viewState.set({ selection: clearedByMiss.id }) // no camera flight: the re-pivot is the view change
+    clearedByMiss = null
     scheduler.invalidate()
   })
   // ── Listening points (Task 20): tree « Points d’écoute », Vue › Aller au point d’écoute, 1 / 2 / 3.
@@ -1464,7 +1471,7 @@ export async function bootCreation(): Promise<void> {
     // An open drag (a press on the selected device) owns its release: `onClickSelected` below decides port or select.
     (x, y) => (placement.placing || placement.dragging || patch.wouldTake(x, y) ? null : pickDevice(host.scene, x, y)),
     selection,
-    (x, y) => missedClick(x, y)
+    (x, y, clicks) => missedClick(x, y, clicks)
   )
   // Hover (Task 14b): a thin Papier outline on the device under the pointer, never the Ambre selection.
   attachCanvasHover(
@@ -1616,9 +1623,15 @@ export async function bootCreation(): Promise<void> {
     () => connectDialog.close(), // a list of the old rig's ports
     () => toast.dismiss() // a message about the previous place's view does not carry over
   )
-  const missedClick = (x: number, y: number): void => {
+  /** The selection the last miss cleared (a double-click on the floor gives it back). */
+  let clearedByMiss: { id: string; t: number } | null = null
+  const missedClick = (x: number, y: number, clicks: number): void => {
     if (placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y)) return
-    if (viewState.get().selection !== null) viewState.set({ selection: null }) // not undoable; the toast speaks, not the status bar
+    // The second click of a double-click is no miss (the re-pivot follows); a click on the hovered cable is on something.
+    if (clicks >= 2 || cableHover.hovered !== null) return
+    const sel = viewState.get().selection
+    clearedByMiss = sel === null ? null : { id: sel, t: performance.now() }
+    if (sel !== null) viewState.set({ selection: null }) // not undoable; the toast speaks, not the status bar
     toast.show(COPY.feedback!.missed!.replace('{key}', bindingLabel(keys.bindings, 'TOGGLE_INVENTORY') || COPY.keys!.space!))
   }
   /** Menu item ids → the key map (the menus show the live labels). */

@@ -5,8 +5,10 @@
  *
  * - It never takes focus (not focusable, `pointer-events: none`: the next click still reaches the canvas).
  * - The region is always in the page (hidden while empty). A message is set into the region once it is
- *   rendered and empty, ~100 ms later, so screen readers notice the change; showing the same message
- *   again re-announces it (as the status bar does).
+ *   rendered and empty, ~100 ms later, so screen readers notice the change. While the region is empty the
+ *   box is drawn invisible (toast.css `:empty`: it stays rendered, so the change is still noticed). The same
+ *   message asked again while it is still up only restarts the 2.5 s: no clear, no flicker, no second announcement
+ *   (a miss on every click would otherwise repeat itself); a different message, or the same one after it ended, is announced.
  * - One timer at most besides the 2.5 s one; both are cleared on `dismiss()` and with the bag (page teardown),
  *   so none outlives the page or a place change (the shell dismisses on a place change).
  */
@@ -36,6 +38,8 @@ export function createToast(el: ToastEl, bag: DisposableBag): Toast {
   let end: ReturnType<typeof setTimeout> | null = null
   let visible = false
   let disposed = false
+  /** The message on screen or about to be set (null when none). */
+  let current: string | null = null
 
   const clear = (): void => {
     if (say !== null) clearTimeout(say)
@@ -45,6 +49,7 @@ export function createToast(el: ToastEl, bag: DisposableBag): Toast {
   const dismiss = (): void => {
     clear()
     visible = false
+    current = null
     el.textContent = ''
     el.hidden = true
   }
@@ -56,8 +61,15 @@ export function createToast(el: ToastEl, bag: DisposableBag): Toast {
   return {
     show(message) {
       if (disposed) return
+      if (visible && message === current) {
+        // Still up with this very text (or about to be set): keep it, restart the 2.5 s only.
+        if (end !== null) clearTimeout(end)
+        end = setTimeout(dismiss, TOAST_MS)
+        return
+      }
       clear()
       visible = true
+      current = message
       el.textContent = ''
       el.hidden = false
       say = setTimeout(() => {
