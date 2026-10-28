@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Échantillons v2 · cadre en bandes et médaillon</title>
+<style>
+  html, body { margin: 0; background: #131114; }
+  canvas { width: 100vw; height: auto; aspect-ratio: 16 / 9; display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080" aria-label="Un panneau de marqueterie à bandes imbriquées autour d'un champ de lanières, avec la marque Tekonest dans un médaillon."></canvas>
+<script src="lib/damas.js"></script>
+<script src="lib/nest.js"></script>
+<script src="lib/panel.js"></script>
+<script>
+/* Sample board v2, from the Damascene marquetry research. Left: the panel (nest of bands, strapwork field, plain roundel).
+   Right: the mark in four versions, the band primitives at 1.6x, and a materials study. Inspired by Damascene wood marquetry. */
+(function () {
+  var D = window.Damas, P = window.Panel, C = D.C, cv = document.getElementById("c"), ctx = cv.getContext("2d");
+  var PEARLCOLS = ["#EFE8DC", "#E4DACB", "#EFE8DC", "#E4DACB", "#EFE8DC", "#E4DACB", "#EFE8DC"];
+  function label(txt, x, y) { ctx.fillStyle = "#8c8186"; ctx.font = "15px system-ui, sans-serif"; ctx.fillText(txt, x, y); }
+
+  function markOn(x, y, size, bg, strands, gapCol, ring) {                       // the mark at a given size on a given ground
+    ctx.save(); ctx.translate(x + size / 2, y + size / 2);
+    ctx.fillStyle = bg; ctx.fillRect(-size / 2, -size / 2, size, size);
+    var sc = (size * 0.40) / 108, n = window.Nest.build(0, 0, sc);
+    if (ring) { ctx.strokeStyle = C.ambre; ctx.lineWidth = Math.max(1.5, size * 0.012); ctx.beginPath(); ctx.arc(0, 0, size * 0.455, 0, 2 * Math.PI); ctx.stroke(); }
+    var small = size <= 64;
+    window.Nest.draw(ctx, n, { w: small ? Math.max(1.6, size * 0.075) : Math.max(1.8, size * 0.0165), gap: small ? 0 : Math.max(1.4, size * 0.011), ground: gapCol, cols: strands });
+    ctx.restore();
+    return n;
+  }
+
+  function draw() {
+    ctx.fillStyle = C.nuit; ctx.fillRect(0, 0, 1920, 1080);
+
+    // left: the panel
+    var info = P.drawPanel(ctx, 530, 540, 980, { seed: 1306, hand: 1.4 });
+    label("A · Panneau : cadre en bandes, champ de lanières, médaillon uni avec la marque", 40, 1068);
+
+    // right, row 1: the mark
+    var x = 1060, y = 40, s = 190, gap = 20;
+    var n1 = markOn(x, y, s, C.nuit, PEARLCOLS, C.nuit, true);
+    markOn(x + (s + gap), y, s, C.nuit, ["#F3EDE3"], C.nuit, false);
+    markOn(x + 2 * (s + gap), y, s, "#F3EDE3", ["#131114"], "#F3EDE3", false);
+    label("B · La marque, vrai dessus-dessous : deux couleurs · une couleur · sur papier", 1060, 252);
+    label("croisements : " + n1.X.length + " · conflits de tissage : " + n1.conflicts, 1060, 272);
+    // small cuts for small sizes (no weave gaps, heavier stroke): real size, then enlarged 4x without smoothing
+    var off = document.createElement("canvas");
+    function small(sz, px, py, mag) {
+      off.width = sz; off.height = sz; var octx = off.getContext("2d"), keep = ctx; ctx = octx; markOn(0, 0, sz, C.nuit, ["#F3EDE3"], C.nuit, false); ctx = keep;
+      ctx.imageSmoothingEnabled = false; ctx.drawImage(off, 0, 0, sz, sz, px, py, sz * mag, sz * mag);
+    }
+    small(64, 1700, 60, 1); small(32, 1780, 60, 1); small(16, 1830, 60, 1);
+    small(32, 1700, 140, 4); small(16, 1840, 140, 4);
+    label("coupe petite taille : 64 · 32 · 16 px, puis agrandie", 1700, 292);
+
+    // row 2: the band primitives at 1.6x
+    var y2 = 320, k = 1.6;
+    var prims = [["rope", 40, "Corde (rope), pleins et déliés alternés"], ["tri", 70, "Losange dans triangle"], ["saw", 28, "Dents de scie, base : hauteur = 2 : 3"]];
+    prims.forEach(function (p, i) {
+      var t = p[1] * k;
+      ctx.save(); ctx.translate(1060 + 420, y2 + t / 2); ctx.scale(1, 1); ctx.beginPath(); ctx.rect(-420, -t / 2, 840, t); ctx.clip();
+      ctx.save(); ctx.scale(k, k); P.strip(ctx, p[0], 840 / k, p[1], 500 + i); ctx.restore();
+      ctx.restore();
+      label("C" + (i + 1) + " · " + p[2], 1060, y2 + t + 18);
+      y2 += t + 40;
+    });
+
+    // row 3: materials
+    var my = y2 + 8;
+    label("D · Matières : nacre en trois tons satinés · noyer · ébène · prune · fil d'or", 1060, my + 4);
+    var tones = [0.1, 0.45, 0.85];
+    tones.forEach(function (t, i) { P.slab(ctx, [[1060 + i * 86, my + 20], [1060 + i * 86 + 74, my + 20], [1060 + i * 86 + 74, my + 94], [1060 + i * 86, my + 94]], t); });
+    D.drawPiece(ctx, { pts: [[1320, my + 20], [1394, my + 20], [1394, my + 94], [1320, my + 94]], role: "walnut", tone: 0.3 });
+    D.drawPiece(ctx, { pts: [[1406, my + 20], [1480, my + 20], [1480, my + 94], [1406, my + 94]], role: "ebony", tone: 0.5 });
+    D.drawPiece(ctx, { pts: [[1492, my + 20], [1566, my + 20], [1566, my + 94], [1492, my + 94]], role: "prune", tone: 0.6 });
+    ctx.fillStyle = C.ambre; ctx.fillRect(1580, my + 54, 140, 3);
+    ctx.fillStyle = "#0C0A0B"; ctx.fillRect(1740, my + 20, 150, 74);
+    P.slab(ctx, [[1746, my + 26], [1814, my + 26], [1814, my + 88], [1746, my + 88]], 0.2);
+    P.slab(ctx, [[1818, my + 26], [1886, my + 26], [1886, my + 88], [1818, my + 88]], 0.55);
+    label("joint : fente d'ombre fine", 1580, my + 112);
+    window.__info = { conflicts: n1.conflicts, crossings: n1.X.length };
+  }
+  window.drawBoard = draw;
+  draw();
+})();
+</script>
+</body>
+</html>
