@@ -333,7 +333,7 @@ Sauvegarde automatique, marque « * », Ctrl+S et projets nommés (Task 13, C16,
 | `project.opened` | Projet « {name} » ouvert. {undo} pour revenir en arrière. | validé | Barre d'état (annoncé) |
 | `project.openFailed` | Impossible d’ouvrir le projet « {name} ». Rien n’a changé. | validé | Barre d'état : projet illisible ou refusé |
 
-Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1–R8 (`rule.*`) sont des rendus fidèles du catalogue (`title` / `check`), sans nouvelle affirmation technique.
+Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1–R8 ne sont pas dans `copy.ts` mais dans le catalogue (`content/catalog.json`, `rules[].title_fr` / `teach_fr`, Task 29) ; voir la section « Textes des règles » ci-dessous.
 
 ## status
 
@@ -380,26 +380,11 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 | `status.pausedBlocked` | Sauvegarde automatique impossible : le navigateur la bloque. | validé | Ligne persistante, stockage bloqué |
 | `status.actionExport` | Exporter… | validé | Bouton de la ligne « en pause » (même action que Projet > Exporter les données mises de côté…) |
 
-## rule
+## Textes des règles (catalogue)
 
-| Key | Texte | Statut | Où / notes |
-|---|---|---|---|
-| `rule.R1Title` | Connecteurs incompatibles | validé | Source : catalog.json `rules[R1].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R1Detail` | Les deux connecteurs doivent pouvoir s’emboîter physiquement. Si ça ne rentre pas, ce n’est pas le bon câble : ne forcez jamais. | validé | Source : catalog.json `rules[R1].check` + `teach` (« never force it »), traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R2Title` | Types de signal incompatibles | validé | Source : catalog.json `rules[R2].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R2Detail` | La source et la destination doivent transporter des signaux compatibles : micro vers préampli micro, ligne vers ligne, numérique vers le même format numérique. | validé | Source : catalog.json `rules[R2].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R3Title` | Sens de connexion incorrect | validé | Source : catalog.json `rules[R3].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R3Detail` | Une sortie doit être reliée à une entrée (sortie → entrée). Sortie vers sortie ou entrée vers entrée n’est pas valide. Une prise bidirectionnelle accepte l’un ou l’autre sens. | validé | Source : catalog.json `rules[R3].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R4Title` | Alimentation fantôme (+48 V) | validé | Source : catalog.json `rules[R4].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R4Detail` | Un appareil qui demande le +48 V doit arriver sur une entrée qui le fournit, avec le +48 V activé. | validé | Source : catalog.json `rules[R4].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R5Title` | Voyant ON-AIR (tally) | validé | Source : catalog.json `rules[R5].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R5Detail` | Quand un fader micro est ouvert sur une console de diffusion, sa sortie GPIO (tally) doit allumer un voyant ON-AIR. | validé | Source : catalog.json `rules[R5].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R6Title` | Écoutes non coupées, micro ouvert (larsen) | validé | Source : catalog.json `rules[R6].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R6Detail` | Ouvrir un micro dans la même pièce que des écoutes actives doit couper ces écoutes ; sinon une boucle de larsen est détectée. | validé | Source : catalog.json `rules[R6].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R7Title` | Mix-minus (N-1) : écho du retour | validé | Source : catalog.json `rules[R7].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R7Detail` | Le départ vers un codec distant doit être le programme moins le retour de ce codec (N-1). Si ce retour est dans son propre départ, il y a écho. | validé | Source : catalog.json `rules[R7].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R8Title` | Word clock maître/esclave et fréquence d’échantillonnage | validé | Source : catalog.json `rules[R8].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R8Detail` | Chaque liaison audio numérique a besoin d’une seule horloge maître en amont. Deux maîtres, aucun maître ou des fréquences différentes sur une liaison sont des erreurs. | validé | Source : catalog.json `rules[R8].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+Les titres et textes pédagogiques des règles R1–R8 sont des **données du catalogue**, pas des chaînes de `copy.ts` : `content/catalog.json`, `rules[].title_fr` (titre) et `rules[].teach_fr` (texte pédagogique), obligatoires (schéma zod, `npm run validate:catalog`). Les champs anglais `title` / `teach` restent pour le mode historique (`?legacy=1`). Le Mode Création ne montre que le français : `ruleTextFor` (`src/creation/shell/statusModel.ts`) est le seul endroit qui les choisit, pour la liste d'erreurs de la barre d'état (titre + texte), le refus épinglé sur la prise (titre) et les prises incompatibles de « Connecter à… » (titre, puis texte sur une 2e ligne).
+
+Statut : **brouillons du développeur (Task 29) à relire par tekuxwriter** (traductions fidèles de `title` / `teach`, sans nouvelle affirmation technique, sans clé `copy.ts`). Les 8 paires sont dans le catalogue ; la relecture se fait là (pas de copie ici, pour éviter deux sources).
 
 ## boot
 
@@ -586,6 +571,8 @@ Câbler au clic sur les prises de la scène (Task 26, CA-19, CA-20). Survoler un
 | `connect.cancel` | Annuler | à valider (tekuxwriter) | Bouton qui ferme sans brancher |
 | `connect.statusConnected` | Connecté : {a} à {b}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un branchement par la boîte (annoncé poliment, une fois) ; {a} / {b} = « Appareil (id) · prise », {undo} = touche d’annulation |
 | `connect.statusClosedStale` | Connecter à… fermé : le matériel a changé. Rouvrez-le pour voir les prises à jour. | à valider (tekuxwriter) | Barre d’état quand la boîte se ferme parce que le matériel a changé pendant qu’elle était ouverte |
+
+Chaque prise refusée du groupe « Incompatibles » affiche sous son nom deux lignes qui ne sont pas des clés `copy.ts` : le titre de la règle (`title_fr`, en rouge) puis son texte pédagogique (`teach_fr`, classe `.cr-connect-teach`, Task 29), tous deux lus dans le catalogue (voir « Textes des règles »).
 
 ## cables
 

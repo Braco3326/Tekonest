@@ -70,9 +70,9 @@ export const Rule = z.object({
   title: z.string().min(1),
   check: z.string().min(1),
   teach: z.string().min(1),
-  /** French title / teaching text (C17): the only rule text Mode Création shows. `title` / `teach` stay English for the legacy UI. */
-  title_fr: z.string().min(1),
-  teach_fr: z.string().min(1),
+  /** The French fields are the only rule text Mode Création shows (C17); `title` / `teach` stay English for the legacy UI. */
+  title_fr: z.string().min(1).describe('French title of the rule, shown at the refused port, in the error list and in the Connecter à… dialog (Mode Création).'),
+  teach_fr: z.string().min(1).describe('French teaching text of the rule, shown as the detail line in the error list and under the reason in the Connecter à… dialog (Mode Création).'),
 })
 
 export const Catalog = z.object({
