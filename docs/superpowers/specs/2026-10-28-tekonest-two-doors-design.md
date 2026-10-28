@@ -1,6 +1,6 @@
-# Tekonest umbrella site, round 1: two doors
+# Tekonest umbrella site: two doors, then a generated visual layer
 
-Date: 2026-10-28. Status: **draft for founder review**. Branch `site/two-doors`, cut from `origin/design/tekonest-umbrella-brand` (`6485dc0`). Local only: nothing is pushed or deployed.
+Date: 2026-10-28. Status: **draft for founder review**. Phase A (sections 1 to 6 below, structure and content) comes first. Phase B (section 7, generated visuals and motion) follows on the same branch, because it attaches to the Phase A pages. Branch `site/two-doors`, cut from `origin/design/tekonest-umbrella-brand` (`6485dc0`). Local only: nothing is pushed or deployed.
 
 ## 1. Purpose
 
@@ -18,11 +18,15 @@ Success looks like this: a visitor sees **two doors**, *Se former* and *Créer a
 | 4 | The artist and technician **network is set aside**: removed from the public site and the map's visible structure. Its files stay in git history (nothing is deleted). It was built for the Rebels pilot. |
 | 5 | Rebels × Tekonest stays a separate project. |
 | 6 | Legal questions (structure, pay rules, performer and licence rules) are discussed after the structure is settled. They are out of scope here and no legal claim is added. |
-| 7 | Round scope: structure and content on the current identity (Nuit, Papier, Crème, Ambre, Prune; Tektur; Damas motifs). No new visual direction. |
+| 7 | Phase A scope: structure and content on the current identity (Nuit, Papier, Crème, Ambre, Prune; Tektur; Damas motifs). No new visual direction. |
+| 8 | Phase B: the next level of the site comes from **generated** visuals and motion (Claude Motion for video, an image generator for stills). Code is used only for what code does better (see 7.1). Code has a lower creative ceiling. |
+| 9 | The identity stays fixed in Phase B: generated assets are art-directed to it, and the exact logo, text and interface are always code on top. |
+| 10 | Generated visuals are **circles with the Damascus design and nothing more**. |
 
 ## 3. Out of scope
 
-- New visual direction, WebGL hero (Higgsfield frames), or a public "all angles" (2D/3D/4D/5D) element. Revisit in round 2.
+- A new visual direction (the identity stays) and a public "all angles" (2D/3D/4D/5D) element. Revisit later.
+- A coded WebGL hero. Superseded by the generated hero film (Phase B).
 - Legal, pay and structure wording beyond what the site already says.
 - Deploying. Pushing `design/tekonest-umbrella-brand` is what publishes tekonest.com, and any pushed branch gets a public Cloudflare preview.
 - The private mind map branch (`site/tekonest-map`). Its outline needs a follow-up edit after this round.
@@ -102,3 +106,75 @@ Not covered: screen-reader pass, real five-second test, live deployment checks, 
 | Public repo | Brand and Rebels documents are public. Not changed here; raised separately. |
 | Git ownership on the E: drive | Work happens in a clone on C: (`C:\Users\braco\dev\tekonest-site`) to avoid global git setting changes. |
 | Case-colliding logo SVGs | Three files under `design/09-logo-nest/` show as modified on Windows; they are never staged. |
+
+## 7. Phase B: generated visual layer
+
+Informed by a three-expert council on 28 Oct 2026 (motion director, performance and accessibility engineer, marquetry art director). The council's default was code-first; the founder overrode it for the creative layer (decision 8). What survives from the council are the guardrails.
+
+### 7.1 Three layers
+
+| Layer | Made with | Used for |
+| --- | --- | --- |
+| **Generated** (the creative layer) | Claude Motion (MP4), an image generator for stills and posters | Hero film, ambient loops, Créer avec nous visuals, Histoire film, section atmosphere, social teasers, key art and posters |
+| **Coded** (only what code does better) | CSS, SVG, small JS | The exact logo and wordmark, all text, status badges and interface, hover and focus states, page transitions, the pause control, and anything driven by real data (for example a waveform of a real recording) |
+| **Real** (never generated) | Your own captures | TekPractice and E3 course screens, any recording, photo or object that claims to be Tekonest's own work |
+
+The brief for the generated assets (shot list, constraints, specs) is [`2026-10-28-tekonest-generated-visuals-brief.md`](2026-10-28-tekonest-generated-visuals-brief.md).
+
+### 7.2 Art direction (keeps the identity)
+
+- **Subject: circles with the Damascus design, nothing more.** Rings, discs and medallions carrying a Damascus-inspired pattern. No other shape or object appears in any generated asset.
+- Every generated asset starts from the fixed identity: Nuit ground, Ambre and Prune accents, Papier and Crème highlights (hex values from `tokens.css`), the Damascus pattern references (`design/16-chatgpt/refs/ref-4-marquetry.png`, `design/11-damas/damas-board.png`), walnut, mother-of-pearl and gold-leaf as abstract material vocabulary. The nest geometry (`ref-1-nest-geometry.png`) is used only for the Histoire film.
+- The precise nest, medallion and logo are **never generated**: they are code or the existing SVG, composited over generated footage.
+- One camera language across all clips: locked-off or very slow, 24 fps, no handheld, no flashing, no text in the frame.
+- Imperfection is allowed and wanted (tolerance, grain, an off-register piece). Curate: several takes per asset, pick the best, grade to the palette in post.
+- Material truth: abstract material scenes only. No generated people, crowds, studios or hands presented as Tekonest's real work, no testimonials, no clients (the honesty rule).
+- Motifs: animate the **method** (pieces seated once, rings laid), never spin, glow or loop the Médaillon or the Bande. Credit "inspired by Damascus marquetry". Do not call the 12-point star Damascene.
+
+### 7.3 Delivery rules (non-negotiable, whatever the style)
+
+- The LCP element is a static poster (WebP, ≤ 60 KB), never a video frame. The video loads after the poster.
+- `muted loop playsinline preload="none"`, `autoplay` set by JS only when in view, motion allowed, no `Save-Data`. Under `prefers-reduced-motion`, `Save-Data` or without JS: poster only, no video request.
+- Any clip that moves longer than 5 seconds has a real pause button (keyboard reachable, visible label, ≥ 24 px) on the page.
+- No audio track. No flashing above 3 Hz. No text baked into video.
+- Every decorative video is `aria-hidden`; any video with meaning has a text alternative.
+- Budget (revised from the engineer's 1.5 MB cap, to be measured): ≤ 4 MB per clip, ≤ 8 MB of video per page, H.264 High `+faststart` plus an AV1 or VP9 WebM source, ≤ 1280 px wide, ≤ 24 fps. Hard Cloudflare Pages limit: 25 MiB per file. Larger files go to R2 with a documented origin.
+- No third-party motion libraries.
+
+### 7.4 Where the generated assets go
+
+| Page | Slot | Asset |
+| --- | --- | --- |
+| Home | Hero background | G1 "Le cercle se pose" film, one-shot, ends on a held frame that is the poster |
+| Home | Closing band (replaces `texture-damas.jpg`) | G2 "Onde" slow loop. This also removes a texture whose provenance the asset register contradicts. |
+| Créer avec nous | Hero right half | G3 hero film |
+| Créer avec nous | The four family cards | G4a to G4d, four square clips of 3 to 4 seconds |
+| Se former | Right half of the hero | G5 "Un cercle pour apprendre" clip, beside a **real** screen capture |
+| Histoire | Under the story | G6 "weave" explainer, 8 seconds, ends on the logo |
+| Social, OG | Share images | G7 teasers (1:1, 9:16) and OG still |
+
+### 7.5 Phase B prerequisites
+
+1. Phase A merged on the branch (the pages these slots belong to exist).
+2. The open accessibility checks done and recorded: screen-reader pass, 200% zoom, Lighthouse mobile.
+3. A pause control built and tested (nothing in `home.js` pauses the hero today).
+4. A video toolchain: confirm whether ffmpeg is available; if not, compression is done with an approved tool.
+5. The founder runs Claude Motion with the brief. I cannot run it from this session.
+6. Real captures of TekPractice and the E3 course supplied for the "Real" layer.
+
+### 7.6 Phase B tests
+
+1. Reduced motion, `Save-Data` and no-JS: no video request in the network log, posters shown.
+2. Pause control works by keyboard and screen reader; focus ring visible.
+3. LCP is a poster ≤ 2.0 s on mobile 4G throttling; CLS 0.
+4. Budget check: report transferred MB per page.
+5. No frame flashes above 3 Hz (check the generated clips themselves).
+6. axe still 0 violations at 375 and 1440 px; reflow at 320 px.
+7. Each clip compared to the palette tokens and to the nest geometry reference; rejected if off.
+8. Review by the founder for fit with the identity, and by a Damascus-marquetry artisan for the motif rules before publishing.
+
+### 7.7 Honest limits
+
+- Generated imagery does not by itself remove the "AI-made" look. The mitigations are art direction, curation, restraint, real captures where the product is shown, and the exact brand marks in code. This reduces the risk; it does not remove it.
+- I have no documentation for Claude Motion in this session beyond that it outputs MP4. The brief is tool-agnostic and also works for other generators.
+- Browser support for scroll-driven animation and whether Cloudflare Pages serves MP4 range requests were not verified. Neither is required by this design.
