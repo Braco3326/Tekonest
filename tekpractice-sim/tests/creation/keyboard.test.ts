@@ -24,7 +24,7 @@ const el = (tagName: string, attrs: Record<string, string> = {}, inDialog = fals
   closest: (s: string) => (inDialog && s.includes('dialog') ? {} : null),
 })
 
-function key(init: { code: string; key: string; target: unknown; ctrlKey?: boolean; shiftKey?: boolean }) {
+function key(init: { code: string; key: string; target: unknown; ctrlKey?: boolean; shiftKey?: boolean; repeat?: boolean }) {
   const e = { altKey: false, metaKey: false, ctrlKey: false, shiftKey: false, isComposing: false, defaultPrevented: false, ...init, prevented: 0 }
   return Object.assign(e, {
     preventDefault() {
@@ -113,6 +113,19 @@ describe('creation keyboard (Task 8)', () => {
     expect(log).toEqual([])
     win.fire(key({ code: 'Space', key: ' ', target: canvas }))
     expect(log).toEqual(['TOGGLE_INVENTORY'])
+  })
+  it('a held Space (auto-repeat) toggles the inventory once: repeats are claimed, never acted on', () => {
+    const { win, canvas, log } = setup()
+    win.fire(key({ code: 'Space', key: ' ', target: canvas }))
+    for (let i = 0; i < 5; i++) {
+      const rep = key({ code: 'Space', key: ' ', target: canvas, repeat: true })
+      win.fire(rep)
+      expect(rep.prevented).toBe(1) // no page scroll either
+    }
+    expect(log).toEqual(['TOGGLE_INVENTORY'])
+    // other actions keep their repeat (a held ] keeps cycling)
+    win.fire(key({ code: 'BracketRight', key: ']', target: canvas, repeat: true }))
+    expect(log).toEqual(['TOGGLE_INVENTORY', 'NEXT_DEVICE'])
   })
   it('nothing fires inside a modal dialog, nor for an event already handled', () => {
     const { win, log } = setup()

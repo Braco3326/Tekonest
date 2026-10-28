@@ -498,11 +498,11 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Status bar: a key 1 / 2 / 3 with no point behind it in this place; {n} = the key. */
     none: 'Pas de point d’écoute {n} dans ce lieu.',
   },
-  /** The inventory drawer (Task 23, CA-09). Tab names: `TAB_LABELS` in src/creation/inventory.ts. */
+  /** The inventory drawer (Task 23, CA-09). `TAB_LABELS` (src/creation/inventory.ts) is built from the `tab*` strings. */
   inventory: {
     /** Drawer title (h2) and the dialog's accessible name; same word as Matériel › Inventaire. */
     title: 'Inventaire',
-    /** Accessible name of the tab list; the tab names come from `TAB_LABELS` (src/creation/inventory.ts). */
+    /** Accessible name of the tab list. */
     tabs: 'Catégories d’appareils',
     /** Line under the title; {key} = the inventory key label (Space by default). Reworded when placement exists (Task 24). */
     hint: 'Entrée ou clic : poser l’appareil au centre de la vue. {key} ou Échap : fermer.',
@@ -524,5 +524,23 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusAdded: 'Ajouté : {device}. {undo} pour annuler.',
     /** Status bar if the store refuses the add (announced). */
     statusRefused: 'Impossible d’ajouter {device}.',
+    /** Tab « Micros » (inventory category). */
+    tabMicros: 'Micros',
+    /** Tab « Consoles » (inventory category). */
+    tabConsoles: 'Consoles',
+    /** Tab « Enceintes » (inventory category). */
+    tabEnceintes: 'Enceintes',
+    /** Tab « Sources » (inventory category). */
+    tabSources: 'Sources',
+    /** Tab « Réseau » (inventory category). */
+    tabReseau: 'Réseau',
+    /** Tab « Secteur » (inventory category). */
+    tabSecteur: 'Secteur',
+    /** Tab « Éclairage » (inventory category). */
+    tabEclairage: 'Éclairage',
+    /** Tab « Bêta » (inventory category). */
+    tabBeta: 'Bêta',
+    /** Tab « Autres » (inventory category). */
+    tabAutres: 'Autres',
   },
 }

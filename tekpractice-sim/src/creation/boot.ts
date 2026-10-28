@@ -1308,8 +1308,9 @@ export async function bootCreation(): Promise<void> {
       }
     )
   }
-  keys.onAction('TOGGLE_INVENTORY', () => {
+  keys.onAction('TOGGLE_INVENTORY', (e) => {
     if (viewLocked()) return false
+    if (e.repeat) return true // a held key toggles once (keyboard.ts claims repeats too)
     setInventory(!drawerOpen())
     return true
   })

@@ -213,6 +213,11 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   root.addEventListener('keydown', (e) => {
     if (e.isComposing) return
     const plain = !e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey
+    // A held key closes it once (repeats would land on the canvas and re-open it).
+    if (e.repeat && plain && d.isToggleKey(e)) {
+      e.preventDefault()
+      return
+    }
     if (e.key === 'Escape' || (plain && d.isToggleKey(e))) {
       e.preventDefault() // also stops the button's own Space activation
       api.close()

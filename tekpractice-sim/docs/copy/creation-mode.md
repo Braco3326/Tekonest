@@ -472,7 +472,7 @@ Points d'écoute nommés (Task 20 ; seule la Régie est obligatoire). Lignes du 
 
 ## inventory
 
-Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 3D a le focus), tiroir en bas de la vue 3D, onglets par catégorie (les noms d'onglets sont ceux de `TAB_LABELS`, src/creation/inventory.ts : Micros, Consoles, Enceintes, Sources, Réseau, Secteur, Éclairage, Bêta, Autres). Entrée ou clic sur un appareil l'ajoute au centre de la vue jusqu'au placement à la souris (Task 24). Espace ou Échap ferment et rendent le focus à la vue 3D.
+Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 3D a le focus), tiroir en bas de la vue 3D, onglets par catégorie (les neuf noms d'onglets sont les lignes `inventory.tab*` ci-dessous ; `TAB_LABELS`, src/creation/inventory.ts, en est construit). Entrée ou clic sur un appareil l'ajoute au centre de la vue jusqu'au placement à la souris (Task 24). Espace ou Échap ferment et rendent le focus à la vue 3D.
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
@@ -488,6 +488,15 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.entry` | Ajouter {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique (Annuler / Rétablir) ; {device} = nom de l’appareil |
 | `inventory.statusAdded` | Ajouté : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après Entrée ou clic sur un appareil (annoncé) ; {undo} = touche d’annulation |
 | `inventory.statusRefused` | Impossible d’ajouter {device}. | à valider (tekuxwriter) | Barre d’état si le store refuse l’ajout (annoncé) |
+| `inventory.tabMicros` | Micros | à valider (tekuxwriter) | Onglet ; Micros, d’après la catégorie « microphone » du catalogue ; les onglets vides sont masqués |
+| `inventory.tabConsoles` | Consoles | à valider (tekuxwriter) | Onglet ; Consoles, stageboxes, préamplis et contrôleurs d’écoute ; les onglets vides sont masqués |
+| `inventory.tabEnceintes` | Enceintes | à valider (tekuxwriter) | Onglet ; Enceintes amplifiées et moniteurs de studio ; les onglets vides sont masqués |
+| `inventory.tabSources` | Sources | à valider (tekuxwriter) | Onglet ; Ordinateurs et interfaces audio ; les onglets vides sont masqués |
+| `inventory.tabReseau` | Réseau | à valider (tekuxwriter) | Onglet ; Codecs et horloges maîtresses ; les onglets vides sont masqués |
+| `inventory.tabSecteur` | Secteur | à valider (tekuxwriter) | Onglet ; Alimentation secteur ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
+| `inventory.tabEclairage` | Éclairage | à valider (tekuxwriter) | Onglet ; Éclairage ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
+| `inventory.tabBeta` | Bêta | à valider (tekuxwriter) | Onglet ; Propositions seulement (jamais un appareil du catalogue), badge « non vérifié » (Task 30) ; masqué sans proposition ; les onglets vides sont masqués |
+| `inventory.tabAutres` | Autres | à valider (tekuxwriter) | Onglet ; Accessoires, câbles, signalisation, patchbays et catégories inconnues ; toujours en dernier ; les onglets vides sont masqués |
 
 ## Glossaire
 

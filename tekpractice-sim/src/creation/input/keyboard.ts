@@ -54,6 +54,12 @@ export const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(
   'TOGGLE_INVENTORY',
 ])
 
+/**
+ * Toggles: a held key (auto-repeat) is claimed without acting. Otherwise Space held on the canvas
+ * would close the inventory drawer, hand focus to the canvas and re-open it on the next repeat.
+ */
+const NO_REPEAT: ReadonlySet<CreationAction> = new Set<CreationAction>(['TOGGLE_INVENTORY'])
+
 const CHARACTER_CODE = /^(Key[A-Z]|Digit\d|Numpad\d|BracketLeft|BracketRight|Minus|Equal|Semicolon|Quote|Comma|Period|Slash|Backslash|Backquote|IntlBackslash)$/
 
 /**
@@ -102,7 +108,12 @@ export function mountCreationKeyboard(d: KeyboardDeps): CreationKeyboard {
       if (CANVAS_ONLY.has(a) && !onCanvas) continue
       if (e.code === 'Space' && plain(e) && isControl(t)) continue
       const fn = handlers.get(a)
-      if (!fn || fn(e) === false) continue
+      if (!fn) continue
+      if (e.repeat && NO_REPEAT.has(a)) {
+        e.preventDefault() // a held Space never scrolls the page either
+        return
+      }
+      if (fn(e) === false) continue
       e.preventDefault()
       return
     }

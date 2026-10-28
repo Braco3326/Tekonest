@@ -8,6 +8,7 @@
  * proposals only and never a catalog device.
  */
 import type { DeviceT, Registry } from '../engine/CatalogLoader'
+import { COPY } from './copy'
 
 export type InventoryTab =
   | 'micros' | 'consoles' | 'enceintes' | 'sources' | 'reseau' | 'secteur' | 'eclairage' | 'beta' | 'autres'
@@ -21,16 +22,18 @@ export interface InventoryItem {
   badge?: 'non vérifié'
 }
 
+/** Tab names: the `inventory.tab*` strings of copy.ts (the one place for shell wording). */
+const T = COPY.inventory!
 export const TAB_LABELS: Record<InventoryTab, string> = {
-  micros: 'Micros',
-  consoles: 'Consoles',
-  enceintes: 'Enceintes',
-  sources: 'Sources',
-  reseau: 'Réseau',
-  secteur: 'Secteur',
-  eclairage: 'Éclairage',
-  beta: 'Bêta',
-  autres: 'Autres',
+  micros: T.tabMicros!,
+  consoles: T.tabConsoles!,
+  enceintes: T.tabEnceintes!,
+  sources: T.tabSources!,
+  reseau: T.tabReseau!,
+  secteur: T.tabSecteur!,
+  eclairage: T.tabEclairage!,
+  beta: T.tabBeta!,
+  autres: T.tabAutres!,
 }
 
 /** Display order. « Autres » stays last; empty tabs are dropped by `inventory`. */

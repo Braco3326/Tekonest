@@ -279,3 +279,21 @@ test('screenshot (on demand)', async ({ page }) => {
   await page.waitForTimeout(400)
   await page.screenshot({ path: 'docs/creative/screens/task-23-drawer-1366.png' })
 })
+
+test('a held Space opens it once and leaves it open (auto-repeat never flickers it), then Space closes', async ({ page }) => {
+  await boot(page)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.down('Space')
+  for (let i = 0; i < 4; i++) await page.keyboard.down('Space') // repeats: e.repeat = true
+  await page.keyboard.up('Space')
+  await page.waitForTimeout(400)
+  await expect(drawer(page)).toBeVisible()
+  await expect(page.getByRole('tab', { selected: true })).toBeFocused()
+  // held while it is open: one close, no re-open
+  await page.keyboard.down('Space')
+  for (let i = 0; i < 4; i++) await page.keyboard.down('Space')
+  await page.keyboard.up('Space')
+  await page.waitForTimeout(400)
+  await expect(drawer(page)).toBeHidden()
+  await expect(page.locator('#renderCanvas')).toBeFocused()
+})
