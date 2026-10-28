@@ -282,7 +282,7 @@
                     },
                     "passive": {
                       "type": "boolean",
-                      "description": "Hypothèse pédagogique du plan (P7), non sourcée : la liaison fonctionne même hors tension. The knowledge base only names the output (K12.2 \"loop-thru outputs\"; DBR12 \"parallel through or mix\"): that it is a parallel link and works unpowered is the plan's simplification, not a sourced fact. Absent = the route needs the device powered."
+                      "description": "Hypothèse pédagogique du plan (P7), non sourcée : la liaison fonctionne même hors tension. The knowledge base only names the output (K12.2 \"loop-thru outputs\"; DBR12 \"CH1 parallel through or CH1+CH2 mix\"): that it is a parallel link and works unpowered is the plan's simplification, not a sourced fact. Absent = the route needs the device powered."
                     },
                     "when": {
                       "type": "object",

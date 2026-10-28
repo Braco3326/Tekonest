@@ -142,7 +142,7 @@
       "realWorld": {
         "brand": "QSC", "model": "K12.2", "category": "powered-speaker",
         "typicalUse": "Ubiquitous 12\" powered PA top for small/medium events",
-        "notes": "Active — takes line level, mains via IEC. No Speakon (that is for passive systems; kept in connectorTypes for teaching). Sortie thru-out-a : la base de connaissances dit « loop-thru outputs » ; qu'elle soit une liaison parallèle de l'entrée et qu'elle marche hors tension est une hypothèse pédagogique du plan (P7), non sourcée."
+        "notes": "Active — takes line level, mains via IEC. No Speakon (that is for passive systems; kept in connectorTypes for teaching). Sortie thru-out-a : la base de connaissances dit « loop-thru outputs » ; qu'elle soit une liaison parallèle de l'entrée et qu'elle marche hors tension est une hypothèse pédagogique du plan (P7), non sourcée. Sa sortie mix séparée (« mix output » de la base de connaissances) n'est pas modélisée."
       },
       "ports": [
         { "portId": "in-line-a",  "dir": "in",  "connector": "xlr3-f",  "signal": "line-level-pro" },
@@ -164,7 +164,7 @@
       "realWorld": {
         "brand": "Yamaha", "model": "DBR12", "category": "powered-speaker",
         "typicalUse": "Common powered wedge/stage monitor",
-        "notes": "Judgment call: chosen as the wedge to keep the Yamaha live ecosystem coherent. Sortie THRU/MIX réelle ; seule la position THRU (liaison parallèle) est modélisée (link-out). La base de connaissances dit « parallel through or mix » ; que la liaison marche hors tension est une hypothèse pédagogique du plan (P7), non sourcée."
+        "notes": "Judgment call: chosen as the wedge to keep the Yamaha live ecosystem coherent. Sortie THRU/MIX réelle ; seule la position THRU (liaison parallèle) est modélisée (link-out). La base de connaissances dit « CH1 parallel through or CH1+CH2 mix » ; que la liaison marche hors tension est une hypothèse pédagogique du plan (P7), non sourcée."
       },
       "ports": [
         { "portId": "in-line",  "dir": "in",  "connector": "xlr3-f",  "signal": "line-level-pro" },
