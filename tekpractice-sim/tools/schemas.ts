@@ -65,7 +65,7 @@ export const Route = z.object({
     'Stereo channel carried to each target, parallel to `to` (same length, P7): ["L","R"] sends left to the first output and right to the second.',
   ),
   passive: z.boolean().optional().describe(
-    'True for a parallel link that works with the device unpowered (P7): a loop-thru / link out the knowledge base documents. Absent = the route needs the device powered.',
+    'Hypothèse pédagogique du plan (P7), non sourcée : la liaison fonctionne même hors tension. The knowledge base only names the output (K12.2 "loop-thru outputs"; DBR12 "parallel through or mix"): that it is a parallel link and works unpowered is the plan\'s simplification, not a sourced fact. Absent = the route needs the device powered.',
   ),
   when: z.object({
     control: z.string().min(1).describe('Id of a control of this device.'),

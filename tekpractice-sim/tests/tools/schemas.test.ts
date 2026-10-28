@@ -231,6 +231,17 @@ describe('Routing and console sound controls in the catalog (Task 33)', () => {
     const passive = devices.flatMap((d) => (d.routing ?? []).filter((r) => r.passive === true).map((r) => `${d.id}:${String(r.from)}`)).sort()
     expect(passive).toEqual(['qsc-k12-2:in-line-a', 'yamaha-dbr12:in-line'])
   })
+  it('every passive route is LABELLED as the unsourced assumption of the plan assumption (P7): in the schema description and in the notes of its device', () => {
+    const shape = (Route as unknown as { _def: { schema: { shape: Record<string, { description?: string }> } } })._def.schema.shape
+    expect(shape.passive.description, 'schema description').toContain('Hypothèse pédagogique du plan (P7), non sourcée')
+    const passiveDevices = (catalogJson.devices as unknown as { id: string; realWorld: { notes: string }; routing?: { passive?: boolean }[] }[]).filter((d) => (d.routing ?? []).some((r) => r.passive === true))
+    expect(passiveDevices.map((d) => d.id).sort()).toEqual(['qsc-k12-2', 'yamaha-dbr12'])
+    for (const d of passiveDevices) expect(d.realWorld.notes, d.id).toContain('hypothèse pédagogique du plan (P7), non sourcée')
+  })
+  it('the DBR12 notes say the real THRU/MIX output is modelled as THRU only', () => {
+    const notes = (catalogJson.devices as unknown as { id: string; realWorld: { notes: string } }[]).find((d) => d.id === 'yamaha-dbr12')!.realWorld.notes
+    expect(notes).toContain('Sortie THRU/MIX réelle ; seule la position THRU (liaison parallèle) est modélisée')
+  })
   it('the parsed catalog keeps routing (the schema knows the field)', () => {
     const parsed = Catalog.parse(catalogJson)
     expect(parsed.devices.find((d) => d.id === 'yamaha-ql1')!.routing).toHaveLength(3)
