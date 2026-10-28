@@ -109,6 +109,8 @@ Not covered: screen-reader pass, real five-second test, live deployment checks, 
 
 ## 7. Phase B: generated visual layer
 
+> **Superseded in part (28 Oct 2026, night).** After the Damascene marquetry research and the founder's review of the first samples, the visual subject is no longer "circles only" and the G1 to G7 slot table in 7.4 is replaced by section 8. Sections 7.3 (delivery rules) and 7.6 (tests) still apply to anything that moves. The animation is deterministic canvas code, not video, so the video-specific budget in 7.3 applies only to a later social export.
+
 Informed by a three-expert council on 28 Oct 2026 (motion director, performance and accessibility engineer, marquetry art director). The council's default was code-first; the founder overrode it for the creative layer (decision 8). What survives from the council are the guardrails.
 
 ### 7.1 Three layers
@@ -141,7 +143,7 @@ The brief for the generated assets (shot list, constraints, specs) is [`2026-10-
 - Budget (revised from the engineer's 1.5 MB cap, to be measured): ≤ 4 MB per clip, ≤ 8 MB of video per page, H.264 High `+faststart` plus an AV1 or VP9 WebM source, ≤ 1280 px wide, ≤ 24 fps. Hard Cloudflare Pages limit: 25 MiB per file. Larger files go to R2 with a documented origin.
 - No third-party motion libraries.
 
-### 7.4 Where the generated assets go
+### 7.4 Where the generated assets go (superseded by section 8)
 
 | Page | Slot | Asset |
 | --- | --- | --- |
@@ -178,3 +180,61 @@ The brief for the generated assets (shot list, constraints, specs) is [`2026-10-
 - Generated imagery does not by itself remove the "AI-made" look. The mitigations are art direction, curation, restraint, real captures where the product is shown, and the exact brand marks in code. This reduces the risk; it does not remove it.
 - I have no documentation for Claude Motion in this session beyond that it outputs MP4. The brief is tool-agnostic and also works for other generators.
 - Browser support for scroll-driven animation and whether Cloudflare Pages serves MP4 range requests were not verified. Neither is required by this design.
+
+## 8. Phase B2: the marquetry panel on the site
+
+Status: mapping approved by the founder on 28 Oct 2026. Research basis: the report "Damascene marquetry design language" (five research notes, kept outside the repo for now). Built and checked so far, all on the local branch `site/visuals`: `visuals/lib/damas.js` (pieces, shared vertices, materials), `visuals/lib/nest.js` (the mark), `visuals/lib/panel.js` (the panel and its making-order timeline), `visuals/panel-motion.html` (10 s, deterministic), `visuals/panel-poster.png`, and the gates `website-prototype/tools/check-visual.mjs`, `frame.mjs`, `contact-sheet.mjs`, `imgdiff.mjs`.
+
+### 8.1 Decisions (founder)
+
+| # | Decision |
+| --- | --- |
+| 11 | The visual subject is the **marquetry panel**: a nest of bands (walnut margin, fillets, rope, diamond-in-triangle, sawtooth) around a strapwork field with a plain roundel. It replaces "circles only". |
+| 12 | The **home hero is replaced** by the panel being made. The old star-and-dust hero and its optional sound pulse are removed. |
+| 13 | The **Histoire scroll-scrubbed version is deferred**. |
+| 14 | The **dividers are replaced everywhere**: the diamond `.bande` strip is retired in favour of the rope and sawtooth bands. |
+| 15 | The **mark in the roundel is the brand mark as continuous loops, no cuts, in Papier white** (`#F3EDE3`). |
+
+### 8.2 Where each part goes
+
+| Part of the panel | Where | How |
+| --- | --- | --- |
+| The panel being made (10 s) | Home hero, right of the headline | Poster first (final frame), then the animation once after load; pause button; still frame under reduced motion, `Save-Data` and no JS |
+| Roundel with the mark | Footer seal, share image | Small static roundel in the footer; the 1200×630 share image is cut from the poster |
+| Walnut margin and fillets | Card frames: the two door cards and the four *Créer avec nous* cards | The existing amber-corner Cadre gains nested hairline fillets |
+| Rope band | Divider | Replaces the diamond strip between the home hero and the doors; sits under the page heroes |
+| Sawtooth | Divider before the footer and above the status board | Thin strip |
+| Diamond-in-triangle band | Top of the *Créer avec nous* page | The one band with wood in it, so it marks the creative door |
+| Strapwork field | Home closing band, and the *Se former* hero's right half | Static crops. The home crop replaces `texture-damas.jpg` (its provenance contradicts the asset register). The *Se former* crop sits beside a **real** screen capture, never in place of one |
+| Corner star | List bullets | An eight-point star replaces the dot |
+| Materials (pearl, walnut, plum, wire) | Design tokens | New CSS variables: `--pearl`, `--pearl-dim`, `--walnut`, `--walnut-dark`, `--ebony`, `--wire` |
+
+### 8.3 Delivery
+
+- **No video and no new library.** The animation is the same canvas code that produced the still, so what plays is what was reviewed.
+- `website-prototype/tools/build-visuals.mjs` concatenates `visuals/lib/damas.js`, `nest.js`, `panel.js` and a small `hero-panel.js` into `assets/js/panel.js`, loaded with `defer` on `index.html` only. Budget: total JS on the home page ≤ 25 KB gzip.
+- `website-prototype/tools/render-assets.mjs` renders the static images from the same code with the existing Playwright dev dependency, using the browser's own WebP encoder: hero poster (1200 and 720 px wide, ≤ 60 KB each), share image 1200×630, divider tiles for rope, sawtooth and diamond-in-triangle (repeat-x, 1× and 2×, ≤ 20 KB each), the closing-band field texture, the *Se former* field crop and the footer seal, all under `assets/img/panel/`. Running it twice yields the same pixels.
+- Home hero markup: a `<figure>` with a fixed `aspect-ratio`, the poster `<img>` (the LCP element) and a `<canvas>` that the script reveals only when motion is allowed, `Save-Data` is off and the figure is in view; a real pause button (`aria-pressed`, visible label, at least 24 px); the canvas has `role="img"` and a text alternative.
+- CSS: the dividers become classes (`.rule-rope`, `.rule-saw`, `.rule-tri`) using the rendered tiles; Cadre gets the nested fillets; list bullets use an inline SVG star.
+
+### 8.4 Tests and acceptance
+
+1. `node tools/check-visual.mjs ../visuals/panel-motion.html` passes: frames identical whatever the drawing order, the last second holds still, an offline frame under 500 ms.
+2. Home: the poster is the LCP element; with reduced motion, `Save-Data` or no JS, no canvas animation starts (checked in the browser script); the pause button works by keyboard; the measured gzip size of the JS loaded on the home page is ≤ 25 KB; CLS is 0.
+3. axe reports 0 violations and no horizontal overflow at 375, 768 and 1440 px on every page; reflow at 320 px and at 200% zoom is checked.
+4. No file references `texture-damas.jpg` or the diamond `.bande` any more; the banned-string checks of section 5 still pass.
+5. Asset budgets hold (poster ≤ 60 KB, each divider tile ≤ 20 KB); the build reports transferred KB per page.
+6. `render-assets.mjs` run twice gives identical pixel hashes.
+7. The honesty rule holds: no new text claims anything is available.
+
+### 8.5 Respect and credit
+
+The footer keeps « Motifs inspirés de la marqueterie de Damas » and adds that the geometry was reconstructed by the designer. The site never says the pieces are Damascene craft, and the panel is described as inspired by Damascene wood marquetry. An expert or artisan review of the finished work, and the question of commissioning and paying one real panel, are founder decisions before launch and are not part of this round.
+
+### 8.6 Out of scope and open items
+
+- Histoire scroll-scrubbed making (decision 13) and an MP4 or WebM export for social (needs an approved encoder).
+- Real captures of TekPractice and the E3 course for the *Se former* hero.
+- Contact e-mail (F-05), legal wording and naming checks.
+- Whether the 10 s animation should be shortened: tune after seeing it on the page.
+- The black sawn scrolls, the figurative scene and the multicolour stripe band from the reference photos are deliberately not used (no process source, an individual maker's work, and an open register decision).
