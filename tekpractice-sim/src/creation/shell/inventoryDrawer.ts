@@ -9,6 +9,12 @@
  * - Tabs: `role="tablist"`, roving tabindex, ← → wrap, Home / End; selection follows focus.
  * - Items: plain buttons (Entrée or click → `onChoose(deviceId)`, the one seam Task 24 swaps for
  *   `startPlacement`); the drawer closes first so the 3D view has focus when placement starts.
+ * - Search (final review 4): a labelled « Filtrer » field above the tabs filters the devices by label across ALL tabs
+ *   (`filterItems`); Entrée in it chooses the first match; no match is said politely (`role="status"`) and shown. A
+ *   printable key typed on a tab or an item moves into the field (keyboard-only: Espace, type, Entrée). In the field no
+ *   key is a shell key and Espace is a space; Échap still closes. A tab click clears the filter.
+ * - Pictures: a device with a thumbnail (`inventoryThumbs`) shows it (decorative, lazy, only for the tab that is open);
+ *   the silhouette stays for a Bêta proposal and when the picture fails to load.
  * - Closed = `inert` + `visibility: hidden` (out of the tab order and the accessibility tree).
  * - The slide is the only motion in Mode Création (≤ 200 ms, none under reduced motion): CSS only,
  *   no per-frame work, nothing rendered by the 3D scene.
@@ -18,7 +24,9 @@ import './inventoryDrawer.css'
 import manifest from '../../../public/assets/ASSET_MANIFEST.json'
 import type { Registry } from '../../engine/CatalogLoader'
 import { COPY } from '../copy'
-import { inventory, TAB_LABELS, type InventoryItem, type InventoryTab } from '../inventory'
+import { assetUrl } from '../../assetUrl'
+import { filterItems, inventory, TAB_LABELS, type InventoryItem, type InventoryTab } from '../inventory'
+import { thumbPath } from '../inventoryThumbs'
 
 export interface InventoryDrawerDeps {
   doc: Document
@@ -89,6 +97,26 @@ function icon(doc: Document, hasModel: boolean): SVGSVGElement {
   return svg
 }
 
+/**
+ * The device's picture (decorative, lazy: only the tab that is open is rendered, so only its pictures are fetched) or, when it
+ * has none or it fails to load, the silhouette.
+ */
+function picture(doc: Document, it: InventoryItem): SVGSVGElement | HTMLImageElement {
+  const path = thumbPath(it.deviceId)
+  const fallback = (): SVGSVGElement => icon(doc, it.hasModel)
+  if (!path) return fallback()
+  const img = doc.createElement('img')
+  img.className = 'cr-inv-thumb'
+  img.alt = ''
+  img.setAttribute('aria-hidden', 'true')
+  img.loading = 'lazy'
+  img.decoding = 'async'
+  img.draggable = false
+  img.src = assetUrl(path)
+  img.addEventListener('error', () => img.replaceWith(fallback()), { once: true })
+  return img
+}
+
 export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   const { doc } = d
   const root = el(doc, 'section', 'cr-drawer')
@@ -109,7 +137,22 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   close.type = 'button'
   close.dataset.testid = 'inventory-close'
   close.setAttribute('aria-label', I().closeLabel!)
-  head.append(title, tablist)
+  // The search field (final review 4): a real label, a text field, a polite status for « no match ».
+  const filterBox = el(doc, 'div', 'cr-drawer-filter')
+  const filterLabel = el(doc, 'label', 'cr-drawer-filter-label', I().filter)
+  filterLabel.htmlFor = 'cr-inv-filter'
+  const filter = el(doc, 'input', 'cr-drawer-filter-input')
+  filter.id = 'cr-inv-filter'
+  filter.type = 'text'
+  filter.autocomplete = 'off'
+  filter.spellcheck = false
+  filter.dataset.testid = 'inventory-filter'
+  const filterStatus = el(doc, 'p', 'cr-sr-only')
+  filterStatus.setAttribute('role', 'status')
+  filterStatus.setAttribute('aria-live', 'polite')
+  filterStatus.dataset.testid = 'inventory-filter-status'
+  filterBox.append(filterLabel, filter, filterStatus)
+  head.append(title, filterBox, tablist)
 
   const panel = el(doc, 'div', 'cr-drawer-panel')
   panel.id = 'cr-inv-panel'
@@ -137,9 +180,31 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     renderItems(tab)
   }
 
+  /** The matches of the filter (every tab), or null while the field is empty. */
+  const matches = (): InventoryItem[] | null => (filter.value.trim() === '' ? null : filterItems(items, filter.value))
+
   const renderItems = (tab: InventoryTab): void => {
     panel.replaceChildren()
-    const mine = items.filter((it) => it.tab === tab)
+    const found = matches()
+    // A filter on: one list of the matches of every tab, named for what it is; no match is said (status) and shown.
+    if (found) {
+      panel.removeAttribute('aria-labelledby')
+      panel.setAttribute('aria-label', I().filterResults!)
+      const none = found.length === 0
+      filterStatus.textContent = none ? I().filterNone! : ''
+      if (none) {
+        const p = el(doc, 'p', 'cr-drawer-empty', I().filterNone)
+        p.setAttribute('aria-hidden', 'true') // the status above says it; read once
+        panel.appendChild(p)
+        return
+      }
+    } else {
+      panel.removeAttribute('aria-label')
+      filterStatus.textContent = ''
+      const sel = tabs.find((t) => t.tab === tab)
+      if (sel) panel.setAttribute('aria-labelledby', sel.btn.id)
+    }
+    const mine = found ?? items.filter((it) => it.tab === tab)
     if (!mine.length) {
       panel.appendChild(el(doc, 'p', 'cr-drawer-empty', I().empty))
       return
@@ -170,7 +235,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
         b.setAttribute('aria-describedby', tip.id)
         li.appendChild(tip)
       }
-      b.append(icon(doc, it.hasModel), text)
+      b.append(picture(doc, it), text)
       b.addEventListener('click', () => choose(it.deviceId))
       li.appendChild(b)
       list.appendChild(li)
@@ -189,7 +254,10 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       btn.setAttribute('role', 'tab')
       btn.setAttribute('aria-controls', panel.id)
       btn.dataset.tab = tab
-      btn.addEventListener('click', () => showTab(tab, false))
+      btn.addEventListener('click', () => {
+        filter.value = '' // a tab is its own list
+        showTab(tab, false)
+      })
       tablist.appendChild(btn)
       return { tab, btn }
     })
@@ -198,6 +266,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     const tab = selected !== null && tabs.some((t) => t.tab === selected) ? selected : first
     if (tab === undefined) {
       panel.removeAttribute('aria-labelledby')
+      panel.removeAttribute('aria-label')
       panel.replaceChildren(el(doc, 'p', 'cr-drawer-empty', I().empty))
       return
     }
@@ -213,13 +282,33 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       e.key === 'ArrowRight' ? (at + 1) % n : e.key === 'ArrowLeft' ? (at - 1 + n) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1
     if (to < 0) return
     e.preventDefault()
+    filter.value = ''
     showTab(tabs[to].tab, true) // selection follows focus
+  })
+
+  // The field: every key is text here (the page-level map skips dialogs; Space is a space), except Entrée (choose the first
+  // match) and Échap (close, handled below). A printable key typed on a tab or an item moves into the field.
+  filter.addEventListener('input', () => {
+    if (selected !== null) renderItems(selected)
+  })
+  filter.addEventListener('keydown', (e) => {
+    if (e.isComposing || e.key !== 'Enter' || e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) return
+    e.preventDefault()
+    const first = matches()?.[0]
+    if (first) choose(first.deviceId)
+  })
+  root.addEventListener('keydown', (e) => {
+    if (e.isComposing || e.defaultPrevented || e.target === filter || e.ctrlKey || e.altKey || e.metaKey) return
+    // One printable character (not Space: that closes) typed on a tab or an item: it starts a search.
+    if (e.key.length === 1 && e.key !== ' ' && !d.isToggleKey(e)) filter.focus() // the character then goes into the field
   })
 
   // Space (the inventory key) and Esc close from anywhere inside; the page-level key map skips dialogs.
   root.addEventListener('keydown', (e) => {
     if (e.isComposing) return
     const plain = !e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey
+    // In the search field Space is a space: only Échap is the drawer's.
+    if (e.target === filter && e.key !== 'Escape') return
     // A held key closes it once (repeats would land on the canvas and re-open it).
     if (e.repeat && plain && d.isToggleKey(e)) {
       e.preventDefault()
@@ -244,6 +333,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     },
     open() {
       if (api.isOpen) return
+      filter.value = ''
       build()
       root.inert = false
       root.getBoundingClientRect() // the closed pose is laid out before the slide starts

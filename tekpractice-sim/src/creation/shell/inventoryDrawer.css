@@ -50,7 +50,21 @@
   letter-spacing: 0.02em;
 }
 .cr-drawer-tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: wrap; }
-.cr .cr-drawer-tab, .cr .cr-drawer-close, .cr .cr-inv-item { transition: none; }
+.cr .cr-drawer-tab, .cr .cr-drawer-close, .cr .cr-inv-item, .cr .cr-drawer-filter-input { transition: none; }
+/* the search field, above the tabs in reading order: a visible label and a bordered field (control edge 7.6:1, as the panel fields) */
+.cr-drawer-filter { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.cr .cr-drawer-filter-label { color: var(--cr-ink-muted); font: 500 13px/1 var(--cr-font-ui); }
+.cr .cr-drawer-filter-input {
+  box-sizing: border-box;
+  width: 180px;
+  height: 28px;
+  padding: 0 6px;
+  background: var(--cr-nuit);
+  color: var(--cr-papier);
+  border: 1px solid var(--cr-ink-muted);
+  font: 400 13px/1 var(--cr-font-ui);
+}
+.cr .cr-drawer-filter-input:hover { border-color: var(--cr-papier); }
 .cr .cr-drawer-tab {
   position: relative;
   padding: 0 12px;
@@ -101,6 +115,9 @@
 .cr-inv-name { overflow-wrap: anywhere; }
 .cr-inv-badge { align-self: flex-start; padding: 0 4px; border: 1px solid var(--cr-ink-muted); color: var(--cr-ink-muted); font-size: 11px; line-height: 16px; }
 .cr-drawer-empty { margin: 0; padding: 8px 0; color: var(--cr-ink-muted); }
+
+/* the device picture (thumbnail): decorative, the same footprint as the silhouette's row */
+.cr-inv-thumb { flex: none; width: 36px; height: 36px; object-fit: contain; }
 
 /* the device silhouette: outlined + dashed = the placeholder box, solid = the device has its own model */
 .cr-inv-icon { flex: none; width: 40px; height: 28px; }

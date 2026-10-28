@@ -505,6 +505,12 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     closeLabel: 'Fermer l’inventaire',
     /** Empty state when the drawer has no device. */
     empty: 'Aucun appareil disponible pour le moment.',
+    /** Étiquette du champ de recherche au-dessus des onglets (aussi son nom pour les aides techniques). */
+    filter: 'Filtrer',
+    /** Dit poliment (et affiché dans la liste) quand le filtre ne correspond à aucun appareil. */
+    filterNone: 'Aucun appareil ne correspond',
+    /** Nom accessible de la liste quand un filtre est actif : elle réunit les appareils de tous les onglets. */
+    filterResults: 'Appareils qui correspondent',
     /** Badge on a proposed device: in the Bêta tab, in the Projet tree and in Properties once it is placed (Task 30). */
     badgeUnverified: 'non vérifié',
     /** Tooltip of a Bêta item, and the description of a placed one (Properties). */
@@ -658,6 +664,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     dashed: 'pointillés',
     /** Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal. */
     hover: '{a} → {b} · {signal}',
+    /** Le même texte avec la longueur du câble tracé ; {length} = « 6,4 m ». */
+    hoverLength: '{a} → {b} · {signal} · {length}',
+    /** Une longueur de câble en mètres ; {n} = un chiffre après la virgule (« 6,4 »). */
+    length: '{n} m',
   },
   /** Connectors (catalog `connectorTypes[].id`) as the hover label names them: faithful renderings of the catalog labels. */
   connector: {

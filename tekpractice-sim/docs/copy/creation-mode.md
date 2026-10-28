@@ -475,6 +475,9 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.hint` | Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser. {key} ou Échap : fermer. | à valider (tekuxwriter) | Sous le titre ; {key} = touche de l’inventaire (« Espace » par défaut) |
 | `inventory.close` | Fermer | à valider (tekuxwriter) | Texte du bouton |
 | `inventory.closeLabel` | Fermer l’inventaire | à valider (tekuxwriter) | Nom accessible du bouton Fermer (contient le texte visible) |
+| `inventory.filter` | Filtrer | à valider (tekuxwriter) | Étiquette du champ de recherche au-dessus des onglets (aussi son nom pour les aides techniques) |
+| `inventory.filterNone` | Aucun appareil ne correspond | à valider (tekuxwriter) | Dit poliment (et affiché dans la liste) quand le filtre ne correspond à aucun appareil |
+| `inventory.filterResults` | Appareils qui correspondent | à valider (tekuxwriter) | Nom accessible de la liste quand un filtre est actif : elle réunit les appareils de tous les onglets |
 | `inventory.empty` | Aucun appareil disponible pour le moment. | à valider (tekuxwriter) | État vide d’un onglet sans appareil |
 | `inventory.badgeUnverified` | non vérifié | à valider (tekuxwriter) | Pastille sur un appareil proposé : onglet Bêta, arbre Projet et Propriétés une fois posé (Task 30) |
 | `inventory.tipUnverified` | Fiche proposée, pas encore vérifiée : comportement approximatif. | à valider (tekuxwriter) | Info-bulle d’un appareil Bêta (tiroir) et description de l’appareil posé (Propriétés) |
@@ -594,6 +597,8 @@ Câbles colorés par type de signal (Task 27, C18). La couleur n’est jamais le
 | `cables.legendExpand` | Déplier la légende des câbles | à valider (tekuxwriter) | Nom accessible du bouton quand elle est repliée (il la déplie) |
 | `cables.dashed` | pointillés | à valider (tekuxwriter) | Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus) |
 | `cables.hover` | {a} → {b} · {signal} | à valider (tekuxwriter) | Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal |
+| `cables.hoverLength` | {a} → {b} · {signal} · {length} | à valider (tekuxwriter) | Le même texte avec la longueur du câble tracé ; {length} = « 6,4 m » |
+| `cables.length` | {n} m | à valider (tekuxwriter) | Une longueur de câble en mètres ; {n} = un chiffre après la virgule (« 6,4 ») |
 
 ## connector
 

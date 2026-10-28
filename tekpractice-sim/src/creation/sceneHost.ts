@@ -31,6 +31,7 @@ import type { RoomLayout } from '../explore/roomLayout'
 import type { DesignState, Placement } from '../trials/trial'
 import { DeviceSpawner, type DeviceInstance } from '../scene/DeviceSpawner'
 import { CableRenderer } from '../scene/CableRenderer'
+import { polylineLength } from '../scene/cablePath'
 import { CameraRig } from '../scene/CameraRig'
 import {
   installDesignerOrbitInput,
@@ -504,6 +505,12 @@ export class SceneHost {
   /** The cable drawn lighter (the hover), or null. */
   hoveredCable(): string | null {
     return this.cables?.highlighted ?? null
+  }
+
+  /** The drawn length of a cable in metres (its polyline), or null when it is not drawn. */
+  cableLengthM(key: string): number | null {
+    const path = this.cables?.paths().find(([id]) => id === key)?.[1]
+    return path ? polylineLength(path) : null
   }
 
   /** The key of the cable drawn with the Papier stroke right now (tests). */

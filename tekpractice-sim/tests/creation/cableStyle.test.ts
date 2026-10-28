@@ -4,7 +4,7 @@ import catalogJson from '../../content/catalog.json'
 import { COPY } from '../../src/creation/copy'
 import { CREATION_TOKENS, contrastRatio } from '../../src/design/creationTokens'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
-import { SIGNAL_STYLE, cableColor, cableDash, cableText, connectionSignal, legendEntries, portInfoOf, presentSignals } from '../../src/creation/cableStyle'
+import { SIGNAL_STYLE, cableColor, cableDash, cableText, connectionSignal, legendEntries, lengthText, portInfoOf, presentSignals } from '../../src/creation/cableStyle'
 
 const catalogSignals: string[] = (catalogJson as { signalTypes: { id: string }[] }).signalTypes.map((s) => s.id)
 const rgb = (hex: string): [number, number, number] => {
@@ -160,6 +160,19 @@ describe('portInfoOf and cableText (the hover text)', () => {
     const want = 'ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu)'
     expect(cableText(portOf, OUT, IN)).toBe(want)
     expect(cableText(portOf, IN, OUT)).toBe(want)
+  })
+  it('with the drawn length: « … · Niveau ligne pro (+4 dBu) · 6,4 m » (French decimal comma, one decimal)', () => {
+    expect(cableText(portOf, OUT, IN, 6.36)).toBe('ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu) · 6,4 m')
+    expect(cableText(portOf, IN, OUT, 12)).toBe('ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu) · 12,0 m')
+    // no length known (null / not a number): the text without it
+    expect(cableText(portOf, OUT, IN, null)).toBe('ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu)')
+    expect(cableText(portOf, OUT, IN, Number.NaN)).toBe('ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu)')
+  })
+  it('lengthText: one decimal, comma, rounds, never a dot', () => {
+    expect(lengthText(6.36)).toBe('6,4 m')
+    expect(lengthText(0.04)).toBe('0,0 m')
+    expect(lengthText(10.25)).toMatch(/^10,[23] m$/)
+    expect(lengthText(1234.56)).toBe('1234,6 m')
   })
   it('null for a connection whose ports are not in the design', () => {
     expect(cableText(portOf, { instance: 'x', port: 'a' }, { instance: 'y', port: 'b' })).toBeNull()

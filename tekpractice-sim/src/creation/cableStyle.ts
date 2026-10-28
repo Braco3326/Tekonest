@@ -125,14 +125,25 @@ export function portInfoOf(
   }
 }
 
+/** « 6,4 m »: metres with one decimal and the French comma. */
+export function lengthText(metres: number): string {
+  return COPY.cables!.length!.replace('{n}', metres.toFixed(1).replace('.', ','))
+}
+
 /**
- * The hover text of a cable: « ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu) ». The output end comes
- * first whichever way the connection is stored. Null when neither port is known (the cable is not in the design).
+ * The hover text of a cable: « ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu) · 6,4 m ». The output end comes
+ * first whichever way the connection is stored; the length (the drawn cable's, metres) ends it when given. Null when neither
+ * port is known (the cable is not in the design).
  */
-export function cableText(portOf: (ref: PortRef) => PortInfo | undefined, a: PortRef, b: PortRef): string | null {
+export function cableText(portOf: (ref: PortRef) => PortInfo | undefined, a: PortRef, b: PortRef, lengthM?: number | null): string | null {
   const signal = connectionSignal(portOf, a, b)
   if (signal === null) return null
   const [from, to] = portOf(a)?.dir !== 'out' && portOf(b)?.dir === 'out' ? [b, a] : [a, b]
   const end = (r: PortRef): string => `${r.instance} ${r.port}`
-  return COPY.cables!.hover!.replace('{a}', end(from)).replace('{b}', end(to)).replace('{signal}', signalLabel(signal))
+  const known = typeof lengthM === 'number' && Number.isFinite(lengthM)
+  return (known ? COPY.cables!.hoverLength! : COPY.cables!.hover!)
+    .replace('{a}', end(from))
+    .replace('{b}', end(to))
+    .replace('{signal}', signalLabel(signal))
+    .replace('{length}', known ? lengthText(lengthM) : '')
 }

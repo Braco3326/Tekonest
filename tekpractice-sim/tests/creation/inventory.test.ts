@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { makeRegistry } from '../helpers'
-import { CATEGORY_TAB, TAB_LABELS, inventory, tabFor, type InventoryTab } from '../../src/creation/inventory'
+import { CATEGORY_TAB, TAB_LABELS, filterItems, inventory, tabFor, type InventoryTab } from '../../src/creation/inventory'
 
 const registry = makeRegistry()
 const allIds = [...registry.deviceById.keys()]
@@ -140,5 +140,34 @@ describe('inventory', () => {
     expect(r.items.filter((i) => i.deviceId === 'shure-sm58')).toHaveLength(1)
     expect(tabOf('shure-sm58', r)).toBe('micros')
     expect(r.tabs).not.toContain('beta')
+  })
+})
+
+describe('filterItems (the drawer search, final review 4)', () => {
+  const r = inventory(registry, none)
+  it('an empty or blank query keeps everything, in order', () => {
+    expect(filterItems(r.items, '').map((i) => i.deviceId)).toEqual(r.items.map((i) => i.deviceId))
+    expect(filterItems(r.items, '   ').length).toBe(r.items.length)
+  })
+  it('matches the label across ALL tabs, ignoring case and accents', () => {
+    const items = [
+      { deviceId: 'a', label: 'Shure SM58', tab: 'micros' as const, hasModel: true },
+      { deviceId: 'b', label: 'Yamaha QL1', tab: 'consoles' as const, hasModel: true },
+      { deviceId: 'c', label: 'Enceinte Éclatée', tab: 'enceintes' as const, hasModel: false },
+    ]
+    expect(filterItems(items, 'sm58').map((i) => i.deviceId)).toEqual(['a'])
+    expect(filterItems(items, 'YAMAHA').map((i) => i.deviceId)).toEqual(['b'])
+    expect(filterItems(items, 'eclatee').map((i) => i.deviceId)).toEqual(['c'])
+    expect(filterItems(items, 'éclat').map((i) => i.deviceId)).toEqual(['c'])
+    expect(filterItems(items, 'e').map((i) => i.deviceId)).toEqual(['a', 'c']) // « Shure », « Éclatée »: order kept, accent folded
+  })
+  it('several words must all be in the label, in any order; no match gives an empty list', () => {
+    const items = [{ deviceId: 'b', label: 'Yamaha QL1', tab: 'consoles' as const, hasModel: true }]
+    expect(filterItems(items, 'ql1 yamaha')).toHaveLength(1)
+    expect(filterItems(items, 'yamaha sm58')).toEqual([])
+    expect(filterItems(items, 'zzz')).toEqual([])
+  })
+  it('every catalog device is found by its own label', () => {
+    for (const it of r.items) expect(filterItems(r.items, it.label).map((i) => i.deviceId), it.label).toContain(it.deviceId)
   })
 })

@@ -31,6 +31,13 @@ export function catenaryPoints(a: P3, b: P3, segments: number): P3[] {
   return pts
 }
 
+/** Length of a polyline in metres (0 for fewer than two points). A cable's drawn length is this over its path points. */
+export function polylineLength(points: readonly P3[]): number {
+  let total = 0
+  for (let i = 1; i < points.length; i++) total += Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y, points[i].z - points[i - 1].z)
+  return total
+}
+
 /**
  * Point at parametric position t (0..1) along a polyline, arc-length accurate.
  * Drives the signal-flow pulses (motion = pedagogical feedback: the signal

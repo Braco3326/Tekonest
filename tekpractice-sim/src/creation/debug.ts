@@ -120,6 +120,10 @@ export interface CreationDebug {
   setCameraRadius(radius: number): void
   /** Task 27: turn the orbit camera about its target by this many radians at once (a cut). */
   turnCamera(dAlpha: number): void
+  /** Final review: the drawn length (m) of a cable (the polyline the hover shows), or null when it is not drawn. */
+  cableLengthM(key: string): number | null
+  /** Final review: the straight distance (m) between two ports in the world, or null when either is unknown. */
+  portDistanceM(a: PortRef, b: PortRef): number | null
   /** Task 26: the first port clicked while a cable is in hand, or null. */
   patchPending(): PortRef | null
   /** Task 24: the raw floor point under a page point (CSS px), as the placement pick finds it; null off the floor. */

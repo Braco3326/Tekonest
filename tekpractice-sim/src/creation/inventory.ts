@@ -93,3 +93,19 @@ export function inventory(
   const used = new Set(items.map((i) => i.tab))
   return { tabs: TAB_ORDER.filter((t) => used.has(t)), items }
 }
+
+/** Lower case, no accents, single spaces: what the search compares. */
+const fold = (s: string): string => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+
+/**
+ * The drawer search: the items whose LABEL holds every word of `query` (any order), across all tabs; accents and case
+ * are ignored. A blank query keeps everything. Order is kept.
+ */
+export function filterItems<T extends { label: string }>(items: readonly T[], query: string): T[] {
+  const words = fold(query).split(/\s+/).filter(Boolean)
+  if (!words.length) return [...items]
+  return items.filter((it) => {
+    const label = fold(it.label)
+    return words.every((w) => label.includes(w))
+  })
+}

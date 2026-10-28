@@ -143,8 +143,15 @@ test('hovering a cable highlights it and says what it joins; leaving clears both
   expect(await page.evaluate(() => window.__creation!.cableHovered())).toBeNull()
   await expect(hoverLabel(page)).toHaveCount(0)
   await page.mouse.move(p.x, p.y)
-  await expect(hoverLabel(page)).toHaveText('sm58 out-xlr → ql1 in-mic-1 · Niveau micro')
+  await expect(hoverLabel(page)).toHaveText(/^sm58 out-xlr → ql1 in-mic-1 · Niveau micro · \d+,\d m$/)
   expect(await page.evaluate(() => window.__creation!.cableHovered())).toBe(MIC_KEY)
+  // The length is the drawn cable's: the polyline length in metres (>= the straight line between the two connectors, a little more for the sag)
+  const shown = parseFloat((await hoverLabel(page).innerText()).match(/(\d+),(\d) m$/)!.slice(1).join('.'))
+  const drawn = (await page.evaluate((k) => window.__creation!.cableLengthM(k), MIC_KEY))!
+  const straight = (await page.evaluate(([a, b]) => window.__creation!.portDistanceM(a, b), [SM58, MIC1] as const))!
+  expect(drawn, 'the drawn cable is at least as long as the straight line between its connectors').toBeGreaterThanOrEqual(straight - 1e-6)
+  expect(drawn, 'and not much longer (a parabolic sag)').toBeLessThan(straight * 1.3 + 0.2)
+  expect(Math.abs(shown - drawn), 'the hover shows the drawn length, rounded to 0.1 m').toBeLessThanOrEqual(0.05 + 1e-9)
   // the label sits at the pointer (a bubble above it, kept inside the 3D view)
   const label = (await hoverLabel(page).boundingBox())!
   expect(Math.abs(label.x + label.width / 2 - p.x)).toBeLessThanOrEqual(label.width / 2 + 8)

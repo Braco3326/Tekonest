@@ -1551,7 +1551,7 @@ export async function bootCreation(): Promise<void> {
     deviceAt: (x, y) => pickDevice(host.scene, x, y) !== null,
     describe: (key) => {
       const c = store.design().rig.connections.find((k) => cableKey(k.a, k.b) === key)
-      return c ? cableText(portInfoNow(), c.a, c.b) : null
+      return c ? cableText(portInfoNow(), c.a, c.b, host.cableLengthM(key)) : null
     },
     subscribe: (fn) => store.subscribe(fn),
   })
@@ -1788,6 +1788,11 @@ export async function bootCreation(): Promise<void> {
     portProxyRadiusPx: (ref) => host.portProxyRadiusPx(ref),
     portAtPoint: (x, y) => host.portAtPoint(x, y, patch.pending !== null),
     patchPending: () => patch.pending,
+    cableLengthM: (key) => host.cableLengthM(key),
+    portDistanceM: (a, b) => {
+      const [pa, pb] = [host.portWorld(a), host.portWorld(b)]
+      return pa && pb ? Vector3.Distance(pa, pb) : null
+    },
     devicePorts: (id) => [...(host.instance(id)?.portMarkers.keys() ?? [])],
     visiblePortLabels: () => host.scene?.meshes.filter((m) => m.name.startsWith('portlabel:') && m.isEnabled() && m.isVisible).length ?? 0,
     setCameraRadius: (r) => {
