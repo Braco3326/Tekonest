@@ -1,0 +1,13 @@
+{
+  "name": "tekonest-website-prototype",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "test": "node --test",
+    "verify:browser": "node tools/verify-browser.mjs"
+  }
+}

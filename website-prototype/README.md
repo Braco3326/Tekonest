@@ -9,8 +9,8 @@ Open `index.html` in a browser. No server or build is needed to view it.
 ## Edit it
 
 - Page content lives in `src/pages/*.html` (a fragment per page, with a `<!-- title: … | description: … -->` header).
-- The shared header and footer live in `src/build.py`.
-- Run `python3 src/build.py` to regenerate the root `*.html` files. It also applies French typography: narrow no-break spaces before `; : ! ?` and inside « ».
+- The shared header and footer live in `tools/build.mjs`.
+- Run `node tools/build.mjs` (Node 22+, no install needed) to regenerate the root `*.html` files. It also applies French typography: narrow no-break spaces before `; : ! ?` and inside « ».
 - Styles: `assets/css/tokens.css` holds the design tokens (source of truth) and `assets/css/site.css` the components.
 
 ## Honest by design
