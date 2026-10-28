@@ -1,5 +1,5 @@
 /**
- * Every Mode Création shell string (wording owned by tekuxwriter). Grows task by task.
+ * Every Mode Création shell string except the R1–R8 rule texts, which are catalog data (`title_fr` / `teach_fr`); wording owned by tekuxwriter. Grows task by task.
  * Mirror of the copy deck docs/copy/creation-mode.md: change both together.
  */
 export const COPY: { readonly [section: string]: Readonly<Record<string, string>> } = {

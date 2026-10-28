@@ -1,6 +1,6 @@
 # Copy deck — Mode Création
 
-Owner: **tekuxwriter**. Source of truth for every string of the Mode Création shell; `src/creation/copy.ts` mirrors it key by key (`tests/creation/copyDeck.test.ts` checks both match). Change both together.
+Owner: **tekuxwriter**. Source of truth for every `copy.ts` string; the R1–R8 rule texts are catalog data (`content/catalog.json`, see « Textes des règles »). `src/creation/copy.ts` mirrors the deck key by key (`tests/creation/copyDeck.test.ts` checks both match). Change both together.
 
 Rules: French first, English technical terms kept as students meet them (XLR, Dante, gain, fader, mute). Short, concrete, never blaming. No string ships with `[À REMPLACER`.
 
