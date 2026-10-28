@@ -576,6 +576,7 @@ export async function bootCreation(): Promise<void> {
   // Panels fold / unfold and the window resizes: the canvas follows its box.
   const resize = new ResizeObserver(() => {
     host.engine.resize()
+    host.onPortViewChange?.() // the projection changed with no camera move: a port label follows its port
     scheduler.invalidate()
   })
   resize.observe(shell.viewport)
@@ -1320,7 +1321,8 @@ export async function bootCreation(): Promise<void> {
     canvas,
     shellBag,
     // A port is the cabling's (Task 26): a click on one is neither a selection nor a miss.
-    (x, y) => (placement.placing || patch.wouldTake(x, y) ? null : pickDevice(host.scene, x, y)),
+    // An open drag (a press on the selected device) owns its release: `onClickSelected` below decides port or select.
+    (x, y) => (placement.placing || placement.dragging || patch.wouldTake(x, y) ? null : pickDevice(host.scene, x, y)),
     selection,
     (x, y) => missedClick(x, y)
   )
@@ -1424,7 +1426,7 @@ export async function bootCreation(): Promise<void> {
   // place picker, nor on a port (its click is the cabling's).
   const toast = mountToast(document, shell.viewport, shellBag)
   const missedClick = (x: number, y: number): void => {
-    if (placement.placing || host.walking || viewLocked() || patch.wouldTake(x, y)) return
+    if (placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y)) return
     if (viewState.get().selection !== null) viewState.set({ selection: null }) // not undoable; the toast speaks, not the status bar
     toast.show(COPY.feedback!.missed!.replace('{key}', bindingLabel(keys.bindings, 'TOGGLE_INVENTORY') || COPY.keys!.space!))
   }
@@ -1579,8 +1581,36 @@ export async function bootCreation(): Promise<void> {
     },
     portScreen: (ref) => screen(host.portWorld(ref)),
     portHitRadiusPx: (ref) => host.portHitRadiusPx(ref),
-    portAtPoint: (x, y) => host.portAtPoint(x, y, true),
+    portAtPoint: (x, y) => host.portAtPoint(x, y),
     patchPending: () => patch.pending,
+    bodyPointAway: (id, minPx) => {
+      const inst = host.instance(id)
+      const centre = inst ? screen(bodyCentreOf(inst)) : null
+      if (!centre) return null
+      const rect = canvas.getBoundingClientRect()
+      // Outside every port's REAL hit area (its proxy radius, bigger than minPx when the camera is close) plus a 2 px margin.
+      const ports = store.design().rig.instances.flatMap((i) =>
+        [...(host.instance(i.instanceId)?.portMarkers.keys() ?? [])].flatMap((port) => {
+          const ref = { instance: i.instanceId, port }
+          const at = screen(host.portWorld(ref))
+          return at ? [{ ...at, r: Math.max(minPx, host.portHitRadiusPx(ref) + 2) }] : []
+        })
+      )
+      let best: { x: number; y: number } | null = null
+      let bestD = Infinity
+      for (let dx = -120; dx <= 120; dx += 2)
+        for (let dy = -80; dy <= 80; dy += 2) {
+          const x = centre.x + dx
+          const y = centre.y + dy
+          const d = Math.hypot(dx, dy)
+          if (d >= bestD || pickDevice(host.scene, x - rect.left, y - rect.top) !== id) continue
+          if (ports.every((q) => Math.hypot(q.x - x, q.y - y) >= q.r)) {
+            best = { x, y }
+            bestD = d
+          }
+        }
+      return best
+    },
     devicePorts: (id) => [...(host.instance(id)?.portMarkers.keys() ?? [])],
     visiblePortLabels: () => host.scene?.meshes.filter((m) => m.name.startsWith('portlabel:') && m.isEnabled() && m.isVisible).length ?? 0,
     setCameraRadius: (r) => {

@@ -31,18 +31,11 @@ import type { PortRef } from '../engine/types'
 import type { DeviceInstance } from '../scene/DeviceSpawner'
 import type { DisposableBag } from '../util/disposable'
 import { CREATION_TOKENS } from '../design/creationTokens'
-import { pickDevice } from './selection'
 
 /** C18: a port's hit area is at least 24 CSS px across. */
 export const HIT_MIN_PX = 24
 /** A highlighted marker (hover, patch glow) reads as about this many CSS px across. */
 export const HIGHLIGHT_PX = 14
-/**
- * Over a device's body, a port's enlarged proxy only takes the click this close (CSS px) to the connector
- * itself: the proxies of a small or far device would otherwise cover its whole body and no click could
- * select it. Off the body (the proxy sticks out past it) and while a cable is in hand, the full 24 px target holds.
- */
-export const TIGHT_PX = 5
 /** A marker's own diameter (m): DeviceSpawner's cylinder. */
 const MARKER_DIAMETER_M = 0.05
 
@@ -84,8 +77,6 @@ export interface ProxyHost {
   canvas: HTMLElement
   instance(id: string): DeviceInstance | undefined
   instances(): Iterable<DeviceInstance>
-  /** A device body is under the canvas point (default: the shell's `pickDevice`). */
-  bodyAt?(x: number, y: number): boolean
 }
 
 interface Entry {
@@ -150,11 +141,10 @@ export class PortProxies {
   }
 
   /**
-   * The port aimed at on a canvas point (CSS px, canvas-relative), or null. Closest centre to the ray wins.
-   * `generous` false: over a device's body only a click within TIGHT_PX of the connector counts, so the body
-   * stays selectable (a cable in hand, or a point off the body, uses the whole proxy).
+   * The port aimed at on a canvas point (CSS px, canvas-relative), or null. Closest centre to the ray wins. ONE radius,
+   * over a device's body or not: what `hitRadiusPx` reports (>= 12 px) is what a first click gets (C18).
    */
-  portAt(x: number, y: number, generous = true): PortRef | null {
+  portAt(x: number, y: number): PortRef | null {
     const { scene } = this.host
     const cam = scene.activeCamera
     if (!cam) return null
@@ -163,25 +153,17 @@ export class PortProxies {
     const ray = scene.createPickingRay(x, y, null, cam)
     let best: PortRef | null = null
     let bestD = Infinity
-    let bestAt = 1
     for (const hit of hits) {
       const mesh = hit.pickedMesh
       const ref = mesh?.metadata?.portRef as PortRef | undefined
       if (!mesh || !ref) continue
-      const to = mesh.getAbsolutePosition().subtract(ray.origin)
-      const d = ray.direction.cross(to).length()
+      const d = ray.direction.cross(mesh.getAbsolutePosition().subtract(ray.origin)).length()
       if (d < bestD) {
         bestD = d
-        bestAt = Math.max(Vector3.Dot(to, ray.direction), 0.01)
         best = { instance: ref.instance, port: ref.port }
       }
     }
-    if (!best || generous) return best
-    const h = this.host.canvas.clientHeight
-    const px = bestD / worldPerPx(bestAt, this.host.camera.fov, h > 0 ? h : 708)
-    if (px <= TIGHT_PX) return best
-    const body = this.host.bodyAt ? this.host.bodyAt(x, y) : pickDevice(scene, x, y) !== null
-    return body ? null : best
+    return best
   }
 
   /** The port's hit radius on screen, in CSS px (>= 12 at any distance; null-safe: 0 for an unknown port). */

@@ -100,6 +100,12 @@ export interface CreationDebug {
   visiblePortLabels(): number
   /** Task 26: move the orbit camera to this distance at once (a zoom). */
   setCameraRadius(radius: number): void
+  /**
+   * Task 26: the page point on a device's body nearest its centre that is outside EVERY port's hit area (at least
+   * `minPx` CSS px from it, and its real proxy radius + 2 px when that is bigger: a close camera makes big targets); a click
+   * there selects the body. Null when the body has no such point.
+   */
+  bodyPointAway(id: string, minPx: number): { x: number; y: number } | null
   /** Task 26: the first port clicked while a cable is in hand, or null. */
   patchPending(): PortRef | null
   /** Task 24: the raw floor point under a page point (CSS px), as the placement pick finds it; null off the floor. */

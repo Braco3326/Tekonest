@@ -92,7 +92,11 @@ test('one selection: ] in the 3D view and a click on the device both select in t
   await page.keyboard.press('Escape')
   expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
   expect(await page.evaluate(() => window.__creation!.outlined())).toEqual([])
-  const p = await page.evaluate(() => window.__creation!.deviceScreen('ql1')) // page coordinates
+  // A port's hit area is >= 12 px (Task 26): click a body point outside every port's hit area, so the click is the body's.
+  await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+  await page.waitForTimeout(800)
+  const p = await page.evaluate(() => window.__creation!.bodyPointAway('ql1', 14)) // page coordinates
+  expect(p, 'a QL1 body point outside every port hit area').not.toBeNull()
   await page.mouse.click(p!.x, p!.y)
   await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBe('ql1')
   await expect(tree.getByRole('treeitem', { name: 'Yamaha QL1 (ql1)' })).toHaveAttribute('aria-selected', 'true')

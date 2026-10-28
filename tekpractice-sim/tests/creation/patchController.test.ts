@@ -28,10 +28,8 @@ function setup(over: { busy?: () => boolean } = {}) {
   history.do({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12', position: [2, 0, 0] })
   history.clear()
   const canvas = new FakeCanvas()
-  const hits = new Map<string, { ref: PortRef; tightOnly: boolean }>() // "x,y" -> the port under that canvas point
-  /** `tightOnly`: the point is on a device body, off the connector itself (only a generous pick finds the port). */
-  const aim = (x: number, y: number, ref: PortRef, tightOnly = false): void => void hits.set(`${x},${y}`, { ref, tightOnly })
-  const asked: boolean[] = []
+  const hits = new Map<string, PortRef>() // "x,y" -> the port under that canvas point
+  const aim = (x: number, y: number, ref: PortRef): void => void hits.set(`${x},${y}`, ref)
   let walking = false
   const marks: { hover: PortRef | null; marks: ReadonlyMap<string, PortMark> | null }[] = []
   const host: PatchHost = {
@@ -39,11 +37,7 @@ function setup(over: { busy?: () => boolean } = {}) {
     get walking() {
       return walking
     },
-    portAtPoint: (x, y, generous) => {
-      asked.push(generous)
-      const h = hits.get(`${x},${y}`)
-      return h && (generous || !h.tightOnly) ? h.ref : null
-    },
+    portAtPoint: (x, y) => hits.get(`${x},${y}`) ?? null,
     portScreen: (r) => ({ x: 100 + r.port.length, y: 50 }),
     markPorts: (hover, m) => void marks.push({ hover, marks: m }),
     onPortViewChange: null,
@@ -82,7 +76,7 @@ function setup(over: { busy?: () => boolean } = {}) {
     announce,
     undoLabel: () => 'Ctrl+Z',
   })
-  return { store, history, canvas, host, ui, calls, marks, ctrl, announce, aim, asked, scheduler, bag, setWalking: (w: boolean) => (walking = w) }
+  return { store, history, canvas, host, ui, calls, marks, ctrl, announce, aim, scheduler, bag, setWalking: (w: boolean) => (walking = w) }
 }
 
 const lastMarks = (s: ReturnType<typeof setup>) => s.marks[s.marks.length - 1]?.marks ?? null
@@ -380,38 +374,17 @@ describe('pointer clicks', () => {
   })
 })
 
-describe('a port never steals the click that selects the device it sits on', () => {
-  it('nothing in hand: over a body only the connector itself counts (wouldTake / click / hover see no port elsewhere on it)', () => {
-    const s = setup()
-    s.aim(30, 30, SM58_OUT, true) // on the body, 11 px from the connector
-    expect(s.ctrl.wouldTake(30, 30)).toBe(false)
-    click(s, 30, 30)
-    expect(s.ctrl.pending).toBeNull()
-    s.canvas.dispatchEvent(ev('pointermove', { offsetX: 30, offsetY: 30 }))
-    expect(s.calls.hover).toEqual([])
-    s.aim(31, 31, SM58_OUT) // right on the connector
-    expect(s.ctrl.wouldTake(31, 31)).toBe(true)
-  })
-
-  it('with a cable in hand the whole proxy counts, even over a body', () => {
-    const s = setup()
-    s.ctrl.click(SM58_OUT)
-    s.aim(30, 30, QL_MIC2, true)
-    expect(s.ctrl.wouldTake(30, 30)).toBe(true)
-    expect(s.asked[s.asked.length - 1]).toBe(true)
-    click(s, 30, 30)
-    expect(s.store.design().rig.connections).toHaveLength(1)
-  })
-
-  it('wouldTake changes nothing (the shell asks it before the release handler runs)', () => {
+describe('wouldTake (the shell asks it before the release handler runs)', () => {
+  it('is true on a port, false elsewhere, and changes nothing', () => {
     const s = setup()
     s.aim(20, 20, SM58_OUT)
     expect(s.ctrl.wouldTake(20, 20)).toBe(true)
+    expect(s.ctrl.wouldTake(99, 99)).toBe(false)
     expect(s.ctrl.pending).toBeNull()
     expect(s.marks).toHaveLength(0)
   })
 
-  it('wouldTake is false while inert (a ghost, a drag, the walk view)', () => {
+  it('is false while inert (a ghost, a drag, the walk view)', () => {
     let busy = true
     const s = setup({ busy: () => busy })
     s.aim(20, 20, SM58_OUT)

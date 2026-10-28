@@ -22,6 +22,18 @@ const selection = (page: Page) => page.evaluate(() => window.__creation!.selecti
 const yawOf = async (page: Page, id: string): Promise<number> => (await design(page)).placements.find((p) => p.instanceId === id)!.yawDeg
 const renders = (page: Page) => page.evaluate(() => window.__creation!.renders())
 
+/** The .glb models arrive after the placeholders and move the ports: wait until the page has stopped rendering. */
+const settle = async (page: Page): Promise<void> => {
+  let last = -1
+  for (let i = 0; i < 40; i++) {
+    const n = await page.evaluate(() => window.__creation!.renders())
+    if (n === last) return
+    last = n
+    await page.waitForTimeout(700)
+  }
+  throw new Error('the page never went idle')
+}
+
 /** A QL1 at a known place, selected with ] (canvas focused). */
 const withQl1 = async (page: Page): Promise<void> => {
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 4] }))
@@ -284,8 +296,12 @@ test('a click where a hidden device stands does nothing visible but shows the sa
 
 test('a click on a device selects it and shows no message; the click that drops a device is no miss; an orbit drag is no miss', async ({ page }) => {
   await boot(page)
-  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 4] }))
-  const at = (await page.evaluate(() => window.__creation!.deviceScreen('ql1')))!
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 4], rotationY: 180 })) // facing the audience as in the reference template: its connectors are on the far side
+  await settle(page)
+  // A port's hit area is >= 12 px (Task 26): click a body point outside every port's hit area, so the click is the body's.
+  // (Facing the stage, the QL1's seven connectors cover its whole body at the default camera distance: no such point exists.)
+  const at = (await page.evaluate(() => window.__creation!.bodyPointAway('ql1', 14)))!
+  expect(at, 'a QL1 body point outside every port hit area').not.toBeNull()
   await page.mouse.click(at.x, at.y)
   expect(await selection(page)).toBe('ql1')
   await expect(page.getByTestId('toast')).toBeHidden()

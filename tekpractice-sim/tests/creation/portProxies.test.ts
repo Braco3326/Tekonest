@@ -89,9 +89,8 @@ describe('PortProxies on a real (headless) scene', () => {
     const instances = new Map([['ql1', inst]])
     const canvas = { clientHeight: H, clientWidth: 1000 } as unknown as HTMLElement
     const bag = new DisposableBag()
-    const body = { on: false }
-    const proxies = new PortProxies({ scene, camera, canvas, instance: (id) => instances.get(id), instances: () => instances.values(), bodyAt: () => body.on }, bag)
-    return { scene, camera, inst, instances, proxies, bag, body }
+    const proxies = new PortProxies({ scene, camera, canvas, instance: (id) => instances.get(id), instances: () => instances.values() }, bag)
+    return { scene, camera, inst, instances, proxies, bag }
   }
 
   it('every port gets a hit area of at least 12 px radius at the default camera distance', () => {
@@ -169,29 +168,13 @@ describe('PortProxies on a real (headless) scene', () => {
     const c = Vector3.Project(mic.portMarkers.get('out-xlr')!.getAbsolutePosition(), Matrix.Identity(), scene.getTransformMatrix(), vp)
     const want = { instance: 'sm58', port: 'out-xlr' }
     for (const [dx, dy] of [[0, 0], [11, 0], [-11, 0], [0, 11], [0, -11]]) expect(proxies.portAt(c.x + dx, c.y + dy), `${dx},${dy}`).toEqual(want)
+    // the reported radius is the real first-click radius: it hits out to ~hitRadiusPx and not beyond
+    const rad = proxies.hitRadiusPx(want)
+    expect(rad).toBeGreaterThanOrEqual(12 - 1e-6)
+    expect(proxies.portAt(c.x + rad - 1, c.y)).toEqual(want)
+    expect(proxies.portAt(c.x + rad + 3, c.y)).toBeNull()
     expect(proxies.portAt(c.x + 40, c.y + 40)).toBeNull()
     expect(proxies.portAt(c.x + 20, c.y)).toBeNull() // not a huge halo either: ~12 px, not 24
-    scene.dispose()
-  })
-
-  it('over a device body the proxy is tight (5 px) unless generous: the body stays selectable; off the body the whole proxy holds', () => {
-    const { proxies, camera, scene, instances, body } = setup(25.6)
-    const mic = new DeviceSpawner(scene, registry, CREATION_DEVICE_THEME).spawn('shure-sm58', new Vector3(0, 0, -9), 'sm58')
-    instances.set('sm58', mic)
-    scene.render()
-    camera.getViewMatrix(true)
-    proxies.refresh()
-    for (const m of scene.meshes) m.computeWorldMatrix(true)
-    const engine = scene.getEngine()
-    const vp = camera.viewport.toGlobal(engine.getRenderWidth(), engine.getRenderHeight())
-    const c = Vector3.Project(mic.portMarkers.get('out-xlr')!.getAbsolutePosition(), Matrix.Identity(), scene.getTransformMatrix(), vp)
-    const want = { instance: 'sm58', port: 'out-xlr' }
-    body.on = true
-    expect(proxies.portAt(c.x + 3, c.y, false)).toEqual(want) // right on the connector: the port, even over the body
-    expect(proxies.portAt(c.x + 11, c.y, false)).toBeNull() // on the body, off the connector: the body's click
-    expect(proxies.portAt(c.x + 11, c.y, true)).toEqual(want) // a cable in hand: the whole proxy
-    body.on = false
-    expect(proxies.portAt(c.x + 11, c.y, false)).toEqual(want) // proxy sticking out past the body: still the full target
     scene.dispose()
   })
 

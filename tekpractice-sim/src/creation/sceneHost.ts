@@ -17,6 +17,7 @@ import {
   Engine,
   HemisphericLight,
   HighlightLayer,
+  Matrix,
   Mesh,
   MeshBuilder,
   Scene,
@@ -45,7 +46,6 @@ import { cableKey, planSceneOps } from './sceneDiff'
 import { placeFromKey, placeKey, type PlaceRef } from './places'
 import { blankData, loadPlaceData, type PlaceData } from './placeData'
 import { CREATION_TOKENS } from '../design/creationTokens'
-import { projectToScreen } from '../scene/project'
 import { PortProxies, type PortMark } from './portProxies'
 import type { RoomTheme } from '../scene/RoomBuilder'
 import { CREATION_DEVICE_THEME, CREATION_ROOM_THEME } from './sceneTheme'
@@ -421,12 +421,9 @@ export class SceneHost {
   /** The camera's view changed (set by the patch controller: its labels follow their port). */
   onPortViewChange: (() => void) | null = null
 
-  /**
-   * The port under a canvas point (CSS px, canvas-relative), proxies included; null in the walk view.
-   * `generous` false: over a device's body only a click right on the connector counts (see TIGHT_PX).
-   */
-  portAtPoint(x: number, y: number, generous: boolean): PortRef | null {
-    return this.walking ? null : (this.proxies?.portAt(x, y, generous) ?? null)
+  /** The port under a canvas point (CSS px, canvas-relative), proxies included; null in the walk view. */
+  portAtPoint(x: number, y: number): PortRef | null {
+    return this.walking ? null : (this.proxies?.portAt(x, y) ?? null)
   }
 
   /** A port's hit radius on screen (CSS px); 0 for an unknown port. */
@@ -434,12 +431,23 @@ export class SceneHost {
     return this.proxies?.hitRadiusPx(ref) ?? 0
   }
 
-  /** A port's page position (CSS px), or null. */
+  /**
+   * A port's page position (CSS px), or null. Projected with the camera's OWN view and projection matrices, not the
+   * scene's transform matrix: that one is only refreshed by the next render, so a label moved from the view-matrix
+   * observer (a cut, a resize) would land where the port WAS.
+   */
   portScreen(ref: PortRef): { x: number; y: number } | null {
     const world = this.portWorld(ref)
-    const scene = this._scene
     const camera = this._camera
-    return world && scene && camera ? projectToScreen(world, scene, camera, this.engine, this.canvas) : null
+    if (!world || !camera) return null
+    const w = this.engine.getRenderWidth()
+    const h = this.engine.getRenderHeight()
+    if (w <= 0 || h <= 0) return null
+    const p = Vector3.Project(world, Matrix.Identity(), camera.getViewMatrix().multiply(camera.getProjectionMatrix()), camera.viewport.toGlobal(w, h))
+    const rect = this.canvas.getBoundingClientRect()
+    const x = rect.left + (p.x / w) * rect.width
+    const y = rect.top + (p.y / h) * rect.height
+    return Number.isFinite(x) && Number.isFinite(y) ? { x, y } : null
   }
 
   /** Restyle the markers: the hovered port and the patch glow (null, null puts everything back). */

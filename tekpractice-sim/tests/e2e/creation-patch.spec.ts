@@ -297,12 +297,23 @@ test('a press-and-drag that starts on a port of the SELECTED device moves it; a 
   const sp = await screenOf(page, QL_OUT)
   const box = (await page.locator('#renderCanvas').boundingBox())!
   expect(await page.evaluate(([x, y]) => window.__creation!.pickAt(x, y), [sp.x - box.x, sp.y - box.y])).toBe('ql1')
+  // Zoom out a little so a re-frame of the selection (the select-and-fly of a plain click on the device) WOULD move the camera.
+  await page.evaluate(() => window.__creation!.setCameraRadius(window.__creation!.camera()!.radius * 1.3))
+  await settle(page)
+  const sp2 = await screenOf(page, QL_OUT)
+  expect(await page.evaluate(([x, y]) => window.__creation!.pickAt(x, y), [sp2.x - box.x, sp2.y - box.y])).toBe('ql1')
   const posOf = async () => (await design(page)).placements.find((q) => q.instanceId === 'ql1')!.position_m
   const before = await posOf()
   const base = await history(page)
-  // a plain click on one of its ports: a cable in hand, the device neither moved nor re-framed
+  const cam0 = await page.evaluate(() => window.__creation!.camera())
+  // a plain click on one of its ports: a cable in hand; the device neither moved nor re-framed (camera and flight checked)
   await clickPort(page, QL_OUT)
   expect(await pending(page)).toEqual(QL_OUT)
+  expect(await page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+  expect(await page.evaluate(() => window.__creation!.camera())).toEqual(cam0)
+  await settle(page)
+  expect(await page.evaluate(() => window.__creation!.camera())).toEqual(cam0)
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1')
   expect(await posOf()).toEqual(before)
   expect(await history(page)).toBe(base)
   await page.keyboard.press('Escape')
@@ -316,6 +327,88 @@ test('a press-and-drag that starts on a port of the SELECTED device moves it; a 
   expect(await posOf()).not.toEqual(before)
   expect(await history(page)).toBe(base + 1)
   expect(await pending(page)).toBeNull()
+})
+
+test("a first click 8 px off a connector that sits on a device body is the PORT's (no selection, camera still); 16+ px off on the body selects it", async ({ page }) => {
+  await boot(page)
+  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
+  const box = (await page.locator('#renderCanvas').boundingBox())!
+  // Where, in canvas px: a ql1 connector drawn over the body with an 8 px neighbour point also over the body and nearest to that connector;
+  // and a body point 16+ px from EVERY port of the rig.
+  const plan = await page.evaluate(() => {
+    const c = window.__creation!
+    const rect = document.querySelector('#renderCanvas')!.getBoundingClientRect()
+    const all = c.design().rig.instances.flatMap((i) => c.devicePorts(i.instanceId).map((port) => ({ instance: i.instanceId, port })))
+    const at = all.map((r) => ({ r, p: c.portScreen(r)! })).map(({ r, p }) => ({ r, x: p.x - rect.left, y: p.y - rect.top }))
+    const nearest = (x: number, y: number) => at.reduce((a, b) => (Math.hypot(a.x - x, a.y - y) <= Math.hypot(b.x - x, b.y - y) ? a : b))
+    let eight: { ref: { instance: string; port: string }; x: number; y: number } | null = null
+    for (const q of at.filter((a) => a.r.instance === 'ql1')) {
+      if (c.pickAt(q.x, q.y) !== 'ql1') continue
+      for (const [dx, dy] of [[8, 0], [-8, 0], [0, 8], [0, -8]]) {
+        const x = q.x + dx
+        const y = q.y + dy
+        const n = nearest(x, y)
+        if (c.pickAt(x, y) === 'ql1' && n.r.port === q.r.port && n.r.instance === q.r.instance) eight ??= { ref: q.r, x, y }
+      }
+    }
+    const centre = c.deviceScreen('ql1')!
+    let far: { x: number; y: number } | null = null
+    for (let dx = -60; dx <= 60; dx += 2)
+      for (let dy = -40; dy <= 40; dy += 2) {
+        const x = centre.x - rect.left + dx
+        const y = centre.y - rect.top + dy
+        if (c.pickAt(x, y) === 'ql1' && Math.hypot(nearest(x, y).x - x, nearest(x, y).y - y) >= 16 && (!far || Math.hypot(dx, dy) < Math.hypot(far.x - (centre.x - rect.left), far.y - (centre.y - rect.top)))) far = { x, y }
+      }
+    return { eight, far }
+  })
+  expect(plan.eight, 'a ql1 connector on its body with an 8 px point on the body').not.toBeNull()
+  expect(plan.far, 'a ql1 body point 16+ px from every port').not.toBeNull()
+  const cam0 = await page.evaluate(() => window.__creation!.camera())
+  await page.mouse.click(box.x + plan.eight!.x, box.y + plan.eight!.y)
+  expect(await pending(page)).toEqual(plan.eight!.ref) // the port took it
+  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull() // and nothing was selected
+  expect(await page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+  await settle(page)
+  expect(await page.evaluate(() => window.__creation!.camera())).toEqual(cam0)
+  await page.keyboard.press('Escape')
+  expect(await pending(page)).toBeNull()
+  await page.mouse.click(box.x + plan.far!.x, box.y + plan.far!.y)
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1') // far from every port: the body
+  expect(await pending(page)).toBeNull()
+})
+
+test('a pinned refusal follows its port through a camera cut and a window resize (within a few px of the independently projected port)', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }))
+  await clickPort(page, K12_POWER)
+  await clickPort(page, MIC1)
+  const alert = page.getByTestId('port-error')
+  await expect(alert).toBeVisible()
+  const near = async (what: string): Promise<void> => {
+    await settle(page) // a quiet page: whatever moves a label must have moved it by now
+    const port = await screenOf(page, MIC1)
+    const box = (await alert.boundingBox())!
+    expect(Math.abs(box.x + box.width / 2 - port.x), `${what}: horizontal`).toBeLessThanOrEqual(6)
+    expect(Math.abs(port.y - 14 - (box.y + box.height)), `${what}: vertical`).toBeLessThanOrEqual(6)
+  }
+  await near('at pin')
+  // a camera cut (reduced motion: one event, no flight)
+  await page.evaluate(() => window.__creation!.setCameraRadius(window.__creation!.camera()!.radius * 0.75))
+  await near('after a zoom cut')
+  // a quarter turn of the view (keypad 6): a single cut too
+  const before = await screenOf(page, MIC1)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Numpad6')
+  await settle(page)
+  const turned = await screenOf(page, MIC1)
+  if (Math.hypot(turned.x - before.x, turned.y - before.y) > 20) {
+    const vp = (await page.getByTestId('viewport').boundingBox())!
+    // only when the port is still well inside the view (a bubble at an edge is clamped, which is not the lag under test)
+    if (turned.x > vp.x + 150 && turned.x < vp.x + vp.width - 150 && turned.y > vp.y + 80 && turned.y < vp.y + vp.height - 40) await near('after a quarter turn')
+  }
+  // a window resize
+  await page.setViewportSize({ width: 1300, height: 640 }) // the port stays well inside the view (a bubble at an edge is clamped, not lagging)
+  await near('after a resize')
 })
 
 test('a place change drops the cable in hand and the labels; the new scene has its own >= 24 px targets', async ({ page }) => {
