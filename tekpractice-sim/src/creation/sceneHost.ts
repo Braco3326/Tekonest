@@ -45,6 +45,8 @@ import { cableKey, planSceneOps } from './sceneDiff'
 import { placeFromKey, placeKey, type PlaceRef } from './places'
 import { blankData, loadPlaceData, type PlaceData } from './placeData'
 import { CREATION_TOKENS } from '../design/creationTokens'
+import { projectToScreen } from '../scene/project'
+import { PortProxies, type PortMark } from './portProxies'
 import type { RoomTheme } from '../scene/RoomBuilder'
 import { CREATION_DEVICE_THEME, CREATION_ROOM_THEME } from './sceneTheme'
 import { ViewCubeWidget, type CubeHooks } from './viewCubeWidget'
@@ -413,6 +415,39 @@ export class SceneHost {
     return marker.getAbsolutePosition().clone()
   }
 
+  // ── port picking (Task 26, CA-19): enlarged invisible proxies, hover / patch glow ──
+
+  private proxies: PortProxies | null = null
+  /** The camera's view changed (set by the patch controller: its labels follow their port). */
+  onPortViewChange: (() => void) | null = null
+
+  /**
+   * The port under a canvas point (CSS px, canvas-relative), proxies included; null in the walk view.
+   * `generous` false: over a device's body only a click right on the connector counts (see TIGHT_PX).
+   */
+  portAtPoint(x: number, y: number, generous: boolean): PortRef | null {
+    return this.walking ? null : (this.proxies?.portAt(x, y, generous) ?? null)
+  }
+
+  /** A port's hit radius on screen (CSS px); 0 for an unknown port. */
+  portHitRadiusPx(ref: PortRef): number {
+    return this.proxies?.hitRadiusPx(ref) ?? 0
+  }
+
+  /** A port's page position (CSS px), or null. */
+  portScreen(ref: PortRef): { x: number; y: number } | null {
+    const world = this.portWorld(ref)
+    const scene = this._scene
+    const camera = this._camera
+    return world && scene && camera ? projectToScreen(world, scene, camera, this.engine, this.canvas) : null
+  }
+
+  /** Restyle the markers: the hovered port and the patch glow (null, null puts everything back). */
+  markPorts(hover: PortRef | null, marks: ReadonlyMap<string, PortMark> | null): void {
+    this.proxies?.mark(hover, marks)
+    this.scheduler.invalidate()
+  }
+
   // ── view decor (Task 9): view state, never in the store, never undoable ──
 
   /** The device drawn with the Ambre selection outline (null = none). */
@@ -659,6 +694,7 @@ export class SceneHost {
     this._place = null
     this.orbitInput = null
     this.spawner = null
+    this.proxies = null // its observer and materials went with `controllers`
     this.cables = null
     this.bag = null
     this.controllers = null
@@ -750,6 +786,12 @@ export class SceneHost {
     this.bag = bag
     this.controllers = new DisposableBag()
     this.spawner = new DeviceSpawner(scene, this.registry, CREATION_DEVICE_THEME)
+    // Disposed first with the place's other controllers (its camera observer goes before the camera does).
+    this.proxies = new PortProxies(
+      { scene, camera, canvas: this.canvas, instance: (id) => this.instances.get(id), instances: () => this.instances.values() },
+      this.controllers,
+      () => this.onPortViewChange?.()
+    )
     this.cables = new CableRenderer(scene, undefined, { pulses: false })
     // L7 (Task 18): a recalled view lands exactly, even during an orbit flick.
     this._rig = new CameraRig(camera, { stopInertiaOnFlight: true })
@@ -861,7 +903,11 @@ export class SceneHost {
       // The .glb replaces the placeholder later: its ports move, its cables follow.
       void inst.modelReady.then((ok) => {
         if (this.instances.get(p.instanceId) !== inst) return // removed or place changed meanwhile
-        if (ok) this.redrawCablesOf(new Set([p.instanceId]))
+        if (ok) {
+          this.redrawCablesOf(new Set([p.instanceId]))
+          this.proxies?.refresh() // the .glb moved the ports
+          this.onPortViewChange?.() // a label on screen follows its port
+        }
         this.applyDecor() // the .glb body meshes take the outline / hidden state too
       })
     }
@@ -875,6 +921,7 @@ export class SceneHost {
     for (const c of ops.cablesAdd) this.drawCable(c.key, c.a, c.b)
     // Endpoints follow moved / respawned devices.
     this.redrawCablesOf(touched)
+    this.proxies?.refresh() // new / moved devices: their port proxies are sized for the camera
     this.applyDecor() // invalidates
   }
 

@@ -1,0 +1,41 @@
+/*
+ * Port labels (Task 26, C18): bubbles anchored to a port of the 3D scene. Papier on the panel colour (the
+ * toast's and the drawer's pair, 15.2:1), square, no motion at all (they appear and disappear). All are
+ * `hidden` at rest, so the viewport stays clear. The hover label and the refusal never take a click; the
+ * « Débrancher » offer does (its button), and its focus ring is the shell's (2 px Ambre + 1 px Nuit).
+ */
+.cr-port-label {
+  position: absolute;
+  z-index: 3; /* with the toast: above the inventory drawer (2) and the view cube's pointer layer (1) */
+  box-sizing: border-box;
+  max-width: min(420px, calc(100% - 12px));
+  padding: 4px 8px;
+  background: var(--cr-panel);
+  color: var(--cr-papier);
+  border: 1px solid var(--cr-prune);
+  font: 400 12px/1.35 var(--cr-font-ui);
+  pointer-events: none;
+  transition: none;
+}
+.cr-port-label[hidden] { display: none; }
+/* The refusal: the danger colour (>= 4.5:1 on the panel) on a danger border. */
+.cr-port-error { color: var(--cr-danger); border-color: var(--cr-danger); font-weight: 500; }
+.cr-port-offer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+  max-width: min(520px, calc(100% - 12px));
+}
+.cr .cr-port-unplug {
+  flex: none;
+  min-height: 24px; /* WCAG 2.5.8 */
+  padding: 0 10px;
+  border: 1px solid var(--cr-ink-muted);
+  background: var(--cr-nuit);
+  color: var(--cr-papier);
+  font: 500 12px/1 var(--cr-font-ui);
+  /* Cuts only: the legacy `button { transition: all }` would otherwise animate the focus ring. */
+  transition: none;
+}
+.cr .cr-port-unplug:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }

@@ -327,7 +327,7 @@ describe('moving the selected device', () => {
     s.fire('pointerup', 202, 301)
     expect(pose(s)).toEqual([2, 0, 3])
     expect(s.history.sizes.undo).toBe(1)
-    expect(s.onClickSelected).toHaveBeenCalledWith('ql1')
+    expect(s.onClickSelected).toHaveBeenCalledWith('ql1', 202, 301) // the release point: a click on a port of the device is the cabling's
   })
 
   it('a press off the device, or on an unselected one, is the camera\'s', () => {

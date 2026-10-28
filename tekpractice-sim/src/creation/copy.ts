@@ -586,4 +586,60 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Toast (`role="status"`, 2.5 s) after a click on the empty floor, the sky or a hidden device; the selection is cleared. */
     missed: 'Rien ici : clique un appareil ou ouvre l’inventaire ({key}).',
   },
+  /** Click-to-patch on the scene's ports (Task 26, CA-19, CA-20). {a} / {b} / {port} / {other} = « Appareil · prise ». */
+  patch: {
+    /** Étiquette au survol d’une prise (jamais permanente) ; {port} = nom de la prise, {connector} = connecteur, {signal} = type de signal. */
+    hoverLabel: '{port} · {connector} · {signal}',
+    /** Libellé de l’entrée d’historique d’un branchement. */
+    entryConnect: 'Brancher {a} à {b}',
+    /** Libellé de l’entrée d’historique d’un débranchement. */
+    entryUnplug: 'Débrancher {a} de {b}',
+    /** Barre d’état après le clic sur la première prise (annoncé). */
+    statusPending: '{port} choisie. Cliquez une prise verte pour brancher le câble, Échap pour annuler.',
+    /** Barre d’état après Échap ou un second clic sur la même prise (annoncé). */
+    statusCancelled: 'Câblage annulé.',
+    /** Barre d’état après un branchement réussi (annoncé) ; {undo} = touche d’annulation. */
+    statusConnected: 'Branché : {a} à {b}. {undo} pour annuler.',
+    /** Barre d’état après « Débrancher » sur une prise (annoncé). */
+    statusUnplugged: 'Débranché : {a} de {b}. {undo} pour annuler.',
+    /** Message épinglé sur la deuxième prise quand le branchement est refusé (`role="alert"`) ; {title} = titre de la règle. */
+    errorLabel: 'Branchement refusé : {title}',
+    /** Bulle sur une prise déjà branchée ; propose « Débrancher ». */
+    offerText: '{port} est branchée à {other}.',
+    /** Nom accessible de la bulle « Débrancher ». */
+    offerGroup: 'Prise déjà branchée',
+    /** Texte visible du bouton de la bulle. */
+    offerUnplug: 'Débrancher',
+    /** Nom complet du bouton de la bulle. */
+    offerName: 'Débrancher {port} de {other}',
+  },
+  /** Connectors (catalog `connectorTypes[].id`) as the hover label names them: faithful renderings of the catalog labels. */
+  connector: {
+    'xlr3-m': 'XLR3 mâle',
+    'xlr3-f': 'XLR3 femelle',
+    'xlr5-m': 'XLR5 mâle (DMX)',
+    'xlr5-f': 'XLR5 femelle (DMX)',
+    'trs-quarter': 'Jack TRS 6,35 mm (symétrique / stéréo)',
+    'ts-quarter': 'Jack TS 6,35 mm (asymétrique)',
+    'trs-35mm': 'Mini-jack TRS 3,5 mm',
+    rca: 'RCA / cinch',
+    'rj45': 'RJ45 (Cat5e/6)',
+    ethercon: 'Neutrik etherCON (RJ45 renforcé)',
+    'speakon-nl4': 'Neutrik Speakon NL4',
+    'powercon-blue': 'Neutrik powerCON (bleu, entrée secteur)',
+    'powercon-true1': 'Neutrik powerCON TRUE1',
+    'iec-c13': 'IEC C13 (fiche secteur)',
+    'iec-c14': 'IEC C14 (embase secteur)',
+    'schuko-plug': 'Fiche Schuko (CEE 7/7)',
+    'schuko-socket': 'Prise murale Schuko (CEE 7/3)',
+    bnc: 'BNC 75 Ω (word clock / MADI coaxial)',
+    'tt-bantam': 'TT / Bantam 4,4 mm (baie de brassage)',
+    'dsub25': 'D-sub 25 (TASCAM analogique / AES59 numérique)',
+    toslink: 'TOSLINK optique',
+    'usb-a': 'USB Type-A',
+    'usb-b': 'USB Type-B',
+    'usb-c': 'USB Type-C / Thunderbolt 3',
+    digilink: 'Avid DigiLink',
+    'gpio-terminal': 'Bornier GPIO / port logique D-sub',
+  },
 }

@@ -543,3 +543,55 @@ Retour sur un clic qui ne touche rien (Task 25, CA-12) : un message bref (`role=
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
 | `feedback.missed` | Rien ici : clique un appareil ou ouvre l’inventaire ({key}). | à valider (tekuxwriter) | Message bref après un clic sur le sol vide, le ciel ou un appareil masqué ; la sélection est levée |
+
+## patch
+
+Câbler au clic sur les prises de la scène (Task 26, CA-19, CA-20). Survoler une prise affiche son étiquette ; cliquer une première prise la choisit (les prises compatibles passent au vert, les autres s’atténuent), cliquer une seconde prise branche le câble. Un branchement refusé épingle le titre de la règle sur la seconde prise et l’ajoute à la liste d’erreurs de la barre d’état. Cliquer une prise déjà branchée propose « Débrancher ». Échap annule. `{a}` / `{b}` / `{port}` / `{other}` = « Appareil · prise », `{undo}` = touche d’annulation.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `patch.hoverLabel` | {port} · {connector} · {signal} | à valider (tekuxwriter) | Étiquette au survol d’une prise (jamais permanente) ; {port} = nom de la prise, {connector} = connecteur, {signal} = type de signal |
+| `patch.entryConnect` | Brancher {a} à {b} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’un branchement |
+| `patch.entryUnplug` | Débrancher {a} de {b} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’un débranchement |
+| `patch.statusPending` | {port} choisie. Cliquez une prise verte pour brancher le câble, Échap pour annuler. | à valider (tekuxwriter) | Barre d’état après le clic sur la première prise (annoncé) |
+| `patch.statusCancelled` | Câblage annulé. | à valider (tekuxwriter) | Barre d’état après Échap ou un second clic sur la même prise (annoncé) |
+| `patch.statusConnected` | Branché : {a} à {b}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un branchement réussi (annoncé) ; {undo} = touche d’annulation |
+| `patch.statusUnplugged` | Débranché : {a} de {b}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après « Débrancher » sur une prise (annoncé) |
+| `patch.errorLabel` | Branchement refusé : {title} | à valider (tekuxwriter) | Message épinglé sur la deuxième prise quand le branchement est refusé (`role="alert"`) ; {title} = titre de la règle |
+| `patch.offerText` | {port} est branchée à {other}. | à valider (tekuxwriter) | Bulle sur une prise déjà branchée ; propose « Débrancher » |
+| `patch.offerGroup` | Prise déjà branchée | à valider (tekuxwriter) | Nom accessible de la bulle « Débrancher » |
+| `patch.offerUnplug` | Débrancher | à valider (tekuxwriter) | Texte visible du bouton de la bulle |
+| `patch.offerName` | Débrancher {port} de {other} | à valider (tekuxwriter) | Nom complet du bouton de la bulle |
+
+## connector
+
+Noms français des connecteurs du catalogue (`connectorTypes[].id`), repris dans l’étiquette au survol d’une prise : rendus fidèles des libellés du catalogue, sans fait technique nouveau.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `connector.xlr3-m` | XLR3 mâle | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.xlr3-f` | XLR3 femelle | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.xlr5-m` | XLR5 mâle (DMX) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.xlr5-f` | XLR5 femelle (DMX) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.trs-quarter` | Jack TRS 6,35 mm (symétrique / stéréo) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.ts-quarter` | Jack TS 6,35 mm (asymétrique) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.trs-35mm` | Mini-jack TRS 3,5 mm | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.rca` | RCA / cinch | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.rj45` | RJ45 (Cat5e/6) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.ethercon` | Neutrik etherCON (RJ45 renforcé) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.speakon-nl4` | Neutrik Speakon NL4 | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.powercon-blue` | Neutrik powerCON (bleu, entrée secteur) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.powercon-true1` | Neutrik powerCON TRUE1 | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.iec-c13` | IEC C13 (fiche secteur) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.iec-c14` | IEC C14 (embase secteur) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.schuko-plug` | Fiche Schuko (CEE 7/7) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.schuko-socket` | Prise murale Schuko (CEE 7/3) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.bnc` | BNC 75 Ω (word clock / MADI coaxial) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.tt-bantam` | TT / Bantam 4,4 mm (baie de brassage) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.dsub25` | D-sub 25 (TASCAM analogique / AES59 numérique) | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.toslink` | TOSLINK optique | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.usb-a` | USB Type-A | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.usb-b` | USB Type-B | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.usb-c` | USB Type-C / Thunderbolt 3 | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.digilink` | Avid DigiLink | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.gpio-terminal` | Bornier GPIO / port logique D-sub | à valider (tekuxwriter) | Étiquette de prise |

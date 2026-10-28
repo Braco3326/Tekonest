@@ -50,8 +50,11 @@ export interface PlacementOptions {
   undoLabel?(): string
   /** A device was dropped: the shell selects it (no camera flight). */
   onPlaced?(instanceId: string): void
-  /** A press-and-release on the selected device without a drag: the shell's usual click (select and frame). */
-  onClickSelected?(instanceId: string): void
+  /**
+   * A press-and-release on the selected device without a drag: the shell's usual click (select and frame).
+   * (x, y) is the release point (canvas px): a click on a port of that device is the cabling's (Task 26).
+   */
+  onClickSelected?(instanceId: string, x: number, y: number): void
   /** Snapping while placing / dragging: false = grid, true = free (Alt), null = nothing is being placed or dragged. */
   onSnap?(free: boolean | null): void
   /** Called just before a drag opens its transaction (the shell closes a stepper burst still open). */
@@ -290,7 +293,7 @@ export class PlacementController {
       if (e.pointerId !== d.pointerId) return
       const click = !d.armed && isClick({ x: d.x, y: d.y, t: d.t }, { x: e.offsetX, y: e.offsetY, t: e.timeStamp })
       this.endDrag(false)
-      if (click) this.opts.onClickSelected?.(d.instanceId)
+      if (click) this.opts.onClickSelected?.(d.instanceId, e.offsetX, e.offsetY)
       else if (d.moved)
         this.opts.announce?.(
           COPY.placement!.statusMoved!

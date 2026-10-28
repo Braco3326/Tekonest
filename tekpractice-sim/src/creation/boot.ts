@@ -35,6 +35,8 @@ import { loadPlaceData } from './placeData'
 import { createPlaceController, type PlaceResult } from './placeController'
 import { PlacementController } from './placementController'
 import { EditController } from './editController'
+import { PatchController } from './patchController'
+import { mountPortLabels } from './shell/portLabel'
 import { mountToast } from './shell/toast'
 import { designFromRoomGear, unavailableList } from './templateGear'
 import { loadTemplates, templateToDesign } from './templates'
@@ -504,6 +506,7 @@ export async function bootCreation(): Promise<void> {
     const ids = new Set(zones().map((z) => `zone:${z.id}`))
     const hidden = viewState.get().hidden.filter((k) => !k.startsWith('zone:') || ids.has(k))
     atPoint = null // a new camera: it stands on no point
+    patch.reset() // a cable in hand, a pinned refusal or an offer belong to the old scene's ports
     toast.dismiss() // a message about the previous place's view does not carry over
     // Any other camera request (cube, menu, V, home, a quarter turn, re-pivot, device focus) leaves
     // the point, even while the point's own flight still runs (Task 21 review minor).
@@ -1245,6 +1248,9 @@ export async function bootCreation(): Promise<void> {
       return true
     }
     if (placement.cancel()) return true // a placement or a drag goes first; the selection stays
+    // A held Échap is one press: its auto-repeats must not fall through to the next level (the cable, then the selection).
+    if (e.repeat) return true
+    if (patch.cancel()) return true // then a cable in hand, a pinned refusal or the « Débrancher » offer; the selection stays
     if (e.target !== canvas || viewState.get().selection === null) return false
     selection.select(null)
     return true
@@ -1313,7 +1319,8 @@ export async function bootCreation(): Promise<void> {
   attachCanvasPicking(
     canvas,
     shellBag,
-    (x, y) => (placement.placing ? null : pickDevice(host.scene, x, y)),
+    // A port is the cabling's (Task 26): a click on one is neither a selection nor a miss.
+    (x, y) => (placement.placing || patch.wouldTake(x, y) ? null : pickDevice(host.scene, x, y)),
     selection,
     (x, y) => missedClick(x, y)
   )
@@ -1324,13 +1331,45 @@ export async function bootCreation(): Promise<void> {
     (x, y) => (placement.placing ? null : pickDevice(host.scene, x, y)),
     (id) => host.setHovered(id)
   )
+  // ── Click-to-patch (Task 26, CA-19, CA-20): enlarged port proxies, hover labels, click port A then port B.
+  // Created AFTER the picking (whose pick / miss handlers ask `patch.wouldTake` before this controller's own release
+  // handler changes its state) and BEFORE the placement (its capture-phase press must see every press first); inert
+  // while a ghost or a drag owns the pointer.
+  const portLabels = mountPortLabels(document, shell.viewport, shellBag)
+  const portName = (r: { instance: string; port: string }): string => `${deviceLabel(r.instance)} (${r.instance}) · ${r.port}`
+  /** « in-mic-1 · XLR3 femelle · Niveau micro » (the names are the catalog's, in French through COPY). */
+  const describePort = (r: { instance: string; port: string }): string => {
+    const deviceId = store.design().rig.instances.find((i) => i.instanceId === r.instance)?.deviceId
+    const p = (deviceId ? registry.deviceById.get(deviceId) : undefined)?.ports.find((q) => q.portId === r.port)
+    if (!p) return r.port
+    return COPY.patch!.hoverLabel!
+      .replace('{port}', p.portId)
+      .replace('{connector}', COPY.connector?.[p.connector] ?? registry.connectorById.get(p.connector)?.label ?? p.connector)
+      .replace('{signal}', COPY.signal?.[p.signal] ?? registry.signalById.get(p.signal)?.label ?? p.signal)
+  }
+  const patch = new PatchController(host, history, store, scheduler, shellBag, {
+    ui: portLabels,
+    busy: () => placement.placing || placement.dragging,
+    describe: describePort,
+    portName,
+    allPorts: () =>
+      store.design().rig.instances.flatMap((i) =>
+        (registry.deviceById.get(i.deviceId)?.ports ?? []).map((p) => ({ instance: i.instanceId, port: p.portId }))
+      ),
+    rejectionTitle: (error, subjects) => rejectionOf(error, subjects, ruleText).title,
+    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    undoLabel,
+    beforeDispatch: () => props.flush(),
+  })
+
   // Placing and moving devices (Task 24, CA-10, P20): after the picking above, so a drop is not also a click-to-select.
   const placement = new PlacementController(host, history, store, viewState, scheduler, shellBag, {
     deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
     announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
     undoLabel,
     onPlaced: (id) => selection.select(id, { fly: false }),
-    onClickSelected: (id) => selection.select(id),
+    // A click on a port of the selected device is the cabling's; any other click on it selects and frames it.
+    onClickSelected: (id, x, y) => void (patch.clickAt(x, y) || selection.select(id)),
     onSnap: (free) => {
       snapFree = free === null ? undefined : free
       refreshSignal()
@@ -1385,7 +1424,7 @@ export async function bootCreation(): Promise<void> {
   // place picker, nor on a port (its click is the cabling's).
   const toast = mountToast(document, shell.viewport, shellBag)
   const missedClick = (x: number, y: number): void => {
-    if (placement.placing || host.walking || viewLocked() || portAt(host.scene, x, y)) return
+    if (placement.placing || host.walking || viewLocked() || patch.wouldTake(x, y)) return
     if (viewState.get().selection !== null) viewState.set({ selection: null }) // not undoable; the toast speaks, not the status bar
     toast.show(COPY.feedback!.missed!.replace('{key}', bindingLabel(keys.bindings, 'TOGGLE_INVENTORY') || COPY.keys!.space!))
   }
@@ -1539,6 +1578,15 @@ export async function bootCreation(): Promise<void> {
       return inst ? screen(bodyCentreOf(inst)) : null
     },
     portScreen: (ref) => screen(host.portWorld(ref)),
+    portHitRadiusPx: (ref) => host.portHitRadiusPx(ref),
+    portAtPoint: (x, y) => host.portAtPoint(x, y, true),
+    patchPending: () => patch.pending,
+    devicePorts: (id) => [...(host.instance(id)?.portMarkers.keys() ?? [])],
+    visiblePortLabels: () => host.scene?.meshes.filter((m) => m.name.startsWith('portlabel:') && m.isEnabled() && m.isVisible).length ?? 0,
+    setCameraRadius: (r) => {
+      if (host.camera) host.camera.radius = r
+      scheduler.invalidate()
+    },
     worldScreen: (p) => screen(Vector3.FromArray(p)),
     choosePlace,
     requestPlace,

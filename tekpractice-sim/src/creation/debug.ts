@@ -90,6 +90,18 @@ export interface CreationDebug {
   placing(): boolean
   /** Task 24: `scene.transformNodes.length` (a ghost must not leave the glb's nodes behind). */
   transformNodeCount(): number
+  /** Task 26: a port's hit radius on screen in CSS px (>= 12 = a 24 px target at any distance); 0 for an unknown port. */
+  portHitRadiusPx(ref: PortRef): number
+  /** Task 26: the port under a canvas-relative point (CSS px), proxies included. */
+  portAtPoint(x: number, y: number): PortRef | null
+  /** Task 26: the ports of a device (ids), [] when unknown. */
+  devicePorts(instanceId: string): string[]
+  /** Task 26: in-scene port label planes drawn right now (0 = none: labels exist on hover only, as DOM). */
+  visiblePortLabels(): number
+  /** Task 26: move the orbit camera to this distance at once (a zoom). */
+  setCameraRadius(radius: number): void
+  /** Task 26: the first port clicked while a cable is in hand, or null. */
+  patchPending(): PortRef | null
   /** Task 24: the raw floor point under a page point (CSS px), as the placement pick finds it; null off the floor. */
   floorPoint(x: number, y: number): [number, number, number] | null
 }
