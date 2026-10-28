@@ -108,3 +108,42 @@ test("families grid is two columns above 800px", () => {
   assert.match(css, /\.families\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/);
   assert.match(css, /@media \(max-width: 800px\)\s*\{\s*\.families\s*\{[^}]*grid-template-columns: 1fr/);
 });
+
+const main = (name) => {
+  const html = plain(page(name));
+  return html.slice(html.indexOf("<main"), html.indexOf("</main>"));
+};
+
+test("home shows exactly two doors", () => {
+  const doors = main("index.html").match(/<ul class="doors[\s\S]*?<\/ul>/)[0];
+  assert.equal((doors.match(/<li class="door cadre">/g) || []).length, 2);
+  assert.deepEqual(
+    [...doors.matchAll(/<h3><a href="([^"]+)">/g)].map((m) => m[1]),
+    ["apprendre.html", "creer.html"]
+  );
+  assert.doesNotMatch(main("index.html"), /reseau\.html/);
+});
+
+test("home hero copy and section titles say two entrances", () => {
+  const html = main("index.html");
+  assert.match(html, /<p class="lead">Se former, créer : des fils tressés ensemble\.<\/p>/);
+  assert.match(html, /<a class="btn btn-light" href="#entrees">Les deux entrées<\/a>/);
+  assert.match(html, /<p class="eyebrow">Deux entrées<\/p>/);
+  assert.doesNotMatch(html, /trois entrées/i);
+});
+
+test("status board lists three branches and the build date", () => {
+  const html = main("index.html");
+  const rows = [...html.matchAll(/<tbody>([\s\S]*?)<\/tbody>/g)][0][1].match(/<tr>[\s\S]*?<\/tr>/g);
+  assert.deepEqual(
+    rows.map((r) => r.match(/<th[^>]*><a [^>]*>([^<]+)<\/a>/)[1]),
+    ["Apprendre", "TekPractice", "Créer avec nous"]
+  );
+  assert.doesNotMatch(html, /Réseau/);
+  assert.match(html, /Mis à jour le 28 octobre 2026\./);
+  assert.match(rows[2], /<span class="status status--prep">En projet<\/span>/);
+});
+
+test("doors grid has two columns", () => {
+  assert.match(page("assets/css/site.css"), /\.doors\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/);
+});
