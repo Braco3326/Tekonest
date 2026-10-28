@@ -3,7 +3,8 @@
  * in-line-a · ligne ») is shown in the one hover label of the shell (`PatchUi.showHover`, the port label's own element).
  *
  * - Priority: a port under the pointer (the enlarged proxies of Task 26) or a device body wins over a cable; the cable
- *   is hovered only when the pointer is over a cable and nothing else.
+ *   is hovered only when the pointer is over a cable and nothing else. The cable test (pure projection) runs FIRST and
+ *   alone when no cable is near: the scene picks (port, device) are not repeated for every move over empty space.
  * - ONE label at a time. The label is shared with the port hover (`PatchController`), which runs first on the same canvas
  *   events: this controller hides the label only when it OWNS it (it showed the cable text); when a port takes the
  *   pointer the label is the port's now and is left alone.
@@ -114,14 +115,24 @@ export class CableHoverController {
     if (this.pointer && !this.inert()) this.evaluate()
   }
 
+  /**
+   * The cheap test first: the cable is found by projecting its points (no scene pick). The shell already does two scene
+   * picks per pointer move (the device hover, the patch controller's port hover), so the port and device picks run here
+   * only when a cable is near the pointer (to see whether one of them wins) or when this controller owns the label and
+   * must know who takes it over.
+   */
   private evaluate(): void {
     const p = this.pointer
     if (!p) return
-    // A port wins: the port label is the patch controller's now, never hidden from here.
+    const key = this.host.cableAtPoint(p.x, p.y)
+    if (key === null) {
+      if (this.key === null) return // nothing hovered, nothing near: no pick, no work
+      // The cable we showed is no longer under the pointer. A port label is the patch controller's: never hide it from here.
+      return this.release(!this.host.portAtPoint(p.x, p.y))
+    }
+    // A port wins (its label is the patch controller's), then a device body; the cable is hovered only when alone.
     if (this.host.portAtPoint(p.x, p.y)) return this.release(false)
     if (this.opts.deviceAt(p.x, p.y)) return this.release(true)
-    const key = this.host.cableAtPoint(p.x, p.y)
-    if (key === null) return this.release(true)
     if (key === this.key) return this.opts.ui.moveHover(p.page)
     const text = this.opts.describe(key)
     if (text === null) return this.release(true)

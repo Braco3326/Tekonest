@@ -16,6 +16,24 @@ const distance = (a: string, b: string): number => {
   return Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2])
 }
 
+/** Machado, Oliveira, Fernandes (2009), severity 1.0, applied to linear RGB. */
+const MACHADO: Record<string, number[][]> = {
+  protanopia: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
+  deuteranopia: [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.01182, 0.04294, 0.968881]],
+  tritanopia: [[1.255528, -0.076749, -0.178779], [-0.078411, 0.930809, 0.147602], [0.004733, 0.691367, 0.3039]],
+}
+const toLinear = (c: number): number => ((c /= 255) <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4))
+const toSrgb = (v: number): string => {
+  const x = Math.min(1, Math.max(0, v))
+  const c = 255 * (x <= 0.0031308 ? x * 12.92 : 1.055 * Math.pow(x, 1 / 2.4) - 0.055)
+  return Math.round(c).toString(16).padStart(2, '0')
+}
+/** The colour as a colour-blind eye sees it, as '#rrggbb'. */
+const simulate = (m: number[][], hex: string): string => {
+  const l = rgb(hex).map(toLinear)
+  return '#' + m.map((row) => toSrgb(row[0]! * l[0]! + row[1]! * l[1]! + row[2]! * l[2]!)).join('')
+}
+
 describe('SIGNAL_STYLE', () => {
   it('has a style for every signal id of the catalog, and no other (the catalog is the source of truth)', () => {
     expect(catalogSignals.length).toBeGreaterThanOrEqual(16)
@@ -36,6 +54,24 @@ describe('SIGNAL_STYLE', () => {
   })
   it('each colour reads on the Nuit background (>= 3:1, WCAG 1.4.11)', () => {
     for (const id of catalogSignals) expect(contrastRatio(SIGNAL_STYLE[id]!.color, CREATION_TOKENS.color.nuit), id).toBeGreaterThanOrEqual(3)
+  })
+  it('each colour also reads on the panel colour (>= 3:1, the legend swatches sit on it)', () => {
+    for (const id of catalogSignals) expect(contrastRatio(SIGNAL_STYLE[id]!.color, CREATION_TOKENS.color.panel), id).toBeGreaterThanOrEqual(3)
+  })
+  it('colours stay apart for colour-blind users: every pair is >= 30 apart (simple RGB distance) under simulated protanopia, deuteranopia and tritanopia', () => {
+    for (const [name, m] of Object.entries(MACHADO)) {
+      for (let i = 0; i < catalogSignals.length; i++)
+        for (let j = i + 1; j < catalogSignals.length; j++) {
+          const [a, b] = [catalogSignals[i]!, catalogSignals[j]!]
+          expect(distance(simulate(m, SIGNAL_STYLE[a]!.color), simulate(m, SIGNAL_STYLE[b]!.color)), `${name}: ${a} / ${b}`).toBeGreaterThanOrEqual(30)
+        }
+    }
+  })
+  it('no signal colour is the selection Ambre or the hover Papier (a cable never reads as a selected device)', () => {
+    for (const id of catalogSignals) {
+      expect(distance(SIGNAL_STYLE[id]!.color, CREATION_TOKENS.color.ambre), id).toBeGreaterThanOrEqual(60)
+      expect(distance(SIGNAL_STYLE[id]!.color, CREATION_TOKENS.color.papier), id).toBeGreaterThanOrEqual(60)
+    }
   })
   it('mains-power is dashed, so the colour is never the only cue; no other signal is', () => {
     expect(SIGNAL_STYLE['mains-power']!.dash).toBe(true)

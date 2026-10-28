@@ -505,22 +505,31 @@ export class SceneHost {
    * with the camera's own matrices and the nearest polyline wins. Null in the walk view and for hidden cables.
    */
   cableAtPoint(x: number, y: number): string | null {
-    const cables = this.cables
-    const project = this.canvasProjector()
-    if (!cables || !project || this.walking) return null
-    return nearestCable(
-      cables.paths().map(([id, path]) => [id, path.map(project)] as const),
-      { x, y },
-      CABLE_HIT_PX
-    )
+    if (this.walking) return null
+    const lines = this.screenLines()
+    return lines.length ? nearestCable(lines, { x, y }, CABLE_HIT_PX) : null
   }
+
+  /**
+   * The drawn, enabled cables projected to canvas CSS px. Cached per (camera pose, canvas size, rig, hidden set): a pointer
+   * move over a still camera projects nothing (only the nearest-segment test runs), and an empty scene projects nothing.
+   */
+  private screenLines(): ReadonlyArray<readonly [string, ReadonlyArray<Pt | null>]> {
+    const cables = this.cables
+    const paths = cables?.paths() ?? []
+    if (!cables || !paths.length) return []
+    const view = this.canvasProjector()
+    if (!view) return []
+    const sig = `${cables.revision}|${paths.map(([id]) => id).join(';')}|${view.sig}`
+    if (this.screenCache?.sig !== sig) this.screenCache = { sig, lines: paths.map(([id, path]) => [id, path.map(view.project)] as const) }
+    return this.screenCache.lines
+  }
+  private screenCache: { sig: string; lines: ReadonlyArray<readonly [string, ReadonlyArray<Pt | null>]> } | null = null
 
   /** Points along a drawn cable in canvas CSS px (its path points and the middles between them), for tests; null when not drawn. */
   cableSamples(key: string): Pt[] | null {
-    const project = this.canvasProjector()
-    const path = this.cables?.paths().find(([id]) => id === key)?.[1]
-    if (!project || !path) return null
-    const pts = path.map(project)
+    const pts = this.screenLines().find(([id]) => id === key)?.[1]
+    if (!pts) return null
     const out: Pt[] = []
     for (let i = 0; i < pts.length; i++) {
       const p = pts[i]
@@ -533,9 +542,10 @@ export class SceneHost {
 
   /**
    * World point -> canvas CSS px with the camera's OWN matrices (the scene's transform matrix is only refreshed by the
-   * next render); null behind the camera. Null itself when there is no camera or no size yet.
+   * next render); null behind the camera. `sig` changes whenever the projection does (pose, size, viewport). The
+   * returned `project` reuses two scratch vectors: no allocation per point but the result.
    */
-  private canvasProjector(): ((p: { x: number; y: number; z: number }) => Pt | null) | null {
+  private canvasProjector(): { project: (p: { x: number; y: number; z: number }) => Pt | null; sig: string } | null {
     const camera = this._camera
     if (!camera) return null
     const w = this.engine.getRenderWidth()
@@ -546,10 +556,16 @@ export class SceneHost {
     const viewport = camera.viewport.toGlobal(w, h)
     const kx = rect.width / w
     const ky = rect.height / h
-    return (p) => {
-      const q = Vector3.Project(new Vector3(p.x, p.y, p.z), Matrix.Identity(), transform, viewport)
-      // Depth outside [0, 1]: behind the camera or beyond the far plane.
-      return q.z >= 0 && q.z <= 1 && Number.isFinite(q.x) && Number.isFinite(q.y) ? { x: q.x * kx, y: q.y * ky } : null
+    const from = new Vector3()
+    const to = new Vector3()
+    return {
+      sig: `${w}x${h}|${rect.width}x${rect.height}|${viewport.x},${viewport.y},${viewport.width},${viewport.height}|${Array.prototype.join.call(transform.m, ',')}`,
+      project: (p) => {
+        from.set(p.x, p.y, p.z)
+        Vector3.ProjectToRef(from, Matrix.IdentityReadOnly, transform, viewport, to)
+        // Depth outside [0, 1]: behind the camera or beyond the far plane.
+        return to.z >= 0 && to.z <= 1 && Number.isFinite(to.x) && Number.isFinite(to.y) ? { x: to.x * kx, y: to.y * ky } : null
+      },
     }
   }
 

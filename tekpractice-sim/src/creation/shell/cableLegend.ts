@@ -25,6 +25,30 @@ export interface CableLegend {
 const SVG = 'http://www.w3.org/2000/svg'
 const L = (): Readonly<Record<string, string>> => COPY.cables!
 
+/** The dash pattern of a dashed signal's stroke sample (SVG user units, the swatch is 36 wide). */
+export const DASH_PATTERN = '6 4'
+
+/** What one legend row shows: the data the DOM is built from (pure, unit tested: the repo's unit tests have no DOM). */
+export interface LegendRow {
+  id: string
+  label: string
+  /** The stroke sample's colour. */
+  color: string
+  /** `stroke-dasharray` of the sample; null = a solid stroke. */
+  dasharray: string | null
+  /** The text note next to a dashed sample (« pointillés »), so the stroke is not the only cue; null otherwise. */
+  note: string | null
+}
+
+export function legendRows(entries: readonly LegendEntry[]): LegendRow[] {
+  return entries.map((e) => ({ id: e.id, label: e.label, color: e.color, dasharray: e.dash ? DASH_PATTERN : null, note: e.dash ? L().dashed! : null }))
+}
+
+/** The toggle's state for the list being open or folded: `aria-expanded`, the accessible name, the list's `hidden`. */
+export function toggleState(open: boolean): { expanded: 'true' | 'false'; name: string; listHidden: boolean } {
+  return { expanded: open ? 'true' : 'false', name: open ? L().legendCollapse! : L().legendExpand!, listHidden: !open }
+}
+
 /** A chevron: points down when the list is open (folding it up). Rotated by CSS. */
 function chevron(doc: Document): SVGSVGElement {
   const svg = doc.createElementNS(SVG, 'svg')
@@ -43,7 +67,7 @@ function chevron(doc: Document): SVGSVGElement {
 }
 
 /** The stroke sample: a line in the cable's colour, dashed like the cable when it is. */
-function swatch(doc: Document, e: LegendEntry): SVGSVGElement {
+function swatch(doc: Document, e: LegendRow): SVGSVGElement {
   const svg = doc.createElementNS(SVG, 'svg')
   svg.setAttribute('viewBox', '0 0 36 8')
   svg.setAttribute('class', 'cr-legend-swatch')
@@ -57,7 +81,7 @@ function swatch(doc: Document, e: LegendEntry): SVGSVGElement {
   line.setAttribute('stroke', e.color)
   line.setAttribute('stroke-width', '3')
   line.setAttribute('stroke-linecap', 'butt')
-  if (e.dash) line.setAttribute('stroke-dasharray', '6 4')
+  if (e.dasharray) line.setAttribute('stroke-dasharray', e.dasharray)
   svg.appendChild(line)
   return svg
 }
@@ -94,11 +118,11 @@ export function mountCableLegend(doc: Document, container: HTMLElement, bag: Dis
   let open = true
   let shown = ''
   const apply = (): void => {
-    list.hidden = !open
-    toggle.setAttribute('aria-expanded', String(open))
-    const name = open ? L().legendCollapse! : L().legendExpand!
-    toggle.setAttribute('aria-label', name)
-    toggle.title = name
+    const st = toggleState(open)
+    list.hidden = st.listHidden
+    toggle.setAttribute('aria-expanded', st.expanded)
+    toggle.setAttribute('aria-label', st.name)
+    toggle.title = st.name
     root.dataset.open = String(open)
   }
   apply()
@@ -118,11 +142,12 @@ export function mountCableLegend(doc: Document, container: HTMLElement, bag: Dis
       apply()
     },
     set(entries) {
-      const key = entries.map((e) => `${e.id}|${e.color}|${e.dash}|${e.label}`).join('\n')
+      const rows = legendRows(entries)
+      const key = rows.map((r) => `${r.id}|${r.color}|${r.dasharray}|${r.label}`).join('\n')
       if (key === shown) return
       shown = key
       list.replaceChildren(
-        ...entries.map((e) => {
+        ...rows.map((e) => {
           const li = doc.createElement('li')
           li.className = 'cr-legend-item'
           li.dataset.signal = e.id
@@ -130,10 +155,10 @@ export function mountCableLegend(doc: Document, container: HTMLElement, bag: Dis
           name.className = 'cr-legend-name'
           name.textContent = e.label
           li.append(swatch(doc, e), name)
-          if (e.dash) {
+          if (e.note) {
             const note = doc.createElement('span')
             note.className = 'cr-legend-note'
-            note.textContent = L().dashed!
+            note.textContent = e.note
             li.append(note)
           }
           return li

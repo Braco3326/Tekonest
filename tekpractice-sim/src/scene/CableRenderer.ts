@@ -46,6 +46,7 @@ export class CableRenderer {
   private colored = new Map<string, StandardMaterial>()
   private hot = new Map<string, StandardMaterial>()
   private _highlighted: string | null = null
+  private _revision = 0
   private drag: { mesh: Mesh; from: Vector3 } | null = null
   private mats!: Record<DragTint | 'committed', StandardMaterial>
 
@@ -125,6 +126,7 @@ export class CableRenderer {
    */
   addCable(connectionId: string, a: Vector3, b: Vector3, ends?: readonly [PortRef, PortRef]): void {
     const wasHot = this._highlighted === connectionId
+    this._revision++
     this.removeCable(connectionId)
     const segments = this.budget.grant(connectionId) // straight line once over budget
     const path = catenaryPoints(a, b, segments)
@@ -149,6 +151,11 @@ export class CableRenderer {
     const out: [string, readonly P3[]][] = []
     for (const [id, c] of this.committed) if (c.mesh.isEnabled()) out.push([id, c.path])
     return out
+  }
+
+  /** Changes whenever a cable is added, redrawn or removed (a cache key for what is drawn). */
+  get revision(): number {
+    return this._revision
   }
 
   /** The cable drawn lighter (the hover); null = none. */
@@ -200,6 +207,7 @@ export class CableRenderer {
     const drawn = this.committed.get(connectionId)
     if (!drawn) return
     drawn.mesh.dispose()
+    this._revision++
     this.committed.delete(connectionId)
     if (this._highlighted === connectionId) this._highlighted = null
     this.budget.release(connectionId)

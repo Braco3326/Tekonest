@@ -2,10 +2,14 @@
  * Cable style by signal type (Task 27, C18). Keyed by the catalog's `signalTypes[].id` (content/catalog.json is the
  * source of truth: a new signal type is a new row here, and `tests/creation/cableStyle.test.ts` fails until it has one).
  *
- * - Colours are distinct pairwise (simple RGB distance >= 60) and each reads at >= 3:1 on Nuit (WCAG 1.4.11), all
- *   tested. They are kept clear of Papier (the hover outline) and Ambre (the selection).
- * - Colour is never the only cue: `mains-power` is DASHED (the renderer draws dashes; the legend shows the stroke) and
- *   every hover text and legend entry carries the French name of the signal.
+ * - Colours are distinct pairwise (simple RGB distance >= 60), stay >= 30 apart under simulated protanopia, deuteranopia
+ *   and tritanopia, and each reads at >= 3:1 on Nuit and on the panel (WCAG 1.4.11), all tested. They are kept >= 60 from
+ *   Papier (the hover outline) and Ambre (the selection).
+ * - Cues other than colour, honestly: every legend entry carries the French name of the signal next to its stroke sample,
+ *   and the hover text names it. `mains-power` is also DASHED, BUT THAT CUE IS DORMANT: no catalog device can source
+ *   mains today (every `mains-power` port is `power-in`), so no valid rig draws a mains cable until Task 32 adds a mains
+ *   source (`multiprise-secteur`). The dash code is delivered and unit-tested, not yet seen by users. The other
+ *   families rely on colour that is colour-blind separable (above) plus the legend and hover names (docs/CREATIVE-MODE-LOG.md L17).
  * - The label of an entry is the French name already in `COPY.signal` (strings live in copy.ts only).
  *
  * Pure data and pure functions: no Babylon, no DOM. The shell never imports the engine; the scene host and the shell
@@ -25,24 +29,33 @@ export interface SignalStyle {
 
 const label = (id: string): string => COPY.signal?.[id] ?? id
 
-/** In the catalog's order: analog, digital, control, power. */
+/**
+ * In the catalog's order: analog, digital, control, power.
+ *
+ * The 16 colours were FOUND, not picked: `node tools/cable-palette-search.mjs` (seed 27, 12 restarts of a seeded hill
+ * climb) maximises the worst pairwise distance as seen through simulated protanopia, deuteranopia and tritanopia
+ * (Machado 2009, severity 1.0) under these constraints: normal-vision distance >= 70, contrast >= 3:1 against Nuit AND the
+ * panel colour, luminance <= 0.7, >= 60 from Papier and Ambre. Result: worst colour-blind pair 60.5 (test floor 30),
+ * worst normal-vision pair 72.6 (floor 60), contrast >= 3.49 on Nuit and >= 3.23 on the panel. The script's output was
+ * then assigned to the signals by family; the assignment is free, the set is what the tests hold.
+ */
 const COLORS: ReadonlyArray<readonly [id: string, color: string, dash?: true]> = [
-  ['mic-level', '#FBD724'],
-  ['line-level-pro', '#43DCFE'],
-  ['line-level-consumer', '#85DF19'],
-  ['instrument-hiz', '#97651C'],
-  ['speaker-level', '#FF6306'],
-  ['headphone-level', '#E457FF'],
-  ['aes3', '#05BAAA'],
-  ['spdif', '#7AF1A3'],
-  ['madi', '#1C74FC'],
-  ['aoip', '#FF9CB1'],
-  ['wordclock', '#6482AA'],
-  ['usb-audio', '#B0A96A'],
-  ['gpio-tally', '#C3D6F3'],
-  ['dmx512', '#E8328E'],
-  ['phantom-48v', '#7B41FE'],
-  ['mains-power', '#EB002A', true],
+  ['mic-level', '#E9DC7D'],
+  ['line-level-pro', '#80BCFE'],
+  ['line-level-consumer', '#376ED3'],
+  ['instrument-hiz', '#BBB400'],
+  ['speaker-level', '#F38AC9'],
+  ['headphone-level', '#E70CFB'],
+  ['aes3', '#28F1F3'],
+  ['spdif', '#8EEDB7'],
+  ['madi', '#03BD89'],
+  ['aoip', '#B4EA30'],
+  ['wordclock', '#9F71A9'],
+  ['usb-audio', '#618569'],
+  ['gpio-tally', '#7CC953'],
+  ['dmx512', '#B616C4'],
+  ['phantom-48v', '#2D7B01'],
+  ['mains-power', '#F8093E', true],
 ]
 
 export const SIGNAL_STYLE: Record<string, SignalStyle> = Object.fromEntries(

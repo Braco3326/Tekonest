@@ -182,7 +182,7 @@ test('a port under the pointer wins over the cable at its end: the port label sh
   expect(await page.evaluate(() => window.__creation!.cableHovered())).toBeNull()
 })
 
-test('an orbit drag (button held) shows no cable hover; a camera cut re-reads the cable under the pointer (the label never stays where a cable no longer is)', async ({ page }) => {
+test('an orbit drag (button held) shows no cable hover and ends it', async ({ page }) => {
   await boot(page)
   const p = await freePoint(page, MIC_KEY)
   await page.mouse.move(p.x, p.y)
@@ -192,16 +192,43 @@ test('an orbit drag (button held) shows no cable hover; a camera cut re-reads th
   expect(await page.evaluate(() => window.__creation!.cableHovered())).toBeNull()
   await expect(hoverLabel(page)).toHaveCount(0)
   await page.mouse.up()
-  // back on a free point, then the camera is cut closer: the hover is whatever is under the pointer NOW
+})
+
+/** The camera is cut under a resting pointer (no mouse event): the hover must follow what is under the pointer NOW. */
+const hoverAt = async (page: Page, key: string) => {
   await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
-  const q = await freePoint(page, MIC_KEY)
+  const q = await freePoint(page, key)
   await page.mouse.move(q.x, q.y)
   await expect(hoverLabel(page)).toBeVisible()
-  await page.evaluate(() => window.__creation!.setCameraRadius(6))
+  expect(await page.evaluate(() => window.__creation!.cableHovered())).toBe(key)
+  return q
+}
+const cut = async (page: Page, move: { radius?: (current: number) => number; turn?: number }) => {
+  const current = (await page.evaluate(() => window.__creation!.camera()))!.radius
+  if (move.radius) await page.evaluate((r) => window.__creation!.setCameraRadius(r), move.radius(current))
+  if (move.turn) await page.evaluate((d) => window.__creation!.turnCamera(d), move.turn)
   await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
   await settle(page)
-  const hovered = await page.evaluate(() => window.__creation!.cableHovered())
-  expect(await hoverLabel(page).count()).toBe(hovered === null ? 0 : 1) // one label exactly when a cable is under the pointer
+}
+
+test('a camera cut that moves the cable away from the resting pointer removes the highlight and the label', async ({ page }) => {
+  await boot(page)
+  const q = await hoverAt(page, MIC_KEY)
+  await cut(page, { turn: 0.5 })
+  // the independent oracle: after the cut, the cable is NOT under the pointer any more
+  expect(await page.evaluate(([x, y]) => window.__creation!.cableAtPage(x, y), [q.x, q.y] as const)).toBeNull()
+  await expect(hoverLabel(page)).toHaveCount(0)
+  expect(await page.evaluate(() => window.__creation!.cableHovered())).toBeNull()
+})
+
+test('a camera cut that leaves the cable under the resting pointer keeps the highlight and the label', async ({ page }) => {
+  await boot(page)
+  const q = await hoverAt(page, MIC_KEY)
+  await cut(page, { radius: (r) => r * 1.002 }) // a hair: the cable moves well under the 7 px tolerance
+  expect(await page.evaluate(([x, y]) => window.__creation!.cableAtPage(x, y), [q.x, q.y] as const)).toBe(MIC_KEY)
+  await expect(hoverLabel(page)).toHaveCount(1)
+  await expect(hoverLabel(page)).toContainText('sm58 out-xlr → ql1 in-mic-1')
+  expect(await page.evaluate(() => window.__creation!.cableHovered())).toBe(MIC_KEY)
 })
 
 test('undo of the hovered cable under a still pointer drops the highlight and the label', async ({ page }) => {
@@ -216,4 +243,32 @@ test('undo of the hovered cable under a still pointer drops the highlight and th
   await page.evaluate(() => window.__creation!.undo())
   await expect(hoverLabel(page)).toHaveCount(0)
   expect(await page.evaluate(() => window.__creation!.cableHovered())).toBeNull()
+})
+
+test('a mains-power entry is drawn dashed with its « pointillés » note, a solid one is not; an empty legend hides the block', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.legendPreview(['mains-power', 'mic-level']))
+  await expect(items(page)).toHaveCount(2)
+  const mains = items(page).nth(0)
+  await expect(mains).toHaveAttribute('data-signal', 'mains-power')
+  await expect(mains).toContainText('Secteur 230 V')
+  await expect(mains).toContainText('pointillés')
+  const line = mains.locator('line')
+  expect(await line.getAttribute('stroke-dasharray')).toMatch(/^\d+ \d+$/)
+  expect(await line.getAttribute('stroke')).toBe(SIGNAL_STYLE['mains-power']!.color)
+  const mic = items(page).nth(1)
+  expect(await mic.locator('line').getAttribute('stroke-dasharray')).toBeNull()
+  await expect(mic.locator('.cr-legend-note')).toHaveCount(0)
+  // the toggle still folds and unfolds it, with the state and the name in step
+  const toggle = page.getByTestId('cable-legend-toggle')
+  await toggle.click()
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  await expect(toggle).toHaveAttribute('aria-label', 'Déplier la légende des câbles')
+  await expect(page.getByTestId('cable-legend-list')).toBeHidden()
+  await toggle.click()
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true')
+  await expect(page.getByTestId('cable-legend-list')).toBeVisible()
+  // no entry: the block is hidden, not an empty box
+  await page.evaluate(() => window.__creation!.legendPreview([]))
+  await expect(legend(page)).toBeHidden()
 })

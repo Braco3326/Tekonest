@@ -515,10 +515,25 @@ describe('SceneHost cables (Task 27, C18): coloured by signal, hover, screen-spa
     const power = 'cable:k12-g power-in|ql1 power-in'
     expect(host.cableColorOf('k12-g power-in|ql1 power-in')).toBe(SIGNAL_STYLE['mains-power']!.color)
     expect(cableMeshes(host)).toBe(2) // one mesh per cable, dashes merged
-    const verts = (name: string) => host.scene!.getMeshByName(name)!.getTotalVertices()
-    const plain = verts(NAME)
-    // the dashed one is made of many short pieces: it has more vertices than a plain tube of a similar length
-    expect(verts(power)).toBeGreaterThan(plain)
+    // Gaps, not a vertex count: a continuous tube is ONE connected piece of triangles, a dashed one is many separate dashes
+    const pieces = (name: string): number => {
+      const idx = host.scene!.getMeshByName(name)!.getIndices()!
+      const parent = new Map<number, number>()
+      const find = (v: number): number => {
+        let r = v
+        while ((parent.get(r) ?? r) !== r) r = parent.get(r)!
+        parent.set(v, r)
+        return r
+      }
+      for (let t = 0; t < idx.length; t += 3) {
+        const [a, b, c] = [find(idx[t]!), find(idx[t + 1]!), find(idx[t + 2]!)]
+        parent.set(b, a)
+        parent.set(find(c), find(a))
+      }
+      return new Set([...new Set(idx)].map(find)).size
+    }
+    expect(pieces(NAME)).toBe(1) // the line cable is one continuous tube
+    expect(pieces(power)).toBeGreaterThanOrEqual(10) // the mains cable is a run of separate dashes (cap 48, never fewer than 4)
     host.dispose()
   })
 
@@ -569,6 +584,36 @@ describe('SceneHost cables (Task 27, C18): coloured by signal, hover, screen-spa
     expect(host.cableAtPoint(x + 60, y + 60)).toBeNull()
     host.setHidden([NAME])
     expect(host.cableAtPoint(x, y)).toBeNull() // a hidden cable cannot be hovered
+    host.dispose()
+  })
+
+  it('cableAtPoint projects the cables once per camera pose and rig, not once per pointer move (no allocation per point either)', async () => {
+    withRect()
+    const { host } = makeHost()
+    await host.load(placeFromKey(ROOM), rig(ROOM))
+    const project = vi.spyOn(Vector3, 'ProjectToRef')
+    const calls = (): number => project.mock.calls.length
+    host.cableAtPoint(1, 1)
+    const first = calls()
+    expect(first).toBeGreaterThan(0)
+    for (let i = 0; i < 30; i++) host.cableAtPoint(2 + i, 3) // 30 more moves, same camera
+    expect(calls()).toBe(first)
+    host.camera!.radius *= 1.1 // the camera moved: projected again, once
+    host.cableAtPoint(1, 1)
+    host.cableAtPoint(2, 2)
+    expect(calls()).toBe(2 * first)
+    host.setHidden([NAME]) // a cable hidden: the answer changes, so does the cache key
+    expect(host.cableAtPoint(1, 1)).toBeNull()
+    host.dispose()
+  })
+
+  it('cableAtPoint with no cable on the scene does no projection at all', async () => {
+    withRect()
+    const { host } = makeHost()
+    await host.load(placeFromKey('blank'), emptyIn('blank'))
+    const project = vi.spyOn(Vector3, 'ProjectToRef')
+    expect(host.cableAtPoint(10, 10)).toBeNull()
+    expect(project).not.toHaveBeenCalled()
     host.dispose()
   })
 

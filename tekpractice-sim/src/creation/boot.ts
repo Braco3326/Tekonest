@@ -1643,6 +1643,10 @@ export async function bootCreation(): Promise<void> {
       if (host.camera) host.camera.radius = r
       scheduler.invalidate()
     },
+    turnCamera: (d) => {
+      if (host.camera) host.camera.alpha += d
+      scheduler.invalidate()
+    },
     worldScreen: (p) => screen(Vector3.FromArray(p)),
     choosePlace,
     requestPlace,
@@ -1682,6 +1686,11 @@ export async function bootCreation(): Promise<void> {
         return f ? ([f.center.x, f.center.y, f.center.z] as [number, number, number]) : null
       }),
     cableColor: (key) => host.cableColorOf(key),
+    legendPreview: (ids) => cableLegend.set(legendEntries(ids)),
+    cableAtPage: (x, y) => {
+      const r = canvas.getBoundingClientRect()
+      return host.cableAtPoint(x - r.left, y - r.top)
+    },
     cableHovered: () => cableHover.hovered,
     cableFreePoint: (key) => {
       // A page point on this cable where nothing else is under the pointer (no port, no device) and the cable is hit.

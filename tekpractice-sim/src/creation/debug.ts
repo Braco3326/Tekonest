@@ -88,8 +88,12 @@ export interface CreationDebug {
   cableCenters(): ([number, number, number] | null)[]
   /** Task 27: the colour a drawn cable has ('#RRGGBB', read from its material); null when it is not drawn. */
   cableColor(key: string): string | null
+  /** Task 27 (test hook): show these signal ids in the legend as if their cables were on the scene (the next rig change puts the real ones back). */
+  legendPreview(ids: string[]): void
   /** Task 27: the cable under the pointer (highlighted, its text shown), or null. */
   cableHovered(): string | null
+  /** Task 27: the cable a page point is over (screen-space pick; ignores ports and devices), or null: an oracle for the hover. */
+  cableAtPage(x: number, y: number): string | null
   /** Task 27: a page point on this cable with no port and no device under it (a hover there is the cable's), or null. */
   cableFreePoint(key: string): { x: number; y: number } | null
   /** Task 24: a device is following the pointer (placement ghost on screen). */
@@ -106,6 +110,8 @@ export interface CreationDebug {
   visiblePortLabels(): number
   /** Task 26: move the orbit camera to this distance at once (a zoom). */
   setCameraRadius(radius: number): void
+  /** Task 27: turn the orbit camera about its target by this many radians at once (a cut). */
+  turnCamera(dAlpha: number): void
   /**
    * Task 26: the page point on a device's body nearest its centre that is outside EVERY port's hit area (at least
    * `minPx` CSS px from it, and its real proxy radius + 2 px when that is bigger: a close camera makes big targets); a click

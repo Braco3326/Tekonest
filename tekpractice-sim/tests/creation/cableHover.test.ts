@@ -21,14 +21,15 @@ function setup(over: { busy?: () => boolean } = {}) {
   let walking = false
   const key = (x: number, y: number): string => `${x},${y}`
   const views: (() => void)[] = []
+  const picks = { port: 0, device: 0, cable: 0 }
   const calls = { highlighted: [] as (string | null)[], shown: [] as { text: string; at: { x: number; y: number } }[], moved: [] as { x: number; y: number }[], hidden: 0 }
   const host: CableHoverHost = {
     canvasElement: canvas as unknown as HTMLElement,
     get walking() {
       return walking
     },
-    cableAtPoint: (x, y) => cables.get(key(x, y)) ?? null,
-    portAtPoint: (x, y) => ports.get(key(x, y)) ?? null,
+    cableAtPoint: (x, y) => (picks.cable++, cables.get(key(x, y)) ?? null),
+    portAtPoint: (x, y) => (picks.port++, ports.get(key(x, y)) ?? null),
     setHoveredCable: (k) => void calls.highlighted.push(k),
     listenView: (fn) => {
       views.push(fn)
@@ -45,7 +46,7 @@ function setup(over: { busy?: () => boolean } = {}) {
   const ctrl = new CableHoverController(host, bag, {
     ui,
     busy: over.busy ?? (() => false),
-    deviceAt: (x, y) => devices.has(key(x, y)),
+    deviceAt: (x, y) => (picks.device++, devices.has(key(x, y))),
     describe: (k) => (k === 'unknown' ? null : `text:${k}`),
     subscribe: (fn) => {
       storeListeners.push(fn)
@@ -55,7 +56,7 @@ function setup(over: { busy?: () => boolean } = {}) {
   const move = (x: number, y: number, init: Record<string, unknown> = {}): void =>
     void canvas.dispatchEvent(ev('pointermove', { offsetX: x, offsetY: y, clientX: x + 300, clientY: y + 40, ...init }))
   return {
-    canvas, cables, ports, devices, calls, ctrl, bag, move, key, views, storeListeners,
+    canvas, cables, ports, devices, calls, picks, ctrl, bag, move, key, views, storeListeners,
     setWalking: (w: boolean) => (walking = w),
     aimCable: (x: number, y: number, id: string) => void cables.set(key(x, y), id),
     aimPort: (x: number, y: number) => void ports.set(key(x, y), { instance: 'i', port: 'p' }),
@@ -153,6 +154,46 @@ describe('priority: a port or a device under the pointer wins', () => {
     expect(s.ctrl.hovered).toBe('k1')
     s.move(12, 10)
     expect(s.calls.highlighted).toEqual(['k1', null])
+    expect(s.calls.hidden).toBe(1)
+  })
+})
+
+describe('cost: the cheap cable test goes first (the shell already does two scene picks per move)', () => {
+  it('no cable near the pointer: ZERO port and device picks on a move, however many moves', () => {
+    const s = setup()
+    for (let i = 0; i < 20; i++) s.move(5 + i, 5)
+    expect(s.picks.cable).toBe(20)
+    expect(s.picks.port).toBe(0)
+    expect(s.picks.device).toBe(0)
+  })
+  it('a camera change with the pointer resting on no cable costs no scene pick either', () => {
+    const s = setup()
+    s.move(5, 5)
+    for (let i = 0; i < 10; i++) s.views[0]!()
+    expect(s.picks.port).toBe(0)
+    expect(s.picks.device).toBe(0)
+  })
+  it('the scene picks run only near a cable (to see whether a port or a device wins)', () => {
+    const s = setup()
+    s.aimCable(10, 10, 'k1')
+    s.move(10, 10)
+    expect(s.picks.port).toBe(1)
+    expect(s.picks.device).toBe(1)
+  })
+  it('the pointer slides off a cable onto a port farther than the cable tolerance: the label is the port label, not hidden here', () => {
+    const s = setup()
+    s.aimCable(10, 10, 'k1')
+    s.aimPort(30, 10) // no cable within reach of (30, 10)
+    s.move(10, 10)
+    s.move(30, 10)
+    expect(s.calls.highlighted).toEqual(['k1', null])
+    expect(s.calls.hidden).toBe(0)
+  })
+  it('the pointer slides off a cable onto nothing: the label is hidden once', () => {
+    const s = setup()
+    s.aimCable(10, 10, 'k1')
+    s.move(10, 10)
+    s.move(30, 10)
     expect(s.calls.hidden).toBe(1)
   })
 })
