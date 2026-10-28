@@ -269,6 +269,24 @@ test('a double-click on the floor shows no « Rien ici » toast and keeps the se
   expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1') // the first click's miss cleared it; the double-click gives it back
 })
 
+test('a slow double-click (the two clicks > 500 ms apart: an OS accessibility setting) still gives the selection back: a second miss does not erase the record', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press(']')
+  await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBe('ql1')
+  const before = await settled(page)
+  const dev = (await page.evaluate(() => window.__creation!.deviceScreen('ql1')))!
+  const at = { x: dev.x, y: dev.y + 150 }
+  expect(await page.evaluate(({ x, y }) => window.__creation!.pickAt(x, y), at)).toBeNull()
+  await page.mouse.click(at.x, at.y) // miss 1: clears the selection
+  await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBeNull()
+  await page.waitForTimeout(560) // the stimulus: past the 500 ms double-click window, inside the 1 s restore window
+  await page.mouse.dblclick(at.x, at.y) // its first click is miss 2 (clicks = 1), then the dblclick event
+  await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBe('ql1')
+  expect(dist((await settled(page)).target, before.target)).toBeGreaterThan(0.1) // and it re-pivoted
+})
+
 test('a double-click event while a device follows the pointer (the drop already happened elsewhere) does not re-pivot', async ({ page }) => {
   await boot(page)
   const before = await settled(page)

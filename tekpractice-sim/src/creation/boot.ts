@@ -1632,8 +1632,13 @@ export async function bootCreation(): Promise<void> {
     // The second click of a double-click is no miss (the re-pivot follows); a click on the hovered cable is on something.
     if (clicks >= 2 || cableHover.hovered !== null) return
     const sel = viewState.get().selection
-    clearedByMiss = sel === null ? null : { id: sel, t: performance.now() }
-    if (sel !== null) viewState.set({ selection: null }) // not undoable; the toast speaks, not the status bar
+    // A miss with nothing selected keeps the record: when the two clicks of a double-click are counted as two misses (the OS
+    // double-click time is over 500 ms, or the pointer jittered over 5 px), the second must not erase what the first cleared.
+    // The 1 s window in the dblclick handler bounds how stale it can be.
+    if (sel !== null) {
+      clearedByMiss = { id: sel, t: performance.now() }
+      viewState.set({ selection: null }) // not undoable; the toast speaks, not the status bar
+    }
     toast.show(COPY.feedback!.missed!.replace('{key}', bindingLabel(keys.bindings, 'TOGGLE_INVENTORY') || COPY.keys!.space!))
   }
   /** Menu item ids → the key map (the menus show the live labels). */
