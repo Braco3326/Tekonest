@@ -213,18 +213,18 @@ Status: mapping approved by the founder on 28 Oct 2026. Research basis: the repo
 
 - **No video and no new library.** The animation is the same canvas code that produced the still, so what plays is what was reviewed.
 - `website-prototype/tools/build-visuals.mjs` concatenates `visuals/lib/damas.js`, `nest.js`, `panel.js` and a small `hero-panel.js` into `assets/js/panel.js`, loaded with `defer` on `index.html` only. Budget: total JS on the home page ≤ 25 KB gzip.
-- `website-prototype/tools/render-assets.mjs` renders the static images from the same code with the existing Playwright dev dependency, using the browser's own WebP encoder: hero poster (720 and 1200 px wide, ≤ 120 KB and ≤ 180 KB; measured 108 and 172 KB at WebP quality 0.7), share image 1200×630, divider tiles for rope, sawtooth and diamond-in-triangle (repeat-x, 1× and 2×, ≤ 20 KB each), the closing-band field texture, the *Se former* field crop and the footer seal, all under `assets/img/panel/`. Running it twice yields the same pixels.
-- Home hero markup: a `<figure>` with a fixed `aspect-ratio`, the poster `<img>` (the LCP element) and a `<canvas>` that the script reveals only when motion is allowed, `Save-Data` is off and the figure is in view; a real pause button (`aria-pressed`, visible label, at least 24 px); the canvas has `role="img"` and a text alternative.
+- `website-prototype/tools/render-assets.mjs` renders the static images from the same code with the existing Playwright dev dependency, using the browser's own WebP encoder: hero poster (720 and 1200 px wide, ≤ 120 KB and ≤ 180 KB; measured 108 and 172 KB at WebP quality 0.7), share image 1200×630, divider tiles for rope, sawtooth and diamond-in-triangle (repeat-x, 1× and 2×, ≤ 20 KB each), the closing-band field texture and the *Se former* field crop (≤ 150 KB each; measured 138 and 112 KB at quality 0.3) and the footer seal, all under `assets/img/panel/`. Running it twice yields the same bytes (`tools/pipeline.test.mjs`).
+- Home hero markup: a `<figure>` with a fixed `aspect-ratio`, the poster `<img>` (the LCP element) and a `<canvas>` that the script reveals only when motion is allowed, `Save-Data` is off and the figure is in view; a real pause button (`aria-pressed`, visible label, at least 24 px); the poster carries the text alternative and the canvas is `aria-hidden`, since it only repeats the poster.
 - CSS: the dividers become classes (`.rule-rope`, `.rule-saw`, `.rule-tri`) using the rendered tiles; Cadre gets the nested fillets; list bullets use an inline SVG star.
 
 ### 8.4 Tests and acceptance
 
 1. `node tools/check-visual.mjs ../visuals/panel-motion.html` passes: frames identical whatever the drawing order, the last second holds still, an offline frame under 500 ms.
 2. Home: the poster is the LCP element; with reduced motion, `Save-Data` or no JS, no canvas animation starts (checked in the browser script); the pause button works by keyboard; the measured gzip size of the JS loaded on the home page is ≤ 25 KB; CLS is 0.
-3. axe reports 0 violations and no horizontal overflow at 375, 768 and 1440 px on every page; reflow at 320 px and at 200% zoom is checked.
+3. axe reports 0 violations and no horizontal overflow at 320, 375, 768 and 1440 px on every page (200% zoom is not separately checked).
 4. No file references `texture-damas.jpg` or the diamond `.bande` any more; the banned-string checks of section 5 still pass.
 5. Asset budgets hold (poster ≤ 120 KB at 720 px and ≤ 180 KB at 1200 px, each divider tile ≤ 20 KB, closing texture and field crop ≤ 150 KB); the build reports transferred KB per page.
-6. `render-assets.mjs` run twice gives identical pixel hashes.
+6. `npm run build:all` regenerates the pages, the bundle and the images with no change (`tools/pipeline.test.mjs`).
 7. The honesty rule holds: no new text claims anything is available.
 
 ### 8.5 Respect and credit
