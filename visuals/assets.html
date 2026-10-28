@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Rendu des images du panneau</title>
+</head>
+<body>
+<script src="lib/damas.js"></script>
+<script src="lib/nest.js"></script>
+<script src="lib/panel.js"></script>
+<script>
+/* Renders the site's static images from the same code as the animation. window.ASSETS lists them; window.renderAsset(name)
+   returns a data:image/webp URL. Deterministic: no randomness, no clock. Inspired by Damascene wood marquetry. */
+(function () {
+  var NUIT = "#131114", P = window.Panel;
+  var ASSETS = [
+    { name: "hero-poster-720.webp", width: 720, height: 720, quality: 0.7 },
+    { name: "hero-poster-1200.webp", width: 1200, height: 1200, quality: 0.7 },
+    { name: "og-share.webp", width: 1200, height: 630, quality: 0.8 },
+    { name: "rope-tile-1x.webp", width: 80, height: 25, quality: 0.95 },
+    { name: "rope-tile-2x.webp", width: 160, height: 50, quality: 0.95 },
+    { name: "tri-tile-1x.webp", width: 76, height: 40, quality: 0.95 },
+    { name: "tri-tile-2x.webp", width: 152, height: 80, quality: 0.95 },
+    { name: "saw-tile-1x.webp", width: 32, height: 24, quality: 0.95 },
+    { name: "saw-tile-2x.webp", width: 64, height: 48, quality: 0.95 },
+    { name: "closing-texture.webp", width: 1280, height: 720, quality: 0.3 },
+    { name: "sefo-field.webp", width: 900, height: 900, quality: 0.3 },
+    { name: "footer-seal.webp", width: 192, height: 192, quality: 0.9 }
+  ];
+  var TILES = { "rope-tile-1x": ["rope", 25], "rope-tile-2x": ["rope", 50], "tri-tile-1x": ["tri", 40], "tri-tile-2x": ["tri", 80], "saw-tile-1x": ["saw", 24], "saw-tile-2x": ["saw", 48] };
+
+  function panelAt(ctx, size, cx, cy) {                       // the panel's final frame, scaled so its width is `size`, centred at (cx, cy)
+    var m = P.build(980, { seed: 1306, hand: 1.4 }), k = size / 980;
+    ctx.save(); ctx.translate(cx - size / 2, cy - size / 2); ctx.scale(k, k); P.render(ctx, 490, 490, m, 1e9); ctx.restore();
+  }
+  function field(ctx, w, h, S, seed) {                        // the strapwork field on Nuit, covering the whole canvas
+    ctx.fillStyle = NUIT; ctx.fillRect(0, 0, w, h);
+    P.fieldTexture(ctx, -S, -S, Math.ceil(w / (2 * S)) + 2, Math.ceil(h / (2 * S)) + 2, S, { seed: seed, hand: 1.4 });
+  }
+  var DRAW = {
+    "hero-poster-720": function (ctx, w) { panelAt(ctx, w, w / 2, w / 2); },
+    "hero-poster-1200": function (ctx, w) { panelAt(ctx, w, w / 2, w / 2); },
+    "og-share": function (ctx, w, h) { ctx.fillStyle = NUIT; ctx.fillRect(0, 0, w, h); panelAt(ctx, 590, w / 2, h / 2); },
+    "closing-texture": function (ctx, w, h) { field(ctx, w, h, 72, 1306); },
+    "sefo-field": function (ctx, w, h) { field(ctx, w, h, 80, 2208); },
+    "footer-seal": function (ctx, w, h) { P.drawRoundel(ctx, w / 2, h / 2, 84); }
+  };
+
+  window.ASSETS = ASSETS;
+  window.renderAsset = function (name) {
+    var a = ASSETS.filter(function (x) { return x.name === name; })[0];
+    if (!a) throw new Error("unknown asset " + name);
+    var key = name.replace(/\.webp$/, ""), cv = document.createElement("canvas"); cv.width = a.width; cv.height = a.height;
+    var ctx = cv.getContext("2d");
+    if (TILES[key]) P.tile(ctx, TILES[key][0], TILES[key][1]); else DRAW[key](ctx, a.width, a.height);
+    return cv.toDataURL("image/webp", a.quality);
+  };
+})();
+</script>
+</body>
+</html>
