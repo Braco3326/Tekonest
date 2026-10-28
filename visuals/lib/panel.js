@@ -5,13 +5,13 @@
    Deterministic: render(t) depends only on t. Inspired by Damascene wood marquetry; geometry reconstructed by the designer. */
 (function (g) {
   var D = g.Damas, C = D.C, TAU = Math.PI * 2;
-  var GROUND = "#0C0A0B", PEARL = "#EFE8DC", WIRE = C.ambre, MASK = { on: false };
+  var GROUND = "#0C0A0B", PEARL = "#E4DAC9", WIRE = C.ambre, MASK = { on: false };
   var clamp = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
   var ease = function (x) { x = clamp(x); return 1 - Math.pow(1 - x, 4); };            // ease-out-quart for laying pieces
   var softOut = function (x) { x = clamp(x); return 1 - Math.pow(1 - x, 2); };         // gentler ease-out for the slow polish
 
   /* ---------- helpers ---------- */
-  function pearl(t) { var base = D.mixHex("#F3EDE3", "#E0D6C8", t); return t > 0.72 ? D.mixHex(base, "#EBD9D6", 0.45) : base; }
+  function pearl(t) { var base = D.mixHex("#E8DFD0", "#CBBFAD", t); return t > 0.72 ? D.mixHex(base, "#DCC8C4", 0.45) : base; }
   function poly(ctx, pts) { ctx.beginPath(); pts.forEach(function (p, i) { i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }); ctx.closePath(); }
   function inset(pts, d) {
     var n = pts.length, area = 0, i;
@@ -163,7 +163,8 @@
       add(prep({ layer: "field", key: Math.round(dist / 3), pts: p.pts, dir: d, draw: function (ctx) {
         ctx.save(); ctx.beginPath(); ctx.rect(-inner, -inner, 2 * inner, 2 * inner); ctx.clip();
         var o1 = inset(p.pts, 2.3), tone = p.tone;
-        if ((p.role === "walnut" && p.layer === 0) || p.role === "nacre") slab(ctx, inset(p.pts, 8), tone);
+        if (p.role === "nacre") slab(ctx, inset(p.pts, 8), tone);
+        else if (p.role === "walnut" && p.layer === 0) { fill(ctx, inset(p.pts, 6.5), "#3A281C"); wood(ctx, inset(p.pts, 6.5), "walnut", tone); }
         else if (p.layer === 1) { fill(ctx, o1, p.role === "prune" ? "#4B2036" : "#34241A"); wood(ctx, o1, p.role === "prune" ? "prune" : "walnut", tone); }
         hair(ctx, o1, "#B9B0A2", 1.1);
         ctx.restore();
@@ -192,7 +193,7 @@
     } });
 
     // the roundel and the mark
-    var r = 2.1 * S, nest = g.Nest.build(0, 0, (r - 17) / 108), NW = { w: Math.max(2.2, r * 0.026), gap: Math.max(1.6, r * 0.02), ground: GROUND, cols: [PEARL, "#E4DACB", PEARL, "#E4DACB", PEARL, "#E4DACB", PEARL] };
+    var r = 2.1 * S, nest = g.Nest.build(0, 0, (r - 17) / 108), NW = { w: Math.max(2.2, r * 0.026), gap: Math.max(1.6, r * 0.02), ground: GROUND, cols: [PEARL, "#D6CBB9", PEARL, "#D6CBB9", PEARL, "#D6CBB9", PEARL] };
     add({ layer: "disc", custom: true, draw: function (ctx, p) { if (MASK.on) return; ctx.save(); ctx.beginPath(); ctx.arc(0, 0, (r + 12) * p, 0, TAU); ctx.clip(); ctx.fillStyle = GROUND; ctx.fillRect(-r - 20, -r - 20, 2 * r + 40, 2 * r + 40); ctx.restore(); } });
     function ringArc(rad, col, w) { return function (ctx, p) { if (MASK.on || p <= 0) return; ctx.strokeStyle = col; ctx.lineWidth = w; ctx.beginPath(); ctx.arc(0, 0, rad, -Math.PI / 2, -Math.PI / 2 + TAU * p); ctx.stroke(); }; }
     add({ layer: "ring1", custom: true, draw: ringArc(r + 9, "#B9B0A2", 1.2) });
