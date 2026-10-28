@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G1 · Le cercle se pose</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #131114; }
+  body { display: grid; place-items: center; overflow: hidden; }
+  canvas { width: min(100vw, 177.78vh); height: auto; aspect-ratio: 16 / 9; display: block; }
+  p { position: fixed; left: 12px; bottom: 8px; margin: 0; font: 12px system-ui, sans-serif; color: #8c8186; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080" aria-label="Des anneaux à motifs damascènes se posent un à un et forment un médaillon circulaire."></canvas>
+<p id="hint">Cliquer pour rejouer</p>
+<script>
+/* G1 « Le cercle se pose »: circles only, carrying a Damascus-inspired inlay pattern.
+   Rings are laid one piece at a time from the outside in; a seated piece never moves again.
+   Deterministic: drawFrame(t) depends only on t (seconds), so every render is identical.
+   Palette = site tokens. Final second holds still. No glow, no spin, no particles, no text. */
+(function () {
+  var W = 1920, H = 1080, FPS = 24, DURATION = 6;
+  var NUIT = "#131114", PAPIER = "#F3EDE3", CREME = "#EAE2D5", AMBRE = "#DD9349",
+      PRUNE = "#612D45", PRUNE_HI = "#8A4466", NOYER = "#6B4A33", NOYER_HI = "#8A6A4F", BOIS = "#1F1813";
+  var CX = 1290, CY = 540, R = 470;              // medallion centre sits right of the calm left third
+
+  var clamp = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
+  var ease = function (x) { x = clamp(x); return 1 - Math.pow(1 - x, 4); };   // ease-out-quart only
+  function rng(seed) {                                                       // mulberry32
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function mix(a, b, k) {                                                    // hex colour blend
+    var pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16);
+    var r = Math.round((pa >> 16) * (1 - k) + (pb >> 16) * k),
+        g = Math.round(((pa >> 8) & 255) * (1 - k) + ((pb >> 8) & 255) * k),
+        bl = Math.round((pa & 255) * (1 - k) + (pb & 255) * k);
+    return "rgb(" + r + "," + g + "," + bl + ")";
+  }
+
+  /* ---------- the pieces, built once with seeded imperfection ---------- */
+  var rings = [];
+  (function build() {
+    var rand = rng(20261028);
+    var TOP = -Math.PI / 2;
+
+    // ring 0: two outer filets, swept clockwise
+    rings.push({ kind: "filets", start: 0.3, dur: 0.9, r: [1.0, 0.972] });
+
+    // ring 1: the Bande, laid as a ring (diamond nacre, square amber, square prune)
+    var band = { kind: "pieces", start: 0.9, span: 1.3, r0: 0.885, r1: 0.955, pieces: [] };
+    var NB = 60;
+    for (var i = 0; i < NB; i++) {
+      var type = i % 3;
+      band.pieces.push({
+        shape: type === 0 ? "diamond" : "square", nacre: type === 0,
+        fill: type === 0 ? mix(PAPIER, CREME, rand() * 0.6) : type === 1 ? AMBRE : PRUNE,
+        edge: type === 2 ? PRUNE_HI : "rgba(0,0,0,.35)",
+        a: TOP + 2 * Math.PI * i / NB + (rand() - 0.5) * 0.004,
+        r: 0.92 + (rand() - 0.5) * 0.004,
+        rad: type === 0 ? 0.040 : 0.017, tan: type === 0 ? 0.034 : 0.017,
+        rot: (rand() - 0.5) * 0.02, t: i / NB * 1.0 + (rand() - 0.5) * 0.03
+      });
+    }
+    rings.push(band);
+
+    // ring 2: twenty-four lozenge petals, nacre, with an amber lozenge on every other one; one hesitation
+    var petals = { kind: "pieces", start: 1.9, span: 1.45, r0: 0.70, r1: 0.865, pieces: [] };
+    var NP = 24;
+    for (i = 0; i < NP; i++) {
+      var a = TOP + 2 * Math.PI * i / NP;
+      var tt = i / NP + (rand() - 0.5) * 0.02;
+      var pause = i >= 12 ? 0.3 / 1.45 : 0;                                   // the ring hesitates halfway, then continues
+      petals.pieces.push({ shape: "diamond", nacre: true, fill: mix(CREME, PAPIER, rand()), edge: "rgba(0,0,0,.4)",
+        a: a, r: 0.783 + (rand() - 0.5) * 0.004, rad: 0.074, tan: 0.036, rot: (rand() - 0.5) * 0.02, t: tt + pause });
+      if (i % 2 === 0) petals.pieces.push({ shape: "diamond", fill: AMBRE, edge: "rgba(0,0,0,.35)",
+        a: a, r: 0.783, rad: 0.032, tan: 0.015, rot: 0, t: tt + pause + 0.04 });
+      petals.pieces.push({ shape: "circle", fill: PRUNE, edge: PRUNE_HI,
+        a: a + Math.PI / NP, r: 0.783, rad: 0.014, tan: 0.014, rot: 0, t: tt + pause + 0.02 });
+    }
+    rings.push(petals);
+
+    // ring 3: the Onde, layered ripples like watered steel, swept clockwise one after another
+    rings.push({ kind: "onde", start: 3.0, r0: 0.535, r1: 0.675, lines: [
+      { r: 0.55, amp: 0.010, m: 17, ph: 0.3, col: NOYER_HI, w: 2.2, d: 0.00 },
+      { r: 0.583, amp: 0.012, m: 19, ph: 1.7, col: AMBRE, w: 1.6, d: 0.12 },
+      { r: 0.616, amp: 0.011, m: 21, ph: 2.9, col: NOYER_HI, w: 2.2, d: 0.24 },
+      { r: 0.648, amp: 0.010, m: 23, ph: 4.4, col: NOYER_HI, w: 1.6, d: 0.36 }
+    ], sweep: 0.9 });
+
+    // ring 4: twelve small eight-point stars, nacre outline, amber heart, prune diamonds between
+    var stars = { kind: "pieces", start: 3.7, span: 0.85, r0: 0.375, r1: 0.52, pieces: [] };
+    var NS = 12;
+    for (i = 0; i < NS; i++) {
+      var as = TOP + 2 * Math.PI * i / NS, ts = i / NS + (rand() - 0.5) * 0.04;
+      stars.pieces.push({ shape: "star8", nacre: true, fill: mix(PAPIER, CREME, rand() * 0.5), edge: "rgba(0,0,0,.4)",
+        a: as, r: 0.448, rad: 0.060, tan: 0.060, rot: (rand() - 0.5) * 0.04, t: ts });
+      stars.pieces.push({ shape: "circle", fill: AMBRE, edge: "rgba(0,0,0,.35)", a: as, r: 0.448, rad: 0.016, tan: 0.016, rot: 0, t: ts + 0.03 });
+      stars.pieces.push({ shape: "diamond", fill: PRUNE, edge: PRUNE_HI, a: as + Math.PI / NS, r: 0.448, rad: 0.030, tan: 0.019, rot: 0, t: ts + 0.03 });
+    }
+    rings.push(stars);
+
+    // open centre: two hairlines close it, at the end
+    rings.push({ kind: "filets", start: 4.5, dur: 0.4, r: [0.305, 0.285] });
+  })();
+
+  /* ---------- drawing ---------- */
+  var ctx = document.getElementById("c").getContext("2d");
+
+  function annulus(r0, r1, alpha) {
+    ctx.globalAlpha = alpha; ctx.fillStyle = BOIS;
+    ctx.beginPath(); ctx.arc(CX, CY, r1 * R, 0, 2 * Math.PI); ctx.arc(CX, CY, r0 * R, 0, 2 * Math.PI, true); ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+  function arcSweep(r, p, col, w) {                                           // clockwise from the top
+    if (p <= 0) return;
+    ctx.strokeStyle = col; ctx.lineWidth = w; ctx.lineCap = "butt";
+    ctx.beginPath(); ctx.arc(CX, CY, r * R, -Math.PI / 2, -Math.PI / 2 + 2 * Math.PI * p); ctx.stroke();
+  }
+  function shapePath(s, hx, hy) {
+    ctx.beginPath();
+    if (s === "diamond") { ctx.moveTo(hx, 0); ctx.lineTo(0, hy); ctx.lineTo(-hx, 0); ctx.lineTo(0, -hy); ctx.closePath(); }
+    else if (s === "square") { ctx.rect(-hx, -hy, 2 * hx, 2 * hy); }
+    else if (s === "circle") { ctx.arc(0, 0, hx, 0, 2 * Math.PI); }
+    else if (s === "star8") {                                                  // two squares, one turned by 45°
+      for (var q = 0; q < 2; q++) {
+        var rot = q * Math.PI / 4;
+        for (var k = 0; k < 4; k++) {
+          var ang = rot + k * Math.PI / 2 + Math.PI / 4, x = hx * Math.cos(ang), y = hx * Math.sin(ang);
+          k ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+        }
+        ctx.closePath();
+      }
+    }
+  }
+  function drawPiece(p, ring, t) {
+    var k = ease((t - (ring.start + p.t * ring.span)) / 0.30);
+    if (k <= 0) return;
+    var ang = p.a, rr = (p.r + 0.012 * (1 - k)) * R;                           // laid from just outside
+    ctx.save();
+    ctx.globalAlpha = k;
+    ctx.translate(CX + rr * Math.cos(ang), CY + rr * Math.sin(ang));
+    ctx.rotate(ang + p.rot);
+    var sc = 0.82 + 0.18 * k;
+    ctx.scale(sc, sc);
+    shapePath(p.shape, p.rad * R, p.tan * R);
+    ctx.fillStyle = p.fill; ctx.fill();
+    if (p.nacre) {                                                             // raking light across the nacre, no glow
+      var hx = p.rad * R, hy = p.tan * R, g = ctx.createLinearGradient(-hx, -hy, hx, hy);
+      g.addColorStop(0, "rgba(255,255,255,.38)"); g.addColorStop(0.55, "rgba(255,255,255,0)"); g.addColorStop(1, "rgba(60,40,30,.16)");
+      ctx.fillStyle = g; ctx.fill();
+    }
+    ctx.lineWidth = 1.2; ctx.strokeStyle = p.edge; ctx.stroke();
+    ctx.restore();
+  }
+  function drawOnde(ring, t) {
+    var board = ease((t - ring.start) / 0.35);
+    annulus(ring.r0, ring.r1, board);
+    ring.lines.forEach(function (ln) {
+      var p = ease((t - ring.start - ln.d) / ring.sweep);
+      if (p <= 0) return;
+      ctx.strokeStyle = ln.col; ctx.lineWidth = ln.w; ctx.lineJoin = "round";
+      ctx.beginPath();
+      var steps = 720, last = Math.floor(steps * p);
+      for (var i = 0; i <= last; i++) {
+        var th = -Math.PI / 2 + 2 * Math.PI * i / steps;
+        var rad = (ln.r + ln.amp * Math.sin(ln.m * th + ln.ph)) * R;
+        var x = CX + rad * Math.cos(th), y = CY + rad * Math.sin(th);
+        i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.stroke();
+    });
+  }
+
+  function drawFrame(t) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = 1; ctx.fillStyle = NUIT; ctx.fillRect(0, 0, W, H);
+    rings.forEach(function (ring) {
+      if (ring.kind === "filets") {
+        ring.r.forEach(function (r, i) { arcSweep(r, ease((t - ring.start - i * 0.12) / ring.dur), i ? NOYER : NOYER_HI, i ? 1.5 : 2.2); });
+      } else if (ring.kind === "onde") {
+        drawOnde(ring, t);
+      } else {
+        annulus(ring.r0, ring.r1, ease((t - ring.start) / 0.35));
+        ring.pieces.forEach(function (p) { drawPiece(p, ring, t); });
+      }
+    });
+  }
+
+  window.drawFrame = drawFrame;
+  window.VISUAL = { id: "G1", width: W, height: H, fps: FPS, duration: DURATION };
+
+  var q = new URLSearchParams(location.search).get("t");
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (q !== null) { drawFrame(parseFloat(q)); document.getElementById("hint").hidden = true; return; }
+  if (reduce) { drawFrame(DURATION); return; }
+  var t0 = 0;
+  function loop(now) {
+    if (!t0) t0 = now;
+    var t = (now - t0) / 1000;
+    drawFrame(Math.min(t, DURATION));
+    if (t < DURATION) requestAnimationFrame(loop);
+  }
+  function play() { t0 = 0; requestAnimationFrame(loop); }
+  document.body.addEventListener("click", play);
+  play();
+})();
+</script>
+</body>
+</html>

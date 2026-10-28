@@ -1,6 +1,6 @@
 # Tekonest generated visuals: production brief
 
-Date: 2026-10-28. Status: **draft for founder review**. Companion to [`2026-10-28-tekonest-two-doors-design.md`](2026-10-28-tekonest-two-doors-design.md), section 7. Tool-agnostic: written for Claude Motion (video) and any image generator for stills and posters.
+Date: 2026-10-28. Status: **draft for founder review**. Companion to [`2026-10-28-tekonest-two-doors-design.md`](2026-10-28-tekonest-two-doors-design.md), section 7. Claude Motion builds animations as code (shapes, text, images) and exports MP4; it does not generate realistic footage, so every shot below is circles and patterns, which suits it. The same shots can be made as canvas animations in `visuals/` (G1 is done: `visuals/g1-cercle-se-pose.html`).
 
 ## 1. How to use it
 

@@ -19,7 +19,7 @@ Success looks like this: a visitor sees **two doors**, *Se former* and *Créer a
 | 5 | Rebels × Tekonest stays a separate project. |
 | 6 | Legal questions (structure, pay rules, performer and licence rules) are discussed after the structure is settled. They are out of scope here and no legal claim is added. |
 | 7 | Phase A scope: structure and content on the current identity (Nuit, Papier, Crème, Ambre, Prune; Tektur; Damas motifs). No new visual direction. |
-| 8 | Phase B: the next level of the site comes from **generated** visuals and motion (Claude Motion for video, an image generator for stills). Code is used only for what code does better (see 7.1). Code has a lower creative ceiling. |
+| 8 | Phase B: the next level of the site comes from rich visuals and motion rendered to video. Claude Motion builds animations as code (shapes, text, images) and exports MP4; it is not a video-generation model, so the clips are made either in Claude Motion (if the founder's plan has it) or as deterministic canvas animations in `visuals/` by the assistant, then rendered. Code is used only for what code does better (see 7.1). |
 | 9 | The identity stays fixed in Phase B: generated assets are art-directed to it, and the exact logo, text and interface are always code on top. |
 | 10 | Generated visuals are **circles with the Damascus design and nothing more**. |
 
@@ -115,7 +115,7 @@ Informed by a three-expert council on 28 Oct 2026 (motion director, performance 
 
 | Layer | Made with | Used for |
 | --- | --- | --- |
-| **Generated** (the creative layer) | Claude Motion (MP4), an image generator for stills and posters | Hero film, ambient loops, Créer avec nous visuals, Histoire film, section atmosphere, social teasers, key art and posters |
+| **Rendered visuals** (the creative layer) | Claude Motion (MP4, built as code) or the canvas animations in `visuals/`, rendered to MP4 or WebM; stills and posters exported from the final frame | Hero film, ambient loops, Créer avec nous visuals, Histoire film, section atmosphere, social teasers, key art and posters |
 | **Coded** (only what code does better) | CSS, SVG, small JS | The exact logo and wordmark, all text, status badges and interface, hover and focus states, page transitions, the pause control, and anything driven by real data (for example a waveform of a real recording) |
 | **Real** (never generated) | Your own captures | TekPractice and E3 course screens, any recording, photo or object that claims to be Tekonest's own work |
 
