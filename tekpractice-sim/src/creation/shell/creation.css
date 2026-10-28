@@ -561,6 +561,8 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   background: var(--cr-nuit);
   color: var(--cr-papier);
   font: 400 16px/1 var(--cr-font-ui);
+  /* Cuts only: the legacy `button { transition: all }` would otherwise animate the focus ring in from a 3 px Papier one. */
+  transition: none;
 }
 .cr .cr-cube-tool:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }
 /* The 3D view's focus ring is Papier, never Ambre: Ambre in the viewport means « selected device » (Task 14b Fix 1). */
