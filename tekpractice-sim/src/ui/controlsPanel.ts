@@ -17,7 +17,12 @@ const ROUTE = /^route-(.+)-to-(.+)$/
  * keeps the legacy HUD as it was (the panel grew taller and the 390 px view cube overlapped it). The control still exists in the
  * rig's state (P19).
  */
-const CREATION_ONLY = new Set(['power'])
+const CREATION_ONLY = new Set([
+  'power',
+  // Task 33 (C8, P8): the QL1 sound controls. Only Mode Création's signal path reads them (playback, mute, master fader, balance);
+  // level a1 puts a QL1 on the legacy HUD, where four dead controls would grow the panel again (same 390 px overlap as `power`).
+  'playback-usb', 'mute-master', 'fader-master', 'balance-master',
+])
 export const legacyControls = <C extends { id: string }>(controls: readonly C[] | undefined): C[] =>
   (controls ?? []).filter((c) => !CREATION_ONLY.has(c.id))
 

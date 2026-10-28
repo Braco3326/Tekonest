@@ -17,7 +17,8 @@
  * No Babylon, no DOM, no engine change: the engine reads the declared ports
  * exactly as it reads a catalog device's (R1–R3 on connector / signal, R4–R8 on
  * the declared flags). Behaviour a proposal does not declare does not exist. The one flag it cannot declare is
- * `isMainsSource` (parseProposals drops it): a proposal never powers anything.
+ * `isMainsSource` (parseProposals drops it): a proposal never powers anything. Nor does it carry `routing` (Task 33):
+ * a signal route is verified data, so a proposal is no signal source and no speaker (parseProposals drops it too).
  */
 import { Device } from '../../tools/schemas'
 import type { DeviceT, Registry } from '../engine/CatalogLoader'
@@ -65,7 +66,11 @@ export function parseProposals(raw: unknown, registry: Registry): ParsedProposal
       skip('already a verified catalog device')
       continue
     }
-    const parsed = Device.safeParse(entry)
+    // A proposal never carries a signal route (Task 33, C8): routes are verified data, read by the signal path for catalog gear
+    // only. Dropped BEFORE the schema runs, so a crafted or malformed `routing` neither survives nor takes the proposal down.
+    const { routing: _routing, ...declared } = entry
+    void _routing
+    const parsed = Device.safeParse(declared)
     if (!parsed.success) {
       const i = parsed.error.issues[0]
       skip(`schema: ${i?.path.join('.')} ${i?.message}`)

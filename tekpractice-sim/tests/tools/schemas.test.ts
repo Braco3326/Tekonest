@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 import { describe, expect, it } from 'vitest'
 import catalogJson from '../../content/catalog.json'
-import { Catalog, Port, PortFlag, Rule } from '../../tools/schemas'
+import { Catalog, Device, Port, PortFlag, Route, Rule } from '../../tools/schemas'
 
 /** Task 29 (C17, CA-15): every catalog rule carries its French title and teaching text. */
 const rule = () => structuredClone(catalogJson.rules[0]) as Record<string, unknown>
@@ -126,5 +126,132 @@ describe('content/catalog.schema.json: the PortFlag hunks match the generator (T
   it('and it is exactly what the generator emits for those nodes', () => {
     expect(flagEnums(onDisk)).toEqual(flagEnums(generated))
     expect(flagEnums(generated)).toHaveLength(2)
+  })
+})
+
+/**
+ * Task 33 (C8, P7): signal routing is catalog data. `Route` is the zod shape; `checkCatalog` (tests/tools/catalogChecks.test.ts)
+ * checks a route against the ports and controls of its device.
+ */
+describe('Route schema (Task 33, C8, P7)', () => {
+  const stereo = { from: 'control:playback-usb', to: ['out-main-l', 'out-main-r'], channels: ['L', 'R'], when: { control: 'playback-usb', equals: true } }
+
+  it('accepts the QL1, K12.2, DBR12 and 8030C routes of the brief, and an enum-valued when', () => {
+    for (const r of [
+      stereo,
+      { from: 'in-mic-1', to: ['out-main-l', 'out-main-r'] },
+      { from: 'in-mic-2', to: ['out-main-l', 'out-main-r'] },
+      { from: 'in-line-a', to: ['transducer'] },
+      { from: 'in-line-a', to: ['thru-out-a'], passive: true },
+      { from: 'in-line', to: ['link-out'], passive: true },
+      { from: 'in-analog', to: ['transducer'] },
+      { from: 'control:mode', to: ['out'], when: { control: 'mode', equals: 'live' } },
+    ]) expect(Route.safeParse(r).success, JSON.stringify(r)).toBe(true)
+  })
+  it('rejects channels whose length differs from `to` (shorter, longer, empty), naming the field', () => {
+    for (const channels of [['L'], ['L', 'R', 'L'], []]) {
+      const parsed = Route.safeParse({ ...stereo, channels })
+      expect(parsed.success, JSON.stringify(channels)).toBe(false)
+      expect(paths(parsed)).toContain('channels')
+    }
+  })
+  it('accepts channels exactly as long as `to`, one entry for a one-output route too', () => {
+    expect(Route.safeParse({ from: 'in-mic-1', to: ['out-main-l'], channels: ['L'] }).success).toBe(true)
+  })
+  it('rejects an empty `to`, a channel that is not L or R, a non-boolean passive and a numeric when.equals', () => {
+    expect(Route.safeParse({ from: 'in-mic-1', to: [] }).success).toBe(false)
+    expect(Route.safeParse({ ...stereo, channels: ['L', 'C'] }).success).toBe(false)
+    expect(Route.safeParse({ from: 'in-line-a', to: ['thru-out-a'], passive: 'yes' }).success).toBe(false)
+    expect(Route.safeParse({ ...stereo, when: { control: 'playback-usb', equals: 1 } }).success).toBe(false)
+    expect(Route.safeParse({ ...stereo, when: { equals: true } }).success).toBe(false)
+  })
+  it('rejects a route without `from`, or with an empty one', () => {
+    expect(Route.safeParse({ to: ['out-main-l'] }).success).toBe(false)
+    expect(Route.safeParse({ from: '', to: ['out-main-l'] }).success).toBe(false)
+  })
+  it('every Route field carries a .describe()', () => {
+    const shape = (Route as unknown as { _def: { schema: { shape: Record<string, { description?: string }> } } })._def.schema.shape
+    expect(Object.keys(shape).sort()).toEqual(['channels', 'from', 'passive', 'to', 'when'])
+    for (const [k, v] of Object.entries(shape)) expect(v.description, k).toMatch(/\S/)
+  })
+  it('Device.routing is optional, and the parsed device keeps it', () => {
+    const d = structuredClone(catalogJson.devices.find((x) => x.id === 'shure-sm58')) as Record<string, unknown>
+    expect(Device.safeParse(d).success).toBe(true)
+    const parsed = Device.parse({ ...d, routing: [{ from: 'out-xlr', to: ['out-xlr'] }] })
+    expect(parsed.routing).toEqual([{ from: 'out-xlr', to: ['out-xlr'] }])
+  })
+  it('a catalog whose QL1 route has channels of the wrong length is refused, with the JSON path', () => {
+    const broken = structuredClone(catalogJson) as unknown as { devices: { id: string; routing?: Record<string, unknown>[] }[] }
+    const i = broken.devices.findIndex((d) => d.id === 'yamaha-ql1')
+    expect(broken.devices[i].routing, 'the QL1 carries routing').toBeDefined()
+    const j = broken.devices[i].routing!.findIndex((r) => r.channels !== undefined)
+    expect(j).toBeGreaterThanOrEqual(0)
+    broken.devices[i].routing![j].channels = ['L']
+    const parsed = Catalog.safeParse(broken)
+    expect(parsed.success).toBe(false)
+    expect(paths(parsed)).toContain(`devices.${i}.routing.${j}.channels`)
+  })
+})
+
+/** The data of the brief, verbatim. Any other device stays free of routing (a Bêta device has none either). */
+describe('Routing and console sound controls in the catalog (Task 33)', () => {
+  type Dev = { id: string; controls?: Record<string, unknown>[]; routing?: Record<string, unknown>[] }
+  const devices = catalogJson.devices as unknown as Dev[]
+  const dev = (id: string) => devices.find((d) => d.id === id)!
+
+  it('QL1 controls: power first, then Lecture console, Mute master, Fader master, Balance (values of the brief)', () => {
+    expect(dev('yamaha-ql1').controls).toEqual([
+      { id: 'power', type: 'toggle', label: 'Alimentation', default: true },
+      { id: 'playback-usb', type: 'toggle', label: 'Lecture console', default: false },
+      { id: 'mute-master', type: 'toggle', label: 'Mute master', default: false },
+      { id: 'fader-master', type: 'enum', label: 'Fader master', options: ['-inf', '-30', '-20', '-10', '-6', '-3', '0', '+6', '+10'], defaultOption: '0' },
+      { id: 'balance-master', type: 'enum', label: 'Balance', options: ['G100', 'G50', 'C', 'D50', 'D100'], defaultOption: 'C' },
+    ])
+  })
+  it('QL1 routing: playback in stereo L/R when playback-usb is on, then both mic inputs to the main outputs', () => {
+    expect(dev('yamaha-ql1').routing).toEqual([
+      { from: 'control:playback-usb', to: ['out-main-l', 'out-main-r'], channels: ['L', 'R'], when: { control: 'playback-usb', equals: true } },
+      { from: 'in-mic-1', to: ['out-main-l', 'out-main-r'] },
+      { from: 'in-mic-2', to: ['out-main-l', 'out-main-r'] },
+    ])
+  })
+  it('speakers: K12.2 and DBR12 feed their transducer and loop through (passive); the 8030C feeds its transducer only', () => {
+    expect(dev('qsc-k12-2').routing).toEqual([
+      { from: 'in-line-a', to: ['transducer'] },
+      { from: 'in-line-a', to: ['thru-out-a'], passive: true },
+    ])
+    expect(dev('yamaha-dbr12').routing).toEqual([
+      { from: 'in-line', to: ['transducer'] },
+      { from: 'in-line', to: ['link-out'], passive: true },
+    ])
+    expect(dev('genelec-8030c').routing).toEqual([{ from: 'in-analog', to: ['transducer'] }])
+  })
+  it('no other device carries routing, and only the two KB parallel links are passive', () => {
+    expect(devices.filter((d) => d.routing !== undefined).map((d) => d.id).sort()).toEqual(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12', 'yamaha-ql1'])
+    const passive = devices.flatMap((d) => (d.routing ?? []).filter((r) => r.passive === true).map((r) => `${d.id}:${String(r.from)}`)).sort()
+    expect(passive).toEqual(['qsc-k12-2:in-line-a', 'yamaha-dbr12:in-line'])
+  })
+  it('the parsed catalog keeps routing (the schema knows the field)', () => {
+    const parsed = Catalog.parse(catalogJson)
+    expect(parsed.devices.find((d) => d.id === 'yamaha-ql1')!.routing).toHaveLength(3)
+  })
+})
+
+/** Same idea as the PortFlag hunks above: the routing hunk of the hand-patched file is what the generator emits. */
+describe('content/catalog.schema.json: the routing hunk matches the generator (Task 33)', () => {
+  type Obj = { properties?: Record<string, unknown>; required?: string[] }
+  const deviceItems = (schema: unknown): Obj => (schema as { definitions: { Catalog: { properties: { devices: { items: Obj } } } } }).definitions.Catalog.properties.devices.items
+  const onDisk = deviceItems(JSON.parse(readFileSync('content/catalog.schema.json', 'utf8')))
+  const generated = deviceItems(zodToJsonSchema(Catalog, { name: 'Catalog', $refStrategy: 'none' }))
+
+  it('Device.routing is optional (not in `required`) and its node is exactly the generated one', () => {
+    expect(onDisk.properties).toHaveProperty('routing')
+    expect(onDisk.required).not.toContain('routing')
+    expect(onDisk.properties!.routing).toEqual(generated.properties!.routing)
+  })
+  it('the node documents the route fields (the descriptions travel to the editor)', () => {
+    const items = (onDisk.properties!.routing as { items: { properties: Record<string, { description?: string }> } }).items
+    expect(Object.keys(items.properties).sort()).toEqual(['channels', 'from', 'passive', 'to', 'when'])
+    for (const [k, v] of Object.entries(items.properties)) expect(v.description, k).toMatch(/\S/)
   })
 })

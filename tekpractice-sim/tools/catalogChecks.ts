@@ -6,8 +6,10 @@
  * Checks:
  *  1. a device without a .glb is a WARNING: the placeholder box ships (CLAUDE.md)
  *  2. a port id used twice inside one device is an ERROR
- *  3. optional `routing` (council C8) is validated when present: ports exist,
- *     directions are right, `enabledBy` is a control of the device
+ *  3. optional `routing` (council C8, P7; Task 33) is validated when present: `from` is an input / bidir
+ *     port, or `control:<id>` of a control of the device; every `to` is an output / bidir port or the
+ *     pseudo-target `transducer`; `channels` (L/R) runs parallel to `to`; `when.control` is a control of
+ *     the device and `when.equals` fits its type; no unknown key (the zod Route would strip it silently)
  *  4. optional `acoustic` (council C12) is validated when present: every
  *     value carries a source, `nominal` only for 90 / 60
  *  5. mains (C7, Task 32): a device with a `power-in` port carries the toggle
@@ -15,8 +17,9 @@
  *     OUT port that carries `mains-power`, and every verified `mains-power` OUT port
  *     has it (Bêta proposals are not checked here: they are not in the catalog)
  *
- * `routing` and `acoustic` are not in the zod Device yet, so they are read
- * defensively as `unknown` from the raw device object.
+ * The catalog is passed RAW (the JSON as read from disk): zod strips unknown keys, and `acoustic` is not in the
+ * zod Device until Task 35. `routing` is in the schema now, but is still read defensively as `unknown` so a
+ * malformed value is reported with a JSON path instead of being trusted.
  */
 import type { CatalogT } from './schemas'
 
@@ -78,6 +81,11 @@ function checkMains(at: string, device: CatalogT['devices'][number], error: (pat
   }
 }
 
+const ROUTE_KEYS = new Set(['from', 'to', 'channels', 'passive', 'when'])
+const CONTROL_SOURCE = 'control:'
+/** The pseudo-target of a loudspeaker route (P7): the drivers, not a port. */
+const TRANSDUCER = 'transducer'
+
 function checkRouting(
   at: string,
   device: CatalogT['devices'][number],
@@ -86,33 +94,57 @@ function checkRouting(
 ): void {
   if (!Array.isArray(routing)) return error(`${at}.routing`, 'routing must be an array of routes')
   const port = (id: unknown): Port | undefined => device.ports.find((p) => p.portId === id)
-  const controlIds = new Set((device.controls ?? []).map((c) => c.id))
+  const control = (id: unknown) => (device.controls ?? []).find((c) => c.id === id)
 
   routing.forEach((route: unknown, i) => {
     const r = `${at}.routing[${i}]`
     if (!isRecord(route)) return error(r, 'a route must be an object')
-    const hasFrom = typeof route.from === 'string'
-    const hasSource = typeof route.source === 'string'
-    if (hasFrom === hasSource) return error(r, 'a route needs exactly one of "from" (a port) or "source" (an internal source)')
+    // The zod Route strips unknown keys, so a typo (or the old `source` / `enabledBy` shape) would vanish silently.
+    for (const key of Object.keys(route))
+      if (!ROUTE_KEYS.has(key)) error(r, `unknown key "${key}" (a route has ${[...ROUTE_KEYS].join(', ')})`)
 
-    if (hasFrom) {
+    if (typeof route.from !== 'string' || route.from === '') {
+      error(`${r}.from`, 'a route needs "from": an input port id, or "control:<controlId>"')
+    } else if (route.from.startsWith(CONTROL_SOURCE)) {
+      const id = route.from.slice(CONTROL_SOURCE.length)
+      if (!control(id)) error(`${r}.from`, `"${id}" is not a control of ${device.id}`)
+    } else {
       const from = port(route.from)
-      if (!from) error(`${r}.from`, `unknown port "${String(route.from)}"`)
+      if (!from) error(`${r}.from`, `unknown port "${route.from}"`)
       else if (from.dir === 'out') error(`${r}.from`, `"${from.portId}" is an output: a route starts at an input or bidir port`)
     }
 
-    if (!Array.isArray(route.to) || route.to.length === 0) {
+    const targets = Array.isArray(route.to) ? route.to : []
+    if (targets.length === 0) {
       error(`${r}.to`, 'a route needs a non-empty "to" list of output ports')
     } else {
-      for (const t of route.to) {
+      for (const t of targets) {
+        if (t === TRANSDUCER) continue
         const to = port(t)
         if (!to) error(`${r}.to`, `unknown port "${String(t)}"`)
         else if (to.dir === 'in') error(`${r}.to`, `"${to.portId}" is an input: a route ends at an output or bidir port`)
       }
     }
 
-    if (route.enabledBy !== undefined && (typeof route.enabledBy !== 'string' || !controlIds.has(route.enabledBy)))
-      error(`${r}.enabledBy`, `"${String(route.enabledBy)}" is not a control of ${device.id}`)
+    if (route.channels !== undefined) {
+      if (!Array.isArray(route.channels) || route.channels.some((c) => c !== 'L' && c !== 'R'))
+        error(`${r}.channels`, 'channels must be a list of "L" / "R"')
+      else if (targets.length > 0 && route.channels.length !== targets.length)
+        error(`${r}.channels`, `${route.channels.length} channel(s) for ${targets.length} target(s): channels runs parallel to "to"`)
+    }
+
+    if (route.passive !== undefined && typeof route.passive !== 'boolean') error(`${r}.passive`, 'passive must be a boolean')
+
+    if (route.when !== undefined) {
+      const w = route.when
+      if (!isRecord(w)) return error(`${r}.when`, 'when must be { control, equals }')
+      const ctl = control(w.control)
+      if (!ctl) return error(`${r}.when.control`, `"${String(w.control)}" is not a control of ${device.id}`)
+      if (ctl.type === 'toggle' && typeof w.equals !== 'boolean')
+        error(`${r}.when.equals`, `"${ctl.id}" is a toggle: equals must be true or false`)
+      else if (ctl.type === 'enum' && (typeof w.equals !== 'string' || !ctl.options.includes(w.equals)))
+        error(`${r}.when.equals`, `"${ctl.id}" is an enum: equals must be one of [${ctl.options.join(', ')}]`)
+    }
   })
 }
 

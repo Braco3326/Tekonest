@@ -249,6 +249,72 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              "routing": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "from": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Where the signal enters: an input (or bidir) port id of this device, or \"control:<controlId>\" for a source inside the device (e.g. \"control:playback-usb\")."
+                    },
+                    "to": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "minItems": 1,
+                      "description": "Where it leaves: output (or bidir) port ids of this device, or the pseudo-target \"transducer\" (the device is a loudspeaker and this route feeds its drivers)."
+                    },
+                    "channels": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "L",
+                          "R"
+                        ]
+                      },
+                      "description": "Stereo channel carried to each target, parallel to `to` (same length, P7): [\"L\",\"R\"] sends left to the first output and right to the second."
+                    },
+                    "passive": {
+                      "type": "boolean",
+                      "description": "True for a parallel link that works with the device unpowered (P7): a loop-thru / link out the knowledge base documents. Absent = the route needs the device powered."
+                    },
+                    "when": {
+                      "type": "object",
+                      "properties": {
+                        "control": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Id of a control of this device."
+                        },
+                        "equals": {
+                          "type": [
+                            "boolean",
+                            "string"
+                          ],
+                          "description": "Value that control must have for the route to be live: a boolean for a toggle, one of the options for an enum."
+                        }
+                      },
+                      "required": [
+                        "control",
+                        "equals"
+                      ],
+                      "additionalProperties": false,
+                      "description": "The route is live only while this control has this value (e.g. playback-usb on). Absent = always live."
+                    }
+                  },
+                  "required": [
+                    "from",
+                    "to"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Signal routes of the device (C8): consumed by the signal path only. Verified data: a Bêta proposal never carries routing (parseProposals drops it)."
               }
             },
             "required": [

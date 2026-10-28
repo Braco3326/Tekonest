@@ -6,7 +6,7 @@ import { makeRegistry } from '../helpers'
 const base = makeRegistry().catalog
 const allModels: ReadonlySet<string> = new Set(base.devices.map((d) => d.id))
 const fresh = (): CatalogT => structuredClone(base)
-/** Optional later fields (routing, acoustic) are not in the zod Device yet, hence the loose view. */
+/** Fields the zod Device does not know yet (acoustic, Task 35) and deliberately malformed values, hence the loose view. */
 type LooseDevice = CatalogT['devices'][number] & Record<string, any>
 const dev = (c: CatalogT, id: string) => c.devices.find((d) => d.id === id) as LooseDevice
 const errors = (c: CatalogT) => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'error')
@@ -43,54 +43,120 @@ describe('checkCatalog, ports', () => {
   })
 })
 
-describe('checkCatalog, routing (optional)', () => {
-  const ql1Ports = () => dev(fresh(), 'yamaha-ql1').ports
-  const inPort = () => ql1Ports().find((p) => p.dir === 'in')!.portId
-  const outPort = () => ql1Ports().find((p) => p.dir === 'out')!.portId
-
-  it('accepts a valid route', () => {
+describe('checkCatalog, routing (Task 33, C8, P7)', () => {
+  const ql1 = (c: CatalogT) => dev(c, 'yamaha-ql1')
+  const inPort = 'in-mic-1'
+  const outPort = 'out-main-l'
+  /** The real QL1 with its routing replaced by exactly these routes. */
+  const withRoutes = (...routes: unknown[]): CatalogT => {
     const c = fresh()
-    dev(c, 'yamaha-ql1').routing = [{ from: inPort(), to: [outPort()] }]
+    ;(ql1(c) as Record<string, unknown>).routing = routes
+    return c
+  }
+  const at = (i: number, field = '') => `devices["yamaha-ql1"].routing[${i}]${field}`
+
+  it('the real QL1 declares routing, and the real catalog passes', () => {
+    expect(ql1(fresh()).routing).toBeDefined()
+    expect(errors(fresh())).toEqual([])
+  })
+
+  it('accepts a port route, a stereo source route behind a toggle, an enum-valued when, a pass-through and the transducer target', () => {
+    const c = withRoutes(
+      { from: inPort, to: [outPort, 'out-main-r'] },
+      { from: 'control:playback-usb', to: [outPort, 'out-main-r'], channels: ['L', 'R'], when: { control: 'playback-usb', equals: true } },
+      { from: 'control:playback-usb', to: [outPort], when: { control: 'balance-master', equals: 'C' } },
+      { from: inPort, to: ['dante-primary'] },
+      { from: 'dante-primary', to: [outPort], passive: true },
+      { from: inPort, to: ['transducer'] },
+    )
     expect(errors(c)).toEqual([])
   })
 
-  it('accepts a source route enabled by an existing control', () => {
-    const c = fresh()
-    const d = dev(c, 'yamaha-ql1')
-    d.controls = [...(d.controls ?? []), { id: 'playback-usb', type: 'toggle', label: 'Lecture console (USB)', default: false }]
-    d.routing = [{ source: 'playback-usb', label: 'Lecture console', to: [outPort()], enabledBy: 'playback-usb' }]
-    expect(errors(c)).toEqual([])
+  it('errors when a route names an unknown port (from, then to)', () => {
+    const e = errors(withRoutes({ from: 'nope', to: [outPort] }, { from: inPort, to: ['nope'] }))
+    expect(e.map((i) => i.path)).toEqual([at(0, '.from'), at(1, '.to')])
+    expect(e[0].message).toMatch(/unknown port "nope"/)
+    expect(e[1].message).toMatch(/unknown port "nope"/)
   })
 
-  it('errors on an unknown port, a wrong direction, an empty target list and an unknown enabledBy', () => {
-    const c = fresh()
-    const d = dev(c, 'yamaha-ql1')
-    d.routing = [
-      { from: 'nope', to: [outPort()] },
-      { from: outPort(), to: [outPort()] },
-      { from: inPort(), to: [inPort()] },
-      { from: inPort(), to: [] },
-      { source: 'player', to: [outPort()], enabledBy: 'no-such-control' },
-      { to: [outPort()] },
-    ]
-    expect(errors(c).map((i) => i.path)).toEqual([
-      'devices["yamaha-ql1"].routing[0].from',
-      'devices["yamaha-ql1"].routing[1].from',
-      'devices["yamaha-ql1"].routing[2].to',
-      'devices["yamaha-ql1"].routing[3].to',
-      'devices["yamaha-ql1"].routing[4].enabledBy',
-      'devices["yamaha-ql1"].routing[5]',
-    ])
+  it('errors when `from` is an output port', () => {
+    const e = errors(withRoutes({ from: outPort, to: ['out-main-r'] }))
+    expect(e.map((i) => i.path)).toEqual([at(0, '.from')])
+    expect(e[0].message).toMatch(/is an output/)
+  })
+
+  it('errors when a `to` is an input port', () => {
+    const e = errors(withRoutes({ from: inPort, to: [outPort, 'in-mic-2'] }))
+    expect(e.map((i) => i.path)).toEqual([at(0, '.to')])
+    expect(e[0].message).toMatch(/"in-mic-2" is an input/)
+  })
+
+  it('accepts a bidir port at either end', () => {
+    expect(errors(withRoutes({ from: 'dante-primary', to: ['dante-primary'] }))).toEqual([])
+  })
+
+  it('errors when `to` is empty or missing', () => {
+    expect(errors(withRoutes({ from: inPort, to: [] }, { from: inPort })).map((i) => i.path)).toEqual([at(0, '.to'), at(1, '.to')])
+  })
+
+  it('errors when when.control is not a control of the device', () => {
+    const e = errors(withRoutes({ from: 'control:playback-usb', to: [outPort], when: { control: 'no-such-control', equals: true } }))
+    expect(e.map((i) => i.path)).toEqual([at(0, '.when.control')])
+    expect(e[0].message).toMatch(/"no-such-control" is not a control of yamaha-ql1/)
+  })
+
+  it('errors when `from` is control:<id> for a control the device lacks', () => {
+    const e = errors(withRoutes({ from: 'control:no-such-control', to: [outPort] }))
+    expect(e.map((i) => i.path)).toEqual([at(0, '.from')])
+    expect(e[0].message).toMatch(/"no-such-control" is not a control of yamaha-ql1/)
+  })
+
+  it('errors when channels has a different length from `to` (shorter and longer)', () => {
+    const e = errors(withRoutes(
+      { from: 'control:playback-usb', to: [outPort, 'out-main-r'], channels: ['L'] },
+      { from: 'control:playback-usb', to: [outPort], channels: ['L', 'R'] },
+    ))
+    expect(e.map((i) => i.path)).toEqual([at(0, '.channels'), at(1, '.channels')])
+    expect(e[0].message).toMatch(/1 channel\(s\) for 2 target\(s\)/)
+  })
+
+  it('errors on a channel that is not L or R, and on a non-boolean passive', () => {
+    const e = errors(withRoutes({ from: inPort, to: [outPort], channels: ['C'] }, { from: inPort, to: [outPort], passive: 'yes' }))
+    expect(e.map((i) => i.path)).toEqual([at(0, '.channels'), at(1, '.passive')])
+  })
+
+  it('errors when when.equals does not fit the control: a string for a toggle, a boolean or an unlisted value for an enum', () => {
+    const e = errors(withRoutes(
+      { from: 'control:playback-usb', to: [outPort], when: { control: 'playback-usb', equals: 'true' } },
+      { from: 'control:playback-usb', to: [outPort], when: { control: 'fader-master', equals: true } },
+      { from: 'control:playback-usb', to: [outPort], when: { control: 'fader-master', equals: '+20' } },
+    ))
+    expect(e.map((i) => i.path)).toEqual([at(0, '.when.equals'), at(1, '.when.equals'), at(2, '.when.equals')])
+  })
+
+  it('errors on a route that is not an object, has no from, or keeps a key the schema would silently drop', () => {
+    const e = errors(withRoutes('x', { to: [outPort] }, { from: inPort, to: [outPort], enabledBy: 'power' }, { source: 'player', to: [outPort] }))
+    expect(e.map((i) => i.path)).toEqual([at(0), at(1, '.from'), at(2), at(3), at(3, '.from')])
+    expect(e[2].message).toMatch(/unknown key "enabledBy"/)
   })
 
   it('errors when routing is not an array', () => {
+    expect(errors(withRoutes()), 'an empty list is fine').toEqual([])
     const c = fresh()
-    dev(c, 'yamaha-ql1').routing = { from: 'a' }
+    ;(ql1(c) as Record<string, unknown>).routing = { from: 'a' }
     expect(errors(c).map((i) => i.path)).toEqual(['devices["yamaha-ql1"].routing'])
   })
 
+  it('the real speakers: every route of the catalog is valid, and a bad port id in a speaker is caught too', () => {
+    const c = fresh()
+    dev(c, 'qsc-k12-2').routing = [{ from: 'in-line-a', to: ['thru-out-b'], passive: true }]
+    expect(errors(c).map((i) => i.path)).toEqual(['devices["qsc-k12-2"].routing[0].to'])
+  })
+
   it('does nothing for a device without routing', () => {
-    expect(errors(fresh())).toEqual([])
+    const c = fresh()
+    delete ql1(c).routing
+    expect(errors(c)).toEqual([])
   })
 })
 

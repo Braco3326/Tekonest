@@ -74,6 +74,24 @@ describe('parseProposals leaves unusable entries out, with the reason', () => {
     const [d] = parse([entry('p-c', { controls: [control] })]).devices
     expect(d.controls).toBeUndefined()
   })
+  it('and no signal route (Task 33): routes are verified data, so a proposal that carries routing registers without it', () => {
+    const routing = [{ from: 'in-1', to: ['transducer'] }, { from: 'control:playback-usb', to: ['in-1'], channels: ['L'] }]
+    const [d] = parse([entry('p-r', { routing })]).devices
+    expect(d.id).toBe('p-r')
+    expect(d.routing).toBeUndefined()
+    expect('routing' in d).toBe(false)
+  })
+  it('a malformed routing neither blocks the proposal nor survives', () => {
+    const r = parse([entry('p-bad', { routing: 'not an array' }), entry('p-bad2', { routing: [{ to: [] }] })])
+    expect(r.skipped).toEqual([])
+    expect(r.devices.map((d) => [d.id, d.routing])).toEqual([['p-bad', undefined], ['p-bad2', undefined]])
+  })
+  it('after registration the registry holds the proposal without routing (the signal path reads routing from the registry)', () => {
+    const reg2 = makeRegistry()
+    registerProposals(reg2, parseProposals({ devices: [entry('p-reg', { routing: [{ from: 'in-1', to: ['transducer'] }] })] }, reg2).devices)
+    expect(reg2.deviceById.get('p-reg')).toBeDefined()
+    expect(reg2.deviceById.get('p-reg')!.routing).toBeUndefined()
+  })
 })
 
 describe('registerProposals / isUnverified', () => {

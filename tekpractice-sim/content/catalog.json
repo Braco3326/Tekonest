@@ -76,7 +76,16 @@
         { "portId": "power-in",      "dir": "in",    "connector": "iec-c14",  "signal": "mains-power" }
       ],
       "controls": [
-        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true },
+        { "id": "playback-usb", "type": "toggle", "label": "Lecture console", "default": false },
+        { "id": "mute-master", "type": "toggle", "label": "Mute master", "default": false },
+        { "id": "fader-master", "type": "enum", "label": "Fader master", "options": ["-inf", "-30", "-20", "-10", "-6", "-3", "0", "+6", "+10"], "defaultOption": "0" },
+        { "id": "balance-master", "type": "enum", "label": "Balance", "options": ["G100", "G50", "C", "D50", "D100"], "defaultOption": "C" }
+      ],
+      "routing": [
+        { "from": "control:playback-usb", "to": ["out-main-l", "out-main-r"], "channels": ["L", "R"], "when": { "control": "playback-usb", "equals": true } },
+        { "from": "in-mic-1", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-2", "to": ["out-main-l", "out-main-r"] }
       ]
     },
     {
@@ -142,6 +151,10 @@
       ],
       "controls": [
         { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-line-a", "to": ["transducer"] },
+        { "from": "in-line-a", "to": ["thru-out-a"], "passive": true }
       ]
     },
     {
@@ -160,6 +173,10 @@
       ],
       "controls": [
         { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-line", "to": ["transducer"] },
+        { "from": "in-line", "to": ["link-out"], "passive": true }
       ]
     },
     {
@@ -254,6 +271,9 @@
       ],
       "controls": [
         { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-analog", "to": ["transducer"] }
       ]
     },
     {

@@ -67,8 +67,10 @@ assertUnique(catalog.devices.map((d) => d.id), 'devices.id')
 assertUnique(catalog.rules.map((r) => r.id), 'rules.id')
 
 // Pure checks (duplicate port ids, optional routing/acoustic, missing .glb).
-// The raw catalog is passed so fields not yet in the zod Device (routing,
-// acoustic) are still seen; its shape was validated just above.
+// The raw catalog is passed, not the typed one: `acoustic` is not in the zod Device until Task 35, and zod strips
+// unknown keys, so the typed catalog would silently skip that check (and could not report a stray key in a route).
+// `routing` is in the schema since Task 33; the raw JSON keeps checkCatalog reading it defensively. Its shape
+// was validated just above. TODO(Task 35): once `acoustic` is in the schema, pass the typed `catalog` and drop the cast.
 const modelIds = new Set(
   readdirSync(resolve(root, 'public/assets')).filter((f) => f.endsWith('.glb')).map((f) => f.slice(0, -4)),
 )

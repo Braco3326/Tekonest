@@ -58,7 +58,14 @@ describe('propsView', () => {
   it('controls come from the catalog (toggle and enum, with the live value)', () => {
     const d = design()
     // every active device carries the catalog's « Alimentation » (Task 32, C7), on by default; last, after its own switches
-    expect(view(d, 'ql1').controls).toEqual([{ id: 'power', label: 'Alimentation', kind: 'toggle', value: true }])
+    // and the QL1 adds its sound controls (Task 33, P8): playback, mute, master fader, balance, each at its catalog default
+    expect(view(d, 'ql1').controls).toEqual([
+      { id: 'power', label: 'Alimentation', kind: 'toggle', value: true },
+      { id: 'playback-usb', label: 'Lecture console', kind: 'toggle', value: false },
+      { id: 'mute-master', label: 'Mute master', kind: 'toggle', value: false },
+      { id: 'fader-master', label: 'Fader master', kind: 'enum', value: '0', options: ['-inf', '-30', '-20', '-10', '-6', '-3', '0', '+6', '+10'] },
+      { id: 'balance-master', label: 'Balance', kind: 'enum', value: 'C', options: ['G100', 'G50', 'C', 'D50', 'D100'] },
+    ])
     expect(view(d, 'isa').controls).toEqual([{ id: 'phantom-48v', label: '+48V phantom', kind: 'toggle', value: false }, { id: 'power', label: 'Alimentation', kind: 'toggle', value: true }])
     expect(view(d, 'hdio').controls).toEqual([{ id: 'sample-rate', label: 'Sample rate', kind: 'enum', value: '48000', options: ['44100', '48000', '96000'] }, { id: 'power', label: 'Alimentation', kind: 'toggle', value: true }])
   })

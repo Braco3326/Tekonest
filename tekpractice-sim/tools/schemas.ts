@@ -49,6 +49,33 @@ export const EnumControl = z.object({
 })
 export const Control = z.discriminatedUnion('type', [ToggleControl, EnumControl])
 
+/**
+ * One signal route of a device (council C8, P7): where the signal that enters the device goes, as data.
+ * Read only by the pure signal-path module (Task 34); the engine never reads it and R1-R3 do not depend on it.
+ * tools/catalogChecks.ts checks a route against the ports and controls of its device (the zod shape cannot see them).
+ */
+export const Route = z.object({
+  from: z.string().min(1).describe(
+    'Where the signal enters: an input (or bidir) port id of this device, or "control:<controlId>" for a source inside the device (e.g. "control:playback-usb").',
+  ),
+  to: z.array(z.string().min(1)).min(1).describe(
+    'Where it leaves: output (or bidir) port ids of this device, or the pseudo-target "transducer" (the device is a loudspeaker and this route feeds its drivers).',
+  ),
+  channels: z.array(z.enum(['L', 'R'])).optional().describe(
+    'Stereo channel carried to each target, parallel to `to` (same length, P7): ["L","R"] sends left to the first output and right to the second.',
+  ),
+  passive: z.boolean().optional().describe(
+    'True for a parallel link that works with the device unpowered (P7): a loop-thru / link out the knowledge base documents. Absent = the route needs the device powered.',
+  ),
+  when: z.object({
+    control: z.string().min(1).describe('Id of a control of this device.'),
+    equals: z.union([z.boolean(), z.string()]).describe('Value that control must have for the route to be live: a boolean for a toggle, one of the options for an enum.'),
+  }).optional().describe('The route is live only while this control has this value (e.g. playback-usb on). Absent = always live.'),
+}).refine((r) => r.channels === undefined || r.channels.length === r.to.length, {
+  path: ['channels'],
+  message: '`channels` must have exactly one entry per `to` target',
+})
+
 export const Device = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'device id must be a kebab-case slug'),
   label: z.string().min(1),
@@ -62,6 +89,9 @@ export const Device = z.object({
   }),
   ports: z.array(Port),
   controls: z.array(Control).optional(),
+  routing: z.array(Route).optional().describe(
+    'Signal routes of the device (C8): consumed by the signal path only. Verified data: a Bêta proposal never carries routing (parseProposals drops it).',
+  ),
 })
 
 export const Rule = z.object({

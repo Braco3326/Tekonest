@@ -60,6 +60,13 @@ for (const s of scenarios) {
   })
 }
 
+test('legacy a1 (P19, Tasks 32-33): the QL1 sound controls and every power switch stay out of the HUD (no panel at all: no device of a1 has a legacy control)', async ({ page }) => {
+  await page.goto('/?level=a1')
+  await page.waitForFunction(() => !!window.__audioSim)
+  await expect(page.locator('#hud-controls')).toBeHidden()
+  await expect(page.locator('#hud-controls .cp-toggle, #hud-controls .cp-select')).toHaveCount(0)
+})
+
 test('controls panel renders and toggles device state (b1)', async ({ page }) => {
   await page.goto('/?level=b1')
   await page.waitForFunction(() => !!window.__audioSim)
