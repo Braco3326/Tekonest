@@ -800,6 +800,10 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-status-pause::before { content: '⏸'; color: var(--cr-ambre); }
 .cr .cr-status-action { min-height: 24px; padding: 0 8px; border: 1px solid var(--cr-ambre); color: var(--cr-papier); }
 .cr .cr-status-action:hover { background: var(--cr-ambre); color: var(--cr-nuit); }
+.cr-status-playback { max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--cr-ink-muted); }
+.cr-status-playback[data-ready='true'] { color: var(--cr-ok); font-weight: 500; }
+.cr-status-mic { color: var(--cr-ok); font-weight: 500; white-space: nowrap; }
+.cr-status-playback[hidden], .cr-status-mic[hidden] { display: none; }
 .cr .cr-signal { display: flex; align-items: center; gap: 6px; min-height: 24px; padding: 0 8px; border: 1px solid var(--cr-panel-line); font-weight: 500; }
 .cr .cr-signal[data-kind='ok'] { color: var(--cr-ok); }
 .cr .cr-signal[data-kind='neutral'] { color: var(--cr-ink-muted); }

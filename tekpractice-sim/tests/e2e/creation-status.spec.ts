@@ -144,3 +144,44 @@ test('« kept-full »: closing the note leaves a persistent paused line with « 
   await action.click()
   await expect(line).toBeHidden()
 })
+
+/** Task 34 (C9, L5): « Signal OK » and « Lecture possible » only when the signal path really reaches a powered speaker. */
+test('the playback line follows the live signal path: ready on the powered rig, mute never gates, power off does', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/')
+  await page.waitForFunction(() => !!window.__creation)
+  await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium' && window.__creation!.design().rig.instances.length === 5)
+  const playback = page.getByTestId('status-playback')
+  // The template as shipped: strip and mains cables, mic cable, no speaker cable, playback off.
+  await expect(playback).toHaveText('La lecture console est coupée.')
+  await expect(playback).toHaveAttribute('data-ready', 'false')
+  await expect(label(page)).toHaveText('Aucune erreur détectée')
+  await expect(page.getByTestId('signal-status')).not.toContainText('Signal OK')
+  await expect(page.getByTestId('status-mic')).toHaveText('Micro OK') // the mic is cabled to a powered QL1: separate from playback
+  // The powered reference rig + playback-usb on.
+  await page.evaluate(() => {
+    const c = window.__creation!
+    c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12-g', port: 'in-line-a' } })
+    c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-r' }, b: { instance: 'k12-d', port: 'in-line-a' } })
+  })
+  await expect(playback).toHaveText('La lecture console est coupée.') // cables alone do not play: the source is still off
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: true }))
+  await expect(playback).toHaveText('Lecture possible')
+  await expect(playback).toHaveAttribute('data-ready', 'true')
+  await expect(label(page)).toHaveText('Signal OK')
+  await expect(page.getByTestId('signal-status')).toHaveAttribute('data-kind', 'ok')
+  // mute-master silences, never gates.
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'mute-master', value: true }))
+  await expect(playback).toHaveText('Lecture possible')
+  await expect(label(page)).toHaveText('Signal OK')
+  // The console switched off: not playable, not « Signal OK », and the mic is not OK either.
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'power', value: false }))
+  await expect(playback).toHaveText('La console n’est pas alimentée.')
+  await expect(playback).toHaveAttribute('data-ready', 'false')
+  await expect(page.getByTestId('signal-status')).not.toContainText('Signal OK')
+  await expect(page.getByTestId('status-mic')).toBeHidden()
+  // Undo brings it back: the line is recomputed from the live design, not remembered.
+  await page.evaluate(() => window.__creation!.undo())
+  await expect(playback).toHaveText('Lecture possible')
+})

@@ -382,6 +382,22 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 | `status.pausedBlocked` | Sauvegarde automatique impossible : le navigateur la bloque. | validé | Ligne persistante, stockage bloqué |
 | `status.actionExport` | Exporter… | validé | Bouton de la ligne « en pause » (même action que Projet > Exporter les données mises de côté…) |
 
+## playback
+
+Lecture et micro (Task 34, C9) : la ligne « Lecture » de la barre d’état et l’indicateur « Micro OK ». Les raisons sont renvoyées par `src/flow/signalPath.ts` ; la première s’affiche quand la lecture n’est pas possible. Toutes les formulations sont des brouillons.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `playback.ready` | Lecture possible | à valider (tekuxwriter) | Barre d’état : le chemin du signal atteint une enceinte alimentée |
+| `playback.micOk` | Micro OK | à valider (tekuxwriter) | Barre d’état, à part de la lecture : un micro atteint une entrée micro d’une console alimentée, sans erreur |
+| `playback.noSource` | Aucune source de lecture dans le projet. | à valider (tekuxwriter) | Raison NO_SOURCE : aucune console avec lecture dans le projet |
+| `playback.sourceOff` | La lecture console est coupée. | à valider (tekuxwriter) | Raison SOURCE_OFF : la commande « Lecture console » est éteinte |
+| `playback.hostUnpowered` | La console n’est pas alimentée. | à valider (tekuxwriter) | Raison HOST_UNPOWERED (lecture et micro) : pas reliée au secteur ou éteinte |
+| `playback.noPath` | Aucun chemin de la console jusqu’à une enceinte. | à valider (tekuxwriter) | Raison NO_PATH : aucun câble de la console vers une entrée d’enceinte |
+| `playback.speakerUnpowered` | Une enceinte reçoit le signal mais n’est pas alimentée. | à valider (tekuxwriter) | Raison SPEAKER_UNPOWERED : enceinte câblée en signal, sans secteur ou éteinte |
+| `playback.ruleError` | Une erreur de câblage bloque le chemin. | à valider (tekuxwriter) | Raison RULE_ERROR (lecture et micro) : une erreur de règle sur un port du chemin |
+| `playback.noMic` | Aucun micro branché sur une entrée micro. | à valider (tekuxwriter) | Raison NO_MIC : aucun micro vérifié câblé sur une entrée micro |
+
 ## Textes des règles (catalogue)
 
 Les titres et textes pédagogiques des règles R1–R8 sont des **données du catalogue**, pas des chaînes de `copy.ts` : `content/catalog.json`, `rules[].title_fr` (titre) et `rules[].teach_fr` (texte pédagogique), obligatoires (schéma zod, `npm run validate:catalog`). Les champs anglais `title` / `teach` restent pour le mode historique (`?legacy=1`). Le Mode Création ne montre que le français : `ruleTextFor` (`src/creation/shell/statusModel.ts`) est le seul endroit qui les choisit, pour la liste d'erreurs de la barre d'état (titre + texte), le refus épinglé sur la prise (titre) et les prises incompatibles de « Connecter à… » (titre, puis texte sur une 2e ligne).

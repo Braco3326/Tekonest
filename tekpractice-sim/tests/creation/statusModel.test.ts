@@ -1,8 +1,12 @@
+import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import type { TeachingEvent } from '../../src/engine/types'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
+import { templateToDesign } from '../../src/creation/templates'
+import { Template } from '../../src/creation/templateSchema'
+import { signalPath } from '../../src/flow/signalPath'
 import { autosaveView, rejectionOf, ruleTextFor, statusView } from '../../src/creation/shell/statusModel'
 
 const ruleText = (id: string): { title: string; detail: string } => ({ title: `T-${id}`, detail: `detail-${id}` })
@@ -13,6 +17,8 @@ const ev = (ruleId: string, severity: 'error' | 'warning', instance = 'u87'): Te
   teach: '',
   subjects: [{ instance, port: 'out' }],
 })
+const READY = { playbackReady: true, reasons: [], micOk: false }
+const NOT_READY = { playbackReady: false, reasons: [], micOk: false }
 const base = { selectionLabel: null, snapFree: false, events: [] as TeachingEvent[], lastRejection: null, ruleText, connections: 1 }
 
 describe('statusView (Task 14, C17)', () => {
@@ -22,15 +28,15 @@ describe('statusView (Task 14, C17)', () => {
     expect(v.errors).toEqual([])
   })
   it('« Signal OK » (ok) ONLY when playbackReady is true; playbackReady defaults to false', () => {
-    expect(statusView({ ...base, playbackReady: true }).signal).toEqual({ kind: 'ok', label: 'Signal OK', count: 0 })
-    expect(statusView({ ...base, playbackReady: false }).signal.label).toBe('Aucune erreur détectée')
+    expect(statusView({ ...base, path: READY }).signal).toEqual({ kind: 'ok', label: 'Signal OK', count: 0 })
+    expect(statusView({ ...base, path: NOT_READY }).signal.label).toBe('Aucune erreur détectée')
   })
   it('a rig with 0 connections → « Rien de branché » (neutral)', () => {
     expect(statusView({ ...base, connections: 0 }).signal).toEqual({ kind: 'neutral', label: 'Rien de branché', count: 0 })
-    expect(statusView({ ...base, connections: 0, playbackReady: true }).signal.label).toBe('Rien de branché')
+    expect(statusView({ ...base, connections: 0, path: READY }).signal.label).toBe('Rien de branché')
   })
   it('errors win over playbackReady and an empty rig', () => {
-    expect(statusView({ ...base, playbackReady: true, events: [ev('R4', 'error')] }).signal.kind).toBe('errors')
+    expect(statusView({ ...base, path: READY, events: [ev('R4', 'error')] }).signal.kind).toBe('errors')
   })
   it('2 error events → « 2 erreurs »; 1 → « 1 erreur »', () => {
     expect(statusView({ ...base, events: [ev('R4', 'error'), ev('R8', 'error', 'hd')] }).signal).toEqual({ kind: 'errors', label: '2 erreurs', count: 2 })
@@ -82,7 +88,7 @@ describe('statusView: unverified devices (Task 30 fix 3)', () => {
     expect(statusView({ ...base, unverified: 3 }).extra).toBe('3 appareils non vérifiés')
   })
   it('joins the other extras, and never changes the signal (still neutral, never « Signal OK »)', () => {
-    const v = statusView({ ...base, unverified: 2, events: [ev('R5', 'warning')], playbackReady: false })
+    const v = statusView({ ...base, unverified: 2, events: [ev('R5', 'warning')], path: NOT_READY })
     expect(v.extra).toBe('1 avertissement · 2 appareils non vérifiés')
     expect(v.signal).toEqual({ kind: 'neutral', label: 'Aucune erreur détectée', count: 0 })
   })
@@ -142,5 +148,48 @@ describe('autosaveView: the autosave state in the status bar', () => {
     expect(autosaveView({ place: true, pending: true, pause: 'kept-exported' }).action).toBe('checked')
     expect(autosaveView({ place: true, pending: false, pause: 'other-tab' }).action).toBe('resume')
     expect(autosaveView({ place: true, pending: false, pause: null }).line).toBe('')
+  })
+})
+
+describe('statusView: the signal path (Task 34, C9, L5)', () => {
+  const reason = (text_fr: string) => ({ code: 'NO_PATH' as const, text_fr, subjects: [] })
+  it('ready → « Lecture possible » and no reason', () => {
+    expect(statusView({ ...base, path: { playbackReady: true, reasons: [reason('ignorée')], micOk: false } }).playback).toEqual({ ready: true, text: 'Lecture possible' })
+  })
+  it('not ready → the FIRST reason text, ready false', () => {
+    const v = statusView({ ...base, path: { playbackReady: false, reasons: [reason('Première.'), reason('Seconde.')], micOk: false } })
+    expect(v.playback).toEqual({ ready: false, text: 'Première.' })
+  })
+  it('no path given (before the first change) → an empty, not-ready line; never « Lecture possible »', () => {
+    expect(statusView(base).playback).toEqual({ ready: false, text: '' })
+  })
+  it('« Micro OK » only when micOk, apart from the playback line', () => {
+    expect(statusView({ ...base, path: { playbackReady: false, reasons: [], micOk: true } }).mic).toBe('Micro OK')
+    expect(statusView({ ...base, path: { playbackReady: true, reasons: [], micOk: false } }).mic).toBe('')
+    expect(statusView(base).mic).toBe('')
+  })
+  it('« Signal OK » still needs a cable and no error; the playback line says its own thing', () => {
+    const v = statusView({ ...base, path: READY, events: [ev('R4', 'error')] })
+    expect(v.signal.kind).toBe('errors')
+    expect(v.playback.ready).toBe(true)
+  })
+  it('the « N appareils non vérifiés » mark is kept next to the signal with a path given', () => {
+    expect(statusView({ ...base, path: READY, unverified: 2 }).extra).toBe('2 appareils non vérifiés')
+  })
+  it('follows the live design: a store change flips the line (no stale value) and mute never does', () => {
+    const r = loadCatalog(catalogJson)
+    const tpl = Template.parse(JSON.parse(readFileSync('content/templates/concert-simple-reference.json', 'utf8')))
+    const s = new CreationStore(r, creationEvaluator(r), templateToDesign(tpl))
+    const line = () => statusView({ ...base, path: signalPath(s.design(), r, s.events()) })
+    expect(line().playback).toEqual({ ready: false, text: 'La lecture console est coupée.' })
+    s.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: true })
+    expect(line().playback).toEqual({ ready: false, text: 'Aucun chemin de la console jusqu’à une enceinte.' })
+    s.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12-g', port: 'in-line-a' } })
+    expect(line()).toMatchObject({ playback: { ready: true, text: 'Lecture possible' }, mic: 'Micro OK', signal: { kind: 'ok', label: 'Signal OK' } })
+    s.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'mute-master', value: true })
+    expect(line().playback).toEqual({ ready: true, text: 'Lecture possible' })
+    s.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'power', value: false })
+    expect(line()).toMatchObject({ playback: { ready: false, text: 'La console n’est pas alimentée.' }, mic: '' })
+    expect(line().signal.kind).toBe('neutral')
   })
 })

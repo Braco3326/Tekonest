@@ -405,6 +405,30 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     pausedBlocked: 'Sauvegarde automatique impossible : le navigateur la bloque.',
     actionExport: 'Exporter…',
   },
+  /**
+   * The signal path's words (Task 34, C9): the status bar's « Lecture » line and « Micro OK ». src/flow/signalPath.ts reads the
+   * reasons from here (plain data, no shell code). DRAFTS: every string here is à valider (tekuxwriter).
+   */
+  playback: {
+    /** Status bar when the signal path reaches a powered speaker (`playbackReady`). */
+    ready: 'Lecture possible',
+    /** Status bar, apart from the playback line, when a mic reaches a powered console input with no error. */
+    micOk: 'Micro OK',
+    /** NO_SOURCE: no device in the project has a playback source (the QL1 is missing). */
+    noSource: 'Aucune source de lecture dans le projet.',
+    /** SOURCE_OFF: the source exists but its playback control is off. */
+    sourceOff: 'La lecture console est coupée.',
+    /** HOST_UNPOWERED: the console is not cabled to mains or switched off (also the mic's reason). */
+    hostUnpowered: 'La console n’est pas alimentée.',
+    /** NO_PATH: nothing is cabled from the console to a speaker input. */
+    noPath: 'Aucun chemin de la console jusqu’à une enceinte.',
+    /** SPEAKER_UNPOWERED: the signal reaches a speaker that has no power. */
+    speakerUnpowered: 'Une enceinte reçoit le signal mais n’est pas alimentée.',
+    /** RULE_ERROR: a rule error sits on a port of the path (also the mic's reason). */
+    ruleError: 'Une erreur de câblage bloque le chemin.',
+    /** NO_MIC: no verified mic is cabled to a mic input. */
+    noMic: 'Aucun micro branché sur une entrée micro.',
+  },
   /** The shell could not start (Phase 1 review): a persistent alert with the way out. */
   boot: {
     /** No WebGL on this computer / browser: the 3D view cannot start. */

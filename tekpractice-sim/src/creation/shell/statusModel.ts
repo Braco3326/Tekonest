@@ -6,6 +6,7 @@
  * a refused connection changed nothing in the rig, so it is listed, not counted.
  */
 import type { PortRef, TeachingEvent } from '../../engine/types'
+import type { PathResult } from '../../flow/signalPath'
 import { COPY } from '../copy'
 
 export type ErrorSeverity = 'rejection' | 'error' | 'warning'
@@ -26,6 +27,13 @@ export interface StatusView {
    * otherwise neutral: « Rien de branché » (no cable) or « Aucune erreur détectée ». Errors win.
    */
   signal: { kind: 'ok' | 'neutral' | 'errors'; label: string; count: number }
+  /**
+   * The « Lecture » line (Task 34, C9): « Lecture possible » when the signal path reaches a powered speaker, else the FIRST
+   * reason ('' before the first signal path). Apart from `signal`: a rig can be playable and carry an error elsewhere.
+   */
+  playback: { ready: boolean; text: string }
+  /** « Micro OK » when a mic reaches a powered console input with no error on it ('' = not shown). Separate from playback. */
+  mic: string
   /** Shown next to the signal label: the refused connection / the warnings ('' = nothing). */
   extra: string
   errors: StatusError[]
@@ -44,6 +52,7 @@ export interface Rejection {
 export type RuleText = (ruleId: string) => { title: string; detail: string }
 
 const S = (): Readonly<Record<string, string>> => COPY.status!
+const P = (): Readonly<Record<string, string>> => COPY.playback!
 const fill = (s: string, k: string, v: string): string => s.replace(`{${k}}`, v)
 const portKey = (p: PortRef): string => `${p.instance}.${p.port}`
 
@@ -54,8 +63,11 @@ export function statusView(input: {
   events: TeachingEvent[]
   lastRejection: Rejection | null
   ruleText: RuleText
-  /** The signal path can play (src/flow/signalPath.ts, fed by Task 34). Default false. */
-  playbackReady?: boolean
+  /**
+   * The signal path of the live design (src/flow/signalPath.ts), recomputed by the owner on every store change.
+   * `playbackReady` alone gates « Signal OK » (L5). Absent = not ready, no reason, no mic.
+   */
+  path?: Pick<PathResult, 'playbackReady' | 'reasons' | 'micOk'>
   /** Cables in the rig (0 → « Rien de branché »). Default 0. */
   connections?: number
   /** Devices in the rig that are Bêta proposals (Task 30): « no error » is weaker evidence with them, and it says so. Default 0. */
@@ -83,6 +95,7 @@ export function statusView(input: {
     warnings.length === 0 ? '' : warnings.length === 1 ? S().warningsOne! : fill(S().warningsMany!, 'n', String(warnings.length)),
     (input.unverified ?? 0) <= 0 ? '' : input.unverified === 1 ? S().unverifiedOne! : fill(S().unverifiedMany!, 'n', String(input.unverified)),
   ].filter(Boolean)
+  const ready = input.path?.playbackReady === true
   return {
     selection: input.selectionLabel === null ? S().selectionNone! : fill(S().selection!, 'device', input.selectionLabel),
     snapping: input.snapFree === undefined ? '' : input.snapFree ? S().snappingFree! : S().snapping!,
@@ -91,9 +104,11 @@ export function statusView(input: {
         ? { kind: 'errors', label: count === 1 ? S().errorsOne! : fill(S().errorsMany!, 'n', String(count)), count }
         : (input.connections ?? 0) === 0
           ? { kind: 'neutral', label: S().signalNothing!, count: 0 }
-          : input.playbackReady === true
+          : input.path?.playbackReady === true
             ? { kind: 'ok', label: S().signalOk!, count: 0 }
             : { kind: 'neutral', label: S().signalNoError!, count: 0 },
+    playback: { ready, text: ready ? P().ready! : (input.path?.reasons[0]?.text_fr ?? '') },
+    mic: input.path?.micOk === true ? P().micOk! : '',
     extra: extra.join(' · '),
     errors: list,
   }

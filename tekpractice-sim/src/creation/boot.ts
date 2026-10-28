@@ -60,6 +60,7 @@ import { bindingLabel, creationActionsFor, loadCreationBindings, type CreationAc
 import type { InventoryDrawer } from './shell/inventoryDrawer'
 import type { BetaPrep } from './betaDevices'
 import { isUnverified, parseProposals, prepareBeta, proposalEntries, registerProposals, within, type BetaLoad } from './betaDevices'
+import { signalPath } from '../flow/signalPath'
 import type { DeviceT } from '../engine/CatalogLoader'
 import type { DesignState } from '../trials/trial'
 import { openPlaceDialog, openReplaceDialog } from './shell/placeDialog'
@@ -254,6 +255,8 @@ export async function bootCreation(): Promise<void> {
   let events = store.events()
   /** Cables in the rig at the last store change (0 → « Rien de branché »). */
   let connections = 0
+  /** The signal path of the live design (Task 34): recomputed with the events on every store change, never per frame. */
+  let path = signalPath(store.design(), registry, events)
   /** Bêta (proposed) devices in the rig at the last store change: « Aucune erreur détectée » says so (Task 30). */
   let unverified = 0
   /** The last refused connection: listed first until a valid connection, a new design, or its device leaves. */
@@ -282,9 +285,9 @@ export async function bootCreation(): Promise<void> {
       ruleText,
       connections,
       unverified,
-      // playbackReady: false until the signal path feeds it (Task 34): « Signal OK » only for a playable chain (L5).
-      // A Bêta device (isUnverified, betaDevices.ts) must never make a chain playable: that path stops at it. R1–R8 read its declared ports only.
-      playbackReady: false,
+      // « Signal OK » only for a playable chain (L5, playbackReady). A Bêta device (isUnverified, betaDevices.ts) never makes a chain
+      // playable: signalPath reads verified catalog devices only. R1–R8 read its declared ports only.
+      path,
     })
     statusBar.render(v)
     return v
@@ -629,6 +632,7 @@ export async function bootCreation(): Promise<void> {
     // The error list follows the rig: the rule events now; the refused connection until a valid one (or a new design, or its device leaves).
     const before = events.filter((e) => e.severity === 'error').length
     events = store.events()
+    path = signalPath(store.design(), registry, events)
     const after = events.filter((e) => e.severity === 'error').length
     connections = store.design().rig.connections.length
     unverified = store.design().rig.instances.filter((i) => isUnverified(registry, i.deviceId)).length

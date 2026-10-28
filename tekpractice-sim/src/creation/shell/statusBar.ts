@@ -74,6 +74,13 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
   let pauseAction: AutosaveView['action'] = null
   pauseBtn.addEventListener('click', () => pauseAction && d.autosaveAction(pauseAction))
 
+  // ── the playback line and the Micro OK mark (Task 34): plain text beside the signal button, not announced on every change
+  const playback = el(doc, 'span', 'cr-status-playback')
+  playback.dataset.testid = 'status-playback'
+  const mic = el(doc, 'span', 'cr-status-mic')
+  mic.dataset.testid = 'status-mic'
+  mic.hidden = true
+
   // ── the signal button
   const signal = el(doc, 'button', 'cr-signal')
   signal.type = 'button'
@@ -91,7 +98,7 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
   signal.append(glyph, label, extra)
 
   const right = el(doc, 'div', 'cr-status-right')
-  right.append(selection, snapping, save, pause, signal)
+  right.append(selection, snapping, save, pause, playback, mic, signal)
   d.bar.append(right)
 
   // ── the pop-over (non-modal dialog)
@@ -166,6 +173,12 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
     // The snapping text is empty (hidden) unless a device is being placed or dragged (Task 24).
     setText(snapping, v.snapping)
     setHidden(snapping, v.snapping === '')
+    setText(playback, v.playback.text)
+    setData(playback, 'ready', String(v.playback.ready))
+    setHidden(playback, v.playback.text === '')
+    if (playback.title !== v.playback.text) playback.title = v.playback.text // the full text when the bar clips it
+    setText(mic, v.mic)
+    setHidden(mic, v.mic === '')
     setText(glyph, v.signal.kind === 'errors' ? GLYPH.error : GLYPH[v.signal.kind])
     setText(label, v.signal.label)
     setText(extra, v.extra ? ` · ${v.extra}` : '')
