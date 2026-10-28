@@ -283,7 +283,8 @@ test("the old hero is gone", () => {
 
 test("the dividers follow the mapping", () => {
   const html = homeHtml();
-  assert.equal((html.match(/class="rule /g) || []).length, 2, "exactly two dividers on the home page");
+  const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
+  assert.equal((main.match(/class="rule /g) || []).length, 2, "exactly two dividers inside the home page content");
   assert.match(html, /<\/section>\s*<div class="rule rule-rope" role="presentation"><\/div>\s*<section class="section" aria-labelledby="entrees">/);
   assert.match(html, /<div class="rule rule-saw" role="presentation"><\/div>\s*<section class="section section--sunken" aria-labelledby="etat">/);
 });
@@ -302,4 +303,56 @@ test("only the home page loads the panel script", () => {
   assert.equal((homeHtml().match(/<script src="assets\/js\/panel\.js" defer><\/script>/g) || []).length, 1);
   for (const name of pages().filter((n) => n !== "index.html")) assert.doesNotMatch(page(name), /panel\.js/, name);
   assert.ok(existsSync(rootPath("assets/js/panel.js")));
+});
+
+// ---- Phase B2, Task 6: branch pages, footer seal, share image ----
+const BRANCH = ["apprendre", "creer", "histoire", "contact", "accessibilite", "tekpractice"];
+const mainOf = (name) => { const h = plain(page(name + ".html")); return h.slice(h.indexOf("<main"), h.indexOf("</main>")); };
+
+test("every branch page has a rope divider right after its hero", () => {
+  for (const n of BRANCH) {
+    assert.match(mainOf(n), /<section class="branch-hero"[\s\S]*?<\/section>\s*<div class="rule rule-rope" role="presentation"><\/div>/, n);
+  }
+});
+
+test("creer opens with the triangle band", () => {
+  assert.match(mainOf("creer"), /^<main id="contenu">\s*<div class="rule rule-tri" role="presentation"><\/div>\s*<section class="branch-hero"/);
+});
+
+test("apprendre shows the strapwork crop beside its hero text", () => {
+  const m = mainOf("apprendre");
+  assert.match(m, /<div class="wrap branch-hero__grid">/);
+  const img = m.match(/<img class="branch-hero__art"[^>]*>/);
+  assert.ok(img, "no img.branch-hero__art");
+  assert.match(img[0], /src="assets\/img\/panel\/sefo-field\.webp"/);
+  assert.match(img[0], /alt=""/);
+  assert.match(img[0], /width="900"/);
+  assert.match(img[0], /height="900"/);
+  assert.match(img[0], /loading="lazy"/);
+});
+
+test("every page ends with a sawtooth divider, the footer seal and the credit line", () => {
+  for (const name of pages()) {
+    const h = plain(page(name));
+    assert.match(h, /<\/main>\s*<div class="rule rule-saw" role="presentation"><\/div>\s*<footer class="site-footer">/, name);
+    const seal = h.match(/<img class="site-footer__seal"[^>]*>/);
+    assert.ok(seal, name + ": no footer seal");
+    assert.match(seal[0], /src="assets\/img\/panel\/footer-seal\.webp"/, name);
+    assert.match(seal[0], /alt=""/, name);
+    assert.match(seal[0], /width="96"/, name);
+    assert.match(seal[0], /height="96"/, name);
+    assert.match(seal[0], /loading="lazy"/, name);
+    assert.match(h, /Motifs inspirés de la marqueterie de Damas\. Géométrie reconstruite par Tekonest\./, name);
+  }
+});
+
+test("the footer seal keeps its 96 px size against the generic footer image rule", () => {
+  // `.site-footer img` (specificity 0,1,1) sets height 28px for the lockup; the seal rule must out-rank it.
+  assert.match(css(), /\.site-footer img\.site-footer__seal\s*\{[^}]*width:\s*96px;[^}]*height:\s*96px;/);
+});
+
+test("every page declares the share image", () => {
+  for (const name of pages()) {
+    assert.match(page(name), /<meta property="og:image" content="https:\/\/tekonest\.com\/assets\/img\/panel\/og-share\.webp">/, name);
+  }
 });

@@ -345,4 +345,4 @@ kbd { display: inline-block; font: 600 0.875em/1.4 var(--font-text); padding: 0 
 @media (min-width: 801px) { .branch-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 360px); } }
 .branch-hero__art { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; display: block; border: 1px solid var(--noyer); }
 @media (max-width: 800px) { .branch-hero__art { display: none; } }
-.site-footer__seal { display: block; width: 96px; height: 96px; margin-bottom: var(--space-4); }
+.site-footer img.site-footer__seal { display: block; width: 96px; height: 96px; margin-bottom: var(--space-4); }
