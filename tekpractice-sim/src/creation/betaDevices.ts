@@ -16,7 +16,8 @@
  *
  * No Babylon, no DOM, no engine change: the engine reads the declared ports
  * exactly as it reads a catalog device's (R1–R3 on connector / signal, R4–R8 on
- * the declared flags). Behaviour a proposal does not declare does not exist.
+ * the declared flags). Behaviour a proposal does not declare does not exist. The one flag it cannot declare is
+ * `isMainsSource` (parseProposals drops it): a proposal never powers anything.
  */
 import { Device } from '../../tools/schemas'
 import type { DeviceT, Registry } from '../engine/CatalogLoader'
@@ -88,6 +89,12 @@ export function parseProposals(raw: unknown, registry: Registry): ParsedProposal
     // A proposal declares ports only: no switch or knob is invented for it.
     const { controls: _controls, ...device } = d
     void _controls
+    // And it never SUPPLIES mains (Task 32, C7): `isMainsSource` is a verified-catalog flag, so one carried by a proposal
+    // (a regenerated or hand-edited file) is dropped here, the other flags kept. Not reported in `skipped`: the device is usable.
+    device.ports = device.ports.map(({ flags, ...port }) => {
+      const kept = (flags ?? []).filter((f) => f !== 'isMainsSource')
+      return kept.length ? { ...port, flags: kept } : port
+    })
     out.devices.push(device)
   }
   return out

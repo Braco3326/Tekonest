@@ -8,7 +8,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { makeRegistry } from '../helpers'
 import { ConnectionGraph } from '../../src/engine/ConnectionGraph'
-import { isMainsSourcePort } from '../../src/creation/mains'
+import { isMainsSourcePort, isMainsSourceRef } from '../../src/creation/mains'
 import { parseProposals, registerProposals } from '../../src/creation/betaDevices'
 
 const proposals = JSON.parse(readFileSync('content/proposals/catalog-proposals.json', 'utf8')) as unknown
@@ -94,5 +94,71 @@ describe('the strip powers a K12.2 through the engine invariants (R1-R3), a Bêt
     const peer = peerPortOf(g, 'k12-g', 'power-in')!
     expect(peer).toEqual({ instance: 'beta', port: portId })
     expect(isMainsSourcePort(r.deviceById.get(deviceId), peer.port)).toBe(false)
+  })
+})
+
+/** A proposal that tries to smuggle the mains flag: an OUT mains-power port carrying isMainsSource next to another flag. */
+const smuggler = {
+  id: 'p-smuggler',
+  label: 'Proposition qui se dit secteur',
+  levels: [],
+  realWorld: { brand: 'Marque', model: 'p-smuggler', category: 'power-strip', typicalUse: 'usage', notes: '' },
+  ports: [
+    { portId: 'out-ac', dir: 'out', connector: 'iec-c13', signal: 'mains-power', flags: ['isMainsSource'] },
+    { portId: 'in-mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level', flags: ['isMicInput', 'isMainsSource'] },
+  ],
+}
+
+describe('a Bêta proposal can never carry isMainsSource (the guard is code, not today\'s data)', () => {
+  it('parseProposals drops the flag from every proposal port and keeps the other flags', () => {
+    const r = makeRegistry()
+    const { devices, skipped } = parseProposals({ devices: [smuggler] }, r)
+    expect(skipped).toEqual([])
+    expect(devices).toHaveLength(1)
+    expect(devices[0].ports.find((p) => p.portId === 'out-ac')!.flags ?? []).not.toContain('isMainsSource')
+    expect(devices[0].ports.find((p) => p.portId === 'in-mic')!.flags).toEqual(['isMicInput'])
+  })
+
+  it('after registerProposals the registered port has no flag and isMainsSourcePort is false for it', () => {
+    const r = makeRegistry()
+    registerProposals(r, parseProposals({ devices: [smuggler] }, r).devices)
+    const d = r.deviceById.get('p-smuggler')!
+    expect(d.ports.flatMap((p) => p.flags ?? [])).not.toContain('isMainsSource')
+    expect(isMainsSourcePort(d, 'out-ac')).toBe(false)
+  })
+
+  it('a smuggler wired to a K12 power-in is accepted by the engine and is not mains by isMainsSourceRef either', () => {
+    const r = makeRegistry()
+    registerProposals(r, parseProposals({ devices: [smuggler] }, r).devices)
+    const instances = [{ instanceId: 'beta', deviceId: 'p-smuggler' }, { instanceId: 'k12-g', deviceId: 'qsc-k12-2' }]
+    const g = new ConnectionGraph(r, instances)
+    expect(g.connect({ instance: 'k12-g', port: 'power-in' }, { instance: 'beta', port: 'out-ac' }).ok).toBe(true)
+    expect(isMainsSourceRef(r, instances, { instance: 'beta', port: 'out-ac' })).toBe(false)
+  })
+})
+
+describe('isMainsSourceRef(registry, instances, ref): the registry-aware reader Task 34 should use', () => {
+  const instances = [
+    { instanceId: 'mains', deviceId: 'multiprise-secteur' },
+    { instanceId: 'k12-g', deviceId: 'qsc-k12-2' },
+    { instanceId: 'beta', deviceId: 'shure-axient-digital-ad4d' },
+  ]
+
+  it('true for a catalog strip output, false for its sibling inlets, unknown instances and unknown ports', () => {
+    const r = withBeta()
+    expect(isMainsSourceRef(r, instances, { instance: 'mains', port: 'out-1' })).toBe(true)
+    expect(isMainsSourceRef(r, instances, { instance: 'mains', port: 'out-9' })).toBe(false)
+    expect(isMainsSourceRef(r, instances, { instance: 'k12-g', port: 'power-in' })).toBe(false)
+    expect(isMainsSourceRef(r, instances, { instance: 'nobody', port: 'out-1' })).toBe(false)
+  })
+
+  it('false for a registered Bêta device port, EVEN IF the flag is set on it directly in the registry object afterwards', () => {
+    const r = withBeta()
+    const beta = r.deviceById.get('shure-axient-digital-ad4d')!
+    const port = beta.ports.find((p) => p.portId === 'out-ac-power-cascade-locking')!
+    expect(isMainsSourceRef(r, instances, { instance: 'beta', port: port.portId })).toBe(false)
+    port.flags = [...(port.flags ?? []), 'isMainsSource'] // tampering after registration
+    expect(isMainsSourcePort(beta, port.portId)).toBe(true) // the device-level reader trusts the data it is given...
+    expect(isMainsSourceRef(r, instances, { instance: 'beta', port: port.portId })).toBe(false) // ...the registry-aware one stops at isUnverified (L18)
   })
 })
