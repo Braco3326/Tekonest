@@ -103,6 +103,17 @@ describe('creation keyboard (Task 8)', () => {
     win.fire(key({ code: 'Space', key: ' ', target: canvas }))
     expect(log).toEqual(['TOGGLE_INVENTORY'])
   })
+  it('Space opens the inventory only on the canvas (Task 23): not on the body, a panel or a text field', () => {
+    const { win, canvas, log } = setup()
+    for (const t of [el('BODY'), el('DIV'), el('INPUT')]) {
+      const e = key({ code: 'Space', key: ' ', target: t })
+      win.fire(e)
+      expect(e.prevented).toBe(0)
+    }
+    expect(log).toEqual([])
+    win.fire(key({ code: 'Space', key: ' ', target: canvas }))
+    expect(log).toEqual(['TOGGLE_INVENTORY'])
+  })
   it('nothing fires inside a modal dialog, nor for an event already handled', () => {
     const { win, log } = setup()
     win.fire(key({ code: 'KeyZ', key: 'z', ctrlKey: true, target: el('BUTTON', {}, true) }))

@@ -71,7 +71,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.saveAs` | Enregistrer sous… | brief | Task 13 : Projet ; demande toujours un nom |
 | `menu.exportKept` | Exporter les données mises de côté… | validé | Task 13 (revue) : Projet ; télécharge en JSON les données illisibles gardées à part (rien n'est supprimé, N19) |
 | `menu.choosePlace` | Choisir un lieu… | validé | Lieu ; ouvre l'écran « Choisir un lieu » par-dessus le lieu affiché (Task 12) |
-| `menu.inventory` | Ouvrir l’inventaire | validé | Matériel ; inactif jusqu'au tiroir d'inventaire |
+| `menu.inventory` | Inventaire | à valider (tekuxwriter) | Matériel ; ouvre / ferme le tiroir (Espace, Task 23) ; remplace « Ouvrir l’inventaire » |
 | `menu.connectTo` | Connecter à… | validé | Câblage ; même libellé que l'action Propriétés « Connecter à… » (C10) |
 | `menu.play` | Écouter le morceau | validé | Écoute ; inactif tant que la lecture n'existe pas |
 | `menu.panelTree` | Panneau Projet | validé | Vue ; replie / déplie le panneau |
@@ -469,6 +469,25 @@ Points d'écoute nommés (Task 20 ; seule la Régie est obligatoire). Lignes du 
 | `points.menu` | Aller au point d’écoute | à valider (tekuxwriter) | Vue ; sous-menu (boutons radio, raccourcis 1 / 2 / 3) |
 | `points.status` | Point d’écoute : {point} | à valider (tekuxwriter) | Barre d'état après le choix d'un point (annoncé) ; {point} = nom du point |
 | `points.none` | Pas de point d’écoute {n} dans ce lieu. | à valider (tekuxwriter) | Barre d'état : touche 2 ou 3 sans point derrière (ex. salle vide) ; {n} = la touche |
+
+## inventory
+
+Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 3D a le focus), tiroir en bas de la vue 3D, onglets par catégorie (les noms d'onglets sont ceux de `TAB_LABELS`, src/creation/inventory.ts : Micros, Consoles, Enceintes, Sources, Réseau, Secteur, Éclairage, Bêta, Autres). Entrée ou clic sur un appareil l'ajoute au centre de la vue jusqu'au placement à la souris (Task 24). Espace ou Échap ferment et rendent le focus à la vue 3D.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `inventory.title` | Inventaire | à valider (tekuxwriter) | Titre du tiroir (h2) et nom accessible de la boîte de dialogue ; même mot que Matériel › Inventaire |
+| `inventory.tabs` | Catégories d’appareils | à valider (tekuxwriter) | Nom accessible de la liste d’onglets (tablist) ; les noms d’onglets viennent de `TAB_LABELS` (src/creation/inventory.ts) |
+| `inventory.hint` | Entrée ou clic : poser l’appareil au centre de la vue. {key} ou Échap : fermer. | à valider (tekuxwriter) | Sous le titre ; {key} = touche de l’inventaire (« Espace » par défaut). Sera remplacé quand le placement à la souris existera (Task 24) |
+| `inventory.close` | Fermer | à valider (tekuxwriter) | Texte du bouton |
+| `inventory.closeLabel` | Fermer l’inventaire | à valider (tekuxwriter) | Nom accessible du bouton Fermer (contient le texte visible) |
+| `inventory.empty` | Aucun appareil disponible pour le moment. | à valider (tekuxwriter) | État vide d’un onglet sans appareil |
+| `inventory.badgeUnverified` | non vérifié | à valider (tekuxwriter) | Pastille sur un appareil proposé (onglet Bêta) ; cartes de proposition : Task 30 |
+| `inventory.loading` | Ouverture de l’inventaire… | à valider (tekuxwriter) | Barre d’état pendant le chargement du tiroir (première ouverture) |
+| `inventory.loadFailed` | L’inventaire n’a pas pu s’ouvrir. Réessayez avec Espace ou le menu Matériel. | à valider (tekuxwriter) | Barre d’état si le module du tiroir ne se charge pas (hors ligne) |
+| `inventory.entry` | Ajouter {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique (Annuler / Rétablir) ; {device} = nom de l’appareil |
+| `inventory.statusAdded` | Ajouté : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après Entrée ou clic sur un appareil (annoncé) ; {undo} = touche d’annulation |
+| `inventory.statusRefused` | Impossible d’ajouter {device}. | à valider (tekuxwriter) | Barre d’état si le store refuse l’ajout (annoncé) |
 
 ## Glossaire
 

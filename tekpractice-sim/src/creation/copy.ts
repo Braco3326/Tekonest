@@ -65,7 +65,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     saveAs: 'Enregistrer sous…',
     exportKept: 'Exporter les données mises de côté…',
     choosePlace: 'Choisir un lieu…',
-    inventory: 'Ouvrir l’inventaire',
+    inventory: 'Inventaire',
     connectTo: 'Connecter à…',
     play: 'Écouter le morceau',
     panelTree: 'Panneau Projet',
@@ -497,5 +497,32 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     status: 'Point d’écoute : {point}',
     /** Status bar: a key 1 / 2 / 3 with no point behind it in this place; {n} = the key. */
     none: 'Pas de point d’écoute {n} dans ce lieu.',
+  },
+  /** The inventory drawer (Task 23, CA-09). Tab names: `TAB_LABELS` in src/creation/inventory.ts. */
+  inventory: {
+    /** Drawer title (h2) and the dialog's accessible name; same word as Matériel › Inventaire. */
+    title: 'Inventaire',
+    /** Accessible name of the tab list; the tab names come from `TAB_LABELS` (src/creation/inventory.ts). */
+    tabs: 'Catégories d’appareils',
+    /** Line under the title; {key} = the inventory key label (Space by default). Reworded when placement exists (Task 24). */
+    hint: 'Entrée ou clic : poser l’appareil au centre de la vue. {key} ou Échap : fermer.',
+    /** Visible text of the close button. */
+    close: 'Fermer',
+    /** Accessible name of the close button (contains the visible text). */
+    closeLabel: 'Fermer l’inventaire',
+    /** Empty state when the drawer has no device. */
+    empty: 'Aucun appareil disponible pour le moment.',
+    /** Badge on a proposed device (Bêta tab); proposals arrive with Task 30. */
+    badgeUnverified: 'non vérifié',
+    /** Status bar while the drawer module loads (first open). */
+    loading: 'Ouverture de l’inventaire…',
+    /** Status bar if the drawer module fails to load. */
+    loadFailed: 'L’inventaire n’a pas pu s’ouvrir. Réessayez avec Espace ou le menu Matériel.',
+    /** History entry label; {device} = device name. */
+    entry: 'Ajouter {device}',
+    /** Status bar after choosing a device (announced); {undo} = undo key label. */
+    statusAdded: 'Ajouté : {device}. {undo} pour annuler.',
+    /** Status bar if the store refuses the add (announced). */
+    statusRefused: 'Impossible d’ajouter {device}.',
   },
 }

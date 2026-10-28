@@ -152,6 +152,10 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     enabled: () => !ctx.walking?.() && pickerBase.enabled(),
     run: () => void (!ctx.walking?.() && pickerBase.run()),
   }
+  // Matériel › Inventaire (Task 23): the drawer takes focus itself (its tab), so the menu does not give it back.
+  const inventoryBase = act('inventory', M.inventory!)
+  const inventoryOn = (): boolean => viewFree() && inventoryBase.enabled()
+  const inventory: MenuItem = { ...inventoryBase, enabled: inventoryOn, run: () => void (inventoryOn() && inventoryBase.run()), returnFocus: false }
   const walk: MenuItem = { ...cam('walk', W.menu!, true), kind: 'checkbox', checked: () => !!ctx.walking?.() }
   const ear = (id: string, label: string, h: 1.2 | 1.7): MenuItem => ({
     ...act(id, label),
@@ -169,7 +173,7 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
       label: M.lieu!,
       items: places.length ? places.map((p) => act(`place:${p.key}`, p.label)) : [act('choose-place', M.choosePlace!)],
     },
-    { id: 'materiel', label: M.materiel!, items: [act('inventory', M.inventory!)] },
+    { id: 'materiel', label: M.materiel!, items: [inventory] },
     { id: 'cablage', label: M.cablage!, items: [act('connect-to', M.connectTo!)] },
     {
       id: 'ecoute',

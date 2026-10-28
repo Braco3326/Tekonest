@@ -50,6 +50,8 @@ export const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(
   'CAMERA_PRESET_1', 'CAMERA_PRESET_2', 'CAMERA_PRESET_3',
   // keypad 4 / 6: a quarter turn of the view (Task 21 review)
   'VIEW_ROT_LEFT', 'VIEW_ROT_RIGHT',
+  // Space: the inventory drawer (Task 23) opens from the 3D view only; elsewhere Space stays the focused control's.
+  'TOGGLE_INVENTORY',
 ])
 
 const CHARACTER_CODE = /^(Key[A-Z]|Digit\d|Numpad\d|BracketLeft|BracketRight|Minus|Equal|Semicolon|Quote|Comma|Period|Slash|Backslash|Backquote|IntlBackslash)$/

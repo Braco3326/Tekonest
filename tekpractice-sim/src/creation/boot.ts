@@ -47,7 +47,8 @@ import { mountPropertiesPanel } from './shell/propertiesPanel'
 import { buildTree, hideKeyOf, type TreeNode } from './shell/treeModel'
 import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
-import { bindingLabel, loadCreationBindings, type CreationAction } from './input/creationActions'
+import { bindingLabel, creationActionsFor, loadCreationBindings, type CreationAction } from './input/creationActions'
+import type { InventoryDrawer } from './shell/inventoryDrawer'
 import { openPlaceDialog, openReplaceDialog } from './shell/placeDialog'
 import type { PlaceCard } from './shell/placePicker'
 import { mountShell } from './shell/layout'
@@ -899,6 +900,7 @@ export async function bootCreation(): Promise<void> {
     setProject({ name: null, savedFp: null, stamp: null })
     refreshTitle()
     autosave.schedule()
+    setInventory(false, { returnFocus: false })
     picker.show({ closable: canvasShown, focus: true })
   }
   /** « Ouvrir… »: the saved list; the chosen project replaces the rig as one undoable snapshot entry (C5), its name with it. */
@@ -1217,6 +1219,11 @@ export async function bootCreation(): Promise<void> {
   // Échap: the walk goes first (back to Orbit), then the selection. Menus, dialogs and the cube
   // caption see the key before (they take it, or it is passive for the caption).
   keys.onAction('CANCEL', (e) => {
+    // The drawer is a dialog: its own Échap closes it from inside; this is Échap pressed while the 3D view has focus.
+    if (drawerOpen()) {
+      setInventory(false)
+      return true
+    }
     if (host.walking && (e.target === canvas || e.target === document.body)) {
       leaveWalk()
       return true
@@ -1230,6 +1237,83 @@ export async function bootCreation(): Promise<void> {
     toggleWalk()
     return true
   })
+  // ── Inventory drawer (Task 23, CA-09): Matériel › Inventaire, Espace (3D view focused). A lazy chunk,
+  // requested on the first open only. Esc / Espace / « Fermer » close it and give the 3D view back.
+  const INV = COPY.inventory!
+  let drawer: InventoryDrawer | null = null
+  let drawerLoad: Promise<InventoryDrawer> | null = null
+  /** The learner's last wish while the chunk loads (a second Espace before it arrives cancels the open). */
+  let drawerWanted = false
+  const drawerOpen = (): boolean => (drawer ? drawer.isOpen : drawerWanted)
+  /**
+   * Entrée / click on a device. Until Task 24 brings `startPlacement(deviceId)` (swap this one body),
+   * the device is added where the middle of the 3D view meets the floor: one undoable SPAWN.
+   */
+  const chooseDevice = (deviceId: string): void => {
+    const name = registry.deviceById.get(deviceId)?.label ?? deviceId
+    const scene = host.scene
+    const cam = scene?.activeCamera ?? host.camera
+    let at: [number, number, number] | null =
+      scene && cam ? floorPointAt(scene, canvas.clientWidth / 2, canvas.clientHeight / 2, cam) : null
+    if (!at && host.camera) {
+      // No floor under the middle of the view (looking at the sky): the camera's pivot, on the floor.
+      const t = host.camera.target
+      at = [t.x, host.layout?.floorAt(t.x, t.z) ?? 0, t.z]
+    }
+    const r = history.do(
+      { type: 'SPAWN', deviceId, ...(at ? { position: at } : {}) },
+      INV.entry!.replace('{device}', name)
+    )
+    shell.setStatus(
+      placeNow(),
+      r.ok ? INV.statusAdded!.replace('{device}', name).replace('{undo}', undoLabel()) : INV.statusRefused!.replace('{device}', name),
+      'ready',
+      true
+    )
+  }
+  const loadDrawer = (): Promise<InventoryDrawer> =>
+    (drawerLoad ??= import('./shell/inventoryDrawer').then(({ mountInventoryDrawer }) => {
+      drawer = mountInventoryDrawer({
+        doc: document,
+        parent: shell.viewport,
+        registry,
+        proposals: () => [], // Task 30 wires the proposals
+        onChoose: chooseDevice,
+        returnFocus: () => canvas.focus(),
+        isToggleKey: (e) => creationActionsFor(keys.bindings, e).includes('TOGGLE_INVENTORY'),
+        keyLabel: () => bindingLabel(keys.bindings, 'TOGGLE_INVENTORY') || COPY.keys!.space!,
+      })
+      return drawer
+    }))
+  const setInventory = (open: boolean, opts: { returnFocus?: boolean } = {}): void => {
+    drawerWanted = open
+    if (drawer) {
+      if (open) drawer.open()
+      else drawer.close(opts)
+      return
+    }
+    if (!open) return
+    shell.setStatus(placeNow(), INV.loading!, 'busy')
+    loadDrawer().then(
+      (d) => {
+        showStatus()
+        if (drawerWanted && !viewLocked()) d.open()
+        else drawerWanted = false
+      },
+      (e) => {
+        console.error('[creation] inventory failed to load', e)
+        drawerLoad = null // a retry may fetch again
+        drawerWanted = false
+        shell.setStatus(placeNow(), INV.loadFailed!, 'ready', true)
+      }
+    )
+  }
+  keys.onAction('TOGGLE_INVENTORY', () => {
+    if (viewLocked()) return false
+    setInventory(!drawerOpen())
+    return true
+  })
+
   // A click on a device body in the 3D view selects it and flies to it.
   attachCanvasPicking(canvas, shellBag, (x, y) => pickDevice(host.scene, x, y), selection)
   // Hover (Task 14b): a thin Papier outline on the device under the pointer, never the Ambre selection.
@@ -1268,7 +1352,11 @@ export async function bootCreation(): Promise<void> {
     'panel-props': () => shell.setPanel('props'),
     site: () => location.assign(siteHref),
     // Lieu → « Choisir un lieu… »: the picker over the current place (Fermer / Échap go back).
-    'choose-place': () => picker.show({ closable: canvasShown, focus: true }),
+    'choose-place': () => {
+      setInventory(false, { returnFocus: false }) // the picker covers the drawer and takes focus
+      picker.show({ closable: canvasShown, focus: true })
+    },
+    inventory: () => setInventory(!drawerOpen()),
     new: () => void newProject(),
     open: () => void openProject(),
     save: () => void save(false),
