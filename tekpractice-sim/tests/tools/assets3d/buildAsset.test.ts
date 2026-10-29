@@ -681,12 +681,12 @@ describe('buildAsset texture budget', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const manifestBefore = await readFile(paths.manifestPath, 'utf8')
-    // a no-op texture step on three 1024 px noise maps leaves roughly 9 MB: far over the 1 MB standard limit
+    // a no-op texture step on three 1024 px noise maps leaves roughly 9 MB: far over the 1.5 MB standard limit
     const optimize: BuildDeps['optimizeTextures'] = async (bytes) => bytes
     const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024, noise: true, pbr: true })], optimize }))
 
     expect(report.ok).toBe(false)
-    expect(report.error).toMatch(/^file size budget exceeded: \d+ > 1000000 \(lower TEXTURE_MAX_PX or FILE_BYTES_MAX in gates\.ts\)$/)
+    expect(report.error).toMatch(/^file size budget exceeded: \d+ > 1500000 \(lower TEXTURE_MAX_PX or FILE_BYTES_MAX in gates\.ts\)$/)
     expect(report.attempts).toHaveLength(1)
     expect(report.attempts[0].credits).toBe(20)
     expect(calls.create).toHaveLength(1)

@@ -678,7 +678,7 @@ describe('checkTextures', () => {
 
   it('exports the tier limits', () => {
     expect(TEXTURE_MAX_PX).toEqual({ connector: 512, standard: 1024, hero: 1024 })
-    expect(FILE_BYTES_MAX).toEqual({ connector: 250_000, standard: 1_000_000, hero: 1_000_000 })
+    expect(FILE_BYTES_MAX).toEqual({ connector: 250_000, standard: 1_500_000, hero: 1_500_000 })
   })
 
   it('textures gate: 1024 px passes, 1025 px fails for standard; 512 passes and 513 fails for connector; file size at the maximum passes and one byte over fails; missing or NaN data fails closed', () => {
@@ -695,11 +695,11 @@ describe('checkTextures', () => {
     expect(checkTextures(reportOf({ textures: [tex(512)] }), connector).ok).toBe(true)
     expect(checkTextures(reportOf({ textures: [tex(513)] }), connector).ok).toBe(false)
 
-    expect(checkTextures(reportOf({ fileBytes: 1_000_000 }), standard).ok).toBe(true)
-    const over = checkTextures(reportOf({ fileBytes: 1_000_001 }), standard)
+    expect(checkTextures(reportOf({ fileBytes: 1_500_000 }), standard).ok).toBe(true)
+    const over = checkTextures(reportOf({ fileBytes: 1_500_001 }), standard)
     expect(over.ok).toBe(false)
-    expect(over.detail).toMatch(/1000001/)
-    expect(over.detail).toMatch(/1000000/)
+    expect(over.detail).toMatch(/1500001/)
+    expect(over.detail).toMatch(/1500000/)
     expect(checkTextures(reportOf({ fileBytes: 250_000 }), connector).ok).toBe(true)
     expect(checkTextures(reportOf({ fileBytes: 250_001 }), connector).ok).toBe(false)
 

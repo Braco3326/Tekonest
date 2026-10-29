@@ -5,6 +5,7 @@
 import { execFileSync } from 'node:child_process'
 import { NodeIO } from '@gltf-transform/core'
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
+import sharp from 'sharp'
 import { describe, expect, it } from 'vitest'
 import { optimizeTextures } from '../../../tools/assets3d/compress'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
@@ -37,6 +38,32 @@ describe('optimizeTextures', () => {
     const { textures } = await inspectGlb(out)
     expect(textures).toHaveLength(3)
     for (const t of textures) expect(t).toMatchObject({ width: 512, height: 512, mimeType: 'image/webp' })
+  })
+
+  it('colour maps are lossy WebP (VP8), data maps near-lossless WebP (VP8L), in two passes', async () => {
+    // add emissive and occlusion maps to the helper's PBR set (base colour, normal, metallic-roughness)
+    const io = new NodeIO().registerExtensions(ALL_EXTENSIONS)
+    const doc = await io.readBinary(await makeBoxGlb({ sizeM: SIZE, nodes: NODES, texture: { sizePx: 256, noise: true, pbr: true } }))
+    const material = doc.getRoot().listMaterials()[0]
+    const png = new Uint8Array(await sharp({ create: { width: 256, height: 256, channels: 3, background: { r: 90, g: 40, b: 200 } } }).png().toBuffer())
+    material.setEmissiveTexture(doc.createTexture('emissive').setImage(png).setMimeType('image/png'))
+    material.setOcclusionTexture(doc.createTexture('occlusion').setImage(png.slice()).setMimeType('image/png'))
+    const out = await optimizeTextures(await io.writeBinary(doc), { maxPx: 128 })
+
+    const after = await io.readBinary(out)
+    const m = after.getRoot().listMaterials()[0]
+    const codec = (t: ReturnType<typeof m.getBaseColorTexture>): string => {
+      const img = t?.getImage()
+      expect(t?.getMimeType()).toBe('image/webp')
+      expect(Buffer.from(img as Uint8Array).subarray(0, 4).toString('latin1')).toBe('RIFF')
+      return Buffer.from(img as Uint8Array).subarray(12, 16).toString('latin1')
+    }
+    expect(codec(m.getBaseColorTexture())).toBe('VP8 ')
+    expect(codec(m.getEmissiveTexture())).toBe('VP8 ')
+    expect(codec(m.getNormalTexture())).toBe('VP8L')
+    expect(codec(m.getMetallicRoughnessTexture())).toBe('VP8L')
+    expect(codec(m.getOcclusionTexture())).toBe('VP8L')
+    for (const t of (await inspectGlb(out)).textures) expect(Math.max(t.width, t.height)).toBeLessThanOrEqual(128)
   })
 
   it('keeps the port_ and ctrl_ empties and the single root', async () => {

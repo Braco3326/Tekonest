@@ -14,7 +14,7 @@
  *   budget          triangles <= 800 (connector) / 4000 (standard, hero), ceilings with no floor; one material (R5)
  *   connector fit   the plug is 0 to 0.3 mm under the socket opening
  *   proportion      the pre-scale model's proportions drift at most 5 % from the spec's
- *   textures        longest texture side <= 512 px (connector) / 1024 px (standard, hero); file <= 250 kB / 1 MB
+ *   textures        longest texture side <= 512 px (connector) / 1024 px (standard, hero); file <= 250 kB / 1.5 MB (near-lossless data maps)
  * Every gate fails closed: a non-finite input (NaN, Infinity) fails with a detail saying which value, and each
  * tolerance test is written `!(x <= tol)` so that a NaN that slipped through still fails.
  */
@@ -46,7 +46,7 @@ export const TRIANGLE_CEILING = { connector: 800, standard: 4000, hero: 4000 } a
 /** Longest texture side, in pixels, by tier: the texture step downsizes to this, the textures gate enforces it. */
 export const TEXTURE_MAX_PX = { connector: 512, standard: 1024, hero: 1024 } as const
 /** Shipped file size ceiling, in bytes, by tier (the whole GLB: geometry, textures and JSON). */
-export const FILE_BYTES_MAX = { connector: 250_000, standard: 1_000_000, hero: 1_000_000 } as const
+export const FILE_BYTES_MAX = { connector: 250_000, standard: 1_500_000, hero: 1_500_000 } as const
 /** Float noise only: a port exactly on the edge of the face rectangle is inside it. */
 const EDGE_SLACK_M = 1e-6
 /** Slack under which two lengths count as equal at a tolerance boundary (a micrometre fraction of float noise). */

@@ -3,8 +3,9 @@
  * @gltf-transform toolchain (the registration pattern of tools/blender/rig-all.mjs). Neither step calls `optimize`,
  * `prune`, `dedup` or `flatten`: they would drop the mesh-less port_ / ctrl_ nodes, which are the point.
  *  - optimizeTextures: Meshy returns 2K PBR maps and Draco does not touch images, so every texture is downscaled to at
- *    most `maxPx` on its longest side (never upscaled) and re-encoded as WebP (quality 80, EXT_texture_webp). A GLB
- *    without textures is returned as the very same bytes.
+ *    most `maxPx` on its longest side (never upscaled) and re-encoded as WebP (EXT_texture_webp): colour maps lossy
+ *    quality 80, normal / metallic-roughness / occlusion near-lossless. A GLB without textures is returned as the very
+ *    same bytes.
  *  - dracoCompress: positions are quantized to `quantizePositionBits` over the mesh's bounding box (16 bits keep a 6 mm
  *    connector under a hundredth of a millimetre, 14 bits do the same for a rack device); the caller re-measures the
  *    compressed bytes because quantization moves vertices.
@@ -29,12 +30,22 @@ export interface TextureOpts {
   maxPx: number
 }
 
-const WEBP_QUALITY = 80
+/** Colour slots (sRGB images a viewer looks at): lossy WebP, quality 80. */
+export const COLOUR_SLOTS = /^(baseColor|emissive)Texture$/
+export const COLOUR_WEBP_QUALITY = 80
+/**
+ * Data slots (normal, metallic-roughness, occlusion): lossy 4:2:0 WebP corrupts normal vectors and the packed ORM
+ * channels, so they use WebP near-lossless (preprocessing level 70; sharp 0.35 and @gltf-transform 4.4 support it).
+ */
+export const DATA_SLOTS = /^(normal|metallicRoughness|occlusion)Texture$/
+export const DATA_WEBP_QUALITY = 70
 
 /**
  * Returns `bytes` with every texture at most `maxPx` px on its longest side (aspect kept, never upscaled) and encoded
- * as WebP, with EXT_texture_webp listed in `extensionsUsed` (and required). Nodes, meshes and materials are untouched.
- * A GLB without textures comes back as the same bytes. Expects an uncompressed GLB: run it before Draco.
+ * as WebP, with EXT_texture_webp listed in `extensionsUsed` (and required). Two passes: the colour slots lossy at
+ * quality 80, the data slots near-lossless; a third pass catches any texture left in PNG / JPEG (a slot of another
+ * extension, an unused image) with the colour settings so nothing escapes the size limit. Nodes, meshes and materials
+ * are untouched. A GLB without textures comes back as the same bytes. Expects an uncompressed GLB: run it before Draco.
  */
 export async function optimizeTextures(bytes: Uint8Array, opts: TextureOpts): Promise<Uint8Array> {
   const maxPx = opts.maxPx
@@ -42,7 +53,12 @@ export async function optimizeTextures(bytes: Uint8Array, opts: TextureOpts): Pr
   const io = new NodeIO().registerExtensions(ALL_EXTENSIONS)
   const doc = await io.readBinary(bytes)
   if (doc.getRoot().listTextures().length === 0) return bytes
-  await doc.transform(textureCompress({ encoder: sharp, targetFormat: 'webp', resize: [maxPx, maxPx], quality: WEBP_QUALITY }))
+  const base = { encoder: sharp, targetFormat: 'webp' as const, resize: [maxPx, maxPx] as [number, number] }
+  await doc.transform(
+    textureCompress({ ...base, slots: COLOUR_SLOTS, quality: COLOUR_WEBP_QUALITY }),
+    textureCompress({ ...base, slots: DATA_SLOTS, nearLossless: true, quality: DATA_WEBP_QUALITY }),
+    textureCompress({ ...base, formats: /^(png|jpeg)$/, quality: COLOUR_WEBP_QUALITY }),
+  )
   return io.writeBinary(doc)
 }
 
