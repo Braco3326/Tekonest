@@ -5,7 +5,8 @@
  * checks the two agree. Zod is the single source of truth for the shape, the types are inferred from it.
  *
  * Face-local coordinates: origin at the bottom-left of the face seen from OUTSIDE, x to the right, y up, in millimetres.
- * The face 'io' is the face oriented to -Z (the one a user plugs into), 'opposite' is the face facing +Z.
+ * The face 'io' is the face the user plugs into. In GLB file space it sits at +Z (the app sees it at -Z after Babylon's
+ * Z mirror); 'opposite' is the face at -Z in file space. On the 'top' and 'bottom' faces, y=0 is the I/O edge (the io-side edge).
  */
 import { z } from 'zod'
 
@@ -13,7 +14,7 @@ const PositiveMm = z.number().finite().positive()
 const CoordMm = z.number().finite().min(0)
 
 export const Face = z.enum(['io', 'opposite', 'top', 'bottom', 'left', 'right']).describe(
-  'A face of the casing. io = the face oriented to -Z (where the user plugs in), opposite = the face to +Z. Coordinates are face-local: origin bottom-left seen from outside, x right, y up.',
+  'A face of the casing. io = the face the user plugs into (in GLB file space it sits at +Z; the app sees it at -Z after Babylon\'s Z mirror), opposite = the face at -Z in file space. Coordinates are face-local: origin bottom-left seen from outside, x right, y up, in millimetres. On top and bottom faces, y=0 is the I/O edge (the io-side edge).',
 )
 
 export const SizeMm = z.object({
