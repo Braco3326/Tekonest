@@ -72,11 +72,26 @@ describe('createMultiImageTask', () => {
       enable_pbr: true,
       texture_resolution: '2k',
       should_remesh: true,
-      topology: 'quad',
+      topology: 'triangle',
       target_polycount: 30000,
       target_formats: ['glb'],
       auto_size: false,
     })
+  })
+
+  it('requests triangle topology by default (the budget gate counts triangles) and quad only when asked', async () => {
+    const f = fakeFetch([json({ result: 'a' }), json({ result: 'b' }), json({ result: 'c' })])
+    await createMultiImageTask([IMG], { targetPolycount: 560 }, { fetch: f.fetch, key: KEY })
+    await createMultiImageTask([IMG], { targetPolycount: 560, topology: 'triangle' }, { fetch: f.fetch, key: KEY })
+    await createMultiImageTask([IMG], { targetPolycount: 560, topology: 'quad' }, { fetch: f.fetch, key: KEY })
+    expect(f.calls.map((c) => JSON.parse(String(c.init.body)).topology)).toEqual(['triangle', 'triangle', 'quad'])
+  })
+
+  it('rejects an unknown topology before any request', async () => {
+    const f = fakeFetch([json({ result: 'x' })])
+    const opts = { targetPolycount: 560, topology: 'ngon' } as unknown as Parameters<typeof createMultiImageTask>[1]
+    await expect(createMultiImageTask([IMG], opts, { fetch: f.fetch, key: KEY })).rejects.toThrow(/topology/)
+    expect(f.calls).toHaveLength(0)
   })
 
   it('rejects more than 4 images before any request', async () => {

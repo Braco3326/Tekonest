@@ -42,7 +42,7 @@ import { fileURLToPath } from 'node:url'
 import { dracoCompress, optimizeTextures } from './compress'
 import type { CompressOpts, TextureOpts } from './compress'
 import { findBlender, redact, requireMeshyKey } from './env'
-import { checkProportionDrift, checkTextures, runGates, TEXTURE_MAX_PX } from './gates'
+import { checkProportionDrift, checkTextures, runGates, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
 import type { GlbReport } from './inspect'
@@ -57,13 +57,28 @@ import type { FixupOpts, FixupReport, YawDeg } from './runFixup'
 import type { AssetSpecT } from './specSchema'
 
 const MAX_PHOTOS = 4
-const POLYCOUNT = { connector: 600, standard: 3000, hero: 3500 } as const
 const QUANTIZE_BITS = { connector: 16, standard: 14, hero: 14 } as const
 const MIME: Record<string, string> = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp' }
 const YAWS = [0, 90, 180, 270]
 
 /** The pilot set: one hero-ish mic, a console, a stagebox and three connectors. */
 export const PILOT_IDS = ['shure-sm58', 'yamaha-ql1', 'yamaha-rio3224-d2', 'xlr3-f', 'trs-quarter', 'rj45']
+
+/** Triangles the fix-up adds per socket recess (fixup.py, a 24-segment boolean cylinder), with margin. */
+const RECESS_TRIANGLES = 100
+/** Share of the tier's triangle ceiling Meshy is asked for: the rest is headroom for clean-up and recesses. */
+const CEILING_SHARE = 0.7
+const MIN_POLYCOUNT = 100
+
+/**
+ * The triangle count requested from Meshy (triangle topology, so it is the unit of the budget gate):
+ * max(100, floor(0.7 x the tier's triangle ceiling) - 100 per port with an opening). Connector 560, a device 2800
+ * minus the recesses. A quad target would double after triangulation and fail the budget on every paid attempt.
+ */
+export function targetPolycount(spec: AssetSpecT): number {
+  const recesses = spec.ports.filter((p) => p.openingMm !== undefined).length
+  return Math.max(MIN_POLYCOUNT, Math.floor(CEILING_SHARE * TRIANGLE_CEILING[spec.tier]) - RECESS_TRIANGLES * recesses)
+}
 
 /** Repo root (tekpractice-sim/), two folders above this file. */
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
@@ -288,7 +303,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       if (rawBytes) {
         raw = rawBytes
       } else {
-        const taskId = await d.meshy.createMultiImageTask(photos, { targetPolycount: POLYCOUNT[spec.tier] })
+        const taskId = await d.meshy.createMultiImageTask(photos, { targetPolycount: targetPolycount(spec), topology: 'triangle' })
         attempt.taskId = taskId
         const task = await d.meshy.waitForTask(taskId)
         attempt.credits = task.consumed_credits ?? null

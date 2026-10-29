@@ -32,9 +32,14 @@ const DATA_URI = /^data:image\/(png|jpeg|webp);base64,/
 const MAY_EXIST =
   'A task MAY already have been created and charged: check the Meshy dashboard before retrying, or a second paid task could be created'
 
+/** Remesh topology. A GLB is always triangulated, so a quad target count turns into about twice as many triangles. */
+export type MeshyTopology = 'triangle' | 'quad'
+
 export interface MeshyOpts {
   /** Target face count after remeshing (Meshy accepts 100 to 300000). */
   targetPolycount: number
+  /** Default 'triangle': the target is then a triangle count, the unit of the pipeline's budget gate. */
+  topology?: MeshyTopology
 }
 
 export interface MeshyTask {
@@ -144,6 +149,9 @@ function validateCreateInput(images: string[], opts: MeshyOpts, key: string): vo
   if (!Number.isInteger(poly) || poly < MIN_POLYCOUNT || poly > MAX_POLYCOUNT) {
     reject(`Meshy targetPolycount must be an integer from ${MIN_POLYCOUNT} to ${MAX_POLYCOUNT}, got ${String(poly)}`)
   }
+  if (opts.topology !== undefined && opts.topology !== 'triangle' && opts.topology !== 'quad') {
+    reject(`Meshy topology must be 'triangle' or 'quad', got ${String(opts.topology)}`)
+  }
   images.forEach((img, i) => {
     if (typeof img !== 'string') reject(`Meshy image ${i} is not a string`)
     if (img.startsWith('https://')) return
@@ -170,7 +178,7 @@ export async function createMultiImageTask(
     enable_pbr: true,
     texture_resolution: '2k',
     should_remesh: true,
-    topology: 'quad',
+    topology: opts.topology ?? 'triangle',
     target_polycount: opts.targetPolycount,
     target_formats: ['glb'],
     auto_size: false,

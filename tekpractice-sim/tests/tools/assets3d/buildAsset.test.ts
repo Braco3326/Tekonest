@@ -8,7 +8,7 @@ import { existsSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { buildAsset, formatReport, isMainModule, main, readPhotosFrom } from '../../../tools/assets3d/build-asset'
+import { buildAsset, formatReport, isMainModule, main, readPhotosFrom, targetPolycount } from '../../../tools/assets3d/build-asset'
 import type { BuildDeps, BuildReport } from '../../../tools/assets3d/build-asset'
 import { dracoCompress, optimizeTextures } from '../../../tools/assets3d/compress'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
@@ -71,7 +71,7 @@ const RAW_BYTES = new Uint8Array([103, 108, 84, 70, 1, 2, 3, 4])
 const PHOTO_BYTES = new Uint8Array([137, 80, 78, 71, 1, 2, 3])
 
 interface Calls {
-  create: { images: string[]; targetPolycount: number }[]
+  create: { images: string[]; targetPolycount: number; topology?: string }[]
   wait: string[]
   download: string[]
   fixup: { inGlb: string; outGlb: string; yawDeg: number | undefined; inBytes: Uint8Array }[]
@@ -127,7 +127,7 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
   return {
     meshy: {
       createMultiImageTask: async (images, opts) => {
-        calls.create.push({ images, targetPolycount: opts.targetPolycount })
+        calls.create.push({ images, targetPolycount: opts.targetPolycount, topology: opts.topology })
         if (rig.createError) throw rig.createError
         return `task-${calls.create.length}`
       },
@@ -189,7 +189,7 @@ describe('buildAsset', () => {
     expect(report.attempts[0].gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift', 'textures'])
     expect(report.attempts[0].gates.every((g) => g.ok)).toBe(true)
     expect(calls.create).toHaveLength(1)
-    expect(calls.create[0].targetPolycount).toBe(3000)
+    expect(calls.create[0]).toMatchObject({ targetPolycount: 2800, topology: 'triangle' })
     expect(calls.compress).toEqual([{ bits: 14 }])
 
     const shipped = join(paths.assetsDir, 'test-mixer.glb')
@@ -227,12 +227,34 @@ describe('buildAsset', () => {
     expect(images).toEqual([`data:image/png;base64,${b64}`, `data:image/png;base64,${b64}`, `data:image/jpeg;base64,${b64}`, `data:image/jpeg;base64,${b64}`])
   })
 
-  it('uses 600 triangles for a connector, 3500 for a hero', async () => {
-    for (const [spec, expected] of [[connectorSpec(), 600], [deviceSpec({ id: 'test-hero', tier: 'hero' }), 3500]] as const) {
+  it('asks Meshy for triangles: 70 % of the tier ceiling minus 100 per port with an opening, never under 100', async () => {
+    const withOpenings = (n: number): AssetSpecT['ports'] =>
+      Array.from({ length: n }, (_, i) => ({ portId: `p${i}`, face: 'io' as const, xMm: 10 + i, yMm: 25, confidence: 'manual' as const, openingMm: 3 }))
+    const cases: [AssetSpecT, number][] = [
+      [connectorSpec(), 560], // floor(0.7 * 800)
+      [deviceSpec({ id: 'test-hero', tier: 'hero' }), 2800], // floor(0.7 * 4000), the one port has no opening
+      [deviceSpec({ id: 'test-ql', tier: 'hero', ports: withOpenings(5) }), 2300], // 2800 - 5 recesses
+      [deviceSpec({ id: 'test-many', ports: withOpenings(40) }), 100], // floor
+    ]
+    for (const [spec, expected] of cases) {
+      expect(targetPolycount(spec)).toBe(expected)
+    }
+    for (const [spec, expected] of cases.slice(0, 2)) {
       calls.create.length = 0
       await addPhotos(spec.id, ['a.png'])
       await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
-      expect(calls.create[0].targetPolycount).toBe(expected)
+      expect(calls.create[0]).toMatchObject({ targetPolycount: expected, topology: 'triangle' })
+    }
+  })
+
+  it('the requested target plus the recesses stays under the triangle ceiling for every pilot spec', async () => {
+    const { loadSpecs } = await import('../../../tools/assets3d/loadSpecs')
+    const { TRIANGLE_CEILING } = await import('../../../tools/assets3d/gates')
+    const specs = loadSpecs()
+    expect(specs.length).toBeGreaterThan(0)
+    for (const spec of specs) {
+      const recesses = spec.ports.filter((p) => p.openingMm !== undefined).length
+      expect(targetPolycount(spec) + 100 * recesses, spec.id).toBeLessThanOrEqual(TRIANGLE_CEILING[spec.tier])
     }
   })
 

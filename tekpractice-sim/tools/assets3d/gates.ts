@@ -41,7 +41,8 @@ const FACE_PLANE_TOL_M = 0.0002
 const FIT_UNDER_MM = 0.3
 const DRIFT_LIMIT = 0.05
 const MAX_MATERIALS = 1
-const TRIANGLE_CEILING = { connector: 800, standard: 4000, hero: 4000 } as const
+/** Triangle ceiling by tier (R5): the budget gate enforces it, the builder derives the Meshy target from it. */
+export const TRIANGLE_CEILING = { connector: 800, standard: 4000, hero: 4000 } as const
 /** Longest texture side, in pixels, by tier: the texture step downsizes to this, the textures gate enforces it. */
 export const TEXTURE_MAX_PX = { connector: 512, standard: 1024, hero: 1024 } as const
 /** Shipped file size ceiling, in bytes, by tier (the whole GLB: geometry, textures and JSON). */
