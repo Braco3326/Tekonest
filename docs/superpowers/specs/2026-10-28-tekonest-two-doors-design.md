@@ -238,3 +238,49 @@ The footer keeps « Motifs inspirés de la marqueterie de Damas » and adds that
 - Contact e-mail (F-05), legal wording and naming checks.
 - Whether the 10 s animation should be shortened: tune after seeing it on the page.
 - The black sawn scrolls, the figurative scene and the multicolour stripe band from the reference photos are deliberately not used (no process source, an individual maker's work, and an open register decision).
+
+## 9. Phase B3: the marquetry as a theme, never as pictures
+
+Status: founder direction of 29 Oct 2026, after seeing Phase B2 live. Supersedes decisions 11, 12 and 14 of section 8 and the delivery model of 8.3. Method: an expert council (front-end, product design, inlay history, neutral, validator), summarised below.
+
+### 9.1 The demand, restated
+
+The founder does not like the whole panel image. The panel is **identity**, not content: its parts become the **design language** of the site (frames, bands, wire, palette, rhythm), and **no part of it ships as an image**, because a picture of the artwork does not serve the project's goal: put a student or a project owner at the right door. Real proof images (TekPractice captures) are the only pictures that will serve that goal, and they come later.
+
+### 9.2 Decisions
+
+| # | Decision |
+| --- | --- |
+| 16 | **No picture of the panel on the site**: no raster file, no canvas drawing of the panel, no animated panel. Every motif is a few lines of CSS (gradients, masks, borders) coloured by tokens. |
+| 17 | **The unit of the theme is the anatomy of the panel**: frame, then band, then a single wire, then field. Every major block is a field with an edge treatment drawn from this vocabulary. |
+| 18 | **Four bands, all CSS**: rope, diamond-in-triangle, sawtooth, wire. Full-bleed horizontal strips, so symmetry about the vertical axis holds at any width. At most two band types are visible in one viewport. |
+| 19 | **Colour roles**: Nuit and Papier are the fields; walnut draws frames and band fills; plum only fills small shapes; amber is the wire and only on Nuit; pearl is the tooth and strand colour, never a large area. |
+| 20 | **Home hero**: a centred typographic Nuit field inside a wire inset frame, text unchanged, no picture. Closing band: the same field, flat. *Se former* hero: text only. |
+| 21 | **The roundel survives once**, as a small CSS-ring component with the brand mark in the footer, replacing the picture seal. |
+| 22 | **Dropped from the site**: the 10 s animation, the poster, the divider tiles, the closing texture, the field crop, the footer seal image and the share image (the site is `noindex`; a share card is a launch item and will carry no panel part). `visuals/` stays in the repository as a brand lab; the site no longer builds from it. |
+
+### 9.3 Mapping
+
+| Part | Where | How (CSS) |
+| --- | --- | --- |
+| Wire | Inset frame of the home hero and the closing band, hairline top rule of cards on dark | 1 px amber border with four 9 px corner squares |
+| Rope | Under every page hero | `.rule-rope`: mask of slanted strands, pearl on Nuit, Nuit on Papier |
+| Diamond-in-triangle | Top of *Créer avec nous*, above the closing band | `.rule-tri`: triangle mask in walnut plus a diamond mask in pearl |
+| Sawtooth | Above the footer, above the status board | `.rule-saw`: tooth mask |
+| Nested fillets | Cards | already CSS |
+| Star | List bullets | already CSS |
+| Roundel | Footer | `.roundel`: rings by border and the symbol |
+| Lattice field, plum and walnut diamonds as areas | Not used on the site | too heavy as CSS and, as areas, decoration that competes with content |
+
+### 9.4 Acceptance
+
+1. No `.webp`, `.jpg` or `.png` is referenced by any page or stylesheet, and no page contains a `<canvas>` or loads `panel.js`.
+2. The motifs live in `site.css` (no `url()` to a file; a `data:image/svg+xml` mask is allowed because it is a shape in the stylesheet).
+3. `npm run build:all` is the page build only; the suite, axe at 320, 375, 768 and 1440 px and the overflow checks pass.
+4. The honesty rule and the credit line hold (the footer keeps « Motifs inspirés de la marqueterie de Damas » and the line about the reconstructed geometry).
+
+### 9.5 Open
+
+- Whether SVG masks inside CSS are acceptable or only pure gradients (the founder decides; the council holds that they are CSS).
+- Code-native motion (a band that draws in once on scroll) is possible and not built.
+- Real TekPractice and E3 captures for the *Se former* hero.
