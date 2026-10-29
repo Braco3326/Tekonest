@@ -85,6 +85,37 @@ describe('coverageSources: the speakers that make sound', () => {
     expect(r.excluded.map((e) => e.reason)).toEqual(['silent', 'silent'])
     expect(noSourceMessage(pathOf(d), r.excluded)).toBe('Aucune enceinte audible : le fader master est à −inf.')
   })
+  it('the console BALANCE is applied (the same law as the sound): C changes nothing; G50 puts the right-fed speaker at −6.02 dB; D50 the left-fed one', () => {
+    const c = rig({ controls: { 'balance-master': 'C' } })
+    expect(coverageSources(c, registry, pathOf(c)).map((x) => [x.id, x.lRefDb])).toEqual([['k12-d', 0], ['k12-g', 0]])
+    const g50 = rig({ controls: { 'balance-master': 'G50' } })
+    const byId = Object.fromEntries(coverageSources(g50, registry, pathOf(g50)).map((x) => [x.id, x.lRefDb]))
+    expect(byId['k12-g']).toBe(0) // fed by the left channel: untouched
+    expect(byId['k12-d']).toBeCloseTo(-6.0206, 4) // fed by the right channel
+    const d50 = rig({ controls: { 'balance-master': 'D50' } })
+    const by2 = Object.fromEntries(coverageSources(d50, registry, pathOf(d50)).map((x) => [x.id, x.lRefDb]))
+    expect([by2['k12-g'] < -6 && by2['k12-g'] > -6.1, by2['k12-d']]).toEqual([true, 0])
+  })
+  it('GOLDEN: balance G100 cuts the right-fed speaker out of the coverage (reason « balance »), the left-fed one stays; D100 the opposite; the fader adds to it', () => {
+    const g100 = rig({ controls: { 'balance-master': 'G100' } })
+    const r = coverageSourcesDetail(g100, registry, pathOf(g100))
+    expect(r.sources.map((x) => x.id)).toEqual(['k12-g'])
+    expect(r.excluded).toEqual([{ instanceId: 'k12-d', reason: 'balance' }])
+    const d100 = rig({ controls: { 'balance-master': 'D100' } })
+    const r2 = coverageSourcesDetail(d100, registry, pathOf(d100))
+    expect(r2.sources.map((x) => x.id)).toEqual(['k12-d'])
+    expect(r2.excluded).toEqual([{ instanceId: 'k12-g', reason: 'balance' }])
+    const both = rig({ controls: { 'balance-master': 'G50', 'fader-master': '-6' } })
+    expect(coverageSources(both, registry, pathOf(both)).find((x) => x.id === 'k12-d')!.lRefDb).toBeCloseTo(-6 - 6.0206, 4)
+  })
+  it('a balance that cuts the only fed side leaves no source, and the message says the balance, not the fader', () => {
+    const d = rig({ controls: { 'balance-master': 'G100' } })
+    d.rig.connections = d.rig.connections.filter((c) => !(c.a.instance === 'ql1' && c.a.port === 'out-main-l')) // only k12-d (right) is fed
+    const path = pathOf(d)
+    const r = coverageSourcesDetail(d, registry, path)
+    expect(r.sources).toEqual([])
+    expect(noSourceMessage(path, r.excluded)).toBe('Aucune enceinte audible : le balance de la console coupe ces enceintes.')
+  })
   it('an unpowered speaker is not fed by the path, so it is not a source (the other one is)', () => {
     const d = rig({ power: { 'k12-d': false } })
     expect(coverageSources(d, registry, pathOf(d)).map((s) => s.id)).toEqual(['k12-g'])

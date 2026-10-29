@@ -5,7 +5,7 @@
  * (levels in a real browser) is the e2e's.
  */
 import { describe, expect, it } from 'vitest'
-import { AudioEngine, FADE_IN_S, FADE_OUT_S, LIMITER, MASTER_GAIN, MASTER_GAIN_DB, PARAM_TAU_S, RESUME_TIMEOUT_MS, ResumeTimeoutError, SNAP_ZERO_S, audioStats } from '../../src/audio/engine'
+import { AudioEngine, FADE_IN_S, FADE_OUT_S, LIMITER, MASTER_GAIN, MASTER_GAIN_DB, PARAM_TAU_S, RESUME_TIMEOUT_MS, ResumeTimeoutError, SNAP_ZERO_S, VOICE_FADE_S, audioStats } from '../../src/audio/engine'
 import type { MixVoice } from '../../src/audio/listenerMix'
 import { FakeAnalyser, FakeBufferSource, FakeCompressor, FakeContext, FakeDelay, FakeGain, FakeMediaSource, FakePanner, fakeEnv, type FakeEnvHandle } from './fakeAudio'
 
@@ -163,14 +163,16 @@ describe('the graph', () => {
     expect(c.gain.gain.of('target').at(-1)).toMatchObject({ value: 0.5, time: 3.05 })
   })
   it('a channel change re-wires the voice (L → R), a speaker that leaves is disconnected, the others are kept', async () => {
-    const { e, ctx } = await started('test')
+    const { e, ctx, h } = await started('test')
     e.update([voice('a', { channels: ['L'] }), voice('b', { channels: ['R'] })])
     const split = ctx.ofType('splitter')[0]
     const a = chainOf(ctx, 0)
     const b = chainOf(ctx, 1)
     e.update([voice('a', { channels: ['R'] }), voice('b', { channels: ['R'] })])
+    h.flushTimers() // the re-wire waits for its fade
     expect([split.feeds(a.gain, 0), split.feeds(a.gain, 1)]).toEqual([false, true])
     e.update([voice('b', { channels: ['R'] })])
+    h.flushTimers() // and so does the disconnection of a speaker that left
     expect(a.gain.disconnected).toBe(1)
     expect(a.analyser.disconnected).toBe(1)
     expect(split.feeds(a.gain)).toBe(false)
@@ -571,5 +573,101 @@ describe('review round 1: the fade-in waits for the file, a context that does no
     const split = ctx.ofType('splitter')[1]
     expect(limiter.feeds(split)).toBe(true)
     expect([split.feeds(l, 0), split.feeds(r, 1)]).toEqual([true, true])
+  })
+})
+
+describe('Phase 4 final wave: unplugging a speaker (or re-wiring a side) never clicks', () => {
+  const fadeMs = VOICE_FADE_S * 1000
+  it('a speaker that leaves the mix is faded to 0 over VOICE_FADE_S FIRST, and disconnected only when its timer fires (the delay buffer is not cut mid-waveform)', async () => {
+    const { e, ctx, h } = await started('test')
+    e.update([voice('a'), voice('b')])
+    const a = chainOf(ctx, 0)
+    ctx.currentTime = 3
+    const timers0 = h.timers.length
+    e.update([voice('b')])
+    const ramp = a.gain.gain.of('linear').at(-1)!
+    expect(ramp).toMatchObject({ value: 0, time: 3 + VOICE_FADE_S })
+    expect(a.gain.gain.of('set').at(-1)).toMatchObject({ time: 3 }) // from the current value
+    expect(a.gain.disconnected).toBe(0) // still connected: its tail is still sounding
+    expect(a.delay.disconnected).toBe(0)
+    expect(h.timers.length).toBe(timers0 + 1)
+    expect(h.timers.at(-1)!.ms).toBeGreaterThanOrEqual(fadeMs)
+    expect(e.snapshot().voices.map((v) => v.instanceId)).toEqual(['b']) // no longer part of the mix
+    h.flushTimers()
+    expect(a.gain.disconnected).toBe(1)
+    expect(a.delay.disconnected).toBe(1)
+    expect(a.pan.disconnected).toBe(1)
+    expect(a.analyser.disconnected).toBe(1)
+  })
+  it('dispose() and stop() clear the fade timers; dispose() still disconnects the fading voice at once', async () => {
+    const a1 = await started('test')
+    a1.e.update([voice('a'), voice('b')])
+    const c1 = chainOf(a1.ctx, 0)
+    a1.e.update([voice('b')])
+    const n = a1.h.timers.length
+    a1.e.dispose()
+    expect(a1.h.timers.length).toBeLessThan(n) // the fade timer was cleared
+    expect(c1.gain.disconnected).toBeGreaterThan(0)
+    a1.h.flushTimers() // nothing left to fire
+    const a2 = await started('test')
+    a2.e.update([voice('a'), voice('b')])
+    a2.e.update([voice('b')])
+    a2.e.stop()
+    expect(a2.h.timers).toHaveLength(1) // only stop()'s own release timer: the voice timer was cleared
+    a2.h.flushTimers()
+    await a2.e.closed
+    expect(a2.ctx.closeCalls).toBe(1)
+  })
+  it('a speaker re-added within the fade is kept: the stale timer does not disconnect it and its gain comes back', async () => {
+    const { e, ctx, h } = await started('test')
+    e.update([voice('a', { gain: 0.5 }), voice('b')])
+    const a = chainOf(ctx, 0)
+    e.update([voice('b')])
+    ctx.currentTime = 4
+    e.update([voice('a', { gain: 0.5 }), voice('b')])
+    h.flushTimers() // the voice's timer was cleared on re-adoption: nothing fires
+    expect(a.gain.disconnected).toBe(0)
+    expect(a.gain.gain.of('target').at(-1)).toMatchObject({ value: 0.5, time: 4 }) // ramping back up
+    expect(e.snapshot().voices.map((v) => v.instanceId).sort()).toEqual(['a', 'b'])
+    expect(ctx.ofType<FakeGain>('gain')).toHaveLength(2 + 2) // no third chain was built for it
+  })
+  it('a re-wire (L → R) fades the voice out, re-wires when the fade is done, and fades back in; the old side keeps feeding until then', async () => {
+    const { e, ctx, h } = await started('test')
+    e.update([voice('a', { channels: ['L'], gain: 0.5 })])
+    const split = ctx.ofType('splitter')[0]
+    const a = chainOf(ctx)
+    ctx.currentTime = 2
+    e.update([voice('a', { channels: ['R'], gain: 0.5 })])
+    expect(a.gain.gain.of('linear').at(-1)).toMatchObject({ value: 0, time: 2 + VOICE_FADE_S })
+    expect([split.feeds(a.gain, 0), split.feeds(a.gain, 1)]).toEqual([true, false]) // not switched yet: no click
+    ctx.currentTime = 2.03
+    h.flushTimers()
+    expect([split.feeds(a.gain, 0), split.feeds(a.gain, 1)]).toEqual([false, true])
+    expect(a.gain.gain.of('target').at(-1)).toMatchObject({ value: 0.5, time: 2.03 }) // fading back in
+  })
+  it('while a re-wire is pending a gain change waits for it, and a change back to the wired side cancels it', async () => {
+    const { e, ctx, h } = await started('test')
+    e.update([voice('a', { channels: ['L'], gain: 0.5 })])
+    const split = ctx.ofType('splitter')[0]
+    const a = chainOf(ctx)
+    e.update([voice('a', { channels: ['R'], gain: 0.5 })])
+    const events = a.gain.gain.events.length
+    e.update([voice('a', { channels: ['R'], gain: 0.25 })]) // another change while fading out: only recorded
+    expect(a.gain.gain.events.length).toBe(events)
+    h.flushTimers()
+    expect(a.gain.gain.of('target').at(-1)!.value).toBe(0.25) // the latest target comes back in
+    // L → R pending, then back to R: nothing to do
+    e.update([voice('a', { channels: ['L'], gain: 0.25 })])
+    e.update([voice('a', { channels: ['R'], gain: 0.25 })])
+    h.flushTimers()
+    expect([split.feeds(a.gain, 0), split.feeds(a.gain, 1)]).toEqual([false, true])
+    expect(a.gain.gain.of('target').at(-1)!.value).toBe(0.25)
+  })
+  it('dispose() during a pending re-wire clears its timer', async () => {
+    const { e, h } = await started('test')
+    e.update([voice('a', { channels: ['L'] })])
+    e.update([voice('a', { channels: ['R'] })])
+    e.dispose()
+    expect(h.timers).toEqual([])
   })
 })

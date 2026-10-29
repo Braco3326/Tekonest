@@ -9,7 +9,7 @@
  *    vérifié » of L27, kept aligned with `isUnverified`),
  *  - has a sourced `acoustic` coverage (finite, > 0),
  *  - is not muted (the master mute silences the feed: it never gates playback, Task 34, but it adds nothing to the field),
- *  - has a feed above −inf,
+ *  - has a feed above −inf (the fader, and the console balance on the side that feeds it),
  *  - and has a placement in the design
  * becomes a source. Every other fed speaker is listed in `excluded` with the reason, so the panel can say why a field is empty.
  * `max_spl_db` (a PEAK figure, L28 (v)) is carried for the S2 rule only; it never enters the level.
@@ -19,9 +19,10 @@ import type { PathResult } from '../flow/signalPath'
 import { isPowered } from '../flow/signalPath'
 import type { AcSource } from '../acoustics/field'
 import type { SpeakerPose } from '../acoustics/geometry'
+import { speakerBalanceDb } from '../audio/balance'
 import type { DesignState } from '../trials/trial'
 
-export type ExclusionReason = 'unverified' | 'no-acoustic' | 'muted' | 'silent' | 'unpowered' | 'no-placement' | 'bad-coverage'
+export type ExclusionReason = 'unverified' | 'no-acoustic' | 'muted' | 'silent' | 'balance' | 'unpowered' | 'no-placement' | 'bad-coverage'
 
 export type SourceKind = 'datasheet' | 'kb' | 'nominal'
 
@@ -97,6 +98,12 @@ export function coverageSourcesDetail(design: DesignState, registry: Registry, p
       skip('silent')
       continue
     }
+    // The console BALANCE is part of the level (src/audio/balance.ts, the law the sound uses): a side it cuts adds nothing to the field.
+    const gainDb = feed.gainDb + speakerBalanceDb(feed.balance, feed.channels)
+    if (!(gainDb > -Infinity) || Number.isNaN(gainDb)) {
+      skip('balance')
+      continue
+    }
     if (!isPowered(design, registry, feed.instanceId)) {
       skip('unpowered')
       continue
@@ -117,7 +124,7 @@ export function coverageSourcesDetail(design: DesignState, registry: Registry, p
       pose: speakerPose(placement, dev.id, offsets),
       hDeg: h.value,
       vDeg: v.value,
-      lRefDb: feed.gainDb, // P10: the feed's gain is the scale level, not an SPL
+      lRefDb: gainDb, // P10: the feed's gain (fader + balance) is the scale level, not an SPL
     })
     out.used.push({
       instanceId: feed.instanceId,

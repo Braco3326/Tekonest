@@ -110,6 +110,7 @@ export const speakerLines = (used: readonly UsedSpeaker[]): string[] =>
 const REASON_KEY: Record<ExclusionReason, string> = {
   muted: 'reasonMuted',
   silent: 'reasonSilent',
+  balance: 'reasonBalance',
   unverified: 'reasonUnverified',
   'no-acoustic': 'reasonNoAcoustic',
   unpowered: 'reasonUnpowered',

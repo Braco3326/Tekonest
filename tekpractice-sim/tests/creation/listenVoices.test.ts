@@ -91,6 +91,25 @@ describe('mixInput', () => {
     expect(listenerMix(mixInput(d, bare, pathOf(d, bare), behind)).every((v) => v.gain > 0)).toBe(true)
     expect(feedOf(d, registry, behind, 'k12-g').dirDb).toBe(-30) // with its data the same spot is behind the speaker
   })
+  it('GOLDEN: the console BALANCE changes the sound: C is unchanged; G100 silences the right-fed k12-d (gain 0), k12-g stays; G50 puts k12-d at one half; D100 the opposite', () => {
+    const gainsFor = (balance: string): Record<string, number> => {
+      const d = rig({ controls: { 'balance-master': balance } })
+      return Object.fromEntries(listenerMix(mixInput(d, registry, pathOf(d), regie)).map((v) => [v.instanceId, v.gain]))
+    }
+    expect(gainsFor('C')).toEqual({ 'k12-d': 1, 'k12-g': 1 })
+    expect(gainsFor('G100')).toEqual({ 'k12-d': 0, 'k12-g': 1 })
+    expect(gainsFor('G50')['k12-d']).toBeCloseTo(0.5, 12)
+    expect(gainsFor('G50')['k12-g']).toBe(1)
+    expect(gainsFor('D100')).toEqual({ 'k12-d': 1, 'k12-g': 0 })
+    expect(gainsFor('D50')['k12-g']).toBeCloseTo(0.5, 12)
+  })
+  it('the balance acts on top of the fader, and a balance cut is exact silence even with a +10 dB fader', () => {
+    const d = rig({ controls: { 'balance-master': 'G50', 'fader-master': '-6' } })
+    const v = listenerMix(mixInput(d, registry, pathOf(d), regie))
+    expect(v.find((x) => x.instanceId === 'k12-d')!.gain).toBeCloseTo(0.5 * 10 ** (-6 / 20), 12)
+    const loud = rig({ controls: { 'balance-master': 'G100', 'fader-master': '+10' } })
+    expect(listenerMix(mixInput(loud, registry, pathOf(loud), regie)).find((x) => x.instanceId === 'k12-d')!.gain).toBe(0)
+  })
   it('a speaker without a placement has no position: it is left out (the others still play)', () => {
     const d = rig()
     d.placements = d.placements.filter((p) => p.instanceId !== 'k12-g')

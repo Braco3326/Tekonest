@@ -37,6 +37,11 @@ export const FADE_OUT_S = 0.08
 export const PARAM_TAU_S = 0.02
 /** After this many seconds (10 time constants: 0.005 % of the start value left) a ramp to 0 is snapped to exactly 0. */
 export const SNAP_ZERO_S = 10 * PARAM_TAU_S
+/**
+ * A speaker that leaves the mix (its cable pulled while it plays), or whose side changes, is faded over this long BEFORE it is disconnected / re-wired: a
+ * disconnect cuts the delay line's buffered audio mid-waveform, which is a click.
+ */
+export const VOICE_FADE_S = 0.025
 export const LIMITER = { threshold: -3, knee: 0, ratio: 20, attack: 0.003, release: 0.1 } as const
 const METER_FFT = 1024
 /** A `resume()` that has not settled after this long is a failure (Safari / iOS may leave a context suspended: no endless « Démarrage… »). */
@@ -103,6 +108,8 @@ interface Chain {
   buf: Float32Array<ArrayBuffer>
   channels: ('L' | 'R')[]
   target: { gain: number; delayS: number; pan: number }
+  /** A side change waiting for the fade-out to finish: the channels to wire next, and the timer. */
+  wiring?: { channels: ('L' | 'R')[]; timer: number }
 }
 
 /** What the debug hook and the panel read: the targets last asked for (not the live parameter values). */
@@ -143,6 +150,8 @@ export class AudioEngine {
   /** The tap after the limiter, one analyser per side: the real output level, read by the e2e. */
   private readonly outTap: { split: ChannelSplitterNode; l: AnalyserNode; r: AnalyserNode; buf: Float32Array<ArrayBuffer> }
   private readonly chains = new Map<string, Chain>()
+  /** Speakers that left the mix and are fading out; disconnected by their timer (cleared by stop / dispose, re-adopted if the speaker comes back). */
+  private readonly fading = new Map<string, { chain: Chain; timer: number }>()
   private src: { node: AudioNode; stop(): void } | null = null
   private el: HTMLAudioElement | null = null
   private url: string | null = null
@@ -290,6 +299,7 @@ export class AudioEngine {
     this.stopping = true
     this.seq++
     this.cancelResume?.()
+    this.clearVoiceTimers() // the master fade-out covers every voice; dispose() disconnects them
     const now = this.ctx.currentTime
     const g = this.master.gain
     g.cancelScheduledValues(now)
@@ -305,31 +315,90 @@ export class AudioEngine {
   update(voices: readonly MixVoice[]): void {
     if (this.isDisposed || this.stopping) return
     const keep = new Set(voices.map((v) => v.instanceId))
-    for (const [id, chain] of this.chains) {
-      if (!keep.has(id)) {
-        this.dropChain(chain)
-        this.chains.delete(id)
-      }
-    }
     const now = this.ctx.currentTime
+    for (const [id, chain] of this.chains) {
+      if (keep.has(id)) continue
+      // Fade the speaker out, disconnect when the fade is done (a cable pulled mid-note must not click).
+      this.chains.delete(id)
+      if (chain.wiring) {
+        this.env.clearTimeout(chain.wiring.timer)
+        chain.wiring = undefined
+      }
+      this.fadeOut(chain.gain.gain, now)
+      const timer = this.env.setTimeout(() => {
+        this.fading.delete(id)
+        this.dropChain(chain)
+      }, VOICE_FADE_S * 1000 + 10)
+      this.fading.set(id, { chain, timer })
+    }
     for (const v of voices) {
       let chain = this.chains.get(v.instanceId)
+      let force = false
       // Both sides: (L + R) / 2. One side: that side as it is.
       const weight = v.channels.length > 1 ? 1 / v.channels.length : 1
       // The graph never receives NaN or Infinity: a non-finite value is « no sound », « no delay », « centre ».
       const fin = (n: number): number => (Number.isFinite(n) ? n : 0)
       const target = { gain: Math.max(0, fin(v.gain * weight)), delayS: Math.min(Math.max(fin(v.delayS), 0), MAX_DELAY_S), pan: Math.min(Math.max(fin(v.pan), -1), 1) }
       if (!chain) {
-        chain = this.makeChain(v.channels, target)
-        this.chains.set(v.instanceId, chain)
-        this.setParam(chain.gain.gain, target.gain, now, true)
-        continue
+        const back = this.fading.get(v.instanceId)
+        if (back) {
+          // The speaker came back during its fade-out: keep its chain (the stale timer must not disconnect it) and ramp it up again.
+          this.env.clearTimeout(back.timer)
+          this.fading.delete(v.instanceId)
+          chain = back.chain
+          this.chains.set(v.instanceId, chain)
+          force = true
+        } else {
+          chain = this.makeChain(v.channels, target)
+          this.chains.set(v.instanceId, chain)
+          this.setParam(chain.gain.gain, target.gain, now, true)
+          continue
+        }
       }
-      if (chain.channels.join() !== v.channels.join()) this.wire(chain, v.channels)
-      if (target.gain !== chain.target.gain) this.setParam(chain.gain.gain, target.gain, now, true)
+      // A change of side: fade out, wire the new side, fade back in (a switch while sounding clicks).
+      const wanted = v.channels.join()
+      if (chain.wiring) {
+        if (wanted === chain.channels.join()) {
+          // back to the side that is still wired: nothing to switch
+          this.env.clearTimeout(chain.wiring.timer)
+          chain.wiring = undefined
+          force = true
+        } else chain.wiring.channels = [...v.channels]
+      } else if (wanted !== chain.channels.join()) this.beginRewire(chain, v.channels, now)
+      const waiting = chain.wiring !== undefined
+      if (force || (!waiting && target.gain !== chain.target.gain)) this.setParam(chain.gain.gain, target.gain, now, true)
       if (target.delayS !== chain.target.delayS) this.setParam(chain.delay.delayTime, target.delayS, now, false)
       if (target.pan !== chain.target.pan) this.setParam(chain.pan.pan, target.pan, now, false)
       chain.target = target
+    }
+  }
+
+  /** Fade the voice out, wire `channels` when the fade is done, then bring the gain back to the voice's latest target. */
+  private beginRewire(chain: Chain, channels: ('L' | 'R')[], now: number): void {
+    this.fadeOut(chain.gain.gain, now)
+    const timer = this.env.setTimeout(() => {
+      const w = chain.wiring
+      chain.wiring = undefined
+      if (!w || this.isDisposed) return
+      this.wire(chain, w.channels)
+      this.setParam(chain.gain.gain, chain.target.gain, this.ctx.currentTime, true)
+    }, VOICE_FADE_S * 1000 + 10)
+    chain.wiring = { channels: [...channels], timer }
+  }
+
+  /** A linear ramp to 0 over VOICE_FADE_S from the parameter's current value. */
+  private fadeOut(p: AudioParam, now: number): void {
+    p.cancelScheduledValues(now)
+    p.setValueAtTime(p.value, now)
+    p.linearRampToValueAtTime(0, now + VOICE_FADE_S)
+  }
+
+  /** Clear every fade / re-wire timer (stop and dispose). */
+  private clearVoiceTimers(): void {
+    for (const f of this.fading.values()) this.env.clearTimeout(f.timer)
+    for (const c of this.chains.values()) {
+      if (c.wiring) this.env.clearTimeout(c.wiring.timer)
+      c.wiring = undefined
     }
   }
 
@@ -373,9 +442,12 @@ export class AudioEngine {
       this.env.clearTimeout(this.timer)
       this.timer = null
     }
+    this.clearVoiceTimers()
     this.releaseSource()
     for (const c of this.chains.values()) this.dropChain(c)
     this.chains.clear()
+    for (const f of this.fading.values()) this.dropChain(f.chain)
+    this.fading.clear()
     for (const n of [this.input, this.splitter, this.master, this.limiter, this.outTap.split, this.outTap.l, this.outTap.r] as AudioNode[]) {
       try {
         n.disconnect()

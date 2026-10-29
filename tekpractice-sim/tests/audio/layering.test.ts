@@ -63,6 +63,18 @@ describe('src/audio/listenerMix.ts is pure', () => {
   })
 })
 
+describe('src/audio/balance.ts is pure too (shared by the sound and the coverage)', () => {
+  const balance = resolve(root, 'audio/balance.ts')
+  it('exists, imports nothing, names no browser / Web Audio / Babylon / store / shell global, no clock or randomness', () => {
+    expect(existsSync(balance)).toBe(true)
+    const src = readFileSync(balance, 'utf8')
+    expect(valueSpecifiers(src)).toEqual([])
+    expect(src).not.toMatch(/^s*import/m)
+    expect(violations(src)).toEqual([])
+    expect(stripComments(src)).not.toMatch(/Date|Math.random|performance.now/)
+  })
+})
+
 describe('the guard bites (on a fixture made for the test, independent of src)', () => {
   const tmp = mkdtempSync(resolve(tmpdir(), 'audio-guard-'))
   afterAll(() => rmSync(tmp, { recursive: true, force: true }))

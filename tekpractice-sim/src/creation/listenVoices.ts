@@ -2,6 +2,7 @@
  * The mix input of the live design (Task 39, ADR-0015 addendum): which speakers sound, where they stand and how they face the listener. Pure: no
  * Babylon, no DOM, no store. The numbers then go through `listenerMix` (src/audio/listenerMix.ts).
  *
+ *  - The console BALANCE is part of the feed's gain (`speakerBalanceDb`, src/audio/balance.ts: the same law as the coverage): a side cut by the balance is −Infinity, silence.
  *  - One feed per speaker of the signal path (`PathResult.speakers`: powered, with a route from the console; a Bêta device never has one).
  *  - Its pose is the placement's (position, yaw, tilt) through `speakerPose`, the conversion the coverage layer uses; the acoustic axis is the
  *    placement's local +z (ADR-0015, decision L30 viii).
@@ -16,6 +17,7 @@ import type { DesignState } from '../trials/trial'
 import { directivityDb } from '../acoustics/field'
 import { offAxis } from '../acoustics/geometry'
 import type { MixInput } from '../audio/listenerMix'
+import { speakerBalanceDb } from '../audio/balance'
 import { speakerPose, type CoverageSourceOptions } from './coverageSources'
 
 export interface ListenerPose {
@@ -43,7 +45,7 @@ export function mixInput(design: DesignState, registry: Registry, path: PathResu
       const a = offAxis(pose, listener.position)
       dirDb = directivityDb(a.thetaHdeg, a.thetaVdeg, h, v, a.rear)
     }
-    feeds.push({ instanceId: feed.instanceId, position: [...pose.position], channels: [...feed.channels], gainDb: feed.gainDb, muted: feed.muted, dirDb })
+    feeds.push({ instanceId: feed.instanceId, position: [...pose.position], channels: [...feed.channels], gainDb: feed.gainDb + speakerBalanceDb(feed.balance, feed.channels), muted: feed.muted, dirDb })
   }
   return { listener: { position: [...listener.position], right: [...listener.right] }, feeds }
 }
