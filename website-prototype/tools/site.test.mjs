@@ -114,24 +114,6 @@ const main = (name) => {
   return html.slice(html.indexOf("<main"), html.indexOf("</main>"));
 };
 
-test("home shows exactly two doors", () => {
-  const doors = main("index.html").match(/<ul class="doors[\s\S]*?<\/ul>/)[0];
-  assert.equal((doors.match(/<li class="door cadre">/g) || []).length, 2);
-  assert.deepEqual(
-    [...doors.matchAll(/<h3><a href="([^"]+)">/g)].map((m) => m[1]),
-    ["apprendre.html", "creer.html"]
-  );
-  assert.doesNotMatch(main("index.html"), /reseau\.html/);
-});
-
-test("home hero copy and section titles say two entrances", () => {
-  const html = main("index.html");
-  assert.match(html, /<p class="lead">Se former, créer : des fils tressés ensemble\.<\/p>/);
-  assert.match(html, /<a class="btn btn-light" href="#entrees">Les deux entrées<\/a>/);
-  assert.match(html, /<p class="eyebrow">Deux entrées<\/p>/);
-  assert.doesNotMatch(html, /trois entrées/i);
-});
-
 test("status board lists three branches and the build date", () => {
   const html = main("index.html");
   const rows = [...html.matchAll(/<tbody>([\s\S]*?)<\/tbody>/g)][0][1].match(/<tr>[\s\S]*?<\/tr>/g);
@@ -276,14 +258,6 @@ test("the home hero is a typographic field inside the wire frame, with no pictur
   assert.doesNotMatch(hero[0], /<img|<figure|<canvas|<button/);
 });
 
-test("the hero text is unchanged", () => {
-  const html = homeHtml();
-  assert.match(html, /<h1 id="hero-titre">Un nid pour les métiers du son\.<\/h1>/);
-  assert.match(html, /Se former, créer : des fils tressés ensemble\./);
-  assert.match(html, /Tekonest se construit pas à pas\. Rien n'est encore en vente/);
-  assert.match(html, /<a class="btn btn-light" href="#entrees">Les deux entrées<\/a>/);
-});
-
 test("the old hero is gone", () => {
   assert.doesNotMatch(homeHtml(), /nid-stage|nid-son|nid-replay|home\.js|texture-damas|class="bande"|hero-panel/);
 });
@@ -293,7 +267,7 @@ test("the dividers follow the mapping", () => {
   const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
   assert.equal((main.match(/class="rule /g) || []).length, 2, "rope and triangle band inside the home page content (the sawtooth is the footer's)");
   assert.doesNotMatch(html, /rule--sunken/, "a band between two fields of the same colour is invisible, so there is none");
-  assert.match(html, /<\/section>\s*<div class="rule rule-rope" role="presentation"><\/div>\s*<section class="section" aria-labelledby="entrees">/);
+  assert.match(html, /<\/section>\s*<div class="rule rule-rope" role="presentation"><\/div>\s*<section class="section[^"]*" aria-labelledby="etat">/);
   assert.match(html, /<div class="rule rule-tri" role="presentation"><\/div>\s*<section class="cta-nuit" aria-labelledby="maintenant">/);
 });
 
@@ -353,4 +327,34 @@ test("site.css uses three breakpoints only", () => {
   const q = [...css().matchAll(/@media \(max-width: ([^)]+)\)/g)].map((m) => m[1]);
   assert.ok(q.length >= 5);
   for (const v of q) assert.ok(["39.99em", "47.99em", "63.99em"].includes(v), `breakpoint ${v}`);
+});
+
+const heroOf = () => homeHtml().match(/<section class="hero-nuit"[\s\S]*?<\/section>/)[0];
+
+test("the home hero states what Tekonest is, then holds two equal doors", () => {
+  const h = heroOf();
+  assert.match(h, /<h1 id="hero-titre">Un nid pour les métiers du son\.<\/h1>/);
+  assert.match(h, /<p class="lead">Deux entrées : se former au son, ou créer un projet avec nous\.<\/p>/);
+  assert.match(h, /Tekonest se construit pas à pas\. Rien n'est encore en vente : chaque ligne de cette page dit ce qui existe et ce qui se prépare\./);
+  assert.doesNotMatch(homeHtml(), /href="#entrees"|des fils tressés ensemble|Les deux entrées/);
+  const doors = [...h.matchAll(/<li class="door door--dark">([\s\S]*?)<\/li>/g)].map((m) => m[1]);
+  assert.equal(doors.length, 2);
+  const shape = (d) => [...d.matchAll(/class="(door-n|door-name|door-who|door-sentence|door-state|door-action)"/g)].map((m) => m[1]);
+  assert.deepEqual(shape(doors[0]), ["door-n", "door-name", "door-who", "door-sentence", "door-state", "door-action"]);
+  assert.deepEqual(shape(doors[1]), shape(doors[0]));
+  assert.deepEqual(doors.map((d) => d.match(/<p class="door-n">(\d\d)<\/p>/)[1]), ["01", "02"]);
+  assert.deepEqual([...h.matchAll(/<h2 class="door-name"><a href="([^"]+)">([^<]+)</g)].map((m) => [m[1], m[2]]), [["apprendre.html", "Se former"], ["creer.html", "Créer avec nous"]]);
+  assert.match(doors[0], /Étudiantes et étudiants en BTS Son/);
+  assert.match(doors[0], /<span class="status status--dev">En développement<\/span>/);
+  assert.match(doors[0], /<a class="inner" href="tekpractice\/jouer\/">Jouer à TekPractice \(version d'essai\)<\/a>/);
+  assert.match(doors[1], /Porteuses et porteurs de projet : spectacle, film, événement/);
+  assert.match(doors[1], /<span class="status status--prep">En projet<\/span>/);
+  assert.match(doors[1], /<a class="inner" href="contact\.html">Écrire pour un projet<\/a>/);
+  assert.ok(h.indexOf("</ul>") < h.indexOf("</section>") && h.indexOf('class="lead"') < h.indexOf('class="doors'), "the statement comes before the doors");
+});
+
+test("the doors are two equal columns from 48 em and stack below", () => {
+  assert.match(ruleBlock(css(), ".doors"), /grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(css(), /@media \(max-width: 47\.99em\)\s*\{[^}]*\.doors\s*\{[^}]*grid-template-columns:\s*1fr/);
+  assert.match(ruleBlock(css(), ".door--dark"), /box-shadow:\s*inset 0 0 0 5px[^;]*,\s*inset 0 0 0 6px/);
 });
