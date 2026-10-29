@@ -272,6 +272,9 @@ test('(g) a click on a dot pins its level, a named point is a keyboard button, �
   await page.keyboard.press('Enter')
   await expect(page.getByTestId('coverage-pinned')).toBeHidden()
   expect((await cov(page)).pinned).toBeNull()
+  // the status bar must not keep the pinned value after the unpin: it reads the current coverage message again
+  await expect(page.getByRole('status')).toHaveText((await cov(page)).message)
+  await expect(page.getByRole('status')).toContainText('Couverture calculée')
   // « Retirer l’épingle » is now hidden: the focus goes to a pin button, never to the page body
   await expect(page.getByRole('button', { name: /^Épingler / }).first()).toBeFocused()
   // mouse: a click on a dot far from every device
@@ -434,6 +437,10 @@ test('(l) folding Propriétés hides the dots, the hatched dots and the aim line
   expect((await cov(page)).pinned).toBeNull()
   await page.getByTestId('props-collapse').click()
   await page.waitForFunction(() => !window.__creation!.coverage().hidden)
+  // the status bar does not keep « masquée » once the dots are back: it reads the current message
+  const bar = page.getByTestId('status-bar').getByRole('status') // (the missed-click toast of the click above is a second status)
+  await expect(bar).toHaveText((await cov(page)).message)
+  await expect(bar).toContainText('Couverture calculée')
   expect((await cov(page)).meshes.sort()).toEqual(['coverage', 'coverage:aim', 'coverage:hatch'])
   await page.waitForTimeout(600)
   expect(await jobs(page)).toBe(base) // hiding and showing are no computation

@@ -319,7 +319,15 @@ export class CoverageController {
     if (!this.isOn) return
     const folded = this.folded()
     this.layer?.setVisible(!folded)
-    if (folded) this.deps.announce(C().hiddenFolded!)
+    // The status bar keeps the last message: say « masquée » on the fold, and put the CURRENT coverage message back on the unfold.
+    if (folded) this.say(C().hiddenFolded!)
+    else if (this.status !== 'computing') this.say(this.message)
+  }
+
+  /** Put a message in the status bar (polite) and remember it: the next `set()` compares with what the bar really shows. */
+  private say(message: string): void {
+    this.lastAnnounced = message
+    this.deps.announce(message)
   }
 
   /** A click that the coverage would take (a dot under the pointer, no device): the shell's « missed click » must not fire. */
@@ -377,10 +385,9 @@ export class CoverageController {
     this.status = status
     this.message = message
     this.panel.render(this.view())
-    if (announce && message !== this.lastAnnounced) {
-      this.lastAnnounced = message
-      this.deps.announce(message)
-    }
+    // With Propriétés folded nothing is visible: a ready result says so instead of « calculée » (the bar must not claim dots that are not there).
+    const said = announce && status === 'ready' && this.folded() ? C().hiddenFolded! : message
+    if (announce && said !== this.lastAnnounced) this.say(said)
   }
 
   private grid(): ReturnType<typeof coverageGrid> {
@@ -479,7 +486,7 @@ export class CoverageController {
     const key = this.pin ? `${this.pin.id}|${this.pin.position.join(',')}` : ''
     if (pinned && key !== this.pinAnnounced) {
       this.pinAnnounced = key
-      this.deps.announce(pinned.text)
+      this.say(pinned.text)
     } else if (!pinned) this.pinAnnounced = ''
   }
 

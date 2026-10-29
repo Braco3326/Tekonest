@@ -110,6 +110,7 @@ interface Rig {
   canvas: { handlers: Record<string, ((e: unknown) => void)[]>; capture: Record<string, unknown>; addEventListener(t: string, f: (e: unknown) => void, o?: unknown): void; removeEventListener(t: string, f: (e: unknown) => void): void; ownerDocument: unknown }
   state: { design: DesignState; scene: object | null; layout: RoomLayout | null; placeId: string | null; propsOpen: boolean; canPin: boolean; ear: number }
   placeBag: { current: DisposableBag }
+  pinHandlers: { pin(id: string | null): void }
   notify(): void
   propsChanged(): void
   press(x?: number, y?: number): void
@@ -138,6 +139,7 @@ function make(over: { layout?: RoomLayout | null } = {}): Rig {
   const state = { design: rig(), scene: {} as object | null, layout: over.layout === undefined ? room('concert-hall-medium') : over.layout, placeId: 'room:concert-hall-medium' as string | null, propsOpen: true, canPin: true, ear: 1.2 }
   const placeBag = { current: new DisposableBag() }
   const bag = new DisposableBag()
+  const panel = { handlers: { pin: (_id: string | null) => undefined } as { pin(id: string | null): void } }
   const deps: CoverageDeps = {
     host: {
       get scene() {
@@ -186,7 +188,10 @@ function make(over: { layout?: RoomLayout | null } = {}): Rig {
       layers.push(l)
       return l
     },
-    createPanel: () => ({ render: (v: CoverageView) => void views.push(v) }),
+    createPanel: (h) => {
+      panel.handlers = h
+      return { render: (v: CoverageView) => void views.push(v) }
+    },
   }
   const c = new CoverageController(deps)
   return {
@@ -199,6 +204,9 @@ function make(over: { layout?: RoomLayout | null } = {}): Rig {
     state,
     placeBag,
     bag,
+    get pinHandlers() {
+      return panel.handlers
+    },
     notify: () => subs.forEach((f) => f()),
     propsChanged: () => propSubs.forEach((f) => f()),
     press: (x = 10, y = 10) => {
@@ -273,11 +281,14 @@ describe('CoverageController lifecycle (fake worker, fake layer)', () => {
     const w0 = r.workers[0]
     const oldJob = w0.jobs[0]
     const l0 = r.layers[0]
+    const lateHandler = w0.onmessage // captured BEFORE the teardown: a reply that arrives from the old worker after terminate()
     // the place goes: the scene host disposes the place bag FIRST, then builds the new scene
     r.placeBag.current.dispose()
     expect(w0.terminated).toBe(1)
     expect(l0.disposed).toBe(true)
     expect(r.c.debug().worker).toBe(false)
+    expect(w0.onmessage).toBeNull() // detached
+    expect(w0.onerror).toBeNull()
     r.placeBag.current = new DisposableBag()
     r.state.scene = {} // the new scene
     r.c.reset()
@@ -285,7 +296,8 @@ describe('CoverageController lifecycle (fake worker, fake layer)', () => {
     expect(r.layers[1].scene).not.toBe(l0.scene)
     // the OLD worker's answer arrives late: nothing is drawn, nothing changes
     const shownBefore = r.c.debug()
-    w0.onmessage?.({ data: runCoverageJob(structuredClone(oldJob)) }) // handlers were detached: no-op
+    expect(lateHandler).not.toBeNull()
+    lateHandler!({ data: runCoverageJob(structuredClone(oldJob)) }) // the retained handler of the disposed client: dropped
     expect(l0.shows).toBe(0)
     expect(r.layers[1].shows).toBe(0)
     expect(r.c.debug().status).toBe(shownBefore.status)
@@ -373,7 +385,48 @@ describe('folding Propriétés hides the layer (the legend, the unit and the cav
     expect(r.c.debug().meshes).toEqual(['coverage'])
     vi.advanceTimersByTime(3000)
     expect(jobsOf(r)).toBe(1)
-    expect(r.announced.filter((m) => m.includes('replié'))).toHaveLength(1) // unfolding says nothing
+    expect(r.announced.filter((m) => m.includes('replié'))).toHaveLength(1)
+    // unfolding RESTORES the current message in the status bar (the fold left « Couverture masquée … » there)
+    expect(r.announced.at(-1)).toMatch(/^Couverture calculée : /)
+    expect(r.announced.at(-1)).toBe(r.c.debug().message)
+  })
+  it('a rig change while folded STILL recomputes (one job), so unfolding shows a current result', () => {
+    const r = make()
+    r.c.setOn(true)
+    vi.advanceTimersByTime(150)
+    r.workers[0].answer(r.workers[0].jobs[0])
+    const first = r.c.debug().stats!
+    r.state.propsOpen = false
+    r.propsChanged()
+    const g = r.state.design.placements.find((x) => x.instanceId === 'k12-g')!
+    g.position_m = [g.position_m[0] - 2, g.position_m[1], g.position_m[2]]
+    r.notify()
+    vi.advanceTimersByTime(150)
+    expect(jobsOf(r)).toBe(2) // computed while hidden
+    r.workers[0].answer(r.workers[0].jobs[1])
+    expect(r.layers[0].shows).toBe(2) // the buffers are current, the meshes still hidden
+    expect(r.layers[0].visible).toBe(false)
+    expect(r.announced.at(-1)).toBe('Couverture masquée : Propriétés est replié.') // a result while folded does not replace the hidden message
+    r.state.propsOpen = true
+    r.propsChanged()
+    expect(r.layers[0].visible).toBe(true)
+    expect(jobsOf(r)).toBe(2) // unfolding computed nothing more
+    const now = r.c.debug().stats!
+    expect(now.mean).not.toBe(first.mean) // the shown result is the new one
+    expect(r.announced.at(-1)).toBe(r.c.debug().message)
+  })
+  it('toggling on while Propriétés is already folded says so (nothing is visible), once, instead of « calculée »', () => {
+    const r = make()
+    r.state.propsOpen = false
+    r.c.setOn(true)
+    vi.advanceTimersByTime(150)
+    r.workers[0].answer(r.workers[0].jobs[0])
+    expect(r.c.debug()).toMatchObject({ status: 'ready', hidden: true, meshes: [] })
+    expect(r.announced.filter((m) => m === 'Couverture masquée : Propriétés est replié.')).toHaveLength(1)
+    expect(r.announced.some((m) => m.startsWith('Couverture calculée'))).toBe(false)
+    r.state.propsOpen = true
+    r.propsChanged()
+    expect(r.announced.at(-1)).toMatch(/^Couverture calculée : /)
   })
   it('a layer built while Propriétés is folded starts hidden; folding while off says nothing', () => {
     const r = make()
@@ -402,6 +455,12 @@ describe('the pin obeys the shell gate and the first-click rules', () => {
     r.workers[0].answer(r.workers[0].jobs[1])
     expect(r.c.debug().pinned).toMatch(/^Point épinglé \(−3,3 m ; 0,3 m\) : /)
     expect(r.announced.filter((m) => m.startsWith('Point épinglé'))).toHaveLength(1)
+    // « Retirer l’épingle »: the status bar must not keep the pinned value; the next result says the current coverage message again
+    r.pinHandlers.pin(null)
+    vi.advanceTimersByTime(150)
+    r.workers[0].answer(r.workers[0].jobs[2])
+    expect(r.c.debug().pinned).toBeNull()
+    expect(r.announced.at(-1)).toMatch(/^Couverture calculée : /)
   })
   it('canPin false (a device follows the pointer, a port, the walk view…): no pin, no job', () => {
     const r = make()
