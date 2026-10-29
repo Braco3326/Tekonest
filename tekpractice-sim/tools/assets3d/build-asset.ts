@@ -15,9 +15,9 @@
  *  5. all pass: optimize the textures (WebP, longest side <= TEXTURE_MAX_PX of the tier), THEN Draco-compress (connector
  *     16 position bits, other tiers 14), and RE-MEASURE the final bytes with the same five gates, because quantization
  *     moves vertices, plus the seventh gate `textures` (texture size and file size). A connector whose compressed bytes
- *     fail ships the texture-optimized, uncompressed GLB (compression 'none'); any other tier fails the attempt.
- *     A measured `textures` failure on the final bytes is a defect of our own settings, not of the Meshy model: it
- *     aborts the build (no new paid task) and the raw GLB stays in the work dir
+ *     fail ships the texture-optimized, uncompressed GLB (compression 'none'). Any failure on the final bytes is a
+ *     defect of our own settings, not of the Meshy model: the failing gates go on the attempt, the bytes are saved as
+ *     attempt-N.final.glb and the build aborts (no new paid task)
  *  6. pass: write public/assets/<id>.glb and record the manifest entry (both skipped on --dry-run). `ok` (and `finalGlb`)
  *     are set only after BOTH succeeded; a failed write or manifest record is an error, never a PASS
  * After maxAttempts failures nothing is written to public/assets or the manifest. The report
@@ -26,9 +26,12 @@
  * Money and safety rules:
  *  - a Meshy 402 or 429 aborts at once (no further attempt); the message is surfaced and `stopped` is set
  *  - any other error thrown inside an attempt (Blender, download, compress, re-measure, I/O) also aborts instead of
- *    retrying: the Meshy task is already paid for and the cause would repeat. Only a measured GATE failure (including
- *    "after Draco" on a non-connector) triggers a new attempt. The one measured failure that does NOT retry is
- *    `textures` on the final bytes (see step 5)
+ *    retrying: the Meshy task is already paid for and the cause would repeat
+ *  - a failed attempt buys a new Meshy task ONLY when every failing gate is in RETRYABLE_GATES {proportionDrift,
+ *    budget}: properties of the Meshy model. The fix-up scales to the exact spec size and places every port_/ctrl_ at
+ *    its planned position, so a size, transform, parts or portPositions failure (or any final-bytes failure) is a
+ *    defect of OUR code, identical on every attempt: it aborts with an error naming the gates and the work dir
+ *  - the pilot stops at the first asset whose report carries an error of any kind
  *  - the manifest is validated before the first paid call (a dry run skips this, it never writes the manifest)
  *  - nothing here logs a request body or header; every error text is scrubbed of MESHY_API_KEY before it reaches the
  *    report, the console or report.json
@@ -210,6 +213,25 @@ async function measure(bytes: Uint8Array, spec: AssetSpecT): Promise<{ gates: Ga
 
 const allOk = (gates: GateResult[]): boolean => gates.every((g) => g.ok)
 
+/**
+ * The only gates whose failure is a property of the Meshy model itself, so a new (paid) task may do better: its
+ * proportions (checked before the fix-up scales it to the spec) and its triangle / material budget. Every other gate
+ * checks what OUR fix-up built (exact size, pivot, port_/ctrl_ nodes at their planned places) or what our compression
+ * produced: it would fail identically on every attempt, so it aborts instead of buying another task.
+ */
+export const RETRYABLE_GATES: ReadonlySet<string> = new Set(['proportionDrift', 'budget'])
+
+/** Names of the failing gates, in order. */
+const failingNames = (gates: GateResult[]): string[] => gates.filter((g) => !g.ok).map((g) => g.gate)
+
+/** The abort error for a failure of one of our own steps (not retryable): names the gates and the work dir. */
+function pipelineDefectError(failed: string[], stage: string, work: string): Error {
+  return new Error(
+    `${stage}: gate${failed.length === 1 ? '' : 's'} ${failed.join(', ')} failed. They check the pipeline's own output, so a new Meshy task ` +
+      `would fail the same way: no further task bought. The paid raw GLB and the attempt files stay in ${work}`,
+  )
+}
+
 interface Shipped {
   bytes: Uint8Array
   triangles: number
@@ -223,18 +245,21 @@ function textureBudgetError(gate: GateResult): Error {
   return new Error(`${gate.detail} (lower TEXTURE_MAX_PX or FILE_BYTES_MAX in gates.ts)`)
 }
 
+/** The outcome of the final-bytes step: the file to ship, or the final bytes that failed and every gate result. */
+type Regate = { ok: true; shipped: Shipped } | { ok: false; gates: GateResult[]; bytes: Uint8Array }
+
 /**
  * Optimizes the textures of a fixed GLB that passed its gates, Draco-compresses the result and re-measures the FINAL
- * bytes (five gates plus `textures`). Throws when any step throws, and when the bytes to ship break the texture budget
- * (a defect of our settings: retrying would buy another Meshy task for nothing). Returns the file to ship, or the
- * failing gates (marked "after Draco") when a non-connector cannot ship compressed.
+ * bytes (five gates plus `textures`). Throws when a step throws. Returns the file to ship, or (`ok: false`) the bytes
+ * that would have shipped with all their gate results: geometry failures are marked "after Draco" when a
+ * non-connector cannot ship compressed. Any final-bytes failure is a defect of our own settings: the caller aborts.
  */
 async function optimizeAndRegate(
   fixed: Uint8Array,
   drift: GateResult,
   spec: AssetSpecT,
   d: Pick<BuildDeps, 'compress' | 'optimizeTextures'>,
-): Promise<{ shipped: Shipped } | { failed: GateResult[] }> {
+): Promise<Regate> {
   // A throw from a step or from a re-measurement is not a measured failure: it propagates and aborts the build.
   const textured = await d.optimizeTextures(fixed, { maxPx: TEXTURE_MAX_PX[spec.tier] })
   const bytes = await d.compress(textured, { quantizePositionBits: QUANTIZE_BITS[spec.tier] })
@@ -246,18 +271,18 @@ async function optimizeAndRegate(
   } else if (spec.tier === 'connector') {
     // A tiny connector can lose its tolerance to quantization: ship the texture-optimized file, re-measured, without Draco.
     const plain = await measure(textured, spec)
-    if (!allOk(plain.gates)) return { failed: [...plain.gates, drift] }
+    if (!allOk(plain.gates)) return { ok: false, gates: [...plain.gates, drift, checkTextures(plain.report, spec)], bytes: textured }
     final = { bytes: textured, triangles: plain.triangles, gates: plain.gates, report: plain.report, compression: 'none' }
   } else {
     const textures = checkTextures(compressed.report, spec)
-    if (!textures.ok) throw textureBudgetError(textures)
-    return { failed: [...compressed.gates.map((g) => ({ ...g, detail: `after Draco: ${g.detail}` })), drift, textures] }
+    return { ok: false, gates: [...compressed.gates.map((g) => (g.ok ? g : { ...g, detail: `after Draco: ${g.detail}` })), drift, textures], bytes }
   }
 
   const textures = checkTextures(final.report, spec)
-  if (!textures.ok) throw textureBudgetError(textures)
+  if (!textures.ok) return { ok: false, gates: [...final.gates, drift, textures], bytes: final.bytes }
   const hasWebp = final.report.textures.length > 0 && final.report.textures.every((t) => t.mimeType === 'image/webp')
   return {
+    ok: true,
     shipped: { bytes: final.bytes, triangles: final.triangles, gates: [...final.gates, drift, textures], compression: final.compression, textures: hasWebp ? 'webp' : 'none' },
   }
 }
@@ -318,12 +343,20 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       const fixedMeasure = await measure(fixed, spec)
       const drift = checkProportionDrift(fixup.preScaleSizeM, spec)
       attempt.gates = [...fixedMeasure.gates, drift]
-      if (!allOk(attempt.gates)) continue
+      const failed = failingNames(attempt.gates)
+      if (failed.length > 0) {
+        // Only a failure of the Meshy model itself buys a new task; anything our fix-up produced aborts.
+        if (failed.every((g) => RETRYABLE_GATES.has(g))) continue
+        throw pipelineDefectError(failed, `attempt ${n}, fixed GLB`, work)
+      }
 
       const result = await optimizeAndRegate(fixed, drift, spec, d)
-      if ('failed' in result) {
-        attempt.gates = result.failed
-        continue
+      if (!result.ok) {
+        // The final bytes are ours (texture step, Draco): keep them and every gate for the post-mortem, then abort.
+        attempt.gates = result.gates
+        await writeFile(join(work, `attempt-${n}.final.glb`), result.bytes)
+        const textures = result.gates.find((g) => g.gate === 'textures' && !g.ok)
+        throw textures ? textureBudgetError(textures) : pipelineDefectError(failingNames(result.gates), `attempt ${n}, final bytes`, work)
       }
       const { shipped } = result
       attempt.gates = shipped.gates
@@ -421,14 +454,18 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
 
 type Print = (line: string) => void
 
-/** Runs the pilot ids one after the other, stops at the first 402 / 429, prints a summary table. Returns the exit code. */
+/**
+ * Runs the pilot ids one after the other and prints a summary table. It stops at the FIRST error of any kind (a Meshy
+ * 402 / 429, a pipeline defect, a thrown precondition): the next asset would most likely hit the same cause and pay
+ * for it. Running out of attempts on retryable gates is a plain FAIL and the pilot goes on. Returns the exit code.
+ */
 async function runPilot(opts: BuildOpts, deps: Partial<BuildDeps>, print: Print): Promise<number> {
   const rows: { id: string; result: string; attempts: string; credits: string; note: string }[] = []
-  let stopped = false
+  let stoppedAt: string | undefined
   let allOk = true
   for (const id of PILOT_IDS) {
-    if (stopped) {
-      rows.push({ id, result: 'not run', attempts: '-', credits: '-', note: 'stopped earlier' })
+    if (stoppedAt) {
+      rows.push({ id, result: 'not run', attempts: '-', credits: '-', note: `stopped at ${stoppedAt}` })
       continue
     }
     try {
@@ -438,13 +475,20 @@ async function runPilot(opts: BuildOpts, deps: Partial<BuildDeps>, print: Print)
       const credits = report.attempts.reduce((sum, a) => sum + (a.credits ?? 0), 0)
       const result = report.stopped ? 'STOPPED' : report.ok ? 'PASS' : 'FAIL'
       rows.push({ id, result, attempts: String(report.attempts.length), credits: String(credits), note: report.stopped ? `${report.stopped}: ${report.error ?? ''}` : (report.error ?? '') })
-      if (report.stopped) stopped = true
       if (!report.ok) allOk = false
+      if (report.error !== undefined) {
+        stoppedAt = id
+        print(`pilot stopped at ${id}: ${report.error}`)
+      }
     } catch (e) {
       allOk = false
-      rows.push({ id, result: 'ERROR', attempts: '-', credits: '-', note: redact(e instanceof Error ? e.message : String(e), process.env.MESHY_API_KEY ?? '') })
+      const note = redact(e instanceof Error ? e.message : String(e), process.env.MESHY_API_KEY ?? '')
+      rows.push({ id, result: 'ERROR', attempts: '-', credits: '-', note })
+      stoppedAt = id
+      print(`pilot stopped at ${id}: ${note}`)
     }
   }
+  const stopped = stoppedAt !== undefined
   print('pilot summary')
   for (const r of rows) print(`  ${r.id.padEnd(20)} ${r.result.padEnd(8)} attempts ${r.attempts.padEnd(2)} credits ${r.credits.padEnd(4)} ${r.note}`.trimEnd())
   return allOk && !stopped ? 0 : 1
