@@ -19,7 +19,7 @@ Status: DRAFT for the founder's approval, 29 Oct 2026. Nothing here is built. It
 | 26 | **A closed status vocabulary of four labels, defined once on the home page** and used everywhere: *Version d'essai* (usable now, unfinished), *En développement* (being built, not open), *En projet* (an intention, nothing promised), *À venir* (planned after something else). Each keeps its glyph so colour is never the only cue. The footer wording changes to match. |
 | 27 | **Six type sizes, no more** (label, small, body, lede, section title, page title) and no new font. Numerals use Tektur; tables use tabular digits. |
 | 28 | **Ornament budget: two ornament types per viewport.** The frame family (wire frame and nested fillets) counts as one type; the bands (rope, triangle, sawtooth) as a second; the roundel is the footer's. |
-| 29 | **Plain statement before poetry.** The home lead says what Tekonest is; "des fils tressés" moves to the *Pourquoi un nid* section where it belongs. |
+| 29 | **Plain statement before poetry.** The home lead says what Tekonest is; "des fils tressés" leaves the lead and the thread image lives only in the *Sept fils* section. |
 | 30 | **Internal commentary and dead controls leave the public pages**: the line « Proposition : la plateforme garderait son visuel sombre… », the CSS mock of the platform preview, the disabled « Accès bientôt disponible » button, and five identical « Nouveau » badges on TekPractice. |
 
 ## 3. What is borrowed and what is not
@@ -51,7 +51,7 @@ French copy is final text for review; typography (narrow no-break spaces) is app
 
 ### 5.1 Home (`index.html`)
 
-1. **Hero field** (Nuit, wire frame). Eyebrow « Paris · métiers du son ». H1 « Un nid pour les métiers du son. » Lead **« Deux entrées : se former au son, ou créer un projet avec nous. »** Honest line **« Tekonest se construit pas à pas. Rien n'est encore en vente : chaque ligne de cette page dit ce qui existe et ce qui se prépare. »**
+1. **Hero field** (Nuit, wire frame; the statement is left-aligned to the 12-column container, as in Berghain, with the doors below it). Eyebrow « Paris · métiers du son ». H1 « Un nid pour les métiers du son. » Lead **« Deux entrées : se former au son, ou créer un projet avec nous. »** Honest line **« Tekonest se construit pas à pas. Rien n'est encore en vente : chaque ligne de cette page dit ce qui existe et ce qui se prépare. »**
    Then **two door panels**, nested fillets in the dark variant:
 
    | | 01 | 02 |
@@ -100,7 +100,7 @@ Ornament types on screen: first screen frame + rope band (2); status index none;
 ### 5.5 Layout (all pages)
 
 - Menu: *Se former*, *Créer avec nous* (equal), then *L'histoire*, *Contact* (quieter). Prototype banner unchanged.
-- Footer in three small-print columns: *Entrées* (Se former, Créer avec nous), *Tekonest* (L'histoire, Contact, Accessibilité), *État*. Fine print: **« Prototype de conception, {date}. Tekonest n'a pas encore de structure juridique ; seuls les services marqués « version d'essai » sont utilisables aujourd'hui, ceux marqués « en développement », « en projet » ou « à venir » ne sont pas proposés. »** The credit line stays.
+- Footer: two link columns, *Entrées* (Se former, Créer avec nous) and *Tekonest* (L'histoire, Contact, Accessibilité), and below them the dated fine print under the small label *État*. Fine print: **« Prototype de conception, {date}. Tekonest n'a pas encore de structure juridique ; seuls les services marqués « version d'essai » sont utilisables aujourd'hui, ceux marqués « en développement », « en projet » ou « à venir » ne sont pas proposés. »** The credit line stays.
 
 ## 6. Build order (for the plan)
 
@@ -113,7 +113,7 @@ Ornament types on screen: first screen frame + rope band (2); status index none;
 ## 7. Acceptance
 
 1. Every `.status` text on every page is one of the four labels; the legend appears once, on the home page; the footer wording matches.
-2. At 1440×900 and 390×844 both doors are visible without scrolling; their widths differ by no more than 1 px from 48 em up.
+2. At 1440×900 both doors are fully visible without scrolling; at 390×844 the first door's name and action are visible and the second door starts within one scroll of the viewport (two stacked doors cannot both fit in 844 px). From 48 em up their widths differ by no more than 1 px.
 3. No disabled `button`, no « Proposition : », no list with more than one identical badge.
 4. At most six distinct font sizes in `site.css` tokens; no new font file.
 5. Two ornament types per viewport on the home page (checked on the screenshots).
