@@ -6,7 +6,8 @@
  *
  * Everything is in WORLD space, metres: the bbox includes the root node's scale and rotation, and `nodes[].worldPos`
  * are world positions. `rootScale` / `rootRotation` are the scale and quaternion (x, y, z, w) of the single
- * top-level node, identity ([1,1,1] / [0,0,0,1]) when there is none or more than one.
+ * top-level node, identity ([1,1,1] / [0,0,0,1]) when there is none or more than one (check
+ * `topLevelCount`: a valid asset has exactly one).
  */
 import { NodeIO } from '@gltf-transform/core'
 import type { Node } from '@gltf-transform/core'
@@ -24,6 +25,8 @@ export interface GlbReport {
   nodeNames: string[]
   /** Every node of the scene graph (ports and controls included) with its world position in metres. */
   nodes: { name: string; worldPos: Vec3; hasMesh: boolean }[]
+  /** Number of top-level nodes across the scenes (a valid asset has exactly 1). */
+  topLevelCount: number
   rootScale: Vec3
   rootRotation: Quat
   /** The root node's extras, or null when it has none. */
@@ -97,6 +100,7 @@ export async function inspectGlb(bytes: Uint8Array): Promise<GlbReport> {
       const m = n.getWorldMatrix()
       return { name: n.getName(), worldPos: [m[12], m[13], m[14]] as Vec3, hasMesh: n.getMesh() !== null }
     }),
+    topLevelCount: topLevel.length,
     rootScale: single ? (single.getScale().slice() as Vec3) : [1, 1, 1],
     rootRotation: single ? (single.getRotation().slice() as Quat) : [0, 0, 0, 1],
     extras: single && Object.keys(single.getExtras()).length > 0 ? single.getExtras() : null,
