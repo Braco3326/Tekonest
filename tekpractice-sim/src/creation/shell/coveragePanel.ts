@@ -114,6 +114,9 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
   body.id = `${id}-body`
   const status = el(doc, 'p', 'cr-cov-status')
   status.dataset.testid = 'coverage-status'
+  // Always shown with the block (decision L30 viii): the aim line is the truth; the 3D model's shape may not match the real front.
+  const caveat = el(doc, 'p', 'cr-cov-note', L.frontCaveat)
+  caveat.dataset.testid = 'coverage-caveat'
   const ready = el(doc, 'div', 'cr-cov-ready')
   ready.dataset.testid = 'coverage-ready'
 
@@ -150,7 +153,7 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
   const spl = el(doc, 'p', 'cr-cov-note', L.splPending)
   spl.dataset.testid = 'coverage-spl'
   ready.append(unit, method, legendTitle, legend, hatched, aim, source, speakersTitle, speakers, statsTitle, stats, pointsTitle, points, pinRow, hint, spl)
-  body.append(status, ready)
+  body.append(status, caveat, ready)
 
   root.append(head, pop, body)
   container.insertBefore(root, before)

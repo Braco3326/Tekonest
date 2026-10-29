@@ -76,6 +76,8 @@ test('(a) Écoute › Couverture: off by default, then the dots, ≤ 20 000 poin
   await expect(page.getByTestId('coverage-stats').locator('dd[data-stat="max"]')).toHaveText('0,0 dB')
   await expect(page.getByTestId('coverage-stats').locator('dd[data-stat="step"]')).toHaveText('0,5 m')
   await expect(page.getByTestId('coverage-speakers')).toContainText('k12-g : 75° × 75°')
+  await expect(page.getByTestId('coverage-caveat')).toContainText('La direction de chaque enceinte est indiquée par le trait')
+  await expect(page.getByTestId('coverage-caveat')).toContainText('modèles en cours de refonte')
   await expect(page.getByTestId('coverage-spl')).toBeHidden() // no sourced sensitivity anywhere: the SPL estimate does not exist
   await expect(page.getByTestId('coverage-ready')).not.toContainText(/NaN|Infinity|undefined/)
   // the legend counts add up to the points (each colour's dots are text too)
@@ -353,7 +355,9 @@ test('(i) the AIM line of each audible speaker starts at the speaker and runs al
   expect((await cov(page)).aim.find((a) => a.id === 'k12-g')!.to[1]).toBeCloseTo(2.7 - 4 * Math.sin((10 * Math.PI) / 180), 5)
 })
 
-test('(j) .glb FRONT CHECK (ADR-0013 addendum / ADR-0015): at yaw 0 the connector markers of the K12.2 sit at −z of the body (the rear, by the connector convention) and the acoustic axis runs to +z; what the model shape says is in L30', async ({ page }) => {
+test('(j) CONVENTION CHECK (L30 viii, kept by decision): at yaw 0 the connector markers of the K12.2 sit at −z of the body and the acoustic axis runs to +z (evidence of the current scene; the model SHAPE is documented in tests/assets/speakerFront.test.ts)', async ({ page }) => {
+  // The convention (yaw 0 = +z, connectors toward −z) is what the rebuilt 3D models will follow too (decision L30 viii): if this fails, the scene's
+  // convention changed. See docs/CREATIVE-MODE-LOG.md L30 and ADR-0015 « Addendum (Task 37) » before touching the test.
   await boot(page)
   const r = await page.evaluate(() => {
     const c = window.__creation!

@@ -4,7 +4,8 @@
  * The acoustic axis is the placement's local +z (yaw 0 = the speaker faces +z). The scene puts a model's connector side (its `port_*` empties)
  * at −z (DeviceSpawner.normalizeModel: « I/O toward −Z »), so a model whose FRONT is on its connector side would face −z at yaw 0, the field
  * would be turned 180° and still look plausible. This test reads the real files (glTF space, y up) and pins what they say: it is evidence and a
- * tripwire, not an assertion that the models are right. See docs/CREATIVE-MODE-LOG.md L30 and the Task 37 report.
+ * tripwire, not an assertion that the models are right. DECIDED (L30 viii): the convention is kept and the models are being rebuilt; these tests document
+ * TODAY's assets and are expected to fail, with an explanatory message, when the rebuilt models land. See docs/CREATIVE-MODE-LOG.md L30 and the Task 37 report.
  *
  * Findings pinned here:
  *  - K12.2: the three port empties sit just outside ONE end face of the body, and that end is the WIDE end of its plan (14 in wide against 6.6 in
@@ -53,18 +54,36 @@ async function read(name: string) {
 }
 const span = (v: number[]): number => Math.max(...v) - Math.min(...v)
 
-describe('the shipped speaker models: where do the connectors sit, and what is there?', () => {
+/**
+ * These are EVIDENCE of today's assets, not requirements (decision L30 viii, 2026-10-29: the convention is kept, the 3D models are being rebuilt with
+ * the I/O face toward −Z, pivot bottom-centre). When a rebuilt model lands, a failure here is EXPECTED: it means the facts below changed. Then (1) re-check
+ * which way the new model's FRONT faces at yaw 0 (it must face +z, connectors at −z), (2) update or delete these tests, (3) update L30 / ADR-0015 and the
+ * `coverage.frontCaveat` note (drop it when the models are right). The failure message says so: it is not a mystery.
+ */
+const evidence = (name: string, fn: () => Promise<void> | void) =>
+  it(`EVIDENCE of the current assets: ${name}`, async () => {
+    try {
+      await fn()
+    } catch (e) {
+      throw new Error(
+        `The facts about the shipped speaker .glb changed (a rebuilt model?): ${e instanceof Error ? e.message : String(e)}\n` +
+          'Not a regression by itself: see docs/CREATIVE-MODE-LOG.md L30 (viii) and ADR-0015 « Addendum (Task 37) ». Re-verify that the new model faces +z at yaw 0 with its connectors at −z, then update these evidence tests.'
+      )
+    }
+  })
+
+describe('the shipped speaker models: where do the connectors sit, and what is there? (evidence, L30)', () => {
   it('the files are there (the test cannot pass vacuously)', () => {
     for (const f of ['qsc-k12-2', 'yamaha-dbr12']) expect(existsSync(resolve(assets, `${f}.glb`)), f).toBe(true)
   })
 
-  it('K12.2: its port empties are on one end face of the body (the +z end of the file), on the same side for all three', async () => {
+  evidence('K12.2: its port empties are on one end face of the body (the +z end of the file), on the same side for all three', async () => {
     const { ports, hi } = await read('qsc-k12-2')
     expect(Object.keys(ports).sort()).toEqual(['in-line-a', 'power-in', 'thru-out-a'])
     for (const [id, p] of Object.entries(ports)) expect(p[2], id).toBeGreaterThanOrEqual(hi[2] - 0.05) // just outside the max-z face
   })
 
-  it('K12.2: that connector end is the WIDE end of the plan; the opposite end is narrow and carries the dense detail (the amp side)', async () => {
+  evidence('K12.2: that connector end is the WIDE end of the plan; the opposite end is narrow and carries the dense detail (the amp side)', async () => {
     const { pts, ports, lo, hi } = await read('qsc-k12-2')
     const depth = hi[2] - lo[2]
     const near = pts.filter((p) => p[2] >= hi[2] - 0.08 * depth) // the 8 % of the depth next to the connectors
@@ -75,7 +94,7 @@ describe('the shipped speaker models: where do the connectors sit, and what is t
     expect(Object.values(ports).every((p) => p[2] > hi[2] - 0.05)).toBe(true)
   })
 
-  it('DBR12: the model is not a speaker-shaped box (its long axis is z; the catalog box is taller than deep): no front can be read from it', async () => {
+  evidence('DBR12: the model is not a speaker-shaped box (its long axis is z; the catalog box is taller than deep): no front can be read from it', async () => {
     const { lo, hi, ports } = await read('yamaha-dbr12')
     const ext = [0, 1, 2].map((k) => hi[k] - lo[k])
     expect(ext[2] / ext[1], 'the file is much longer than it is tall').toBeGreaterThan(2.5)

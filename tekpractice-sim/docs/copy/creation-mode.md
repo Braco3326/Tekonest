@@ -671,6 +671,7 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.hatched` | Hachuré : interférences non modélisées | à valider (tekuxwriter) | Ligne de légende des points à recouvrement (deux enceintes à 6 dB ou moins l’une de l’autre). Mot pour mot (brief §5) |
 | `coverage.hatchedCount` | {n} points concernés | à valider (tekuxwriter) | Nombre de points hachurés |
 | `coverage.aim` | Trait clair : axe de chaque enceinte audible | à valider (tekuxwriter) | Légende des traits d’axe tracés dans la vue 3D tant que la couverture est affichée |
+| `coverage.frontCaveat` | La direction de chaque enceinte est indiquée par le trait ; la forme du modèle 3D peut ne pas correspondre à la vraie face avant (modèles en cours de refonte). | à valider (tekuxwriter) | Mention honnête affichée tant que la couverture est affichée (décision controller, L30 viii : on garde la convention lacet 0 = +z ; les modèles 3D sont en refonte). Ne dit pas que le modèle a tort ou raison |
 | `coverage.sourceLine` | Couverture : {sources} | à valider (tekuxwriter) | Provenance des angles ; {sources} = liste construite avec les clés ci-dessous |
 | `coverage.sourceKb` | données KB | à valider (tekuxwriter) | Angle issu de la base de connaissances |
 | `coverage.sourceNominal` | valeur nominale | à valider (tekuxwriter) | Angle par défaut 90° × 60° (aucune donnée constructeur) |
