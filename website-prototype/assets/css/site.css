@@ -316,7 +316,7 @@ kbd { display: inline-block; font: 600 0.875em/1.4 var(--font-text); padding: 0 
 /* The wire frame: the amber wire inset in a Nuit field (hero, closing band) */
 .cadre-filet--fil { border-color: var(--wire); outline-color: rgb(221 147 73 / .45); opacity: 1; inset: 24px; }
 @media (max-width: 47.99em) { .cadre-filet--fil { inset: 10px; } }
-@media (max-width: 47.99em) { .hero-nuit > .wrap { padding-block: var(--space-6) var(--space-7); } .hero-nuit__txt { padding-bottom: var(--space-5); } .door--dark { padding: var(--space-4); } }
+@media (max-width: 47.99em) { .hero-nuit > .wrap { padding-block: var(--space-6) var(--space-7); } .hero-nuit__txt { padding-bottom: var(--space-5); } }
 
 /* The roundel: rings of wire around the brand mark (footer) */
 .roundel { width: 64px; height: 64px; margin: 4px 4px var(--space-5); border-radius: 50%; border: 1px solid var(--wire); outline: 1px solid rgb(221 147 73 / .45); outline-offset: 4px; display: grid; place-items: center; color: var(--pearl); }
@@ -333,3 +333,4 @@ kbd { display: inline-block; font: 600 0.875em/1.4 var(--font-text); padding: 0 
 .door--dark .door-state { margin-top: auto; padding-top: var(--space-2); }
 .door--dark .status { color: var(--color-on-dark); }
 .door--dark .inner { position: relative; z-index: 1; color: var(--color-on-dark); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 47.99em) { .door--dark { padding: var(--space-4); } }
