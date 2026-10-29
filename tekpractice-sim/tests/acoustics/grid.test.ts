@@ -5,7 +5,9 @@
  * strip narrower than one step at the border is left out. A zone smaller than one cell gets a single point at its centre.
  */
 import { describe, expect, it } from 'vitest'
-import { listenerGrid } from '../../src/acoustics/grid'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { DEFAULT_MAX_POINTS, listenerGrid } from '../../src/acoustics/grid'
 
 type Z = { x: number; z: number; w: number; d: number; y: number }
 const zone = (over: Partial<Z> = {}): Z => ({ x: 0, z: 0, w: 4, d: 2, y: 0, ...over })
@@ -134,5 +136,101 @@ describe('listenerGrid: step 0.5 m, then 1 m, then 2 m while the count exceeds m
     const g = listenerGrid([zone({ w: 18, d: 24 })], 1.2)
     expect(g.stepM).toBe(0.5)
     expect(g.points.length / 3).toBe(1728)
+  })
+})
+
+describe('listenerGrid: zones that overlap (real room data)', () => {
+  /** The audience and foh zones of a shipped room, exactly as roomLayout reads them (rect_m = centre x, centre z, w, d). */
+  const room = (id: string): Z[] => {
+    const r = JSON.parse(readFileSync(resolve(__dirname, `../../content/rooms/${id}.json`), 'utf8')) as {
+      zones: { kind: string; rect_m: [number, number, number, number]; floor_y_m?: number }[]
+    }
+    return r.zones.filter((z) => z.kind === 'audience' || z.kind === 'foh').map((z) => ({ x: z.rect_m[0], z: z.rect_m[1], w: z.rect_m[2], d: z.rect_m[3], y: z.floor_y_m ?? 0 }))
+  }
+  const key = (q: [number, number, number]): string => q.map((v) => v.toFixed(4)).join(',')
+
+  it('premise: bar-club-stage-small has an audience zone that contains its foh zone, at the same floor height', () => {
+    const [aud, foh] = room('bar-club-stage-small')
+    expect(aud).toBeDefined()
+    expect(foh).toBeDefined()
+    expect(foh.y).toBe(aud.y)
+    expect(Math.abs(foh.x - aud.x) + foh.w / 2).toBeLessThanOrEqual(aud.w / 2)
+    expect(Math.abs(foh.z - aud.z) + foh.d / 2).toBeLessThanOrEqual(aud.d / 2)
+  })
+  it('bar-club-stage-small: no listener position appears twice, and the foh zone adds nothing to the audience grid', () => {
+    const zs = room('bar-club-stage-small')
+    const g = listenerGrid(zs, 1.2)
+    const p = xyz(g)
+    expect(new Set(p.map(key)).size).toBe(p.length)
+    // the audience zone alone: 9.8 / 0.5 = 19 columns, 11.2 / 0.5 = 22 rows
+    expect(p).toHaveLength(19 * 22)
+    expect(xyz(listenerGrid([zs[0]], 1.2))).toEqual(p)
+    // the two lattices of the old behaviour are offset, so the duplicates were NOT identical triples: no two points may be closer than one step
+    let nearest = Infinity
+    for (let i = 0; i < p.length; i++) for (let j = i + 1; j < p.length; j++) nearest = Math.min(nearest, Math.hypot(p[i][0] - p[j][0], p[i][2] - p[j][2]))
+    expect(nearest).toBeGreaterThanOrEqual(0.5 - 1e-6)
+  })
+  it('dj-booth-small and concert-hall-medium (same floor height): no duplicate listener position', () => {
+    for (const id of ['dj-booth-small', 'concert-hall-medium']) {
+      const p = xyz(listenerGrid(room(id), 1.2))
+      expect(new Set(p.map(key)).size, id).toBe(p.length)
+    }
+  })
+  it('a zone inside another at a DIFFERENT floor height is kept: both lattices are present', () => {
+    const outer = zone({ x: 0, z: 0, w: 4, d: 4, y: 0 })
+    const inner = zone({ x: 0, z: 0, w: 2, d: 2, y: 3 })
+    const p = xyz(listenerGrid([outer, inner], 1.2))
+    expect(p).toHaveLength(8 * 8 + 4 * 4)
+    expect(p.filter((q) => Math.abs(q[1] - 4.2) < 1e-6)).toHaveLength(16)
+    expect(p.filter((q) => Math.abs(q[1] - 1.2) < 1e-6)).toHaveLength(64)
+  })
+  it('floor heights equal within 1 mm count as the same height; 2 mm apart do not', () => {
+    const outer = zone({ w: 4, d: 4, y: 1 })
+    expect(listenerGrid([outer, zone({ w: 2, d: 2, y: 1.0004 })], 1.2).points.length / 3).toBe(64)
+    expect(listenerGrid([outer, zone({ w: 2, d: 2, y: 1.002 })], 1.2).points.length / 3).toBe(64 + 16)
+  })
+  it('only EARLIER zones hide a point: the inner zone listed first keeps its points and the outer one loses the ones it contains', () => {
+    const outer = zone({ w: 4, d: 4 })
+    const inner = zone({ w: 2, d: 2 })
+    const p = xyz(listenerGrid([inner, outer], 1.2))
+    expect(p).toHaveLength(16 + (64 - 16)) // inner 4 x 4; outer 8 x 8 minus the 16 outer points inside the inner rectangle
+    expect(new Set(p.map(key)).size).toBe(p.length)
+  })
+  it('partial overlap: a point inside an earlier zone of the same height is dropped, the rest of the later zone stays', () => {
+    const a = zone({ x: 0, z: 0, w: 4, d: 2 }) // x from −2 to 2
+    const b = zone({ x: 2, z: 0, w: 4, d: 2 }) // x from 0 to 4: half of it lies in a
+    const p = xyz(listenerGrid([a, b], 1.2))
+    // a: 8 columns x 4 rows = 32. b: 8 x 4 = 32 centres, columns at x = 0.25, 0.75 … 3.75; the 4 columns with x ≤ 1.75 lie inside a
+    // (x ≤ 2), so b keeps 4 columns x 4 rows = 16
+    expect(p).toHaveLength(32 + 16)
+    expect(new Set(p.map(key)).size).toBe(p.length)
+  })
+  it('the step choice counts the points that are kept: two stacked copies of a zone at the same height count once', () => {
+    const z = zone({ w: 100, d: 50 }) // exactly 20000 at 0.5 m
+    const g = listenerGrid([z, { ...z }], 1.2)
+    expect(g.stepM).toBe(0.5)
+    expect(g.points.length / 3).toBe(20000)
+  })
+  it('an earlier zone with no area hides nothing, even a point lying exactly on its (degenerate) line', () => {
+    expect(xyz(listenerGrid([zone({ w: 0, d: 0 }), zone({ w: 1, d: 1 })], 1.2))).toHaveLength(4)
+    // the earlier zone is the line x = 0 (w = 0); the later 1.5 x 1.5 zone has a column of points exactly on it (x = −0.5, 0, 0.5): all 9 stay
+    expect(xyz(listenerGrid([zone({ w: 0, d: 100 }), zone({ w: 1.5, d: 1.5 })], 1.2))).toHaveLength(9)
+  })
+  it('the edge of an earlier zone belongs to it (as roomLayout.floorAt): a point exactly on that edge is dropped', () => {
+    const a = zone({ x: 0, z: 0, w: 4, d: 4 }) // x from −2 to 2, z from −2 to 2: 8 x 8 = 64 points
+    const b = zone({ x: 2, z: 0, w: 1.5, d: 1.5 }) // 3 x 3 points at x = 1.5, 2, 2.5 and z = −0.5, 0, 0.5; x = 1.5 and x = 2 (on the edge) are inside a
+    const p = xyz(listenerGrid([a, b], 1.2))
+    expect(p).toHaveLength(64 + 3) // only the x = 2.5 column of b is kept
+  })
+
+  it('sports-venue-pa-large (four stands and a raised foh): 2 m, within the default limit', () => {
+    const zs = room('sports-venue-pa-large')
+    const g = listenerGrid(zs, 1.2)
+    expect(g.stepM).toBe(2)
+    expect(g.points.length / 3).toBeLessThanOrEqual(DEFAULT_MAX_POINTS)
+    expect(g.points.length / 3).toBeGreaterThan(0)
+    // the step above would have been too many: 1 m gives more than the limit
+    const at1m = zs.reduce((s, zn) => s + Math.floor(zn.w) * Math.floor(zn.d), 0)
+    expect(at1m).toBeGreaterThan(DEFAULT_MAX_POINTS)
   })
 })

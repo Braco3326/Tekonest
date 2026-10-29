@@ -1,14 +1,18 @@
 /**
- * Task 36: src/acoustics is a pure layer. It will run in a Web Worker (Task 37) and be read by src/audio/listenerMix.ts (Task 39), so it
- * may import only itself: no Babylon, no DOM, no store, no creation / engine / flow module. A TYPE import from tools/schemas is the only
- * thing allowed to reach outside (it is erased and carries no runtime dependency). Modelled on the src/flow guard (tests/flow/signalPath.test.ts).
+ * Task 36: the acoustics CORE (geometry, field, scale, grid) is a pure layer. It runs in a Web Worker (Task 37) and is read by
+ * src/audio/listenerMix.ts (Task 39), so it may import only itself: no Babylon, no DOM, no store, no creation / engine / flow module.
+ * A TYPE import from tools/schemas is the only thing allowed to reach outside (it is erased and carries no runtime dependency).
+ * Task 37 adds worker.ts and client.ts to the same folder; they must use `self` / `postMessage` and are NOT part of the core, so this test
+ * names the core files explicitly instead of reading the folder. Modelled on the src/flow guard (tests/flow/signalPath.test.ts).
  */
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { dirname, resolve } from 'node:path'
-import { describe, expect, it } from 'vitest'
+import { afterAll, describe, expect, it } from 'vitest'
 
 const root = resolve(__dirname, '../../src')
 const dir = resolve(root, 'acoustics')
+const CORE = ['geometry', 'field', 'scale', 'grid'] as const
 
 /** Specifiers of value imports, value re-exports, side-effect imports, dynamic import() and require(); `import type` is left out. */
 function valueSpecifiers(src: string): string[] {
@@ -29,7 +33,7 @@ const resolveTs = (from: string, spec: string): string | null => {
   for (const c of [`${base}.ts`, `${base}/index.ts`, base]) if (existsSync(c) && c.endsWith('.ts')) return c
   return null
 }
-/** Every src file and every package reachable by value imports from `entry`. */
+/** Every file and every package reachable by value imports from `entry`. */
 function closure(entry: string): { files: Set<string>; packages: Set<string> } {
   const files = new Set<string>()
   const packages = new Set<string>()
@@ -47,45 +51,72 @@ function closure(entry: string): { files: Set<string>; packages: Set<string> } {
   }
   return { files, packages }
 }
-const sources = (): string[] => (existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.ts')).map((f) => resolve(dir, f)) : [])
+const coreFiles = (): string[] => CORE.map((n) => resolve(dir, `${n}.ts`))
 const rel = (f: string): string => f.replace(root, '').replace(/\\/g, '/')
+const stripComments = (s: string): string => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '')
 
-describe('src/acoustics stays a pure layer', () => {
-  it('the four modules exist', () => {
-    expect(sources().map(rel).sort()).toEqual(['/acoustics/field.ts', '/acoustics/geometry.ts', '/acoustics/grid.ts', '/acoustics/scale.ts'])
+describe('the acoustics core stays a pure layer', () => {
+  it('the four core modules exist', () => {
+    for (const f of coreFiles()) expect(existsSync(f), rel(f)).toBe(true)
   })
-  it('the value-import closure of each module stays inside src/acoustics and reaches no package at all', () => {
-    for (const entry of sources()) {
+  it('the value-import closure of each core module stays inside the core and reaches no package at all', () => {
+    for (const entry of coreFiles()) {
       const { files, packages } = closure(entry)
-      for (const f of files) expect(rel(f), `${rel(entry)} reaches ${rel(f)}`).toMatch(/^\/acoustics\/[a-z]+\.ts$/)
+      for (const f of files) expect(rel(f), `${rel(entry)} reaches ${rel(f)}`).toMatch(new RegExp(`^/acoustics/(${CORE.join('|')})\\.ts$`))
       expect([...packages], rel(entry)).toEqual([])
     }
   })
-  it('every value import is a sibling module `./name` (no asset, no package, no parent folder)', () => {
-    for (const f of sources()) for (const spec of valueSpecifiers(readFileSync(f, 'utf8'))) expect(spec, rel(f)).toMatch(/^\.\/[a-z]+$/)
+  it('every value import of a core module is another core module `./name` (no asset, no package, no parent folder, no worker/client)', () => {
+    for (const f of coreFiles()) for (const spec of valueSpecifiers(readFileSync(f, 'utf8'))) expect(spec, rel(f)).toMatch(new RegExp(`^\\./(${CORE.join('|')})$`))
   })
   it('the only thing that may leave the folder is an `import type` from tools/schemas', () => {
-    for (const f of sources()) {
+    for (const f of coreFiles()) {
       for (const spec of typeSpecifiers(readFileSync(f, 'utf8'))) {
-        const ok = /^\.\/[a-z]+$/.test(spec) || /^(?:\.\.\/)+tools\/schemas$/.test(spec)
+        const ok = new RegExp(`^\\./(${CORE.join('|')})$`).test(spec) || /^(?:\.\.\/)+tools\/schemas$/.test(spec)
         expect(ok, `${rel(f)} type-imports ${spec}`).toBe(true)
       }
     }
   })
-  it('no module names Babylon, the DOM, a worker global, the store or the shell', () => {
-    for (const f of sources()) {
-      const code = readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '')
+  it('no core module names Babylon, the DOM, a worker global, the store or the shell', () => {
+    for (const f of coreFiles()) {
+      const code = stripComments(readFileSync(f, 'utf8'))
       for (const bad of [/@babylonjs/, /\bdocument\b/, /\bwindow\b/, /\bself\b/, /\bpostMessage\b/, /\bnavigator\b/, /creation\/store/, /ConnectionGraph/, /RuleEvaluator/, /\bCOPY\b/]) {
         expect(code, `${rel(f)} ${bad}`).not.toMatch(bad)
       }
     }
   })
-  it('the modules do not depend on Date or randomness (the field is a pure function of its inputs)', () => {
-    for (const f of sources()) expect(readFileSync(f, 'utf8'), rel(f)).not.toMatch(/\bDate\b|Math\.random|performance\.now/)
+  it('the core does not depend on Date or randomness (the field is a pure function of its inputs)', () => {
+    for (const f of coreFiles()) expect(readFileSync(f, 'utf8'), rel(f)).not.toMatch(/\bDate\b|Math\.random|performance\.now/)
   })
 })
 
-describe('the guard bites', () => {
+describe('the guard bites (on a fixture made for the test, independent of the rest of src)', () => {
+  const tmp = mkdtempSync(resolve(tmpdir(), 'acoustics-guard-'))
+  afterAll(() => rmSync(tmp, { recursive: true, force: true }))
+  const write = (name: string, body: string): string => {
+    const f = resolve(tmp, name)
+    mkdirSync(dirname(f), { recursive: true })
+    writeFileSync(f, body)
+    return f
+  }
+  const a = write('core/a.ts', "import { b } from './b'\nexport const a = b\n")
+  write('core/b.ts', "import { leak } from '../outside/leak'\nimport x from '@babylonjs/core'\nexport const b = leak + String(x)\n")
+  write('outside/leak.ts', 'export const leak = 1\n')
+  const clean = write('core/clean.ts', "import { a } from './a'\nexport const clean = a\n")
+  const dyn = write('core/dyn.ts', "export const load = () => import('@babylonjs/core')\n")
+  const typeOnly = write('core/typeOnly.ts', "import type { T } from '../outside/leak'\nexport type U = T\n")
+
+  it('the walker follows transitive imports out of the folder and reports packages', () => {
+    const { files, packages } = closure(a)
+    expect([...files].map((f) => f.replace(tmp, '').replace(/\\/g, '/')).sort()).toEqual(['/core/a.ts', '/core/b.ts', '/outside/leak.ts'])
+    expect([...packages]).toEqual(['@babylonjs/core'])
+    expect([...closure(clean).files].some((f) => /outside/.test(f))).toBe(true) // reached through a -> b
+  })
+  it('a dynamic import() is seen; an `import type` is not a value import but is listed as a type import', () => {
+    expect([...closure(dyn).packages]).toEqual(['@babylonjs/core'])
+    expect(closure(typeOnly).files.size).toBe(1)
+    expect(typeSpecifiers(readFileSync(typeOnly, 'utf8'))).toEqual(['../outside/leak'])
+  })
   it('valueSpecifiers sees plain, multi-line, re-export, side-effect, dynamic and require imports, and skips `import type`', () => {
     const code = [
       "import { a } from '../engine/x'",
@@ -100,12 +131,8 @@ describe('the guard bites', () => {
     expect(valueSpecifiers(code).sort()).toEqual(['../engine/x', '../creation/store', './y', '../flow/z', './side', '@babylonjs/core', 'node:fs'].sort())
     expect(typeSpecifiers(code)).toEqual(['../../tools/schemas'])
   })
-  it('the closure walker follows transitive imports (creation/boot reaches creation/store)', () => {
-    const { files } = closure(resolve(root, 'creation/boot.ts'))
-    expect([...files].some((f) => /creation[\\/]store\.ts$/.test(f))).toBe(true)
-  })
-  it('the closure walker finds packages (a Babylon-importing module reports @babylonjs)', () => {
-    const { packages } = closure(resolve(root, 'scene/CameraRig.ts'))
-    expect([...packages].some((p) => /babylon/i.test(p))).toBe(true)
+  it('stripComments hides words in comments but not in code', () => {
+    expect(stripComments('// self\n/* window */\nconst x = self')).toMatch(/const x = self/)
+    expect(stripComments('// self\n/* window */\nconst x = 1')).not.toMatch(/self|window/)
   })
 })

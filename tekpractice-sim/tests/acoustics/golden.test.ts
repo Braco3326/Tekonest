@@ -53,7 +53,9 @@ describe('golden (council Q5)', () => {
     for (const [h, v] of [[0, 60], [90, 0], [-90, 60], [90, NaN], [Infinity, 60]]) expect(() => directivityDb(0, 0, h, v, false), `${h} x ${v}`).toThrow(RangeError)
   })
 
-  // yaw 90: lx = dx·cos90 − dz·sin90 = 0 and lz = dx·sin90 + dz·cos90 = 5 → straight ahead
+  // yaw 90: lx = dx·cos90 − dz·sin90 = 0 and lz = dx·sin90 + dz·cos90 = 5 → straight ahead.
+  // NOTE: #7 alone cannot tell a correct yaw from one with a flipped lx sign (the point is on axis either way); the (5, 0, 5) / (5, 0, −5)
+  // test in « sign conventions » below ("yaw 90 faces +x, and its left is +z") is what pins the left/right sign. Do not trim it.
   it('#7 yaw 90° faces +x', () => expect(offAxis({ position: [0, 0, 0], yawDeg: 90, tiltDeg: 0 }, [5, 0, 0]).thetaHdeg).toBeCloseTo(0, 6))
   // 20·log10(1/0.5) = 6.0206 at 0.5 m and at 0.1 m (floored); at 0.6 m: −20·log10(0.6) = +4.437
   it('#8 r is floored at 0.5 m: the level at 0.1 m equals the level at 0.5 m, and that level is +6.02 dB', () => {

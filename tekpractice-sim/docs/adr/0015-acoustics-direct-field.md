@@ -12,7 +12,7 @@ Mode Création doit montrer à l'apprenant où une sonorisation couvre bien le p
 
 ### Un noyau pur
 
-`src/acoustics/` n'importe que lui-même : ni Babylon, ni DOM, ni magasin, ni module `creation`, `engine` ou `flow`. Un test (`tests/acoustics/layering.test.ts`) parcourt les imports de valeur et le vérifie, avec un contrôle « le garde mord ». Le noyau **ne lit pas le catalogue** : `AcSource` porte des nombres simples (pose, `hDeg`, `vDeg`, `lRefDb`). Il peut donc tourner tel quel dans un Worker.
+Le **noyau** de `src/acoustics/` (`geometry`, `field`, `scale`, `grid`) n'importe que lui-même : ni Babylon, ni DOM, ni magasin, ni module `creation`, `engine` ou `flow`. Un test (`tests/acoustics/layering.test.ts`) nomme ces quatre fichiers, parcourt leurs imports de valeur et le vérifie, avec un contrôle « le garde mord » sur un dossier de test créé pour l'occasion. La Task 37 ajoutera `worker.ts` et `client.ts` dans le même dossier : ce sont les seules exceptions (un Worker utilise `self` et `postMessage`), elles ne font pas partie du noyau. Le noyau **ne lit pas le catalogue** : `AcSource` porte des nombres simples (pose, `hDeg`, `vDeg`, `lRefDb`). Il peut donc tourner tel quel dans un Worker.
 
 ### Formule
 
@@ -61,7 +61,8 @@ Une alimentation à `gainDb = −Infinity` (fader à −inf) ou une liste de sou
 
 - Les zones sont celles de `roomLayout` (`audience` et `foh`, filtrées par l'appelant) : `{ x, z }` est le **centre** du rectangle, `w` sa taille en x, `d` en z, `y` le sol de la zone. Hauteur d'oreille ajoutée : 1,2 m assis (défaut), 1,7 m debout.
 - Pas : 0,5 m, puis 1 m, puis 2 m tant que le **total** des points (toutes zones) dépasse `maxPoints` (20 000 par défaut, limite incluse). 2 m est le pas le plus grossier : une très grande salle est rendue à 2 m même si elle dépasse encore la limite.
-- **Règle de bord** (déterministe, testée) : le treillis est centré sur la zone, ses cellules mesurent exactement le pas, et un point est le **centre d'une cellule**. Aucun point n'est donc sur le bord (le plus proche est à pas/2 à l'intérieur), une bande de bord plus étroite qu'un pas est laissée de côté, et une zone plus petite qu'une cellule reçoit un seul point en son centre. Une zone sans surface ne donne aucun point. Les zones sont supposées disjointes.
+- **Règle de bord** (déterministe, testée) : le treillis est centré sur la zone, ses cellules mesurent exactement le pas, et un point est le **centre d'une cellule**. Aucun point n'est donc sur le bord (le plus proche est à pas/2 à l'intérieur), une bande de bord plus étroite qu'un pas est laissée de côté, et une zone plus petite qu'une cellule reçoit un seul point en son centre. Une zone sans surface ne donne aucun point et n'en cache aucun.
+- **Zones qui se recouvrent** (cas réel : dans plusieurs lieux livrés, la zone `foh` « régie » est un rectangle inclus dans la zone `audience`, et d'autres zones `foh` ou `audience` se chevauchent en partie) : une position d'écoute n'est comptée qu'**une fois**, sinon `count`, la moyenne et σ (P17) et le choix du pas seraient faussés. Un point candidat d'une zone est **écarté** s'il tombe dans le rectangle (bords compris, comme `roomLayout.floorAt`) d'une zone **antérieure** de la liste dont le sol est à la **même hauteur** (à 1 mm près). Une zone à une autre hauteur (un balcon, une régie surélevée) ne cache rien et n'est pas cachée. La zone antérieure l'emporte (l'ordre de la liste compte). Limite : un point situé dans la bande de bord que le treillis de la zone antérieure laisse de côté (au plus une cellule) est écarté aussi. Le pas est choisi sur le nombre de points **conservés**. Testé sur les rectangles réels de `bar-club-stage-small` (aucun point à moins d'un pas d'un autre) et de `sports-venue-pa-large` (pas de 2 m).
 - Ordre : zone par zone, lignes en z puis colonnes en x.
 
 ### Estimation « ≈ dB SPL » (S2) : règle, pas de code
@@ -79,7 +80,10 @@ Les angles viennent du champ `acoustic` du catalogue (`coverage_h_deg`, `coverag
 - **Absorption de l'air**, vent, température : la vitesse du son (343 m/s, contrainte du plan) n'entre pas dans le calcul du niveau.
 - **Intelligibilité** (STI) : aucune estimation.
 - **Seuil légal** : le projet n'affirme rien sur une limite de niveau sonore ; aucune comparaison réglementaire.
-- La directivité est un modèle lisse en cloche à deux angles, pas le diagramme mesuré de l'enceinte.
+- **La directivité est une approximation, pas le diagramme mesuré de l'enceinte.** C'est une parabole en dB (−6·u²) coupée à −30 dB, avec une marche à l'arrière (voir plus haut) : ni une cloche lisse, ni un diagramme réel. Plus précisément :
+  - θH est l'azimut et θV l'élévation dans le repère de l'enceinte ; ils sont combinés en **somme de carrés**. Les angles de couverture du catalogue sont des valeurs dans les **plans principaux** (horizontal et vertical) ; ce que le modèle donne dans les diagonales est une extrapolation.
+  - « −6 dB à la moitié de la couverture » est **notre convention**. La base de connaissances ne dit pas à quel niveau chaque fabricant définit ses angles : ce n'est pas forcément le même.
+  - La directivité est la **même à toutes les fréquences** : une vraie enceinte devient plus directive vers l'aigu et plus large dans le grave.
 
 ## Écarts du plan relevés à l'implémentation
 
@@ -92,4 +96,6 @@ Les angles viennent du champ `acoustic` du catalogue (`coverage_h_deg`, `coverag
 
 - La Task 37 construit les `AcSource` (pose, couverture du catalogue, `gainDb` de l'alimentation) pour les seules enceintes alimentées, sous tension et non en sourdine, et exécute `computeField` dans un Worker, sur changement seulement.
 - La Task 39 lit `directivityDb` pour le mixage ; elle doit donc garder la même convention de signes.
+- **Non vérifié : la face avant des `.glb` (K12.2, DBR12).** Le modèle suppose que l'avant de l'enceinte (la grille) regarde +z local. Si un modèle 3D regarde l'autre côté, c'est un retournement de 180° : tous les points du public deviennent « arrière » (−30 dB) et le champ se réduit à un dégradé de distance d'apparence plausible. À trancher en Task 37, **avant d'afficher la couverture** (voir aussi l'addendum d'ADR-0013).
+- **Pour la Task 37 :** (1) `computeField` lève `RangeError` si une enceinte n'a pas de couverture valide : l'appelant écarte les enceintes sans champ `acoustic` du catalogue et les appareils Bêta avant de construire les `AcSource` ; (2) beaucoup de lieux n'ont aucune zone `audience` ni `foh` (studios, cabines) : la grille est alors vide, `maxDb = −Infinity` et `stats.count = 0`, et le panneau de couverture a besoin d'un état vide ; (3) `maxDb` est sur l'échelle de `L_ref`, ce n'est pas un dB SPL.
 - Réversible et sans migration : aucune donnée enregistrée n'est touchée.
