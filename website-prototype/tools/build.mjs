@@ -63,18 +63,38 @@ const LAYOUT = `<!doctype html>
       <img src="assets/img/lockup-reverse.svg" alt="Tekonest" width="140" height="30">
       <p>Un nid pour les métiers du son : se former, créer ensemble.</p>
     </div>
-    <nav aria-label="Pied de page">
-      <ul>
-{footnav}
-        <li><a href="accessibilite.html">Accessibilité</a></li>
-      </ul>
+    <nav class="foot-cols" aria-label="Pied de page">
+      <div class="foot-col">
+        <p class="foot-title">Entrées</p>
+        <ul>
+{foot_entrees}
+        </ul>
+      </div>
+      <div class="foot-col">
+        <p class="foot-title">Tekonest</p>
+        <ul>
+{foot_tekonest}
+        </ul>
+      </div>
     </nav>
-    <p class="fine">Prototype de conception, {footer_date}. Tekonest n'a pas encore de structure juridique ; les services marqués « en préparation », « en développement » ou « en réflexion » ne sont pas proposés aujourd'hui. Polices : Tektur et IBM Plex Sans (licence SIL OFL 1.1), hébergées sur ce site. Motifs inspirés de la marqueterie de Damas. Géométrie reconstruite par Tekonest.</p>
+    <div class="foot-fine">
+      <p class="foot-title">État</p>
+      <p class="fine">Prototype de conception, {footer_date}. Tekonest n'a pas encore de structure juridique ; seuls les services marqués « version d'essai » sont utilisables aujourd'hui, ceux marqués « en développement », « en projet » ou « à venir » ne sont pas proposés. Polices : Tektur et IBM Plex Sans (licence SIL OFL 1.1), hébergées sur ce site. Motifs inspirés de la marqueterie de Damas. Géométrie reconstruite par Tekonest.</p>
+    </div>
   </div>
 </footer>
 </body>
 </html>
 `;
+
+/** The footer's two link columns: the two doors, then the rest. */
+function footColumns(indent = "          ") {
+  const li = ([href, label]) => `${indent}<li><a href="${href}">${label}</a></li>`;
+  return {
+    foot_entrees: NAV.slice(0, 2).map(li).join("\n"),
+    foot_tekonest: [...NAV.slice(2), ["accessibilite.html", "Accessibilité"]].map(li).join("\n"),
+  };
+}
 
 function navItems(current, indent = "        ") {
   return NAV.map(([href, label]) => {
@@ -125,7 +145,7 @@ export function build({ outDir = ROOT } = {}) {
       title,
       description,
       nav: navItems(name),
-      footnav: navItems(null),
+      ...footColumns(),
       content,
       footer_date: FOOTER_DATE,
       roundel: inlineSymbol(),

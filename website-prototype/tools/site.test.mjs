@@ -391,3 +391,41 @@ test("no page has a disabled button, and the retired card and mock styles are go
   assert.doesNotMatch(css(), /\.families|\.family\b|\.product-preview|\.preview-(apprendre|tekpractice)|\.endorse|\.door\.cadre/);
   assert.match(ruleBlock(css(), ".rows li"), /min-height:\s*44px/);
 });
+
+test("every status on every page is one of the four labels, with its own class", () => {
+  const ok = { "Version d'essai": "status--now", "En développement": "status--dev", "En projet": "status--prep", "À venir": "status--later" };
+  for (const name of pages()) {
+    for (const [, cls, text] of plain(page(name)).matchAll(/<span class="status (status--\w+)">([^<]+)<\/span>/g)) {
+      assert.equal(ok[text], cls, `${name}: « ${text} » with ${cls}`);
+    }
+  }
+});
+
+test("TekPractice says Version d'essai once and drops the repeated Nouveau badges", () => {
+  const html = plain(page("tekpractice.html"));
+  assert.match(html, /<span class="status status--now">Version d'essai<\/span>/);
+  assert.doesNotMatch(html, />Nouveau<\/span>/);
+  assert.match(html, /<span class="status status--later">À venir<\/span>/);
+});
+
+test("L'histoire explains the motifs before the values", () => {
+  const html = plain(page("histoire.html"));
+  assert.match(html, /Les motifs du site \(cadres, bandes, médaillon\) sont inspirés de la marqueterie de Damas, faite de bois et de nacre\. Ils sont dessinés par Tekonest et ne prétendent pas reproduire ce savoir-faire\./);
+  assert.ok(html.indexOf('id="motifs"') > 0 && html.indexOf('id="motifs"') < html.indexOf('id="valeurs"'));
+});
+
+test("the footer has two link columns and the dated fine print under État", () => {
+  for (const name of pages()) {
+    const f = plain(page(name)).split("<footer")[1];
+    assert.deepEqual([...f.matchAll(/<p class="foot-title">([^<]+)<\/p>/g)].map((m) => m[1]), ["Entrées", "Tekonest", "État"], name);
+    assert.deepEqual([...f.split('<p class="foot-title">Tekonest</p>')[0].matchAll(/<li><a href="([^"]+)"/g)].map((m) => m[1]), ["apprendre.html", "creer.html"], name);
+    assert.deepEqual([...f.split('<p class="foot-title">Tekonest</p>')[1].split('<p class="foot-title">État</p>')[0].matchAll(/<li><a href="([^"]+)"/g)].map((m) => m[1]), ["histoire.html", "contact.html", "accessibilite.html"], name);
+    assert.match(f, /seuls les services marqués « version d'essai » sont utilisables aujourd'hui, ceux marqués « en développement », « en projet » ou « à venir » ne sont pas proposés\./, name);
+    assert.match(f, /Géométrie reconstruite par Tekonest\./, name);
+    assert.doesNotMatch(f, /en préparation|en réflexion/, name);
+  }
+});
+
+test("the two doors keep full ink in the menu; the other items are quieter", () => {
+  assert.match(css(), /\.site-nav li:nth-child\(-n\+2\) a\s*\{[^}]*color:\s*var\(--color-ink\)/);
+});

@@ -161,10 +161,10 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 .site-footer .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-7); }
 .site-footer img { height: 28px; width: auto; margin-bottom: var(--space-4); }
 .site-footer p { color: var(--color-on-dark-2); font-size: var(--text-sm); }
-.site-footer ul { list-style: none; padding: 0; margin: 0; columns: 2; gap: var(--space-6); }
+.site-footer ul { list-style: none; padding: 0; margin: 0; }
 .site-footer li a { display: inline-flex; min-height: 40px; align-items: center; text-decoration: none; }
 .site-footer li a:hover { text-decoration: underline; }
-.site-footer .fine { grid-column: 1 / -1; max-width: none; border-top: 1px solid #3A3337; padding-top: var(--space-5); margin: 0; }
+.site-footer .fine { max-width: none; margin: 0; }
 @media (max-width: 47.99em) { .site-footer .wrap { grid-template-columns: 1fr; } }
 
 /* ── Identity pass (24 Oct 2026): branches by cable STYLE, dark areas, focus per ground ── */
@@ -311,3 +311,11 @@ kbd { display: inline-block; font: 600 0.875em/1.4 var(--font-text); padding: 0 
 .rows--n h3 { font-family: var(--font-display); font-weight: 500; font-size: var(--text-lg); margin: 0; }
 .rows--n p { margin: 0; color: var(--color-ink-2); }
 @media (max-width: 47.99em) { .rows--n li { grid-template-columns: 3rem minmax(0, 1fr); } .rows--n p { grid-column: 2; } }
+
+/* Menu: the two doors in full ink, the rest quieter (Phase C) */
+.site-nav li:nth-child(-n+2) a { color: var(--color-ink); }
+
+/* Footer: two link columns, then the dated fine print under a small label */
+.foot-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
+.site-footer .foot-title { margin: 0 0 var(--space-3); font: 500 var(--text-label)/1.4 var(--font-text); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-on-dark-2); }
+.foot-fine { grid-column: 1 / -1; border-top: 1px solid #3A3337; padding-top: var(--space-5); }

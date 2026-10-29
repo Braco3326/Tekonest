@@ -36,7 +36,7 @@
 <section class="branch-hero" style="--cable: var(--cable-tekpractice)" aria-labelledby="tp-titre">
   <div class="wrap">
     <div class="cable" aria-hidden="true"></div>
-    <span class="status status--dev">En développement · version d'essai</span>
+    <span class="status status--now">Version d'essai</span>
     <h1 id="tp-titre">TekPractice, le simulateur de câblage</h1>
     <p class="lead">Un simulateur 3D dans le navigateur. Vous branchez micros, consoles, boîtiers de scène et enceintes, et TekPractice vous explique chaque erreur : alimentation fantôme, retour N-1, horloge…</p>
     <div class="hero-actions">
@@ -55,12 +55,12 @@
       <p>TekPractice s'ouvre maintenant sur un seul mode : vous choisissez un lieu, vous y installez votre matériel et vous le câblez. Les niveaux reviendront ensuite sous forme de missions.</p>
     </div>
     <ul class="links-list">
-      <li><strong>Choisir un lieu</strong><span>36 lieux (salles, studios, théâtres, décors 3D) et un modèle « Concert simple » prêt à câbler. Ouvrez-les vides ou avec leur matériel.</span><span class="status status--dev">Nouveau</span></li>
-      <li><strong>Un atelier complet</strong><span>Menus en haut, projet à gauche, propriétés de l'appareil à droite ; annuler et rétablir.</span><span class="status status--dev">Nouveau</span></li>
-      <li><strong>Le cube de vue</strong><span>26 zones (faces, arêtes, coins), ↺ ↻ pour tourner d'un quart, ⌂ pour revenir. Les mêmes vues sont dans le menu Vue et sous la touche <kbd>V</kbd>.</span><span class="status status--dev">Nouveau</span></li>
-      <li><strong>Tourner autour d'un appareil</strong><span>Cliquez un appareil : il devient le centre de la rotation. Double-cliquez le sol pour changer de centre.</span><span class="status status--dev">Nouveau</span></li>
-      <li><strong>Marcher et écouter</strong><span>Vue marche à hauteur d'oreille (1,2 m assis, 1,7 m debout) et points d'écoute Régie, Premier rang, Fond de salle sur les touches 1, 2, 3.</span><span class="status status--dev">Nouveau</span></li>
-      <li><strong>À venir</strong><span>Inventaire repensé, test du système avec une musique, et carte des niveaux sonores relatifs dans la salle.</span><span class="status status--prep">En préparation</span></li>
+      <li><strong>Choisir un lieu</strong><span>36 lieux (salles, studios, théâtres, décors 3D) et un modèle « Concert simple » prêt à câbler. Ouvrez-les vides ou avec leur matériel.</span></li>
+      <li><strong>Un atelier complet</strong><span>Menus en haut, projet à gauche, propriétés de l'appareil à droite ; annuler et rétablir.</span></li>
+      <li><strong>Le cube de vue</strong><span>26 zones (faces, arêtes, coins), ↺ ↻ pour tourner d'un quart, ⌂ pour revenir. Les mêmes vues sont dans le menu Vue et sous la touche <kbd>V</kbd>.</span></li>
+      <li><strong>Tourner autour d'un appareil</strong><span>Cliquez un appareil : il devient le centre de la rotation. Double-cliquez le sol pour changer de centre.</span></li>
+      <li><strong>Marcher et écouter</strong><span>Vue marche à hauteur d'oreille (1,2 m assis, 1,7 m debout) et points d'écoute Régie, Premier rang, Fond de salle sur les touches 1, 2, 3.</span></li>
+      <li><strong>À venir</strong><span>Inventaire repensé, test du système avec une musique, et carte des niveaux sonores relatifs dans la salle.</span><span class="status status--later">À venir</span></li>
     </ul>
     <p class="note">Les anciens niveaux restent accessibles : <a href="tekpractice/jouer/?legacy=1">ouvrir les niveaux A1–D1</a>.</p>
   </div>
@@ -204,16 +204,27 @@
       <img src="assets/img/lockup-reverse.svg" alt="Tekonest" width="140" height="30">
       <p>Un nid pour les métiers du son : se former, créer ensemble.</p>
     </div>
-    <nav aria-label="Pied de page">
-      <ul>
-        <li><a href="apprendre.html">Se former</a></li>
-        <li><a href="creer.html">Créer avec nous</a></li>
-        <li><a href="histoire.html">L'histoire</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="accessibilite.html">Accessibilité</a></li>
-      </ul>
+    <nav class="foot-cols" aria-label="Pied de page">
+      <div class="foot-col">
+        <p class="foot-title">Entrées</p>
+        <ul>
+          <li><a href="apprendre.html">Se former</a></li>
+          <li><a href="creer.html">Créer avec nous</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <p class="foot-title">Tekonest</p>
+        <ul>
+          <li><a href="histoire.html">L'histoire</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="accessibilite.html">Accessibilité</a></li>
+        </ul>
+      </div>
     </nav>
-    <p class="fine">Prototype de conception, 28 octobre 2026. Tekonest n'a pas encore de structure juridique ; les services marqués « en préparation », « en développement » ou « en réflexion » ne sont pas proposés aujourd'hui. Polices : Tektur et IBM Plex Sans (licence SIL OFL 1.1), hébergées sur ce site. Motifs inspirés de la marqueterie de Damas. Géométrie reconstruite par Tekonest.</p>
+    <div class="foot-fine">
+      <p class="foot-title">État</p>
+      <p class="fine">Prototype de conception, 28 octobre 2026. Tekonest n'a pas encore de structure juridique ; seuls les services marqués « version d'essai » sont utilisables aujourd'hui, ceux marqués « en développement », « en projet » ou « à venir » ne sont pas proposés. Polices : Tektur et IBM Plex Sans (licence SIL OFL 1.1), hébergées sur ce site. Motifs inspirés de la marqueterie de Damas. Géométrie reconstruite par Tekonest.</p>
+    </div>
   </div>
 </footer>
 </body>
