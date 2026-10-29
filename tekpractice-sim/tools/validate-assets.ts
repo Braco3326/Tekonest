@@ -15,12 +15,13 @@
  */
 import { existsSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
-import path, { basename, dirname, join, resolve } from 'node:path'
+import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { checkTextures, runGates } from './assets3d/gates'
 import type { GateResult } from './assets3d/gates'
 import { inspectGlb } from './assets3d/inspect'
 import { DEFAULT_SPEC_DIR } from './assets3d/loadSpecs'
+import { isMainModule } from './assets3d/mainModule'
 import { buildPlacement } from './assets3d/placement'
 import { AssetSpec } from './assets3d/specSchema'
 import type { AssetSpecT } from './assets3d/specSchema'
@@ -140,15 +141,6 @@ export async function main(argv: string[], print: Print = console.log): Promise<
     print(`error: ${message(e)}`)
     return 1
   }
-}
-
-/** True when this module is the script node was started with (case-insensitive on Windows, where the drive letter can differ). */
-function isMainModule(argv1: string | undefined, moduleUrl: string): boolean {
-  if (!argv1) return false
-  const win = process.platform === 'win32'
-  const a = (win ? path.win32 : path.posix).resolve(argv1)
-  const b = fileURLToPath(moduleUrl, { windows: win })
-  return win ? a.toLowerCase() === b.toLowerCase() : a === b
 }
 
 if (isMainModule(process.argv[1], import.meta.url)) void main(process.argv.slice(2)).then((code) => process.exit(code))

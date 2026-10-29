@@ -67,10 +67,13 @@ export interface FixupDeps {
   blender?: string | null
 }
 
-/** child_process.execFile as a promise that resolves with the exit code instead of rejecting. */
-function defaultExec(file: string, args: string[]): Promise<ExecResult> {
+/**
+ * child_process.execFile as a promise that resolves with the exit code instead of rejecting. Shared by every Blender
+ * caller (fix-up, contact sheet); `timeoutMs` is the wall-clock limit (default 10 minutes).
+ */
+export function defaultExec(file: string, args: string[], timeoutMs: number = TIMEOUT_MS): Promise<ExecResult> {
   return new Promise((done) => {
-    execFile(file, args, { maxBuffer: MAX_BUFFER, timeout: TIMEOUT_MS, windowsHide: true }, (err, stdout, stderr) => {
+    execFile(file, args, { maxBuffer: MAX_BUFFER, timeout: timeoutMs, windowsHide: true }, (err, stdout, stderr) => {
       // err.code is the exit code, or a string such as 'ENOENT' when the file could not be started.
       const raw = err ? (err as NodeJS.ErrnoException & { code?: number | string }).code : 0
       const code = typeof raw === 'number' ? raw : err ? 1 : 0
@@ -99,7 +102,7 @@ export async function runFixup(
   if (!blender) {
     throw new Error('Blender is not installed (not found at the default 5.1 path): install Blender 5.1 or set BLENDER_EXE to blender.exe')
   }
-  const exec = deps.exec ?? defaultExec
+  const exec = deps.exec ?? ((file: string, args: string[]) => defaultExec(file, args))
 
   const placement = buildPlacement(spec)
   const plan = { id: spec.id, kind: spec.kind, yawDeg, placement, extras: toExtras(spec, placement) }

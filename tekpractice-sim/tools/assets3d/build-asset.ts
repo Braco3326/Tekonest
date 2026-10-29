@@ -37,7 +37,7 @@
  */
 import { existsSync } from 'node:fs'
 import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises'
-import path, { dirname, extname, join, resolve } from 'node:path'
+import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { dracoCompress, optimizeTextures } from './compress'
 import type { CompressOpts, TextureOpts } from './compress'
@@ -47,6 +47,7 @@ import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
 import type { GlbReport } from './inspect'
 import { loadSpecs } from './loadSpecs'
+import { isMainModule } from './mainModule'
 import { assertManifestUsable, recordAsset } from './manifest'
 import { createMultiImageTask, downloadGlb, MESHY_MODEL, MeshyError, waitForTask } from './meshy'
 import type { MeshyOpts, MeshyTask } from './meshy'
@@ -452,16 +453,7 @@ export async function main(argv: string[], deps: Partial<BuildDeps> = {}, print:
   }
 }
 
-/**
- * True when this module is the script node was started with. On Windows the comparison ignores case (the drive letter
- * of `process.argv[1]` and of the module URL can differ), so the CLI never silently does nothing.
- */
-export function isMainModule(argv1: string | undefined, moduleUrl: string, platform: NodeJS.Platform = process.platform): boolean {
-  if (!argv1) return false
-  const win = platform === 'win32'
-  const a = (win ? path.win32 : path.posix).resolve(argv1)
-  const b = fileURLToPath(moduleUrl, { windows: win })
-  return win ? a.toLowerCase() === b.toLowerCase() : a === b
-}
+/** Re-exported from the light shared module (kept here for the existing callers and tests). */
+export { isMainModule }
 
 if (isMainModule(process.argv[1], import.meta.url)) void main(process.argv.slice(2)).then((code) => process.exit(code))

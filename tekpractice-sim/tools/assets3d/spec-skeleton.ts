@@ -14,6 +14,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { CatalogT } from '../schemas'
 import { DEFAULT_SPEC_DIR } from './loadSpecs'
+import { isMainModule } from './mainModule'
 import type { AssetSpecT, SpecSourceT } from './specSchema'
 
 type SizeMm = AssetSpecT['realSizeMm']
@@ -169,4 +170,4 @@ function main(argv: string[]): number {
   }
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) process.exit(main(process.argv.slice(2)))
+if (isMainModule(process.argv[1], import.meta.url)) process.exit(main(process.argv.slice(2)))

@@ -7,6 +7,7 @@ const base = makeRegistry().catalog
 const allModels: ReadonlySet<string> = new Set(base.devices.map((d) => d.id))
 const fresh = (): CatalogT => structuredClone(base)
 /** Deliberately malformed values (acoustic / routing are typed in the zod Device, but a test must be able to break them), hence the loose view. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LooseDevice = Omit<CatalogT['devices'][number], 'acoustic' | 'routing'> & Record<string, any>
 const dev = (c: CatalogT, id: string) => c.devices.find((d) => d.id === id) as LooseDevice
 const errors = (c: CatalogT) => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'error')

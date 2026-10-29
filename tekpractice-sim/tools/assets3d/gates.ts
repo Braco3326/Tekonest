@@ -257,10 +257,14 @@ export function checkConnectorFit(plug: AssetSpecT, socket: AssetSpecT): GateRes
   if (outer === undefined) problems.push(`${plug.id} mating.outerMm is missing`)
   if (opening === undefined) problems.push(`${socket.id} mating.openingMm is missing`)
   if (outer === undefined || opening === undefined) return { gate, ok: false, detail: problems.join('; ') }
+  if (!Number.isFinite(outer)) problems.push(`${plug.id} mating.outerMm is not finite (${String(outer)})`)
+  if (!Number.isFinite(opening)) problems.push(`${socket.id} mating.openingMm is not finite (${String(opening)})`)
+  if (problems.length > 0) return { gate, ok: false, detail: problems.join('; ') }
 
+  // Written `!(x <= y)` / `!(x >= y)` so that a NaN that slipped through still fails.
   const under = opening - outer
-  if (under < -EPS_M) return { gate, ok: false, detail: `plug ${outer.toFixed(2)} mm is oversize for the ${opening.toFixed(2)} mm opening (${(-under).toFixed(2)} mm larger, it must be 0 to ${FIT_UNDER_MM} mm under)` }
-  if (under > FIT_UNDER_MM + EPS_M) return { gate, ok: false, detail: `plug ${outer.toFixed(2)} mm is ${under.toFixed(2)} mm under the ${opening.toFixed(2)} mm opening (it must be 0 to ${FIT_UNDER_MM} mm under)` }
+  if (!(under >= -EPS_M)) return { gate, ok: false, detail: `plug ${outer.toFixed(2)} mm is oversize for the ${opening.toFixed(2)} mm opening (${(-under).toFixed(2)} mm larger, it must be 0 to ${FIT_UNDER_MM} mm under)` }
+  if (!(under <= FIT_UNDER_MM + EPS_M)) return { gate, ok: false, detail: `plug ${outer.toFixed(2)} mm is ${under.toFixed(2)} mm under the ${opening.toFixed(2)} mm opening (it must be 0 to ${FIT_UNDER_MM} mm under)` }
   return { gate, ok: true, detail: `plug ${outer.toFixed(2)} mm is ${under.toFixed(2)} mm under the ${opening.toFixed(2)} mm opening` }
 }
 

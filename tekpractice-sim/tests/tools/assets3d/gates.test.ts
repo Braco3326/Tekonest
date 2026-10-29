@@ -584,6 +584,21 @@ describe('checkConnectorFit', () => {
     expect(r.detail).toContain('openingMm')
   })
 
+  it('fails closed on a NaN or non-finite outerMm or openingMm, naming the value', () => {
+    for (const [p, s, field] of [
+      [Number.NaN, 6.3, 'outerMm'],
+      [6.1, Number.NaN, 'openingMm'],
+      [Number.POSITIVE_INFINITY, 6.3, 'outerMm'],
+      [6.1, Number.POSITIVE_INFINITY, 'openingMm'],
+      [Number.NEGATIVE_INFINITY, 6.3, 'outerMm'],
+    ] as const) {
+      const r = checkConnectorFit(plug(p), socket(s))
+      expect(r.ok).toBe(false)
+      expect(r.detail).toContain(field)
+      expect(r.detail).toMatch(/not finite/)
+    }
+  })
+
   it('fails when a spec has no mating block', () => {
     const r = checkConnectorFit(connectorSpec({ mating: undefined }), socket(6.3))
     expect(r.ok).toBe(false)
@@ -622,7 +637,11 @@ describe('checkProportionDrift', () => {
   })
 
   it('exactly 5 percent passes, 5.1 percent fails, and the printed percent has two decimals', () => {
-    const exact = checkProportionDrift({ w: 0.105, h: 0.05, d: 0.2 }, spec)
+    // 0.1 * 1.05 is 0.10500000000000001: its drift is 0.050000000000000044 in floating point, ABOVE 0.05, so this
+    // passes only thanks to the 1e-9 slack (0.105 itself would land below 0.05 and pin nothing)
+    const w = 0.1 * 1.05
+    expect(Math.abs(w / 0.1 - 1) > 0.05).toBe(true)
+    const exact = checkProportionDrift({ w, h: 0.05, d: 0.2 }, spec)
     expect(exact.ok).toBe(true)
     expect(exact.detail).toContain('5.00 %')
     const bad = checkProportionDrift({ w: 0.1051, h: 0.05, d: 0.2 }, spec)

@@ -7,9 +7,8 @@
  * Exit codes: 0 integer printed, 1 key unset or the call failed. A printed 0 means the prepaid API credits are empty:
  * buy a small API top-up in the Meshy subscription settings before generating anything.
  */
-import { resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { requireMeshyKey } from './env'
+import { isMainModule } from './mainModule'
 import { getBalance } from './meshy'
 
 export async function main(env: NodeJS.ProcessEnv = process.env): Promise<number> {
@@ -23,4 +22,4 @@ export async function main(env: NodeJS.ProcessEnv = process.env): Promise<number
   }
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) void main().then((code) => process.exit(code))
+if (isMainModule(process.argv[1], import.meta.url)) void main().then((code) => process.exit(code))

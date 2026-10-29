@@ -25,7 +25,6 @@
  * (specRectInView) needs only the scale: a model that matches the spec fills the rectangle exactly. The clip start
  * is 1 mm: an older pipeline cut 2-3 cm connectors with a larger one.
  */
-import { execFile } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
@@ -35,6 +34,7 @@ import sharp from 'sharp'
 import type { OverlayOptions } from 'sharp'
 import { findBlender } from './env'
 import { inspectGlb } from './inspect'
+import { defaultExec } from './runFixup'
 import type { ExecResult } from './runFixup'
 import type { AssetSpecT } from './specSchema'
 
@@ -60,7 +60,6 @@ export const CLIP_START_M = 0.001
 
 /** Blender wall-clock limit; four Workbench renders take seconds. */
 const TIMEOUT_MS = 5 * 60 * 1000
-const MAX_BUFFER = 64 * 1024 * 1024
 const STDERR_TAIL = 2000
 
 type Vec3 = [number, number, number]
@@ -90,18 +89,6 @@ export interface ContactSheetDeps {
   exec?: (file: string, args: string[]) => Promise<ExecResult>
   /** Blender executable; undefined = findBlender(), null = none found. */
   blender?: string | null
-}
-
-/** child_process.execFile as a promise that resolves with the exit code instead of rejecting. */
-function defaultExec(file: string, args: string[]): Promise<ExecResult> {
-  return new Promise((done) => {
-    execFile(file, args, { maxBuffer: MAX_BUFFER, timeout: TIMEOUT_MS, windowsHide: true }, (err, stdout, stderr) => {
-      const raw = err ? (err as NodeJS.ErrnoException & { code?: number | string }).code : 0
-      const code = typeof raw === 'number' ? raw : err ? 1 : 0
-      const extra = err && typeof raw !== 'number' ? `\n${err.message}` : ''
-      done({ code, stdout: String(stdout), stderr: String(stderr) + extra })
-    })
-  })
 }
 
 const MM = 0.001
@@ -259,7 +246,7 @@ export async function renderContactSheet(
   if (!blender) {
     throw new Error('Blender is not installed (not found at the default 5.1 path): install Blender 5.1 or set BLENDER_EXE to blender.exe')
   }
-  const exec = deps.exec ?? defaultExec
+  const exec = deps.exec ?? ((file: string, args: string[]) => defaultExec(file, args, TIMEOUT_MS))
 
   const report = await inspectGlb(new Uint8Array(await readFile(glb)))
   const framing = computeFraming(report.bboxM, spec)
