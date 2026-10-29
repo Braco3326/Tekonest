@@ -56,6 +56,11 @@ function readManifest(path: string): Manifest {
   return parsed as Manifest
 }
 
+/** Throws, writing nothing, unless the manifest at `path` is one recordAsset can update (call it before paying for a build). */
+export function assertManifestUsable(path: string): void {
+  readManifest(path)
+}
+
 /** Adds or updates the manifest entry of `entry.id`. Throws, writing nothing, when the file cannot be trusted. */
 export function recordAsset(manifestPath: string, entry: ManifestEntry): void {
   const manifest = readManifest(manifestPath)

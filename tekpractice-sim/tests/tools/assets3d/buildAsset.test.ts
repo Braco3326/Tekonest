@@ -8,7 +8,7 @@ import { existsSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { buildAsset, formatReport, main, readPhotosFrom } from '../../../tools/assets3d/build-asset'
+import { buildAsset, formatReport, isMainModule, main, readPhotosFrom } from '../../../tools/assets3d/build-asset'
 import type { BuildDeps, BuildReport } from '../../../tools/assets3d/build-asset'
 import { dracoCompress } from '../../../tools/assets3d/compress'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
@@ -226,8 +226,9 @@ describe('buildAsset', () => {
   it('saves the raw bytes and the fixed GLB of every attempt under work/ and passes the yaw to the fix-up', async () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
-    await buildAsset(spec.id, { maxAttempts: 2, yawDeg: 180, dryRun: true }, makeDeps({ spec, fixed: [await tallGlb(spec), await goodGlb(spec)] }))
-    const work = join(paths.sourceDir, spec.id, 'work')
+    const report = await buildAsset(spec.id, { maxAttempts: 2, yawDeg: 180, dryRun: true }, makeDeps({ spec, fixed: [await tallGlb(spec), await goodGlb(spec)] }))
+    const work = join(paths.sourceDir, spec.id, 'work', '2026-10-29T12-00-00-000Z')
+    expect(report.workDir).toBe(work)
     expect((await readdir(work)).sort()).toEqual(['attempt-1.fixed.glb', 'attempt-1.raw.glb', 'attempt-2.fixed.glb', 'attempt-2.raw.glb'])
     expect(new Uint8Array(await readFile(join(work, 'attempt-1.raw.glb')))).toEqual(RAW_BYTES)
     expect(calls.fixup.map((c) => c.yawDeg)).toEqual([180, 180])
@@ -355,7 +356,7 @@ describe('buildAsset', () => {
     expect(report.ok).toBe(true)
     expect(report.attempts).toHaveLength(1)
     expect(report.attempts[0].credits).toBeNull()
-    expect(new Uint8Array(await readFile(join(paths.sourceDir, spec.id, 'work', 'attempt-1.raw.glb')))).toEqual(RAW_BYTES)
+    expect(new Uint8Array(await readFile(join(report.workDir, 'attempt-1.raw.glb')))).toEqual(RAW_BYTES)
     const entry = (await readManifest()).assets.find((a) => a.id === 'test-mixer')
     expect(entry).toMatchObject({ tool: 'raw', toolVersion: 'raw', logosRemoved: false })
   })
@@ -445,7 +446,136 @@ describe('buildAsset', () => {
     expect(calls.create).toHaveLength(1)
     expect(report.attempts).toHaveLength(1)
     expect(report.attempts[0].credits).toBe(20)
-    expect(existsSync(join(paths.sourceDir, spec.id, 'work', 'attempt-1.raw.glb'))).toBe(true)
+    expect(existsSync(join(report.workDir, 'attempt-1.raw.glb'))).toBe(true)
+  })
+
+  it('records the Meshy task id of each attempt in the report', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const report = await buildAsset(spec.id, { maxAttempts: 2 }, makeDeps({ spec, fixed: [await tallGlb(spec), await goodGlb(spec)] }))
+    expect(report.attempts.map((a) => a.taskId)).toEqual(['task-1', 'task-2'])
+    const onDisk = JSON.parse(await readFile(join(paths.sourceDir, spec.id, 'report.json'), 'utf8')) as BuildReport
+    expect(onDisk.workDir).toBe(report.workDir)
+    expect(onDisk.attempts[0].taskId).toBe('task-1')
+  })
+
+  it('keeps the task id when the wait fails after the paid create', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+    deps.meshy = { ...(deps.meshy as NonNullable<BuildDeps['meshy']>), waitForTask: async () => { throw new MeshyError(0, 'Meshy task task-1 timed out') } }
+    const report = await buildAsset(spec.id, { maxAttempts: 3 }, deps)
+    expect(report.ok).toBe(false)
+    expect(report.attempts).toHaveLength(1)
+    expect(report.attempts[0].taskId).toBe('task-1')
+  })
+
+  it('a rerun writes its own work folder and leaves the earlier paid output alone', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const first = await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+    const later = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+    later.now = () => new Date('2026-10-30T08:30:00.000Z')
+    const second = await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, later)
+    expect(second.workDir).not.toBe(first.workDir)
+    expect(second.workDir).toBe(join(paths.sourceDir, spec.id, 'work', '2026-10-30T08-30-00-000Z'))
+    expect(existsSync(join(first.workDir, 'attempt-1.raw.glb'))).toBe(true)
+    expect(existsSync(join(second.workDir, 'attempt-1.raw.glb'))).toBe(true)
+    // the work folder name is valid on Windows
+    expect(first.workDir.slice(paths.sourceDir.length)).not.toMatch(/[:*?"<>|]/)
+  })
+
+  it('a write failure after a pass is not a PASS: ok false, error set, no temp file left behind', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    // a folder where the GLB must go makes the final rename fail
+    await mkdir(join(paths.assetsDir, 'test-mixer.glb'))
+    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+    expect(report.ok).toBe(false)
+    expect(report.finalGlb).toBeUndefined()
+    expect(report.error).toBeTruthy()
+    expect(calls.create).toHaveLength(1)
+    expect((await readdir(paths.assetsDir)).filter((f) => f.endsWith('.tmp'))).toEqual([])
+    expect((await readManifest()).assets.find((a) => a.id === 'test-mixer')).not.toHaveProperty('tool')
+    expect(formatReport(report)).toContain('result: FAIL')
+    expect(formatReport(report)).not.toMatch(/result: PASS/)
+  })
+
+  it('recordAsset throwing after the GLB write is not a PASS: ok false, error set, exit code 1', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+    const fix = deps.runFixup as NonNullable<BuildDeps['runFixup']>
+    // the manifest is valid at the pre-flight check and corrupted while the build runs
+    deps.runFixup = async (...args) => {
+      await writeFile(paths.manifestPath, '{ broken')
+      return fix(...args)
+    }
+    const report = await buildAsset(spec.id, { maxAttempts: 3 }, deps)
+    expect(report.ok).toBe(false)
+    expect(report.finalGlb).toBeUndefined()
+    expect(report.error).toMatch(/not valid JSON/)
+    expect(calls.create).toHaveLength(1)
+
+    const out: string[] = []
+    const deps2 = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+    const fix2 = deps2.runFixup as NonNullable<BuildDeps['runFixup']>
+    deps2.runFixup = async (...args) => {
+      await writeFile(paths.manifestPath, '{ broken')
+      return fix2(...args)
+    }
+    await writeFile(paths.manifestPath, JSON.stringify({ assets: [] }))
+    expect(await main([spec.id], deps2, (l) => out.push(l))).toBe(1)
+    expect(out.join(String.fromCharCode(10))).not.toMatch(/result: PASS/)
+  })
+
+  it('an invalid manifest fails before any Meshy call', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    for (const content of ['{ nope', '{"generated":"x"}']) {
+      await writeFile(paths.manifestPath, content)
+      await expect(buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/manifest/)
+    }
+    await rm(paths.manifestPath)
+    await expect(buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/manifest/)
+    expect(calls.create).toHaveLength(0)
+    expect(calls.fixup).toHaveLength(0)
+  })
+
+  it('a dry run does not need a valid manifest', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    await writeFile(paths.manifestPath, '{ nope')
+    const report = await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+    expect(report.ok).toBe(true)
+  })
+
+  it('a compress throw aborts after one Meshy create, on a device and on a connector', async () => {
+    for (const spec of [deviceSpec(), connectorSpec()]) {
+      calls.create.length = 0
+      await addPhotos(spec.id, ['a.png'])
+      const compress: BuildDeps['compress'] = async () => {
+        throw new Error('draco encoder blew up')
+      }
+      const fixupReport = spec.kind === 'connector' ? { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } : undefined
+      const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress, fixupReport }))
+      expect(report.ok).toBe(false)
+      expect(report.error).toContain('draco encoder blew up')
+      expect(report.attempts).toHaveLength(1)
+      expect(calls.create).toHaveLength(1)
+      expect(existsSync(join(paths.assetsDir, `${spec.id}.glb`))).toBe(false)
+    }
+  })
+
+  it('a re-measure throw on the compressed bytes aborts too', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const compress: BuildDeps['compress'] = async () => new Uint8Array([1, 2, 3, 4])
+    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress }))
+    expect(report.ok).toBe(false)
+    expect(report.error).toBeTruthy()
+    expect(report.attempts).toHaveLength(1)
+    expect(calls.create).toHaveLength(1)
   })
 
   it('dry-run writes nothing to public/assets or the manifest, but still writes the report', async () => {
@@ -557,17 +687,70 @@ describe('CLI main', () => {
   })
 })
 
+describe('pilot with a failing write', () => {
+  it('marks the row FAIL and exits 1', async () => {
+    const spec = deviceSpec({ id: 'shure-sm58' })
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+    deps.loadSpec = () => spec
+    for (const id of ['shure-sm58', 'yamaha-ql1', 'yamaha-rio3224-d2', 'xlr3-f', 'trs-quarter', 'rj45']) await addPhotos(id, ['a.png'])
+    await mkdir(join(paths.assetsDir, 'shure-sm58.glb'))
+    const out: string[] = []
+    const code = await main(['--pilot', '--attempts', '1', '--dry-run'], deps, (l) => out.push(l))
+    expect(code).toBe(0) // dry runs never write, so no failure here
+    out.length = 0
+    const code2 = await main(['--pilot', '--attempts', '1'], deps, (l) => out.push(l))
+    expect(code2).toBe(1)
+    expect(out.join(String.fromCharCode(10))).toMatch(/shure-sm58\s+FAIL/)
+  })
+})
+
 describe('formatReport', () => {
+  it('says dry run only for a dry run', () => {
+    const base: BuildReport = { id: 'x', ok: true, dryRun: true, workDir: 'w', attempts: [] }
+    expect(formatReport(base)).toContain('PASS (dry run)')
+    expect(formatReport({ ...base, dryRun: false })).not.toMatch(/dry run/)
+  })
+
   it('lists each gate once per attempt with PASS or FAIL', () => {
     const report: BuildReport = {
       id: 'x',
       ok: false,
       dryRun: false,
+      workDir: 'work',
       attempts: [{ n: 1, credits: 20, gates: [{ gate: 'size', ok: false, detail: 'w is off' }, { gate: 'budget', ok: true, detail: 'fine' }] }],
     }
     const text = formatReport(report)
     expect(text).toContain('FAIL  size')
     expect(text).toContain('PASS  budget')
     expect(text).toContain('w is off')
+  })
+})
+
+describe('isMainModule', () => {
+  const url = 'file:///E:/dev/Tekonest-wt/assets3d/tekpractice-sim/tools/assets3d/build-asset.ts'
+
+  it('matches the same path', () => {
+    expect(isMainModule('E:/dev/Tekonest-wt/assets3d/tekpractice-sim/tools/assets3d/build-asset.ts', url, 'win32')).toBe(true)
+  })
+
+  it('on win32 ignores the case of the drive letter and the folders', () => {
+    expect(isMainModule('e:/DEV/tekonest-wt/assets3d/tekpractice-sim/tools/assets3d/build-asset.ts', url, 'win32')).toBe(true)
+  })
+
+  it('on linux stays case-sensitive', () => {
+    expect(isMainModule('/repo/Tools/build-asset.ts', 'file:///repo/tools/build-asset.ts', 'linux')).toBe(false)
+    expect(isMainModule('/repo/tools/build-asset.ts', 'file:///repo/tools/build-asset.ts', 'linux')).toBe(true)
+  })
+
+  it('is false for another script or none', () => {
+    expect(isMainModule('E:/other/script.ts', url, 'win32')).toBe(false)
+    expect(isMainModule(undefined, url, 'win32')).toBe(false)
+  })
+})
+
+describe('Meshy model constant', () => {
+  it('build-asset records the model the Meshy client requests', async () => {
+    const { MESHY_MODEL } = await import('../../../tools/assets3d/meshy')
+    expect(MESHY_MODEL).toBe('meshy-7.1')
   })
 })

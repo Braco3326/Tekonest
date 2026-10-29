@@ -16,6 +16,8 @@
  */
 import { redact, requireMeshyKey } from './env'
 
+/** The ai_model every task requests; the builder records it as the manifest's toolVersion. */
+export const MESHY_MODEL = 'meshy-7.1'
 const BASE_URL = 'https://api.meshy.ai'
 const TASK_PATH = '/openapi/v1/multi-image-to-3d'
 const MAX_IMAGES = 4
@@ -162,7 +164,7 @@ export async function createMultiImageTask(
   const d = resolveDeps(deps)
   const body = {
     image_urls: images,
-    ai_model: 'meshy-7.1',
+    ai_model: MESHY_MODEL,
     geometry_resolution: 'standard',
     should_texture: true,
     enable_pbr: true,

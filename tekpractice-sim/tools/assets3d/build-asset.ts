@@ -7,28 +7,33 @@
  * Per attempt n (1..maxAttempts):
  *  1. raw GLB: the `--raw` file (only one attempt is meaningful then, zero Meshy calls), else Meshy multi-image-to-3D
  *     from assets-source/<id>/photos (sorted by name, at most 4), downloaded right away, credits noted
- *  2. the raw bytes are saved to assets-source/<id>/work/attempt-N.raw.glb
- *  3. runFixup (Blender) writes work/attempt-N.fixed.glb
+ *  2. the raw bytes are saved to assets-source/<id>/work/<run>/attempt-N.raw.glb, where <run> is the run's start time
+ *     (from deps.now, Windows-safe): a rerun never overwrites earlier, paid output. The Meshy task id of each attempt is
+ *     recorded in the report right after the paid create call
+ *  3. runFixup (Blender) writes work/<run>/attempt-N.fixed.glb
  *  4. inspectGlb + runGates on the fixed GLB, plus checkProportionDrift on the fix-up's pre-scale size (6th gate)
  *  5. all pass: Draco-compress (connector 16 position bits, other tiers 14) and RE-MEASURE the compressed bytes with the
  *     same five gates, because quantization moves vertices. A connector whose compressed bytes fail ships the
  *     uncompressed fixed GLB (compression 'none'); any other tier fails the attempt
- *  6. pass: write public/assets/<id>.glb and record the manifest entry (both skipped on --dry-run)
+ *  6. pass: write public/assets/<id>.glb and record the manifest entry (both skipped on --dry-run). `ok` (and `finalGlb`)
+ *     are set only after BOTH succeeded; a failed write or manifest record is an error, never a PASS
  * After maxAttempts failures nothing is written to public/assets or the manifest. The report
- * (assets-source/<id>/report.json, gitignored) is always written, even on a dry run.
+ * (assets-source/<id>/report.json, gitignored, with the run's `workDir`) is always written, even on a dry run.
  *
  * Money and safety rules:
  *  - a Meshy 402 or 429 aborts at once (no further attempt); the message is surfaced and `stopped` is set
- *  - any other error thrown inside an attempt (Blender, download, I/O) also aborts instead of retrying: the Meshy task
- *    is already paid for and the cause would repeat. Only a failed GATE triggers a new attempt
+ *  - any other error thrown inside an attempt (Blender, download, compress, re-measure, I/O) also aborts instead of
+ *    retrying: the Meshy task is already paid for and the cause would repeat. Only a measured GATE failure (including
+ *    "after Draco" on a non-connector) triggers a new attempt
+ *  - the manifest is validated before the first paid call (a dry run skips this, it never writes the manifest)
  *  - nothing here logs a request body or header; every error text is scrubbed of MESHY_API_KEY before it reaches the
  *    report, the console or report.json
  *  - with the real Blender fix-up, a missing Blender is detected before the first Meshy call
  * All I/O is injectable through BuildDeps so the whole flow is unit-tested without Meshy or Blender.
  */
 import { existsSync } from 'node:fs'
-import { mkdir, readFile, readdir, rename, writeFile } from 'node:fs/promises'
-import { dirname, extname, join, resolve } from 'node:path'
+import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises'
+import path, { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { dracoCompress } from './compress'
 import type { CompressOpts } from './compress'
@@ -37,16 +42,14 @@ import { checkProportionDrift, runGates } from './gates'
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
 import { loadSpecs } from './loadSpecs'
-import { recordAsset } from './manifest'
-import { createMultiImageTask, downloadGlb, MeshyError, waitForTask } from './meshy'
+import { assertManifestUsable, recordAsset } from './manifest'
+import { createMultiImageTask, downloadGlb, MESHY_MODEL, MeshyError, waitForTask } from './meshy'
 import type { MeshyOpts, MeshyTask } from './meshy'
 import { buildPlacement } from './placement'
 import { runFixup } from './runFixup'
 import type { FixupOpts, FixupReport, YawDeg } from './runFixup'
 import type { AssetSpecT } from './specSchema'
 
-/** The Meshy ai_model the client requests (tools/assets3d/meshy.ts); recorded as the manifest's toolVersion. */
-const MESHY_MODEL = 'meshy-7.1'
 const MAX_PHOTOS = 4
 const POLYCOUNT = { connector: 600, standard: 3000, hero: 3500 } as const
 const QUANTIZE_BITS = { connector: 16, standard: 14, hero: 14 } as const
@@ -94,6 +97,8 @@ export interface BuildOpts {
 
 export interface BuildAttempt {
   n: number
+  /** The Meshy task created for this attempt (absent for --raw); set right after the paid create call. */
+  taskId?: string
   /** Meshy credits this attempt consumed; null for --raw or when the attempt stopped before a task finished. */
   credits: number | null
   gates: GateResult[]
@@ -107,6 +112,8 @@ export interface BuildReport {
   /** The shipped file; absent on a failure and on a dry run. */
   finalGlb?: string
   dryRun: boolean
+  /** This run's folder of raw and fixed GLBs: assets-source/<id>/work/<run start time>. */
+  workDir: string
   /** Why the build stopped early (scrubbed of the API key). */
   error?: string
   /** Set when Meshy answered 402 (out of credits) or 429 (rate limit): callers must not start another build. */
@@ -155,11 +162,17 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
 }
 
 /** Writes `bytes` to `path` through a temp file and a rename, so a reader never sees half a file. */
-async function writeAtomic(path: string, bytes: Uint8Array): Promise<void> {
-  await mkdir(dirname(path), { recursive: true })
-  const temp = `${path}.${process.pid}.tmp`
-  await writeFile(temp, bytes)
-  await rename(temp, path)
+async function writeAtomic(target: string, bytes: Uint8Array): Promise<void> {
+  await mkdir(dirname(target), { recursive: true })
+  const temp = `${target}.${process.pid}.tmp`
+  try {
+    await writeFile(temp, bytes)
+    await rename(temp, target)
+  } catch (e) {
+    // a stray .tmp in public/assets would be shipped by Vite
+    await rm(temp, { force: true })
+    throw e
+  }
 }
 
 /** The five asset gates over the bytes of a GLB, measured fresh with inspectGlb. */
@@ -178,7 +191,7 @@ interface Shipped {
 }
 
 /**
- * Compresses a fixed GLB that passed its gates and re-measures the result.
+ * Compresses a fixed GLB that passed its gates and re-measures the result. Throws when either step throws.
  * Returns the file to ship, or the failing gates (marked "after Draco") when a non-connector cannot ship compressed.
  */
 async function compressAndRegate(
@@ -189,14 +202,9 @@ async function compressAndRegate(
   compress: BuildDeps['compress'],
 ): Promise<{ shipped: Shipped } | { failed: GateResult[] }> {
   const bits = QUANTIZE_BITS[spec.tier]
-  let compressed: { bytes: Uint8Array; gates: GateResult[]; triangles: number }
-  try {
-    const bytes = await compress(fixed, { quantizePositionBits: bits })
-    compressed = { bytes, ...(await measure(bytes, spec)) }
-  } catch (e) {
-    const detail = `Draco compression or its re-measurement failed: ${e instanceof Error ? e.message : String(e)}`
-    compressed = { bytes: fixed, gates: [{ gate: 'compression', ok: false, detail }], triangles: 0 }
-  }
+  // A throw from the compressor or the re-measurement is not a measured failure: it propagates and aborts the build.
+  const bytes = await compress(fixed, { quantizePositionBits: bits })
+  const compressed = { bytes, ...(await measure(bytes, spec)) }
   if (allOk(compressed.gates)) {
     return { shipped: { bytes: compressed.bytes, triangles: compressed.triangles, gates: [...compressed.gates, drift], compression: 'draco' } }
   }
@@ -229,11 +237,15 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
     throw new Error('Blender is not installed (not found at the default 5.1 path): install Blender 5.1 or set BLENDER_EXE to blender.exe')
   }
 
+  // Fail before the first paid call if the manifest could not be written afterwards.
+  if (!dryRun) assertManifestUsable(d.paths.manifestPath)
+
   const dir = join(d.paths.sourceDir, id)
-  const work = join(dir, 'work')
+  const runStamp = d.now().toISOString().replace(/[:.]/g, '-')
+  const work = join(dir, 'work', runStamp)
   await mkdir(work, { recursive: true })
 
-  const report: BuildReport = { id, ok: false, attempts: [], dryRun }
+  const report: BuildReport = { id, ok: false, attempts: [], dryRun, workDir: work }
   const maxAttempts = rawBytes ? 1 : opts.maxAttempts
 
   for (let n = 1; n <= maxAttempts && !report.ok; n++) {
@@ -245,6 +257,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
         raw = rawBytes
       } else {
         const taskId = await d.meshy.createMultiImageTask(photos, { targetPolycount: POLYCOUNT[spec.tier] })
+        attempt.taskId = taskId
         const task = await d.meshy.waitForTask(taskId)
         attempt.credits = task.consumed_credits ?? null
         raw = await d.meshy.downloadGlb(task)
@@ -268,25 +281,29 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       const { shipped } = result
       attempt.gates = shipped.gates
       attempt.compression = shipped.compression
-      report.ok = true
       if (!dryRun) {
         const target = join(d.paths.assetsDir, `${id}.glb`)
         await writeAtomic(target, shipped.bytes)
+        try {
+          recordAsset(d.paths.manifestPath, {
+            id,
+            kind: spec.kind,
+            status: 'ok',
+            tris: shipped.triangles,
+            ports: spec.ports.length,
+            tool: rawBytes ? 'raw' : 'meshy',
+            toolVersion: rawBytes ? 'raw' : MESHY_MODEL,
+            date: d.now().toISOString(),
+            specSource: spec.sources[0]?.url ?? 'spec',
+            logosRemoved: false,
+            gates: shipped.gates.map((g) => ({ gate: g.gate, ok: g.ok })),
+          })
+        } catch (e) {
+          throw new Error(`the GLB was written to ${target} but the manifest was not updated: ${e instanceof Error ? e.message : String(e)}`)
+        }
         report.finalGlb = target
-        recordAsset(d.paths.manifestPath, {
-          id,
-          kind: spec.kind,
-          status: 'ok',
-          tris: shipped.triangles,
-          ports: spec.ports.length,
-          tool: rawBytes ? 'raw' : 'meshy',
-          toolVersion: rawBytes ? 'raw' : MESHY_MODEL,
-          date: d.now().toISOString(),
-          specSource: spec.sources[0]?.url ?? 'spec',
-          logosRemoved: false,
-          gates: shipped.gates.map((g) => ({ gate: g.gate, ok: g.ok })),
-        })
       }
+      report.ok = true
     } catch (e) {
       const message = scrub(e instanceof Error ? e.message : String(e))
       report.error = message
@@ -309,7 +326,7 @@ export function formatReport(report: BuildReport): string {
     if (a.compression) lines.push(`  compression: ${a.compression}`)
   }
   if (report.error) lines.push(`error: ${report.error}`)
-  if (report.ok) lines.push(report.finalGlb ? `result: PASS, shipped ${report.finalGlb}` : 'result: PASS (dry run)')
+  if (report.ok) lines.push(report.finalGlb ? `result: PASS, shipped ${report.finalGlb}` : report.dryRun ? 'result: PASS (dry run)' : 'result: PASS')
   else lines.push('result: FAIL')
   return lines.join('\n')
 }
@@ -403,4 +420,16 @@ export async function main(argv: string[], deps: Partial<BuildDeps> = {}, print:
   }
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) void main(process.argv.slice(2)).then((code) => process.exit(code))
+/**
+ * True when this module is the script node was started with. On Windows the comparison ignores case (the drive letter
+ * of `process.argv[1]` and of the module URL can differ), so the CLI never silently does nothing.
+ */
+export function isMainModule(argv1: string | undefined, moduleUrl: string, platform: NodeJS.Platform = process.platform): boolean {
+  if (!argv1) return false
+  const win = platform === 'win32'
+  const a = (win ? path.win32 : path.posix).resolve(argv1)
+  const b = fileURLToPath(moduleUrl, { windows: win })
+  return win ? a.toLowerCase() === b.toLowerCase() : a === b
+}
+
+if (isMainModule(process.argv[1], import.meta.url)) void main(process.argv.slice(2)).then((code) => process.exit(code))
