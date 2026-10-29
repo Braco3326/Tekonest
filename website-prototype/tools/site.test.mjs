@@ -114,18 +114,6 @@ const main = (name) => {
   return html.slice(html.indexOf("<main"), html.indexOf("</main>"));
 };
 
-test("status board lists three branches and the build date", () => {
-  const html = main("index.html");
-  const rows = [...html.matchAll(/<tbody>([\s\S]*?)<\/tbody>/g)][0][1].match(/<tr>[\s\S]*?<\/tr>/g);
-  assert.deepEqual(
-    rows.map((r) => r.match(/<th[^>]*><a [^>]*>([^<]+)<\/a>/)[1]),
-    ["Apprendre", "TekPractice", "Créer avec nous"]
-  );
-  assert.doesNotMatch(html, /Réseau/);
-  assert.match(html, /Mis à jour le 28 octobre 2026\./);
-  assert.match(rows[2], /<span class="status status--prep">En projet<\/span>/);
-});
-
 test("doors grid has two columns", () => {
   assert.match(page("assets/css/site.css"), /\.doors\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/);
 });
@@ -357,4 +345,41 @@ test("the doors are two equal columns from 48 em and stack below", () => {
   assert.match(ruleBlock(css(), ".doors"), /grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
   assert.match(css(), /@media \(max-width: 47\.99em\)\s*\{[^}]*\.doors\s*\{[^}]*grid-template-columns:\s*1fr/);
   assert.match(ruleBlock(css(), ".door--dark"), /box-shadow:\s*inset 0 0 0 5px[^;]*,\s*inset 0 0 0 6px/);
+});
+
+test("the home status index is one grouped table with a single legend", () => {
+  const html = main("index.html");
+  const labels = [["status--now", "Version d'essai"], ["status--dev", "En développement"], ["status--prep", "En projet"], ["status--later", "À venir"]];
+  const legend = html.match(/<dl class="legend">([\s\S]*?)<\/dl>/)[1];
+  assert.deepEqual([...legend.matchAll(/<span class="status (status--\w+)">([^<]+)<\/span>/g)].map((m) => [m[1], m[2]]), labels);
+  for (const name of pages().filter((n) => n !== "index.html")) assert.doesNotMatch(page(name), /class="legend"/, name);
+  const table = html.match(/<table class="board board--groups">[\s\S]*?<\/table>/)[0];
+  assert.deepEqual([...table.matchAll(/<th scope="rowgroup"[^>]*>([^<]+)<\/th>/g)].map((m) => m[1]), ["Déjà là", "En construction", "Ensuite"]);
+  const rows = table.match(/<tr>\s*<th scope="row"[\s\S]*?<\/tr>/g);
+  assert.deepEqual(rows.map((r) => r.match(/<th scope="row"[^>]*>(?:<a [^>]*>)?([^<]+)/)[1]),
+    ["TekPractice", "Apprendre", "Créer avec nous", "Cours des autres épreuves", "TekPractice dans le cours E4"]);
+  assert.deepEqual(rows.map((r) => r.match(/status (status--\w+)/)[1]), ["status--now", "status--dev", "status--prep", "status--later", "status--later"]);
+  for (const r of rows) assert.deepEqual([...r.matchAll(/data-label="([^"]+)"/g)].map((m) => m[1]), ["Pour qui", "État", "Prochaine étape"]);
+  assert.equal((html.match(/Mis à jour le 28 octobre 2026\./g) || []).length, 1);
+  assert.ok(html.indexOf('aria-labelledby="etat"') < html.indexOf('aria-labelledby="fils"'));
+  assert.match(css(), /\.board--groups/);
+});
+
+test("the seven fils are seven numbered rows and the marquetry sentence has moved", () => {
+  const html = main("index.html");
+  const fils = html.match(/<ol class="fils">[\s\S]*?<\/ol>/)[0];
+  assert.deepEqual([...fils.matchAll(/<span class="fil-n">(\d\d)<\/span>/g)].map((m) => m[1]), ["01", "02", "03", "04", "05", "06", "07"]);
+  assert.match(html, /Le nid a sept fils : les sept métiers avec lesquels Tekonest veut travailler\./);
+  assert.doesNotMatch(html, /marqueterie|Un nid tient ensemble/);
+});
+
+test("the stylesheets are brace-balanced and never close more than they open", () => {
+  for (const f of ["assets/css/site.css", "assets/css/tokens.css"]) {
+    let depth = 0;
+    for (const ch of page(f).replace(/\/\*[\s\S]*?\*\//g, "").replace(/"[^"]*"/g, '""')) {
+      if (ch === "{") depth++;
+      if (ch === "}") { depth--; assert.ok(depth >= 0, `${f}: a stray }`); }
+    }
+    assert.equal(depth, 0, `${f}: unbalanced braces`);
+  }
 });

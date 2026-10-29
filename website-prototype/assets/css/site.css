@@ -248,7 +248,6 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 .door-who { font-size: var(--text-sm); color: var(--color-ink-3); margin: 0; }
 .door.cadre::after, .family.cadre::after { content: ""; position: absolute; bottom: 0; right: 0; width: 18px; height: 18px; background: var(--color-amber); clip-path: polygon(100% 0, 100% 100%, 0 100%); pointer-events: none; }
 
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10 -10 20 20'%3E%3Cpath d='M0,-9L4.5,7.79L-7.79,-4.5L9,0L-7.79,4.5L4.5,-7.79L0,9L-4.5,-7.79L7.79,4.5L-9,0L7.79,-4.5L-4.5,7.79Z' fill='none' stroke='%23DD9349' stroke-width='1.2'/%3E%3C/svg%3E") center/contain no-repeat; }
 
 /* Sept fils, sept métiers */
 .fils-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-7); margin-bottom: var(--space-7); align-items: end; }
@@ -256,20 +255,6 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 .fils-head p { color: var(--color-ink-2); margin: 0 0 var(--space-3); }
 .fils-head .note { font-size: var(--text-sm); }
 @media (max-width: 47.99em) { .fils-head { grid-template-columns: 1fr; gap: var(--space-4); } }
-.fils { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--noyer); border-bottom: 1px solid var(--noyer); }
-.fil { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5) var(--space-4); border-left: 1px solid var(--color-line); }
-.fil:first-child { border-left: 0; }
-.fil-nid { width: 56px; height: 56px; fill: none; stroke: var(--color-line-strong); stroke-width: 7; }
-.fil-nid .on { stroke: var(--color-signal); stroke-width: 16; }
-.fil-n { font: 500 var(--text-label)/1.4 var(--font-text); letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink-3); }
-.fil strong { font-family: var(--font-display); font-weight: 500; font-size: var(--text-lg); }
-.fil-d { font-size: var(--text-sm); color: var(--color-ink-2); }
-@media (prefers-reduced-motion: no-preference) {
-  .fil-nid { transition: transform 700ms var(--ease); }
-  .fil:hover .fil-nid { transform: rotate(51.43deg); }
-}
-@media (max-width: 63.99em) { .fils { grid-template-columns: repeat(4, minmax(0, 1fr)); } .fil:nth-child(5) { border-left: 0; } .fil:nth-child(n+5) { border-top: 1px solid var(--color-line); } }
-@media (max-width: 39.99em) { .fils { grid-template-columns: repeat(2, minmax(0, 1fr)); } .fil { border-left: 0; border-top: 1px solid var(--color-line); } .fil:nth-child(even) { border-left: 1px solid var(--color-line); } .fil:first-child, .fil:nth-child(2) { border-top: 0; } }
 
 /* Closing band on Nuit with the bronze Damascus texture */
 .cta-nuit { position: relative; background: var(--color-ink); color: var(--color-on-dark); overflow: hidden; --focus-color: var(--color-paper); }
@@ -280,10 +265,7 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 .cta-nuit h2 { font-size: var(--text-2xl); color: var(--color-on-dark); }
 .cta-nuit p { color: var(--color-on-dark-2); max-width: 36rem; margin: 0; }
 .cta-nuit .hero-actions { justify-content: center; margin-top: var(--space-3); }
-.fil-nid { width: 64px; height: 64px; stroke: var(--color-line); stroke-width: 6; }
-.fil-nid .on { stroke: var(--color-signal); stroke-width: 14; }
 @media (max-width: 47.99em) { .hero-nuit > .wrap, .cta-nuit__in { padding-inline: calc(var(--gutter) + 14px); } }
-.fil-nid { stroke: var(--color-line-strong); stroke-width: 5; } .fil-nid ellipse:not(.on) { opacity: .45; }
 
 /* ===== TekPractice page: play button, controls tables, keys (24 Oct 2026) ===== */
 .btn-play { min-height: 56px; padding: 0 var(--space-6); font-size: var(--text-lg); }
@@ -334,3 +316,24 @@ kbd { display: inline-block; font: 600 0.875em/1.4 var(--font-text); padding: 0 
 .door--dark .status { color: var(--color-on-dark); }
 .door--dark .inner { position: relative; z-index: 1; color: var(--color-on-dark); text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 47.99em) { .door--dark { padding: var(--space-4); } }
+
+/* Status index (Phase C): a legend defined once, then one table grouped by state */
+.legend { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-5); margin: 0 0 var(--space-7); padding: 0; }
+.legend > div { display: grid; gap: var(--space-2); align-content: start; }
+.legend dt, .legend dd { margin: 0; }
+.legend dd { font-size: var(--text-sm); color: var(--color-ink-2); }
+.board--groups .group-name { padding: var(--space-6) 0 var(--space-2); border-bottom: 1px solid var(--color-line-strong); font: 500 var(--text-label)/1.4 var(--font-text); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-3); }
+.board--groups tbody:first-of-type .group-name { padding-top: var(--space-2); }
+@media (max-width: 63.99em) { .legend { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 39.99em) { .legend { grid-template-columns: 1fr; gap: var(--space-4); } }
+
+/* The seven fils as rows: mark, number, name, one line */
+.fils { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--noyer); }
+.fil { display: grid; grid-template-columns: 28px 3rem minmax(0, 11rem) minmax(0, 1fr); gap: var(--space-4); align-items: center; min-height: 44px; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-line); }
+.fil-nid { width: 28px; height: 28px; fill: none; stroke: var(--color-line-strong); stroke-width: 5; }
+.fil-nid ellipse:not(.on) { opacity: .45; }
+.fil-nid .on { stroke: var(--color-signal); stroke-width: 14; opacity: 1; }
+.fil-n { font: 500 var(--text-label)/1.4 var(--font-text); letter-spacing: 0.14em; color: var(--color-ink-3); font-variant-numeric: tabular-nums; }
+.fil strong { font-family: var(--font-display); font-weight: 500; font-size: var(--text-lg); }
+.fil-d { font-size: var(--text-sm); color: var(--color-ink-2); }
+@media (max-width: 47.99em) { .fil { grid-template-columns: 28px 3rem minmax(0, 1fr); row-gap: var(--space-1); } .fil-d { grid-column: 1 / -1; } }
