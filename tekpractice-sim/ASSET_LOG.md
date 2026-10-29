@@ -89,3 +89,18 @@ livrée et l'appareil est déjà dans l'onglet « Secteur » du tiroir. `npm run
 (même chaîne que les autres glb), export `public/assets/multiprise-secteur.glb` ≤ 200 Ko, et une vignette
 `public/assets/thumbs/multiprise-secteur.png` (sans elle le tiroir montre la silhouette ; `tests/creation/inventoryThumbs.test.ts`
 attend `thumbPath('multiprise-secteur') === null` tant qu'elle n'existe pas : à mettre à jour avec la vignette).
+
+## 2026-10-29 — Chansons de démonstration (Task 38, décisions S3 / P13)
+
+**Aucune chanson n'est livrée pour l'instant.** `content/songs.json` vaut `[]` et `public/audio/songs/` n'existe pas.
+Raison : aucune piste n'a encore été vérifiée sur sa page (texte de la dédicace CC0 / domaine public lisible, URL de licence
+notée) et approuvée par le fondateur ; sans cette preuve, rien n'est téléchargé ni lié. Le Mode Création s'appuie donc sur le
+signal de test généré (`src/audio/testSignal.ts`, œuvre propre) et sur « Choisir un fichier audio… » (fichier local, jamais envoyé ni conservé).
+
+Règles pour ajouter une chanson plus tard (2 à 3 pistes au plus, 3 Mo maximum chacune, mp3 de préférence, ogg accepté) :
+- Licence exactement `CC0-1.0`, page de la piste et page de licence ouvertes et lues ; l'URL de licence est notée ici.
+- **Pixabay n'est pas CC0** (licence propre à Pixabay) : ne jamais l'utiliser.
+- Chaque piste a UNE ligne dans ce fichier qui contient à la fois son chemin (`audio/songs/<nom>.mp3`) et son URL de licence, plus sa
+  source, la date de récupération et son SHA-256 ; la même entrée existe dans `content/songs.json`.
+- `npm run validate:songs` (et `tests/audio/songs.test.ts`) vérifient : fichier présent, taille égale à `bytes` et ≤ 3 Mo, SHA-256 égal,
+  licence `CC0-1.0`, ligne présente dans ce journal. Ajouter une entrée est une édition de contenu, sans changement du moteur.

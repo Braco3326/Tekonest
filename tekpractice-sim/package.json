@@ -13,6 +13,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "validate:catalog": "tsx tools/validate-catalog.ts",
+    "validate:songs": "tsx tools/validate-songs.ts",
     "gen:schema": "tsx tools/generate-schema.ts > content/catalog.schema.json",
     "sync:kb": "tsx tools/build-kb-sheets.ts && tsx tools/sync-rooms.ts && tsx tools/build-coach-kb.ts && tsx tools/propose-content.ts",
     "lint": "eslint src tools --ext .ts",
