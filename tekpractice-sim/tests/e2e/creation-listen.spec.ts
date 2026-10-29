@@ -501,3 +501,21 @@ test('(n) 1366×768 with the coverage AND the listening block open: the properti
   await choose(page, 'Stop')
   await waitStopped(page)
 })
+
+test('(o) the ear height moves the listener: the voices follow it at once, without any change to the rig', async ({ page }) => {
+  await boot(page)
+  await play(page)
+  const gain = async (): Promise<number> => (await state(page)).voices.find((v) => v.instanceId === 'k12-g')!.gain
+  const seated = await gain()
+  const rig = await page.evaluate(() => JSON.stringify(window.__creation!.design()))
+  await openEcoute(page)
+  await page.getByRole('menuitemradio', { name: 'Hauteur d’oreille : debout 1,7 m' }).click()
+  expect(await page.evaluate(() => window.__creation!.earHeight())).toBe(1.7)
+  await page.waitForFunction((g0) => window.__creation!.audioState().voices.find((v) => v.instanceId === 'k12-g')!.gain !== g0, seated, { timeout: 5000 })
+  const standing = await gain()
+  expect(standing).not.toBe(seated)
+  expect(Math.abs(standing - seated)).toBeLessThan(0.1) // a listener 0,5 m higher: a small change of distance, not a different sound
+  expect(await page.evaluate(() => JSON.stringify(window.__creation!.design()))).toBe(rig) // the rig did not change
+  await choose(page, 'Stop')
+  await waitStopped(page)
+})
