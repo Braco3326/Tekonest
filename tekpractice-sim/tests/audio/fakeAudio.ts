@@ -132,9 +132,16 @@ export class FakeContext {
   closeCalls = 0
   resumeCalls = 0
   destination = new FakeNode('destination', this)
+  /** Set by a test: resume() stays pending until `releaseResume()` (a suspended context that never starts). */
+  deferResume = false
+  private resumeWaiters: (() => void)[] = []
   async resume(): Promise<void> {
     this.resumeCalls++
+    if (this.deferResume) await new Promise<void>((r) => this.resumeWaiters.push(r))
     this.state = 'running'
+  }
+  releaseResume(): void {
+    for (const r of this.resumeWaiters.splice(0)) r()
   }
   async close(): Promise<void> {
     this.closeCalls++
@@ -178,6 +185,13 @@ export class FakeAudioElement {
   loads = 0
   /** Set by a test: make play() reject (an undecodable file). */
   failPlay = false
+  /** Set by a test: play() stays pending until `releasePlay()` (a large file being decoded). */
+  deferPlay = false
+  ended = false
+  private playWaiters: (() => void)[] = []
+  releasePlay(): void {
+    for (const r of this.playWaiters.splice(0)) r()
+  }
   listeners = new Map<string, Set<() => void>>()
   addEventListener(type: string, fn: () => void): void {
     if (!this.listeners.has(type)) this.listeners.set(type, new Set())
@@ -191,6 +205,7 @@ export class FakeAudioElement {
   }
   async play(): Promise<void> {
     if (this.failPlay) throw new DOMException('The element has no supported sources.', 'NotSupportedError')
+    if (this.deferPlay) await new Promise<void>((r) => this.playWaiters.push(r))
     this.paused = false
   }
   pause(): void {

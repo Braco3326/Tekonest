@@ -1,16 +1,17 @@
 /**
  * The Web Audio adapter (Task 39, C9, C14, CA-03, CA-26, S3). A LAZY chunk: nothing here is loaded until the first « Lecture ».
  *
- *   source ─▶ input (2 ch, speaker up-mix) ─▶ ChannelSplitter(2) ─▶ per voice: [L and/or R] ─▶ Gain ─▶ Delay(≤ 1 s) ─▶ StereoPanner ─▶ Analyser (meter) ─▶ master Gain ─▶ limiter ─▶ destination
+ *   source ─▶ input (2 ch, speaker up-mix) ─▶ master Gain ─▶ ChannelSplitter(2) ─▶ per voice: [L and/or R] ─▶ Gain ─▶ Delay(≤ 1 s) ─▶ StereoPanner ─▶ Analyser (the speaker's OUTPUT level) ─▶ limiter ─▶ output tap ─▶ destination
  *
  * The voices come from the pure `listenerMix` (gain, delay, pan per powered speaker); `update()` moves the three parameters with
  * `setTargetAtTime(…, 0.02)` so a mix change never clicks. A voice whose gain is 0 (muted, fader at −inf) is snapped to EXACTLY 0 once the ramp has
  * settled. A speaker fed by both channels takes (L + R) / 2, so a mono file keeps its level and a stereo one never clips by the sum.
  *
  * HEARING SAFETY (controller ruling, L31): audio never starts loud.
- *   - master gain `MASTER_GAIN_DB` = −18 dBFS (× 0.126) before anything reaches the destination;
- *   - a DynamicsCompressorNode set as a limiter (threshold −3 dBFS, knee 0, ratio 20, attack 3 ms, release 100 ms) sits between master and destination;
- *   - a 80 ms linear fade-in when the source starts and a 80 ms fade-out when it stops (no click); `dispose()` is immediate.
+ *   - master gain `MASTER_GAIN_DB` = −12 dBFS (× 0.251), ahead of the voices, so every meter reads the level AFTER it;
+ *   - a DynamicsCompressorNode set as a limiter (threshold −3 dBFS, knee 0, ratio 20, attack 3 ms, release 100 ms) sits between the voices and the destination (NOMINAL: a browser's compressor may add automatic make-up gain);
+ *   - an 80 ms linear fade-in from the moment the source really produces sound (a file: when `play()` has resolved, not before) and an 80 ms fade-out when it stops
+ *     (no click); `dispose()` is immediate. The worst case (two speakers, a full-scale file, the fader at +10 dB) is bounded by the limiter: see ADR-0015, addendum 39.
  *
  * Privacy (S3): a local file is played from `URL.createObjectURL(file)` through an <audio> element and a MediaElementAudioSourceNode. It is never
  * fetched, uploaded or stored: the object URL is revoked and the element removed on stop / dispose. No song is bundled (content/songs.json is empty);
@@ -20,8 +21,15 @@
  */
 import { MAX_DELAY_S, type MixVoice } from './listenerMix'
 import { renderTestSignal } from './testSignal'
+import { audioStats, newAudioContext } from './context'
 
-export const MASTER_GAIN_DB = -18
+export { audioStats }
+
+/**
+ * The overall volume, set so that the reference rig at the Régie with the test signal puts the speakers' output peak between −30 and −6 dBFS (e2e). With the
+ * loudness normalisation of the mix (the loudest speaker is unity) the absolute level is THIS constant, not the distance.
+ */
+export const MASTER_GAIN_DB = -12
 export const MASTER_GAIN = 10 ** (MASTER_GAIN_DB / 20)
 export const FADE_IN_S = 0.08
 export const FADE_OUT_S = 0.08
@@ -31,6 +39,16 @@ export const PARAM_TAU_S = 0.02
 export const SNAP_ZERO_S = 10 * PARAM_TAU_S
 export const LIMITER = { threshold: -3, knee: 0, ratio: 20, attack: 0.003, release: 0.1 } as const
 const METER_FFT = 1024
+/** A `resume()` that has not settled after this long is a failure (Safari / iOS may leave a context suspended: no endless « Démarrage… »). */
+export const RESUME_TIMEOUT_MS = 3000
+
+/** The context could not start in time. */
+export class ResumeTimeoutError extends Error {
+  constructor() {
+    super('AudioContext.resume() did not settle')
+    this.name = 'ResumeTimeout'
+  }
+}
 
 export type PlaySource = { kind: 'song'; url: string } | { kind: 'file'; file: File } | { kind: 'test' }
 
@@ -47,18 +65,12 @@ export interface AudioEnv {
   clearTimeout(id: number): void
 }
 
-/** Counters over the page's life (the e2e checks that nothing leaks: every context closed, every URL revoked, every element removed). */
-export const audioStats = { contexts: { opened: 0, closed: 0 }, urls: { created: 0, revoked: 0 }, elements: { created: 0, removed: 0 } }
-
 let testBuffer: { sampleRate: number; buffer: Promise<AudioBuffer> } | null = null
 
 /** The real environment. Browser globals are read here, at call time, never at import. */
 export function browserEnv(): AudioEnv {
   return {
-    createContext: () => {
-      const Ctor = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
-      return new Ctor({ latencyHint: 'playback' })
-    },
+    createContext: newAudioContext,
     createAudio: () => {
       const el = document.createElement('audio')
       el.hidden = true
@@ -103,9 +115,13 @@ export interface EngineSnapshot {
 }
 
 export class AudioEngine {
-  static create(env: AudioEnv = browserEnv()): Promise<AudioEngine> {
+  /**
+   * `ctx`: the context made inside the user's click (src/audio/context.ts), adopted by the engine (which then closes it). Without one the engine makes its own
+   * through `env.createContext()`, which only works well where the browser lets a context start outside a gesture.
+   */
+  static create(env: AudioEnv = browserEnv(), ctx?: AudioContext | null): Promise<AudioEngine> {
     try {
-      return Promise.resolve(new AudioEngine(env))
+      return Promise.resolve(new AudioEngine(env, ctx ?? null))
     } catch (e) {
       return Promise.reject(e)
     }
@@ -113,6 +129,8 @@ export class AudioEngine {
 
   /** Told when the source ends by itself (a local file or a song reaching its end); never for the looped test signal. */
   onEnded: (() => void) | null = null
+  /** Told when a playing media element fails or is paused from outside (a decode error mid-stream, a media key): the sound has stopped for a reason the learner did not choose. */
+  onFailed: (() => void) | null = null
   /** Resolves when everything is released (after `stop()`'s fade, or `dispose()`). */
   readonly closed: Promise<void>
 
@@ -122,6 +140,8 @@ export class AudioEngine {
   private readonly splitter: ChannelSplitterNode
   private readonly master: GainNode
   private readonly limiter: DynamicsCompressorNode
+  /** The tap after the limiter, one analyser per side: the real output level, read by the e2e. */
+  private readonly outTap: { split: ChannelSplitterNode; l: AnalyserNode; r: AnalyserNode; buf: Float32Array<ArrayBuffer> }
   private readonly chains = new Map<string, Chain>()
   private src: { node: AudioNode; stop(): void } | null = null
   private el: HTMLAudioElement | null = null
@@ -135,11 +155,20 @@ export class AudioEngine {
   private timer: number | null = null
   private resolveClosed!: () => void
   private elEnded: (() => void) | null = null
+  private elError: (() => void) | null = null
+  private elPause: (() => void) | null = null
+  private cancelResume: (() => void) | null = null
 
-  private constructor(private readonly env: AudioEnv) {
+  private constructor(
+    private readonly env: AudioEnv,
+    adopted: AudioContext | null
+  ) {
     this.closed = new Promise<void>((r) => (this.resolveClosed = r))
-    const ctx = env.createContext()
-    audioStats.contexts.opened++
+    let ctx = adopted
+    if (!ctx) {
+      ctx = env.createContext()
+      audioStats.contexts.opened++
+    }
     this.ctx = ctx
     this.splitter = ctx.createChannelSplitter(2)
     this.master = ctx.createGain()
@@ -148,14 +177,22 @@ export class AudioEngine {
     this.input.channelCount = 2
     this.input.channelCountMode = 'explicit'
     this.input.channelInterpretation = 'speakers'
-    this.input.connect(this.splitter)
+    this.input.connect(this.master) // the master gain is AHEAD of the voices: every speaker's meter reads the level after it
+    this.master.connect(this.splitter)
     this.limiter = ctx.createDynamicsCompressor()
     this.limiter.threshold.value = LIMITER.threshold
     this.limiter.knee.value = LIMITER.knee
     this.limiter.ratio.value = LIMITER.ratio
     this.limiter.attack.value = LIMITER.attack
     this.limiter.release.value = LIMITER.release
-    this.master.connect(this.limiter)
+    const split = ctx.createChannelSplitter(2)
+    const l = ctx.createAnalyser()
+    const r = ctx.createAnalyser()
+    l.fftSize = r.fftSize = METER_FFT
+    this.outTap = { split, l, r, buf: new Float32Array(METER_FFT) }
+    this.limiter.connect(split)
+    split.connect(l, 0)
+    split.connect(r, 1)
     this.limiter.connect(ctx.destination)
   }
 
@@ -185,7 +222,7 @@ export class AudioEngine {
     this.kind = source.kind
     const stale = (): boolean => this.isDisposed || this.stopping || this.seq !== seq
     try {
-      await this.ctx.resume() // the context was made in the « Lecture » gesture; with the browser's policy it may start suspended
+      await this.resumed() // a context made in the click normally runs; one that stays suspended fails after RESUME_TIMEOUT_MS instead of waiting for ever
       if (stale()) return
       if (source.kind === 'test') {
         const buffer = await this.env.renderTest(this.ctx)
@@ -204,7 +241,7 @@ export class AudioEngine {
           },
         }
         bs.connect(this.input)
-        this.fadeIn()
+        this.fadeIn() // synthetic and instant: the sound starts with the ramp
         bs.start()
       } else {
         const el = this.env.createAudio()
@@ -220,12 +257,22 @@ export class AudioEngine {
           if (!this.isDisposed && !this.stopping) this.onEnded?.()
         }
         el.addEventListener('ended', this.elEnded)
+        // After a successful start only: a decode error mid-stream, or a pause that is not the end of the file (a media key), is a stop nobody asked for.
+        this.elError = () => {
+          if (this.playingNow && !this.isDisposed && !this.stopping) this.onFailed?.()
+        }
+        this.elPause = () => {
+          if (this.playingNow && !this.isDisposed && !this.stopping && !el.ended) this.onFailed?.()
+        }
+        el.addEventListener('error', this.elError)
+        el.addEventListener('pause', this.elPause)
         const mes = this.ctx.createMediaElementSource(el)
         this.src = { node: mes, stop: () => el.pause() }
         mes.connect(this.input)
-        this.fadeIn()
+        // The master stays at 0 while the file is being read and decoded: a slow `play()` (a large file) must not use up the 80 ms ramp before the first sample.
         await el.play() // rejects for a file the browser cannot decode
         if (stale()) return
+        this.fadeIn()
       }
       this.playingNow = true
     } catch (e) {
@@ -242,6 +289,7 @@ export class AudioEngine {
     if (this.isDisposed || this.stopping) return
     this.stopping = true
     this.seq++
+    this.cancelResume?.()
     const now = this.ctx.currentTime
     const g = this.master.gain
     g.cancelScheduledValues(now)
@@ -268,7 +316,9 @@ export class AudioEngine {
       let chain = this.chains.get(v.instanceId)
       // Both sides: (L + R) / 2. One side: that side as it is.
       const weight = v.channels.length > 1 ? 1 / v.channels.length : 1
-      const target = { gain: v.gain * weight, delayS: Math.min(Math.max(v.delayS, 0), MAX_DELAY_S), pan: Math.min(Math.max(v.pan, -1), 1) }
+      // The graph never receives NaN or Infinity: a non-finite value is « no sound », « no delay », « centre ».
+      const fin = (n: number): number => (Number.isFinite(n) ? n : 0)
+      const target = { gain: Math.max(0, fin(v.gain * weight)), delayS: Math.min(Math.max(fin(v.delayS), 0), MAX_DELAY_S), pan: Math.min(Math.max(fin(v.pan), -1), 1) }
       if (!chain) {
         chain = this.makeChain(v.channels, target)
         this.chains.set(v.instanceId, chain)
@@ -296,11 +346,29 @@ export class AudioEngine {
     return out
   }
 
+  /**
+   * The largest absolute sample each speaker's analyser holds (linear, 0 = silence), and the same at the real output (after the limiter, the larger side).
+   * Speaker values are AFTER the master gain and before the limiter; `output` is what reaches the destination (nominal: a browser's compressor may add make-up gain).
+   */
+  peaks(): { voices: Record<string, number>; output: number } {
+    const voices: Record<string, number> = {}
+    if (this.isDisposed) return { voices, output: 0 }
+    const peakOf = (a: AnalyserNode, buf: Float32Array<ArrayBuffer>): number => {
+      a.getFloatTimeDomainData(buf)
+      let m = 0
+      for (let i = 0; i < buf.length; i++) m = Math.max(m, Math.abs(buf[i]))
+      return m
+    }
+    for (const [id, c] of this.chains) voices[id] = peakOf(c.analyser, c.buf)
+    return { voices, output: Math.max(peakOf(this.outTap.l, this.outTap.buf), peakOf(this.outTap.r, this.outTap.buf)) }
+  }
+
   /** Immediate and idempotent: every node disconnected, the context closed, the object URL revoked, the element removed, the timer cleared. */
   dispose(): void {
     if (this.isDisposed) return
     this.isDisposed = true
     this.seq++
+    this.cancelResume?.()
     if (this.timer !== null) {
       this.env.clearTimeout(this.timer)
       this.timer = null
@@ -308,7 +376,7 @@ export class AudioEngine {
     this.releaseSource()
     for (const c of this.chains.values()) this.dropChain(c)
     this.chains.clear()
-    for (const n of [this.input, this.splitter, this.master, this.limiter] as AudioNode[]) {
+    for (const n of [this.input, this.splitter, this.master, this.limiter, this.outTap.split, this.outTap.l, this.outTap.r] as AudioNode[]) {
       try {
         n.disconnect()
       } catch {
@@ -326,6 +394,35 @@ export class AudioEngine {
   }
 
   // ── internals ───────────────────────────────────────────────────────────────
+
+  /** `ctx.resume()` with a bound: rejects with ResumeTimeoutError, and settles quietly when `stop()` / `dispose()` cancels the wait. */
+  private resumed(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const timer = this.env.setTimeout(() => {
+        this.cancelResume = null
+        reject(new ResumeTimeoutError())
+      }, RESUME_TIMEOUT_MS)
+      this.cancelResume = () => {
+        this.cancelResume = null
+        this.env.clearTimeout(timer)
+        resolve()
+      }
+      this.ctx.resume().then(
+        () => {
+          if (this.cancelResume) {
+            this.env.clearTimeout(timer)
+            this.cancelResume = null
+            resolve()
+          }
+        },
+        (e: unknown) => {
+          this.env.clearTimeout(timer)
+          this.cancelResume = null
+          reject(e)
+        }
+      )
+    })
+  }
 
   private fadeIn(): void {
     const now = this.ctx.currentTime
@@ -348,7 +445,7 @@ export class AudioEngine {
     gain.connect(delay)
     delay.connect(pan)
     pan.connect(analyser)
-    analyser.connect(this.master)
+    analyser.connect(this.limiter)
     const chain: Chain = { gain, delay, pan, analyser, buf: new Float32Array(analyser.fftSize), channels: [], target }
     this.wire(chain, channels)
     return chain
@@ -409,7 +506,9 @@ export class AudioEngine {
     const el = this.el
     if (el) {
       if (this.elEnded) el.removeEventListener('ended', this.elEnded)
-      this.elEnded = null
+      if (this.elError) el.removeEventListener('error', this.elError)
+      if (this.elPause) el.removeEventListener('pause', this.elPause)
+      this.elEnded = this.elError = this.elPause = null
       el.pause()
       el.removeAttribute('src')
       el.load() // drops the media resource (and its hold on the blob)

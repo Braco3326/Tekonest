@@ -2,7 +2,8 @@
  * The listener mix (Task 39, C9, C14, CA-03). Pure: no DOM, no Web Audio, no Babylon, no store. What each powered speaker contributes at the
  * listener's ears, from geometry alone:
  *
- *   gain  = 1 / max(r, 0.5 m) · 10^(gainDb/20) · 10^(dirDb/20)      (0 when muted or when the fader is at −inf)
+ *   geom  = 1 / max(r, 0.5 m) · 10^(dirDb/20)                       (the geometry gain of a speaker)
+ *   gain  = (geom / the largest geom of the feeds) · 10^(gainDb/20)  (0 when muted or when the fader is at −inf)
  *   delay = r / 343 − (the smallest r / 343 of the feeds)           (the nearest voice has none; capped at the 1 s delay line)
  *   pan   = dot(horizontal unit vector listener → speaker, listener RIGHT), clamped to [−1, 1]
  *
@@ -10,6 +11,12 @@
  * never assumes a handedness (P14: facing −z in Babylon's left-handed world the right is world −x, so a speaker at world +x pans LEFT).
  * `dirDb` is `directivityDb(...)` toward the listener (src/acoustics/field.ts), computed by the caller from the speaker's pose: it is not
  * re-implemented here. The 0.5 m floor is the one of `levelDb` (tests/audio/layering.test.ts checks they agree).
+ *
+ * LOUDNESS NORMALISATION (controller ruling, Task 39 review): the loudest speaker's geometry gain, taken BEFORE the fader and the mute, is unity. The ratios
+ * between speakers (1/r, directivity), the delays and the pans are untouched, the faders still scale the level, a mute / −inf is exactly 0, and nothing
+ * audible (every geometry gain 0 or not finite) is all 0. So the ABSOLUTE level is a constant of the engine (its master gain), not a function of the
+ * distance: a listener 40 m from the only speaker hears it as loud as one at 2 m. This keeps the sound audible at any seat; it is not a realism claim.
+ * Not finite input (a NaN position, a NaN directivity) is « no sound » for that voice: the audio graph never receives NaN or Infinity.
  *
  * A SIMPLE simulation: level, delay and left–right placement from the geometry. No room acoustics, no frequency response, no reflections, no
  * crosstalk between the speakers.
@@ -44,17 +51,25 @@ export function listenerMix(input: MixInput): MixVoice[] {
     const dx = f.position[0] - p[0]
     const dz = f.position[2] - p[2]
     const h = Math.hypot(dx, dz)
-    return { r: Math.hypot(dx, f.position[1] - p[1], dz), dot: h > 1e-12 ? (dx / h) * rx + (dz / h) * rz : 0 }
+    const r = Math.hypot(dx, f.position[1] - p[1], dz)
+    // The geometry gain: 1/r (floored) times the directivity toward the listener. A non-finite one is « no sound », never NaN in the graph.
+    const g = (10 ** (f.dirDb / 20)) / Math.max(r, MIN_DISTANCE_M)
+    return { r, dot: h > 1e-12 ? (dx / h) * rx + (dz / h) * rz : 0, g: Number.isFinite(g) && g > 0 ? g : 0 }
   })
-  const nearest = geo.reduce((m, g) => Math.min(m, g.r), Infinity) // over every feed, muted or not: muting one never shifts the others
+  const nearest = geo.reduce((m, g) => (Number.isFinite(g.r) ? Math.min(m, g.r) : m), Infinity) // over every feed, muted or not: muting one never shifts the others
+  // LOUDNESS NORMALISATION: the loudest speaker's geometry gain (before fader and mute) is unity. Ratios, delays and pans are untouched; the absolute
+  // level is the engine's master constant, not the distance (this is not a realism claim). Nothing audible (all 0) → all 0.
+  const loudest = geo.reduce((m, g) => Math.max(m, g.g), 0)
   return input.feeds.map((f, i) => {
-    const silent = f.muted || f.gainDb === -Infinity || Number.isNaN(f.gainDb)
+    const silent = f.muted || f.gainDb === -Infinity || Number.isNaN(f.gainDb) || loudest === 0
+    const gain = silent ? 0 : (geo[i].g / loudest) * 10 ** (f.gainDb / 20)
+    const delay = Number.isFinite(nearest) && Number.isFinite(geo[i].r) ? (geo[i].r - nearest) / SPEED_OF_SOUND : 0
     return {
       instanceId: f.instanceId,
       channels: [...f.channels],
-      gain: silent ? 0 : (10 ** (f.gainDb / 20) * 10 ** (f.dirDb / 20)) / Math.max(geo[i].r, MIN_DISTANCE_M),
-      delayS: clamp((geo[i].r - nearest) / SPEED_OF_SOUND, 0, MAX_DELAY_S),
-      pan: clamp(geo[i].dot, -1, 1) + 0, // `+ 0`: a −0 becomes +0
+      gain: Number.isFinite(gain) ? gain : 0,
+      delayS: Number.isFinite(delay) ? clamp(delay, 0, MAX_DELAY_S) : 0,
+      pan: Number.isFinite(geo[i].dot) ? clamp(geo[i].dot, -1, 1) + 0 : 0, // `+ 0`: a −0 becomes +0
     }
   })
 }
