@@ -6,8 +6,11 @@ import {
   checkPortPositions,
   checkProportionDrift,
   checkSize,
+  checkTextures,
   checkTransform,
+  FILE_BYTES_MAX,
   runGates,
+  TEXTURE_MAX_PX,
 } from '../../../tools/assets3d/gates'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
 import type { GlbReport } from '../../../tools/assets3d/inspect'
@@ -73,6 +76,8 @@ function reportOf(over: Partial<GlbReport> = {}): GlbReport {
     rootScale: [1, 1, 1],
     rootRotation: [0, 0, 0, 1],
     extras: null,
+    fileBytes: 1000,
+    textures: [],
     ...over,
   }
 }
@@ -644,6 +649,62 @@ describe('checkProportionDrift', () => {
 
   it('fails a degenerate size', () => {
     expect(checkProportionDrift({ w: 0, h: 0, d: 0 }, spec).ok).toBe(false)
+  })
+})
+
+describe('checkTextures', () => {
+  const tex = (px: number, name = 'baseColor') => ({ name, width: px, height: px, mimeType: 'image/webp' })
+  const standard = deviceSpec()
+  const connector = connectorSpec()
+
+  it('exports the tier limits', () => {
+    expect(TEXTURE_MAX_PX).toEqual({ connector: 512, standard: 1024, hero: 1024 })
+    expect(FILE_BYTES_MAX).toEqual({ connector: 250_000, standard: 1_000_000, hero: 1_000_000 })
+  })
+
+  it('textures gate: 1024 px passes, 1025 px fails for standard; 512 passes and 513 fails for connector; file size at the maximum passes and one byte over fails; missing or NaN data fails closed', () => {
+    expect(checkTextures(reportOf({ textures: [tex(1024)] }), standard)).toMatchObject({ gate: 'textures', ok: true })
+    const big = checkTextures(reportOf({ textures: [tex(1025, 'normal')] }), standard)
+    expect(big.ok).toBe(false)
+    expect(big.detail).toMatch(/normal/)
+    expect(big.detail).toMatch(/1025/)
+    expect(big.detail).toMatch(/1024/)
+    // the longest side counts, not the first
+    expect(checkTextures(reportOf({ textures: [{ name: 'tall', width: 16, height: 1025, mimeType: 'image/webp' }] }), standard).ok).toBe(false)
+    expect(checkTextures(reportOf({ textures: [tex(1024), tex(1024, 'normal')] }), deviceSpec({ tier: 'hero' })).ok).toBe(true)
+
+    expect(checkTextures(reportOf({ textures: [tex(512)] }), connector).ok).toBe(true)
+    expect(checkTextures(reportOf({ textures: [tex(513)] }), connector).ok).toBe(false)
+
+    expect(checkTextures(reportOf({ fileBytes: 1_000_000 }), standard).ok).toBe(true)
+    const over = checkTextures(reportOf({ fileBytes: 1_000_001 }), standard)
+    expect(over.ok).toBe(false)
+    expect(over.detail).toMatch(/1000001/)
+    expect(over.detail).toMatch(/1000000/)
+    expect(checkTextures(reportOf({ fileBytes: 250_000 }), connector).ok).toBe(true)
+    expect(checkTextures(reportOf({ fileBytes: 250_001 }), connector).ok).toBe(false)
+
+    // fail closed
+    expect(checkTextures(reportOf({ fileBytes: Number.NaN }), standard).ok).toBe(false)
+    expect(checkTextures(reportOf({ fileBytes: Number.POSITIVE_INFINITY }), standard).ok).toBe(false)
+    expect(checkTextures(reportOf({ fileBytes: undefined as unknown as number }), standard).ok).toBe(false)
+    expect(checkTextures(reportOf({ textures: [{ ...tex(512), width: Number.NaN }] }), standard).ok).toBe(false)
+    expect(checkTextures(reportOf({ textures: [{ ...tex(512), height: undefined as unknown as number }] }), standard).ok).toBe(false)
+    expect(checkTextures(reportOf({ textures: undefined as unknown as GlbReport['textures'] }), standard).ok).toBe(false)
+  })
+
+  it('a model without textures passes when its file size is within the limit', () => {
+    const r = checkTextures(reportOf({ textures: [], fileBytes: 70_000 }), standard)
+    expect(r.ok).toBe(true)
+    expect(r.detail).toMatch(/70000/)
+  })
+
+  it('lists every problem at once', () => {
+    const r = checkTextures(reportOf({ textures: [tex(2048, 'a'), tex(2048, 'b')], fileBytes: 9_000_000 }), standard)
+    expect(r.ok).toBe(false)
+    expect(r.detail).toMatch(/a/)
+    expect(r.detail).toMatch(/b/)
+    expect(r.detail).toMatch(/9000000/)
   })
 })
 

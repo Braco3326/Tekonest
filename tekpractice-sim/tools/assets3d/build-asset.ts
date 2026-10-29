@@ -12,9 +12,12 @@
  *     recorded in the report right after the paid create call
  *  3. runFixup (Blender) writes work/<run>/attempt-N.fixed.glb
  *  4. inspectGlb + runGates on the fixed GLB, plus checkProportionDrift on the fix-up's pre-scale size (6th gate)
- *  5. all pass: Draco-compress (connector 16 position bits, other tiers 14) and RE-MEASURE the compressed bytes with the
- *     same five gates, because quantization moves vertices. A connector whose compressed bytes fail ships the
- *     uncompressed fixed GLB (compression 'none'); any other tier fails the attempt
+ *  5. all pass: optimize the textures (WebP, longest side <= TEXTURE_MAX_PX of the tier), THEN Draco-compress (connector
+ *     16 position bits, other tiers 14), and RE-MEASURE the final bytes with the same five gates, because quantization
+ *     moves vertices, plus the seventh gate `textures` (texture size and file size). A connector whose compressed bytes
+ *     fail ships the texture-optimized, uncompressed GLB (compression 'none'); any other tier fails the attempt.
+ *     A measured `textures` failure on the final bytes is a defect of our own settings, not of the Meshy model: it
+ *     aborts the build (no new paid task) and the raw GLB stays in the work dir
  *  6. pass: write public/assets/<id>.glb and record the manifest entry (both skipped on --dry-run). `ok` (and `finalGlb`)
  *     are set only after BOTH succeeded; a failed write or manifest record is an error, never a PASS
  * After maxAttempts failures nothing is written to public/assets or the manifest. The report
@@ -24,7 +27,8 @@
  *  - a Meshy 402 or 429 aborts at once (no further attempt); the message is surfaced and `stopped` is set
  *  - any other error thrown inside an attempt (Blender, download, compress, re-measure, I/O) also aborts instead of
  *    retrying: the Meshy task is already paid for and the cause would repeat. Only a measured GATE failure (including
- *    "after Draco" on a non-connector) triggers a new attempt
+ *    "after Draco" on a non-connector) triggers a new attempt. The one measured failure that does NOT retry is
+ *    `textures` on the final bytes (see step 5)
  *  - the manifest is validated before the first paid call (a dry run skips this, it never writes the manifest)
  *  - nothing here logs a request body or header; every error text is scrubbed of MESHY_API_KEY before it reaches the
  *    report, the console or report.json
@@ -35,12 +39,13 @@ import { existsSync } from 'node:fs'
 import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises'
 import path, { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { dracoCompress } from './compress'
-import type { CompressOpts } from './compress'
+import { dracoCompress, optimizeTextures } from './compress'
+import type { CompressOpts, TextureOpts } from './compress'
 import { findBlender, redact, requireMeshyKey } from './env'
-import { checkProportionDrift, runGates } from './gates'
+import { checkProportionDrift, checkTextures, runGates, TEXTURE_MAX_PX } from './gates'
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
+import type { GlbReport } from './inspect'
 import { loadSpecs } from './loadSpecs'
 import { assertManifestUsable, recordAsset } from './manifest'
 import { createMultiImageTask, downloadGlb, MESHY_MODEL, MeshyError, waitForTask } from './meshy'
@@ -78,6 +83,8 @@ export interface BuildDeps {
   }
   runFixup: (inGlb: string, outGlb: string, spec: AssetSpecT, opts?: FixupOpts) => Promise<FixupReport>
   compress: (bytes: Uint8Array, opts: CompressOpts) => Promise<Uint8Array>
+  /** The texture budget step: runs before `compress`. */
+  optimizeTextures: (bytes: Uint8Array, opts: TextureOpts) => Promise<Uint8Array>
   /** The spec of `id`; throws when there is none. */
   loadSpec: (id: string) => AssetSpecT
   /** The reference photos of `id` as image data URIs, in order, at most 4 ([] when there are none). */
@@ -102,7 +109,10 @@ export interface BuildAttempt {
   /** Meshy credits this attempt consumed; null for --raw or when the attempt stopped before a task finished. */
   credits: number | null
   gates: GateResult[]
+  /** Geometry compression of the shipped file. */
   compression?: 'draco' | 'none'
+  /** 'webp' when the shipped file carries textures (all re-encoded as WebP by the texture step), 'none' when it has none. */
+  textures?: 'webp' | 'none'
 }
 
 export interface BuildReport {
@@ -148,6 +158,7 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
     },
     runFixup: deps.runFixup ?? ((inGlb, outGlb, spec, opts) => runFixup(inGlb, outGlb, spec, opts)),
     compress: deps.compress ?? dracoCompress,
+    optimizeTextures: deps.optimizeTextures ?? optimizeTextures,
     loadSpec:
       deps.loadSpec ??
       ((id) => {
@@ -175,10 +186,10 @@ async function writeAtomic(target: string, bytes: Uint8Array): Promise<void> {
   }
 }
 
-/** The five asset gates over the bytes of a GLB, measured fresh with inspectGlb. */
-async function measure(bytes: Uint8Array, spec: AssetSpecT): Promise<{ gates: GateResult[]; triangles: number }> {
+/** The five asset gates over the bytes of a GLB, measured fresh with inspectGlb (the report is kept for the textures gate). */
+async function measure(bytes: Uint8Array, spec: AssetSpecT): Promise<{ gates: GateResult[]; triangles: number; report: GlbReport }> {
   const report = await inspectGlb(bytes)
-  return { gates: runGates(report, spec, buildPlacement(spec)), triangles: report.triangles }
+  return { gates: runGates(report, spec, buildPlacement(spec)), triangles: report.triangles, report }
 }
 
 const allOk = (gates: GateResult[]): boolean => gates.every((g) => g.ok)
@@ -188,31 +199,51 @@ interface Shipped {
   triangles: number
   gates: GateResult[]
   compression: 'draco' | 'none'
+  textures: 'webp' | 'none'
+}
+
+/** The abort error for a measured `textures` failure: our own settings are at fault, so no new paid Meshy task. */
+function textureBudgetError(gate: GateResult): Error {
+  return new Error(`${gate.detail} (lower TEXTURE_MAX_PX or FILE_BYTES_MAX in gates.ts)`)
 }
 
 /**
- * Compresses a fixed GLB that passed its gates and re-measures the result. Throws when either step throws.
- * Returns the file to ship, or the failing gates (marked "after Draco") when a non-connector cannot ship compressed.
+ * Optimizes the textures of a fixed GLB that passed its gates, Draco-compresses the result and re-measures the FINAL
+ * bytes (five gates plus `textures`). Throws when any step throws, and when the bytes to ship break the texture budget
+ * (a defect of our settings: retrying would buy another Meshy task for nothing). Returns the file to ship, or the
+ * failing gates (marked "after Draco") when a non-connector cannot ship compressed.
  */
-async function compressAndRegate(
+async function optimizeAndRegate(
   fixed: Uint8Array,
-  fixedMeasure: { gates: GateResult[]; triangles: number },
   drift: GateResult,
   spec: AssetSpecT,
-  compress: BuildDeps['compress'],
+  d: Pick<BuildDeps, 'compress' | 'optimizeTextures'>,
 ): Promise<{ shipped: Shipped } | { failed: GateResult[] }> {
-  const bits = QUANTIZE_BITS[spec.tier]
-  // A throw from the compressor or the re-measurement is not a measured failure: it propagates and aborts the build.
-  const bytes = await compress(fixed, { quantizePositionBits: bits })
-  const compressed = { bytes, ...(await measure(bytes, spec)) }
+  // A throw from a step or from a re-measurement is not a measured failure: it propagates and aborts the build.
+  const textured = await d.optimizeTextures(fixed, { maxPx: TEXTURE_MAX_PX[spec.tier] })
+  const bytes = await d.compress(textured, { quantizePositionBits: QUANTIZE_BITS[spec.tier] })
+  const compressed = await measure(bytes, spec)
+
+  let final: { bytes: Uint8Array; triangles: number; gates: GateResult[]; report: GlbReport; compression: 'draco' | 'none' }
   if (allOk(compressed.gates)) {
-    return { shipped: { bytes: compressed.bytes, triangles: compressed.triangles, gates: [...compressed.gates, drift], compression: 'draco' } }
+    final = { bytes, triangles: compressed.triangles, gates: compressed.gates, report: compressed.report, compression: 'draco' }
+  } else if (spec.tier === 'connector') {
+    // A tiny connector can lose its tolerance to quantization: ship the texture-optimized file, re-measured, without Draco.
+    const plain = await measure(textured, spec)
+    if (!allOk(plain.gates)) return { failed: [...plain.gates, drift] }
+    final = { bytes: textured, triangles: plain.triangles, gates: plain.gates, report: plain.report, compression: 'none' }
+  } else {
+    const textures = checkTextures(compressed.report, spec)
+    if (!textures.ok) throw textureBudgetError(textures)
+    return { failed: [...compressed.gates.map((g) => ({ ...g, detail: `after Draco: ${g.detail}` })), drift, textures] }
   }
-  if (spec.tier === 'connector') {
-    // A tiny connector can lose its tolerance to quantization: ship the file that was measured and passed.
-    return { shipped: { bytes: fixed, triangles: fixedMeasure.triangles, gates: [...fixedMeasure.gates, drift], compression: 'none' } }
+
+  const textures = checkTextures(final.report, spec)
+  if (!textures.ok) throw textureBudgetError(textures)
+  const hasWebp = final.report.textures.length > 0 && final.report.textures.every((t) => t.mimeType === 'image/webp')
+  return {
+    shipped: { bytes: final.bytes, triangles: final.triangles, gates: [...final.gates, drift, textures], compression: final.compression, textures: hasWebp ? 'webp' : 'none' },
   }
-  return { failed: [...compressed.gates.map((g) => ({ ...g, detail: `after Draco: ${g.detail}` })), drift] }
 }
 
 /** Builds one asset. Precondition problems (unknown spec, no photos, unreadable --raw, no Blender) throw; everything else is in the report. */
@@ -273,7 +304,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       attempt.gates = [...fixedMeasure.gates, drift]
       if (!allOk(attempt.gates)) continue
 
-      const result = await compressAndRegate(fixed, fixedMeasure, drift, spec, d.compress)
+      const result = await optimizeAndRegate(fixed, drift, spec, d)
       if ('failed' in result) {
         attempt.gates = result.failed
         continue
@@ -281,6 +312,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       const { shipped } = result
       attempt.gates = shipped.gates
       attempt.compression = shipped.compression
+      attempt.textures = shipped.textures
       if (!dryRun) {
         const target = join(d.paths.assetsDir, `${id}.glb`)
         await writeAtomic(target, shipped.bytes)
@@ -323,7 +355,7 @@ export function formatReport(report: BuildReport): string {
     lines.push(`attempt ${a.n}  credits: ${a.credits === null ? 'n/a' : String(a.credits)}`)
     if (a.gates.length === 0) lines.push('  (no gates ran)')
     for (const g of a.gates) lines.push(`  ${g.ok ? 'PASS' : 'FAIL'}  ${g.gate.padEnd(16)}${g.detail}`)
-    if (a.compression) lines.push(`  compression: ${a.compression}`)
+    if (a.compression) lines.push(`  compression: ${a.compression}, textures: ${a.textures ?? 'none'}`)
   }
   if (report.error) lines.push(`error: ${report.error}`)
   if (report.ok) lines.push(report.finalGlb ? `result: PASS, shipped ${report.finalGlb}` : report.dryRun ? 'result: PASS (dry run)' : 'result: PASS')

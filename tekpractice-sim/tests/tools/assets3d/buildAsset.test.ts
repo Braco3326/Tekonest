@@ -10,7 +10,7 @@ import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { buildAsset, formatReport, isMainModule, main, readPhotosFrom } from '../../../tools/assets3d/build-asset'
 import type { BuildDeps, BuildReport } from '../../../tools/assets3d/build-asset'
-import { dracoCompress } from '../../../tools/assets3d/compress'
+import { dracoCompress, optimizeTextures } from '../../../tools/assets3d/compress'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
 import { MeshyError } from '../../../tools/assets3d/meshy'
 import type { MeshyTask } from '../../../tools/assets3d/meshy'
@@ -18,6 +18,7 @@ import { buildPlacement } from '../../../tools/assets3d/placement'
 import type { FixupReport } from '../../../tools/assets3d/runFixup'
 import type { AssetSpecT } from '../../../tools/assets3d/specSchema'
 import { makeBoxGlb } from './helpers'
+import type { MakeMeshGlbOpts } from './helpers'
 
 const FAKE_KEY = 'msy_FAKE_KEY_do_not_leak_0123456789'
 
@@ -49,13 +50,13 @@ function connectorSpec(over: Partial<AssetSpecT> = {}): AssetSpecT {
 }
 
 /** A fixed (post Blender) GLB that clears every gate for `spec`. `shiftXM` moves a connector body sideways. */
-async function goodGlb(spec: AssetSpecT, shiftXM = 0): Promise<Uint8Array> {
+async function goodGlb(spec: AssetSpecT, shiftXM = 0, texture?: MakeMeshGlbOpts['texture']): Promise<Uint8Array> {
   const placement = buildPlacement(spec)
   if (spec.kind === 'connector') {
-    return makeBoxGlb({ sizeM: placement.sizeM, meshOnChild: { pos: [shiftXM, -placement.sizeM.h / 2, placement.sizeM.d / 2] } })
+    return makeBoxGlb({ sizeM: placement.sizeM, texture, meshOnChild: { pos: [shiftXM, -placement.sizeM.h / 2, placement.sizeM.d / 2] } })
   }
   const nodes = [...placement.ports.map((p) => ({ name: p.name, pos: p.pos })), ...placement.controls.map((c) => ({ name: c.name, pos: c.pos }))]
-  return makeBoxGlb({ sizeM: placement.sizeM, nodes })
+  return makeBoxGlb({ sizeM: placement.sizeM, nodes, texture })
 }
 
 /** A device GLB 3 mm too tall: the size gate fails. */
@@ -75,6 +76,9 @@ interface Calls {
   download: string[]
   fixup: { inGlb: string; outGlb: string; yawDeg: number | undefined; inBytes: Uint8Array }[]
   compress: { bits: number }[]
+  optimize: { maxPx: number }[]
+  /** The order the texture and Draco steps ran in. */
+  order: ('optimize' | 'compress')[]
 }
 
 interface Rig {
@@ -83,6 +87,7 @@ interface Rig {
   fixed: Uint8Array[]
   fixupReport?: FixupReport
   compress?: BuildDeps['compress']
+  optimize?: BuildDeps['optimizeTextures']
   createError?: Error
   downloadError?: Error
   credits?: number
@@ -101,7 +106,7 @@ beforeEach(async () => {
     paths.manifestPath,
     JSON.stringify({ generated: 'g', assets: [{ id: 'other', status: 'ok', tris: 7 }, { id: 'test-mixer', kind: 'device', optimized: true, tris: 5, status: 'ok', note: 'old' }] }, null, 2),
   )
-  calls = { create: [], wait: [], download: [], fixup: [], compress: [] }
+  calls = { create: [], wait: [], download: [], fixup: [], compress: [], optimize: [], order: [] }
   savedKey = process.env.MESHY_API_KEY
 })
 afterEach(async () => {
@@ -146,8 +151,16 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
     compress:
       rig.compress ??
       (async (bytes, opts) => {
+        calls.order.push('compress')
         calls.compress.push({ bits: opts.quantizePositionBits })
         return dracoCompress(bytes, opts)
+      }),
+    optimizeTextures:
+      rig.optimize ??
+      (async (bytes, opts) => {
+        calls.order.push('optimize')
+        calls.optimize.push({ maxPx: opts.maxPx })
+        return optimizeTextures(bytes, opts)
       }),
     loadSpec: (id) => {
       if (id !== rig.spec.id) throw new Error(`no asset spec "${id}"`)
@@ -173,7 +186,7 @@ describe('buildAsset', () => {
     expect(report.dryRun).toBe(false)
     expect(report.attempts).toHaveLength(1)
     expect(report.attempts[0]).toMatchObject({ n: 1, credits: 20, compression: 'draco' })
-    expect(report.attempts[0].gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift'])
+    expect(report.attempts[0].gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift', 'textures'])
     expect(report.attempts[0].gates.every((g) => g.ok)).toBe(true)
     expect(calls.create).toHaveLength(1)
     expect(calls.create[0].targetPolycount).toBe(3000)
@@ -592,6 +605,145 @@ describe('buildAsset', () => {
     const onDisk = JSON.parse(await readFile(join(paths.sourceDir, spec.id, 'report.json'), 'utf8')) as BuildReport
     expect(onDisk.dryRun).toBe(true)
     expect(onDisk.ok).toBe(true)
+  })
+})
+
+describe('buildAsset texture budget', () => {
+  it('textures are optimized before Draco and the shipped file is re-gated', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const fixed = await goodGlb(spec, 0, { sizePx: 2048, pbr: true })
+    expect((await inspectGlb(fixed)).textures).toHaveLength(3)
+    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [fixed] }))
+
+    expect(report.ok).toBe(true)
+    expect(calls.order).toEqual(['optimize', 'compress'])
+    expect(calls.optimize).toEqual([{ maxPx: 1024 }])
+    expect(calls.compress).toEqual([{ bits: 14 }])
+
+    const shipped = await inspectGlb(new Uint8Array(await readFile(join(paths.assetsDir, 'test-mixer.glb'))))
+    expect(shipped.textures).toHaveLength(3)
+    for (const t of shipped.textures) expect(t).toMatchObject({ width: 1024, height: 1024, mimeType: 'image/webp' })
+    expect(shipped.triangles).toBe(12)
+
+    const gates = report.attempts[0].gates
+    expect(gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift', 'textures'])
+    expect(gates.every((g) => g.ok)).toBe(true)
+    expect(gates[6].detail).toContain(String(shipped.fileBytes))
+    const entry = (await readManifest()).assets.find((a) => a.id === 'test-mixer')
+    expect((entry?.gates as { gate: string }[]).map((g) => g.gate)).toContain('textures')
+  })
+
+  it('a connector gets the 512 px limit', async () => {
+    const spec = connectorSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const report = await buildAsset(spec.id, { maxAttempts: 1 }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024 })], fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
+    expect(report.ok).toBe(true)
+    expect(calls.optimize).toEqual([{ maxPx: 512 }])
+    expect((await inspectGlb(new Uint8Array(await readFile(join(paths.assetsDir, 'test-jack.glb'))))).textures[0]).toMatchObject({ width: 512, mimeType: 'image/webp' })
+  })
+
+  it('attempt records textures webp', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const textured = await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 256 })] }))
+    expect(textured.attempts[0]).toMatchObject({ compression: 'draco', textures: 'webp' })
+    const onDisk = JSON.parse(await readFile(join(paths.sourceDir, spec.id, 'report.json'), 'utf8')) as BuildReport
+    expect(onDisk.attempts[0].textures).toBe('webp')
+
+    const plain = await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+    expect(plain.attempts[0]).toMatchObject({ compression: 'draco', textures: 'none' })
+  })
+
+  it('an oversize final file aborts without a second Meshy create and keeps the raw GLB', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const manifestBefore = await readFile(paths.manifestPath, 'utf8')
+    // a no-op texture step on three 1024 px noise maps leaves roughly 9 MB: far over the 1 MB standard limit
+    const optimize: BuildDeps['optimizeTextures'] = async (bytes) => bytes
+    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024, noise: true, pbr: true })], optimize }))
+
+    expect(report.ok).toBe(false)
+    expect(report.error).toMatch(/^file size budget exceeded: \d+ > 1000000 \(lower TEXTURE_MAX_PX or FILE_BYTES_MAX in gates\.ts\)$/)
+    expect(report.attempts).toHaveLength(1)
+    expect(report.attempts[0].credits).toBe(20)
+    expect(calls.create).toHaveLength(1)
+    expect(existsSync(join(report.workDir, 'attempt-1.raw.glb'))).toBe(true)
+    expect(existsSync(join(paths.assetsDir, 'test-mixer.glb'))).toBe(false)
+    expect(await readFile(paths.manifestPath, 'utf8')).toBe(manifestBefore)
+  })
+
+  it('an oversize texture on the final bytes also aborts, naming the texture', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const optimize: BuildDeps['optimizeTextures'] = async (bytes) => bytes
+    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 2048 })], optimize }))
+    expect(report.ok).toBe(false)
+    expect(report.error).toMatch(/baseColor/)
+    expect(report.error).toMatch(/2048/)
+    expect(report.error).toMatch(/TEXTURE_MAX_PX/)
+    expect(report.attempts).toHaveLength(1)
+    expect(calls.create).toHaveLength(1)
+    expect(existsSync(join(report.workDir, 'attempt-1.raw.glb'))).toBe(true)
+    expect(existsSync(join(paths.assetsDir, 'test-mixer.glb'))).toBe(false)
+  })
+
+  it('a throw in optimizeTextures aborts for every tier', async () => {
+    for (const spec of [connectorSpec(), deviceSpec(), deviceSpec({ id: 'test-hero', tier: 'hero' })]) {
+      calls.create.length = 0
+      calls.compress.length = 0
+      await addPhotos(spec.id, ['a.png'])
+      const optimize: BuildDeps['optimizeTextures'] = async () => {
+        throw new Error('sharp blew up')
+      }
+      const fixupReport = spec.kind === 'connector' ? { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } : undefined
+      const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], optimize, fixupReport }))
+      expect(report.ok).toBe(false)
+      expect(report.error).toContain('sharp blew up')
+      expect(report.attempts).toHaveLength(1)
+      expect(calls.create).toHaveLength(1)
+      expect(calls.compress).toHaveLength(0)
+      expect(existsSync(join(paths.assetsDir, `${spec.id}.glb`))).toBe(false)
+    }
+  })
+
+  it('the connector fallback ships the optimized, uncompressed file and gates its textures', async () => {
+    const spec = connectorSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const shifted = await goodGlb(spec, 0.0006)
+    const compress: BuildDeps['compress'] = async () => shifted
+    const report = await buildAsset(spec.id, { maxAttempts: 1 }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024 })], compress, fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
+    expect(report.ok).toBe(true)
+    expect(report.attempts[0]).toMatchObject({ compression: 'none', textures: 'webp' })
+    expect(report.attempts[0].gates.at(-1)).toMatchObject({ gate: 'textures', ok: true })
+    const shipped = await inspectGlb(new Uint8Array(await readFile(join(paths.assetsDir, 'test-jack.glb'))))
+    expect(shipped.textures[0]).toMatchObject({ width: 512, height: 512, mimeType: 'image/webp' })
+  })
+
+  it('the connector fallback aborts when the file it would ship breaks the texture budget', async () => {
+    const spec = connectorSpec()
+    await addPhotos(spec.id, ['a.png'])
+    // 512 px noise x3 is still far over 250 kB, and the Draco output is rejected on its geometry
+    const noisy = await goodGlb(spec, 0, { sizePx: 512, noise: true, pbr: true })
+    const optimize: BuildDeps['optimizeTextures'] = async (bytes) => bytes
+    const compress: BuildDeps['compress'] = async () => goodGlb(spec, 0.0006)
+    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [noisy], optimize, compress, fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
+    expect(report.ok).toBe(false)
+    expect(report.error).toMatch(/file size budget exceeded: \d+ > 250000/)
+    expect(report.attempts).toHaveLength(1)
+    expect(calls.create).toHaveLength(1)
+    expect(existsSync(join(paths.assetsDir, 'test-jack.glb'))).toBe(false)
+  })
+
+  it('a geometry failure after Draco still retries (a Meshy defect), with the textures gate in the report', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const bad = await tallGlb(spec)
+    const compress: BuildDeps['compress'] = async () => bad
+    const report = await buildAsset(spec.id, { maxAttempts: 2 }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress }))
+    expect(report.attempts).toHaveLength(2)
+    expect(calls.create).toHaveLength(2)
+    expect(report.attempts[0].gates.at(-1)?.gate).toBe('textures')
   })
 })
 

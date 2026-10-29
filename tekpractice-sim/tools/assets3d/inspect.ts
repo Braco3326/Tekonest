@@ -31,6 +31,10 @@ export interface GlbReport {
   rootRotation: Quat
   /** The root node's extras, or null when it has none. */
   extras: unknown
+  /** Byte length of the inspected GLB. */
+  fileBytes: number
+  /** Every texture with its pixel size and mime type, read from the image header (also for WebP). */
+  textures: { name: string; width: number; height: number; mimeType: string }[]
 }
 
 /** Applies a column-major 4x4 matrix to a point. */
@@ -88,6 +92,18 @@ export async function inspectGlb(bytes: Uint8Array): Promise<GlbReport> {
       triangles += Math.floor((indices ? indices.getCount() : count) / 3)
     }
   }
+  const textures = root.listTextures().map((t, i) => {
+    const name = t.getName() || t.getURI() || `texture ${i}`
+    const unreadable = (why: string): Error => new Error(`texture "${name}" (${t.getMimeType() || 'unknown mime type'}) has no readable size (${why}): cannot check the texture budget`)
+    let size: [number, number] | null
+    try {
+      size = t.getSize()
+    } catch (e) {
+      throw unreadable(e instanceof Error ? e.message : String(e))
+    }
+    if (!size) throw unreadable('unknown image format')
+    return { name, width: size[0], height: size[1], mimeType: t.getMimeType() }
+  })
   const hasGeometry = min[0] !== Infinity
   const single = topLevel.length === 1 ? topLevel[0] : undefined
 
@@ -104,5 +120,7 @@ export async function inspectGlb(bytes: Uint8Array): Promise<GlbReport> {
     rootScale: single ? (single.getScale().slice() as Vec3) : [1, 1, 1],
     rootRotation: single ? (single.getRotation().slice() as Quat) : [0, 0, 0, 1],
     extras: single && Object.keys(single.getExtras()).length > 0 ? single.getExtras() : null,
+    fileBytes: bytes.byteLength,
+    textures,
   }
 }

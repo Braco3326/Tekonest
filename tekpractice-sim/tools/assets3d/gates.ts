@@ -1,7 +1,9 @@
 /**
  * assets3d/gates: the pass/fail checks a built GLB must clear before it ships. Pure functions over a GlbReport
  * (tools/assets3d/inspect.ts), the asset spec and its placement; no fs. Every gate returns a GateResult and
- * `runGates` runs all five asset gates without short-circuiting, so a report shows every failure at once.
+ * `runGates` runs all five asset gates without short-circuiting, so a report shows every failure at once. The sixth
+ * and seventh results, `proportionDrift` and `textures`, are added by the orchestrator (the first needs the fix-up's
+ * pre-scale size, the second only makes sense on the final shipped bytes).
  *
  * The report is in GLB file space (io face at +Z, see placement.ts), world metres. Lengths in the `detail`
  * strings are printed in millimetres for humans. Tolerances (all in this file, nowhere else):
@@ -12,6 +14,7 @@
  *   budget          triangles <= 800 (connector) / 4000 (standard, hero), ceilings with no floor; one material (R5)
  *   connector fit   the plug is 0 to 0.3 mm under the socket opening
  *   proportion      the pre-scale model's proportions drift at most 5 % from the spec's
+ *   textures        longest texture side <= 512 px (connector) / 1024 px (standard, hero); file <= 250 kB / 1 MB
  * Every gate fails closed: a non-finite input (NaN, Infinity) fails with a detail saying which value, and each
  * tolerance test is written `!(x <= tol)` so that a NaN that slipped through still fails.
  */
@@ -39,6 +42,10 @@ const FIT_UNDER_MM = 0.3
 const DRIFT_LIMIT = 0.05
 const MAX_MATERIALS = 1
 const TRIANGLE_CEILING = { connector: 800, standard: 4000, hero: 4000 } as const
+/** Longest texture side, in pixels, by tier: the texture step downsizes to this, the textures gate enforces it. */
+export const TEXTURE_MAX_PX = { connector: 512, standard: 1024, hero: 1024 } as const
+/** Shipped file size ceiling, in bytes, by tier (the whole GLB: geometry, textures and JSON). */
+export const FILE_BYTES_MAX = { connector: 250_000, standard: 1_000_000, hero: 1_000_000 } as const
 /** Float noise only: a port exactly on the edge of the face rectangle is inside it. */
 const EDGE_SLACK_M = 1e-6
 /** Slack under which two lengths count as equal at a tolerance boundary (a micrometre fraction of float noise). */
@@ -206,6 +213,33 @@ export function checkBudget(report: GlbReport, spec: AssetSpecT): GateResult {
   if (!Number.isFinite(report.materials)) problems.push(`materials count is not finite (${report.materials})`)
   else if (!(report.materials <= MAX_MATERIALS)) problems.push(`${report.materials} materials, at most ${MAX_MATERIALS} allowed`)
   return result('budget', problems, `${report.triangles} triangles (ceiling ${ceiling}), ${report.materials} material${report.materials === 1 ? '' : 's'}`)
+}
+
+/**
+ * Textures gate: on the FINAL bytes, every texture's longest side is within the tier maximum (TEXTURE_MAX_PX) and the
+ * whole file within the tier's FILE_BYTES_MAX. A model without textures only has its file size checked. Fails closed on a
+ * missing or non-finite size, and lists every problem at once, naming the texture and the numbers.
+ */
+export function checkTextures(report: GlbReport, spec: AssetSpecT): GateResult {
+  const maxPx = TEXTURE_MAX_PX[spec.tier]
+  const maxBytes = FILE_BYTES_MAX[spec.tier]
+  const problems: string[] = []
+
+  if (!Number.isFinite(report.fileBytes)) problems.push(`the file size is not known (${String(report.fileBytes)})`)
+  else if (!(report.fileBytes <= maxBytes)) problems.push(`file size budget exceeded: ${report.fileBytes} > ${maxBytes}`)
+
+  if (!Array.isArray(report.textures)) problems.push('the texture list is missing')
+  else {
+    for (const t of report.textures) {
+      if (!Number.isFinite(t.width) || !Number.isFinite(t.height) || !(t.width > 0) || !(t.height > 0)) {
+        problems.push(`texture "${t.name}" has no usable size (${String(t.width)} x ${String(t.height)})`)
+      } else if (!(Math.max(t.width, t.height) <= maxPx)) {
+        problems.push(`texture "${t.name}" is ${t.width} x ${t.height} px, the longest side must be at most ${maxPx} px (${spec.tier})`)
+      }
+    }
+  }
+  const count = Array.isArray(report.textures) ? report.textures.length : 0
+  return result('textures', problems, `${count} texture${count === 1 ? '' : 's'} within ${maxPx} px, file ${report.fileBytes} bytes (limit ${maxBytes})`)
 }
 
 /** Connector-fit gate: the plug's outer diameter is 0 to 0.3 mm under the socket's opening. */

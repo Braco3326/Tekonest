@@ -2,8 +2,10 @@
  * Test helpers for the assets3d tools: builds small in-memory GLB files with @gltf-transform/core.
  */
 import { Document, NodeIO } from '@gltf-transform/core'
+import type { Texture } from '@gltf-transform/core'
 import { ALL_EXTENSIONS, KHRDracoMeshCompression } from '@gltf-transform/extensions'
 import draco3d from 'draco3dgltf'
+import sharp from 'sharp'
 
 type Vec3 = [number, number, number]
 
@@ -51,6 +53,25 @@ export interface MakeMeshGlbOpts {
   strayRoots?: { name: string; scale?: number }[]
   /** Material baseColorFactor (linear RGBA); default is the glTF default [1, 1, 1, 1]. */
   baseColor?: [number, number, number, number]
+  /**
+   * Gives the material a square PNG base-colour texture of `sizePx`; `pbr` adds a normal and a metallic-roughness map of
+   * the same size (what Meshy returns). `noise` fills them with deterministic pseudo-random pixels (a PNG that does not
+   * compress, like a photo), otherwise they are one flat colour. Default: no texture.
+   */
+  texture?: { sizePx: number; noise?: boolean; pbr?: boolean }
+}
+
+/** A square RGB PNG: flat colour, or deterministic pseudo-random noise (same bytes every call). */
+async function makePng(sizePx: number, noise: boolean): Promise<Uint8Array> {
+  const raw = Buffer.alloc(sizePx * sizePx * 3, 0x80)
+  if (noise) {
+    let seed = 12345
+    for (let i = 0; i < raw.length; i++) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0
+      raw[i] = seed >>> 24
+    }
+  }
+  return new Uint8Array(await sharp(raw, { raw: { width: sizePx, height: sizePx, channels: 3 } }).png().toBuffer())
 }
 
 /** Builds a GLB with one root node (carrying the mesh unless `meshOnChild`), and returns its bytes. */
@@ -59,6 +80,12 @@ export async function makeMeshGlb(opts: MakeMeshGlbOpts): Promise<Uint8Array> {
   const buffer = doc.createBuffer()
   const material = doc.createMaterial('body')
   if (opts.baseColor) material.setBaseColorFactor(opts.baseColor)
+  if (opts.texture) {
+    const { sizePx, noise = false, pbr = false } = opts.texture
+    const png = async (name: string): Promise<Texture> => doc.createTexture(name).setImage(await makePng(sizePx, noise)).setMimeType('image/png')
+    material.setBaseColorTexture(await png('baseColor'))
+    if (pbr) material.setNormalTexture(await png('normal')).setMetallicRoughnessTexture(await png('metallicRoughness'))
+  }
   const mesh = doc.createMesh('mesh')
   for (const g of opts.prims) {
     const position = doc.createAccessor().setType('VEC3').setArray(new Float32Array(g.positions)).setBuffer(buffer)

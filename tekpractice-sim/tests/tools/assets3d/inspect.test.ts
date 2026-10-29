@@ -167,3 +167,32 @@ describe('inspectGlb takes the bbox from decoded vertices, not from accessor min
     })
   }
 })
+
+describe('inspectGlb textures and file size', () => {
+  it('reports textures and fileBytes', async () => {
+    const plain = await makeBoxGlb({ sizeM: SIZE })
+    const none = await inspectGlb(plain)
+    expect(none.textures).toEqual([])
+    expect(none.fileBytes).toBe(plain.byteLength)
+
+    const textured = await makeBoxGlb({ sizeM: SIZE, texture: { sizePx: 128, pbr: true } })
+    const r = await inspectGlb(textured)
+    expect(r.fileBytes).toBe(textured.byteLength)
+    expect(r.textures).toEqual([
+      { name: 'baseColor', width: 128, height: 128, mimeType: 'image/png' },
+      { name: 'normal', width: 128, height: 128, mimeType: 'image/png' },
+      { name: 'metallicRoughness', width: 128, height: 128, mimeType: 'image/png' },
+    ])
+  })
+
+  it('fails loudly when a texture size cannot be read', async () => {
+    const doc = new Document()
+    const buffer = doc.createBuffer()
+    const pos = doc.createAccessor().setType('VEC3').setBuffer(buffer).setArray(new Float32Array([0, 0, 0, 1, 0, 0, 0, 1, 0]))
+    const mesh = doc.createMesh('tri').addPrimitive(doc.createPrimitive().setAttribute('POSITION', pos))
+    const texture = doc.createTexture('broken').setImage(new Uint8Array([1, 2, 3, 4])).setMimeType('image/png')
+    doc.createMaterial('m').setBaseColorTexture(texture)
+    doc.createScene().addChild(doc.createNode('root').setMesh(mesh))
+    await expect(inspectGlb(await new NodeIO().writeBinary(doc))).rejects.toThrow(/texture "broken".*size/i)
+  })
+})
