@@ -44,13 +44,12 @@
   /* ── Type ── */
   --font-display: "Tektur", "IBM Plex Sans", system-ui, sans-serif;
   --font-text: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --text-label: 0.8125rem; /* 13: small caps labels */
   --text-sm: 0.875rem;   /* 14 */
   --text-base: 1.0625rem;/* 17 */
-  --text-lg: 1.25rem;    /* 20 */
-  --text-xl: 1.5rem;     /* 24 */
-  --text-2xl: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);   /* 28 → 40 */
-  --text-3xl: clamp(2rem, 1.3rem + 2.8vw, 3.25rem);   /* 32 → 52 */
-  --text-hero: clamp(2.6rem, 1.2rem + 5.6vw, 5.75rem); /* 42 → 92 */
+  --text-lg: 1.25rem;    /* 20: lede, h3 */
+  --text-2xl: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);   /* 28 → 40: section title */
+  --text-hero: clamp(2.25rem, 1.4rem + 3.6vw, 3.75rem); /* 36 → 60: page title */
   --leading-tight: 1.02;
   --leading-text: 1.6;
   --tracking-display: -0.01em;

@@ -103,10 +103,10 @@ test("old organiser links redirect", () => {
   assert.match(redirects, /^\/organiser\.html \/creer\.html 301$/m);
 });
 
-test("families grid is two columns above 800px", () => {
+test("families grid is two columns from 48 em", () => {
   const css = page("assets/css/site.css");
   assert.match(css, /\.families\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/);
-  assert.match(css, /@media \(max-width: 800px\)\s*\{\s*\.families\s*\{[^}]*grid-template-columns: 1fr/);
+  assert.match(css, /@media \(max-width: 47\.99em\)\s*\{\s*\.families\s*\{[^}]*grid-template-columns: 1fr/);
 });
 
 const main = (name) => {
@@ -337,4 +337,20 @@ test("every page preloads the fonts it paints first, so text cannot shift when t
 
 test("no page declares a share image", () => {
   for (const name of pages()) assert.doesNotMatch(page(name), /og:image/, name);
+});
+
+// ---- Phase C: the Berghain model (spec 2026-10-29-tekonest-berghain-adaptation.md) ----
+test("the type scale has six sizes and nothing else sets a size", () => {
+  const tokens = page("assets/css/tokens.css");
+  const names = [...tokens.matchAll(/--text-([a-z0-9]+)\s*:/g)].map((m) => m[1]).sort();
+  assert.deepEqual(names, ["2xl", "base", "hero", "label", "lg", "sm"]);
+  for (const [, n] of css().matchAll(/var\(--text-([a-z0-9]+)\)/g)) assert.ok(names.includes(n), `--text-${n} is not in the scale`);
+  for (const [, v] of css().matchAll(/font-size:\s*([^;}]+)/g)) assert.doesNotMatch(v, /\d(rem|px)\b/, `raw size ${v}`);
+  for (const [, v] of css().matchAll(/\bfont:\s*([^;}]+)/g)) assert.doesNotMatch(v, /\d(rem|px)\b/, `raw size in font: ${v}`);
+});
+
+test("site.css uses three breakpoints only", () => {
+  const q = [...css().matchAll(/@media \(max-width: ([^)]+)\)/g)].map((m) => m[1]);
+  assert.ok(q.length >= 5);
+  for (const v of q) assert.ok(["39.99em", "47.99em", "63.99em"].includes(v), `breakpoint ${v}`);
 });
