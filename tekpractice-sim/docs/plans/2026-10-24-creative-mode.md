@@ -1933,7 +1933,7 @@ Brief §7 defaults (logged in `docs/CREATIVE-MODE-LOG.md`), inventory facts L1�
 
 ### Task 36: Pure acoustics core and ADR-0015
 
-- **Agent:** tekdeveloper. **Closes:** CA-23 (model part). **Decisions:** C13, P9, P10, P17.
+- **Agent:** tekdeveloper. **Closes:** CA-23 (model part). **Decisions:** C13, P9, P10, P17. *(réf. corrigée : CA-23…26 de l'audit sont autres ; Phase 4 = CA-03, brief §5, C13)*
 - **Files:** create `src/acoustics/geometry.ts`, `src/acoustics/field.ts`, `src/acoustics/scale.ts`, `src/acoustics/grid.ts`, `docs/adr/0015-acoustics-direct-field.md`; tests `tests/acoustics/golden.test.ts`, `tests/acoustics/field.test.ts`, `tests/acoustics/grid.test.ts`.
 - **Interfaces (produces):**
 
@@ -2038,7 +2038,7 @@ Brief §7 defaults (logged in `docs/CREATIVE-MODE-LOG.md`), inventory facts L1�
 
 ### Task 37: Coverage worker, dots, legend and statistics
 
-- **Agents:** tekdeveloper (worker, thin instances), tekfrontenddesigner (`/frontend-design`, legend + stats panel), tekuxwriter (honesty copy), tekdesigner (8-colour scale on Nuit). **Closes:** CA-23, CA-24, CA-25. **Decisions:** C13, S2, S6.
+- **Agents:** tekdeveloper (worker, thin instances), tekfrontenddesigner (`/frontend-design`, legend + stats panel), tekuxwriter (honesty copy), tekdesigner (8-colour scale on Nuit). **Closes:** CA-23, CA-24, CA-25. **Decisions:** C13, S2, S6. *(réf. corrigée : CA-23…26 de l'audit sont autres ; Phase 4 = CA-03, brief §5, C13)*
 - **Files:** create `src/acoustics/worker.ts`, `src/acoustics/client.ts`, `src/creation/coverageLayer.ts`, `src/creation/shell/coveragePanel.ts`, `tests/acoustics/honesty.test.ts`; modify `src/creation/shell/menuModel.ts` (Écoute › « Couverture » toggle, « Hauteur d'oreille »), `src/creation/copy.ts`; tests `tests/acoustics/client.test.ts`, `tests/e2e/creation-coverage.spec.ts`.
 - **Interfaces:**
 
@@ -2057,7 +2057,7 @@ Brief §7 defaults (logged in `docs/CREATIVE-MODE-LOG.md`), inventory facts L1�
   - Panel (Properties side, not over the viewport): legend 0 → −24 dB in 3 dB steps with labels, « dB relatif (0 = point le plus fort) », « somme énergétique, champ direct », source line (« Couverture : données KB / valeur nominale »), the fidelity chip « relatif », stats min/max/moyenne/écart-type/points, « Hachuré : interférences non modélisées ». « ≈ dB SPL estimé » appears only when every contributing speaker has sourced `sensitivity_db` and `max_spl_db` (none today, so it is hidden; the unit test proves the rule with a synthetic catalog).
 - [ ] **Step 4: e2e** `tests/e2e/creation-coverage.spec.ts`: powered reference rig + playback-usb on; Écoute › Couverture → `__creation.coverage()` returns ≤ 20 000 points with max 0 dB; idle 2 s → 0 renders and 0 worker jobs; moving `k12-g` by 1 m → exactly 1 new job after 150 ms; muting the master → the dots disappear (no fed source) and the panel says why; `__creation.drawCalls('coverage') === 1` for the plain dots mesh.
 - [ ] **Step 5: run.** `npm run build; if ($?) { npx playwright test tests/e2e/creation-coverage.spec.ts }` → PASS.
-- [ ] **Step 6: commit.** `feat(acoustics): debounced worker coverage with thin-instance dots, legend and stats (CA-23, CA-24, CA-25)`.
+- [ ] **Step 6: commit.** `feat(acoustics): debounced worker coverage with thin-instance dots, legend and stats (CA-23, CA-24, CA-25)`. *(réf. corrigée : CA-23…26 de l'audit sont autres ; Phase 4 = CA-03, brief §5, C13)*
 - **Acceptance:** coverage on change only; one draw call; honest labels; no STI / legal-limit wording (grep test).
 
 ### Task 38: CC0 demo songs and local file
@@ -2074,7 +2074,8 @@ Brief §7 defaults (logged in `docs/CREATIVE-MODE-LOG.md`), inventory facts L1�
 
 ### Task 39: Web Audio listener mix, transport and meters
 
-- **Agents:** tekdeveloper (pure mix + adapter), tekfrontenddesigner (`/frontend-design`, Écoute UI), tekuxwriter. **Closes:** CA-03 (P0: hear the rig), CA-26. **Decisions:** C9, C14, S3.
+- **Agents:** tekdeveloper (pure mix + adapter), tekfrontenddesigner (`/frontend-design`, Écoute UI), tekuxwriter. **Closes:** CA-03 (P0: hear the rig), CA-26. **Decisions:** C9, C14, S3. *(réf. corrigée : CA-23…26 de l'audit sont autres ; Phase 4 = CA-03, brief §5, C13)*
+- *(écart, Phase 4 : le brief §5 / conseil T4.5 demandait aussi « Écouter depuis ici » (un clic sur un point de couverture déplace l'auditeur) et un vumètre de console ; ni l'un ni l'autre n'est fait, propriétaire : Task 43 étape 3, voir L31 du journal. Le balance de la console, lui, est appliqué au son et à la couverture : loi dans ADR-0015, addendum Task 39.)*
 - **Files:** create `src/audio/listenerMix.ts` (pure), `src/audio/engine.ts` (Web Audio adapter, lazy chunk), `src/audio/testSignal.ts` (own-work generated pink noise and a short musical pattern rendered with `OfflineAudioContext`), `src/creation/shell/listenPanel.ts`; modify `src/creation/shell/menuModel.ts` (Écoute: « Lecture » / « Stop », « Morceau » list, « Choisir un fichier audio… », « Signal de test »), `src/creation/copy.ts`; tests `tests/audio/listenerMix.test.ts`, `tests/e2e/creation-listen.spec.ts`.
 - **Interfaces:**
 
@@ -2095,7 +2096,7 @@ Brief §7 defaults (logged in `docs/CREATIVE-MODE-LOG.md`), inventory facts L1�
 - [ ] **Step 4: wiring.** « Lecture » is enabled iff `signalPath(...).playbackReady`; otherwise the button stays focusable with `aria-disabled="true"` and its description is the first reason (`text_fr`). The listener is the walk camera in walk view, else the active listening point (Task 20) looking at the stage. Voices update on store change, listener move (debounced to animation frames only while playing), ear height change.
 - [ ] **Step 5: failing e2e** `tests/e2e/creation-listen.spec.ts` (Chromium flag `--autoplay-policy=no-user-gesture-required` in `playwright.config.ts` `launchOptions.args`): unpowered rig → Lecture `aria-disabled` with « La console n'est pas alimentée. »; power everything + playback-usb on → Lecture enabled → click → after 500 ms `__creation.audioLevels()` shows both speakers > 0; `mute-master` on → levels 0 but « Lecture » stays on (mute never gates); stop → lease `meters` released and 0 renders in 2 s; « Choisir un fichier audio… » with `setInputFiles` (a 1 s generated WAV in the test) plays and **no network request** carries the file (`page.on('request')` sees no POST/PUT and no blob upload).
 - [ ] **Step 6: run.** `npm run build; if ($?) { npx playwright test tests/e2e/creation-listen.spec.ts }` → PASS.
-- [ ] **Step 7: commit.** `feat(audio): listener mix through each powered speaker; songs, local file, test signal (CA-03, CA-26)`.
+- [ ] **Step 7: commit.** `feat(audio): listener mix through each powered speaker; songs, local file, test signal (CA-03, CA-26)`. *(réf. corrigée : CA-23…26 de l'audit sont autres ; Phase 4 = CA-03, brief §5, C13)*
 - **Acceptance:** sound only when the chain is truly valid; per-speaker gain/delay/pan from geometry; local file never leaves the browser.
 
 ### Task 40 (bonus, cut first after Délais): Wavefront visualisation

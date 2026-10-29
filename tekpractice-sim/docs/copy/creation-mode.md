@@ -669,7 +669,7 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.method` | somme énergétique, champ direct | à valider (tekuxwriter) | Ce que le calcul fait. Mot pour mot (brief §5) |
 | `coverage.chip` | relatif | à valider (tekuxwriter) | Pastille de fidélité (brief §5) |
 | `coverage.chipName` | Fidélité du calcul : relatif | à valider (tekuxwriter) | Nom accessible de la pastille (bouton qui ouvre l’explication) |
-| `coverage.chipPopover` | Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. Le balance et les canaux L/R de la console ne changent pas le niveau affiché ; l’origine de l’enceinte est son point de pose. | à valider (tekuxwriter) | Explication de la pastille |
+| `coverage.chipPopover` | Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. Le fader, le mute et le balance de la console changent le niveau affiché comme le son (le balance baisse le côté opposé) ; l’origine de l’enceinte est son point de pose. | à valider (tekuxwriter) | Explication de la pastille |
 | `coverage.legendTitle` | Échelle | à valider (tekuxwriter) | Titre de la légende des couleurs |
 | `coverage.legendBin` | {from} à {to} dB | à valider (tekuxwriter) | Une ligne de légende ; {from} / {to} = bornes de la classe de 3 dB |
 | `coverage.legendLast` | {from} dB et moins | à valider (tekuxwriter) | Dernière ligne de légende (classe ouverte vers le bas) |
@@ -712,6 +712,7 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.reasonNotFedBare` | aucune enceinte ne reçoit de signal | à valider (tekuxwriter) | Idem sans raison détaillée |
 | `coverage.reasonMuted` | la console est en mute | à valider (tekuxwriter) | Toutes les enceintes alimentées sont en sourdine |
 | `coverage.reasonSilent` | le fader master est à −inf | à valider (tekuxwriter) | Toutes les enceintes alimentées sont à −inf |
+| `coverage.reasonBalance` | le balance de la console coupe ces enceintes | à valider (tekuxwriter) | Raison dite quand le balance (G100 / D100) coupe tous les côtés qui alimentent les enceintes branchées |
 | `coverage.reasonUnverified` | appareil non vérifié (Bêta) | à valider (tekuxwriter) | Enceinte Bêta : aucune donnée acoustique vérifiée |
 | `coverage.reasonNoAcoustic` | enceinte sans données acoustiques | à valider (tekuxwriter) | Enceinte du catalogue sans angles de couverture |
 | `coverage.reasonUnpowered` | enceinte hors tension | à valider (tekuxwriter) | Enceinte alimentée en signal mais sans secteur |
@@ -723,7 +724,7 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 
 ## listen
 
-Écoute (Task 39, C9, C14, CA-03, CA-26) : le bloc « Écoute » de Propriétés, les annonces de lecture et les mentions d’honnêteté. Simulation simple, dite comme telle ; aucun réalisme revendiqué. Toutes les formulations sont des brouillons.
+Écoute (Task 39, C9, C14, CA-03 [réf. corrigée : CA-23…26 de l'audit sont autres ; Phase 4 = CA-03, brief §5, C13]) : le bloc « Écoute » de Propriétés, les annonces de lecture et les mentions d’honnêteté. Simulation simple, dite comme telle ; aucun réalisme revendiqué. Toutes les formulations sont des brouillons.
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
@@ -747,8 +748,9 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `listen.panRight` | droite {n} % | à valider (tekuxwriter) | Idem, à droite |
 | `listen.panCenter` | centre | à valider (tekuxwriter) | Idem, au milieu |
 | `listen.noSpeakers` | Aucune enceinte à écouter. | à valider (tekuxwriter) | Le bloc, sans enceinte alimentée |
-| `listen.simple` | Simulation simple : niveau relatif, retard et placement gauche-droite calculés d’après la géométrie. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie. | à valider (tekuxwriter) | Mention d’honnêteté dans le bloc (visible tant que Propriétés est déplié) ; la ligne de lecture le redit toujours (brief §10) |
-| `listen.volume` | Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin. | à valider (tekuxwriter) | Sécurité d’écoute : volume général de −18 dBFS, limiteur, fondu d’entrée et de sortie |
+| `listen.simple` | Simulation simple : niveau relatif, retard et placement gauche-droite calculés d’après la géométrie ; le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie. | à valider (tekuxwriter) | Mention d’honnêteté dans le bloc (visible tant que Propriétés est déplié) ; la ligne de lecture le redit toujours (brief §10) |
+| `listen.limits` | Limites : le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle) ; l’origine d’une enceinte est son point de pose ; déplacer l’auditeur fait glisser le retard et peut faire glisser la hauteur du son (ce n’est pas un effet Doppler) ; il n’y a pas de vumètre de console, seulement un niveau par enceinte ; on n’écoute pas « depuis ici » : le point d’écoute est la Régie, un autre point d’écoute ou la caméra de marche. | à valider (tekuxwriter) | Les limites que l’ADR-0015 (addendum Task 39) annonce comme « dites à l’apprenant » : le bloc les dit toutes ; deux sont des écarts au brief §5 (« Écouter depuis ici », vumètre de console), voir L31 |
+| `listen.volume` | Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin. | à valider (tekuxwriter) | Sécurité d’écoute : volume général de −12 dBFS, limiteur, fondu d’entrée et de sortie |
 | `listen.fileLocal` | Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré. | à valider (tekuxwriter) | Confidentialité (S3), toujours affichée dans le bloc |
 | `listen.fileInputName` | Choisir un fichier audio | à valider (tekuxwriter) | Nom accessible du champ fichier (masqué, déclenché par le menu) |
 | `listen.notReady` | Lecture impossible. {reason} | à valider (tekuxwriter) | Annonce quand on demande la lecture sans chaîne valide ; `{reason}` = la première raison |
