@@ -17,6 +17,7 @@ import type { MeshyTask } from '../../../tools/assets3d/meshy'
 import { buildPlacement } from '../../../tools/assets3d/placement'
 import type { FixupReport } from '../../../tools/assets3d/runFixup'
 import type { AssetSpecT } from '../../../tools/assets3d/specSchema'
+import type { CatalogT } from '../../../tools/schemas'
 import { boxGeometry, makeBoxGlb, makeMeshGlb } from './helpers'
 import type { MakeMeshGlbOpts } from './helpers'
 
@@ -112,6 +113,8 @@ interface Rig {
   createError?: Error
   downloadError?: Error
   credits?: number
+  /** The catalog checkSpecParity sees; default: one that matches `spec` exactly. */
+  catalog?: CatalogT
   /** Runs inside the fake waitForTask, i.e. after the paid create and before the task finishes. */
   onWait?: (id: string) => void
 }
@@ -190,6 +193,7 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
         calls.optimize.push({ maxPx: opts.maxPx })
         return optimizeTextures(bytes, opts)
       }),
+    loadCatalog: () => rig.catalog ?? catalogFor(rig.spec),
     loadSpec: (id) => {
       if (id !== rig.spec.id) throw new Error(`no asset spec "${id}"`)
       return rig.spec
@@ -198,6 +202,12 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
     now: () => new Date('2026-10-29T12:00:00.000Z'),
     log: (line) => calls.log.push(line),
   }
+}
+
+/** The smallest catalog checkSpecParity accepts for `spec` (only the fields it reads). */
+function catalogFor(spec: AssetSpecT): CatalogT {
+  const device = { id: spec.id, ports: spec.ports.map((p) => ({ portId: p.portId })), controls: spec.controls.map((c) => ({ id: c.controlId })) }
+  return { devices: spec.kind === 'device' ? [device] : [], connectorTypes: spec.kind === 'connector' ? [{ id: spec.id }] : [] } as unknown as CatalogT
 }
 
 async function readManifest(): Promise<{ assets: Record<string, unknown>[] }> {
@@ -1096,6 +1106,42 @@ describe('CLI ship and spend guards', () => {
     const out: string[] = []
     expect(await main([spec.id, '--yes', '--ship', '--logos-removed', '--dry-run'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))).toBe(1)
     expect(out.join('\n')).toMatch(/contradict/)
+  })
+})
+
+describe('catalog parity before paying', () => {
+  it('a spec with a port the catalog device does not have aborts with zero Meshy calls, listing the errors', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const catalog = catalogFor(deviceSpec({ ports: [{ portId: 'in-mic-2', face: 'io', xMm: 20, yMm: 25, confidence: 'manual' }] }))
+    const err = await buildAsset(spec.id, { maxAttempts: 3, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], catalog })).catch((e: unknown) => e)
+    expect(err).toBeInstanceOf(Error)
+    expect((err as Error).message).toMatch(/nothing was spent/)
+    expect((err as Error).message).toContain('spec port "in-mic-1" is not in the catalog')
+    expect((err as Error).message).toContain('catalog port "in-mic-2" is missing from the spec')
+    expect(calls.create).toHaveLength(0)
+    expect(calls.fixup).toHaveLength(0)
+    expect(existsSync(join(paths.sourceDir, spec.id, 'work'))).toBe(false)
+  })
+
+  it('the CLI reports it as an error with exit 1 and no Meshy call', async () => {
+    const spec = connectorSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const out: string[] = []
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)], catalog: catalogFor(connectorSpec({ id: 'other-jack' })) })
+    expect(await main([spec.id, '--yes'], deps, (l) => out.push(l))).toBe(1)
+    expect(out.join('\n')).toMatch(/not in catalog\.connectorTypes/)
+    expect(calls.create).toHaveLength(0)
+  })
+
+  it('the default catalog loader parses the real content/catalog.json with the zod schema', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+    delete deps.loadCatalog
+    // test-mixer is not a catalog device: the real catalog is read and the parity error proves it was consulted
+    await expect(buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, deps)).rejects.toThrow(/device spec "test-mixer": not in catalog\.devices/)
+    expect(calls.create).toHaveLength(0)
   })
 })
 

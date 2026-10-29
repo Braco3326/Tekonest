@@ -42,9 +42,10 @@
  *  - nothing here logs a request body or header; every error text is scrubbed of MESHY_API_KEY before it reaches the
  *    report, the console or report.json
  *  - with the real Blender fix-up, a missing Blender is detected before the first Meshy call
+ *  - the spec is checked against content/catalog.json (checkSpecParity) before the first Meshy call and before shipping
  * All I/O is injectable through BuildDeps so the whole flow is unit-tested without Meshy or Blender.
  */
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises'
 import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -55,7 +56,9 @@ import { checkProportionDrift, checkTextures, runGates, TEXTURE_MAX_PX, TRIANGLE
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
 import type { GlbReport } from './inspect'
-import { loadSpecs } from './loadSpecs'
+import { Catalog } from '../schemas'
+import type { CatalogT } from '../schemas'
+import { checkSpecParity, loadSpecs } from './loadSpecs'
 import { isMainModule } from './mainModule'
 import { assertManifestUsable, recordAsset } from './manifest'
 import { createMultiImageTask, downloadGlb, MESHY_MODEL, MeshyError, waitForTask } from './meshy'
@@ -116,6 +119,8 @@ export interface BuildDeps {
   optimizeTextures: (bytes: Uint8Array, opts: TextureOpts) => Promise<Uint8Array>
   /** The spec of `id`; throws when there is none. */
   loadSpec: (id: string) => AssetSpecT
+  /** content/catalog.json parsed with the zod Catalog schema: the spec's ports / controls are checked against it before paying. */
+  loadCatalog: () => CatalogT
   /** The reference photos of `id` as image data URIs, in order, at most 4 ([] when there are none). */
   readPhotos: (id: string) => Promise<string[]>
   paths: BuildPaths
@@ -207,6 +212,7 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
         if (!spec) throw new Error(`no asset spec "${id}" in content/asset-specs (create it with npm run asset:spec)`)
         return spec
       }),
+    loadCatalog: deps.loadCatalog ?? (() => Catalog.parse(JSON.parse(readFileSync(join(REPO_ROOT, 'content', 'catalog.json'), 'utf8')))),
     readPhotos: deps.readPhotos ?? ((id) => readPhotosFrom(join(paths.sourceDir, id, 'photos'))),
     paths,
     now: deps.now ?? (() => new Date()),
@@ -333,6 +339,13 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   }
   if (deps.runFixup === undefined && !findBlender()) {
     throw new Error('Blender is not installed (not found at the default 5.1 path): install Blender 5.1 or set BLENDER_EXE to blender.exe')
+  }
+
+  // The schema check of loadSpec says nothing about the catalog: a port id that is not the device's would only show up
+  // in the sim after paying. Check parity before the first Meshy call, and before anything ships.
+  if (!rawBytes || !dryRun) {
+    const errors = checkSpecParity(spec, d.loadCatalog())
+    if (errors.length > 0) throw new Error(`spec ${id} does not match content/catalog.json, nothing was spent:\n  ${errors.join('\n  ')}`)
   }
 
   // Fail before the first paid call if the manifest could not be written afterwards.
