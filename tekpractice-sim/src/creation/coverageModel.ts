@@ -28,7 +28,7 @@ type Zone = RoomLayout['zones'][number]
 /**
  * The zones the dots cover, in WORLD coordinates (RoomBuilder draws the zones from the same numbers, so a dot lands on the floor mark drawn
  * there): every `audience` zone first, then every `foh` zone, so where they overlap (the « régie » inside the pit) the audience lattice wins.
- * A room without an audience or foh zone (studios, booths: 16 of the 32 shipped rooms) gives none: the grid is empty.
+ * A room without an audience or foh zone (studios, booths: 16 of the 32 shipped rooms, measured on 2026-10-29) gives none: the grid is empty.
  */
 export function listenerZones(layout: RoomLayout | null): Zone[] {
   if (!layout) return []
@@ -170,6 +170,8 @@ export interface CoverageView {
   sourceLine: string | null
   points: PointRow[]
   pinned: { text: string } | null
+  /** A named point or the pinned dot is above 0 dB (louder than every grid point): the panel says the scale is the grid's. */
+  probeAbove: boolean
   /** The « ≈ dB SPL estimé » line exists (S2): only when every contributing speaker has a sourced sensitivity and max SPL. */
   spl: boolean
 }
@@ -185,6 +187,7 @@ export const EMPTY_VIEW: CoverageView = {
   sourceLine: null,
   points: [],
   pinned: null,
+  probeAbove: false,
   spl: false,
 }
 

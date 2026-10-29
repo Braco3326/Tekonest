@@ -150,9 +150,11 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
   const pinRow = el(doc, 'div', 'cr-cov-pinrow')
   pinRow.append(pinned, unpin)
   const hint = el(doc, 'p', 'cr-cov-note', L.pinHint)
+  const above = el(doc, 'p', 'cr-cov-note', L.probeAbove)
+  above.dataset.testid = 'coverage-probe-above'
   const spl = el(doc, 'p', 'cr-cov-note', L.splPending)
   spl.dataset.testid = 'coverage-spl'
-  ready.append(unit, method, legendTitle, legend, hatched, aim, source, speakersTitle, speakers, statsTitle, stats, pointsTitle, points, pinRow, hint, spl)
+  ready.append(unit, method, legendTitle, legend, hatched, aim, source, speakersTitle, speakers, statsTitle, stats, pointsTitle, points, pinRow, hint, above, spl)
   body.append(status, caveat, ready)
 
   root.append(head, pop, body)
@@ -225,10 +227,13 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
         applyPop()
         return
       }
-      // Rebuild only on a change (the render is called on every result, but the DOM must not churn: a focused button stays focused).
+      // Rebuild only on a change (the render is called on every result). A rebuild would drop the focused control, so the focus is put back (below).
       const key = JSON.stringify(view)
       if (key === shown) return
       shown = key
+      const active = doc.activeElement
+      const focus: { kind: 'point' | 'unpin' | 'none'; id?: string } =
+        active === unpin ? { kind: 'unpin' } : active instanceof HTMLElement && points.contains(active) && active.dataset.point ? { kind: 'point', id: active.dataset.point } : { kind: 'none' }
       status.textContent = view.message
       status.dataset.status = view.status
       const has = view.status === 'ready'
@@ -265,6 +270,10 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
       pinned.textContent = view.pinned?.text ?? ''
       pinRow.hidden = view.pinned === null
       spl.hidden = !view.spl
+      above.hidden = !view.probeAbove
+      // Put the focus back where it was: the same « Épingler … » button; after « Retirer l’épingle » (now hidden) the first pin button, else the block's toggle.
+      if (focus.kind === 'point') points.querySelector<HTMLElement>(`button[data-point="${focus.id}"]`)?.focus()
+      else if (focus.kind === 'unpin') (points.querySelector<HTMLElement>('button[data-point]') ?? toggle).focus()
     },
   }
 }

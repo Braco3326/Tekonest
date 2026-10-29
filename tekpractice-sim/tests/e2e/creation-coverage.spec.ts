@@ -35,6 +35,23 @@ const toggleCoverage = async (page: Page): Promise<void> => {
   await coverageItem(page).click()
 }
 const panel = (page: Page) => page.getByTestId('coverage-panel')
+/** The page point of a grid cell centre (at ear height `y`) that has no cable, port or device under it: a click there is the dots' alone. Fails if there is none. */
+const freeDot = async (page: Page, y = 1.2): Promise<{ x: number; y: number }> => {
+  const at = await page.evaluate((h) => {
+    const c = window.__creation!
+    const r = document.getElementById('renderCanvas')!.getBoundingClientRect()
+    for (const [x, z] of [[-3.25, 0.25], [-4.75, 2.25], [3.25, 2.25], [4.75, 0.25], [-3.25, 4.25], [3.25, 4.25], [-4.75, -1.75]]) {
+      const p = c.worldScreen([x, h, z])
+      if (!p) continue
+      const cx = p.x - r.left
+      const cy = p.y - r.top
+      if (c.cableAtPage(p.x, p.y) === null && c.pickAt(cx, cy) === null && c.portAtPoint(cx, cy) === null) return p
+    }
+    return null
+  }, y)
+  expect(at, 'a grid cell with nothing else under the pointer').not.toBeNull()
+  return at!
+}
 
 test('(a) Écoute › Couverture: off by default, then the dots, ≤ 20 000 points, maximum exactly 0 dB, the legend and the statistics as text', async ({ page }) => {
   await boot(page)
@@ -214,7 +231,7 @@ test('(f) playback off: nothing is fed, the panel quotes the reason; a room with
   await page.waitForFunction(() => window.__creation!.coverage().status === 'no-source')
   await expect(page.getByTestId('coverage-status')).toHaveText('Aucune enceinte audible : aucune enceinte ne reçoit de signal (la lecture console est coupée).')
   expect(await jobs(page)).toBe(0)
-  // a studio: no audience, no régie zone: 16 of the 32 shipped rooms
+  // a studio: no audience, no régie zone (16 of the 32 shipped rooms, measured on 2026-10-29)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: true }))
   await waitReady(page)
   await page.evaluate(() => window.__creation!.choosePlace('room:podcast-room-small'))
@@ -245,16 +262,22 @@ test('(g) a click on a dot pins its level, a named point is a keyboard button, �
   await page.getByRole('button', { name: 'Épingler Régie' }).focus()
   await page.keyboard.press('Enter')
   await expect(page.getByTestId('coverage-pinned')).toContainText('Point épinglé (0,0 m ; 8,0 m)')
+  // the rebuild of the block must not drop the keyboard focus (it stays on the same button, and Enter again is still possible)
+  await expect(page.getByRole('button', { name: 'Épingler Régie' })).toBeFocused()
+  // the pinned value is said politely too (a non-live paragraph is no announcement)
+  await expect(page.getByRole('status')).toContainText('Point épinglé (0,0 m ; 8,0 m)')
   await expect(page.getByTestId('coverage-pinned')).toContainText(`${regie.db!.toFixed(1).replace('-', '−').replace('.', ',')} dB`)
   await expect(page.getByRole('button', { name: 'Retirer l’épingle' })).toBeVisible()
-  await page.getByRole('button', { name: 'Retirer l’épingle' }).click()
+  await page.getByRole('button', { name: 'Retirer l’épingle' }).focus()
+  await page.keyboard.press('Enter')
   await expect(page.getByTestId('coverage-pinned')).toBeHidden()
   expect((await cov(page)).pinned).toBeNull()
+  // « Retirer l’épingle » is now hidden: the focus goes to a pin button, never to the page body
+  await expect(page.getByRole('button', { name: /^Épingler / }).first()).toBeFocused()
   // mouse: a click on a dot far from every device
-  const at = await page.evaluate(() => window.__creation!.worldScreen([-3.25, 1.2, 0.25]))
-  expect(at).not.toBeNull()
-  await page.mouse.click(at!.x, at!.y)
-  await expect(page.getByTestId('coverage-pinned')).toContainText('Point épinglé (−3,3 m ; 0,3 m) : ') // grid cell centre (−3.25, 0.25)
+  const at = await freeDot(page)
+  await page.mouse.click(at.x, at.y)
+  await expect(page.getByTestId('coverage-pinned')).toContainText(/Point épinglé \(.* m ; .* m\) : /)
   expect((await cov(page)).pinned).toMatch(/dB$/)
   await expect(page.getByTestId('toast')).toBeHidden() // the click was the coverage's: not a « missed click »
   // the ear height moves the plane: the dot pin goes (another plane), a named point follows
@@ -264,8 +287,8 @@ test('(g) a click on a dot pins its level, a named point is a keyboard button, �
   await waitReady(page)
   expect((await cov(page)).pinned).toBeNull()
   // a click on a DEVICE is never a pin (the dots plane crosses that pixel's ray in front of the console): pin a dot, then click the console
-  const dot = await page.evaluate(() => window.__creation!.worldScreen([-3.25, 1.7, 0.25]))
-  await page.mouse.click(dot!.x, dot!.y)
+  const dot = await freeDot(page, 1.7)
+  await page.mouse.click(dot.x, dot.y)
   await expect(page.getByTestId('coverage-pinned')).toBeVisible()
   await page.getByRole('button', { name: 'Retirer l’épingle' }).click()
   // a pixel where a device body AND a dot cell are both under the pointer (searched around the console: the test fails if there is none)
@@ -321,12 +344,22 @@ test('(h) ear height change recomputes once; toggling off removes the dots, the 
   await toggleCoverage(page)
   await waitReady(page)
   expect(await page.evaluate(() => window.__creation!.liveListeners())).toBe(listeners)
-  // a place change while on: the old place's dots are gone with its scene, the new place is computed
+  // a place change while on (to a room with no audience zone): the old place's dots, aim lines and worker go with its scene, no job is posted for the
+  // old place, the toggle stays on and says why there is nothing to show
   const meshesOn = await page.evaluate(() => window.__creation!.meshCount())
   expect(meshesOn).toBeGreaterThan(meshesOff)
-  await page.evaluate(() => window.__creation!.choosePlace('room:theatre-italian-medium'))
-  await page.waitForFunction(() => window.__creation!.place() === 'room:theatre-italian-medium')
-  await page.waitForFunction(() => ['no-source', 'no-audience', 'ready'].includes(window.__creation!.coverage().status))
+  expect((await cov(page)).meshes).toContain('coverage')
+  const jobsBefore = await jobs(page)
+  await page.evaluate(() => window.__creation!.choosePlace('room:podcast-room-small'))
+  await page.waitForFunction(() => window.__creation!.place() === 'room:podcast-room-small' && window.__creation!.coverage().status === 'no-audience')
+  const after = await cov(page)
+  expect(after).toMatchObject({ on: true, worker: false, meshes: [], plain: 0, hatched: 0, aim: [], pending: false })
+  expect(await jobs(page)).toBe(jobsBefore) // no job for the old place, none for a room with nothing to cover
+  const scene = await page.evaluate(() => window.__creation!.meshCount())
+  expect(scene).toBeLessThan(meshesOn) // the old scene's coverage meshes are not carried over
+  // and back to a room with an audience: a fresh worker and a fresh layer
+  await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
   expect((await cov(page)).on).toBe(true)
   expect(errors).toEqual([])
 })
@@ -378,6 +411,58 @@ test('(j) CONVENTION CHECK (L30 viii, kept by decision): at yaw 0 the connector 
   const aim = (await cov(page)).aim.find((a) => a.id === 'k12-g')!
   expect(aim.to[2]).toBeGreaterThan(aim.from[2])
   for (const p of r.ports) expect(p.at![2], p.port).toBeLessThan(aim.from[2]) // the connectors are behind the speaker's acoustic origin
+})
+
+test('(l) folding Propriétés hides the dots, the hatched dots and the aim lines (the legend and the caveat are in it); the toggle stays on; unfolding brings them back with no new job', async ({ page }) => {
+  await boot(page)
+  await toggleCoverage(page)
+  await waitReady(page)
+  await page.waitForFunction(() => window.__creation!.coverage().meshes.includes('coverage'))
+  expect((await cov(page)).meshes.sort()).toEqual(['coverage', 'coverage:aim', 'coverage:hatch'])
+  const base = await jobs(page)
+  await page.getByTestId('props-collapse').click()
+  await page.waitForFunction(() => window.__creation!.coverage().hidden)
+  const folded = await cov(page)
+  expect(folded).toMatchObject({ on: true, hidden: true, meshes: [] }) // nothing drawn, the toggle is still on
+  await page.getByRole('menuitem', { name: 'Écoute' }).click()
+  await expect(coverageItem(page)).toHaveAttribute('aria-checked', 'true')
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('status')).toHaveText('Couverture masquée : Propriétés est replié.')
+  // a click over where a dot is does not pin while the legend is out of sight
+  const at = await freeDot(page)
+  await page.mouse.click(at.x, at.y)
+  expect((await cov(page)).pinned).toBeNull()
+  await page.getByTestId('props-collapse').click()
+  await page.waitForFunction(() => !window.__creation!.coverage().hidden)
+  expect((await cov(page)).meshes.sort()).toEqual(['coverage', 'coverage:aim', 'coverage:hatch'])
+  await page.waitForTimeout(600)
+  expect(await jobs(page)).toBe(base) // hiding and showing are no computation
+  await expect(page.getByTestId('coverage-caveat')).toBeVisible()
+})
+
+test('(m) a click that drops a device over the grid is the placement\'s: it does not also pin a dot', async ({ page }) => {
+  await boot(page)
+  await toggleCoverage(page)
+  await waitReady(page)
+  const base = await jobs(page)
+  // choose a device from the drawer: it now follows the pointer
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Space')
+  await expect(page.getByTestId('inventory-drawer')).toBeVisible()
+  const first = page.getByRole('tabpanel').getByTestId('inventory-item').first()
+  await page.keyboard.press('Tab')
+  await expect(first).toBeFocused()
+  await page.keyboard.press('Enter')
+  await page.waitForFunction(() => window.__creation!.placing())
+  const instances = await page.evaluate(() => window.__creation!.design().rig.instances.length)
+  const at = await freeDot(page)
+  await page.mouse.move(at.x, at.y)
+  await page.mouse.click(at.x, at.y)
+  await page.waitForFunction((n) => window.__creation!.design().rig.instances.length === n + 1, instances) // the drop happened
+  expect((await cov(page)).pinned).toBeNull()
+  await expect(page.getByTestId('coverage-pinned')).toBeHidden()
+  await page.waitForTimeout(500)
+  expect(await jobs(page)).toBe(base) // a pin would have forced a job
 })
 
 test('(k) a11y: the coverage block has no axe violation (text contrast, names, structure)', async ({ page }) => {

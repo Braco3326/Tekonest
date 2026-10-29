@@ -41,6 +41,11 @@ const shot = async (page: Page, name: string): Promise<void> => {
 
 test('coverage screenshots', async ({ page }) => {
   await boot(page)
+  const m = await page.evaluate(() => {
+    const h = (sel: string): number => Math.round(document.querySelector(sel)!.getBoundingClientRect().height)
+    return { propsBody: h('.cr-props .cr-panel-body'), coverage: h('.cr-cov'), coverageScroll: Math.round(document.querySelector('.cr-cov')!.scrollHeight), cableLegend: h('.cr-legend'), aside: h('.cr-props') }
+  })
+  console.log('[measure 1366x768, coverage open, caveat shown]', JSON.stringify(m))
   await shot(page, 'task-37-coverage-1366')
   // the click-to-pin state and the chip pop-over
   await page.getByRole('button', { name: 'Épingler Régie' }).click()

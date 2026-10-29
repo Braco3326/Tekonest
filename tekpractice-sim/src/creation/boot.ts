@@ -1640,10 +1640,17 @@ export async function bootCreation(): Promise<void> {
   )
   /** The selection the last miss cleared (a double-click on the floor gives it back). */
   let clearedByMiss: { id: string; t: number } | null = null
+  /**
+   * A click on the canvas at this point is nobody's but the empty scene's: no device follows the pointer or is dragged, not the walk view, not under the
+   * picker, not on a port (the cabling's), not on a hovered cable. The ONE predicate the « missed click » and the coverage pin share.
+   */
+  const clickIsFree = (x: number, y: number): boolean =>
+    !(placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y) || cableHover.hovered !== null)
   const missedClick = (x: number, y: number, clicks: number): void => {
-    if (placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y) || coverage?.wouldTake(x, y)) return
-    // The second click of a double-click is no miss (the re-pivot follows); a click on the hovered cable is on something.
-    if (clicks >= 2 || cableHover.hovered !== null) return
+    // A click on something (a device being placed or dragged, a port, a hovered cable, a coverage dot) is no miss; nor is the walk view or the picker.
+    if (!clickIsFree(x, y) || coverage?.wouldTake(x, y)) return
+    // The second click of a double-click is no miss (the re-pivot follows).
+    if (clicks >= 2) return
     const sel = viewState.get().selection
     // A miss with nothing selected keeps the record: when the two clicks of a double-click are counted as two misses (the OS
     // double-click time is over 500 ms, or the pointer jittered over 5 px), the second must not erase what the first cleared.
@@ -1688,6 +1695,9 @@ export async function bootCreation(): Promise<void> {
           invalidate: () => scheduler.invalidate(),
           announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
           subscribe: (fn) => store.subscribe(fn),
+          propsOpen: () => shell.isPanelOpen('props'),
+          onPropsChange: (fn) => shell.onPanelChange((p) => p === 'props' && fn()),
+          canPin: (x, y) => clickIsFree(x, y),
           bag: shellBag,
           container: shell.props,
           before: cableLegend.element,
@@ -1821,7 +1831,7 @@ export async function bootCreation(): Promise<void> {
   )
 
   /** The coverage is off or its chunk is not loaded: the debug hook says so without loading anything. */
-  const COVERAGE_OFF = (): CoverageDebug => ({ on: false, status: 'off', pending: false, worker: false, points: 0, step: null, stats: null, plain: 0, hatched: 0, bins: [], sources: [], aim: [], message: '', pinned: null, probes: [], maxLevelDb: null, spl: false })
+  const COVERAGE_OFF = (): CoverageDebug => ({ on: false, status: 'off', pending: false, worker: false, points: 0, step: null, stats: null, plain: 0, hatched: 0, meshes: [], hidden: false, bins: [], sources: [], aim: [], message: '', pinned: null, probes: [], maxLevelDb: null, spl: false })
   const screen = (world: Vector3 | null): { x: number; y: number } | null => {
     const { scene, camera } = host
     return world && scene && camera

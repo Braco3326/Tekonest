@@ -169,6 +169,73 @@ describe('CoverageClient', () => {
     w.onerror?.({ message: 'chunk 404' })
     expect(errors[1]).toBe('worker: chunk 404')
   })
+  it('a worker that errored is DISCARDED: it is terminated, and the next request builds a fresh worker that gets the job (no job into a dead worker)', () => {
+    const errors: string[] = []
+    const c = new CoverageClient(make)
+    c.onError((m) => errors.push(m))
+    c.request(job())
+    vi.advanceTimersByTime(150)
+    const dead = w
+    dead.onerror?.({ message: 'chunk 404' })
+    expect(errors).toEqual(['worker: chunk 404'])
+    expect(dead.terminated).toBe(1)
+    expect(c.busy).toBe(false)
+    const id = c.request(job())
+    vi.advanceTimersByTime(150)
+    expect(made).toBe(2) // a new worker
+    expect(dead.posted).toHaveLength(1) // the dead one got nothing more
+    expect(w.posted).toHaveLength(1)
+    const got: number[] = []
+    c.onResult((r) => got.push(r.jobId))
+    w.reply(answer(id))
+    expect(got).toEqual([id])
+  })
+  it('watchdog: a job with no answer within 10 s is an error, the worker is discarded, and the next request recreates it', () => {
+    const errors: string[] = []
+    const c = new CoverageClient(make)
+    c.onError((m) => errors.push(m))
+    c.request(job())
+    vi.advanceTimersByTime(150)
+    const silent = w
+    vi.advanceTimersByTime(9_999)
+    expect(errors).toEqual([])
+    expect(c.busy).toBe(true)
+    vi.advanceTimersByTime(1)
+    expect(errors).toEqual(['worker: no answer within 10000 ms'])
+    expect(silent.terminated).toBe(1)
+    expect(c.busy).toBe(false)
+    c.request(job())
+    vi.advanceTimersByTime(150)
+    expect(made).toBe(2)
+    expect(w.posted).toHaveLength(1)
+  })
+  it('watchdog: an answer in time cancels it (no error later); a newer post restarts it; dispose cancels it', () => {
+    const errors: string[] = []
+    const c = new CoverageClient(make, 150, 1000)
+    c.onError((m) => errors.push(m))
+    const a = c.request(job())
+    vi.advanceTimersByTime(150)
+    vi.advanceTimersByTime(900)
+    w.reply(answer(a))
+    vi.advanceTimersByTime(5000)
+    expect(errors).toEqual([])
+    c.request(job())
+    vi.advanceTimersByTime(150)
+    vi.advanceTimersByTime(700)
+    c.request(job()) // a newer job is posted 850 ms after the first: the clock restarts
+    vi.advanceTimersByTime(150)
+    vi.advanceTimersByTime(900) // 1750 ms after the first post: it would have fired at 1000
+    expect(errors).toEqual([])
+    vi.advanceTimersByTime(100)
+    expect(errors).toHaveLength(1)
+    const c2 = new CoverageClient(make, 150, 1000)
+    c2.onError((m) => errors.push(m))
+    c2.request(job())
+    vi.advanceTimersByTime(150)
+    c2.dispose()
+    vi.advanceTimersByTime(5000)
+    expect(errors).toHaveLength(1)
+  })
   it('dispose() cancels a pending post, terminates the worker, detaches it and ignores later requests and answers', () => {
     const c = new CoverageClient(make)
     const got: number[] = []

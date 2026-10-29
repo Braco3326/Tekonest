@@ -45,6 +45,11 @@ import { CoverageLayer } from './coverageLayer'
 import { mountCoveragePanel, type CoveragePanel } from './shell/coveragePanel'
 import { isClick } from './selection'
 
+/** What the controller needs of the scene layer (CoverageLayer satisfies it; a unit test fakes it). */
+export type LayerPort = Pick<CoverageLayer, 'scene' | 'show' | 'clearDots' | 'setAim' | 'setPin' | 'setVisible' | 'pickDot' | 'counts' | 'aimLines' | 'drawCalls' | 'dispose' | 'enabledMeshes'>
+/** What the controller needs of the panel. */
+export type PanelPort = Pick<CoveragePanel, 'render'>
+
 export interface CoverageHost {
   readonly scene: Scene | null
   readonly camera: ArcRotateCamera | null
@@ -77,8 +82,20 @@ export interface CoverageDeps {
   /** Where the panel goes (the Propriétés panel) and what it goes before (the cable legend). */
   container: HTMLElement
   before: HTMLElement | null
+  /** Propriétés is open (the legend, the unit and the caveat are in it: with it folded the dots are hidden). */
+  propsOpen(): boolean
+  /** Propriétés was folded or unfolded; returns the remover. */
+  onPropsChange(fn: () => void): () => void
+  /**
+   * May a click at this canvas point pin a dot? The shell's one « this click is free » predicate (the same the « missed click » uses): false while a
+   * device follows the pointer or is dragged, in the walk view, under the picker, over a port, over a hovered cable.
+   */
+  canPin(x: number, y: number): boolean
   /** Tests inject a fake worker; the app builds the module worker. */
   makeWorker?: () => MessagePortLike
+  /** Tests inject a fake layer / panel; the app builds the real ones. */
+  createLayer?: (scene: Scene, invalidate: () => void) => LayerPort
+  createPanel?: (handlers: { pin(id: string | null): void }) => PanelPort
 }
 
 /** What `window.__creation.coverage()` returns: the e2e oracle (plain data). */
@@ -96,6 +113,10 @@ export interface CoverageDebug {
   stats: { min: number; max: number; mean: number; sd: number; count: number } | null
   plain: number
   hatched: number
+  /** Names of the coverage meshes that are enabled right now (dots, hatched dots, aim lines, pin ring): empty while Propriétés is folded. */
+  meshes: string[]
+  /** Propriétés is folded: the layer is hidden (the toggle stays on). */
+  hidden: boolean
   /** Dots per colour bin. */
   bins: number[]
   sources: string[]
@@ -109,7 +130,7 @@ export interface CoverageDebug {
   spl: boolean
 }
 
-const OFF_DEBUG: CoverageDebug = { on: false, status: 'off', pending: false, worker: false, points: 0, step: null, stats: null, plain: 0, hatched: 0, bins: [], sources: [], aim: [], message: '', pinned: null, probes: [], maxLevelDb: null, spl: false }
+const OFF_DEBUG: CoverageDebug = { on: false, status: 'off', pending: false, worker: false, points: 0, step: null, stats: null, plain: 0, hatched: 0, meshes: [], hidden: false, bins: [], sources: [], aim: [], message: '', pinned: null, probes: [], maxLevelDb: null, spl: false }
 
 interface Shown {
   reply: CoverageReply
@@ -139,8 +160,9 @@ export class CoverageController {
   private status: CoverageStatus = 'off'
   private message = ''
   private client: CoverageClient | null = null
-  private layer: CoverageLayer | null = null
-  private panel: CoveragePanel
+  private layer: LayerPort | null = null
+  private panel: PanelPort
+  private pinAnnounced = ''
   private shown: Shown | null = null
   private req: { id: number; scene: Scene; stepM: number; n: number; detail: CoverageSourcesResult; probes: { id: string; name: string }[]; hasDotProbe: boolean } | null = null
   private lastSig = ''
@@ -154,19 +176,26 @@ export class CoverageController {
   private down: { x: number; y: number; t: number } | null = null
 
   constructor(private readonly deps: CoverageDeps) {
-    this.panel = mountCoveragePanel(deps.host.canvasElement.ownerDocument, deps.container, deps.before, deps.bag, {
-      pin: (id) => this.pinNamed(id),
-    })
+    const handlers = { pin: (id: string | null) => this.pinNamed(id) }
+    this.panel = deps.createPanel ? deps.createPanel(handlers) : mountCoveragePanel(deps.host.canvasElement.ownerDocument, deps.container, deps.before, deps.bag, handlers)
     // A click on a dot pins its level. Listeners live as long as the controller (the canvas outlives the places); they act only while it is on.
     const canvas = deps.host.canvasElement
-    deps.bag.listen(canvas, 'pointerdown', (e: PointerEvent) => {
-      this.down = e.button === 0 && e.isPrimary ? { x: e.offsetX, y: e.offsetY, t: e.timeStamp } : null
-    })
-    deps.bag.listen(canvas, 'pointerup', (e: PointerEvent) => this.onPointerUp(e))
+    // Capture, so both run BEFORE the placement controller's drop (its pointerup) and the others: a click that drops a device, patches a port or
+    // lands in the walk view is theirs (`canPin` is the shell's shared gate, checked at the press and at the release).
+    deps.bag.listen(
+      canvas,
+      'pointerdown',
+      (e: PointerEvent) => {
+        this.down = e.button === 0 && e.isPrimary && this.isOn && deps.canPin(e.offsetX, e.offsetY) ? { x: e.offsetX, y: e.offsetY, t: e.timeStamp } : null
+      },
+      { capture: true }
+    )
+    deps.bag.listen(canvas, 'pointerup', (e: PointerEvent) => this.onPointerUp(e), { capture: true })
     // `lostpointercapture` / blur: a press that never ended is not a click
     deps.bag.listen(canvas, 'lostpointercapture', () => (this.down = null))
     deps.bag.listen(canvas, 'pointercancel', () => (this.down = null))
     this.removeSubscribe = deps.subscribe(() => this.refresh())
+    deps.bag.add(deps.onPropsChange(() => this.onPropsChange()))
     deps.bag.add(() => this.dispose())
   }
 
@@ -197,6 +226,7 @@ export class CoverageController {
       sourceLine: sourceLine(s.detail.used),
       points: named,
       pinned,
+      probeAbove: s.reply.probeRelDb.some((v) => v > 0.05),
       spl: splEstimateEligible(s.detail.used),
     }
   }
@@ -216,6 +246,8 @@ export class CoverageController {
       stats: s ? { ...s.reply.stats } : null,
       plain: counts.plain,
       hatched: counts.hatched,
+      meshes: this.layer?.enabledMeshes ?? [],
+      hidden: this.folded(),
       bins: s ? [...s.counts] : [],
       sources: s ? s.detail.used.map((u) => u.instanceId) : [],
       aim: (this.layer?.aimLines ?? []).map((a) => ({ id: a.id, from: [...a.from], to: [...a.to] })),
@@ -274,9 +306,25 @@ export class CoverageController {
     return this.isOn ? (this.layer?.pickDot(x, y)?.position ?? null) : null
   }
 
+  /** Propriétés is folded. */
+  private folded(): boolean {
+    return !this.deps.propsOpen()
+  }
+
+  /**
+   * Propriétés folded: the legend, the unit and the front caveat are out of sight, and nothing may overlay the viewport, so the dots, the hatched
+   * dots and the aim lines are HIDDEN (the toggle stays on; no job, the buffers are kept). Unfolded: they come back. Said once, politely.
+   */
+  private onPropsChange(): void {
+    if (!this.isOn) return
+    const folded = this.folded()
+    this.layer?.setVisible(!folded)
+    if (folded) this.deps.announce(C().hiddenFolded!)
+  }
+
   /** A click that the coverage would take (a dot under the pointer, no device): the shell's « missed click » must not fire. */
   wouldTake(x: number, y: number): boolean {
-    return this.isOn && this.layer !== null && !this.deps.deviceAt(x, y) && this.layer.pickDot(x, y) !== null
+    return this.isOn && this.layer !== null && this.deps.canPin(x, y) && !this.deps.deviceAt(x, y) && this.layer.pickDot(x, y) !== null
   }
 
   dispose(): void {
@@ -301,10 +349,11 @@ export class CoverageController {
     this.aimSig = ''
   }
 
-  private ensureLayer(scene: Scene): CoverageLayer {
+  private ensureLayer(scene: Scene): LayerPort {
     if (this.layer && this.layer.scene === scene) return this.layer
     this.layer?.dispose()
-    const layer = new CoverageLayer(scene, () => this.deps.invalidate())
+    const layer = this.deps.createLayer ? this.deps.createLayer(scene, () => this.deps.invalidate()) : new CoverageLayer(scene, () => this.deps.invalidate())
+    layer.setVisible(!this.folded())
     this.layer = layer
     // The place's bag disposes it (and the worker) before the scene goes.
     this.deps.host.placeBag?.add(() => {
@@ -352,18 +401,18 @@ export class CoverageController {
     }
     const layer = this.ensureLayer(scene)
     const detail = coverageSourcesDetail(this.deps.design(), this.deps.registry, this.deps.path())
+    const grid = this.grid()
+    const n = grid.points.length / 3
+    if (n === 0) {
+      this.nothingToShow(layer) // no audience: no dots and no aim lines either (the indicator is only for a coverage that is visible)
+      this.set('no-audience', C().noAudience!, true)
+      return
+    }
     // The aim lines follow the rig at once (one small mesh, only rebuilt when a speaker's pose or feed changed).
     const aimSig = sourcesKey(detail.sources)
     if (aimSig !== this.aimSig) {
       this.aimSig = aimSig
       layer.setAim(detail.sources)
-    }
-    const grid = this.grid()
-    const n = grid.points.length / 3
-    if (n === 0) {
-      this.nothingToShow(layer)
-      this.set('no-audience', C().noAudience!, true)
-      return
     }
     if (detail.sources.length === 0) {
       this.nothingToShow(layer)
@@ -393,8 +442,10 @@ export class CoverageController {
     else this.panel.render(this.view())
   }
 
-  private nothingToShow(layer: CoverageLayer): void {
+  private nothingToShow(layer: LayerPort): void {
     layer.clearDots()
+    layer.setAim([])
+    this.aimSig = ''
     layer.setPin(null, 0.5)
     this.shown = null
     this.req = null
@@ -423,6 +474,13 @@ export class CoverageController {
     layer.show(grid.points, r.relDb, r.overlap, req.stepM)
     layer.setPin(this.pin ? this.pin.position : null, req.stepM)
     this.set('ready', doneMessage(r.stats, req.stepM), true)
+    // A pinned value is said once per pin (it is a non-live paragraph in the panel).
+    const pinned = this.view().pinned
+    const key = this.pin ? `${this.pin.id}|${this.pin.position.join(',')}` : ''
+    if (pinned && key !== this.pinAnnounced) {
+      this.pinAnnounced = key
+      this.deps.announce(pinned.text)
+    } else if (!pinned) this.pinAnnounced = ''
   }
 
   private onError(message: string): void {

@@ -7,12 +7,8 @@
  * tripwire, not an assertion that the models are right. DECIDED (L30 viii): the convention is kept and the models are being rebuilt; these tests document
  * TODAY's assets and are expected to fail, with an explanatory message, when the rebuilt models land. See docs/CREATIVE-MODE-LOG.md L30 and the Task 37 report.
  *
- * Findings pinned here:
- *  - K12.2: the three port empties sit just outside ONE end face of the body, and that end is the WIDE end of its plan (14 in wide against 6.6 in
- *    at the other end, which carries the dense detail and the recessed panel). If the wide end is the baffle (as on a trapezoidal speaker), the
- *    model's front is on the connector side: at yaw 0 it faces −z in the scene.
- *  - DBR12: the model is a long box (158 × 57 × 65 units; the catalog box is 0.376 × 0.601 × 0.348 m) whose grille is on a long side; it is not a
- *    speaker-shaped box at all (REVIEW-ME §12 flags it « sur-échelle »), so no front can be read from it.
+ * The findings pinned here (K12.2: the connector end is the wide end of its plan; DBR12: not a speaker-shaped box) and their figures are written
+ * once, in ADR-0015 « Addendum (Task 37) »; the thresholds below are those figures.
  */
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'

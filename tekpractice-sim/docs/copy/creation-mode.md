@@ -663,7 +663,7 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.method` | somme énergétique, champ direct | à valider (tekuxwriter) | Ce que le calcul fait. Mot pour mot (brief §5) |
 | `coverage.chip` | relatif | à valider (tekuxwriter) | Pastille de fidélité (brief §5) |
 | `coverage.chipName` | Fidélité du calcul : relatif | à valider (tekuxwriter) | Nom accessible de la pastille (bouton qui ouvre l’explication) |
-| `coverage.chipPopover` | Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de ce lieu avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. | à valider (tekuxwriter) | Explication de la pastille |
+| `coverage.chipPopover` | Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. Le balance et les canaux L/R de la console ne changent pas le niveau affiché ; l’origine de l’enceinte est son point de pose. | à valider (tekuxwriter) | Explication de la pastille |
 | `coverage.legendTitle` | Échelle | à valider (tekuxwriter) | Titre de la légende des couleurs |
 | `coverage.legendBin` | {from} à {to} dB | à valider (tekuxwriter) | Une ligne de légende ; {from} / {to} = bornes de la classe de 3 dB |
 | `coverage.legendLast` | {from} dB et moins | à valider (tekuxwriter) | Dernière ligne de légende (classe ouverte vers le bas) |
@@ -695,9 +695,11 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.pinned` | Point épinglé ({x} m ; {z} m) : {value} | à valider (tekuxwriter) | Valeur du point cliqué dans la vue 3D ; {x} / {z} = position |
 | `coverage.unpin` | Retirer l’épingle | à valider (tekuxwriter) | Bouton |
 | `coverage.pinHint` | Cliquez un point coloré dans la vue 3D pour épingler son niveau. | à valider (tekuxwriter) | Aide sous la liste |
+| `coverage.probeAbove` | Un point nommé peut dépasser 0 dB : l’échelle est celle de la grille. | à valider (tekuxwriter) | Note sous la liste des points quand un point nommé est plus fort que le point le plus fort de la grille |
 | `coverage.splPending` | ≈ dB SPL estimé : non calculé (estimation pédagogique, formule non sourcée). | à valider (tekuxwriter) | Seulement si chaque enceinte a une sensibilité et un SPL max sourcés (aucune aujourd’hui : jamais affiché) |
 | `coverage.computing` | Calcul de la couverture… | à valider (tekuxwriter) | État pendant le calcul |
-| `coverage.failed` | Le calcul de la couverture a échoué. | à valider (tekuxwriter) | Le Worker n’a pas répondu ou a refusé le calcul |
+| `coverage.failed` | Calcul de la couverture indisponible (réessayez). | à valider (tekuxwriter) | Le Worker n’a pas répondu ou a refusé le calcul |
+| `coverage.hiddenFolded` | Couverture masquée : Propriétés est replié. | à valider (tekuxwriter) | Annoncé une fois quand on replie Propriétés alors que la couverture est cochée (les points reviennent au dépliage) |
 | `coverage.noAudience` | Pas de public dans ce lieu : aucune zone public ni régie à couvrir. Rien à calculer. | à valider (tekuxwriter) | Lieu sans zone « audience » ni « foh » |
 | `coverage.noSource` | Aucune enceinte audible : {reason} | à valider (tekuxwriter) | Aucun son à montrer ; {reason} = une raison ci-dessous |
 | `coverage.reasonNotFed` | aucune enceinte ne reçoit de signal ({why}) | à valider (tekuxwriter) | Le chemin du signal n’atteint aucune enceinte ; {why} = la première raison de la lecture |

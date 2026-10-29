@@ -39,6 +39,9 @@ export class CoverageLayer {
   private observers: { mesh: Mesh; o: Nullable<Observer<Mesh>>; lines: boolean }[] = []
   private draws = new Map<string, { frame: number; count: number }>()
   private disposed = false
+  /** false while the legend is out of sight (Propriétés folded): every mesh is hidden, nothing is computed or lost, and the layer returns on unfold. */
+  private visible = true
+  private pinOn = false
   /** What is on screen (for picking and for the e2e oracle). */
   private shown: { points: Float32Array; step: number; plain: number; hatched: number } | null = null
   private aimShown: { id: string; from: [number, number, number]; to: [number, number, number] }[] = []
@@ -153,7 +156,7 @@ export class CoverageLayer {
       mesh.thinInstanceSetBuffer('matrix', m, 16, true)
       mesh.thinInstanceSetBuffer('color', c, 4, true)
       mesh.thinInstanceRefreshBoundingInfo(true)
-      mesh.setEnabled(true)
+      mesh.setEnabled(this.visible)
     }
     fill(this.plain, plain, false)
     fill(this.hatch, hatched, true)
@@ -170,6 +173,26 @@ export class CoverageLayer {
     }
     this.shown = null
     this.invalidate()
+  }
+
+  /** Hide / show every coverage mesh at once (one frame). The buffers stay: showing again costs no computation. */
+  setVisible(visible: boolean): void {
+    if (this.disposed || visible === this.visible) return
+    this.visible = visible
+    this.plain.setEnabled(visible && (this.shown?.plain ?? 0) > 0)
+    this.hatch.setEnabled(visible && (this.shown?.hatched ?? 0) > 0)
+    this.aim?.setEnabled(visible)
+    this.pin?.setEnabled(visible && this.pinOn)
+    this.invalidate()
+  }
+
+  get isVisible(): boolean {
+    return this.visible
+  }
+
+  /** Names of the coverage meshes that are enabled (drawn) right now. */
+  get enabledMeshes(): string[] {
+    return [this.plain, this.hatch, this.aim, this.pin].filter((m): m is Mesh => m !== null && !m.isDisposed() && m.isEnabled()).map((m) => m.name)
   }
 
   /** Dots on screen: plain and hatched. */
@@ -210,6 +233,7 @@ export class CoverageLayer {
       aim.color = Color3.FromHexString(CREATION_TOKENS.color.papier)
       aim.isPickable = false
       aim.alwaysSelectAsActiveMesh = true
+      aim.setEnabled(this.visible)
       this.countDraws(aim, true)
       this.aim = aim
     }
@@ -224,6 +248,7 @@ export class CoverageLayer {
   /** A ring on a pinned dot; null removes it. */
   setPin(at: [number, number, number] | null, stepM: number): void {
     if (this.disposed) return
+    this.pinOn = at !== null
     if (!at) {
       this.pin?.setEnabled(false)
       this.invalidate()
@@ -242,7 +267,7 @@ export class CoverageLayer {
     const d = stepM * 1.15
     this.pin.scaling.set(d, 1, d)
     this.pin.position.set(at[0], at[1] + 0.01, at[2])
-    this.pin.setEnabled(true)
+    this.pin.setEnabled(this.visible)
     this.invalidate()
   }
 
@@ -253,7 +278,7 @@ export class CoverageLayer {
   pickDot(x: number, y: number): DotHit | null {
     const shown = this.shown
     const camera = this.scene.activeCamera
-    if (this.disposed || !shown || !camera) return null
+    if (this.disposed || !this.visible || !shown || !camera) return null
     const ray = this.scene.createPickingRay(x, y, Matrix.Identity(), camera)
     const { points, step } = shown
     const levels = new Set<number>()

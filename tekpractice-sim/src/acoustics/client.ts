@@ -7,6 +7,8 @@
  * - Every request gets an id (`jobId`, increasing, returned by `request`). An answer is delivered only when its id is the latest REQUESTED one:
  *   an answer to an older request is dropped (« stale »), even when its job had been posted.
  * - The big buffers of the job are TRANSFERRED to the worker (`postMessage(job, [buffers])`): the caller must keep its own copy of what it needs.
+ * - A worker that errors (a chunk that failed to load, a crash) or that does not answer a posted job within `watchdogMs` (10 s) is DISCARDED:
+ *   terminated and dropped, `onError` is told, and the next request builds a fresh worker (a dead worker never swallows later jobs).
  * - `dispose()` clears the timer, detaches the handlers and terminates the worker. Idempotent. A request after `dispose()` is ignored.
  */
 import { isFailure, type CoverageJob, type CoverageReply } from './job'
@@ -38,13 +40,15 @@ export class CoverageClient {
   private seq = 0
   private disposed = false
   private inFlight = false
+  private watchdog: ReturnType<typeof setTimeout> | null = null
   private readonly results = new Set<(r: CoverageReply) => void>()
   private readonly errors = new Set<(message: string) => void>()
   private counts: CoverageClientStats = { requested: 0, posted: 0, delivered: 0, dropped: 0 }
 
   constructor(
     private readonly makeWorker: () => MessagePortLike,
-    private readonly debounceMs = 150
+    private readonly debounceMs = 150,
+    private readonly watchdogMs = 10_000
   ) {}
 
   /** The id the request got. The answer to it (if no newer request exists by then) reaches `onResult`. */
@@ -89,10 +93,16 @@ export class CoverageClient {
     this.disposed = true
     if (this.timer !== null) clearTimeout(this.timer)
     this.timer = null
+    this.clearWatchdog()
     this.latest = null
     this.inFlight = false
     this.results.clear()
     this.errors.clear()
+    this.discardWorker()
+  }
+
+  /** Terminate and forget the worker (the next job builds a new one). */
+  private discardWorker(): void {
     const w = this.worker
     this.worker = null
     if (w) {
@@ -103,12 +113,20 @@ export class CoverageClient {
     }
   }
 
+  private clearWatchdog(): void {
+    if (this.watchdog !== null) clearTimeout(this.watchdog)
+    this.watchdog = null
+  }
+
   private ensureWorker(): MessagePortLike | null {
     if (this.worker) return this.worker
     try {
       const w = this.makeWorker()
       w.onmessage = (e) => this.receive(e.data)
-      w.onerror = (e) => this.fail(`worker: ${messageOf(e)}`)
+      w.onerror = (e) => {
+        this.discardWorker()
+        this.fail(`worker: ${messageOf(e)}`)
+      }
       this.worker = w
       return w
     } catch (e) {
@@ -126,6 +144,13 @@ export class CoverageClient {
     if (!w) return
     this.counts.posted++
     this.inFlight = true
+    this.clearWatchdog()
+    this.watchdog = setTimeout(() => {
+      this.watchdog = null
+      if (this.disposed || !this.inFlight) return
+      this.discardWorker()
+      this.fail(`worker: no answer within ${this.watchdogMs} ms`)
+    }, this.watchdogMs)
     const transfer: Transferable[] = [job.points.buffer]
     if (job.probes) transfer.push(job.probes.buffer)
     w.postMessage(job, transfer)
@@ -139,6 +164,7 @@ export class CoverageClient {
       return
     }
     this.inFlight = false
+    this.clearWatchdog()
     if (isFailure(data)) return this.fail(data.error)
     this.counts.delivered++
     for (const fn of [...this.results]) fn(data as CoverageReply)
@@ -146,6 +172,7 @@ export class CoverageClient {
 
   private fail(message: string): void {
     this.inFlight = false
+    this.clearWatchdog()
     for (const fn of [...this.errors]) fn(message)
   }
 }
