@@ -49,7 +49,9 @@ describe('inspectGlb', () => {
   })
 
   it('decodes a Draco-compressed file and still reports the true bbox', async () => {
-    const r = await inspectGlb(await makeBoxGlb({ sizeM: SIZE, draco: true }))
+    const bytes = await makeBoxGlb({ sizeM: SIZE, draco: true })
+    expect(new TextDecoder('latin1').decode(bytes)).toContain('KHR_draco_mesh_compression')
+    const r = await inspectGlb(bytes)
     // quantization-safe tolerance: 0.05 mm = 5e-5 m
     close(r.bboxM.min, [-0.1, 0, -0.15], 5e-5)
     close(r.bboxM.max, [0.1, 0.1, 0.15], 5e-5)
