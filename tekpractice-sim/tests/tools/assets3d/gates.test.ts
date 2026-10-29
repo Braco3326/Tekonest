@@ -126,6 +126,24 @@ describe('checkSize', () => {
     expect(checkSize(await boxReport({ w: 0.4704, h: 0.05, d: 0.2 }), big).ok).toBe(false)
   })
 
+  it.each([
+    ['w', (e: number) => ({ w: 0.006 + e, h: 0.006, d: 0.006 })],
+    ['h', (e: number) => ({ w: 0.006, h: 0.006 + e, d: 0.006 })],
+    ['d', (e: number) => ({ w: 0.006, h: 0.006, d: 0.006 + e })],
+  ] as const)('only the %s axis off: 0.4 mm passes, 0.6 mm fails, and the detail names the axis', async (axis, size) => {
+    const small = deviceSpec({ realSizeMm: { w: 6, h: 6, d: 6 } })
+    expect(checkSize(await boxReport(size(0.0004)), small).ok).toBe(true)
+    const bad = checkSize(await boxReport(size(0.0006)), small)
+    expect(bad.ok).toBe(false)
+    expect(bad.detail).toContain(`${axis} measures`)
+  })
+
+  it('fails closed on a NaN bbox', () => {
+    const r = checkSize(reportOf({ bboxM: { min: [-0.05, Number.NaN, -0.1], max: [0.05, 0.05, 0.1] } }), spec)
+    expect(r.ok).toBe(false)
+    expect(r.detail).toMatch(/not finite/i)
+  })
+
   it('measures the world bbox, so an unapplied root scale shows up', async () => {
     const r = await inspectGlb(await makeBoxGlb({ sizeM: { w: 10, h: 5, d: 20 }, scale: 0.01 }))
     expect(checkSize(r, spec).ok).toBe(true)
@@ -184,6 +202,43 @@ describe('checkTransform', () => {
   it('a device centred on y (pivot at mid-height) fails', async () => {
     const report = await inspectGlb(await makeBoxGlb({ sizeM: { w: 0.1, h: 0.05, d: 0.2 }, meshOnChild: { pos: [0, -0.025, 0] } }))
     expect(checkTransform(report, deviceSpec()).ok).toBe(false)
+  })
+
+  it('scale 1.001 fails and 1 + 1e-7 passes', () => {
+    const bad = checkTransform(reportOf({ rootScale: [1.001, 1, 1] }), deviceSpec())
+    expect(bad.ok).toBe(false)
+    expect(bad.detail).toMatch(/scale/i)
+    expect(checkTransform(reportOf({ rootScale: [1 + 1e-7, 1, 1 - 1e-7] }), deviceSpec()).ok).toBe(true)
+  })
+
+  it('device: the x-centre alone off by 0.6 mm fails, 0.4 mm passes', async () => {
+    const size = { w: 0.1, h: 0.05, d: 0.2 }
+    expect(checkTransform(await inspectGlb(await makeBoxGlb({ sizeM: size, meshOnChild: { pos: [0.0004, 0, 0] } })), deviceSpec()).ok).toBe(true)
+    const bad = checkTransform(await inspectGlb(await makeBoxGlb({ sizeM: size, meshOnChild: { pos: [0.0006, 0, 0] } })), deviceSpec())
+    expect(bad.ok).toBe(false)
+    expect(bad.detail).toMatch(/centred/i)
+  })
+
+  it('connector: the x-centre alone off by 0.6 mm fails, 0.4 mm passes', async () => {
+    const size = { w: 0.006, h: 0.006, d: 0.02 }
+    expect(checkTransform(await inspectGlb(await makeBoxGlb({ sizeM: size, meshOnChild: { pos: [0.0004, -0.003, 0.01] } })), connectorSpec()).ok).toBe(true)
+    const bad = checkTransform(await inspectGlb(await makeBoxGlb({ sizeM: size, meshOnChild: { pos: [0.0006, -0.003, 0.01] } })), connectorSpec())
+    expect(bad.ok).toBe(false)
+    expect(bad.detail).toMatch(/centre/i)
+  })
+
+  it('fails closed on NaN in the scale, the rotation and the bbox', () => {
+    const scale = checkTransform(reportOf({ rootScale: [Number.NaN, 1, 1] }), deviceSpec())
+    expect(scale.ok).toBe(false)
+    expect(scale.detail).toMatch(/scale.*not finite/i)
+    const rot = checkTransform(reportOf({ rootRotation: [0, 0, 0, Number.NaN] }), deviceSpec())
+    expect(rot.ok).toBe(false)
+    expect(rot.detail).toMatch(/rotation.*not finite/i)
+    for (const spec of [deviceSpec(), connectorSpec()]) {
+      const box = checkTransform(reportOf({ bboxM: { min: [Number.NaN, 0, 0], max: [0.05, 0.05, 0.1] } }), spec)
+      expect(box.ok).toBe(false)
+      expect(box.detail).toMatch(/bbox.*not finite/i)
+    }
   })
 
   describe('connector pivot is the mating-face centre', () => {
@@ -265,6 +320,21 @@ describe('checkParts', () => {
     expect(r.detail).toContain('body.001')
   })
 
+  it('a dotted id such as out-6.35 is fine, the exporter suffix .001 is not', () => {
+    const dotted = buildPlacement(deviceSpec({
+      ports: [{ portId: 'out-6.35', face: 'io', xMm: 20, yMm: 25, confidence: 'manual' }],
+      controls: [],
+    }))
+    expect(checkParts(withNodeNames(reportOf(), ['port_out-6.35']), dotted).ok).toBe(true)
+    const bad = checkParts(withNodeNames(reportOf(), ['port_out.001']), buildPlacement(deviceSpec({
+      ports: [{ portId: 'out', face: 'io', xMm: 20, yMm: 25, confidence: 'manual' }],
+      controls: [],
+    })))
+    expect(bad.ok).toBe(false)
+    expect(bad.detail).toContain('port_out.001')
+    expect(bad.detail).toMatch(/suffix/i)
+  })
+
   it('parts fails when a control is missing', async () => {
     const nodes = placedNodes(placement).filter((n) => n.name !== 'ctrl_gain')
     const r = checkParts(await boxReport(placement.sizeM, nodes), placement)
@@ -325,6 +395,41 @@ describe('checkPortPositions', () => {
     const bad = checkPortPositions(moveNode(base, 'ctrl_gain', [0, 0, 0.4 * MM]), placement)
     expect(bad.ok).toBe(false)
     expect(bad.detail).toContain('ctrl_gain')
+  })
+
+  it('Euclidean tolerance: 0.2 mm on any single axis passes, a 0.2/0.2/0.2 mm diagonal (0.346 mm) fails', async () => {
+    const base = await boxReport(sizeM, placedNodes(placement))
+    const d = 0.2 * MM
+    for (const delta of [[d, 0, 0], [0, d, 0], [0, 0, d]] as [number, number, number][]) {
+      expect(checkPortPositions(moveNode(base, 'ctrl_gain', delta), placement).ok).toBe(true)
+    }
+    const bad = checkPortPositions(moveNode(base, 'ctrl_gain', [d, d, d]), placement)
+    expect(bad.ok).toBe(false)
+    expect(bad.detail).toContain('ctrl_gain')
+    expect(bad.detail).toContain('0.35')
+  })
+
+  it('face plane tolerance is 0.2 mm: 0.15 mm off passes, 0.25 mm off fails', async () => {
+    const base = await boxReport(sizeM, placedNodes(placement))
+    const withMaxZ = (z: number): GlbReport => ({ ...base, bboxM: { min: base.bboxM.min, max: [0.05, 0.05, z] } })
+    expect(checkPortPositions(withMaxZ(0.1 + 0.15 * MM), placement).ok).toBe(true)
+    const bad = checkPortPositions(withMaxZ(0.1 + 0.25 * MM), placement)
+    expect(bad.ok).toBe(false)
+    expect(bad.detail).toMatch(/face plane/i)
+  })
+
+  it('fails closed on NaN in a node position and in the bbox', async () => {
+    const base = await boxReport(sizeM, placedNodes(placement))
+    const nanPort = { ...base, nodes: base.nodes.map((n) => (n.name === port ? { ...n, worldPos: [Number.NaN, 0.025, 0.1] as [number, number, number] } : n)) }
+    const a = checkPortPositions(nanPort, placement)
+    expect(a.ok).toBe(false)
+    expect(a.detail).toMatch(/not finite/i)
+    const nanCtrl = { ...base, nodes: base.nodes.map((n) => (n.name === 'ctrl_gain' ? { ...n, worldPos: [0, Number.NaN, 0] as [number, number, number] } : n)) }
+    expect(checkPortPositions(nanCtrl, placement).ok).toBe(false)
+    const nanBox = { ...base, bboxM: { min: [-0.05, 0, Number.NaN] as [number, number, number], max: base.bboxM.max } }
+    const b = checkPortPositions(nanBox, placement)
+    expect(b.ok).toBe(false)
+    expect(b.detail).toMatch(/bbox.*not finite/i)
   })
 
   it('a port left at the origin fails', async () => {
@@ -428,6 +533,13 @@ describe('checkBudget', () => {
     expect(checkBudget(reportOf({ materials: 0 }), deviceSpec()).ok).toBe(true)
   })
 
+  it('fails closed on NaN triangles or materials', () => {
+    const t = checkBudget(reportOf({ triangles: Number.NaN }), deviceSpec())
+    expect(t.ok).toBe(false)
+    expect(t.detail).toMatch(/triangles.*not finite/i)
+    expect(checkBudget(reportOf({ materials: Number.NaN }), deviceSpec()).ok).toBe(false)
+  })
+
   it('reports both problems in one detail', () => {
     const r = checkBudget(reportOf({ triangles: 5000, materials: 3 }), deviceSpec())
     expect(r.ok).toBe(false)
@@ -502,6 +614,28 @@ describe('checkProportionDrift', () => {
   it('measures drift on any axis, in either direction', () => {
     expect(checkProportionDrift({ w: 0.1, h: 0.047, d: 0.2 }, spec).ok).toBe(false) // h 6 percent small
     expect(checkProportionDrift({ w: 0.1, h: 0.05, d: 0.18 }, spec).ok).toBe(false) // d shrinks 10 percent, so w and h read 11 percent large
+  })
+
+  it('exactly 5 percent passes, 5.1 percent fails, and the printed percent has two decimals', () => {
+    const exact = checkProportionDrift({ w: 0.105, h: 0.05, d: 0.2 }, spec)
+    expect(exact.ok).toBe(true)
+    expect(exact.detail).toContain('5.00 %')
+    const bad = checkProportionDrift({ w: 0.1051, h: 0.05, d: 0.2 }, spec)
+    expect(bad.ok).toBe(false)
+    expect(bad.detail).toContain('5.10 %')
+  })
+
+  it('fails closed on NaN or non-finite sizes', () => {
+    expect(checkProportionDrift({ w: Number.NaN, h: 0.05, d: 0.2 }, spec).ok).toBe(false)
+    expect(checkProportionDrift({ w: 0.1, h: 0.05, d: Number.POSITIVE_INFINITY }, spec).ok).toBe(false)
+  })
+
+  it('fails a non-positive or non-finite spec axis with a clear detail', () => {
+    for (const w of [0, -100, Number.NaN]) {
+      const r = checkProportionDrift({ w: 0.1, h: 0.05, d: 0.2 }, deviceSpec({ realSizeMm: { w, h: 50, d: 200 } }))
+      expect(r.ok).toBe(false)
+      expect(r.detail).toMatch(/spec/i)
+    }
   })
 
   it('a permuted axis order drifts', () => {

@@ -12,6 +12,8 @@
  *   budget          triangles <= 800 (connector) / 4000 (standard, hero), ceilings with no floor; one material (R5)
  *   connector fit   the plug is 0 to 0.3 mm under the socket opening
  *   proportion      the pre-scale model's proportions drift at most 5 % from the spec's
+ * Every gate fails closed: a non-finite input (NaN, Infinity) fails with a detail saying which value, and each
+ * tolerance test is written `!(x <= tol)` so that a NaN that slipped through still fails.
  */
 import type { GlbReport } from './inspect'
 import type { Placement } from './placement'
@@ -44,6 +46,8 @@ const EPS_M = 1e-9
 
 const mm = (m: number): string => (m * 1000).toFixed(2)
 const fmtVec = (v: ArrayLike<number>): string => `(${Array.from(v, mm).join(', ')})`
+const finite = (v: ArrayLike<number>): boolean => Array.from(v).every(Number.isFinite)
+const bboxFinite = (r: GlbReport): boolean => finite(r.bboxM.min) && finite(r.bboxM.max)
 const result = (gate: string, problems: string[], okDetail: string): GateResult =>
   problems.length === 0 ? { gate, ok: true, detail: okDetail } : { gate, ok: false, detail: problems.join('; ') }
 
@@ -60,13 +64,15 @@ function extents(report: GlbReport): Vec3 {
 
 /** Size gate: each axis of the measured world bbox matches the spec within max(0.5 mm, 0.5 % of the spec size). */
 export function checkSize(report: GlbReport, spec: AssetSpecT): GateResult {
-  const measured = extents(report)
   const wanted = specSizeM(spec)
+  if (!bboxFinite(report)) return { gate: 'size', ok: false, detail: 'the bbox is not finite (NaN or Infinity)' }
+  if (!finite(wanted)) return { gate: 'size', ok: false, detail: 'the spec size is not finite' }
+  const measured = extents(report)
   const labels = ['w', 'h', 'd']
   const problems: string[] = []
   for (let i = 0; i < 3; i++) {
     const tol = Math.max(SIZE_FLOOR_M, SIZE_FRACTION * wanted[i])
-    if (Math.abs(measured[i] - wanted[i]) > tol + EPS_M) {
+    if (!(Math.abs(measured[i] - wanted[i]) <= tol + EPS_M)) {
       problems.push(`${labels[i]} measures ${mm(measured[i])} mm, spec ${mm(wanted[i])} mm (off by ${mm(Math.abs(measured[i] - wanted[i]))} mm, tolerance ${mm(tol)} mm)`)
     }
   }
@@ -88,15 +94,20 @@ export function checkTransform(report: GlbReport, spec: AssetSpecT): GateResult 
   const problems: string[] = []
   if (report.topLevelCount !== 1) problems.push(`${report.topLevelCount} top-level nodes, expected exactly 1`)
 
-  const [sx, sy, sz] = report.rootScale
-  if (sx < 0 || sy < 0 || sz < 0) problems.push(`negative root scale (${report.rootScale.join(', ')})`)
-  else if (report.rootScale.some((s) => Math.abs(s - 1) > UNIT_TOL)) problems.push(`root scale is (${report.rootScale.join(', ')}), expected (1, 1, 1): apply the scale`)
+  if (!finite(report.rootScale)) problems.push(`root scale is not finite (${report.rootScale.join(', ')})`)
+  else if (report.rootScale.some((s) => s < 0)) problems.push(`negative root scale (${report.rootScale.join(', ')})`)
+  else if (report.rootScale.some((s) => !(Math.abs(s - 1) <= UNIT_TOL))) problems.push(`root scale is (${report.rootScale.join(', ')}), expected (1, 1, 1): apply the scale`)
 
-  if (!isIdentityRotation(report.rootRotation)) problems.push(`root rotation is (${report.rootRotation.join(', ')}), expected identity: apply the rotation`)
+  if (!finite(report.rootRotation)) problems.push(`root rotation is not finite (${report.rootRotation.join(', ')})`)
+  else if (!isIdentityRotation(report.rootRotation)) problems.push(`root rotation is (${report.rootRotation.join(', ')}), expected identity: apply the rotation`)
 
+  if (!bboxFinite(report)) {
+    problems.push('the bbox is not finite (NaN or Infinity), the pivot cannot be checked')
+    return result('transform', problems, '')
+  }
   const { min, max } = report.bboxM
   const centre = [(min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2]
-  const off = (v: number): boolean => Math.abs(v) > PIVOT_TOL_M + EPS_M
+  const off = (v: number): boolean => !(Math.abs(v) <= PIVOT_TOL_M + EPS_M)
   if (spec.kind === 'device') {
     if (off(min[1])) problems.push(`pivot not at the bottom: bbox min y is ${mm(min[1])} mm, expected 0`)
     if (off(centre[0]) || off(centre[2])) problems.push(`pivot not centred: bbox centre x, z is (${mm(centre[0])}, ${mm(centre[2])}) mm, expected (0, 0)`)
@@ -110,7 +121,8 @@ export function checkTransform(report: GlbReport, spec: AssetSpecT): GateResult 
 
 const PART_PREFIX = /^(port_|ctrl_)/
 const STRAY_NAME = /^(Cube|Camera|Light)/i
-const NUMERIC_SUFFIX = /\.\d+$/
+/** The exporter's duplicate suffix, exactly three digits: a legitimate id such as out-6.35 is not rejected. */
+const NUMERIC_SUFFIX = /\.\d{3}$/
 
 /**
  * Parts gate (R4): the node names starting with port_ or ctrl_ are exactly the placement's port and control names
@@ -145,6 +157,7 @@ export function checkParts(report: GlbReport, placement: Placement): GateResult 
  */
 export function checkPortPositions(report: GlbReport, placement: Placement): GateResult {
   const problems: string[] = []
+  if (!bboxFinite(report)) return { gate: 'portPositions', ok: false, detail: 'the bbox is not finite (NaN or Infinity)' }
   const { min, max } = report.bboxM
   const byName = new Map(report.nodes.map((n) => [n.name, n.worldPos]))
   const wanted = [
@@ -158,8 +171,12 @@ export function checkPortPositions(report: GlbReport, placement: Placement): Gat
       problems.push(`${w.name} is not in the model`)
       continue
     }
+    if (!finite(actual) || !finite(w.pos)) {
+      problems.push(`${w.name} position is not finite (${actual.join(', ')})`)
+      continue
+    }
     const dist = Math.hypot(actual[0] - w.pos[0], actual[1] - w.pos[1], actual[2] - w.pos[2])
-    if (dist > PORT_TOL_M + EPS_M) {
+    if (!(dist <= PORT_TOL_M + EPS_M)) {
       problems.push(`${w.name} is at ${fmtVec(actual)} mm, placement ${fmtVec(w.pos)} mm (off by ${mm(dist)} mm, tolerance ${mm(PORT_TOL_M)} mm)`)
     }
     if (!w.outward) continue
@@ -167,12 +184,12 @@ export function checkPortPositions(report: GlbReport, placement: Placement): Gat
     const axis = w.outward.findIndex((c) => c !== 0)
     const face = w.outward[axis] > 0 ? max[axis] : min[axis]
     const planeOff = Math.abs(actual[axis] - face)
-    if (planeOff > FACE_PLANE_TOL_M + EPS_M) {
+    if (!(planeOff <= FACE_PLANE_TOL_M + EPS_M)) {
       problems.push(`${w.name} is off the face plane: ${AXES[axis]} = ${mm(actual[axis])} mm, the body face is at ${mm(face)} mm (off by ${mm(planeOff)} mm, tolerance ${mm(FACE_PLANE_TOL_M)} mm)`)
     }
     for (let k = 0; k < 3; k++) {
       if (k === axis) continue
-      if (actual[k] < min[k] - EDGE_SLACK_M || actual[k] > max[k] + EDGE_SLACK_M) {
+      if (!(actual[k] >= min[k] - EDGE_SLACK_M && actual[k] <= max[k] + EDGE_SLACK_M)) {
         problems.push(`${w.name} is outside the face rectangle: ${AXES[k]} = ${mm(actual[k])} mm, the body spans ${mm(min[k])} to ${mm(max[k])} mm`)
       }
     }
@@ -184,8 +201,10 @@ export function checkPortPositions(report: GlbReport, placement: Placement): Gat
 export function checkBudget(report: GlbReport, spec: AssetSpecT): GateResult {
   const ceiling = TRIANGLE_CEILING[spec.tier]
   const problems: string[] = []
-  if (report.triangles > ceiling) problems.push(`${report.triangles} triangles exceeds the ${spec.tier} ceiling of ${ceiling}`)
-  if (report.materials > MAX_MATERIALS) problems.push(`${report.materials} materials, at most ${MAX_MATERIALS} allowed`)
+  if (!Number.isFinite(report.triangles)) problems.push(`triangles count is not finite (${report.triangles})`)
+  else if (!(report.triangles <= ceiling)) problems.push(`${report.triangles} triangles exceeds the ${spec.tier} ceiling of ${ceiling}`)
+  if (!Number.isFinite(report.materials)) problems.push(`materials count is not finite (${report.materials})`)
+  else if (!(report.materials <= MAX_MATERIALS)) problems.push(`${report.materials} materials, at most ${MAX_MATERIALS} allowed`)
   return result('budget', problems, `${report.triangles} triangles (ceiling ${ceiling}), ${report.materials} material${report.materials === 1 ? '' : 's'}`)
 }
 
@@ -220,17 +239,19 @@ export function checkProportionDrift(preScaleSizeM: SizeM, spec: AssetSpecT): Ga
   const gate = 'proportionDrift'
   const pre = [preScaleSizeM.w, preScaleSizeM.h, preScaleSizeM.d]
   const wanted = specSizeM(spec)
+  if (!wanted.every((v) => Number.isFinite(v) && v > 0)) return { gate, ok: false, detail: `the spec size (${wanted.map(mm).join(', ')} mm) must be positive and finite on every axis` }
   const preMax = Math.max(...pre)
-  if (!(preMax > 0) || pre.some((v) => v < 0 || !Number.isFinite(v))) return { gate, ok: false, detail: `the pre-scale size (${pre.join(', ')}) is degenerate` }
+  if (!(preMax > 0) || pre.some((v) => !Number.isFinite(v) || v < 0)) return { gate, ok: false, detail: `the pre-scale size (${pre.join(', ')}) is degenerate or not finite` }
 
   const specMax = Math.max(...wanted)
   let drift = 0
   for (let i = 0; i < 3; i++) {
     drift = Math.max(drift, Math.abs((pre[i] / preMax) / (wanted[i] / specMax) - 1))
   }
-  const percent = (drift * 100).toFixed(1)
-  if (drift > DRIFT_LIMIT) return { gate, ok: false, detail: `proportions drift ${percent} % from the spec, limit ${DRIFT_LIMIT * 100} %` }
-  return { gate, ok: true, detail: `proportions drift ${percent} % from the spec, limit ${DRIFT_LIMIT * 100} %` }
+  const percent = (drift * 100).toFixed(2)
+  const detail = `proportions drift ${percent} % from the spec, limit ${DRIFT_LIMIT * 100} %`
+  // Strictly greater than 5 % fails; the slack lets a mathematically exact 5 % pass despite float error.
+  return { gate, ok: drift <= DRIFT_LIMIT + EPS_M, detail }
 }
 
 /** Runs the five asset gates in order (size, transform, parts, portPositions, budget). Never short-circuits. */
