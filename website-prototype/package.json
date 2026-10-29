@@ -8,10 +8,7 @@
   "scripts": {
     "build": "node tools/build.mjs",
     "test": "node --test",
-    "verify:browser": "node tools/verify-browser.mjs",
-    "render:assets": "node tools/render-assets.mjs",
-    "build:visuals": "node tools/build-visuals.mjs",
-    "build:all": "node tools/build.mjs && node tools/build-visuals.mjs && node tools/render-assets.mjs"
+    "verify:browser": "node tools/verify-browser.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

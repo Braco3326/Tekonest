@@ -198,25 +198,51 @@ test("home does not claim Tekonest already works in all seven trades", () => {
   assert.doesNotMatch(html, /dans lesquels Tekonest travaille/);
 });
 
-// ---- Phase B2, Task 4: panel tokens, dividers, frames, bullets, hero layout ----
+// ---- Phase B3: the marquetry as a theme, never as pictures (spec section 9) ----
 const css = () => page("assets/css/site.css");
 const ruleBlock = (text, selector) => {
   const i = text.indexOf(selector + " {");
   return i < 0 ? "" : text.slice(i, text.indexOf("}", i));
 };
+const homeHtml = () => plain(page("index.html"));
+const BRANCH = ["apprendre", "creer", "histoire", "contact", "accessibilite", "tekpractice"];
+const mainOf = (name) => { const h = plain(page(name + ".html")); return h.slice(h.indexOf("<main"), h.indexOf("</main>")); };
 
 test("the panel tokens exist", () => {
   const tokens = page("assets/css/tokens.css");
-  for (const name of ["--pearl", "--pearl-dim", "--walnut-dark", "--ebony", "--wire"]) assert.match(tokens, new RegExp(`${name}\s*:`), name);
+  for (const name of ["--pearl", "--pearl-dim", "--walnut-dark", "--ebony", "--wire"]) assert.match(tokens, new RegExp(`${name}\\s*:`), name);
 });
 
-test("the dividers use the rendered tiles", () => {
-  for (const [rule, tile] of [[".rule-rope", "rope"], [".rule-tri", "tri"], [".rule-saw", "saw"]]) {
-    const block = ruleBlock(css(), rule);
-    assert.match(block, new RegExp(`assets/img/panel/${tile}-tile-1x\.webp|\.\./img/panel/${tile}-tile-1x\.webp`), `${rule} tile`);
-    assert.ok(existsSync(rootPath(`assets/img/panel/${tile}-tile-1x.webp`)), `${tile} tile file`);
+test("no picture of the panel ships: no raster file, no canvas, no panel script", () => {
+  const raster = /\.(webp|jpe?g|png|gif|avif)\b/i;
+  for (const name of pages()) {
+    const h = page(name);
+    assert.doesNotMatch(h, /<canvas\b/, `${name}: canvas`);
+    assert.doesNotMatch(h, /panel\.js/, `${name}: panel script`);
+    assert.doesNotMatch(h, new RegExp(`(?:src|srcset|href|content)="[^"]*${raster.source}`, "i"), `${name}: raster reference`);
   }
-  assert.match(ruleBlock(css(), ".rule"), /repeat-x/);
+  assert.doesNotMatch(css(), new RegExp(`url\\([^)]*${raster.source}`, "i"), "site.css references a raster file");
+  for (const gone of ["assets/img/panel", "assets/js/panel.js"]) assert.equal(existsSync(rootPath(gone)), false, `${gone} is still shipped`);
+});
+
+test("the bands are rules in the stylesheet, not files", () => {
+  for (const rule of [".rule-rope", ".rule-tri", ".rule-saw"]) {
+    const block = ruleBlock(css(), rule) + ruleBlock(css(), rule + "::before");   // the triangle band draws on its pseudo-elements
+    assert.ok(ruleBlock(css(), rule), `${rule} has no rule`);
+    assert.match(block, /mask(-image)?:/, `${rule} is not drawn by a mask`);
+    assert.doesNotMatch(block, /url\((?!["']?data:image\/svg\+xml)/, `${rule} points at a file`);
+  }
+  assert.match(ruleBlock(css(), ".rule"), /display:\s*block/);
+});
+
+test("the rope is a chain of rounded links, not straight stripes", () => {
+  // Straight parallel bars read as hazard tape. The mask must draw rounded (rx) links.
+  assert.match(decodeURIComponent(ruleBlock(css(), ".rule-rope")), /<rect[^>]*\brx=/);
+});
+
+test("the wire frame and the roundel are CSS components", () => {
+  assert.match(ruleBlock(css(), ".cadre-filet--fil"), /border-color:\s*var\(--wire\)/);
+  assert.match(ruleBlock(css(), ".roundel"), /border-radius:\s*50%/);
 });
 
 test("the old diamond strip, hero canvas and replay button are gone from the CSS", () => {
@@ -225,6 +251,7 @@ test("the old diamond strip, hero canvas and replay button are gone from the CSS
   assert.doesNotMatch(text, /\.site-footer::before/);
   assert.doesNotMatch(text, /\.hero-nuit canvas/);
   assert.doesNotMatch(text, /\.btn-replay/);
+  assert.doesNotMatch(text, /\.hero-panel|\.branch-hero__art|\.site-footer__seal|\.cta-nuit__bg/);
 });
 
 test("cards carry nested fillets", () => {
@@ -237,34 +264,16 @@ test("lists use the star bullet", () => {
   assert.match(ruleBlock(css(), ".cols li"), /background:[^;]*data:image\/svg\+xml/);
 });
 
-test("the hero figure reserves its square", () => {
-  assert.match(ruleBlock(css(), ".hero-panel"), /aspect-ratio:\s*1\b/);
-  assert.match(css(), /\.hero-panel__pause\[hidden\]/);
-});
-
 test("the old halo animation is gone", () => {
   assert.doesNotMatch(css(), /halo-turn/);
   assert.doesNotMatch(css(), /\.direction\b/);
 });
 
-// ---- Phase B2, Task 5: the home page ----
-const homeHtml = () => plain(page("index.html"));
-
-test("the hero is the panel figure", () => {
-  const fig = homeHtml().match(/<figure class="hero-panel">[\s\S]*?<\/figure>/);
-  assert.ok(fig, "no figure.hero-panel");
-  const f = fig[0];
-  const img = f.match(/<img class="hero-panel__poster"[^>]*>/)[0];
-  assert.match(img, /src="assets\/img\/panel\/hero-poster-720\.webp"/);
-  assert.match(img, /srcset="assets\/img\/panel\/hero-poster-720\.webp 720w, assets\/img\/panel\/hero-poster-1200\.webp 1200w"/);
-  assert.match(img, /sizes="/);
-  assert.match(img, /width="720"/);
-  assert.match(img, /height="720"/);
-  assert.match(img, /fetchpriority="high"/);
-  assert.doesNotMatch(img, /loading="lazy"/);
-  assert.match(img, /alt="Panneau de marqueterie/);
-  assert.match(f, /<canvas class="hero-panel__canvas"[^>]*\bhidden\b[^>]*aria-hidden="true"|<canvas class="hero-panel__canvas"[^>]*aria-hidden="true"[^>]*\bhidden\b/);
-  assert.match(f, /<button class="hero-panel__pause" type="button" aria-pressed="false" hidden>Mettre en pause l'animation<\/button>/);
+test("the home hero is a typographic field inside the wire frame, with no picture", () => {
+  const hero = homeHtml().match(/<section class="hero-nuit"[\s\S]*?<\/section>/);
+  assert.ok(hero, "no hero");
+  assert.match(hero[0], /<div class="cadre-filet cadre-filet--fil" aria-hidden="true"><\/div>/);
+  assert.doesNotMatch(hero[0], /<img|<figure|<canvas|<button/);
 });
 
 test("the hero text is unchanged", () => {
@@ -276,38 +285,23 @@ test("the hero text is unchanged", () => {
 });
 
 test("the old hero is gone", () => {
-  const html = homeHtml();
-  assert.doesNotMatch(html, /nid-stage|nid-son|nid-replay|home\.js|texture-damas|class="bande"/);
-  for (const gone of ["assets/js/home.js", "assets/img/photos/texture-damas.jpg", "assets/img/photos/texture-damas.webp"]) assert.equal(existsSync(rootPath(gone)), false, gone);
+  assert.doesNotMatch(homeHtml(), /nid-stage|nid-son|nid-replay|home\.js|texture-damas|class="bande"|hero-panel/);
 });
 
 test("the dividers follow the mapping", () => {
   const html = homeHtml();
   const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
-  assert.equal((main.match(/class="rule /g) || []).length, 2, "exactly two dividers inside the home page content");
+  assert.equal((main.match(/class="rule /g) || []).length, 2, "rope and triangle band inside the home page content (the sawtooth is the footer's)");
+  assert.doesNotMatch(html, /rule--sunken/, "a band between two fields of the same colour is invisible, so there is none");
   assert.match(html, /<\/section>\s*<div class="rule rule-rope" role="presentation"><\/div>\s*<section class="section" aria-labelledby="entrees">/);
-  assert.match(html, /<div class="rule rule-saw" role="presentation"><\/div>\s*<section class="section section--sunken" aria-labelledby="etat">/);
+  assert.match(html, /<div class="rule rule-tri" role="presentation"><\/div>\s*<section class="cta-nuit" aria-labelledby="maintenant">/);
 });
 
-test("the closing band uses the field texture", () => {
-  const img = homeHtml().match(/<img class="cta-nuit__bg"[^>]*>/);
-  assert.ok(img, "no img.cta-nuit__bg");
-  assert.match(img[0], /src="assets\/img\/panel\/closing-texture\.webp"/);
-  assert.match(img[0], /alt=""/);
-  assert.match(img[0], /width="1280"/);
-  assert.match(img[0], /height="720"/);
-  assert.match(img[0], /loading="lazy"/);
+test("the closing band is a flat field in the wire frame", () => {
+  const band = homeHtml().match(/<section class="cta-nuit"[\s\S]*?<\/section>/)[0];
+  assert.doesNotMatch(band, /<img|cta-nuit__bg/);
+  assert.match(band, /<div class="cadre-filet cadre-filet--fil" aria-hidden="true"><\/div>/);
 });
-
-test("only the home page loads the panel script", () => {
-  assert.equal((homeHtml().match(/<script src="assets\/js\/panel\.js" defer><\/script>/g) || []).length, 1);
-  for (const name of pages().filter((n) => n !== "index.html")) assert.doesNotMatch(page(name), /panel\.js/, name);
-  assert.ok(existsSync(rootPath("assets/js/panel.js")));
-});
-
-// ---- Phase B2, Task 6: branch pages, footer seal, share image ----
-const BRANCH = ["apprendre", "creer", "histoire", "contact", "accessibilite", "tekpractice"];
-const mainOf = (name) => { const h = plain(page(name + ".html")); return h.slice(h.indexOf("<main"), h.indexOf("</main>")); };
 
 test("every branch page has a rope divider right after its hero", () => {
   for (const n of BRANCH) {
@@ -319,40 +313,28 @@ test("creer opens with the triangle band", () => {
   assert.match(mainOf("creer"), /^<main id="contenu">\s*<div class="rule rule-tri" role="presentation"><\/div>\s*<section class="branch-hero"/);
 });
 
-test("apprendre shows the strapwork crop beside its hero text", () => {
+test("apprendre's hero is text only", () => {
   const m = mainOf("apprendre");
-  assert.match(m, /<div class="wrap branch-hero__grid">/);
-  const img = m.match(/<img class="branch-hero__art"[^>]*>/);
-  assert.ok(img, "no img.branch-hero__art");
-  assert.match(img[0], /src="assets\/img\/panel\/sefo-field\.webp"/);
-  assert.match(img[0], /alt=""/);
-  assert.match(img[0], /width="900"/);
-  assert.match(img[0], /height="900"/);
-  assert.match(img[0], /loading="lazy"/);
+  assert.doesNotMatch(m, /branch-hero__grid|branch-hero__art|<img/);
 });
 
-test("every page ends with a sawtooth divider, the footer seal and the credit line", () => {
+test("every page ends with a sawtooth divider, the roundel and the credit line", () => {
   for (const name of pages()) {
     const h = plain(page(name));
     assert.match(h, /<\/main>\s*<div class="rule rule-saw" role="presentation"><\/div>\s*<footer class="site-footer">/, name);
-    const seal = h.match(/<img class="site-footer__seal"[^>]*>/);
-    assert.ok(seal, name + ": no footer seal");
-    assert.match(seal[0], /src="assets\/img\/panel\/footer-seal\.webp"/, name);
-    assert.match(seal[0], /alt=""/, name);
-    assert.match(seal[0], /width="96"/, name);
-    assert.match(seal[0], /height="96"/, name);
-    assert.match(seal[0], /loading="lazy"/, name);
+    assert.match(h, /<div class="roundel" aria-hidden="true">\s*<svg[\s\S]*?<\/svg>\s*<\/div>/, `${name}: roundel`);
     assert.match(h, /Motifs inspirés de la marqueterie de Damas\. Géométrie reconstruite par Tekonest\./, name);
   }
 });
 
-test("the footer seal keeps its 96 px size against the generic footer image rule", () => {
-  // `.site-footer img` (specificity 0,1,1) sets height 28px for the lockup; the seal rule must out-rank it.
-  assert.match(css(), /\.site-footer img\.site-footer__seal\s*\{[^}]*width:\s*96px;[^}]*height:\s*96px;/);
+test("every page preloads the fonts it paints first, so text cannot shift when they arrive", () => {
+  for (const name of pages()) {
+    for (const file of ["tektur-medium", "ibm-plex-sans-latin-400-normal", "ibm-plex-sans-latin-500-normal", "ibm-plex-sans-latin-600-normal"]) {
+      assert.match(page(name), new RegExp(`<link rel="preload" href="assets/fonts/${file}\\.woff2" as="font" type="font/woff2" crossorigin>`), `${name}: ${file}`);
+    }
+  }
 });
 
-test("every page declares the share image", () => {
-  for (const name of pages()) {
-    assert.match(page(name), /<meta property="og:image" content="https:\/\/tekonest\.com\/assets\/img\/panel\/og-share\.webp">/, name);
-  }
+test("no page declares a share image", () => {
+  for (const name of pages()) assert.doesNotMatch(page(name), /og:image/, name);
 });

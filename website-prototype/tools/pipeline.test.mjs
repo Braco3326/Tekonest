@@ -31,9 +31,9 @@ function mtimes() {
   return out;
 }
 
-test("build:all never rewrites an up-to-date file (other tests read these files in parallel)", { timeout: 120000 }, () => {
+test("the page build never rewrites an up-to-date file (other tests read these files in parallel)", { timeout: 120000 }, () => {
   const before = mtimes();
-  for (const tool of ["build.mjs", "build-visuals.mjs", "render-assets.mjs"]) {
+  for (const tool of ["build.mjs"]) {
     execFileSync(process.execPath, [join(ROOT, "tools", tool)], { cwd: ROOT, stdio: "pipe" });
   }
   const after = mtimes();
@@ -41,12 +41,12 @@ test("build:all never rewrites an up-to-date file (other tests read these files 
   assert.deepEqual(touched, [], `rewritten although unchanged: ${touched.join(", ")}`);
 });
 
-test("build:all regenerates nothing new", { timeout: 120000 }, () => {
+test("the page build regenerates nothing new", { timeout: 120000 }, () => {
   const before = snapshot();
-  for (const tool of ["build.mjs", "build-visuals.mjs", "render-assets.mjs"]) {
+  for (const tool of ["build.mjs"]) {
     execFileSync(process.execPath, [join(ROOT, "tools", tool)], { cwd: ROOT, stdio: "pipe" });
   }
   const after = snapshot();
   const changed = Object.keys({ ...before, ...after }).filter((f) => before[f] !== after[f]);
-  assert.deepEqual(changed, [], `a generated file is stale: ${changed.join(", ")}. Run npm run build:all and commit.`);
+  assert.deepEqual(changed, [], `a generated file is stale: ${changed.join(", ")}. Run npm run build and commit.`);
 });

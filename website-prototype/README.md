@@ -11,20 +11,22 @@ Open `index.html` in a browser. No server or build is needed to view it.
 - Page content lives in `src/pages/*.html` (a fragment per page, with a `<!-- title: … | description: … -->` header).
 - The shared header and footer live in `tools/build.mjs`.
 - Run `node tools/build.mjs` (Node 22+, no install needed) to regenerate the root `*.html` files. It also applies French typography: narrow no-break spaces before `; : ! ?` and inside « ».
-- Run `npm run build:all` to regenerate every generated file in one go (the three generators below). `node --test` fails if one is stale.
+- `node --test` fails if the built pages are stale.
 - Styles: `assets/css/tokens.css` holds the design tokens (source of truth) and `assets/css/site.css` the components.
 
-## The marquetry panel (generated files)
+## The marquetry theme
 
-The home hero, the dividers and the image assets come from one body of canvas code in [`../visuals/`](../visuals/) (`lib/damas.js`, `lib/nest.js`, `lib/panel.js`, `hero-panel.js`). Nothing in it is hand-edited downstream:
+The look of the site is inspired by Damascene marquetry (« Motifs inspirés de la marqueterie de Damas »), and **no picture of it ships**: the motifs are CSS in `assets/css/site.css` (gradients, masks, borders), coloured by the tokens in `assets/css/tokens.css`. The system is the anatomy of a panel: a frame, then a band, then a single wire, then the field.
 
-| Generator | Writes | What it does |
+| Part | Class | Where |
 |---|---|---|
-| `node tools/build.mjs` | root `*.html` | Fragments and layout into pages |
-| `node tools/build-visuals.mjs` | `assets/js/panel.js` | Bundles the four sources (header: "Generated … Do not edit") |
-| `node tools/render-assets.mjs` | `assets/img/panel/*.webp` | Renders posters, share image, divider tiles, closing texture, field crop and footer seal with the browser's WebP encoder (needs Playwright's Chromium) |
+| Rope band | `.rule .rule-rope` | under every page hero |
+| Diamond-in-triangle band | `.rule .rule-tri` | top of *Créer avec nous*, above the closing band |
+| Sawtooth band | `.rule .rule-saw` | above the footer |
+| Wire frame | `.cadre-filet .cadre-filet--fil` | inside the home hero and the closing band |
+| Roundel | `.roundel` | footer (the brand mark inlined from `assets/img/symbol.svg`) |
 
-Budgets, all enforced by tests: home JS ≤ 25 KB gzip (measured 15.7), poster ≤ 120 KB at 720 px and ≤ 180 KB at 1200 px (107.6 and 172.1), divider tiles ≤ 20 KB, closing texture and field crop ≤ 150 KB (138.4 and 111.5). `node tools/verify-browser.mjs` checks the hero in a browser (LCP, layout shift, reduced motion, Save-Data, keyboard pause) and runs axe on every page; `node tools/check-visual.mjs ../visuals/panel-motion.html 500` checks the animation itself.
+A band belongs to the field below it. The lab that explored the panel (canvas code, samples, the animation) stays in [`../visuals/`](../visuals/) and is not built into the site. `node tools/verify-browser.mjs` checks that no picture loads, that the bands are drawn, and runs axe on every page.
 
 ## Honest by design
 

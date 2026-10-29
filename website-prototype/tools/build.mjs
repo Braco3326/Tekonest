@@ -29,8 +29,11 @@ const LAYOUT = `<!doctype html>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <meta name="robots" content="noindex">
-<meta property="og:image" content="https://tekonest.com/assets/img/panel/og-share.webp">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/tektur-medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ibm-plex-sans-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/site.css">
 <script src="assets/js/site.js"></script>
@@ -56,7 +59,7 @@ const LAYOUT = `<!doctype html>
 <footer class="site-footer">
   <div class="wrap">
     <div>
-      <img class="site-footer__seal" src="assets/img/panel/footer-seal.webp" alt="" width="96" height="96" loading="lazy" decoding="async">
+      <div class="roundel" aria-hidden="true">{roundel}</div>
       <img src="assets/img/lockup-reverse.svg" alt="Tekonest" width="140" height="30">
       <p>Un nid pour les métiers du son : se former, créer ensemble.</p>
     </div>
@@ -93,6 +96,13 @@ export function frenchTypography(html) {
     .join("");
 }
 
+/** The brand mark as inline SVG in the current colour, for the footer roundel (one source: assets/img/symbol.svg). */
+function inlineSymbol() {
+  return readFileSync(join(ROOT, "assets", "img", "symbol.svg"), "utf8").trim()
+    .replace(/ width="\d+" height="\d+"/, "")
+    .replaceAll("#131114", "currentColor");
+}
+
 function fill(template, values) {
   return template.replace(/\{(\w+)\}/g, (match, key) =>
     key in values ? values[key] : match
@@ -118,6 +128,7 @@ export function build({ outDir = ROOT } = {}) {
       footnav: navItems(null),
       content,
       footer_date: FOOTER_DATE,
+      roundel: inlineSymbol(),
     });
     const [head, body] = [html.slice(0, html.indexOf("<body>")), html.slice(html.indexOf("<body>") + 6)];
     writeIfChanged(join(outDir, name), `${head}<body>${frenchTypography(body)}`);

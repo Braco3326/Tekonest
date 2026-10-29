@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Browser checks for the built pages: axe (WCAG 2.2 AA), horizontal overflow, mobile menu, reduced motion,
-// Save-Data and no-JS rendering, and the home hero panel (LCP, layout shift, start, keyboard pause, end).
+// Browser checks for the built pages: axe (WCAG 2.2 AA), horizontal overflow, mobile menu, reduced motion and
+// no-JS rendering, and the theme (no picture loads, the bands are drawn by CSS, layout shift 0).
 // Saves screenshots for review.
 // Run (from website-prototype/): node tools/verify-browser.mjs
 import { mkdirSync, readdirSync } from "node:fs";
@@ -24,20 +24,11 @@ const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 // Screenshots: 375 and 1440 for every page, 768 for the pages whose grid changed.
 const SHOT_WIDTHS = [375, 768, 1440];
 const WIDE_GRID_PAGES = new Set(["index", "creer", "apprendre"]);
-const PAUSE = "Mettre en pause l'animation";
-const RESUME = "Reprendre l'animation";
 
 const failures = [];
 const ok = (message) => console.log(`OK    ${message}`);
 const fail = (message) => { failures.push(message); console.log(`FAIL  ${message}`); };
 const check = (pass, name, detail = "") => (pass ? ok(name) : fail(`${name}${detail ? ` (${detail})` : ""}`));
-
-/** The hero's three parts. */
-const hero = (page) => ({
-  poster: page.locator("figure.hero-panel img.hero-panel__poster"),
-  canvas: page.locator("figure.hero-panel canvas.hero-panel__canvas"),
-  button: page.locator("figure.hero-panel button.hero-panel__pause"),
-});
 
 /** Opens the home page in a fresh context and waits for the load event. */
 async function openHome(browser, BASE, { viewport = DESKTOP, init, ...options } = {}) {
@@ -49,67 +40,43 @@ async function openHome(browser, BASE, { viewport = DESKTOP, init, ...options } 
 }
 
 async function homeChecks(BASE, browser) {
-  // Reduced motion: no canvas, the poster stays.
-  {
-    const { context, page } = await openHome(browser, BASE, { reducedMotion: "reduce" });
-    await page.waitForTimeout(2000);
-    const { poster, canvas } = hero(page);
-    check((await poster.isVisible()) && !(await canvas.isVisible()), "home, reduced motion: the canvas stays hidden and the poster stays visible after 2 s");
+  // The home page loads no picture at all (only fonts, styles, scripts and SVG), whatever the user settings.
+  for (const [label, options] of [["default", {}], ["reduced motion", { reducedMotion: "reduce" }], ["no JavaScript", { javaScriptEnabled: false }]]) {
+    const context = await browser.newContext({ viewport: DESKTOP, ...options });
+    const page = await context.newPage();
+    const pictures = [];
+    page.on("response", (r) => { const t = r.headers()["content-type"] || ""; if (t.startsWith("image/") && !t.includes("svg")) pictures.push(r.url()); });
+    await page.goto(`${BASE}/index.html`, { waitUntil: "load" });
+    if (options.javaScriptEnabled !== false) {            // page.evaluate cannot run when JavaScript is off
+      await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } });
+    } else {
+      for (let i = 0; i < 12; i++) await page.mouse.wheel(0, 600);
+    }
+    await page.waitForTimeout(400);
+    check(pictures.length === 0, `home, ${label}: no picture is loaded`, pictures.join(", "));
+    check(!(await page.locator("canvas, figure.hero-panel").count()), `home, ${label}: no canvas and no hero picture in the page`);
     await context.close();
   }
-  // No JavaScript: the markup alone shows the poster.
-  {
-    const { context, page } = await openHome(browser, BASE, { javaScriptEnabled: false });
-    const { poster, canvas } = hero(page);
-    check((await poster.isVisible()) && !(await canvas.isVisible()), "home, no JavaScript: the poster is visible and no canvas is");
-    await context.close();
-  }
-  // Save-Data: the script declines to start.
-  {
-    const init = () => Object.defineProperty(navigator, "connection", { value: { saveData: true }, configurable: true });
-    const { context, page } = await openHome(browser, BASE, { init });
-    await page.waitForTimeout(2500);
-    const { poster, canvas, button } = hero(page);
-    check((await poster.isVisible()) && !(await canvas.isVisible()) && !(await button.isVisible()), "home, Save-Data: the canvas stays hidden");
-    await context.close();
-  }
-  // LCP element and layout shift, measured in one load.
-  {
-    const init = () => {
-      window.__lcp = null;
-      window.__cls = 0;
-      new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) window.__lcp = { tag: entry.element?.tagName ?? "", cls: String(entry.element?.className ?? "") };
-      }).observe({ type: "largest-contentful-paint", buffered: true });
-      new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) if (!entry.hadRecentInput) window.__cls += entry.value;
-      }).observe({ type: "layout-shift", buffered: true });
-    };
-    const { context, page } = await openHome(browser, BASE, { init });
-    await page.waitForTimeout(3000);
-    const { lcp, cls } = await page.evaluate(() => ({ lcp: window.__lcp, cls: window.__cls }));
-    check(lcp?.tag === "IMG" && lcp.cls.includes("hero-panel__poster"), "home: the poster is the LCP element", JSON.stringify(lcp));
-    check(cls < 0.001, "home: layout shift is 0", `CLS ${cls}`);
-    await context.close();
-  }
-  // Start, keyboard pause and resume, end: one load, in that order.
+  // The theme is drawn: each band has height and a mask, the wire frame and the roundel are visible.
   {
     const { context, page } = await openHome(browser, BASE);
-    const { canvas, button } = hero(page);
-    await page.waitForTimeout(2500);
-    check((await canvas.isVisible()) && (await button.isVisible()), "home: the animation starts");
-
-    await button.focus();
-    await page.keyboard.press("Enter");
-    const paused = [await button.getAttribute("aria-pressed"), (await button.textContent()).trim()];
-    await page.keyboard.press("Enter");
-    const resumed = [await button.getAttribute("aria-pressed"), (await button.textContent()).trim()];
-    check(paused[0] === "true" && paused[1] === RESUME && resumed[0] === "false" && resumed[1] === PAUSE,
-      "home: the pause button works by keyboard", `paused ${paused}, resumed ${resumed}`);
-
-    // 10 s of animation plus the little time spent paused above.
-    await button.waitFor({ state: "hidden", timeout: 13000 }).catch(() => {});
-    check(!(await button.isVisible()) && (await canvas.isVisible()), "home: the pause button goes away when the animation ends");
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(300);
+    const bands = await page.evaluate(() => [...document.querySelectorAll(".rule")].map((el) => {
+      const cs = getComputedStyle(el), m = cs.maskImage || cs.webkitMaskImage || "none", mb = getComputedStyle(el, "::before").maskImage || "none";
+      return { cls: el.className, height: el.getBoundingClientRect().height, masked: m !== "none" || mb !== "none" };
+    }));
+    check(bands.length >= 3 && bands.every((b) => b.height >= 16 && b.masked), "home: the bands are drawn by CSS (height and mask)", JSON.stringify(bands));
+    check((await page.locator(".hero-nuit .cadre-filet--fil").isVisible()) && (await page.locator("footer .roundel").isVisible()), "home: the wire frame and the footer roundel are visible");
+    await context.close();
+  }
+  // Layout shift stays at 0 (no late picture can push the page).
+  {
+    const init = () => { window.__cls = 0; new PerformanceObserver((list) => { for (const e of list.getEntries()) if (!e.hadRecentInput) window.__cls += e.value; }).observe({ type: "layout-shift", buffered: true }); };
+    const { context, page } = await openHome(browser, BASE, { init });
+    await page.waitForTimeout(3000);
+    const cls = await page.evaluate(() => window.__cls);
+    check(cls < 0.001, "home: layout shift is 0", `CLS ${cls}`);
     await context.close();
   }
 }

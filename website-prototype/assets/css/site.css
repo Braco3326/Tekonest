@@ -215,13 +215,15 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 :root { --noyer: #6B4A33; --noyer-dark: #8A6A4F; --nacre: #FBF8F3; }
 .eyebrow { font: 500 0.75rem/1.4 var(--font-text); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-signal); margin: 0 0 var(--space-3); }
 
-/* Hero on Nuit with canvas (Onde + Médaillon + nid) */
-.hero-nuit { position: relative; background: var(--color-ink); color: var(--color-on-dark); min-height: min(88vh, 760px); display: flex; align-items: center; overflow: hidden; --focus-color: var(--color-paper); }
-.hero-nuit__txt { position: relative; padding-block: var(--space-9); }
+/* Hero on Nuit: a centred typographic field inside the wire frame (Phase B3) */
+.hero-nuit { position: relative; background: var(--color-ink); color: var(--color-on-dark); min-height: min(72vh, 640px); display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; --focus-color: var(--color-paper); }
+.hero-nuit > .wrap { position: relative; width: 100%; }
+.hero-nuit__txt { position: relative; padding-block: var(--space-9); display: grid; justify-items: center; }
 .hero-nuit .eyebrow { color: var(--color-amber); }
 .hero-nuit h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.25rem, 1.4rem + 3.6vw, 3.75rem); line-height: 1.04; letter-spacing: -0.01em; max-width: 13ch; color: var(--color-on-dark); }
 .hero-nuit .lead { margin-top: var(--space-5); max-width: 32rem; font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem); color: var(--color-on-dark-2); }
 .hero-nuit .honest { margin-top: var(--space-4); max-width: 32rem; font-size: var(--text-sm); color: var(--color-on-dark-2); }
+.hero-nuit .hero-actions { justify-content: center; }
 
 
 /* Cadre: double walnut filet offset 7px + amber corner piece */
@@ -288,7 +290,6 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 
 /* Closing band on Nuit with the bronze Damascus texture */
 .cta-nuit { position: relative; background: var(--color-ink); color: var(--color-on-dark); overflow: hidden; --focus-color: var(--color-paper); }
-.cta-nuit__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .38; }
 .cta-nuit__in { position: relative; padding-block: var(--space-9); padding-inline: calc(var(--gutter) + var(--space-6)); text-align: center; display: grid; justify-items: center; gap: var(--space-4); }
 .cta-nuit .cadre-filet { inset: var(--space-6) var(--gutter); }
 .cta-nuit blockquote { margin: 0 0 var(--space-4); font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); line-height: 1.15; max-width: 22ch; color: var(--color-on-dark); }
@@ -313,37 +314,27 @@ kbd { display: inline-block; font: 600 0.875em/1.4 var(--font-text); padding: 0 
 @media (max-width: 720px) { .board--keys tbody th { width: auto; } }
 
 
-/* ===== Marquetry panel (Phase B2) ===== */
-/* Dividers: rendered tiles repeated along x (assets/img/panel, from visuals/ by tools/render-assets.mjs) */
-.rule { display: block; margin: 0; background-repeat: repeat-x; background-position: left center; }
-.rule-rope { height: 25px; background-size: 80px 25px; background-image: url("../img/panel/rope-tile-1x.webp"); background-image: image-set(url("../img/panel/rope-tile-1x.webp") 1x, url("../img/panel/rope-tile-2x.webp") 2x); }
-.rule-tri { height: 40px; background-size: 76px 40px; background-image: url("../img/panel/tri-tile-1x.webp"); background-image: image-set(url("../img/panel/tri-tile-1x.webp") 1x, url("../img/panel/tri-tile-2x.webp") 2x); }
-.rule-saw { height: 24px; background-size: 32px 24px; background-image: url("../img/panel/saw-tile-1x.webp"); background-image: image-set(url("../img/panel/saw-tile-1x.webp") 1x, url("../img/panel/saw-tile-2x.webp") 2x); }
-
-/* Home hero: text left, the panel being made on the right. The poster is the LCP image; the canvas is revealed by script only when motion is allowed. */
-.hero-nuit__grid { position: relative; width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) min(46vw, 560px); gap: var(--space-8); align-items: center; padding-block: var(--space-8); }
-.hero-nuit__grid .hero-nuit__txt { padding-block: 0; }
-.hero-panel { position: relative; margin: 0; width: 100%; aspect-ratio: 1; justify-self: end; background: #0C0A0B; }
-.hero-panel__poster, .hero-panel__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.hero-panel__canvas[hidden], .hero-panel__pause[hidden] { display: none; }
-.hero-panel__pause { position: absolute; left: 12px; bottom: 12px; background: rgba(19,17,20,.88); border: 1px solid #857B81; color: var(--color-on-dark); font: 500 0.875rem var(--font-text); min-height: 44px; padding: 0 var(--space-4); cursor: pointer; }
-.hero-panel__pause:hover { border-color: var(--color-amber); }
-.hero-panel__pause[aria-pressed="true"] { border-color: var(--color-amber); color: var(--color-amber); }
-.hero-panel__pause:focus-visible { outline: 3px solid var(--focus-color); outline-offset: 3px; }
-.hero-panel:focus-visible { outline: 3px solid var(--focus-color); outline-offset: 3px; }
-@media (max-width: 800px) {
-  .hero-nuit { min-height: 0; }
-  .hero-nuit__grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); padding-block: var(--space-7); }
-  .hero-panel { order: -1; width: min(86vw, 420px); justify-self: center; }
-}
-
 /* Lists: an eight-point star (two squares, one turned 45 degrees) in place of the dot */
 .cols ul { list-style: none; padding: 0; margin: var(--space-3) 0 0; }
 .cols li { padding-left: 1.5rem; margin-block: var(--space-2); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cg fill='none' stroke='%23612D45' stroke-width='1'%3E%3Crect x='2.2' y='2.2' width='7.6' height='7.6'/%3E%3Crect x='2.2' y='2.2' width='7.6' height='7.6' transform='rotate(45 6 6)'/%3E%3C/g%3E%3C/svg%3E") no-repeat 0 0.4em / 12px 12px; }
 
-/* Se former hero: the strapwork crop beside the text (hidden on narrow screens), and the footer seal */
-.branch-hero__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-7); align-items: center; }
-@media (min-width: 801px) { .branch-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 360px); } }
-.branch-hero__art { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; display: block; border: 1px solid var(--noyer); }
-@media (max-width: 800px) { .branch-hero__art { display: none; } }
-.site-footer img.site-footer__seal { display: block; width: 96px; height: 96px; margin-bottom: var(--space-4); }
+
+/* ===== Marquetry theme (Phase B3): the anatomy of the panel as CSS. No picture ships. ===== */
+/* A band belongs to the field below it; --band is its colour. The shape is a mask in the stylesheet, so tokens recolour it. */
+.rule { display: block; margin: 0; position: relative; --band: var(--color-ink); }
+.rule-rope { height: 24px; background: var(--band); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Crect x='3.75' y='2.5' width='4.5' height='19' rx='2.25' transform='rotate(-25 6 12)'/%3E%3Cpath d='M0 0h12v1.5H0zM0 22.5h12V24H0z'/%3E%3C/svg%3E") repeat-x left center / 12px 24px; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 24'%3E%3Crect x='3.75' y='2.5' width='4.5' height='19' rx='2.25' transform='rotate(-25 6 12)'/%3E%3Cpath d='M0 0h12v1.5H0zM0 22.5h12V24H0z'/%3E%3C/svg%3E") repeat-x left center / 12px 24px; }
+.rule-saw { height: 16px; background: var(--band); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M0 16L12 0L24 16Z'/%3E%3C/svg%3E") repeat-x left bottom / 24px 16px; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cpath d='M0 16L12 0L24 16Z'/%3E%3C/svg%3E") repeat-x left bottom / 24px 16px; }
+.rule-tri { height: 32px; background: var(--ebony); }
+.rule-tri::before, .rule-tri::after { content: ""; position: absolute; inset: 0; }
+.rule-tri::before { background: var(--noyer); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 32'%3E%3Cpath d='M0 32L24 4L48 32Z'/%3E%3C/svg%3E") repeat-x left bottom / 48px 32px; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 32'%3E%3Cpath d='M0 32L24 4L48 32Z'/%3E%3C/svg%3E") repeat-x left bottom / 48px 32px; }
+.rule-tri::after { background: var(--pearl); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 32'%3E%3Cpath d='M24 14L30 22L24 30L18 22Z'/%3E%3C/svg%3E") repeat-x left bottom / 48px 32px; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 32'%3E%3Cpath d='M24 14L30 22L24 30L18 22Z'/%3E%3C/svg%3E") repeat-x left bottom / 48px 32px; }
+@media (forced-colors: active), print { .rule { display: none; } }
+
+/* The wire frame: the amber wire inset in a Nuit field (hero, closing band) */
+.cadre-filet--fil { border-color: var(--wire); outline-color: rgb(221 147 73 / .45); opacity: 1; inset: 24px; }
+@media (max-width: 760px) { .cadre-filet--fil { inset: 10px; } }
+@media (max-width: 760px) { .hero-nuit { min-height: 0; } .hero-nuit__txt { padding-block: var(--space-8); } }
+
+/* The roundel: rings of wire around the brand mark (footer) */
+.roundel { width: 64px; height: 64px; margin: 4px 4px var(--space-5); border-radius: 50%; border: 1px solid var(--wire); outline: 1px solid rgb(221 147 73 / .45); outline-offset: 4px; display: grid; place-items: center; color: var(--pearl); }
+.roundel svg { width: 40px; height: 40px; display: block; }
