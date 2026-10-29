@@ -70,7 +70,11 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     duplicate: 'Dupliquer',
     delete: 'Supprimer',
     connectTo: 'Connecter à…',
-    play: 'Écouter le morceau',
+    play: 'Lecture',
+    stop: 'Stop',
+    song: 'Morceau',
+    chooseFile: 'Choisir un fichier audio…',
+    testSignal: 'Signal de test',
     coverage: 'Couverture',
     panelTree: 'Panneau Projet',
     panelProps: 'Panneau Propriétés',
@@ -429,6 +433,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     ruleError: 'Une erreur de câblage bloque le chemin.',
     /** NO_MIC: no verified mic is cabled to a mic input. */
     noMic: 'Aucun micro branché sur une entrée micro.',
+    /** Announced once when « Micro OK » is lost; {reason} = the first reason. */
+    micLost: 'Plus de Micro OK. {reason}',
   },
   /**
    * Coverage (Task 37, C13, S2): Écoute › Couverture, the dots in the 3D view and the legend / statistics block at the bottom of Propriétés.
@@ -493,6 +499,43 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     announceDone: 'Couverture calculée : {n} points, {min} à {max} dB, pas {step} m.',
     announceOff: 'Couverture masquée.',
     loadFailed: 'La couverture n’a pas pu se charger. Rechargez la page.',
+  },
+  /**
+   * Listening (Task 39, C9, C14, CA-03, CA-26): Écoute › Lecture / Stop / Morceau / Choisir un fichier audio… / Signal de test, and the Écoute block at the
+   * bottom of Propriétés. Honesty (brief §10): a SIMPLE simulation, said in the block. Every string here: à valider (tekuxwriter).
+   */
+  listen: {
+    panelTitle: 'Écoute',
+    panelCollapse: 'Replier l’écoute',
+    panelExpand: 'Déplier l’écoute',
+    stopped: 'Lecture arrêtée.',
+    starting: 'Démarrage de la lecture…',
+    playing: 'Lecture en cours : {source}.',
+    sourceTest: 'signal de test',
+    sourceFile: 'fichier {name}',
+    sourceSong: '{title}',
+    silentMix: 'Aucune enceinte ne sonne pour le moment : la console est en mute ou son fader est à −inf.',
+    metersTitle: 'Niveau à chaque enceinte',
+    meterRow: '{name} : niveau {level}, gain {gain}, retard {delay}, pan {pan}',
+    levelDb: '{v} dBFS',
+    levelSilent: 'silence',
+    gainValue: '{v} dB',
+    delayValue: '{v} ms',
+    panLeft: 'gauche {n} %',
+    panRight: 'droite {n} %',
+    panCenter: 'centre',
+    noSpeakers: 'Aucune enceinte à écouter.',
+    simple: 'Simulation simple : niveau, retard et placement gauche-droite calculés d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie.',
+    volume: 'Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin.',
+    fileLocal: 'Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré.',
+    fileInputName: 'Choisir un fichier audio',
+    notReady: 'Lecture impossible. {reason}',
+    stoppedNotReady: 'Lecture arrêtée. {reason}',
+    stoppedPlace: 'Lecture arrêtée : le lieu a changé.',
+    stoppedEnded: 'Lecture terminée.',
+    failedFile: 'Ce fichier n’a pas pu être lu. Essayez un fichier MP3, WAV ou OGG.',
+    failed: 'La lecture n’a pas pu démarrer.',
+    loadFailed: 'La lecture n’a pas pu se charger. Rechargez la page.',
   },
   /** The shell could not start (Phase 1 review): a persistent alert with the way out. */
   boot: {

@@ -63,6 +63,9 @@ export class FakeNode {
 
 export class FakeGain extends FakeNode {
   gain = new FakeParam(1)
+  channelCount = 2
+  channelCountMode = 'max'
+  channelInterpretation = 'speakers'
   constructor(ctx: FakeContext) {
     super('gain', ctx)
   }

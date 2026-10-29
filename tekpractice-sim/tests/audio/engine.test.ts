@@ -20,9 +20,9 @@ async function started(kind: 'test' | 'file' | 'song' = 'test', opts: { deferRen
   return { h, e, ctx }
 }
 const chainOf = (ctx: FakeContext, k = 0): { gain: FakeGain; delay: FakeDelay; pan: FakePanner; analyser: FakeAnalyser } => {
-  // voices create their nodes in the order gain, delay, panner, analyser; the master is a gain made before them
+  // voices create their nodes in the order gain, delay, panner, analyser; the master and the input are the two gains made before them
   const gains = ctx.ofType<FakeGain>('gain')
-  return { gain: gains[1 + k], delay: ctx.ofType<FakeDelay>('delay')[k], pan: ctx.ofType<FakePanner>('panner')[k], analyser: ctx.ofType<FakeAnalyser>('analyser')[k] }
+  return { gain: gains[2 + k], delay: ctx.ofType<FakeDelay>('delay')[k], pan: ctx.ofType<FakePanner>('panner')[k], analyser: ctx.ofType<FakeAnalyser>('analyser')[k] }
 }
 
 describe('hearing safety: it never starts loud', () => {
@@ -86,7 +86,12 @@ describe('the graph', () => {
     e.update([voice('l', { channels: ['L'] }), voice('r', { channels: ['R'] }), voice('both', { channels: ['L', 'R'] })])
     const split = ctx.ofType('splitter')[0]
     const src = ctx.ofType<FakeBufferSource>('buffersource')[0]
-    expect(src.feeds(split)).toBe(true)
+    const input = ctx.ofType<FakeGain>('gain')[1]
+    expect(src.feeds(input)).toBe(true) // the source enters the 2-channel input, which feeds the splitter
+    expect(input.feeds(split)).toBe(true)
+    expect(input.channelCount).toBe(2)
+    expect(input.channelCountMode).toBe('explicit')
+    expect(input.channelInterpretation).toBe('speakers') // a mono file is up-mixed: both speakers get it
     expect(src.loop).toBe(true)
     expect(src.started).toBe(1)
     const master = ctx.ofType<FakeGain>('gain')[0]
@@ -105,7 +110,7 @@ describe('the graph', () => {
   it('a speaker fed by both channels takes (L + R) / 2: the gain is halved so a mono source keeps its level', async () => {
     const { e, ctx } = await started('test')
     e.update([voice('both', { channels: ['L', 'R'], gain: 0.5 }), voice('one', { channels: ['L'], gain: 0.5 })])
-    const targets = ctx.ofType<FakeGain>('gain').slice(1).map((g) => g.gain.of('target').at(-1)!.value)
+    const targets = ctx.ofType<FakeGain>('gain').slice(2).map((g) => g.gain.of('target').at(-1)!.value)
     expect(targets).toEqual([0.25, 0.5])
   })
   it('a new voice starts at its delay and pan (no sweep from zero); its gain ramps up from 0', async () => {
@@ -185,7 +190,7 @@ describe('sources', () => {
     expect(h.elements[0].paused).toBe(false)
     const mes = ctx.ofType<FakeMediaSource>('mediasource')[0]
     expect(mes.element).toBe(h.elements[0])
-    expect(mes.feeds(ctx.ofType('splitter')[0])).toBe(true)
+    expect(mes.feeds(ctx.ofType<FakeGain>('gain')[1])).toBe(true) // into the up-mixing input
     expect(h.renders).toBe(0)
   })
   it('a song is a same-origin URL on the element: no object URL is made', async () => {
@@ -252,7 +257,7 @@ describe('lifecycle: nothing is left behind', () => {
     await e.closed
     await Promise.resolve()
     expect(ctx.closeCalls).toBe(1)
-    expect(ctx.ofType('gain')).toHaveLength(1) // update() after dispose built nothing
+    expect(ctx.ofType('gain')).toHaveLength(2) // the master and the input: update() after dispose built nothing
   })
   it('a context that refuses to close (already closed) does not throw out of dispose()', async () => {
     const { e, ctx } = await started('test')

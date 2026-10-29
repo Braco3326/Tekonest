@@ -18,6 +18,7 @@ import type { Registry } from '../engine/CatalogLoader'
 import type { PathResult } from '../flow/signalPath'
 import { isPowered } from '../flow/signalPath'
 import type { AcSource } from '../acoustics/field'
+import type { SpeakerPose } from '../acoustics/geometry'
 import type { DesignState } from '../trials/trial'
 
 export type ExclusionReason = 'unverified' | 'no-acoustic' | 'muted' | 'silent' | 'unpowered' | 'no-placement' | 'bad-coverage'
@@ -59,6 +60,14 @@ export const FRONT_YAW_OFFSET_DEG: Readonly<Record<string, number>> = {}
 
 /** The L28 (iii) deduction note in the `ref` of a coverage value (« V déduit de « axisymmetric » … »). */
 const DEDUCED = /\bdéduit\b/i
+
+/**
+ * A speaker's acoustic pose from its placement (position, yaw, tilt): the ONE conversion the coverage layer and the listener mix share (Task 39).
+ * `offsets` = degrees added to the yaw by device id (empty today, see `CoverageSourceOptions`).
+ */
+export function speakerPose(placement: DesignState['placements'][number], deviceId: string, offsets: Readonly<Record<string, number>> = FRONT_YAW_OFFSET_DEG): SpeakerPose {
+  return { position: [...placement.position_m], yawDeg: placement.yawDeg + (offsets[deviceId] ?? 0), tiltDeg: placement.tiltDeg ?? 0 }
+}
 
 export function coverageSourcesDetail(design: DesignState, registry: Registry, path: PathResult, options: CoverageSourceOptions = {}): CoverageSourcesResult {
   const offsets = options.frontYawOffsetDeg ?? FRONT_YAW_OFFSET_DEG
@@ -105,7 +114,7 @@ export function coverageSourcesDetail(design: DesignState, registry: Registry, p
     }
     out.sources.push({
       id: feed.instanceId,
-      pose: { position: [...placement.position_m], yawDeg: placement.yawDeg + (offsets[dev.id] ?? 0), tiltDeg: placement.tiltDeg ?? 0 },
+      pose: speakerPose(placement, dev.id, offsets),
       hDeg: h.value,
       vDeg: v.value,
       lRefDb: feed.gainDb, // P10: the feed's gain is the scale level, not an SPL

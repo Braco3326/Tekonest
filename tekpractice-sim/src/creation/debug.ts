@@ -12,6 +12,7 @@ import type { DeviceInstance } from '../scene/DeviceSpawner'
 import type { PlaceResult } from './placeController'
 import type { QuarantineItem } from './persistence'
 import type { CoverageDebug } from './coverageController'
+import type { ListenDebug } from './listenController'
 
 export interface CreationDebug {
   /** Through `history.do` (undoable, as a UI action). */
@@ -139,6 +140,12 @@ export interface CreationDebug {
   coverageDotAt(x: number, y: number): [number, number, number] | null
   /** Task 37: the world position of a port marker (after the .glb is applied it sits on the model), or null when unknown. */
   portWorld(ref: PortRef): [number, number, number] | null
+  /** Task 39: each speaker's output level (linear RMS from its analyser; 0 = silence) while playing; {} otherwise. Never loads the audio chunk. */
+  audioLevels(): Record<string, number>
+  /** Task 39: the listen controller's state (plain data); `stopped` with no voices until the first « Lecture ». */
+  audioState(): ListenDebug
+  /** Task 39: Web Audio counters over the page's life: every context opened must be closed, every object URL revoked, every <audio> element removed. */
+  audioStats(): { contexts: { opened: number; closed: number }; urls: { created: number; revoked: number }; elements: { created: number; removed: number } }
 }
 
 declare global {

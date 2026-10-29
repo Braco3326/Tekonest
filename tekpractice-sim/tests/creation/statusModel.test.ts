@@ -7,7 +7,7 @@ import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { templateToDesign } from '../../src/creation/templates'
 import { Template } from '../../src/creation/templateSchema'
 import { signalPath } from '../../src/flow/signalPath'
-import { autosaveView, rejectionOf, ruleTextFor, statusView } from '../../src/creation/shell/statusModel'
+import { autosaveView, playbackAnnouncement, playbackNoticeState, rejectionOf, ruleTextFor, statusView, type PlaybackNoticeState } from '../../src/creation/shell/statusModel'
 
 const ruleText = (id: string): { title: string; detail: string } => ({ title: `T-${id}`, detail: `detail-${id}` })
 const ev = (ruleId: string, severity: 'error' | 'warning', instance = 'u87'): TeachingEvent => ({
@@ -191,5 +191,41 @@ describe('statusView: the signal path (Task 34, C9, L5)', () => {
     s.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'power', value: false })
     expect(line()).toMatchObject({ playback: { ready: false, text: 'La console n’est pas alimentée.' }, mic: '' })
     expect(line().signal.kind).toBe('neutral')
+  })
+})
+
+describe('playback and mic announcements (Task 39, review of Task 34)', () => {
+  const state = (over: Partial<PlaybackNoticeState> = {}): PlaybackNoticeState => ({ ready: false, reason: 'Aucune source de lecture dans le projet.', micOk: false, micReason: 'Aucun micro branché sur une entrée micro.', ...over })
+  const ready = state({ ready: true, reason: '' })
+  it('becoming possible is announced: « Lecture possible »', () => {
+    expect(playbackAnnouncement(state(), ready)).toBe('Lecture possible')
+  })
+  it('losing it announces the first reason, once; a loss the owner reports itself (it is playing and stops) is not said twice', () => {
+    expect(playbackAnnouncement(ready, state({ reason: 'La console n’est pas alimentée.' }))).toBe('La console n’est pas alimentée.')
+    expect(playbackAnnouncement(ready, state({ reason: 'La console n’est pas alimentée.' }), { stopsPlayback: true })).toBe('')
+    expect(playbackAnnouncement(state({ ready: true, reason: '' }), state({ ready: true, reason: '' }), { stopsPlayback: true })).toBe('')
+  })
+  it('still impossible with another first reason: that reason; with the same one: nothing (not per store change)', () => {
+    expect(playbackAnnouncement(state(), state({ reason: 'La lecture console est coupée.' }))).toBe('La lecture console est coupée.')
+    expect(playbackAnnouncement(state(), state())).toBe('')
+    expect(playbackAnnouncement(ready, ready)).toBe('')
+  })
+  it('« Micro OK » is announced when it appears, and the loss with its reason; no change, nothing', () => {
+    expect(playbackAnnouncement(state(), state({ micOk: true, micReason: '' }))).toBe('Micro OK')
+    expect(playbackAnnouncement(state({ micOk: true, micReason: '' }), state())).toBe('Plus de Micro OK. Aucun micro branché sur une entrée micro.')
+    expect(playbackAnnouncement(state({ micOk: true, micReason: '' }), state({ micOk: true, micReason: '' }))).toBe('')
+  })
+  it('both at once are one sentence in order: playback, then mic', () => {
+    expect(playbackAnnouncement(state(), state({ ready: true, reason: '', micOk: true, micReason: '' }))).toBe('Lecture possible. Micro OK.')
+  })
+  it('the state is read from the path: ready → no reason; not ready → the FIRST reason; the mic reason likewise', () => {
+    const reasons = [{ code: 'SOURCE_OFF' as const, text_fr: 'La lecture console est coupée.', subjects: [] }, { code: 'NO_PATH' as const, text_fr: 'x', subjects: [] }]
+    expect(playbackNoticeState({ playbackReady: false, reasons, micOk: false, micReasons: [{ code: 'NO_MIC', text_fr: 'Aucun micro branché sur une entrée micro.', subjects: [] }] })).toEqual({
+      ready: false,
+      reason: 'La lecture console est coupée.',
+      micOk: false,
+      micReason: 'Aucun micro branché sur une entrée micro.',
+    })
+    expect(playbackNoticeState({ playbackReady: true, reasons: [], micOk: true, micReasons: [] })).toEqual({ ready: true, reason: '', micOk: true, micReason: '' })
   })
 })

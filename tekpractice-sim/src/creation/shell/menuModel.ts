@@ -30,6 +30,11 @@ export interface MenuItem {
   kind?: 'checkbox' | 'radio'
   /** Its checked state, read at each render (with `kind`). */
   checked?(): boolean
+  /**
+   * Why a disabled item is disabled (Task 39: « Lecture » says the first reason of the signal path). Read at each render; shown under the label and
+   * set as the item's accessible DESCRIPTION while it is disabled (the item stays focusable, APG). Never shown on an enabled item.
+   */
+  description?(): string | undefined
 }
 
 /**
@@ -75,6 +80,14 @@ export interface MenuContext {
   listenerPoint?(): string
   /** Écoute › Couverture (Task 37): the coverage dots are on (the item is checked). */
   coverage?(): boolean
+  /** Écoute (Task 39): a source is playing (« Lecture » reads « Stop »). */
+  playing?(): boolean
+  /** Écoute (Task 39): the signal path can play (`playbackReady`); the sources are off without it. */
+  playbackReady?(): boolean
+  /** Écoute (Task 39): the first reason the path cannot play (the disabled items' description). */
+  playbackReason?(): string | undefined
+  /** Écoute › Morceau (Task 39): the demo songs; the submenu is left out when there are none. */
+  songs?(): { id: string; title: string }[]
 }
 
 export function buildMenus(ctx: MenuContext): MenuDef[] {
@@ -176,6 +189,30 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
   const coverageBase = act('coverage', M.coverage!)
   const coverageLive = (): boolean => viewFree() && coverageBase.enabled()
   const coverage: MenuItem = { ...coverageBase, enabled: coverageLive, run: () => void (coverageLive() && coverageBase.run()), kind: 'checkbox', checked: () => !!ctx.coverage?.() }
+  // Écoute › Lecture / Stop, Morceau, Choisir un fichier audio…, Signal de test (Task 39). The sources need a valid chain (`playbackReady`), the
+  // transport does not: Stop is always live. A disabled one stays focusable and says why (the first reason of the signal path).
+  const registered = (action: string): boolean => typeof ctx.actions[action] === 'function'
+  const canStart = (): boolean => viewFree() && !!ctx.playbackReady?.()
+  const why = (): string | undefined => ctx.playbackReason?.() || undefined
+  /** A source item: runs its action when the chain is valid. */
+  const source = (id: string, label: string, action = id): MenuItem => {
+    const on = (): boolean => registered(action) && canStart()
+    return { id, label, enabled: on, run: () => void (on() && ctx.actions[action]()), description: () => (on() ? undefined : why()) }
+  }
+  const playing = !!ctx.playing?.()
+  const playOn = (): boolean => registered('play') && (playing || canStart())
+  const play: MenuItem = {
+    id: 'play',
+    label: playing ? M.stop! : M.play!,
+    enabled: playOn,
+    run: () => void (playOn() && ctx.actions.play()),
+    description: () => (playOn() ? undefined : why()),
+  }
+  const songList = ctx.songs?.() ?? []
+  const songItems = songList.map((s) => source(`song:${s.id}`, s.title))
+  const songs: MenuItem[] = songList.length
+    ? [{ id: 'songs', label: M.song!, enabled: () => songItems.some((i) => i.enabled()), run: () => {}, children: songItems, description: () => (songItems.some((i) => i.enabled()) ? undefined : why()) }]
+    : []
   return [
     {
       id: 'projet',
@@ -192,7 +229,7 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     {
       id: 'ecoute',
       label: M.ecoute!,
-      items: [act('play', M.play!), coverage, ear('ear-seated', W.earSeated!, 1.2), ear('ear-standing', W.earStanding!, 1.7)],
+      items: [play, ...songs, source('choose-file', M.chooseFile!), source('test-signal', M.testSignal!), coverage, ear('ear-seated', W.earSeated!, 1.2), ear('ear-standing', W.earStanding!, 1.7)],
     },
     {
       id: 'vue',

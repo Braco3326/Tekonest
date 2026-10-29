@@ -1,7 +1,7 @@
 /**
  * The Web Audio adapter (Task 39, C9, C14, CA-03, CA-26, S3). A LAZY chunk: nothing here is loaded until the first « Lecture ».
  *
- *   source ─▶ ChannelSplitter(2) ─▶ per voice: [L and/or R] ─▶ Gain ─▶ Delay(≤ 1 s) ─▶ StereoPanner ─▶ Analyser (meter) ─▶ master Gain ─▶ limiter ─▶ destination
+ *   source ─▶ input (2 ch, speaker up-mix) ─▶ ChannelSplitter(2) ─▶ per voice: [L and/or R] ─▶ Gain ─▶ Delay(≤ 1 s) ─▶ StereoPanner ─▶ Analyser (meter) ─▶ master Gain ─▶ limiter ─▶ destination
  *
  * The voices come from the pure `listenerMix` (gain, delay, pan per powered speaker); `update()` moves the three parameters with
  * `setTargetAtTime(…, 0.02)` so a mix change never clicks. A voice whose gain is 0 (muted, fader at −inf) is snapped to EXACTLY 0 once the ramp has
@@ -117,6 +117,8 @@ export class AudioEngine {
   readonly closed: Promise<void>
 
   private readonly ctx: AudioContext
+  /** Every source enters here: forced to 2 channels with the speaker up-mix, so a MONO file feeds L and R alike (a ChannelSplitter alone is « discrete »: mono would reach L only). */
+  private readonly input: GainNode
   private readonly splitter: ChannelSplitterNode
   private readonly master: GainNode
   private readonly limiter: DynamicsCompressorNode
@@ -142,6 +144,11 @@ export class AudioEngine {
     this.splitter = ctx.createChannelSplitter(2)
     this.master = ctx.createGain()
     this.master.gain.value = 0 // the fade-in raises it; nothing is audible before the source starts
+    this.input = ctx.createGain()
+    this.input.channelCount = 2
+    this.input.channelCountMode = 'explicit'
+    this.input.channelInterpretation = 'speakers'
+    this.input.connect(this.splitter)
     this.limiter = ctx.createDynamicsCompressor()
     this.limiter.threshold.value = LIMITER.threshold
     this.limiter.knee.value = LIMITER.knee
@@ -196,7 +203,7 @@ export class AudioEngine {
             }
           },
         }
-        bs.connect(this.splitter)
+        bs.connect(this.input)
         this.fadeIn()
         bs.start()
       } else {
@@ -215,7 +222,7 @@ export class AudioEngine {
         el.addEventListener('ended', this.elEnded)
         const mes = this.ctx.createMediaElementSource(el)
         this.src = { node: mes, stop: () => el.pause() }
-        mes.connect(this.splitter)
+        mes.connect(this.input)
         this.fadeIn()
         await el.play() // rejects for a file the browser cannot decode
         if (stale()) return
@@ -301,7 +308,7 @@ export class AudioEngine {
     this.releaseSource()
     for (const c of this.chains.values()) this.dropChain(c)
     this.chains.clear()
-    for (const n of [this.splitter, this.master, this.limiter] as AudioNode[]) {
+    for (const n of [this.input, this.splitter, this.master, this.limiter] as AudioNode[]) {
       try {
         n.disconnect()
       } catch {

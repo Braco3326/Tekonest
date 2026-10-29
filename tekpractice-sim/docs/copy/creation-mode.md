@@ -76,7 +76,11 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.duplicate` | Dupliquer | à valider (tekuxwriter) | Matériel ; copie l’appareil sélectionné à 0,5 m (Ctrl+D) ; grisé sans sélection |
 | `menu.delete` | Supprimer | à valider (tekuxwriter) | Matériel ; supprime l’appareil sélectionné et ses câbles (Suppr) ; annulable ; grisé sans sélection |
 | `menu.connectTo` | Connecter à… | validé | Câblage ; même libellé que l'action Propriétés « Connecter à… » (C10) |
-| `menu.play` | Écouter le morceau | validé | Écoute ; inactif tant que la lecture n'existe pas |
+| `menu.play` | Lecture | à valider (tekuxwriter) | Écoute › Lecture (Task 39) : démarre la source choisie ; actif seulement si la chaîne est valide (sinon `aria-disabled` + la première raison) ; devient « Stop » pendant la lecture |
+| `menu.stop` | Stop | à valider (tekuxwriter) | Écoute : libellé de l'élément de lecture pendant que ça joue |
+| `menu.song` | Morceau | à valider (tekuxwriter) | Écoute › Morceau : sous-menu des morceaux de démonstration ; masqué tant qu'il n'y en a aucun (`content/songs.json` est vide) |
+| `menu.chooseFile` | Choisir un fichier audio… | à valider (tekuxwriter) | Écoute : ouvre le sélecteur de fichier du navigateur ; le fichier reste local |
+| `menu.testSignal` | Signal de test | à valider (tekuxwriter) | Écoute : bruit rose (gauche, droite, les deux) puis une courte phrase musicale, générés par l'application |
 | `menu.coverage` | Couverture | à valider (tekuxwriter) | Écoute › Couverture : case à cocher (décochée au départ) |
 | `menu.panelTree` | Panneau Projet | validé | Vue ; replie / déplie le panneau |
 | `menu.panelProps` | Panneau Propriétés | validé | Vue ; idem |
@@ -398,6 +402,7 @@ Lecture et micro (Task 34, C9) : la ligne « Lecture » de la barre d’état et
 | `playback.speakerUnpowered` | Une enceinte reçoit le signal mais n’est pas alimentée. | à valider (tekuxwriter) | Raison SPEAKER_UNPOWERED : enceinte câblée en signal, sans secteur ou éteinte |
 | `playback.ruleError` | Une erreur de câblage bloque le chemin. | à valider (tekuxwriter) | Raison RULE_ERROR (lecture et micro) : une erreur de règle sur un port du chemin |
 | `playback.noMic` | Aucun micro branché sur une entrée micro. | à valider (tekuxwriter) | Raison NO_MIC : aucun micro vérifié câblé sur une entrée micro |
+| `playback.micLost` | Plus de Micro OK. {reason} | à valider (tekuxwriter) | Task 39 : annoncé une fois quand « Micro OK » disparaît ; `{reason}` = la première raison du micro |
 
 ## Textes des règles (catalogue)
 
@@ -714,3 +719,41 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.announceDone` | Couverture calculée : {n} points, {min} à {max} dB, pas {step} m. | à valider (tekuxwriter) | Annoncé une fois par résultat (zone d’état) |
 | `coverage.announceOff` | Couverture masquée. | à valider (tekuxwriter) | Annoncé quand on la masque |
 | `coverage.loadFailed` | La couverture n’a pas pu se charger. Rechargez la page. | à valider (tekuxwriter) | Le morceau de code de la couverture n’a pas pu être téléchargé (hors ligne) ; annoncé, la case reste décochée |
+
+## listen
+
+Écoute (Task 39, C9, C14, CA-03, CA-26) : le bloc « Écoute » de Propriétés, les annonces de lecture et les mentions d’honnêteté. Simulation simple, dite comme telle ; aucun réalisme revendiqué. Toutes les formulations sont des brouillons.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `listen.panelTitle` | Écoute | à valider (tekuxwriter) | Titre du bloc, bas de Propriétés (jamais sur la vue 3D) |
+| `listen.panelCollapse` | Replier l’écoute | à valider (tekuxwriter) | Nom du bouton, bloc ouvert |
+| `listen.panelExpand` | Déplier l’écoute | à valider (tekuxwriter) | Nom du bouton, bloc replié |
+| `listen.stopped` | Lecture arrêtée. | à valider (tekuxwriter) | État du bloc et annonce après Stop |
+| `listen.starting` | Démarrage de la lecture… | à valider (tekuxwriter) | État du bloc pendant le chargement du moteur audio |
+| `listen.playing` | Lecture en cours : {source}. | à valider (tekuxwriter) | État du bloc et annonce ; `{source}` = signal de test, fichier ou morceau |
+| `listen.sourceTest` | signal de test | à valider (tekuxwriter) | Nom de la source dans la ligne d’état |
+| `listen.sourceFile` | fichier {name} | à valider (tekuxwriter) | Nom de la source ; `{name}` = nom du fichier choisi |
+| `listen.sourceSong` | {title} | à valider (tekuxwriter) | Nom de la source ; `{title}` = titre du morceau (donnée du catalogue des morceaux) |
+| `listen.silentMix` | Aucune enceinte ne sonne pour le moment : la console est en mute ou son fader est à −inf. | à valider (tekuxwriter) | Le son joue mais chaque enceinte est coupée : le mute et le fader silencent sans jamais bloquer la lecture |
+| `listen.metersTitle` | Niveau à chaque enceinte | à valider (tekuxwriter) | Titre de la liste des enceintes (valeurs en texte, équivalent des indicateurs) |
+| `listen.meterRow` | {name} : niveau {level}, gain {gain}, retard {delay}, pan {pan} | à valider (tekuxwriter) | Une ligne par enceinte qui sonne |
+| `listen.levelDb` | {v} dBFS | à valider (tekuxwriter) | Niveau mesuré à la sortie de l’enceinte, avant le volume général |
+| `listen.levelSilent` | silence | à valider (tekuxwriter) | Niveau nul |
+| `listen.gainValue` | {v} dB | à valider (tekuxwriter) | Gain de l’enceinte : distance, fader, directivité |
+| `listen.delayValue` | {v} ms | à valider (tekuxwriter) | Retard par rapport à l’enceinte la plus proche |
+| `listen.panLeft` | gauche {n} % | à valider (tekuxwriter) | Placement gauche-droite de l’enceinte, vu de l’auditeur |
+| `listen.panRight` | droite {n} % | à valider (tekuxwriter) | Idem, à droite |
+| `listen.panCenter` | centre | à valider (tekuxwriter) | Idem, au milieu |
+| `listen.noSpeakers` | Aucune enceinte à écouter. | à valider (tekuxwriter) | Le bloc, sans enceinte alimentée |
+| `listen.simple` | Simulation simple : niveau, retard et placement gauche-droite calculés d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie. | à valider (tekuxwriter) | Mention d’honnêteté, toujours affichée dans le bloc (brief §10) |
+| `listen.volume` | Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin. | à valider (tekuxwriter) | Sécurité d’écoute : volume général de −18 dBFS, limiteur, fondu d’entrée et de sortie |
+| `listen.fileLocal` | Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré. | à valider (tekuxwriter) | Confidentialité (S3), toujours affichée dans le bloc |
+| `listen.fileInputName` | Choisir un fichier audio | à valider (tekuxwriter) | Nom accessible du champ fichier (masqué, déclenché par le menu) |
+| `listen.notReady` | Lecture impossible. {reason} | à valider (tekuxwriter) | Annonce quand on demande la lecture sans chaîne valide ; `{reason}` = la première raison |
+| `listen.stoppedNotReady` | Lecture arrêtée. {reason} | à valider (tekuxwriter) | Annonce quand un changement du rig rend la chaîne invalide pendant la lecture |
+| `listen.stoppedPlace` | Lecture arrêtée : le lieu a changé. | à valider (tekuxwriter) | Annonce au changement de lieu pendant la lecture |
+| `listen.stoppedEnded` | Lecture terminée. | à valider (tekuxwriter) | Annonce quand un fichier arrive à sa fin |
+| `listen.failedFile` | Ce fichier n’a pas pu être lu. Essayez un fichier MP3, WAV ou OGG. | à valider (tekuxwriter) | Annonce quand le navigateur ne décode pas le fichier choisi |
+| `listen.failed` | La lecture n’a pas pu démarrer. | à valider (tekuxwriter) | Annonce d’une erreur de démarrage (autre qu’un fichier illisible) |
+| `listen.loadFailed` | La lecture n’a pas pu se charger. Rechargez la page. | à valider (tekuxwriter) | Annonce quand le morceau de code du moteur audio ne se télécharge pas |
