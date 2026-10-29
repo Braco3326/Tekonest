@@ -4,7 +4,7 @@
  * compressor or a stub. The real public/assets and ASSET_MANIFEST.json are never touched.
  */
 import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises'
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
@@ -96,6 +96,8 @@ interface Calls {
   optimize: { maxPx: number }[]
   /** The order the texture and Draco steps ran in. */
   order: ('optimize' | 'compress')[]
+  /** The progress lines buildAsset logged. */
+  log: string[]
 }
 
 interface Rig {
@@ -110,6 +112,8 @@ interface Rig {
   createError?: Error
   downloadError?: Error
   credits?: number
+  /** Runs inside the fake waitForTask, i.e. after the paid create and before the task finishes. */
+  onWait?: (id: string) => void
 }
 
 let root: string
@@ -125,7 +129,7 @@ beforeEach(async () => {
     paths.manifestPath,
     JSON.stringify({ generated: 'g', assets: [{ id: 'other', status: 'ok', tris: 7 }, { id: 'test-mixer', kind: 'device', optimized: true, tris: 5, status: 'ok', note: 'old' }] }, null, 2),
   )
-  calls = { create: [], wait: [], download: [], fixup: [], compress: [], optimize: [], order: [] }
+  calls = { create: [], wait: [], download: [], fixup: [], compress: [], optimize: [], order: [], log: [] }
   savedKey = process.env.MESHY_API_KEY
 })
 afterEach(async () => {
@@ -150,8 +154,12 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
         if (rig.createError) throw rig.createError
         return `task-${calls.create.length}`
       },
-      waitForTask: async (id): Promise<MeshyTask> => {
+      waitForTask: async (id, onProgress): Promise<MeshyTask> => {
         calls.wait.push(id)
+        rig.onWait?.(id)
+        onProgress?.({ id, status: 'IN_PROGRESS', progress: 40 })
+        onProgress?.({ id, status: 'IN_PROGRESS', progress: 40 })
+        onProgress?.({ id, status: 'SUCCEEDED', progress: 100 })
         return { id, status: 'SUCCEEDED', progress: 100, consumed_credits: rig.credits ?? 20, model_urls: { glb: 'https://assets.example/x.glb' } }
       },
       downloadGlb: async (task) => {
@@ -188,6 +196,7 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
     },
     paths,
     now: () => new Date('2026-10-29T12:00:00.000Z'),
+    log: (line) => calls.log.push(line),
   }
 }
 
@@ -284,7 +293,7 @@ describe('buildAsset', () => {
     const report = await buildAsset(spec.id, { maxAttempts: 2, yawDeg: 180, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [FIXUP_DRIFT, FIXUP_OK] }))
     const work = join(paths.sourceDir, spec.id, 'work', '2026-10-29T12-00-00-000Z')
     expect(report.workDir).toBe(work)
-    expect((await readdir(work)).sort()).toEqual(['attempt-1.fixed.glb', 'attempt-1.raw.glb', 'attempt-2.fixed.glb', 'attempt-2.raw.glb'])
+    expect((await readdir(work)).sort()).toEqual(['attempt-1.fixed.glb', 'attempt-1.raw.glb', 'attempt-2.fixed.glb', 'attempt-2.raw.glb', 'report.json'])
     expect(new Uint8Array(await readFile(join(work, 'attempt-1.raw.glb')))).toEqual(RAW_BYTES)
     expect(calls.fixup.map((c) => c.yawDeg)).toEqual([180, 180])
     expect(calls.fixup[0].inGlb).toBe(join(work, 'attempt-1.raw.glb'))
@@ -568,6 +577,58 @@ describe('buildAsset', () => {
     const onDisk = JSON.parse(await readFile(join(paths.sourceDir, spec.id, 'report.json'), 'utf8')) as BuildReport
     expect(onDisk.workDir).toBe(report.workDir)
     expect(onDisk.attempts[0].taskId).toBe('task-1')
+  })
+
+  it('prints the task id and the work dir right after the paid create, then one line per distinct poll', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const order: string[] = []
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)], onWait: () => order.push(`wait after ${calls.log.length} log lines`) })
+    const report = await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, deps)
+    expect(calls.log[0]).toBe(`task task-1 created, workDir ${report.workDir}`)
+    expect(order).toEqual(['wait after 1 log lines'])
+    // the same status and percent twice prints once
+    expect(calls.log.slice(1)).toEqual(['task task-1: IN_PROGRESS 40%', 'task task-1: SUCCEEDED 100%'])
+  })
+
+  it('the paid task id is on disk in the work dir before the wait (a Ctrl-C keeps it)', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const seen: BuildReport[] = []
+    const work = join(paths.sourceDir, spec.id, 'work', '2026-10-29T12-00-00-000Z')
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)], onWait: () => { seen.push(JSON.parse(readFileSync(join(work, 'report.json'), 'utf8')) as BuildReport) } })
+    await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, deps)
+    expect(seen).toHaveLength(1)
+    expect(seen[0].attempts[0].taskId).toBe('task-1')
+    expect(seen[0].workDir).toBe(work)
+    expect(JSON.parse(readFileSync(join(paths.sourceDir, spec.id, 'report.json'), 'utf8')).attempts[0].taskId).toBe('task-1')
+  })
+
+  it('report.json is rewritten after every step: the fix-up sees the download step, the compress step sees the gates', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const work = join(paths.sourceDir, spec.id, 'work', '2026-10-29T12-00-00-000Z')
+    const snapshots: { step: string; report: BuildReport }[] = []
+    const snap = (step: string): void => {
+      snapshots.push({ step, report: JSON.parse(readFileSync(join(work, 'report.json'), 'utf8')) as BuildReport })
+    }
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)], credits: 30 })
+    const fix = deps.runFixup as NonNullable<BuildDeps['runFixup']>
+    deps.runFixup = async (...args) => {
+      snap('fixup')
+      return fix(...args)
+    }
+    deps.optimizeTextures = async (bytes) => {
+      snap('textures')
+      return bytes
+    }
+    const report = await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, deps)
+    expect(snapshots[0].report.attempts[0]).toMatchObject({ taskId: 'task-1', credits: 30, gates: [] })
+    expect(snapshots[1].report.attempts[0].gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift'])
+    // the work-dir copy and the summary copy end identical to the returned report
+    const final = JSON.parse(await readFile(join(work, 'report.json'), 'utf8'))
+    expect(final).toEqual(JSON.parse(JSON.stringify(report)))
+    expect(JSON.parse(await readFile(join(paths.sourceDir, spec.id, 'report.json'), 'utf8'))).toEqual(final)
   })
 
   it('keeps the task id when the wait fails after the paid create', async () => {

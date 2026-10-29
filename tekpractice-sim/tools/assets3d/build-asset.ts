@@ -97,7 +97,8 @@ export interface BuildPaths {
 export interface BuildDeps {
   meshy: {
     createMultiImageTask: (images: string[], opts: MeshyOpts) => Promise<string>
-    waitForTask: (id: string) => Promise<MeshyTask>
+    /** Polls until the task ends; `onProgress` is called once per poll. */
+    waitForTask: (id: string, onProgress?: (task: MeshyTask) => void) => Promise<MeshyTask>
     downloadGlb: (task: MeshyTask) => Promise<Uint8Array>
   }
   runFixup: (inGlb: string, outGlb: string, spec: AssetSpecT, opts?: FixupOpts) => Promise<FixupReport>
@@ -110,6 +111,8 @@ export interface BuildDeps {
   readPhotos: (id: string) => Promise<string[]>
   paths: BuildPaths
   now: () => Date
+  /** Progress lines (task id and work dir right after each paid create, poll status). Default console.log. */
+  log: (line: string) => void
 }
 
 export interface BuildOpts {
@@ -172,7 +175,7 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
   return {
     meshy: deps.meshy ?? {
       createMultiImageTask: (images, opts) => createMultiImageTask(images, opts, key()),
-      waitForTask: (id) => waitForTask(id, key()),
+      waitForTask: (id, onProgress) => waitForTask(id, key(), { onProgress }),
       downloadGlb: (task) => downloadGlb(task),
     },
     runFixup: deps.runFixup ?? ((inGlb, outGlb, spec, opts) => runFixup(inGlb, outGlb, spec, opts)),
@@ -188,6 +191,7 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
     readPhotos: deps.readPhotos ?? ((id) => readPhotosFrom(join(paths.sourceDir, id, 'photos'))),
     paths,
     now: deps.now ?? (() => new Date()),
+    log: deps.log ?? ((line) => console.log(line)),
   }
 }
 
@@ -319,6 +323,16 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
 
   const report: BuildReport = { id, ok: false, attempts: [], dryRun, workDir: work }
   const maxAttempts = rawBytes ? 1 : opts.maxAttempts
+  const reportText = (): string => scrub(JSON.stringify(report, null, 2)) + '\n'
+  /**
+   * Writes the report into this run's work dir after every step (create, download, fix-up, gates, compress), so a
+   * Ctrl-C or a kill still leaves the paid task id on disk, plus the summary copy at assets-source/<id>/report.json.
+   */
+  const persist = async (): Promise<void> => {
+    const text = reportText()
+    await writeFile(join(work, 'report.json'), text)
+    await writeFile(join(dir, 'report.json'), text)
+  }
 
   for (let n = 1; n <= maxAttempts && !report.ok; n++) {
     const attempt: BuildAttempt = { n, credits: null, gates: [] }
@@ -330,19 +344,29 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       } else {
         const taskId = await d.meshy.createMultiImageTask(photos, { targetPolycount: targetPolycount(spec), topology: 'triangle' })
         attempt.taskId = taskId
-        const task = await d.meshy.waitForTask(taskId)
+        d.log(`task ${taskId} created, workDir ${work}`)
+        await persist()
+        let lastPoll = ''
+        const task = await d.meshy.waitForTask(taskId, (t) => {
+          const line = `task ${taskId}: ${t.status} ${t.progress}%`
+          if (line !== lastPoll) d.log(line)
+          lastPoll = line
+        })
         attempt.credits = task.consumed_credits ?? null
         raw = await d.meshy.downloadGlb(task)
       }
       const rawPath = join(work, `attempt-${n}.raw.glb`)
       const fixedPath = join(work, `attempt-${n}.fixed.glb`)
       await writeFile(rawPath, raw)
+      await persist()
 
       const fixup = await d.runFixup(rawPath, fixedPath, spec, { yawDeg: opts.yawDeg ?? 0 })
+      await persist()
       const fixed = new Uint8Array(await readFile(fixedPath))
       const fixedMeasure = await measure(fixed, spec)
       const drift = checkProportionDrift(fixup.preScaleSizeM, spec)
       attempt.gates = [...fixedMeasure.gates, drift]
+      await persist()
       const failed = failingNames(attempt.gates)
       if (failed.length > 0) {
         // Only a failure of the Meshy model itself buys a new task; anything our fix-up produced aborts.
@@ -351,6 +375,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       }
 
       const result = await optimizeAndRegate(fixed, drift, spec, d)
+      attempt.gates = result.ok ? result.shipped.gates : result.gates
+      await persist()
       if (!result.ok) {
         // The final bytes are ours (texture step, Draco): keep them and every gate for the post-mortem, then abort.
         attempt.gates = result.gates
@@ -393,7 +419,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
     }
   }
 
-  await writeFile(join(dir, 'report.json'), scrub(JSON.stringify(report, null, 2)) + '\n')
+  // The last word on disk: the work-dir copy and the summary copy are the same final report.
+  await persist()
   return report
 }
 
@@ -501,6 +528,8 @@ export async function main(argv: string[], deps: Partial<BuildDeps> = {}, print:
     print(args.error)
     return 1
   }
+  // progress lines (task ids, polls) go where the rest of the CLI output goes
+  deps = { ...deps, log: deps.log ?? print }
   if (args.pilot) return runPilot(args.opts, deps, print)
   try {
     const report = await buildAsset(args.id as string, args.opts, deps)

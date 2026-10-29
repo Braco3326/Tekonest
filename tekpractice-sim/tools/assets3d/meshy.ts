@@ -12,7 +12,9 @@
  *    not cover it, and the free plan cannot create tasks at all (402 either way)
  * Secret rules: the API key only ever travels in the Authorization header. Every thrown message passes through `redact`, so
  * neither `err.message`, `err.stack` nor a serialized error contains it. The asset download deliberately sends no key.
- * All I/O is injectable (`fetch`, `sleep`, `now`, `key`) so tests run offline and instantly.
+ * Every request carries AbortSignal.timeout: 60 s for an API call, 5 minutes for the model download; a timeout throws a
+ * MeshyError that names the task id when there is one (a poll timeout says the task may still be running).
+ * All I/O is injectable (`fetch`, `sleep`, `now`, `key`, the two timeouts) so tests run offline and instantly.
  */
 import { redact, requireMeshyKey } from './env'
 
@@ -23,6 +25,10 @@ const TASK_PATH = '/openapi/v1/multi-image-to-3d'
 const MAX_IMAGES = 4
 const DEFAULT_POLL_MS = 5000
 const DEFAULT_TIMEOUT_MS = 15 * 60 * 1000
+/** Wall-clock limit of one API request (create, poll, balance), body included. */
+export const REQUEST_TIMEOUT_MS = 60_000
+/** Wall-clock limit of the model download, body included. */
+export const DOWNLOAD_TIMEOUT_MS = 5 * 60 * 1000
 const TERMINAL = new Set(['SUCCEEDED', 'FAILED', 'CANCELED'])
 const MIN_POLYCOUNT = 100
 const MAX_POLYCOUNT = 300000
@@ -60,11 +66,17 @@ export interface MeshyDeps {
   key: string
   sleep: (ms: number) => Promise<void>
   now: () => number
+  /** Abort an API request (GET / POST) after this many ms (default REQUEST_TIMEOUT_MS). */
+  requestTimeoutMs: number
+  /** Abort the model download after this many ms (default DOWNLOAD_TIMEOUT_MS). */
+  downloadTimeoutMs: number
 }
 
 export interface WaitOpts {
   pollMs: number
   timeoutMs: number
+  /** Called once per poll with the task as Meshy reported it (status, progress), before any wait. */
+  onProgress?: (task: MeshyTask) => void
 }
 
 /** A failed Meshy call. `status` is the HTTP status, or 0 when no HTTP status applies (network error, FAILED task, timeout). */
@@ -84,7 +96,14 @@ function resolveDeps(deps: Partial<MeshyDeps>, needKey = true): MeshyDeps {
     key: deps.key ?? (needKey ? requireMeshyKey() : ''),
     sleep: deps.sleep ?? ((ms) => new Promise<void>((r) => setTimeout(r, ms))),
     now: deps.now ?? Date.now,
+    requestTimeoutMs: deps.requestTimeoutMs ?? REQUEST_TIMEOUT_MS,
+    downloadTimeoutMs: deps.downloadTimeoutMs ?? DOWNLOAD_TIMEOUT_MS,
   }
+}
+
+/** True for the rejection of a fetch (or of its body) aborted by AbortSignal.timeout. */
+function isTimeout(e: unknown): boolean {
+  return e instanceof Error && (e.name === 'TimeoutError' || e.name === 'AbortError')
 }
 
 /** Pulls the API's own message out of an error response body (JSON `message`, else the first 200 chars of text). */
@@ -112,11 +131,15 @@ async function failure(res: Response, key: string): Promise<MeshyError> {
   return new MeshyError(res.status, redact(detail ? `${text}: ${detail}` : text, key))
 }
 
-/** One HTTP attempt. Network errors become a MeshyError (status 0) with the key scrubbed; nothing is retried. */
-async function send(url: string, init: RequestInit, d: MeshyDeps): Promise<Response> {
+/**
+ * One HTTP attempt, aborted after `timeoutMs` (AbortSignal.timeout: the body read is covered too). Network errors and
+ * timeouts become a MeshyError (status 0) with the key scrubbed; nothing is retried.
+ */
+async function send(url: string, init: RequestInit, d: MeshyDeps, timeoutMs: number = d.requestTimeoutMs): Promise<Response> {
   try {
-    return await d.fetch(url, init)
+    return await d.fetch(url, { ...init, signal: AbortSignal.timeout(timeoutMs) })
   } catch (e) {
+    if (isTimeout(e)) throw new MeshyError(0, `Meshy request timed out after ${timeoutMs} ms`)
     const msg = e instanceof Error ? e.message : String(e)
     throw new MeshyError(0, redact(`Meshy network error: ${msg}`, d.key))
   }
@@ -207,7 +230,10 @@ async function pollOnce(id: string, d: MeshyDeps): Promise<MeshyTask> {
   try {
     const res = await send(`${BASE_URL}${TASK_PATH}/${encodeURIComponent(id)}`, { method: 'GET', headers: authHeaders(d) }, d)
     if (!res.ok) throw await failure(res, d.key)
-    const body = (await res.json().catch(() => null)) as MeshyTask | null
+    const body = (await res.json().catch((e: unknown) => {
+      if (isTimeout(e)) throw new MeshyError(0, `Meshy request timed out after ${d.requestTimeoutMs} ms`)
+      return null
+    })) as MeshyTask | null
     if (!body || typeof body !== 'object' || typeof body.status !== 'string') {
       throw new MeshyError(res.status, 'Meshy task response was not valid JSON for a task')
     }
@@ -229,6 +255,7 @@ export async function waitForTask(
   const start = d.now()
   for (;;) {
     const task = await pollOnce(id, d)
+    opts.onProgress?.(task)
     if (TERMINAL.has(task.status)) {
       if (task.status === 'SUCCEEDED') return task
       const why = task.task_error?.message ? `: ${task.task_error.message}` : ''
@@ -253,9 +280,16 @@ export async function downloadGlb(task: MeshyTask, deps: Partial<MeshyDeps> = {}
     throw new MeshyError(0, `Meshy task ${task.id} has expired (files are deleted after 3 days); its GLB can no longer be downloaded`)
   }
   // The url is pre-signed: no Authorization header, so the key never reaches the asset host.
-  const res = await send(url, { method: 'GET' }, d)
-  if (!res.ok) throw await failure(res, d.key)
-  return new Uint8Array(await res.arrayBuffer())
+  const note = `The GLB of task ${task.id} was not downloaded; the task itself finished on Meshy: download it again with this id before it expires`
+  try {
+    const res = await send(url, { method: 'GET' }, d, d.downloadTimeoutMs)
+    if (!res.ok) throw await failure(res, d.key)
+    return new Uint8Array(await res.arrayBuffer())
+  } catch (e) {
+    if (e instanceof MeshyError) throw withNote(e, note)
+    const why = isTimeout(e) ? `Meshy download timed out after ${d.downloadTimeoutMs} ms` : `Meshy download failed: ${e instanceof Error ? e.message : String(e)}`
+    throw withNote(new MeshyError(0, redact(why, d.key)), note)
+  }
 }
 
 /**

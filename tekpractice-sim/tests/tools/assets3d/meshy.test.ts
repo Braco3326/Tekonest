@@ -460,6 +460,70 @@ describe('waitForTask poll errors', () => {
   })
 })
 
+describe('request timeouts and progress', () => {
+  /** A fetch that never answers on its own: it only rejects when the request's signal aborts (as real fetch does). */
+  function hangingFetch(): { fetch: typeof fetch; signals: (AbortSignal | null | undefined)[] } {
+    const signals: (AbortSignal | null | undefined)[] = []
+    const fn = ((_input: RequestInfo | URL, init?: RequestInit) => {
+      signals.push(init?.signal)
+      return new Promise<Response>((_resolve, reject) => {
+        init?.signal?.addEventListener('abort', () => reject(init.signal?.reason))
+      })
+    }) as typeof fetch
+    return { fetch: fn, signals }
+  }
+
+  it('every API call carries an AbortSignal (the 60 s default is the request timeout)', async () => {
+    const f = fakeFetch([json({ result: 'x' }), json(task()), json({ balance: 3 })])
+    await createMultiImageTask([IMG], { targetPolycount: 560 }, { fetch: f.fetch, key: KEY })
+    await waitForTask('t1', { fetch: f.fetch, key: KEY, sleep: clock().sleep, now: clock().now })
+    await getBalance({ fetch: f.fetch, key: KEY })
+    for (const c of f.calls) expect(c.init.signal).toBeInstanceOf(AbortSignal)
+  })
+
+  it('a hung create POST times out with the may-already-exist warning, without the key', async () => {
+    const f = hangingFetch()
+    const err = (await createMultiImageTask([IMG], { targetPolycount: 560 }, { fetch: f.fetch, key: KEY, requestTimeoutMs: 20 }).catch((e: unknown) => e)) as MeshyError
+    expect(err).toBeInstanceOf(MeshyError)
+    expect(err.message).toMatch(/timed out after 20 ms/)
+    expect(err.message).toMatch(/may already have been created/i)
+    expect(err.message).not.toContain(KEY)
+    expect(f.signals).toHaveLength(1)
+  })
+
+  it('a hung poll times out naming the task id and saying it may still be running', async () => {
+    const f = hangingFetch()
+    const c = clock()
+    const err = (await waitForTask('task-hang', { fetch: f.fetch, key: KEY, sleep: c.sleep, now: c.now, requestTimeoutMs: 20 }).catch((e: unknown) => e)) as MeshyError
+    expect(err).toBeInstanceOf(MeshyError)
+    expect(err.message).toMatch(/timed out after 20 ms/)
+    expect(err.message).toContain('task-hang')
+    expect(err.message).toMatch(/may still be running/i)
+  })
+
+  it('a hung download times out after its own (longer) limit and names the task id', async () => {
+    const f = hangingFetch()
+    const t = task({ id: 'task-dl', model_urls: { glb: 'https://assets.meshy.ai/m.glb' } })
+    const err = (await downloadGlb(t, { fetch: f.fetch, requestTimeoutMs: 1, downloadTimeoutMs: 30 }).catch((e: unknown) => e)) as MeshyError
+    expect(err).toBeInstanceOf(MeshyError)
+    expect(err.message).toMatch(/timed out after 30 ms/)
+    expect(err.message).toContain('task-dl')
+  })
+
+  it('onProgress sees every poll once, with its status and percent', async () => {
+    const c = clock()
+    const f = fakeFetch([
+      json(task({ status: 'PENDING', progress: 0 })),
+      json(task({ status: 'IN_PROGRESS', progress: 55 })),
+      json(task({ status: 'SUCCEEDED', progress: 100 })),
+    ])
+    const seen: string[] = []
+    await waitForTask('t1', { fetch: f.fetch, key: KEY, sleep: c.sleep, now: c.now }, { onProgress: (t) => seen.push(`${t.status} ${t.progress}`) })
+    expect(seen).toEqual(['PENDING 0', 'IN_PROGRESS 55', 'SUCCEEDED 100'])
+    expect(f.calls).toHaveLength(3)
+  })
+})
+
 describe('downloadGlb without an API key', () => {
   it('works with MESHY_API_KEY unset and no deps.key', async () => {
     const saved = process.env.MESHY_API_KEY
