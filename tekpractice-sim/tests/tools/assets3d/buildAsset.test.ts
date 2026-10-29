@@ -225,7 +225,7 @@ describe('buildAsset', () => {
     expect(report.dryRun).toBe(false)
     expect(report.attempts).toHaveLength(1)
     expect(report.attempts[0]).toMatchObject({ n: 1, credits: 20, compression: 'draco' })
-    expect(report.attempts[0].gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift', 'textures'])
+    expect(report.attempts[0].gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift', 'textures', 'validator'])
     expect(report.attempts[0].gates.every((g) => g.ok)).toBe(true)
     expect(calls.create).toHaveLength(1)
     expect(calls.create[0]).toMatchObject({ targetPolycount: 2800, topology: 'triangle' })
@@ -250,6 +250,8 @@ describe('buildAsset', () => {
       date: '2026-10-29T12:00:00.000Z',
       specSource: 'https://example.com/mixer.pdf',
       logosRemoved: true,
+      photos: ['a.png', 'b.png'],
+      taskId: 'task-1',
       tris: 12,
     })
     expect(entry?.gates).toEqual(report.attempts[0].gates.map((g) => ({ gate: g.gate, ok: g.ok })))
@@ -488,7 +490,7 @@ describe('buildAsset', () => {
     expect(report.attempts[0].credits).toBeNull()
     expect(new Uint8Array(await readFile(join(report.workDir, 'attempt-1.raw.glb')))).toEqual(RAW_BYTES)
     const entry = (await readManifest()).assets.find((a) => a.id === 'test-mixer')
-    expect(entry).toMatchObject({ tool: 'raw', toolVersion: 'raw', logosRemoved: true })
+    expect(entry).toMatchObject({ tool: 'raw', toolVersion: 'raw', logosRemoved: true, photos: [], taskId: null })
   })
 
   it('--raw makes only one attempt even when it fails', async () => {
@@ -584,6 +586,8 @@ describe('buildAsset', () => {
     await addPhotos(spec.id, ['a.png'])
     const report = await buildAsset(spec.id, { maxAttempts: 2, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [FIXUP_DRIFT, FIXUP_OK] }))
     expect(report.attempts.map((a) => a.taskId)).toEqual(['task-1', 'task-2'])
+    // the manifest records the task of the SHIPPED attempt
+    expect((await readManifest()).assets.find((a) => a.id === 'test-mixer')).toMatchObject({ taskId: 'task-2', photos: ['a.png'] })
     const onDisk = JSON.parse(await readFile(join(paths.sourceDir, spec.id, 'report.json'), 'utf8')) as BuildReport
     expect(onDisk.workDir).toBe(report.workDir)
     expect(onDisk.attempts[0].taskId).toBe('task-1')
@@ -778,6 +782,24 @@ describe('buildAsset', () => {
 })
 
 describe('buildAsset texture budget', () => {
+  it('a glTF validator error on the final bytes aborts after ONE create, keeping the bytes and the gate', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const placement = buildPlacement(spec)
+    const nodes = [...placement.ports.map((p) => ({ name: p.name, pos: p.pos })), ...placement.controls.map((c) => ({ name: c.name, pos: c.pos }))]
+    const invalid = await makeBoxGlb({ sizeM: placement.sizeM, nodes, texture: { sizePx: 64 }, noTexcoord: true })
+    const compress: BuildDeps['compress'] = async () => invalid
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress }))
+    expect(report.ok).toBe(false)
+    expect(calls.create).toHaveLength(1)
+    const validator = report.attempts[0].gates.find((g) => g.gate === 'validator')
+    expect(validator?.ok).toBe(false)
+    expect(validator?.detail).toMatch(/MESH_PRIMITIVE_TOO_FEW_TEXCOORDS/)
+    expect(report.error).toMatch(/gate validator failed/)
+    expect(existsSync(join(report.workDir, 'attempt-1.final.glb'))).toBe(true)
+    expect(existsSync(join(paths.assetsDir, 'test-mixer.glb'))).toBe(false)
+  })
+
   it('textures are optimized before Draco and the shipped file is re-gated', async () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
@@ -796,9 +818,10 @@ describe('buildAsset texture budget', () => {
     expect(shipped.triangles).toBe(12)
 
     const gates = report.attempts[0].gates
-    expect(gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift', 'textures'])
+    expect(gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift', 'textures', 'validator'])
     expect(gates.every((g) => g.ok)).toBe(true)
     expect(gates[6].detail).toContain(String(shipped.fileBytes))
+    expect(gates[7]).toMatchObject({ gate: 'validator', ok: true, detail: expect.stringMatching(/^glTF validator: 0 errors/) })
     const entry = (await readManifest()).assets.find((a) => a.id === 'test-mixer')
     expect((entry?.gates as { gate: string }[]).map((g) => g.gate)).toContain('textures')
   })
@@ -884,7 +907,8 @@ describe('buildAsset texture budget', () => {
     const report = await buildAsset(spec.id, { maxAttempts: 1, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024 })], compress, fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
     expect(report.ok).toBe(true)
     expect(report.attempts[0]).toMatchObject({ compression: 'none', textures: 'webp' })
-    expect(report.attempts[0].gates.at(-1)).toMatchObject({ gate: 'textures', ok: true })
+    expect(report.attempts[0].gates.at(-2)).toMatchObject({ gate: 'textures', ok: true })
+    expect(report.attempts[0].gates.at(-1)).toMatchObject({ gate: 'validator', ok: true })
     const shipped = await inspectGlb(new Uint8Array(await readFile(join(paths.assetsDir, 'test-jack.glb'))))
     expect(shipped.textures[0]).toMatchObject({ width: 512, height: 512, mimeType: 'image/webp' })
   })
@@ -912,7 +936,7 @@ describe('buildAsset texture budget', () => {
     const report = await buildAsset(spec.id, { maxAttempts: 2, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress }))
     expect(report.attempts).toHaveLength(1)
     expect(calls.create).toHaveLength(1)
-    expect(report.attempts[0].gates.at(-1)?.gate).toBe('textures')
+    expect(report.attempts[0].gates.slice(-2).map((g) => g.gate)).toEqual(['textures', 'validator'])
   })
 
   it('a textures failure on the final bytes keeps the failing gate on the attempt and saves attempt-N.final.glb', async () => {
@@ -924,7 +948,7 @@ describe('buildAsset texture budget', () => {
     const textures = report.attempts[0].gates.find((g) => g.gate === 'textures')
     expect(textures?.ok).toBe(false)
     expect(textures?.detail).toMatch(/2048/)
-    expect(report.attempts[0].gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift', 'textures'])
+    expect(report.attempts[0].gates.map((g) => g.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'proportionDrift', 'textures', 'validator'])
     const final = await inspectGlb(new Uint8Array(await readFile(join(report.workDir, 'attempt-1.final.glb'))))
     expect(final.textures[0]).toMatchObject({ width: 2048 })
     const onDisk = JSON.parse(await readFile(join(paths.sourceDir, spec.id, 'report.json'), 'utf8')) as BuildReport
@@ -935,6 +959,15 @@ describe('buildAsset texture budget', () => {
 describe('readPhotosFrom', () => {
   it('returns [] for a missing folder', async () => {
     expect(await readPhotosFrom(join(root, 'missing'))).toEqual([])
+  })
+
+  it('returns the file name, the path and the data URI of each photo', async () => {
+    await addPhotos('x', ['b.jpg', 'a.png'])
+    const dir = join(paths.sourceDir, 'x', 'photos')
+    const got = await readPhotosFrom(dir)
+    expect(got.map((p) => p.name)).toEqual(['a.png', 'b.jpg'])
+    expect(got[0].path).toBe(join(dir, 'a.png'))
+    expect(got[1].dataUri).toBe(`data:image/jpeg;base64,${Buffer.from(PHOTO_BYTES).toString('base64')}`)
   })
 })
 

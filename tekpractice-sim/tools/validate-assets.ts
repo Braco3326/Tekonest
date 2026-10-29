@@ -5,8 +5,8 @@
  *
  * Per id (union of the top-level `<id>.glb` files and the `<id>.json` specs, sorted):
  *  - a GLB without a spec is `unmigrated`: info only, never a failure, so the old models keep shipping
- *  - a spec and a GLB: the shipped bytes are inspected, then the five asset gates plus `textures` run (the same set
- *    build-asset runs on the file it ships); `failed` when any result is not ok. checkConnectorFit (plug / socket
+ *  - a spec and a GLB: the shipped bytes are inspected, then the five asset gates plus `textures` and `validator` run (the
+ *    final-bytes set build-asset runs on the file it ships); `failed` when any result is not ok. checkConnectorFit (plug / socket
  *    pairs) is out of scope here
  *  - a spec without a GLB is `failed` (gate `missing-glb`): a spec means the asset is supposed to be migrated
  *  - an unreadable or invalid spec (gate `spec`) or an unreadable GLB (gate `glb`) fails that entry only
@@ -17,13 +17,14 @@ import { existsSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { checkTextures, runGates } from './assets3d/gates'
+import { checkTextures, checkValidator, runGates } from './assets3d/gates'
 import type { GateResult } from './assets3d/gates'
 import { inspectGlb } from './assets3d/inspect'
 import { DEFAULT_SPEC_DIR } from './assets3d/loadSpecs'
 import { isMainModule } from './assets3d/mainModule'
 import { buildPlacement } from './assets3d/placement'
 import { AssetSpec } from './assets3d/specSchema'
+import { validateGltf } from './assets3d/validateGltf'
 import type { AssetSpecT } from './assets3d/specSchema'
 
 export type AssetStatus = 'ok' | 'failed' | 'unmigrated'
@@ -79,8 +80,9 @@ async function validateOne(id: string, glbFile: string | undefined, specFile: st
   }
   let results: GateResult[]
   try {
-    const report = await inspectGlb(new Uint8Array(await readFile(glbFile)))
-    results = [...runGates(report, spec, buildPlacement(spec)), checkTextures(report, spec)]
+    const bytes = new Uint8Array(await readFile(glbFile))
+    const report = await inspectGlb(bytes)
+    results = [...runGates(report, spec, buildPlacement(spec)), checkTextures(report, spec), checkValidator(await validateGltf(bytes))]
   } catch (e) {
     return { id, status: 'failed', results: [fail('glb', `cannot read ${basename(glbFile)}: ${message(e)}`)] }
   }

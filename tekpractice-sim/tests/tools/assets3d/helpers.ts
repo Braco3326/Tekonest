@@ -59,6 +59,11 @@ export interface MakeMeshGlbOpts {
    * compress, like a photo), otherwise they are one flat colour. Default: no texture.
    */
   texture?: { sizePx: number; noise?: boolean; pbr?: boolean }
+  /**
+   * With a texture, every primitive gets a TEXCOORD_0 (all zeros) so the file is valid glTF. `noTexcoord` leaves it
+   * out: the glTF validator then reports MESH_PRIMITIVE_TOO_FEW_TEXCOORDS errors (a deliberately invalid file).
+   */
+  noTexcoord?: boolean
 }
 
 /** A square RGB PNG: flat colour, or deterministic pseudo-random noise (same bytes every call). */
@@ -90,6 +95,10 @@ export async function makeMeshGlb(opts: MakeMeshGlbOpts): Promise<Uint8Array> {
   for (const g of opts.prims) {
     const position = doc.createAccessor().setType('VEC3').setArray(new Float32Array(g.positions)).setBuffer(buffer)
     const prim = doc.createPrimitive().setAttribute('POSITION', position).setMaterial(material)
+    if (opts.texture && !opts.noTexcoord) {
+      const uv = new Float32Array((g.positions.length / 3) * 2)
+      prim.setAttribute('TEXCOORD_0', doc.createAccessor().setType('VEC2').setArray(uv).setBuffer(buffer))
+    }
     if (g.indices) prim.setIndices(doc.createAccessor().setType('SCALAR').setArray(new Uint32Array(g.indices)).setBuffer(buffer))
     mesh.addPrimitive(prim)
   }

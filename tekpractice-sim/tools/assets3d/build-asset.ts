@@ -20,7 +20,7 @@
  *  4. inspectGlb + runGates on the fixed GLB, plus checkProportionDrift on the fix-up's pre-scale size (6th gate)
  *  5. all pass: optimize the textures (WebP, longest side <= TEXTURE_MAX_PX of the tier), THEN Draco-compress (connector
  *     16 position bits, other tiers 14), and RE-MEASURE the final bytes with the same five gates, because quantization
- *     moves vertices, plus the seventh gate `textures` (texture size and file size). A connector whose compressed bytes
+ *     moves vertices, plus `textures` (texture size and file size) and `validator` (Khronos glTF validator, 0 errors). A connector whose compressed bytes
  *     fail ships the texture-optimized, uncompressed GLB (compression 'none'). Any failure on the final bytes is a
  *     defect of our own settings, not of the Meshy model: the failing gates go on the attempt, the bytes are saved as
  *     attempt-N.final.glb and the build aborts (no new paid task)
@@ -52,7 +52,7 @@ import { fileURLToPath } from 'node:url'
 import { dracoCompress, optimizeTextures } from './compress'
 import type { CompressOpts, TextureOpts } from './compress'
 import { findBlender, redact, requireMeshyKey } from './env'
-import { checkProportionDrift, checkTextures, runGates, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
+import { checkProportionDrift, checkTextures, checkValidator, runGates, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
 import type { GlbReport } from './inspect'
@@ -67,6 +67,7 @@ import { buildPlacement } from './placement'
 import { runFixup } from './runFixup'
 import type { FixupOpts, FixupReport, YawDeg } from './runFixup'
 import type { AssetSpecT } from './specSchema'
+import { validateGltf } from './validateGltf'
 
 const MAX_PHOTOS = 4
 const QUANTIZE_BITS = { connector: 16, standard: 14, hero: 14 } as const
@@ -121,8 +122,8 @@ export interface BuildDeps {
   loadSpec: (id: string) => AssetSpecT
   /** content/catalog.json parsed with the zod Catalog schema: the spec's ports / controls are checked against it before paying. */
   loadCatalog: () => CatalogT
-  /** The reference photos of `id` as image data URIs, in order, at most 4 ([] when there are none). */
-  readPhotos: (id: string) => Promise<string[]>
+  /** The reference photos of `id`, in order, at most 4 ([] when there are none). */
+  readPhotos: (id: string) => Promise<PhotoFile[]>
   paths: BuildPaths
   now: () => Date
   /** Progress lines (task id and work dir right after each paid create, poll status). Default console.log. */
@@ -176,14 +177,22 @@ export interface BuildReport {
   stopped?: 'meshy-402' | 'meshy-429'
 }
 
-/** Reads the photo files of `dir` as data URIs: png / jpg / jpeg / webp only, sorted by name, at most 4. */
-export async function readPhotosFrom(dir: string): Promise<string[]> {
+/** One reference photo: its file name (recorded in the manifest), its path and its content as an image data URI. */
+export interface PhotoFile {
+  name: string
+  path: string
+  dataUri: string
+}
+
+/** Reads the photo files of `dir`: png / jpg / jpeg / webp only, sorted by name, at most 4. */
+export async function readPhotosFrom(dir: string): Promise<PhotoFile[]> {
   if (!existsSync(dir)) return []
   const names = (await readdir(dir)).filter((f) => MIME[extname(f).toLowerCase()] !== undefined).sort()
-  const out: string[] = []
+  const out: PhotoFile[] = []
   for (const name of names.slice(0, MAX_PHOTOS)) {
-    const bytes = await readFile(join(dir, name))
-    out.push(`data:${MIME[extname(name).toLowerCase()]};base64,${bytes.toString('base64')}`)
+    const path = join(dir, name)
+    const bytes = await readFile(path)
+    out.push({ name, path, dataUri: `data:${MIME[extname(name).toLowerCase()]};base64,${bytes.toString('base64')}` })
   }
   return out
 }
@@ -238,6 +247,11 @@ async function writeAtomic(target: string, bytes: Uint8Array): Promise<void> {
 async function measure(bytes: Uint8Array, spec: AssetSpecT): Promise<{ gates: GateResult[]; triangles: number; report: GlbReport }> {
   const report = await inspectGlb(bytes)
   return { gates: runGates(report, spec, buildPlacement(spec)), triangles: report.triangles, report }
+}
+
+/** The two gates that only make sense on the FINAL bytes: textures (sizes, file size) and the Khronos glTF validator. */
+async function finalGates(bytes: Uint8Array, report: GlbReport, spec: AssetSpecT): Promise<GateResult[]> {
+  return [checkTextures(report, spec), checkValidator(await validateGltf(bytes))]
 }
 
 const allOk = (gates: GateResult[]): boolean => gates.every((g) => g.ok)
@@ -300,19 +314,19 @@ async function optimizeAndRegate(
   } else if (spec.tier === 'connector') {
     // A tiny connector can lose its tolerance to quantization: ship the texture-optimized file, re-measured, without Draco.
     const plain = await measure(textured, spec)
-    if (!allOk(plain.gates)) return { ok: false, gates: [...plain.gates, drift, checkTextures(plain.report, spec)], bytes: textured }
+    if (!allOk(plain.gates)) return { ok: false, gates: [...plain.gates, drift, ...(await finalGates(textured, plain.report, spec))], bytes: textured }
     final = { bytes: textured, triangles: plain.triangles, gates: plain.gates, report: plain.report, compression: 'none' }
   } else {
-    const textures = checkTextures(compressed.report, spec)
-    return { ok: false, gates: [...compressed.gates.map((g) => (g.ok ? g : { ...g, detail: `after Draco: ${g.detail}` })), drift, textures], bytes }
+    const after = await finalGates(bytes, compressed.report, spec)
+    return { ok: false, gates: [...compressed.gates.map((g) => (g.ok ? g : { ...g, detail: `after Draco: ${g.detail}` })), drift, ...after], bytes }
   }
 
-  const textures = checkTextures(final.report, spec)
-  if (!textures.ok) return { ok: false, gates: [...final.gates, drift, textures], bytes: final.bytes }
+  const after = await finalGates(final.bytes, final.report, spec)
+  if (!allOk(after)) return { ok: false, gates: [...final.gates, drift, ...after], bytes: final.bytes }
   const hasWebp = final.report.textures.length > 0 && final.report.textures.every((t) => t.mimeType === 'image/webp')
   return {
     ok: true,
-    shipped: { bytes: final.bytes, triangles: final.triangles, gates: [...final.gates, drift, textures], compression: final.compression, textures: hasWebp ? 'webp' : 'none' },
+    shipped: { bytes: final.bytes, triangles: final.triangles, gates: [...final.gates, drift, ...after], compression: final.compression, textures: hasWebp ? 'webp' : 'none' },
   }
 }
 
@@ -328,7 +342,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   const scrub = (text: string): string => redact(text, apiKey)
 
   let rawBytes: Uint8Array | null = null
-  let photos: string[] = []
+  let photos: PhotoFile[] = []
   if (opts.rawGlb) {
     rawBytes = new Uint8Array(await readFile(opts.rawGlb))
   } else {
@@ -377,7 +391,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       if (rawBytes) {
         raw = rawBytes
       } else {
-        const taskId = await d.meshy.createMultiImageTask(photos, { targetPolycount: targetPolycount(spec), topology: 'triangle' })
+        const taskId = await d.meshy.createMultiImageTask(photos.map((ph) => ph.dataUri), { targetPolycount: targetPolycount(spec), topology: 'triangle' })
         attempt.taskId = taskId
         d.log(`task ${taskId} created, workDir ${work}`)
         await persist()
@@ -441,6 +455,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
             date: d.now().toISOString(),
             specSource: spec.sources[0]?.url ?? 'spec',
             logosRemoved: opts.logosRemoved === true,
+            photos: photos.map((ph) => ph.name),
+            taskId: attempt.taskId ?? null,
             gates: shipped.gates.map((g) => ({ gate: g.gate, ok: g.ok })),
           })
         } catch (e) {

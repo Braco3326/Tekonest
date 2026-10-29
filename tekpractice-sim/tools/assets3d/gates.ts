@@ -2,8 +2,8 @@
  * assets3d/gates: the pass/fail checks a built GLB must clear before it ships. Pure functions over a GlbReport
  * (tools/assets3d/inspect.ts), the asset spec and its placement; no fs. Every gate returns a GateResult and
  * `runGates` runs all five asset gates without short-circuiting, so a report shows every failure at once. The sixth
- * and seventh results, `proportionDrift` and `textures`, are added by the orchestrator (the first needs the fix-up's
- * pre-scale size, the second only makes sense on the final shipped bytes).
+ * to eighth results, `proportionDrift`, `textures` and `validator`, are added by the orchestrator (the first needs the
+ * fix-up's pre-scale size, the other two only make sense on the final shipped bytes).
  *
  * The report is in GLB file space (io face at +Z, see placement.ts), world metres. Lengths in the `detail`
  * strings are printed in millimetres for humans. Tolerances (all in this file, nowhere else):
@@ -15,12 +15,14 @@
  *   connector fit   the plug is 0 to 0.3 mm under the socket opening
  *   proportion      the pre-scale model's proportions drift at most 5 % from the spec's
  *   textures        longest texture side <= 512 px (connector) / 1024 px (standard, hero); file <= 250 kB / 1.5 MB (near-lossless data maps)
+ *   validator       0 errors from the Khronos glTF validator on the final bytes (warnings listed, never failing)
  * Every gate fails closed: a non-finite input (NaN, Infinity) fails with a detail saying which value, and each
  * tolerance test is written `!(x <= tol)` so that a NaN that slipped through still fails.
  */
 import type { GlbReport } from './inspect'
 import type { Placement } from './placement'
 import type { AssetSpecT } from './specSchema'
+import type { GltfValidation } from './validateGltf'
 
 export interface GateResult {
   gate: string
@@ -291,6 +293,18 @@ export function checkProportionDrift(preScaleSizeM: SizeM, spec: AssetSpecT): Ga
   const detail = `proportions drift ${percent} % from the spec, limit ${DRIFT_LIMIT * 100} %`
   // Strictly greater than 5 % fails; the slack lets a mathematically exact 5 % pass despite float error.
   return { gate, ok: drift <= DRIFT_LIMIT + EPS_M, detail }
+}
+
+/**
+ * Validator gate: the Khronos glTF validator found no error in the FINAL bytes. Warnings never fail it but are listed
+ * in the detail. Fails closed when the counts are not finite numbers.
+ */
+export function checkValidator(v: GltfValidation): GateResult {
+  const gate = 'validator'
+  if (!Number.isFinite(v.errors) || !Number.isFinite(v.warnings)) return { gate, ok: false, detail: `the validator counts are not usable (${String(v.errors)} errors, ${String(v.warnings)} warnings)` }
+  const list = v.messages.length > 0 ? `: ${v.messages.join('; ')}` : ''
+  const counts = `${v.errors} error${v.errors === 1 ? '' : 's'}, ${v.warnings} warning${v.warnings === 1 ? '' : 's'}`
+  return { gate, ok: !(v.errors > 0), detail: `glTF validator: ${counts}${list}` }
 }
 
 /** Runs the five asset gates in order (size, transform, parts, portPositions, budget). Never short-circuits. */

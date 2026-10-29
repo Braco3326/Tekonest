@@ -66,7 +66,7 @@ describe('validateAssets', () => {
     writeGlb(spec.id, await goodGlb(spec))
     const [entry] = await validateAssets(assetsDir, specsDir)
     expect(entry).toMatchObject({ id: 'test-mixer', status: 'ok' })
-    expect(entry.results.map((r) => r.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'textures'])
+    expect(entry.results.map((r) => r.gate)).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'textures', 'validator'])
     expect(entry.results.every((r) => r.ok)).toBe(true)
   })
 
@@ -134,6 +134,16 @@ describe('validateAssets', () => {
     const [entry] = await validateAssets(assetsDir, specsDir)
     expect(entry.status).toBe('failed')
     expect(entry.results.filter((r) => !r.ok).map((r) => r.gate)).toEqual(['textures'])
+  })
+
+  it('a file the Khronos glTF validator rejects fails the validator gate', async () => {
+    const spec = deviceSpec()
+    writeSpec(spec)
+    writeGlb(spec.id, await makeBoxGlb({ sizeM: SIZE_M, nodes: nodesOf(spec), texture: { sizePx: 64 }, noTexcoord: true }))
+    const [entry] = await validateAssets(assetsDir, specsDir)
+    expect(entry.status).toBe('failed')
+    expect(entry.results.filter((r) => !r.ok).map((r) => r.gate)).toEqual(['validator'])
+    expect(entry.results.at(-1)?.detail).toMatch(/MESH_PRIMITIVE_TOO_FEW_TEXCOORDS/)
   })
 
   it('treats a missing specs directory (or assets directory) as empty', async () => {

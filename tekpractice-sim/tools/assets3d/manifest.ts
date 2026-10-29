@@ -6,7 +6,8 @@
  *    with `status: 'ok'` unless the entry says otherwise
  *  - the file is rewritten atomically (temp file in the same folder, then rename) as 2-space JSON plus a trailing newline
  *  - a file that is missing, is not valid JSON or has no `assets` array is refused and left untouched
- * The optional fields written by the 3D pipeline: tool, toolVersion, date, specSource, logosRemoved, tris, gates.
+ * The optional fields written by the 3D pipeline: tool, toolVersion, date, specSource, logosRemoved, photos, taskId,
+ * tris, gates.
  * `logosRemoved` is true only when the founder shipped with --logos-removed (removing logos from a texture is manual).
  */
 import { existsSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs'
@@ -31,6 +32,10 @@ export interface ManifestEntry {
   /** First spec source url, or 'spec' when the spec lists none. */
   specSource?: string
   logosRemoved?: boolean
+  /** File names (not paths) of the reference photos sent to Meshy, in order ([] for a raw GLB). */
+  photos?: string[]
+  /** The Meshy task id of the shipped attempt, or null for a raw GLB. */
+  taskId?: string | null
   gates?: ManifestGate[]
   [extra: string]: unknown
 }
