@@ -376,7 +376,7 @@ describe('Matériel › Pivoter, Dupliquer, Supprimer (Task 25)', () => {
     const REASON = 'La console n’est pas alimentée.'
     const run: string[] = []
     const actions = (): Record<string, () => void> =>
-      Object.fromEntries(['play', 'choose-file', 'test-signal', 'song:demo-1'].map((a) => [a, () => void run.push(a)]))
+      Object.fromEntries(['play', 'stop', 'choose-file', 'test-signal', 'song:demo-1'].map((a) => [a, () => void run.push(a)]))
     const live = (over: Partial<MenuContext> = {}): MenuContext => ctx({ actions: actions(), playbackReady: () => true, playbackReason: () => undefined, ...over })
     const ecoute = (c: MenuContext) => buildMenus(c).find((m) => m.id === 'ecoute')!
     it('« Lecture » is enabled iff the chain can play; otherwise it stays in the menu (focusable) and its description is the FIRST reason', () => {
@@ -411,6 +411,22 @@ describe('Matériel › Pivoter, Dupliquer, Supprimer (Task 25)', () => {
       expect(p.label).toBe('Stop')
       expect(p.enabled()).toBe(true)
       expect(p.description!()).toBeUndefined()
+    })
+    it('the item runs what it was RENDERED as: shown as « Stop », it only stops, even if the sound ended while the menu was open (it must never start playback)', () => {
+      run.length = 0
+      let playing = true
+      const stopItem = find(buildMenus(live({ playing: () => playing })), 'play')
+      expect(stopItem.label).toBe('Stop')
+      playing = false // the file ended, or a media key paused it, while the menu stayed open
+      stopItem.run()
+      expect(run).toEqual(['stop']) // never 'play'
+      expect(stopItem.enabled()).toBe(true)
+      run.length = 0
+      const playItem = find(buildMenus(live({ playing: () => playing })), 'play')
+      expect(playItem.label).toBe('Lecture')
+      playing = true // started from the block's button meanwhile
+      playItem.run()
+      expect(run).toEqual(['play']) // the action itself ignores a start while playing (boot)
     })
     it('« Morceau » is left out when there is no song (the list is empty by design), and lists the songs by title otherwise', () => {
       expect(ecoute(live()).items.some((i) => i.id === 'songs')).toBe(false)

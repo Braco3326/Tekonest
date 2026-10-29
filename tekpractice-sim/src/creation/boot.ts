@@ -102,6 +102,8 @@ import { openNameDialog, openProjectList } from './shell/projectDialogs'
 import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
+import { createAnnouncer } from './shell/announcer'
+import { armCancelFallback } from './fileDialogGuard'
 import {
   autosaveView,
   playbackAnnouncement,
@@ -465,6 +467,11 @@ export async function bootCreation(): Promise<void> {
     shell.setStatus(placeLabel(store.design().roomId), COPY.shell!.statusReady!, 'ready')
   }
   const placeNow = (): string => (canvasShown ? placeLabel(store.design().roomId) : '')
+  /**
+   * ONE announcer for the status line's polite region, where the last write wins: the playback / signal announcements of the store change, the listen controller's
+   * and the coverage controller's all land in the same tick (the sound stops AND the coverage has no speaker left). It merges the distinct messages of a tick.
+   */
+  const announcer = createAnnouncer((message, reannounce) => shell.setStatus(placeNow(), message, 'ready', reannounce))
   const deviceIds = (): string[] => store.design().rig.instances.map((i) => i.instanceId)
   const deviceLabel = (id: string): string => {
     const deviceId = store.design().rig.instances.find((i) => i.instanceId === id)?.deviceId
@@ -675,7 +682,7 @@ export async function bootCreation(): Promise<void> {
     const playbackSaid = playbackAnnouncement(notice, nextNotice, { stopsPlayback: !!listen?.active })
     notice = nextNotice
     const said = [after !== before ? `${COPY.status!.signalAnnounce} ${sv.signal.label}` : '', playbackSaid].filter(Boolean)
-    if (said.length) shell.setStatus(placeNow(), said.join(' '), 'ready')
+    for (const m of said) announcer.say(m, false)
     // A selected device that left the rig (REMOVE, undo of its SPAWN) is no longer selected.
     const v = viewState.get()
     const ids = deviceIds()
@@ -1723,7 +1730,7 @@ export async function bootCreation(): Promise<void> {
           listeningPoints: () => listeningPoints(),
           deviceAt: (x, y) => pickDevice(host.scene, x, y) !== null,
           invalidate: () => scheduler.invalidate(),
-          announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+          announce: (message) => announcer.say(message),
           subscribe: (fn) => store.subscribe(fn),
           propsOpen: () => shell.isPanelOpen('props'),
           onPropsChange: (fn) => shell.onPanelChange((p) => p === 'props' && fn()),
@@ -1779,7 +1786,7 @@ export async function bootCreation(): Promise<void> {
           path: () => path,
           listener: listenerNow,
           hold: (name) => scheduler.hold(name),
-          announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+          announce: (message) => announcer.say(message),
           deviceLabel: (id) => `${deviceLabel(id)} (${id})`,
           subscribe: (fn) => store.subscribe(fn),
           propsOpen: () => shell.isPanelOpen('props'),
@@ -1848,9 +1855,28 @@ export async function bootCreation(): Promise<void> {
   // The file chooser: a hidden <input type="file"> clicked from the menu action, inside the click's own gesture, with the AudioContext made in that same
   // click and kept until the file arrives (or the dialog is cancelled). Keyboard users reach it through the menu item.
   let fileCtx: AudioContext | null = null
+  /** Disarms the « focus came back and no file » fallback of the context above (a browser that sends no `cancel`). */
+  let disarmFileGuard: (() => void) | null = null
   const dropFileCtx = (): void => {
+    disarmFileGuard?.()
+    disarmFileGuard = null
     closeAudioContext(fileCtx)
     fileCtx = null
+  }
+  const armFileGuard = (): void => {
+    const mine = fileCtx
+    disarmFileGuard = armCancelFallback(
+      {
+        onFocusBack: (fn) => {
+          window.addEventListener('focus', fn)
+          return () => window.removeEventListener('focus', fn)
+        },
+        later: (fn, ms) => window.setTimeout(fn, ms),
+        clear: (id) => window.clearTimeout(id),
+      },
+      () => mine !== null && fileCtx === mine,
+      dropFileCtx
+    )
   }
   const fileInput = document.createElement('input')
   fileInput.type = 'file'
@@ -1866,24 +1892,29 @@ export async function bootCreation(): Promise<void> {
     const file = fileInput.files?.[0]
     fileInput.value = '' // the same file can be chosen again; the page keeps no reference to it beyond the playing engine
     const ctx = fileCtx
+    disarmFileGuard?.()
+    disarmFileGuard = null
     fileCtx = null
     if (file) void startListening({ kind: 'file', file }, ctx ?? contextForClick())
     else closeAudioContext(ctx)
   })
   shellBag.listen(fileInput, 'cancel', dropFileCtx) // the dialog was closed with no file
-  // The songs: a lazy list, validated; an empty or failed list leaves « Morceau » out. Titles and files are data, never written here.
-  void import('../audio/songs')
-    .then((m) => m.loadSongs())
-    .then((list) => {
-      songs = list
-      if (list[0]) chosen = songSource(list[0])
-      for (const e of list)
-        actions[`song:${e.id}`] = () => {
-          dropFileCtx()
-          void startListening(songSource(e), contextForClick())
-        }
-    })
-    .catch((e: unknown) => console.warn('[creation] songs unavailable', e))
+  // The songs: a lazy list, validated; an empty or failed list leaves « Morceau » out. Titles and files are data, never written here. Fetched when the learner
+  // first reaches for the Écoute menu (hover, focus or open of its title), not at every boot: the list is empty today and the chunk is not free.
+  let songsLoad: Promise<void> | null = null
+  const ensureSongs = (): Promise<void> =>
+    (songsLoad ??= import('../audio/songs')
+      .then((m) => m.loadSongs())
+      .then((list) => {
+        songs = list
+        if (list[0] && chosen.kind === 'test') chosen = songSource(list[0])
+        for (const e of list)
+          actions[`song:${e.id}`] = () => {
+            dropFileCtx()
+            void startListening(songSource(e), contextForClick())
+          }
+      })
+      .catch((e: unknown) => console.warn('[creation] songs unavailable', e)))
 
   /** Menu item ids → the key map (the menus show the live labels). */
   const MENU_KEYS: Record<string, CreationAction | undefined> = {
@@ -1955,14 +1986,17 @@ export async function bootCreation(): Promise<void> {
     },
     coverage: () => void setCoverage(!coverageOn),
     // Lecture is a toggle: « Stop » while it plays (or is about to). The file chooser and the test signal are sources.
+    // « Lecture » only starts, « Stop » only stops: the menu item runs the action it was rendered as (menuModel), so a stale « Stop » can never start a sound.
     play: () => {
-      if (listenIntent) return stopListening()
+      if (listenIntent) return // already playing (started elsewhere since the menu opened)
       dropFileCtx()
       void startListening(chosen, contextForClick())
     },
+    stop: stopListening,
     'choose-file': () => {
       dropFileCtx() // a dialog left open earlier
       fileCtx = contextForClick()
+      if (fileCtx) armFileGuard()
       fileInput.click()
     },
     'test-signal': () => {
@@ -2008,7 +2042,8 @@ export async function bootCreation(): Promise<void> {
       points: () => listeningPoints().map((p) => ({ id: p.id, label: p.label })),
       listenerPoint: () =>
         activePoint(listeningPoints(), viewState.get().listenerPoint)?.id ?? '',
-    })
+    }),
+    { onTopIntent: (id) => void (id === 'ecoute' && ensureSongs()) } // the songs list is fetched when the learner reaches for Écoute
   )
 
   /** The coverage is off or its chunk is not loaded: the debug hook says so without loading anything. */

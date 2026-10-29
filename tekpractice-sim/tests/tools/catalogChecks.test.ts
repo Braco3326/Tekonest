@@ -125,6 +125,28 @@ describe('checkCatalog, routing (Task 33, C8, P7)', () => {
     expect(e.map((i) => i.path)).toEqual([at(0, '.channels'), at(1, '.passive')])
   })
 
+  it('errors on a `when` on a route that is not a source (from a port): signalPath only honours it on "control:<id>" routes, so it would be silently ignored', () => {
+    const e = errors(withRoutes(
+      { from: inPort, to: [outPort], when: { control: 'playback-usb', equals: true } },
+      { from: 'dante-primary', to: [outPort], when: { control: 'fader-master', equals: '0' } },
+    ))
+    expect(e.map((i) => i.path)).toEqual([at(0, '.when'), at(1, '.when')])
+    expect(e[0].message).toMatch(/source route/)
+  })
+
+  it('errors on passive together with when (the Task 33 deferral): a passive pass-through never reads a condition', () => {
+    const e = errors(withRoutes({ from: 'control:playback-usb', to: [outPort], passive: true, when: { control: 'playback-usb', equals: true } }))
+    expect(e.map((i) => i.path)).toEqual([at(0, '.passive')])
+    expect(e[0].message).toMatch(/passive.*when/)
+  })
+
+  it('a `when` on a source route, and a passive route without `when`, are still fine', () => {
+    expect(errors(withRoutes(
+      { from: 'control:playback-usb', to: [outPort], when: { control: 'playback-usb', equals: true } },
+      { from: 'dante-primary', to: [outPort], passive: true },
+    ))).toEqual([])
+  })
+
   it('errors when when.equals does not fit the control: a string for a toggle, a boolean or an unlisted value for an enum', () => {
     const e = errors(withRoutes(
       { from: 'control:playback-usb', to: [outPort], when: { control: 'playback-usb', equals: 'true' } },

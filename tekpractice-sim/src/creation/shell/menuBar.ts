@@ -22,7 +22,12 @@ export interface MenuBarHandle {
 /** A submenu keeps this far (CSS px) from the window edges. */
 const MARGIN = 4
 
-export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarHandle {
+/** Optional hooks of the owner. `onTopIntent`: the learner reaches for a menu (pointer over its title, focus on it, or opening it): load what its items will need. */
+export interface MenuBarHooks {
+  onTopIntent?(menuId: MenuDef['id']): void
+}
+
+export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[], hooks: MenuBarHooks = {}): MenuBarHandle {
   const doc = bar.ownerDocument
   const defs = menus()
   const tops: HTMLButtonElement[] = []
@@ -56,7 +61,9 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
     panels.push(panel)
 
     top.addEventListener('click', () => (openIndex === i ? close(true) : open(i, 'first')))
+    top.addEventListener('focus', () => hooks.onTopIntent?.(def.id))
     top.addEventListener('pointerenter', () => {
+      hooks.onTopIntent?.(def.id)
       if (openIndex >= 0 && openIndex !== i) open(i, 'none')
     })
     top.addEventListener('keydown', (e) => onTopKey(e, i))
@@ -246,6 +253,7 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
   }
 
   function open(i: number, focus: 'first' | 'last' | 'none'): void {
+    hooks.onTopIntent?.(defs[i].id)
     if (openIndex >= 0 && openIndex !== i) hide(openIndex)
     openIndex = i
     render(i)

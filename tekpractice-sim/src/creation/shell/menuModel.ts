@@ -200,13 +200,16 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     const on = (): boolean => registered(action) && canStart()
     return { id, label, enabled: on, run: () => void (on() && ctx.actions[action]()), description: () => (on() ? undefined : why()) }
   }
+  // The item runs what it was RENDERED as. The menu is rebuilt only when it opens: if the sound ends while it is open, a « Stop » must still only stop
+  // (its own action), never start playback from the live state.
   const playing = !!ctx.playing?.()
-  const playOn = (): boolean => registered('play') && (playing || canStart())
+  const playAction = playing ? 'stop' : 'play'
+  const playOn = (): boolean => registered(playAction) && (playing || canStart())
   const play: MenuItem = {
     id: 'play',
     label: playing ? M.stop! : M.play!,
     enabled: playOn,
-    run: () => void (playOn() && ctx.actions.play()),
+    run: () => void (playOn() && ctx.actions[playAction]()),
     description: () => (playOn() ? undefined : why()),
   }
   const songList = ctx.songs?.() ?? []

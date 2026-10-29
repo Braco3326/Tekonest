@@ -308,8 +308,12 @@ test('(g) a click on a dot pins its level, a named point is a keyboard button, Â
     return null
   })
   expect(both, 'a pixel with both a device and a dot under it').not.toBeNull()
+  const jobsBefore = await jobs(page)
   await page.mouse.click(both!.x, both!.y)
-  await page.waitForTimeout(300)
+  await page.waitForTimeout(400) // longer than the 150 ms debounce: a pin WOULD have posted its job by now
+  // `pinned` only turns non-null after a worker reply, so on its own it could pass for a pin that is still on its way: no job was posted either
+  expect(await jobs(page)).toBe(jobsBefore)
+  expect((await cov(page)).pending).toBe(false)
   expect((await cov(page)).pinned).toBeNull()
 })
 

@@ -244,7 +244,7 @@ test('(e) the chain turning invalid while playing stops it, said with the reason
   await play(page)
   expect(await set(page, 'power', false)).toBe(true)
   await waitStopped(page)
-  await expect(page.getByRole('status')).toHaveText('Lecture arrêtée. La console n’est pas alimentée.')
+  await expect(page.getByRole('status')).toContainText('Lecture arrêtée. La console n’est pas alimentée.') // with the lost « Micro OK », merged by the announcer
   expect(await page.evaluate(() => window.__creation!.leases())).not.toContain('meters')
   expect(await set(page, 'power', true)).toBe(true)
   await play(page)
@@ -613,4 +613,96 @@ test('(r) under the place picker a valid chain still has « Lecture » off, and 
   await expect(item(page, 'Lecture')).toHaveAttribute('aria-disabled', 'true')
   await expect(item(page, 'Lecture')).toHaveAccessibleDescription('Indisponible pendant le choix du lieu.')
   await expect(page.locator('#cr-menu-desc-play')).toBeVisible()
+})
+
+test('(s) the sound stopping and the coverage emptying in ONE change are BOTH announced (the status line is one region where the last write used to win)', async ({ page }) => {
+  await boot(page)
+  await play(page) // the listen controller subscribed first…
+  await ecoute(page).click()
+  await page.getByRole('menuitemcheckbox', { name: 'Couverture' }).click() // …the coverage after it
+  await page.waitForFunction(() => window.__creation!.coverage().status === 'ready' && !window.__creation!.coverage().pending, null, { timeout: 20_000 })
+  await page.evaluate(() => {
+    const said: string[] = []
+    ;(window as unknown as { __said: string[] }).__said = said
+    new MutationObserver(() => said.push(document.querySelector('.cr-status-msg')!.textContent ?? '')).observe(document.querySelector('.cr-status-msg')!, { childList: true, characterData: true, subtree: true })
+  })
+  expect(await set(page, 'power', false)).toBe(true)
+  await waitStopped(page)
+  const status = page.locator('.cr-status-msg')
+  await expect(status).toContainText('Lecture arrêtée. La console n’est pas alimentée.')
+  await expect(status).toContainText('Aucune enceinte audible')
+  // …in ONE write: the region was never left holding only the second message
+  const said = await page.evaluate(() => (window as unknown as { __said: string[] }).__said)
+  expect(said.filter((t) => t.includes('Lecture arrêtée.') && t.includes('Aucune enceinte audible'))).toHaveLength(1)
+  expect(said.filter((t) => t.includes('Aucune enceinte audible') && !t.includes('Lecture arrêtée.'))).toEqual([])
+})
+
+test('(t) the console BALANCE changes the sound and the coverage alike: G100 silences the right-fed speaker (meter 0) and takes it out of the coverage; C brings it back', async ({ page }) => {
+  await boot(page)
+  await play(page)
+  await ecoute(page).click()
+  await page.getByRole('menuitemcheckbox', { name: 'Couverture' }).click()
+  await page.waitForFunction(() => window.__creation!.coverage().status === 'ready' && !window.__creation!.coverage().pending, null, { timeout: 20_000 })
+  expect((await page.evaluate(() => window.__creation!.coverage().sources)).sort()).toEqual(['k12-d', 'k12-g'])
+  expect(await set(page, 'balance-master', 'G100')).toBe(true)
+  await page.waitForFunction(() => {
+    const l = window.__creation!.audioLevels()
+    return l['k12-d'] === 0 && (l['k12-g'] ?? 0) > 0
+  }, null, { timeout: 10_000 })
+  expect((await state(page)).state).toBe('playing') // the balance never gates
+  expect((await state(page)).voices.find((v) => v.instanceId === 'k12-d')!.gain).toBe(0)
+  await page.waitForFunction(() => window.__creation!.coverage().sources.join() === 'k12-g' && !window.__creation!.coverage().pending, null, { timeout: 10_000 })
+  await expect(page.getByTestId('listen-meters').locator('li[data-instance="k12-d"]')).toContainText('niveau de sortie silence, gain silence')
+  expect(await set(page, 'balance-master', 'C')).toBe(true)
+  await waitBothHeard(page)
+  await page.waitForFunction(() => window.__creation!.coverage().sources.length === 2 && !window.__creation!.coverage().pending, null, { timeout: 10_000 })
+  // half way: G50 puts the right speaker at one half (−6 dB)
+  expect(await set(page, 'balance-master', 'G50')).toBe(true)
+  await page.waitForFunction(() => Math.abs((window.__creation!.audioState().voices.find((v) => v.instanceId === 'k12-d')?.gain ?? 0) - 0.5) < 1e-9, null, { timeout: 5000 })
+  // the limits are said where the learner reads: the block carries every limit the ADR announces
+  await expect(page.getByTestId('listen-limits')).toContainText('la moyenne de ses deux côtés')
+  await expect(page.getByTestId('listen-limits')).toContainText('on n’écoute pas « depuis ici »')
+  await expect(page.getByTestId('listen-simple')).toContainText('le fader, le mute et le balance de la console agissent sur le son')
+  await choose(page, 'Stop')
+  await waitStopped(page)
+})
+
+test('(u) a « Stop » shown in an open menu never starts a sound: the file ended while the menu was open', async ({ page }) => {
+  await boot(page)
+  await openEcoute(page)
+  const [chooser] = await Promise.all([page.waitForEvent('filechooser'), item(page, 'Choisir un fichier audio…').click()])
+  await chooser.setFiles({ name: 'short.wav', mimeType: 'audio/wav', buffer: wav(1) })
+  await waitPlaying(page)
+  await openEcoute(page)
+  await expect(item(page, 'Stop')).toBeVisible() // rendered as « Stop »
+  await waitStopped(page) // the file ends while the menu stays open
+  const opened = (await stats(page)).contexts.opened
+  await item(page, 'Stop').click()
+  await page.waitForTimeout(600)
+  expect((await state(page)).state).toBe('stopped')
+  expect((await stats(page)).contexts.opened).toBe(opened) // nothing was started
+})
+
+test('(v) pulling one speaker\'s cable while playing: that speaker leaves the mix, the other goes on, the playback is not stopped', async ({ page }) => {
+  await boot(page)
+  await play(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12-g', port: 'in-line-a' } }))
+  await page.waitForFunction(() => window.__creation!.audioState().voices.map((v) => v.instanceId).join() === 'k12-d')
+  expect((await state(page)).state).toBe('playing')
+  await page.waitForFunction(() => (window.__creation!.audioLevels()['k12-d'] ?? 0) > 0)
+  await page.waitForFunction(() => !('k12-g' in window.__creation!.audioLevels()), null, { timeout: 5000 }) // its chain is gone once the fade is done
+  await choose(page, 'Stop')
+  await waitStopped(page)
+})
+
+test('(w) the songs list is fetched when the learner reaches for Écoute, not at boot', async ({ page }) => {
+  const requests: string[] = []
+  page.on('request', (r) => requests.push(r.url()))
+  await boot(page)
+  expect(requests.filter((u) => /\/songs-[^/]*\.js$/.test(u))).toEqual([])
+  await ecoute(page).hover()
+  await page.waitForFunction(() => performance.getEntriesByType('resource').some((e) => /\/songs-[^/]*\.js$/.test(e.name)), null, { timeout: 5000 })
+  expect(requests.filter((u) => /\/songs-[^/]*\.js$/.test(u)).length).toBeGreaterThan(0)
+  await ecoute(page).click()
+  await expect(page.getByRole('menuitem', { name: 'Morceau' })).toHaveCount(0) // the list is empty: the group stays hidden
 })

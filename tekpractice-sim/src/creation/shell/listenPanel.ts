@@ -90,11 +90,13 @@ export function mountListenPanel(doc: Document, container: HTMLElement, before: 
   // Always shown (brief §10, S3): the simulation is simple, the volume starts low, the file stays here.
   const simple = el(doc, 'p', 'cr-listen-note', t.simple)
   simple.dataset.testid = 'listen-simple'
+  const limits = el(doc, 'p', 'cr-listen-note', t.limits)
+  limits.dataset.testid = 'listen-limits'
   const volume = el(doc, 'p', 'cr-listen-note', t.volume)
   volume.dataset.testid = 'listen-volume'
   const local = el(doc, 'p', 'cr-listen-note', t.fileLocal)
   local.dataset.testid = 'listen-local'
-  body.append(state, transport, reason, silent, metersTitle, meters, none, simple, volume, local)
+  body.append(state, transport, reason, silent, metersTitle, meters, none, simple, limits, volume, local)
   root.append(head, body)
   container.insertBefore(root, before)
   bag.add(() => root.remove())
