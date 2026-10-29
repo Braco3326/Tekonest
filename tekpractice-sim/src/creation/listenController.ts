@@ -18,7 +18,8 @@
 import type { Registry } from '../engine/CatalogLoader'
 import type { PathResult } from '../flow/signalPath'
 import type { DesignState } from '../trials/trial'
-import { AudioEngine, audioStats, type PlaySource } from '../audio/engine'
+import { AudioEngine, type PlaySource } from '../audio/engine'
+import { closeAudioContext } from '../audio/context'
 import { listenerMix, type MixVoice } from '../audio/listenerMix'
 import type { DisposableBag } from '../util/disposable'
 import { COPY } from './copy'
@@ -32,8 +33,10 @@ export interface EngineLike {
   stop(): void
   update(voices: MixVoice[]): void
   levels(): Record<string, number>
+  peaks(): { voices: Record<string, number>; output: number }
   dispose(): void
   onEnded: (() => void) | null
+  onFailed: (() => void) | null
   readonly closed: Promise<void>
 }
 export type PanelPort = Pick<ListenPanel, 'render'>
@@ -67,8 +70,13 @@ export interface ListenDeps {
   frame?: (fn: () => void) => () => void
   /** Milliseconds, monotonic (the meter rate). Default: performance.now. */
   now?: () => number
-  /** Tests inject a fake engine; the app builds the Web Audio one. */
-  createEngine?: () => Promise<EngineLike>
+  /**
+   * Tests inject a fake engine; the app builds the Web Audio one. `ctx` is the AudioContext the shell made SYNCHRONOUSLY in the click (before the chunk
+   * was fetched); the engine adopts it. Called synchronously from `play()`.
+   */
+  createEngine?: (ctx: AudioContext | null) => Promise<EngineLike>
+  /** Close a context that was handed in but never adopted by an engine. Default: `closeAudioContext`. */
+  closeContext?: (ctx: AudioContext | null) => void
   /** Tests inject a fake panel; the app builds the real one. */
   createPanel?: (handlers: { toggle(): void }) => PanelPort
 }
@@ -167,9 +175,9 @@ export class ListenController {
     }
   }
 
-  /** Web Audio counters over the page's life (the e2e checks that nothing leaks). */
-  stats(): typeof audioStats {
-    return JSON.parse(JSON.stringify(audioStats)) as typeof audioStats
+  /** The speakers' output peaks (after the master gain) and the real output peak (after the limiter), linear; zeros when nothing plays. */
+  readPeaks(): { voices: Record<string, number>; output: number } {
+    return this.engine && this.st === 'playing' ? this.engine.peaks() : { voices: {}, output: 0 }
   }
 
   /** The speakers' output levels (linear RMS) right now; {} when nothing plays. */
@@ -177,10 +185,16 @@ export class ListenController {
     return this.engine && this.st === 'playing' ? this.engine.levels() : {}
   }
 
-  async play(source: ListenSource): Promise<void> {
-    if (this.disposed) return
+  /**
+   * `ctx`: the context the shell made in the click. It ends up adopted by the engine (which closes it), or closed here when this call does not get to
+   * make an engine (the chain is not playable, the controller is gone, the engine could not be made).
+   */
+  async play(source: ListenSource, ctx: AudioContext | null = null): Promise<void> {
+    const close = (): void => (this.deps.closeContext ?? closeAudioContext)(ctx)
+    if (this.disposed) return close()
     const path = this.deps.path()
     if (!path.playbackReady) {
+      close()
       // The menu is off in this state, but a stale click or a call from the block lands here: the rule is checked where it matters.
       this.deps.announce(L().notReady!.replace('{reason}', path.reasons[0]?.text_fr ?? '').trim())
       return
@@ -192,9 +206,10 @@ export class ListenController {
     this.afterChange()
     let engine: EngineLike
     try {
-      engine = await (this.deps.createEngine ?? (() => AudioEngine.create()))()
+      engine = await (this.deps.createEngine ?? ((c) => AudioEngine.create(undefined, c)))(ctx)
     } catch (e) {
       console.error('[listen] audio engine failed', e)
+      close()
       if (session === this.token) this.fail(L().loadFailed!)
       return
     }
@@ -206,13 +221,18 @@ export class ListenController {
     engine.onEnded = () => {
       if (session === this.token) this.stop('ended')
     }
+    // A media element that fails mid-stream, or is paused from outside: the sound has stopped for a reason nobody chose; everything is released and it is said.
+    engine.onFailed = () => {
+      if (session === this.token) this.fail(source.kind === 'file' ? L().failedFile! : L().failed!)
+    }
     this.pushVoices(true)
     try {
       await engine.play(toPlaySource(source))
     } catch (e) {
       if (session !== this.token) return // stopped meanwhile: the failure is of no interest
       console.warn('[listen] play failed', e)
-      this.fail(source.kind === 'file' ? L().failedFile! : L().failed!)
+      // A context that never started (ResumeTimeout) is a general failure; a file the browser cannot read is the file's.
+      this.fail(source.kind === 'file' && (e as Error | undefined)?.name !== 'ResumeTimeout' ? L().failedFile! : L().failed!)
       return
     }
     if (session !== this.token || this.disposed) return // stop() already released this engine
@@ -281,6 +301,7 @@ export class ListenController {
     this.engine = null
     if (e) {
       e.onEnded = null
+      e.onFailed = null
       e.stop()
       this.retiring.add(e)
       void e.closed.then(() => this.retiring.delete(e))

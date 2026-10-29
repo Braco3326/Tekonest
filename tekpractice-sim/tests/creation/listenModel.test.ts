@@ -43,12 +43,12 @@ describe('rows', () => {
   it('one row per voice, sorted by id, with the name, level, gain, delay and pan as one sentence', () => {
     const rows = rowsOf([v('k12-g', 0.5, 0.01, -0.5), v('k12-d', 0.25, 0, 0.5)], { 'k12-g': 0.1, 'k12-d': 0 }, (id) => `QSC (${id})`)
     expect(rows.map((r) => r.id)).toEqual(['k12-d', 'k12-g'])
-    expect(rows[1].text).toBe('QSC (k12-g) : niveau −20,0 dBFS, gain −6,0 dB, retard 10,0 ms, pan gauche 50 %')
-    expect(rows[0].text).toBe('QSC (k12-d) : niveau silence, gain −12,0 dB, retard 0,0 ms, pan droite 50 %')
+    expect(rows[1].text).toBe('QSC (k12-g) : niveau de sortie −20,0 dBFS, gain −6,0 dB, retard 10,0 ms, pan gauche 50 %')
+    expect(rows[0].text).toBe('QSC (k12-d) : niveau de sortie silence, gain −12,0 dB, retard 0,0 ms, pan droite 50 %')
   })
   it('a muted voice (gain 0) reads « silence » everywhere, no -Infinity, no NaN', () => {
     const [r] = rowsOf([v('a', 0, 0, 0)], {}, (id) => id)
-    expect(r.text).toBe('a : niveau silence, gain silence, retard 0,0 ms, pan centre')
+    expect(r.text).toBe('a : niveau de sortie silence, gain silence, retard 0,0 ms, pan centre')
     expect(r.text).not.toMatch(/NaN|Infinity|undefined/)
     expect(r.bar).toBe(0)
   })

@@ -77,6 +77,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.delete` | Supprimer | à valider (tekuxwriter) | Matériel ; supprime l’appareil sélectionné et ses câbles (Suppr) ; annulable ; grisé sans sélection |
 | `menu.connectTo` | Connecter à… | validé | Câblage ; même libellé que l'action Propriétés « Connecter à… » (C10) |
 | `menu.play` | Lecture | à valider (tekuxwriter) | Écoute › Lecture (Task 39) : démarre la source choisie ; actif seulement si la chaîne est valide (sinon `aria-disabled` + la première raison) ; devient « Stop » pendant la lecture |
+| `menu.playLocked` | Indisponible pendant le choix du lieu. | à valider (tekuxwriter) | Description de « Lecture » (et des sources) désactivés quand le sélecteur de lieu couvre la vue et que la chaîne, elle, est valide |
 | `menu.stop` | Stop | à valider (tekuxwriter) | Écoute : libellé de l'élément de lecture pendant que ça joue |
 | `menu.song` | Morceau | à valider (tekuxwriter) | Écoute › Morceau : sous-menu des morceaux de démonstration ; masqué tant qu'il n'y en a aucun (`content/songs.json` est vide) |
 | `menu.chooseFile` | Choisir un fichier audio… | à valider (tekuxwriter) | Écoute : ouvre le sélecteur de fichier du navigateur ; le fichier reste local |
@@ -731,28 +732,28 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `listen.panelExpand` | Déplier l’écoute | à valider (tekuxwriter) | Nom du bouton, bloc replié |
 | `listen.stopped` | Lecture arrêtée. | à valider (tekuxwriter) | État du bloc et annonce après Stop |
 | `listen.starting` | Démarrage de la lecture… | à valider (tekuxwriter) | État du bloc pendant le chargement du moteur audio |
-| `listen.playing` | Lecture en cours : {source}. | à valider (tekuxwriter) | État du bloc et annonce ; `{source}` = signal de test, fichier ou morceau |
+| `listen.playing` | Lecture en cours : {source} (simulation simple). | à valider (tekuxwriter) | État du bloc ET annonce ; `{source}` = signal de test, fichier ou morceau. Dit « simulation simple » à chaque lecture, même quand Propriétés est replié (le bloc, lui, est masqué alors) |
 | `listen.sourceTest` | signal de test | à valider (tekuxwriter) | Nom de la source dans la ligne d’état |
 | `listen.sourceFile` | fichier {name} | à valider (tekuxwriter) | Nom de la source ; `{name}` = nom du fichier choisi |
 | `listen.sourceSong` | {title} | à valider (tekuxwriter) | Nom de la source ; `{title}` = titre du morceau (donnée du catalogue des morceaux) |
 | `listen.silentMix` | Aucune enceinte ne sonne pour le moment : la console est en mute ou son fader est à −inf. | à valider (tekuxwriter) | Le son joue mais chaque enceinte est coupée : le mute et le fader silencent sans jamais bloquer la lecture |
 | `listen.metersTitle` | Niveau à chaque enceinte | à valider (tekuxwriter) | Titre de la liste des enceintes (valeurs en texte, équivalent des indicateurs) |
-| `listen.meterRow` | {name} : niveau {level}, gain {gain}, retard {delay}, pan {pan} | à valider (tekuxwriter) | Une ligne par enceinte qui sonne |
-| `listen.levelDb` | {v} dBFS | à valider (tekuxwriter) | Niveau mesuré à la sortie de l’enceinte, avant le volume général |
+| `listen.meterRow` | {name} : niveau de sortie {level}, gain {gain}, retard {delay}, pan {pan} | à valider (tekuxwriter) | Une ligne par enceinte qui sonne ; le niveau est mesuré à la sortie de l’enceinte, APRÈS le volume général (avant le limiteur) |
+| `listen.levelDb` | {v} dBFS | à valider (tekuxwriter) | Niveau de sortie de l’enceinte, après le volume général |
 | `listen.levelSilent` | silence | à valider (tekuxwriter) | Niveau nul |
-| `listen.gainValue` | {v} dB | à valider (tekuxwriter) | Gain de l’enceinte : distance, fader, directivité |
+| `listen.gainValue` | {v} dB | à valider (tekuxwriter) | Gain de l’enceinte RELATIF à la plus forte (normalisation du volume) : distance, directivité et fader |
 | `listen.delayValue` | {v} ms | à valider (tekuxwriter) | Retard par rapport à l’enceinte la plus proche |
 | `listen.panLeft` | gauche {n} % | à valider (tekuxwriter) | Placement gauche-droite de l’enceinte, vu de l’auditeur |
 | `listen.panRight` | droite {n} % | à valider (tekuxwriter) | Idem, à droite |
 | `listen.panCenter` | centre | à valider (tekuxwriter) | Idem, au milieu |
 | `listen.noSpeakers` | Aucune enceinte à écouter. | à valider (tekuxwriter) | Le bloc, sans enceinte alimentée |
-| `listen.simple` | Simulation simple : niveau, retard et placement gauche-droite calculés d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie. | à valider (tekuxwriter) | Mention d’honnêteté, toujours affichée dans le bloc (brief §10) |
+| `listen.simple` | Simulation simple : niveau relatif, retard et placement gauche-droite calculés d’après la géométrie. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie. | à valider (tekuxwriter) | Mention d’honnêteté dans le bloc (visible tant que Propriétés est déplié) ; la ligne de lecture le redit toujours (brief §10) |
 | `listen.volume` | Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin. | à valider (tekuxwriter) | Sécurité d’écoute : volume général de −18 dBFS, limiteur, fondu d’entrée et de sortie |
 | `listen.fileLocal` | Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré. | à valider (tekuxwriter) | Confidentialité (S3), toujours affichée dans le bloc |
 | `listen.fileInputName` | Choisir un fichier audio | à valider (tekuxwriter) | Nom accessible du champ fichier (masqué, déclenché par le menu) |
 | `listen.notReady` | Lecture impossible. {reason} | à valider (tekuxwriter) | Annonce quand on demande la lecture sans chaîne valide ; `{reason}` = la première raison |
 | `listen.stoppedNotReady` | Lecture arrêtée. {reason} | à valider (tekuxwriter) | Annonce quand un changement du rig rend la chaîne invalide pendant la lecture |
-| `listen.stoppedPlace` | Lecture arrêtée : le lieu a changé. | à valider (tekuxwriter) | Annonce au changement de lieu pendant la lecture |
+| `listen.stoppedPlace` | Lecture arrêtée : le lieu a changé. | à valider (tekuxwriter) | Annonce quand le lieu change et que la chaîne reste valide ; un changement de lieu qui vide le rig est d’abord dit par « Lecture arrêtée. {reason} » (`stoppedNotReady`), le rig étant vidé avant l’affichage du lieu |
 | `listen.stoppedEnded` | Lecture terminée. | à valider (tekuxwriter) | Annonce quand un fichier arrive à sa fin |
 | `listen.failedFile` | Ce fichier n’a pas pu être lu. Essayez un fichier MP3, WAV ou OGG. | à valider (tekuxwriter) | Annonce quand le navigateur ne décode pas le fichier choisi |
 | `listen.failed` | La lecture n’a pas pu démarrer. | à valider (tekuxwriter) | Annonce d’une erreur de démarrage (autre qu’un fichier illisible) |

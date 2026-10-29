@@ -33,6 +33,7 @@ class FakeEngine implements EngineLike {
   disposes = 0
   levelReads = 0
   onEnded: (() => void) | null = null
+  onFailed: (() => void) | null = null
   playGate: { resolve(): void; reject(e: unknown): void } | null = null
   /** Set by a test: make play() wait for `release()` / `fail()`. */
   deferPlay = false
@@ -50,6 +51,9 @@ class FakeEngine implements EngineLike {
   }
   update(v: MixVoice[]): void {
     this.updates.push(v)
+  }
+  peaks(): { voices: Record<string, number>; output: number } {
+    return { voices: { 'k12-g': 0.25 }, output: 0.3 }
   }
   levels(): Record<string, number> {
     this.levelReads++
@@ -81,6 +85,9 @@ function make(opts: { deferEngine?: boolean; engineFails?: boolean; powered?: bo
     now: 0,
   }
   const engines: FakeEngine[] = []
+  /** The contexts handed to createEngine, in order, and the ones the controller closed itself (never adopted by an engine). */
+  const handed: (AudioContext | null)[] = []
+  const closed: (AudioContext | null)[] = []
   const created = { n: 0 }
   const gates: { resolve(): void; reject(e: unknown): void }[] = []
   const views: ListenView[] = []
@@ -125,8 +132,10 @@ function make(opts: { deferEngine?: boolean; engineFails?: boolean; powered?: bo
       return () => void (f.cancelled = true)
     },
     now: () => st.now,
-    createEngine: async () => {
+    closeContext: (c) => void closed.push(c),
+    createEngine: async (c) => {
       created.n++
+      handed.push(c)
       if (opts.engineFails) throw new Error('chunk failed')
       if (opts.deferEngine) await new Promise<void>((resolve, reject) => gates.push({ resolve, reject }))
       const e = new FakeEngine()
@@ -153,7 +162,7 @@ function make(opts: { deferEngine?: boolean; engineFails?: boolean; powered?: bo
     }
   }
   const pending = (): number => frames.filter((f) => !f.cancelled).length
-  return { c, st, store, dispatch, engines, created, views, announced, leases, frames, frame, pending, refreshPath, bag, subscribers, handlers: () => handlers, startDefault: () => startDefault, release: () => gates.splice(0).forEach((g) => g.resolve()) }
+  return { c, st, store, handed, closed, dispatch, engines, created, views, announced, leases, frames, frame, pending, refreshPath, bag, subscribers, handlers: () => handlers, startDefault: () => startDefault, release: () => gates.splice(0).forEach((g) => g.resolve()) }
 }
 const TEST = { kind: 'test' } as const
 /** Let the pending promise callbacks run. */
@@ -187,18 +196,18 @@ describe('play: only on a valid chain, lazily', () => {
     expect(m.leases.names).toEqual(['meters'])
     expect(m.leases.held).toBe(1)
     expect(m.pending()).toBe(1)
-    expect(m.announced).toEqual(['Lecture en cours : signal de test.'])
-    expect(lastView(m)).toMatchObject({ state: 'playing', line: 'Lecture en cours : signal de test.', canStart: true })
+    expect(m.announced).toEqual(['Lecture en cours : signal de test (simulation simple).'])
+    expect(lastView(m)).toMatchObject({ state: 'playing', line: 'Lecture en cours : signal de test (simulation simple).', canStart: true })
   })
   it('a file and a song are named in the line and handed to the engine as such', async () => {
     const m = make()
     const file = new File([new Uint8Array(4)], 'mon-mix.wav')
     await m.c.play({ kind: 'file', file })
     expect(m.engines[0].played).toEqual([{ kind: 'file', file }])
-    expect(m.announced.at(-1)).toBe('Lecture en cours : fichier mon-mix.wav.')
+    expect(m.announced.at(-1)).toBe('Lecture en cours : fichier mon-mix.wav (simulation simple).')
     await m.c.play({ kind: 'song', id: 's', title: 'Titre', url: '/audio/songs/s.mp3' })
     expect(m.engines[1].played).toEqual([{ kind: 'song', url: '/audio/songs/s.mp3' }])
-    expect(m.announced.at(-1)).toBe('Lecture en cours : Titre.')
+    expect(m.announced.at(-1)).toBe('Lecture en cours : Titre (simulation simple).')
   })
   it('the voices carry the mix of the live design: k12-g (world +x) pans left of the Régie listener, both equidistant', async () => {
     const m = make()
@@ -215,7 +224,7 @@ describe('play: only on a valid chain, lazily', () => {
     const rows = lastView(m).rows
     expect(rows.map((r) => r.id)).toEqual(['k12-d', 'k12-g'])
     const g = rows.find((r) => r.id === 'k12-g')!
-    expect(g.text).toMatch(/^Nom k12-g : niveau −12,0 dBFS, gain −.*dB, retard 0,0 ms, pan gauche \d+ %$/)
+    expect(g.text).toMatch(/^Nom k12-g : niveau de sortie −12,0 dBFS, gain 0,0 dB, retard 0,0 ms, pan gauche \d+ %$/)
     expect(g.bar).toBeGreaterThan(0)
   })
 })
@@ -538,5 +547,115 @@ describe('the block', () => {
     const m = make({ powered: false })
     expect(lastView(m)).toMatchObject({ shown: true, state: 'stopped', canStart: false, line: 'Lecture arrêtée.' })
     expect(lastView(m).reason).toBe(m.st.path.reasons[0].text_fr)
+  })
+})
+
+describe('review round 1: the context is made in the click, handed in, and never leaked', () => {
+  const ctxA = { id: 'A' } as unknown as AudioContext
+  it('the context made in the click is handed to the engine factory, SYNCHRONOUSLY from play() (before any await), and never closed by the controller when an engine adopts it', async () => {
+    const m = make()
+    const p = m.c.play(TEST, ctxA)
+    expect(m.created.n).toBe(1) // the factory was called before play() yielded
+    expect(m.handed).toEqual([ctxA])
+    await p
+    expect(m.closed).toEqual([]) // the engine owns it now
+    m.c.stop()
+    expect(m.closed).toEqual([]) // and closes it itself
+  })
+  it('a chain that cannot play: the context made for the click is closed, no engine is made', async () => {
+    const m = make({ powered: false })
+    await m.c.play(TEST, ctxA)
+    expect(m.created.n).toBe(0)
+    expect(m.closed).toEqual([ctxA])
+  })
+  it('the engine could not be made: the context is closed (once) and it is said', async () => {
+    const m = make({ engineFails: true })
+    await m.c.play(TEST, ctxA)
+    expect(m.closed).toEqual([ctxA])
+    expect(m.announced).toEqual(['La lecture n’a pas pu se charger. Rechargez la page.'])
+  })
+  it('a disposed controller closes the context it is handed', async () => {
+    const m = make()
+    m.c.dispose()
+    await m.c.play(TEST, ctxA)
+    expect(m.closed).toEqual([ctxA])
+    expect(m.created.n).toBe(0)
+  })
+  it('stale: Stop while the engine is being made: the late engine (which adopted the context) is disposed; the controller does not close it a second time', async () => {
+    const m = make({ deferEngine: true })
+    const p = m.c.play(TEST, ctxA)
+    m.c.stop()
+    m.release()
+    await p
+    expect(m.engines[0].disposes).toBe(1)
+    expect(m.closed).toEqual([])
+  })
+  it('a context that never starts (ResumeTimeout) says the GENERAL failure, even for a file, and frees everything', async () => {
+    const m = make({ configure: (e) => (e.failPlay = Object.assign(new Error('AudioContext.resume() did not settle'), { name: 'ResumeTimeout' })) })
+    await m.c.play({ kind: 'file', file: new File([new Uint8Array(1)], 'a.wav') })
+    expect(m.announced).toEqual(['La lecture n’a pas pu démarrer.'])
+    expect(m.c.state).toBe('stopped')
+    expect(m.engines[0].stops).toBe(1)
+    expect(m.leases.taken).toBe(0)
+    expect(m.pending()).toBe(0)
+  })
+  it('a media element that fails mid-stream: said (the file message), the lease and the loop are released, the engine is stopped; after a Stop it is ignored', async () => {
+    const m = make()
+    await m.c.play({ kind: 'file', file: new File([new Uint8Array(1)], 'a.wav') })
+    m.announced.length = 0
+    m.engines[0].onFailed!()
+    expect(m.c.state).toBe('stopped')
+    expect(m.leases.held).toBe(0)
+    expect(m.pending()).toBe(0)
+    expect(m.engines[0].stops).toBe(1)
+    expect(m.announced).toEqual(['Ce fichier n’a pas pu être lu. Essayez un fichier MP3, WAV ou OGG.'])
+    const m2 = make()
+    await m2.c.play(TEST)
+    const failed = m2.engines[0].onFailed!
+    m2.c.stop()
+    m2.announced.length = 0
+    expect(m2.engines[0].onFailed).toBeNull() // detached at stop
+    failed()
+    expect(m2.announced).toEqual([])
+  })
+  it('INTEGRATION with the real engine and a context whose resume() never settles: after the bounded wait the controller is stopped, said, and every context is closed', async () => {
+    const { AudioEngine, RESUME_TIMEOUT_MS } = await import('../../src/audio/engine')
+    const { fakeEnv } = await import('../audio/fakeAudio')
+    const h = fakeEnv()
+    const announced: string[] = []
+    const base = make()
+    const c = new ListenController({
+      registry,
+      design: () => base.store.design(),
+      path: () => base.st.path,
+      listener: () => base.st.listener,
+      hold: () => () => undefined,
+      announce: (x) => void announced.push(x),
+      deviceLabel: (id) => id,
+      subscribe: () => () => undefined,
+      propsOpen: () => true,
+      startDefault: () => undefined,
+      bag: new DisposableBag(),
+      container: {} as HTMLElement,
+      before: null,
+      frame: () => () => undefined,
+      createEngine: async (ctx) => {
+        const e = await AudioEngine.create(h.env, ctx)
+        h.contexts[0].deferResume = true
+        return e
+      },
+      createPanel: () => ({ render: () => undefined }),
+    })
+    const mine = h.env.createContext()
+    const p = c.play(TEST, mine)
+    await flush()
+    expect(c.state).toBe('starting')
+    h.timers.find((t) => t.ms === RESUME_TIMEOUT_MS)!.fn()
+    await p
+    expect(c.state).toBe('stopped')
+    expect(announced).toEqual(['La lecture n’a pas pu démarrer.'])
+    h.flushTimers()
+    await flush()
+    expect(h.contexts[0].closeCalls).toBe(1) // the click's context was closed with the engine
   })
 })

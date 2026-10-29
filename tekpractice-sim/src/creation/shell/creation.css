@@ -356,6 +356,8 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-collapse:focus-visible { outline-offset: -3px; box-shadow: none; }
 .cr-collapse svg { width: 12px; height: 12px; }
 .cr-panel-body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 8px 0; }
+/* The properties keep a floor (Task 39): the blocks under them (coverage up to 54 %, listening up to 34 %, the cable legend) shrink and scroll inside themselves instead of squeezing the selected device's settings. Owned here, not by a lazy block's CSS. */
+.cr-props .cr-panel-body { min-height: 120px; }
 
 /* ── Cable legend (Task 27): the bottom of « Propriétés », never over the 3D view ───────────────────────────── */
 .cr-legend { flex: 0 0 auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }

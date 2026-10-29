@@ -427,6 +427,16 @@ describe('Matériel › Pivoter, Dupliquer, Supprimer (Task 25)', () => {
       const p = find(buildMenus(ctx({ playbackReady: () => true })), 'play')
       expect(p.enabled()).toBe(false)
     })
+    it('under the place picker with a VALID chain the items are off and say why (never off with no word); a chain reason wins when there is one', () => {
+      const locked = buildMenus(live({ viewLocked: () => true, songs: () => [{ id: 'demo-1', title: 'T' }] }))
+      for (const id of ['play', 'choose-file', 'test-signal', 'songs', 'song:demo-1']) {
+        expect(find(locked, id).enabled(), id).toBe(false)
+        expect(find(locked, id).description!(), id).toBe('Indisponible pendant le choix du lieu.')
+      }
+      const both = find(buildMenus(live({ viewLocked: () => true, playbackReady: () => false, playbackReason: () => REASON })), 'play')
+      expect(both.description!()).toBe(REASON)
+      expect(find(buildMenus(live()), 'play').description!()).toBeUndefined()
+    })
     it('nothing starts under the place picker (viewLocked) but Stop still works', () => {
       expect(find(buildMenus(live({ viewLocked: () => true })), 'play').enabled()).toBe(false)
       expect(find(buildMenus(live({ viewLocked: () => true, playing: () => true })), 'play').enabled()).toBe(true)

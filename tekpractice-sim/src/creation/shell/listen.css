@@ -3,8 +3,6 @@
    reduced-motion rule would animate the focus ring and `visibility`). */
 .cr-listen { flex: 0 1 auto; min-height: 0; max-height: 34%; overflow: auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }
 .cr-listen[hidden] { display: none; }
-/* With the coverage block open too (54 %), the blocks must not starve the selection's properties: the body keeps a floor and the blocks shrink and scroll inside themselves. */
-.cr .cr-props .cr-panel-body { min-height: 120px; }
 .cr[data-props='collapsed'] .cr-listen { display: none; }
 .cr-listen-head { display: flex; align-items: stretch; position: sticky; top: 0; z-index: 1; background: var(--cr-panel); }
 .cr .cr-listen-toggle {

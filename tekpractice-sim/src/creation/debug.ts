@@ -142,6 +142,11 @@ export interface CreationDebug {
   portWorld(ref: PortRef): [number, number, number] | null
   /** Task 39: each speaker's output level (linear RMS from its analyser; 0 = silence) while playing; {} otherwise. Never loads the audio chunk. */
   audioLevels(): Record<string, number>
+  /**
+   * Task 39: the largest sample of each speaker (after the master gain, before the limiter) and of the real output (after the limiter), linear. The e2e reads the
+   * levels the learner would hear from here (nominal: a browser's compressor may add make-up gain).
+   */
+  audioPeaks(): { voices: Record<string, number>; output: number }
   /** Task 39: the listen controller's state (plain data); `stopped` with no voices until the first « Lecture ». */
   audioState(): ListenDebug
   /** Task 39: Web Audio counters over the page's life: every context opened must be closed, every object URL revoked, every <audio> element removed. */

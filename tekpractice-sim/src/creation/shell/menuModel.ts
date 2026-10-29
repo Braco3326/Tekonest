@@ -193,7 +193,8 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
   // transport does not: Stop is always live. A disabled one stays focusable and says why (the first reason of the signal path).
   const registered = (action: string): boolean => typeof ctx.actions[action] === 'function'
   const canStart = (): boolean => viewFree() && !!ctx.playbackReady?.()
-  const why = (): string | undefined => ctx.playbackReason?.() || undefined
+  // The chain's first reason; with a valid chain but the place picker over the view, the picker is the reason (an item must never be off with no word why).
+  const why = (): string | undefined => ctx.playbackReason?.() || (viewFree() ? undefined : M.playLocked!)
   /** A source item: runs its action when the chain is valid. */
   const source = (id: string, label: string, action = id): MenuItem => {
     const on = (): boolean => registered(action) && canStart()

@@ -64,7 +64,7 @@ const play = async (page: Page): Promise<void> => {
 }
 
 /** A mono 16-bit PCM WAV of a sine, generated here (no asset): `seconds` long. */
-function wav(seconds: number, rate = 22050, hz = 440): Buffer {
+function wav(seconds: number, rate = 22050, hz = 440, amplitude = 0.5): Buffer {
   const n = Math.floor(seconds * rate)
   const b = Buffer.alloc(44 + n * 2)
   b.write('RIFF', 0)
@@ -79,7 +79,7 @@ function wav(seconds: number, rate = 22050, hz = 440): Buffer {
   b.writeUInt16LE(16, 34)
   b.write('data', 36)
   b.writeUInt32LE(n * 2, 40)
-  for (let i = 0; i < n; i++) b.writeInt16LE(Math.round(Math.sin((2 * Math.PI * hz * i) / rate) * 0.5 * 32767), 44 + i * 2)
+  for (let i = 0; i < n; i++) b.writeInt16LE(Math.round(Math.sin((2 * Math.PI * hz * i) / rate) * amplitude * 32767), 44 + i * 2)
   return b
 }
 
@@ -87,6 +87,8 @@ test('(a) an unpowered console: « Lecture » is aria-disabled, focusable, descr
   const requests: string[] = []
   page.on('request', (r) => requests.push(r.url()))
   await boot(page)
+  // the properties keep a floor from the start (creation.css owns it; nothing lazy is loaded yet)
+  await expect(page.locator('.cr-props .cr-panel-body')).toHaveCSS('min-height', '120px')
   expect(await set(page, 'playback-usb', true)).toBe(true)
   expect(await set(page, 'power', false)).toBe(true) // the console is switched off: HOST_UNPOWERED
   await openEcoute(page)
@@ -151,15 +153,16 @@ test('(b) powered + playback on: « Lecture » is enabled; one click, then BOTH 
   const p = (await panel.boundingBox())!
   const v = (await page.getByTestId('viewport').boundingBox())!
   expect(p.x).toBeGreaterThanOrEqual(v.x + v.width - 1) // right of the viewport: never over the 3D view
-  await expect(page.getByTestId('listen-state')).toHaveText('Lecture en cours : signal de test.')
+  await expect(page.getByTestId('listen-state')).toHaveText('Lecture en cours : signal de test (simulation simple).')
   await expect(page.getByTestId('listen-meters').locator('li')).toHaveCount(2)
-  await expect(page.getByTestId('listen-meters').locator('li[data-instance="k12-g"]')).toContainText(/QSC K12\.2 \(k12-g\) : niveau −?\d+,\d dBFS, gain −?\d+,\d dB, retard 0,0 ms, pan gauche \d+ %/)
+  await expect(page.getByTestId('listen-meters').locator('li[data-instance="k12-g"]')).toContainText(/QSC K12\.2 \(k12-g\) : niveau de sortie −?\d+,\d dBFS, gain 0,0 dB, retard 0,0 ms, pan gauche \d+ %/)
   await expect(page.getByTestId('listen-meters').locator('li[data-instance="k12-d"]')).toContainText(/pan droite \d+ %/)
   await expect(page.getByTestId('listen-simple')).toHaveText(/^Simulation simple : .*Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie\.$/)
+  await expect(page.getByTestId('listen-simple')).toContainText('Le volume est normalisé')
   await expect(page.getByTestId('listen-volume')).toContainText('Le volume démarre bas')
   await expect(page.getByTestId('listen-local')).toContainText('ni envoyé ni enregistré')
   await expect(page.getByTestId('listen-panel')).not.toContainText(/NaN|Infinity|undefined/)
-  await expect(page.getByRole('status')).toHaveText('Lecture en cours : signal de test.')
+  await expect(page.getByRole('status')).toHaveText('Lecture en cours : signal de test (simulation simple).')
   expect((await stats(page)).contexts).toEqual({ opened: 1, closed: 0 })
   // No new control animates, even under the reduced-motion rule
   for (const id of ['listen-transport', 'listen-toggle']) expect(await page.getByTestId(id).evaluate((e) => getComputedStyle(e).transitionProperty), id).toBe('none')
@@ -179,7 +182,7 @@ test('(c) mute and the fader silence the speakers (levels exactly 0) but never s
   await page.keyboard.press('Escape')
   await expect(page.getByTestId('listen-silent')).toBeVisible()
   await expect(page.getByTestId('listen-silent')).toContainText('mute')
-  await expect(page.getByTestId('listen-meters').locator('li[data-instance="k12-g"]')).toContainText('niveau silence, gain silence')
+  await expect(page.getByTestId('listen-meters').locator('li[data-instance="k12-g"]')).toContainText('niveau de sortie silence, gain silence')
   expect(await page.evaluate(() => window.__creation!.leases())).toContain('meters')
   expect(await set(page, 'mute-master', false)).toBe(true)
   await waitBothHeard(page)
@@ -306,6 +309,12 @@ test('(f) « Choisir un fichier audio… »: a 1 s WAV made here plays through b
   expect(after.idb).toEqual(before.idb)
   expect(after.ls).not.toMatch(/test-tone|UklGR|RIFF/)
   expect(await page.evaluate(() => sessionStorage.length)).toBe(0)
+  // the page keeps no reference to the file: « Lecture » goes back to the test signal, it does not replay the file
+  await choose(page, 'Lecture')
+  await waitPlaying(page)
+  expect((await state(page)).sourceName).toBe('signal de test')
+  await choose(page, 'Stop')
+  await waitStopped(page)
 })
 
 test('(g) a held Entrée is ONE press: in the menu and on the block\'s button (an even number of keydowns would otherwise toggle back)', async ({ page }) => {
@@ -492,7 +501,16 @@ test('(n) 1366×768 with the coverage AND the listening block open: the properti
   const body = (await page.locator('.cr-props .cr-panel-body').boundingBox())!
   const listen = (await page.getByTestId('listen-panel').boundingBox())!
   const viewport = (await page.getByTestId('viewport').boundingBox())!
-  expect(body.height).toBeGreaterThanOrEqual(115) // the selection's properties are still usable
+  expect(body.height).toBeGreaterThanOrEqual(120) // the selection's properties are still usable (the floor is creation.css's)
+  test.info().annotations.push({ type: 'measured', description: `properties body ${body.height.toFixed(1)} px, listen block ${listen.height.toFixed(1)} px, props column ${(await page.locator('.cr-props').boundingBox())!.height.toFixed(1)} px, viewport ${(viewport.width / 1366).toFixed(3)} of the width` })
+  console.log(`[measured 1366x768, coverage + listen open] properties body ${body.height.toFixed(1)} px; listen block ${listen.height.toFixed(1)} px`)
+  const props = (await page.locator('.cr-props').boundingBox())!
+  for (const box of [listen, (await page.getByTestId('coverage-panel').boundingBox())!, body]) {
+    expect(box.y).toBeGreaterThanOrEqual(props.y - 1) // both blocks stay inside the properties column
+    expect(box.y + box.height).toBeLessThanOrEqual(props.y + props.height + 1)
+    expect(box.x).toBeGreaterThanOrEqual(props.x - 1)
+    expect(box.x + box.width).toBeLessThanOrEqual(props.x + props.width + 1)
+  }
   expect(viewport.width / 1366).toBeGreaterThanOrEqual(0.6)
   expect(listen.x).toBeGreaterThanOrEqual(viewport.x + viewport.width - 1)
   // the block never grows past its share, and scrolls inside itself
@@ -504,18 +522,95 @@ test('(n) 1366×768 with the coverage AND the listening block open: the properti
 
 test('(o) the ear height moves the listener: the voices follow it at once, without any change to the rig', async ({ page }) => {
   await boot(page)
+  // an asymmetric rig, so that the loudness normalisation (the loudest speaker is unity) does not hide the change: k12-g close to the Régie, k12-d far away
+  await page.evaluate(() => {
+    const c = window.__creation!
+    const p = c.design().placements.find((x) => x.instanceId === 'k12-g')!
+    c.dispatch({ type: 'SET_POSE', instanceId: 'k12-g', position: [1, 0, 0], yawDeg: p.yawDeg, tiltDeg: p.tiltDeg ?? 0, mount: p.mount ?? 'stand' })
+  })
   await play(page)
-  const gain = async (): Promise<number> => (await state(page)).voices.find((v) => v.instanceId === 'k12-g')!.gain
+  const gain = async (): Promise<number> => (await state(page)).voices.find((v) => v.instanceId === 'k12-d')!.gain
   const seated = await gain()
+  expect(seated).toBeLessThan(1) // k12-d is the quieter one
   const rig = await page.evaluate(() => JSON.stringify(window.__creation!.design()))
   await openEcoute(page)
   await page.getByRole('menuitemradio', { name: 'Hauteur d’oreille : debout 1,7 m' }).click()
   expect(await page.evaluate(() => window.__creation!.earHeight())).toBe(1.7)
-  await page.waitForFunction((g0) => window.__creation!.audioState().voices.find((v) => v.instanceId === 'k12-g')!.gain !== g0, seated, { timeout: 5000 })
+  await page.waitForFunction((g0) => window.__creation!.audioState().voices.find((v) => v.instanceId === 'k12-d')!.gain !== g0, seated, { timeout: 5000 })
   const standing = await gain()
   expect(standing).not.toBe(seated)
-  expect(Math.abs(standing - seated)).toBeLessThan(0.1) // a listener 0,5 m higher: a small change of distance, not a different sound
+  expect(Math.abs(standing - seated)).toBeLessThan(0.2) // a listener 0,5 m higher: a change of distance, not a different sound
   expect(await page.evaluate(() => JSON.stringify(window.__creation!.design()))).toBe(rig) // the rig did not change
   await choose(page, 'Stop')
   await waitStopped(page)
+})
+
+/** Largest sample of each speaker (after the master gain) and of the real output (after the limiter), recorded in the page every 20 ms. */
+const recordPeaks = (page: Page): Promise<void> =>
+  page.evaluate(() => {
+    const w = window as unknown as { __pk: { v: Record<string, number>; out: number; n: number } }
+    w.__pk = { v: {}, out: 0, n: 0 }
+    setInterval(() => {
+      const p = window.__creation!.audioPeaks()
+      for (const [k, x] of Object.entries(p.voices)) w.__pk.v[k] = Math.max(w.__pk.v[k] ?? 0, x)
+      w.__pk.out = Math.max(w.__pk.out, p.output)
+      w.__pk.n++
+    }, 20)
+  })
+const peaks = (page: Page) => page.evaluate(() => (window as unknown as { __pk: { v: Record<string, number>; out: number; n: number } }).__pk)
+const dbfs = (x: number): number => 20 * Math.log10(x)
+
+test('(p) LOUDNESS: the test signal at the Régie is audible and safe: each speaker and the real output peak between −30 and −6 dBFS (measured, post-master)', async ({ page }) => {
+  await boot(page)
+  await recordPeaks(page)
+  await play(page)
+  await page.waitForFunction(() => (window as unknown as { __pk: { n: number } }).__pk.n >= 200, null, { timeout: 15_000 }) // 4 s: the bursts and part of the pattern
+  const pk = await peaks(page)
+  const g = dbfs(pk.v['k12-g'])
+  const d = dbfs(pk.v['k12-d'])
+  const out = dbfs(pk.out)
+  console.log(`[measured, test signal, Régie] k12-g ${g.toFixed(1)} dBFS, k12-d ${d.toFixed(1)} dBFS, output ${out.toFixed(1)} dBFS`)
+  test.info().annotations.push({ type: 'measured', description: `test signal peaks: k12-g ${g.toFixed(1)}, k12-d ${d.toFixed(1)}, output ${out.toFixed(1)} dBFS` })
+  for (const [name, v] of [['k12-g', g], ['k12-d', d], ['output', out]] as const) {
+    expect(v, `${name} peak ${v.toFixed(1)} dBFS`).toBeGreaterThanOrEqual(-30)
+    expect(v, `${name} peak ${v.toFixed(1)} dBFS`).toBeLessThanOrEqual(-6)
+  }
+  await choose(page, 'Stop')
+  await waitStopped(page)
+})
+
+test('(q) LOUDNESS, worst case: a FULL-SCALE file stays under −6 dBFS at the output at unity, and under 0 dBFS with the fader at +10 dB (the limiter)', async ({ page }) => {
+  await boot(page)
+  await recordPeaks(page)
+  await openEcoute(page)
+  const [chooser] = await Promise.all([page.waitForEvent('filechooser'), item(page, 'Choisir un fichier audio…').click()])
+  await chooser.setFiles({ name: 'full-scale.wav', mimeType: 'audio/wav', buffer: wav(6, 22050, 440, 1) })
+  await page.waitForFunction(() => window.__creation!.audioState().state === 'playing', null, { timeout: 15_000 })
+  await page.waitForFunction(() => (window as unknown as { __pk: { n: number } }).__pk.n >= 50 && (window as unknown as { __pk: { out: number } }).__pk.out > 0, null, { timeout: 15_000 })
+  const unity = await peaks(page)
+  console.log(`[measured, full-scale file, unity faders] k12-g ${dbfs(unity.v['k12-g']).toFixed(1)}, k12-d ${dbfs(unity.v['k12-d']).toFixed(1)}, output ${dbfs(unity.out).toFixed(1)} dBFS`)
+  test.info().annotations.push({ type: 'measured', description: `full-scale file, unity: output ${dbfs(unity.out).toFixed(1)} dBFS` })
+  expect(dbfs(unity.out)).toBeLessThanOrEqual(-6)
+  expect(dbfs(unity.out)).toBeGreaterThanOrEqual(-30)
+  // the fader at +10 dB: the limiter bounds the output
+  await recordPeaks(page)
+  expect(await set(page, 'fader-master', '+10')).toBe(true)
+  await page.waitForFunction(() => (window as unknown as { __pk: { n: number } }).__pk.n >= 40, null, { timeout: 15_000 })
+  const boost = await peaks(page)
+  console.log(`[measured, full-scale file, fader +10 dB] k12-g ${dbfs(boost.v['k12-g']).toFixed(1)}, k12-d ${dbfs(boost.v['k12-d']).toFixed(1)}, output ${dbfs(boost.out).toFixed(1)} dBFS`)
+  test.info().annotations.push({ type: 'measured', description: `full-scale file, fader +10 dB: output ${dbfs(boost.out).toFixed(1)} dBFS` })
+  expect(boost.out).toBeLessThan(1) // never at or over full scale
+  await choose(page, 'Stop')
+  await waitStopped(page)
+})
+
+test('(r) under the place picker a valid chain still has « Lecture » off, and it says why', async ({ page }) => {
+  await boot(page)
+  await page.getByRole('menuitem', { name: 'Lieu', exact: true }).click()
+  await page.getByRole('menuitem', { name: 'Choisir un lieu…' }).click()
+  await expect(page.getByTestId('place-picker')).toBeVisible()
+  await openEcoute(page)
+  await expect(item(page, 'Lecture')).toHaveAttribute('aria-disabled', 'true')
+  await expect(item(page, 'Lecture')).toHaveAccessibleDescription('Indisponible pendant le choix du lieu.')
+  await expect(page.locator('#cr-menu-desc-play')).toBeVisible()
 })
