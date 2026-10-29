@@ -1,7 +1,7 @@
 /**
  * Pure checks for content/songs.json (Task 38). Node-side (hashing), so it lives in tools/, not src/.
  * Every entry must: pass the SongEntry schema (licence exactly CC0-1.0), have its file, match the
- * declared size and SHA-256, stay <= 3 MB for real, and appear in ASSET_LOG.md on ONE line that
+ * declared size and SHA-256, stay <= 3 MiB (3145728 bytes) for real, and appear in ASSET_LOG.md on ONE line that
  * carries both the file and the licenceUrl. At most 3 entries, unique ids.
  */
 import { createHash } from 'node:crypto'
@@ -43,7 +43,7 @@ export function validateSongs(entries: unknown, deps: SongsDeps): string[] {
       return
     }
     const bytes = deps.read(e.file)
-    if (bytes.length > MAX_SONG_BYTES) errors.push(`${e.id}: file is ${bytes.length} bytes, above the 3 MB cap`)
+    if (bytes.length > MAX_SONG_BYTES) errors.push(`${e.id}: file is ${bytes.length} bytes, above the ${MAX_SONG_BYTES}-byte cap (3 MiB)`)
     if (bytes.length !== e.bytes) errors.push(`${e.id}: size ${bytes.length} does not match bytes ${e.bytes}`)
     const actual = createHash('sha256').update(bytes).digest('hex')
     if (actual !== e.sha256) errors.push(`${e.id}: sha256 ${actual} does not match ${e.sha256}`)

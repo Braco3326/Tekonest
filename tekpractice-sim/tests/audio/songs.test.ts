@@ -81,16 +81,15 @@ describe('validateSongs (synthetic entries)', () => {
     const errs = validateSongs([entryFor(content, { sha256: 'f'.repeat(64) })], depsFor({ [FILE]: content }))
     expect(errs.join('\n')).toMatch(/synthetic-a.*sha256/)
   })
-  it('fails a file above 3 MB even when bytes is declared honestly', () => {
+  it('schema rejects declared bytes > cap', () => {
     const big = new Uint8Array(MAX_SONG_BYTES + 1)
     const errs = validateSongs([entryFor(big)], depsFor({ [FILE]: big }))
-    expect(errs.join('\n')).toMatch(/synthetic-a/)
-    expect(errs.length).toBeGreaterThan(0)
+    expect(errs.join('\n')).toMatch(/synthetic-a: bytes: /)
   })
   it('fails a file above 3 MB when bytes understates it (real size is checked too)', () => {
     const big = new Uint8Array(MAX_SONG_BYTES + 1)
     const errs = validateSongs([entryFor(big, { bytes: 10 })], depsFor({ [FILE]: big }))
-    expect(errs.join('\n')).toMatch(/3 MB/)
+    expect(errs.join('\n')).toMatch(/synthetic-a.*3145728-byte cap/)
   })
   it('passes a file of exactly 3 MB', () => {
     const edge = new Uint8Array(MAX_SONG_BYTES)
@@ -173,23 +172,28 @@ describe('tools/validate-songs.ts (CLI)', () => {
     spawnSync(process.execPath, [tsx, join(projectRoot, 'tools', 'validate-songs.ts'), ...(root ? ['--root', root] : [])], {
       cwd: projectRoot,
       encoding: 'utf8',
+      // A cold tsx start can be slow when ~150 test files run in parallel; spawnSync blocks, so give it its
+      // own limit (reported as r.error, a clear failure) below the per-test timeout.
+      timeout: 20_000,
     })
 
   it('exits 0 on the shipped repo', () => {
     const r = run()
+    expect(r.error).toBeUndefined()
     expect(r.stderr).toBe('')
     expect(r.status).toBe(0)
     expect(r.stdout).toMatch(/songs/)
-  })
+  }, 30_000)
   it('exits 1 and prints the error on a bad root', () => {
     const root = tmp()
     mkdirSync(join(root, 'content'))
     writeFileSync(join(root, 'content', 'songs.json'), JSON.stringify([entryFor(content)]))
     writeFileSync(join(root, 'ASSET_LOG.md'), goodLog)
     const r = run(root)
+    expect(r.error).toBeUndefined()
     expect(r.status).toBe(1)
     expect(r.stderr).toMatch(/synthetic-a.*does not exist/)
-  })
+  }, 30_000)
 })
 
 describe('shipped songs list', () => {
@@ -202,6 +206,8 @@ describe('shipped songs list', () => {
     expect(songs).toHaveLength(raw.length)
     expect(songs.length).toBeLessThanOrEqual(3)
   })
+  // Enforces: public/audio/songs/ exists exactly when content/songs.json lists at least one song (no orphan audio
+  // folder while the list is empty, no listed song without its folder). File-level checks are validateSongsAt's job.
   it('ships the audio directory if and only if the list is not empty', async () => {
     const songs = await loadSongs()
     expect(existsSync(join(projectRoot, 'public', 'audio', 'songs'))).toBe(songs.length > 0)
@@ -210,5 +216,10 @@ describe('shipped songs list', () => {
     const log = readFileSync(join(projectRoot, 'ASSET_LOG.md'), 'utf8')
     expect(log).toMatch(/Chansons de démonstration/)
     expect(log).toMatch(/Pixabay[^\n]*n'est pas CC0/)
+    expect(log).toContain('3 Mio (3 145 728 octets)')
+    // The present-tense claim about what Creation Mode relies on must match the tree.
+    expect(log).toContain('src/audio/testSignal.ts')
+    expect(existsSync(join(projectRoot, 'src', 'audio', 'testSignal.ts'))).toBe(true)
+    expect(readFileSync(join(projectRoot, 'src', 'audio', 'engine.ts'), 'utf8')).toContain('URL.createObjectURL(file)')
   })
 })

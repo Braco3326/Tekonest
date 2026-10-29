@@ -94,13 +94,14 @@ attend `thumbPath('multiprise-secteur') === null` tant qu'elle n'existe pas : à
 
 **Aucune chanson n'est livrée pour l'instant.** `content/songs.json` vaut `[]` et `public/audio/songs/` n'existe pas.
 Raison : aucune piste n'a encore été vérifiée sur sa page (texte de la dédicace CC0 / domaine public lisible, URL de licence
-notée) et approuvée par le fondateur ; sans cette preuve, rien n'est téléchargé ni lié. Le Mode Création s'appuie donc sur le
-signal de test généré (`src/audio/testSignal.ts`, œuvre propre) et sur « Choisir un fichier audio… » (fichier local, jamais envoyé ni conservé).
+notée) et approuvée par le fondateur ; sans cette preuve, rien n'est téléchargé ni lié. Dans le menu Écoute, le Mode Création
+s'appuie donc sur « Signal de test » (signal généré par `src/audio/testSignal.ts`, œuvre propre) et sur « Choisir un fichier audio… »
+(fichier local lu via `URL.createObjectURL` dans `src/audio/engine.ts`, jamais envoyé ni conservé).
 
-Règles pour ajouter une chanson plus tard (2 à 3 pistes au plus, 3 Mo maximum chacune, mp3 de préférence, ogg accepté) :
+Règles pour ajouter une chanson plus tard (2 à 3 pistes au plus, 3 Mio (3 145 728 octets) maximum chacune, mp3 de préférence, ogg accepté) :
 - Licence exactement `CC0-1.0`, page de la piste et page de licence ouvertes et lues ; l'URL de licence est notée ici.
 - **Pixabay n'est pas CC0** (licence propre à Pixabay) : ne jamais l'utiliser.
 - Chaque piste a UNE ligne dans ce fichier qui contient à la fois son chemin (`audio/songs/<nom>.mp3`) et son URL de licence, plus sa
   source, la date de récupération et son SHA-256 ; la même entrée existe dans `content/songs.json`.
-- `npm run validate:songs` (et `tests/audio/songs.test.ts`) vérifient : fichier présent, taille égale à `bytes` et ≤ 3 Mo, SHA-256 égal,
+- `npm run validate:songs` (et `tests/audio/songs.test.ts`) vérifient : fichier présent, taille égale à `bytes` et ≤ 3 Mio, SHA-256 égal,
   licence `CC0-1.0`, ligne présente dans ce journal. Ajouter une entrée est une édition de contenu, sans changement du moteur.

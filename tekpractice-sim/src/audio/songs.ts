@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-/** Hard cap per demo song (plan global constraint: each file <= 3 MB). */
+/** Hard cap per demo song (plan global constraint: each file <= 3 MB, taken as 3 MiB). */
 export const MAX_SONG_BYTES = 3 * 1024 * 1024
 export const MAX_SONGS = 3
 
