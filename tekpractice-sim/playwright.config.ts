@@ -9,6 +9,9 @@ export default defineConfig({
     baseURL: 'http://localhost:4173',
     viewport: { width: 1280, height: 800 },
     screenshot: 'only-on-failure',
+    // Task 39: Chromium starts an AudioContext without a user gesture, so the listen e2e can read the analysers headless. The app itself still creates
+    // its context inside the « Lecture » click; legacy specs never make a context and are not affected.
+    launchOptions: { args: ['--autoplay-policy=no-user-gesture-required'] },
   },
   // Production-like: smoke runs against the built bundle, not the dev server.
   webServer: {
