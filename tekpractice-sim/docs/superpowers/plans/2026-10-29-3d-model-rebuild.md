@@ -75,7 +75,7 @@
 
 **Interfaces:**
 - Consumes: `AssetSpec` (Task 2).
-- Produces: `buildPlacement(spec: AssetSpec): Placement` with `Placement = { sizeM: {w,h,d}; ports: { name: string; pos: [number,number,number]; outward: [number,number,number] }[]; controls: { name: string; pos: [number,number,number]; axis: 'x'|'y'|'z'; kind: string; sizeM: {w,h,d}; travelM?: number }[] }`, glTF space, metres, pivot bottom-centre. Face mapping: 'io' -> z=-d/2, outward (0,0,-1), x_world = xMm/1000 - w/2; 'opposite' -> z=+d/2 mirrored in x; 'top' -> y=h; 'bottom' -> y=0; 'left'/'right' -> x=-+w/2.
+- Produces: `buildPlacement(spec: AssetSpec): Placement` with `Placement = { sizeM: {w,h,d}; ports: { name: string; pos: [number,number,number]; outward: [number,number,number] }[]; controls: { name: string; pos: [number,number,number]; axis: 'x'|'y'|'z'; kind: string; sizeM: {w,h,d}; travelM?: number }[] }`, glTF space, metres, pivot bottom-centre. Face mapping: 'io' -> z=-d/2 (Note, R9/R15: that is Babylon world space; in the GLB file the io face is at z=+d/2, outward (0,0,+1)), outward (0,0,-1), x_world = xMm/1000 - w/2; 'opposite' -> z=+d/2 mirrored in x; 'top' -> y=h; 'bottom' -> y=0; 'left'/'right' -> x=-+w/2.
 - The same module exports `toExtras(spec: AssetSpec, placement: Placement): AssetExtrasV1` (shape in Task 10).
 
 - [ ] **Step 1: Write failing tests** `io face port lands at z=-d/2 and x offset from centre` (spec 468 x 272 x 562, port xMm 234, yMm 100 -> pos [0, 0.1, -0.281]), `opposite face mirrors x`, `bottom face port sits at y=0`, `control names are ctrl_<id>`, `outward vector matches the face`.

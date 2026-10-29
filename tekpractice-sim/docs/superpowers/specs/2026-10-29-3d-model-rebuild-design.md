@@ -39,14 +39,14 @@ Inputs (private folder `assets-source/<id>/`, gitignored):
 
 Stages:
 1. Generate. Meshy multi-image to 3D (`meshy-7.1`, quad topology), from rectified photos. Device bodies are generated blank or flat-faced on the panel side where controls will be added. Download immediately (Meshy keeps results 3 days).
-2. Fix-up (Blender 5.1 headless, `blender --background --python`): clean mesh (merge by distance, fill holes, recalc normals), orient the I/O face toward -Z, rescale to the spec's real W x H x D, set the pivot at bottom-centre, remove baked logos and brand text from textures.
+2. Fix-up (Blender 5.1 headless, `blender --background --python`): clean mesh (merge by distance, fill holes, recalc normals), orient the I/O face toward -Z (Note, R9/R15: "toward -Z" is Babylon world space after loading; in the GLB file itself the I/O face is at +Z.), rescale to the spec's real W x H x D, set the pivot at bottom-centre, remove baked logos and brand text from textures.
 3. Parts: each port becomes an empty `port_<portId>` at its spec coordinates with the outward axis; the real socket is cut into the panel. Each control becomes its own object `ctrl_<controlId>` with its pivot on its rotation or slide axis. Names match `catalog.json` exactly.
 4. Export: GLB at 1 unit = 1 m, Y-up, with `extras` on the root: `realSizeMm`, `ports[]`, `controls[]`. Draco compression, then re-verify.
 
 ### 4.2 Gates (run on every asset; a failure means regenerate, then flag)
 
 - Size: world bounding box matches `realSizeMm` within max(0.5 mm, 0.5 %). If proportions are off by more than about 5 %, reject and regenerate.
-- Orientation: pivot bottom-centre, no rotation, no negative scale, I/O toward -Z.
+- Orientation: pivot bottom-centre, no rotation, no negative scale, I/O toward -Z. (Note, R9/R15: "toward -Z" is Babylon world space after loading; in the GLB file itself the I/O face is at +Z.)
 - Parts: exactly one `port_<id>` per catalog port and one `ctrl_<id>` per catalog control, no extras. Each port lies on the face plane (+-0.2 mm), inside the face rectangle, within 0.3 mm of its spec coordinates. No port left at the origin.
 - Connector fit: a plug's outer size is 0 to 0.3 mm under its socket's opening; the plug origin sits at the mating plane.
 - Budgets and format: polygon and texture limits (connectors 300-800 tris, devices 800-4000 tris unless the founder approves more for hero gear), one material per object, glTF validator reports 0 errors.
@@ -65,6 +65,18 @@ Pilot (6 models, roughly 200-400 credits): devices `shure-sm58`, `yamaha-ql1`, `
 Rollout order after a go: (1) connector kit, reused on every device; (2) hero devices: mics, QL1, Rio, speakers, patchbay; (3) remaining rack gear. One commit per model.
 
 `public/assets/ASSET_MANIFEST.json` gains per asset: tool and version, date, source photos (reference only), spec source, genericized-logo flag, gate results.
+
+### 4.5 Deliberate deviations (2026-10-29)
+
+Recorded after the whole-branch review; each is a conscious choice for the pilot, not an oversight.
+
+- Controls are named empties (`ctrl_<id>`) with the real pivot and axis and no geometry in the pilot. The control's geometry can be parented under its empty later without changing names or pivots.
+- `checkConnectorFit` exists and is tested, but it is not wired into a build: there are no socket specs to pair the plug specs with yet. It runs once socket specs exist.
+- Fix-up determinism ("Rebuild determinism" above) needs Blender, which is not installed on the build PC: fixup.py and render_views.py are written blind and are untested. Node-side determinism (texture step, Draco, gates, report) is tested.
+- The numeric gates validate our own construction against the measured bounding box: a port empty floating in front of a recessed panel, or a model whose real panel is set back from its bbox face, still passes. A per-port surface ray-cast gate in fixup.py is needed before the rollout.
+- Polygon budgets are ceilings only (R5: connectors <= 800, devices <= 4000 triangles), no floor. Meshy is asked for triangle topology (not quad as stage 1 says) with a target of max(100, 0.7 x ceiling - 100 per socket recess), because a GLB is triangulated and a quad target doubles.
+- Retries buy a new Meshy task only for failures of the model itself (proportion drift, budget); a failure of a gate that checks our own fix-up or compression aborts (stage table above says "regenerate" for every gate).
+- `asset:build` ships nothing by default; shipping needs `--ship --logos-removed` (the founder asserts the textures are logo-free) and any Meshy spending needs `--yes`.
 
 ## 5. Risks and open items
 
