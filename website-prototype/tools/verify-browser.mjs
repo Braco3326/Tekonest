@@ -101,7 +101,7 @@ async function doorChecks(BASE, browser) {
     check(b.top > a.bottom - 1 && Math.abs(a.left - b.left) < 1, "home, 390: the doors stack in order 01 then 02");
     await context.close();
   }
-  for (const width of [768, 1440]) {
+  for (const width of [768, 1024, 1440]) {
     const { context, page } = await openHome(browser, BASE, { viewport: { width, height: 900 } });
     const [a, b] = await rects(page);
     check(Math.abs(a.width - b.width) <= 1 && b.left > a.left && Math.abs(a.top - b.top) < 1, `home, ${width}: the two doors are side by side and differ in width by at most 1 px`, JSON.stringify([a.width, b.width]));

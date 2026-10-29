@@ -12,7 +12,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PAGES = join(ROOT, "src", "pages");
 
 export const NNBSP = " ";
-const FOOTER_DATE = "28 octobre 2026";
+export const FOOTER_DATE = "28 octobre 2026";
 
 export const NAV = [
   ["apprendre.html", "Se former"],
@@ -140,7 +140,7 @@ export function build({ outDir = ROOT } = {}) {
     const m = text.match(/^<!--\s*title:\s*([\s\S]*?)\s*\|\s*description:\s*([\s\S]*?)\s*-->\s*/);
     if (!m) throw new Error(`${name}: missing <!-- title: … | description: … --> header`);
     const [, title, description] = m;
-    const content = text.slice(m[0].length);
+    const content = fill(text.slice(m[0].length), { footer_date: FOOTER_DATE });   // one date for the footer and the status index
     const html = fill(LAYOUT, {
       title,
       description,

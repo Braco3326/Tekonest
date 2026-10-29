@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { NAV } from "./build.mjs";
+import { NAV, FOOTER_DATE } from "./build.mjs";
 
 const ROOT = new URL("../", import.meta.url);
 const rootPath = (name) => fileURLToPath(new URL(name, ROOT));
@@ -341,7 +341,7 @@ test("the home status index is one grouped table with a single legend", () => {
     ["TekPractice", "Apprendre", "Créer avec nous", "Cours des autres épreuves", "TekPractice dans le cours E4"]);
   assert.deepEqual(rows.map((r) => r.match(/status (status--\w+)/)[1]), ["status--now", "status--dev", "status--prep", "status--later", "status--later"]);
   for (const r of rows) assert.deepEqual([...r.matchAll(/data-label="([^"]+)"/g)].map((m) => m[1]), ["Pour qui", "État", "Prochaine étape"]);
-  assert.equal((html.match(/Mis à jour le 28 octobre 2026\./g) || []).length, 1);
+  assert.equal((html.match(new RegExp(`Mis à jour le ${FOOTER_DATE}\\.`, "g")) || []).length, 1);
   assert.ok(html.indexOf('aria-labelledby="etat"') < html.indexOf('aria-labelledby="fils"'));
   assert.match(css(), /\.board--groups/);
 });
@@ -395,9 +395,9 @@ test("no page has a disabled button, and the retired card and mock styles are go
 test("every status on every page is one of the four labels, with its own class", () => {
   const ok = { "Version d'essai": "status--now", "En développement": "status--dev", "En projet": "status--prep", "À venir": "status--later" };
   for (const name of pages()) {
-    for (const [, cls, text] of plain(page(name)).matchAll(/<span class="status (status--\w+)">([^<]+)<\/span>/g)) {
-      assert.equal(ok[text], cls, `${name}: « ${text} » with ${cls}`);
-    }
+    const all = [...plain(page(name)).matchAll(/<span class="(status[^"]*)">([^<]*)<\/span>/g)];
+    for (const [, cls, text] of all) assert.equal(`status ${ok[text]}`, cls, `${name}: « ${text} » with class "${cls}"`);
+    assert.equal(all.length, (page(name).match(/class="status\b/g) || []).length, `${name}: a status element is not a plain span`);
   }
 });
 
@@ -428,4 +428,13 @@ test("the footer has two link columns and the dated fine print under État", () 
 
 test("the two doors keep full ink in the menu; the other items are quieter", () => {
   assert.match(css(), /\.site-nav li:nth-child\(-n\+2\) a\s*\{[^}]*color:\s*var\(--color-ink\)/);
+});
+
+test("no page keeps a picture mock or design commentary", () => {
+  for (const name of pages()) assert.doesNotMatch(plain(page(name)), /product-preview|preview-(apprendre|tekpractice)|\bendorse\b|Proposition\s*:|class="products?"/, name);
+});
+
+test("the home status date is the build date, from one source", () => {
+  assert.match(page("src/pages/index.html"), /Mis à jour le \{footer_date\}\./);
+  assert.match(homeHtml(), new RegExp(`Mis à jour le ${FOOTER_DATE}\\.`));
 });

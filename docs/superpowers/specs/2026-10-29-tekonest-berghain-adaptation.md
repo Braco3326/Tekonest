@@ -63,7 +63,7 @@ French copy is final text for review; typography (narrow no-break spaces) is app
    | Action | Jouer à TekPractice (version d'essai) | Écrire pour un projet |
 
    Rope band below. The « Les deux entrées » anchor button is removed (the doors are already on screen).
-2. **« Où nous en sommes »** (Papier). Line « Mis à jour le {date de la page}. » (one source: the build date). Legend, once, as a short definition list of the four labels (see decision 26). One table, three groups:
+2. **« Où nous en sommes »** (Crème). Line « Mis à jour le {date de la page}. » (one source: the build date). Legend, once, as a short definition list of the four labels (see decision 26). One table, three groups:
 
    | Group | Name | For whom | State | Next step |
    | --- | --- | --- | --- | --- |
@@ -72,7 +72,7 @@ French copy is final text for review; typography (narrow no-break spaces) is app
    | Ensuite | Créer avec nous | Porteuses et porteurs de projet | En projet | Préciser l'offre avec les premières demandes. |
    | Ensuite | Cours des autres épreuves | Étudiants en BTS Son | À venir | Après la relecture du cours E3. |
    | Ensuite | TekPractice dans le cours E4 | Étudiants en BTS Son | À venir | Après le mode Création. |
-3. **« Sept fils, sept métiers. »** (Crème). One sentence: « Le nid a sept fils : les sept métiers avec lesquels Tekonest veut travailler. » Seven rows (number, name, one line) with the small mark; this is the page's signature element. The marquetry sentence moves to *L'histoire*.
+3. **« Sept fils, sept métiers. »** (Papier, so two tinted sections never stack). One sentence: « Le nid a sept fils : les sept métiers avec lesquels Tekonest veut travailler. » Seven rows (number, name, one line) with the small mark; this is the page's signature element. The marquetry sentence moves to *L'histoire*.
 4. **Closing band** (triangle band above, Nuit, wire frame): text unchanged (« Ce que vous pouvez faire aujourd'hui… », « Écrire à Tekonest », « Lire l'histoire »).
 
 Ornament types on screen: first screen frame + rope band (2); status index none; seven fils the marks (1); closing triangle band + wire frame (2); footer sawtooth + roundel (2).
