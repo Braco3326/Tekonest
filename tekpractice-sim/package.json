@@ -15,6 +15,8 @@
     "validate:catalog": "tsx tools/validate-catalog.ts",
     "asset:spec": "tsx tools/assets3d/spec-skeleton.ts",
     "asset:balance": "tsx tools/assets3d/meshy-balance.ts",
+    "asset:build": "tsx tools/assets3d/build-asset.ts",
+    "asset:pilot": "tsx tools/assets3d/build-asset.ts --pilot",
     "gen:schema": "tsx tools/generate-schema.ts > content/catalog.schema.json",
     "sync:kb": "tsx tools/build-kb-sheets.ts && tsx tools/sync-rooms.ts && tsx tools/build-coach-kb.ts && tsx tools/propose-content.ts",
     "lint": "eslint src tools --ext .ts",
