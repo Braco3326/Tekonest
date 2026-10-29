@@ -671,3 +671,79 @@ describe('Phase 4 final wave: unplugging a speaker (or re-wiring a side) never c
     expect(h.timers).toEqual([])
   })
 })
+
+describe('Phase 4 final wave, round 2: the fade covers the delay line, the speaker that comes back on the other side', () => {
+  it('a speaker with a 0.3 s delay is disconnected only after the fade AND the delay line has played out (its timer is at least 335 ms), not after a fixed 35 ms', async () => {
+    const { e, ctx, h } = await started('test')
+    e.update([voice('a', { delayS: 0.3 }), voice('b')])
+    const a = chainOf(ctx, 0)
+    const n = h.timers.length
+    e.update([voice('b')])
+    expect(h.timers.length).toBe(n + 1)
+    expect(h.timers.at(-1)!.ms).toBeGreaterThanOrEqual((VOICE_FADE_S + 0.3) * 1000 + 10)
+    expect(h.timers.at(-1)!.ms).toBeGreaterThanOrEqual(335)
+    expect(a.delay.disconnected).toBe(0) // the delay line still holds audio from before the fade
+    h.flushTimers()
+    expect(a.delay.disconnected).toBe(1)
+  })
+  it('the timer follows the CURRENT delay when it is larger than the last target (a ramp in progress), and is capped at the 1 s line', async () => {
+    const { e, ctx, h } = await started('test')
+    e.update([voice('a', { delayS: 0.05 }), voice('b')])
+    const a = chainOf(ctx, 0)
+    a.delay.delayTime.value = 0.4 // the real parameter is still gliding toward 0.05
+    e.update([voice('b')])
+    expect(h.timers.at(-1)!.ms).toBeGreaterThanOrEqual((VOICE_FADE_S + 0.4) * 1000 + 10)
+    const o = await started('test')
+    o.e.update([voice('a', { delayS: 1 }), voice('b')])
+    chainOf(o.ctx, 0).delay.delayTime.value = 5 // nonsense: never longer than the delay line
+    o.e.update([voice('b')])
+    expect(o.h.timers.at(-1)!.ms).toBeLessThanOrEqual((VOICE_FADE_S + 1) * 1000 + 10)
+  })
+  it('dispose() still clears that long timer and disconnects the fading voice at once', async () => {
+    const { e, ctx, h } = await started('test')
+    e.update([voice('a', { delayS: 0.3 }), voice('b')])
+    const a = chainOf(ctx, 0)
+    e.update([voice('b')])
+    e.dispose()
+    expect(h.timers).toEqual([])
+    expect(a.delay.disconnected).toBeGreaterThan(0)
+  })
+  it('STOP waits for the delay lines too: the release timer is fade-out + the longest voice delay, so a delayed speaker is not cut at Stop', async () => {
+    const { e, h } = await started('test')
+    e.update([voice('a', { delayS: 0.3 }), voice('b', { delayS: 0.1 })])
+    e.stop()
+    expect(h.timers).toHaveLength(1)
+    expect(h.timers[0].ms).toBeGreaterThanOrEqual((FADE_OUT_S + 0.3) * 1000 + 40)
+    expect(h.timers[0].ms).toBeLessThanOrEqual((FADE_OUT_S + 1) * 1000 + 40) // never beyond the line
+    const none = await started('test')
+    none.e.stop()
+    expect(none.h.timers[0].ms).toBeLessThan(200) // no delay: the short release as before
+    e.dispose()
+    expect(h.timers).toEqual([])
+  })
+  it('STOP also counts a voice that is still fading out', async () => {
+    const { e, h } = await started('test')
+    e.update([voice('a', { delayS: 0.5 }), voice('b')])
+    e.update([voice('b')]) // a is fading
+    e.stop()
+    expect(h.timers.at(-1)!.ms).toBeGreaterThanOrEqual((FADE_OUT_S + 0.5) * 1000 + 40)
+  })
+  it('a speaker that leaves and comes back on the OTHER side within the fade stays at 0 until the side is switched: no ramp up on the old side', async () => {
+    const { e, ctx, h } = await started('test')
+    e.update([voice('a', { channels: ['L'], gain: 0.5 }), voice('b')])
+    const split = ctx.ofType('splitter')[0]
+    const a = chainOf(ctx, 0)
+    ctx.currentTime = 6
+    e.update([voice('b')]) // leaves
+    ctx.currentTime = 6.01
+    e.update([voice('a', { channels: ['R'], gain: 0.5 }), voice('b')]) // back, on the other side, 10 ms later
+    expect(a.gain.gain.of('target').filter((t) => t.time >= 6.01)).toEqual([]) // no ramp up while the old side is still wired
+    expect(a.gain.gain.of('linear').at(-1)).toMatchObject({ value: 0, time: 6.01 + VOICE_FADE_S }) // still fading down
+    expect([split.feeds(a.gain, 0), split.feeds(a.gain, 1)]).toEqual([true, false])
+    ctx.currentTime = 6.05
+    h.flushTimers()
+    expect([split.feeds(a.gain, 0), split.feeds(a.gain, 1)]).toEqual([false, true])
+    expect(a.gain.gain.of('target').at(-1)).toMatchObject({ value: 0.5, time: 6.05 }) // and only then back up
+    expect(a.gain.disconnected).toBe(0)
+  })
+})

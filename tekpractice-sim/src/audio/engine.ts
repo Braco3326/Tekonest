@@ -305,10 +305,11 @@ export class AudioEngine {
     g.cancelScheduledValues(now)
     g.setValueAtTime(g.value, now)
     g.linearRampToValueAtTime(0, now + FADE_OUT_S)
+    // The master gain is upstream of the voices' delay lines: they keep sounding what they hold. Release after the fade AND the longest delay, not before.
     this.timer = this.env.setTimeout(() => {
       this.timer = null
       this.dispose()
-    }, FADE_OUT_S * 1000 + 40)
+    }, (FADE_OUT_S + this.longestTail()) * 1000 + 40)
   }
 
   /** The voices of the pure mix. Creates a chain for a new speaker, drops the ones that left, ramps the rest. */
@@ -325,10 +326,12 @@ export class AudioEngine {
         chain.wiring = undefined
       }
       this.fadeOut(chain.gain.gain, now)
+      // The fade is on the gain, UPSTREAM of the delay line: audio sent before the fade is still inside the line for `tail` seconds, and a disconnect before it has
+      // played out would cut it mid-waveform. So the disconnect waits for the fade plus the line's delay.
       const timer = this.env.setTimeout(() => {
         this.fading.delete(id)
         this.dropChain(chain)
-      }, VOICE_FADE_S * 1000 + 10)
+      }, (VOICE_FADE_S + this.tailOf(chain)) * 1000 + 10)
       this.fading.set(id, { chain, timer })
     }
     for (const v of voices) {
@@ -366,11 +369,26 @@ export class AudioEngine {
         } else chain.wiring.channels = [...v.channels]
       } else if (wanted !== chain.channels.join()) this.beginRewire(chain, v.channels, now)
       const waiting = chain.wiring !== undefined
-      if (force || (!waiting && target.gain !== chain.target.gain)) this.setParam(chain.gain.gain, target.gain, now, true)
+      // `force` (a speaker back from its fade) never overrides a pending re-wire: coming back on the OTHER side must stay at 0 until the side is switched.
+      if (!waiting && (force || target.gain !== chain.target.gain)) this.setParam(chain.gain.gain, target.gain, now, true)
       if (target.delayS !== chain.target.delayS) this.setParam(chain.delay.delayTime, target.delayS, now, false)
       if (target.pan !== chain.target.pan) this.setParam(chain.pan.pan, target.pan, now, false)
       chain.target = target
     }
+  }
+
+  /** How long a voice's delay line still holds audio: the larger of its target and its live delay, never beyond the line. */
+  private tailOf(chain: Chain): number {
+    const live = Number.isFinite(chain.delay.delayTime.value) ? chain.delay.delayTime.value : 0
+    return Math.min(MAX_DELAY_S, Math.max(0, chain.target.delayS, live))
+  }
+
+  /** The longest tail among the voices and the ones still fading out. */
+  private longestTail(): number {
+    let t = 0
+    for (const c of this.chains.values()) t = Math.max(t, this.tailOf(c))
+    for (const f of this.fading.values()) t = Math.max(t, this.tailOf(f.chain))
+    return t
   }
 
   /** Fade the voice out, wire `channels` when the fade is done, then bring the gain back to the voice's latest target. */

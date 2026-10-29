@@ -69,7 +69,7 @@ describe('src/audio/balance.ts is pure too (shared by the sound and the coverage
     expect(existsSync(balance)).toBe(true)
     const src = readFileSync(balance, 'utf8')
     expect(valueSpecifiers(src)).toEqual([])
-    expect(src).not.toMatch(/^s*import/m)
+    expect(src).not.toMatch(/^\s*import\b/m)
     expect(violations(src)).toEqual([])
     expect(stripComments(src)).not.toMatch(/Date|Math.random|performance.now/)
   })
