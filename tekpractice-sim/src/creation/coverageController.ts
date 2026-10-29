@@ -345,8 +345,9 @@ export class CoverageController {
     const h = this.deps.host
     const scene = h.scene
     if (!scene || h.placeId === null) {
+      // A place is being loaded (the old scene is gone, the new one not shown yet): the place's own `onPlaceShown` resets and computes. Not announced.
       this.shown = null
-      this.set('no-source', C().announceNoPlace!, true)
+      this.set('computing', C().computing!, false)
       return
     }
     const layer = this.ensureLayer(scene)

@@ -710,5 +710,4 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.reasonsJoin` |  ;  | à valider (tekuxwriter) | Séparateur de plusieurs raisons |
 | `coverage.announceDone` | Couverture calculée : {n} points, {min} à {max} dB, pas {step} m. | à valider (tekuxwriter) | Annoncé une fois par résultat (zone d’état) |
 | `coverage.announceOff` | Couverture masquée. | à valider (tekuxwriter) | Annoncé quand on la masque |
-| `coverage.announceNoPlace` | Choisissez un lieu pour calculer la couverture. | à valider (tekuxwriter) | Couverture demandée sans lieu |
 | `coverage.loadFailed` | La couverture n’a pas pu se charger. Rechargez la page. | à valider (tekuxwriter) | Le morceau de code de la couverture n’a pas pu être téléchargé (hors ligne) ; annoncé, la case reste décochée |
