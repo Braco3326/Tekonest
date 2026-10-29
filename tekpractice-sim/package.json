@@ -13,6 +13,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "validate:catalog": "tsx tools/validate-catalog.ts",
+    "validate:assets": "tsx tools/validate-assets.ts",
     "asset:spec": "tsx tools/assets3d/spec-skeleton.ts",
     "asset:balance": "tsx tools/assets3d/meshy-balance.ts",
     "asset:build": "tsx tools/assets3d/build-asset.ts",
