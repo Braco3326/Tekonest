@@ -99,6 +99,7 @@ interface Calls {
   order: ('optimize' | 'compress')[]
   /** The progress lines buildAsset logged. */
   log: string[]
+  sheet: { glb: string; photo: string | null; out: string; specId: string }[]
 }
 
 interface Rig {
@@ -115,6 +116,8 @@ interface Rig {
   credits?: number
   /** The catalog checkSpecParity sees; default: one that matches `spec` exactly. */
   catalog?: CatalogT
+  /** The contact sheet renderer; default a recorder, null = no Blender. */
+  renderSheet?: BuildDeps['renderSheet']
   /** Runs inside the fake waitForTask, i.e. after the paid create and before the task finishes. */
   onWait?: (id: string) => void
 }
@@ -132,7 +135,7 @@ beforeEach(async () => {
     paths.manifestPath,
     JSON.stringify({ generated: 'g', assets: [{ id: 'other', status: 'ok', tris: 7 }, { id: 'test-mixer', kind: 'device', optimized: true, tris: 5, status: 'ok', note: 'old' }] }, null, 2),
   )
-  calls = { create: [], wait: [], download: [], fixup: [], compress: [], optimize: [], order: [], log: [] }
+  calls = { create: [], wait: [], download: [], fixup: [], compress: [], optimize: [], order: [], log: [], sheet: [] }
   savedKey = process.env.MESHY_API_KEY
 })
 afterEach(async () => {
@@ -201,6 +204,12 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
     paths,
     now: () => new Date('2026-10-29T12:00:00.000Z'),
     log: (line) => calls.log.push(line),
+    renderSheet:
+      rig.renderSheet !== undefined
+        ? rig.renderSheet
+        : async (glb, photo, out, spec) => {
+            calls.sheet.push({ glb, photo, out, specId: spec.id })
+          },
   }
 }
 
@@ -602,7 +611,7 @@ describe('buildAsset', () => {
     expect(calls.log[0]).toBe(`task task-1 created, workDir ${report.workDir}`)
     expect(order).toEqual(['wait after 1 log lines'])
     // the same status and percent twice prints once
-    expect(calls.log.slice(1)).toEqual(['task task-1: IN_PROGRESS 40%', 'task task-1: SUCCEEDED 100%'])
+    expect(calls.log.slice(1).filter((l) => l.startsWith('task '))).toEqual(['task task-1: IN_PROGRESS 40%', 'task task-1: SUCCEEDED 100%'])
   })
 
   it('the paid task id is on disk in the work dir before the wait (a Ctrl-C keeps it)', async () => {
@@ -1139,6 +1148,43 @@ describe('CLI ship and spend guards', () => {
     const out: string[] = []
     expect(await main([spec.id, '--yes', '--ship', '--logos-removed', '--dry-run'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))).toBe(1)
     expect(out.join('\n')).toMatch(/contradict/)
+  })
+})
+
+describe('contact sheet per attempt', () => {
+  it('renders one sheet per attempt from the fixed GLB, with the first photo and the spec', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['b.png', 'a.png'])
+    const report = await buildAsset(spec.id, { maxAttempts: 2, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [FIXUP_DRIFT, FIXUP_OK] }))
+    expect(calls.sheet).toEqual([1, 2].map((n) => ({
+      glb: join(report.workDir, `attempt-${n}.fixed.glb`),
+      photo: join(paths.sourceDir, spec.id, 'photos', 'a.png'),
+      out: join(report.workDir, `attempt-${n}.sheet.png`),
+      specId: spec.id,
+    })))
+  })
+
+  it('a failing sheet only logs a warning: the build passes and nothing extra is bought', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const renderSheet: BuildDeps['renderSheet'] = async () => {
+      throw new Error('Blender contact sheet failed (exit 1): RENDER_FAIL')
+    }
+    const report = await buildAsset(spec.id, { maxAttempts: 3, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], renderSheet }))
+    expect(report.ok).toBe(true)
+    expect(report.error).toBeUndefined()
+    expect(calls.create).toHaveLength(1)
+    expect(calls.log.some((l) => /^warning: the contact sheet of attempt 1 failed .*RENDER_FAIL/.test(l))).toBe(true)
+  })
+
+  it('without Blender (renderSheet null) no sheet is attempted', async () => {
+    const spec = deviceSpec()
+    const rawPath = join(root, 'hand-made.glb')
+    await writeFile(rawPath, RAW_BYTES)
+    const report = await buildAsset(spec.id, { maxAttempts: 1, rawGlb: rawPath, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], renderSheet: null }))
+    expect(report.ok).toBe(true)
+    expect(calls.sheet).toHaveLength(0)
+    expect(calls.log.some((l) => /contact sheet/.test(l))).toBe(false)
   })
 })
 

@@ -19,7 +19,7 @@ describe('mainModule.isMainModule', () => {
   })
 
   it('every CLI script uses the shared guard, not its own copy', () => {
-    for (const file of ['validate-assets.ts', 'assets3d/build-asset.ts', 'assets3d/meshy-balance.ts', 'assets3d/spec-skeleton.ts']) {
+    for (const file of ['validate-assets.ts', 'assets3d/build-asset.ts', 'assets3d/meshy-balance.ts', 'assets3d/spec-skeleton.ts', 'assets3d/make-sheet.ts']) {
       const src = readFileSync(join(TOOLS, file), 'utf8')
       expect(src, file).toMatch(/isMainModule\(process\.argv\[1\], import\.meta\.url\)/)
       expect(src, file).not.toMatch(/function isMainModule/)

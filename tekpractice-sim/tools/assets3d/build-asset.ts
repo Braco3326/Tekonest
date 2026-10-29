@@ -16,7 +16,8 @@
  *  2. the raw bytes are saved to assets-source/<id>/work/<run>/attempt-N.raw.glb, where <run> is the run's start time
  *     (from deps.now, Windows-safe): a rerun never overwrites earlier, paid output. The Meshy task id of each attempt is
  *     recorded in the report right after the paid create call
- *  3. runFixup (Blender) writes work/<run>/attempt-N.fixed.glb
+ *  3. runFixup (Blender) writes work/<run>/attempt-N.fixed.glb, and (Blender available, best effort) its contact sheet
+ *     work/<run>/attempt-N.sheet.png; a failed sheet only logs a warning
  *  4. inspectGlb + runGates on the fixed GLB, plus checkProportionDrift on the fix-up's pre-scale size (6th gate)
  *  5. all pass: optimize the textures (WebP, longest side <= TEXTURE_MAX_PX of the tier), THEN Draco-compress (connector
  *     16 position bits, other tiers 14), and RE-MEASURE the final bytes with the same five gates, because quantization
@@ -50,6 +51,7 @@ import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promise
 import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { dracoCompress, optimizeTextures } from './compress'
+import { renderContactSheet } from './contactSheet'
 import type { CompressOpts, TextureOpts } from './compress'
 import { findBlender, redact, requireMeshyKey } from './env'
 import { checkProportionDrift, checkTextures, checkValidator, runGates, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
@@ -128,6 +130,11 @@ export interface BuildDeps {
   now: () => Date
   /** Progress lines (task id and work dir right after each paid create, poll status). Default console.log. */
   log: (line: string) => void
+  /**
+   * Renders the contact sheet of a GLB (renderContactSheet), or null when Blender is not available. Called once per
+   * attempt on the fixed GLB; best effort: a failure is logged as a warning and never fails the build.
+   */
+  renderSheet: ((glb: string, photo: string | null, outPng: string, spec: AssetSpecT) => Promise<void>) | null
 }
 
 export interface BuildOpts {
@@ -226,6 +233,7 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
     paths,
     now: deps.now ?? (() => new Date()),
     log: deps.log ?? ((line) => console.log(line)),
+    renderSheet: deps.renderSheet !== undefined ? deps.renderSheet : findBlender() ? (glb, photo, out, spec) => renderContactSheet(glb, photo, out, spec) : null,
   }
 }
 
@@ -411,6 +419,16 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
 
       const fixup = await d.runFixup(rawPath, fixedPath, spec, { yawDeg: opts.yawDeg ?? 0 })
       await persist()
+      if (d.renderSheet) {
+        // The review image for this attempt (yaw / flip are read off it). Best effort: never fails the build.
+        const sheet = join(work, `attempt-${n}.sheet.png`)
+        try {
+          await d.renderSheet(fixedPath, photos[0]?.path ?? null, sheet, spec)
+          d.log(`contact sheet ${sheet}`)
+        } catch (e) {
+          d.log(`warning: the contact sheet of attempt ${n} failed (the build goes on): ${scrub(e instanceof Error ? e.message : String(e))}`)
+        }
+      }
       const fixed = new Uint8Array(await readFile(fixedPath))
       const fixedMeasure = await measure(fixed, spec)
       const drift = checkProportionDrift(fixup.preScaleSizeM, spec)
