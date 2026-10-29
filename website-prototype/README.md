@@ -28,6 +28,18 @@ The look of the site is inspired by Damascene marquetry (« Motifs inspirés de 
 
 A band belongs to the field below it. The lab that explored the panel (canvas code, samples, the animation) stays in [`../visuals/`](../visuals/) and is not built into the site. `node tools/verify-browser.mjs` checks that no picture loads, that the bands are drawn, and runs axe on every page.
 
+## The layout system (Phase C, after Berghain)
+
+One canonical list grouped by state, two equal doors, a plain statement first. The rules, all enforced by `tools/site.test.mjs` and `tools/verify-browser.mjs`:
+
+- **Six type sizes** (tokens in `tokens.css`): `--text-label` 13, `--text-sm` 14, `--text-base` 17, `--text-lg` 20, `--text-2xl` 28→40, `--text-hero` 36→60. No other size, no new font.
+- **Three breakpoints**: `max-width` 39.99em, 47.99em (doors side by side, tables as tables from 48 em) and 63.99em.
+- **Four status labels, defined once on the home page** (`dl.legend`) and used everywhere, each with its glyph class: Version d'essai `status--now`, En développement `status--dev`, En projet `status--prep`, À venir `status--later`.
+- **Components**: `.door--dark` (the two hero doors), `.board--groups` (the grouped status table), `.legend`, `.rows` and `.rows--n` (hairline rows), `.fils` (the seven trades as rows), `.foot-cols` and `.foot-fine` (footer).
+- **Ornament budget**: two ornament types per viewport (frames, bands); no pictures; no disabled buttons.
+
+Spec: `docs/superpowers/specs/2026-10-29-tekonest-berghain-adaptation.md`.
+
 ## Honest by design
 
 - **No data is collected.** Sign-ups are disabled and labelled « Inscriptions bientôt ouvertes ».

@@ -1,6 +1,6 @@
 # Tekonest, Phase C: adapting the Berghain model (sections, text and design together)
 
-Status: DRAFT for the founder's approval, 29 Oct 2026. Nothing here is built. It builds on section 9 of `2026-10-28-tekonest-two-doors-design.md` (the marquetry as a CSS theme, never as pictures) and on the report `E:\CLAUDE BU\reports\Minimalist website templates and examples.md` (the founder chose Berghain from its shortlist). Method: expert council (information architect, venue-identity art director, French UX writer, neutral, validator; one challenge round).
+Status: approved by the founder and built on branch `site/theme`, 29 Oct 2026 (plan `2026-10-29-tekonest-berghain-phase-c.md`). It builds on section 9 of `2026-10-28-tekonest-two-doors-design.md` (the marquetry as a CSS theme, never as pictures) and on the report `E:\CLAUDE BU\reports\Minimalist website templates and examples.md` (the founder chose Berghain from its shortlist). Method: expert council (information architect, venue-identity art director, French UX writer, neutral, validator; one challenge round).
 
 ## 1. What Berghain actually is (checked on 29 Oct 2026)
 

@@ -11,11 +11,12 @@ import AxeBuilder from "@axe-core/playwright";
 import { serveStatic } from "./static-server.mjs";
 
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
-const SHOTS = join(ROOT, "..", "design", "07-review", "screens-2026-10-28-b");
+const SHOTS = join(ROOT, "..", "design", "07-review", "screens-2026-10-29");
 const VIEWPORTS = [
   { width: 320, height: 640 },
   { width: 375, height: 812 },
   { width: 768, height: 1024 },
+  { width: 1024, height: 768 },
   { width: 1440, height: 900 },
 ];
 const DESKTOP = { width: 1440, height: 900 };
@@ -81,6 +82,49 @@ async function homeChecks(BASE, browser) {
   }
 }
 
+/** The two doors in the home hero: above the fold, equal, stacked in order, reachable by keyboard. */
+async function doorChecks(BASE, browser) {
+  const rects = (page) => page.evaluate(() => [...document.querySelectorAll(".door--dark")].map((d) => {
+    const r = d.getBoundingClientRect(), a = d.querySelector(".door-action a").getBoundingClientRect(), n = d.querySelector(".door-name a").getBoundingClientRect();
+    return { top: r.top, left: r.left, width: r.width, bottom: r.bottom, nameTop: n.top, nameBottom: n.bottom, actionBottom: a.bottom };
+  }));
+  {
+    const { context, page } = await openHome(browser, BASE, { viewport: { width: 1440, height: 900 } });
+    const [a, b] = await rects(page);
+    check(a.top >= 0 && a.bottom <= 900 && b.top >= 0 && b.bottom <= 900, "home, 1440×900: both doors are fully visible without scrolling", JSON.stringify([a.bottom, b.bottom]));
+    await context.close();
+  }
+  {
+    const { context, page } = await openHome(browser, BASE, { viewport: { width: 390, height: 844 } });
+    const [a, b] = await rects(page);
+    check(a.nameTop >= 0 && a.actionBottom <= 844 && b.top <= 2 * 844, "home, 390×844: the first door's name and action are visible, the second starts within one scroll", JSON.stringify({ actionBottom: a.actionBottom, door2Top: b.top }));
+    check(b.top > a.bottom - 1 && Math.abs(a.left - b.left) < 1, "home, 390: the doors stack in order 01 then 02");
+    await context.close();
+  }
+  for (const width of [768, 1440]) {
+    const { context, page } = await openHome(browser, BASE, { viewport: { width, height: 900 } });
+    const [a, b] = await rects(page);
+    check(Math.abs(a.width - b.width) <= 1 && b.left > a.left && Math.abs(a.top - b.top) < 1, `home, ${width}: the two doors are side by side and differ in width by at most 1 px`, JSON.stringify([a.width, b.width]));
+    await context.close();
+  }
+  {
+    const { context, page } = await openHome(browser, BASE, { viewport: { width: 1440, height: 900 } });
+    const reached = new Set(); let ringOk = true;
+    for (let i = 0; i < 40 && reached.size < 2; i++) {
+      await page.keyboard.press("Tab");
+      const st = await page.evaluate(() => {
+        const d = document.activeElement?.closest?.(".door--dark");
+        if (!d) return null;
+        const cs = getComputedStyle(d);
+        return { index: [...document.querySelectorAll(".door--dark")].indexOf(d), width: parseFloat(cs.outlineWidth), style: cs.outlineStyle };
+      });
+      if (st) { reached.add(st.index); if (!(st.width >= 2 && st.style !== "none")) ringOk = false; }
+    }
+    check(reached.size === 2 && ringOk, "home: both doors are reachable by keyboard and the focus ring is visible", `reached ${[...reached]}, ring ${ringOk}`);
+    await context.close();
+  }
+}
+
 async function run(BASE, browser) {
   mkdirSync(SHOTS, { recursive: true });
   const names = readdirSync(ROOT).filter((f) => f.endsWith(".html")).map((f) => f.replace(/\.html$/, "")).sort();
@@ -102,7 +146,7 @@ async function run(BASE, browser) {
     }
     await context.close();
   }
-  check(axeViolations === 0 && overflows === 0, "every page: axe 0 violations, no overflow at 320, 375, 768 and 1440 px");
+  check(axeViolations === 0 && overflows === 0, "every page: axe 0 violations, no overflow at 320, 375, 768, 1024 and 1440 px");
 
   // Screenshots, from the final state (reduced motion shows the poster, which is the last frame).
   // Scroll through each page first so lazy images are in.
@@ -123,6 +167,7 @@ async function run(BASE, browser) {
   }
 
   await homeChecks(BASE, browser);
+  await doorChecks(BASE, browser);
 
   // Mobile menu: toggle, Escape closes, focus returns to the button.
   {
