@@ -3,7 +3,7 @@
  *
  * Node computes everything spec-related (placement and extras, GLB file space, see placement.ts) and hands it to
  * Python as plan.json in a fresh temp dir; Python does only the geometry: clean, rotate into the spec's axis order
- * (plus the human-picked yaw, R12), scale to the exact spec size, set the pivot, add the port_/ctrl_ nodes, cut the
+ * (plus the human-picked yaw, R12, and the optional upside-down flip), scale to the exact spec size, set the pivot, add the port_/ctrl_ nodes, cut the
  * socket recesses, write the extras and export. It answers with report.json, or exits non-zero with a one-line
  * FIXUP_FAIL message on stderr. Command line (`--python-exit-code 1` turns an uncaught Python error into exit 1;
  * without it Blender exits 0 after a crashed script):
@@ -52,6 +52,11 @@ export type FixupReport = z.infer<typeof FixupReportSchema>
 
 export interface FixupOpts {
   yawDeg?: YawDeg
+  /**
+   * An extra 180-degree turn about glTF Z after the axis-order rotation and the yaw: up and down swap, the +Z I/O face
+   * stays the I/O face. For a model the contact sheet shows upside down (CLI --flip).
+   */
+  flipUpright?: boolean
 }
 
 export interface ExecResult {
@@ -105,7 +110,8 @@ export async function runFixup(
   const exec = deps.exec ?? ((file: string, args: string[]) => defaultExec(file, args))
 
   const placement = buildPlacement(spec)
-  const plan = { id: spec.id, kind: spec.kind, yawDeg, placement, extras: toExtras(spec, placement) }
+  const flipUpright = opts.flipUpright === true
+  const plan = { id: spec.id, kind: spec.kind, yawDeg, flipUpright, placement, extras: toExtras(spec, placement) }
 
   const tmp = await mkdtemp(join(tmpdir(), 'tekpractice-fixup-'))
   try {

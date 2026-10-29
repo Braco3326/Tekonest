@@ -1,7 +1,7 @@
 /**
  * assets3d/build-asset: the orchestrator of the 3D-asset pipeline, one asset per run.
  *
- *   npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--yes] [--ship --logos-removed]
+ *   npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--flip] [--yes] [--ship --logos-removed]
  *   npm run asset:pilot -- --yes [--attempts 3] [--yaw 0] [--ship --logos-removed]   (the six pilot ids, in turn)
  *
  * By default NOTHING ships: the run does everything and leaves the result in its work dir (final.glb and report.json),
@@ -152,6 +152,8 @@ export interface BuildOpts {
    */
   logosRemoved?: boolean
   yawDeg?: YawDeg
+  /** Turn the model upside down (180 degrees about glTF Z) in the fix-up, after the yaw (CLI --flip). */
+  flipUpright?: boolean
 }
 
 export interface BuildAttempt {
@@ -417,7 +419,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       await writeFile(rawPath, raw)
       await persist()
 
-      const fixup = await d.runFixup(rawPath, fixedPath, spec, { yawDeg: opts.yawDeg ?? 0 })
+      const fixup = await d.runFixup(rawPath, fixedPath, spec, { yawDeg: opts.yawDeg ?? 0, flipUpright: opts.flipUpright === true })
       await persist()
       if (d.renderSheet) {
         // The review image for this attempt (yaw / flip are read off it). Best effort: never fails the build.
@@ -516,13 +518,14 @@ export function formatReport(report: BuildReport): string {
 }
 
 const USAGE = [
-  'usage: npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--yes] [--ship --logos-removed]',
-  '       npm run asset:pilot -- --yes [--attempts 3] [--yaw 0|90|180|270] [--ship --logos-removed]',
+  'usage: npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--flip] [--yes] [--ship --logos-removed]',
+  '       npm run asset:pilot -- --yes [--attempts 3] [--yaw 0|90|180|270] [--flip] [--ship --logos-removed]',
   '  default       build and gate everything, leave final.glb and report.json in the run\'s work dir; ship nothing',
   '  --yes         allow the Meshy spending printed before the run (needed unless --raw)',
   '  --ship        also write public/assets/<id>.glb and the manifest entry (needs --logos-removed)',
   '  --logos-removed  you checked the textures: no brand logos (recorded as logosRemoved: true)',
   '  --raw         use a hand-made raw GLB: no Meshy call, one attempt',
+  '  --yaw / --flip  turn the model about glTF Y / upside down (about glTF Z) in the fix-up, read off the contact sheet',
 ].join('\n')
 
 interface CliArgs {
@@ -549,6 +552,7 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
     else if (a === '--ship') ship = true
     else if (a === '--logos-removed') logosRemoved = true
     else if (a === '--yes') yes = true
+    else if (a === '--flip') opts.flipUpright = true
     else if (a === '--pilot') pilot = true
     else if (a === '--raw') {
       const v = argv[++i]

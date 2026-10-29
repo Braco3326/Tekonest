@@ -92,7 +92,7 @@ interface Calls {
   create: { images: string[]; targetPolycount: number; topology?: string }[]
   wait: string[]
   download: string[]
-  fixup: { inGlb: string; outGlb: string; yawDeg: number | undefined; inBytes: Uint8Array }[]
+  fixup: { inGlb: string; outGlb: string; yawDeg: number | undefined; flipUpright: boolean | undefined; inBytes: Uint8Array }[]
   compress: { bits: number }[]
   optimize: { maxPx: number }[]
   /** The order the texture and Draco steps ran in. */
@@ -175,7 +175,7 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
       },
     },
     runFixup: async (inGlb, outGlb, _spec, opts) => {
-      calls.fixup.push({ inGlb, outGlb, yawDeg: opts?.yawDeg, inBytes: new Uint8Array(await readFile(inGlb)) })
+      calls.fixup.push({ inGlb, outGlb, yawDeg: opts?.yawDeg, flipUpright: opts?.flipUpright, inBytes: new Uint8Array(await readFile(inGlb)) })
       const bytes = rig.fixed[Math.min(attempt, rig.fixed.length - 1)]
       const report = rig.fixupReports ? rig.fixupReports[Math.min(attempt, rig.fixupReports.length - 1)] : (rig.fixupReport ?? FIXUP_OK)
       attempt++
@@ -1148,6 +1148,17 @@ describe('CLI ship and spend guards', () => {
     const out: string[] = []
     expect(await main([spec.id, '--yes', '--ship', '--logos-removed', '--dry-run'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))).toBe(1)
     expect(out.join('\n')).toMatch(/contradict/)
+  })
+})
+
+describe('--flip', () => {
+  it('passes flipUpright to the fix-up (false by default, true with --flip)', async () => {
+    const spec = deviceSpec()
+    const rawPath = join(root, 'box.glb')
+    await writeFile(rawPath, RAW_BYTES)
+    expect(await main([spec.id, '--raw', rawPath, '--yaw', '90'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), () => undefined)).toBe(0)
+    expect(await main([spec.id, '--raw', rawPath, '--flip'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), () => undefined)).toBe(0)
+    expect(calls.fixup.map((c) => [c.yawDeg, c.flipUpright])).toEqual([[90, false], [0, true]])
   })
 })
 

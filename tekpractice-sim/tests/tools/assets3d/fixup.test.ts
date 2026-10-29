@@ -3,7 +3,7 @@
  * contract: the command line, plan.json, report.json, error paths and temp-dir clean-up. The integration block runs the
  * real tools/assets3d/blender/fixup.py through Blender and is skipped when Blender is not installed.
  */
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
@@ -100,6 +100,7 @@ describe('runFixup (unit, injected exec)', () => {
       id: 'test-desk',
       kind: 'device',
       yawDeg: 180,
+      flipUpright: false,
       placement: JSON.parse(JSON.stringify(placement)),
       extras: JSON.parse(JSON.stringify(toExtras(spec, placement))),
     })
@@ -109,7 +110,24 @@ describe('runFixup (unit, injected exec)', () => {
     const connector = deviceSpec({ id: 'test-jack', kind: 'connector', tier: 'connector', realSizeMm: { w: 6, h: 6, d: 20 }, ports: [], controls: [] })
     const { exec, calls } = fakeExec()
     await runFixup('in.glb', 'out.glb', connector, undefined, { exec, blender: 'blender' })
-    expect(calls[0].plan).toMatchObject({ kind: 'connector', yawDeg: 0 })
+    expect(calls[0].plan).toMatchObject({ kind: 'connector', yawDeg: 0, flipUpright: false })
+  })
+
+  it('writes flipUpright true into plan.json when asked, next to the yaw', async () => {
+    const { exec, calls } = fakeExec()
+    await runFixup('in.glb', 'out.glb', deviceSpec(), { yawDeg: 90, flipUpright: true }, { exec, blender: 'blender' })
+    expect(calls[0].plan).toMatchObject({ yawDeg: 90, flipUpright: true })
+  })
+
+  it('fixup.py reads flipUpright and applies FLIP_Z (180 degrees about glTF Z) after the yaw', () => {
+    const py = readFileSync(FIXUP_SCRIPT, 'utf8')
+    expect(py).toMatch(/flip = plan\.get\("flipUpright", False\) is True/)
+    expect(py).toMatch(/FLIP_Z: Mat3 = \[\[-1\.0, 0\.0, 0\.0\], \[0\.0, -1\.0, 0\.0\], \[0\.0, 0\.0, 1\.0\]\]/)
+    // composed after the yaw: FLIP_Z @ (yaw @ axis)
+    const yawLine = py.indexOf('r_total_g = mat_mul(yaw_matrix(yaw), r_axis)')
+    const flipLine = py.indexOf('r_total_g = mat_mul(FLIP_Z, r_total_g)')
+    expect(yawLine).toBeGreaterThan(0)
+    expect(flipLine).toBeGreaterThan(yawLine)
   })
 
   it('returns the report that fixup.py wrote', async () => {

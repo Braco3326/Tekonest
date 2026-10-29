@@ -5,7 +5,7 @@ Called by tools/assets3d/runFixup.ts, headless:
   blender --background --factory-startup --python-exit-code 1 --python fixup.py -- \
       --in <raw.glb> --out <fixed.glb> --plan <plan.json> --report <report.json>
 
-plan.json (written by Node): {id, kind, yawDeg, placement, extras}. The placement is in GLB file space
+plan.json (written by Node): {id, kind, yawDeg, flipUpright, placement, extras}. The placement is in GLB file space
 (glTF: +Y up, right-handed, metres, the 'io' face at z=+d/2). Blender is Z-up, so a glTF point or direction
 (x, y, z) is authored here at (x, -z, y); the exporter with export_yup=True converts back, so the exported
 positions equal the placement.
@@ -15,7 +15,8 @@ Steps, in order:
   2. import the GLB, bake every mesh's world transform into its vertices, join all meshes into one
   3. clean: merge by distance, fill holes, recalculate normals; keep one material on every face
   4. rotate by the best of the 24 proper 90-degree rotations so the extents match the spec's (w, h, d), then by
-     yawDeg about glTF +Y (a human picks the I/O side from the contact sheet)
+     yawDeg about glTF +Y (a human picks the I/O side from the contact sheet), then, when flipUpright, by 180
+     degrees about glTF Z (up and down swap, the +Z I/O face stays put)
   5. measure the pre-scale size (spec axis order), scale non-uniformly to the exact spec size
   6. pivot: device = bottom-centre (glTF min y = 0, centre x, z = 0); connector = centre of the mating face,
      body along glTF +Z (min z = 0, centre x, y = 0)
@@ -133,6 +134,11 @@ def yaw_matrix(deg: int) -> Mat3:
     """Rotation about glTF +Y by a multiple of 90 degrees (exact integers, no float noise)."""
     c, s = {0: (1.0, 0.0), 90: (0.0, 1.0), 180: (-1.0, 0.0), 270: (0.0, -1.0)}[deg]
     return [[c, 0.0, s], [0.0, 1.0, 0.0], [-s, 0.0, c]]
+
+
+# 180 degrees about glTF Z: (x, y, z) -> (-x, -y, z). Composed in glTF space like the yaw; the change of basis
+# below (C_G2B, glTF (x, y, z) = Blender (x, -z, y)) turns it into a turn about Blender -Y.
+FLIP_Z: Mat3 = [[-1.0, 0.0, 0.0], [0.0, -1.0, 0.0], [0.0, 0.0, 1.0]]
 
 
 def drift_score(ext: Vec3, spec: Vec3) -> float:
@@ -432,6 +438,7 @@ def run() -> None:
     yaw = int(plan.get("yawDeg", 0))
     if yaw not in (0, 90, 180, 270):
         raise FixupError(f"yawDeg must be 0, 90, 180 or 270, got {yaw}")
+    flip = plan.get("flipUpright", False) is True
     placement = plan["placement"]
     size = placement["sizeM"]
     spec_g: Vec3 = (float(size["w"]), float(size["h"]), float(size["d"]))
@@ -448,10 +455,12 @@ def run() -> None:
         raise FixupError(f"the imported model is flat or empty (extents {raw})")
     r_axis = choose_rotation(raw, spec_g)
     r_total_g = mat_mul(yaw_matrix(yaw), r_axis)
+    if flip:
+        r_total_g = mat_mul(FLIP_Z, r_total_g)
     r_total_b = mat_mul(mat_mul(C_G2B, r_total_g), transpose(C_G2B))
     me.transform(to_matrix4(r_total_b))
     rotated = round(angle_deg(r_total_g), 6)
-    log(f"rotation {rotated} degrees (yaw {yaw}), raw extents {raw}")
+    log(f"rotation {rotated} degrees (yaw {yaw}, flip {flip}), raw extents {raw}")
 
     pre = extents_g(me)
     if min(pre) <= 1e-9:
