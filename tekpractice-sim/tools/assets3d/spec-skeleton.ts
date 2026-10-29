@@ -82,14 +82,17 @@ export function findKbEntry(id: string, kbDir: string = DEFAULT_KB_DIR): KbEntry
     const doc: unknown = JSON.parse(readFileSync(resolve(kbDir, file), 'utf8'))
     const devices = (doc as { devices?: unknown }).devices
     if (!Array.isArray(devices)) continue
-    const entry = devices.find((e: { id?: unknown }) => e?.id === id) as Record<string, any> | undefined
+    const entry = devices.find((e: { id?: unknown }) => e?.id === id) as Record<string, unknown> | undefined
     if (!entry) continue
-    const dimensions: string | undefined = typeof entry.key_specs?.dimensions === 'string' ? entry.key_specs.dimensions : undefined
+    const keySpecs = entry.key_specs
+    const rawDimensions = typeof keySpecs === 'object' && keySpecs !== null ? (keySpecs as Record<string, unknown>).dimensions : undefined
+    const dimensions = typeof rawDimensions === 'string' ? rawDimensions : undefined
     const sources: SpecSourceT[] = []
     const note = `knowledge-base/equipment/${file} key_specs.dimensions${dimensions ? `: "${dimensions}"` : ' (absent)'}`
-    if (typeof entry.datasheet_url === 'string' && entry.datasheet_url) sources.push({ kind: 'datasheet', url: entry.datasheet_url, note })
-    else if (typeof entry.manual_url === 'string' && entry.manual_url) sources.push({ kind: 'manual', url: entry.manual_url, note })
-    else if (typeof entry.product_page_url === 'string' && entry.product_page_url) sources.push({ kind: 'datasheet', url: entry.product_page_url, note: `${note} (product page)` })
+    const { datasheet_url: datasheet, manual_url: manual, product_page_url: page } = entry
+    if (typeof datasheet === 'string' && datasheet) sources.push({ kind: 'datasheet', url: datasheet, note })
+    else if (typeof manual === 'string' && manual) sources.push({ kind: 'manual', url: manual, note })
+    else if (typeof page === 'string' && page) sources.push({ kind: 'datasheet', url: page, note: `${note} (product page)` })
     return { file, dimensions, sources }
   }
   return null
