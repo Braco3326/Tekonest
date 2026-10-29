@@ -157,7 +157,8 @@ test('review Fix 1 (minor): a listening point is a room-level view: it clears th
   expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
   await expect(regie).toHaveAttribute('aria-selected', 'true')
   await expect(tree.locator('[aria-selected="true"]')).toHaveCount(1)
-  await expect(page.getByRole('status')).toHaveText('Point d’écoute : Régie')
+  // the point's own message, merged by the announcer with « Aucun appareil sélectionné. » (the selection was cleared in the same tick)
+  await expect(page.getByRole('status')).toContainText('Point d’écoute : Régie')
   expect(await distTo(page, 'regie')).toBeLessThan(0.5)
 })
 

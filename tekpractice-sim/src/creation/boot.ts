@@ -309,12 +309,7 @@ export async function bootCreation(): Promise<void> {
     if (intent.type !== 'CONNECT') return
     lastRejection = rejectionOf(r.error, r.subjects, ruleText)
     refreshSignal()
-    shell.setStatus(
-      placeNow(),
-      COPY.status!.statusRefused!.replace('{title}', lastRejection.title),
-      'ready',
-      true
-    )
+    announcer.say(COPY.status!.statusRefused!.replace('{title}', lastRejection.title))
   })
 
   // ── Project (Task 13, C16): per-origin localStorage, name, dirty marker, autosave.
@@ -427,7 +422,7 @@ export async function bootCreation(): Promise<void> {
       if (r === 'full') {
         autosaveFull = true
         notes.show({ id: 'autosave-full', title: PJ.blockedTitle!, body: PJ.autosaveFull! })
-        shell.setStatus(placeNow(), PJ.autosaveFull!, 'ready', true)
+        announcer.say(PJ.autosaveFull!)
       } else {
         storageBlocked = true
         blockedNote()
@@ -471,7 +466,7 @@ export async function bootCreation(): Promise<void> {
    * ONE announcer for the status line's polite region, where the last write wins: the playback / signal announcements of the store change, the listen controller's
    * and the coverage controller's all land in the same tick (the sound stops AND the coverage has no speaker left). It merges the distinct messages of a tick.
    */
-  const announcer = createAnnouncer((message, reannounce) => shell.setStatus(placeNow(), message, 'ready', reannounce))
+  const announcer = createAnnouncer((message, reannounce, state) => shell.setStatus(placeNow(), message, state, reannounce))
   const deviceIds = (): string[] => store.design().rig.instances.map((i) => i.instanceId)
   const deviceLabel = (id: string): string => {
     const deviceId = store.design().rig.instances.find((i) => i.instanceId === id)?.deviceId
@@ -491,14 +486,9 @@ export async function bootCreation(): Promise<void> {
     },
     invalidate: () => scheduler.invalidate(),
     onSelect: (id) =>
-      shell.setStatus(
-        placeNow(),
-        id
+      announcer.say(id
           ? COPY.shell!.statusSelected!.replace('{device}', deviceLabel(id))
-          : COPY.shell!.statusNoSelection!,
-        'ready',
-        true
-      ),
+          : COPY.shell!.statusNoSelection!),
   })
 
   // ── « Projet » tree (Task 9, C10): rebuilt on store / view-state / place changes, never polled.
@@ -545,12 +535,7 @@ export async function bootCreation(): Promise<void> {
         if (!selection.flyToKey(node.id)) return
         treeActive = node.id
         tree.render()
-        shell.setStatus(
-          placeNow(),
-          COPY.tree!.statusFramed!.replace('{item}', node.label),
-          'ready',
-          true
-        )
+        announcer.say(COPY.tree!.statusFramed!.replace('{item}', node.label))
       } else if (node.kind === 'point') {
         // A listening point (Task 20): leaves the walk, the camera stands there looking at the stage.
         treeActive = node.id // before the view-state change re-renders the tree
@@ -569,15 +554,10 @@ export async function bootCreation(): Promise<void> {
       const hidden = viewState.get().hidden
       const now = !hidden.includes(key)
       viewState.set({ hidden: now ? [...hidden, key] : hidden.filter((k) => k !== key) })
-      shell.setStatus(
-        placeNow(),
-        (now ? COPY.tree!.statusHidden! : COPY.tree!.statusShown!).replace(
+      announcer.say((now ? COPY.tree!.statusHidden! : COPY.tree!.statusShown!).replace(
           '{item}',
           nodeLabel(key)
-        ),
-        'ready',
-        true
-      )
+        ))
     },
   })
   // ── « Propriétés » (Task 10): the selection's pose, controls and cables, edited through history.do only.
@@ -589,7 +569,7 @@ export async function bootCreation(): Promise<void> {
     design: () => store.design(),
     selection: () => viewState.get().selection,
     floorAt: (x, z) => host.layout?.floorAt(x, z) ?? 0,
-    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    announce: (message) => announcer.say(message),
     // « Connecter à… » (Task 28, CA-02): the keyboard / screen-reader way to cable, defined with the patch controller below.
     connect: (from, opener) => connectDialog.open(from, opener),
   })
@@ -750,7 +730,7 @@ export async function bootCreation(): Promise<void> {
     const msg = N.fallbackBody!.replace('{place}', placeLabel(key))
     notes.show({ id: 'fallback', title: N.fallbackTitle!, body: msg })
     if (picker.isOpen) picker.showError(msg) // the note sits under the picker while it is open
-    shell.setStatus(placeNow(), msg, 'ready', true)
+    announcer.say(msg)
   }
   host.onFallback = fallbackNote
 
@@ -788,7 +768,7 @@ export async function bootCreation(): Promise<void> {
       // Said where the learner is: the picker stays open over an inert viewport (review fix 2).
       const msg = COPY.picker!.openFailed!.replace('{place}', card.title)
       if (picker.isOpen) picker.showError(msg)
-      return shell.setStatus(placeNow(), msg, 'ready', true)
+      return announcer.say(msg)
     }
     if (result === 'cancelled') return showStatus()
     showCanvas() // 'done' / 'same'
@@ -802,7 +782,7 @@ export async function bootCreation(): Promise<void> {
       const head = hadGear
         ? COPY.shell!.statusReplaced!.replace('{n}', n).replace('{undo}', undoLabel())
         : COPY.shell!.statusGearLoaded!.replace('{n}', n)
-      shell.setStatus(placeNow(), head + more, 'ready', true)
+      announcer.say(head + more)
     }
     if (missing.length)
       notes.show({
@@ -892,7 +872,7 @@ export async function bootCreation(): Promise<void> {
     refreshTitle()
     showCanvas()
     showStatus()
-    shell.setStatus(placeNow(), PJ.restored!, 'ready', true)
+    announcer.say(PJ.restored!)
     return true
   }
   refreshSignal()
@@ -913,6 +893,7 @@ export async function bootCreation(): Promise<void> {
 
   // ── Keyboard (Task 8, C10, P3): one window listener for the page's lifetime.
   const shellBag = new DisposableBag()
+  shellBag.add(() => announcer.dispose())
   const keys = mountCreationKeyboard({
     bag: shellBag,
     bindings: loadCreationBindings(storage),
@@ -926,7 +907,7 @@ export async function bootCreation(): Promise<void> {
   const cycle = (dir: 1 | -1): boolean => {
     const next = nextDevice(deviceIds(), viewState.get().selection, dir)
     if (next === null) {
-      shell.setStatus(placeNow(), COPY.shell!.statusNothingToSelect!, 'idle', true)
+      announcer.say(COPY.shell!.statusNothingToSelect!, true, 'idle')
       return true
     }
     selection.select(next) // the camera follows (a cut under reduced motion)
@@ -970,7 +951,7 @@ export async function bootCreation(): Promise<void> {
     try {
       props.flush() // a stepper burst still open is part of what is saved
       if (!canvasShown || store.design().roomId === null)
-        return shell.setStatus(placeNow(), PJ.saveNoPlace!, 'idle', true)
+        return announcer.say(PJ.saveNoPlace!, true, 'idle')
       let name = projectName
       /** The stored row this save may replace, as this tab knows it (another tab's newer copy is set aside). */
       let expectStamp = projectStamp
@@ -1006,7 +987,7 @@ export async function bootCreation(): Promise<void> {
         // quarantine-full: the unreadable list (export it first) vs another tab's copy (a new name works).
         const msg =
           r === 'quarantine-full' && readProjectList(storage).status === 'unreadable' ? PJ.quarantineFullList! : saveFailed[r]
-        return shell.setStatus(placeNow(), msg, 'ready', true)
+        return announcer.say(msg)
       }
       setProject({ name, savedFp: designFingerprint(design), stamp })
       refreshTitle()
@@ -1015,7 +996,7 @@ export async function bootCreation(): Promise<void> {
       autosave.resume()
       autosave.schedule()
       autosave.flush() // the name and the clean state survive a reload at once
-      shell.setStatus(placeNow(), saveDone[r].replace('{name}', name), 'ready', true)
+      announcer.say(saveDone[r].replace('{name}', name))
     } finally {
       saving = false
     }
@@ -1081,13 +1062,13 @@ export async function bootCreation(): Promise<void> {
     if (name === null) return
     const design = loadProject(storage, name)
     const failed = (): void =>
-      shell.setStatus(placeNow(), PJ.openFailed!.replace('{name}', name), 'ready', true)
+      announcer.say(PJ.openFailed!.replace('{name}', name))
     if (!design || design.roomId === null) return failed()
     const prep = await ensureBetaFor(design)
     if (prep.kind === 'unavailable') {
       // Nothing is opened and nothing changes: the stored project stays as it is (open it again once the network is back).
       notes.show({ id: 'beta-unavailable', title: COPY.inventory!.unavailableTitle!, body: COPY.inventory!.unavailableOpen! })
-      return shell.setStatus(placeNow(), COPY.inventory!.unavailableOpen!, 'ready', true)
+      return announcer.say(COPY.inventory!.unavailableOpen!)
     }
     notes.dismiss('beta-unavailable') // the sheets came back: an earlier « fiches indisponibles » note no longer holds
     const missing = prep.missing
@@ -1109,18 +1090,13 @@ export async function bootCreation(): Promise<void> {
     refreshTitle()
     autosave.schedule()
     showCanvas()
-    shell.setStatus(
-      placeNow(),
-      PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()),
-      'ready',
-      true
-    )
+    announcer.say(PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()))
   }
   /** « Exporter les données mises de côté… »: one JSON file; nothing is removed (clearing is Oscar's call, N19). */
   const exportKept = (): void => {
     const kept = readQuarantine(storage)
     if (!kept.length && !pending.length)
-      return shell.setStatus(placeNow(), PJ.exportNothing!, 'idle', true)
+      return announcer.say(PJ.exportNothing!, true, 'idle')
     const file = `tekpractice-donnees-mises-de-cote-${new Date().toISOString().slice(0, 10)}.json`
     const url = URL.createObjectURL(
       new Blob([exportBundle(storage, pending)], { type: 'application/json' })
@@ -1145,7 +1121,7 @@ export async function bootCreation(): Promise<void> {
       })
       refreshAutosave()
     }
-    shell.setStatus(placeNow(), PJ.exported!.replace('{file}', file), 'ready', true)
+    announcer.say(PJ.exported!.replace('{file}', file))
   }
   /** What the last export held (the autosave may overwrite it once the learner checked the file). */
   let heldExport: QuarantineItem[] = []
@@ -1175,7 +1151,7 @@ export async function bootCreation(): Promise<void> {
       body,
       actions: [{ label: PJ.resumeHere!, run: resumeHere }],
     })
-    shell.setStatus(placeNow(), body, 'ready', true)
+    announcer.say(body)
   })
   // Leaving the page: the pending autosave is written now (never mid-transaction).
   const leave = (): void => {
@@ -1199,12 +1175,7 @@ export async function bootCreation(): Promise<void> {
   host.onWalkChange = (on) => {
     if (on) canvas.setAttribute('aria-label', WK.canvas!.replace('{walk}', walkKey()))
     else if (canvasLabel !== null) canvas.setAttribute('aria-label', canvasLabel)
-    shell.setStatus(
-      placeNow(),
-      on ? WK.statusOn!.replace('{walk}', walkKey()) : WK.statusOff!,
-      'ready',
-      true
-    )
+    announcer.say(on ? WK.statusOn!.replace('{walk}', walkKey()) : WK.statusOff!)
   }
   const enterWalk = (): boolean =>
     !viewLocked() &&
@@ -1232,10 +1203,10 @@ export async function bootCreation(): Promise<void> {
   }
   const setEar = (h: 1.2 | 1.7): void => {
     viewState.set({ earHeight: h }) // its subscriber saves it and moves a live walker
-    shell.setStatus(placeNow(), h === 1.2 ? WK.earSeated! : WK.earStanding!, 'ready', true)
+    announcer.say(h === 1.2 ? WK.earSeated! : WK.earStanding!)
   }
   const announceView = (label: string): void =>
-    shell.setStatus(placeNow(), VW.status!.replace('{view}', label), 'ready', true)
+    announcer.say(VW.status!.replace('{view}', label))
   const goToView = (z: ZoneSigns): void => {
     if (viewLocked()) return
     leaveWalk() // a named view is an orbit view
@@ -1350,7 +1321,7 @@ export async function bootCreation(): Promise<void> {
     atPoint = { id, pose }
     viewState.set({ listenerPoint: id })
     scheduler.invalidate()
-    if (!opts.refly) shell.setStatus(placeNow(), PT.status!.replace('{point}', p.label), 'ready', true)
+    if (!opts.refly) announcer.say(PT.status!.replace('{point}', p.label))
     return true
   }
   /** The orbit camera is (or is flying to) this pose: nobody moved it since (any other flight clears `atPoint`). */
@@ -1372,7 +1343,7 @@ export async function bootCreation(): Promise<void> {
     if (viewLocked()) return false
     const p = pointForKey(listeningPoints(), n)
     if (!p) {
-      shell.setStatus(placeNow(), PT.none!.replace('{n}', String(n)), 'idle', true)
+      announcer.say(PT.none!.replace('{n}', String(n)), true, 'idle')
       return true
     }
     return goToPoint(p.id)
@@ -1384,7 +1355,7 @@ export async function bootCreation(): Promise<void> {
   const frameFromMenu = (): void => {
     if (viewState.get().selection !== null) leaveWalk()
     if (!selection.frameSelection())
-      shell.setStatus(placeNow(), COPY.shell!.statusNoSelection!, 'idle', true)
+      announcer.say(COPY.shell!.statusNoSelection!, true, 'idle')
   }
   keys.onAction('VIEW_PICKER', () => {
     if (viewLocked() || host.walking) return false // the orbit views' picker: off while walking
@@ -1494,7 +1465,7 @@ export async function bootCreation(): Promise<void> {
         console.error('[creation] inventory failed to load', e)
         drawerLoad = null // asked again on the next open, but a failed import may stay failed for this page: the message says to reload
         drawerWanted = false
-        shell.setStatus(placeNow(), INV.loadFailed!, 'ready', true)
+        announcer.say(INV.loadFailed!)
       }
     )
   }
@@ -1549,7 +1520,7 @@ export async function bootCreation(): Promise<void> {
         (registry.deviceById.get(i.deviceId)?.ports ?? []).map((p) => ({ instance: i.instanceId, port: p.portId }))
       ),
     rejectionTitle: (error, subjects) => rejectionOf(error, subjects, ruleText).title,
-    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    announce: (message) => announcer.say(message),
     undoLabel,
     beforeDispatch: () => props.flush(),
   })
@@ -1562,7 +1533,7 @@ export async function bootCreation(): Promise<void> {
     history,
     portName,
     rejectionText: (error, subjects) => rejectionOf(error, subjects, ruleText),
-    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    announce: (message) => announcer.say(message),
     undoLabel,
     beforeDispatch: () => props.flush(),
     focus: {
@@ -1602,7 +1573,7 @@ export async function bootCreation(): Promise<void> {
   // Placing and moving devices (Task 24, CA-10, P20): after the picking above, so a drop is not also a click-to-select.
   const placement = new PlacementController(host, history, store, viewState, scheduler, shellBag, {
     deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
-    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    announce: (message) => announcer.say(message),
     undoLabel,
     onPlaced: (id) => selection.select(id, { fly: false }),
     // A click on a port of the selected device is the cabling's; any other click on it selects and frames it.
@@ -1626,7 +1597,7 @@ export async function bootCreation(): Promise<void> {
     blocked: () => dragOpen() || placement.placing,
     roomBounds: () => host.roomBounds(),
     deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
-    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    announce: (message) => announcer.say(message),
     undoLabel,
     onDuplicated: (id) => selection.select(id, { fly: false }), // the copy is the selection; no camera flight
   })
@@ -1642,7 +1613,7 @@ export async function bootCreation(): Promise<void> {
   /** Suppr / Ctrl+D while a device follows the pointer: the selected device is not what the learner is looking at, so it is left alone and the placement goes on (said, announced). */
   const placingBlocksEdit = (): boolean => {
     if (!placement.placing) return false
-    shell.setStatus(placeNow(), COPY.edit!.statusWhilePlacing!, 'ready', true)
+    announcer.say(COPY.edit!.statusWhilePlacing!)
     return true
   }
   keys.onAction('DUPLICATE', (e) => {
@@ -1753,7 +1724,7 @@ export async function bootCreation(): Promise<void> {
       const c = await loadCoverage()
       if (!c) {
         coverageOn = false
-        shell.setStatus(placeNow(), COPY.coverage!.loadFailed!, 'ready', true)
+        announcer.say(COPY.coverage!.loadFailed!)
         return
       }
       if (coverageOn) c.setOn(true)
@@ -1835,7 +1806,7 @@ export async function bootCreation(): Promise<void> {
       closeAudioContext(ctx)
       listenIntent = false
       forgetFile()
-      shell.setStatus(placeNow(), COPY.listen!.loadFailed!, 'ready', true)
+      announcer.say(COPY.listen!.loadFailed!)
       return
     }
     await c.play(source, ctx)
@@ -1850,7 +1821,7 @@ export async function bootCreation(): Promise<void> {
     listenIntent = false
     forgetFile()
     if (listen?.active) listen.stop('user')
-    else if (was) shell.setStatus(placeNow(), COPY.listen!.stopped!, 'ready', true) // asked, then stopped before the chunk was in
+    else if (was) announcer.say(COPY.listen!.stopped!) // asked, then stopped before the chunk was in
   }
   // The file chooser: a hidden <input type="file"> clicked from the menu action, inside the click's own gesture, with the AudioContext made in that same
   // click and kept until the file arrives (or the dialog is cancelled). Keyboard users reach it through the menu item.

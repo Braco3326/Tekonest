@@ -690,7 +690,7 @@ test('(v) pulling one speaker\'s cable while playing: that speaker leaves the mi
   await page.waitForFunction(() => window.__creation!.audioState().voices.map((v) => v.instanceId).join() === 'k12-d')
   expect((await state(page)).state).toBe('playing')
   await page.waitForFunction(() => (window.__creation!.audioLevels()['k12-d'] ?? 0) > 0)
-  await page.waitForFunction(() => !('k12-g' in window.__creation!.audioLevels()), null, { timeout: 5000 }) // its chain is gone once the fade is done
+  await page.waitForFunction(() => !('k12-g' in window.__creation!.audioLevels()), null, { timeout: 5000 }) // it no longer counts as a voice (the meters list the mix); the fade, the delay-covering timer and the disconnect are the engine unit tests, and a click cannot be detected here
   await choose(page, 'Stop')
   await waitStopped(page)
 })
@@ -705,4 +705,25 @@ test('(w) the songs list is fetched when the learner reaches for Écoute, not at
   expect(requests.filter((u) => /\/songs-[^/]*\.js$/.test(u)).length).toBeGreaterThan(0)
   await ecoute(page).click()
   await expect(page.getByRole('menuitem', { name: 'Morceau' })).toHaveCount(0) // the list is empty: the group stays hidden
+})
+
+test('(x) the answer to the learner\'s own action is not overwritten: playing, then Suppr on the QL1 → the status says the deletion AND that the sound stopped', async ({ page }) => {
+  await boot(page)
+  await play(page)
+  await page.locator('#renderCanvas').focus()
+  for (let i = 0; i < 6 && (await page.evaluate(() => window.__creation!.selection())) !== 'ql1'; i++) await page.keyboard.press(']') // [ ] cycle the devices
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1')
+  await page.evaluate(() => {
+    const said: string[] = []
+    ;(window as unknown as { __said: string[] }).__said = said
+    new MutationObserver(() => said.push(document.querySelector('.cr-status-msg')!.textContent ?? '')).observe(document.querySelector('.cr-status-msg')!, { childList: true, characterData: true, subtree: true })
+  })
+  await page.keyboard.press('Delete')
+  await waitStopped(page)
+  const status = page.locator('.cr-status-msg')
+  await expect(status).toContainText('Supprimé : Yamaha QL1, avec ses câbles.')
+  await expect(status).toContainText('Lecture arrêtée.')
+  // the final text of the tick holds both, in the order they were written
+  const said = await page.evaluate(() => (window as unknown as { __said: string[] }).__said)
+  expect(said.at(-1)).toMatch(/Lecture arrêtée\..*Supprimé : Yamaha QL1|Supprimé : Yamaha QL1.*Lecture arrêtée\./)
 })

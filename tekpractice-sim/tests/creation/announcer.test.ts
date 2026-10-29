@@ -8,9 +8,9 @@ import { describe, expect, it } from 'vitest'
 import { createAnnouncer } from '../../src/creation/shell/announcer'
 
 function make() {
-  const said: { message: string; reannounce: boolean }[] = []
+  const said: { message: string; reannounce: boolean; state: string }[] = []
   const queue: (() => void)[] = []
-  const a = createAnnouncer((message, reannounce) => void said.push({ message, reannounce }), (fn) => void queue.push(fn))
+  const a = createAnnouncer((message, reannounce, state) => void said.push({ message, reannounce, state }), (fn) => void queue.push(fn))
   /** The end of the tick: run what was scheduled. */
   const tick = (): void => {
     for (const fn of queue.splice(0)) fn()
@@ -22,7 +22,7 @@ describe('createAnnouncer', () => {
   it('writes the first message of a tick AT ONCE, and a lone message is not written again at the end of the tick', () => {
     const m = make()
     m.a.say('Lecture arrêtée. La console n’est pas alimentée.')
-    expect(m.said).toEqual([{ message: 'Lecture arrêtée. La console n’est pas alimentée.', reannounce: true }])
+    expect(m.said).toEqual([{ message: 'Lecture arrêtée. La console n’est pas alimentée.', reannounce: true, state: 'ready' }])
     m.tick()
     expect(m.said).toHaveLength(1)
   })
@@ -66,6 +66,18 @@ describe('createAnnouncer', () => {
     m.tick()
     expect(m.said.at(-1)!.reannounce).toBe(true)
     expect(m.said.at(-2)!.reannounce).toBe(false) // the first write keeps its own flag
+  })
+  it('the status state travels: « idle » answers (nothing to select) keep it, a merge is « ready » as soon as one message is', () => {
+    const m = make()
+    m.a.say('Aucun appareil à sélectionner : ce lieu est vide.', true, 'idle')
+    expect(m.said[0].state).toBe('idle')
+    m.a.say('Deuxième.', true, 'idle')
+    m.tick()
+    expect(m.said.at(-1)!.state).toBe('idle') // every message of the tick was idle
+    m.a.say('Un.', true, 'idle')
+    m.a.say('Deux.', true, 'ready')
+    m.tick()
+    expect(m.said.at(-1)!.state).toBe('ready')
   })
   it('dispose() drops what is pending and ignores what comes after', () => {
     const m = make()

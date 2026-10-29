@@ -449,7 +449,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     method: 'somme énergétique, champ direct',
     chip: 'relatif',
     chipName: 'Fidélité du calcul : relatif',
-    chipPopover: 'Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. Le fader, le mute et le balance de la console changent le niveau affiché comme le son (le balance baisse le côté opposé) ; l’origine de l’enceinte est son point de pose.',
+    chipPopover: 'Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. Le balance de la console change l’équilibre affiché comme le son (il baisse le côté opposé) ; le fader master, commun à toutes les enceintes, ne change pas un niveau relatif ; le mute ou −inf retire les enceintes ; l’origine de l’enceinte est son point de pose.',
     legendTitle: 'Échelle',
     legendBin: '{from} à {to} dB',
     legendLast: '{from} dB et moins',
