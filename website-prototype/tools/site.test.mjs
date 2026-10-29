@@ -73,19 +73,6 @@ test("the header nav marks exactly the current page", () => {
 
 const plain = (text) => text.replace(/ /g, " ");
 
-test("creer page content", () => {
-  const html = plain(page("creer.html"));
-  assert.match(html, /<h1[^>]*>Une expérience au service de votre projet\.<\/h1>/);
-  const families = [...html.matchAll(/<li class="family cadre">([\s\S]*?)<\/li>/g)].map((m) => m[1]);
-  assert.deepEqual(
-    families.map((f) => f.match(/<h3>(.*?)<\/h3>/)[1]),
-    ["Création sonore", "Prise de son", "Live", "Direction artistique, mixage et mastering"]
-  );
-  for (const f of families) assert.match(f, /<span class="status status--prep">En projet<\/span>/);
-  assert.match(html, /<a class="btn btn-primary" href="contact\.html">Parlez-nous de votre projet<\/a>/);
-  assert.match(html, /Ce n'est ni un devis ni un engagement/);
-});
-
 test("creer page makes no price or availability claim", () => {
   assert.doesNotMatch(bodyText(plain(page("creer.html"))), /€|tarif|prix|gratuit|réserv/i);
 });
@@ -101,12 +88,6 @@ test("old organiser links redirect", () => {
   const redirects = page("_redirects");
   assert.match(redirects, /^\/organiser \/creer\.html 301$/m);
   assert.match(redirects, /^\/organiser\.html \/creer\.html 301$/m);
-});
-
-test("families grid is two columns from 48 em", () => {
-  const css = page("assets/css/site.css");
-  assert.match(css, /\.families\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/);
-  assert.match(css, /@media \(max-width: 47\.99em\)\s*\{\s*\.families\s*\{[^}]*grid-template-columns: 1fr/);
 });
 
 const main = (name) => {
@@ -225,7 +206,7 @@ test("the old diamond strip, hero canvas and replay button are gone from the CSS
 });
 
 test("cards carry nested fillets", () => {
-  const block = ruleBlock(css(), ".door.cadre, .family.cadre");
+  const block = ruleBlock(css(), ".door--dark");
   assert.match(block, /box-shadow:\s*inset 0 0 0 5px[^;]*,\s*inset 0 0 0 6px/);
 });
 
@@ -382,4 +363,31 @@ test("the stylesheets are brace-balanced and never close more than they open", (
     }
     assert.equal(depth, 0, `${f}: unbalanced braces`);
   }
+});
+
+test("creer lists four numbered rows with no repeated badge", () => {
+  const html = plain(page("creer.html"));
+  assert.match(html, /<h1[^>]*>Une expérience au service de votre projet\.<\/h1>/);
+  assert.match(html, /Quatre manières de travailler ensemble\. Toutes sont encore en projet : dites-nous ce dont votre projet a besoin\./);
+  const rows = html.match(/<ol class="rows rows--n">([\s\S]*?)<\/ol>/)[1].match(/<li>[\s\S]*?<\/li>/g);
+  assert.deepEqual(rows.map((r) => r.match(/<h3>(.*?)<\/h3>/)[1]), ["Création sonore", "Prise de son", "Live", "Direction artistique, mixage et mastering"]);
+  assert.deepEqual(rows.map((r) => r.match(/<span class="row-n">(\d\d)<\/span>/)[1]), ["01", "02", "03", "04"]);
+  assert.equal((html.match(/class="status /g) || []).length, 1, "the status is said once, in the hero");
+  assert.match(html, /<span class="status status--prep">En projet<\/span>/);
+  assert.match(html, /<a class="btn btn-primary" href="contact\.html">Parlez-nous de votre projet<\/a>/);
+  assert.match(html, /Ce n'est ni un devis ni un engagement/);
+});
+
+test("apprendre keeps no mock, no design commentary and no disabled control", () => {
+  const html = plain(page("apprendre.html"));
+  assert.doesNotMatch(html, /product-preview|preview-apprendre|endorse|Proposition\s*:|<button[^>]*disabled/);
+  assert.match(html, /Pas encore ouvert\./);
+  assert.match(html, /<a href="contact\.html">Nous écrire<\/a>/);
+  assert.deepEqual([...html.matchAll(/<ul class="rows">([\s\S]*?)<\/ul>/g)].map((m) => (m[1].match(/<li>/g) || []).length), [4, 3], "four existing and three upcoming items stay");
+});
+
+test("no page has a disabled button, and the retired card and mock styles are gone", () => {
+  for (const name of pages()) assert.doesNotMatch(page(name), /<button[^>]*\bdisabled\b/, name);
+  assert.doesNotMatch(css(), /\.families|\.family\b|\.product-preview|\.preview-(apprendre|tekpractice)|\.endorse|\.door\.cadre/);
+  assert.match(ruleBlock(css(), ".rows li"), /min-height:\s*44px/);
 });
