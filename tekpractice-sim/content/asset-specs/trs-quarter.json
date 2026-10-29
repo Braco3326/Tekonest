@@ -1,0 +1,28 @@
+{
+  "id": "trs-quarter",
+  "kind": "connector",
+  "tier": "connector",
+  "realSizeMm": {
+    "w": 14.5,
+    "h": 14.5,
+    "d": 93
+  },
+  "ports": [],
+  "controls": [],
+  "mating": {
+    "role": "plug",
+    "outerMm": 6.29
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/media/8523/download/np3x-2.pdf?v=1",
+      "note": "Neutrik NP3X dimension drawing ST-NP3X (opened, rendered): tip and sleeve diameter 6.29 mm (0.248 in), body diameter 14.5 mm, overall length min. 93 mm."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/np3x.pdf",
+      "note": "Neutrik NP3X datasheet (opened): 3-pole 1/4 in professional phone plug (TRS), slimline shell 14.5 mm wide. What the model is: the cable-end TRS plug (catalog trs-quarter matesWith itself, the plug goes into a panel jack of the same type). role = plug; outerMm = 6.29 mm, 0.06 mm under a 6.35 mm (1/4 in) jack bushing, inside the connector-fit gate (0 to 0.3 mm under). Body along +Z, mating face (the tip end) at z = 0; length 93 mm, the manufacturer's stated minimum."
+    }
+  ]
+}

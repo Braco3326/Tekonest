@@ -1,0 +1,32 @@
+{
+  "id": "rj45",
+  "kind": "connector",
+  "tier": "connector",
+  "realSizeMm": {
+    "w": 11.68,
+    "h": 8,
+    "d": 22.48
+  },
+  "ports": [],
+  "controls": [],
+  "mating": {
+    "role": "plug"
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://en.wikipedia.org/wiki/Modular_connector",
+      "note": "Modular connector article (opened): 8P8C plug 22.48 mm long x 11.68 mm wide x 8.00 mm high, contact pitch 1.02 mm, quoting a Molex data sheet; IEC 60603-7 / ANSI/TIA-1096-A. Secondary source: the Molex data sheet itself could not be opened, so width and height still need a drawing check."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.digikey.com/en/products/detail/l-com/TDS8P8C/22644724",
+      "note": "L-com TDS8P8C 8P8C plug listing (opened): length 0.880 in (22.35 mm), within 0.15 mm of the 22.48 mm length above."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/ne8fdp.pdf",
+      "note": "Neutrik NE8FDP datasheet (opened): the etherCON receptacle accepts any standard RJ45 plug, so this plug goes into both an rj45 and an ethercon port (catalog matesWith rj45, ethercon). What the model is: the bare cable RJ45 plug (8P8C), role = plug, no mating diameter because the plug is rectangular. Body along +Z, mating face (contact end) at z = 0; w = 11.68 (x), h = 8.00 (y, latch side up), d = 22.48 (z)."
+    }
+  ]
+}
