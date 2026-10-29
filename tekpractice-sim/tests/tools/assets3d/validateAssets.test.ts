@@ -6,7 +6,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { buildPlacement } from '../../../tools/assets3d/placement'
+import { buildPlacement, toExtras } from '../../../tools/assets3d/placement'
 import type { AssetSpecT } from '../../../tools/assets3d/specSchema'
 import { main, validateAssets } from '../../../tools/validate-assets'
 import { makeBoxGlb } from './helpers'
@@ -33,9 +33,12 @@ function nodesOf(spec: AssetSpecT): { name: string; pos: [number, number, number
   return [...placement.ports.map((p) => ({ name: p.name, pos: p.pos })), ...placement.controls.map((c) => ({ name: c.name, pos: c.pos }))]
 }
 
-/** A GLB that meets `spec`: a box of its size with the port and control nodes in place. */
+/** The root extras fixup.py writes on every pipeline-built GLB. */
+const extrasOf = (spec: AssetSpecT): object => ({ tekpractice: toExtras(spec, buildPlacement(spec)) })
+
+/** A pipeline-built GLB that meets `spec`: a box of its size with the port and control nodes in place, and the extras. */
 async function goodGlb(spec: AssetSpecT): Promise<Uint8Array> {
-  return makeBoxGlb({ sizeM: SIZE_M, nodes: nodesOf(spec) })
+  return makeBoxGlb({ sizeM: SIZE_M, nodes: nodesOf(spec), extras: extrasOf(spec) })
 }
 
 let root: string
@@ -73,10 +76,29 @@ describe('validateAssets', () => {
   it('fails when a shipped GLB breaks its spec', async () => {
     const spec = deviceSpec()
     writeSpec(spec)
-    writeGlb(spec.id, await makeBoxGlb({ sizeM: { w: 0.2, h: 0.1, d: 0.4 }, nodes: [] }))
+    writeGlb(spec.id, await makeBoxGlb({ sizeM: { w: 0.2, h: 0.1, d: 0.4 }, nodes: [], extras: extrasOf(spec) }))
     const [entry] = await validateAssets(assetsDir, specsDir)
     expect(entry.status).toBe('failed')
     expect(entry.results.filter((r) => !r.ok).map((r) => r.gate)).toContain('size')
+  })
+
+  it('a spec with a legacy GLB (no tekpractice extras) is pending, whatever its gates would say', async () => {
+    const spec = deviceSpec()
+    writeSpec(spec)
+    writeGlb(spec.id, await makeBoxGlb({ sizeM: { w: 0.2, h: 0.1, d: 0.4 }, nodes: [] }))
+    expect(await validateAssets(assetsDir, specsDir)).toEqual([{ id: 'test-mixer', status: 'pending', results: [] }])
+    // other root extras are not the pipeline's
+    writeGlb(spec.id, await makeBoxGlb({ sizeM: SIZE_M, nodes: nodesOf(spec), extras: { author: 'blender' } }))
+    expect((await validateAssets(assetsDir, specsDir))[0].status).toBe('pending')
+  })
+
+  it('a spec with a pipeline GLB that fails a gate is failed (pending is only for GLBs without extras)', async () => {
+    const spec = deviceSpec()
+    writeSpec(spec)
+    writeGlb(spec.id, await makeBoxGlb({ sizeM: SIZE_M, nodes: [], extras: extrasOf(spec) }))
+    const [entry] = await validateAssets(assetsDir, specsDir)
+    expect(entry.status).toBe('failed')
+    expect(entry.results.filter((r) => !r.ok).map((r) => r.gate)).toEqual(['parts', 'portPositions'])
   })
 
   it('a spec without a GLB fails with missing-glb', async () => {
@@ -130,7 +152,7 @@ describe('validateAssets', () => {
   it('a textured file over the texture limit fails the textures gate', async () => {
     const spec = deviceSpec()
     writeSpec(spec)
-    writeGlb(spec.id, await makeBoxGlb({ sizeM: SIZE_M, nodes: nodesOf(spec), texture: { sizePx: 1100 } }))
+    writeGlb(spec.id, await makeBoxGlb({ sizeM: SIZE_M, nodes: nodesOf(spec), texture: { sizePx: 1100 }, extras: extrasOf(spec) }))
     const [entry] = await validateAssets(assetsDir, specsDir)
     expect(entry.status).toBe('failed')
     expect(entry.results.filter((r) => !r.ok).map((r) => r.gate)).toEqual(['textures'])
@@ -139,7 +161,7 @@ describe('validateAssets', () => {
   it('a file the Khronos glTF validator rejects fails the validator gate', async () => {
     const spec = deviceSpec()
     writeSpec(spec)
-    writeGlb(spec.id, await makeBoxGlb({ sizeM: SIZE_M, nodes: nodesOf(spec), texture: { sizePx: 64 }, noTexcoord: true }))
+    writeGlb(spec.id, await makeBoxGlb({ sizeM: SIZE_M, nodes: nodesOf(spec), texture: { sizePx: 64 }, noTexcoord: true, extras: extrasOf(spec) }))
     const [entry] = await validateAssets(assetsDir, specsDir)
     expect(entry.status).toBe('failed')
     expect(entry.results.filter((r) => !r.ok).map((r) => r.gate)).toEqual(['validator'])
@@ -172,7 +194,7 @@ describe('validate-assets CLI main', () => {
     writeGlb('old-model', await makeBoxGlb({ sizeM: SIZE_M }))
     const { code, lines } = await run()
     expect(code).toBe(0)
-    expect(lines.at(-1)).toBe('1 ok, 0 failed, 1 unmigrated')
+    expect(lines.at(-1)).toBe('1 ok, 0 failed, 0 pending, 1 unmigrated')
     expect(lines.some((l) => /^old-model\s+unmigrated\s+\S/.test(l))).toBe(true)
     expect(lines.some((l) => /^test-mixer\s+ok\s+\S/.test(l))).toBe(true)
   })
@@ -182,13 +204,24 @@ describe('validate-assets CLI main', () => {
     const { code, lines } = await run()
     expect(code).toBe(1)
     expect(lines.some((l) => /^test-mixer\s+failed\s+.*missing-glb/.test(l))).toBe(true)
-    expect(lines.at(-1)).toBe('0 ok, 1 failed, 0 unmigrated')
+    expect(lines.at(-1)).toBe('0 ok, 1 failed, 0 pending, 0 unmigrated')
+  })
+
+  it('pending entries are info: exit 0, counted in the summary', async () => {
+    const spec = deviceSpec()
+    writeSpec(spec)
+    writeGlb(spec.id, await makeBoxGlb({ sizeM: SIZE_M }))
+    writeGlb('old-model', await makeBoxGlb({ sizeM: SIZE_M }))
+    const { code, lines } = await run()
+    expect(code).toBe(0)
+    expect(lines.some((l) => /^test-mixer\s+pending\s+.*rebuild pending/.test(l))).toBe(true)
+    expect(lines.at(-1)).toBe('0 ok, 0 failed, 1 pending, 1 unmigrated')
   })
 
   it('works on empty and missing directories', async () => {
     const lines: string[] = []
     const code = await main(['--assets', join(root, 'x'), '--specs', join(root, 'y')], (l) => lines.push(l))
     expect(code).toBe(0)
-    expect(lines.at(-1)).toBe('0 ok, 0 failed, 0 unmigrated')
+    expect(lines.at(-1)).toBe('0 ok, 0 failed, 0 pending, 0 unmigrated')
   })
 })

@@ -5,13 +5,15 @@
  *
  * Per id (union of the top-level `<id>.glb` files and the `<id>.json` specs, sorted):
  *  - a GLB without a spec is `unmigrated`: info only, never a failure, so the old models keep shipping
- *  - a spec and a GLB: the shipped bytes are inspected, then the five asset gates plus `textures` and `validator` run (the
+ *  - a spec and a GLB WITHOUT the `tekpractice` extras on its root is `pending`: a legacy model that predates the
+ *    pipeline (the spec exists, the rebuild has not shipped yet). Info only, never a failure
+ *  - a spec and a GLB WITH the extras (built by the pipeline): the shipped bytes are inspected, then the five asset gates plus `textures` and `validator` run (the
  *    final-bytes set build-asset runs on the file it ships); `failed` when any result is not ok. checkConnectorFit (plug / socket
  *    pairs) is out of scope here
  *  - a spec without a GLB is `failed` (gate `missing-glb`): a spec means the asset is supposed to be migrated
  *  - an unreadable or invalid spec (gate `spec`) or an unreadable GLB (gate `glb`) fails that entry only
  * Only the top level of the assets folder is read: environments/ and thumbnails are ignored. A missing folder is empty.
- * Prints `id  status  detail` rows, then `N ok, M failed, K unmigrated`; exit code 1 when any entry failed.
+ * Prints `id  status  detail` rows, then `N ok, M failed, K pending, L unmigrated`; exit code 1 when any entry failed.
  */
 import { existsSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
@@ -27,7 +29,7 @@ import { AssetSpec } from './assets3d/specSchema'
 import { validateGltf } from './assets3d/validateGltf'
 import type { AssetSpecT } from './assets3d/specSchema'
 
-export type AssetStatus = 'ok' | 'failed' | 'unmigrated'
+export type AssetStatus = 'ok' | 'failed' | 'pending' | 'unmigrated'
 
 export interface AssetValidation {
   id: string
@@ -66,6 +68,13 @@ async function readSpec(file: string): Promise<AssetSpecT> {
   return parsed.data
 }
 
+/** True when a root's extras carry the pipeline's `tekpractice` object (written by fixup.py on every built GLB). */
+function hasPipelineExtras(extras: unknown): boolean {
+  if (extras === null || typeof extras !== 'object') return false
+  const t = (extras as Record<string, unknown>).tekpractice
+  return t !== null && typeof t === 'object'
+}
+
 /** Validates one id; never throws. */
 async function validateOne(id: string, glbFile: string | undefined, specFile: string | undefined): Promise<AssetValidation> {
   if (specFile === undefined) return { id, status: 'unmigrated', results: [] }
@@ -82,6 +91,8 @@ async function validateOne(id: string, glbFile: string | undefined, specFile: st
   try {
     const bytes = new Uint8Array(await readFile(glbFile))
     const report = await inspectGlb(bytes)
+    // A legacy GLB (no pipeline extras) is not measured against the new spec: its rebuild is pending.
+    if (!hasPipelineExtras(report.extras)) return { id, status: 'pending', results: [] }
     results = [...runGates(report, spec, buildPlacement(spec)), checkTextures(report, spec), checkValidator(await validateGltf(bytes))]
   } catch (e) {
     return { id, status: 'failed', results: [fail('glb', `cannot read ${basename(glbFile)}: ${message(e)}`)] }
@@ -105,6 +116,7 @@ export async function validateAssets(assetsDir: string, specsDir: string): Promi
 /** The detail column of a row. */
 function detailOf(entry: AssetValidation): string {
   if (entry.status === 'unmigrated') return 'no spec yet (old model, still shipping)'
+  if (entry.status === 'pending') return 'spec ready, the shipped GLB predates the pipeline (no tekpractice extras): rebuild pending'
   if (entry.status === 'ok') return `${entry.results.length} gates passed`
   return entry.results.filter((r) => !r.ok).map((r) => `${r.gate}: ${r.detail}`).join('; ')
 }
@@ -117,7 +129,7 @@ export function report(entries: AssetValidation[], print: Print): number {
   print(`${'id'.padEnd(width)}  ${'status'.padEnd(10)}  detail`)
   for (const e of entries) print(`${e.id.padEnd(width)}  ${e.status.padEnd(10)}  ${detailOf(e)}`)
   const count = (s: AssetStatus): number => entries.filter((e) => e.status === s).length
-  print(`${count('ok')} ok, ${count('failed')} failed, ${count('unmigrated')} unmigrated`)
+  print(`${count('ok')} ok, ${count('failed')} failed, ${count('pending')} pending, ${count('unmigrated')} unmigrated`)
   return count('failed') > 0 ? 1 : 0
 }
 
