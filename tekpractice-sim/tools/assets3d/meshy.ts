@@ -22,6 +22,13 @@ const MAX_IMAGES = 4
 const DEFAULT_POLL_MS = 5000
 const DEFAULT_TIMEOUT_MS = 15 * 60 * 1000
 const TERMINAL = new Set(['SUCCEEDED', 'FAILED', 'CANCELED'])
+const MIN_POLYCOUNT = 100
+const MAX_POLYCOUNT = 300000
+/** Meshy rejects images over 20 MB; checked on the decoded size. */
+const MAX_IMAGE_BYTES = 20 * 1024 * 1024
+const DATA_URI = /^data:image\/(png|jpeg|webp);base64,/
+const MAY_EXIST =
+  'A task MAY already have been created and charged: check the Meshy dashboard before retrying, or a second paid task could be created'
 
 export interface MeshyOpts {
   /** Target face count after remeshing (Meshy accepts 100 to 300000). */
@@ -63,10 +70,11 @@ export class MeshyError extends Error {
   }
 }
 
-function resolveDeps(deps: Partial<MeshyDeps>): MeshyDeps {
+/** Fills the defaults. `needKey: false` (the pre-signed asset download) never reads the environment and yields an empty key. */
+function resolveDeps(deps: Partial<MeshyDeps>, needKey = true): MeshyDeps {
   return {
     fetch: deps.fetch ?? globalThis.fetch,
-    key: deps.key ?? requireMeshyKey(),
+    key: deps.key ?? (needKey ? requireMeshyKey() : ''),
     sleep: deps.sleep ?? ((ms) => new Promise<void>((r) => setTimeout(r, ms))),
     now: deps.now ?? Date.now,
   }
@@ -111,15 +119,46 @@ function authHeaders(d: MeshyDeps): Record<string, string> {
   return { Authorization: `Bearer ${d.key}`, 'Content-Type': 'application/json' }
 }
 
+/** The same error (status kept, message already redacted) with an extra sentence. */
+function withNote(e: MeshyError, note: string): MeshyError {
+  return new MeshyError(e.status, `${e.message}. ${note}`)
+}
+
+/** Decoded byte length of a base64 payload, computed from its length (nothing is decoded or allocated). */
+function base64Bytes(payload: string): number {
+  const pad = payload.endsWith('==') ? 2 : payload.endsWith('=') ? 1 : 0
+  return Math.floor((payload.length * 3) / 4) - pad
+}
+
+/** Pre-flight checks: anything Meshy would answer with a 400 is refused here, before a request is made. */
+function validateCreateInput(images: string[], opts: MeshyOpts, key: string): void {
+  const reject = (msg: string): never => {
+    throw new MeshyError(0, redact(msg, key))
+  }
+  if (images.length < 1 || images.length > MAX_IMAGES) {
+    reject(`Meshy multi-image-to-3d takes 1 to ${MAX_IMAGES} images, got ${images.length}`)
+  }
+  const poly = opts.targetPolycount
+  if (!Number.isInteger(poly) || poly < MIN_POLYCOUNT || poly > MAX_POLYCOUNT) {
+    reject(`Meshy targetPolycount must be an integer from ${MIN_POLYCOUNT} to ${MAX_POLYCOUNT}, got ${String(poly)}`)
+  }
+  images.forEach((img, i) => {
+    if (typeof img !== 'string') reject(`Meshy image ${i} is not a string`)
+    if (img.startsWith('https://')) return
+    const m = DATA_URI.exec(img)
+    if (!m) reject(`Meshy image ${i} must be an https URL or a data:image/(png|jpeg|webp);base64, URI`)
+    const bytes = base64Bytes(img.slice(m ? m[0].length : 0))
+    if (bytes > MAX_IMAGE_BYTES) reject(`Meshy image ${i} is ${bytes} bytes decoded, over the 20 MB limit`)
+  })
+}
+
 /** Starts a multi-image-to-3D task from 1-4 image data URIs and returns its id. Spends credits: called once, never retried. */
 export async function createMultiImageTask(
   images: string[],
   opts: MeshyOpts,
   deps: Partial<MeshyDeps> = {},
 ): Promise<string> {
-  if (images.length < 1 || images.length > MAX_IMAGES) {
-    throw new MeshyError(0, `Meshy multi-image-to-3d takes 1 to ${MAX_IMAGES} images, got ${images.length}`)
-  }
+  validateCreateInput(images, opts, deps.key ?? '')
   const d = resolveDeps(deps)
   const body = {
     image_urls: images,
@@ -134,13 +173,38 @@ export async function createMultiImageTask(
     target_formats: ['glb'],
     auto_size: false,
   }
-  const res = await send(BASE_URL + TASK_PATH, { method: 'POST', headers: authHeaders(d), body: JSON.stringify(body) }, d)
-  if (!res.ok) throw await failure(res, d.key)
+  // A dropped connection or a 5xx can happen after Meshy accepted (and charged) the task: say so, never retry.
+  let res: Response
+  try {
+    res = await send(BASE_URL + TASK_PATH, { method: 'POST', headers: authHeaders(d), body: JSON.stringify(body) }, d)
+  } catch (e) {
+    throw e instanceof MeshyError ? withNote(e, MAY_EXIST) : e
+  }
+  if (!res.ok) {
+    const err = await failure(res, d.key)
+    throw res.status >= 500 ? withNote(err, MAY_EXIST) : err
+  }
   const parsed = (await res.json().catch(() => null)) as { result?: unknown } | null
   if (!parsed || typeof parsed.result !== 'string' || !parsed.result) {
-    throw new MeshyError(res.status, 'Meshy create response had no task id (result)')
+    throw new MeshyError(res.status, `Meshy create response had no task id (result). ${MAY_EXIST}`)
   }
   return parsed.result
+}
+
+/** One GET of the task. Every failure (HTTP, network, unreadable body) names the id and says the task may still be running. */
+async function pollOnce(id: string, d: MeshyDeps): Promise<MeshyTask> {
+  const note = `Task ${id} may still be running on Meshy: check the dashboard, or poll it again with this id`
+  try {
+    const res = await send(`${BASE_URL}${TASK_PATH}/${encodeURIComponent(id)}`, { method: 'GET', headers: authHeaders(d) }, d)
+    if (!res.ok) throw await failure(res, d.key)
+    const body = (await res.json().catch(() => null)) as MeshyTask | null
+    if (!body || typeof body !== 'object' || typeof body.status !== 'string') {
+      throw new MeshyError(res.status, 'Meshy task response was not valid JSON for a task')
+    }
+    return body
+  } catch (e) {
+    throw withNote(e instanceof MeshyError ? e : new MeshyError(0, redact(String(e), d.key)), note)
+  }
 }
 
 /** Polls the task every `pollMs` until SUCCEEDED (returned), FAILED / CANCELED (thrown) or `timeoutMs` (thrown, naming the id). */
@@ -154,16 +218,17 @@ export async function waitForTask(
   const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS
   const start = d.now()
   for (;;) {
-    const res = await send(`${BASE_URL}${TASK_PATH}/${encodeURIComponent(id)}`, { method: 'GET', headers: authHeaders(d) }, d)
-    if (!res.ok) throw await failure(res, d.key)
-    const task = (await res.json()) as MeshyTask
+    const task = await pollOnce(id, d)
     if (TERMINAL.has(task.status)) {
       if (task.status === 'SUCCEEDED') return task
       const why = task.task_error?.message ? `: ${task.task_error.message}` : ''
       throw new MeshyError(0, redact(`Meshy task ${id} ${task.status}${why}`, d.key))
     }
     if (d.now() - start >= timeoutMs) {
-      throw new MeshyError(0, `Meshy task ${id} timed out after ${timeoutMs} ms (last status ${task.status}, ${task.progress}%)`)
+      throw new MeshyError(
+        0,
+        `Meshy task ${id} timed out after ${timeoutMs} ms (last status ${task.status}, ${task.progress}%); it may still be running on Meshy`,
+      )
     }
     await d.sleep(pollMs)
   }
@@ -173,7 +238,7 @@ export async function waitForTask(
 export async function downloadGlb(task: MeshyTask, deps: Partial<MeshyDeps> = {}): Promise<Uint8Array> {
   const url = task.model_urls?.glb
   if (!url) throw new MeshyError(0, `Meshy task ${task.id} has no model_urls.glb to download`)
-  const d = resolveDeps(deps)
+  const d = resolveDeps(deps, false) // no API key needed: the url is pre-signed
   if (task.expires_at && task.expires_at < d.now()) {
     throw new MeshyError(0, `Meshy task ${task.id} has expired (files are deleted after 3 days); its GLB can no longer be downloaded`)
   }

@@ -302,3 +302,160 @@ describe('getBalance', () => {
     await expect(getBalance({ fetch: odd.fetch, key: KEY })).rejects.toThrow(/balance/)
   })
 })
+
+describe('createMultiImageTask pre-flight validation', () => {
+  async function rejected(images: string[], polycount: number, pattern: RegExp): Promise<void> {
+    const f = fakeFetch([json({ result: 'x' })])
+    const err = await createMultiImageTask(images, { targetPolycount: polycount }, { fetch: f.fetch, key: KEY }).catch(
+      (e: unknown) => e,
+    )
+    expect(err).toBeInstanceOf(MeshyError)
+    expect((err as MeshyError).status).toBe(0)
+    expect((err as MeshyError).message).toMatch(pattern)
+    expect((err as MeshyError).message).not.toContain(KEY)
+    expect(f.calls).toHaveLength(0)
+  }
+
+  it.each([NaN, Infinity, 1000.5, 99, 300001, -5, 0])('rejects targetPolycount %s before any request', async (n) => {
+    await rejected([IMG], n, /targetPolycount/)
+  })
+
+  it.each([100, 300000])('accepts the targetPolycount bound %s', async (n) => {
+    const f = fakeFetch([json({ result: 'ok' })])
+    await expect(createMultiImageTask([IMG], { targetPolycount: n }, { fetch: f.fetch, key: KEY })).resolves.toBe('ok')
+    expect(f.calls).toHaveLength(1)
+  })
+
+  it.each([
+    ['a plain http URL', 'http://example.com/a.png'],
+    ['a local path', 'C:/images/front.png'],
+    ['a gif data URI', 'data:image/gif;base64,AAAA'],
+    ['a non-base64 data URI', 'data:image/png,AAAA'],
+    ['an empty string', ''],
+  ])('rejects %s before any request', async (_label, img) => {
+    await rejected([IMG, img], 1000, /https URL or a data:image/)
+  })
+
+  it('accepts https URLs and png / jpeg / webp data URIs', async () => {
+    const f = fakeFetch([json({ result: 'ok' })])
+    const imgs = ['https://example.com/a.png', 'data:image/jpeg;base64,AAAA', 'data:image/webp;base64,AAAA']
+    await expect(createMultiImageTask(imgs, { targetPolycount: 1000 }, { fetch: f.fetch, key: KEY })).resolves.toBe('ok')
+  })
+
+  it('rejects a data URI whose decoded size is over 20 MB, without decoding it', async () => {
+    // 20 MiB = 20971520 bytes; 27962032 base64 chars decode to 20971524 bytes.
+    const big = 'data:image/png;base64,' + 'A'.repeat(27_962_032)
+    await rejected([big], 1000, /20 MB/)
+  })
+
+  it('accepts a data URI just under 20 MB', async () => {
+    const f = fakeFetch([json({ result: 'ok' })])
+    const edge = 'data:image/png;base64,' + 'A'.repeat(27_962_024) // 20971518 bytes
+    await expect(createMultiImageTask([edge], { targetPolycount: 1000 }, { fetch: f.fetch, key: KEY })).resolves.toBe('ok')
+  })
+})
+
+describe('credit safety on the create POST', () => {
+  it('a rejected fetch says a task MAY already have been created', async () => {
+    const f = fakeFetch([new Error(`socket hang up ${KEY}`)])
+    const err = (await createMultiImageTask([IMG], { targetPolycount: 1000 }, { fetch: f.fetch, key: KEY }).catch(
+      (e: unknown) => e,
+    )) as MeshyError
+    expect(err).toBeInstanceOf(MeshyError)
+    expect(err.message).toMatch(/may already have been created/i)
+    expect(err.message).toMatch(/dashboard/i)
+    expect(err.message).not.toContain(KEY)
+    expect(f.calls).toHaveLength(1)
+  })
+
+  it('a 500 says a task MAY already have been created, keeps the status, and is not retried', async () => {
+    const f = fakeFetch([json({ message: 'internal' }, 500), json({ result: 'late' })])
+    const err = (await createMultiImageTask([IMG], { targetPolycount: 1000 }, { fetch: f.fetch, key: KEY }).catch(
+      (e: unknown) => e,
+    )) as MeshyError
+    expect(err.status).toBe(500)
+    expect(err.message).toMatch(/may already have been created/i)
+    expect(err.message).toMatch(/dashboard/i)
+    expect(f.calls).toHaveLength(1)
+  })
+
+  it('a 200 without a task id also warns that a task may exist', async () => {
+    const f = fakeFetch([json({})])
+    const err = (await createMultiImageTask([IMG], { targetPolycount: 1000 }, { fetch: f.fetch, key: KEY }).catch(
+      (e: unknown) => e,
+    )) as MeshyError
+    expect(err.message).toMatch(/may already have been created/i)
+  })
+
+  it('a 400 / 402 / 429 (nothing created) does not carry the warning', async () => {
+    for (const status of [400, 402, 429]) {
+      const f = fakeFetch([json({ message: 'no' }, status)])
+      const err = (await createMultiImageTask([IMG], { targetPolycount: 1000 }, { fetch: f.fetch, key: KEY }).catch(
+        (e: unknown) => e,
+      )) as MeshyError
+      expect(err.message).not.toMatch(/may already have been created/i)
+    }
+  })
+})
+
+describe('waitForTask poll errors', () => {
+  const run = (replies: Reply[]): Promise<unknown> => {
+    const c = clock()
+    const f = fakeFetch(replies)
+    return waitForTask('task-xyz', { fetch: f.fetch, key: KEY, sleep: c.sleep, now: c.now }).catch((e: unknown) => e)
+  }
+
+  it('a 500 poll names the task id and says it may still be running', async () => {
+    const err = (await run([json({ message: 'down' }, 500)])) as MeshyError
+    expect(err).toBeInstanceOf(MeshyError)
+    expect(err.status).toBe(500)
+    expect(err.message).toContain('task-xyz')
+    expect(err.message).toMatch(/may still be running/i)
+    expect(err.message).not.toContain(KEY)
+  })
+
+  it('a rejected fetch while polling names the task id, says it may still be running, and hides the key', async () => {
+    const err = (await run([new Error(`ECONNRESET ${KEY}`)])) as MeshyError
+    expect(err).toBeInstanceOf(MeshyError)
+    expect(err.message).toContain('ECONNRESET')
+    expect(err.message).toContain('task-xyz')
+    expect(err.message).toMatch(/may still be running/i)
+    expect(err.message).not.toContain(KEY)
+    expect(JSON.stringify(err, Object.getOwnPropertyNames(err))).not.toContain(KEY)
+  })
+
+  it('a 200 with invalid JSON becomes a MeshyError, not a SyntaxError', async () => {
+    const err = (await run([new Response('<html>oops</html>', { status: 200 })])) as MeshyError
+    expect(err).toBeInstanceOf(MeshyError)
+    expect(err.message).toContain('task-xyz')
+    expect(err.message).toMatch(/may still be running/i)
+    expect(err.message).not.toContain(KEY)
+  })
+
+  it('a 200 with a null body becomes a MeshyError', async () => {
+    const err = (await run([json(null)])) as MeshyError
+    expect(err).toBeInstanceOf(MeshyError)
+    expect(err.message).toContain('task-xyz')
+  })
+
+  it('a FAILED task is not described as still running', async () => {
+    const err = (await run([json(task({ status: 'FAILED', task_error: { message: 'bad mesh' } }))])) as MeshyError
+    expect(err.message).toContain('bad mesh')
+    expect(err.message).not.toMatch(/may still be running/i)
+  })
+})
+
+describe('downloadGlb without an API key', () => {
+  it('works with MESHY_API_KEY unset and no deps.key', async () => {
+    const saved = process.env.MESHY_API_KEY
+    delete process.env.MESHY_API_KEY
+    try {
+      const f = fakeFetch([() => new Response(new Uint8Array([7, 8, 9]), { status: 200 })])
+      const got = await downloadGlb(task({ model_urls: { glb: 'https://assets.meshy.ai/m.glb' } }), { fetch: f.fetch })
+      expect(Array.from(got)).toEqual([7, 8, 9])
+      expect(f.calls[0].init.headers).toBeUndefined()
+    } finally {
+      if (saved !== undefined) process.env.MESHY_API_KEY = saved
+    }
+  })
+})
