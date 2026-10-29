@@ -5,7 +5,7 @@
  *   L = L_ref + D(θH, θV) − 20·log10(max(r, 0.5 m))        D = max(−6·u², −30) dB,  u² = (θH/(H/2))² + (θV/(V/2))²
  *
  * -6 dB per doubling of distance; exactly −6 dB at half the nominal H (or V) coverage; −30 dB behind the speaker plane and as the floor.
- * Not modelled: reflections, interference (the overlap flag is only a warning), air absorption, STI. See ADR-0015.
+ * Not modelled: reflections, interference (the overlap flag is only a warning), air absorption, intelligibility. See ADR-0015.
  *
  * NaN contract: nothing returned here is NaN for finite inputs. `-Infinity` is « no sound » (an empty source list, or every feed at −inf):
  * `maxDb` is `-Infinity` and every `relDb` is `-Infinity`.

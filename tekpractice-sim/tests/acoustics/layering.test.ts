@@ -2,7 +2,7 @@
  * Task 36: the acoustics CORE (geometry, field, scale, grid) is a pure layer. It runs in a Web Worker (Task 37) and is read by
  * src/audio/listenerMix.ts (Task 39), so it may import only itself: no Babylon, no DOM, no store, no creation / engine / flow module.
  * A TYPE import from tools/schemas is the only thing allowed to reach outside (it is erased and carries no runtime dependency).
- * Task 37 adds worker.ts and client.ts to the same folder; they must use `self` / `postMessage` and are NOT part of the core, so this test
+ * Task 37 adds worker.ts, client.ts and job.ts to the same folder (worker.ts uses `self` / `postMessage`); they are NOT part of the core, so this test
  * names the core files explicitly instead of reading the folder. Modelled on the src/flow guard (tests/flow/signalPath.test.ts).
  */
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
@@ -87,6 +87,38 @@ describe('the acoustics core stays a pure layer', () => {
   })
   it('the core does not depend on Date or randomness (the field is a pure function of its inputs)', () => {
     for (const f of coreFiles()) expect(readFileSync(f, 'utf8'), rel(f)).not.toMatch(/\bDate\b|Math\.random|performance\.now/)
+  })
+})
+
+describe('the worker side (Task 37): worker.ts, client.ts and job.ts import only the core and each other', () => {
+  const SIDE = ['worker', 'client', 'job'] as const
+  const ALLOWED_SIDE: Record<(typeof SIDE)[number], string[]> = {
+    job: ['job', ...CORE],
+    client: ['client', 'job', ...CORE],
+    worker: ['worker', 'job', ...CORE],
+  }
+  const file = (n: string): string => resolve(dir, `${n}.ts`)
+  it('the three files exist', () => {
+    for (const n of SIDE) expect(existsSync(file(n)), n).toBe(true)
+  })
+  it('the value-import closure of each stays inside its allow-list and reaches no package', () => {
+    for (const n of SIDE) {
+      const { files, packages } = closure(file(n))
+      const names = [...files].map((f) => rel(f).replace(/^\/acoustics\//, '').replace(/\.ts$/, ''))
+      for (const f of names) expect(ALLOWED_SIDE[n], `${n}.ts reaches ${f}`).toContain(f)
+      expect([...packages], n).toEqual([])
+    }
+  })
+  it('only the worker names a worker global; none names Babylon, the DOM, the store or the shell', () => {
+    for (const n of SIDE) {
+      const code = stripComments(readFileSync(file(n), 'utf8'))
+      for (const bad of [/@babylonjs/, /\bdocument\b/, /\bwindow\b/, /creation\/store/, /ConnectionGraph/, /RuleEvaluator/, /\bCOPY\b/]) expect(code, `${n}.ts ${bad}`).not.toMatch(bad)
+      if (n !== 'worker') expect(code, `${n}.ts names a worker global`).not.toMatch(/\bself\b/)
+    }
+    expect(stripComments(readFileSync(file('worker'), 'utf8'))).toMatch(/\bself\b/)
+  })
+  it('no core module imports the worker side (the core stays importable by listenerMix and by the worker alike)', () => {
+    for (const f of coreFiles()) for (const spec of valueSpecifiers(readFileSync(f, 'utf8'))) expect(spec, rel(f)).not.toMatch(/worker|client|job/)
   })
 })
 

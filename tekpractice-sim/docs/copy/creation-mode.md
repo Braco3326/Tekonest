@@ -77,6 +77,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.delete` | Supprimer | à valider (tekuxwriter) | Matériel ; supprime l’appareil sélectionné et ses câbles (Suppr) ; annulable ; grisé sans sélection |
 | `menu.connectTo` | Connecter à… | validé | Câblage ; même libellé que l'action Propriétés « Connecter à… » (C10) |
 | `menu.play` | Écouter le morceau | validé | Écoute ; inactif tant que la lecture n'existe pas |
+| `menu.coverage` | Couverture | à valider (tekuxwriter) | Écoute › Couverture : case à cocher (décochée au départ) |
 | `menu.panelTree` | Panneau Projet | validé | Vue ; replie / déplie le panneau |
 | `menu.panelProps` | Panneau Propriétés | validé | Vue ; idem |
 | `menu.shortcuts` | Raccourcis clavier | validé | Aide ; affiche « H » depuis Task 8, inactif jusqu'au panneau d'aide |
@@ -648,3 +649,65 @@ Noms français des connecteurs du catalogue (`connectorTypes[].id`), repris dans
 | `connector.usb-c` | USB Type-C / Thunderbolt 3 | à valider (tekuxwriter) | Étiquette de prise |
 | `connector.digilink` | Avid DigiLink | à valider (tekuxwriter) | Étiquette de prise |
 | `connector.gpio-terminal` | Bornier GPIO / port logique D-sub | à valider (tekuxwriter) | Étiquette de prise |
+
+## coverage
+
+Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statistiques et les mentions d’honnêteté. Aucun score d’intelligibilité, aucune limite réglementaire : niveaux relatifs seulement (brief §5). Toutes les formulations sont des brouillons.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `coverage.panelTitle` | Couverture | à valider (tekuxwriter) | Titre du bloc, bas de Propriétés (jamais sur la vue 3D) |
+| `coverage.panelCollapse` | Replier la couverture | à valider (tekuxwriter) | Nom du bouton quand le bloc est déplié |
+| `coverage.panelExpand` | Déplier la couverture | à valider (tekuxwriter) | Nom du bouton quand le bloc est replié |
+| `coverage.unit` | dB relatif (0 = point le plus fort) | à valider (tekuxwriter) | Unité de l’échelle. Mot pour mot (brief §5) |
+| `coverage.method` | somme énergétique, champ direct | à valider (tekuxwriter) | Ce que le calcul fait. Mot pour mot (brief §5) |
+| `coverage.chip` | relatif | à valider (tekuxwriter) | Pastille de fidélité (brief §5) |
+| `coverage.chipName` | Fidélité du calcul : relatif | à valider (tekuxwriter) | Nom accessible de la pastille (bouton qui ouvre l’explication) |
+| `coverage.chipPopover` | Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de ce lieu avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. | à valider (tekuxwriter) | Explication de la pastille |
+| `coverage.legendTitle` | Échelle | à valider (tekuxwriter) | Titre de la légende des couleurs |
+| `coverage.legendBin` | {from} à {to} dB | à valider (tekuxwriter) | Une ligne de légende ; {from} / {to} = bornes de la classe de 3 dB |
+| `coverage.legendLast` | {from} dB et moins | à valider (tekuxwriter) | Dernière ligne de légende (classe ouverte vers le bas) |
+| `coverage.legendCount` | {n} points | à valider (tekuxwriter) | Nombre de points dans la classe (texte lu avec la couleur) |
+| `coverage.hatched` | Hachuré : interférences non modélisées | à valider (tekuxwriter) | Ligne de légende des points à recouvrement (deux enceintes à 6 dB ou moins l’une de l’autre). Mot pour mot (brief §5) |
+| `coverage.hatchedCount` | {n} points concernés | à valider (tekuxwriter) | Nombre de points hachurés |
+| `coverage.aim` | Trait clair : axe de chaque enceinte audible | à valider (tekuxwriter) | Légende des traits d’axe tracés dans la vue 3D tant que la couverture est affichée |
+| `coverage.sourceLine` | Couverture : {sources} | à valider (tekuxwriter) | Provenance des angles ; {sources} = liste construite avec les clés ci-dessous |
+| `coverage.sourceKb` | données KB | à valider (tekuxwriter) | Angle issu de la base de connaissances |
+| `coverage.sourceNominal` | valeur nominale | à valider (tekuxwriter) | Angle par défaut 90° × 60° (aucune donnée constructeur) |
+| `coverage.sourceDatasheet` | fiche constructeur | à valider (tekuxwriter) | Angle issu d’une fiche constructeur |
+| `coverage.sourceDeduced` | V déduit | à valider (tekuxwriter) | À ajouter à « données KB » quand l’angle vertical est une déduction (K12.2 : « axisymmetric ») |
+| `coverage.speakersTitle` | Enceintes prises en compte | à valider (tekuxwriter) | Titre de la liste des enceintes du calcul |
+| `coverage.speakerRow` | {name} : {h}° × {v}° | à valider (tekuxwriter) | Une enceinte ; {name} = identifiant, {h} / {v} = couverture horizontale / verticale |
+| `coverage.statsTitle` | Statistiques | à valider (tekuxwriter) | Titre du bloc de statistiques (équivalent texte des points) |
+| `coverage.statMin` | Minimum | à valider (tekuxwriter) | Statistique |
+| `coverage.statMax` | Maximum | à valider (tekuxwriter) | Statistique |
+| `coverage.statMean` | Moyenne | à valider (tekuxwriter) | Statistique |
+| `coverage.statSd` | Écart-type | à valider (tekuxwriter) | Statistique (écart-type de population) |
+| `coverage.statCount` | Points | à valider (tekuxwriter) | Nombre de points d’écoute calculés |
+| `coverage.statStep` | Pas de la grille | à valider (tekuxwriter) | Distance entre deux points d’écoute |
+| `coverage.dbValue` | {v} dB | à valider (tekuxwriter) | Un niveau relatif ; {v} = nombre |
+| `coverage.mValue` | {v} m | à valider (tekuxwriter) | Une distance ; {v} = nombre |
+| `coverage.pointsTitle` | Niveau en un point | à valider (tekuxwriter) | Titre de la liste des points d’écoute nommés et du point épinglé |
+| `coverage.pointRow` | {name} : {value} | à valider (tekuxwriter) | Un point nommé ; {value} = niveau relatif |
+| `coverage.pointSilent` | aucun son | à valider (tekuxwriter) | Valeur d’un point qui ne reçoit rien |
+| `coverage.pin` | Épingler {name} | à valider (tekuxwriter) | Nom du bouton d’un point nommé ; {name} = Régie… |
+| `coverage.pinned` | Point épinglé ({x} m ; {z} m) : {value} | à valider (tekuxwriter) | Valeur du point cliqué dans la vue 3D ; {x} / {z} = position |
+| `coverage.unpin` | Retirer l’épingle | à valider (tekuxwriter) | Bouton |
+| `coverage.pinHint` | Cliquez un point coloré dans la vue 3D pour épingler son niveau. | à valider (tekuxwriter) | Aide sous la liste |
+| `coverage.splPending` | ≈ dB SPL estimé : non calculé (estimation pédagogique, formule non sourcée). | à valider (tekuxwriter) | Seulement si chaque enceinte a une sensibilité et un SPL max sourcés (aucune aujourd’hui : jamais affiché) |
+| `coverage.computing` | Calcul de la couverture… | à valider (tekuxwriter) | État pendant le calcul |
+| `coverage.failed` | Le calcul de la couverture a échoué. | à valider (tekuxwriter) | Le Worker n’a pas répondu ou a refusé le calcul |
+| `coverage.noAudience` | Pas de public dans ce lieu : aucune zone public ni régie à couvrir. Rien à calculer. | à valider (tekuxwriter) | Lieu sans zone « audience » ni « foh » |
+| `coverage.noSource` | Aucune enceinte audible : {reason} | à valider (tekuxwriter) | Aucun son à montrer ; {reason} = une raison ci-dessous |
+| `coverage.reasonNotFed` | aucune enceinte ne reçoit de signal ({why}) | à valider (tekuxwriter) | Le chemin du signal n’atteint aucune enceinte ; {why} = la première raison de la lecture |
+| `coverage.reasonNotFedBare` | aucune enceinte ne reçoit de signal | à valider (tekuxwriter) | Idem sans raison détaillée |
+| `coverage.reasonMuted` | la console est en mute | à valider (tekuxwriter) | Toutes les enceintes alimentées sont en sourdine |
+| `coverage.reasonSilent` | le fader master est à −inf | à valider (tekuxwriter) | Toutes les enceintes alimentées sont à −inf |
+| `coverage.reasonUnverified` | appareil non vérifié (Bêta) | à valider (tekuxwriter) | Enceinte Bêta : aucune donnée acoustique vérifiée |
+| `coverage.reasonNoAcoustic` | enceinte sans données acoustiques | à valider (tekuxwriter) | Enceinte du catalogue sans angles de couverture |
+| `coverage.reasonUnpowered` | enceinte hors tension | à valider (tekuxwriter) | Enceinte alimentée en signal mais sans secteur |
+| `coverage.reasonOther` | enceinte non utilisable | à valider (tekuxwriter) | Raison de repli (position ou couverture invalide) |
+| `coverage.reasonsJoin` |  ;  | à valider (tekuxwriter) | Séparateur de plusieurs raisons |
+| `coverage.announceDone` | Couverture calculée : {n} points, de {min} à {max} dB relatifs, pas de {step} m. | à valider (tekuxwriter) | Annoncé une fois par résultat (zone d’état) |
+| `coverage.announceOff` | Couverture masquée. | à valider (tekuxwriter) | Annoncé quand on la masque |
+| `coverage.announceNoPlace` | Choisissez un lieu pour calculer la couverture. | à valider (tekuxwriter) | Couverture demandée sans lieu |
