@@ -80,6 +80,50 @@ describe('pilot specs load and match the catalog', () => {
     }
   })
 
+  it.each(DEVICES)('%s: no two round ports on the same face overlap', (id) => {
+    const spec = byId(id)
+    const round = spec.ports.filter((p) => p.openingMm !== undefined)
+    // 0.5 mm of overlap is allowed for photo error. 24 mm is the Neutrik D-series panel cutout, not a mating opening,
+    // and the mic rows have a 23.8 - 23.9 mm pitch read from a photo, so a strict touch-test would be noise.
+    const TOLERANCE_MM = 0.5
+    for (let i = 0; i < round.length; i++) {
+      for (let j = i + 1; j < round.length; j++) {
+        const a = round[i]
+        const b = round[j]
+        if (a.face !== b.face) continue
+        const dist = Math.hypot(a.xMm - b.xMm, a.yMm - b.yMm)
+        const touching = ((a.openingMm ?? 0) + (b.openingMm ?? 0)) / 2
+        expect(dist, `${id}: ${a.portId} and ${b.portId} overlap`).toBeGreaterThanOrEqual(touching - TOLERANCE_MM)
+      }
+    }
+  })
+
+  /**
+   * QL1 top-face controls. The overhead photo (assets-source/yamaha-ql1/photos/top.jpg) has the rear at the TOP of
+   * the picture, but a 'top' face is defined seen from above with the I/O edge (here the rear panel) at the BOTTOM,
+   * x right, y up: that is the photo rotated 180 degrees, so x is mirrored: xMm = 468 - x_photo, where
+   * x_photo = (px - 140) / 3.006 read off the photo (fader/mute A 401.5, PAN knob 337.7, USER DEFINED key 1 411.8).
+   * y is measured from the rear edge in both frames and does not change.
+   */
+  it('the QL1 top-face controls are mirrored into the face-local convention', () => {
+    const ql1 = byId('yamaha-ql1')
+    const x = (controlId: string): number => ql1.controls.find((c) => c.controlId === controlId)?.xMm ?? Number.NaN
+    expect(x('fader-master')).toBeCloseTo(468 - 401.5, 1)
+    expect(x('mute-master')).toBeCloseTo(468 - 401.5, 1)
+    expect(x('balance-master')).toBeCloseTo(468 - 337.7, 1)
+    expect(x('playback-usb')).toBeCloseTo(468 - 411.8, 1)
+    // the master faders are on the unit's right seen from the front, which is the small-x half of the mirrored face frame
+    expect(x('fader-master')).toBeLessThan(468 / 2)
+  })
+
+  it('the QL1 mute-master key and fader-master share a strip, so the same x within 1 mm', () => {
+    const ql1 = byId('yamaha-ql1')
+    const fader = ql1.controls.find((c) => c.controlId === 'fader-master')
+    const mute = ql1.controls.find((c) => c.controlId === 'mute-master')
+    expect(fader && mute).toBeTruthy()
+    expect(Math.abs((fader?.xMm ?? 0) - (mute?.xMm ?? 1e6))).toBeLessThanOrEqual(1)
+  })
+
   it('the I/O face of the QL1 and the Rio3224-D2 carries most of the modelled ports; the SM58 has no io face', () => {
     for (const id of ['yamaha-ql1', 'yamaha-rio3224-d2']) {
       const spec = byId(id)

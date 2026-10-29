@@ -81,7 +81,7 @@
       "controlId": "fader-master",
       "kind": "fader",
       "face": "top",
-      "xMm": 401.5,
+      "xMm": 66.5,
       "yMm": 442.5,
       "axis": "z",
       "travelMm": 100,
@@ -95,7 +95,7 @@
       "controlId": "mute-master",
       "kind": "button",
       "face": "top",
-      "xMm": 401.5,
+      "xMm": 66.5,
       "yMm": 317.5,
       "axis": "y",
       "sizeMm": {
@@ -108,7 +108,7 @@
       "controlId": "balance-master",
       "kind": "knob",
       "face": "top",
-      "xMm": 337.7,
+      "xMm": 130.3,
       "yMm": 89.2,
       "axis": "y",
       "sizeMm": {
@@ -121,7 +121,7 @@
       "controlId": "playback-usb",
       "kind": "button",
       "face": "top",
-      "xMm": 411.8,
+      "xMm": 56.2,
       "yMm": 68.9,
       "axis": "y",
       "sizeMm": {
@@ -145,7 +145,7 @@
     {
       "kind": "photo",
       "url": "https://uk.yamaha.com/en/files/photoviewer_mixers_ql1_overhead_tcm117-1717827.jpg",
-      "note": "Top, overhead (assets-source/yamaha-ql1/photos/top.jpg, 1689x2000): x scale 3.006 px/mm and y scale 3.062 px/mm, calibrated to the 468 mm width and 562 mm depth; top-face y runs from the rear (I/O) edge to the front. Control mapping: fader-master = master fader A of the Master section (100 mm travel, position at mid-travel); mute-master = the [ON] key above fader A (it switches the channel on or off); balance-master = the Selected Channel [PAN] knob (manual: it adjusts pan or L/R balance); playback-usb = USER DEFINED key 1: the catalog id is logical-only, the console has no dedicated play button, user keys can be assigned to recorder functions, key 1 is the stand-in. Heights (h) of caps, knobs and keys are estimates, not visible in the overhead view."
+      "note": "Top, overhead (assets-source/yamaha-ql1/photos/top.jpg, 1689x2000): x scale 3.006 px/mm and y scale 3.062 px/mm, calibrated to the 468 mm width and 562 mm depth; top-face y runs from the rear (I/O) edge to the front. The photo has the rear at the TOP of the picture, but the face-local convention for a top face is seen from above with the I/O edge (the rear) at the BOTTOM, x right, y up: that is the photo rotated 180 degrees, so the photo x is mirrored, xMm = 468 - x_photo (photo x = (px - 140) / 3.006: fader/mute A 401.5 -> 66.5, PAN 337.7 -> 130.3, USER key 1 411.8 -> 56.2); y is already measured from the rear edge and is unchanged. Control mapping: fader-master = master fader A of the Master section (100 mm travel, position at mid-travel); mute-master = the [ON] key above fader A (it switches the channel on or off); balance-master = the Selected Channel [PAN] knob (manual: it adjusts pan or L/R balance); playback-usb = USER DEFINED key 1: the catalog id is logical-only, the console has no dedicated play button, user keys can be assigned to recorder functions, key 1 is the stand-in. Heights (h) of caps, knobs and keys are estimates, not visible in the overhead view."
     },
     {
       "kind": "datasheet",
