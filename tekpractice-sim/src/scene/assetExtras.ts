@@ -29,7 +29,8 @@ const isId = (v: unknown): v is string => typeof v === 'string' && v.length > 0
 
 function vec3(v: unknown): Vec3 | null {
   if (!Array.isArray(v) || v.length !== 3) return null
-  const out = v.map((n: unknown) => (typeof n === 'number' && Number.isFinite(n) ? n : NaN))
+  // Array.from visits holes (as undefined), so a sparse array is rejected; .map would skip them and keep the holes.
+  const out = Array.from(v, (n: unknown) => (typeof n === 'number' && Number.isFinite(n) ? n : NaN))
   return out.every((n) => !Number.isNaN(n)) ? (out as Vec3) : null
 }
 

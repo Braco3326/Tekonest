@@ -70,6 +70,14 @@ describe('parseAssetExtras', () => {
     expect(parseAssetExtras({ ...valid(), controls: [{ controlId: 'p', pos: [0, 0, Infinity], axis: 'x', kind: 'knob' }] })).toBeNull()
   })
 
+  it('returns null for a sparse pos array (holes are not numbers)', () => {
+    // eslint-disable-next-line no-sparse-arrays
+    const sparse: unknown = [0.1, , 0.175]
+    expect((sparse as unknown[]).length).toBe(3)
+    expect(parseAssetExtras({ ...valid(), ports: [{ portId: 'a', pos: sparse }] })).toBeNull()
+    expect(parseAssetExtras({ ...valid(), controls: [{ controlId: 'p', pos: new Array(3), axis: 'x', kind: 'knob' }] })).toBeNull()
+  })
+
   it('returns null for anything that is not an extras object, and never throws', () => {
     for (const raw of [null, undefined, 42, true, [], 'not json', '{"schema":1', '[]', '"x"', () => 1]) {
       expect(() => parseAssetExtras(raw)).not.toThrow()

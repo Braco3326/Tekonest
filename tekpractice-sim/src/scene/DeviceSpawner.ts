@@ -404,7 +404,7 @@ export class DeviceSpawner {
     for (const n of glbRoot.getDescendants(false)) {
       if (!(n instanceof TransformNode)) continue
       if (n.name === exact) return n
-      if (n.name.startsWith(exact)) fallback = n // tolerate .001-style suffixes
+      if (n.name.startsWith(exact) && /^\.\d+$/.test(n.name.slice(exact.length))) fallback = n // only ^exact(\.\d+)?$: .001-style suffixes
     }
     return fallback
   }

@@ -163,6 +163,48 @@ describe('DeviceSpawner with GLB extras', () => {
     expect(cb.isDescendantOf(b.root)).toBe(true)
   })
 
+  it('only <exact> or <exact>.NNN matches: ctrl_power_old / ctrl_powerX are not the power control', async () => {
+    const glb = await makeBoxGlb({
+      sizeM: SIZE,
+      extras: { tekpractice: extras() },
+      nodes: [{ name: 'ctrl_power_old', pos: CTRL_GLTF }, { name: 'ctrl_powerX', pos: CTRL_GLTF }, { name: 'port_in-line-a-spare', pos: PORT_GLTF }],
+    })
+    serveGlb(glb)
+    const { spawner } = makeSpawner()
+    const inst = spawner.spawn(DEVICE, new Vector3(0, 0, 0), 'k12')
+    await expect(inst.modelReady).resolves.toBe(true)
+    expect(inst.controlNodes.size).toBe(0)
+    // port_in-line-a-spare is not port_in-line-a: the marker falls back to the grid, not onto that node
+    expect(inst.portMarkers.get('in-line-a')!.position.x).not.toBeCloseTo(PORT_GLTF[0], 5)
+  })
+
+  it('extras models keep their authored size and offset: no height scaling, grounding or centring', async () => {
+    // REAL_SIZE_M of qsc-k12-2 has h = 0.602; this model is authored 0.45 m tall, its body off-centre on a child node
+    const authored = { w: 0.3, h: 0.45, d: 0.25 }
+    const offset: [number, number, number] = [0.05, 0.02, -0.03]
+    const glb = await makeBoxGlb({
+      sizeM: authored,
+      meshOnChild: { pos: offset },
+      extras: { tekpractice: { ...extras(), realSizeMm: { w: 300, h: 450, d: 250 } } },
+      nodes: [{ name: 'ctrl_power', pos: CTRL_GLTF }],
+    })
+    serveGlb(glb)
+    const { spawner } = makeSpawner()
+    const inst = spawner.spawn(DEVICE, new Vector3(2, 0.5, -1), 'k12')
+    await expect(inst.modelReady).resolves.toBe(true)
+    const glbRoot = glbRootOf(inst)
+    expect(glbRoot.scaling.asArray()).toEqual([1, 1, -1])
+    expect(glbRoot.position.asArray()).toEqual([0, 0, 0])
+    glbRoot.computeWorldMatrix(true)
+    const b = glbRoot.getHierarchyBoundingVectors()
+    const o = inst.root.getAbsolutePosition()
+    expect(b.max.y - b.min.y).toBeCloseTo(authored.h, 5) // NOT 0.602
+    expect(b.max.x - b.min.x).toBeCloseTo(authored.w, 5)
+    expect(b.min.y - o.y).toBeCloseTo(offset[1], 5) // not grounded
+    expect((b.min.x + b.max.x) / 2 - o.x).toBeCloseTo(offset[0], 5) // not centred (x kept)
+    expect((b.min.z + b.max.z) / 2 - o.z).toBeCloseTo(-offset[2], 5) // not centred (glTF z mirrored to Babylon -z)
+  })
+
   it('a GLB without extras still takes the height-scaling path (2x too large -> REAL_SIZE_M height, grounded, centred, grid)', async () => {
     // 2x too large, and the mesh offset from the root so the legacy grounding / centring visibly act
     const glb = await makeBoxGlb({ sizeM: { w: SIZE.w * 2, h: SIZE.h * 2, d: SIZE.d * 2 }, meshOnChild: { pos: [0.5, 0.2, 0.1] } })
@@ -172,6 +214,8 @@ describe('DeviceSpawner with GLB extras', () => {
     await expect(inst.modelReady).resolves.toBe(true)
     const glbRoot = glbRootOf(inst)
     expect(glbRoot.scaling.x).toBeCloseTo(0.5, 6)
+    // the legacy path leaves the loader's 180-degree turn about Y in place (only the extras path resets it)
+    expect(glbRoot.rotationQuaternion!.asArray()).toEqual([0, 1, 0, 0])
     glbRoot.computeWorldMatrix(true)
     const b = glbRoot.getHierarchyBoundingVectors()
     const o = inst.root.getAbsolutePosition()
