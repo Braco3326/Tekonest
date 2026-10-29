@@ -487,9 +487,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     reasonUnpowered: 'enceinte hors tension',
     reasonOther: 'enceinte non utilisable',
     reasonsJoin: ' ; ',
-    announceDone: 'Couverture calculée : {n} points, de {min} à {max} dB relatifs, pas de {step} m.',
+    announceDone: 'Couverture calculée : {n} points, {min} à {max} dB, pas {step} m.',
     announceOff: 'Couverture masquée.',
     announceNoPlace: 'Choisissez un lieu pour calculer la couverture.',
+    loadFailed: 'La couverture n’a pas pu se charger. Rechargez la page.',
   },
   /** The shell could not start (Phase 1 review): a persistent alert with the way out. */
   boot: {

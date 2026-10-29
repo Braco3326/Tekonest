@@ -58,6 +58,7 @@ import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
 import { bindingLabel, creationActionsFor, loadCreationBindings, type CreationAction } from './input/creationActions'
 import type { InventoryDrawer } from './shell/inventoryDrawer'
+import type { CoverageController, CoverageDebug } from './coverageController'
 import type { BetaPrep } from './betaDevices'
 import { isUnverified, parseProposals, prepareBeta, proposalEntries, registerProposals, within, type BetaLoad } from './betaDevices'
 import { signalPath } from '../flow/signalPath'
@@ -582,6 +583,7 @@ export async function bootCreation(): Promise<void> {
       earHeight = v.earHeight
       saveViewPrefs(storage, { earHeight })
       host.setEarHeight(earHeight) // a live walker moves at once
+      coverage?.refresh() // the listener plane moved (a no-op while the coverage is off)
       // The listening points follow the ear height: a camera still standing on one moves with it.
       if (atPoint && !host.walking && cameraOn(atPoint.pose)) goToPoint(atPoint.id, { refly: true })
     }
@@ -598,6 +600,12 @@ export async function bootCreation(): Promise<void> {
    * of the hook is lost). They register here once they exist; before that there is nothing to reset.
    */
   const placeResets: (() => void)[] = []
+  /**
+   * Écoute › Couverture (Task 37): the lazy coverage controller, declared here because the ear-height subscriber above can run before it exists.
+   * `coverageOn` is the learner's intent (the menu's check mark), true as soon as the item is chosen, before the chunk has loaded.
+   */
+  let coverage: CoverageController | null = null
+  let coverageOn = false
   /** The keypad quarter-turn keys (set once the key map exists, same reason): nothing is claimed before. */
   let isViewRotateCode: (code: string) => boolean = () => false
   host.onPlaceShown = () => {
@@ -1627,12 +1635,13 @@ export async function bootCreation(): Promise<void> {
     () => cableHover.reset(), // a hovered cable belongs to the old scene
     () => patch.reset(), // a cable in hand, a pinned refusal or an offer belong to the old scene's ports
     () => connectDialog.close(), // a list of the old rig's ports
-    () => toast.dismiss() // a message about the previous place's view does not carry over
+    () => toast.dismiss(), // a message about the previous place's view does not carry over
+    () => coverage?.reset() // the dots, the pin and the worker belong to the old place
   )
   /** The selection the last miss cleared (a double-click on the floor gives it back). */
   let clearedByMiss: { id: string; t: number } | null = null
   const missedClick = (x: number, y: number, clicks: number): void => {
-    if (placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y)) return
+    if (placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y) || coverage?.wouldTake(x, y)) return
     // The second click of a double-click is no miss (the re-pivot follows); a click on the hovered cable is on something.
     if (clicks >= 2 || cableHover.hovered !== null) return
     const sel = viewState.get().selection
@@ -1645,6 +1654,65 @@ export async function bootCreation(): Promise<void> {
     }
     toast.show(COPY.feedback!.missed!.replace('{key}', bindingLabel(keys.bindings, 'TOGGLE_INVENTORY') || COPY.keys!.space!))
   }
+  // ── Écoute › Couverture (Task 37, CA-23…25): the whole feature (controller, scene layer, panel + CSS, client, worker) is ONE lazy chunk,
+  // fetched on the first toggle. Off by default; a failed fetch says so and leaves the menu item unchecked.
+  let coverageLoad: Promise<CoverageController | null> | null = null
+  const loadCoverage = (): Promise<CoverageController | null> =>
+    (coverageLoad ??= import('./coverageController')
+      .then(({ createCoverage }) => {
+        coverage = createCoverage({
+          host: {
+            get scene() {
+              return host.scene
+            },
+            get camera() {
+              return host.camera
+            },
+            get layout() {
+              return host.layout
+            },
+            get placeId() {
+              return canvasShown && host.place ? placeKey(host.place) : null
+            },
+            canvasElement: canvas,
+            get placeBag() {
+              return host.placeBag
+            },
+          },
+          registry,
+          design: () => store.design(),
+          path: () => path,
+          earHeight: () => viewState.get().earHeight,
+          listeningPoints: () => listeningPoints(),
+          deviceAt: (x, y) => pickDevice(host.scene, x, y) !== null,
+          invalidate: () => scheduler.invalidate(),
+          announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+          subscribe: (fn) => store.subscribe(fn),
+          bag: shellBag,
+          container: shell.props,
+          before: cableLegend.element,
+        })
+        return coverage
+      })
+      .catch((e: unknown) => {
+        console.error('[creation] coverage chunk failed', e)
+        coverageLoad = null
+        return null
+      }))
+  const setCoverage = async (on: boolean): Promise<void> => {
+    coverageOn = on
+    if (on) {
+      shell.setPanel('props', true) // the legend and the statistics live in Propriétés
+      const c = await loadCoverage()
+      if (!c) {
+        coverageOn = false
+        shell.setStatus(placeNow(), COPY.coverage!.loadFailed!, 'ready', true)
+        return
+      }
+      if (coverageOn) c.setOn(true)
+    } else coverage?.setOn(false)
+  }
+
   /** Menu item ids → the key map (the menus show the live labels). */
   const MENU_KEYS: Record<string, CreationAction | undefined> = {
     undo: 'UNDO',
@@ -1713,6 +1781,7 @@ export async function bootCreation(): Promise<void> {
       canvas.focus() // the arrows then walk (or orbit, back from the walk)
       toggleWalk()
     },
+    coverage: () => void setCoverage(!coverageOn),
     'ear-seated': () => setEar(1.2),
     'ear-standing': () => setEar(1.7),
     ...Object.fromEntries(
@@ -1744,12 +1813,15 @@ export async function bootCreation(): Promise<void> {
       viewLocked,
       walking: () => host.walking,
       earHeight: () => viewState.get().earHeight,
+      coverage: () => coverageOn,
       points: () => listeningPoints().map((p) => ({ id: p.id, label: p.label })),
       listenerPoint: () =>
         activePoint(listeningPoints(), viewState.get().listenerPoint)?.id ?? '',
     })
   )
 
+  /** The coverage is off or its chunk is not loaded: the debug hook says so without loading anything. */
+  const COVERAGE_OFF = (): CoverageDebug => ({ on: false, status: 'off', pending: false, worker: false, points: 0, step: null, stats: null, plain: 0, hatched: 0, bins: [], sources: [], aim: [], message: '', pinned: null, probes: [], maxLevelDb: null, spl: false })
   const screen = (world: Vector3 | null): { x: number; y: number } | null => {
     const { scene, camera } = host
     return world && scene && camera
@@ -1869,6 +1941,14 @@ export async function bootCreation(): Promise<void> {
     placing: () => placement.placing,
     transformNodeCount: () => host.scene?.transformNodes.length ?? 0,
     modelsPending: () => host.pendingModels,
+    coverage: () => coverage?.debug() ?? COVERAGE_OFF(),
+    drawCalls: (name) => coverage?.drawCalls(name) ?? 0,
+    coverageJobs: () => coverage?.jobs ?? 0,
+    coverageDotAt: (x, y) => coverage?.dotAt(x, y) ?? null,
+    portWorld: (ref) => {
+      const p = host.portWorld(ref)
+      return p ? [p.x, p.y, p.z] : null
+    },
     floorPoint: (x, y) => {
       const { scene, camera } = host
       const r = canvas.getBoundingClientRect()

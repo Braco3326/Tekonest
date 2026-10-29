@@ -73,6 +73,8 @@ export interface MenuContext {
   points?(): { id: string; label: string }[]
   /** The active listening point's id (its radio item is checked). */
   listenerPoint?(): string
+  /** Écoute › Couverture (Task 37): the coverage dots are on (the item is checked). */
+  coverage?(): boolean
 }
 
 export function buildMenus(ctx: MenuContext): MenuDef[] {
@@ -170,6 +172,10 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     kind: 'radio',
     checked: () => (ctx.earHeight?.() ?? 1.2) === h,
   })
+  // Écoute › Couverture (Task 37): a checkbox, off by default; live once its action is registered and a place is on screen.
+  const coverageBase = act('coverage', M.coverage!)
+  const coverageLive = (): boolean => viewFree() && coverageBase.enabled()
+  const coverage: MenuItem = { ...coverageBase, enabled: coverageLive, run: () => void (coverageLive() && coverageBase.run()), kind: 'checkbox', checked: () => !!ctx.coverage?.() }
   return [
     {
       id: 'projet',
@@ -186,7 +192,7 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     {
       id: 'ecoute',
       label: M.ecoute!,
-      items: [act('play', M.play!), ear('ear-seated', W.earSeated!, 1.2), ear('ear-standing', W.earStanding!, 1.7)],
+      items: [act('play', M.play!), coverage, ear('ear-seated', W.earSeated!, 1.2), ear('ear-standing', W.earStanding!, 1.7)],
     },
     {
       id: 'vue',

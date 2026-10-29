@@ -11,6 +11,7 @@ import type { DesignState } from '../trials/trial'
 import type { DeviceInstance } from '../scene/DeviceSpawner'
 import type { PlaceResult } from './placeController'
 import type { QuarantineItem } from './persistence'
+import type { CoverageDebug } from './coverageController'
 
 export interface CreationDebug {
   /** Through `history.do` (undoable, as a UI action). */
@@ -128,6 +129,16 @@ export interface CreationDebug {
   patchPending(): PortRef | null
   /** Task 24: the raw floor point under a page point (CSS px), as the placement pick finds it; null off the floor. */
   floorPoint(x: number, y: number): [number, number, number] | null
+  /** Task 37: the coverage's state (plain data; never loads its chunk: `on: false` until Écoute › Couverture is chosen). */
+  coverage(): CoverageDebug
+  /** Task 37: draw calls of the coverage mesh called `name` ('coverage' = the plain dots) in the latest frame it drew; 0 if it never did. */
+  drawCalls(name: string): number
+  /** Task 37: coverage jobs posted to the worker since the page loaded (idle = no change; a moved speaker = +1). */
+  coverageJobs(): number
+  /** Task 37: the coverage dot under a canvas point (canvas CSS px), devices ignored (the oracle of the pin); null when none. */
+  coverageDotAt(x: number, y: number): [number, number, number] | null
+  /** Task 37: the world position of a port marker (after the .glb is applied it sits on the model), or null when unknown. */
+  portWorld(ref: PortRef): [number, number, number] | null
 }
 
 declare global {

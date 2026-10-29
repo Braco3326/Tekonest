@@ -708,6 +708,7 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.reasonUnpowered` | enceinte hors tension | à valider (tekuxwriter) | Enceinte alimentée en signal mais sans secteur |
 | `coverage.reasonOther` | enceinte non utilisable | à valider (tekuxwriter) | Raison de repli (position ou couverture invalide) |
 | `coverage.reasonsJoin` |  ;  | à valider (tekuxwriter) | Séparateur de plusieurs raisons |
-| `coverage.announceDone` | Couverture calculée : {n} points, de {min} à {max} dB relatifs, pas de {step} m. | à valider (tekuxwriter) | Annoncé une fois par résultat (zone d’état) |
+| `coverage.announceDone` | Couverture calculée : {n} points, {min} à {max} dB, pas {step} m. | à valider (tekuxwriter) | Annoncé une fois par résultat (zone d’état) |
 | `coverage.announceOff` | Couverture masquée. | à valider (tekuxwriter) | Annoncé quand on la masque |
 | `coverage.announceNoPlace` | Choisissez un lieu pour calculer la couverture. | à valider (tekuxwriter) | Couverture demandée sans lieu |
+| `coverage.loadFailed` | La couverture n’a pas pu se charger. Rechargez la page. | à valider (tekuxwriter) | Le morceau de code de la couverture n’a pas pu être téléchargé (hors ligne) ; annoncé, la case reste décochée |

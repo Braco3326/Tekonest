@@ -1,0 +1,75 @@
+/* Coverage block (Task 37): the bottom of « Propriétés », above the cable legend, never over the 3D view.
+   Loaded with the lazy coverage chunk (coveragePanel.ts imports it), not with the shell. Every control: no transition
+   (the legacy `button { transition: all }` and the 0.01 ms reduced-motion rule would animate the focus ring and `visibility`). */
+.cr-cov { flex: 0 1 auto; min-height: 0; max-height: 62%; overflow: auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }
+.cr-cov[hidden] { display: none; }
+.cr[data-props='collapsed'] .cr-cov { display: none; }
+.cr-cov-head { display: flex; align-items: stretch; position: sticky; top: 0; z-index: 1; background: var(--cr-panel); }
+.cr .cr-cov-toggle {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 28px; /* WCAG 2.5.8 */
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  text-align: left;
+  font: 500 11px/1 var(--cr-font-ui);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cr-ink-muted);
+  transition: none;
+}
+.cr .cr-cov-toggle:hover { color: var(--cr-ambre); background: var(--cr-nuit); }
+.cr .cr-cov-toggle:focus-visible,
+.cr .cr-cov-chip:focus-visible,
+.cr .cr-cov-btn:focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); }
+.cr-cov-chevron { width: 12px; height: 12px; flex: none; margin-left: 8px; }
+.cr-cov[data-open='false'] .cr-cov-chevron { transform: rotate(-90deg); }
+.cr .cr-cov-chip {
+  flex: none;
+  margin: 3px 12px 3px 4px;
+  padding: 0 10px;
+  min-height: 24px;
+  font: 500 11px/1 var(--cr-font-ui);
+  letter-spacing: 0.06em;
+  color: var(--cr-papier);
+  background: transparent;
+  border: 1px solid var(--cr-ink-muted);
+  border-radius: 12px;
+  transition: none;
+}
+.cr .cr-cov-chip:hover, .cr .cr-cov-chip[aria-expanded='true'] { color: var(--cr-ambre); border-color: var(--cr-ambre); }
+.cr-cov-pop { margin: 0; padding: 8px 12px; font: 400 12px/1.4 var(--cr-font-ui); color: var(--cr-papier); background: var(--cr-nuit); border-top: 1px solid var(--cr-panel-line); border-bottom: 1px solid var(--cr-panel-line); transition: none; }
+.cr-cov-pop[hidden], .cr-cov-body[hidden], .cr-cov-ready[hidden], .cr-cov-pinrow[hidden], .cr-cov [hidden] { display: none; }
+.cr-cov-body { padding: 4px 12px 12px; font: 400 12px/1.35 var(--cr-font-ui); color: var(--cr-papier); font-variant-numeric: tabular-nums; }
+.cr-cov-status { margin: 4px 0 6px; color: var(--cr-papier); overflow-wrap: anywhere; }
+.cr-cov-status[data-status='no-audience'], .cr-cov-status[data-status='no-source'], .cr-cov-status[data-status='error'] { color: var(--cr-papier); border-left: 3px solid var(--cr-ambre); padding-left: 8px; }
+.cr-cov-unit { margin: 6px 0 0; font-weight: 600; }
+.cr-cov-note { margin: 2px 0 6px; color: var(--cr-ink-muted); font-size: 11px; line-height: 1.35; overflow-wrap: anywhere; }
+.cr-cov-h { margin: 10px 0 4px; font: 500 11px/1 var(--cr-font-ui); letter-spacing: 0.1em; text-transform: uppercase; color: var(--cr-ink-muted); }
+.cr-cov-legend, .cr-cov-list, .cr-cov-points { list-style: none; margin: 0; padding: 0; }
+.cr-cov-bin, .cr-cov-hatched { display: flex; align-items: center; gap: 8px; min-height: 20px; }
+.cr-cov-hatched { margin: 4px 0 6px; }
+.cr-cov-swatch { width: 14px; height: 14px; flex: none; }
+.cr-cov-bin-label { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.cr-cov-count { flex: none; color: var(--cr-ink-muted); font-size: 11px; }
+.cr-cov-list li { margin: 1px 0; overflow-wrap: anywhere; }
+.cr-cov-stats { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; row-gap: 2px; margin: 0; }
+.cr-cov-stats dt { color: var(--cr-ink-muted); }
+.cr-cov-stats dd { margin: 0; text-align: right; }
+.cr-cov-point { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 26px; }
+.cr-cov-point-text { min-width: 0; overflow-wrap: anywhere; }
+.cr-cov-pinrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; }
+.cr-cov-pinned { margin: 0; min-width: 0; overflow-wrap: anywhere; color: var(--cr-ambre); }
+.cr .cr-cov-btn {
+  flex: none;
+  min-height: 24px;
+  padding: 0 8px;
+  font: 500 11px/1 var(--cr-font-ui);
+  color: var(--cr-papier);
+  background: transparent;
+  border: 1px solid var(--cr-ink-muted);
+  transition: none;
+}
+.cr .cr-cov-btn:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }

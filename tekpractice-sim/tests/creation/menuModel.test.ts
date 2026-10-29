@@ -292,6 +292,34 @@ describe('menu model (Task 7)', () => {
     })
   })
 
+  describe('Écoute › Couverture (Task 37)', () => {
+    const item = (c: MenuContext) => find(buildMenus(c), 'coverage')
+    it('a checkbox item in Écoute, between « Écouter le morceau » and the ear heights, unchecked by default', () => {
+      const ecoute = buildMenus(ctx()).find((m) => m.id === 'ecoute')!
+      expect(ecoute.items.map((i) => i.id)).toEqual(['play', 'coverage', 'ear-seated', 'ear-standing'])
+      const c = item(ctx())
+      expect(c.label).toBe('Couverture')
+      expect(c.kind).toBe('checkbox')
+      expect(c.checked!()).toBe(false)
+    })
+    it('is checked from the state, runs its action, and is off without an action or while no place is on screen', () => {
+      let on = false
+      const ran: string[] = []
+      const live = item(ctx({ actions: { coverage: () => void ran.push('toggle') }, coverage: () => on }))
+      expect(live.enabled()).toBe(true)
+      live.run()
+      expect(ran).toEqual(['toggle'])
+      on = true
+      expect(live.checked!()).toBe(true)
+      const noAction = item(ctx())
+      expect(noAction.enabled()).toBe(false)
+      const locked = item(ctx({ actions: { coverage: () => void ran.push('locked') }, viewLocked: () => true }))
+      expect(locked.enabled()).toBe(false)
+      locked.run() // a disabled item never runs
+      expect(ran).toEqual(['toggle'])
+    })
+  })
+
   it('every item has a non-empty French label, no placeholder, unique ids', () => {
     const items = buildMenus(ctx({ places: [{ key: 'blank', label: 'Salle vide neutre' }] })).flatMap((m) => all(m.items))
     for (const i of items) {
