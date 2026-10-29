@@ -82,6 +82,14 @@ function pixel(img: Raw, x: number, y: number): [number, number, number] {
 
 const GREY: [number, number, number] = [GREY_SRGB, GREY_SRGB, GREY_SRGB]
 
+/** Saturated, clearly non-grey fixture colour (linear baseColorFactor): the model never blends into the grey background. */
+const RED: [number, number, number, number] = [0.8, 0.05, 0.05, 1]
+
+/** Max channel minus min channel: 0 for any grey, large for the red box whatever the shading. */
+function chroma(p: [number, number, number]): number {
+  return Math.max(...p) - Math.min(...p)
+}
+
 describe('specRectInView (hand-worked)', () => {
   // Spec 400 x 100 x 200 mm, ortho scale 0.5 m on 512 px: 1 m = 1024 px.
   it('io and back show width x height, centred', () => {
@@ -445,22 +453,24 @@ describe(`renderContactSheet (integration, real Blender${BLENDER ? '' : ': SKIPP
     'renders a 4-view sheet with the expected pixel size and the box fully in frame in every view',
     async () => {
       const glb = join(dir, 'box.glb')
-      await writeFile(glb, await makeBoxGlb({ sizeM: { w: 0.468, h: 0.044, d: 0.23 } }))
+      await writeFile(glb, await makeBoxGlb({ sizeM: { w: 0.468, h: 0.044, d: 0.23 }, baseColor: RED }))
       const out = join(dir, 'sheet.png')
 
       await renderContactSheet(glb, null, out, spec({ realSizeMm: { w: 468, h: 44, d: 230 } }))
 
       const img = await readRaw(out)
       expect([img.width, img.height]).toEqual([4 * PANEL_PX, PANEL_PX])
-      // Fully in frame: the outermost pixel ring of every panel is background, never model.
       for (let i = 0; i < 4; i++) {
-        for (const [x, y] of [[0, 0], [PANEL_PX - 1, 0], [0, PANEL_PX - 1], [PANEL_PX - 1, PANEL_PX - 1]]) {
-          const p = pixel(img, i * PANEL_PX + x, y)
-          p.forEach((c, k) => expect(Math.abs(c - GREY[k])).toBeLessThanOrEqual(4))
+        const ox = i * PANEL_PX
+        // Fully in frame: the WHOLE outermost pixel ring of the panel is background grey, never model.
+        for (let k = 0; k < PANEL_PX; k++) {
+          for (const [x, y] of [[k, 0], [k, PANEL_PX - 1], [0, k], [PANEL_PX - 1, k]]) {
+            const p = pixel(img, ox + x, y)
+            p.forEach((c, ch) => expect(Math.abs(c - GREY[ch]), `${VIEW_NAMES[i]} ring pixel (${x}, ${y})`).toBeLessThanOrEqual(6))
+          }
         }
-        // and the model is there: the panel centre is not background
-        const c = pixel(img, i * PANEL_PX + 256, 256)
-        expect(c.some((v, k) => Math.abs(v - GREY[k]) > 8)).toBe(true)
+        // and the model is there: the panel centre is a clearly coloured pixel (red under any Workbench shading)
+        expect(chroma(pixel(img, ox + 256, 256)), `${VIEW_NAMES[i]} centre`).toBeGreaterThan(60)
       }
     },
     180_000,
@@ -470,17 +480,15 @@ describe(`renderContactSheet (integration, real Blender${BLENDER ? '' : ': SKIPP
     'a model matching the spec fills the spec rectangle exactly in the io view',
     async () => {
       const glb = join(dir, 'box2.glb')
-      await writeFile(glb, await makeBoxGlb({ sizeM: { w: 0.468, h: 0.044, d: 0.23 } }))
+      await writeFile(glb, await makeBoxGlb({ sizeM: { w: 0.468, h: 0.044, d: 0.23 }, baseColor: RED }))
       const out = join(dir, 'sheet2.png')
       await renderContactSheet(glb, null, out, spec({ realSizeMm: { w: 468, h: 44, d: 230 } }))
       const img = await readRaw(out)
       const r = specRectInView('io', spec({ realSizeMm: { w: 468, h: 44, d: 230 } }), 0.468 * 1.2, PANEL_PX)
-      // just inside the outline the box is rendered (not background); just outside it, background.
+      // just inside the outline the box is rendered (coloured); just outside it, background grey.
       const my = r.y + Math.floor(r.h / 2)
-      const inside = pixel(img, r.x + 4, my)
-      expect(inside.some((v, k) => Math.abs(v - GREY[k]) > 8)).toBe(true)
-      const outside = pixel(img, r.x - 6, my)
-      outside.forEach((c, k) => expect(Math.abs(c - GREY[k])).toBeLessThanOrEqual(4))
+      expect(chroma(pixel(img, r.x + 4, my))).toBeGreaterThan(60)
+      pixel(img, r.x - 6, my).forEach((c, k) => expect(Math.abs(c - GREY[k])).toBeLessThanOrEqual(6))
     },
     180_000,
   )

@@ -49,6 +49,8 @@ export interface MakeMeshGlbOpts {
   meshOnChild?: { pos: Vec3 }
   /** Extra top-level nodes next to the root, without mesh (optionally scaled). */
   strayRoots?: { name: string; scale?: number }[]
+  /** Material baseColorFactor (linear RGBA); default is the glTF default [1, 1, 1, 1]. */
+  baseColor?: [number, number, number, number]
 }
 
 /** Builds a GLB with one root node (carrying the mesh unless `meshOnChild`), and returns its bytes. */
@@ -56,6 +58,7 @@ export async function makeMeshGlb(opts: MakeMeshGlbOpts): Promise<Uint8Array> {
   const doc = new Document()
   const buffer = doc.createBuffer()
   const material = doc.createMaterial('body')
+  if (opts.baseColor) material.setBaseColorFactor(opts.baseColor)
   const mesh = doc.createMesh('mesh')
   for (const g of opts.prims) {
     const position = doc.createAccessor().setType('VEC3').setArray(new Float32Array(g.positions)).setBuffer(buffer)

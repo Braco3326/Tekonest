@@ -11,9 +11,11 @@ all locations and angles already in Blender space, nothing to convert or measure
   {sizePx, orthoScaleM, clipStartM, clipEndM, backgroundLinear: [r, g, b],
    views: [{name, location: [x, y, z], rotationDeg: [x, y, z]}, ...]}
 
-For each view it writes <dir>/<name>.png, sizePx x sizePx, flat background, Workbench engine (no GPU needed), base
-colour texture shown, orthographic camera with the clip start from the plan (1 mm: a larger one cut small connectors
-in the old pipeline). On any failure it prints one line 'RENDER_FAIL <reason>' to stderr and exits 1.
+For each view it writes <dir>/<name>.png, sizePx x sizePx, flat background, Workbench engine, base colour
+texture shown, orthographic camera with the clip start from the plan (1 mm: a larger one cut small connectors in the
+old pipeline). Workbench is the lightest engine but it still renders through a GPU (OpenGL) context even with
+--background: fine on a desktop, not guaranteed on a machine without a GPU or driver. On any failure it prints one
+line 'RENDER_FAIL <reason>' to stderr and exits 1.
 """
 from __future__ import annotations
 
@@ -57,6 +59,39 @@ def import_model(src: str) -> None:
         raise RenderError("the imported model has no mesh")
 
 
+def find_image_node(socket: bpy.types.NodeSocket, depth: int = 4) -> bpy.types.Node | None:
+    """The image texture node feeding `socket`, looking through up to `depth` nodes (e.g. a colour mix), or None."""
+    if depth < 0 or not socket.is_linked:
+        return None
+    node = socket.links[0].from_node
+    if node.type == "TEX_IMAGE":
+        return node
+    for inp in node.inputs:
+        found = find_image_node(inp, depth - 1)
+        if found is not None:
+            return found
+    return None
+
+
+def activate_base_colour_images() -> None:
+    """Workbench TEXTURE mode shows the ACTIVE image node: make it the one feeding Base Color. Skips quietly."""
+    for mat in bpy.data.materials:
+        try:
+            tree = mat.node_tree
+            if tree is None:
+                continue
+            for node in tree.nodes:
+                if node.type != "BSDF_PRINCIPLED":
+                    continue
+                socket = node.inputs.get("Base Color")
+                image = find_image_node(socket) if socket is not None else None
+                if image is not None:
+                    tree.nodes.active = image
+                    break
+        except Exception:  # noqa: BLE001 - a material that cannot be inspected keeps Blender's default
+            continue
+
+
 def setup_scene(plan: dict) -> None:
     scene = bpy.context.scene
     size = int(plan["sizePx"])
@@ -70,6 +105,8 @@ def setup_scene(plan: dict) -> None:
     # 'Standard' = no tone mapping, so the world colour comes out as the sRGB grey Node composes the sheet on.
     scene.view_settings.view_transform = "Standard"
     scene.display.render_aa = "8"
+    # No dithering noise: the background must be exactly the grey Node composes the letterbox bars on.
+    scene.render.dither_intensity = 0.0
     scene.display.shading.light = "STUDIO"
     scene.display.shading.color_type = "TEXTURE"
     if scene.world is None:
@@ -109,6 +146,7 @@ def run() -> None:
 
     wipe_scene()
     import_model(args["in"])
+    activate_base_colour_images()
     setup_scene(plan)
     cam = make_camera(plan)
     for view in plan["views"]:
