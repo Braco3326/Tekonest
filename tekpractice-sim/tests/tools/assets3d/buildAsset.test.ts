@@ -205,11 +205,11 @@ async function readManifest(): Promise<{ assets: Record<string, unknown>[] }> {
 }
 
 describe('buildAsset', () => {
-  it('a passing attempt copies the GLB, records the manifest entry with logosRemoved false and the gates', async () => {
+  it('a passing attempt copies the GLB, records the manifest entry with logosRemoved true and the gates', async () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['b.png', 'a.png'])
     const fixed = await goodGlb(spec)
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [fixed] }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [fixed] }))
 
     expect(report.ok).toBe(true)
     expect(report.dryRun).toBe(false)
@@ -239,7 +239,7 @@ describe('buildAsset', () => {
       toolVersion: 'meshy-7.1',
       date: '2026-10-29T12:00:00.000Z',
       specSource: 'https://example.com/mixer.pdf',
-      logosRemoved: false,
+      logosRemoved: true,
       tris: 12,
     })
     expect(entry?.gates).toEqual(report.attempts[0].gates.map((g) => ({ gate: g.gate, ok: g.ok })))
@@ -293,7 +293,7 @@ describe('buildAsset', () => {
     const report = await buildAsset(spec.id, { maxAttempts: 2, yawDeg: 180, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [FIXUP_DRIFT, FIXUP_OK] }))
     const work = join(paths.sourceDir, spec.id, 'work', '2026-10-29T12-00-00-000Z')
     expect(report.workDir).toBe(work)
-    expect((await readdir(work)).sort()).toEqual(['attempt-1.fixed.glb', 'attempt-1.raw.glb', 'attempt-2.fixed.glb', 'attempt-2.raw.glb', 'report.json'])
+    expect((await readdir(work)).sort()).toEqual(['attempt-1.fixed.glb', 'attempt-1.raw.glb', 'attempt-2.fixed.glb', 'attempt-2.raw.glb', 'final.glb', 'report.json'])
     expect(new Uint8Array(await readFile(join(work, 'attempt-1.raw.glb')))).toEqual(RAW_BYTES)
     expect(calls.fixup.map((c) => c.yawDeg)).toEqual([180, 180])
     expect(calls.fixup[0].inGlb).toBe(join(work, 'attempt-1.raw.glb'))
@@ -305,7 +305,7 @@ describe('buildAsset', () => {
     await addPhotos(spec.id, ['a.png'])
     const manifestBefore = await readFile(paths.manifestPath, 'utf8')
     const filesBefore = await readdir(paths.assetsDir)
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_DRIFT }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_DRIFT }))
 
     expect(report.ok).toBe(false)
     expect(report.error).toBeUndefined()
@@ -325,7 +325,7 @@ describe('buildAsset', () => {
   it('stops at the first passing attempt', async () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [FIXUP_DRIFT, FIXUP_OK] }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [FIXUP_DRIFT, FIXUP_OK] }))
     expect(report.ok).toBe(true)
     expect(report.attempts.map((a) => a.n)).toEqual([1, 2])
     expect(calls.create).toHaveLength(2)
@@ -336,7 +336,7 @@ describe('buildAsset', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const drifted: FixupReport = { ...FIXUP_OK, preScaleSizeM: { w: 10, h: 10, d: 20 } }
-    const report = await buildAsset(spec.id, { maxAttempts: 2 }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: drifted }))
+    const report = await buildAsset(spec.id, { maxAttempts: 2, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: drifted }))
     expect(report.ok).toBe(false)
     expect(report.attempts).toHaveLength(2)
     const failed = report.attempts[0].gates.filter((g) => !g.ok)
@@ -347,7 +347,7 @@ describe('buildAsset', () => {
   it('a budget-only failure retries (a Meshy model property), then passes on a lighter model', async () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await heavyGlb(spec), await goodGlb(spec)] }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await heavyGlb(spec), await goodGlb(spec)] }))
     expect(calls.create).toHaveLength(2)
     expect(report.attempts[0].gates.filter((g) => !g.ok).map((g) => g.gate)).toEqual(['budget'])
     expect(report.attempts[0].gates.find((g) => g.gate === 'budget')?.detail).toMatch(/4012 triangles/)
@@ -362,7 +362,7 @@ describe('buildAsset', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const fixed = which === 'tallGlb' ? await tallGlb(spec) : await partlessGlb(spec)
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [fixed] }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [fixed] }))
     expect(calls.create).toHaveLength(1)
     expect(report.attempts).toHaveLength(1)
     expect(report.ok).toBe(false)
@@ -379,7 +379,7 @@ describe('buildAsset', () => {
     const placement = buildPlacement(spec)
     const nodes = [...placement.ports.map((p) => ({ name: p.name, pos: p.pos })), ...placement.controls.map((c) => ({ name: c.name, pos: c.pos }))]
     const scaled = await makeBoxGlb({ sizeM: { w: placement.sizeM.w * 2, h: placement.sizeM.h * 2, d: placement.sizeM.d * 2 }, nodes, scale: 0.5 })
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [scaled] }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [scaled] }))
     expect(calls.create).toHaveLength(1)
     expect(report.attempts[0].gates.filter((g) => !g.ok).map((g) => g.gate)).toContain('transform')
     expect(report.error).toMatch(/transform/)
@@ -388,7 +388,7 @@ describe('buildAsset', () => {
   it('mixed drift + parts failures abort (the parts failure is ours, a new task cannot fix it)', async () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await partlessGlb(spec)], fixupReport: FIXUP_DRIFT }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await partlessGlb(spec)], fixupReport: FIXUP_DRIFT }))
     expect(calls.create).toHaveLength(1)
     expect(report.attempts).toHaveLength(1)
     expect(report.attempts[0].gates.filter((g) => !g.ok).map((g) => g.gate)).toEqual(['parts', 'portPositions', 'proportionDrift'])
@@ -404,7 +404,7 @@ describe('buildAsset', () => {
       calls.compress.push({ bits: opts.quantizePositionBits })
       return shifted
     }
-    const report = await buildAsset(spec.id, { maxAttempts: 1 }, makeDeps({ spec, fixed: [fixed], compress, fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
+    const report = await buildAsset(spec.id, { maxAttempts: 1, logosRemoved: true }, makeDeps({ spec, fixed: [fixed], compress, fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
 
     expect(calls.compress).toEqual([{ bits: 16 }])
     expect(report.ok).toBe(true)
@@ -412,7 +412,7 @@ describe('buildAsset', () => {
     expect(report.attempts[0].gates.every((g) => g.ok)).toBe(true)
     expect(new Uint8Array(await readFile(join(paths.assetsDir, 'test-jack.glb')))).toEqual(fixed)
     const manifest = await readManifest()
-    expect(manifest.assets.find((a) => a.id === 'test-jack')).toMatchObject({ id: 'test-jack', kind: 'connector', status: 'ok', specSource: 'spec', logosRemoved: false })
+    expect(manifest.assets.find((a) => a.id === 'test-jack')).toMatchObject({ id: 'test-jack', kind: 'connector', status: 'ok', specSource: 'spec', logosRemoved: true })
   })
 
   it('a compression failure on a device tier is our defect: it aborts after ONE create and keeps the final bytes', async () => {
@@ -423,7 +423,7 @@ describe('buildAsset', () => {
       calls.compress.push({ bits: opts.quantizePositionBits })
       return bad
     }
-    const report = await buildAsset(spec.id, { maxAttempts: 2 }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress }))
+    const report = await buildAsset(spec.id, { maxAttempts: 2, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress }))
 
     expect(report.ok).toBe(false)
     expect(report.attempts).toHaveLength(1)
@@ -443,7 +443,7 @@ describe('buildAsset', () => {
     process.env.MESHY_API_KEY = FAKE_KEY
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
-    const report = await buildAsset(spec.id, { maxAttempts: 2 }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [FIXUP_DRIFT, FIXUP_OK], credits: 35 }))
+    const report = await buildAsset(spec.id, { maxAttempts: 2, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [FIXUP_DRIFT, FIXUP_OK], credits: 35 }))
     expect(report.attempts.map((a) => a.credits)).toEqual([35, 35])
     expect(JSON.stringify(report)).not.toContain(FAKE_KEY)
     const onDisk = await readFile(join(paths.sourceDir, spec.id, 'report.json'), 'utf8')
@@ -456,7 +456,7 @@ describe('buildAsset', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const downloadError = new MeshyError(0, `download failed for Bearer ${FAKE_KEY}`)
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], downloadError }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], downloadError }))
     expect(report.ok).toBe(false)
     expect(report.error).toContain('download failed')
     expect(JSON.stringify(report)).not.toContain(FAKE_KEY)
@@ -469,7 +469,7 @@ describe('buildAsset', () => {
     const spec = deviceSpec()
     const rawPath = join(root, 'hand-made.glb')
     await writeFile(rawPath, RAW_BYTES)
-    const report = await buildAsset(spec.id, { maxAttempts: 3, rawGlb: rawPath }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, rawGlb: rawPath, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
     expect(calls.create).toHaveLength(0)
     expect(calls.wait).toHaveLength(0)
     expect(calls.download).toHaveLength(0)
@@ -478,14 +478,14 @@ describe('buildAsset', () => {
     expect(report.attempts[0].credits).toBeNull()
     expect(new Uint8Array(await readFile(join(report.workDir, 'attempt-1.raw.glb')))).toEqual(RAW_BYTES)
     const entry = (await readManifest()).assets.find((a) => a.id === 'test-mixer')
-    expect(entry).toMatchObject({ tool: 'raw', toolVersion: 'raw', logosRemoved: false })
+    expect(entry).toMatchObject({ tool: 'raw', toolVersion: 'raw', logosRemoved: true })
   })
 
   it('--raw makes only one attempt even when it fails', async () => {
     const spec = deviceSpec()
     const rawPath = join(root, 'hand-made.glb')
     await writeFile(rawPath, RAW_BYTES)
-    const report = await buildAsset(spec.id, { maxAttempts: 3, rawGlb: rawPath }, makeDeps({ spec, fixed: [await tallGlb(spec)] }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, rawGlb: rawPath, logosRemoved: true }, makeDeps({ spec, fixed: [await tallGlb(spec)] }))
     expect(report.ok).toBe(false)
     expect(report.attempts).toHaveLength(1)
     expect(calls.fixup).toHaveLength(1)
@@ -497,7 +497,7 @@ describe('buildAsset', () => {
     await writeFile(rawPath, RAW_BYTES)
     const fixed = await goodGlb(spec)
     const run = async (): Promise<{ glb: Uint8Array; report: BuildReport; reportFile: string; manifest: string }> => {
-      const report = await buildAsset(spec.id, { maxAttempts: 1, rawGlb: rawPath }, makeDeps({ spec, fixed: [fixed] }))
+      const report = await buildAsset(spec.id, { maxAttempts: 1, rawGlb: rawPath, logosRemoved: true }, makeDeps({ spec, fixed: [fixed] }))
       return {
         glb: new Uint8Array(await readFile(join(paths.assetsDir, 'test-mixer.glb'))),
         report,
@@ -518,7 +518,7 @@ describe('buildAsset', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const createError = new MeshyError(402, 'Meshy request failed with HTTP 402: insufficient credits, top up the API balance')
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], createError }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], createError }))
     expect(calls.create).toHaveLength(1)
     expect(report.ok).toBe(false)
     expect(report.attempts).toHaveLength(1)
@@ -532,24 +532,24 @@ describe('buildAsset', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const createError = new MeshyError(429, 'Meshy request failed with HTTP 429: slow down')
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], createError }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], createError }))
     expect(calls.create).toHaveLength(1)
     expect(report.stopped).toBe('meshy-429')
   })
 
   it('no photos -> clear error and zero Meshy calls', async () => {
     const spec = deviceSpec()
-    await expect(buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/no photos/i)
+    await expect(buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/no photos/i)
     await mkdir(join(paths.sourceDir, spec.id, 'photos'), { recursive: true })
     await writeFile(join(paths.sourceDir, spec.id, 'photos', 'readme.txt'), 'not an image')
-    await expect(buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/no photos/i)
+    await expect(buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/no photos/i)
     expect(calls.create).toHaveLength(0)
     expect(calls.fixup).toHaveLength(0)
   })
 
   it('an unknown spec id throws before anything runs', async () => {
     const spec = deviceSpec()
-    await expect(buildAsset('nope', { maxAttempts: 1 }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/no asset spec "nope"/)
+    await expect(buildAsset('nope', { maxAttempts: 1, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/no asset spec "nope"/)
     expect(calls.create).toHaveLength(0)
   })
 
@@ -560,7 +560,7 @@ describe('buildAsset', () => {
     deps.runFixup = async () => {
       throw new Error('Blender fix-up of test-mixer failed (exit 1): FIXUP_FAIL no mesh')
     }
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, deps)
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, deps)
     expect(report.ok).toBe(false)
     expect(report.error).toContain('FIXUP_FAIL no mesh')
     expect(calls.create).toHaveLength(1)
@@ -572,7 +572,7 @@ describe('buildAsset', () => {
   it('records the Meshy task id of each attempt in the report', async () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
-    const report = await buildAsset(spec.id, { maxAttempts: 2 }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [FIXUP_DRIFT, FIXUP_OK] }))
+    const report = await buildAsset(spec.id, { maxAttempts: 2, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [FIXUP_DRIFT, FIXUP_OK] }))
     expect(report.attempts.map((a) => a.taskId)).toEqual(['task-1', 'task-2'])
     const onDisk = JSON.parse(await readFile(join(paths.sourceDir, spec.id, 'report.json'), 'utf8')) as BuildReport
     expect(onDisk.workDir).toBe(report.workDir)
@@ -636,7 +636,7 @@ describe('buildAsset', () => {
     await addPhotos(spec.id, ['a.png'])
     const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
     deps.meshy = { ...(deps.meshy as NonNullable<BuildDeps['meshy']>), waitForTask: async () => { throw new MeshyError(0, 'Meshy task task-1 timed out') } }
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, deps)
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, deps)
     expect(report.ok).toBe(false)
     expect(report.attempts).toHaveLength(1)
     expect(report.attempts[0].taskId).toBe('task-1')
@@ -662,7 +662,7 @@ describe('buildAsset', () => {
     await addPhotos(spec.id, ['a.png'])
     // a folder where the GLB must go makes the final rename fail
     await mkdir(join(paths.assetsDir, 'test-mixer.glb'))
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
     expect(report.ok).toBe(false)
     expect(report.finalGlb).toBeUndefined()
     expect(report.error).toBeTruthy()
@@ -683,7 +683,7 @@ describe('buildAsset', () => {
       await writeFile(paths.manifestPath, '{ broken')
       return fix(...args)
     }
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, deps)
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, deps)
     expect(report.ok).toBe(false)
     expect(report.finalGlb).toBeUndefined()
     expect(report.error).toMatch(/not valid JSON/)
@@ -697,7 +697,7 @@ describe('buildAsset', () => {
       return fix2(...args)
     }
     await writeFile(paths.manifestPath, JSON.stringify({ assets: [] }))
-    expect(await main([spec.id], deps2, (l) => out.push(l))).toBe(1)
+    expect(await main([spec.id, '--yes', '--ship', '--logos-removed'], deps2, (l) => out.push(l))).toBe(1)
     expect(out.join(String.fromCharCode(10))).not.toMatch(/result: PASS/)
   })
 
@@ -706,10 +706,10 @@ describe('buildAsset', () => {
     await addPhotos(spec.id, ['a.png'])
     for (const content of ['{ nope', '{"generated":"x"}']) {
       await writeFile(paths.manifestPath, content)
-      await expect(buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/manifest/)
+      await expect(buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/manifest/)
     }
     await rm(paths.manifestPath)
-    await expect(buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/manifest/)
+    await expect(buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/manifest/)
     expect(calls.create).toHaveLength(0)
     expect(calls.fixup).toHaveLength(0)
   })
@@ -730,7 +730,7 @@ describe('buildAsset', () => {
         throw new Error('draco encoder blew up')
       }
       const fixupReport = spec.kind === 'connector' ? { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } : undefined
-      const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress, fixupReport }))
+      const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress, fixupReport }))
       expect(report.ok).toBe(false)
       expect(report.error).toContain('draco encoder blew up')
       expect(report.attempts).toHaveLength(1)
@@ -743,7 +743,7 @@ describe('buildAsset', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const compress: BuildDeps['compress'] = async () => new Uint8Array([1, 2, 3, 4])
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress }))
     expect(report.ok).toBe(false)
     expect(report.error).toBeTruthy()
     expect(report.attempts).toHaveLength(1)
@@ -773,7 +773,7 @@ describe('buildAsset texture budget', () => {
     await addPhotos(spec.id, ['a.png'])
     const fixed = await goodGlb(spec, 0, { sizePx: 2048, pbr: true })
     expect((await inspectGlb(fixed)).textures).toHaveLength(3)
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [fixed] }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [fixed] }))
 
     expect(report.ok).toBe(true)
     expect(calls.order).toEqual(['optimize', 'compress'])
@@ -796,7 +796,7 @@ describe('buildAsset texture budget', () => {
   it('a connector gets the 512 px limit', async () => {
     const spec = connectorSpec()
     await addPhotos(spec.id, ['a.png'])
-    const report = await buildAsset(spec.id, { maxAttempts: 1 }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024 })], fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
+    const report = await buildAsset(spec.id, { maxAttempts: 1, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024 })], fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
     expect(report.ok).toBe(true)
     expect(calls.optimize).toEqual([{ maxPx: 512 }])
     expect((await inspectGlb(new Uint8Array(await readFile(join(paths.assetsDir, 'test-jack.glb'))))).textures[0]).toMatchObject({ width: 512, mimeType: 'image/webp' })
@@ -820,7 +820,7 @@ describe('buildAsset texture budget', () => {
     const manifestBefore = await readFile(paths.manifestPath, 'utf8')
     // a no-op texture step on three 1024 px noise maps leaves roughly 9 MB: far over the 1.5 MB standard limit
     const optimize: BuildDeps['optimizeTextures'] = async (bytes) => bytes
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024, noise: true, pbr: true })], optimize }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024, noise: true, pbr: true })], optimize }))
 
     expect(report.ok).toBe(false)
     expect(report.error).toMatch(/^file size budget exceeded: \d+ > 1500000 \(lower TEXTURE_MAX_PX or FILE_BYTES_MAX in gates\.ts\)$/)
@@ -836,7 +836,7 @@ describe('buildAsset texture budget', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const optimize: BuildDeps['optimizeTextures'] = async (bytes) => bytes
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 2048 })], optimize }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 2048 })], optimize }))
     expect(report.ok).toBe(false)
     expect(report.error).toMatch(/baseColor/)
     expect(report.error).toMatch(/2048/)
@@ -856,7 +856,7 @@ describe('buildAsset texture budget', () => {
         throw new Error('sharp blew up')
       }
       const fixupReport = spec.kind === 'connector' ? { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } : undefined
-      const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec)], optimize, fixupReport }))
+      const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], optimize, fixupReport }))
       expect(report.ok).toBe(false)
       expect(report.error).toContain('sharp blew up')
       expect(report.attempts).toHaveLength(1)
@@ -871,7 +871,7 @@ describe('buildAsset texture budget', () => {
     await addPhotos(spec.id, ['a.png'])
     const shifted = await goodGlb(spec, 0.0006)
     const compress: BuildDeps['compress'] = async () => shifted
-    const report = await buildAsset(spec.id, { maxAttempts: 1 }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024 })], compress, fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
+    const report = await buildAsset(spec.id, { maxAttempts: 1, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024 })], compress, fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
     expect(report.ok).toBe(true)
     expect(report.attempts[0]).toMatchObject({ compression: 'none', textures: 'webp' })
     expect(report.attempts[0].gates.at(-1)).toMatchObject({ gate: 'textures', ok: true })
@@ -886,7 +886,7 @@ describe('buildAsset texture budget', () => {
     const noisy = await goodGlb(spec, 0, { sizePx: 512, noise: true, pbr: true })
     const optimize: BuildDeps['optimizeTextures'] = async (bytes) => bytes
     const compress: BuildDeps['compress'] = async () => goodGlb(spec, 0.0006)
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [noisy], optimize, compress, fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [noisy], optimize, compress, fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
     expect(report.ok).toBe(false)
     expect(report.error).toMatch(/file size budget exceeded: \d+ > 250000/)
     expect(report.attempts).toHaveLength(1)
@@ -899,7 +899,7 @@ describe('buildAsset texture budget', () => {
     await addPhotos(spec.id, ['a.png'])
     const bad = await tallGlb(spec)
     const compress: BuildDeps['compress'] = async () => bad
-    const report = await buildAsset(spec.id, { maxAttempts: 2 }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress }))
+    const report = await buildAsset(spec.id, { maxAttempts: 2, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], compress }))
     expect(report.attempts).toHaveLength(1)
     expect(calls.create).toHaveLength(1)
     expect(report.attempts[0].gates.at(-1)?.gate).toBe('textures')
@@ -909,7 +909,7 @@ describe('buildAsset texture budget', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const optimize: BuildDeps['optimizeTextures'] = async (bytes) => bytes
-    const report = await buildAsset(spec.id, { maxAttempts: 3 }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 2048 })], optimize }))
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 2048 })], optimize }))
     expect(report.ok).toBe(false)
     const textures = report.attempts[0].gates.find((g) => g.gate === 'textures')
     expect(textures?.ok).toBe(false)
@@ -957,7 +957,7 @@ describe('CLI main', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const out: string[] = []
-    const code = await main([spec.id, '--attempts', '2', '--dry-run'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))
+    const code = await main([spec.id, '--attempts', '2', '--dry-run', '--yes'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))
     const text = out.join('\n')
     expect(code).toBe(0)
     expect(text).toMatch(/PASS\s+size/)
@@ -970,7 +970,7 @@ describe('CLI main', () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
     const out: string[] = []
-    const code = await main([spec.id, '--attempts', '1'], makeDeps({ spec, fixed: [await tallGlb(spec)] }), (l) => out.push(l))
+    const code = await main([spec.id, '--attempts', '1', '--yes'], makeDeps({ spec, fixed: [await tallGlb(spec)] }), (l) => out.push(l))
     expect(code).toBe(1)
     expect(out.join('\n')).toMatch(/FAIL\s+size.*h measures/)
   })
@@ -1004,13 +1004,98 @@ describe('CLI main', () => {
     await addPhotos('shure-sm58', ['a.png'])
     await addPhotos('yamaha-ql1', ['a.png'])
     const out: string[] = []
-    const code = await main(['--pilot', '--attempts', '2'], deps, (l) => out.push(l))
+    const code = await main(['--pilot', '--attempts', '2', '--yes'], deps, (l) => out.push(l))
     expect(code).toBe(1)
     expect(calls.create).toHaveLength(1)
     const text = out.join('\n')
     expect(text).toMatch(/shure-sm58\s+STOPPED/)
     expect(text).toMatch(/yamaha-ql1\s+not run/)
     expect(text).toMatch(/402/)
+  })
+})
+
+describe('CLI ship and spend guards', () => {
+  it('by default nothing ships: final.glb and report.json land in the work dir, public/assets and the manifest untouched', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const manifestBefore = await readFile(paths.manifestPath, 'utf8')
+    const filesBefore = await readdir(paths.assetsDir)
+    const out: string[] = []
+    expect(await main([spec.id, '--attempts', '1', '--yes'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))).toBe(0)
+    expect(await readFile(paths.manifestPath, 'utf8')).toBe(manifestBefore)
+    expect(await readdir(paths.assetsDir)).toEqual(filesBefore)
+    const work = join(paths.sourceDir, spec.id, 'work', '2026-10-29T12-00-00-000Z')
+    expect(existsSync(join(work, 'final.glb'))).toBe(true)
+    expect(existsSync(join(work, 'report.json'))).toBe(true)
+    expect((await inspectGlb(new Uint8Array(await readFile(join(work, 'final.glb'))))).nodeNames).toContain('port_in-mic-1')
+    const text = out.join('\n')
+    expect(text).toContain(`result: PASS (dry run, not shipped): ${join(work, 'final.glb')}`)
+    expect(text).toMatch(/--ship --logos-removed/)
+  })
+
+  it('--ship without --logos-removed is refused before anything runs', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const out: string[] = []
+    expect(await main([spec.id, '--yes', '--ship'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))).toBe(1)
+    expect(out.join('\n')).toMatch(/--ship is refused without --logos-removed/)
+    expect(calls.create).toHaveLength(0)
+    expect(calls.fixup).toHaveLength(0)
+    expect(existsSync(join(paths.assetsDir, 'test-mixer.glb'))).toBe(false)
+  })
+
+  it('the library refuses to ship without logosRemoved, with zero Meshy calls', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    await expect(buildAsset(spec.id, { maxAttempts: 1 }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/refusing to ship test-mixer.*logos/)
+    expect(calls.create).toHaveLength(0)
+  })
+
+  it('--ship --logos-removed writes the GLB and the manifest entry with logosRemoved true', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const out: string[] = []
+    expect(await main([spec.id, '--attempts', '1', '--yes', '--ship', '--logos-removed'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))).toBe(0)
+    expect(existsSync(join(paths.assetsDir, 'test-mixer.glb'))).toBe(true)
+    expect((await readManifest()).assets.find((a) => a.id === 'test-mixer')).toMatchObject({ logosRemoved: true, tool: 'meshy' })
+    expect(out.join('\n')).toMatch(/result: PASS, shipped/)
+  })
+
+  it('without --yes there is no Meshy call: the pre-spend line is printed and the run is refused', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const out: string[] = []
+    expect(await main([spec.id, '--attempts', '3'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))).toBe(1)
+    expect(out[0]).toBe('will create up to 3 Meshy tasks, about 30 credits each, max 90 credits')
+    expect(out.join('\n')).toMatch(/refusing to call Meshy without --yes/)
+    expect(calls.create).toHaveLength(0)
+    expect(calls.fixup).toHaveLength(0)
+  })
+
+  it('asset:pilot needs --yes too, and counts six assets times the attempts', async () => {
+    const spec = deviceSpec({ id: 'shure-sm58' })
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+    deps.loadSpec = () => spec
+    const out: string[] = []
+    expect(await main(['--pilot', '--attempts', '2'], deps, (l) => out.push(l))).toBe(1)
+    expect(out[0]).toBe('will create up to 12 Meshy tasks, about 30 credits each, max 360 credits')
+    expect(calls.create).toHaveLength(0)
+  })
+
+  it('--raw needs no --yes (no Meshy call) and prints no spending line', async () => {
+    const spec = deviceSpec()
+    const rawPath = join(root, 'box.glb')
+    await writeFile(rawPath, RAW_BYTES)
+    const out: string[] = []
+    expect(await main([spec.id, '--raw', rawPath], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))).toBe(0)
+    expect(out.join('\n')).not.toMatch(/will create/)
+  })
+
+  it('--ship with --dry-run is a contradiction', async () => {
+    const spec = deviceSpec()
+    const out: string[] = []
+    expect(await main([spec.id, '--yes', '--ship', '--logos-removed', '--dry-run'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))).toBe(1)
+    expect(out.join('\n')).toMatch(/contradict/)
   })
 })
 
@@ -1021,7 +1106,7 @@ describe('pilot stop rule', () => {
     deps.loadSpec = () => spec
     for (const id of PILOT_IDS) await addPhotos(id, ['a.png'])
     const out: string[] = []
-    const code = await main(['--pilot', '--attempts', '3', '--dry-run'], deps, (l) => out.push(l))
+    const code = await main(['--pilot', '--attempts', '3', '--yes'], deps, (l) => out.push(l))
     expect(code).toBe(1)
     expect(calls.create).toHaveLength(1)
     const text = out.join('\n')
@@ -1036,7 +1121,7 @@ describe('pilot stop rule', () => {
     deps.loadSpec = () => spec
     for (const id of PILOT_IDS) await addPhotos(id, ['a.png'])
     const out: string[] = []
-    expect(await main(['--pilot', '--attempts', '1', '--dry-run'], deps, (l) => out.push(l))).toBe(1)
+    expect(await main(['--pilot', '--attempts', '1', '--yes'], deps, (l) => out.push(l))).toBe(1)
     expect(calls.create).toHaveLength(PILOT_IDS.length)
     expect(out.join('\n')).not.toMatch(/pilot stopped/)
   })
@@ -1050,10 +1135,10 @@ describe('pilot with a failing write', () => {
     for (const id of ['shure-sm58', 'yamaha-ql1', 'yamaha-rio3224-d2', 'xlr3-f', 'trs-quarter', 'rj45']) await addPhotos(id, ['a.png'])
     await mkdir(join(paths.assetsDir, 'shure-sm58.glb'))
     const out: string[] = []
-    const code = await main(['--pilot', '--attempts', '1', '--dry-run'], deps, (l) => out.push(l))
-    expect(code).toBe(0) // dry runs never write, so no failure here
+    const code = await main(['--pilot', '--attempts', '1', '--yes'], deps, (l) => out.push(l))
+    expect(code).toBe(0) // the default never ships, so no write and no failure here
     out.length = 0
-    const code2 = await main(['--pilot', '--attempts', '1'], deps, (l) => out.push(l))
+    const code2 = await main(['--pilot', '--attempts', '1', '--yes', '--ship', '--logos-removed'], deps, (l) => out.push(l))
     expect(code2).toBe(1)
     expect(out.join(String.fromCharCode(10))).toMatch(/shure-sm58\s+FAIL/)
   })
@@ -1062,7 +1147,7 @@ describe('pilot with a failing write', () => {
 describe('formatReport', () => {
   it('says dry run only for a dry run', () => {
     const base: BuildReport = { id: 'x', ok: true, dryRun: true, workDir: 'w', attempts: [] }
-    expect(formatReport(base)).toContain('PASS (dry run)')
+    expect(formatReport(base)).toContain('PASS (dry run, not shipped)')
     expect(formatReport({ ...base, dryRun: false })).not.toMatch(/dry run/)
   })
 

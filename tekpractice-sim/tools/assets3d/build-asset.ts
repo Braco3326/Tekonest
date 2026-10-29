@@ -1,8 +1,14 @@
 /**
  * assets3d/build-asset: the orchestrator of the 3D-asset pipeline, one asset per run.
  *
- *   npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--dry-run]
- *   npm run asset:pilot [-- --attempts 3 --yaw 0 --dry-run]      (the six pilot ids, one after the other)
+ *   npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--yes] [--ship --logos-removed]
+ *   npm run asset:pilot -- --yes [--attempts 3] [--yaw 0] [--ship --logos-removed]   (the six pilot ids, in turn)
+ *
+ * By default NOTHING ships: the run does everything and leaves the result in its work dir (final.glb and report.json),
+ * never in public/assets or the manifest. `--ship` writes public/assets/<id>.glb and the manifest entry, and it needs
+ * `--logos-removed`: the founder asserts the textures carry no brand logos (recorded as logosRemoved: true). Any run
+ * that calls Meshy (everything except --raw, and always the pilot) first prints the most it can spend and refuses to
+ * start without `--yes`.
  *
  * Per attempt n (1..maxAttempts):
  *  1. raw GLB: the `--raw` file (only one attempt is meaningful then, zero Meshy calls), else Meshy multi-image-to-3D
@@ -18,8 +24,8 @@
  *     fail ships the texture-optimized, uncompressed GLB (compression 'none'). Any failure on the final bytes is a
  *     defect of our own settings, not of the Meshy model: the failing gates go on the attempt, the bytes are saved as
  *     attempt-N.final.glb and the build aborts (no new paid task)
- *  6. pass: write public/assets/<id>.glb and record the manifest entry (both skipped on --dry-run). `ok` (and `finalGlb`)
- *     are set only after BOTH succeeded; a failed write or manifest record is an error, never a PASS
+ *  6. pass: the final bytes go to work/<run>/final.glb; with --ship (logos removed) also public/assets/<id>.glb and the
+ *     manifest entry. `ok` (and `finalGlb`) are set only after BOTH succeeded; a failed write or record is an error
  * After maxAttempts failures nothing is written to public/assets or the manifest. The report
  * (assets-source/<id>/report.json, gitignored, with the run's `workDir`) is always written, even on a dry run.
  *
@@ -83,6 +89,9 @@ export function targetPolycount(spec: AssetSpecT): number {
   return Math.max(MIN_POLYCOUNT, Math.floor(CEILING_SHARE * TRIANGLE_CEILING[spec.tier]) - RECESS_TRIANGLES * recesses)
 }
 
+/** Credits one meshy-7.1 multi-image task with 2K PBR textures costs (meshy.ts header): the pre-spend summary uses it. */
+export const CREDITS_PER_TASK = 30
+
 /** Repo root (tekpractice-sim/), two folders above this file. */
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 
@@ -119,8 +128,16 @@ export interface BuildOpts {
   maxAttempts: number
   /** A hand-made raw GLB: no Meshy, one attempt. */
   rawGlb?: string
-  /** Run everything and write the report, but never write public/assets or the manifest. */
+  /**
+   * Run everything and leave the result in the work dir (final.glb, report.json), never in public/assets or the
+   * manifest. The CLI sets it to !--ship, so a CLI run is a dry run unless shipping was asked for.
+   */
   dryRun?: boolean
+  /**
+   * The founder asserts the textures are free of logos. Shipping (dryRun false) is refused without it; it is what
+   * the manifest records as logosRemoved.
+   */
+  logosRemoved?: boolean
   yawDeg?: YawDeg
 }
 
@@ -141,8 +158,10 @@ export interface BuildReport {
   id: string
   ok: boolean
   attempts: BuildAttempt[]
-  /** The shipped file; absent on a failure and on a dry run. */
+  /** The shipped file in public/assets; absent on a failure and on a dry run. */
   finalGlb?: string
+  /** The final bytes of the passing attempt in the work dir (work/<run>/final.glb), dry run or not. */
+  builtGlb?: string
   dryRun: boolean
   /** This run's folder of raw and fixed GLBs: assets-source/<id>/work/<run start time>. */
   workDir: string
@@ -296,6 +315,9 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   const d = resolveDeps(deps)
   const spec = d.loadSpec(id)
   const dryRun = opts.dryRun === true
+  if (!dryRun && opts.logosRemoved !== true) {
+    throw new Error(`refusing to ship ${id}: shipping writes public/assets and the manifest, and needs the assertion that the textures carry no logos (logosRemoved, the CLI flag --logos-removed)`)
+  }
   const apiKey = process.env.MESHY_API_KEY ?? ''
   const scrub = (text: string): string => redact(text, apiKey)
 
@@ -388,6 +410,9 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       attempt.gates = shipped.gates
       attempt.compression = shipped.compression
       attempt.textures = shipped.textures
+      const built = join(work, 'final.glb')
+      await writeFile(built, shipped.bytes)
+      report.builtGlb = built
       if (!dryRun) {
         const target = join(d.paths.assetsDir, `${id}.glb`)
         await writeAtomic(target, shipped.bytes)
@@ -402,7 +427,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
             toolVersion: rawBytes ? 'raw' : MESHY_MODEL,
             date: d.now().toISOString(),
             specSource: spec.sources[0]?.url ?? 'spec',
-            logosRemoved: false,
+            logosRemoved: opts.logosRemoved === true,
             gates: shipped.gates.map((g) => ({ gate: g.gate, ok: g.ok })),
           })
         } catch (e) {
@@ -426,7 +451,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
 
 /** A readable gate table per attempt, the credits, and the verdict. */
 export function formatReport(report: BuildReport): string {
-  const lines = [`asset ${report.id}${report.dryRun ? '  (dry run: nothing written to public/assets or the manifest)' : ''}`]
+  const lines = [`asset ${report.id}${report.dryRun ? '  (not shipped: nothing written to public/assets or the manifest)' : ''}`]
   for (const a of report.attempts) {
     lines.push(`attempt ${a.n}  credits: ${a.credits === null ? 'n/a' : String(a.credits)}`)
     if (a.gates.length === 0) lines.push('  (no gates ran)')
@@ -434,17 +459,30 @@ export function formatReport(report: BuildReport): string {
     if (a.compression) lines.push(`  compression: ${a.compression}, textures: ${a.textures ?? 'none'}`)
   }
   if (report.error) lines.push(`error: ${report.error}`)
-  if (report.ok) lines.push(report.finalGlb ? `result: PASS, shipped ${report.finalGlb}` : report.dryRun ? 'result: PASS (dry run)' : 'result: PASS')
+  if (report.ok && report.finalGlb) lines.push(`result: PASS, shipped ${report.finalGlb}`)
+  else if (report.ok && report.dryRun) {
+    lines.push(`result: PASS (dry run, not shipped): ${report.builtGlb ?? report.workDir}`)
+    lines.push('  review the contact sheet (npm run asset:sheet), then rerun with --ship --logos-removed to ship')
+  } else if (report.ok) lines.push('result: PASS')
   else lines.push('result: FAIL')
   return lines.join('\n')
 }
 
-const USAGE =
-  'usage: npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--dry-run]   |   npm run asset:pilot [-- --attempts 3 --yaw 0 --dry-run]'
+const USAGE = [
+  'usage: npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--yes] [--ship --logos-removed]',
+  '       npm run asset:pilot -- --yes [--attempts 3] [--yaw 0|90|180|270] [--ship --logos-removed]',
+  '  default       build and gate everything, leave final.glb and report.json in the run\'s work dir; ship nothing',
+  '  --yes         allow the Meshy spending printed before the run (needed unless --raw)',
+  '  --ship        also write public/assets/<id>.glb and the manifest entry (needs --logos-removed)',
+  '  --logos-removed  you checked the textures: no brand logos (recorded as logosRemoved: true)',
+  '  --raw         use a hand-made raw GLB: no Meshy call, one attempt',
+].join('\n')
 
 interface CliArgs {
   id?: string
   pilot: boolean
+  /** --yes: the user accepted the printed Meshy spending. */
+  yes: boolean
   opts: BuildOpts
 }
 
@@ -454,9 +492,16 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
   const opts: BuildOpts = { maxAttempts: 3 }
   let id: string | undefined
   let pilot = false
+  let ship = false
+  let dryRunFlag = false
+  let logosRemoved = false
+  let yes = false
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]
-    if (a === '--dry-run') opts.dryRun = true
+    if (a === '--dry-run') dryRunFlag = true // the default anyway, kept so old command lines still work
+    else if (a === '--ship') ship = true
+    else if (a === '--logos-removed') logosRemoved = true
+    else if (a === '--yes') yes = true
     else if (a === '--pilot') pilot = true
     else if (a === '--raw') {
       const v = argv[++i]
@@ -476,7 +521,13 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
   }
   if (pilot && (id !== undefined || opts.rawGlb)) return bad('--pilot takes no id and no --raw')
   if (!pilot && id === undefined) return bad('an asset id is required')
-  return { id, pilot, opts }
+  if (ship && dryRunFlag) return bad('--ship and --dry-run contradict each other')
+  if (ship && !logosRemoved) {
+    return bad('--ship is refused without --logos-removed: open the textures, make sure no brand logo is left, then pass --ship --logos-removed (the manifest records logosRemoved: true)')
+  }
+  opts.dryRun = !ship
+  if (ship) opts.logosRemoved = true
+  return { id, pilot, yes, opts }
 }
 
 type Print = (line: string) => void
@@ -530,6 +581,15 @@ export async function main(argv: string[], deps: Partial<BuildDeps> = {}, print:
   }
   // progress lines (task ids, polls) go where the rest of the CLI output goes
   deps = { ...deps, log: deps.log ?? print }
+  if (args.pilot || !args.opts.rawGlb) {
+    // Spending guard: say the most this run can spend, and spend nothing without an explicit --yes.
+    const tasks = (args.pilot ? PILOT_IDS.length : 1) * args.opts.maxAttempts
+    print(`will create up to ${tasks} Meshy task${tasks === 1 ? '' : 's'}, about ${CREDITS_PER_TASK} credits each, max ${tasks * CREDITS_PER_TASK} credits`)
+    if (!args.yes) {
+      print('refusing to call Meshy without --yes (add --yes to accept this spending, or use --raw file.glb for a free run)')
+      return 1
+    }
+  }
   if (args.pilot) return runPilot(args.opts, deps, print)
   try {
     const report = await buildAsset(args.id as string, args.opts, deps)

@@ -7,7 +7,7 @@
  *  - the file is rewritten atomically (temp file in the same folder, then rename) as 2-space JSON plus a trailing newline
  *  - a file that is missing, is not valid JSON or has no `assets` array is refused and left untouched
  * The optional fields written by the 3D pipeline: tool, toolVersion, date, specSource, logosRemoved, tris, gates.
- * `logosRemoved` is always false from the builder: removing logos from the texture is a manual step.
+ * `logosRemoved` is true only when the founder shipped with --logos-removed (removing logos from a texture is manual).
  */
 import { existsSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs'
 
