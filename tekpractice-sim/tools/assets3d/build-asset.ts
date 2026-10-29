@@ -21,14 +21,15 @@
  *  4. inspectGlb + runGates on the fixed GLB, plus checkProportionDrift on the fix-up's pre-scale size (6th gate)
  *  5. all pass: optimize the textures (WebP, longest side <= TEXTURE_MAX_PX of the tier), THEN Draco-compress (connector
  *     16 position bits, other tiers 14), and RE-MEASURE the final bytes with the same five gates, because quantization
- *     moves vertices, plus `textures` (texture size and file size) and `validator` (Khronos glTF validator, 0 errors). A connector whose compressed bytes
- *     fail ships the texture-optimized, uncompressed GLB (compression 'none'). Any failure on the final bytes is a
+ *     moves vertices, plus `textures` (texture size and file size) and `validator` (Khronos glTF validator, 0
+ *     errors). A connector whose compressed bytes fail ships the texture-optimized, uncompressed GLB (compression 'none'). Any failure on the final bytes is a
  *     defect of our own settings, not of the Meshy model: the failing gates go on the attempt, the bytes are saved as
  *     attempt-N.final.glb and the build aborts (no new paid task)
  *  6. pass: the final bytes go to work/<run>/final.glb; with --ship (logos removed) also public/assets/<id>.glb and the
  *     manifest entry. `ok` (and `finalGlb`) are set only after BOTH succeeded; a failed write or record is an error
- * After maxAttempts failures nothing is written to public/assets or the manifest. The report
- * (assets-source/<id>/report.json, gitignored, with the run's `workDir`) is always written, even on a dry run.
+ * After maxAttempts failures nothing is written to public/assets or the manifest. The report is written into
+ * work/<run>/report.json after every step (a Ctrl-C keeps the paid task id) and copied to assets-source/<id>/report.json
+ * (gitignored, with the run's `workDir`), even on a dry run. Each paid create prints `task <id> created, workDir <dir>`.
  *
  * Money and safety rules:
  *  - a Meshy 402 or 429 aborts at once (no further attempt); the message is surfaced and `stopped` is set
@@ -40,6 +41,7 @@
  *    defect of OUR code, identical on every attempt: it aborts with an error naming the gates and the work dir
  *  - the pilot stops at the first asset whose report carries an error of any kind
  *  - the manifest is validated before the first paid call (a dry run skips this, it never writes the manifest)
+ *  - every Meshy request has a timeout (60 s API, 5 min download; meshy.ts)
  *  - nothing here logs a request body or header; every error text is scrubbed of MESHY_API_KEY before it reaches the
  *    report, the console or report.json
  *  - with the real Blender fix-up, a missing Blender is detected before the first Meshy call
