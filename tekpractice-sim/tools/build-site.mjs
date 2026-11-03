@@ -1,16 +1,26 @@
 // Deploy build for https://tekonest.com/tekpractice/jouer/ -> dist-site/
 // Windows-safe (no cross-env). Strips sourcemaps, drops .glb > 25 MiB (the game
 // falls back to placeholders), reports files > 20 MiB and the total file count.
+// REFUSES to run (exit 1, before anything is removed or built) while a VITE_*KEY/SECRET/TOKEN/PASSWORD variable is set in the environment or defined in a .env*
+// file of the project root: Vite would inline it in plain text into the public bundle (the Anthropic SDK is bundled in the legacy chunk). See tools/deploy-guard.mjs.
 import { spawnSync } from 'node:child_process'
 import { existsSync, readdirSync, rmSync, statSync } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { findSecretVars, formatRefusal } from './deploy-guard.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const out = join(root, 'dist-site')
 const MiB = 1024 * 1024
 const WARN = 20 * MiB
 const LIMIT = 25 * MiB
+
+// Task 43d D: first of all. Nothing is removed and Vite is not started if a secret would be baked into the public build.
+const secrets = findSecretVars({ env: process.env, rootDir: root })
+if (secrets.length) {
+  console.error(formatRefusal(secrets))
+  process.exit(1)
+}
 
 rmSync(out, { recursive: true, force: true })
 const viteBin = join(root, 'node_modules', 'vite', 'bin', 'vite.js')
