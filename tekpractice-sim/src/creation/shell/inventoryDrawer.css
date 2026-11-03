@@ -115,6 +115,10 @@
   background: var(--cr-nuit);
   border: 1px solid var(--cr-panel-line);
 }
+/* Drag-and-drop (Task 43b): a finger on an item is a drag, not a page pan; the text is not selected under a mouse drag.
+   A list that scrolls (marked by the module) keeps its vertical pan: there a finger drags sideways, or taps (tap, tap). */
+.cr .cr-inv-item { touch-action: none; user-select: none; -webkit-user-select: none; }
+.cr-drawer-panel[data-scrolls='true'] .cr-inv-item { touch-action: pan-y; }
 .cr .cr-inv-item:hover { border-color: var(--cr-ambre); color: var(--cr-ambre); }
 .cr-inv-text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .cr-inv-name { overflow-wrap: anywhere; }

@@ -633,7 +633,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Accessible name of the tab list. */
     tabs: 'Catégories d’appareils',
     /** Line under the title; {key} = the inventory key label (Space by default). */
-    hint: 'Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser. {key} ou Échap : fermer ; dans « Filtrer », seul Échap ferme.',
+    hint: 'Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser, ou glisser l’appareil dans la vue. {key} ou Échap : fermer ; dans « Filtrer », seul Échap ferme.',
     /** Visible text of the close button. */
     close: 'Fermer',
     /** Accessible name of the close button (contains the visible text). */
@@ -692,7 +692,15 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** History entry label of a drag. */
     entryMove: 'Déplacer {device}',
     /** Status bar once a device is chosen and follows the pointer (announced). */
-    statusPlacing: 'Cliquez pour poser {device} (Entrée : ici). R : pivoter. Alt : libre. Échap : annuler.',
+    statusPlacing: 'Cliquez pour poser {device} (Entrée : ici). R : pivoter. Alt ou G : libre. Échap : annuler.',
+    /** The visible cancel button shown while a device follows the pointer (Task 43b); its accessible name too. */
+    cancelButton: 'Annuler la pose',
+    /** Status bar once a device is dragged out of the inventory (announced; Task 43b). */
+    statusDragging: 'Glissez dans la vue et relâchez pour poser {device}. Échap : annuler.',
+    /** Status bar when the G key latches free placement on (announced, once per press; Task 43b). */
+    statusSnapFree: 'Placement libre : hors grille. G pour revenir à la grille.',
+    /** Status bar when the G key turns the latch off (announced, once per press; Task 43b). */
+    statusSnapGrid: 'Aimantation à la grille : 0,25 m · 15°. G pour placer librement.',
     /** Status bar after the drop (announced). */
     statusPlaced: 'Posé : {device}. {undo} pour annuler.',
     /** Status bar after a drag (announced). */

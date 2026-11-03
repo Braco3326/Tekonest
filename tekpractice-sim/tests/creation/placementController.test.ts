@@ -7,6 +7,7 @@ import { ViewState } from '../../src/creation/viewState'
 import { PlacementController, type PlacementHost } from '../../src/creation/placementController'
 import { EditController } from '../../src/creation/editController'
 import { DisposableBag } from '../../src/util/disposable'
+import { COPY } from '../../src/creation/copy'
 
 const registry = loadCatalog(catalogJson)
 
@@ -67,11 +68,13 @@ function setup() {
   }
   // A "world": the pointer's canvas px are metres * 100 on a flat floor; a device is under the pointer inside 30 px of it
   const floor = (x: number, y: number): V3 => [x / 100, 0, y / 100]
+  let floorOff = false // the pointer is over the sky
   const bag = new DisposableBag()
   const announce = vi.fn()
   const onSnap = vi.fn()
   const onClickSelected = vi.fn()
   const onPlaced = vi.fn()
+  const onPlacing = vi.fn()
   let deviceUnder: string | null = null
   const ctrl = new PlacementController(
     host,
@@ -86,7 +89,8 @@ function setup() {
       onSnap,
       onClickSelected,
       onPlaced,
-      floorPoint: (x, y) => floor(x, y),
+      floorPoint: (x, y) => (floorOff ? null : floor(x, y)),
+      onPlacing,
       deviceAt: () => deviceUnder,
     }
   )
@@ -114,7 +118,7 @@ function setup() {
   }
   const spawn = (instanceId: string, position: V3) =>
     history.do({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId, position, mount: 'floor' })
-  return { win, store, history, viewState, canvas, host, ghost, ctrl, fire, leases, scheduler, announce, onSnap, onClickSelected, onPlaced, bag, spawn, under: (id: string | null) => (deviceUnder = id) }
+  return { onPlacing, noFloor: (off: boolean) => (floorOff = off), win, store, history, viewState, canvas, host, ghost, ctrl, fire, leases, scheduler, announce, onSnap, onClickSelected, onPlaced, bag, spawn, under: (id: string | null) => (deviceUnder = id) }
 }
 
 describe('placing', () => {
@@ -571,5 +575,227 @@ describe('the Alt tap (final review 8): its keyup is claimed while a device is p
     s.ctrl.startPlacement('yamaha-ql1')
     s.bag.dispose()
     expect(keyup(s, 'Alt', 'AltLeft')).toBe(false)
+  })
+})
+
+describe('the free latch, G (Task 43b): a way to place freely without holding Alt', () => {
+  const FREE_PX: [number, number] = [113, 232] // 1.13 m, 2.32 m: off the grid
+
+  it('does nothing when nothing is placed or dragged: false, no announcement, no snapping text', () => {
+    const s = setup()
+    expect(s.ctrl.toggleFreeLatch()).toBe(false)
+    expect(s.announce).not.toHaveBeenCalled()
+    expect(s.onSnap).not.toHaveBeenCalled()
+  })
+
+  it('while placing: the toggle says « libre », the ghost then follows off the grid, a second toggle brings the grid back; each toggle is announced once', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.announce.mockClear()
+    expect(s.ctrl.toggleFreeLatch()).toBe(true)
+    expect(s.onSnap).toHaveBeenLastCalledWith(true)
+    expect(s.announce).toHaveBeenCalledTimes(1)
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapFree)
+    s.fire('pointermove', ...FREE_PX)
+    expect(s.ghost.moves.at(-1)).toEqual([1.13, 0, 2.32])
+    s.fire('pointermove', FREE_PX[0] + 1, FREE_PX[1]) // moving does not announce again
+    expect(s.announce).toHaveBeenCalledTimes(1)
+    expect(s.ctrl.toggleFreeLatch()).toBe(true)
+    expect(s.onSnap).toHaveBeenLastCalledWith(false)
+    expect(s.announce).toHaveBeenCalledTimes(2)
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapGrid)
+    s.fire('pointermove', ...FREE_PX)
+    expect(s.ghost.moves.at(-1)).toEqual([1.25, 0, 2.25])
+  })
+
+  it('the click that drops uses the latch: an exact point, one SPAWN, one undo entry', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ctrl.toggleFreeLatch()
+    s.fire('pointerdown', ...FREE_PX)
+    s.fire('pointerup', ...FREE_PX)
+    expect(s.store.design().placements[0].position_m).toEqual([1.13, 0, 2.32])
+    expect(s.history.sizes.undo).toBe(1)
+  })
+
+  it('Entrée after the latch drops where the ghost stands (it does not jump)', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointermove', ...FREE_PX)
+    s.ctrl.toggleFreeLatch()
+    s.fire('pointermove', ...FREE_PX)
+    expect(s.ctrl.confirm()).toBe(true)
+    expect(s.store.design().placements[0].position_m).toEqual([1.13, 0, 2.32])
+  })
+
+  it('Alt still means free with the latch off, and Alt on top of the latch stays free', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointermove', ...FREE_PX, { altKey: true })
+    expect(s.ghost.moves.at(-1)).toEqual([1.13, 0, 2.32])
+    s.ctrl.toggleFreeLatch()
+    s.fire('pointermove', ...FREE_PX, { altKey: true })
+    expect(s.ghost.moves.at(-1)).toEqual([1.13, 0, 2.32])
+  })
+
+  it('the latch resets when the pose ends (drop, Échap) and when a new one starts', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ctrl.toggleFreeLatch()
+    s.fire('pointerdown', ...FREE_PX)
+    s.fire('pointerup', ...FREE_PX) // dropped
+    s.ctrl.startPlacement('yamaha-ql1')
+    expect(s.onSnap).toHaveBeenLastCalledWith(false) // the new pose starts on the grid
+    s.fire('pointermove', ...FREE_PX)
+    expect(s.ghost.moves.at(-1)).toEqual([1.25, 0, 2.25])
+    s.ctrl.toggleFreeLatch()
+    s.ctrl.cancel() // Échap
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointermove', ...FREE_PX)
+    expect(s.ghost.moves.at(-1)).toEqual([1.25, 0, 2.25])
+  })
+
+  it('while dragging the selected device: the latch frees the move, ends with the drag, and the next drag is on the grid', () => {
+    const s = setup()
+    s.spawn('ql1', [2, 0, 3])
+    s.viewState.set({ selection: 'ql1' })
+    s.under('ql1')
+    const pose = () => s.store.design().placements.find((p) => p.instanceId === 'ql1')!.position_m
+    s.fire('pointerdown', 200, 300)
+    expect(s.ctrl.toggleFreeLatch()).toBe(true)
+    s.fire('pointermove', 313, 300)
+    expect(pose()).toEqual([3.13, 0, 3])
+    s.fire('pointerup', 313, 300)
+    s.fire('pointerdown', 313, 300)
+    s.fire('pointermove', 413, 300)
+    expect(pose()).toEqual([4.25, 0, 3]) // snapped again: the latch did not outlive its drag
+    s.fire('pointerup', 413, 300)
+  })
+})
+
+describe('a tap places on touch, and the pose can be cancelled and followed by a drawer drag (Task 43b)', () => {
+  it('a tap (touch press and release, no travel) drops like a click: one SPAWN, one entry', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointerdown', 113, 232, { pointerType: 'touch' })
+    s.fire('pointerup', 113, 232, { pointerType: 'touch' })
+    expect(s.store.design().placements[0].position_m).toEqual([1.25, 0, 2.25])
+    expect(s.history.sizes.undo).toBe(1)
+    expect(s.ctrl.placing).toBe(false)
+  })
+
+  it('a finger that travels is the camera orbit, not a drop; a second finger is ignored', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointerdown', 100, 100, { pointerType: 'touch' })
+    s.fire('pointerup', 220, 140, { pointerType: 'touch' })
+    s.fire('pointerdown', 300, 300, { pointerType: 'touch', isPrimary: false, pointerId: 2 })
+    s.fire('pointerup', 300, 300, { pointerType: 'touch', isPrimary: false, pointerId: 2 })
+    expect(s.store.design().rig.instances).toHaveLength(0)
+    expect(s.ctrl.placing).toBe(true)
+  })
+
+  it('a finger never grabs a placed device (that stays the mouse drag)', () => {
+    const s = setup()
+    s.spawn('ql1', [2, 0, 3])
+    s.viewState.set({ selection: 'ql1' })
+    s.under('ql1')
+    const later = vi.fn()
+    s.canvas.addEventListener('pointerdown', later)
+    s.fire('pointerdown', 200, 300, { pointerType: 'touch' })
+    expect(later).toHaveBeenCalledTimes(1) // the camera saw it
+    expect(s.ctrl.dragging).toBe(false)
+  })
+
+  it('onPlacing says true when a pose starts and false when it ends (Échap, drop)', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    expect(s.onPlacing).toHaveBeenLastCalledWith(true)
+    s.ctrl.cancel()
+    expect(s.onPlacing).toHaveBeenLastCalledWith(false)
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ctrl.confirm()
+    expect(s.onPlacing.mock.calls.map((c) => c[0])).toEqual([true, false, true, false])
+  })
+
+  describe('drawer drag (pointer events steered by the drawer)', () => {
+    const drag = (s: ReturnType<typeof setup>) => s.ctrl.startPlacement('yamaha-ql1', { pointerDrag: true })
+
+    it('says it is a drag, the ghost follows the pointer on the grid (Alt or the latch: free)', () => {
+      const s = setup()
+      drag(s)
+      expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusDragging!.replace('{device}', 'yamaha-ql1'))
+      s.ctrl.dragGhostTo(113, 232)
+      expect(s.ghost.moves.at(-1)).toEqual([1.25, 0, 2.25])
+      s.ctrl.dragGhostTo(113, 232, true)
+      expect(s.ghost.moves.at(-1)).toEqual([1.13, 0, 2.32])
+      s.ctrl.toggleFreeLatch()
+      s.ctrl.dragGhostTo(113, 232)
+      expect(s.ghost.moves.at(-1)).toEqual([1.13, 0, 2.32])
+    })
+
+    it('released over the view: dropped where the pointer is, the click path (one SPAWN, one entry, selected, said)', () => {
+      const s = setup()
+      drag(s)
+      s.ctrl.dragGhostTo(113, 232)
+      s.ctrl.endPointerDrag(113, 232, { overView: true })
+      const d = s.store.design()
+      expect(d.placements[0].position_m).toEqual([1.25, 0, 2.25])
+      expect(s.history.sizes.undo).toBe(1)
+      expect(s.onPlaced).toHaveBeenCalledWith(d.rig.instances[0].instanceId)
+      expect(s.announce).toHaveBeenLastCalledWith(expect.stringContaining('Posé'))
+      expect(s.ctrl.placing).toBe(false)
+      expect(s.ghost.shown).toBeNull()
+    })
+
+    it('released over the view with Alt: the exact point', () => {
+      const s = setup()
+      drag(s)
+      s.ctrl.endPointerDrag(113, 232, { overView: true, altKey: true })
+      expect(s.store.design().placements[0].position_m).toEqual([1.13, 0, 2.32])
+    })
+
+    it('released anywhere else, or a cancelled gesture, or over the sky: cancelled and said, nothing placed, no entry', () => {
+      for (const how of ['elsewhere', 'cancelled', 'sky'] as const) {
+        const s = setup()
+        drag(s)
+        s.announce.mockClear()
+        if (how === 'sky') s.noFloor(true)
+        s.ctrl.endPointerDrag(113, 232, { overView: how !== 'elsewhere', cancelled: how === 'cancelled' })
+        expect(s.store.design().rig.instances, how).toHaveLength(0)
+        expect(s.history.sizes.undo, how).toBe(0)
+        expect(s.ctrl.placing, how).toBe(false)
+        expect(s.announce, how).toHaveBeenCalledTimes(1)
+        expect(s.announce, how).toHaveBeenLastCalledWith(COPY.placement!.statusCancelled)
+      }
+    })
+
+    it('after Échap the rest of the gesture does nothing: no ghost move, no drop', () => {
+      const s = setup()
+      drag(s)
+      s.ctrl.cancel()
+      s.ghost.moves.length = 0
+      s.ctrl.dragGhostTo(113, 232)
+      s.ctrl.endPointerDrag(113, 232, { overView: true })
+      expect(s.ghost.moves).toEqual([])
+      expect(s.store.design().rig.instances).toHaveLength(0)
+    })
+
+    it('a pose started the usual way is not steered by a stray drawer drag, and a drag pose does not outlive its pose', () => {
+      const s = setup()
+      s.ctrl.startPlacement('yamaha-ql1') // chosen by Entrée / click
+      const moved = s.ghost.moves.length
+      s.ctrl.dragGhostTo(113, 232)
+      expect(s.ghost.moves).toHaveLength(moved) // the ghost did not follow a stray drag
+      s.ctrl.endPointerDrag(113, 232, { overView: true })
+      expect(s.store.design().rig.instances).toHaveLength(0)
+      expect(s.ctrl.placing).toBe(true)
+      s.ctrl.cancel()
+      drag(s)
+      s.ctrl.cancel()
+      s.ctrl.startPlacement('yamaha-ql1') // a new pose after a cancelled drag pose is a plain one again
+      s.ctrl.endPointerDrag(113, 232, { overView: true })
+      expect(s.ctrl.placing).toBe(true)
+    })
   })
 })

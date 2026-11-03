@@ -495,7 +495,7 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 |---|---|---|---|
 | `inventory.title` | Inventaire | à valider (tekuxwriter) | Titre du tiroir (h2) et nom accessible de la boîte de dialogue ; même mot que Matériel › Inventaire |
 | `inventory.tabs` | Catégories d’appareils | à valider (tekuxwriter) | Nom accessible de la liste d’onglets (tablist) ; les noms d’onglets sont les lignes `inventory.tab*` de copy.ts |
-| `inventory.hint` | Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser. {key} ou Échap : fermer ; dans « Filtrer », seul Échap ferme. | à valider (tekuxwriter) | Sous le titre ; {key} = touche de l’inventaire (« Espace » par défaut) |
+| `inventory.hint` | Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser, ou glisser l’appareil dans la vue. {key} ou Échap : fermer ; dans « Filtrer », seul Échap ferme. | à valider (tekuxwriter) | Sous le titre ; {key} = touche de l’inventaire (« Espace » par défaut) |
 | `inventory.close` | Fermer | à valider (tekuxwriter) | Texte du bouton |
 | `inventory.closeLabel` | Fermer l’inventaire | à valider (tekuxwriter) | Nom accessible du bouton Fermer (contient le texte visible) |
 | `inventory.filter` | Filtrer | à valider (tekuxwriter) | Étiquette du champ de recherche au-dessus des onglets (aussi son nom pour les aides techniques) |
@@ -536,7 +536,11 @@ Pose et déplacement d'un appareil dans la vue 3D (Task 24, CA-10). Choisir un a
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
 | `placement.entryMove` | Déplacer {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’un glisser (Annuler / Rétablir) |
-| `placement.statusPlacing` | Cliquez pour poser {device} (Entrée : ici). R : pivoter. Alt : libre. Échap : annuler. | à valider (tekuxwriter) | Barre d’état dès qu’un appareil est choisi (annoncé) |
+| `placement.statusPlacing` | Cliquez pour poser {device} (Entrée : ici). R : pivoter. Alt ou G : libre. Échap : annuler. | à valider (tekuxwriter) | Barre d’état dès qu’un appareil est choisi (annoncé) |
+| `placement.cancelButton` | Annuler la pose | à valider (tekuxwriter) | Bouton visible en bas à gauche de la vue 3D tant qu’un appareil suit le pointeur (Task 43b) ; nom accessible ; cible d’au moins 44 px |
+| `placement.statusDragging` | Glissez dans la vue et relâchez pour poser {device}. Échap : annuler. | à valider (tekuxwriter) | Barre d’état dès qu’un appareil est glissé hors du tiroir (annoncé ; Task 43b) |
+| `placement.statusSnapFree` | Placement libre : hors grille. G pour revenir à la grille. | à valider (tekuxwriter) | Annoncé à l’appui sur G pendant une pose ou un déplacement (Task 43b) ; la barre d’état affiche alors « Aimantation : libre » |
+| `placement.statusSnapGrid` | Aimantation à la grille : 0,25 m · 15°. G pour placer librement. | à valider (tekuxwriter) | Annoncé à l’appui sur G quand le verrou « libre » est levé (Task 43b) |
 | `placement.statusPlaced` | Posé : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après la pose (annoncé) |
 | `placement.statusMoved` | Déplacé : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un glisser (annoncé) |
 | `placement.statusCancelled` | Pose annulée. | à valider (tekuxwriter) | Barre d’état après Échap pendant la pose (annoncé) |

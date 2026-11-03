@@ -34,6 +34,8 @@ import { placeFromKey, placeKey } from './places'
 import { loadPlaceData } from './placeData'
 import { createPlaceController, type PlaceResult } from './placeController'
 import { PlacementController } from './placementController'
+import { toCanvasPx } from './dragDrop'
+import { mountCancelPlacement } from './shell/cancelPlacement'
 import { EditController } from './editController'
 import { PatchController } from './patchController'
 import { CableHoverController } from './cableHover'
@@ -1414,10 +1416,12 @@ export async function bootCreation(): Promise<void> {
   let drawerRetry = false
   const drawerOpen = (): boolean => (drawer ? drawer.isOpen || (drawerRetry && drawerWanted) : drawerWanted)
   /** Entrée / click on a device in the drawer: it follows the pointer until a click drops it (Task 24). */
-  const chooseDevice = (deviceId: string): void => {
+  const chooseDevice = (deviceId: string, opts: { pointerDrag?: boolean } = {}): void => {
     registerBeta([deviceId]) // a Bêta sheet becomes placeable only now (a catalog id is never touched)
-    placement.startPlacement(deviceId)
+    placement.startPlacement(deviceId, opts)
   }
+  /** A drawer drag works in client px; the placement controller in canvas px. */
+  const canvasPx = (at: { x: number; y: number }): { x: number; y: number } => toCanvasPx(at, canvas.getBoundingClientRect())
   /**
    * The drawer was mounted without the Bêta sheets because their fetch FAILED (not because there are none): the next open
    * fetches them again before it shows, so the tab can come back. The module itself (drawerLoad) stays cached.
@@ -1431,11 +1435,29 @@ export async function bootCreation(): Promise<void> {
         parent: shell.viewport,
         registry,
         proposals: () => proposalEntries(betaDevices), // « Bêta » shows only if there are any
-        onChoose: chooseDevice,
+        onChoose: (deviceId) => chooseDevice(deviceId),
+        // Drag-and-drop out of the drawer (Task 43b): the same placement, steered by the window-level pointer events of the press.
+        onDragStart: (deviceId, at, alt) => {
+          chooseDevice(deviceId, { pointerDrag: true })
+          if (!placement.placing) return false
+          const c = canvasPx(at)
+          placement.dragGhostTo(c.x, c.y, alt)
+          return true
+        },
+        onDragMove: (at, alt) => {
+          const c = canvasPx(at)
+          placement.dragGhostTo(c.x, c.y, alt)
+        },
+        onDragEnd: (at, alt, cancelled) => {
+          const c = canvasPx(at)
+          // Over the 3D view = the canvas is the top element there (a panel, a menu, the cube, the cancel button are not).
+          placement.endPointerDrag(c.x, c.y, { overView: document.elementFromPoint(at.x, at.y) === canvas, cancelled, altKey: alt })
+        },
         returnFocus: () => canvas.focus(),
         isToggleKey: (e) => creationActionsFor(keys.bindings, e).includes('TOGGLE_INVENTORY'),
         keyLabel: () => bindingLabel(keys.bindings, 'TOGGLE_INVENTORY') || COPY.keys!.space!,
       })
+      shellBag.add(() => drawer?.dispose())
       return drawer
     }))
   const setInventory = (open: boolean, opts: { returnFocus?: boolean } = {}): void => {
@@ -1570,6 +1592,14 @@ export async function bootCreation(): Promise<void> {
     subscribe: (fn) => store.subscribe(fn),
   })
 
+  // « Annuler la pose » (Task 43b): shown while a device follows the pointer.
+  const cancelPose = mountCancelPlacement({
+    doc: document,
+    parent: shell.viewport,
+    onCancel: () => void placement.cancel(),
+    focusView: () => canvas.focus(),
+  })
+  shellBag.add(() => cancelPose.dispose())
   // Placing and moving devices (Task 24, CA-10, P20): after the picking above, so a drop is not also a click-to-select.
   const placement = new PlacementController(host, history, store, viewState, scheduler, shellBag, {
     deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
@@ -1583,6 +1613,7 @@ export async function bootCreation(): Promise<void> {
       refreshSignal()
     },
     beforeDrag: () => props.flush(),
+    onPlacing: (on) => cancelPose.setVisible(on),
   })
 
   // ── Edit the selected device (Task 25, CA-11): R / Maj+R (Alt = 1°), Ctrl+D, Suppr and Matériel › Pivoter /
@@ -1608,6 +1639,8 @@ export async function bootCreation(): Promise<void> {
     edits.rotate(dir, e.altKey)
     return true
   }
+  // G: latch free placement while a device is placed or dragged. Nothing placed or dragged: the key is not ours (false).
+  keys.onAction('SNAP_TOGGLE', () => placement.toggleFreeLatch())
   keys.onAction('ROTATE_CW', (e) => rotateKey(1, e))
   keys.onAction('ROTATE_CCW', (e) => rotateKey(-1, e))
   /** Suppr / Ctrl+D while a device follows the pointer: the selected device is not what the learner is looking at, so it is left alone and the placement goes on (said, announced). */
