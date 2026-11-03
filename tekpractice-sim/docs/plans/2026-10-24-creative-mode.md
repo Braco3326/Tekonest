@@ -2075,7 +2075,7 @@ Brief §7 defaults (logged in `docs/CREATIVE-MODE-LOG.md`), inventory facts L1�
 ### Task 39: Web Audio listener mix, transport and meters
 
 - **Agents:** tekdeveloper (pure mix + adapter), tekfrontenddesigner (`/frontend-design`, Écoute UI), tekuxwriter. **Closes:** CA-03 (P0: hear the rig), CA-26. **Decisions:** C9, C14, S3. *(réf. corrigée : CA-23…26 de l'audit sont autres ; Phase 4 = CA-03, brief §5, C13)*
-- *(écart, Phase 4 : le brief §5 / conseil T4.5 demandait aussi « Écouter depuis ici » (un clic sur un point de couverture déplace l'auditeur) et un vumètre de console ; ni l'un ni l'autre n'est fait, propriétaire : Task 43 étape 3, voir L31 du journal. Le balance de la console, lui, est appliqué au son et à la couverture : loi dans ADR-0015, addendum Task 39.)*
+- *(écart, Phase 4 : le brief §5 / conseil T4.5 demandait aussi « Écouter depuis ici » (un clic sur un point de couverture déplace l'auditeur) et un vumètre de console ; « Écouter depuis ici » a été fait à la Task 43b (via la vue, point « Ici », journal L32) ; le vumètre de console reste un écart décidé (L32). Le balance de la console, lui, est appliqué au son et à la couverture : loi dans ADR-0015, addendum Task 39.)*
 - **Files:** create `src/audio/listenerMix.ts` (pure), `src/audio/engine.ts` (Web Audio adapter, lazy chunk), `src/audio/testSignal.ts` (own-work generated pink noise and a short musical pattern rendered with `OfflineAudioContext`), `src/creation/shell/listenPanel.ts`; modify `src/creation/shell/menuModel.ts` (Écoute: « Lecture » / « Stop », « Morceau » list, « Choisir un fichier audio… », « Signal de test »), `src/creation/copy.ts`; tests `tests/audio/listenerMix.test.ts`, `tests/e2e/creation-listen.spec.ts`.
 - **Interfaces:**
 

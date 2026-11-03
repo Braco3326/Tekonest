@@ -77,6 +77,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     chooseFile: 'Choisir un fichier audio…',
     testSignal: 'Signal de test',
     coverage: 'Couverture',
+    /** Écoute: listen from where the view stands (Task 43b). */
+    listenHere: 'Écouter depuis ici',
     panelTree: 'Panneau Projet',
     panelProps: 'Panneau Propriétés',
     shortcuts: 'Raccourcis clavier',
@@ -528,7 +530,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     panCenter: 'centre',
     noSpeakers: 'Aucune enceinte à écouter.',
     simple: 'Simulation simple : niveau relatif, retard et placement gauche-droite calculés d’après la géométrie ; le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie.',
-    limits: 'Limites : le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle) ; l’origine d’une enceinte est son point de pose ; déplacer l’auditeur fait glisser le retard et peut faire glisser la hauteur du son (ce n’est pas un effet Doppler) ; il n’y a pas de vumètre de console, seulement un niveau par enceinte ; on n’écoute pas « depuis ici » : le point d’écoute est la Régie, un autre point d’écoute ou la caméra de marche.',
+    limits: 'Limites : le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle) ; l’origine d’une enceinte est son point de pose ; déplacer l’auditeur fait glisser le retard et peut faire glisser la hauteur du son (ce n’est pas un effet Doppler) ; il n’y a pas de vumètre de console, seulement un niveau par enceinte ; on écoute depuis la Régie, un autre point d’écoute, « Ici » (là où se trouve la vue) ou la caméra de marche.',
     volume: 'Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin.',
     fileLocal: 'Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré.',
     fileInputName: 'Choisir un fichier audio',
@@ -619,6 +621,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     fondDeSalle: 'Fond de salle',
     /** A blank place or a venue set: one point in the middle. */
     centre: 'Centre',
+    /** The point « Écouter depuis ici » puts where the view stands (Task 43b): tree row, Vue › Aller au point d’écoute, coverage probe. */
+    here: 'Ici',
     /** Vue › submenu listing the points. */
     menu: 'Aller au point d’écoute',
     /** Status bar after going to a point (announced); {point} = its name. */

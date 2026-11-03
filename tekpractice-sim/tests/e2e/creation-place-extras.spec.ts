@@ -6,6 +6,7 @@
  *     3D view drops it (one undo entry), release anywhere else or Échap cancels; a press without movement is the click.
  *  4. CA-12: a device dropped inside a stage zone lands at the zone's own floor height (room data `floor_y_m`), mount « Sol ».
  */
+import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type CDPSession, type Page } from '@playwright/test'
 test.use({ viewport: { width: 1366, height: 768 } })
 
@@ -94,20 +95,27 @@ test('G frees the move of a dragged device too, and the next drag is on the grid
   await canvas(page).focus()
   await page.keyboard.press(']')
   await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
-  const from = await screenOf(page, [0, 0.3, 4])
+  // the .glb arrives after the placeholder and moves the body: press where the body really is, once the loads are done
+  await expect.poll(() => page.evaluate(() => window.__creation!.modelsPending()), { timeout: 20_000 }).toBe(0)
+  const bodyAt = async (): Promise<{ x: number; y: number }> => (await page.evaluate(() => window.__creation!.deviceScreen('ql1')))!
+  const from = await bodyAt()
   const to = await screenOf(page, [1.03, 0.3, 5.28])
   await page.mouse.move(from.x, from.y)
   await page.mouse.down()
   await page.mouse.move((from.x + to.x) / 2, (from.y + to.y) / 2, { steps: 4 })
+  await expect(page.getByTestId('status-snapping')).toHaveText('Aimantation : 0,25 m · 15°') // the drag really started
   await page.keyboard.press('g')
   await expect(page.getByTestId('status-snapping')).toHaveText('Aimantation : libre')
   await page.mouse.move(to.x, to.y, { steps: 4 })
   await page.mouse.up()
+  await expect(page.getByTestId('status-snapping')).toBeHidden() // the latch ended with the drag
   const [x, , z] = await poseOf(page, 'ql1')
   expect(onGrid(x) && onGrid(z)).toBe(false)
-  await page.mouse.move(to.x, to.y)
+  const again = await bodyAt()
+  await page.mouse.move(again.x, again.y)
   await page.mouse.down()
-  await expect(page.getByTestId('status-snapping')).toHaveText('Aimantation : 0,25 m · 15°')
+  await page.mouse.move(again.x + 30, again.y + 10, { steps: 3 })
+  await expect(page.getByTestId('status-snapping')).toHaveText('Aimantation : 0,25 m · 15°') // the next drag is back on the grid
   await page.mouse.up()
 })
 
@@ -151,6 +159,31 @@ test('« Annuler la pose » is reachable by Tab from the 3D view and works with 
   expect(await placing(page)).toBe(false)
   await expect(canvas(page)).toBeFocused()
   expect((await design(page)).rig.instances).toHaveLength(0)
+})
+
+test('axe: no serious or critical violation while a pose is in progress (the cancel button is on screen); the button has a visible focus ring', async ({ page }) => {
+  await boot(page)
+  await choose(page, 'yamaha-ql1', 'Consoles')
+  await expect(cancelButton(page)).toBeVisible()
+  for (let i = 0; i < 12 && !(await cancelButton(page).evaluate((e) => e === document.activeElement)); i++) await page.keyboard.press('Tab') // keyboard focus: the ring shows
+  await expect(cancelButton(page)).toBeFocused()
+  const ring = await cancelButton(page).evaluate((e) => {
+    const c = getComputedStyle(e)
+    return { outline: c.outlineStyle, width: parseFloat(c.outlineWidth), shadow: c.boxShadow }
+  })
+  expect(ring.outline !== 'none' && ring.width > 0 || ring.shadow !== 'none', 'a focus indicator').toBe(true)
+  // The shell is position: fixed under body { overflow: hidden }, which blinds axe's visibility rules: lifted while it runs (as creation-budgets).
+  await page.evaluate(() => document.body.style.setProperty('overflow', 'visible'))
+  try {
+    const r = await new AxeBuilder({ page }).analyze()
+    const bad = r.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical').map((v) => v.id + ': ' + v.nodes.map((n) => n.target.join(' ')).join(' | '))
+    // Only the finding Task 43a already reported (the Projet tree's four expandable rows; creation-budgets.spec KNOWN_TREE_GROUP_ROWS): anything else fails.
+    expect(bad).toEqual(['label-content-name-mismatch: li[data-node-id="zones"] | li[data-node-id="materiel"] | li[data-node-id="cables"] | li[data-node-id="ecoute"]'])
+    const looked = [...r.passes, ...r.incomplete, ...r.violations].filter((x) => x.id === 'color-contrast').reduce((n, x) => n + x.nodes.length, 0)
+    expect(looked, 'axe evaluated text (not blind)').toBeGreaterThan(10)
+  } finally {
+    await page.evaluate(() => document.body.style.removeProperty('overflow'))
+  }
 })
 
 test.describe('touch', () => {
@@ -276,6 +309,24 @@ test('Échap during the drag cancels it; the release afterwards drops nothing', 
   await expect(statusLine(page)).toContainText('Pose annulée')
 })
 
+test('a drag whose pointerup never came (the window lost the pointer): the next move with no button down is the release, over the view it drops', async ({ page }) => {
+  await boot(page)
+  await openDrawer(page, 'Consoles')
+  const from = await centre(page, 'yamaha-ql1')
+  const at = await screenOf(page, TARGET)
+  await page.mouse.move(from.x, from.y)
+  await page.mouse.down()
+  await page.mouse.move(from.x + 12, from.y - 40, { steps: 3 })
+  expect(await placing(page)).toBe(true)
+  await page.evaluate(({ x, y }) => {
+    window.dispatchEvent(new PointerEvent('pointermove', { pointerId: 1, pointerType: 'mouse', isPrimary: true, buttons: 0, clientX: x, clientY: y, bubbles: true }))
+  }, at)
+  await oneQl1(page)
+  expect(await placing(page)).toBe(false)
+  await page.mouse.up() // the real release, late: nothing more happens
+  expect(await history(page)).toBe(1)
+})
+
 test('a press without movement is the click it always was: the device is chosen, then a click in the view places it', async ({ page }) => {
   await boot(page)
   await openDrawer(page, 'Consoles')
@@ -357,7 +408,8 @@ test('CA-12: a device dropped inside the stage zone lands at the deck height (ro
   await expect(height).toHaveValue('1,30')
   await expect(height).toHaveAttribute('readonly', '')
   // moved onto the audience floor (z = 5, outside every raised zone): back to 0
-  const from = await screenOf(page, [pl.position_m[0], 1.6, pl.position_m[2]])
+  await expect.poll(() => page.evaluate(() => window.__creation!.modelsPending()), { timeout: 20_000 }).toBe(0) // the .glb moves the body: press where it really is
+  const from = (await page.evaluate((i) => window.__creation!.deviceScreen(i), id))!
   const off = await screenOf(page, [1.03, 0, 5.28])
   await page.mouse.move(from.x, from.y)
   await page.mouse.down()
@@ -365,4 +417,97 @@ test('CA-12: a device dropped inside the stage zone lands at the deck height (ro
   await page.mouse.up()
   await expect.poll(async () => (await poseOf(page, id))[1]).toBe(0)
   await expect(height).toHaveValue('0,00')
+})
+
+// ── 5. Écoute › Écouter depuis ici ───────────────────────────────────────────────────────────────
+test.describe('Écouter depuis ici', () => {
+  /** The reference rig, both speakers cabled, console playback on (as creation-listen). */
+  const bootRig = async (page: Page): Promise<void> => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto('/')
+    await page.waitForFunction(() => !!window.__creation)
+    await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
+    await page.waitForFunction((p) => window.__creation!.place() === p && window.__creation!.design().rig.instances.length === 5, PLACE)
+    await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+    const ok = await page.evaluate(() => {
+      const c = window.__creation!
+      return [
+        c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12-g', port: 'in-line-a' } }).ok,
+        c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-r' }, b: { instance: 'k12-d', port: 'in-line-a' } }).ok,
+        c.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: true }).ok,
+      ]
+    })
+    expect(ok).toEqual([true, true, true])
+  }
+  const menu = async (page: Page, top: string, name: string): Promise<void> => {
+    await page.getByRole('menuitem', { name: top, exact: true }).click()
+    await page.getByRole('menuitem', { name, exact: true }).click()
+  }
+  const points = (page: Page) => page.evaluate(() => window.__creation!.listeningPoints())
+  const voices = (page: Page) => page.evaluate(() => window.__creation!.audioState().voices)
+
+  test('the listener moves to where the view stands (the orbit pivot, on the floor at ear height); the camera stays; playback and the tree follow', async ({ page }) => {
+    await bootRig(page)
+    // re-pivot the view onto a bare patch of the hall floor next to the left speaker's side of the room
+    const floor: V3 = [5, 0, 0]
+    const at = (await page.evaluate((p) => window.__creation!.worldScreen(p), floor))!
+    await page.mouse.dblclick(at.x, at.y)
+    await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+    const cam = (await page.evaluate(() => window.__creation!.camera()))!
+    expect((await points(page)).map((p) => p.id)).not.toContain('ici')
+    // play from the Régie (centred between the two speakers): the two voices are alike
+    await menu(page, 'Écoute', 'Lecture')
+    await page.waitForFunction(() => window.__creation!.audioState().state === 'playing', null, { timeout: 15_000 })
+    const regie = await voices(page)
+    expect(regie).toHaveLength(2)
+    expect(Math.abs(regie[0].gain - regie[1].gain)).toBeLessThan(1e-6)
+    // Écoute › Écouter depuis ici
+    await menu(page, 'Écoute', 'Écouter depuis ici')
+    const ici = (await points(page)).find((p) => p.id === 'ici')!
+    expect(ici.label).toBe('Ici')
+    expect(ici.position[0]).toBeCloseTo(cam.target[0], 6)
+    expect(ici.position[2]).toBeCloseTo(cam.target[2], 6)
+    expect(ici.position[1]).toBeCloseTo(1.2, 6) // the audience floor is at 0: ear height
+    expect(await page.evaluate(() => window.__creation!.listenerPoint())).toBe('ici')
+    await expect(statusLine(page)).toContainText('Point d’écoute : Ici')
+    expect(await page.evaluate(() => window.__creation!.camera()!.target)).toEqual(cam.target) // the camera did not move
+    // the sound follows: the speaker on this side (k12-g, x +6) is now the louder one
+    await expect.poll(async () => {
+      const v = await voices(page)
+      const g = v.find((x) => x.instanceId === 'k12-g')!.gain
+      const d = v.find((x) => x.instanceId === 'k12-d')!.gain
+      return g > d + 0.01
+    }).toBe(true)
+    // « Ici » is a listening point like the others: listed and checked in Vue › Aller au point d’écoute, with no key
+    await page.getByRole('menuitem', { name: 'Vue', exact: true }).click()
+    await page.getByRole('menuitem', { name: /Aller au point d’écoute/ }).hover()
+    const radio = page.getByRole('menuitemradio', { name: /^Ici/ })
+    await expect(radio).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByRole('menuitemradio', { name: /Régie/ })).toHaveAttribute('aria-checked', 'false')
+    await page.keyboard.press('Escape')
+    await menu(page, 'Écoute', 'Stop')
+    await page.waitForFunction(() => window.__creation!.audioState().state === 'stopped', null, { timeout: 10_000 })
+  })
+
+  test('another place forgets it; « Ici » is back on the Régie', async ({ page }) => {
+    await bootRig(page)
+    await menu(page, 'Écoute', 'Écouter depuis ici')
+    expect((await points(page)).map((p) => p.id)).toContain('ici')
+    await page.evaluate(() => window.__creation!.choosePlace('room:bar-club-stage-small'))
+    await page.waitForFunction(() => window.__creation!.place() === 'room:bar-club-stage-small')
+    expect((await points(page)).map((p) => p.id)).not.toContain('ici')
+    expect(await page.evaluate(() => window.__creation!.listenerPoint())).toBe('regie')
+  })
+
+  test('in the walk view it is the walker who is heard from: the point lands under the walker', async ({ page }) => {
+    await bootRig(page)
+    await canvas(page).focus()
+    await page.keyboard.press('Shift+V') // walk
+    await page.waitForFunction(() => window.__creation!.view() === 'explore')
+    const w = (await page.evaluate(() => window.__creation!.walkCamera()))!
+    await menu(page, 'Écoute', 'Écouter depuis ici')
+    const ici = (await points(page)).find((p) => p.id === 'ici')!
+    expect(ici.position[0]).toBeCloseTo(w.x, 3)
+    expect(ici.position[2]).toBeCloseTo(w.z, 3)
+  })
 })

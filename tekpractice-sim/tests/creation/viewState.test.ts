@@ -55,7 +55,22 @@ describe('view prefs (Task 19): the ear height survives a reload, never in the r
 
 describe('ViewState (never undoable)', () => {
   it('has the defaults: nothing selected, panels open, seated ear height, listening at the Régie', () => {
-    expect(new ViewState().get()).toEqual({ selection: null, hidden: [], treeOpen: true, propsOpen: true, earHeight: 1.2, listenerPoint: 'regie' })
+    expect(new ViewState().get()).toEqual({ selection: null, hidden: [], treeOpen: true, propsOpen: true, earHeight: 1.2, listenerPoint: 'regie', listenerHere: null })
+  })
+  it('the « Ici » spot (Task 43b) is view state only: set and cleared like the active point, notified, and never in the view prefs', () => {
+    const v = new ViewState()
+    let n = 0
+    v.subscribe(() => n++)
+    v.set({ listenerHere: { x: 1, z: 2, dx: 0, dz: -1 }, listenerPoint: 'ici' })
+    expect(v.get().listenerHere).toEqual({ x: 1, z: 2, dx: 0, dz: -1 })
+    v.set({ listenerHere: { x: 1, z: 2, dx: 0, dz: -1 } }) // the same spot: no notification
+    expect(n).toBe(1)
+    v.set({ listenerHere: null, listenerPoint: 'regie' })
+    expect(v.get().listenerHere).toBeNull()
+    expect(n).toBe(2)
+    const s = memory()
+    saveViewPrefs(s, { earHeight: 1.2 })
+    expect(JSON.parse(s.m.get(VIEW_PREFS_KEY)!)).toEqual({ version: 1, earHeight: 1.2 })
   })
   it('the listening point is view state only: never written to the view prefs (Task 20)', () => {
     const s = memory()

@@ -16,6 +16,11 @@ export interface ViewStateData {
    * `DEFAULT_LISTENER_POINT` whenever another place is shown (review Fix 1).
    */
   listenerPoint: string
+  /**
+   * « Écouter depuis ici » (Task 43b): the spot the learner put the listener on (floor x, z and a horizontal heading), null = none.
+   * Session only, like `listenerPoint`: cleared whenever another place is shown. The point `ici` exists exactly while this is set.
+   */
+  listenerHere: { x: number; z: number; dx: number; dz: number } | null
 }
 
 const DEFAULTS: ViewStateData = {
@@ -25,6 +30,7 @@ const DEFAULTS: ViewStateData = {
   propsOpen: true,
   earHeight: 1.2,
   listenerPoint: DEFAULT_LISTENER_POINT,
+  listenerHere: null,
 }
 
 /** View settings kept across reloads (Task 19: the ear height). Per origin, never in the rig. */

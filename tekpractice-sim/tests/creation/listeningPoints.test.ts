@@ -10,9 +10,13 @@ import {
   activePoint,
   DEFAULT_LISTENER_POINT,
   defaultPoints,
+  HERE_ID,
+  hereSpot,
+  hereToPoint,
   keySlot,
   pointForKey,
   pointLookAt,
+  POINT_IDS,
   pointPose,
 } from '../../src/creation/listeningPoints'
 import { ORBIT_FEEL } from '../../src/camera/orbitFeel'
@@ -178,5 +182,56 @@ describe('pointPose: the orbit camera stands at the point and looks at the stage
     expect(p[1]).toBeCloseTo(1.2, 9)
     expect(p[2]).toBeCloseTo(50, 9)
     expect(pose.target[2]).toBeLessThan(50)
+  })
+})
+
+describe('« Écouter depuis ici » (Task 43b): the listener where the view stands', () => {
+  const L = room('concert-hall-medium') // 18.1 x 32, stage (0, -11.5, 14 x 9) at +1.3 m
+  const bounds = { minX: -9.05, maxX: 9.05, minZ: -16, maxZ: 16 }
+
+  it('orbit: the listener is at the orbit target (x, z), facing the way the camera looks (horizontal part only)', () => {
+    const s = hereSpot({ walking: false, eye: [3, 8, 14], target: [3, 0, 4], forward: [0, -0.6, -0.8] }, bounds)
+    expect(s.x).toBe(3)
+    expect(s.z).toBe(4)
+    expect(s.dx).toBeCloseTo(0, 9)
+    expect(s.dz).toBeCloseTo(-1, 9) // normalised: the tilt is dropped
+  })
+  it('walking: the listener is at the walker (x, z), not at the orbit target', () => {
+    const s = hereSpot({ walking: true, eye: [-2, 1.2, 6], target: [9, 9, 9], forward: [1, 0, 0] }, bounds)
+    expect([s.x, s.z]).toEqual([-2, 6])
+    expect([s.dx, s.dz]).toEqual([1, 0])
+  })
+  it('looking straight down or up has no heading: it faces the stage end (-z), as the named points do', () => {
+    const s = hereSpot({ walking: false, eye: [1, 20, 2], target: [1, 0, 2], forward: [0, -1, 0] }, bounds)
+    expect([s.dx, s.dz]).toEqual([0, -1])
+  })
+  it('stays inside the room', () => {
+    const s = hereSpot({ walking: false, eye: [0, 5, 0], target: [40, 0, -90], forward: [0, 0, -1] }, bounds)
+    expect([s.x, s.z]).toEqual([9.05, -16])
+  })
+
+  it('the point stands at floor + the ear height, on a raised deck too, and looks along the heading', () => {
+    const onStage = hereToPoint({ x: 1, z: -10, dx: 0, dz: 1 }, L, 1.2)
+    expect(onStage.id).toBe(HERE_ID)
+    expect(onStage.label).toBe('Ici')
+    expect(onStage.position).toEqual([1, 1.3 + 1.2, -10])
+    expect(onStage.look).toEqual([1, 1.3 + 1.2, -5])
+    const audience = hereToPoint({ x: 1, z: 6, dx: 1, dz: 0 }, L, 1.7)
+    expect(audience.position[1]).toBeCloseTo(1.7, 9) // the audience floor is at 0
+    expect(audience.look).toEqual([6, audience.position[1], 6])
+  })
+  it('a blank place (no layout) has a floor at 0', () => {
+    expect(hereToPoint({ x: 0, z: 0, dx: 0, dz: -1 }, null, 1.2).position).toEqual([0, 1.2, 0])
+  })
+
+  it('pointLookAt returns the heading of the « Ici » point and the stage for every named one', () => {
+    const here = hereToPoint({ x: 1, z: 6, dx: 0, dz: 1 }, L, 1.2)
+    expect(pointLookAt(L, here)).toEqual(here.look)
+    expect(pointLookAt(L, defaultPoints(L, 1.2)[0])).toEqual([0, 1.3 + 1.2, -11.5])
+  })
+  it('« Ici » has no key slot and is not a default point (the named points never include it)', () => {
+    expect(keySlot(HERE_ID)).toBeNull()
+    expect(defaultPoints(L, 1.2).some((p) => p.id === HERE_ID)).toBe(false)
+    expect(POINT_IDS).toContain(HERE_ID) // its menu action exists
   })
 })

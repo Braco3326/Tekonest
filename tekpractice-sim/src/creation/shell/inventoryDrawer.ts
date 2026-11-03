@@ -204,6 +204,8 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   function onPressMove(e: PointerEvent): void {
     const p = press
     if (!p || e.pointerId !== p.pointerId) return
+    // The button is up and the pointerup never came (the window lost the pointer): that is the release it is, here.
+    if (e.buttons === 0) return onPressUp(e)
     const at = { x: e.clientX, y: e.clientY }
     if (p.dragging) return d.onDragMove?.(at, e.altKey)
     if (!pastDragThreshold({ x: p.x, y: p.y }, at)) return

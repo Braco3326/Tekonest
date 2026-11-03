@@ -292,11 +292,32 @@ describe('menu model (Task 7)', () => {
     })
   })
 
+  describe('Écoute › Écouter depuis ici (Task 43b)', () => {
+    const item = (c: MenuContext) => find(buildMenus(c), 'listen-here')
+    it('a plain item in Écoute with the French name, live once its action exists and the view is free', () => {
+      const ran: string[] = []
+      const live = item(ctx({ actions: { 'listen-here': () => void ran.push('here') } }))
+      expect(live.label).toBe('Écouter depuis ici')
+      expect(live.kind).toBeUndefined()
+      expect(live.enabled()).toBe(true)
+      live.run()
+      expect(ran).toEqual(['here'])
+    })
+    it('is off without an action or while the place picker covers the view, and a disabled item never runs', () => {
+      const ran: string[] = []
+      expect(item(ctx()).enabled()).toBe(false)
+      const locked = item(ctx({ actions: { 'listen-here': () => void ran.push('locked') }, viewLocked: () => true }))
+      expect(locked.enabled()).toBe(false)
+      locked.run()
+      expect(ran).toEqual([])
+    })
+  })
+
   describe('Écoute › Couverture (Task 37)', () => {
     const item = (c: MenuContext) => find(buildMenus(c), 'coverage')
     it('a checkbox item in Écoute, after the sources and before the ear heights, unchecked by default', () => {
       const ecoute = buildMenus(ctx()).find((m) => m.id === 'ecoute')!
-      expect(ecoute.items.map((i) => i.id)).toEqual(['play', 'choose-file', 'test-signal', 'coverage', 'ear-seated', 'ear-standing'])
+      expect(ecoute.items.map((i) => i.id)).toEqual(['play', 'choose-file', 'test-signal', 'listen-here', 'coverage', 'ear-seated', 'ear-standing'])
       const c = item(ctx())
       expect(c.label).toBe('Couverture')
       expect(c.kind).toBe('checkbox')
@@ -435,9 +456,9 @@ describe('Matériel › Pivoter, Dupliquer, Supprimer (Task 25)', () => {
       expect(songs.label).toBe('Morceau')
       expect(songs.children!.map((c) => [c.id, c.label])).toEqual([['song:demo-1', 'Titre un'], ['song:demo-2', 'Titre deux']])
     })
-    it('the order: Lecture, Morceau, Choisir un fichier audio…, Signal de test, Couverture, the ear heights', () => {
+    it('the order: Lecture, Morceau, Choisir un fichier audio…, Signal de test, Écouter depuis ici, Couverture, the ear heights', () => {
       const c = live({ songs: () => [{ id: 'demo-1', title: 'T' }] })
-      expect(ecoute(c).items.map((i) => i.label)).toEqual(['Lecture', 'Morceau', 'Choisir un fichier audio…', 'Signal de test', 'Couverture', expect.any(String), expect.any(String)])
+      expect(ecoute(c).items.map((i) => i.label)).toEqual(['Lecture', 'Morceau', 'Choisir un fichier audio…', 'Signal de test', 'Écouter depuis ici', 'Couverture', expect.any(String), expect.any(String)])
     })
     it('without a registered action the item is off (and says the reason when there is one)', () => {
       const p = find(buildMenus(ctx({ playbackReady: () => true })), 'play')

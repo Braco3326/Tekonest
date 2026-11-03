@@ -233,7 +233,7 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     {
       id: 'ecoute',
       label: M.ecoute!,
-      items: [play, ...songs, source('choose-file', M.chooseFile!), source('test-signal', M.testSignal!), coverage, ear('ear-seated', W.earSeated!, 1.2), ear('ear-standing', W.earStanding!, 1.7)],
+      items: [play, ...songs, source('choose-file', M.chooseFile!), source('test-signal', M.testSignal!), cam('listen-here', M.listenHere!, true), coverage, ear('ear-seated', W.earSeated!, 1.2), ear('ear-standing', W.earStanding!, 1.7)],
     },
     {
       id: 'vue',

@@ -21,6 +21,9 @@ import {
   activePoint,
   DEFAULT_LISTENER_POINT,
   defaultPoints,
+  HERE_ID,
+  hereSpot,
+  hereToPoint,
   POINT_IDS,
   pointForKey,
   pointLookAt,
@@ -499,8 +502,13 @@ export async function bootCreation(): Promise<void> {
   const zones = (): { id: string; kind: string }[] =>
     canvasShown ? (host.layout?.zones ?? []).map((z) => ({ id: z.id, kind: z.kind })) : []
   /** The place's listening points (Task 20) at the current ear height; none before a place is shown. */
-  const listeningPoints = (): ListeningPoint[] =>
-    canvasShown && host.place ? defaultPoints(host.layout, viewState.get().earHeight) : []
+  const listeningPoints = (): ListeningPoint[] => {
+    if (!canvasShown || !host.place) return []
+    const { earHeight, listenerHere } = viewState.get()
+    const named = defaultPoints(host.layout, earHeight)
+    // « Écouter depuis ici » (Task 43b): one more point, last, at the spot the learner chose (it follows the ear height).
+    return listenerHere ? [...named, hereToPoint(listenerHere, host.layout, earHeight)] : named
+  }
   /** The point the camera was last sent to and the pose it got (the ear height re-flies it while it is still there). */
   let atPoint: { id: string; pose: PointPose } | null = null
   /** True while goToPoint asks the rig for the point's own flight. */
@@ -635,7 +643,7 @@ export async function bootCreation(): Promise<void> {
     })
     if (treeActive?.startsWith('point:')) treeActive = null
     // A new place listens from its Régie (Centre without a layout) until a point is chosen (review Fix 1).
-    viewState.set({ hidden, listenerPoint: DEFAULT_LISTENER_POINT })
+    viewState.set({ hidden, listenerPoint: DEFAULT_LISTENER_POINT, listenerHere: null })
     tree.render()
   }
 
@@ -1340,6 +1348,28 @@ export async function bootCreation(): Promise<void> {
       Math.hypot(c.target.x - tx, c.target.y - ty, c.target.z - tz) < 1e-3
     )
   }
+  /**
+   * Écoute › Écouter depuis ici (Task 43b): the listening position becomes where the view stands (the walker; in orbit the view's pivot, on the
+   * floor at ear height), facing the way the camera looks. The camera does not move. It is the point « Ici »: active, listed with the others
+   * (tree, Vue › Aller au point d’écoute, coverage probes), and playback and coverage follow it at once.
+   */
+  function listenHere(): boolean {
+    const cam = host.scene?.activeCamera
+    if (viewLocked() || !canvasShown || !cam) return false
+    const forward = cam.getForwardRay().direction
+    const eye = cam.globalPosition
+    const target = host.camera?.target ?? eye
+    const spot = hereSpot(
+      { walking: host.walking, eye: [eye.x, eye.y, eye.z], target: [target.x, target.y, target.z], forward: [forward.x, forward.y, forward.z] },
+      host.roomBounds()
+    )
+    viewState.set({ listenerHere: spot, listenerPoint: HERE_ID })
+    coverage?.refresh() // the probes include the new point (a no-op while the coverage is off)
+    listen?.refresh() // the ears moved: the voices follow (a no-op while nothing plays)
+    scheduler.invalidate()
+    announcer.say(PT.status!.replace('{point}', PT.here!))
+    return true
+  }
   /** Key 1 / 2 / 3 (3D view focused): a fixed slot (1 Régie / Centre, 2 Premier rang, 3 Fond de salle). */
   const pointKey = (n: number): boolean => {
     if (viewLocked()) return false
@@ -2006,6 +2036,10 @@ export async function bootCreation(): Promise<void> {
     'test-signal': () => {
       dropFileCtx()
       void startListening({ kind: 'test' }, contextForClick())
+    },
+    'listen-here': () => {
+      canvas.focus()
+      listenHere()
     },
     'ear-seated': () => setEar(1.2),
     'ear-standing': () => setEar(1.7),
