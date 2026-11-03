@@ -16,7 +16,7 @@ function fakeDom() {
     remove: vi.fn(),
   }
   const doc = { createElement: () => button, activeElement: null as unknown }
-  const parent = { appendChild: vi.fn() }
+  const parent = { appendChild: vi.fn(), dataset: {} as Record<string, string> }
   return { button, doc, parent, clicks }
 }
 
@@ -36,10 +36,12 @@ describe('« Annuler la pose » button (Task 43b)', () => {
     const c = mountCancelPlacement({ doc: d.doc as never, parent: d.parent as never, onCancel, focusView: vi.fn() })
     c.setVisible(true)
     expect(d.button.hidden).toBe(false)
+    expect(d.parent.dataset.placing).toBe('true') // the CSS lifts the notes above the button
     d.clicks[0]()
     expect(onCancel).toHaveBeenCalledTimes(1)
     c.setVisible(false)
     expect(d.button.hidden).toBe(true)
+    expect(d.parent.dataset.placing).toBeUndefined()
   })
   it('hiding under the focus gives the focus back to the 3D view; hiding without it does not', () => {
     const d = fakeDom()
@@ -52,6 +54,14 @@ describe('« Annuler la pose » button (Task 43b)', () => {
     d.doc.activeElement = d.button
     c.setVisible(false)
     expect(focusView).toHaveBeenCalledTimes(1)
+  })
+  it('dispose while shown clears the placing mark of the view', () => {
+    const d = fakeDom()
+    const c = mountCancelPlacement({ doc: d.doc as never, parent: d.parent as never, onCancel: vi.fn(), focusView: vi.fn() })
+    c.setVisible(true)
+    expect(d.parent.dataset.placing).toBe('true')
+    c.dispose()
+    expect(d.parent.dataset.placing).toBeUndefined()
   })
   it('dispose removes the button and its listener; later calls do nothing', () => {
     const d = fakeDom()

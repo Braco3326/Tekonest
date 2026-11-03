@@ -530,7 +530,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     panCenter: 'centre',
     noSpeakers: 'Aucune enceinte à écouter.',
     simple: 'Simulation simple : niveau relatif, retard et placement gauche-droite calculés d’après la géométrie ; le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie.',
-    limits: 'Limites : le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle) ; l’origine d’une enceinte est son point de pose ; déplacer l’auditeur fait glisser le retard et peut faire glisser la hauteur du son (ce n’est pas un effet Doppler) ; il n’y a pas de vumètre de console, seulement un niveau par enceinte ; on écoute depuis la Régie, un autre point d’écoute, « Ici » (là où se trouve la vue) ou la caméra de marche.',
+    limits: 'Limites : le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle) ; l’origine d’une enceinte est son point de pose ; déplacer l’auditeur fait glisser le retard et peut faire glisser la hauteur du son (ce n’est pas un effet Doppler) ; il n’y a pas de vumètre de console, seulement un niveau par enceinte ; on écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue) ou la caméra de marche, qui écoute à sa place pendant la marche.',
     volume: 'Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin.',
     fileLocal: 'Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré.',
     fileInputName: 'Choisir un fichier audio',
@@ -702,9 +702,11 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Status bar once a device is dragged out of the inventory (announced; Task 43b). */
     statusDragging: 'Glissez dans la vue et relâchez pour poser {device}. Échap : annuler.',
     /** Status bar when the G key latches free placement on (announced, once per press; Task 43b). */
-    statusSnapFree: 'Placement libre : hors grille. G pour revenir à la grille.',
+    statusSnapFree: 'Placement libre : position et rotation hors pas. G pour revenir à la grille.',
     /** Status bar when the G key turns the latch off (announced, once per press; Task 43b). */
     statusSnapGrid: 'Aimantation à la grille : 0,25 m · 15°. G pour placer librement.',
+    /** Status bar when the G latch is lifted while Alt is still held (announced; the placement stays free; Task 43b fix round). */
+    statusSnapLatchOff: 'Verrou G levé. Alt maintenu : placement libre.',
     /** Status bar after the drop (announced). */
     statusPlaced: 'Posé : {device}. {undo} pour annuler.',
     /** Status bar after a drag (announced). */

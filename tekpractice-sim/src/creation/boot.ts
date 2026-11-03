@@ -1448,9 +1448,9 @@ export async function bootCreation(): Promise<void> {
   let drawerRetry = false
   const drawerOpen = (): boolean => (drawer ? drawer.isOpen || (drawerRetry && drawerWanted) : drawerWanted)
   /** Entrée / click on a device in the drawer: it follows the pointer until a click drops it (Task 24). */
-  const chooseDevice = (deviceId: string, opts: { pointerDrag?: boolean } = {}): void => {
+  const chooseDevice = (deviceId: string, opts: { pointerDrag?: boolean } = {}): boolean => {
     registerBeta([deviceId]) // a Bêta sheet becomes placeable only now (a catalog id is never touched)
-    placement.startPlacement(deviceId, opts)
+    return placement.startPlacement(deviceId, opts)
   }
   /** A drawer drag works in client px; the placement controller in canvas px. */
   const canvasPx = (at: { x: number; y: number }): { x: number; y: number } => toCanvasPx(at, canvas.getBoundingClientRect())
@@ -1467,11 +1467,10 @@ export async function bootCreation(): Promise<void> {
         parent: shell.viewport,
         registry,
         proposals: () => proposalEntries(betaDevices), // « Bêta » shows only if there are any
-        onChoose: (deviceId) => chooseDevice(deviceId),
+        onChoose: (deviceId) => void chooseDevice(deviceId),
         // Drag-and-drop out of the drawer (Task 43b): the same placement, steered by the window-level pointer events of the press.
         onDragStart: (deviceId, at, alt) => {
-          chooseDevice(deviceId, { pointerDrag: true })
-          if (!placement.placing) return false
+          if (!chooseDevice(deviceId, { pointerDrag: true })) return false // refused: the drawer stays open (an earlier pose does not count)
           const c = canvasPx(at)
           placement.dragGhostTo(c.x, c.y, alt)
           return true

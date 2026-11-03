@@ -131,7 +131,9 @@ export class PlacementController {
       bag.listen(window, 'blur', () => this.endDrag(false))
       // Alt is the « free » modifier while a device is placed or dragged: a bare Alt tap would also toggle the menu bar in
       // Firefox on Windows. Claiming its keyup (only then) keeps the menu bar shut; any other time Alt is the browser's.
+      bag.listen(window, 'keydown', (e: KeyboardEvent) => void (this.altHeld = e.altKey))
       bag.listen(window, 'keyup', (e: KeyboardEvent) => {
+        this.altHeld = e.altKey
         if ((e.key === 'Alt' || e.code === 'AltLeft' || e.code === 'AltRight') && (this.placing || this.dragging)) e.preventDefault()
       })
     }
@@ -154,23 +156,27 @@ export class PlacementController {
   }
 
   /** `pointerDrag`: the pose was started by dragging an item out of the inventory (the drawer then calls dragGhostTo / endPointerDrag). */
-  startPlacement(deviceId: string, opts: { pointerDrag?: boolean } = {}): void {
-    if (this.drag) return
+  startPlacement(deviceId: string, opts: { pointerDrag?: boolean } = {}): boolean {
+    if (this.drag) return false
     this.yawDeg = 0 // each placement starts square; R turns it (rotateGhost)
     const seed = this.seedPoint()
     if (!seed || !this.host.showGhost(deviceId, seed, this.yawDeg)) {
       this.opts.announce?.(this.refused(deviceId))
-      return
+      return false
     }
     this.deviceId = deviceId
     this.at = seed
     this.press = null
+    // A new pose starts on the grid, with no Alt remembered: it may begin while another is in progress (the drawer reopened and another device chosen).
+    this.latched = false
+    this.altHeld = false
     this.pointerDrag = opts.pointerDrag === true
     this.opts.onPlacing?.(true)
     this.setSnap(false)
     this.opts.announce?.(
       (this.pointerDrag ? COPY.placement!.statusDragging! : COPY.placement!.statusPlacing!).replace('{device}', this.name(deviceId))
     )
+    return true
   }
 
   /**
@@ -179,7 +185,8 @@ export class PlacementController {
    */
   rotateGhost(dir: 1 | -1, free: boolean): boolean {
     if (!this.placing || !this.at) return false
-    this.yawDeg = rotateStep(this.yawDeg, dir, free)
+    // « Libre » means the rotation too: Alt+R and, with the G latch on, R turn by 1 degree (L19).
+    this.yawDeg = rotateStep(this.yawDeg, dir, isFree(free, this.latched))
     this.host.moveGhost(this.at, this.yawDeg)
     this.scheduler.invalidate()
     this.opts.announce?.(COPY.edit!.statusGhostYaw!.replace('{deg}', String(this.yawDeg)))
@@ -193,8 +200,10 @@ export class PlacementController {
   toggleFreeLatch(): boolean {
     if (!this.placing && !this.drag) return false
     this.latched = !this.latched
-    this.setSnap(isFree(this.altHeld, this.latched))
-    this.opts.announce?.(this.latched ? COPY.placement!.statusSnapFree! : COPY.placement!.statusSnapGrid!)
+    const free = isFree(this.altHeld, this.latched)
+    this.setSnap(free)
+    // Said from the resulting state: Alt still held after the latch is lifted keeps it free, and nothing may then say « grille ».
+    this.opts.announce?.(this.latched ? COPY.placement!.statusSnapFree! : free ? COPY.placement!.statusSnapLatchOff! : COPY.placement!.statusSnapGrid!)
     return true
   }
 
@@ -366,6 +375,7 @@ export class PlacementController {
         )
       return
     }
+    if (e.pointerType === 'touch' && !e.isPrimary) return // a second finger lifting near the first press is no tap
     const press = this.press
     this.press = null
     if (!press || e.button !== 0 || !this.placing) return

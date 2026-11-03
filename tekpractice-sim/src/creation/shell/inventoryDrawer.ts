@@ -217,8 +217,9 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     } catch {
       // already released
     }
-    api.close() // the view is clear for the drop and has focus (Échap works as for any pose)
-    if (!d.onDragStart(p.deviceId, at, e.altKey)) stopPress()
+    // The shell starts the pose first: a refusal leaves the drawer open (nothing took its place), a start clears the view and gives it the focus (Échap works as for any pose).
+    if (!d.onDragStart(p.deviceId, at, e.altKey)) return stopPress()
+    api.close()
   }
   function onPressUp(e: PointerEvent): void {
     const p = press
@@ -234,7 +235,14 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   }
   const beginPress = (e: PointerEvent, btn: HTMLElement, deviceId: string): void => {
     swallowClick = false
-    if (!d.onDragStart || !e.isPrimary || e.button !== 0 || press || !win) return
+    if (!d.onDragStart || !e.isPrimary || e.button !== 0 || !win) return
+    // A primary pointer going down while a press is still recorded: that press's pointerup / pointercancel never came (a lost touch). It must not block this one;
+    // a drag it had started is ended as cancelled.
+    if (press) {
+      const stale = press
+      stopPress()
+      if (stale.dragging) d.onDragEnd?.({ x: stale.x, y: stale.y }, false, true)
+    }
     press = { pointerId: e.pointerId, deviceId, btn, x: e.clientX, y: e.clientY, dragging: false }
     win.addEventListener('pointermove', onPressMove)
     win.addEventListener('pointerup', onPressUp)

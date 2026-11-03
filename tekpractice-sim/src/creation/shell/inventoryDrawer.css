@@ -117,7 +117,8 @@
 }
 /* Drag-and-drop (Task 43b): a finger on an item is a drag, not a page pan; the text is not selected under a mouse drag.
    A list that scrolls (marked by the module) keeps its vertical pan: there a finger drags sideways, or taps (tap, tap). */
-.cr .cr-inv-item { touch-action: none; user-select: none; -webkit-user-select: none; }
+.cr .cr-inv-item { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.cr-inv-thumb { pointer-events: none; } /* a long press on the picture must not open the image menu and cancel the drag */
 .cr-drawer-panel[data-scrolls='true'] .cr-inv-item { touch-action: pan-y; }
 .cr .cr-inv-item:hover { border-color: var(--cr-ambre); color: var(--cr-ambre); }
 .cr-inv-text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }

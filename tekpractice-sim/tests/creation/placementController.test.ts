@@ -799,3 +799,118 @@ describe('a tap places on touch, and the pose can be cancelled and followed by a
     })
   })
 })
+
+describe('fix round (review of Task 43b, S1 S3 S4 N2)', () => {
+  const key = (s: ReturnType<typeof setup>, type: 'keydown' | 'keyup', altKey: boolean) => {
+    const e = new Event(type, { cancelable: true })
+    Object.defineProperty(e, 'key', { value: 'Alt' })
+    Object.defineProperty(e, 'code', { value: 'AltLeft' })
+    Object.defineProperty(e, 'altKey', { value: altKey })
+    s.win.dispatchEvent(e)
+  }
+
+  it('S1: with the G latch on, R turns the ghost by 1 degree (the bar says « libre » for the rotation too); latch off, 15', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ctrl.toggleFreeLatch()
+    expect(s.ctrl.rotateGhost(1, false)).toBe(true)
+    expect(s.ghost.yaws.at(-1)).toBe(1)
+    expect(s.ctrl.rotateGhost(-1, false)).toBe(true)
+    expect(s.ghost.yaws.at(-1)).toBe(0)
+    s.ctrl.toggleFreeLatch() // latch off
+    s.ctrl.rotateGhost(1, false)
+    expect(s.ghost.yaws.at(-1)).toBe(15)
+    s.ctrl.rotateGhost(1, true) // Alt+R is still 1 degree
+    expect(s.ghost.yaws.at(-1)).toBe(16)
+  })
+
+  it('S1: the drop uses the freely turned yaw', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ctrl.toggleFreeLatch()
+    s.ctrl.rotateGhost(1, false)
+    s.ctrl.rotateGhost(1, false)
+    s.ctrl.confirm()
+    expect(s.store.design().placements[0].yawDeg).toBe(2)
+  })
+
+  it('S3: a pose started while another is in progress starts on the grid (the latch is not inherited); the bar says so', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ctrl.toggleFreeLatch()
+    s.ctrl.startPlacement('yamaha-ql1') // the drawer was reopened during the pose and another device chosen
+    expect(s.onSnap).toHaveBeenLastCalledWith(false)
+    s.fire('pointermove', 113, 232)
+    expect(s.ghost.moves.at(-1)).toEqual([1.25, 0, 2.25])
+    s.ctrl.toggleFreeLatch() // the next G latches again (it does not announce « grille » for a state that was free)
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapFree)
+  })
+
+  it('S4: Alt really held while G is released: the latch is off but the placement is still free, and nothing says « grille »', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointermove', 113, 232, { altKey: true })
+    s.ctrl.toggleFreeLatch()
+    s.ctrl.toggleFreeLatch()
+    expect(s.onSnap).toHaveBeenLastCalledWith(true)
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapLatchOff)
+    expect(s.announce).not.toHaveBeenCalledWith(COPY.placement!.statusSnapGrid)
+  })
+
+  it('S4: an Alt held at the last drop is not remembered by the next pose: G twice says « grille » and the bar is on the grid', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointerdown', 113, 232, { altKey: true })
+    s.fire('pointerup', 113, 232, { altKey: true })
+    s.ctrl.startPlacement('yamaha-ql1') // Entrée in the drawer: no pointer event yet
+    s.ctrl.toggleFreeLatch()
+    s.ctrl.toggleFreeLatch()
+    expect(s.onSnap).toHaveBeenLastCalledWith(false)
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapGrid)
+  })
+
+  it('S4: a pose that replaces another one (the drawer reopened mid-pose) does not inherit the Alt of the first', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointermove', 113, 232, { altKey: true })
+    s.ctrl.startPlacement('yamaha-ql1') // chosen with Entrée: no pointer event yet
+    s.ctrl.toggleFreeLatch()
+    s.ctrl.toggleFreeLatch()
+    expect(s.onSnap).toHaveBeenLastCalledWith(false)
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapGrid)
+  })
+
+  it('S4: the Alt key itself is tracked (keydown / keyup on the window), with no pointer event in between', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    key(s, 'keydown', true)
+    s.ctrl.toggleFreeLatch()
+    s.ctrl.toggleFreeLatch()
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapLatchOff)
+    key(s, 'keyup', false)
+    s.ctrl.toggleFreeLatch()
+    s.ctrl.toggleFreeLatch()
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapGrid)
+    expect(s.onSnap).toHaveBeenLastCalledWith(false)
+  })
+
+  it('startPlacement says whether a pose started (a refused one does not)', () => {
+    const s = setup()
+    expect(s.ctrl.startPlacement('yamaha-ql1')).toBe(true)
+    const s2 = setup()
+    s2.host.showGhost = () => false
+    expect(s2.ctrl.startPlacement('yamaha-ql1')).toBe(false)
+    expect(s2.ctrl.placing).toBe(false)
+  })
+
+  it('N2: the release of a second finger near the first press does not drop', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointerdown', 113, 232, { pointerType: 'touch' })
+    s.fire('pointerup', 115, 233, { pointerType: 'touch', isPrimary: false, pointerId: 2 })
+    expect(s.store.design().rig.instances).toHaveLength(0)
+    expect(s.ctrl.placing).toBe(true)
+    s.fire('pointerup', 113, 232, { pointerType: 'touch' })
+    expect(s.store.design().rig.instances).toHaveLength(1)
+  })
+})

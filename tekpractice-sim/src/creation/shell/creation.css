@@ -775,12 +775,16 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr .cr-note-action { min-height: 28px; padding: 4px 10px; border: 1px solid var(--cr-ambre); color: var(--cr-papier); }
 .cr .cr-note-action:hover { background: var(--cr-ambre); color: var(--cr-nuit); }
 
-/* « Annuler la pose » (Task 43b): bottom left of the 3D view, over it; a 44 px target (the 28 px status bar cannot hold one). */
+/* « Annuler la pose » (Task 43b): bottom left of the 3D view, over it; a 44 px target (the 28 px status bar cannot hold one). The dismissible notes
+   (.cr-notes, z 5) live in the same corner: while a pose is in progress the view carries data-placing and the notes stack ABOVE the button (44 px + a gap), so
+   neither covers the other at any width (the view is only 168 px wide at 400 px: the cube and its tools take the top). Above the drawer (z 2). */
+.cr-viewport[data-placing='true'] .cr-notes { bottom: 68px; }
 .cr .cr-cancel-pose {
   position: absolute;
   left: 12px;
   bottom: 12px;
-  z-index: 2;
+  z-index: 6;
+  transition: none;
   box-sizing: border-box;
   min-width: 44px;
   min-height: 44px;

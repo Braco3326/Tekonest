@@ -161,6 +161,44 @@ test('« Annuler la pose » is reachable by Tab from the 3D view and works with 
   expect((await design(page)).rig.instances).toHaveLength(0)
 })
 
+for (const vp of [{ width: 1366, height: 768 }, { width: 400, height: 800 }]) {
+  test(`« Annuler la pose » is inside the view, clear of the notes and the view cube, and on top of the reopened drawer, at ${vp.width} px`, async ({ page }) => {
+    await page.setViewportSize(vp)
+    await boot(page)
+    await choose(page, 'yamaha-ql1', 'Consoles')
+    // a dismissible note is on screen (as « Appareils non rechargés »): the stack is bottom left of the view
+    await page.evaluate(() => {
+      const stack = document.querySelector('[data-testid="notes"]')!
+      const n = document.createElement('div')
+      n.className = 'cr-note'
+      n.style.minHeight = '120px'
+      n.textContent = 'Une note'
+      stack.append(n)
+    })
+    const rect = async (loc: ReturnType<Page['locator']>) => (await loc.boundingBox())!
+    const b = await rect(cancelButton(page))
+    const view = await rect(page.locator('.cr-viewport'))
+    expect(b.x, 'inside the view (left)').toBeGreaterThanOrEqual(view.x)
+    expect(b.y, 'inside the view (top)').toBeGreaterThanOrEqual(view.y)
+    expect(b.x + b.width, 'inside the view (right)').toBeLessThanOrEqual(view.x + view.width)
+    expect(b.y + b.height, 'inside the view (bottom)').toBeLessThanOrEqual(view.y + view.height)
+    const meets = (a: { x: number; y: number; width: number; height: number }, c: { x: number; y: number; width: number; height: number }): boolean =>
+      a.x < c.x + c.width && c.x < a.x + a.width && a.y < c.y + c.height && c.y < a.y + a.height
+    const note = await rect(page.locator('[data-testid="notes"] .cr-note'))
+    expect(meets(b, note), 'clear of the notes').toBe(false)
+    const cube = await page.evaluate(() => window.__creation!.cubeRect())
+    expect(meets(b, cube), 'clear of the view cube').toBe(false)
+    const top = (r: { x: number; y: number; width: number; height: number }) =>
+      page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.getAttribute('data-testid'), { x: r.x + r.width / 2, y: r.y + r.height / 2 })
+    expect(await top(b), 'the button is what a tap at its centre reaches').toBe('cancel-placement')
+    // the drawer reopened during the pose does not hide it
+    await canvas(page).focus()
+    await page.keyboard.press('Space')
+    await expect(page.getByTestId('inventory-drawer')).toBeVisible()
+    expect(await top(await rect(cancelButton(page)))).toBe('cancel-placement')
+  })
+}
+
 test('axe: no serious or critical violation while a pose is in progress (the cancel button is on screen); the button has a visible focus ring', async ({ page }) => {
   await boot(page)
   await choose(page, 'yamaha-ql1', 'Consoles')
@@ -308,7 +346,7 @@ test('Échap during the drag cancels it; the release afterwards drops nothing', 
   await expect(statusLine(page)).toContainText('Pose annulée')
 })
 
-test('a drag whose pointerup never came (the window lost the pointer): the next move with no button down is the release, over the view it drops', async ({ page }) => {
+test('a drag whose pointerup never came (SYNTHETIC: a window pointermove with no button, the real button still down): the next move with no button down is the release, over the view it drops', async ({ page }) => {
   await boot(page)
   await openDrawer(page, 'Consoles')
   const from = await centre(page, 'yamaha-ql1')
@@ -486,6 +524,51 @@ test.describe('Écouter depuis ici', () => {
     await page.keyboard.press('Escape')
     await menu(page, 'Écoute', 'Stop')
     await page.waitForFunction(() => window.__creation!.audioState().state === 'stopped', null, { timeout: 10_000 })
+  })
+
+  test('the heading is the camera\'s: after Écouter depuis ici the pan of each speaker matches the side it is DRAWN on (screen oracle), at three azimuths', async ({ page }) => {
+    await bootRig(page)
+    await menu(page, 'Écoute', 'Lecture')
+    await page.waitForFunction(() => window.__creation!.audioState().state === 'playing', null, { timeout: 15_000 })
+    for (const turn of [0, 0.5, -0.5]) {
+      if (turn !== 0) await page.evaluate((t) => window.__creation!.turnCamera(t), turn)
+      await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+      await menu(page, 'Écoute', 'Écouter depuis ici')
+      const box = (await canvas(page).boundingBox())!
+      const centre = box.x + box.width / 2
+      for (const id of ['k12-g', 'k12-d']) {
+        const at = (await page.evaluate((i) => window.__creation!.deviceScreen(i), id))!
+        expect(at, id + ' is drawn').not.toBeNull()
+        const v = (await voices(page)).find((x) => x.instanceId === id)!
+        expect(Math.abs(at.x - centre), id + ' is off-centre enough to have a side').toBeGreaterThan(20)
+        // drawn to the left of the view's centre (where the listener stands, looking along the view) = panned left
+        expect(Math.sign(v.pan), `${id} at turn ${turn}: drawn ${at.x < centre ? 'left' : 'right'}, pan ${v.pan}`).toBe(at.x < centre ? -1 : 1)
+      }
+    }
+  })
+
+  test('« Ici » is a coverage probe: its level is read in the panel, and follows the point when it is placed again', async ({ page }) => {
+    await bootRig(page)
+    await page.getByRole('menuitem', { name: 'Écoute', exact: true }).click()
+    await page.getByRole('menuitemcheckbox', { name: 'Couverture' }).click()
+    await page.waitForFunction(() => window.__creation!.coverage().status === 'ready' && !window.__creation!.coverage().pending, null, { timeout: 20_000 })
+    expect((await page.evaluate(() => window.__creation!.coverage().probes)).map((p) => p.id)).not.toContain('ici')
+    await menu(page, 'Écoute', 'Écouter depuis ici')
+    await page.waitForFunction(() => window.__creation!.coverage().probes.some((p) => p.id === 'ici') && !window.__creation!.coverage().pending, null, { timeout: 20_000 })
+    const ici = (await page.evaluate(() => window.__creation!.coverage().probes)).find((p) => p.id === 'ici')!
+    expect(ici.db).not.toBeNull()
+    expect(Number.isFinite(ici.db!)).toBe(true)
+    await expect(page.getByTestId('coverage-points')).toContainText('Ici : ') // the level as text, like the Régie row
+    await expect(page.getByRole('button', { name: 'Épingler Ici' })).toBeVisible() // and a button, like the named points
+    // the camera moves to another spot, « Ici » is placed again: the probe is recomputed there
+    const before = ici.db
+    await page.evaluate(() => window.__creation!.turnCamera(0.5))
+    const floor: V3 = [-5, 0, 2]
+    const at = (await page.evaluate((p) => window.__creation!.worldScreen(p), floor))!
+    await page.mouse.dblclick(at.x, at.y)
+    await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+    await menu(page, 'Écoute', 'Écouter depuis ici')
+    await expect.poll(async () => (await page.evaluate(() => window.__creation!.coverage().probes)).find((p) => p.id === 'ici')?.db).not.toBe(before)
   })
 
   test('another place forgets it; « Ici » is back on the Régie', async ({ page }) => {
