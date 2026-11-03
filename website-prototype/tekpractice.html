@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TekPractice — Tekonest</title>
-<meta name="description" content="TekPractice, le simulateur de câblage : un atelier 3D dans le navigateur pour apprendre à câbler du vrai matériel son. En développement, version d'essai jouable.">
+<meta name="description" content="TekPractice, le simulateur de câblage : choisissez un lieu, posez du vrai matériel son, câblez-le et écoutez le résultat dans le navigateur. En développement, version d'essai jouable.">
 <meta name="robots" content="noindex">
 <meta property="og:image" content="https://tekonest.com/assets/img/panel/og-share.webp">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -35,7 +35,7 @@
     <div class="cable" aria-hidden="true"></div>
     <span class="status status--dev">En développement · version d'essai</span>
     <h1 id="tp-titre">TekPractice, le simulateur de câblage</h1>
-    <p class="lead">Un simulateur 3D dans le navigateur. Vous branchez micros, consoles, boîtiers de scène et enceintes, et TekPractice vous explique chaque erreur : alimentation fantôme, retour N-1, horloge…</p>
+    <p class="lead">Un simulateur 3D dans le navigateur. Vous choisissez un lieu, vous y posez du vrai matériel son, vous le câblez. Quand un branchement est impossible, TekPractice vous dit pourquoi.</p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-play" href="tekpractice/jouer/">Jouer maintenant</a>
     </div>
@@ -48,17 +48,16 @@
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Version d'essai</p>
-      <h2 id="nouveau">Nouveau : le Mode Création (25 octobre 2026)</h2>
-      <p>TekPractice s'ouvre maintenant sur un seul mode : vous choisissez un lieu, vous y installez votre matériel et vous le câblez. Les niveaux reviendront ensuite sous forme de missions.</p>
+      <h2 id="nouveau">Mode Création : installez, câblez, écoutez</h2>
+      <p>TekPractice s'ouvre sur le Mode Création. Vous montez une sono dans un lieu, pas à pas, et vous voyez ce qui marche. Les niveaux reviendront ensuite sous forme de missions.</p>
     </div>
-    <ul class="links-list">
-      <li><strong>Choisir un lieu</strong><span>36 lieux (salles, studios, théâtres, décors 3D) et un modèle « Concert simple » prêt à câbler. Ouvrez-les vides ou avec leur matériel.</span><span class="status status--dev">Nouveau</span></li>
-      <li><strong>Un atelier complet</strong><span>Menus en haut, projet à gauche, propriétés de l'appareil à droite ; annuler et rétablir.</span><span class="status status--dev">Nouveau</span></li>
-      <li><strong>Le cube de vue</strong><span>26 zones (faces, arêtes, coins), ↺ ↻ pour tourner d'un quart, ⌂ pour revenir. Les mêmes vues sont dans le menu Vue et sous la touche <kbd>V</kbd>.</span><span class="status status--dev">Nouveau</span></li>
-      <li><strong>Tourner autour d'un appareil</strong><span>Cliquez un appareil : il devient le centre de la rotation. Double-cliquez le sol pour changer de centre.</span><span class="status status--dev">Nouveau</span></li>
-      <li><strong>Marcher et écouter</strong><span>Vue marche à hauteur d'oreille (1,2 m assis, 1,7 m debout) et points d'écoute Régie, Premier rang, Fond de salle sur les touches 1, 2, 3.</span><span class="status status--dev">Nouveau</span></li>
-      <li><strong>À venir</strong><span>Inventaire repensé, test du système avec une musique, et carte des niveaux sonores relatifs dans la salle.</span><span class="status status--prep">En préparation</span></li>
-    </ul>
+    <ol class="steps" style="--cable-text: var(--cable-tekpractice-text)">
+      <li><span><strong>Choisissez un lieu.</strong> 36 lieux : 32 salles et studios, 3 décors et une salle vide neutre. Ouvrez-les vides ou avec leur matériel.</span></li>
+      <li><span><strong>Posez du vrai matériel.</strong> Console, micros, enceintes amplifiées, multiprise : des appareils réels, choisis dans l'inventaire.</span></li>
+      <li><span><strong>Câblez.</strong> Reliez une prise à une autre. Si le branchement est impossible, TekPractice le refuse et vous dit pourquoi, en français. Huit règles de câblage, des connecteurs à l'alimentation fantôme, en passant par le sens du signal.</span></li>
+      <li><span><strong>Écoutez.</strong> Lancez le signal de test ou choisissez votre propre fichier audio, depuis la Régie, le Premier rang ou le Fond de salle. C'est une simulation simple. Votre fichier reste dans votre navigateur : il n'est ni envoyé ni enregistré.</span></li>
+      <li><span><strong>Voyez la couverture.</strong> Des points de couleur montrent les niveaux relatifs dans la salle, le point le plus fort valant 0 dB. Son direct seulement : ni réflexions de la salle, ni mesure.</span></li>
+    </ol>
     <p class="note">Les anciens niveaux restent accessibles : <a href="tekpractice/jouer/?legacy=1">ouvrir les niveaux A1–D1</a>.</p>
   </div>
 </section>
@@ -175,7 +174,7 @@
 <section class="section section--sunken" aria-labelledby="suite">
   <div class="wrap">
     <div class="cols">
-      <div class="col"><h2 id="suite">Ce qui se prépare</h2><ul><li>Une version publique stable en ligne.</li><li>Rendre la vue 3D utilisable entièrement au clavier.</li><li>Les conseils d'Oscar, à la place des textes provisoires.</li></ul></div>
+      <div class="col"><h2 id="suite">Ce qui se prépare</h2><ul><li>Une version publique stable en ligne.</li><li>Rendre la vue 3D utilisable entièrement au clavier.</li><li>Les conseils d'Oscar, à la place des textes provisoires.</li><li>Des morceaux de démonstration : aucun n'est inclus pour l'instant, utilisez le signal de test ou votre fichier.</li></ul></div>
       <div class="col"><h2>Ce qui reste à décider</h2><ul><li>Le modèle d'accès : gratuit, ou une partie payante.</li><li>Les licences des modèles 3D avant tout usage commercial.</li></ul></div>
       <div class="col"><h2>Pour qui</h2><ul><li>Les étudiantes et étudiants du BTS Son, en priorité.</li></ul></div>
     </div>
