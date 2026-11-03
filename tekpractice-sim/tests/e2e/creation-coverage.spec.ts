@@ -294,6 +294,7 @@ test('(g) a click on a dot pins its level, a named point is a keyboard button, �
   await page.mouse.click(dot.x, dot.y)
   await expect(page.getByTestId('coverage-pinned')).toBeVisible()
   await page.getByRole('button', { name: 'Retirer l’épingle' }).click()
+  await waitReady(page) // removing the pin recomputes: let that job finish, or under load it is still busy when the device click is judged (pending)
   // a pixel where a device body AND a dot cell are both under the pointer (searched around the console: the test fails if there is none)
   const both = await page.evaluate(() => {
     const c = window.__creation!
