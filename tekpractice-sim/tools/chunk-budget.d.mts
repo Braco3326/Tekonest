@@ -19,6 +19,10 @@ export interface BudgetInput {
   chunkModules: ChunkModules
   /** File (relative to dist) -> raw bytes. */
   sizes: Record<string, number>
+  /** JS chunk file -> its source text (for the Web Worker scan of the start closure). */
+  chunkTexts?: Record<string, string>
+  /** JS files of dist/ that are in no chunk list: Vite's worker sub-builds (e.g. `assets/worker-HASH.js`). */
+  workerAssets?: string[]
 }
 export interface BudgetRow {
   name: string
@@ -40,11 +44,14 @@ export interface ForbiddenRule {
   id: string
   why: string
   match: (moduleId: string) => boolean
+  /** Exact module ids: each one must exist in some chunk of the build, or the rule is stale. */
+  ids?: string[]
   optional?: boolean
 }
 export const RATIO: number
 export const CREATION_ENTRY_MODULE: string
 export const LEGACY_ENTRY_MODULE: string
+export const PAGE_ENTRY_SRC: string
 export const ALLOWED_STATIC: string[]
 export const FORBIDDEN_STATIC: ForbiddenRule[]
 export function evaluateBudget(input: BudgetInput): BudgetVerdict

@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright'
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test, type Locator, type Page } from '@playwright/test'
 
 /**
  * Task 43a (plan Task 43, CA-18): the runtime budgets of Mode Création, on the production build.
@@ -10,6 +10,14 @@ import { expect, test, type Page } from '@playwright/test'
  *  - AXE: 0 serious or critical violations on the whole page (no rule disabled, nothing excluded) with: the place picker, the shell, the inventory drawer, the
  *    connect dialog, the view picker and the listen panel on screen.
  * No fixed sleep is an assertion mechanism. The only waits that are not "until a state": IDLE_WINDOW_MS, the window being measured.
+ *
+ * SCOPE OF THE IDLE CLAIM. Six of the seven idle scenarios run with `prefers-reduced-motion: reduce` (boot() emulates it by default, which also cuts the camera
+ * tweens short); the seventh, "a place change WITHOUT reduced motion", runs with the animations on. So CA-18 is measured with and without tween animation for the
+ * place change, and with reduced motion only for the other five.
+ *
+ * A "0 renders" READING PROVES NOTHING ON ITS OWN (a stalled or throttled page reads 0 too). Every idle window is therefore bracketed by liveness proofs: a
+ * page-side requestAnimationFrame counter must advance during the window (the page was not frozen), and a `resize` event (it invalidates the scheduler) must
+ * make `renders()` move before AND after the window (the counter observes a real render, the loop is alive).
  */
 test.use({ viewport: { width: 1366, height: 768 } })
 
@@ -21,8 +29,18 @@ const QUIET_MS = 500
 const PLACE = 'room:concert-hall-medium'
 
 /** The reference template ("Concert simple (référence)": 5 devices) with its two signal cables and playback on: the powered rig, as the listen / coverage specs. */
-const boot = async (page: Page, opts: { powered?: boolean } = {}): Promise<void> => {
-  await page.emulateMedia({ reducedMotion: 'reduce' })
+const boot = async (page: Page, opts: { powered?: boolean; motion?: boolean } = {}): Promise<void> => {
+  await page.emulateMedia({ reducedMotion: opts.motion ? 'no-preference' : 'reduce' })
+  // An independent clock for the idle windows: counts the page's animation frames, whatever the app does.
+  await page.addInitScript(() => {
+    const w = window as unknown as { __rafTicks: number }
+    w.__rafTicks = 0
+    const tick = (): void => {
+      w.__rafTicks++
+      requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+  })
   await page.goto('/')
   await page.waitForFunction(() => !!window.__creation)
   await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
@@ -63,12 +81,30 @@ const settled = async (page: Page): Promise<void> => {
   )
 }
 
-/** The page is at rest, then IDLE_WINDOW_MS later it has drawn nothing. `what` names the action that came before, for the failure message. */
+const rafTicks = (page: Page): Promise<number> => page.evaluate(() => (window as unknown as { __rafTicks: number }).__rafTicks)
+
+/** A `resize` invalidates the scheduler: the loop must answer with a frame, and renders() must count it. Proof that the loop is alive and the counter sees renders. */
+const pokeAndExpectFrame = async (page: Page, when: string): Promise<void> => {
+  const n = await renders(page)
+  await page.evaluate(() => void window.dispatchEvent(new Event('resize')))
+  await expect.poll(() => renders(page), { message: `a forced render is observed by renders() (${when})`, timeout: 5000 }).toBeGreaterThan(n)
+}
+
+/**
+ * The page is at rest, then IDLE_WINDOW_MS later it has drawn nothing. `what` names the action that came before, for the failure message.
+ * Liveness: the loop answers a forced frame before the window and after it, and the page's own rAF counter advanced during it.
+ */
 const expectIdle = async (page: Page, what: string): Promise<void> => {
   await settled(page)
+  await pokeAndExpectFrame(page, `before the window after ${what}`)
+  await settled(page)
   const before = await renders(page)
+  const ticks = await rafTicks(page)
   await page.waitForTimeout(IDLE_WINDOW_MS)
-  expect(await renders(page), `renders in ${IDLE_WINDOW_MS} ms after ${what}`).toBe(before)
+  const after = await renders(page)
+  expect(await rafTicks(page) - ticks, `animation frames the page ran in ${IDLE_WINDOW_MS} ms (the window was not frozen)`).toBeGreaterThan(10)
+  expect(after, `renders in ${IDLE_WINDOW_MS} ms after ${what}`).toBe(before)
+  await pokeAndExpectFrame(page, `after the window after ${what}`)
 }
 
 const ecoute = (page: Page) => page.getByRole('menuitem', { name: 'Écoute', exact: true })
@@ -101,6 +137,17 @@ test.describe('idle = 0 renders in 2 s (CA-18)', () => {
     await page.waitForFunction(() => window.__creation!.place() === 'room:bar-club-stage-small')
     expect(await renders(page), 'the place change drew frames').toBeGreaterThan(n)
     await expectIdle(page, 'a place change')
+  })
+
+  test('after a place change, WITHOUT reduced motion (the tweens run, then rest)', async ({ page }) => {
+    await boot(page, { powered: false, motion: true })
+    expect(await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches), 'animations are on').toBe(false)
+    const n = await renders(page)
+    await page.evaluate(() => void window.__creation!.requestPlace('room:bar-club-stage-small'))
+    await page.getByRole('button', { name: 'Garder le matériel' }).click()
+    await page.waitForFunction(() => window.__creation!.place() === 'room:bar-club-stage-small')
+    expect(await renders(page), 'the place change drew frames').toBeGreaterThan(n)
+    await expectIdle(page, 'a place change with animations on')
   })
 
   test('after a cube hover (and after leaving it)', async ({ page }) => {
@@ -217,11 +264,13 @@ test('5 place changes with the template gear: liveListeners() and the page-level
 })
 
 /**
- * THE ONE KNOWN, REPORTED, NOT-FIXED VIOLATION (Task 43a). The Projet tree's four expandable rows (`li[role=treeitem]` that CONTAIN their `ul[role=group]`) are named
+ * 43d-tree: THE ONE KNOWN, REPORTED, NOT-FIXED VIOLATION (Task 43a). The Projet tree's four expandable rows (`li[role=treeitem]` that CONTAIN their `ul[role=group]`) are named
  * from their own label (+ count) by aria-labelledby, but axe 4.14 `label-content-name-mismatch` (WCAG 2.5.3 Label in Name) reads the visible text of the whole
  * `li`, children included, and finds it is not contained in the name. Leaf rows are not flagged. A real fix is a restructure of the tree DOM (the row as the
  * treeitem, the group owned by `aria-owns`), which touches the keyboard model and every tree spec: reported to the controller. The tests that show the tree assert this
  * EXACT list, not "nothing": any other violation fails, and the day the tree is restructured these tests fail until this constant is emptied.
+ * LIMITS OF THE PIN: it cannot tell a different defect inside those same four `li` nodes under the same rule from the known one; and it turns three of the six axe
+ * tests into "0 serious or critical except this one" (a deviation from the brief, disclosed in the 43a report). Owner: Task 43d, item B (tracking id 43d-tree).
  */
 const KNOWN_TREE_GROUP_ROWS = ['label-content-name-mismatch (serious): li[data-node-id="zones"] | li[data-node-id="materiel"] | li[data-node-id="cables"] | li[data-node-id="ecoute"]']
 
@@ -233,17 +282,35 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
    * treats every element as not visible: `color-contrast` and the other visibility-based rules do not evaluate (measured: a probe paragraph in #777 on #888 is
    * not reported, and the picker lists 2 nodes under color-contrast instead of 63). Every earlier axe check of this app ran with that blind spot. The shell is
    * fixed, so lifting the overflow changes no layout; it is restored at once. No rule is disabled and nothing is excluded.
+   * The inline value (and priority) that was on `body` is saved and put back, whatever it was; the document height is measured before and after to show the
+   * lift moved nothing (the place picker overlay included).
+   * `minLooked` is a per-state floor for the nodes color-contrast evaluated, about 80 % of what Task 43d measured: picker 67, shell 41, drawer 59, connect dialog
+   * 11 (a modal makes the rest of the page inert, so few nodes), view picker 29, listen panel 47. (The 43a note "63 to 89" was not true of the dialog states.)
+   * Each run also records its count as a test annotation.
    */
-  const bad = async (page: Page): Promise<string[]> => {
-    await page.evaluate(() => document.body.style.setProperty('overflow', 'visible'))
+  const bad = async (page: Page, minLooked: number): Promise<string[]> => {
+    const saved = await page.evaluate(() => {
+      const st = document.body.style
+      const prev = { value: st.getPropertyValue('overflow'), priority: st.getPropertyPriority('overflow'), height: document.body.scrollHeight }
+      st.setProperty('overflow', 'visible')
+      return prev
+    })
     try {
       const r = await new AxeBuilder({ page }).analyze()
       // Proof the run was not blind: color-contrast really looked at text (passes + the ones axe could not decide).
       const looked = [...r.passes, ...r.incomplete, ...r.violations].filter((x) => x.id === 'color-contrast').reduce((n, x) => n + x.nodes.length, 0)
-      expect(looked, 'color-contrast evaluated text nodes (axe is not blind)').toBeGreaterThan(10)
+      test.info().annotations.push({ type: 'axe', description: `color-contrast looked at ${looked} node(s)` })
+      expect(looked, 'color-contrast evaluated text nodes (axe is not blind)').toBeGreaterThanOrEqual(minLooked)
+      expect(await page.evaluate(() => document.body.scrollHeight), 'lifting overflow did not change the document height').toBe(saved.height)
       return r.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical').map((v) => `${v.id} (${v.impact}): ${v.nodes.map((n) => n.target.join(' ')).join(' | ')}`)
     } finally {
-      await page.evaluate(() => document.body.style.removeProperty('overflow'))
+      const restored = await page.evaluate((prev) => {
+        const st = document.body.style
+        if (prev.value) st.setProperty('overflow', prev.value, prev.priority)
+        else st.removeProperty('overflow')
+        return st.getPropertyValue('overflow')
+      }, saved)
+      expect(restored, 'the inline overflow of body is back to what it was').toBe(saved.value)
     }
   }
 
@@ -253,18 +320,29 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
     await page.waitForFunction(() => !!window.__creation)
     await expect(page.getByTestId('place-picker')).toBeVisible()
     await page.evaluate(() => document.fonts.ready)
-    expect(await bad(page)).toEqual([])
+    expect(await bad(page, 50)).toEqual([])
     // The Label-in-Name fix put the type after the name in the DOM; it is still DRAWN above the name, the size below it (the look did not change).
-    const card = page.locator('[data-testid="place-grid"] .cr-card').first()
-    const y = async (cls: string): Promise<number> => (await card.locator(cls).boundingBox())!.y
-    expect(await y('.cr-card-type')).toBeLessThan(await y('.cr-card-name'))
-    expect(await y('.cr-card-name')).toBeLessThan(await y('.cr-card-size'))
+    // Checked on the first, a middle and the last place card, and on the first and last (wide, row layout) template card.
+    const drawnTypeNameSize = async (card: Locator, label: string): Promise<void> => {
+      await card.scrollIntoViewIfNeeded()
+      const y = async (cls: string): Promise<number> => (await card.locator(cls).boundingBox())!.y
+      expect(await y('.cr-card-type'), `${label}: type above name`).toBeLessThan(await y('.cr-card-name'))
+      expect(await y('.cr-card-name'), `${label}: name above size`).toBeLessThan(await y('.cr-card-size'))
+    }
+    const places = page.locator('[data-testid="place-grid"] .cr-card')
+    const nPlaces = await places.count()
+    expect(nPlaces, 'the picker lists several places').toBeGreaterThan(3)
+    for (const i of [0, Math.floor(nPlaces / 2), nPlaces - 1]) await drawnTypeNameSize(places.nth(i), `place card ${i} of ${nPlaces}`)
+    const templates = page.locator('[data-testid="template-grid"] .cr-card')
+    const nTemplates = await templates.count()
+    expect(nTemplates, 'the picker lists templates').toBeGreaterThan(0)
+    for (const i of new Set([0, nTemplates - 1])) await drawnTypeNameSize(templates.nth(i), `template card ${i} of ${nTemplates}`)
   })
 
   test('the shell with a place and the template on screen (only the known tree-row finding)', async ({ page }) => {
     await boot(page, { powered: false })
     await expect(page.getByTestId('place-picker')).toBeHidden()
-    expect(await bad(page)).toEqual(KNOWN_TREE_GROUP_ROWS)
+    expect(await bad(page, 30)).toEqual(KNOWN_TREE_GROUP_ROWS)
   })
 
   test('the inventory drawer, open', async ({ page }) => {
@@ -272,7 +350,7 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
     await page.locator('#renderCanvas').focus()
     await page.keyboard.press('Space')
     await expect(drawer(page)).toBeVisible()
-    expect(await bad(page)).toEqual(KNOWN_TREE_GROUP_ROWS)
+    expect(await bad(page, 45)).toEqual(KNOWN_TREE_GROUP_ROWS)
   })
 
   test('the connect dialog, open', async ({ page }) => {
@@ -284,7 +362,7 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
     await opener.focus()
     await page.keyboard.press('Enter')
     await expect(page.getByTestId('cr-connect-dialog')).toBeVisible()
-    expect(await bad(page)).toEqual([])
+    expect(await bad(page, 8)).toEqual([])
   })
 
   test('the view picker, open', async ({ page }) => {
@@ -292,7 +370,7 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
     await page.locator('#renderCanvas').focus()
     await page.keyboard.press('v')
     await expect(page.getByRole('dialog', { name: 'Choisir une vue' })).toBeVisible()
-    expect(await bad(page)).toEqual([])
+    expect(await bad(page, 20)).toEqual([])
   })
 
   test('the listen panel (the Écoute block on screen; playback is not running)', async ({ page }) => {
@@ -304,7 +382,7 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
     await expect(page.getByTestId('listen-panel')).toBeVisible()
     await expect(page.getByTestId('listen-transport')).toBeVisible()
     await settled(page)
-    expect(await bad(page)).toEqual(KNOWN_TREE_GROUP_ROWS)
+    expect(await bad(page, 35)).toEqual(KNOWN_TREE_GROUP_ROWS)
   })
 })
 
