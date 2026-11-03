@@ -137,10 +137,13 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
         s.id = `${o.id}-${cls}`
         return s
       }
-      text.append(part('type', card.typeLabel), part('name', card.title), part('size', card.sizeLabel))
+      // DOM order = the accessible name's order = name, size, type, badge: the visible text is then contained in the name (WCAG 2.5.3 Label in Name,
+      // axe `label-content-name-mismatch`, found by the Task 43a sweep). The type is drawn ABOVE the name by CSS (`.cr-card-type { order: -1 }`).
+      // A space between the parts (ignored by flex layout) so the visible text reads "name size type", as the name does.
+      text.append(part('name', card.title), ' ', part('size', card.sizeLabel), ' ', part('type', card.typeLabel))
       o.append(thumb, text)
       const badgeText = card.withGear ? P().withGearBadge : card.key.startsWith('template:') ? P().devices!.replace('{n}', String(card.withGearCount)) : ''
-      if (badgeText) text.appendChild(part('badge', badgeText))
+      if (badgeText) text.append(' ', part('badge', badgeText))
       // Read the name first (visually the type sits above it): name, size, type, badge.
       o.setAttribute('aria-labelledby', ['name', 'size', 'type', ...(badgeText ? ['badge'] : [])].map((p) => `${o.id}-${p}`).join(' '))
       // The highlight follows focus, however it got there (a click, a screen reader, the skip link).

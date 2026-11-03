@@ -20,6 +20,8 @@ const r = spawnSync(process.execPath, [viteBin, 'build', '--outDir', 'dist-site'
   env: { ...process.env, TEKPRACTICE_BASE: '/tekpractice/jouer/' },
 })
 if (r.status !== 0) process.exit(r.status ?? 1)
+// Task 43a: `build.manifest` + the chunkModules plugin write .vite/ for tools/chunk-budget.mjs (run on dist/). It is a build artefact, not a site file.
+rmSync(join(out, '.vite'), { recursive: true, force: true })
 
 const walk = (dir) =>
   readdirSync(dir).flatMap((f) => {
