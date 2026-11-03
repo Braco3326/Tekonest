@@ -177,8 +177,7 @@ test('axe: no serious or critical violation while a pose is in progress (the can
   try {
     const r = await new AxeBuilder({ page }).analyze()
     const bad = r.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical').map((v) => v.id + ': ' + v.nodes.map((n) => n.target.join(' ')).join(' | '))
-    // Only the finding Task 43a already reported (the Projet tree's four expandable rows; creation-budgets.spec KNOWN_TREE_GROUP_ROWS): anything else fails.
-    expect(bad).toEqual(['label-content-name-mismatch: li[data-node-id="zones"] | li[data-node-id="materiel"] | li[data-node-id="cables"] | li[data-node-id="ecoute"]'])
+    expect(bad).toEqual([])
     const looked = [...r.passes, ...r.incomplete, ...r.violations].filter((x) => x.id === 'color-contrast').reduce((n, x) => n + x.nodes.length, 0)
     expect(looked, 'axe evaluated text (not blind)').toBeGreaterThan(10)
   } finally {

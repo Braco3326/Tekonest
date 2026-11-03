@@ -264,15 +264,10 @@ test('5 place changes with the template gear: liveListeners() and the page-level
 })
 
 /**
- * 43d-tree: THE ONE KNOWN, REPORTED, NOT-FIXED VIOLATION (Task 43a). The Projet tree's four expandable rows (`li[role=treeitem]` that CONTAIN their `ul[role=group]`) are named
- * from their own label (+ count) by aria-labelledby, but axe 4.14 `label-content-name-mismatch` (WCAG 2.5.3 Label in Name) reads the visible text of the whole
- * `li`, children included, and finds it is not contained in the name. Leaf rows are not flagged. A real fix is a restructure of the tree DOM (the row as the
- * treeitem, the group owned by `aria-owns`), which touches the keyboard model and every tree spec: reported to the controller. The tests that show the tree assert this
- * EXACT list, not "nothing": any other violation fails, and the day the tree is restructured these tests fail until this constant is emptied.
- * LIMITS OF THE PIN: it cannot tell a different defect inside those same four `li` nodes under the same rule from the known one; and it turns three of the six axe
- * tests into "0 serious or critical except this one" (a deviation from the brief, disclosed in the 43a report). Owner: Task 43d, item B (tracking id 43d-tree).
+ * The Projet tree rows used to be pinned here (axe label-content-name-mismatch on the four expandable rows, 43a). Fixed in Task 43d (tracking id 43d-tree, see
+ * projectTree.ts): the pin is EMPTY, so any serious / critical violation, that one included, fails every axe test of this file.
  */
-const KNOWN_TREE_GROUP_ROWS = ['label-content-name-mismatch (serious): li[data-node-id="zones"] | li[data-node-id="materiel"] | li[data-node-id="cables"] | li[data-node-id="ecoute"]']
+const KNOWN_TREE_GROUP_ROWS: string[] = []
 
 test.describe('axe: 0 serious or critical violations, whole page, no rule disabled', () => {
   /**
@@ -339,9 +334,18 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
     for (const i of new Set([0, nTemplates - 1])) await drawnTypeNameSize(templates.nth(i), `template card ${i} of ${nTemplates}`)
   })
 
-  test('the shell with a place and the template on screen (only the known tree-row finding)', async ({ page }) => {
+  test('the shell with a place and the template on screen', async ({ page }) => {
     await boot(page, { powered: false })
     await expect(page.getByTestId('place-picker')).toBeHidden()
+    expect(await bad(page, 30)).toEqual(KNOWN_TREE_GROUP_ROWS)
+  })
+
+  test('the shell with every Projet tree group open (rows that contain their children)', async ({ page }) => {
+    await boot(page, { powered: false })
+    const tree = page.getByTestId('tree')
+    for (const name of [/^Zones/, /^Matériel/, /^Câbles/, /^Points d’écoute/]) await tree.getByRole('treeitem', { name }).click() // a click on a group opens it
+    await expect(tree.locator('[role="treeitem"][aria-expanded="true"]')).toHaveCount(4)
+    expect(await tree.getByRole('treeitem').count(), 'the groups show their children').toBeGreaterThan(9)
     expect(await bad(page, 30)).toEqual(KNOWN_TREE_GROUP_ROWS)
   })
 

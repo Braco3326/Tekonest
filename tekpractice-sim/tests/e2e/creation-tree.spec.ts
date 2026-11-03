@@ -150,6 +150,9 @@ test('an empty « Matériel » says so; one store change rebuilds the tree once'
   const gear = tree.getByRole('treeitem', { name: /^Matériel/ })
   await expect(gear).toHaveAccessibleDescription('Aucun appareil installé')
   await expect(tree.getByText('Aucun appareil installé')).toBeVisible()
+  // Label in Name (43d-tree): the hint is drawn under the row but is NOT inside the treeitem, whose name does not contain it.
+  await expect(gear.locator('.cr-tree-empty')).toHaveCount(0)
+  await expect(tree.locator('li[role="none"] > .cr-tree-empty')).toHaveCount(1)
   const r0 = await page.evaluate(() => window.__creation!.treeRenders())
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
   expect(await page.evaluate(() => window.__creation!.treeRenders())).toBe(r0 + 1)
@@ -182,4 +185,61 @@ test('idle = 0 renders in 2 s with a device selected (the Ambre outline costs no
   await page.waitForTimeout(2000)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(r0)
   expect(await page.evaluate(() => window.__creation!.outlined())).toEqual(['ql1'])
+})
+
+/**
+ * Task 43d (« 43d-tree »): WCAG 2.5.3 Label in Name, checked here without axe. A row's accessible name (aria-labelledby: label, badge, count, hidden state) must
+ * read like the text drawn on the row ("Zones 6"), and an OPEN group must be owned by its row (aria-owns, a sibling in a role="none" wrapper) rather than sit
+ * inside the treeitem, where its text counted as the row's visible text.
+ */
+test('Label in Name: every row is named by the text it shows; an open group is owned by its row, not nested in it; the browser tree still nests it', async ({ page }) => {
+  // The reference template (5 devices, 6 zones) plus two cables, so that all four groups have children.
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/')
+  await page.waitForFunction(() => !!window.__creation)
+  await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
+  await page.waitForFunction(() => window.__creation!.design().rig.instances.length === 5)
+  const wired = await page.evaluate(() => {
+    const c = window.__creation!
+    return [
+      c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12-g', port: 'in-line-a' } }).ok,
+      c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-r' }, b: { instance: 'k12-d', port: 'in-line-a' } }).ok,
+    ]
+  })
+  expect(wired).toEqual([true, true])
+  const tree = page.getByRole('tree', { name: 'Projet' })
+  for (const name of [/^Zones/, /^Matériel/, /^Câbles/, /^Points d’écoute/]) await tree.getByRole('treeitem', { name }).click() // a click on a group opens it
+  await expect(tree.locator('[role="treeitem"][aria-expanded="true"]')).toHaveCount(4)
+  await page.getByRole('button', { name: 'Masquer Yamaha QL1 (ql1)' }).click() // a hidden row also carries a state word ("masqué") in its name
+  const facts = await tree.evaluate((root) => {
+    const norm = (t: string | null): string => (t ?? '').replace(/\s+/g, ' ').trim()
+    const rows = [...root.querySelectorAll<HTMLElement>('[role="treeitem"]')]
+    return {
+      count: rows.length,
+      mismatches: rows
+        .map((li) => {
+          const shown = norm(li.querySelector(':scope > .cr-tree-item')!.textContent)
+          const name = norm((li.getAttribute('aria-labelledby') ?? '').split(/\s+/).map((id) => document.getElementById(id)?.textContent ?? '').join(' '))
+          return shown === name ? null : `${li.dataset.nodeId}: shown « ${shown} » / name « ${name} »`
+        })
+        .filter(Boolean),
+      nested: rows.filter((li) => li.querySelector('ul, p, [role="treeitem"]')).map((li) => li.dataset.nodeId),
+      owned: rows
+        .filter((li) => li.getAttribute('aria-expanded') === 'true')
+        .map((li) => {
+          const g = document.getElementById(li.getAttribute('aria-owns') ?? '')
+          return { id: li.dataset.nodeId, group: g?.getAttribute('role'), wrapperRole: g?.parentElement?.getAttribute('role'), wrapperIsLi: g?.parentElement?.tagName, insideRow: !!g && li.contains(g), kids: g?.querySelectorAll(':scope > [role="treeitem"]').length ?? 0 }
+        }),
+    }
+  })
+  expect(facts.count, 'rows with the four groups open').toBeGreaterThan(9)
+  expect(facts.mismatches, 'every row is named by what it shows').toEqual([])
+  expect(facts.nested, 'no treeitem holds a group, a hint or another treeitem').toEqual([])
+  expect(facts.owned).toHaveLength(4)
+  for (const o of facts.owned) expect(o, `group of ${o.id}`).toMatchObject({ group: 'group', wrapperRole: 'none', wrapperIsLi: 'LI', insideRow: false })
+  expect(facts.owned.find((o) => o.id === 'materiel')!.kids, 'the five devices').toBe(5)
+  // The browser's own tree (what a screen reader gets) still nests the children under their row.
+  const snap = await tree.getByRole('treeitem', { name: /^Matériel/ }).ariaSnapshot()
+  expect(snap).toContain('Yamaha QL1')
+  expect(snap).toContain('k12-g')
 })
