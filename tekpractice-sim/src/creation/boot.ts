@@ -11,6 +11,7 @@ import roomIndexJson from '../../content/rooms/index.json'
 import { Vector3 } from '@babylonjs/core'
 import { loadCatalog } from '../engine/CatalogLoader'
 import { projectToScreen } from '../scene/project'
+import { useSameOriginDraco } from '../render/draco'
 import { DisposableBag } from '../util/disposable'
 import { COPY } from './copy'
 import { showBootFailure, type BootFailureKind } from './bootFailure'
@@ -134,6 +135,7 @@ const roomName = (id: string): string =>
 
 export async function bootCreation(): Promise<void> {
   injectCreationTokens()
+  useSameOriginDraco() // CA-24: the Draco decoder comes from public/draco/, never from cdn.babylonjs.com (before any .glb is loaded)
   const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
   const shell = mountShell(document, canvas)
   canvas.style.display = 'none' // shown once a place is chosen

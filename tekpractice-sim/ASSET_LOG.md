@@ -105,3 +105,31 @@ Règles pour ajouter une chanson plus tard (2 à 3 pistes au plus, 3 Mio (3 145 
   source, la date de récupération et son SHA-256 ; la même entrée existe dans `content/songs.json`.
 - `npm run validate:songs` (et `tests/audio/songs.test.ts`) vérifient : fichier présent, taille égale à `bytes` et ≤ 3 Mio, SHA-256 égal,
   licence `CC0-1.0`, ligne présente dans ce journal. Ajouter une entrée est une édition de contenu, sans changement du moteur.
+
+## 2026-11-03 — Décodeur Draco servi par le site (Task 43d, audit CA-24)
+
+26 des 53 modèles `.glb` livrés (appareils et décors) sont compressés en Draco (`KHR_draco_mesh_compression` dans `extensionsUsed`). Le chargeur glTF de
+Babylon allait chercher son décodeur sur `https://cdn.babylonjs.com/` (tiers : bloqué par certains filtres d'école, absent hors ligne, reçoit l'adresse IP de chaque
+visiteur). Le décodeur est maintenant **copié dans le dépôt**, sous `public/draco/`, et servi par le site lui-même.
+
+| Fichier | Octets | SHA-256 |
+|---|---|---|
+| `public/draco/draco_decoder_gltf.wasm` | 192 593 | `712db3449ae2041d6e8a224c395bda6cedb49e51322fae38b7db9beb8b381889` |
+| `public/draco/draco_decoder_gltf_nodejs.js` | 58 456 | `8bb2952d2ba7d67e1414f8df819410cb0434a666be53f671fff75f68843d76f6` |
+| `public/draco/LICENSE-Apache-2.0.txt` | 9 197 | texte standard de la licence Apache 2.0 |
+
+- **Source** : copie octet pour octet des fichiers du paquet npm `draco3dgltf` **1.5.7** (déjà en devDependency, `node_modules/draco3dgltf/`), qui est le décodeur
+  glTF de la bibliothèque Draco de Google (`https://github.com/google/draco`). `@babylonjs/core` n'en embarque aucun.
+- **Licence : Apache-2.0** (champ `license` du `package.json` du paquet) ; le texte de la licence est livré à côté des fichiers (condition de redistribution).
+  Aucun avis `NOTICE` n'existe dans le paquet.
+- **Le fichier `..._nodejs.js` n'est pas réservé à Node** malgré son nom : c'est le même module Emscripten, qui détecte son environnement (page, worker ou Node) et
+  ne touche à `fs` que sous Node. Associé au `.wasm` du même paquet, il forme une paire issue d'un seul build (le test `tests/render/draco.test.ts` vérifie
+  l'identité octet pour octet avec le paquet, pour qu'une mise à jour d'un seul des deux soit refusée).
+- **Branchement** : `src/render/draco.ts` règle `DracoCompression.Configuration` sur `public/draco/…` avec le chemin de base de Vite (`/` en local,
+  `/tekpractice/jouer/` au déploiement). Appelé au démarrage du Mode Création (`src/creation/boot.ts`) et de l'entrée historique (`src/legacyMain.ts`). Aucun
+  `fallbackUrl` : le seul repli que connaît Babylon est celui du CDN ; un navigateur sans WebAssembly ne peut de toute façon pas faire tourner la 3D de l'application
+  (le `.glb` échoue, la boîte provisoire reste).
+- **Garde** : `tests/e2e/creation-budgets.spec.ts` (CA-24) échoue si une requête sort de l'origine, et exige que le décodeur soit demandé sous `/draco/` (200),
+  dans une session Mode Création complète et dans l'entrée historique (`?level=a1`).
+- **Taille** : 251 Kio au total, très en dessous de la limite de 25 Mio par fichier du déploiement ; chargés à la première décompression d'un modèle, pas au démarrage
+  (le budget de chunks `npm run budget` ne les compte pas : ce ne sont pas des chunks JavaScript du bundle).

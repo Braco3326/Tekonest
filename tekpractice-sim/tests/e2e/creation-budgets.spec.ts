@@ -391,16 +391,46 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
 })
 
 /**
- * CA-24 (audit, OPEN, not fixed by Task 43a): Babylon's glTF loader fetches the Draco decoder from https://cdn.babylonjs.com/ at runtime (a third party: blocked by
- * school filters, absent offline). The fix is to vendor the decoder files under public/ and set `DracoCompression.Configuration` to them (a decision about third-party
- * files in the repo: reported). Until then this test pins the EXACT cross-origin set: a NEW third-party host fails it, and so does the day CA-24 is fixed (the
- * constant must then be emptied, which makes the test a true same-origin guard).
+ * CA-24 (audit; fixed in Task 43d): Babylon's glTF loader used to fetch its Draco decoder from https://cdn.babylonjs.com/ at runtime (26 of the 53 shipped
+ * models are Draco-compressed; a third party is blocked by school filters, absent offline, and learns every visitor's IP). The decoder (draco3dgltf 1.5.7,
+ * Apache-2.0) is now vendored under public/draco/ and `DracoCompression.Configuration` points to it (src/render/draco.ts, set by Mode Création's boot and by the
+ * legacy entry). These tests are the guard: NO request leaves the origin, and the decoder really is fetched from /draco/ (so "no foreign request" is not
+ * a pass because nothing was decoded). Requests are read on the browser context, so a dedicated worker's fetch (where the wrapper loads) is seen too.
+ * Not seen by this listener: WebSocket and EventSource traffic.
  */
-const KNOWN_CROSS_ORIGIN = { hosts: ['cdn.babylonjs.com'], pathPattern: /^\/draco_(decoder|wasm_wrapper)_gltf\.(wasm|js)$/ }
+const DRACO_FILES = ['/draco/draco_decoder_gltf.wasm', '/draco/draco_decoder_gltf_nodejs.js']
 
-test('CA-24: a whole session (boot, template models, drawer, playback, coverage) makes no cross-origin request except the known Draco CDN one', async ({ page }) => {
-  const seen: string[] = []
-  page.on('request', (r) => seen.push(r.url()))
+/** Every request of the page and its workers, and the status of each response. */
+const watch = (page: Page) => {
+  const urls: string[] = []
+  const status = new Map<string, number>()
+  const problems: string[] = []
+  page.context().on('request', (r) => urls.push(r.url()))
+  page.context().on('response', (r) => status.set(new URL(r.url()).pathname, r.status()))
+  page.on('pageerror', (e) => problems.push(`pageerror: ${e.message}`))
+  page.on('console', (m) => {
+    if (m.type() === 'error' || m.type() === 'warning') problems.push(`${m.type()}: ${m.text()}`)
+  })
+  return {
+    real: () => urls.filter((u) => !u.startsWith('data:') && !u.startsWith('blob:')),
+    status,
+    problems,
+  }
+}
+
+const expectSameOriginDraco = (w: ReturnType<typeof watch>, origin: string, base = '/'): void => {
+  const urls = w.real().map((u) => new URL(u))
+  const foreign = urls.filter((u) => u.origin !== origin)
+  expect(foreign.map((u) => u.href), 'cross-origin requests (CA-24)').toEqual([])
+  const draco = [...new Set(urls.map((u) => u.pathname))].filter((p) => p.startsWith(base + 'draco/'))
+  expect(draco.sort(), 'the Draco decoder is fetched from the same origin').toEqual(DRACO_FILES.map((f) => base + f.slice(1)).sort())
+  for (const p of draco) expect(w.status.get(p), `${p} answered 200`).toBe(200)
+  const dracoProblems = w.problems.filter((m) => /draco|decoder|wasm|importScripts/i.test(m))
+  expect(dracoProblems, 'no decoder error in the console').toEqual([])
+}
+
+test('CA-24: a whole Mode Création session (boot, Draco template models, drawer, playback, coverage) makes no cross-origin request; the decoder comes from /draco/', async ({ page }) => {
+  const w = watch(page)
   await boot(page)
   await page.locator('#renderCanvas').focus()
   await page.keyboard.press('Space')
@@ -414,11 +444,20 @@ test('CA-24: a whole session (boot, template models, drawer, playback, coverage)
   await choose(page, 'Stop')
   await waitState(page, 'stopped')
   await settled(page)
-  const origin = new URL(page.url()).origin
-  const real = seen.filter((u) => !u.startsWith('data:') && !u.startsWith('blob:'))
-  expect(real.length, 'the session made requests at all').toBeGreaterThan(20)
-  const foreign = real.map((u) => new URL(u)).filter((u) => u.origin !== origin)
-  expect([...new Set(foreign.map((u) => u.hostname))].sort()).toEqual(KNOWN_CROSS_ORIGIN.hosts)
-  expect(foreign.filter((u) => !KNOWN_CROSS_ORIGIN.pathPattern.test(u.pathname)).map((u) => u.href)).toEqual([])
-  test.info().annotations.push({ type: 'CA-24', description: `${foreign.length} cross-origin request(s): ${[...new Set(foreign.map((u) => u.pathname))].join(', ')}` })
+  expect(w.real().length, 'the session made requests at all').toBeGreaterThan(20)
+  expectSameOriginDraco(w, new URL(page.url()).origin)
+  // The models really were DECODED, not left as placeholder boxes (measured: decoder blocked = 109 meshes and QL1 at the box centre [0, 0.125, 8]; decoded = 124 meshes).
+  expect(await page.evaluate(() => window.__creation!.meshCount()), 'decoded meshes in the scene').toBeGreaterThan(120)
+  expect(await page.evaluate(() => window.__creation!.deviceBodyCenter('ql1')), 'QL1 is its real model, not the placeholder box').not.toEqual([0, 0.125, 8])
+  test.info().annotations.push({ type: 'CA-24', description: `${w.real().length} requests, 0 cross-origin; Draco: ${DRACO_FILES.join(', ')}` })
+})
+
+test('CA-24 (legacy entry): a level with devices makes no cross-origin request; the decoder comes from /draco/', async ({ page }) => {
+  const w = watch(page)
+  await page.goto('/?level=a1')
+  // the shelf devices are .glb files, most of them Draco-compressed: wait until the decoder has been asked for, and the network is quiet
+  await expect.poll(() => w.real().filter((u) => new URL(u).pathname === DRACO_FILES[0]).length, { message: 'the legacy path asked for the decoder', timeout: 30_000 }).toBeGreaterThan(0)
+  await page.waitForLoadState('networkidle')
+  expect(w.real().filter((u) => u.endsWith('.glb')).length, 'devices were fetched').toBeGreaterThan(0)
+  expectSameOriginDraco(w, new URL(page.url()).origin)
 })
