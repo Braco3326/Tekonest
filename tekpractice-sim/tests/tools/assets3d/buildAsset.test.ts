@@ -1484,6 +1484,61 @@ describe('scripted build (--scripted)', () => {
     expect(report.attempts[0].taskId).toBeUndefined()
   })
 
+  describe('hybrid: --project maps a Meshy picture onto the scripted shape', () => {
+    const box = (over: Partial<AssetSpecT> = {}): AssetSpecT => deviceSpec({ build: { shape: 'rack-box' }, ...over })
+    const hybridDeps = async (spec: AssetSpecT) => {
+      const seen: { face?: string; png?: number[]; projectedFrom?: string } = {}
+      const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+      deps.renderProjection = async (glb, face) => {
+        seen.face = face
+        seen.projectedFrom = glb
+        return { png: new Uint8Array([9, 8, 7]), faceMm: { w: 100, h: 50 } }
+      }
+      deps.runBuilder = async (_spec, outGlb, projection) => {
+        seen.png = projection ? Array.from(projection.png) : undefined
+        if (projection) seen.face = projection.face
+        await writeFile(outGlb, RAW_BYTES)
+      }
+      return { deps, seen }
+    }
+
+    it('renders the face of the fixed Meshy GLB (default io) and hands the picture to the builder; the attempt keeps the task id', async () => {
+      const spec = box()
+      const { deps, seen } = await hybridDeps(spec)
+      const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectFrom: '/some/attempt-1.fixed.glb', rawTaskId: 'task-xyz-123', dryRun: true }, deps)
+      expect(report.ok).toBe(true)
+      expect(seen).toMatchObject({ face: 'io', projectedFrom: '/some/attempt-1.fixed.glb', png: [9, 8, 7] })
+      expect(report.hybrid).toBe(true)
+      expect(report.attempts[0].taskId).toBe('task-xyz-123')
+      expect(calls.create).toHaveLength(0)
+    })
+
+    it('uses the face the spec names in build.projection', async () => {
+      const spec = box({ build: { shape: 'rack-box', projection: 'top' } })
+      const { deps, seen } = await hybridDeps(spec)
+      await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectFrom: '/x.glb', dryRun: true }, deps)
+      expect(seen.face).toBe('top')
+    })
+
+    it('refuses projectFrom without scripted before anything is spent or written', async () => {
+      const spec = box()
+      const { deps } = await hybridDeps(spec)
+      await expect(buildAsset(spec.id, { maxAttempts: 1, projectFrom: '/x.glb', dryRun: true }, deps)).rejects.toThrow(/projectFrom goes with scripted/)
+      expect(calls.create).toHaveLength(0)
+    })
+
+    it('shipping needs the logos assertion (the picture comes from photos), and the manifest says hybrid with the task id and both versions', async () => {
+      const spec = box()
+      await addPhotos(spec.id, ['a.png'])
+      const { deps } = await hybridDeps(spec)
+      await expect(buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectFrom: '/x.glb', rawTaskId: 'task-xyz-123' }, deps)).rejects.toThrow(/logos/)
+      const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectFrom: '/x.glb', rawTaskId: 'task-xyz-123', logosRemoved: true }, (await hybridDeps(spec)).deps)
+      expect(report.ok).toBe(true)
+      const entry = (await readManifest()).assets.find((a) => a.id === spec.id)
+      expect(entry).toMatchObject({ tool: 'hybrid', toolVersion: 'blender-builder-1+meshy-7.1', taskId: 'task-xyz-123', logosRemoved: true, photos: ['a.png'] })
+    })
+  })
+
   it('ship records tool scripted, the builder version, no task, no photos, logosRemoved true without being asked', async () => {
     const spec = jack()
     const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK }))

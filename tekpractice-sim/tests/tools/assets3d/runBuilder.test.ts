@@ -142,3 +142,40 @@ describe('runBuilder (unit, injected exec)', () => {
     expect(existsSync(bad.calls[0].tmp)).toBe(false)
   })
 })
+
+describe('runBuilder with a projection (unit, injected exec)', () => {
+  const boxSpec = (): AssetSpecT => ({
+    id: 'test-rack',
+    kind: 'device',
+    tier: 'hero',
+    realSizeMm: { w: 482.6, h: 88.9, d: 300 },
+    ports: [],
+    controls: [],
+    sources: [],
+    build: { shape: 'rack-box' },
+  })
+
+  it('writes the picture next to plan.json and puts { face, png } in the plan (the picture exists while Blender runs)', async () => {
+    const seen: { exists: boolean; bytes: number[] }[] = []
+    const calls: Call[] = []
+    const exec = async (file: string, args: string[]): Promise<ExecResult> => {
+      const planPath = argAfter(args, '--plan')
+      const plan = JSON.parse(await readFile(planPath, 'utf8')) as { projection?: { face: string; png: string } }
+      calls.push({ file, args, plan, tmp: dirname(planPath) })
+      seen.push({ exists: existsSync(plan.projection!.png), bytes: Array.from(await readFile(plan.projection!.png)) })
+      return { code: 0, stdout: '', stderr: '' }
+    }
+    await runBuilder(boxSpec(), 'out/raw.glb', { exec, blender: 'C:/fake/blender.exe' }, { face: 'io', png: new Uint8Array([1, 2, 3, 4]) })
+    const plan = calls[0].plan as { projection: { face: string; png: string } }
+    expect(plan.projection.face).toBe('io')
+    expect(dirname(plan.projection.png)).toBe(calls[0].tmp)
+    expect(seen[0]).toEqual({ exists: true, bytes: [1, 2, 3, 4] })
+    expect(existsSync(calls[0].tmp)).toBe(false) // cleaned up afterwards
+  })
+
+  it('leaves the plan without a projection key when none is given', async () => {
+    const { exec, calls } = fakeExec()
+    await runBuilder(boxSpec(), 'out/raw.glb', { exec, blender: 'C:/fake/blender.exe' })
+    expect(calls[0].plan).not.toHaveProperty('projection')
+  })
+})

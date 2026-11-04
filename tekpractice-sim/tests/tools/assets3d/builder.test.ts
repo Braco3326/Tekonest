@@ -12,6 +12,7 @@ import { join } from 'node:path'
 import { NodeIO } from '@gltf-transform/core'
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 import draco3d from 'draco3dgltf'
+import sharp from 'sharp'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { buildAsset } from '../../../tools/assets3d/build-asset'
 import { findBlender } from '../../../tools/assets3d/env'
@@ -278,6 +279,53 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 1 } } }
     const { raw } = await expectBuiltTo(spec, 4000)
     expect(raw.triangles).toBeLessThan(100)
+  }, 120_000)
+
+  it.skipIf(!BLENDER)('a projection maps the picture onto the faces that look the same way and gives every other face a palette swatch (one material, one texture, no vertex colours)', async () => {
+    const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 1 } } }
+    // a 400 x 100 px picture: the left half red (200, 30, 30), the right half blue (30, 30, 200)
+    const px = Buffer.alloc(400 * 100 * 3)
+    for (let y = 0; y < 100; y++) for (let x = 0; x < 400; x++) px.set(x < 200 ? [200, 30, 30] : [30, 30, 200], (y * 400 + x) * 3)
+    const png = new Uint8Array(await sharp(px, { raw: { width: 400, height: 100, channels: 3 } }).png().toBuffer())
+    const out = join(dir, 'projected.raw.glb')
+    await runBuilder(spec, out, {}, { face: 'io', png })
+    const doc = await new NodeIO().registerExtensions(ALL_EXTENSIONS).readBinary(new Uint8Array(await readFile(out)))
+    const prims = doc.getRoot().listMeshes().flatMap((m) => m.listPrimitives())
+    expect(doc.getRoot().listMaterials()).toHaveLength(1)
+    const tex = doc.getRoot().listMaterials()[0].getBaseColorTexture()
+    expect(tex, 'no base colour texture').not.toBeNull()
+    expect(prims.every((p) => p.getAttribute('COLOR_0') === null), 'vertex colours left').toBe(true)
+    const { data, info } = await sharp(Buffer.from(tex!.getImage()!)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    const texel = (u: number, v: number): number[] => {
+      const x = Math.min(info.width - 1, Math.floor(u * info.width))
+      const y = Math.min(info.height - 1, Math.floor(v * info.height)) // glTF v runs down the image
+      return Array.from(data.subarray((y * info.width + x) * 3, (y * info.width + x) * 3 + 3))
+    }
+    const near = (a: number[], b: number[]): boolean => a.every((c, i) => Math.abs(c - b[i]) <= 3)
+    const halfDepth = 0.5 * spec.realSizeMm.d * MM
+    let front = 0
+    let swatch = 0
+    for (const prim of prims) {
+      const pos = prim.getAttribute('POSITION')!
+      const uv = prim.getAttribute('TEXCOORD_0')!
+      const nrm = prim.getAttribute('NORMAL')!
+      for (let i = 0; i < pos.getCount(); i++) {
+        const p3 = pos.getElement(i, [0, 0, 0])
+        const n3 = nrm.getElement(i, [0, 0, 0])
+        const t = texel(...(uv.getElement(i, [0, 0]) as [number, number]))
+        if (n3[2] > 0.99 && Math.abs(p3[2] - halfDepth) < 1e-4 && Math.abs(p3[0]) > 0.05) {
+          // a vertex flat on the io face (glTF +z): its UV must show the picture, red on the left (x < 0), blue on the right
+          front++
+          expect(near(t, p3[0] < 0 ? [200, 30, 30] : [30, 30, 200]), 'front vertex x=' + p3[0] + ' got ' + t).toBe(true)
+        } else if (n3[2] < -0.99 || Math.abs(n3[1]) > 0.99) {
+          // the back, top and bottom faces: a swatch, never the picture's red or blue
+          swatch++
+          expect(near(t, [200, 30, 30]) || near(t, [30, 30, 200]), 'a non-projected face shows the picture').toBe(false)
+        }
+      }
+    }
+    expect(front).toBeGreaterThan(0)
+    expect(swatch).toBeGreaterThan(0)
   }, 120_000)
 
   it.skipIf(!BLENDER)('a chamfer larger than half the smallest side exits with BUILD_FAIL naming chamferMm', async () => {

@@ -70,6 +70,7 @@ export const BuildSpec = z.object({
   params: z.record(z.string(), z.number().finite()).optional().describe('Extra shape dimensions in millimetres (names per shape in SHAPE_SPECS). Sizes come from realSizeMm, never from here.'),
   profile: z.array(Station).min(4).optional().describe('Shape revolve only: the lathe profile, at least four [axial mm from the base, diameter mm] stations with strictly increasing positions; first at 0, last at the height, widest = the width.'),
   colours: z.array(ZoneColour).min(1).optional().describe('Shape revolve only: colour zones along the axis (first at 0, strictly increasing), sRGB hex of the real part.'),
+  projection: z.enum(['io', 'opposite', 'top', 'left']).optional().describe('The face that takes its picture from a Meshy model (asset:build --scripted --project <fixed.glb>); default io. The picture is mapped planar onto the scripted faces that look that way.'),
 }).strict().superRefine((b, ctx) => {
   const { profile, colours } = b
   profile?.forEach((st, i) => {

@@ -62,6 +62,8 @@ import type { CompressOpts, TextureOpts } from './compress'
 import { findBlender, redact, requireMeshyKey } from './env'
 import { blankBands } from './blank'
 import { normaliseLook } from './look'
+import { renderProjection } from './projection'
+import type { Projection, ProjectionFace } from './projection'
 import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, runGates, DATA_TEXTURE_MAX_PX, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
@@ -75,6 +77,7 @@ import { createMultiImageTask, downloadGlb, MESHY_MODEL, MeshyError, waitForTask
 import type { MeshyOpts, MeshyTask } from './meshy'
 import { buildPlacement } from './placement'
 import { BUILDER_VERSION, runBuilder } from './runBuilder'
+import type { BuildProjection } from './runBuilder'
 import { runFixup } from './runFixup'
 import type { FixupOpts, FixupReport, YawDeg } from './runFixup'
 import { validateBuild } from './shapes'
@@ -128,7 +131,9 @@ export interface BuildDeps {
   }
   runFixup: (inGlb: string, outGlb: string, spec: AssetSpecT, opts?: FixupOpts) => Promise<FixupReport>
   /** The scripted builder: writes the raw GLB of a spec with a `build` block (default: runBuilder with Blender). */
-  runBuilder: (spec: AssetSpecT, outGlb: string) => Promise<void>
+  runBuilder: (spec: AssetSpecT, outGlb: string, projection?: BuildProjection) => Promise<void>
+  /** The flat image of one face of a fixed-up Meshy model (default: renderProjection with Blender). */
+  renderProjection: (glb: string, face: ProjectionFace) => Promise<Projection>
   compress: (bytes: Uint8Array, opts: CompressOpts) => Promise<Uint8Array>
   /** The texture budget step: runs before `compress`. */
   optimizeTextures: (bytes: Uint8Array, opts: TextureOpts) => Promise<Uint8Array>
@@ -153,8 +158,13 @@ export interface BuildOpts {
   maxAttempts: number
   /** A hand-made raw GLB: no Meshy, one attempt. */
   rawGlb?: string
-  /** With rawGlb: the id of the Meshy task the GLB was downloaded from by hand (CLI --meshy-task); the manifest then records Meshy provenance. */
+  /** With rawGlb or projectFrom: the id of the Meshy task the GLB was downloaded from by hand (CLI --meshy-task); the manifest then records Meshy provenance. */
   rawTaskId?: string
+  /**
+   * With scripted (CLI --project <glb>): a fixed-up Meshy GLB whose picture of the spec's `build.projection` face (default io) is
+   * mapped onto the scripted shape: our exact geometry with Meshy's look. The texture comes from photos, so shipping needs logosRemoved.
+   */
+  projectFrom?: string
   /**
    * Build the raw GLB with our own scripted builder from the spec's `build` block (CLI --scripted): no Meshy, no photos,
    * one attempt, no retry. Excludes rawGlb. Logos are not an issue (no photo texture), so logosRemoved counts as true.
@@ -199,6 +209,8 @@ export interface BuildReport {
   dryRun: boolean
   /** Set (true) when the raw GLB came from the scripted builder. */
   scripted?: true
+  /** Set (true) with scripted when a Meshy picture was projected onto the shape (--project). */
+  hybrid?: true
   /** This run's folder of raw and fixed GLBs: assets-source/<id>/work/<run start time>. */
   workDir: string
   /** Why the build stopped early (scrubbed of the API key). */
@@ -242,7 +254,8 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
       downloadGlb: (task) => downloadGlb(task),
     },
     runFixup: deps.runFixup ?? ((inGlb, outGlb, spec, opts) => runFixup(inGlb, outGlb, spec, opts)),
-    runBuilder: deps.runBuilder ?? ((spec, outGlb) => runBuilder(spec, outGlb)),
+    runBuilder: deps.runBuilder ?? ((spec, outGlb, projection) => runBuilder(spec, outGlb, {}, projection)),
+    renderProjection: deps.renderProjection ?? ((glb, face) => renderProjection(glb, face)),
     compress: deps.compress ?? dracoCompress,
     optimizeTextures: deps.optimizeTextures ?? optimizeTextures,
     loadSpec:
@@ -334,12 +347,14 @@ async function optimizeAndRegate(
   carried: GateResult[],
   spec: AssetSpecT,
   d: Pick<BuildDeps, 'compress' | 'optimizeTextures'>,
+  scripted = false,
 ): Promise<Regate> {
   // A throw from a step or from a re-measurement is not a measured failure: it propagates and aborts the build.
   // Mode Création has no environment map and dim lights: cap the metal and lift the colour map of a textured model (no-op without textures).
   // Brand text and logos of the spec's blank bands are repainted first (on the full-size map), then the look is normalised.
   const clean = spec.texture ? await blankBands(fixed, spec.texture.blankBandsMm ?? [], spec.texture.blankRects ?? []) : fixed
-  const lit = await normaliseLook(clean)
+  // A scripted shape's palette is already lifted by the builder, and a projected picture was lifted when it was rendered: no second lift.
+  const lit = scripted ? clean : await normaliseLook(clean)
   const textured = await d.optimizeTextures(lit, { maxPx: TEXTURE_MAX_PX[spec.tier], dataMaxPx: DATA_TEXTURE_MAX_PX[spec.tier] })
   const bytes = await d.compress(textured, { quantizePositionBits: QUANTIZE_BITS[spec.tier] })
   const compressed = await measure(bytes, spec)
@@ -378,15 +393,18 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
     if (!spec.build) throw new Error(`${id}: no build block in the spec, so it cannot be built with --scripted`)
     const errors = validateBuild(spec)
     if (errors.length > 0) throw new Error(errors.join('; '))
+  } else if (opts.projectFrom) {
+    throw new Error('projectFrom goes with scripted: the picture is mapped onto a scripted shape')
   }
+  const hybrid = scripted && opts.projectFrom !== undefined
   // A yaw of 90 or 270 degrees swaps the model's width and depth after the fix-up has matched them to the spec, so on a
   // footprint that is not square the proportion gate fails the same way on every attempt: refuse before anything is spent.
   const yaw = opts.yawDeg ?? 0
   if ((yaw === 90 || yaw === 270) && Math.abs(spec.realSizeMm.w - spec.realSizeMm.d) / Math.max(spec.realSizeMm.w, spec.realSizeMm.d) > 0.005) {
     throw new Error(`yaw ${yaw} on ${id}: the footprint is non-square (${spec.realSizeMm.w} x ${spec.realSizeMm.d} mm) and this yaw swaps width and depth, so the model could never match the spec (use 0 or 180); nothing was spent`)
   }
-  // A scripted model has no photo texture, so there is no logo to remove.
-  const logosRemoved = scripted || opts.logosRemoved === true
+  // A plain scripted model has no photo texture, so there is no logo to remove; a hybrid carries a Meshy picture made from photos.
+  const logosRemoved = (scripted && !hybrid) || opts.logosRemoved === true
   if (!dryRun && !logosRemoved) {
     throw new Error(`refusing to ship ${id}: shipping writes public/assets and the manifest, and needs the assertion that the textures carry no logos (logosRemoved, the CLI flag --logos-removed)`)
   }
@@ -399,6 +417,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
     rawBytes = new Uint8Array(await readFile(opts.rawGlb))
     // a hand-downloaded Meshy GLB: record the reference photos it was made from (listed, never sent anywhere)
     if (opts.rawTaskId) photos = await d.readPhotos(id)
+  } else if (hybrid && opts.rawTaskId) {
+    photos = await d.readPhotos(id) // the reference photos the Meshy picture was made from (listed in the manifest, never sent)
   } else if (!scripted) {
     photos = await d.readPhotos(id)
     if (photos.length === 0) {
@@ -426,6 +446,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
 
   const report: BuildReport = { id, ok: false, attempts: [], dryRun, workDir: work }
   if (scripted) report.scripted = true
+  if (hybrid) report.hybrid = true
   const maxAttempts = rawBytes || scripted ? 1 : opts.maxAttempts
   const reportText = (): string => scrub(JSON.stringify(report, null, 2)) + '\n'
   /**
@@ -445,7 +466,14 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       const rawPath = join(work, `attempt-${n}.raw.glb`)
       let raw: Uint8Array | null = null
       if (scripted) {
-        await d.runBuilder(spec, rawPath)
+        let projection: BuildProjection | undefined
+        if (opts.projectFrom) {
+          const face = spec.build?.projection ?? 'io'
+          projection = { face, png: (await d.renderProjection(opts.projectFrom, face)).png }
+          if (opts.rawTaskId) attempt.taskId = opts.rawTaskId
+          d.log(`projecting the ${face} face of ${opts.projectFrom}`)
+        }
+        await d.runBuilder(spec, rawPath, projection)
       } else if (rawBytes) {
         raw = rawBytes
         if (opts.rawTaskId) attempt.taskId = opts.rawTaskId
@@ -493,7 +521,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
         throw pipelineDefectError(failed, `attempt ${n}, fixed GLB`, work)
       }
 
-      const result = await optimizeAndRegate(fixed, [drift, ...surface], spec, d)
+      const result = await optimizeAndRegate(fixed, [drift, ...surface], spec, d, scripted)
       attempt.gates = result.ok ? result.shipped.gates : result.gates
       await persist()
       if (!result.ok) {
@@ -520,8 +548,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
             status: 'ok',
             tris: shipped.triangles,
             ports: spec.ports.length,
-            tool: scripted ? 'scripted' : rawBytes && !opts.rawTaskId ? 'raw' : 'meshy',
-            toolVersion: scripted ? BUILDER_VERSION : rawBytes && !opts.rawTaskId ? 'raw' : MESHY_MODEL,
+            tool: hybrid ? 'hybrid' : scripted ? 'scripted' : rawBytes && !opts.rawTaskId ? 'raw' : 'meshy',
+            toolVersion: hybrid ? `${BUILDER_VERSION}+${MESHY_MODEL}` : scripted ? BUILDER_VERSION : rawBytes && !opts.rawTaskId ? 'raw' : MESHY_MODEL,
             date: d.now().toISOString(),
             specSource: spec.sources[0]?.url ?? 'spec',
             logosRemoved,
@@ -574,7 +602,8 @@ export async function shipRun(id: string, runDir: string, opts: ShipRunOpts = {}
   const finalPath = join(dir, 'final.glb')
   if (!existsSync(finalPath)) throw new Error(`no final.glb in ${dir}`)
   const scripted = stored.scripted === true
-  if (!scripted && opts.logosRemoved !== true) {
+  const hybrid = stored.hybrid === true
+  if ((!scripted || hybrid) && opts.logosRemoved !== true) {
     throw new Error(`refusing to ship ${id}: its textures need the assertion that they carry no logos (--logos-removed)`)
   }
 
@@ -601,19 +630,19 @@ export async function shipRun(id: string, runDir: string, opts: ShipRunOpts = {}
       status: 'ok',
       tris: measured.triangles,
       ports: spec.ports.length,
-      tool: scripted ? 'scripted' : taskId ? 'meshy' : 'raw',
-      toolVersion: scripted ? BUILDER_VERSION : taskId ? MESHY_MODEL : 'raw',
+      tool: hybrid ? 'hybrid' : scripted ? 'scripted' : taskId ? 'meshy' : 'raw',
+      toolVersion: hybrid ? `${BUILDER_VERSION}+${MESHY_MODEL}` : scripted ? BUILDER_VERSION : taskId ? MESHY_MODEL : 'raw',
       date: d.now().toISOString(),
       specSource: spec.sources[0]?.url ?? 'spec',
       logosRemoved: true,
-      photos: scripted || !taskId ? [] : (await d.readPhotos(id)).map((ph) => ph.name),
+      photos: (scripted && !hybrid) || !taskId ? [] : (await d.readPhotos(id)).map((ph) => ph.name),
       taskId,
       gates: gates.map((g) => ({ gate: g.gate, ok: g.ok })),
     })
   } catch (e) {
     throw new Error(`the GLB was written to ${target} but the manifest was not updated: ${e instanceof Error ? e.message : String(e)}`)
   }
-  return { id, ok: true, attempts: stored.attempts, dryRun: false, workDir: dir, builtGlb: finalPath, finalGlb: target, ...(scripted ? { scripted: true as const } : {}) }
+  return { id, ok: true, attempts: stored.attempts, dryRun: false, workDir: dir, builtGlb: finalPath, finalGlb: target, ...(scripted ? { scripted: true as const } : {}), ...(hybrid ? { hybrid: true as const } : {}) }
 }
 
 /** A readable gate table per attempt, the credits, and the verdict. */
@@ -683,6 +712,11 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
     else if (a === '--flip') opts.flipUpright = true
     else if (a === '--pilot') pilot = true
     else if (a === '--scripted') opts.scripted = true
+    else if (a === '--project') {
+      const v = argv[++i]
+      if (!v || v.startsWith('--')) return bad('--project needs the fixed-up Meshy .glb whose picture is projected (an earlier run\'s attempt-1.fixed.glb)')
+      opts.projectFrom = v
+    }
     else if (a === '--ship-run') {
       const v = argv[++i]
       if (!v || v.startsWith('--')) return bad('--ship-run needs the run folder (assets-source/<id>/work/<run>)')
@@ -711,7 +745,8 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
     else return bad(`unexpected argument ${a}`)
   }
   if (pilot && (id !== undefined || opts.rawGlb)) return bad('--pilot takes no id and no --raw')
-  if (opts.rawTaskId && !opts.rawGlb) return bad('--meshy-task goes with --raw: it names the Meshy task the raw GLB came from')
+  if (opts.rawTaskId && !opts.rawGlb && !opts.projectFrom) return bad('--meshy-task goes with --raw or --project: it names the Meshy task the GLB came from')
+  if (opts.projectFrom && !opts.scripted) return bad('--project goes with --scripted: the picture is mapped onto a scripted shape')
   if (shipRunDir !== undefined) {
     // Shipping a finished run builds nothing: every flag that shapes a build is meaningless and would be silently ignored.
     const clash = [opts.rawGlb ? '--raw' : '', opts.scripted ? '--scripted' : '', attemptsGiven ? '--attempts' : '', yawGiven ? '--yaw' : '', opts.flipUpright ? '--flip' : '', pilot ? '--pilot' : '', ship ? '--ship' : '', dryRunFlag ? '--dry-run' : ''].filter(Boolean)
@@ -727,7 +762,7 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
   }
   if (!pilot && id === undefined) return bad('an asset id is required')
   if (ship && dryRunFlag) return bad('--ship and --dry-run contradict each other')
-  if (ship && !logosRemoved && !opts.scripted) {
+  if (ship && !logosRemoved && (!opts.scripted || opts.projectFrom)) {
     return bad('--ship is refused without --logos-removed: open the textures, make sure no brand logo is left, then pass --ship --logos-removed (the manifest records logosRemoved: true)')
   }
   opts.dryRun = !ship
