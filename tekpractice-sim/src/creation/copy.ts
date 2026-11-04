@@ -203,7 +203,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** L1: the neutral blank room card. */
     blank: 'Salle vide neutre',
     /** Under the title; also the grids' description. */
-    hint: 'Cliquez un lieu pour l’ouvrir (ou flèches puis Entrée).',
+    hint: 'Choisissez un lieu pour l’ouvrir : clic, ou flèches puis Entrée.',
     /** One line under « Modèles » (night wave 2, E): what a template is. */
     templatesPitch: 'Un lieu avec son matériel déjà posé : le plus simple pour commencer.',
     /** Plan legend under the hint (the thumbnails: seen from the audience, stage at the top). */
@@ -324,7 +324,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Status bar after the autosave was reopened at start. */
     restored: 'Travail de la dernière séance rouvert.',
     /** Said once, after a saved project is reopened (autosave or « Ouvrir… »), when it holds active gear that needs power and no power strip at all. */
-    noMains: 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » du tiroir) et branchez-y les appareils.',
+    noMains: 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » de l’inventaire) et branchez-y les appareils.',
     /** Name dialog (Ctrl+S the first time, « Enregistrer sous… »). Entrée enregistre. */
     nameTitle: 'Enregistrer le projet',
     nameTitleAs: 'Enregistrer sous',
@@ -488,12 +488,12 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     pin: 'Épingler {name}',
     pinned: 'Point épinglé ({x} m ; {z} m) : {value}',
     unpin: 'Retirer l’épingle',
-    pinHint: 'Cliquez un point coloré dans la vue 3D pour épingler son niveau.',
+    pinHint: 'Cliquez sur un point coloré dans la vue 3D pour épingler son niveau.',
     probeAbove: 'Un point nommé peut dépasser 0 dB : l’échelle est celle de la grille.',
     splPending: '≈ dB SPL estimé : non calculé (estimation pédagogique, formule non sourcée).',
     computing: 'Calcul de la couverture…',
     failed: 'Calcul de la couverture indisponible (réessayez).',
-    hiddenFolded: 'Couverture masquée : Propriétés est replié.',
+    hiddenFolded: 'Couverture masquée : le panneau Propriétés est replié. Dépliez-le pour la revoir.',
     noAudience: 'Pas de public dans ce lieu : aucune zone public ni régie à couvrir. Rien à calculer.',
     noSource: 'Aucune enceinte audible : {reason}',
     reasonNotFed: 'aucune enceinte ne reçoit de signal ({why})',
@@ -547,9 +547,9 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Title of the closed `<details>` that holds the rest of the limits. */
     limitsTitle: 'Limites de la simulation',
     /** In the details, first: what acts on the sound, and what the volume does (the second half of the former « simple »). */
-    limitsMore: 'Le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Pas non plus de fuite d’un canal dans l’autre (diaphonie).',
+    limitsMore: 'Le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Pas de diaphonie (fuite d’un canal dans l’autre).',
     /** In the details, second: the limits of the numbers and of the ears. */
-    limits: 'Le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle). L’origine d’une enceinte est son point de pose. Déplacer l’auditeur fait glisser le retard et peut faire varier la hauteur du son ; ce n’est pas un vrai effet Doppler (celui d’un son qui passe devant vous). Il n’y a pas de vumètre de console, seulement un niveau par enceinte. On écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur) ou la caméra de marche, qui écoute à sa place pendant la marche.',
+    limits: 'Le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle). L’origine d’une enceinte est son point de pose. Déplacer l’auditeur fait glisser le retard et peut faire varier la hauteur du son ; ce n’est pas un effet Doppler simulé. Il n’y a pas de vumètre de console, seulement un niveau par enceinte. On écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur) ou la caméra de marche, qui écoute à sa place pendant la marche.',
     volume: 'Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin.',
     fileLocal: 'Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré.',
     fileInputName: 'Choisir un fichier audio',
@@ -770,7 +770,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   /** Feedback on a click that hit nothing (Task 25, CA-12). {key} = the inventory key label. */
   feedback: {
     /** Toast (`role="status"`, 2.5 s) after a click on the empty floor, the sky or a hidden device; the selection is cleared. */
-    missed: 'Rien ici : clique un appareil ou ouvre l’inventaire ({key}).',
+    missed: 'Rien ici : cliquez sur un appareil ou ouvrez l’inventaire ({key}).',
   },
   /** Click-to-patch on the scene's ports (Task 26, CA-19, CA-20). {a} / {b} / {port} / {other} = « Appareil · prise ». */
   patch: {
@@ -781,7 +781,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Libellé de l’entrée d’historique d’un débranchement. */
     entryUnplug: 'Débrancher {a} de {b}',
     /** Barre d’état après le clic sur la première prise (annoncé). */
-    statusPending: '{port} choisie. Cliquez une prise verte pour brancher le câble, Échap pour annuler.',
+    statusPending: '{port} choisie. Cliquez sur une prise verte pour brancher le câble, Échap pour annuler.',
     /** Barre d’état après Échap ou un second clic sur la même prise (annoncé). */
     statusCancelled: 'Câblage annulé.',
     /** Barre d’état après un branchement réussi (annoncé) ; {undo} = touche d’annulation. */

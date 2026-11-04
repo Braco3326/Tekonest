@@ -439,7 +439,7 @@ test('(l) folding Propriétés hides the dots, the hatched dots and the aim line
   await page.getByRole('menuitem', { name: 'Écoute' }).click()
   await expect(coverageItem(page)).toHaveAttribute('aria-checked', 'true')
   await page.keyboard.press('Escape')
-  await expect(page.getByRole('status')).toHaveText('Couverture masquée : Propriétés est replié.')
+  await expect(page.getByRole('status')).toHaveText('Couverture masquée : le panneau Propriétés est replié. Dépliez-le pour la revoir.')
   // a click over where a dot is does not pin while the legend is out of sight
   const at = await freeDot(page)
   await page.mouse.click(at.x, at.y)

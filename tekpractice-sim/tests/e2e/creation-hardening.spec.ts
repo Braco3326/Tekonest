@@ -427,7 +427,7 @@ test('item 5: a dialog with no compatible port opens with aria-expanded false', 
 
 // ── Item 7 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-const NO_MAINS = 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » du tiroir) et branchez-y les appareils.'
+const NO_MAINS = 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » de l’inventaire) et branchez-y les appareils.'
 const statusMsg = (page: Page) => page.locator('.cr-status-msg')
 const AUTOSAVE_KEY = 'audio-sim/creation.v1'
 

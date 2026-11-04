@@ -86,7 +86,7 @@ test.describe('picker (E)', () => {
 
   test('E: the hint says the click first, and one line under « Modèles » says what a template is', async ({ page }) => {
     await boot(page)
-    await expect(page.locator('.cr-pick-hint')).toHaveText('Cliquez un lieu pour l’ouvrir (ou flèches puis Entrée).')
+    await expect(page.locator('.cr-pick-hint')).toHaveText('Choisissez un lieu pour l’ouvrir : clic, ou flèches puis Entrée.')
     const pitch = page.getByTestId('template-pitch')
     await expect(pitch).toHaveText('Un lieu avec son matériel déjà posé : le plus simple pour commencer.')
     // wave 2c: the pitch describes the template grid (with the hint), the place grid keeps the hint alone

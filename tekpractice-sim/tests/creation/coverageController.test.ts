@@ -376,7 +376,7 @@ describe('folding Propriétés hides the layer (the legend, the unit and the cav
     r.propsChanged()
     expect(r.layers[0].visible).toBe(false)
     expect(r.c.debug()).toMatchObject({ on: true, hidden: true, meshes: [] }) // the toggle stays on
-    expect(r.announced.filter((m) => m === 'Couverture masquée : Propriétés est replié.')).toHaveLength(1)
+    expect(r.announced.filter((m) => m === 'Couverture masquée : le panneau Propriétés est replié. Dépliez-le pour la revoir.')).toHaveLength(1)
     vi.advanceTimersByTime(3000)
     expect(jobsOf(r)).toBe(1)
     r.state.propsOpen = true
@@ -406,7 +406,7 @@ describe('folding Propriétés hides the layer (the legend, the unit and the cav
     r.workers[0].answer(r.workers[0].jobs[1])
     expect(r.layers[0].shows).toBe(2) // the buffers are current, the meshes still hidden
     expect(r.layers[0].visible).toBe(false)
-    expect(r.announced.at(-1)).toBe('Couverture masquée : Propriétés est replié.') // a result while folded does not replace the hidden message
+    expect(r.announced.at(-1)).toBe('Couverture masquée : le panneau Propriétés est replié. Dépliez-le pour la revoir.') // a result while folded does not replace the hidden message
     r.state.propsOpen = true
     r.propsChanged()
     expect(r.layers[0].visible).toBe(true)
@@ -422,7 +422,7 @@ describe('folding Propriétés hides the layer (the legend, the unit and the cav
     vi.advanceTimersByTime(150)
     r.workers[0].answer(r.workers[0].jobs[0])
     expect(r.c.debug()).toMatchObject({ status: 'ready', hidden: true, meshes: [] })
-    expect(r.announced.filter((m) => m === 'Couverture masquée : Propriétés est replié.')).toHaveLength(1)
+    expect(r.announced.filter((m) => m === 'Couverture masquée : le panneau Propriétés est replié. Dépliez-le pour la revoir.')).toHaveLength(1)
     expect(r.announced.some((m) => m.startsWith('Couverture calculée'))).toBe(false)
     r.state.propsOpen = true
     r.propsChanged()
