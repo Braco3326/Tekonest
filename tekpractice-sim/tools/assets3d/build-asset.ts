@@ -336,7 +336,7 @@ async function optimizeAndRegate(
   // A throw from a step or from a re-measurement is not a measured failure: it propagates and aborts the build.
   // Mode Création has no environment map and dim lights: cap the metal and lift the colour map of a textured model (no-op without textures).
   // Brand text and logos of the spec's blank bands are repainted first (on the full-size map), then the look is normalised.
-  const clean = spec.texture ? await blankBands(fixed, spec.texture.blankBandsMm) : fixed
+  const clean = spec.texture ? await blankBands(fixed, spec.texture.blankBandsMm ?? [], spec.texture.blankRects ?? []) : fixed
   const lit = await normaliseLook(clean)
   const textured = await d.optimizeTextures(lit, { maxPx: TEXTURE_MAX_PX[spec.tier], dataMaxPx: DATA_TEXTURE_MAX_PX[spec.tier] })
   const bytes = await d.compress(textured, { quantizePositionBits: QUANTIZE_BITS[spec.tier] })

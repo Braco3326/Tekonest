@@ -129,6 +129,15 @@ describe('AssetSpec texture block (blank bands)', () => {
     expect(s.success).toBe(true)
   })
 
+  it('accepts rectangles on a face, alone or with bands, and rejects a texture block with neither', () => {
+    const rect = { face: 'io', xMm: 10, yMm: 20, wMm: 30, hMm: 15 }
+    expect(AssetSpec.safeParse({ ...base(), texture: { blankRects: [rect, { ...rect, face: 'opposite', depthMm: 60, marginMm: 12, fill: '#202020' }] } }).success).toBe(true)
+    expect(AssetSpec.safeParse({ ...base(), texture: { blankBandsMm: [{ fromMm: 1, toMm: 5 }], blankRects: [rect] } }).success).toBe(true)
+    expect(AssetSpec.safeParse({ ...base(), texture: {} }).success).toBe(false)
+    expect(AssetSpec.safeParse({ ...base(), texture: { blankRects: [{ ...rect, wMm: 0 }] } }).success).toBe(false)
+    expect(AssetSpec.safeParse({ ...base(), texture: { blankRects: [{ ...rect, face: 'front' }] } }).success).toBe(false)
+  })
+
   it('rejects an empty list, an inverted or negative band, a bad fill and an unknown key', () => {
     const bad = (texture: unknown) => AssetSpec.safeParse({ ...base(), texture }).success
     expect(bad({ blankBandsMm: [] })).toBe(false)

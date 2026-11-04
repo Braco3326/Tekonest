@@ -101,3 +101,61 @@ describe('blankBands', () => {
     expect(Buffer.from(a).equals(Buffer.from(b))).toBe(true)
   })
 })
+
+/** A 100 x 60 x 40 mm box seen as three triangles, each with its own UV stripe: A and B on the io face, C on the opposite face. */
+async function faceGlb(): Promise<Uint8Array> {
+  const doc = new Document()
+  const buffer = doc.createBuffer()
+  const px = Buffer.alloc(16 * 16 * 3)
+  const colours: Rgb[] = [RED, BLUE, GREY, [10, 200, 10]]
+  for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) px.set(colours[Math.floor(x / 4)], (y * 16 + x) * 3)
+  const png = new Uint8Array(await sharp(px, { raw: { width: 16, height: 16, channels: 3 } }).png().toBuffer())
+  const mat = doc.createMaterial('m').setBaseColorTexture(doc.createTexture('baseColor').setImage(png).setMimeType('image/png'))
+  const pos: number[] = []
+  const uv: number[] = []
+  // io face is z = +d/2 = +20 mm, x_world = x_local - 50 mm. A at local (20, 30), B at (80, 30); C on the opposite face (z = -20 mm)
+  const tri = (cx: number, cy: number, z: number, stripe: number): void => {
+    const x0 = (cx - 50) * MM
+    pos.push(x0 - 2 * MM, (cy - 2) * MM, z * MM, x0 + 2 * MM, (cy - 2) * MM, z * MM, x0, (cy + 3) * MM, z * MM)
+    const u0 = (stripe * 4 + 0.5) / 16
+    const u1 = (stripe * 4 + 3.5) / 16
+    uv.push(u0, 0.1, u1, 0.1, (u0 + u1) / 2, 0.9)
+  }
+  tri(20, 30, 20, 0)
+  tri(80, 30, 20, 1)
+  tri(20, 30, -20, 2)
+  // two corner points make the box extents: 100 x 60 x 40 mm
+  pos.push(-50 * MM, 0, -20 * MM, 50 * MM, 60 * MM, 20 * MM, 50 * MM, 60 * MM, 20 * MM)
+  uv.push(0.9, 0.9, 0.9, 0.9, 0.9, 0.9)
+  const prim = doc.createPrimitive().setMaterial(mat)
+    .setAttribute('POSITION', doc.createAccessor().setType('VEC3').setArray(new Float32Array(pos)).setBuffer(buffer))
+    .setAttribute('TEXCOORD_0', doc.createAccessor().setType('VEC2').setArray(new Float32Array(uv)).setBuffer(buffer))
+  doc.createScene('s').addChild(doc.createNode('root').setMesh(doc.createMesh('mesh').addPrimitive(prim)))
+  return new NodeIO().writeBinary(doc)
+}
+
+describe('blankBands rects (a logo on a face, in the spec face-local millimetres)', () => {
+  it('repaints only the faces of the rectangle on the given face', async () => {
+    const out = await blankBands(await faceGlb(), [], [{ face: 'io', xMm: 10, yMm: 20, wMm: 20, hMm: 20, fill: '#00ff00' }])
+    expect(await stripe(out, 0)).toEqual([0, 255, 0]) // A: inside
+    expect(await stripe(out, 1)).toEqual(BLUE) // B: another x
+    expect(await stripe(out, 2)).toEqual(GREY) // C: the opposite face, same x and y
+  })
+
+  it('the opposite face is mirrored (x runs the other way seen from outside)', async () => {
+    // C sits at world x = -30 mm; seen from the back, local x = w/2 - x_world = 50 + 30 = 80
+    const out = await blankBands(await faceGlb(), [], [{ face: 'opposite', xMm: 70, yMm: 20, wMm: 20, hMm: 20, fill: '#00ff00' }])
+    expect(await stripe(out, 2)).toEqual([0, 255, 0])
+    expect(await stripe(out, 0)).toEqual(RED)
+  })
+
+  it('refuses a rectangle that covers no face', async () => {
+    await expect(blankBands(await faceGlb(), [], [{ face: 'io', xMm: 40, yMm: 0, wMm: 10, hMm: 10, fill: '#000000' }])).rejects.toThrow(/covers no face/)
+  })
+
+  it('the automatic fill takes the median colour of the faces just around the rectangle on that face', async () => {
+    // A is blanked; B (60 mm to the right, 20 mm margin is not enough) -> a wide margin rect: sample B by asking for a rect around A with margin
+    const out = await blankBands(await faceGlb(), [], [{ face: 'io', xMm: 10, yMm: 20, wMm: 20, hMm: 20, marginMm: 70 }])
+    expect(await stripe(out, 0)).toEqual(BLUE)
+  })
+})

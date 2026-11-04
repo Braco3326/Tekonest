@@ -88,9 +88,23 @@ const BlankBand = z.object({
   fill: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'fill must be #rrggbb').optional().describe('Colour of the repainted texels; absent = the median colour of the faces just outside the band.'),
 }).strict().refine((b) => b.toMm > b.fromMm, { message: 'a band must have toMm greater than fromMm' })
 
+/** A rectangle on a face of a textured model whose printing is repainted: face-local millimetres, like the ports. */
+const BlankRect = z.object({
+  face: Face,
+  xMm: CoordMm,
+  yMm: CoordMm,
+  wMm: PositiveMm,
+  hMm: PositiveMm,
+  depthMm: PositiveMm.optional().describe('How far behind the face plane a covered face may lie (default 40, at most 40 percent of the casing thickness): a logo on a recessed plate.'),
+  marginMm: PositiveMm.optional().describe('Width of the ring around the rectangle that the automatic fill samples (default 8).'),
+  fill: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'fill must be #rrggbb').optional().describe('Colour of the repainted texels; absent = the median colour of the faces just around the rectangle.'),
+}).strict()
+
 export const TextureSpec = z.object({
-  blankBandsMm: z.array(BlankBand).min(1).describe('Height bands, in millimetres from the base of the upright model, where the colour map is repainted: removes brand text and logos from a Meshy model.'),
-}).strict().describe('Optional: how the colour map of a textured (Meshy) model is cleaned.')
+  blankBandsMm: z.array(BlankBand).min(1).optional().describe('Height bands, in millimetres from the base of the upright model, where the colour map is repainted: removes brand text and logos that run around a mic or a stand.'),
+  blankRects: z.array(BlankRect).min(1).optional().describe('Rectangles on a face (face-local millimetres, like the ports) where the colour map is repainted: removes a logo on a panel.'),
+}).strict().refine((t) => t.blankBandsMm !== undefined || t.blankRects !== undefined, { message: 'a texture block needs blankBandsMm or blankRects' })
+  .describe('Optional: how the colour map of a textured (Meshy) model is cleaned.')
 
 export const AssetSpec = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'spec id must be a kebab-case slug'),
