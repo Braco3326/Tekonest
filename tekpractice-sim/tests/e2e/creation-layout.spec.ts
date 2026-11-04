@@ -138,3 +138,50 @@ test('axe with a place on screen and a menu open', async ({ page }) => {
   const res = await new AxeBuilder({ page }).analyze()
   expect(res.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical')).toEqual([])
 })
+
+// ── Night 2 wave 5, P3-7: axe `region` (moderate) on every Mode Création screen: the visually hidden h1 sat outside every landmark ───────────────────────
+// Found live (moderate, every screen, the h1 the only node). It is now the first child of the header landmark: still first in the DOM (heading order), the skip link's target unchanged.
+const landmarkRegion = async (page: Page): Promise<string[]> =>
+  (await new AxeBuilder({ page }).withRules(['region']).analyze()).violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(' | ')}`)
+
+test('P3-7: axe reports no `region` violation on the picker, on the loaded place, and with the drawer or a dialog open', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await boot(page)
+  await expect(page.getByTestId('place-picker')).toBeVisible()
+  expect(await landmarkRegion(page), 'the picker').toEqual([])
+  await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
+  expect(await landmarkRegion(page), 'the loaded place').toEqual([])
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Space')
+  await expect(page.getByTestId('inventory-drawer')).toBeVisible()
+  expect(await landmarkRegion(page), 'the drawer open').toEqual([])
+  await page.keyboard.press('Escape')
+  await page.keyboard.press('Control+s')
+  await expect(page.getByTestId('cr-name-dialog')).toBeVisible()
+  expect(await landmarkRegion(page), 'a dialog open').toEqual([])
+})
+
+test('P3-7: the h1 is inside the header landmark, first in the page, and the skip link still lands on the 3D view', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
+  const h1 = page.locator('h1')
+  await expect(h1).toHaveCount(1)
+  await expect(h1).toHaveText('TekPractice, Mode Création')
+  expect(await h1.evaluate((e) => e.closest('header') === document.querySelector('[data-testid="menubar"]'))).toBe(true)
+  // heading order: the h1 comes before every other heading of the page
+  const order = await page.evaluate(() => [...document.querySelectorAll('h1, h2, h3')].map((h) => h.tagName))
+  expect(order[0]).toBe('H1')
+  expect(order.filter((t) => t === 'H1')).toHaveLength(1)
+  // it takes no room in the bar (visually hidden, not a flex item of the layout) and stays out of the way of the menus
+  const bar = (await page.getByTestId('menubar').boundingBox())!
+  expect(bar.height).toBe(32)
+  expect(await h1.evaluate((e) => getComputedStyle(e).position), 'out of the flex flow of the bar (no gap, no width taken)').toBe('absolute')
+  const brand = (await page.locator('.cr-brand').boundingBox())!
+  expect(brand.x, 'the brand is the first thing in the bar (12 px padding)').toBeCloseTo(12, 0)
+  await page.keyboard.press('Tab')
+  await expect(page.getByTestId('skip-link')).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('#renderCanvas')).toBeFocused()
+})

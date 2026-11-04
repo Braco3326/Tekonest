@@ -77,9 +77,9 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   const root = el(doc, 'div', 'cr')
   root.id = 'creation-root'
   root.dataset.testid = 'creation-root'
-  // The page's h1 (Task 7 review): visually hidden, panels and the picker use h2.
+  // The page's h1 (Task 7 review): visually hidden, panels and the picker use h2. It is the first thing INSIDE the header landmark (night 2 wave 5, P3-7: outside every
+  // landmark it was the one node axe's `region` rule flagged on every screen); it stays first in the DOM, so the heading order and the skip link's target do not change.
   const h1 = el(doc, 'h1', 'cr-sr-only', S().appTitle)
-  root.appendChild(h1)
 
   // ── header: brand, menus, project title, back to the site
   const menubar = el(doc, 'header', 'cr-menubar')
@@ -90,7 +90,7 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   menus.setAttribute('aria-label', S().menubar!)
   const title = el(doc, 'span', 'cr-title', S().untitled)
   title.dataset.testid = 'project-title'
-  menubar.append(brand, menus, title)
+  menubar.append(h1, brand, menus, title)
   const site = doc.getElementById('site-link')
   if (site instanceof HTMLAnchorElement) {
     // One link, visible name = accessible name (no aria-label mismatch).
