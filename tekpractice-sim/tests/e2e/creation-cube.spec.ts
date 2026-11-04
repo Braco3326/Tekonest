@@ -269,3 +269,64 @@ test('the Ambre hover patch reads ≥ 3:1 against the cube body on the rendered 
   console.log(`[cube hover] body rgb(${body.map(Math.round)}) hover rgb(${lit.map(Math.round)}) contrast ${ratio.toFixed(2)}:1`)
   expect(ratio).toBeGreaterThanOrEqual(3)
 })
+
+// ── Night 2 wave 5, P3-2: the cube's 120 x 120 hit square swallowed clicks in its empty corners ───────────────────────────────────────────────
+// Measured live: at 5 corner points `cubeZoneAt` returned null, yet the element on top was the cube layer; a port drawn under it (k12-g in-line-a) could not be clicked. The layer is
+// now clipped to the cube's silhouette (the hull of its eight corners, updated with the pose): outside it a press goes to the canvas, inside it nothing changes.
+test('P3-2: a device drawn under an empty corner of the cube square can be clicked; the cube itself still takes its own clicks', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.cubeZoneScreenPoint('dessus')) // from above the floor is seen everywhere under the square
+  await waitRendersIdle(page)
+  const r = await page.evaluate(() => window.__creation!.cubeRect())
+  const corner = { x: r.x + 4, y: r.y + 4 }
+  expect(await page.evaluate((p) => window.__creation!.cubeZoneAt(p.x, p.y), corner), 'the corner of the square misses the cube (the test means something)').toBeNull()
+  // the floor point under that pixel: two Newton steps on the screen map (top view: nearly linear)
+  const at = (x: number, z: number) => page.evaluate((p) => window.__creation!.worldScreen([p.x, 0, p.z]), { x, z })
+  let w = { x: 0, z: 0 }
+  for (let i = 0; i < 3; i++) {
+    const s = (await at(w.x, w.z))!
+    const sx = (await at(w.x + 1, w.z))!
+    const sz = (await at(w.x, w.z + 1))!
+    const a = sx.x - s.x, b = sz.x - s.x, c = sx.y - s.y, d = sz.y - s.y
+    const det = a * d - b * c
+    const ex = corner.x - s.x, ey = corner.y - s.y
+    w = { x: w.x + (d * ex - b * ey) / det, z: w.z + (-c * ex + a * ey) / det }
+  }
+  const landed = (await at(w.x, w.z))!
+  expect(Math.hypot(landed.x - corner.x, landed.y - corner.y), 'a floor point under the corner pixel').toBeLessThan(2)
+  expect((await page.evaluate((p) => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'corner-ql1', position: [p.x, 0, p.z] }), w)).ok).toBe(true)
+  await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+  await waitRendersIdle(page)
+  const cv = (await page.locator('#renderCanvas').boundingBox())!
+  expect(await page.evaluate((p) => window.__creation!.pickAt(p.x, p.y), { x: corner.x - cv.x, y: corner.y - cv.y }), 'a click on the canvas there would pick it (pickAt takes canvas px)').toBe('corner-ql1')
+  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
+  expect(await page.evaluate((p) => document.elementFromPoint(p.x, p.y)?.id, corner), 'the canvas is what is under the corner').toBe('renderCanvas')
+  await page.mouse.click(corner.x, corner.y)
+  await expect.poll(() => page.evaluate(() => window.__creation!.selection()), 'the click reached the canvas').toBe('corner-ql1')
+  // inside the cube nothing changed: its centre is the cube layer and a click there still turns the camera to that zone
+  const centre = { x: r.x + r.width / 2, y: r.y + r.height / 2 }
+  expect(await page.evaluate((p) => document.elementFromPoint(p.x, p.y)?.getAttribute('data-testid'), centre)).toBe('view-cube')
+})
+
+test('P3-2: the cube layer follows the silhouette from every pose: its centre and the middle of every zone patch are the cube, every point the square misses is the canvas', async ({ page }) => {
+  await boot(page)
+  for (const id of ['face', 'dessus', 'droite', 'dessus-face-droite', 'arriere-gauche']) {
+    await page.evaluate((z) => window.__creation!.cubeZoneScreenPoint(z), id)
+    await waitRendersIdle(page)
+    const bad = await page.evaluate(() => {
+      const c = window.__creation!
+      const r = c.cubeRect()
+      const wrong: string[] = []
+      for (let y = r.y + 1; y < r.y + r.height; y += 3)
+        for (let x = r.x + 1; x < r.x + r.width; x += 3) {
+          const zone = c.cubeZoneAt(x, y)
+          const top = document.elementFromPoint(x, y)?.getAttribute('data-testid') === 'view-cube'
+          if (zone && !top) wrong.push(`${Math.round(x)},${Math.round(y)} ${zone} not the cube layer`)
+          if (!zone && top) wrong.push(`${Math.round(x)},${Math.round(y)} no zone but the cube layer`)
+        }
+      return wrong
+    })
+    // a point right on the silhouette edge may fall either way by a pixel: allow a thin band, never a region
+    expect(bad.length, `${id}: ${bad.slice(0, 6).join(' | ')}`).toBeLessThan(40)
+  }
+})

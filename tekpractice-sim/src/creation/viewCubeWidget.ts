@@ -122,6 +122,28 @@ function unlit(name: string, scene: Scene, color: string): StandardMaterial {
   return m
 }
 
+/** Andrew's monotone chain: the convex hull of a few points (the cube's eight corners on screen). */
+export function convexHull(points: readonly { x: number; y: number }[]): { x: number; y: number }[] {
+  const p = [...points].sort((a, b) => a.x - b.x || a.y - b.y)
+  if (p.length < 3) return p
+  const cross = (o: { x: number; y: number }, a: { x: number; y: number }, b: { x: number; y: number }): number => (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x)
+  const half = (list: { x: number; y: number }[]): { x: number; y: number }[] => {
+    const h: { x: number; y: number }[] = []
+    for (const q of list) {
+      while (h.length >= 2 && cross(h[h.length - 2], h[h.length - 1], q) <= 1e-9) h.pop()
+      h.push(q)
+    }
+    h.pop()
+    return h
+  }
+  return [...half(p), ...half([...p].reverse())]
+}
+/** A CSS clip-path for a polygon in px (relative to the layer's own box). */
+export function clipPolygon(hull: readonly { x: number; y: number }[]): string {
+  const r = (n: number): number => Math.round(n * 10) / 10
+  return `polygon(${hull.map((q) => `${r(q.x)}px ${r(q.y)}px`).join(', ')})`
+}
+
 /** What the shell does for the cube's buttons and clicks (Task 21 review, brief §3). */
 export interface CubeHooks {
   /** ↺ (−1) / ↻ (+1): a quarter turn of the view. */
@@ -294,6 +316,7 @@ export class ViewCubeWidget {
     this.tools = tools
     this.canvas?.parentElement?.appendChild(tools)
     this.layout()
+    this.updateShape()
     bag.observe(engine.onResizeObservable, () => this.layout())
     if (typeof window !== 'undefined' && typeof window.addEventListener === 'function')
       bag.listen(window, 'resize', () => this.layout())
@@ -450,11 +473,42 @@ export class ViewCubeWidget {
     return m
   }
 
+  /** The pose the hit shape was computed for (NaN = none yet) and the shape (night 2 wave 5, P3-2). */
+  private shapeAlpha = Number.NaN
+  private shapeBeta = Number.NaN
+  private shapeSize = 0
+  private shape = ''
+
   /** The cube turns exactly like the room. */
   private sync(): void {
     if (this.disposed) return
     this.cubeCam.alpha = this.main.alpha
     this.cubeCam.beta = this.main.beta
+    this.updateShape()
+  }
+
+  /**
+   * P3-2: the pointer layer only takes the presses that land ON the cube. Its square is 120 px, the cube's silhouette (a convex solid: the hull of its eight corners as the cube
+   * camera draws them) leaves the corners empty; a clip-path of that hull keeps the corners out of the layer's hit test, so a press there goes to the canvas (a port, a device, the
+   * orbit drag) and nothing the cube does changes. Recomputed only when the pose or the square's size changed: it is not per-frame work.
+   */
+  private updateShape(): void {
+    const cam = this.cubeCam
+    const size = this.sizePx()
+    if (cam.alpha === this.shapeAlpha && cam.beta === this.shapeBeta && size === this.shapeSize) return
+    this.shapeAlpha = cam.alpha
+    this.shapeBeta = cam.beta
+    this.shapeSize = size
+    const vp = cam.getViewMatrix().multiply(cam.getProjectionMatrix())
+    const pts: { x: number; y: number }[] = []
+    for (const x of [-0.5, 0.5]) for (const y of [-0.5, 0.5]) for (const z of [-0.5, 0.5]) {
+      const n = Vector3.TransformCoordinates(v3(cubeToWorld({ x, y, z })), vp) // NDC: x right, y up
+      pts.push({ x: ((n.x + 1) / 2) * size, y: ((1 - n.y) / 2) * size })
+    }
+    const next = clipPolygon(convexHull(pts))
+    if (next === this.shape) return
+    this.shape = next
+    this.hitElement.style.clipPath = next
   }
 
   /** Square size and place: 16 px from the viewport's top-left; the camera viewport follows the canvas. */

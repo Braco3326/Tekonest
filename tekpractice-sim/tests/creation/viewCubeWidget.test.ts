@@ -5,7 +5,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ArcRotateCamera, Camera, NullEngine, Scene, Vector3, VertexBuffer } from '@babylonjs/core'
-import { ViewCubeWidget, type CubeHooks } from '../../src/creation/viewCubeWidget'
+import { ViewCubeWidget, clipPolygon, convexHull, type CubeHooks } from '../../src/creation/viewCubeWidget'
 import { CUBE_LAYER, cubeToWorld } from '../../src/creation/viewCubeGeometry'
 import { RenderScheduler } from '../../src/creation/renderScheduler'
 import { CameraRig } from '../../src/scene/CameraRig'
@@ -283,5 +283,81 @@ describe('ViewCubeWidget (Task 17)', () => {
     expect((cube.hitElement as unknown as { removed: boolean }).removed).toBe(true)
     expect((cube.caption as unknown as { removed: boolean }).removed).toBe(true)
     cube.dispose() // idempotent
+  })
+})
+
+describe('the hit shape (night 2 wave 5, P3-2: the corners of the square are not the cube)', () => {
+  it('convexHull: the corners of a square with points inside keep four; collinear points are dropped; fewer than three come back as they are', () => {
+    const hull = convexHull([{ x: 0, y: 0 }, { x: 10, y: 0 }, { x: 10, y: 10 }, { x: 0, y: 10 }, { x: 5, y: 5 }, { x: 5, y: 0 }, { x: 2, y: 3 }])
+    expect(hull.length).toBe(4)
+    expect(new Set(hull.map((p) => `${p.x},${p.y}`))).toEqual(new Set(['0,0', '10,0', '10,10', '0,10']))
+    expect(convexHull([{ x: 1, y: 2 }])).toEqual([{ x: 1, y: 2 }])
+    expect(convexHull([])).toEqual([])
+  })
+
+  it('clipPolygon writes a CSS polygon in px, one decimal at most', () => {
+    expect(clipPolygon([{ x: 0, y: 0 }, { x: 10.04, y: 0 }, { x: 5, y: 7.26 }])).toBe('polygon(0px 0px, 10px 0px, 5px 7.3px)')
+  })
+
+  it('the layer is clipped to the silhouette of the cube from the first frame, inside its own square, and a corner of the square is outside it', () => {
+    const { cube } = setup()
+    const style = (cube.hitElement as unknown as FakeEl).style as Record<string, string>
+    expect(style.clipPath).toMatch(/^polygon\(/)
+    const pts = [...style.clipPath.matchAll(/(-?[\d.]+)px (-?[\d.]+)px/g)].map((m) => ({ x: Number(m[1]), y: Number(m[2]) }))
+    expect(pts.length).toBeGreaterThanOrEqual(4)
+    expect(pts.length).toBeLessThanOrEqual(8)
+    for (const p of pts) {
+      expect(p.x, 'inside the 120 px square').toBeGreaterThanOrEqual(-0.5)
+      expect(p.x).toBeLessThanOrEqual(120.5)
+      expect(p.y).toBeGreaterThanOrEqual(-0.5)
+      expect(p.y).toBeLessThanOrEqual(120.5)
+    }
+    // the cube is a hexagon-like solid from a corner pose: its hull does not reach the square's four corners
+    const inside = (x: number, y: number): boolean => {
+      let c = false
+      for (let i = 0, j = pts.length - 1; i < pts.length; j = i++)
+        if (pts[i].y > y !== pts[j].y > y && x < ((pts[j].x - pts[i].x) * (y - pts[i].y)) / (pts[j].y - pts[i].y) + pts[i].x) c = !c
+      return c
+    }
+    expect(inside(60, 60), 'the centre is the cube').toBe(true)
+    expect(inside(1, 1) && inside(119, 1) && inside(1, 119) && inside(119, 119), 'not all four corners').toBe(false)
+  })
+
+  it('it follows the pose (a new alpha / beta changes the shape) and only recomputes when the pose changed', () => {
+    const { cube, main } = setup()
+    const style = (cube.hitElement as unknown as FakeEl).style as Record<string, string>
+    const a = style.clipPath
+    cube.zoneAtCanvas(76, 76) // a pick syncs: the same pose, the same shape
+    expect(style.clipPath).toBe(a)
+    main.alpha += 0.4
+    main.beta = 0.0001 // from above: the top view
+    cube.zoneAtCanvas(76, 76)
+    expect(style.clipPath).not.toBe(a)
+  })
+
+  it('every pose of the 26 zones: the shape is inside the square and contains the cube centre (so the cube always takes a press at its middle)', () => {
+    const { cube, main } = setup()
+    const style = (cube.hitElement as unknown as FakeEl).style as Record<string, string>
+    main.lowerBetaLimit = null
+    main.upperBetaLimit = null
+    for (const z of ZONES) {
+      const a = zoneAngles(z)
+      main.alpha = a.alpha
+      main.beta = a.beta
+      cube.zoneAtCanvas(76, 76)
+      const pts = [...style.clipPath.matchAll(/(-?[\d.]+)px (-?[\d.]+)px/g)].map((m) => ({ x: Number(m[1]), y: Number(m[2]) }))
+      expect(pts.length, zoneId(z)).toBeGreaterThanOrEqual(3)
+      for (const p of pts) {
+        expect(p.x, zoneId(z)).toBeGreaterThanOrEqual(-0.5)
+        expect(p.x, zoneId(z)).toBeLessThanOrEqual(120.5)
+        expect(p.y, zoneId(z)).toBeGreaterThanOrEqual(-0.5)
+        expect(p.y, zoneId(z)).toBeLessThanOrEqual(120.5)
+      }
+      const minX = Math.min(...pts.map((p) => p.x)), maxX = Math.max(...pts.map((p) => p.x)), minY = Math.min(...pts.map((p) => p.y)), maxY = Math.max(...pts.map((p) => p.y))
+      expect(minX).toBeLessThan(60)
+      expect(maxX).toBeGreaterThan(60)
+      expect(minY).toBeLessThan(60)
+      expect(maxY).toBeGreaterThan(60)
+    }
   })
 })
