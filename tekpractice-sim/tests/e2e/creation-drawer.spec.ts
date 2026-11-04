@@ -512,3 +512,73 @@ test('a picture that fails to load falls back to the silhouette (the drawer neve
   // its neighbour keeps its picture
   await expect(drawer(page).locator('[data-device-id="shure-sm57"] img')).toHaveCount(1)
 })
+
+// ── Night 2 wave 4, item 2: at 400 px the tab row shows ~2 tabs and nothing said it scrolls ─────────────────────────────────────────────
+// Measured on 7d9d62f at 400 x 800: the row is wider than its box (scrollWidth > clientWidth) and the cut-off third tab was the only hint.
+// Now an edge fade (a mask on the row, so no element and nothing for assistive tech) shows on the side that has more tabs, and goes at the end.
+test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
+  test.use({ viewport: { width: 400, height: 800 } })
+  const row = (page: Page) => drawer(page).getByRole('tablist')
+  const mask = (page: Page) => row(page).evaluate((e) => getComputedStyle(e).maskImage || getComputedStyle(e).webkitMaskImage || 'none')
+  const state = (page: Page) =>
+    row(page).evaluate((e) => ({
+      scrolls: e.scrollWidth > e.clientWidth + 1,
+      start: (e as HTMLElement).dataset.fadeStart,
+      end: (e as HTMLElement).dataset.fadeEnd,
+      left: e.scrollLeft,
+      atEnd: e.scrollLeft + e.clientWidth >= e.scrollWidth - 1,
+      lastFullyVisible: (() => {
+        const tabs = [...e.querySelectorAll('[role="tab"]')]
+        const last = tabs[tabs.length - 1].getBoundingClientRect()
+        return last.right <= e.getBoundingClientRect().right + 0.5
+      })(),
+    }))
+
+  test('the row scrolls, shows a fade on the side with more tabs, the last tab is reached by a pointer scroll and the fade goes at the end', async ({ page }) => {
+    await boot(page)
+    await open(page)
+    const s0 = await state(page)
+    expect(s0.scrolls, 'at 400 px the tabs do not all fit (the test means something)').toBe(true)
+    expect(s0.end, 'more tabs on the right: a fade says so').toBe('true')
+    expect(s0.start).toBe('false')
+    expect(await mask(page), 'and it is drawn').not.toBe('none')
+    // decoration only: nothing was added to the tab list for it
+    expect(await row(page).evaluate((e) => [...e.children].every((c) => c.getAttribute('role') === 'tab'))).toBe(true)
+    const box = (await row(page).boundingBox())!
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2)
+    await page.mouse.wheel(60, 0)
+    await expect.poll(async () => (await state(page)).start, 'once scrolled the left side has more tabs too').toBe('true')
+    await page.mouse.wheel(2000, 0)
+    await expect.poll(async () => (await state(page)).atEnd).toBe(true)
+    const s1 = await state(page)
+    expect(s1.lastFullyVisible, 'the last tab is reached').toBe(true)
+    expect(s1.end, 'at the end the right fade is gone').toBe('false')
+    expect(s1.start).toBe('true')
+    await page.mouse.wheel(-5000, 0)
+    await expect.poll(async () => (await state(page)).left).toBe(0)
+    expect((await state(page)).start).toBe('false')
+  })
+
+  test('with all the tabs on screen (1700 px wide; at 1366 the row of 549 px already scrolls in 489) there is no fade at all', async ({ page }) => {
+    await page.setViewportSize({ width: 1700, height: 900 })
+    await boot(page)
+    await open(page)
+    const s = await state(page)
+    expect(s.scrolls).toBe(false)
+    expect(s.start).toBe('false')
+    expect(s.end).toBe('false')
+    expect(await mask(page)).toBe('none')
+  })
+
+  test('a keyboard move to the last tab (End) updates the fade as well', async ({ page }) => {
+    await boot(page)
+    await open(page)
+    await row(page).getByRole('tab').first().focus()
+    await page.keyboard.press('End')
+    await expect.poll(async () => (await state(page)).end).toBe('false')
+    expect((await state(page)).lastFullyVisible).toBe(true)
+    await page.keyboard.press('Home')
+    await expect.poll(async () => (await state(page)).start).toBe('false')
+    expect((await state(page)).end).toBe('true')
+  })
+})

@@ -56,6 +56,21 @@
   letter-spacing: 0.02em;
 }
 .cr-drawer-tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; }
+/* The row scrolls sideways when the tabs do not fit: an edge fade on the side that has more (inventoryDrawer.ts sets data-fade-start / data-fade-end). A mask, not an element:
+   decoration only, nothing for assistive tech, and a tab under it stays clickable and focusable. */
+.cr-drawer-tabs { --cr-fade: 28px; }
+.cr-drawer-tabs[data-fade-end='true'] {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--cr-fade)), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--cr-fade)), transparent);
+}
+.cr-drawer-tabs[data-fade-start='true'] {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - var(--cr-fade)), transparent);
+  mask-image: linear-gradient(to left, #000 calc(100% - var(--cr-fade)), transparent);
+}
+.cr-drawer-tabs[data-fade-start='true'][data-fade-end='true'] {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--cr-fade), #000 calc(100% - var(--cr-fade)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--cr-fade), #000 calc(100% - var(--cr-fade)), transparent);
+}
 .cr .cr-drawer-tab, .cr .cr-drawer-close, .cr .cr-inv-item, .cr .cr-drawer-filter-input { transition: none; }
 /* the search field, above the tabs in reading order: a visible label and a bordered field (control edge 7.6:1, as the panel fields) */
 .cr-drawer-filter { display: flex; align-items: center; gap: 8px; margin: 4px 0; flex: 0 1 220px; min-width: 120px; }

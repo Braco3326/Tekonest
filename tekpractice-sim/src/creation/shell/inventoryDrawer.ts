@@ -175,6 +175,18 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   filterBox.append(filterLabel, filter, filterStatus)
   head.append(title, filterBox, tablist)
 
+  // Night 2 wave 4, item 2: the tab row scrolls sideways when the tabs do not fit (a phone shows about two), and nothing said so. The side that has more tabs gets an edge fade
+  // (a mask in the CSS, driven by these two flags): no element, so nothing for assistive tech, and the keyboard reaches every tab as before.
+  const syncFade = (): void => {
+    const more = tablist.scrollWidth > tablist.clientWidth + 1
+    const start = more && tablist.scrollLeft > 1
+    const end = more && tablist.scrollLeft + tablist.clientWidth < tablist.scrollWidth - 1
+    if (tablist.dataset.fadeStart !== String(start)) tablist.dataset.fadeStart = String(start)
+    if (tablist.dataset.fadeEnd !== String(end)) tablist.dataset.fadeEnd = String(end)
+  }
+  tablist.addEventListener('scroll', syncFade, { passive: true })
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncFade).observe(tablist)
+
   const panel = el(doc, 'div', 'cr-drawer-panel')
   panel.id = 'cr-inv-panel'
   panel.setAttribute('role', 'tabpanel')
@@ -377,6 +389,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       tablist.appendChild(btn)
       return { tab, btn }
     })
+    syncFade() // the tabs changed (the « Bêta » tab came or went): the row may be longer or shorter now
     hint.textContent = I().hint!.replace('{key}', d.keyLabel())
     const first = tabs[0]?.tab
     const tab = selected !== null && tabs.some((t) => t.tab === selected) ? selected : first
