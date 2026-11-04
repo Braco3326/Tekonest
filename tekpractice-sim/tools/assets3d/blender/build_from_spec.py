@@ -53,14 +53,15 @@ GOLD = "#d4af37"
 # Yamaha stage box (research report, "Rio3224-D2"): slate-blue panel, black ears and chassis. All palette values are
 # LIFTED: the creation scene lights vertical faces with about a quarter of the fill + key (hemispheric 0.5 from above, key 0.5),
 # so a colour that is right on the real part renders near black there. Checked in Babylon with those lights.
-SLATE = "#a0b8d6"
-PLATE_IN = "#7a8aa6"
-PLATE_OUT = "#616b82"
+SLATE = "#8398b8"
+PLATE_IN = "#66738c"
+PLATE_OUT = "#525b70"
 CHASSIS = "#545661"
 EAR = "#383840"
 BEZEL = "#34343b"
 LCD = "#2e4352"
 STEEL = "#b4b8c0"
+INLET = "#4a4c55"
 PALE = "#b4cfe0"  # the clear RJ45 housing, drawn as an opaque pale blue-grey
 
 DEFAULT_FRONT_LEN_MM = 12.0
@@ -605,12 +606,13 @@ def build_stagebox_rio3224(plan: Plan) -> bpy.types.Object:
     for row_y in (166.7, 120.2, 73.8, 27.3):                                   # 32 female inputs
         for i in range(8):
             bezel((-186.2 + 23.45 * i) * mm, row_y * mm, 11.0 * mm, 8.2 * mm, z_front)
-    for i in range(4):                                                         # 4 AES/EBU outputs
-        bezel((12.0 + 25.1 * i) * mm, 120.2 * mm, 12.0 * mm, 8.8 * mm, z_front)
     for row_y in (73.8, 27.3):                                                 # 16 analog outputs
         for i in range(8):
             bezel((12.0 + 25.13 * i) * mm, row_y * mm, 12.0 * mm, 8.8 * mm, z_front)
     body.done(BEZEL)
+    for i in range(4):                                                         # 4 AES/EBU outputs, silver rims
+        bezel((12.0 + 25.1 * i) * mm, 120.2 * mm, 12.0 * mm, 8.8 * mm, z_front)
+    body.done(STEEL)
     for inner in discs:
         bm.faces.new(inner)
     body.done(DARK)
@@ -632,24 +634,42 @@ def build_stagebox_rio3224(plan: Plan) -> bpy.types.Object:
     body.done(EAR)
 
     # --- back: fans, power inlets, etherCON ----------------------------------------------------------------------
-    fans: list[list[bmesh.types.BMVert]] = []
+    # Two wire-guard fans: black frame, chrome outer ring and mid ring, dark blades, chrome hub. Faces are built in three
+    # passes (frame, chrome, dark) so each pass takes one colour.
+    fan_depth = 3.0 * mm
+    z_tip = back_plate - fan_depth
+    fan_rings: list[dict[str, list[bmesh.types.BMVert]]] = []
     for fy in (152.0, 69.0):
-        base = ring(bm, 40.0 * mm, back_plate, 12, -160.0 * mm, fy * mm)
-        tip = ring(bm, 40.0 * mm, back_plate - 3.0 * mm, 12, -160.0 * mm, fy * mm)
-        inner = ring(bm, 31.0 * mm, back_plate - 3.0 * mm, 12, -160.0 * mm, fy * mm)
-        band(bm, base, tip)
-        band(bm, tip, inner)
-        bm.faces.new(base)
-        fans.append(inner)
+        fx = -160.0 * mm
+        fan_rings.append({
+            "base": ring(bm, 40.0 * mm, back_plate, 12, fx, fy * mm),
+            "tip": ring(bm, 40.0 * mm, z_tip, 12, fx, fy * mm),
+            "rim": ring(bm, 36.5 * mm, z_tip, 12, fx, fy * mm),
+            "mid_out": ring(bm, 24.0 * mm, z_tip, 12, fx, fy * mm),
+            "mid_in": ring(bm, 21.5 * mm, z_tip, 12, fx, fy * mm),
+            "hub": ring(bm, 8.0 * mm, z_tip, 12, fx, fy * mm),
+        })
+    for r in fan_rings:
+        band(bm, r["base"], r["tip"])
+        bm.faces.new(r["base"])
     body.done(CHASSIS)
-    for inner in fans:
-        bm.faces.new(inner[::-1])
+    for r in fan_rings:
+        band(bm, r["tip"], r["rim"])
+        band(bm, r["mid_out"], r["mid_in"])
+        bm.faces.new(r["hub"][::-1])
+    body.done(STEEL)
+    for r in fan_rings:
+        band(bm, r["rim"], r["mid_out"])
+        band(bm, r["mid_in"], r["hub"])
     body.done(DARK)
+    # Dante plate behind the two etherCON ports (flush, a shade lighter than the black back).
+    box(bm, 121.5 * mm, 215.5 * mm, 163.0 * mm, 204.0 * mm, back_plate - 0.6 * mm, back_plate)
+    body.done(PLATE_OUT)
     for cx, cy, bw, bh, core_w, core_h in ((159.9, 54.3, 39.0, 23.0, 31.0, 15.0), (106.9, 54.3, 39.0, 23.0, 31.0, 15.0),
                                            (182.5, 183.7, 21.0, 21.0, 14.0, 14.0), (154.5, 183.7, 21.0, 21.0, 14.0, 14.0)):
         # The housing stops 0.5 mm short of the tip; the dark core is the part that reaches the box face.
         box(bm, (cx - bw / 2.0) * mm, (cx + bw / 2.0) * mm, (cy - bh / 2.0) * mm, (cy + bh / 2.0) * mm, z_back + 0.5 * mm, back_plate)
-        body.done(STEEL)
+        body.done(INLET if bw > 30.0 else STEEL)
         box(bm, (cx - core_w / 2.0) * mm, (cx + core_w / 2.0) * mm, (cy - core_h / 2.0) * mm, (cy + core_h / 2.0) * mm, z_back, z_back + 0.5 * mm)
         body.done(DARK)
     log(f"stage box: {sum(len(f.verts) - 2 for f in bm.faces)} triangles before export")
