@@ -52,12 +52,9 @@ DARK = "#0b0b0d"
 GOLD = "#d4af37"
 PALE = "#b4cfe0"  # the clear RJ45 housing, drawn as an opaque pale blue-grey
 
-# The cylinder-plug (XLR) pin layout is stylised, not a measured copy of any vendor part.
-PIN_HOLE_DIAMETER_MM = 1.5
-PIN_HOLE_DEPTH_MM = 3.0
-PIN_CIRCLE_RADIUS_MM = 4.4
-PIN_HOLE_SEGMENTS = 12
 DEFAULT_FRONT_LEN_MM = 12.0
+XLR_SEGMENTS = 20             # a multiple of 4 so the box is exact; 20 keeps the profile near 700 triangles
+XLR_SHELL_RADIUS_MM = 9.6     # the 19.2 mm nickel shell
 
 DEFAULT_CHAMFER_MM = 1.0
 
@@ -208,15 +205,16 @@ def make_material() -> bpy.types.Material:
     return mat
 
 
-def revolve(body: Body, profile: list[tuple[float, float]], colours: list[str], n: int = SEGMENTS, cap_first: bool = False, cap_last: bool = False) -> None:
+def revolve(body: Body, profile: list[tuple[float, float]], colours: list[str], n: int = SEGMENTS, cap_first: bool = False, cap_last: bool = False, cy: float = 0.0) -> list[list[bmesh.types.BMVert]]:
     """Lathe about the glTF z axis. `profile` is (radius, z) points, `colours` one sRGB hex per band between points.
 
-    A radius of 0 at an end is a point (fan). `cap_first` / `cap_last` close the open end with a flat face; every band and
-    each cap is coloured as it is built, so a cap takes the colour of its neighbouring band.
+    `cap_first` / `cap_last` close the open end with a flat face; every band and each cap is coloured as it is built, so a
+    cap takes the colour of its neighbouring band. `cy` moves the axis along y. Returns the rings (an open end can be
+    filled by the caller, e.g. around holes).
     """
     if len(colours) != len(profile) - 1:
         raise BuildError("revolve needs one colour per band")
-    rings = [ring(body.bm, r, z, n) for r, z in profile]
+    rings = [ring(body.bm, r, z, n, 0.0, cy) for r, z in profile]
     if cap_first:
         body.bm.faces.new(rings[0])
         body.done(colours[0])
@@ -226,6 +224,7 @@ def revolve(body: Body, profile: list[tuple[float, float]], colours: list[str], 
     if cap_last:
         body.bm.faces.new(rings[-1][::-1])
         body.done(colours[-1])
+    return rings
 
 
 def extrude_zy(bm: bmesh.types.BMesh, pts: list[tuple[float, float]], x0: float, x1: float) -> list[bmesh.types.BMFace]:
@@ -297,47 +296,77 @@ def bevel_faces(bm: bmesh.types.BMesh, faces: list[bmesh.types.BMFace], width: f
 # --- shapes -----------------------------------------------------------------------------------------------
 
 def build_cylinder_plug(plan: Plan) -> bpy.types.Object:
-    """XLR-like cable plug: a front section of the mating diameter (z = 0 .. frontLen) in a larger shell (to z = d)."""
-    w, h, d = size_m(plan)
-    shell_r = min(w, h) / 2.0
-    front_r = positive(plan.get("matingOuterMm"), "matingOuterMm") * MM / 2.0
-    front_len = param_m(plan, "frontLenMm", DEFAULT_FRONT_LEN_MM)
-    if front_r >= shell_r:
-        raise BuildError(f"matingOuterMm ({front_r * 2000:.2f}) must be smaller than the shell diameter ({shell_r * 2000:.2f})")
-    if front_len >= d:
-        raise BuildError(f"params.frontLenMm ({front_len / MM:.2f}) must be shorter than sizeMm.d ({d / MM:.2f})")
-    hole_r = PIN_HOLE_DIAMETER_MM * MM / 2.0
-    hole_depth = PIN_HOLE_DEPTH_MM * MM
-    pin_circle = PIN_CIRCLE_RADIUS_MM * MM
-    if pin_circle + hole_r >= front_r or hole_depth >= front_len:
-        raise BuildError("the front section is too small for the three pin holes")
+    """3-pole female XLR cable plug (generic, Neutrik-NC3FXX-class proportions), mating face at z = 0.
 
+    Revolved profile, front to back: dark front insert (diameter `matingOuterMm`, length `frontLenMm`), a cone out to the
+    19.2 mm nickel shell, then the black bushing (the widest part, w / 2) with one groove, the tapering boot and the tail
+    at z = d. A nickel latch lug sits on the +Y side of the shell and rises above the bushing, which is why the spec box is
+    about 20.3 x 21.0 mm and the axis sits 0.35 mm below the box centre (the fix-up centres the box). The mating face
+    carries the real pin layout (pin 2 and pin 1 left and right, pin 3 below) and a key slot at 12 o'clock.
+
+    Verified (Neutrik drawing): shell 19.2, insert 15.75, length. Derived from one DXF parse: bushing, boot, lug, pin
+    positions. Estimated: hole and slot depth, rear boot. Dimensions only, no vendor geometry or branding."""
+    w, h, d = size_m(plan)
+    mm = MM
+    bushing_r = w / 2.0
+    shell_r = XLR_SHELL_RADIUS_MM * mm
+    front_r = positive(plan.get("matingOuterMm"), "matingOuterMm") * mm / 2.0
+    front_len = param_m(plan, "frontLenMm", DEFAULT_FRONT_LEN_MM)
+    if bushing_r <= shell_r + 0.2 * mm:
+        raise BuildError(f"sizeMm.w ({w / mm:.2f}) must be wider than the 19.2 mm shell: the bushing and the latch lug are part of the box (about 20.3 mm)")
+    if front_r >= shell_r - 0.5 * mm or front_len < 8.0 * mm or front_len + 2.5 * mm >= 30.0 * mm:
+        raise BuildError("matingOuterMm / params.frontLenMm do not fit inside the shell")
+    if d < 60.0 * mm:
+        raise BuildError(f"sizeMm.d ({d / mm:.2f}) is too short for an XLR plug (needs at least 60 mm)")
+    lug_top = h - bushing_r          # lug top above the axis (the bbox is bushing_r below the axis and lug_top above it)
+    if lug_top <= bushing_r + 0.3 * mm or lug_top > bushing_r + 3.0 * mm:
+        raise BuildError(f"sizeMm.h ({h / mm:.2f}) does not match a latch lug 0.3 to 3 mm above the bushing")
+    axis_y = bushing_r - h / 2.0     # the axis sits this far from the box centre (negative: below)
+
+    chamfer = 0.4 * mm
+    profile: list[tuple[float, float]] = [
+        (front_r - chamfer, 0.0),              # mating face edge
+        (front_r, chamfer),
+        (front_r, front_len),                  # front insert
+        (shell_r, front_len + 2.5 * mm),       # shoulder cone out to the shell
+        (shell_r, 30.0 * mm),                  # nickel shell
+        (bushing_r, 36.0 * mm),                # bushing ramp
+        (bushing_r, 43.0 * mm),
+        (bushing_r - 1.25 * mm, 43.0 * mm),    # the one groove
+        (bushing_r - 1.25 * mm, 44.2 * mm),
+        (bushing_r, 44.2 * mm),
+        (bushing_r, 47.0 * mm),
+        (bushing_r - 1.95 * mm, d - 10.5 * mm),  # boot cone
+        (bushing_r - 2.75 * mm, d),            # tail
+    ]
+    colours = [BLACK, BLACK, NICKEL, NICKEL, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK]
     body = Body("xlr-plug")
     bm = body.bm
-    a = ring(bm, front_r, 0.0)
-    b = ring(bm, front_r, front_len)
-    c = ring(bm, shell_r, front_len)
-    e = ring(bm, shell_r, d)
-    band(bm, a, b)          # front section side
-    band(bm, b, c)          # the step from the front section to the shell
-    band(bm, c, e)          # shell side
-    bm.faces.new(e[::-1])   # back end (cable side), a flat cap
+    rings = revolve(body, profile, colours, XLR_SEGMENTS, cap_last=True, cy=axis_y)
 
-    # Mating face with three blind pin holes: the outer ring plus three small rings are filled as one region with holes.
-    fill_edges = [bm.edges.get((a[i], a[(i + 1) % SEGMENTS])) for i in range(SEGMENTS)]
-    for k in range(3):
-        ang = 2 * math.pi * k / 3 + math.pi / 2
-        cx, cy = pin_circle * math.cos(ang), pin_circle * math.sin(ang)
-        top = ring(bm, hole_r, 0.0, PIN_HOLE_SEGMENTS, cx, cy)
-        bottom = ring(bm, hole_r, hole_depth, PIN_HOLE_SEGMENTS, cx, cy)
-        band(bm, top, bottom)
-        bm.faces.new(bottom[::-1])
-        for i in range(PIN_HOLE_SEGMENTS):
-            fill_edges.append(bm.edges.get((top[i], top[(i + 1) % PIN_HOLE_SEGMENTS])))
-    result = bmesh.ops.triangle_fill(bm, use_beauty=True, use_dissolve=False, edges=fill_edges, normal=g2b(0.0, 0.0, -1.0))
-    if not result["geom"]:
-        raise BuildError("could not fill the mating face around the pin holes")
+    # Mating face: the outer ring filled around three pin holes and the key slot.
+    outline = [bm.edges.get((rings[0][i], rings[0][(i + 1) % XLR_SEGMENTS])) for i in range(XLR_SEGMENTS)]
+    holes = []
+    for px, py in ((-4.05, 0.0), (4.05, 0.0), (0.0, -3.95)):
+        holes.append(blind_hole(bm, px * mm, axis_y + py * mm, 0.0, 1.25 * mm, 8, 3.0 * mm, 1.0))
+    key_mouth, key_floor = rect_hole(bm, -2.3 * mm, 2.3 * mm, axis_y + 2.4 * mm, axis_y + 6.0 * mm, 0.0, 2.5 * mm, 1.0)
+    holes.append(key_mouth)
+    bm.faces.new(key_floor[::-1])
+    body.done(DARK)
+    fill_with_holes(bm, outline, holes, (0.0, 0.0, -1.0))
     body.done(BLACK)
+
+    # Latch lug on +Y: a trapezoid section (6.3 wide at the base, 2.3 on top) rising from 10.0 mm at the front to the top
+    # of the box at the cable-side end (z = 24 mm); its base is sunk into the shell.
+    base_y = axis_y + 8.9 * mm
+    z_front, z_back = 14.5 * mm, 24.0 * mm
+    sections = []
+    for z, top_y in ((z_front, axis_y + 10.0 * mm), (z_back, axis_y + lug_top)):
+        sections.append([bm.verts.new(g2b(x, y, z)) for x, y in ((-3.15 * mm, base_y), (3.15 * mm, base_y), (1.15 * mm, top_y), (-1.15 * mm, top_y))])
+    band(bm, sections[0], sections[1])
+    bm.faces.new(sections[0])
+    bm.faces.new(sections[1][::-1])
+    body.done(NICKEL)
     return body.finish()
 
 

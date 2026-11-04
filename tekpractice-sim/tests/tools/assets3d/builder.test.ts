@@ -166,21 +166,26 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
 
   const xlr = (): AssetSpecT => realSpec('xlr3-f')
 
-  it.skipIf(!BLENDER)('xlr3-f builds at 19.2 x 19.2 x 72.5 mm with the small mating end at minimum z', async () => {
+  it.skipIf(!BLENDER)('xlr3-f builds at 20.3 x 21 x 72.5 mm: 15.75 mm insert at minimum z, 19.2 mm shell, wider bushing, lug on top', async () => {
     const spec = xlr()
-    const { raw, rawBytes } = await buildAndFix(spec)
-    const size = [0, 1, 2].map((k) => raw.bboxM.max[k] - raw.bboxM.min[k])
-    expect(Math.abs(size[0] - 19.2 * MM)).toBeLessThan(TOL_M)
-    expect(Math.abs(size[1] - 19.2 * MM)).toBeLessThan(TOL_M)
-    expect(Math.abs(size[2] - 72.5 * MM)).toBeLessThan(TOL_M)
-    expect(raw.triangles).toBeLessThanOrEqual(800)
-    expect(raw.materials).toBe(1)
+    const { raw, rawBytes, fixed, fixedBytes } = await expectBuiltTo(spec, 800)
+    await expectLooks(rawBytes, raw.triangles, 3) // black, nickel, dark pin holes
+    await expectLooks(fixedBytes, fixed.triangles, 3)
 
     const verts = await vertices(rawBytes)
     const zMin = raw.bboxM.min[2]
-    const zMax = raw.bboxM.max[2]
-    expect(Math.abs(radiusAtZ(verts, zMin) - 15.75 * MM / 2)).toBeLessThan(TOL_M)
-    expect(Math.abs(radiusAtZ(verts, zMax) - 19.2 * MM / 2)).toBeLessThan(TOL_M)
+    // The axis sits 0.35 mm below the box centre (the lug rises above the bushing, nothing hangs below it).
+    const axisY = -0.35 * MM
+    const radius = (v: [number, number, number]): number => Math.hypot(v[0], v[1] - axisY)
+    const inRange = (lo: number, hi: number): [number, number, number][] => verts.filter((v) => v[2] > zMin + lo * MM + 1e-7 && v[2] < zMin + hi * MM - 1e-7)
+    expect(Math.abs(Math.max(...inRange(0.3, 12.1).map(radius)) - 15.75 * MM / 2)).toBeLessThan(TOL_M) // front insert
+    expect(Math.abs(Math.max(...inRange(14.4, 30.1).filter((v) => v[1] - axisY < 9.5 * MM).map(radius)) - 19.2 * MM / 2)).toBeLessThan(TOL_M) // nickel shell
+    expect(Math.abs(Math.max(...inRange(35.9, 43.1).map(radius)) - 20.3 * MM / 2)).toBeLessThan(TOL_M) // bushing: the widest round part
+    // The latch lug is the highest thing, above the bushing, on the +Y side of the shell.
+    const top = Math.max(...verts.map((v) => v[1]))
+    expect(top).toBeCloseTo(10.5 * MM, 6)
+    expect(Math.max(...inRange(14.4, 24.1).map((v) => v[1]))).toBeGreaterThan(axisY + 9.9 * MM)
+    expect(Math.max(...inRange(30.9, 47.1).map((v) => v[1]))).toBeLessThan(top - 0.2 * MM)
   }, 120_000)
 
   it.skipIf(!BLENDER)('xlr3-f goes through the fix-up unrotated and passes every gate', async () => {
