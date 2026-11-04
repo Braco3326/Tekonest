@@ -166,6 +166,7 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
       pitch.dataset.testid = 'template-pitch'
       const rowHead = el(doc, 'div', 'cr-pick-rowhead')
       rowHead.append(heading, pitch)
+      box.setAttribute('aria-describedby', `${hint.id} ${pitch.id}`) // wave 2c: the pitch describes the template grid, as the hint describes both
       scroll.append(rowHead, box)
     } else scroll.append(heading, box)
     return g

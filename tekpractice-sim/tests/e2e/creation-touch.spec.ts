@@ -91,6 +91,21 @@ test.describe('coarse pointer, 400 x 800', () => {
     }
   })
 
+  test('S5 (wave 2c): a control that starts above the fold is scrolled to below the 45 px sticky title row, not under it', async ({ page }) => {
+    await boot(page)
+    await selectKit(page, 'ql1')
+    await page.getByTestId('props-collapse').click()
+    const props = page.getByTestId('properties')
+    await props.evaluate((e) => e.scrollTo(0, e.scrollHeight))
+    expect(await props.evaluate((e) => e.scrollTop), 'the column is long enough to scroll').toBeGreaterThan(100)
+    const head = (await page.locator('.cr-props .cr-panel-head').boundingBox())!
+    expect(head.height).toBeGreaterThanOrEqual(45)
+    await page.locator('.cr-props .cr-field-input').first().focus() // above the fold now: the browser scrolls it into view
+    const f = (await page.locator('.cr-props .cr-field-input').first().boundingBox())!
+    expect(f.y, 'not under the sticky row').toBeGreaterThanOrEqual(head.y + head.height - 0.5)
+    expect(await props.evaluate((e) => getComputedStyle(e).scrollPaddingTop)).toBe('52px')
+  })
+
   test('the folded rails (Projet and Propriétés, with the legend rail) are 44 px wide targets', async ({ page }) => {
     await boot(page)
     for (const id of ['tree-collapse', 'props-collapse']) {
@@ -142,6 +157,8 @@ test.describe('coarse pointer, 400 x 800', () => {
     await page.getByTestId('listen-limits-title').click()
     expect(await small(page)).toEqual([])
     expect(await noOverflow(page)).toBeLessThanOrEqual(0)
+    // wave 2c (S4): a 44 px summary still draws its disclosure marker (a flex summary loses it)
+    for (const id of ['coverage-about-title', 'listen-limits-title']) expect(await page.getByTestId(id).evaluate((e) => getComputedStyle(e).display), id).toBe('list-item')
     await page.getByRole('menuitem', { name: 'Écoute', exact: true }).click()
     await page.getByRole('menuitem', { name: 'Stop', exact: true }).click()
   })

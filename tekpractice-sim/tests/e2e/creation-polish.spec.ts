@@ -89,6 +89,9 @@ test.describe('picker (E)', () => {
     await expect(page.locator('.cr-pick-hint')).toHaveText('Cliquez un lieu pour l’ouvrir (ou flèches puis Entrée).')
     const pitch = page.getByTestId('template-pitch')
     await expect(pitch).toHaveText('Un lieu avec son matériel déjà posé : le plus simple pour commencer.')
+    // wave 2c: the pitch describes the template grid (with the hint), the place grid keeps the hint alone
+    await expect(page.getByTestId('template-grid')).toHaveAttribute('aria-describedby', 'cr-picker-hint cr-pick-templates-pitch')
+    await expect(page.getByTestId('place-grid')).toHaveAttribute('aria-describedby', 'cr-picker-hint')
     // it goes with the « Modèles » heading (on its line when there is room, under it when not) and above its cards, and the row is as tall as the bare heading
     const h = await box(page.getByRole('heading', { name: 'Modèles' }))
     const p = await box(pitch)
@@ -137,10 +140,12 @@ test.describe('drawer (F), 1366 x 768', () => {
     const sizes = await page.evaluate(() => [...document.querySelectorAll('.cr-inv-thumb, .cr-inv-icon')].map((e) => [e.getBoundingClientRect().width, e.getBoundingClientRect().height]))
     for (const [w, h] of sizes) expect([Math.round(w), Math.round(h)]).toEqual([40, 36])
     // a picture that fails to load becomes the silhouette in the same box
-    await page.evaluate(() => {
-      const img = document.querySelector('.cr-inv-thumb')
-      if (img) img.dispatchEvent(new Event('error'))
-    })
+    const thumbs = await page.locator('.cr-inv-thumb').count()
+    expect(thumbs, 'the Consoles tab has pictures: the failure below is really exercised').toBeGreaterThan(0)
+    const icons = await page.locator('.cr-inv-icon').count()
+    await page.evaluate(() => document.querySelector('.cr-inv-thumb')!.dispatchEvent(new Event('error')))
+    await expect(page.locator('.cr-inv-icon')).toHaveCount(icons + 1) // the silhouette took the picture's place
+    await expect(page.locator('.cr-inv-thumb')).toHaveCount(thumbs - 1)
     expect(await nameX()).toEqual(before)
     const after = await page.evaluate(() => [...document.querySelectorAll('.cr-inv-thumb, .cr-inv-icon')].map((e) => [e.getBoundingClientRect().width, e.getBoundingClientRect().height]))
     for (const [w, h] of after) expect([Math.round(w), Math.round(h)]).toEqual([40, 36])
@@ -162,6 +167,26 @@ test.describe('drawer (F), 1366 x 768', () => {
     await expect(page.getByTestId('inventory-item').first()).toBeVisible()
     await expect(clear).toHaveCount(0)
     await expect(page.getByTestId('inventory-filter-status')).toHaveText('')
+  })
+
+  test('C1 (wave 2c): every word the empty-filter help suggests finds devices in the drawer, with the real catalog', async ({ page }) => {
+    await boot(page, PLACE)
+    await openDrawer(page)
+    await page.getByTestId('inventory-filter').fill('zzzz')
+    const help = (await page.locator('.cr-drawer-empty p').textContent())!
+    const words = help.match(/\(([^)]+)\)/)![1].split(',').map((w) => w.trim())
+    expect(words).toEqual(['micro', 'console', 'enceinte'])
+    for (const w of words) {
+      await page.getByTestId('inventory-filter').fill(w)
+      await expect(page.getByTestId('inventory-item').first(), w).toBeVisible()
+      await expect(page.locator('.cr-drawer-empty'), w).toHaveCount(0)
+      expect(await page.getByTestId('inventory-filter-status').textContent(), w).toBe('')
+    }
+    // « console » reaches a console by its family, and a brand word still works
+    await page.getByTestId('inventory-filter').fill('console')
+    await expect(page.locator('[data-testid="inventory-item"][data-device-id="yamaha-ql1"]')).toBeVisible()
+    await page.getByTestId('inventory-filter').fill('ql1')
+    await expect(page.getByTestId('inventory-item')).toHaveCount(1)
   })
 
   test('F: Espace on « Effacer le filtre » presses it (it does not close the drawer, as it does everywhere else)', async ({ page }) => {
@@ -203,9 +228,11 @@ test.describe('drawer (F), 400 x 800', () => {
     await expect(page.getByTestId('inventory-filter')).toHaveAttribute('placeholder', 'Filtrer')
     expect((await box(page.locator('.cr-drawer-filter-label'))).width, 'label is out of sight').toBeLessThanOrEqual(2)
     await expect(page.getByRole('textbox', { name: 'Filtrer' })).toBeVisible()
-    // every tab is still reachable: the last one scrolls into view when focused
+    // every tab is still reachable the way a keyboard user gets there: End from the selected tab (selection follows focus), the last one scrolls into view
     const tabs = page.getByRole('tab')
-    await tabs.last().focus()
+    await page.getByRole('tab', { selected: true }).focus()
+    await page.keyboard.press('End')
+    await expect(tabs.last()).toBeFocused()
     await expect(tabs.last()).toBeInViewport()
     const t = await box(tabs.last())
     expect(meets(t, close), 'the last tab never goes under Fermer').toBe(false)

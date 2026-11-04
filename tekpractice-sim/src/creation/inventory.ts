@@ -108,14 +108,15 @@ export function inventory(
 const fold = (s: string): string => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
 
 /**
- * The drawer search: the items whose LABEL holds every word of `query` (any order), across all tabs; accents and case
- * are ignored. A blank query keeps everything. Order is kept.
+ * The drawer search: the items whose LABEL or FAMILY (the tab's name: « Micros », « Consoles », « Enceintes »…) holds every word of `query`
+ * (any order), across all tabs; accents and case are ignored. A blank query keeps everything. Order is kept. The family is searched because the
+ * empty-filter help suggests « micro, console, enceinte » (night wave 2c, C1): those words are in no device label, they are the tabs' names.
  */
-export function filterItems<T extends { label: string }>(items: readonly T[], query: string): T[] {
+export function filterItems<T extends { label: string; tab?: InventoryTab }>(items: readonly T[], query: string): T[] {
   const words = fold(query).split(/\s+/).filter(Boolean)
   if (!words.length) return [...items]
   return items.filter((it) => {
-    const label = fold(it.label)
-    return words.every((w) => label.includes(w))
+    const hay = fold(it.tab ? `${it.label} ${TAB_LABELS[it.tab]}` : it.label)
+    return words.every((w) => hay.includes(w))
   })
 }

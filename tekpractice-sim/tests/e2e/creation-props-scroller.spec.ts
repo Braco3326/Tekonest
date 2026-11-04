@@ -82,28 +82,28 @@ test('H: the whole column is reachable by scrolling it, and its title row stays 
   await stop(page)
 })
 
-test('H: the coverage block reads status, unit, statistics, scale, points, then the folded notes', async ({ page }) => {
+test('H and C2: the coverage block reads status, unit, statistics, scale, method, source, points, then the folded notes', async ({ page }) => {
   await boot(page)
   await everythingOn(page)
   const y = async (id: string): Promise<number> => (await page.getByTestId(id).boundingBox())!.y
-  const order = [await y('coverage-status'), await y('coverage-unit'), await y('coverage-stats'), await y('coverage-legend'), await y('coverage-points'), await y('coverage-about-title')]
-  expect(order, 'status, unit, statistics, scale, points, notes').toEqual([...order].sort((a, b) => a - b))
+  const order = [await y('coverage-status'), await y('coverage-unit'), await y('coverage-stats'), await y('coverage-legend'), await y('coverage-hatched'), await y('coverage-method'), await y('coverage-source'), await y('coverage-points'), await y('coverage-about-title')]
+  expect(order, 'status, unit, statistics, scale, hatched, method, source, points, notes').toEqual([...order].sort((a, b) => a - b))
   expect(new Set(order).size).toBe(order.length)
   // the notes are folded and one click away; nothing was removed
   const about = page.getByTestId('coverage-about')
   await expect(about).not.toHaveAttribute('open', '')
   await expect(page.getByTestId('coverage-about-title')).toHaveText('À propos du calcul')
-  for (const id of ['coverage-method', 'coverage-speakers']) await expect(page.getByTestId(id)).toBeHidden()
+  // C2 (brief §5: the legend shows the processing and the source, a missing datum is flagged): visible WITHOUT opening anything
+  for (const id of ['coverage-unit', 'coverage-method', 'coverage-source', 'coverage-hatched', 'coverage-stats']) await expect(page.getByTestId(id), id).toBeVisible()
+  await expect(page.getByTestId('coverage-method')).toHaveText('somme énergétique, champ direct')
+  await expect(page.getByTestId('coverage-source')).toHaveText(/^Couverture : /)
+  // what is folded: the aim line, the speakers, the hints
+  await expect(page.getByTestId('coverage-speakers')).toBeHidden()
   await page.getByTestId('coverage-about-title').click()
   await expect(about).toHaveAttribute('open', '')
-  await expect(page.getByTestId('coverage-method')).toHaveText('somme énergétique, champ direct')
-  await expect(page.getByTestId('coverage-method')).toBeVisible()
+  await expect(page.getByTestId('coverage-speakers')).toBeVisible()
   await expect(page.getByTestId('coverage-speakers')).toContainText('k12-g')
-  await expect(page.getByTestId('coverage-source')).toBeVisible()
-  // the unit and the statistics are NOT folded (they are what the numbers mean)
   await page.getByTestId('coverage-about-title').click()
-  await expect(page.getByTestId('coverage-unit')).toBeVisible()
-  await expect(page.getByTestId('coverage-stats')).toBeVisible()
   await stop(page)
 })
 

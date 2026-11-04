@@ -72,5 +72,5 @@
 /* Touch (night wave 2, I): 44 px targets. */
 @media (pointer: coarse) {
   .cr .cr-listen-toggle, .cr .cr-listen-btn { min-height: 44px; }
-  .cr-listen-limits-title { display: flex; align-items: center; min-height: 44px; }
+  .cr-listen-limits-title { box-sizing: border-box; min-height: 44px; padding-block: 14px; line-height: 16px; } /* list-item kept: the marker stays (wave 2c, S4) */
 }

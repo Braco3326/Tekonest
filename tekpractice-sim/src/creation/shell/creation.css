@@ -42,7 +42,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 
 /* Thin scrollbars in the Nuit palette (night wave 2, E): the platform's wide light bars are the loudest thing on a dark screen. scrollbar-color is inherited, scrollbar-width is not. */
 .cr, .cr-dialog { scrollbar-color: var(--cr-ink-muted) var(--cr-panel); }
-.cr *, .cr-dialog { scrollbar-width: thin; }
+.cr *, .cr-dialog, .cr-dialog * { scrollbar-width: thin; }
 
 /* ── Dialogs (modal.ts): under <body>, outside `.cr`; tokens only, square corners ── */
 .cr-dialog-overlay {
@@ -661,7 +661,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-pick-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin: 4px 0 0; font-size: 12px; color: var(--cr-ink-muted); }
 .cr-pick-key { display: inline-flex; align-items: center; gap: 6px; color: var(--cr-papier); }
 .cr-pick-key::before { content: ''; width: 14px; height: 10px; box-sizing: border-box; }
-.cr-pick-key--stage::before { background: var(--cr-prune); border: 1px solid var(--cr-ink-muted); } /* Prune on Nuit is ~1.5:1: the outline keeps the swatch a visible shape */
+.cr-pick-key--stage::before { background: var(--cr-prune); border: 1px solid var(--cr-ink-muted); } /* Prune on Nuit is 1.76:1: the outline keeps the swatch a visible shape */
 .cr-pick-key--operator::before { background: rgba(221, 147, 73, 0.3); border: 1px solid var(--cr-ambre); }
 .cr-pick-key--audience::before { border: 1px dashed var(--cr-papier); }
 .cr-pick-tools { display: flex; align-items: center; gap: 12px; }
@@ -774,7 +774,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr .cr-btn-primary:hover { background: var(--cr-papier); border-color: var(--cr-papier); }
 
 /* ── notes in the 3D view (Task 12): dismissible, non-blocking, bottom-left ── */
-.cr-notes { position: absolute; left: 12px; bottom: 12px; z-index: 5; display: flex; flex-direction: column; gap: 8px; width: min(380px, calc(100% - 24px)); pointer-events: none; }
+.cr-notes { position: absolute; left: 12px; bottom: 12px; z-index: 5; display: flex; flex-direction: column; gap: 8px; width: min(380px, calc(100% - 24px)); pointer-events: auto; /* auto (wave 2c, S8): with none, the scrollbar of a capped stack could not be dragged; the box is exactly the notes' extent, so it covers nothing else */ }
 .cr-notes:empty { display: none; }
 .cr-note {
   position: relative;
@@ -803,6 +803,8 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-notes { max-height: calc(100% - 220px); overflow-y: auto; }
 .cr-viewport[data-placing='true'] .cr-note-list { display: none; }
 .cr-viewport[data-placing='true'] .cr-toast { bottom: 68px; }
+/* Wave 2c, S7: the open drawer (z 2) stands over the notes (they were at 5 and covered its tabs); the notes come back when it closes. */
+.cr:has(.cr-drawer[data-open='true']) .cr-notes { z-index: 1; }
 .cr .cr-cancel-pose {
   position: absolute;
   left: 12px;
@@ -835,7 +837,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   white-space: nowrap;
   overflow: hidden;
 }
-.cr-status-summary { display: flex; align-items: center; gap: 16px; flex: 1 1 auto; min-width: 0; height: 100%; }
+.cr-status-summary { display: flex; align-items: center; gap: 16px; flex: 1 1 0; min-width: 0; height: 100%; }
 .cr-status-place { flex: 0 1 auto; min-width: 0; max-width: 32ch; overflow: hidden; text-overflow: ellipsis; color: var(--cr-papier); font-weight: 500; }
 .cr-status-place:empty { display: none; }
 .cr-status-msg { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
@@ -844,18 +846,18 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-status-msg[data-state='busy']::before { background: var(--cr-ambre); }
 
 /* Task 14: selection, snapping, autosave, signal button (right side of the bar). */
-.cr-status-right { display: flex; align-items: center; gap: 16px; flex: none; height: 100%; }
-.cr-status-sel { color: var(--cr-papier); max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
+.cr-status-right { display: flex; align-items: center; gap: 16px; flex: 0 1 auto; min-width: 0; height: 100%; }
+.cr-status-sel { color: var(--cr-papier); flex: 0 1 auto; min-width: 0; max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
 .cr-status-save[hidden], .cr-status-pause[hidden], .cr-status-action[hidden] { display: none; }
 .cr-status-pause { display: flex; align-items: center; gap: 8px; color: var(--cr-papier); }
 .cr-status-pause::before { content: '⏸'; color: var(--cr-ambre); }
 .cr .cr-status-action { min-height: 24px; padding: 0 8px; border: 1px solid var(--cr-ambre); color: var(--cr-papier); }
 .cr .cr-status-action:hover { background: var(--cr-ambre); color: var(--cr-nuit); }
-.cr-status-playback { max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--cr-ink-muted); }
+.cr-status-playback { flex: 0 1 auto; min-width: 0; max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--cr-ink-muted); }
 .cr-status-playback[data-ready='true'] { color: var(--cr-ok); font-weight: 500; }
 .cr-status-mic { color: var(--cr-ok); font-weight: 500; white-space: nowrap; }
 .cr-status-playback[hidden], .cr-status-mic[hidden] { display: none; }
-.cr .cr-signal { display: flex; align-items: center; gap: 6px; min-height: 24px; padding: 0 8px; border: 1px solid var(--cr-panel-line); font-weight: 500; }
+.cr .cr-signal { display: flex; flex: none; align-items: center; gap: 6px; min-height: 24px; padding: 0 8px; border: 1px solid var(--cr-panel-line); font-weight: 500; }
 .cr .cr-signal[data-kind='ok'] { color: var(--cr-ok); }
 .cr .cr-signal[data-kind='neutral'] { color: var(--cr-ink-muted); }
 .cr .cr-signal[data-kind='errors'] { color: var(--cr-danger); border-color: var(--cr-danger); }
@@ -944,6 +946,7 @@ body:has(.cr-viewport[data-placing='true']) .cr-errlist { bottom: calc(var(--cr-
    stepper pair still leaves the field room in the 260 px column. Fields are 16 px: a smaller font makes iOS zoom the page on focus. */
 @media (pointer: coarse) {
   .cr { --cr-menubar-h: 48px; --cr-status-h: 48px; --cr-rail-w: 45px; }
+  .cr-props { scroll-padding-top: 52px; } /* the sticky head is 45 px here (40 px above): a focused control is never left under it */
   .cr-menu-top { min-width: 44px; }
   .cr-menu-item { min-height: 44px; }
   .cr-menubar #site-link { min-width: 44px; justify-content: center; }

@@ -176,10 +176,8 @@ for (const vp of [{ width: 400, height: 800 }, { width: 1366, height: 768 }]) {
       expect(meets(s, tools), 'clear of the cube tools').toBe(false)
       expect(await stack.evaluate((e) => e.scrollHeight > e.clientHeight), 'it scrolls inside itself').toBe(true)
       await expect(page.locator('.cr-note-list').first()).toBeVisible()
-      // notes stand over the drawer (z-index 5 against 2): the pose is started before they come back
-      await page.evaluate(() => document.querySelector('[data-testid="notes"]')!.replaceChildren())
+      // wave 2c (S7): the notes are still on screen when the drawer opens and a pose is started through it (they used to cover its tabs)
       await startPose(page)
-      await fillNotes(page)
       await expect(page.locator('.cr-note-list').first()).toBeHidden()
       const s2 = await box(stack)
       const cancel = await box(cancelButton(page))
@@ -187,6 +185,48 @@ for (const vp of [{ width: 400, height: 800 }, { width: 1366, height: 768 }]) {
       expect(meets(s2, cancel), 'clear of « Annuler la pose »').toBe(false)
       await page.keyboard.press('Escape')
       await expect(page.locator('.cr-note-list').first()).toBeVisible()
+    })
+
+    test('S3 and S7: a toast is drawn above the notes; the open drawer is drawn above the notes (its tabs are what a tap reaches)', async ({ page }) => {
+      await boot(page)
+      await fillNotes(page)
+      await page.evaluate(() => {
+        const t = document.querySelector<HTMLElement>('[data-testid="toast"]')!
+        t.hidden = false
+        t.textContent = 'Rien ici : Espace ouvre le tiroir des appareils pour en poser un.'
+      })
+      const z = (sel: string) => page.locator(sel).first().evaluate((e) => Number(getComputedStyle(e).zIndex))
+      const t = await box(page.getByTestId('toast'))
+      const s = await box(page.getByTestId('notes'))
+      expect(meets(t, s), 'the toast and the notes do share some screen (the test means something)').toBe(true)
+      expect(await z('.cr-toast'), 'toast above the notes').toBeGreaterThan(await z('.cr-notes'))
+      await page.evaluate(() => (document.querySelector<HTMLElement>('[data-testid="toast"]')!.hidden = true))
+      await page.locator('#renderCanvas').focus()
+      await page.keyboard.press('Space')
+      await expect(page.getByTestId('inventory-drawer')).toBeVisible()
+      expect(await z('.cr-drawer'), 'drawer above the notes while open').toBeGreaterThan(await z('.cr-notes'))
+      const tab = await box(page.getByRole('tab').first())
+      expect(await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.getAttribute('role'), { x: tab.x + tab.width / 2, y: tab.y + tab.height / 2 }), 'a tap on the first tab reaches the tab').toBe('tab')
+      await page.keyboard.press('Escape')
+      await expect.poll(() => z('.cr-notes'), 'the notes are back on top once the drawer is closed').toBeGreaterThan(await z('.cr-drawer'))
+    })
+
+    test('S8: a capped notes stack scrolls under a real wheel, and its scrollbar belongs to it (not to the 3D view below)', async ({ page }) => {
+      await boot(page)
+      await fillNotes(page)
+      const stack = page.getByTestId('notes')
+      expect(await stack.evaluate((e) => e.scrollHeight > e.clientHeight)).toBe(true)
+      const s = await box(stack)
+      await page.mouse.move(s.x + s.width / 2, s.y + 60)
+      await page.mouse.wheel(0, 240)
+      await expect.poll(() => stack.evaluate((e) => e.scrollTop), 'a wheel over a note scrolls the stack').toBeGreaterThan(0)
+      const bar = await stack.evaluate((e) => (e as HTMLElement).offsetWidth - e.clientWidth)
+      if (bar > 0) {
+        // classic scrollbars take room: the point on the bar is the stack's (a pointer-events: none stack handed it to the canvas)
+        const onBar = await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.closest('[data-testid="notes"]') !== null, { x: s.x + s.width - bar / 2, y: s.y + s.height / 2 })
+        expect(onBar, 'the scrollbar track is the stack\'s').toBe(true)
+      }
+      expect(await stack.evaluate((e) => getComputedStyle(e).pointerEvents)).toBe('auto')
     })
 
     test('D: the toast stands above « Annuler la pose » during a pose', async ({ page }) => {
@@ -202,6 +242,33 @@ for (const vp of [{ width: 400, height: 800 }, { width: 1366, height: 768 }]) {
       expect(meets(t, cancel), `toast ${JSON.stringify(t)} vs button ${JSON.stringify(cancel)}`).toBe(false)
       expect(t.x).toBeGreaterThanOrEqual(0)
       expect(t.x + t.width).toBeLessThanOrEqual(vp.width)
+    })
+  })
+}
+
+// ── S6 (wave 2c): between 761 and ~1100 px the right group of the status bar shrinks, the Signal button never leaves the window ──────────
+for (const width of [761, 800, 1024]) {
+  test.describe(`status bar at ${width} px with a long selection and a playback line`, () => {
+    test.use({ viewport: { width, height: 700 } })
+    test(`S6: the Signal button is fully inside the window at ${width} px`, async ({ page }) => {
+      await boot(page)
+      await page.evaluate(() => {
+        const set = (id: string, text: string) => {
+          const e = document.querySelector<HTMLElement>(`[data-testid="${id}"]`)!
+          e.hidden = false
+          e.textContent = text
+        }
+        set('status-selection', 'Sélection : Avid Pro Tools HDX avec un nom d’appareil vraiment très long (avid-protools-hdx)')
+        set('status-playback', 'Aucune source de lecture dans le projet : branchez un ordinateur ou une interface audio')
+        set('status-mic', 'Micro OK')
+      })
+      const s = await box(page.getByTestId('signal-status'))
+      expect(s.x, 'Signal left edge').toBeGreaterThanOrEqual(0)
+      expect(s.x + s.width, `Signal right edge (${JSON.stringify(s)})`).toBeLessThanOrEqual(width)
+      const bar = await box(page.getByTestId('status-bar'))
+      expect(s.y + s.height).toBeLessThanOrEqual(bar.y + bar.height + 0.5)
+      await page.getByTestId('signal-status').click()
+      await expect(page.getByTestId('error-list')).toBeVisible()
     })
   })
 }

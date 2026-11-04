@@ -87,6 +87,8 @@ test('(a) Écoute › Couverture: off by default, then the dots, ≤ 20 000 poin
   await expect(page.getByTestId('coverage-method')).toHaveText('somme énergétique, champ direct')
   await expect(page.getByTestId('coverage-source')).toHaveText('Couverture : fiche de l’appareil (verticale déduite)')
   await expect(page.getByTestId('coverage-hatched')).toContainText('Hachuré : interférences non modélisées')
+  // night wave 2c (C2): all four are on screen without opening « À propos du calcul » (toHaveText also passes on a folded element)
+  for (const id of ['coverage-unit', 'coverage-method', 'coverage-source', 'coverage-hatched']) await expect(page.getByTestId(id), id).toBeVisible()
   await expect(page.getByTestId('coverage-legend').locator('li')).toHaveCount(8)
   await expect(page.getByTestId('coverage-legend').locator('li').first()).toContainText('0 à −3 dB')
   await expect(page.getByTestId('coverage-legend').locator('li').last()).toContainText('−21 dB et moins')

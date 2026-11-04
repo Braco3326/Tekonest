@@ -85,9 +85,9 @@ code pas en dur. (Le nom de fichier `creationTokens.ts` n'est pas dans `src/crea
 | Token | Valeur | Rôle |
 |---|---|---|
 | `--cr-nuit` | `#131114` | fond de l'app, champs, vue 3D ; l'encre des boutons pleins Ambre |
-| `--cr-papier` | `#F3EDE3` | texte principal (16,1 : 1 sur Nuit, 15,2 : 1 sur panel) |
+| `--cr-papier` | `#F3EDE3` | texte principal (16,1 : 1 sur Nuit, 14,95 : 1 sur panel) |
 | `--cr-ambre` | `#DD9349` | **sélection et action** (7,5 : 1 sur Nuit) : barre de ligne choisie, anneau de focus, bouton principal |
-| `--cr-prune` | `#612D45` | accent calme : bordures des fenêtres et du tiroir, zone « scène » des plans |
+| `--cr-prune` | `#612D45` | accent calme : bordures des fenêtres et du tiroir, zone « scène » des plans (1,76 : 1 sur Nuit : décoratif, la pastille « scène » porte donc un bord `ink-muted`) |
 | `--cr-panel` | `#1C191D` | Nuit surélevé : barres, panneaux, tiroir, cartes |
 | `--cr-panel-line` | `#3A3339` | séparateur discret (≈ 1,4 : 1 : **décoratif seulement**, jamais le bord d'un contrôle) |
 | `--cr-ink-muted` | `#B3AAA0` | texte secondaire (≥ 4,5 : 1) **et bord d'un contrôle** (7,6 : 1 sur le panneau, WCAG 1.4.11) |

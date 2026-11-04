@@ -63,7 +63,8 @@ describe('honesty: the copy says what the coverage is', () => {
   it('the unit and the method are the exact brief wording, as their own keys', () => {
     expect(COPY.coverage!.unit).toBe('dB relatif (0 = point le plus fort)')
     expect(COPY.coverage!.method).toBe('somme énergétique, champ direct')
-    // Night wave 2 (G): the chip reads « estimation » (the controller's call: « relatif » is a word of the unit line, which keeps it); its name still carries the visible word.
+  })
+  it('the fidelity chip reads « estimation » (a deliberate change since night wave 2, the brief §5 said « relatif »: see the dated note there; the founder is to confirm), and its accessible name contains that word', () => {
     expect(COPY.coverage!.chip).toBe('estimation')
     expect(COPY.coverage!.chipName).toContain(COPY.coverage!.chip)
   })
