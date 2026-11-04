@@ -62,7 +62,20 @@
     "shape": "rack-box",
     "params": {
       "chamferMm": 1
-    }
+    },
+    "projection": "opposite"
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 445,
+        "yMm": 15,
+        "wMm": 36,
+        "hMm": 15,
+        "marginMm": 4
+      }
+    ]
   },
   "sources": [
     {
