@@ -135,6 +135,43 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(gates.filter((g) => !g.ok)).toEqual([])
   }, 120_000)
 
+  /** Every wave-1 asset must come out of the builder at the spec size, inside the triangle budget, and through the fix-up unrotated. */
+  async function expectBuiltTo(spec: AssetSpecT, budget: number): Promise<Built> {
+    const built = await buildAndFix(spec)
+    const { w, h, d } = spec.realSizeMm
+    const size = [0, 1, 2].map((k) => built.raw.bboxM.max[k] - built.raw.bboxM.min[k])
+    for (const [k, mm] of [w, h, d].entries()) expect(Math.abs(size[k] - mm * MM)).toBeLessThan(TOL_M)
+    expect(built.raw.triangles).toBeLessThanOrEqual(budget)
+    expect(built.raw.materials).toBe(1)
+    expect(built.fix.rotatedDegrees).toBe(0)
+    expect(built.gates.filter((g) => !g.ok)).toEqual([])
+    return built
+  }
+
+  it.skipIf(!BLENDER)('trs-quarter builds at 14.5 x 14.5 x 93 mm with a 6.29 mm barrel at minimum z', async () => {
+    const spec = specWithBuild('trs-quarter', { shape: 'trs-plug', params: { barrelMm: 19 } })
+    const { raw, rawBytes } = await expectBuiltTo(spec, 800)
+    const verts = await vertices(rawBytes)
+    const zMin = raw.bboxM.min[2]
+    // The barrel is every vertex before the body step at z = 19 mm; the grooves are narrower, the tip is rounded.
+    const barrel = verts.filter((v) => v[2] < zMin + 19 * MM - 1e-6)
+    const barrelRadius = Math.max(...barrel.map((v) => Math.hypot(v[0], v[1])))
+    expect(Math.abs(barrelRadius - 6.29 * MM / 2)).toBeLessThan(TOL_M)
+    expect(radiusAtZ(verts, zMin)).toBeLessThan(6.29 * MM / 2)
+    expect(Math.abs(radiusAtZ(verts, raw.bboxM.max[2]) - 14.5 * MM / 2)).toBeLessThan(TOL_M)
+  }, 120_000)
+
+  it.skipIf(!BLENDER)('rj45 builds at 11.68 x 8 x 22.48 mm with the latch step on the +Y side', async () => {
+    const spec = specWithBuild('rj45', { shape: 'rj45-plug' })
+    const { raw, rawBytes } = await expectBuiltTo(spec, 800)
+    const verts = await vertices(rawBytes)
+    const zMin = raw.bboxM.min[2]
+    const zMax = raw.bboxM.max[2]
+    // Full height at the mating end, 1.5 mm lower from 60 % of the length to the far end.
+    expect(Math.max(...verts.filter((v) => v[2] < zMin + 0.5 * MM).map((v) => v[1]))).toBeCloseTo(4 * MM, 6)
+    expect(Math.max(...verts.filter((v) => v[2] > zMax - 0.5 * MM).map((v) => v[1]))).toBeCloseTo(2.5 * MM, 6)
+  }, 120_000)
+
   it.skipIf(!BLENDER)('a negative size exits non-zero with the BUILD_FAIL reason', async () => {
     const base = xlr()
     const bad = { ...base, realSizeMm: { ...base.realSizeMm, d: -1 } } as AssetSpecT
