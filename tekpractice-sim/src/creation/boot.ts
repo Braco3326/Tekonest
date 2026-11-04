@@ -1427,6 +1427,9 @@ export async function bootCreation(): Promise<void> {
     if (placement.cancel()) return true // a placement or a drag goes first; the selection stays
     // A held Échap is one press: its auto-repeats must not fall through to the next level (the cable, then the selection).
     if (e.repeat) return true
+    // A hover label on screen is dismissed first and alone (WCAG 1.4.13): the pointer stays where it is, the cable in hand, the
+    // pinned refusal and the selection are untouched, and the next Échap does the usual cascade. A pose goes before (above): no label is shown during one.
+    if (portLabels.dismissHover()) return true
     if (patch.cancel()) return true // then a cable in hand, a pinned refusal or the « Débrancher » offer; the selection stays
     if (e.target !== canvas || viewState.get().selection === null) return false
     selection.select(null)
