@@ -366,7 +366,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-collapse svg { width: 12px; height: 12px; }
 .cr-panel-body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 8px 0; }
 /* The properties keep a floor (Task 39): the blocks under them (coverage up to 54 %, listening up to 34 %, the cable legend) shrink and scroll inside themselves instead of squeezing the selected device's settings. Owned here, not by a lazy block's CSS. */
-.cr-props .cr-panel-body { flex: 0 0 auto; min-height: 120px; overflow: visible; }
+.cr-props .cr-panel-body { flex: 1 0 auto; min-height: 120px; overflow: visible; } /* grows into free space (the blocks after it stay at the bottom of a short column), never shrinks, never scrolls itself */
 
 /* ── Cable legend (Task 27): the bottom of « Propriétés », never over the 3D view ───────────────────────────── */
 .cr-legend { flex: 0 0 auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }
@@ -686,7 +686,9 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr .cr-pick-close[hidden] { display: none; }
 
 .cr-pick-scroll { flex: 1; min-height: 0; overflow-x: hidden; overflow-y: auto; padding: 4px 24px 24px; }
-.cr-pick-pitch { margin: -4px 0 10px; color: var(--cr-ink-muted); font-size: 12px; line-height: 1.35; }
+.cr-pick-rowhead { display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; margin: 16px 0 10px; }
+.cr-pick-rowhead .cr-pick-row { margin: 0; }
+.cr-pick-pitch { margin: 0; color: var(--cr-ink-muted); font-size: 12px; line-height: 1.3; }
 .cr-pick-row {
   margin: 16px 0 10px;
   font: 500 13px/1.2 var(--cr-font-ui); /* « MODÈLES »: accents read better in Plex (bundled 400/500) */

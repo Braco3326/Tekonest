@@ -89,12 +89,15 @@ test.describe('picker (E)', () => {
     await expect(page.locator('.cr-pick-hint')).toHaveText('Cliquez un lieu pour l’ouvrir (ou flèches puis Entrée).')
     const pitch = page.getByTestId('template-pitch')
     await expect(pitch).toHaveText('Un lieu avec son matériel déjà posé : le plus simple pour commencer.')
-    // it sits between the « Modèles » heading and its cards
+    // it goes with the « Modèles » heading (on its line when there is room, under it when not) and above its cards, and the row is as tall as the bare heading
     const h = await box(page.getByRole('heading', { name: 'Modèles' }))
     const p = await box(pitch)
     const g = await box(page.getByTestId('template-grid'))
-    expect(p.y).toBeGreaterThanOrEqual(h.y + h.height - 1)
+    expect(p.x >= h.x + h.width - 1 || p.y >= h.y + h.height - 1, 'right of the heading, or under it').toBe(true)
     expect(g.y).toBeGreaterThanOrEqual(p.y + p.height - 1)
+    expect(g.y - (h.y + h.height), 'the gap to the cards is the heading own 10 px').toBeLessThanOrEqual(10.5)
+    // on a wide window the pitch costs no height: the place grid below stays where the bare heading put it (the axe label-in-name rule of the picker is sensitive to what straddles the fold, creation-budgets)
+    expect((await box(page.locator('.cr-pick-rowhead'))).height, 'one line, as tall as the bare heading').toBeLessThanOrEqual(h.height + 1)
   })
 })
 
