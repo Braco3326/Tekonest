@@ -598,3 +598,24 @@ test.describe('Écouter depuis ici', () => {
     expect(ici.position[2]).toBeCloseTo(w.z, 3)
   })
 })
+
+// Task 44 S4: the persistent error list (a fixed pop-over above the status bar, up to 440 px wide / 60 vh tall) shares the bottom left of a narrow window with « Annuler la pose »;
+// while a pose runs the view carries data-placing and the list stands above the button, so neither covers the other.
+for (const vp of [{ width: 1366, height: 768 }, { width: 400, height: 700 }, { width: 400, height: 560 }]) {
+  test(`the error list does not cover « Annuler la pose » while a pose runs and the list is open, at ${vp.width}x${vp.height}`, async ({ page }) => {
+    await page.setViewportSize(vp)
+    await boot(page)
+    await choose(page, 'yamaha-ql1', 'Consoles')
+    expect(await placing(page)).toBe(true)
+    await page.getByTestId('signal-status').click() // opens the persistent error list (a refusal is not needed: the box is the same, with its empty line)
+    const list = page.getByTestId('error-list')
+    await expect(list).toBeVisible()
+    const a = (await list.boundingBox())!
+    const b = (await cancelButton(page).boundingBox())!
+    const meets = a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height
+    expect(meets, `list ${JSON.stringify(a)} vs button ${JSON.stringify(b)}`).toBe(false)
+    // the button is still what a tap at its centre reaches, and the list is still on screen
+    expect(await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.getAttribute('data-testid'), { x: b.x + b.width / 2, y: b.y + b.height / 2 })).toBe('cancel-placement')
+    expect(a.y, 'the list stays inside the window (top)').toBeGreaterThanOrEqual(0)
+  })
+}

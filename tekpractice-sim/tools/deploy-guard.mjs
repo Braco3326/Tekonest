@@ -30,6 +30,7 @@ const ASSIGN = /^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/
 /** The value part of a `.env` line, without its quotes or trailing comment. Only used to know whether it is blank. */
 function bareValue(raw) {
   const v = raw.trim()
+  if (v.startsWith('#')) return '' // `KEY=   # paste here`: dotenv reads a value that starts with # as a comment, so the value is empty (Task 44 N3)
   const quote = v[0]
   if ((quote === '"' || quote === "'" || quote === '`') && v.indexOf(quote, 1) > 0) return v.slice(1, v.indexOf(quote, 1))
   const hash = v.search(/\s#/)

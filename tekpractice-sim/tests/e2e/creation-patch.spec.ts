@@ -462,11 +462,12 @@ test('with a cable in hand every port is a full 12 px target, on a device that i
   await boot(page)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }))
   await frameQl1Unselected(page)
-  const inHand = { instance: 'ql1', port: 'power-in' }
-  await clickPort(page, inHand) // a cable in hand, started on a connector of the (still unselected) console: the connector itself always patches
-  expect(await pending(page)).toEqual(inHand)
+  // The cable is sourced on the SM58, a DIFFERENT device from the one whose ports are measured. The camera is framed on the console, where the SM58 is off screen, and
+  // the Escape of frameQl1Unselected cancels a cable in hand: so the cable is put in hand AFTER the framing, through the same state machine a click uses (patchClick).
+  await page.evaluate((r) => window.__creation!.patchClick(r), SM58)
+  expect(await pending(page)).toEqual(SM58)
   expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
-  expect(await page.evaluate((r) => window.__creation!.portHitRadiusPx(r), MIC1)).toBeGreaterThanOrEqual(12 - 1e-6) // ql1 is not selected, but a cable is in hand
+  expect(await page.evaluate((r) => window.__creation!.portHitRadiusPx(r), MIC1)).toBeGreaterThanOrEqual(12 - 1e-6) // ql1 is not selected, but a cable is in hand (on another device)
   const plan = await ql1Plan(page) // a point 8 px from a ql1 connector, that connector the nearest port
   expect(plan.eight, 'a ql1 connector with an 8 px point on its body').not.toBeNull()
   expect(await page.evaluate(({ x, y }) => window.__creation!.portAtPoint(x, y), { x: plan.eight!.x, y: plan.eight!.y })).toEqual(plan.eight!.ref)

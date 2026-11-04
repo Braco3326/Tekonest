@@ -128,6 +128,8 @@ export interface CreationDebug {
   portDistanceM(a: PortRef, b: PortRef): number | null
   /** Task 26: the first port clicked while a cable is in hand, or null. */
   patchPending(): PortRef | null
+  /** Task 44 S2: the patch state machine's click on a port (what a click on its marker does), for a test that must put a cable in hand on a port that is off screen. False while patching is inert. */
+  patchClick(ref: PortRef): boolean
   /** Task 24: the raw floor point under a page point (CSS px), as the placement pick finds it; null off the floor. */
   floorPoint(x: number, y: number): [number, number, number] | null
   /** Task 37: the coverage's state (plain data; never loads its chunk: `on: false` until Écoute › Couverture is chosen). */

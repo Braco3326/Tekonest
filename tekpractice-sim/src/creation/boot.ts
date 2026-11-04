@@ -2138,6 +2138,7 @@ export async function bootCreation(): Promise<void> {
     portProxyRadiusPx: (ref) => host.portProxyRadiusPx(ref),
     portAtPoint: (x, y) => host.portAtPoint(x, y, patch.pending !== null),
     patchPending: () => patch.pending,
+    patchClick: (ref) => patch.click(ref),
     cableLengthM: (key) => host.cableLengthM(key),
     portDistanceM: (a, b) => {
       const [pa, pb] = [host.portWorld(a), host.portWorld(b)]

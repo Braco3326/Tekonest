@@ -62,6 +62,17 @@ describe('findSecretVars: the environment', () => {
   it('an empty or blank value ships nothing and is not refused', () => {
     expect(findSecretVars({ env: { VITE_AI_COACH_KEY: '', VITE_B_TOKEN: '   ' }, rootDir: project() })).toEqual([])
   })
+  it('N3: a value that starts with # is a comment, dotenv reads it as blank: not refused (VITE_AI_COACH_KEY=   # paste here)', () => {
+    for (const line of ['VITE_AI_COACH_KEY=   # paste here', 'VITE_AI_COACH_KEY=# paste here', 'export VITE_AI_COACH_KEY= #todo']) {
+      expect(findSecretVars({ env: {}, rootDir: project({ '.env': `${line}
+` }) }), line).toEqual([])
+    }
+    // ... while a real value followed by a comment, or a value that merely contains a #, is still refused
+    for (const line of [`VITE_AI_COACH_KEY=${SENTINEL} # mine`, `VITE_AI_COACH_KEY=abc#def`]) {
+      expect(findSecretVars({ env: {}, rootDir: project({ '.env': `${line}
+` }) }).map((f) => f.name), line).toEqual(['VITE_AI_COACH_KEY'])
+    }
+  })
   it('a clean environment and a project without .env files pass', () => {
     expect(findSecretVars({ env: { PATH: 'x', VITE_AI_COACH_PROVIDER: 'anthropic' }, rootDir: project({ 'package.json': '{}' }) })).toEqual([])
   })
@@ -205,7 +216,7 @@ describe('the Vercel build command is guarded too (R1 S1)', () => {
   const projectRoot = join(here, '..', '..')
   const vercel = JSON.parse(readFileSync(join(projectRoot, 'vercel.json'), 'utf8')) as { buildCommand: string; outputDirectory: string; framework: string }
   it('starts with the guard, then the normal build; the other fields are kept', () => {
-    expect(vercel.buildCommand).toBe('node tools/deploy-guard.mjs && npm run build')
+    expect(vercel.buildCommand).toBe('node tools/deploy-guard.mjs && npm run build && node tools/strip-build-meta.mjs')
     expect(vercel.outputDirectory).toBe('dist')
     expect(vercel.framework).toBe('vite')
   })
@@ -216,6 +227,42 @@ describe('the Vercel build command is guarded too (R1 S1)', () => {
     expect(r.status).toBe(1)
     expect(`${r.stdout}${r.stderr}`).toContain('VITE_AI_COACH_KEY')
     expect(`${r.stdout}${r.stderr}`).not.toContain(SENTINEL)
+  })
+})
+
+describe('N2: the Vercel build strips the build metadata (dist/.vite: manifest.json, chunk-modules.json) that the deploy site must not publish', () => {
+  const projectRoot = join(here, '..', '..')
+  const vercel = JSON.parse(readFileSync(join(projectRoot, 'vercel.json'), 'utf8')) as { buildCommand: string }
+  it('the build command runs the guard first, the build, then the strip script, in that order', () => {
+    const parts = vercel.buildCommand.split('&&').map((p) => p.trim())
+    expect(parts).toEqual(['node tools/deploy-guard.mjs', 'npm run build', 'node tools/strip-build-meta.mjs'])
+  })
+  it('the script removes <dir>/.vite and nothing else (default dir: dist), and is happy when there is nothing to remove', () => {
+    const dist = join(tmp, 'strip-dist')
+    mkdirSync(join(dist, '.vite'), { recursive: true })
+    mkdirSync(join(dist, 'assets'), { recursive: true })
+    writeFileSync(join(dist, '.vite', 'manifest.json'), '{}')
+    writeFileSync(join(dist, '.vite', 'chunk-modules.json'), '{}')
+    writeFileSync(join(dist, 'index.html'), '<html></html>')
+    writeFileSync(join(dist, 'assets', 'a.js'), '1')
+    const run = () => spawnSync(process.execPath, [join(tools, 'strip-build-meta.mjs'), dist], { encoding: 'utf8' })
+    expect(run().status).toBe(0)
+    expect(existsSync(join(dist, '.vite'))).toBe(false)
+    expect(existsSync(join(dist, 'index.html'))).toBe(true)
+    expect(existsSync(join(dist, 'assets', 'a.js'))).toBe(true)
+    expect(run().status).toBe(0) // nothing left: still fine
+  })
+  it('run with no argument it works on the project dist (checked on a copy of the tools in a scratch project, so the real dist is never touched)', () => {
+    const proj = join(tmp, 'strip-proj')
+    mkdirSync(join(proj, 'tools'), { recursive: true })
+    mkdirSync(join(proj, 'dist', '.vite'), { recursive: true })
+    copyFileSync(join(tools, 'strip-build-meta.mjs'), join(proj, 'tools', 'strip-build-meta.mjs'))
+    writeFileSync(join(proj, 'dist', '.vite', 'manifest.json'), '{}')
+    writeFileSync(join(proj, 'dist', 'index.html'), 'x')
+    const r = spawnSync(process.execPath, [join(proj, 'tools', 'strip-build-meta.mjs')], { cwd: proj, encoding: 'utf8' })
+    expect(r.status).toBe(0)
+    expect(existsSync(join(proj, 'dist', '.vite'))).toBe(false)
+    expect(existsSync(join(proj, 'dist', 'index.html'))).toBe(true)
   })
 })
 

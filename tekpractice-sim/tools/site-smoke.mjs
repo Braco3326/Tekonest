@@ -75,8 +75,14 @@ try {
     await page.close()
   }
 
-  // CA-24 (Task 43d): under the deploy base the Draco decoder is fetched from the site itself (BASE + draco/...), answers 200, and nothing leaves the origin.
-  {
+  // CA-24 (Task 43d, N5 of Task 44): under the deploy base the Draco decoder is fetched from the site itself (BASE + draco/...), answers 200, and nothing leaves the
+  // origin. Checked on BOTH paths: Mode Création (a template with Draco-compressed devices) and the legacy game (?legacy=1&level=a1).
+  // The decoder is requested when the FIRST Draco model is decoded, which can come a while after the models report ready (it failed once, right after build:site, with
+  // « never requested » in a fixed window), so the two requests are POLLED for, up to DRACO_WAIT_MS, instead of being looked for once after a fixed delay.
+  const DRACO_WAIT_MS = 20_000 // generous: a slow machine right after a build; a healthy run answers in well under a second
+  const wasm = BASE + 'draco/draco_decoder_gltf.wasm'
+  const wrapper = BASE + 'draco/draco_decoder_gltf_nodejs.js'
+  const dracoCheck = async (name, url, drive) => {
     const page = await browser.newPage({ viewport: { width: 1366, height: 768 } })
     const problems = []
     const seen = []
@@ -84,26 +90,37 @@ try {
     page.context().on('request', (r) => seen.push(r.url()))
     page.context().on('response', (r) => status.set(new URL(r.url()).pathname, r.status()))
     page.on('pageerror', (e) => problems.push(e.message))
-    await page.goto(ORIGIN + BASE)
-    await page.getByTestId('template-grid').getByRole('option').first().click() // a template with Draco-compressed devices
-    const wasm = BASE + 'draco/draco_decoder_gltf.wasm'
-    const wrapper = BASE + 'draco/draco_decoder_gltf_nodejs.js'
+    await page.goto(url)
+    await drive(page, problems)
+    const deadline = Date.now() + DRACO_WAIT_MS
+    while ((!status.has(wasm) || !status.has(wrapper)) && Date.now() < deadline) await page.waitForTimeout(200)
+    await page.waitForTimeout(500) // let a late foreign request show up
+    const foreign = seen.filter((u) => !u.startsWith('data:') && !u.startsWith('blob:') && new URL(u).origin !== ORIGIN)
+    if (foreign.length) problems.push('cross-origin request(s): ' + [...new Set(foreign)].join(', '))
+    for (const path of [wasm, wrapper]) {
+      if (status.get(path) !== 200) problems.push(`${path} answered ${status.get(path) ?? `nothing (never requested in ${DRACO_WAIT_MS / 1000} s)`}`)
+    }
+    if (problems.length) {
+      failed = true
+      console.error(`[smoke:site] FAIL Draco decoder under the deploy base (${name}):\n  ` + problems.join('\n  '))
+    } else console.log(`[smoke:site] OK   Draco decoder (${name}): ${wasm} and ${wrapper} answered 200, 0 cross-origin request`)
+    await page.close()
+  }
+  await dracoCheck('Mode Création', ORIGIN + BASE, async (page, problems) => {
+    await page.getByTestId('template-grid').getByRole('option').first().click()
     try {
       await page.waitForFunction(() => window.__creation && window.__creation.modelsPending() === 0 && window.__creation.design().rig.instances.length > 0, null, { timeout: 30_000 })
     } catch {
       problems.push('the template never finished loading its models')
     }
-    const foreign = seen.filter((u) => !u.startsWith('data:') && !u.startsWith('blob:') && new URL(u).origin !== ORIGIN)
-    if (foreign.length) problems.push('cross-origin request(s): ' + [...new Set(foreign)].join(', '))
-    for (const path of [wasm, wrapper]) {
-      if (status.get(path) !== 200) problems.push(`${path} answered ${status.get(path) ?? 'nothing (never requested)'}`)
+  })
+  await dracoCheck('legacy ?legacy=1&level=a1', ORIGIN + BASE + '?legacy=1&level=a1', async (page, problems) => {
+    try {
+      await page.waitForFunction(() => window.__audioSim && window.__audioSim.assets().length > 0 && window.__audioSim.assets().every((a) => a.status === 'glb' || a.status === 'placeholder'), null, { timeout: 30_000 })
+    } catch {
+      problems.push('the legacy level never finished loading its models')
     }
-    if (problems.length) {
-      failed = true
-      console.error('[smoke:site] FAIL Draco decoder under the deploy base:\n  ' + problems.join('\n  '))
-    } else console.log(`[smoke:site] OK   Draco decoder: ${wasm} and ${wrapper} answered 200, 0 cross-origin request`)
-    await page.close()
-  }
+  })
 } catch (e) {
   failed = true
   console.error('[smoke:site] ERROR', e)
