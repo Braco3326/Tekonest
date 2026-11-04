@@ -15,7 +15,7 @@
       "yMm": 107,
       "confidence": "photo",
       "openingMm": 24,
-      "insetMm": 9
+      "insetMm": 13.8
     },
     {
       "portId": "power-in",
@@ -23,7 +23,7 @@
       "xMm": 58.1,
       "yMm": 107,
       "confidence": "photo",
-      "insetMm": 12
+      "insetMm": 13.8
     }
   ],
   "controls": [
@@ -42,6 +42,26 @@
     }
   ],
   "driftLimit": 0.2,
+  "texture": {
+    "blankRects": [
+      {
+        "face": "io",
+        "xMm": 45,
+        "yMm": 126,
+        "wMm": 55,
+        "hMm": 20,
+        "marginMm": 8
+      },
+      {
+        "face": "opposite",
+        "xMm": 70,
+        "yMm": 34,
+        "wMm": 50,
+        "hMm": 22,
+        "marginMm": 8
+      }
+    ]
+  },
   "sources": [
     {
       "kind": "datasheet",

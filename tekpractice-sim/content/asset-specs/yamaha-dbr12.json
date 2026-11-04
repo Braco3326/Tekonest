@@ -14,7 +14,8 @@
       "xMm": 164.9,
       "yMm": 396.4,
       "confidence": "manual",
-      "openingMm": 24
+      "openingMm": 24,
+      "insetMm": 25.7
     },
     {
       "portId": "link-out",
@@ -22,14 +23,16 @@
       "xMm": 164.9,
       "yMm": 304,
       "confidence": "manual",
-      "openingMm": 24
+      "openingMm": 24,
+      "insetMm": 25.6
     },
     {
       "portId": "power-in",
       "face": "io",
       "xMm": 169.9,
       "yMm": 213.6,
-      "confidence": "manual"
+      "confidence": "manual",
+      "insetMm": 25.5
     }
   ],
   "controls": [
@@ -47,6 +50,19 @@
       }
     }
   ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 150,
+        "yMm": 46,
+        "wMm": 64,
+        "hMm": 64,
+        "marginMm": 10
+      }
+    ]
+  },
+  "driftLimit": 0.1,
   "sources": [
     {
       "kind": "datasheet",
