@@ -17,6 +17,49 @@
     }
   ],
   "controls": [],
+  "build": {
+    "shape": "revolve",
+    "profile": [
+      [
+        0,
+        49
+      ],
+      [
+        1.5,
+        51
+      ],
+      [
+        54,
+        51
+      ],
+      [
+        95,
+        51
+      ],
+      [
+        98.5,
+        51
+      ],
+      [
+        100,
+        47
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#b9bcc2"
+      },
+      {
+        "fromMm": 54,
+        "colour": "#d93a3a"
+      },
+      {
+        "fromMm": 95,
+        "colour": "#2e2f33"
+      }
+    ]
+  },
   "sources": [
     {
       "kind": "datasheet",
@@ -27,6 +70,11 @@
       "kind": "datasheet",
       "url": "https://www.yellowtec.com/litt/",
       "note": "Yellowtec litt product page (opened, text read): color segments in red, green, yellow, white, blue in two heights, 41 mm and 27 mm."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.yellowtec.com/fileadmin/downloads/Product-Brief-litt-web.pdf",
+      "note": "build.profile: the published stack as a lathe profile: every part is a 51 mm disc, Base Controller 0-54 mm (aluminium), colour segment 54-95 mm (41 mm, red for ON AIR; the real segment is translucent, drawn opaque), cover cap 95-100 mm (5 mm). The 1.5 mm foot chamfer and the 1.5 and 3.5 mm top chamfers (47 mm cap top) are styling, not measured. Colours are estimates (brushed aluminium, red, dark cap)."
     }
   ]
 }
