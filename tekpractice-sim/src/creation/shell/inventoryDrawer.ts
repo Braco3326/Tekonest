@@ -167,6 +167,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   filter.autocomplete = 'off'
   filter.spellcheck = false
   filter.dataset.testid = 'inventory-filter'
+  filter.placeholder = I().filter! // the same word as its label, drawn only when a phone hides the label (CSS)
   const filterStatus = el(doc, 'p', 'cr-sr-only')
   filterStatus.setAttribute('role', 'status')
   filterStatus.setAttribute('aria-live', 'polite')
@@ -280,9 +281,19 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       const none = found.length === 0
       filterStatus.textContent = none ? I().filterNone! : ''
       if (none) {
-        const p = el(doc, 'p', 'cr-drawer-empty', I().filterNone)
-        p.setAttribute('aria-hidden', 'true') // the status above says it; read once
-        panel.appendChild(p)
+        // The status above says the short form once (it is the only live text); this is the way out, read when the learner gets there. The typed text goes in as text.
+        const box = el(doc, 'div', 'cr-drawer-empty')
+        box.append(el(doc, 'p', undefined, I().filterNoneHelp!.replace('{q}', () => filter.value.trim())))
+        const clear = el(doc, 'button', 'cr-drawer-clear', I().filterClear)
+        clear.type = 'button'
+        clear.dataset.testid = 'inventory-filter-clear'
+        clear.addEventListener('click', () => {
+          filter.value = ''
+          renderItems(tab)
+          filter.focus()
+        })
+        box.append(clear)
+        panel.appendChild(box)
         return
       }
     } else {
@@ -414,6 +425,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     const plain = !e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey
     // In the search field Space is a space: only Échap is the drawer's.
     if (e.target === filter && e.key !== 'Escape') return
+    if (e.key === ' ' && (e.target as Element).classList?.contains('cr-drawer-clear')) return // « Effacer le filtre » is a button: Espace presses it
     // A held key closes it once (repeats would land on the canvas and re-open it).
     if (e.repeat && plain && d.isToggleKey(e)) {
       e.preventDefault()

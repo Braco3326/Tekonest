@@ -159,7 +159,12 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
     })
     box.addEventListener('keydown', (e) => onGridKey(e, g))
     grids.push(g)
-    scroll.append(heading, box)
+    if (id === 'templates') {
+      const pitch = el(doc, 'p', 'cr-pick-pitch', P().templatesPitch)
+      pitch.id = 'cr-pick-templates-pitch'
+      pitch.dataset.testid = 'template-pitch'
+      scroll.append(heading, pitch, box)
+    } else scroll.append(heading, box)
     return g
   }
   if (d.templates.length) makeGrid('templates', P().templates!, d.templates, 'template-grid')

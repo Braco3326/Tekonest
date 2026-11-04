@@ -203,7 +203,9 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** L1: the neutral blank room card. */
     blank: 'Salle vide neutre',
     /** Under the title; also the grids' description. */
-    hint: 'Flèches pour parcourir, Entrée pour ouvrir.',
+    hint: 'Cliquez un lieu pour l’ouvrir (ou flèches puis Entrée).',
+    /** One line under « Modèles » (night wave 2, E): what a template is. */
+    templatesPitch: 'Un lieu avec son matériel déjà posé : le plus simple pour commencer.',
     /** Plan legend under the hint (the thumbnails: seen from the audience, stage at the top). */
     legendIntro: 'Plans vus depuis le public, scène en haut :',
     legendStage: 'scène',
@@ -650,6 +652,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     filter: 'Filtrer',
     /** Dit poliment (et affiché dans la liste) quand le filtre ne correspond à aucun appareil. */
     filterNone: 'Aucun appareil ne correspond',
+    /** Shown in the list (not spoken: the status above says the short form) when the filter matches nothing; {q} = what was typed. Night wave 2, F. */
+    filterNoneHelp: 'Aucun appareil ne correspond à « {q} ». Effacez le filtre ou essayez un autre mot (micro, console, enceinte).',
+    /** The button under it: clears the filter and puts the focus back in the field. */
+    filterClear: 'Effacer le filtre',
     /** Nom accessible de la liste quand un filtre est actif : elle réunit les appareils de tous les onglets. */
     filterResults: 'Appareils qui correspondent',
     /** Badge on a proposed device: in the Bêta tab, in the Projet tree and in Properties once it is placed (Task 30). */

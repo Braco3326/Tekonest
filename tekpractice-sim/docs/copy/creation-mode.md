@@ -213,7 +213,8 @@ Types de signal du catalogue (`signalTypes[].id`), tels que Propriétés les nom
 |---|---|---|---|
 | `picker.title` | Choisir un lieu | validé | Titre (h2, sous le `h1` `shell.appTitle`) de l'écran de départ « Choisir un lieu » (Task 12) ; ouvert au premier lancement et par Lieu → « Choisir un lieu… » |
 | `picker.blank` | Salle vide neutre | brief | Carte de la salle vide (L1) |
-| `picker.hint` | Flèches pour parcourir, Entrée pour ouvrir. | validé | Task 12 : sous le titre ; aussi la description (`aria-describedby`) des deux grilles. Les flèches ne changent jamais de lieu (CA-13) |
+| `picker.hint` | Cliquez un lieu pour l’ouvrir (ou flèches puis Entrée). | à valider (tekuxwriter) | Vague de nuit 2, E : sous le titre ; aussi la description (`aria-describedby`) des deux grilles. Dit le clic d’abord (c’est le geste de la souris et du toucher), les flèches ensuite ; les flèches ne changent jamais de lieu (CA-13). Remplace « Flèches pour parcourir, Entrée pour ouvrir. » (validé en Task 12) |
+| `picker.templatesPitch` | Un lieu avec son matériel déjà posé : le plus simple pour commencer. | à valider (tekuxwriter) | Vague de nuit 2, E : une ligne sous le titre « Modèles » (paragraphe, pas dans le nom de la grille) ; dit ce qu’est un modèle sans promettre plus que ce que le code fait (le matériel est posé, branché comme le modèle le dit) |
 | `picker.legendIntro` | Plans vus depuis le public, scène en haut : | validé | Task 12 : légende des vignettes (même sens que la vue Face, ADR-0011 / P14), suivie de trois pastilles |
 | `picker.legendStage` | scène | validé | Pastille Prune (zones stage / pit) |
 | `picker.legendOperator` | régie | validé | Pastille Ambre (régie façade, retours, régie, poste, galerie, cabine) |
@@ -502,7 +503,9 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.close` | Fermer | à valider (tekuxwriter) | Texte du bouton |
 | `inventory.closeLabel` | Fermer l’inventaire | à valider (tekuxwriter) | Nom accessible du bouton Fermer (contient le texte visible) |
 | `inventory.filter` | Filtrer | à valider (tekuxwriter) | Étiquette du champ de recherche au-dessus des onglets (aussi son nom pour les aides techniques) |
-| `inventory.filterNone` | Aucun appareil ne correspond | à valider (tekuxwriter) | Dit poliment (et affiché dans la liste) quand le filtre ne correspond à aucun appareil |
+| `inventory.filterNone` | Aucun appareil ne correspond | à valider (tekuxwriter) | Dit poliment (zone `role=status`, forme courte) quand le filtre ne correspond à aucun appareil ; depuis la vague de nuit 2 il n’est plus affiché dans la liste (voir `filterNoneHelp`) |
+| `inventory.filterNoneHelp` | Aucun appareil ne correspond à « {q} ». Effacez le filtre ou essayez un autre mot (micro, console, enceinte). | à valider (tekuxwriter) | Vague de nuit 2, F : texte affiché dans la liste vide du tiroir (lu quand on y arrive, pas annoncé : la zone de statut dit la forme courte) ; `{q}` = le texte tapé, jamais interprété comme du HTML ; les trois mots sont des familles du catalogue |
+| `inventory.filterClear` | Effacer le filtre | à valider (tekuxwriter) | Vague de nuit 2, F : bouton sous le texte précédent ; vide le champ, rend le focus au champ ; Espace l’active (ailleurs dans le tiroir Espace ferme) |
 | `inventory.filterResults` | Appareils qui correspondent | à valider (tekuxwriter) | Nom accessible de la liste quand un filtre est actif : elle réunit les appareils de tous les onglets |
 | `inventory.empty` | Aucun appareil disponible pour le moment. | à valider (tekuxwriter) | État vide d’un onglet sans appareil |
 | `inventory.badgeUnverified` | non vérifié | à valider (tekuxwriter) | Pastille sur un appareil proposé : onglet Bêta, arbre Projet et Propriétés une fois posé (Task 30) |
