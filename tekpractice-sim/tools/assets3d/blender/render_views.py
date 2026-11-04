@@ -107,7 +107,8 @@ def setup_scene(plan: dict) -> None:
     scene.display.render_aa = "8"
     # No dithering noise: the background must be exactly the grey Node composes the letterbox bars on.
     scene.render.dither_intensity = 0.0
-    scene.display.shading.light = "STUDIO"
+    # the plan may ask for FLAT (the projection step: the flat albedo of a face, no shading); the contact sheet keeps STUDIO
+    scene.display.shading.light = str(plan.get("light", "STUDIO"))
     # A model with vertex colours (scripted builds) shows them; one flat colour per material would paint it all one grey.
     # Meshy models carry a base colour texture: TEXTURE mode shows it.
     has_vertex_colours = any(ob.type == "MESH" and len(ob.data.color_attributes) > 0 for ob in bpy.data.objects)
