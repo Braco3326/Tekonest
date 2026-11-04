@@ -85,7 +85,7 @@ test('(a) Écoute › Couverture: off by default, then the dots, ≤ 20 000 poin
   expect(p.x).toBeGreaterThanOrEqual(v.x + v.width - 1) // right of the viewport: it never overlays the 3D view
   await expect(page.getByTestId('coverage-unit')).toHaveText('dB relatif (0 = point le plus fort)')
   await expect(page.getByTestId('coverage-method')).toHaveText('somme énergétique, champ direct')
-  await expect(page.getByTestId('coverage-source')).toHaveText('Couverture : données KB (V déduit)')
+  await expect(page.getByTestId('coverage-source')).toHaveText('Couverture : fiche de l’appareil (verticale déduite)')
   await expect(page.getByTestId('coverage-hatched')).toContainText('Hachuré : interférences non modélisées')
   await expect(page.getByTestId('coverage-legend').locator('li')).toHaveCount(8)
   await expect(page.getByTestId('coverage-legend').locator('li').first()).toContainText('0 à −3 dB')
@@ -110,12 +110,13 @@ test('(a) Écoute › Couverture: off by default, then the dots, ≤ 20 000 poin
   expect(text).not.toContain('spl')
 })
 
-test('(b) the fidelity chip « relatif » opens an explanation; Échap closes it and gives the focus back', async ({ page }) => {
+test('(b) the fidelity chip « estimation » opens an explanation; Échap closes it and gives the focus back', async ({ page }) => {
   await boot(page)
   await toggleCoverage(page)
   await waitReady(page)
   const chip = page.getByTestId('coverage-chip')
-  await expect(chip).toHaveText('relatif')
+  await expect(chip).toHaveText('estimation')
+  await expect(chip).toHaveAttribute('aria-label', 'Fidélité du calcul : estimation') // WCAG 2.5.3: the visible word is in the name
   await expect(chip).toHaveAttribute('aria-expanded', 'false')
   await expect(page.getByTestId('coverage-popover')).toBeHidden()
   await chip.focus()

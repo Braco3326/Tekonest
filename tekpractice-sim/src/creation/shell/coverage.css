@@ -36,7 +36,6 @@
   color: var(--cr-papier);
   background: transparent;
   border: 1px solid var(--cr-ink-muted);
-  border-radius: 12px;
   transition: none;
 }
 .cr .cr-cov-chip:hover, .cr .cr-cov-chip[aria-expanded='true'] { color: var(--cr-ambre); border-color: var(--cr-ambre); }

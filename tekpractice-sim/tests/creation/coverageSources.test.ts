@@ -245,13 +245,13 @@ describe('provenance: what the source line says', () => {
     const used = coverageSourcesDetail(d, registry, pathOf(d)).used
     expect(used.every((u) => u.hKind === 'kb' && u.vKind === 'kb' && u.vDeduced)).toBe(true)
     expect(provenanceOf(used)).toEqual({ kinds: ['kb'], vDeduced: true })
-    expect(sourceLine(used)).toBe('Couverture : données KB (V déduit)')
+    expect(sourceLine(used)).toBe('Couverture : fiche de l’appareil (verticale déduite)')
   })
   it('a nominal pair (the 8030C 90 × 60) reads « valeur nominale »; mixed with KB data both are listed, KB first', () => {
     const k = coverageSourcesDetail(rig(), registry, pathOf(rig())).used[0]
     const nominal: UsedSpeaker = { ...k, instanceId: 'g', deviceId: 'genelec-8030c', hKind: 'nominal', vKind: 'nominal', vDeduced: false }
     expect(sourceLine([nominal])).toBe('Couverture : valeur nominale')
-    expect(sourceLine([nominal, k])).toBe('Couverture : données KB (V déduit) / valeur nominale')
+    expect(sourceLine([nominal, k])).toBe('Couverture : fiche de l’appareil (verticale déduite) / valeur nominale')
   })
   it('a datasheet value reads « fiche constructeur »; an empty list has no line', () => {
     const k = coverageSourcesDetail(rig(), registry, pathOf(rig())).used[0]
@@ -266,7 +266,7 @@ describe('provenance: what the source line says', () => {
     const d = rig({}, reg)
     const used = coverageSourcesDetail(d, reg, pathOf(d, reg)).used
     expect(used.every((u) => !u.vDeduced)).toBe(true)
-    expect(sourceLine(used)).toBe('Couverture : données KB')
+    expect(sourceLine(used)).toBe('Couverture : fiche de l’appareil')
   })
 })
 

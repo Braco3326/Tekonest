@@ -73,6 +73,10 @@ export function mountListenPanel(doc: Document, container: HTMLElement, before: 
   const state = el(doc, 'p', 'cr-listen-state')
   state.id = `${id}-state`
   state.dataset.testid = 'listen-state'
+  // Where the sound is heard from (night wave 2, G): one line above the button, plain text, a change of point is not announced here (the shell announces it).
+  const from = el(doc, 'p', 'cr-listen-from')
+  from.dataset.testid = 'listen-from'
+  from.hidden = true
   const transport = el(doc, 'button', 'cr-listen-btn')
   transport.type = 'button'
   transport.dataset.testid = 'listen-transport'
@@ -87,16 +91,24 @@ export function mountListenPanel(doc: Document, container: HTMLElement, before: 
   meters.dataset.testid = 'listen-meters'
   const none = el(doc, 'p', 'cr-listen-note', t.noSpeakers)
   none.dataset.testid = 'listen-none'
-  // Always shown (brief §10, S3): the simulation is simple, the volume starts low, the file stays here.
+  // Always shown (brief §10, S3): the simulation is simple (one sentence), the volume starts low, the file stays here. The rest of the limits is a closed <details>:
+  // nothing is removed, it is one click away (night wave 2, G).
   const simple = el(doc, 'p', 'cr-listen-note', t.simple)
   simple.dataset.testid = 'listen-simple'
+  const limitsBox = el(doc, 'details', 'cr-listen-limits')
+  limitsBox.dataset.testid = 'listen-limits-box'
+  const limitsTitle = el(doc, 'summary', 'cr-listen-limits-title', t.limitsTitle)
+  limitsTitle.dataset.testid = 'listen-limits-title'
+  const more = el(doc, 'p', 'cr-listen-note', t.limitsMore)
+  more.dataset.testid = 'listen-limits-more'
   const limits = el(doc, 'p', 'cr-listen-note', t.limits)
   limits.dataset.testid = 'listen-limits'
+  limitsBox.append(limitsTitle, more, limits)
   const volume = el(doc, 'p', 'cr-listen-note', t.volume)
   volume.dataset.testid = 'listen-volume'
   const local = el(doc, 'p', 'cr-listen-note', t.fileLocal)
   local.dataset.testid = 'listen-local'
-  body.append(state, transport, reason, silent, metersTitle, meters, none, simple, limits, volume, local)
+  body.append(state, from, transport, reason, silent, metersTitle, meters, none, simple, limitsBox, volume, local)
   root.append(head, body)
   container.insertBefore(root, before)
   bag.add(() => root.remove())
@@ -123,19 +135,36 @@ export function mountListenPanel(doc: Document, container: HTMLElement, before: 
     if (transport.getAttribute('aria-disabled') !== 'true') handlers.toggle()
   })
 
-  const rows = new Map<string, { li: HTMLLIElement; text: HTMLElement; bar: HTMLElement; shownText: string; shownBar: number }>()
-  const rowOf = (r: ListenRow): { li: HTMLLIElement; text: HTMLElement; bar: HTMLElement; shownText: string; shownBar: number } => {
+  interface MeterRow {
+    li: HTMLLIElement
+    text: HTMLElement
+    main: HTMLElement
+    sub: HTMLElement
+    bar: HTMLElement
+    shownText: string
+    shownMain: string
+    shownSub: string
+    shownBar: number
+  }
+  const rows = new Map<string, MeterRow>()
+  const rowOf = (r: ListenRow): MeterRow => {
     let row = rows.get(r.id)
     if (!row) {
       const li = el(doc, 'li', 'cr-listen-meter')
       li.dataset.instance = r.id
-      const text = el(doc, 'span', 'cr-listen-meter-text')
+      // The sentence assistive tech reads, complete, once (the row is not a live region); the two drawn lines are the same facts, hidden from it.
+      const text = el(doc, 'span', 'cr-listen-meter-text cr-sr-only')
+      const view = el(doc, 'span', 'cr-listen-meter-view')
+      view.setAttribute('aria-hidden', 'true')
+      const main = el(doc, 'span', 'cr-listen-meter-main')
+      const sub = el(doc, 'span', 'cr-listen-meter-sub')
+      view.append(main, sub)
       const track = el(doc, 'span', 'cr-listen-track')
       track.setAttribute('aria-hidden', 'true')
       const bar = el(doc, 'span', 'cr-listen-bar')
       track.appendChild(bar)
-      li.append(text, track)
-      row = { li, text, bar, shownText: '', shownBar: -1 }
+      li.append(text, view, track)
+      row = { li, text, main, sub, bar, shownText: '', shownMain: '', shownSub: '', shownBar: -1 }
       rows.set(r.id, row)
     }
     return row
@@ -156,9 +185,12 @@ export function mountListenPanel(doc: Document, container: HTMLElement, before: 
       const playing = view.state !== 'stopped'
       if (state.textContent !== view.line) state.textContent = view.line
       state.dataset.state = view.state
+      if (from.textContent !== view.from) from.textContent = view.from
+      from.hidden = view.from === ''
       // The button: « Stop » while the sound runs or starts; « Lecture » otherwise, off (still focusable) when the chain cannot play.
       const label = playing ? COPY.menu!.stop! : COPY.menu!.play!
       if (transport.textContent !== label) transport.textContent = label
+      transport.dataset.state = playing ? 'playing' : 'stopped' // the CSS draws ▶ / ■ and the primary fill from it
       const off = !playing && !view.canStart
       if (off) transport.setAttribute('aria-disabled', 'true')
       else transport.removeAttribute('aria-disabled')
@@ -183,6 +215,14 @@ export function mountListenPanel(doc: Document, container: HTMLElement, before: 
         if (row.shownText !== r.text) {
           row.text.textContent = r.text
           row.shownText = r.text
+        }
+        if (row.shownMain !== r.main) {
+          row.main.textContent = r.main
+          row.shownMain = r.main
+        }
+        if (row.shownSub !== r.sub) {
+          row.sub.textContent = r.sub
+          row.shownSub = r.sub
         }
         const w = Math.round(r.bar * 100)
         if (row.shownBar !== w) {

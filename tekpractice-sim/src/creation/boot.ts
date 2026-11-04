@@ -600,8 +600,13 @@ export async function bootCreation(): Promise<void> {
     connect: (from, opener) => connectDialog.open(from, opener),
   })
   let earHeight = viewState.get().earHeight
+  let listenerPoint = viewState.get().listenerPoint
   viewState.subscribe(() => {
     const v = viewState.get()
+    if (v.listenerPoint !== listenerPoint) {
+      listenerPoint = v.listenerPoint
+      listen?.refresh() // « Écoute depuis : … » follows the point (a stopped block only redraws its text)
+    }
     if (v.earHeight !== earHeight) {
       earHeight = v.earHeight
       saveViewPrefs(storage, { earHeight })
@@ -1201,6 +1206,7 @@ export async function bootCreation(): Promise<void> {
   const walkKey = (): string => bindingLabel(keys.bindings, 'WALK_TOGGLE') || 'Maj+V'
   const canvasLabel = canvas.getAttribute('aria-label')
   host.onWalkChange = (on) => {
+    listen?.refresh() // « Écoute depuis : … » names the walk camera while it listens
     if (on) canvas.setAttribute('aria-label', WK.canvas!.replace('{walk}', walkKey()))
     else if (canvasLabel !== null) canvas.setAttribute('aria-label', canvasLabel)
     announcer.say(on ? WK.statusOn!.replace('{walk}', walkKey()) : WK.statusOff!)
@@ -1862,6 +1868,7 @@ export async function bootCreation(): Promise<void> {
           design: () => store.design(),
           path: () => path,
           listener: listenerNow,
+          listenFrom: () => (host.walking ? COPY.listen!.fromWalk! : (activePoint(listeningPoints(), viewState.get().listenerPoint)?.label ?? '')),
           hold: (name) => scheduler.hold(name),
           announce: (message) => announcer.say(message),
           deviceLabel: (id) => `${deviceLabel(id)} (${id})`,

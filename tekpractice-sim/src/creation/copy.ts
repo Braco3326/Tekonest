@@ -453,8 +453,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     panelExpand: 'Déplier la couverture',
     unit: 'dB relatif (0 = point le plus fort)',
     method: 'somme énergétique, champ direct',
-    chip: 'relatif',
-    chipName: 'Fidélité du calcul : relatif',
+    chip: 'estimation',
+    chipName: 'Fidélité du calcul : estimation',
     chipPopover: 'Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. Le balance de la console change l’équilibre affiché comme le son (il baisse le côté opposé) ; le fader master, commun à toutes les enceintes, ne change pas un niveau relatif ; le mute ou −inf retire les enceintes ; l’origine de l’enceinte est son point de pose.',
     legendTitle: 'Échelle',
     legendBin: '{from} à {to} dB',
@@ -465,10 +465,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     aim: 'Trait clair : axe de chaque enceinte audible',
     frontCaveat: 'Face avant du modèle 3D non vérifiée pour {names} : le trait indique l’axe acoustique, pas forcément la face du modèle.',
     sourceLine: 'Couverture : {sources}',
-    sourceKb: 'données KB',
+    sourceKb: 'fiche de l’appareil',
     sourceNominal: 'valeur nominale',
     sourceDatasheet: 'fiche constructeur',
-    sourceDeduced: 'V déduit',
+    sourceDeduced: 'verticale déduite',
     speakersTitle: 'Enceintes prises en compte',
     speakerRow: '{name} : {h}° × {v}°',
     statsTitle: 'Statistiques',
@@ -525,6 +525,9 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     silentMix: 'Aucune enceinte ne sonne pour le moment : la console est en mute ou son fader est à −inf.',
     metersTitle: 'Niveau à chaque enceinte',
     meterRow: '{name} : niveau de sortie {level}, gain {gain}, retard {delay}, pan {pan}',
+    /** The same row drawn on two lines (night wave 2, G): the name and the level, then the rest muted. Not read: the screen reader gets `meterRow`. */
+    meterMain: '{name} : {level}',
+    meterSub: 'gain {gain} · retard {delay} · pan {pan}',
     levelDb: '{v} dBFS',
     levelSilent: 'silence',
     gainValue: '{v} dB',
@@ -533,8 +536,18 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     panRight: 'droite {n} %',
     panCenter: 'centre',
     noSpeakers: 'Aucune enceinte à écouter.',
-    simple: 'Simulation simple : niveau relatif, retard et placement gauche-droite calculés d’après la géométrie ; le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie.',
-    limits: 'Limites : le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle) ; l’origine d’une enceinte est son point de pose ; déplacer l’auditeur fait glisser le retard et peut faire glisser la hauteur du son (ce n’est pas un effet Doppler) ; il n’y a pas de vumètre de console, seulement un niveau par enceinte ; on écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur) ou la caméra de marche, qui écoute à sa place pendant la marche.',
+    /** « Écoute depuis : {point}. » above the button (night wave 2, G): where the sound is heard from; {point} = a name of `points.*`, or `fromWalk`. */
+    from: 'Écoute depuis : {point}.',
+    /** The point name while the walk camera listens in place of the points. */
+    fromWalk: 'la caméra de marche',
+    /** Always shown: what the simulation is, in one sentence. The rest of its limits is folded under `limitsTitle`. */
+    simple: 'Simulation simple : niveau relatif, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.',
+    /** Title of the closed `<details>` that holds the rest of the limits. */
+    limitsTitle: 'Limites de la simulation',
+    /** In the details, first: what acts on the sound, and what the volume does (the second half of the former « simple »). */
+    limitsMore: 'Le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Pas non plus de fuite d’un canal dans l’autre (diaphonie).',
+    /** In the details, second: the limits of the numbers and of the ears. */
+    limits: 'Le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle). L’origine d’une enceinte est son point de pose. Déplacer l’auditeur fait glisser le retard et peut faire varier la hauteur du son ; ce n’est pas un vrai effet Doppler (celui d’un son qui passe devant vous). Il n’y a pas de vumètre de console, seulement un niveau par enceinte. On écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur) ou la caméra de marche, qui écoute à sa place pendant la marche.',
     volume: 'Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin.',
     fileLocal: 'Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré.',
     fileInputName: 'Choisir un fichier audio',

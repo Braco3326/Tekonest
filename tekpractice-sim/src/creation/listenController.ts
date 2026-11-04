@@ -48,6 +48,8 @@ export interface ListenDeps {
   path(): PathResult
   /** Where the learner listens from, with the camera's rendered right vector; null when there is no place on screen. */
   listener(): ListenerPose | null
+  /** The name the sound is heard from, as the block says it (a listening point's name, or the walk camera's): '' when unknown. Night wave 2, G. */
+  listenFrom?(): string
   /** The render scheduler's lease (`hold('meters')`): the returned function releases it. */
   hold(name: string): () => void
   /** Said politely through the shell's status line, once per event. */
@@ -151,9 +153,11 @@ export class ListenController {
     const reason = path.playbackReady ? '' : (path.reasons[0]?.text_fr ?? '')
     const line =
       this.st === 'stopped' ? L().stopped! : this.st === 'starting' ? L().starting! : L().playing!.replace('{source}', this.src ? sourceName(this.src) : '')
+    const from = this.deps.listenFrom?.() ?? ''
     return {
       ...EMPTY_LISTEN_VIEW,
       shown: true,
+      from: from === '' ? '' : L().from!.replace('{point}', () => from),
       state: this.st,
       line,
       silent: this.st === 'playing' && this.voices.length > 0 && this.voices.every((v) => v.gain === 0),
