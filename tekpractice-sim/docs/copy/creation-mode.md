@@ -412,7 +412,43 @@ Lecture et micro (Task 34, C9) : la ligne « Lecture » de la barre d’état et
 
 Les titres et textes pédagogiques des règles R1–R8 sont des **données du catalogue**, pas des chaînes de `copy.ts` : `content/catalog.json`, `rules[].title_fr` (titre) et `rules[].teach_fr` (texte pédagogique), obligatoires (schéma zod, `npm run validate:catalog`). Les champs anglais `title` / `teach` restent pour le mode historique (`?legacy=1`). Le Mode Création ne montre que le français : `ruleTextFor` (`src/creation/shell/statusModel.ts`) est le seul endroit qui les choisit, pour la liste d'erreurs de la barre d'état (titre + texte), le refus épinglé sur la prise (titre) et les prises incompatibles de « Connecter à… » (titre, puis texte sur une 2e ligne).
 
-Statut : **brouillons du développeur (Task 29) à relire par tekuxwriter** (traductions fidèles de `title` / `teach`, sans nouvelle affirmation technique, sans clé `copy.ts`). Les 8 paires sont dans le catalogue ; la relecture se fait là (pas de copie ici, pour éviter deux sources).
+Statut : **brouillons du développeur (Task 29) à relire par tekuxwriter** (traductions fidèles de `title` / `teach`, sans nouvelle affirmation technique, sans clé `copy.ts`). Les 8 paires sont dans le catalogue ; la relecture se fait là (pas de copie ici, pour éviter deux sources). Les réécritures proposées par tekuxwriter (nuit 2026-11-04) sont dans la section « Propositions en attente (fondateur) » ci-dessous, non appliquées (coût : `rulesRev` des Essais).
+
+## Propositions en attente (fondateur)
+
+Propositions de tekuxwriter (nuit 2026-11-04), reportées ici depuis une note privée pour qu'elles vivent dans le dépôt. Rien de cette section n'est une chaîne de `copy.ts` (pas de clé).
+
+### Textes des règles R1–R8 (catalogue) : réécritures proposées, non appliquées
+
+Fidèles aux champs anglais `title` / `teach`, sans nouvelle affirmation technique ; « vous » comme dans le shell ; « = » gardé là où la source l'emploie (les étudiants le lisent comme une formule). **Non appliquées** : le hash `rulesRev` des Essais de l'ancien mode porte sur tout `catalog.rules`, donc un changement de texte rend tout design déjà gelé « différent ». À appliquer lors d'une révision voulue du catalogue (décision du fondateur sur ce coût), pas avant. Un essai d'application (vague 3b) a été annulé pour cette raison.
+
+| Règle | Champ | Actuel (brouillon Task 29) | Proposé | Pourquoi |
+|---|---|---|---|---|
+| R1 | title_fr | Connecteurs incompatibles | (garder) | Clair. |
+| R1 | teach_fr | Un XLR mâle s’emboîte dans un XLR femelle ; une fiche TT s’emboîte dans un jack TT. Si ça ne rentre pas, ce n’est pas le bon câble : il ne faut jamais forcer. | Un XLR mâle se branche sur un XLR femelle ; une fiche TT, sur un jack TT. Si ça ne rentre pas, ce n’est pas le bon câble : ne forcez jamais. | Plus court, consigne directe. |
+| R2 | title_fr | Types de signal incompatibles | (garder) | Clair. |
+| R2 | teach_fr | Un micro sur une entrée ligne est trop faible de 40 dB ; une ligne sur un préampli micro sature ; de l’AES3 dans une entrée analogique ne donne que du bruit ; du matériel grand public relié à du matériel pro sort 12 dB plus bas. | Un micro sur une entrée ligne arrive 40 dB trop faible ; une ligne sur un préampli micro sature ; de l’AES3 sur une entrée analogique ne donne que du bruit ; du matériel grand public sur du matériel pro arrive 12 dB trop bas. | Mêmes quatre faits et chiffres, tournures parallèles. |
+| R3 | title_fr | Sens de connexion incorrect | Sens du signal incorrect | Optionnel ; le texte parle du sens du signal. Trois tests e2e citent le titre actuel. |
+| R3 | teach_fr | Le signal circule dans un seul sens : source → destination. Deux sorties qui se battent peuvent endommager le matériel. | Le signal circule dans un seul sens : de la source vers la destination. Deux sorties reliées entre elles se combattent et peuvent endommager le matériel. | « qui se battent » est obscur sans dire que les sorties sont reliées. |
+| R4 | title_fr | Alimentation fantôme (+48 V) | (garder) | Cohérent avec le signal `phantom-48v`. |
+| R4 | teach_fr | Les micros à condensateur (U 87) restent muets sans alimentation fantôme +48 V. Les micros dynamiques (SM58, RE20) l’ignorent. Les micros à ruban d’époque peuvent être endommagés par elle. | Les micros à condensateur (U 87) restent muets sans alimentation fantôme +48 V. Les micros dynamiques (SM58, RE20) n’en tiennent pas compte. Les micros à ruban anciens (vintage) peuvent être endommagés par le +48 V. | « par elle » est lourd ; « vintage » est le mot que les étudiants rencontrent. |
+| R5 | title_fr | Voyant ON-AIR (tally) | (garder) | Clair, terme anglais gardé. |
+| R5 | teach_fr | Le voyant rouge est un contrat de sécurité : micro ouvert = ON-AIR allumé, sinon quelqu’un entrera en parlant pendant le journal. | Le voyant rouge est un contrat de sécurité : micro ouvert = ON-AIR allumé. Sinon, quelqu’un entrera en parlant pendant le journal. | Deux phrases : la règle, puis la conséquence. |
+| R6 | title_fr | Coupure des écoutes sur micro ouvert (larsen) | Coupure des écoutes quand le micro est ouvert (larsen) | « sur micro ouvert » est comprimé. |
+| R6 | teach_fr | Enceintes de studio + micro ouvert = larsen. Les consoles de diffusion coupent automatiquement les écoutes de la régie quand un micro est ouvert. | Enceintes de studio + micro ouvert = larsen (feedback). Les consoles de diffusion coupent automatiquement les écoutes de la régie quand votre micro est ouvert. | « feedback » est le terme que les étudiants rencontrent ; « votre » suit la source anglaise. |
+| R7 | title_fr | Mix-minus / N-1 : écho du retour | (garder) | Clair. |
+| R7 | teach_fr | Renvoyer à un invité sa propre voix, c’est la lui faire entendre en différé : inutilisable. Tout duplex a besoin d’un bus N-1. | Si vous renvoyez à un invité sa propre voix, il s’entend en différé : c’est inutilisable. Chaque duplex a besoin d’un bus N-1. | « la lui faire entendre » est difficile à lire ; mêmes faits. |
+| R8 | title_fr | Word clock maître/esclave et fréquence d’échantillonnage | Word clock : maître/esclave et fréquence d’échantillonnage (sample rate) | « Sample rate » est le libellé vu dans Réglages (contrôle `sample-rate`). |
+| R8 | teach_fr | Un audio numérique sans horloge commune = des clics et des craquements. Un seul maître (l’OCX HD ou l’interface), tous les autres en esclave. | Sans horloge commune, l’audio numérique fait des clics et des craquements. Un seul maître (l’OCX HD ou l’interface) ; tous les autres sont esclaves. | Se lit comme une phrase ; mêmes faits. |
+
+### Cinq propositions
+
+1. **Normalisation du volume toujours visible** : appliquée à la ronde finale (`listen.simple` = « Simulation simple : niveau relatif, volume normalisé, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions. »). Reste au fondateur de confirmer.
+2. **« Touchez »** : non utilisé. Le texte d'aide du choix de lieu est une seule chaîne pour la souris et le toucher ; un verbe propre à l'appareil demande du code (deux clés). « Choisissez … : clic, ou flèches puis Entrée » est livré. Si le fondateur veut « Touchez » sur tablette, c'est un changement de code.
+3. **« le balance » devient « la balance »** : appliqué en vague 3b dans `coverage.chipPopover`, `coverage.reasonBalance` et `listen.limitsMore`.
+4. **Pastille `coverage.chip` « estimation »** : à confirmer par le fondateur (décision du contrôleur de la vague 2) ; reste « à trancher (Oscar) ».
+5. **Un seul verbe pour « relier deux prises »** : aujourd'hui « Brancher » (câblage, historique), « Connecter à… » (dialogue, menu) et « Connecté : » (état du dialogue). Proposition pour une vague ultérieure : garder « Connecter à… » comme nom du dialogue, employer « Branché : » dans les deux lignes d'état et « Connexion refusée : » pour `patch.errorLabel`. Coût : environ sept lignes de test.
+
 
 ## boot
 

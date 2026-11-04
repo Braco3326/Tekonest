@@ -34,7 +34,7 @@ describe('copy deck docs/copy/creation-mode.md mirrors COPY (Task 7)', () => {
   })
   it('reverse: every `## section` heading of the deck is a COPY section, or a listed non-COPY section', () => {
     // Deliberately not COPY sections: the vocabulary rules (prose, no keys) and the catalog rule texts (Task 29).
-    const NOT_COPY = new Set(['Glossaire', 'Textes des règles (catalogue)'])
+    const NOT_COPY = new Set(['Glossaire', 'Textes des règles (catalogue)', 'Propositions en attente (fondateur)'])
     const headings = [...deck.matchAll(/^## (.+?)\s*$/gm)].map((m) => m[1])
     expect(headings.length).toBeGreaterThan(0)
     expect(headings.filter((h) => !Object.prototype.hasOwnProperty.call(COPY, h) && !NOT_COPY.has(h))).toEqual([]) // own keys only: « constructor » is not a section
