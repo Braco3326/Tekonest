@@ -568,7 +568,12 @@ test.describe('Écouter depuis ici', () => {
     await page.mouse.dblclick(at.x, at.y)
     await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
     await menu(page, 'Écoute', 'Écouter depuis ici')
-    await expect.poll(async () => (await page.evaluate(() => window.__creation!.coverage().probes)).find((p) => p.id === 'ici')?.db).not.toBe(before)
+    await expect
+      .poll(async () => {
+        const db = (await page.evaluate(() => window.__creation!.coverage().probes)).find((p) => p.id === 'ici')?.db
+        return db !== undefined && db !== null && Number.isFinite(db) && db !== before // a real, new level (not a missing probe or null)
+      })
+      .toBe(true)
   })
 
   test('another place forgets it; « Ici » is back on the Régie', async ({ page }) => {

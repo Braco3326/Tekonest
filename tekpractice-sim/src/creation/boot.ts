@@ -1671,7 +1671,7 @@ export async function bootCreation(): Promise<void> {
     return true
   }
   // G: latch free placement while a device is placed or dragged. Nothing placed or dragged: the key is not ours (false).
-  keys.onAction('SNAP_TOGGLE', () => placement.toggleFreeLatch())
+  keys.onAction('SNAP_TOGGLE', (e) => placement.toggleFreeLatch(e.altKey))
   keys.onAction('ROTATE_CW', (e) => rotateKey(1, e))
   keys.onAction('ROTATE_CCW', (e) => rotateKey(-1, e))
   /** Suppr / Ctrl+D while a device follows the pointer: the selected device is not what the learner is looking at, so it is left alone and the placement goes on (said, announced). */

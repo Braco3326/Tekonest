@@ -128,7 +128,10 @@ export class PlacementController {
       if (this.drag && e.pointerId === this.drag.pointerId) this.endDrag(false)
     })
     if (typeof window !== 'undefined') {
-      bag.listen(window, 'blur', () => this.endDrag(false))
+      bag.listen(window, 'blur', () => {
+        this.altHeld = false // an Alt released in another window never sends its keyup here
+        this.endDrag(false)
+      })
       // Alt is the « free » modifier while a device is placed or dragged: a bare Alt tap would also toggle the menu bar in
       // Firefox on Windows. Claiming its keyup (only then) keeps the menu bar shut; any other time Alt is the browser's.
       bag.listen(window, 'keydown', (e: KeyboardEvent) => void (this.altHeld = e.altKey))
@@ -197,8 +200,10 @@ export class PlacementController {
    * G while a device follows the pointer or is dragged: latch free placement on / off (Alt keeps working on top of it).
    * Said once per toggle. False when there is nothing to place or drag (the key then does nothing).
    */
-  toggleFreeLatch(): boolean {
+  toggleFreeLatch(altKey?: boolean): boolean {
     if (!this.placing && !this.drag) return false
+    // The Alt state of the key event itself, when the caller has it, beats what the last pointer event said.
+    if (altKey !== undefined) this.altHeld = altKey
     this.latched = !this.latched
     const free = isFree(this.altHeld, this.latched)
     this.setSnap(free)

@@ -914,3 +914,53 @@ describe('fix round (review of Task 43b, S1 S3 S4 N2)', () => {
     expect(s.store.design().rig.instances).toHaveLength(1)
   })
 })
+
+describe('fix round R2 (Alt from the real key event, blur, end-of-pose reset)', () => {
+  it('3: the Alt state of the G key event itself is what counts: an Alt released without any pointer event is not remembered', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointermove', 113, 232, { altKey: true }) // the last thing the controller saw: Alt down
+    s.ctrl.toggleFreeLatch(false) // the key event says Alt is up (it was released with the pointer still)
+    s.ctrl.toggleFreeLatch(false)
+    expect(s.onSnap).toHaveBeenLastCalledWith(false)
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapGrid)
+  })
+
+  it('3: a key event that says Alt is down keeps the placement free when the latch is lifted', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ctrl.toggleFreeLatch(true)
+    s.ctrl.toggleFreeLatch(true)
+    expect(s.onSnap).toHaveBeenLastCalledWith(true)
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapLatchOff)
+  })
+
+  it('3: the window losing focus forgets a held Alt (its keyup goes to another window)', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointermove', 113, 232, { altKey: true })
+    s.win.dispatchEvent(new Event('blur'))
+    s.ctrl.toggleFreeLatch()
+    s.ctrl.toggleFreeLatch()
+    expect(s.onSnap).toHaveBeenLastCalledWith(false)
+    expect(s.announce).toHaveBeenLastCalledWith(COPY.placement!.statusSnapGrid)
+  })
+
+  it('4: the latch is off as soon as the pose has ended, before any new pose starts (a drag of the selected device is on the grid)', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ctrl.toggleFreeLatch()
+    s.fire('pointerdown', 113, 232)
+    s.fire('pointerup', 113, 232) // dropped
+    const id = s.store.design().rig.instances[0].instanceId
+    s.viewState.set({ selection: id })
+    s.under(id)
+    const pose = () => s.store.design().placements.find((p) => p.instanceId === id)!.position_m
+    expect(pose()).toEqual([1.13, 0, 2.32]) // the drop was free
+    s.fire('pointerdown', 113, 232)
+    s.fire('pointermove', 213, 232)
+    expect(pose()[0] % 0.25).toBeCloseTo(0, 9) // back on the grid: the latch did not outlive its pose
+    expect(s.onSnap).toHaveBeenLastCalledWith(false)
+    s.fire('pointerup', 213, 232)
+  })
+})
