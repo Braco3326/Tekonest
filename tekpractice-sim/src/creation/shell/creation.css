@@ -368,7 +368,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr[data-props='collapsed'] .cr-legend-toggle, .cr[data-props='collapsed'] .cr-legend-list { display: none; }
 .cr[data-props='collapsed'] .cr-legend-rail { display: grid; place-items: center; width: 100%; height: 32px; color: var(--cr-ink-muted); transition: none; }
 .cr[data-props='collapsed'] .cr-legend-rail:hover { color: var(--cr-ambre); background: var(--cr-nuit); }
-.cr[data-props='collapsed'] .cr-legend-rail:focus-visible { outline-offset: -3px; box-shadow: none; }
+.cr[data-props='collapsed'] .cr-legend-rail:focus-visible { outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); } /* inside the rail's edge (it clips): 2 px Ambre + the Nuit halo, as the legend toggle */
 .cr-legend-rail-icon { width: 16px; height: 16px; }
 .cr .cr-legend-toggle {
   display: flex;

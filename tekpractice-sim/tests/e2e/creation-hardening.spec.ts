@@ -300,6 +300,15 @@ test('item 4 (1366 px): with Propriétés folded the legend is reachable from th
   expect(box.width).toBeGreaterThanOrEqual(24)
   expect(box.height).toBeGreaterThanOrEqual(24)
   expect(await noHorizontalOverflow(page)).toBe(true)
+  // review finding 12: it states the disclosure it performs, and its keyboard ring keeps the Nuit halo
+  await expect(rail(page)).toHaveAttribute('aria-expanded', 'false')
+  await expect(rail(page)).toHaveAttribute('aria-controls', 'cr-props-body')
+  await expect(page.locator('#cr-props-body')).toHaveCount(1)
+  await page.keyboard.press('Shift')
+  await rail(page).focus()
+  const ring = await rail(page).evaluate((e) => ({ outline: getComputedStyle(e).outlineStyle, shadow: getComputedStyle(e).boxShadow }))
+  expect(ring.outline).toBe('solid')
+  expect(ring.shadow).toContain('rgb(19, 17, 20)') // Nuit #131114
   await rail(page).click()
   await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
   await expect(page.getByTestId('cable-legend-list')).toBeVisible()

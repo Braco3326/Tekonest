@@ -141,6 +141,9 @@ export function mountCableLegend(doc: Document, container: HTMLElement, bag: Dis
   rail.dataset.testid = 'cable-legend-rail'
   rail.setAttribute('aria-label', L().legendRail!)
   rail.title = L().legendRail!
+  // It unfolds the Propriétés panel (folded whenever this button is shown): the disclosure is stated, not guessed.
+  rail.setAttribute('aria-expanded', 'false')
+  rail.setAttribute('aria-controls', 'cr-props-body')
   rail.appendChild(railIcon(doc))
   bag.listen(rail, 'click', () => opts.onRail?.())
 
