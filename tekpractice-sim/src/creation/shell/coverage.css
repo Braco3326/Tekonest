@@ -1,10 +1,14 @@
 /* Coverage block (Task 37): the bottom of « Propriétés », above the cable legend, never over the 3D view.
    Loaded with the lazy coverage chunk (coveragePanel.ts imports it), not with the shell. Every control: no transition
    (the legacy `button { transition: all }` and the 0.01 ms reduced-motion rule would animate the focus ring and `visibility`). */
-.cr-cov { flex: 0 1 auto; min-height: 0; max-height: 54%; overflow: auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }
+.cr-cov { flex: 0 0 auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }
 .cr-cov[hidden] { display: none; }
 .cr[data-props='collapsed'] .cr-cov { display: none; }
-.cr-cov-head { display: flex; align-items: stretch; position: sticky; top: 0; z-index: 1; background: var(--cr-panel); }
+.cr-cov-head { display: flex; align-items: stretch; background: var(--cr-panel); }
+.cr-cov-about { margin: 8px 0 2px; }
+.cr-cov-about-title { padding: 4px 0; color: var(--cr-ink-muted); font: 500 12px/1.3 var(--cr-font-ui); cursor: pointer; }
+.cr-cov-about-title:hover { color: var(--cr-ambre); }
+.cr-cov-about[open] > .cr-cov-about-title { color: var(--cr-papier); }
 .cr .cr-cov-toggle {
   display: flex;
   flex: 1 1 auto;

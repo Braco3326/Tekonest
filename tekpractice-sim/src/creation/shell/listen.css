@@ -1,10 +1,10 @@
 /* Écoute block (Task 39): the bottom of « Propriétés », above the cable legend, never over the 3D view. Loaded with the lazy listen chunk
    (listenPanel.ts imports it), not with the shell. Every control: no transition (the legacy `button { transition: all }` and the 0.01 ms
    reduced-motion rule would animate the focus ring and `visibility`). */
-.cr-listen { flex: 0 1 auto; min-height: 0; max-height: 34%; overflow: auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }
+.cr-listen { flex: 0 0 auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }
 .cr-listen[hidden] { display: none; }
 .cr[data-props='collapsed'] .cr-listen { display: none; }
-.cr-listen-head { display: flex; align-items: stretch; position: sticky; top: 0; z-index: 1; background: var(--cr-panel); }
+.cr-listen-head { display: flex; align-items: stretch; background: var(--cr-panel); }
 .cr .cr-listen-toggle {
   display: flex;
   flex: 1 1 auto;

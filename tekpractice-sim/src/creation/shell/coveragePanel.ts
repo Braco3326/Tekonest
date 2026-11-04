@@ -155,7 +155,14 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
   above.dataset.testid = 'coverage-probe-above'
   const spl = el(doc, 'p', 'cr-cov-note', L.splPending)
   spl.dataset.testid = 'coverage-spl'
-  ready.append(unit, method, legendTitle, legend, hatched, aim, source, speakersTitle, speakers, statsTitle, stats, pointsTitle, points, pinRow, hint, above, spl)
+  // Night wave 2, H: what the learner reads first is the status (above), the unit, the statistics, the scale and the points; the notes about the
+  // calculation are folded under a closed « À propos du calcul » (nothing removed, one click away).
+  const about = el(doc, 'details', 'cr-cov-about')
+  about.dataset.testid = 'coverage-about'
+  const aboutTitle = el(doc, 'summary', 'cr-cov-about-title', L.aboutTitle)
+  aboutTitle.dataset.testid = 'coverage-about-title'
+  about.append(aboutTitle, method, aim, source, speakersTitle, speakers, hint, above, spl)
+  ready.append(unit, statsTitle, stats, legendTitle, legend, hatched, pointsTitle, points, pinRow, about)
   body.append(status, caveat, ready)
 
   root.append(head, pop, body)

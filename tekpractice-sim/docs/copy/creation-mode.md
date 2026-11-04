@@ -679,6 +679,7 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.panelTitle` | Couverture | à valider (tekuxwriter) | Titre du bloc, bas de Propriétés (jamais sur la vue 3D) |
 | `coverage.panelCollapse` | Replier la couverture | à valider (tekuxwriter) | Nom du bouton quand le bloc est déplié |
 | `coverage.panelExpand` | Déplier la couverture | à valider (tekuxwriter) | Nom du bouton quand le bloc est replié |
+| `coverage.aboutTitle` | À propos du calcul | à valider (tekuxwriter) | Vague de nuit 2, H : titre (`summary`) du détail replié, sous les points, qui contient les notes sur le calcul (méthode, trait d’axe, source, enceintes prises en compte, indications d’épinglage, remarques). Aucune note n’est retirée |
 | `coverage.unit` | dB relatif (0 = point le plus fort) | à valider (tekuxwriter) | Unité de l’échelle. Mot pour mot (brief §5) |
 | `coverage.method` | somme énergétique, champ direct | à valider (tekuxwriter) | Ce que le calcul fait. Mot pour mot (brief §5) |
 | `coverage.chip` | estimation | à valider (tekuxwriter) | Pastille de fidélité. Vague de nuit 2, G : « estimation » remplace « relatif » (le mot « relatif » reste dans l’unité « dB relatif (0 = point le plus fort) » et dans l’explication, qui commence par « Estimation pédagogique ») ; un texte plus simple pour un public qui ne sait pas ce que « relatif » promet. Décision du contrôleur (brief de la vague), à valider |

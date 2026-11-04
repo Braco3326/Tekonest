@@ -451,6 +451,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     panelTitle: 'Couverture',
     panelCollapse: 'Replier la couverture',
     panelExpand: 'Déplier la couverture',
+    /** Title of the closed `<details>` under the points: the notes about the calculation (method, aim line, source, speakers, hints). Night wave 2, H. */
+    aboutTitle: 'À propos du calcul',
     unit: 'dB relatif (0 = point le plus fort)',
     method: 'somme énergétique, champ direct',
     chip: 'estimation',

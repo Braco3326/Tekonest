@@ -328,6 +328,11 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   overflow: hidden;
   background: var(--cr-panel);
 }
+/* Propriétés is ONE scroller (night wave 2, H): the settings of the selection, the coverage, the listening and the legend follow each other and the column scrolls as a whole;
+   no block scrolls inside itself. Its title row stays on top (sticky), and a focused control is never left under it (scroll-padding). Folded: a rail, nothing scrolls. */
+.cr-props { overflow-x: hidden; overflow-y: auto; scroll-padding-top: 40px; }
+.cr[data-props='collapsed'] .cr-props { overflow: hidden; }
+.cr-props .cr-panel-head { position: sticky; top: 0; z-index: 2; background: var(--cr-panel); }
 .cr-tree { grid-area: tree; border-right: 1px solid var(--cr-panel-line); }
 .cr-props { grid-area: props; border-left: 1px solid var(--cr-panel-line); }
 
@@ -361,7 +366,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-collapse svg { width: 12px; height: 12px; }
 .cr-panel-body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 8px 0; }
 /* The properties keep a floor (Task 39): the blocks under them (coverage up to 54 %, listening up to 34 %, the cable legend) shrink and scroll inside themselves instead of squeezing the selected device's settings. Owned here, not by a lazy block's CSS. */
-.cr-props .cr-panel-body { min-height: 120px; }
+.cr-props .cr-panel-body { flex: 0 0 auto; min-height: 120px; overflow: visible; }
 
 /* ── Cable legend (Task 27): the bottom of « Propriétés », never over the 3D view ───────────────────────────── */
 .cr-legend { flex: 0 0 auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }
@@ -394,7 +399,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr .cr-legend-toggle:focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); }
 .cr-legend-chevron { width: 12px; height: 12px; flex: none; }
 .cr-legend[data-open='false'] .cr-legend-chevron { transform: rotate(-90deg); }
-.cr-legend-list { list-style: none; margin: 0; padding: 4px 12px 10px; max-height: 168px; overflow: auto; }
+.cr-legend-list { list-style: none; margin: 0; padding: 4px 12px 10px; }
 .cr-legend-item { display: flex; align-items: center; gap: 8px; min-height: 22px; font: 400 12px/1.3 var(--cr-font-ui); color: var(--cr-papier); }
 .cr-legend-swatch { width: 36px; height: 8px; flex: none; }
 .cr-legend-name { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }

@@ -507,17 +507,19 @@ test('(n) 1366×768 with the coverage AND the listening block open: the properti
   test.info().annotations.push({ type: 'measured', description: `properties body ${body.height.toFixed(1)} px, listen block ${listen.height.toFixed(1)} px, props column ${(await page.locator('.cr-props').boundingBox())!.height.toFixed(1)} px, viewport ${(viewport.width / 1366).toFixed(3)} of the width` })
   console.log(`[measured 1366x768, coverage + listen open] properties body ${body.height.toFixed(1)} px; listen block ${listen.height.toFixed(1)} px`)
   const props = (await page.locator('.cr-props').boundingBox())!
+  // night wave 2 (H): Propriétés is ONE scroller; the blocks follow each other in it (horizontally inside the column; vertically they are reached by scrolling it)
   for (const box of [listen, (await page.getByTestId('coverage-panel').boundingBox())!, body]) {
-    expect(box.y).toBeGreaterThanOrEqual(props.y - 1) // both blocks stay inside the properties column
-    expect(box.y + box.height).toBeLessThanOrEqual(props.y + props.height + 1)
     expect(box.x).toBeGreaterThanOrEqual(props.x - 1)
     expect(box.x + box.width).toBeLessThanOrEqual(props.x + props.width + 1)
   }
   expect(viewport.width / 1366).toBeGreaterThanOrEqual(0.6)
   expect(listen.x).toBeGreaterThanOrEqual(viewport.x + viewport.width - 1)
-  // the block never grows past its share, and scrolls inside itself
-  const pr = (await page.locator('.cr-props').boundingBox())!
-  expect(listen.height).toBeLessThanOrEqual(pr.height * 0.34 + 1)
+  // no block scrolls inside itself any more (the column does): the old 34 % cap is gone
+  expect(await page.getByTestId('listen-panel').evaluate((e) => getComputedStyle(e).overflowY)).toBe('visible')
+  expect(await page.locator('.cr-props').evaluate((e) => getComputedStyle(e).overflowY)).toBe('auto')
+  await page.getByTestId('listen-panel').scrollIntoViewIfNeeded()
+  const listenNow = (await page.getByTestId('listen-panel').boundingBox())!
+  expect(listenNow.y + listenNow.height).toBeLessThanOrEqual(props.y + props.height + 1)
   await choose(page, 'Stop')
   await waitStopped(page)
 })
