@@ -1,0 +1,47 @@
+{
+  "id": "shure-sm58",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 51,
+    "h": 162,
+    "d": 51
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 25.5,
+      "yMm": 25.5,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [],
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+      "note": "Shure SM58 spec sheet (copy hosted by College of San Mateo, opened and text read): Dimensions 162 mm (6-3/8 in.) L x 51 mm (2 in.) W; connector: three-pin professional audio connector (male XLR type). The model stands upright with the XLR end down: h = 162 mm length, w = d = 51 mm head diameter."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.shure.com/en-US/products/microphones/sm58",
+      "note": "Shure product page (opened): the standard SM58 (no on/off switch); it lists no dimensions, so the size comes from the spec sheet above."
+    },
+    {
+      "kind": "photo",
+      "url": "https://products.shureweb.eu/shure_product_db/product_images/files/48b/91a/7a-/original/b1982c056eb29e6a4f1cb26819c96334.webp",
+      "note": "Shure product-DB image, private reference (assets-source/shure-sm58/photos/front.webp): front view, the base is a plain round end, the XLR shell is concentric with the handle axis"
+    },
+    {
+      "kind": "photo",
+      "url": "https://products.shureweb.eu/shure_product_db/product_images/files/44c/ca7/2f-/original/427825b75ff14036f40c30430ce88957.webp",
+      "note": "Shure product-DB image, private reference (assets-source/shure-sm58/photos/three-quarter-base.webp): 3/4 view from the XLR end: three male pins in a shell centred on the handle axis"
+    },
+    {
+      "kind": "photo",
+      "url": "https://products.shureweb.eu/shure_product_db/product_images/files/44c/ca7/2f-/original/427825b75ff14036f40c30430ce88957.webp",
+      "note": "out-xlr: the catalog has one port, the male XLR. It sits on the bottom (base) face at its centre (x = w/2 = 25.5, y = d/2 = 25.5 from the io edge). Centred by geometry from the photos, no drawing gives it, so the confidence is photo. openingMm is left out on purpose: the inner diameter of the male shell is not published on any page opened. The catalog lists no controls for the SM58 (no switch)."
+    }
+  ]
+}

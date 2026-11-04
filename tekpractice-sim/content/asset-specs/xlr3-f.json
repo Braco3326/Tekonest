@@ -1,0 +1,39 @@
+{
+  "id": "xlr3-f",
+  "kind": "connector",
+  "tier": "connector",
+  "realSizeMm": {
+    "w": 19.2,
+    "h": 19.2,
+    "d": 72.5
+  },
+  "ports": [],
+  "controls": [],
+  "mating": {
+    "role": "plug",
+    "outerMm": 15.75
+  },
+  "build": {
+    "shape": "cylinder-plug",
+    "params": {
+      "frontLenMm": 12
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/media/8223/download/nc3fxx-1.pdf?v=1",
+      "note": "Neutrik NC3FXX dimension drawing ST-NC3FXX (opened, drawing rendered): overall length 71.5 - 73.5 mm, shell diameter 19.2 mm, mating front diameter 15.75 mm, latch lug on one side. The roughly 22 mm figure sometimes quoted does not hold for this connector: 19.2 mm is the shell, 24 mm is the panel cutout of the receptacle. What the model is: the CABLE-END female XLR (a loose plug on a cable, modelled on the Neutrik NC3FXX), not the panel receptacle. The catalog id xlr3-f matesWith xlr3-m, so it is the plug that goes onto an xlr3-m port such as the SM58 base: role = plug, outerMm = 15.75 mm, the front section that enters the male shell. The body is a plain 19.2 mm cylinder along +Z with the mating face at z = 0; the latch lug (about 2.6 mm above the shell on one side, read off the drawing) is left out of the bounding box so that the pivot stays centred. Length 72.5 mm = the middle of the 71.5 - 73.5 mm range."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/media/8225/download/nc3mxx-2.pdf?v=1",
+      "note": "Neutrik NC3MXX dimension drawing (opened, rendered): the male cable connector it mates with is 19 mm in diameter and 68.1 - 70.1 mm long; the 15.75 mm front section of the female goes inside the shell of the male."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nc3fxx.pdf",
+      "note": "Neutrik NC3FXX datasheet (opened): 3-pole female cable connector, cable O.D. 3.5 - 8.0 mm, IEC 61076-2-103."
+    }
+  ]
+}

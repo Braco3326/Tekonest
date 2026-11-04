@@ -25,6 +25,7 @@ import type { PortRef } from '../engine/types'
 import { TOKENS } from '../design/tokens'
 import { assetUrl } from '../assetUrl'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
+import { findExtras, type AssetExtrasV1 } from './assetExtras'
 
 export interface DeviceInstance {
   instanceId: string
@@ -32,6 +33,8 @@ export interface DeviceInstance {
   root: TransformNode
   /** portId → the pickable marker mesh (metadata.portRef is set). */
   portMarkers: Map<string, Mesh>
+  /** controlId → the `ctrl_<controlId>` node of THIS instance's .glb (filled when a glb with extras loads; else empty). */
+  controlNodes: Map<string, TransformNode>
   /** Set to 'glb' once the model loads + normalises, 'placeholder' otherwise. */
   assetStatus: 'glb' | 'placeholder'
   /** Resolves true when the .glb applied (ports re-anchored), false on fallback. */
@@ -250,6 +253,7 @@ export class DeviceSpawner {
       deviceId,
       root,
       portMarkers,
+      controlNodes: new Map(),
       assetStatus: 'placeholder',
       // Reassigned below to the real load promise; typed here so the object is
       // fully-formed before tryLoadModel can flip assetStatus.
@@ -316,8 +320,11 @@ export class DeviceSpawner {
           m.metadata = { ...(m.metadata ?? {}), isDeviceBody: true, instanceId }
         }
 
-        const front = this.options.alignFront ? device.modelFront?.axis : undefined
-        const scale = this.normalizeModel(deviceId, glbRoot, front)
+        // Pipeline extras (3D rebuild): a model authored at real size, pivot bottom-centre, I/O on the glTF +Z face. Such a
+        // model is already oriented (I/O ends on Babylon -Z, the rear), so the catalog front alignment below does not apply to it.
+        const extras = findExtras(glbRoot)
+        const front = !extras && this.options.alignFront ? device.modelFront?.axis : undefined
+        const scale = this.normalizeModel(deviceId, glbRoot, front, extras)
         const rear = front && glbRoot.parent instanceof TransformNode ? rearFace(glbRoot, glbRoot.parent) : null
         this.reanchorPorts(device, instanceId, glbRoot, portMarkers, front === undefined, rear)
         if (front) {
@@ -328,6 +335,11 @@ export class DeviceSpawner {
             return [d.x, d.y, d.z]
           }
         }
+        if (extras)
+          for (const c of extras.controls) {
+            const node = this.portEmpty(glbRoot, c.controlId, 'ctrl_')
+            if (node) instance.controlNodes.set(c.controlId, node)
+          }
 
         // THIS instance's box: a global name lookup could hit a respawned twin with the same id.
         root.getChildMeshes(true, (n) => n.name === `box:${instanceId}`)[0]?.setEnabled(false)
@@ -349,8 +361,19 @@ export class DeviceSpawner {
    * translates — no rotation/scale): uniform scale by REAL height, ground min.y
    * to the instance origin, center X/Z, and rotate 180° if the ports face +Z.
    * Returns the applied scale factor (1 when the id has no known real size).
+   *
+   * With pipeline extras the model is already authored right (real size in metres, pivot bottom-centre): scale 1, no
+   * grounding, no centring, no 180° spin. Only the handedness: Babylon 7's glTF loader gives its `__root__` a 180°
+   * turn about Y AND a (1, 1, −1) scale in a left-handed scene, i.e. glTF (x, y, z) → Babylon (−x, y, z), which
+   * would leave the glTF +Z I/O face on Babylon +Z (proved in tests/scene/deviceSpawnerExtras.test.ts). Dropping that
+   * turn keeps only the z mirror, glTF (x, y, z) → Babylon (x, y, −z): I/O on −Z, nothing mirrored left-right.
    */
-  private normalizeModel(deviceId: string, glbRoot: AbstractMesh, front?: FrontAxis): number {
+  private normalizeModel(deviceId: string, glbRoot: AbstractMesh, front?: FrontAxis, extras: AssetExtrasV1 | null = null): number {
+    if (extras) {
+      glbRoot.rotationQuaternion = Quaternion.Identity()
+      glbRoot.computeWorldMatrix(true)
+      return 1
+    }
     const real = REAL_SIZE_M[deviceId]
     const worldOrigin =
       glbRoot.parent instanceof TransformNode
@@ -425,13 +448,13 @@ export class DeviceSpawner {
    * docs/REVIEW-ME.md §10): a grid on the −Z face of the NORMALISED model.
    * Look (size/color) is untouched — only positions move.
    */
-  private portEmpty(glbRoot: AbstractMesh, portId: string): TransformNode | null {
-    const exact = `port_${portId}`
+  private portEmpty(glbRoot: AbstractMesh, portId: string, prefix = 'port_'): TransformNode | null {
+    const exact = `${prefix}${portId}`
     let fallback: TransformNode | null = null
     for (const n of glbRoot.getDescendants(false)) {
       if (!(n instanceof TransformNode)) continue
       if (n.name === exact) return n
-      if (n.name.startsWith(exact)) fallback = n // tolerate .001-style suffixes
+      if (n.name.startsWith(exact) && /^\.\d+$/.test(n.name.slice(exact.length))) fallback = n // only ^exact(\.\d+)?$: .001-style suffixes
     }
     return fallback
   }

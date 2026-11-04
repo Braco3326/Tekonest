@@ -1,0 +1,106 @@
+{
+  "id": "yamaha-rio3224-d2",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 480,
+    "h": 220,
+    "d": 368
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 54,
+      "yMm": 166.1,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 77.8,
+      "yMm": 166.1,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-line-1",
+      "face": "io",
+      "xMm": 252.2,
+      "yMm": 74.7,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-line-2",
+      "face": "io",
+      "xMm": 276.2,
+      "yMm": 74.7,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "dante-primary",
+      "face": "opposite",
+      "xMm": 57.5,
+      "yMm": 183.7,
+      "confidence": "photo"
+    },
+    {
+      "portId": "power-in",
+      "face": "opposite",
+      "xMm": 80.1,
+      "yMm": 54.3,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 430.3,
+      "yMm": 191,
+      "axis": "x",
+      "sizeMm": {
+        "w": 20.6,
+        "h": 29.3,
+        "d": 10
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 1
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+      "note": "Yamaha R series 2nd generation spec page (opened), Rio3224-D2 column: Dimensions W 480 mm x H 220 mm x D 368 mm, net weight 13.5 kg. W includes the rack ears."
+    },
+    {
+      "kind": "photo",
+      "url": "https://uk.yamaha.com/en/files/1B9DA74123BC4ECE8412A54CC38C8C7A_12073_tcm117-1632580.jpg",
+      "note": "Front, straight-on, rack ears included (assets-source/yamaha-rio3224-d2/photos/front.jpg, 4000x1842). Scale 8.333 px/mm horizontally (4000 px = 480 mm over the ears), 8.35 px/mm vertically; origin bottom-left of the ears. The front panel is the io face: it carries 32 XLR inputs, 16 XLR outputs, 8 AES/EBU outputs, the display and the power rocker, i.e. 4 of the 6 modelled ports and the power control. in-mic-1/2 = INPUT 1 and 2 (top-left, pitch 23.8 mm); out-line-1/2 = OUTPUT 1 and 2 (first two XLR males of the lower-right block, pitch 24.0 mm). The catalog models 2 of 32 inputs and 2 of 16 outputs; the first two of each are used. power = the rocker at the top right of the front panel (20.6 x 29.3 mm visible housing; its protrusion d = 10 mm is an estimate, not visible in any view)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://uk.yamaha.com/en/files/rio3224-d2_rear_tcm117-1640391.jpg",
+      "note": "Rear, straight-on (assets-source/yamaha-rio3224-d2/photos/rear.jpg, 2000x985): Dante PRIMARY / SECONDARY etherCON top left, two IEC C14 inlets A and B bottom left, two fans. The rear is the opposite face. The photo is shot from behind, so its scale is not the front one: calibrated here at 4.11 px/mm so that the chassis width equals the front panel width (426 mm); x is measured from the centre of the 480 mm box, y from the vertical centre of the chassis. Expect +/- 5 mm on both rear ports. dante-primary = PRIMARY; power-in = inlet A (the catalog has one power port, the unit has two, A and B)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nc3fd-l-1",
+      "note": "Neutrik NC3FD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". The XLR receptacles in the photos are Neutrik D-series (NEUTRIK legible on the Rio3224-D2 front), so openingMm = 24 for the XLR ports. The NC3MD-L-1 (male) page says the same (https://www.neutrik.com/en/product/nc3md-l-1)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/ne8fdp.pdf",
+      "note": "Neutrik NE8FDP datasheet (opened): D-shape etherCON chassis connector, fits the standardised entertainment-industry panels and accepts any standard RJ45 plug. No cutout number is stated, so no openingMm is given for the Dante port or for the rectangular IEC inlet."
+    }
+  ]
+}
