@@ -47,18 +47,20 @@ ROUGHNESS = 0.45
 
 # Part colours, sRGB hex (research report: tuned to read under the game's two lights, no environment texture).
 NICKEL = "#c9ccd0"
-BLACK = "#303034"
-DARK = "#0b0b0d"
+BLACK = "#3a3a40"
+DARK = "#141417"
 GOLD = "#d4af37"
-# Yamaha stage box (research report, "Rio3224-D2"): slate-blue panel, black ears and chassis.
-SLATE = "#5a6679"
-PLATE_IN = "#444c5d"
-PLATE_OUT = "#343946"
-CHASSIS = "#2c2d33"
-EAR = "#1c1c1f"
-BEZEL = "#1b1b1e"
-LCD = "#16222b"
-STEEL = "#8a8f98"
+# Yamaha stage box (research report, "Rio3224-D2"): slate-blue panel, black ears and chassis. All palette values are
+# LIFTED: the creation scene lights vertical faces with about a quarter of the fill + key (hemispheric 0.5 from above, key 0.5),
+# so a colour that is right on the real part renders near black there. Checked in Babylon with those lights.
+SLATE = "#a0b8d6"
+PLATE_IN = "#7a8aa6"
+PLATE_OUT = "#616b82"
+CHASSIS = "#545661"
+EAR = "#383840"
+BEZEL = "#34343b"
+LCD = "#2e4352"
+STEEL = "#b4b8c0"
 PALE = "#b4cfe0"  # the clear RJ45 housing, drawn as an opaque pale blue-grey
 
 DEFAULT_FRONT_LEN_MM = 12.0
