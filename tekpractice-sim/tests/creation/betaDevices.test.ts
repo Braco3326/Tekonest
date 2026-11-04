@@ -282,6 +282,27 @@ describe('a placed Bêta device says « non vérifié » in the tree and in Prop
     expect(v.ports.map((p) => p.portId)).toEqual(file.devices.find((d) => d.id === 'crown-xls-2502')!.ports.map((p) => (p as { portId: string }).portId))
     expect(propsView(design as never, reg, 'ql1')!.unverified).toBe(false)
   })
+  it('properties: the Connexions text of a cable that touches the Bêta device ends with « non vérifié » (night wave 1, item 1), on both devices; a verified-only cable does not', () => {
+    const xlr = (file.devices.find((d) => d.id === 'crown-xls-2502')!.ports as { portId: string; connector: string; signal: string; dir: string }[]).find(
+      (p) => p.dir === 'in' && p.connector === 'xlr3-f' && p.signal === 'line-level-pro'
+    )!
+    const wired = {
+      ...design,
+      rig: {
+        ...design.rig,
+        instances: [...design.rig.instances, { instanceId: 'k12-g', deviceId: 'qsc-k12-2' }],
+        connections: [
+          { a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'amp-1', port: xlr.portId } },
+          { a: { instance: 'ql1', port: 'out-main-r' }, b: { instance: 'k12-g', port: 'in-line-a' } },
+        ],
+      },
+    }
+    const cableOf = (instance: string, port: string): string | null => propsView(wired as never, reg, instance)!.ports.find((p) => p.portId === port)!.cable
+    expect(cableOf('ql1', 'out-main-l')).toMatch(/ · non vérifié$/)
+    expect(cableOf('amp-1', xlr.portId)).toMatch(/ · non vérifié$/)
+    expect(cableOf('ql1', 'out-main-r')).not.toContain('non vérifié')
+    expect(cableOf('k12-g', 'in-line-a')).not.toContain('non vérifié')
+  })
 })
 
 describe('copy', () => {

@@ -13,6 +13,7 @@
  */
 import type { Registry } from '../../engine/CatalogLoader'
 import type { PortRef } from '../../engine/types'
+import { isUnverified, markUnverified } from '../betaDevices'
 import { COPY } from '../copy'
 import type { History } from '../history'
 import type { CreationStore, DispatchFail } from '../store'
@@ -23,8 +24,10 @@ export interface Candidate {
   ref: PortRef
   /** « K12.2 (k12-g) · in-line-a · XLR3 femelle · Niveau ligne pro (+4 dBu) »: the option's full name and what the filter searches. */
   label: string
-  /** The group heading: « K12.2 (k12-g) ». */
+  /** The group heading: « K12.2 (k12-g) »; « … · non vérifié » for a Bêta device (night wave 1, item 1). */
   device: string
+  /** The device is a Bêta proposal: its ports are declared, not verified. */
+  unverified: boolean
   /** The option's visible text under its group: « in-line-a · XLR3 femelle · Niveau ligne pro (+4 dBu) ». */
   port: string
 }
@@ -61,12 +64,13 @@ export function candidates(
     if (inst.instanceId === from.instance) continue
     const device = registry.deviceById.get(inst.deviceId)
     if (!device) continue
-    const heading = `${shortName(registry, inst.deviceId)} (${inst.instanceId})`
+    const unverified = isUnverified(registry, inst.deviceId)
+    const heading = markUnverified(`${shortName(registry, inst.deviceId)} (${inst.instanceId})`, unverified)
     for (const p of device.ports) {
       const ref: PortRef = { instance: inst.instanceId, port: p.portId }
       if (store.connectionAt(ref) !== undefined) continue // a taken port is not a candidate (UNPLUG first)
       const port = `${p.portId} · ${connectorName(registry, p.connector)} · ${signalName(registry, p.signal)}`
-      const entry: Candidate = { ref, label: `${heading} · ${port}`, device: heading, port }
+      const entry: Candidate = { ref, label: `${heading} · ${port}`, device: heading, unverified, port }
       const r = store.canConnect(from, ref)
       if (r.ok) out.ok.push(entry)
       else {

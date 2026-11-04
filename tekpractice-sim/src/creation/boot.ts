@@ -72,7 +72,7 @@ import { listenerAtPoint, listenerFromCamera } from './listenerPose'
 import { audioStats, closeAudioContext, openAudioContext } from '../audio/context'
 import type { ListenerPose } from './listenVoices'
 import type { BetaPrep } from './betaDevices'
-import { isUnverified, parseProposals, prepareBeta, proposalEntries, registerProposals, within, type BetaLoad } from './betaDevices'
+import { isUnverified, markUnverified, parseProposals, prepareBeta, proposalEntries, registerProposals, within, type BetaLoad } from './betaDevices'
 import { signalPath } from '../flow/signalPath'
 import type { DeviceT } from '../engine/CatalogLoader'
 import type { DesignState } from '../trials/trial'
@@ -1558,10 +1558,11 @@ export async function bootCreation(): Promise<void> {
     const deviceId = store.design().rig.instances.find((i) => i.instanceId === r.instance)?.deviceId
     const p = (deviceId ? registry.deviceById.get(deviceId) : undefined)?.ports.find((q) => q.portId === r.port)
     if (!p) return r.port
-    return COPY.patch!.hoverLabel!
+    // A Bêta device's port says so on hover (night wave 1, item 1).
+    return markUnverified(COPY.patch!.hoverLabel!
       .replace('{port}', p.portId)
       .replace('{connector}', COPY.connector?.[p.connector] ?? registry.connectorById.get(p.connector)?.label ?? p.connector)
-      .replace('{signal}', COPY.signal?.[p.signal] ?? registry.signalById.get(p.signal)?.label ?? p.signal)
+      .replace('{signal}', COPY.signal?.[p.signal] ?? registry.signalById.get(p.signal)?.label ?? p.signal), !!deviceId && isUnverified(registry, deviceId))
   }
   const patch = new PatchController(host, history, store, scheduler, shellBag, {
     ui: portLabels,
@@ -1618,7 +1619,9 @@ export async function bootCreation(): Promise<void> {
     deviceAt: (x, y) => pickDevice(host.scene, x, y) !== null,
     describe: (key) => {
       const c = store.design().rig.connections.find((k) => cableKey(k.a, k.b) === key)
-      return c ? cableText(portInfoNow(), c.a, c.b, host.cableLengthM(key)) : null
+      if (!c) return null
+      const deviceOf = (instance: string): string => store.design().rig.instances.find((i) => i.instanceId === instance)?.deviceId ?? ''
+      return cableText(portInfoNow(), c.a, c.b, host.cableLengthM(key), isUnverified(registry, deviceOf(c.a.instance)) || isUnverified(registry, deviceOf(c.b.instance)))
     },
     subscribe: (fn) => store.subscribe(fn),
   })

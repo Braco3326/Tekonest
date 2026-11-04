@@ -19,6 +19,7 @@ import type { PortRef } from '../../engine/types'
 import { COPY } from '../copy'
 import type { History } from '../history'
 import type { CreationStore } from '../store'
+import { isUnverified, markUnverified } from '../betaDevices'
 import { ConnectSession, focusPlan, groupByDevice, type CloseReason, type RejectionText } from './connectModel'
 import { connectorName, shortName, signalName } from './propertiesModel'
 import { modalButton, modalRow, openModal } from './modal'
@@ -71,7 +72,8 @@ export function createConnectDialog(d: ConnectDialogDeps): ConnectDialog {
   const portDescription = (ref: PortRef): string => {
     const inst = d.store.design().rig.instances.find((i) => i.instanceId === ref.instance)
     const port = inst && d.registry.deviceById.get(inst.deviceId)?.ports.find((p) => p.portId === ref.port)
-    const head = `${inst ? shortName(d.registry, inst.deviceId) : ref.instance} (${ref.instance}) · ${ref.port}`
+    const name = `${inst ? shortName(d.registry, inst.deviceId) : ref.instance} (${ref.instance})`
+    const head = `${markUnverified(name, !!inst && isUnverified(d.registry, inst.deviceId))} · ${ref.port}`
     return port ? `${head} · ${connectorName(d.registry, port.connector)} · ${signalName(d.registry, port.signal)}` : head
   }
 

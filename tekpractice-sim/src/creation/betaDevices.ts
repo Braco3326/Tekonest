@@ -24,6 +24,7 @@
 import { Device } from '../../tools/schemas'
 import type { DeviceT, Registry } from '../engine/CatalogLoader'
 import type { DesignState } from '../trials/trial'
+import { COPY } from './copy'
 
 /** What the inventory needs of a proposal (`inventory()`'s `proposals` option). */
 export interface BetaProposal {
@@ -138,6 +139,13 @@ export function registerProposals(registry: Registry, devices: readonly DeviceT[
 export function isUnverified(registry: Registry, deviceId: string): boolean {
   return registered.get(registry)?.has(deviceId) === true
 }
+
+/**
+ * A name followed by the « non vérifié » mark when its device is a Bêta proposal (night wave 1, item 1): the one place that
+ * composes the mark, so every label that names a Bêta device or one of its ports or cables says it the same way. A verified
+ * name comes back untouched.
+ */
+export const markUnverified = (name: string, unverified: boolean): string => (unverified ? `${name} · ${COPY.inventory!.badgeUnverified!}` : name)
 
 /** The distinct device ids of a design that the registry does not know yet (the proposals to load before it opens). */
 export function unknownDeviceIds(registry: Registry, design: Pick<DesignState, 'rig'> | null | undefined): string[] {

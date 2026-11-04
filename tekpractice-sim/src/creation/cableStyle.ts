@@ -137,15 +137,23 @@ export function lengthText(metres: number): string {
  * first whichever way the connection is stored; the length (the drawn cable's, metres) ends it when given. Null when neither
  * port is known (the cable is not in the design).
  */
-export function cableText(portOf: (ref: PortRef) => PortInfo | undefined, a: PortRef, b: PortRef, lengthM?: number | null): string | null {
+export function cableText(
+  portOf: (ref: PortRef) => PortInfo | undefined,
+  a: PortRef,
+  b: PortRef,
+  lengthM?: number | null,
+  unverified = false
+): string | null {
   const signal = connectionSignal(portOf, a, b)
   if (signal === null) return null
   const [from, to] = portOf(a)?.dir !== 'out' && portOf(b)?.dir === 'out' ? [b, a] : [a, b]
   const end = (r: PortRef): string => `${r.instance} ${r.port}`
   const known = typeof lengthM === 'number' && Number.isFinite(lengthM)
-  return (known ? COPY.cables!.hoverLength! : COPY.cables!.hover!)
+  const text = (known ? COPY.cables!.hoverLength! : COPY.cables!.hover!)
     .replace('{a}', end(from))
     .replace('{b}', end(to))
     .replace('{signal}', signalLabel(signal))
     .replace('{length}', known ? lengthText(lengthM) : '')
+  // A cable on a Bêta device is as unverified as its device (night wave 1, item 1).
+  return unverified ? `${text} · ${COPY.inventory!.badgeUnverified!}` : text
 }
