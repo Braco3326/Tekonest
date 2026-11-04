@@ -5,11 +5,13 @@
  * fix-up unrotated and pass every gate.
  */
 import { readFileSync } from 'node:fs'
+import { existsSync } from 'node:fs'
 import { mkdtemp, readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { NodeIO } from '@gltf-transform/core'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { buildAsset } from '../../../tools/assets3d/build-asset'
 import { findBlender } from '../../../tools/assets3d/env'
 import type { GateResult } from '../../../tools/assets3d/gates'
 import { runGates } from '../../../tools/assets3d/gates'
@@ -21,18 +23,32 @@ import { BUILD_SCRIPT, runBuilder } from '../../../tools/assets3d/runBuilder'
 import { runFixup } from '../../../tools/assets3d/runFixup'
 import type { FixupReport } from '../../../tools/assets3d/runFixup'
 import { BUILD_SHAPES } from '../../../tools/assets3d/shapes'
-import type { AssetSpecT, BuildSpecT } from '../../../tools/assets3d/specSchema'
+import type { AssetSpecT } from '../../../tools/assets3d/specSchema'
 
 const BLENDER = findBlender()
 const MM = 0.001
 const TOL_M = 0.01 * MM
 
-/** The shipped spec of `id` with `build` swapped in (until the real specs carry their own block). */
-function specWithBuild(id: string, build: BuildSpecT): AssetSpecT {
+/** The shipped spec of `id` (content/asset-specs), with its own build block. */
+function realSpec(id: string): AssetSpecT {
   const spec = loadSpecs().find((s) => s.id === id)
   if (!spec) throw new Error(`no spec ${id}`)
-  return { ...spec, build }
+  return spec
 }
+
+/** The four wave-1 assets and the build block each spec must carry. */
+const WAVE1: [string, AssetSpecT['build']][] = [
+  ['xlr3-f', { shape: 'cylinder-plug', params: { frontLenMm: 12 } }],
+  ['trs-quarter', { shape: 'trs-plug', params: { barrelMm: 19 } }],
+  ['rj45', { shape: 'rj45-plug' }],
+  ['yamaha-rio3224-d2', { shape: 'rack-box', params: { chamferMm: 1 } }],
+]
+
+describe('wave-1 specs', () => {
+  it.each(WAVE1)('%s carries its build block', (id, build) => {
+    expect(realSpec(id).build).toEqual(build)
+  })
+})
 
 interface Built {
   raw: GlbReport
@@ -110,7 +126,7 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     return hit
   }
 
-  const xlr = (): AssetSpecT => specWithBuild('xlr3-f', { shape: 'cylinder-plug', params: { frontLenMm: 12 } })
+  const xlr = (): AssetSpecT => realSpec('xlr3-f')
 
   it.skipIf(!BLENDER)('xlr3-f builds at 19.2 x 19.2 x 72.5 mm with the small mating end at minimum z', async () => {
     const spec = xlr()
@@ -149,7 +165,7 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
   }
 
   it.skipIf(!BLENDER)('trs-quarter builds at 14.5 x 14.5 x 93 mm with a 6.29 mm barrel at minimum z', async () => {
-    const spec = specWithBuild('trs-quarter', { shape: 'trs-plug', params: { barrelMm: 19 } })
+    const spec = realSpec('trs-quarter')
     const { raw, rawBytes } = await expectBuiltTo(spec, 800)
     const verts = await vertices(rawBytes)
     const zMin = raw.bboxM.min[2]
@@ -162,7 +178,7 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
   }, 120_000)
 
   it.skipIf(!BLENDER)('rj45 builds at 11.68 x 8 x 22.48 mm with the latch step on the +Y side', async () => {
-    const spec = specWithBuild('rj45', { shape: 'rj45-plug' })
+    const spec = realSpec('rj45')
     const { raw, rawBytes } = await expectBuiltTo(spec, 800)
     const verts = await vertices(rawBytes)
     const zMin = raw.bboxM.min[2]
@@ -173,7 +189,7 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
   }, 120_000)
 
   it.skipIf(!BLENDER)('yamaha-rio3224-d2 builds as a chamfered 480 x 220 x 368 mm box and passes every gate with its ports and recesses', async () => {
-    const spec = specWithBuild('yamaha-rio3224-d2', { shape: 'rack-box', params: { chamferMm: 1 } })
+    const spec = realSpec('yamaha-rio3224-d2')
     const { raw, fixed } = await expectBuiltTo(spec, 4000)
     // Bottom-centre pivot as built: the fix-up keeps it.
     expect(raw.bboxM.min[1]).toBeCloseTo(0, 6)
@@ -182,7 +198,7 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
   }, 120_000)
 
   it.skipIf(!BLENDER)('a chamfer larger than half the smallest side exits with BUILD_FAIL naming chamferMm', async () => {
-    const spec = specWithBuild('yamaha-rio3224-d2', { shape: 'rack-box', params: { chamferMm: 300 } })
+    const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 300 } } }
     await expect(runBuilder(spec, join(dir, 'big-chamfer.glb'))).rejects.toThrow(/chamferMm/)
   }, 120_000)
 
@@ -191,4 +207,26 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     const bad = { ...base, realSizeMm: { ...base.realSizeMm, d: -1 } } as AssetSpecT
     await expect(runBuilder(bad, join(dir, 'bad.glb'))).rejects.toThrow(/sizeMm\.d must be a positive/)
   }, 120_000)
+
+  it.skipIf(!BLENDER).each(WAVE1.map(([id]) => id))('%s: asset:build --scripted passes every gate end to end and ships nothing', async (id) => {
+    const paths = { assetsDir: join(dir, 'e2e', id, 'public'), sourceDir: join(dir, 'e2e', id, 'assets-source'), manifestPath: join(dir, 'e2e', id, 'public', 'ASSET_MANIFEST.json') }
+    const report = await buildAsset(id, { maxAttempts: 1, scripted: true, dryRun: true }, { paths, renderSheet: null, log: () => undefined })
+    expect(report.error).toBeUndefined()
+    expect(report.ok).toBe(true)
+    expect(report.attempts[0].gates.filter((g) => !g.ok)).toEqual([])
+    expect(existsSync(join(report.workDir, 'final.glb'))).toBe(true)
+    expect(existsSync(join(paths.assetsDir, `${id}.glb`))).toBe(false)
+    expect(existsSync(paths.manifestPath)).toBe(false)
+  }, 180_000)
+
+  it.skipIf(!BLENDER)('two builder runs produce identical bytes', async () => {
+    for (const [id] of WAVE1) {
+      const a = join(dir, `det-${id}-a.glb`)
+      const b = join(dir, `det-${id}-b.glb`)
+      await runBuilder(realSpec(id), a)
+      await runBuilder(realSpec(id), b)
+      const [x, y] = [await readFile(a), await readFile(b)]
+      expect(x.equals(y), `${id}: the two raw GLBs differ (${x.length} vs ${y.length} bytes)`).toBe(true)
+    }
+  }, 180_000)
 })

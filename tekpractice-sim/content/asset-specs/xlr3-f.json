@@ -13,6 +13,12 @@
     "role": "plug",
     "outerMm": 15.75
   },
+  "build": {
+    "shape": "cylinder-plug",
+    "params": {
+      "frontLenMm": 12
+    }
+  },
   "sources": [
     {
       "kind": "datasheet",

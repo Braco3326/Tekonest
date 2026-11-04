@@ -12,6 +12,9 @@
   "mating": {
     "role": "plug"
   },
+  "build": {
+    "shape": "rj45-plug"
+  },
   "sources": [
     {
       "kind": "datasheet",

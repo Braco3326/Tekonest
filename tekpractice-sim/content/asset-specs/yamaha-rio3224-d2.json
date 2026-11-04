@@ -70,6 +70,12 @@
       }
     }
   ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 1
+    }
+  },
   "sources": [
     {
       "kind": "datasheet",
