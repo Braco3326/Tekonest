@@ -162,3 +162,41 @@ describe('isMainsSourceRef(registry, instances, ref): the registry-aware reader 
     expect(isMainsSourceRef(r, instances, { instance: 'beta', port: port.portId })).toBe(false) // ...the registry-aware one stops at isUnverified (L18)
   })
 })
+
+// ── Night wave 1, item 7: a reopened project that holds active gear and no mains source gets one honest line ───────────────────
+import { needsMainsHint } from '../../src/creation/mains'
+import type { DesignState } from '../../src/trials/trial'
+
+describe('needsMainsHint: active gear that needs power and no mains source in the project (night wave 1, item 7)', () => {
+  const design = (deviceIds: string[], controls: Record<string, Record<string, boolean | string>> = {}): DesignState =>
+    ({
+      roomId: 'room:x',
+      rig: { instances: deviceIds.map((deviceId, i) => ({ instanceId: `d${i}`, deviceId })), connections: [], controls },
+      placements: [],
+    }) as unknown as DesignState
+  const r = makeRegistry()
+
+  it('true: a console and a speaker (both need power) with no power strip', () => {
+    expect(needsMainsHint(design(['yamaha-ql1', 'qsc-k12-2', 'shure-sm58']), r)).toBe(true)
+  })
+  it('false: the project holds a power strip (cabled or not: it is the learner\'s own state)', () => {
+    expect(needsMainsHint(design(['yamaha-ql1', 'multiprise-secteur']), r)).toBe(false)
+  })
+  it('false: nothing needs power (a microphone alone, an empty rig)', () => {
+    expect(needsMainsHint(design(['shure-sm58']), r)).toBe(false)
+    expect(needsMainsHint(design([]), r)).toBe(false)
+  })
+  it('false: the only device that needs power has been switched off by the learner (« Alimentation » off)', () => {
+    expect(needsMainsHint(design(['yamaha-ql1'], { d0: { power: false } }), r)).toBe(false)
+    expect(needsMainsHint(design(['yamaha-ql1', 'qsc-k12-2'], { d0: { power: false } }), r)).toBe(true) // the speaker is still active
+  })
+  it('false: a Bêta device alone (its power need is unverified; it is never counted), true once a verified active device joins', () => {
+    const b = withBeta()
+    const betaWithPowerIn = [...b.deviceById.values()].find((d) => !b.catalog.devices.some((c) => c.id === d.id) && d.ports.some((p) => p.portId === 'power-in'))
+    if (betaWithPowerIn) expect(needsMainsHint(design([betaWithPowerIn.id]), b)).toBe(false)
+    expect(needsMainsHint(design(['yamaha-ql1']), b)).toBe(true)
+  })
+  it('false for a malformed design (never throws on a bad autosave)', () => {
+    for (const d of [null, undefined, {}, { rig: null }, { rig: { instances: 3 } }] as never[]) expect(needsMainsHint(d, r)).toBe(false)
+  })
+})

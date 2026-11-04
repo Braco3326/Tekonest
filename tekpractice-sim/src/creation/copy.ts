@@ -321,6 +321,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     autosaveFull: 'Stockage du navigateur plein : sauvegarde automatique en pause. Votre travail reste affiché tant que la page est ouverte ; rien de déjà enregistré n’est effacé.',
     /** Status bar after the autosave was reopened at start. */
     restored: 'Travail de la dernière séance rouvert.',
+    /** Said once, after a saved project is reopened (autosave or « Ouvrir… »), when it holds active gear that needs power and no power strip at all. */
+    noMains: 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » du tiroir) et branchez-y les appareils.',
     /** Name dialog (Ctrl+S the first time, « Enregistrer sous… »). Entrée enregistre. */
     nameTitle: 'Enregistrer le projet',
     nameTitleAs: 'Enregistrer sous',

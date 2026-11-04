@@ -31,3 +31,25 @@ export function isMainsSourceRef(
   if (deviceId === undefined || isUnverified(registry, deviceId)) return false
   return isMainsSourcePort(registry.deviceById.get(deviceId), ref.port)
 }
+
+/**
+ * Night wave 1, item 7. A project saved before the mains model (Phase 4) holds active gear but no power strip, so nothing in it is powered and
+ * the playback line gives a reason that never mentions the mains. True when the design holds a VERIFIED device that needs power (it has a
+ * `power-in` and its « Alimentation » is not switched off) and NO mains source at all (no verified device with an `isMainsSource` port).
+ * A strip that is in the project, cabled or not, is the learner's own state: no hint then. A Bêta device is never counted (its needs are
+ * unverified, and it supplies nothing). Pure; a malformed design is simply false.
+ */
+export function needsMainsHint(design: { rig?: unknown } | null | undefined, registry: Registry): boolean {
+  const rig = design?.rig as { instances?: unknown; controls?: unknown } | null | undefined
+  if (!Array.isArray(rig?.instances)) return false
+  const controls = (rig?.controls && typeof rig.controls === 'object' ? rig.controls : {}) as Record<string, Record<string, unknown> | undefined>
+  let needs = false
+  for (const i of rig.instances as { instanceId?: unknown; deviceId?: unknown }[]) {
+    if (typeof i?.deviceId !== 'string' || typeof i.instanceId !== 'string' || isUnverified(registry, i.deviceId)) continue
+    const device = registry.deviceById.get(i.deviceId)
+    if (!device) continue
+    if (device.ports.some((p) => p.flags?.includes('isMainsSource'))) return false
+    if (device.ports.some((p) => p.portId === 'power-in') && controls[i.instanceId]?.power !== false) needs = true
+  }
+  return needs
+}

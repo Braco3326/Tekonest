@@ -43,6 +43,7 @@ import { mountCancelPlacement } from './shell/cancelPlacement'
 import { EditController } from './editController'
 import { PatchController } from './patchController'
 import { CableHoverController } from './cableHover'
+import { needsMainsHint } from './mains'
 import { cableText, connectionSignal, legendEntries, portInfoOf, presentSignals } from './cableStyle'
 import { mountCableLegend } from './shell/cableLegend'
 import { mountPortLabels } from './shell/portLabel'
@@ -260,6 +261,13 @@ export async function bootCreation(): Promise<void> {
     const I = COPY.inventory!
     notes.show({ id: 'beta-unavailable', title: I.unavailableTitle!, body: I.unavailable! })
     shell.setStatus('', I.unavailable!, 'ready', true)
+  }
+  /**
+   * Night wave 1, item 7. A saved project reopened with active gear and no power strip (a project of before the mains model) would otherwise sit
+   * unpowered with a playback reason that never mentions the mains: one honest line, through the announcer, once per reopen. The project is never edited.
+   */
+  const noteNoMains = (): void => {
+    if (needsMainsHint(store.design(), registry)) announcer.say(COPY.project!.noMains!)
   }
   const noteMissing = (ids: readonly string[]): void => {
     if (!ids.length) return
@@ -885,6 +893,7 @@ export async function bootCreation(): Promise<void> {
     showCanvas()
     showStatus()
     announcer.say(PJ.restored!)
+    noteNoMains()
     return true
   }
   refreshSignal()
@@ -1103,6 +1112,7 @@ export async function bootCreation(): Promise<void> {
     autosave.schedule()
     showCanvas()
     announcer.say(PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()))
+    noteNoMains()
   }
   /** « Exporter les données mises de côté… »: one JSON file; nothing is removed (clearing is Oscar's call, N19). */
   const exportKept = (): void => {
