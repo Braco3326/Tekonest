@@ -5,7 +5,8 @@
  *
  * DOM only, no scene, no timer, no render request. Fed by the shell with plain data (`LegendEntry`: id, label, colour,
  * dash) computed in `src/creation/cableStyle.ts`; it never reads the rig (C6: the shell dispatches intents only).
- * Hidden entirely while no cable is on the scene. The toggle is a real button: named, `aria-expanded`, a visible
+ * Hidden entirely while no cable is on the scene. While Propriétés is folded (a 32 px rail) the block shows only a small rail button
+ * (night wave 1, item 4): it unfolds Propriétés with the legend open and puts focus on the legend's toggle, so the legend stays reachable. The toggle is a real button: named, `aria-expanded`, a visible
  * focus ring (the shell's 2 px Ambre + 1 px Nuit, in the CSS), no transition.
  */
 import type { LegendEntry } from '../cableStyle'
@@ -15,6 +16,8 @@ import { COPY } from '../copy'
 export interface CableLegend {
   readonly element: HTMLElement
   readonly toggle: HTMLButtonElement
+  /** The rail button (visible only while Propriétés is folded, by CSS): it asks the shell to unfold Propriétés. */
+  readonly rail: HTMLButtonElement
   /** Show these entries (in the order given); an empty list hides the block. Rebuilds only on a change. */
   set(entries: readonly LegendEntry[]): void
   /** The list is unfolded. */
@@ -88,7 +91,28 @@ function swatch(doc: Document, e: LegendRow): SVGSVGElement {
 
 let seq = 0
 
-export function mountCableLegend(doc: Document, container: HTMLElement, bag: DisposableBag): CableLegend {
+/** Three short strokes, the last one dashed: what the legend shows, as the rail's icon. Decorative. */
+function railIcon(doc: Document): SVGSVGElement {
+  const svg = doc.createElementNS(SVG, 'svg')
+  svg.setAttribute('viewBox', '0 0 16 16')
+  svg.setAttribute('aria-hidden', 'true')
+  svg.setAttribute('focusable', 'false')
+  svg.setAttribute('class', 'cr-legend-rail-icon')
+  ;[3, 8, 13].forEach((y, i) => {
+    const line = doc.createElementNS(SVG, 'line')
+    line.setAttribute('x1', '2')
+    line.setAttribute('x2', '14')
+    line.setAttribute('y1', String(y))
+    line.setAttribute('y2', String(y))
+    line.setAttribute('stroke', 'currentColor')
+    line.setAttribute('stroke-width', '2')
+    if (i === 2) line.setAttribute('stroke-dasharray', '3 2')
+    svg.appendChild(line)
+  })
+  return svg
+}
+
+export function mountCableLegend(doc: Document, container: HTMLElement, bag: DisposableBag, opts: { onRail?(): void } = {}): CableLegend {
   const id = `cr-legend-${++seq}`
   const root = doc.createElement('section')
   root.className = 'cr-legend'
@@ -111,7 +135,16 @@ export function mountCableLegend(doc: Document, container: HTMLElement, bag: Dis
   list.className = 'cr-legend-list'
   list.dataset.testid = 'cable-legend-list'
 
-  root.append(toggle, list)
+  const rail = doc.createElement('button')
+  rail.type = 'button'
+  rail.className = 'cr-legend-rail'
+  rail.dataset.testid = 'cable-legend-rail'
+  rail.setAttribute('aria-label', L().legendRail!)
+  rail.title = L().legendRail!
+  rail.appendChild(railIcon(doc))
+  bag.listen(rail, 'click', () => opts.onRail?.())
+
+  root.append(rail, toggle, list)
   container.appendChild(root)
   bag.add(() => root.remove())
 
@@ -134,6 +167,7 @@ export function mountCableLegend(doc: Document, container: HTMLElement, bag: Dis
   return {
     element: root,
     toggle,
+    rail,
     get open() {
       return open
     },

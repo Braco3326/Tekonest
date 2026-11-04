@@ -809,6 +809,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     legendCollapse: 'Replier la légende des câbles',
     /** Nom accessible du bouton quand elle est repliée (il la déplie). */
     legendExpand: 'Déplier la légende des câbles',
+    /** Nom accessible (et infobulle) du bouton de la légende dans le rail de Propriétés repliée : il déplie le panneau, légende ouverte. */
+    legendRail: 'Légende des câbles : déplier Propriétés',
     /** Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus). */
     dashed: 'pointillés',
     /** Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal. */

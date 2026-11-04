@@ -625,6 +625,7 @@ Câbles colorés par type de signal (Task 27, C18). La couleur n’est jamais le
 | `cables.legendTitle` | Légende des câbles | à valider (tekuxwriter) | Titre visible du bloc légende (bas du panneau Propriétés), aussi nom accessible de la liste |
 | `cables.legendCollapse` | Replier la légende des câbles | à valider (tekuxwriter) | Nom accessible du bouton de la légende quand elle est dépliée (il la replie) |
 | `cables.legendExpand` | Déplier la légende des câbles | à valider (tekuxwriter) | Nom accessible du bouton quand elle est repliée (il la déplie) |
+| `cables.legendRail` | Légende des câbles : déplier Propriétés | à valider (tekuxwriter) | Nom accessible et infobulle du bouton de la légende dans le rail de Propriétés repliée (visible seulement s’il y a un câble) : il déplie le panneau, légende ouverte |
 | `cables.dashed` | pointillés | à valider (tekuxwriter) | Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus) |
 | `cables.hover` | {a} → {b} · {signal} | à valider (tekuxwriter) | Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal |
 | `cables.hoverLength` | {a} → {b} · {signal} · {length} | à valider (tekuxwriter) | Le même texte avec la longueur du câble tracé ; {length} = « 6,4 m » |

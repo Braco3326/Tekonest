@@ -1608,7 +1608,14 @@ export async function bootCreation(): Promise<void> {
   // ── Cables by signal type (Task 27, C18): the colour is the scene host's (the catalog's signal of each connection);
   // the legend (bottom of Propriétés) lists the types present; hovering a cable highlights it and says what it joins.
   // After the patch controller: a port under the pointer wins, and its label is never hidden from here.
-  const cableLegend = mountCableLegend(document, shell.props, shellBag)
+  const cableLegend = mountCableLegend(document, shell.props, shellBag, {
+    // The rail button of a folded Propriétés: unfold it with the legend open, and put focus on the legend (night wave 1, item 4).
+    onRail: () => {
+      shell.setPanel('props', true)
+      cableLegend.setOpen(true)
+      cableLegend.toggle.focus()
+    },
+  })
   const portInfoNow = () => portInfoOf(registry, store.design().rig.instances)
   const refreshLegend = (): void => {
     const portOf = portInfoNow()
