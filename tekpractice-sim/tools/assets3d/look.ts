@@ -6,7 +6,7 @@
  * the SM58 handle vanishes. The scripted builder solves the same problem by lifting its palette (build_from_spec.py lift_hex);
  * this step applies the same rule to a textured model:
  *  - the metallic factor is capped at LOOK_METALLIC (a lower factor is kept); roughness is left to the map;
- *  - every pixel of the base-colour map is lifted: linear x LOOK_GAIN, capped at LOOK_LINEAR_CAP, never darker than it was
+ *  - every pixel of the base-colour map is lifted: linear x LOOK_GAIN + LOOK_OFFSET, capped at LOOK_LINEAR_CAP, never darker than it was
  *    (a white label stays white); alpha is untouched.
  * The normal and metallic-roughness maps are not touched. A GLB without textures comes back as the very same bytes.
  * Runs on the fixed-up GLB, before the texture step (so the lift is applied to the full-size map, then downscaled).
@@ -20,6 +20,8 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 export const LOOK_METALLIC = 0.15
 /** Linear gain of the colour map, the value of the scripted builder's REVOLVE_LIFT. */
 export const LOOK_GAIN = 3.0
+/** Linear offset added with the gain: black plastic (a speaker cabinet, a label) becomes a dark grey, not a hole in the picture. */
+export const LOOK_OFFSET = 0.012
 /** Linear ceiling of a lifted pixel (the scripted builder's REVOLVE_LIFT_CAP). */
 export const LOOK_LINEAR_CAP = 0.85
 
@@ -29,7 +31,7 @@ const toSrgb = (v: number): number => (v <= 0.0031308 ? 12.92 * v : 1.055 * v **
 /** One sRGB byte, lifted: max(linear, min(cap, linear x gain)) back to an sRGB byte. */
 export function liftChannel(byte: number): number {
   const lin = toLinear(byte / 255)
-  const lifted = Math.max(lin, Math.min(LOOK_LINEAR_CAP, lin * LOOK_GAIN))
+  const lifted = Math.max(lin, Math.min(LOOK_LINEAR_CAP, lin * LOOK_GAIN + LOOK_OFFSET))
   return Math.max(0, Math.min(255, Math.round(toSrgb(lifted) * 255)))
 }
 

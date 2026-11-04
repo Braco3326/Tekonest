@@ -14,14 +14,16 @@
       "xMm": 136.7,
       "yMm": 107,
       "confidence": "photo",
-      "openingMm": 24
+      "openingMm": 24,
+      "insetMm": 9
     },
     {
       "portId": "power-in",
       "face": "io",
       "xMm": 58.1,
       "yMm": 107,
-      "confidence": "photo"
+      "confidence": "photo",
+      "insetMm": 12
     }
   ],
   "controls": [
@@ -39,6 +41,7 @@
       }
     }
   ],
+  "driftLimit": 0.2,
   "sources": [
     {
       "kind": "datasheet",

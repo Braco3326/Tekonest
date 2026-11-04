@@ -6,7 +6,7 @@
 import sharp from 'sharp'
 import { Document, NodeIO } from '@gltf-transform/core'
 import { describe, expect, it } from 'vitest'
-import { LOOK_GAIN, LOOK_LINEAR_CAP, LOOK_METALLIC, liftChannel, normaliseLook } from '../../../tools/assets3d/look'
+import { LOOK_GAIN, LOOK_LINEAR_CAP, LOOK_METALLIC, LOOK_OFFSET, liftChannel, normaliseLook } from '../../../tools/assets3d/look'
 import { makeBoxGlb } from './helpers'
 
 const SIZE = { w: 0.2, h: 0.1, d: 0.3 }
@@ -14,7 +14,7 @@ const SIZE = { w: 0.2, h: 0.1, d: 0.3 }
 /** Reference formula, written independently of the implementation: sRGB byte -> linear x gain, never darker, capped -> sRGB byte. */
 function expectedLift(byte: number): number {
   const lin = (byte / 255 <= 0.04045) ? byte / 255 / 12.92 : ((byte / 255 + 0.055) / 1.055) ** 2.4
-  const lifted = Math.max(lin, Math.min(LOOK_LINEAR_CAP, lin * LOOK_GAIN))
+  const lifted = Math.max(lin, Math.min(LOOK_LINEAR_CAP, lin * LOOK_GAIN + LOOK_OFFSET))
   const s = lifted <= 0.0031308 ? 12.92 * lifted : 1.055 * lifted ** (1 / 2.4) - 0.055
   return Math.round(s * 255)
 }
@@ -51,7 +51,7 @@ describe('liftChannel', () => {
       expect(liftChannel(b)).toBeGreaterThanOrEqual(b)
     }
     expect(liftChannel(255)).toBe(255)
-    expect(liftChannel(0)).toBe(0)
+    expect(liftChannel(0)).toBeGreaterThan(20) // a black plastic cabinet or label is not a hole in the picture: the offset lifts it to a dark grey
   })
 })
 

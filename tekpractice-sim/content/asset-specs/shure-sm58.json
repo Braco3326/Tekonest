@@ -26,6 +26,7 @@
       { "fromMm": 119.5, "colour": "#9a9a9e" }
     ]
   },
+  "texture": { "blankBandsMm": [{ "fromMm": 111, "toMm": 121, "fill": "#2a2a2a" }] },
   "sources": [
     {
       "kind": "datasheet",

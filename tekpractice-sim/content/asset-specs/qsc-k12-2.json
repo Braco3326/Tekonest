@@ -14,7 +14,8 @@
       "xMm": 147.2,
       "yMm": 112.2,
       "confidence": "photo",
-      "openingMm": 24
+      "openingMm": 24,
+      "insetMm": 36
     },
     {
       "portId": "thru-out-a",
@@ -22,14 +23,16 @@
       "xMm": 147.7,
       "yMm": 81.1,
       "confidence": "photo",
-      "openingMm": 24
+      "openingMm": 24,
+      "insetMm": 36
     },
     {
       "portId": "power-in",
       "face": "io",
       "xMm": 179.1,
       "yMm": 39.1,
-      "confidence": "photo"
+      "confidence": "photo",
+      "insetMm": 36
     }
   ],
   "controls": [
@@ -47,6 +50,7 @@
       }
     }
   ],
+  "driftLimit": 0.25,
   "sources": [
     {
       "kind": "manual",
