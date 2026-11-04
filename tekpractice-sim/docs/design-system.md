@@ -79,7 +79,7 @@ passe `RoomTheme` à `buildRoom` et `DeviceTheme` à `DeviceSpawner` ; sans thè
 Tout ce qui précède décrit le système historique (blanc galerie, `--tk-*`). **Le Mode Création a son propre système**, qui est celui du chrome
 (menus, panneaux, tiroir, barre d'état, boîtes de dialogue) : `src/design/creationTokens.ts` est la source de vérité (`injectCreationTokens` pose les
 variables `--cr-*` sur `<html>`), `src/creation/shell/creation.css` (et les CSS paresseux `inventoryDrawer.css`, `listen.css`, `coverage.css`, `toast.css`,
-`connectDialog.css`) les consomme **sans aucune valeur en dur** pour les couleurs, polices et tailles de chrome. Un token manquant se demande à tekdesigner, il ne se
+`connectDialog.css`) les consomme : les couleurs de marque passent par les `--cr-*`, jamais en dur. **Ce qui reste en dur** : des voiles et ombres en `rgba` (`creation.css` lignes 185, 665, 751, 759, 787 et 907 au 2026-11-04) et une partie des tailles de texte en `px`. Un token manquant se demande à tekdesigner, il ne se
 code pas en dur. (Le nom de fichier `creationTokens.ts` n'est pas dans `src/creation/shell/` : il est dans `src/design/`.)
 
 | Token | Valeur | Rôle |
