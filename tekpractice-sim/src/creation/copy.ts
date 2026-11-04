@@ -419,7 +419,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * The signal path's words (Task 34, C9): the status bar's « Lecture » line and « Micro OK ». src/flow/signalPath.ts reads the
-   * reasons from here (plain data, no shell code). DRAFTS: every string here is à valider (tekuxwriter).
+   * reasons from here (plain data, no shell code). Every string here: validé (tekuxwriter, 2026-11-04).
    */
   playback: {
     /** Status bar when the signal path reaches a powered speaker (`playbackReady`). */
@@ -445,7 +445,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Coverage (Task 37, C13, S2): Écoute › Couverture, the dots in the 3D view and the legend / statistics block at the bottom of Propriétés.
-   * Honesty (brief §5): relative dB only, no intelligibility score, no regulatory level. Every string here: à valider (tekuxwriter).
+   * Honesty (brief §5): relative dB only, no intelligibility score, no regulatory level. Every string here: validé (tekuxwriter, 2026-11-04), except `chip` (à trancher, Oscar).
    */
   coverage: {
     panelTitle: 'Couverture',
@@ -512,7 +512,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Listening (Task 39, C9, C14, CA-03, CA-26): Écoute › Lecture / Stop / Morceau / Choisir un fichier audio… / Signal de test, and the Écoute block at the
-   * bottom of Propriétés. Honesty (brief §10): a SIMPLE simulation, said in the block. Every string here: à valider (tekuxwriter).
+   * bottom of Propriétés. Honesty (brief §10): a SIMPLE simulation, said in the block. Every string here: validé (tekuxwriter, 2026-11-04).
    */
   listen: {
     panelTitle: 'Écoute',
@@ -584,7 +584,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Named views (Task 18, C11, CA-05): the Vue menu and the `V` picker. The 26 view names
-   * themselves come from `zoneLabel` (src/camera/cubeZones.ts). Every string here: à valider (tekuxwriter).
+   * themselves come from `zoneLabel` (src/camera/cubeZones.ts). Every string here: validé (tekuxwriter, 2026-11-04).
    */
   views: {
     /** Vue › submenu holding the 26 views. */
@@ -614,7 +614,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Walking (Task 19, C11, S6): Vue › Marcher (Maj+V) and the ear height in Écoute.
-   * Every string here: à valider (tekuxwriter).
+   * Every string here: validé (tekuxwriter, 2026-11-04).
    */
   walk: {
     /** Vue menu item (checkbox; shortcut shown from the key map). */
@@ -631,7 +631,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Named listening points (Task 20): the « Points d’écoute » tree rows, Vue › Aller au point
-   * d’écoute, keys 1 / 2 / 3. Every string here: à valider (tekuxwriter).
+   * d’écoute, keys 1 / 2 / 3. Every string here: validé (tekuxwriter, 2026-11-04).
    */
   points: {
     /** Point names (tree rows, menu items). */
