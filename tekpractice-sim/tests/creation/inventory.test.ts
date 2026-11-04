@@ -201,6 +201,32 @@ describe('filterItems (the drawer search, final review 4)', () => {
     // a word of the label and a word of the family together
     expect(filterItems(r.items, 'yamaha console').every((i) => i.tab === 'consoles' || /console/i.test(i.label))).toBe(true)
   })
+  it('night wave 3b: the FAMILY matches at word start only (« e » no longer reaches every Console / Enceinte), the label still matches inside words', () => {
+    const items = [
+      { deviceId: 'k', label: 'XYZ 9', tab: 'consoles' as const, hasModel: true },
+      { deviceId: 'm', label: 'Qrs 4', tab: 'micros' as const, hasModel: true },
+      { deviceId: 'w', label: 'Qrs 5', tab: 'enceintes' as const, hasModel: true },
+    ]
+    // a one-letter query: only the family that STARTS with it (before: also « Consoles », which merely holds an « e »)
+    expect(filterItems(items, 'e').map((i) => i.deviceId)).toEqual(['w'])
+    expect(filterItems(items, 'ceinte')).toEqual([]) // inside « Enceintes »
+    expect(filterItems(items, 'o').map((i) => i.deviceId)).toEqual([]) // « Consoles », « Micros »: inside words
+    expect(filterItems(items, 'sole')).toEqual([]) // inside « Consoles »
+    expect(filterItems(items, 'ros')).toEqual([]) // inside « Micros »
+    // at word start: found, prefixes included, accents and case ignored
+    expect(filterItems(items, 'c').map((i) => i.deviceId)).toEqual(['k'])
+    expect(filterItems(items, 'cons').map((i) => i.deviceId)).toEqual(['k'])
+    expect(filterItems(items, 'CONSOLES').map((i) => i.deviceId)).toEqual(['k'])
+    expect(filterItems(items, 'micro').map((i) => i.deviceId)).toEqual(['m'])
+    expect(filterItems(items, 'enceinte').map((i) => i.deviceId)).toEqual(['w'])
+    // the LABEL keeps matching inside words (« ure » finds « Shure »; the existing test above), and a label + a family word still combine
+    expect(filterItems(items, 'yz 9 console').map((i) => i.deviceId)).toEqual(['k'])
+    expect(filterItems(items, 'yz sole')).toEqual([])
+    // the family name is accent-folded (« Bêta »), and matched at the start only
+    const multi = [{ deviceId: 'x', label: 'Qrs', tab: 'beta' as const, hasModel: false }]
+    expect(filterItems(multi, 'beta').map((i) => i.deviceId)).toEqual(['x'])
+    expect(filterItems(multi, 'eta')).toEqual([])
+  })
   it('every catalog device is found by its own label', () => {
     for (const it of r.items) expect(filterItems(r.items, it.label).map((i) => i.deviceId), it.label).toContain(it.deviceId)
   })

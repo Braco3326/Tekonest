@@ -111,12 +111,15 @@ const fold = (s: string): string => s.normalize('NFD').replace(/[\u0300-\u036f]/
  * The drawer search: the items whose LABEL or FAMILY (the tab's name: « Micros », « Consoles », « Enceintes »…) holds every word of `query`
  * (any order), across all tabs; accents and case are ignored. A blank query keeps everything. Order is kept. The family is searched because the
  * empty-filter help suggests « micro, console, enceinte » (night wave 2c, C1): those words are in no device label, they are the tabs' names.
+ * The label matches anywhere in a word (« ure » finds « Shure »); the FAMILY only at the start of one of its words (night wave 3b), so « e » no
+ * longer finds every Console and Enceinte through « Consoles » / « Enceintes »; « console », « micro », « enceinte » (and their prefixes) still do.
  */
 export function filterItems<T extends { label: string; tab?: InventoryTab }>(items: readonly T[], query: string): T[] {
   const words = fold(query).split(/\s+/).filter(Boolean)
   if (!words.length) return [...items]
   return items.filter((it) => {
-    const hay = fold(it.tab ? `${it.label} ${TAB_LABELS[it.tab]}` : it.label)
-    return words.every((w) => hay.includes(w))
+    const label = fold(it.label)
+    const family = it.tab ? fold(TAB_LABELS[it.tab]).split(/\s+/) : []
+    return words.every((w) => label.includes(w) || family.some((f) => f.startsWith(w)))
   })
 }
