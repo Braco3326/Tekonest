@@ -162,7 +162,7 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
   const aboutTitle = el(doc, 'summary', 'cr-cov-about-title', L.aboutTitle)
   aboutTitle.dataset.testid = 'coverage-about-title'
   about.append(aboutTitle, aim, speakersTitle, speakers, hint, above, spl)
-  // The method (« somme énergétique, champ direct ») and the source line (« valeur nominale », « fiche de l’appareil »…) are NOT folded (night wave 2c, C2):
+  // The method (« somme énergétique, champ direct ») and the source line (« valeur nominale », « base de connaissances »…) are NOT folded (night wave 2c, C2):
   // the brief (§5) wants the legend to show the processing and the source, and a missing datum flagged. They follow the scale and its hatched line.
   ready.append(unit, statsTitle, stats, legendTitle, legend, hatched, method, source, pointsTitle, points, pinRow, about)
   body.append(status, caveat, ready)

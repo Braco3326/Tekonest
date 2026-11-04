@@ -467,7 +467,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     aim: 'Trait clair : axe de chaque enceinte audible',
     frontCaveat: 'Face avant du modèle 3D non vérifiée pour {names} : le trait indique l’axe acoustique, pas forcément la face du modèle.',
     sourceLine: 'Couverture : {sources}',
-    sourceKb: 'fiche de l’appareil',
+    sourceKb: 'base de connaissances',
     sourceNominal: 'valeur nominale',
     sourceDatasheet: 'fiche constructeur',
     sourceDeduced: 'verticale déduite',
@@ -543,7 +543,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** The point name while the walk camera listens in place of the points. */
     fromWalk: 'la caméra de marche',
     /** Always shown: what the simulation is, in one sentence. The rest of its limits is folded under `limitsTitle`. */
-    simple: 'Simulation simple : niveau relatif, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.',
+    simple: 'Simulation simple : niveau relatif, volume normalisé, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.',
     /** Title of the closed `<details>` that holds the rest of the limits. */
     limitsTitle: 'Limites de la simulation',
     /** In the details, first: what acts on the sound, and what the volume does (the second half of the former « simple »). */

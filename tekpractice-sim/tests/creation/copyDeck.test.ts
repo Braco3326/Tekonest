@@ -51,6 +51,10 @@ describe('copy deck docs/copy/creation-mode.md mirrors COPY (Task 7)', () => {
     expect(COPY.coverage.reasonBalance).toBe('la balance de la console coupe ces enceintes')
     expect(COPY.listen.limitsMore).toContain('Le fader, le mute et la balance de la console agissent sur le son.')
   })
+  it('final fix round (C1, S1): the always-visible listen sentence says the volume is normalised; the KB source is named « base de connaissances », not « fiche »', () => {
+    expect(COPY.listen.simple).toBe('Simulation simple : niveau relatif, volume normalisé, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.')
+    expect(COPY.coverage.sourceKb).toBe('base de connaissances')
+  })
   it('no shipped string is a placeholder', () => {
     for (const entries of Object.values(COPY)) for (const t of Object.values(entries)) expect(t).not.toContain('[À REMPLACER')
   })

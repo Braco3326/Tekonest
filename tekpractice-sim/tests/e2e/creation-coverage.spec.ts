@@ -85,7 +85,7 @@ test('(a) Écoute › Couverture: off by default, then the dots, ≤ 20 000 poin
   expect(p.x).toBeGreaterThanOrEqual(v.x + v.width - 1) // right of the viewport: it never overlays the 3D view
   await expect(page.getByTestId('coverage-unit')).toHaveText('dB relatif (0 = point le plus fort)')
   await expect(page.getByTestId('coverage-method')).toHaveText('somme énergétique, champ direct')
-  await expect(page.getByTestId('coverage-source')).toHaveText('Couverture : fiche de l’appareil (verticale déduite)')
+  await expect(page.getByTestId('coverage-source')).toHaveText('Couverture : base de connaissances (verticale déduite)')
   await expect(page.getByTestId('coverage-hatched')).toContainText('Hachuré : interférences non modélisées')
   // night wave 2c (C2): all four are on screen without opening « À propos du calcul » (toHaveText also passes on a folded element)
   for (const id of ['coverage-unit', 'coverage-method', 'coverage-source', 'coverage-hatched']) await expect(page.getByTestId(id), id).toBeVisible()

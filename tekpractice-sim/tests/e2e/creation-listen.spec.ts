@@ -159,7 +159,7 @@ test('(b) powered + playback on: « Lecture » is enabled; one click, then BOTH 
   await expect(page.getByTestId('listen-meters').locator('li[data-instance="k12-g"]')).toContainText(/QSC K12\.2 \(k12-g\) : niveau de sortie −?\d+,\d dBFS, gain 0,0 dB, retard 0,0 ms, pan gauche \d+ %/)
   await expect(page.getByTestId('listen-meters').locator('li[data-instance="k12-d"]')).toContainText(/pan droite \d+ %/)
   // night wave 2 (G): one honest sentence stays on screen, the rest of the limits is under a closed « Limites de la simulation » (nothing removed)
-  await expect(page.getByTestId('listen-simple')).toHaveText('Simulation simple : niveau relatif, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.')
+  await expect(page.getByTestId('listen-simple')).toHaveText('Simulation simple : niveau relatif, volume normalisé, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.')
   await expect(page.getByTestId('listen-limits-more')).toContainText('Le volume est normalisé')
   await expect(page.getByTestId('listen-limits-more')).toContainText('diaphonie')
   await expect(page.getByTestId('listen-volume')).toContainText('Le volume démarre bas')

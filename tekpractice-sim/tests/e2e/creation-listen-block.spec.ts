@@ -111,7 +111,7 @@ test('the limits: one honest sentence on screen, the rest of them under a closed
   await boot(page)
   await menu(page, 'Lecture')
   await page.waitForFunction(() => window.__creation!.audioState().state === 'playing', null, { timeout: 15_000 })
-  await expect(page.getByTestId('listen-simple')).toHaveText('Simulation simple : niveau relatif, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.')
+  await expect(page.getByTestId('listen-simple')).toHaveText('Simulation simple : niveau relatif, volume normalisé, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.')
   const box = page.getByTestId('listen-limits-box')
   await expect(box).not.toHaveAttribute('open', '')
   await expect(page.getByTestId('listen-limits-title')).toHaveText('Limites de la simulation')
