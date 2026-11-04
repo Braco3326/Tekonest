@@ -96,6 +96,16 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 }
 .cr-dialog-error { margin: 6px 0 0; color: var(--cr-danger); font-size: 14px; }
 .cr-dialog-error:empty { display: none; }
+/* « Raccourcis clavier » (night 2 wave 5, P2-1): the list scrolls inside the box on a short window (it is a focus stop: tabindex 0 in shortcutsDialog.ts). */
+.cr-dialog:has(.cr-shortcuts) { display: flex; flex-direction: column; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); box-sizing: border-box; }
+.cr-shortcuts { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-right: 8px; }
+.cr-shortcuts-h { margin: 16px 0 6px; font: 600 13px/1.3 var(--cr-font-ui); letter-spacing: 0.08em; text-transform: uppercase; color: var(--cr-ink-muted); }
+.cr-shortcuts-h:first-child { margin-top: 0; }
+.cr-shortcuts-dl { display: grid; grid-template-columns: minmax(0, 1fr) auto; margin: 0; }
+.cr-shortcuts-dl dt, .cr-shortcuts-dl dd { margin: 0; padding: 6px 0; border-bottom: 1px solid var(--cr-panel-line); }
+.cr-shortcuts-dl dt { font-weight: 400; }
+.cr-shortcuts-dl dd { display: flex; flex-wrap: wrap; justify-content: flex-end; align-content: center; gap: 4px; padding-left: 16px; }
+.cr-shortcuts kbd { padding: 0 6px; font: 500 12px/20px var(--cr-font-ui); color: var(--cr-papier); background: var(--cr-nuit); border: 1px solid var(--cr-ink-muted); white-space: nowrap; }
 .cr-project-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .cr-project-row {
   display: flex;

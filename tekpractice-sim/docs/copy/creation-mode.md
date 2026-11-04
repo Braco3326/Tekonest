@@ -91,6 +91,42 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 
 Since Task 12, Lieu holds only « Choisir un lieu… »; the place names are on the picker cards (`content/rooms/*.json` `name_fr`, `picker.set-*`, `picker.blank`).
 
+## shortcuts
+
+Le dialogue « Raccourcis clavier » (menu Aide, touche H ; vague de nuit 2, vague 5, P2-1) : la liste des touches de la carte des touches, avec les étiquettes vivantes (une action reliée à une autre touche affiche la nouvelle ; une action sans touche n'apparaît pas). Textes de la vague 5, à relire par tekuxwriter.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `shortcuts.title` | Raccourcis clavier | à valider (tekuxwriter) | Titre du dialogue (même texte que l’entrée de menu `menu.shortcuts`) |
+| `shortcuts.hint` | Dans la vue 3D, ces touches agissent quand elle a le focus. Elles sont repérées par leur position sur le clavier. | à valider (tekuxwriter) | Phrase sous le titre (description du dialogue). Vrai du code : les touches de lettres et de chiffres n’agissent que sur la vue 3D (`CANVAS_ONLY`) |
+| `shortcuts.opened` | Liste des raccourcis clavier affichée. | à valider (tekuxwriter) | Annonce unique à l’ouverture (ligne d’état) |
+| `shortcuts.close` | Fermer | à valider (tekuxwriter) | Bouton du dialogue (Échap ferme aussi) |
+| `shortcuts.keyArrows` | Flèches | à valider (tekuxwriter) | Nom de la touche pour orbiter (hors carte des touches : entrée de la caméra) |
+| `shortcuts.groupView` | Vue 3D | à valider (tekuxwriter) | Titre de groupe |
+| `shortcuts.groupDevices` | Appareils | à valider (tekuxwriter) | Titre de groupe |
+| `shortcuts.groupProject` | Projet | à valider (tekuxwriter) | Titre de groupe |
+| `shortcuts.orbit` | Orbiter autour de la scène | à valider (tekuxwriter) | Ligne : flèches |
+| `shortcuts.quarterLeft` | Quart de tour de la vue vers la gauche | à valider (tekuxwriter) | Ligne : pavé numérique 4 |
+| `shortcuts.quarterRight` | Quart de tour de la vue vers la droite | à valider (tekuxwriter) | Ligne : pavé numérique 6 |
+| `shortcuts.points` | Aller à un point d’écoute | à valider (tekuxwriter) | Ligne : 1, 2, 3 |
+| `shortcuts.frame` | Cadrer la sélection | à valider (tekuxwriter) | Ligne : F et Entrée |
+| `shortcuts.home` | Vue d’ensemble | à valider (tekuxwriter) | Ligne : Alt+H |
+| `shortcuts.picker` | Choisir une vue | à valider (tekuxwriter) | Ligne : V |
+| `shortcuts.walk` | Marcher dans la salle | à valider (tekuxwriter) | Ligne : Maj+V |
+| `shortcuts.next` | Appareil suivant | à valider (tekuxwriter) | Ligne : ] |
+| `shortcuts.prev` | Appareil précédent | à valider (tekuxwriter) | Ligne : [ |
+| `shortcuts.inventory` | Ouvrir ou fermer l’inventaire | à valider (tekuxwriter) | Ligne : Espace |
+| `shortcuts.rotateCw` | Pivoter de 15° (Alt : 1°) | à valider (tekuxwriter) | Ligne : R |
+| `shortcuts.rotateCcw` | Pivoter de 15° dans l’autre sens | à valider (tekuxwriter) | Ligne : Maj+R |
+| `shortcuts.snap` | Placement libre pendant une pose ou un déplacement | à valider (tekuxwriter) | Ligne : G |
+| `shortcuts.duplicate` | Dupliquer l’appareil sélectionné | à valider (tekuxwriter) | Ligne : Ctrl+D |
+| `shortcuts.delete` | Supprimer l’appareil sélectionné | à valider (tekuxwriter) | Ligne : Suppr |
+| `shortcuts.cancel` | Annuler la pose, le câble en main ou la sélection | à valider (tekuxwriter) | Ligne : Échap |
+| `shortcuts.undo` | Annuler la dernière action | à valider (tekuxwriter) | Ligne : Ctrl+Z |
+| `shortcuts.redo` | Rétablir | à valider (tekuxwriter) | Ligne : Ctrl+Y |
+| `shortcuts.save` | Enregistrer le projet | à valider (tekuxwriter) | Ligne : Ctrl+S |
+| `shortcuts.help` | Afficher cette liste | à valider (tekuxwriter) | Ligne : H |
+
 ## tree
 
 Arbre « Projet » (Task 9, modèle WAI-ARIA tree). Remplace les clés `shell.treePlace`, `shell.treeGear`, `shell.treeNoPlace` et `shell.treeNoGear` (Task 7), supprimées. Les lignes d'appareil s'affichent « {nom catalogue} ({id}) », ex. « Yamaha QL1 (ql1) » ; les câbles « {id} {port} → {id} {port} », ex. « ql1 out-main-l → k12-g in-line-a » (nom de port français quand le catalogue en aura un) ; les zones par leur type en français (section `zoneKind`), numérotées quand un type se répète (« Public », « Public 2 »).
