@@ -43,10 +43,10 @@
   border: 1px solid var(--cr-ambre);
   transition: none;
 }
-.cr .cr-listen-btn::before { content: '▶' / ''; font-size: 11px; }
+.cr .cr-listen-btn::before { content: '▶'; content: '▶' / ''; font-size: 11px; }
 @media (hover: hover) { .cr .cr-listen-btn:hover { background: var(--cr-papier); border-color: var(--cr-papier); } }
 .cr .cr-listen-btn[data-state='playing'] { color: var(--cr-papier); background: transparent; border-color: var(--cr-ambre); }
-.cr .cr-listen-btn[data-state='playing']::before { content: '■' / ''; }
+.cr .cr-listen-btn[data-state='playing']::before { content: '■'; content: '■' / ''; }
 @media (hover: hover) { .cr .cr-listen-btn[data-state='playing']:hover { color: var(--cr-nuit); background: var(--cr-ambre); border-color: var(--cr-ambre); } }
 .cr .cr-listen-btn[aria-disabled='true'] { color: var(--cr-ink-muted); background: transparent; border: 1px dashed var(--cr-ink-muted); cursor: default; }
 @media (hover: hover) { .cr .cr-listen-btn[aria-disabled='true']:hover { color: var(--cr-ink-muted); background: transparent; border: 1px dashed var(--cr-ink-muted); cursor: default; } }
