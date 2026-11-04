@@ -412,7 +412,7 @@ Lecture et micro (Task 34, C9) : la ligne « Lecture » de la barre d’état et
 
 Les titres et textes pédagogiques des règles R1–R8 sont des **données du catalogue**, pas des chaînes de `copy.ts` : `content/catalog.json`, `rules[].title_fr` (titre) et `rules[].teach_fr` (texte pédagogique), obligatoires (schéma zod, `npm run validate:catalog`). Les champs anglais `title` / `teach` restent pour le mode historique (`?legacy=1`). Le Mode Création ne montre que le français : `ruleTextFor` (`src/creation/shell/statusModel.ts`) est le seul endroit qui les choisit, pour la liste d'erreurs de la barre d'état (titre + texte), le refus épinglé sur la prise (titre) et les prises incompatibles de « Connecter à… » (titre, puis texte sur une 2e ligne).
 
-Statut : **validé (tekuxwriter, 2026-11-04)**. Les 8 paires sont dans le catalogue ; la relecture se fait là (pas de copie ici, pour éviter deux sources). Nuit 2026-11-04 : `teach_fr` de R1 à R8 réécrits (mêmes faits et mêmes chiffres : 40 dB, 12 dB, +48 V, N-1, OCX HD) et titres de R6 et R8 clarifiés (R3 gardé : « Sens de connexion incorrect », cité par trois tests e2e). `tests/creation/ruleTexts.test.ts` fige les 16 textes à la lettre. Le hash `rulesRev` des Essais (ancien sim) couvre tout le tableau `rules` : il change avec ces textes, comme à chaque édition du catalogue.
+Statut : **brouillons du développeur (Task 29) à relire par tekuxwriter** (traductions fidèles de `title` / `teach`, sans nouvelle affirmation technique, sans clé `copy.ts`). Les 8 paires sont dans le catalogue ; la relecture se fait là (pas de copie ici, pour éviter deux sources).
 
 ## boot
 
