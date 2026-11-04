@@ -204,7 +204,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   }
   /** Empties the panel except the Bêta status node, then adds `nodes` after it. */
   const resetPanel = (...nodes: Node[]): void => {
-    for (const c of [...panel.childNodes]) if (c !== betaNote) c.remove()
+    for (const c of Array.from(panel.children)) if (c !== betaNote) panel.removeChild(c)
     panel.append(...nodes)
   }
   const hint = el(doc, 'p', 'cr-drawer-hint')
