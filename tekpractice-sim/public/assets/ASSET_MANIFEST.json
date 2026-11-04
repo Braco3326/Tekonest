@@ -424,7 +424,7 @@
     {
       "id": "shure-sm58",
       "optimized": true,
-      "tris": 744,
+      "tris": 10875,
       "kind": "device",
       "ports": 1,
       "status": "ok",
@@ -436,12 +436,62 @@
       "attributionText": "« Shure SM58 » par GRIP420 (https://sketchfab.com/3d-models/shure-sm58-89d38b9c53f8496a922ce1199ca57afc) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
       "trademark": "branded-internal",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:22:56.361Z",
+      "specSource": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "front.webp",
+        "head-closeup.webp",
+        "three-quarter-base.webp",
+        "three-quarter-head.webp"
+      ],
+      "taskId": "01a1a750-7d9d-76e9-a9e3-e5487242d762",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "shure-sm57",
       "optimized": true,
-      "tris": 400,
+      "tris": 10826,
       "kind": "device",
       "ports": 1,
       "status": "ok",
@@ -453,12 +503,61 @@
       "attributionText": "« SM57 » par AstorMilanese (https://sketchfab.com/3d-models/sm57-68a4fa6898b14f07b3ee9f56b342f469) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
       "trademark": "branded-internal",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:05.526Z",
+      "specSource": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "front.png",
+        "three-quarter-base.png",
+        "three-quarter-head.png"
+      ],
+      "taskId": "01a1a766-79f8-732a-893a-e30d1b5ead35",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "qsc-k12-2",
       "optimized": true,
-      "tris": 196,
+      "tris": 10140,
       "kind": "device",
       "ports": 3,
       "status": "ok",
@@ -469,12 +568,62 @@
       "attributionText": "« QSC K12.2 » par dantheman001robux (https://sketchfab.com/3d-models/qsc-k122-42ddb9057e8647dd831e065106630d28) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
       "trademark": "branded-internal",
       "portEmpties": 3,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:39.575Z",
+      "specSource": "https://www.qsc.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "closeup-rear-panel.png",
+        "front.png",
+        "rear.png",
+        "side-right.png"
+      ],
+      "taskId": "01a1a76c-3a26-76f4-86c7-723b02c93744",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "yamaha-dbr12",
       "optimized": true,
-      "tris": 196,
+      "tris": 5761,
       "kind": "device",
       "ports": 3,
       "status": "ok",
@@ -485,7 +634,57 @@
       "attributionText": "« Stage Monitor Speaker » par Sousinho (https://sketchfab.com/3d-models/stage-monitor-speaker-be94233262e24cbfa3723b607567afac) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
       "trademark": "branded-internal",
       "portEmpties": 3,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:48.211Z",
+      "specSource": "https://usa.yamaha.com/files/download/other_assets/4/332514/VHN5580_DBR15_TS_En_B0_views.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "front.jpg",
+        "rear.jpg",
+        "side.jpg",
+        "three-quarter-left.jpg"
+      ],
+      "taskId": "01a1a76c-3baf-7308-93ae-32b8b6986962",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "km-210-9",
@@ -522,7 +721,7 @@
     {
       "id": "ev-re20",
       "optimized": true,
-      "tris": 868,
+      "tris": 9566,
       "kind": "device",
       "ports": 1,
       "status": "ok",
@@ -534,7 +733,55 @@
       "attributionText": "« Shure SM7B Microphone | Blender » par Marshal (https://sketchfab.com/3d-models/shure-sm7b-microphone-blender-932fa222f4b14538828cac6da5747eec) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
       "trademark": "branded-internal",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:14.055Z",
+      "specSource": "https://products.electrovoice.com/download/970110",
+      "logosRemoved": true,
+      "photos": [
+        "front-black-variant.png",
+        "front.png"
+      ],
+      "taskId": "01a1a766-7cf1-7757-980b-5488bbb55e10",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "yellowtec-mika",
@@ -563,7 +810,7 @@
     {
       "id": "genelec-8030c",
       "optimized": true,
-      "tris": 196,
+      "tris": 10498,
       "kind": "device",
       "ports": 2,
       "status": "ok",
@@ -574,7 +821,57 @@
       "attributionText": "« Genelec 8340A RAW » par holofichesystems (https://sketchfab.com/3d-models/genelec-8340a-raw-ce1bff22430e45bf8e3cc2e4f353f4d9) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
       "trademark": "branded-internal",
       "portEmpties": 2,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:57.526Z",
+      "specSource": "https://assets.ctfassets.net/4zjnzn055a4v/1qUiHwGHNmumKgYugG6wws/837b26c2261771b9d58a94c44bb1cdc4/8030c_views.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "front.jpg",
+        "rear-three-quarter.jpg",
+        "rear.jpg",
+        "three-quarter-left.jpg"
+      ],
+      "taskId": "01a1a76c-3cde-7762-bedc-4bc3bd914ce9",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "playout-pc",
@@ -627,7 +924,7 @@
     {
       "id": "ev-re50",
       "optimized": true,
-      "tris": 468,
+      "tris": 9839,
       "kind": "device",
       "ports": 1,
       "status": "ok",
@@ -639,7 +936,54 @@
       "attributionText": "",
       "trademark": "generic",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:22.287Z",
+      "specSource": "https://products.electrovoice.com/download/970113",
+      "logosRemoved": true,
+      "photos": [
+        "front.png"
+      ],
+      "taskId": "01a1a766-804c-74a8-a230-3ac62bb220d9",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "avid-protools-hdx",
@@ -708,7 +1052,7 @@
     {
       "id": "neumann-u87-ai",
       "optimized": true,
-      "tris": 636,
+      "tris": 10415,
       "kind": "device",
       "ports": 1,
       "status": "ok",
@@ -720,7 +1064,57 @@
       "attributionText": "« U87 » par schwabbl1 (https://sketchfab.com/3d-models/u87-0f0e14eee8fb4f56a9826bae9b061c55) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
       "trademark": "branded-internal",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:31.556Z",
+      "specSource": "https://www.neumann.com/en-en/products/microphones/u-87-ai/",
+      "logosRemoved": true,
+      "photos": [
+        "closeup-grille.jpg",
+        "closeup-pattern-switch.jpg",
+        "front.jpg",
+        "three-quarter.png"
+      ],
+      "taskId": "01a1a766-7b4b-7606-acee-84ef9a33786e",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "switchcraft-studiopatch-9625",
