@@ -164,6 +164,11 @@ class Body:
         bm = self.bm
         if any(f[self.tag] == 0 for f in bm.faces):
             raise BuildError(f"{self.name}: a part was built without Body.done(colour)")
+        # Every part must be a closed solid: an open edge means a missing face, which recalculated normals and the
+        # fix-up's hole filling would hide or patch differently from what was built.
+        open_edges = [e for e in bm.edges if len(e.link_faces) == 1]
+        if open_edges:
+            raise BuildError(f"{self.name}: {len(open_edges)} open edges: a part is not a closed solid")
         bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
         layer = bm.loops.layers.float_color.new(COLOUR_ATTRIBUTE)
         linear = [srgb_hex_to_linear(c) if c else (0.5, 0.5, 0.5) for c in self.colours]
