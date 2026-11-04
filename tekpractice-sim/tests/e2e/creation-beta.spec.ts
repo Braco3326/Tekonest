@@ -119,12 +119,21 @@ test('« Bêta » is hidden when the file holds no proposal', async ({ page }) =
   await expect(page.getByTestId('inventory-badge')).toHaveCount(0)
 })
 
-test('« Bêta » is hidden, and the drawer still opens, when the proposals file cannot be loaded', async ({ page }) => {
+const LOADING = 'Chargement…'
+const TAB_UNAVAILABLE = 'Fiches Bêta indisponibles (réseau). Rechargez la page pour les retrouver.'
+const betaStatus = (page: Page) => page.getByTestId('inventory-beta-status')
+
+test('night wave 1, item 6: when the proposals file cannot be loaded the drawer still opens, « Bêta » says so in plain French, the other tabs work', async ({ page }) => {
   await page.route('**/proposalsSource*', (r) => r.abort())
   await boot(page)
   await open(page)
   await expect(page.getByRole('tab').first()).toHaveText('Micros')
-  await expect(betaTab(page)).toHaveCount(0)
+  await betaTab(page).click()
+  await expect(betaStatus(page)).toHaveText(TAB_UNAVAILABLE)
+  await expect(betaStatus(page)).toHaveAttribute('data-state', 'unavailable')
+  await expect(page.getByTestId('inventory-badge')).toHaveCount(0)
+  await page.getByRole('tab', { name: 'Micros' }).click()
+  await expect(page.getByRole('tabpanel').getByTestId('inventory-item').first()).toBeVisible()
   await page.keyboard.press('Space')
   await expect(drawer(page)).toBeHidden()
 })
@@ -134,10 +143,10 @@ test('« Bêta » is hidden, and the drawer still opens, when the proposals file
  * fetch is never « there are none »); the next open asks again and the tab comes back. A request ABORTED outright is remembered by
  * Chromium for the document (a second import() of the same chunk fails without a new request): only a reload recovers that one.
  */
-const stallProposals = async (page: Page): Promise<{ release: () => Promise<void>; held: () => number }> => {
-  await page.addInitScript(() => {
-    ;(window as unknown as { __creationBetaTimeoutMs: number }).__creationBetaTimeoutMs = 400 // test-only seam (default 5 s)
-  })
+const stallProposals = async (page: Page, timeoutMs = 400): Promise<{ release: () => Promise<void>; held: () => number }> => {
+  await page.addInitScript((ms) => {
+    ;(window as unknown as { __creationBetaTimeoutMs: number }).__creationBetaTimeoutMs = ms // test-only seam (default 5 s)
+  }, timeoutMs)
   const held: Array<() => Promise<void>> = []
   await page.route('**/proposalsSource*', (r) => void held.push(() => r.continue()))
   return { release: async () => void (await Promise.all(held.splice(0).map((f) => f()))), held: () => held.length }
@@ -146,31 +155,56 @@ const stallProposals = async (page: Page): Promise<{ release: () => Promise<void
 test('« Bêta » comes back on the next open once a stalled proposals file has arrived (a failed fetch is not remembered for the session)', async ({ page }) => {
   const net = await stallProposals(page)
   await boot(page)
-  await open(page) // waits the 400 ms, then opens without the tab
+  await open(page) // opens at once; after the 400 ms the Bêta tab says the sheets are unavailable
   await expect(page.getByRole('tab').first()).toHaveText('Micros')
-  await expect(betaTab(page)).toHaveCount(0)
+  await betaTab(page).click()
+  await expect(betaStatus(page)).toHaveText(TAB_UNAVAILABLE)
   await page.keyboard.press('Space')
   await expect(drawer(page)).toBeHidden()
   await net.release() // the network is back
   await open(page)
-  await expect(betaTab(page)).toBeVisible()
   await betaTab(page).click()
   await expect(page.getByTestId('inventory-badge').first()).toBeVisible()
+  await expect(betaStatus(page)).toHaveCount(0)
 })
 
-test('a second Espace while the drawer waits for the Bêta sheets cancels the open (as for the first open)', async ({ page }) => {
-  const net = await stallProposals(page)
+test('night wave 1, item 6: the drawer opens at once while the Bêta request is stalled; « Bêta » says « Chargement… » alone, the other tabs work, and the tab fills in when the request settles', async ({ page }) => {
+  const net = await stallProposals(page, 60_000) // would hold the old drawer shut for a minute
+  await boot(page)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Space')
+  await expect(drawer(page)).toBeVisible({ timeout: 1500 }) // not the 5 s the old drawer waited offline
+  await expect.poll(() => net.held()).toBeGreaterThan(0) // and the request is really pending
+  // the other tabs are usable, with their items, right now
+  await page.getByRole('tab', { name: 'Micros' }).click()
+  await expect(page.getByRole('tabpanel').getByTestId('inventory-item').first()).toBeVisible()
+  await expect(betaStatus(page)).toHaveCount(0)
+  // only the Bêta tab is waiting
+  await betaTab(page).click()
+  await expect(betaStatus(page)).toHaveText(LOADING)
+  await expect(betaStatus(page)).toHaveAttribute('data-state', 'loading')
+  // it fills in by itself, on the tab the learner is on, with the focus where it was
+  await betaTab(page).focus()
+  await net.release()
+  await expect(page.getByRole('tabpanel').getByTestId('inventory-item')).toHaveCount(proposals.length)
+  await expect(betaStatus(page)).toHaveCount(0)
+  await expect(betaTab(page)).toBeFocused()
+  await expect(betaTab(page)).toHaveAttribute('aria-selected', 'true')
+})
+
+test('night wave 1, item 6: Espace closes the drawer while the sheets are still loading, and their late arrival neither reopens it nor shows a status', async ({ page }) => {
+  const net = await stallProposals(page, 60_000)
   await boot(page)
   await open(page)
   await page.keyboard.press('Space')
   await expect(drawer(page)).toBeHidden()
-  await page.locator('#renderCanvas').focus()
-  await page.keyboard.press('Space') // the retry waits for the sheets (they are still stalled)
-  await expect(page.getByRole('status')).toContainText('Ouverture')
-  await page.keyboard.press('Space') // changed my mind
   await net.release()
-  await expect(page.getByRole('status')).not.toContainText('Ouverture') // the retry is over
+  await page.waitForFunction(() => document.querySelector('[data-testid="inventory-drawer"]')?.getAttribute('data-open') === 'false')
   await expect(drawer(page)).toBeHidden()
+  await expect(page.getByRole('status')).not.toContainText('Ouverture')
+  await open(page) // the sheets are there by now
+  await betaTab(page).click()
+  await expect(page.getByTestId('inventory-badge').first()).toBeVisible()
 })
 
 test('« Bêta » is hidden when the file is not a proposals file', async ({ page }) => {

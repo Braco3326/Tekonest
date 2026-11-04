@@ -670,6 +670,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     loading: 'Ouverture de l’inventaire…',
     /** Status bar if the drawer module fails to load. */
     loadFailed: 'L’inventaire n’a pas pu s’ouvrir (réseau). Rechargez la page.',
+    /** Inside the « Bêta » tab only, while the sheets are fetched (the drawer is already open and the other tabs usable). */
+    betaLoading: 'Chargement…',
+    /** Inside the « Bêta » tab when the sheets could not be fetched (offline, no answer within 5 s): the other tabs are not affected. */
+    betaUnavailable: 'Fiches Bêta indisponibles (réseau). Rechargez la page pour les retrouver.',
     /** History entry label; {device} = device name. */
     entry: 'Ajouter {device}',
     /** Tab « Micros » (inventory category). */

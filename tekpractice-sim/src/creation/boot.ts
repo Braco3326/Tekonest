@@ -1447,9 +1447,7 @@ export async function bootCreation(): Promise<void> {
   let drawerLoad: Promise<InventoryDrawer> | null = null
   /** The learner's last wish while the chunk loads (a second Espace before it arrives cancels the open). */
   let drawerWanted = false
-  /** A mounted drawer is waiting for a fresh fetch of the Bêta sheets before it shows (a second Espace cancels, as for the first open). */
-  let drawerRetry = false
-  const drawerOpen = (): boolean => (drawer ? drawer.isOpen || (drawerRetry && drawerWanted) : drawerWanted)
+  const drawerOpen = (): boolean => (drawer ? drawer.isOpen : drawerWanted)
   /** Entrée / click on a device in the drawer: it follows the pointer until a click drops it (Task 24). */
   const chooseDevice = (deviceId: string, opts: { pointerDrag?: boolean } = {}): boolean => {
     registerBeta([deviceId]) // a Bêta sheet becomes placeable only now (a catalog id is never touched)
@@ -1461,15 +1459,26 @@ export async function bootCreation(): Promise<void> {
    * The drawer was mounted without the Bêta sheets because their fetch FAILED (not because there are none): the next open
    * fetches them again before it shows, so the tab can come back. The module itself (drawerLoad) stays cached.
    */
-  let betaStale = false
+  let betaStatus: 'loading' | 'ready' | 'unavailable' = 'loading'
+  let betaSync: Promise<void> | null = null
+  const syncBeta = (): void => {
+    if (betaStatus === 'ready' || betaSync) return
+    betaStatus = 'loading'
+    drawer?.refresh()
+    betaSync = loadBeta().then((r) => {
+      betaStatus = r.failed ? 'unavailable' : 'ready' // never rejects
+      betaSync = null
+      drawer?.refresh()
+    })
+  }
   const loadDrawer = (): Promise<InventoryDrawer> =>
-    (drawerLoad ??= Promise.all([import('./shell/inventoryDrawer'), loadBeta()]).then(([{ mountInventoryDrawer }, beta]) => {
-      betaStale = beta.failed
+    (drawerLoad ??= import('./shell/inventoryDrawer').then(({ mountInventoryDrawer }) => {
       drawer = mountInventoryDrawer({
         doc: document,
         parent: shell.viewport,
         registry,
-        proposals: () => proposalEntries(betaDevices), // « Bêta » shows only if there are any
+        proposals: () => proposalEntries(betaDevices), // « Bêta » shows only if there are any, or while they load / failed
+        betaStatus: () => betaStatus,
         onChoose: (deviceId) => void chooseDevice(deviceId),
         // Drag-and-drop out of the drawer (Task 43b): the same placement, steered by the window-level pointer events of the press.
         onDragStart: (deviceId, at, alt) => {
@@ -1496,22 +1505,18 @@ export async function bootCreation(): Promise<void> {
     }))
   const setInventory = (open: boolean, opts: { returnFocus?: boolean } = {}): void => {
     drawerWanted = open
-    if (drawer && !(open && betaStale)) {
-      if (open) drawer.open()
-      else drawer.close(opts)
+    if (open) patch.dismissRefusal() // the drawer takes the learner's attention: the refusal pinned in the view has been read
+    if (drawer) {
+      if (open) {
+        drawer.open()
+        syncBeta()
+      } else drawer.close(opts)
       return
     }
     if (!open) return
+    // Only the drawer's own chunk is awaited (a local file); the Bêta sheets arrive after it is open.
     shell.setStatus(placeNow(), INV.loading!, 'busy')
-    drawerRetry = !!drawer
-    const ready = drawer
-      ? loadBeta().then((r) => {
-          betaStale = r.failed // never rejects; a second failure keeps the retry for the next open
-          drawerRetry = false
-          return drawer!
-        })
-      : loadDrawer()
-    ready.then(
+    loadDrawer().then(
       (d) => {
         showStatus()
         if (drawerWanted && !viewLocked()) d.open()

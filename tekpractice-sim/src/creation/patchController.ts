@@ -8,6 +8,8 @@
  *   exception: the rule's title is pinned at B (`ui.pinError`, `role="alert"`), the cable stays in hand for a
  *   retry, and `history.onRefused` (the shell) lists it in the status bar. A second click on A cancels.
  * - Click an occupied port with nothing pending: the bubble offers « Débrancher » (`UNPLUG`, one entry).
+ * - The pinned refusal stays until the learner acts (night wave 1, item 3): the next pointer press in the view, the drawer opening
+ *   (`dismissRefusal`), or the next successful change of the rig clears it; a keyboard user keeps it until they do one of those or press Échap.
  * - Échap (`cancel`) drops the cable, the error and the offer. Dragging from port to port is NOT built (cut list).
  *
  * Inert while a placement ghost or a drag owns the pointer (`opts.busy`) and in the walk view. Intents only: the
@@ -139,6 +141,11 @@ export class PatchController {
     return true
   }
 
+  /** The pinned refusal has been read (the drawer opened): drop it. The cable in hand and the offer are the learner's own state and stay. */
+  dismissRefusal(): void {
+    this.dropError()
+  }
+
   /** A place change or teardown: nothing of the old scene's ports survives. */
   reset(): void {
     const had = this._pending !== null || this.hover !== null
@@ -199,6 +206,7 @@ export class PatchController {
 
   private onDown(e: PointerEvent): void {
     this.press = null
+    this.dropError() // any press in the view: the refusal has been read (a retry on a port pins a fresh one)
     if (e.button !== 0 || !e.isPrimary) return
     this.dropOffer() // a press elsewhere closes the offer (a click on a port re-opens it on release)
     if (e.shiftKey || e.ctrlKey || e.metaKey) return // pan gestures stay the camera's
@@ -348,7 +356,8 @@ export class PatchController {
       this._pending = null
       this.host.markPorts(this.hover, null)
     } else if (this._pending) this.applyMarks()
-    if (this._errorAt && !present.has(this._errorAt.instance)) this.dropError()
+    // Any successful change of the rig is an action taken since the refusal (a refusal itself changes nothing): it has been read.
+    if (this._errorAt) this.dropError()
     // An offer is about a cable that may be gone or changed: re-ask rather than keep a stale one.
     if (this.offerAt) this.dropOffer()
   }

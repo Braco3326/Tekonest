@@ -104,6 +104,18 @@ describe('inventory', () => {
     expect(tabs[tabs.length - 1]).toBe('autres')
   })
 
+  it('night wave 1, item 6: while the Bêta sheets load or failed, « bêta » is listed (empty) so the drawer can say so; ready with none hides it; the catalog tabs are the same', () => {
+    const base = inventory(registry, none).tabs
+    for (const beta of ['loading', 'unavailable'] as const) {
+      const r = inventory(registry, { ...none, beta })
+      expect(r.tabs, beta).toEqual(['micros', 'consoles', 'enceintes', 'sources', 'reseau', 'secteur', 'beta', 'autres'])
+      expect(r.items.filter((i) => i.tab === 'beta')).toEqual([])
+      expect(r.tabs.filter((t) => t !== 'beta')).toEqual(base)
+    }
+    expect(inventory(registry, { ...none, beta: 'ready' }).tabs).toEqual(base)
+    expect(inventory(registry, none).tabs).toEqual(base)
+  })
+
   it('keeps « autres » last even when « bêta » is shown', () => {
     const { tabs } = inventory(registry, { proposals: [{ deviceId: 'p-1', label: 'Proposé' }], modelIds: allModels })
     expect(tabs.slice(-2)).toEqual(['beta', 'autres'])

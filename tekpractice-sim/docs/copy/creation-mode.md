@@ -513,6 +513,8 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.unavailableOpen` | Fiches Bêta indisponibles (réseau). Le projet n’a pas été ouvert. Rechargez la page, puis rouvrez-le. | à valider (tekuxwriter) | Corps de la note et ligne d’état quand « Ouvrir… » n’a pas pu charger les fiches Bêta du projet choisi : rien n’est ouvert ni modifié |
 | `inventory.loadingBeta` | Chargement des fiches Bêta… | à valider (tekuxwriter) | Barre d’état pendant le chargement des fiches Bêta dont un projet enregistré a besoin (réouverture seulement) |
 | `inventory.loading` | Ouverture de l’inventaire… | à valider (tekuxwriter) | Barre d’état pendant le chargement du tiroir (première ouverture) |
+| `inventory.betaLoading` | Chargement… | à valider (tekuxwriter) | Dans l’onglet « Bêta » seulement, pendant la requête des fiches (le tiroir est déjà ouvert, les autres onglets servent) |
+| `inventory.betaUnavailable` | Fiches Bêta indisponibles (réseau). Rechargez la page pour les retrouver. | à valider (tekuxwriter) | Dans l’onglet « Bêta » si les fiches n’ont pas pu être chargées (hors ligne, pas de réponse en 5 s) ; les autres onglets ne sont pas touchés |
 | `inventory.loadFailed` | L’inventaire n’a pas pu s’ouvrir (réseau). Rechargez la page. | à valider (tekuxwriter) | Barre d’état si le module du tiroir ne se charge pas (hors ligne) |
 | `inventory.entry` | Ajouter {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique (Annuler / Rétablir) ; {device} = nom de l’appareil |
 | `inventory.tabMicros` | Micros | à valider (tekuxwriter) | Onglet ; Micros, d’après la catégorie « microphone » du catalogue ; les onglets vides sont masqués |
