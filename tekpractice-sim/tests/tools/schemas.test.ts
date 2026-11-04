@@ -493,3 +493,32 @@ describe('content/catalog.schema.json: the acoustic hunk matches the generator (
     }
   })
 })
+
+/** Task 43c (L34): the modelFront hunk of the hand-patched file is what the generator emits. */
+describe('content/catalog.schema.json: the modelFront hunk matches the generator (Task 43c)', () => {
+  type Obj = { properties?: Record<string, unknown>; required?: string[] }
+  const deviceItems = (schema: unknown): Obj => (schema as { definitions: { Catalog: { properties: { devices: { items: Obj } } } } }).definitions.Catalog.properties.devices.items
+  const onDisk = deviceItems(JSON.parse(readFileSync('content/catalog.schema.json', 'utf8')))
+  const generated = deviceItems(zodToJsonSchema(Catalog, { name: 'Catalog', $refStrategy: 'none' }))
+  it('Device.modelFront is optional and its node is exactly the generated one, every field documented', () => {
+    expect(onDisk.properties).toHaveProperty('modelFront')
+    expect(onDisk.required).not.toContain('modelFront')
+    expect(onDisk.properties!.modelFront).toEqual(generated.properties!.modelFront)
+    type N = { description?: string; properties?: Record<string, { description?: string }> }
+    const node = onDisk.properties!.modelFront as N
+    expect(Object.keys(node.properties!).sort()).toEqual(['axis', 'evidence'])
+    for (const [k, v] of Object.entries(node.properties!)) expect(v.description, k).toMatch(/\S/)
+  })
+  it('the schema refuses a stray key, an unknown axis and an empty evidence', () => {
+    const base = JSON.parse(readFileSync('content/catalog.json', 'utf8'))
+    const bad = (mf: unknown): boolean => {
+      const c = structuredClone(base)
+      c.devices.find((d: { id: string }) => d.id === 'qsc-k12-2').modelFront = mf
+      return Catalog.safeParse(c).success
+    }
+    expect(bad({ axis: '+z', evidence: 'x' })).toBe(true)
+    expect(bad({ axis: '+y', evidence: 'x' })).toBe(false)
+    expect(bad({ axis: '+z', evidence: '' })).toBe(false)
+    expect(bad({ axis: '+z', evidence: 'x', extra: 1 })).toBe(false)
+  })
+})

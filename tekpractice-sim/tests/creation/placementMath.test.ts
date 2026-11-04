@@ -4,6 +4,7 @@ import {
   SNAP_M,
   clampToRoom,
   duplicatePose,
+  isFree,
   rotateStep,
   snapPosition,
   snapYaw,
@@ -115,5 +116,14 @@ describe('clampToRoom', () => {
   })
   it('never touches y', () => {
     expect(clampToRoom([0, 1.7, 0], room)[1]).toBe(1.7)
+  })
+})
+
+describe('isFree (Task 43b): Alt held OR the G latch on', () => {
+  it('is free when either is on, snapped when both are off', () => {
+    expect(isFree(false, false)).toBe(false)
+    expect(isFree(true, false)).toBe(true)
+    expect(isFree(false, true)).toBe(true)
+    expect(isFree(true, true)).toBe(true) // Alt on top of the latch does not bring the grid back
   })
 })

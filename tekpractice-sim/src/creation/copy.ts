@@ -70,7 +70,15 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     duplicate: 'Dupliquer',
     delete: 'Supprimer',
     connectTo: 'Connecter à…',
-    play: 'Écouter le morceau',
+    play: 'Lecture',
+    playLocked: 'Indisponible pendant le choix du lieu.',
+    stop: 'Stop',
+    song: 'Morceau',
+    chooseFile: 'Choisir un fichier audio…',
+    testSignal: 'Signal de test',
+    coverage: 'Couverture',
+    /** Écoute: listen from where the view stands (Task 43b). */
+    listenHere: 'Écouter depuis ici',
     panelTree: 'Panneau Projet',
     panelProps: 'Panneau Propriétés',
     shortcuts: 'Raccourcis clavier',
@@ -428,6 +436,111 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     ruleError: 'Une erreur de câblage bloque le chemin.',
     /** NO_MIC: no verified mic is cabled to a mic input. */
     noMic: 'Aucun micro branché sur une entrée micro.',
+    /** Announced once when « Micro OK » is lost; {reason} = the first reason. */
+    micLost: 'Plus de Micro OK. {reason}',
+  },
+  /**
+   * Coverage (Task 37, C13, S2): Écoute › Couverture, the dots in the 3D view and the legend / statistics block at the bottom of Propriétés.
+   * Honesty (brief §5): relative dB only, no intelligibility score, no regulatory level. Every string here: à valider (tekuxwriter).
+   */
+  coverage: {
+    panelTitle: 'Couverture',
+    panelCollapse: 'Replier la couverture',
+    panelExpand: 'Déplier la couverture',
+    unit: 'dB relatif (0 = point le plus fort)',
+    method: 'somme énergétique, champ direct',
+    chip: 'relatif',
+    chipName: 'Fidélité du calcul : relatif',
+    chipPopover: 'Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. Le balance de la console change l’équilibre affiché comme le son (il baisse le côté opposé) ; le fader master, commun à toutes les enceintes, ne change pas un niveau relatif ; le mute ou −inf retire les enceintes ; l’origine de l’enceinte est son point de pose.',
+    legendTitle: 'Échelle',
+    legendBin: '{from} à {to} dB',
+    legendLast: '{from} dB et moins',
+    legendCount: '{n} points',
+    hatched: 'Hachuré : interférences non modélisées',
+    hatchedCount: '{n} points concernés',
+    aim: 'Trait clair : axe de chaque enceinte audible',
+    frontCaveat: 'Face avant du modèle 3D non vérifiée pour {names} : le trait indique l’axe acoustique, pas forcément la face du modèle.',
+    sourceLine: 'Couverture : {sources}',
+    sourceKb: 'données KB',
+    sourceNominal: 'valeur nominale',
+    sourceDatasheet: 'fiche constructeur',
+    sourceDeduced: 'V déduit',
+    speakersTitle: 'Enceintes prises en compte',
+    speakerRow: '{name} : {h}° × {v}°',
+    statsTitle: 'Statistiques',
+    statMin: 'Minimum',
+    statMax: 'Maximum',
+    statMean: 'Moyenne',
+    statSd: 'Écart-type',
+    statCount: 'Points',
+    statStep: 'Pas de la grille',
+    dbValue: '{v} dB',
+    mValue: '{v} m',
+    pointsTitle: 'Niveau en un point',
+    pointRow: '{name} : {value}',
+    pointSilent: 'aucun son',
+    pin: 'Épingler {name}',
+    pinned: 'Point épinglé ({x} m ; {z} m) : {value}',
+    unpin: 'Retirer l’épingle',
+    pinHint: 'Cliquez un point coloré dans la vue 3D pour épingler son niveau.',
+    probeAbove: 'Un point nommé peut dépasser 0 dB : l’échelle est celle de la grille.',
+    splPending: '≈ dB SPL estimé : non calculé (estimation pédagogique, formule non sourcée).',
+    computing: 'Calcul de la couverture…',
+    failed: 'Calcul de la couverture indisponible (réessayez).',
+    hiddenFolded: 'Couverture masquée : Propriétés est replié.',
+    noAudience: 'Pas de public dans ce lieu : aucune zone public ni régie à couvrir. Rien à calculer.',
+    noSource: 'Aucune enceinte audible : {reason}',
+    reasonNotFed: 'aucune enceinte ne reçoit de signal ({why})',
+    reasonNotFedBare: 'aucune enceinte ne reçoit de signal',
+    reasonMuted: 'la console est en mute',
+    reasonSilent: 'le fader master est à −inf',
+    reasonBalance: 'le balance de la console coupe ces enceintes',
+    reasonUnverified: 'appareil non vérifié (Bêta)',
+    reasonNoAcoustic: 'enceinte sans données acoustiques',
+    reasonUnpowered: 'enceinte hors tension',
+    reasonOther: 'enceinte non utilisable',
+    reasonsJoin: ' ; ',
+    announceDone: 'Couverture calculée : {n} points, {min} à {max} dB, pas {step} m.',
+    announceOff: 'Couverture masquée.',
+    loadFailed: 'La couverture n’a pas pu se charger. Rechargez la page.',
+  },
+  /**
+   * Listening (Task 39, C9, C14, CA-03, CA-26): Écoute › Lecture / Stop / Morceau / Choisir un fichier audio… / Signal de test, and the Écoute block at the
+   * bottom of Propriétés. Honesty (brief §10): a SIMPLE simulation, said in the block. Every string here: à valider (tekuxwriter).
+   */
+  listen: {
+    panelTitle: 'Écoute',
+    panelCollapse: 'Replier l’écoute',
+    panelExpand: 'Déplier l’écoute',
+    stopped: 'Lecture arrêtée.',
+    starting: 'Démarrage de la lecture…',
+    playing: 'Lecture en cours : {source} (simulation simple).',
+    sourceTest: 'signal de test',
+    sourceFile: 'fichier {name}',
+    sourceSong: '{title}',
+    silentMix: 'Aucune enceinte ne sonne pour le moment : la console est en mute ou son fader est à −inf.',
+    metersTitle: 'Niveau à chaque enceinte',
+    meterRow: '{name} : niveau de sortie {level}, gain {gain}, retard {delay}, pan {pan}',
+    levelDb: '{v} dBFS',
+    levelSilent: 'silence',
+    gainValue: '{v} dB',
+    delayValue: '{v} ms',
+    panLeft: 'gauche {n} %',
+    panRight: 'droite {n} %',
+    panCenter: 'centre',
+    noSpeakers: 'Aucune enceinte à écouter.',
+    simple: 'Simulation simple : niveau relatif, retard et placement gauche-droite calculés d’après la géométrie ; le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie.',
+    limits: 'Limites : le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle) ; l’origine d’une enceinte est son point de pose ; déplacer l’auditeur fait glisser le retard et peut faire glisser la hauteur du son (ce n’est pas un effet Doppler) ; il n’y a pas de vumètre de console, seulement un niveau par enceinte ; on écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur) ou la caméra de marche, qui écoute à sa place pendant la marche.',
+    volume: 'Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin.',
+    fileLocal: 'Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré.',
+    fileInputName: 'Choisir un fichier audio',
+    notReady: 'Lecture impossible. {reason}',
+    stoppedNotReady: 'Lecture arrêtée. {reason}',
+    stoppedPlace: 'Lecture arrêtée : le lieu a changé.',
+    stoppedEnded: 'Lecture terminée.',
+    failedFile: 'Ce fichier n’a pas pu être lu. Essayez un fichier MP3, WAV ou OGG.',
+    failed: 'La lecture n’a pas pu démarrer.',
+    loadFailed: 'La lecture n’a pas pu se charger. Rechargez la page.',
   },
   /** The shell could not start (Phase 1 review): a persistent alert with the way out. */
   boot: {
@@ -508,6 +621,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     fondDeSalle: 'Fond de salle',
     /** A blank place or a venue set: one point in the middle. */
     centre: 'Centre',
+    /** The point « Écouter depuis ici » puts where the view stands (Task 43b): tree row, Vue › Aller au point d’écoute, coverage probe. */
+    here: 'Ici',
     /** Vue › submenu listing the points. */
     menu: 'Aller au point d’écoute',
     /** Status bar after going to a point (announced); {point} = its name. */
@@ -522,7 +637,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Accessible name of the tab list. */
     tabs: 'Catégories d’appareils',
     /** Line under the title; {key} = the inventory key label (Space by default). */
-    hint: 'Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser. {key} ou Échap : fermer ; dans « Filtrer », seul Échap ferme.',
+    hint: 'Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser, ou glisser l’appareil dans la vue. {key} ou Échap : fermer ; dans « Filtrer », seul Échap ferme.',
     /** Visible text of the close button. */
     close: 'Fermer',
     /** Accessible name of the close button (contains the visible text). */
@@ -581,7 +696,17 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** History entry label of a drag. */
     entryMove: 'Déplacer {device}',
     /** Status bar once a device is chosen and follows the pointer (announced). */
-    statusPlacing: 'Cliquez pour poser {device} (Entrée : ici). R : pivoter. Alt : libre. Échap : annuler.',
+    statusPlacing: 'Cliquez pour poser {device} (Entrée : ici). R : pivoter. Alt ou G : libre. Échap : annuler.',
+    /** The visible cancel button shown while a device follows the pointer (Task 43b); its accessible name too. */
+    cancelButton: 'Annuler la pose',
+    /** Status bar once a device is dragged out of the inventory (announced; Task 43b). */
+    statusDragging: 'Glissez dans la vue et relâchez pour poser {device}. Échap : annuler.',
+    /** Status bar when the G key latches free placement on (announced, once per press; Task 43b). */
+    statusSnapFree: 'Placement libre : position et rotation hors pas. G pour revenir à la grille.',
+    /** Status bar when the G key turns the latch off (announced, once per press; Task 43b). */
+    statusSnapGrid: 'Aimantation à la grille : 0,25 m · 15°. G pour placer librement.',
+    /** Status bar when the G latch is lifted while Alt is still held (announced; the placement stays free; Task 43b fix round). */
+    statusSnapLatchOff: 'Verrou G levé. Alt maintenu : placement libre.',
     /** Status bar after the drop (announced). */
     statusPlaced: 'Posé : {device}. {undo} pour annuler.',
     /** Status bar after a drag (announced). */

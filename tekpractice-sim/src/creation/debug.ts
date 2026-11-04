@@ -11,6 +11,8 @@ import type { DesignState } from '../trials/trial'
 import type { DeviceInstance } from '../scene/DeviceSpawner'
 import type { PlaceResult } from './placeController'
 import type { QuarantineItem } from './persistence'
+import type { CoverageDebug } from './coverageController'
+import type { ListenDebug } from './listenController'
 
 export interface CreationDebug {
   /** Through `history.do` (undoable, as a UI action). */
@@ -126,8 +128,40 @@ export interface CreationDebug {
   portDistanceM(a: PortRef, b: PortRef): number | null
   /** Task 26: the first port clicked while a cable is in hand, or null. */
   patchPending(): PortRef | null
+  /** Task 44 S2: the patch state machine's click on a port (what a click on its marker does), for a test that must put a cable in hand on a port that is off screen. False while patching is inert. */
+  patchClick(ref: PortRef): boolean
   /** Task 24: the raw floor point under a page point (CSS px), as the placement pick finds it; null off the floor. */
   floorPoint(x: number, y: number): [number, number, number] | null
+  /** Task 37: the coverage's state (plain data; never loads its chunk: `on: false` until Écoute › Couverture is chosen). */
+  coverage(): CoverageDebug
+  /** Task 37: draw calls of the coverage mesh called `name` ('coverage' = the plain dots) in the latest frame it drew; 0 if it never did. */
+  drawCalls(name: string): number
+  /** Task 37: coverage jobs posted to the worker since the page loaded (idle = no change; a moved speaker = +1). */
+  coverageJobs(): number
+  /** Task 37: the coverage dot under a canvas point (canvas CSS px), devices ignored (the oracle of the pin); null when none. */
+  coverageDotAt(x: number, y: number): [number, number, number] | null
+  /**
+   * Task 43c (L34): the world direction the model's DECLARED front (catalog `modelFront`) faces, from the live root of the loaded model; null when the device
+   * has none, its model is not loaded, or the instance is unknown. At yaw 0 it is +z, the way the acoustic aim line points.
+   */
+  modelFront(instanceId: string): [number, number, number] | null
+  /** Task 43c fix round: the box of the body's vertices in the frame of the instance root (centred on (0, 0) in x / z and min y 0 when it sits on its placement and the floor, at any yaw). */
+  bodyBoundsInRoot(instanceId: string): { lo: [number, number, number]; hi: [number, number, number] } | null
+  /** Task 43c (L34): independent oracle for a loudspeaker's front, the x-extent of the body vertices at the +z and the -z end of its z range (world axes, yaw 0). */
+  bodyEnds(instanceId: string): { plusZ: number; minusZ: number; depth: number; rearX: [number, number]; rearZ: number } | null
+  /** Task 37: the world position of a port marker (after the .glb is applied it sits on the model), or null when unknown. */
+  portWorld(ref: PortRef): [number, number, number] | null
+  /** Task 39: each speaker's output level (linear RMS from its analyser; 0 = silence) while playing; {} otherwise. Never loads the audio chunk. */
+  audioLevels(): Record<string, number>
+  /**
+   * Task 39: the largest sample of each speaker (after the master gain, before the limiter) and of the real output (after the limiter), linear. The e2e reads the
+   * levels the learner would hear from here (nominal: a browser's compressor may add make-up gain).
+   */
+  audioPeaks(): { voices: Record<string, number>; output: number }
+  /** Task 39: the listen controller's state (plain data); `stopped` with no voices until the first « Lecture ». */
+  audioState(): ListenDebug
+  /** Task 39: Web Audio counters over the page's life: every context opened must be closed, every object URL revoked, every <audio> element removed. */
+  audioStats(): { contexts: { opened: number; closed: number }; urls: { created: number; revoked: number }; elements: { created: number; removed: number } }
 }
 
 declare global {

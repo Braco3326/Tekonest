@@ -18,6 +18,10 @@
  * - Closed = `inert` + `visibility: hidden` (out of the tab order and the accessibility tree).
  * - The slide is the only motion in Mode Création (≤ 200 ms, none under reduced motion): CSS only,
  *   no per-frame work, nothing rendered by the 3D scene.
+ * - Drag-and-drop (Task 43b, CA-23): pointer events, so mouse AND touch. A press on an item that travels more than 6 px starts a placement
+ *   (the drawer closes, the view is clear), the ghost follows the pointer, and the release decides (the shell: over the 3D view = drop,
+ *   anywhere else = cancel). A press that does not travel is the click it always was. The window-level listeners exist only while an
+ *   item is pressed.
  * DOM only: it dispatches nothing itself and never touches the rig (C6).
  */
 import './inventoryDrawer.css'
@@ -26,6 +30,7 @@ import type { Registry } from '../../engine/CatalogLoader'
 import { COPY } from '../copy'
 import { assetUrl } from '../../assetUrl'
 import { filterItems, inventory, TAB_LABELS, type InventoryItem, type InventoryTab } from '../inventory'
+import { pastDragThreshold } from '../dragDrop'
 import { thumbPath } from '../inventoryThumbs'
 
 export interface InventoryDrawerDeps {
@@ -43,6 +48,15 @@ export interface InventoryDrawerDeps {
   isToggleKey(e: KeyboardEvent): boolean
   /** Label of the inventory key for the hint (« Espace »). */
   keyLabel(): string
+  /**
+   * A press on an item travelled past the threshold (client px; the drawer is closed by now). Start placing the device and follow
+   * the pointer; false = nothing started (the drag is dropped).
+   */
+  onDragStart?(deviceId: string, at: { x: number; y: number }, altKey: boolean): boolean
+  /** The pointer moved during a drag. */
+  onDragMove?(at: { x: number; y: number }, altKey: boolean): void
+  /** The drag ended: `cancelled` for a pointer cancel (the shell otherwise decides by what is under the pointer). */
+  onDragEnd?(at: { x: number; y: number }, altKey: boolean, cancelled: boolean): void
 }
 
 export interface InventoryDrawer {
@@ -51,6 +65,8 @@ export interface InventoryDrawer {
   open(): void
   /** `returnFocus: false` when something else takes focus right after (the place picker). */
   close(opts?: { returnFocus?: boolean }): void
+  /** Ends a press in progress and removes its window listeners (the shell is going away). */
+  dispose(): void
 }
 
 /** Devices that ship a `public/assets/<id>.glb` (the manifest lists exactly those files). */
@@ -166,6 +182,73 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   let tabs: { tab: InventoryTab; btn: HTMLButtonElement }[] = []
   let items: InventoryItem[] = []
 
+  // ── drag-and-drop (Task 43b): one press at a time, window listeners only while it lasts
+  interface Press {
+    pointerId: number
+    deviceId: string
+    btn: HTMLElement
+    x: number
+    y: number
+    dragging: boolean
+  }
+  let press: Press | null = null
+  /** A drag ended: the pointer click that may follow it is not a « choose » (a keyboard click, detail 0, always is). */
+  let swallowClick = false
+  const win = doc.defaultView
+  const stopPress = (): void => {
+    press = null
+    win?.removeEventListener('pointermove', onPressMove)
+    win?.removeEventListener('pointerup', onPressUp)
+    win?.removeEventListener('pointercancel', onPressCancel)
+  }
+  function onPressMove(e: PointerEvent): void {
+    const p = press
+    if (!p || e.pointerId !== p.pointerId) return
+    // The button is up and the pointerup never came (the window lost the pointer): that is the release it is, here.
+    if (e.buttons === 0) return onPressUp(e)
+    const at = { x: e.clientX, y: e.clientY }
+    if (p.dragging) return d.onDragMove?.(at, e.altKey)
+    if (!pastDragThreshold({ x: p.x, y: p.y }, at)) return
+    if (!d.onDragStart) return stopPress()
+    p.dragging = true
+    swallowClick = true
+    try {
+      p.btn.releasePointerCapture?.(e.pointerId) // a finger is captured by the item it touched: the events must follow it over the view
+    } catch {
+      // already released
+    }
+    // The shell starts the pose first: a refusal leaves the drawer open (nothing took its place), a start clears the view and gives it the focus (Échap works as for any pose).
+    if (!d.onDragStart(p.deviceId, at, e.altKey)) return stopPress()
+    api.close()
+  }
+  function onPressUp(e: PointerEvent): void {
+    const p = press
+    if (!p || e.pointerId !== p.pointerId) return
+    stopPress()
+    if (p.dragging) d.onDragEnd?.({ x: e.clientX, y: e.clientY }, e.altKey, false)
+  }
+  function onPressCancel(e: PointerEvent): void {
+    const p = press
+    if (!p || e.pointerId !== p.pointerId) return
+    stopPress()
+    if (p.dragging) d.onDragEnd?.({ x: e.clientX, y: e.clientY }, e.altKey, true)
+  }
+  const beginPress = (e: PointerEvent, btn: HTMLElement, deviceId: string): void => {
+    swallowClick = false
+    if (!d.onDragStart || !e.isPrimary || e.button !== 0 || !win) return
+    // A primary pointer going down while a press is still recorded: that press's pointerup / pointercancel never came (a lost touch). It must not block this one;
+    // a drag it had started is ended as cancelled.
+    if (press) {
+      const stale = press
+      stopPress()
+      if (stale.dragging) d.onDragEnd?.({ x: stale.x, y: stale.y }, false, true)
+    }
+    press = { pointerId: e.pointerId, deviceId, btn, x: e.clientX, y: e.clientY, dragging: false }
+    win.addEventListener('pointermove', onPressMove)
+    win.addEventListener('pointerup', onPressUp)
+    win.addEventListener('pointercancel', onPressCancel)
+  }
+
   const showTab = (tab: InventoryTab, focus: boolean): void => {
     selected = tab
     for (const t of tabs) {
@@ -236,11 +319,20 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
         li.appendChild(tip)
       }
       b.append(picture(doc, it), text)
-      b.addEventListener('click', () => choose(it.deviceId))
+      b.addEventListener('pointerdown', (e) => beginPress(e, b, it.deviceId))
+      b.addEventListener('click', (e) => {
+        if (swallowClick && e.detail > 0) {
+          swallowClick = false
+          return
+        }
+        choose(it.deviceId)
+      })
       li.appendChild(b)
       list.appendChild(li)
     }
     panel.appendChild(list)
+    // A list that scrolls keeps its vertical touch pan (the CSS); one that does not can give the whole item to a drag.
+    panel.dataset.scrolls = String(panel.scrollHeight > panel.clientHeight + 1)
   }
 
   const build = (): void => {
@@ -346,6 +438,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       root.inert = true
       if (opts?.returnFocus !== false) d.returnFocus()
     },
+    dispose: stopPress,
   }
   return api
 }

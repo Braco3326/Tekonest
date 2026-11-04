@@ -21,10 +21,15 @@ export interface ListeningPoint {
   id: string
   label: string
   position: [number, number, number]
+  /** What the listener looks at, when it is not the stage (the « Ici » point looks the way the view looked). */
+  look?: [number, number, number]
 }
 
 /** Every id a place may offer, in menu / digit order of a room (the blank place has `centre` only). */
-export const POINT_IDS = ['regie', 'premier-rang', 'fond-de-salle', 'centre'] as const
+export const POINT_IDS = ['regie', 'premier-rang', 'fond-de-salle', 'centre', 'ici'] as const
+
+/** « Écouter depuis ici » (Task 43b): the one point the learner places by hand. It has no key slot and no place offers it by default. */
+export const HERE_ID = 'ici'
 
 /** The default active listening point (`viewState.listenerPoint`). */
 export const DEFAULT_LISTENER_POINT = 'regie'
@@ -97,8 +102,43 @@ export function activePoint(points: readonly ListeningPoint[], id: string): List
   return points.find((p) => p.id === id) ?? points[0] ?? null
 }
 
-/** What a listener at `point` looks at: the stage centre (1.2 m above its deck), else the front wall's middle. */
+/** Where « Écouter depuis ici » put the listener: a floor spot and a horizontal heading (unit vector). Height follows the ear height setting. */
+export interface HereSpot {
+  x: number
+  z: number
+  dx: number
+  dz: number
+}
+
+/**
+ * The listener position for « Écouter depuis ici ». Walking: where the walker stands. Orbit: the orbit target, put on the floor at ear height
+ * (the view's pivot). Facing: the horizontal part of the camera's forward direction; looking straight down or up has none, so it faces the
+ * stage end (−z) like the named points. Kept inside the room.
+ */
+export function hereSpot(
+  input: { walking: boolean; eye: readonly number[]; target: readonly number[]; forward: readonly number[] },
+  bounds: { minX: number; maxX: number; minZ: number; maxZ: number }
+): HereSpot {
+  const at = input.walking ? input.eye : input.target
+  const h = Math.hypot(input.forward[0], input.forward[2])
+  const [dx, dz] = h < 1e-6 ? [0, -1] : [input.forward[0] / h, input.forward[2] / h]
+  return { x: clamp(at[0], bounds.minX, bounds.maxX), z: clamp(at[2], bounds.minZ, bounds.maxZ), dx, dz }
+}
+
+/** The « Ici » listening point: floor + ear height under the spot, looking 5 m along its heading at the same height. */
+export function hereToPoint(spot: HereSpot, layout: RoomLayout | null, earHeight: number): ListeningPoint {
+  const y = (layout ? layout.floorAt(spot.x, spot.z) : 0) + earHeight
+  return {
+    id: HERE_ID,
+    label: P().here!,
+    position: [spot.x, y, spot.z],
+    look: [spot.x + spot.dx * 5, y, spot.z + spot.dz * 5],
+  }
+}
+
+/** What a listener at `point` looks at: its own heading (« Ici »), else the stage centre (1.2 m above its deck), else the front wall's middle. */
 export function pointLookAt(layout: RoomLayout | null, point: ListeningPoint): [number, number, number] {
+  if (point.look) return point.look
   const [x, , z] = point.position
   if (!layout) return [x, 1.2, z - 5]
   const stage = layout.zones.find((zn) => zn.kind === 'stage')

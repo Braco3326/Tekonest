@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm run build",
+  "buildCommand": "node tools/deploy-guard.mjs && npm run build && node tools/strip-build-meta.mjs",
   "outputDirectory": "dist",
   "framework": "vite"
 }

@@ -178,3 +178,45 @@ export function autosaveView(input: { place: boolean; pending: boolean; pause: A
   const word = state === 'paused' ? S().autosavePaused! : state === 'modified' ? S().autosaveModified! : S().autosaveSaved!
   return { label: `${S().autosave} ${word}`, state, line, action }
 }
+
+/**
+ * What the screen reader is told when the playback or the mic changes (Task 34 review → Task 39). The status bar's « Lecture » and « Micro OK » spans are
+ * plain text, not live: a change is announced ONCE, through the polite status line, when it flips, never per store change and never per frame.
+ */
+export interface PlaybackNoticeState {
+  ready: boolean
+  /** The first reason (`text_fr`), '' when ready. */
+  reason: string
+  micOk: boolean
+  /** The first reason there is no « Micro OK », '' when it is OK. */
+  micReason: string
+}
+
+export function playbackNoticeState(path: Pick<PathResult, 'playbackReady' | 'reasons' | 'micOk' | 'micReasons'>): PlaybackNoticeState {
+  return {
+    ready: path.playbackReady,
+    reason: path.playbackReady ? '' : (path.reasons[0]?.text_fr ?? ''),
+    micOk: path.micOk,
+    micReason: path.micOk ? '' : (path.micReasons[0]?.text_fr ?? ''),
+  }
+}
+
+/**
+ * The words to announce for the change from `prev` to `next` ('' = nothing):
+ *  - playback becomes possible → « Lecture possible »; it is lost → the first reason; still impossible but for another first reason → that reason;
+ *  - the mic becomes OK → « Micro OK »; it is lost → « Plus de Micro OK. <reason> ».
+ * `stopsPlayback`: the owner is playing and will itself say that the playback stopped (with the reason): the loss is then not said twice.
+ */
+export function playbackAnnouncement(prev: PlaybackNoticeState, next: PlaybackNoticeState, opts: { stopsPlayback?: boolean } = {}): string {
+  const parts: string[] = []
+  if (prev.ready !== next.ready) {
+    if (next.ready) parts.push(P().ready!)
+    else if (!opts.stopsPlayback && next.reason !== '') parts.push(next.reason)
+  } else if (!next.ready && prev.reason !== next.reason && next.reason !== '') parts.push(next.reason)
+  if (prev.micOk !== next.micOk) {
+    if (next.micOk) parts.push(P().micOk!)
+    else parts.push(P().micLost!.replace('{reason}', next.micReason).trim())
+  }
+  // Two sentences read as two: each ends with a full stop (a single one is said as the status bar shows it).
+  return parts.length > 1 ? parts.map((x) => (/[.!?…]$/.test(x) ? x : `${x}.`)).join(' ') : (parts[0] ?? '')
+}

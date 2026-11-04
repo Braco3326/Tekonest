@@ -16,6 +16,14 @@ type V3 = [number, number, number]
 /** Adding 0 turns -0 into 0 (a pose must not print or fingerprint as « -0 »). */
 const clean = (n: number): number => n + 0
 
+/**
+ * Is placement free of the grid? Alt held, OR the G latch on (Task 43b: a way to place freely for people who cannot hold
+ * Alt: Alt+drag moves the window on some Linux desktops, Alt+click is a right click on ChromeOS). Alt on top of the latch stays free.
+ */
+export function isFree(altHeld: boolean, latched: boolean): boolean {
+  return altHeld || latched
+}
+
 /** x and z to the 0.25 m grid unless `free` (Alt); y is kept. Always a new array. */
 export function snapPosition(p: V3, free: boolean): V3 {
   if (free) return [p[0], p[1], p[2]]

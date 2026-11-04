@@ -10,7 +10,7 @@
     { "instanceId": "mains", "deviceId": "multiprise-secteur" }
   ],
   "placements": [
-    { "instanceId": "ql1", "deviceId": "yamaha-ql1", "position_m": [0, 0, 8], "yawDeg": 180, "mount": "floor" },
+    { "instanceId": "ql1", "deviceId": "yamaha-ql1", "position_m": [0, 0, 8], "yawDeg": 0, "mount": "floor" },
     { "instanceId": "sm58", "deviceId": "shure-sm58", "position_m": [0, 2.8, -9], "yawDeg": 0, "mount": "stand" },
     { "instanceId": "k12-g", "deviceId": "qsc-k12-2", "position_m": [6, 2.7, -7.5], "yawDeg": 0, "tiltDeg": 0, "mount": "stand" },
     { "instanceId": "k12-d", "deviceId": "qsc-k12-2", "position_m": [-6, 2.7, -7.5], "yawDeg": 0, "tiltDeg": 0, "mount": "stand" },

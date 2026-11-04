@@ -292,6 +292,55 @@ describe('menu model (Task 7)', () => {
     })
   })
 
+  describe('Écoute › Écouter depuis ici (Task 43b)', () => {
+    const item = (c: MenuContext) => find(buildMenus(c), 'listen-here')
+    it('a plain item in Écoute with the French name, live once its action exists and the view is free', () => {
+      const ran: string[] = []
+      const live = item(ctx({ actions: { 'listen-here': () => void ran.push('here') } }))
+      expect(live.label).toBe('Écouter depuis ici')
+      expect(live.kind).toBeUndefined()
+      expect(live.enabled()).toBe(true)
+      live.run()
+      expect(ran).toEqual(['here'])
+    })
+    it('is off without an action or while the place picker covers the view, and a disabled item never runs', () => {
+      const ran: string[] = []
+      expect(item(ctx()).enabled()).toBe(false)
+      const locked = item(ctx({ actions: { 'listen-here': () => void ran.push('locked') }, viewLocked: () => true }))
+      expect(locked.enabled()).toBe(false)
+      locked.run()
+      expect(ran).toEqual([])
+    })
+  })
+
+  describe('Écoute › Couverture (Task 37)', () => {
+    const item = (c: MenuContext) => find(buildMenus(c), 'coverage')
+    it('a checkbox item in Écoute, after the sources and before the ear heights, unchecked by default', () => {
+      const ecoute = buildMenus(ctx()).find((m) => m.id === 'ecoute')!
+      expect(ecoute.items.map((i) => i.id)).toEqual(['play', 'choose-file', 'test-signal', 'listen-here', 'coverage', 'ear-seated', 'ear-standing'])
+      const c = item(ctx())
+      expect(c.label).toBe('Couverture')
+      expect(c.kind).toBe('checkbox')
+      expect(c.checked!()).toBe(false)
+    })
+    it('is checked from the state, runs its action, and is off without an action or while no place is on screen', () => {
+      let on = false
+      const ran: string[] = []
+      const live = item(ctx({ actions: { coverage: () => void ran.push('toggle') }, coverage: () => on }))
+      expect(live.enabled()).toBe(true)
+      live.run()
+      expect(ran).toEqual(['toggle'])
+      on = true
+      expect(live.checked!()).toBe(true)
+      const noAction = item(ctx())
+      expect(noAction.enabled()).toBe(false)
+      const locked = item(ctx({ actions: { coverage: () => void ran.push('locked') }, viewLocked: () => true }))
+      expect(locked.enabled()).toBe(false)
+      locked.run() // a disabled item never runs
+      expect(ran).toEqual(['toggle'])
+    })
+  })
+
   it('every item has a non-empty French label, no placeholder, unique ids', () => {
     const items = buildMenus(ctx({ places: [{ key: 'blank', label: 'Salle vide neutre' }] })).flatMap((m) => all(m.items))
     for (const i of items) {
@@ -343,5 +392,91 @@ describe('Matériel › Pivoter, Dupliquer, Supprimer (Task 25)', () => {
   it('without a hasSelection hook the items stay off', () => {
     const menus = buildMenus(withKeys())
     expect(find(menus, 'delete').enabled()).toBe(false)
+  })
+  describe('Écoute › Lecture, Morceau, Choisir un fichier audio…, Signal de test (Task 39)', () => {
+    const REASON = 'La console n’est pas alimentée.'
+    const run: string[] = []
+    const actions = (): Record<string, () => void> =>
+      Object.fromEntries(['play', 'stop', 'choose-file', 'test-signal', 'song:demo-1'].map((a) => [a, () => void run.push(a)]))
+    const live = (over: Partial<MenuContext> = {}): MenuContext => ctx({ actions: actions(), playbackReady: () => true, playbackReason: () => undefined, ...over })
+    const ecoute = (c: MenuContext) => buildMenus(c).find((m) => m.id === 'ecoute')!
+    it('« Lecture » is enabled iff the chain can play; otherwise it stays in the menu (focusable) and its description is the FIRST reason', () => {
+      const off = find(buildMenus(live({ playbackReady: () => false, playbackReason: () => REASON })), 'play')
+      expect(off.label).toBe('Lecture')
+      expect(off.enabled()).toBe(false)
+      expect(off.description!()).toBe(REASON)
+      const on = find(buildMenus(live()), 'play')
+      expect(on.enabled()).toBe(true)
+      expect(on.description!()).toBeUndefined()
+    })
+    it('the sources (file, test signal, songs) follow the same gate and say the same reason', () => {
+      const off = buildMenus(live({ playbackReady: () => false, playbackReason: () => REASON, songs: () => [{ id: 'demo-1', title: 'Titre' }] }))
+      for (const id of ['choose-file', 'test-signal', 'songs', 'song:demo-1']) {
+        expect(find(off, id).enabled(), id).toBe(false)
+        expect(find(off, id).description!(), id).toBe(REASON)
+      }
+      const on = buildMenus(live({ songs: () => [{ id: 'demo-1', title: 'Titre' }] }))
+      for (const id of ['choose-file', 'test-signal', 'songs', 'song:demo-1']) expect(find(on, id).enabled(), id).toBe(true)
+    })
+    it('a disabled item never runs; an enabled one runs its action', () => {
+      run.length = 0
+      const off = buildMenus(live({ playbackReady: () => false }))
+      for (const id of ['play', 'choose-file', 'test-signal']) find(off, id).run()
+      expect(run).toEqual([])
+      const on = buildMenus(live())
+      for (const id of ['play', 'choose-file', 'test-signal']) find(on, id).run()
+      expect(run).toEqual(['play', 'choose-file', 'test-signal'])
+    })
+    it('while playing the item reads « Stop » and stays live even if the chain just became invalid (stopping is never gated)', () => {
+      const p = find(buildMenus(live({ playing: () => true, playbackReady: () => false, playbackReason: () => REASON })), 'play')
+      expect(p.label).toBe('Stop')
+      expect(p.enabled()).toBe(true)
+      expect(p.description!()).toBeUndefined()
+    })
+    it('the item runs what it was RENDERED as: shown as « Stop », it only stops, even if the sound ended while the menu was open (it must never start playback)', () => {
+      run.length = 0
+      let playing = true
+      const stopItem = find(buildMenus(live({ playing: () => playing })), 'play')
+      expect(stopItem.label).toBe('Stop')
+      playing = false // the file ended, or a media key paused it, while the menu stayed open
+      stopItem.run()
+      expect(run).toEqual(['stop']) // never 'play'
+      expect(stopItem.enabled()).toBe(true)
+      run.length = 0
+      const playItem = find(buildMenus(live({ playing: () => playing })), 'play')
+      expect(playItem.label).toBe('Lecture')
+      playing = true // started from the block's button meanwhile
+      playItem.run()
+      expect(run).toEqual(['play']) // the action itself ignores a start while playing (boot)
+    })
+    it('« Morceau » is left out when there is no song (the list is empty by design), and lists the songs by title otherwise', () => {
+      expect(ecoute(live()).items.some((i) => i.id === 'songs')).toBe(false)
+      expect(ecoute(live({ songs: () => [] })).items.some((i) => i.id === 'songs')).toBe(false)
+      const songs = find(buildMenus(live({ songs: () => [{ id: 'demo-1', title: 'Titre un' }, { id: 'demo-2', title: 'Titre deux' }] })), 'songs')
+      expect(songs.label).toBe('Morceau')
+      expect(songs.children!.map((c) => [c.id, c.label])).toEqual([['song:demo-1', 'Titre un'], ['song:demo-2', 'Titre deux']])
+    })
+    it('the order: Lecture, Morceau, Choisir un fichier audio…, Signal de test, Écouter depuis ici, Couverture, the ear heights', () => {
+      const c = live({ songs: () => [{ id: 'demo-1', title: 'T' }] })
+      expect(ecoute(c).items.map((i) => i.label)).toEqual(['Lecture', 'Morceau', 'Choisir un fichier audio…', 'Signal de test', 'Écouter depuis ici', 'Couverture', expect.any(String), expect.any(String)])
+    })
+    it('without a registered action the item is off (and says the reason when there is one)', () => {
+      const p = find(buildMenus(ctx({ playbackReady: () => true })), 'play')
+      expect(p.enabled()).toBe(false)
+    })
+    it('under the place picker with a VALID chain the items are off and say why (never off with no word); a chain reason wins when there is one', () => {
+      const locked = buildMenus(live({ viewLocked: () => true, songs: () => [{ id: 'demo-1', title: 'T' }] }))
+      for (const id of ['play', 'choose-file', 'test-signal', 'songs', 'song:demo-1']) {
+        expect(find(locked, id).enabled(), id).toBe(false)
+        expect(find(locked, id).description!(), id).toBe('Indisponible pendant le choix du lieu.')
+      }
+      const both = find(buildMenus(live({ viewLocked: () => true, playbackReady: () => false, playbackReason: () => REASON })), 'play')
+      expect(both.description!()).toBe(REASON)
+      expect(find(buildMenus(live()), 'play').description!()).toBeUndefined()
+    })
+    it('nothing starts under the place picker (viewLocked) but Stop still works', () => {
+      expect(find(buildMenus(live({ viewLocked: () => true })), 'play').enabled()).toBe(false)
+      expect(find(buildMenus(live({ viewLocked: () => true, playing: () => true })), 'play').enabled()).toBe(true)
+    })
   })
 })

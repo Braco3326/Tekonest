@@ -89,3 +89,51 @@ livrée et l'appareil est déjà dans l'onglet « Secteur » du tiroir. `npm run
 (même chaîne que les autres glb), export `public/assets/multiprise-secteur.glb` ≤ 200 Ko, et une vignette
 `public/assets/thumbs/multiprise-secteur.png` (sans elle le tiroir montre la silhouette ; `tests/creation/inventoryThumbs.test.ts`
 attend `thumbPath('multiprise-secteur') === null` tant qu'elle n'existe pas : à mettre à jour avec la vignette).
+
+## 2026-10-29 — Chansons de démonstration (Task 38, décisions S3 / P13)
+
+**Aucune chanson n'est livrée pour l'instant.** `content/songs.json` vaut `[]` et `public/audio/songs/` n'existe pas.
+Raison : aucune piste n'a encore été vérifiée sur sa page (texte de la dédicace CC0 / domaine public lisible, URL de licence
+notée) et approuvée par le fondateur ; sans cette preuve, rien n'est téléchargé ni lié. Dans le menu Écoute, le Mode Création
+s'appuie donc sur « Signal de test » (signal généré par `src/audio/testSignal.ts`, œuvre propre) et sur « Choisir un fichier audio… »
+(fichier local lu via `URL.createObjectURL` dans `src/audio/engine.ts`, jamais envoyé ni conservé).
+
+Règles pour ajouter une chanson plus tard (2 à 3 pistes au plus, 3 Mio (3 145 728 octets) maximum chacune, mp3 de préférence, ogg accepté) :
+- Licence exactement `CC0-1.0`, page de la piste et page de licence ouvertes et lues ; l'URL de licence est notée ici.
+- **Pixabay n'est pas CC0** (licence propre à Pixabay) : ne jamais l'utiliser.
+- Chaque piste a UNE ligne dans ce fichier qui contient à la fois son chemin (`audio/songs/<nom>.mp3`) et son URL de licence, plus sa
+  source, la date de récupération et son SHA-256 ; la même entrée existe dans `content/songs.json`.
+- `npm run validate:songs` (et `tests/audio/songs.test.ts`) vérifient : fichier présent, taille égale à `bytes` et ≤ 3 Mio, SHA-256 égal,
+  licence `CC0-1.0`, ligne présente dans ce journal. Ajouter une entrée est une édition de contenu, sans changement du moteur.
+
+## 2026-11-03 — Décodeur Draco servi par le site (Task 43d, audit CA-24)
+
+26 des 53 modèles `.glb` livrés (appareils et décors) sont compressés en Draco (`KHR_draco_mesh_compression` dans `extensionsUsed`). Le chargeur glTF de
+Babylon allait chercher son décodeur sur `https://cdn.babylonjs.com/` (tiers : bloqué par certains filtres d'école, absent hors ligne, reçoit l'adresse IP de chaque
+visiteur). Le décodeur est maintenant **copié dans le dépôt**, sous `public/draco/`, et servi par le site lui-même.
+
+| Fichier | Octets | SHA-256 |
+|---|---|---|
+| `public/draco/draco_decoder_gltf.wasm` | 192 593 | `712db3449ae2041d6e8a224c395bda6cedb49e51322fae38b7db9beb8b381889` |
+| `public/draco/draco_decoder_gltf_nodejs.js` | 58 456 | `8bb2952d2ba7d67e1414f8df819410cb0434a666be53f671fff75f68843d76f6` |
+| `public/draco/LICENSE-Apache-2.0.txt` | 9 142 | texte standard de la licence Apache 2.0 (taille du fichier validé, fins de ligne LF ; la copie de travail Windows en CRLF est plus grosse) |
+| `public/draco/NOTICE.txt` | — | provenance, version, SHA-256, raison du nom `_nodejs`, écart avec le fichier du CDN |
+
+- **Source** : copie octet pour octet des fichiers du paquet npm `draco3dgltf` **1.5.7** (déjà en devDependency, `node_modules/draco3dgltf/`), qui est le décodeur
+  glTF de la bibliothèque Draco de Google (`https://github.com/google/draco`). `@babylonjs/core` n'en embarque aucun.
+- **Licence : Apache-2.0** (champ `license` du `package.json` du paquet) ; le texte de la licence est livré à côté des fichiers (condition de redistribution).
+  Le paquet ne contient aucun avis `NOTICE` ; `public/draco/NOTICE.txt` est le nôtre (provenance, empreintes).
+- **Le fichier `..._nodejs.js` n'est pas réservé à Node** malgré son nom : c'est le même module Emscripten, qui détecte son environnement (page, worker ou Node) et
+  ne touche à `fs` que sous Node. Associé au `.wasm` du même paquet, il forme une paire issue d'un seul build (le test `tests/render/draco.test.ts` vérifie
+  l'identité octet pour octet avec le paquet, pour qu'une mise à jour d'un seul des deux soit refusée).
+  **Écart à dire :** ce n'est **pas** le `draco_wasm_wrapper_gltf.js` que Babylon télécharge sur son CDN (le paquet npm ne livre que ce module-là) ; son build, et donc sa version, peuvent différer de celui du CDN. Le décodage a été vérifié **dans Chromium seulement** (Playwright) : ni Firefox, ni Safari, ni comparaison sommet par sommet avec le décodeur du CDN.
+- **Branchement** : `src/render/draco.ts` règle `DracoCompression.Configuration` sur `public/draco/…` avec le chemin de base de Vite (`/` en local,
+  `/tekpractice/jouer/` au déploiement). Appelé au démarrage du Mode Création (`src/creation/boot.ts`) et de l'entrée historique (`src/legacyMain.ts`). Aucun
+  `fallbackUrl` : le seul repli que connaît Babylon est celui du CDN ; un navigateur sans WebAssembly ne peut de toute façon pas faire tourner la 3D de l'application
+  (le `.glb` échoue, la boîte provisoire reste).
+- **Garde** : `tests/e2e/creation-budgets.spec.ts` (CA-24) échoue si une requête sort de l'origine, et exige que le décodeur soit demandé sous `/draco/` (200),
+  dans une session Mode Création complète et dans l'entrée historique (`?level=a1`). **Portée exacte : aucune requête hors origine dans les sessions exercées** (Chromium seulement ;
+  ni WebSocket ni EventSource vus par l'écouteur) ; ce n'est pas une preuve qu'aucun chemin de l'application n'appelle un tiers. Et `tests/assets/glbExtensions.test.ts` échoue
+  dès qu'un `.glb` de `public/` annonce une extension hors liste blanche (KTX2/Basis, Meshopt… iraient chercher un autre décodeur sur le CDN).
+- **Taille** : 251 049 octets de fichiers de décodeur (192 593 + 58 456), plus la licence et l'avis, très en dessous de la limite de 25 Mio par fichier du déploiement ; chargés à la première décompression d'un modèle, pas au démarrage
+  (le budget de chunks `npm run budget` ne les compte pas : ce ne sont pas des chunks JavaScript du bundle).

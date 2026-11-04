@@ -54,6 +54,14 @@ describe('creation key map (Task 8, P3)', () => {
     expect(bindingLabel(D, 'ROTATE_CW')).toBe('R')
     expect(bindingLabel(D, 'ROTATE_CCW')).toBe('Maj+R')
   })
+  it('G (the physical KeyG) latches free placement; it is not bound to any other action and has no Alt/Ctrl variant (Task 43b)', () => {
+    expect(creationActionsFor(D, { code: 'KeyG', key: 'g' })).toEqual(['SNAP_TOGGLE'])
+    expect(creationActionsFor(D, { code: 'KeyG', key: 'G', shiftKey: true })).toEqual([])
+    expect(creationActionsFor(D, { code: 'KeyG', key: 'g', ctrlKey: true })).toEqual([])
+    expect(bindingLabel(D, 'SNAP_TOGGLE')).toBe('G')
+    const holders = Object.entries(D).filter(([, chords]) => chords.includes('KeyG')).map(([a]) => a)
+    expect(holders).toEqual(['SNAP_TOGGLE'])
+  })
   it('Ctrl+D follows the labelled key (like Ctrl+Z), Suppr is the Delete key', () => {
     expect(creationActionsFor(D, { code: 'KeyD', key: 'd', ctrlKey: true })).toEqual(['DUPLICATE'])
     expect(creationActionsFor(D, { code: 'KeyE', key: 'd', ctrlKey: true })).toEqual(['DUPLICATE']) // another layout

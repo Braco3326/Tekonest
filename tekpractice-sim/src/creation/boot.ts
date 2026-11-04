@@ -11,6 +11,7 @@ import roomIndexJson from '../../content/rooms/index.json'
 import { Vector3 } from '@babylonjs/core'
 import { loadCatalog } from '../engine/CatalogLoader'
 import { projectToScreen } from '../scene/project'
+import { useSameOriginDraco } from '../render/draco'
 import { DisposableBag } from '../util/disposable'
 import { COPY } from './copy'
 import { showBootFailure, type BootFailureKind } from './bootFailure'
@@ -21,6 +22,9 @@ import {
   activePoint,
   DEFAULT_LISTENER_POINT,
   defaultPoints,
+  HERE_ID,
+  hereSpot,
+  hereToPoint,
   POINT_IDS,
   pointForKey,
   pointLookAt,
@@ -34,6 +38,8 @@ import { placeFromKey, placeKey } from './places'
 import { loadPlaceData } from './placeData'
 import { createPlaceController, type PlaceResult } from './placeController'
 import { PlacementController } from './placementController'
+import { toCanvasPx } from './dragDrop'
+import { mountCancelPlacement } from './shell/cancelPlacement'
 import { EditController } from './editController'
 import { PatchController } from './patchController'
 import { CableHoverController } from './cableHover'
@@ -45,7 +51,7 @@ import { designFromRoomGear, unavailableList } from './templateGear'
 import { loadTemplates, templateToDesign } from './templates'
 import { mountNotes } from './shell/notes'
 import { bodyCentreOf } from './debug'
-import { debugBodyCenter } from '../scene/debugBody'
+import { debugBodyCenter, debugBodyBoundsInRoot, debugBodyEnds } from '../scene/debugBody'
 import { cableKey } from './sceneDiff'
 import { attachCanvasHover, attachCanvasPicking, createSelection, pickDevice } from './selection'
 import { floorPointAt } from '../scene/pivotPick'
@@ -58,6 +64,13 @@ import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
 import { bindingLabel, creationActionsFor, loadCreationBindings, type CreationAction } from './input/creationActions'
 import type { InventoryDrawer } from './shell/inventoryDrawer'
+import type { CoverageController, CoverageDebug } from './coverageController'
+import type { ListenController, ListenDebug } from './listenController'
+import type { ListenSource } from './listenModel'
+import type { SongEntry } from '../audio/songs'
+import { listenerAtPoint, listenerFromCamera } from './listenerPose'
+import { audioStats, closeAudioContext, openAudioContext } from '../audio/context'
+import type { ListenerPose } from './listenVoices'
 import type { BetaPrep } from './betaDevices'
 import { isUnverified, parseProposals, prepareBeta, proposalEntries, registerProposals, within, type BetaLoad } from './betaDevices'
 import { signalPath } from '../flow/signalPath'
@@ -95,8 +108,12 @@ import { openNameDialog, openProjectList } from './shell/projectDialogs'
 import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
+import { createAnnouncer } from './shell/announcer'
+import { armCancelFallback } from './fileDialogGuard'
 import {
   autosaveView,
+  playbackAnnouncement,
+  playbackNoticeState,
   rejectionOf,
   ruleTextFor,
   statusView,
@@ -118,6 +135,7 @@ const roomName = (id: string): string =>
 
 export async function bootCreation(): Promise<void> {
   injectCreationTokens()
+  useSameOriginDraco() // CA-24: the Draco decoder comes from public/draco/, never from cdn.babylonjs.com (before any .glb is loaded)
   const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
   const shell = mountShell(document, canvas)
   canvas.style.display = 'none' // shown once a place is chosen
@@ -257,6 +275,8 @@ export async function bootCreation(): Promise<void> {
   let connections = 0
   /** The signal path of the live design (Task 34): recomputed with the events on every store change, never per frame. */
   let path = signalPath(store.design(), registry, events)
+  /** What the screen reader was last told about the playback and the mic (Task 39): a change is announced once, never per store change. */
+  let notice = playbackNoticeState(path)
   /** Bêta (proposed) devices in the rig at the last store change: « Aucune erreur détectée » says so (Task 30). */
   let unverified = 0
   /** The last refused connection: listed first until a valid connection, a new design, or its device leaves. */
@@ -296,12 +316,7 @@ export async function bootCreation(): Promise<void> {
     if (intent.type !== 'CONNECT') return
     lastRejection = rejectionOf(r.error, r.subjects, ruleText)
     refreshSignal()
-    shell.setStatus(
-      placeNow(),
-      COPY.status!.statusRefused!.replace('{title}', lastRejection.title),
-      'ready',
-      true
-    )
+    announcer.say(COPY.status!.statusRefused!.replace('{title}', lastRejection.title))
   })
 
   // ── Project (Task 13, C16): per-origin localStorage, name, dirty marker, autosave.
@@ -414,7 +429,7 @@ export async function bootCreation(): Promise<void> {
       if (r === 'full') {
         autosaveFull = true
         notes.show({ id: 'autosave-full', title: PJ.blockedTitle!, body: PJ.autosaveFull! })
-        shell.setStatus(placeNow(), PJ.autosaveFull!, 'ready', true)
+        announcer.say(PJ.autosaveFull!)
       } else {
         storageBlocked = true
         blockedNote()
@@ -454,6 +469,11 @@ export async function bootCreation(): Promise<void> {
     shell.setStatus(placeLabel(store.design().roomId), COPY.shell!.statusReady!, 'ready')
   }
   const placeNow = (): string => (canvasShown ? placeLabel(store.design().roomId) : '')
+  /**
+   * ONE announcer for the status line's polite region, where the last write wins: the playback / signal announcements of the store change, the listen controller's
+   * and the coverage controller's all land in the same tick (the sound stops AND the coverage has no speaker left). It merges the distinct messages of a tick.
+   */
+  const announcer = createAnnouncer((message, reannounce, state) => shell.setStatus(placeNow(), message, state, reannounce))
   const deviceIds = (): string[] => store.design().rig.instances.map((i) => i.instanceId)
   const deviceLabel = (id: string): string => {
     const deviceId = store.design().rig.instances.find((i) => i.instanceId === id)?.deviceId
@@ -473,14 +493,9 @@ export async function bootCreation(): Promise<void> {
     },
     invalidate: () => scheduler.invalidate(),
     onSelect: (id) =>
-      shell.setStatus(
-        placeNow(),
-        id
+      announcer.say(id
           ? COPY.shell!.statusSelected!.replace('{device}', deviceLabel(id))
-          : COPY.shell!.statusNoSelection!,
-        'ready',
-        true
-      ),
+          : COPY.shell!.statusNoSelection!),
   })
 
   // ── « Projet » tree (Task 9, C10): rebuilt on store / view-state / place changes, never polled.
@@ -489,8 +504,13 @@ export async function bootCreation(): Promise<void> {
   const zones = (): { id: string; kind: string }[] =>
     canvasShown ? (host.layout?.zones ?? []).map((z) => ({ id: z.id, kind: z.kind })) : []
   /** The place's listening points (Task 20) at the current ear height; none before a place is shown. */
-  const listeningPoints = (): ListeningPoint[] =>
-    canvasShown && host.place ? defaultPoints(host.layout, viewState.get().earHeight) : []
+  const listeningPoints = (): ListeningPoint[] => {
+    if (!canvasShown || !host.place) return []
+    const { earHeight, listenerHere } = viewState.get()
+    const named = defaultPoints(host.layout, earHeight)
+    // « Écouter depuis ici » (Task 43b): one more point, last, at the spot the learner chose (it follows the ear height).
+    return listenerHere ? [...named, hereToPoint(listenerHere, host.layout, earHeight)] : named
+  }
   /** The point the camera was last sent to and the pose it got (the ear height re-flies it while it is still there). */
   let atPoint: { id: string; pose: PointPose } | null = null
   /** True while goToPoint asks the rig for the point's own flight. */
@@ -527,12 +547,7 @@ export async function bootCreation(): Promise<void> {
         if (!selection.flyToKey(node.id)) return
         treeActive = node.id
         tree.render()
-        shell.setStatus(
-          placeNow(),
-          COPY.tree!.statusFramed!.replace('{item}', node.label),
-          'ready',
-          true
-        )
+        announcer.say(COPY.tree!.statusFramed!.replace('{item}', node.label))
       } else if (node.kind === 'point') {
         // A listening point (Task 20): leaves the walk, the camera stands there looking at the stage.
         treeActive = node.id // before the view-state change re-renders the tree
@@ -551,15 +566,10 @@ export async function bootCreation(): Promise<void> {
       const hidden = viewState.get().hidden
       const now = !hidden.includes(key)
       viewState.set({ hidden: now ? [...hidden, key] : hidden.filter((k) => k !== key) })
-      shell.setStatus(
-        placeNow(),
-        (now ? COPY.tree!.statusHidden! : COPY.tree!.statusShown!).replace(
+      announcer.say((now ? COPY.tree!.statusHidden! : COPY.tree!.statusShown!).replace(
           '{item}',
           nodeLabel(key)
-        ),
-        'ready',
-        true
-      )
+        ))
     },
   })
   // ── « Propriétés » (Task 10): the selection's pose, controls and cables, edited through history.do only.
@@ -571,7 +581,7 @@ export async function bootCreation(): Promise<void> {
     design: () => store.design(),
     selection: () => viewState.get().selection,
     floorAt: (x, z) => host.layout?.floorAt(x, z) ?? 0,
-    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    announce: (message) => announcer.say(message),
     // « Connecter à… » (Task 28, CA-02): the keyboard / screen-reader way to cable, defined with the patch controller below.
     connect: (from, opener) => connectDialog.open(from, opener),
   })
@@ -582,6 +592,8 @@ export async function bootCreation(): Promise<void> {
       earHeight = v.earHeight
       saveViewPrefs(storage, { earHeight })
       host.setEarHeight(earHeight) // a live walker moves at once
+      coverage?.refresh() // the listener plane moved (a no-op while the coverage is off)
+      listen?.refresh() // the ears moved: the voices follow (a no-op while nothing plays)
       // The listening points follow the ear height: a camera still standing on one moves with it.
       if (atPoint && !host.walking && cameraOn(atPoint.pose)) goToPoint(atPoint.id, { refly: true })
     }
@@ -598,6 +610,19 @@ export async function bootCreation(): Promise<void> {
    * of the hook is lost). They register here once they exist; before that there is nothing to reset.
    */
   const placeResets: (() => void)[] = []
+  /**
+   * Écoute › Couverture (Task 37): the lazy coverage controller, declared here because the ear-height subscriber above can run before it exists.
+   * `coverageOn` is the learner's intent (the menu's check mark), true as soon as the item is chosen, before the chunk has loaded.
+   */
+  let coverage: CoverageController | null = null
+  let coverageOn = false
+  /**
+   * Écoute › Lecture (Task 39): the lazy listen controller (engine, panel, meters). `listenIntent` is what the menu shows (« Stop » as soon as « Lecture » is chosen,
+   * before the chunk has loaded); `listenWanted` is bumped by every start and by every stop / place change, so a chunk that resolves late is ignored.
+   */
+  let listen: ListenController | null = null
+  let listenIntent = false
+  let listenWanted = 0
   /** The keypad quarter-turn keys (set once the key map exists, same reason): nothing is claimed before. */
   let isViewRotateCode: (code: string) => boolean = () => false
   host.onPlaceShown = () => {
@@ -620,7 +645,7 @@ export async function bootCreation(): Promise<void> {
     })
     if (treeActive?.startsWith('point:')) treeActive = null
     // A new place listens from its Régie (Centre without a layout) until a point is chosen (review Fix 1).
-    viewState.set({ hidden, listenerPoint: DEFAULT_LISTENER_POINT })
+    viewState.set({ hidden, listenerPoint: DEFAULT_LISTENER_POINT, listenerHere: null })
     tree.render()
   }
 
@@ -643,9 +668,13 @@ export async function bootCreation(): Promise<void> {
         lastRejection = null
     }
     const sv = refreshSignal()
-    // The count is said, not only shown, when a change adds or clears an error (never on a refresh with the same count).
-    if (after !== before)
-      shell.setStatus(placeNow(), `${COPY.status!.signalAnnounce} ${sv.signal.label}`, 'ready')
+    // The count is said, not only shown, when a change adds or clears an error (never on a refresh with the same count); « Lecture possible » / the reason
+    // and « Micro OK » likewise, once, when they flip (Task 34 review). A loss that stops the sound is said by the listen controller, with its reason.
+    const nextNotice = playbackNoticeState(path)
+    const playbackSaid = playbackAnnouncement(notice, nextNotice, { stopsPlayback: !!listen?.active })
+    notice = nextNotice
+    const said = [after !== before ? `${COPY.status!.signalAnnounce} ${sv.signal.label}` : '', playbackSaid].filter(Boolean)
+    for (const m of said) announcer.say(m, false)
     // A selected device that left the rig (REMOVE, undo of its SPAWN) is no longer selected.
     const v = viewState.get()
     const ids = deviceIds()
@@ -713,7 +742,7 @@ export async function bootCreation(): Promise<void> {
     const msg = N.fallbackBody!.replace('{place}', placeLabel(key))
     notes.show({ id: 'fallback', title: N.fallbackTitle!, body: msg })
     if (picker.isOpen) picker.showError(msg) // the note sits under the picker while it is open
-    shell.setStatus(placeNow(), msg, 'ready', true)
+    announcer.say(msg)
   }
   host.onFallback = fallbackNote
 
@@ -751,7 +780,7 @@ export async function bootCreation(): Promise<void> {
       // Said where the learner is: the picker stays open over an inert viewport (review fix 2).
       const msg = COPY.picker!.openFailed!.replace('{place}', card.title)
       if (picker.isOpen) picker.showError(msg)
-      return shell.setStatus(placeNow(), msg, 'ready', true)
+      return announcer.say(msg)
     }
     if (result === 'cancelled') return showStatus()
     showCanvas() // 'done' / 'same'
@@ -765,7 +794,7 @@ export async function bootCreation(): Promise<void> {
       const head = hadGear
         ? COPY.shell!.statusReplaced!.replace('{n}', n).replace('{undo}', undoLabel())
         : COPY.shell!.statusGearLoaded!.replace('{n}', n)
-      shell.setStatus(placeNow(), head + more, 'ready', true)
+      announcer.say(head + more)
     }
     if (missing.length)
       notes.show({
@@ -855,7 +884,7 @@ export async function bootCreation(): Promise<void> {
     refreshTitle()
     showCanvas()
     showStatus()
-    shell.setStatus(placeNow(), PJ.restored!, 'ready', true)
+    announcer.say(PJ.restored!)
     return true
   }
   refreshSignal()
@@ -876,6 +905,7 @@ export async function bootCreation(): Promise<void> {
 
   // ── Keyboard (Task 8, C10, P3): one window listener for the page's lifetime.
   const shellBag = new DisposableBag()
+  shellBag.add(() => announcer.dispose())
   const keys = mountCreationKeyboard({
     bag: shellBag,
     bindings: loadCreationBindings(storage),
@@ -889,7 +919,7 @@ export async function bootCreation(): Promise<void> {
   const cycle = (dir: 1 | -1): boolean => {
     const next = nextDevice(deviceIds(), viewState.get().selection, dir)
     if (next === null) {
-      shell.setStatus(placeNow(), COPY.shell!.statusNothingToSelect!, 'idle', true)
+      announcer.say(COPY.shell!.statusNothingToSelect!, true, 'idle')
       return true
     }
     selection.select(next) // the camera follows (a cut under reduced motion)
@@ -933,7 +963,7 @@ export async function bootCreation(): Promise<void> {
     try {
       props.flush() // a stepper burst still open is part of what is saved
       if (!canvasShown || store.design().roomId === null)
-        return shell.setStatus(placeNow(), PJ.saveNoPlace!, 'idle', true)
+        return announcer.say(PJ.saveNoPlace!, true, 'idle')
       let name = projectName
       /** The stored row this save may replace, as this tab knows it (another tab's newer copy is set aside). */
       let expectStamp = projectStamp
@@ -969,7 +999,7 @@ export async function bootCreation(): Promise<void> {
         // quarantine-full: the unreadable list (export it first) vs another tab's copy (a new name works).
         const msg =
           r === 'quarantine-full' && readProjectList(storage).status === 'unreadable' ? PJ.quarantineFullList! : saveFailed[r]
-        return shell.setStatus(placeNow(), msg, 'ready', true)
+        return announcer.say(msg)
       }
       setProject({ name, savedFp: designFingerprint(design), stamp })
       refreshTitle()
@@ -978,7 +1008,7 @@ export async function bootCreation(): Promise<void> {
       autosave.resume()
       autosave.schedule()
       autosave.flush() // the name and the clean state survive a reload at once
-      shell.setStatus(placeNow(), saveDone[r].replace('{name}', name), 'ready', true)
+      announcer.say(saveDone[r].replace('{name}', name))
     } finally {
       saving = false
     }
@@ -1044,13 +1074,13 @@ export async function bootCreation(): Promise<void> {
     if (name === null) return
     const design = loadProject(storage, name)
     const failed = (): void =>
-      shell.setStatus(placeNow(), PJ.openFailed!.replace('{name}', name), 'ready', true)
+      announcer.say(PJ.openFailed!.replace('{name}', name))
     if (!design || design.roomId === null) return failed()
     const prep = await ensureBetaFor(design)
     if (prep.kind === 'unavailable') {
       // Nothing is opened and nothing changes: the stored project stays as it is (open it again once the network is back).
       notes.show({ id: 'beta-unavailable', title: COPY.inventory!.unavailableTitle!, body: COPY.inventory!.unavailableOpen! })
-      return shell.setStatus(placeNow(), COPY.inventory!.unavailableOpen!, 'ready', true)
+      return announcer.say(COPY.inventory!.unavailableOpen!)
     }
     notes.dismiss('beta-unavailable') // the sheets came back: an earlier « fiches indisponibles » note no longer holds
     const missing = prep.missing
@@ -1072,18 +1102,13 @@ export async function bootCreation(): Promise<void> {
     refreshTitle()
     autosave.schedule()
     showCanvas()
-    shell.setStatus(
-      placeNow(),
-      PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()),
-      'ready',
-      true
-    )
+    announcer.say(PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()))
   }
   /** « Exporter les données mises de côté… »: one JSON file; nothing is removed (clearing is Oscar's call, N19). */
   const exportKept = (): void => {
     const kept = readQuarantine(storage)
     if (!kept.length && !pending.length)
-      return shell.setStatus(placeNow(), PJ.exportNothing!, 'idle', true)
+      return announcer.say(PJ.exportNothing!, true, 'idle')
     const file = `tekpractice-donnees-mises-de-cote-${new Date().toISOString().slice(0, 10)}.json`
     const url = URL.createObjectURL(
       new Blob([exportBundle(storage, pending)], { type: 'application/json' })
@@ -1108,7 +1133,7 @@ export async function bootCreation(): Promise<void> {
       })
       refreshAutosave()
     }
-    shell.setStatus(placeNow(), PJ.exported!.replace('{file}', file), 'ready', true)
+    announcer.say(PJ.exported!.replace('{file}', file))
   }
   /** What the last export held (the autosave may overwrite it once the learner checked the file). */
   let heldExport: QuarantineItem[] = []
@@ -1138,7 +1163,7 @@ export async function bootCreation(): Promise<void> {
       body,
       actions: [{ label: PJ.resumeHere!, run: resumeHere }],
     })
-    shell.setStatus(placeNow(), body, 'ready', true)
+    announcer.say(body)
   })
   // Leaving the page: the pending autosave is written now (never mid-transaction).
   const leave = (): void => {
@@ -1162,12 +1187,7 @@ export async function bootCreation(): Promise<void> {
   host.onWalkChange = (on) => {
     if (on) canvas.setAttribute('aria-label', WK.canvas!.replace('{walk}', walkKey()))
     else if (canvasLabel !== null) canvas.setAttribute('aria-label', canvasLabel)
-    shell.setStatus(
-      placeNow(),
-      on ? WK.statusOn!.replace('{walk}', walkKey()) : WK.statusOff!,
-      'ready',
-      true
-    )
+    announcer.say(on ? WK.statusOn!.replace('{walk}', walkKey()) : WK.statusOff!)
   }
   const enterWalk = (): boolean =>
     !viewLocked() &&
@@ -1195,10 +1215,10 @@ export async function bootCreation(): Promise<void> {
   }
   const setEar = (h: 1.2 | 1.7): void => {
     viewState.set({ earHeight: h }) // its subscriber saves it and moves a live walker
-    shell.setStatus(placeNow(), h === 1.2 ? WK.earSeated! : WK.earStanding!, 'ready', true)
+    announcer.say(h === 1.2 ? WK.earSeated! : WK.earStanding!)
   }
   const announceView = (label: string): void =>
-    shell.setStatus(placeNow(), VW.status!.replace('{view}', label), 'ready', true)
+    announcer.say(VW.status!.replace('{view}', label))
   const goToView = (z: ZoneSigns): void => {
     if (viewLocked()) return
     leaveWalk() // a named view is an orbit view
@@ -1313,7 +1333,7 @@ export async function bootCreation(): Promise<void> {
     atPoint = { id, pose }
     viewState.set({ listenerPoint: id })
     scheduler.invalidate()
-    if (!opts.refly) shell.setStatus(placeNow(), PT.status!.replace('{point}', p.label), 'ready', true)
+    if (!opts.refly) announcer.say(PT.status!.replace('{point}', p.label))
     return true
   }
   /** The orbit camera is (or is flying to) this pose: nobody moved it since (any other flight clears `atPoint`). */
@@ -1330,12 +1350,34 @@ export async function bootCreation(): Promise<void> {
       Math.hypot(c.target.x - tx, c.target.y - ty, c.target.z - tz) < 1e-3
     )
   }
+  /**
+   * Écoute › Écouter depuis ici (Task 43b): the listening position becomes where the view stands (the walker; in orbit the view's pivot, on the
+   * floor at ear height), facing the way the camera looks. The camera does not move. It is the point « Ici »: active, listed with the others
+   * (tree, Vue › Aller au point d’écoute, coverage probes), and playback and coverage follow it at once.
+   */
+  function listenHere(): boolean {
+    const cam = host.scene?.activeCamera
+    if (viewLocked() || !canvasShown || !cam) return false
+    const forward = cam.getForwardRay().direction
+    const eye = cam.globalPosition
+    const target = host.camera?.target ?? eye
+    const spot = hereSpot(
+      { walking: host.walking, eye: [eye.x, eye.y, eye.z], target: [target.x, target.y, target.z], forward: [forward.x, forward.y, forward.z] },
+      host.roomBounds()
+    )
+    viewState.set({ listenerHere: spot, listenerPoint: HERE_ID })
+    coverage?.refresh() // the probes include the new point (a no-op while the coverage is off)
+    listen?.refresh() // the ears moved: the voices follow (a no-op while nothing plays)
+    scheduler.invalidate()
+    announcer.say(PT.status!.replace('{point}', PT.here!))
+    return true
+  }
   /** Key 1 / 2 / 3 (3D view focused): a fixed slot (1 Régie / Centre, 2 Premier rang, 3 Fond de salle). */
   const pointKey = (n: number): boolean => {
     if (viewLocked()) return false
     const p = pointForKey(listeningPoints(), n)
     if (!p) {
-      shell.setStatus(placeNow(), PT.none!.replace('{n}', String(n)), 'idle', true)
+      announcer.say(PT.none!.replace('{n}', String(n)), true, 'idle')
       return true
     }
     return goToPoint(p.id)
@@ -1347,7 +1389,7 @@ export async function bootCreation(): Promise<void> {
   const frameFromMenu = (): void => {
     if (viewState.get().selection !== null) leaveWalk()
     if (!selection.frameSelection())
-      shell.setStatus(placeNow(), COPY.shell!.statusNoSelection!, 'idle', true)
+      announcer.say(COPY.shell!.statusNoSelection!, true, 'idle')
   }
   keys.onAction('VIEW_PICKER', () => {
     if (viewLocked() || host.walking) return false // the orbit views' picker: off while walking
@@ -1406,10 +1448,12 @@ export async function bootCreation(): Promise<void> {
   let drawerRetry = false
   const drawerOpen = (): boolean => (drawer ? drawer.isOpen || (drawerRetry && drawerWanted) : drawerWanted)
   /** Entrée / click on a device in the drawer: it follows the pointer until a click drops it (Task 24). */
-  const chooseDevice = (deviceId: string): void => {
+  const chooseDevice = (deviceId: string, opts: { pointerDrag?: boolean } = {}): boolean => {
     registerBeta([deviceId]) // a Bêta sheet becomes placeable only now (a catalog id is never touched)
-    placement.startPlacement(deviceId)
+    return placement.startPlacement(deviceId, opts)
   }
+  /** A drawer drag works in client px; the placement controller in canvas px. */
+  const canvasPx = (at: { x: number; y: number }): { x: number; y: number } => toCanvasPx(at, canvas.getBoundingClientRect())
   /**
    * The drawer was mounted without the Bêta sheets because their fetch FAILED (not because there are none): the next open
    * fetches them again before it shows, so the tab can come back. The module itself (drawerLoad) stays cached.
@@ -1423,11 +1467,28 @@ export async function bootCreation(): Promise<void> {
         parent: shell.viewport,
         registry,
         proposals: () => proposalEntries(betaDevices), // « Bêta » shows only if there are any
-        onChoose: chooseDevice,
+        onChoose: (deviceId) => void chooseDevice(deviceId),
+        // Drag-and-drop out of the drawer (Task 43b): the same placement, steered by the window-level pointer events of the press.
+        onDragStart: (deviceId, at, alt) => {
+          if (!chooseDevice(deviceId, { pointerDrag: true })) return false // refused: the drawer stays open (an earlier pose does not count)
+          const c = canvasPx(at)
+          placement.dragGhostTo(c.x, c.y, alt)
+          return true
+        },
+        onDragMove: (at, alt) => {
+          const c = canvasPx(at)
+          placement.dragGhostTo(c.x, c.y, alt)
+        },
+        onDragEnd: (at, alt, cancelled) => {
+          const c = canvasPx(at)
+          // Over the 3D view = the canvas is the top element there (a panel, a menu, the cube, the cancel button are not).
+          placement.endPointerDrag(c.x, c.y, { overView: document.elementFromPoint(at.x, at.y) === canvas, cancelled, altKey: alt })
+        },
         returnFocus: () => canvas.focus(),
         isToggleKey: (e) => creationActionsFor(keys.bindings, e).includes('TOGGLE_INVENTORY'),
         keyLabel: () => bindingLabel(keys.bindings, 'TOGGLE_INVENTORY') || COPY.keys!.space!,
       })
+      shellBag.add(() => drawer?.dispose())
       return drawer
     }))
   const setInventory = (open: boolean, opts: { returnFocus?: boolean } = {}): void => {
@@ -1457,7 +1518,7 @@ export async function bootCreation(): Promise<void> {
         console.error('[creation] inventory failed to load', e)
         drawerLoad = null // asked again on the next open, but a failed import may stay failed for this page: the message says to reload
         drawerWanted = false
-        shell.setStatus(placeNow(), INV.loadFailed!, 'ready', true)
+        announcer.say(INV.loadFailed!)
       }
     )
   }
@@ -1512,7 +1573,7 @@ export async function bootCreation(): Promise<void> {
         (registry.deviceById.get(i.deviceId)?.ports ?? []).map((p) => ({ instance: i.instanceId, port: p.portId }))
       ),
     rejectionTitle: (error, subjects) => rejectionOf(error, subjects, ruleText).title,
-    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    announce: (message) => announcer.say(message),
     undoLabel,
     beforeDispatch: () => props.flush(),
   })
@@ -1525,7 +1586,7 @@ export async function bootCreation(): Promise<void> {
     history,
     portName,
     rejectionText: (error, subjects) => rejectionOf(error, subjects, ruleText),
-    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    announce: (message) => announcer.say(message),
     undoLabel,
     beforeDispatch: () => props.flush(),
     focus: {
@@ -1562,10 +1623,18 @@ export async function bootCreation(): Promise<void> {
     subscribe: (fn) => store.subscribe(fn),
   })
 
+  // « Annuler la pose » (Task 43b): shown while a device follows the pointer.
+  const cancelPose = mountCancelPlacement({
+    doc: document,
+    parent: shell.viewport,
+    onCancel: () => void placement.cancel(),
+    focusView: () => canvas.focus(),
+  })
+  shellBag.add(() => cancelPose.dispose())
   // Placing and moving devices (Task 24, CA-10, P20): after the picking above, so a drop is not also a click-to-select.
   const placement = new PlacementController(host, history, store, viewState, scheduler, shellBag, {
     deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
-    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    announce: (message) => announcer.say(message),
     undoLabel,
     onPlaced: (id) => selection.select(id, { fly: false }),
     // A click on a port of the selected device is the cabling's; any other click on it selects and frames it.
@@ -1575,6 +1644,7 @@ export async function bootCreation(): Promise<void> {
       refreshSignal()
     },
     beforeDrag: () => props.flush(),
+    onPlacing: (on) => cancelPose.setVisible(on),
   })
 
   // ── Edit the selected device (Task 25, CA-11): R / Maj+R (Alt = 1°), Ctrl+D, Suppr and Matériel › Pivoter /
@@ -1589,7 +1659,7 @@ export async function bootCreation(): Promise<void> {
     blocked: () => dragOpen() || placement.placing,
     roomBounds: () => host.roomBounds(),
     deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
-    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    announce: (message) => announcer.say(message),
     undoLabel,
     onDuplicated: (id) => selection.select(id, { fly: false }), // the copy is the selection; no camera flight
   })
@@ -1600,12 +1670,14 @@ export async function bootCreation(): Promise<void> {
     edits.rotate(dir, e.altKey)
     return true
   }
+  // G: latch free placement while a device is placed or dragged. Nothing placed or dragged: the key is not ours (false).
+  keys.onAction('SNAP_TOGGLE', (e) => placement.toggleFreeLatch(e.altKey))
   keys.onAction('ROTATE_CW', (e) => rotateKey(1, e))
   keys.onAction('ROTATE_CCW', (e) => rotateKey(-1, e))
   /** Suppr / Ctrl+D while a device follows the pointer: the selected device is not what the learner is looking at, so it is left alone and the placement goes on (said, announced). */
   const placingBlocksEdit = (): boolean => {
     if (!placement.placing) return false
-    shell.setStatus(placeNow(), COPY.edit!.statusWhilePlacing!, 'ready', true)
+    announcer.say(COPY.edit!.statusWhilePlacing!)
     return true
   }
   keys.onAction('DUPLICATE', (e) => {
@@ -1627,14 +1699,30 @@ export async function bootCreation(): Promise<void> {
     () => cableHover.reset(), // a hovered cable belongs to the old scene
     () => patch.reset(), // a cable in hand, a pinned refusal or an offer belong to the old scene's ports
     () => connectDialog.close(), // a list of the old rig's ports
-    () => toast.dismiss() // a message about the previous place's view does not carry over
+    () => toast.dismiss(), // a message about the previous place's view does not carry over
+    () => coverage?.reset(), // the dots, the pin and the worker belong to the old place
+    () => {
+      // the sound of the old place stops, and a « Lecture » whose chunk is still loading is dropped
+      listenWanted++
+      listenIntent = false
+      dropFileCtx()
+      forgetFile()
+      listen?.reset()
+    }
   )
   /** The selection the last miss cleared (a double-click on the floor gives it back). */
   let clearedByMiss: { id: string; t: number } | null = null
+  /**
+   * A click on the canvas at this point is nobody's but the empty scene's: no device follows the pointer or is dragged, not the walk view, not under the
+   * picker, not on a port (the cabling's), not on a hovered cable. The ONE predicate the « missed click » and the coverage pin share.
+   */
+  const clickIsFree = (x: number, y: number): boolean =>
+    !(placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y) || cableHover.hovered !== null)
   const missedClick = (x: number, y: number, clicks: number): void => {
-    if (placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y)) return
-    // The second click of a double-click is no miss (the re-pivot follows); a click on the hovered cable is on something.
-    if (clicks >= 2 || cableHover.hovered !== null) return
+    // A click on something (a device being placed or dragged, a port, a hovered cable, a coverage dot) is no miss; nor is the walk view or the picker.
+    if (!clickIsFree(x, y) || coverage?.wouldTake(x, y)) return
+    // The second click of a double-click is no miss (the re-pivot follows).
+    if (clicks >= 2) return
     const sel = viewState.get().selection
     // A miss with nothing selected keeps the record: when the two clicks of a double-click are counted as two misses (the OS
     // double-click time is over 500 ms, or the pointer jittered over 5 px), the second must not erase what the first cleared.
@@ -1645,6 +1733,224 @@ export async function bootCreation(): Promise<void> {
     }
     toast.show(COPY.feedback!.missed!.replace('{key}', bindingLabel(keys.bindings, 'TOGGLE_INVENTORY') || COPY.keys!.space!))
   }
+  // ── Écoute › Couverture (Task 37, CA-23…25): the whole feature (controller, scene layer, panel + CSS, client, worker) is ONE lazy chunk,
+  // fetched on the first toggle. Off by default; a failed fetch says so and leaves the menu item unchecked.
+  let coverageLoad: Promise<CoverageController | null> | null = null
+  const loadCoverage = (): Promise<CoverageController | null> =>
+    (coverageLoad ??= import('./coverageController')
+      .then(({ createCoverage }) => {
+        coverage = createCoverage({
+          host: {
+            get scene() {
+              return host.scene
+            },
+            get camera() {
+              return host.camera
+            },
+            get layout() {
+              return host.layout
+            },
+            get placeId() {
+              return canvasShown && host.place ? placeKey(host.place) : null
+            },
+            canvasElement: canvas,
+            get placeBag() {
+              return host.placeBag
+            },
+          },
+          registry,
+          design: () => store.design(),
+          path: () => path,
+          earHeight: () => viewState.get().earHeight,
+          listeningPoints: () => listeningPoints(),
+          deviceAt: (x, y) => pickDevice(host.scene, x, y) !== null,
+          invalidate: () => scheduler.invalidate(),
+          announce: (message) => announcer.say(message),
+          subscribe: (fn) => store.subscribe(fn),
+          propsOpen: () => shell.isPanelOpen('props'),
+          onPropsChange: (fn) => shell.onPanelChange((p) => p === 'props' && fn()),
+          canPin: (x, y) => clickIsFree(x, y),
+          bag: shellBag,
+          container: shell.props,
+          before: cableLegend.element,
+        })
+        return coverage
+      })
+      .catch((e: unknown) => {
+        console.error('[creation] coverage chunk failed', e)
+        coverageLoad = null
+        return null
+      }))
+  const setCoverage = async (on: boolean): Promise<void> => {
+    coverageOn = on
+    if (on) {
+      shell.setPanel('props', true) // the legend and the statistics live in Propriétés
+      const c = await loadCoverage()
+      if (!c) {
+        coverageOn = false
+        announcer.say(COPY.coverage!.loadFailed!)
+        return
+      }
+      if (coverageOn) c.setOn(true)
+    } else coverage?.setOn(false)
+  }
+
+
+  // ── Écoute › Lecture (Task 39, C9, C14, CA-03, CA-26): the engine, the panel and the meters are ONE lazy chunk, fetched on the first « Lecture ».
+  // The AudioContext is made synchronously in the click, BEFORE the chunk is fetched (contextForClick), and handed to the engine. A local file is read through an object URL by an <audio> element in the engine and never
+  // goes anywhere else. The listener is the walk camera, else the active listening point looking at the stage, with the camera's RENDERED right vector.
+  /** The demo songs (content/songs.json, empty by design today): « Morceau » is left out of the menu while there are none. */
+  let songs: SongEntry[] = []
+  /** What « Lecture » plays: the test signal, or the first song once the list has loaded. */
+  let chosen: ListenSource = { kind: 'test' }
+  const songSource = (e: SongEntry): ListenSource => ({ kind: 'song', id: e.id, title: e.title, url: `${import.meta.env.BASE_URL}${e.file}` })
+  const listenerNow = (): ListenerPose | null => {
+    const scene = host.scene
+    if (!canvasShown || !scene) return null
+    if (host.walking) return scene.activeCamera ? listenerFromCamera(scene.activeCamera) : null
+    const point = activePoint(listeningPoints(), viewState.get().listenerPoint)
+    return point ? listenerAtPoint(point.position, pointLookAt(host.layout, point), scene.useRightHandedSystem) : null
+  }
+  let listenLoad: Promise<ListenController | null> | null = null
+  const loadListen = (): Promise<ListenController | null> =>
+    (listenLoad ??= import('./listenController')
+      .then(({ createListen }) => {
+        listen = createListen({
+          registry,
+          design: () => store.design(),
+          path: () => path,
+          listener: listenerNow,
+          hold: (name) => scheduler.hold(name),
+          announce: (message) => announcer.say(message),
+          deviceLabel: (id) => `${deviceLabel(id)} (${id})`,
+          subscribe: (fn) => store.subscribe(fn),
+          propsOpen: () => shell.isPanelOpen('props'),
+          startDefault: () => void startListening(chosen, contextForClick()),
+          onChange: () => {
+            if (!listen) return
+            listenIntent = listen.active // an end, a failure or a rig change that stopped it: the menu follows
+            if (!listen.active) forgetFile()
+          },
+          bag: shellBag,
+          container: shell.props,
+          before: cableLegend.element,
+        })
+        return listen
+      })
+      .catch((e: unknown) => {
+        console.error('[creation] listen chunk failed', e)
+        listenLoad = null
+        return null
+      }))
+  /** What « Lecture » plays when nothing else was chosen: the first song once the list has loaded, else the test signal. */
+  const defaultSource = (): ListenSource => (songs[0] ? songSource(songs[0]) : { kind: 'test' })
+  /**
+   * A chosen FILE is played once: when it ends, fails or is stopped, « Lecture » goes back to the default source (the page keeps no reference to a file it
+   * is no longer playing; a replay is « Choisir un fichier audio… » again).
+   */
+  const forgetFile = (): void => {
+    if (chosen.kind === 'file') chosen = defaultSource()
+  }
+  /**
+   * The AudioContext is made HERE, synchronously inside the click (or key press) that asks for the sound, before the chunk is fetched: Safari and iOS start a
+   * context made later suspended. The controller hands it to the engine, which closes it; a start that is dropped on the way closes it here.
+   */
+  const contextForClick = (): AudioContext | null => (path.playbackReady ? openAudioContext() : null)
+  /** « Lecture » / a song / a file / the test signal: load the chunk, then start. A Stop (or a place change) meanwhile drops the start. */
+  const startListening = async (source: ListenSource, ctx: AudioContext | null = null): Promise<void> => {
+    chosen = source
+    const mine = ++listenWanted
+    listenIntent = true
+    const c = await loadListen()
+    if (mine !== listenWanted) {
+      closeAudioContext(ctx) // stopped, replaced or the place changed while the chunk loaded: the context made for this click is not used
+      return
+    }
+    if (!c) {
+      closeAudioContext(ctx)
+      listenIntent = false
+      forgetFile()
+      announcer.say(COPY.listen!.loadFailed!)
+      return
+    }
+    await c.play(source, ctx)
+    if (mine === listenWanted) {
+      listenIntent = c.active
+      if (!c.active) forgetFile()
+    }
+  }
+  const stopListening = (): void => {
+    listenWanted++
+    const was = listenIntent
+    listenIntent = false
+    forgetFile()
+    if (listen?.active) listen.stop('user')
+    else if (was) announcer.say(COPY.listen!.stopped!) // asked, then stopped before the chunk was in
+  }
+  // The file chooser: a hidden <input type="file"> clicked from the menu action, inside the click's own gesture, with the AudioContext made in that same
+  // click and kept until the file arrives (or the dialog is cancelled). Keyboard users reach it through the menu item.
+  let fileCtx: AudioContext | null = null
+  /** Disarms the « focus came back and no file » fallback of the context above (a browser that sends no `cancel`). */
+  let disarmFileGuard: (() => void) | null = null
+  const dropFileCtx = (): void => {
+    disarmFileGuard?.()
+    disarmFileGuard = null
+    closeAudioContext(fileCtx)
+    fileCtx = null
+  }
+  const armFileGuard = (): void => {
+    const mine = fileCtx
+    disarmFileGuard = armCancelFallback(
+      {
+        onFocusBack: (fn) => {
+          window.addEventListener('focus', fn)
+          return () => window.removeEventListener('focus', fn)
+        },
+        later: (fn, ms) => window.setTimeout(fn, ms),
+        clear: (id) => window.clearTimeout(id),
+      },
+      () => mine !== null && fileCtx === mine,
+      dropFileCtx
+    )
+  }
+  const fileInput = document.createElement('input')
+  fileInput.type = 'file'
+  fileInput.accept = 'audio/*'
+  fileInput.hidden = true
+  fileInput.tabIndex = -1
+  fileInput.dataset.testid = 'listen-file'
+  fileInput.setAttribute('aria-label', COPY.listen!.fileInputName!)
+  shell.root.appendChild(fileInput)
+  shellBag.add(() => fileInput.remove())
+  shellBag.add(dropFileCtx)
+  shellBag.listen(fileInput, 'change', () => {
+    const file = fileInput.files?.[0]
+    fileInput.value = '' // the same file can be chosen again; the page keeps no reference to it beyond the playing engine
+    const ctx = fileCtx
+    disarmFileGuard?.()
+    disarmFileGuard = null
+    fileCtx = null
+    if (file) void startListening({ kind: 'file', file }, ctx ?? contextForClick())
+    else closeAudioContext(ctx)
+  })
+  shellBag.listen(fileInput, 'cancel', dropFileCtx) // the dialog was closed with no file
+  // The songs: a lazy list, validated; an empty or failed list leaves « Morceau » out. Titles and files are data, never written here. Fetched when the learner
+  // first reaches for the Écoute menu (hover, focus or open of its title), not at every boot: the list is empty today and the chunk is not free.
+  let songsLoad: Promise<void> | null = null
+  const ensureSongs = (): Promise<void> =>
+    (songsLoad ??= import('../audio/songs')
+      .then((m) => m.loadSongs())
+      .then((list) => {
+        songs = list
+        if (list[0] && chosen.kind === 'test') chosen = songSource(list[0])
+        for (const e of list)
+          actions[`song:${e.id}`] = () => {
+            dropFileCtx()
+            void startListening(songSource(e), contextForClick())
+          }
+      })
+      .catch((e: unknown) => console.warn('[creation] songs unavailable', e)))
+
   /** Menu item ids → the key map (the menus show the live labels). */
   const MENU_KEYS: Record<string, CreationAction | undefined> = {
     undo: 'UNDO',
@@ -1713,6 +2019,29 @@ export async function bootCreation(): Promise<void> {
       canvas.focus() // the arrows then walk (or orbit, back from the walk)
       toggleWalk()
     },
+    coverage: () => void setCoverage(!coverageOn),
+    // Lecture is a toggle: « Stop » while it plays (or is about to). The file chooser and the test signal are sources.
+    // « Lecture » only starts, « Stop » only stops: the menu item runs the action it was rendered as (menuModel), so a stale « Stop » can never start a sound.
+    play: () => {
+      if (listenIntent) return // already playing (started elsewhere since the menu opened)
+      dropFileCtx()
+      void startListening(chosen, contextForClick())
+    },
+    stop: stopListening,
+    'choose-file': () => {
+      dropFileCtx() // a dialog left open earlier
+      fileCtx = contextForClick()
+      if (fileCtx) armFileGuard()
+      fileInput.click()
+    },
+    'test-signal': () => {
+      dropFileCtx()
+      void startListening({ kind: 'test' }, contextForClick())
+    },
+    'listen-here': () => {
+      canvas.focus()
+      listenHere()
+    },
     'ear-seated': () => setEar(1.2),
     'ear-standing': () => setEar(1.7),
     ...Object.fromEntries(
@@ -1744,12 +2073,22 @@ export async function bootCreation(): Promise<void> {
       viewLocked,
       walking: () => host.walking,
       earHeight: () => viewState.get().earHeight,
+      coverage: () => coverageOn,
+      playing: () => listenIntent,
+      playbackReady: () => path.playbackReady,
+      playbackReason: () => path.reasons[0]?.text_fr,
+      songs: () => songs.map((e) => ({ id: e.id, title: e.title })),
       points: () => listeningPoints().map((p) => ({ id: p.id, label: p.label })),
       listenerPoint: () =>
         activePoint(listeningPoints(), viewState.get().listenerPoint)?.id ?? '',
-    })
+    }),
+    { onTopIntent: (id) => void (id === 'ecoute' && ensureSongs()) } // the songs list is fetched when the learner reaches for Écoute
   )
 
+  /** The coverage is off or its chunk is not loaded: the debug hook says so without loading anything. */
+  const COVERAGE_OFF = (): CoverageDebug => ({ on: false, status: 'off', pending: false, worker: false, points: 0, step: null, stats: null, plain: 0, hatched: 0, meshes: [], hidden: false, bins: [], sources: [], aim: [], message: '', pinned: null, probes: [], maxLevelDb: null, spl: false })
+  /** The listen chunk is not loaded: the debug hook says so without loading anything. */
+  const LISTEN_OFF = (): ListenDebug => ({ state: 'stopped', source: null, sourceName: '', voices: [], lease: false, loop: false, retiring: 0 })
   const screen = (world: Vector3 | null): { x: number; y: number } | null => {
     const { scene, camera } = host
     return world && scene && camera
@@ -1799,6 +2138,7 @@ export async function bootCreation(): Promise<void> {
     portProxyRadiusPx: (ref) => host.portProxyRadiusPx(ref),
     portAtPoint: (x, y) => host.portAtPoint(x, y, patch.pending !== null),
     patchPending: () => patch.pending,
+    patchClick: (ref) => patch.click(ref),
     cableLengthM: (key) => host.cableLengthM(key),
     portDistanceM: (a, b) => {
       const [pa, pb] = [host.portWorld(a), host.portWorld(b)]
@@ -1869,6 +2209,27 @@ export async function bootCreation(): Promise<void> {
     placing: () => placement.placing,
     transformNodeCount: () => host.scene?.transformNodes.length ?? 0,
     modelsPending: () => host.pendingModels,
+    coverage: () => coverage?.debug() ?? COVERAGE_OFF(),
+    drawCalls: (name) => coverage?.drawCalls(name) ?? 0,
+    coverageJobs: () => coverage?.jobs ?? 0,
+    coverageDotAt: (x, y) => coverage?.dotAt(x, y) ?? null,
+    audioLevels: () => listen?.readLevels() ?? {},
+    audioState: () => listen?.debug() ?? LISTEN_OFF(),
+    audioPeaks: () => listen?.readPeaks() ?? { voices: {}, output: 0 },
+    audioStats: () => JSON.parse(JSON.stringify(audioStats)) as typeof audioStats,
+    modelFront: (id) => host.instance(id)?.frontWorld() ?? null,
+    bodyBoundsInRoot: (id) => {
+      const inst = host.instance(id)
+      return inst ? debugBodyBoundsInRoot(inst) : null
+    },
+    bodyEnds: (id) => {
+      const inst = host.instance(id)
+      return inst ? debugBodyEnds(inst) : null
+    },
+    portWorld: (ref) => {
+      const p = host.portWorld(ref)
+      return p ? [p.x, p.y, p.z] : null
+    },
     floorPoint: (x, y) => {
       const { scene, camera } = host
       const r = canvas.getBoundingClientRect()

@@ -25,6 +25,8 @@ export interface ShellDom {
   treeBody: HTMLElement
   propsBody: HTMLElement
   isPanelOpen(p: PanelId): boolean
+  /** A side panel folded or unfolded (a click on its button, a menu item, a script): told after the state changed. Returns the remover. */
+  onPanelChange(fn: (p: PanelId, open: boolean) => void): () => void
   /** Collapse / expand a side panel (toggles when `open` is omitted). */
   setPanel(p: PanelId, open?: boolean): void
   /**
@@ -153,7 +155,9 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   const nameOf = (p: PanelId, open: boolean): string =>
     p === 'tree' ? (open ? S().treeCollapse! : S().treeExpand!) : open ? S().propsCollapse! : S().propsExpand!
   const isPanelOpen = (p: PanelId): boolean => root.dataset[p] !== 'collapsed'
+  const panelListeners = new Set<(p: PanelId, open: boolean) => void>()
   const setPanel = (p: PanelId, open = !isPanelOpen(p)): void => {
+    const was = root.dataset[p]
     root.dataset[p] = open ? 'open' : 'collapsed'
     const b = btnOf[p]
     b.setAttribute('aria-expanded', String(open))
@@ -163,6 +167,7 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
     const svg = b.firstElementChild as SVGElement
     const left = p === 'tree' ? open : !open
     svg.style.transform = left ? '' : 'scaleX(-1)'
+    if (was !== root.dataset[p]) for (const fn of [...panelListeners]) fn(p, open)
   }
   for (const p of ['tree', 'props'] as const) btnOf[p].addEventListener('click', () => setPanel(p))
 
@@ -193,6 +198,10 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
     treeBody: tree.body,
     propsBody: props.body,
     isPanelOpen,
+    onPanelChange: (fn) => {
+      panelListeners.add(fn)
+      return () => void panelListeners.delete(fn)
+    },
     setPanel,
     setStatus,
   }

@@ -16,6 +16,7 @@ import { loadOnboarding, renderOnboarding, type OnboardingConfig } from './ui/on
 import { recommend } from './ui/readiness'
 
 import { injectTokens } from './design/tokens'
+import { useSameOriginDraco } from './render/draco'
 import { loadCatalog, loadLevel } from './engine/CatalogLoader'
 import { bootGame, type BootOptions } from './game'
 import { bootGame2D } from './game2d'
@@ -28,6 +29,7 @@ import roomIndexJson from '../content/rooms/index.json'
 import { RoomFile, RoomIndex, type RoomFileT } from './explore/roomSchema'
 
 injectTokens()
+useSameOriginDraco() // CA-24: the Draco decoder comes from public/draco/, never from cdn.babylonjs.com (before any .glb is loaded)
 
 const LEVELS: Record<string, unknown> = { a1: a1Json, b1: b1Json, c1: c1Json, d1: d1Json }
 const levelParam = new URLSearchParams(location.search).get('level')

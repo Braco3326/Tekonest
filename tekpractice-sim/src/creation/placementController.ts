@@ -18,7 +18,8 @@ import type { DisposableBag } from '../util/disposable'
 import { floorPointAt } from '../scene/pivotPick'
 import { COPY } from './copy'
 import type { History } from './history'
-import { clampToRoom, rotateStep, snapPosition, type RoomBounds } from './placementMath'
+import { releaseAction } from './dragDrop'
+import { clampToRoom, isFree, rotateStep, snapPosition, type RoomBounds } from './placementMath'
 import type { RenderScheduler } from './renderScheduler'
 import { isClick, pickDevice } from './selection'
 import type { CreationStore } from './store'
@@ -57,6 +58,8 @@ export interface PlacementOptions {
   onClickSelected?(instanceId: string, x: number, y: number): void
   /** Snapping while placing / dragging: false = grid, true = free (Alt), null = nothing is being placed or dragged. */
   onSnap?(free: boolean | null): void
+  /** A device started or stopped following the pointer (the « Annuler la pose » button follows this; Task 43b). */
+  onPlacing?(placing: boolean): void
   /** Called just before a drag opens its transaction (the shell closes a stepper burst still open). */
   beforeDrag?(): void
   /** The floor point under a canvas point (default: the shared `floorPointAt` pick). */
@@ -97,6 +100,12 @@ export class PlacementController {
   private press: { x: number; y: number; t: number } | null = null
   private drag: Drag | null = null
   private snap: boolean | null = null
+  /** The placement was started by a drag out of the inventory: the drawer's window-level pointer events steer it (Task 43b). */
+  private pointerDrag = false
+  /** The G latch (Task 43b): free placement without Alt. Lives for one pose or one drag, reset when it ends. */
+  private latched = false
+  /** Alt as the last pointer event or key saw it (the latch toggle needs it to say what the snapping is now). */
+  private altHeld = false
 
   constructor(
     private readonly host: PlacementHost,
@@ -119,10 +128,15 @@ export class PlacementController {
       if (this.drag && e.pointerId === this.drag.pointerId) this.endDrag(false)
     })
     if (typeof window !== 'undefined') {
-      bag.listen(window, 'blur', () => this.endDrag(false))
+      bag.listen(window, 'blur', () => {
+        this.altHeld = false // an Alt released in another window never sends its keyup here
+        this.endDrag(false)
+      })
       // Alt is the « free » modifier while a device is placed or dragged: a bare Alt tap would also toggle the menu bar in
       // Firefox on Windows. Claiming its keyup (only then) keeps the menu bar shut; any other time Alt is the browser's.
+      bag.listen(window, 'keydown', (e: KeyboardEvent) => void (this.altHeld = e.altKey))
       bag.listen(window, 'keyup', (e: KeyboardEvent) => {
+        this.altHeld = e.altKey
         if ((e.key === 'Alt' || e.code === 'AltLeft' || e.code === 'AltRight') && (this.placing || this.dragging)) e.preventDefault()
       })
     }
@@ -144,19 +158,28 @@ export class PlacementController {
     return this.drag !== null
   }
 
-  startPlacement(deviceId: string): void {
-    if (this.drag) return
+  /** `pointerDrag`: the pose was started by dragging an item out of the inventory (the drawer then calls dragGhostTo / endPointerDrag). */
+  startPlacement(deviceId: string, opts: { pointerDrag?: boolean } = {}): boolean {
+    if (this.drag) return false
     this.yawDeg = 0 // each placement starts square; R turns it (rotateGhost)
     const seed = this.seedPoint()
     if (!seed || !this.host.showGhost(deviceId, seed, this.yawDeg)) {
       this.opts.announce?.(this.refused(deviceId))
-      return
+      return false
     }
     this.deviceId = deviceId
     this.at = seed
     this.press = null
+    // A new pose starts on the grid, with no Alt remembered: it may begin while another is in progress (the drawer reopened and another device chosen).
+    this.latched = false
+    this.altHeld = false
+    this.pointerDrag = opts.pointerDrag === true
+    this.opts.onPlacing?.(true)
     this.setSnap(false)
-    this.opts.announce?.(COPY.placement!.statusPlacing!.replace('{device}', this.name(deviceId)))
+    this.opts.announce?.(
+      (this.pointerDrag ? COPY.placement!.statusDragging! : COPY.placement!.statusPlacing!).replace('{device}', this.name(deviceId))
+    )
+    return true
   }
 
   /**
@@ -165,10 +188,27 @@ export class PlacementController {
    */
   rotateGhost(dir: 1 | -1, free: boolean): boolean {
     if (!this.placing || !this.at) return false
-    this.yawDeg = rotateStep(this.yawDeg, dir, free)
+    // « Libre » means the rotation too: Alt+R and, with the G latch on, R turn by 1 degree (L19).
+    this.yawDeg = rotateStep(this.yawDeg, dir, isFree(free, this.latched))
     this.host.moveGhost(this.at, this.yawDeg)
     this.scheduler.invalidate()
     this.opts.announce?.(COPY.edit!.statusGhostYaw!.replace('{deg}', String(this.yawDeg)))
+    return true
+  }
+
+  /**
+   * G while a device follows the pointer or is dragged: latch free placement on / off (Alt keeps working on top of it).
+   * Said once per toggle. False when there is nothing to place or drag (the key then does nothing).
+   */
+  toggleFreeLatch(altKey?: boolean): boolean {
+    if (!this.placing && !this.drag) return false
+    // The Alt state of the key event itself, when the caller has it, beats what the last pointer event said.
+    if (altKey !== undefined) this.altHeld = altKey
+    this.latched = !this.latched
+    const free = isFree(this.altHeld, this.latched)
+    this.setSnap(free)
+    // Said from the resulting state: Alt still held after the latch is lifted keeps it free, and nothing may then say « grille ».
+    this.opts.announce?.(this.latched ? COPY.placement!.statusSnapFree! : free ? COPY.placement!.statusSnapLatchOff! : COPY.placement!.statusSnapGrid!)
     return true
   }
 
@@ -195,15 +235,46 @@ export class PlacementController {
     return true
   }
 
+  /**
+   * The pointer of a drawer drag is at canvas px (x, y): the ghost follows it. No-op unless the pose was started by that drag
+   * and is still going (Échap or a place change may have ended it while the button is still down).
+   */
+  dragGhostTo(x: number, y: number, altKey = false): void {
+    if (!this.placing || !this.pointerDrag) return
+    this.setSnap(this.free({ altKey }))
+    const hit = this.floorPointAtPx(x, y)
+    if (!hit) return
+    this.at = this.target(hit, this.free({ altKey }))
+    this.host.moveGhost(this.at, this.yawDeg)
+    this.scheduler.invalidate()
+  }
+
+  /**
+   * The drawer drag ended at canvas px (x, y). Over the 3D view: drop there (the click path: same SPAWN, same entry, same
+   * announcement); anywhere else, a cancelled gesture, or no floor under the pointer: the pose is cancelled (said).
+   * No-op when the pose already ended (Échap).
+   */
+  endPointerDrag(x: number, y: number, input: { overView: boolean; cancelled?: boolean; altKey?: boolean }): void {
+    if (!this.placing || !this.pointerDrag) return
+    const hit = releaseAction(input) === 'drop' ? this.floorPointAtPx(x, y) : null
+    if (!hit) {
+      this.cancel()
+      return
+    }
+    this.drop(this.target(hit, this.free({ altKey: input.altKey === true })))
+  }
+
   // ── pointer events ──────────────────────────────────────────────────────────
 
   private onDown(e: PointerEvent): void {
-    if (e.button !== 0 || !e.isPrimary || e.pointerType === 'touch') return
+    if (e.button !== 0 || !e.isPrimary) return
     if (e.shiftKey || e.ctrlKey || e.metaKey) return // pan gestures stay the camera's
+    // A tap drops the ghost (touch too, Task 43b); a finger that travels is the camera's orbit, as for the mouse (isClick on release).
     if (this.placing) {
       this.press = { x: e.offsetX, y: e.offsetY, t: e.timeStamp }
       return
     }
+    if (e.pointerType === 'touch') return // a finger never grabs a placed device: the camera's orbit
     if (this.drag || this.host.walking) return
     const d = this.dragCandidate(e)
     if (!d) return
@@ -229,7 +300,7 @@ export class PlacementController {
       }
     }
     canvas.focus?.()
-    this.setSnap(e.altKey)
+    this.setSnap(this.free(e))
   }
 
   /** The drag a press would start: on the selected, floor-mounted device. Null = the camera takes the press. */
@@ -264,12 +335,12 @@ export class PlacementController {
     if (d) {
       if (e.pointerId !== d.pointerId) return
       if (e.buttons === 0) return this.endDrag(false) // the pointerup never came: a release
-      this.setSnap(e.altKey)
+      this.setSnap(this.free(e))
       if (!d.armed && Math.hypot(e.offsetX - d.x, e.offsetY - d.y) <= DRAG_PX) return
       d.armed = true
       const hit = this.floorPointAtPx(e.offsetX, e.offsetY)
       if (!hit) return
-      const to = this.target([hit[0] + d.grab[0], hit[1], hit[2] + d.grab[1]], e.altKey)
+      const to = this.target([hit[0] + d.grab[0], hit[1], hit[2] + d.grab[1]], this.free(e))
       if (d.last && d.last[0] === to[0] && d.last[1] === to[1] && d.last[2] === to[2]) return
       const r = this.history.do({
         type: 'SET_POSE',
@@ -286,10 +357,10 @@ export class PlacementController {
       return
     }
     if (!this.placing || e.pointerType === 'touch') return
-    this.setSnap(e.altKey)
+    this.setSnap(this.free(e))
     const hit = this.floorPointAtPx(e.offsetX, e.offsetY)
     if (!hit) return
-    this.at = this.target(hit, e.altKey)
+    this.at = this.target(hit, this.free(e))
     this.host.moveGhost(this.at, this.yawDeg)
     this.scheduler.invalidate()
   }
@@ -309,13 +380,14 @@ export class PlacementController {
         )
       return
     }
+    if (e.pointerType === 'touch' && !e.isPrimary) return // a second finger lifting near the first press is no tap
     const press = this.press
     this.press = null
     if (!press || e.button !== 0 || !this.placing) return
     if (!isClick(press, { x: e.offsetX, y: e.offsetY, t: e.timeStamp })) return // an orbit, not a drop
     const hit = this.floorPointAtPx(e.offsetX, e.offsetY)
     if (!hit) return
-    this.drop(this.target(hit, e.altKey))
+    this.drop(this.target(hit, this.free(e)))
   }
 
   /** A place change took the ghost down: the placement is over, said in the status bar. */
@@ -360,8 +432,10 @@ export class PlacementController {
     this.deviceId = null
     this.at = null
     this.press = null
+    this.latched = false
     this.host.hideGhost()
     this.setSnap(null)
+    this.opts.onPlacing?.(false)
     this.scheduler.invalidate()
   }
 
@@ -370,11 +444,18 @@ export class PlacementController {
     const d = this.drag
     if (!d) return
     this.drag = null
+    this.latched = false
     if (rollback) this.history.rollback()
     else this.history.commit()
     d.release()
     this.setSnap(null)
     this.scheduler.invalidate()
+  }
+
+  /** Free of the grid for this pointer event: Alt held now, or the latch (remembers Alt for the toggle). */
+  private free(e: { altKey: boolean }): boolean {
+    this.altHeld = e.altKey
+    return isFree(e.altKey, this.latched)
   }
 
   private setSnap(free: boolean | null): void {

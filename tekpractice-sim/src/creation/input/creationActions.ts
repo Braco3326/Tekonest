@@ -14,7 +14,7 @@ import { COPY } from '../copy'
 export const CREATION_ACTIONS = [
   'UNDO', 'REDO', 'SAVE', 'DUPLICATE', 'DELETE', 'NEXT_DEVICE', 'PREV_DEVICE', 'FRAME_SELECTION',
   'TOGGLE_INVENTORY', 'TOGGLE_HELP', 'VIEW_PICKER', 'WALK_TOGGLE', 'ROTATE_CW', 'ROTATE_CCW',
-  'CAMERA_HOME', 'CAMERA_PRESET_1', 'CAMERA_PRESET_2', 'CAMERA_PRESET_3', 'VIEW_ROT_LEFT', 'VIEW_ROT_RIGHT', 'CANCEL',
+  'SNAP_TOGGLE', 'CAMERA_HOME', 'CAMERA_PRESET_1', 'CAMERA_PRESET_2', 'CAMERA_PRESET_3', 'VIEW_ROT_LEFT', 'VIEW_ROT_RIGHT', 'CANCEL',
 ] as const
 export type CreationAction = (typeof CREATION_ACTIONS)[number]
 export type CreationBindings = Record<CreationAction, string[]>
@@ -35,6 +35,8 @@ export const DEFAULT_CREATION_BINDINGS: CreationBindings = {
   // R turns 15° (Maj+R the other way); Alt is the « free » modifier everywhere: Alt+R / Alt+Maj+R turn 1° (Task 25).
   ROTATE_CW: ['KeyR', 'Alt+KeyR'],
   ROTATE_CCW: ['Shift+KeyR', 'Alt+Shift+KeyR'],
+  // G latches free placement while a device is placed or dragged (Task 43b): the non-Alt way (by physical position, AZERTY-safe; KeyG is free).
+  SNAP_TOGGLE: ['KeyG'],
   CAMERA_HOME: ['Alt+KeyH'],
   // Mode Création: the listening points by position (Task 20: 1 = Régie). The legacy's saved
   // views « Vue 1/2/3 » (same action names, legacy key map) do not exist in Mode Création.

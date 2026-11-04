@@ -54,6 +54,8 @@ export const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(
   'TOGGLE_INVENTORY',
   // R / Maj+R: rotate (Task 25). Suppr deletes the selected device: only with the 3D view focused, where the selection is seen.
   'ROTATE_CW', 'ROTATE_CCW', 'DELETE',
+  // G: the free-placement latch (Task 43b), only meaningful while a device follows the pointer or is dragged (canvas has focus then).
+  'SNAP_TOGGLE',
 ])
 
 /**
@@ -66,6 +68,8 @@ const NO_REPEAT: ReadonlySet<CreationAction> = new Set<CreationAction>([
   // Edits (Task 25): a held Suppr / Ctrl+D / R is one edit, never a burst of undo entries. Claimed too, so the browser
   // does not bookmark the page or navigate while the key is held.
   'DUPLICATE', 'DELETE', 'ROTATE_CW', 'ROTATE_CCW',
+  // A held G is one toggle, not a flicker.
+  'SNAP_TOGGLE',
 ])
 
 const CHARACTER_CODE = /^(Key[A-Z]|Digit\d|Numpad\d|BracketLeft|BracketRight|Minus|Equal|Semicolon|Quote|Comma|Period|Slash|Backslash|Backquote|IntlBackslash)$/

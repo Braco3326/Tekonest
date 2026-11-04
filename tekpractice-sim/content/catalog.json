@@ -156,6 +156,10 @@
         { "from": "in-line-a", "to": ["transducer"] },
         { "from": "in-line-a", "to": ["thru-out-a"], "passive": true }
       ],
+      "modelFront": {
+        "axis": "+z",
+        "evidence": "Measured on public/assets/qsc-k12-2.glb (Task 43c, L34): the +z face is the grille plate (a 4-triangle quad over 12.5 x 23.2 in, z in [-1.64, 0] in, the face of the max-z end) and the cabinet is widest there (14 in, the catalog width) while the -z end is narrow (6.6 in) and carries the recessed amplifier panel, and the handles; a 12 in woofer cannot sit on the 6.6 in end. Its port_* empties sit on the grille face (z = +0.023), so the spawner ignores them for this device."
+      },
       "acoustic": {
         "coverage_h_deg": { "value": 75, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.coverage « 75° nominal, axisymmetric »", "retrieved": "2026-10-22" } },
         "coverage_v_deg": { "value": 75, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.coverage « 75° nominal, axisymmetric » (V déduit de « axisymmetric » : même angle dans les deux plans)", "retrieved": "2026-10-22" } },
@@ -285,6 +289,10 @@
       "routing": [
         { "from": "in-analog", "to": ["transducer"] }
       ],
+      "modelFront": {
+        "axis": "-x",
+        "evidence": "Measured on public/assets/genelec-8030c.glb (Task 43c, L34), a textured scan: seen from -x (glTF space) the face carries the woofer cone and the tweeter; seen from +x it is the rear plate (amplifier panel, cable entry). Its port_* empties sit on a side face (z = +0.144), not on the rear one, so the spawner ignores them for this device."
+      },
       "acoustic": {
         "coverage_h_deg": { "value": 90, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur dans la KB)", "retrieved": "2026-10-22" } },
         "coverage_v_deg": { "value": 60, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur dans la KB)", "retrieved": "2026-10-22" } }

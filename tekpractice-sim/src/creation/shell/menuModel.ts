@@ -30,6 +30,11 @@ export interface MenuItem {
   kind?: 'checkbox' | 'radio'
   /** Its checked state, read at each render (with `kind`). */
   checked?(): boolean
+  /**
+   * Why a disabled item is disabled (Task 39: « Lecture » says the first reason of the signal path). Read at each render; shown under the label and
+   * set as the item's accessible DESCRIPTION while it is disabled (the item stays focusable, APG). Never shown on an enabled item.
+   */
+  description?(): string | undefined
 }
 
 /**
@@ -73,6 +78,16 @@ export interface MenuContext {
   points?(): { id: string; label: string }[]
   /** The active listening point's id (its radio item is checked). */
   listenerPoint?(): string
+  /** Écoute › Couverture (Task 37): the coverage dots are on (the item is checked). */
+  coverage?(): boolean
+  /** Écoute (Task 39): a source is playing (« Lecture » reads « Stop »). */
+  playing?(): boolean
+  /** Écoute (Task 39): the signal path can play (`playbackReady`); the sources are off without it. */
+  playbackReady?(): boolean
+  /** Écoute (Task 39): the first reason the path cannot play (the disabled items' description). */
+  playbackReason?(): string | undefined
+  /** Écoute › Morceau (Task 39): the demo songs; the submenu is left out when there are none. */
+  songs?(): { id: string; title: string }[]
 }
 
 export function buildMenus(ctx: MenuContext): MenuDef[] {
@@ -170,6 +185,38 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     kind: 'radio',
     checked: () => (ctx.earHeight?.() ?? 1.2) === h,
   })
+  // Écoute › Couverture (Task 37): a checkbox, off by default; live once its action is registered and a place is on screen.
+  const coverageBase = act('coverage', M.coverage!)
+  const coverageLive = (): boolean => viewFree() && coverageBase.enabled()
+  const coverage: MenuItem = { ...coverageBase, enabled: coverageLive, run: () => void (coverageLive() && coverageBase.run()), kind: 'checkbox', checked: () => !!ctx.coverage?.() }
+  // Écoute › Lecture / Stop, Morceau, Choisir un fichier audio…, Signal de test (Task 39). The sources need a valid chain (`playbackReady`), the
+  // transport does not: Stop is always live. A disabled one stays focusable and says why (the first reason of the signal path).
+  const registered = (action: string): boolean => typeof ctx.actions[action] === 'function'
+  const canStart = (): boolean => viewFree() && !!ctx.playbackReady?.()
+  // The chain's first reason; with a valid chain but the place picker over the view, the picker is the reason (an item must never be off with no word why).
+  const why = (): string | undefined => ctx.playbackReason?.() || (viewFree() ? undefined : M.playLocked!)
+  /** A source item: runs its action when the chain is valid. */
+  const source = (id: string, label: string, action = id): MenuItem => {
+    const on = (): boolean => registered(action) && canStart()
+    return { id, label, enabled: on, run: () => void (on() && ctx.actions[action]()), description: () => (on() ? undefined : why()) }
+  }
+  // The item runs what it was RENDERED as. The menu is rebuilt only when it opens: if the sound ends while it is open, a « Stop » must still only stop
+  // (its own action), never start playback from the live state.
+  const playing = !!ctx.playing?.()
+  const playAction = playing ? 'stop' : 'play'
+  const playOn = (): boolean => registered(playAction) && (playing || canStart())
+  const play: MenuItem = {
+    id: 'play',
+    label: playing ? M.stop! : M.play!,
+    enabled: playOn,
+    run: () => void (playOn() && ctx.actions[playAction]()),
+    description: () => (playOn() ? undefined : why()),
+  }
+  const songList = ctx.songs?.() ?? []
+  const songItems = songList.map((s) => source(`song:${s.id}`, s.title))
+  const songs: MenuItem[] = songList.length
+    ? [{ id: 'songs', label: M.song!, enabled: () => songItems.some((i) => i.enabled()), run: () => {}, children: songItems, description: () => (songItems.some((i) => i.enabled()) ? undefined : why()) }]
+    : []
   return [
     {
       id: 'projet',
@@ -186,7 +233,7 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     {
       id: 'ecoute',
       label: M.ecoute!,
-      items: [act('play', M.play!), ear('ear-seated', W.earSeated!, 1.2), ear('ear-standing', W.earStanding!, 1.7)],
+      items: [play, ...songs, source('choose-file', M.chooseFile!), source('test-signal', M.testSignal!), cam('listen-here', M.listenHere!, true), coverage, ear('ear-seated', W.earSeated!, 1.2), ear('ear-standing', W.earStanding!, 1.7)],
     },
     {
       id: 'vue',

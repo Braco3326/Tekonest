@@ -219,6 +219,35 @@ describe('creation keyboard (Task 8)', () => {
       expect(log).toEqual(['DELETE', 'DUPLICATE', 'ROTATE_CW', 'ROTATE_CCW', 'ROTATE_CW'])
     })
   })
+  describe('G, the free-placement latch (Task 43b)', () => {
+    const gSetup = () => {
+      const win = fakeWindow()
+      const canvas = el('CANVAS')
+      const kb = mountCreationKeyboard({ bag: new DisposableBag(), bindings: DEFAULT_CREATION_BINDINGS, canvas: canvas as unknown as HTMLElement, target: win })
+      const log: string[] = []
+      kb.onAction('SNAP_TOGGLE', () => void log.push('SNAP_TOGGLE'))
+      return { win, canvas, log }
+    }
+    it('acts on the canvas only (a G typed in a field or on a button is not ours), by physical key (AZERTY-safe), and not with a modifier', () => {
+      const { win, canvas, log } = gSetup()
+      win.fire(key({ code: 'KeyG', key: 'g', target: canvas }))
+      win.fire(key({ code: 'KeyG', key: 'G', target: canvas })) // another layout types the same physical key differently
+      win.fire(key({ code: 'KeyG', key: 'g', target: el('INPUT') }))
+      win.fire(key({ code: 'KeyG', key: 'g', target: el('BUTTON') }))
+      win.fire(key({ code: 'KeyG', key: 'g', ctrlKey: true, target: canvas }))
+      expect(log).toEqual(['SNAP_TOGGLE', 'SNAP_TOGGLE'])
+    })
+    it('a held G toggles once: repeats are claimed, never acted on', () => {
+      const { win, canvas, log } = gSetup()
+      win.fire(key({ code: 'KeyG', key: 'g', target: canvas }))
+      for (let i = 0; i < 4; i++) {
+        const rep = key({ code: 'KeyG', key: 'g', target: canvas, repeat: true })
+        win.fire(rep)
+        expect(rep.prevented).toBe(1)
+      }
+      expect(log).toEqual(['SNAP_TOGGLE'])
+    })
+  })
   it('the listener is released with the bag', () => {
     const { win, bag } = setup()
     expect(win.count).toBe(1)

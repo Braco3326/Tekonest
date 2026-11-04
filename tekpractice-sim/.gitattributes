@@ -4,3 +4,4 @@
 *.glb binary
 *.gltf text
 *.ktx2 binary
+*.wasm binary

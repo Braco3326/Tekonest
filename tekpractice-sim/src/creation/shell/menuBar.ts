@@ -22,7 +22,12 @@ export interface MenuBarHandle {
 /** A submenu keeps this far (CSS px) from the window edges. */
 const MARGIN = 4
 
-export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarHandle {
+/** Optional hooks of the owner. `onTopIntent`: the learner reaches for a menu (pointer over its title, focus on it, or opening it): load what its items will need. */
+export interface MenuBarHooks {
+  onTopIntent?(menuId: MenuDef['id']): void
+}
+
+export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[], hooks: MenuBarHooks = {}): MenuBarHandle {
   const doc = bar.ownerDocument
   const defs = menus()
   const tops: HTMLButtonElement[] = []
@@ -56,7 +61,9 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
     panels.push(panel)
 
     top.addEventListener('click', () => (openIndex === i ? close(true) : open(i, 'first')))
+    top.addEventListener('focus', () => hooks.onTopIntent?.(def.id))
     top.addEventListener('pointerenter', () => {
+      hooks.onTopIntent?.(def.id)
       if (openIndex >= 0 && openIndex !== i) open(i, 'none')
     })
     top.addEventListener('keydown', (e) => onTopKey(e, i))
@@ -160,7 +167,20 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
         k.textContent = item.shortcut
         b.appendChild(k)
       }
-      if (!item.enabled()) b.setAttribute('aria-disabled', 'true')
+      if (!item.enabled()) {
+        b.setAttribute('aria-disabled', 'true')
+        // Why it is off (Task 39): visible under the label, and the item's accessible description (aria-hidden: it is not part of the NAME).
+        const why = item.description?.()
+        if (why) {
+          const d = doc.createElement('span')
+          d.className = 'cr-menu-desc'
+          d.id = `cr-menu-desc-${item.id}`
+          d.setAttribute('aria-hidden', 'true')
+          d.textContent = why
+          b.appendChild(d)
+          b.setAttribute('aria-describedby', d.id)
+        }
+      }
       return b
     }
     for (const item of def.items) {
@@ -233,6 +253,7 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
   }
 
   function open(i: number, focus: 'first' | 'last' | 'none'): void {
+    hooks.onTopIntent?.(defs[i].id)
     if (openIndex >= 0 && openIndex !== i) hide(openIndex)
     openIndex = i
     render(i)
@@ -259,7 +280,19 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
     if (returnFocus) tops[i].focus()
   }
 
+  /**
+   * A held Entrée / Espace is ONE press: its auto-repeats do nothing (Task 39). Without this a held key opens the menu, runs « Lecture », closes it,
+   * opens it again, runs « Stop »… and the sound starts and stops for as long as the key is down.
+   */
+  function heldKey(e: KeyboardEvent): boolean {
+    if (!e.repeat || (e.key !== 'Enter' && e.key !== ' ')) return false
+    e.preventDefault()
+    e.stopPropagation()
+    return true
+  }
+
   function onTopKey(e: KeyboardEvent, i: number): void {
+    if (heldKey(e)) return
     const n = tops.length
     let handled = true
     switch (e.key) {
@@ -340,6 +373,7 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
   }
 
   function onPanelKey(e: KeyboardEvent, i: number): void {
+    if (heldKey(e)) return
     if (sub && sub.panel.contains(doc.activeElement)) {
       if (onSubKey(e, i)) {
         e.preventDefault()

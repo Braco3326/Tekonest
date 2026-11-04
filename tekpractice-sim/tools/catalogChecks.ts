@@ -144,6 +144,11 @@ function checkRouting(
 
     if (route.passive !== undefined && typeof route.passive !== 'boolean') error(`${r}.passive`, 'passive must be a boolean')
 
+    // `when` is read by signalPath.ts on SOURCE routes only (from "control:<id>"); on a pass-through route it would be silently ignored, and a passive route never reads one.
+    if (route.when !== undefined && !(typeof route.from === 'string' && route.from.startsWith(CONTROL_SOURCE)))
+      error(`${r}.when`, 'when is honoured on a source route only (from "control:<id>"): signalPath never checks it on a route from a port, so it would be silently ignored')
+    if (route.passive === true && route.when !== undefined) error(`${r}.passive`, 'passive and when together make no sense: a passive pass-through never reads a condition')
+
     if (route.when !== undefined) {
       const w = route.when
       if (!isRecord(w)) return error(`${r}.when`, 'when must be { control, equals }')

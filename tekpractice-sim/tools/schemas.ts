@@ -108,6 +108,18 @@ export const Acoustic = z.object({
   sensitivity_db: Sourced(z.number()).optional().describe('Sensitivity in dB SPL (1 W, 1 m), as the source states it. Omitted when the source gives no value.'),
 }).strict()
 
+/**
+ * Where the FRONT of a device's shipped .glb faces, measured on the file (Task 43c, L34, decision L30 viii). The axis is in glTF model space (the
+ * file as any glTF viewer shows it: y up, the nodes' own transforms applied), the one place a person can measure it; the scene import turns it into
+ * a scene direction (DeviceSpawner). Mode Création's convention is yaw 0 = the front faces +z, and the acoustics aim along that front, so the
+ * spawner turns the model about y until this axis points at +z. ABSENT = the front could not be established with evidence: nothing is turned and
+ * the coverage block keeps its « face avant non vérifiée » note for that device. A rebuilt model (I/O toward −Z, front toward +Z) drops the field.
+ */
+export const ModelFront = z.object({
+  axis: z.enum(['+x', '-x', '+z', '-z']).describe('Direction the front (the grille / driver face of a loudspeaker) faces, in the glTF model space of public/assets/<id>.glb.'),
+  evidence: z.string().min(1).describe('How it was measured: what is on that face (grille, driver), what is on the opposite one, and where the file was read.'),
+}).strict()
+
 export const Device = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'device id must be a kebab-case slug'),
   label: z.string().min(1),
@@ -123,6 +135,9 @@ export const Device = z.object({
   controls: z.array(Control).optional(),
   acoustic: Acoustic.optional().describe(
     'Sourced acoustic fields of a loudspeaker (C12): coverage, max SPL, sensitivity, each with its provenance. Verified data: a Bêta proposal never carries acoustic (parseProposals drops it).',
+  ),
+  modelFront: ModelFront.optional().describe(
+    'Where the front of the shipped .glb faces (glTF model space), measured on the file: Mode Création turns the model so that it faces +z at yaw 0, where the acoustics aim. Absent = not established. Verified data: a Bêta proposal never carries it.',
   ),
   routing: z.array(Route).optional().describe(
     'Signal routes of the device (C8): consumed by the signal path only. Verified data: a Bêta proposal never carries routing (parseProposals drops it).',

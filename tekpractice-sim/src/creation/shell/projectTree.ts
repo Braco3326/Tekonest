@@ -6,6 +6,11 @@
  * The eye is out of the tab order (one tab stop for the tree): → on a leaf row
  * reaches it, ← or Échap goes back to the row. DOM only: dispatches nothing to
  * the rig (C6). Rebuilt on demand by its owner (store / view-state changes).
+ *
+ * Label in Name (WCAG 2.5.3, Task 43d « 43d-tree »): a row's name is its parts joined by spaces, and the text drawn on the row reads the same (text-node
+ * spaces between the parts); an open group and the empty-state hint are SIBLINGS of their row (role="none" wrappers, the group owned by aria-owns), never
+ * inside the treeitem, where their text would count as the row's own.
+ * Checked with Chromium's accessibility tree only (Playwright ariaSnapshot, axe); no screen reader (NVDA, VoiceOver) has read aria-owns here.
  */
 import { COPY } from '../copy'
 import { flattenVisible, hideKeyOf, parentOf, treeKey, type TreeKey, type TreeNode } from './treeModel'
@@ -83,6 +88,10 @@ export function mountProjectTree(d: ProjectTreeDeps): ProjectTree {
   const rowOf = (id: string): HTMLElement | null => tree.querySelector<HTMLElement>(`[role="treeitem"][data-node-id="${CSS.escape(id)}"]`)
   const eyeOf = (id: string): HTMLButtonElement | null => rowOf(id)?.querySelector<HTMLButtonElement>(':scope > .cr-tree-item > .cr-eye') ?? null
 
+  // The row's name is its parts joined by spaces (aria-labelledby); the visible text must read the same ("Zones 6", not "Zones6"), or axe's
+  // label-content-name-mismatch (WCAG 2.5.3 Label in Name, tracking id 43d-tree) fails the row. The flex row draws no gap for a whitespace-only text node.
+  const space = (): Text => doc.createTextNode(' ')
+
   const build = (list: TreeNode[], level: number, parent: HTMLElement, selected: string | null): void => {
     list.forEach((n, i) => {
       byId.set(n.id, n)
@@ -119,7 +128,7 @@ export function mountProjectTree(d: ProjectTreeDeps): ProjectTree {
         badge.id = `${labelId}-b`
         badge.textContent = n.badge
         badge.dataset.testid = 'tree-badge'
-        row.appendChild(badge)
+        row.append(space(), badge)
         ids.push(badge.id)
       }
       if (n.children) {
@@ -127,7 +136,7 @@ export function mountProjectTree(d: ProjectTreeDeps): ProjectTree {
         count.className = 'cr-tree-count'
         count.id = `${labelId}-n`
         count.textContent = String(n.children.length)
-        row.appendChild(count)
+        row.append(space(), count)
         ids.push(count.id)
       }
       const key = hideKeyOf(n)
@@ -137,7 +146,7 @@ export function mountProjectTree(d: ProjectTreeDeps): ProjectTree {
         state.className = 'cr-sr-only'
         state.id = `${labelId}-h`
         state.textContent = T().hiddenState!
-        row.appendChild(state)
+        row.append(space(), state)
         ids.push(state.id)
       }
       li.setAttribute('aria-labelledby', ids.join(' '))
@@ -161,8 +170,12 @@ export function mountProjectTree(d: ProjectTreeDeps): ProjectTree {
         row.appendChild(eye)
       }
       li.appendChild(row)
+      let hintWrap: HTMLElement | null = null
       if (n.emptyHint) {
-        // Shown under the row; read as the row's description (aria-hidden: not read twice in browse mode).
+        // Shown under the row; read as the row's description (aria-hidden: not read twice in browse mode). A SIBLING of the row, not inside the treeitem:
+        // inside it, its text counts as the row's visible text and axe's label-content-name-mismatch (43d-tree) fails the row, whose name does not have it.
+        hintWrap = doc.createElement('li')
+        hintWrap.setAttribute('role', 'none')
         const hint = doc.createElement('p')
         hint.className = 'cr-tree-empty'
         hint.id = `${labelId}-e`
@@ -170,15 +183,24 @@ export function mountProjectTree(d: ProjectTreeDeps): ProjectTree {
         hint.setAttribute('aria-hidden', 'true')
         hint.style.setProperty('--cr-tree-level', String(level))
         li.setAttribute('aria-describedby', hint.id)
-        li.appendChild(hint)
-      }
-      if (hasKids && expanded.has(n.id)) {
-        const group = doc.createElement('ul')
-        group.setAttribute('role', 'group')
-        build(n.children!, level + 1, group, selected)
-        li.appendChild(group)
+        hintWrap.appendChild(hint)
       }
       parent.appendChild(li)
+      if (hintWrap) parent.appendChild(hintWrap)
+      if (hasKids && expanded.has(n.id)) {
+        // The OPEN group is a SIBLING of its row, owned by it with aria-owns (the APG navigation-tree pattern; the wrapper `li` is role="none"). Inside the
+        // treeitem, axe's label-content-name-mismatch (WCAG 2.5.3, tracking id 43d-tree) reads the children's text as the row's visible text, which the row's
+        // name (label + count) rightly does not contain. aria-level / setsize / posinset are explicit, so assistive tech keeps the tree shape.
+        const wrap = doc.createElement('li')
+        wrap.setAttribute('role', 'none')
+        const group = doc.createElement('ul')
+        group.id = `${labelId}-g`
+        group.setAttribute('role', 'group')
+        li.setAttribute('aria-owns', group.id)
+        build(n.children!, level + 1, group, selected)
+        wrap.appendChild(group)
+        parent.appendChild(wrap)
+      }
     })
   }
 
