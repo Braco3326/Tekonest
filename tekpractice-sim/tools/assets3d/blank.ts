@@ -2,19 +2,21 @@
  * assets3d/blank: removes brand text and logos from a textured (Meshy) model by HEIGHT or by RECTANGLE ON A FACE.
  *
  * A Meshy colour map is a shattered atlas of tiny islands, so a logo cannot be found (or painted over) in the image. The model
- * can: its faces at a given height are the faces that carry the printing there, and their UV triangles say which texels belong to
- * them. `blankBands` repaints those texels, for every band `{ fromMm, toMm, fill? }` (millimetres from the base, the model standing
- * upright with its pivot at the bottom-centre, as after the fix-up), with `fill` (#rrggbb) or, by default, the median colour of the
- * faces just outside the band (a text band on a handle takes the handle's colour).
- *  - a band that covers no face throws (a silent no-op would ship the logo);
- *  - an automatic fill with no face just outside the band to sample throws;
- *  - the texels are repainted with a one-pixel margin so no edge of the old printing survives the later downscale.
- * A rectangle { face, xMm, yMm, wMm, hMm, depthMm?, marginMm?, fill? } is in the spec's face-local millimetres (origin bottom-left seen
- * from outside, x right, y up, as the ports): it covers the faces whose centroid projects into it on that face and lies at most depthMm
- * (default 40, at most 40 percent of the thickness) behind the face plane, so a logo on a recessed amp plate is found too. The automatic fill samples the faces within
- * marginMm (default 8) around it. The model's size is measured from its own bounding box.
- * Runs on the fixed-up GLB (positions final, texture still full size), before the look and texture steps. An empty band list
- * returns the very same bytes. Deterministic.
+ * can: every texel of the map belongs to a triangle, and a triangle's UV corners and 3D corners give the 3D position of each of its
+ * texels (barycentric interpolation). `blankBands` repaints the texels whose 3D position lies in a region, so a logo printed on one
+ * big flat triangle is removed exactly, whatever the triangle's centre is:
+ *  - a band `{ fromMm, toMm, fill? }`: millimetres from the base, the model standing upright with its pivot at the bottom-centre,
+ *    as after the fix-up;
+ *  - a rectangle `{ face, xMm, yMm, wMm, hMm, depthMm?, marginMm?, fill? }` in the spec's face-local millimetres (origin
+ *    bottom-left seen from outside, x right, y up, as the ports) on that face, at most `depthMm` (default 40, and at most 40
+ *    percent of the casing thickness there) behind the face plane, so a logo on a recessed amp plate is found too.
+ * `fill` is '#rrggbb' or, by default, the median colour of the texels just around the region (a band: 8 mm above and below;
+ * a rectangle: `marginMm`, default 8). The model's size is measured from its own vertices.
+ *  - a region that covers no texel throws (a silent no-op would ship the logo); so does an automatic fill with nothing around the
+ *    region to sample;
+ *  - the repainted texels are grown by one pixel so no edge of the old printing survives the later downscale.
+ * Runs on the fixed-up GLB (positions final, texture still full size), before the look and texture steps. No region returns the very
+ * same bytes. Deterministic.
  */
 // sharp MUST be imported before @gltf-transform (see compress.ts).
 import sharp from 'sharp'
@@ -25,7 +27,7 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 export interface Band {
   fromMm: number
   toMm: number
-  /** '#rrggbb'; absent = the median colour of the faces just outside the band. */
+  /** '#rrggbb'; absent = the median colour of the texels just outside the band. */
   fill?: string
 }
 
@@ -37,36 +39,39 @@ export interface Rect {
   yMm: number
   wMm: number
   hMm: number
-  /** How far behind the face plane a covered face may lie, in mm (default 40, at most 40 percent of the casing thickness). */
+  /** How far behind the face plane a covered point may lie, in mm (default 40, at most 40 percent of the casing thickness). */
   depthMm?: number
   /** Width of the ring around the rectangle that the automatic fill samples, in mm (default 8). */
   marginMm?: number
   fill?: string
 }
 
-/** How far outside a band (mm) the faces sampled for the automatic fill may lie. */
+/** How far outside a band (mm) the texels sampled for the automatic fill may lie. */
 const SAMPLE_MARGIN_MM = 8
 
 type Rgb = [number, number, number]
+type P3 = [number, number, number]
 
 interface Tri {
   /** UV corners in pixels. */
   px: [number, number][]
-  /** World centroid in millimetres. */
-  xMm: number
-  yMm: number
-  zMm: number
+  /** 3D corners in millimetres (world, after the node transforms). */
+  p: P3[]
 }
 
-/** A region of the model: the faces to repaint and the faces around them to sample the automatic fill from. */
+/** A region of the model: which 3D points are repainted and which are sampled for the automatic fill. */
 interface Region {
   label: string
   fill?: string
-  inside: (t: Tri) => boolean
-  ring: (t: Tri) => boolean
+  /** true = repaint, false = not. */
+  inside: (p: P3) => boolean
+  /** true = a texel to sample the automatic fill from (just around the region). */
+  ring: (p: P3) => boolean
+  /** Can the triangle possibly touch the region or its ring? (a cheap pre-filter on the triangle's corners) */
+  near: (t: Tri) => boolean
 }
 
-/** Triangles of a primitive with their centroid height (world, mm) and UV corners in pixels of `tex`. */
+/** Triangles of a primitive with their UV corners in pixels of the texture and 3D corners in mm; `bounds` collects the vertex extents. */
 function triangles(prim: Primitive, world: ArrayLike<number>, w: number, h: number, bounds: { lo: number[]; hi: number[] }): Tri[] {
   const pos = prim.getAttribute('POSITION')
   const uv = prim.getAttribute('TEXCOORD_0')
@@ -75,38 +80,35 @@ function triangles(prim: Primitive, world: ArrayLike<number>, w: number, h: numb
   const idx = prim.getIndices()
   const count = idx ? idx.getCount() : pos.getCount()
   const out: Tri[] = []
-  const p = [0, 0, 0]
+  const v = [0, 0, 0]
   const q = [0, 0]
   for (let t = 0; t + 2 < count; t += 3) {
-    let x = 0
-    let y = 0
-    let z = 0
     const px: [number, number][] = []
+    const p: P3[] = []
     for (let k = 0; k < 3; k++) {
       const i = idx ? idx.getScalar(t + k) : t + k
-      pos.getElement(i, p)
-      // world position of the vertex (column-major 4x4 matrix)
-      const vx = world[0] * p[0] + world[4] * p[1] + world[8] * p[2] + world[12]
-      const vy = world[1] * p[0] + world[5] * p[1] + world[9] * p[2] + world[13]
-      const vz = world[2] * p[0] + world[6] * p[1] + world[10] * p[2] + world[14]
-      x += vx
-      y += vy
-      z += vz
-      for (const [a, v] of [[0, vx], [1, vy], [2, vz]] as [number, number][]) {
-        bounds.lo[a] = Math.min(bounds.lo[a], v * 1000)
-        bounds.hi[a] = Math.max(bounds.hi[a], v * 1000)
+      pos.getElement(i, v)
+      const wp: P3 = [
+        (world[0] * v[0] + world[4] * v[1] + world[8] * v[2] + world[12]) * 1000,
+        (world[1] * v[0] + world[5] * v[1] + world[9] * v[2] + world[13]) * 1000,
+        (world[2] * v[0] + world[6] * v[1] + world[10] * v[2] + world[14]) * 1000,
+      ]
+      for (let a = 0; a < 3; a++) {
+        bounds.lo[a] = Math.min(bounds.lo[a], wp[a])
+        bounds.hi[a] = Math.max(bounds.hi[a], wp[a])
       }
+      p.push(wp)
       uv.getElement(i, q)
       px.push([q[0] * w, q[1] * h])
     }
-    out.push({ px, xMm: (x / 3) * 1000, yMm: (y / 3) * 1000, zMm: (z / 3) * 1000 })
+    out.push({ px, p })
   }
   return out
 }
 
-/** Calls `visit(x, y)` for every pixel whose centre lies in the triangle (barycentric test, small tolerance). */
-function rasterise(tri: [number, number][], w: number, h: number, visit: (x: number, y: number) => void): void {
-  const [a, b, c] = tri
+/** Calls `visit(x, y, point)` for every pixel whose centre lies in the triangle, with the pixel's interpolated 3D point. */
+function rasterise(tri: Tri, w: number, h: number, visit: (x: number, y: number, point: P3) => void): void {
+  const [a, b, c] = tri.px
   const minX = Math.max(0, Math.floor(Math.min(a[0], b[0], c[0])))
   const maxX = Math.min(w - 1, Math.ceil(Math.max(a[0], b[0], c[0])))
   const minY = Math.max(0, Math.floor(Math.min(a[1], b[1], c[1])))
@@ -114,6 +116,7 @@ function rasterise(tri: [number, number][], w: number, h: number, visit: (x: num
   const det = (b[1] - c[1]) * (a[0] - c[0]) + (c[0] - b[0]) * (a[1] - c[1])
   if (Math.abs(det) < 1e-9) return
   const eps = -0.02
+  const [pa, pb, pc] = tri.p
   for (let y = minY; y <= maxY; y++) {
     for (let x = minX; x <= maxX; x++) {
       const px = x + 0.5
@@ -121,7 +124,9 @@ function rasterise(tri: [number, number][], w: number, h: number, visit: (x: num
       const l1 = ((b[1] - c[1]) * (px - c[0]) + (c[0] - b[0]) * (py - c[1])) / det
       const l2 = ((c[1] - a[1]) * (px - c[0]) + (a[0] - c[0]) * (py - c[1])) / det
       const l3 = 1 - l1 - l2
-      if (l1 >= eps && l2 >= eps && l3 >= eps) visit(x, y)
+      if (l1 >= eps && l2 >= eps && l3 >= eps) {
+        visit(x, y, [l1 * pa[0] + l2 * pb[0] + l3 * pc[0], l1 * pa[1] + l2 * pb[1] + l3 * pc[1], l1 * pa[2] + l2 * pb[2] + l3 * pc[2]])
+      }
     }
   }
 }
@@ -185,77 +190,102 @@ export async function blankBands(bytes: Uint8Array, bands: Band[], rects: Rect[]
     ...bands.map((band): Region => ({
       label: `the band ${band.fromMm}-${band.toMm} mm`,
       fill: band.fill,
-      inside: (t) => t.yMm >= band.fromMm && t.yMm <= band.toMm,
-      ring: (t) => (t.yMm < band.fromMm && t.yMm >= band.fromMm - SAMPLE_MARGIN_MM) || (t.yMm > band.toMm && t.yMm <= band.toMm + SAMPLE_MARGIN_MM),
+      inside: (p) => p[1] >= band.fromMm && p[1] <= band.toMm,
+      ring: (p) => (p[1] < band.fromMm && p[1] >= band.fromMm - SAMPLE_MARGIN_MM) || (p[1] > band.toMm && p[1] <= band.toMm + SAMPLE_MARGIN_MM),
+      near: (t) => Math.max(t.p[0][1], t.p[1][1], t.p[2][1]) >= band.fromMm - SAMPLE_MARGIN_MM && Math.min(t.p[0][1], t.p[1][1], t.p[2][1]) <= band.toMm + SAMPLE_MARGIN_MM,
     })),
     ...rects.map((r): Region => {
       // default: 40 mm behind the face, but never more than 40 percent of the casing's thickness there (a thin unit's far face is not this face)
       const thickness = r.face === 'io' || r.face === 'opposite' ? d : r.face === 'top' || r.face === 'bottom' ? h : w
       const depthMax = r.depthMm ?? Math.min(40, 0.4 * thickness)
       const margin = r.marginMm ?? SAMPLE_MARGIN_MM
-      const local = (t: Tri) => faceLocal(r.face, t.xMm - cx, t.yMm - lo[1], t.zMm - cz, w, h, d)
-      const within = (t: Tri, grow: number): boolean => {
-        const l = local(t)
+      const local = (p: P3) => faceLocal(r.face, p[0] - cx, p[1] - lo[1], p[2] - cz, w, h, d)
+      const within = (p: P3, grow: number): boolean => {
+        const l = local(p)
         return l.depth <= depthMax && l.depth >= -2 && l.u >= r.xMm - grow && l.u <= r.xMm + r.wMm + grow && l.v >= r.yMm - grow && l.v <= r.yMm + r.hMm + grow
       }
-      return { label: `the ${r.face} rectangle ${r.xMm},${r.yMm} ${r.wMm}x${r.hMm} mm`, fill: r.fill, inside: (t) => within(t, 0), ring: (t) => within(t, margin) && !within(t, 0) }
+      return {
+        label: `the ${r.face} rectangle ${r.xMm},${r.yMm} ${r.wMm}x${r.hMm} mm`,
+        fill: r.fill,
+        inside: (p) => within(p, 0),
+        ring: (p) => within(p, margin) && !within(p, 0),
+        // a triangle can reach the rectangle if its face-local extent overlaps the rectangle grown by the margin
+        near: (t) => {
+          const ls = t.p.map(local)
+          const uMin = Math.min(...ls.map((l) => l.u))
+          const uMax = Math.max(...ls.map((l) => l.u))
+          const vMin = Math.min(...ls.map((l) => l.v))
+          const vMax = Math.max(...ls.map((l) => l.v))
+          const dMin = Math.min(...ls.map((l) => l.depth))
+          return dMin <= depthMax && uMax >= r.xMm - margin && uMin <= r.xMm + r.wMm + margin && vMax >= r.yMm - margin && vMin <= r.yMm + r.hMm + margin
+        },
+      }
     }),
   ]
 
   const covered = new Array<number>(regions.length).fill(0)
   for (const [tex, tris] of byTexture) {
-    const [w, h] = tex.getSize() as [number, number]
+    const [tw, th] = tex.getSize() as [number, number]
     const { data } = await sharp(Buffer.from(tex.getImage() as Uint8Array)).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
-    for (let bi = 0; bi < regions.length; bi++) {
-      const region = regions[bi]
-      const inside = tris.filter(region.inside)
-      covered[bi] += inside.length
-      if (inside.length === 0) continue
+    // Sample colours come from the ORIGINAL pixels, so one region's repaint never feeds another's automatic fill.
+    const original = Uint8Array.from(data)
+    for (let ri = 0; ri < regions.length; ri++) {
+      const region = regions[ri]
+      const near = tris.filter(region.near)
+      const mask = new Uint8Array(tw * th)
+      let any = false
+      for (const t of near) {
+        rasterise(t, tw, th, (x, y, p) => {
+          if (region.inside(p)) {
+            mask[y * tw + x] = 1
+            any = true
+          }
+        })
+      }
+      if (!any) continue
+      covered[ri]++
       let colour: Rgb
       if (region.fill !== undefined) colour = hexToRgb(region.fill)
       else {
-        const ring = tris.filter(region.ring)
-        if (ring.length === 0) throw new Error(`blankBands: no faces around ${region.label} to take the fill colour from; give a fill`)
         const r: number[] = []
         const g: number[] = []
         const b: number[] = []
-        for (const t of ring) {
-          rasterise(t.px, w, h, (x, y) => {
-            const o = (y * w + x) * 4
-            r.push(data[o])
-            g.push(data[o + 1])
-            b.push(data[o + 2])
+        for (const t of near) {
+          rasterise(t, tw, th, (x, y, p) => {
+            if (!region.ring(p) || mask[y * tw + x]) return
+            const o = (y * tw + x) * 4
+            r.push(original[o])
+            g.push(original[o + 1])
+            b.push(original[o + 2])
           })
         }
-        if (r.length === 0) throw new Error(`blankBands: the faces around ${region.label} cover no texel to take the fill colour from; give a fill`)
+        if (r.length === 0) throw new Error(`blankBands: no texels around ${region.label} to take the fill colour from; give a fill`)
         colour = [median(r), median(g), median(b)]
       }
-      // The band's texels, grown by one pixel.
-      const mask = new Uint8Array(w * h)
-      for (const t of inside) rasterise(t.px, w, h, (x, y) => (mask[y * w + x] = 1))
+      // The region's texels, grown by one pixel.
       const grown = Uint8Array.from(mask)
-      for (let y = 0; y < h; y++) {
-        for (let x = 0; x < w; x++) {
-          if (!mask[y * w + x]) continue
+      for (let y = 0; y < th; y++) {
+        for (let x = 0; x < tw; x++) {
+          if (!mask[y * tw + x]) continue
           for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
             const nx = x + dx
             const ny = y + dy
-            if (nx >= 0 && ny >= 0 && nx < w && ny < h) grown[ny * w + nx] = 1
+            if (nx >= 0 && ny >= 0 && nx < tw && ny < th) grown[ny * tw + nx] = 1
           }
         }
       }
-      for (let i = 0; i < w * h; i++) {
+      for (let i = 0; i < tw * th; i++) {
         if (!grown[i]) continue
         data[i * 4] = colour[0]
         data[i * 4 + 1] = colour[1]
         data[i * 4 + 2] = colour[2]
       }
     }
-    const png = await sharp(data, { raw: { width: w, height: h, channels: 4 } }).png().toBuffer()
+    const png = await sharp(data, { raw: { width: tw, height: th, channels: 4 } }).png().toBuffer()
     tex.setImage(new Uint8Array(png)).setMimeType('image/png')
   }
-  covered.forEach((n, bi) => {
-    if (n === 0) throw new Error(`blankBands: ${regions[bi].label} covers no face of the model`)
+  covered.forEach((n, ri) => {
+    if (n === 0) throw new Error(`blankBands: ${regions[ri].label} covers no texel of the model`)
   })
   return io.writeBinary(doc)
 }

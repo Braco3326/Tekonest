@@ -11,28 +11,28 @@
     {
       "portId": "in-line-a",
       "face": "io",
-      "xMm": 147.2,
-      "yMm": 112.2,
+      "xMm": 74,
+      "yMm": 129,
       "confidence": "photo",
       "openingMm": 24,
-      "insetMm": 36
+      "insetMm": 27.5
     },
     {
       "portId": "thru-out-a",
       "face": "io",
-      "xMm": 147.7,
-      "yMm": 81.1,
+      "xMm": 74,
+      "yMm": 98,
       "confidence": "photo",
       "openingMm": 24,
-      "insetMm": 36
+      "insetMm": 38.9
     },
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 179.1,
-      "yMm": 39.1,
+      "xMm": 113,
+      "yMm": 46,
       "confidence": "photo",
-      "insetMm": 36
+      "insetMm": 25.8
     }
   ],
   "controls": [
@@ -40,8 +40,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 221.6,
-      "yMm": 47.4,
+      "xMm": 139,
+      "yMm": 66,
       "axis": "x",
       "sizeMm": {
         "w": 14.4,
@@ -51,6 +51,18 @@
     }
   ],
   "driftLimit": 0.25,
+  "texture": {
+    "blankRects": [
+      {
+        "face": "io",
+        "xMm": 80,
+        "yMm": 283,
+        "wMm": 80,
+        "hMm": 62,
+        "marginMm": 10
+      }
+    ]
+  },
   "sources": [
     {
       "kind": "manual",

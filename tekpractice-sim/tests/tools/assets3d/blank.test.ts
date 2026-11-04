@@ -76,12 +76,12 @@ describe('blankBands', () => {
 
   it('refuses a band that covers no face (a silent no-op would ship the logo)', async () => {
     const glb = await stripedGlb([5, 50], [RED, BLUE])
-    await expect(blankBands(glb, [{ fromMm: 100, toMm: 120, fill: '#000000' }])).rejects.toThrow(/covers no face/)
+    await expect(blankBands(glb, [{ fromMm: 100, toMm: 120, fill: '#000000' }])).rejects.toThrow(/covers no texel/)
   })
 
   it('refuses an automatic fill with nothing around the band to sample', async () => {
     const glb = await stripedGlb([5], [RED])
-    await expect(blankBands(glb, [{ fromMm: 0, toMm: 10 }])).rejects.toThrow(/no faces around/)
+    await expect(blankBands(glb, [{ fromMm: 0, toMm: 10 }])).rejects.toThrow(/no texels around/)
   })
 
   it('refuses a model without UVs', async () => {
@@ -150,12 +150,42 @@ describe('blankBands rects (a logo on a face, in the spec face-local millimetres
   })
 
   it('refuses a rectangle that covers no face', async () => {
-    await expect(blankBands(await faceGlb(), [], [{ face: 'io', xMm: 40, yMm: 0, wMm: 10, hMm: 10, fill: '#000000' }])).rejects.toThrow(/covers no face/)
+    await expect(blankBands(await faceGlb(), [], [{ face: 'io', xMm: 40, yMm: 0, wMm: 10, hMm: 10, fill: '#000000' }])).rejects.toThrow(/covers no texel/)
   })
 
   it('the automatic fill takes the median colour of the faces just around the rectangle on that face', async () => {
     // A is blanked; B (60 mm to the right, 20 mm margin is not enough) -> a wide margin rect: sample B by asking for a rect around A with margin
     const out = await blankBands(await faceGlb(), [], [{ face: 'io', xMm: 10, yMm: 20, wMm: 20, hMm: 20, marginMm: 70 }])
     expect(await stripe(out, 0)).toEqual(BLUE)
+  })
+})
+
+describe('blankBands on one big triangle (a logo printed on a large flat face)', () => {
+  /** One triangle 10 mm wide and 100 mm tall (y 0 to 100), centroid at y = 33, whose UV runs from pixel row 14.4 (y = 0) to 1.6 (y = 100) of a 16 px red map. */
+  async function tallGlb(): Promise<Uint8Array> {
+    const doc = new Document()
+    const buffer = doc.createBuffer()
+    const png = new Uint8Array(await sharp({ create: { width: 16, height: 16, channels: 3, background: { r: 200, g: 30, b: 30 } } }).png().toBuffer())
+    const mat = doc.createMaterial('m').setBaseColorTexture(doc.createTexture('baseColor').setImage(png).setMimeType('image/png'))
+    const pos = [0, 0, 0, 10 * MM, 0, 0, 5 * MM, 100 * MM, 0]
+    const uv = [0.1, 0.9, 0.9, 0.9, 0.5, 0.1]
+    const prim = doc.createPrimitive().setMaterial(mat)
+      .setAttribute('POSITION', doc.createAccessor().setType('VEC3').setArray(new Float32Array(pos)).setBuffer(buffer))
+      .setAttribute('TEXCOORD_0', doc.createAccessor().setType('VEC2').setArray(new Float32Array(uv)).setBuffer(buffer))
+    doc.createScene('s').addChild(doc.createNode('root').setMesh(doc.createMesh('mesh').addPrimitive(prim)))
+    return new NodeIO().writeBinary(doc)
+  }
+  const pixel = async (bytes: Uint8Array, x: number, y: number): Promise<Rgb> => {
+    const img = (await new NodeIO().readBinary(bytes)).getRoot().listMaterials()[0].getBaseColorTexture()!.getImage()!
+    const { data, info } = await sharp(Buffer.from(img)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    const o = (y * info.width + x) * 3
+    return [data[o], data[o + 1], data[o + 2]]
+  }
+
+  it('repaints only the texels inside the band, although the triangle centroid (y = 33) is outside it', async () => {
+    const out = await blankBands(await tallGlb(), [{ fromMm: 10, toMm: 20, fill: '#00ff00' }])
+    expect(await pixel(out, 8, 13)).toEqual([0, 255, 0]) // row 13: y of about 12 mm, inside
+    expect(await pixel(out, 8, 8)).toEqual([200, 30, 30]) // row 8: about 50 mm
+    expect(await pixel(out, 8, 3)).toEqual([200, 30, 30]) // row 3: about 90 mm
   })
 })

@@ -13,7 +13,8 @@
       "face": "bottom",
       "xMm": 16,
       "yMm": 16,
-      "confidence": "photo"
+      "confidence": "photo",
+      "openingMm": 19
     }
   ],
   "controls": [],
@@ -93,6 +94,15 @@
       {
         "fromMm": 126,
         "colour": "#9a9a9e"
+      }
+    ]
+  },
+  "texture": {
+    "blankBandsMm": [
+      {
+        "fromMm": 126,
+        "toMm": 140,
+        "fill": "#202020"
       }
     ]
   },

@@ -96,6 +96,22 @@
       }
     ]
   },
+  "texture": {
+    "blankBandsMm": [
+      {
+        "fromMm": 26,
+        "toMm": 42
+      },
+      {
+        "fromMm": 17,
+        "toMm": 25
+      },
+      {
+        "fromMm": 126,
+        "toMm": 140
+      }
+    ]
+  },
   "sources": [
     {
       "kind": "datasheet",
