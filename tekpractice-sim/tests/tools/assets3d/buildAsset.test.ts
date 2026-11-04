@@ -371,6 +371,46 @@ describe('buildAsset', () => {
     expect(existsSync(join(paths.assetsDir, 'test-mixer.glb'))).toBe(false)
   })
 
+  it('yaw 90 or 270 on a non-square device is refused before any paid call: it swaps width and depth, so the drift gate fails on every attempt', async () => {
+    const spec = deviceSpec() // 100 x 50 x 200 mm: w != d
+    await addPhotos(spec.id, ['a.png'])
+    for (const yawDeg of [90, 270] as const) {
+      await expect(buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true, yawDeg }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/yaw.*(90|270).*non-square|non-square.*yaw/s)
+    }
+    expect(calls.create).toHaveLength(0)
+    expect(existsSync(join(paths.sourceDir, spec.id, 'work'))).toBe(false)
+    // 0 and 180 are fine on any device, and 90 / 270 on a square footprint (w = d) too.
+    for (const yawDeg of [0, 180] as const) {
+      const report = await buildAsset(spec.id, { maxAttempts: 1, dryRun: true, yawDeg }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+      expect(report.ok).toBe(true)
+    }
+    const square = deviceSpec({ realSizeMm: { w: 100, h: 50, d: 100 } })
+    await expect(buildAsset(square.id, { maxAttempts: 1, dryRun: true, yawDeg: 90 }, makeDeps({ spec: square, fixed: [await goodGlb(square)], fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 10, h: 5, d: 10 } } }))).resolves.toMatchObject({ ok: true })
+  })
+
+  it('the CLI reports the yaw refusal as an error with exit 1 and no Meshy call', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const out: string[] = []
+    expect(await main([spec.id, '--yaw', '90', '--yes'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), (l) => out.push(l))).toBe(1)
+    expect(out.join('\n')).toMatch(/non-square/)
+    expect(calls.create).toHaveLength(0)
+  })
+
+  it('a material-count failure is not a Meshy property: it aborts after ONE create, no retry', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const placement = buildPlacement(spec)
+    const nodes = [...placement.ports.map((p) => ({ name: p.name, pos: p.pos })), ...placement.controls.map((c) => ({ name: c.name, pos: c.pos }))]
+    const two = await makeMeshGlb({ prims: [boxGeometry(placement.sizeM), boxGeometry({ w: 0.01, h: 0.01, d: 0.01 })], nodes, separateMaterials: true })
+    const report = await buildAsset(spec.id, { maxAttempts: 3, logosRemoved: true }, makeDeps({ spec, fixed: [two, await goodGlb(spec)] }))
+    expect(calls.create).toHaveLength(1)
+    expect(report.attempts).toHaveLength(1)
+    expect(report.ok).toBe(false)
+    expect(report.attempts[0].gates.find((g) => g.gate === 'budget')?.detail).toMatch(/2 materials/)
+    expect(report.error).toMatch(/gate budget failed.*no further task bought/)
+  })
+
   it('a budget-only failure retries (a Meshy model property), then passes on a lighter model', async () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])
@@ -1159,11 +1199,13 @@ describe('CLI ship and spend guards', () => {
 
 describe('--flip', () => {
   it('passes flipUpright to the fix-up (false by default, true with --flip)', async () => {
-    const spec = deviceSpec()
+    // A square footprint: a 90 degree yaw is allowed there (it would be refused on a non-square device).
+    const spec = deviceSpec({ realSizeMm: { w: 100, h: 50, d: 100 } })
+    const square = { ...FIXUP_OK, preScaleSizeM: { w: 10, h: 5, d: 10 } }
     const rawPath = join(root, 'box.glb')
     await writeFile(rawPath, RAW_BYTES)
-    expect(await main([spec.id, '--raw', rawPath, '--yaw', '90'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), () => undefined)).toBe(0)
-    expect(await main([spec.id, '--raw', rawPath, '--flip'], makeDeps({ spec, fixed: [await goodGlb(spec)] }), () => undefined)).toBe(0)
+    expect(await main([spec.id, '--raw', rawPath, '--yaw', '90'], makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: square }), () => undefined)).toBe(0)
+    expect(await main([spec.id, '--raw', rawPath, '--flip'], makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: square }), () => undefined)).toBe(0)
     expect(calls.fixup.map((c) => [c.yawDeg, c.flipUpright])).toEqual([[90, false], [0, true]])
   })
 })

@@ -28,6 +28,11 @@ export interface GateResult {
   gate: string
   ok: boolean
   detail: string
+  /**
+   * false = a new Meshy attempt cannot fix this failure even though the gate is normally a model property (a material
+   * count above one: the fix-up joins everything into one material, so more materials is a defect of our own pipeline).
+   */
+  retryable?: boolean
 }
 
 type Vec3 = [number, number, number]
@@ -215,7 +220,10 @@ export function checkBudget(report: GlbReport, spec: AssetSpecT): GateResult {
   else if (!(report.triangles <= ceiling)) problems.push(`${report.triangles} triangles exceeds the ${spec.tier} ceiling of ${ceiling}`)
   if (!Number.isFinite(report.materials)) problems.push(`materials count is not finite (${report.materials})`)
   else if (!(report.materials <= MAX_MATERIALS)) problems.push(`${report.materials} materials, at most ${MAX_MATERIALS} allowed`)
-  return result('budget', problems, `${report.triangles} triangles (ceiling ${ceiling}), ${report.materials} material${report.materials === 1 ? '' : 's'}`)
+  const budget = result('budget', problems, `${report.triangles} triangles (ceiling ${ceiling}), ${report.materials} material${report.materials === 1 ? '' : 's'}`)
+  // A failure on the material count is ours, not the model's: never worth a new paid attempt.
+  const materialsFailed = !Number.isFinite(report.materials) || !(report.materials <= MAX_MATERIALS)
+  return budget.ok || !materialsFailed ? budget : { ...budget, retryable: false }
 }
 
 /**

@@ -508,6 +508,20 @@ describe('checkPortPositions', () => {
   })
 })
 
+describe('checkBudget retryable flag', () => {
+  it('a material-count failure is marked not retryable (a new Meshy task cannot change what our fix-up joins); a triangle failure is not marked', () => {
+    const spec = deviceSpec()
+    const materials = checkBudget(reportOf({ triangles: 12, materials: 2 }), spec)
+    expect(materials).toMatchObject({ gate: 'budget', ok: false, retryable: false })
+    const triangles = checkBudget(reportOf({ triangles: 4001 }), spec)
+    expect(triangles.ok).toBe(false)
+    expect(triangles.retryable).not.toBe(false)
+    expect(checkBudget(reportOf({ triangles: 12, materials: 2 }), spec).detail).toMatch(/2 materials/)
+    // Both at once: the material failure decides (retrying cannot fix it).
+    expect(checkBudget(reportOf({ triangles: 4001, materials: 2 }), spec).retryable).toBe(false)
+  })
+})
+
 describe('checkBudget', () => {
   it('budget fails a connector at 801 triangles and passes at 800', () => {
     const spec = connectorSpec()

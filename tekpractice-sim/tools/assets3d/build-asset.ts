@@ -38,7 +38,8 @@
  *  - any other error thrown inside an attempt (Blender, download, compress, re-measure, I/O) also aborts instead of
  *    retrying: the Meshy task is already paid for and the cause would repeat
  *  - a failed attempt buys a new Meshy task ONLY when every failing gate is in RETRYABLE_GATES {proportionDrift,
- *    budget}: properties of the Meshy model. The fix-up scales to the exact spec size and places every port_/ctrl_ at
+ *    budget}: properties of the Meshy model (a budget failure on the material count is ours, not retryable; a yaw of 90 or
+ *    270 on a non-square footprint is refused before the first paid call). The fix-up scales to the exact spec size and places every port_/ctrl_ at
  *    its planned position, so a size, transform, parts or portPositions failure (or any final-bytes failure) is a
  *    defect of OUR code, identical on every attempt: it aborts with an error naming the gates and the work dir
  *  - the pilot stops at the first asset whose report carries an error of any kind
@@ -369,6 +370,12 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
     const errors = validateBuild(spec)
     if (errors.length > 0) throw new Error(errors.join('; '))
   }
+  // A yaw of 90 or 270 degrees swaps the model's width and depth after the fix-up has matched them to the spec, so on a
+  // footprint that is not square the proportion gate fails the same way on every attempt: refuse before anything is spent.
+  const yaw = opts.yawDeg ?? 0
+  if ((yaw === 90 || yaw === 270) && Math.abs(spec.realSizeMm.w - spec.realSizeMm.d) / Math.max(spec.realSizeMm.w, spec.realSizeMm.d) > 0.005) {
+    throw new Error(`yaw ${yaw} on ${id}: the footprint is non-square (${spec.realSizeMm.w} x ${spec.realSizeMm.d} mm) and this yaw swaps width and depth, so the model could never match the spec (use 0 or 180); nothing was spent`)
+  }
   // A scripted model has no photo texture, so there is no logo to remove.
   const logosRemoved = scripted || opts.logosRemoved === true
   if (!dryRun && !logosRemoved) {
@@ -468,7 +475,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       const failed = failingNames(attempt.gates)
       if (failed.length > 0) {
         // Only a failure of the Meshy model itself buys a new task; anything our fix-up produced aborts.
-        if (failed.every((g) => RETRYABLE_GATES.has(g))) continue
+        if (attempt.gates.filter((g) => !g.ok).every((g) => g.retryable !== false && RETRYABLE_GATES.has(g.gate))) continue
         throw pipelineDefectError(failed, `attempt ${n}, fixed GLB`, work)
       }
 

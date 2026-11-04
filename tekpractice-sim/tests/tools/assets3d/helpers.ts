@@ -51,6 +51,8 @@ export interface MakeMeshGlbOpts {
   meshOnChild?: { pos: Vec3 }
   /** Extra top-level nodes next to the root, without mesh (optionally scaled). */
   strayRoots?: { name: string; scale?: number }[]
+  /** Give every primitive its own material (default: all share one), so the file has as many materials as primitives. */
+  separateMaterials?: boolean
   /** Material baseColorFactor (linear RGBA); default is the glTF default [1, 1, 1, 1]. */
   baseColor?: [number, number, number, number]
   /**
@@ -94,7 +96,8 @@ export async function makeMeshGlb(opts: MakeMeshGlbOpts): Promise<Uint8Array> {
   const mesh = doc.createMesh('mesh')
   for (const g of opts.prims) {
     const position = doc.createAccessor().setType('VEC3').setArray(new Float32Array(g.positions)).setBuffer(buffer)
-    const prim = doc.createPrimitive().setAttribute('POSITION', position).setMaterial(material)
+    const own = opts.separateMaterials && mesh.listPrimitives().length > 0 ? doc.createMaterial(`body-${mesh.listPrimitives().length}`) : material
+    const prim = doc.createPrimitive().setAttribute('POSITION', position).setMaterial(own)
     if (opts.texture && !opts.noTexcoord) {
       const uv = new Float32Array((g.positions.length / 3) * 2)
       prim.setAttribute('TEXCOORD_0', doc.createAccessor().setType('VEC2').setArray(uv).setBuffer(buffer))
