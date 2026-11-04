@@ -49,6 +49,13 @@ describe('port inset (a jack deep in a recessed panel)', () => {
     expect(p.pos[2]).toBeCloseTo(0.281, 9)
     expect(p.insetM).toBeUndefined()
   })
+  it('a port with an inset gets no recess opening (the fix-up cuts the socket recess on the face plane only; inside a recessed panel it would punch a hole in the shell)', () => {
+    const spec = withPort('io', 100, 50, 24)
+    spec.ports[0].insetMm = 25
+    const p = buildPlacement(spec).ports[0]
+    expect(p.openingM).toBeUndefined()
+    expect(buildPlacement(withPort('io', 100, 50, 24)).ports[0].openingM).toBeCloseTo(0.024, 9)
+  })
   it('the extras carry the inset position (the app puts the cable end at the real jack)', () => {
     const spec = inset('io', 35)
     const ex = toExtras(spec, buildPlacement(spec))

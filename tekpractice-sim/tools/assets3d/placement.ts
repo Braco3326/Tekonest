@@ -72,7 +72,8 @@ export function buildPlacement(spec: AssetSpecT): Placement {
     const pos: Vec3 = [onPlane[0] - outward[0] * inset, onPlane[1] - outward[1] * inset, onPlane[2] - outward[2] * inset]
     const placed: PlacedPort = { name: `port_${p.portId}`, pos, outward }
     if (inset > 0) placed.insetM = inset
-    if (p.openingMm !== undefined) placed.openingM = mmToM(p.openingMm)
+    // the socket recess is cut on the face plane only: inside a recessed panel (inset) it would punch a hole in a thin shell
+    if (p.openingMm !== undefined && inset === 0) placed.openingM = mmToM(p.openingMm)
     return placed
   })
 
