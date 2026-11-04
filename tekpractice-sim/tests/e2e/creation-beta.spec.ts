@@ -9,6 +9,7 @@
 import { readFileSync } from 'node:fs'
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
+import { quietWindow, waitForAutosave } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 interface Proposal {
@@ -218,7 +219,7 @@ test('« Bêta » is hidden when the file is not a proposals file', async ({ pag
 test('the proposals chunk is not requested at boot, and is requested when the drawer first opens', async ({ page }) => {
   const urls = chunkUrls(page)
   await boot(page)
-  await page.waitForTimeout(300)
+  await quietWindow(page, 300)
   expect(urls).toEqual([])
   await open(page)
   await expect(betaTab(page)).toBeVisible()
@@ -327,7 +328,7 @@ test('reload: a Bêta device comes back with the catalogue ones, the chunk is fe
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
   await placeBeta(page, AMP.id)
   const before = await design(page)
-  await page.waitForTimeout(1200) // the autosave
+  await waitForAutosave(page) // the autosave
   const urls = chunkUrls(page)
   await reboot(page)
   const after = await design(page)
@@ -343,11 +344,11 @@ test('reload: a Bêta device comes back with the catalogue ones, the chunk is fe
 test('reload with only catalogue gear does not fetch the proposals chunk', async ({ page }) => {
   await boot(page)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
-  await page.waitForTimeout(1200)
+  await waitForAutosave(page)
   const urls = chunkUrls(page)
   await reboot(page)
   expect((await design(page)).rig.instances.map((i) => i.instanceId)).toEqual(['ql1'])
-  await page.waitForTimeout(300)
+  await quietWindow(page, 300)
   expect(urls).toEqual([])
 })
 
@@ -355,7 +356,7 @@ test('reload when the proposal is no longer offered: the catalogue gear comes ba
   await boot(page)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
   await placeBeta(page, AMP.id)
-  await page.waitForTimeout(1200)
+  await waitForAutosave(page)
   await serveProposals(page, 'export default { "devices": [] }') // the sync no longer proposes it
   await reboot(page)
   expect((await design(page)).rig.instances.map((i) => i.instanceId)).toEqual(['ql1'])
@@ -369,7 +370,7 @@ test('reload when the proposal is no longer offered: the catalogue gear comes ba
 test('reload with only a Bêta device whose proposal is gone: nothing is invented, the note says so', async ({ page }) => {
   await boot(page)
   await placeBeta(page, AMP.id)
-  await page.waitForTimeout(1200)
+  await waitForAutosave(page)
   await serveProposals(page, 'export default { "devices": [] }')
   await page.reload()
   await page.waitForFunction(() => !!window.__creation)
@@ -405,7 +406,7 @@ const saveSession = async (page: Page): Promise<string> => {
   await boot(page)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
   await placeBeta(page, AMP.id)
-  await page.waitForTimeout(1200) // the autosave
+  await waitForAutosave(page) // the autosave
   const raw = await stored(page)
   expect(raw).toContain(AMP.id)
   return raw!
@@ -427,7 +428,7 @@ test('reload while the proposals chunk cannot be fetched: nothing is lost, nothi
   await expect(page.getByTestId('note-storage')).toHaveCount(0)
   expect(await page.evaluate(() => window.__creation!.quarantine())).toEqual([])
   // the stored project is byte-identical, also after the autosave delay and a page hide
-  await page.waitForTimeout(1500)
+  await quietWindow(page, 1500)
   await page.evaluate(() => window.dispatchEvent(new Event('beforeunload')))
   expect(await stored(page)).toBe(raw)
   // a reload WITHOUT the failure: the project is back, the chunk was fetched for it
@@ -450,7 +451,7 @@ test('reload while the proposals request stalls: the workspace is not blank for 
   await expect(page.getByTestId('note-beta-unavailable')).toBeVisible()
   await expect(page.getByTestId('place-picker')).toBeVisible()
   expect((await design(page)).rig.instances).toEqual([])
-  await page.waitForTimeout(1500)
+  await quietWindow(page, 1500)
   expect(await stored(page)).toBe(raw)
 })
 

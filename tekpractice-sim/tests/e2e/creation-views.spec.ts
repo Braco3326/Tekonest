@@ -7,6 +7,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { ZONES, zoneAngles, zoneId, zoneLabel, type ZoneSigns } from '../../src/camera/cubeZones'
 import { DEFAULT_FRONT_ALPHA, DESSUS_BETA } from '../../src/camera/viewCube'
 import { viewMenuOrder } from '../../src/creation/shell/menuModel'
+import { quietWindow } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const boot = async (page: Page, reduced = true): Promise<void> => {
@@ -74,7 +75,7 @@ test('V opens « Choisir une vue » (5 rows, focus on the nearest view); arrows 
   await page.keyboard.press('Escape')
   await expect(dialog).toHaveCount(0)
   await expect(canvas).toBeFocused()
-  await page.waitForTimeout(100)
+  await quietWindow(page, 100)
   expect(await camera(page)).toEqual(before)
   // « Annuler » does the same
   await page.keyboard.press('v')

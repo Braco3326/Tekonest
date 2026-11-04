@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { IDLE_WINDOW_MS, quietWindow } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 /** Task 10: the « Propriétés » panel edits the selection through history.do only. */
@@ -91,7 +92,7 @@ test('« Augmenter Lacet » clicked 5 times quickly = one undo entry (stepper bu
   await expect(props.getByRole('textbox', { name: 'Lacet', exact: true })).toHaveValue('75')
   await expect.poll(() => undoSize(page)).toBe(u0 + 1)
   expect((await pose(page, 'ql1'))!.yawDeg).toBe(75)
-  await page.waitForTimeout(800)
+  await quietWindow(page, 800)
   expect(await undoSize(page)).toBe(u0 + 1)
   await page.evaluate(() => window.__creation!.undo())
   expect((await pose(page, 'ql1'))!.yawDeg).toBe(0)
@@ -112,7 +113,7 @@ test('review fixes 1-2: a foreign command during a burst is its own entry; an un
     window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [1, 0, 6] })
   })
   await expect(up).toBeFocused()
-  await page.waitForTimeout(800)
+  await quietWindow(page, 800)
   expect(await undoSize(page)).toBe(u0 + 2)
   // undo the SPAWN only: the burst is untouched
   await page.evaluate(() => window.__creation!.undo())
@@ -140,7 +141,7 @@ test('review fix 3: a held stepper stops when its device leaves the panel (no st
   await page.locator('#renderCanvas').focus()
   await page.keyboard.press(']')
   expect(await page.evaluate(() => window.__creation!.selection())).toBe('k12-g')
-  await page.waitForTimeout(700)
+  await quietWindow(page, 700)
   expect((await pose(page, 'k12-g'))!.yawDeg).toBe(0)
 })
 
@@ -278,10 +279,10 @@ test('every input is labelled; idle = 0 renders in 2 s with the panel shown', as
   await page.mouse.move(5, 5)
   await expect.poll(async () => {
     const a = await page.evaluate(() => window.__creation!.renders())
-    await page.waitForTimeout(500)
+    await quietWindow(page, 500)
     return (await page.evaluate(() => window.__creation!.renders())) - a
   }, { timeout: 15000 }).toBe(0)
   const r0 = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(r0)
 })

@@ -10,6 +10,7 @@
  */
 import { expect, test, type Page } from '@playwright/test'
 import { nearestZone, zoneAngles, zoneLabel } from '../../src/camera/cubeZones'
+import { IDLE_WINDOW_MS, quietWindow } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const boot = async (page: Page, reduced = true): Promise<void> => {
@@ -29,9 +30,9 @@ const angleDiff = (a: number, b: number): number => Math.abs(((((a - b) % (2 * M
 const dist = (a: readonly number[], b: readonly number[]): number => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2])
 const renders = (page: Page) => page.evaluate(() => window.__creation!.renders())
 const idleRenders = async (page: Page): Promise<number> => {
-  await page.waitForTimeout(300)
+  await quietWindow(page, 300)
   const r0 = await renders(page)
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   return (await renders(page)) - r0
 }
 const FACE = zoneAngles({ x: 0, y: 0, z: 1 })
@@ -128,14 +129,14 @@ test('⌂ = « Vue d’ensemble » (the opening pose, as Alt+H); Vue › Tourner
   // Num Lock off (the test browser's case): keypad 6 also reports « ArrowRight » / keyCode 39.
   // Babylon's arrow orbit must not add its own turn: the view lands exactly and stays there.
   await page.keyboard.press('Numpad6')
-  await page.waitForTimeout(300)
+  await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
   expect(angleDiff((await camera(page)).alpha, DROITE.alpha)).toBeLessThan(1e-6)
   await page.keyboard.press('Numpad4')
-  await page.waitForTimeout(300)
+  await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
   expect(angleDiff((await camera(page)).alpha, FACE.alpha)).toBeLessThan(1e-6)
   await page.getByTestId('tree-collapse').focus()
   await page.keyboard.press('Numpad6')
-  await page.waitForTimeout(150)
+  await quietWindow(page, 150)
   expect(angleDiff((await camera(page)).alpha, FACE.alpha)).toBeLessThan(0.01)
   expect(await idleRenders(page)).toBe(0)
 })
@@ -263,7 +264,7 @@ test('a double-click on the floor shows no « Rien ici » toast and keeps the se
   await page.mouse.dblclick(at.x, at.y)
   const after = await settled(page)
   expect(dist(after.target, before.target)).toBeGreaterThan(0.1) // it re-pivoted
-  await page.waitForTimeout(400) // past the 100 ms before a message is set
+  await quietWindow(page, 400) // past the 100 ms before a message is set
   await expect(toast).toBeHidden()
   await expect(toast).toHaveText('')
   expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1') // the first click's miss cleared it; the double-click gives it back
@@ -281,7 +282,7 @@ test('a slow double-click (the two clicks > 500 ms apart: an OS accessibility se
   expect(await page.evaluate(({ x, y }) => window.__creation!.pickAt(x, y), at)).toBeNull()
   await page.mouse.click(at.x, at.y) // miss 1: clears the selection
   await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBeNull()
-  await page.waitForTimeout(560) // the stimulus: past the 500 ms double-click window, inside the 1 s restore window
+  await quietWindow(page, 560) // the stimulus: past the 500 ms double-click window, inside the 1 s restore window
   await page.mouse.dblclick(at.x, at.y) // its first click is miss 2 (clicks = 1), then the dblclick event
   await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBe('ql1')
   expect(dist((await settled(page)).target, before.target)).toBeGreaterThan(0.1) // and it re-pivoted

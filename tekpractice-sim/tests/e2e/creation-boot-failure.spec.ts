@@ -8,6 +8,7 @@
  * menus themselves stay usable (Exporter…, Ouvrir…, Vue, Aide on a first visit).
  */
 import { expect, test, type Page } from '@playwright/test'
+import { quietWindow } from './waits'
 
 const pageErrors = (page: Page): string[] => {
   const errors: string[] = []
@@ -34,7 +35,7 @@ test('no WebGL: a persistent alert « Vue 3D indisponible » links to the 2D ver
   await expect(link).toHaveAttribute('href', '?level=a1&render=2d')
   await expect(link).toBeFocused()
   await expect(page.getByTestId('place-picker')).toHaveCount(0)
-  await page.waitForTimeout(500)
+  await quietWindow(page, 500)
   await expect(alert).toBeVisible() // persistent: no close button, nothing replaces it
   await expect(alert.getByRole('button')).toHaveCount(0)
   expect(errors).toEqual([])

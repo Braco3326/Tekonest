@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
+import { IDLE_WINDOW_MS, quietWindow, waitRendersIdle } from './waits'
 
 /**
  * Task 37 (CA-23, CA-24, CA-25): Écoute › Couverture. The powered reference rig + playback on; the dots, the legend and the statistics, the
@@ -136,9 +137,9 @@ test('(c) idle: 2 s with the coverage on renders no frame and posts no job; one 
   await waitReady(page)
   // let the last frame after the result be drawn, then watch
   await page.waitForFunction(() => window.__creation!.drawCalls('coverage') > 0)
-  await page.waitForTimeout(500)
+  await waitRendersIdle(page)
   const before = { r: await page.evaluate(() => window.__creation!.renders()), j: await jobs(page) }
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(before.r) // 0 renders at idle
   expect(await jobs(page)).toBe(before.j) // 0 worker jobs at idle
   expect(before.j).toBe(1) // the one job of the toggle
@@ -165,7 +166,7 @@ test('(d) moving k12-g by 1 m posts exactly ONE job after the debounce, and the 
   expect(await jobs(page)).toBe(base) // debounced: nothing is posted at once
   await page.waitForFunction((n) => window.__creation!.coverageJobs() === n + 1, base, { timeout: 5000 })
   await waitReady(page)
-  await page.waitForTimeout(600) // and no second job follows
+  await quietWindow(page, 600) // and no second job follows
   expect(await jobs(page)).toBe(base + 1)
   const after = await cov(page)
   expect(after.stats!.mean).not.toBe(mean0)
@@ -180,7 +181,7 @@ test('(d) moving k12-g by 1 m posts exactly ONE job after the debounce, and the 
   })
   await page.waitForFunction((n) => window.__creation!.coverageJobs() === n + 1, b2, { timeout: 5000 })
   await waitReady(page)
-  await page.waitForTimeout(500)
+  await quietWindow(page, 500)
   expect(await jobs(page)).toBe(b2 + 1)
   // a rig change that does not touch the speakers (the microphone) posts nothing
   const b3 = await jobs(page)
@@ -189,7 +190,7 @@ test('(d) moving k12-g by 1 m posts exactly ONE job after the debounce, and the 
     const p = c.design().placements.find((x) => x.instanceId === 'sm58')!
     c.dispatch({ type: 'SET_POSE', instanceId: 'sm58', position: [p.position_m[0] + 0.5, p.position_m[1], p.position_m[2]], yawDeg: p.yawDeg, tiltDeg: 0, mount: p.mount ?? 'stand' })
   })
-  await page.waitForTimeout(600)
+  await quietWindow(page, 600)
   expect(await jobs(page)).toBe(b3)
 })
 
@@ -311,7 +312,7 @@ test('(g) a click on a dot pins its level, a named point is a keyboard button, �
   expect(both, 'a pixel with both a device and a dot under it').not.toBeNull()
   const jobsBefore = await jobs(page)
   await page.mouse.click(both!.x, both!.y)
-  await page.waitForTimeout(400) // longer than the 150 ms debounce: a pin WOULD have posted its job by now
+  await quietWindow(page, 400) // longer than the 150 ms debounce: a pin WOULD have posted its job by now
   // `pinned` only turns non-null after a worker reply, so on its own it could pass for a pin that is still on its way: no job was posted either
   expect(await jobs(page)).toBe(jobsBefore)
   expect((await cov(page)).pending).toBe(false)
@@ -332,7 +333,7 @@ test('(h) ear height change recomputes once; toggling off removes the dots, the 
   await page.getByRole('menuitemradio', { name: /debout/ }).click()
   await page.waitForFunction((n) => window.__creation!.coverageJobs() === n + 1, base)
   await waitReady(page)
-  await page.waitForTimeout(500)
+  await quietWindow(page, 500)
   expect(await jobs(page)).toBe(base + 1)
   // off: everything it made is gone
   await toggleCoverage(page)
@@ -344,7 +345,7 @@ test('(h) ear height change recomputes once; toggling off removes the dots, the 
   // a rig change while off posts nothing and renders no dots
   const j = await jobs(page)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'mute-master', value: true }))
-  await page.waitForTimeout(500)
+  await quietWindow(page, 500)
   expect(await jobs(page)).toBe(j)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'mute-master', value: false }))
   // on again: the same controller, no listener leak, a fresh computation
@@ -447,7 +448,7 @@ test('(l) folding Propriétés hides the dots, the hatched dots and the aim line
   await expect(bar).toHaveText((await cov(page)).message)
   await expect(bar).toContainText('Couverture calculée')
   expect((await cov(page)).meshes.sort()).toEqual(['coverage', 'coverage:aim', 'coverage:hatch'])
-  await page.waitForTimeout(600)
+  await quietWindow(page, 600)
   expect(await jobs(page)).toBe(base) // hiding and showing are no computation
   await expect(page.getByTestId('coverage-legend')).toBeVisible()
 })
@@ -473,7 +474,7 @@ test('(m) a click that drops a device over the grid is the placement\'s: it does
   await page.waitForFunction((n) => window.__creation!.design().rig.instances.length === n + 1, instances) // the drop happened
   expect((await cov(page)).pinned).toBeNull()
   await expect(page.getByTestId('coverage-pinned')).toBeHidden()
-  await page.waitForTimeout(500)
+  await quietWindow(page, 500)
   expect(await jobs(page)).toBe(base) // a pin would have forced a job
 })
 

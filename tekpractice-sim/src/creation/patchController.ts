@@ -207,6 +207,9 @@ export class PatchController {
   private onDown(e: PointerEvent): void {
     this.press = null
     this.dropError() // any press in the view: the refusal has been read (a retry on a port pins a fresh one)
+    // A press closes the port's hover label, as it does a native tooltip (night wave 1, item 2): the label has done its job, and the first Échap after
+    // clicking a port must drop the cable, not just a label. `hover` is kept, so the label returns only when the pointer reaches another port.
+    this.opts.ui.hideHover()
     if (e.button !== 0 || !e.isPrimary) return
     this.dropOffer() // a press elsewhere closes the offer (a click on a port re-opens it on release)
     if (e.shiftKey || e.ctrlKey || e.metaKey) return // pan gestures stay the camera's

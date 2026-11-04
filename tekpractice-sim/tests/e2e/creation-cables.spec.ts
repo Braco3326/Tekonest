@@ -7,6 +7,7 @@ import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import { SIGNAL_STYLE } from '../../src/creation/cableStyle'
 import { cableKey } from '../../src/creation/sceneDiff'
+import { IDLE_WINDOW_MS, SETTLE_SAMPLE_MS, quietWindow } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 type Ref = { instance: string; port: string }
@@ -41,7 +42,7 @@ const settle = async (page: Page): Promise<void> => {
     const n = await page.evaluate(() => window.__creation!.renders())
     if (n === last) return
     last = n
-    await page.waitForTimeout(700)
+    await page.waitForTimeout(SETTLE_SAMPLE_MS)
   }
   throw new Error('the page never went idle')
 }
@@ -141,11 +142,14 @@ test('the legend is at the bottom of Propriétés, never over the 3D view; it co
   await page.keyboard.press('Enter')
   await expect(page.getByTestId('cable-legend-toggle')).toHaveAttribute('aria-expanded', 'true')
 
-  // folding Propriétés itself takes the legend with it
+  // folding Propriétés takes the list and the toggle away; the rail button (night wave 1, item 4) keeps the legend reachable
   await page.getByRole('button', { name: 'Replier le panneau Propriétés' }).click()
-  await expect(legend(page)).toBeHidden()
+  await expect(page.getByTestId('cable-legend-toggle')).toBeHidden()
+  await expect(items(page).first()).toBeHidden()
+  await expect(page.getByTestId('cable-legend-rail')).toBeVisible()
   await page.getByRole('button', { name: 'Déplier le panneau Propriétés' }).click()
   await expect(legend(page)).toBeVisible()
+  await expect(page.getByTestId('cable-legend-rail')).toBeHidden()
 })
 
 test('the legend and the hover label pass axe (no serious or critical violation)', async ({ page }) => {
@@ -186,7 +190,7 @@ test('hovering a cable highlights it and says what it joins; leaving clears both
   // idle: no frame at all for 2 s once the hover has ended
   await settle(page)
   const before = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(before)
 })
 
@@ -314,7 +318,7 @@ test('a click on the hovered cable is no missed click: no « Rien ici » toast, 
   await expect(hoverLabel(page)).toBeVisible()
   expect(await page.evaluate(() => window.__creation!.cableHovered())).toBe(MIC_KEY)
   await page.mouse.click(p.x, p.y)
-  await page.waitForTimeout(300) // past the 100 ms before a message would be set
+  await quietWindow(page, 300) // past the 100 ms before a message would be set
   await expect(page.getByTestId('toast')).toBeHidden()
   await expect(page.getByTestId('toast')).toHaveText('')
   expect(await page.evaluate(() => window.__creation!.selection())).toBe(sel)

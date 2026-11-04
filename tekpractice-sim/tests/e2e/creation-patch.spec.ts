@@ -7,6 +7,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import catalog from '../../content/catalog.json'
+import { IDLE_WINDOW_MS, SETTLE_SAMPLE_MS, quietWindow, waitRendersIdle } from './waits'
 
 /** Task 29 (CA-15): the rule texts are the catalog's French fields, pinned exactly. */
 const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
@@ -42,7 +43,7 @@ const settle = async (page: Page): Promise<void> => {
     const n = await page.evaluate(() => window.__creation!.renders())
     if (n === last) return
     last = n
-    await page.waitForTimeout(700)
+    await page.waitForTimeout(SETTLE_SAMPLE_MS)
   }
   throw new Error('the page never went idle')
 }
@@ -588,9 +589,9 @@ test('idle after patching renders nothing, and nothing leaks across place change
   const p = await screenOf(page, MIC1)
   await page.mouse.move(p.x, p.y, { steps: 3 })
   await page.mouse.move(p.x - 300, p.y + 200, { steps: 3 })
-  await page.waitForTimeout(400)
+  await waitRendersIdle(page)
   const before = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(before)
   for (let i = 0; i < 3; i++) {
     await page.evaluate((k) => window.__creation!.choosePlace(k), i % 2 === 0 ? 'blank' : 'room:concert-hall-medium')

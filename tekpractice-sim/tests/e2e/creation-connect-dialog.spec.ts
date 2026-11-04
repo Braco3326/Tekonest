@@ -6,6 +6,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import catalog from '../../content/catalog.json'
+import { SETTLE_SAMPLE_MS, quietWindow } from './waits'
 
 /** Task 29 (CA-15): the rule texts are the catalog's French fields, pinned exactly. */
 const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
@@ -39,7 +40,7 @@ const settle = async (page: Page): Promise<void> => {
     const n = await page.evaluate(() => window.__creation!.renders())
     if (n === last) return
     last = n
-    await page.waitForTimeout(700)
+    await page.waitForTimeout(SETTLE_SAMPLE_MS)
   }
   throw new Error('the page never went idle')
 }
@@ -312,7 +313,7 @@ test('« Connecté : … » is a polite status, said once, and not again when th
   await select(page, 'k12-g')
   await select(page, 'ql1')
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_POSE', instanceId: 'ql1', position: [0.5, 0, 8], yawDeg: 0, tiltDeg: 0, mount: 'floor' }))
-  await page.waitForTimeout(400)
+  await quietWindow(page, 400)
   const said = await page.evaluate(() => (window as unknown as { __said: string[] }).__said)
   expect(said.filter((t) => t.startsWith('Connecté : ')), `heard: ${JSON.stringify(said)}`).toHaveLength(1)
 })

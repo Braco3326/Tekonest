@@ -7,6 +7,7 @@
 import { readFileSync } from 'node:fs'
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
+import { IDLE_WINDOW_MS, quietWindow, waitRendersIdle } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 /** The catalogue as the shell lists it: content/catalog.json is the source of truth (25 devices with the power strip, Task 32). */
@@ -31,7 +32,7 @@ test('the drawer chunk is not requested before the first open, then is', async (
   page.on('request', (r) => urls.push(r.url()))
   await boot(page)
   await page.locator('#renderCanvas').focus()
-  await page.waitForTimeout(300)
+  await quietWindow(page, 300)
   expect(urls.filter((u) => /inventoryDrawer/i.test(u))).toEqual([])
   await expect(drawer(page)).toHaveCount(0)
   await page.keyboard.press('Space')
@@ -74,7 +75,7 @@ test('Space opens it only while the 3D view has focus', async ({ page }) => {
   await page.keyboard.press('Space')
   await page.getByTestId('tree-collapse').focus()
   await page.keyboard.press('Space') // the button's own activation
-  await page.waitForTimeout(300)
+  await quietWindow(page, 300)
   await expect(drawer(page)).toHaveCount(0)
   await page.locator('#renderCanvas').focus()
   await page.keyboard.press('Space')
@@ -257,9 +258,9 @@ test('a named « Fermer » button closes it and gives the canvas back; the hint 
 test('idle with the drawer open: no render in 2 s (no per-frame work)', async ({ page }) => {
   await boot(page)
   await open(page)
-  await page.waitForTimeout(500)
+  await waitRendersIdle(page)
   const a = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(a)
 })
 
@@ -325,7 +326,7 @@ test('a held Space toggles the drawer exactly once (auto-repeat never flickers i
     await page.keyboard.down('Space')
     for (let i = 0; i < 3; i++) await page.keyboard.down('Space')
     await page.keyboard.up('Space')
-    await page.waitForTimeout(400)
+    await quietWindow(page, 400)
   }
   await page.locator('#renderCanvas').focus()
   await hold()
@@ -478,7 +479,7 @@ test('thumbnails: a catalog device shows its picture (decorative, lazy, loaded);
   const thumbs: string[] = []
   page.on('request', (r) => /\/assets\/thumbs\//.test(r.url()) && thumbs.push(r.url()))
   await boot(page)
-  await page.waitForTimeout(400)
+  await quietWindow(page, 400)
   expect(thumbs).toEqual([]) // nothing before the first open
   await open(page)
   const ql = drawer(page).locator('[data-device-id="yamaha-ql1"]')

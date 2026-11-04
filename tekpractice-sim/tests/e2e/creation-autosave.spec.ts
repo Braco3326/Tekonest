@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { expect, test, type Page } from '@playwright/test'
+import { quietWindow, waitForAutosave } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 /** Task 13 (C16, CA-14): autosave, « * » dirty marker, Ctrl+S, named projects. */
@@ -24,7 +25,7 @@ test('2 devices → 1.2 s → reload: both back with the same ids and poses, no 
   await boot(page)
   await placeTwo(page)
   const before = await design(page)
-  await page.waitForTimeout(1200)
+  await waitForAutosave(page)
   await page.reload()
   await page.waitForFunction(() => !!window.__creation)
   await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
@@ -103,7 +104,7 @@ test('« * » while dirty; Ctrl+S asks a name, Enter saves (no click); legacy ke
   await expect(page).toHaveTitle('Mon concert · Mode Création · TekPractice')
   await expect(page.getByRole('dialog')).toHaveCount(0)
   // the name and the clean state survive a reload
-  await page.waitForTimeout(1200)
+  await waitForAutosave(page)
   await page.reload()
   await page.waitForFunction(() => window.__creation?.place() === 'room:concert-hall-medium')
   await expect(page).toHaveTitle('Mon concert · Mode Création · TekPractice')
@@ -167,7 +168,7 @@ test('blocked localStorage: the shell boots, says so, and Ctrl+S never crashes (
   await page.getByRole('textbox', { name: 'Nom du projet' }).fill('X')
   await page.keyboard.press('Enter')
   await expect(page.locator('.cr-status-msg')).toContainText('Le navigateur bloque la sauvegarde')
-  await page.waitForTimeout(1200)
+  await quietWindow(page, 1200)
   expect(errors).toEqual([])
 })
 
@@ -309,7 +310,7 @@ test('quarantine full (5): the unreadable autosave is not dropped; autosave wait
   await boot(page)
   await expect(page.getByTestId('note-kept-full')).toContainText('Exportez-les')
   await placeTwo(page)
-  await page.waitForTimeout(1300)
+  await quietWindow(page, 1300)
   expect(await page.evaluate(() => localStorage.getItem('audio-sim/creation.v1'))).toBe('{sixth') // not overwritten
   expect(await page.evaluate(() => window.__creation!.quarantine().length)).toBe(5) // nothing evicted
   await page.getByRole('menuitem', { name: 'Projet' }).click()
@@ -320,11 +321,11 @@ test('quarantine full (5): the unreadable autosave is not dropped; autosave wait
   // the note stays until the learner says the file is good; autosave still waits
   const note = page.getByTestId('note-kept-full')
   await expect(note).toContainText('vérifier')
-  await page.waitForTimeout(1300)
+  await quietWindow(page, 1300)
   expect(await page.evaluate(() => localStorage.getItem('audio-sim/creation.v1'))).toBe('{sixth')
   await note.getByRole('button', { name: 'J’ai vérifié le fichier' }).click()
   await expect(note).toHaveCount(0)
-  await page.waitForTimeout(1300)
+  await waitForAutosave(page)
   expect(JSON.parse((await page.evaluate(() => localStorage.getItem('audio-sim/creation.v1')))!).design.rig.instances).toHaveLength(2)
 })
 
@@ -380,17 +381,17 @@ test('quarantine full + another tab saved this project meanwhile: Ctrl+S points 
 test('two tabs: when the other tab autosaves, this one pauses (said) and writes nothing until Ctrl+S here', async ({ page, context }) => {
   await boot(page)
   await placeTwo(page)
-  await page.waitForTimeout(1300) // tab 1 autosaved
+  await waitForAutosave(page) // tab 1 autosaved
   const tab2 = await context.newPage()
   await boot(tab2)
   await tab2.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
   // tab 1 writes again → tab 2 hears it
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [1, 0, 6] }))
-  await page.waitForTimeout(1300)
+  await waitForAutosave(page)
   await expect(tab2.getByTestId('note-other-tab')).toContainText('Ce projet est ouvert dans un autre onglet')
   // tab 2 changes: nothing written over tab 1's autosave
   await tab2.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'ql1' }))
-  await tab2.waitForTimeout(1300)
+  await quietWindow(tab2, 1300)
   const ids = async () => JSON.parse((await page.evaluate(() => localStorage.getItem('audio-sim/creation.v1')))!).design.rig.instances.map((i: { instanceId: string }) => i.instanceId).sort()
   expect(await ids()).toEqual(['k12-g', 'ql1', 'sm58'])
   // Ctrl+S in tab 2: it becomes the active tab, its autosave resumes
@@ -398,7 +399,7 @@ test('two tabs: when the other tab autosaves, this one pauses (said) and writes 
   await tab2.keyboard.press('Control+s')
   await nameAndEnter(tab2, 'Onglet 2')
   await expect(tab2.getByTestId('note-other-tab')).toHaveCount(0)
-  await tab2.waitForTimeout(300)
+  await waitForAutosave(tab2)
   expect(await ids()).toEqual(['k12-g']) // tab 2's own rig (it never saw tab 1's sm58)
   await tab2.close()
 })
@@ -406,18 +407,18 @@ test('two tabs: when the other tab autosaves, this one pauses (said) and writes 
 test('two tabs: « Reprendre ici » in the note resumes this tab’s autosave', async ({ page, context }) => {
   await boot(page)
   await placeTwo(page)
-  await page.waitForTimeout(1300)
+  await waitForAutosave(page)
   const tab2 = await context.newPage()
   await boot(tab2)
   await tab2.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
   await page.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'k12-g' }))
-  await page.waitForTimeout(1300)
+  await waitForAutosave(page)
   const note = tab2.getByTestId('note-other-tab')
   await expect(note).toContainText('« Reprendre ici »')
   await note.getByRole('button', { name: 'Reprendre ici' }).click()
   await expect(note).toHaveCount(0)
   await tab2.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [1, 0, 6] }))
-  await tab2.waitForTimeout(1300)
+  await waitForAutosave(tab2)
   const ids = JSON.parse((await tab2.evaluate(() => localStorage.getItem('audio-sim/creation.v1')))!).design.rig.instances.map((i: { instanceId: string }) => i.instanceId).sort()
   expect(ids).toEqual(['k12-g', 'ql1', 'sm58']) // tab 2's rig written
   await tab2.close()
@@ -429,7 +430,7 @@ test('two tabs: saving a project the other tab saved meanwhile keeps that versio
   await page.locator('#renderCanvas').focus()
   await page.keyboard.press('Control+s')
   await nameAndEnter(page, 'Partagé')
-  await page.waitForTimeout(1300)
+  await waitForAutosave(page)
   const tab2 = await context.newPage()
   await boot(tab2)
   await tab2.waitForFunction(() => window.__creation!.project().name === 'Partagé')
