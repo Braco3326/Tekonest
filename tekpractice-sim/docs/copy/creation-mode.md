@@ -626,6 +626,8 @@ Pose et déplacement d'un appareil dans la vue 3D (Task 24, CA-10). Choisir un a
 | `placement.statusMoved` | Déplacé : {device}. {undo} pour annuler. | validé | Barre d’état après un glisser (annoncé) |
 | `placement.statusCancelled` | Pose annulée. | validé | Barre d’état après Échap pendant la pose (annoncé) |
 | `placement.statusMoveCancelled` | Déplacement annulé : {device} est resté en place. | validé | Barre d’état après Échap pendant un glisser (annoncé) |
+| `placement.dragStand` | Sur pied : déplacez-le avec Propriétés › Position. | à valider (tekuxwriter) | Barre d’état (annoncé, une fois par glisser) quand un glisser commence sur l’appareil sélectionné posé sur pied : la vue tourne au lieu de le déplacer ; dit comment le déplacer (vague 5, P3-3) |
+| `placement.dragFlown` | Accroché : déplacez-le avec Propriétés › Position. | à valider (tekuxwriter) | Même ligne pour un appareil accroché |
 | `placement.statusRefused` | Impossible de poser {device}. | validé | Barre d’état si l’appareil ne peut pas être posé (annoncé) |
 
 ## edit

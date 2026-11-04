@@ -774,6 +774,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusCancelled: 'Pose annulée.',
     /** Status bar after Échap during a drag (announced). */
     statusMoveCancelled: 'Déplacement annulé : {device} est resté en place.',
+    /** Status bar once a drag starts on the selected device that stands on a stand: the view orbits instead, and this says how to move it (announced once per drag; night 2 wave 5, P3-3). À valider (tekuxwriter). */
+    dragStand: 'Sur pied : déplacez-le avec Propriétés › Position.',
+    /** Same for a flown device (announced once per drag). À valider (tekuxwriter). */
+    dragFlown: 'Accroché : déplacez-le avec Propriétés › Position.',
     /** Status bar if the device cannot be placed (announced). */
     statusRefused: 'Impossible de poser {device}.',
   },  /** Rotate, duplicate and delete the selected device (Task 25, CA-11). {device} = device name, {undo} = undo key label, {deg} = yaw in degrees. */

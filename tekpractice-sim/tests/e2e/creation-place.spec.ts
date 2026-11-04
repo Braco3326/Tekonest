@@ -338,3 +338,64 @@ test('idle while placing and after a drop: no render in 2 s, no lease left', asy
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(b)
   expect(await page.evaluate(() => window.__creation!.leases())).toEqual([])
 })
+
+// ── Night 2 wave 5, P3-3: pressing and dragging a stand-mounted or flown device orbits the camera silently ──────────────────────────────────────
+// Found live on the template's K12s: a drag that starts on the selected speaker (on its stand, or flown) cannot move it (only floor devices are dragged) and turns the camera, with
+// no word. The status line now says so, once per drag, and says how to move it (Propriétés › Position).
+test('P3-3: a drag that starts on the selected stand-mounted device says why the view orbits, once per drag; a floor device still moves with no such hint', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await boot(page)
+  await page.evaluate(() => {
+    const c = window.__creation!
+    c.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12-g', position: [3, 1.2, -3], mount: 'stand' })
+    c.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 4], mount: 'floor' })
+  })
+  await modelsSettled(page)
+  await page.locator('#renderCanvas').focus()
+  await page.evaluate(() => window.__creation!.cubeZoneScreenPoint('face')) // a pose where both are on screen
+  await waitRendersIdle(page)
+  for (let i = 0; i < 6 && (await page.evaluate(() => window.__creation!.selection())) !== 'k12-g'; i++) await page.keyboard.press(']')
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('k12-g')
+  await waitRendersIdle(page)
+  const at = (await page.evaluate(() => window.__creation!.deviceScreen('k12-g')))!
+  const a0 = (await camera(page)).alpha
+  const status = page.locator('.cr-status-msg')
+  const HINT = 'Sur pied : déplacez-le avec Propriétés › Position.'
+  const dragFrom = async (x: number, y: number): Promise<void> => {
+    await page.mouse.move(x, y)
+    await page.mouse.down()
+    await page.mouse.move(x + 3, y)
+    await page.mouse.move(x + 60, y + 4, { steps: 4 })
+    await page.mouse.move(x + 120, y + 8, { steps: 4 })
+  }
+  await dragFrom(at.x, at.y)
+  await expect(status).toHaveText(HINT)
+  await page.mouse.up()
+  expect((await camera(page)).alpha, 'the camera orbited (nothing else moved)').not.toBeCloseTo(a0, 2)
+  expect(await poseOf(page, 'k12-g'), 'the speaker did not move').toEqual([3, 1.2, -3])
+  // once per drag: say something else in the line, then a second drag says it again; and while one drag goes on the line is not rewritten
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'power', value: true }))
+  const at2 = (await page.evaluate(() => window.__creation!.deviceScreen('k12-g')))!
+  await dragFrom(at2.x, at2.y)
+  await expect(status).toHaveText(HINT)
+  await page.mouse.up()
+  // a click (no travel) on the same device says nothing about dragging
+  await page.keyboard.press('Escape')
+  await page.locator('#renderCanvas').focus()
+  for (let i = 0; i < 6 && (await page.evaluate(() => window.__creation!.selection())) !== 'k12-g'; i++) await page.keyboard.press(']')
+  const at3 = (await page.evaluate(() => window.__creation!.deviceScreen('k12-g')))!
+  await page.mouse.click(at3.x, at3.y)
+  expect(await status.textContent()).not.toBe(HINT)
+  // the floor device is dragged: no hint, it moves, « Déplacé » says so
+  await page.evaluate(() => window.__creation!.cubeZoneScreenPoint('face'))
+  await page.locator('#renderCanvas').focus()
+  for (let i = 0; i < 6 && (await page.evaluate(() => window.__creation!.selection())) !== 'ql1'; i++) await page.keyboard.press(']')
+  await waitRendersIdle(page)
+  const q = (await page.evaluate(() => window.__creation!.deviceScreen('ql1')))!
+  const before = await poseOf(page, 'ql1')
+  await dragFrom(q.x, q.y)
+  await page.mouse.up()
+  expect(await poseOf(page, 'ql1')).not.toEqual(before)
+  await expect(status).toContainText('Déplacé')
+  await expect(status).not.toHaveText(HINT)
+})
