@@ -94,11 +94,11 @@ describe('the shipped speaker models: where do the connectors sit, and what is t
     expect(Object.values(ports).every((p) => p[2] > hi[2] - 0.05)).toBe(true)
   })
 
-  evidence('DBR12: the model is not a speaker-shaped box (its long axis is z; the catalog box is taller than deep): no front can be read from it', async () => {
+  evidence('DBR12: the model is not a speaker-shaped box (its long axis is z; the catalog box is taller than deep): it lies on its side, so its orientation is not established (a pitch or roll fix, not a yaw)', async () => {
     const { lo, hi, ports } = await read('yamaha-dbr12')
     const ext = [0, 1, 2].map((k) => hi[k] - lo[k])
     expect(ext[2] / ext[1], 'the file is much longer than it is tall').toBeGreaterThan(2.5)
-    // the catalog box (DeviceSpawner.REAL_SIZE_M): 0.376 wide, 0.601 high, 0.348 deep: taller than deep. The file normalised by height would be 1.67 m deep.
+    // the catalog box (DeviceSpawner.REAL_SIZE_M): 0.376 wide, 0.601 high, 0.348 deep: taller than deep. The file normalised by height would be about 1.65 m deep.
     expect((0.601 * ext[2]) / ext[1] / 0.348, 'depth the scene would give it, over the catalog depth').toBeGreaterThan(4)
     expect(Object.keys(ports).sort()).toEqual(['in-line', 'link-out', 'power-in'])
   })

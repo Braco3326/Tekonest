@@ -40,26 +40,38 @@ export function debugBodyEnds(inst: { root: { getChildMeshes(direct: boolean): A
     for (let i = 0; i + 2 < data.length; i += 3) pts.push(Vector3.TransformCoordinates(new Vector3(data[i], data[i + 1], data[i + 2]), w))
   }
   if (!pts.length) return null
-  const zLo = Math.min(...pts.map((p) => p.z))
-  const zHi = Math.max(...pts.map((p) => p.z))
-  const depth = zHi - zLo
-  const xSpan = (sel: (p: Vector3) => boolean): number => {
-    const xs = pts.filter(sel).map((p) => p.x)
-    return xs.length ? Math.max(...xs) - Math.min(...xs) : 0
+  let zLo = Infinity
+  let zHi = -Infinity
+  for (const p of pts) {
+    zLo = Math.min(zLo, p.z)
+    zHi = Math.max(zHi, p.z)
   }
-  const rear = pts.filter((p) => p.z <= zLo + 0.08 * depth).map((p) => p.x)
-  return { plusZ: xSpan((p) => p.z >= zHi - 0.08 * depth), minusZ: xSpan((p) => p.z <= zLo + 0.08 * depth), depth, rearX: [Math.min(...rear), Math.max(...rear)], rearZ: zLo }
+  const depth = zHi - zLo
+  const xRange = (sel: (p: Vector3) => boolean): [number, number] => {
+    let lo = Infinity
+    let hi = -Infinity
+    for (const p of pts) if (sel(p)) {
+      lo = Math.min(lo, p.x)
+      hi = Math.max(hi, p.x)
+    }
+    return lo === Infinity ? [0, 0] : [lo, hi]
+  }
+  const span = (r: [number, number]): number => r[1] - r[0]
+  const plus = xRange((p) => p.z >= zHi - 0.08 * depth)
+  const rear = xRange((p) => p.z <= zLo + 0.08 * depth)
+  return { plusZ: span(plus), minusZ: span(rear), depth, rearX: rear, rearZ: zLo }
 }
 
 /**
- * e2e oracle for « the device lands on its placement » (Task 43c fix round): the centre of the body's vertices in the FRAME OF THE INSTANCE ROOT (the world
- * vertices through the inverse of the root's world matrix), so a yaw cannot blur it the way a world-aligned box does (`debugBodyCenter`, a box of boxes, reads
- * ~2 cm off for a console turned 200 degrees). A body centred on its placement reads (0, y, 0) here. Null when there is no body mesh.
+ * e2e oracle for « the device lands on its placement » and « it stands on the floor » (Task 43c fix round): the box of the body's vertices in the FRAME OF THE
+ * INSTANCE ROOT (the world vertices through the inverse of the root's world matrix), so a yaw cannot blur it the way a world-aligned box does
+ * (`debugBodyCenter`, a box of boxes, reads ~2 cm off for a console turned 200 degrees). A body centred on its placement and grounded reads
+ * lo = (-w/2, 0, -d/2), hi = (w/2, h, d/2) here. Null when there is no body mesh.
  */
-export function debugBodyCentreInRoot(inst: { root: { getChildMeshes(direct: boolean): AbstractMesh[]; computeWorldMatrix(force?: boolean): Matrix } }): [number, number, number] | null {
+export function debugBodyBoundsInRoot(inst: { root: { getChildMeshes(direct: boolean): AbstractMesh[]; computeWorldMatrix(force?: boolean): Matrix } }): { lo: [number, number, number]; hi: [number, number, number] } | null {
   const inv = Matrix.Invert(inst.root.computeWorldMatrix(true))
-  const lo = [Infinity, Infinity, Infinity]
-  const hi = [-Infinity, -Infinity, -Infinity]
+  const lo: [number, number, number] = [Infinity, Infinity, Infinity]
+  const hi: [number, number, number] = [-Infinity, -Infinity, -Infinity]
   for (const m of inst.root.getChildMeshes(false)) {
     if (m.metadata?.isDeviceBody !== true || !m.isEnabled()) continue
     const data = m.getVerticesData('position')
@@ -71,5 +83,5 @@ export function debugBodyCentreInRoot(inst: { root: { getChildMeshes(direct: boo
       hi[0] = Math.max(hi[0], p.x); hi[1] = Math.max(hi[1], p.y); hi[2] = Math.max(hi[2], p.z)
     }
   }
-  return lo[0] === Infinity ? null : [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2]
+  return lo[0] === Infinity ? null : { lo, hi }
 }

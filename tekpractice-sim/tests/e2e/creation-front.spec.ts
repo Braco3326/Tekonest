@@ -160,22 +160,22 @@ test('(f) a corrected device LOADED at yaw 90 / 200 (not turned afterwards): its
   }
 })
 
-test('(g) a device lands ON its placement at any yaw: body centre within 2 cm of (x, z), every speaker + a console + a mic, yaw 0 / 90 / 180 / 200', async ({ page }) => {
+test('(g) a device lands ON its placement and on the floor at any yaw (centre within 2 cm of (x, z), lowest point within 1 cm of 0), and its port markers keep their place in the placement frame, yaw 0 / 90 / 180 / 200', async ({ page }) => {
   await boot(page)
-  const devices = ['qsc-k12-2', 'yamaha-dbr12', 'genelec-8030c', 'yamaha-ql1', 'shure-sm58']
+  const devices = ['qsc-k12-2', 'yamaha-dbr12', 'genelec-8030c', 'yamaha-ql1', 'yamaha-rio3224-d2', 'shure-sm58']
   const yaws = [0, 90, 180, 200]
   const spawned = await page.evaluate(
     ([devs, ys]) => {
       const c = window.__creation!
-      const out: { id: string; x: number; z: number }[] = []
+      const out: { id: string; device: string; yaw: number; x: number; z: number }[] = []
       let i = 0
       for (const d of devs as string[])
         for (const y of ys as number[]) {
           const id = `p-${d}-${y}`
-          const x = -9 + (i % 5) * 2.4
-          const z = 4 + Math.floor(i / 5) * 2.4
+          const x = -9 + (i % 6) * 2.4
+          const z = 4 + Math.floor(i / 6) * 2.4
           c.dispatch({ type: 'SPAWN', deviceId: d, position: [x, 0, z], rotationY: y, instanceId: id })
-          out.push({ id, x, z })
+          out.push({ id, device: d, yaw: y, x, z })
           i++
         }
       return out
@@ -183,13 +183,41 @@ test('(g) a device lands ON its placement at any yaw: body centre within 2 cm of
     [devices, yaws]
   )
   await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
-  const centres = await page.evaluate((s) => s.map((p) => ({ ...p, c: window.__creation!.deviceBodyCenter(p.id), local: window.__creation!.bodyCentreInRoot(p.id) })), spawned)
-  for (const p of centres) {
+  const rows = await page.evaluate(
+    (s) =>
+      s.map((p) => {
+        const c = window.__creation!
+        const rad = (p.yaw * Math.PI) / 180
+        // every marker in the frame of the placement: the world offset turned back by the yaw (world = R(yaw) local: x = lx cos + lz sin, z = -lx sin + lz cos)
+        const markers = c.devicePorts(p.id).map((port) => {
+          const w = c.portWorld({ instance: p.id, port })!
+          const dx = w[0] - p.x
+          const dz = w[2] - p.z
+          return [port, dx * Math.cos(rad) - dz * Math.sin(rad), w[1], dx * Math.sin(rad) + dz * Math.cos(rad)] as [string, number, number, number]
+        })
+        return { ...p, c: c.deviceBodyCenter(p.id), b: c.bodyBoundsInRoot(p.id), markers }
+      }),
+    spawned
+  )
+  for (const p of rows) {
     expect(p.c, p.id).not.toBeNull()
+    expect(p.b, p.id).not.toBeNull()
     // the exact oracle: the vertices in the frame of the placement (no world-box blur from the yaw)
-    expect(Math.hypot(p.local![0], p.local![2]), `${p.id}: body centre vs placement (x, z), in the placement's frame`).toBeLessThan(0.02)
+    expect(Math.hypot((p.b!.lo[0] + p.b!.hi[0]) / 2, (p.b!.lo[2] + p.b!.hi[2]) / 2), `${p.id}: body centre vs placement (x, z), in the placement's frame`).toBeLessThan(0.02)
+    expect(Math.abs(p.b!.lo[1]), `${p.id}: the lowest point of the body is on the floor`).toBeLessThan(0.01)
     // and the world box centre the other tests use (a box of boxes: allowed 3 cm of its own blur at a turned yaw)
     expect(Math.hypot(p.c![0] - p.x, p.c![2] - p.z), `${p.id}: world body centre vs placement (x, z)`).toBeLessThan(0.03)
+  }
+  // the markers of the QL1 and the RIO (real port_* empties, no front correction) are where they are at yaw 0, in the placement frame, whatever the yaw
+  for (const device of ['yamaha-ql1', 'yamaha-rio3224-d2']) {
+    const at0 = rows.find((r) => r.device === device && r.yaw === 0)!
+    expect(at0.markers.length, `${device}: has ports`).toBeGreaterThan(3)
+    for (const r of rows.filter((q) => q.device === device && q.yaw !== 0))
+      for (const [port, lx, ly, lz] of r.markers) {
+        const ref = at0.markers.find((m) => m[0] === port)!
+        expect(Math.hypot(lx - ref[1], lz - ref[3]), `${r.id} ${port}: marker (x, z) in the placement frame vs yaw 0`).toBeLessThan(0.01)
+        expect(Math.abs(ly - ref[2]), `${r.id} ${port}: marker height`).toBeLessThan(0.01)
+      }
   }
 })
 
@@ -218,4 +246,21 @@ test('(h) the port markers of a corrected K12.2 sit on its rear face (x within t
     expect(p[0] - 4, `marker ${i} x mirrored`).toBeCloseTo(-(r.p0[i][0] - 0), 2)
     expect(p[2], `marker ${i} z mirrored`).toBeCloseTo(-r.p0[i][2], 2)
   })
+})
+
+test('(i) the port markers of a corrected 8030C sit on its rear face (x and z), at yaw 0', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'genelec-8030c', position: [0, 0, 0], rotationY: 0, instanceId: 'g0' }))
+  await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+  const r = await page.evaluate(() => {
+    const c = window.__creation!
+    return { ends: c.bodyEnds('g0')!, ports: ['in-analog', 'power-in'].map((p) => c.portWorld({ instance: 'g0', port: p })!) }
+  })
+  const [lo, hi] = r.ends.rearX
+  for (const p of r.ports) {
+    expect(p[0], '8030C marker x within the rear width (+1 cm)').toBeGreaterThanOrEqual(lo - 0.01)
+    expect(p[0]).toBeLessThanOrEqual(hi + 0.01)
+    expect(p[2], 'behind the rear plane').toBeLessThan(r.ends.rearZ + 0.005)
+    expect(p[2], 'but close to it (within 6 cm)').toBeGreaterThan(r.ends.rearZ - 0.06)
+  }
 })

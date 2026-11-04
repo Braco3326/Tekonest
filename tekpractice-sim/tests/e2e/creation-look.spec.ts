@@ -87,14 +87,6 @@ for (const [w, h] of [
     // select a device with a click in the 3D view (the pick path), the camera cuts to it
     const first = await page.evaluate(() => window.__creation!.design().rig.instances[0].instanceId)
     // Over an unselected body a port's first-click area is tight (final review 3): a plain click on the body's centre selects it.
-    // L34 fix round: the first device (the console, yaw 180 in the template) now shows its connectors where they are, on the face toward the camera; at the
-    // default zoom it is ~25 px wide and every body point is inside a port's area. This test is about the pick path, so the console is turned to yaw 0
-    // (connectors on the far side), same place, before the click.
-    await page.evaluate((id) => {
-      const pl = window.__creation!.design().placements.find((x) => x.instanceId === id)!
-      window.__creation!.dispatch({ type: 'SET_POSE', instanceId: id, position: [...pl.position_m], yawDeg: 0, tiltDeg: 0, mount: pl.mount ?? 'floor' })
-    }, first)
-    await settle(page)
     const p = (await page.evaluate((id) => window.__creation!.deviceScreen(id), first))!
     expect(p, 'the device centre is on screen').not.toBeNull()
     await page.mouse.click(p.x, p.y)

@@ -94,17 +94,22 @@ export function rearFace(root: AbstractMesh, parent: TransformNode): RearFace | 
     for (let i = 0; i + 2 < data.length; i += 3) pts.push(Vector3.TransformCoordinates(new Vector3(data[i], data[i + 1], data[i + 2]), mat))
   }
   if (!pts.length) return null
-  const zs = pts.map((p) => p.z)
-  const zLo = Math.min(...zs)
-  const depth = Math.max(...zs) - zLo
-  const slab = pts.filter((p) => p.z <= zLo + 0.08 * depth)
-  return {
-    xMin: Math.min(...slab.map((p) => p.x)),
-    xMax: Math.max(...slab.map((p) => p.x)),
-    yMin: Math.min(...slab.map((p) => p.y)),
-    yMax: Math.max(...slab.map((p) => p.y)),
-    z: zLo,
+  let zLo = Infinity
+  let zHi = -Infinity
+  for (const p of pts) {
+    zLo = Math.min(zLo, p.z)
+    zHi = Math.max(zHi, p.z)
   }
+  const limit = zLo + 0.08 * (zHi - zLo)
+  const face: RearFace = { xMin: Infinity, xMax: -Infinity, yMin: Infinity, yMax: -Infinity, z: zLo }
+  for (const p of pts) {
+    if (p.z > limit) continue
+    face.xMin = Math.min(face.xMin, p.x)
+    face.xMax = Math.max(face.xMax, p.x)
+    face.yMin = Math.min(face.yMin, p.y)
+    face.yMax = Math.max(face.yMax, p.y)
+  }
+  return face
 }
 
 /**

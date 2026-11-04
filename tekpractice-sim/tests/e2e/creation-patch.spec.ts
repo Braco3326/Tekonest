@@ -67,6 +67,19 @@ const selectDevice = async (page: Page, id: string): Promise<void> => {
   await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
   await settle(page)
 }
+/**
+ * Task 43c fix round: the template's QL1 (yaw 0, connectors toward the stage, the far side from the default camera) is only ~35 x 20 px at the default view, and its
+ * far-side connectors are not drawn over its body there. These tests need a connector drawn over the body with an 8 px neighbour on it, so the camera is brought
+ * close the way a person does: select the console (the camera flies in), deselect with Escape (the body is unselected AND big), then 4 m from it, where a connector
+ * is under 8 px across. The QL1 itself is as the template has it.
+ */
+const frameQl1Unselected = async (page: Page): Promise<void> => {
+  await selectDevice(page, 'ql1')
+  await page.keyboard.press('Escape')
+  await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBeNull()
+  await page.evaluate(() => window.__creation!.setCameraRadius(4))
+  await settle(page)
+}
 /** Every port of the rig: its pick proxy radius (the >= 12 px floor) and the radius a first click gets over its body now. */
 const proxyRadii = (page: Page) =>
   page.evaluate(() => {
@@ -321,23 +334,8 @@ test('while a device follows the pointer, patching is inert: the click that drop
   await page.keyboard.press('Escape')
 })
 
-
-/**
- * Task 43c fix round: a device now lands ON its placement at any yaw and its markers sit on its real connector face. The template's QL1 stands at yaw 180,
- * so its connectors face the default camera and, with the console only ~25 px wide, every body point is within a port's first-click area. These tests are
- * about the hit radii over a body whose connectors are on the FAR side from the camera, so they put the QL1 at yaw 0 (same place) first.
- */
-const qlConnectorsAway = async (page: Page): Promise<void> => {
-  await page.evaluate(() => {
-    const p = window.__creation!.design().placements.find((x) => x.instanceId === 'ql1')!
-    window.__creation!.dispatch({ type: 'SET_POSE', instanceId: 'ql1', position: [...p.position_m], yawDeg: 0, tiltDeg: 0, mount: p.mount ?? 'floor' })
-  })
-  await settle(page)
-}
-
 test('a press-and-drag that starts on a port of the SELECTED device moves it; a plain click there is the cabling\'s', async ({ page }) => {
   await boot(page)
-  await qlConnectorsAway(page)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }))
   const canvas = page.locator('#renderCanvas')
   await canvas.focus()
@@ -416,14 +414,7 @@ const ql1Plan = (page: Page) =>
 
 test('over an UNSELECTED device body a first click 8 px off a connector selects the body; ON the connector it starts the patch (final review 3)', async ({ page }) => {
   await boot(page)
-  await qlConnectorsAway(page)
-  // The ~25 px console is too small at the default view for an 8 px neighbour point, and the camera only flies in on a selection: select it (the camera
-  // settles close), then deselect with Escape, so the body is unselected AND big (L34 fix round).
-  await selectDevice(page, 'ql1')
-  await page.keyboard.press('Escape')
-  await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBeNull()
-  await page.evaluate(() => window.__creation!.setCameraRadius(4)) // ~4 m from it: a connector is under 8 px across, 8 px neighbours are on the body
-  await settle(page)
+  await frameQl1Unselected(page)
   expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
   const box = (await page.locator('#renderCanvas').boundingBox())!
   const plan = await ql1Plan(page)
@@ -451,7 +442,6 @@ test('over an UNSELECTED device body a first click 8 px off a connector selects 
 
 test("on the SELECTED device a first click 8 px off a connector is still the PORT's (camera still)", async ({ page }) => {
   await boot(page)
-  await qlConnectorsAway(page)
   await selectDevice(page, 'ql1')
   const box = (await page.locator('#renderCanvas').boundingBox())!
   const plan = await ql1Plan(page)
@@ -471,8 +461,11 @@ test("on the SELECTED device a first click 8 px off a connector is still the POR
 test('with a cable in hand every port is a full 12 px target, on a device that is not selected too', async ({ page }) => {
   await boot(page)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }))
-  await clickPort(page, SM58) // a cable in hand (the connector itself always patches)
-  expect(await pending(page)).toEqual(SM58)
+  await frameQl1Unselected(page)
+  const inHand = { instance: 'ql1', port: 'power-in' }
+  await clickPort(page, inHand) // a cable in hand, started on a connector of the (still unselected) console: the connector itself always patches
+  expect(await pending(page)).toEqual(inHand)
+  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
   expect(await page.evaluate((r) => window.__creation!.portHitRadiusPx(r), MIC1)).toBeGreaterThanOrEqual(12 - 1e-6) // ql1 is not selected, but a cable is in hand
   const plan = await ql1Plan(page) // a point 8 px from a ql1 connector, that connector the nearest port
   expect(plan.eight, 'a ql1 connector with an 8 px point on its body').not.toBeNull()
