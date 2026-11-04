@@ -817,3 +817,12 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `listen.failedFile` | Ce fichier n’a pas pu être lu. Essayez un fichier MP3, WAV ou OGG. | validé | Annonce quand le navigateur ne décode pas le fichier choisi |
 | `listen.failed` | La lecture n’a pas pu démarrer. | validé | Annonce d’une erreur de démarrage (autre qu’un fichier illisible) |
 | `listen.loadFailed` | La lecture n’a pas pu se charger. Rechargez la page. | validé | Annonce quand le morceau de code du moteur audio ne se télécharge pas |
+
+## Textes hors COPY (index.html)
+
+Les seuls textes qui vivent dans `index.html` et non dans `copy.ts` : la garde d'entrée (vague de nuit 2, vague 5, P1-1). Quand le script d'entrée lui-même ne se charge pas (fichier absent, ou servi en HTML par le serveur), `main.ts` ne tourne jamais et l'alerte de la section `boot` ne peut pas s'afficher : un petit script en ligne, sans module ni dépendance, affiche cette alerte (`role="alert"`) avec un lien qui recharge la page avec `?v=<heure>` (le routeur ignore ce paramètre). `tests/creation/entryGuard.test.ts` tient `index.html` et cette section égaux.
+
+| Clé | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `index.html#entryFailure` | Le jeu n’a pas pu se charger. Rechargez la page en forçant le rafraîchissement (Ctrl+F5) ou ouvrez-la de nouveau. | à valider (tekuxwriter) | Corps de l'alerte de la garde d'entrée (texte donné par le brief de la vague 5) |
+| `index.html#entryReload` | Recharger la page | à valider (tekuxwriter) | Lien de l'alerte (même mot que `boot.reload`), reçoit le focus ; recharge avec `?v=<heure>` |

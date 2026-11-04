@@ -125,3 +125,57 @@ test('« Choisir un lieu » open over a rig: « Annuler » is disabled and Ctrl+
   await page.keyboard.press('Control+z')
   await expect.poll(instances).toBe(0)
 })
+
+// ── Night 2 wave 5, P1-1: the ENTRY script itself is missing or served as HTML (production did that for hashed assets: 200 text/html) ────────────────────────
+// main.js never runs, so the boot-failure alert above cannot show. The inline guard in index.html shows a role="alert" with a reload link (?v=<time>, ignored by the router).
+const ENTRY = '**/assets/main-*.js'
+for (const [what, fulfill] of [
+  ['served as text/html (200)', { status: 200, contentType: 'text/html; charset=utf-8', body: '<!doctype html><html><body>home</body></html>' }],
+  ['a 404', { status: 404, contentType: 'text/plain', body: 'not found' }],
+] as const) {
+  test(`P1-1: the entry script ${what}: an alert says so, its link reloads the page with a cache-busting query and the app then starts`, async ({ page }) => {
+    await page.route(ENTRY, (r) => r.fulfill(fulfill))
+    await page.goto('/')
+    const alert = page.getByTestId('entry-failure')
+    await expect(alert).toBeVisible()
+    await expect(alert).toHaveAttribute('role', 'alert')
+    await expect(alert).toContainText('Le jeu n’a pas pu se charger. Rechargez la page en forçant le rafraîchissement (Ctrl+F5) ou ouvrez-la de nouveau.')
+    const link = alert.getByRole('link', { name: 'Recharger la page' })
+    await expect(link).toBeFocused()
+    await expect(link).toHaveAttribute('href', /^\/\?v=\d+$/)
+    await expect(page.getByTestId('boot-failure'), 'one alert, not two').toHaveCount(0)
+    await page.unroute(ENTRY) // the edge now serves the real file
+    await link.click()
+    await page.waitForFunction(() => !!window.__creation)
+    await expect(page).toHaveURL(/\?v=\d+$/)
+    await expect(page.getByTestId('place-picker'), 'the router ignores v: Mode Création, not legacy').toBeVisible()
+    await expect(page.getByTestId('entry-failure')).toHaveCount(0)
+  })
+}
+
+test('P1-1: a normal load never shows the guard (Mode Création, and legacy)', async ({ page }) => {
+  await page.goto('/')
+  await page.waitForFunction(() => !!window.__creation)
+  await expect(page.getByTestId('entry-failure')).toHaveCount(0)
+  await page.goto('/?legacy=1')
+  await expect(page.locator('#hud')).toBeAttached()
+  await quietWindow(page, 1000) // a quiet window: nothing may appear after the load either
+  await expect(page.getByTestId('entry-failure')).toHaveCount(0)
+})
+
+test('P1-1: the legacy entry (?legacy=1) that cannot load shows the guard too, keeping the other query parameters in the reload link', async ({ page }) => {
+  await page.route(ENTRY, (r) => r.fulfill({ status: 200, contentType: 'text/html', body: '<html></html>' }))
+  await page.goto('/?legacy=1')
+  const link = page.getByTestId('entry-failure').getByRole('link', { name: 'Recharger la page' })
+  await expect(link).toBeVisible()
+  await expect(link).toHaveAttribute('href', /^\/\?legacy=1&v=\d+$/)
+})
+
+test('P1-1: a lazy chunk that fails to preload shows ONE alert (the boot chunk has its own, the guard stays out of its way)', async ({ page }) => {
+  await page.route('**/assets/boot-*.js', (r) => r.abort())
+  await page.goto('/')
+  await expect(page.getByTestId('boot-failure')).toBeVisible()
+  await quietWindow(page, 600) // past the guard's 100 ms wait: it must not add a second alert
+  await expect(page.getByRole('alert')).toHaveCount(1)
+  await expect(page.getByTestId('entry-failure')).toHaveCount(0)
+})
