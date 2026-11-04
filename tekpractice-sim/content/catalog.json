@@ -295,7 +295,8 @@
       },
       "modelBody": {
         "baseFraction": 0.285,
-        "evidence": "Measured on public/assets/genelec-8030c.glb (night wave 1, L36): the file is ONE mesh that includes a floor stand. Cut in 1 % bands of the model height, the footprint is a base plate at the bottom, then a thin neck (a few centimetres across) up to 28.5 % of the height, then the cabinet (about 0.21 x 0.23 model units) up to the top. Mode Création scales the cabinet (71.5 % of the model) to the real height of REAL_SIZE_M (0.299 m, KB key_specs.dimensions: 299 mm with Iso-Pod, 285 mm without); the stand keeps its scan proportions. tests/assets/modelBody.test.ts re-measures the fraction on the file."
+        "cabinetHeightM": 0.285,
+        "evidence": "Measured on public/assets/genelec-8030c.glb (night wave 1, L36): the file is ONE mesh that includes a floor stand. Cut in 1 % bands of the model height, the footprint is a base plate at the bottom, then a thin neck (a few centimetres across) up to 28.5 % of the height, then the cabinet (about 0.21 x 0.23 model units) up to the top. Mode Création scales the cabinet (71.5 % of the model) to cabinetHeightM = 0.285 m, the knowledge base's value WITHOUT the Iso-Pod (knowledge-base/equipment/studio-monitors.json key_specs.dimensions: 'Height 299 mm with Iso-Pod (285 mm without)'), because the cut takes the stand out of the measurement; the stand keeps its scan proportions. tests/assets/modelBody.test.ts re-measures baseFraction on the file and reads the 285 mm from the knowledge base."
       },
       "acoustic": {
         "coverage_h_deg": { "value": 90, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur dans la KB)", "retrieved": "2026-10-22" } },

@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import catalog from '../../content/catalog.json'
 
 /**
  * Task 43c (L34, decision L30 viii): the glb front ship gate. Mode Création's convention is yaw 0 = the front faces +z, and the acoustics aim
@@ -254,8 +255,15 @@ test('(i) the port markers of a corrected 8030C sit on its rear face (x and z), 
   await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
   const r = await page.evaluate(() => {
     const c = window.__creation!
-    return { ends: c.bodyEnds('g0')!, ports: ['in-analog', 'power-in'].map((p) => c.portWorld({ instance: 'g0', port: p })!) }
+    return { ends: c.bodyEnds('g0')!, b: c.bodyBoundsInRoot('g0')!, ports: ['in-analog', 'power-in'].map((p) => c.portWorld({ instance: 'g0', port: p })!) }
   })
+  // night wave 1 review finding 6: the markers are on the CABINET's rear face, not on the stand neck (the model's lowest baseFraction is stand)
+  const stand = (catalog.devices.find((d) => d.id === 'genelec-8030c') as { modelBody: { baseFraction: number } }).modelBody.baseFraction
+  const cabinetBottom = r.b.lo[1] + stand * (r.b.hi[1] - r.b.lo[1])
+  for (const p of r.ports) {
+    expect(p[1], 'marker height above the stand').toBeGreaterThanOrEqual(cabinetBottom - 0.005)
+    expect(p[1], 'and under the top of the cabinet').toBeLessThanOrEqual(r.b.hi[1] + 0.005)
+  }
   const [lo, hi] = r.ends.rearX
   for (const p of r.ports) {
     expect(p[0], '8030C marker x within the rear width (+1 cm)').toBeGreaterThanOrEqual(lo - 0.01)
@@ -266,11 +274,7 @@ test('(i) the port markers of a corrected 8030C sit on its rear face (x and z), 
 })
 
 // ── Night wave 1, item 8: the 8030C file includes its floor stand; the cabinet, not the whole model, has the real height ───────────────────────
-import catalog from '../../content/catalog.json'
-
-const REAL_8030C_H = 0.299 // REAL_SIZE_M['genelec-8030c'].h, the datasheet's 299 mm (285 mm without the Iso-Pod: inside the same ± 2 cm)
-
-test('(j) the 8030C cabinet is 0,299 m tall (± 2 cm): the stand under it is no longer counted in the normalisation; the K12.2 is unchanged', async ({ page }) => {
+test('(j) the 8030C cabinet is the catalog cabinet height (0,285 m, within 5 mm): the stand under it is not counted in the normalisation; the K12.2 is unchanged', async ({ page }) => {
   await boot(page)
   await page.evaluate(() => {
     const c = window.__creation!
@@ -279,13 +283,14 @@ test('(j) the 8030C cabinet is 0,299 m tall (± 2 cm): the stand under it is no 
   await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
   const r = await page.evaluate(() => ({ g: window.__creation!.bodyBoundsInRoot('g0'), k: window.__creation!.bodyBoundsInRoot('k12-g') }))
   expect(r.g, 'the 8030C model is loaded').not.toBeNull()
-  const base = (catalog.devices.find((d) => d.id === 'genelec-8030c') as { modelBody?: { baseFraction: number } }).modelBody!.baseFraction
+  const body = (catalog.devices.find((d) => d.id === 'genelec-8030c') as { modelBody?: { baseFraction: number; cabinetHeightM: number } }).modelBody!
   const total = r.g!.hi[1] - r.g!.lo[1]
   expect(Math.abs(r.g!.lo[1]), 'the stand stands on the floor').toBeLessThan(0.01)
-  // the cabinet is what is above the stand: the share of the model the catalog gives (checked on the file by tests/assets/modelBody.test.ts)
-  expect(Math.abs(total * (1 - base) - REAL_8030C_H), `cabinet = ${(total * (1 - base)).toFixed(3)} m (whole model ${total.toFixed(3)} m)`).toBeLessThan(0.02)
-  // and the old normalisation (the whole model 0,299 m, cabinet ≈ 0,21 m) is gone
-  expect(total).toBeGreaterThan(0.37)
+  // the cabinet is what is above the stand (baseFraction is re-measured on the file by tests/assets/modelBody.test.ts); cabinetHeightM is the datasheet's
+  const cabinet = total * (1 - body.baseFraction)
+  expect(Math.abs(cabinet - body.cabinetHeightM), `cabinet = ${cabinet.toFixed(4)} m (whole model ${total.toFixed(4)} m)`).toBeLessThan(0.005)
+  // the old normalisation (the whole model 0,299 m, cabinet 0,214 m) is far away
+  expect(total).toBeGreaterThan(0.38)
   // a single-body model keeps its whole height: the K12.2 is 0,602 m
   expect(r.k!.hi[1] - r.k!.lo[1]).toBeCloseTo(0.602, 1)
 })

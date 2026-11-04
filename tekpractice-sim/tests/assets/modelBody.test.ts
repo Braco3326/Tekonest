@@ -18,7 +18,7 @@ import { bodyHeightOf, scaleForHeight } from '../../src/scene/modelBody'
 const draco3d = createRequire(import.meta.url)('draco3dgltf') as { createDecoderModule(): Promise<unknown> }
 const root = resolve(__dirname, '../..')
 const catalog = JSON.parse(readFileSync(resolve(root, 'content/catalog.json'), 'utf8')) as {
-  devices: { id: string; modelBody?: { baseFraction: number; evidence: string } }[]
+  devices: { id: string; modelBody?: { baseFraction: number; cabinetHeightM: number; evidence: string } }[]
 }
 
 /** Every vertex of the file in glTF model space (the nodes' own transforms applied), y up. */
@@ -73,6 +73,18 @@ describe('the 8030C cabinet starts where the catalog says (night wave 1, item 8)
     expect(measured).toBeLessThan(0.4)
     expect(Math.abs(dev.modelBody!.baseFraction - measured)).toBeLessThan(0.02)
     expect(dev.modelBody!.evidence.length, 'evidence: how it was measured').toBeGreaterThan(40)
+  })
+
+  it('modelBody.cabinetHeightM is the height WITHOUT the Iso-Pod (285 mm), because the cut removes the stand from the measurement', () => {
+    const kb = JSON.parse(readFileSync(resolve(root, '../knowledge-base/equipment/studio-monitors.json'), 'utf8')) as {
+      devices: { id: string; key_specs: { dimensions: string } }[]
+    }
+    const dims = kb.devices.find((d) => d.id === 'genelec-8030c')!.key_specs.dimensions
+    expect(dims).toMatch(/285 mm without/) // the source of the number, read from the file
+    const dev = catalog.devices.find((d) => d.id === 'genelec-8030c')!
+    expect(dev.modelBody!.cabinetHeightM).toBe(0.285)
+    expect(dev.modelBody!.evidence).toContain('285 mm')
+    expect(dev.modelBody!.evidence).not.toContain('REAL_SIZE_M') // the legacy table (299 mm with Iso-Pod) is not the source of this number
   })
 
   it('the other loudspeaker models are single cabinets: no device but the 8030C declares a stand', () => {
