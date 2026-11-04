@@ -106,6 +106,23 @@ describe('AssetSpec build profile (revolve)', () => {
   })
 })
 
+describe('AssetSpec texture block (blank bands)', () => {
+  const base = (): AssetSpecT => specFor(fresh(), 'qsc-k12-2')
+  it('accepts blank bands with and without a fill', () => {
+    const s = AssetSpec.safeParse({ ...base(), texture: { blankBandsMm: [{ fromMm: 110, toMm: 124 }, { fromMm: 10, toMm: 20, fill: '#3b3b3e' }] } })
+    expect(s.success).toBe(true)
+  })
+
+  it('rejects an empty list, an inverted or negative band, a bad fill and an unknown key', () => {
+    const bad = (texture: unknown) => AssetSpec.safeParse({ ...base(), texture }).success
+    expect(bad({ blankBandsMm: [] })).toBe(false)
+    expect(bad({ blankBandsMm: [{ fromMm: 20, toMm: 10 }] })).toBe(false)
+    expect(bad({ blankBandsMm: [{ fromMm: -1, toMm: 10 }] })).toBe(false)
+    expect(bad({ blankBandsMm: [{ fromMm: 1, toMm: 10, fill: 'red' }] })).toBe(false)
+    expect(bad({ blankBandsMm: [{ fromMm: 1, toMm: 10 }], extra: 1 })).toBe(false)
+  })
+})
+
 describe('checkSpecParity (device)', () => {
   it('parity passes when ids match exactly', () => {
     expect(checkSpecParity(specFor(catalog, 'yamaha-ql1'), catalog)).toEqual([])

@@ -60,6 +60,7 @@ import { dracoCompress, optimizeTextures } from './compress'
 import { renderContactSheet } from './contactSheet'
 import type { CompressOpts, TextureOpts } from './compress'
 import { findBlender, redact, requireMeshyKey } from './env'
+import { blankBands } from './blank'
 import { normaliseLook } from './look'
 import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, runGates, DATA_TEXTURE_MAX_PX, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
 import type { GateResult } from './gates'
@@ -334,7 +335,9 @@ async function optimizeAndRegate(
 ): Promise<Regate> {
   // A throw from a step or from a re-measurement is not a measured failure: it propagates and aborts the build.
   // Mode Création has no environment map and dim lights: cap the metal and lift the colour map of a textured model (no-op without textures).
-  const lit = await normaliseLook(fixed)
+  // Brand text and logos of the spec's blank bands are repainted first (on the full-size map), then the look is normalised.
+  const clean = spec.texture ? await blankBands(fixed, spec.texture.blankBandsMm) : fixed
+  const lit = await normaliseLook(clean)
   const textured = await d.optimizeTextures(lit, { maxPx: TEXTURE_MAX_PX[spec.tier], dataMaxPx: DATA_TEXTURE_MAX_PX[spec.tier] })
   const bytes = await d.compress(textured, { quantizePositionBits: QUANTIZE_BITS[spec.tier] })
   const compressed = await measure(bytes, spec)

@@ -8,11 +8,13 @@ import { existsSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { NodeIO } from '@gltf-transform/core'
+import sharp from 'sharp'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { buildAsset, formatReport, isMainModule, main, PILOT_IDS, readPhotosFrom, shipRun, targetPolycount } from '../../../tools/assets3d/build-asset'
 import type { BuildDeps, BuildReport } from '../../../tools/assets3d/build-asset'
 import { dracoCompress, optimizeTextures } from '../../../tools/assets3d/compress'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
+import { liftChannel } from '../../../tools/assets3d/look'
 import { MeshyError } from '../../../tools/assets3d/meshy'
 import type { MeshyTask } from '../../../tools/assets3d/meshy'
 import { buildPlacement } from '../../../tools/assets3d/placement'
@@ -931,6 +933,39 @@ describe('buildAsset texture budget', () => {
     const m = (await new NodeIO().readBinary(seen!)).getRoot().listMaterials()[0]
     expect(m.getMetallicFactor()).toBeLessThanOrEqual(0.15)
     expect(m.getBaseColorTexture()).not.toBeNull()
+  })
+
+  it('repaints the spec blank bands (logos) before the look and texture steps, and not at all without a texture block', async () => {
+    const read = async (bytes: Uint8Array): Promise<number[]> => {
+      const img = (await new NodeIO().readBinary(bytes)).getRoot().listMaterials()[0].getBaseColorTexture()!.getImage()!
+      const { data } = await sharp(Buffer.from(img)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+      return [data[0], data[1], data[2]]
+    }
+    // the helper writes all-zero UVs (degenerate triangles): give every triangle the corner (0,0), (1,0), (0,1) so its texels exist
+    const withRealUvs = async (bytes: Uint8Array): Promise<Uint8Array> => {
+      const io = new NodeIO()
+      const doc = await io.readBinary(bytes)
+      for (const prim of doc.getRoot().listMeshes().flatMap((m) => m.listPrimitives())) {
+        const uv = prim.getAttribute('TEXCOORD_0')!
+        const arr = uv.getArray() as Float32Array
+        for (let i = 0; i < arr.length / 2; i++) arr.set([[0, 0], [1, 0], [0, 1]][i % 3], i * 2)
+        uv.setArray(arr)
+      }
+      return io.writeBinary(doc)
+    }
+    const run = async (spec: AssetSpecT): Promise<number[]> => {
+      await addPhotos(spec.id, ['a.png'])
+      let seen: Uint8Array | undefined
+      const optimize: BuildDeps['optimizeTextures'] = async (bytes) => {
+        seen = bytes
+        return bytes
+      }
+      await buildAsset(spec.id, { maxAttempts: 1, logosRemoved: true }, makeDeps({ spec, fixed: [await withRealUvs(await goodGlb(spec, 0, { sizePx: 16, pbr: true }))], optimize }))
+      return read(seen!)
+    }
+    const lifted = liftChannel(0x20)
+    expect(await run(deviceSpec({ texture: { blankBandsMm: [{ fromMm: 0, toMm: 1000, fill: '#202020' }] } }))).toEqual([lifted, lifted, lifted])
+    expect((await run(deviceSpec())).every((v) => v === liftChannel(0x80))).toBe(true) // untouched flat grey, only lifted
   })
 
   it('an oversize final file aborts without a second Meshy create and keeps the raw GLB', async () => {

@@ -80,6 +80,17 @@ export const BuildSpec = z.object({
   })
 }).describe('Optional: how the scripted builder makes this asset (asset:build --scripted).')
 
+/** A height band of a textured model whose printing (brand text, logos) is repainted away (tools/assets3d/blank.ts). */
+const BlankBand = z.object({
+  fromMm: z.number().finite().min(0),
+  toMm: z.number().finite().min(0),
+  fill: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'fill must be #rrggbb').optional().describe('Colour of the repainted texels; absent = the median colour of the faces just outside the band.'),
+}).strict().refine((b) => b.toMm > b.fromMm, { message: 'a band must have toMm greater than fromMm' })
+
+export const TextureSpec = z.object({
+  blankBandsMm: z.array(BlankBand).min(1).describe('Height bands, in millimetres from the base of the upright model, where the colour map is repainted: removes brand text and logos from a Meshy model.'),
+}).strict().describe('Optional: how the colour map of a textured (Meshy) model is cleaned.')
+
 export const AssetSpec = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'spec id must be a kebab-case slug'),
   kind: z.enum(['device', 'connector']),
@@ -89,6 +100,7 @@ export const AssetSpec = z.object({
   controls: z.array(ControlSpec),
   mating: Mating.optional(),
   build: BuildSpec.optional(),
+  texture: TextureSpec.optional(),
   sources: z.array(SpecSource),
 }).strict()
 
@@ -96,5 +108,6 @@ export type FaceT = z.infer<typeof Face>
 export type PortSpecT = z.infer<typeof PortSpec>
 export type ControlSpecT = z.infer<typeof ControlSpec>
 export type BuildSpecT = z.infer<typeof BuildSpec>
+export type TextureSpecT = z.infer<typeof TextureSpec>
 export type SpecSourceT = z.infer<typeof SpecSource>
 export type AssetSpecT = z.infer<typeof AssetSpec>
