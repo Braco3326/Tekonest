@@ -154,7 +154,8 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
         const fixedPath = join(dir, `${spec.id}-${cache.size}.fixed.glb`)
         await runBuilder(spec, rawPath)
         const rawBytes = new Uint8Array(await readFile(rawPath))
-        const fix = await runFixup(rawPath, fixedPath, spec)
+        // As buildAsset does for a scripted build: the builder models its own sockets, the fix-up cuts no recess.
+        const fix = await runFixup(rawPath, fixedPath, spec, { recess: false })
         const fixedBytes = new Uint8Array(await readFile(fixedPath))
         const fixed = await inspectGlb(fixedBytes)
         return { raw: await inspectGlb(rawBytes), rawBytes, fix, fixed, fixedBytes, gates: runGates(fixed, spec, buildPlacement(spec)) }
@@ -203,6 +204,8 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(built.raw.triangles).toBeLessThanOrEqual(budget)
     expect(built.raw.materials).toBe(1)
     expect(built.fix.rotatedDegrees).toBe(0)
+    // No recess boolean ran: the fix-up neither adds nor drops a triangle (a cut would have changed the count).
+    expect(built.fixed.triangles).toBe(built.raw.triangles)
     expect(built.gates.filter((g) => !g.ok)).toEqual([])
     return built
   }
@@ -259,10 +262,12 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     // 52 connector bezels (two 10-sided rings each) reach the front face; the four rear housings reach the back face.
     expect(rings(zFront)).toBeGreaterThanOrEqual(52 * 10)
     expect(rings(zBack)).toBeGreaterThanOrEqual(4 * 8)
-    // The panel stands 11.5 mm behind the front face: nothing else stands closer to it than the connectors, so the
-    // rocker, knob and buttons (the highest at 10 mm) stay behind the bezel tips.
-    const frontOfBezels = verts.filter((v) => v[2] > zFront - 11.5 * MM + 1.05 * MM && v[2] < zFront - 1e-7)
-    expect(frontOfBezels.length).toBeGreaterThan(0)
+    // The panel stands 11.5 mm behind the front face. Every vertex is either at the panel (bezel bases, plates, ears), on a
+    // bezel tip (exactly at the front face) or within 10 mm of the panel (rocker, knob, buttons): nothing but the
+    // connectors comes closer to the front face than 1.5 mm.
+    const panelZ = zFront - 11.5 * MM
+    const strays = verts.filter((v) => v[2] > panelZ + 10 * MM + 1e-7 && v[2] < zFront - 1e-7)
+    expect(strays).toEqual([])
     // Ears: the 480 mm width is the two 27 mm ears (the chassis and panel are 426 mm wide).
     const earVerts = verts.filter((v) => Math.abs(v[0]) > 213.5 * MM)
     expect(earVerts.length).toBeGreaterThan(0)
@@ -278,6 +283,11 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
   it.skipIf(!BLENDER)('a chamfer larger than half the smallest side exits with BUILD_FAIL naming chamferMm', async () => {
     const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 300 } } }
     await expect(runBuilder(spec, join(dir, 'big-chamfer.glb'))).rejects.toThrow(/chamferMm/)
+  }, 120_000)
+
+  it.skipIf(!BLENDER)('a TRS barrel too short for its two insulator bands is refused, naming barrelMm', async () => {
+    const spec: AssetSpecT = { ...realSpec('trs-quarter'), build: { shape: 'trs-plug', params: { barrelMm: 15 } } }
+    await expect(runBuilder(spec, join(dir, 'short-barrel.glb'))).rejects.toThrow(/barrelMm/)
   }, 120_000)
 
   it.skipIf(!BLENDER)('a negative size exits non-zero with the BUILD_FAIL reason', async () => {
@@ -300,7 +310,7 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(existsSync(paths.manifestPath)).toBe(false)
   }, 180_000)
 
-  it.skipIf(!BLENDER)('two builder runs produce identical bytes', async () => {
+  it.skipIf(!BLENDER)('two builder runs produce identical raw GLB bytes', async () => {
     for (const [id] of WAVE1) {
       const a = join(dir, `det-${id}-a.glb`)
       const b = join(dir, `det-${id}-b.glb`)

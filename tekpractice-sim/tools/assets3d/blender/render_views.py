@@ -111,7 +111,8 @@ def setup_scene(plan: dict) -> None:
     # A model with vertex colours (scripted builds) shows them; one flat colour per material would paint it all one grey.
     # Meshy models carry a base colour texture: TEXTURE mode shows it.
     has_vertex_colours = any(ob.type == "MESH" and len(ob.data.color_attributes) > 0 for ob in bpy.data.objects)
-    scene.display.shading.color_type = "VERTEX" if has_vertex_colours else "TEXTURE"
+    has_textures = any(n.type == "TEX_IMAGE" for m in bpy.data.materials if m.node_tree is not None for n in m.node_tree.nodes)
+    scene.display.shading.color_type = "VERTEX" if has_vertex_colours and not has_textures else "TEXTURE"
     if scene.world is None:
         scene.world = bpy.data.worlds.new("World")
     scene.world.color = tuple(float(v) for v in plan["backgroundLinear"])

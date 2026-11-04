@@ -69,9 +69,10 @@ XLR_SEGMENTS = 20             # a multiple of 4 so the box is exact; 20 keeps th
 XLR_SHELL_RADIUS_MM = 9.6     # the 19.2 mm nickel shell
 
 DEFAULT_CHAMFER_MM = 1.0
+EAR_RECESS = 0.05 * MM          # the ear face sits this far behind the panel plane
 BEZEL_SEGMENTS = 10           # 52 connector bezels: 10 sides keep the stage box inside the 4000-triangle hero budget
 
-# trs-plug: 16 segments keep the 22-point profile inside the 800-triangle connector budget (about 700).
+# trs-plug: 16 segments keep the 23-point profile inside the 800-triangle connector budget (about 700).
 TRS_SEGMENTS = 16
 DEFAULT_BARREL_MM = 30.5
 
@@ -319,7 +320,7 @@ def fill_with_holes(bm: bmesh.types.BMesh, outline: list[bmesh.types.BMEdge], ho
 
 def bevel_faces(bm: bmesh.types.BMesh, faces: list[bmesh.types.BMFace], width: float) -> None:
     """One-segment chamfer of every edge of `faces` (the part just built), `width` metres."""
-    edges = list({e for f in faces for e in f.edges})
+    edges = list(dict.fromkeys(e for f in faces for e in f.edges))  # first-seen order: no set, no memory-address ordering
     bmesh.ops.bevel(bm, geom=edges, offset=width, offset_type="OFFSET", segments=1, affect="EDGES")
 
 
@@ -389,7 +390,7 @@ def build_cylinder_plug(plan: Plan) -> bpy.types.Object:
     # Latch lug on +Y: a trapezoid section (6.3 wide at the base, 2.3 on top) rising from 10.0 mm at the front to the top
     # of the box at the cable-side end (z = 24 mm); its base is sunk into the shell.
     base_y = axis_y + 8.9 * mm
-    z_front, z_back = 14.5 * mm, 24.0 * mm
+    z_front, z_back = front_len + 2.5 * mm, 24.0 * mm   # starts where the shoulder cone meets the shell
     sections = []
     for z, top_y in ((z_front, axis_y + 10.0 * mm), (z_back, axis_y + lug_top)):
         sections.append([bm.verts.new(g2b(x, y, z)) for x, y in ((-3.15 * mm, base_y), (3.15 * mm, base_y), (1.15 * mm, top_y), (-1.15 * mm, top_y))])
@@ -416,8 +417,9 @@ def build_trs_plug(plan: Plan) -> bpy.types.Object:
         raise BuildError(f"matingOuterMm ({barrel_r * 2000:.2f}) must be smaller than the body diameter ({body_r * 2000:.2f})")
     nose_len = 7.5 * MM
     boot_len = 23.5 * MM
-    if barrel_len < 14.0 * MM or barrel_len + nose_len + boot_len + 8.0 * MM > d:
-        raise BuildError(f"params.barrelMm ({barrel_len / MM:.2f}) does not fit a plug of sizeMm.d {d / MM:.2f} (needs 14 mm to about {(d - nose_len - boot_len - 8.0 * MM) / MM:.0f} mm)")
+    if barrel_len < 18.6 * MM or barrel_len + nose_len + boot_len + 8.0 * MM > d:
+        # 18.6 mm: the second insulator band ends at 17.6 mm and the sleeve needs a little length after it
+        raise BuildError(f"params.barrelMm ({barrel_len / MM:.2f}) does not fit a plug of sizeMm.d {d / MM:.2f} (needs 18.6 mm to about {(d - nose_len - boot_len - 8.0 * MM) / MM:.0f} mm)")
 
     r = barrel_r
     k = r / (3.175 * MM)             # the profile below is drawn for a 6.35 mm barrel; scale the radii to the spec's
@@ -427,7 +429,7 @@ def build_trs_plug(plan: Plan) -> bpy.types.Object:
     boot_start = d - boot_len
     # (radius, z from the tip). Measured by eye from the CC0 photo "Phone-connectors-labeled.jpg" (6.35 mm TRS plug,
     # ruler in frame): a pointed arrowhead tip, a narrow neck with a bead, then the barrel with the first black insulator
-    # about 9.6 mm from the tip (1.6 mm wide) and the second about 16.7 mm (1 mm wide).
+    # about 9.6 mm from the tip (1.6 mm wide) and the second about 16.7 mm (0.9 mm wide).
     profile: list[tuple[float, float]] = [
         (0.55 * mm * k, 0.0),            # small flat tip
         (2.65 * mm * k, 4.0 * mm),       # the arrowhead cone
@@ -581,13 +583,15 @@ def build_stagebox_rio3224(plan: Plan) -> bpy.types.Object:
     body.done(SLATE)
     for sign in (-1.0, 1.0):
         x0, x1 = sorted((sign * half_c, sign * hw))
-        box(bm, x0, x1, 0.0, h, panel - 2.5 * mm, panel)                       # the ear plate, flush with the panel
+        # The ear plate is 0.05 mm behind the panel plane and the flange starts inside the plate, so that no vertex or edge
+        # coincides with the slate panel (the fix-up merges coincident vertices and would leave 4-face edges).
+        box(bm, x0, x1, 0.0, h, panel - 2.5 * mm, panel - EAR_RECESS)
         x_in, x_out = sorted((sign * half_c, sign * (half_c + 2.5 * mm)))
         z_flange = panel - flange_depth
-        extrude_zy(bm, [(panel - 2.5 * mm, 0.0), (z_flange + 17.0 * mm, 0.0), (z_flange, 17.0 * mm), (z_flange, h - 17.0 * mm), (z_flange + 17.0 * mm, h), (panel - 2.5 * mm, h)], x_in, x_out)
+        extrude_zy(bm, [(panel - 2.4 * mm, 0.0), (z_flange + 17.0 * mm, 0.0), (z_flange, 17.0 * mm), (z_flange, h - 17.0 * mm), (z_flange + 17.0 * mm, h), (panel - 2.4 * mm, h)], x_in, x_out)
         body.done(EAR)
         for y in (182.1, 169.5, 109.3, 49.1, 36.4):                            # five rack-hole slots (dark pads)
-            box(bm, sign * 231.0 * mm - 5.25 * mm, sign * 231.0 * mm + 5.25 * mm, y * mm - 3.5 * mm, y * mm + 3.5 * mm, panel, panel + 0.3 * mm)
+            box(bm, sign * 231.0 * mm - 5.25 * mm, sign * 231.0 * mm + 5.25 * mm, y * mm - 3.5 * mm, y * mm + 3.5 * mm, panel - EAR_RECESS, panel + 0.3 * mm)
         body.done(DARK)
 
     # --- plates on the panel (1 mm raised) -------------------------------------------------------------------
