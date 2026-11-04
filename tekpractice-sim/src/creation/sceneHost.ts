@@ -38,6 +38,7 @@ import {
   uninstallDesignerOrbitInput,
   type DesignerOrbitPointersInput,
 } from '../scene/designerOrbitInput'
+import { installArrowTap } from '../scene/keyboardOrbitTap'
 import { applyOrbitFeel, ENSEMBLE_LOWER_RADIUS } from '../camera/orbitFeel'
 import { isSoftwareRenderer } from '../render/detect'
 import { assetUrl } from '../assetUrl'
@@ -903,6 +904,8 @@ export class SceneHost {
     this._camera = camera
     this.orbitInput = orbitInput
     camera.attachControl(true)
+    // A tap of an arrow key is worth one step even when no frame renders while it is down (night 2 wave 5, P2-2); the hold stays Babylon's.
+    installArrowTap(scene, camera)
     camera.lowerRadiusLimit = ENSEMBLE_LOWER_RADIUS
     camera.upperRadiusLimit = env ? 40 : Math.max(40, roomRadius * 1.5)
     applyOrbitFeel(camera)

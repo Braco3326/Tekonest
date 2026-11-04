@@ -87,3 +87,102 @@ test('the canvas keys work as its label says: arrows orbit, ] selects (announced
   await page.keyboard.press('Tab')
   await expect(page.getByRole('menu')).toHaveCount(0)
 })
+
+// ── Night 2 wave 5, P2-2: a single arrow tap must turn the camera on a slow PC ────────────────────────────────────────────────────────────────
+// Measured live (SwiftShader, 15-20 fps): ONE ArrowLeft turned the camera by 0 rad, held 400 ms by 1.58 rad: Babylon reads the keys that are down when a frame renders.
+// A fixed step per tap now (about 3.8 degrees = what one default frame gives), the hold is Babylon's own and unchanged, nothing is counted twice.
+const STEP = 0.01 / (1 - 0.85)
+const alpha = (page: import('@playwright/test').Page): Promise<number> => page.evaluate(() => window.__creation!.camera()!.alpha)
+const settleCamera = async (page: import('@playwright/test').Page): Promise<void> => {
+  await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+}
+const bootCamera = async (page: import('@playwright/test').Page, reduced: boolean): Promise<void> => {
+  await page.emulateMedia({ reducedMotion: reduced ? 'reduce' : 'no-preference' })
+  await page.goto('/')
+  await page.waitForFunction(() => !!window.__creation)
+  await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
+  await page.locator('#renderCanvas').focus()
+  await settleCamera(page)
+}
+for (const reduced of [true, false]) {
+  test.describe(reduced ? 'reduced motion' : 'normal motion', () => {
+    test('a tap released before any frame (a slow PC, emulated: keydown and keyup in one task) still turns the camera by one step, both ways', async ({ page }) => {
+      await bootCamera(page, reduced)
+      const a0 = await alpha(page)
+      const r0 = await page.evaluate(() => window.__creation!.renders())
+      await page.evaluate(() => {
+        const c = document.querySelector('#renderCanvas')!
+        const key = (type: string, code: number, name: string) => c.dispatchEvent(new KeyboardEvent(type, { key: name, code: name, keyCode: code, bubbles: true, cancelable: true }))
+        key('keydown', 37, 'ArrowLeft')
+        key('keyup', 37, 'ArrowLeft') // no frame can run between the two: the old behaviour turned by 0
+      })
+      await settleCamera(page)
+      const a1 = await alpha(page)
+      expect(Math.abs(a1 - a0), `one tap = one step (${STEP.toFixed(4)} rad)`).toBeGreaterThan(STEP * 0.9)
+      expect(Math.abs(a1 - a0)).toBeLessThan(STEP * 1.1)
+      expect(a1 < a0, 'ArrowLeft turns alpha down').toBe(true)
+      expect(await page.evaluate(() => window.__creation!.renders())).toBeGreaterThan(r0) // and the camera was drawn
+      await page.evaluate(() => {
+        const c = document.querySelector('#renderCanvas')!
+        const key = (type: string) => c.dispatchEvent(new KeyboardEvent(type, { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39, bubbles: true, cancelable: true }))
+        key('keydown')
+        key('keyup')
+      })
+      await settleCamera(page)
+      expect(Math.abs((await alpha(page)) - a0), 'and back by one step the other way').toBeLessThan(STEP * 0.1)
+    })
+
+    test('a real 30 ms tap with the CPU throttled (6x) turns the camera by the step, once', async ({ page }) => {
+      await bootCamera(page, reduced)
+      const cdp = await page.context().newCDPSession(page)
+      await cdp.send('Emulation.setCPUThrottlingRate', { rate: 6 })
+      const a0 = await alpha(page)
+      await page.keyboard.down('ArrowLeft')
+      await page.waitForTimeout(30) // a 30 ms tap: the finger is up before a slow frame
+      await page.keyboard.up('ArrowLeft')
+      await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 })
+      await settleCamera(page)
+      const d = Math.abs((await alpha(page)) - a0)
+      expect(d, 'turned').toBeGreaterThan(STEP * 0.9)
+      expect(d, 'by one step, or two frames of the hold at most, never a burst').toBeLessThan(STEP * 2.2)
+    })
+  })
+}
+
+test('holding an arrow still orbits continuously, one step per frame it is down (no double count), and stops on keyup', async ({ page }) => {
+  await bootCamera(page, false)
+  const a0 = await alpha(page)
+  // keydown and keyup are dispatched from this task and the frames between are counted in the same task: the number of frames the key was down is exact
+  const frames = await page.evaluate(async () => {
+    const c = document.querySelector('#renderCanvas')!
+    const key = (type: string) => c.dispatchEvent(new KeyboardEvent(type, { key: 'ArrowRight', code: 'ArrowRight', keyCode: 39, bubbles: true, cancelable: true }))
+    const r0 = window.__creation!.renders()
+    key('keydown')
+    await new Promise((res) => setTimeout(res, 500))
+    const during = window.__creation!.renders() - r0
+    key('keyup')
+    return during
+  })
+  await settleCamera(page)
+  const a1 = await alpha(page)
+  expect(frames, 'it rendered while held').toBeGreaterThan(3)
+  expect(a1 - a0, 'turned by one step per frame held').toBeGreaterThan(STEP * (frames - 0.6))
+  expect(a1 - a0, 'and not one step more (a tap step on top of the frames would be a double count)').toBeLessThan(STEP * (frames + 0.6))
+  // stopped: nothing moves any more once released and settled
+  const rest = await alpha(page)
+  await page.waitForTimeout(400)
+  expect(await alpha(page)).toBe(rest)
+})
+
+test('Ctrl + arrow (pan) and a tap in a text field do not turn the camera by a step', async ({ page }) => {
+  await bootCamera(page, false)
+  const a0 = await alpha(page)
+  await page.evaluate(() => {
+    const c = document.querySelector('#renderCanvas')!
+    c.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37, ctrlKey: true, bubbles: true }))
+    c.dispatchEvent(new KeyboardEvent('keyup', { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37, ctrlKey: true, bubbles: true }))
+  })
+  await settleCamera(page)
+  expect(Math.abs((await alpha(page)) - a0)).toBeLessThan(STEP * 0.1)
+})
