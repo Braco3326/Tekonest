@@ -219,15 +219,21 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(radiusAtZ(verts, raw.bboxM.max[2])).toBeLessThan(14.5 * MM / 2 * 0.7)
   }, 120_000)
 
-  it.skipIf(!BLENDER)('rj45 builds at 11.68 x 8 x 22.48 mm with the latch step on the +Y side', async () => {
+  it.skipIf(!BLENDER)('rj45 builds at 11.68 x 8 x 22.48 mm: 6.6 mm at the mating end, 8 mm at the cable end, latch side +Y', async () => {
     const spec = realSpec('rj45')
-    const { raw, rawBytes } = await expectBuiltTo(spec, 800)
+    const { raw, rawBytes, fixed, fixedBytes } = await expectBuiltTo(spec, 800)
+    await expectLooks(rawBytes, raw.triangles, 3) // pale body, gold contacts, dark cable hole
+    await expectLooks(fixedBytes, fixed.triangles, 3)
     const verts = await vertices(rawBytes)
     const zMin = raw.bboxM.min[2]
     const zMax = raw.bboxM.max[2]
-    // Full height at the mating end, 1.5 mm lower from 60 % of the length to the far end.
-    expect(Math.max(...verts.filter((v) => v[2] < zMin + 0.5 * MM).map((v) => v[1]))).toBeCloseTo(4 * MM, 6)
-    expect(Math.max(...verts.filter((v) => v[2] > zMax - 0.5 * MM).map((v) => v[1]))).toBeCloseTo(2.5 * MM, 6)
+    // Research report: the insertion part is 6.6 mm high (4 - 1.4 = +2.6 mm on the latch side, -4 mm on the contact side),
+    // the cable end rises to the full 8 mm. The old builder had this step upside down.
+    const front = verts.filter((v) => v[2] < zMin + 1 * MM)
+    expect(Math.max(...front.map((v) => v[1]))).toBeCloseTo(2.6 * MM, 6)
+    expect(Math.max(...verts.filter((v) => v[2] > zMax - 0.5 * MM).map((v) => v[1]))).toBeCloseTo(4 * MM, 6)
+    // The gold contact blades stand under the front half, flush with the cable end's underside.
+    expect(Math.min(...front.map((v) => v[1]))).toBeCloseTo(-4 * MM, 6)
   }, 120_000)
 
   it.skipIf(!BLENDER)('yamaha-rio3224-d2 builds as a chamfered 480 x 220 x 368 mm box and passes every gate with its ports and recesses', async () => {

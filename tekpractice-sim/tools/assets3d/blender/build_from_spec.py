@@ -50,6 +50,7 @@ NICKEL = "#c9ccd0"
 BLACK = "#303034"
 DARK = "#0b0b0d"
 GOLD = "#d4af37"
+PALE = "#b4cfe0"  # the clear RJ45 housing, drawn as an opaque pale blue-grey
 
 # The cylinder-plug (XLR) pin layout is stylised, not a measured copy of any vendor part.
 PIN_HOLE_DIAMETER_MM = 1.5
@@ -63,16 +64,6 @@ DEFAULT_CHAMFER_MM = 1.0
 # trs-plug: 16 segments keep the 22-point profile inside the 800-triangle connector budget (about 700).
 TRS_SEGMENTS = 16
 DEFAULT_BARREL_MM = 30.5
-
-# rj45-plug (stylised, not a measured copy of any vendor part)
-RJ45_LATCH_STEP_MM = 1.5
-RJ45_LATCH_START = 0.6        # the step starts at this fraction of the length
-RJ45_SLOTS = 8
-RJ45_SLOT_WIDTH_MM = 0.6
-RJ45_SLOT_HEIGHT_MM = 3.0
-RJ45_SLOT_DEPTH_MM = 1.0
-RJ45_SLOT_PITCH_MM = 1.02
-RJ45_SLOT_BOTTOM_MM = 1.5     # slots start this far above the bottom (the side opposite the latch)
 
 Plan = dict[str, Any]
 
@@ -237,6 +228,72 @@ def revolve(body: Body, profile: list[tuple[float, float]], colours: list[str], 
         body.done(colours[-1])
 
 
+def extrude_zy(bm: bmesh.types.BMesh, pts: list[tuple[float, float]], x0: float, x1: float) -> list[bmesh.types.BMFace]:
+    """A prism: the polygon `pts` of (z, y) points (glTF space) extruded along x from x0 to x1. Returns its faces."""
+    left = [bm.verts.new(g2b(x0, y, z)) for z, y in pts]
+    right = [bm.verts.new(g2b(x1, y, z)) for z, y in pts]
+    faces = [bm.faces.new(left), bm.faces.new(right[::-1])]
+    n = len(pts)
+    for i in range(n):
+        j = (i + 1) % n
+        faces.append(bm.faces.new((left[i], right[i], right[j], left[j])))
+    return faces
+
+
+def box(bm: bmesh.types.BMesh, x0: float, x1: float, y0: float, y1: float, z0: float, z1: float) -> list[bmesh.types.BMFace]:
+    """An axis-aligned box in glTF space (12 triangles)."""
+    return extrude_zy(bm, [(z0, y0), (z1, y0), (z1, y1), (z0, y1)], x0, x1)
+
+
+def blind_hole(bm: bmesh.types.BMesh, cx: float, cy: float, z: float, radius: float, n: int, depth: float, sign: float) -> list[bmesh.types.BMEdge]:
+    """A round hole whose mouth ring is at height z and whose floor is `depth` away along sign (+1: toward +z).
+
+    Builds the wall and the floor and returns the mouth's edges, which the face around the hole is then filled against
+    (fill_with_holes)."""
+    mouth = ring(bm, radius, z, n, cx, cy)
+    floor = ring(bm, radius, z + sign * depth, n, cx, cy)
+    band(bm, mouth, floor)
+    bm.faces.new(floor[::-1])
+    return [bm.edges.get((mouth[i], mouth[(i + 1) % n])) for i in range(n)]
+
+
+def rect_hole(bm: bmesh.types.BMesh, x0: float, x1: float, y0: float, y1: float, z: float, depth: float, sign: float) -> tuple[list[bmesh.types.BMEdge], list[bmesh.types.BMVert]]:
+    """A rectangular hole: wall faces now, mouth edges and floor vertices returned (the floor face is made by the caller,
+    so that walls and floor can take different colours)."""
+    mouth = [bm.verts.new(g2b(x, y, z)) for x, y in ((x0, y0), (x1, y0), (x1, y1), (x0, y1))]
+    floor = [bm.verts.new(g2b(x, y, z + sign * depth)) for x, y in ((x0, y0), (x1, y0), (x1, y1), (x0, y1))]
+    band(bm, mouth, floor)
+    return [bm.edges.get((mouth[i], mouth[(i + 1) % 4])) for i in range(4)], floor
+
+
+def take_face(bm: bmesh.types.BMesh, z: float) -> list[bmesh.types.BMEdge]:
+    """Removes the one face lying in the plane z (glTF) and returns its edges, to be refilled around holes."""
+    found = [f for f in bm.faces if all(abs(-v.co.y - z) < 1e-9 for v in f.verts)]
+    if len(found) != 1:
+        raise BuildError(f"expected one face in the plane z = {z / MM:.2f} mm, found {len(found)}")
+    edges = list(found[0].edges)
+    bmesh.ops.delete(bm, geom=found, context="FACES_ONLY")
+    return edges
+
+
+def fill_with_holes(bm: bmesh.types.BMesh, outline: list[bmesh.types.BMEdge], holes: list[list[bmesh.types.BMEdge]], normal_g: tuple[float, float, float]) -> None:
+    """Fills the planar region bounded by `outline` (edges) minus the loops `holes` with triangles."""
+    edges = list(outline)
+    for hole in holes:
+        edges += hole
+    if any(e is None for e in edges):
+        raise BuildError("fill_with_holes: an outline edge does not exist")
+    result = bmesh.ops.triangle_fill(bm, use_beauty=True, use_dissolve=False, edges=edges, normal=g2b(*normal_g))
+    if not result["geom"]:
+        raise BuildError("could not fill a face around its holes")
+
+
+def bevel_faces(bm: bmesh.types.BMesh, faces: list[bmesh.types.BMFace], width: float) -> None:
+    """One-segment chamfer of every edge of `faces` (the part just built), `width` metres."""
+    edges = list({e for f in faces for e in f.edges})
+    bmesh.ops.bevel(bm, geom=edges, offset=width, offset_type="OFFSET", segments=1, affect="EDGES")
+
+
 # --- shapes -----------------------------------------------------------------------------------------------
 
 def build_cylinder_plug(plan: Plan) -> bpy.types.Object:
@@ -343,50 +400,62 @@ def build_trs_plug(plan: Plan) -> bpy.types.Object:
 
 
 def build_rj45_plug(plan: Plan) -> bpy.types.Object:
-    """RJ45 plug: a w x h x d box (centred on x and y, mating face at z = 0) with a latch step on the +Y side
-    (the top is 1.5 mm lower from 60 % of the length to the far end) and eight contact slots in the mating face."""
-    w, h, d = size_m(plan)
-    step = RJ45_LATCH_STEP_MM * MM
-    z_step = d * RJ45_LATCH_START
-    slot_w = RJ45_SLOT_WIDTH_MM * MM
-    slot_h = RJ45_SLOT_HEIGHT_MM * MM
-    slot_depth = RJ45_SLOT_DEPTH_MM * MM
-    pitch = RJ45_SLOT_PITCH_MM * MM
-    if step >= h / 2.0:
-        raise BuildError(f"sizeMm.h ({h / MM:.2f}) is too small for the latch step")
-    if (RJ45_SLOTS - 1) * pitch + slot_w >= w or slot_depth >= z_step:
-        raise BuildError("the box is too small for the eight contact slots")
+    """Bare RJ45 (8P8C) cable plug, mating face at z = 0, latch side +Y (research report, "RJ45 8P8C plug").
 
-    x0, x1 = -w / 2.0, w / 2.0
-    y0, y1 = -h / 2.0, h / 2.0
-    # Side profile (z, y), going round from the mating-face top: the latch step is on the +Y side.
-    profile = [(0.0, y1), (0.0, y0), (d, y0), (d, y1 - step), (z_step, y1 - step), (z_step, y1)]
+    The insertion part is 6.6 mm high (the contacts, 0.2 mm blades on the underside, are part of it) and the cable end
+    rises to the full 8 mm; a thin hinged latch tab slopes up toward the rear between two guard shoulders, the cable hole
+    is dark. Verified: overall size, 1.02 mm pitch, 6.60 mm insertion height. Estimated: latch, shoulders, rear block
+    length, hole. One pale body colour stands for the clear housing, gold for the contacts."""
+    w, h, d = size_m(plan)
+    if w < 10.0 * MM or h < 7.0 * MM or d < 20.0 * MM:
+        raise BuildError(f"an RJ45 plug needs sizeMm of at least 10 x 7 x 20 (got {w / MM:.2f} x {h / MM:.2f} x {d / MM:.2f})")
+    mm = MM
+    hw = w / 2.0
+    y_top, y_bot = h / 2.0, -h / 2.0
+    blade_t = 0.2 * mm
+    front_bot = y_bot + blade_t
+    front_top = y_top - 1.4 * mm          # 8.00 - 6.60: the insertion area is lower than the cable end
+    z_rear = 15.5 * mm
+
     body = Body("rj45-plug")
     bm = body.bm
-    left = [bm.verts.new(g2b(x0, y, z)) for z, y in profile]
-    right = [bm.verts.new(g2b(x1, y, z)) for z, y in profile]
-    n = len(profile)
-    bm.faces.new(left)
-    bm.faces.new(right[::-1])
-    for i in range(1, n):       # edge 0 (i = 0 -> 1) is the mating face, filled below around the slots
-        j = (i + 1) % n
-        bm.faces.new((left[i], right[i], right[j], left[j]))
-    # Mating face: its outline plus eight rectangular slot rings, filled as one region with holes.
-    fill_edges = [bm.edges.get((left[0], left[1])), bm.edges.get((left[1], right[1])),
-                  bm.edges.get((right[1], right[0])), bm.edges.get((right[0], left[0]))]
-    y_lo = y0 + RJ45_SLOT_BOTTOM_MM * MM
-    for k in range(RJ45_SLOTS):
-        cx = (k - (RJ45_SLOTS - 1) / 2.0) * pitch
-        corners = [(cx - slot_w / 2.0, y_lo), (cx + slot_w / 2.0, y_lo), (cx + slot_w / 2.0, y_lo + slot_h), (cx - slot_w / 2.0, y_lo + slot_h)]
-        top = [bm.verts.new(g2b(x, y, 0.0)) for x, y in corners]
-        bottom = [bm.verts.new(g2b(x, y, slot_depth)) for x, y in corners]
-        band(bm, top, bottom)
-        bm.faces.new(bottom[::-1])
-        fill_edges += [bm.edges.get((top[i], top[(i + 1) % 4])) for i in range(4)]
-    result = bmesh.ops.triangle_fill(bm, use_beauty=True, use_dissolve=False, edges=fill_edges, normal=g2b(0.0, 0.0, -1.0))
-    if not result["geom"]:
-        raise BuildError("could not fill the mating face around the contact slots")
-    body.done(BLACK)
+    main = extrude_zy(bm, [(0.0, front_bot), (z_rear, front_bot), (z_rear, y_bot), (d, y_bot), (d, y_top), (z_rear, y_top), (z_rear, front_top), (0.0, front_top)], -hw, hw)
+    bevel_faces(bm, main, 0.15 * mm)  # smaller than the 0.2 mm underside step
+    # The rear and front faces are rebuilt with their holes (cable entry, eight contact slots): drop the bevelled ones,
+    # keep their boundary edges.
+    rear_outline = take_face(bm, d)
+    front_outline = take_face(bm, 0.0)
+    body.done(PALE)
+    hole = blind_hole(bm, 0.0, 0.0, d, 2.75 * mm, 8, 2.0 * mm, -1.0)
+    body.done(DARK)
+    fill_with_holes(bm, rear_outline, [hole], (0.0, 0.0, 1.0))
+    body.done(PALE)
+    slots: list[list[bmesh.types.BMEdge]] = []
+    floors: list[list[bmesh.types.BMVert]] = []
+    for i in range(8):
+        cx = (i - 3.5) * 1.02 * mm
+        mouth, floor = rect_hole(bm, cx - 0.31 * mm, cx + 0.31 * mm, front_bot + 0.45 * mm, front_bot + 3.45 * mm, 0.0, 1.0 * mm, 1.0)
+        slots.append(mouth)
+        floors.append(floor)
+    for floor in floors:
+        bm.faces.new(floor[::-1])
+    body.done(GOLD)  # contact blades seen in the slots: walls and floor gold
+    fill_with_holes(bm, front_outline, slots, (0.0, 0.0, -1.0))
+    body.done(PALE)
+
+    # Latch tab: hinged near the front, rising toward the rear, between the guard shoulders.
+    box_latch = extrude_zy(bm, [(3.0 * mm, front_top), (z_rear, front_top + 0.5 * mm), (z_rear, front_top + 1.1 * mm), (3.0 * mm, front_top + 0.6 * mm)], -4.0 * mm, 4.0 * mm)
+    del box_latch
+    body.done(PALE)
+    for sign in (-1.0, 1.0):
+        x_in, x_out = sorted((sign * 4.34 * mm, sign * hw))
+        extrude_zy(bm, [(6.0 * mm, front_top), (z_rear, front_top), (z_rear, y_top), (9.0 * mm, y_top)], x_in, x_out)
+        body.done(PALE)
+    # Eight gold contact blades under the insertion part, flush with the front face.
+    for i in range(8):
+        cx = (i - 3.5) * 1.02 * mm
+        box(bm, cx - 0.25 * mm, cx + 0.25 * mm, y_bot, front_bot, 0.0, 8.2 * mm)
+        body.done(GOLD)
     return body.finish()
 
 
