@@ -26,6 +26,8 @@ export interface PlacedPort {
   outward: Vec3
   /** Diameter of the port opening in metres, when the spec gives it (R3). */
   openingM?: number
+  /** How far behind the bounding-box face the port sits, in metres (spec insetMm); absent = on the face plane. */
+  insetM?: number
 }
 
 export interface PlacedControl {
@@ -65,8 +67,11 @@ export function buildPlacement(spec: AssetSpecT): Placement {
   if (spec.kind === 'connector') return { sizeM, ports: [], controls: [] }
 
   const ports = spec.ports.map((p): PlacedPort => {
-    const { pos, outward } = onFace(p.face, mmToM(p.xMm), mmToM(p.yMm), sizeM)
+    const { pos: onPlane, outward } = onFace(p.face, mmToM(p.xMm), mmToM(p.yMm), sizeM)
+    const inset = p.insetMm !== undefined && p.insetMm > 0 ? mmToM(p.insetMm) : 0
+    const pos: Vec3 = [onPlane[0] - outward[0] * inset, onPlane[1] - outward[1] * inset, onPlane[2] - outward[2] * inset]
     const placed: PlacedPort = { name: `port_${p.portId}`, pos, outward }
+    if (inset > 0) placed.insetM = inset
     if (p.openingMm !== undefined) placed.openingM = mmToM(p.openingMm)
     return placed
   })

@@ -106,6 +106,22 @@ describe('AssetSpec build profile (revolve)', () => {
   })
 })
 
+describe('AssetSpec insetMm and driftLimit', () => {
+  const base = (): AssetSpecT => specFor(fresh(), 'qsc-k12-2')
+  it('accepts a port inset and a drift limit, rejects a negative inset and a limit outside (0, 0.35]', () => {
+    const withPortInset = (insetMm: number) => AssetSpec.safeParse({ ...base(), ports: base().ports.map((p, i) => (i === 0 ? { ...p, insetMm } : p)) }).success
+    expect(withPortInset(35)).toBe(true)
+    expect(withPortInset(0)).toBe(true)
+    expect(withPortInset(-1)).toBe(false)
+    expect(withPortInset(250)).toBe(false)
+    const lim = (driftLimit: number) => AssetSpec.safeParse({ ...base(), driftLimit }).success
+    expect(lim(0.25)).toBe(true)
+    expect(lim(0.35)).toBe(true)
+    expect(lim(0.4)).toBe(false)
+    expect(lim(0)).toBe(false)
+  })
+})
+
 describe('AssetSpec texture block (blank bands)', () => {
   const base = (): AssetSpecT => specFor(fresh(), 'qsc-k12-2')
   it('accepts blank bands with and without a fill', () => {

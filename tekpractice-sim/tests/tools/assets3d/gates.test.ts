@@ -388,6 +388,18 @@ describe('checkPortPositions', () => {
     expect(r).toMatchObject({ gate: 'portPositions', ok: true })
   })
 
+  it('a port with an inset sits that far behind the bounding-box face and passes; without the inset the same node is off the face plane', async () => {
+    const withInset = deviceSpec({ ports: [{ portId: 'in-mic-1', face: 'io', xMm: 20, yMm: 25, confidence: 'manual', insetMm: 30 }] })
+    const placed = buildPlacement(withInset)
+    const r = checkPortPositions(await boxReport(placed.sizeM, placedNodes(placed)), placed)
+    expect(r).toMatchObject({ gate: 'portPositions', ok: true })
+    // the same node position judged against a placement that claims no inset: it is 30 mm inside the body face
+    const flat = buildPlacement(deviceSpec())
+    const sunk = checkPortPositions(await boxReport(flat.sizeM, placedNodes(placed)), { ...flat, ports: flat.ports.map((p) => ({ ...p, pos: placed.ports[0].pos })) })
+    expect(sunk.ok).toBe(false)
+    expect(sunk.detail).toContain('off the face plane')
+  })
+
   it('port position fails at 0.4 mm off and passes at 0.2 mm off', async () => {
     const base = await boxReport(sizeM, placedNodes(placement))
     expect(checkPortPositions(moveNode(base, port, [0.2 * MM, 0, 0]), placement).ok).toBe(true)
@@ -674,6 +686,15 @@ describe('checkConnectorFit', () => {
 
 describe('checkProportionDrift', () => {
   const spec = deviceSpec() // 100 x 50 x 200 mm, d is the largest axis
+
+  it('a spec driftLimit replaces the 5 percent default (a Meshy speaker whose depth was guessed)', () => {
+    const pre = { w: 0.1, h: 0.05, d: 0.2 * 0.85 } // the depth 15 percent short: the other axes drift 17.6 percent
+    expect(checkProportionDrift(pre, spec).ok).toBe(false)
+    const wide = checkProportionDrift(pre, deviceSpec({ driftLimit: 0.2 }))
+    expect(wide.ok).toBe(true)
+    expect(wide.detail).toContain('limit 20 %')
+    expect(checkProportionDrift(pre, deviceSpec({ driftLimit: 0.15 })).ok).toBe(false)
+  })
 
   it('passes an exact copy and a uniformly scaled copy', () => {
     expect(checkProportionDrift({ w: 0.1, h: 0.05, d: 0.2 }, spec)).toMatchObject({ gate: 'proportionDrift', ok: true })

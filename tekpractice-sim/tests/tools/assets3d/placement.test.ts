@@ -29,6 +29,33 @@ function withControl(face: FaceT, xMm: number, yMm: number): AssetSpecT {
 
 const portOf = (face: FaceT, x: number, y: number) => buildPlacement(withPort(face, x, y)).ports[0]
 
+describe('port inset (a jack deep in a recessed panel)', () => {
+  const inset = (face: FaceT, mm: number): AssetSpecT => {
+    const s = withPort(face, 100, 50)
+    s.ports[0].insetMm = mm
+    return s
+  }
+  it('moves the port inward along its outward axis and says by how much', () => {
+    const io = buildPlacement(inset('io', 35)).ports[0]
+    expect(io.pos[2]).toBeCloseTo(0.281 - 0.035, 9)
+    expect(io.insetM).toBeCloseTo(0.035, 9)
+    const top = buildPlacement(inset('top', 10)).ports[0]
+    expect(top.pos[1]).toBeCloseTo(0.272 - 0.01, 9)
+    const opp = buildPlacement(inset('opposite', 5)).ports[0]
+    expect(opp.pos[2]).toBeCloseTo(-0.281 + 0.005, 9)
+  })
+  it('no inset leaves the port on the face plane and the field absent', () => {
+    const p = buildPlacement(withPort('io', 100, 50)).ports[0]
+    expect(p.pos[2]).toBeCloseTo(0.281, 9)
+    expect(p.insetM).toBeUndefined()
+  })
+  it('the extras carry the inset position (the app puts the cable end at the real jack)', () => {
+    const spec = inset('io', 35)
+    const ex = toExtras(spec, buildPlacement(spec))
+    expect(ex.ports[0].pos[2]).toBeCloseTo(0.281 - 0.035, 9)
+  })
+})
+
 describe('buildPlacement', () => {
   it('reports the size in metres', () => {
     expect(buildPlacement(withPort('io', 0, 0)).sizeM).toEqual({ w: 0.468, h: 0.272, d: 0.562 })

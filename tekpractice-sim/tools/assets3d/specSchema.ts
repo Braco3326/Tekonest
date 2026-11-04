@@ -31,6 +31,7 @@ export const PortSpec = z.object({
   yMm: CoordMm,
   confidence: z.enum(['manual', 'photo']).describe('manual = read from a manual or datasheet drawing; photo = read from a photo (a skeleton starts as photo, zeroed, for a human to fill).'),
   openingMm: PositiveMm.optional().describe('Diameter of the circular opening of the port, in millimetres (R3).'),
+  insetMm: z.number().finite().min(0).max(200).optional().describe('How far behind the bounding-box face the real jack sits, in millimetres: a connector panel recessed into a speaker cabinet. The port node is placed that far inside the face plane (default 0 = on it).'),
 }).strict()
 
 export const ControlSpec = z.object({
@@ -101,6 +102,7 @@ export const AssetSpec = z.object({
   mating: Mating.optional(),
   build: BuildSpec.optional(),
   texture: TextureSpec.optional(),
+  driftLimit: z.number().finite().gt(0).max(0.35).optional().describe('Proportion drift the fix-up may absorb, as a fraction (default 0.05). A Meshy model whose depth was guessed from front photos (a speaker cabinet) may need more; the founder accepts it per device.'),
   sources: z.array(SpecSource),
 }).strict()
 

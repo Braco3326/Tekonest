@@ -178,8 +178,8 @@ export function checkPortPositions(report: GlbReport, placement: Placement): Gat
   const { min, max } = report.bboxM
   const byName = new Map(report.nodes.map((n) => [n.name, n.worldPos]))
   const wanted = [
-    ...placement.ports.map((p) => ({ name: p.name, pos: p.pos, outward: p.outward as Vec3 | undefined })),
-    ...placement.controls.map((c) => ({ name: c.name, pos: c.pos, outward: undefined as Vec3 | undefined })),
+    ...placement.ports.map((p) => ({ name: p.name, pos: p.pos, outward: p.outward as Vec3 | undefined, inset: p.insetM ?? 0 })),
+    ...placement.controls.map((c) => ({ name: c.name, pos: c.pos, outward: undefined as Vec3 | undefined, inset: 0 })),
   ]
 
   for (const w of wanted) {
@@ -199,7 +199,8 @@ export function checkPortPositions(report: GlbReport, placement: Placement): Gat
     if (!w.outward) continue
 
     const axis = w.outward.findIndex((c) => c !== 0)
-    const face = w.outward[axis] > 0 ? max[axis] : min[axis]
+    // a port in a recessed panel (spec insetMm) sits that far behind the bounding-box face
+    const face = (w.outward[axis] > 0 ? max[axis] : min[axis]) - w.outward[axis] * w.inset
     const planeOff = Math.abs(actual[axis] - face)
     if (!(planeOff <= FACE_PLANE_TOL_M + EPS_M)) {
       problems.push(`${w.name} is off the face plane: ${AXES[axis]} = ${mm(actual[axis])} mm, the body face is at ${mm(face)} mm (off by ${mm(planeOff)} mm, tolerance ${mm(FACE_PLANE_TOL_M)} mm)`)
@@ -300,9 +301,10 @@ export function checkProportionDrift(preScaleSizeM: SizeM, spec: AssetSpecT): Ga
     drift = Math.max(drift, Math.abs((pre[i] / preMax) / (wanted[i] / specMax) - 1))
   }
   const percent = (drift * 100).toFixed(2)
-  const detail = `proportions drift ${percent} % from the spec, limit ${DRIFT_LIMIT * 100} %`
-  // Strictly greater than 5 % fails; the slack lets a mathematically exact 5 % pass despite float error.
-  return { gate, ok: drift <= DRIFT_LIMIT + EPS_M, detail }
+  const limit = spec.driftLimit ?? DRIFT_LIMIT
+  const detail = `proportions drift ${percent} % from the spec, limit ${Math.round(limit * 10000) / 100} %`
+  // Strictly greater than the limit fails; the slack lets a mathematically exact limit pass despite float error.
+  return { gate, ok: drift <= limit + EPS_M, detail }
 }
 
 /** How close the real surface must be to a port: the face-plane gate's 0.2 mm plus mesh slack. */
