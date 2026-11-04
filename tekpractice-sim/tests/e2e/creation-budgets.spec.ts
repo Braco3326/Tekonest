@@ -263,24 +263,20 @@ test('5 place changes with the template gear: liveListeners() and the page-level
   expect(after.meshes, 'meshes').toBe(baseline.meshes)
 })
 
-/**
- * The Projet tree rows used to be pinned here (axe label-content-name-mismatch on the four expandable rows, 43a). Fixed in Task 43d (tracking id 43d-tree, see
- * projectTree.ts): the pin is EMPTY, so any serious / critical violation, that one included, fails every axe test of this file.
- */
-const KNOWN_TREE_GROUP_ROWS: string[] = []
-
 test.describe('axe: 0 serious or critical violations, whole page, no rule disabled', () => {
   /**
-   * `rule: selector | selector` for each serious / critical violation.
+   * `rule: selector | selector` for each serious / critical violation. Every test expects `[]`: the Projet tree rows that used to be a pinned exception here
+   * (label-content-name-mismatch, tracking id 43d-tree) were fixed in Task 43d (projectTree.ts), so any violation, that one included, fails.
    *
    * WHY `overflow` IS LIFTED WHILE AXE RUNS. index.html has `body { overflow: hidden }` (the shell is position: fixed and never scrolls). With that, axe-core 4.14
    * treats every element as not visible: `color-contrast` and the other visibility-based rules do not evaluate (measured: a probe paragraph in #777 on #888 is
-   * not reported, and the picker lists 2 nodes under color-contrast instead of 63). Every earlier axe check of this app ran with that blind spot. The shell is
+   * not reported, and the picker lists 2 nodes under color-contrast instead of 63 in Task 43a and 67 in Task 43d). Every earlier axe check of this app ran with that blind spot. The shell is
    * fixed, so lifting the overflow changes no layout; it is restored at once. No rule is disabled and nothing is excluded.
    * The inline value (and priority) that was on `body` is saved and put back, whatever it was; the document height is measured before and after to show the
    * lift moved nothing (the place picker overlay included).
-   * `minLooked` is a per-state floor for the nodes color-contrast evaluated, about 80 % of what Task 43d measured: picker 67, shell 41, drawer 59, connect dialog
-   * 11 (a modal makes the rest of the page inert, so few nodes), view picker 29, listen panel 47. (The 43a note "63 to 89" was not true of the dialog states.)
+   * `minLooked` is a per-state floor for the nodes color-contrast evaluated, 69 to 76 % of what Task 43d measured (picker 50 of 67, shell 30 of 41, drawer 45 of 59, connect dialog
+   * 8 of 11 (a modal makes the rest of the page inert, so few nodes), view picker 20 of 29, listen panel 35 of 47); the all-groups-open test uses 30, which was not measured
+   * separately. (The 43a note "63 to 89" was not true of the dialog states.)
    * Each run also records its count as a test annotation.
    */
   const bad = async (page: Page, minLooked: number): Promise<string[]> => {
@@ -337,7 +333,7 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
   test('the shell with a place and the template on screen', async ({ page }) => {
     await boot(page, { powered: false })
     await expect(page.getByTestId('place-picker')).toBeHidden()
-    expect(await bad(page, 30)).toEqual(KNOWN_TREE_GROUP_ROWS)
+    expect(await bad(page, 30)).toEqual([])
   })
 
   test('the shell with every Projet tree group open (rows that contain their children)', async ({ page }) => {
@@ -346,7 +342,7 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
     for (const name of [/^Zones/, /^Matériel/, /^Câbles/, /^Points d’écoute/]) await tree.getByRole('treeitem', { name }).click() // a click on a group opens it
     await expect(tree.locator('[role="treeitem"][aria-expanded="true"]')).toHaveCount(4)
     expect(await tree.getByRole('treeitem').count(), 'the groups show their children').toBeGreaterThan(9)
-    expect(await bad(page, 30)).toEqual(KNOWN_TREE_GROUP_ROWS)
+    expect(await bad(page, 30)).toEqual([])
   })
 
   test('the inventory drawer, open', async ({ page }) => {
@@ -354,7 +350,7 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
     await page.locator('#renderCanvas').focus()
     await page.keyboard.press('Space')
     await expect(drawer(page)).toBeVisible()
-    expect(await bad(page, 45)).toEqual(KNOWN_TREE_GROUP_ROWS)
+    expect(await bad(page, 45)).toEqual([])
   })
 
   test('the connect dialog, open', async ({ page }) => {
@@ -386,7 +382,7 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
     await expect(page.getByTestId('listen-panel')).toBeVisible()
     await expect(page.getByTestId('listen-transport')).toBeVisible()
     await settled(page)
-    expect(await bad(page, 35)).toEqual(KNOWN_TREE_GROUP_ROWS)
+    expect(await bad(page, 35)).toEqual([])
   })
 })
 
@@ -394,7 +390,7 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
  * CA-24 (audit; fixed in Task 43d): Babylon's glTF loader used to fetch its Draco decoder from https://cdn.babylonjs.com/ at runtime (26 of the 53 shipped
  * models are Draco-compressed; a third party is blocked by school filters, absent offline, and learns every visitor's IP). The decoder (draco3dgltf 1.5.7,
  * Apache-2.0) is now vendored under public/draco/ and `DracoCompression.Configuration` points to it (src/render/draco.ts, set by Mode Création's boot and by the
- * legacy entry). These tests are the guard: NO request leaves the origin, and the decoder really is fetched from /draco/ (so "no foreign request" is not
+ * legacy entry). These tests are the guard: NO request leaves the origin IN THE SESSIONS THEY EXERCISE (Chromium; one creation session and one legacy level, not every path of the app), and the decoder really is fetched from /draco/ (so "no foreign request" is not
  * a pass because nothing was decoded). Requests are read on the browser context, so a dedicated worker's fetch (where the wrapper loads) is seen too.
  * Not seen by this listener: WebSocket and EventSource traffic.
  */

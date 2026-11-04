@@ -22,7 +22,9 @@
 //     from its caller). That file is a forbidden module, but the same line written in boot.ts would leave no trace in any module list, so the TEXT of the start
 //     closure is scanned too: any emitted worker asset name (a JS file of dist/ that no chunk list knows) is a failure in any start chunk, and a `new Worker(` is
 //     a failure in a start chunk that holds a project module (the Babylon chunk has project-free workers of its own, and is not scanned for it). A `?worker`
-//     import is matched on the module id.
+//     import is matched on the module id. LIMITS of the text scan (stated, not hidden): it looks for the literal `new Worker(` only, so a `new SharedWorker(`, a
+//     constructor reached through an alias (`const W = Worker; new W(...)`) or a worker built from a blob are not seen; and chunks with no project module are skipped for
+//     the `new Worker(` check (the Babylon vendor chunk), so a worker started from inside a vendor chunk is not seen either. The asset-name check covers every start chunk.
 //   - A rule that matches no module anywhere in the build is STALE (the file was renamed): that is a failure, never a silent pass. For a rule that lists exact
 //     ids, EACH id must exist in some chunk. A start-closure chunk with no entry in the sidecar is a failure, not a skip.
 //
@@ -30,9 +32,9 @@
 // before the `await import()` of the engine, or Safari / iOS leave it suspended (docs/CREATIVE-MODE-LOG.md L31 viii; the file header says the same). It is a
 // 60-line file with no Web Audio graph in it. Everything else under src/audio/ is lazy.
 
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, realpathSync, statSync } from 'node:fs'
 import { join, resolve } from 'node:path'
-import { fileURLToPath, pathToFileURL } from 'node:url'
+import { fileURLToPath } from 'node:url'
 
 export const RATIO = 1.15
 const RATIO_PERCENT = 115 // integer maths: 1000 x 1.15 must be exactly 1150
@@ -237,4 +239,13 @@ function main() {
   process.exit(verdict.ok ? 0 : 1)
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) main()
+/** True when this file is the script node was started with. Both sides go through realpath: a link or junction to tools/ must not make the CLI silently do nothing. */
+function isMain() {
+  try {
+    return !!process.argv[1] && realpathSync.native(resolve(process.argv[1])) === realpathSync.native(fileURLToPath(import.meta.url))
+  } catch {
+    return false
+  }
+}
+
+if (isMain()) main()

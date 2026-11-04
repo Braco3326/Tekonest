@@ -5,7 +5,7 @@
 // JavaScript: measured in Task 43a, a scratch build with VITE_AI_COACH_KEY=zzTESTKEYzz contained `{VITE_AI_COACH_KEY:"zzTESTKEYzz"}` in legacyMain-*.js. The committed build
 // has none. ADR-0006 accepts "the user's own key from their local .env" for local use; the PUBLIC deploy (https://tekonest.com/tekpractice/jouer/) must never carry one.
 //
-// WHAT COUNTS. A variable whose name matches /^VITE_.*(KEY|SECRET|TOKEN|PASSWORD)/i, with a non-blank value, either
+// WHAT COUNTS. A variable whose name matches SECRET_VAR below (VITE_ + KEY, SECRET, TOKEN, PASSW, PASS, CRED, AUTH, PRIVATE or API), with a non-blank value, either
 //   - in the environment of the build, or
 //   - defined in a `.env*` file of the project root (.env, .env.local, .env.production, .env.<mode>, ...). `.env.example`, `.env.sample` and `.env.template` are
 //     documentation that Vite never loads: they are skipped. A blank value (`VITE_AI_COACH_KEY=`) ships nothing and is not refused.
@@ -13,12 +13,16 @@
 //
 // Usage: `node tools/deploy-guard.mjs [projectRoot]` (exit 0 clean, 1 refused). tools/build-site.mjs calls findSecretVars() itself, before anything else.
 
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, realpathSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
-import { fileURLToPath, pathToFileURL } from 'node:url'
+import { fileURLToPath } from 'node:url'
 
-/** Names that must never reach a public bundle. */
-export const SECRET_VAR = /^VITE_.*(KEY|SECRET|TOKEN|PASSWORD)/i
+/**
+ * Names that must never reach a public bundle: any VITE_ name that says key, secret, token, password (PASSW, PASS), credential, auth, private or API. Broad on purpose
+ * (VITE_MY_KEYBOARD is refused too: a false alarm costs a rename, a miss costs a leaked key). The three variables the app really reads (src/vite-env.d.ts) are
+ * VITE_AI_COACH_KEY (a secret), VITE_AI_COACH_PROVIDER and VITE_AI_COACH_MODEL: the last two do not match, so no allow-list is needed (a test pins it).
+ */
+export const SECRET_VAR = /^VITE_.*(KEY|SECRET|TOKEN|PASSW|PASS|CRED|AUTH|PRIVATE|API)/i
 
 const NEVER_LOADED = /\.(example|sample|template)$/i
 const ASSIGN = /^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/
@@ -79,4 +83,13 @@ function main() {
   }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) main()
+/** True when this file is the script node was started with. Both sides go through realpath: a link or junction to tools/ must not make the CLI silently do nothing. */
+function isMain() {
+  try {
+    return !!process.argv[1] && realpathSync.native(resolve(process.argv[1])) === realpathSync.native(fileURLToPath(import.meta.url))
+  } catch {
+    return false
+  }
+}
+
+if (isMain()) main()

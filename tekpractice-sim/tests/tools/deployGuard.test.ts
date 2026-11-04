@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process'
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, rmdirSync, symlinkSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -26,6 +26,17 @@ const project = (files: Record<string, string> = {}): string => {
 const SENTINEL = 'sk-ant-NOT-A-REAL-KEY-zq81'
 
 describe('SECRET_VAR (which names count)', () => {
+  // R1 S5: broadened to the other usual words for a credential. The app really reads three variables (src/vite-env.d.ts): only the KEY is a secret.
+  it.each(['VITE_DB_PASS', 'VITE_DB_PASSWD', 'VITE_AWS_CREDENTIALS', 'VITE_CRED', 'VITE_AUTH0_CLIENT', 'VITE_OAUTH_ID', 'VITE_PRIVATE_URL', 'VITE_OPENAI_API', 'VITE_MAPS_APIKEY', 'vite_x_api_url'])(
+    '%s is refused (R1 S5)',
+    (name) => expect(SECRET_VAR.test(name)).toBe(true),
+  )
+  it('of the three variables the app reads, only VITE_AI_COACH_KEY is refused; the provider and the model are not secrets and need no allow-list', () => {
+    const decl = readFileSync(join(here, '..', '..', 'src', 'vite-env.d.ts'), 'utf8')
+    const names = [...decl.matchAll(/readonly (VITE_[A-Z_]+)\?:/g)].map((m) => m[1])
+    expect(names.sort()).toEqual(['VITE_AI_COACH_KEY', 'VITE_AI_COACH_MODEL', 'VITE_AI_COACH_PROVIDER'])
+    expect(names.filter((n) => SECRET_VAR.test(n))).toEqual(['VITE_AI_COACH_KEY'])
+  })
   it.each(['VITE_AI_COACH_KEY', 'VITE_API_KEY', 'VITE_SOME_SECRET', 'VITE_GITHUB_TOKEN', 'VITE_DB_PASSWORD', 'vite_ai_coach_key', 'VITE_AI_COACH_KEY_2', 'VITE_MY_KEYBOARD'])(
     '%s is refused',
     (name) => expect(SECRET_VAR.test(name)).toBe(true),
@@ -126,20 +137,60 @@ describe('tools/deploy-guard.mjs (command line)', () => {
 })
 
 describe('tools/build-site.mjs refuses BEFORE building', () => {
-  const repoRoot = join(here, '..', '..')
-  const site = join(repoRoot, 'dist-site', 'index.html')
-  it('with a secret in the environment: exit non-zero, names the variable, no value, no Vite build, dist-site untouched', () => {
-    const before = existsSync(site) ? statSync(site).mtimeMs : null
-    const started = Date.now()
-    // cwd in the temp dir: nothing relative to the repository is used by the child
-    const r = spawnSync(process.execPath, [join(tools, 'build-site.mjs')], { cwd: tmp, encoding: 'utf8', env: { PATH: process.env.PATH ?? '', VITE_AI_COACH_KEY: SENTINEL } })
-    const out = `${r.stdout}${r.stderr}`
-    expect(r.status).toBe(1)
-    expect(out).toContain('VITE_AI_COACH_KEY')
-    expect(out).not.toContain(SENTINEL)
-    expect(out).not.toMatch(/vite v\d|building for production|modules transformed|\[build-site\] output/i)
-    expect(Date.now() - started, 'it stopped at once, a build takes far longer').toBeLessThan(8000)
-    expect(existsSync(site) ? statSync(site).mtimeMs : null).toBe(before) // not even cleaned
+  // R1 S3: the script runs in a THROWAWAY COPY of the tools (a temp project root) with a stub Vite that only writes a marker. If the guard ever regresses, the
+  // build "succeeds" in the temp root: the real dist-site of the repository is never written, whatever happens here.
+  const STUB_VITE = [
+    "const fs = require('node:fs'); const path = require('node:path')",
+    "const root = path.resolve(__dirname, '..', '..', '..')",
+    "fs.writeFileSync(path.join(root, 'vite-ran.marker'), 'ran')",
+    "fs.mkdirSync(path.join(root, 'dist-site'), { recursive: true })",
+    "fs.writeFileSync(path.join(root, 'dist-site', 'index.html'), '<html></html>')",
+    '',
+  ].join('\n')
+  /** A temp project root: tools/build-site.mjs + tools/deploy-guard.mjs copied, node_modules/vite/bin/vite.js the stub. */
+  const fakeRoot = (): string => {
+    const dir = join(tmp, `site${++n}`)
+    mkdirSync(join(dir, 'tools'), { recursive: true })
+    mkdirSync(join(dir, 'node_modules', 'vite', 'bin'), { recursive: true })
+    for (const f of ['build-site.mjs', 'deploy-guard.mjs']) copyFileSync(join(tools, f), join(dir, 'tools', f))
+    writeFileSync(join(dir, 'node_modules', 'vite', 'bin', 'vite.js'), STUB_VITE)
+    return dir
+  }
+  const build = (dir: string, env: Record<string, string>) => {
+    const r = spawnSync(process.execPath, [join(dir, 'tools', 'build-site.mjs')], { cwd: tmp, encoding: 'utf8', env: { PATH: process.env.PATH ?? '', ...env } })
+    return { code: r.status, out: `${r.stdout}${r.stderr}` }
+  }
+  it('with a secret in the environment: exit 1, names the variable, no value, and Vite is NEVER started (the stub leaves no marker, nothing is built)', () => {
+    const dir = fakeRoot()
+    const r = build(dir, { VITE_AI_COACH_KEY: SENTINEL })
+    expect(r.code).toBe(1)
+    expect(r.out).toContain('VITE_AI_COACH_KEY')
+    expect(r.out).not.toContain(SENTINEL)
+    expect(existsSync(join(dir, 'vite-ran.marker')), 'Vite was started').toBe(false)
+    expect(existsSync(join(dir, 'dist-site')), 'dist-site was created').toBe(false)
+  })
+  it('with a key in a .env file of the project root: the same', () => {
+    const dir = fakeRoot()
+    writeFileSync(join(dir, '.env'), `VITE_AI_COACH_KEY=${SENTINEL}\n`)
+    const r = build(dir, {})
+    expect(r.code).toBe(1)
+    expect(r.out).toContain('.env')
+    expect(existsSync(join(dir, 'vite-ran.marker'))).toBe(false)
+  })
+  it('control, so the tests above are not vacuous: with nothing set the same copy runs Vite (marker present, dist-site/index.html written, exit 0)', () => {
+    const dir = fakeRoot()
+    const r = build(dir, {})
+    expect(r.out).not.toContain('REFUSED')
+    expect(r.code).toBe(0)
+    expect(existsSync(join(dir, 'vite-ran.marker'))).toBe(true)
+    expect(existsSync(join(dir, 'dist-site', 'index.html'))).toBe(true)
+  })
+  it('an existing dist-site of the project is left alone when the build is refused (not even cleaned)', () => {
+    const dir = fakeRoot()
+    mkdirSync(join(dir, 'dist-site'))
+    writeFileSync(join(dir, 'dist-site', 'old.txt'), 'old')
+    expect(build(dir, { VITE_X_TOKEN: 'a' }).code).toBe(1)
+    expect(existsSync(join(dir, 'dist-site', 'old.txt'))).toBe(true)
   })
   it('calls the guard before it removes dist-site or starts Vite (source order)', () => {
     const src = readFileSync(join(tools, 'build-site.mjs'), 'utf8')
@@ -148,4 +199,60 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
     expect(guard).toBeLessThan(src.indexOf('rmSync(out'))
     expect(guard).toBeLessThan(src.indexOf('spawnSync(process.execPath, [viteBin'))
   })
+})
+
+describe('the Vercel build command is guarded too (R1 S1)', () => {
+  const projectRoot = join(here, '..', '..')
+  const vercel = JSON.parse(readFileSync(join(projectRoot, 'vercel.json'), 'utf8')) as { buildCommand: string; outputDirectory: string; framework: string }
+  it('starts with the guard, then the normal build; the other fields are kept', () => {
+    expect(vercel.buildCommand).toBe('node tools/deploy-guard.mjs && npm run build')
+    expect(vercel.outputDirectory).toBe('dist')
+    expect(vercel.framework).toBe('vite')
+  })
+  it('the guard part of that very command refuses a key (run as written, from the project root)', () => {
+    const guardPart = vercel.buildCommand.split('&&')[0].trim()
+    const env = { ...process.env, VITE_AI_COACH_KEY: SENTINEL } // the whole environment: a shell needs ComSpec, SystemRoot...
+    const r = spawnSync(guardPart, { shell: true, cwd: projectRoot, encoding: 'utf8', env })
+    expect(r.status).toBe(1)
+    expect(`${r.stdout}${r.stderr}`).toContain('VITE_AI_COACH_KEY')
+    expect(`${r.stdout}${r.stderr}`).not.toContain(SENTINEL)
+  })
+})
+
+describe('the CLIs also run when started through a link or a junction (R1 S4: a path mismatch must not make them silently do nothing)', () => {
+  // A Windows junction needs no administrator right; elsewhere 'junction' is ignored and a directory symlink is made. The link is removed with rmdir, never
+  // with a recursive remove through it.
+  const link = join(tmp, 'tools-link')
+  const makeLink = (): string => {
+    if (!existsSync(link)) symlinkSync(tools, link, 'junction')
+    return link
+  }
+  afterAll(() => {
+    try {
+      rmdirSync(link)
+    } catch {
+      /* never created */
+    }
+  })
+  it('deploy-guard.mjs through the link: still exit 1 with a key (it used to exit 0 and print nothing)', () => {
+    const r = spawnSync(process.execPath, [join(makeLink(), 'deploy-guard.mjs'), project()], { encoding: 'utf8', env: { PATH: process.env.PATH ?? '', VITE_AI_COACH_KEY: SENTINEL } })
+    expect(r.status).toBe(1)
+    expect(`${r.stdout}${r.stderr}`).toContain('VITE_AI_COACH_KEY')
+  })
+  it('deploy-guard.mjs through the link: exit 0 and silent on a clean project', () => {
+    const r = spawnSync(process.execPath, [join(makeLink(), 'deploy-guard.mjs'), project()], { encoding: 'utf8', env: { PATH: process.env.PATH ?? '' } })
+    expect(r.status).toBe(0)
+    expect(`${r.stdout}${r.stderr}`).toBe('')
+  })
+  it('chunk-budget.mjs through the link: it runs (exit 2 and its message for a dist with no .vite, not a silent 0)', () => {
+    const r = spawnSync(process.execPath, [join(makeLink(), 'chunk-budget.mjs'), project()], { encoding: 'utf8' })
+    expect(r.status).toBe(2)
+    expect(`${r.stdout}${r.stderr}`).toMatch(/not found.*npm run build/)
+  })
+})
+
+describe('.gitignore (R1 item 12)', () => {
+  const ignored = (file: string): boolean => spawnSync('git', ['check-ignore', '-q', file], { cwd: join(here, '..', '..') }).status === 0
+  it.each(['.env', '.env.local', '.env.production', '.env.production.local', '.env.staging'])('%s is ignored', (f) => expect(ignored(f)).toBe(true))
+  it('.env.example (the documented template) is not', () => expect(ignored('.env.example')).toBe(false))
 })

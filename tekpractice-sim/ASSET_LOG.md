@@ -116,20 +116,24 @@ visiteur). Le décodeur est maintenant **copié dans le dépôt**, sous `public/
 |---|---|---|
 | `public/draco/draco_decoder_gltf.wasm` | 192 593 | `712db3449ae2041d6e8a224c395bda6cedb49e51322fae38b7db9beb8b381889` |
 | `public/draco/draco_decoder_gltf_nodejs.js` | 58 456 | `8bb2952d2ba7d67e1414f8df819410cb0434a666be53f671fff75f68843d76f6` |
-| `public/draco/LICENSE-Apache-2.0.txt` | 9 197 | texte standard de la licence Apache 2.0 |
+| `public/draco/LICENSE-Apache-2.0.txt` | 9 142 | texte standard de la licence Apache 2.0 (taille du fichier validé, fins de ligne LF ; la copie de travail Windows en CRLF est plus grosse) |
+| `public/draco/NOTICE.txt` | — | provenance, version, SHA-256, raison du nom `_nodejs`, écart avec le fichier du CDN |
 
 - **Source** : copie octet pour octet des fichiers du paquet npm `draco3dgltf` **1.5.7** (déjà en devDependency, `node_modules/draco3dgltf/`), qui est le décodeur
   glTF de la bibliothèque Draco de Google (`https://github.com/google/draco`). `@babylonjs/core` n'en embarque aucun.
 - **Licence : Apache-2.0** (champ `license` du `package.json` du paquet) ; le texte de la licence est livré à côté des fichiers (condition de redistribution).
-  Aucun avis `NOTICE` n'existe dans le paquet.
+  Le paquet ne contient aucun avis `NOTICE` ; `public/draco/NOTICE.txt` est le nôtre (provenance, empreintes).
 - **Le fichier `..._nodejs.js` n'est pas réservé à Node** malgré son nom : c'est le même module Emscripten, qui détecte son environnement (page, worker ou Node) et
   ne touche à `fs` que sous Node. Associé au `.wasm` du même paquet, il forme une paire issue d'un seul build (le test `tests/render/draco.test.ts` vérifie
   l'identité octet pour octet avec le paquet, pour qu'une mise à jour d'un seul des deux soit refusée).
+  **Écart à dire :** ce n'est **pas** le `draco_wasm_wrapper_gltf.js` que Babylon télécharge sur son CDN (le paquet npm ne livre que ce module-là) ; son build, et donc sa version, peuvent différer de celui du CDN. Le décodage a été vérifié **dans Chromium seulement** (Playwright) : ni Firefox, ni Safari, ni comparaison sommet par sommet avec le décodeur du CDN.
 - **Branchement** : `src/render/draco.ts` règle `DracoCompression.Configuration` sur `public/draco/…` avec le chemin de base de Vite (`/` en local,
   `/tekpractice/jouer/` au déploiement). Appelé au démarrage du Mode Création (`src/creation/boot.ts`) et de l'entrée historique (`src/legacyMain.ts`). Aucun
   `fallbackUrl` : le seul repli que connaît Babylon est celui du CDN ; un navigateur sans WebAssembly ne peut de toute façon pas faire tourner la 3D de l'application
   (le `.glb` échoue, la boîte provisoire reste).
 - **Garde** : `tests/e2e/creation-budgets.spec.ts` (CA-24) échoue si une requête sort de l'origine, et exige que le décodeur soit demandé sous `/draco/` (200),
-  dans une session Mode Création complète et dans l'entrée historique (`?level=a1`).
-- **Taille** : 251 Kio au total, très en dessous de la limite de 25 Mio par fichier du déploiement ; chargés à la première décompression d'un modèle, pas au démarrage
+  dans une session Mode Création complète et dans l'entrée historique (`?level=a1`). **Portée exacte : aucune requête hors origine dans les sessions exercées** (Chromium seulement ;
+  ni WebSocket ni EventSource vus par l'écouteur) ; ce n'est pas une preuve qu'aucun chemin de l'application n'appelle un tiers. Et `tests/assets/glbExtensions.test.ts` échoue
+  dès qu'un `.glb` de `public/` annonce une extension hors liste blanche (KTX2/Basis, Meshopt… iraient chercher un autre décodeur sur le CDN).
+- **Taille** : 251 049 octets de fichiers de décodeur (192 593 + 58 456), plus la licence et l'avis, très en dessous de la limite de 25 Mio par fichier du déploiement ; chargés à la première décompression d'un modèle, pas au démarrage
   (le budget de chunks `npm run budget` ne les compte pas : ce ne sont pas des chunks JavaScript du bundle).

@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { DracoCompression } from '@babylonjs/core'
@@ -64,7 +65,41 @@ describe('the vendored decoder files', () => {
   })
 })
 
+describe('public/draco/NOTICE.txt', () => {
+  const notice = readFileSync(join(publicDir, 'draco', 'NOTICE.txt'), 'utf8')
+  const sha = (f: string): string => createHash('sha256').update(readFileSync(join(publicDir, f))).digest('hex')
+  it('names the source, the version and the licence', () => {
+    expect(notice).toContain('draco3dgltf 1.5.7')
+    expect(notice).toContain('https://github.com/google/draco')
+    expect(notice).toContain('Apache License, Version 2.0')
+  })
+  it('carries the real SHA-256 and size of each vendored file (a swapped file makes this red)', () => {
+    for (const f of [DRACO_WASM_BINARY, DRACO_WASM_WRAPPER]) {
+      expect(notice, f).toContain(sha(f))
+      expect(notice, f).toContain(`${statSync(join(publicDir, f)).size} bytes`)
+    }
+  })
+  it('says why the wrapper is called nodejs and that it is not the CDN wrapper', () => {
+    expect(notice).toMatch(/nodejs/)
+    expect(notice).toMatch(/NOT the "draco_wasm_wrapper_gltf.js"/)
+    expect(notice).toMatch(/may differ/)
+  })
+})
+
 describe('ASSET_LOG.md', () => {
+  it('gives the real sizes: 251 049 bytes of decoder files, and the licence as the LF blob that is committed (9 142), not the CRLF working copy', () => {
+    const log = readFileSync(join(__dirname, '..', '..', 'ASSET_LOG.md'), 'utf8')
+    expect(statSync(join(publicDir, DRACO_WASM_BINARY)).size + statSync(join(publicDir, DRACO_WASM_WRAPPER)).size).toBe(251_049)
+    expect(log).toContain('251 049 octets')
+    expect(log).toContain('9 142')
+    expect(log).not.toContain('251 Kio')
+    expect(log).not.toContain('9 197')
+  })
+  it('scopes the CA-24 claim to the sessions that were exercised', () => {
+    const log = readFileSync(join(__dirname, '..', '..', 'ASSET_LOG.md'), 'utf8')
+    expect(log).toMatch(/aucune requête (d'exécution )?hors origine dans les sessions exercées/)
+    expect(log).toMatch(/Chromium seulement/)
+  })
   it('records the vendored Draco decoder: files, version, licence and source', () => {
     const log = readFileSync(join(__dirname, '..', '..', 'ASSET_LOG.md'), 'utf8')
     expect(log).toMatch(/draco_decoder_gltf\.wasm/)

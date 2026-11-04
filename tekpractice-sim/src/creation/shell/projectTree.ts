@@ -10,6 +10,7 @@
  * Label in Name (WCAG 2.5.3, Task 43d « 43d-tree »): a row's name is its parts joined by spaces, and the text drawn on the row reads the same (text-node
  * spaces between the parts); an open group and the empty-state hint are SIBLINGS of their row (role="none" wrappers, the group owned by aria-owns), never
  * inside the treeitem, where their text would count as the row's own.
+ * Checked with Chromium's accessibility tree only (Playwright ariaSnapshot, axe); no screen reader (NVDA, VoiceOver) has read aria-owns here.
  */
 import { COPY } from '../copy'
 import { flattenVisible, hideKeyOf, parentOf, treeKey, type TreeKey, type TreeNode } from './treeModel'
