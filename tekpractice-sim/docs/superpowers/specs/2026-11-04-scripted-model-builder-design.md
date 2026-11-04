@@ -40,6 +40,8 @@ Inventory read from `content/catalog.json` on 2026-11-04 (read-only): 25 devices
 | 3 (rack and desktop boxes) | `axia-iq`, `avid-hd-io`, `avid-protools-hdx`, `focusrite-isa-one`, `grace-m905`, `switchcraft-studiopatch-9625`, `antelope-ocx-hd`, `aeta-scoop5-s`, `aeta-scoopy-plus-s`, `playout-pc`, `multiprise-secteur` | `rack-box` (parameters for ears, knobs as empties) | scripted |
 | 4 (shaped gear) | mics `shure-sm58`, `shure-sm57`, `ev-re20`, `ev-re50`, `neumann-u87-ai`; speakers `qsc-k12-2`, `yamaha-dbr12`, `genelec-8030c`; console `yamaha-ql1`; stand and arms `km-210-9`, `yellowtec-mika`, `yellowtec-litt`; loom `mogami-gold-db25-xlrm` | `revolve` (mics, from a silhouette profile), `speaker-box`, `assembly` (tubes, arms, loom), QL1 as `rack-box` | scripted first; Meshy only where a hero look is wanted and the scripted result is judged too plain |
 
+**Delivery order (revised 2026-11-04, after the wave-1 review): 1, then 3 and 4, then 2.** The sim does not load connector GLBs: `xlr3-f`, `trs-quarter` and `rj45` appear in the app only as French labels in `src/creation/copy.ts`, while devices load `public/assets/<deviceId>.glb` (inventory drawer, DeviceSpawner). Until a cable-plug renderer exists, a connector model is never seen by the user, so the visible devices of waves 3 and 4 come before the connector kit of wave 2. The wave numbers stay as they are (other notes refer to them); only the order changes. Wave 2 moves up again if a plug renderer is added.
+
 Notes:
 - The mics are surfaces of revolution, so a scripted `revolve` profile may give a better and exact result than an AI model. The decision to spend Meshy credits on any wave-4 asset is made per asset, after seeing the scripted version on a contact sheet.
 - The bottleneck is not the builder but the specs: each device needs measured port and control positions (79 ports, 25 controls in the catalog). `asset:spec` creates skeletons with dimensions from `knowledge-base/equipment`; positions come from manuals and photos (confidence `manual` or `photo`), batched per wave.
@@ -117,7 +119,8 @@ Whole catalog (end of wave 4): every catalog device and connector type has a GLB
 
 ## 7. Risks and open items
 
-- Rack ears, panel inset and handle of the Rio3224-D2 are not built in wave 1 (plain chamfered box, see 4.3): they come with the per-port surface gate, because the ports sit on the bounding-box face. Their dimensions are also not in the sources read so far.
+- Rio3224-D2 (done after the reference research): built as a 5U stage box with ears, flanges, plates and 52 bezels whose tips are the bounding-box faces, so the ports lie on them without a recessed panel. A recessed panel with ports floating behind the bbox face still needs the per-port surface gate (2026-10-29 spec 4.5). The datasheet drawings show no handle.
+- The sim does not render connector models (see the delivery order in 4.1): the wave-1 connectors are built and gated but only visible in the contact sheets until a cable-plug renderer exists.
 - Fix-up picks the best of 24 rotations by size match. A symmetric builder output (for example a square cross-section) could tie; the builder emits final orientation, so the identity rotation must win ties. Verify in an integration test.
 - Blender 5.2.3 differs from the 5.1 the pipeline was written against. The existing integration tests pass; the builder tests are the next check.
 - A scripted connector is a generic standard shape (IEC 61076-2-103 style dimensions from the datasheet), not a copy of Neutrik trade dress. Dimensions are facts; no vendor geometry is used.
