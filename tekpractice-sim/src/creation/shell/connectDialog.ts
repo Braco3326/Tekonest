@@ -139,7 +139,7 @@ export function createConnectDialog(d: ConnectDialogDeps): ConnectDialog {
         input.dataset.testid = 'connect-filter'
         input.setAttribute('role', 'combobox')
         input.setAttribute('aria-autocomplete', 'list')
-        input.setAttribute('aria-expanded', 'true')
+        input.setAttribute('aria-expanded', 'false') // render() below says the truth: open while the list holds options
         input.setAttribute('aria-controls', `${id}-list`)
 
         const count = document.createElement('p')
@@ -279,6 +279,8 @@ export function createConnectDialog(d: ConnectDialogDeps): ConnectDialog {
             })
           )
           list.hidden = session.visible.length === 0
+          // The combobox's popup is the listbox: expanded exactly while it is shown (night wave 1, item 5).
+          input.setAttribute('aria-expanded', String(!list.hidden))
           const total = session.visible.length
           const text = total
             ? total === 1
