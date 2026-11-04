@@ -14,8 +14,14 @@ fixup.py; the exporter with export_yup=True converts back, so the exported posit
   - device: bottom at y = 0, centred on x and z (pivot = bottom-centre)
 The output is the raw input of attempt 1 of buildAsset: the fix-up still orients (identity must win), scales to the exact
 spec size and adds the port_/ctrl_ empties, so this script builds geometry only: one mesh, one material
-('tekpractice-body', dark grey, no textures), fixed object and mesh names. It is deterministic: bmesh only (no boolean
-modifiers), no randomness, no timestamps.
+('tekpractice-body', no textures), fixed object and mesh names. It is deterministic: bmesh only (no boolean modifiers),
+no randomness, no timestamps.
+
+Look (research report 2026-11-04, "Wave 1 model reference geometry"): the single material carries a per-face-corner
+vertex colour (COLOR_0 in the GLB), so black plastic, nickel and gold are told apart without a second material.
+Smooth shading with sharp edges above 40 degrees gives round barrels and crisp rims. Metallic 0.25 and roughness 0.45
+because the game scene has no environment texture (a high metallic renders near black there); the metal look is carried by
+the base colour. Parts are built one after the other and coloured with Body.done(<sRGB hex>).
 
 On any failure the script prints one line 'BUILD_FAIL <reason>' to stderr and exits 1.
 """
@@ -33,6 +39,17 @@ from mathutils import Vector
 
 MM = 0.001
 SEGMENTS = 32
+MATERIAL_NAME = "tekpractice-body"
+COLOUR_ATTRIBUTE = "Col"
+SHARP_ANGLE_DEG = 40.0
+METALLIC = 0.25
+ROUGHNESS = 0.45
+
+# Part colours, sRGB hex (research report: tuned to read under the game's two lights, no environment texture).
+NICKEL = "#c9ccd0"
+BLACK = "#303034"
+DARK = "#0b0b0d"
+GOLD = "#d4af37"
 
 # The cylinder-plug (XLR) pin layout is stylised, not a measured copy of any vendor part.
 PIN_HOLE_DIAMETER_MM = 1.5
@@ -43,12 +60,9 @@ DEFAULT_FRONT_LEN_MM = 12.0
 
 DEFAULT_CHAMFER_MM = 1.0
 
-# trs-plug: 24 segments keep a plug with grooves inside the 800-triangle connector budget.
-TRS_SEGMENTS = 24
-DEFAULT_BARREL_MM = 19.0
-TRS_GROOVE_WIDTH_MM = 1.0
-TRS_GROOVE_DEPTH_MM = 0.4
-TRS_GROOVE_AT = (0.30, 0.55)  # start of each insulator groove as a fraction of the barrel length
+# trs-plug: 16 segments keep the 22-point profile inside the 800-triangle connector budget (about 700).
+TRS_SEGMENTS = 16
+DEFAULT_BARREL_MM = 30.5
 
 # rj45-plug (stylised, not a measured copy of any vendor part)
 RJ45_LATCH_STEP_MM = 1.5
@@ -128,24 +142,99 @@ def band(bm: bmesh.types.BMesh, lo: list[bmesh.types.BMVert], hi: list[bmesh.typ
         bm.faces.new((lo[i], lo[j], hi[j], hi[i]))
 
 
-def new_body_object(bm: bmesh.types.BMesh, name: str) -> bpy.types.Object:
-    """Finishes the bmesh (consistent outward normals) and turns it into the one scene object with the one material."""
-    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
-    me = bpy.data.meshes.new(name)
-    bm.to_mesh(me)
-    bm.free()
-    mat = bpy.data.materials.new("tekpractice-body")
-    mat.diffuse_color = (0.08, 0.08, 0.09, 1.0)
-    if mat.node_tree is not None:
-        bsdf = mat.node_tree.nodes.get("Principled BSDF")
-        if bsdf is not None:
-            bsdf.inputs["Base Color"].default_value = (0.08, 0.08, 0.09, 1.0)
-            bsdf.inputs["Metallic"].default_value = 0.0
-            bsdf.inputs["Roughness"].default_value = 0.6
-    me.materials.append(mat)
-    ob = bpy.data.objects.new(name, me)
-    bpy.context.scene.collection.objects.link(ob)
-    return ob
+class Body:
+    """A bmesh made of parts. Each finished part gets one sRGB colour (Body.done), written as a vertex colour."""
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+        self.bm = bmesh.new()
+        self.tag = self.bm.faces.layers.int.new("part")
+        self.colours: list[str] = [""]  # index 0 = not coloured yet
+
+    def done(self, colour: str) -> None:
+        """Gives every face that has no colour yet the sRGB hex `colour` (the part just built)."""
+        self.colours.append(colour)
+        for f in self.bm.faces:
+            if f[self.tag] == 0:
+                f[self.tag] = len(self.colours) - 1
+
+    def finish(self) -> bpy.types.Object:
+        """Colours the corners, makes it one smooth-shaded object with the one material. Raises on an uncoloured face."""
+        bm = self.bm
+        if any(f[self.tag] == 0 for f in bm.faces):
+            raise BuildError(f"{self.name}: a part was built without Body.done(colour)")
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+        layer = bm.loops.layers.float_color.new(COLOUR_ATTRIBUTE)
+        linear = [srgb_hex_to_linear(c) if c else (0.5, 0.5, 0.5) for c in self.colours]
+        for f in bm.faces:
+            rgb = linear[f[self.tag]]
+            for loop in f.loops:
+                loop[layer] = (rgb[0], rgb[1], rgb[2], 1.0)
+        bm.faces.layers.int.remove(self.tag)
+        me = bpy.data.meshes.new(self.name)
+        bm.to_mesh(me)
+        bm.free()
+        # Smooth faces, hard edges where the surface turns by more than 40 degrees (Blender 4.1+ replaced auto-smooth).
+        me.shade_smooth()
+        me.set_sharp_from_angle(angle=math.radians(SHARP_ANGLE_DEG))
+        # After every to_mesh: without an active colour attribute the exporter writes a fake white COLOR_0.
+        attr = me.color_attributes[COLOUR_ATTRIBUTE]
+        me.color_attributes.active_color = attr
+        me.color_attributes.render_color_index = list(me.color_attributes).index(attr)
+        me.materials.append(make_material())
+        ob = bpy.data.objects.new(self.name, me)
+        bpy.context.scene.collection.objects.link(ob)
+        return ob
+
+
+def srgb_hex_to_linear(hexcolour: str) -> tuple[float, float, float]:
+    """'#rrggbb' (sRGB) -> linear floats (Blender and glTF vertex colours are linear)."""
+    text = hexcolour.lstrip("#")
+    if len(text) != 6:
+        raise BuildError(f"colour {hexcolour!r} must be #rrggbb")
+    out = []
+    for i in range(3):
+        c = int(text[2 * i:2 * i + 2], 16) / 255.0
+        out.append(c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4)
+    return (out[0], out[1], out[2])
+
+
+def make_material() -> bpy.types.Material:
+    """The one material: Principled BSDF whose base colour is the vertex colour (a Color Attribute node)."""
+    mat = bpy.data.materials.new(MATERIAL_NAME)
+    mat.use_backface_culling = True
+    if mat.node_tree is None:
+        mat.use_nodes = True
+    nodes = mat.node_tree.nodes
+    bsdf = nodes.get("Principled BSDF")
+    if bsdf is None:
+        bsdf = nodes.new("ShaderNodeBsdfPrincipled")
+    colour = nodes.new("ShaderNodeVertexColor")
+    colour.layer_name = COLOUR_ATTRIBUTE
+    mat.node_tree.links.new(colour.outputs["Color"], bsdf.inputs["Base Color"])
+    bsdf.inputs["Metallic"].default_value = METALLIC
+    bsdf.inputs["Roughness"].default_value = ROUGHNESS
+    return mat
+
+
+def revolve(body: Body, profile: list[tuple[float, float]], colours: list[str], n: int = SEGMENTS, cap_first: bool = False, cap_last: bool = False) -> None:
+    """Lathe about the glTF z axis. `profile` is (radius, z) points, `colours` one sRGB hex per band between points.
+
+    A radius of 0 at an end is a point (fan). `cap_first` / `cap_last` close the open end with a flat face; every band and
+    each cap is coloured as it is built, so a cap takes the colour of its neighbouring band.
+    """
+    if len(colours) != len(profile) - 1:
+        raise BuildError("revolve needs one colour per band")
+    rings = [ring(body.bm, r, z, n) for r, z in profile]
+    if cap_first:
+        body.bm.faces.new(rings[0])
+        body.done(colours[0])
+    for i in range(len(rings) - 1):
+        band(body.bm, rings[i], rings[i + 1])
+        body.done(colours[i])
+    if cap_last:
+        body.bm.faces.new(rings[-1][::-1])
+        body.done(colours[-1])
 
 
 # --- shapes -----------------------------------------------------------------------------------------------
@@ -166,7 +255,8 @@ def build_cylinder_plug(plan: Plan) -> bpy.types.Object:
     if pin_circle + hole_r >= front_r or hole_depth >= front_len:
         raise BuildError("the front section is too small for the three pin holes")
 
-    bm = bmesh.new()
+    body = Body("xlr-plug")
+    bm = body.bm
     a = ring(bm, front_r, 0.0)
     b = ring(bm, front_r, front_len)
     c = ring(bm, shell_r, front_len)
@@ -190,45 +280,66 @@ def build_cylinder_plug(plan: Plan) -> bpy.types.Object:
     result = bmesh.ops.triangle_fill(bm, use_beauty=True, use_dissolve=False, edges=fill_edges, normal=g2b(0.0, 0.0, -1.0))
     if not result["geom"]:
         raise BuildError("could not fill the mating face around the pin holes")
-    return new_body_object(bm, "xlr-plug")
+    body.done(BLACK)
+    return body.finish()
 
 
 def build_trs_plug(plan: Plan) -> bpy.types.Object:
-    """6.35 mm style TRS plug: a rounded-tip barrel of the mating diameter (z = 0 .. barrelMm) with two insulator
-    grooves, then a body cylinder of the spec's width to z = d."""
+    """6.35 mm TRS cable plug, from the tip (z = 0) to the cable: a domed, grooved tip, two thin black insulator bands
+    between nickel tip, ring and sleeve (mating length `barrelMm`, default 30.5 as on real plugs), a conical nose into the
+    handle shell, then a black boot that tapers toward the cable (z = d).
+
+    Only the diameters and the 30-31 mm mating length are sourced; the lengths inside the barrel and the handle split are
+    estimates from photos (research report, estimated rows)."""
     w, h, d = size_m(plan)
     body_r = min(w, h) / 2.0
     barrel_r = positive(plan.get("matingOuterMm"), "matingOuterMm") * MM / 2.0
     barrel_len = param_m(plan, "barrelMm", DEFAULT_BARREL_MM)
     if barrel_r >= body_r:
         raise BuildError(f"matingOuterMm ({barrel_r * 2000:.2f}) must be smaller than the body diameter ({body_r * 2000:.2f})")
-    if barrel_len >= d:
-        raise BuildError(f"params.barrelMm ({barrel_len / MM:.2f}) must be shorter than sizeMm.d ({d / MM:.2f})")
-    groove_w = TRS_GROOVE_WIDTH_MM * MM
-    groove_r = barrel_r - TRS_GROOVE_DEPTH_MM * MM
-    tip_len = barrel_r * 0.5
-    if tip_len + groove_w >= barrel_len * TRS_GROOVE_AT[0] or groove_r <= 0:
-        raise BuildError("params.barrelMm is too short for the tip and the two insulator grooves")
+    nose_len = 7.5 * MM
+    boot_len = 23.5 * MM
+    if barrel_len < 14.0 * MM or barrel_len + nose_len + boot_len + 8.0 * MM > d:
+        raise BuildError(f"params.barrelMm ({barrel_len / MM:.2f}) does not fit a plug of sizeMm.d {d / MM:.2f} (needs 14 mm to about {(d - nose_len - boot_len - 8.0 * MM) / MM:.0f} mm)")
 
-    # (radius, z) profile of the revolved body, tip first. Rounded tip: a flat face of radius 0.55 R, then a quarter-round.
+    r = barrel_r
+    groove_r = r - 0.4 * MM
+    insulator_r = r - 0.2 * MM
+    mm = MM
+    shell_start = barrel_len + nose_len
+    boot_start = d - boot_len
     profile: list[tuple[float, float]] = [
-        (barrel_r * 0.55, 0.0),
-        (barrel_r * 0.80, tip_len * 0.20),
-        (barrel_r * 0.95, tip_len * 0.55),
-        (barrel_r, tip_len),
+        (r * 0.445, 0.0),            # flat tip face
+        (r * 0.70, 0.4 * mm),        # dome
+        (r * 0.89, 1.0 * mm),
+        (r, 2.0 * mm),
+        (r, 2.4 * mm),
+        (groove_r, 2.4 * mm),        # groove behind the tip
+        (groove_r, 2.9 * mm),
+        (r, 4.5 * mm),               # taper back up
+        (insulator_r, 4.5 * mm),     # insulator 1
+        (insulator_r, 6.2 * mm),
+        (r, 6.2 * mm),               # ring
+        (r, 11.0 * mm),
+        (insulator_r, 11.0 * mm),    # insulator 2
+        (insulator_r, 12.7 * mm),
+        (r, 12.7 * mm),              # sleeve
+        (r, barrel_len),
+        (4.6 * mm, barrel_len),      # nose collar: a step, then a cone out to the shell
+        (body_r, shell_start),
+        (body_r, boot_start),        # shell
+        (body_r * 0.925, boot_start),
+        (body_r * 0.925, boot_start + 4.5 * mm),
+        (body_r * 0.55, d),          # boot tapering to the cable
     ]
-    for frac in TRS_GROOVE_AT:
-        z0 = barrel_len * frac
-        profile += [(barrel_r, z0), (groove_r, z0), (groove_r, z0 + groove_w), (barrel_r, z0 + groove_w)]
-    profile += [(barrel_r, barrel_len), (body_r, barrel_len), (body_r, d)]
-
-    bm = bmesh.new()
-    rings = [ring(bm, r, z, TRS_SEGMENTS) for r, z in profile]
-    for lo, hi in zip(rings, rings[1:]):
-        band(bm, lo, hi)
-    bm.faces.new(rings[0])          # tip face (normals are recalculated at the end)
-    bm.faces.new(rings[-1][::-1])   # cable end
-    return new_body_object(bm, "trs-plug")
+    colours = [
+        NICKEL, NICKEL, NICKEL, NICKEL, NICKEL, NICKEL, NICKEL,
+        BLACK, BLACK, NICKEL, NICKEL, BLACK, BLACK, NICKEL, NICKEL,
+        NICKEL, NICKEL, NICKEL, BLACK, BLACK, BLACK,
+    ]
+    body = Body("trs-plug")
+    revolve(body, profile, colours, TRS_SEGMENTS, cap_first=True, cap_last=True)
+    return body.finish()
 
 
 def build_rj45_plug(plan: Plan) -> bpy.types.Object:
@@ -250,7 +361,8 @@ def build_rj45_plug(plan: Plan) -> bpy.types.Object:
     y0, y1 = -h / 2.0, h / 2.0
     # Side profile (z, y), going round from the mating-face top: the latch step is on the +Y side.
     profile = [(0.0, y1), (0.0, y0), (d, y0), (d, y1 - step), (z_step, y1 - step), (z_step, y1)]
-    bm = bmesh.new()
+    body = Body("rj45-plug")
+    bm = body.bm
     left = [bm.verts.new(g2b(x0, y, z)) for z, y in profile]
     right = [bm.verts.new(g2b(x1, y, z)) for z, y in profile]
     n = len(profile)
@@ -274,7 +386,8 @@ def build_rj45_plug(plan: Plan) -> bpy.types.Object:
     result = bmesh.ops.triangle_fill(bm, use_beauty=True, use_dissolve=False, edges=fill_edges, normal=g2b(0.0, 0.0, -1.0))
     if not result["geom"]:
         raise BuildError("could not fill the mating face around the contact slots")
-    return new_body_object(bm, "rj45-plug")
+    body.done(BLACK)
+    return body.finish()
 
 
 def build_rack_box(plan: Plan) -> bpy.types.Object:
@@ -285,13 +398,15 @@ def build_rack_box(plan: Plan) -> bpy.types.Object:
     if chamfer >= min(w, h, d) / 2.0:
         raise BuildError(f"params.chamferMm ({chamfer / MM:.2f}) must be smaller than half the smallest side ({min(w, h, d) / 2.0 / MM:.2f})")
 
-    bm = bmesh.new()
+    body = Body("rack-box")
+    bm = body.bm
     corners = [(sx * w / 2.0, y, sz * d / 2.0) for y in (0.0, h) for sx, sz in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
     v = [bm.verts.new(g2b(*c)) for c in corners]
     for q in ((0, 1, 2, 3), (7, 6, 5, 4), (0, 4, 5, 1), (1, 5, 6, 2), (2, 6, 7, 3), (3, 7, 4, 0)):
         bm.faces.new([v[i] for i in q])
     bmesh.ops.bevel(bm, geom=bm.edges[:], offset=chamfer, offset_type="OFFSET", segments=1, affect="EDGES")
-    return new_body_object(bm, "rack-box")
+    body.done(DARK)
+    return body.finish()
 
 
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).

@@ -10,6 +10,8 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { NodeIO } from '@gltf-transform/core'
+import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
+import draco3d from 'draco3dgltf'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { buildAsset } from '../../../tools/assets3d/build-asset'
 import { findBlender } from '../../../tools/assets3d/env'
@@ -39,7 +41,7 @@ function realSpec(id: string): AssetSpecT {
 /** The four wave-1 assets and the build block each spec must carry. */
 const WAVE1: [string, AssetSpecT['build']][] = [
   ['xlr3-f', { shape: 'cylinder-plug', params: { frontLenMm: 12 } }],
-  ['trs-quarter', { shape: 'trs-plug', params: { barrelMm: 19 } }],
+  ['trs-quarter', { shape: 'trs-plug', params: { barrelMm: 30.5 } }],
   ['rj45', { shape: 'rj45-plug' }],
   ['yamaha-rio3224-d2', { shape: 'rack-box', params: { chamferMm: 1 } }],
 ]
@@ -55,6 +57,7 @@ interface Built {
   rawBytes: Uint8Array
   fix: FixupReport
   fixed: GlbReport
+  fixedBytes: Uint8Array
   gates: GateResult[]
 }
 
@@ -81,6 +84,40 @@ async function vertices(bytes: Uint8Array): Promise<[number, number, number][]> 
     }
   }
   return out
+}
+
+/** What a GLB carries for looks: vertex count, and the distinct COLOR_0 values (3 decimals) with the accessor type. */
+async function looks(bytes: Uint8Array): Promise<{ vertices: number; colourType: string | null; colours: Set<string> }> {
+  const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'draco3d.decoder': await draco3d.createDecoderModule() })
+  const doc = await io.readBinary(bytes)
+  let vertices = 0
+  let colourType: string | null = null
+  const colours = new Set<string>()
+  for (const mesh of doc.getRoot().listMeshes()) {
+    for (const prim of mesh.listPrimitives()) {
+      vertices += prim.getAttribute('POSITION')?.getCount() ?? 0
+      const col = prim.getAttribute('COLOR_0')
+      if (!col) continue
+      colourType = col.getType()
+      const el: number[] = [0, 0, 0, 1]
+      for (let i = 0; i < col.getCount(); i++) {
+        col.getElement(i, el)
+        colours.add(el.slice(0, 3).map((v) => v.toFixed(3)).join(','))
+      }
+    }
+  }
+  return { vertices, colourType, colours }
+}
+
+/**
+ * The model must look like the part: vertex colours (COLOR_0, a VEC3) with at least `minColours` distinct values, and
+ * smooth shading (vertices shared between triangles: flat shading would give 3 vertices per triangle).
+ */
+async function expectLooks(bytes: Uint8Array, triangles: number, minColours: number): Promise<void> {
+  const l = await looks(bytes)
+  expect(l.colourType, 'COLOR_0 missing').toBe('VEC3')
+  expect(l.colours.size).toBeGreaterThanOrEqual(minColours)
+  expect(l.vertices, 'vertices per triangle: flat shading?').toBeLessThan(triangles * 1.8)
 }
 
 /** Largest distance from the z axis among the vertices whose z is within 1e-7 m of `z`. */
@@ -118,8 +155,9 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
         await runBuilder(spec, rawPath)
         const rawBytes = new Uint8Array(await readFile(rawPath))
         const fix = await runFixup(rawPath, fixedPath, spec)
-        const fixed = await inspectGlb(new Uint8Array(await readFile(fixedPath)))
-        return { raw: await inspectGlb(rawBytes), rawBytes, fix, fixed, gates: runGates(fixed, spec, buildPlacement(spec)) }
+        const fixedBytes = new Uint8Array(await readFile(fixedPath))
+        const fixed = await inspectGlb(fixedBytes)
+        return { raw: await inspectGlb(rawBytes), rawBytes, fix, fixed, fixedBytes, gates: runGates(fixed, spec, buildPlacement(spec)) }
       })()
       cache.set(key, hit)
     }
@@ -164,17 +202,21 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     return built
   }
 
-  it.skipIf(!BLENDER)('trs-quarter builds at 14.5 x 14.5 x 93 mm with a 6.29 mm barrel at minimum z', async () => {
+  it.skipIf(!BLENDER)('trs-quarter builds at 14.5 x 14.5 x 93 mm with a 6.29 mm, 30.5 mm barrel at minimum z', async () => {
     const spec = realSpec('trs-quarter')
-    const { raw, rawBytes } = await expectBuiltTo(spec, 800)
+    const { raw, rawBytes, fixed, fixedBytes } = await expectBuiltTo(spec, 800)
+    await expectLooks(rawBytes, raw.triangles, 2)
+    await expectLooks(fixedBytes, fixed.triangles, 2) // the fix-up must keep colours and smooth normals
     const verts = await vertices(rawBytes)
     const zMin = raw.bboxM.min[2]
-    // The barrel is every vertex before the body step at z = 19 mm; the grooves are narrower, the tip is rounded.
-    const barrel = verts.filter((v) => v[2] < zMin + 19 * MM - 1e-6)
+    // The barrel is every vertex before the nose step at z = 30.5 mm; the grooves are narrower, the tip is rounded.
+    const barrel = verts.filter((v) => v[2] < zMin + 30.5 * MM - 1e-6)
     const barrelRadius = Math.max(...barrel.map((v) => Math.hypot(v[0], v[1])))
     expect(Math.abs(barrelRadius - 6.29 * MM / 2)).toBeLessThan(TOL_M)
     expect(radiusAtZ(verts, zMin)).toBeLessThan(6.29 * MM / 2)
-    expect(Math.abs(radiusAtZ(verts, raw.bboxM.max[2]) - 14.5 * MM / 2)).toBeLessThan(TOL_M)
+    // The handle shell is the widest part (14.5 mm); the boot tapers toward the cable end.
+    expect(Math.abs(Math.max(...verts.map((v) => Math.hypot(v[0], v[1]))) - 14.5 * MM / 2)).toBeLessThan(TOL_M)
+    expect(radiusAtZ(verts, raw.bboxM.max[2])).toBeLessThan(14.5 * MM / 2 * 0.7)
   }, 120_000)
 
   it.skipIf(!BLENDER)('rj45 builds at 11.68 x 8 x 22.48 mm with the latch step on the +Y side', async () => {
@@ -215,6 +257,11 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(report.ok).toBe(true)
     expect(report.attempts[0].gates.filter((g) => !g.ok)).toEqual([])
     expect(existsSync(join(report.workDir, 'final.glb'))).toBe(true)
+    if (id === 'trs-quarter') {
+      // The shipped bytes (fix-up, texture step, Draco, re-measure) keep the vertex colours and the smooth shading.
+      const final = new Uint8Array(await readFile(join(report.workDir, 'final.glb')))
+      await expectLooks(final, (await inspectGlb(final)).triangles, 2)
+    }
     expect(existsSync(join(paths.assetsDir, `${id}.glb`))).toBe(false)
     expect(existsSync(paths.manifestPath)).toBe(false)
   }, 180_000)

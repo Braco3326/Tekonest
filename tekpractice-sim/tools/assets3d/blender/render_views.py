@@ -12,7 +12,7 @@ all locations and angles already in Blender space, nothing to convert or measure
    views: [{name, location: [x, y, z], rotationDeg: [x, y, z]}, ...]}
 
 For each view it writes <dir>/<name>.png, sizePx x sizePx, flat background, Workbench engine, base colour
-texture shown, orthographic camera with the clip start from the plan (1 mm: a larger one cut small connectors in the
+texture shown (vertex colours instead when the model has them), orthographic camera with the clip start from the plan (1 mm: a larger one cut small connectors in the
 old pipeline). Workbench is the lightest engine but it still renders through a GPU (OpenGL) context even with
 --background: fine on a desktop, not guaranteed on a machine without a GPU or driver. On any failure it prints one
 line 'RENDER_FAIL <reason>' to stderr and exits 1.
@@ -108,7 +108,10 @@ def setup_scene(plan: dict) -> None:
     # No dithering noise: the background must be exactly the grey Node composes the letterbox bars on.
     scene.render.dither_intensity = 0.0
     scene.display.shading.light = "STUDIO"
-    scene.display.shading.color_type = "TEXTURE"
+    # A model with vertex colours (scripted builds) shows them; one flat colour per material would paint it all one grey.
+    # Meshy models carry a base colour texture: TEXTURE mode shows it.
+    has_vertex_colours = any(ob.type == "MESH" and len(ob.data.color_attributes) > 0 for ob in bpy.data.objects)
+    scene.display.shading.color_type = "VERTEX" if has_vertex_colours else "TEXTURE"
     if scene.world is None:
         scene.world = bpy.data.worlds.new("World")
     scene.world.color = tuple(float(v) for v in plan["backgroundLinear"])

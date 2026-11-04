@@ -16,7 +16,7 @@
   "build": {
     "shape": "trs-plug",
     "params": {
-      "barrelMm": 19
+      "barrelMm": 30.5
     }
   },
   "sources": [

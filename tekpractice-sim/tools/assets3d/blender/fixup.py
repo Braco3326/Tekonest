@@ -21,6 +21,7 @@ Steps, in order:
   6. pivot: device = bottom-centre (glTF min y = 0, centre x, z = 0); connector = centre of the mating face,
      body along glTF +Z (min z = 0, centre x, y = 0)
   7. socket recess: a 2 mm deep boolean cylinder per port that has openingM (a failure is logged, not fatal)
+  7b. keep one colour attribute, active (vertex colours of scripted models; see ensure_active_colour)
   8. one root Empty named <id> parenting the mesh, the port_<id> and ctrl_<id> empties; extras under
      the custom property 'tekpractice' on the root
   9. export GLB (+Y up, custom properties, no cameras or lights), re-read the file and check it, write report.json
@@ -259,6 +260,23 @@ def single_material(me: bpy.types.Mesh, material: bpy.types.Material | None) -> 
         me.materials.append(material)
     me.polygons.foreach_set("material_index", [0] * len(me.polygons))
     me.update()
+
+
+def ensure_active_colour(me: bpy.types.Mesh) -> None:
+    """Keeps exactly one colour attribute (the imported COLOR_0) and makes it the active, rendered one.
+
+    The bmesh join / clean round trip leaves a mesh with colours but no active colour attribute; the glTF exporter then
+    writes a fake white COLOR_0 and the real colours as COLOR_1, which viewers ignore. Meshy models have no colours, so
+    this is a no-op for them.
+    """
+    attrs = me.color_attributes
+    if len(attrs) == 0:
+        return
+    keep = attrs[0]
+    for extra in [a for a in attrs if a.name != keep.name]:
+        attrs.remove(extra)
+    attrs.active_color = keep
+    attrs.render_color_index = 0
 
 
 def cylinder_cutter(name: str, pos_g: Any, outward_g: Any, radius: float) -> bpy.types.Object:
@@ -521,6 +539,7 @@ def run() -> None:
     if top != [spec_id]:
         raise FixupError(f"top-level objects are {top}, expected only {spec_id!r}")
 
+    ensure_active_colour(body.data)
     export_glb(args["out"])
     verify_export(args["out"], plan)
 
