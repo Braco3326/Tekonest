@@ -150,6 +150,23 @@ test('item 1: a Bêta device\'s port and cable say « non vérifié » on hover;
   await expect(hoverLabel(page)).not.toContainText(MARK)
 })
 
+test('item 1 (review): the status bar names a selected Bêta device « non vérifié » (the 3D view has no cue); the Connexions line and the « Débrancher » bubble name it too', async ({ page }) => {
+  await boot(page)
+  const amp = await addBetaAmp(page)
+  await selectDevice(page, amp)
+  await expect(page.getByTestId('status-selection')).toContainText(`(${amp}) · ${MARK}`)
+  await expect(page.getByTestId('signal-extra')).toContainText('1 appareil non vérifié')
+  // the other end of the cable, seen from the console: the amp is named with the mark, visibly
+  await selectDevice(page, 'ql1')
+  await expect(page.getByTestId('status-selection')).not.toContainText(MARK)
+  await expect(page.locator('[data-key="port:out-main-l"] .cr-port-other')).toContainText(`(${amp}) · ${MARK} · ${AMP_XLR.portId}`)
+  await expect(page.locator('[data-key="unplug:out-main-l"]')).toHaveAccessibleName(new RegExp(`${MARK}`))
+  // the bubble offered on the cabled console output names the amp at the other end
+  await clickPort(page, QL_OUT)
+  await expect(page.getByTestId('port-offer')).toContainText(MARK)
+  await expect(page.getByTestId('port-unplug')).toHaveAccessibleName(new RegExp(MARK))
+})
+
 // ── Item 2 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 test('item 2: Échap closes the hover label of a port with the pointer where it is, and leaves the cable in hand alone; the next Échap drops the cable', async ({ page }) => {

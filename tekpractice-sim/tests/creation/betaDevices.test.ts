@@ -306,6 +306,11 @@ describe('a placed Bêta device says « non vérifié » in the tree and in Prop
     expect(cableOf('ql1', 'out-main-l')).toMatch(/ · non vérifié$/)
     expect(cableOf('amp-1', xlr.portId)).toMatch(/ · non vérifié$/)
     expect(cableOf('ql1', 'out-main-r')).not.toContain('non vérifié')
+    // the visible « other end » line and what the « Débrancher » button is named after (review finding 1)
+    const toOf = (instance: string, port: string) => (propsView(wired as never, reg, instance)!.ports.find((p) => p.portId === port)!.state as { toLabel: string }).toLabel
+    expect(toOf('ql1', 'out-main-l')).toContain('(amp-1) · non vérifié · ')
+    expect(toOf('amp-1', xlr.portId)).toBe('QL1 (ql1) · out-main-l')
+    expect(toOf('ql1', 'out-main-r')).toBe('K12.2 (k12-g) · in-line-a')
     expect(cableOf('k12-g', 'in-line-a')).not.toContain('non vérifié')
   })
 })

@@ -306,7 +306,7 @@ export async function bootCreation(): Promise<void> {
   const refreshSignal = (): StatusView => {
     const sel = viewState.get().selection
     const v = statusView({
-      selectionLabel: sel === null ? null : `${deviceLabel(sel)} (${sel})`,
+      selectionLabel: sel === null ? null : deviceName(sel),
       snapFree,
       events,
       lastRejection,
@@ -483,6 +483,12 @@ export async function bootCreation(): Promise<void> {
    */
   const announcer = createAnnouncer((message, reannounce, state) => shell.setStatus(placeNow(), message, state, reannounce))
   const deviceIds = (): string[] => store.design().rig.instances.map((i) => i.instanceId)
+  /** « Appareil (id) », with « non vérifié » after it for a Bêta device: what the status line and the announcements name (review findings 2, 3). */
+  const isUnverifiedInstance = (id: string): boolean => {
+    const deviceId = store.design().rig.instances.find((i) => i.instanceId === id)?.deviceId
+    return !!deviceId && isUnverified(registry, deviceId)
+  }
+  const deviceName = (id: string): string => markUnverified(`${deviceLabel(id)} (${id})`, isUnverifiedInstance(id))
   const deviceLabel = (id: string): string => {
     const deviceId = store.design().rig.instances.find((i) => i.instanceId === id)?.deviceId
     return (deviceId && registry.deviceById.get(deviceId)?.label) || id
@@ -502,7 +508,7 @@ export async function bootCreation(): Promise<void> {
     invalidate: () => scheduler.invalidate(),
     onSelect: (id) =>
       announcer.say(id
-          ? COPY.shell!.statusSelected!.replace('{device}', deviceLabel(id))
+          ? COPY.shell!.statusSelected!.replace('{device}', markUnverified(deviceLabel(id), isUnverifiedInstance(id)))
           : COPY.shell!.statusNoSelection!),
   })
 
@@ -1574,6 +1580,8 @@ export async function bootCreation(): Promise<void> {
   // while a ghost or a drag owns the pointer.
   const portLabels = mountPortLabels(document, shell.viewport, shellBag)
   const portName = (r: { instance: string; port: string }): string => `${deviceLabel(r.instance)} (${r.instance}) · ${r.port}`
+  /** Displayed / spoken variant (announcements, the « Débrancher » bubble): the history labels keep the plain `portName`. */
+  const spokenPortName = (r: { instance: string; port: string }): string => `${deviceName(r.instance)} · ${r.port}`
   /** « in-mic-1 · XLR3 femelle · Niveau micro » (the names are the catalog's, in French through COPY). */
   const describePort = (r: { instance: string; port: string }): string => {
     const deviceId = store.design().rig.instances.find((i) => i.instanceId === r.instance)?.deviceId
@@ -1590,6 +1598,7 @@ export async function bootCreation(): Promise<void> {
     busy: () => placement.placing || placement.dragging || connectDialog.isOpen,
     describe: describePort,
     portName,
+    spokenName: spokenPortName,
     allPorts: () =>
       store.design().rig.instances.flatMap((i) =>
         (registry.deviceById.get(i.deviceId)?.ports ?? []).map((p) => ({ instance: i.instanceId, port: p.portId }))
@@ -1607,6 +1616,7 @@ export async function bootCreation(): Promise<void> {
     store,
     history,
     portName,
+    spokenName: spokenPortName,
     rejectionText: (error, subjects) => rejectionOf(error, subjects, ruleText),
     announce: (message) => announcer.say(message),
     undoLabel,

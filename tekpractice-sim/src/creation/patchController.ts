@@ -62,8 +62,10 @@ export interface PatchOptions {
   busy(): boolean
   /** The hover label text (« in-mic-1 · XLR3 femelle · Niveau micro »). */
   describe(ref: PortRef): string
-  /** « Appareil · prise », for history labels, the status line and the offer. */
+  /** « Appareil · prise », for history labels (undo entries): always plain. */
   portName(ref: PortRef): string
+  /** The same for what is displayed or spoken (announcements, the « Débrancher » bubble): a Bêta device says « non vérifié ». Defaults to `portName`. */
+  spokenName?(ref: PortRef): string
   /** Every port of the rig (the candidates of the glow). */
   allPorts(): PortRef[]
   /** The refusal's rule title (the status bar's list uses the same). */
@@ -191,7 +193,7 @@ export class PatchController {
       this.dropError()
       this._pending = ref
       this.applyMarks()
-      this.opts.announce?.(fill(COPY.patch!.statusPending!, { port: this.opts.portName(ref) }))
+      this.opts.announce?.(fill(COPY.patch!.statusPending!, { port: this.spoken(ref) }))
       return true
     }
     if (same(this._pending, ref)) {
@@ -280,12 +282,13 @@ export class PatchController {
   private connect(a: PortRef, b: PortRef): void {
     this.opts.beforeDispatch?.()
     const names = { a: this.opts.portName(a), b: this.opts.portName(b) }
+    const said = { a: this.spoken(a), b: this.spoken(b) }
     const r = this.history.do({ type: 'CONNECT', a, b }, fill(COPY.patch!.entryConnect!, names))
     if (r.ok) {
       this.dropError()
       this._pending = null
       this.applyMarks()
-      this.opts.announce?.(fill(COPY.patch!.statusConnected!, { ...names, undo: this.opts.undoLabel?.() ?? 'Ctrl+Z' }))
+      this.opts.announce?.(fill(COPY.patch!.statusConnected!, { ...said, undo: this.opts.undoLabel?.() ?? 'Ctrl+Z' }))
       return
     }
     // A refusal is a message, not an exception: pinned at B; the cable stays in hand (the status list got it from history.onRefused).
@@ -303,8 +306,8 @@ export class PatchController {
     this.offerAt = ref
     if (same(this.hover, ref)) this.opts.ui.hideHover() // one label per port
     this.opts.ui.offerUnplug({
-      text: fill(COPY.patch!.offerText!, { port: this.opts.portName(ref), other: this.opts.portName(other) }),
-      buttonName: fill(COPY.patch!.offerName!, { port: this.opts.portName(ref), other: this.opts.portName(other) }),
+      text: fill(COPY.patch!.offerText!, { port: this.spoken(ref), other: this.spoken(other) }),
+      buttonName: fill(COPY.patch!.offerName!, { port: this.spoken(ref), other: this.spoken(other) }),
       at,
       onUnplug: () => this.unplug(ref, other),
     })
@@ -317,13 +320,18 @@ export class PatchController {
     this.dropOffer()
     this.opts.beforeDispatch?.()
     const names = { a: this.opts.portName(a), b: this.opts.portName(b) }
+    const said = { a: this.spoken(a), b: this.spoken(b) }
     const r = this.history.do({ type: 'UNPLUG', a, b }, fill(COPY.patch!.entryUnplug!, names))
-    if (r.ok) this.opts.announce?.(fill(COPY.patch!.statusUnplugged!, { ...names, undo: this.opts.undoLabel?.() ?? 'Ctrl+Z' }))
+    if (r.ok) this.opts.announce?.(fill(COPY.patch!.statusUnplugged!, { ...said, undo: this.opts.undoLabel?.() ?? 'Ctrl+Z' }))
     if (refocus) this.host.canvasElement.focus?.()
     this.scheduler.invalidate()
   }
 
   // ── internals ───────────────────────────────────────────────────────────────
+
+  private spoken(ref: PortRef): string {
+    return (this.opts.spokenName ?? this.opts.portName)(ref)
+  }
 
   private inert(): boolean {
     return this.disposed || this.host.walking || this.opts.busy()

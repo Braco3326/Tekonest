@@ -330,3 +330,25 @@ describe('Bêta devices carry « non vérifié » in the « Connecter à… » l
     expect(hit.every((e) => e.ref.instance === 'xls')).toBe(true)
   })
 })
+
+describe('ConnectSession announces the spoken names, records the plain ones (night wave 1 review finding 3)', () => {
+  it('a result carries spokenName; the history entry label carries portName', () => {
+    const { store, history } = rig()
+    const s = new ConnectSession({
+      store,
+      history,
+      registry,
+      from: QL_L,
+      portName: (r) => `${r.instance}.${r.port}`,
+      spokenName: (r) => `${r.instance}.${r.port} (non vérifié)`,
+      rejectionText: (e, subjects) => rejectionOf(e, subjects, ruleText),
+    })
+    const r = s.activate({ repeat: false })
+    expect(r.kind).toBe('connected')
+    if (r.kind === 'connected') {
+      expect(r.a).toBe('ql1.out-main-l (non vérifié)')
+      expect(r.b).toContain('(non vérifié)')
+    }
+    expect(history.undoLabel).not.toContain('non vérifié')
+  })
+})
