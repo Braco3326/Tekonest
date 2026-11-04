@@ -38,4 +38,4 @@
   /* Cuts only: the legacy `button { transition: all }` would otherwise animate the focus ring. */
   transition: none;
 }
-.cr .cr-port-unplug:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }
+@media (hover: hover) { .cr .cr-port-unplug:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); } }

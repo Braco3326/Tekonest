@@ -7,7 +7,7 @@
 .cr-cov-head { display: flex; align-items: stretch; background: var(--cr-panel); }
 .cr-cov-about { margin: 8px 0 2px; }
 .cr-cov-about-title { padding: 4px 0; color: var(--cr-ink-muted); font: 500 12px/1.3 var(--cr-font-ui); cursor: pointer; }
-.cr-cov-about-title:hover { color: var(--cr-ambre); }
+@media (hover: hover) { .cr-cov-about-title:hover { color: var(--cr-ambre); } }
 .cr-cov-about[open] > .cr-cov-about-title { color: var(--cr-papier); }
 .cr .cr-cov-toggle {
   display: flex;
@@ -24,7 +24,7 @@
   color: var(--cr-ink-muted);
   transition: none;
 }
-.cr .cr-cov-toggle:hover { color: var(--cr-ambre); background: var(--cr-nuit); }
+@media (hover: hover) { .cr .cr-cov-toggle:hover { color: var(--cr-ambre); background: var(--cr-nuit); } }
 .cr .cr-cov-toggle:focus-visible,
 .cr .cr-cov-chip:focus-visible,
 .cr .cr-cov-btn:focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); }
@@ -42,7 +42,8 @@
   border: 1px solid var(--cr-ink-muted);
   transition: none;
 }
-.cr .cr-cov-chip:hover, .cr .cr-cov-chip[aria-expanded='true'] { color: var(--cr-ambre); border-color: var(--cr-ambre); }
+.cr .cr-cov-chip[aria-expanded='true'] { color: var(--cr-ambre); border-color: var(--cr-ambre); }
+@media (hover: hover) { .cr .cr-cov-chip:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); } }
 .cr-cov-pop { margin: 0; padding: 8px 12px; font: 400 12px/1.4 var(--cr-font-ui); color: var(--cr-papier); background: var(--cr-nuit); border-top: 1px solid var(--cr-panel-line); border-bottom: 1px solid var(--cr-panel-line); transition: none; }
 .cr-cov-pop[hidden], .cr-cov-body[hidden], .cr-cov-ready[hidden], .cr-cov-pinrow[hidden], .cr-cov [hidden] { display: none; }
 .cr-cov-body { padding: 4px 12px 12px; font: 400 12px/1.35 var(--cr-font-ui); color: var(--cr-papier); font-variant-numeric: tabular-nums; }
@@ -75,7 +76,7 @@
   border: 1px solid var(--cr-ink-muted);
   transition: none;
 }
-.cr .cr-cov-btn:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }
+@media (hover: hover) { .cr .cr-cov-btn:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); } }
 
 /* Touch (night wave 2, I): 44 px targets. */
 @media (pointer: coarse) {

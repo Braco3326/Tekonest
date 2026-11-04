@@ -254,3 +254,62 @@ test.describe('a mouse, 1366 x 768: the desktop pixels do not move', () => {
     expect(tree.width).toBe(200)
   })
 })
+
+// ── Night 2 wave 4, item 3: a tap leaves the element « hovered » on a touch screen; the hover styles must not stay ─────────────────────────
+// With a mouse the hover look is there (control); with a touch screen (`hover: none`) a tapped element looks like one that was never touched.
+const look = (page: Page, sel: string, nth: number) =>
+  page.locator(sel).nth(nth).evaluate((e) => {
+    const s = getComputedStyle(e)
+    return { color: s.color, background: s.backgroundColor, border: s.borderTopColor }
+  })
+test.describe('hover styles on touch (wave 4, item 3)', () => {
+  test.describe('touch screen', () => {
+    test.use({ viewport: { width: 400, height: 800 }, hasTouch: true })
+    test('the context has no hover; a tapped cube tool, menu title and Signal button look untouched once the finger has moved on', async ({ page }) => {
+      await boot(page)
+      expect(await page.evaluate(() => matchMedia('(hover: hover)').matches), 'a touch context has no hover (the test means something)').toBe(false)
+      const tool = '.cr-cube-tool'
+      const menu = '.cr-menu-top'
+      const signal = '[data-testid="signal-status"]'
+      const baseTool = await look(page, tool, 1)
+      const baseMenu = await look(page, menu, 1)
+      const box = async (sel: string, n: number) => (await page.locator(sel).nth(n).boundingBox())!
+      // A phone leaves the tapped element in :hover (the browser sends compatibility mouse events after the touch). Headless Chromium does not do that for a tap, so the
+      // state is set the way a phone leaves it: a mouse move onto the element, in a context whose media query says hover: none. Then the finger moves on (a tap elsewhere).
+      const touchAndLeaveHover = async (sel: string, n: number) => {
+        const b = await box(sel, n)
+        await page.touchscreen.tap(b.x + b.width / 2, b.y + b.height / 2)
+        const after = await box(sel, n) // the tap may have moved the element (a panel button folds its panel)
+        await page.mouse.move(after.x + after.width / 2, after.y + after.height / 2)
+        expect(await page.locator(sel).nth(n).evaluate((e) => e.matches(':hover')), `${sel} #${n} is « hovered » (the test means something)`).toBe(true)
+      }
+      await touchAndLeaveHover(tool, 0) // the first tool; the second is the untouched twin
+      // the tapped tool is compared to its untouched twin (same class, same look when nothing is hovered or focused)
+      expect(await look(page, tool, 0)).toEqual(await look(page, tool, 1))
+      expect(await look(page, tool, 1)).toEqual(baseTool)
+      await touchAndLeaveHover(menu, 1)
+      await page.keyboard.press('Escape') // a tap on a menu title opens it; Échap closes it and the focus goes back to the bar
+      await page.locator(menu).nth(1).evaluate((e) => (e as HTMLElement).blur())
+      expect(await look(page, menu, 1), 'a menu title once its menu is closed').toEqual(baseMenu)
+      const before = await look(page, signal, 0)
+      await touchAndLeaveHover(signal, 0)
+      await page.keyboard.press('Escape') // the error list that the tap opened closes
+      await expect(page.getByTestId('error-list')).toBeHidden()
+      await page.locator(signal).evaluate((e) => (e as HTMLElement).blur())
+      expect(await look(page, signal, 0), 'the Signal button while « hovered » by a tap').toEqual(before)
+    })
+  })
+  test.describe('mouse (control)', () => {
+    test.use({ viewport: { width: 1366, height: 768 } })
+    test('with a mouse the hover look is still there', async ({ page }) => {
+      await boot(page)
+      expect(await page.evaluate(() => matchMedia('(hover: hover)').matches)).toBe(true)
+      const base = await look(page, '.cr-cube-tool', 0)
+      await page.locator('.cr-cube-tool').first().hover()
+      await expect.poll(async () => (await look(page, '.cr-cube-tool', 0)).border).not.toBe(base.border)
+      const baseMenu = await look(page, '.cr-menu-top', 1)
+      await page.locator('.cr-menu-top').nth(1).hover()
+      await expect.poll(async () => (await look(page, '.cr-menu-top', 1)).background).not.toBe(baseMenu.background)
+    })
+  })
+})
