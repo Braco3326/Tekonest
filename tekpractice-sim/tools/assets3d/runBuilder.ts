@@ -6,7 +6,7 @@
  *
  *   blender --background --factory-startup --python-exit-code 1 --python build_from_spec.py -- --plan <plan.json> --out <glb>
  *
- * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params }. Sizes always come from the spec's realSizeMm.
+ * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours? } (profile and colours only for revolve). Sizes always come from the spec's realSizeMm.
  * The GLB is the raw input of attempt 1 of buildAsset: the fix-up and every gate run on it unchanged.
  * `exec` and `blender` are injectable so the contract is unit-tested without Blender.
  */
@@ -52,6 +52,8 @@ export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDe
     sizeMm: spec.realSizeMm,
     ...(spec.mating?.outerMm !== undefined ? { matingOuterMm: spec.mating.outerMm } : {}),
     params: spec.build.params ?? {},
+    ...(spec.build.profile ? { profile: spec.build.profile } : {}),
+    ...(spec.build.colours ? { colours: spec.build.colours } : {}),
   }
 
   const tmp = await mkdtemp(join(tmpdir(), 'tekpractice-builder-'))

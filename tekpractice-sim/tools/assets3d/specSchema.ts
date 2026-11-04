@@ -56,10 +56,29 @@ export const SpecSource = z.object({
   note: z.string(),
 }).strict()
 
+/** One lathe station: [position along the axis from the base in mm, diameter in mm]. */
+const Station = z.tuple([z.number().finite(), z.number().finite().min(0)])
+/** A colour zone of a revolved shape: from `fromMm` along the axis up to the next zone. sRGB hex, as on the real part. */
+const ZoneColour = z.object({
+  fromMm: z.number().finite().min(0),
+  colour: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'colour must be #rrggbb'),
+}).strict()
+
 export const BuildSpec = z.object({
   shape: z.enum(BUILD_SHAPES).describe('Shape the scripted builder makes for this asset (tools/assets3d/shapes.ts).'),
   params: z.record(z.string(), z.number().finite()).optional().describe('Extra shape dimensions in millimetres (names per shape in SHAPE_SPECS). Sizes come from realSizeMm, never from here.'),
-}).strict().describe('Optional: how the scripted builder makes this asset (asset:build --scripted).')
+  profile: z.array(Station).min(4).optional().describe('Shape revolve only: the lathe profile, at least four [axial mm from the base, diameter mm] stations with strictly increasing positions; first at 0, last at the height, widest = the width.'),
+  colours: z.array(ZoneColour).min(1).optional().describe('Shape revolve only: colour zones along the axis (first at 0, strictly increasing), sRGB hex of the real part.'),
+}).strict().superRefine((b, ctx) => {
+  const { profile, colours } = b
+  profile?.forEach((st, i) => {
+    if (i > 0 && !(st[0] > profile[i - 1][0])) ctx.addIssue({ code: 'custom', path: ['profile', i, 0], message: `station positions must strictly increase (${st[0]} after ${profile[i - 1][0]})` })
+  })
+  colours?.forEach((c, i) => {
+    if (i === 0 && c.fromMm !== 0) ctx.addIssue({ code: 'custom', path: ['colours', 0, 'fromMm'], message: 'the first colour zone must start at 0' })
+    if (i > 0 && !(c.fromMm > colours[i - 1].fromMm)) ctx.addIssue({ code: 'custom', path: ['colours', i, 'fromMm'], message: 'colour zones must strictly increase' })
+  })
+}).describe('Optional: how the scripted builder makes this asset (asset:build --scripted).')
 
 export const AssetSpec = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'spec id must be a kebab-case slug'),

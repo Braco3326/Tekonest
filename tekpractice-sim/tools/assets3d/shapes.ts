@@ -9,7 +9,7 @@
 import type { AssetSpecT } from './specSchema'
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -19,6 +19,8 @@ export interface ShapeSpec {
   params: readonly string[]
   /** True when the shape needs `mating.outerMm` (the diameter of the mating end). */
   needsMatingOuter: boolean
+  /** True when the shape is driven by a lathe `profile` (and takes optional `colours`); every other shape takes neither. */
+  usesProfile?: boolean
 }
 
 export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
@@ -28,12 +30,17 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   'rack-box': { kind: 'device', params: ['chamferMm'], needsMatingOuter: false },
   // The Yamaha Rio3224-D2 stage box: layout (connector grid, panel plates) is in the builder, only datasheet sizes are params.
   'stagebox-rio3224': { kind: 'device', params: ['earMm', 'flangeDepthMm', 'frontStepMm', 'rearStepMm'], needsMatingOuter: false },
+  // A surface of revolution about the vertical axis from a measured profile (microphones, later stands and lamps).
+  revolve: { kind: 'device', params: ['segments'], needsMatingOuter: false, usesProfile: true },
 }
 
 /**
  * Checks the `build` block of `spec`. Returns one message per problem (empty = ok, also when there is no build block).
  * Messages name the asset id, the shape and the param so a typo is found at once.
  */
+/** How far a profile may be off the spec size, in mm (the fix-up rescales anyway; this keeps the shape honest). */
+const PROFILE_TOL_MM = 0.05
+
 export function validateBuild(spec: AssetSpecT): string[] {
   const build = spec.build
   if (!build) return []
@@ -50,6 +57,32 @@ export function validateBuild(spec: AssetSpecT): string[] {
       errors.push(`${spec.id}: build shape '${build.shape}' has no param '${name}' (allowed: ${allowed})`)
     } else if (!Number.isFinite(value) || value <= 0) {
       errors.push(`${spec.id}: build param '${name}' of shape '${build.shape}' must be a positive number, got ${String(value)}`)
+    }
+  }
+  const size = spec.realSizeMm
+  if (!shape.usesProfile) {
+    if (build.profile !== undefined || build.colours !== undefined) {
+      errors.push(`${spec.id}: build shape '${build.shape}' takes no profile or colours (only revolve does)`)
+    }
+  } else if (build.profile === undefined) {
+    errors.push(`${spec.id}: build shape 'revolve' needs a profile (at least four [position mm, diameter mm] stations)`)
+  } else {
+    const profile = build.profile
+    if (Math.abs(size.w - size.d) > PROFILE_TOL_MM) {
+      errors.push(`${spec.id}: a revolved shape needs a round footprint: w (${size.w} mm) must equal d (${size.d} mm)`)
+    }
+    const first = profile[0][0]
+    const last = profile[profile.length - 1][0]
+    const widest = Math.max(...profile.map((st) => st[1]))
+    if (Math.abs(first) > PROFILE_TOL_MM) errors.push(`${spec.id}: the first station must be at 0 (the base), got ${first} mm`)
+    if (Math.abs(last - size.h) > PROFILE_TOL_MM) errors.push(`${spec.id}: the last station must be at the height ${size.h} mm, got ${last} mm`)
+    if (Math.abs(widest - size.w) > PROFILE_TOL_MM) errors.push(`${spec.id}: the widest station (${widest} mm) must equal the width ${size.w} mm`)
+    for (const c of build.colours ?? []) {
+      if (c.fromMm > size.h) errors.push(`${spec.id}: a colour zone at ${c.fromMm} mm is beyond the height ${size.h} mm`)
+    }
+    const segments = build.params?.segments
+    if (segments !== undefined && !(Number.isInteger(segments) && segments >= 12 && segments <= 64 && segments % 4 === 0)) {
+      errors.push(`${spec.id}: param 'segments' must be a whole number from 12 to 64 and a multiple of 4 (so the box is exact), got ${segments}`)
     }
   }
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {

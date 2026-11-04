@@ -69,6 +69,10 @@ XLR_SEGMENTS = 20             # a multiple of 4 so the box is exact; 20 keeps th
 XLR_SHELL_RADIUS_MM = 9.6     # the 19.2 mm nickel shell
 
 DEFAULT_CHAMFER_MM = 1.0
+REVOLVE_SEGMENTS = 32         # revolve: round enough for a mic head at close range, 34 stations stay near 2200 triangles
+REVOLVE_LIFT = 3.0            # spec colours are real-part colours; lifted for the creation scene (see lift_hex)
+REVOLVE_LIFT_CAP = 0.85
+REVOLVE_DEFAULT_COLOUR = "#8a8a90"
 EAR_RECESS = 0.05 * MM          # the ear face sits this far behind the panel plane
 BEZEL_SEGMENTS = 10           # 52 connector bezels: 10 sides keep the stage box inside the 4000-triangle hero budget
 
@@ -691,6 +695,92 @@ def build_stagebox_rio3224(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+def lift_hex(hexcolour: str, gain: float = REVOLVE_LIFT) -> str:
+    """Lifts an sRGB hex colour for the creation scene's dim lighting (linear x gain, capped), back to sRGB hex.
+
+    Spec colours are the colours of the real part; vertical faces get about a quarter of the light there, so a revolved
+    shape (a mic, a stand) lifts them the way the Rio's palette was lifted by hand."""
+    linear = srgb_hex_to_linear(hexcolour)
+    out = []
+    for c in linear:
+        v = min(REVOLVE_LIFT_CAP, c * gain)
+        s = 12.92 * v if v <= 0.0031308 else 1.055 * (v ** (1 / 2.4)) - 0.055
+        out.append(max(0, min(255, round(s * 255))))
+    return "#%02x%02x%02x" % (out[0], out[1], out[2])
+
+
+def build_revolve(plan: Plan) -> bpy.types.Object:
+    """A surface of revolution about the vertical axis from a measured profile (microphones, later stands and lamps).
+
+    plan.profile is [[y_mm from the base, diameter_mm], ...] (at least four stations, strictly increasing y, first at 0 =
+    the bottom, widest = the width), plan.colours [{fromMm, colour}] the colour zones (real-part sRGB, lifted here), and
+    params.segments (default 32, a multiple of 4 so the box is exact). Pivot bottom-centre, axis along glTF Y. A station of
+    diameter 0 is a pole (a fan); a first or last station with a diameter is closed by a flat cap."""
+    w, h, d = size_m(plan)
+    profile = plan.get("profile")
+    if not isinstance(profile, list) or len(profile) < 4:
+        raise BuildError("revolve needs plan.profile: at least four [y_mm, diameter_mm] stations")
+    stations: list[tuple[float, float]] = []
+    for i, st in enumerate(profile):
+        if not (isinstance(st, list) and len(st) == 2):
+            raise BuildError(f"profile station {i} must be [y_mm, diameter_mm], got {st!r}")
+        y_mm, dia_mm = st
+        for name, value in (("position", y_mm), ("diameter", dia_mm)):
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+                raise BuildError(f"profile station {i} {name} must be a finite number, got {value!r}")
+        if dia_mm < 0:
+            raise BuildError(f"profile station {i} diameter must not be negative, got {dia_mm}")
+        if stations and not (y_mm * MM > stations[-1][0]):
+            raise BuildError(f"profile station {i} position {y_mm} must be above the previous station")
+        stations.append((float(y_mm) * MM, float(dia_mm) * MM / 2.0))
+    if abs(stations[0][0]) > 1e-9:
+        raise BuildError("the first profile station must be at 0 (the base)")
+    segments = int((plan.get("params") or {}).get("segments", REVOLVE_SEGMENTS))
+    if segments < 12 or segments > 64 or segments % 4 != 0:
+        raise BuildError(f"params.segments must be a multiple of 4 from 12 to 64, got {segments}")
+
+    zones = plan.get("colours") or [{"fromMm": 0, "colour": REVOLVE_DEFAULT_COLOUR}]
+    zones = sorted(zones, key=lambda z: z["fromMm"])
+    lifted = [(float(z["fromMm"]) * MM, lift_hex(z["colour"])) for z in zones]
+
+    def colour_at(y: float) -> str:
+        chosen = lifted[0][1]
+        for from_y, colour in lifted:
+            if y >= from_y - 1e-12:
+                chosen = colour
+        return chosen
+
+    body = Body("revolve")
+    bm = body.bm
+
+    def level(radius: float, y: float) -> list[bmesh.types.BMVert]:
+        if radius <= 1e-9:                      # a pole: one vertex
+            return [bm.verts.new(g2b(0.0, y, 0.0))]
+        return [bm.verts.new(g2b(radius * math.cos(2 * math.pi * k / segments), y, radius * math.sin(2 * math.pi * k / segments))) for k in range(segments)]
+
+    levels = [level(r, y) for y, r in stations]
+    for i in range(len(levels) - 1):
+        lo, hi = levels[i], levels[i + 1]
+        if len(lo) == 1 and len(hi) == 1:
+            raise BuildError(f"profile stations {i} and {i + 1} both have diameter 0")
+        if len(lo) == 1:
+            for k in range(segments):
+                bm.faces.new((lo[0], hi[(k + 1) % segments], hi[k]))
+        elif len(hi) == 1:
+            for k in range(segments):
+                bm.faces.new((lo[k], lo[(k + 1) % segments], hi[0]))
+        else:
+            band(bm, lo, hi)
+        body.done(colour_at((stations[i][0] + stations[i + 1][0]) / 2.0))
+    if len(levels[0]) > 1:
+        bm.faces.new(levels[0][::-1])
+        body.done(colour_at(stations[0][0]))
+    if len(levels[-1]) > 1:
+        bm.faces.new(levels[-1])
+        body.done(colour_at(stations[-1][0]))
+    return body.finish()
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "cylinder-plug": build_cylinder_plug,
@@ -698,6 +788,7 @@ SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "rj45-plug": build_rj45_plug,
     "rack-box": build_rack_box,
     "stagebox-rio3224": build_stagebox_rio3224,
+    "revolve": build_revolve,
 }
 
 

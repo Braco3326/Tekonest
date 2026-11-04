@@ -90,6 +90,15 @@ describe('runBuilder (unit, injected exec)', () => {
     })
   })
 
+  it('puts the lathe profile and the zone colours into plan.json', async () => {
+    const { exec, calls } = fakeExec()
+    const profile: [number, number][] = [[0, 23.4], [20, 26], [117, 33], [140, 51], [162, 5]]
+    const colours = [{ fromMm: 0, colour: '#3b3b3e' }, { fromMm: 117, colour: '#9a9a9e' }]
+    const spec = plugSpec({ kind: 'device', tier: 'hero', mating: undefined, realSizeMm: { w: 51, h: 162, d: 51 }, build: { shape: 'revolve', params: { segments: 24 }, profile, colours } })
+    await runBuilder(spec, 'out/raw.glb', { exec, blender: 'b' })
+    expect(calls[0].plan).toMatchObject({ shape: 'revolve', params: { segments: 24 }, profile, colours })
+  })
+
   it('exposes the builder version recorded in the manifest', () => {
     expect(BUILDER_VERSION).toBe('blender-builder-1')
   })

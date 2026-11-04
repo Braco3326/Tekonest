@@ -77,6 +77,35 @@ describe('AssetSpec build block', () => {
   })
 })
 
+describe('AssetSpec build profile (revolve)', () => {
+  const profile = [[0, 20], [40, 30], [100, 30], [162, 10]]
+  const base = (): AssetSpecT => specFor(catalog, 'yamaha-ql1')
+  const parse = (build: unknown): boolean => AssetSpec.safeParse({ ...base(), build }).success
+
+  it('accepts a lathe profile of at least four stations with strictly increasing positions, and zone colours', () => {
+    expect(parse({ shape: 'revolve', profile })).toBe(true)
+    expect(parse({ shape: 'revolve', profile, colours: [{ fromMm: 0, colour: '#3b3b3e' }, { fromMm: 117, colour: '#9a9a9e' }] })).toBe(true)
+    expect(parse({ shape: 'revolve', profile: [[0, 0], [10, 20], [20, 20], [30, 0]], params: { segments: 24 } })).toBe(true)
+  })
+
+  it('rejects fewer than four stations, a non-increasing or repeated position, non-finite numbers and a negative diameter', () => {
+    expect(parse({ shape: 'revolve', profile: profile.slice(0, 3) })).toBe(false)
+    expect(parse({ shape: 'revolve', profile: [[0, 20], [40, 30], [40, 30], [162, 10]] })).toBe(false)
+    expect(parse({ shape: 'revolve', profile: [[0, 20], [40, 30], [30, 30], [162, 10]] })).toBe(false)
+    expect(parse({ shape: 'revolve', profile: [[0, 20], [40, Number.NaN], [100, 30], [162, 10]] })).toBe(false)
+    expect(parse({ shape: 'revolve', profile: [[0, 20], [Number.POSITIVE_INFINITY, 30], [100, 30], [162, 10]] })).toBe(false)
+    expect(parse({ shape: 'revolve', profile: [[0, 20], [40, -1], [100, 30], [162, 10]] })).toBe(false)
+    expect(parse({ shape: 'revolve', profile: [[0, 20, 5], [40, 30], [100, 30], [162, 10]] })).toBe(false)
+  })
+
+  it('rejects colours that do not start at 0, are not increasing, or are not #rrggbb', () => {
+    expect(parse({ shape: 'revolve', profile, colours: [{ fromMm: 5, colour: '#3b3b3e' }] })).toBe(false)
+    expect(parse({ shape: 'revolve', profile, colours: [{ fromMm: 0, colour: '#3b3b3e' }, { fromMm: 0, colour: '#9a9a9e' }] })).toBe(false)
+    expect(parse({ shape: 'revolve', profile, colours: [{ fromMm: 0, colour: 'grey' }] })).toBe(false)
+    expect(parse({ shape: 'revolve', profile, colours: [] })).toBe(false)
+  })
+})
+
 describe('checkSpecParity (device)', () => {
   it('parity passes when ids match exactly', () => {
     expect(checkSpecParity(specFor(catalog, 'yamaha-ql1'), catalog)).toEqual([])

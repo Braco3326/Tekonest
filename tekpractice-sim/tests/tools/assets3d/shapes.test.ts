@@ -95,6 +95,43 @@ describe('validateBuild', () => {
     expect(errors[0]).toContain('earMm')
   })
 
+  describe('revolve (lathe profile)', () => {
+    const device = { kind: 'device', tier: 'hero', mating: undefined, realSizeMm: { w: 51, h: 162, d: 51 } } as const
+    const profile: [number, number][] = [[0, 23.4], [20, 26], [117, 33], [140, 51], [162, 5]]
+    const revolve = (over: Partial<NonNullable<AssetSpecT['build']>> = {}, spec: Partial<AssetSpecT> = {}): AssetSpecT =>
+      specWith({ shape: 'revolve', profile, ...over }, { ...device, ...spec })
+
+    it('accepts a profile that spans the height, peaks at the width and sits on a round footprint', () => {
+      expect(validateBuild(revolve())).toEqual([])
+      expect(validateBuild(revolve({ params: { segments: 24 } }))).toEqual([])
+    })
+
+    it('needs a profile, and refuses a profile on any other shape, naming both', () => {
+      expect(validateBuild(revolve({ profile: undefined }))[0]).toMatch(/revolve.*profile/)
+      const e = validateBuild(specWith({ shape: 'rack-box', profile }, { ...device }))
+      expect(e).toHaveLength(1)
+      expect(e[0]).toMatch(/rack-box.*no profile|profile.*rack-box/)
+    })
+
+    it('refuses a profile that does not start at the base, does not end at the height or does not reach the width', () => {
+      expect(validateBuild(revolve({ profile: [[1, 23.4], [20, 26], [117, 33], [140, 51], [162, 5]] }))[0]).toMatch(/first station.*0/)
+      expect(validateBuild(revolve({ profile: [[0, 23.4], [20, 26], [117, 33], [140, 51], [160, 5]] }))[0]).toMatch(/last station.*162/)
+      expect(validateBuild(revolve({ profile: [[0, 23.4], [20, 26], [117, 33], [140, 45], [162, 5]] }))[0]).toMatch(/widest station.*51/)
+      expect(validateBuild(revolve({ profile: [[0, 23.4], [20, 26], [117, 33], [140, 55], [162, 5]] }))[0]).toMatch(/widest station.*51/)
+    })
+
+    it('refuses a footprint that is not round (w differs from d) and a bad segment count', () => {
+      expect(validateBuild(revolve({}, { realSizeMm: { w: 51, h: 162, d: 60 } }))[0]).toMatch(/round|w.*d/)
+      for (const segments of [10, 14, 66, 30.5]) {
+        expect(validateBuild(revolve({ params: { segments } }))[0], String(segments)).toMatch(/segments/)
+      }
+    })
+
+    it('refuses colours with a station before 0 or beyond the height', () => {
+      expect(validateBuild(revolve({ colours: [{ fromMm: 0, colour: '#111111' }, { fromMm: 170, colour: '#222222' }] }))[0]).toMatch(/colour.*170/)
+    })
+  })
+
   it('accepts a rack-box with a chamfer on a device', () => {
     const spec = specWith({ shape: 'rack-box', params: { chamferMm: 1 } }, { kind: 'device', tier: 'standard', mating: undefined })
     expect(validateBuild(spec)).toEqual([])

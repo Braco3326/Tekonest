@@ -290,6 +290,35 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     await expect(runBuilder(spec, join(dir, 'short-barrel.glb'))).rejects.toThrow(/barrelMm/)
   }, 120_000)
 
+  it.skipIf(!BLENDER)('shure-sm58 builds as a lathe of its measured profile: 51 x 162 x 51 mm, every station at its diameter, bottom port on the base', async () => {
+    const spec = realSpec('shure-sm58')
+    const profile = spec.build?.profile
+    expect(profile?.length).toBeGreaterThanOrEqual(4)
+    const { raw, rawBytes, fixed, fixedBytes } = await expectBuiltTo(spec, 4000)
+    await expectLooks(rawBytes, raw.triangles, 2) // grille and handle zones
+    await expectLooks(fixedBytes, fixed.triangles, 2)
+    expect(raw.bboxM.min[1]).toBeCloseTo(0, 6)
+    // The axis is the pivot: every station ring has the profile's radius (within a hundredth of a millimetre).
+    const verts = await vertices(rawBytes)
+    for (const [yMm, diaMm] of profile ?? []) {
+      const ring = verts.filter((v) => Math.abs(v[1] - yMm * MM) < 1e-7)
+      expect(ring.length, `no vertices at y = ${yMm} mm`).toBeGreaterThan(0)
+      expect(Math.abs(Math.max(...ring.map((v) => Math.hypot(v[0], v[2]))) - diaMm * MM / 2)).toBeLessThan(0.01 * MM)
+    }
+    // The bottom port (out-xlr) lies on the real base cap: the ray cast found the surface.
+    const surface = fixed.nodes.find((n) => n.name === 'port_out-xlr')
+    expect(surface?.worldPos[1]).toBeCloseTo(0, 6)
+  }, 120_000)
+
+  it.skipIf(!BLENDER)('a revolve profile with a station above the height is refused with BUILD_FAIL naming the station', async () => {
+    const base = realSpec('shure-sm58')
+    const bad = { ...base, build: { ...base.build!, profile: [[0, 20], [40, 30], [100, 51], [150, 30]] } } as AssetSpecT
+    // validateBuild catches the last station before Blender runs; bypass it to prove the script also refuses
+    const sneaky = { ...bad, build: { ...bad.build!, profile: [[0, 20], [40, 30], [30, 51], [162, 30]] } } as AssetSpecT
+    await expect(runBuilder(bad, join(dir, 'bad-profile.glb'))).rejects.toThrow(/last station/)
+    await expect(runBuilder(sneaky, join(dir, 'bad-profile2.glb'))).rejects.toThrow(/strictly|increas|above the previous/)
+  }, 120_000)
+
   it.skipIf(!BLENDER)('a negative size exits non-zero with the BUILD_FAIL reason', async () => {
     const base = xlr()
     const bad = { ...base, realSizeMm: { ...base.realSizeMm, d: -1 } } as AssetSpecT
