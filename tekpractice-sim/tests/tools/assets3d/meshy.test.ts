@@ -94,6 +94,34 @@ describe('createMultiImageTask', () => {
     expect(f.calls).toHaveLength(0)
   })
 
+  it('passes the quality options (2K geometry, no remesh, no image enhancement, 4K texture) only when asked', async () => {
+    const f = fakeFetch([json({ result: 'a' }), json({ result: 'b' })])
+    await createMultiImageTask([IMG], { targetPolycount: 560 }, { fetch: f.fetch, key: KEY })
+    await createMultiImageTask(
+      [IMG],
+      { targetPolycount: 560, geometryResolution: '2k', shouldRemesh: false, imageEnhancement: false, textureResolution: '4k' },
+      { fetch: f.fetch, key: KEY },
+    )
+    const plain = JSON.parse(String(f.calls[0].init.body))
+    expect(plain).not.toHaveProperty('image_enhancement')
+    expect(plain.geometry_resolution).toBe('standard')
+    expect(plain.should_remesh).toBe(true)
+    expect(plain.texture_resolution).toBe('2k')
+    const rich = JSON.parse(String(f.calls[1].init.body))
+    expect(rich.geometry_resolution).toBe('2k')
+    expect(rich.should_remesh).toBe(false)
+    expect(rich.image_enhancement).toBe(false)
+    expect(rich.texture_resolution).toBe('4k')
+  })
+
+  it('rejects an unknown geometry or texture resolution before any request', async () => {
+    const f = fakeFetch([json({ result: 'x' })])
+    const bad = (o: object) => ({ targetPolycount: 560, ...o }) as unknown as Parameters<typeof createMultiImageTask>[1]
+    await expect(createMultiImageTask([IMG], bad({ geometryResolution: '4k' }), { fetch: f.fetch, key: KEY })).rejects.toThrow(/geometryResolution/)
+    await expect(createMultiImageTask([IMG], bad({ textureResolution: '16k' }), { fetch: f.fetch, key: KEY })).rejects.toThrow(/textureResolution/)
+    expect(f.calls).toHaveLength(0)
+  })
+
   it('rejects more than 4 images before any request', async () => {
     const f = fakeFetch([json({ result: 'x' })])
     await expect(

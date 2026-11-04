@@ -46,6 +46,14 @@ export interface MeshyOpts {
   targetPolycount: number
   /** Default 'triangle': the target is then a triangle count, the unit of the pipeline's budget gate. */
   topology?: MeshyTopology
+  /** 'standard' (default) or '2k' (Ultra geometry, needs meshy-7.1). Only sent as given. */
+  geometryResolution?: 'standard' | '2k'
+  /** Default true (the pipeline remeshes to its triangle target). false keeps Meshy's own highest-quality mesh: far above the budget. */
+  shouldRemesh?: boolean
+  /** Default left to Meshy (true). false keeps the input photos' exact look: no "enhancement" of panel text and sockets. */
+  imageEnhancement?: boolean
+  /** Default '2k'. */
+  textureResolution?: '2k' | '4k' | '8k'
 }
 
 export interface MeshyTask {
@@ -175,6 +183,12 @@ function validateCreateInput(images: string[], opts: MeshyOpts, key: string): vo
   if (opts.topology !== undefined && opts.topology !== 'triangle' && opts.topology !== 'quad') {
     reject(`Meshy topology must be 'triangle' or 'quad', got ${String(opts.topology)}`)
   }
+  if (opts.geometryResolution !== undefined && opts.geometryResolution !== 'standard' && opts.geometryResolution !== '2k') {
+    reject(`Meshy geometryResolution must be 'standard' or '2k' (4k is not supported by multi-image), got ${String(opts.geometryResolution)}`)
+  }
+  if (opts.textureResolution !== undefined && !['2k', '4k', '8k'].includes(opts.textureResolution)) {
+    reject(`Meshy textureResolution must be '2k', '4k' or '8k', got ${String(opts.textureResolution)}`)
+  }
   images.forEach((img, i) => {
     if (typeof img !== 'string') reject(`Meshy image ${i} is not a string`)
     if (img.startsWith('https://')) return
@@ -196,15 +210,16 @@ export async function createMultiImageTask(
   const body = {
     image_urls: images,
     ai_model: MESHY_MODEL,
-    geometry_resolution: 'standard',
+    geometry_resolution: opts.geometryResolution ?? 'standard',
     should_texture: true,
     enable_pbr: true,
-    texture_resolution: '2k',
-    should_remesh: true,
+    texture_resolution: opts.textureResolution ?? '2k',
+    should_remesh: opts.shouldRemesh ?? true,
     topology: opts.topology ?? 'triangle',
     target_polycount: opts.targetPolycount,
     target_formats: ['glb'],
     auto_size: false,
+    ...(opts.imageEnhancement === undefined ? {} : { image_enhancement: opts.imageEnhancement }),
   }
   // A dropped connection or a 5xx can happen after Meshy accepted (and charged) the task: say so, never retry.
   let res: Response

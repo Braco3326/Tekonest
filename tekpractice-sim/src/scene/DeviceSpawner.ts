@@ -326,21 +326,16 @@ export class DeviceSpawner {
         // model is already oriented (I/O ends on Babylon -Z, the rear), so the catalog front alignment below does not apply to it.
         const extras = findExtras(glbRoot)
         const front = !extras && this.options.alignFront ? device.modelFront?.axis : undefined
-        // A pipeline model has its I/O (the rear) on glTF +Z and so its front, the opposite face, on glTF -Z, which the loader's z mirror sends to
-        // Babylon +Z: where Mode Création aims the acoustics at yaw 0. It needs no turn (`front` stays undefined: the file's own port empties are
-        // trusted), but a device that DECLARES a front gets it reported, so frontWorld (debug hook, proof of L34) stays truthful and follows the yaw.
-        // The catalog axis describes the legacy file it was measured on and does not apply to a pipeline model.
-        const reportedFront: FrontAxis | undefined = extras ? (this.options.alignFront && device.modelFront ? '-z' : undefined) : front
         // Night wave 1 (item 8): a model that includes its floor stand is scaled by its cabinet's height (Mode Création only, like `front`).
         const body = this.options.alignFront ? device.modelBody : undefined
         const scale = this.normalizeModel(deviceId, glbRoot, front, extras, body)
         const rear = front && glbRoot.parent instanceof TransformNode ? rearFace(glbRoot, glbRoot.parent) : null
         this.reanchorPorts(device, instanceId, glbRoot, portMarkers, front === undefined, rear)
-        if (reportedFront) {
+        if (front) {
           instance.frontWorld = () => {
             if (glbRoot.isDisposed()) return null
             glbRoot.computeWorldMatrix(true)
-            const d = frontDirection(reportedFront, glbRoot.getWorldMatrix())
+            const d = frontDirection(front, glbRoot.getWorldMatrix())
             return [d.x, d.y, d.z]
           }
         }
