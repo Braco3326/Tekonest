@@ -519,3 +519,64 @@ for (const touch of [false, true]) {
     })
   })
 }
+
+// ── Night 2 wave 5, P2-3: « Retour au site Tekonest » was pushed off the screen by the phone menubar ───────────────────────────────────────────
+// Measured on bb4e026: touch at 400 px the link ran from x 377.7 to 421.7 and the menubar scrollWidth was 422 (the seven menu titles are 44 px targets: 350 px, then the 44 px
+// link); with a mouse at 360 and 375 px it ran to 389.8. Below 440 px the titles and the link are tighter (less padding, 12 px type; the link is the « ← » alone, its name unchanged).
+const menubarGeometry = (page: Page) =>
+  page.evaluate(() => {
+    const bar = document.querySelector<HTMLElement>('[data-testid="menubar"]')!
+    const link = document.querySelector<HTMLElement>('#site-link')!.getBoundingClientRect()
+    const tops = [...document.querySelectorAll<HTMLElement>('.cr-menu-top')].map((e) => e.getBoundingClientRect())
+    return {
+      scrollWidth: bar.scrollWidth,
+      clientWidth: bar.clientWidth,
+      docScroll: document.documentElement.scrollWidth,
+      link: { x: link.x, right: link.right, height: link.height },
+      tops: tops.map((t) => ({ x: t.x, right: t.right, width: t.width })),
+    }
+  })
+for (const touch of [false, true]) {
+  for (const width of [360, 375, 400, 430]) {
+    test.describe(`menubar at ${width} px, ${touch ? 'touch' : 'mouse'} (wave 5, P2-3)`, () => {
+      test.use({ viewport: { width, height: 800 }, hasTouch: touch })
+      test('the link and every menu title are fully inside the window, nothing scrolls, the link keeps its name', async ({ page }) => {
+        await boot(page, null)
+        const g = await menubarGeometry(page)
+        expect(g.scrollWidth, 'the menubar does not overflow itself').toBeLessThanOrEqual(g.clientWidth)
+        expect(g.docScroll, 'no horizontal scroll').toBeLessThanOrEqual(width)
+        expect(g.link.x, 'link left edge').toBeGreaterThanOrEqual(0)
+        expect(g.link.right, 'link right edge').toBeLessThanOrEqual(width + 0.01)
+        for (const [i, t] of g.tops.entries()) expect(t.right, `menu title ${i} right edge`).toBeLessThanOrEqual(g.link.x + 0.5)
+        expect(g.tops.length).toBe(7)
+        const link = page.getByRole('link', { name: 'Retour au site Tekonest' })
+        await expect(link).toBeVisible()
+        await expect(link).toHaveAccessibleName('Retour au site Tekonest')
+        // a press on it reaches it (nothing covers it)
+        expect(await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.closest('#site-link') !== null, { x: g.link.x + (g.link.right - g.link.x) / 2, y: g.link.height / 2 })).toBe(true)
+        if (touch) {
+          expect(g.link.right - g.link.x, 'a 44 px target').toBeGreaterThanOrEqual(43.5)
+          for (const [i, t] of g.tops.entries()) expect(t.width, `menu title ${i} is a 44 px target`).toBeGreaterThanOrEqual(43.5)
+        }
+      })
+    })
+  }
+}
+test.describe('menubar above 440 px: unchanged (wave 5, P2-3)', () => {
+  for (const [width, link, tops] of [
+    [1366, 170.2, '54.7,44.3,67.8,67,60.2,42.2,46.3'],
+    [761, 170.2, '54.7,44.3,67.8,67,60.2,42.2,46.3'],
+    [760, 35.4, '46.7,36.3,59.8,59,52.2,34.2,38.3'],
+    [441, 35.4, '46.7,36.3,59.8,59,52.2,34.2,38.3'],
+  ] as const) {
+    test(`the link and the titles keep their measured widths at ${width} px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 })
+      await boot(page, null)
+      const g = await menubarGeometry(page)
+      expect(Math.abs(g.link.right - g.link.x - link)).toBeLessThan(0.3)
+      const got = g.tops.map((t) => t.width)
+      const want = tops.split(',').map(Number)
+      for (const [i, w] of want.entries()) expect(Math.abs(got[i] - w), `title ${i}`).toBeLessThan(0.3)
+    })
+  }
+})
