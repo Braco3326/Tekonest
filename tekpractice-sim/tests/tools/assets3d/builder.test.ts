@@ -172,6 +172,20 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(Math.max(...verts.filter((v) => v[2] > zMax - 0.5 * MM).map((v) => v[1]))).toBeCloseTo(2.5 * MM, 6)
   }, 120_000)
 
+  it.skipIf(!BLENDER)('yamaha-rio3224-d2 builds as a chamfered 480 x 220 x 368 mm box and passes every gate with its ports and recesses', async () => {
+    const spec = specWithBuild('yamaha-rio3224-d2', { shape: 'rack-box', params: { chamferMm: 1 } })
+    const { raw, fixed } = await expectBuiltTo(spec, 4000)
+    // Bottom-centre pivot as built: the fix-up keeps it.
+    expect(raw.bboxM.min[1]).toBeCloseTo(0, 6)
+    // The fix-up added the six port empties (io and opposite faces) to the box.
+    expect(fixed.nodeNames.filter((n) => n.startsWith('port_'))).toHaveLength(6)
+  }, 120_000)
+
+  it.skipIf(!BLENDER)('a chamfer larger than half the smallest side exits with BUILD_FAIL naming chamferMm', async () => {
+    const spec = specWithBuild('yamaha-rio3224-d2', { shape: 'rack-box', params: { chamferMm: 300 } })
+    await expect(runBuilder(spec, join(dir, 'big-chamfer.glb'))).rejects.toThrow(/chamferMm/)
+  }, 120_000)
+
   it.skipIf(!BLENDER)('a negative size exits non-zero with the BUILD_FAIL reason', async () => {
     const base = xlr()
     const bad = { ...base, realSizeMm: { ...base.realSizeMm, d: -1 } } as AssetSpecT

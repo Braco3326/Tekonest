@@ -41,6 +41,8 @@ PIN_CIRCLE_RADIUS_MM = 4.4
 PIN_HOLE_SEGMENTS = 12
 DEFAULT_FRONT_LEN_MM = 12.0
 
+DEFAULT_CHAMFER_MM = 1.0
+
 # trs-plug: 24 segments keep a plug with grooves inside the 800-triangle connector budget.
 TRS_SEGMENTS = 24
 DEFAULT_BARREL_MM = 19.0
@@ -276,7 +278,20 @@ def build_rj45_plug(plan: Plan) -> bpy.types.Object:
 
 
 def build_rack_box(plan: Plan) -> bpy.types.Object:
-    raise BuildError("shape 'rack-box' is not implemented yet")
+    """Plain box w x h x d, centred on x and z with its bottom at y = 0, every edge chamfered by chamferMm (one segment).
+    No panel inset and no ear flanges in wave 1: ports sit on the bounding-box face (2026-10-29 spec 4.5)."""
+    w, h, d = size_m(plan)
+    chamfer = param_m(plan, "chamferMm", DEFAULT_CHAMFER_MM)
+    if chamfer >= min(w, h, d) / 2.0:
+        raise BuildError(f"params.chamferMm ({chamfer / MM:.2f}) must be smaller than half the smallest side ({min(w, h, d) / 2.0 / MM:.2f})")
+
+    bm = bmesh.new()
+    corners = [(sx * w / 2.0, y, sz * d / 2.0) for y in (0.0, h) for sx, sz in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+    v = [bm.verts.new(g2b(*c)) for c in corners]
+    for q in ((0, 1, 2, 3), (7, 6, 5, 4), (0, 4, 5, 1), (1, 5, 6, 2), (2, 6, 7, 3), (3, 7, 4, 0)):
+        bm.faces.new([v[i] for i in q])
+    bmesh.ops.bevel(bm, geom=bm.edges[:], offset=chamfer, offset_type="OFFSET", segments=1, affect="EDGES")
+    return new_body_object(bm, "rack-box")
 
 
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
