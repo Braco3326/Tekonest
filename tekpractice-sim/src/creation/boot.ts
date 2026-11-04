@@ -1466,8 +1466,9 @@ export async function bootCreation(): Promise<void> {
   /** A drawer drag works in client px; the placement controller in canvas px. */
   const canvasPx = (at: { x: number; y: number }): { x: number; y: number } => toCanvasPx(at, canvas.getBoundingClientRect())
   /**
-   * The drawer was mounted without the Bêta sheets because their fetch FAILED (not because there are none): the next open
-   * fetches them again before it shows, so the tab can come back. The module itself (drawerLoad) stays cached.
+   * The Bêta sheets as the drawer shows them (night wave 1, item 6). The drawer never waits for them: it opens at once, its « Bêta » tab
+   * says « Chargement… » while the request runs and a plain message if it failed, and the tab fills in when the request settles. Every
+   * open asks again while the sheets are not there (a failure is told apart from « the file has no sheet », see `loadBeta`).
    */
   let betaStatus: 'loading' | 'ready' | 'unavailable' = 'loading'
   let betaSync: Promise<void> | null = null
@@ -1529,8 +1530,10 @@ export async function bootCreation(): Promise<void> {
     loadDrawer().then(
       (d) => {
         showStatus()
-        if (drawerWanted && !viewLocked()) d.open()
-        else drawerWanted = false
+        if (drawerWanted && !viewLocked()) {
+          d.open()
+          syncBeta()
+        } else drawerWanted = false
       },
       (e) => {
         console.error('[creation] inventory failed to load', e)
