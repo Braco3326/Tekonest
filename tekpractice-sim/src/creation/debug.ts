@@ -138,6 +138,13 @@ export interface CreationDebug {
   coverageJobs(): number
   /** Task 37: the coverage dot under a canvas point (canvas CSS px), devices ignored (the oracle of the pin); null when none. */
   coverageDotAt(x: number, y: number): [number, number, number] | null
+  /**
+   * Task 43c (L34): the world direction the model's DECLARED front (catalog `modelFront`) faces, from the live root of the loaded model; null when the device
+   * has none, its model is not loaded, or the instance is unknown. At yaw 0 it is +z, the way the acoustic aim line points.
+   */
+  modelFront(instanceId: string): [number, number, number] | null
+  /** Task 43c (L34): independent oracle for a loudspeaker's front, the x-extent of the body vertices at the +z and the -z end of its z range (world axes, yaw 0). */
+  bodyEnds(instanceId: string): { plusZ: number; minusZ: number; depth: number } | null
   /** Task 37: the world position of a port marker (after the .glb is applied it sits on the model), or null when unknown. */
   portWorld(ref: PortRef): [number, number, number] | null
   /** Task 39: each speaker's output level (linear RMS from its analyser; 0 = silence) while playing; {} otherwise. Never loads the audio chunk. */

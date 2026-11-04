@@ -12,8 +12,8 @@ import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { templateToDesign } from '../../src/creation/templates'
 import { Template } from '../../src/creation/templateSchema'
 import { signalPath } from '../../src/flow/signalPath'
-import { coverageSources } from '../../src/creation/coverageSources'
-import { binCounts, coverageGrid, formatDb, formatNumber, legendRows, listenerZones, noSourceMessage, pinnedText, pointText, statRows } from '../../src/creation/coverageModel'
+import { coverageSources, type UsedSpeaker } from '../../src/creation/coverageSources'
+import { binCounts, coverageGrid, formatDb, frontNote, formatNumber, legendRows, listenerZones, noSourceMessage, pinnedText, pointText, statRows } from '../../src/creation/coverageModel'
 import { makeRegistry } from '../helpers'
 import { COVERAGE_PALETTE } from '../../src/creation/coveragePalette'
 import type { PortRef } from '../../src/engine/types'
@@ -163,5 +163,17 @@ describe('reference case: concert-hall-medium + k12-g (x = +6) and k12-d (x = �
     const g = computeField(turned, grid.points)
     // every audience dot is behind both speakers: −30 dB rear lobe + distance: the relative field is still ≤ 0 and finite, but the levels differ
     expect(g.maxDb).toBeLessThan(f.maxDb - 20)
+  })
+})
+
+describe('frontNote (Task 43c, L34): the model-front note names only the speakers whose front is not established', () => {
+  const u = (instanceId: string, frontVerified: boolean): UsedSpeaker => ({ instanceId, deviceId: 'x', hDeg: 90, vDeg: 60, hKind: 'kb', vKind: 'kb', vDeduced: false, sensitivityDb: undefined, maxSplDb: undefined, frontVerified })
+  it('no note when every contributing speaker is verified, or when there is none', () => {
+    expect(frontNote([u('a', true), u('b', true)])).toBeNull()
+    expect(frontNote([])).toBeNull()
+  })
+  it('names the unverified ones, in order, and only them', () => {
+    expect(frontNote([u('dbr-g', false), u('k12', true)])).toBe('Face avant du modèle 3D non vérifiée pour dbr-g : le trait indique l’axe acoustique, pas forcément la face du modèle.')
+    expect(frontNote([u('a', false), u('b', true), u('c', false)])).toContain('a, c')
   })
 })

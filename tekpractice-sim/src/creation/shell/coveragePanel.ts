@@ -114,9 +114,10 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
   body.id = `${id}-body`
   const status = el(doc, 'p', 'cr-cov-status')
   status.dataset.testid = 'coverage-status'
-  // Always shown with the block (decision L30 viii): the aim line is the truth; the 3D model's shape may not match the real front.
-  const caveat = el(doc, 'p', 'cr-cov-note', L.frontCaveat)
+  // Only for a contributing speaker whose model front is not established (L34, Task 43c: catalog `modelFront` absent); the aim line is the truth.
+  const caveat = el(doc, 'p', 'cr-cov-note')
   caveat.dataset.testid = 'coverage-caveat'
+  caveat.hidden = true
   const ready = el(doc, 'div', 'cr-cov-ready')
   ready.dataset.testid = 'coverage-ready'
 
@@ -236,6 +237,8 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
         active === unpin ? { kind: 'unpin' } : active instanceof HTMLElement && points.contains(active) && active.dataset.point ? { kind: 'point', id: active.dataset.point } : { kind: 'none' }
       status.textContent = view.message
       status.dataset.status = view.status
+      caveat.textContent = view.frontNote ?? ''
+      caveat.hidden = view.frontNote === null
       const has = view.status === 'ready'
       ready.hidden = !has
       if (!has) return

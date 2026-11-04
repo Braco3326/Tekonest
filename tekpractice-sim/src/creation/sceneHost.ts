@@ -956,7 +956,7 @@ export class SceneHost {
     const bag = new DisposableBag()
     this.bag = bag
     this.controllers = new DisposableBag()
-    this.spawner = new DeviceSpawner(scene, this.registry, CREATION_DEVICE_THEME)
+    this.spawner = new DeviceSpawner(scene, this.registry, CREATION_DEVICE_THEME, { alignFront: true })
     // Disposed first with the place's other controllers (its camera observer goes before the camera does).
     this.proxies = new PortProxies(
       { scene, camera, canvas: this.canvas, instance: (id) => this.instances.get(id), instances: () => this.instances.values(), selected: () => this.selected },

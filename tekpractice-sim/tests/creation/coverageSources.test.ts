@@ -269,3 +269,25 @@ describe('provenance: what the source line says', () => {
     expect(sourceLine(used)).toBe('Couverture : données KB')
   })
 })
+
+describe('front verification (Task 43c, L34): which contributing speakers have an established model front', () => {
+  it('the K12.2 of the reference rig is verified (the catalog declares its modelFront)', () => {
+    const d = rig()
+    const used = coverageSourcesDetail(d, registry, pathOf(d)).used
+    expect(used.map((u) => [u.instanceId, u.frontVerified])).toEqual([['k12-d', true], ['k12-g', true]])
+  })
+  it('a speaker whose device declares no modelFront is not verified (the DBR12 today; here the K12.2 with the field removed)', () => {
+    const reg = catalogWith((dev) => {
+      delete (dev['qsc-k12-2'] as { modelFront?: unknown }).modelFront
+    })
+    const d = rig({}, reg)
+    const used = coverageSourcesDetail(d, reg, pathOf(d, reg)).used
+    expect(used.map((u) => u.frontVerified)).toEqual([false, false])
+  })
+  it('the real catalog: the DBR12 declares no front, the 8030C and the K12.2 do', () => {
+    const by = (id: string): unknown => registry.deviceById.get(id)!.modelFront
+    expect(by('yamaha-dbr12')).toBeUndefined()
+    expect(by('qsc-k12-2')).toMatchObject({ axis: '+z' })
+    expect(by('genelec-8030c')).toMatchObject({ axis: '-x' })
+  })
+})

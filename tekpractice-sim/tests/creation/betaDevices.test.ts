@@ -99,6 +99,11 @@ describe('parseProposals leaves unusable entries out, with the reason', () => {
     expect(r.skipped).toEqual([])
     expect(r.devices.map((d) => [d.id, d.acoustic])).toEqual([['p-bad', undefined], ['p-bad2', undefined]])
   })
+  it('and no modelFront (Task 43c, L34): the model front is measured on a shipped .glb, a proposal has none; a crafted or malformed one neither survives nor blocks', () => {
+    const r = parse([entry('p-f', { modelFront: { axis: '+z', evidence: 'x' } }), entry('p-f2', { modelFront: 'front' })])
+    expect(r.skipped).toEqual([])
+    expect(r.devices.map((d) => [d.id, d.modelFront, 'modelFront' in d])).toEqual([['p-f', undefined, false], ['p-f2', undefined, false]])
+  })
   it('after registration the registry holds the proposal without routing (the signal path reads routing from the registry)', () => {
     const reg2 = makeRegistry()
     registerProposals(reg2, parseProposals({ devices: [entry('p-reg', { routing: [{ from: 'in-1', to: ['transducer'] }] })] }, reg2).devices)

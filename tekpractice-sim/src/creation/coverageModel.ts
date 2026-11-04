@@ -104,6 +104,16 @@ export function sourceLine(used: readonly UsedSpeaker[]): string | null {
   return fill(L.sourceLine!, { sources: parts.join(' / ') })
 }
 
+/**
+ * « Face avant du modèle 3D non vérifiée pour dbr-g : … »: the speakers that contribute and whose model front is NOT established (catalog `modelFront`
+ * absent, Task 43c / L34), by instance id like the speaker list. Null when every contributing speaker is verified (or there is none): the note is
+ * then not shown at all, the aim line and the model agree.
+ */
+export function frontNote(used: readonly UsedSpeaker[]): string | null {
+  const names = used.filter((u) => !u.frontVerified).map((u) => u.instanceId)
+  return names.length ? fill(C().frontCaveat!, { names: names.join(', ') }) : null
+}
+
 export const speakerLines = (used: readonly UsedSpeaker[]): string[] =>
   used.map((u) => fill(C().speakerRow!, { name: u.instanceId, h: formatNumber(u.hDeg, 0), v: formatNumber(u.vDeg, 0) }))
 
@@ -169,6 +179,8 @@ export interface CoverageView {
   stats: StatRow[] | null
   speakers: string[]
   sourceLine: string | null
+  /** The model-front note (frontNote), or null when every contributing speaker's front is established. */
+  frontNote: string | null
   points: PointRow[]
   pinned: { text: string } | null
   /** A named point or the pinned dot is above 0 dB (louder than every grid point): the panel says the scale is the grid's. */
@@ -186,6 +198,7 @@ export const EMPTY_VIEW: CoverageView = {
   stats: null,
   speakers: [],
   sourceLine: null,
+  frontNote: null,
   points: [],
   pinned: null,
   probeAbove: false,

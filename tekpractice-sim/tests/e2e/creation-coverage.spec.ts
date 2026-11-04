@@ -93,8 +93,8 @@ test('(a) Écoute › Couverture: off by default, then the dots, ≤ 20 000 poin
   await expect(page.getByTestId('coverage-stats').locator('dd[data-stat="max"]')).toHaveText('0,0 dB')
   await expect(page.getByTestId('coverage-stats').locator('dd[data-stat="step"]')).toHaveText('0,5 m')
   await expect(page.getByTestId('coverage-speakers')).toContainText('k12-g : 75° × 75°')
-  await expect(page.getByTestId('coverage-caveat')).toContainText('La direction de chaque enceinte est indiquée par le trait')
-  await expect(page.getByTestId('coverage-caveat')).toContainText('modèles en cours de refonte')
+  // L34 (Task 43c): both K12.2 have a measured, corrected model front, so the model-front note is not shown (tests/e2e/creation-front.spec.ts (e) has it shown for a DBR12)
+  await expect(page.getByTestId('coverage-caveat')).toBeHidden()
   await expect(page.getByTestId('coverage-spl')).toBeHidden() // no sourced sensitivity anywhere: the SPL estimate does not exist
   await expect(page.getByTestId('coverage-ready')).not.toContainText(/NaN|Infinity|undefined/)
   // the legend counts add up to the points (each colour's dots are text too)
@@ -396,7 +396,7 @@ test('(i) the AIM line of each audible speaker starts at the speaker and runs al
   expect((await cov(page)).aim.find((a) => a.id === 'k12-g')!.to[1]).toBeCloseTo(2.7 - 4 * Math.sin((10 * Math.PI) / 180), 5)
 })
 
-test('(j) CONVENTION CHECK (L30 viii, kept by decision): at yaw 0 the connector markers of the K12.2 sit at −z of the body and the acoustic axis runs to +z (evidence of the current scene; the model SHAPE is documented in tests/assets/speakerFront.test.ts)', async ({ page }) => {
+test('(j) CONVENTION CHECK (L30 viii; the K12.2 model is turned onto +z by L34): at yaw 0 the connector markers of the K12.2 sit at −z of the body and the acoustic axis runs to +z (the front itself is proved in tests/e2e/creation-front.spec.ts)', async ({ page }) => {
   // The convention (yaw 0 = +z, connectors toward −z) is what the rebuilt 3D models will follow too (decision L30 viii): if this fails, the scene's
   // convention changed. See docs/CREATIVE-MODE-LOG.md L30 and ADR-0015 « Addendum (Task 37) » before touching the test.
   await boot(page)
@@ -421,7 +421,7 @@ test('(j) CONVENTION CHECK (L30 viii, kept by decision): at yaw 0 the connector 
   for (const p of r.ports) expect(p.at![2], p.port).toBeLessThan(aim.from[2]) // the connectors are behind the speaker's acoustic origin
 })
 
-test('(l) folding Propriétés hides the dots, the hatched dots and the aim lines (the legend and the caveat are in it); the toggle stays on; unfolding brings them back with no new job', async ({ page }) => {
+test('(l) folding Propriétés hides the dots, the hatched dots and the aim lines (the legend is in it); the toggle stays on; unfolding brings them back with no new job', async ({ page }) => {
   await boot(page)
   await toggleCoverage(page)
   await waitReady(page)
@@ -449,7 +449,7 @@ test('(l) folding Propriétés hides the dots, the hatched dots and the aim line
   expect((await cov(page)).meshes.sort()).toEqual(['coverage', 'coverage:aim', 'coverage:hatch'])
   await page.waitForTimeout(600)
   expect(await jobs(page)).toBe(base) // hiding and showing are no computation
-  await expect(page.getByTestId('coverage-caveat')).toBeVisible()
+  await expect(page.getByTestId('coverage-legend')).toBeVisible()
 })
 
 test('(m) a click that drops a device over the grid is the placement\'s: it does not also pin a dot', async ({ page }) => {

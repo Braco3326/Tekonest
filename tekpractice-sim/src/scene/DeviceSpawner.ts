@@ -9,8 +9,10 @@ import {
   AbstractMesh,
   Color3,
   DynamicTexture,
+  Matrix,
   Mesh,
   MeshBuilder,
+  Quaternion,
   Scene,
   SceneLoader,
   StandardMaterial,
@@ -22,6 +24,7 @@ import type { Registry, DeviceT } from '../engine/CatalogLoader'
 import type { PortRef } from '../engine/types'
 import { TOKENS } from '../design/tokens'
 import { assetUrl } from '../assetUrl'
+import { frontDirection, yawOntoPlusZ, type FrontAxis } from './modelFront'
 
 export interface DeviceInstance {
   instanceId: string
@@ -33,6 +36,11 @@ export interface DeviceInstance {
   assetStatus: 'glb' | 'placeholder'
   /** Resolves true when the .glb applied (ports re-anchored), false on fallback. */
   modelReady: Promise<boolean>
+  /**
+   * World direction (unit vector) the model's declared front faces (catalog `modelFront`), read from the live root of the loaded model; null while
+   * the model is not loaded, for a device with no declared front, or when the spawner does not align fronts (legacy). Test hook and proof of L34.
+   */
+  frontWorld(): [number, number, number] | null
   dispose(): void
 }
 
@@ -89,6 +97,16 @@ const REAL_SIZE_M: Record<string, { w: number; h: number; d: number }> = {
   'yellowtec-litt': { w: 0.051, h: 0.28, d: 0.051 },
   'yellowtec-mika': { w: 0.09, h: 0.45, d: 0.787 },
   'mogami-gold-db25-xlrm': { w: 0.3, h: 0.06, d: 0.12 },
+}
+
+/** What a spawner is asked to do beyond the legacy behaviour. Absent = the legacy look, exactly. */
+export interface DeviceSpawnerOptions {
+  /**
+   * Mode Création (Task 43c, L34): turn a model whose catalog device declares `modelFront` about y until its front faces +z at yaw 0 (where the
+   * acoustics aim), and anchor its ports on the −z grid instead of on the file's port_* empties (which sit on the wrong face of these files).
+   * The legacy game never sets it: its models look exactly as before.
+   */
+  alignFront?: boolean
 }
 
 /** A port slot in the −Z grid: local position of its marker + its pick radius. */
@@ -212,7 +230,8 @@ export class DeviceSpawner {
   constructor(
     private scene: Scene,
     private registry: Registry,
-    private theme?: DeviceTheme
+    private theme?: DeviceTheme,
+    private options: DeviceSpawnerOptions = {}
   ) {}
 
   spawn(deviceId: string, position: Vector3, instanceId = deviceId): DeviceInstance {
@@ -233,6 +252,7 @@ export class DeviceSpawner {
       // Reassigned below to the real load promise; typed here so the object is
       // fully-formed before tryLoadModel can flip assetStatus.
       modelReady: Promise.resolve(false),
+      frontWorld: () => null,
       dispose: () => root.dispose(false, true),
     }
 
@@ -294,8 +314,17 @@ export class DeviceSpawner {
           m.metadata = { ...(m.metadata ?? {}), isDeviceBody: true, instanceId }
         }
 
-        const scale = this.normalizeModel(deviceId, glbRoot)
-        this.reanchorPorts(device, instanceId, glbRoot, portMarkers)
+        const front = this.options.alignFront ? device.modelFront?.axis : undefined
+        const scale = this.normalizeModel(deviceId, glbRoot, front)
+        this.reanchorPorts(device, instanceId, glbRoot, portMarkers, front === undefined)
+        if (front) {
+          instance.frontWorld = () => {
+            if (glbRoot.isDisposed()) return null
+            glbRoot.computeWorldMatrix(true)
+            const d = frontDirection(front, glbRoot.getWorldMatrix())
+            return [d.x, d.y, d.z]
+          }
+        }
 
         // THIS instance's box: a global name lookup could hit a respawned twin with the same id.
         root.getChildMeshes(true, (n) => n.name === `box:${instanceId}`)[0]?.setEnabled(false)
@@ -318,7 +347,7 @@ export class DeviceSpawner {
    * to the instance origin, center X/Z, and rotate 180° if the ports face +Z.
    * Returns the applied scale factor (1 when the id has no known real size).
    */
-  private normalizeModel(deviceId: string, glbRoot: AbstractMesh): number {
+  private normalizeModel(deviceId: string, glbRoot: AbstractMesh, front?: FrontAxis): number {
     const real = REAL_SIZE_M[deviceId]
     const origin =
       glbRoot.parent instanceof TransformNode
@@ -337,6 +366,20 @@ export class DeviceSpawner {
       bounds = glbRoot.getHierarchyBoundingVectors()
     }
 
+    // (e0) Task 43c: a declared front is turned onto +z (the acoustic axis at yaw 0) instead of following the port empties. Done through the
+    // root's quaternion (the loader sets one, which makes `rotation` inert), before grounding / centering so the anchors follow the turn.
+    if (front) {
+      const parent = glbRoot.parent as TransformNode | null
+      glbRoot.computeWorldMatrix(true)
+      const local = parent ? glbRoot.getWorldMatrix().multiply(Matrix.Invert(parent.getWorldMatrix())) : glbRoot.getWorldMatrix()
+      const dir = frontDirection(front, local)
+      const yaw = yawOntoPlusZ(dir)
+      const turn = Quaternion.RotationAxis(Vector3.Up(), yaw)
+      glbRoot.rotationQuaternion = glbRoot.rotationQuaternion ? turn.multiply(glbRoot.rotationQuaternion) : turn.multiply(Quaternion.FromEulerAngles(glbRoot.rotation.x, glbRoot.rotation.y, glbRoot.rotation.z))
+      glbRoot.computeWorldMatrix(true)
+      bounds = glbRoot.getHierarchyBoundingVectors()
+    }
+
     // (e) orientation: if the port empties sit on +Z, spin 180° so I/O faces −Z.
     // Applied BEFORE grounding/centering so absolute anchors follow the spin.
     const empties = glbRoot
@@ -349,7 +392,7 @@ export class DeviceSpawner {
       let meanZ = 0
       for (const n of empties) meanZ += n.getAbsolutePosition().z - origin.z
       meanZ /= empties.length
-      if (meanZ > 0) {
+      if (meanZ > 0 && !front) {
         glbRoot.rotation.y += Math.PI
         glbRoot.computeWorldMatrix(true)
         bounds = glbRoot.getHierarchyBoundingVectors()
@@ -390,7 +433,8 @@ export class DeviceSpawner {
     device: DeviceT,
     instanceId: string,
     glbRoot: AbstractMesh,
-    portMarkers: Map<string, Mesh>
+    portMarkers: Map<string, Mesh>,
+    useEmpties = true
   ): void {
     if (device.ports.length === 0) return
     const root = glbRoot.parent as TransformNode
@@ -412,7 +456,7 @@ export class DeviceSpawner {
         : Vector3.Zero()
     device.ports.forEach((port, i) => {
       // Real I/O empty from the rigged glb wins; the grid slot is the fallback.
-      const empty = this.portEmpty(glbRoot, port.portId)
+      const empty = useEmpties ? this.portEmpty(glbRoot, port.portId) : null
       let local = slots[i].local
       if (empty) {
         empty.computeWorldMatrix(true)

@@ -70,9 +70,11 @@ export function parseProposals(raw: unknown, registry: Registry): ParsedProposal
     // A proposal never carries a signal route (Task 33, C8) nor acoustic data (Task 35, C12): both are verified, sourced data, read
     // for catalog gear only. Dropped BEFORE the schema runs, so a crafted or malformed `routing` / `acoustic` neither survives nor
     // takes the proposal down.
-    const { routing: _routing, acoustic: _acoustic, ...declared } = entry
+    // Nor a model front (Task 43c, L34): it is measured on a shipped .glb, and a proposal has none.
+    const { routing: _routing, acoustic: _acoustic, modelFront: _modelFront, ...declared } = entry
     void _routing
     void _acoustic
+    void _modelFront
     const parsed = Device.safeParse(declared)
     if (!parsed.success) {
       const i = parsed.error.issues[0]

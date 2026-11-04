@@ -39,6 +39,11 @@ export interface UsedSpeaker {
   /** Sourced catalog figures, or undefined (none today for `sensitivityDb`). */
   sensitivityDb: number | undefined
   maxSplDb: number | undefined
+  /**
+   * The front of this speaker's 3D model is established (the catalog device declares `modelFront`, measured on the file, Task 43c / L34): the spawner turns
+   * the model onto +z at yaw 0, where the acoustics aim. False = not established: the coverage block says the model's face may not match the aim line.
+   */
+  frontVerified: boolean
 }
 
 export interface CoverageSourcesResult {
@@ -49,9 +54,9 @@ export interface CoverageSourcesResult {
 
 export interface CoverageSourceOptions {
   /**
-   * Degrees added to a device's yaw to get its acoustic axis, by device id. EMPTY (ADR-0015: yaw 0 faces +z): the front of the K12.2 / DBR12 `.glb`
-   * is an open question (docs/CREATIVE-MODE-LOG.md L30), not something to fix here. The seam exists so that a decision (a per-device offset,
-   * or none because the assets get re-oriented) is one line of data and one test, not a change of the acoustic core.
+   * Degrees added to a device's yaw to get its acoustic axis, by device id. EMPTY (ADR-0015: yaw 0 faces +z). L34 (Task 43c) fixed the front on the
+   * MODEL side instead (catalog `modelFront`, turned by DeviceSpawner), so the acoustic axis and the picture agree without touching the aim. The seam
+   * stays: a per-device offset is still one line of data and one test, not a change of the acoustic core.
    */
   frontYawOffsetDeg?: Readonly<Record<string, number>>
 }
@@ -136,6 +141,7 @@ export function coverageSourcesDetail(design: DesignState, registry: Registry, p
       vDeduced: DEDUCED.test(v.source.ref),
       sensitivityDb: ac.sensitivity_db?.value,
       maxSplDb: ac.max_spl_db?.value,
+      frontVerified: dev.modelFront !== undefined,
     })
   }
   return out

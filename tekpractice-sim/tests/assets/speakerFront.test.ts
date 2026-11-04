@@ -9,6 +9,10 @@
  *
  * The findings pinned here (K12.2: the connector end is the wide end of its plan; DBR12: not a speaker-shaped box) and their figures are written
  * once, in ADR-0015 « Addendum (Task 37) »; the thresholds below are those figures.
+ *
+ * Task 43c (L34) acted on them: the catalog now carries `modelFront` for the K12.2 and the 8030C and the spawner turns those models onto +z (see
+ * tests/assets/modelFront.test.ts, the measured table). These tests still describe the FILES, which are unchanged: when a rebuilt model lands and
+ * they fail, also delete that device's `modelFront` from the catalog (the rebuilt model already faces +z).
  */
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -53,8 +57,8 @@ const span = (v: number[]): number => Math.max(...v) - Math.min(...v)
 /**
  * These are EVIDENCE of today's assets, not requirements (decision L30 viii, 2026-10-29: the convention is kept, the 3D models are being rebuilt with
  * the I/O face toward −Z, pivot bottom-centre). When a rebuilt model lands, a failure here is EXPECTED: it means the facts below changed. Then (1) re-check
- * which way the new model's FRONT faces at yaw 0 (it must face +z, connectors at −z), (2) update or delete these tests, (3) update L30 / ADR-0015 and the
- * `coverage.frontCaveat` note (drop it when the models are right). The failure message says so: it is not a mystery.
+ * which way the new model's FRONT faces at yaw 0 (it must face +z, connectors at −z), (2) update or delete these tests, (3) update L30 / ADR-0015 and
+ * remove the device's `modelFront` from the catalog (L34: a rebuilt model already faces +z; the coverage note then never shows for it). The failure message says so: it is not a mystery.
  */
 const evidence = (name: string, fn: () => Promise<void> | void) =>
   it(`EVIDENCE of the current assets: ${name}`, async () => {

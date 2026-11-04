@@ -447,6 +447,32 @@
                 "additionalProperties": false,
                 "description": "Sourced acoustic fields of a loudspeaker (C12): coverage, max SPL, sensitivity, each with its provenance. Verified data: a Bêta proposal never carries acoustic (parseProposals drops it)."
               },
+              "modelFront": {
+                "type": "object",
+                "properties": {
+                  "axis": {
+                    "type": "string",
+                    "enum": [
+                      "+x",
+                      "-x",
+                      "+z",
+                      "-z"
+                    ],
+                    "description": "Direction the front (the grille / driver face of a loudspeaker) faces, in the glTF model space of public/assets/<id>.glb."
+                  },
+                  "evidence": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "How it was measured: what is on that face (grille, driver), what is on the opposite one, and where the file was read."
+                  }
+                },
+                "required": [
+                  "axis",
+                  "evidence"
+                ],
+                "additionalProperties": false,
+                "description": "Where the front of the shipped .glb faces (glTF model space), measured on the file: Mode Création turns the model so that it faces +z at yaw 0, where the acoustics aim. Absent = not established. Verified data: a Bêta proposal never carries it."
+              },
               "routing": {
                 "type": "array",
                 "items": {

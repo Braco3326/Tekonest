@@ -459,7 +459,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     hatched: 'Hachuré : interférences non modélisées',
     hatchedCount: '{n} points concernés',
     aim: 'Trait clair : axe de chaque enceinte audible',
-    frontCaveat: 'La direction de chaque enceinte est indiquée par le trait ; la forme du modèle 3D peut ne pas correspondre à la vraie face avant (modèles en cours de refonte).',
+    frontCaveat: 'Face avant du modèle 3D non vérifiée pour {names} : le trait indique l’axe acoustique, pas forcément la face du modèle.',
     sourceLine: 'Couverture : {sources}',
     sourceKb: 'données KB',
     sourceNominal: 'valeur nominale',
