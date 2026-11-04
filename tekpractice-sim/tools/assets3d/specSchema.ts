@@ -9,6 +9,7 @@
  * Z mirror); 'opposite' is the face at -Z in file space. On the 'top' and 'bottom' faces, y=0 is the I/O edge (the io-side edge).
  */
 import { z } from 'zod'
+import { BUILD_SHAPES } from './shapes'
 
 const PositiveMm = z.number().finite().positive()
 const CoordMm = z.number().finite().min(0)
@@ -55,6 +56,11 @@ export const SpecSource = z.object({
   note: z.string(),
 }).strict()
 
+export const BuildSpec = z.object({
+  shape: z.enum(BUILD_SHAPES).describe('Shape the scripted builder makes for this asset (tools/assets3d/shapes.ts).'),
+  params: z.record(z.string(), z.number().finite()).optional().describe('Extra shape dimensions in millimetres (names per shape in SHAPE_SPECS). Sizes come from realSizeMm, never from here.'),
+}).strict().describe('Optional: how the scripted builder makes this asset (asset:build --scripted).')
+
 export const AssetSpec = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'spec id must be a kebab-case slug'),
   kind: z.enum(['device', 'connector']),
@@ -63,11 +69,13 @@ export const AssetSpec = z.object({
   ports: z.array(PortSpec),
   controls: z.array(ControlSpec),
   mating: Mating.optional(),
+  build: BuildSpec.optional(),
   sources: z.array(SpecSource),
 }).strict()
 
 export type FaceT = z.infer<typeof Face>
 export type PortSpecT = z.infer<typeof PortSpec>
 export type ControlSpecT = z.infer<typeof ControlSpec>
+export type BuildSpecT = z.infer<typeof BuildSpec>
 export type SpecSourceT = z.infer<typeof SpecSource>
 export type AssetSpecT = z.infer<typeof AssetSpec>

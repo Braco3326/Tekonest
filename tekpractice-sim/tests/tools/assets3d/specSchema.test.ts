@@ -54,6 +54,29 @@ describe('AssetSpec schema', () => {
   })
 })
 
+describe('AssetSpec build block', () => {
+  it('still parses a spec without build', () => {
+    expect(AssetSpec.safeParse(specFor(catalog, 'yamaha-ql1')).success).toBe(true)
+  })
+
+  it('parses a build block with only a shape, and one with params', () => {
+    const spec = specFor(catalog, 'yamaha-ql1')
+    expect(AssetSpec.safeParse({ ...spec, build: { shape: 'rack-box' } }).success).toBe(true)
+    expect(AssetSpec.safeParse({ ...spec, build: { shape: 'rack-box', params: { chamferMm: 1 } } }).success).toBe(true)
+  })
+
+  it('rejects an unknown key in build (strict)', () => {
+    const spec = specFor(catalog, 'yamaha-ql1')
+    expect(AssetSpec.safeParse({ ...spec, build: { shape: 'rack-box', extra: 1 } }).success).toBe(false)
+  })
+
+  it('rejects an unknown shape and a NaN param', () => {
+    const spec = specFor(catalog, 'yamaha-ql1')
+    expect(AssetSpec.safeParse({ ...spec, build: { shape: 'cube' } }).success).toBe(false)
+    expect(AssetSpec.safeParse({ ...spec, build: { shape: 'rack-box', params: { chamferMm: Number.NaN } } }).success).toBe(false)
+  })
+})
+
 describe('checkSpecParity (device)', () => {
   it('parity passes when ids match exactly', () => {
     expect(checkSpecParity(specFor(catalog, 'yamaha-ql1'), catalog)).toEqual([])
