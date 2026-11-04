@@ -62,6 +62,36 @@ describe('the catalog French rule texts', () => {
   })
 })
 
+/** Night wave 3b: tekuxwriter's R1–R8 pass (docs/copy: « Textes des règles »). Pinned in full so a silent edit of a figure or a fact is caught. */
+const WAVE3_TEACH_FR: Record<string, string> = {
+  R1: 'Un XLR mâle se branche sur un XLR femelle ; une fiche TT, sur un jack TT. Si ça ne rentre pas, ce n’est pas le bon câble : ne forcez jamais.',
+  R2: 'Un micro sur une entrée ligne arrive 40 dB trop faible ; une ligne sur un préampli micro sature ; de l’AES3 sur une entrée analogique ne donne que du bruit ; du matériel grand public sur du matériel pro arrive 12 dB trop bas.',
+  R3: 'Le signal circule dans un seul sens : de la source vers la destination. Deux sorties reliées entre elles se combattent et peuvent endommager le matériel.',
+  R4: 'Les micros à condensateur (U 87) restent muets sans alimentation fantôme +48 V. Les micros dynamiques (SM58, RE20) n’en tiennent pas compte. Les micros à ruban anciens (vintage) peuvent être endommagés par le +48 V.',
+  R5: 'Le voyant rouge est un contrat de sécurité : micro ouvert = ON-AIR allumé. Sinon, quelqu’un entrera en parlant pendant le journal.',
+  R6: 'Enceintes de studio + micro ouvert = larsen (feedback). Les consoles de diffusion coupent automatiquement les écoutes de la régie quand votre micro est ouvert.',
+  R7: 'Si vous renvoyez à un invité sa propre voix, il s’entend en différé : c’est inutilisable. Chaque duplex a besoin d’un bus N-1.',
+  R8: 'Sans horloge commune, l’audio numérique fait des clics et des craquements. Un seul maître (l’OCX HD ou l’interface) ; tous les autres sont esclaves.',
+}
+const WAVE3_TITLE_FR: Record<string, string> = {
+  R1: 'Connecteurs incompatibles',
+  R2: 'Types de signal incompatibles',
+  R3: 'Sens de connexion incorrect', // NOT changed: three e2e tests quote it
+  R4: 'Alimentation fantôme (+48 V)',
+  R5: 'Voyant ON-AIR (tally)',
+  R6: 'Coupure des écoutes quand le micro est ouvert (larsen)',
+  R7: 'Mix-minus / N-1 : écho du retour',
+  R8: 'Word clock : maître/esclave et fréquence d’échantillonnage (sample rate)',
+}
+describe('the R1–R8 French texts of the night wave 3 copy pass', () => {
+  it.each(IDS)('%s: teach_fr is the validated text, to the letter', (id) => {
+    expect(fr(id).teach_fr).toBe(WAVE3_TEACH_FR[id])
+  })
+  it.each(IDS)('%s: title_fr is the validated title, to the letter', (id) => {
+    expect(fr(id).title_fr).toBe(WAVE3_TITLE_FR[id])
+  })
+})
+
 describe('ruleTextFor reads the catalog French fields, never the English', () => {
   it.each(IDS)('%s: title and detail are exactly title_fr and teach_fr', (id) => {
     expect(ruleText(id)).toEqual({ title: fr(id).title_fr, detail: fr(id).teach_fr })
