@@ -206,7 +206,10 @@
     "params": {
       "chamferMm": 1.5
     },
-    "projection": "top"
+    "projection": [
+      "top",
+      "io"
+    ]
   },
   "texture": {
     "blankRects": [
@@ -223,6 +226,30 @@
         "xMm": 243,
         "yMm": 28,
         "wMm": 64,
+        "hMm": 20,
+        "marginMm": 6
+      },
+      {
+        "face": "io",
+        "xMm": 30,
+        "yMm": 203,
+        "wMm": 132,
+        "hMm": 38,
+        "marginMm": 6
+      },
+      {
+        "face": "io",
+        "xMm": 362,
+        "yMm": 203,
+        "wMm": 80,
+        "hMm": 32,
+        "marginMm": 6
+      },
+      {
+        "face": "io",
+        "xMm": 360,
+        "yMm": 74,
+        "wMm": 50,
         "hMm": 20,
         "marginMm": 6
       }
