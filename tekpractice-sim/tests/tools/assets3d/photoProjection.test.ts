@@ -60,11 +60,11 @@ describe('photoProjection', () => {
     }
   })
 
-  it('an explicit crop (pixels of the trimmed photo) fixes a photo with extras around the product', async () => {
+  it('an explicit crop (pixels of the ORIGINAL photo, no trimming) fixes a photo with extras around the product', async () => {
     const dir = await mkdtemp(join(tmpdir(), 'photoproj-'))
     try {
-      // the product is 400 x 140 px; the crop keeps its top 100 rows: 400 x 100 matches the face
-      const out = await photoProjection(await photo(dir, { productW: 400, productH: 140 }), 'io', SIZE, { crop: [0, 0, 400, 100] })
+      // the product is 400 x 140 px at (60, 40) in the original; the crop keeps its top 100 rows: 400 x 100 matches the face
+      const out = await photoProjection(await photo(dir, { productW: 400, productH: 140 }), 'io', SIZE, { crop: [60, 40, 400, 100] })
       const meta = await sharp(Buffer.from(out.png)).metadata()
       expect([meta.width, meta.height]).toEqual([400, 100])
     } finally {

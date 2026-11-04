@@ -22,7 +22,7 @@ const ASPECT_TOLERANCE = 0.08
 const BACKGROUND_FLOOR = 240
 
 export interface PhotoOpts {
-  /** [left, top, width, height] in pixels of the TRIMMED photo, applied before the aspect check. */
+  /** [left, top, width, height] in pixels of the ORIGINAL photo: when given, the photo is cropped to it and NOT trimmed (a render with a reflection or a perspective top has no clean white margin). */
   crop?: [number, number, number, number]
 }
 
@@ -64,16 +64,15 @@ export async function photoProjection(
 ): Promise<Projection> {
   const faceMm = projectionFaceMm(face, sizeMm)
   let img = sharp(file).rotate().flatten({ background: { r: 255, g: 255, b: 255 } })
-  let trimmed: Buffer
-  try {
-    trimmed = await img.trim({ background: '#ffffff', threshold: 255 - BACKGROUND_FLOOR + 1 }).png().toBuffer()
-  } catch {
-    throw new Error(`photoProjection: ${file} has nothing but background (an empty photo)`)
-  }
-  img = sharp(trimmed)
   if (opts.crop) {
     const [left, top, width, height] = opts.crop
-    img = img.extract({ left, top, width, height })
+    img = sharp(await img.png().toBuffer()).extract({ left, top, width, height })
+  } else {
+    try {
+      img = sharp(await img.trim({ background: '#ffffff', threshold: 255 - BACKGROUND_FLOOR + 1 }).png().toBuffer())
+    } catch {
+      throw new Error(`photoProjection: ${file} has nothing but background (an empty photo)`)
+    }
   }
   const { data, info } = await img.removeAlpha().raw().toBuffer({ resolveWithObject: true })
   let darkest = 255
@@ -85,7 +84,7 @@ export async function photoProjection(
   if (off > ASPECT_TOLERANCE) {
     throw new Error(
       `photoProjection: the product in ${file} is ${info.width} x ${info.height} px (aspect ${aspect.toFixed(3)}), the ${face} face is ${faceMm.w} x ${faceMm.h} mm (aspect ${faceAspect.toFixed(3)}): ${(off * 100).toFixed(1)} % apart, over ${ASPECT_TOLERANCE * 100} %. ` +
-        'The photo is not straight-on or shows extras: give a crop (face=file@left,top,width,height, pixels of the trimmed photo) or another photo',
+        'The photo is not straight-on or shows extras: give a crop (face=file@left,top,width,height, pixels of the original photo) or another photo',
     )
   }
   const width = Math.min(MAX_PX, info.width)
