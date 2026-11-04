@@ -30,10 +30,18 @@ export function mountNotes(doc: Document, parent: HTMLElement): Notes {
   stack.dataset.testid = 'notes'
   parent.appendChild(stack)
   const open = new Map<string, HTMLElement>()
+  // Night wave 3b: the stack passes pointer events through to the 3D view (the 8 px gaps between notes are not the notes') unless it overflows its
+  // cap: then it scrolls, and its scrollbar must be draggable, so it takes events over its whole box (CSS: [data-overflow='true']).
+  const syncOverflow = (): void => {
+    stack.dataset.overflow = stack.scrollHeight > stack.clientHeight ? 'true' : 'false'
+  }
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncOverflow).observe(stack)
+  if (typeof MutationObserver !== 'undefined') new MutationObserver(syncOverflow).observe(stack, { childList: true, subtree: true, characterData: true })
 
   const dismiss = (id: string): void => {
     open.get(id)?.remove()
     open.delete(id)
+    syncOverflow()
   }
   return {
     show(n) {
@@ -83,6 +91,7 @@ export function mountNotes(doc: Document, parent: HTMLElement): Notes {
       }
       stack.appendChild(box)
       open.set(n.id, box)
+      syncOverflow()
     },
     dismiss,
     clear() {

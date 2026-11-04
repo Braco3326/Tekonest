@@ -229,6 +229,40 @@ for (const vp of [{ width: 400, height: 800 }, { width: 1366, height: 768 }]) {
       expect(await stack.evaluate((e) => getComputedStyle(e).pointerEvents)).toBe('auto')
     })
 
+    test('night wave 3b: a stack that does not overflow takes no click in the gaps between its notes (they reach the 3D view); an overflowing one keeps its whole box', async ({ page }) => {
+      await boot(page)
+      const addNotes = (n: number): Promise<void> =>
+        page.evaluate((count) => {
+          const stack = document.querySelector('[data-testid="notes"]')!
+          for (let i = 0; i < count; i++) {
+            const note = document.createElement('section')
+            note.className = 'cr-note'
+            note.innerHTML = '<h3 class="cr-note-title">Une note</h3><p class="cr-note-body">Texte</p>'
+            stack.append(note)
+          }
+        }, n)
+      await addNotes(2)
+      const stack = page.getByTestId('notes')
+      expect(await stack.evaluate((e) => e.scrollHeight > e.clientHeight), 'two short notes fit').toBe(false)
+      const notes = page.locator('[data-testid="notes"] .cr-note')
+      const a = await box(notes.nth(0))
+      const b = await box(notes.nth(1))
+      const gap = { x: a.x + a.width / 2, y: (a.y + a.height + b.y) / 2 }
+      expect(b.y - (a.y + a.height), 'there is a gap between the two notes (the test means something)').toBeGreaterThanOrEqual(4)
+      const hit = (p: { x: number; y: number }) => page.evaluate(({ x, y }) => { const e = document.elementFromPoint(x, y); return e?.id || (e?.closest('.cr-note') ? 'note' : e?.closest('[data-testid="notes"]') ? 'notes' : e?.tagName) }, p)
+      expect(await hit(gap), 'a click in the gap reaches the canvas').toBe('renderCanvas')
+      expect(await stack.evaluate((e) => getComputedStyle(e).pointerEvents)).toBe('none')
+      // the notes themselves stay clickable
+      expect(await hit({ x: a.x + a.width / 2, y: a.y + a.height / 2 }), 'a note takes its own clicks').toBe('note')
+      await expect(page.locator('.cr-note-title').first()).toBeVisible()
+      // fill it up: the stack scrolls, owns its box again (scrollbar draggable), and gives it back when it fits again
+      await addNotes(6)
+      await expect.poll(() => stack.evaluate((e) => e.scrollHeight > e.clientHeight), 'eight notes overflow').toBe(true)
+      await expect.poll(() => stack.evaluate((e) => getComputedStyle(e).pointerEvents), 'an overflowing stack takes events (its scrollbar)').toBe('auto')
+      await page.evaluate(() => { document.querySelectorAll('[data-testid="notes"] .cr-note').forEach((n, i) => i >= 2 && n.remove()) })
+      await expect.poll(() => stack.evaluate((e) => getComputedStyle(e).pointerEvents), 'it fits again: events pass through').toBe('none')
+    })
+
     test('D: the toast stands above « Annuler la pose » during a pose', async ({ page }) => {
       await boot(page)
       await startPose(page)

@@ -774,7 +774,9 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr .cr-btn-primary:hover { background: var(--cr-papier); border-color: var(--cr-papier); }
 
 /* ── notes in the 3D view (Task 12): dismissible, non-blocking, bottom-left ── */
-.cr-notes { position: absolute; left: 12px; bottom: 12px; z-index: 5; display: flex; flex-direction: column; gap: 8px; width: min(380px, calc(100% - 24px)); pointer-events: auto; /* auto (wave 2c, S8): with none, the scrollbar of a capped stack could not be dragged; the box is exactly the notes' extent, so it covers nothing else */ }
+.cr-notes { position: absolute; left: 12px; bottom: 12px; z-index: 5; display: flex; flex-direction: column; gap: 8px; width: min(380px, calc(100% - 24px)); pointer-events: none; /* night wave 3b: none again, the 8 px gaps between notes swallowed clicks meant for the 3D view; the notes themselves are auto (.cr-note) */ }
+/* auto only while the stack overflows its cap (notes.ts sets data-overflow): wave 2c, S8: with none, the scrollbar of a capped stack could not be dragged */
+.cr-notes[data-overflow='true'] { pointer-events: auto; }
 .cr-notes:empty { display: none; }
 .cr-note {
   position: relative;
