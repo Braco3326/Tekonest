@@ -87,6 +87,14 @@ describe('validateBuild', () => {
     expect(validateBuild(specWith({ shape: 'rj45-plug' }, { mating: undefined }))).toEqual([])
   })
 
+  it('accepts the Rio stage box with its datasheet params on a device, and rejects a misspelled one', () => {
+    const device = { kind: 'device', tier: 'hero', mating: undefined } as const
+    expect(validateBuild(specWith({ shape: 'stagebox-rio3224', params: { earMm: 27, flangeDepthMm: 190, frontStepMm: 11.5, rearStepMm: 6 } }, device))).toEqual([])
+    const errors = validateBuild(specWith({ shape: 'stagebox-rio3224', params: { earmm: 27 } }, device))
+    expect(errors[0]).toContain('earmm')
+    expect(errors[0]).toContain('earMm')
+  })
+
   it('accepts a rack-box with a chamfer on a device', () => {
     const spec = specWith({ shape: 'rack-box', params: { chamferMm: 1 } }, { kind: 'device', tier: 'standard', mating: undefined })
     expect(validateBuild(spec)).toEqual([])

@@ -9,7 +9,7 @@
 import type { AssetSpecT } from './specSchema'
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -26,6 +26,8 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   'trs-plug': { kind: 'connector', params: ['barrelMm'], needsMatingOuter: true },
   'rj45-plug': { kind: 'connector', params: [], needsMatingOuter: false },
   'rack-box': { kind: 'device', params: ['chamferMm'], needsMatingOuter: false },
+  // The Yamaha Rio3224-D2 stage box: layout (connector grid, panel plates) is in the builder, only datasheet sizes are params.
+  'stagebox-rio3224': { kind: 'device', params: ['earMm', 'flangeDepthMm', 'frontStepMm', 'rearStepMm'], needsMatingOuter: false },
 }
 
 /**

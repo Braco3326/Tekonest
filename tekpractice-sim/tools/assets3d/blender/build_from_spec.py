@@ -50,6 +50,15 @@ NICKEL = "#c9ccd0"
 BLACK = "#303034"
 DARK = "#0b0b0d"
 GOLD = "#d4af37"
+# Yamaha stage box (research report, "Rio3224-D2"): slate-blue panel, black ears and chassis.
+SLATE = "#5a6679"
+PLATE_IN = "#444c5d"
+PLATE_OUT = "#343946"
+CHASSIS = "#2c2d33"
+EAR = "#1c1c1f"
+BEZEL = "#1b1b1e"
+LCD = "#16222b"
+STEEL = "#8a8f98"
 PALE = "#b4cfe0"  # the clear RJ45 housing, drawn as an opaque pale blue-grey
 
 DEFAULT_FRONT_LEN_MM = 12.0
@@ -57,6 +66,7 @@ XLR_SEGMENTS = 20             # a multiple of 4 so the box is exact; 20 keeps th
 XLR_SHELL_RADIUS_MM = 9.6     # the 19.2 mm nickel shell
 
 DEFAULT_CHAMFER_MM = 1.0
+BEZEL_SEGMENTS = 10           # 52 connector bezels: 10 sides keep the stage box inside the 4000-triangle hero budget
 
 # trs-plug: 16 segments keep the 22-point profile inside the 800-triangle connector budget (about 700).
 TRS_SEGMENTS = 16
@@ -236,6 +246,18 @@ def extrude_zy(bm: bmesh.types.BMesh, pts: list[tuple[float, float]], x0: float,
     for i in range(n):
         j = (i + 1) % n
         faces.append(bm.faces.new((left[i], right[i], right[j], left[j])))
+    return faces
+
+
+def extrude_xy(bm: bmesh.types.BMesh, pts: list[tuple[float, float]], z0: float, z1: float) -> list[bmesh.types.BMFace]:
+    """A prism: the polygon `pts` of (x, y) points (glTF space) extruded along z from z0 to z1. Returns its faces."""
+    back = [bm.verts.new(g2b(x, y, z0)) for x, y in pts]
+    front = [bm.verts.new(g2b(x, y, z1)) for x, y in pts]
+    faces = [bm.faces.new(back[::-1]), bm.faces.new(front)]
+    n = len(pts)
+    for i in range(n):
+        j = (i + 1) % n
+        faces.append(bm.faces.new((back[i], back[j], front[j], front[i])))
     return faces
 
 
@@ -507,12 +529,138 @@ def build_rack_box(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+def build_stagebox_rio3224(plan: Plan) -> bpy.types.Object:
+    """Yamaha Rio3224-D2 style 5U stage box (research report, "Rio3224-D2"; generic: no logo, no model name).
+
+    Model frame: X right (seen from the front, the I/O face at +Z), Y up with the bottom at 0, bottom-centre pivot. The
+    480 mm width includes the two black rack ears (earMm each); the slate-blue front panel is flush with the ears and
+    carries the 4 x 8 input grid (round bezels), the display strip, the AES/EBU and output block (one darker L-shaped
+    plate), the knob, two buttons and the rocker; every connector stands frontStepMm in front of the panel and its tip
+    is the bounding-box face (so the port nodes lie on it). The back is a flat black plate with two fans, two power
+    inlets and two etherCON ports standing rearStepMm behind it. No handles: the datasheet drawings show none.
+    Verified: sizes, ear width, depth steps. Photo-derived (about 1.5 mm): the layout of the plates and connectors."""
+    w, h, d = size_m(plan)
+    mm = MM
+    ear = param_m(plan, "earMm", 27.0)
+    flange_depth = param_m(plan, "flangeDepthMm", 190.0)
+    front_step = param_m(plan, "frontStepMm", 11.5)
+    rear_step = param_m(plan, "rearStepMm", 6.0)
+    if w < 400.0 * mm or h < 200.0 * mm or d < 300.0 * mm:
+        raise BuildError(f"a Rio3224-D2 stage box needs sizeMm of about 480 x 220 x 368 (got {w / mm:.0f} x {h / mm:.0f} x {d / mm:.0f})")
+    if ear < 15.0 * mm or ear > 40.0 * mm or flange_depth > d - front_step - rear_step - 20.0 * mm:
+        raise BuildError("params.earMm / params.flangeDepthMm do not fit the box")
+
+    hw = w / 2.0
+    z_front, z_back = d / 2.0, -d / 2.0
+    panel = z_front - front_step          # the panel and the ear faces
+    back_plate = z_back + rear_step       # the chassis rear
+    half_c = hw - ear                     # half width of the chassis and the panel
+    body = Body("stagebox-rio3224")
+    bm = body.bm
+    segs = BEZEL_SEGMENTS
+
+    # --- chassis, panel, ears -------------------------------------------------------------------------------
+    chassis = box(bm, -half_c, half_c, 0.0, h, back_plate, panel - 1.0 * mm)
+    bevel_faces(bm, chassis, 1.0 * mm)
+    body.done(CHASSIS)
+    box(bm, -half_c, half_c, 0.0, h, panel - 1.0 * mm, panel)
+    body.done(SLATE)
+    for sign in (-1.0, 1.0):
+        x0, x1 = sorted((sign * half_c, sign * hw))
+        box(bm, x0, x1, 0.0, h, panel - 2.5 * mm, panel)                       # the ear plate, flush with the panel
+        x_in, x_out = sorted((sign * half_c, sign * (half_c + 2.5 * mm)))
+        z_flange = panel - flange_depth
+        extrude_zy(bm, [(panel - 2.5 * mm, 0.0), (z_flange + 17.0 * mm, 0.0), (z_flange, 17.0 * mm), (z_flange, h - 17.0 * mm), (z_flange + 17.0 * mm, h), (panel - 2.5 * mm, h)], x_in, x_out)
+        body.done(EAR)
+        for y in (182.1, 169.5, 109.3, 49.1, 36.4):                            # five rack-hole slots (dark pads)
+            box(bm, sign * 231.0 * mm - 5.25 * mm, sign * 231.0 * mm + 5.25 * mm, y * mm - 3.5 * mm, y * mm + 3.5 * mm, panel, panel + 0.3 * mm)
+        body.done(DARK)
+
+    # --- plates on the panel (1 mm raised) -------------------------------------------------------------------
+    plate = 1.0 * mm
+    box(bm, -200.9 * mm, -7.2 * mm, 7.1 * mm, 204.4 * mm, panel, panel + plate)
+    body.done(PLATE_IN)
+    l_plate = [(-4.1, 155.7), (103.7, 155.7), (103.7, 109.1), (204.0, 109.1), (204.0, 7.1), (-4.1, 7.1)]
+    extrude_xy(bm, [(x * mm, y * mm) for x, y in l_plate], panel, panel + plate)
+    body.done(PLATE_OUT)
+    box(bm, -4.1 * mm, 177.4 * mm, 158.3 * mm, 204.5 * mm, panel, panel + plate)  # display strip
+    body.done(DARK)
+    box(bm, 3.6 * mm, 169.0 * mm, 184.0 * mm, 198.4 * mm, panel + plate, panel + plate + 0.15 * mm)
+    body.done(LCD)
+
+    # --- connectors: round bezels 11.5 mm proud of the panel ------------------------------------------------------
+    discs: list[list[bmesh.types.BMVert]] = []
+
+    def bezel(cx: float, cy: float, r_out: float, r_in: float, z_tip: float) -> None:
+        base = ring(bm, r_out, panel, segs, cx, cy)
+        tip = ring(bm, r_out, z_tip, segs, cx, cy)
+        inner = ring(bm, r_in, z_tip, segs, cx, cy)
+        band(bm, base, tip)
+        band(bm, tip, inner)
+        bm.faces.new(base[::-1])
+        discs.append(inner)
+
+    for row_y in (166.7, 120.2, 73.8, 27.3):                                   # 32 female inputs
+        for i in range(8):
+            bezel((-186.2 + 23.45 * i) * mm, row_y * mm, 11.0 * mm, 8.2 * mm, z_front)
+    for i in range(4):                                                         # 4 AES/EBU outputs
+        bezel((12.0 + 25.1 * i) * mm, 120.2 * mm, 12.0 * mm, 8.8 * mm, z_front)
+    for row_y in (73.8, 27.3):                                                 # 16 analog outputs
+        for i in range(8):
+            bezel((12.0 + 25.13 * i) * mm, row_y * mm, 12.0 * mm, 8.8 * mm, z_front)
+    body.done(BEZEL)
+    for inner in discs:
+        bm.faces.new(inner)
+    body.done(DARK)
+
+    # --- display controls and the power rocker ---------------------------------------------------------------
+    n_knob = 16
+    knob_base = ring(bm, 9.35 * mm, panel + plate, n_knob, 139.2 * mm, 171.5 * mm)
+    knob_top = ring(bm, 9.35 * mm, panel + 8.0 * mm, n_knob, 139.2 * mm, 171.5 * mm)
+    band(bm, knob_base, knob_top)
+    bm.faces.new(knob_base[::-1])
+    bm.faces.new(knob_top)
+    body.done(EAR)
+    for x in (87.6, 107.3):
+        box(bm, x * mm - 3.5 * mm, x * mm + 3.5 * mm, 172.0 * mm - 3.5 * mm, 172.0 * mm + 3.5 * mm, panel + plate, panel + 4.0 * mm)
+    body.done(DARK)
+    box(bm, 180.0 * mm, 200.6 * mm, 171.0 * mm, 204.3 * mm, panel, panel + 6.0 * mm)   # rocker frame
+    body.done(DARK)
+    box(bm, 182.5 * mm, 198.1 * mm, 173.5 * mm, 201.8 * mm, panel + 6.0 * mm, panel + 10.0 * mm)  # the rocker itself
+    body.done(EAR)
+
+    # --- back: fans, power inlets, etherCON ----------------------------------------------------------------------
+    fans: list[list[bmesh.types.BMVert]] = []
+    for fy in (152.0, 69.0):
+        base = ring(bm, 40.0 * mm, back_plate, 12, -160.0 * mm, fy * mm)
+        tip = ring(bm, 40.0 * mm, back_plate - 3.0 * mm, 12, -160.0 * mm, fy * mm)
+        inner = ring(bm, 31.0 * mm, back_plate - 3.0 * mm, 12, -160.0 * mm, fy * mm)
+        band(bm, base, tip)
+        band(bm, tip, inner)
+        bm.faces.new(base)
+        fans.append(inner)
+    body.done(CHASSIS)
+    for inner in fans:
+        bm.faces.new(inner[::-1])
+    body.done(DARK)
+    for cx, cy, bw, bh, core_w, core_h in ((159.9, 54.3, 39.0, 23.0, 31.0, 15.0), (106.9, 54.3, 39.0, 23.0, 31.0, 15.0),
+                                           (182.5, 183.7, 21.0, 21.0, 14.0, 14.0), (154.5, 183.7, 21.0, 21.0, 14.0, 14.0)):
+        # The housing stops 0.5 mm short of the tip; the dark core is the part that reaches the box face.
+        box(bm, (cx - bw / 2.0) * mm, (cx + bw / 2.0) * mm, (cy - bh / 2.0) * mm, (cy + bh / 2.0) * mm, z_back + 0.5 * mm, back_plate)
+        body.done(STEEL)
+        box(bm, (cx - core_w / 2.0) * mm, (cx + core_w / 2.0) * mm, (cy - core_h / 2.0) * mm, (cy + core_h / 2.0) * mm, z_back, z_back + 0.5 * mm)
+        body.done(DARK)
+    log(f"stage box: {sum(len(f.verts) - 2 for f in bm.faces)} triangles before export")
+    return body.finish()
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "cylinder-plug": build_cylinder_plug,
     "trs-plug": build_trs_plug,
     "rj45-plug": build_rj45_plug,
     "rack-box": build_rack_box,
+    "stagebox-rio3224": build_stagebox_rio3224,
 }
 
 

@@ -43,7 +43,7 @@ const WAVE1: [string, AssetSpecT['build']][] = [
   ['xlr3-f', { shape: 'cylinder-plug', params: { frontLenMm: 12 } }],
   ['trs-quarter', { shape: 'trs-plug', params: { barrelMm: 30.5 } }],
   ['rj45', { shape: 'rj45-plug' }],
-  ['yamaha-rio3224-d2', { shape: 'rack-box', params: { chamferMm: 1 } }],
+  ['yamaha-rio3224-d2', { shape: 'stagebox-rio3224', params: { earMm: 27, flangeDepthMm: 190, frontStepMm: 11.5, rearStepMm: 6 } }],
 ]
 
 describe('wave-1 specs', () => {
@@ -241,13 +241,38 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(Math.min(...front.map((v) => v[1]))).toBeCloseTo(-4 * MM, 6)
   }, 120_000)
 
-  it.skipIf(!BLENDER)('yamaha-rio3224-d2 builds as a chamfered 480 x 220 x 368 mm box and passes every gate with its ports and recesses', async () => {
+  it.skipIf(!BLENDER)('yamaha-rio3224-d2 builds as a 480 x 220 x 368 mm stage box: connectors define the front and rear faces, ears, colours', async () => {
     const spec = realSpec('yamaha-rio3224-d2')
-    const { raw, fixed } = await expectBuiltTo(spec, 4000)
+    const { raw, rawBytes, fixed, fixedBytes } = await expectBuiltTo(spec, 4000)
+    await expectLooks(rawBytes, raw.triangles, 6) // slate panel, plates, chassis, ears, bezels, dark cores, display...
+    await expectLooks(fixedBytes, fixed.triangles, 6)
     // Bottom-centre pivot as built: the fix-up keeps it.
     expect(raw.bboxM.min[1]).toBeCloseTo(0, 6)
-    // The fix-up added the six port empties (io and opposite faces) to the box.
+    // The fix-up added the six port empties (io and opposite faces) and the control, and cut no recess into the bezels.
     expect(fixed.nodeNames.filter((n) => n.startsWith('port_'))).toHaveLength(6)
+    expect(fixed.nodeNames.filter((n) => n.startsWith('ctrl_'))).toHaveLength(1)
+
+    const verts = await vertices(rawBytes)
+    const zFront = raw.bboxM.max[2]
+    const zBack = raw.bboxM.min[2]
+    const rings = (z: number): number => verts.filter((v) => Math.abs(v[2] - z) < 1e-7).length
+    // 52 connector bezels (two 10-sided rings each) reach the front face; the four rear housings reach the back face.
+    expect(rings(zFront)).toBeGreaterThanOrEqual(52 * 10)
+    expect(rings(zBack)).toBeGreaterThanOrEqual(4 * 8)
+    // The panel stands 11.5 mm behind the front face: nothing else stands closer to it than the connectors, so the
+    // rocker, knob and buttons (the highest at 10 mm) stay behind the bezel tips.
+    const frontOfBezels = verts.filter((v) => v[2] > zFront - 11.5 * MM + 1.05 * MM && v[2] < zFront - 1e-7)
+    expect(frontOfBezels.length).toBeGreaterThan(0)
+    // Ears: the 480 mm width is the two 27 mm ears (the chassis and panel are 426 mm wide).
+    const earVerts = verts.filter((v) => Math.abs(v[0]) > 213.5 * MM)
+    expect(earVerts.length).toBeGreaterThan(0)
+    expect(Math.max(...earVerts.map((v) => Math.abs(v[0])))).toBeCloseTo(240 * MM, 6)
+  }, 120_000)
+
+  it.skipIf(!BLENDER)('rack-box still builds a plain chamfered box at the spec size (shared by later wave-3 devices)', async () => {
+    const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 1 } } }
+    const { raw } = await expectBuiltTo(spec, 4000)
+    expect(raw.triangles).toBeLessThan(100)
   }, 120_000)
 
   it.skipIf(!BLENDER)('a chamfer larger than half the smallest side exits with BUILD_FAIL naming chamferMm', async () => {
@@ -268,11 +293,9 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(report.ok).toBe(true)
     expect(report.attempts[0].gates.filter((g) => !g.ok)).toEqual([])
     expect(existsSync(join(report.workDir, 'final.glb'))).toBe(true)
-    if (id === 'trs-quarter') {
-      // The shipped bytes (fix-up, texture step, Draco, re-measure) keep the vertex colours and the smooth shading.
-      const final = new Uint8Array(await readFile(join(report.workDir, 'final.glb')))
-      await expectLooks(final, (await inspectGlb(final)).triangles, 2)
-    }
+    // The shipped bytes (fix-up, texture step, Draco, re-measure) keep the vertex colours and the smooth shading.
+    const final = new Uint8Array(await readFile(join(report.workDir, 'final.glb')))
+    await expectLooks(final, (await inspectGlb(final)).triangles, 2)
     expect(existsSync(join(paths.assetsDir, `${id}.glb`))).toBe(false)
     expect(existsSync(paths.manifestPath)).toBe(false)
   }, 180_000)

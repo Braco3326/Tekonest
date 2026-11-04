@@ -71,9 +71,12 @@
     }
   ],
   "build": {
-    "shape": "rack-box",
+    "shape": "stagebox-rio3224",
     "params": {
-      "chamferMm": 1
+      "earMm": 27,
+      "flangeDepthMm": 190,
+      "frontStepMm": 11.5,
+      "rearStepMm": 6
     }
   },
   "sources": [
