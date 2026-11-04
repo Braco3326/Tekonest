@@ -184,13 +184,18 @@ test('night wave 1, item 6: the drawer opens at once while the Bêta request is 
   await betaTab(page).click()
   await expect(betaStatus(page)).toHaveText(LOADING)
   await expect(betaStatus(page)).toHaveAttribute('data-state', 'loading')
-  // it fills in by itself, on the tab the learner is on, with the focus where it was
+  // it fills in by itself, on the tab the learner is on, with the focus where it was; the buttons of the other tabs are not replaced under the
+  // learner's pointer (a rebuild of the whole drawer would swap the element they are about to click)
   await betaTab(page).focus()
+  const stamp = (name: string) => page.getByRole('tab', { name }).evaluate((e) => ((e as HTMLElement & { __kept?: boolean }).__kept = true))
+  await stamp('Micros')
+  await stamp('Consoles')
   await net.release()
   await expect(page.getByRole('tabpanel').getByTestId('inventory-item')).toHaveCount(proposals.length)
   await expect(betaStatus(page)).toHaveCount(0)
   await expect(betaTab(page)).toBeFocused()
   await expect(betaTab(page)).toHaveAttribute('aria-selected', 'true')
+  for (const name of ['Micros', 'Consoles']) expect(await page.getByRole('tab', { name }).evaluate((e) => (e as HTMLElement & { __kept?: boolean }).__kept), `${name} tab button is the same node`).toBe(true)
 })
 
 test('night wave 1, item 6: Espace closes the drawer while the sheets are still loading, and their late arrival neither reopens it nor shows a status', async ({ page }) => {

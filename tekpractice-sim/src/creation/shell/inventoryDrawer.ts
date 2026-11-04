@@ -447,10 +447,22 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     },
     refresh() {
       if (!api.isOpen) return
-      // The tab buttons are rebuilt: a focused one gets its successor back (same tab), so a keyboard user is not thrown to the page.
-      const had = tabs.find((t) => t.btn === doc.activeElement)?.tab
-      build()
-      if (had) tabs.find((t) => t.tab === had)?.btn.focus()
+      const inv = inventory(d.registry, { proposals: d.proposals(), modelIds: MODEL_IDS, beta: d.betaStatus() })
+      const sameTabs = inv.tabs.length === tabs.length && inv.tabs.every((t, i) => tabs[i].tab === t)
+      if (!sameTabs) {
+        // The « Bêta » tab appeared or went: the tab buttons are rebuilt, and a focused one gets its successor back (same tab), so a keyboard user is not thrown to the page.
+        const had = tabs.find((t) => t.btn === doc.activeElement)?.tab
+        build()
+        if (had) tabs.find((t) => t.tab === had)?.btn.focus()
+        return
+      }
+      // Same tabs: nothing the learner may be about to click is replaced. Only the panel is redrawn, and only when it shows Bêta items (the « Bêta » tab or a filter).
+      items = inv.items
+      if (selected !== null && (selected === 'beta' || filter.value.trim() !== '')) {
+        const inPanel = panel.contains(doc.activeElement)
+        renderItems(selected)
+        if (inPanel) tabs.find((t) => t.tab === selected)?.btn.focus() // the item that had focus is gone: the tab it belonged to
+      }
     },
     close(opts) {
       if (!api.isOpen) return
