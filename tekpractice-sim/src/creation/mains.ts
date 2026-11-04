@@ -48,7 +48,7 @@ export function needsMainsHint(design: { rig?: unknown } | null | undefined, reg
     if (typeof i?.deviceId !== 'string' || typeof i.instanceId !== 'string' || isUnverified(registry, i.deviceId)) continue
     const device = registry.deviceById.get(i.deviceId)
     if (!device) continue
-    if (device.ports.some((p) => p.flags?.includes('isMainsSource'))) return false
+    if (device.ports.some((p) => isMainsSourcePort(device, p.portId))) return false // the one rule, not a copy of it
     if (device.ports.some((p) => p.portId === 'power-in') && controls[i.instanceId]?.power !== false) needs = true
   }
   return needs

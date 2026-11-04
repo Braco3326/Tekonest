@@ -7,7 +7,7 @@ import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import { SIGNAL_STYLE } from '../../src/creation/cableStyle'
 import { cableKey } from '../../src/creation/sceneDiff'
-import { IDLE_WINDOW_MS, SETTLE_SAMPLE_MS, quietWindow } from './waits'
+import { IDLE_WINDOW_MS, quietWindow, settleRenders as settle } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 type Ref = { instance: string; port: string }
@@ -34,17 +34,6 @@ const boot = async (page: Page, o: { keepStrip?: boolean } = {}): Promise<void> 
   }
   await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
   await settle(page)
-}
-/** The .glb models arrive after the placeholders and move the ports: wait until the page has stopped rendering. */
-const settle = async (page: Page): Promise<void> => {
-  let last = -1
-  for (let i = 0; i < 40; i++) {
-    const n = await page.evaluate(() => window.__creation!.renders())
-    if (n === last) return
-    last = n
-    await page.waitForTimeout(SETTLE_SAMPLE_MS)
-  }
-  throw new Error('the page never went idle')
 }
 const legend = (page: Page) => page.getByTestId('cable-legend')
 const items = (page: Page) => page.locator('[data-testid="cable-legend-list"] > li')

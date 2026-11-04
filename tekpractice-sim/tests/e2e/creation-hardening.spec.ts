@@ -11,7 +11,7 @@ import { readFileSync } from 'node:fs'
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import { cableKey } from '../../src/creation/sceneDiff'
-import { SETTLE_SAMPLE_MS, quietWindow } from './waits'
+import { AUTOSAVE_KEY, quietWindow, settleRenders as settle } from './waits'
 
 test.use({ viewport: { width: 1366, height: 768 } })
 
@@ -28,18 +28,6 @@ const proposals = (JSON.parse(readFileSync('content/proposals/catalog-proposals.
 const AMP = proposals.find((p) => p.id === 'crown-xls-2502')!
 const AMP_XLR = AMP.ports.find((p) => p.connector === 'xlr3-f' && p.signal === 'line-level-pro')!
 
-/** Named wait: the .glb models arrive after the placeholders and move the ports; this is the quiet window between two samples of the render counter. */
-const QUIET_WINDOW_MS = SETTLE_SAMPLE_MS
-const settle = async (page: Page): Promise<void> => {
-  let last = -1
-  for (let i = 0; i < 40; i++) {
-    const n = await page.evaluate(() => window.__creation!.renders())
-    if (n === last) return
-    last = n
-    await page.waitForTimeout(QUIET_WINDOW_MS)
-  }
-  throw new Error('the page never went idle')
-}
 
 /** The reference template ("Concert simple") without its power strip, on a settled camera. */
 const boot = async (page: Page): Promise<void> => {
@@ -429,7 +417,6 @@ test('item 5: a dialog with no compatible port opens with aria-expanded false', 
 
 const NO_MAINS = 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » de l’inventaire) et branchez-y les appareils.'
 const statusMsg = (page: Page) => page.locator('.cr-status-msg')
-const AUTOSAVE_KEY = 'audio-sim/creation.v1'
 
 /** A project of before the mains model: a console and a speaker in the hall, no power strip, one signal cable. Waits for the autosave to hold it. */
 const oldProject = async (page: Page, o: { strip?: boolean } = {}): Promise<void> => {

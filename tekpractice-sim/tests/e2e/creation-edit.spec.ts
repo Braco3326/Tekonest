@@ -4,7 +4,7 @@
  * each is ONE undo entry. A click on nothing says so (toast, role="status") and clears the selection.
  */
 import { expect, test, type Page } from '@playwright/test'
-import { IDLE_WINDOW_MS, SETTLE_SAMPLE_MS, quietWindow, waitRendersIdle } from './waits'
+import { IDLE_WINDOW_MS, quietWindow, waitRendersIdle, settleRenders as settle } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const PLACE = 'room:concert-hall-medium'
@@ -23,17 +23,6 @@ const selection = (page: Page) => page.evaluate(() => window.__creation!.selecti
 const yawOf = async (page: Page, id: string): Promise<number> => (await design(page)).placements.find((p) => p.instanceId === id)!.yawDeg
 const renders = (page: Page) => page.evaluate(() => window.__creation!.renders())
 
-/** The .glb models arrive after the placeholders and move the ports: wait until the page has stopped rendering. */
-const settle = async (page: Page): Promise<void> => {
-  let last = -1
-  for (let i = 0; i < 40; i++) {
-    const n = await page.evaluate(() => window.__creation!.renders())
-    if (n === last) return
-    last = n
-    await page.waitForTimeout(SETTLE_SAMPLE_MS)
-  }
-  throw new Error('the page never went idle')
-}
 
 /** A QL1 at a known place, selected with ] (canvas focused). */
 const withQl1 = async (page: Page): Promise<void> => {

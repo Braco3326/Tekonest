@@ -36,6 +36,21 @@ export async function waitRendersIdle(page: Page, timeout = 15_000): Promise<voi
     .toBe(0)
 }
 
+/**
+ * Baseline settle for a spec that loads gear: the .glb models arrive after the placeholders and move the ports, so wait until the render counter holds still over two samples
+ * of `SETTLE_SAMPLE_MS` (the specs used to carry five copies of this loop; night 2 wave 4, item 6). A state wait, not a guessed time: it returns the moment the page is idle.
+ */
+export async function settleRenders(page: Page): Promise<void> {
+  let last = -1
+  for (let i = 0; i < 40; i++) {
+    const n = await page.evaluate(() => window.__creation!.renders())
+    if (n === last) return
+    last = n
+    await page.waitForTimeout(SETTLE_SAMPLE_MS)
+  }
+  throw new Error('the page never went idle')
+}
+
 export const AUTOSAVE_KEY = 'audio-sim/creation.v1'
 
 /** Waits until the autosave in storage holds the design on screen (the debounce has fired and the write landed), instead of sleeping past the debounce. */

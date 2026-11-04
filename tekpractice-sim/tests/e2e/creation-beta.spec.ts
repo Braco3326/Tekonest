@@ -9,7 +9,7 @@
 import { readFileSync } from 'node:fs'
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { quietWindow, waitForAutosave } from './waits'
+import { AUTOSAVE_KEY, quietWindow, waitForAutosave } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 interface Proposal {
@@ -484,7 +484,6 @@ test('accessibility: no axe violation on the Bêta tab, with a Bêta device sele
   if (process.env.BETA_SCREENS === 'commit') await page.screenshot({ path: 'docs/creative/screens/task-30-beta-placed-1366.png' })
 })
 
-const AUTOSAVE_KEY = 'audio-sim/creation.v1'
 const stored = (page: Page) => page.evaluate((k) => localStorage.getItem(k), AUTOSAVE_KEY)
 const UNAVAILABLE = 'Fiches Bêta indisponibles (réseau). Rechargez la page pour retrouver votre projet.'
 
