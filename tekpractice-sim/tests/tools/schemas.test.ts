@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { zodToJsonSchema } from 'zod-to-json-schema'
-import { catalogSchemaText } from '../../tools/generate-schema'
+import { spawnSync } from 'node:child_process'
+import { catalogSchemaText } from '../../tools/catalogSchemaText'
 import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
 import catalogJson from '../../content/catalog.json'
@@ -105,6 +107,12 @@ describe('content/catalog.schema.json is exactly what `npm run gen:schema` emits
   it('same text as the generator, so the editor autocompletion matches the zod source of truth', () => {
     const onDisk = readFileSync('content/catalog.schema.json', 'utf8').split('\r\n').join('\n')
     expect(onDisk).toBe(catalogSchemaText())
+  })
+  it('and the script itself (what `npm run gen:schema` runs) prints exactly that text: it can never write an empty file (review finding 14)', () => {
+    const r = spawnSync(process.execPath, [resolve(__dirname, '../../node_modules/tsx/dist/cli.mjs'), 'tools/generate-schema.ts'], { cwd: resolve(__dirname, '../..'), encoding: 'utf8' })
+    expect(r.status, r.stderr).toBe(0)
+    expect(r.stdout.length).toBeGreaterThan(1000)
+    expect(r.stdout).toBe(catalogSchemaText())
   })
 })
 
