@@ -1,0 +1,72 @@
+{
+  "id": "yamaha-dbr12",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 376,
+    "h": 601,
+    "d": 348
+  },
+  "ports": [
+    {
+      "portId": "in-line",
+      "face": "io",
+      "xMm": 164.9,
+      "yMm": 396.4,
+      "confidence": "manual",
+      "openingMm": 24
+    },
+    {
+      "portId": "link-out",
+      "face": "io",
+      "xMm": 164.9,
+      "yMm": 304,
+      "confidence": "manual",
+      "openingMm": 24
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 169.9,
+      "yMm": 213.6,
+      "confidence": "manual"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 214.9,
+      "yMm": 213.6,
+      "axis": "x",
+      "sizeMm": {
+        "w": 11.8,
+        "h": 17.2,
+        "d": 8
+      }
+    }
+  ],
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://usa.yamaha.com/files/download/other_assets/4/332514/VHN5580_DBR15_TS_En_B0_views.pdf",
+      "note": "Yamaha DBR15/DBR12/DBR10 technical specifications (opened, rendered): DBR12 dimensions W x H x D 376 x 601 x 348 mm with rubber feet, net weight 15.8 kg, floor monitor angle 50 degrees symmetrical, plastic, handles side x 2, pole socket 35 mm. Page 2 'Dimensions' carries the DBR12 rear view with the amplifier panel. Positions are read from that drawing at 1.19 px/mm (the 376 mm width spans 448 px; the 102 mm M8 point dimension gives 1.22 px/mm), x from the cabinet centre line, y from the base (601 mm tall): in-line = CH1 combo jack (top jack, the one next to the MIC/LINE switch), link-out = the XLR output jack below the two combos, power-in = IEC inlet, power = rocker beside it. Expect +/- 3 mm. The drawing is a line drawing, not a dimensioned panel layout, so the coordinates are a scaled reading, not printed numbers."
+    },
+    {
+      "kind": "manual",
+      "url": "https://usa.yamaha.com/files/download/other_assets/5/332505/VHN5500_DBR15_OM_En_C0_views.pdf",
+      "note": "Yamaha DBR owner's manual (opened, text read): rear panel legend: 1 input jacks CH1/CH2 (balanced combo XLR/phone, RCA on CH2), 2 LEVEL knobs, 3 MIC/LINE switch for CH1, 4 output switch THRU/MIX, 5 output jack (balanced XLR, for another DBR), power switch and AC inlet at the bottom of the panel."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://usa.yamaha.com/products/proaudio/speakers/dbr/specs.html",
+      "note": "Yamaha DBR series specs page (opened): DBR12 W 376 mm, H 601 mm, D 348 mm (the three columns are DBR15 / DBR12 / DBR10: 455 / 376 / 308 wide, 700 / 601 / 493 high, 378 / 348 / 289 deep)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nc3md-l-1",
+      "note": "Neutrik NC3MD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". openingMm = 24 for the XLR ports by that convention (guess: the drawing shows the connector rings about 21 mm across)."
+    }
+  ]
+}

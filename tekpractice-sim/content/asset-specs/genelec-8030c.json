@@ -1,0 +1,64 @@
+{
+  "id": "genelec-8030c",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 189,
+    "h": 299,
+    "d": 178
+  },
+  "ports": [
+    {
+      "portId": "in-analog",
+      "face": "io",
+      "xMm": 136.7,
+      "yMm": 107,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 58.1,
+      "yMm": 107,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 94.5,
+      "yMm": 134.9,
+      "axis": "z",
+      "sizeMm": {
+        "w": 10,
+        "h": 10,
+        "d": 3
+      }
+    }
+  ],
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://assets.ctfassets.net/4zjnzn055a4v/1qUiHwGHNmumKgYugG6wws/837b26c2261771b9d58a94c44bb1cdc4/8030c_views.pdf",
+      "note": "Genelec 8030C dimension drawing 8030C_views (opened, rendered): 299 mm overall height incl. Iso-Pod, 189 mm wide, 178 mm deep, acoustic axis 190 mm, Iso-Pod offset 15 mm, M6 depth 10 holes 76 mm apart. The rear view (drawing rotated 90 degrees on the page) was re-rendered upright at 5.67 px/mm (checked on the 299 mm height and the 76 mm M6 spacing): the amplifier plate is 118.6 mm wide and centred, the square power button at the plate centre line (10 x 10 mm, 134.9 mm above the base of the Iso-Pod). In that drawing the cabinet outline measures about 174 mm across against the 189 mm spec width (unexplained), so only positions relative to the centre line and the vertical scale were used; expect +/- 3 mm on the power button."
+    },
+    {
+      "kind": "photo",
+      "url": "https://images.ctfassets.net/4zjnzn055a4v/24f3PvLYfkiyxYYq14xMzp/96fd447157086fbc543f46dc40e74d94/8030CP-k10_web.jpg",
+      "note": "Genelec 8030C rear/underside product photo (opened, 900 px wide): the connector panel is a horizontal strip below the amplifier plate, facing down: IEC inlet on the left, XLR input on the right (seen from behind), a small screw between them. Scale 3.08 px/mm from the plate width (365 px = 118.6 mm); offsets from the plate centre line (px 452): IEC -36.4 mm, XLR +42.2 mm. y = 107 mm is the height of that strip in the upright rear drawing (about 1190 px of the rendered crop, 5.67 px/mm, 1795 px at the base of the Iso-Pod). Oblique view: expect +/- 6 mm."
+    },
+    {
+      "kind": "manual",
+      "url": "https://assets.ctfassets.net/4zjnzn055a4v/1my4dzvqUoe4oKYwS6KsUu/a8f964c3ce07eb802b88b8d861799a07/8030c_opman_gb_fi.pdf",
+      "note": "Genelec 8030C operating manual (opened, text read, p.5 figure rendered): Figure 3 'Control and connector layout on the rear panel' (reflex port, threads, tone controls, sensitivity adjustment, power switch, horizontal connector panel, Iso-Pod); specification table: height 299 mm with Iso-Pod (285 mm without), width 189 mm, depth 178 mm, weight 5.0 kg, XLR female balanced input."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nc3md-l-1",
+      "note": "Neutrik NC3MD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". openingMm = 24 for the XLR input is a guess by that convention (the photo ring is about 22.7 mm)."
+    }
+  ]
+}

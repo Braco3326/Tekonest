@@ -1,0 +1,56 @@
+{
+  "id": "mogami-gold-db25-xlrm",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 96,
+    "h": 48,
+    "d": 500
+  },
+  "ports": [
+    {
+      "portId": "in-db25",
+      "face": "io",
+      "xMm": 48,
+      "yMm": 24,
+      "confidence": "photo"
+    },
+    {
+      "portId": "out-xlr-1",
+      "face": "opposite",
+      "xMm": 12,
+      "yMm": 36,
+      "confidence": "photo"
+    },
+    {
+      "portId": "out-xlr-2",
+      "face": "opposite",
+      "xMm": 36,
+      "yMm": 36,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [],
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://mogamicable.com/category/products/gold-DB25-XLRM.php",
+      "note": "Mogami Gold DB25-XLRM product page (opened, text read): ordered in 2, 3, 5, 10, 15, 20, 25, 30, 40 or 50 ft; rugged noise-proof all-metal D-sub shells, easy-to-grab metal thumb screws. No physical dimensions on the page."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://mogamicable.com/pdf/MogamiCatalog.pdf",
+      "note": "Mogami catalog (opened, text read): 'Gold DB25-XLRM (5, 10, 15, 20, 25, 30, 40 or 50 ft)', eight channels analog in or out, DB25 to gold pin XLR, industry standard analog (Tascam) pin-out. No connector dimensions."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://mogamicable.com/pdf/Mogami_Tech_cat2019.pdf",
+      "note": "Mogami technical catalog (opened, text read): multicore W2932 is the 8-channel cable, 11.5 mm overall diameter, 1.2 mm jacket. A retailer snippet says the DB25-XLRM is built from 2932; Mogami's own page does not say so, so the 11.5 mm trunk diameter is likely, not confirmed."
+    },
+    {
+      "kind": "photo",
+      "url": "https://mogamicable.com/category/images/large/GoldDB25-XLRM.jpg",
+      "note": "Mogami product photo (opened, 250 px wide, oblique): metal DB25 hood with a red strain relief on the right, black trunk, the trunk splitting into 8 black tails of staggered length each ending in a black gold-pin XLR male. No scale visible. Every size in the model (block 96 x 48 mm, hood about 62 x 17 x 45 mm, XLR plug about 22 mm diameter x 62 mm, tails about 160 mm, stub about 150 mm, overall model length 500 mm) is an estimate from general D-sub and Neutrik XLR sizes, not from a source; the real cable is 5 to 50 ft long and the model is a short stub. No openingMm is given on the XLR ports (they are male plugs, there is no opening). The two XLR positions are the first two plugs of the top row of a 4 x 2 block at 24 mm pitch, seen from the mating end (guess)."
+    }
+  ]
+}

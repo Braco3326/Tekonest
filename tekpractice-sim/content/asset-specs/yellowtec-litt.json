@@ -1,0 +1,32 @@
+{
+  "id": "yellowtec-litt",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 51,
+    "h": 100,
+    "d": 51
+  },
+  "ports": [
+    {
+      "portId": "in-gpio",
+      "face": "bottom",
+      "xMm": 25.5,
+      "yMm": 25.5,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [],
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.yellowtec.com/fileadmin/downloads/Product-Brief-litt-web.pdf",
+      "note": "Yellowtec litt product brief (opened, text read, p.6 rendered): all parts are 51 mm diameter discs: Base Controller 54 mm high (45 mm for the wall-mount version), 50/35 Color Segment 41 mm, 50/22 Color Segment 27 mm, Cover Cap 5 mm, Spoiler 18 mm high tapering from 51 mm to 29 mm, Riser 29 mm diameter in 120/240/360 mm lengths; supply 9-24 V; the Base Controller has screw-terminal inputs (Chassis, Ground, +9-24 V, Red, Yellow, Green, Blue, White control inputs, +3...24 V) which are the catalog's GPIO drive. The modelled stack is Base Controller 54 + one 50/35 segment 41 + cover cap 5 = 100 mm, 51 mm diameter (a choice: the brief lists every combination). The terminals are inside the base controller, reached through the bottom (system cable through the riser / socket); in-gpio is therefore placed on the bottom face at the centre (25.5, 25.5), a guess, no drawing shows the terminal block position."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.yellowtec.com/litt/",
+      "note": "Yellowtec litt product page (opened, text read): color segments in red, green, yellow, white, blue in two heights, 41 mm and 27 mm."
+    }
+  ]
+}

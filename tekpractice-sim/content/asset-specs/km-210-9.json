@@ -1,0 +1,24 @@
+{
+  "id": "km-210-9",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 700,
+    "h": 1605,
+    "d": 700
+  },
+  "ports": [],
+  "controls": [],
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.k-m.de/en/downloads/01994d9eb9907194b59b7d910e75132d/datasheet",
+      "note": "K&M 210/9 data sheet, variant 21090-300-55 black (opened, text read, page rendered): height from 900 to 1,605 mm, boom arm length from 435 to 745 mm, 2-piece telescopic boom with T-bar locking screw, 2-piece folding rod with clutch, socket with foldable legs, steel, zinc die-cast base, 3/8 in threaded connector, 3.1 kg, size when folded 105 x 85 x 985 mm. The page has one product photo (stand, slight perspective) and no dimension drawing."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.k-m.de/us/products/mic-stands/floor-stands/210-9-microphone-stand-black?c=232",
+      "note": "K&M product page for the 210/9 black (opened): same technical data as the data sheet (900-1,605 mm, boom 435-745 mm, folded 105 x 85 x 985 mm, 3.1 kg, 3/8 in thread). No base diameter, no tube diameters, no drawing: the 700 x 700 mm footprint is a photo estimate (leg tips about 650 mm apart in the data sheet photo, scaled on the 1,605 mm height), not a published figure."
+    }
+  ]
+}

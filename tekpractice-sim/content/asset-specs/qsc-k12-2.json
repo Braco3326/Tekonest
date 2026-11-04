@@ -1,0 +1,72 @@
+{
+  "id": "qsc-k12-2",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 356,
+    "h": 602,
+    "d": 350
+  },
+  "ports": [
+    {
+      "portId": "in-line-a",
+      "face": "io",
+      "xMm": 147.2,
+      "yMm": 112.2,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "thru-out-a",
+      "face": "io",
+      "xMm": 147.7,
+      "yMm": 81.1,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 179.1,
+      "yMm": 39.1,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 221.6,
+      "yMm": 47.4,
+      "axis": "x",
+      "sizeMm": {
+        "w": 14.4,
+        "h": 20,
+        "d": 8
+      }
+    }
+  ],
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://www.qsc.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
+      "note": "K.2 Series user manual (opened, rendered): dimension drawing Figure 25 p.21 for the K12.2 gives 602 mm (23.7 in) high at the front rim, 598 mm (23.5 in) lower rim, 356 mm (14 in) wide, 350 mm (13.8 in) deep; specification table p.22 repeats 602 x 356 x 350 mm. Figure 12 p.11 is the rear amplifier panel (inputs A and B combo XLR/TRS, GAIN knobs, LEDs, Stereo 3.5 mm input) and the specification table lists 2 x XLR/M loop-thru output, 1 x XLR/M mix output, 1 x locking IEC, LCD 45 mm x 25.4 mm. The drawing carries no connector coordinates, so every position below is read from the photo."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.qsc.com/fileadmin/images/live/k2/K12.2_Back_closeUp.jpg",
+      "note": "QSC K12.2 amplifier panel close-up, straight-on, 641x838 px (opened). Scale about 3.6 px/mm (estimated from the IEC inlet screw pitch 153 px for a 40-43 mm flange, the XLR flange ring of about 100 px for a Neutrik D-size flange, and the 45 mm LCD): expect +/- 6 mm. in-line-a = INPUT A combo (px 132,365); thru-out-a = the XLR/M loop-thru under input A (px 134,477); power-in = locking IEC inlet (px 247,628); power = rocker (px 400,598, 14.4 x 20 mm visible). y = 8 mm + (740 - py)/3.6, 740 px being the panel's lower edge, which sits about 8 mm above the cabinet base (from the full photo). x is measured from the horizontal centre of the rear face: x = 178 + (px - 243)/3.6, where px 243 is the rear-face centre (panel centre px 297 minus 15 mm, the panel sits about 15 mm right of the rear-face centre in the full photo). The rear face is narrower than the 356 mm box; x here is given in the frame of the 356 mm bounding box (centre 178) so a box shape can use it directly; subtract (356 - rear width)/2 for a trapezoid shape."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.qsc.com/resource-files/productresources/spk/k.2/k12.2/q_spk_k2_12_img_back.png",
+      "note": "QSC K12.2 rear three-quarter product render (opened, 1361x2700). Used for the vertical position of the panel on the 602 mm rear face (about 2.35 px/mm) and its horizontal offset inside the rear face; the view is oblique, so it was only used for relative placement, not for the port coordinates."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nc3md-l-1",
+      "note": "Neutrik NC3MD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". The QSC XLR/combo receptacles use the same D-size footprint (guess, from the photo), so openingMm = 24 for the two XLR ports."
+    }
+  ]
+}

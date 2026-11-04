@@ -1,0 +1,24 @@
+{
+  "id": "yellowtec-mika",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 787,
+    "h": 162,
+    "d": 51
+  },
+  "ports": [],
+  "controls": [],
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.yellowtec.com/fileadmin/user_upload/mika/pdf/mika_pdf_MicArms_EN.pdf",
+      "note": "Yellowtec m!ka Microphone Arms brochure (opened, 2 pages rendered). Page 1: m!ka Mic Arm M max length 31 in (78.7 cm), 1.05 kg net, max mic weight 2 kg (XS 53.5 cm, XL 107.5 cm). Page 2 'Dimensional Drawings', m!ka Mic Arms M (YT3201 / YT3205 / YT3601 / YT3605): two arm segments of 400 mm pivot to pivot, column housing diameter 51 mm, post diameter 16 mm and 66 mm long, 5/8 in-27 UNS 2A microphone thread, base rotatable by 360 degrees, joint travel 100 / 155 / 39.5 degrees, cable exits >450 mm and >1500 mm, 0.5-1.5 kg mic load. The M size was chosen (typical radio studio arm; the catalog does not say which size). The realSizeMm is the arm stretched out horizontally, 787 mm = 'max length' 78.7 cm; h = 66 mm post + about 45 mm housing + about 51 mm hub (the 45 and 51 are read from the drawing at 0.61 px/mm, guess +/- 8 mm); d = 51 mm (hub width, guess)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.yellowtec.com/mika/",
+      "note": "Yellowtec m!ka product page (opened, text read): product family and downloads links only; no dimensions beyond the brochure."
+    }
+  ]
+}
