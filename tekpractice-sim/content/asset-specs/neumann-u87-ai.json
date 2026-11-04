@@ -1,0 +1,121 @@
+{
+  "id": "neumann-u87-ai",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 56,
+    "h": 200,
+    "d": 56
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 28,
+      "yMm": 28,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve",
+    "profile": [
+      [
+        0,
+        8.8
+      ],
+      [
+        2,
+        17
+      ],
+      [
+        5.6,
+        26.4
+      ],
+      [
+        20,
+        43.7
+      ],
+      [
+        30,
+        43.1
+      ],
+      [
+        60,
+        45.8
+      ],
+      [
+        100,
+        49.1
+      ],
+      [
+        120,
+        50.5
+      ],
+      [
+        122,
+        53.5
+      ],
+      [
+        135,
+        54.1
+      ],
+      [
+        138,
+        52.8
+      ],
+      [
+        170,
+        54.9
+      ],
+      [
+        190,
+        56
+      ],
+      [
+        195,
+        54.7
+      ],
+      [
+        198,
+        50.3
+      ],
+      [
+        199.5,
+        44.5
+      ],
+      [
+        200,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#8a8c90"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-en/products/microphones/u-87-ai/",
+      "note": "Neumann U 87 Ai official product page (opened): diameter 56 mm, length 200 mm, weight 500 g. Connector: 3-pin XLR male (the page gives no connector drawing). realSizeMm: w = d = 56 (widest diameter), h = 200 (length), upright with the XLR base end down (same convention as the shure-sm58 spec)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://assets.sennheiser.com/assets/U-87-Ai-Frontal_Neumann-Studio-Microphone_G.jpg/Zz0xNzY0NzUwYWU3YzYxMWYwYWE5OGVhNTViNWQyZmI4Ng==?width=1600&format=webp&quality=80",
+      "note": "Official Neumann product image \"Frontal\" (1600 x 3657 px, full mic, side-on, white background; private reference, measured only), used for the silhouette profile in mic-profiles.json: scale 200 mm over the mic height, the widest read 56.1 mm against the published 56 mm. Station values are photo estimates."
+    },
+    {
+      "kind": "photo",
+      "url": "https://assets.sennheiser.com/assets/U-87-Ai-Frontal_Neumann-Studio-Microphone_G.jpg/Zz0xNzY0NzUwYWU3YzYxMWYwYWE5OGVhNTViNWQyZmI4Ng==?width=1600&format=webp&quality=80",
+      "note": "out-xlr: the catalog has one port, the male XLR (flag requiresPhantom). It sits on the bottom (XLR base end) face at its centre (x = y = 28 mm): the photo shows the connector barrel concentric with the body. By geometry, so the confidence is photo. openingMm is left out (not published). The catalog lists no controls for the U 87 Ai (the pattern, pad and roll-off switches are not catalog controls)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://assets.sennheiser.com/assets/U-87-Ai-Frontal_Neumann-Studio-Microphone_G.jpg/Zz0xNzY0NzUwYWU3YzYxMWYwYWE5OGVhNTViNWQyZmI4Ng==?width=1600&format=webp&quality=80",
+      "note": "build.profile: the 17 stations of mic-profiles.json, measured by the research session from the official Neumann \"Frontal\" image (1600 x 3657, 200 mm over 3374 px; the widest reads 56.1 mm against the published 56). The body taper (50.5 mm under the ring to 43.1 mm at the base) comes from this one photo; slight perspective cannot be excluded. build.colours: ESTIMATED (satin nickel), not measured."
+    }
+  ]
+}

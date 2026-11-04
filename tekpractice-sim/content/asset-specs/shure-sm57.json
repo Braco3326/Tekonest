@@ -1,0 +1,121 @@
+{
+  "id": "shure-sm57",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 32,
+    "h": 157,
+    "d": 32
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 16,
+      "yMm": 16,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve",
+    "profile": [
+      [
+        0,
+        17.03
+      ],
+      [
+        4.2,
+        23.59
+      ],
+      [
+        17,
+        24.31
+      ],
+      [
+        37,
+        25.44
+      ],
+      [
+        57,
+        27.38
+      ],
+      [
+        77,
+        29.44
+      ],
+      [
+        93,
+        31.28
+      ],
+      [
+        125.6,
+        31.28
+      ],
+      [
+        127.6,
+        27.49
+      ],
+      [
+        130,
+        28.82
+      ],
+      [
+        132.5,
+        31.69
+      ],
+      [
+        139,
+        32
+      ],
+      [
+        154.1,
+        29.74
+      ],
+      [
+        155,
+        26.36
+      ],
+      [
+        156.1,
+        17.03
+      ],
+      [
+        157,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#3b3b3e"
+      },
+      {
+        "fromMm": 126,
+        "colour": "#9a9a9e"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
+      "note": "Shure SM57 spec sheet (copy hosted by College of San Mateo, downloaded and text read): case 157 mm (6-3/16 in.) L x 32 mm (1-1/4 in.) W at the widest point; three-pin professional audio connector (male XLR type). realSizeMm: w = d = 32 (widest diameter), h = 157 (length), upright with the XLR base end down (same convention as the shure-sm58 spec)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
+      "note": "The product image embedded in the same spec sheet (side-on, upright, 534 x 992 px; private reference, measured only) used for the silhouette profile in mic-profiles.json. Station values are photo estimates (scale 157 mm over the image height). The base is a plain round end with the male XLR concentric with the handle."
+    },
+    {
+      "kind": "photo",
+      "url": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
+      "note": "out-xlr: the catalog has one port, the male XLR. It sits on the bottom (XLR base end) face at its centre (x = y = 16 mm). Centred by geometry (the mic is a body of revolution and the connector is concentric); no drawing gives the position, so the confidence is photo. openingMm is left out: the inner diameter of the male shell is not published on any page opened. The catalog lists no controls for the SM57 (no switch)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
+      "note": "build.profile: the 16 stations of mic-profiles.json (E:/CLAUDE BU/research_notes/wave4-specs, measured by the research session from the product image inside the Shure spec sheet, 157 mm over 860 px), diameters rescaled x1.026 so the widest is the 32 mm of the sheet. About +/-0.5 mm; the two small grooves at 127.6 and 133.4 mm and the mesh dome (about R 40 mm) are simplified. build.colours: ESTIMATED (dark grey handle, silver grille by analogy with the SM58 photo), not measured."
+    }
+  ]
+}

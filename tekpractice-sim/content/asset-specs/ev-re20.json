@@ -1,0 +1,121 @@
+{
+  "id": "ev-re20",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 54.4,
+    "h": 216.7,
+    "d": 54.4
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 27.2,
+      "yMm": 27.2,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve",
+    "profile": [
+      [
+        0,
+        24.3
+      ],
+      [
+        2.8,
+        31.3
+      ],
+      [
+        27,
+        31.4
+      ],
+      [
+        27.2,
+        33.3
+      ],
+      [
+        30.8,
+        42.4
+      ],
+      [
+        33.7,
+        45
+      ],
+      [
+        73.6,
+        48.8
+      ],
+      [
+        78.6,
+        49.2
+      ],
+      [
+        160.4,
+        49.8
+      ],
+      [
+        165.2,
+        53.7
+      ],
+      [
+        206.4,
+        53.6
+      ],
+      [
+        208.9,
+        54.4
+      ],
+      [
+        211,
+        48.3
+      ],
+      [
+        213.5,
+        48.5
+      ],
+      [
+        215,
+        41.8
+      ],
+      [
+        216.7,
+        36.1
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#3d3f44"
+      },
+      {
+        "fromMm": 165,
+        "colour": "#7d8086"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://products.electrovoice.com/download/970110",
+      "note": "Electro-Voice RE20 data sheet (official, downloaded, text read, the page-2 dimension drawing rendered from its vector paths): length 216.7 mm (8.53 in.), widest diameter 54.4 mm (2.14 in.), body diameter 49.2 mm (1.94 in.). Connector: 3-pin XLR male. realSizeMm: w = d = 54.4 (widest diameter), h = 216.7 (length), upright with the XLR base end down (same convention as the shure-sm58 spec)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://products.electrovoice.com/download/970110",
+      "note": "Silhouette profile in mic-profiles.json: read from the vector dimension drawing on page 2 of the same data sheet (outline coordinates from the PDF path data, scaled by the labelled 54.4 mm and 216.7 mm). Axial positions carry up to about 4 percent uncertainty (the length extension line is about 9 mm beyond the drawn rear end)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://products.electrovoice.com/download/970110",
+      "note": "out-xlr: the catalog has one port, the male XLR. It sits on the bottom (XLR base end) face at its centre (x = y = 27.2 mm). The photo in the same data sheet shows the cable plugging straight into the rear barrel along the body axis, and the drawing shows a body of revolution, so the centre is by geometry: confidence photo. openingMm is left out (not published). The catalog lists no controls for the RE20."
+    },
+    {
+      "kind": "photo",
+      "url": "https://products.electrovoice.com/download/970110",
+      "note": "build.profile: the 16 stations of mic-profiles.json, read from the PDF path data of the official EV RE20 data sheet (dimension drawing, exact outline coordinates); diameters reproduce the labelled 54.4 and 49.2 mm; axial positions were stretched so the drawn silhouette equals the labelled 216.7 mm (the length extension line sits about 9 mm beyond the drawn rear end), so features along the length may be off by up to about 8 mm at the head end. build.colours: ESTIMATED (dark grey body, lighter head), not measured."
+    }
+  ]
+}

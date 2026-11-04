@@ -1,0 +1,121 @@
+{
+  "id": "ev-re50",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 49,
+    "h": 197,
+    "d": 49
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 24.5,
+      "yMm": 24.5,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve",
+    "profile": [
+      [
+        0,
+        19.84
+      ],
+      [
+        11.5,
+        26.35
+      ],
+      [
+        130,
+        26.35
+      ],
+      [
+        130.2,
+        24.15
+      ],
+      [
+        140.1,
+        24.55
+      ],
+      [
+        144,
+        29.56
+      ],
+      [
+        153.7,
+        38.38
+      ],
+      [
+        157.8,
+        40.68
+      ],
+      [
+        167.3,
+        44.99
+      ],
+      [
+        170.4,
+        49
+      ],
+      [
+        174.5,
+        49
+      ],
+      [
+        177.8,
+        45.39
+      ],
+      [
+        177.9,
+        41.58
+      ],
+      [
+        192.4,
+        37.78
+      ],
+      [
+        196.4,
+        22.85
+      ],
+      [
+        197,
+        9.22
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#2a2a2d"
+      },
+      {
+        "fromMm": 167,
+        "colour": "#6e7076"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://products.electrovoice.com/download/970113",
+      "note": "Electro-Voice RE50/B data sheet (official, 1/2008 Telex edition, downloaded, text read, the page-2 dimension drawing rendered from its vector paths): length 197 mm (7.75 in.), max diameter 49 mm (1.94 in.), shank diameter 25 mm (1.0 in.). Connector: 3-pin XLR male. realSizeMm: w = d = 49 (widest diameter), h = 197 (length), upright with the XLR base end down (same convention as the shure-sm58 spec)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://products.electrovoice.com/download/970113",
+      "note": "Silhouette profile in mic-profiles.json: read from the vector dimension drawing on page 2 of the same data sheet (outline coordinates from the PDF path data, scale from the labelled 197 mm and checked against the labelled 49 mm: drawn ring 48.9 mm). The drawn handle measures 26.3 mm against the 25 mm label (the 25 mm arrows span 27.1 mm at scale), so about 5 percent doubt on the handle diameter."
+    },
+    {
+      "kind": "photo",
+      "url": "https://products.electrovoice.com/download/970113",
+      "note": "out-xlr: the catalog has one port, the male XLR. It sits on the bottom (XLR base end) face at its centre (x = y = 24.5 mm). The drawing shows a body of revolution with the XLR end at the right, so the connector position is by geometry (concentric): confidence photo. openingMm is left out (not published). The catalog lists no controls for the RE50B."
+    },
+    {
+      "kind": "photo",
+      "url": "https://products.electrovoice.com/download/970113",
+      "note": "build.profile: the 16 stations of mic-profiles.json, read from the PDF path data of the official EV RE50/B data sheet (exact outline coordinates, scale from the labelled 197 mm); the drawn handle is 26.3 mm although the label says shank 25 mm (the drawing is inconsistent with its label by about 5 percent; the drawn values were kept). build.colours: ESTIMATED (black handle, grey windscreen), not measured."
+    }
+  ]
+}
