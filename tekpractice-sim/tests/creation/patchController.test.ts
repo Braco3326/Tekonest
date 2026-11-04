@@ -489,3 +489,21 @@ describe('the pinned refusal clears when the learner has read it (night wave 1, 
     expect(s.ctrl.errorAt).toBeNull()
   })
 })
+
+// ── Night wave 1, item 2 (follow-up): a press closes the hover label, as a native tooltip does ─────────────────────────────────────
+describe('a press on the canvas closes the port hover label (night wave 1, item 2)', () => {
+  it('so the first Échap after clicking a port drops the cable, not just the label; the label returns on another port', () => {
+    const s = setup()
+    s.aim(10, 10, SM58_OUT)
+    s.aim(20, 20, QL_MIC1)
+    s.canvas.dispatchEvent(ev('pointermove', { offsetX: 10, offsetY: 10 }))
+    expect(s.calls.hover).toEqual(['desc:sm58.out-xlr']) // the label is shown
+    const hidden = s.calls.hideHover
+    s.canvas.dispatchEvent(ev('pointerdown', { offsetX: 10, offsetY: 10, timeStamp: 1000 }))
+    expect(s.calls.hideHover).toBeGreaterThan(hidden) // the press closed it
+    s.canvas.dispatchEvent(ev('pointermove', { offsetX: 11, offsetY: 10 })) // still on the same port: not shown again
+    expect(s.calls.hover).toEqual(['desc:sm58.out-xlr'])
+    s.canvas.dispatchEvent(ev('pointermove', { offsetX: 20, offsetY: 20 })) // another port: its label
+    expect(s.calls.hover).toEqual(['desc:sm58.out-xlr', 'desc:ql1.in-mic-1'])
+  })
+})
