@@ -99,16 +99,17 @@ describe('bodyHeightOf / scaleForHeight', () => {
     expect(bodyHeightOf(0.5, 0)).toBe(0.5)
   })
   it('the uniform scale makes the cabinet the real height: without the stand a taller scale than the whole model would give', () => {
-    const whole = scaleForHeight(0.299, 0.55, undefined)
-    const body = scaleForHeight(0.299, 0.55, 0.285)
-    expect(whole).toBeCloseTo(0.299 / 0.55, 12)
-    expect(body).toBeCloseTo(0.299 / (0.55 * 0.715), 12)
+    // 0.285 m is the cabinet target here (cabinetHeightM); the stand share (baseFraction) is the third argument
+    const whole = scaleForHeight(0.285, 0.55, undefined)
+    const body = scaleForHeight(0.285, 0.55, 0.285)
+    expect(whole).toBeCloseTo(0.285 / 0.55, 12)
+    expect(body).toBeCloseTo(0.285 / (0.55 * 0.715), 12)
     expect(body).toBeGreaterThan(whole)
-    expect(0.55 * (1 - 0.285) * body).toBeCloseTo(0.299, 12) // the cabinet, in metres
+    expect(0.55 * (1 - 0.285) * body).toBeCloseTo(0.285, 12) // the cabinet, in metres
   })
   it('keeps the old behaviour for an unusable model or a nonsense fraction (scale 1, or the whole model)', () => {
-    expect(scaleForHeight(0.299, 0, 0.3)).toBe(1)
-    expect(scaleForHeight(0.299, 1e-9, 0.3)).toBe(1)
+    expect(scaleForHeight(0.285, 0, 0.3)).toBe(1)
+    expect(scaleForHeight(0.285, 1e-9, 0.3)).toBe(1)
     expect(bodyHeightOf(0.5, 1)).toBe(0.5) // a stand that is the whole model is not a stand
     expect(bodyHeightOf(0.5, -0.2)).toBe(0.5)
     expect(bodyHeightOf(0.5, Number.NaN)).toBe(0.5)
