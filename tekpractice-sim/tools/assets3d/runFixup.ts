@@ -57,6 +57,12 @@ export interface FixupOpts {
    * stays the I/O face. For a model the contact sheet shows upside down (CLI --flip).
    */
   flipUpright?: boolean
+  /**
+   * false = do not cut the 2 mm socket recess at ports with an opening (plan.json `recess: false`). A scripted model
+   * (tools/assets3d/blender/build_from_spec.py) builds its own sockets, and the cut would shorten the bezels it models.
+   * Default: cut, as for Meshy models, whose panels are solid.
+   */
+  recess?: boolean
 }
 
 export interface ExecResult {
@@ -111,7 +117,7 @@ export async function runFixup(
 
   const placement = buildPlacement(spec)
   const flipUpright = opts.flipUpright === true
-  const plan = { id: spec.id, kind: spec.kind, yawDeg, flipUpright, placement, extras: toExtras(spec, placement) }
+  const plan = { id: spec.id, kind: spec.kind, yawDeg, flipUpright, ...(opts.recess === false ? { recess: false } : {}), placement, extras: toExtras(spec, placement) }
 
   const tmp = await mkdtemp(join(tmpdir(), 'tekpractice-fixup-'))
   try {

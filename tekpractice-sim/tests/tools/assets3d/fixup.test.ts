@@ -119,6 +119,20 @@ describe('runFixup (unit, injected exec)', () => {
     expect(calls[0].plan).toMatchObject({ yawDeg: 90, flipUpright: true })
   })
 
+  it('writes recess false into plan.json only when asked (a scripted model models its own sockets)', async () => {
+    const { exec, calls } = fakeExec()
+    await runFixup('in.glb', 'out.glb', deviceSpec(), { recess: false }, { exec, blender: 'blender' })
+    await runFixup('in.glb', 'out.glb', deviceSpec(), {}, { exec, blender: 'blender' })
+    expect(calls[0].plan).toMatchObject({ recess: false })
+    expect(calls[1].plan).not.toHaveProperty('recess')
+  })
+
+  it('fixup.py skips the port recess cuts when the plan says recess false', () => {
+    const py = readFileSync(FIXUP_SCRIPT, 'utf8')
+    expect(py).toContain('recess = plan.get("recess", True) is not False')
+    expect(py).toContain('if recess and port.get("openingM"):')
+  })
+
   it('fixup.py reads flipUpright and applies FLIP_Z (180 degrees about glTF Z) after the yaw', () => {
     const py = readFileSync(FIXUP_SCRIPT, 'utf8')
     expect(py).toMatch(/flip = plan\.get\("flipUpright", False\) is True/)

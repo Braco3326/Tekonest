@@ -92,7 +92,7 @@ interface Calls {
   create: { images: string[]; targetPolycount: number; topology?: string }[]
   wait: string[]
   download: string[]
-  fixup: { inGlb: string; outGlb: string; yawDeg: number | undefined; flipUpright: boolean | undefined; inBytes: Uint8Array }[]
+  fixup: { inGlb: string; outGlb: string; yawDeg: number | undefined; flipUpright: boolean | undefined; recess: boolean | undefined; inBytes: Uint8Array }[]
   compress: { bits: number }[]
   optimize: { maxPx: number }[]
   /** The order the texture and Draco steps ran in. */
@@ -177,7 +177,7 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
       },
     },
     runFixup: async (inGlb, outGlb, _spec, opts) => {
-      calls.fixup.push({ inGlb, outGlb, yawDeg: opts?.yawDeg, flipUpright: opts?.flipUpright, inBytes: new Uint8Array(await readFile(inGlb)) })
+      calls.fixup.push({ inGlb, outGlb, yawDeg: opts?.yawDeg, flipUpright: opts?.flipUpright, recess: opts?.recess, inBytes: new Uint8Array(await readFile(inGlb)) })
       const bytes = rig.fixed[Math.min(attempt, rig.fixed.length - 1)]
       const report = rig.fixupReports ? rig.fixupReports[Math.min(attempt, rig.fixupReports.length - 1)] : (rig.fixupReport ?? FIXUP_OK)
       attempt++
@@ -1384,6 +1384,16 @@ describe('scripted build (--scripted)', () => {
     const deps = makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK })
     await expect(buildAsset(spec.id, { maxAttempts: 1, scripted: true, dryRun: true }, deps)).rejects.toThrow(/rack-box.*connector/)
     expect(existsSync(join(paths.sourceDir, spec.id))).toBe(false)
+  })
+
+  it('a scripted build asks the fix-up not to cut port recesses (the builder models its own sockets); other builds keep them', async () => {
+    const spec = jack()
+    await buildAsset(spec.id, { maxAttempts: 1, scripted: true, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK }))
+    const device = deviceSpec()
+    const rawPath = join(root, 'plain.glb')
+    await writeFile(rawPath, RAW_BYTES)
+    await buildAsset(device.id, { maxAttempts: 1, rawGlb: rawPath, dryRun: true }, makeDeps({ spec: device, fixed: [await goodGlb(device)] }))
+    expect(calls.fixup.map((c) => c.recess)).toEqual([false, undefined])
   })
 
   it('a gate failure aborts after one builder call: no retry', async () => {

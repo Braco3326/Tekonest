@@ -20,7 +20,8 @@ Steps, in order:
   5. measure the pre-scale size (spec axis order), scale non-uniformly to the exact spec size
   6. pivot: device = bottom-centre (glTF min y = 0, centre x, z = 0); connector = centre of the mating face,
      body along glTF +Z (min z = 0, centre x, y = 0)
-  7. socket recess: a 2 mm deep boolean cylinder per port that has openingM (a failure is logged, not fatal)
+  7. socket recess: a 2 mm deep boolean cylinder per port that has openingM (a failure is logged, not fatal); skipped
+     when the plan says recess false (scripted models build their own sockets)
   7b. keep one colour attribute, active (vertex colours of scripted models; see ensure_active_colour)
   8. one root Empty named <id> parenting the mesh, the port_<id> and ctrl_<id> empties; extras under
      the custom property 'tekpractice' on the root
@@ -457,6 +458,7 @@ def run() -> None:
     if yaw not in (0, 90, 180, 270):
         raise FixupError(f"yawDeg must be 0, 90, 180 or 270, got {yaw}")
     flip = plan.get("flipUpright", False) is True
+    recess = plan.get("recess", True) is not False
     placement = plan["placement"]
     size = placement["sizeM"]
     spec_g: Vec3 = (float(size["w"]), float(size["h"]), float(size["d"]))
@@ -505,7 +507,7 @@ def run() -> None:
     me.update()
 
     for port in placement["ports"]:
-        if port.get("openingM"):
+        if recess and port.get("openingM"):
             cut_recess(body, port)
     me = body.data
     me.name = body_name

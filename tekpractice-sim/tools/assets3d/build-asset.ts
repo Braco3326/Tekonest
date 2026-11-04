@@ -448,7 +448,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       if (raw) await writeFile(rawPath, raw)
       await persist()
 
-      const fixup = await d.runFixup(rawPath, fixedPath, spec, { yawDeg: opts.yawDeg ?? 0, flipUpright: opts.flipUpright === true })
+      const fixup = await d.runFixup(rawPath, fixedPath, spec, { yawDeg: opts.yawDeg ?? 0, flipUpright: opts.flipUpright === true, ...(scripted ? { recess: false } : {}) })
       await persist()
       if (d.renderSheet) {
         // The review image for this attempt (yaw / flip are read off it). Best effort: never fails the build.
