@@ -1507,16 +1507,16 @@ describe('scripted build (--scripted)', () => {
   describe('hybrid: --project maps a Meshy picture onto the scripted shape', () => {
     const box = (over: Partial<AssetSpecT> = {}): AssetSpecT => deviceSpec({ build: { shape: 'rack-box' }, ...over })
     const hybridDeps = async (spec: AssetSpecT) => {
-      const seen: { face?: string; png?: number[]; projectedFrom?: string } = {}
+      const seen: { face?: string; faces?: string[]; png?: number[]; projectedFrom?: string } = {}
       const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
       deps.renderProjection = async (glb, face) => {
         seen.face = face
         seen.projectedFrom = glb
         return { png: new Uint8Array([9, 8, 7]), faceMm: { w: 100, h: 50 } }
       }
-      deps.runBuilder = async (_spec, outGlb, projection) => {
-        seen.png = projection ? Array.from(projection.png) : undefined
-        if (projection) seen.face = projection.face
+      deps.runBuilder = async (_spec, outGlb, projections) => {
+        seen.png = projections?.[0] ? Array.from(projections[0].png) : undefined
+        seen.faces = projections?.map((p) => p.face)
         await writeFile(outGlb, RAW_BYTES)
       }
       return { deps, seen }
@@ -1527,7 +1527,7 @@ describe('scripted build (--scripted)', () => {
       const { deps, seen } = await hybridDeps(spec)
       const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectFrom: '/some/attempt-1.fixed.glb', rawTaskId: 'task-xyz-123', dryRun: true }, deps)
       expect(report.ok).toBe(true)
-      expect(seen).toMatchObject({ face: 'io', projectedFrom: '/some/attempt-1.fixed.glb', png: [9, 8, 7] })
+      expect(seen).toMatchObject({ face: 'io', faces: ['io'], projectedFrom: '/some/attempt-1.fixed.glb', png: [9, 8, 7] })
       expect(report.hybrid).toBe(true)
       expect(report.attempts[0].taskId).toBe('task-xyz-123')
       expect(calls.create).toHaveLength(0)
@@ -1537,7 +1537,14 @@ describe('scripted build (--scripted)', () => {
       const spec = box({ build: { shape: 'rack-box', projection: 'top' } })
       const { deps, seen } = await hybridDeps(spec)
       await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectFrom: '/x.glb', dryRun: true }, deps)
-      expect(seen.face).toBe('top')
+      expect(seen.faces).toEqual(['top'])
+    })
+
+    it('renders every face a spec lists, in order, and hands them all to the builder', async () => {
+      const spec = box({ build: { shape: 'rack-box', projection: ['top', 'io'] } })
+      const { deps, seen } = await hybridDeps(spec)
+      await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectFrom: '/x.glb', dryRun: true }, deps)
+      expect(seen.faces).toEqual(['top', 'io'])
     })
 
     it('refuses projectFrom without scripted before anything is spent or written', async () => {

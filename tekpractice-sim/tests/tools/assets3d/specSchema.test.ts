@@ -122,6 +122,21 @@ describe('AssetSpec insetMm and driftLimit', () => {
   })
 })
 
+describe('AssetSpec build.projection', () => {
+  const base = (): AssetSpecT => specFor(fresh(), 'qsc-k12-2')
+  const parse = (projection: unknown): boolean => AssetSpec.safeParse({ ...base(), build: { shape: 'rack-box', projection } }).success
+  it('accepts one face or a list of one to four faces', () => {
+    expect(parse('io')).toBe(true)
+    expect(parse(['top', 'io'])).toBe(true)
+    expect(parse(['top', 'io', 'opposite', 'left'])).toBe(true)
+  })
+  it('rejects an empty list, an unknown face and more than four faces', () => {
+    expect(parse([])).toBe(false)
+    expect(parse('bottom')).toBe(false)
+    expect(parse(['io', 'top', 'left', 'opposite', 'io'])).toBe(false)
+  })
+})
+
 describe('AssetSpec texture block (blank bands)', () => {
   const base = (): AssetSpecT => specFor(fresh(), 'qsc-k12-2')
   it('accepts blank bands with and without a fill', () => {

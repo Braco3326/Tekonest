@@ -345,6 +345,54 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(fixed.triangles).toBeLessThan(400)
   }, 120_000)
 
+  it.skipIf(!BLENDER)('two projections (io and top) land on their own faces in one atlas: the io picture on the io face, the top picture on the top face, swatches elsewhere', async () => {
+    const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 1 } } }
+    const solid = async (w: number, h: number, rgb: number[]): Promise<Uint8Array> =>
+      new Uint8Array(await sharp({ create: { width: w, height: h, channels: 3, background: { r: rgb[0], g: rgb[1], b: rgb[2] } } }).png().toBuffer())
+    const out = join(dir, 'projected2.raw.glb')
+    await runBuilder(spec, out, {}, [
+      { face: 'io', png: await solid(300, 100, [200, 30, 30]) },
+      { face: 'top', png: await solid(200, 150, [30, 200, 30]) },
+    ])
+    const doc = await new NodeIO().registerExtensions(ALL_EXTENSIONS).readBinary(new Uint8Array(await readFile(out)))
+    const prims = doc.getRoot().listMeshes().flatMap((m) => m.listPrimitives())
+    const tex = doc.getRoot().listMaterials()[0].getBaseColorTexture()!
+    const { data, info } = await sharp(Buffer.from(tex.getImage()!)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    expect(info.width).toBe(300) // the widest picture
+    expect(info.height).toBe(32 + 100 + 150) // palette strip + both pictures
+    const texel = (u: number, v: number): number[] => {
+      const x = Math.min(info.width - 1, Math.floor(u * info.width))
+      const y = Math.min(info.height - 1, Math.floor(v * info.height))
+      return Array.from(data.subarray((y * info.width + x) * 3, (y * info.width + x) * 3 + 3))
+    }
+    const near = (a: number[], b: number[]): boolean => a.every((c, i) => Math.abs(c - b[i]) <= 3)
+    let io = 0
+    let top = 0
+    let other = 0
+    for (const prim of prims) {
+      const pos = prim.getAttribute('POSITION')!
+      const uv = prim.getAttribute('TEXCOORD_0')!
+      const nrm = prim.getAttribute('NORMAL')!
+      for (let i = 0; i < pos.getCount(); i++) {
+        const n3 = nrm.getElement(i, [0, 0, 0])
+        const t = texel(...(uv.getElement(i, [0, 0]) as [number, number]))
+        if (n3[2] > 0.99) {
+          io++
+          expect(near(t, [200, 30, 30]), 'io vertex shows ' + t).toBe(true)
+        } else if (n3[1] > 0.99) {
+          top++
+          expect(near(t, [30, 200, 30]), 'top vertex shows ' + t).toBe(true)
+        } else if (n3[2] < -0.99 || n3[1] < -0.99) {
+          other++
+          expect(near(t, [200, 30, 30]) || near(t, [30, 200, 30]), 'a swatch face shows a picture').toBe(false)
+        }
+      }
+    }
+    expect(io).toBeGreaterThan(0)
+    expect(top).toBeGreaterThan(0)
+    expect(other).toBeGreaterThan(0)
+  }, 120_000)
+
   it.skipIf(!BLENDER)('a chamfer larger than half the smallest side exits with BUILD_FAIL naming chamferMm', async () => {
     const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 300 } } }
     await expect(runBuilder(spec, join(dir, 'big-chamfer.glb'))).rejects.toThrow(/chamferMm/)

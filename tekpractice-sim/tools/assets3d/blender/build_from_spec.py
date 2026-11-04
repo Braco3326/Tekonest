@@ -853,16 +853,16 @@ def srgb_byte(linear: float) -> int:
 
 
 def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
-    """Maps the picture plan.projection.png onto the faces of `ob` that look the way plan.projection.face looks (planar UV), and
-    gives every other face a swatch of its own colour in the same atlas, so the model keeps ONE material and ONE texture.
+    """Maps pictures onto the faces of `ob` that look the way each picture's face looks (planar UV), and gives every other face a
+    swatch of its own colour, all in ONE atlas, so the model keeps ONE material and ONE texture.
 
-    plan.projection = {face: io | opposite | top | left, png: path of the face image (face-local x right, y up, seen from outside)}.
-    The image is the whole face rectangle (width x height, depth for the top face, from plan.sizeMm); the atlas is that image on top
-    of a one-row palette strip. The vertex colours are removed (the swatches carry them). The atlas is saved to `out_png` (the
-    exporter embeds it). Blender space: glTF (x, y, z) = Blender (x, -z, y), so the io face looks along Blender -Y.
+    plan.projections = [{face: io | opposite | top | left, png: path of the face image (face-local x right, y up, seen from outside)}].
+    Each image is the whole face rectangle (width x height, depth for the top face, from plan.sizeMm). The atlas stacks the pictures
+    above a one-row palette strip; a face goes to the FIRST projection whose face it looks at (within 50 degrees), else to a swatch.
+    The vertex colours are removed (the swatches carry them). The atlas is saved to `out_png` (the exporter embeds it).
+    Blender space: glTF (x, y, z) = Blender (x, -z, y), so the io face looks along Blender -Y.
     """
-    proj = plan["projection"]
-    face = proj["face"]
+    projections = plan["projections"]
     w, h, d = size_m(plan)
     # face -> (outward normal in Blender space, (u, v) of a point in metres, face rectangle in metres)
     faces = {
@@ -871,63 +871,82 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
         "top": ((0.0, 0.0, 1.0), lambda co: (co.x + w / 2, d / 2 + co.y), (w, d)),
         "left": ((-1.0, 0.0, 0.0), lambda co: (d / 2 - co.y, co.z), (d, h)),
     }
-    if face not in faces:
-        raise BuildError(f"projection face {face!r} is not one of {sorted(faces)}")
-    normal, local, (fw, fh) = faces[face]
-    outward = Vector(normal)
-
-    img = bpy.data.images.load(proj["png"])
-    img.colorspace_settings.name = "sRGB"
-    iw, ih = img.size
-    if iw < SWATCH_PX or ih < 2:
-        raise BuildError(f"the projection image {proj['png']} is too small ({iw} x {ih})")
-    picture = [c for c in img.pixels[:]]
+    pictures = []   # [(face, image, width px, height px, floats)]
+    for proj in projections:
+        face = proj["face"]
+        if face not in faces:
+            raise BuildError(f"projection face {face!r} is not one of {sorted(faces)}")
+        if any(p[0] == face for p in pictures):
+            raise BuildError(f"projection face {face!r} is given twice")
+        img = bpy.data.images.load(proj["png"])
+        img.colorspace_settings.name = "sRGB"
+        iw, ih = img.size
+        if iw < SWATCH_PX or ih < 2:
+            raise BuildError(f"the projection image {proj['png']} is too small ({iw} x {ih})")
+        pictures.append((face, img, iw, ih, [c for c in img.pixels[:]]))
+    atlas_w = max(p[2] for p in pictures)
 
     me = ob.data
     colours = me.color_attributes[COLOUR_ATTRIBUTE]
+    # which picture (index) each polygon looks at, else None (a swatch)
+    looks_at: dict[int, int] = {}
     palette: list[tuple[int, int, int]] = []
     swatch_of: dict[int, int] = {}
     for poly in me.polygons:
-        if poly.normal.dot(outward) >= PROJECTION_COS:
-            continue
-        c = colours.data[poly.loop_start].color
-        key = (srgb_byte(c[0]), srgb_byte(c[1]), srgb_byte(c[2]))
-        if key not in palette:
-            palette.append(key)
-        swatch_of[poly.index] = palette.index(key)
-    if len(palette) > iw // SWATCH_PX:
-        raise BuildError(f"{len(palette)} palette colours do not fit in an atlas {iw} px wide")
+        for k, (face, _img, _iw, _ih, _px) in enumerate(pictures):
+            if poly.normal.dot(Vector(faces[face][0])) >= PROJECTION_COS:
+                looks_at[poly.index] = k
+                break
+        else:
+            c = colours.data[poly.loop_start].color
+            key = (srgb_byte(c[0]), srgb_byte(c[1]), srgb_byte(c[2]))
+            if key not in palette:
+                palette.append(key)
+            swatch_of[poly.index] = palette.index(key)
+    if len(palette) > atlas_w // SWATCH_PX:
+        raise BuildError(f"{len(palette)} palette colours do not fit in an atlas {atlas_w} px wide")
 
-    # the atlas: palette strip at the bottom (Blender images are bottom-up), the picture above it
+    # the atlas, bottom-up like Blender images: the palette strip, then the pictures stacked above it
     pal_rows = SWATCH_PX
-    atlas = bpy.data.images.new("projection_atlas", iw, ih + pal_rows, alpha=False)
+    offsets = []
+    row = pal_rows
+    for (_f, _img, _iw, ih, _px) in pictures:
+        offsets.append(row)
+        row += ih
+    total_h = row
+    atlas = bpy.data.images.new("projection_atlas", atlas_w, total_h, alpha=False)
     atlas.colorspace_settings.name = "sRGB"
-    pix = [0.0] * (iw * (ih + pal_rows) * 4)
-    for row in range(pal_rows):
-        for col in range(iw):
+    pix = [0.0] * (atlas_w * total_h * 4)
+    for r in range(pal_rows):
+        for col in range(atlas_w):
             k = min(col // SWATCH_PX, max(0, len(palette) - 1))
-            r, g, b = palette[k] if palette else (128, 128, 128)
-            o = (row * iw + col) * 4
-            pix[o:o + 4] = [r / 255.0, g / 255.0, b / 255.0, 1.0]
-    start = pal_rows * iw * 4
-    pix[start:start + len(picture)] = picture
+            rr, gg, bb = palette[k] if palette else (128, 128, 128)
+            o = (r * atlas_w + col) * 4
+            pix[o:o + 4] = [rr / 255.0, gg / 255.0, bb / 255.0, 1.0]
+    for (_f, _img, iw, ih, px), off in zip(pictures, offsets):
+        for r in range(ih):
+            src = r * iw * 4
+            dst = ((off + r) * atlas_w) * 4
+            pix[dst:dst + iw * 4] = px[src:src + iw * 4]
     atlas.pixels.foreach_set(pix)
     atlas.filepath_raw = out_png
     atlas.file_format = "PNG"
     atlas.save()
 
     uv = me.uv_layers.new(name="UVMap")
-    total_h = ih + pal_rows
     for poly in me.polygons:
         for li in poly.loop_indices:
             co = me.vertices[me.loops[li].vertex_index].co
             if poly.index in swatch_of:
-                uv.data[li].uv = ((swatch_of[poly.index] + 0.5) * SWATCH_PX / iw, (pal_rows / 2) / total_h)
+                uv.data[li].uv = ((swatch_of[poly.index] + 0.5) * SWATCH_PX / atlas_w, (pal_rows / 2) / total_h)
             else:
+                k = looks_at[poly.index]
+                face, _img, iw, ih, _px = pictures[k]
+                _normal, local, (fw, fh) = faces[face]
                 u, v = local(co)
                 u = min(max(u / fw, 0.5 / iw), 1.0 - 0.5 / iw)
                 v = min(max(v / fh, 0.5 / ih), 1.0 - 0.5 / ih)
-                uv.data[li].uv = (u, (pal_rows + v * ih) / total_h)
+                uv.data[li].uv = (u * iw / atlas_w, (offsets[k] + v * ih) / total_h)
 
     # one material, the atlas as its base colour; no vertex colours any more
     me.materials.clear()
@@ -945,7 +964,7 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
     bsdf.inputs["Roughness"].default_value = ROUGHNESS
     me.materials.append(mat)
     me.color_attributes.remove(colours)
-    log(f"projection of the {face} face: {iw} x {ih} px picture, {len(palette)} palette colours, {len(swatch_of)} swatch faces")
+    log(f"projection of the {', '.join(p[0] for p in pictures)} face(s): atlas {atlas_w} x {total_h} px, {len(palette)} palette colours, {len(swatch_of)} swatch faces")
 
 
 def export_glb(dst: str) -> None:
@@ -976,7 +995,7 @@ def run() -> None:
         raise BuildError(f"unknown shape {shape!r} (known: {', '.join(sorted(SHAPES))})")
     wipe_scene()
     builder(plan)
-    if plan.get("projection"):
+    if plan.get("projections"):
         meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
         if len(meshes) != 1:
             raise BuildError(f"a projection needs exactly one mesh object, the build made {len(meshes)}")

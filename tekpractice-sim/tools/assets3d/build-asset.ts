@@ -132,7 +132,7 @@ export interface BuildDeps {
   }
   runFixup: (inGlb: string, outGlb: string, spec: AssetSpecT, opts?: FixupOpts) => Promise<FixupReport>
   /** The scripted builder: writes the raw GLB of a spec with a `build` block (default: runBuilder with Blender). */
-  runBuilder: (spec: AssetSpecT, outGlb: string, projection?: BuildProjection) => Promise<void>
+  runBuilder: (spec: AssetSpecT, outGlb: string, projections?: BuildProjection[]) => Promise<void>
   /** The flat image of one face of a fixed-up Meshy model (default: renderProjection with Blender). */
   renderProjection: (glb: string, face: ProjectionFace) => Promise<Projection>
   compress: (bytes: Uint8Array, opts: CompressOpts) => Promise<Uint8Array>
@@ -257,7 +257,7 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
       downloadGlb: (task) => downloadGlb(task),
     },
     runFixup: deps.runFixup ?? ((inGlb, outGlb, spec, opts) => runFixup(inGlb, outGlb, spec, opts)),
-    runBuilder: deps.runBuilder ?? ((spec, outGlb, projection) => runBuilder(spec, outGlb, {}, projection)),
+    runBuilder: deps.runBuilder ?? ((spec, outGlb, projections) => runBuilder(spec, outGlb, {}, projections)),
     renderProjection: deps.renderProjection ?? ((glb, face) => renderProjection(glb, face)),
     compress: deps.compress ?? dracoCompress,
     optimizeTextures: deps.optimizeTextures ?? optimizeTextures,
@@ -471,14 +471,16 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       const rawPath = join(work, `attempt-${n}.raw.glb`)
       let raw: Uint8Array | null = null
       if (scripted) {
-        let projection: BuildProjection | undefined
+        let projections: BuildProjection[] | undefined
         if (opts.projectFrom) {
-          const face = spec.build?.projection ?? 'io'
-          projection = { face, png: (await d.renderProjection(opts.projectFrom, face)).png }
+          const wanted = spec.build?.projection ?? 'io'
+          const faces = Array.isArray(wanted) ? wanted : [wanted]
+          projections = []
+          for (const face of faces) projections.push({ face, png: (await d.renderProjection(opts.projectFrom, face)).png })
           if (opts.rawTaskId) attempt.taskId = opts.rawTaskId
-          d.log(`projecting the ${face} face of ${opts.projectFrom}`)
+          d.log(`projecting the ${faces.join(', ')} face(s) of ${opts.projectFrom}`)
         }
-        await d.runBuilder(spec, rawPath, projection)
+        await d.runBuilder(spec, rawPath, projections)
       } else if (rawBytes) {
         raw = opts.slab ? await orientSlab(rawBytes, spec.realSizeMm) : rawBytes
         if (opts.rawTaskId) attempt.taskId = opts.rawTaskId

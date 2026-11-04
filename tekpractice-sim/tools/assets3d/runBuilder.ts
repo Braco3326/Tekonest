@@ -6,7 +6,7 @@
  *
  *   blender --background --factory-startup --python-exit-code 1 --python build_from_spec.py -- --plan <plan.json> --out <glb>
  *
- * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours?, projection? } (profile and colours only for revolve; projection = { face, png } maps a picture of that face onto the shape). Sizes always come from the spec's realSizeMm.
+ * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours?, projections? } (profile and colours only for revolve and console-wedge; projections = [{ face, png }] map a picture of each face onto the shape). Sizes always come from the spec's realSizeMm.
  * The GLB is the raw input of attempt 1 of buildAsset: the fix-up and every gate run on it unchanged.
  * `exec` and `blender` are injectable so the contract is unit-tested without Blender.
  */
@@ -40,7 +40,7 @@ const STDERR_TAIL = 2000
  * Builds the raw GLB `outGlb` for `spec` with Blender. Throws when the spec has no (valid) build block, Blender is
  * missing, or the script fails (the message carries the BUILD_FAIL reason). Nothing is created before the spec is checked.
  */
-export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDeps = {}, projection?: BuildProjection): Promise<void> {
+export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDeps = {}, projection?: BuildProjection | BuildProjection[]): Promise<void> {
   if (!spec.build) throw new Error(`${spec.id}: no build block in the spec, so it cannot be built with --scripted`)
   const errors = validateBuild(spec)
   if (errors.length > 0) throw new Error(errors.join('; '))
@@ -67,10 +67,15 @@ export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDe
   try {
     const planPath = join(tmp, 'plan.json')
     let planOut: Record<string, unknown> = plan
-    if (projection) {
-      const pngPath = join(tmp, 'projection.png')
-      await writeFile(pngPath, projection.png)
-      planOut = { ...plan, projection: { face: projection.face, png: pngPath } }
+    const list = projection === undefined ? [] : Array.isArray(projection) ? projection : [projection]
+    if (list.length > 0) {
+      const projections = []
+      for (const [i, pr] of list.entries()) {
+        const pngPath = join(tmp, `projection-${i}.png`)
+        await writeFile(pngPath, pr.png)
+        projections.push({ face: pr.face, png: pngPath })
+      }
+      planOut = { ...plan, projections }
     }
     await writeFile(planPath, JSON.stringify(planOut, null, 2))
     const args = [
