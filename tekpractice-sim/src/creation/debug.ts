@@ -143,8 +143,10 @@ export interface CreationDebug {
    * has none, its model is not loaded, or the instance is unknown. At yaw 0 it is +z, the way the acoustic aim line points.
    */
   modelFront(instanceId: string): [number, number, number] | null
+  /** Task 43c fix round: the centre of the body's vertices in the frame of the instance root (0, y, 0 when it sits on its placement, at any yaw). */
+  bodyCentreInRoot(instanceId: string): [number, number, number] | null
   /** Task 43c (L34): independent oracle for a loudspeaker's front, the x-extent of the body vertices at the +z and the -z end of its z range (world axes, yaw 0). */
-  bodyEnds(instanceId: string): { plusZ: number; minusZ: number; depth: number } | null
+  bodyEnds(instanceId: string): { plusZ: number; minusZ: number; depth: number; rearX: [number, number]; rearZ: number } | null
   /** Task 37: the world position of a port marker (after the .glb is applied it sits on the model), or null when unknown. */
   portWorld(ref: PortRef): [number, number, number] | null
   /** Task 39: each speaker's output level (linear RMS from its analyser; 0 = silence) while playing; {} otherwise. Never loads the audio chunk. */

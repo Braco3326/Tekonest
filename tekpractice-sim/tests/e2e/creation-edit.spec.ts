@@ -330,7 +330,7 @@ test('a click where a hidden device stands does nothing visible but shows the sa
 
 test('a click on a device selects it and shows no message; the click that drops a device is no miss; an orbit drag is no miss', async ({ page }) => {
   await boot(page)
-  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 4], rotationY: 180 })) // facing the audience as in the reference template: its connectors are on the far side
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 4], rotationY: 0 })) // yaw 0: its connectors are on the far side from the default camera (at yaw 180, as in the template, they face it and, at this zoom, cover the body: L34 fix round)
   await settle(page)
   // Over an unselected body a port's first-click area is tight (final review 3): a plain click on the body's centre selects it,
   // even with the QL1 facing the camera and its connectors on the far side.

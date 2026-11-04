@@ -8,10 +8,10 @@
  *                      amplifier end. Confirmed on screen (Playwright, Face and Arrière views at yaw 0, before and after the fix).
  *   genelec-8030c  -x  read by eye on a textured scan, confirmed on screen (woofer and tweeter on the -x face, the amplifier plate on +x). No
  *                      numeric oracle: a sphere-like scan has no wide / narrow end. The e2e and the screenshots are its evidence.
- *   yamaha-dbr12   --  NOT ESTABLISHED. The mesh is a 158 x 65 x 58 unit triangular prism (not a 376 x 601 x 348 mm cabinet), its grille texture sits
- *                      on a long side face and its connector empties on an end face: a speaker has its connectors opposite its grille, so the file
- *                      contradicts itself and no front can be named with evidence. The catalog carries no `modelFront` for it; the coverage block
- *                      keeps its note for it.
+ *   yamaha-dbr12   --  ORIENTATION NOT ESTABLISHED. The model lies horizontally (65.5 x 57.6 x 158.4 units, long axis on z, not a 376 x 601 x 348 mm
+ *                      cabinet) and looks rolled or pitched by about 90 degrees: the grille, the logo and the woofer ring are on one long face, only the
+ *                      port_* empties sit on an end face (z = 79.29). It appears to lie on its side, so it needs a pitch or roll fix, which a yaw-only
+ *                      `modelFront` cannot give. The catalog carries no `modelFront` for it; the coverage block keeps its note for it.
  *
  * When a REBUILT model of one of these devices lands (I/O toward -Z, front toward +Z): remove its `modelFront` from content/catalog.json and set its
  * entry in MEASURED to null; tests/assets/speakerFront.test.ts will have failed first, on purpose, to say the file changed.
@@ -62,7 +62,7 @@ async function read(id: string) {
 const span = (v: number[]): number => Math.max(...v) - Math.min(...v)
 
 /** The root of a scaled import once DeviceSpawner has set its uniform scale: the loader's 180 degree turn about y, positive scale (see DeviceSpawner). */
-const scaledImport = Matrix.Compose(new Vector3(0.025, 0.025, 0.025), new Quaternion(0, 1, 0, 0), Vector3.Zero())
+const scaledImport = Matrix.Compose(new Vector3(0.025, 0.025, 0.025), new Quaternion(0, 1, 0, 0), new Vector3(0.3, 0.2, -0.4)) // translated, as the spawner leaves it after grounding / centring
 
 describe('the loudspeaker models: measured front vs catalog data (Task 43c, L34)', () => {
   const speakers = catalog.devices.filter((d) => d.acoustic !== undefined)

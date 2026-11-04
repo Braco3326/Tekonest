@@ -121,3 +121,101 @@ test('(e) the model-front note: hidden while every contributing speaker has a de
   await expect(note).toHaveText('Face avant du modèle 3D non vérifiée pour dbr-g : le trait indique l’axe acoustique, pas forcément la face du modèle.')
   expect(await page.evaluate(() => window.__creation!.modelFront('dbr-g'))).toBeNull() // nothing was turned, nothing is claimed
 })
+
+// ── Task 43c fix round ──────────────────────────────────────────────────────
+
+/** Spawned already turned, so the model loads under a ROTATED parent (reload, undo of a removal, duplicate, rig change all do this). */
+test('(f) a corrected device LOADED at yaw 90 / 200 (not turned afterwards): its front equals the placement direction, and for a fed K12.2 the aim line', async ({ page }) => {
+  await boot(page)
+  for (const yaw of [90, 200]) {
+    const rad = (yaw * Math.PI) / 180
+    // fed K12.2: turn it, remove it, undo the removal: the respawn runs the model load under the turned parent
+    await page.evaluate((y) => window.__creation!.dispatch({ type: 'SET_POSE', instanceId: 'k12-g', position: [6, 2.7, -7.5], yawDeg: y, tiltDeg: 0, mount: 'stand' }), yaw)
+    expect(await page.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'k12-g' }).ok)).toBe(true)
+    expect(await page.evaluate(() => window.__creation!.undo())).toBe(true)
+    await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+    await page.waitForFunction((y) => {
+      const a = window.__creation!.coverage().aim.find((x) => x.id === 'k12-g')
+      return !!a && Math.abs(Math.atan2(a.to[0] - a.from[0], a.to[2] - a.from[2]) - ((((y + 180) % 360) - 180) * Math.PI) / 180) < 1e-6
+    }, yaw)
+    const f = await page.evaluate(() => window.__creation!.modelFront('k12-g'))
+    expect(f, `k12-g respawned at yaw ${yaw}`).not.toBeNull()
+    close(f!, await aimDir(page, 'k12-g'))
+    close(f!, [Math.sin(rad), 0, Math.cos(rad)])
+    // spawned directly at that yaw: a K12.2 and the 8030C
+    await page.evaluate(
+      ([y]) => {
+        const c = window.__creation!
+        c.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', position: [0, 0, 0], rotationY: y, instanceId: `k-${y}` })
+        c.dispatch({ type: 'SPAWN', deviceId: 'genelec-8030c', position: [3, 0, 0], rotationY: y, instanceId: `g-${y}` })
+      },
+      [yaw]
+    )
+    await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+    for (const id of [`k-${yaw}`, `g-${yaw}`]) {
+      const v = await page.evaluate((i) => window.__creation!.modelFront(i), id)
+      expect(v, id).not.toBeNull()
+      close(v!, [Math.sin(rad), 0, Math.cos(rad)])
+    }
+  }
+})
+
+test('(g) a device lands ON its placement at any yaw: body centre within 2 cm of (x, z), every speaker + a console + a mic, yaw 0 / 90 / 180 / 200', async ({ page }) => {
+  await boot(page)
+  const devices = ['qsc-k12-2', 'yamaha-dbr12', 'genelec-8030c', 'yamaha-ql1', 'shure-sm58']
+  const yaws = [0, 90, 180, 200]
+  const spawned = await page.evaluate(
+    ([devs, ys]) => {
+      const c = window.__creation!
+      const out: { id: string; x: number; z: number }[] = []
+      let i = 0
+      for (const d of devs as string[])
+        for (const y of ys as number[]) {
+          const id = `p-${d}-${y}`
+          const x = -9 + (i % 5) * 2.4
+          const z = 4 + Math.floor(i / 5) * 2.4
+          c.dispatch({ type: 'SPAWN', deviceId: d, position: [x, 0, z], rotationY: y, instanceId: id })
+          out.push({ id, x, z })
+          i++
+        }
+      return out
+    },
+    [devices, yaws]
+  )
+  await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+  const centres = await page.evaluate((s) => s.map((p) => ({ ...p, c: window.__creation!.deviceBodyCenter(p.id), local: window.__creation!.bodyCentreInRoot(p.id) })), spawned)
+  for (const p of centres) {
+    expect(p.c, p.id).not.toBeNull()
+    // the exact oracle: the vertices in the frame of the placement (no world-box blur from the yaw)
+    expect(Math.hypot(p.local![0], p.local![2]), `${p.id}: body centre vs placement (x, z), in the placement's frame`).toBeLessThan(0.02)
+    // and the world box centre the other tests use (a box of boxes: allowed 3 cm of its own blur at a turned yaw)
+    expect(Math.hypot(p.c![0] - p.x, p.c![2] - p.z), `${p.id}: world body centre vs placement (x, z)`).toBeLessThan(0.03)
+  }
+})
+
+test('(h) the port markers of a corrected K12.2 sit on its rear face (x within the rear width, z behind the body), at yaw 0 and when loaded turned 180', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => {
+    const c = window.__creation!
+    c.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', position: [0, 0, 0], rotationY: 0, instanceId: 'r0' })
+    c.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', position: [4, 0, 0], rotationY: 180, instanceId: 'r180' })
+  })
+  await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+  const r = await page.evaluate(() => {
+    const c = window.__creation!
+    const ports = (i: string) => ['in-line-a', 'thru-out-a', 'power-in'].map((p) => c.portWorld({ instance: i, port: p })!)
+    return { ends: c.bodyEnds('r0')!, p0: ports('r0'), p180: ports('r180'), c0: c.deviceBodyCenter('r0')!, c180: c.deviceBodyCenter('r180')! }
+  })
+  const [lo, hi] = r.ends.rearX
+  for (const p of r.p0) {
+    expect(p[0], 'marker x within the rear width (+1 cm)').toBeGreaterThanOrEqual(lo - 0.01)
+    expect(p[0]).toBeLessThanOrEqual(hi + 0.01)
+    expect(p[2], 'behind the rear plane').toBeLessThan(r.ends.rearZ + 0.005)
+    expect(p[2], 'but close to it (within 6 cm)').toBeGreaterThan(r.ends.rearZ - 0.06)
+  }
+  // turned 180: the same markers, mirrored about the placement (x, z) = (4, 0)
+  r.p180.forEach((p, i) => {
+    expect(p[0] - 4, `marker ${i} x mirrored`).toBeCloseTo(-(r.p0[i][0] - 0), 2)
+    expect(p[2], `marker ${i} z mirrored`).toBeCloseTo(-r.p0[i][2], 2)
+  })
+})

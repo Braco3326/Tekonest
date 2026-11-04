@@ -24,7 +24,7 @@ import type { Registry, DeviceT } from '../engine/CatalogLoader'
 import type { PortRef } from '../engine/types'
 import { TOKENS } from '../design/tokens'
 import { assetUrl } from '../assetUrl'
-import { frontDirection, yawOntoPlusZ, type FrontAxis } from './modelFront'
+import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 
 export interface DeviceInstance {
   instanceId: string
@@ -103,8 +103,10 @@ const REAL_SIZE_M: Record<string, { w: number; h: number; d: number }> = {
 export interface DeviceSpawnerOptions {
   /**
    * Mode Création (Task 43c, L34): turn a model whose catalog device declares `modelFront` about y until its front faces +z at yaw 0 (where the
-   * acoustics aim), and anchor its ports on the −z grid instead of on the file's port_* empties (which sit on the wrong face of these files).
-   * The legacy game never sets it: its models look exactly as before.
+   * acoustics aim), and anchor its ports on the rear face of the turned model instead of on the file's port_* empties (which sit on the wrong face of
+   * these files). Also (fix round): ground and centre the model from its bounds in the PARENT's frame, so a device spawned turned or tilted lands on its
+   * placement (the legacy world-aligned bounds put it up to 47 cm off at yaw 180 / 200).
+   * The legacy game never sets it: its models look exactly as before, byte for byte.
    */
   alignFront?: boolean
 }
@@ -316,7 +318,8 @@ export class DeviceSpawner {
 
         const front = this.options.alignFront ? device.modelFront?.axis : undefined
         const scale = this.normalizeModel(deviceId, glbRoot, front)
-        this.reanchorPorts(device, instanceId, glbRoot, portMarkers, front === undefined)
+        const rear = front && glbRoot.parent instanceof TransformNode ? rearFace(glbRoot, glbRoot.parent) : null
+        this.reanchorPorts(device, instanceId, glbRoot, portMarkers, front === undefined, rear)
         if (front) {
           instance.frontWorld = () => {
             if (glbRoot.isDisposed()) return null
@@ -349,13 +352,17 @@ export class DeviceSpawner {
    */
   private normalizeModel(deviceId: string, glbRoot: AbstractMesh, front?: FrontAxis): number {
     const real = REAL_SIZE_M[deviceId]
-    const origin =
+    const worldOrigin =
       glbRoot.parent instanceof TransformNode
         ? (glbRoot.parent as TransformNode).getAbsolutePosition()
         : Vector3.Zero()
+    // Mode Création (alignFront): measure in the parent's frame, where the local position is written. Legacy: world bounds, as before.
+    const parentNode = this.options.alignFront && glbRoot.parent instanceof TransformNode ? glbRoot.parent : null
+    const origin = parentNode ? Vector3.Zero() : worldOrigin
+    const measure = (): { min: Vector3; max: Vector3 } => (parentNode ? localBounds(glbRoot, parentNode) : glbRoot.getHierarchyBoundingVectors())
 
     glbRoot.computeWorldMatrix(true)
-    let bounds = glbRoot.getHierarchyBoundingVectors()
+    let bounds = measure()
     const height0 = bounds.max.y - bounds.min.y
 
     // (a/b) uniform scale by height — the most reliable anchor across the set.
@@ -363,7 +370,7 @@ export class DeviceSpawner {
     if (scale !== 1) {
       glbRoot.scaling.setAll(scale)
       glbRoot.computeWorldMatrix(true)
-      bounds = glbRoot.getHierarchyBoundingVectors()
+      bounds = measure()
     }
 
     // (e0) Task 43c: a declared front is turned onto +z (the acoustic axis at yaw 0) instead of following the port empties. Done through the
@@ -377,7 +384,7 @@ export class DeviceSpawner {
       const turn = Quaternion.RotationAxis(Vector3.Up(), yaw)
       glbRoot.rotationQuaternion = glbRoot.rotationQuaternion ? turn.multiply(glbRoot.rotationQuaternion) : turn.multiply(Quaternion.FromEulerAngles(glbRoot.rotation.x, glbRoot.rotation.y, glbRoot.rotation.z))
       glbRoot.computeWorldMatrix(true)
-      bounds = glbRoot.getHierarchyBoundingVectors()
+      bounds = measure()
     }
 
     // (e) orientation: if the port empties sit on +Z, spin 180° so I/O faces −Z.
@@ -390,12 +397,12 @@ export class DeviceSpawner {
         `[assets] ${deviceId}: ${empties.length} empties port_* trouvés — ${empties.map((n) => n.name).join(', ')}`
       )
       let meanZ = 0
-      for (const n of empties) meanZ += n.getAbsolutePosition().z - origin.z
+      for (const n of empties) meanZ += n.getAbsolutePosition().z - worldOrigin.z
       meanZ /= empties.length
       if (meanZ > 0 && !front) {
         glbRoot.rotation.y += Math.PI
         glbRoot.computeWorldMatrix(true)
-        bounds = glbRoot.getHierarchyBoundingVectors()
+        bounds = measure()
       }
     }
 
@@ -434,7 +441,8 @@ export class DeviceSpawner {
     instanceId: string,
     glbRoot: AbstractMesh,
     portMarkers: Map<string, Mesh>,
-    useEmpties = true
+    useEmpties = true,
+    rear: RearFace | null = null
   ): void {
     if (device.ports.length === 0) return
     const root = glbRoot.parent as TransformNode
@@ -450,6 +458,13 @@ export class DeviceSpawner {
     }
 
     const slots = this.grid(device.ports.length, w, h, d)
+    // Corrected device: the markers sit on the rear face of the turned model itself (its own bounds), not on the catalog box.
+    if (rear) {
+      const spots = rearGrid(device.ports.length, rear, THEMED_LABELS.pitchX, THEMED_LABELS.pitchY)
+      spots.forEach((v, i) => (slots[i].local = v))
+    }
+    // Mode Création: an empty's position is taken in the instance root's frame (the legacy world difference is only right for an unturned root).
+    const inverseRoot = this.options.alignFront ? Matrix.Invert(root.computeWorldMatrix(true)) : null
     const rootOrigin =
       glbRoot.parent instanceof TransformNode
         ? (glbRoot.parent as TransformNode).getAbsolutePosition()
@@ -460,7 +475,7 @@ export class DeviceSpawner {
       let local = slots[i].local
       if (empty) {
         empty.computeWorldMatrix(true)
-        local = empty.getAbsolutePosition().subtract(rootOrigin)
+        local = inverseRoot ? Vector3.TransformCoordinates(empty.getAbsolutePosition(), inverseRoot) : empty.getAbsolutePosition().subtract(rootOrigin)
       }
       const marker = portMarkers.get(port.portId)
       if (marker) {

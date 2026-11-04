@@ -51,7 +51,7 @@ import { designFromRoomGear, unavailableList } from './templateGear'
 import { loadTemplates, templateToDesign } from './templates'
 import { mountNotes } from './shell/notes'
 import { bodyCentreOf } from './debug'
-import { debugBodyCenter, debugBodyEnds } from '../scene/debugBody'
+import { debugBodyCenter, debugBodyCentreInRoot, debugBodyEnds } from '../scene/debugBody'
 import { cableKey } from './sceneDiff'
 import { attachCanvasHover, attachCanvasPicking, createSelection, pickDevice } from './selection'
 import { floorPointAt } from '../scene/pivotPick'
@@ -2217,6 +2217,10 @@ export async function bootCreation(): Promise<void> {
     audioPeaks: () => listen?.readPeaks() ?? { voices: {}, output: 0 },
     audioStats: () => JSON.parse(JSON.stringify(audioStats)) as typeof audioStats,
     modelFront: (id) => host.instance(id)?.frontWorld() ?? null,
+    bodyCentreInRoot: (id) => {
+      const inst = host.instance(id)
+      return inst ? debugBodyCentreInRoot(inst) : null
+    },
     bodyEnds: (id) => {
       const inst = host.instance(id)
       return inst ? debugBodyEnds(inst) : null

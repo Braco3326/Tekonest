@@ -158,7 +158,7 @@
       ],
       "modelFront": {
         "axis": "+z",
-        "evidence": "Measured on public/assets/qsc-k12-2.glb (Task 43c, L34): the +z face is the flat grille plate (a 4-triangle plane over 12.5 x 23.2 in at z = 0) and the cabinet is widest there (14 in, the catalog width) while the -z end is narrow (6.6 in) and carries the recessed amplifier panel, and the handles; a 12 in woofer cannot sit on the 6.6 in end. Its port_* empties sit on the grille face (z = +0.023), so the spawner ignores them for this device."
+        "evidence": "Measured on public/assets/qsc-k12-2.glb (Task 43c, L34): the +z face is the grille plate (a 4-triangle quad over 12.5 x 23.2 in, z in [-1.64, 0] in, the face of the max-z end) and the cabinet is widest there (14 in, the catalog width) while the -z end is narrow (6.6 in) and carries the recessed amplifier panel, and the handles; a 12 in woofer cannot sit on the 6.6 in end. Its port_* empties sit on the grille face (z = +0.023), so the spawner ignores them for this device."
       },
       "acoustic": {
         "coverage_h_deg": { "value": 75, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.coverage « 75° nominal, axisymmetric »", "retrieved": "2026-10-22" } },
