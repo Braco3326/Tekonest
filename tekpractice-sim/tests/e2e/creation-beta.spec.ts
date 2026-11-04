@@ -228,6 +228,42 @@ test('night wave 1 review 8: when the sheets load empty and the Bêta tab goes, 
   expect(await page.evaluate(() => document.activeElement?.getAttribute('role'))).toBe('tab')
 })
 
+test('final fix N9: with an empty filter result and focus on « Effacer le filtre », the sheets arriving keep the focus on the (new) clear button', async ({ page }) => {
+  const net = await stallProposals(page, 60_000)
+  await boot(page)
+  await open(page)
+  await page.getByTestId('inventory-filter').fill('zzzz')
+  const clear = page.getByTestId('inventory-filter-clear')
+  await expect(clear).toBeVisible()
+  await clear.focus()
+  await clear.evaluate((e) => ((e as HTMLElement & { __old?: boolean }).__old = true))
+  await net.release()
+  // the Bêta tab is listed from the start (as « Chargement… »), so it is no sign of the arrival: the redraw is: the clear button becomes a NEW node
+  await expect.poll(() => clear.evaluate((e) => (e as HTMLElement & { __old?: boolean }).__old === true), 'the panel was redrawn when the sheets arrived').toBe(false)
+  await expect(clear).toBeFocused() // and the new button has the focus
+  expect(await page.evaluate(() => document.activeElement?.getAttribute('data-testid'))).toBe('inventory-filter-clear')
+})
+
+test('final fix N10: no axe violation on the Bêta tab while the sheets load (« Chargement… ») and when they cannot be fetched (unavailable)', async ({ page }) => {
+  const net = await stallProposals(page, 60_000)
+  await boot(page)
+  await open(page)
+  await betaTab(page).click()
+  await expect(betaStatus(page)).toHaveText(LOADING)
+  const loading = await new AxeBuilder({ page }).include('[data-testid="inventory-drawer"]').analyze()
+  expect(loading.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(' | ')}`), 'loading').toEqual([])
+  await net.release()
+  await page.unroute('**/proposalsSource*')
+  await page.route('**/proposalsSource*', (r) => r.abort())
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  await open(page)
+  await betaTab(page).click()
+  await expect(betaStatus(page)).toHaveAttribute('data-state', 'unavailable')
+  const unavailable = await new AxeBuilder({ page }).include('[data-testid="inventory-drawer"]').analyze()
+  expect(unavailable.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(' | ')}`), 'unavailable').toEqual([])
+})
+
 test('wave 1c R1: when the sheets load empty and the Bêta tab goes, focus that is in the filter field stays there', async ({ page }) => {
   await page.addInitScript(() => {
     ;(window as unknown as { __creationBetaTimeoutMs: number }).__creationBetaTimeoutMs = 60_000

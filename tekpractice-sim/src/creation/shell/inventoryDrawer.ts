@@ -468,8 +468,14 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
         tab: tabs.find((t) => t.btn === active)?.tab,
         item: active && panel.contains(active) ? active.dataset.deviceId : undefined,
         inside: !!active && root.contains(active),
+        // « Effacer le filtre » (final fix N9): the empty-result help is redrawn with a NEW button; the focus goes to it, not to a tab
+        clear: active?.dataset.testid === 'inventory-filter-clear',
       }
       const restore = (): void => {
+        if (had.clear) {
+          const again = panel.querySelector<HTMLElement>('[data-testid="inventory-filter-clear"]')
+          if (again) return again.focus()
+        }
         if (had.item) {
           const again = [...panel.querySelectorAll<HTMLElement>('[data-device-id]')].find((e) => e.dataset.deviceId === had.item)
           if (again) return again.focus()
@@ -488,7 +494,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       items = inv.items
       if (selected !== null && (selected === 'beta' || filter.value.trim() !== '')) {
         renderItems(selected)
-        if (had.item || (had.inside && !root.contains(doc.activeElement))) restore()
+        if (had.item || had.clear || (had.inside && !root.contains(doc.activeElement))) restore()
       }
     },
     close(opts) {
