@@ -63,6 +63,7 @@ import { findBlender, redact, requireMeshyKey } from './env'
 import { blankBands } from './blank'
 import { normaliseLook } from './look'
 import { renderProjection } from './projection'
+import { orientSlab } from './slab'
 import type { Projection, ProjectionFace } from './projection'
 import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, runGates, DATA_TEXTURE_MAX_PX, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
 import type { GateResult } from './gates'
@@ -158,6 +159,8 @@ export interface BuildOpts {
   maxAttempts: number
   /** A hand-made raw GLB: no Meshy, one attempt. */
   rawGlb?: string
+  /** With rawGlb: the model is a thin Meshy panel (CLI --slab): its thin axis becomes the depth and the spec's depth proportion is restored before the fix-up. */
+  slab?: boolean
   /** With rawGlb or projectFrom: the id of the Meshy task the GLB was downloaded from by hand (CLI --meshy-task); the manifest then records Meshy provenance. */
   rawTaskId?: string
   /**
@@ -475,7 +478,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
         }
         await d.runBuilder(spec, rawPath, projection)
       } else if (rawBytes) {
-        raw = rawBytes
+        raw = opts.slab ? await orientSlab(rawBytes, spec.realSizeMm) : rawBytes
         if (opts.rawTaskId) attempt.taskId = opts.rawTaskId
       } else {
         const taskId = await d.meshy.createMultiImageTask(photos.map((ph) => ph.dataUri), { targetPolycount: targetPolycount(spec), topology: 'triangle' })
@@ -674,6 +677,7 @@ const USAGE = [
   '  --ship        also write public/assets/<id>.glb and the manifest entry (needs --logos-removed)',
   '  --logos-removed  you checked the textures: no brand logos (recorded as logosRemoved: true)',
   '  --raw         use a hand-made raw GLB: no Meshy call, one attempt',
+  '  --slab        with --raw: the GLB is a thin Meshy panel: turn its thin axis into the depth and restore the spec depth proportion before the fix-up',
   '  --meshy-task  with --raw: the id of the Meshy task the GLB was downloaded from; the manifest records Meshy provenance',
   '  --ship-run    ship the final.glb of an earlier passing run (re-gated) without building again: no Meshy call, no fix-up',
   '  --scripted    build the raw GLB with our own Blender builder from the spec build block: no Meshy, no spending, one attempt; --ship needs no --logos-removed',
@@ -712,6 +716,7 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
     else if (a === '--flip') opts.flipUpright = true
     else if (a === '--pilot') pilot = true
     else if (a === '--scripted') opts.scripted = true
+    else if (a === '--slab') opts.slab = true
     else if (a === '--project') {
       const v = argv[++i]
       if (!v || v.startsWith('--')) return bad('--project needs the fixed-up Meshy .glb whose picture is projected (an earlier run\'s attempt-1.fixed.glb)')
@@ -746,6 +751,7 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
   }
   if (pilot && (id !== undefined || opts.rawGlb)) return bad('--pilot takes no id and no --raw')
   if (opts.rawTaskId && !opts.rawGlb && !opts.projectFrom) return bad('--meshy-task goes with --raw or --project: it names the Meshy task the GLB came from')
+  if (opts.slab && !opts.rawGlb) return bad('--slab goes with --raw: it orients the thin Meshy panel in the GLB you give')
   if (opts.projectFrom && !opts.scripted) return bad('--project goes with --scripted: the picture is mapped onto a scripted shape')
   if (shipRunDir !== undefined) {
     // Shipping a finished run builds nothing: every flag that shapes a build is meaningless and would be silently ignored.

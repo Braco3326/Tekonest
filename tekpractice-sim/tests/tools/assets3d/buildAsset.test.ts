@@ -578,6 +578,26 @@ describe('buildAsset', () => {
     expect(entry).toMatchObject({ tool: 'meshy', toolVersion: 'meshy-7.1', taskId: 'task-abc', photos: ['a.png'] })
   })
 
+  it('--raw with slab turns a thin Meshy panel upright before the fix-up sees it (thin axis to depth, spec depth proportion)', async () => {
+    const spec = deviceSpec() // 100 x 50 x 200 mm
+    const rawPath = join(root, 'slab.glb')
+    // a slab: x 0.30, y 0.02 (thin), z 0.10
+    await writeFile(rawPath, await makeBoxGlb({ sizeM: { w: 0.3, h: 0.02, d: 0.1 } }))
+    await buildAsset(spec.id, { maxAttempts: 1, rawGlb: rawPath, slab: true, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+    expect(calls.fixup).toHaveLength(1)
+    const r = await inspectGlb(calls.fixup[0].inBytes)
+    const e = r.bboxM.max.map((v, i) => +(v - r.bboxM.min[i]).toFixed(4))
+    expect(e).toEqual([0.3, 0.1, 0.6]) // x the largest, y the middle, z = 0.3 x 200 / 100
+  })
+
+  it('--raw without slab hands the fix-up the raw bytes untouched', async () => {
+    const spec = deviceSpec()
+    const rawPath = join(root, 'plain.glb')
+    await writeFile(rawPath, RAW_BYTES)
+    await buildAsset(spec.id, { maxAttempts: 1, rawGlb: rawPath, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], renderSheet: null }))
+    expect(calls.fixup[0].inBytes).toEqual(RAW_BYTES)
+  })
+
   it('--raw makes only one attempt even when it fails', async () => {
     const spec = deviceSpec()
     const rawPath = join(root, 'hand-made.glb')
