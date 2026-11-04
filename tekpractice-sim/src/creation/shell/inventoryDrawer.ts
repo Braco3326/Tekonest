@@ -190,6 +190,23 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   const panel = el(doc, 'div', 'cr-drawer-panel')
   panel.id = 'cr-inv-panel'
   panel.setAttribute('role', 'tabpanel')
+  // The Bêta status (night 2 wave 4, item 5; L36 open item 9): ONE live node, in the panel from the first build and never removed or replaced; only its text changes (loading,
+  // unavailable, empty, or nothing). A live region announces a change of text in a node that was already there: a node inserted with its text is not read by every screen reader.
+  const betaNote = el(doc, 'p', 'cr-drawer-beta-status')
+  betaNote.setAttribute('role', 'status')
+  betaNote.dataset.testid = 'inventory-beta-status'
+  betaNote.dataset.state = 'none'
+  panel.appendChild(betaNote)
+  const setBetaNote = (state: 'none' | 'loading' | 'unavailable' | 'empty'): void => {
+    const text = state === 'loading' ? I().betaLoading! : state === 'unavailable' ? I().betaUnavailable! : state === 'empty' ? I().empty! : ''
+    if (betaNote.dataset.state !== state) betaNote.dataset.state = state
+    if (betaNote.textContent !== text) betaNote.textContent = text
+  }
+  /** Empties the panel except the Bêta status node, then adds `nodes` after it. */
+  const resetPanel = (...nodes: Node[]): void => {
+    for (const c of [...panel.childNodes]) if (c !== betaNote) c.remove()
+    panel.append(...nodes)
+  }
   const hint = el(doc, 'p', 'cr-drawer-hint')
   // DOM order = Tab order: « Filtrer », the tabs, the devices, then « Fermer » (placed top right by the CSS).
   root.append(head, panel, hint, close)
@@ -284,7 +301,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   const matches = (): InventoryItem[] | null => (filter.value.trim() === '' ? null : filterItems(items, filter.value))
 
   const renderItems = (tab: InventoryTab): void => {
-    panel.replaceChildren()
+    resetPanel()
     const found = matches()
     // A filter on: one list of the matches of every tab, named for what it is; no match is said (status) and shown.
     if (found) {
@@ -306,6 +323,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
         })
         box.append(clear)
         panel.appendChild(box)
+        setBetaNote('none')
         return
       }
     } else {
@@ -317,14 +335,12 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     const mine = found ?? items.filter((it) => it.tab === tab)
     if (!mine.length) {
       // The « Bêta » tab says where its sheets are; no other tab is ever held up by them.
-      const status = tab === 'beta' && !found ? d.betaStatus() : 'ready'
-      if (status === 'ready') panel.appendChild(el(doc, 'p', 'cr-drawer-empty', I().empty))
-      else {
-        const p = el(doc, 'p', 'cr-drawer-empty', status === 'loading' ? I().betaLoading : I().betaUnavailable)
-        p.dataset.testid = 'inventory-beta-status'
-        p.dataset.state = status
-        p.setAttribute('role', 'status')
-        panel.appendChild(p)
+      if (tab === 'beta' && !found) {
+        const status = d.betaStatus()
+        setBetaNote(status === 'ready' ? 'empty' : status) // the same node, only its text (once per render: no empty text in between, so a repeat is not read again)
+      } else {
+        panel.appendChild(el(doc, 'p', 'cr-drawer-empty', I().empty))
+        setBetaNote('none')
       }
       return
     }
@@ -367,6 +383,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       list.appendChild(li)
     }
     panel.appendChild(list)
+    setBetaNote('none')
     // A list that scrolls keeps its vertical touch pan (the CSS); one that does not can give the whole item to a drag.
     panel.dataset.scrolls = String(panel.scrollHeight > panel.clientHeight + 1)
   }
@@ -396,7 +413,8 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     if (tab === undefined) {
       panel.removeAttribute('aria-labelledby')
       panel.removeAttribute('aria-label')
-      panel.replaceChildren(el(doc, 'p', 'cr-drawer-empty', I().empty))
+      setBetaNote('none')
+      resetPanel(el(doc, 'p', 'cr-drawer-empty', I().empty))
       return
     }
     showTab(tab, false)

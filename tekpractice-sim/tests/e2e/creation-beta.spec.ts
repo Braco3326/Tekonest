@@ -166,7 +166,7 @@ test('« Bêta » comes back on the next open once a stalled proposals file has 
   await open(page)
   await betaTab(page).click()
   await expect(page.getByTestId('inventory-badge').first()).toBeVisible()
-  await expect(betaStatus(page)).toHaveCount(0)
+  await expect(betaStatus(page)).toHaveText('')
 })
 
 test('night wave 1, item 6: the drawer opens at once while the Bêta request is stalled; « Bêta » says « Chargement… » alone, the other tabs work, and the tab fills in when the request settles', async ({ page }) => {
@@ -179,7 +179,7 @@ test('night wave 1, item 6: the drawer opens at once while the Bêta request is 
   // the other tabs are usable, with their items, right now
   await page.getByRole('tab', { name: 'Micros' }).click()
   await expect(page.getByRole('tabpanel').getByTestId('inventory-item').first()).toBeVisible()
-  await expect(betaStatus(page)).toHaveCount(0)
+  await expect(betaStatus(page)).toHaveText('')
   // only the Bêta tab is waiting
   await betaTab(page).click()
   await expect(betaStatus(page)).toHaveText(LOADING)
@@ -192,7 +192,7 @@ test('night wave 1, item 6: the drawer opens at once while the Bêta request is 
   await stamp('Consoles')
   await net.release()
   await expect(page.getByRole('tabpanel').getByTestId('inventory-item')).toHaveCount(proposals.length)
-  await expect(betaStatus(page)).toHaveCount(0)
+  await expect(betaStatus(page)).toHaveText('')
   await expect(betaTab(page)).toBeFocused()
   await expect(betaTab(page)).toHaveAttribute('aria-selected', 'true')
   for (const name of ['Micros', 'Consoles']) expect(await page.getByRole('tab', { name }).evaluate((e) => (e as HTMLElement & { __kept?: boolean }).__kept), `${name} tab button is the same node`).toBe(true)
@@ -255,8 +255,8 @@ test('final fix N10: no axe violation on the Bêta tab while the sheets load («
   await net.release()
   await page.unroute('**/proposalsSource*')
   await page.route('**/proposalsSource*', (r) => r.abort())
-  await page.reload()
-  await page.waitForFunction(() => !!window.__creation)
+  await waitForAutosave(page) // else the reload may find no saved place, show the picker, and the Space key opens no drawer (flaked 2 in 5 before this wait)
+  await reboot(page)
   await open(page)
   await betaTab(page).click()
   await expect(betaStatus(page)).toHaveAttribute('data-state', 'unavailable')
@@ -589,4 +589,66 @@ test('after a failed reload, starting something else sets the held project aside
   await page.evaluate((p) => window.__creation!.choosePlace(p), PLACE) // the learner starts a new project
   await page.waitForFunction((p) => window.__creation!.place() === p, PLACE)
   await expect.poll(() => page.evaluate(() => window.__creation!.quarantine().map((q) => q.raw))).toContain(raw)
+})
+
+// ── Night 2 wave 4, item 5 (L36 open item 9): ONE persistent role="status" node in the Bêta panel; only its text changes ─────────────────────────────
+// A live region announces a change of text in a node that was ALREADY in the page. The drawer used to insert a node already filled (« Chargement… »), which some screen readers
+// do not read. Now the node is there from the first build (empty), is never removed or replaced, and says loading / unavailable / nothing.
+const NOTE = '[data-testid="inventory-beta-status"]'
+/** Marks the node and counts the times it leaves the panel (removed, even to be put back). */
+const watchNote = (page: Page): Promise<void> =>
+  page.evaluate((sel) => {
+    const note = document.querySelector<HTMLElement>(sel)!
+    ;(note as HTMLElement & { __kept?: boolean }).__kept = true
+    const w = window as unknown as { __noteRemoved: number }
+    w.__noteRemoved = 0
+    new MutationObserver((records) => {
+      for (const r of records) for (const n of r.removedNodes) if (n === note) w.__noteRemoved++
+    }).observe(note.parentElement!, { childList: true })
+  }, NOTE)
+const noteState = (page: Page) =>
+  page.evaluate((sel) => {
+    const all = document.querySelectorAll<HTMLElement>(sel)
+    const n = all[0]
+    return { count: all.length, kept: (n as (HTMLElement & { __kept?: boolean }) | undefined)?.__kept === true, removed: (window as unknown as { __noteRemoved: number }).__noteRemoved, role: n?.getAttribute('role'), text: n?.textContent, inDrawer: !!n?.closest('[data-testid="inventory-drawer"]') }
+  }, NOTE)
+
+test('wave 4 item 5: the status node is in the drawer before its text changes, and is the same node for loading, then unavailable', async ({ page }) => {
+  const net = await stallProposals(page, 900)
+  await boot(page)
+  await open(page)
+  await expect(page.getByRole('tab').first()).toHaveText('Micros')
+  const first = await noteState(page)
+  expect(first.count, 'one status node exists on the Micros tab, before any Bêta text').toBe(1)
+  expect(first.role).toBe('status')
+  expect(first.text, 'and it is empty (nothing to say)').toBe('')
+  expect(first.inDrawer).toBe(true)
+  await watchNote(page)
+  await betaTab(page).click()
+  await expect(betaStatus(page)).toHaveText(LOADING)
+  await expect(betaStatus(page)).toHaveAttribute('data-state', 'loading')
+  await expect(betaStatus(page)).toHaveText(TAB_UNAVAILABLE) // the 900 ms pass: the same node changes its text
+  await expect(betaStatus(page)).toHaveAttribute('data-state', 'unavailable')
+  await page.getByRole('tab', { name: 'Micros' }).click()
+  await expect(betaStatus(page)).toHaveText('')
+  await expect(betaStatus(page)).toHaveAttribute('data-state', 'none')
+  const last = await noteState(page)
+  expect(last.count).toBe(1)
+  expect(last.kept, 'the very same element').toBe(true)
+  expect(last.removed, 'never removed from the panel').toBe(0)
+  await net.release()
+})
+
+test('wave 4 item 5: when the sheets arrive the same node goes quiet and the proposals are listed', async ({ page }) => {
+  const net = await stallProposals(page, 60_000)
+  await boot(page)
+  await open(page)
+  await watchNote(page)
+  await betaTab(page).click()
+  await expect(betaStatus(page)).toHaveText(LOADING)
+  await net.release()
+  await expect(page.getByRole('tabpanel').getByTestId('inventory-item')).toHaveCount(proposals.length)
+  await expect(betaStatus(page)).toHaveText('')
+  const s = await noteState(page)
+  expect(s).toMatchObject({ count: 1, kept: true, removed: 0, role: 'status' })
 })

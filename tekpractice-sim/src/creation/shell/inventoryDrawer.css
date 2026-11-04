@@ -143,6 +143,9 @@
 .cr-inv-text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .cr-inv-name { overflow-wrap: anywhere; }
 .cr-inv-badge { align-self: flex-start; padding: 0 4px; border: 1px solid var(--cr-ink-muted); color: var(--cr-ink-muted); font-size: 11px; line-height: 16px; }
+/* The Bêta status is always in the panel (a live region must exist before its text changes); with no text it takes no room. */
+.cr-drawer-beta-status { margin: 0; padding: 8px 0; color: var(--cr-ink-muted); overflow-wrap: anywhere; }
+.cr-drawer-beta-status:empty { padding: 0; }
 .cr-drawer-empty { margin: 0; padding: 8px 0; color: var(--cr-ink-muted); overflow-wrap: anywhere; }
 .cr-drawer-empty p { margin: 0 0 8px; }
 .cr .cr-drawer-clear { min-height: 28px; padding: 0 12px; border: 1px solid var(--cr-ink-muted); color: var(--cr-papier); transition: none; }
