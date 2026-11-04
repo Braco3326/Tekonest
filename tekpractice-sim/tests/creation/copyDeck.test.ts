@@ -45,6 +45,12 @@ describe('copy deck docs/copy/creation-mode.md mirrors COPY (Task 7)', () => {
     expect(deck).not.toMatch(/^## rule\s*$/m)
     expect(deck).not.toMatch(/`rule\.R[1-8]/)
   })
+  it('the console balance is feminine in French (la balance), in every shipped string and its agreement', () => {
+    for (const [section, entries] of Object.entries(COPY)) for (const [key, t] of Object.entries(entries)) expect(t, `${section}.${key}`).not.toMatch(/\ble balance\b/i)
+    expect(COPY.coverage.chipPopover).toContain('La balance de la console change l’équilibre affiché comme le son (elle baisse le côté opposé)')
+    expect(COPY.coverage.reasonBalance).toBe('la balance de la console coupe ces enceintes')
+    expect(COPY.listen.limitsMore).toContain('Le fader, le mute et la balance de la console agissent sur le son.')
+  })
   it('no shipped string is a placeholder', () => {
     for (const entries of Object.values(COPY)) for (const t of Object.values(entries)) expect(t).not.toContain('[À REMPLACER')
   })

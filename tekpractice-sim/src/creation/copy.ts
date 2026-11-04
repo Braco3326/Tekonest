@@ -457,7 +457,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     method: 'somme énergétique, champ direct',
     chip: 'estimation',
     chipName: 'Fidélité du calcul : estimation',
-    chipPopover: 'Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. Le balance de la console change l’équilibre affiché comme le son (il baisse le côté opposé) ; le fader master, commun à toutes les enceintes, ne change pas un niveau relatif ; le mute ou −inf retire les enceintes ; l’origine de l’enceinte est son point de pose.',
+    chipPopover: 'Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. La balance de la console change l’équilibre affiché comme le son (elle baisse le côté opposé) ; le fader master, commun à toutes les enceintes, ne change pas un niveau relatif ; le mute ou −inf retire les enceintes ; l’origine de l’enceinte est son point de pose.',
     legendTitle: 'Échelle',
     legendBin: '{from} à {to} dB',
     legendLast: '{from} dB et moins',
@@ -500,7 +500,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     reasonNotFedBare: 'aucune enceinte ne reçoit de signal',
     reasonMuted: 'la console est en mute',
     reasonSilent: 'le fader master est à −inf',
-    reasonBalance: 'le balance de la console coupe ces enceintes',
+    reasonBalance: 'la balance de la console coupe ces enceintes',
     reasonUnverified: 'appareil non vérifié (Bêta)',
     reasonNoAcoustic: 'enceinte sans données acoustiques',
     reasonUnpowered: 'enceinte hors tension',
@@ -547,7 +547,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Title of the closed `<details>` that holds the rest of the limits. */
     limitsTitle: 'Limites de la simulation',
     /** In the details, first: what acts on the sound, and what the volume does (the second half of the former « simple »). */
-    limitsMore: 'Le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Pas de diaphonie (fuite d’un canal dans l’autre).',
+    limitsMore: 'Le fader, le mute et la balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Pas de diaphonie (fuite d’un canal dans l’autre).',
     /** In the details, second: the limits of the numbers and of the ears. */
     limits: 'Le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle). L’origine d’une enceinte est son point de pose. Déplacer l’auditeur fait glisser le retard et peut faire varier la hauteur du son ; ce n’est pas un effet Doppler simulé. Il n’y a pas de vumètre de console, seulement un niveau par enceinte. On écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur) ou la caméra de marche, qui écoute à sa place pendant la marche.',
     volume: 'Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin.',

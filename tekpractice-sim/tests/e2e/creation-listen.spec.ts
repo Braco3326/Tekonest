@@ -666,7 +666,7 @@ test('(t) the console BALANCE changes the sound and the coverage alike: G100 sil
   // the limits are said where the learner reads: the block carries every limit the ADR announces
   await expect(page.getByTestId('listen-limits')).toContainText('la moyenne de ses deux côtés')
   await expect(page.getByTestId('listen-limits')).toContainText('« Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur)')
-  await expect(page.getByTestId('listen-limits-more')).toContainText('Le fader, le mute et le balance de la console agissent sur le son')
+  await expect(page.getByTestId('listen-limits-more')).toContainText('Le fader, le mute et la balance de la console agissent sur le son')
   await choose(page, 'Stop')
   await waitStopped(page)
 })

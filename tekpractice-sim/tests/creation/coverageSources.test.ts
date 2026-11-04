@@ -114,7 +114,7 @@ describe('coverageSources: the speakers that make sound', () => {
     const path = pathOf(d)
     const r = coverageSourcesDetail(d, registry, path)
     expect(r.sources).toEqual([])
-    expect(noSourceMessage(path, r.excluded)).toBe('Aucune enceinte audible : le balance de la console coupe ces enceintes.')
+    expect(noSourceMessage(path, r.excluded)).toBe('Aucune enceinte audible : la balance de la console coupe ces enceintes.')
   })
   it('an unpowered speaker is not fed by the path, so it is not a source (the other one is)', () => {
     const d = rig({ power: { 'k12-d': false } })
