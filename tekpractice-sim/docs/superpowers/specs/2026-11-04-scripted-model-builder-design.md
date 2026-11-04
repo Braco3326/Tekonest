@@ -71,7 +71,7 @@ Runs as `blender --background --python build_from_spec.py -- --spec <file> --out
   - `cylinder-plug` (XLR3-F): 19.2 mm shell, 15.75 mm front section, three pin holes, length from `realSizeMm`. The latch lug stays out of the bounding box (spec note).
   - `trs-plug`: 6.35 mm tip/ring/sleeve plug with a sleeve and handle, from the spec size.
   - `rj45-plug`: body with latch, contact face with eight slots.
-  - `rack-box`: width x height x depth box with a recessed front/back panel and optional rack-ear flanges; ear size only if the sources give it, otherwise a plain box (see open items).
+  - `rack-box`: width x height x depth box with chamfered edges. No panel inset and no ear flanges in wave 1: ports are placed on the bounding-box face, so an inset would leave them floating until the per-port surface gate exists (2026-10-29 spec 4.5); ears and inset come with that gate.
 
 ### 4.4 Pipeline hook
 
