@@ -21,7 +21,7 @@ const placeTwo = async (page: Page): Promise<void> => {
 }
 const design = (page: Page) => page.evaluate(() => window.__creation!.design())
 
-test('2 devices → 1.2 s → reload: both back with the same ids and poses, no picker', async ({ page }) => {
+test('2 devices → autosave written → reload: both back with the same ids and poses, no picker', async ({ page }) => {
   await boot(page)
   await placeTwo(page)
   const before = await design(page)

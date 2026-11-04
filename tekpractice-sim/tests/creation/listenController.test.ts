@@ -69,7 +69,7 @@ class FakeEngine implements EngineLike {
   }
 }
 
-function make(opts: { deferEngine?: boolean; engineFails?: boolean; powered?: boolean; configure?: (e: FakeEngine) => void } = {}) {
+function make(opts: { deferEngine?: boolean; engineFails?: boolean; powered?: boolean; listenFrom?: () => string; configure?: (e: FakeEngine) => void } = {}) {
   const t = Template.parse(JSON.parse(readFileSync('content/templates/concert-simple-reference.json', 'utf8')))
   const store = new CreationStore(registry, creationEvaluator(registry), templateToDesign(t))
   const dispatch = (i: Parameters<CreationStore['dispatch']>[0]): void => void expect(store.dispatch(i).ok).toBe(true)
@@ -103,6 +103,7 @@ function make(opts: { deferEngine?: boolean; engineFails?: boolean; powered?: bo
     design: () => store.design(),
     path: () => st.path,
     listener: () => st.listener,
+    listenFrom: opts.listenFrom,
     hold: (name) => {
       leases.held++
       leases.taken++
@@ -657,5 +658,27 @@ describe('review round 1: the context is made in the click, handed in, and never
     h.flushTimers()
     await flush()
     expect(h.contexts[0].closeCalls).toBe(1) // the click's context was closed with the engine
+  })
+})
+
+describe('night wave 2 (G): « Écoute depuis : … » says where the sound is heard from', () => {
+  it('the view carries the line with the name the shell gives; no name, no line (and no dependency, no line)', () => {
+    let from = 'Régie'
+    const a = make({ listenFrom: () => from })
+    expect(a.c.view().from).toBe('Écoute depuis : Régie.')
+    from = 'Ici'
+    expect(a.c.view().from).toBe('Écoute depuis : Ici.')
+    from = ''
+    expect(a.c.view().from).toBe('')
+    expect(make().c.view().from).toBe('')
+  })
+  it('the panel is told again when the shell asks for a refresh while stopped (a point chosen, the walk toggled)', () => {
+    let from = 'Régie'
+    const a = make({ listenFrom: () => from })
+    const n = a.views.length
+    from = 'Premier rang'
+    a.c.refresh()
+    expect(a.views.length).toBe(n + 1)
+    expect(a.views[a.views.length - 1].from).toBe('Écoute depuis : Premier rang.')
   })
 })

@@ -6,7 +6,7 @@
  * The legacy `TOKENS` (src/design/tokens.ts, `--tk-*`) and its look are untouched.
  *
  * Contrast (WCAG 2.1, tested in tests/creation/creationTokens.test.ts):
- * Papier/Nuit 16.1, Papier/panel 15.2, inkMuted/panel ≥ 4.5, Ambre/Nuit 7.5.
+ * Papier/Nuit 16.1, Papier/panel 14.95, inkMuted/panel ≥ 4.5, Ambre/Nuit 7.5.
  */
 export const CREATION_TOKENS = {
   color: {

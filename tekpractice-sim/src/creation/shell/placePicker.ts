@@ -159,7 +159,16 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
     })
     box.addEventListener('keydown', (e) => onGridKey(e, g))
     grids.push(g)
-    scroll.append(heading, box)
+    if (id === 'templates') {
+      // The pitch shares the heading's line when it fits and goes under it when it does not (a flex row that wraps): the row is as tall as the bare heading, so the place grid below does not move.
+      const pitch = el(doc, 'p', 'cr-pick-pitch', P().templatesPitch)
+      pitch.id = 'cr-pick-templates-pitch'
+      pitch.dataset.testid = 'template-pitch'
+      const rowHead = el(doc, 'div', 'cr-pick-rowhead')
+      rowHead.append(heading, pitch)
+      box.setAttribute('aria-describedby', `${hint.id} ${pitch.id}`) // wave 2c: the pitch describes the template grid, as the hint describes both
+      scroll.append(rowHead, box)
+    } else scroll.append(heading, box)
     return g
   }
   if (d.templates.length) makeGrid('templates', P().templates!, d.templates, 'template-grid')

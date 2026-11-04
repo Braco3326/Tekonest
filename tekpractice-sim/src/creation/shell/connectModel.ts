@@ -123,6 +123,8 @@ export interface ConnectSessionDeps {
   from: PortRef
   /** « Appareil (id) · prise », for the history entry and the announcement. */
   portName(ref: PortRef): string
+  /** What is announced (a Bêta device says « non vérifié »); the history entry keeps the plain `portName`. Defaults to `portName`. */
+  spokenName?(ref: PortRef): string
   rejectionText: RejectionText
   /** Called just before the intent (the shell closes a stepper burst still open). */
   beforeDispatch?(): void
@@ -207,6 +209,7 @@ export class ConnectSession {
     if (!present.has(this.from.instance) || !present.has(to.instance)) return ignored
     const a = this.d.portName(this.from)
     const b = this.d.portName(to)
+    const say = this.d.spokenName ?? this.d.portName
     this.d.beforeDispatch?.()
     this.dispatching = true
     let r: ReturnType<History['do']>
@@ -217,7 +220,7 @@ export class ConnectSession {
     }
     if (r.ok) {
       this.spent = true
-      return { kind: 'connected', from: this.from, to: { instance: to.instance, port: to.port }, a, b }
+      return { kind: 'connected', from: this.from, to: { instance: to.instance, port: to.port }, a: say(this.from), b: say(to) }
     }
     return { kind: 'refused', message: this.d.rejectionText(r.error, r.subjects).title }
   }

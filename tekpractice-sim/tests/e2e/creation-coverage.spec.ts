@@ -85,8 +85,10 @@ test('(a) Écoute › Couverture: off by default, then the dots, ≤ 20 000 poin
   expect(p.x).toBeGreaterThanOrEqual(v.x + v.width - 1) // right of the viewport: it never overlays the 3D view
   await expect(page.getByTestId('coverage-unit')).toHaveText('dB relatif (0 = point le plus fort)')
   await expect(page.getByTestId('coverage-method')).toHaveText('somme énergétique, champ direct')
-  await expect(page.getByTestId('coverage-source')).toHaveText('Couverture : données KB (V déduit)')
+  await expect(page.getByTestId('coverage-source')).toHaveText('Couverture : base de connaissances (verticale déduite)')
   await expect(page.getByTestId('coverage-hatched')).toContainText('Hachuré : interférences non modélisées')
+  // night wave 2c (C2): all four are on screen without opening « À propos du calcul » (toHaveText also passes on a folded element)
+  for (const id of ['coverage-unit', 'coverage-method', 'coverage-source', 'coverage-hatched']) await expect(page.getByTestId(id), id).toBeVisible()
   await expect(page.getByTestId('coverage-legend').locator('li')).toHaveCount(8)
   await expect(page.getByTestId('coverage-legend').locator('li').first()).toContainText('0 à −3 dB')
   await expect(page.getByTestId('coverage-legend').locator('li').last()).toContainText('−21 dB et moins')
@@ -110,12 +112,13 @@ test('(a) Écoute › Couverture: off by default, then the dots, ≤ 20 000 poin
   expect(text).not.toContain('spl')
 })
 
-test('(b) the fidelity chip « relatif » opens an explanation; Échap closes it and gives the focus back', async ({ page }) => {
+test('(b) the fidelity chip « estimation » opens an explanation; Échap closes it and gives the focus back', async ({ page }) => {
   await boot(page)
   await toggleCoverage(page)
   await waitReady(page)
   const chip = page.getByTestId('coverage-chip')
-  await expect(chip).toHaveText('relatif')
+  await expect(chip).toHaveText('estimation')
+  await expect(chip).toHaveAttribute('aria-label', 'Fidélité du calcul : estimation') // WCAG 2.5.3: the visible word is in the name
   await expect(chip).toHaveAttribute('aria-expanded', 'false')
   await expect(page.getByTestId('coverage-popover')).toBeHidden()
   await chip.focus()
@@ -436,7 +439,7 @@ test('(l) folding Propriétés hides the dots, the hatched dots and the aim line
   await page.getByRole('menuitem', { name: 'Écoute' }).click()
   await expect(coverageItem(page)).toHaveAttribute('aria-checked', 'true')
   await page.keyboard.press('Escape')
-  await expect(page.getByRole('status')).toHaveText('Couverture masquée : Propriétés est replié.')
+  await expect(page.getByRole('status')).toHaveText('Couverture masquée : le panneau Propriétés est replié. Dépliez-le pour la revoir.')
   // a click over where a dot is does not pin while the legend is out of sight
   const at = await freeDot(page)
   await page.mouse.click(at.x, at.y)

@@ -63,7 +63,10 @@ describe('honesty: the copy says what the coverage is', () => {
   it('the unit and the method are the exact brief wording, as their own keys', () => {
     expect(COPY.coverage!.unit).toBe('dB relatif (0 = point le plus fort)')
     expect(COPY.coverage!.method).toBe('somme énergétique, champ direct')
-    expect(COPY.coverage!.chip).toBe('relatif')
+  })
+  it('the fidelity chip reads « estimation » (a deliberate change since night wave 2, the brief §5 said « relatif »: see the dated note there; the founder is to confirm), and its accessible name contains that word', () => {
+    expect(COPY.coverage!.chip).toBe('estimation')
+    expect(COPY.coverage!.chipName).toContain(COPY.coverage!.chip)
   })
   it('never labels a coverage level as an SPL, except the guarded estimate line', () => {
     for (const [k, t] of Object.entries(COPY.coverage!)) if (/\bSPL\b/.test(t)) expect(['splPending'], `coverage.${k}`).toContain(k)

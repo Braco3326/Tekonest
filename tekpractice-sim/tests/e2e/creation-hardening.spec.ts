@@ -11,7 +11,7 @@ import { readFileSync } from 'node:fs'
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import { cableKey } from '../../src/creation/sceneDiff'
-import { SETTLE_SAMPLE_MS } from './waits'
+import { SETTLE_SAMPLE_MS, quietWindow } from './waits'
 
 test.use({ viewport: { width: 1366, height: 768 } })
 
@@ -150,6 +150,59 @@ test('item 1: a Bêta device\'s port and cable say « non vérifié » on hover;
   await expect(hoverLabel(page)).not.toContainText(MARK)
 })
 
+test('item 1 (review): the status bar names a selected Bêta device « non vérifié » (the 3D view has no cue); the Connexions line and the « Débrancher » bubble name it too', async ({ page }) => {
+  await boot(page)
+  const amp = await addBetaAmp(page)
+  await selectDevice(page, amp)
+  await expect(page.getByTestId('status-selection')).toContainText(`(${amp}) · ${MARK}`)
+  await expect(page.getByTestId('signal-extra')).toContainText('1 appareil non vérifié')
+  // the other end of the cable, seen from the console: the amp is named with the mark, visibly
+  await selectDevice(page, 'ql1')
+  await expect(page.getByTestId('status-selection')).not.toContainText(MARK)
+  await expect(page.locator('[data-key="port:out-main-l"] .cr-port-other')).toContainText(`(${amp}) · ${MARK} · ${AMP_XLR.portId}`)
+  await expect(page.locator('[data-key="unplug:out-main-l"]')).toHaveAccessibleName(new RegExp(`${MARK}`))
+  // the bubble offered on the cabled console output names the amp at the other end
+  await clickPort(page, QL_OUT)
+  await expect(page.getByTestId('port-offer')).toContainText(MARK)
+  await expect(page.getByTestId('port-unplug')).toHaveAccessibleName(new RegExp(MARK))
+})
+
+test('wave 1c R3: connecting the Bêta amp through « Connecter à… » announces the amp with « non vérifié »', async ({ page }) => {
+  await boot(page)
+  const amp = await addBetaAmp(page)
+  await page.evaluate(([a, p]) => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: a, port: p } }), [amp, AMP_XLR.portId] as const)
+  await selectDevice(page, 'ql1')
+  await page.locator('[data-key="connect:out-main-l"]').focus()
+  await page.keyboard.press('Enter')
+  const dialog = page.getByTestId('cr-connect-dialog')
+  await expect(dialog).toBeVisible()
+  await page.getByTestId('connect-filter').fill(amp)
+  await expect(dialog.getByRole('option').first()).toBeVisible()
+  await page.keyboard.press('Enter')
+  await expect(dialog).toBeHidden()
+  await expect(statusMsg(page)).toContainText(`(${amp}) · ${MARK}`)
+  expect(await page.evaluate(() => window.__creation!.design().rig.connections.length)).toBeGreaterThan(0)
+})
+
+// R4: finding 13, the refused-open branch
+test('wave 1c R4: the pinned refusal is cleared when the drawer opens, not when the open is asked: a chunk that resolves after the picker opened leaves it', async ({ page }) => {
+  await boot(page)
+  await pinRefusal(page)
+  const held: Array<() => Promise<void>> = []
+  await page.route('**/*inventoryDrawer*', (r) => void held.push(() => r.continue()))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Space')
+  await expect.poll(() => held.length).toBeGreaterThan(0) // the open is asked and waiting for its chunk
+  await expect(page.getByTestId('port-error')).toBeVisible() // asked is not opened
+  await page.getByRole('menuitem', { name: 'Lieu' }).click()
+  await page.getByRole('menuitem', { name: 'Choisir un lieu…' }).click()
+  await expect(page.getByTestId('place-picker')).toBeVisible()
+  await Promise.all(held.splice(0).map((f) => f()))
+  await quietWindow(page, 600) // the chunk has arrived and nothing may open
+  await expect(page.getByTestId('inventory-drawer')).toBeHidden()
+  await expect(page.getByTestId('port-error')).toBeVisible() // the open was refused: the refusal was not read
+})
+
 // ── Item 2 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 test('item 2: Échap closes the hover label of a port with the pointer where it is, and leaves the cable in hand alone; the next Échap drops the cable', async ({ page }) => {
@@ -283,6 +336,15 @@ test('item 4 (1366 px): with Propriétés folded the legend is reachable from th
   expect(box.width).toBeGreaterThanOrEqual(24)
   expect(box.height).toBeGreaterThanOrEqual(24)
   expect(await noHorizontalOverflow(page)).toBe(true)
+  // review finding 12: it states the disclosure it performs, and its keyboard ring keeps the Nuit halo
+  await expect(rail(page)).toHaveAttribute('aria-expanded', 'false')
+  await expect(rail(page)).toHaveAttribute('aria-controls', 'cr-props-body')
+  await expect(page.locator('#cr-props-body')).toHaveCount(1)
+  await page.keyboard.press('Shift')
+  await rail(page).focus()
+  const ring = await rail(page).evaluate((e) => ({ outline: getComputedStyle(e).outlineStyle, shadow: getComputedStyle(e).boxShadow }))
+  expect(ring.outline).toBe('solid')
+  expect(ring.shadow).toContain('rgb(19, 17, 20)') // Nuit #131114
   await rail(page).click()
   await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
   await expect(page.getByTestId('cable-legend-list')).toBeVisible()
@@ -365,7 +427,7 @@ test('item 5: a dialog with no compatible port opens with aria-expanded false', 
 
 // ── Item 7 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-const NO_MAINS = 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » du tiroir) et branchez-y les appareils.'
+const NO_MAINS = 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » de l’inventaire) et branchez-y les appareils.'
 const statusMsg = (page: Page) => page.locator('.cr-status-msg')
 const AUTOSAVE_KEY = 'audio-sim/creation.v1'
 

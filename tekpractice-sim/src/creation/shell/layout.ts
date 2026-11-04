@@ -171,9 +171,10 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   }
   for (const p of ['tree', 'props'] as const) btnOf[p].addEventListener('click', () => setPanel(p))
 
-  // A narrow window starts with Propriétés folded so the 3D view keeps ≥ 60 %.
+  // A narrow window starts with Propriétés folded so the 3D view keeps ≥ 60 %; a phone-sized one (< 760 px) folds Projet too (night wave 2, item A:
+  // at 400 px the 200 px tree left the view 168 px wide). Only the first state: a click, a menu item or a script wins afterwards.
   const win = doc.defaultView
-  setPanel('tree', true)
+  setPanel('tree', !(win && win.innerWidth < 760))
   setPanel('props', !(win && win.innerWidth < 1200))
 
   const liveMsg = createLiveText(statusMsg, (fn, ms) => (win ? win.setTimeout(fn, ms) : fn()))

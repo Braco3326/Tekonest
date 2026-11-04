@@ -43,25 +43,28 @@
   flex: none;
   display: flex;
   align-items: stretch;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* night wave 2 (F): one row, the tab row sits on the border above the list; the tabs scroll sideways when they do not fit */
   gap: 0 16px;
   padding: 0 96px 0 12px; /* room for « Fermer » */
   border-bottom: 1px solid var(--cr-panel-line);
 }
 .cr .cr-drawer-title {
+  flex: none;
   align-self: center;
   margin: 0;
   font: 600 15px/1 var(--cr-font-title);
   letter-spacing: 0.02em;
 }
-.cr-drawer-tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: wrap; }
+.cr-drawer-tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; }
 .cr .cr-drawer-tab, .cr .cr-drawer-close, .cr .cr-inv-item, .cr .cr-drawer-filter-input { transition: none; }
 /* the search field, above the tabs in reading order: a visible label and a bordered field (control edge 7.6:1, as the panel fields) */
-.cr-drawer-filter { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.cr-drawer-filter { display: flex; align-items: center; gap: 8px; margin: 4px 0; flex: 0 1 220px; min-width: 120px; }
 .cr .cr-drawer-filter-label { color: var(--cr-ink-muted); font: 500 13px/1 var(--cr-font-ui); }
 .cr .cr-drawer-filter-input {
   box-sizing: border-box;
-  width: 180px;
+  width: auto;
+  flex: 1 1 auto;
+  min-width: 0;
   height: 28px;
   padding: 0 6px;
   background: var(--cr-nuit);
@@ -72,6 +75,7 @@
 .cr .cr-drawer-filter-input:hover { border-color: var(--cr-papier); }
 .cr .cr-drawer-tab {
   position: relative;
+  flex: none;
   padding: 0 12px;
   min-height: 36px;
   color: var(--cr-ink-muted);
@@ -124,13 +128,16 @@
 .cr-inv-text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .cr-inv-name { overflow-wrap: anywhere; }
 .cr-inv-badge { align-self: flex-start; padding: 0 4px; border: 1px solid var(--cr-ink-muted); color: var(--cr-ink-muted); font-size: 11px; line-height: 16px; }
-.cr-drawer-empty { margin: 0; padding: 8px 0; color: var(--cr-ink-muted); }
+.cr-drawer-empty { margin: 0; padding: 8px 0; color: var(--cr-ink-muted); overflow-wrap: anywhere; }
+.cr-drawer-empty p { margin: 0 0 8px; }
+.cr .cr-drawer-clear { min-height: 28px; padding: 0 12px; border: 1px solid var(--cr-ink-muted); color: var(--cr-papier); transition: none; }
+.cr .cr-drawer-clear:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }
 
 /* the device picture (thumbnail): decorative, the same footprint as the silhouette's row */
-.cr-inv-thumb { flex: none; width: 36px; height: 36px; object-fit: contain; }
+.cr-inv-thumb { flex: none; width: 40px; height: 36px; object-fit: contain; }
 
 /* the device silhouette: outlined + dashed = the placeholder box, solid = the device has its own model */
-.cr-inv-icon { flex: none; width: 40px; height: 28px; }
+.cr-inv-icon { flex: none; width: 40px; height: 36px; } /* the picture's box (F): names stay on one column, and do not jump when an image fails and the silhouette takes its place */
 .cr-inv-icon-body { fill: none; stroke: var(--cr-ink-muted); stroke-width: 1.5; }
 .cr-inv-icon--placeholder .cr-inv-icon-body { stroke-dasharray: 3 2; }
 .cr-inv-icon--model .cr-inv-icon-body { fill: var(--cr-prune); stroke: var(--cr-papier); }
@@ -139,8 +146,26 @@
 
 .cr-drawer-hint { flex: none; margin: 0; padding: 4px 12px 6px; color: var(--cr-ink-muted); font-size: 12px; border-top: 1px solid var(--cr-panel-line); }
 
+/* The field's placeholder repeats its label, so it is invisible while the label shows and takes over when the label gives way (phones, below): same word, no new text. */
+.cr .cr-drawer-filter-input::placeholder { color: transparent; opacity: 1; }
+@media (max-width: 520px) {
+  /* a phone: the tab row needs the room (about 180 px instead of 135); the label is still the field's name (read, not seen) */
+  .cr .cr-drawer-filter-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .cr-drawer-head { gap: 0 8px; padding-right: 84px; }
+  .cr-drawer-filter { flex-basis: 100px; min-width: 80px; }
+  .cr .cr-drawer-filter-input::placeholder { color: var(--cr-ink-muted); }
+}
+
 /* narrow window: the title gives way to the tabs, the hint is dropped (the buttons are named) */
 @media (max-width: 720px) {
   .cr .cr-drawer-title { display: none; }
   .cr-drawer-hint { display: none; }
+}
+
+/* Touch (night wave 2, I): 44 px targets for the controls of the drawer; the items are already 52. */
+@media (pointer: coarse) {
+  .cr .cr-drawer-tab { min-height: 44px; }
+  .cr .cr-drawer-close { top: 0; right: 4px; min-height: 44px; }
+  .cr .cr-drawer-filter-input { height: 44px; font-size: 16px; }
+  .cr .cr-drawer-clear { min-height: 44px; }
 }

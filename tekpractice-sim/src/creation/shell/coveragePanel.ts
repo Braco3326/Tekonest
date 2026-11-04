@@ -6,7 +6,7 @@
  * DOM only, no scene, no timer, no render request. Fed by the controller with a plain `CoverageView` (coverageModel.ts); it never reads the rig
  * (C6: the shell dispatches intents only; here there is no intent at all, the pin is a view setting). Hidden entirely while the coverage is off.
  * Every control is a real button: named, `aria-expanded` where it opens something, a visible focus ring (2 px Ambre + 1 px Nuit, in the CSS), no
- * transition. The fidelity chip « relatif » opens a pop-over (Échap closes it and gives the focus back).
+ * transition. The fidelity chip « estimation » opens a pop-over (Échap closes it and gives the focus back).
  */
 import './coverage.css'
 import type { DisposableBag } from '../../util/disposable'
@@ -155,7 +155,16 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
   above.dataset.testid = 'coverage-probe-above'
   const spl = el(doc, 'p', 'cr-cov-note', L.splPending)
   spl.dataset.testid = 'coverage-spl'
-  ready.append(unit, method, legendTitle, legend, hatched, aim, source, speakersTitle, speakers, statsTitle, stats, pointsTitle, points, pinRow, hint, above, spl)
+  // Night wave 2, H: what the learner reads first is the status (above), the unit, the statistics, the scale and the points; the notes about the
+  // calculation (aim line, speakers, hints, remarks) are folded under a closed « À propos du calcul » (nothing removed, one click away).
+  const about = el(doc, 'details', 'cr-cov-about')
+  about.dataset.testid = 'coverage-about'
+  const aboutTitle = el(doc, 'summary', 'cr-cov-about-title', L.aboutTitle)
+  aboutTitle.dataset.testid = 'coverage-about-title'
+  about.append(aboutTitle, aim, speakersTitle, speakers, hint, above, spl)
+  // The method (« somme énergétique, champ direct ») and the source line (« valeur nominale », « base de connaissances »…) are NOT folded (night wave 2c, C2):
+  // the brief (§5) wants the legend to show the processing and the source, and a missing datum flagged. They follow the scale and its hatched line.
+  ready.append(unit, statsTitle, stats, legendTitle, legend, hatched, method, source, pointsTitle, points, pinRow, about)
   body.append(status, caveat, ready)
 
   root.append(head, pop, body)

@@ -18,7 +18,7 @@ import { bodyHeightOf, scaleForHeight } from '../../src/scene/modelBody'
 const draco3d = createRequire(import.meta.url)('draco3dgltf') as { createDecoderModule(): Promise<unknown> }
 const root = resolve(__dirname, '../..')
 const catalog = JSON.parse(readFileSync(resolve(root, 'content/catalog.json'), 'utf8')) as {
-  devices: { id: string; modelBody?: { baseFraction: number; evidence: string } }[]
+  devices: { id: string; modelBody?: { baseFraction: number; cabinetHeightM: number; evidence: string } }[]
 }
 
 /** Every vertex of the file in glTF model space (the nodes' own transforms applied), y up. */
@@ -75,6 +75,18 @@ describe('the 8030C cabinet starts where the catalog says (night wave 1, item 8)
     expect(dev.modelBody!.evidence.length, 'evidence: how it was measured').toBeGreaterThan(40)
   })
 
+  it('modelBody.cabinetHeightM is the height WITHOUT the Iso-Pod (285 mm), because the cut removes the stand from the measurement', () => {
+    const kb = JSON.parse(readFileSync(resolve(root, '../knowledge-base/equipment/studio-monitors.json'), 'utf8')) as {
+      devices: { id: string; key_specs: { dimensions: string } }[]
+    }
+    const dims = kb.devices.find((d) => d.id === 'genelec-8030c')!.key_specs.dimensions
+    expect(dims).toMatch(/285 mm without/) // the source of the number, read from the file
+    const dev = catalog.devices.find((d) => d.id === 'genelec-8030c')!
+    expect(dev.modelBody!.cabinetHeightM).toBe(0.285)
+    expect(dev.modelBody!.evidence).toContain('285 mm')
+    expect(dev.modelBody!.evidence).not.toContain('REAL_SIZE_M') // the legacy table (299 mm with Iso-Pod) is not the source of this number
+  })
+
   it('the other loudspeaker models are single cabinets: no device but the 8030C declares a stand', () => {
     expect(catalog.devices.filter((d) => d.modelBody !== undefined).map((d) => d.id)).toEqual(['genelec-8030c'])
   })
@@ -87,16 +99,17 @@ describe('bodyHeightOf / scaleForHeight', () => {
     expect(bodyHeightOf(0.5, 0)).toBe(0.5)
   })
   it('the uniform scale makes the cabinet the real height: without the stand a taller scale than the whole model would give', () => {
-    const whole = scaleForHeight(0.299, 0.55, undefined)
-    const body = scaleForHeight(0.299, 0.55, 0.285)
-    expect(whole).toBeCloseTo(0.299 / 0.55, 12)
-    expect(body).toBeCloseTo(0.299 / (0.55 * 0.715), 12)
+    // 0.285 m is the cabinet target here (cabinetHeightM); the stand share (baseFraction) is the third argument
+    const whole = scaleForHeight(0.285, 0.55, undefined)
+    const body = scaleForHeight(0.285, 0.55, 0.285)
+    expect(whole).toBeCloseTo(0.285 / 0.55, 12)
+    expect(body).toBeCloseTo(0.285 / (0.55 * 0.715), 12)
     expect(body).toBeGreaterThan(whole)
-    expect(0.55 * (1 - 0.285) * body).toBeCloseTo(0.299, 12) // the cabinet, in metres
+    expect(0.55 * (1 - 0.285) * body).toBeCloseTo(0.285, 12) // the cabinet, in metres
   })
   it('keeps the old behaviour for an unusable model or a nonsense fraction (scale 1, or the whole model)', () => {
-    expect(scaleForHeight(0.299, 0, 0.3)).toBe(1)
-    expect(scaleForHeight(0.299, 1e-9, 0.3)).toBe(1)
+    expect(scaleForHeight(0.285, 0, 0.3)).toBe(1)
+    expect(scaleForHeight(0.285, 1e-9, 0.3)).toBe(1)
     expect(bodyHeightOf(0.5, 1)).toBe(0.5) // a stand that is the whole model is not a stand
     expect(bodyHeightOf(0.5, -0.2)).toBe(0.5)
     expect(bodyHeightOf(0.5, Number.NaN)).toBe(0.5)

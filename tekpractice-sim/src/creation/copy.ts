@@ -203,7 +203,9 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** L1: the neutral blank room card. */
     blank: 'Salle vide neutre',
     /** Under the title; also the grids' description. */
-    hint: 'Flèches pour parcourir, Entrée pour ouvrir.',
+    hint: 'Choisissez un lieu pour l’ouvrir : clic, ou flèches puis Entrée.',
+    /** One line under « Modèles » (night wave 2, E): what a template is. */
+    templatesPitch: 'Un lieu avec son matériel déjà posé : le plus simple pour commencer.',
     /** Plan legend under the hint (the thumbnails: seen from the audience, stage at the top). */
     legendIntro: 'Plans vus depuis le public, scène en haut :',
     legendStage: 'scène',
@@ -322,7 +324,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Status bar after the autosave was reopened at start. */
     restored: 'Travail de la dernière séance rouvert.',
     /** Said once, after a saved project is reopened (autosave or « Ouvrir… »), when it holds active gear that needs power and no power strip at all. */
-    noMains: 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » du tiroir) et branchez-y les appareils.',
+    noMains: 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » de l’inventaire) et branchez-y les appareils.',
     /** Name dialog (Ctrl+S the first time, « Enregistrer sous… »). Entrée enregistre. */
     nameTitle: 'Enregistrer le projet',
     nameTitleAs: 'Enregistrer sous',
@@ -417,7 +419,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * The signal path's words (Task 34, C9): the status bar's « Lecture » line and « Micro OK ». src/flow/signalPath.ts reads the
-   * reasons from here (plain data, no shell code). DRAFTS: every string here is à valider (tekuxwriter).
+   * reasons from here (plain data, no shell code). Every string here: validé (tekuxwriter, 2026-11-04).
    */
   playback: {
     /** Status bar when the signal path reaches a powered speaker (`playbackReady`). */
@@ -443,17 +445,19 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Coverage (Task 37, C13, S2): Écoute › Couverture, the dots in the 3D view and the legend / statistics block at the bottom of Propriétés.
-   * Honesty (brief §5): relative dB only, no intelligibility score, no regulatory level. Every string here: à valider (tekuxwriter).
+   * Honesty (brief §5): relative dB only, no intelligibility score, no regulatory level. Every string here: validé (tekuxwriter, 2026-11-04), except `chip` (à trancher, Oscar).
    */
   coverage: {
     panelTitle: 'Couverture',
     panelCollapse: 'Replier la couverture',
     panelExpand: 'Déplier la couverture',
+    /** Title of the closed `<details>` under the points: the notes about the calculation (method, aim line, source, speakers, hints). Night wave 2, H. */
+    aboutTitle: 'À propos du calcul',
     unit: 'dB relatif (0 = point le plus fort)',
     method: 'somme énergétique, champ direct',
-    chip: 'relatif',
-    chipName: 'Fidélité du calcul : relatif',
-    chipPopover: 'Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. Le balance de la console change l’équilibre affiché comme le son (il baisse le côté opposé) ; le fader master, commun à toutes les enceintes, ne change pas un niveau relatif ; le mute ou −inf retire les enceintes ; l’origine de l’enceinte est son point de pose.',
+    chip: 'estimation',
+    chipName: 'Fidélité du calcul : estimation',
+    chipPopover: 'Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. La balance de la console change l’équilibre affiché comme le son (elle baisse le côté opposé) ; le fader master, commun à toutes les enceintes, ne change pas un niveau relatif ; le mute ou −inf retire les enceintes ; l’origine de l’enceinte est son point de pose.',
     legendTitle: 'Échelle',
     legendBin: '{from} à {to} dB',
     legendLast: '{from} dB et moins',
@@ -463,10 +467,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     aim: 'Trait clair : axe de chaque enceinte audible',
     frontCaveat: 'Face avant du modèle 3D non vérifiée pour {names} : le trait indique l’axe acoustique, pas forcément la face du modèle.',
     sourceLine: 'Couverture : {sources}',
-    sourceKb: 'données KB',
+    sourceKb: 'base de connaissances',
     sourceNominal: 'valeur nominale',
     sourceDatasheet: 'fiche constructeur',
-    sourceDeduced: 'V déduit',
+    sourceDeduced: 'verticale déduite',
     speakersTitle: 'Enceintes prises en compte',
     speakerRow: '{name} : {h}° × {v}°',
     statsTitle: 'Statistiques',
@@ -484,19 +488,19 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     pin: 'Épingler {name}',
     pinned: 'Point épinglé ({x} m ; {z} m) : {value}',
     unpin: 'Retirer l’épingle',
-    pinHint: 'Cliquez un point coloré dans la vue 3D pour épingler son niveau.',
+    pinHint: 'Cliquez sur un point coloré dans la vue 3D pour épingler son niveau.',
     probeAbove: 'Un point nommé peut dépasser 0 dB : l’échelle est celle de la grille.',
     splPending: '≈ dB SPL estimé : non calculé (estimation pédagogique, formule non sourcée).',
     computing: 'Calcul de la couverture…',
     failed: 'Calcul de la couverture indisponible (réessayez).',
-    hiddenFolded: 'Couverture masquée : Propriétés est replié.',
+    hiddenFolded: 'Couverture masquée : le panneau Propriétés est replié. Dépliez-le pour la revoir.',
     noAudience: 'Pas de public dans ce lieu : aucune zone public ni régie à couvrir. Rien à calculer.',
     noSource: 'Aucune enceinte audible : {reason}',
     reasonNotFed: 'aucune enceinte ne reçoit de signal ({why})',
     reasonNotFedBare: 'aucune enceinte ne reçoit de signal',
     reasonMuted: 'la console est en mute',
     reasonSilent: 'le fader master est à −inf',
-    reasonBalance: 'le balance de la console coupe ces enceintes',
+    reasonBalance: 'la balance de la console coupe ces enceintes',
     reasonUnverified: 'appareil non vérifié (Bêta)',
     reasonNoAcoustic: 'enceinte sans données acoustiques',
     reasonUnpowered: 'enceinte hors tension',
@@ -508,7 +512,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Listening (Task 39, C9, C14, CA-03, CA-26): Écoute › Lecture / Stop / Morceau / Choisir un fichier audio… / Signal de test, and the Écoute block at the
-   * bottom of Propriétés. Honesty (brief §10): a SIMPLE simulation, said in the block. Every string here: à valider (tekuxwriter).
+   * bottom of Propriétés. Honesty (brief §10): a SIMPLE simulation, said in the block. Every string here: validé (tekuxwriter, 2026-11-04).
    */
   listen: {
     panelTitle: 'Écoute',
@@ -523,6 +527,9 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     silentMix: 'Aucune enceinte ne sonne pour le moment : la console est en mute ou son fader est à −inf.',
     metersTitle: 'Niveau à chaque enceinte',
     meterRow: '{name} : niveau de sortie {level}, gain {gain}, retard {delay}, pan {pan}',
+    /** The same row drawn on two lines (night wave 2, G): the name and the level, then the rest muted. Not read: the screen reader gets `meterRow`. */
+    meterMain: '{name} : {level}',
+    meterSub: 'gain {gain} · retard {delay} · pan {pan}',
     levelDb: '{v} dBFS',
     levelSilent: 'silence',
     gainValue: '{v} dB',
@@ -531,8 +538,18 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     panRight: 'droite {n} %',
     panCenter: 'centre',
     noSpeakers: 'Aucune enceinte à écouter.',
-    simple: 'Simulation simple : niveau relatif, retard et placement gauche-droite calculés d’après la géométrie ; le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie.',
-    limits: 'Limites : le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle) ; l’origine d’une enceinte est son point de pose ; déplacer l’auditeur fait glisser le retard et peut faire glisser la hauteur du son (ce n’est pas un effet Doppler) ; il n’y a pas de vumètre de console, seulement un niveau par enceinte ; on écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur) ou la caméra de marche, qui écoute à sa place pendant la marche.',
+    /** « Écoute depuis : {point}. » above the button (night wave 2, G): where the sound is heard from; {point} = a name of `points.*`, or `fromWalk`. */
+    from: 'Écoute depuis : {point}.',
+    /** The point name while the walk camera listens in place of the points. */
+    fromWalk: 'la caméra de marche',
+    /** Always shown: what the simulation is, in one sentence. The rest of its limits is folded under `limitsTitle`. */
+    simple: 'Simulation simple : niveau relatif, volume normalisé, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.',
+    /** Title of the closed `<details>` that holds the rest of the limits. */
+    limitsTitle: 'Limites de la simulation',
+    /** In the details, first: what acts on the sound, and what the volume does (the second half of the former « simple »). */
+    limitsMore: 'Le fader, le mute et la balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Pas de diaphonie (fuite d’un canal dans l’autre).',
+    /** In the details, second: the limits of the numbers and of the ears. */
+    limits: 'Le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle). L’origine d’une enceinte est son point de pose. Déplacer l’auditeur fait glisser le retard et peut faire varier la hauteur du son ; ce n’est pas un effet Doppler simulé. Il n’y a pas de vumètre de console, seulement un niveau par enceinte. On écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur) ou la caméra de marche, qui écoute à sa place pendant la marche.',
     volume: 'Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin.',
     fileLocal: 'Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré.',
     fileInputName: 'Choisir un fichier audio',
@@ -567,7 +584,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Named views (Task 18, C11, CA-05): the Vue menu and the `V` picker. The 26 view names
-   * themselves come from `zoneLabel` (src/camera/cubeZones.ts). Every string here: à valider (tekuxwriter).
+   * themselves come from `zoneLabel` (src/camera/cubeZones.ts). Every string here: validé (tekuxwriter, 2026-11-04).
    */
   views: {
     /** Vue › submenu holding the 26 views. */
@@ -597,7 +614,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Walking (Task 19, C11, S6): Vue › Marcher (Maj+V) and the ear height in Écoute.
-   * Every string here: à valider (tekuxwriter).
+   * Every string here: validé (tekuxwriter, 2026-11-04).
    */
   walk: {
     /** Vue menu item (checkbox; shortcut shown from the key map). */
@@ -614,7 +631,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Named listening points (Task 20): the « Points d’écoute » tree rows, Vue › Aller au point
-   * d’écoute, keys 1 / 2 / 3. Every string here: à valider (tekuxwriter).
+   * d’écoute, keys 1 / 2 / 3. Every string here: validé (tekuxwriter, 2026-11-04).
    */
   points: {
     /** Point names (tree rows, menu items). */
@@ -650,6 +667,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     filter: 'Filtrer',
     /** Dit poliment (et affiché dans la liste) quand le filtre ne correspond à aucun appareil. */
     filterNone: 'Aucun appareil ne correspond',
+    /** Shown in the list (not spoken: the status above says the short form) when the filter matches nothing; {q} = what was typed. Night wave 2, F. */
+    filterNoneHelp: 'Aucun appareil ne correspond à « {q} ». Effacez le filtre ou essayez un autre mot (micro, console, enceinte).',
+    /** The button under it: clears the filter and puts the focus back in the field. */
+    filterClear: 'Effacer le filtre',
     /** Nom accessible de la liste quand un filtre est actif : elle réunit les appareils de tous les onglets. */
     filterResults: 'Appareils qui correspondent',
     /** Badge on a proposed device: in the Bêta tab, in the Projet tree and in Properties once it is placed (Task 30). */
@@ -749,7 +770,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   /** Feedback on a click that hit nothing (Task 25, CA-12). {key} = the inventory key label. */
   feedback: {
     /** Toast (`role="status"`, 2.5 s) after a click on the empty floor, the sky or a hidden device; the selection is cleared. */
-    missed: 'Rien ici : clique un appareil ou ouvre l’inventaire ({key}).',
+    missed: 'Rien ici : cliquez sur un appareil ou ouvrez l’inventaire ({key}).',
   },
   /** Click-to-patch on the scene's ports (Task 26, CA-19, CA-20). {a} / {b} / {port} / {other} = « Appareil · prise ». */
   patch: {
@@ -760,7 +781,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Libellé de l’entrée d’historique d’un débranchement. */
     entryUnplug: 'Débrancher {a} de {b}',
     /** Barre d’état après le clic sur la première prise (annoncé). */
-    statusPending: '{port} choisie. Cliquez une prise verte pour brancher le câble, Échap pour annuler.',
+    statusPending: '{port} choisie. Cliquez sur une prise verte pour brancher le câble, Échap pour annuler.',
     /** Barre d’état après Échap ou un second clic sur la même prise (annoncé). */
     statusCancelled: 'Câblage annulé.',
     /** Barre d’état après un branchement réussi (annoncé) ; {undo} = touche d’annulation. */

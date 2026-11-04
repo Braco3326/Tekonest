@@ -435,7 +435,7 @@ test('no match: « Aucun appareil ne correspond » is said politely and shown; E
   await expect(say).toHaveText('Aucun appareil ne correspond')
   await expect(shown(page)).toHaveCount(0)
   await expect(drawer(page).locator('.cr-drawer-empty')).toBeVisible()
-  await expect(drawer(page).locator('.cr-drawer-empty')).toHaveText('Aucun appareil ne correspond')
+  await expect(drawer(page).locator('.cr-drawer-empty')).toContainText('Aucun appareil ne correspond à « ')
   await page.keyboard.press('Enter')
   await expect(drawer(page)).toBeVisible()
   expect(await page.evaluate(() => window.__creation!.placing())).toBe(false)

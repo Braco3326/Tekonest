@@ -20,7 +20,7 @@ import type { Intent } from '../../ui/intents'
 import type { DesignState, Mount, Placement } from '../../trials/trial'
 import { COPY } from '../copy'
 import { cableText, portInfoOf } from '../cableStyle'
-import { isUnverified } from '../betaDevices'
+import { isUnverified, markUnverified } from '../betaDevices'
 
 export type FieldId = 'name' | 'x' | 'y' | 'z' | 'yaw' | 'tilt' | 'mount'
 
@@ -171,7 +171,8 @@ export function propsView(design: DesignState, registry: Registry, instanceId: s
       (c) => (c.a.instance === instanceId && c.a.port === p.portId) || (c.b.instance === instanceId && c.b.port === p.portId),
     )
     const to = conn ? (conn.a.instance === instanceId && conn.a.port === p.portId ? conn.b : conn.a) : null
-    const toLabel = to ? `${shortName(registry, deviceOf.get(to.instance) ?? '')} (${to.instance}) · ${to.port}` : ''
+    // The device at the other end says « non vérifié » when it is a Bêta one (review finding 1): the visible line, the « Débrancher » name and its description.
+    const toLabel = to ? `${markUnverified(`${shortName(registry, deviceOf.get(to.instance) ?? '')} (${to.instance})`, isUnverified(registry, deviceOf.get(to.instance) ?? ''))} · ${to.port}` : ''
     const signalLabel = signalName(registry, p.signal)
     const connectorLabel = connectorName(registry, p.connector)
     const me = { instance: instanceId, port: p.portId }

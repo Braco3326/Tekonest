@@ -31,6 +31,8 @@ export interface ConnectDialogDeps {
   history: Pick<History, 'do'>
   /** « Appareil (id) · prise » (history entry, announcement). */
   portName(ref: PortRef): string
+  /** Announced name (a Bêta device says « non vérifié »); defaults to `portName`. */
+  spokenName?(ref: PortRef): string
   /** The one place that turns a refusal into text (the status bar's). */
   rejectionText: RejectionText
   /** A line for the status bar (announced politely). */
@@ -85,6 +87,7 @@ export function createConnectDialog(d: ConnectDialogDeps): ConnectDialog {
       registry: d.registry,
       from,
       portName: d.portName,
+      ...(d.spokenName ? { spokenName: d.spokenName } : {}),
       rejectionText: d.rejectionText,
       ...(d.beforeDispatch ? { beforeDispatch: d.beforeDispatch } : {}),
     })

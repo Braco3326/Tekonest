@@ -5,6 +5,9 @@
 > (Teenage Engineering × Apple × vrai studio). Le blanc est un dispositif
 > pédagogique : il baisse l'anxiété (StudentJourney Beat 1) et fait du matériel
 > réel le héros. JAMAIS de valeur en dur hors tokens.
+>
+> **Deux systèmes.** Cette page décrit d'abord le système historique (blanc, `--tk-*`). Le Mode Création a le sien (Nuit / Papier / Ambre / Prune,
+> `--cr-*`, angles droits) : voir « Mode Création chrome » plus bas, et « Scène 3D — Mode Création » pour la vue.
 
 ## Principes
 
@@ -70,6 +73,66 @@ passe `RoomTheme` à `buildRoom` et `DeviceTheme` à `DeviceSpawner` ; sans thè
   + marqueurs écrivent le stencil, labels / ombre / sphères de pick exclus du masque) + lavis Ambre 0.22. Survol : trait Papier,
   sans lavis. Le group 1 n'efface que la profondeur (effacer le stencil remplirait le corps d'Ambre).
 - Focus clavier du canvas : anneau Papier, jamais Ambre (Ambre dans la vue = « appareil sélectionné »).
+
+## Mode Création chrome (tokens `CREATION_TOKENS`, variables `--cr-*`)
+
+Tout ce qui précède décrit le système historique (blanc galerie, `--tk-*`). **Le Mode Création a son propre système**, qui est celui du chrome
+(menus, panneaux, tiroir, barre d'état, boîtes de dialogue) : `src/design/creationTokens.ts` est la source de vérité (`injectCreationTokens` pose les
+variables `--cr-*` sur `<html>`), `src/creation/shell/creation.css` (et les CSS paresseux `inventoryDrawer.css`, `listen.css`, `coverage.css`, `toast.css`,
+`connectDialog.css`) les consomme : les couleurs de marque passent par les `--cr-*`, jamais en dur. **Ce qui reste en dur** : des voiles et ombres en `rgba` (`creation.css` lignes 185, 665, 751, 759, 787 et 907 au 2026-11-04) et une partie des tailles de texte en `px`. Un token manquant se demande à tekdesigner, il ne se
+code pas en dur. (Le nom de fichier `creationTokens.ts` n'est pas dans `src/creation/shell/` : il est dans `src/design/`.)
+
+| Token | Valeur | Rôle |
+|---|---|---|
+| `--cr-nuit` | `#131114` | fond de l'app, champs, vue 3D ; l'encre des boutons pleins Ambre |
+| `--cr-papier` | `#F3EDE3` | texte principal (16,1 : 1 sur Nuit, 14,95 : 1 sur panel) |
+| `--cr-ambre` | `#DD9349` | **sélection et action** (7,5 : 1 sur Nuit) : barre de ligne choisie, anneau de focus, bouton principal |
+| `--cr-prune` | `#612D45` | accent calme : bordures des fenêtres et du tiroir, zone « scène » des plans (1,76 : 1 sur Nuit : décoratif, la pastille « scène » porte donc un bord `ink-muted`) |
+| `--cr-panel` | `#1C191D` | Nuit surélevé : barres, panneaux, tiroir, cartes |
+| `--cr-panel-line` | `#3A3339` | séparateur discret (≈ 1,4 : 1 : **décoratif seulement**, jamais le bord d'un contrôle) |
+| `--cr-ink-muted` | `#B3AAA0` | texte secondaire (≥ 4,5 : 1) **et bord d'un contrôle** (7,6 : 1 sur le panneau, WCAG 1.4.11) |
+| `--cr-danger` | `#F08A7E` | erreur (texte et filet), jamais seul |
+| `--cr-ok` | `#8CCB9B` | succès / prêt (texte et pastille) |
+| `--cr-font-title` | Tektur | titres courts sans accent aigu (marque, titre du projet, titre du tiroir) |
+| `--cr-font-ui` | IBM Plex Sans | tout le reste ; **tout texte à accents** (« PROPRIÉTÉS », noms de lieux) : l'aigu de Tektur se lit comme un macron à petite taille |
+| `--cr-menubar-h` / `--cr-status-h` | 32 / 28 px | hauteurs des barres (48 / 48 au toucher, voir plus bas) |
+| `--cr-tree-w` / `--cr-props-w` / `--cr-rail-w` | 200 / 260 / 32 px | colonnes ; replié = un rail (45 px au toucher) |
+| `--cr-drawer-ms` / `--cr-fly-ms` | 180 / 450 ms | les deux seuls mouvements du Mode Création |
+
+**Forme.** Angles droits partout : il n'y a volontairement **pas de token de rayon**, et `.cr *, .cr *:focus-visible { border-radius: 0 !important }` bat le
+`a:focus-visible` historique. Un `border-radius` écrit dans une feuille du Mode Création est du code mort.
+
+**Mouvement.** Aucune transition, sauf la glissade du tiroir (`--cr-drawer-ms`, aucune sous `prefers-reduced-motion`). Chaque contrôle porte `transition: none` : le
+`button { transition: all }` historique animerait sinon l'anneau de focus, et la règle de mouvement réduit (0,01 ms) retarderait `visibility`.
+
+**Focus.** Anneau de 2 px **Ambre**, décalé de 1 px, avec un halo **Nuit** de 3 px (`box-shadow`), pour tout `:focus-visible` du chrome et des dialogues. Règles
+dérivées : (a) dans un panneau qui rogne (lignes de l'arbre, bascules de légende, onglets, rails) l'anneau est tracé **vers l'intérieur** (`outline-offset: -3px`
++ halo `inset`), pour n'être jamais coupé ; (b) sur un **bouton plein Ambre** (« Lecture ») l'anneau reste l'anneau extérieur : un anneau Ambre intérieur
+disparaîtrait sur son fond ; (c) l'anneau de la **vue 3D** est **Papier**, jamais Ambre : dans la vue, Ambre veut dire « appareil sélectionné ».
+
+**Sens des couleurs.** Ambre = ce qui est choisi ou ce qu'on peut faire ; jamais pour un état désactivé (désactivé = encre atténuée et **bord en tirets**, le contrôle
+reste focalisable avec `aria-disabled`). La couleur n'est jamais seule : une barre, un glyphe, un mot ou un bord double le message (barre Ambre de la ligne choisie,
+⚠ ⓘ ⊘ devant les erreurs, « non vérifié » en pastille à bord `ink-muted`).
+
+**Tailles tactiles : la règle des 44 px.** Sous `@media (pointer: coarse)` (un doigt est le pointeur principal), tout contrôle que le doigt peut rencontrer fait **au moins
+44 × 44 px** : onglets et « Fermer » du tiroir, outils du cube, fermeture des notes et de la liste d'erreurs, boutons − / + (les réglages passent en une colonne, texte à
+16 px pour que iOS ne zoome pas), bascules, « Débrancher », lignes de l'arbre, œil, éléments de menu, sélecteur et « Fermer » du choix de lieu, en-têtes et rails
+de panneaux (45 px : 44 + la bordure de 1 px), boutons, pastille et résumés d'Écoute et de couverture. Les deux barres passent à 48 px (un contrôle de 44 px dans une barre
+perd 1 px à sa bordure). Avec une souris **rien ne change** (32 / 28 / 28 px, e2e de géométrie à 1366 × 768). `tests/e2e/creation-touch.spec.ts` balaie tous les éléments
+interactifs affichés, dans neuf états, et liste ceux qui font moins de 44 px.
+
+**Fenêtres étroites.** Points de rupture : 1200 px (Propriétés démarre repliée, `layout.ts`), 1000 px (la marque et le titre du projet s'effacent), **760 px** (Projet démarre
+replié ; la barre d'état ne garde que le message, l'avertissement de sauvegarde en pause et le bouton Signal ; marge des menus réduite), 720 px (le titre du tiroir s'efface), 520 px
+(le libellé « Filtrer » du tiroir cède la place à un texte indicatif du même mot), 480 px (boîte « Connecter à… »). Propriétés est **un seul défilement** (`.cr-props`) : aucun
+bloc ne défile en lui-même, la rangée de titre reste collée en haut.
+
+**Motif `data-placing` (ne pas le réinventer en JS).** Tant qu'un appareil suit le pointeur, la vue porte `data-placing="true"` (posé par `cancelPlacement.ts`) et **le CSS** réagit :
+les notes montent à 68 px, le toast aussi, la liste « appareils non rechargés » se range, la liste d'erreurs (hors de la vue, donc `body:has(.cr-viewport[data-placing='true'])`) monte
+au-dessus du bouton « Annuler la pose » (44 px, en bas à gauche de la vue), et la barre d'état retire le nom du lieu pour laisser lire les raccourcis. Même idée pour
+l'écran de départ : `.cr:has(.cr-pick:not([hidden]) .cr-pick-close[hidden])` (le choix de lieu sans « Fermer » = rien n'est encore affiché) retire de la barre d'état la sélection, la lecture,
+le micro et le bouton Signal (« Rien de branché » y serait lu comme un avertissement).
+
+**Défilement.** Barres fines aux couleurs du chrome (`scrollbar-width: thin`, `scrollbar-color: ink-muted` sur `panel`) pour tout ce qui défile.
 
 ## HUD
 

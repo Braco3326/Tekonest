@@ -167,6 +167,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   filter.autocomplete = 'off'
   filter.spellcheck = false
   filter.dataset.testid = 'inventory-filter'
+  filter.placeholder = I().filter! // the same word as its label, drawn only when a phone hides the label (CSS)
   const filterStatus = el(doc, 'p', 'cr-sr-only')
   filterStatus.setAttribute('role', 'status')
   filterStatus.setAttribute('aria-live', 'polite')
@@ -280,9 +281,19 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       const none = found.length === 0
       filterStatus.textContent = none ? I().filterNone! : ''
       if (none) {
-        const p = el(doc, 'p', 'cr-drawer-empty', I().filterNone)
-        p.setAttribute('aria-hidden', 'true') // the status above says it; read once
-        panel.appendChild(p)
+        // The status above says the short form once (it is the only live text); this is the way out, read when the learner gets there. The typed text goes in as text.
+        const box = el(doc, 'div', 'cr-drawer-empty')
+        box.append(el(doc, 'p', undefined, I().filterNoneHelp!.replace('{q}', () => filter.value.trim())))
+        const clear = el(doc, 'button', 'cr-drawer-clear', I().filterClear)
+        clear.type = 'button'
+        clear.dataset.testid = 'inventory-filter-clear'
+        clear.addEventListener('click', () => {
+          filter.value = ''
+          renderItems(tab)
+          filter.focus()
+        })
+        box.append(clear)
+        panel.appendChild(box)
         return
       }
     } else {
@@ -414,6 +425,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     const plain = !e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey
     // In the search field Space is a space: only Échap is the drawer's.
     if (e.target === filter && e.key !== 'Escape') return
+    if (e.key === ' ' && (e.target as Element).classList?.contains('cr-drawer-clear')) return // « Effacer le filtre » is a button: Espace presses it
     // A held key closes it once (repeats would land on the canvas and re-open it).
     if (e.repeat && plain && d.isToggleKey(e)) {
       e.preventDefault()
@@ -449,19 +461,40 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       if (!api.isOpen) return
       const inv = inventory(d.registry, { proposals: d.proposals(), modelIds: MODEL_IDS, beta: d.betaStatus() })
       const sameTabs = inv.tabs.length === tabs.length && inv.tabs.every((t, i) => tabs[i].tab === t)
+      // Where the keyboard focus is, to give it back after a redraw (review findings 7 and 8): the same result item if it is still listed, else its tab,
+      // else the selected tab. A learner is never thrown to the page.
+      const active = doc.activeElement as HTMLElement | null
+      const had = {
+        tab: tabs.find((t) => t.btn === active)?.tab,
+        item: active && panel.contains(active) ? active.dataset.deviceId : undefined,
+        inside: !!active && root.contains(active),
+        // « Effacer le filtre » (final fix N9): the empty-result help is redrawn with a NEW button; the focus goes to it, not to a tab
+        clear: active?.dataset.testid === 'inventory-filter-clear',
+      }
+      const restore = (): void => {
+        if (had.clear) {
+          const again = panel.querySelector<HTMLElement>('[data-testid="inventory-filter-clear"]')
+          if (again) return again.focus()
+        }
+        if (had.item) {
+          const again = [...panel.querySelectorAll<HTMLElement>('[data-device-id]')].find((e) => e.dataset.deviceId === had.item)
+          if (again) return again.focus()
+        }
+        const tab = tabs.find((t) => t.tab === (had.tab ?? selected)) ?? tabs.find((t) => t.tab === selected)
+        if (had.inside && tab) tab.btn.focus()
+      }
       if (!sameTabs) {
-        // The « Bêta » tab appeared or went: the tab buttons are rebuilt, and a focused one gets its successor back (same tab), so a keyboard user is not thrown to the page.
-        const had = tabs.find((t) => t.btn === doc.activeElement)?.tab
+        // The « Bêta » tab appeared or went: the tab buttons are rebuilt. Focus is given back only if the rebuild took it (a focused tab or result was replaced):
+        // focus in the filter field or on « Fermer » was never touched and must stay there (wave 1c R1).
         build()
-        if (had) tabs.find((t) => t.tab === had)?.btn.focus()
+        if (!root.contains(doc.activeElement)) restore()
         return
       }
       // Same tabs: nothing the learner may be about to click is replaced. Only the panel is redrawn, and only when it shows Bêta items (the « Bêta » tab or a filter).
       items = inv.items
       if (selected !== null && (selected === 'beta' || filter.value.trim() !== '')) {
-        const inPanel = panel.contains(doc.activeElement)
         renderItems(selected)
-        if (inPanel) tabs.find((t) => t.tab === selected)?.btn.focus() // the item that had focus is gone: the tab it belonged to
+        if (had.item || had.clear || (had.inside && !root.contains(doc.activeElement))) restore()
       }
     },
     close(opts) {

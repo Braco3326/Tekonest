@@ -20,7 +20,7 @@ const QL_MIC2: PortRef = { instance: 'ql1', port: 'in-mic-2' }
 const K12_POWER: PortRef = { instance: 'k12', port: 'power-in' }
 
 /** Points on the fake canvas: the pointer's px map to a port through `at`. */
-function setup(over: { busy?: () => boolean } = {}) {
+function setup(over: { busy?: () => boolean; spoken?: (r: PortRef) => string } = {}) {
   const asked: (boolean | undefined)[] = [] // the `inHand` flag each portAtPoint was asked with
   const store = new CreationStore(registry, creationEvaluator(registry))
   const history = new History(store)
@@ -71,6 +71,7 @@ function setup(over: { busy?: () => boolean } = {}) {
     busy: over.busy ?? (() => false),
     describe: (r) => `desc:${r.instance}.${r.port}`,
     portName: (r) => `${r.instance} · ${r.port}`,
+    ...(over.spoken ? { spokenName: over.spoken } : {}),
     allPorts: () =>
       store.design().rig.instances.flatMap((i) => registry.deviceById.get(i.deviceId)!.ports.map((p) => ({ instance: i.instanceId, port: p.portId }))),
     rejectionTitle: (e) => `title:${e.ruleId ?? e.code}`,
@@ -505,5 +506,30 @@ describe('a press on the canvas closes the port hover label (night wave 1, item 
     expect(s.calls.hover).toEqual(['desc:sm58.out-xlr'])
     s.canvas.dispatchEvent(ev('pointermove', { offsetX: 20, offsetY: 20 })) // another port: its label
     expect(s.calls.hover).toEqual(['desc:sm58.out-xlr', 'desc:ql1.in-mic-1'])
+  })
+})
+
+// ── Night wave 1 review finding 3: what is announced / shown names a Bêta device; the undo labels stay plain ───────────────────────
+describe('spokenName: announcements and the « Débrancher » bubble say « non vérifié », history labels do not', () => {
+  const spoken = (r: PortRef): string => `${r.instance} (non vérifié) · ${r.port}`
+  it('pending, connected and unplugged announcements and the offer use the spoken name; the undo label uses the plain one', () => {
+    const s = setup({ spoken })
+    s.ctrl.click(SM58_OUT)
+    expect(s.announce).toHaveBeenLastCalledWith(expect.stringContaining('sm58 (non vérifié) · out-xlr'))
+    s.ctrl.click(QL_MIC1)
+    expect(s.announce).toHaveBeenLastCalledWith(expect.stringContaining('sm58 (non vérifié) · out-xlr'))
+    expect(s.history.undoLabel).toContain('sm58 · out-xlr')
+    expect(s.history.undoLabel).not.toContain('non vérifié')
+    s.ctrl.click(QL_MIC1) // occupied: the offer
+    expect(s.calls.offers[0].text).toContain('(non vérifié)')
+    expect(s.calls.offers[0].buttonName).toContain('(non vérifié)')
+    s.calls.offers[0].onUnplug()
+    expect(s.announce).toHaveBeenLastCalledWith(expect.stringContaining('(non vérifié)'))
+    expect(s.history.undoLabel).not.toContain('non vérifié')
+  })
+  it('without a spokenName everything reads as before', () => {
+    const s = setup()
+    s.ctrl.click(SM58_OUT)
+    expect(s.announce).toHaveBeenLastCalledWith(expect.stringContaining('sm58 · out-xlr'))
   })
 })

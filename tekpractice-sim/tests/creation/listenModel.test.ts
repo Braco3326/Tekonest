@@ -46,6 +46,15 @@ describe('rows', () => {
     expect(rows[1].text).toBe('QSC (k12-g) : niveau de sortie −20,0 dBFS, gain −6,0 dB, retard 10,0 ms, pan gauche 50 %')
     expect(rows[0].text).toBe('QSC (k12-d) : niveau de sortie silence, gain −12,0 dB, retard 0,0 ms, pan droite 50 %')
   })
+  it('night wave 2 (G): the visible row is two lines, the name and the level, then gain, delay and pan; the full sentence stays for assistive tech', () => {
+    const [r] = rowsOf([v('k12-g', 0.5, 0.01, -0.5)], { 'k12-g': 0.1 }, (id) => `QSC (${id})`)
+    expect(r.main).toBe('QSC (k12-g) : −20,0 dBFS')
+    expect(r.sub).toBe('gain −6,0 dB · retard 10,0 ms · pan gauche 50 %')
+    expect(r.text, 'the spoken text is unchanged and complete').toBe('QSC (k12-g) : niveau de sortie −20,0 dBFS, gain −6,0 dB, retard 10,0 ms, pan gauche 50 %')
+    const [m] = rowsOf([v('a', 0, 0, 0)], {}, (id) => id)
+    expect(`${m.main} ${m.sub}`).not.toMatch(/NaN|Infinity|undefined/)
+    expect(m.main).toBe('a : silence')
+  })
   it('a muted voice (gain 0) reads « silence » everywhere, no -Infinity, no NaN', () => {
     const [r] = rowsOf([v('a', 0, 0, 0)], {}, (id) => id)
     expect(r.text).toBe('a : niveau de sortie silence, gain silence, retard 0,0 ms, pan centre')

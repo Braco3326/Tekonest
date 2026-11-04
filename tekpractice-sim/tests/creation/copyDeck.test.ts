@@ -34,7 +34,7 @@ describe('copy deck docs/copy/creation-mode.md mirrors COPY (Task 7)', () => {
   })
   it('reverse: every `## section` heading of the deck is a COPY section, or a listed non-COPY section', () => {
     // Deliberately not COPY sections: the vocabulary rules (prose, no keys) and the catalog rule texts (Task 29).
-    const NOT_COPY = new Set(['Glossaire', 'Textes des règles (catalogue)'])
+    const NOT_COPY = new Set(['Glossaire', 'Textes des règles (catalogue)', 'Propositions en attente (fondateur)'])
     const headings = [...deck.matchAll(/^## (.+?)\s*$/gm)].map((m) => m[1])
     expect(headings.length).toBeGreaterThan(0)
     expect(headings.filter((h) => !Object.prototype.hasOwnProperty.call(COPY, h) && !NOT_COPY.has(h))).toEqual([]) // own keys only: « constructor » is not a section
@@ -44,6 +44,16 @@ describe('copy deck docs/copy/creation-mode.md mirrors COPY (Task 7)', () => {
     expect(Object.keys(COPY)).not.toContain('rule')
     expect(deck).not.toMatch(/^## rule\s*$/m)
     expect(deck).not.toMatch(/`rule\.R[1-8]/)
+  })
+  it('the console balance is feminine in French (la balance), in every shipped string and its agreement', () => {
+    for (const [section, entries] of Object.entries(COPY)) for (const [key, t] of Object.entries(entries)) expect(t, `${section}.${key}`).not.toMatch(/\ble balance\b/i)
+    expect(COPY.coverage.chipPopover).toContain('La balance de la console change l’équilibre affiché comme le son (elle baisse le côté opposé)')
+    expect(COPY.coverage.reasonBalance).toBe('la balance de la console coupe ces enceintes')
+    expect(COPY.listen.limitsMore).toContain('Le fader, le mute et la balance de la console agissent sur le son.')
+  })
+  it('final fix round (C1, S1): the always-visible listen sentence says the volume is normalised; the KB source is named « base de connaissances », not « fiche »', () => {
+    expect(COPY.listen.simple).toBe('Simulation simple : niveau relatif, volume normalisé, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.')
+    expect(COPY.coverage.sourceKb).toBe('base de connaissances')
   })
   it('no shipped string is a placeholder', () => {
     for (const entries of Object.values(COPY)) for (const t of Object.values(entries)) expect(t).not.toContain('[À REMPLACER')

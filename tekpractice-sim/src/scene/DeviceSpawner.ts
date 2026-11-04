@@ -84,6 +84,7 @@ const REAL_SIZE_M: Record<string, { w: number; h: number; d: number }> = {
   'neumann-u87-ai': { w: 0.056, h: 0.2, d: 0.056 },
   'qsc-k12-2': { w: 0.356, h: 0.602, d: 0.35 },
   'yamaha-dbr12': { w: 0.376, h: 0.601, d: 0.348 },
+  // h 0.299 is the legacy mode's only: in Mode Création the catalog `modelBody.cabinetHeightM` (0.285, the cabinet without stand or Iso-Pod) replaces it.
   'genelec-8030c': { w: 0.189, h: 0.299, d: 0.178 },
   'yamaha-ql1': { w: 0.468, h: 0.272, d: 0.562 },
   'yamaha-rio3224-d2': { w: 0.48, h: 0.22, d: 0.368 },
@@ -331,8 +332,8 @@ export class DeviceSpawner {
         // The catalog axis describes the legacy file it was measured on and does not apply to a pipeline model.
         const reportedFront: FrontAxis | undefined = extras ? (this.options.alignFront && device.modelFront ? '-z' : undefined) : front
         // Night wave 1 (item 8): a model that includes its floor stand is scaled by its cabinet's height (Mode Création only, like `front`).
-        const bodyBase = this.options.alignFront ? device.modelBody?.baseFraction : undefined
-        const scale = this.normalizeModel(deviceId, glbRoot, front, extras, bodyBase)
+        const body = this.options.alignFront ? device.modelBody : undefined
+        const scale = this.normalizeModel(deviceId, glbRoot, front, extras, body)
         const rear = front && glbRoot.parent instanceof TransformNode ? rearFace(glbRoot, glbRoot.parent) : null
         this.reanchorPorts(device, instanceId, glbRoot, portMarkers, front === undefined, rear)
         if (reportedFront) {
@@ -376,7 +377,13 @@ export class DeviceSpawner {
    * would leave the glTF +Z I/O face on Babylon +Z (proved in tests/scene/deviceSpawnerExtras.test.ts). Dropping that
    * turn keeps only the z mirror, glTF (x, y, z) → Babylon (x, y, −z): I/O on −Z, nothing mirrored left-right.
    */
-  private normalizeModel(deviceId: string, glbRoot: AbstractMesh, front?: FrontAxis, extras: AssetExtrasV1 | null = null, bodyBase?: number): number {
+  private normalizeModel(
+    deviceId: string,
+    glbRoot: AbstractMesh,
+    front?: FrontAxis,
+    extras: AssetExtrasV1 | null = null,
+    body?: { baseFraction: number; cabinetHeightM: number },
+  ): number {
     if (extras) {
       glbRoot.rotationQuaternion = Quaternion.Identity()
       glbRoot.computeWorldMatrix(true)
@@ -397,8 +404,9 @@ export class DeviceSpawner {
     const height0 = bounds.max.y - bounds.min.y
 
     // (a/b) uniform scale by height — the most reliable anchor across the set.
-    // With `bodyBase` (the share of the model that is stand, catalog `modelBody`) the REAL height is the cabinet's, not the whole model's.
-    const scale = real && height0 > 1e-6 ? scaleForHeight(real.h, height0, bodyBase) : 1
+    // With `body` (catalog `modelBody`: the share of the model that is stand, and the real height of the cabinet alone) the target is the cabinet's
+    // height, not the table's (the REAL_SIZE_M height includes what the cut removed). Legacy passes none: unchanged.
+    const scale = real && height0 > 1e-6 ? scaleForHeight(body ? body.cabinetHeightM : real.h, height0, body?.baseFraction) : 1
     if (scale !== 1) {
       glbRoot.scaling.setAll(scale)
       glbRoot.computeWorldMatrix(true)

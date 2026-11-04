@@ -521,14 +521,20 @@
                     "exclusiveMaximum": 1,
                     "description": "Share (0 to 1) of the total height of the model, from its lowest point, that is stand under the cabinet."
                   },
+                  "cabinetHeightM": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "Real height in metres of the cabinet alone (the model without the stand), from the datasheet: the target of the height normalisation in Mode Création."
+                  },
                   "evidence": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "How it was measured on public/assets/<id>.glb: where the neck ends and the cabinet starts."
+                    "description": "How it was measured on public/assets/<id>.glb: where the neck ends and the cabinet starts, and where cabinetHeightM comes from."
                   }
                 },
                 "required": [
                   "baseFraction",
+                  "cabinetHeightM",
                   "evidence"
                 ],
                 "additionalProperties": false,

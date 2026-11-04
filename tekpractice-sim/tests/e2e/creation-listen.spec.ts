@@ -158,8 +158,10 @@ test('(b) powered + playback on: « Lecture » is enabled; one click, then BOTH 
   await expect(page.getByTestId('listen-meters').locator('li')).toHaveCount(2)
   await expect(page.getByTestId('listen-meters').locator('li[data-instance="k12-g"]')).toContainText(/QSC K12\.2 \(k12-g\) : niveau de sortie −?\d+,\d dBFS, gain 0,0 dB, retard 0,0 ms, pan gauche \d+ %/)
   await expect(page.getByTestId('listen-meters').locator('li[data-instance="k12-d"]')).toContainText(/pan droite \d+ %/)
-  await expect(page.getByTestId('listen-simple')).toHaveText(/^Simulation simple : .*Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie\.$/)
-  await expect(page.getByTestId('listen-simple')).toContainText('Le volume est normalisé')
+  // night wave 2 (G): one honest sentence stays on screen, the rest of the limits is under a closed « Limites de la simulation » (nothing removed)
+  await expect(page.getByTestId('listen-simple')).toHaveText('Simulation simple : niveau relatif, volume normalisé, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions.')
+  await expect(page.getByTestId('listen-limits-more')).toContainText('Le volume est normalisé')
+  await expect(page.getByTestId('listen-limits-more')).toContainText('diaphonie')
   await expect(page.getByTestId('listen-volume')).toContainText('Le volume démarre bas')
   await expect(page.getByTestId('listen-local')).toContainText('ni envoyé ni enregistré')
   await expect(page.getByTestId('listen-panel')).not.toContainText(/NaN|Infinity|undefined/)
@@ -505,17 +507,31 @@ test('(n) 1366×768 with the coverage AND the listening block open: the properti
   test.info().annotations.push({ type: 'measured', description: `properties body ${body.height.toFixed(1)} px, listen block ${listen.height.toFixed(1)} px, props column ${(await page.locator('.cr-props').boundingBox())!.height.toFixed(1)} px, viewport ${(viewport.width / 1366).toFixed(3)} of the width` })
   console.log(`[measured 1366x768, coverage + listen open] properties body ${body.height.toFixed(1)} px; listen block ${listen.height.toFixed(1)} px`)
   const props = (await page.locator('.cr-props').boundingBox())!
+  // night wave 2 (H): Propriétés is ONE scroller; the blocks follow each other in it (horizontally inside the column; vertically they are reached by scrolling it)
   for (const box of [listen, (await page.getByTestId('coverage-panel').boundingBox())!, body]) {
-    expect(box.y).toBeGreaterThanOrEqual(props.y - 1) // both blocks stay inside the properties column
-    expect(box.y + box.height).toBeLessThanOrEqual(props.y + props.height + 1)
     expect(box.x).toBeGreaterThanOrEqual(props.x - 1)
     expect(box.x + box.width).toBeLessThanOrEqual(props.x + props.width + 1)
   }
   expect(viewport.width / 1366).toBeGreaterThanOrEqual(0.6)
   expect(listen.x).toBeGreaterThanOrEqual(viewport.x + viewport.width - 1)
-  // the block never grows past its share, and scrolls inside itself
-  const pr = (await page.locator('.cr-props').boundingBox())!
-  expect(listen.height).toBeLessThanOrEqual(pr.height * 0.34 + 1)
+  // no block scrolls inside itself any more (the column does): the old 34 % cap is gone
+  expect(await page.getByTestId('listen-panel').evaluate((e) => getComputedStyle(e).overflowY)).toBe('visible')
+  expect(await page.locator('.cr-props').evaluate((e) => getComputedStyle(e).overflowY)).toBe('auto')
+  await page.getByTestId('listen-panel').scrollIntoViewIfNeeded()
+  const listenNow = (await page.getByTestId('listen-panel').boundingBox())!
+  expect(listenNow.y + listenNow.height).toBeLessThanOrEqual(props.y + props.height + 1)
+  // final fix round (S5): the vertical contain check of the old test, restored for the other two blocks. The column is one scroller and a block can be
+  // taller than what it shows at once (the coverage panel is 681 px in a 663 px viewport of the column), so: scrolled to its first child, the top of the
+  // block lies inside the column; scrolled to its last child, its bottom does. Nothing of a block is out of reach.
+  for (const [name, loc] of [['coverage panel', page.getByTestId('coverage-panel')], ['properties body', page.locator('.cr-props .cr-panel-body')]] as const) {
+    await loc.locator(':scope > *').first().scrollIntoViewIfNeeded()
+    const top = (await loc.boundingBox())!
+    expect(top.y, `${name}: top reachable inside the column`).toBeGreaterThanOrEqual(props.y - 1)
+    expect(top.y, `${name}: top below the column's top edge and not past its bottom`).toBeLessThanOrEqual(props.y + props.height)
+    await loc.locator(':scope > *').last().scrollIntoViewIfNeeded()
+    const bottom = (await loc.boundingBox())!
+    expect(bottom.y + bottom.height, `${name}: bottom reachable inside the column`).toBeLessThanOrEqual(props.y + props.height + 1)
+  }
   await choose(page, 'Stop')
   await waitStopped(page)
 })
@@ -662,7 +678,7 @@ test('(t) the console BALANCE changes the sound and the coverage alike: G100 sil
   // the limits are said where the learner reads: the block carries every limit the ADR announces
   await expect(page.getByTestId('listen-limits')).toContainText('la moyenne de ses deux côtés')
   await expect(page.getByTestId('listen-limits')).toContainText('« Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur)')
-  await expect(page.getByTestId('listen-simple')).toContainText('le fader, le mute et le balance de la console agissent sur le son')
+  await expect(page.getByTestId('listen-limits-more')).toContainText('Le fader, le mute et la balance de la console agissent sur le son')
   await choose(page, 'Stop')
   await waitStopped(page)
 })

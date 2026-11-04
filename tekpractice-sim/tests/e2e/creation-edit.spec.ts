@@ -8,7 +8,7 @@ import { IDLE_WINDOW_MS, SETTLE_SAMPLE_MS, quietWindow, waitRendersIdle } from '
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const PLACE = 'room:concert-hall-medium'
-const MISSED = /Rien ici : clique un appareil ou ouvre l.inventaire \(Espace\)\./
+const MISSED = /Rien ici : cliquez sur un appareil ou ouvrez l.inventaire \(Espace\)\./
 
 const boot = async (page: Page): Promise<void> => {
   await page.emulateMedia({ reducedMotion: 'reduce' }) // a camera cut, not a 450 ms flight: stable screen points

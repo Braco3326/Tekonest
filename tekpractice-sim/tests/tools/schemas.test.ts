@@ -1,6 +1,9 @@
-import { readFileSync } from 'node:fs'
+import { mkdtempSync, readFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join, resolve } from 'node:path'
 import { zodToJsonSchema } from 'zod-to-json-schema'
-import { catalogSchemaText } from '../../tools/generate-schema'
+import { spawnSync } from 'node:child_process'
+import { catalogSchemaText } from '../../tools/catalogSchemaText'
 import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
 import catalogJson from '../../content/catalog.json'
@@ -105,6 +108,16 @@ describe('content/catalog.schema.json is exactly what `npm run gen:schema` emits
   it('same text as the generator, so the editor autocompletion matches the zod source of truth', () => {
     const onDisk = readFileSync('content/catalog.schema.json', 'utf8').split('\r\n').join('\n')
     expect(onDisk).toBe(catalogSchemaText())
+  })
+  it('and the script itself (what  runs) writes exactly that text to the path it is given; the npm script has no shell redirect (review 14, wave 1c R2)', () => {
+    const out = resolve(mkdtempSync(join(tmpdir(), 'gen-schema-')), 'schema.json')
+    const r = spawnSync(process.execPath, [resolve(__dirname, '../../node_modules/tsx/dist/cli.mjs'), 'tools/generate-schema.ts', out], { cwd: resolve(__dirname, '../..'), encoding: 'utf8' })
+    expect(r.status, r.stderr).toBe(0)
+    expect(readFileSync(out, 'utf8')).toBe(catalogSchemaText())
+    // a redirect () truncates the committed file before the script runs, whatever happens in it
+    const npmScript = (JSON.parse(readFileSync(resolve(__dirname, '../../package.json'), 'utf8')) as { scripts: Record<string, string> }).scripts['gen:schema']
+    expect(npmScript).toBe('tsx tools/generate-schema.ts')
+    expect(npmScript).not.toContain('>')
   })
 })
 

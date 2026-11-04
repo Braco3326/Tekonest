@@ -24,7 +24,7 @@ Typography: plain spaces before « : ; ! ? » and inside « » (no U+00A0 / U+20
 | `shell.treeExpand` | Déplier le panneau Projet | brief | Bouton, panneau replié (rail 32 px) |
 | `shell.propsCollapse` | Replier le panneau Propriétés | brief | Bouton, panneau ouvert |
 | `shell.propsExpand` | Déplier le panneau Propriétés | brief | Bouton, panneau replié |
-| `shell.canvas` | Vue 3D : flèches = orbiter, [ ] = appareil suivant/précédent, Entrée = cadrer, 1 2 3 = points d’écoute | brief ; « 1 2 3 » à valider (tekuxwriter) | `aria-label` du canvas (touches livrées en Task 8 ; 1 2 3 en Task 20, lues par position : la touche « & 1 » en AZERTY) |
+| `shell.canvas` | Vue 3D : flèches = orbiter, [ ] = appareil suivant/précédent, Entrée = cadrer, 1 2 3 = points d’écoute | brief ; « 1 2 3 » validé | `aria-label` du canvas (touches livrées en Task 8 ; 1 2 3 en Task 20, lues par position : la touche « & 1 » en AZERTY) |
 | `shell.propsEmpty` | Sélectionnez un appareil pour voir ses réglages. | validé | Propriétés : état vide |
 | `shell.statusNoPlace` | Choisissez un lieu pour commencer. | validé | Barre d'état, avant le premier lieu |
 | `shell.statusLoading` | Chargement du lieu… | validé | Barre d'état pendant un changement de lieu (`role="status"`) |
@@ -50,7 +50,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `keys.escape` | Échap | validé | Touche Échap (annuler / fermer) |
 | `keys.enter` | Entrée | validé | Touche Entrée (cadrer depuis la vue 3D) |
 | `keys.shift` | Maj | validé | Modificateur Maj (« Maj+V », « Maj+R ») ; Ctrl et Alt restent tels quels |
-| `keys.numpad` | Pavé num. | à valider (tekuxwriter) | Préfixe d'une touche du pavé numérique (« Pavé num. 6 ») |
+| `keys.numpad` | Pavé num. | validé | Préfixe d'une touche du pavé numérique (« Pavé num. 6 ») |
 
 ## menu
 
@@ -71,19 +71,19 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.saveAs` | Enregistrer sous… | brief | Task 13 : Projet ; demande toujours un nom |
 | `menu.exportKept` | Exporter les données mises de côté… | validé | Task 13 (revue) : Projet ; télécharge en JSON les données illisibles gardées à part (rien n'est supprimé, N19) |
 | `menu.choosePlace` | Choisir un lieu… | validé | Lieu ; ouvre l'écran « Choisir un lieu » par-dessus le lieu affiché (Task 12) |
-| `menu.inventory` | Inventaire | à valider (tekuxwriter) | Matériel ; ouvre / ferme le tiroir (Espace, Task 23) ; remplace « Ouvrir l’inventaire » |
-| `menu.rotate` | Pivoter | à valider (tekuxwriter) | Matériel ; tourne l’appareil sélectionné de 15° (R, Task 25) ; grisé sans sélection |
-| `menu.duplicate` | Dupliquer | à valider (tekuxwriter) | Matériel ; copie l’appareil sélectionné à 0,5 m (Ctrl+D) ; grisé sans sélection |
-| `menu.delete` | Supprimer | à valider (tekuxwriter) | Matériel ; supprime l’appareil sélectionné et ses câbles (Suppr) ; annulable ; grisé sans sélection |
+| `menu.inventory` | Inventaire | validé | Matériel ; ouvre / ferme le tiroir (Espace, Task 23) ; remplace « Ouvrir l’inventaire » |
+| `menu.rotate` | Pivoter | validé | Matériel ; tourne l’appareil sélectionné de 15° (R, Task 25) ; grisé sans sélection |
+| `menu.duplicate` | Dupliquer | validé | Matériel ; copie l’appareil sélectionné à 0,5 m (Ctrl+D) ; grisé sans sélection |
+| `menu.delete` | Supprimer | validé | Matériel ; supprime l’appareil sélectionné et ses câbles (Suppr) ; annulable ; grisé sans sélection |
 | `menu.connectTo` | Connecter à… | validé | Câblage ; même libellé que l'action Propriétés « Connecter à… » (C10) |
-| `menu.play` | Lecture | à valider (tekuxwriter) | Écoute › Lecture (Task 39) : démarre la source choisie ; actif seulement si la chaîne est valide (sinon `aria-disabled` + la première raison) ; devient « Stop » pendant la lecture |
-| `menu.playLocked` | Indisponible pendant le choix du lieu. | à valider (tekuxwriter) | Description de « Lecture » (et des sources) désactivés quand le sélecteur de lieu couvre la vue et que la chaîne, elle, est valide |
-| `menu.stop` | Stop | à valider (tekuxwriter) | Écoute : libellé de l'élément de lecture pendant que ça joue |
-| `menu.song` | Morceau | à valider (tekuxwriter) | Écoute › Morceau : sous-menu des morceaux de démonstration ; masqué tant qu'il n'y en a aucun (`content/songs.json` est vide) |
-| `menu.chooseFile` | Choisir un fichier audio… | à valider (tekuxwriter) | Écoute : ouvre le sélecteur de fichier du navigateur ; le fichier reste local |
-| `menu.testSignal` | Signal de test | à valider (tekuxwriter) | Écoute : bruit rose (gauche, droite, les deux) puis une courte phrase musicale, générés par l'application |
-| `menu.listenHere` | Écouter depuis ici | à valider (tekuxwriter) | Écoute ; met le point d’écoute là où se trouve la vue (le marcheur en vue de marche, sinon le pivot de la vue au sol, à hauteur d’oreille) et l’oriente comme la caméra ; la caméra ne bouge pas (Task 43b) |
-| `menu.coverage` | Couverture | à valider (tekuxwriter) | Écoute › Couverture : case à cocher (décochée au départ) |
+| `menu.play` | Lecture | validé | Écoute › Lecture (Task 39) : démarre la source choisie ; actif seulement si la chaîne est valide (sinon `aria-disabled` + la première raison) ; devient « Stop » pendant la lecture |
+| `menu.playLocked` | Indisponible pendant le choix du lieu. | validé | Description de « Lecture » (et des sources) désactivés quand le sélecteur de lieu couvre la vue et que la chaîne, elle, est valide |
+| `menu.stop` | Stop | validé | Écoute : libellé de l'élément de lecture pendant que ça joue |
+| `menu.song` | Morceau | validé | Écoute › Morceau : sous-menu des morceaux de démonstration ; masqué tant qu'il n'y en a aucun (`content/songs.json` est vide) |
+| `menu.chooseFile` | Choisir un fichier audio… | validé | Écoute : ouvre le sélecteur de fichier du navigateur ; le fichier reste local |
+| `menu.testSignal` | Signal de test | validé | Écoute : bruit rose (gauche, droite, les deux) puis une courte phrase musicale, générés par l'application |
+| `menu.listenHere` | Écouter depuis ici | validé | Écoute ; met le point d’écoute là où se trouve la vue (le marcheur en vue de marche, sinon le pivot de la vue au sol, à hauteur d’oreille) et l’oriente comme la caméra ; la caméra ne bouge pas (Task 43b) |
+| `menu.coverage` | Couverture | validé | Écoute › Couverture : case à cocher (décochée au départ) |
 | `menu.panelTree` | Panneau Projet | validé | Vue ; replie / déplie le panneau |
 | `menu.panelProps` | Panneau Propriétés | validé | Vue ; idem |
 | `menu.shortcuts` | Raccourcis clavier | validé | Aide ; affiche « H » depuis Task 8, inactif jusqu'au panneau d'aide |
@@ -179,10 +179,10 @@ Panneau « Propriétés » (Task 10) : l'appareil sélectionné. Libellés de te
 | `props.unplug` | Débrancher | validé | Texte visible du bouton par câble |
 | `props.unplugName` | Débrancher {port} de {other} | validé | Nom complet du bouton ; `{other}` = « K12.2 (k12-g) · in-line-a » |
 | `props.statusUnplugged` | Débranché : {port} de {other} | validé | Barre d'état (annoncé) après « Débrancher » |
-| `props.connect` | Connecter à… | à valider (tekuxwriter) | Task 28 : bouton visible d'une prise libre (ouvre la boîte « Connecter à… ») |
-| `props.connectName` | Connecter à… (depuis {port}) | à valider (tekuxwriter) | Nom complet du bouton ; `{port}` = la prise de la ligne |
-| `props.portName` | {port} · {connector} · {signal} · {state} | à valider (tekuxwriter) | Nom accessible d'une ligne de Connexions : l'équivalent clavier de l'étiquette au survol d'une prise ; `{state}` = « branché à … » ou « libre » |
-| `props.portStateConnected` | branché à {other} | à valider (tekuxwriter) | `{other}` = « K12.2 (k12-g) · in-line-a » |
+| `props.connect` | Connecter à… | validé | Task 28 : bouton visible d'une prise libre (ouvre la boîte « Connecter à… ») |
+| `props.connectName` | Connecter à… (depuis {port}) | validé | Nom complet du bouton ; `{port}` = la prise de la ligne |
+| `props.portName` | {port} · {connector} · {signal} · {state} | validé | Nom accessible d'une ligne de Connexions : l'équivalent clavier de l'étiquette au survol d'une prise ; `{state}` = « branché à … » ou « libre » |
+| `props.portStateConnected` | branché à {other} | validé | `{other}` = « K12.2 (k12-g) · in-line-a » |
 
 ## signal
 
@@ -213,7 +213,8 @@ Types de signal du catalogue (`signalTypes[].id`), tels que Propriétés les nom
 |---|---|---|---|
 | `picker.title` | Choisir un lieu | validé | Titre (h2, sous le `h1` `shell.appTitle`) de l'écran de départ « Choisir un lieu » (Task 12) ; ouvert au premier lancement et par Lieu → « Choisir un lieu… » |
 | `picker.blank` | Salle vide neutre | brief | Carte de la salle vide (L1) |
-| `picker.hint` | Flèches pour parcourir, Entrée pour ouvrir. | validé | Task 12 : sous le titre ; aussi la description (`aria-describedby`) des deux grilles. Les flèches ne changent jamais de lieu (CA-13) |
+| `picker.hint` | Choisissez un lieu pour l’ouvrir : clic, ou flèches puis Entrée. | validé (nuit 2026-11-04, relecture fondateur conseillée) | Vague de nuit 2, E : sous le titre ; aussi la description (`aria-describedby`) des deux grilles. Dit le clic d’abord (c’est le geste de la souris et du toucher), les flèches ensuite ; nuit 2026-11-04 : verbe neutre « Choisissez » (une seule chaîne pour souris et toucher, « Cliquez un lieu » était incorrect) ; les flèches ne changent jamais de lieu (CA-13). Remplace « Flèches pour parcourir, Entrée pour ouvrir. » (validé en Task 12) |
+| `picker.templatesPitch` | Un lieu avec son matériel déjà posé : le plus simple pour commencer. | validé | Vague de nuit 2, E : une ligne sous le titre « Modèles » (paragraphe, pas dans le nom de la grille) ; dit ce qu’est un modèle sans promettre plus que ce que le code fait (le matériel est posé, branché comme le modèle le dit) |
 | `picker.legendIntro` | Plans vus depuis le public, scène en haut : | validé | Task 12 : légende des vignettes (même sens que la vue Face, ADR-0011 / P14), suivie de trois pastilles |
 | `picker.legendStage` | scène | validé | Pastille Prune (zones stage / pit) |
 | `picker.legendOperator` | régie | validé | Pastille Ambre (régie façade, retours, régie, poste, galerie, cabine) |
@@ -318,7 +319,7 @@ Sauvegarde automatique, marque « * », Ctrl+S et projets nommés (Task 13, C16,
 | `project.openDirtyTitle` | Ouvrir un autre projet ? | validé | « Ouvrir… » avec des modifications non enregistrées (corps : `project.newBody`) |
 | `project.openDirtyConfirm` | Choisir un projet | validé | Bouton principal de ce dialogue |
 | `project.autosaveFull` | Stockage du navigateur plein : sauvegarde automatique en pause. Votre travail reste affiché tant que la page est ouverte ; rien de déjà enregistré n’est effacé. | validé | Note + barre d'état quand l'écriture automatique dépasse le quota. L9 (réponse coordinateur) : « Enregistrer sous » écrit dans le même stockage et l'app ne supprime aucun projet, donc aucun remède n'est promis ; export / suppression de projet prévus plus tard |
-| `project.noMains` | Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » du tiroir) et branchez-y les appareils. | à valider (tekuxwriter) | Barre d’état (annoncée, une fois par réouverture), seulement si le projet rouvert contient un appareil actif qui a besoin du secteur et aucune multiprise ; jamais de modification du projet |
+| `project.noMains` | Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » de l’inventaire) et branchez-y les appareils. | validé | Barre d’état (annoncée, une fois par réouverture), seulement si le projet rouvert contient un appareil actif qui a besoin du secteur et aucune multiprise ; jamais de modification du projet |
 | `project.restored` | Travail de la dernière séance rouvert. | validé | Barre d'état au démarrage quand la sauvegarde automatique est rouverte (le sélecteur de lieu ne s'affiche pas) |
 | `project.nameTitle` | Enregistrer le projet | validé | Titre du dialogue de nom (Ctrl+S la première fois) |
 | `project.nameTitleAs` | Enregistrer sous | validé | Titre du même dialogue pour « Enregistrer sous… » |
@@ -358,8 +359,8 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 | `status.errorsMany` | {n} erreurs | brief | Idem, `{n}` ≥ 2 |
 | `status.warningsOne` | 1 avertissement | validé | À côté du bouton signal (les avertissements ne comptent pas comme erreurs) |
 | `status.warningsMany` | {n} avertissements | validé | Idem, `{n}` ≥ 2 |
-| `status.unverifiedOne` | 1 appareil non vérifié | à valider (tekuxwriter) | À côté du signal quand le montage contient un appareil Bêta : les règles ont tourné sur des ports déclarés, non vérifiés (Task 30) |
-| `status.unverifiedMany` | {n} appareils non vérifiés | à valider (tekuxwriter) | Idem, `{n}` ≥ 2 |
+| `status.unverifiedOne` | 1 appareil non vérifié | validé | À côté du signal quand le montage contient un appareil Bêta : les règles ont tourné sur des ports déclarés, non vérifiés (Task 30) |
+| `status.unverifiedMany` | {n} appareils non vérifiés | validé | Idem, `{n}` ≥ 2 |
 | `status.refusedMark` | connexion refusée | validé | À côté du bouton signal tant que la dernière connexion refusée est listée |
 | `status.signalAnnounce` | Signal : | validé | Annoncé (`role="status"`) avant le nouveau libellé quand une modification ajoute ou retire une erreur (« Signal : 1 erreur ») |
 | `status.signalHint` | Afficher les erreurs et avertissements | validé | Infobulle (`title`) du bouton signal |
@@ -392,26 +393,62 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 
 ## playback
 
-Lecture et micro (Task 34, C9) : la ligne « Lecture » de la barre d’état et l’indicateur « Micro OK ». Les raisons sont renvoyées par `src/flow/signalPath.ts` ; la première s’affiche quand la lecture n’est pas possible. Toutes les formulations sont des brouillons.
+Lecture et micro (Task 34, C9) : la ligne « Lecture » de la barre d’état et l’indicateur « Micro OK ». Les raisons sont renvoyées par `src/flow/signalPath.ts` ; la première s’affiche quand la lecture n’est pas possible. Relues par tekuxwriter (nuit 2026-11-04).
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `playback.ready` | Lecture possible | à valider (tekuxwriter) | Barre d’état : le chemin du signal atteint une enceinte alimentée |
-| `playback.micOk` | Micro OK | à valider (tekuxwriter) | Barre d’état, à part de la lecture : un micro atteint une entrée micro d’une console alimentée, sans erreur |
-| `playback.noSource` | Aucune source de lecture dans le projet. | à valider (tekuxwriter) | Raison NO_SOURCE : aucune console avec lecture dans le projet |
-| `playback.sourceOff` | La lecture console est coupée. | à valider (tekuxwriter) | Raison SOURCE_OFF : la commande « Lecture console » est éteinte |
-| `playback.hostUnpowered` | La console n’est pas alimentée. | à valider (tekuxwriter) | Raison HOST_UNPOWERED (lecture et micro) : pas reliée au secteur ou éteinte |
-| `playback.noPath` | Aucun chemin de la console jusqu’à une enceinte. | à valider (tekuxwriter) | Raison NO_PATH : aucun câble de la console vers une entrée d’enceinte |
-| `playback.speakerUnpowered` | Une enceinte reçoit le signal mais n’est pas alimentée. | à valider (tekuxwriter) | Raison SPEAKER_UNPOWERED : enceinte câblée en signal, sans secteur ou éteinte |
-| `playback.ruleError` | Une erreur de câblage bloque le chemin. | à valider (tekuxwriter) | Raison RULE_ERROR (lecture et micro) : une erreur de règle sur un port du chemin |
-| `playback.noMic` | Aucun micro branché sur une entrée micro. | à valider (tekuxwriter) | Raison NO_MIC : aucun micro vérifié câblé sur une entrée micro |
-| `playback.micLost` | Plus de Micro OK. {reason} | à valider (tekuxwriter) | Task 39 : annoncé une fois quand « Micro OK » disparaît ; `{reason}` = la première raison du micro |
+| `playback.ready` | Lecture possible | validé | Barre d’état : le chemin du signal atteint une enceinte alimentée |
+| `playback.micOk` | Micro OK | validé | Barre d’état, à part de la lecture : un micro atteint une entrée micro d’une console alimentée, sans erreur |
+| `playback.noSource` | Aucune source de lecture dans le projet. | validé | Raison NO_SOURCE : aucune console avec lecture dans le projet |
+| `playback.sourceOff` | La lecture console est coupée. | validé | Raison SOURCE_OFF : la commande « Lecture console » est éteinte |
+| `playback.hostUnpowered` | La console n’est pas alimentée. | validé | Raison HOST_UNPOWERED (lecture et micro) : pas reliée au secteur ou éteinte |
+| `playback.noPath` | Aucun chemin de la console jusqu’à une enceinte. | validé | Raison NO_PATH : aucun câble de la console vers une entrée d’enceinte |
+| `playback.speakerUnpowered` | Une enceinte reçoit le signal mais n’est pas alimentée. | validé | Raison SPEAKER_UNPOWERED : enceinte câblée en signal, sans secteur ou éteinte |
+| `playback.ruleError` | Une erreur de câblage bloque le chemin. | validé | Raison RULE_ERROR (lecture et micro) : une erreur de règle sur un port du chemin |
+| `playback.noMic` | Aucun micro branché sur une entrée micro. | validé | Raison NO_MIC : aucun micro vérifié câblé sur une entrée micro |
+| `playback.micLost` | Plus de Micro OK. {reason} | validé | Task 39 : annoncé une fois quand « Micro OK » disparaît ; `{reason}` = la première raison du micro |
 
 ## Textes des règles (catalogue)
 
 Les titres et textes pédagogiques des règles R1–R8 sont des **données du catalogue**, pas des chaînes de `copy.ts` : `content/catalog.json`, `rules[].title_fr` (titre) et `rules[].teach_fr` (texte pédagogique), obligatoires (schéma zod, `npm run validate:catalog`). Les champs anglais `title` / `teach` restent pour le mode historique (`?legacy=1`). Le Mode Création ne montre que le français : `ruleTextFor` (`src/creation/shell/statusModel.ts`) est le seul endroit qui les choisit, pour la liste d'erreurs de la barre d'état (titre + texte), le refus épinglé sur la prise (titre) et les prises incompatibles de « Connecter à… » (titre, puis texte sur une 2e ligne).
 
-Statut : **brouillons du développeur (Task 29) à relire par tekuxwriter** (traductions fidèles de `title` / `teach`, sans nouvelle affirmation technique, sans clé `copy.ts`). Les 8 paires sont dans le catalogue ; la relecture se fait là (pas de copie ici, pour éviter deux sources).
+Statut : **brouillons du développeur (Task 29) à relire par tekuxwriter** (traductions fidèles de `title` / `teach`, sans nouvelle affirmation technique, sans clé `copy.ts`). Les 8 paires sont dans le catalogue ; la relecture se fait là (pas de copie ici, pour éviter deux sources). Les réécritures proposées par tekuxwriter (nuit 2026-11-04) sont dans la section « Propositions en attente (fondateur) » ci-dessous, non appliquées (coût : `rulesRev` des Essais).
+
+## Propositions en attente (fondateur)
+
+Propositions de tekuxwriter (nuit 2026-11-04), reportées ici depuis une note privée pour qu'elles vivent dans le dépôt. Rien de cette section n'est une chaîne de `copy.ts` (pas de clé).
+
+### Textes des règles R1–R8 (catalogue) : réécritures proposées, non appliquées
+
+Fidèles aux champs anglais `title` / `teach`, sans nouvelle affirmation technique ; « vous » comme dans le shell ; « = » gardé là où la source l'emploie (les étudiants le lisent comme une formule). **Non appliquées** : le hash `rulesRev` des Essais de l'ancien mode porte sur tout `catalog.rules`, donc un changement de texte rend tout design déjà gelé « différent ». À appliquer lors d'une révision voulue du catalogue (décision du fondateur sur ce coût), pas avant. Un essai d'application (vague 3b) a été annulé pour cette raison.
+
+| Règle | Champ | Actuel (brouillon Task 29) | Proposé | Pourquoi |
+|---|---|---|---|---|
+| R1 | title_fr | Connecteurs incompatibles | (garder) | Clair. |
+| R1 | teach_fr | Un XLR mâle s’emboîte dans un XLR femelle ; une fiche TT s’emboîte dans un jack TT. Si ça ne rentre pas, ce n’est pas le bon câble : il ne faut jamais forcer. | Un XLR mâle se branche sur un XLR femelle ; une fiche TT, sur un jack TT. Si ça ne rentre pas, ce n’est pas le bon câble : ne forcez jamais. | Plus court, consigne directe. |
+| R2 | title_fr | Types de signal incompatibles | (garder) | Clair. |
+| R2 | teach_fr | Un micro sur une entrée ligne est trop faible de 40 dB ; une ligne sur un préampli micro sature ; de l’AES3 dans une entrée analogique ne donne que du bruit ; du matériel grand public relié à du matériel pro sort 12 dB plus bas. | Un micro sur une entrée ligne arrive 40 dB trop faible ; une ligne sur un préampli micro sature ; de l’AES3 sur une entrée analogique ne donne que du bruit ; du matériel grand public sur du matériel pro arrive 12 dB trop bas. | Mêmes quatre faits et chiffres, tournures parallèles. |
+| R3 | title_fr | Sens de connexion incorrect | Sens du signal incorrect | Optionnel ; le texte parle du sens du signal. Trois tests e2e citent le titre actuel. |
+| R3 | teach_fr | Le signal circule dans un seul sens : source → destination. Deux sorties qui se battent peuvent endommager le matériel. | Le signal circule dans un seul sens : de la source vers la destination. Deux sorties reliées entre elles se combattent et peuvent endommager le matériel. | « qui se battent » est obscur sans dire que les sorties sont reliées. |
+| R4 | title_fr | Alimentation fantôme (+48 V) | (garder) | Cohérent avec le signal `phantom-48v`. |
+| R4 | teach_fr | Les micros à condensateur (U 87) restent muets sans alimentation fantôme +48 V. Les micros dynamiques (SM58, RE20) l’ignorent. Les micros à ruban d’époque peuvent être endommagés par elle. | Les micros à condensateur (U 87) restent muets sans alimentation fantôme +48 V. Les micros dynamiques (SM58, RE20) n’en tiennent pas compte. Les micros à ruban anciens (vintage) peuvent être endommagés par le +48 V. | « par elle » est lourd ; « vintage » est le mot que les étudiants rencontrent. |
+| R5 | title_fr | Voyant ON-AIR (tally) | (garder) | Clair, terme anglais gardé. |
+| R5 | teach_fr | Le voyant rouge est un contrat de sécurité : micro ouvert = ON-AIR allumé, sinon quelqu’un entrera en parlant pendant le journal. | Le voyant rouge est un contrat de sécurité : micro ouvert = ON-AIR allumé. Sinon, quelqu’un entrera en parlant pendant le journal. | Deux phrases : la règle, puis la conséquence. |
+| R6 | title_fr | Coupure des écoutes sur micro ouvert (larsen) | Coupure des écoutes quand le micro est ouvert (larsen) | « sur micro ouvert » est comprimé. |
+| R6 | teach_fr | Enceintes de studio + micro ouvert = larsen. Les consoles de diffusion coupent automatiquement les écoutes de la régie quand un micro est ouvert. | Enceintes de studio + micro ouvert = larsen (feedback). Les consoles de diffusion coupent automatiquement les écoutes de la régie quand votre micro est ouvert. | « feedback » est le terme que les étudiants rencontrent ; « votre » suit la source anglaise. |
+| R7 | title_fr | Mix-minus / N-1 : écho du retour | (garder) | Clair. |
+| R7 | teach_fr | Renvoyer à un invité sa propre voix, c’est la lui faire entendre en différé : inutilisable. Tout duplex a besoin d’un bus N-1. | Si vous renvoyez à un invité sa propre voix, il s’entend en différé : c’est inutilisable. Chaque duplex a besoin d’un bus N-1. | « la lui faire entendre » est difficile à lire ; mêmes faits. |
+| R8 | title_fr | Word clock maître/esclave et fréquence d’échantillonnage | Word clock : maître/esclave et fréquence d’échantillonnage (sample rate) | « Sample rate » est le libellé vu dans Réglages (contrôle `sample-rate`). |
+| R8 | teach_fr | Un audio numérique sans horloge commune = des clics et des craquements. Un seul maître (l’OCX HD ou l’interface), tous les autres en esclave. | Sans horloge commune, l’audio numérique fait des clics et des craquements. Un seul maître (l’OCX HD ou l’interface) ; tous les autres sont esclaves. | Se lit comme une phrase ; mêmes faits. |
+
+### Cinq propositions
+
+1. **Normalisation du volume toujours visible** : appliquée à la ronde finale (`listen.simple` = « Simulation simple : niveau relatif, volume normalisé, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions. »). Reste au fondateur de confirmer.
+2. **« Touchez »** : non utilisé. Le texte d'aide du choix de lieu est une seule chaîne pour la souris et le toucher ; un verbe propre à l'appareil demande du code (deux clés). « Choisissez … : clic, ou flèches puis Entrée » est livré. Si le fondateur veut « Touchez » sur tablette, c'est un changement de code.
+3. **« le balance » devient « la balance »** : appliqué en vague 3b dans `coverage.chipPopover`, `coverage.reasonBalance` et `listen.limitsMore`.
+4. **Pastille `coverage.chip` « estimation »** : à confirmer par le fondateur (décision du contrôleur de la vague 2) ; reste « à trancher (Oscar) ».
+5. **Un seul verbe pour « relier deux prises »** : aujourd'hui « Brancher » (câblage, historique), « Connecter à… » (dialogue, menu) et « Connecté : » (état du dialogue). Proposition pour une vague ultérieure : garder « Connecter à… » comme nom du dialogue, employer « Branché : » dans les deux lignes d'état et « Connexion refusée : » pour `patch.errorLabel`. Coût : environ sept lignes de test.
+
 
 ## boot
 
@@ -432,12 +469,12 @@ Le cube de vue (Task 17, C11) en haut à gauche de la vue 3D : libellés peints 
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `cube.face` | FACE | à valider | Libellé de la face avant du cube (côté public), aussi sur la flèche de la boussole |
-| `cube.arriere` | ARRIÈRE | à valider | Libellé de la face arrière |
-| `cube.gauche` | GAUCHE | à valider | Libellé de la face gauche (vue depuis le public) |
-| `cube.droite` | DROITE | à valider | Libellé de la face droite (vue depuis le public) |
-| `cube.dessus` | DESSUS | à valider | Libellé de la face du dessus |
-| `cube.dessous` | DESSOUS | à valider | Libellé de la face du dessous |
+| `cube.face` | FACE | validé | Libellé de la face avant du cube (côté public), aussi sur la flèche de la boussole |
+| `cube.arriere` | ARRIÈRE | validé | Libellé de la face arrière |
+| `cube.gauche` | GAUCHE | validé | Libellé de la face gauche (vue depuis le public) |
+| `cube.droite` | DROITE | validé | Libellé de la face droite (vue depuis le public) |
+| `cube.dessus` | DESSUS | validé | Libellé de la face du dessus |
+| `cube.dessous` | DESSOUS | validé | Libellé de la face du dessous |
 
 ## views
 
@@ -445,22 +482,22 @@ Les vues nommées (Task 18, C11, CA-05) : le sous-menu Vue › Vues (26 vues gro
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `views.menu` | Vues | à valider (tekuxwriter) | Vue ; sous-menu des 26 vues |
-| `views.faces` | Faces | à valider (tekuxwriter) | Titre du groupe des 6 faces dans le sous-menu |
-| `views.edges` | Arêtes | à valider (tekuxwriter) | Titre du groupe des 12 arêtes |
-| `views.corners` | Coins | à valider (tekuxwriter) | Titre du groupe des 8 coins |
-| `views.frame` | Cadrer la sélection | à valider (tekuxwriter) | Vue ; raccourci F (vue 3D) |
-| `views.home` | Vue d’ensemble | à valider (tekuxwriter) | Vue ; raccourci Alt+H ; retour à la vue d'ouverture du lieu |
-| `views.pick` | Choisir une vue… | à valider (tekuxwriter) | Vue ; raccourci V (vue 3D) ; ouvre le sélecteur |
-| `views.rotateLeftMenu` | Tourner la vue à gauche | à valider (tekuxwriter) | Vue ; raccourci Pavé num. 4 (vue 3D) ; quart de tour |
-| `views.rotateRightMenu` | Tourner la vue à droite | à valider (tekuxwriter) | Vue ; raccourci Pavé num. 6 (vue 3D) ; quart de tour |
-| `views.rotateLeft` | Tourner de 90° à gauche | à valider (tekuxwriter) | Nom accessible et infobulle du bouton ↺ à côté du cube |
-| `views.rotateRight` | Tourner de 90° à droite | à valider (tekuxwriter) | Nom accessible et infobulle du bouton ↻ à côté du cube (⌂ reprend `views.home`) |
-| `views.pickerTitle` | Choisir une vue | à valider (tekuxwriter) | Titre du sélecteur `V` (dialogue) |
-| `views.pickerHelp` | Flèches : changer de vue. Entrée : y aller. Échap : annuler. | à valider (tekuxwriter) | Sous le titre ; description du dialogue |
-| `views.cancel` | Annuler | à valider (tekuxwriter) | Bouton du sélecteur (même effet qu'Échap) |
-| `views.current` | Vue actuelle : {view}. | à valider (tekuxwriter) | Début de la description du sélecteur ; {view} = la vue la plus proche de la caméra (le focus part de sa case, marquée `aria-current`) |
-| `views.status` | Vue : {view} | à valider (tekuxwriter) | Barre d'état après le choix d'une vue (annoncé) ; {view} = nom de la vue |
+| `views.menu` | Vues | validé | Vue ; sous-menu des 26 vues |
+| `views.faces` | Faces | validé | Titre du groupe des 6 faces dans le sous-menu |
+| `views.edges` | Arêtes | validé | Titre du groupe des 12 arêtes |
+| `views.corners` | Coins | validé | Titre du groupe des 8 coins |
+| `views.frame` | Cadrer la sélection | validé | Vue ; raccourci F (vue 3D) |
+| `views.home` | Vue d’ensemble | validé | Vue ; raccourci Alt+H ; retour à la vue d'ouverture du lieu |
+| `views.pick` | Choisir une vue… | validé | Vue ; raccourci V (vue 3D) ; ouvre le sélecteur |
+| `views.rotateLeftMenu` | Tourner la vue à gauche | validé | Vue ; raccourci Pavé num. 4 (vue 3D) ; quart de tour |
+| `views.rotateRightMenu` | Tourner la vue à droite | validé | Vue ; raccourci Pavé num. 6 (vue 3D) ; quart de tour |
+| `views.rotateLeft` | Tourner de 90° à gauche | validé | Nom accessible et infobulle du bouton ↺ à côté du cube |
+| `views.rotateRight` | Tourner de 90° à droite | validé | Nom accessible et infobulle du bouton ↻ à côté du cube (⌂ reprend `views.home`) |
+| `views.pickerTitle` | Choisir une vue | validé | Titre du sélecteur `V` (dialogue) |
+| `views.pickerHelp` | Flèches : changer de vue. Entrée : y aller. Échap : annuler. | validé | Sous le titre ; description du dialogue |
+| `views.cancel` | Annuler | validé | Bouton du sélecteur (même effet qu'Échap) |
+| `views.current` | Vue actuelle : {view}. | validé | Début de la description du sélecteur ; {view} = la vue la plus proche de la caméra (le focus part de sa case, marquée `aria-current`) |
+| `views.status` | Vue : {view} | validé | Barre d'état après le choix d'une vue (annoncé) ; {view} = nom de la vue |
 
 ## walk
 
@@ -468,12 +505,12 @@ Marcher dans le lieu (Task 19, C11, S6) : Vue › Marcher (Maj+V, la vue 3D a le
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `walk.menu` | Marcher | à valider (tekuxwriter) | Vue ; case à cocher ; raccourci Maj+V (vue 3D) |
-| `walk.earSeated` | Hauteur d’oreille : assis 1,2 m | à valider (tekuxwriter) | Écoute ; bouton radio (défaut) ; aussi annoncé dans la barre d'état |
-| `walk.earStanding` | Hauteur d’oreille : debout 1,7 m | à valider (tekuxwriter) | Écoute ; bouton radio ; aussi annoncé dans la barre d'état |
-| `walk.statusOn` | Marche : flèches ou ZQSD (WASD en QWERTY) pour avancer et tourner, {walk} ou Échap pour revenir à l’orbite. | à valider (tekuxwriter) | Barre d'état à l'entrée en marche (annoncé) ; {walk} = « Maj+V » |
-| `walk.statusOff` | Retour à l’orbite | à valider (tekuxwriter) | Barre d'état à la sortie de la marche (annoncé) |
-| `walk.canvas` | Vue 3D en marche : flèches = avancer et tourner, glisser = regarder, {walk} ou Échap = revenir à l’orbite | à valider (tekuxwriter) | `aria-label` du canvas pendant la marche (remplace `shell.canvas`) |
+| `walk.menu` | Marcher | validé | Vue ; case à cocher ; raccourci Maj+V (vue 3D) |
+| `walk.earSeated` | Hauteur d’oreille : assis 1,2 m | validé | Écoute ; bouton radio (défaut) ; aussi annoncé dans la barre d'état |
+| `walk.earStanding` | Hauteur d’oreille : debout 1,7 m | validé | Écoute ; bouton radio ; aussi annoncé dans la barre d'état |
+| `walk.statusOn` | Marche : flèches ou ZQSD (WASD en QWERTY) pour avancer et tourner, {walk} ou Échap pour revenir à l’orbite. | validé | Barre d'état à l'entrée en marche (annoncé) ; {walk} = « Maj+V » |
+| `walk.statusOff` | Retour à l’orbite | validé | Barre d'état à la sortie de la marche (annoncé) |
+| `walk.canvas` | Vue 3D en marche : flèches = avancer et tourner, glisser = regarder, {walk} ou Échap = revenir à l’orbite | validé | `aria-label` du canvas pendant la marche (remplace `shell.canvas`) |
 
 ## points
 
@@ -481,14 +518,14 @@ Points d'écoute nommés (Task 20 ; seule la Régie est obligatoire). Lignes du 
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `points.regie` | Régie | à valider (tekuxwriter) | Point de la zone régie façade, sinon de la régie (control room), sinon centre du lieu aux 2/3 de la profondeur ; touche 1 (touches fixes : 2 = Premier rang, 3 = Fond de salle, même si un point manque) |
-| `points.premierRang` | Premier rang | à valider (tekuxwriter) | 2 m devant le bord de scène, dans le public |
-| `points.fondDeSalle` | Fond de salle | à valider (tekuxwriter) | 1 m avant le fond de la dernière zone public |
-| `points.centre` | Centre | à valider (tekuxwriter) | Salle vide neutre et décors 3D : seul point, au centre |
-| `points.here` | Ici | à valider (tekuxwriter) | Nom du point créé par Écoute › Écouter depuis ici : ligne de l’arbre, Vue › Aller au point d’écoute, sonde de couverture ; sans touche (Task 43b) |
-| `points.menu` | Aller au point d’écoute | à valider (tekuxwriter) | Vue ; sous-menu (boutons radio, raccourcis 1 / 2 / 3) |
-| `points.status` | Point d’écoute : {point} | à valider (tekuxwriter) | Barre d'état après le choix d'un point (annoncé) ; {point} = nom du point |
-| `points.none` | Pas de point d’écoute {n} dans ce lieu. | à valider (tekuxwriter) | Barre d'état : touche 2 ou 3 sans point derrière (ex. salle vide) ; {n} = la touche |
+| `points.regie` | Régie | validé | Point de la zone régie façade, sinon de la régie (control room), sinon centre du lieu aux 2/3 de la profondeur ; touche 1 (touches fixes : 2 = Premier rang, 3 = Fond de salle, même si un point manque) |
+| `points.premierRang` | Premier rang | validé | 2 m devant le bord de scène, dans le public |
+| `points.fondDeSalle` | Fond de salle | validé | 1 m avant le fond de la dernière zone public |
+| `points.centre` | Centre | validé | Salle vide neutre et décors 3D : seul point, au centre |
+| `points.here` | Ici | validé | Nom du point créé par Écoute › Écouter depuis ici : ligne de l’arbre, Vue › Aller au point d’écoute, sonde de couverture ; sans touche (Task 43b) |
+| `points.menu` | Aller au point d’écoute | validé | Vue ; sous-menu (boutons radio, raccourcis 1 / 2 / 3) |
+| `points.status` | Point d’écoute : {point} | validé | Barre d'état après le choix d'un point (annoncé) ; {point} = nom du point |
+| `points.none` | Pas de point d’écoute {n} dans ce lieu. | validé | Barre d'état : touche 2 ou 3 sans point derrière (ex. salle vide) ; {n} = la touche |
 
 ## inventory
 
@@ -496,37 +533,39 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `inventory.title` | Inventaire | à valider (tekuxwriter) | Titre du tiroir (h2) et nom accessible de la boîte de dialogue ; même mot que Matériel › Inventaire |
-| `inventory.tabs` | Catégories d’appareils | à valider (tekuxwriter) | Nom accessible de la liste d’onglets (tablist) ; les noms d’onglets sont les lignes `inventory.tab*` de copy.ts |
-| `inventory.hint` | Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser, ou glisser l’appareil dans la vue. {key} ou Échap : fermer ; dans « Filtrer », seul Échap ferme. | à valider (tekuxwriter) | Sous le titre ; {key} = touche de l’inventaire (« Espace » par défaut) |
-| `inventory.close` | Fermer | à valider (tekuxwriter) | Texte du bouton |
-| `inventory.closeLabel` | Fermer l’inventaire | à valider (tekuxwriter) | Nom accessible du bouton Fermer (contient le texte visible) |
-| `inventory.filter` | Filtrer | à valider (tekuxwriter) | Étiquette du champ de recherche au-dessus des onglets (aussi son nom pour les aides techniques) |
-| `inventory.filterNone` | Aucun appareil ne correspond | à valider (tekuxwriter) | Dit poliment (et affiché dans la liste) quand le filtre ne correspond à aucun appareil |
-| `inventory.filterResults` | Appareils qui correspondent | à valider (tekuxwriter) | Nom accessible de la liste quand un filtre est actif : elle réunit les appareils de tous les onglets |
-| `inventory.empty` | Aucun appareil disponible pour le moment. | à valider (tekuxwriter) | État vide d’un onglet sans appareil |
-| `inventory.badgeUnverified` | non vérifié | à valider (tekuxwriter) | Pastille sur un appareil proposé : onglet Bêta, arbre Projet et Propriétés une fois posé (Task 30) |
-| `inventory.tipUnverified` | Fiche proposée, pas encore vérifiée : comportement approximatif. | à valider (tekuxwriter) | Info-bulle d’un appareil Bêta (tiroir) et description de l’appareil posé (Propriétés) |
-| `inventory.missingTitle` | Appareils non rechargés | à valider (tekuxwriter) | Titre de la note quand un projet rouvert contient des appareils dont la fiche n’existe plus |
-| `inventory.missingBody` | La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés. | à valider (tekuxwriter) | Corps de la note ; les identifiants des appareils suivent en liste |
-| `inventory.unavailableTitle` | Projet non rouvert | à valider (tekuxwriter) | Titre de la note quand les fiches Bêta dont un projet enregistré a besoin n’ont pas pu être chargées (réseau, délai de 5 s) : le projet n’est ni ouvert ni modifié |
-| `inventory.unavailable` | Fiches Bêta indisponibles (réseau). Rechargez la page pour retrouver votre projet. | à valider (tekuxwriter) | Corps de la note, ligne d’état et ligne du sélecteur de lieu pour le même cas |
-| `inventory.unavailableOpen` | Fiches Bêta indisponibles (réseau). Le projet n’a pas été ouvert. Rechargez la page, puis rouvrez-le. | à valider (tekuxwriter) | Corps de la note et ligne d’état quand « Ouvrir… » n’a pas pu charger les fiches Bêta du projet choisi : rien n’est ouvert ni modifié |
-| `inventory.loadingBeta` | Chargement des fiches Bêta… | à valider (tekuxwriter) | Barre d’état pendant le chargement des fiches Bêta dont un projet enregistré a besoin (réouverture seulement) |
-| `inventory.loading` | Ouverture de l’inventaire… | à valider (tekuxwriter) | Barre d’état pendant le chargement du tiroir (première ouverture) |
-| `inventory.betaLoading` | Chargement… | à valider (tekuxwriter) | Dans l’onglet « Bêta » seulement, pendant la requête des fiches (le tiroir est déjà ouvert, les autres onglets servent) |
-| `inventory.betaUnavailable` | Fiches Bêta indisponibles (réseau). Rechargez la page pour les retrouver. | à valider (tekuxwriter) | Dans l’onglet « Bêta » si les fiches n’ont pas pu être chargées (hors ligne, pas de réponse en 5 s) ; les autres onglets ne sont pas touchés |
-| `inventory.loadFailed` | L’inventaire n’a pas pu s’ouvrir (réseau). Rechargez la page. | à valider (tekuxwriter) | Barre d’état si le module du tiroir ne se charge pas (hors ligne) |
-| `inventory.entry` | Ajouter {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique (Annuler / Rétablir) ; {device} = nom de l’appareil |
-| `inventory.tabMicros` | Micros | à valider (tekuxwriter) | Onglet ; Micros, d’après la catégorie « microphone » du catalogue ; les onglets vides sont masqués |
-| `inventory.tabConsoles` | Consoles | à valider (tekuxwriter) | Onglet ; Consoles, stageboxes, préamplis et contrôleurs d’écoute ; les onglets vides sont masqués |
-| `inventory.tabEnceintes` | Enceintes | à valider (tekuxwriter) | Onglet ; Enceintes amplifiées et moniteurs de studio ; les onglets vides sont masqués |
-| `inventory.tabSources` | Sources | à valider (tekuxwriter) | Onglet ; Ordinateurs et interfaces audio ; les onglets vides sont masqués |
-| `inventory.tabReseau` | Réseau | à valider (tekuxwriter) | Onglet ; Codecs et horloges maîtresses ; les onglets vides sont masqués |
-| `inventory.tabSecteur` | Secteur | à valider (tekuxwriter) | Onglet ; Alimentation secteur ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
-| `inventory.tabEclairage` | Éclairage | à valider (tekuxwriter) | Onglet ; Éclairage ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
-| `inventory.tabBeta` | Bêta | à valider (tekuxwriter) | Onglet ; Propositions seulement (jamais un appareil du catalogue), badge « non vérifié » (Task 30) ; masqué sans proposition ; les onglets vides sont masqués |
-| `inventory.tabAutres` | Autres | à valider (tekuxwriter) | Onglet ; Accessoires, câbles, signalisation, patchbays et catégories inconnues ; toujours en dernier ; les onglets vides sont masqués |
+| `inventory.title` | Inventaire | validé | Titre du tiroir (h2) et nom accessible de la boîte de dialogue ; même mot que Matériel › Inventaire |
+| `inventory.tabs` | Catégories d’appareils | validé | Nom accessible de la liste d’onglets (tablist) ; les noms d’onglets sont les lignes `inventory.tab*` de copy.ts |
+| `inventory.hint` | Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser, ou glisser l’appareil dans la vue. {key} ou Échap : fermer ; dans « Filtrer », seul Échap ferme. | validé | Sous le titre ; {key} = touche de l’inventaire (« Espace » par défaut) |
+| `inventory.close` | Fermer | validé | Texte du bouton |
+| `inventory.closeLabel` | Fermer l’inventaire | validé | Nom accessible du bouton Fermer (contient le texte visible) |
+| `inventory.filter` | Filtrer | validé | Étiquette du champ de recherche au-dessus des onglets (aussi son nom pour les aides techniques) ; sous 520 px le libellé est masqué (lu, pas vu) et le même mot sert de texte indicatif du champ (vague 2) ; la recherche compare le nom de l’appareil et le nom de son onglet |
+| `inventory.filterNone` | Aucun appareil ne correspond | validé | Dit poliment (zone `role=status`, forme courte) quand le filtre ne correspond à aucun appareil ; depuis la vague de nuit 2 il n’est plus affiché dans la liste (voir `filterNoneHelp`) |
+| `inventory.filterNoneHelp` | Aucun appareil ne correspond à « {q} ». Effacez le filtre ou essayez un autre mot (micro, console, enceinte). | validé | Vague de nuit 2, F : texte affiché dans la liste vide du tiroir (lu quand on y arrive, pas annoncé : la zone de statut dit la forme courte) ; `{q}` = le texte tapé, jamais interprété comme du HTML ; les trois mots (micro, console, enceinte) ne sont dans aucun nom d’appareil : ce sont des noms d’onglets, et la recherche du tiroir regarde le nom de l’appareil ET le nom de son onglet (vague 2c, C1), donc chacun trouve vraiment des appareils (test unitaire tiré de ce texte même) |
+| `inventory.filterClear` | Effacer le filtre | validé | Vague de nuit 2, F : bouton sous le texte précédent ; vide le champ, rend le focus au champ ; Espace l’active (ailleurs dans le tiroir Espace ferme) |
+| `inventory.filterResults` | Appareils qui correspondent | validé | Nom accessible de la liste quand un filtre est actif : elle réunit les appareils de tous les onglets |
+| `inventory.empty` | Aucun appareil disponible pour le moment. | validé | État vide d’un onglet sans appareil |
+| `inventory.badgeUnverified` | non vérifié | validé | Pastille sur un appareil proposé : onglet Bêta, arbre Projet et Propriétés une fois posé (Task 30) |
+| `inventory.tipUnverified` | Fiche proposée, pas encore vérifiée : comportement approximatif. | validé | Info-bulle d’un appareil Bêta (tiroir) et description de l’appareil posé (Propriétés) |
+| `inventory.missingTitle` | Appareils non rechargés | validé | Titre de la note quand un projet rouvert contient des appareils dont la fiche n’existe plus |
+| `inventory.missingBody` | La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés. | validé | Corps de la note ; les identifiants des appareils suivent en liste |
+| `inventory.unavailableTitle` | Projet non rouvert | validé | Titre de la note quand les fiches Bêta dont un projet enregistré a besoin n’ont pas pu être chargées (réseau, délai de 5 s) : le projet n’est ni ouvert ni modifié |
+| `inventory.unavailable` | Fiches Bêta indisponibles (réseau). Rechargez la page pour retrouver votre projet. | validé | Corps de la note, ligne d’état et ligne du sélecteur de lieu pour le même cas |
+| `inventory.unavailableOpen` | Fiches Bêta indisponibles (réseau). Le projet n’a pas été ouvert. Rechargez la page, puis rouvrez-le. | validé | Corps de la note et ligne d’état quand « Ouvrir… » n’a pas pu charger les fiches Bêta du projet choisi : rien n’est ouvert ni modifié |
+| `inventory.loadingBeta` | Chargement des fiches Bêta… | validé | Barre d’état pendant le chargement des fiches Bêta dont un projet enregistré a besoin (réouverture seulement) |
+| `inventory.loading` | Ouverture de l’inventaire… | validé | Barre d’état pendant le chargement du tiroir (première ouverture) |
+| `inventory.betaLoading` | Chargement… | validé | Dans l’onglet « Bêta » seulement, pendant la requête des fiches (le tiroir est déjà ouvert, les autres onglets servent) |
+| `inventory.betaUnavailable` | Fiches Bêta indisponibles (réseau). Rechargez la page pour les retrouver. | validé | Dans l’onglet « Bêta » si les fiches n’ont pas pu être chargées (hors ligne, pas de réponse en 5 s) ; les autres onglets ne sont pas touchés |
+| `inventory.loadFailed` | L’inventaire n’a pas pu s’ouvrir (réseau). Rechargez la page. | validé | Barre d’état si le module du tiroir ne se charge pas (hors ligne) |
+| `inventory.entry` | Ajouter {device} | validé | Libellé de l’entrée d’historique (Annuler / Rétablir) ; {device} = nom de l’appareil |
+| `inventory.tabMicros` | Micros | validé | Onglet ; Micros, d’après la catégorie « microphone » du catalogue ; les onglets vides sont masqués |
+| `inventory.tabConsoles` | Consoles | validé | Onglet ; Consoles, stageboxes, préamplis et contrôleurs d’écoute ; les onglets vides sont masqués |
+| `inventory.tabEnceintes` | Enceintes | validé | Onglet ; Enceintes amplifiées et moniteurs de studio ; les onglets vides sont masqués |
+| `inventory.tabSources` | Sources | validé | Onglet ; Ordinateurs et interfaces audio ; les onglets vides sont masqués |
+| `inventory.tabReseau` | Réseau | validé | Onglet ; Codecs et horloges maîtresses ; les onglets vides sont masqués |
+| `inventory.tabSecteur` | Secteur | validé | Onglet ; Alimentation secteur ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
+| `inventory.tabEclairage` | Éclairage | validé | Onglet ; Éclairage ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
+| `inventory.tabBeta` | Bêta | validé | Onglet ; Propositions seulement (jamais un appareil du catalogue), badge « non vérifié » (Task 30) ; masqué sans proposition ; les onglets vides sont masqués |
+| `inventory.tabAutres` | Autres | validé | Onglet ; Accessoires, câbles, signalisation, patchbays et catégories inconnues ; toujours en dernier ; les onglets vides sont masqués |
 
 ## Glossaire
 
@@ -540,18 +579,18 @@ Pose et déplacement d'un appareil dans la vue 3D (Task 24, CA-10). Choisir un a
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `placement.entryMove` | Déplacer {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’un glisser (Annuler / Rétablir) |
-| `placement.statusPlacing` | Cliquez pour poser {device} (Entrée : ici). R : pivoter. Alt ou G : libre. Échap : annuler. | à valider (tekuxwriter) | Barre d’état dès qu’un appareil est choisi (annoncé) |
-| `placement.cancelButton` | Annuler la pose | à valider (tekuxwriter) | Bouton visible en bas à gauche de la vue 3D tant qu’un appareil suit le pointeur (Task 43b) ; nom accessible ; cible d’au moins 44 px |
-| `placement.statusDragging` | Glissez dans la vue et relâchez pour poser {device}. Échap : annuler. | à valider (tekuxwriter) | Barre d’état dès qu’un appareil est glissé hors du tiroir (annoncé ; Task 43b) |
-| `placement.statusSnapFree` | Placement libre : position et rotation hors pas. G pour revenir à la grille. | à valider (tekuxwriter) | Annoncé à l’appui sur G pendant une pose ou un déplacement (Task 43b) ; la barre d’état affiche alors « Aimantation : libre » |
-| `placement.statusSnapGrid` | Aimantation à la grille : 0,25 m · 15°. G pour placer librement. | à valider (tekuxwriter) | Annoncé à l’appui sur G quand le verrou « libre » est levé (Task 43b) |
-| `placement.statusSnapLatchOff` | Verrou G levé. Alt maintenu : placement libre. | à valider (tekuxwriter) | Garde : annoncé si le verrou est levé alors que le placement reste libre par Alt, pour que rien ne parle de la grille ; la touche G seule ne peut pas produire ce cas aujourd’hui (Alt+G n’est lié à aucune action) (Task 43b, correctif) |
-| `placement.statusPlaced` | Posé : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après la pose (annoncé) |
-| `placement.statusMoved` | Déplacé : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un glisser (annoncé) |
-| `placement.statusCancelled` | Pose annulée. | à valider (tekuxwriter) | Barre d’état après Échap pendant la pose (annoncé) |
-| `placement.statusMoveCancelled` | Déplacement annulé : {device} est resté en place. | à valider (tekuxwriter) | Barre d’état après Échap pendant un glisser (annoncé) |
-| `placement.statusRefused` | Impossible de poser {device}. | à valider (tekuxwriter) | Barre d’état si l’appareil ne peut pas être posé (annoncé) |
+| `placement.entryMove` | Déplacer {device} | validé | Libellé de l’entrée d’historique d’un glisser (Annuler / Rétablir) |
+| `placement.statusPlacing` | Cliquez pour poser {device} (Entrée : ici). R : pivoter. Alt ou G : libre. Échap : annuler. | validé | Barre d’état dès qu’un appareil est choisi (annoncé) |
+| `placement.cancelButton` | Annuler la pose | validé | Bouton visible en bas à gauche de la vue 3D tant qu’un appareil suit le pointeur (Task 43b) ; nom accessible ; cible d’au moins 44 px |
+| `placement.statusDragging` | Glissez dans la vue et relâchez pour poser {device}. Échap : annuler. | validé | Barre d’état dès qu’un appareil est glissé hors du tiroir (annoncé ; Task 43b) |
+| `placement.statusSnapFree` | Placement libre : position et rotation hors pas. G pour revenir à la grille. | validé | Annoncé à l’appui sur G pendant une pose ou un déplacement (Task 43b) ; la barre d’état affiche alors « Aimantation : libre » |
+| `placement.statusSnapGrid` | Aimantation à la grille : 0,25 m · 15°. G pour placer librement. | validé | Annoncé à l’appui sur G quand le verrou « libre » est levé (Task 43b) |
+| `placement.statusSnapLatchOff` | Verrou G levé. Alt maintenu : placement libre. | validé | Garde : annoncé si le verrou est levé alors que le placement reste libre par Alt, pour que rien ne parle de la grille ; la touche G seule ne peut pas produire ce cas aujourd’hui (Alt+G n’est lié à aucune action) (Task 43b, correctif) |
+| `placement.statusPlaced` | Posé : {device}. {undo} pour annuler. | validé | Barre d’état après la pose (annoncé) |
+| `placement.statusMoved` | Déplacé : {device}. {undo} pour annuler. | validé | Barre d’état après un glisser (annoncé) |
+| `placement.statusCancelled` | Pose annulée. | validé | Barre d’état après Échap pendant la pose (annoncé) |
+| `placement.statusMoveCancelled` | Déplacement annulé : {device} est resté en place. | validé | Barre d’état après Échap pendant un glisser (annoncé) |
+| `placement.statusRefused` | Impossible de poser {device}. | validé | Barre d’état si l’appareil ne peut pas être posé (annoncé) |
 
 ## edit
 
@@ -559,16 +598,16 @@ Pivoter, dupliquer et supprimer l'appareil sélectionné (Task 25, CA-11). R tou
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `edit.entryRotate` | Pivoter {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’un pas de rotation (Annuler / Rétablir) |
-| `edit.entryDuplicate` | Dupliquer {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’une duplication |
-| `edit.entryDelete` | Supprimer {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’une suppression (l’appareil et ses câbles) |
-| `edit.statusRotated` | Pivoté : {device}, {deg}°. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un pas de rotation (annoncé) |
-| `edit.statusGhostYaw` | Orientation : {deg}°. | à valider (tekuxwriter) | Barre d’état après R pendant une pose (annoncé) |
-| `edit.statusDuplicated` | Dupliqué : {device}. La copie est sélectionnée. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après Ctrl+D (annoncé) |
-| `edit.statusDeleted` | Supprimé : {device}, avec ses câbles. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après Suppr (annoncé) |
-| `edit.statusNoPose` | {device} n’a pas de position : impossible de le pivoter ou de le dupliquer. | à valider (tekuxwriter) | Barre d’état si l’appareil n’a pas de position enregistrée (annoncé) |
-| `edit.statusWhilePlacing` | Terminez ou annulez la pose d’abord (Échap). | à valider (tekuxwriter) | Barre d’état si Suppr ou Ctrl+D est pressé pendant une pose : l’appareil sélectionné n’est pas touché (annoncé) |
-| `edit.statusRefused` | Modification impossible pour {device}. | à valider (tekuxwriter) | Barre d’état si le rig refuse la modification (annoncé) |
+| `edit.entryRotate` | Pivoter {device} | validé | Libellé de l’entrée d’historique d’un pas de rotation (Annuler / Rétablir) |
+| `edit.entryDuplicate` | Dupliquer {device} | validé | Libellé de l’entrée d’historique d’une duplication |
+| `edit.entryDelete` | Supprimer {device} | validé | Libellé de l’entrée d’historique d’une suppression (l’appareil et ses câbles) |
+| `edit.statusRotated` | Pivoté : {device}, {deg}°. {undo} pour annuler. | validé | Barre d’état après un pas de rotation (annoncé) |
+| `edit.statusGhostYaw` | Orientation : {deg}°. | validé | Barre d’état après R pendant une pose (annoncé) |
+| `edit.statusDuplicated` | Dupliqué : {device}. La copie est sélectionnée. {undo} pour annuler. | validé | Barre d’état après Ctrl+D (annoncé) |
+| `edit.statusDeleted` | Supprimé : {device}, avec ses câbles. {undo} pour annuler. | validé | Barre d’état après Suppr (annoncé) |
+| `edit.statusNoPose` | {device} n’a pas de position : impossible de le pivoter ou de le dupliquer. | validé | Barre d’état si l’appareil n’a pas de position enregistrée (annoncé) |
+| `edit.statusWhilePlacing` | Terminez ou annulez la pose d’abord (Échap). | validé | Barre d’état si Suppr ou Ctrl+D est pressé pendant une pose : l’appareil sélectionné n’est pas touché (annoncé) |
+| `edit.statusRefused` | Modification impossible pour {device}. | validé | Barre d’état si le rig refuse la modification (annoncé) |
 
 ## feedback
 
@@ -576,7 +615,7 @@ Retour sur un clic qui ne touche rien (Task 25, CA-12) : un message bref (`role=
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `feedback.missed` | Rien ici : clique un appareil ou ouvre l’inventaire ({key}). | à valider (tekuxwriter) | Message bref après un clic sur le sol vide, le ciel ou un appareil masqué ; la sélection est levée |
+| `feedback.missed` | Rien ici : cliquez sur un appareil ou ouvrez l’inventaire ({key}). | validé | Message bref après un clic sur le sol vide, le ciel ou un appareil masqué ; la sélection est levée |
 
 ## patch
 
@@ -584,18 +623,18 @@ Câbler au clic sur les prises de la scène (Task 26, CA-19, CA-20). Survoler un
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `patch.hoverLabel` | {port} · {connector} · {signal} | à valider (tekuxwriter) | Étiquette au survol d’une prise (jamais permanente) ; {port} = nom de la prise, {connector} = connecteur, {signal} = type de signal |
-| `patch.entryConnect` | Brancher {a} à {b} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’un branchement |
-| `patch.entryUnplug` | Débrancher {a} de {b} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’un débranchement |
-| `patch.statusPending` | {port} choisie. Cliquez une prise verte pour brancher le câble, Échap pour annuler. | à valider (tekuxwriter) | Barre d’état après le clic sur la première prise (annoncé) |
-| `patch.statusCancelled` | Câblage annulé. | à valider (tekuxwriter) | Barre d’état après Échap ou un second clic sur la même prise (annoncé) |
-| `patch.statusConnected` | Branché : {a} à {b}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un branchement réussi (annoncé) ; {undo} = touche d’annulation |
-| `patch.statusUnplugged` | Débranché : {a} de {b}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après « Débrancher » sur une prise (annoncé) |
-| `patch.errorLabel` | Branchement refusé : {title} | à valider (tekuxwriter) | Message épinglé sur la deuxième prise quand le branchement est refusé (`role="alert"`) ; {title} = titre de la règle |
-| `patch.offerText` | {port} est branchée à {other}. | à valider (tekuxwriter) | Bulle sur une prise déjà branchée ; propose « Débrancher » |
-| `patch.offerGroup` | Prise déjà branchée | à valider (tekuxwriter) | Nom accessible de la bulle « Débrancher » |
-| `patch.offerUnplug` | Débrancher | à valider (tekuxwriter) | Texte visible du bouton de la bulle |
-| `patch.offerName` | Débrancher {port} de {other} | à valider (tekuxwriter) | Nom complet du bouton de la bulle |
+| `patch.hoverLabel` | {port} · {connector} · {signal} | validé | Étiquette au survol d’une prise (jamais permanente) ; {port} = nom de la prise, {connector} = connecteur, {signal} = type de signal |
+| `patch.entryConnect` | Brancher {a} à {b} | validé | Libellé de l’entrée d’historique d’un branchement |
+| `patch.entryUnplug` | Débrancher {a} de {b} | validé | Libellé de l’entrée d’historique d’un débranchement |
+| `patch.statusPending` | {port} choisie. Cliquez sur une prise verte pour brancher le câble, Échap pour annuler. | validé | Barre d’état après le clic sur la première prise (annoncé) |
+| `patch.statusCancelled` | Câblage annulé. | validé | Barre d’état après Échap ou un second clic sur la même prise (annoncé) |
+| `patch.statusConnected` | Branché : {a} à {b}. {undo} pour annuler. | validé | Barre d’état après un branchement réussi (annoncé) ; {undo} = touche d’annulation |
+| `patch.statusUnplugged` | Débranché : {a} de {b}. {undo} pour annuler. | validé | Barre d’état après « Débrancher » sur une prise (annoncé) |
+| `patch.errorLabel` | Branchement refusé : {title} | validé | Message épinglé sur la deuxième prise quand le branchement est refusé (`role="alert"`) ; {title} = titre de la règle |
+| `patch.offerText` | {port} est branchée à {other}. | validé | Bulle sur une prise déjà branchée ; propose « Débrancher » |
+| `patch.offerGroup` | Prise déjà branchée | validé | Nom accessible de la bulle « Débrancher » |
+| `patch.offerUnplug` | Débrancher | validé | Texte visible du bouton de la bulle |
+| `patch.offerName` | Débrancher {port} de {other} | validé | Nom complet du bouton de la bulle |
 
 ## connect
 
@@ -603,19 +642,19 @@ Câbler au clic sur les prises de la scène (Task 26, CA-19, CA-20). Survoler un
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `connect.title` | Connecter à… | à valider (tekuxwriter) | Titre de la boîte de dialogue |
-| `connect.body` | Depuis {port}. Tapez pour filtrer, flèches haut et bas pour choisir, Entrée pour brancher, Échap pour fermer. | à valider (tekuxwriter) | Sous le titre, lue comme sa description ; {port} = la prise de départ avec son connecteur et son signal |
-| `connect.filter` | Filtrer | à valider (tekuxwriter) | Libellé du champ de filtre (saisie qui réduit la liste) |
-| `connect.listName` | Prises compatibles | à valider (tekuxwriter) | Nom de la liste des prises compatibles |
-| `connect.countOne` | 1 prise compatible. | à valider (tekuxwriter) | Annonce (polite) du nombre de prises après une frappe |
-| `connect.countMany` | {n} prises compatibles. | à valider (tekuxwriter) | Idem ; {n} = nombre |
-| `connect.none` | Aucune prise compatible n’est libre. | à valider (tekuxwriter) | Rien de compatible du tout (aucun filtre) : dit en clair dans la boîte |
-| `connect.noMatch` | Aucune prise ne correspond à « {query} ». | à valider (tekuxwriter) | Le filtre ne retient rien ; {query} = le texte tapé |
-| `connect.rejectedToggle` | Incompatibles ({n}) | à valider (tekuxwriter) | Bouton qui déplie le groupe des prises refusées ; {n} = nombre |
-| `connect.rejectedHint` | Ces prises ne peuvent pas recevoir ce câble ; chacune dit pourquoi. | à valider (tekuxwriter) | Phrase au-dessus du groupe des prises refusées (elles ne se choisissent pas) |
-| `connect.cancel` | Annuler | à valider (tekuxwriter) | Bouton qui ferme sans brancher |
-| `connect.statusConnected` | Connecté : {a} à {b}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un branchement par la boîte (annoncé poliment, une fois) ; {a} / {b} = « Appareil (id) · prise », {undo} = touche d’annulation |
-| `connect.statusClosedStale` | Connecter à… fermé : le matériel a changé. Rouvrez-le pour voir les prises à jour. | à valider (tekuxwriter) | Barre d’état quand la boîte se ferme parce que le matériel a changé pendant qu’elle était ouverte |
+| `connect.title` | Connecter à… | validé | Titre de la boîte de dialogue |
+| `connect.body` | Depuis {port}. Tapez pour filtrer, flèches haut et bas pour choisir, Entrée pour brancher, Échap pour fermer. | validé | Sous le titre, lue comme sa description ; {port} = la prise de départ avec son connecteur et son signal |
+| `connect.filter` | Filtrer | validé | Libellé du champ de filtre (saisie qui réduit la liste) |
+| `connect.listName` | Prises compatibles | validé | Nom de la liste des prises compatibles |
+| `connect.countOne` | 1 prise compatible. | validé | Annonce (polite) du nombre de prises après une frappe |
+| `connect.countMany` | {n} prises compatibles. | validé | Idem ; {n} = nombre |
+| `connect.none` | Aucune prise compatible n’est libre. | validé | Rien de compatible du tout (aucun filtre) : dit en clair dans la boîte |
+| `connect.noMatch` | Aucune prise ne correspond à « {query} ». | validé | Le filtre ne retient rien ; {query} = le texte tapé |
+| `connect.rejectedToggle` | Incompatibles ({n}) | validé | Bouton qui déplie le groupe des prises refusées ; {n} = nombre |
+| `connect.rejectedHint` | Ces prises ne peuvent pas recevoir ce câble ; chacune dit pourquoi. | validé | Phrase au-dessus du groupe des prises refusées (elles ne se choisissent pas) |
+| `connect.cancel` | Annuler | validé | Bouton qui ferme sans brancher |
+| `connect.statusConnected` | Connecté : {a} à {b}. {undo} pour annuler. | validé | Barre d’état après un branchement par la boîte (annoncé poliment, une fois) ; {a} / {b} = « Appareil (id) · prise », {undo} = touche d’annulation |
+| `connect.statusClosedStale` | Connecter à… fermé : le matériel a changé. Rouvrez-le pour voir les prises à jour. | validé | Barre d’état quand la boîte se ferme parce que le matériel a changé pendant qu’elle était ouverte |
 
 Chaque prise refusée du groupe « Incompatibles » affiche sous son nom deux lignes qui ne sont pas des clés `copy.ts` : le titre de la règle (`title_fr`, en rouge) puis son texte pédagogique (`teach_fr`, classe `.cr-connect-teach`, Task 29), tous deux lus dans le catalogue (voir « Textes des règles »).
 
@@ -625,14 +664,14 @@ Câbles colorés par type de signal (Task 27, C18). La couleur n’est jamais le
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `cables.legendTitle` | Légende des câbles | à valider (tekuxwriter) | Titre visible du bloc légende (bas du panneau Propriétés), aussi nom accessible de la liste |
-| `cables.legendCollapse` | Replier la légende des câbles | à valider (tekuxwriter) | Nom accessible du bouton de la légende quand elle est dépliée (il la replie) |
-| `cables.legendExpand` | Déplier la légende des câbles | à valider (tekuxwriter) | Nom accessible du bouton quand elle est repliée (il la déplie) |
-| `cables.legendRail` | Légende des câbles : déplier Propriétés | à valider (tekuxwriter) | Nom accessible et infobulle du bouton de la légende dans le rail de Propriétés repliée (visible seulement s’il y a un câble) : il déplie le panneau, légende ouverte |
-| `cables.dashed` | pointillés | à valider (tekuxwriter) | Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus) |
-| `cables.hover` | {a} → {b} · {signal} | à valider (tekuxwriter) | Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal |
-| `cables.hoverLength` | {a} → {b} · {signal} · {length} | à valider (tekuxwriter) | Le même texte avec la longueur du câble tracé ; {length} = « 6,4 m » |
-| `cables.length` | {n} m | à valider (tekuxwriter) | Une longueur de câble en mètres ; {n} = un chiffre après la virgule (« 6,4 ») |
+| `cables.legendTitle` | Légende des câbles | validé | Titre visible du bloc légende (bas du panneau Propriétés), aussi nom accessible de la liste |
+| `cables.legendCollapse` | Replier la légende des câbles | validé | Nom accessible du bouton de la légende quand elle est dépliée (il la replie) |
+| `cables.legendExpand` | Déplier la légende des câbles | validé | Nom accessible du bouton quand elle est repliée (il la déplie) |
+| `cables.legendRail` | Légende des câbles : déplier Propriétés | validé | Nom accessible et infobulle du bouton de la légende dans le rail de Propriétés repliée (visible seulement s’il y a un câble) : il déplie le panneau, légende ouverte |
+| `cables.dashed` | pointillés | validé | Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus) |
+| `cables.hover` | {a} → {b} · {signal} | validé | Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal |
+| `cables.hoverLength` | {a} → {b} · {signal} · {length} | validé | Le même texte avec la longueur du câble tracé ; {length} = « 6,4 m » |
+| `cables.length` | {n} m | validé | Une longueur de câble en mètres ; {n} = un chiffre après la virgule (« 6,4 ») |
 
 ## connector
 
@@ -640,134 +679,141 @@ Noms français des connecteurs du catalogue (`connectorTypes[].id`), repris dans
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `connector.xlr3-m` | XLR3 mâle | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.xlr3-f` | XLR3 femelle | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.xlr5-m` | XLR5 mâle (DMX) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.xlr5-f` | XLR5 femelle (DMX) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.trs-quarter` | Jack TRS 6,35 mm (symétrique / stéréo) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.ts-quarter` | Jack TS 6,35 mm (asymétrique) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.trs-35mm` | Mini-jack TRS 3,5 mm | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.rca` | RCA / cinch | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.rj45` | RJ45 (Cat5e/6) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.ethercon` | Neutrik etherCON (RJ45 renforcé) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.speakon-nl4` | Neutrik Speakon NL4 | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.powercon-blue` | Neutrik powerCON (bleu, entrée secteur) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.powercon-true1` | Neutrik powerCON TRUE1 | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.iec-c13` | IEC C13 (fiche secteur) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.iec-c14` | IEC C14 (embase secteur) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.schuko-plug` | Fiche Schuko (CEE 7/7) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.schuko-socket` | Prise murale Schuko (CEE 7/3) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.bnc` | BNC 75 Ω (word clock / MADI coaxial) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.tt-bantam` | TT / Bantam 4,4 mm (baie de brassage) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.dsub25` | D-sub 25 (TASCAM analogique / AES59 numérique) | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.toslink` | TOSLINK optique | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.usb-a` | USB Type-A | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.usb-b` | USB Type-B | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.usb-c` | USB Type-C / Thunderbolt 3 | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.digilink` | Avid DigiLink | à valider (tekuxwriter) | Étiquette de prise |
-| `connector.gpio-terminal` | Bornier GPIO / port logique D-sub | à valider (tekuxwriter) | Étiquette de prise |
+| `connector.xlr3-m` | XLR3 mâle | validé | Étiquette de prise |
+| `connector.xlr3-f` | XLR3 femelle | validé | Étiquette de prise |
+| `connector.xlr5-m` | XLR5 mâle (DMX) | validé | Étiquette de prise |
+| `connector.xlr5-f` | XLR5 femelle (DMX) | validé | Étiquette de prise |
+| `connector.trs-quarter` | Jack TRS 6,35 mm (symétrique / stéréo) | validé | Étiquette de prise |
+| `connector.ts-quarter` | Jack TS 6,35 mm (asymétrique) | validé | Étiquette de prise |
+| `connector.trs-35mm` | Mini-jack TRS 3,5 mm | validé | Étiquette de prise |
+| `connector.rca` | RCA / cinch | validé | Étiquette de prise |
+| `connector.rj45` | RJ45 (Cat5e/6) | validé | Étiquette de prise |
+| `connector.ethercon` | Neutrik etherCON (RJ45 renforcé) | validé | Étiquette de prise |
+| `connector.speakon-nl4` | Neutrik Speakon NL4 | validé | Étiquette de prise |
+| `connector.powercon-blue` | Neutrik powerCON (bleu, entrée secteur) | validé | Étiquette de prise |
+| `connector.powercon-true1` | Neutrik powerCON TRUE1 | validé | Étiquette de prise |
+| `connector.iec-c13` | IEC C13 (fiche secteur) | validé | Étiquette de prise |
+| `connector.iec-c14` | IEC C14 (embase secteur) | validé | Étiquette de prise |
+| `connector.schuko-plug` | Fiche Schuko (CEE 7/7) | validé | Étiquette de prise |
+| `connector.schuko-socket` | Prise murale Schuko (CEE 7/3) | validé | Étiquette de prise |
+| `connector.bnc` | BNC 75 Ω (word clock / MADI coaxial) | validé | Étiquette de prise |
+| `connector.tt-bantam` | TT / Bantam 4,4 mm (baie de brassage) | validé | Étiquette de prise |
+| `connector.dsub25` | D-sub 25 (TASCAM analogique / AES59 numérique) | validé | Étiquette de prise |
+| `connector.toslink` | TOSLINK optique | validé | Étiquette de prise |
+| `connector.usb-a` | USB Type-A | validé | Étiquette de prise |
+| `connector.usb-b` | USB Type-B | validé | Étiquette de prise |
+| `connector.usb-c` | USB Type-C / Thunderbolt 3 | validé | Étiquette de prise |
+| `connector.digilink` | Avid DigiLink | validé | Étiquette de prise |
+| `connector.gpio-terminal` | Bornier GPIO / port logique D-sub | validé | Étiquette de prise |
 
 ## coverage
 
-Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statistiques et les mentions d’honnêteté. Aucun score d’intelligibilité, aucune limite réglementaire : niveaux relatifs seulement (brief §5). Toutes les formulations sont des brouillons.
+Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statistiques et les mentions d’honnêteté. Aucun score d’intelligibilité, aucune limite réglementaire : niveaux relatifs seulement (brief §5). Relues par tekuxwriter (nuit 2026-11-04). Les mentions d’honnêteté du brief §5 ne sont PAS toutes restées mot pour mot : la vague de nuit 2 a changé la pastille (« relatif » devient « estimation », encore « à trancher (Oscar) ») et les deux mentions de source (`sourceKb`, `sourceDeduced`) ; la ronde finale a encore changé `sourceKb` (« base de connaissances »). Le détail daté est dans la note du brief §5.
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `coverage.panelTitle` | Couverture | à valider (tekuxwriter) | Titre du bloc, bas de Propriétés (jamais sur la vue 3D) |
-| `coverage.panelCollapse` | Replier la couverture | à valider (tekuxwriter) | Nom du bouton quand le bloc est déplié |
-| `coverage.panelExpand` | Déplier la couverture | à valider (tekuxwriter) | Nom du bouton quand le bloc est replié |
-| `coverage.unit` | dB relatif (0 = point le plus fort) | à valider (tekuxwriter) | Unité de l’échelle. Mot pour mot (brief §5) |
-| `coverage.method` | somme énergétique, champ direct | à valider (tekuxwriter) | Ce que le calcul fait. Mot pour mot (brief §5) |
-| `coverage.chip` | relatif | à valider (tekuxwriter) | Pastille de fidélité (brief §5) |
-| `coverage.chipName` | Fidélité du calcul : relatif | à valider (tekuxwriter) | Nom accessible de la pastille (bouton qui ouvre l’explication) |
-| `coverage.chipPopover` | Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. Le balance de la console change l’équilibre affiché comme le son (il baisse le côté opposé) ; le fader master, commun à toutes les enceintes, ne change pas un niveau relatif ; le mute ou −inf retire les enceintes ; l’origine de l’enceinte est son point de pose. | à valider (tekuxwriter) | Explication de la pastille |
-| `coverage.legendTitle` | Échelle | à valider (tekuxwriter) | Titre de la légende des couleurs |
-| `coverage.legendBin` | {from} à {to} dB | à valider (tekuxwriter) | Une ligne de légende ; {from} / {to} = bornes de la classe de 3 dB |
-| `coverage.legendLast` | {from} dB et moins | à valider (tekuxwriter) | Dernière ligne de légende (classe ouverte vers le bas) |
-| `coverage.legendCount` | {n} points | à valider (tekuxwriter) | Nombre de points dans la classe (texte lu avec la couleur) |
-| `coverage.hatched` | Hachuré : interférences non modélisées | à valider (tekuxwriter) | Ligne de légende des points à recouvrement (deux enceintes à 6 dB ou moins l’une de l’autre). Mot pour mot (brief §5) |
-| `coverage.hatchedCount` | {n} points concernés | à valider (tekuxwriter) | Nombre de points hachurés |
-| `coverage.aim` | Trait clair : axe de chaque enceinte audible | à valider (tekuxwriter) | Légende des traits d’axe tracés dans la vue 3D tant que la couverture est affichée |
-| `coverage.frontCaveat` | Face avant du modèle 3D non vérifiée pour {names} : le trait indique l’axe acoustique, pas forcément la face du modèle. | à valider (tekuxwriter) | Affichée sous le bloc Couverture **seulement** quand une enceinte prise en compte n’a pas de `modelFront` dans le catalogue (aujourd’hui : le Yamaha DBR12) ; {names} = identifiants d’instance, comme la liste des enceintes. Plus de note pour le K12.2 et le 8030C (face avant mesurée sur le fichier et corrigée par le spawner, journal L34). Ne dit pas que le modèle a tort ou raison, ni qu’il est « correct » |
-| `coverage.sourceLine` | Couverture : {sources} | à valider (tekuxwriter) | Provenance des angles ; {sources} = liste construite avec les clés ci-dessous |
-| `coverage.sourceKb` | données KB | à valider (tekuxwriter) | Angle issu de la base de connaissances |
-| `coverage.sourceNominal` | valeur nominale | à valider (tekuxwriter) | Angle par défaut 90° × 60° (aucune donnée constructeur) |
-| `coverage.sourceDatasheet` | fiche constructeur | à valider (tekuxwriter) | Angle issu d’une fiche constructeur |
-| `coverage.sourceDeduced` | V déduit | à valider (tekuxwriter) | À ajouter à « données KB » quand l’angle vertical est une déduction (K12.2 : « axisymmetric ») |
-| `coverage.speakersTitle` | Enceintes prises en compte | à valider (tekuxwriter) | Titre de la liste des enceintes du calcul |
-| `coverage.speakerRow` | {name} : {h}° × {v}° | à valider (tekuxwriter) | Une enceinte ; {name} = identifiant, {h} / {v} = couverture horizontale / verticale |
-| `coverage.statsTitle` | Statistiques | à valider (tekuxwriter) | Titre du bloc de statistiques (équivalent texte des points) |
-| `coverage.statMin` | Minimum | à valider (tekuxwriter) | Statistique |
-| `coverage.statMax` | Maximum | à valider (tekuxwriter) | Statistique |
-| `coverage.statMean` | Moyenne | à valider (tekuxwriter) | Statistique |
-| `coverage.statSd` | Écart-type | à valider (tekuxwriter) | Statistique (écart-type de population) |
-| `coverage.statCount` | Points | à valider (tekuxwriter) | Nombre de points d’écoute calculés |
-| `coverage.statStep` | Pas de la grille | à valider (tekuxwriter) | Distance entre deux points d’écoute |
-| `coverage.dbValue` | {v} dB | à valider (tekuxwriter) | Un niveau relatif ; {v} = nombre |
-| `coverage.mValue` | {v} m | à valider (tekuxwriter) | Une distance ; {v} = nombre |
-| `coverage.pointsTitle` | Niveau en un point | à valider (tekuxwriter) | Titre de la liste des points d’écoute nommés et du point épinglé |
-| `coverage.pointRow` | {name} : {value} | à valider (tekuxwriter) | Un point nommé ; {value} = niveau relatif |
-| `coverage.pointSilent` | aucun son | à valider (tekuxwriter) | Valeur d’un point qui ne reçoit rien |
-| `coverage.pin` | Épingler {name} | à valider (tekuxwriter) | Nom du bouton d’un point nommé ; {name} = Régie… |
-| `coverage.pinned` | Point épinglé ({x} m ; {z} m) : {value} | à valider (tekuxwriter) | Valeur du point cliqué dans la vue 3D ; {x} / {z} = position |
-| `coverage.unpin` | Retirer l’épingle | à valider (tekuxwriter) | Bouton |
-| `coverage.pinHint` | Cliquez un point coloré dans la vue 3D pour épingler son niveau. | à valider (tekuxwriter) | Aide sous la liste |
-| `coverage.probeAbove` | Un point nommé peut dépasser 0 dB : l’échelle est celle de la grille. | à valider (tekuxwriter) | Note sous la liste des points quand un point nommé est plus fort que le point le plus fort de la grille |
-| `coverage.splPending` | ≈ dB SPL estimé : non calculé (estimation pédagogique, formule non sourcée). | à valider (tekuxwriter) | Seulement si chaque enceinte a une sensibilité et un SPL max sourcés (aucune aujourd’hui : jamais affiché) |
-| `coverage.computing` | Calcul de la couverture… | à valider (tekuxwriter) | État pendant le calcul |
-| `coverage.failed` | Calcul de la couverture indisponible (réessayez). | à valider (tekuxwriter) | Le Worker n’a pas répondu ou a refusé le calcul |
-| `coverage.hiddenFolded` | Couverture masquée : Propriétés est replié. | à valider (tekuxwriter) | Annoncé une fois quand on replie Propriétés alors que la couverture est cochée (les points reviennent au dépliage) |
-| `coverage.noAudience` | Pas de public dans ce lieu : aucune zone public ni régie à couvrir. Rien à calculer. | à valider (tekuxwriter) | Lieu sans zone « audience » ni « foh » |
-| `coverage.noSource` | Aucune enceinte audible : {reason} | à valider (tekuxwriter) | Aucun son à montrer ; {reason} = une raison ci-dessous |
-| `coverage.reasonNotFed` | aucune enceinte ne reçoit de signal ({why}) | à valider (tekuxwriter) | Le chemin du signal n’atteint aucune enceinte ; {why} = la première raison de la lecture |
-| `coverage.reasonNotFedBare` | aucune enceinte ne reçoit de signal | à valider (tekuxwriter) | Idem sans raison détaillée |
-| `coverage.reasonMuted` | la console est en mute | à valider (tekuxwriter) | Toutes les enceintes alimentées sont en sourdine |
-| `coverage.reasonSilent` | le fader master est à −inf | à valider (tekuxwriter) | Toutes les enceintes alimentées sont à −inf |
-| `coverage.reasonBalance` | le balance de la console coupe ces enceintes | à valider (tekuxwriter) | Raison dite quand le balance (G100 / D100) coupe tous les côtés qui alimentent les enceintes branchées |
-| `coverage.reasonUnverified` | appareil non vérifié (Bêta) | à valider (tekuxwriter) | Enceinte Bêta : aucune donnée acoustique vérifiée |
-| `coverage.reasonNoAcoustic` | enceinte sans données acoustiques | à valider (tekuxwriter) | Enceinte du catalogue sans angles de couverture |
-| `coverage.reasonUnpowered` | enceinte hors tension | à valider (tekuxwriter) | Enceinte alimentée en signal mais sans secteur |
-| `coverage.reasonOther` | enceinte non utilisable | à valider (tekuxwriter) | Raison de repli (position ou couverture invalide) |
-| `coverage.reasonsJoin` |  ;  | à valider (tekuxwriter) | Séparateur de plusieurs raisons |
-| `coverage.announceDone` | Couverture calculée : {n} points, {min} à {max} dB, pas {step} m. | à valider (tekuxwriter) | Annoncé une fois par résultat (zone d’état) |
-| `coverage.announceOff` | Couverture masquée. | à valider (tekuxwriter) | Annoncé quand on la masque |
-| `coverage.loadFailed` | La couverture n’a pas pu se charger. Rechargez la page. | à valider (tekuxwriter) | Le morceau de code de la couverture n’a pas pu être téléchargé (hors ligne) ; annoncé, la case reste décochée |
+| `coverage.panelTitle` | Couverture | validé | Titre du bloc, bas de Propriétés (jamais sur la vue 3D) |
+| `coverage.panelCollapse` | Replier la couverture | validé | Nom du bouton quand le bloc est déplié |
+| `coverage.panelExpand` | Déplier la couverture | validé | Nom du bouton quand le bloc est replié |
+| `coverage.aboutTitle` | À propos du calcul | validé | Vague de nuit 2, H : titre (`summary`) du détail replié, sous les points, qui contient les notes sur le calcul (méthode, trait d’axe, source, enceintes prises en compte, indications d’épinglage, remarques). Aucune note n’est retirée |
+| `coverage.unit` | dB relatif (0 = point le plus fort) | validé | Unité de l’échelle. Mot pour mot (brief §5) |
+| `coverage.method` | somme énergétique, champ direct | validé | Ce que le calcul fait. Mot pour mot (brief §5) |
+| `coverage.chip` | estimation | à trancher (Oscar) | Pastille de fidélité. Vague de nuit 2, G : « estimation » remplace « relatif » (le mot « relatif » reste dans l’unité « dB relatif (0 = point le plus fort) » et dans l’explication, qui commence par « Estimation pédagogique ») ; un texte plus simple pour un public qui ne sait pas ce que « relatif » promet. Décision du contrôleur (brief de la vague), à confirmer par le fondateur |
+| `coverage.chipName` | Fidélité du calcul : estimation | validé | Nom accessible de la pastille (bouton qui ouvre l’explication) ; contient le texte visible « estimation » (WCAG 2.5.3, Label in Name) |
+| `coverage.chipPopover` | Estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. 0 dB est le point le plus fort de la grille d’écoute (public et régie) avec ces réglages. Champ direct seulement : ni réflexions de la salle, ni interférences. La balance de la console change l’équilibre affiché comme le son (elle baisse le côté opposé) ; le fader master, commun à toutes les enceintes, ne change pas un niveau relatif ; le mute ou −inf retire les enceintes ; l’origine de l’enceinte est son point de pose. | validé | Explication de la pastille. Nuit 2026-11-04 : « le balance » corrigé en « la balance » (genre seul, avec `coverage.reasonBalance` et `listen.limitsMore`) ; chaque affirmation du texte est gardée |
+| `coverage.legendTitle` | Échelle | validé | Titre de la légende des couleurs |
+| `coverage.legendBin` | {from} à {to} dB | validé | Une ligne de légende ; {from} / {to} = bornes de la classe de 3 dB |
+| `coverage.legendLast` | {from} dB et moins | validé | Dernière ligne de légende (classe ouverte vers le bas) |
+| `coverage.legendCount` | {n} points | validé | Nombre de points dans la classe (texte lu avec la couleur) |
+| `coverage.hatched` | Hachuré : interférences non modélisées | validé | Ligne de légende des points à recouvrement (deux enceintes à 6 dB ou moins l’une de l’autre). Mot pour mot (brief §5) |
+| `coverage.hatchedCount` | {n} points concernés | validé | Nombre de points hachurés |
+| `coverage.aim` | Trait clair : axe de chaque enceinte audible | validé | Légende des traits d’axe tracés dans la vue 3D tant que la couverture est affichée |
+| `coverage.frontCaveat` | Face avant du modèle 3D non vérifiée pour {names} : le trait indique l’axe acoustique, pas forcément la face du modèle. | validé | Affichée sous le bloc Couverture **seulement** quand une enceinte prise en compte n’a pas de `modelFront` dans le catalogue (aujourd’hui : le Yamaha DBR12) ; {names} = identifiants d’instance, comme la liste des enceintes. Plus de note pour le K12.2 et le 8030C (face avant mesurée sur le fichier et corrigée par le spawner, journal L34). Ne dit pas que le modèle a tort ou raison, ni qu’il est « correct » |
+| `coverage.sourceLine` | Couverture : {sources} | validé | Provenance des angles ; {sources} = liste construite avec les clés ci-dessous |
+| `coverage.sourceKb` | base de connaissances | validé | Angle issu de la base de connaissances du projet. Vague de nuit 2, G : remplace « données KB » (jargon) par « fiche de l’appareil » ; ronde finale (S1) : « fiche de l’appareil » se lisait comme une fiche constructeur (c’est `sourceDatasheet`) et comme les « Fiches Bêta » (appareils non vérifiés), d’où « base de connaissances » |
+| `coverage.sourceNominal` | valeur nominale | validé | Angle par défaut 90° × 60° (aucune donnée constructeur) |
+| `coverage.sourceDatasheet` | fiche constructeur | validé | Angle issu d’une fiche constructeur |
+| `coverage.sourceDeduced` | verticale déduite | validé | À ajouter à « base de connaissances » quand l’angle vertical est une déduction (K12.2 : « axisymmetric »). Vague de nuit 2, G : remplace « V déduit » (jargon) |
+| `coverage.speakersTitle` | Enceintes prises en compte | validé | Titre de la liste des enceintes du calcul |
+| `coverage.speakerRow` | {name} : {h}° × {v}° | validé | Une enceinte ; {name} = identifiant, {h} / {v} = couverture horizontale / verticale |
+| `coverage.statsTitle` | Statistiques | validé | Titre du bloc de statistiques (équivalent texte des points) |
+| `coverage.statMin` | Minimum | validé | Statistique |
+| `coverage.statMax` | Maximum | validé | Statistique |
+| `coverage.statMean` | Moyenne | validé | Statistique |
+| `coverage.statSd` | Écart-type | validé | Statistique (écart-type de population) |
+| `coverage.statCount` | Points | validé | Nombre de points d’écoute calculés |
+| `coverage.statStep` | Pas de la grille | validé | Distance entre deux points d’écoute |
+| `coverage.dbValue` | {v} dB | validé | Un niveau relatif ; {v} = nombre |
+| `coverage.mValue` | {v} m | validé | Une distance ; {v} = nombre |
+| `coverage.pointsTitle` | Niveau en un point | validé | Titre de la liste des points d’écoute nommés et du point épinglé |
+| `coverage.pointRow` | {name} : {value} | validé | Un point nommé ; {value} = niveau relatif |
+| `coverage.pointSilent` | aucun son | validé | Valeur d’un point qui ne reçoit rien |
+| `coverage.pin` | Épingler {name} | validé | Nom du bouton d’un point nommé ; {name} = Régie… |
+| `coverage.pinned` | Point épinglé ({x} m ; {z} m) : {value} | validé | Valeur du point cliqué dans la vue 3D ; {x} / {z} = position |
+| `coverage.unpin` | Retirer l’épingle | validé | Bouton |
+| `coverage.pinHint` | Cliquez sur un point coloré dans la vue 3D pour épingler son niveau. | validé | Aide sous la liste |
+| `coverage.probeAbove` | Un point nommé peut dépasser 0 dB : l’échelle est celle de la grille. | validé | Note sous la liste des points quand un point nommé est plus fort que le point le plus fort de la grille |
+| `coverage.splPending` | ≈ dB SPL estimé : non calculé (estimation pédagogique, formule non sourcée). | validé | Seulement si chaque enceinte a une sensibilité et un SPL max sourcés (aucune aujourd’hui : jamais affiché) |
+| `coverage.computing` | Calcul de la couverture… | validé | État pendant le calcul |
+| `coverage.failed` | Calcul de la couverture indisponible (réessayez). | validé | Le Worker n’a pas répondu ou a refusé le calcul |
+| `coverage.hiddenFolded` | Couverture masquée : le panneau Propriétés est replié. Dépliez-le pour la revoir. | validé (nuit 2026-11-04, relecture fondateur conseillée) | Annoncé une fois quand on replie Propriétés alors que la couverture est cochée (les points reviennent au dépliage) |
+| `coverage.noAudience` | Pas de public dans ce lieu : aucune zone public ni régie à couvrir. Rien à calculer. | validé | Lieu sans zone « audience » ni « foh » |
+| `coverage.noSource` | Aucune enceinte audible : {reason} | validé | Aucun son à montrer ; {reason} = une raison ci-dessous |
+| `coverage.reasonNotFed` | aucune enceinte ne reçoit de signal ({why}) | validé | Le chemin du signal n’atteint aucune enceinte ; {why} = la première raison de la lecture |
+| `coverage.reasonNotFedBare` | aucune enceinte ne reçoit de signal | validé | Idem sans raison détaillée |
+| `coverage.reasonMuted` | la console est en mute | validé | Toutes les enceintes alimentées sont en sourdine |
+| `coverage.reasonSilent` | le fader master est à −inf | validé | Toutes les enceintes alimentées sont à −inf |
+| `coverage.reasonBalance` | la balance de la console coupe ces enceintes | validé | Raison dite quand la balance (G100 / D100) coupe tous les côtés qui alimentent les enceintes branchées |
+| `coverage.reasonUnverified` | appareil non vérifié (Bêta) | validé | Enceinte Bêta : aucune donnée acoustique vérifiée |
+| `coverage.reasonNoAcoustic` | enceinte sans données acoustiques | validé | Enceinte du catalogue sans angles de couverture |
+| `coverage.reasonUnpowered` | enceinte hors tension | validé | Enceinte alimentée en signal mais sans secteur |
+| `coverage.reasonOther` | enceinte non utilisable | validé | Raison de repli (position ou couverture invalide) |
+| `coverage.reasonsJoin` |  ;  | validé | Séparateur de plusieurs raisons |
+| `coverage.announceDone` | Couverture calculée : {n} points, {min} à {max} dB, pas {step} m. | validé | Annoncé une fois par résultat (zone d’état) |
+| `coverage.announceOff` | Couverture masquée. | validé | Annoncé quand on la masque |
+| `coverage.loadFailed` | La couverture n’a pas pu se charger. Rechargez la page. | validé | Le morceau de code de la couverture n’a pas pu être téléchargé (hors ligne) ; annoncé, la case reste décochée |
 
 ## listen
 
-Écoute (Task 39, C9, C14, CA-03 [réf. corrigée : CA-23…26 de l'audit sont autres ; Phase 4 = CA-03, brief §5, C13]) : le bloc « Écoute » de Propriétés, les annonces de lecture et les mentions d’honnêteté. Simulation simple, dite comme telle ; aucun réalisme revendiqué. Toutes les formulations sont des brouillons.
+Écoute (Task 39, C9, C14, CA-03 [réf. corrigée : CA-23…26 de l'audit sont autres ; Phase 4 = CA-03, brief §5, C13]) : le bloc « Écoute » de Propriétés, les annonces de lecture et les mentions d’honnêteté. Simulation simple, dite comme telle ; aucun réalisme revendiqué. Relues par tekuxwriter (nuit 2026-11-04) ; `listen.playing` est gardé tel quel (brief §10). `listen.simple` a été raccourci en nuit 2 (la normalisation du volume passait dans le détail replié), puis rétabli avec « volume normalisé » à la ronde finale (proposition de tekuxwriter, décision du contrôleur) : la limite la plus surprenante redevient toujours visible. Le détail daté est dans la note du brief §10.
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `listen.panelTitle` | Écoute | à valider (tekuxwriter) | Titre du bloc, bas de Propriétés (jamais sur la vue 3D) |
-| `listen.panelCollapse` | Replier l’écoute | à valider (tekuxwriter) | Nom du bouton, bloc ouvert |
-| `listen.panelExpand` | Déplier l’écoute | à valider (tekuxwriter) | Nom du bouton, bloc replié |
-| `listen.stopped` | Lecture arrêtée. | à valider (tekuxwriter) | État du bloc et annonce après Stop |
-| `listen.starting` | Démarrage de la lecture… | à valider (tekuxwriter) | État du bloc pendant le chargement du moteur audio |
-| `listen.playing` | Lecture en cours : {source} (simulation simple). | à valider (tekuxwriter) | État du bloc ET annonce ; `{source}` = signal de test, fichier ou morceau. Dit « simulation simple » à chaque lecture, même quand Propriétés est replié (le bloc, lui, est masqué alors) |
-| `listen.sourceTest` | signal de test | à valider (tekuxwriter) | Nom de la source dans la ligne d’état |
-| `listen.sourceFile` | fichier {name} | à valider (tekuxwriter) | Nom de la source ; `{name}` = nom du fichier choisi |
-| `listen.sourceSong` | {title} | à valider (tekuxwriter) | Nom de la source ; `{title}` = titre du morceau (donnée du catalogue des morceaux) |
-| `listen.silentMix` | Aucune enceinte ne sonne pour le moment : la console est en mute ou son fader est à −inf. | à valider (tekuxwriter) | Le son joue mais chaque enceinte est coupée : le mute et le fader silencent sans jamais bloquer la lecture |
-| `listen.metersTitle` | Niveau à chaque enceinte | à valider (tekuxwriter) | Titre de la liste des enceintes (valeurs en texte, équivalent des indicateurs) |
-| `listen.meterRow` | {name} : niveau de sortie {level}, gain {gain}, retard {delay}, pan {pan} | à valider (tekuxwriter) | Une ligne par enceinte qui sonne ; le niveau est mesuré à la sortie de l’enceinte, APRÈS le volume général (avant le limiteur) |
-| `listen.levelDb` | {v} dBFS | à valider (tekuxwriter) | Niveau de sortie de l’enceinte, après le volume général |
-| `listen.levelSilent` | silence | à valider (tekuxwriter) | Niveau nul |
-| `listen.gainValue` | {v} dB | à valider (tekuxwriter) | Gain de l’enceinte RELATIF à la plus forte (normalisation du volume) : distance, directivité et fader |
-| `listen.delayValue` | {v} ms | à valider (tekuxwriter) | Retard par rapport à l’enceinte la plus proche |
-| `listen.panLeft` | gauche {n} % | à valider (tekuxwriter) | Placement gauche-droite de l’enceinte, vu de l’auditeur |
-| `listen.panRight` | droite {n} % | à valider (tekuxwriter) | Idem, à droite |
-| `listen.panCenter` | centre | à valider (tekuxwriter) | Idem, au milieu |
-| `listen.noSpeakers` | Aucune enceinte à écouter. | à valider (tekuxwriter) | Le bloc, sans enceinte alimentée |
-| `listen.simple` | Simulation simple : niveau relatif, retard et placement gauche-droite calculés d’après la géométrie ; le fader, le mute et le balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Ni acoustique de salle, ni réponse en fréquence, ni réflexions, ni diaphonie. | à valider (tekuxwriter) | Mention d’honnêteté dans le bloc (visible tant que Propriétés est déplié) ; la ligne de lecture le redit toujours (brief §10) |
-| `listen.limits` | Limites : le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle) ; l’origine d’une enceinte est son point de pose ; déplacer l’auditeur fait glisser le retard et peut faire glisser la hauteur du son (ce n’est pas un effet Doppler) ; il n’y a pas de vumètre de console, seulement un niveau par enceinte ; on écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur) ou la caméra de marche, qui écoute à sa place pendant la marche. | à valider (tekuxwriter) | Les limites que l’ADR-0015 (addendum Task 39) annonce comme « dites à l’apprenant » : le bloc les dit toutes ; deux sont des écarts au brief §5 (« Écouter depuis ici », vumètre de console), voir L31 |
-| `listen.volume` | Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin. | à valider (tekuxwriter) | Sécurité d’écoute : volume général de −12 dBFS, limiteur, fondu d’entrée et de sortie |
-| `listen.fileLocal` | Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré. | à valider (tekuxwriter) | Confidentialité (S3), toujours affichée dans le bloc |
-| `listen.fileInputName` | Choisir un fichier audio | à valider (tekuxwriter) | Nom accessible du champ fichier (masqué, déclenché par le menu) |
-| `listen.notReady` | Lecture impossible. {reason} | à valider (tekuxwriter) | Annonce quand on demande la lecture sans chaîne valide ; `{reason}` = la première raison |
-| `listen.stoppedNotReady` | Lecture arrêtée. {reason} | à valider (tekuxwriter) | Annonce quand un changement du rig rend la chaîne invalide pendant la lecture |
-| `listen.stoppedPlace` | Lecture arrêtée : le lieu a changé. | à valider (tekuxwriter) | Annonce quand le lieu change et que la chaîne reste valide ; un changement de lieu qui vide le rig est d’abord dit par « Lecture arrêtée. {reason} » (`stoppedNotReady`), le rig étant vidé avant l’affichage du lieu |
-| `listen.stoppedEnded` | Lecture terminée. | à valider (tekuxwriter) | Annonce quand un fichier arrive à sa fin |
-| `listen.failedFile` | Ce fichier n’a pas pu être lu. Essayez un fichier MP3, WAV ou OGG. | à valider (tekuxwriter) | Annonce quand le navigateur ne décode pas le fichier choisi |
-| `listen.failed` | La lecture n’a pas pu démarrer. | à valider (tekuxwriter) | Annonce d’une erreur de démarrage (autre qu’un fichier illisible) |
-| `listen.loadFailed` | La lecture n’a pas pu se charger. Rechargez la page. | à valider (tekuxwriter) | Annonce quand le morceau de code du moteur audio ne se télécharge pas |
+| `listen.panelTitle` | Écoute | validé | Titre du bloc, bas de Propriétés (jamais sur la vue 3D) |
+| `listen.panelCollapse` | Replier l’écoute | validé | Nom du bouton, bloc ouvert |
+| `listen.panelExpand` | Déplier l’écoute | validé | Nom du bouton, bloc replié |
+| `listen.from` | Écoute depuis : {point}. | validé | Vague de nuit 2, G : une ligne au-dessus du bouton « Lecture » ; `{point}` = un nom de `points.*` (« Régie », « Premier rang », « Fond de salle », « Centre », « Ici ») ou `listen.fromWalk`. Se met à jour à chaque choix de point (touches 1 à 3, menu, « Écouter depuis ici ») même à l’arrêt |
+| `listen.fromWalk` | la caméra de marche | validé | Vague de nuit 2, G : le nom du point d’écoute pendant la marche (la caméra de marche écoute à la place des points) ; n’existait pas dans `points.*` |
+| `listen.stopped` | Lecture arrêtée. | validé | État du bloc et annonce après Stop |
+| `listen.starting` | Démarrage de la lecture… | validé | État du bloc pendant le chargement du moteur audio |
+| `listen.playing` | Lecture en cours : {source} (simulation simple). | validé | État du bloc ET annonce ; `{source}` = signal de test, fichier ou morceau. Dit « simulation simple » à chaque lecture, même quand Propriétés est replié (le bloc, lui, est masqué alors) |
+| `listen.sourceTest` | signal de test | validé | Nom de la source dans la ligne d’état |
+| `listen.sourceFile` | fichier {name} | validé | Nom de la source ; `{name}` = nom du fichier choisi |
+| `listen.sourceSong` | {title} | validé | Nom de la source ; `{title}` = titre du morceau (donnée du catalogue des morceaux) |
+| `listen.silentMix` | Aucune enceinte ne sonne pour le moment : la console est en mute ou son fader est à −inf. | validé | Le son joue mais chaque enceinte est coupée : le mute et le fader silencent sans jamais bloquer la lecture |
+| `listen.metersTitle` | Niveau à chaque enceinte | validé | Titre de la liste des enceintes (valeurs en texte, équivalent des indicateurs) |
+| `listen.meterRow` | {name} : niveau de sortie {level}, gain {gain}, retard {delay}, pan {pan} | validé | Une ligne par enceinte qui sonne ; le niveau est mesuré à la sortie de l’enceinte, APRÈS le volume général (avant le limiteur) |
+| `listen.meterMain` | {name} : {level} | validé | Vague de nuit 2, G : première ligne affichée d’un vumètre (nom et niveau, en Papier). Non lue : le lecteur d’écran reçoit `meterRow`, complet, en un seul endroit (la ligne dessinée est `aria-hidden`) |
+| `listen.meterSub` | gain {gain} · retard {delay} · pan {pan} | validé | Vague de nuit 2, G : seconde ligne affichée (gain, retard, pan, en gris), mêmes valeurs que `meterRow`. Non lue |
+| `listen.levelDb` | {v} dBFS | validé | Niveau de sortie de l’enceinte, après le volume général |
+| `listen.levelSilent` | silence | validé | Niveau nul |
+| `listen.gainValue` | {v} dB | validé | Gain de l’enceinte RELATIF à la plus forte (normalisation du volume) : distance, directivité et fader |
+| `listen.delayValue` | {v} ms | validé | Retard par rapport à l’enceinte la plus proche |
+| `listen.panLeft` | gauche {n} % | validé | Placement gauche-droite de l’enceinte, vu de l’auditeur |
+| `listen.panRight` | droite {n} % | validé | Idem, à droite |
+| `listen.panCenter` | centre | validé | Idem, au milieu |
+| `listen.noSpeakers` | Aucune enceinte à écouter. | validé | Le bloc, sans enceinte alimentée |
+| `listen.simple` | Simulation simple : niveau relatif, volume normalisé, retard et placement gauche-droite d’après la géométrie. Ni acoustique de salle, ni réponse en fréquence, ni réflexions. | validé | Vague de nuit 2, G : la seule phrase d’honnêteté toujours visible (le bloc déplié) ; elle dit ce que la simulation calcule et ce qu’elle ne fait pas. Le reste des limites est replié sous « Limites de la simulation » (`limitsMore`, `limits`) ; la ligne de lecture redit « simulation simple » à chaque lecture (brief §10). Ronde finale (C1) : « volume normalisé » est de retour dans cette phrase (deux mots de plus que la version de nuit 2, aucune affirmation nouvelle : `limitsMore` le disait déjà) |
+| `listen.limitsTitle` | Limites de la simulation | validé | Vague de nuit 2, G : titre (`summary`) du détail replié qui contient le reste des limites |
+| `listen.limitsMore` | Le fader, le mute et la balance de la console agissent sur le son. Le volume est normalisé : l’enceinte la plus forte garde le même niveau quelle que soit la distance. Pas de diaphonie (fuite d’un canal dans l’autre). | validé (nuit 2026-11-04, relecture fondateur conseillée) | Vague de nuit 2, G : dans le détail, en premier : ce qui agit sur le son et ce que fait la normalisation du volume (la seconde moitié de l’ancien `simple`). Nuit 2026-11-04 : la limite se lit seule (plus de « non plus » qui renvoyait à la phrase hors du détail) ; « diaphonie » d’abord, son explication entre parenthèses |
+| `listen.limits` | Le niveau affiché pour chaque enceinte est la moyenne de ses deux côtés (une enceinte placée sur le côté lit plus bas que sa sortie réelle). L’origine d’une enceinte est son point de pose. Déplacer l’auditeur fait glisser le retard et peut faire varier la hauteur du son ; ce n’est pas un effet Doppler simulé. Il n’y a pas de vumètre de console, seulement un niveau par enceinte. On écoute depuis la Régie, un autre point d’écoute, « Ici » (le point visé par la vue ; en marche, là où se trouve le marcheur) ou la caméra de marche, qui écoute à sa place pendant la marche. | validé (nuit 2026-11-04, relecture fondateur conseillée) | Vague de nuit 2, G : dans le détail replié « Limites de la simulation », en second ; aucune limite retirée, « effet Doppler » et « moyenne de ses deux côtés » gardés. Nuit 2026-11-04 : la définition entre parenthèses du Doppler (trop étroite) est retirée, « simulé » dit la limite |
+| `listen.volume` | Le volume démarre bas et reste limité : réglez celui de votre ordinateur si besoin. | validé | Sécurité d’écoute : volume général de −12 dBFS, limiteur, fondu d’entrée et de sortie |
+| `listen.fileLocal` | Un fichier choisi reste dans votre navigateur : il n’est ni envoyé ni enregistré. | validé | Confidentialité (S3), toujours affichée dans le bloc |
+| `listen.fileInputName` | Choisir un fichier audio | validé | Nom accessible du champ fichier (masqué, déclenché par le menu) |
+| `listen.notReady` | Lecture impossible. {reason} | validé | Annonce quand on demande la lecture sans chaîne valide ; `{reason}` = la première raison |
+| `listen.stoppedNotReady` | Lecture arrêtée. {reason} | validé | Annonce quand un changement du rig rend la chaîne invalide pendant la lecture |
+| `listen.stoppedPlace` | Lecture arrêtée : le lieu a changé. | validé | Annonce quand le lieu change et que la chaîne reste valide ; un changement de lieu qui vide le rig est d’abord dit par « Lecture arrêtée. {reason} » (`stoppedNotReady`), le rig étant vidé avant l’affichage du lieu |
+| `listen.stoppedEnded` | Lecture terminée. | validé | Annonce quand un fichier arrive à sa fin |
+| `listen.failedFile` | Ce fichier n’a pas pu être lu. Essayez un fichier MP3, WAV ou OGG. | validé | Annonce quand le navigateur ne décode pas le fichier choisi |
+| `listen.failed` | La lecture n’a pas pu démarrer. | validé | Annonce d’une erreur de démarrage (autre qu’un fichier illisible) |
+| `listen.loadFailed` | La lecture n’a pas pu se charger. Rechargez la page. | validé | Annonce quand le morceau de code du moteur audio ne se télécharge pas |

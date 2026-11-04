@@ -1,7 +1,7 @@
 /**
  * Night wave 1, item 8. A shipped .glb may include something the device is not: the Genelec 8030C file is ONE mesh with its floor stand (a base
  * plate and a thin neck). The height normalisation scales the model so that its measured height equals the device's real height; with the stand
- * counted, the cabinet came out at about 73 % of its size. A catalog device can declare `modelBody.baseFraction`: the share of the model's total
+ * counted, the cabinet came out at about 75 % of its real size (0.299 m x 0.715 / 0.285 m). A catalog device can declare `modelBody.baseFraction`: the share of the model's total
  * height that is stand, under the cabinet (measured on the file, see tests/assets/modelBody.test.ts). Mode Création then scales so that the
  * CABINET (the model minus that share) has the real height. Pure arithmetic, no Babylon.
  */

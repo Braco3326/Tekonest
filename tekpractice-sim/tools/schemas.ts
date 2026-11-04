@@ -127,7 +127,8 @@ export const ModelFront = z.object({
  */
 export const ModelBody = z.object({
   baseFraction: z.number().gt(0).lt(1).describe('Share (0 to 1) of the total height of the model, from its lowest point, that is stand under the cabinet.'),
-  evidence: z.string().min(1).describe('How it was measured on public/assets/<id>.glb: where the neck ends and the cabinet starts.'),
+  cabinetHeightM: z.number().positive().describe('Real height in metres of the cabinet alone (the model without the stand), from the datasheet: the target of the height normalisation in Mode Création.'),
+  evidence: z.string().min(1).describe('How it was measured on public/assets/<id>.glb: where the neck ends and the cabinet starts, and where cabinetHeightM comes from.'),
 }).strict()
 
 export const Device = z.object({

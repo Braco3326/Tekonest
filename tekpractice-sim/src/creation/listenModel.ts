@@ -13,8 +13,11 @@ export type ListenSource = { kind: 'test' } | { kind: 'file'; file: File } | { k
 export interface ListenRow {
   id: string
   name: string
-  /** « QSC K12.2 (k12-g) : niveau −24,3 dBFS, gain −9,0 dB, retard 12 ms, pan gauche 42 % ». */
+  /** « QSC K12.2 (k12-g) : niveau −24,3 dBFS, gain −9,0 dB, retard 12 ms, pan gauche 42 % ». The sentence assistive tech reads. */
   text: string
+  /** The two drawn lines of the same row (night wave 2, G): « QSC K12.2 (k12-g) : −24,3 dBFS » and « gain −9,0 dB · retard 12,0 ms · pan gauche 42 % ». */
+  main: string
+  sub: string
   /** 0 (silence) … 1 (full scale) for the picture. */
   bar: number
 }
@@ -28,6 +31,8 @@ export interface ListenView {
   /** Playing, but every speaker is at 0 (mute, fader at −inf). */
   silent: boolean
   rows: ListenRow[]
+  /** « Écoute depuis : Régie. » ('' = not known); where the sound is heard from, said above the button. */
+  from: string
   /** The transport button starts (true) or is off with `reason`. */
   canStart: boolean
   reason: string
@@ -73,8 +78,10 @@ export function rowsOf(voices: readonly MixVoice[], levels: Readonly<Record<stri
         .replace('{gain}', gainText(v.gain))
         .replace('{delay}', delayText(v.delayS))
         .replace('{pan}', panText(v.pan))
-      return { id: v.instanceId, name, text, bar: barOf(rms) }
+      const main = L().meterMain!.replace('{name}', name).replace('{level}', levelText(rms))
+      const sub = L().meterSub!.replace('{gain}', gainText(v.gain)).replace('{delay}', delayText(v.delayS)).replace('{pan}', panText(v.pan))
+      return { id: v.instanceId, name, text, main, sub, bar: barOf(rms) }
     })
 }
 
-export const EMPTY_LISTEN_VIEW: ListenView = { shown: false, state: 'stopped', line: '', silent: false, rows: [], canStart: false, reason: '' }
+export const EMPTY_LISTEN_VIEW: ListenView = { shown: false, state: 'stopped', line: '', silent: false, rows: [], from: '', canStart: false, reason: '' }
