@@ -375,13 +375,18 @@
       "trademark": "generic",
       "portEmpties": 6,
       "riggedAt": "2026-07-19",
-      "tool": "scripted",
-      "toolVersion": "blender-builder-1",
-      "date": "2026-11-04T07:10:22.001Z",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1+meshy-7.1",
+      "date": "2026-11-04T17:43:47.570Z",
       "specSource": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
       "logosRemoved": true,
-      "photos": [],
-      "taskId": null,
+      "photos": [
+        "front.jpg",
+        "rear.jpg",
+        "three-quarter-left.jpg",
+        "three-quarter-right.jpg"
+      ],
+      "taskId": "01a1a756-9480-724f-ad41-8ca08e0a218f",
       "gates": [
         {
           "gate": "size",
