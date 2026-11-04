@@ -191,10 +191,31 @@ describe('needsMainsHint: active gear that needs power and no mains source in th
     expect(needsMainsHint(design(['yamaha-ql1', 'qsc-k12-2'], { d0: { power: false } }), r)).toBe(true) // the speaker is still active
   })
   it('false: a Bêta device alone (its power need is unverified; it is never counted), true once a verified active device joins', () => {
-    const b = withBeta()
-    const betaWithPowerIn = [...b.deviceById.values()].find((d) => !b.catalog.devices.some((c) => c.id === d.id) && d.ports.some((p) => p.portId === 'power-in'))
-    if (betaWithPowerIn) expect(needsMainsHint(design([betaWithPowerIn.id]), b)).toBe(false)
-    expect(needsMainsHint(design(['yamaha-ql1']), b)).toBe(true)
+    // A synthetic proposal that DOES declare a power-in (no shipped proposal does, so a loop over the file would assert nothing).
+    const b = makeRegistry()
+    const parsed = parseProposals(
+      {
+        devices: [
+          {
+            id: 'p-amp',
+            label: 'Ampli proposé',
+            levels: [],
+            realWorld: { brand: 'Marque', model: 'p-amp', category: 'amplifier', typicalUse: 'usage', notes: '' },
+            ports: [
+              { portId: 'in-1', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },
+              { portId: 'power-in', dir: 'in', connector: 'iec-c14', signal: 'mains-power' },
+            ],
+          },
+        ],
+      },
+      b,
+    )
+    expect(parsed.skipped).toEqual([])
+    registerProposals(b, parsed.devices)
+    expect(b.deviceById.get('p-amp')!.ports.some((p) => p.portId === 'power-in')).toBe(true) // the premise
+    expect(needsMainsHint(design(['p-amp']), b)).toBe(false)
+    expect(needsMainsHint(design(['p-amp', 'shure-sm58']), b)).toBe(false)
+    expect(needsMainsHint(design(['yamaha-ql1', 'p-amp']), b)).toBe(true)
   })
   it('false for a malformed design (never throws on a bad autosave)', () => {
     for (const d of [null, undefined, {}, { rig: null }, { rig: { instances: 3 } }] as never[]) expect(needsMainsHint(d, r)).toBe(false)
