@@ -2,6 +2,7 @@
  * assets3d/build-asset: the orchestrator of the 3D-asset pipeline, one asset per run.
  *
  *   npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--flip] [--yes] [--ship --logos-removed]
+ *   npm run asset:build -- <id> --ship-run <work/run folder> [--logos-removed]   (ship an earlier run, build nothing)
  *   npm run asset:build -- <id> --scripted [--ship]   (our own Blender builder from the spec's `build` block: no Meshy, no spending)
  *   npm run asset:pilot -- --yes [--attempts 3] [--yaw 0] [--ship --logos-removed]   (the six pilot ids, in turn)
  *
@@ -534,6 +535,74 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   return report
 }
 
+export interface ShipRunOpts {
+  /** The founder checked the textures for logos (not needed for a scripted run, which has none). */
+  logosRemoved?: boolean
+}
+
+/**
+ * Ships the final.glb of a finished run (assets-source/<id>/work/<run>) to public/assets and the manifest WITHOUT building
+ * anything again: no Meshy call, no fix-up, no compression. The earlier run must have passed; the bytes are re-measured
+ * with every gate (the stored proportion-drift result stands in for the fix-up's pre-scale size, which is not on disk).
+ * Throws on anything that does not hold, before writing a byte.
+ */
+export async function shipRun(id: string, runDir: string, opts: ShipRunOpts = {}, deps: Partial<BuildDeps> = {}): Promise<BuildReport> {
+  const d = resolveDeps(deps)
+  const spec = d.loadSpec(id)
+  const dir = resolve(runDir)
+  let stored: BuildReport
+  try {
+    stored = JSON.parse(await readFile(join(dir, 'report.json'), 'utf8')) as BuildReport
+  } catch {
+    throw new Error(`no readable report.json in ${dir}: it is not a run folder of assets-source/<id>/work`)
+  }
+  if (stored.id !== id) throw new Error(`the run in ${dir} belongs to ${stored.id}, not ${id}`)
+  if (stored.ok !== true) throw new Error(`the run in ${dir} did not pass: only a passing run can be shipped`)
+  const finalPath = join(dir, 'final.glb')
+  if (!existsSync(finalPath)) throw new Error(`no final.glb in ${dir}`)
+  const scripted = stored.scripted === true
+  if (!scripted && opts.logosRemoved !== true) {
+    throw new Error(`refusing to ship ${id}: its textures need the assertion that they carry no logos (--logos-removed)`)
+  }
+
+  const errors = checkSpecParity(spec, d.loadCatalog())
+  if (errors.length > 0) throw new Error(`spec ${id} does not match content/catalog.json, nothing was shipped:\n  ${errors.join('\n  ')}`)
+  assertManifestUsable(d.paths.manifestPath)
+
+  const last = stored.attempts[stored.attempts.length - 1]
+  const drift = last?.gates.find((g) => g.gate === 'proportionDrift')
+  if (!drift || !drift.ok) throw new Error(`the run in ${dir} has no passing proportionDrift result: rebuild it`)
+  const bytes = new Uint8Array(await readFile(finalPath))
+  const measured = await measure(bytes, spec)
+  const gates = [...measured.gates, drift, ...(await finalGates(bytes, measured.report, spec))]
+  const failed = failingNames(gates)
+  if (failed.length > 0) throw new Error(`the final.glb in ${dir} no longer passes: gate${failed.length === 1 ? '' : 's'} ${failed.join(', ')} failed`)
+
+  const target = join(d.paths.assetsDir, `${id}.glb`)
+  await writeAtomic(target, bytes)
+  const taskId = last?.taskId ?? null
+  try {
+    recordAsset(d.paths.manifestPath, {
+      id,
+      kind: spec.kind,
+      status: 'ok',
+      tris: measured.triangles,
+      ports: spec.ports.length,
+      tool: scripted ? 'scripted' : taskId ? 'meshy' : 'raw',
+      toolVersion: scripted ? BUILDER_VERSION : taskId ? MESHY_MODEL : 'raw',
+      date: d.now().toISOString(),
+      specSource: spec.sources[0]?.url ?? 'spec',
+      logosRemoved: true,
+      photos: scripted || !taskId ? [] : (await d.readPhotos(id)).map((ph) => ph.name),
+      taskId,
+      gates: gates.map((g) => ({ gate: g.gate, ok: g.ok })),
+    })
+  } catch (e) {
+    throw new Error(`the GLB was written to ${target} but the manifest was not updated: ${e instanceof Error ? e.message : String(e)}`)
+  }
+  return { id, ok: true, attempts: stored.attempts, dryRun: false, workDir: dir, builtGlb: finalPath, finalGlb: target, ...(scripted ? { scripted: true as const } : {}) }
+}
+
 /** A readable gate table per attempt, the credits, and the verdict. */
 export function formatReport(report: BuildReport): string {
   const lines = [`asset ${report.id}${report.dryRun ? '  (not shipped: nothing written to public/assets or the manifest)' : ''}`]
@@ -556,12 +625,14 @@ export function formatReport(report: BuildReport): string {
 const USAGE = [
   'usage: npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--flip] [--yes] [--ship --logos-removed]',
   '       npm run asset:build -- <id> --scripted [--ship]',
+  '       npm run asset:build -- <id> --ship-run <assets-source/<id>/work/<run>> [--logos-removed]',
   '       npm run asset:pilot -- --yes [--attempts 3] [--yaw 0|90|180|270] [--flip] [--ship --logos-removed]',
   '  default       build and gate everything, leave final.glb and report.json in the run\'s work dir; ship nothing',
   '  --yes         allow the Meshy spending printed before the run (needed unless --raw)',
   '  --ship        also write public/assets/<id>.glb and the manifest entry (needs --logos-removed)',
   '  --logos-removed  you checked the textures: no brand logos (recorded as logosRemoved: true)',
   '  --raw         use a hand-made raw GLB: no Meshy call, one attempt',
+  '  --ship-run    ship the final.glb of an earlier passing run (re-gated) without building again: no Meshy call, no fix-up',
   '  --scripted    build the raw GLB with our own Blender builder from the spec build block: no Meshy, no spending, one attempt; --ship needs no --logos-removed',
   '  --yaw / --flip  turn the model about glTF Y / upside down (about glTF Z) in the fix-up, read off the contact sheet',
 ].join('\n')
@@ -572,6 +643,8 @@ interface CliArgs {
   /** --yes: the user accepted the printed Meshy spending. */
   yes: boolean
   opts: BuildOpts
+  /** --ship-run <dir>: ship a finished run instead of building. */
+  shipRunDir?: string
 }
 
 /** Parses the command line; returns the parsed arguments or an error message that includes the usage. */
@@ -585,6 +658,7 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
   let logosRemoved = false
   let yes = false
   let attemptsGiven = false
+  let shipRunDir: string | undefined
   let yawGiven = false
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]
@@ -595,6 +669,11 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
     else if (a === '--flip') opts.flipUpright = true
     else if (a === '--pilot') pilot = true
     else if (a === '--scripted') opts.scripted = true
+    else if (a === '--ship-run') {
+      const v = argv[++i]
+      if (!v || v.startsWith('--')) return bad('--ship-run needs the run folder (assets-source/<id>/work/<run>)')
+      shipRunDir = v
+    }
     else if (a === '--raw') {
       const v = argv[++i]
       if (!v || v.startsWith('--')) return bad('--raw needs a .glb file path')
@@ -614,6 +693,14 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
     else return bad(`unexpected argument ${a}`)
   }
   if (pilot && (id !== undefined || opts.rawGlb)) return bad('--pilot takes no id and no --raw')
+  if (shipRunDir !== undefined) {
+    // Shipping a finished run builds nothing: every flag that shapes a build is meaningless and would be silently ignored.
+    const clash = [opts.rawGlb ? '--raw' : '', opts.scripted ? '--scripted' : '', attemptsGiven ? '--attempts' : '', yawGiven ? '--yaw' : '', opts.flipUpright ? '--flip' : '', pilot ? '--pilot' : '', ship ? '--ship' : '', dryRunFlag ? '--dry-run' : ''].filter(Boolean)
+    if (clash.length > 0) return bad(`--ship-run cannot be combined with ${clash.join(', ')}: it ships the final.glb of an earlier run without building`)
+    if (id === undefined) return bad('an asset id is required')
+    opts.logosRemoved = logosRemoved
+    return { id, pilot: false, yes, opts, shipRunDir }
+  }
   if (opts.scripted) {
     // A scripted build is already oriented, makes one attempt and has no photos: these flags would be silently ignored.
     const clash = [opts.rawGlb ? '--raw' : '', attemptsGiven ? '--attempts' : '', yawGiven ? '--yaw' : '', opts.flipUpright ? '--flip' : '', pilot ? '--pilot' : ''].filter(Boolean)
@@ -680,6 +767,15 @@ export async function main(argv: string[], deps: Partial<BuildDeps> = {}, print:
   }
   // progress lines (task ids, polls) go where the rest of the CLI output goes
   deps = { ...deps, log: deps.log ?? print }
+  if (args.shipRunDir !== undefined) {
+    try {
+      print(formatReport(await shipRun(args.id as string, args.shipRunDir, { logosRemoved: args.opts.logosRemoved }, deps)))
+      return 0
+    } catch (e) {
+      print(`error: ${redact(e instanceof Error ? e.message : String(e), process.env.MESHY_API_KEY ?? '')}`)
+      return 1
+    }
+  }
   if (args.pilot || (!args.opts.rawGlb && !args.opts.scripted)) {
     // Spending guard: say the most this run can spend, and spend nothing without an explicit --yes.
     const tasks = (args.pilot ? PILOT_IDS.length : 1) * args.opts.maxAttempts

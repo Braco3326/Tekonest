@@ -8,7 +8,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { buildAsset, formatReport, isMainModule, main, PILOT_IDS, readPhotosFrom, targetPolycount } from '../../../tools/assets3d/build-asset'
+import { buildAsset, formatReport, isMainModule, main, PILOT_IDS, readPhotosFrom, shipRun, targetPolycount } from '../../../tools/assets3d/build-asset'
 import type { BuildDeps, BuildReport } from '../../../tools/assets3d/build-asset'
 import { dracoCompress, optimizeTextures } from '../../../tools/assets3d/compress'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
@@ -1484,5 +1484,81 @@ describe('scripted build (--scripted)', () => {
     expect(await main([spec.id, '--scripted', '--ship'], makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK }), (l) => out.push(l))).toBe(0)
     expect(existsSync(join(paths.assetsDir, `${spec.id}.glb`))).toBe(true)
     expect(out.join('\n')).toMatch(/shipped/)
+  })
+})
+
+describe('ship from a finished run (--ship-run)', () => {
+  /** A dry-run Meshy build, whose work dir is then shipped. */
+  async function dryRun(spec: AssetSpecT, over: Partial<Rig> = {}): Promise<BuildReport> {
+    await addPhotos(spec.id, ['a.png'])
+    const report = await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], ...over }))
+    expect(report.ok).toBe(true)
+    return report
+  }
+
+  it('ships the final.glb of an earlier run without calling Meshy or the fix-up again, and records the manifest', async () => {
+    const spec = deviceSpec()
+    const first = await dryRun(spec)
+    const before = { create: calls.create.length, fixup: calls.fixup.length, compress: calls.compress.length }
+    const report = await shipRun(spec.id, first.workDir, { logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+
+    expect(report.ok).toBe(true)
+    expect(report.finalGlb).toBe(join(paths.assetsDir, 'test-mixer.glb'))
+    expect(new Uint8Array(await readFile(join(paths.assetsDir, 'test-mixer.glb')))).toEqual(new Uint8Array(await readFile(join(first.workDir, 'final.glb'))))
+    expect({ create: calls.create.length, fixup: calls.fixup.length, compress: calls.compress.length }).toEqual(before)
+    const entry = (await readManifest()).assets.find((a) => a.id === 'test-mixer')
+    expect(entry).toMatchObject({ status: 'ok', tool: 'meshy', logosRemoved: true, taskId: 'task-1', photos: ['a.png'] })
+    expect((entry?.gates as { gate: string; ok: boolean }[]).every((g) => g.ok)).toBe(true)
+  })
+
+  it('a scripted run ships without --logos-removed; a Meshy run is refused without it, and nothing is written', async () => {
+    const jack = connectorSpec({ build: { shape: 'cylinder-plug' } })
+    const scripted = await buildAsset(jack.id, { maxAttempts: 1, scripted: true, dryRun: true }, makeDeps({ spec: jack, fixed: [await goodGlb(jack)], fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
+    const shipped = await shipRun(jack.id, scripted.workDir, {}, makeDeps({ spec: jack, fixed: [await goodGlb(jack)] }))
+    expect(shipped.ok).toBe(true)
+    expect((await readManifest()).assets.find((a) => a.id === jack.id)).toMatchObject({ tool: 'scripted', toolVersion: 'blender-builder-1', logosRemoved: true, taskId: null })
+
+    const spec = deviceSpec()
+    const meshy = await dryRun(spec)
+    await expect(shipRun(spec.id, meshy.workDir, {}, makeDeps({ spec, fixed: [await goodGlb(spec)] }))).rejects.toThrow(/logos/)
+    expect(existsSync(join(paths.assetsDir, 'test-mixer.glb'))).toBe(false)
+  })
+
+  it('refuses a run of another asset, a failed run, a missing final.glb, and bytes that no longer pass the gates', async () => {
+    const spec = deviceSpec()
+    const run = await dryRun(spec)
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+    await expect(shipRun('other-asset', run.workDir, { logosRemoved: true }, { ...deps, loadSpec: () => ({ ...spec, id: 'other-asset' }) })).rejects.toThrow(/belongs to test-mixer/)
+
+    const reportPath = join(run.workDir, 'report.json')
+    const original = await readFile(reportPath, 'utf8')
+    await writeFile(reportPath, original.replace('"ok": true', '"ok": false'))
+    await expect(shipRun(spec.id, run.workDir, { logosRemoved: true }, deps)).rejects.toThrow(/did not pass/)
+    await writeFile(reportPath, original)
+
+    await writeFile(join(run.workDir, 'final.glb'), await tallGlb(spec))
+    await expect(shipRun(spec.id, run.workDir, { logosRemoved: true }, deps)).rejects.toThrow(/gate size/)
+    await rm(join(run.workDir, 'final.glb'))
+    await expect(shipRun(spec.id, run.workDir, { logosRemoved: true }, deps)).rejects.toThrow(/no final\.glb/)
+    expect(existsSync(join(paths.assetsDir, 'test-mixer.glb'))).toBe(false)
+  })
+
+  it('CLI --ship-run ships, needs --logos-removed for a Meshy run, and excludes the flags that build', async () => {
+    const spec = deviceSpec()
+    const run = await dryRun(spec)
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+    const out: string[] = []
+    expect(await main([spec.id, '--ship-run', run.workDir], deps, (l) => out.push(l))).toBe(1)
+    expect(out.join('\n')).toMatch(/logos/)
+    out.length = 0
+    expect(await main([spec.id, '--ship-run', run.workDir, '--logos-removed'], deps, (l) => out.push(l))).toBe(0)
+    expect(out.join('\n')).toMatch(/shipped/)
+    expect(existsSync(join(paths.assetsDir, 'test-mixer.glb'))).toBe(true)
+    for (const extra of [['--raw', 'x.glb'], ['--scripted'], ['--attempts', '2'], ['--yaw', '180'], ['--flip'], ['--ship']]) {
+      out.length = 0
+      expect(await main([spec.id, '--ship-run', run.workDir, '--logos-removed', ...extra], deps, (l) => out.push(l))).toBe(1)
+      expect(out.join('\n')).toContain('--ship-run')
+      expect(out.join('\n')).toContain(extra[0])
+    }
   })
 })
