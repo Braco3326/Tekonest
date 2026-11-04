@@ -86,8 +86,8 @@ test.describe('coarse pointer, 400 x 800', () => {
     const props = (await page.getByTestId('properties').boundingBox())!
     for (const sel of ['.cr-field-input', '.cr-step', '.cr-toggle']) {
       const b = await page.locator(`.cr-props ${sel}`).first().boundingBox()
-      if (!b) continue
-      expect(b.x + b.width, sel).toBeLessThanOrEqual(props.x + props.width + 0.5)
+      expect(b, `${sel} exists in the properties column (an absent control would hide a clipped one)`).not.toBeNull()
+      expect(b!.x + b!.width, sel).toBeLessThanOrEqual(props.x + props.width + 0.5)
     }
   })
 

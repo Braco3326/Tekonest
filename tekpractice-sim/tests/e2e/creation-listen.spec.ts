@@ -520,6 +520,18 @@ test('(n) 1366×768 with the coverage AND the listening block open: the properti
   await page.getByTestId('listen-panel').scrollIntoViewIfNeeded()
   const listenNow = (await page.getByTestId('listen-panel').boundingBox())!
   expect(listenNow.y + listenNow.height).toBeLessThanOrEqual(props.y + props.height + 1)
+  // final fix round (S5): the vertical contain check of the old test, restored for the other two blocks. The column is one scroller and a block can be
+  // taller than what it shows at once (the coverage panel is 681 px in a 663 px viewport of the column), so: scrolled to its first child, the top of the
+  // block lies inside the column; scrolled to its last child, its bottom does. Nothing of a block is out of reach.
+  for (const [name, loc] of [['coverage panel', page.getByTestId('coverage-panel')], ['properties body', page.locator('.cr-props .cr-panel-body')]] as const) {
+    await loc.locator(':scope > *').first().scrollIntoViewIfNeeded()
+    const top = (await loc.boundingBox())!
+    expect(top.y, `${name}: top reachable inside the column`).toBeGreaterThanOrEqual(props.y - 1)
+    expect(top.y, `${name}: top below the column's top edge and not past its bottom`).toBeLessThanOrEqual(props.y + props.height)
+    await loc.locator(':scope > *').last().scrollIntoViewIfNeeded()
+    const bottom = (await loc.boundingBox())!
+    expect(bottom.y + bottom.height, `${name}: bottom reachable inside the column`).toBeLessThanOrEqual(props.y + props.height + 1)
+  }
   await choose(page, 'Stop')
   await waitStopped(page)
 })

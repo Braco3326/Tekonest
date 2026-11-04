@@ -802,7 +802,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-viewport[data-placing='true'] .cr-notes { bottom: 68px; }
 /* Night wave 2, item D: the stack never grows over the view cube (top left, up to ~200 px with its caption) and scrolls inside itself; during a pose the
    long « appareils non rechargés » list gives way (a pose needs the view, the list is back when it ends); the toast stands above the cancel button (12 + 44 px). */
-.cr-notes { max-height: calc(100% - 220px); overflow-y: auto; }
+.cr-notes { max-height: max(96px, calc(100% - 220px)); overflow-y: auto; } /* final fix round (S7): on a short window the cap used to reach 0 */
 .cr-viewport[data-placing='true'] .cr-note-list { display: none; }
 .cr-viewport[data-placing='true'] .cr-toast { bottom: 68px; }
 /* Wave 2c, S7: the open drawer (z 2) stands over the notes (they were at 5 and covered its tabs); the notes come back when it closes. */

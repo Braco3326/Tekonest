@@ -221,6 +221,7 @@ for (const vp of [{ width: 400, height: 800 }, { width: 1366, height: 768 }]) {
       await page.mouse.wheel(0, 240)
       await expect.poll(() => stack.evaluate((e) => e.scrollTop), 'a wheel over a note scrolls the stack').toBeGreaterThan(0)
       const bar = await stack.evaluate((e) => (e as HTMLElement).offsetWidth - e.clientWidth)
+      if (bar === 0) test.info().annotations.push({ type: 'skipped-check', description: 'overlay scrollbars (no track width): the scrollbar-track hit test below does not apply; the wheel scroll above is the check' })
       if (bar > 0) {
         // classic scrollbars take room: the point on the bar is the stack's (a pointer-events: none stack handed it to the canvas)
         const onBar = await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.closest('[data-testid="notes"]') !== null, { x: s.x + s.width - bar / 2, y: s.y + s.height / 2 })
@@ -279,6 +280,39 @@ for (const vp of [{ width: 400, height: 800 }, { width: 1366, height: 768 }]) {
     })
   })
 }
+
+// ── S7 (final fix round): on a short window the notes cap (100% - 220px) used to reach 0 ───────────────────────────────────────────────
+test.describe('short landscape window with touch, 844 x 300', () => {
+  test.use({ viewport: { width: 844, height: 300 }, hasTouch: true })
+  test('S7: the notes stay visible (at least 96 px), clear of « Annuler la pose » and inside the window; the status bar is intact', async ({ page }) => {
+    await boot(page)
+    await page.evaluate(() => {
+      const stack = document.querySelector('[data-testid="notes"]')!
+      for (let i = 0; i < 4; i++) {
+        const n = document.createElement('section')
+        n.className = 'cr-note'
+        n.style.minHeight = '140px'
+        n.innerHTML = '<h3 class="cr-note-title">Une note</h3><p class="cr-note-body">Texte</p>'
+        stack.append(n)
+      }
+    })
+    const stack = page.getByTestId('notes')
+    const before = await box(stack)
+    expect(before.height, 'the capped stack is not squeezed to nothing on a 300 px window').toBeGreaterThanOrEqual(96)
+    await startPose(page)
+    const s = await box(stack)
+    const cancel = await box(cancelButton(page))
+    const status = await box(page.getByTestId('status-bar'))
+    expect(s.height, 'still at least 96 px during a pose').toBeGreaterThanOrEqual(96)
+    expect(meets(s, cancel), `notes ${JSON.stringify(s)} vs « Annuler la pose » ${JSON.stringify(cancel)}`).toBe(false)
+    expect(s.y, 'notes inside the window (top)').toBeGreaterThanOrEqual(0)
+    expect(s.y + s.height, 'notes inside the window (bottom)').toBeLessThanOrEqual(300)
+    expect(meets(s, status), 'notes clear of the status bar').toBe(false)
+    expect(status.y + status.height, 'the status bar ends at the window bottom').toBe(300)
+    expect(status.height).toBeGreaterThan(20)
+    await expect(page.getByTestId('signal-status')).toBeVisible()
+  })
+})
 
 // ── S6 (wave 2c): between 761 and ~1100 px the right group of the status bar shrinks, the Signal button never leaves the window ──────────
 for (const width of [761, 800, 1024]) {
