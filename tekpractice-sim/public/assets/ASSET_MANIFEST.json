@@ -1059,7 +1059,7 @@
     {
       "id": "avid-hd-io",
       "optimized": true,
-      "tris": 12,
+      "tris": 44,
       "kind": "device",
       "ports": 7,
       "status": "ok",
@@ -1070,7 +1070,52 @@
       "attributionText": "« Alesis Midiverb III » par Dave.Maak (https://sketchfab.com/3d-models/alesis-midiverb-iii-8e96f1582bfa476fb87655d91e66a25c) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
       "trademark": "branded-internal",
       "portEmpties": 7,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1+meshy-7.1",
+      "date": "2026-11-04T18:06:52.360Z",
+      "specSource": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
+      "logosRemoved": true,
+      "photos": [],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "focusrite-isa-one",

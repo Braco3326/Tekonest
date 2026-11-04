@@ -11,8 +11,8 @@
     {
       "portId": "digilink",
       "face": "io",
-      "xMm": 355.2,
-      "yMm": 13.5,
+      "xMm": 332,
+      "yMm": 13,
       "confidence": "photo"
     },
     {
@@ -39,22 +39,22 @@
     {
       "portId": "wordclock-in",
       "face": "io",
-      "xMm": 415.9,
-      "yMm": 67.9,
+      "xMm": 430,
+      "yMm": 68,
       "confidence": "photo"
     },
     {
       "portId": "wordclock-out",
       "face": "io",
-      "xMm": 415.9,
-      "yMm": 45.8,
+      "xMm": 430,
+      "yMm": 45,
       "confidence": "photo"
     },
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 433.1,
-      "yMm": 16.3,
+      "xMm": 448,
+      "yMm": 15,
       "confidence": "photo"
     }
   ],
@@ -90,7 +90,31 @@
     "shape": "rack-box",
     "params": {
       "chamferMm": 1
-    }
+    },
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 10,
+        "yMm": 36,
+        "wMm": 44,
+        "hMm": 28,
+        "marginMm": 6
+      },
+      {
+        "face": "io",
+        "xMm": 343,
+        "yMm": 1,
+        "wMm": 34,
+        "hMm": 12,
+        "marginMm": 4
+      }
+    ]
   },
   "sources": [
     {
