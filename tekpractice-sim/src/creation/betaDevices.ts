@@ -72,10 +72,11 @@ export function parseProposals(raw: unknown, registry: Registry): ParsedProposal
     // for catalog gear only. Dropped BEFORE the schema runs, so a crafted or malformed `routing` / `acoustic` neither survives nor
     // takes the proposal down.
     // Nor a model front (Task 43c, L34): it is measured on a shipped .glb, and a proposal has none.
-    const { routing: _routing, acoustic: _acoustic, modelFront: _modelFront, ...declared } = entry
+    const { routing: _routing, acoustic: _acoustic, modelFront: _modelFront, modelBody: _modelBody, ...declared } = entry
     void _routing
     void _acoustic
     void _modelFront
+    void _modelBody
     const parsed = Device.safeParse(declared)
     if (!parsed.success) {
       const i = parsed.error.issues[0]

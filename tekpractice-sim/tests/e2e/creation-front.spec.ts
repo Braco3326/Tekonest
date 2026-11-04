@@ -264,3 +264,28 @@ test('(i) the port markers of a corrected 8030C sit on its rear face (x and z), 
     expect(p[2], 'but close to it (within 6 cm)').toBeGreaterThan(r.ends.rearZ - 0.06)
   }
 })
+
+// ── Night wave 1, item 8: the 8030C file includes its floor stand; the cabinet, not the whole model, has the real height ───────────────────────
+import catalog from '../../content/catalog.json'
+
+const REAL_8030C_H = 0.299 // REAL_SIZE_M['genelec-8030c'].h, the datasheet's 299 mm (285 mm without the Iso-Pod: inside the same ± 2 cm)
+
+test('(j) the 8030C cabinet is 0,299 m tall (± 2 cm): the stand under it is no longer counted in the normalisation; the K12.2 is unchanged', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => {
+    const c = window.__creation!
+    c.dispatch({ type: 'SPAWN', deviceId: 'genelec-8030c', position: [0, 0, 0], rotationY: 0, instanceId: 'g0' })
+  })
+  await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+  const r = await page.evaluate(() => ({ g: window.__creation!.bodyBoundsInRoot('g0'), k: window.__creation!.bodyBoundsInRoot('k12-g') }))
+  expect(r.g, 'the 8030C model is loaded').not.toBeNull()
+  const base = (catalog.devices.find((d) => d.id === 'genelec-8030c') as { modelBody?: { baseFraction: number } }).modelBody!.baseFraction
+  const total = r.g!.hi[1] - r.g!.lo[1]
+  expect(Math.abs(r.g!.lo[1]), 'the stand stands on the floor').toBeLessThan(0.01)
+  // the cabinet is what is above the stand: the share of the model the catalog gives (checked on the file by tests/assets/modelBody.test.ts)
+  expect(Math.abs(total * (1 - base) - REAL_8030C_H), `cabinet = ${(total * (1 - base)).toFixed(3)} m (whole model ${total.toFixed(3)} m)`).toBeLessThan(0.02)
+  // and the old normalisation (the whole model 0,299 m, cabinet ≈ 0,21 m) is gone
+  expect(total).toBeGreaterThan(0.37)
+  // a single-body model keeps its whole height: the K12.2 is 0,602 m
+  expect(r.k!.hi[1] - r.k!.lo[1]).toBeCloseTo(0.602, 1)
+})

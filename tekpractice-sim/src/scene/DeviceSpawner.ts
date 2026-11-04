@@ -24,6 +24,7 @@ import type { Registry, DeviceT } from '../engine/CatalogLoader'
 import type { PortRef } from '../engine/types'
 import { TOKENS } from '../design/tokens'
 import { assetUrl } from '../assetUrl'
+import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 
 export interface DeviceInstance {
@@ -317,7 +318,9 @@ export class DeviceSpawner {
         }
 
         const front = this.options.alignFront ? device.modelFront?.axis : undefined
-        const scale = this.normalizeModel(deviceId, glbRoot, front)
+        // Night wave 1 (item 8): a model that includes its floor stand is scaled by its cabinet's height (Mode Création only, like `front`).
+        const bodyBase = this.options.alignFront ? device.modelBody?.baseFraction : undefined
+        const scale = this.normalizeModel(deviceId, glbRoot, front, bodyBase)
         const rear = front && glbRoot.parent instanceof TransformNode ? rearFace(glbRoot, glbRoot.parent) : null
         this.reanchorPorts(device, instanceId, glbRoot, portMarkers, front === undefined, rear)
         if (front) {
@@ -350,7 +353,7 @@ export class DeviceSpawner {
    * to the instance origin, center X/Z, and rotate 180° if the ports face +Z.
    * Returns the applied scale factor (1 when the id has no known real size).
    */
-  private normalizeModel(deviceId: string, glbRoot: AbstractMesh, front?: FrontAxis): number {
+  private normalizeModel(deviceId: string, glbRoot: AbstractMesh, front?: FrontAxis, bodyBase?: number): number {
     const real = REAL_SIZE_M[deviceId]
     const worldOrigin =
       glbRoot.parent instanceof TransformNode
@@ -366,7 +369,8 @@ export class DeviceSpawner {
     const height0 = bounds.max.y - bounds.min.y
 
     // (a/b) uniform scale by height — the most reliable anchor across the set.
-    const scale = real && height0 > 1e-6 ? real.h / height0 : 1
+    // With `bodyBase` (the share of the model that is stand, catalog `modelBody`) the REAL height is the cabinet's, not the whole model's.
+    const scale = real && height0 > 1e-6 ? scaleForHeight(real.h, height0, bodyBase) : 1
     if (scale !== 1) {
       glbRoot.scaling.setAll(scale)
       glbRoot.computeWorldMatrix(true)

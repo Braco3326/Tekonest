@@ -120,6 +120,16 @@ export const ModelFront = z.object({
   evidence: z.string().min(1).describe('How it was measured: what is on that face (grille, driver), what is on the opposite one, and where the file was read.'),
 }).strict()
 
+/**
+ * A shipped .glb that includes a floor stand under the device (night wave 1, item 8): the share of the model's total height that is stand. Mode Création
+ * scales the model so that the CABINET (the model minus that share) has the device's real height; the stand is drawn at its scan proportions below it.
+ * ABSENT = the model is the device alone. Measured on the file (tests/assets/modelBody.test.ts re-measures it).
+ */
+export const ModelBody = z.object({
+  baseFraction: z.number().gt(0).lt(1).describe('Share (0 to 1) of the total height of the model, from its lowest point, that is stand under the cabinet.'),
+  evidence: z.string().min(1).describe('How it was measured on public/assets/<id>.glb: where the neck ends and the cabinet starts.'),
+}).strict()
+
 export const Device = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'device id must be a kebab-case slug'),
   label: z.string().min(1),
@@ -138,6 +148,9 @@ export const Device = z.object({
   ),
   modelFront: ModelFront.optional().describe(
     'Where the front of the shipped .glb faces (glTF model space), measured on the file: Mode Création turns the model so that it faces +z at yaw 0, where the acoustics aim. Absent = not established. Verified data: a Bêta proposal never carries it.',
+  ),
+  modelBody: ModelBody.optional().describe(
+    'A floor stand included in the shipped .glb (share of the model height): Mode Création normalises the height of the cabinet, not of the whole model. Absent = the model is the device alone. Verified data: a Bêta proposal never carries it.',
   ),
   routing: z.array(Route).optional().describe(
     'Signal routes of the device (C8): consumed by the signal path only. Verified data: a Bêta proposal never carries routing (parseProposals drops it).',
