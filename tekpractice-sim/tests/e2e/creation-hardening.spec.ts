@@ -11,7 +11,7 @@ import { readFileSync } from 'node:fs'
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import { cableKey } from '../../src/creation/sceneDiff'
-import { SETTLE_SAMPLE_MS } from './waits'
+import { SETTLE_SAMPLE_MS, quietWindow } from './waits'
 
 test.use({ viewport: { width: 1366, height: 768 } })
 
@@ -165,6 +165,42 @@ test('item 1 (review): the status bar names a selected Bêta device « non véri
   await clickPort(page, QL_OUT)
   await expect(page.getByTestId('port-offer')).toContainText(MARK)
   await expect(page.getByTestId('port-unplug')).toHaveAccessibleName(new RegExp(MARK))
+})
+
+test('wave 1c R3: connecting the Bêta amp through « Connecter à… » announces the amp with « non vérifié »', async ({ page }) => {
+  await boot(page)
+  const amp = await addBetaAmp(page)
+  await page.evaluate(([a, p]) => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: a, port: p } }), [amp, AMP_XLR.portId] as const)
+  await selectDevice(page, 'ql1')
+  await page.locator('[data-key="connect:out-main-l"]').focus()
+  await page.keyboard.press('Enter')
+  const dialog = page.getByTestId('cr-connect-dialog')
+  await expect(dialog).toBeVisible()
+  await page.getByTestId('connect-filter').fill(amp)
+  await expect(dialog.getByRole('option').first()).toBeVisible()
+  await page.keyboard.press('Enter')
+  await expect(dialog).toBeHidden()
+  await expect(statusMsg(page)).toContainText(`(${amp}) · ${MARK}`)
+  expect(await page.evaluate(() => window.__creation!.design().rig.connections.length)).toBeGreaterThan(0)
+})
+
+// R4: finding 13, the refused-open branch
+test('wave 1c R4: the pinned refusal is cleared when the drawer opens, not when the open is asked: a chunk that resolves after the picker opened leaves it', async ({ page }) => {
+  await boot(page)
+  await pinRefusal(page)
+  const held: Array<() => Promise<void>> = []
+  await page.route('**/*inventoryDrawer*', (r) => void held.push(() => r.continue()))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Space')
+  await expect.poll(() => held.length).toBeGreaterThan(0) // the open is asked and waiting for its chunk
+  await expect(page.getByTestId('port-error')).toBeVisible() // asked is not opened
+  await page.getByRole('menuitem', { name: 'Lieu' }).click()
+  await page.getByRole('menuitem', { name: 'Choisir un lieu…' }).click()
+  await expect(page.getByTestId('place-picker')).toBeVisible()
+  await Promise.all(held.splice(0).map((f) => f()))
+  await quietWindow(page, 600) // the chunk has arrived and nothing may open
+  await expect(page.getByTestId('inventory-drawer')).toBeHidden()
+  await expect(page.getByTestId('port-error')).toBeVisible() // the open was refused: the refusal was not read
 })
 
 // ── Item 2 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────
