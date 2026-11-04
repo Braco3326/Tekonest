@@ -1,6 +1,6 @@
 # TekPractice scripted model builder: design
 
-Status: DRAFT for founder review (2026-11-04). Design approved in chat by the founder on 2026-11-04. Scope widened the same day, on the founder's instruction, from four assets to the whole catalog, delivered in waves (section 4.1). Nothing implemented.
+Status: DRAFT for founder review (2026-11-04). Design approved in chat by the founder on 2026-11-04. Scope widened the same day, on the founder's instruction, from four assets to the whole catalog, delivered in waves (section 4.1). Wave 1 implemented the same day (not shipped: the four models wait for the founder's look review).
 Builds on: `2026-10-29-3d-model-rebuild-design.md` (the Meshy pipeline, gates, manifest and app-side extras, all kept).
 Evidence: `E:\CLAUDE BU\reports\3D equipment sources scan.md` (Hotmart STAGE LAB pack, StageBuilder Pro thread, FreeCAD) and the notes in `E:\CLAUDE BU\research_notes\3D equipment sources scan\`.
 
@@ -61,7 +61,7 @@ The `shape` enum starts with the four wave-1 shapes and grows by one entry each 
 
 ### 4.3 Builder: `tools/assets3d/blender/build_from_spec.py`
 
-Runs as `blender --background --python build_from_spec.py -- --spec <file> --out <raw.glb>`, via a new `tools/assets3d/runBuilder.ts` that mirrors `runFixup.ts` (injectable exec, same error handling).
+Runs as `blender --background --factory-startup --python-exit-code 1 --python build_from_spec.py -- --plan <plan.json> --out <raw.glb>` (plan.json: id, kind, shape, sizeMm, matingOuterMm, params; written by Node from the spec), via a new `tools/assets3d/runBuilder.ts` that mirrors `runFixup.ts` (injectable exec, same error handling).
 
 - A small registry maps each `shape` to a function that creates one mesh at exact size, in millimetres converted to metres, already in final orientation (mating or I/O face at +Z in file space, Y up, bottom-centre pivot for devices, mating-face-centre pivot for connectors).
 - It builds geometry only: body, shell, panel inset, bevels where the real part has them. It does not place `port_*`/`ctrl_*` empties and does not apply per-port recesses; the existing fix-up still does that, so port logic is not duplicated.
@@ -71,7 +71,7 @@ Runs as `blender --background --python build_from_spec.py -- --spec <file> --out
   - `cylinder-plug` (XLR3-F): 19.2 mm shell, 15.75 mm front section, three pin holes, length from `realSizeMm`. The latch lug stays out of the bounding box (spec note).
   - `trs-plug`: 6.35 mm tip/ring/sleeve plug with a sleeve and handle, from the spec size.
   - `rj45-plug`: body with latch, contact face with eight slots.
-  - `rack-box`: width x height x depth box with chamfered edges. No panel inset and no ear flanges in wave 1: ports are placed on the bounding-box face, so an inset would leave them floating until the per-port surface gate exists (2026-10-29 spec 4.5); ears and inset come with that gate.
+  - `rack-box`: width x height x depth box (bottom-centre pivot) with all twelve edges chamfered by `chamferMm` (default 1 mm, one segment), flat faces. No panel inset and no ear flanges in wave 1: ports are placed on the bounding-box face, so an inset would leave them floating until the per-port surface gate exists (2026-10-29 spec 4.5); ears and inset come with that gate.
 
 ### 4.4 Pipeline hook
 
@@ -109,7 +109,7 @@ Whole catalog (end of wave 4): every catalog device and connector type has a GLB
 
 ## 7. Risks and open items
 
-- Rack ears and handle dimensions of the Rio3224-D2 are not in the sources read so far. If they cannot be measured from the Yamaha photos or manual, the slice ships a plain box and the ears become a follow-up.
+- Rack ears, panel inset and handle of the Rio3224-D2 are not built in wave 1 (plain chamfered box, see 4.3): they come with the per-port surface gate, because the ports sit on the bounding-box face. Their dimensions are also not in the sources read so far.
 - Fix-up picks the best of 24 rotations by size match. A symmetric builder output (for example a square cross-section) could tie; the builder emits final orientation, so the identity rotation must win ties. Verify in an integration test.
 - Blender 5.2.3 differs from the 5.1 the pipeline was written against. The existing integration tests pass; the builder tests are the next check.
 - A scripted connector is a generic standard shape (IEC 61076-2-103 style dimensions from the datasheet), not a copy of Neutrik trade dress. Dimensions are facts; no vendor geometry is used.
