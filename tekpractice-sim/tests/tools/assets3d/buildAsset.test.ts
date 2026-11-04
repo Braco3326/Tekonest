@@ -1547,10 +1547,47 @@ describe('scripted build (--scripted)', () => {
       expect(seen.faces).toEqual(['top', 'io'])
     })
 
+    it('a face given as a photo takes its picture from the photo, the other faces from the Meshy render', async () => {
+      const spec = box({ build: { shape: 'rack-box', projection: ['top', 'io'] } })
+      const { deps, seen } = await hybridDeps(spec)
+      const asked: string[] = []
+      deps.renderProjection = async (_glb, face) => {
+        asked.push('meshy:' + face)
+        return { png: new Uint8Array([1]), faceMm: { w: 1, h: 1 } }
+      }
+      deps.photoProjection = async (photo, face, sizeMm) => {
+        asked.push('photo:' + face + ':' + photo.file + ':' + sizeMm.w + 'x' + sizeMm.h + 'x' + sizeMm.d)
+        return { png: new Uint8Array([2]), faceMm: { w: 1, h: 1 } }
+      }
+      await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectFrom: '/x.glb', projectPhotos: [{ face: 'io', file: 'rear.jpg' }], dryRun: true }, deps)
+      expect(asked).toEqual(['meshy:top', 'photo:io:rear.jpg:100x50x200'])
+      expect(seen.faces).toEqual(['top', 'io'])
+    })
+
+    it('photos alone are enough (no Meshy GLB) when every face has one; a face with neither is refused naming it', async () => {
+      const spec = box({ build: { shape: 'rack-box', projection: ['top', 'io'] } })
+      const { deps } = await hybridDeps(spec)
+      deps.photoProjection = async () => ({ png: new Uint8Array([2]), faceMm: { w: 1, h: 1 } })
+      const ok = await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectPhotos: [{ face: 'top', file: 't.jpg' }, { face: 'io', file: 'r.jpg' }], dryRun: true }, deps)
+      expect(ok.ok).toBe(true)
+      expect(ok.hybrid).toBe(true)
+      const missing = await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectPhotos: [{ face: 'io', file: 'r.jpg' }], dryRun: true }, deps)
+      expect(missing.ok).toBe(false)
+      expect(missing.error).toMatch(/top face has no picture/)
+    })
+
+    it('a photo for a face the spec does not project is refused', async () => {
+      const spec = box()
+      const { deps } = await hybridDeps(spec)
+      const wrong = await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectPhotos: [{ face: 'top', file: 't.jpg' }], dryRun: true }, deps)
+      expect(wrong.ok).toBe(false)
+      expect(wrong.error).toMatch(/no top face/)
+    })
+
     it('refuses projectFrom without scripted before anything is spent or written', async () => {
       const spec = box()
       const { deps } = await hybridDeps(spec)
-      await expect(buildAsset(spec.id, { maxAttempts: 1, projectFrom: '/x.glb', dryRun: true }, deps)).rejects.toThrow(/projectFrom goes with scripted/)
+      await expect(buildAsset(spec.id, { maxAttempts: 1, projectFrom: '/x.glb', dryRun: true }, deps)).rejects.toThrow(/go with scripted/)
       expect(calls.create).toHaveLength(0)
     })
 

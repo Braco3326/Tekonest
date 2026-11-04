@@ -62,6 +62,8 @@ import type { CompressOpts, TextureOpts } from './compress'
 import { findBlender, redact, requireMeshyKey } from './env'
 import { blankBands } from './blank'
 import { normaliseLook } from './look'
+import { parsePhotoArg, photoProjection } from './photoProjection'
+import type { PhotoArg } from './photoProjection'
 import { renderProjection } from './projection'
 import { orientSlab } from './slab'
 import type { Projection, ProjectionFace } from './projection'
@@ -135,6 +137,8 @@ export interface BuildDeps {
   runBuilder: (spec: AssetSpecT, outGlb: string, projections?: BuildProjection[]) => Promise<void>
   /** The flat image of one face of a fixed-up Meshy model (default: renderProjection with Blender). */
   renderProjection: (glb: string, face: ProjectionFace) => Promise<Projection>
+  /** The picture of a face made from a straight-on photo (default: photoProjection). */
+  photoProjection: (photo: PhotoArg, face: ProjectionFace, sizeMm: { w: number; h: number; d: number }) => Promise<Projection>
   compress: (bytes: Uint8Array, opts: CompressOpts) => Promise<Uint8Array>
   /** The texture budget step: runs before `compress`. */
   optimizeTextures: (bytes: Uint8Array, opts: TextureOpts) => Promise<Uint8Array>
@@ -168,6 +172,8 @@ export interface BuildOpts {
    * mapped onto the scripted shape: our exact geometry with Meshy's look. The texture comes from photos, so shipping needs logosRemoved.
    */
   projectFrom?: string
+  /** With scripted (CLI --project-photo face=file[@l,t,w,h]): the picture of that face comes from a straight-on photo instead of the Meshy render. */
+  projectPhotos?: PhotoArg[]
   /**
    * Build the raw GLB with our own scripted builder from the spec's `build` block (CLI --scripted): no Meshy, no photos,
    * one attempt, no retry. Excludes rawGlb. Logos are not an issue (no photo texture), so logosRemoved counts as true.
@@ -259,6 +265,7 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
     runFixup: deps.runFixup ?? ((inGlb, outGlb, spec, opts) => runFixup(inGlb, outGlb, spec, opts)),
     runBuilder: deps.runBuilder ?? ((spec, outGlb, projections) => runBuilder(spec, outGlb, {}, projections)),
     renderProjection: deps.renderProjection ?? ((glb, face) => renderProjection(glb, face)),
+    photoProjection: deps.photoProjection ?? ((photo, face, sizeMm) => photoProjection(photo.file, face, sizeMm, photo.crop ? { crop: photo.crop } : {})),
     compress: deps.compress ?? dracoCompress,
     optimizeTextures: deps.optimizeTextures ?? optimizeTextures,
     loadSpec:
@@ -398,10 +405,10 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
     if (!spec.build) throw new Error(`${id}: no build block in the spec, so it cannot be built with --scripted`)
     const errors = validateBuild(spec)
     if (errors.length > 0) throw new Error(errors.join('; '))
-  } else if (opts.projectFrom) {
-    throw new Error('projectFrom goes with scripted: the picture is mapped onto a scripted shape')
+  } else if (opts.projectFrom || (opts.projectPhotos ?? []).length > 0) {
+    throw new Error('projectFrom and projectPhotos go with scripted: the picture is mapped onto a scripted shape')
   }
-  const hybrid = scripted && opts.projectFrom !== undefined
+  const hybrid = scripted && (opts.projectFrom !== undefined || (opts.projectPhotos ?? []).length > 0)
   // A yaw of 90 or 270 degrees swaps the model's width and depth after the fix-up has matched them to the spec, so on a
   // footprint that is not square the proportion gate fails the same way on every attempt: refuse before anything is spent.
   const yaw = opts.yawDeg ?? 0
@@ -472,13 +479,26 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       let raw: Uint8Array | null = null
       if (scripted) {
         let projections: BuildProjection[] | undefined
-        if (opts.projectFrom) {
+        if (hybrid) {
           const wanted = spec.build?.projection ?? 'io'
           const faces = Array.isArray(wanted) ? wanted : [wanted]
+          const photos = opts.projectPhotos ?? []
+          for (const p of photos) {
+            if (!faces.includes(p.face)) throw new Error(`--project-photo ${p.face}: the spec's build.projection is ${faces.join(', ')}, it has no ${p.face} face`)
+          }
           projections = []
-          for (const face of faces) projections.push({ face, png: (await d.renderProjection(opts.projectFrom, face)).png })
+          for (const face of faces) {
+            const photo = photos.find((p) => p.face === face)
+            if (photo) {
+              projections.push({ face, png: (await d.photoProjection(photo, face, spec.realSizeMm)).png })
+            } else if (opts.projectFrom) {
+              projections.push({ face, png: (await d.renderProjection(opts.projectFrom, face)).png })
+            } else {
+              throw new Error(`the ${face} face has no picture: give --project <fixed Meshy glb> or --project-photo ${face}=<photo>`)
+            }
+          }
           if (opts.rawTaskId) attempt.taskId = opts.rawTaskId
-          d.log(`projecting the ${faces.join(', ')} face(s) of ${opts.projectFrom}`)
+          d.log(`projecting ${faces.map((f) => (photos.some((p) => p.face === f) ? f + ' (photo)' : f + ' (Meshy)')).join(', ')}`)
         }
         await d.runBuilder(spec, rawPath, projections)
       } else if (rawBytes) {
@@ -681,6 +701,7 @@ const USAGE = [
   '  --ship        also write public/assets/<id>.glb and the manifest entry (needs --logos-removed)',
   '  --logos-removed  you checked the textures: no brand logos (recorded as logosRemoved: true)',
   '  --raw         use a hand-made raw GLB: no Meshy call, one attempt',
+  '  --project-photo  with --scripted: face=file[@left,top,width,height]: the picture of that face is a straight-on photo (repeatable); other faces come from --project',
   '  --slab        with --raw: the GLB is a thin Meshy panel: turn its thin axis into the depth and restore the spec depth proportion before the fix-up',
   '  --meshy-task  with --raw: the id of the Meshy task the GLB was downloaded from; the manifest records Meshy provenance',
   '  --ship-run    ship the final.glb of an earlier passing run (re-gated) without building again: no Meshy call, no fix-up',
@@ -721,7 +742,15 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
     else if (a === '--pilot') pilot = true
     else if (a === '--scripted') opts.scripted = true
     else if (a === '--slab') opts.slab = true
-    else if (a === '--project') {
+    else if (a === '--project-photo') {
+      const v = argv[++i]
+      if (!v || v.startsWith('--')) return bad('--project-photo needs face=file (or face=file@left,top,width,height)')
+      try {
+        ;(opts.projectPhotos ??= []).push(parsePhotoArg(v))
+      } catch (e) {
+        return bad(e instanceof Error ? e.message : String(e))
+      }
+    } else if (a === '--project') {
       const v = argv[++i]
       if (!v || v.startsWith('--')) return bad('--project needs the fixed-up Meshy .glb whose picture is projected (an earlier run\'s attempt-1.fixed.glb)')
       opts.projectFrom = v
@@ -754,9 +783,9 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
     else return bad(`unexpected argument ${a}`)
   }
   if (pilot && (id !== undefined || opts.rawGlb)) return bad('--pilot takes no id and no --raw')
-  if (opts.rawTaskId && !opts.rawGlb && !opts.projectFrom) return bad('--meshy-task goes with --raw or --project: it names the Meshy task the GLB came from')
+  if (opts.rawTaskId && !opts.rawGlb && !opts.projectFrom && !(opts.projectPhotos ?? []).length) return bad('--meshy-task goes with --raw or --project: it names the Meshy task the GLB came from')
   if (opts.slab && !opts.rawGlb) return bad('--slab goes with --raw: it orients the thin Meshy panel in the GLB you give')
-  if (opts.projectFrom && !opts.scripted) return bad('--project goes with --scripted: the picture is mapped onto a scripted shape')
+  if ((opts.projectFrom || (opts.projectPhotos ?? []).length > 0) && !opts.scripted) return bad('--project and --project-photo go with --scripted: the picture is mapped onto a scripted shape')
   if (shipRunDir !== undefined) {
     // Shipping a finished run builds nothing: every flag that shapes a build is meaningless and would be silently ignored.
     const clash = [opts.rawGlb ? '--raw' : '', opts.scripted ? '--scripted' : '', attemptsGiven ? '--attempts' : '', yawGiven ? '--yaw' : '', opts.flipUpright ? '--flip' : '', pilot ? '--pilot' : '', ship ? '--ship' : '', dryRunFlag ? '--dry-run' : ''].filter(Boolean)
@@ -772,7 +801,7 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
   }
   if (!pilot && id === undefined) return bad('an asset id is required')
   if (ship && dryRunFlag) return bad('--ship and --dry-run contradict each other')
-  if (ship && !logosRemoved && (!opts.scripted || opts.projectFrom)) {
+  if (ship && !logosRemoved && (!opts.scripted || opts.projectFrom || (opts.projectPhotos ?? []).length > 0)) {
     return bad('--ship is refused without --logos-removed: open the textures, make sure no brand logo is left, then pass --ship --logos-removed (the manifest records logosRemoved: true)')
   }
   opts.dryRun = !ship
