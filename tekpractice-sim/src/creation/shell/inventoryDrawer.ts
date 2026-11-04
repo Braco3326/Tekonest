@@ -40,6 +40,8 @@ export interface InventoryDrawerDeps {
   registry: Registry
   /** Proposed devices (« Bêta » tab, Task 30), read at each open. */
   proposals(): { deviceId: string; label: string }[]
+  /** Where the Bêta sheets are: the drawer never waits for them (night wave 1, item 6). Read at each build. */
+  betaStatus(): 'loading' | 'ready' | 'unavailable'
   /** Entrée or click on a device (the drawer is already closed and the 3D view focused). */
   onChoose(deviceId: string): void
   /** Hands focus back to the 3D view when the drawer closes. */
@@ -63,6 +65,8 @@ export interface InventoryDrawer {
   readonly root: HTMLElement
   readonly isOpen: boolean
   open(): void
+  /** The Bêta sheets arrived or failed: rebuild the tabs in place (same tab, same filter, focus kept). No-op while closed. */
+  refresh(): void
   /** `returnFocus: false` when something else takes focus right after (the place picker). */
   close(opts?: { returnFocus?: boolean }): void
   /** Ends a press in progress and removes its window listeners (the shell is going away). */
@@ -289,7 +293,16 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     }
     const mine = found ?? items.filter((it) => it.tab === tab)
     if (!mine.length) {
-      panel.appendChild(el(doc, 'p', 'cr-drawer-empty', I().empty))
+      // The « Bêta » tab says where its sheets are; no other tab is ever held up by them.
+      const status = tab === 'beta' && !found ? d.betaStatus() : 'ready'
+      if (status === 'ready') panel.appendChild(el(doc, 'p', 'cr-drawer-empty', I().empty))
+      else {
+        const p = el(doc, 'p', 'cr-drawer-empty', status === 'loading' ? I().betaLoading : I().betaUnavailable)
+        p.dataset.testid = 'inventory-beta-status'
+        p.dataset.state = status
+        p.setAttribute('role', 'status')
+        panel.appendChild(p)
+      }
       return
     }
     const list = el(doc, 'ul', 'cr-inv-list')
@@ -336,7 +349,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   }
 
   const build = (): void => {
-    const inv = inventory(d.registry, { proposals: d.proposals(), modelIds: MODEL_IDS })
+    const inv = inventory(d.registry, { proposals: d.proposals(), modelIds: MODEL_IDS, beta: d.betaStatus() })
     items = inv.items
     tablist.replaceChildren()
     tabs = inv.tabs.map((tab, i) => {
@@ -431,6 +444,13 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       root.getBoundingClientRect() // the closed pose is laid out before the slide starts
       root.dataset.open = 'true'
       ;(tabs.find((t) => t.tab === selected)?.btn ?? close).focus()
+    },
+    refresh() {
+      if (!api.isOpen) return
+      // The tab buttons are rebuilt: a focused one gets its successor back (same tab), so a keyboard user is not thrown to the page.
+      const had = tabs.find((t) => t.btn === doc.activeElement)?.tab
+      build()
+      if (had) tabs.find((t) => t.tab === had)?.btn.focus()
     },
     close(opts) {
       if (!api.isOpen) return

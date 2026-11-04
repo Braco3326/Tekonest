@@ -176,7 +176,9 @@ export function propsView(design: DesignState, registry: Registry, instanceId: s
     const connectorLabel = connectorName(registry, p.connector)
     const me = { instance: instanceId, port: p.portId }
     // The cable as the hover shows it: the output end first, whichever way it is stored.
-    const cable = to ? cableText(portOf, me, { instance: to.instance, port: to.port }) : null
+    const cable = to
+      ? cableText(portOf, me, { instance: to.instance, port: to.port }, null, isUnverified(registry, device.id) || isUnverified(registry, deviceOf.get(to.instance) ?? ''))
+      : null
     return {
       portId: p.portId,
       label: p.portId, // the catalog has no French port names yet

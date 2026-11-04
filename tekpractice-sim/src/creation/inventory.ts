@@ -70,7 +70,15 @@ export function tabFor(device: DeviceT): InventoryTab {
 
 export function inventory(
   registry: Registry,
-  opts: { proposals: { deviceId: string; label: string }[]; modelIds: ReadonlySet<string> },
+  opts: {
+    proposals: { deviceId: string; label: string }[]
+    modelIds: ReadonlySet<string>
+    /**
+     * Where the Bêta sheets are (night wave 1, item 6): while they `loading` or `unavailable` the « Bêta » tab is listed anyway (empty), so the
+     * drawer can say so in it; `ready` (the default) lists it only when there are proposals.
+     */
+    beta?: 'loading' | 'ready' | 'unavailable'
+  },
 ): { tabs: InventoryTab[]; items: InventoryItem[] } {
   const items: InventoryItem[] = registry.catalog.devices.map((d) => ({
     deviceId: d.id,
@@ -92,6 +100,7 @@ export function inventory(
     })
   }
   const used = new Set(items.map((i) => i.tab))
+  if (opts.beta === 'loading' || opts.beta === 'unavailable') used.add('beta')
   return { tabs: TAB_ORDER.filter((t) => used.has(t)), items }
 }
 

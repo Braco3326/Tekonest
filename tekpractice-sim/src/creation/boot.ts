@@ -43,6 +43,7 @@ import { mountCancelPlacement } from './shell/cancelPlacement'
 import { EditController } from './editController'
 import { PatchController } from './patchController'
 import { CableHoverController } from './cableHover'
+import { needsMainsHint } from './mains'
 import { cableText, connectionSignal, legendEntries, portInfoOf, presentSignals } from './cableStyle'
 import { mountCableLegend } from './shell/cableLegend'
 import { mountPortLabels } from './shell/portLabel'
@@ -72,7 +73,7 @@ import { listenerAtPoint, listenerFromCamera } from './listenerPose'
 import { audioStats, closeAudioContext, openAudioContext } from '../audio/context'
 import type { ListenerPose } from './listenVoices'
 import type { BetaPrep } from './betaDevices'
-import { isUnverified, parseProposals, prepareBeta, proposalEntries, registerProposals, within, type BetaLoad } from './betaDevices'
+import { isUnverified, markUnverified, parseProposals, prepareBeta, proposalEntries, registerProposals, within, type BetaLoad } from './betaDevices'
 import { signalPath } from '../flow/signalPath'
 import type { DeviceT } from '../engine/CatalogLoader'
 import type { DesignState } from '../trials/trial'
@@ -260,6 +261,13 @@ export async function bootCreation(): Promise<void> {
     const I = COPY.inventory!
     notes.show({ id: 'beta-unavailable', title: I.unavailableTitle!, body: I.unavailable! })
     shell.setStatus('', I.unavailable!, 'ready', true)
+  }
+  /**
+   * Night wave 1, item 7. A saved project reopened with active gear and no power strip (a project of before the mains model) would otherwise sit
+   * unpowered with a playback reason that never mentions the mains: one honest line, through the announcer, once per reopen. The project is never edited.
+   */
+  const noteNoMains = (): void => {
+    if (needsMainsHint(store.design(), registry)) announcer.say(COPY.project!.noMains!)
   }
   const noteMissing = (ids: readonly string[]): void => {
     if (!ids.length) return
@@ -885,6 +893,7 @@ export async function bootCreation(): Promise<void> {
     showCanvas()
     showStatus()
     announcer.say(PJ.restored!)
+    noteNoMains()
     return true
   }
   refreshSignal()
@@ -1103,6 +1112,7 @@ export async function bootCreation(): Promise<void> {
     autosave.schedule()
     showCanvas()
     announcer.say(PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()))
+    noteNoMains()
   }
   /** « Exporter les données mises de côté… »: one JSON file; nothing is removed (clearing is Oscar's call, N19). */
   const exportKept = (): void => {
@@ -1427,6 +1437,9 @@ export async function bootCreation(): Promise<void> {
     if (placement.cancel()) return true // a placement or a drag goes first; the selection stays
     // A held Échap is one press: its auto-repeats must not fall through to the next level (the cable, then the selection).
     if (e.repeat) return true
+    // A hover label on screen is dismissed first and alone (WCAG 1.4.13): the pointer stays where it is, the cable in hand, the
+    // pinned refusal and the selection are untouched, and the next Échap does the usual cascade. A pose goes before (above): no label is shown during one.
+    if (portLabels.dismissHover()) return true
     if (patch.cancel()) return true // then a cable in hand, a pinned refusal or the « Débrancher » offer; the selection stays
     if (e.target !== canvas || viewState.get().selection === null) return false
     selection.select(null)
@@ -1444,9 +1457,7 @@ export async function bootCreation(): Promise<void> {
   let drawerLoad: Promise<InventoryDrawer> | null = null
   /** The learner's last wish while the chunk loads (a second Espace before it arrives cancels the open). */
   let drawerWanted = false
-  /** A mounted drawer is waiting for a fresh fetch of the Bêta sheets before it shows (a second Espace cancels, as for the first open). */
-  let drawerRetry = false
-  const drawerOpen = (): boolean => (drawer ? drawer.isOpen || (drawerRetry && drawerWanted) : drawerWanted)
+  const drawerOpen = (): boolean => (drawer ? drawer.isOpen : drawerWanted)
   /** Entrée / click on a device in the drawer: it follows the pointer until a click drops it (Task 24). */
   const chooseDevice = (deviceId: string, opts: { pointerDrag?: boolean } = {}): boolean => {
     registerBeta([deviceId]) // a Bêta sheet becomes placeable only now (a catalog id is never touched)
@@ -1455,18 +1466,30 @@ export async function bootCreation(): Promise<void> {
   /** A drawer drag works in client px; the placement controller in canvas px. */
   const canvasPx = (at: { x: number; y: number }): { x: number; y: number } => toCanvasPx(at, canvas.getBoundingClientRect())
   /**
-   * The drawer was mounted without the Bêta sheets because their fetch FAILED (not because there are none): the next open
-   * fetches them again before it shows, so the tab can come back. The module itself (drawerLoad) stays cached.
+   * The Bêta sheets as the drawer shows them (night wave 1, item 6). The drawer never waits for them: it opens at once, its « Bêta » tab
+   * says « Chargement… » while the request runs and a plain message if it failed, and the tab fills in when the request settles. Every
+   * open asks again while the sheets are not there (a failure is told apart from « the file has no sheet », see `loadBeta`).
    */
-  let betaStale = false
+  let betaStatus: 'loading' | 'ready' | 'unavailable' = 'loading'
+  let betaSync: Promise<void> | null = null
+  const syncBeta = (): void => {
+    if (betaStatus === 'ready' || betaSync) return
+    betaStatus = 'loading'
+    drawer?.refresh()
+    betaSync = loadBeta().then((r) => {
+      betaStatus = r.failed ? 'unavailable' : 'ready' // never rejects
+      betaSync = null
+      drawer?.refresh()
+    })
+  }
   const loadDrawer = (): Promise<InventoryDrawer> =>
-    (drawerLoad ??= Promise.all([import('./shell/inventoryDrawer'), loadBeta()]).then(([{ mountInventoryDrawer }, beta]) => {
-      betaStale = beta.failed
+    (drawerLoad ??= import('./shell/inventoryDrawer').then(({ mountInventoryDrawer }) => {
       drawer = mountInventoryDrawer({
         doc: document,
         parent: shell.viewport,
         registry,
-        proposals: () => proposalEntries(betaDevices), // « Bêta » shows only if there are any
+        proposals: () => proposalEntries(betaDevices), // « Bêta » shows only if there are any, or while they load / failed
+        betaStatus: () => betaStatus,
         onChoose: (deviceId) => void chooseDevice(deviceId),
         // Drag-and-drop out of the drawer (Task 43b): the same placement, steered by the window-level pointer events of the press.
         onDragStart: (deviceId, at, alt) => {
@@ -1493,26 +1516,24 @@ export async function bootCreation(): Promise<void> {
     }))
   const setInventory = (open: boolean, opts: { returnFocus?: boolean } = {}): void => {
     drawerWanted = open
-    if (drawer && !(open && betaStale)) {
-      if (open) drawer.open()
-      else drawer.close(opts)
+    if (open) patch.dismissRefusal() // the drawer takes the learner's attention: the refusal pinned in the view has been read
+    if (drawer) {
+      if (open) {
+        drawer.open()
+        syncBeta()
+      } else drawer.close(opts)
       return
     }
     if (!open) return
+    // Only the drawer's own chunk is awaited (a local file); the Bêta sheets arrive after it is open.
     shell.setStatus(placeNow(), INV.loading!, 'busy')
-    drawerRetry = !!drawer
-    const ready = drawer
-      ? loadBeta().then((r) => {
-          betaStale = r.failed // never rejects; a second failure keeps the retry for the next open
-          drawerRetry = false
-          return drawer!
-        })
-      : loadDrawer()
-    ready.then(
+    loadDrawer().then(
       (d) => {
         showStatus()
-        if (drawerWanted && !viewLocked()) d.open()
-        else drawerWanted = false
+        if (drawerWanted && !viewLocked()) {
+          d.open()
+          syncBeta()
+        } else drawerWanted = false
       },
       (e) => {
         console.error('[creation] inventory failed to load', e)
@@ -1558,10 +1579,11 @@ export async function bootCreation(): Promise<void> {
     const deviceId = store.design().rig.instances.find((i) => i.instanceId === r.instance)?.deviceId
     const p = (deviceId ? registry.deviceById.get(deviceId) : undefined)?.ports.find((q) => q.portId === r.port)
     if (!p) return r.port
-    return COPY.patch!.hoverLabel!
+    // A Bêta device's port says so on hover (night wave 1, item 1).
+    return markUnverified(COPY.patch!.hoverLabel!
       .replace('{port}', p.portId)
       .replace('{connector}', COPY.connector?.[p.connector] ?? registry.connectorById.get(p.connector)?.label ?? p.connector)
-      .replace('{signal}', COPY.signal?.[p.signal] ?? registry.signalById.get(p.signal)?.label ?? p.signal)
+      .replace('{signal}', COPY.signal?.[p.signal] ?? registry.signalById.get(p.signal)?.label ?? p.signal), !!deviceId && isUnverified(registry, deviceId))
   }
   const patch = new PatchController(host, history, store, scheduler, shellBag, {
     ui: portLabels,
@@ -1604,7 +1626,14 @@ export async function bootCreation(): Promise<void> {
   // ── Cables by signal type (Task 27, C18): the colour is the scene host's (the catalog's signal of each connection);
   // the legend (bottom of Propriétés) lists the types present; hovering a cable highlights it and says what it joins.
   // After the patch controller: a port under the pointer wins, and its label is never hidden from here.
-  const cableLegend = mountCableLegend(document, shell.props, shellBag)
+  const cableLegend = mountCableLegend(document, shell.props, shellBag, {
+    // The rail button of a folded Propriétés: unfold it with the legend open, and put focus on the legend (night wave 1, item 4).
+    onRail: () => {
+      shell.setPanel('props', true)
+      cableLegend.setOpen(true)
+      cableLegend.toggle.focus()
+    },
+  })
   const portInfoNow = () => portInfoOf(registry, store.design().rig.instances)
   const refreshLegend = (): void => {
     const portOf = portInfoNow()
@@ -1618,7 +1647,9 @@ export async function bootCreation(): Promise<void> {
     deviceAt: (x, y) => pickDevice(host.scene, x, y) !== null,
     describe: (key) => {
       const c = store.design().rig.connections.find((k) => cableKey(k.a, k.b) === key)
-      return c ? cableText(portInfoNow(), c.a, c.b, host.cableLengthM(key)) : null
+      if (!c) return null
+      const deviceOf = (instance: string): string => store.design().rig.instances.find((i) => i.instanceId === instance)?.deviceId ?? ''
+      return cableText(portInfoNow(), c.a, c.b, host.cableLengthM(key), isUnverified(registry, deviceOf(c.a.instance)) || isUnverified(registry, deviceOf(c.b.instance)))
     },
     subscribe: (fn) => store.subscribe(fn),
   })

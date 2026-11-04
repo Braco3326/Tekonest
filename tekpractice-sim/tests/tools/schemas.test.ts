@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { zodToJsonSchema } from 'zod-to-json-schema'
+import { catalogSchemaText } from '../../tools/generate-schema'
 import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
 import catalogJson from '../../content/catalog.json'
@@ -96,7 +97,18 @@ describe('Mains data in the catalog (Task 32, C7)', () => {
 })
 
 /**
- * Freshness of the hand-patched content/catalog.schema.json (known to differ from the generator: its `controls` union is stale).
+ * Freshness of content/catalog.schema.json. Night wave 1 (item 9): the whole file is what `npm run gen:schema` emits, byte for byte
+ * (it used to differ: its `controls` union was stale). After a change to tools/schemas.ts, run `npm run gen:schema`.
+ * The PortFlag hunks below stay as the readable check of what Task 32 added.
+ */
+describe('content/catalog.schema.json is exactly what `npm run gen:schema` emits (night wave 1, item 9)', () => {
+  it('same text as the generator, so the editor autocompletion matches the zod source of truth', () => {
+    const onDisk = readFileSync('content/catalog.schema.json', 'utf8').split('\r\n').join('\n')
+    expect(onDisk).toBe(catalogSchemaText())
+  })
+})
+
+/**
  * Only the hunks Task 32 touched are held: every flag enum in the file is the zod PortFlag, value for value, description included.
  */
 describe('content/catalog.schema.json: the PortFlag hunks match the generator (Task 32)', () => {

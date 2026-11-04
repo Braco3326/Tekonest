@@ -86,6 +86,7 @@ function setup(over: Partial<InventoryDrawerDeps> = {}) {
     parent: new FakeEl('div') as never,
     registry,
     proposals: () => [],
+    betaStatus: () => 'ready' as const,
     onChoose: calls.choose,
     returnFocus: () => {},
     isToggleKey: () => false,

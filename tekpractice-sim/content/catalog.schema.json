@@ -188,66 +188,105 @@
               "controls": {
                 "type": "array",
                 "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "toggle"
-                      ]
-                    },
-                    "label": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "default": {
-                      "type": "boolean"
-                    },
-                    "enables": {
+                  "anyOf": [
+                    {
                       "type": "object",
                       "properties": {
-                        "flag": {
+                        "id": {
                           "type": "string",
-                          "enum": [
-                            "providesPhantom",
-                            "requiresPhantom",
-                            "isClockMaster",
-                            "isClockSlave",
-                            "isMicInput",
-                            "isMonitorOut",
-                            "isOnAirTally",
-                            "isDantePrimary",
-                            "isMainsSource"
-                          ],
-                          "description": "A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing."
+                          "minLength": 1
                         },
-                        "ports": {
+                        "type": {
+                          "type": "string",
+                          "const": "toggle"
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "default": {
+                          "type": "boolean"
+                        },
+                        "enables": {
+                          "type": "object",
+                          "properties": {
+                            "flag": {
+                              "type": "string",
+                              "enum": [
+                                "providesPhantom",
+                                "requiresPhantom",
+                                "isClockMaster",
+                                "isClockSlave",
+                                "isMicInput",
+                                "isMonitorOut",
+                                "isOnAirTally",
+                                "isDantePrimary",
+                                "isMainsSource"
+                              ],
+                              "description": "A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing."
+                            },
+                            "ports": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "minItems": 1
+                            }
+                          },
+                          "required": [
+                            "flag",
+                            "ports"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "label",
+                        "default"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "type": {
+                          "type": "string",
+                          "const": "enum"
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "options": {
                           "type": "array",
                           "items": {
                             "type": "string",
                             "minLength": 1
                           },
-                          "minItems": 1
+                          "minItems": 2
+                        },
+                        "defaultOption": {
+                          "type": "string",
+                          "minLength": 1
                         }
                       },
                       "required": [
-                        "flag",
-                        "ports"
+                        "id",
+                        "type",
+                        "label",
+                        "options",
+                        "defaultOption"
                       ],
                       "additionalProperties": false
                     }
-                  },
-                  "required": [
-                    "id",
-                    "type",
-                    "label",
-                    "default"
-                  ],
-                  "additionalProperties": false
+                  ]
                 }
               },
               "acoustic": {
@@ -472,6 +511,28 @@
                 ],
                 "additionalProperties": false,
                 "description": "Where the front of the shipped .glb faces (glTF model space), measured on the file: Mode Création turns the model so that it faces +z at yaw 0, where the acoustics aim. Absent = not established. Verified data: a Bêta proposal never carries it."
+              },
+              "modelBody": {
+                "type": "object",
+                "properties": {
+                  "baseFraction": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "exclusiveMaximum": 1,
+                    "description": "Share (0 to 1) of the total height of the model, from its lowest point, that is stand under the cabinet."
+                  },
+                  "evidence": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "How it was measured on public/assets/<id>.glb: where the neck ends and the cabinet starts."
+                  }
+                },
+                "required": [
+                  "baseFraction",
+                  "evidence"
+                ],
+                "additionalProperties": false,
+                "description": "A floor stand included in the shipped .glb (share of the model height): Mode Création normalises the height of the cabinet, not of the whole model. Absent = the model is the device alone. Verified data: a Bêta proposal never carries it."
               },
               "routing": {
                 "type": "array",

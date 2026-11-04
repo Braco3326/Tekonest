@@ -178,3 +178,20 @@ describe('portInfoOf and cableText (the hover text)', () => {
     expect(cableText(portOf, { instance: 'x', port: 'a' }, { instance: 'y', port: 'b' })).toBeNull()
   })
 })
+
+describe('cableText marks a cable that touches a Bêta device (night wave 1, item 1)', () => {
+  const registry = loadCatalog(catalogJson)
+  const portOf = portInfoOf(registry, [
+    { instanceId: 'ql1', deviceId: 'yamaha-ql1' },
+    { instanceId: 'k12-g', deviceId: 'qsc-k12-2' },
+  ])
+  const OUT = { instance: 'ql1', port: 'out-main-l' }
+  const IN = { instance: 'k12-g', port: 'in-line-a' }
+  it('« … · non vérifié » ends the text (after the length) only when asked; the verified text is byte-identical', () => {
+    const plain = 'ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu)'
+    expect(cableText(portOf, OUT, IN, 6.36, true)).toBe(`${plain} · 6,4 m · non vérifié`)
+    expect(cableText(portOf, OUT, IN, null, true)).toBe(`${plain} · non vérifié`)
+    expect(cableText(portOf, OUT, IN, 6.36, false)).toBe(`${plain} · 6,4 m`)
+    expect(cableText(portOf, OUT, IN, 6.36)).toBe(`${plain} · 6,4 m`)
+  })
+})

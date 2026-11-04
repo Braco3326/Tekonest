@@ -362,7 +362,14 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 /* ── Cable legend (Task 27): the bottom of « Propriétés », never over the 3D view ───────────────────────────── */
 .cr-legend { flex: 0 0 auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }
 .cr-legend[hidden], .cr-legend-list[hidden] { display: none; }
-.cr[data-props='collapsed'] .cr-legend { display: none; }
+/* Propriétés folded (a rail): only the rail button stays, the toggle and the list wait for the panel to unfold (night wave 1, item 4). */
+.cr-legend-rail { display: none; }
+.cr[data-props='collapsed'] .cr-legend { border-top: 0; }
+.cr[data-props='collapsed'] .cr-legend-toggle, .cr[data-props='collapsed'] .cr-legend-list { display: none; }
+.cr[data-props='collapsed'] .cr-legend-rail { display: grid; place-items: center; width: 100%; height: 32px; color: var(--cr-ink-muted); transition: none; }
+.cr[data-props='collapsed'] .cr-legend-rail:hover { color: var(--cr-ambre); background: var(--cr-nuit); }
+.cr[data-props='collapsed'] .cr-legend-rail:focus-visible { outline-offset: -3px; box-shadow: none; }
+.cr-legend-rail-icon { width: 16px; height: 16px; }
 .cr .cr-legend-toggle {
   display: flex;
   width: 100%;

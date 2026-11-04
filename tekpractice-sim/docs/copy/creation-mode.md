@@ -318,6 +318,7 @@ Sauvegarde automatique, marque « * », Ctrl+S et projets nommés (Task 13, C16,
 | `project.openDirtyTitle` | Ouvrir un autre projet ? | validé | « Ouvrir… » avec des modifications non enregistrées (corps : `project.newBody`) |
 | `project.openDirtyConfirm` | Choisir un projet | validé | Bouton principal de ce dialogue |
 | `project.autosaveFull` | Stockage du navigateur plein : sauvegarde automatique en pause. Votre travail reste affiché tant que la page est ouverte ; rien de déjà enregistré n’est effacé. | validé | Note + barre d'état quand l'écriture automatique dépasse le quota. L9 (réponse coordinateur) : « Enregistrer sous » écrit dans le même stockage et l'app ne supprime aucun projet, donc aucun remède n'est promis ; export / suppression de projet prévus plus tard |
+| `project.noMains` | Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » du tiroir) et branchez-y les appareils. | à valider (tekuxwriter) | Barre d’état (annoncée, une fois par réouverture), seulement si le projet rouvert contient un appareil actif qui a besoin du secteur et aucune multiprise ; jamais de modification du projet |
 | `project.restored` | Travail de la dernière séance rouvert. | validé | Barre d'état au démarrage quand la sauvegarde automatique est rouverte (le sélecteur de lieu ne s'affiche pas) |
 | `project.nameTitle` | Enregistrer le projet | validé | Titre du dialogue de nom (Ctrl+S la première fois) |
 | `project.nameTitleAs` | Enregistrer sous | validé | Titre du même dialogue pour « Enregistrer sous… » |
@@ -513,6 +514,8 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.unavailableOpen` | Fiches Bêta indisponibles (réseau). Le projet n’a pas été ouvert. Rechargez la page, puis rouvrez-le. | à valider (tekuxwriter) | Corps de la note et ligne d’état quand « Ouvrir… » n’a pas pu charger les fiches Bêta du projet choisi : rien n’est ouvert ni modifié |
 | `inventory.loadingBeta` | Chargement des fiches Bêta… | à valider (tekuxwriter) | Barre d’état pendant le chargement des fiches Bêta dont un projet enregistré a besoin (réouverture seulement) |
 | `inventory.loading` | Ouverture de l’inventaire… | à valider (tekuxwriter) | Barre d’état pendant le chargement du tiroir (première ouverture) |
+| `inventory.betaLoading` | Chargement… | à valider (tekuxwriter) | Dans l’onglet « Bêta » seulement, pendant la requête des fiches (le tiroir est déjà ouvert, les autres onglets servent) |
+| `inventory.betaUnavailable` | Fiches Bêta indisponibles (réseau). Rechargez la page pour les retrouver. | à valider (tekuxwriter) | Dans l’onglet « Bêta » si les fiches n’ont pas pu être chargées (hors ligne, pas de réponse en 5 s) ; les autres onglets ne sont pas touchés |
 | `inventory.loadFailed` | L’inventaire n’a pas pu s’ouvrir (réseau). Rechargez la page. | à valider (tekuxwriter) | Barre d’état si le module du tiroir ne se charge pas (hors ligne) |
 | `inventory.entry` | Ajouter {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique (Annuler / Rétablir) ; {device} = nom de l’appareil |
 | `inventory.tabMicros` | Micros | à valider (tekuxwriter) | Onglet ; Micros, d’après la catégorie « microphone » du catalogue ; les onglets vides sont masqués |
@@ -625,6 +628,7 @@ Câbles colorés par type de signal (Task 27, C18). La couleur n’est jamais le
 | `cables.legendTitle` | Légende des câbles | à valider (tekuxwriter) | Titre visible du bloc légende (bas du panneau Propriétés), aussi nom accessible de la liste |
 | `cables.legendCollapse` | Replier la légende des câbles | à valider (tekuxwriter) | Nom accessible du bouton de la légende quand elle est dépliée (il la replie) |
 | `cables.legendExpand` | Déplier la légende des câbles | à valider (tekuxwriter) | Nom accessible du bouton quand elle est repliée (il la déplie) |
+| `cables.legendRail` | Légende des câbles : déplier Propriétés | à valider (tekuxwriter) | Nom accessible et infobulle du bouton de la légende dans le rail de Propriétés repliée (visible seulement s’il y a un câble) : il déplie le panneau, légende ouverte |
 | `cables.dashed` | pointillés | à valider (tekuxwriter) | Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus) |
 | `cables.hover` | {a} → {b} · {signal} | à valider (tekuxwriter) | Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal |
 | `cables.hoverLength` | {a} → {b} · {signal} · {length} | à valider (tekuxwriter) | Le même texte avec la longueur du câble tracé ; {length} = « 6,4 m » |

@@ -38,6 +38,11 @@ export function placeBubble(at: Pt, size: { w: number; h: number }, box: { w: nu
 }
 
 export interface PortLabelUi extends PatchUi {
+  /**
+   * Échap on a visible hover label (WCAG 1.4.13, dismissible): hides it and says so (true); false when none is shown. The pointer has not
+   * moved, so nothing re-shows it until the pointer reaches another port or cable (the controllers only show on a change of target).
+   */
+  dismissHover(): boolean
   /** The three elements, for tests and layout checks. */
   readonly elements: { hover: HTMLElement; error: HTMLElement; offer: HTMLElement }
 }
@@ -97,6 +102,11 @@ export function mountPortLabels(doc: Document, parent: HTMLElement, bag: Disposa
       if (!hover.hidden) place(hover, at)
     },
     hideHover: () => hide(hover),
+    dismissHover() {
+      if (hover.hidden) return false
+      hide(hover)
+      return true
+    },
     pinError(text, at) {
       // Hidden then shown with its text in one go: the alert is announced as it appears.
       error.hidden = false

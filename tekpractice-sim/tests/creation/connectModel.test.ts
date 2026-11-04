@@ -280,3 +280,53 @@ describe('focusPlan: where focus goes when the dialog closes (never <body>, neve
       }
   })
 })
+
+// ── Night wave 1, item 1: a Bêta device is named « non vérifié » wherever the dialog names it ─────────────────────────────
+import { readFileSync } from 'node:fs'
+import { parseProposals, registerProposals } from '../../src/creation/betaDevices'
+import { COPY } from '../../src/creation/copy'
+
+describe('Bêta devices carry « non vérifié » in the « Connecter à… » list (night wave 1, item 1)', () => {
+  const file = JSON.parse(readFileSync('content/proposals/catalog-proposals.json', 'utf8')) as unknown
+  /** A fresh registry (the shared one would keep the proposal registered for the other tests). */
+  function betaRig() {
+    const reg = loadCatalog(catalogJson)
+    const amp = parseProposals(file, reg).devices.find((d) => d.id === 'crown-xls-2502')!
+    registerProposals(reg, [amp])
+    const store = new CreationStore(reg, creationEvaluator(reg))
+    const history = new History(store)
+    history.do({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 0] })
+    history.do({ type: 'SPAWN', deviceId: 'crown-xls-2502', instanceId: 'xls', position: [1, 0, 0] })
+    history.do({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12-g', position: [2, 0, 0] })
+    history.clear()
+    return { reg, store }
+  }
+  const MARK = COPY.inventory!.badgeUnverified!
+
+  it('the heading, the full label and the flag of every option of a Bêta device (compatible and refused), and only those', () => {
+    const { reg, store } = betaRig()
+    const c = candidates(store, reg, QL_L)
+    const beta = [...c.ok, ...c.rejected].filter((e) => e.ref.instance === 'xls')
+    const verified = [...c.ok, ...c.rejected].filter((e) => e.ref.instance === 'k12-g')
+    expect(beta.length).toBeGreaterThan(0)
+    expect(verified.length).toBeGreaterThan(0)
+    for (const e of beta) {
+      expect(e.unverified, e.label).toBe(true)
+      expect(e.device, e.label).toContain(MARK)
+      expect(e.label, e.label).toContain(MARK)
+    }
+    for (const e of verified) {
+      expect(e.unverified, e.label).toBe(false)
+      expect(e.device).not.toContain(MARK)
+      expect(e.label).not.toContain(MARK)
+    }
+  })
+
+  it('the filter finds a Bêta device by the words « non vérifié »', () => {
+    const { reg, store } = betaRig()
+    const c = candidates(store, reg, QL_L)
+    const hit = filterCandidates([...c.ok, ...c.rejected], 'non verifie')
+    expect(hit.length).toBeGreaterThan(0)
+    expect(hit.every((e) => e.ref.instance === 'xls')).toBe(true)
+  })
+})

@@ -293,6 +293,10 @@
         "axis": "-x",
         "evidence": "Measured on public/assets/genelec-8030c.glb (Task 43c, L34), a textured scan: seen from -x (glTF space) the face carries the woofer cone and the tweeter; seen from +x it is the rear plate (amplifier panel, cable entry). Its port_* empties sit on a side face (z = +0.144), not on the rear one, so the spawner ignores them for this device."
       },
+      "modelBody": {
+        "baseFraction": 0.285,
+        "evidence": "Measured on public/assets/genelec-8030c.glb (night wave 1, L36): the file is ONE mesh that includes a floor stand. Cut in 1 % bands of the model height, the footprint is a base plate at the bottom, then a thin neck (a few centimetres across) up to 28.5 % of the height, then the cabinet (about 0.21 x 0.23 model units) up to the top. Mode Création scales the cabinet (71.5 % of the model) to the real height of REAL_SIZE_M (0.299 m, KB key_specs.dimensions: 299 mm with Iso-Pod, 285 mm without); the stand keeps its scan proportions. tests/assets/modelBody.test.ts re-measures the fraction on the file."
+      },
       "acoustic": {
         "coverage_h_deg": { "value": 90, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur dans la KB)", "retrieved": "2026-10-22" } },
         "coverage_v_deg": { "value": 60, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur dans la KB)", "retrieved": "2026-10-22" } }

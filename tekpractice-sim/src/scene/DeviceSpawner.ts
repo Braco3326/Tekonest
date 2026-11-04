@@ -24,6 +24,7 @@ import type { Registry, DeviceT } from '../engine/CatalogLoader'
 import type { PortRef } from '../engine/types'
 import { TOKENS } from '../design/tokens'
 import { assetUrl } from '../assetUrl'
+import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
 
@@ -324,7 +325,9 @@ export class DeviceSpawner {
         // model is already oriented (I/O ends on Babylon -Z, the rear), so the catalog front alignment below does not apply to it.
         const extras = findExtras(glbRoot)
         const front = !extras && this.options.alignFront ? device.modelFront?.axis : undefined
-        const scale = this.normalizeModel(deviceId, glbRoot, front, extras)
+        // Night wave 1 (item 8): a model that includes its floor stand is scaled by its cabinet's height (Mode Création only, like `front`).
+        const bodyBase = this.options.alignFront ? device.modelBody?.baseFraction : undefined
+        const scale = this.normalizeModel(deviceId, glbRoot, front, extras, bodyBase)
         const rear = front && glbRoot.parent instanceof TransformNode ? rearFace(glbRoot, glbRoot.parent) : null
         this.reanchorPorts(device, instanceId, glbRoot, portMarkers, front === undefined, rear)
         if (front) {
@@ -368,7 +371,7 @@ export class DeviceSpawner {
    * would leave the glTF +Z I/O face on Babylon +Z (proved in tests/scene/deviceSpawnerExtras.test.ts). Dropping that
    * turn keeps only the z mirror, glTF (x, y, z) → Babylon (x, y, −z): I/O on −Z, nothing mirrored left-right.
    */
-  private normalizeModel(deviceId: string, glbRoot: AbstractMesh, front?: FrontAxis, extras: AssetExtrasV1 | null = null): number {
+  private normalizeModel(deviceId: string, glbRoot: AbstractMesh, front?: FrontAxis, extras: AssetExtrasV1 | null = null, bodyBase?: number): number {
     if (extras) {
       glbRoot.rotationQuaternion = Quaternion.Identity()
       glbRoot.computeWorldMatrix(true)
@@ -389,7 +392,8 @@ export class DeviceSpawner {
     const height0 = bounds.max.y - bounds.min.y
 
     // (a/b) uniform scale by height — the most reliable anchor across the set.
-    const scale = real && height0 > 1e-6 ? real.h / height0 : 1
+    // With `bodyBase` (the share of the model that is stand, catalog `modelBody`) the REAL height is the cabinet's, not the whole model's.
+    const scale = real && height0 > 1e-6 ? scaleForHeight(real.h, height0, bodyBase) : 1
     if (scale !== 1) {
       glbRoot.scaling.setAll(scale)
       glbRoot.computeWorldMatrix(true)

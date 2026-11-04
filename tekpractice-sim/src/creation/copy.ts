@@ -321,6 +321,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     autosaveFull: 'Stockage du navigateur plein : sauvegarde automatique en pause. Votre travail reste affiché tant que la page est ouverte ; rien de déjà enregistré n’est effacé.',
     /** Status bar after the autosave was reopened at start. */
     restored: 'Travail de la dernière séance rouvert.',
+    /** Said once, after a saved project is reopened (autosave or « Ouvrir… »), when it holds active gear that needs power and no power strip at all. */
+    noMains: 'Aucune multiprise dans ce projet : les appareils actifs ne sont pas alimentés. Ajoutez-en une (onglet « Secteur » du tiroir) et branchez-y les appareils.',
     /** Name dialog (Ctrl+S the first time, « Enregistrer sous… »). Entrée enregistre. */
     nameTitle: 'Enregistrer le projet',
     nameTitleAs: 'Enregistrer sous',
@@ -670,6 +672,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     loading: 'Ouverture de l’inventaire…',
     /** Status bar if the drawer module fails to load. */
     loadFailed: 'L’inventaire n’a pas pu s’ouvrir (réseau). Rechargez la page.',
+    /** Inside the « Bêta » tab only, while the sheets are fetched (the drawer is already open and the other tabs usable). */
+    betaLoading: 'Chargement…',
+    /** Inside the « Bêta » tab when the sheets could not be fetched (offline, no answer within 5 s): the other tabs are not affected. */
+    betaUnavailable: 'Fiches Bêta indisponibles (réseau). Rechargez la page pour les retrouver.',
     /** History entry label; {device} = device name. */
     entry: 'Ajouter {device}',
     /** Tab « Micros » (inventory category). */
@@ -809,6 +815,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     legendCollapse: 'Replier la légende des câbles',
     /** Nom accessible du bouton quand elle est repliée (il la déplie). */
     legendExpand: 'Déplier la légende des câbles',
+    /** Nom accessible (et infobulle) du bouton de la légende dans le rail de Propriétés repliée : il déplie le panneau, légende ouverte. */
+    legendRail: 'Légende des câbles : déplier Propriétés',
     /** Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus). */
     dashed: 'pointillés',
     /** Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal. */

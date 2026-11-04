@@ -437,3 +437,55 @@ describe('release', () => {
     expect(s.ctrl.errorAt).toBeNull()
   })
 })
+
+// ── Night wave 1, item 3: how long a pinned refusal stays ──────────────────────────────────────────────────────────────────
+describe('the pinned refusal clears when the learner has read it (night wave 1, item 3)', () => {
+  /** A refusal pinned at in-mic-2, cable still in hand from the mains inlet. */
+  function refused() {
+    const s = setup()
+    s.ctrl.click(K12_POWER)
+    s.ctrl.click(QL_MIC2)
+    expect(s.ctrl.errorAt).toEqual(QL_MIC2)
+    return s
+  }
+  it('the next pointer press on the canvas clears it (any button, a port or the empty view), the cable stays in hand', () => {
+    for (const button of [0, 1, 2]) {
+      const s = refused()
+      const clears = s.calls.clearError
+      s.canvas.dispatchEvent(ev('pointerdown', { button, offsetX: 3, offsetY: 3 }))
+      expect(s.ctrl.errorAt, `button ${button}`).toBeNull()
+      expect(s.calls.clearError).toBeGreaterThan(clears)
+      expect(s.ctrl.pending).toEqual(K12_POWER)
+    }
+  })
+  it('a hover or a pointer release alone does not clear it', () => {
+    const s = refused()
+    s.canvas.dispatchEvent(ev('pointermove', { offsetX: 3, offsetY: 3 }))
+    s.canvas.dispatchEvent(ev('pointerup', { offsetX: 3, offsetY: 3 }))
+    expect(s.ctrl.errorAt).toEqual(QL_MIC2)
+  })
+  it('dismissRefusal (the drawer opening) clears it and keeps the cable in hand; with none pinned it does nothing', () => {
+    const s = refused()
+    s.ctrl.dismissRefusal()
+    expect(s.ctrl.errorAt).toBeNull()
+    expect(s.ctrl.pending).toEqual(K12_POWER)
+    const clears = s.calls.clearError
+    s.ctrl.dismissRefusal()
+    expect(s.calls.clearError).toBe(clears)
+  })
+  it('the next successful change of the rig clears it (here: another device placed); a refusal itself changes nothing', () => {
+    const s = refused()
+    s.history.do({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58b', position: [5, 0, 0] })
+    expect(s.ctrl.errorAt).toBeNull()
+    const again = refused()
+    again.ctrl.click(QL_MIC2) // a second refusal for the same pair: pinned again, not cleared by itself
+    expect(again.ctrl.errorAt).toEqual(QL_MIC2)
+  })
+  it('keys and no-op presses leave it (a keyboard user reads it at their own pace): cancel() is the Échap way out', () => {
+    const s = refused()
+    s.canvas.dispatchEvent(ev('keydown', { key: 'ArrowLeft' }))
+    expect(s.ctrl.errorAt).toEqual(QL_MIC2)
+    expect(s.ctrl.cancel()).toBe(true)
+    expect(s.ctrl.errorAt).toBeNull()
+  })
+})
