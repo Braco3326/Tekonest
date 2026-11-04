@@ -565,6 +565,19 @@ describe('buildAsset', () => {
     expect(entry).toMatchObject({ tool: 'raw', toolVersion: 'raw', logosRemoved: true, photos: [], taskId: null })
   })
 
+  it('--raw with rawTaskId (a Meshy GLB downloaded by hand) records Meshy provenance and the task id, and still makes zero Meshy calls', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const rawPath = join(root, 'meshy-by-hand.glb')
+    await writeFile(rawPath, RAW_BYTES)
+    const report = await buildAsset(spec.id, { maxAttempts: 1, rawGlb: rawPath, rawTaskId: 'task-abc', logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+    expect(calls.create).toHaveLength(0)
+    expect(report.ok).toBe(true)
+    expect(report.attempts[0].taskId).toBe('task-abc')
+    const entry = (await readManifest()).assets.find((a) => a.id === 'test-mixer')
+    expect(entry).toMatchObject({ tool: 'meshy', toolVersion: 'meshy-7.1', taskId: 'task-abc', photos: ['a.png'] })
+  })
+
   it('--raw makes only one attempt even when it fails', async () => {
     const spec = deviceSpec()
     const rawPath = join(root, 'hand-made.glb')

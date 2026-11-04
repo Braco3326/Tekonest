@@ -153,6 +153,8 @@ export interface BuildOpts {
   maxAttempts: number
   /** A hand-made raw GLB: no Meshy, one attempt. */
   rawGlb?: string
+  /** With rawGlb: the id of the Meshy task the GLB was downloaded from by hand (CLI --meshy-task); the manifest then records Meshy provenance. */
+  rawTaskId?: string
   /**
    * Build the raw GLB with our own scripted builder from the spec's `build` block (CLI --scripted): no Meshy, no photos,
    * one attempt, no retry. Excludes rawGlb. Logos are not an issue (no photo texture), so logosRemoved counts as true.
@@ -395,6 +397,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   let photos: PhotoFile[] = []
   if (opts.rawGlb) {
     rawBytes = new Uint8Array(await readFile(opts.rawGlb))
+    // a hand-downloaded Meshy GLB: record the reference photos it was made from (listed, never sent anywhere)
+    if (opts.rawTaskId) photos = await d.readPhotos(id)
   } else if (!scripted) {
     photos = await d.readPhotos(id)
     if (photos.length === 0) {
@@ -444,6 +448,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
         await d.runBuilder(spec, rawPath)
       } else if (rawBytes) {
         raw = rawBytes
+        if (opts.rawTaskId) attempt.taskId = opts.rawTaskId
       } else {
         const taskId = await d.meshy.createMultiImageTask(photos.map((ph) => ph.dataUri), { targetPolycount: targetPolycount(spec), topology: 'triangle' })
         attempt.taskId = taskId
@@ -515,8 +520,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
             status: 'ok',
             tris: shipped.triangles,
             ports: spec.ports.length,
-            tool: scripted ? 'scripted' : rawBytes ? 'raw' : 'meshy',
-            toolVersion: scripted ? BUILDER_VERSION : rawBytes ? 'raw' : MESHY_MODEL,
+            tool: scripted ? 'scripted' : rawBytes && !opts.rawTaskId ? 'raw' : 'meshy',
+            toolVersion: scripted ? BUILDER_VERSION : rawBytes && !opts.rawTaskId ? 'raw' : MESHY_MODEL,
             date: d.now().toISOString(),
             specSource: spec.sources[0]?.url ?? 'spec',
             logosRemoved,
@@ -640,6 +645,7 @@ const USAGE = [
   '  --ship        also write public/assets/<id>.glb and the manifest entry (needs --logos-removed)',
   '  --logos-removed  you checked the textures: no brand logos (recorded as logosRemoved: true)',
   '  --raw         use a hand-made raw GLB: no Meshy call, one attempt',
+  '  --meshy-task  with --raw: the id of the Meshy task the GLB was downloaded from; the manifest records Meshy provenance',
   '  --ship-run    ship the final.glb of an earlier passing run (re-gated) without building again: no Meshy call, no fix-up',
   '  --scripted    build the raw GLB with our own Blender builder from the spec build block: no Meshy, no spending, one attempt; --ship needs no --logos-removed',
   '  --yaw / --flip  turn the model about glTF Y / upside down (about glTF Z) in the fix-up, read off the contact sheet',
@@ -686,6 +692,10 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
       const v = argv[++i]
       if (!v || v.startsWith('--')) return bad('--raw needs a .glb file path')
       opts.rawGlb = v
+    } else if (a === '--meshy-task') {
+      const v = argv[++i]
+      if (!v || !/^[0-9A-Za-z-]{8,64}$/.test(v)) return bad('--meshy-task needs the Meshy task id (letters, digits and dashes)')
+      opts.rawTaskId = v
     } else if (a === '--attempts') {
       const n = Number(argv[++i])
       if (!Number.isInteger(n) || n < 1) return bad('--attempts must be a whole number of at least 1')
@@ -701,6 +711,7 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
     else return bad(`unexpected argument ${a}`)
   }
   if (pilot && (id !== undefined || opts.rawGlb)) return bad('--pilot takes no id and no --raw')
+  if (opts.rawTaskId && !opts.rawGlb) return bad('--meshy-task goes with --raw: it names the Meshy task the raw GLB came from')
   if (shipRunDir !== undefined) {
     // Shipping a finished run builds nothing: every flag that shapes a build is meaningless and would be silently ignored.
     const clash = [opts.rawGlb ? '--raw' : '', opts.scripted ? '--scripted' : '', attemptsGiven ? '--attempts' : '', yawGiven ? '--yaw' : '', opts.flipUpright ? '--flip' : '', pilot ? '--pilot' : '', ship ? '--ship' : '', dryRunFlag ? '--dry-run' : ''].filter(Boolean)
