@@ -288,9 +288,9 @@ describe('buildAsset', () => {
       Array.from({ length: n }, (_, i) => ({ portId: `p${i}`, face: 'io' as const, xMm: 10 + i, yMm: 25, confidence: 'manual' as const, openingMm: 3 }))
     const cases: [AssetSpecT, number][] = [
       [connectorSpec(), 560], // floor(0.7 * 800)
-      [deviceSpec({ id: 'test-hero', tier: 'hero' }), 2800], // floor(0.7 * 4000), the one port has no opening
-      [deviceSpec({ id: 'test-ql', tier: 'hero', ports: withOpenings(5) }), 2300], // 2800 - 5 recesses
-      [deviceSpec({ id: 'test-many', ports: withOpenings(40) }), 100], // floor
+      [deviceSpec({ id: 'test-hero', tier: 'hero' }), 10500], // floor(0.7 * 15000), the one port has no opening
+      [deviceSpec({ id: 'test-ql', tier: 'hero', ports: withOpenings(5) }), 10000], // 10500 - 5 recesses
+      [deviceSpec({ id: 'test-many', ports: withOpenings(40) }), 100], // floor (standard tier: 2800 - 40 recesses)
     ]
     for (const [spec, expected] of cases) {
       expect(targetPolycount(spec)).toBe(expected)

@@ -572,10 +572,16 @@ describe('checkBudget', () => {
     expect(checkBudget(reportOf({ triangles: 12 }), connectorSpec()).ok).toBe(true)
   })
 
-  it.each(['standard', 'hero'] as const)('%s tier passes at 4000 triangles and fails at 4001', (tier) => {
-    const spec = deviceSpec({ tier })
+  it('the standard tier passes at 4000 triangles and fails at 4001', () => {
+    const spec = deviceSpec({ tier: 'standard' })
     expect(checkBudget(reportOf({ triangles: 4000 }), spec).ok).toBe(true)
     expect(checkBudget(reportOf({ triangles: 4001 }), spec).ok).toBe(false)
+  })
+
+  it('the hero tier passes at 15000 triangles and fails at 15001 (a photo-textured mic or panel needs the detail)', () => {
+    const spec = deviceSpec({ tier: 'hero' })
+    expect(checkBudget(reportOf({ triangles: 15000 }), spec).ok).toBe(true)
+    expect(checkBudget(reportOf({ triangles: 15001 }), spec).ok).toBe(false)
   })
 
   it('fails two materials', () => {

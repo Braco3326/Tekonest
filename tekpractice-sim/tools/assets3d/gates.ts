@@ -11,7 +11,7 @@
  *   pivot           0.5 mm (device: bottom-centre; connector: centre of the mating face, body along +Z)
  *   scale/rotation  1e-6 (scale 1, identity quaternion, q and -q are the same rotation)
  *   port positions  0.3 mm from the placement; 0.2 mm from the real face plane of the measured body (R4)
- *   budget          triangles <= 800 (connector) / 4000 (standard, hero), ceilings with no floor; one material (R5)
+ *   budget          triangles <= 800 (connector) / 4000 (standard) / 15000 (hero), ceilings with no floor; one material (R5; hero raised 2026-11-04: a photo-textured mic or panel needs the detail)
  *   connector fit   the plug is 0 to 0.3 mm under the socket opening
  *   proportion      the pre-scale model's proportions drift at most 5 % from the spec's
  *   textures        longest texture side <= 512 px (connector) / 1024 px (standard, hero); file <= 250 kB / 1.5 MB (near-lossless data maps)
@@ -49,7 +49,7 @@ const FIT_UNDER_MM = 0.3
 const DRIFT_LIMIT = 0.05
 const MAX_MATERIALS = 1
 /** Triangle ceiling by tier (R5): the budget gate enforces it, the builder derives the Meshy target from it. */
-export const TRIANGLE_CEILING = { connector: 800, standard: 4000, hero: 4000 } as const
+export const TRIANGLE_CEILING = { connector: 800, standard: 4000, hero: 15000 } as const
 /** Longest texture side, in pixels, by tier: the texture step downsizes to this, the textures gate enforces it. */
 export const TEXTURE_MAX_PX = { connector: 512, standard: 1024, hero: 1024 } as const
 /** Shipped file size ceiling, in bytes, by tier (the whole GLB: geometry, textures and JSON). */
@@ -212,7 +212,7 @@ export function checkPortPositions(report: GlbReport, placement: Placement): Gat
   return result('portPositions', problems, `${wanted.length} port/control nodes within ${mm(PORT_TOL_M)} mm of the placement, ports on the face plane`)
 }
 
-/** Budget gate (R5): triangle count is a ceiling by tier (connector 800, standard and hero 4000), no floor; at most one material. */
+/** Budget gate (R5): triangle count is a ceiling by tier (connector 800, standard 4000, hero 15000), no floor; at most one material. */
 export function checkBudget(report: GlbReport, spec: AssetSpecT): GateResult {
   const ceiling = TRIANGLE_CEILING[spec.tier]
   const problems: string[] = []
