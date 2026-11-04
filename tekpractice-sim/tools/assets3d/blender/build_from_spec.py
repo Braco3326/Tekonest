@@ -396,12 +396,13 @@ def build_cylinder_plug(plan: Plan) -> bpy.types.Object:
 
 
 def build_trs_plug(plan: Plan) -> bpy.types.Object:
-    """6.35 mm TRS cable plug, from the tip (z = 0) to the cable: a domed, grooved tip, two thin black insulator bands
-    between nickel tip, ring and sleeve (mating length `barrelMm`, default 30.5 as on real plugs), a conical nose into the
+    """6.35 mm TRS cable plug, from the tip (z = 0) to the cable: a pointed arrowhead tip with a neck and a bead,
+    two thin black insulator bands between nickel tip, ring and sleeve (mating length `barrelMm`, default 30.5 as on real plugs), a conical nose into the
     handle shell, then a black boot that tapers toward the cable (z = d).
 
-    Only the diameters and the 30-31 mm mating length are sourced; the lengths inside the barrel and the handle split are
-    estimates from photos (research report, estimated rows)."""
+    Sourced: the diameters and the 30-31 mm mating length. The tip shape and the two insulator positions are read from the CC0
+    Commons photo of a 6.35 mm TRS plug (not from the research report, whose estimates were off); the handle split of the
+    93 mm is an estimate."""
     w, h, d = size_m(plan)
     body_r = min(w, h) / 2.0
     barrel_r = positive(plan.get("matingOuterMm"), "matingOuterMm") * MM / 2.0
@@ -414,39 +415,44 @@ def build_trs_plug(plan: Plan) -> bpy.types.Object:
         raise BuildError(f"params.barrelMm ({barrel_len / MM:.2f}) does not fit a plug of sizeMm.d {d / MM:.2f} (needs 14 mm to about {(d - nose_len - boot_len - 8.0 * MM) / MM:.0f} mm)")
 
     r = barrel_r
-    groove_r = r - 0.4 * MM
-    insulator_r = r - 0.2 * MM
+    k = r / (3.175 * MM)             # the profile below is drawn for a 6.35 mm barrel; scale the radii to the spec's
+    insulator_r = r - 0.1 * MM       # the black bands sit 0.1 mm below the metal, like the real insulators
     mm = MM
     shell_start = barrel_len + nose_len
     boot_start = d - boot_len
+    # (radius, z from the tip). Measured by eye from the CC0 photo "Phone-connectors-labeled.jpg" (6.35 mm TRS plug,
+    # ruler in frame): a pointed arrowhead tip, a narrow neck with a bead, then the barrel with the first black insulator
+    # about 9.6 mm from the tip (1.6 mm wide) and the second about 16.7 mm (1 mm wide).
     profile: list[tuple[float, float]] = [
-        (r * 0.445, 0.0),            # flat tip face
-        (r * 0.70, 0.4 * mm),        # dome
-        (r * 0.89, 1.0 * mm),
-        (r, 2.0 * mm),
-        (r, 2.4 * mm),
-        (groove_r, 2.4 * mm),        # groove behind the tip
-        (groove_r, 2.9 * mm),
-        (r, 4.5 * mm),               # taper back up
-        (insulator_r, 4.5 * mm),     # insulator 1
-        (insulator_r, 6.2 * mm),
-        (r, 6.2 * mm),               # ring
-        (r, 11.0 * mm),
-        (insulator_r, 11.0 * mm),    # insulator 2
-        (insulator_r, 12.7 * mm),
-        (r, 12.7 * mm),              # sleeve
+        (0.55 * mm * k, 0.0),            # small flat tip
+        (2.65 * mm * k, 4.0 * mm),       # the arrowhead cone
+        (2.65 * mm * k, 4.5 * mm),
+        (1.75 * mm * k, 4.9 * mm),       # neck
+        (1.75 * mm * k, 5.7 * mm),
+        (2.45 * mm * k, 6.5 * mm),       # bead
+        (2.50 * mm * k, 7.2 * mm),
+        (r, 8.1 * mm),                   # barrel
+        (r, 9.6 * mm),
+        (insulator_r, 9.6 * mm),         # insulator 1
+        (insulator_r, 11.2 * mm),
+        (r, 11.2 * mm),                  # ring
+        (r, 16.7 * mm),
+        (insulator_r, 16.7 * mm),        # insulator 2
+        (insulator_r, 17.6 * mm),
+        (r, 17.6 * mm),                  # sleeve
         (r, barrel_len),
-        (4.6 * mm, barrel_len),      # nose collar: a step, then a cone out to the shell
+        (4.6 * mm, barrel_len),          # nose collar: a step, then a cone out to the shell
         (body_r, shell_start),
-        (body_r, boot_start),        # shell
+        (body_r, boot_start),            # shell
         (body_r * 0.925, boot_start),
         (body_r * 0.925, boot_start + 4.5 * mm),
-        (body_r * 0.55, d),          # boot tapering to the cable
+        (body_r * 0.55, d),              # boot tapering to the cable
     ]
     colours = [
-        NICKEL, NICKEL, NICKEL, NICKEL, NICKEL, NICKEL, NICKEL,
-        BLACK, BLACK, NICKEL, NICKEL, BLACK, BLACK, NICKEL, NICKEL,
-        NICKEL, NICKEL, NICKEL, BLACK, BLACK, BLACK,
+        NICKEL, NICKEL, NICKEL, NICKEL, NICKEL, NICKEL, NICKEL, NICKEL,   # tip, neck, bead, barrel
+        BLACK, BLACK, BLACK, NICKEL, BLACK, BLACK, BLACK,                  # insulator 1, ring, insulator 2
+        NICKEL, NICKEL, NICKEL, NICKEL,                                    # sleeve, nose, shell
+        BLACK, BLACK, BLACK,                                               # boot
     ]
     body = Body("trs-plug")
     revolve(body, profile, colours, TRS_SEGMENTS, cap_first=True, cap_last=True)
