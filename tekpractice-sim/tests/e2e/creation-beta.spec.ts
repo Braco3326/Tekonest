@@ -198,6 +198,36 @@ test('night wave 1, item 6: the drawer opens at once while the Bêta request is 
   for (const name of ['Micros', 'Consoles']) expect(await page.getByRole('tab', { name }).evaluate((e) => (e as HTMLElement & { __kept?: boolean }).__kept), `${name} tab button is the same node`).toBe(true)
 })
 
+test('night wave 1 review 7: with a filter on and focus on a result, the sheets arriving keep the focus on that same result', async ({ page }) => {
+  const net = await stallProposals(page, 60_000)
+  await boot(page)
+  await open(page)
+  await page.getByTestId('inventory-filter').fill('shure')
+  const first = page.getByTestId('inventory-item').first()
+  await expect(first).toBeVisible()
+  const id = await first.getAttribute('data-device-id')
+  const before = await page.getByTestId('inventory-item').count()
+  await first.focus()
+  await net.release()
+  await expect.poll(() => page.getByTestId('inventory-item').count()).toBeGreaterThan(before) // the Bêta Shure sheets joined the results
+  expect(await page.evaluate(() => (document.activeElement as HTMLElement | null)?.dataset.deviceId)).toBe(id)
+})
+
+test('night wave 1 review 8: when the sheets load empty and the Bêta tab goes, focus on it falls to a tab, not to the page', async ({ page }) => {
+  await page.addInitScript(() => {
+    ;(window as unknown as { __creationBetaTimeoutMs: number }).__creationBetaTimeoutMs = 60_000
+  })
+  const held: Array<() => Promise<void>> = []
+  await page.route('**/proposalsSource*', (r) => void held.push(() => r.fulfill({ status: 200, contentType: 'text/javascript', body: 'export default { "devices": [] }' })))
+  await boot(page)
+  await open(page)
+  await betaTab(page).focus()
+  await expect.poll(() => held.length).toBeGreaterThan(0)
+  await Promise.all(held.splice(0).map((f) => f()))
+  await expect(betaTab(page)).toHaveCount(0)
+  expect(await page.evaluate(() => document.activeElement?.getAttribute('role'))).toBe('tab')
+})
+
 test('night wave 1, item 6: Espace closes the drawer while the sheets are still loading, and their late arrival neither reopens it nor shows a status', async ({ page }) => {
   const net = await stallProposals(page, 60_000)
   await boot(page)

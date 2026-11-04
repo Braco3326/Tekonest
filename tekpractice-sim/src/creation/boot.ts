@@ -1522,10 +1522,10 @@ export async function bootCreation(): Promise<void> {
     }))
   const setInventory = (open: boolean, opts: { returnFocus?: boolean } = {}): void => {
     drawerWanted = open
-    if (open) patch.dismissRefusal() // the drawer takes the learner's attention: the refusal pinned in the view has been read
     if (drawer) {
       if (open) {
         drawer.open()
+        patch.dismissRefusal() // the drawer took the learner's attention: the refusal pinned in the view has been read (not when the open was refused)
         syncBeta()
       } else drawer.close(opts)
       return
@@ -1538,6 +1538,7 @@ export async function bootCreation(): Promise<void> {
         showStatus()
         if (drawerWanted && !viewLocked()) {
           d.open()
+          patch.dismissRefusal()
           syncBeta()
         } else drawerWanted = false
       },

@@ -449,19 +449,33 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       if (!api.isOpen) return
       const inv = inventory(d.registry, { proposals: d.proposals(), modelIds: MODEL_IDS, beta: d.betaStatus() })
       const sameTabs = inv.tabs.length === tabs.length && inv.tabs.every((t, i) => tabs[i].tab === t)
+      // Where the keyboard focus is, to give it back after a redraw (review findings 7 and 8): the same result item if it is still listed, else its tab,
+      // else the selected tab. A learner is never thrown to the page.
+      const active = doc.activeElement as HTMLElement | null
+      const had = {
+        tab: tabs.find((t) => t.btn === active)?.tab,
+        item: active && panel.contains(active) ? active.dataset.deviceId : undefined,
+        inside: !!active && root.contains(active),
+      }
+      const restore = (): void => {
+        if (had.item) {
+          const again = [...panel.querySelectorAll<HTMLElement>('[data-device-id]')].find((e) => e.dataset.deviceId === had.item)
+          if (again) return again.focus()
+        }
+        const tab = tabs.find((t) => t.tab === (had.tab ?? selected)) ?? tabs.find((t) => t.tab === selected)
+        if (had.inside && tab) tab.btn.focus()
+      }
       if (!sameTabs) {
-        // The « Bêta » tab appeared or went: the tab buttons are rebuilt, and a focused one gets its successor back (same tab), so a keyboard user is not thrown to the page.
-        const had = tabs.find((t) => t.btn === doc.activeElement)?.tab
+        // The « Bêta » tab appeared or went: the tab buttons are rebuilt.
         build()
-        if (had) tabs.find((t) => t.tab === had)?.btn.focus()
+        restore()
         return
       }
       // Same tabs: nothing the learner may be about to click is replaced. Only the panel is redrawn, and only when it shows Bêta items (the « Bêta » tab or a filter).
       items = inv.items
       if (selected !== null && (selected === 'beta' || filter.value.trim() !== '')) {
-        const inPanel = panel.contains(doc.activeElement)
         renderItems(selected)
-        if (inPanel) tabs.find((t) => t.tab === selected)?.btn.focus() // the item that had focus is gone: the tab it belonged to
+        if (had.item || (had.inside && !root.contains(doc.activeElement))) restore()
       }
     },
     close(opts) {
