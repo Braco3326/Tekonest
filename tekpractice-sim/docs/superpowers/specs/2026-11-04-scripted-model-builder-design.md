@@ -35,7 +35,7 @@ Inventory read from `content/catalog.json` on 2026-11-04 (read-only): 25 devices
 
 | Wave | Assets | Builder shape(s) | Track |
 |---|---|---|---|
-| 1 (proof) | `xlr3-f`, `trs-quarter`, `rj45`, `yamaha-rio3224-d2` | `cylinder-plug`, `trs-plug`, `rj45-plug`, `rack-box` | scripted, no credits |
+| 1 (proof) | `xlr3-f`, `trs-quarter`, `rj45`, `yamaha-rio3224-d2` | `cylinder-plug`, `trs-plug`, `rj45-plug`, `stagebox-rio3224` (`rack-box` stays for wave 3) | scripted, no credits |
 | 2 (connector kit) | the other 22 connector types: `xlr3-m`, `xlr5-m/f`, `ts-quarter`, `trs-35mm`, `rca`, `ethercon`, `speakon-nl4`, `powercon-blue/true1`, `iec-c13/c14`, `schuko-plug/socket`, `bnc`, `tt-bantam`, `dsub25`, `toslink`, `usb-a/b/c`, `digilink`, `gpio-terminal` | the wave-1 shapes plus `rect-plug` and `schuko` | scripted |
 | 3 (rack and desktop boxes) | `axia-iq`, `avid-hd-io`, `avid-protools-hdx`, `focusrite-isa-one`, `grace-m905`, `switchcraft-studiopatch-9625`, `antelope-ocx-hd`, `aeta-scoop5-s`, `aeta-scoopy-plus-s`, `playout-pc`, `multiprise-secteur` | `rack-box` (parameters for ears, knobs as empties) | scripted |
 | 4 (shaped gear) | mics `shure-sm58`, `shure-sm57`, `ev-re20`, `ev-re50`, `neumann-u87-ai`; speakers `qsc-k12-2`, `yamaha-dbr12`, `genelec-8030c`; console `yamaha-ql1`; stand and arms `km-210-9`, `yellowtec-mika`, `yellowtec-litt`; loom `mogami-gold-db25-xlrm` | `revolve` (mics, from a silhouette profile), `speaker-box`, `assembly` (tubes, arms, loom), QL1 as `rack-box` | scripted first; Meshy only where a hero look is wanted and the scripted result is judged too plain |
@@ -67,11 +67,19 @@ Runs as `blender --background --factory-startup --python-exit-code 1 --python bu
 - It builds geometry only: body, shell, panel inset, bevels where the real part has them. It does not place `port_*`/`ctrl_*` empties and does not apply per-port recesses; the existing fix-up still does that, so port logic is not duplicated.
 - One material, no textures, so shipped files stay tiny and there are no logos to remove.
 - Deterministic: no random operations, no timestamps in the output. Two runs produce byte-identical GLBs.
-- Shapes for slice 1:
-  - `cylinder-plug` (XLR3-F): 19.2 mm shell, 15.75 mm front section, three pin holes, length from `realSizeMm`. The latch lug stays out of the bounding box (spec note).
-  - `trs-plug`: 6.35 mm tip/ring/sleeve plug with a sleeve and handle, from the spec size.
-  - `rj45-plug`: body with latch, contact face with eight slots.
-  - `rack-box`: width x height x depth box (bottom-centre pivot) with all twelve edges chamfered by `chamferMm` (default 1 mm, one segment), flat faces. No panel inset and no ear flanges in wave 1: ports are placed on the bounding-box face, so an inset would leave them floating until the per-port surface gate exists (2026-10-29 spec 4.5); ears and inset come with that gate.
+- Shapes for slice 1 (redesigned on 2026-11-04 from the reference research, report "Wave 1 model reference geometry"; the first versions were plain cylinders and boxes and were rejected by the founder as not clean or well shaped):
+  - `cylinder-plug` (XLR3-F): revolved profile of 13 points at 20 segments: dark front insert (15.75 mm), cone, 19.2 mm nickel shell, black bushing with one groove (about 20.3 mm, the widest round part), tapering boot; nickel latch lug on +Y; the real pin layout (pin holes at (-4.05, 0), (4.05, 0), (0, -3.95), key slot at 12 o'clock). Founder decision 2026-11-04: the box includes the bushing and the lug, so `realSizeMm` is 20.3 x 21.0 x 72.5 and the axis sits 0.35 mm below the box centre. 640 triangles.
+  - `trs-plug`: 23-point lathe at 16 segments: pointed arrowhead tip, neck with a bead, two thin black insulator bands (about 9.6 and 16.7 mm from the tip, read from the CC0 Commons photo), nickel barrel with `barrelMm` 30.5 (real plugs have 30 to 31 mm of barrel; the first version used 19), conical nose, nickel shell, black tapering boot. 732 triangles.
+  - `rj45-plug`: bare 8P8C plug: 6.6 mm high insertion part, 8 mm cable end (the first version had this step upside down), hinged latch tab between two guard shoulders, eight gold contact slots in the front face and gold blades underneath, dark cable hole. 384 triangles.
+  - `stagebox-rio3224`: the Rio3224-D2 (5U, not 4 RU): chassis, slate front panel flush with two 27 mm black ears (the 480 mm includes them) with side flanges and rack-hole slots, three raised plates, 52 round connector bezels 11.5 mm proud of the panel (their tips are the bounding-box face, so the port nodes lie on it), display strip, knob, buttons, rocker; flat back with two chrome-ringed fans, two power inlets, two etherCON ports 6 mm proud. No handles (the datasheet shows none). 3704 triangles. Layout lives in the builder, only datasheet sizes are params (`earMm`, `flangeDepthMm`, `frontStepMm`, `rearStepMm`).
+  - `rack-box`: width x height x depth box (bottom-centre pivot) with all twelve edges chamfered by `chamferMm` (default 1 mm, one segment), flat faces. Kept for the other wave-3 boxes; no longer used by the Rio.
+
+### 4.3b Look rules (verified in Blender 5.2 and Babylon 7 with the creation scene's lights)
+
+- Smooth shading with sharp edges above 40 degrees (`Mesh.shade_smooth` then `set_sharp_from_angle`); vertex colours (COLOR_0, one per face corner) through the single material (metallic 0.25, roughness 0.45, backface culling), so one material still holds. The fix-up keeps exactly one colour attribute and makes it the active one (otherwise the exporter writes a fake white COLOR_0). Tests assert COLOR_0 (VEC3, two or more colours) and shared vertices after the fix-up and after Draco.
+- Scripted builds skip the fix-up's socket recess cut (`recess: false`): the builder models its own sockets and the cut would shorten four Rio bezels by 2 mm. `openingMm` stays in the extras.
+- The creation scene lights vertical faces with about a quarter of fill + key (hemispheric 0.5 from above, key 0.5): a colour that is right on the real part renders near black. The Rio palette is therefore lifted (about x3.5 in linear terms); plug colours stay close to the real parts. Judge new shapes in Babylon with those lights, not only in Blender.
+- The contact sheet renders vertex colours (Workbench VERTEX mode) when the model has them.
 
 ### 4.4 Pipeline hook
 
