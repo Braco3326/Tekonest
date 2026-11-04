@@ -7,6 +7,7 @@ import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promis
 import { existsSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { NodeIO } from '@gltf-transform/core'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { buildAsset, formatReport, isMainModule, main, PILOT_IDS, readPhotosFrom, shipRun, targetPolycount } from '../../../tools/assets3d/build-asset'
 import type { BuildDeps, BuildReport } from '../../../tools/assets3d/build-asset'
@@ -915,6 +916,21 @@ describe('buildAsset texture budget', () => {
 
     const plain = await buildAsset(spec.id, { maxAttempts: 1, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
     expect(plain.attempts[0]).toMatchObject({ compression: 'draco', textures: 'none' })
+  })
+
+  it('the texture step receives a model already normalised for Mode Création (metal capped, colour map lifted)', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    let seen: Uint8Array | undefined
+    const optimize: BuildDeps['optimizeTextures'] = async (bytes) => {
+      seen = bytes
+      return bytes
+    }
+    await buildAsset(spec.id, { maxAttempts: 1, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 64, pbr: true })], optimize }))
+    expect(seen).toBeDefined()
+    const m = (await new NodeIO().readBinary(seen!)).getRoot().listMaterials()[0]
+    expect(m.getMetallicFactor()).toBeLessThanOrEqual(0.15)
+    expect(m.getBaseColorTexture()).not.toBeNull()
   })
 
   it('an oversize final file aborts without a second Meshy create and keeps the raw GLB', async () => {
