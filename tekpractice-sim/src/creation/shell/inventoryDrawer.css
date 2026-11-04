@@ -161,3 +161,11 @@
   .cr .cr-drawer-title { display: none; }
   .cr-drawer-hint { display: none; }
 }
+
+/* Touch (night wave 2, I): 44 px targets for the controls of the drawer; the items are already 52. */
+@media (pointer: coarse) {
+  .cr .cr-drawer-tab { min-height: 44px; }
+  .cr .cr-drawer-close { top: 0; right: 4px; min-height: 44px; }
+  .cr .cr-drawer-filter-input { height: 44px; font-size: 16px; }
+  .cr .cr-drawer-clear { min-height: 44px; }
+}

@@ -68,3 +68,9 @@
 /* The bar only draws the level that the text states: no transition, it follows the meter at once. */
 .cr-listen-track { display: block; height: 4px; margin-top: 3px; background: var(--cr-nuit); border: 1px solid var(--cr-panel-line); }
 .cr-listen-bar { display: block; height: 100%; width: 0; background: var(--cr-ambre); transition: none; }
+
+/* Touch (night wave 2, I): 44 px targets. */
+@media (pointer: coarse) {
+  .cr .cr-listen-toggle, .cr .cr-listen-btn { min-height: 44px; }
+  .cr-listen-limits-title { display: flex; align-items: center; min-height: 44px; }
+}

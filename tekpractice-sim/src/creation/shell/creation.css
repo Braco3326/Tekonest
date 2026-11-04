@@ -936,3 +936,39 @@ body:has(.cr-viewport[data-placing='true']) .cr-errlist { bottom: calc(var(--cr-
 .cr-errlist-rtitle { font-weight: 500; }
 .cr-errlist-detail { color: var(--cr-ink-muted); font-size: 12px; }
 .cr-errlist-ports { color: var(--cr-papier); font-size: 12px; }
+/* ── Touch (night wave 2, item I): every control a finger can meet is at least 44 x 44 px ─────────────────────────────────────────────────
+   Only for a coarse primary pointer: with a mouse nothing here applies and the desktop pixels are the ones above, unchanged. The two bars are 48 px: a 44 px
+   control inside a bar loses 1 px to its border. The rails and the panel heads are 45 px (44 + the panel's 1 px border) so their buttons are 44. The settings go one column (label above the control) so a 44 px
+   stepper pair still leaves the field room in the 260 px column. Fields are 16 px: a smaller font makes iOS zoom the page on focus. */
+@media (pointer: coarse) {
+  .cr { --cr-menubar-h: 48px; --cr-status-h: 48px; --cr-rail-w: 45px; }
+  .cr-menu-top { min-width: 44px; }
+  .cr-menu-item { min-height: 44px; }
+  .cr-menubar #site-link { min-width: 44px; justify-content: center; }
+  .cr-panel-head { height: 45px; }
+  .cr-collapse { width: 44px; height: 44px; flex-basis: 44px; }
+  .cr-tree-item { min-height: 44px; }
+  .cr-eye { flex-basis: 44px; width: 44px; height: 44px; }
+  .cr .cr-legend-toggle { min-height: 44px; }
+  .cr[data-props='collapsed'] .cr-legend-rail { height: 44px; }
+  .cr-field { grid-template-columns: minmax(0, 1fr); row-gap: 4px; padding: 4px 0; }
+  .cr-field-error { grid-column: 1; }
+  .cr-field-input, .cr-select { height: 44px; font-size: 16px; }
+  .cr .cr-step { flex-basis: 44px; width: 44px; height: 44px; }
+  .cr .cr-toggle { min-height: 44px; }
+  .cr .cr-unplug { min-height: 44px; }
+  .cr .cr-cube-tool { width: 44px; height: 44px; }
+  .cr-cube-tools { gap: 0; }
+  .cr .cr-cube-tool + .cr-cube-tool { margin-top: -1px; }
+  .cr-note { padding-right: 52px; }
+  .cr .cr-note-close { top: 0; right: 0; width: 44px; height: 44px; }
+  .cr .cr-note-action { min-height: 44px; }
+  .cr .cr-errlist-close { width: 44px; height: 44px; }
+  .cr .cr-errlist-row { min-height: 44px; }
+  .cr .cr-status-action, .cr .cr-signal { min-height: 44px; }
+  .cr-pick-filter select, .cr .cr-pick-close { height: 44px; }
+  .cr .cr-btn { height: 44px; }
+  .cr-pick-mode { min-height: 44px; }
+  .cr-dialog-btn, .cr-project-row { min-height: 44px; }
+  .cr-connect-opt { display: flex; align-items: center; min-height: 44px; }
+}

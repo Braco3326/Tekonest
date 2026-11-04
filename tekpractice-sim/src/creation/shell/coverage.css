@@ -76,3 +76,10 @@
   transition: none;
 }
 .cr .cr-cov-btn:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }
+
+/* Touch (night wave 2, I): 44 px targets. */
+@media (pointer: coarse) {
+  .cr .cr-cov-toggle, .cr .cr-cov-chip, .cr .cr-cov-btn { min-height: 44px; }
+  .cr .cr-cov-chip { margin-block: 0; }
+  .cr-cov-about-title { display: flex; align-items: center; min-height: 44px; }
+}
