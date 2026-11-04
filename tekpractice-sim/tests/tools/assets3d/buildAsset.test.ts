@@ -94,7 +94,7 @@ interface Calls {
   download: string[]
   fixup: { inGlb: string; outGlb: string; yawDeg: number | undefined; flipUpright: boolean | undefined; recess: boolean | undefined; inBytes: Uint8Array }[]
   compress: { bits: number }[]
-  optimize: { maxPx: number }[]
+  optimize: { maxPx: number; dataMaxPx: number | undefined }[]
   /** The order the texture and Draco steps ran in. */
   order: ('optimize' | 'compress')[]
   /** The progress lines buildAsset logged. */
@@ -199,7 +199,7 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
       rig.optimize ??
       (async (bytes, opts) => {
         calls.order.push('optimize')
-        calls.optimize.push({ maxPx: opts.maxPx })
+        calls.optimize.push({ maxPx: opts.maxPx, dataMaxPx: opts.dataMaxPx })
         return optimizeTextures(bytes, opts)
       }),
     loadCatalog: () => rig.catalog ?? catalogFor(rig.spec),
@@ -878,12 +878,13 @@ describe('buildAsset texture budget', () => {
 
     expect(report.ok).toBe(true)
     expect(calls.order).toEqual(['optimize', 'compress'])
-    expect(calls.optimize).toEqual([{ maxPx: 1024 }])
+    expect(calls.optimize).toEqual([{ maxPx: 1024, dataMaxPx: 512 }]) // data maps (normal, metallic-roughness) at half the colour limit
     expect(calls.compress).toEqual([{ bits: 14 }])
 
     const shipped = await inspectGlb(new Uint8Array(await readFile(join(paths.assetsDir, 'test-mixer.glb'))))
     expect(shipped.textures).toHaveLength(3)
-    for (const t of shipped.textures) expect(t).toMatchObject({ width: 1024, height: 1024, mimeType: 'image/webp' })
+    expect(shipped.textures.map((t) => t.width).sort((x, y) => x - y)).toEqual([512, 512, 1024]) // the colour map at 1024, normal and metallic-roughness at 512
+    for (const t of shipped.textures) expect(t).toMatchObject({ mimeType: 'image/webp' })
     expect(shipped.triangles).toBe(12)
 
     const gates = report.attempts[0].gates
@@ -900,7 +901,7 @@ describe('buildAsset texture budget', () => {
     await addPhotos(spec.id, ['a.png'])
     const report = await buildAsset(spec.id, { maxAttempts: 1, logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec, 0, { sizePx: 1024 })], fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
     expect(report.ok).toBe(true)
-    expect(calls.optimize).toEqual([{ maxPx: 512 }])
+    expect(calls.optimize).toEqual([{ maxPx: 512, dataMaxPx: 256 }])
     expect((await inspectGlb(new Uint8Array(await readFile(join(paths.assetsDir, 'test-jack.glb'))))).textures[0]).toMatchObject({ width: 512, mimeType: 'image/webp' })
   })
 

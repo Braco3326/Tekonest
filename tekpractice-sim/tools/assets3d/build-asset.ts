@@ -60,7 +60,7 @@ import { dracoCompress, optimizeTextures } from './compress'
 import { renderContactSheet } from './contactSheet'
 import type { CompressOpts, TextureOpts } from './compress'
 import { findBlender, redact, requireMeshyKey } from './env'
-import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, runGates, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
+import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, runGates, DATA_TEXTURE_MAX_PX, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
 import type { GlbReport } from './inspect'
@@ -332,7 +332,7 @@ async function optimizeAndRegate(
   d: Pick<BuildDeps, 'compress' | 'optimizeTextures'>,
 ): Promise<Regate> {
   // A throw from a step or from a re-measurement is not a measured failure: it propagates and aborts the build.
-  const textured = await d.optimizeTextures(fixed, { maxPx: TEXTURE_MAX_PX[spec.tier] })
+  const textured = await d.optimizeTextures(fixed, { maxPx: TEXTURE_MAX_PX[spec.tier], dataMaxPx: DATA_TEXTURE_MAX_PX[spec.tier] })
   const bytes = await d.compress(textured, { quantizePositionBits: QUANTIZE_BITS[spec.tier] })
   const compressed = await measure(bytes, spec)
 

@@ -52,6 +52,8 @@ const MAX_MATERIALS = 1
 export const TRIANGLE_CEILING = { connector: 800, standard: 4000, hero: 15000 } as const
 /** Longest texture side, in pixels, by tier: the texture step downsizes to this, the textures gate enforces it. */
 export const TEXTURE_MAX_PX = { connector: 512, standard: 1024, hero: 1024 } as const
+/** Longest side of the data maps (normal, metallic-roughness, occlusion), by tier: half the colour limit, because near-lossless data maps weigh several times a lossy colour map. */
+export const DATA_TEXTURE_MAX_PX = { connector: 256, standard: 512, hero: 512 } as const
 /** Shipped file size ceiling, in bytes, by tier (the whole GLB: geometry, textures and JSON). */
 export const FILE_BYTES_MAX = { connector: 250_000, standard: 1_500_000, hero: 1_500_000 } as const
 /** Float noise only: a port exactly on the edge of the face rectangle is inside it. */

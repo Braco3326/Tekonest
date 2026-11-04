@@ -28,6 +28,12 @@ export interface CompressOpts {
 export interface TextureOpts {
   /** Longest side allowed for every texture, in pixels (a positive whole number). */
   maxPx: number
+  /**
+   * Longest side for the data maps (normal, metallic-roughness, occlusion) when it should be smaller than `maxPx`
+   * (default: `maxPx`). Near-lossless data maps weigh several times a lossy colour map, and a colour map carries the
+   * look a learner sees, so a hero model keeps a sharp colour map and halves the data maps.
+   */
+  dataMaxPx?: number
 }
 
 /** Colour slots (sRGB images a viewer looks at): lossy WebP, quality 80. */
@@ -50,13 +56,15 @@ export const DATA_WEBP_QUALITY = 70
 export async function optimizeTextures(bytes: Uint8Array, opts: TextureOpts): Promise<Uint8Array> {
   const maxPx = opts.maxPx
   if (!Number.isInteger(maxPx) || maxPx < 1) throw new Error(`maxPx must be a positive whole number of pixels, got ${String(maxPx)}`)
+  const dataPx = opts.dataMaxPx ?? maxPx
+  if (!Number.isInteger(dataPx) || dataPx < 1) throw new Error(`dataMaxPx must be a positive whole number of pixels, got ${String(opts.dataMaxPx)}`)
   const io = new NodeIO().registerExtensions(ALL_EXTENSIONS)
   const doc = await io.readBinary(bytes)
   if (doc.getRoot().listTextures().length === 0) return bytes
   const base = { encoder: sharp, targetFormat: 'webp' as const, resize: [maxPx, maxPx] as [number, number] }
   await doc.transform(
     textureCompress({ ...base, slots: COLOUR_SLOTS, quality: COLOUR_WEBP_QUALITY }),
-    textureCompress({ ...base, slots: DATA_SLOTS, nearLossless: true, quality: DATA_WEBP_QUALITY }),
+    textureCompress({ ...base, resize: [dataPx, dataPx], slots: DATA_SLOTS, nearLossless: true, quality: DATA_WEBP_QUALITY }),
     textureCompress({ ...base, formats: /^(png|jpeg)$/, quality: COLOUR_WEBP_QUALITY }),
   )
   return io.writeBinary(doc)

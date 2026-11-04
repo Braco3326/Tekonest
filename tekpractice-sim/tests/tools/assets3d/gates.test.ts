@@ -11,6 +11,7 @@ import {
   checkTransform,
   FILE_BYTES_MAX,
   runGates,
+  DATA_TEXTURE_MAX_PX,
   TEXTURE_MAX_PX,
 } from '../../../tools/assets3d/gates'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
@@ -735,6 +736,7 @@ describe('checkTextures', () => {
 
   it('exports the tier limits', () => {
     expect(TEXTURE_MAX_PX).toEqual({ connector: 512, standard: 1024, hero: 1024 })
+    expect(DATA_TEXTURE_MAX_PX).toEqual({ connector: 256, standard: 512, hero: 512 })
     expect(FILE_BYTES_MAX).toEqual({ connector: 250_000, standard: 1_500_000, hero: 1_500_000 })
   })
 

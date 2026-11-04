@@ -40,6 +40,21 @@ describe('optimizeTextures', () => {
     for (const t of textures) expect(t).toMatchObject({ width: 512, height: 512, mimeType: 'image/webp' })
   })
 
+  it('dataMaxPx gives the data maps (normal, metallic-roughness) a smaller limit than the colour map', async () => {
+    const out = await optimizeTextures(await makeBoxGlb({ sizeM: SIZE, texture: { sizePx: 1024, pbr: true } }), { maxPx: 512, dataMaxPx: 256 })
+    const { textures } = await inspectGlb(out)
+    const by = (n: RegExp) => textures.filter((t) => n.test(t.name))
+    expect(textures).toHaveLength(3)
+    const sizes = textures.map((t) => t.width).sort((a, b) => a - b)
+    expect(sizes).toEqual([256, 256, 512]) // one colour map at 512, normal and metallic-roughness at 256
+    expect(by(/./)).toHaveLength(3)
+  })
+
+  it('rejects a dataMaxPx that is not a positive whole number', async () => {
+    const glb = await makeBoxGlb({ sizeM: SIZE, texture: { sizePx: 256, pbr: true } })
+    await expect(optimizeTextures(glb, { maxPx: 512, dataMaxPx: 0 })).rejects.toThrow(/dataMaxPx/)
+  })
+
   it('colour maps are lossy WebP (VP8), data maps near-lossless WebP (VP8L), in two passes', async () => {
     // add emissive and occlusion maps to the helper's PBR set (base colour, normal, metallic-roughness)
     const io = new NodeIO().registerExtensions(ALL_EXTENSIONS)

@@ -13,7 +13,8 @@
       "face": "bottom",
       "xMm": 25.5,
       "yMm": 25.5,
-      "confidence": "photo"
+      "confidence": "photo",
+      "openingMm": 19
     }
   ],
   "controls": [],
