@@ -4,6 +4,7 @@
  * device moves it (ONE undo entry, Échap rolls it back); any other left-drag orbits.
  */
 import { expect, test, type Page } from '@playwright/test'
+import { IDLE_WINDOW_MS, quietWindow, waitRendersIdle } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const PLACE = 'room:concert-hall-medium'
@@ -302,7 +303,7 @@ test('a held Entrée that chose the device does not also drop it: repeats never 
   await page.keyboard.down('Enter')
   await page.keyboard.down('Enter') // an even number of keydowns in all
   await page.keyboard.up('Enter')
-  await page.waitForTimeout(150)
+  await quietWindow(page, 150)
   expect(await page.evaluate(() => window.__creation!.placing())).toBe(true)
   expect((await design(page)).rig.instances).toHaveLength(0)
   await page.keyboard.press('Enter') // a deliberate press drops
@@ -325,15 +326,15 @@ test('a place change during placement ends it and says so (the placement line do
 test('idle while placing and after a drop: no render in 2 s, no lease left', async ({ page }) => {
   await boot(page)
   await choose(page, 'yamaha-ql1', 'Consoles')
-  await page.waitForTimeout(800)
+  await waitRendersIdle(page)
   const a = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(a) // a ghost standing still costs nothing
   await page.keyboard.press('Enter')
   await expect.poll(async () => (await design(page)).rig.instances.length).toBe(1)
-  await page.waitForTimeout(800)
+  await waitRendersIdle(page)
   const b = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(b)
   expect(await page.evaluate(() => window.__creation!.leases())).toEqual([])
 })

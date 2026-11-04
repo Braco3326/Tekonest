@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { IDLE_WINDOW_MS, quietWindow, waitRendersIdle } from './waits'
 test('5 place changes without reload: one scene, no leftovers, no leaks, 0 console errors', async ({ page }) => {
   const errors: string[] = []
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()))
@@ -25,9 +26,9 @@ test('idle in a place = 0 renders: after choosePlace and a 1.5 s settle, renders
   await page.waitForFunction(() => !!window.__creation) // the shell boots from a lazy chunk, after `load`
   await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
   await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
-  await page.waitForTimeout(1500) // settle: models land, the first frames are drawn
+  await waitRendersIdle(page) // settle: models land, the first frames are drawn
   const r0 = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(r0)
 })
 test('changing place with gear asks « Garder le matériel / Repartir à vide »', async ({ page }) => {

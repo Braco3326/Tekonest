@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import catalog from '../../content/catalog.json'
+import { quietWindow } from './waits'
 
 /** Task 29 (CA-15): the rule texts are the catalog's French fields, pinned exactly. */
 const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
@@ -85,7 +86,7 @@ test('(b)(c) a refused CONNECT is listed first, persists, selects its device; a 
   await expect(btn).toBeFocused()
 
   // Persistent, not a toast.
-  await page.waitForTimeout(10_000)
+  await quietWindow(page, 10_000)
   await btn.click()
   await expect(rows.first()).toHaveAttribute('data-severity', 'rejection')
   await expect(page).toHaveTitle(/Mode Création/)

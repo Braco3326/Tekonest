@@ -4,6 +4,7 @@
  * each is ONE undo entry. A click on nothing says so (toast, role="status") and clears the selection.
  */
 import { expect, test, type Page } from '@playwright/test'
+import { IDLE_WINDOW_MS, SETTLE_SAMPLE_MS, quietWindow, waitRendersIdle } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const PLACE = 'room:concert-hall-medium'
@@ -29,7 +30,7 @@ const settle = async (page: Page): Promise<void> => {
     const n = await page.evaluate(() => window.__creation!.renders())
     if (n === last) return
     last = n
-    await page.waitForTimeout(700)
+    await page.waitForTimeout(SETTLE_SAMPLE_MS)
   }
   throw new Error('the page never went idle')
 }
@@ -297,9 +298,9 @@ test('a click on the empty floor shows the message (role=status, polite), clears
   await expect(toast).toBeHidden({ timeout: 4000 })
   expect(Date.now() - shownAt).toBeGreaterThan(1500)
   expect(Date.now() - shownAt).toBeLessThan(3800)
-  await page.waitForTimeout(500) // let the last frame settle
+  await waitRendersIdle(page) // let the last frame settle
   const a = await renders(page)
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await renders(page)).toBe(a) // 0 renders in 2 s once the toast has ended
   expect(await page.evaluate(() => window.__creation!.leases())).toEqual([])
 })

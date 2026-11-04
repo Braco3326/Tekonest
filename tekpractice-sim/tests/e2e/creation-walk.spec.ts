@@ -6,6 +6,7 @@
  * and leaks nothing. Movement keys are HELD and polled (a tap can fall inside one frame).
  */
 import { expect, test, type Page } from '@playwright/test'
+import { quietWindow } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const boot = async (page: Page): Promise<void> => {
@@ -21,9 +22,9 @@ const leases = (page: Page) => page.evaluate(() => window.__creation!.leases())
 const renders = (page: Page) => page.evaluate(() => window.__creation!.renders())
 /** Renders during `ms` with nothing touched (after a short settle). */
 const idleRenders = async (page: Page, ms = 2000): Promise<number> => {
-  await page.waitForTimeout(300)
+  await quietWindow(page, 300)
   const r0 = await renders(page)
-  await page.waitForTimeout(ms)
+  await quietWindow(page, ms)
   return (await renders(page)) - r0
 }
 
@@ -82,12 +83,12 @@ test('an arrow held in Orbit does not start the walk moving (review minor 6)', a
   await page.keyboard.press('Shift+V')
   await expect.poll(() => view(page)).toBe('orbit')
   await page.keyboard.down('ArrowUp') // orbits
-  await page.waitForTimeout(150)
+  await quietWindow(page, 150)
   await page.keyboard.press('Shift+V')
   await expect.poll(() => view(page)).toBe('explore')
   const p0 = (await walkCam(page))!
   await page.keyboard.down('ArrowUp') // an auto-repeat of the same held key (repeat: true)
-  await page.waitForTimeout(400)
+  await quietWindow(page, 400)
   const p1 = (await walkCam(page))!
   expect(Math.hypot(p1.x - p0.x, p1.z - p0.z)).toBeLessThan(1e-6)
   expect(await leases(page)).not.toContain('walk')
@@ -98,7 +99,7 @@ test('Maj+V acts only on the 3D view (WCAG 2.1.4), never on a button or under th
   await boot(page)
   await page.getByTestId('tree-collapse').focus()
   await page.keyboard.press('Shift+V')
-  await page.waitForTimeout(200)
+  await quietWindow(page, 200)
   expect(await view(page)).toBe('orbit')
   await page.getByRole('menuitem', { name: 'Lieu' }).click()
   await page.getByRole('menuitem', { name: 'Choisir un lieu…' }).click()
@@ -196,7 +197,7 @@ test('a place change while walking goes back to Orbit and leaks nothing (listene
   await boot(page)
   await page.evaluate(() => window.__creation!.choosePlace('blank'))
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
-  await page.waitForTimeout(200)
+  await quietWindow(page, 200)
   const orbitListeners = await page.evaluate(() => window.__creation!.liveListeners())
   await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
   await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')

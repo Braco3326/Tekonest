@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { ZONES, zoneAngles, zoneId, zoneLabel } from '../../src/camera/cubeZones'
+import { IDLE_WINDOW_MS, quietWindow, waitRendersIdle } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 /** Every 4 px of the cube square: the zone under that point, as a click would classify it. */
@@ -114,7 +115,7 @@ test('from the Face pose, clicking the top edge patch lands on Dessus · Face; a
   expect(miss).toBeDefined()
   const before = await page.evaluate(() => window.__creation!.camera())
   await page.mouse.click(miss.x, miss.y)
-  await page.waitForTimeout(100)
+  await quietWindow(page, 100)
   expect(await page.evaluate(() => window.__creation!.camera())).toEqual(before)
 })
 
@@ -145,24 +146,24 @@ test('the cube sits 16 px into the viewport (never over the Projet panel) and fo
 test('hover renders on demand: a frame per zone change, then idle (0 renders in 2 s)', async ({ page }) => {
   await boot(page)
   await page.evaluate(() => window.__creation!.cubeZoneScreenPoint('face'))
-  await page.waitForTimeout(1500) // settle (shaders, textures, fonts)
+  await waitRendersIdle(page) // settle (shaders, textures, fonts)
   const r = await page.evaluate(() => window.__creation!.cubeRect())
   const n0 = await page.evaluate(() => window.__creation!.renders())
   await page.mouse.move(r.x + r.width / 2, r.y + r.height / 2)
   await expect.poll(() => page.evaluate(() => window.__creation!.cubeHover())).toBe('face')
   await expect.poll(() => page.evaluate(() => window.__creation!.renders())).toBeGreaterThan(n0)
-  await page.waitForTimeout(300)
+  await waitRendersIdle(page)
   const n1 = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(n1)
   // leaving the cube clears the hover: one frame repaints the patch, then idle again (Task 21 gate: 0 renders in 2 s)
   const n2 = await page.evaluate(() => window.__creation!.renders())
   await page.mouse.move(r.x + r.width + 200, r.y + r.height + 200)
   await expect.poll(() => page.evaluate(() => window.__creation!.cubeHover())).toBeNull()
   await expect.poll(() => page.evaluate(() => window.__creation!.renders())).toBeGreaterThan(n2)
-  await page.waitForTimeout(300)
+  await waitRendersIdle(page)
   const n3 = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(n3)
 })
 
@@ -214,7 +215,7 @@ test('device picking ignores the cube; the main camera stays the active camera b
   expect(await page.evaluate((p) => window.__creation!.pickAt(p.x, p.y), { x: 16 + r.width / 2, y: 16 + r.height / 2 })).toBeNull()
   // the main camera stays the scene's active camera between frames (the cube camera renders second)
   await page.mouse.move(r.x + r.width / 2, r.y + r.height / 2)
-  await page.waitForTimeout(200)
+  await quietWindow(page, 200)
   expect(await page.evaluate(() => window.__creation!.activeCameraIsMain())).toBe(true)
 })
 
@@ -253,7 +254,7 @@ const contrast = (a: number[], b: number[]): number => {
 test('the Ambre hover patch reads ≥ 3:1 against the cube body on the rendered pixels', async ({ page }) => {
   await boot(page)
   await page.evaluate(() => window.__creation!.cubeZoneScreenPoint('face'))
-  await page.waitForTimeout(500)
+  await waitRendersIdle(page)
   // the top-right corner patch of the front face: no label ink there
   const pts = (await cubeMap(page)).filter((p) => p.zone === 'dessus-face-droite')
   const p = pts.reduce((best, q) => (q.y > best.y || (q.y === best.y && q.x < best.x) ? q : best)) // lowest-left point: on the front face
@@ -262,7 +263,7 @@ test('the Ambre hover patch reads ≥ 3:1 against the cube body on the rendered 
   const body = await pixel(page, target.x, target.y)
   await page.mouse.move(target.x, target.y)
   await expect.poll(() => page.evaluate(() => window.__creation!.cubeHover())).toBe('dessus-face-droite')
-  await page.waitForTimeout(200)
+  await waitRendersIdle(page)
   const lit = await pixel(page, target.x, target.y)
   const ratio = contrast(lit, body)
   console.log(`[cube hover] body rgb(${body.map(Math.round)}) hover rgb(${lit.map(Math.round)}) contrast ${ratio.toFixed(2)}:1`)

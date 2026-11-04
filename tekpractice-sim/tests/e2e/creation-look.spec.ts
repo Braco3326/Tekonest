@@ -7,6 +7,7 @@
  * Plus: hover is Papier and never the selection, and costs no idle frame.
  */
 import { expect, test, type Page } from '@playwright/test'
+import { IDLE_WINDOW_SHORT_MS, quietWindow } from './waits'
 
 const SHOTS = 'test-results/screens'
 
@@ -25,7 +26,7 @@ const settle = async (page: Page): Promise<void> => {
     .poll(
       async () => {
         const a = await page.evaluate(() => window.__creation!.renders())
-        await page.waitForTimeout(400)
+        await quietWindow(page, 400)
         return (await page.evaluate(() => window.__creation!.renders())) - a
       },
       { timeout: 15000 }
@@ -94,7 +95,7 @@ for (const [w, h] of [
     expect(await page.evaluate(() => window.__creation!.outlined())).toEqual([first])
     await settle(page) // idle reached with the HighlightLayer stroke active
     const r0 = await page.evaluate(() => window.__creation!.renders())
-    await page.waitForTimeout(1500)
+    await quietWindow(page, IDLE_WINDOW_SHORT_MS)
     expect(
       await page.evaluate(() => window.__creation!.renders()),
       'idle = 0 renders with a .glb selected'
@@ -159,7 +160,7 @@ test('placeholder look (a .glb that fails): token body, family top tint, port ma
   expect(dist(mid, AMBRE), `centre pixel ${mid}`).toBeGreaterThan(40)
   // the selection stroke (HighlightLayer) costs no idle frame
   const r0 = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(1500)
+  await quietWindow(page, IDLE_WINDOW_SHORT_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(r0)
   expect(await page.evaluate(() => window.__creation!.outlined())).toEqual(['ql1'])
   await page.keyboard.press('Escape')
@@ -184,14 +185,14 @@ test('hover: Papier outline on the device under the pointer, never the selection
     .poll(
       async () => {
         const a = await page.evaluate(() => window.__creation!.renders())
-        await page.waitForTimeout(400)
+        await quietWindow(page, 400)
         return (await page.evaluate(() => window.__creation!.renders())) - a
       },
       { timeout: 15000 }
     )
     .toBe(0)
   const r0 = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(1500)
+  await quietWindow(page, IDLE_WINDOW_SHORT_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(r0)
   // leaving the canvas clears it
   await page.mouse.move(2, 2)

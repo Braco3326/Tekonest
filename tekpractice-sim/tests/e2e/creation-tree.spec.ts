@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { IDLE_WINDOW_MS, quietWindow, waitRendersIdle } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const boot = async (page: Page): Promise<void> => {
@@ -94,7 +95,7 @@ test('one selection: ] in the 3D view and a click on the device both select in t
   expect(await page.evaluate(() => window.__creation!.outlined())).toEqual([])
   // Over an unselected body a port's first-click area is tight (final review 3): a plain click on the body's centre selects it.
   await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
-  await page.waitForTimeout(800)
+  await waitRendersIdle(page)
   const p = await page.evaluate(() => window.__creation!.deviceScreen('ql1')) // page coordinates
   expect(p, 'the QL1 centre is on screen').not.toBeNull()
   await page.mouse.click(p!.x, p!.y)
@@ -178,11 +179,11 @@ test('idle = 0 renders in 2 s with a device selected (the Ambre outline costs no
   // let the .glb arrive and the last invalidations drain
   await expect.poll(async () => {
     const a = await page.evaluate(() => window.__creation!.renders())
-    await page.waitForTimeout(500)
+    await quietWindow(page, 500)
     return (await page.evaluate(() => window.__creation!.renders())) - a
   }, { timeout: 15000 }).toBe(0)
   const r0 = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(r0)
   expect(await page.evaluate(() => window.__creation!.outlined())).toEqual(['ql1'])
 })

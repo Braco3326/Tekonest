@@ -5,6 +5,7 @@
  * Reduced motion = a cut, so positions are asserted at once (no poll a 450 ms flight could pass).
  */
 import { expect, test, type Page } from '@playwright/test'
+import { quietWindow } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const boot = async (page: Page, place = 'room:concert-hall-medium'): Promise<void> => {
@@ -77,7 +78,7 @@ test('keys 1 / 2 / 3 (by code, 3D view focused): Régie, Premier rang, Fond de s
   // WCAG 2.1.4: a digit typed with focus elsewhere does nothing
   await page.getByTestId('tree-collapse').focus()
   await page.keyboard.press('Digit2')
-  await page.waitForTimeout(150)
+  await quietWindow(page, 150)
   expect(await listener(page)).toBe('regie')
   expect(await distTo(page, 'regie')).toBeLessThan(0.5)
 })

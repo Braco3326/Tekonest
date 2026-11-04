@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
+import { IDLE_WINDOW_MS, quietWindow } from './waits'
 
 /**
  * Task 39 (CA-03, CA-26): Écoute › Lecture. The learner HEARS the rig through each powered speaker: the gate (playbackReady), the sound (levels read from
@@ -200,8 +201,7 @@ test('(d) Stop: the lease and the loop are released, the context is closed, and 
   await play(page)
   // while playing the scheduler really renders (the lease holds frames)
   const r0 = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(300)
-  expect(await page.evaluate(() => window.__creation!.renders())).toBeGreaterThan(r0)
+  await expect.poll(() => page.evaluate(() => window.__creation!.renders())).toBeGreaterThan(r0)
   await choose(page, 'Stop')
   await waitStopped(page)
   await page.waitForFunction(() => !window.__creation!.leases().includes('meters'))
@@ -230,7 +230,7 @@ test('(d) Stop: the lease and the loop are released, the context is closed, and 
     { timeout: 10_000, polling: 100 }
   )
   const before = await page.evaluate(() => window.__creation!.renders())
-  await page.waitForTimeout(2000)
+  await quietWindow(page, IDLE_WINDOW_MS)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(before)
   // and it can be started again: a fresh context
   await play(page)
@@ -325,7 +325,7 @@ test('(g) a held Entrée is ONE press: in the menu and on the block\'s button (a
   for (let i = 0; i < 4; i++) await page.keyboard.down('Enter') // the first is a press, the three others are auto-repeats
   await page.keyboard.up('Enter')
   await waitPlaying(page)
-  await page.waitForTimeout(400)
+  await quietWindow(page, 400)
   expect((await state(page)).state).toBe('playing')
   expect((await stats(page)).contexts.opened).toBe(1) // started once, not start / stop / start
   await expect(page.locator('#cr-menu-ecoute-panel')).toBeHidden()
@@ -334,7 +334,7 @@ test('(g) a held Entrée is ONE press: in the menu and on the block\'s button (a
   for (let i = 0; i < 4; i++) await page.keyboard.down('Enter')
   await page.keyboard.up('Enter')
   await waitStopped(page)
-  await page.waitForTimeout(400)
+  await quietWindow(page, 400)
   expect((await state(page)).state).toBe('stopped')
   expect((await stats(page)).contexts.opened).toBe(1)
 })
@@ -446,9 +446,9 @@ test('(k) the sound follows the listener: the Régie facing the stage and the wa
   expect(Math.sign(g0)).toBe((await drawnLeft('k12-g')) ? -1 : 1)
   // strafe: the listener moves, the pan of the nearer-side speaker changes within a few frames (no store change involved)
   await page.keyboard.down('KeyD')
-  await page.waitForTimeout(700)
-  await page.keyboard.up('KeyD')
+  // held until the pan has moved (a state), then released
   await page.waitForFunction((p0) => Math.abs(window.__creation!.audioState().voices.find((v) => v.instanceId === 'k12-g')!.pan - p0) > 0.01, g0, { timeout: 5000 })
+  await page.keyboard.up('KeyD')
   expect(Math.sign(await pan('k12-g'))).toBe((await drawnLeft('k12-g')) ? -1 : 1)
   await page.keyboard.press('Escape') // back to Orbit
   await choose(page, 'Stop')
@@ -678,7 +678,7 @@ test('(u) a « Stop » shown in an open menu never starts a sound: the file ende
   await waitStopped(page) // the file ends while the menu stays open
   const opened = (await stats(page)).contexts.opened
   await item(page, 'Stop').click()
-  await page.waitForTimeout(600)
+  await quietWindow(page, 600)
   expect((await state(page)).state).toBe('stopped')
   expect((await stats(page)).contexts.opened).toBe(opened) // nothing was started
 })
