@@ -156,8 +156,25 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
     p === 'tree' ? (open ? S().treeCollapse! : S().treeExpand!) : open ? S().propsCollapse! : S().propsExpand!
   const isPanelOpen = (p: PanelId): boolean => root.dataset[p] !== 'collapsed'
   const panelListeners = new Set<(p: PanelId, open: boolean) => void>()
+  /** Below this width the two side panels cannot be open together (night 2 wave 4, item 1: Projet 200 + Propriétés 260 > 400). Same threshold as the CSS cap. */
+  const PHONE_PX = 760
+  const phone = (): boolean => !!win && win.innerWidth < PHONE_PX
+  let openOrder = 0
+  const openedAt: Record<PanelId, number> = { tree: 0, props: 0 }
+  const other = (p: PanelId): PanelId => (p === 'tree' ? 'props' : 'tree')
   const setPanel = (p: PanelId, open = !isPanelOpen(p)): void => {
     const was = root.dataset[p]
+    if (open && was !== 'open') {
+      openedAt[p] = ++openOrder
+      // Accordion on a phone: opening one panel folds the other (a user's own choice at a wide width is never touched).
+      const o = other(p)
+      if (phone() && isPanelOpen(o)) {
+        const body = o === 'tree' ? tree.body : props.body
+        const hadFocus = body.contains(doc.activeElement)
+        setPanel(o, false)
+        if (hadFocus) btnOf[o].focus() // the folded body is display: none: a focus left in it would fall to the page
+      }
+    }
     root.dataset[p] = open ? 'open' : 'collapsed'
     const b = btnOf[p]
     b.setAttribute('aria-expanded', String(open))
@@ -174,8 +191,14 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   // A narrow window starts with Propriétés folded so the 3D view keeps ≥ 60 %; a phone-sized one (< 760 px) folds Projet too (night wave 2, item A:
   // at 400 px the 200 px tree left the view 168 px wide). Only the first state: a click, a menu item or a script wins afterwards.
   const win = doc.defaultView
-  setPanel('tree', !(win && win.innerWidth < 760))
+  setPanel('tree', !phone())
   setPanel('props', !(win && win.innerWidth < 1200))
+
+  // A window narrowed below 760 px with both panels open: the one opened longer ago folds (the same accordion, applied once).
+  const narrowQuery = win?.matchMedia ? win.matchMedia(`(max-width: ${PHONE_PX - 0.02}px)`) : null
+  narrowQuery?.addEventListener('change', (e) => {
+    if (e.matches && isPanelOpen('tree') && isPanelOpen('props')) setPanel(openedAt.tree < openedAt.props ? 'tree' : 'props', false)
+  })
 
   const liveMsg = createLiveText(statusMsg, (fn, ms) => (win ? win.setTimeout(fn, ms) : fn()))
   const setStatus = (place: string, message: string, state: 'idle' | 'busy' | 'ready' = 'idle', reannounce = false): void => {

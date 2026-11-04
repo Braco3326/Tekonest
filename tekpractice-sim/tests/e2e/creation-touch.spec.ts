@@ -48,11 +48,11 @@ const selectKit = async (page: Page, id: string): Promise<void> => {
   for (let i = 0; i < 8 && (await page.evaluate(() => window.__creation!.selection())) !== id; i++) await page.keyboard.press(']')
   expect(await page.evaluate(() => window.__creation!.selection())).toBe(id)
 }
-const openBothPanels = async (page: Page): Promise<void> => {
-  for (const id of ['tree-collapse', 'props-collapse']) {
-    const b = page.getByTestId(id)
-    if ((await b.getAttribute('aria-expanded')) !== 'true') await b.click()
-  }
+/** Opens a side panel (and waits for it). Below 760 px opening one folds the other (wave 4, item 1): the two are checked one after the other. */
+const openPanel = async (page: Page, id: 'tree-collapse' | 'props-collapse'): Promise<void> => {
+  const b = page.getByTestId(id)
+  if ((await b.getAttribute('aria-expanded')) !== 'true') await b.click()
+  await expect(b).toHaveAttribute('aria-expanded', 'true')
 }
 
 test.describe('coarse pointer, 400 x 800', () => {
@@ -75,14 +75,18 @@ test.describe('coarse pointer, 400 x 800', () => {
     expect(status.y + status.height).toBe(800)
   })
 
-  test('a place with a selection and both panels open: the tree rows, the settings, the ports and the rails are 44 px targets', async ({ page }) => {
+  test('a place with a selection, Projet then Propriétés open in turn: the tree rows, the settings, the ports and the rails are 44 px targets', async ({ page }) => {
     await boot(page)
     await selectKit(page, 'ql1')
-    await openBothPanels(page)
+    await openPanel(page, 'tree-collapse')
     await page.getByRole('treeitem', { name: /^Matériel/ }).click() // opens the group: its rows are on screen
     expect(await small(page)).toEqual([])
     expect(await noOverflow(page)).toBeLessThanOrEqual(0)
-    // the settings are one column here: nothing is clipped on the right of the 260 px column
+    await openPanel(page, 'props-collapse') // folds Projet (the accordion): the rail of Projet is a target too
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    expect(await small(page)).toEqual([])
+    expect(await noOverflow(page)).toBeLessThanOrEqual(0)
+    // the settings are one column here: nothing is clipped on the right of the column
     const props = (await page.getByTestId('properties').boundingBox())!
     for (const sel of ['.cr-field-input', '.cr-step', '.cr-toggle']) {
       const b = await page.locator(`.cr-props ${sel}`).first().boundingBox()

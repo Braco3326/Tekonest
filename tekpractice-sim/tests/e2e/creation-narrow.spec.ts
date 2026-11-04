@@ -340,3 +340,96 @@ for (const width of [761, 800, 1024]) {
     })
   })
 }
+
+// ── Night 2 wave 4, item 1: below 760 px two open side panels overflowed (Projet 200 + Propriétés 260 > 400) ─────────────────────────────
+// Measured on 7d9d62f at 400 x 800 with both open: the view 0 px wide, Propriétés at x = 200..460 (60 px off screen), the Signal button at x = 325..448.
+// Propriétés alone left the view 108 px wide. Now: below 760 px opening one panel folds the other (an accordion), the open panel is capped so the view keeps
+// at least 140 px, and a wide window keeps the user's choices as before.
+const geometry = (page: Page) =>
+  page.evaluate(() => {
+    const b = (s: string) => {
+      const r = document.querySelector(s)!.getBoundingClientRect()
+      return { x: r.x, width: r.width }
+    }
+    return { scrollWidth: document.documentElement.scrollWidth, tree: b('[data-testid="project-tree"]'), view: b('[data-testid="viewport"]'), props: b('[data-testid="properties"]'), signal: b('[data-testid="signal-status"]') }
+  })
+test.describe('side panels at 400 x 800 (wave 4, item 1)', () => {
+  test.use({ viewport: { width: 400, height: 800 } })
+  for (const coarse of [false, true]) {
+    test.describe(coarse ? 'touch (coarse pointer)' : 'mouse', () => {
+      test.use({ hasTouch: coarse, isMobile: false })
+      test('opening Projet then Propriétés folds the other; nothing overflows, the view keeps 140 px, Signal stays on screen', async ({ page }) => {
+        await boot(page)
+        const tree = page.getByTestId('tree-collapse')
+        const props = page.getByTestId('props-collapse')
+        await expect(tree).toHaveAttribute('aria-expanded', 'false')
+        await expect(props).toHaveAttribute('aria-expanded', 'false')
+        const check = async (label: string): Promise<void> => {
+          // the grid animates nothing (reduced motion), but wait for the state, not for time
+          await expect.poll(async () => (await geometry(page)).tree.width + (await geometry(page)).props.width + (await geometry(page)).view.width, label).toBe(400)
+          const g = await geometry(page)
+          expect(g.scrollWidth, `${label}: no horizontal scroll`).toBeLessThanOrEqual(400)
+          expect(g.view.width, `${label}: the view keeps 140 px`).toBeGreaterThanOrEqual(140)
+          expect(g.props.x + g.props.width, `${label}: Propriétés inside the window`).toBeLessThanOrEqual(400)
+          expect(g.signal.x + g.signal.width, `${label}: Signal inside the window`).toBeLessThanOrEqual(400)
+          expect(g.signal.x, `${label}: Signal left edge`).toBeGreaterThanOrEqual(0)
+        }
+        await check('both folded')
+        await tree.click()
+        await expect(tree).toHaveAttribute('aria-expanded', 'true')
+        await check('Projet open')
+        await props.click()
+        await expect(props).toHaveAttribute('aria-expanded', 'true')
+        await expect(tree, 'Projet folded by the accordion').toHaveAttribute('aria-expanded', 'false')
+        await expect(page.getByRole('button', { name: 'Déplier le panneau Projet' })).toBeVisible()
+        await check('Propriétés open')
+        await tree.click()
+        await expect(props, 'and the other way round').toHaveAttribute('aria-expanded', 'false')
+        await expect(tree).toHaveAttribute('aria-expanded', 'true')
+        await check('Projet open again')
+        await tree.click()
+        await expect(tree, 'a panel can still be folded by hand').toHaveAttribute('aria-expanded', 'false')
+        await check('both folded again')
+      })
+    })
+  }
+  test('a panel opened from the Vue menu folds the other one too, and the focus is not left in the folded panel', async ({ page }) => {
+    await boot(page)
+    await page.getByTestId('tree-collapse').click()
+    const row = page.getByRole('tree').locator('[tabindex], button, [role="treeitem"]').first()
+    await row.focus()
+    await expect(row).toBeFocused()
+    await page.getByRole('menuitem', { name: 'Vue' }).click()
+    await page.getByRole('menuitem', { name: 'Panneau Propriétés' }).click()
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    // whatever has the focus is on screen (the folded tree body is display: none, a focus left there would be lost)
+    const onScreen = await page.evaluate(() => {
+      const a = document.activeElement as HTMLElement | null
+      return !!a && a !== document.body ? a.getClientRects().length > 0 : true
+    })
+    expect(onScreen).toBe(true)
+  })
+})
+
+test.describe('side panels at 1366 x 768 (wave 4, item 1: unchanged)', () => {
+  test.use({ viewport: { width: 1366, height: 768 } })
+  test('both panels can be open together, and folding one leaves the other as it was', async ({ page }) => {
+    await boot(page)
+    const tree = page.getByTestId('tree-collapse')
+    const props = page.getByTestId('props-collapse')
+    await expect(tree).toHaveAttribute('aria-expanded', 'true')
+    if ((await props.getAttribute('aria-expanded')) !== 'true') await props.click()
+    await expect(props).toHaveAttribute('aria-expanded', 'true')
+    await expect(tree).toHaveAttribute('aria-expanded', 'true')
+    const g = await geometry(page)
+    expect(g.tree.width).toBe(200)
+    expect(g.props.width).toBe(260)
+    expect(g.view.width).toBe(1366 - 200 - 260)
+    await tree.click()
+    await expect(tree).toHaveAttribute('aria-expanded', 'false')
+    await expect(props).toHaveAttribute('aria-expanded', 'true')
+    await tree.click()
+    await expect(props, 'opening Projet at a wide width does not fold Propriétés').toHaveAttribute('aria-expanded', 'true')
+  })
+})

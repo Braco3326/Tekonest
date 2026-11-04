@@ -27,6 +27,11 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 }
 .cr[data-tree='collapsed'] { --cr-tree-w: var(--cr-rail-w); }
 .cr[data-props='collapsed'] { --cr-props-w: var(--cr-rail-w); }
+/* Night 2 wave 4, item 1: below 760 px only ONE side panel is open at a time (layout.ts folds the other), and the open one is capped so the 3D view keeps at least 140 px
+   next to the other panel's rail: at 400 px Propriétés (260) left the view 108 px wide, both open left it 0 and pushed the Signal button off screen. 759.98px = layout.ts PHONE_PX. */
+@media (max-width: 759.98px) {
+  .cr { --cr-tree-w: min(200px, calc(100vw - var(--cr-rail-w) - 140px)); --cr-props-w: min(260px, calc(100vw - var(--cr-rail-w) - 140px)); }
+}
 
 /* Square corners, focused or not (beats the legacy `a:focus-visible { border-radius }`). */
 .cr *, .cr *:focus-visible, .cr-skip, .cr-skip:focus-visible, .cr-dialog, .cr-dialog * { border-radius: 0 !important; }
