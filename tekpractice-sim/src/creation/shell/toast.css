@@ -10,6 +10,8 @@
   bottom: 16px;
   transform: translateX(-50%);
   box-sizing: border-box;
+  /* night wave 2 (D): a box placed at left: 50% only has the right half of the view to stretch into, so a long message wrapped in a narrow window; max-content takes the whole line up to the max-width */
+  width: max-content;
   max-width: min(560px, calc(100% - 32px));
   padding: 8px 14px;
   background: var(--cr-panel);

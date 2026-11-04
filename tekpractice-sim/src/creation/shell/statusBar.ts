@@ -193,6 +193,7 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
     setHidden(save, a.label === '' || a.line !== '')
     setHidden(pause, a.line === '')
     setText(pauseText, a.line)
+    if (pauseText.title !== a.line) pauseText.title = a.line // the full line when a narrow bar clips it
     pauseAction = a.action
     setHidden(pauseBtn, a.action === null)
     if (a.action) setText(pauseBtn, ACTION_LABEL(a.action))

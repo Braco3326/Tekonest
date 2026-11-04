@@ -786,6 +786,11 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
    (.cr-notes, z 5) live in the same corner: while a pose is in progress the view carries data-placing and the notes stack ABOVE the button (44 px + a gap), so
    neither covers the other at any width (the view is only 168 px wide at 400 px: the cube and its tools take the top). Above the drawer (z 2). */
 .cr-viewport[data-placing='true'] .cr-notes { bottom: 68px; }
+/* Night wave 2, item D: the stack never grows over the view cube (top left, up to ~200 px with its caption) and scrolls inside itself; during a pose the
+   long « appareils non rechargés » list gives way (a pose needs the view, the list is back when it ends); the toast stands above the cancel button (12 + 44 px). */
+.cr-notes { max-height: calc(100% - 220px); overflow-y: auto; }
+.cr-viewport[data-placing='true'] .cr-note-list { display: none; }
+.cr-viewport[data-placing='true'] .cr-toast { bottom: 68px; }
 .cr .cr-cancel-pose {
   position: absolute;
   left: 12px;
@@ -819,7 +824,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   overflow: hidden;
 }
 .cr-status-summary { display: flex; align-items: center; gap: 16px; flex: 1 1 auto; min-width: 0; height: 100%; }
-.cr-status-place { flex: none; color: var(--cr-papier); font-weight: 500; }
+.cr-status-place { flex: 0 1 auto; min-width: 0; max-width: 32ch; overflow: hidden; text-overflow: ellipsis; color: var(--cr-papier); font-weight: 500; }
 .cr-status-place:empty { display: none; }
 .cr-status-msg { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .cr-status-msg::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 6px; vertical-align: 1px; background: var(--cr-ink-muted); }
@@ -847,6 +852,28 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-signal-extra:empty { display: none; }
 /* inside the clipped status bar: rings are drawn inward so they are never cut */
 .cr .cr-signal:focus-visible, .cr .cr-status-action:focus-visible { outline-offset: -2px; box-shadow: none; }
+
+/* Night wave 2, item C: the bar says what matters now. While a pose runs the place name gives way (the key hints are what is read), same
+   data-placing pattern as the error list below. On the very first screen (the place picker is up and has no « Fermer »: nothing is on screen yet)
+   selection, playback, microphone and signal have nothing to say, and « Rien de branché » would read as a warning there. */
+body:has(.cr-viewport[data-placing='true']) .cr-status-place { display: none; }
+.cr:has(.cr-pick:not([hidden]) .cr-pick-close[hidden]) :is(.cr-status-sel, .cr-status-playback, .cr-status-mic, .cr-signal) { display: none; }
+
+/* Night wave 2, item B: on a phone (400 px) the right group was 620 px wide and pushed the Signal button, and so the error list, off screen.
+   Only the message, the autosave WARNING (a paused autosave is not an extra) and the Signal button stay; the rest is in Propriétés, the
+   tree and the menus. A paused-autosave line takes the message's place and is ellipsised (its full text is the title, and the note). */
+@media (max-width: 760px) {
+  .cr-status, .cr-status-summary, .cr-status-right { gap: 8px; }
+  .cr-status-place, .cr-status-sel, .cr-status-snap, .cr-status-save, .cr-status-playback, .cr-status-mic { display: none; }
+  .cr-status-summary { flex: 1 1 0; } /* the message takes what the Signal button leaves (its own text width must not push the button out) */
+  .cr-status-right { flex: 0 0 auto; }
+  .cr-status-pause { flex: 1 1 auto; min-width: 0; }
+  .cr-status-pause-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .cr-status-action, .cr-signal { flex: none; }
+  /* the live message is still rendered (and read) but clipped to nothing while the autosave warning needs the room */
+  .cr-status:has(.cr-status-pause:not([hidden])) .cr-status-summary { flex: 0 0 0; overflow: hidden; }
+  .cr-status:has(.cr-status-pause:not([hidden])) .cr-status-right { flex: 1 1 0; min-width: 0; }
+}
 
 /* The persistent error list (non-modal pop-over above the signal button). */
 .cr-errlist {
