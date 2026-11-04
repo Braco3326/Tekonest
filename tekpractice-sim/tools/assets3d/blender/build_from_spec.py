@@ -550,6 +550,37 @@ def build_rack_box(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+def build_console_wedge(plan: Plan) -> bpy.types.Object:
+    """A console or any wedge-shaped casing: plan.profile is the SIDE profile [[depth mm from the io face, height mm], ...] (first
+    station at depth 0, last at depth d, the tallest = h), extruded across the width w, bottom flat on y = 0, every edge chamfered by
+    chamferMm. Pivot bottom-centre, the io face (the tall rear) at z = +d/2. One colour (CHASSIS); a projection puts the real top on it."""
+    w, h, d = size_m(plan)
+    profile = plan.get("profile")
+    if not isinstance(profile, list) or len(profile) < 3:
+        raise BuildError("console-wedge needs plan.profile: at least three [depth_mm, height_mm] stations")
+    stations: list[tuple[float, float]] = []
+    for i, st in enumerate(profile):
+        if not (isinstance(st, list) and len(st) == 2 and all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in st)):
+            raise BuildError(f"profile station {i} must be [depth_mm, height_mm], got {st!r}")
+        if st[1] <= 0:
+            raise BuildError(f"profile station {i} height must be positive, got {st[1]}")
+        if stations and not (st[0] * MM > stations[-1][0]):
+            raise BuildError(f"profile station {i} depth {st[0]} must be beyond the previous station")
+        stations.append((float(st[0]) * MM, float(st[1]) * MM))
+    chamfer = param_m(plan, "chamferMm", DEFAULT_CHAMFER_MM)
+    if chamfer >= min(w, min(s[1] for s in stations)) / 2.0:
+        raise BuildError(f"params.chamferMm ({chamfer / MM:.2f}) must be smaller than half the smallest side")
+
+    body = Body("console-wedge")
+    bm = body.bm
+    # polygon of (z, y): the rear-bottom corner, the front-bottom corner, then the top profile from the front edge back to the io face
+    pts = [(d / 2.0, 0.0), (-d / 2.0, 0.0)] + [(d / 2.0 - t, hh) for t, hh in reversed(stations)]
+    extrude_zy(bm, pts, -w / 2.0, w / 2.0)
+    bmesh.ops.bevel(bm, geom=bm.edges[:], offset=chamfer, offset_type="OFFSET", segments=1, affect="EDGES")
+    body.done(CHASSIS)
+    return body.finish()
+
+
 def build_stagebox_rio3224(plan: Plan) -> bpy.types.Object:
     """Yamaha Rio3224-D2 style 5U stage box (research report, "Rio3224-D2"; generic: no logo, no model name).
 
@@ -790,6 +821,7 @@ SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "rack-box": build_rack_box,
     "stagebox-rio3224": build_stagebox_rio3224,
     "revolve": build_revolve,
+    "console-wedge": build_console_wedge,
 }
 
 
@@ -809,7 +841,7 @@ def wipe_scene() -> None:
 
 # --- projection: a picture of one face from a Meshy model, mapped onto our exact shape ---------------------------------------
 
-PROJECTION_COS = math.cos(math.radians(30.0))   # a face looks at the projection when its normal is within 30 degrees of the face normal
+PROJECTION_COS = math.cos(math.radians(50.0))   # a face looks at the projection when its normal is within 50 degrees of the face normal (a console top slopes up to about 33)
 SWATCH_PX = 32                                  # one palette swatch in the atlas: 32 x 32 px
 
 

@@ -351,11 +351,13 @@ async function optimizeAndRegate(
   spec: AssetSpecT,
   d: Pick<BuildDeps, 'compress' | 'optimizeTextures'>,
   scripted = false,
+  hybrid = false,
 ): Promise<Regate> {
   // A throw from a step or from a re-measurement is not a measured failure: it propagates and aborts the build.
   // Mode Création has no environment map and dim lights: cap the metal and lift the colour map of a textured model (no-op without textures).
   // Brand text and logos of the spec's blank bands are repainted first (on the full-size map), then the look is normalised.
-  const clean = spec.texture ? await blankBands(fixed, spec.texture.blankBandsMm ?? [], spec.texture.blankRects ?? []) : fixed
+  // (a plain scripted model has no picture to clean: the spec's texture block applies to Meshy and hybrid models)
+  const clean = spec.texture && (!scripted || hybrid) ? await blankBands(fixed, spec.texture.blankBandsMm ?? [], spec.texture.blankRects ?? []) : fixed
   // A scripted shape's palette is already lifted by the builder, and a projected picture was lifted when it was rendered: no second lift.
   const lit = scripted ? clean : await normaliseLook(clean)
   const textured = await d.optimizeTextures(lit, { maxPx: TEXTURE_MAX_PX[spec.tier], dataMaxPx: DATA_TEXTURE_MAX_PX[spec.tier] })
@@ -524,7 +526,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
         throw pipelineDefectError(failed, `attempt ${n}, fixed GLB`, work)
       }
 
-      const result = await optimizeAndRegate(fixed, [drift, ...surface], spec, d, scripted)
+      const result = await optimizeAndRegate(fixed, [drift, ...surface], spec, d, scripted, hybrid)
       attempt.gates = result.ok ? result.shipped.gates : result.gates
       await persist()
       if (!result.ok) {

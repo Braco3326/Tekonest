@@ -137,3 +137,30 @@ describe('validateBuild', () => {
     expect(validateBuild(spec)).toEqual([])
   })
 })
+
+describe('console-wedge (side profile)', () => {
+  const device: Partial<AssetSpecT> = { kind: 'device', realSizeMm: { w: 468, h: 272, d: 562 } }
+  const profile: [number, number][] = [[0, 272], [40, 257], [161, 178], [281, 132], [562, 95]]
+  const wedge = (over: Partial<NonNullable<AssetSpecT['build']>> = {}): AssetSpecT => specWith({ shape: 'console-wedge', profile, ...over }, device)
+
+  it('accepts a side profile from the io face (depth 0) to the front edge (depth d), its tallest point being the height', () => {
+    expect(validateBuild(wedge())).toEqual([])
+    expect(validateBuild(wedge({ params: { chamferMm: 1 } }))).toEqual([])
+  })
+
+  it('needs a profile, and takes no colours', () => {
+    expect(validateBuild(wedge({ profile: undefined }))[0]).toMatch(/console-wedge.*profile/)
+    expect(validateBuild(wedge({ colours: [{ fromMm: 0, colour: '#222222' }] }))[0]).toMatch(/colours/)
+  })
+
+  it('checks the first depth (0), the last depth (d), and the tallest point (h), each named in the message', () => {
+    expect(validateBuild(wedge({ profile: [[5, 272], [40, 257], [161, 178], [562, 95]] }))[0]).toMatch(/first station.*0/)
+    expect(validateBuild(wedge({ profile: [[0, 272], [40, 257], [161, 178], [500, 95]] }))[0]).toMatch(/last station.*562/)
+    expect(validateBuild(wedge({ profile: [[0, 250], [40, 240], [161, 178], [562, 95]] }))[0]).toMatch(/tallest.*272/)
+    expect(validateBuild(wedge({ profile: [[0, 300], [40, 257], [161, 178], [562, 95]] }))[0]).toMatch(/tallest.*272/)
+  })
+
+  it('refuses a height of 0 or less at a station (the casing would have no thickness there)', () => {
+    expect(validateBuild(wedge({ profile: [[0, 272], [40, 0], [161, 178], [562, 95]] }))[0]).toMatch(/height/)
+  })
+})

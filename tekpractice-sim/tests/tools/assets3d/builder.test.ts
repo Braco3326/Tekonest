@@ -328,6 +328,23 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(swatch).toBeGreaterThan(0)
   }, 120_000)
 
+  it.skipIf(!BLENDER)('console-wedge builds yamaha-ql1 at 468 x 272 x 562 mm with its measured side profile, ports on the flat io face, every gate passing', async () => {
+    const spec = realSpec('yamaha-ql1')
+    expect(spec.build?.shape).toBe('console-wedge')
+    const { raw, fixed, fixedBytes, gates } = await expectBuiltTo(spec, 4000)
+    expect(raw.triangles).toBeLessThan(400)
+    expect(gates.filter((g) => !g.ok)).toEqual([])
+    const verts = await vertices(fixedBytes)
+    const heightAt = (depthMm: number): number => {
+      const z = (0.5 * spec.realSizeMm.d - depthMm) * MM
+      return Math.max(...verts.filter((v) => Math.abs(v[2] - z) < 2 * MM).map((v) => v[1])) / MM
+    }
+    expect(heightAt(0.5)).toBeGreaterThan(270) // the tall rear
+    expect(Math.abs(heightAt(201) - 152)).toBeLessThan(2) // the sampling window is +-2 mm of depth, and the slope is 0.6
+    expect(heightAt(561.5)).toBeLessThan(100) // the low front edge
+    expect(fixed.triangles).toBeLessThan(400)
+  }, 120_000)
+
   it.skipIf(!BLENDER)('a chamfer larger than half the smallest side exits with BUILD_FAIL naming chamferMm', async () => {
     const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 300 } } }
     await expect(runBuilder(spec, join(dir, 'big-chamfer.glb'))).rejects.toThrow(/chamferMm/)
