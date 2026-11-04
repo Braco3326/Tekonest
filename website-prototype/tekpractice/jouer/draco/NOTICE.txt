@@ -1,0 +1,22 @@
+Draco 3D data compression library - glTF decoder
+================================================
+
+The files in this folder are copies of the glTF Draco decoder published by Google in the npm package "draco3dgltf".
+
+  Project   : Draco, https://github.com/google/draco
+  Package   : draco3dgltf 1.5.7 ("Google Draco Team"), https://www.npmjs.com/package/draco3dgltf
+  Licence   : Apache License, Version 2.0 (package.json "license": "Apache-2.0"); the licence text is in LICENSE-Apache-2.0.txt, next to this file.
+              The package carries no NOTICE file of its own.
+
+Files (byte-identical copies of node_modules/draco3dgltf/ at version 1.5.7, not modified):
+
+  draco_decoder_gltf.wasm         192593 bytes  SHA-256 712db3449ae2041d6e8a224c395bda6cedb49e51322fae38b7db9beb8b381889
+  draco_decoder_gltf_nodejs.js     58456 bytes  SHA-256 8bb2952d2ba7d67e1414f8df819410cb0434a666be53f671fff75f68843d76f6
+
+Why the JavaScript file is called "nodejs": that is the name it has in the package. It is the full Emscripten module that goes with the .wasm (it detects a
+page, a worker or Node, and only reads files under Node), and it is the only JavaScript wrapper the package ships. It is NOT the "draco_wasm_wrapper_gltf.js"
+that Babylon.js downloads from its CDN by default, and its build may differ from that file. It is used here as Babylon's "wasmUrl", paired with the .wasm of
+the same package (one build). See src/render/draco.ts and ASSET_LOG.md (entry "Decodeur Draco servi par le site").
+
+Why they are here: the Babylon.js glTF loader decodes the Draco-compressed models (KHR_draco_mesh_compression) with this decoder. By default it downloads
+one from cdn.babylonjs.com at runtime, a third party; the site serves its own copy instead (audit CA-24).
