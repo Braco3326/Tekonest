@@ -433,3 +433,89 @@ test.describe('side panels at 1366 x 768 (wave 4, item 1: unchanged)', () => {
     await expect(props, 'opening Projet at a wide width does not fold Propriétés').toHaveAttribute('aria-expanded', 'true')
   })
 })
+
+// ── Night 2 wave 4, item 7: the status bar's texts at 400 px, seen on real states for the first time ─────────────────────────────────────────────
+// Measured on 7d9d62f at 400 x 800 (real flows, not injected text): the place name, the selection and the playback line are display: none at this width (the place is a node of
+// Projet, the selection is in Propriétés, the playback line is in Écoute: nothing is clipped, the facts are elsewhere). Two things were wrong. (1) A Bêta device placed and a
+// connection refused make the Signal button 398 px wide ("Aucune erreur détectée · connexion refusée · 1 appareil non vérifié"): it ran from x = 20 to x = 418, 18 px off the
+// window, its last words cut with no full text. (2) A state message longer than ~36 characters (the pose hints are 120) is cut by an ellipsis with no title, and on a touch
+// screen (no hover) nothing could show it.
+/** Places the first Bêta proposal (drawer, tab, device, click in the view) and makes a refused connection: the longest realistic Signal button. */
+const betaAndRefusal = async (page: Page): Promise<void> => {
+  await canvas(page).focus()
+  await page.keyboard.press('Space')
+  await page.getByRole('tab', { name: 'Bêta' }).click()
+  await page.getByTestId('inventory-item').first().click()
+  await expect.poll(() => page.evaluate(() => window.__creation!.placing())).toBe(true)
+  await page.mouse.move(200, 300)
+  await page.mouse.move(210, 310)
+  await page.mouse.click(210, 310)
+  await expect.poll(() => page.evaluate(() => window.__creation!.design().rig.instances.length)).toBeGreaterThan(0)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'ql1', port: 'out-main-r' } }))
+}
+for (const touch of [false, true]) {
+  test.describe(`status bar texts at 400 x 800, ${touch ? 'touch' : 'mouse'} (wave 4, item 7)`, () => {
+    test.use({ viewport: { width: 400, height: 800 }, hasTouch: touch })
+
+    test('a Bêta device, a refused connection: the Signal button stays inside the window, its tail is clipped with the full text in its title, and it still opens the list', async ({ page }) => {
+      await boot(page, null)
+      await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
+      await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium' && window.__creation!.design().rig.instances.length === 5)
+      await betaAndRefusal(page)
+      const signal = page.getByTestId('signal-status')
+      await expect(signal).toContainText('appareil non vérifié') // the state the test is about is there
+      await expect(signal).toContainText('connexion refusée')
+      const s = await box(signal)
+      const bar = await box(page.getByTestId('status-bar'))
+      expect(s.x, 'Signal left edge').toBeGreaterThanOrEqual(0)
+      expect(s.x + s.width, 'Signal right edge inside the window').toBeLessThanOrEqual(400)
+      expect(s.y + s.height).toBeLessThanOrEqual(bar.y + bar.height + 0.5)
+      expect(await page.getByTestId('signal-label').evaluate((e) => e.getBoundingClientRect().right), 'the label itself is whole').toBeLessThanOrEqual(400)
+      const title = (await signal.getAttribute('title'))!
+      expect(title.replace(/\s+/g, ' '), 'the full text is carried by the title').toContain('connexion refusée · 1 appareil non vérifié')
+      expect(await page.getByTestId('signal-label').textContent()).toMatch(/Aucune erreur détectée/)
+      await signal.click()
+      await expect(page.getByTestId('error-list')).toBeVisible()
+    })
+
+    test('a long state message: its full text is its title, and on a touch screen it takes two lines inside the bar', async ({ page }) => {
+      await boot(page)
+      await startPose(page)
+      const msg = page.locator('.cr-status-msg')
+      const text = (await msg.textContent())!
+      expect(text.length, 'the pose hints are long (the test means something)').toBeGreaterThan(60)
+      expect(await msg.getAttribute('title'), 'the full text is the title').toBe(text)
+      const m = await box(msg)
+      const bar = await box(page.getByTestId('status-bar'))
+      expect(m.y).toBeGreaterThanOrEqual(bar.y)
+      expect(m.y + m.height, 'inside the bar').toBeLessThanOrEqual(bar.y + bar.height + 0.5)
+      if (touch) expect(m.height, 'two lines on a touch screen (48 px bar)').toBeGreaterThan(20)
+      const sg = await box(page.getByTestId('signal-status'))
+      expect(meets(m, sg), 'the message does not run under Signal').toBe(false)
+    })
+
+    test('the autosave warning line: its full text is its title, Signal is not pushed out', async ({ page }) => {
+      await page.addInitScript(() => {
+        if (sessionStorage.getItem('seeded')) return
+        sessionStorage.setItem('seeded', '1')
+        const items = [0, 1, 2, 3, 4].map((i) => ({ at: 't', key: 'audio-sim/creation.v1', reason: 'corrupt', raw: `old${i}` }))
+        localStorage.setItem('audio-sim/creation.v1.quarantine', JSON.stringify({ version: 1, items }))
+        localStorage.setItem('audio-sim/creation.v1', '{sixth')
+      })
+      await boot(page)
+      await page.getByTestId('note-kept-full').getByRole('button', { name: 'Fermer la note' }).click()
+      const line = page.getByTestId('status-autosave-paused')
+      await expect(line).toBeVisible()
+      const text = page.locator('.cr-status-pause-text')
+      const full = (await text.textContent())!
+      expect(await text.getAttribute('title')).toBe(full)
+      const s = await box(page.getByTestId('signal-status'))
+      expect(s.x + s.width).toBeLessThanOrEqual(400)
+      const a = await box(page.getByTestId('status-autosave-action'))
+      expect(a.x + a.width).toBeLessThanOrEqual(400)
+      expect(meets(a, s)).toBe(false)
+      await page.getByTestId('signal-status').click()
+      await expect(page.getByTestId('error-list')).toBeVisible()
+    })
+  })
+}

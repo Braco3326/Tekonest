@@ -890,13 +890,22 @@ body:has(.cr-viewport[data-placing='true']) .cr-status-place { display: none; }
   .cr-status, .cr-status-summary, .cr-status-right { gap: 8px; }
   .cr-status-place, .cr-status-sel, .cr-status-snap, .cr-status-save, .cr-status-playback, .cr-status-mic { display: none; }
   .cr-status-summary { flex: 1 1 0; } /* the message takes what the Signal button leaves (its own text width must not push the button out) */
-  .cr-status-right { flex: 0 0 auto; }
+  .cr-status-right { flex: 0 1 auto; min-width: 0; } /* wave 4, item 7: shrinks (with the Signal button inside it) instead of running past the window */
   .cr-status-pause { flex: 1 1 auto; min-width: 0; }
   .cr-status-pause-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-  .cr-status-action, .cr-signal { flex: none; }
+  .cr-status-action { flex: none; }
+  /* The Signal button gives up the tail of its text (an ellipsis; the title carries it, the list opens from the button) before it leaves the window; its glyph and label stay whole. */
+  .cr .cr-signal { flex: 0 1 auto; min-width: 0; max-width: 100%; }
+  .cr-signal-glyph, .cr-signal-label { flex: none; }
+  .cr-signal-extra { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   /* the live message is still rendered (and read) but clipped to nothing while the autosave warning needs the room */
   .cr-status:has(.cr-status-pause:not([hidden])) .cr-status-summary { flex: 0 0 0; overflow: hidden; }
   .cr-status:has(.cr-status-pause:not([hidden])) .cr-status-right { flex: 1 1 0; min-width: 0; }
+}
+
+/* Touch, phone width (wave 4, item 7): a state message gets two lines in the 48 px bar (a title is not there to be hovered); a mouse keeps one line and its title. */
+@media (max-width: 760px) and (pointer: coarse) {
+  .cr-status-msg { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; white-space: normal; line-height: 1.25; }
 }
 
 /* The persistent error list (non-modal pop-over above the signal button). */

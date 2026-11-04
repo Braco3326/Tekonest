@@ -205,6 +205,8 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
     // Writes only on a change; the message itself goes through liveText (re-announced only for a learner's action).
     if (statusPlace.textContent !== place) statusPlace.textContent = place
     liveMsg(message, reannounce)
+    // the full text when the bar clips it (night 2 wave 4, item 7: the pose hints are 98 characters, the bar shows about 36 at 400 px); on a touch screen the CSS gives it two lines
+    if (statusMsg.title !== message) statusMsg.title = message
     if (statusMsg.dataset.state !== state) statusMsg.dataset.state = state
   }
   setStatus('', S().statusNoPlace!)
