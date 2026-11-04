@@ -478,9 +478,10 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
         if (had.inside && tab) tab.btn.focus()
       }
       if (!sameTabs) {
-        // The « Bêta » tab appeared or went: the tab buttons are rebuilt.
+        // The « Bêta » tab appeared or went: the tab buttons are rebuilt. Focus is given back only if the rebuild took it (a focused tab or result was replaced):
+        // focus in the filter field or on « Fermer » was never touched and must stay there (wave 1c R1).
         build()
-        restore()
+        if (!root.contains(doc.activeElement)) restore()
         return
       }
       // Same tabs: nothing the learner may be about to click is replaced. Only the panel is redrawn, and only when it shows Bêta items (the « Bêta » tab or a filter).

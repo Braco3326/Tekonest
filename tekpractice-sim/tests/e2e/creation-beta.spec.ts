@@ -228,6 +228,22 @@ test('night wave 1 review 8: when the sheets load empty and the Bêta tab goes, 
   expect(await page.evaluate(() => document.activeElement?.getAttribute('role'))).toBe('tab')
 })
 
+test('wave 1c R1: when the sheets load empty and the Bêta tab goes, focus that is in the filter field stays there', async ({ page }) => {
+  await page.addInitScript(() => {
+    ;(window as unknown as { __creationBetaTimeoutMs: number }).__creationBetaTimeoutMs = 60_000
+  })
+  const held: Array<() => Promise<void>> = []
+  await page.route('**/proposalsSource*', (r) => void held.push(() => r.fulfill({ status: 200, contentType: 'text/javascript', body: 'export default { "devices": [] }' })))
+  await boot(page)
+  await open(page)
+  const field = page.getByTestId('inventory-filter')
+  await field.focus()
+  await expect.poll(() => held.length).toBeGreaterThan(0)
+  await Promise.all(held.splice(0).map((f) => f()))
+  await expect(betaTab(page)).toHaveCount(0)
+  await expect(field).toBeFocused()
+})
+
 test('night wave 1, item 6: Espace closes the drawer while the sheets are still loading, and their late arrival neither reopens it nor shows a status', async ({ page }) => {
   const net = await stallProposals(page, 60_000)
   await boot(page)
