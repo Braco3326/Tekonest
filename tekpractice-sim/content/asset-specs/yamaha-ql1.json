@@ -208,6 +208,26 @@
     },
     "projection": "top"
   },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 70,
+        "yMm": 28,
+        "wMm": 110,
+        "hMm": 20,
+        "marginMm": 6
+      },
+      {
+        "face": "top",
+        "xMm": 243,
+        "yMm": 28,
+        "wMm": 64,
+        "hMm": 20,
+        "marginMm": 6
+      }
+    ]
+  },
   "sources": [
     {
       "kind": "manual",
