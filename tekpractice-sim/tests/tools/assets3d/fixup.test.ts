@@ -15,7 +15,7 @@ import { buildPlacement, toExtras } from '../../../tools/assets3d/placement'
 import { FIXUP_SCRIPT, runFixup } from '../../../tools/assets3d/runFixup'
 import type { ExecResult, FixupReport } from '../../../tools/assets3d/runFixup'
 import type { AssetSpecT } from '../../../tools/assets3d/specSchema'
-import { makeBoxGlb } from './helpers'
+import { boxGeometry, makeBoxGlb, makeMeshGlb } from './helpers'
 
 /** The brief's 468 x 44 x 230 mm device: one io port (with an opening, so the recess runs) and one knob on top. */
 function deviceSpec(over: Partial<AssetSpecT> = {}): AssetSpecT {
@@ -131,6 +131,12 @@ describe('runFixup (unit, injected exec)', () => {
     const py = readFileSync(FIXUP_SCRIPT, 'utf8')
     expect(py).toContain('recess = plan.get("recess", True) is not False')
     expect(py).toContain('if recess and port.get("openingM"):')
+  })
+
+  it('fixup.py measures the port surface with a BVH ray cast before exporting and writes portSurface into the report', () => {
+    const py = readFileSync(FIXUP_SCRIPT, 'utf8')
+    expect(py).toContain('BVHTree')
+    expect(py).toContain('"portSurface"')
   })
 
   it('fixup.py reads flipUpright and applies FLIP_Z (180 degrees about glTF Z) after the yaw', () => {
@@ -258,6 +264,41 @@ describe(`runFixup with real Blender (${BLENDER ? `using ${BLENDER}` : `SKIPPED,
       expect(extras?.ports.map((p) => p.portId)).toEqual(['in-mic-1'])
       expect(extras?.controls.map((c) => [c.controlId, c.axis, c.kind])).toEqual([['gain-1', 'y', 'knob']])
       extras?.ports[0].pos.forEach((v, i) => expect(v).toBeCloseTo(wanted.ports[0].pos[i], 6))
+    },
+    120_000,
+  )
+
+  it.skipIf(!BLENDER)(
+    'measures, per port, how far the real surface is behind or ahead of the port: a flush port reads 0, a port in front of a recessed panel reads the recess',
+    async () => {
+      // Two 100 x 50 x 200 mm halves side by side: the left one reaches the io face, the right one is 10 mm behind it.
+      const spec = deviceSpec({
+        ports: [
+          { portId: 'flush', face: 'io', xMm: 25, yMm: 25, confidence: 'manual' },
+          { portId: 'floating', face: 'io', xMm: 75, yMm: 25, confidence: 'manual' },
+        ],
+        controls: [],
+        realSizeMm: { w: 100, h: 50, d: 200 },
+      })
+      const half = (x0: number, x1: number, zFront: number): { positions: number[]; indices: number[] } => {
+        const g = boxGeometry({ w: x1 - x0, h: 0.05, d: zFront + 0.1 })
+        const positions = g.positions.slice()
+        for (let i = 0; i < positions.length; i += 3) {
+          positions[i] += (x0 + x1) / 2
+          positions[i + 2] += (zFront - 0.1) / 2
+        }
+        return { positions, indices: g.indices }
+      }
+      const raw = join(dir, 'recessed.glb')
+      const out = join(dir, 'recessed.fixed.glb')
+      await writeFile(raw, await makeMeshGlb({ prims: [half(-0.05, 0, 0.1), half(0, 0.05, 0.09)] }))
+
+      const fix = await runFixup(raw, out, spec, { recess: false })
+
+      expect(fix.rotatedDegrees).toBe(0)
+      const offsets = Object.fromEntries((fix.portSurface ?? []).map((p) => [p.name, p.offsetM]))
+      expect(offsets['port_flush']).toBeCloseTo(0, 5)
+      expect(offsets['port_floating']).toBeCloseTo(0.01, 4)
     },
     120_000,
   )

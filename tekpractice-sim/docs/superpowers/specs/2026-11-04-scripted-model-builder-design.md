@@ -95,7 +95,11 @@ New flag: `npm run asset:build -- <id> --scripted`.
 
 ### 4.5 Gates
 
-Unchanged: size, transform, parts, port positions, budget (connectors ≤ 800, standard/hero ≤ 4000 triangles), textures, glTF validator, proportion drift. A scripted asset also gets the contact sheet from `asset:sheet` for the visual review. The per-port surface ray-cast gate listed in the 2026-10-29 deviations remains future work.
+Unchanged: size, transform, parts, port positions, budget (connectors ≤ 800, standard/hero ≤ 4000 triangles), textures, glTF validator, proportion drift. A scripted asset also gets the contact sheet from `asset:sheet` for the visual review. The per-port surface ray-cast gate listed in the 2026-10-29 deviations exists since 2026-11-04 (`portSurface`, section 4.5b).
+
+### 4.5b Per-port surface gate (added 2026-11-04)
+
+fixup.py casts a ray per port, from 10 mm outside the port inward (BVH tree of the final mesh), and writes `portSurface` into report.json: how far the real surface lies behind the port (0 = on it, positive = behind, negative = port sunk, null = the ray missed). `checkPortSurface` (gates.ts) fails a port more than 0.5 mm off the surface; a port with an opening may sit 2 mm in front when the fix-up cut the socket recess. It is a Meshy-model property, so a failure is retryable like proportion drift. All six Rio ports pass (they lie on the bezel tips and rear housings); a synthetic test with a panel recessed 10 mm fails a port in front of it. Because the gate exists, a later Rio version may recess its panel and let the ports float behind the bbox face.
 
 ### 4.6 App side
 
@@ -119,7 +123,7 @@ Whole catalog (end of wave 4): every catalog device and connector type has a GLB
 
 ## 7. Risks and open items
 
-- Rio3224-D2 (done after the reference research): built as a 5U stage box with ears, flanges, plates and 52 bezels whose tips are the bounding-box faces, so the ports lie on them without a recessed panel. A recessed panel with ports floating behind the bbox face still needs the per-port surface gate (2026-10-29 spec 4.5). The datasheet drawings show no handle.
+- Rio3224-D2 (done after the reference research): built as a 5U stage box with ears, flanges, plates and 52 bezels whose tips are the bounding-box faces, so the ports lie on them without a recessed panel. A recessed panel with ports floating behind the bbox face needs the per-port surface gate, which now exists (4.5b), plus a decision on how ports then relate to the face-plane gate. The datasheet drawings show no handle.
 - The sim does not render connector models (see the delivery order in 4.1): the wave-1 connectors are built and gated but only visible in the contact sheets until a cable-plug renderer exists.
 - Fix-up picks the best of 24 rotations by size match. A symmetric builder output (for example a square cross-section) could tie; the builder emits final orientation, so the identity rotation must win ties. Verify in an integration test.
 - Blender 5.2.3 differs from the 5.1 the pipeline was written against. The existing integration tests pass; the builder tests are the next check.

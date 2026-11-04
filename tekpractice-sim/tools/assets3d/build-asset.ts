@@ -60,7 +60,7 @@ import { dracoCompress, optimizeTextures } from './compress'
 import { renderContactSheet } from './contactSheet'
 import type { CompressOpts, TextureOpts } from './compress'
 import { findBlender, redact, requireMeshyKey } from './env'
-import { checkProportionDrift, checkTextures, checkValidator, runGates, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
+import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, runGates, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
 import type { GlbReport } from './inspect'
@@ -290,7 +290,7 @@ const allOk = (gates: GateResult[]): boolean => gates.every((g) => g.ok)
  * checks what OUR fix-up built (exact size, pivot, port_/ctrl_ nodes at their planned places) or what our compression
  * produced: it would fail identically on every attempt, so it aborts instead of buying another task.
  */
-export const RETRYABLE_GATES: ReadonlySet<string> = new Set(['proportionDrift', 'budget'])
+export const RETRYABLE_GATES: ReadonlySet<string> = new Set(['proportionDrift', 'budget', 'portSurface'])
 
 /** Names of the failing gates, in order. */
 const failingNames = (gates: GateResult[]): string[] => gates.filter((g) => !g.ok).map((g) => g.gate)
@@ -327,7 +327,7 @@ type Regate = { ok: true; shipped: Shipped } | { ok: false; gates: GateResult[];
  */
 async function optimizeAndRegate(
   fixed: Uint8Array,
-  drift: GateResult,
+  carried: GateResult[],
   spec: AssetSpecT,
   d: Pick<BuildDeps, 'compress' | 'optimizeTextures'>,
 ): Promise<Regate> {
@@ -342,19 +342,19 @@ async function optimizeAndRegate(
   } else if (spec.tier === 'connector') {
     // A tiny connector can lose its tolerance to quantization: ship the texture-optimized file, re-measured, without Draco.
     const plain = await measure(textured, spec)
-    if (!allOk(plain.gates)) return { ok: false, gates: [...plain.gates, drift, ...(await finalGates(textured, plain.report, spec))], bytes: textured }
+    if (!allOk(plain.gates)) return { ok: false, gates: [...plain.gates, ...carried, ...(await finalGates(textured, plain.report, spec))], bytes: textured }
     final = { bytes: textured, triangles: plain.triangles, gates: plain.gates, report: plain.report, compression: 'none' }
   } else {
     const after = await finalGates(bytes, compressed.report, spec)
-    return { ok: false, gates: [...compressed.gates.map((g) => (g.ok ? g : { ...g, detail: `after Draco: ${g.detail}` })), drift, ...after], bytes }
+    return { ok: false, gates: [...compressed.gates.map((g) => (g.ok ? g : { ...g, detail: `after Draco: ${g.detail}` })), ...carried, ...after], bytes }
   }
 
   const after = await finalGates(final.bytes, final.report, spec)
-  if (!allOk(after)) return { ok: false, gates: [...final.gates, drift, ...after], bytes: final.bytes }
+  if (!allOk(after)) return { ok: false, gates: [...final.gates, ...carried, ...after], bytes: final.bytes }
   const hasWebp = final.report.textures.length > 0 && final.report.textures.every((t) => t.mimeType === 'image/webp')
   return {
     ok: true,
-    shipped: { bytes: final.bytes, triangles: final.triangles, gates: [...final.gates, drift, ...after], compression: final.compression, textures: hasWebp ? 'webp' : 'none' },
+    shipped: { bytes: final.bytes, triangles: final.triangles, gates: [...final.gates, ...carried, ...after], compression: final.compression, textures: hasWebp ? 'webp' : 'none' },
   }
 }
 
@@ -471,7 +471,9 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       const fixed = new Uint8Array(await readFile(fixedPath))
       const fixedMeasure = await measure(fixed, spec)
       const drift = checkProportionDrift(fixup.preScaleSizeM, spec)
-      attempt.gates = [...fixedMeasure.gates, drift]
+      // The ray-cast gate runs when the fix-up measured the ports (always with Blender; fakes and old reports have none).
+      const surface = fixup.portSurface ? [checkPortSurface(fixup.portSurface, spec, { recessCut: !scripted })] : []
+      attempt.gates = [...fixedMeasure.gates, drift, ...surface]
       await persist()
       const failed = failingNames(attempt.gates)
       if (failed.length > 0) {
@@ -480,7 +482,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
         throw pipelineDefectError(failed, `attempt ${n}, fixed GLB`, work)
       }
 
-      const result = await optimizeAndRegate(fixed, drift, spec, d)
+      const result = await optimizeAndRegate(fixed, [drift, ...surface], spec, d)
       attempt.gates = result.ok ? result.shipped.gates : result.gates
       await persist()
       if (!result.ok) {

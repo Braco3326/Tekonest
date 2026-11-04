@@ -4,6 +4,7 @@ import {
   checkConnectorFit,
   checkParts,
   checkPortPositions,
+  checkPortSurface,
   checkProportionDrift,
   checkSize,
   checkTextures,
@@ -505,6 +506,42 @@ describe('checkPortPositions', () => {
     const r = checkPortPositions(moveNode(base, 'ctrl_gain', [0, 0.005, 0]), placement)
     expect(r.ok).toBe(false)
     expect(r.detail).not.toMatch(/face plane/i)
+  })
+})
+
+describe('checkPortSurface (per-port ray-cast)', () => {
+  const MMF = 0.001
+  const surfaces = (...offsetsMm: (number | null)[]): { name: string; offsetM: number | null }[] =>
+    offsetsMm.map((o, i) => ({ name: `port_p${i + 1}`, offsetM: o === null ? null : o * MMF }))
+  const withOpening = deviceSpec({ ports: [{ portId: 'p1', face: 'io', xMm: 20, yMm: 25, confidence: 'manual', openingMm: 24 }] })
+
+  it('passes ports lying on the surface within 0.5 mm, and a model without ports', () => {
+    expect(checkPortSurface(surfaces(0, 0.4, -0.4), deviceSpec(), { recessCut: false })).toMatchObject({ gate: 'portSurface', ok: true })
+    expect(checkPortSurface([], connectorSpec(), { recessCut: false }).ok).toBe(true)
+  })
+
+  it('fails a port floating in front of a recessed panel, naming the port and the distance', () => {
+    const r = checkPortSurface(surfaces(0, 10), deviceSpec(), { recessCut: false })
+    expect(r.ok).toBe(false)
+    expect(r.detail).toContain('port_p2')
+    expect(r.detail).toMatch(/10\.00 mm behind/)
+    expect(r.detail).not.toContain('port_p1')
+  })
+
+  it('fails a port sunk into the body and a ray that misses the body', () => {
+    const sunk = checkPortSurface(surfaces(-0.6), deviceSpec(), { recessCut: false })
+    expect(sunk.ok).toBe(false)
+    expect(sunk.detail).toMatch(/0\.60 mm inside|0\.60 mm in front/)
+    const missed = checkPortSurface(surfaces(null), deviceSpec(), { recessCut: false })
+    expect(missed.ok).toBe(false)
+    expect(missed.detail).toMatch(/misses the body/)
+  })
+
+  it('allows the 2 mm socket recess only when the fix-up cut one for a port with an opening', () => {
+    expect(checkPortSurface(surfaces(2), withOpening, { recessCut: true }).ok).toBe(true)
+    expect(checkPortSurface(surfaces(2), withOpening, { recessCut: false }).ok).toBe(false)
+    expect(checkPortSurface(surfaces(2), deviceSpec(), { recessCut: true }).ok).toBe(false)
+    expect(checkPortSurface(surfaces(2.6), withOpening, { recessCut: true }).ok).toBe(false)
   })
 })
 

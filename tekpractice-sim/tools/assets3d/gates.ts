@@ -303,6 +303,33 @@ export function checkProportionDrift(preScaleSizeM: SizeM, spec: AssetSpecT): Ga
   return { gate, ok: drift <= DRIFT_LIMIT + EPS_M, detail }
 }
 
+/** How close the real surface must be to a port: the face-plane gate's 0.2 mm plus mesh slack. */
+const SURFACE_TOL_M = 0.0005
+/** The socket recess the fix-up cuts at a port with an opening (RECESS_DEPTH_M in fixup.py). */
+const RECESS_DEPTH_M = 0.002
+
+/**
+ * Port-surface gate (2026-10-29 spec 4.5): every port node lies on the model's REAL surface, not just on the bounding-box
+ * face. `surfaces` is fixup.py's ray cast per port (offset of the surface behind the port, null = missed). The numeric
+ * gates pass a port floating in front of a recessed panel; this one fails it. A port with an opening may sit up to the
+ * socket recess (2 mm) in front of the surface when the fix-up cut one (`recessCut`). Fails closed on a missing ray hit.
+ */
+export function checkPortSurface(surfaces: { name: string; offsetM: number | null }[], spec: AssetSpecT, opts: { recessCut: boolean }): GateResult {
+  const gate = 'portSurface'
+  const opening = new Map(spec.ports.map((p) => [`port_${p.portId}`, p.openingMm]))
+  const problems: string[] = []
+  for (const s of surfaces) {
+    if (s.offsetM === null || !Number.isFinite(s.offsetM)) {
+      problems.push(`${s.name}: the ray from outside misses the body, the port is beside or beyond it`)
+      continue
+    }
+    const allowedBehind = SURFACE_TOL_M + (opts.recessCut && opening.get(s.name) !== undefined ? RECESS_DEPTH_M : 0)
+    if (s.offsetM > allowedBehind + EPS_M) problems.push(`${s.name} floats in front of the surface: the surface is ${mm(s.offsetM)} mm behind it (limit ${mm(allowedBehind)} mm)`)
+    else if (s.offsetM < -SURFACE_TOL_M - EPS_M) problems.push(`${s.name} is sunk ${mm(-s.offsetM)} mm inside the body (limit ${mm(SURFACE_TOL_M)} mm)`)
+  }
+  return result(gate, problems, `${surfaces.length} port${surfaces.length === 1 ? '' : 's'} on the real surface (ray cast, within ${mm(SURFACE_TOL_M)} mm${opts.recessCut ? ', socket recess allowed' : ''})`)
+}
+
 /**
  * Validator gate: the Khronos glTF validator found no error in the FINAL bytes. Warnings never fail it but are listed
  * in the detail. Fails closed when the counts are not finite numbers.

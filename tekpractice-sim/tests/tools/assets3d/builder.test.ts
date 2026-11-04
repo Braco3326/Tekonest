@@ -302,6 +302,8 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(report.error).toBeUndefined()
     expect(report.ok).toBe(true)
     expect(report.attempts[0].gates.filter((g) => !g.ok)).toEqual([])
+    // The per-port ray cast ran on the real mesh and every port lies on its surface (the Rio's bezel tips and rear housings).
+    expect(report.attempts[0].gates.map((g) => g.gate)).toContain('portSurface')
     expect(existsSync(join(report.workDir, 'final.glb'))).toBe(true)
     // The shipped bytes (fix-up, texture step, Draco, re-measure) keep the vertex colours and the smooth shading.
     const final = new Uint8Array(await readFile(join(report.workDir, 'final.glb')))

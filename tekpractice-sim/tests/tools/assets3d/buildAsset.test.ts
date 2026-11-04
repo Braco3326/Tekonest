@@ -397,6 +397,20 @@ describe('buildAsset', () => {
     expect(calls.create).toHaveLength(0)
   })
 
+  it('adds a portSurface gate when the fix-up measured the ports; a port floating in front of a recessed panel is a model property: retried', async () => {
+    const spec = deviceSpec()
+    await addPhotos(spec.id, ['a.png'])
+    const flush = { ...FIXUP_OK, portSurface: [{ name: 'port_in-mic-1', offsetM: 0 }] }
+    const floating = { ...FIXUP_OK, portSurface: [{ name: 'port_in-mic-1', offsetM: 0.011 }] }
+    const report = await buildAsset(spec.id, { maxAttempts: 3, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReports: [floating, flush] }))
+    expect(calls.create).toHaveLength(2)
+    expect(report.attempts[0].gates.filter((g) => !g.ok).map((g) => g.gate)).toEqual(['portSurface'])
+    expect(report.attempts[0].gates.find((g) => g.gate === 'portSurface')?.detail).toMatch(/port_in-mic-1.*11\.00 mm behind/)
+    expect(report.ok).toBe(true)
+    expect(report.attempts[1].gates.map((g) => g.gate)).toContain('portSurface')
+    expect(report.attempts[1].gates.every((g) => g.ok)).toBe(true)
+  })
+
   it('a material-count failure is not a Meshy property: it aborts after ONE create, no retry', async () => {
     const spec = deviceSpec()
     await addPhotos(spec.id, ['a.png'])

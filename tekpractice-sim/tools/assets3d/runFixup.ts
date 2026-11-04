@@ -46,6 +46,12 @@ const FixupReportSchema = z.object({
   scaleApplied: z.tuple([FiniteNum, FiniteNum, FiniteNum]),
   /** Angle of the total rotation (axis order then yaw), degrees in [0, 180]. */
   rotatedDegrees: FiniteNum,
+  /**
+   * Per port, how far the model's real surface lies behind the port along its outward axis (metres; positive = the surface is
+   * behind the port, negative = the port is sunk into the body, null = a ray from outside missed the body). Measured by a
+   * BVH ray cast in fixup.py; read by checkPortSurface. Absent in reports of older runs.
+   */
+  portSurface: z.array(z.object({ name: z.string().min(1), offsetM: FiniteNum.nullable() }).strict()).optional(),
 }).strict()
 
 export type FixupReport = z.infer<typeof FixupReportSchema>

@@ -27,7 +27,8 @@ Steps, in order:
      the custom property 'tekpractice' on the root
   9. export GLB (+Y up, custom properties, no cameras or lights), re-read the file and check it, write report.json
 
-report.json: {preScaleSizeM: {w, h, d}, scaleApplied: [x, y, z], rotatedDegrees}. On any failure the script
+report.json: {preScaleSizeM: {w, h, d}, scaleApplied: [x, y, z], rotatedDegrees, portSurface: [{name, offsetM}]} (portSurface: how far
+the real surface is behind each port, by a BVH ray cast from outside; see port_surface_offsets). On any failure the script
 prints one line 'FIXUP_FAIL <reason>' to stderr and exits 1. Nothing is rejected on proportions here: the
 orchestrator evaluates the drift gate from preScaleSizeM.
 """
@@ -45,8 +46,10 @@ from typing import Any
 import bmesh
 import bpy
 from mathutils import Matrix, Vector
+from mathutils.bvhtree import BVHTree
 
 RECESS_DEPTH_M = 0.002
+PORT_PROBE_M = 0.01
 RECESS_PROTRUDE_M = 0.001
 RECESS_SEGMENTS = 24
 MERGE_FRACTION = 1e-5
@@ -356,6 +359,26 @@ def cut_recess(body: bpy.types.Object, port: dict[str, Any]) -> None:
             bpy.data.meshes.remove(broken)
 
 
+def port_surface_offsets(body: bpy.types.Object, ports: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Per port: the distance of the real surface behind the port, by a ray cast from PORT_PROBE_M outside it, inward.
+
+    The numeric gates compare nodes with the bounding box; a port floating in front of a recessed panel (or sunk into a
+    protruding one) passes them. This asks the actual mesh: 0 = the surface is at the port, positive = it lies that far
+    behind, negative = the port is that far inside the body, None = the ray misses the body altogether.
+    """
+    bm = bmesh.new()
+    bm.from_mesh(body.data)
+    tree = BVHTree.FromBMesh(bm)
+    out: list[dict[str, Any]] = []
+    for port in ports:
+        n = g2b(port["outward"]).normalized()
+        origin = g2b(port["pos"]) + n * PORT_PROBE_M
+        hit = tree.ray_cast(origin, -n, 10.0)
+        out.append({"name": port["name"], "offsetM": None if hit[0] is None else float(hit[3]) - PORT_PROBE_M})
+    bm.free()
+    return out
+
+
 def new_empty(name: str, parent: bpy.types.Object | None, pos_g: Any, display: str, size: float) -> bpy.types.Object:
     ob = bpy.data.objects.new(name, None)
     ob.empty_display_type = display
@@ -542,6 +565,7 @@ def run() -> None:
         raise FixupError(f"top-level objects are {top}, expected only {spec_id!r}")
 
     ensure_active_colour(body.data)
+    port_surface = port_surface_offsets(body, placement["ports"])
     export_glb(args["out"])
     verify_export(args["out"], plan)
 
@@ -549,6 +573,7 @@ def run() -> None:
         "preScaleSizeM": {"w": pre[0], "h": pre[1], "d": pre[2]},
         "scaleApplied": scale_g,
         "rotatedDegrees": rotated,
+        "portSurface": port_surface,
     }
     with open(args["report"], "w", encoding="utf-8") as f:
         json.dump(report, f)
