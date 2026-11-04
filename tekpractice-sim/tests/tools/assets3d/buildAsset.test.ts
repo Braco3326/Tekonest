@@ -100,6 +100,8 @@ interface Calls {
   /** The progress lines buildAsset logged. */
   log: string[]
   sheet: { glb: string; photo: string | null; out: string; specId: string }[]
+  /** The scripted builder calls: spec id and the raw GLB path it was asked to write. */
+  build: { specId: string; outGlb: string }[]
 }
 
 interface Rig {
@@ -135,7 +137,7 @@ beforeEach(async () => {
     paths.manifestPath,
     JSON.stringify({ generated: 'g', assets: [{ id: 'other', status: 'ok', tris: 7 }, { id: 'test-mixer', kind: 'device', optimized: true, tris: 5, status: 'ok', note: 'old' }] }, null, 2),
   )
-  calls = { create: [], wait: [], download: [], fixup: [], compress: [], optimize: [], order: [], log: [], sheet: [] }
+  calls = { create: [], wait: [], download: [], fixup: [], compress: [], optimize: [], order: [], log: [], sheet: [], build: [] }
   savedKey = process.env.MESHY_API_KEY
 })
 afterEach(async () => {
@@ -181,6 +183,10 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
       attempt++
       await writeFile(outGlb, bytes)
       return report
+    },
+    runBuilder: async (spec, outGlb) => {
+      calls.build.push({ specId: spec.id, outGlb })
+      await writeFile(outGlb, RAW_BYTES)
     },
     compress:
       rig.compress ??
@@ -1328,5 +1334,103 @@ describe('Meshy model constant', () => {
   it('build-asset records the model the Meshy client requests', async () => {
     const { MESHY_MODEL } = await import('../../../tools/assets3d/meshy')
     expect(MESHY_MODEL).toBe('meshy-7.1')
+  })
+})
+
+describe('scripted build (--scripted)', () => {
+  /** A 6 x 6 x 20 mm connector with a build block, and the fix-up report of a model that is already exactly that shape. */
+  const jack = (over: Partial<AssetSpecT> = {}): AssetSpecT => connectorSpec({ build: { shape: 'cylinder-plug', params: { frontLenMm: 5 } }, ...over })
+  const FIXUP_JACK: FixupReport = { preScaleSizeM: { w: 6, h: 6, d: 20 }, scaleApplied: [1, 1, 1], rotatedDegrees: 0 }
+
+  it('creates no Meshy task and reads no photos: the builder writes attempt-1.raw.glb and the rest of the loop runs', async () => {
+    const spec = jack()
+    let photoReads = 0
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK })
+    deps.readPhotos = async () => {
+      photoReads++
+      return []
+    }
+    const report = await buildAsset(spec.id, { maxAttempts: 3, scripted: true, dryRun: true }, deps)
+
+    expect(report.ok).toBe(true)
+    expect(calls.create).toHaveLength(0)
+    expect(calls.wait).toHaveLength(0)
+    expect(photoReads).toBe(0)
+    expect(calls.build).toEqual([{ specId: spec.id, outGlb: join(report.workDir, 'attempt-1.raw.glb') }])
+    expect(calls.fixup).toHaveLength(1)
+    expect(calls.fixup[0].inGlb).toBe(join(report.workDir, 'attempt-1.raw.glb'))
+    expect(report.attempts[0].credits).toBeNull()
+    expect(report.attempts[0].taskId).toBeUndefined()
+  })
+
+  it('ship records tool scripted, the builder version, no task, no photos, logosRemoved true without being asked', async () => {
+    const spec = jack()
+    const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK }))
+    expect(report.ok).toBe(true)
+    const entry = (await readManifest()).assets.find((a) => a.id === spec.id)
+    expect(entry).toMatchObject({ tool: 'scripted', toolVersion: 'blender-builder-1', taskId: null, photos: [], logosRemoved: true, status: 'ok' })
+  })
+
+  it('without a build block it fails before any file is created', async () => {
+    const spec = connectorSpec()
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK })
+    await expect(buildAsset(spec.id, { maxAttempts: 1, scripted: true, dryRun: true }, deps)).rejects.toThrow(/no build block/)
+    expect(existsSync(join(paths.sourceDir, spec.id))).toBe(false)
+    expect(calls.build).toHaveLength(0)
+  })
+
+  it('a shape for the wrong kind is refused with both names, before any file is created', async () => {
+    const spec = jack({ build: { shape: 'rack-box' } })
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK })
+    await expect(buildAsset(spec.id, { maxAttempts: 1, scripted: true, dryRun: true }, deps)).rejects.toThrow(/rack-box.*connector/)
+    expect(existsSync(join(paths.sourceDir, spec.id))).toBe(false)
+  })
+
+  it('a gate failure aborts after one builder call: no retry', async () => {
+    const spec = deviceSpec({ build: { shape: 'rack-box' } })
+    const report = await buildAsset(spec.id, { maxAttempts: 3, scripted: true, dryRun: true }, makeDeps({ spec, fixed: [await tallGlb(spec)] }))
+    expect(report.ok).toBe(false)
+    expect(report.attempts).toHaveLength(1)
+    expect(calls.build).toHaveLength(1)
+    expect(calls.fixup).toHaveLength(1)
+    expect(report.error).toMatch(/gate size failed/)
+  })
+
+  it('--raw together with scripted is refused by the library too', async () => {
+    const spec = jack()
+    const rawPath = join(root, 'x.glb')
+    await writeFile(rawPath, RAW_BYTES)
+    const deps = makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK })
+    await expect(buildAsset(spec.id, { maxAttempts: 1, scripted: true, rawGlb: rawPath, dryRun: true }, deps)).rejects.toThrow(/scripted.*rawGlb|rawGlb.*scripted/)
+  })
+
+  it('CLI --scripted builds with no spending line and no --yes', async () => {
+    const spec = jack()
+    const out: string[] = []
+    const code = await main([spec.id, '--scripted'], makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK }), (l) => out.push(l))
+    expect(code).toBe(0)
+    expect(out.join('\n')).not.toMatch(/will create/)
+    expect(out.join('\n')).toMatch(/PASS \(dry run/)
+    expect(calls.create).toHaveLength(0)
+  })
+
+  it('CLI --scripted is refused with --raw, --attempts, --yaw, --flip and --pilot, naming both flags', async () => {
+    const spec = jack()
+    for (const extra of [['--raw', 'x.glb'], ['--attempts', '2'], ['--yaw', '90'], ['--flip'], ['--pilot']]) {
+      const out: string[] = []
+      const argv = extra[0] === '--pilot' ? ['--scripted', ...extra] : [spec.id, '--scripted', ...extra]
+      expect(await main(argv, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK }), (l) => out.push(l))).toBe(1)
+      expect(out.join('\n')).toContain('--scripted')
+      expect(out.join('\n')).toContain(extra[0])
+    }
+    expect(calls.build).toHaveLength(0)
+  })
+
+  it('CLI --scripted --ship ships without --logos-removed', async () => {
+    const spec = jack()
+    const out: string[] = []
+    expect(await main([spec.id, '--scripted', '--ship'], makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK }), (l) => out.push(l))).toBe(0)
+    expect(existsSync(join(paths.assetsDir, `${spec.id}.glb`))).toBe(true)
+    expect(out.join('\n')).toMatch(/shipped/)
   })
 })

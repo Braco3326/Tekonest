@@ -2,13 +2,15 @@
  * assets3d/build-asset: the orchestrator of the 3D-asset pipeline, one asset per run.
  *
  *   npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--flip] [--yes] [--ship --logos-removed]
+ *   npm run asset:build -- <id> --scripted [--ship]   (our own Blender builder from the spec's `build` block: no Meshy, no spending)
  *   npm run asset:pilot -- --yes [--attempts 3] [--yaw 0] [--ship --logos-removed]   (the six pilot ids, in turn)
  *
  * By default NOTHING ships: the run does everything and leaves the result in its work dir (final.glb and report.json),
  * never in public/assets or the manifest. `--ship` writes public/assets/<id>.glb and the manifest entry, and it needs
  * `--logos-removed`: the founder asserts the textures carry no brand logos (recorded as logosRemoved: true). Any run
- * that calls Meshy (everything except --raw, and always the pilot) first prints the most it can spend and refuses to
- * start without `--yes`.
+ * that calls Meshy (everything except --raw and --scripted, and always the pilot) first prints the most it can spend and
+ * refuses to start without `--yes`. A `--scripted` run builds the raw GLB with runBuilder (tools/assets3d/blender/
+ * build_from_spec.py) instead: one attempt, no photos, no Meshy, no texture, so logosRemoved is recorded as true by itself.
  *
  * Per attempt n (1..maxAttempts):
  *  1. raw GLB: the `--raw` file (only one attempt is meaningful then, zero Meshy calls), else Meshy multi-image-to-3D
@@ -68,8 +70,10 @@ import { assertManifestUsable, recordAsset } from './manifest'
 import { createMultiImageTask, downloadGlb, MESHY_MODEL, MeshyError, waitForTask } from './meshy'
 import type { MeshyOpts, MeshyTask } from './meshy'
 import { buildPlacement } from './placement'
+import { BUILDER_VERSION, runBuilder } from './runBuilder'
 import { runFixup } from './runFixup'
 import type { FixupOpts, FixupReport, YawDeg } from './runFixup'
+import { validateBuild } from './shapes'
 import type { AssetSpecT } from './specSchema'
 import { validateGltf } from './validateGltf'
 
@@ -119,6 +123,8 @@ export interface BuildDeps {
     downloadGlb: (task: MeshyTask) => Promise<Uint8Array>
   }
   runFixup: (inGlb: string, outGlb: string, spec: AssetSpecT, opts?: FixupOpts) => Promise<FixupReport>
+  /** The scripted builder: writes the raw GLB of a spec with a `build` block (default: runBuilder with Blender). */
+  runBuilder: (spec: AssetSpecT, outGlb: string) => Promise<void>
   compress: (bytes: Uint8Array, opts: CompressOpts) => Promise<Uint8Array>
   /** The texture budget step: runs before `compress`. */
   optimizeTextures: (bytes: Uint8Array, opts: TextureOpts) => Promise<Uint8Array>
@@ -143,6 +149,11 @@ export interface BuildOpts {
   maxAttempts: number
   /** A hand-made raw GLB: no Meshy, one attempt. */
   rawGlb?: string
+  /**
+   * Build the raw GLB with our own scripted builder from the spec's `build` block (CLI --scripted): no Meshy, no photos,
+   * one attempt, no retry. Excludes rawGlb. Logos are not an issue (no photo texture), so logosRemoved counts as true.
+   */
+  scripted?: boolean
   /**
    * Run everything and leave the result in the work dir (final.glb, report.json), never in public/assets or the
    * manifest. The CLI sets it to !--ship, so a CLI run is a dry run unless shipping was asked for.
@@ -180,6 +191,8 @@ export interface BuildReport {
   /** The final bytes of the passing attempt in the work dir (work/<run>/final.glb), dry run or not. */
   builtGlb?: string
   dryRun: boolean
+  /** Set (true) when the raw GLB came from the scripted builder. */
+  scripted?: true
   /** This run's folder of raw and fixed GLBs: assets-source/<id>/work/<run start time>. */
   workDir: string
   /** Why the build stopped early (scrubbed of the API key). */
@@ -223,6 +236,7 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
       downloadGlb: (task) => downloadGlb(task),
     },
     runFixup: deps.runFixup ?? ((inGlb, outGlb, spec, opts) => runFixup(inGlb, outGlb, spec, opts)),
+    runBuilder: deps.runBuilder ?? ((spec, outGlb) => runBuilder(spec, outGlb)),
     compress: deps.compress ?? dracoCompress,
     optimizeTextures: deps.optimizeTextures ?? optimizeTextures,
     loadSpec:
@@ -347,7 +361,17 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   const d = resolveDeps(deps)
   const spec = d.loadSpec(id)
   const dryRun = opts.dryRun === true
-  if (!dryRun && opts.logosRemoved !== true) {
+  const scripted = opts.scripted === true
+  if (scripted) {
+    // Free of side effects: a bad scripted request fails before any directory or file exists.
+    if (opts.rawGlb) throw new Error('scripted and rawGlb exclude each other: a scripted build makes its own raw GLB')
+    if (!spec.build) throw new Error(`${id}: no build block in the spec, so it cannot be built with --scripted`)
+    const errors = validateBuild(spec)
+    if (errors.length > 0) throw new Error(errors.join('; '))
+  }
+  // A scripted model has no photo texture, so there is no logo to remove.
+  const logosRemoved = scripted || opts.logosRemoved === true
+  if (!dryRun && !logosRemoved) {
     throw new Error(`refusing to ship ${id}: shipping writes public/assets and the manifest, and needs the assertion that the textures carry no logos (logosRemoved, the CLI flag --logos-removed)`)
   }
   const apiKey = process.env.MESHY_API_KEY ?? ''
@@ -357,7 +381,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   let photos: PhotoFile[] = []
   if (opts.rawGlb) {
     rawBytes = new Uint8Array(await readFile(opts.rawGlb))
-  } else {
+  } else if (!scripted) {
     photos = await d.readPhotos(id)
     if (photos.length === 0) {
       throw new Error(`no photos for ${id}: put 1 to ${MAX_PHOTOS} reference images (png, jpg or webp) in ${join(d.paths.sourceDir, id, 'photos')}`)
@@ -383,7 +407,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   await mkdir(work, { recursive: true })
 
   const report: BuildReport = { id, ok: false, attempts: [], dryRun, workDir: work }
-  const maxAttempts = rawBytes ? 1 : opts.maxAttempts
+  if (scripted) report.scripted = true
+  const maxAttempts = rawBytes || scripted ? 1 : opts.maxAttempts
   const reportText = (): string => scrub(JSON.stringify(report, null, 2)) + '\n'
   /**
    * Writes the report into this run's work dir after every step (create, download, fix-up, gates, compress), so a
@@ -399,8 +424,11 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
     const attempt: BuildAttempt = { n, credits: null, gates: [] }
     report.attempts.push(attempt)
     try {
-      let raw: Uint8Array
-      if (rawBytes) {
+      const rawPath = join(work, `attempt-${n}.raw.glb`)
+      let raw: Uint8Array | null = null
+      if (scripted) {
+        await d.runBuilder(spec, rawPath)
+      } else if (rawBytes) {
         raw = rawBytes
       } else {
         const taskId = await d.meshy.createMultiImageTask(photos.map((ph) => ph.dataUri), { targetPolycount: targetPolycount(spec), topology: 'triangle' })
@@ -416,9 +444,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
         attempt.credits = task.consumed_credits ?? null
         raw = await d.meshy.downloadGlb(task)
       }
-      const rawPath = join(work, `attempt-${n}.raw.glb`)
       const fixedPath = join(work, `attempt-${n}.fixed.glb`)
-      await writeFile(rawPath, raw)
+      if (raw) await writeFile(rawPath, raw)
       await persist()
 
       const fixup = await d.runFixup(rawPath, fixedPath, spec, { yawDeg: opts.yawDeg ?? 0, flipUpright: opts.flipUpright === true })
@@ -472,11 +499,11 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
             status: 'ok',
             tris: shipped.triangles,
             ports: spec.ports.length,
-            tool: rawBytes ? 'raw' : 'meshy',
-            toolVersion: rawBytes ? 'raw' : MESHY_MODEL,
+            tool: scripted ? 'scripted' : rawBytes ? 'raw' : 'meshy',
+            toolVersion: scripted ? BUILDER_VERSION : rawBytes ? 'raw' : MESHY_MODEL,
             date: d.now().toISOString(),
             specSource: spec.sources[0]?.url ?? 'spec',
-            logosRemoved: opts.logosRemoved === true,
+            logosRemoved,
             photos: photos.map((ph) => ph.name),
             taskId: attempt.taskId ?? null,
             gates: shipped.gates.map((g) => ({ gate: g.gate, ok: g.ok })),
@@ -513,7 +540,7 @@ export function formatReport(report: BuildReport): string {
   if (report.ok && report.finalGlb) lines.push(`result: PASS, shipped ${report.finalGlb}`)
   else if (report.ok && report.dryRun) {
     lines.push(`result: PASS (dry run, not shipped): ${report.builtGlb ?? report.workDir}`)
-    lines.push('  review the contact sheet (npm run asset:sheet), then rerun with --ship --logos-removed to ship')
+    lines.push(`  review the contact sheet (npm run asset:sheet), then rerun with ${report.scripted ? '--ship' : '--ship --logos-removed'} to ship`)
   } else if (report.ok) lines.push('result: PASS')
   else lines.push('result: FAIL')
   return lines.join('\n')
@@ -521,12 +548,14 @@ export function formatReport(report: BuildReport): string {
 
 const USAGE = [
   'usage: npm run asset:build -- <id> [--raw file.glb] [--attempts 3] [--yaw 0|90|180|270] [--flip] [--yes] [--ship --logos-removed]',
+  '       npm run asset:build -- <id> --scripted [--ship]',
   '       npm run asset:pilot -- --yes [--attempts 3] [--yaw 0|90|180|270] [--flip] [--ship --logos-removed]',
   '  default       build and gate everything, leave final.glb and report.json in the run\'s work dir; ship nothing',
   '  --yes         allow the Meshy spending printed before the run (needed unless --raw)',
   '  --ship        also write public/assets/<id>.glb and the manifest entry (needs --logos-removed)',
   '  --logos-removed  you checked the textures: no brand logos (recorded as logosRemoved: true)',
   '  --raw         use a hand-made raw GLB: no Meshy call, one attempt',
+  '  --scripted    build the raw GLB with our own Blender builder from the spec build block: no Meshy, no spending, one attempt; --ship needs no --logos-removed',
   '  --yaw / --flip  turn the model about glTF Y / upside down (about glTF Z) in the fix-up, read off the contact sheet',
 ].join('\n')
 
@@ -548,6 +577,8 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
   let dryRunFlag = false
   let logosRemoved = false
   let yes = false
+  let attemptsGiven = false
+  let yawGiven = false
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]
     if (a === '--dry-run') dryRunFlag = true // the default anyway, kept so old command lines still work
@@ -556,6 +587,7 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
     else if (a === '--yes') yes = true
     else if (a === '--flip') opts.flipUpright = true
     else if (a === '--pilot') pilot = true
+    else if (a === '--scripted') opts.scripted = true
     else if (a === '--raw') {
       const v = argv[++i]
       if (!v || v.startsWith('--')) return bad('--raw needs a .glb file path')
@@ -564,18 +596,25 @@ function parseArgs(argv: string[]): CliArgs | { error: string } {
       const n = Number(argv[++i])
       if (!Number.isInteger(n) || n < 1) return bad('--attempts must be a whole number of at least 1')
       opts.maxAttempts = n
+      attemptsGiven = true
     } else if (a === '--yaw') {
       const n = Number(argv[++i])
       if (!YAWS.includes(n)) return bad('--yaw must be 0, 90, 180 or 270')
       opts.yawDeg = n as YawDeg
+      yawGiven = true
     } else if (a.startsWith('--')) return bad(`unknown option ${a}`)
     else if (id === undefined) id = a
     else return bad(`unexpected argument ${a}`)
   }
   if (pilot && (id !== undefined || opts.rawGlb)) return bad('--pilot takes no id and no --raw')
+  if (opts.scripted) {
+    // A scripted build is already oriented, makes one attempt and has no photos: these flags would be silently ignored.
+    const clash = [opts.rawGlb ? '--raw' : '', attemptsGiven ? '--attempts' : '', yawGiven ? '--yaw' : '', opts.flipUpright ? '--flip' : '', pilot ? '--pilot' : ''].filter(Boolean)
+    if (clash.length > 0) return bad(`--scripted cannot be combined with ${clash.join(', ')}: a scripted build is already oriented, makes one attempt and has no photos`)
+  }
   if (!pilot && id === undefined) return bad('an asset id is required')
   if (ship && dryRunFlag) return bad('--ship and --dry-run contradict each other')
-  if (ship && !logosRemoved) {
+  if (ship && !logosRemoved && !opts.scripted) {
     return bad('--ship is refused without --logos-removed: open the textures, make sure no brand logo is left, then pass --ship --logos-removed (the manifest records logosRemoved: true)')
   }
   opts.dryRun = !ship
@@ -634,7 +673,7 @@ export async function main(argv: string[], deps: Partial<BuildDeps> = {}, print:
   }
   // progress lines (task ids, polls) go where the rest of the CLI output goes
   deps = { ...deps, log: deps.log ?? print }
-  if (args.pilot || !args.opts.rawGlb) {
+  if (args.pilot || (!args.opts.rawGlb && !args.opts.scripted)) {
     // Spending guard: say the most this run can spend, and spend nothing without an explicit --yes.
     const tasks = (args.pilot ? PILOT_IDS.length : 1) * args.opts.maxAttempts
     print(`will create up to ${tasks} Meshy task${tasks === 1 ? '' : 's'}, about ${CREDITS_PER_TASK} credits each, max ${tasks * CREDITS_PER_TASK} credits`)
