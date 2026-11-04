@@ -7,13 +7,14 @@
  *    else the shipped public/assets/<id>.glb
  *  - reference photo: the first photo (by name) of assets-source/<id>/photos, or none
  *  - overlay: the spec of <id> (content/asset-specs) when there is one
- *  - output: --out, else contact-sheet.png next to the input
+ *  - output: --out, else contact-sheet.png next to the input, except that a GLB inside public/assets (shipped) gets its
+ *    sheet under assets-source/<id>/ and an --out inside public/assets is refused: Vite would ship the PNG
  * Needs Blender (renderContactSheet renders four orthographic views). Exit codes: 0 sheet written, 1 anything else.
  * Everything is injectable (paths, spec loader, Blender exec) so it is unit-tested without Blender.
  */
 import { existsSync } from 'node:fs'
 import { readdir } from 'node:fs/promises'
-import { dirname, extname, join, resolve } from 'node:path'
+import { dirname, extname, isAbsolute, join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { renderContactSheet } from './contactSheet'
 import type { ContactSheetDeps } from './contactSheet'
@@ -107,7 +108,15 @@ export async function main(argv: string[], deps: Partial<SheetDeps> = {}, print:
     }
     const photo = await firstPhoto(d.sourceDir, id)
     const spec = d.loadSpec(id)
-    const target = out ? resolve(out) : join(dirname(input), SHEET_NAME)
+    const inAssets = (p: string): boolean => {
+      const rel = relative(resolve(d.assetsDir), resolve(p))
+      return rel !== '' && !rel.startsWith('..') && !isAbsolute(rel)
+    }
+    if (out && inAssets(out)) {
+      print(`error: --out ${out} is inside the assets dir (public/assets): Vite would ship the sheet, write it elsewhere`)
+      return 1
+    }
+    const target = out ? resolve(out) : inAssets(input) ? join(d.sourceDir, id, SHEET_NAME) : join(dirname(input), SHEET_NAME)
     await d.render(input, photo, target, spec, { exec: d.exec, blender: d.blender })
     print(`contact sheet of ${input}${photo ? ` with ${photo}` : ' (no reference photo)'}${spec ? '' : ' (no spec: no overlay)'}`)
     print(`wrote ${target}`)

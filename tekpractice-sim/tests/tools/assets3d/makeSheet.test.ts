@@ -96,7 +96,9 @@ describe('asset:sheet CLI', () => {
   it('falls back to public/assets/<id>.glb, and takes an explicit GLB and --out', async () => {
     await writeFile(join(assetsDir, `${ID}.glb`), await glb())
     expect(await main([ID], deps(), () => undefined)).toBe(0)
-    expect(existsSync(join(assetsDir, 'contact-sheet.png'))).toBe(true)
+    // The sheet of a shipped GLB never lands in public/assets (Vite would ship it): it goes to assets-source/<id>.
+    expect(existsSync(join(assetsDir, 'contact-sheet.png'))).toBe(false)
+    expect(existsSync(join(sourceDir, ID, 'contact-sheet.png'))).toBe(true)
     expect(execCalls[0].args).toContain(join(assetsDir, `${ID}.glb`))
 
     const other = join(root, 'other.glb')
@@ -107,6 +109,19 @@ describe('asset:sheet CLI', () => {
     expect(execCalls[1].args).toContain(other)
     // no photo: four panels
     expect((await sharp(await readFile(target)).metadata()).width).toBe(4 * PANEL_PX)
+  })
+
+  it('refuses an --out inside public/assets, and an explicit shipped GLB also writes its sheet under assets-source', async () => {
+    await writeFile(join(assetsDir, `${ID}.glb`), await glb())
+    const out: string[] = []
+    expect(await main([ID, '--out', join(assetsDir, 'sheet.png')], deps(), (l) => out.push(l))).toBe(1)
+    expect(out.join('\n')).toMatch(/public\/assets|assets dir/)
+    expect(existsSync(join(assetsDir, 'sheet.png'))).toBe(false)
+    expect(execCalls).toHaveLength(0)
+
+    expect(await main([ID, join(assetsDir, `${ID}.glb`)], deps(), () => undefined)).toBe(0)
+    expect(existsSync(join(sourceDir, ID, 'contact-sheet.png'))).toBe(true)
+    expect(existsSync(join(assetsDir, 'contact-sheet.png'))).toBe(false)
   })
 
   it('works without a spec (no overlay) and says so', async () => {
