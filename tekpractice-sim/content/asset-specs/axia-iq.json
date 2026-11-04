@@ -1,0 +1,176 @@
+{
+  "id": "axia-iq",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 519.3,
+    "h": 111.2,
+    "d": 482.9
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 53.6,
+      "yMm": 25.8,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "in-line-1",
+      "face": "io",
+      "xMm": 79.1,
+      "yMm": 25.8,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-monitor-l",
+      "face": "io",
+      "xMm": 130,
+      "yMm": 25.8,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-monitor-r",
+      "face": "io",
+      "xMm": 156,
+      "yMm": 25.8,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-program-aes",
+      "face": "io",
+      "xMm": 182,
+      "yMm": 25.8,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-n1",
+      "face": "io",
+      "xMm": 208,
+      "yMm": 25.8,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "gpio",
+      "face": "io",
+      "xMm": 346.7,
+      "yMm": 77.8,
+      "confidence": "photo"
+    },
+    {
+      "portId": "livewire",
+      "face": "io",
+      "xMm": 444.7,
+      "yMm": 16.4,
+      "confidence": "photo"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 86.2,
+      "yMm": 71.3,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "fader-in-mic-1",
+      "kind": "fader",
+      "face": "top",
+      "xMm": 483.4,
+      "yMm": 151.8,
+      "axis": "z",
+      "travelMm": 100,
+      "sizeMm": {
+        "w": 14,
+        "h": 15,
+        "d": 22
+      }
+    },
+    {
+      "controlId": "monitor-mute",
+      "kind": "button",
+      "face": "top",
+      "xMm": 157.7,
+      "yMm": 96.5,
+      "axis": "y",
+      "sizeMm": {
+        "w": 11.5,
+        "h": 5,
+        "d": 9
+      }
+    },
+    {
+      "controlId": "route-in-mic-1-to-out-n1",
+      "kind": "button",
+      "face": "top",
+      "xMm": 475.8,
+      "yMm": 69.4,
+      "axis": "y",
+      "sizeMm": {
+        "w": 11.5,
+        "h": 5,
+        "d": 9
+      }
+    },
+    {
+      "controlId": "route-in-line-1-to-out-n1",
+      "kind": "button",
+      "face": "top",
+      "xMm": 435.7,
+      "yMm": 69.4,
+      "axis": "y",
+      "sizeMm": {
+        "w": 11.5,
+        "h": 5,
+        "d": 9
+      }
+    },
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 125,
+      "yMm": 71.3,
+      "axis": "x",
+      "sizeMm": {
+        "w": 20,
+        "h": 14,
+        "d": 8
+      }
+    }
+  ],
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.telosalliance.com/consoles-audio-mixing/broadcast-consoles/axia-iq-family/axia-iq",
+      "note": "Axia iQ product page (opened): iQ Main Frame 20.5 x 19 x 4.5 in (last value desktop to meter bridge); the page does not label the axes."
+    },
+    {
+      "kind": "manual",
+      "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Axia-iQ%20Manual-v1.3.1-C21316028.pdf",
+      "note": "Axia iQ manual v1.3.1 (downloaded to a scratch folder outside the repo, text read): Appendix A dimension drawing \"iQ Main Frame (8 faders + monitor controls)\": 20.45 in (519.331 mm) x 19.01 in (482.881 mm) x 4.38 in (111.175 mm); each iQ frame has a connection panel with a Console (6-pin Molex), CANBus accessory, D-sub backup-PSU and IEC inlet; all audio I/O lives on the QOR.32 / StudioCore engine, so the catalog ports are a simplification placed on the console rear. Faders are 100 mm."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.telosalliance.com/consoles-audio-mixing/integrated-console-engines/axia-studiocore",
+      "note": "Axia StudioCore page (opened): 2RU engine, mic/line combos, RJ-45 line I/O, AES/EBU RJ-45, 4 GPI/O DB15, Livewire+ switch, IEC; gives the URL of the rear photo used for port placement."
+    },
+    {
+      "kind": "photo",
+      "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia+Products/StudioCore/Carousel+Images/StudioCore_Rear_Carousel_V2.jpg",
+      "note": "StudioCore rear photo, straight-on (opened, 2000x650): scale 2.55 px/mm from the 2U height (227 px = 88.9 mm; an XLR combo is about 58 px = 23 mm, consistent); x from the left body edge, y from the bottom. Used only as the layout model for the simplified console rear: positions are copied onto the 519.3 mm wide console rear, centred."
+    },
+    {
+      "kind": "photo",
+      "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Carousel_/IQ_StraightON_Carousel.png",
+      "note": "iQ Main Frame (right) next to an expansion frame, straight-on view (opened, 2000x650): x scale 1.311 px/mm from the 519.3 mm frame width (681 px); depth scale 0.85 px/mm from the 100 mm fader slot (85 px), with the top-face y measured from the rear edge (photo y 203). The top-face x is mirrored (xMm = 519.3 - x_photo) because the face-local top view has the io (rear) edge at the bottom."
+    }
+  ]
+}

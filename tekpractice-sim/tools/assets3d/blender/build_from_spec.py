@@ -541,7 +541,7 @@ def build_rack_box(plan: Plan) -> bpy.types.Object:
     for q in ((0, 1, 2, 3), (7, 6, 5, 4), (0, 4, 5, 1), (1, 5, 6, 2), (2, 6, 7, 3), (3, 7, 4, 0)):
         bm.faces.new([v[i] for i in q])
     bmesh.ops.bevel(bm, geom=bm.edges[:], offset=chamfer, offset_type="OFFSET", segments=1, affect="EDGES")
-    body.done(DARK)
+    body.done(CHASSIS)  # lifted grey: a near-black box vanishes against the creation scene's night background
     return body.finish()
 
 

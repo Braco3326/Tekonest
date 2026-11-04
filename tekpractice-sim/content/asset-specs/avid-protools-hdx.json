@@ -1,0 +1,66 @@
+{
+  "id": "avid-protools-hdx",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 169,
+    "h": 386,
+    "d": 445
+  },
+  "ports": [
+    {
+      "portId": "digilink",
+      "face": "io",
+      "xMm": 85,
+      "yMm": 150,
+      "confidence": "photo"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 125,
+      "yMm": 45,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "sample-rate",
+      "kind": "led",
+      "face": "opposite",
+      "xMm": 84.5,
+      "yMm": 320,
+      "axis": "z",
+      "sizeMm": {
+        "w": 3,
+        "h": 3,
+        "d": 2
+      }
+    },
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 84.5,
+      "yMm": 350,
+      "axis": "z",
+      "sizeMm": {
+        "w": 20,
+        "h": 20,
+        "d": 4
+      }
+    }
+  ],
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.avid.com/products/Pro-Tools-HDX",
+      "note": "Avid Pro Tools | HDX product page (opened): HDX card with two DigiLink ports (64 channels) and one DigiSerial port; no dimensions."
+    },
+    {
+      "kind": "manual",
+      "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_HDX_Guide.pdf",
+      "note": "Pro Tools | HDX Getting Started guide (downloaded to a scratch folder outside the repo, text read): HDX PCIe card = 2 DigiLink Mini ports + 1 DigiSerial (8-pin mini-DIN), needs a full-length slot; installs in any qualified Mac/Windows workstation. No card or bracket dimensions, no workstation dimensions: the box is a role-based stand-in (see notes)."
+    }
+  ]
+}

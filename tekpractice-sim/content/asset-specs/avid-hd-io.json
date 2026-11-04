@@ -1,0 +1,112 @@
+{
+  "id": "avid-hd-io",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 88.9,
+    "d": 355.6
+  },
+  "ports": [
+    {
+      "portId": "digilink",
+      "face": "io",
+      "xMm": 355.2,
+      "yMm": 13.5,
+      "confidence": "photo"
+    },
+    {
+      "portId": "analog-in-db25",
+      "face": "io",
+      "xMm": 59.4,
+      "yMm": 71.7,
+      "confidence": "photo"
+    },
+    {
+      "portId": "analog-out-db25",
+      "face": "io",
+      "xMm": 93.6,
+      "yMm": 30,
+      "confidence": "photo"
+    },
+    {
+      "portId": "aes-io-db25",
+      "face": "io",
+      "xMm": 192.8,
+      "yMm": 62,
+      "confidence": "photo"
+    },
+    {
+      "portId": "wordclock-in",
+      "face": "io",
+      "xMm": 415.9,
+      "yMm": 67.9,
+      "confidence": "photo"
+    },
+    {
+      "portId": "wordclock-out",
+      "face": "io",
+      "xMm": 415.9,
+      "yMm": 45.8,
+      "confidence": "photo"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 433.1,
+      "yMm": 16.3,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "sample-rate",
+      "kind": "led",
+      "face": "opposite",
+      "xMm": 166.2,
+      "yMm": 38.2,
+      "axis": "z",
+      "sizeMm": {
+        "w": 3,
+        "h": 3,
+        "d": 2
+      }
+    },
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 64.4,
+      "yMm": 21.6,
+      "axis": "z",
+      "sizeMm": {
+        "w": 19,
+        "h": 19,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 1
+    }
+  },
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
+      "note": "Avid HD I/O Guide v8.1 (opened, PDF text read and the two panel illustrations on p.5 and p.7 extracted locally): front panel = power button with LED ring, sample-rate and sync-mode LEDs, loop-master LED and 16x2 meters; back panel (8x8x8 configuration) = Bay 1 Analog In (two DB25: +4 dBu left, -10 dBV right), Bay 2 Analog Out (DB25), Bay 3 Digital I/O (AES/EBU DB25, TDIF DB25, ADAT optical, AES/EBU XLR in/out, S/PDIF RCA, WORD CLOCK and LOOP SYNC BNC in/out), Bay 4 empty, DigiLink EXPANSION and PRIMARY ports, ACCESSORY DB9, IEC inlet. The guide states no physical dimensions."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
+      "note": "Rear panel illustration embedded in the same PDF (p.7, extracted locally, 863x168 px). Scale 1.775 px/mm from the rack-ear mounting slots (centres 823 px apart = 465.1 mm EIA spacing; vertical 136 px = 76.2 mm for the outer holes of a 2U). x from the left ear outer edge, y from the bottom edge; the picture is seen from behind, which is the outside of the io face. Expect +/- 4 mm."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
+      "note": "Front panel illustration embedded in the same PDF (p.5, extracted locally, 867x243 px, front straight-on with the top surface visible). Scale 1.727 px/mm from the ear slots (131.6 px = 76.2 mm). power = round button with green LED ring; sample-rate = the 48 kHz LED of the SAMPLE RATE row (the real unit has no sample-rate control, the rate is set in Pro Tools and only shown on LEDs)."
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "id": "aeta-scoop5-s",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 480,
+    "h": 44,
+    "d": 252
+  },
+  "ports": [
+    {
+      "portId": "in-send",
+      "face": "io",
+      "xMm": 65.4,
+      "yMm": 23.9,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-return",
+      "face": "io",
+      "xMm": 116.7,
+      "yMm": 22.6,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "ip",
+      "face": "io",
+      "xMm": 279.8,
+      "yMm": 12.1,
+      "confidence": "photo"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 436,
+      "yMm": 20.9,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 32,
+      "yMm": 30.6,
+      "axis": "z",
+      "sizeMm": {
+        "w": 10,
+        "h": 10,
+        "d": 3
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 1
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S-IP_ENG.pdf",
+      "note": "AETA Scoop5S-IP datasheet 12/2020 (opened, text read): 1U 19'' (WxHxD) 480 x 44 x 252 mm, 3.2 kg, AC 85-263 V, XLR sockets (2 female in, 2 male out analog; 1 female in, 1 male out AES/EBU), Ethernet 100/10BaseT. The S-IP is the IP-only variant of the same chassis."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_scoop5S.pdf",
+      "note": "AETA Scoop5 S user manual (opened, text read): section 3.2.2 all connections are on the rear panel (IEC mains socket, analog inputs female XLR, outputs male XLR, Ethernet RJ45); section 3.2.1 on/off key at the far left of the front panel, top left corner, hold 3 s (the unit has no mains rocker, it starts as soon as power is applied); section 6.5 says 1U 44 mm and 265 mm overall depth (inconsistent with its own 12.5 inch, so the 252 mm of the datasheet is used)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.aeta-audio.com/wp-content/uploads/2018/10/Scoop5S_2-1.png",
+      "note": "AETA rear photo (opened as image, 800x621, near straight-on). Calibrated 1.59 px/mm: plate height 70 px = 44 mm, giving a plate width of 444 mm (706 px); plate assumed centred in the 480 mm box (18 mm offset). The IEC inlet then measures 29 mm wide, consistent with a C14. in-send = ANALOG input A (female XLR, second of the left pair, label A); out-return = analog output A (male XLR, label A). Positions +/- 4 mm. ip = the RJ45 labelled Ethernet. power-in = IEC inlet at the right end."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.aeta-audio.com/wp-content/uploads/2018/10/Scoop5S_1-1.png",
+      "note": "AETA front photo (opened as image, 800x621, three-quarter view, so only a rough position). Opposite face = front. power = the round on/off key at the top-left of the front panel, about 10 mm diameter; read 15 mm from the faceplate left edge plus an assumed 17.5 mm rack ear, 30.6 mm from the bottom (+/- 6 mm). Protrusion d = 3 mm is an estimate."
+    }
+  ]
+}

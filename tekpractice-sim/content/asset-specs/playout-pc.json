@@ -1,0 +1,66 @@
+{
+  "id": "playout-pc",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 290,
+    "h": 92.6,
+    "d": 292.8
+  },
+  "ports": [
+    {
+      "portId": "aoip",
+      "face": "io",
+      "xMm": 95,
+      "yMm": 45,
+      "confidence": "photo"
+    },
+    {
+      "portId": "out-analog-consumer",
+      "face": "io",
+      "xMm": 45,
+      "yMm": 68,
+      "confidence": "photo"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 245,
+      "yMm": 46,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 70,
+      "axis": "z",
+      "sizeMm": {
+        "w": 18,
+        "h": 18,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 2
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://cdn.shopify.com/s/files/1/1167/3148/files/Dell_OptiPlex-7010-Technical_Specifications.pdf",
+      "note": "Dell OptiPlex 7010 technical specifications (opened, text read; this is the 2012 generation): Small Form Factor 11.4 x 3.7 x 12.3 in (H x W x D) = 29.0 x 9.3 x 31.2 cm, ports 1 RJ-45, 2 line-in, 2 line-out (headphone/speaker). Used as the form-factor reference only. The current 7010 SFF is quoted at 290 x 92.6 x 292.8 mm by Dell (read in a search-result summary of Dell's tech-spec page, the page itself was not opened); the 292.8 mm depth is used."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.dell.com/en-us/shop/desktops/small-form-factor/spd/optiplex-7010-small-ff",
+      "note": "Dell OptiPlex 7010 SFF shop page (opened): the specs section did not load, so it gave no dimensions or port layout. Nothing on this page was used for a number."
+    }
+  ]
+}

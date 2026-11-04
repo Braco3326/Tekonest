@@ -1,0 +1,69 @@
+{
+  "id": "switchcraft-studiopatch-9625",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 44.45,
+    "d": 140
+  },
+  "ports": [
+    {
+      "portId": "front-tt-1",
+      "face": "io",
+      "xMm": 31,
+      "yMm": 31,
+      "confidence": "photo"
+    },
+    {
+      "portId": "front-tt-2",
+      "face": "io",
+      "xMm": 31,
+      "yMm": 12,
+      "confidence": "photo"
+    },
+    {
+      "portId": "rear-in-db25",
+      "face": "opposite",
+      "xMm": 416.3,
+      "yMm": 31.5,
+      "confidence": "photo"
+    },
+    {
+      "portId": "rear-out-db25",
+      "face": "opposite",
+      "xMm": 416.3,
+      "yMm": 13.5,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 1
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://datasheet.chipsmall.com/6425/362759.pdf",
+      "note": "Switchcraft StudioPatch series brochure NPB 563C (opened, text read): 9625 = 48 channels (96 TT/bantam jacks), DB25 I/O, front-of-rack access programmable normalling, all in 1RU, DB25 wired to the TASCAM DTRS pinout. 1RU gives h = 44.45 mm and the 19 inch rack gives w = 482.6 mm. The brochure carries no dimension drawing and no depth."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.redco.com/Switchcraft-9625.html",
+      "note": "Redco dealer page (opened): weight 8 lbs; two groups of 24 channels of TT jacks; each group of eight channels has its own in and out DB-25 (12 DB25 in total). No dimensions on the page."
+    },
+    {
+      "kind": "photo",
+      "url": "https://datasheet.chipsmall.com/6425/362759.pdf",
+      "note": "Embedded press photo of the 9625 front (extracted from the brochure PDF into a scratch folder outside the repo, 1029x482, three-quarter view, not orthographic). Scale about 1.98 px/mm from ear tip to ear tip = 482.6 mm. Front = io face: two TT jack rows (top row y about 31 mm, bottom row about 12 mm, normalling switch row between them at about 19.5 mm); first column read at x about 31 mm after allowing for perspective (+/- 6 mm). front-tt-1 = first jack of the top row, front-tt-2 = first jack of the bottom row."
+    },
+    {
+      "kind": "photo",
+      "url": "https://datasheet.chipsmall.com/6425/362759.pdf",
+      "note": "Embedded press photo of the 9625 rear (same PDF, 1029x482, three-quarter view): six DB25 pairs, INPUT over OUTPUT, labelled 41-48 at the left end up to 1-8 at the right end as seen from behind. The rear is the opposite face. Perspective makes the photo pitch non-uniform, so the six pairs are placed symmetrically about the 241.3 mm centre at an assumed 70 mm pitch (x = 241.3 + (k - 2.5) x 70, k = 0..5 from the left as seen from behind); INPUT 1-8 and OUTPUT 1-8 are the rightmost pair (x 416.3). Row heights from the left end of the photo (plate about 44 mm = 88 px): INPUT row y about 31.5, OUTPUT row y about 13.5 (+/- 4 mm)."
+    }
+  ]
+}

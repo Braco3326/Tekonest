@@ -1,0 +1,57 @@
+{
+  "id": "aeta-scoopy-plus-s",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 155,
+    "h": 80,
+    "d": 234
+  },
+  "ports": [
+    {
+      "portId": "ip",
+      "face": "io",
+      "xMm": 36.7,
+      "yMm": 50.4,
+      "confidence": "photo"
+    },
+    {
+      "portId": "in-mic",
+      "face": "right",
+      "xMm": 133.2,
+      "yMm": 22.3,
+      "confidence": "photo",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-headphone",
+      "face": "right",
+      "xMm": 181,
+      "yMm": 20.5,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [],
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_scoopy%2Bs.pdf",
+      "note": "AETA Scoopy+ S user manual (opened, text read): section 7.5 dimensions (D x W x H) 234 x 155 x 80 mm, 1.14 kg without batteries; section 3.2 panels: rear = DC 2.1 mm jack, Ethernet RJ45, extension, USB, ISDN, SD, SIM; left side (as seen by the operator) = input 3 and input 1 female XLR, gain 3, headphone 1 6.35 mm jack; right side = headphone 2, input 2 XLR, line outputs L/R male XLR. The unit is battery or 8-15 V DC powered, there is no mains inlet and no catalog control."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.la-bs.com/Objets/SCOOPYPLUS-S_dt.pdf",
+      "note": "AETA Scoopy+ S French datasheet 12/2017 (opened, text read): Dimensions 155 x 80 x 234 mm (LxHxP), max weight 1.14 kg without batteries; 3 mic/line inputs, 2 headphone outputs, 2 line outputs, Ethernet 100/10BaseT."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_scoopy%2Bs.pdf",
+      "note": "Figure 8 (rear panel photo, 913x445, straight-on, extracted into a scratch folder outside the repo). Outer body 857 px = 155 mm, so 5.53 px/mm; origin at the bottom-left of the body as seen from behind. Rear panel = io face. ip = the RJ45 with the network symbol, centre at 36.7 mm from the left, 50.4 mm from the bottom (+/- 4 mm). The rear is about 69 mm tall at the rear, the 80 mm is the front height of the sloped body."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_scoopy%2Bs.pdf",
+      "note": "Figure 9 (left side panel photo as seen by the operator, 1075x375). Body depth 234 mm over about 1030 px, so 4.4 px/mm; the rear edge is at the left of the photo. As the io face is the rear, this operator-left side is the 'right' face (seen from behind it is on the right) and its x runs from the rear (io) edge towards the front, which matches the photo. in-mic = INPUT 1 XLR female (x 133.2, y 22.3); out-headphone = headphone socket 1, 6.35 mm jack (x 181, y 20.5). +/- 5 mm (the photo is slightly perspective). openingMm 24 is the standard D-size XLR cutout; the measured bezel is about 23 mm."
+    }
+  ]
+}

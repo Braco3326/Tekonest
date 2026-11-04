@@ -1,0 +1,99 @@
+{
+  "id": "grace-m905",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 88.9,
+    "d": 266.7
+  },
+  "ports": [
+    {
+      "portId": "in-analog-l",
+      "face": "io",
+      "xMm": 362.1,
+      "yMm": 25.6,
+      "confidence": "manual",
+      "openingMm": 24
+    },
+    {
+      "portId": "in-analog-r",
+      "face": "io",
+      "xMm": 386,
+      "yMm": 25.6,
+      "confidence": "manual",
+      "openingMm": 24
+    },
+    {
+      "portId": "in-aes3",
+      "face": "io",
+      "xMm": 141,
+      "yMm": 59.2,
+      "confidence": "manual",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 167.8,
+      "yMm": 25.6,
+      "confidence": "manual",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 191.9,
+      "yMm": 25.6,
+      "confidence": "manual",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-headphone",
+      "face": "opposite",
+      "xMm": 344.6,
+      "yMm": 46.2,
+      "confidence": "manual"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 60.1,
+      "yMm": 65.4,
+      "confidence": "manual"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 398,
+      "yMm": 46.2,
+      "axis": "z",
+      "sizeMm": {
+        "w": 17,
+        "h": 17,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 1
+    }
+  },
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://gracedesign.com/wp-content/uploads/2018/06/m905_owners_manual_reve.pdf",
+      "note": "m905 Owner's Manual rev E (opened via fetch, PDF text read and the vector panel drawings rendered locally): ACU rear panel drawing (digital version) with 24 numbered callouts, ACU front panel drawing (1 = headphone output TRS 1/4 in, 2 = AC mains standby switch), specification table \"Dimensions Main chassis IEC 2U 3.5 in x 10.5 in x 17 in\". Rear drawing scale 2.445 px/mm from the 19 in over-ears width (1180 px = 482.6 mm), cross-checked on the 2U height (215 px = 88.9 mm); front drawing 2.49 px/mm. x from the left ear outer edge, y from the bottom edge. Rear drawing is seen from behind (outside of the io face), front drawing from the front."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://gracedesign.com/products/monitor-controllers/m905/",
+      "note": "Grace Design m905 product page (opened): lists main chassis 3.5 in x 10.5 in x 17 in (axes unlabelled). Read as H 3.5 in = 2U 88.9 mm, D 10.5 in = 266.7 mm, 17 in = chassis width without rack ears; with the ears the drawing is 19 in = 482.6 mm wide, so w = 482.6 is used (rack ears included, like the Rio3224-D2 spec)."
+    }
+  ]
+}

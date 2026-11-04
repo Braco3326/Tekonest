@@ -1,0 +1,84 @@
+{
+  "id": "antelope-ocx-hd",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 44,
+    "d": 230
+  },
+  "ports": [
+    {
+      "portId": "wordclock-out-1",
+      "face": "io",
+      "xMm": 191.6,
+      "yMm": 30.2,
+      "confidence": "photo"
+    },
+    {
+      "portId": "wordclock-out-2",
+      "face": "io",
+      "xMm": 191.6,
+      "yMm": 13.9,
+      "confidence": "photo"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 44.8,
+      "yMm": 23.2,
+      "confidence": "photo"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "sample-rate",
+      "kind": "knob",
+      "face": "opposite",
+      "xMm": 319,
+      "yMm": 22.4,
+      "axis": "z",
+      "sizeMm": {
+        "w": 26,
+        "h": 26,
+        "d": 18
+      }
+    },
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 56.4,
+      "yMm": 23.8,
+      "axis": "z",
+      "sizeMm": {
+        "w": 17,
+        "h": 17,
+        "d": 5
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 1
+    }
+  },
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://images.equipboard.com/uploads/item/manual/73416/antelope-audio-ocx-hd-manual.pdf",
+      "note": "Antelope OCX HD user manual (opened, text read, specifications table p.21-22): Width 482.6 mm / 19\", Height 44 mm / 1.75\", Depth 230 mm / 9.05\". Rear: AC power IEC connection, 2 word clock inputs, video, 10M atomic, 2 S/PDIF in, AES/EBU in, ten word clock outputs on BNC, four AES/EBU outputs, S/PDIF outputs, USB B. Front: power switch (illuminated ring), clock source knob, sample rate selection knob, +/-4% and +/-0.1% buttons, three presets. No dimension drawing with connector coordinates."
+    },
+    {
+      "kind": "photo",
+      "url": "https://images.equipboard.com/uploads/item/manual/73416/antelope-audio-ocx-hd-manual.pdf",
+      "note": "Rear panel render embedded in the manual (extracted into a scratch folder outside the repo, 1385x574, straight-on from behind). Scale 2.85 px/mm, calibrated three ways that agree: plate height 125 px = 44 mm, IEC C14 screw-hole pitch 114 px = 40 mm, and a 4-XLR pitch of about 30 mm. Plate measured 454 mm wide, assumed centred in the 482.6 mm box (14.1 mm offset). io = rear: IEC inlet centre x 44.8, y 23.2; word clock output WC1 (top-left of the output block) x 191.6, y 30.2; WC2 (below it) x 191.6, y 13.9. wordclock-out-1/2 are mapped to WC1/WC2 (the catalog models 2 of the 10 outputs). +/- 6 mm."
+    },
+    {
+      "kind": "photo",
+      "url": "https://images.equipboard.com/uploads/item/manual/73416/antelope-audio-ocx-hd-manual.pdf",
+      "note": "Front panel render embedded in the manual (1821x771, near straight-on). Horizontal scale 3.359 px/mm from the 482.6 mm face width (x 97 to 1718 px); vertical scale 3.68 px/mm from the 44 mm face height. Opposite face = front. power = the round illuminated PWR button (about 17 mm diameter) at x 56.4, y 23.8; sample-rate = the SAMPLE RATE knob (about 26 mm diameter) at x 319.0, y 22.4. Protrusion depths d (5 mm and 18 mm) are estimates, not visible in any view. +/- 4 mm."
+    }
+  ]
+}

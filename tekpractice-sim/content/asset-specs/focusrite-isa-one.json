@@ -1,0 +1,75 @@
+{
+  "id": "focusrite-isa-one",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 220,
+    "h": 104,
+    "d": 290
+  },
+  "ports": [
+    {
+      "portId": "in-mic",
+      "face": "io",
+      "xMm": 188.1,
+      "yMm": 21.7,
+      "confidence": "manual",
+      "openingMm": 24
+    },
+    {
+      "portId": "out-line",
+      "face": "io",
+      "xMm": 116.7,
+      "yMm": 21.7,
+      "confidence": "manual",
+      "openingMm": 24
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 36.6,
+      "yMm": 35.4,
+      "confidence": "manual"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "phantom-48v",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 29.8,
+      "yMm": 44.2,
+      "axis": "z",
+      "sizeMm": {
+        "w": 7.5,
+        "h": 7.5,
+        "d": 3
+      }
+    },
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 36.8,
+      "yMm": 61.3,
+      "axis": "x",
+      "sizeMm": {
+        "w": 20,
+        "h": 14.4,
+        "d": 8
+      }
+    }
+  ],
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/ISA%20One%20User%20Guide%201.1%20-%20FR.pdf",
+      "note": "ISA One User Guide 1.1, French machine translation (opened, text read and page images extracted locally): front-panel line drawing (the +48V button), rear-panel line drawing (POWER rocker, IEC inlet, MAIN O/P XLR male, MIC I/P XLR female, LINE I/P XLR + TRS, DI O/P, insert, cue mix, option-card slot) and the Physical page: 220 mm / 8.7 in wide, 104 mm / 4.1 in high, 290 mm / 11.4 in deep, 3.9 kg. Rear drawing scale 4.54 px/mm (999 px outline = 220 mm; its height 470 px = 103.5 mm confirms), seen from behind; front drawing scale 4.636 px/mm from the 220 mm width, y in the frontal projection of the sloped face."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://us.focusrite.com/mic-pres/isa-one/specifications",
+      "note": "Focusrite ISA One specifications page (opened): feature list only (front DI jack, VU meter, headphone; rear XLR DI out, TRS cue inputs, insert point, optional A-D card). No dimensions on the page, they come from the user guide."
+    }
+  ]
+}
