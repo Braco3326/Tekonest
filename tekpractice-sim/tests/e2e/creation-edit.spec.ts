@@ -335,8 +335,26 @@ test('a click on a device selects it and shows no message; the click that drops 
   await settle(page)
   // Over an unselected body a port's first-click area is tight (final review 3): a plain click on the body's centre selects it,
   // even with the QL1 facing the camera and its connectors on the far side.
-  const at = (await page.evaluate(() => window.__creation!.deviceScreen('ql1')))!
-  expect(at, 'the QL1 centre is on screen').not.toBeNull()
+  const centre = (await page.evaluate(() => window.__creation!.deviceScreen('ql1')))!
+  expect(centre, 'the QL1 centre is on screen').not.toBeNull()
+  // The point of the body nearest its centre that is on the body and 8+ px from every connector (an unselected device gives a port a 6 px first-click area; a console's connectors, seen over its body from this
+  // camera, may lie right on its centre: a click there is a click on a port, which starts a patch, not a click on the body).
+  const at = (await page.evaluate((c) => {
+    const d = window.__creation!
+    const rect = document.querySelector('#renderCanvas')!.getBoundingClientRect()
+    const ports = d.design().rig.instances.flatMap((i) => d.devicePorts(i.instanceId).map((port) => d.portScreen({ instance: i.instanceId, port })!))
+    let best: { x: number; y: number } | null = null
+    for (let dx = -40; dx <= 40; dx += 2)
+      for (let dy = -30; dy <= 30; dy += 2) {
+        const x = c.x + dx
+        const y = c.y + dy
+        if (d.pickAt(x - rect.left, y - rect.top) !== 'ql1') continue
+        if (ports.some((q) => Math.hypot(q.x - x, q.y - y) < 8)) continue
+        if (!best || Math.hypot(dx, dy) < Math.hypot(best.x - c.x, best.y - c.y)) best = { x, y }
+      }
+    return best
+  }, centre))!
+  expect(at, 'a body point 8+ px from every connector, near the centre').not.toBeNull()
   await page.mouse.click(at.x, at.y)
   expect(await selection(page)).toBe('ql1')
   await expect(page.getByTestId('toast')).toBeHidden()

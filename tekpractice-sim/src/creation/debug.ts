@@ -3,7 +3,7 @@
  * goes through the same functions as the UI (history, place commit).
  * Legacy keeps `window.__audioSim`.
  */
-import { Vector3 } from '@babylonjs/core'
+import { Vector3, VertexBuffer } from '@babylonjs/core'
 import type { DispatchResult } from './store'
 import type { Intent } from '../ui/intents'
 import type { PortRef, TeachingEvent } from '../engine/types'
@@ -186,8 +186,28 @@ function bodyBoundsOf(inst: DeviceInstance): { lo: Vector3; hi: Vector3 } | null
   return lo && hi ? { lo, hi } : null
 }
 
-/** Centre of a device's visible body meshes (world), or null. */
+/**
+ * A point inside a device's visible body (world), or null: the mean of the body's vertices. The centre of the bounding box is not good enough: a
+ * wedge (a console) is lower than half its height over most of its depth, so that point is in the air above its sloping top and a click there
+ * misses the device. The vertex mean of a solid whose bottom lies on its footprint is inside it for the shapes of the catalogue.
+ */
 export function bodyCentreOf(inst: DeviceInstance): Vector3 | null {
+  const sum = new Vector3()
+  let n = 0
+  const p = new Vector3()
+  for (const m of inst.root.getChildMeshes(false)) {
+    if (m.metadata?.isDeviceBody !== true || !m.isEnabled()) continue
+    const data = m.getVerticesData(VertexBuffer.PositionKind)
+    if (!data) continue
+    m.computeWorldMatrix(true)
+    const world = m.getWorldMatrix()
+    for (let i = 0; i + 2 < data.length; i += 3) {
+      Vector3.TransformCoordinatesFromFloatsToRef(data[i], data[i + 1], data[i + 2], world, p)
+      sum.addInPlace(p)
+      n++
+    }
+  }
+  if (n > 0) return sum.scale(1 / n)
   const b = bodyBoundsOf(inst)
   return b ? b.lo.add(b.hi).scale(0.5) : null
 }

@@ -393,7 +393,9 @@ const ql1Plan = (page: Page) =>
     const at = all.map((r) => ({ r, p: c.portScreen(r)! })).map(({ r, p }) => ({ r, x: p.x - rect.left, y: p.y - rect.top }))
     const nearest = (x: number, y: number) => at.reduce((a, b) => (Math.hypot(a.x - x, a.y - y) <= Math.hypot(b.x - x, b.y - y) ? a : b))
     let eight: { ref: { instance: string; port: string }; x: number; y: number; cx: number; cy: number } | null = null
-    for (const q of at.filter((a) => a.r.instance === 'ql1')) {
+    // a connector that already has a cable is no target for a first click that starts a patch (it opens the cable's popup instead)
+    const wired = new Set(c.design().rig.connections.flatMap((k) => [k.a, k.b]).map((r) => r.instance + '/' + r.port))
+    for (const q of at.filter((a) => a.r.instance === 'ql1' && !wired.has(a.r.instance + '/' + a.r.port))) {
       if (c.pickAt(q.x, q.y) !== 'ql1') continue
       for (const [dx, dy] of [[8, 0], [-8, 0], [0, 8], [0, -8]]) {
         const x = q.x + dx
