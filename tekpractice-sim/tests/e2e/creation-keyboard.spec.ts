@@ -133,19 +133,23 @@ for (const reduced of [true, false]) {
       expect(Math.abs((await alpha(page)) - a0), 'and back by one step the other way').toBeLessThan(STEP * 0.1)
     })
 
-    test('a real 30 ms tap with the CPU throttled (6x) turns the camera by the step, once', async ({ page }) => {
+    test('a real 30 ms tap with the CPU throttled (6x) turns the camera by the step: one per frame the key was down, at least one, never a burst', async ({ page }) => {
       await bootCamera(page, reduced)
       const cdp = await page.context().newCDPSession(page)
       await cdp.send('Emulation.setCPUThrottlingRate', { rate: 6 })
       const a0 = await alpha(page)
+      const r0 = await page.evaluate(() => window.__creation!.renders())
       await page.keyboard.down('ArrowLeft')
-      await page.waitForTimeout(30) // a 30 ms tap: the finger is up before a slow frame
+      await page.waitForTimeout(30) // a 30 ms tap: the finger is up before a slow frame (or after one or two, on a loaded machine)
+      const r1 = await page.evaluate(() => window.__creation!.renders())
       await page.keyboard.up('ArrowLeft')
       await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 })
       await settleCamera(page)
       const d = Math.abs((await alpha(page)) - a0)
+      // frames seen while down: Babylon's step each; none seen: our one step. A frame may run between the read and the release (+1), never a tap step on top of the frames.
+      const frames = Math.max(1, r1 - r0)
       expect(d, 'turned').toBeGreaterThan(STEP * 0.9)
-      expect(d, 'by one step, or two frames of the hold at most, never a burst').toBeLessThan(STEP * 2.2)
+      expect(d, `one step per frame the key was down (${frames}), at most one more`).toBeLessThan(STEP * (frames + 1.2))
     })
   })
 }
