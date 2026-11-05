@@ -137,6 +137,20 @@ describe('AssetSpec build.projection', () => {
   })
 })
 
+describe('AssetSpec build.projectionShiftMm', () => {
+  const base = (): AssetSpecT => specFor(fresh(), 'qsc-k12-2')
+  const parse = (projectionShiftMm: unknown): boolean => AssetSpec.safeParse({ ...base(), build: { shape: 'rack-box', projection: ['io', 'opposite'], projectionShiftMm } }).success
+  it('accepts a millimetre shift per face, negative or positive, for the four faces', () => {
+    expect(parse({ io: 68 })).toBe(true)
+    expect(parse({ io: -12.5, opposite: 3, top: 0, left: 1 })).toBe(true)
+  })
+  it('rejects an unknown face, a non-number and a non-finite shift', () => {
+    expect(parse({ bottom: 5 })).toBe(false)
+    expect(parse({ io: '68' })).toBe(false)
+    expect(parse({ io: Infinity })).toBe(false)
+  })
+})
+
 describe('AssetSpec texture block (blank bands)', () => {
   const base = (): AssetSpecT => specFor(fresh(), 'qsc-k12-2')
   it('accepts blank bands with and without a fill', () => {

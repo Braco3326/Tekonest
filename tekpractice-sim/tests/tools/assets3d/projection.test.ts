@@ -8,7 +8,7 @@ import sharp from 'sharp'
 import { describe, expect, it } from 'vitest'
 import { findBlender } from '../../../tools/assets3d/env'
 import { liftChannel } from '../../../tools/assets3d/look'
-import { PROJECTION_PX, projectionFaceMm, renderProjection } from '../../../tools/assets3d/projection'
+import { PROJECTION_PX, projectionFaceMm, renderProjection, shiftPictureX } from '../../../tools/assets3d/projection'
 import type { ExecResult } from '../../../tools/assets3d/runFixup'
 import { makeBoxGlb } from './helpers'
 import { mkdtemp, rm } from 'node:fs/promises'
@@ -55,6 +55,46 @@ describe('projectionFaceMm', () => {
   })
   it('refuses a face the renderer has no view for', () => {
     expect(() => projectionFaceMm('bottom' as never, { w: 1, h: 1, d: 1 })).toThrow(/bottom/)
+  })
+})
+
+describe('shiftPictureX', () => {
+  /** A 400 x 100 px picture (1 px = 1 mm on a 400 mm wide face): red left half (x < 200), blue right half. */
+  const picture = async (): Promise<Uint8Array> => {
+    const px = Buffer.alloc(400 * 100 * 3)
+    for (let y = 0; y < 100; y++) for (let x = 0; x < 400; x++) px.set(x < 200 ? [200, 30, 30] : [30, 30, 200], (y * 400 + x) * 3)
+    return new Uint8Array(await sharp(px, { raw: { width: 400, height: 100, channels: 3 } }).png().toBuffer())
+  }
+  const column = async (png: Uint8Array, x: number): Promise<number[]> => {
+    const { data, info } = await sharp(Buffer.from(png)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    return Array.from(data.subarray((50 * info.width + x) * 3, (50 * info.width + x) * 3 + 3))
+  }
+
+  it('moves the picture to the right by the given millimetres, keeping its size and filling the gap with the edge colour', async () => {
+    const out = await shiftPictureX(await picture(), 100, 400)
+    const meta = await sharp(Buffer.from(out)).metadata()
+    expect([meta.width, meta.height]).toEqual([400, 100])
+    expect(await column(out, 10)).toEqual([200, 30, 30]) // the gap on the left: the old left edge, replicated
+    expect(await column(out, 290)).toEqual([200, 30, 30]) // the red half now ends at 300
+    expect(await column(out, 310)).toEqual([30, 30, 200])
+  })
+
+  it('moves it to the left for a negative shift, and leaves the same bytes for zero', async () => {
+    const src = await picture()
+    const out = await shiftPictureX(src, -100, 400)
+    expect(await column(out, 90)).toEqual([200, 30, 30]) // the red half now ends at 100
+    expect(await column(out, 110)).toEqual([30, 30, 200])
+    expect(await column(out, 395)).toEqual([30, 30, 200]) // the gap on the right: the old right edge
+    expect(await shiftPictureX(src, 0, 400)).toBe(src)
+  })
+
+  it('scales the shift by the picture width over the face width (a 2000 px picture of a 400 mm face: 5 px per mm)', async () => {
+    const big = new Uint8Array(await sharp(Buffer.from(await picture())).resize(2000, 500, { kernel: 'nearest' }).png().toBuffer())
+    const out = await shiftPictureX(big, 20, 400) // 100 px
+    const { data, info } = await sharp(Buffer.from(out)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    const at = (x: number): number[] => Array.from(data.subarray((250 * info.width + x) * 3, (250 * info.width + x) * 3 + 3))
+    expect(at(1090)).toEqual([200, 30, 30]) // the red half ended at 1000 px, now at 1100
+    expect(at(1110)).toEqual([30, 30, 200])
   })
 })
 

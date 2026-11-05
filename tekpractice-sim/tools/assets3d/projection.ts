@@ -141,3 +141,22 @@ export async function renderProjection(glb: string, face: ProjectionFace, deps: 
     await rm(tmp, { recursive: true, force: true })
   }
 }
+
+/**
+ * Moves a face picture sideways by `shiftMm` (positive = to the right, face-local x) on a face `faceWidthMm` wide, keeping the picture's
+ * size: what leaves on one side is cut, the gap on the other is filled with the picture's own edge colour. For a cabinet whose real rear
+ * panel sits where the Meshy model's does not (the model is not symmetric, the real cabinet is), so the picture and the ports move together.
+ * A zero shift returns the very same object.
+ */
+export async function shiftPictureX(png: Uint8Array, shiftMm: number, faceWidthMm: number): Promise<Uint8Array> {
+  if (!(faceWidthMm > 0) || !Number.isFinite(shiftMm)) throw new Error(`shiftPictureX: needs a finite shift and a positive face width, got ${shiftMm} and ${faceWidthMm}`)
+  const meta = await sharp(Buffer.from(png)).metadata()
+  const width = meta.width ?? 0
+  const height = meta.height ?? 0
+  const dx = Math.round((shiftMm * width) / faceWidthMm)
+  if (dx === 0) return png
+  // two passes: sharp runs extract before extend inside one pipeline
+  const widened = await sharp(Buffer.from(png)).removeAlpha().extend(dx > 0 ? { left: dx, extendWith: 'copy' } : { right: -dx, extendWith: 'copy' }).png().toBuffer()
+  const moved = await sharp(widened).extract({ left: dx > 0 ? 0 : -dx, top: 0, width, height }).png().toBuffer()
+  return new Uint8Array(moved)
+}

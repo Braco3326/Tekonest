@@ -64,7 +64,7 @@ import { blankBands } from './blank'
 import { normaliseLook } from './look'
 import { parsePhotoArg, photoProjection } from './photoProjection'
 import type { PhotoArg } from './photoProjection'
-import { renderProjection } from './projection'
+import { renderProjection, shiftPictureX } from './projection'
 import { orientSlab } from './slab'
 import type { Projection, ProjectionFace } from './projection'
 import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, runGates, DATA_TEXTURE_MAX_PX, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
@@ -496,10 +496,15 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
           projections = []
           for (const face of faces) {
             const photo = photos.find((p) => p.face === face)
+            // a picture may be moved sideways (spec build.projectionShiftMm) so that it moves with the ports it shows
+            const shifted = async (pr: Projection): Promise<Uint8Array> => {
+              const mm = spec.build?.projectionShiftMm?.[face]
+              return mm ? shiftPictureX(pr.png, mm, pr.faceMm.w) : pr.png
+            }
             if (photo) {
-              projections.push({ face, png: (await d.photoProjection(photo, face, spec.realSizeMm)).png })
+              projections.push({ face, png: await shifted(await d.photoProjection(photo, face, spec.realSizeMm)) })
             } else if (opts.projectFrom) {
-              projections.push({ face, png: (await d.renderProjection(opts.projectFrom, face, spec.realSizeMm)).png })
+              projections.push({ face, png: await shifted(await d.renderProjection(opts.projectFrom, face, spec.realSizeMm)) })
             } else {
               throw new Error(`the ${face} face has no picture: give --project <fixed Meshy glb> or --project-photo ${face}=<photo>`)
             }

@@ -73,6 +73,7 @@ export const BuildSpec = z.object({
   profile: z.array(Station).min(4).optional().describe('Shape revolve only: the lathe profile, at least four [axial mm from the base, diameter mm] stations with strictly increasing positions; first at 0, last at the height, widest = the width.'),
   colours: z.array(ZoneColour).min(1).optional().describe('Shape revolve only: colour zones along the axis (first at 0, strictly increasing), sRGB hex of the real part.'),
   projection: z.union([ProjectionFaceEnum, z.array(ProjectionFaceEnum).min(1).max(4)]).optional().describe('The face(s) that take their picture from a Meshy model (asset:build --scripted --project <fixed.glb>); default io. Each picture is mapped planar onto the scripted faces that look that way; a face given twice or two faces looking the same way is refused.'),
+  projectionShiftMm: z.object({ io: z.number().finite(), opposite: z.number().finite(), top: z.number().finite(), left: z.number().finite() }).partial().strict().optional().describe("Millimetres to move the picture of a projected face sideways (face-local x, positive = right) before it is mapped: for a cabinet whose real panel sits where the Meshy model has it off-centre, so the picture moves with the ports."),
 }).strict().superRefine((b, ctx) => {
   const { profile, colours } = b
   profile?.forEach((st, i) => {

@@ -1540,6 +1540,29 @@ describe('scripted build (--scripted)', () => {
       expect(seen.faces).toEqual(['top'])
     })
 
+    it('moves a face picture sideways by the spec projectionShiftMm (face-local x, millimetres) before the builder sees it, and leaves the other faces alone', async () => {
+      const spec = box({ realSizeMm: { w: 400, h: 100, d: 200 }, build: { shape: 'rack-box', projection: ['io', 'top'], projectionShiftMm: { io: 100 } } })
+      const px = Buffer.alloc(400 * 100 * 3)
+      for (let y = 0; y < 100; y++) for (let x = 0; x < 400; x++) px.set(x < 200 ? [200, 30, 30] : [30, 30, 200], (y * 400 + x) * 3)
+      const original = new Uint8Array(await sharp(px, { raw: { width: 400, height: 100, channels: 3 } }).png().toBuffer())
+      const { deps } = await hybridDeps(spec)
+      deps.renderProjection = async () => ({ png: original, faceMm: { w: 400, h: 100 } })
+      const got: Record<string, Uint8Array> = {}
+      deps.runBuilder = async (_spec, outGlb, projections) => {
+        for (const p of projections ?? []) got[p.face] = p.png
+        await writeFile(outGlb, RAW_BYTES)
+      }
+      await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectFrom: '/x.glb', dryRun: true }, deps)
+      const redEnd = async (png: Uint8Array): Promise<number> => {
+        const { data, info } = await sharp(Buffer.from(png)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+        let x = 0
+        while (x < info.width && data[(50 * info.width + x) * 3] > 100) x++
+        return x
+      }
+      expect(await redEnd(got.io)).toBe(300) // 200 + the 100 mm shift
+      expect(await redEnd(got.top)).toBe(200) // untouched
+    })
+
     it('renders every face a spec lists, in order, and hands them all to the builder', async () => {
       const spec = box({ build: { shape: 'rack-box', projection: ['top', 'io'] } })
       const { deps, seen } = await hybridDeps(spec)
