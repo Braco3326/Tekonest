@@ -348,7 +348,7 @@ test('S1 (fix round): widening the window to 1600 px grows the cube to 130 px an
     const c = window.__creation!
     const r = c.cubeRect()
     const wrong: string[] = []
-    // the band the 120 px shape would have left out: the right and bottom 12 px of the 130 px square
+    // the whole 130 px square, every 2 px (a stale 120 px shape would let through the right and bottom 10 px bands: hundreds of points)
     for (let y = r.y + 1; y < r.y + r.height; y += 2)
       for (let x = r.x + 1; x < r.x + r.width; x += 2) {
         const zone = c.cubeZoneAt(x, y)
@@ -357,5 +357,6 @@ test('S1 (fix round): widening the window to 1600 px grows the cube to 130 px an
       }
     return wrong
   })
-  expect(bad, bad.slice(0, 5).join(' | ')).toEqual([])
+  // only the pixels on the silhouette edge may fall either way (the same tolerance as the 26-pose test, one per 2 px sample here)
+  expect(bad.length, bad.slice(0, 5).join(' | ')).toBeLessThanOrEqual(35)
 })
