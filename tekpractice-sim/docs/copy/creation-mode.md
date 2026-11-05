@@ -99,7 +99,6 @@ Le dialogue « Raccourcis clavier » (menu Aide, touche H ; vague de nuit 2, vag
 |---|---|---|---|
 | `shortcuts.title` | Raccourcis clavier | validé | Titre du dialogue (même texte que l’entrée de menu `menu.shortcuts`) |
 | `shortcuts.hint` | Les raccourcis à une seule touche (lettres, chiffres, Espace, Suppr…) n’agissent que lorsque la vue 3D a le focus. Ils sont repérés par leur position sur le clavier. | validé (nuit 2026-11-05, relecture fondateur conseillée) | Phrase sous le titre (description du dialogue). Vrai du code : les touches simples (lettres, chiffres, Espace, Suppr…) n’agissent que sur la vue 3D (`CANVAS_ONLY`) ; Ctrl+Z, Ctrl+S, Ctrl+D, Alt+H et Échap agissent ailleurs aussi. Ancien texte : « ces touches » laissait croire que tout le tableau exigeait le focus de la vue 3D |
-| `shortcuts.opened` | Liste des raccourcis clavier affichée. | validé | Annonce unique à l’ouverture (ligne d’état) |
 | `shortcuts.close` | Fermer | validé | Bouton du dialogue (Échap ferme aussi) |
 | `shortcuts.keyArrows` | Flèches | validé | Nom de la touche pour orbiter (hors carte des touches : entrée de la caméra) |
 | `shortcuts.groupView` | Vue 3D | validé | Titre de groupe |

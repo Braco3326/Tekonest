@@ -43,8 +43,10 @@ test('Aide › Raccourcis clavier is enabled and opens it; Échap closes it and 
   await expect(dialog(page)).toBeVisible()
   await page.keyboard.press('Escape')
   await expect(dialog(page)).toHaveCount(0)
-  expect(await page.evaluate(() => document.activeElement !== document.body && !!document.activeElement), 'the focus is on something, not lost to the page').toBe(true)
-  await page.getByRole('button', { name: 'Fermer' }).count() // (the dialog is gone: none)
+  // the focus goes back to the menu bar, where the learner was (fix round S3), not to the page
+  expect(await page.evaluate(() => !!document.activeElement?.closest('[data-testid="menubar"]')), 'the focus is back in the menu bar').toBe(true)
+  await expect(page.getByRole('menuitem', { name: 'Aide', exact: true })).toBeFocused()
+  await expect(page.getByTestId('cr-shortcuts-dialog').getByRole('button')).toHaveCount(0) // the dialog and its Fermer button are gone
 })
 
 test('on the first screen (the picker) the Aide menu opens it; H alone does nothing outside the 3D view (a character key shortcut: WCAG 2.1.4)', async ({ page }) => {
@@ -88,12 +90,12 @@ test('the list names every key of the 3D view label (arrows, [ ], Entrée, 1 2 3
   await expect(list.locator('dt', { hasText: 'Cadrer la sélection' })).toBeVisible()
 })
 
-test('the dialog keeps the focus inside (Tab and Shift+Tab wrap), and says itself once in the status line', async ({ page }) => {
+test('the dialog keeps the focus inside (Tab and Shift+Tab wrap) and writes nothing in the status line (its name is read when the focus lands in it)', async ({ page }) => {
   await boot(page)
   await canvas(page).focus()
   await page.keyboard.press('h')
   await expect(dialog(page)).toBeVisible()
-  await expect(page.locator('.cr-status-msg')).toHaveText('Liste des raccourcis clavier affichée.')
+  await expect(page.locator('.cr-status-msg')).not.toContainText('raccourcis') // fix round S2: no announcement; the shell behind the dialog is inert
   for (let i = 0; i < 6; i++) {
     await page.keyboard.press('Tab')
     expect(await page.evaluate(() => !!document.activeElement?.closest('[role="dialog"]')), `Tab ${i + 1}`).toBe(true)

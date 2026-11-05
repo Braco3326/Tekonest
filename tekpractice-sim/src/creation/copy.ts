@@ -88,7 +88,6 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   shortcuts: {
     title: 'Raccourcis clavier',
     hint: 'Les raccourcis à une seule touche (lettres, chiffres, Espace, Suppr…) n’agissent que lorsque la vue 3D a le focus. Ils sont repérés par leur position sur le clavier.',
-    opened: 'Liste des raccourcis clavier affichée.',
     close: 'Fermer',
     keyArrows: 'Flèches',
     groupView: 'Vue 3D',

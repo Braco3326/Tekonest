@@ -1459,8 +1459,8 @@ export async function bootCreation(): Promise<void> {
     return true
   })
   // « Raccourcis clavier » (night 2 wave 5, P2-1): H and Aide › Raccourcis clavier. The list is built from the live key map; the modal keeps the focus in, Échap closes it and gives the focus back.
+  // No status announcement (fix round S2): the shell is inert behind the dialog, and its name is announced when the focus lands in it.
   const openShortcuts = async (): Promise<void> => {
-    announcer.say(COPY.shortcuts!.opened!)
     await openShortcutsDialog(keys.bindings)
   }
   keys.onAction('TOGGLE_HELP', () => {
