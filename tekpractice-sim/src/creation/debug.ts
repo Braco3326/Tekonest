@@ -119,6 +119,8 @@ export interface CreationDebug {
   /** Task 26: in-scene port label planes drawn right now (0 = none: labels exist on hover only, as DOM). */
   visiblePortLabels(): number
   /** Task 26: move the orbit camera to this distance at once (a zoom). */
+  /** Look audit seam: selects the device and flies (or cuts, under reduced motion) the camera to it, as a click on it does. null clears the selection (the camera stays). False for an unknown id. */
+  frameDevice(id: string | null): boolean
   setCameraRadius(radius: number): void
   /** Task 27: turn the orbit camera about its target by this many radians at once (a cut). */
   turnCamera(dAlpha: number): void

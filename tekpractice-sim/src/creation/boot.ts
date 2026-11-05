@@ -2195,6 +2195,7 @@ export async function bootCreation(): Promise<void> {
     },
     devicePorts: (id) => [...(host.instance(id)?.portMarkers.keys() ?? [])],
     visiblePortLabels: () => host.scene?.meshes.filter((m) => m.name.startsWith('portlabel:') && m.isEnabled() && m.isVisible).length ?? 0,
+    frameDevice: (id) => selection.select(id),
     setCameraRadius: (r) => {
       if (host.camera) host.camera.radius = r
       scheduler.invalidate()
