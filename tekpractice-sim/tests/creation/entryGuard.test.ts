@@ -22,6 +22,16 @@ describe('entry guard (index.html)', () => {
   it('the text is the one the brief gave', () => {
     expect(inHtml('TEXT')).toBe('Le jeu n’a pas pu se charger. Rechargez la page en forçant le rafraîchissement (Ctrl+F5) ou ouvrez-la de nouveau.')
   })
+  it('it acts only until the app has started, only for the entry script, and its link is a full address (fix round C1, N1, N2)', () => {
+    expect(guard).toContain('window.__tekBooted')
+    expect(guard).toContain('window.__tekEntryFailed = show')
+    expect(guard).toContain('a.href = url.href')
+    expect(guard).toContain(String.raw`/\/(assets\/main-|src\/main\.)/`)
+    // main.ts says the app has started, in both routes
+    const main = readFileSync(fileURLToPath(new URL('../../src/main.ts', import.meta.url)), 'utf8')
+    expect(main.match(/booted()/g)?.length).toBeGreaterThanOrEqual(2)
+    expect(main).toContain('__tekEntryFailed')
+  })
   it('it is a classic script placed before the entry module, listens to the entry error and to vite:preloadError, and adds the v query', () => {
     expect(guard.indexOf('<script>')).toBeGreaterThan(-1)
     expect(guard).toContain("addEventListener(\n          'error'")

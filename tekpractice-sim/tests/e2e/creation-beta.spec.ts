@@ -133,6 +133,8 @@ test('night wave 1, item 6: when the proposals file cannot be loaded the drawer 
   await expect(betaStatus(page)).toHaveText(TAB_UNAVAILABLE)
   await expect(betaStatus(page)).toHaveAttribute('data-state', 'unavailable')
   await expect(page.getByTestId('inventory-badge')).toHaveCount(0)
+  await quietWindow(page, 400) // a failed lazy chunk after the start is the app's to handle: the entry guard of index.html stays out (review C1)
+  await expect(page.getByTestId('entry-failure')).toHaveCount(0)
   await page.getByRole('tab', { name: 'Micros' }).click()
   await expect(page.getByRole('tabpanel').getByTestId('inventory-item').first()).toBeVisible()
   await page.keyboard.press('Space')

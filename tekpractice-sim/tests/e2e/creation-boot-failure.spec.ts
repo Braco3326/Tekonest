@@ -127,13 +127,14 @@ test('« Choisir un lieu » open over a rig: « Annuler » is disabled and Ctrl+
 })
 
 // ── Night 2 wave 5, P1-1: the ENTRY script itself is missing or served as HTML (production did that for hashed assets: 200 text/html) ────────────────────────
-// main.js never runs, so the boot-failure alert above cannot show. The inline guard in index.html shows a role="alert" with a reload link (?v=<time>, ignored by the router).
+// main.js never runs, so the boot-failure alert above cannot show. The inline guard in index.html TELLS the user (role="alert") and offers a link that refreshes the page (?v=<time> on the page address, ignored by the router). It does not
+// change the entry script's address: if an edge still serves HTML under it the failure comes back; the cure is site-side (see the wave 5 report). Review C1: it acts only before the app started.
 const ENTRY = '**/assets/main-*.js'
 for (const [what, fulfill] of [
   ['served as text/html (200)', { status: 200, contentType: 'text/html; charset=utf-8', body: '<!doctype html><html><body>home</body></html>' }],
   ['a 404', { status: 404, contentType: 'text/plain', body: 'not found' }],
 ] as const) {
-  test(`P1-1: the entry script ${what}: an alert says so, its link reloads the page with a cache-busting query and the app then starts`, async ({ page }) => {
+  test(`P1-1: the entry script ${what}: an alert says so, its link refreshes the page (?v=<time> on the page address; the entry script's own address is the same) and the app then starts once the file is served again`, async ({ page }) => {
     await page.route(ENTRY, (r) => r.fulfill(fulfill))
     await page.goto('/')
     const alert = page.getByTestId('entry-failure')
@@ -142,7 +143,7 @@ for (const [what, fulfill] of [
     await expect(alert).toContainText('Le jeu n’a pas pu se charger. Rechargez la page en forçant le rafraîchissement (Ctrl+F5) ou ouvrez-la de nouveau.')
     const link = alert.getByRole('link', { name: 'Recharger la page' })
     await expect(link).toBeFocused()
-    await expect(link).toHaveAttribute('href', /^\/\?v=\d+$/)
+    await expect(link).toHaveAttribute('href', /^https?:\/\/[^/]+\/\?v=\d+$/) // a full address (never protocol-relative)
     await expect(page.getByTestId('boot-failure'), 'one alert, not two').toHaveCount(0)
     await page.unroute(ENTRY) // the edge now serves the real file
     await link.click()
@@ -168,7 +169,7 @@ test('P1-1: the legacy entry (?legacy=1) that cannot load shows the guard too, k
   await page.goto('/?legacy=1')
   const link = page.getByTestId('entry-failure').getByRole('link', { name: 'Recharger la page' })
   await expect(link).toBeVisible()
-  await expect(link).toHaveAttribute('href', /^\/\?legacy=1&v=\d+$/)
+  await expect(link).toHaveAttribute('href', /^https?:\/\/[^/]+\/\?legacy=1&v=\d+$/)
 })
 
 test('P1-1: a lazy chunk that fails to preload shows ONE alert (the boot chunk has its own, the guard stays out of its way)', async ({ page }) => {
@@ -178,4 +179,13 @@ test('P1-1: a lazy chunk that fails to preload shows ONE alert (the boot chunk h
   await quietWindow(page, 600) // past the guard's 100 ms wait: it must not add a second alert
   await expect(page.getByRole('alert')).toHaveCount(1)
   await expect(page.getByTestId('entry-failure')).toHaveCount(0)
+})
+
+test('C1: the legacy route chunk that cannot load (before the app started) shows the guard once; a lazy chunk after the start never does', async ({ page }) => {
+  await page.route('**/assets/legacyMain-*.js', (r) => r.abort())
+  await page.goto('/?legacy=1')
+  await expect(page.getByTestId('entry-failure')).toBeVisible()
+  await expect(page.getByTestId('entry-failure')).toHaveCount(1)
+  await quietWindow(page, 400)
+  await expect(page.getByTestId('entry-failure')).toHaveCount(1) // once, whatever fires (the import rejection, vite:preloadError)
 })
