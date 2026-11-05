@@ -757,8 +757,8 @@
          the real cure is on the site side (a 404.html, cache headers, a purge after a deploy; see the wave 5 report). It acts ONLY until main.ts says the app has started
          (window.__tekBooted): a lazy chunk that fails later is the app's to handle, and the guard never covers the screen for it. Two triggers before that: the entry module script's
          error event (only a script whose address is the entry, /assets/main- or /src/main.), and vite:preloadError for the route chunk (it steps aside when the boot chunk's own alert
-         shows). Placement: before the entry module in this file, after it in the build; it works because a module script's error event fires once its fetch has failed, after
-         this script has run. A Content-Security-Policy with script-src would need a hash or nonce for this inline script. The two French strings below are the only user strings that
+         shows). Placement: before the entry module in this file, after it in the build; it works because a module script is deferred: its error event fires when the module would
+         have run, after the document has been parsed and so after this script has run. It would break if the entry script ever got `async` (the event could then fire before this listener exists). A Content-Security-Policy with script-src would need a hash or nonce for this inline script. The two French strings below are the only user strings that
          live in index.html (deck: « Textes hors COPY »; tests/creation/entryGuard.test.ts keeps them equal). -->
     <script>
       ;(function () {

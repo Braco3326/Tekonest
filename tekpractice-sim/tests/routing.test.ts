@@ -13,7 +13,7 @@ describe('decideRoute', () => {
     expect(decideRoute('', { levels: true })).toBe('legacy'))
 })
 
-describe('decideRoute and the cache-busting query (night 2 wave 5, P1-1: the entry guard reloads with ?v=<time>)', () => {
+describe('decideRoute ignores a v query (night 2 wave 5, P1-1: the entry guard refreshes the page with ?v=<time>)', () => {
   it('?v= alone keeps Mode Création', () => expect(decideRoute('?v=1730000000000')).toBe('creation'))
   it('?legacy=1&v= and ?level=a1&v= keep legacy', () => {
     expect(decideRoute('?legacy=1&v=1730000000000')).toBe('legacy')

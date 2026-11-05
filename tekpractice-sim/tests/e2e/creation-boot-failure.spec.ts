@@ -181,11 +181,13 @@ test('P1-1: a lazy chunk that fails to preload shows ONE alert (the boot chunk h
   await expect(page.getByTestId('entry-failure')).toHaveCount(0)
 })
 
-test('C1: the legacy route chunk that cannot load (before the app started) shows the guard once; a lazy chunk after the start never does', async ({ page }) => {
+test('C1: the legacy route chunk that cannot load (before the app started) shows the entry guard once, and not the creation boot-failure alert too', async ({ page }) => {
   await page.route('**/assets/legacyMain-*.js', (r) => r.abort())
   await page.goto('/?legacy=1')
   await expect(page.getByTestId('entry-failure')).toBeVisible()
   await expect(page.getByTestId('entry-failure')).toHaveCount(1)
   await quietWindow(page, 400)
   await expect(page.getByTestId('entry-failure')).toHaveCount(1) // once, whatever fires (the import rejection, vite:preloadError)
+  await expect(page.getByTestId('boot-failure'), 'one alert, not two').toHaveCount(0)
+  await expect(page.getByRole('alert')).toHaveCount(1)
 })

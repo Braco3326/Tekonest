@@ -29,7 +29,10 @@ describe('entry guard (index.html)', () => {
     expect(guard).toContain(String.raw`/\/(assets\/main-|src\/main\.)/`)
     // main.ts says the app has started, in both routes
     const main = readFileSync(fileURLToPath(new URL('../../src/main.ts', import.meta.url)), 'utf8')
-    expect(main.match(/booted()/g)?.length).toBeGreaterThanOrEqual(2)
+    // the legacy route passes it as the fulfilment handler, the creation route calls it once the route chunk is here (before bootCreation): deleting either must fail this
+    expect(main, 'legacy route: booted is the fulfilment handler').toContain('.then(booted,')
+    expect(main, 'creation route: booted() is called when the route chunk has loaded').toMatch(/\.then\(\(m\) => \{\s*booted\(\)/)
+    expect(main, 'and before bootCreation').toMatch(/booted\(\)[^\n]*\n\s*return m\.bootCreation\(\)/)
     expect(main).toContain('__tekEntryFailed')
   })
   it('it is a classic script placed before the entry module, listens to the entry error and to vite:preloadError, and adds the v query', () => {
