@@ -67,7 +67,7 @@ import type { PhotoArg } from './photoProjection'
 import { renderProjection, shiftPictureX } from './projection'
 import { orientSlab } from './slab'
 import type { Projection, ProjectionFace } from './projection'
-import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, runGates, DATA_TEXTURE_MAX_PX, TEXTURE_MAX_PX, TRIANGLE_CEILING } from './gates'
+import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, runGates, DATA_TEXTURE_MAX_PX, textureMaxPx, TRIANGLE_CEILING } from './gates'
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
 import type { GlbReport } from './inspect'
@@ -372,7 +372,7 @@ async function optimizeAndRegate(
   const clean = spec.texture && (!scripted || hybrid) ? await blankBands(fixed, spec.texture.blankBandsMm ?? [], spec.texture.blankRects ?? []) : fixed
   // A scripted shape's palette is already lifted by the builder, and a projected picture was lifted when it was rendered: no second lift.
   const lit = scripted ? clean : await normaliseLook(clean)
-  const textured = await d.optimizeTextures(lit, { maxPx: TEXTURE_MAX_PX[spec.tier], dataMaxPx: DATA_TEXTURE_MAX_PX[spec.tier] })
+  const textured = await d.optimizeTextures(lit, { maxPx: textureMaxPx(spec), dataMaxPx: DATA_TEXTURE_MAX_PX[spec.tier] })
   const bytes = await d.compress(textured, { quantizePositionBits: QUANTIZE_BITS[spec.tier] })
   const compressed = await measure(bytes, spec)
 

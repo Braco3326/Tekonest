@@ -12,7 +12,9 @@ import {
   FILE_BYTES_MAX,
   runGates,
   DATA_TEXTURE_MAX_PX,
+  HYBRID_TEXTURE_MAX_PX,
   TEXTURE_MAX_PX,
+  textureMaxPx,
 } from '../../../tools/assets3d/gates'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
 import type { GlbReport } from '../../../tools/assets3d/inspect'
@@ -756,6 +758,25 @@ describe('checkProportionDrift', () => {
 
   it('fails a degenerate size', () => {
     expect(checkProportionDrift({ w: 0, h: 0, d: 0 }, spec).ok).toBe(false)
+  })
+})
+
+describe('textureMaxPx (hybrid models get a larger atlas)', () => {
+  it('is the tier limit, except for a spec with a projection (a hybrid: scripted shape + picture atlas), which gets HYBRID_TEXTURE_MAX_PX', () => {
+    expect(HYBRID_TEXTURE_MAX_PX).toBe(2048)
+    expect(textureMaxPx(deviceSpec({ tier: 'hero' }))).toBe(1024)
+    expect(textureMaxPx(deviceSpec({ tier: 'hero', build: { shape: 'rack-box' } }))).toBe(1024) // scripted, no picture
+    expect(textureMaxPx(deviceSpec({ tier: 'hero', build: { shape: 'rack-box', projection: 'io' } }))).toBe(2048)
+    expect(textureMaxPx(deviceSpec({ tier: 'connector' }))).toBe(512)
+  })
+  it('the textures gate lets a hybrid atlas reach 2048 px and still refuses 2049', () => {
+    const hybrid = deviceSpec({ tier: 'hero', build: { shape: 'rack-box', projection: ['io', 'top'] } })
+    const atlas = (w: number, h: number) => ({ name: 'baseColor', width: w, height: h, mimeType: 'image/webp' })
+    expect(checkTextures(reportOf({ textures: [atlas(2048, 1155)] }), hybrid).ok).toBe(true)
+    const big = checkTextures(reportOf({ textures: [atlas(2049, 1155)] }), hybrid)
+    expect(big.ok).toBe(false)
+    expect(big.detail).toMatch(/2048/)
+    expect(checkTextures(reportOf({ textures: [atlas(2048, 1155)] }), deviceSpec({ tier: 'hero' })).ok).toBe(false) // a plain hero stays at 1024
   })
 })
 

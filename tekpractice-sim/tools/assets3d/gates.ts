@@ -52,6 +52,15 @@ const MAX_MATERIALS = 1
 export const TRIANGLE_CEILING = { connector: 800, standard: 4000, hero: 15000 } as const
 /** Longest texture side, in pixels, by tier: the texture step downsizes to this, the textures gate enforces it. */
 export const TEXTURE_MAX_PX = { connector: 512, standard: 1024, hero: 1024 } as const
+/**
+ * Longest atlas side of a hybrid (a scripted shape wearing pictures of its faces): the pictures sit side by side in one atlas, so its long side
+ * carries all of them. The mesh is a few hundred triangles, so the larger map costs little to draw, and one colour map is all there is.
+ */
+export const HYBRID_TEXTURE_MAX_PX = 2048
+/** The longest texture side allowed for `spec`: its tier limit, or HYBRID_TEXTURE_MAX_PX when the spec projects pictures onto a scripted shape. */
+export function textureMaxPx(spec: AssetSpecT): number {
+  return spec.build?.projection !== undefined ? HYBRID_TEXTURE_MAX_PX : TEXTURE_MAX_PX[spec.tier]
+}
 /** Longest side of the data maps (normal, metallic-roughness, occlusion), by tier: half the colour limit, because near-lossless data maps weigh several times a lossy colour map. */
 export const DATA_TEXTURE_MAX_PX = { connector: 256, standard: 512, hero: 512 } as const
 /** Shipped file size ceiling, in bytes, by tier (the whole GLB: geometry, textures and JSON). */
@@ -235,7 +244,7 @@ export function checkBudget(report: GlbReport, spec: AssetSpecT): GateResult {
  * missing or non-finite size, and lists every problem at once, naming the texture and the numbers.
  */
 export function checkTextures(report: GlbReport, spec: AssetSpecT): GateResult {
-  const maxPx = TEXTURE_MAX_PX[spec.tier]
+  const maxPx = textureMaxPx(spec)
   const maxBytes = FILE_BYTES_MAX[spec.tier]
   const problems: string[] = []
 

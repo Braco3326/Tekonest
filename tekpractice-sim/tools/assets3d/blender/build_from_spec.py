@@ -933,6 +933,7 @@ def wipe_scene() -> None:
 
 PROJECTION_COS = math.cos(math.radians(50.0))   # a face looks at the projection when its normal is within 50 degrees of the face normal (a console top slopes up to about 33)
 SWATCH_PX = 32                                  # one palette swatch in the atlas: 32 x 32 px
+ATLAS_ROW_MAX_PX = 4096                         # the pictures stand side by side in one row; wider than this in all, they are scaled down together
 
 
 def srgb_byte(linear: float) -> int:
@@ -947,8 +948,9 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
     swatch of its own colour, all in ONE atlas, so the model keeps ONE material and ONE texture.
 
     plan.projections = [{face: io | opposite | top | left, png: path of the face image (face-local x right, y up, seen from outside)}].
-    Each image is the whole face rectangle (width x height, depth for the top face, from plan.sizeMm). The atlas stacks the pictures
-    above a one-row palette strip; a face goes to the FIRST projection whose face it looks at (within 50 degrees), else to a swatch.
+    Each image is the whole face rectangle (width x height, depth for the top face, from plan.sizeMm). The atlas puts the pictures side by
+    side in one row (scaled together by one factor when they are wider than ATLAS_ROW_MAX_PX in all, so every face keeps the same pixels per
+    millimetre) above a one-row palette strip; a face goes to the FIRST projection whose face it looks at (within 50 degrees), else to a swatch.
     The vertex colours are removed (the swatches carry them). The atlas is saved to `out_png` (the exporter embeds it).
     Blender space: glTF (x, y, z) = Blender (x, -z, y), so the io face looks along Blender -Y.
     """
@@ -973,8 +975,17 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
         iw, ih = img.size
         if iw < SWATCH_PX or ih < 2:
             raise BuildError(f"the projection image {proj['png']} is too small ({iw} x {ih})")
-        pictures.append((face, img, iw, ih, [c for c in img.pixels[:]]))
-    atlas_w = max(p[2] for p in pictures)
+        pictures.append([face, img, iw, ih, None])
+    # one scale factor for all of them, so that the row fits ATLAS_ROW_MAX_PX (Blender's image.scale is bilinear: fine for a factor above 0.5)
+    shrink = min(1.0, ATLAS_ROW_MAX_PX / sum(p[2] for p in pictures))
+    for p in pictures:
+        if shrink < 1.0:
+            p[1].scale(max(SWATCH_PX, round(p[2] * shrink)), max(2, round(p[3] * shrink)))
+            p[2], p[3] = p[1].size
+        p[4] = [c for c in p[1].pixels[:]]
+    pictures = [tuple(p) for p in pictures]
+    atlas_w = sum(p[2] for p in pictures)
+    tallest = max(p[3] for p in pictures)
 
     me = ob.data
     colours = me.color_attributes[COLOUR_ATTRIBUTE]
@@ -996,14 +1007,14 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
     if len(palette) > atlas_w // SWATCH_PX:
         raise BuildError(f"{len(palette)} palette colours do not fit in an atlas {atlas_w} px wide")
 
-    # the atlas, bottom-up like Blender images: the palette strip, then the pictures stacked above it
+    # the atlas, bottom-up like Blender images: the palette strip, then the pictures side by side above it
     pal_rows = SWATCH_PX
-    offsets = []
-    row = pal_rows
-    for (_f, _img, _iw, ih, _px) in pictures:
-        offsets.append(row)
-        row += ih
-    total_h = row
+    offsets = []   # the x of each picture's left edge
+    col = 0
+    for (_f, _img, iw, _ih, _px) in pictures:
+        offsets.append(col)
+        col += iw
+    total_h = pal_rows + tallest
     atlas = bpy.data.images.new("projection_atlas", atlas_w, total_h, alpha=False)
     atlas.colorspace_settings.name = "sRGB"
     pix = [0.0] * (atlas_w * total_h * 4)
@@ -1016,7 +1027,7 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
     for (_f, _img, iw, ih, px), off in zip(pictures, offsets):
         for r in range(ih):
             src = r * iw * 4
-            dst = ((off + r) * atlas_w) * 4
+            dst = ((pal_rows + r) * atlas_w + off) * 4
             pix[dst:dst + iw * 4] = px[src:src + iw * 4]
     atlas.pixels.foreach_set(pix)
     atlas.filepath_raw = out_png
@@ -1036,7 +1047,7 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
                 u, v = local(co)
                 u = min(max(u / fw, 0.5 / iw), 1.0 - 0.5 / iw)
                 v = min(max(v / fh, 0.5 / ih), 1.0 - 0.5 / ih)
-                uv.data[li].uv = (u * iw / atlas_w, (offsets[k] + v * ih) / total_h)
+                uv.data[li].uv = ((offsets[k] + u * iw) / atlas_w, (pal_rows + v * ih) / total_h)
 
     # one material, the atlas as its base colour; no vertex colours any more
     me.materials.clear()

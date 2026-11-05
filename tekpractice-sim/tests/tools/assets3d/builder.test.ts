@@ -391,6 +391,26 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(fixed.triangles).toBeLessThan(400)
   }, 120_000)
 
+  it.skipIf(!BLENDER)('pictures wider in all than 4096 px are scaled by one common factor to a 4096 px atlas row, each still on its own face', async () => {
+    const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 1 } } }
+    const solid = async (w: number, h: number, rgb: number[]): Promise<Uint8Array> =>
+      new Uint8Array(await sharp({ create: { width: w, height: h, channels: 3, background: { r: rgb[0], g: rgb[1], b: rgb[2] } } }).png().toBuffer())
+    const out = join(dir, 'projected-big.raw.glb')
+    await runBuilder(spec, out, {}, [
+      { face: 'io', png: await solid(3000, 100, [200, 30, 30]) },
+      { face: 'top', png: await solid(3000, 150, [30, 200, 30]) },
+    ])
+    const doc = await new NodeIO().registerExtensions(ALL_EXTENSIONS).readBinary(new Uint8Array(await readFile(out)))
+    const tex = doc.getRoot().listMaterials()[0].getBaseColorTexture()!
+    const { data, info } = await sharp(Buffer.from(tex.getImage()!)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    expect(info.width).toBe(4096) // 2 x 2048: 3000 x 0.6827
+    expect(info.height).toBe(32 + 102) // the palette strip + the tallest picture, 150 x 0.6827
+    const at = (x: number, y: number): number[] => Array.from(data.subarray((y * info.width + x) * 3, (y * info.width + x) * 3 + 3))
+    const near = (a: number[], b: number[]): boolean => a.every((c, i) => Math.abs(c - b[i]) <= 3)
+    expect(near(at(1000, 134 - 32 - 20), [200, 30, 30])).toBe(true) // the io picture is the left half of the row (image rows run top-down)
+    expect(near(at(3000, 134 - 32 - 20), [30, 200, 30])).toBe(true) // the top picture the right half
+  }, 120_000)
+
   it.skipIf(!BLENDER)('two projections (io and top) land on their own faces in one atlas: the io picture on the io face, the top picture on the top face, swatches elsewhere', async () => {
     const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 1 } } }
     const solid = async (w: number, h: number, rgb: number[]): Promise<Uint8Array> =>
@@ -404,8 +424,8 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     const prims = doc.getRoot().listMeshes().flatMap((m) => m.listPrimitives())
     const tex = doc.getRoot().listMaterials()[0].getBaseColorTexture()!
     const { data, info } = await sharp(Buffer.from(tex.getImage()!)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
-    expect(info.width).toBe(300) // the widest picture
-    expect(info.height).toBe(32 + 100 + 150) // palette strip + both pictures
+    expect(info.width).toBe(300 + 200) // the pictures side by side in one row
+    expect(info.height).toBe(32 + 150) // the palette strip + the tallest picture
     const texel = (u: number, v: number): number[] => {
       const x = Math.min(info.width - 1, Math.floor(u * info.width))
       const y = Math.min(info.height - 1, Math.floor(v * info.height))
