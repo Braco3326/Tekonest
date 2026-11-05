@@ -308,25 +308,54 @@ test('P3-2: a device drawn under an empty corner of the cube square can be click
   expect(await page.evaluate((p) => document.elementFromPoint(p.x, p.y)?.getAttribute('data-testid'), centre)).toBe('view-cube')
 })
 
-test('P3-2: the cube layer follows the silhouette from every pose: its centre and the middle of every zone patch are the cube, every point the square misses is the canvas', async ({ page }) => {
+test('P3-2 + S10: from the pose of each of the 26 zones, the layer is the cube at the point of that zone, lets no cube point through, and covers at most a thin band of empty pixels', async ({ page }) => {
   await boot(page)
-  for (const id of ['face', 'dessus', 'droite', 'dessus-face-droite', 'arriere-gauche']) {
-    await page.evaluate((z) => window.__creation!.cubeZoneScreenPoint(z), id)
+  for (const s of ZONES) {
+    const id = zoneId(s)
+    const pt = (await page.evaluate((z) => window.__creation!.cubeZoneScreenPoint(z), id))!
     await waitRendersIdle(page)
-    const bad = await page.evaluate(() => {
+    expect(await page.evaluate((p) => document.elementFromPoint(p.x, p.y)?.getAttribute('data-testid'), pt), `${id}: the zone's own point is the cube layer`).toBe('view-cube')
+    const r = await page.evaluate(() => {
       const c = window.__creation!
-      const r = c.cubeRect()
-      const wrong: string[] = []
-      for (let y = r.y + 1; y < r.y + r.height; y += 3)
-        for (let x = r.x + 1; x < r.x + r.width; x += 3) {
+      const rc = c.cubeRect()
+      let through = 0
+      let extra = 0
+      for (let y = rc.y + 0.5; y < rc.y + rc.height; y += 1)
+        for (let x = rc.x + 0.5; x < rc.x + rc.width; x += 1) {
           const zone = c.cubeZoneAt(x, y)
           const top = document.elementFromPoint(x, y)?.getAttribute('data-testid') === 'view-cube'
-          if (zone && !top) wrong.push(`${Math.round(x)},${Math.round(y)} ${zone} not the cube layer`)
-          if (!zone && top) wrong.push(`${Math.round(x)},${Math.round(y)} no zone but the cube layer`)
+          if (zone && !top) through++
+          if (!zone && top) extra++
         }
-      return wrong
+      return { through, extra }
     })
-    // a point right on the silhouette edge may fall either way by a pixel: allow a thin band, never a region
-    expect(bad.length, `${id}: ${bad.slice(0, 6).join(' | ')}`).toBeLessThan(40)
+    // a point of the cube that the layer lets through would be a click the cube never gets: only the pixels on the silhouette edge may fall either way
+    expect(r.through, `${id}: cube points the layer lets through`).toBeLessThanOrEqual(70)
+    expect(r.extra, `${id}: empty points the layer still takes`).toBeLessThanOrEqual(100)
   }
+})
+
+test('S1 (fix round): widening the window to 1600 px grows the cube to 130 px and its hit shape with it, the camera not moving', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.cubeZoneScreenPoint('face'))
+  await waitRendersIdle(page)
+  const camBefore = await page.evaluate(() => window.__creation!.camera())
+  await page.setViewportSize({ width: 1600, height: 900 })
+  await expect.poll(() => page.evaluate(() => window.__creation!.cubeRect().width)).toBe(130)
+  await waitRendersIdle(page)
+  expect(await page.evaluate(() => window.__creation!.camera()), 'the camera did not move').toEqual(camBefore)
+  const bad = await page.evaluate(() => {
+    const c = window.__creation!
+    const r = c.cubeRect()
+    const wrong: string[] = []
+    // the band the 120 px shape would have left out: the right and bottom 12 px of the 130 px square
+    for (let y = r.y + 1; y < r.y + r.height; y += 2)
+      for (let x = r.x + 1; x < r.x + r.width; x += 2) {
+        const zone = c.cubeZoneAt(x, y)
+        const top = document.elementFromPoint(x, y)?.getAttribute('data-testid') === 'view-cube'
+        if (zone && !top) wrong.push(`${Math.round(x - r.x)},${Math.round(y - r.y)} ${zone}: a cube point the layer lets through`)
+      }
+    return wrong
+  })
+  expect(bad, bad.slice(0, 5).join(' | ')).toEqual([])
 })

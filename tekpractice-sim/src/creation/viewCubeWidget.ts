@@ -124,7 +124,10 @@ function unlit(name: string, scene: Scene, color: string): StandardMaterial {
 
 /** Andrew's monotone chain: the convex hull of a few points (the cube's eight corners on screen). */
 export function convexHull(points: readonly { x: number; y: number }[]): { x: number; y: number }[] {
-  const p = [...points].sort((a, b) => a.x - b.x || a.y - b.y)
+  // Quantised to a hundredth of a px first: the cube seen along an edge or a diagonal projects its corners onto 4 spots with float noise (30.0000002 against 29.9999999), and a sort by x
+  // then scrambles the near-vertical runs: the chain then dropped a corner of the rectangle (found on the Dessous · Droite pose: a quarter of the cube let through).
+  const q = (v: number): number => Math.round(v * 100) / 100
+  const p = points.map((pt) => ({ x: q(pt.x), y: q(pt.y) })).sort((a, b) => a.x - b.x || a.y - b.y)
   if (p.length < 3) return p
   const cross = (o: { x: number; y: number }, a: { x: number; y: number }, b: { x: number; y: number }): number => (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x)
   const half = (list: { x: number; y: number }[]): { x: number; y: number }[] => {
@@ -532,6 +535,7 @@ export class ViewCubeWidget {
     const ts = this.tools.style
     ts.left = `${(c?.offsetLeft ?? 0) + K.marginPx + size + 4}px`
     ts.top = s.top
+    this.updateShape() // the square may have changed size (120 / 130 px with the window): the hit shape is in px of the square (fix round S1)
     this.scheduler.invalidate()
   }
 

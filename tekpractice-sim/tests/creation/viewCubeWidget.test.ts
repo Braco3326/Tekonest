@@ -295,6 +295,13 @@ describe('the hit shape (night 2 wave 5, P3-2: the corners of the square are not
     expect(convexHull([])).toEqual([])
   })
 
+  it('convexHull: a cube seen along an edge (corners on 4 spots, with float noise) keeps all four corners (it lost one on Dessous · Droite)', () => {
+    const P = (x: number, y: number) => ({ x, y })
+    const noisy = [P(30.0000002, 17.6), P(29.9999999, 17.6000001), P(30.0000001, 60), P(29.9999998, 102.4), P(90.0000003, 17.6), P(90, 60.0000002), P(89.9999999, 102.4), P(90.0000001, 102.4000001)]
+    const hull = convexHull(noisy)
+    expect(new Set(hull.map((p) => `${p.x},${p.y}`))).toEqual(new Set(['30,17.6', '90,17.6', '90,102.4', '30,102.4']))
+  })
+
   it('clipPolygon writes a CSS polygon in px, one decimal at most', () => {
     expect(clipPolygon([{ x: 0, y: 0 }, { x: 10.04, y: 0 }, { x: 5, y: 7.26 }])).toBe('polygon(0px 0px, 10px 0px, 5px 7.3px)')
   })
