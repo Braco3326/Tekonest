@@ -12,10 +12,55 @@
     {
       "id": "xlr3-f",
       "optimized": true,
-      "tris": 184,
+      "tris": 640,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-04T07:09:53.507Z",
+      "specSource": "https://www.neutrik.com/media/8223/download/nc3fxx-1.pdf?v=1",
+      "logosRemoved": true,
+      "photos": [],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "xlr5-m",
@@ -36,10 +81,55 @@
     {
       "id": "trs-quarter",
       "optimized": true,
-      "tris": 320,
+      "tris": 732,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-04T07:10:03.593Z",
+      "specSource": "https://www.neutrik.com/media/8523/download/np3x-2.pdf?v=1",
+      "logosRemoved": true,
+      "photos": [],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "ts-quarter",
@@ -68,10 +158,55 @@
     {
       "id": "rj45",
       "optimized": true,
-      "tris": 24,
+      "tris": 384,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-04T07:10:12.437Z",
+      "specSource": "https://en.wikipedia.org/wiki/Modular_connector",
+      "logosRemoved": true,
+      "photos": [],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "ethercon",
@@ -228,7 +363,7 @@
     {
       "id": "yamaha-rio3224-d2",
       "optimized": true,
-      "tris": 12,
+      "tris": 3704,
       "kind": "device",
       "ports": 6,
       "status": "ok",
@@ -239,7 +374,52 @@
       "attributionText": "",
       "trademark": "generic",
       "portEmpties": 6,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-04T07:10:22.001Z",
+      "specSource": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+      "logosRemoved": true,
+      "photos": [],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "shure-sm58",

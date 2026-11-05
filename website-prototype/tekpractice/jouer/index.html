@@ -743,9 +743,9 @@
         transition-duration: 0.01ms !important;
       }
     </style>
-    <script type="module" crossorigin src="/tekpractice/jouer/assets/main-YS7ugCVM.js"></script>
+    <script type="module" crossorigin src="/tekpractice/jouer/assets/main-BDQPt0H-.js"></script>
     <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/modulepreload-polyfill-B5Qt9EMX.js">
-    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/babylon-Cfth5-vy.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/babylon-BQBAJmw-.js">
   </head>
   <body>
     <a id="site-link" href="/" aria-label="Retour au site Tekonest">← tekonest.com</a>
@@ -753,5 +753,64 @@
     <div id="board2d" hidden></div>
     <div id="hud"></div>
     <div id="dashboard" hidden></div>
+    <!-- Entry guard (night 2 wave 5, P1-1; fix round C1, C2, N1-N3, N5). When the ENTRY module script cannot load (a missing file, or an HTML page served in its place: production did
+         that for hashed assets, answering 200 text/html) nothing of the app runs, not even main.ts (so not bootFailure.ts), and the page stays blank. This plain script (no module, no
+         dependency) then TELLS the user what happened (role="alert") and offers « Recharger la page », which refreshes index.html only: its link adds ?v=<time> to the PAGE address
+         (routing.ts ignores it). It does not change the entry script's own address (/assets/main-<hash>.js), so if an edge still holds HTML under that address the failure comes back:
+         the real cure is on the site side (a 404.html, cache headers, a purge after a deploy; see the wave 5 report). It acts ONLY until main.ts says the app has started
+         (window.__tekBooted): a lazy chunk that fails later is the app's to handle, and the guard never covers the screen for it. Two triggers before that: the entry module script's
+         error event (only a script whose address is the entry, /assets/main- or /src/main.), and vite:preloadError for the route chunk (it steps aside when the boot chunk's own alert
+         shows). Placement: before the entry module in this file, after it in the build; it works because a module script is deferred: its error event fires when the module would
+         have run, after the document has been parsed and so after this script has run. It would break if the entry script ever got `async` (the event could then fire before this listener exists). A Content-Security-Policy with script-src would need a hash or nonce for this inline script. The two French strings below are the only user strings that
+         live in index.html (deck: « Textes hors COPY »; tests/creation/entryGuard.test.ts keeps them equal). -->
+    <script>
+      ;(function () {
+        var TEXT = 'Le jeu n’a pas pu se charger. Rechargez la page en forçant le rafraîchissement (Ctrl+F5) ou ouvrez-la de nouveau.'
+        var ACTION = 'Recharger la page'
+        var shown = false
+        function show() {
+          if (shown || window.__tekBooted || !document.body) return
+          shown = true
+          var url = new URL(location.href)
+          url.searchParams.set('v', String(Date.now()))
+          var box = document.createElement('section')
+          box.setAttribute('role', 'alert')
+          box.setAttribute('data-testid', 'entry-failure')
+          box.style.cssText =
+            'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2147483647;box-sizing:border-box;width:min(32rem,calc(100vw - 32px));padding:24px;border-radius:0;' +
+            'background:var(--cr-nuit,#131114);color:var(--cr-papier,#f3ede3);border:1px solid var(--cr-ambre,#dd9349);font:16px/1.5 "IBM Plex Sans",system-ui,sans-serif'
+          var p = document.createElement('p')
+          p.style.cssText = 'margin:0 0 16px'
+          p.textContent = TEXT
+          var a = document.createElement('a')
+          a.href = url.href
+          a.textContent = ACTION
+          a.style.cssText =
+            'display:inline-block;padding:8px 16px;border-radius:0;background:var(--cr-ambre,#dd9349);color:var(--cr-nuit,#131114);font:600 16px/1.5 "IBM Plex Sans",system-ui,sans-serif;text-decoration:none'
+          box.appendChild(p)
+          box.appendChild(a)
+          document.body.appendChild(box)
+          a.focus()
+        }
+        // main.ts calls this when the legacy route cannot load (that route has no alert of its own)
+        window.__tekEntryFailed = show
+        // a resource error does not bubble: capture on the window; only the ENTRY module script counts
+        window.addEventListener(
+          'error',
+          function (e) {
+            var t = e.target
+            if (t && t.tagName === 'SCRIPT' && t.type === 'module' && /\/(assets\/main-|src\/main\.)/.test(t.src || '')) show()
+          },
+          true
+        )
+        // the route chunk cannot be fetched (before the app started): main.ts shows its own alert for the creation chunk, so this only steps in when nothing else did
+        window.addEventListener('vite:preloadError', function () {
+          if (window.__tekBooted) return
+          setTimeout(function () {
+            if (!window.__tekBooted && !document.querySelector('[data-testid="boot-failure"]')) show()
+          }, 100)
+        })
+      })()
+    </script>
   </body>
 </html>
