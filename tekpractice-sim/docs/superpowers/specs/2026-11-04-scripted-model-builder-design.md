@@ -96,7 +96,7 @@ New flag: `npm run asset:build -- <id> --scripted`.
 
 ### 4.5 Gates
 
-Unchanged: size, transform, parts, port positions, budget (connectors ≤ 800, standard/hero ≤ 4000 triangles), textures, glTF validator, proportion drift. A scripted asset also gets the contact sheet from `asset:sheet` for the visual review. The per-port surface ray-cast gate listed in the 2026-10-29 deviations exists since 2026-11-04 (`portSurface`, section 4.5b).
+Unchanged: size, transform, parts, port positions, budget (connectors ≤ 800, standard ≤ 4000, hero ≤ 15000 triangles since 2026-11-04: a photo-textured mic or panel needs the detail; the hero raise is the builder session's decision, to be confirmed by the founder), textures, glTF validator, proportion drift. A scripted asset also gets the contact sheet from `asset:sheet` for the visual review. The per-port surface ray-cast gate listed in the 2026-10-29 deviations exists since 2026-11-04 (`portSurface`, section 4.5b).
 
 ### 4.5b Per-port surface gate (added 2026-11-04)
 
@@ -163,13 +163,13 @@ Routes 3 and 4 may be mixed face by face (`build.projection` is a face or a list
 
 New pieces (all tested, TDD):
 - `meshy.ts`: optional `geometryResolution`, `shouldRemesh`, `imageEnhancement`, `textureResolution` (sent only when asked).
-- Gates: hero triangle ceiling 15000 (was 4000; the Meshy target follows: 10500), data maps (normal, metallic-roughness) at half the colour limit, a per-spec `driftLimit` (at most 0.35), a per-port `insetMm` (a jack inside a recessed panel: the port node sits behind the face plane and the portPositions gate follows).
+- Gates: hero triangle ceiling 15000 (was 4000; the Meshy target follows: 10500; NOT yet confirmed by the founder), the texture STEP downsizes data maps (normal, metallic-roughness) to half the colour limit (the textures gate itself checks only the colour limit and the file size), a per-spec `driftLimit` (at most 0.35), a per-port `insetMm` (a jack inside a recessed panel: the port node sits behind the face plane and the portPositions gate follows).
 - `look.ts`: caps the metallic factor at 0.15 and lifts the colour map (linear x 3 + 0.012, capped 0.85, never darker): a Meshy PBR set is black in Mode Création's IBL-less lights otherwise.
 - `blank.ts`: repaints logos and brand text per TEXEL (interpolated 3D position), by height band or by rectangle in the spec's face-local millimetres (`texture.blankBandsMm`, `texture.blankRects`). A Meshy atlas is shattered, so image-space patching is impossible; a logo printed on one big flat triangle is removed exactly. A region that covers no texel is an error.
 - `slab.ts` and `--slab`: a thin Meshy panel gets its thin axis turned into the depth before the fix-up (otherwise the proportion matcher lays it flat).
 - `console-wedge` shape: a side profile `[depth from the io face, height]` extruded across the width (QL1: 17 measured stations, chamfer 1.5 mm).
 - Manifest: `tool: 'hybrid'`, `toolVersion: blender-builder-1+meshy-7.1`, the task id and the reference photos are recorded; `--meshy-task` records provenance of a hand-downloaded Meshy GLB.
 
-Logos: every texture here derives from manufacturer photos. The repaint removes the brand marks it was asked to; the manifest's `logosRemoved` was set after viewing each result, but the founder asserts it for the commercial track (CLAUDE.md: generic visual equivalents only). Model names such as the "RIO3224-D2" print and the "HD I/O" mark were left (nominative); see the night log.
+Logos: every texture here derives from manufacturer photos. The repaint removes the brand marks it was asked to; the manifest's `logosRemoved` was set after viewing each result, but the founder asserts it for the commercial track (CLAUDE.md: generic visual equivalents only). After the independent review the model-name prints (RIO3224-D2, HD I/O, OCXHD) were repainted too; whether manufacturer photos may be used as textures at all (copyright, trade dress) is a founder/legal decision, not a pipeline default.
 
 Not done and why: the OCX HD, Scoop5 and QL1-class rear faces that only have perspective renders were not projected (the aspect check refuses them); the Focusrite ISA One, Grace m905, StudioPatch and Axia iQ have no straight-on photos; the K&M stand, m!ka arm, litt lamp and Mogami loom need an `assembly` shape (see section 7).

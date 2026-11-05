@@ -1547,6 +1547,38 @@ describe('scripted build (--scripted)', () => {
       expect(seen.faces).toEqual(['top', 'io'])
     })
 
+    it('a hybrid repaints the spec blank bands on the model it builds (the texture block applies to hybrids, not to plain scripted models)', async () => {
+      const spec = box({ texture: { blankBandsMm: [{ fromMm: 0, toMm: 1000, fill: '#202020' }] } })
+      await addPhotos(spec.id, ['a.png'])
+      // the model the (fake) builder-and-fix-up chain hands to the texture step: a textured box with real UVs
+      const withRealUvs = async (bytes: Uint8Array): Promise<Uint8Array> => {
+        const io = new NodeIO()
+        const doc = await io.readBinary(bytes)
+        for (const prim of doc.getRoot().listMeshes().flatMap((m) => m.listPrimitives())) {
+          const uv = prim.getAttribute('TEXCOORD_0')!
+          const arr = uv.getArray() as Float32Array
+          for (let i = 0; i < arr.length / 2; i++) arr.set([[0, 0], [1, 0], [0, 1]][i % 3], i * 2)
+          uv.setArray(arr)
+        }
+        return io.writeBinary(doc)
+      }
+      const read = async (bytes: Uint8Array): Promise<number> => {
+        const img = (await new NodeIO().readBinary(bytes)).getRoot().listMaterials()[0].getBaseColorTexture()!.getImage()!
+        const { data } = await sharp(Buffer.from(img)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+        return data[0]
+      }
+      const fixed = await withRealUvs(await goodGlb(spec, 0, { sizePx: 16, pbr: true }))
+      const run = async (s: AssetSpecT): Promise<number> => {
+        let seen: Uint8Array | undefined
+        const deps = makeDeps({ spec: s, fixed: [fixed], optimize: async (bytes) => ((seen = bytes), bytes) })
+        deps.photoProjection = async () => ({ png: new Uint8Array([2]), faceMm: { w: 1, h: 1 } })
+        await buildAsset(s.id, { maxAttempts: 1, scripted: true, projectPhotos: [{ face: 'io', file: 'r.jpg' }], logosRemoved: true, dryRun: true }, deps)
+        return read(seen!)
+      }
+      expect(await run(spec)).toBe(0x20) // painted with the fill (scripted: no second lift)
+      expect(await run(box())).toBe(0x80) // no texture block: the flat grey of the helper texture, untouched
+    })
+
     it('photos only: the manifest names the builder alone, no Meshy, no task, the photo file names, and replaces the licence fields of the model it replaces', async () => {
       const spec = box({ build: { shape: 'rack-box', projection: 'io' } })
       await addPhotos(spec.id, ['a.png'])

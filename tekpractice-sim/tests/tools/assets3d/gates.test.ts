@@ -684,6 +684,15 @@ describe('checkConnectorFit', () => {
   })
 })
 
+describe('checkPortSurface and insetMm', () => {
+  it('a port with an opening and NO inset may sit 2 mm in front (the fix-up cut a recess); the same port WITH an inset gets only the 0.5 mm tolerance', () => {
+    const withOpening = (insetMm?: number) => deviceSpec({ ports: [{ portId: 'in-mic-1', face: 'io', xMm: 20, yMm: 25, confidence: 'manual', openingMm: 24, ...(insetMm === undefined ? {} : { insetMm }) }] })
+    const surfaces = [{ name: 'port_in-mic-1', offsetM: 0.0015 }] // the surface 1.5 mm behind the port
+    expect(checkPortSurface(surfaces, withOpening(), { recessCut: true }).ok).toBe(true)
+    expect(checkPortSurface(surfaces, withOpening(30), { recessCut: true }).ok).toBe(false)
+  })
+})
+
 describe('checkProportionDrift', () => {
   const spec = deviceSpec() // 100 x 50 x 200 mm, d is the largest axis
 

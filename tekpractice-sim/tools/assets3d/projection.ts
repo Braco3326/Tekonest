@@ -66,7 +66,7 @@ const round2 = (v: number): number => Math.round(v * 100) / 100
  * Renders the face `face` of `glb` (a fixed-up model: pivot bottom-centre, spec size) and returns its cropped, lifted image.
  * Throws when Blender is missing, exits non-zero (the message carries the stderr tail) or writes no image.
  */
-export async function renderProjection(glb: string, face: ProjectionFace, deps: ProjectionDeps = {}): Promise<Projection> {
+export async function renderProjection(glb: string, face: ProjectionFace, deps: ProjectionDeps = {}, expectedMm?: { w: number; h: number; d: number }): Promise<Projection> {
   const viewName = VIEW_OF[face]
   if (!viewName) throw new Error(`cannot project the ${String(face)} face: only io, opposite, top and left have a render view`)
   const blender = deps.blender === undefined ? findBlender() : deps.blender
@@ -78,6 +78,13 @@ export async function renderProjection(glb: string, face: ProjectionFace, deps: 
   const report = await inspectGlb(new Uint8Array(await readFile(glb)))
   const extM = report.bboxM.max.map((v, i) => v - report.bboxM.min[i])
   const sizeMm = { w: round2(extM[0] / MM), h: round2(extM[1] / MM), d: round2(extM[2] / MM) }
+  if (expectedMm) {
+    for (const k of ['w', 'h', 'd'] as const) {
+      if (Math.abs(sizeMm[k] - expectedMm[k]) > 0.005 * expectedMm[k]) {
+        throw new Error(`renderProjection: ${basename(glb)} is ${sizeMm.w} x ${sizeMm.h} x ${sizeMm.d} mm but the spec size is ${expectedMm.w} x ${expectedMm.h} x ${expectedMm.d} mm: give the FIXED-UP Meshy model (attempt-N.fixed.glb of an asset:build --raw run), not the raw download, or the picture would be stretched`)
+      }
+    }
+  }
   const faceMm = projectionFaceMm(face, sizeMm)
   const orthoScaleM = Math.max(faceMm.w, faceMm.h) * MM * FRAME_MARGIN
   const maxExtentM = Math.max(...extM)

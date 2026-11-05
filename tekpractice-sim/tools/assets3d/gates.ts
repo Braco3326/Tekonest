@@ -13,7 +13,7 @@
  *   port positions  0.3 mm from the placement; 0.2 mm from the real face plane of the measured body (R4)
  *   budget          triangles <= 800 (connector) / 4000 (standard) / 15000 (hero), ceilings with no floor; one material (R5; hero raised 2026-11-04: a photo-textured mic or panel needs the detail)
  *   connector fit   the plug is 0 to 0.3 mm under the socket opening
- *   proportion      the pre-scale model's proportions drift at most 5 % from the spec's
+ *   proportion      the pre-scale model's proportions drift at most 5 % from the spec's (a spec may raise it with driftLimit, at most 35 %)
  *   textures        longest texture side <= 512 px (connector) / 1024 px (standard, hero); file <= 250 kB / 1.5 MB (near-lossless data maps)
  *   validator       0 errors from the Khronos glTF validator on the final bytes (warnings listed, never failing)
  * Every gate fails closed: a non-finite input (NaN, Infinity) fails with a detail saying which value, and each
@@ -320,7 +320,8 @@ const RECESS_DEPTH_M = 0.002
  */
 export function checkPortSurface(surfaces: { name: string; offsetM: number | null }[], spec: AssetSpecT, opts: { recessCut: boolean }): GateResult {
   const gate = 'portSurface'
-  const opening = new Map(spec.ports.map((p) => [`port_${p.portId}`, p.openingMm]))
+  // the fix-up cuts a socket recess only for a port with an opening that is NOT inset (placement.ts): an inset port gets no slack
+  const opening = new Map(spec.ports.map((p) => [`port_${p.portId}`, p.insetMm !== undefined && p.insetMm > 0 ? undefined : p.openingMm]))
   const problems: string[] = []
   for (const s of surfaces) {
     if (s.offsetM === null || !Number.isFinite(s.offsetM)) {

@@ -81,6 +81,18 @@ describe('renderProjection', () => {
     }
   })
 
+  it('refuses a source model whose size differs from the spec by more than 0.5 percent (a raw, not fixed-up, Meshy model would stretch the picture)', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'projection-'))
+    try {
+      const { exec } = fakeExec()
+      const glb = await glbFile(dir) // 400 x 100 x 200 mm
+      await expect(renderProjection(glb, 'io', { exec, blender: 'C:/fake/blender.exe' }, { w: 400, h: 100, d: 220 })).rejects.toThrow(/FIXED-UP/)
+      await expect(renderProjection(glb, 'io', { exec, blender: 'C:/fake/blender.exe' }, { w: 400, h: 100, d: 200.5 })).resolves.toBeDefined()
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
+  })
+
   it('maps the opposite face to the back view and the top face to the top view, with their own crop sizes', async () => {
     const dir = await mkdtemp(join(tmpdir(), 'projection-'))
     try {

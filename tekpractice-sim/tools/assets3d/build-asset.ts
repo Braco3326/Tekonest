@@ -137,7 +137,7 @@ export interface BuildDeps {
   /** The scripted builder: writes the raw GLB of a spec with a `build` block (default: runBuilder with Blender). */
   runBuilder: (spec: AssetSpecT, outGlb: string, projections?: BuildProjection[]) => Promise<void>
   /** The flat image of one face of a fixed-up Meshy model (default: renderProjection with Blender). */
-  renderProjection: (glb: string, face: ProjectionFace) => Promise<Projection>
+  renderProjection: (glb: string, face: ProjectionFace, expectedMm?: { w: number; h: number; d: number }) => Promise<Projection>
   /** The picture of a face made from a straight-on photo (default: photoProjection). */
   photoProjection: (photo: PhotoArg, face: ProjectionFace, sizeMm: { w: number; h: number; d: number }) => Promise<Projection>
   compress: (bytes: Uint8Array, opts: CompressOpts) => Promise<Uint8Array>
@@ -269,7 +269,7 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
     },
     runFixup: deps.runFixup ?? ((inGlb, outGlb, spec, opts) => runFixup(inGlb, outGlb, spec, opts)),
     runBuilder: deps.runBuilder ?? ((spec, outGlb, projections) => runBuilder(spec, outGlb, {}, projections)),
-    renderProjection: deps.renderProjection ?? ((glb, face) => renderProjection(glb, face)),
+    renderProjection: deps.renderProjection ?? ((glb, face, expectedMm) => renderProjection(glb, face, {}, expectedMm)),
     photoProjection: deps.photoProjection ?? ((photo, face, sizeMm) => photoProjection(photo.file, face, sizeMm, photo.crop ? { crop: photo.crop } : {})),
     compress: deps.compress ?? dracoCompress,
     optimizeTextures: deps.optimizeTextures ?? optimizeTextures,
@@ -499,7 +499,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
             if (photo) {
               projections.push({ face, png: (await d.photoProjection(photo, face, spec.realSizeMm)).png })
             } else if (opts.projectFrom) {
-              projections.push({ face, png: (await d.renderProjection(opts.projectFrom, face)).png })
+              projections.push({ face, png: (await d.renderProjection(opts.projectFrom, face, spec.realSizeMm)).png })
             } else {
               throw new Error(`the ${face} face has no picture: give --project <fixed Meshy glb> or --project-photo ${face}=<photo>`)
             }

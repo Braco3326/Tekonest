@@ -57,16 +57,18 @@ interface Tri {
   px: [number, number][]
   /** 3D corners in millimetres (world, after the node transforms). */
   p: P3[]
+  /** Unit normal of the triangle (its sign depends on the winding, so only its direction is used). */
+  n: P3
 }
 
 /** A region of the model: which 3D points are repainted and which are sampled for the automatic fill. */
 interface Region {
   label: string
   fill?: string
-  /** true = repaint, false = not. */
-  inside: (p: P3) => boolean
+  /** true = repaint, false = not (`t` is the triangle the texel belongs to). */
+  inside: (p: P3, t: Tri) => boolean
   /** true = a texel to sample the automatic fill from (just around the region). */
-  ring: (p: P3) => boolean
+  ring: (p: P3, t: Tri) => boolean
   /** Can the triangle possibly touch the region or its ring? (a cheap pre-filter on the triangle's corners) */
   near: (t: Tri) => boolean
 }
@@ -101,13 +103,17 @@ function triangles(prim: Primitive, world: ArrayLike<number>, w: number, h: numb
       uv.getElement(i, q)
       px.push([q[0] * w, q[1] * h])
     }
-    out.push({ px, p })
+    const e1 = [p[1][0] - p[0][0], p[1][1] - p[0][1], p[1][2] - p[0][2]]
+    const e2 = [p[2][0] - p[0][0], p[2][1] - p[0][1], p[2][2] - p[0][2]]
+    const c = [e1[1] * e2[2] - e1[2] * e2[1], e1[2] * e2[0] - e1[0] * e2[2], e1[0] * e2[1] - e1[1] * e2[0]]
+    const len = Math.hypot(c[0], c[1], c[2]) || 1
+    out.push({ px, p, n: [c[0] / len, c[1] / len, c[2] / len] })
   }
   return out
 }
 
 /** Calls `visit(x, y, point)` for every pixel whose centre lies in the triangle, with the pixel's interpolated 3D point. */
-function rasterise(tri: Tri, w: number, h: number, visit: (x: number, y: number, point: P3) => void): void {
+function rasterise(tri: Tri, w: number, h: number, visit: (x: number, y: number, point: P3, tri: Tri) => void): void {
   const [a, b, c] = tri.px
   const minX = Math.max(0, Math.floor(Math.min(a[0], b[0], c[0])))
   const maxX = Math.min(w - 1, Math.ceil(Math.max(a[0], b[0], c[0])))
@@ -115,7 +121,10 @@ function rasterise(tri: Tri, w: number, h: number, visit: (x: number, y: number,
   const maxY = Math.min(h - 1, Math.ceil(Math.max(a[1], b[1], c[1])))
   const det = (b[1] - c[1]) * (a[0] - c[0]) + (c[0] - b[0]) * (a[1] - c[1])
   if (Math.abs(det) < 1e-9) return
-  const eps = -0.02
+  // A pixel centre may lie up to half a pixel outside an edge (a tolerance in pixels, not in barycentric units: a big triangle would otherwise reach tens of pixels out).
+  const area2 = Math.abs(det)
+  const altitude = [area2 / Math.hypot(b[0] - c[0], b[1] - c[1]), area2 / Math.hypot(a[0] - c[0], a[1] - c[1]), area2 / Math.hypot(a[0] - b[0], a[1] - b[1])]
+  const eps = altitude.map((alt) => (alt > 0 ? -0.5 / alt : 0))
   const [pa, pb, pc] = tri.p
   for (let y = minY; y <= maxY; y++) {
     for (let x = minX; x <= maxX; x++) {
@@ -124,8 +133,8 @@ function rasterise(tri: Tri, w: number, h: number, visit: (x: number, y: number,
       const l1 = ((b[1] - c[1]) * (px - c[0]) + (c[0] - b[0]) * (py - c[1])) / det
       const l2 = ((c[1] - a[1]) * (px - c[0]) + (a[0] - c[0]) * (py - c[1])) / det
       const l3 = 1 - l1 - l2
-      if (l1 >= eps && l2 >= eps && l3 >= eps) {
-        visit(x, y, [l1 * pa[0] + l2 * pb[0] + l3 * pc[0], l1 * pa[1] + l2 * pb[1] + l3 * pc[1], l1 * pa[2] + l2 * pb[2] + l3 * pc[2]])
+      if (l1 >= eps[0] && l2 >= eps[1] && l3 >= eps[2]) {
+        visit(x, y, [l1 * pa[0] + l2 * pb[0] + l3 * pc[0], l1 * pa[1] + l2 * pb[1] + l3 * pc[1], l1 * pa[2] + l2 * pb[2] + l3 * pc[2]], tri)
       }
     }
   }
@@ -191,7 +200,7 @@ export async function blankBands(bytes: Uint8Array, bands: Band[], rects: Rect[]
       label: `the band ${band.fromMm}-${band.toMm} mm`,
       fill: band.fill,
       inside: (p) => p[1] >= band.fromMm && p[1] <= band.toMm,
-      ring: (p) => (p[1] < band.fromMm && p[1] >= band.fromMm - SAMPLE_MARGIN_MM) || (p[1] > band.toMm && p[1] <= band.toMm + SAMPLE_MARGIN_MM),
+      ring: (p, _t) => (p[1] < band.fromMm && p[1] >= band.fromMm - SAMPLE_MARGIN_MM) || (p[1] > band.toMm && p[1] <= band.toMm + SAMPLE_MARGIN_MM),
       near: (t) => Math.max(t.p[0][1], t.p[1][1], t.p[2][1]) >= band.fromMm - SAMPLE_MARGIN_MM && Math.min(t.p[0][1], t.p[1][1], t.p[2][1]) <= band.toMm + SAMPLE_MARGIN_MM,
     })),
     ...rects.map((r): Region => {
@@ -200,15 +209,18 @@ export async function blankBands(bytes: Uint8Array, bands: Band[], rects: Rect[]
       const depthMax = r.depthMm ?? Math.min(40, 0.4 * thickness)
       const margin = r.marginMm ?? SAMPLE_MARGIN_MM
       const local = (p: P3) => faceLocal(r.face, p[0] - cx, p[1] - lo[1], p[2] - cz, w, h, d)
-      const within = (p: P3, grow: number): boolean => {
+      // the face's outward axis in the file frame (the triangle must look along it: a rectangle at the edge of a face must not repaint the adjoining face)
+      const axis: P3 = { io: [0, 0, 1], opposite: [0, 0, -1], top: [0, 1, 0], bottom: [0, -1, 0], left: [-1, 0, 0], right: [1, 0, 0] }[r.face] as P3
+      const facing = (t: Tri): boolean => Math.abs(t.n[0] * axis[0] + t.n[1] * axis[1] + t.n[2] * axis[2]) > 0.5
+      const within = (p: P3, t: Tri, grow: number): boolean => {
         const l = local(p)
-        return l.depth <= depthMax && l.depth >= -2 && l.u >= r.xMm - grow && l.u <= r.xMm + r.wMm + grow && l.v >= r.yMm - grow && l.v <= r.yMm + r.hMm + grow
+        return facing(t) && l.depth <= depthMax && l.depth >= -2 && l.u >= r.xMm - grow && l.u <= r.xMm + r.wMm + grow && l.v >= r.yMm - grow && l.v <= r.yMm + r.hMm + grow
       }
       return {
         label: `the ${r.face} rectangle ${r.xMm},${r.yMm} ${r.wMm}x${r.hMm} mm`,
         fill: r.fill,
-        inside: (p) => within(p, 0),
-        ring: (p) => within(p, margin) && !within(p, 0),
+        inside: (p, t) => within(p, t, 0),
+        ring: (p, t) => within(p, t, margin) && !within(p, t, 0),
         // a triangle can reach the rectangle if its face-local extent overlaps the rectangle grown by the margin
         near: (t) => {
           const ls = t.p.map(local)
@@ -235,8 +247,8 @@ export async function blankBands(bytes: Uint8Array, bands: Band[], rects: Rect[]
       const mask = new Uint8Array(tw * th)
       let any = false
       for (const t of near) {
-        rasterise(t, tw, th, (x, y, p) => {
-          if (region.inside(p)) {
+        rasterise(t, tw, th, (x, y, p, tri) => {
+          if (region.inside(p, tri)) {
             mask[y * tw + x] = 1
             any = true
           }
@@ -251,8 +263,8 @@ export async function blankBands(bytes: Uint8Array, bands: Band[], rects: Rect[]
         const g: number[] = []
         const b: number[] = []
         for (const t of near) {
-          rasterise(t, tw, th, (x, y, p) => {
-            if (!region.ring(p) || mask[y * tw + x]) return
+          rasterise(t, tw, th, (x, y, p, tri) => {
+            if (!region.ring(p, tri) || mask[y * tw + x]) return
             const o = (y * tw + x) * 4
             r.push(original[o])
             g.push(original[o + 1])

@@ -189,3 +189,39 @@ describe('blankBands on one big triangle (a logo printed on a large flat face)',
     expect(await pixel(out, 8, 3)).toEqual([200, 30, 30]) // row 3: about 90 mm
   })
 })
+
+describe('blankBands rects: only the faces that look along the face axis, and no bleed past a triangle edge', () => {
+  /** A 100 x 60 x 40 mm box seen as two triangles: A flat on the io face (z = +20), T flat on the top face (y = 60) right at the io edge; separate UV stripes. */
+  async function edgeGlb(): Promise<Uint8Array> {
+    const doc = new Document()
+    const buffer = doc.createBuffer()
+    const px = Buffer.alloc(16 * 16 * 3)
+    for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) px.set(x < 8 ? RED : BLUE, (y * 16 + x) * 3)
+    const png = new Uint8Array(await sharp(px, { raw: { width: 16, height: 16, channels: 3 } }).png().toBuffer())
+    const mat = doc.createMaterial('m').setBaseColorTexture(doc.createTexture('baseColor').setImage(png).setMimeType('image/png'))
+    // A on the io face near its top edge: local (50, 55) 4 x 5 mm; T on the top face (y = 60 mm), 5 mm behind the io edge, x = 50
+    const pos = [
+      46 * MM - 50 * MM, 53 * MM, 20 * MM, 54 * MM - 50 * MM, 53 * MM, 20 * MM, 50 * MM - 50 * MM, 58 * MM, 20 * MM,
+      46 * MM - 50 * MM, 60 * MM, 15 * MM, 54 * MM - 50 * MM, 60 * MM, 15 * MM, 50 * MM - 50 * MM, 60 * MM, 10 * MM,
+      -50 * MM, 0, -20 * MM, 50 * MM, 60 * MM, 20 * MM, 50 * MM, 60 * MM, 20 * MM,
+    ]
+    const uv = [0.1, 0.1, 0.4, 0.1, 0.25, 0.9, 0.6, 0.1, 0.9, 0.1, 0.75, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9]
+    const prim = doc.createPrimitive().setMaterial(mat)
+      .setAttribute('POSITION', doc.createAccessor().setType('VEC3').setArray(new Float32Array(pos)).setBuffer(buffer))
+      .setAttribute('TEXCOORD_0', doc.createAccessor().setType('VEC2').setArray(new Float32Array(uv)).setBuffer(buffer))
+    doc.createScene('s').addChild(doc.createNode('root').setMesh(doc.createMesh('mesh').addPrimitive(prim)))
+    return new NodeIO().writeBinary(doc)
+  }
+  const pixel = async (bytes: Uint8Array, x: number, y: number): Promise<Rgb> => {
+    const img = (await new NodeIO().readBinary(bytes)).getRoot().listMaterials()[0].getBaseColorTexture()!.getImage()!
+    const { data, info } = await sharp(Buffer.from(img)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    const o = (y * info.width + x) * 3
+    return [data[o], data[o + 1], data[o + 2]]
+  }
+
+  it('a rectangle that reaches the top edge of the io face repaints the io triangle but not the top-face triangle that lies within the depth tolerance', async () => {
+    const out = await blankBands(await edgeGlb(), [], [{ face: 'io', xMm: 40, yMm: 50, wMm: 20, hMm: 10, fill: '#00ff00', depthMm: 30 }])
+    expect(await pixel(out, 3, 8)).toEqual([0, 255, 0]) // the io triangle's stripe (left half)
+    expect(await pixel(out, 12, 8)).toEqual(BLUE) // the top triangle (right half) keeps its colour
+  })
+})
