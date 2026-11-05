@@ -620,3 +620,40 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
     expect((await state(page)).end).toBe('true')
   })
 })
+
+// ── Fix round 2, item 1: the focusin handler of the fade scrolled the row on a MOUSE press too, so a click in the last 28 px (where the next tab peeks) was lost ───────────────────────
+test.describe('drawer tab row at 400 x 800: a mouse click inside the fade (fix round 2)', () => {
+  test.use({ viewport: { width: 400, height: 800 } })
+  const row = (page: Page) => drawer(page).getByRole('tablist')
+  test('a click 5 px inside the right edge of the peeking tab selects it (the press must not shift the row under the pointer)', async ({ page }) => {
+    await boot(page)
+    await open(page)
+    const peek = await row(page).evaluate((e) => {
+      const b = e.getBoundingClientRect()
+      const tabs = [...e.querySelectorAll<HTMLElement>('[role="tab"]')]
+      const i = tabs.findIndex((t) => t.getBoundingClientRect().left < b.right && t.getBoundingClientRect().right > b.right + 8)
+      return { i, x: b.right - 5, y: b.top + b.height / 2, name: tabs[i]?.textContent }
+    })
+    expect(peek.i, 'a tab peeks over the right edge (the test means something)').toBeGreaterThan(0)
+    await page.mouse.click(peek.x, peek.y)
+    await expect(row(page).getByRole('tab').nth(peek.i), `the peeking tab « ${peek.name} » is selected by the click`).toHaveAttribute('aria-selected', 'true')
+  })
+
+  test('the same on the left edge once the row is scrolled: a click 5 px inside the peeking tab selects it', async ({ page }) => {
+    await boot(page)
+    await open(page)
+    const box = (await row(page).boundingBox())!
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2)
+    await page.mouse.wheel(2000, 0)
+    await expect.poll(() => row(page).evaluate((e) => (e as HTMLElement).dataset.fadeEnd)).toBe('false')
+    const peek = await row(page).evaluate((e) => {
+      const b = e.getBoundingClientRect()
+      const tabs = [...e.querySelectorAll<HTMLElement>('[role="tab"]')]
+      const i = tabs.findIndex((t) => t.getBoundingClientRect().left < b.left - 8 && t.getBoundingClientRect().right > b.left)
+      return { i, x: b.left + 5, y: b.top + b.height / 2, name: tabs[i]?.textContent }
+    })
+    expect(peek.i, 'a tab peeks over the left edge').toBeGreaterThanOrEqual(0)
+    await page.mouse.click(peek.x, peek.y)
+    await expect(row(page).getByRole('tab').nth(peek.i), `the peeking tab « ${peek.name} » is selected by the click`).toHaveAttribute('aria-selected', 'true')
+  })
+})

@@ -190,6 +190,9 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   tablist.addEventListener('focusin', (e) => {
     const t = e.target as HTMLElement | null
     if (!t || t.parentElement !== tablist) return
+    // Keyboard focus only (fix round 2): a mouse press focuses the tab too, and shifting the row between the press and the release would put the release off the tab,
+    // so the click (and its selection) would be lost. A pointer focus is not :focus-visible; a click cannot need the ring.
+    if (!t.matches(':focus-visible')) return
     const fade = parseFloat(getComputedStyle(tablist).getPropertyValue('--cr-fade')) || 28
     const box = tablist.getBoundingClientRect()
     const r = t.getBoundingClientRect()
