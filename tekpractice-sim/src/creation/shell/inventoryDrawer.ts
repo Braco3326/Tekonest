@@ -185,6 +185,19 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     if (tablist.dataset.fadeEnd !== String(end)) tablist.dataset.fadeEnd = String(end)
   }
   tablist.addEventListener('scroll', syncFade, { passive: true })
+  // A tab the keyboard focuses is brought in CLEAR of the edge fade (fix round S7): the browser only scrolls a focused tab until it is visible, which can leave it under the fade and
+  // its focus ring half faded (measured: 10 px from the edge, the fade is 28). At an end of the row the scroll simply stops where it can, and there is no fade there.
+  tablist.addEventListener('focusin', (e) => {
+    const t = e.target as HTMLElement | null
+    if (!t || t.parentElement !== tablist) return
+    const fade = parseFloat(getComputedStyle(tablist).getPropertyValue('--cr-fade')) || 28
+    const box = tablist.getBoundingClientRect()
+    const r = t.getBoundingClientRect()
+    const left = r.left - box.left
+    const right = box.right - r.right
+    if (left < fade) tablist.scrollLeft -= fade - left
+    else if (right < fade) tablist.scrollLeft += fade - right
+  })
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncFade).observe(tablist)
 
   const panel = el(doc, 'div', 'cr-drawer-panel')

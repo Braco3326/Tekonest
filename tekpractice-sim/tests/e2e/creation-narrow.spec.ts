@@ -538,7 +538,8 @@ for (const touch of [false, true]) {
       expect(s.y + s.height).toBeLessThanOrEqual(bar.y + bar.height + 0.5)
       expect(await page.getByTestId('signal-label').evaluate((e) => e.getBoundingClientRect().right), 'the label itself is whole').toBeLessThanOrEqual(400)
       const title = (await signal.getAttribute('title'))!
-      expect(title.replace(/\s+/g, ' '), 'the full text is carried by the title').toContain('connexion refusée · 1 appareil non vérifié')
+      expect(title.replace(/\s+/g, ' '), 'the clipped part is carried by the title').toContain('connexion refusée · 1 appareil non vérifié')
+      expect(title, 'and the title does not repeat the label the button already has (fix round N8)').not.toContain('Aucune erreur détectée')
       expect(await page.getByTestId('signal-label').textContent()).toMatch(/Aucune erreur détectée/)
       await signal.click()
       await expect(page.getByTestId('error-list')).toBeVisible()

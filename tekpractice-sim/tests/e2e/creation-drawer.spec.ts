@@ -559,6 +559,44 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
     expect((await state(page)).start).toBe('false')
   })
 
+  test('S7: a tab reached with the arrows is scrolled in clear of the fade: fully inside the unmasked part of the row, so its focus ring is whole', async ({ page }) => {
+    await boot(page)
+    await open(page)
+    const FADE = 28
+    const read = () =>
+      row(page).evaluate((e) => {
+        const f = document.activeElement!.getBoundingClientRect()
+        const b = e.getBoundingClientRect()
+        return { left: f.left - b.left, right: b.right - f.right, start: (e as HTMLElement).dataset.fadeStart, end: (e as HTMLElement).dataset.fadeEnd }
+      })
+    const clear = async (label: string): Promise<void> => {
+      // the flags follow the scroll (a scroll event): wait until they say the same as the geometry before reading the margins
+      await expect
+        .poll(() =>
+          row(page).evaluate((e) => {
+            const want = { start: String(e.scrollLeft > 1), end: String(e.scrollLeft + e.clientWidth < e.scrollWidth - 1) }
+            return (e as HTMLElement).dataset.fadeStart === want.start && (e as HTMLElement).dataset.fadeEnd === want.end
+          })
+        )
+        .toBe(true)
+      const r = await read()
+      if (r.start === 'true') expect(r.left, label + ': clear of the start fade').toBeGreaterThanOrEqual(FADE - 0.5)
+      if (r.end === 'true') expect(r.right, label + ': clear of the end fade').toBeGreaterThanOrEqual(FADE - 0.5)
+    }
+    await row(page).getByRole('tab').first().focus()
+    const n = await row(page).getByRole('tab').count()
+    for (let i = 0; i < n - 1; i++) {
+      await page.keyboard.press('ArrowRight')
+      await expect(row(page).getByRole('tab').nth(i + 1)).toBeFocused()
+      await clear('going right, tab ' + (i + 1))
+    }
+    for (let i = n - 1; i > 0; i--) {
+      await page.keyboard.press('ArrowLeft')
+      await expect(row(page).getByRole('tab').nth(i - 1)).toBeFocused()
+      await clear('going back, tab ' + (i - 1))
+    }
+  })
+
   test('with all the tabs on screen (1700 px wide; at 1366 the row of 549 px already scrolls in 489) there is no fade at all', async ({ page }) => {
     await page.setViewportSize({ width: 1700, height: 900 })
     await boot(page)
