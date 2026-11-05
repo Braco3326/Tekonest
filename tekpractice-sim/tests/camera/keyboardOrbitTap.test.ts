@@ -2,8 +2,9 @@
  * Night 2 wave 5, P2-2: one tap of an arrow key must turn the camera even when no frame renders while the key is down (a slow PC). The step logic, headless.
  */
 import { describe, expect, it } from 'vitest'
+import { ArcRotateCamera, KeyboardEventTypes, KeyboardInfo, NullEngine, Scene, Vector3 } from '@babylonjs/core'
 import { ORBIT_FEEL } from '../../src/camera/orbitFeel'
-import { ArrowTap, tapDirection, tapStepOffset, tapStepTravel, type TapCamera } from '../../src/scene/keyboardOrbitTap'
+import { ArrowTap, installArrowTap, tapDirection, tapStepOffset, tapStepTravel, type TapCamera } from '../../src/scene/keyboardOrbitTap'
 
 const LEFT = 37
 const UP = 38
@@ -128,5 +129,60 @@ describe('ArrowTap', () => {
     h.tap.down({ keyCode: RIGHT })
     h.tap.up({ keyCode: RIGHT })
     expect(h.c.inertialAlphaOffset).toBeCloseTo(0.0667, 3)
+  })
+})
+
+// ── Fix round 2, item 4: installArrowTap on a real (headless) scene, fed what Babylon's keyboard observable would carry ───────────────────────────────────────────────────────────
+// The e2e dispatches on the drawer filter, whose events never reach the place Babylon listens: it could not tell whether the text-field guard works. Here the guard is the subject.
+describe('installArrowTap: which key events count (headless scene)', () => {
+  const setup = () => {
+    const engine = new NullEngine()
+    const scene = new Scene(engine)
+    const camera = new ArcRotateCamera('cam', 1, 1, 10, Vector3.Zero(), scene)
+    camera.inertia = ORBIT_FEEL.inertia // the app's (Babylon's own default is 0.9)
+    scene.activeCamera = camera
+    installArrowTap(scene, camera)
+    const press = (target: unknown, over: Record<string, unknown> = {}): void => {
+      const evt = { keyCode: LEFT, repeat: false, ctrlKey: false, altKey: false, metaKey: false, target, ...over } as unknown as KeyboardEvent
+      scene.onKeyboardObservable.notifyObservers(new KeyboardInfo(KeyboardEventTypes.KEYDOWN, evt))
+      scene.onKeyboardObservable.notifyObservers(new KeyboardInfo(KeyboardEventTypes.KEYUP, evt)) // no frame in between: a tap
+    }
+    return { scene, camera, press }
+  }
+  const canvas = { tagName: 'CANVAS', closest: () => null }
+  const field = { tagName: 'INPUT', closest: () => null }
+  const inDialog = { tagName: 'BUTTON', closest: (sel: string) => (sel.includes('dialog') ? {} : null) }
+
+  it('a tap on the 3D view (the canvas) adds one step', () => {
+    const { camera, press } = setup()
+    press(canvas)
+    expect(camera.inertialAlphaOffset).toBeCloseTo(-0.01, 9)
+  })
+  it('a tap whose target is a text field adds nothing (it fails when isTextTarget is bypassed)', () => {
+    const { camera, press } = setup()
+    press(field)
+    expect(camera.inertialAlphaOffset).toBe(0)
+    press({ tagName: 'DIV', isContentEditable: true, closest: () => null }) // an editable region is a text target too
+    expect(camera.inertialAlphaOffset).toBe(0)
+  })
+  it('a tap inside a dialog adds nothing', () => {
+    const { camera, press } = setup()
+    press(inDialog)
+    expect(camera.inertialAlphaOffset).toBe(0)
+  })
+  it('a tap while another camera is the active one (the walk view) adds nothing', () => {
+    const { scene, camera, press } = setup()
+    scene.activeCamera = new ArcRotateCamera('walk', 0, 1, 5, Vector3.Zero(), scene)
+    press(canvas)
+    expect(camera.inertialAlphaOffset).toBe(0)
+  })
+  it('a rendered frame between the press and the release leaves the camera to Babylon (no step added)', () => {
+    const { scene, camera } = setup()
+    const evt = { keyCode: LEFT, repeat: false, target: canvas } as unknown as KeyboardEvent
+    scene.onKeyboardObservable.notifyObservers(new KeyboardInfo(KeyboardEventTypes.KEYDOWN, evt))
+    scene.render()
+    camera.inertialAlphaOffset = 0 // what Babylon's own frame did is its business
+    scene.onKeyboardObservable.notifyObservers(new KeyboardInfo(KeyboardEventTypes.KEYUP, evt))
+    expect(camera.inertialAlphaOffset).toBe(0)
   })
 })

@@ -192,7 +192,7 @@ test('Ctrl + arrow (pan) does not turn the camera by a step', async ({ page }) =
   expect(Math.abs((await alpha(page)) - a0)).toBeLessThan(STEP * 0.1)
 })
 
-test('S9: an arrow tapped in a text field (the drawer filter) does not turn the camera, while the same tap on the 3D view does', async ({ page }) => {
+test('S9 (end to end, a smoke check): an arrow dispatched on the drawer filter turns nothing, the same tap on the 3D view turns one step; the text-field guard itself is proven headless in keyboardOrbitTap.test.ts', async ({ page }) => {
   await bootCamera(page, false)
   await page.keyboard.press('Space') // the drawer opens and its « Filtrer » field takes the focus
   const filter = page.getByTestId('inventory-filter')
