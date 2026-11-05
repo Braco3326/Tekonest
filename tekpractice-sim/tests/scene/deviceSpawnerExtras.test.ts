@@ -56,10 +56,10 @@ function serveGlb(glb: Uint8Array) {
     realImport(null, '', glb, args[3] as Scene, undefined, '.glb')) as unknown as typeof SceneLoader.ImportMeshAsync)
 }
 
-function makeSpawner() {
+function makeSpawner(options: ConstructorParameters<typeof DeviceSpawner>[3] = {}) {
   const engine = new NullEngine()
   const scene = new Scene(engine)
-  return { scene, spawner: new DeviceSpawner(scene, registry) }
+  return { scene, spawner: new DeviceSpawner(scene, registry, undefined, options) }
 }
 
 const glbRootOf = (inst: DeviceInstance): Mesh =>
@@ -250,5 +250,55 @@ describe('DeviceSpawner with GLB extras', () => {
     expect(inst.assetStatus).toBe('placeholder')
     expect(inst.controlNodes).toBeInstanceOf(Map)
     expect(inst.controlNodes.size).toBe(0)
+  })
+})
+
+describe('the acoustic front of an extras model (Mode Création, alignFront)', () => {
+  // Convention (placement.ts, fixup.py): the I/O face is glTF +Z (the REAR); the opposite face, the front of a speaker, is glTF -Z. The Babylon glTF
+  // loader mirrors z, so that front faces Babylon +Z: exactly where Mode Création aims the acoustics at yaw 0. No turn is needed; the spawner only
+  // has to REPORT it (frontWorld, the debug hook and proof of L34) for a device that declares a modelFront, and it must follow the instance yaw.
+  const extrasGlb = (): Promise<Uint8Array> => makeBoxGlb({ sizeM: SIZE, extras: { tekpractice: extras() }, nodes: [{ name: 'port_in-line-a', pos: PORT_GLTF }] })
+
+  it('reports +Z at yaw 0 for an extras model whose device declares modelFront, whatever axis the catalog gives for the OLD file', async () => {
+    serveGlb(await extrasGlb())
+    const { spawner } = makeSpawner({ alignFront: true })
+    expect(registry.deviceById.get(DEVICE)!.modelFront?.axis).toBe('+z') // the legacy file's axis: ignored for a pipeline model
+    const inst = spawner.spawn(DEVICE, new Vector3(1, 0, 2), 'k12')
+    await expect(inst.modelReady).resolves.toBe(true)
+    const f = inst.frontWorld()
+    expect(f).not.toBeNull()
+    expect(f!.map((v) => +v.toFixed(5))).toEqual([0, 0, 1])
+  })
+
+  it('turns with the instance yaw (a quarter turn sends +Z to +X, a half turn to -Z)', async () => {
+    serveGlb(await extrasGlb())
+    const { spawner } = makeSpawner({ alignFront: true })
+    const inst = spawner.spawn(DEVICE, new Vector3(0, 0, 0), 'k12')
+    await inst.modelReady
+    inst.root.rotation.y = Math.PI / 2
+    expect(inst.frontWorld()!.map((v) => +v.toFixed(5))).toEqual([1, 0, 0])
+    inst.root.rotation.y = Math.PI
+    expect(inst.frontWorld()!.map((v) => +v.toFixed(5))).toEqual([0, 0, -1])
+  })
+
+  it('does not turn the model for it: the I/O face still lands on Babylon -Z and the port marker on the empty', async () => {
+    serveGlb(await extrasGlb())
+    const { spawner } = makeSpawner({ alignFront: true })
+    const inst = spawner.spawn(DEVICE, new Vector3(0, 0, 0), 'k12')
+    await inst.modelReady
+    expect(inst.portMarkers.get('in-line-a')!.position.z).toBeCloseTo(-SIZE.d / 2, 5)
+    expect(inst.portMarkers.get('in-line-a')!.position.x).toBeCloseTo(PORT_GLTF[0], 5)
+  })
+
+  it('stays null for a device without a declared modelFront (the Rio, the connectors) and for the legacy spawner (no alignFront)', async () => {
+    serveGlb(await extrasGlb())
+    const a = makeSpawner({ alignFront: true }).spawner.spawn('yamaha-rio3224-d2', new Vector3(0, 0, 0), 'rio')
+    await a.modelReady
+    expect(registry.deviceById.get('yamaha-rio3224-d2')!.modelFront).toBeUndefined()
+    expect(a.frontWorld()).toBeNull()
+
+    const b = makeSpawner().spawner.spawn(DEVICE, new Vector3(0, 0, 0), 'k12')
+    await b.modelReady
+    expect(b.frontWorld()).toBeNull()
   })
 })

@@ -1,5 +1,4 @@
 import { expect, test, type Page } from '@playwright/test'
-import catalog from '../../content/catalog.json'
 
 /**
  * Task 43c (L34, decision L30 viii): the glb front ship gate. Mode Création's convention is yaw 0 = the front faces +z, and the acoustics aim
@@ -222,7 +221,9 @@ test('(g) a device lands ON its placement and on the floor at any yaw (centre wi
   }
 })
 
-test('(h) the port markers of a corrected K12.2 sit on its rear face (x within the rear width, z behind the body), at yaw 0 and when loaded turned 180', async ({ page }) => {
+// (h) (i) (j): the K12.2 and the 8030C were REBUILT (Meshy fixed up to the spec, pipeline models): exact real size, no floor stand, and the jacks sit INSIDE the
+// amp recess (the spec's insetMm: 25.8 to 38.9 mm on the K12.2, 13.8 mm on the 8030C), so the markers are a few centimetres in front of the rear plane, not behind it.
+test('(h) the port markers of the K12.2 sit on its rear (x within the rear width, z at the rear plane or inside the amp recess, 4.5 cm at most), at yaw 0 and when loaded turned 180', async ({ page }) => {
   await boot(page)
   await page.evaluate(() => {
     const c = window.__creation!
@@ -239,8 +240,8 @@ test('(h) the port markers of a corrected K12.2 sit on its rear face (x within t
   for (const p of r.p0) {
     expect(p[0], 'marker x within the rear width (+1 cm)').toBeGreaterThanOrEqual(lo - 0.01)
     expect(p[0]).toBeLessThanOrEqual(hi + 0.01)
-    expect(p[2], 'behind the rear plane').toBeLessThan(r.ends.rearZ + 0.005)
-    expect(p[2], 'but close to it (within 6 cm)').toBeGreaterThan(r.ends.rearZ - 0.06)
+    expect(p[2], 'not behind the rear plane: the jacks are inside the recess').toBeGreaterThan(r.ends.rearZ - 0.005)
+    expect(p[2], 'but no deeper than the recess (4.5 cm)').toBeLessThan(r.ends.rearZ + 0.045)
   }
   // turned 180: the same markers, mirrored about the placement (x, z) = (4, 0)
   r.p180.forEach((p, i) => {
@@ -249,7 +250,7 @@ test('(h) the port markers of a corrected K12.2 sit on its rear face (x within t
   })
 })
 
-test('(i) the port markers of a corrected 8030C sit on its rear face (x and z), at yaw 0', async ({ page }) => {
+test('(i) the port markers of the 8030C sit on its rear (x within the rear width, z at the rear plane or 2 cm inside), at yaw 0', async ({ page }) => {
   await boot(page)
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'genelec-8030c', position: [0, 0, 0], rotationY: 0, instanceId: 'g0' }))
   await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
@@ -257,24 +258,22 @@ test('(i) the port markers of a corrected 8030C sit on its rear face (x and z), 
     const c = window.__creation!
     return { ends: c.bodyEnds('g0')!, b: c.bodyBoundsInRoot('g0')!, ports: ['in-analog', 'power-in'].map((p) => c.portWorld({ instance: 'g0', port: p })!) }
   })
-  // night wave 1 review finding 6: the markers are on the CABINET's rear face, not on the stand neck (the model's lowest baseFraction is stand)
-  const stand = (catalog.devices.find((d) => d.id === 'genelec-8030c') as { modelBody: { baseFraction: number } }).modelBody.baseFraction
-  const cabinetBottom = r.b.lo[1] + stand * (r.b.hi[1] - r.b.lo[1])
+  // the rebuilt model has no floor stand (the catalog's modelBody describes the legacy scan and is inert for a pipeline model): the markers are on the cabinet
   for (const p of r.ports) {
-    expect(p[1], 'marker height above the stand').toBeGreaterThanOrEqual(cabinetBottom - 0.005)
+    expect(p[1], 'marker height above the floor').toBeGreaterThanOrEqual(r.b.lo[1] - 0.005)
     expect(p[1], 'and under the top of the cabinet').toBeLessThanOrEqual(r.b.hi[1] + 0.005)
   }
   const [lo, hi] = r.ends.rearX
   for (const p of r.ports) {
     expect(p[0], '8030C marker x within the rear width (+1 cm)').toBeGreaterThanOrEqual(lo - 0.01)
     expect(p[0]).toBeLessThanOrEqual(hi + 0.01)
-    expect(p[2], 'behind the rear plane').toBeLessThan(r.ends.rearZ + 0.005)
-    expect(p[2], 'but close to it (within 6 cm)').toBeGreaterThan(r.ends.rearZ - 0.06)
+    expect(p[2], 'not behind the rear plane: the jacks are inside the plate recess').toBeGreaterThan(r.ends.rearZ - 0.005)
+    expect(p[2], 'but no deeper than the recess (2 cm)').toBeLessThan(r.ends.rearZ + 0.02)
   }
 })
 
 // ── Night wave 1, item 8: the 8030C file includes its floor stand; the cabinet, not the whole model, has the real height ───────────────────────
-test('(j) the 8030C cabinet is the catalog cabinet height (0,285 m, within 5 mm): the stand under it is not counted in the normalisation; the K12.2 is unchanged', async ({ page }) => {
+test('(j) the 8030C is its real height (0,299 m with the Iso-Pod feet, within 5 mm; no floor stand in the rebuilt model); the K12.2 is its real 0,602 m', async ({ page }) => {
   await boot(page)
   await page.evaluate(() => {
     const c = window.__creation!
@@ -283,14 +282,11 @@ test('(j) the 8030C cabinet is the catalog cabinet height (0,285 m, within 5 mm)
   await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
   const r = await page.evaluate(() => ({ g: window.__creation!.bodyBoundsInRoot('g0'), k: window.__creation!.bodyBoundsInRoot('k12-g') }))
   expect(r.g, 'the 8030C model is loaded').not.toBeNull()
-  const body = (catalog.devices.find((d) => d.id === 'genelec-8030c') as { modelBody?: { baseFraction: number; cabinetHeightM: number } }).modelBody!
   const total = r.g!.hi[1] - r.g!.lo[1]
-  expect(Math.abs(r.g!.lo[1]), 'the stand stands on the floor').toBeLessThan(0.01)
-  // the cabinet is what is above the stand (baseFraction is re-measured on the file by tests/assets/modelBody.test.ts); cabinetHeightM is the datasheet's
-  const cabinet = total * (1 - body.baseFraction)
-  expect(Math.abs(cabinet - body.cabinetHeightM), `cabinet = ${cabinet.toFixed(4)} m (whole model ${total.toFixed(4)} m)`).toBeLessThan(0.005)
-  // the old normalisation (the whole model 0,299 m, cabinet 0,214 m) is far away
-  expect(total).toBeGreaterThan(0.38)
+  expect(Math.abs(r.g!.lo[1]), 'the feet stand on the floor').toBeLessThan(0.01)
+  // a pipeline model is at its exact spec size and the spawner applies no height normalisation to it: 0,299 m (cabinet 0,285 + 14 mm Iso-Pod feet). The catalog's modelBody
+  // (baseFraction 0,285 of a legacy scan with a floor stand) is inert for it; applying it would have shrunk the cabinet to about 0,214 m.
+  expect(Math.abs(total - 0.299), `whole model ${total.toFixed(4)} m`).toBeLessThan(0.005)
   // a single-body model keeps its whole height: the K12.2 is 0,602 m
   expect(r.k!.hi[1] - r.k!.lo[1]).toBeCloseTo(0.602, 1)
 })
