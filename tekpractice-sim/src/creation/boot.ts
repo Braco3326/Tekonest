@@ -2144,6 +2144,30 @@ export async function bootCreation(): Promise<void> {
       ? projectToScreen(world, scene, camera, host.engine, canvas)
       : null
   }
+  /**
+   * Test seam: where to click to hit device `id`'s body: its body centre, or, when a port's first-click area (or another device) is there, the
+   * nearest point of the body at least PORT_CLEAR_PX from every port. A console seen from the front has its rear connectors projected over its body.
+   */
+  const PORT_CLEAR_PX = 8
+  const bodyClickPoint = (id: string): { x: number; y: number } | null => {
+    const inst = host.instance(id)
+    const c = inst ? screen(bodyCentreOf(inst)) : null
+    if (!inst || !c) return null
+    const rect = canvas.getBoundingClientRect()
+    const ports = store
+      .design()
+      .rig.instances.flatMap((i) => [...(host.instance(i.instanceId)?.portMarkers.keys() ?? [])].map((port) => screen(host.portWorld({ instance: i.instanceId, port }))))
+      .filter((q): q is { x: number; y: number } => q !== null)
+    const clear = (q: { x: number; y: number }): boolean => pickDevice(host.scene, q.x - rect.left, q.y - rect.top) === id && ports.every((r) => Math.hypot(r.x - q.x, r.y - q.y) >= PORT_CLEAR_PX)
+    if (clear(c)) return c
+    let best: { x: number; y: number } | null = null
+    for (let dx = -60; dx <= 60; dx += 2)
+      for (let dy = -45; dy <= 45; dy += 2) {
+        const q = { x: c.x + dx, y: c.y + dy }
+        if (clear(q) && (!best || Math.hypot(dx, dy) < Math.hypot(best.x - c.x, best.y - c.y))) best = q
+      }
+    return best ?? c
+  }
   window.__creation = {
     dispatch: (intent) => history.do(intent),
     design: () => store.design(),
@@ -2178,10 +2202,7 @@ export async function bootCreation(): Promise<void> {
     liveListeners: () => DisposableBag.liveListeners,
     place: () => (host.place ? placeKey(host.place) : null),
     selection: () => viewState.get().selection,
-    deviceScreen: (id) => {
-      const inst = host.instance(id)
-      return inst ? screen(bodyCentreOf(inst)) : null
-    },
+    deviceScreen: (id) => bodyClickPoint(id),
     portScreen: (ref) => screen(host.portWorld(ref)),
     portHitRadiusPx: (ref) => host.portHitRadiusPx(ref, patch.pending !== null),
     portProxyRadiusPx: (ref) => host.portProxyRadiusPx(ref),
