@@ -6,7 +6,7 @@
 import sharp from 'sharp'
 import { Document, NodeIO } from '@gltf-transform/core'
 import { describe, expect, it } from 'vitest'
-import { LOOK_GAIN, LOOK_LINEAR_CAP, LOOK_METALLIC, LOOK_OFFSET, liftChannel, normaliseLook } from '../../../tools/assets3d/look'
+import { LOOK_GAIN, LOOK_LINEAR_CAP, LOOK_METALLIC, LOOK_OFFSET, LOOK_ROUGHNESS, liftChannel, normaliseLook } from '../../../tools/assets3d/look'
 import { makeBoxGlb } from './helpers'
 
 const SIZE = { w: 0.2, h: 0.1, d: 0.3 }
@@ -61,7 +61,7 @@ describe('normaliseLook', () => {
     expect(a.getMetallicFactor()).toBeCloseTo(LOOK_METALLIC, 6)
     const b = (await read(await normaliseLook(await texturedGlb([60, 60, 62, 255], 0.05)))).getRoot().listMaterials()[0]
     expect(b.getMetallicFactor()).toBeCloseTo(0.05, 6)
-    expect(a.getRoughnessFactor()).toBe(1) // roughness is the map's job, untouched
+    expect(a.getRoughnessFactor()).toBe(LOOK_ROUGHNESS) // the metallic-roughness map is dropped: a constant satin roughness
   })
 
   it('lifts the colour map with the reference formula and keeps its alpha', async () => {
@@ -70,14 +70,15 @@ describe('normaliseLook', () => {
     expect(px).toEqual([expectedLift(40), expectedLift(40), expectedLift(42), 200])
   })
 
-  it('leaves the normal and metallic-roughness maps byte for byte', async () => {
-    const before = await read(await texturedGlb([40, 40, 42, 255]))
-    const after = await read(await normaliseLook(await texturedGlb([40, 40, 42, 255])))
-    const maps = (d: Document) => {
-      const m = d.getRoot().listMaterials()[0]
-      return [m.getNormalTexture()!.getImage()!, m.getMetallicRoughnessTexture()!.getImage()!].map((i) => Buffer.from(i).toString('base64'))
-    }
-    expect(maps(after)).toEqual(maps(before))
+  it('drops the normal, metallic-roughness and occlusion maps (the colour map carries the detail; full PBR is heavy in a software renderer) and keeps the colour map', async () => {
+    const before = (await read(await texturedGlb([40, 40, 42, 255]))).getRoot().listMaterials()[0]
+    expect(before.getNormalTexture(), 'the fixture has a normal map').not.toBeNull()
+    expect(before.getMetallicRoughnessTexture(), 'the fixture has a metallic-roughness map').not.toBeNull()
+    const after = (await read(await normaliseLook(await texturedGlb([40, 40, 42, 255])))).getRoot().listMaterials()[0]
+    expect(after.getNormalTexture()).toBeNull()
+    expect(after.getMetallicRoughnessTexture()).toBeNull()
+    expect(after.getOcclusionTexture()).toBeNull()
+    expect(after.getBaseColorTexture()).not.toBeNull()
   })
 
   it('returns a GLB without textures as the very same bytes (the scripted models are not touched)', async () => {

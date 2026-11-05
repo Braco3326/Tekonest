@@ -5,10 +5,12 @@
  * (metallic factor 1, a colour map made for a lit studio) is therefore black on every metal surface and very dark elsewhere:
  * the SM58 handle vanishes. The scripted builder solves the same problem by lifting its palette (build_from_spec.py lift_hex);
  * this step applies the same rule to a textured model:
- *  - the metallic factor is capped at LOOK_METALLIC (a lower factor is kept); roughness is left to the map;
+ *  - the metallic factor is capped at LOOK_METALLIC (a lower factor is kept); the normal and metallic-roughness maps are DROPPED and the roughness
+ *    set to LOOK_ROUGHNESS: the colour map already carries the detail a learner sees (grille weave, slats, labels), and full PBR with a normal map
+ *    made two speakers slow enough in a software-rendered browser to starve the page's audio timers (e2e), and costs three textures of GPU memory;
  *  - every pixel of the base-colour map is lifted: linear x LOOK_GAIN + LOOK_OFFSET, capped at LOOK_LINEAR_CAP, never darker than it was
  *    (a white label stays white); alpha is untouched.
- * The normal and metallic-roughness maps are not touched. A GLB without textures comes back as the very same bytes.
+ * A GLB without a base-colour texture comes back as the very same bytes.
  * Runs on the fixed-up GLB, before the texture step (so the lift is applied to the full-size map, then downscaled).
  */
 // sharp MUST be imported before @gltf-transform (see compress.ts).
@@ -18,6 +20,8 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 
 /** Metallic factor ceiling: a little sheen on the grille and rim, never a black mirror. */
 export const LOOK_METALLIC = 0.15
+/** Roughness of a textured model once its metallic-roughness map is dropped (a satin finish). */
+export const LOOK_ROUGHNESS = 0.6
 /** Linear gain of the colour map, the value of the scripted builder's REVOLVE_LIFT. */
 export const LOOK_GAIN = 3.0
 /** Linear offset added with the gain: black plastic (a speaker cabinet, a label) becomes a dark grey, not a hole in the picture. */
@@ -46,6 +50,10 @@ export async function normaliseLook(bytes: Uint8Array): Promise<Uint8Array> {
   const lifted = new Set<unknown>()
   for (const m of materials) {
     m.setMetallicFactor(Math.min(m.getMetallicFactor(), LOOK_METALLIC))
+    m.setRoughnessFactor(LOOK_ROUGHNESS)
+    m.setNormalTexture(null)
+    m.setMetallicRoughnessTexture(null)
+    m.setOcclusionTexture(null)
     const tex = m.getBaseColorTexture()!
     if (lifted.has(tex)) continue
     lifted.add(tex)
