@@ -96,6 +96,14 @@
         "wMm": 30,
         "hMm": 14,
         "marginMm": 6
+      },
+      {
+        "face": "io",
+        "xMm": 364,
+        "yMm": 133,
+        "wMm": 80,
+        "hMm": 17,
+        "marginMm": 5
       }
     ]
   },

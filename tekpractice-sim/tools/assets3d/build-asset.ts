@@ -54,7 +54,7 @@
  */
 import { existsSync, readFileSync } from 'node:fs'
 import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises'
-import { dirname, extname, join, resolve } from 'node:path'
+import { basename, dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { dracoCompress, optimizeTextures } from './compress'
 import { renderContactSheet } from './contactSheet'
@@ -76,6 +76,7 @@ import type { CatalogT } from '../schemas'
 import { checkSpecParity, loadSpecs } from './loadSpecs'
 import { isMainModule } from './mainModule'
 import { assertManifestUsable, recordAsset } from './manifest'
+import type { ManifestEntry } from './manifest'
 import { createMultiImageTask, downloadGlb, MESHY_MODEL, MeshyError, waitForTask } from './meshy'
 import type { MeshyOpts, MeshyTask } from './meshy'
 import { buildPlacement } from './placement'
@@ -220,6 +221,10 @@ export interface BuildReport {
   scripted?: true
   /** Set (true) with scripted when a Meshy picture was projected onto the shape (--project). */
   hybrid?: true
+  /** With hybrid: a Meshy render was projected (--project), so Meshy is part of the provenance. */
+  meshyPicture?: true
+  /** With hybrid: the file names of the photos used as pictures (--project-photo). */
+  projectPhotoNames?: string[]
   /** This run's folder of raw and fixed GLBs: assets-source/<id>/work/<run start time>. */
   workDir: string
   /** Why the build stopped early (scrubbed of the API key). */
@@ -459,6 +464,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   const report: BuildReport = { id, ok: false, attempts: [], dryRun, workDir: work }
   if (scripted) report.scripted = true
   if (hybrid) report.hybrid = true
+  if (hybrid && opts.projectFrom) report.meshyPicture = true
+  if (hybrid && (opts.projectPhotos ?? []).length > 0) report.projectPhotoNames = (opts.projectPhotos ?? []).map((p) => basename(p.file))
   const maxAttempts = rawBytes || scripted ? 1 : opts.maxAttempts
   const reportText = (): string => scrub(JSON.stringify(report, null, 2)) + '\n'
   /**
@@ -575,13 +582,18 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
             status: 'ok',
             tris: shipped.triangles,
             ports: spec.ports.length,
-            tool: hybrid ? 'hybrid' : scripted ? 'scripted' : rawBytes && !opts.rawTaskId ? 'raw' : 'meshy',
-            toolVersion: hybrid ? `${BUILDER_VERSION}+${MESHY_MODEL}` : scripted ? BUILDER_VERSION : rawBytes && !opts.rawTaskId ? 'raw' : MESHY_MODEL,
+            ...provenanceOf({
+              scripted,
+              hybrid,
+              meshyPicture: hybrid && opts.projectFrom !== undefined,
+              raw: rawBytes !== null,
+              taskId: attempt.taskId ?? null,
+              referencePhotos: photos.map((ph) => ph.name),
+              projectPhotos: report.projectPhotoNames ?? [],
+            }),
             date: d.now().toISOString(),
             specSource: spec.sources[0]?.url ?? 'spec',
             logosRemoved,
-            photos: photos.map((ph) => ph.name),
-            taskId: attempt.taskId ?? null,
             gates: shipped.gates.map((g) => ({ gate: g.gate, ok: g.ok })),
           })
         } catch (e) {
@@ -657,19 +669,55 @@ export async function shipRun(id: string, runDir: string, opts: ShipRunOpts = {}
       status: 'ok',
       tris: measured.triangles,
       ports: spec.ports.length,
-      tool: hybrid ? 'hybrid' : scripted ? 'scripted' : taskId ? 'meshy' : 'raw',
-      toolVersion: hybrid ? `${BUILDER_VERSION}+${MESHY_MODEL}` : scripted ? BUILDER_VERSION : taskId ? MESHY_MODEL : 'raw',
+      ...provenanceOf({
+        scripted,
+        hybrid,
+        meshyPicture: stored.meshyPicture === true,
+        raw: !scripted && !taskId,
+        taskId,
+        referencePhotos: taskId ? (await d.readPhotos(id)).map((ph) => ph.name) : [],
+        projectPhotos: stored.projectPhotoNames ?? [],
+      }),
       date: d.now().toISOString(),
       specSource: spec.sources[0]?.url ?? 'spec',
       logosRemoved: true,
-      photos: (scripted && !hybrid) || !taskId ? [] : (await d.readPhotos(id)).map((ph) => ph.name),
-      taskId,
       gates: gates.map((g) => ({ gate: g.gate, ok: g.ok })),
     })
   } catch (e) {
     throw new Error(`the GLB was written to ${target} but the manifest was not updated: ${e instanceof Error ? e.message : String(e)}`)
   }
   return { id, ok: true, attempts: stored.attempts, dryRun: false, workDir: dir, builtGlb: finalPath, finalGlb: target, ...(scripted ? { scripted: true as const } : {}), ...(hybrid ? { hybrid: true as const } : {}) }
+}
+
+/** The manifest's provenance fields of one build: how it was made, with what, from which photos, and what that means for the licence fields. */
+export function provenanceOf(i: {
+  scripted: boolean
+  hybrid: boolean
+  /** A Meshy render was projected onto the shape (hybrid only). */
+  meshyPicture: boolean
+  /** A hand-made / hand-downloaded raw GLB (no scripted build). */
+  raw: boolean
+  taskId: string | null
+  referencePhotos: string[]
+  projectPhotos: string[]
+}): Pick<ManifestEntry, 'tool' | 'toolVersion' | 'photos' | 'taskId'> & Partial<Pick<ManifestEntry, 'source' | 'license' | 'trademark'>> {
+  const meshyInvolved = i.taskId !== null && (!i.scripted || i.meshyPicture)
+  const photos = [...new Set([...(meshyInvolved ? i.referencePhotos : []), ...i.projectPhotos])]
+  const FROM_PHOTOS = 'generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed'
+  if (i.hybrid) {
+    return {
+      tool: 'hybrid',
+      toolVersion: i.meshyPicture ? `${BUILDER_VERSION}+${MESHY_MODEL}` : BUILDER_VERSION,
+      photos,
+      taskId: meshyInvolved ? i.taskId : null,
+      source: i.meshyPicture ? 'hybrid: own scripted geometry + Meshy render and/or official photo as texture' : 'hybrid: own scripted geometry + official photo as texture',
+      license: FROM_PHOTOS,
+      trademark: 'branded-internal',
+    }
+  }
+  if (i.scripted) return { tool: 'scripted', toolVersion: BUILDER_VERSION, photos: [], taskId: null, source: 'modeled', license: 'internal (own work)', trademark: 'generic' }
+  if (i.raw && i.taskId === null) return { tool: 'raw', toolVersion: 'raw', photos: [], taskId: null }
+  return { tool: 'meshy', toolVersion: MESHY_MODEL, photos, taskId: i.taskId, source: 'ai-meshy', license: FROM_PHOTOS, trademark: 'branded-internal' }
 }
 
 /** A readable gate table per attempt, the credits, and the verdict. */

@@ -113,6 +113,14 @@
         "wMm": 34,
         "hMm": 12,
         "marginMm": 4
+      },
+      {
+        "face": "opposite",
+        "xMm": 403,
+        "yMm": 0,
+        "wMm": 34,
+        "hMm": 11,
+        "marginMm": 4
       }
     ]
   },

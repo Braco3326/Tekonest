@@ -138,7 +138,7 @@ beforeEach(async () => {
   await mkdir(paths.assetsDir, { recursive: true })
   await writeFile(
     paths.manifestPath,
-    JSON.stringify({ generated: 'g', assets: [{ id: 'other', status: 'ok', tris: 7 }, { id: 'test-mixer', kind: 'device', optimized: true, tris: 5, status: 'ok', note: 'old' }] }, null, 2),
+    JSON.stringify({ generated: 'g', assets: [{ id: 'other', status: 'ok', tris: 7 }, { id: 'test-mixer', kind: 'device', optimized: true, tris: 5, status: 'ok', reviewer: 'old' }] }, null, 2),
   )
   calls = { create: [], wait: [], download: [], fixup: [], compress: [], optimize: [], order: [], log: [], sheet: [], build: [] }
   savedKey = process.env.MESHY_API_KEY
@@ -261,7 +261,7 @@ describe('buildAsset', () => {
     expect(entry).toMatchObject({
       id: 'test-mixer',
       status: 'ok',
-      note: 'old',
+      reviewer: 'old',
       optimized: true,
       tool: 'meshy',
       toolVersion: 'meshy-7.1',
@@ -1545,6 +1545,24 @@ describe('scripted build (--scripted)', () => {
       const { deps, seen } = await hybridDeps(spec)
       await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectFrom: '/x.glb', dryRun: true }, deps)
       expect(seen.faces).toEqual(['top', 'io'])
+    })
+
+    it('photos only: the manifest names the builder alone, no Meshy, no task, the photo file names, and replaces the licence fields of the model it replaces', async () => {
+      const spec = box({ build: { shape: 'rack-box', projection: 'io' } })
+      await addPhotos(spec.id, ['a.png'])
+      const { deps } = await hybridDeps(spec)
+      deps.photoProjection = async () => ({ png: new Uint8Array([2]), faceMm: { w: 1, h: 1 } })
+      // an old downloaded-model entry (CC-BY Sketchfab) that this build replaces
+      const manifest = JSON.parse(await readFile(paths.manifestPath, 'utf8'))
+      Object.assign(manifest.assets.find((a: { id: string }) => a.id === spec.id), { source: 'download-ccby', author: 'Someone', license: 'CC-BY', attributionText: 'old credit', sourceUrl: 'https://x', trademark: 'branded-internal', note: 'old model' })
+      await writeFile(paths.manifestPath, JSON.stringify(manifest))
+      const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true, projectPhotos: [{ face: 'io', file: '/some/dir/rear.jpg' }], logosRemoved: true }, deps)
+      expect(report.ok).toBe(true)
+      const entry = (await readManifest()).assets.find((a) => a.id === spec.id) as Record<string, unknown>
+      expect(entry).toMatchObject({ tool: 'hybrid', toolVersion: 'blender-builder-1', taskId: null, photos: ['rear.jpg'] })
+      for (const k of ['author', 'attributionText', 'sourceUrl', 'note']) expect(entry, k).not.toHaveProperty(k)
+      expect(String(entry.source)).toMatch(/hybrid/)
+      expect(String(entry.license)).not.toMatch(/CC-BY/)
     })
 
     it('a face given as a photo takes its picture from the photo, the other faces from the Meshy render', async () => {

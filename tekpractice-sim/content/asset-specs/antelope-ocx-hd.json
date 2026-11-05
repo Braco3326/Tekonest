@@ -69,10 +69,26 @@
     "blankRects": [
       {
         "face": "opposite",
+        "xMm": 0,
+        "yMm": 13,
+        "wMm": 41,
+        "hMm": 19,
+        "marginMm": 4
+      },
+      {
+        "face": "opposite",
+        "xMm": 0,
+        "yMm": 2,
+        "wMm": 38,
+        "hMm": 9,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
         "xMm": 445,
-        "yMm": 15,
-        "wMm": 36,
-        "hMm": 15,
+        "yMm": 16,
+        "wMm": 37,
+        "hMm": 21,
         "marginMm": 4
       }
     ]
