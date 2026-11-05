@@ -97,35 +97,35 @@ Le dialogue « Raccourcis clavier » (menu Aide, touche H ; vague de nuit 2, vag
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `shortcuts.title` | Raccourcis clavier | à valider (tekuxwriter) | Titre du dialogue (même texte que l’entrée de menu `menu.shortcuts`) |
-| `shortcuts.hint` | Dans la vue 3D, ces touches agissent quand elle a le focus. Elles sont repérées par leur position sur le clavier. | à valider (tekuxwriter) | Phrase sous le titre (description du dialogue). Vrai du code : les touches de lettres et de chiffres n’agissent que sur la vue 3D (`CANVAS_ONLY`) |
-| `shortcuts.opened` | Liste des raccourcis clavier affichée. | à valider (tekuxwriter) | Annonce unique à l’ouverture (ligne d’état) |
-| `shortcuts.close` | Fermer | à valider (tekuxwriter) | Bouton du dialogue (Échap ferme aussi) |
-| `shortcuts.keyArrows` | Flèches | à valider (tekuxwriter) | Nom de la touche pour orbiter (hors carte des touches : entrée de la caméra) |
-| `shortcuts.groupView` | Vue 3D | à valider (tekuxwriter) | Titre de groupe |
-| `shortcuts.groupDevices` | Appareils | à valider (tekuxwriter) | Titre de groupe |
-| `shortcuts.groupProject` | Projet | à valider (tekuxwriter) | Titre de groupe |
-| `shortcuts.orbit` | Orbiter autour de la scène | à valider (tekuxwriter) | Ligne : flèches |
-| `shortcuts.quarterLeft` | Quart de tour de la vue vers la gauche | à valider (tekuxwriter) | Ligne : pavé numérique 4 |
-| `shortcuts.quarterRight` | Quart de tour de la vue vers la droite | à valider (tekuxwriter) | Ligne : pavé numérique 6 |
-| `shortcuts.points` | Aller à un point d’écoute | à valider (tekuxwriter) | Ligne : 1, 2, 3 |
-| `shortcuts.frame` | Cadrer la sélection | à valider (tekuxwriter) | Ligne : F et Entrée |
-| `shortcuts.home` | Vue d’ensemble | à valider (tekuxwriter) | Ligne : Alt+H |
-| `shortcuts.picker` | Choisir une vue | à valider (tekuxwriter) | Ligne : V |
-| `shortcuts.walk` | Marcher dans la salle | à valider (tekuxwriter) | Ligne : Maj+V |
-| `shortcuts.next` | Appareil suivant | à valider (tekuxwriter) | Ligne : ] |
-| `shortcuts.prev` | Appareil précédent | à valider (tekuxwriter) | Ligne : [ |
-| `shortcuts.inventory` | Ouvrir ou fermer l’inventaire | à valider (tekuxwriter) | Ligne : Espace |
-| `shortcuts.rotateCw` | Pivoter de 15° (Alt : 1°) | à valider (tekuxwriter) | Ligne : R |
-| `shortcuts.rotateCcw` | Pivoter de 15° dans l’autre sens | à valider (tekuxwriter) | Ligne : Maj+R |
-| `shortcuts.snap` | Placement libre pendant une pose ou un déplacement | à valider (tekuxwriter) | Ligne : G |
-| `shortcuts.duplicate` | Dupliquer l’appareil sélectionné | à valider (tekuxwriter) | Ligne : Ctrl+D |
-| `shortcuts.delete` | Supprimer l’appareil sélectionné | à valider (tekuxwriter) | Ligne : Suppr |
-| `shortcuts.cancel` | Annuler la pose, le câble en main ou la sélection | à valider (tekuxwriter) | Ligne : Échap |
-| `shortcuts.undo` | Annuler la dernière action | à valider (tekuxwriter) | Ligne : Ctrl+Z |
-| `shortcuts.redo` | Rétablir | à valider (tekuxwriter) | Ligne : Ctrl+Y |
-| `shortcuts.save` | Enregistrer le projet | à valider (tekuxwriter) | Ligne : Ctrl+S |
-| `shortcuts.help` | Afficher cette liste | à valider (tekuxwriter) | Ligne : H |
+| `shortcuts.title` | Raccourcis clavier | validé | Titre du dialogue (même texte que l’entrée de menu `menu.shortcuts`) |
+| `shortcuts.hint` | Les raccourcis à une seule touche (lettres, chiffres, Espace, Suppr…) n’agissent que lorsque la vue 3D a le focus. Ils sont repérés par leur position sur le clavier. | validé (nuit 2026-11-05, relecture fondateur conseillée) | Phrase sous le titre (description du dialogue). Vrai du code : les touches simples (lettres, chiffres, Espace, Suppr…) n’agissent que sur la vue 3D (`CANVAS_ONLY`) ; Ctrl+Z, Ctrl+S, Ctrl+D, Alt+H et Échap agissent ailleurs aussi. Ancien texte : « ces touches » laissait croire que tout le tableau exigeait le focus de la vue 3D |
+| `shortcuts.opened` | Liste des raccourcis clavier affichée. | validé | Annonce unique à l’ouverture (ligne d’état) |
+| `shortcuts.close` | Fermer | validé | Bouton du dialogue (Échap ferme aussi) |
+| `shortcuts.keyArrows` | Flèches | validé | Nom de la touche pour orbiter (hors carte des touches : entrée de la caméra) |
+| `shortcuts.groupView` | Vue 3D | validé | Titre de groupe |
+| `shortcuts.groupDevices` | Appareils | validé | Titre de groupe |
+| `shortcuts.groupProject` | Projet | validé | Titre de groupe |
+| `shortcuts.orbit` | Orbiter autour de la scène | validé | Ligne : flèches |
+| `shortcuts.quarterLeft` | Quart de tour de la vue vers la gauche | validé | Ligne : pavé numérique 4 |
+| `shortcuts.quarterRight` | Quart de tour de la vue vers la droite | validé | Ligne : pavé numérique 6 |
+| `shortcuts.points` | Aller à un point d’écoute | validé | Ligne : 1, 2, 3 |
+| `shortcuts.frame` | Cadrer la sélection | validé | Ligne : F et Entrée |
+| `shortcuts.home` | Vue d’ensemble | validé | Ligne : Alt+H |
+| `shortcuts.picker` | Choisir une vue | validé | Ligne : V |
+| `shortcuts.walk` | Marcher dans la salle | validé | Ligne : Maj+V |
+| `shortcuts.next` | Appareil suivant | validé | Ligne : ] |
+| `shortcuts.prev` | Appareil précédent | validé | Ligne : [ |
+| `shortcuts.inventory` | Ouvrir ou fermer l’inventaire | validé | Ligne : Espace |
+| `shortcuts.rotateCw` | Pivoter de 15° (Alt : 1°) | validé | Ligne : R |
+| `shortcuts.rotateCcw` | Pivoter de 15° dans l’autre sens | validé | Ligne : Maj+R |
+| `shortcuts.snap` | Activer ou désactiver le placement libre (pose ou déplacement) | validé (nuit 2026-11-05, relecture fondateur conseillée) | Ligne : G. Verbe ajouté : G bascule le placement libre (comme « Ouvrir ou fermer l’inventaire ») ; l’ancien libellé nommait l’état sans dire ce que fait la touche |
+| `shortcuts.duplicate` | Dupliquer l’appareil sélectionné | validé | Ligne : Ctrl+D |
+| `shortcuts.delete` | Supprimer l’appareil sélectionné | validé | Ligne : Suppr |
+| `shortcuts.cancel` | Annuler la pose, le câble en main ou la sélection | validé | Ligne : Échap |
+| `shortcuts.undo` | Annuler la dernière action | validé | Ligne : Ctrl+Z |
+| `shortcuts.redo` | Rétablir | validé | Ligne : Ctrl+Y |
+| `shortcuts.save` | Enregistrer le projet | validé | Ligne : Ctrl+S |
+| `shortcuts.help` | Afficher cette liste | validé | Ligne : H |
 
 ## tree
 
@@ -626,8 +626,8 @@ Pose et déplacement d'un appareil dans la vue 3D (Task 24, CA-10). Choisir un a
 | `placement.statusMoved` | Déplacé : {device}. {undo} pour annuler. | validé | Barre d’état après un glisser (annoncé) |
 | `placement.statusCancelled` | Pose annulée. | validé | Barre d’état après Échap pendant la pose (annoncé) |
 | `placement.statusMoveCancelled` | Déplacement annulé : {device} est resté en place. | validé | Barre d’état après Échap pendant un glisser (annoncé) |
-| `placement.dragStand` | Sur pied : déplacez-le avec Propriétés › Position. | à valider (tekuxwriter) | Barre d’état (annoncé, une fois par glisser) quand un glisser commence sur l’appareil sélectionné posé sur pied : la vue tourne au lieu de le déplacer ; dit comment le déplacer (vague 5, P3-3) |
-| `placement.dragFlown` | Accroché : déplacez-le avec Propriétés › Position. | à valider (tekuxwriter) | Même ligne pour un appareil accroché |
+| `placement.dragStand` | Sur pied : déplacez-le avec Propriétés › Position. | validé | Barre d’état (annoncé, une fois par glisser) quand un glisser commence sur l’appareil sélectionné posé sur pied : la vue tourne au lieu de le déplacer ; dit comment le déplacer (vague 5, P3-3) |
+| `placement.dragFlown` | Accroché : déplacez-le avec Propriétés › Position. | validé | Même ligne pour un appareil accroché |
 | `placement.statusRefused` | Impossible de poser {device}. | validé | Barre d’état si l’appareil ne peut pas être posé (annoncé) |
 
 ## edit
@@ -862,5 +862,5 @@ Les seuls textes qui vivent dans `index.html` et non dans `copy.ts` : la garde d
 
 | Clé | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `index.html#entryFailure` | Le jeu n’a pas pu se charger. Rechargez la page en forçant le rafraîchissement (Ctrl+F5) ou ouvrez-la de nouveau. | à valider (tekuxwriter) | Corps de l'alerte de la garde d'entrée (texte donné par le brief de la vague 5) |
-| `index.html#entryReload` | Recharger la page | à valider (tekuxwriter) | Lien de l'alerte (même mot que `boot.reload`), reçoit le focus ; recharge avec `?v=<heure>` |
+| `index.html#entryFailure` | Le jeu n’a pas pu se charger. Rechargez la page en forçant le rafraîchissement (Ctrl+F5) ou ouvrez-la de nouveau. | validé | Corps de l'alerte de la garde d'entrée (texte donné par le brief de la vague 5) |
+| `index.html#entryReload` | Recharger la page | validé | Lien de l'alerte (même mot que `boot.reload`), reçoit le focus ; recharge avec `?v=<heure>` |

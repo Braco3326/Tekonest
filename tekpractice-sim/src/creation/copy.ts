@@ -84,10 +84,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     shortcuts: 'Raccourcis clavier',
     siteBack: 'Retour au site Tekonest',
   },
-  /** « Raccourcis clavier » (night 2 wave 5, P2-1): the dialog of the Aide menu and the H key. À valider (tekuxwriter). */
+  /** « Raccourcis clavier » (night 2 wave 5, P2-1): the dialog of the Aide menu and the H key. Validé (tekuxwriter, night 2). */
   shortcuts: {
     title: 'Raccourcis clavier',
-    hint: 'Dans la vue 3D, ces touches agissent quand elle a le focus. Elles sont repérées par leur position sur le clavier.',
+    hint: 'Les raccourcis à une seule touche (lettres, chiffres, Espace, Suppr…) n’agissent que lorsque la vue 3D a le focus. Ils sont repérés par leur position sur le clavier.',
     opened: 'Liste des raccourcis clavier affichée.',
     close: 'Fermer',
     keyArrows: 'Flèches',
@@ -107,7 +107,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     inventory: 'Ouvrir ou fermer l’inventaire',
     rotateCw: 'Pivoter de 15° (Alt : 1°)',
     rotateCcw: 'Pivoter de 15° dans l’autre sens',
-    snap: 'Placement libre pendant une pose ou un déplacement',
+    snap: 'Activer ou désactiver le placement libre (pose ou déplacement)',
     duplicate: 'Dupliquer l’appareil sélectionné',
     delete: 'Supprimer l’appareil sélectionné',
     cancel: 'Annuler la pose, le câble en main ou la sélection',
@@ -774,9 +774,9 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusCancelled: 'Pose annulée.',
     /** Status bar after Échap during a drag (announced). */
     statusMoveCancelled: 'Déplacement annulé : {device} est resté en place.',
-    /** Status bar once a drag starts on the selected device that stands on a stand: the view orbits instead, and this says how to move it (announced once per drag; night 2 wave 5, P3-3). À valider (tekuxwriter). */
+    /** Status bar once a drag starts on the selected device that stands on a stand: the view orbits instead, and this says how to move it (announced once per drag; night 2 wave 5, P3-3). Validé (tekuxwriter, night 2). */
     dragStand: 'Sur pied : déplacez-le avec Propriétés › Position.',
-    /** Same for a flown device (announced once per drag). À valider (tekuxwriter). */
+    /** Same for a flown device (announced once per drag). Validé (tekuxwriter, night 2). */
     dragFlown: 'Accroché : déplacez-le avec Propriétés › Position.',
     /** Status bar if the device cannot be placed (announced). */
     statusRefused: 'Impossible de poser {device}.',
