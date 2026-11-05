@@ -11,7 +11,7 @@
     {
       "portId": "in-line-a",
       "face": "io",
-      "xMm": 74,
+      "xMm": 142,
       "yMm": 129,
       "confidence": "photo",
       "openingMm": 24,
@@ -20,7 +20,7 @@
     {
       "portId": "thru-out-a",
       "face": "io",
-      "xMm": 74,
+      "xMm": 142,
       "yMm": 98,
       "confidence": "photo",
       "openingMm": 24,
@@ -29,7 +29,7 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 113,
+      "xMm": 181,
       "yMm": 46,
       "confidence": "photo",
       "insetMm": 25.8
@@ -40,7 +40,7 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 139,
+      "xMm": 207,
       "yMm": 66,
       "axis": "x",
       "sizeMm": {
@@ -55,11 +55,19 @@
     "blankRects": [
       {
         "face": "io",
-        "xMm": 80,
+        "xMm": 148,
         "yMm": 283,
         "wMm": 80,
         "hMm": 62,
         "marginMm": 10
+      },
+      {
+        "face": "opposite",
+        "xMm": 130,
+        "yMm": 0,
+        "wMm": 86,
+        "hMm": 32,
+        "marginMm": 6
       }
     ]
   },
@@ -84,5 +92,23 @@
       "url": "https://www.neutrik.com/en/product/nc3md-l-1",
       "note": "Neutrik NC3MD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". The QSC XLR/combo receptacles use the same D-size footprint (guess, from the photo), so openingMm = 24 for the two XLR ports."
     }
-  ]
+  ],
+  "build": {
+    "shape": "speaker-cabinet",
+    "params": {
+      "midWidthMm": 340,
+      "rearWidthMm": 168,
+      "taperDepthMm": 120,
+      "chamferMm": 4,
+      "bevelSegments": 2
+    },
+    "projection": [
+      "io",
+      "opposite",
+      "left"
+    ],
+    "projectionShiftMm": {
+      "io": 68
+    }
+  }
 }

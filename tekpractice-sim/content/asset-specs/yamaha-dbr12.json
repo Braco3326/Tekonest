@@ -11,8 +11,8 @@
     {
       "portId": "in-line",
       "face": "io",
-      "xMm": 164.9,
-      "yMm": 396.4,
+      "xMm": 156.3,
+      "yMm": 410,
       "confidence": "manual",
       "openingMm": 24,
       "insetMm": 25.7
@@ -20,8 +20,8 @@
     {
       "portId": "link-out",
       "face": "io",
-      "xMm": 164.9,
-      "yMm": 304,
+      "xMm": 158,
+      "yMm": 290,
       "confidence": "manual",
       "openingMm": 24,
       "insetMm": 25.6
@@ -29,8 +29,8 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 169.9,
-      "yMm": 213.6,
+      "xMm": 167.5,
+      "yMm": 172.5,
       "confidence": "manual",
       "insetMm": 25.5
     }
@@ -59,6 +59,22 @@
         "wMm": 64,
         "hMm": 64,
         "marginMm": 10
+      },
+      {
+        "face": "io",
+        "xMm": 110,
+        "yMm": 428,
+        "wMm": 58,
+        "hMm": 30,
+        "marginMm": 6
+      },
+      {
+        "face": "io",
+        "xMm": 225,
+        "yMm": 362,
+        "wMm": 38,
+        "hMm": 16,
+        "marginMm": 3
       }
     ]
   },
@@ -84,5 +100,20 @@
       "url": "https://www.neutrik.com/en/product/nc3md-l-1",
       "note": "Neutrik NC3MD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". openingMm = 24 for the XLR ports by that convention (guess: the drawing shows the connector rings about 21 mm across)."
     }
-  ]
+  ],
+  "build": {
+    "shape": "speaker-cabinet",
+    "params": {
+      "midWidthMm": 316,
+      "rearWidthMm": 190,
+      "taperDepthMm": 55,
+      "chamferMm": 4,
+      "bevelSegments": 2
+    },
+    "projection": [
+      "io",
+      "opposite",
+      "left"
+    ]
+  }
 }

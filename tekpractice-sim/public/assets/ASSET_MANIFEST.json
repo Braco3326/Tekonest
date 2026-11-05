@@ -598,15 +598,15 @@
     {
       "id": "qsc-k12-2",
       "optimized": true,
-      "tris": 10140,
+      "tris": 308,
       "kind": "device",
       "ports": 3,
       "status": "ok",
       "portEmpties": 3,
       "riggedAt": "2026-07-19",
-      "tool": "meshy",
-      "toolVersion": "meshy-7.1",
-      "date": "2026-11-04T17:23:39.575Z",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1+meshy-7.1",
+      "date": "2026-11-05T03:47:51.241Z",
       "specSource": "https://www.qsc.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
       "logosRemoved": true,
       "photos": [
@@ -654,22 +654,22 @@
           "ok": true
         }
       ],
-      "source": "ai-meshy",
+      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
       "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
       "trademark": "branded-internal"
     },
     {
       "id": "yamaha-dbr12",
       "optimized": true,
-      "tris": 5761,
+      "tris": 332,
       "kind": "device",
       "ports": 3,
       "status": "ok",
       "portEmpties": 3,
       "riggedAt": "2026-07-19",
-      "tool": "meshy",
-      "toolVersion": "meshy-7.1",
-      "date": "2026-11-04T17:23:48.211Z",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1+meshy-7.1",
+      "date": "2026-11-05T03:48:17.625Z",
       "specSource": "https://usa.yamaha.com/files/download/other_assets/4/332514/VHN5580_DBR15_TS_En_B0_views.pdf",
       "logosRemoved": true,
       "photos": [
@@ -717,7 +717,7 @@
           "ok": true
         }
       ],
-      "source": "ai-meshy",
+      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
       "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
       "trademark": "branded-internal"
     },
@@ -841,15 +841,15 @@
     {
       "id": "genelec-8030c",
       "optimized": true,
-      "tris": 10498,
+      "tris": 220,
       "kind": "device",
       "ports": 2,
       "status": "ok",
       "portEmpties": 2,
       "riggedAt": "2026-07-19",
-      "tool": "meshy",
-      "toolVersion": "meshy-7.1",
-      "date": "2026-11-04T17:23:57.526Z",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1+meshy-7.1",
+      "date": "2026-11-05T03:48:35.379Z",
       "specSource": "https://assets.ctfassets.net/4zjnzn055a4v/1qUiHwGHNmumKgYugG6wws/837b26c2261771b9d58a94c44bb1cdc4/8030c_views.pdf",
       "logosRemoved": true,
       "photos": [
@@ -897,7 +897,7 @@
           "ok": true
         }
       ],
-      "source": "ai-meshy",
+      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
       "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
       "trademark": "branded-internal"
     },

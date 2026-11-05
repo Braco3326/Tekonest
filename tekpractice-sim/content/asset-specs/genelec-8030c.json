@@ -11,17 +11,17 @@
     {
       "portId": "in-analog",
       "face": "io",
-      "xMm": 136.7,
-      "yMm": 107,
+      "xMm": 137.3,
+      "yMm": 70,
       "confidence": "photo",
-      "openingMm": 24,
+      "openingMm": 14,
       "insetMm": 13.8
     },
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 58.1,
-      "yMm": 107,
+      "xMm": 58.5,
+      "yMm": 80,
       "confidence": "photo",
       "insetMm": 13.8
     }
@@ -59,6 +59,14 @@
         "wMm": 50,
         "hMm": 22,
         "marginMm": 8
+      },
+      {
+        "face": "io",
+        "xMm": 98,
+        "yMm": 66,
+        "wMm": 28,
+        "hMm": 7,
+        "marginMm": 2
       }
     ]
   },
@@ -83,5 +91,17 @@
       "url": "https://www.neutrik.com/en/product/nc3md-l-1",
       "note": "Neutrik NC3MD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". openingMm = 24 for the XLR input is a guess by that convention (the photo ring is about 22.7 mm)."
     }
-  ]
+  ],
+  "build": {
+    "shape": "speaker-cabinet",
+    "params": {
+      "chamferMm": 12,
+      "bevelSegments": 3
+    },
+    "projection": [
+      "io",
+      "opposite",
+      "left"
+    ]
+  }
 }

@@ -67,7 +67,13 @@ function measuredBaseFraction(pts: number[][]): number {
   })
   const widest = Math.max(...foot)
   let lastThin = -1
-  for (let b = 0; b < bands / 2; b++) if (foot[b] < 0.35 * widest) lastThin = b
+  // the stand is the thin run that starts at the bottom: it ends at the first wide band. A band without a vertex is skipped (a scripted
+  // cabinet has vertices only at its bevel rings, its faces and its socket pockets, so most of its bands hold none or only a pocket ring).
+  for (let b = 0; b < bands / 2; b++) {
+    if (foot[b] === 0) continue
+    if (foot[b] >= 0.35 * widest) break
+    lastThin = b
+  }
   return (lastThin + 1) / bands
 }
 
