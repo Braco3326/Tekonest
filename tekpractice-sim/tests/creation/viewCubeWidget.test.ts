@@ -295,11 +295,28 @@ describe('the hit shape (night 2 wave 5, P3-2: the corners of the square are not
     expect(convexHull([])).toEqual([])
   })
 
-  it('convexHull: a cube seen along an edge (corners on 4 spots, with float noise) keeps all four corners (it lost one on Dessous · Droite)', () => {
-    const P = (x: number, y: number) => ({ x, y })
-    const noisy = [P(30.0000002, 17.6), P(29.9999999, 17.6000001), P(30.0000001, 60), P(29.9999998, 102.4), P(90.0000003, 17.6), P(90, 60.0000002), P(89.9999999, 102.4), P(90.0000001, 102.4000001)]
+  it('convexHull: corners that differ by float noise far below 1e-9 (a cube seen along an edge) still give the whole rectangle (the old chain popped a corner: area 2544 instead of 5088)', () => {
+    // 4 spots, 2 corners on each, 1e-13 apart: what Dessous · Droite really projects. At 1e-7 the old chain was right, which is why the earlier test could not fail.
+    const noisy = [
+      [29.9999999999999, 17.6], [29.9999999999998, 17.6], [30.0000000000003, 102.4], [29.9999999999996, 102.4],
+      [89.9999999999995, 17.6], [89.9999999999994, 17.6], [89.9999999999993, 102.4], [89.9999999999992, 102.4],
+    ].map(([x, y]) => ({ x, y }))
     const hull = convexHull(noisy)
-    expect(new Set(hull.map((p) => `${p.x},${p.y}`))).toEqual(new Set(['30,17.6', '90,17.6', '90,102.4', '30,102.4']))
+    const area = Math.abs(hull.reduce((sum, p, i) => sum + (p.x * hull[(i + 1) % hull.length].y - hull[(i + 1) % hull.length].x * p.y), 0)) / 2
+    expect(area).toBeCloseTo(60 * 84.8, 1) // 5088
+    expect(new Set(hull.map((p) => p.x + ',' + p.y))).toEqual(new Set(['30,17.6', '90,17.6', '90,102.4', '30,102.4']))
+  })
+
+  it('convexHull: the same rectangle at any noise from 1e-13 to 1e-6 and in any order of the points', () => {
+    for (const noise of [1e-13, 1e-12, 1e-11, 1e-9, 1e-7, 1e-6]) {
+      for (let k = 0; k < 20; k++) {
+        const j = (n: number): number => n + (((k * 7 + Math.round(n)) % 5) - 2) * noise
+        const pts = [[30, 17.6], [30, 17.6], [30, 102.4], [30, 102.4], [90, 17.6], [90, 17.6], [90, 102.4], [90, 102.4]].map(([x, y], i) => ({ x: j(x) + (i % 3) * noise, y: j(y) - (i % 2) * noise }))
+        pts.sort((u, v) => Math.sin(u.x * 1e9 + k) - Math.sin(v.x * 1e9 + k))
+        const hull = convexHull(pts)
+        expect(new Set(hull.map((p) => p.x + ',' + p.y)), 'noise ' + noise + ' variant ' + k).toEqual(new Set(['30,17.6', '90,17.6', '90,102.4', '30,102.4']))
+      }
+    }
   })
 
   it('clipPolygon writes a CSS polygon in px, one decimal at most', () => {
