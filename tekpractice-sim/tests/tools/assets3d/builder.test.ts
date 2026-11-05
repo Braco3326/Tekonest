@@ -328,6 +328,50 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(swatch).toBeGreaterThan(0)
   }, 120_000)
 
+  it.skipIf(!BLENDER)('speaker-cabinet builds a hexagonal cabinet: full width at the baffle, narrowing over the last taperDepthMm to the rear, with a real pocket behind each inset port', async () => {
+    const spec: AssetSpecT = {
+      ...realSpec('qsc-k12-2'),
+      controls: [],
+      texture: undefined,
+      ports: [
+        { portId: 'in-line-a', face: 'io', xMm: 150, yMm: 300, confidence: 'photo', openingMm: 24, insetMm: 27.5 },
+        { portId: 'power-in', face: 'io', xMm: 205, yMm: 200, confidence: 'photo', insetMm: 25.8 },
+      ],
+      build: { shape: 'speaker-cabinet', params: { rearWidthMm: 168, taperDepthMm: 120, chamferMm: 3, bevelSegments: 2 } },
+    }
+    const { raw, fixedBytes, gates } = await expectBuiltTo(spec, 1500)
+    expect(raw.triangles).toBeGreaterThan(100) // not a bare box
+    expect(gates.filter((g) => !g.ok)).toEqual([])
+    const verts = await vertices(fixedBytes)
+    const halfW = 178 * MM
+    const halfD = 175 * MM
+    // the front (baffle) is full width, the rear is the flat 168 mm face less the bevel
+    expect(Math.max(...verts.map((v) => Math.abs(v[0])))).toBeGreaterThan(halfW - 0.01 * MM)
+    const rear = verts.filter((v) => v[2] > halfD - 0.01 * MM)
+    expect(Math.max(...rear.map((v) => Math.abs(v[0]))) / MM).toBeLessThan(84.01)
+    expect(Math.max(...rear.map((v) => Math.abs(v[0]))) / MM).toBeGreaterThan(77)
+    // the full width ends where the taper starts: 120 mm from the rear, that is z = 55 mm
+    const fullWidth = verts.filter((v) => Math.abs(v[0]) > halfW - 0.5 * MM)
+    expect(Math.max(...fullWidth.map((v) => v[2])) / MM).toBeGreaterThan(50)
+    expect(Math.max(...fullWidth.map((v) => v[2])) / MM).toBeLessThan(57)
+    // a round pocket per inset port: a ring of floor vertices of radius 12 mm at z = 175 - inset, centred on the port (glTF x = xMm - w / 2)
+    for (const [xMm, yMm, inset, r] of [[150, 300, 27.5, 12], [205, 200, 25.8, 12]] as const) {
+      const cx = (xMm - 178) * MM
+      const cy = yMm * MM
+      const floor = verts.filter((v) => Math.abs(v[2] - (halfD - inset * MM)) < 0.01 * MM && Math.hypot(v[0] - cx, v[1] - cy) < (r + 0.01) * MM)
+      expect(floor.length, 'pocket floor vertices at ' + xMm).toBeGreaterThanOrEqual(12)
+      const mouth = verts.filter((v) => Math.abs(v[2] - halfD) < 0.01 * MM && Math.abs(Math.hypot(v[0] - cx, v[1] - cy) - r * MM) < 0.01 * MM)
+      expect(mouth.length, 'pocket mouth vertices at ' + xMm).toBeGreaterThanOrEqual(12)
+    }
+  }, 120_000)
+
+  it.skipIf(!BLENDER)('speaker-cabinet without a taper is a bevelled box at the spec size', async () => {
+    const spec: AssetSpecT = { ...realSpec('genelec-8030c'), controls: [], texture: undefined, ports: [], build: { shape: 'speaker-cabinet', params: { chamferMm: 12, bevelSegments: 3 } } }
+    const { raw, gates } = await expectBuiltTo(spec, 1500)
+    expect(raw.triangles).toBeGreaterThan(60) // a bare box is 12; three bevel segments round every edge
+    expect(gates.filter((g) => !g.ok)).toEqual([])
+  }, 120_000)
+
   it.skipIf(!BLENDER)('console-wedge builds yamaha-ql1 at 468 x 272 x 562 mm with its measured side profile, ports on the flat io face, every gate passing', async () => {
     const spec = realSpec('yamaha-ql1')
     expect(spec.build?.shape).toBe('console-wedge')

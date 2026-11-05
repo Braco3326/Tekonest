@@ -99,6 +99,24 @@ describe('runBuilder (unit, injected exec)', () => {
     expect(calls[0].plan).toMatchObject({ shape: 'revolve', params: { segments: 24 }, profile, colours })
   })
 
+  it('puts the io-face ports with their inset and opening into plan.json for a shape that cuts pockets, and for no other shape', async () => {
+    const { exec, calls } = fakeExec()
+    const ports: AssetSpecT['ports'] = [
+      { portId: 'in-line-a', face: 'io', xMm: 180, yMm: 129, confidence: 'photo', openingMm: 24, insetMm: 27.5 },
+      { portId: 'power-in', face: 'io', xMm: 200, yMm: 46, confidence: 'photo', insetMm: 25.8 },
+      { portId: 'mic-front', face: 'opposite', xMm: 100, yMm: 100, confidence: 'photo' },
+    ]
+    const speaker = plugSpec({ id: 'test-speaker', kind: 'device', tier: 'hero', mating: undefined, realSizeMm: { w: 356, h: 602, d: 350 }, ports, build: { shape: 'speaker-cabinet', params: { rearWidthMm: 168, taperDepthMm: 120, chamferMm: 3 } } })
+    await runBuilder(speaker, 'out/raw.glb', { exec, blender: 'b' })
+    expect((calls[0].plan as { ports: unknown }).ports).toEqual([
+      { portId: 'in-line-a', xMm: 180, yMm: 129, insetMm: 27.5, openingMm: 24 },
+      { portId: 'power-in', xMm: 200, yMm: 46, insetMm: 25.8 },
+    ])
+    const box = plugSpec({ kind: 'device', tier: 'hero', mating: undefined, realSizeMm: { w: 100, h: 44, d: 200 }, ports, build: { shape: 'rack-box' } })
+    await runBuilder(box, 'out/raw.glb', { exec, blender: 'b' })
+    expect(calls[1].plan).not.toHaveProperty('ports')
+  })
+
   it('exposes the builder version recorded in the manifest', () => {
     expect(BUILDER_VERSION).toBe('blender-builder-1')
   })

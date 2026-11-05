@@ -9,7 +9,7 @@
 import type { AssetSpecT } from './specSchema'
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -23,6 +23,8 @@ export interface ShapeSpec {
   usesProfile?: boolean
   /** How the profile reads: 'lathe' = [axial position, diameter] (revolve), 'side' = [depth from the io face, height] (console-wedge). */
   profileKind?: 'lathe' | 'side'
+  /** True when the builder also needs the spec's ports (it cuts a pocket behind each inset port): runBuilder then puts them in plan.json. */
+  usesPorts?: boolean
 }
 
 export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
@@ -36,7 +38,13 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   revolve: { kind: 'device', params: ['segments'], needsMatingOuter: false, usesProfile: true, profileKind: 'lathe' },
   // A console or any wedge-shaped casing: the side profile [depth from the io face mm, height mm] extruded across the width, edges chamfered.
   'console-wedge': { kind: 'device', params: ['chamferMm'], needsMatingOuter: false, usesProfile: true, profileKind: 'side' },
+  // A loudspeaker cabinet: a hexagon in plan (full width at the baffle, narrowing over the last taperDepthMm to rearWidthMm at the io face),
+  // bevelled, with a round pocket cut into the io face behind each port that has an insetMm (depth = the inset, diameter = openingMm or 24 mm).
+  'speaker-cabinet': { kind: 'device', params: ['chamferMm', 'bevelSegments', 'rearWidthMm', 'taperDepthMm'], needsMatingOuter: false, usesPorts: true },
 }
+
+/** Default diameter of a socket pocket when the port gives no openingMm, in millimetres (the builder uses the same). */
+export const POCKET_DEFAULT_MM = 24
 
 /**
  * Checks the `build` block of `spec`. Returns one message per problem (empty = ok, also when there is no build block).
@@ -103,8 +111,43 @@ export function validateBuild(spec: AssetSpecT): string[] {
       errors.push(`${spec.id}: param 'segments' must be a whole number from 12 to 64 and a multiple of 4 (so the box is exact), got ${segments}`)
     }
   }
+  if (build.shape === 'speaker-cabinet') errors.push(...validateSpeakerCabinet(spec))
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {
     errors.push(`${spec.id}: build shape '${build.shape}' needs mating.outerMm (the diameter of the mating end)`)
+  }
+  return errors
+}
+
+/** The checks of a speaker-cabinet: plan widths, taper, bevel, and that every socket pocket fits in the flat rear face. */
+function validateSpeakerCabinet(spec: AssetSpecT): string[] {
+  const errors: string[] = []
+  const { w, h, d } = spec.realSizeMm
+  const p = spec.build?.params ?? {}
+  const chamfer = p.chamferMm ?? 1
+  const rear = p.rearWidthMm ?? w
+  const taper = p.taperDepthMm
+  if (rear > w) errors.push(`${spec.id}: rearWidthMm (${rear}) cannot be wider than the width ${w} mm`)
+  else if (rear <= 4 * chamfer) errors.push(`${spec.id}: rearWidthMm (${rear}) must be more than four times the bevel (chamferMm ${chamfer})`)
+  if (rear < w && taper === undefined) errors.push(`${spec.id}: a rear narrower than the front needs taperDepthMm (how far from the io face the sides start to narrow)`)
+  if (rear >= w && taper !== undefined) errors.push(`${spec.id}: taperDepthMm (${taper}) has no effect when rearWidthMm is not narrower than the width`)
+  if (taper !== undefined && taper >= d) errors.push(`${spec.id}: taperDepthMm (${taper}) must be less than the depth ${d} mm`)
+  const segments = p.bevelSegments
+  if (segments !== undefined && !(Number.isInteger(segments) && segments >= 1 && segments <= 4)) {
+    errors.push(`${spec.id}: param 'bevelSegments' must be a whole number from 1 to 4, got ${segments}`)
+  }
+  const left = (w - Math.min(rear, w)) / 2 + chamfer
+  const right = (w + Math.min(rear, w)) / 2 - chamfer
+  for (const port of spec.ports) {
+    if (!(port.insetMm !== undefined && port.insetMm > 0)) continue // no inset, no pocket
+    if (port.face !== 'io') {
+      errors.push(`${spec.id}: port '${port.portId}' has an insetMm but is on the ${port.face} face: a pocket is cut on the io face only`)
+      continue
+    }
+    const r = (port.openingMm ?? POCKET_DEFAULT_MM) / 2
+    if (port.xMm - r < left || port.xMm + r > right || port.yMm - r < chamfer || port.yMm + r > h - chamfer) {
+      errors.push(`${spec.id}: the pocket of port '${port.portId}' (x ${port.xMm}, y ${port.yMm}, radius ${r} mm) does not fit in the flat rear face (x ${left} to ${right} mm)`)
+    }
+    if (port.insetMm > d / 2) errors.push(`${spec.id}: port '${port.portId}' inset (${port.insetMm} mm) is deeper than half the depth`)
   }
   return errors
 }

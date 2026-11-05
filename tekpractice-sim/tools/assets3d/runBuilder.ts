@@ -6,7 +6,7 @@
  *
  *   blender --background --factory-startup --python-exit-code 1 --python build_from_spec.py -- --plan <plan.json> --out <glb>
  *
- * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours?, projections? } (profile and colours only for revolve and console-wedge; projections = [{ face, png }] map a picture of each face onto the shape). Sizes always come from the spec's realSizeMm.
+ * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours?, ports? (io-face ports, for shapes that cut socket pockets), projections? } (profile and colours only for revolve and console-wedge; projections = [{ face, png }] map a picture of each face onto the shape). Sizes always come from the spec's realSizeMm.
  * The GLB is the raw input of attempt 1 of buildAsset: the fix-up and every gate run on it unchanged.
  * `exec` and `blender` are injectable so the contract is unit-tested without Blender.
  */
@@ -16,6 +16,7 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { findBlender } from './env'
 import type { ProjectionFace } from './projection'
+import { SHAPE_SPECS } from './shapes'
 import { defaultExec } from './runFixup'
 import type { FixupDeps } from './runFixup'
 import { validateBuild } from './shapes'
@@ -61,6 +62,14 @@ export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDe
     params: spec.build.params ?? {},
     ...(spec.build.profile ? { profile: spec.build.profile } : {}),
     ...(spec.build.colours ? { colours: spec.build.colours } : {}),
+    // a shape that cuts a pocket behind each inset port needs where they are (io face only: that is the face it cuts)
+    ...(SHAPE_SPECS[spec.build.shape].usesPorts
+      ? {
+          ports: spec.ports
+            .filter((p) => p.face === 'io')
+            .map((p) => ({ portId: p.portId, xMm: p.xMm, yMm: p.yMm, ...(p.insetMm !== undefined ? { insetMm: p.insetMm } : {}), ...(p.openingMm !== undefined ? { openingMm: p.openingMm } : {}) })),
+        }
+      : {}),
   }
 
   const tmp = await mkdtemp(join(tmpdir(), 'tekpractice-builder-'))

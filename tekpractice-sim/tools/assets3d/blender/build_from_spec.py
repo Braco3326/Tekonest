@@ -275,6 +275,18 @@ def extrude_xy(bm: bmesh.types.BMesh, pts: list[tuple[float, float]], z0: float,
     return faces
 
 
+def extrude_xz(bm: bmesh.types.BMesh, pts: list[tuple[float, float]], y0: float, y1: float) -> list[bmesh.types.BMFace]:
+    """A prism: the polygon `pts` of (x, z) points (glTF space, the plan seen from above) extruded along y from y0 to y1. Returns its faces."""
+    low = [bm.verts.new(g2b(x, y0, z)) for x, z in pts]
+    high = [bm.verts.new(g2b(x, y1, z)) for x, z in pts]
+    faces = [bm.faces.new(low[::-1]), bm.faces.new(high)]
+    n = len(pts)
+    for i in range(n):
+        j = (i + 1) % n
+        faces.append(bm.faces.new((low[i], low[j], high[j], high[i])))
+    return faces
+
+
 def box(bm: bmesh.types.BMesh, x0: float, x1: float, y0: float, y1: float, z0: float, z1: float) -> list[bmesh.types.BMFace]:
     """An axis-aligned box in glTF space (12 triangles)."""
     return extrude_zy(bm, [(z0, y0), (z1, y0), (z1, y1), (z0, y1)], x0, x1)
@@ -581,6 +593,74 @@ def build_console_wedge(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+CABINET = "#3d3f46"          # lifted black plastic: the creation scene's night backdrop swallows a true black
+CABINET_POCKET = "#25262b"   # the inside of a socket pocket, a shade darker than the cabinet
+POCKET_DEFAULT_MM = 24.0
+POCKET_SEGMENTS = 16
+FLAT_FACE_TOL = 1e-6         # metres: how far a vertex may be from a plane and still lie in it (bmesh stores float32)
+
+
+def take_flat_face(bm: bmesh.types.BMesh, z: float) -> list[bmesh.types.BMEdge]:
+    """Removes the one face lying in the glTF plane z (within FLAT_FACE_TOL) and returns its edges, to be refilled around holes."""
+    found = [f for f in bm.faces if all(abs(-v.co.y - z) < FLAT_FACE_TOL for v in f.verts)]
+    if len(found) != 1:
+        raise BuildError(f"expected one flat face in the plane z = {z / MM:.2f} mm, found {len(found)}")
+    edges = list(found[0].edges)
+    bmesh.ops.delete(bm, geom=found, context="FACES_ONLY")
+    return edges
+
+
+def build_speaker_cabinet(plan: Plan) -> bpy.types.Object:
+    """A loudspeaker cabinet w x h x d, bottom at y = 0, centred on x and z, the io (rear) face at z = +d/2.
+
+    The plan seen from above is a hexagon: full width w from the baffle (z = -d/2) back to taperDepthMm short of the rear, then the sides
+    narrow to rearWidthMm at the io face (no param = a plain box). Every edge is bevelled by chamferMm in bevelSegments segments (default
+    1 and 3 mm). plan.ports: each io-face port with an insetMm gets a round pocket in the rear face, its floor insetMm behind the face
+    (so the port marker sits on a real surface) and its diameter openingMm (24 mm when the port gives none). One colour (CABINET) and a
+    darker one for the pockets; a projection puts the real baffle, rear panel and sides on it."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    chamfer = param_m(plan, "chamferMm", 3.0)
+    segments = params.get("bevelSegments", 1)
+    if isinstance(segments, bool) or not isinstance(segments, int) or not 1 <= segments <= 4:
+        raise BuildError(f"params.bevelSegments must be a whole number from 1 to 4, got {segments!r}")
+    rear = param_m(plan, "rearWidthMm", w / MM) if "rearWidthMm" in params else w
+    if rear > w + 1e-9:
+        raise BuildError(f"params.rearWidthMm ({rear / MM:.1f}) cannot be wider than the width ({w / MM:.1f})")
+    taper = param_m(plan, "taperDepthMm", d / MM) if "taperDepthMm" in params else 0.0
+    if rear < w - 1e-9 and not 0.0 < taper < d:
+        raise BuildError("a rear narrower than the front needs params.taperDepthMm, less than the depth")
+    if chamfer * 4.0 >= min(w, rear, h, d):
+        raise BuildError(f"params.chamferMm ({chamfer / MM:.2f}) is too large for the smallest side")
+
+    body = Body("speaker-cabinet")
+    bm = body.bm
+    if rear < w - 1e-9:
+        plan_pts = [(-w / 2.0, -d / 2.0), (w / 2.0, -d / 2.0), (w / 2.0, d / 2.0 - taper), (rear / 2.0, d / 2.0), (-rear / 2.0, d / 2.0), (-w / 2.0, d / 2.0 - taper)]
+    else:
+        plan_pts = [(-w / 2.0, -d / 2.0), (w / 2.0, -d / 2.0), (w / 2.0, d / 2.0), (-w / 2.0, d / 2.0)]
+    extrude_xz(bm, plan_pts, 0.0, h)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    bmesh.ops.bevel(bm, geom=bm.edges[:], offset=chamfer, offset_type="OFFSET", segments=segments, affect="EDGES")
+    body.done(CABINET)
+
+    pockets = [p for p in (plan.get("ports") or []) if isinstance(p.get("insetMm"), (int, float)) and p["insetMm"] > 0]
+    if pockets:
+        outline = take_flat_face(bm, d / 2.0)
+        holes = []
+        for p in pockets:
+            radius = float(p.get("openingMm") or POCKET_DEFAULT_MM) * MM / 2.0
+            cx = float(p["xMm"]) * MM - w / 2.0
+            cy = float(p["yMm"]) * MM
+            if abs(cx) + radius > rear / 2.0 - chamfer + 1e-9 or cy - radius < chamfer or cy + radius > h - chamfer:
+                raise BuildError(f"the pocket of port {p.get('portId')!r} does not fit in the flat rear face")
+            holes.append(blind_hole(bm, cx, cy, d / 2.0, radius, POCKET_SEGMENTS, float(p["insetMm"]) * MM, -1.0))
+        body.done(CABINET_POCKET)  # the pocket walls and floors, built so far
+        fill_with_holes(bm, outline, holes, (0.0, 0.0, 1.0))
+        body.done(CABINET)  # the rear face refilled around the pockets
+    return body.finish()
+
+
 def build_stagebox_rio3224(plan: Plan) -> bpy.types.Object:
     """Yamaha Rio3224-D2 style 5U stage box (research report, "Rio3224-D2"; generic: no logo, no model name).
 
@@ -822,6 +902,7 @@ SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "stagebox-rio3224": build_stagebox_rio3224,
     "revolve": build_revolve,
     "console-wedge": build_console_wedge,
+    "speaker-cabinet": build_speaker_cabinet,
 }
 
 

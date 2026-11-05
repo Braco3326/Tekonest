@@ -164,3 +164,45 @@ describe('console-wedge (side profile)', () => {
     expect(validateBuild(wedge({ profile: [[0, 272], [40, 0], [161, 178], [562, 95]] }))[0]).toMatch(/height/)
   })
 })
+
+describe('speaker-cabinet (plan hexagon, socket pockets)', () => {
+  const port = (portId: string, xMm: number, over: Record<string, unknown> = {}): AssetSpecT['ports'][number] =>
+    ({ portId, face: 'io', xMm, yMm: 300, confidence: 'photo', openingMm: 24, insetMm: 25, ...over }) as AssetSpecT['ports'][number]
+  const device: Partial<AssetSpecT> = { kind: 'device', tier: 'hero', mating: undefined, realSizeMm: { w: 356, h: 602, d: 350 }, ports: [port('in-line-a', 180)] }
+  const cabinet = (params: Record<string, number> = { rearWidthMm: 168, taperDepthMm: 120, chamferMm: 3 }, over: Partial<AssetSpecT> = {}): AssetSpecT =>
+    specWith({ shape: 'speaker-cabinet', params }, { ...device, ...over })
+
+  it('is a device shape with its own params, and its spec needs no profile or colours', () => {
+    expect(SHAPE_SPECS['speaker-cabinet']).toMatchObject({ kind: 'device', needsMatingOuter: false })
+    expect([...SHAPE_SPECS['speaker-cabinet'].params].sort()).toEqual(['bevelSegments', 'chamferMm', 'rearWidthMm', 'taperDepthMm'])
+    expect(validateBuild(cabinet())).toEqual([])
+    expect(validateBuild(cabinet({}))).toEqual([]) // a plain box needs no param at all
+  })
+
+  it('refuses a rear wider than the front, and a rear too narrow for the bevel', () => {
+    expect(validateBuild(cabinet({ rearWidthMm: 400, taperDepthMm: 100 }))[0]).toMatch(/rearWidthMm.*356/)
+    expect(validateBuild(cabinet({ rearWidthMm: 5, taperDepthMm: 100, chamferMm: 3 }))[0]).toMatch(/rearWidthMm/)
+  })
+
+  it('needs a taper depth inside the casing when the rear is narrower, and refuses one when it is not', () => {
+    expect(validateBuild(cabinet({ rearWidthMm: 168 }))[0]).toMatch(/taperDepthMm/) // narrower rear without a taper
+    expect(validateBuild(cabinet({ rearWidthMm: 168, taperDepthMm: 350 }))[0]).toMatch(/taperDepthMm.*350/) // the whole depth
+    expect(validateBuild(cabinet({ taperDepthMm: 100 }))[0]).toMatch(/taperDepthMm/) // a taper without a narrower rear
+  })
+
+  it('takes a whole number of bevel segments from 1 to 4', () => {
+    expect(validateBuild(cabinet({ chamferMm: 3, bevelSegments: 3 }))).toEqual([])
+    expect(validateBuild(cabinet({ chamferMm: 3, bevelSegments: 5 }))[0]).toMatch(/bevelSegments/)
+    expect(validateBuild(cabinet({ chamferMm: 3, bevelSegments: 2.5 }))[0]).toMatch(/bevelSegments/)
+  })
+
+  it('checks every socket pocket: only on the io face, inside the rear face, no deeper than half the depth', () => {
+    const rear = { rearWidthMm: 168, taperDepthMm: 120, chamferMm: 3 } // the rear face spans x = 94 .. 262 mm
+    expect(validateBuild(cabinet(rear, { ports: [port('a', 94 + 12 + 3), port('b', 262 - 12 - 3)] }))).toEqual([]) // just inside, pocket radius 12
+    expect(validateBuild(cabinet(rear, { ports: [port('left-out', 74)] }))[0]).toMatch(/left-out.*rear face/)
+    expect(validateBuild(cabinet(rear, { ports: [port('right-out', 270)] }))[0]).toMatch(/right-out.*rear face/)
+    expect(validateBuild(cabinet(rear, { ports: [port('deep', 180, { insetMm: 200 })] }))[0]).toMatch(/deep.*inset/)
+    expect(validateBuild(cabinet(rear, { ports: [port('side', 180, { face: 'left' })] }))[0]).toMatch(/side.*io face/)
+    expect(validateBuild(cabinet(rear, { ports: [port('flush', 40, { insetMm: undefined })] }))).toEqual([]) // no inset, no pocket, no check
+  })
+})
