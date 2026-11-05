@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { quietWindow } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 test('from a fresh load, Tab walks skip link → menubar → tree → canvas → properties → status, each with a visible ring', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
@@ -133,7 +134,7 @@ for (const reduced of [true, false]) {
       expect(Math.abs((await alpha(page)) - a0), 'and back by one step the other way').toBeLessThan(STEP * 0.1)
     })
 
-    test('a real 30 ms tap with the CPU throttled (6x) turns the camera by the step: one per frame the key was down, at least one, never a burst', async ({ page }) => {
+    test('a real 30 ms tap with the CPU throttled (6x) turns the camera by at least one step and by no more than one per frame it was down plus one (a coarse bound: the exact double-count guard is the frame-counted hold test below)', async ({ page }) => {
       await bootCamera(page, reduced)
       const cdp = await page.context().newCDPSession(page)
       await cdp.send('Emulation.setCPUThrottlingRate', { rate: 6 })
@@ -175,11 +176,11 @@ test('holding an arrow still orbits continuously, one step per frame it is down 
   expect(a1 - a0, 'and not one step more (a tap step on top of the frames would be a double count)').toBeLessThan(STEP * (frames + 0.6))
   // stopped: nothing moves any more once released and settled
   const rest = await alpha(page)
-  await page.waitForTimeout(400)
+  await quietWindow(page, 400) // a real quiet window: nothing may move the camera once the key is up and the inertia has played out
   expect(await alpha(page)).toBe(rest)
 })
 
-test('Ctrl + arrow (pan) and a tap in a text field do not turn the camera by a step', async ({ page }) => {
+test('Ctrl + arrow (pan) does not turn the camera by a step', async ({ page }) => {
   await bootCamera(page, false)
   const a0 = await alpha(page)
   await page.evaluate(() => {
@@ -189,4 +190,31 @@ test('Ctrl + arrow (pan) and a tap in a text field do not turn the camera by a s
   })
   await settleCamera(page)
   expect(Math.abs((await alpha(page)) - a0)).toBeLessThan(STEP * 0.1)
+})
+
+test('S9: an arrow tapped in a text field (the drawer filter) does not turn the camera, while the same tap on the 3D view does', async ({ page }) => {
+  await bootCamera(page, false)
+  await page.keyboard.press('Space') // the drawer opens and its « Filtrer » field takes the focus
+  const filter = page.getByTestId('inventory-filter')
+  await filter.focus()
+  await expect(filter).toBeFocused()
+  const a0 = await alpha(page)
+  await page.evaluate(() => {
+    const f = document.querySelector('[data-testid="inventory-filter"]')!
+    f.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37, bubbles: true }))
+    f.dispatchEvent(new KeyboardEvent('keyup', { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37, bubbles: true }))
+  })
+  await settleCamera(page)
+  await quietWindow(page, 300) // a quiet window: no late step either
+  expect(Math.abs((await alpha(page)) - a0), 'a tap in the text field turns nothing').toBeLessThan(STEP * 0.1)
+  // the control: the same tap on the 3D view does turn it (the test means something)
+  await page.keyboard.press('Escape')
+  await page.locator('#renderCanvas').focus()
+  await page.evaluate(() => {
+    const c = document.querySelector('#renderCanvas')!
+    c.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37, bubbles: true }))
+    c.dispatchEvent(new KeyboardEvent('keyup', { key: 'ArrowLeft', code: 'ArrowLeft', keyCode: 37, bubbles: true }))
+  })
+  await settleCamera(page)
+  expect(Math.abs((await alpha(page)) - a0), 'the same tap on the view turns one step').toBeGreaterThan(STEP * 0.9)
 })

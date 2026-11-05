@@ -375,6 +375,7 @@ test('P3-3: a drag that starts on the selected stand-mounted device says why the
   expect(await poseOf(page, 'k12-g'), 'the speaker did not move').toEqual([3, 1.2, -3])
   // once per drag: say something else in the line, then a second drag says it again; and while one drag goes on the line is not rewritten
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'power', value: true }))
+  await expect(status, 'the line says something else before the second drag (so the second hint is a new announcement)').not.toHaveText(HINT)
   const at2 = (await page.evaluate(() => window.__creation!.deviceScreen('k12-g')))!
   await dragFrom(at2.x, at2.y)
   await expect(status).toHaveText(HINT)
