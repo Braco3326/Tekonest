@@ -38,9 +38,10 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   revolve: { kind: 'device', params: ['segments'], needsMatingOuter: false, usesProfile: true, profileKind: 'lathe' },
   // A console or any wedge-shaped casing: the side profile [depth from the io face mm, height mm] extruded across the width, edges chamfered.
   'console-wedge': { kind: 'device', params: ['chamferMm'], needsMatingOuter: false, usesProfile: true, profileKind: 'side' },
-  // A loudspeaker cabinet: a hexagon in plan (full width at the baffle, narrowing over the last taperDepthMm to rearWidthMm at the io face),
+  // A loudspeaker cabinet: a hexagon in plan (full width at the baffle, midWidthMm where the rear taper starts taperDepthMm from the io face,
+  // rearWidthMm at the io face; mid and rear default to the width, rear to the mid width, so a plain box or trapezoid needs fewer params),
   // bevelled, with a round pocket cut into the io face behind each port that has an insetMm (depth = the inset, diameter = openingMm or 24 mm).
-  'speaker-cabinet': { kind: 'device', params: ['chamferMm', 'bevelSegments', 'rearWidthMm', 'taperDepthMm'], needsMatingOuter: false, usesPorts: true },
+  'speaker-cabinet': { kind: 'device', params: ['chamferMm', 'bevelSegments', 'midWidthMm', 'rearWidthMm', 'taperDepthMm'], needsMatingOuter: false, usesPorts: true },
 }
 
 /** Default diameter of a socket pocket when the port gives no openingMm, in millimetres (the builder uses the same). */
@@ -124,12 +125,14 @@ function validateSpeakerCabinet(spec: AssetSpecT): string[] {
   const { w, h, d } = spec.realSizeMm
   const p = spec.build?.params ?? {}
   const chamfer = p.chamferMm ?? 1
-  const rear = p.rearWidthMm ?? w
+  const mid = p.midWidthMm ?? w
+  const rear = p.rearWidthMm ?? mid
   const taper = p.taperDepthMm
-  if (rear > w) errors.push(`${spec.id}: rearWidthMm (${rear}) cannot be wider than the width ${w} mm`)
+  if (mid > w) errors.push(`${spec.id}: midWidthMm (${mid}) cannot be wider than the width ${w} mm`)
+  if (rear > mid) errors.push(`${spec.id}: rearWidthMm (${rear}) cannot be wider than midWidthMm (${mid})`)
   else if (rear <= 4 * chamfer) errors.push(`${spec.id}: rearWidthMm (${rear}) must be more than four times the bevel (chamferMm ${chamfer})`)
-  if (rear < w && taper === undefined) errors.push(`${spec.id}: a rear narrower than the front needs taperDepthMm (how far from the io face the sides start to narrow)`)
-  if (rear >= w && taper !== undefined) errors.push(`${spec.id}: taperDepthMm (${taper}) has no effect when rearWidthMm is not narrower than the width`)
+  if (rear < mid && taper === undefined) errors.push(`${spec.id}: a rear narrower than the middle needs taperDepthMm (how far from the io face the sides start to narrow)`)
+  if (rear >= mid && taper !== undefined) errors.push(`${spec.id}: taperDepthMm (${taper}) has no effect when rearWidthMm is not narrower than midWidthMm`)
   if (taper !== undefined && taper >= d) errors.push(`${spec.id}: taperDepthMm (${taper}) must be less than the depth ${d} mm`)
   const segments = p.bevelSegments
   if (segments !== undefined && !(Number.isInteger(segments) && segments >= 1 && segments <= 4)) {

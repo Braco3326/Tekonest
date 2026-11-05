@@ -174,7 +174,7 @@ describe('speaker-cabinet (plan hexagon, socket pockets)', () => {
 
   it('is a device shape with its own params, and its spec needs no profile or colours', () => {
     expect(SHAPE_SPECS['speaker-cabinet']).toMatchObject({ kind: 'device', needsMatingOuter: false })
-    expect([...SHAPE_SPECS['speaker-cabinet'].params].sort()).toEqual(['bevelSegments', 'chamferMm', 'rearWidthMm', 'taperDepthMm'])
+    expect([...SHAPE_SPECS['speaker-cabinet'].params].sort()).toEqual(['bevelSegments', 'chamferMm', 'midWidthMm', 'rearWidthMm', 'taperDepthMm'])
     expect(validateBuild(cabinet())).toEqual([])
     expect(validateBuild(cabinet({}))).toEqual([]) // a plain box needs no param at all
   })
@@ -188,6 +188,13 @@ describe('speaker-cabinet (plan hexagon, socket pockets)', () => {
     expect(validateBuild(cabinet({ rearWidthMm: 168 }))[0]).toMatch(/taperDepthMm/) // narrower rear without a taper
     expect(validateBuild(cabinet({ rearWidthMm: 168, taperDepthMm: 350 }))[0]).toMatch(/taperDepthMm.*350/) // the whole depth
     expect(validateBuild(cabinet({ taperDepthMm: 100 }))[0]).toMatch(/taperDepthMm/) // a taper without a narrower rear
+  })
+
+  it('the mid width (where the rear taper starts) lies between the rear width and the front width', () => {
+    expect(validateBuild(cabinet({ midWidthMm: 338, rearWidthMm: 168, taperDepthMm: 120, chamferMm: 3 }))).toEqual([])
+    expect(validateBuild(cabinet({ midWidthMm: 400, rearWidthMm: 168, taperDepthMm: 120 }))[0]).toMatch(/midWidthMm.*356/)
+    expect(validateBuild(cabinet({ midWidthMm: 150, rearWidthMm: 168, taperDepthMm: 120 }))[0]).toMatch(/rearWidthMm.*midWidthMm/)
+    expect(validateBuild(cabinet({ midWidthMm: 338, taperDepthMm: 120 }))[0]).toMatch(/midWidthMm|taperDepthMm/) // a narrower middle without a narrower rear is a plain trapezoid: needs the rear width
   })
 
   it('takes a whole number of bevel segments from 1 to 4', () => {

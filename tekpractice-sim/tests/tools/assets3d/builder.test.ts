@@ -337,7 +337,7 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
         { portId: 'in-line-a', face: 'io', xMm: 150, yMm: 300, confidence: 'photo', openingMm: 24, insetMm: 27.5 },
         { portId: 'power-in', face: 'io', xMm: 205, yMm: 200, confidence: 'photo', insetMm: 25.8 },
       ],
-      build: { shape: 'speaker-cabinet', params: { rearWidthMm: 168, taperDepthMm: 120, chamferMm: 3, bevelSegments: 2 } },
+      build: { shape: 'speaker-cabinet', params: { midWidthMm: 340, rearWidthMm: 168, taperDepthMm: 120, chamferMm: 3, bevelSegments: 2 } },
     }
     const { raw, fixedBytes, gates } = await expectBuiltTo(spec, 1500)
     expect(raw.triangles).toBeGreaterThan(100) // not a bare box
@@ -350,10 +350,12 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     const rear = verts.filter((v) => v[2] > halfD - 0.01 * MM)
     expect(Math.max(...rear.map((v) => Math.abs(v[0]))) / MM).toBeLessThan(84.01)
     expect(Math.max(...rear.map((v) => Math.abs(v[0]))) / MM).toBeGreaterThan(77)
-    // the full width ends where the taper starts: 120 mm from the rear, that is z = 55 mm
-    const fullWidth = verts.filter((v) => Math.abs(v[0]) > halfW - 0.5 * MM)
-    expect(Math.max(...fullWidth.map((v) => v[2])) / MM).toBeGreaterThan(50)
-    expect(Math.max(...fullWidth.map((v) => v[2])) / MM).toBeLessThan(57)
+    // the sides run from the full front width to the mid width (340 mm) where the rear taper starts, 120 mm from the rear: z = 55 mm
+    const nearTaper = verts.filter((v) => Math.abs(v[2] / MM - 55) < 3.5)
+    expect(Math.max(...nearTaper.map((v) => Math.abs(v[0]))) / MM).toBeGreaterThan(165)
+    expect(Math.max(...nearTaper.map((v) => Math.abs(v[0]))) / MM).toBeLessThan(170.4)
+    const frontRim = verts.filter((v) => v[2] < -halfD + 4 * MM)
+    expect(Math.max(...frontRim.map((v) => Math.abs(v[0]))) / MM).toBeGreaterThan(177)
     // a round pocket per inset port: a ring of floor vertices of radius 12 mm at z = 175 - inset, centred on the port (glTF x = xMm - w / 2)
     for (const [xMm, yMm, inset, r] of [[150, 300, 27.5, 12], [205, 200, 25.8, 12]] as const) {
       const cx = (xMm - 178) * MM

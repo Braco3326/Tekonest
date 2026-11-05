@@ -613,8 +613,9 @@ def take_flat_face(bm: bmesh.types.BMesh, z: float) -> list[bmesh.types.BMEdge]:
 def build_speaker_cabinet(plan: Plan) -> bpy.types.Object:
     """A loudspeaker cabinet w x h x d, bottom at y = 0, centred on x and z, the io (rear) face at z = +d/2.
 
-    The plan seen from above is a hexagon: full width w from the baffle (z = -d/2) back to taperDepthMm short of the rear, then the sides
-    narrow to rearWidthMm at the io face (no param = a plain box). Every edge is bevelled by chamferMm in bevelSegments segments (default
+    The plan seen from above is a hexagon: full width w at the baffle (z = -d/2), midWidthMm where the rear taper starts (taperDepthMm short of
+    the rear), rearWidthMm at the io face. midWidthMm defaults to w and rearWidthMm to midWidthMm (no param = a plain box, no taperDepthMm =
+    a plain trapezoid from the baffle to the rear). Every edge is bevelled by chamferMm in bevelSegments segments (default
     1 and 3 mm). plan.ports: each io-face port with an insetMm gets a round pocket in the rear face, its floor insetMm behind the face
     (so the port marker sits on a real surface) and its diameter openingMm (24 mm when the port gives none). One colour (CABINET) and a
     darker one for the pockets; a projection puts the real baffle, rear panel and sides on it."""
@@ -624,27 +625,35 @@ def build_speaker_cabinet(plan: Plan) -> bpy.types.Object:
     segments = params.get("bevelSegments", 1)
     if isinstance(segments, bool) or not isinstance(segments, int) or not 1 <= segments <= 4:
         raise BuildError(f"params.bevelSegments must be a whole number from 1 to 4, got {segments!r}")
-    rear = param_m(plan, "rearWidthMm", w / MM) if "rearWidthMm" in params else w
-    if rear > w + 1e-9:
-        raise BuildError(f"params.rearWidthMm ({rear / MM:.1f}) cannot be wider than the width ({w / MM:.1f})")
+    mid = param_m(plan, "midWidthMm", w / MM) if "midWidthMm" in params else w
+    if mid > w + 1e-9:
+        raise BuildError(f"params.midWidthMm ({mid / MM:.1f}) cannot be wider than the width ({w / MM:.1f})")
+    rear = param_m(plan, "rearWidthMm", mid / MM) if "rearWidthMm" in params else mid
+    if rear > mid + 1e-9:
+        raise BuildError(f"params.rearWidthMm ({rear / MM:.1f}) cannot be wider than midWidthMm ({mid / MM:.1f})")
     taper = param_m(plan, "taperDepthMm", d / MM) if "taperDepthMm" in params else 0.0
-    if rear < w - 1e-9 and not 0.0 < taper < d:
-        raise BuildError("a rear narrower than the front needs params.taperDepthMm, less than the depth")
+    if rear < mid - 1e-9 and not 0.0 < taper < d:
+        raise BuildError("a rear narrower than the middle needs params.taperDepthMm, less than the depth")
     if chamfer * 4.0 >= min(w, rear, h, d):
         raise BuildError(f"params.chamferMm ({chamfer / MM:.2f}) is too large for the smallest side")
 
     body = Body("speaker-cabinet")
     bm = body.bm
-    if rear < w - 1e-9:
-        plan_pts = [(-w / 2.0, -d / 2.0), (w / 2.0, -d / 2.0), (w / 2.0, d / 2.0 - taper), (rear / 2.0, d / 2.0), (-rear / 2.0, d / 2.0), (-w / 2.0, d / 2.0 - taper)]
+    if rear < mid - 1e-9:
+        plan_pts = [(-w / 2.0, -d / 2.0), (w / 2.0, -d / 2.0), (mid / 2.0, d / 2.0 - taper), (rear / 2.0, d / 2.0), (-rear / 2.0, d / 2.0), (-mid / 2.0, d / 2.0 - taper)]
     else:
-        plan_pts = [(-w / 2.0, -d / 2.0), (w / 2.0, -d / 2.0), (w / 2.0, d / 2.0), (-w / 2.0, d / 2.0)]
+        plan_pts = [(-w / 2.0, -d / 2.0), (w / 2.0, -d / 2.0), (rear / 2.0, d / 2.0), (-rear / 2.0, d / 2.0)]
     extrude_xz(bm, plan_pts, 0.0, h)
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
     bmesh.ops.bevel(bm, geom=bm.edges[:], offset=chamfer, offset_type="OFFSET", segments=segments, affect="EDGES")
+    # A side that slopes from the baffle corner to the mid corner loses a little width where the corner is bevelled (chamfer x slope, a
+    # fraction of a millimetre): stretch x back to exactly w, so the size gate holds to the hundredth of a millimetre.
+    span = max(v.co.x for v in bm.verts) - min(v.co.x for v in bm.verts)
+    if abs(span - w) > 1e-7:
+        bmesh.ops.scale(bm, vec=(w / span, 1.0, 1.0), verts=bm.verts[:])
     body.done(CABINET)
 
-    pockets = [p for p in (plan.get("ports") or []) if isinstance(p.get("insetMm"), (int, float)) and p["insetMm"] > 0]
+    pockets =[p for p in (plan.get("ports") or []) if isinstance(p.get("insetMm"), (int, float)) and p["insetMm"] > 0]
     if pockets:
         outline = take_flat_face(bm, d / 2.0)
         holes = []
