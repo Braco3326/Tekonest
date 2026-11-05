@@ -13,7 +13,6 @@ const ALLOWED_USED = [
   'KHR_draco_mesh_compression', // public/draco/
   'KHR_materials_ior',
   'KHR_materials_specular',
-  'KHR_materials_unlit',
   'KHR_texture_transform',
 ]
 const ALLOWED_REQUIRED = ['EXT_texture_webp', 'KHR_draco_mesh_compression', 'KHR_texture_transform']

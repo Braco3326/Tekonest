@@ -57,9 +57,9 @@ async function read(id: string) {
   }
   const lo = [0, 1, 2].map((k) => Math.min(...pts.map((p) => p[k])))
   const hi = [0, 1, 2].map((k) => Math.max(...pts.map((p) => p[k])))
-  return { pts, ports, lo, hi }
+  const pipeline = doc.getRoot().listNodes().some((n) => (n.getExtras() as { tekpractice?: unknown } | null)?.tekpractice !== undefined)
+  return { pts, ports, lo, hi, pipeline }
 }
-const span = (v: number[]): number => Math.max(...v) - Math.min(...v)
 
 /** The root of a scaled import once DeviceSpawner has set its uniform scale: the loader's 180 degree turn about y, positive scale (see DeviceSpawner). */
 const scaledImport = Matrix.Compose(new Vector3(0.025, 0.025, 0.025), new Quaternion(0, 1, 0, 0), new Vector3(0.3, 0.2, -0.4)) // translated, as the spawner leaves it after grounding / centring
@@ -91,27 +91,24 @@ describe('the loudspeaker models: measured front vs catalog data (Task 43c, L34)
     }
   })
 
-  it('K12.2, derived from the file: the declared axis is the wide end of the plan (the baffle), the opposite end is the narrow amplifier end', async () => {
-    const axis = catalog.devices.find((d) => d.id === 'qsc-k12-2')!.modelFront!.axis
-    expect(axis).toBe('+z') // the test below reads z; a changed axis must be re-derived, not silently followed
-    const { pts, lo, hi } = await read('qsc-k12-2')
-    const depth = hi[2] - lo[2]
-    const plusEnd = pts.filter((p) => p[2] >= hi[2] - 0.08 * depth)
-    const minusEnd = pts.filter((p) => p[2] <= lo[2] + 0.08 * depth)
-    expect(span(plusEnd.map((p) => p[0])), 'plan width at the declared front').toBeGreaterThan(13) // 14 in
-    expect(span(minusEnd.map((p) => p[0])), 'plan width at the opposite end').toBeLessThan(8) // 6.6 in
-  })
-
-  it('the port_* empties of a corrected model are NOT on its rear face (why the spawner re-anchors its ports on the grid): K12.2 on the front face, 8030C on a side face', async () => {
-    const k = await read('qsc-k12-2')
-    for (const [id, p] of Object.entries(k.ports)) expect(p[2], `k12 ${id}`).toBeGreaterThanOrEqual(k.hi[2] - 0.05) // the +z (front) face
-    const g = await read('genelec-8030c')
-    const centreX = (g.lo[0] + g.hi[0]) / 2
-    const rearIsPlusX = g.hi[0] - 0.05
-    for (const [id, p] of Object.entries(g.ports)) {
-      expect(Math.abs(p[0] - centreX), `8030C ${id}: on the middle of the x extent, not on a rear face`).toBeLessThan(0.3 * (g.hi[0] - g.lo[0]))
-      expect(p[0], `8030C ${id}: not on the +x (rear) face`).toBeLessThan(rearIsPlusX)
-      expect(p[2], `8030C ${id}: past the +z side face`).toBeGreaterThan(g.hi[2] - 0.05)
+  // K12.2 and 8030C were REBUILT (Meshy, fixed up to the spec, tekpractice extras): the facts below replace the legacy-scan evidence that used to be here
+  // (the K12.2 plan was read as wide / narrow ends, the 8030C by eye). A pipeline model has its I/O face at glTF +z with the port empties on or just behind it,
+  // so its baffle is the opposite face (-z in the file), which the scene turns onto +z at yaw 0 by convention; DeviceSpawner applies NO catalog front turn to it.
+  // The catalog's modelFront for these two devices describes the legacy files and is inert for a pipeline model (content/catalog.json is not edited by the 3D
+  // pipeline: remove modelFront there when the catalog is next revised).
+  it.each([
+    ['qsc-k12-2', 0.04, { w: 0.356, h: 0.602, d: 0.35 }],
+    ['genelec-8030c', 0.02, { w: 0.189, h: 0.299, d: 0.178 }],
+  ] as const)('%s is a pipeline model: its spec size in metres, and its port empties on the I/O face (glTF +z) within the jack depth', async (id, maxInset, size) => {
+    const { ports, lo, hi, pipeline } = await read(id)
+    expect(pipeline, `${id}: the tekpractice extras (the spawner trusts the file's own empties)`).toBe(true)
+    expect(hi[0] - lo[0], `${id} width`).toBeCloseTo(size.w, 3)
+    expect(hi[1] - lo[1], `${id} height`).toBeCloseTo(size.h, 3)
+    expect(hi[2] - lo[2], `${id} depth`).toBeCloseTo(size.d, 3)
+    expect(Object.keys(ports).length, `${id}: has its ports`).toBeGreaterThan(1)
+    for (const [pid, p] of Object.entries(ports)) {
+      expect(p[2], `${id} ${pid}: on or behind the +z face`).toBeLessThanOrEqual(hi[2] + 1e-4)
+      expect(p[2], `${id} ${pid}: no deeper than the jack recess`).toBeGreaterThanOrEqual(hi[2] - maxInset)
     }
   })
 })

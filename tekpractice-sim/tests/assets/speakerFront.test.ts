@@ -52,7 +52,6 @@ async function read(name: string) {
   const hi = [0, 1, 2].map((k) => Math.max(...pts.map((p) => p[k])))
   return { pts, ports, lo, hi }
 }
-const span = (v: number[]): number => Math.max(...v) - Math.min(...v)
 
 /**
  * These are EVIDENCE of today's assets, not requirements (decision L30 viii, 2026-10-29: the convention is kept, the 3D models are being rebuilt with
@@ -77,29 +76,27 @@ describe('the shipped speaker models: where do the connectors sit, and what is t
     for (const f of ['qsc-k12-2', 'yamaha-dbr12']) expect(existsSync(resolve(assets, `${f}.glb`)), f).toBe(true)
   })
 
-  evidence('K12.2: its port empties are on one end face of the body (the +z end of the file), on the same side for all three', async () => {
-    const { ports, hi } = await read('qsc-k12-2')
+  // REBUILT (2026-11-04, Meshy fixed up to the spec, tekpractice extras): the K12.2 and the DBR12 are speaker-shaped boxes at their real size with the I/O
+  // face at +z (their baffle is the opposite face, which faces +z in the scene at yaw 0 by the convention). These two replace the legacy-scan evidence.
+  evidence('K12.2: a box at its real size (356 x 602 x 350 mm) whose three port empties sit on or just behind the +z I/O face (the amp plate is recessed up to 39 mm)', async () => {
+    const { ports, lo, hi } = await read('qsc-k12-2')
     expect(Object.keys(ports).sort()).toEqual(['in-line-a', 'power-in', 'thru-out-a'])
-    for (const [id, p] of Object.entries(ports)) expect(p[2], id).toBeGreaterThanOrEqual(hi[2] - 0.05) // just outside the max-z face
+    expect([0, 1, 2].map((k) => +(hi[k] - lo[k]).toFixed(3))).toEqual([0.356, 0.602, 0.35])
+    for (const [id, p] of Object.entries(ports)) {
+      expect(p[2], id).toBeLessThanOrEqual(hi[2] + 1e-4)
+      expect(p[2], id).toBeGreaterThanOrEqual(hi[2] - 0.04)
+    }
   })
 
-  evidence('K12.2: that connector end is the WIDE end of the plan; the opposite end is narrow and carries the dense detail (the amp side)', async () => {
-    const { pts, ports, lo, hi } = await read('qsc-k12-2')
-    const depth = hi[2] - lo[2]
-    const near = pts.filter((p) => p[2] >= hi[2] - 0.08 * depth) // the 8 % of the depth next to the connectors
-    const far = pts.filter((p) => p[2] <= lo[2] + 0.08 * depth) // and next to the other end
-    expect(span(near.map((p) => p[0])), 'plan width at the connector end').toBeGreaterThan(13) // 14 in: the full width
-    expect(span(far.map((p) => p[0])), 'plan width at the other end').toBeLessThan(8) // 6.6 in
-    expect(far.length, 'the other end carries most of the geometry (panel, handles)').toBeGreaterThan(10 * near.length)
-    expect(Object.values(ports).every((p) => p[2] > hi[2] - 0.05)).toBe(true)
-  })
-
-  evidence('DBR12: the model is not a speaker-shaped box (its long axis is z; the catalog box is taller than deep): it lies on its side, so its orientation is not established (a pitch or roll fix, not a yaw)', async () => {
+  evidence('DBR12: a speaker-shaped box (taller than deep) at its real size (376 x 601 x 348 mm); its three port empties sit behind the +z I/O face (recess about 26 mm)', async () => {
     const { lo, hi, ports } = await read('yamaha-dbr12')
     const ext = [0, 1, 2].map((k) => hi[k] - lo[k])
-    expect(ext[2] / ext[1], 'the file is much longer than it is tall').toBeGreaterThan(2.5)
-    // the catalog box (DeviceSpawner.REAL_SIZE_M): 0.376 wide, 0.601 high, 0.348 deep: taller than deep. The file normalised by height would be about 1.65 m deep.
-    expect((0.601 * ext[2]) / ext[1] / 0.348, 'depth the scene would give it, over the catalog depth').toBeGreaterThan(4)
+    expect(ext[1], 'taller than deep').toBeGreaterThan(ext[2])
+    expect(ext.map((v) => +v.toFixed(3))).toEqual([0.376, 0.601, 0.348])
     expect(Object.keys(ports).sort()).toEqual(['in-line', 'link-out', 'power-in'])
+    for (const [id, p] of Object.entries(ports)) {
+      expect(p[2], id).toBeLessThanOrEqual(hi[2] + 1e-4)
+      expect(p[2], id).toBeGreaterThanOrEqual(hi[2] - 0.03)
+    }
   })
 })

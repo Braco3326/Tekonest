@@ -21,6 +21,13 @@ const catalog = JSON.parse(readFileSync(resolve(root, 'content/catalog.json'), '
   devices: { id: string; modelBody?: { baseFraction: number; cabinetHeightM: number; evidence: string } }[]
 }
 
+/** True when the shipped file is a pipeline model (a root node carries the `tekpractice` extras: exact real size, no stand, ports from the spec). */
+async function isPipelineModel(id: string): Promise<boolean> {
+  const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'draco3d.decoder': await draco3d.createDecoderModule() })
+  const doc = await io.read(resolve(root, `public/assets/${id}.glb`))
+  return doc.getRoot().listNodes().some((n) => (n.getExtras() as { tekpractice?: unknown } | null)?.tekpractice !== undefined)
+}
+
 /** Every vertex of the file in glTF model space (the nodes' own transforms applied), y up. */
 async function vertices(id: string): Promise<number[][]> {
   const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'draco3d.decoder': await draco3d.createDecoderModule() })
@@ -69,6 +76,13 @@ describe('the 8030C cabinet starts where the catalog says (night wave 1, item 8)
     const dev = catalog.devices.find((d) => d.id === 'genelec-8030c')!
     expect(dev.modelBody, 'the catalog declares where the cabinet starts').toBeDefined()
     const measured = measuredBaseFraction(await vertices('genelec-8030c'))
+    if (await isPipelineModel('genelec-8030c')) {
+      // Rebuilt (Meshy, fixed up to the spec): the cabinet and its four Iso-Pod feet at the real 299 mm, NO floor stand. The catalog's modelBody describes the
+      // LEGACY scan and is not applied to a pipeline model (DeviceSpawner skips the height normalisation for models with the extras), so it is inert data until
+      // the catalog is revised (content/catalog.json is not edited by the 3D pipeline: remove modelBody for this device there).
+      expect(measured, 'no stand under the rebuilt cabinet').toBeLessThan(0.05)
+      return
+    }
     expect(measured).toBeGreaterThan(0.2) // a real stand under it
     expect(measured).toBeLessThan(0.4)
     expect(Math.abs(dev.modelBody!.baseFraction - measured)).toBeLessThan(0.02)

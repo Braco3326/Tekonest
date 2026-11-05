@@ -141,3 +141,35 @@ Control geometry (controls remain named empties), Meshy-textured scripted boxes,
 ## 9. Next step
 
 Invoke writing-plans for wave 1 only (builder, schema, `--scripted` flag, four assets).
+
+## 8. Night of 2026-11-04 (evening): Meshy tried, and the hybrid that came out of it
+
+The founder said the scripted models lacked visible detail and precision and asked for Meshy to be tried and compared with perfect sources. An expert council (3 personas + a neutral solver) preceded the work; its recommendation was a bounded trial, not a commitment. What was measured (Meshy API, `meshy-7.1`, 30 credits per task, balance 3100 before; 22 tasks, 3 of them wasted on poor inputs):
+
+| Class | Meshy alone | Our scripted shape alone | Verdict |
+|---|---|---|---|
+| Microphones (SM58, SM57, RE20, RE50, U87 Ai) | Right silhouette, real grille mesh, finish, rings (drift 1 to 4 %); text and logos garbled but present; metallic factor 1 reads black in our lights | Exact profile, smooth grey lathe, no texture | Meshy direct, after the look step and logo repaint |
+| Speakers (K12.2, DBR12, 8030C) | Recognisable cabinets, drivers, feet, rear amp plates with the real connector layout; depth guessed (drift 4 to 22 %); the rear panel is recessed 5 to 37 mm | No shape yet (speaker-box not built) | Meshy direct with `insetMm` and `driftLimit` per spec |
+| Rack units seen from the front (Rio3224-D2) | A flat slab, depth lost (drift 92 %), rear missing | Exact box, exact port positions | Hybrid: our shape, Meshy's rectified front picture |
+| Consoles (QL1) | Excellent top (faders, scribble strips, screen, knobs), messy sides and rear | Needs the wedge profile | Hybrid: measured wedge, Meshy top, official rear photo |
+| Flat connector panels with a straight-on photo | Not needed | Exact | Hybrid with the photo itself as the picture |
+
+Conclusion: Meshy owns APPEARANCE, our builder owns GEOMETRY. The pipeline now has four routes, chosen per device class:
+1. `asset:build -- <id> --scripted` (connectors, plain boxes, lathe parts), no Meshy.
+2. `asset:build -- <id> --raw <meshy.glb> --meshy-task <id> [--yaw n] [--flip] [--slab]`: a Meshy GLB (downloaded by `assets-source/_scratch/meshy-trial.mts`, a scratch tool) fixed up to the spec: mics, speakers.
+3. `asset:build -- <id> --scripted --project <fixed meshy glb>`: our exact shape wearing a face picture rendered orthographically from the fixed Meshy model (`tools/assets3d/projection.ts`): Rio, QL1 top.
+4. `asset:build -- <id> --scripted --project-photo face=file[@l,t,w,h]`: the picture is a straight-on official photo (`photoProjection.ts`): QL1 rear, Avid HD I/O, Antelope OCX HD.
+Routes 3 and 4 may be mixed face by face (`build.projection` is a face or a list); the builder puts every picture and a palette strip for the remaining faces into ONE atlas (one material, one texture).
+
+New pieces (all tested, TDD):
+- `meshy.ts`: optional `geometryResolution`, `shouldRemesh`, `imageEnhancement`, `textureResolution` (sent only when asked).
+- Gates: hero triangle ceiling 15000 (was 4000; the Meshy target follows: 10500), data maps (normal, metallic-roughness) at half the colour limit, a per-spec `driftLimit` (at most 0.35), a per-port `insetMm` (a jack inside a recessed panel: the port node sits behind the face plane and the portPositions gate follows).
+- `look.ts`: caps the metallic factor at 0.15 and lifts the colour map (linear x 3 + 0.012, capped 0.85, never darker): a Meshy PBR set is black in Mode Création's IBL-less lights otherwise.
+- `blank.ts`: repaints logos and brand text per TEXEL (interpolated 3D position), by height band or by rectangle in the spec's face-local millimetres (`texture.blankBandsMm`, `texture.blankRects`). A Meshy atlas is shattered, so image-space patching is impossible; a logo printed on one big flat triangle is removed exactly. A region that covers no texel is an error.
+- `slab.ts` and `--slab`: a thin Meshy panel gets its thin axis turned into the depth before the fix-up (otherwise the proportion matcher lays it flat).
+- `console-wedge` shape: a side profile `[depth from the io face, height]` extruded across the width (QL1: 17 measured stations, chamfer 1.5 mm).
+- Manifest: `tool: 'hybrid'`, `toolVersion: blender-builder-1+meshy-7.1`, the task id and the reference photos are recorded; `--meshy-task` records provenance of a hand-downloaded Meshy GLB.
+
+Logos: every texture here derives from manufacturer photos. The repaint removes the brand marks it was asked to; the manifest's `logosRemoved` was set after viewing each result, but the founder asserts it for the commercial track (CLAUDE.md: generic visual equivalents only). Model names such as the "RIO3224-D2" print and the "HD I/O" mark were left (nominative); see the night log.
+
+Not done and why: the OCX HD, Scoop5 and QL1-class rear faces that only have perspective renders were not projected (the aspect check refuses them); the Focusrite ISA One, Grace m905, StudioPatch and Axia iQ have no straight-on photos; the K&M stand, m!ka arm, litt lamp and Mogami loom need an `assembly` shape (see section 7).
