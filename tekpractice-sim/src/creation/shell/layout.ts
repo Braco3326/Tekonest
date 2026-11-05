@@ -162,18 +162,27 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   let openOrder = 0
   const openedAt: Record<PanelId, number> = { tree: 0, props: 0 }
   const other = (p: PanelId): PanelId => (p === 'tree' ? 'props' : 'tree')
+  /**
+   * A panel the accordion folded (not the learner): it comes back when the window is wide again, unless the learner touched it since (any click, menu item or script on it clears this).
+   * Fix round S6: a wide-window choice is never lost for good by a narrow moment.
+   */
+  const autoFolded: Record<PanelId, boolean> = { tree: false, props: false }
+  /** The accordion folds `o`; a focus left in its body (display: none once folded) goes to its own button, never to the page (fix round S4, S5). */
+  const foldByAccordion = (o: PanelId): void => {
+    const body = o === 'tree' ? tree.body : props.body
+    const hadFocus = body.contains(doc.activeElement)
+    setPanel(o, false)
+    autoFolded[o] = true // after setPanel: setPanel is the learner's path and clears it
+    if (hadFocus) btnOf[o].focus()
+  }
   const setPanel = (p: PanelId, open = !isPanelOpen(p)): void => {
     const was = root.dataset[p]
+    autoFolded[p] = false // a click, a menu item or a script on this panel is a choice: the accordion no longer owns it
     if (open && was !== 'open') {
       openedAt[p] = ++openOrder
       // Accordion on a phone: opening one panel folds the other (a user's own choice at a wide width is never touched).
       const o = other(p)
-      if (phone() && isPanelOpen(o)) {
-        const body = o === 'tree' ? tree.body : props.body
-        const hadFocus = body.contains(doc.activeElement)
-        setPanel(o, false)
-        if (hadFocus) btnOf[o].focus() // the folded body is display: none: a focus left in it would fall to the page
-      }
+      if (phone() && isPanelOpen(o)) foldByAccordion(o)
     }
     root.dataset[p] = open ? 'open' : 'collapsed'
     const b = btnOf[p]
@@ -194,10 +203,16 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   setPanel('tree', !phone())
   setPanel('props', !(win && win.innerWidth < 1200))
 
-  // A window narrowed below 760 px with both panels open: the one opened longer ago folds (the same accordion, applied once).
+  // The window crosses 760 px. Narrower with both panels open: the one opened longer ago folds (the same accordion, focus handed to its button). Wider again: a panel that only the
+  // accordion folded comes back (fix round S6); one the learner folded or opened stays as they left it.
   const narrowQuery = win?.matchMedia ? win.matchMedia(`(max-width: ${PHONE_PX - 0.02}px)`) : null
   narrowQuery?.addEventListener('change', (e) => {
-    if (e.matches && isPanelOpen('tree') && isPanelOpen('props')) setPanel(openedAt.tree < openedAt.props ? 'tree' : 'props', false)
+    if (e.matches) {
+      if (isPanelOpen('tree') && isPanelOpen('props')) foldByAccordion(openedAt.tree < openedAt.props ? 'tree' : 'props')
+      return
+    }
+    for (const p of ['tree', 'props'] as const) if (autoFolded[p] && !isPanelOpen(p)) setPanel(p, true) // not the learner's choice: back, and still not theirs
+    for (const p of ['tree', 'props'] as const) autoFolded[p] = false
   })
 
   const liveMsg = createLiveText(statusMsg, (fn, ms) => (win ? win.setTimeout(fn, ms) : fn()))

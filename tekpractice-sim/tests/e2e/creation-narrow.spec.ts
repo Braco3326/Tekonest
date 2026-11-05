@@ -7,6 +7,7 @@
  *  D. Notes and toast during a pose: the notes stack is capped, the missing-devices list is out of the way, the toast clears « Annuler la pose ».
  */
 import { expect, test, type Page } from '@playwright/test'
+import { quietWindow } from './waits'
 
 const PLACE = 'room:concert-hall-medium'
 type Box = { x: number; y: number; width: number; height: number }
@@ -393,22 +394,87 @@ test.describe('side panels at 400 x 800 (wave 4, item 1)', () => {
       })
     })
   }
-  test('a panel opened from the Vue menu folds the other one too, and the focus is not left in the folded panel', async ({ page }) => {
+  test('a panel opened from the Vue menu folds the other one too (the menu hands the focus back to its own title)', async ({ page }) => {
     await boot(page)
     await page.getByTestId('tree-collapse').click()
-    const row = page.getByRole('tree').locator('[tabindex], button, [role="treeitem"]').first()
-    await row.focus()
-    await expect(row).toBeFocused()
     await page.getByRole('menuitem', { name: 'Vue' }).click()
     await page.getByRole('menuitem', { name: 'Panneau Propriétés' }).click()
     await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
     await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
-    // whatever has the focus is on screen (the folded tree body is display: none, a focus left there would be lost)
-    const onScreen = await page.evaluate(() => {
-      const a = document.activeElement as HTMLElement | null
-      return !!a && a !== document.body ? a.getClientRects().length > 0 : true
-    })
-    expect(onScreen).toBe(true)
+    await expect(page.getByRole('menuitem', { name: 'Vue' })).toBeFocused() // never lost to the page
+  })
+
+  test('S4: the focus is inside Projet when a script opens Propriétés: Projet folds and its own button takes the focus (not the page)', async ({ page }) => {
+    await boot(page)
+    await page.getByTestId('tree-collapse').click()
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'true')
+    const row = page.getByRole('treeitem').first()
+    await row.focus()
+    expect(await page.evaluate(() => !!document.activeElement?.closest('[data-testid="project-tree"] [role="tree"]')), 'the focus is on a row of the tree (the test means something)').toBe(true)
+    // the focus stays on the row (a programmatic click moves nothing), as when the app opens Propriétés by itself
+    await page.evaluate(() => document.querySelector<HTMLElement>('[data-testid="props-collapse"]')!.click())
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByTestId('tree-collapse'), 'the focus went to the own button of the folded panel').toBeFocused()
+  })
+})
+
+// ── Fix round S5 / S6: the window crossing 760 px ───────────────────────────────────────────────────────────────────────────────────────────────
+test.describe('side panels when the window is resized across 760 px (fix round S5, S6)', () => {
+  test.use({ viewport: { width: 1366, height: 768 } })
+  const state = (page: Page) =>
+    page.evaluate(() => ({
+      tree: document.querySelector('[data-testid="tree-collapse"]')!.getAttribute('aria-expanded'),
+      props: document.querySelector('[data-testid="props-collapse"]')!.getAttribute('aria-expanded'),
+    }))
+  const bothOpen = async (page: Page): Promise<void> => {
+    await boot(page)
+    if ((await page.getByTestId('props-collapse').getAttribute('aria-expanded')) !== 'true') await page.getByTestId('props-collapse').click()
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+  }
+
+  test('S5: narrowing to 700 px with both open folds the older one (Projet) and a focus inside it goes to its own button', async ({ page }) => {
+    await bothOpen(page)
+    await page.getByRole('treeitem').first().focus()
+    await page.setViewportSize({ width: 700, height: 768 })
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByTestId('tree-collapse')).toBeFocused()
+    const g = await geometry(page)
+    expect(g.view.width, 'the view keeps 140 px').toBeGreaterThanOrEqual(140)
+    expect(g.scrollWidth).toBeLessThanOrEqual(700)
+  })
+
+  test('S6: a panel that only the accordion folded comes back when the window is wide again', async ({ page }) => {
+    await bothOpen(page)
+    await page.setViewportSize({ width: 700, height: 768 })
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await page.setViewportSize({ width: 1366, height: 768 })
+    await expect.poll(() => state(page)).toEqual({ tree: 'true', props: 'true' })
+  })
+
+  test('S6: opening the other panel by hand at 700 px folds the first by the accordion; wide again, both are open', async ({ page }) => {
+    await bothOpen(page)
+    await page.setViewportSize({ width: 700, height: 768 })
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await page.getByTestId('tree-collapse').click() // the learner opens Projet: Propriétés is folded by the accordion
+    await expect.poll(() => state(page)).toEqual({ tree: 'true', props: 'false' })
+    await page.setViewportSize({ width: 1366, height: 768 })
+    await expect.poll(() => state(page), 'Projet stays (opened by hand), Propriétés comes back').toEqual({ tree: 'true', props: 'true' })
+  })
+
+  test('S6: what the learner folded by hand stays folded when the window widens (only the accordion-folded panel comes back)', async ({ page }) => {
+    await bothOpen(page)
+    await page.setViewportSize({ width: 700, height: 768 })
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await page.getByTestId('tree-collapse').click() // the learner opens Projet (Propriétés is folded by the accordion)...
+    await page.getByTestId('tree-collapse').click() // ...and folds it again by hand: Projet is theirs now
+    await expect.poll(() => state(page)).toEqual({ tree: 'false', props: 'false' })
+    await page.setViewportSize({ width: 1366, height: 768 })
+    await expect.poll(() => state(page), 'Propriétés (the accordion) is back, Projet stays folded').toEqual({ tree: 'false', props: 'true' })
+    await quietWindow(page, 300) // a quiet window: nothing reopens Projet afterwards
+    expect(await state(page)).toEqual({ tree: 'false', props: 'true' })
   })
 })
 
