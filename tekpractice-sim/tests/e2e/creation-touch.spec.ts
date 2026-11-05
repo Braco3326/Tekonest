@@ -4,6 +4,7 @@
  * With a mouse nothing changes: the desktop pixels (menubar 32, status bar 28, tools 28) are asserted at 1366 x 768.
  */
 import { expect, test, type Page } from '@playwright/test'
+import { waitRendersIdle } from './waits'
 
 const boot = async (page: Page, template = true): Promise<void> => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
@@ -53,6 +54,10 @@ const openPanel = async (page: Page, id: 'tree-collapse' | 'props-collapse'): Pr
   const b = page.getByTestId(id)
   if ((await b.getAttribute('aria-expanded')) !== 'true') await b.click()
   await expect(b).toHaveAttribute('aria-expanded', 'true')
+  // the panel has its width before anything is measured in it (a measure taken while it was still narrow read 14 px inputs once, on a loaded machine: it passed 4 of 4 alone)
+  const panel = page.getByTestId(id === 'props-collapse' ? 'properties' : 'project-tree')
+  await expect.poll(async () => (await panel.boundingBox())!.width).toBeGreaterThan(150)
+  await waitRendersIdle(page)
 }
 
 test.describe('coarse pointer, 400 x 800', () => {
