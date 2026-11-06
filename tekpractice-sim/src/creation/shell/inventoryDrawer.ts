@@ -25,7 +25,7 @@
  * DOM only: it dispatches nothing itself and never touches the rig (C6).
  */
 import './inventoryDrawer.css'
-import manifest from '../../../public/assets/ASSET_MANIFEST.json'
+import { MODEL_IDS } from '../../scene/modelIds'
 import type { Registry } from '../../engine/CatalogLoader'
 import { COPY } from '../copy'
 import { assetUrl } from '../../assetUrl'
@@ -72,11 +72,6 @@ export interface InventoryDrawer {
   /** Ends a press in progress and removes its window listeners (the shell is going away). */
   dispose(): void
 }
-
-/** Devices that ship a `public/assets/<id>.glb` (the manifest lists exactly those files). */
-const MODEL_IDS: ReadonlySet<string> = new Set(
-  (manifest as { assets: { id: string; status: string }[] }).assets.filter((a) => a.status === 'ok').map((a) => a.id),
-)
 
 const I = (): Readonly<Record<string, string>> => COPY.inventory!
 const SVG = 'http://www.w3.org/2000/svg'
