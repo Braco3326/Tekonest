@@ -39,6 +39,20 @@ async function waitForServer(url, ms) {
   throw new Error(`preview did not answer at ${url} within ${ms} ms`)
 }
 
+// `vite preview` answers a missing file with the 200 HTML fallback, which hides a request for a file that does not exist (it showed as a 404 only once
+// the site had a real 404 page). So every .glb/.js/.css/.wasm response must NOT be text/html, and no response may be a 404.
+const ASSET_URL = /\.(glb|js|css|wasm)$/
+const watchResponses = (page, problems) => {
+  const bad = new Set()
+  page.on('response', (r) => {
+    const path = new URL(r.url()).pathname
+    if (new URL(r.url()).origin !== ORIGIN) return
+    if (r.status() === 404) bad.add(`${path} answered 404`)
+    else if (ASSET_URL.test(path) && /text\/html/i.test(r.headers()['content-type'] ?? '')) bad.add(`${path} answered text/html (a missing file served by the SPA fallback)`)
+  })
+  return () => problems.push(...bad)
+}
+
 let preview
 let browser
 let failed = false
@@ -59,6 +73,7 @@ try {
   for (const c of checks) {
     const page = await browser.newPage({ viewport: { width: 1366, height: 768 } })
     const errors = []
+    const flushMissing = watchResponses(page, errors)
     page.on('console', (m) => m.type() === 'error' && errors.push(m.text()))
     page.on('pageerror', (e) => errors.push(e.message))
     await page.goto(c.url)
@@ -68,6 +83,7 @@ try {
       errors.push(`${c.selector} never appeared`)
     }
     await page.waitForTimeout(1000) // late async errors (chunks, assets)
+    flushMissing()
     if (errors.length) {
       failed = true
       console.error(`[smoke:site] FAIL ${c.name} (${c.url}):\n  ` + errors.join('\n  '))
@@ -87,6 +103,7 @@ try {
     const problems = []
     const seen = []
     const status = new Map()
+    const flushMissing = watchResponses(page, problems)
     page.context().on('request', (r) => seen.push(r.url()))
     page.context().on('response', (r) => status.set(new URL(r.url()).pathname, r.status()))
     page.on('pageerror', (e) => problems.push(e.message))
@@ -95,6 +112,7 @@ try {
     const deadline = Date.now() + DRACO_WAIT_MS
     while ((!status.has(wasm) || !status.has(wrapper)) && Date.now() < deadline) await page.waitForTimeout(200)
     await page.waitForTimeout(500) // let a late foreign request show up
+    flushMissing()
     const foreign = seen.filter((u) => !u.startsWith('data:') && !u.startsWith('blob:') && new URL(u).origin !== ORIGIN)
     if (foreign.length) problems.push('cross-origin request(s): ' + [...new Set(foreign)].join(', '))
     for (const path of [wasm, wrapper]) {
@@ -102,7 +120,7 @@ try {
     }
     if (problems.length) {
       failed = true
-      console.error(`[smoke:site] FAIL Draco decoder under the deploy base (${name}):\n  ` + problems.join('\n  '))
+      console.error(`[smoke:site] FAIL Draco decoder / missing files under the deploy base (${name}):\n  ` + problems.join('\n  '))
     } else console.log(`[smoke:site] OK   Draco decoder (${name}): ${wasm} and ${wrapper} answered 200, 0 cross-origin request`)
     await page.close()
   }
