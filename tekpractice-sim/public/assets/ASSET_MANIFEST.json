@@ -354,17 +354,15 @@
       "portEmpties": 7,
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
-      "toolVersion": "blender-builder-1+meshy-7.1",
-      "date": "2026-11-04T18:03:55.255Z",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-06T18:44:36.620Z",
       "specSource": "https://usa.yamaha.com/files/download/other_assets/1/798481/ql5_1_en_om_d1.pdf",
       "logosRemoved": true,
       "photos": [
-        "front.jpg",
-        "rear.jpg",
-        "three-quarter.jpg",
-        "top.jpg"
+        "top_rot180.jpg",
+        "rear.jpg"
       ],
-      "taskId": "01a1a75d-9cb6-71b8-8810-290b454b296f",
+      "taskId": null,
       "gates": [
         {
           "gate": "size",
@@ -403,7 +401,7 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
+      "source": "hybrid: own scripted geometry + official photo as texture",
       "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
       "trademark": "branded-internal"
     },

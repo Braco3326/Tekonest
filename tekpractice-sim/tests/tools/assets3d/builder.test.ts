@@ -391,25 +391,46 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(fixed.triangles).toBeLessThan(400)
   }, 120_000)
 
-  it.skipIf(!BLENDER)('pictures wider in all than 4096 px are scaled by one common factor to a 4096 px atlas row, each still on its own face', async () => {
+  it.skipIf(!BLENDER)('tall pictures stay side by side in a row (a column would be twice as long) and are scaled by one common factor to the 4096 px limit, each still on its own face', async () => {
     const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 1 } } }
     const solid = async (w: number, h: number, rgb: number[]): Promise<Uint8Array> =>
       new Uint8Array(await sharp({ create: { width: w, height: h, channels: 3, background: { r: rgb[0], g: rgb[1], b: rgb[2] } } }).png().toBuffer())
-    const out = join(dir, 'projected-big.raw.glb')
+    const out = join(dir, 'projected-tall.raw.glb')
     await runBuilder(spec, out, {}, [
-      { face: 'io', png: await solid(3000, 100, [200, 30, 30]) },
-      { face: 'top', png: await solid(3000, 150, [30, 200, 30]) },
+      { face: 'io', png: await solid(400, 5000, [200, 30, 30]) },
+      { face: 'top', png: await solid(400, 5000, [30, 200, 30]) },
     ])
     const doc = await new NodeIO().registerExtensions(ALL_EXTENSIONS).readBinary(new Uint8Array(await readFile(out)))
     const tex = doc.getRoot().listMaterials()[0].getBaseColorTexture()!
     const { data, info } = await sharp(Buffer.from(tex.getImage()!)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
-    expect(info.width).toBe(4096) // 2 x 2048: 3000 x 0.6827
-    expect(info.height).toBe(32 + 102) // the palette strip + the tallest picture, 150 x 0.6827
+    expect(info.width).toBe(656) // 2 x 328: 400 x 0.8192, a row (800 x 5000 is 5000 long, a column 400 x 10000 would be 10000)
+    expect(info.height).toBe(32 + 4096) // the palette strip + 5000 x 0.8192
     const at = (x: number, y: number): number[] => Array.from(data.subarray((y * info.width + x) * 3, (y * info.width + x) * 3 + 3))
-    const near = (a: number[], b: number[]): boolean => a.every((c, i) => Math.abs(c - b[i]) <= 3)
-    expect(near(at(1000, 134 - 32 - 20), [200, 30, 30])).toBe(true) // the io picture is the left half of the row (image rows run top-down)
-    expect(near(at(3000, 134 - 32 - 20), [30, 200, 30])).toBe(true) // the top picture the right half
-  }, 120_000)
+    const near = (c: number[], d: number[]): boolean => c.every((v, i) => Math.abs(v - d[i]) <= 3)
+    expect(near(at(100, 1000), [200, 30, 30])).toBe(true) // the io picture is the left half of the row
+    expect(near(at(500, 1000), [30, 200, 30])).toBe(true) // the top picture the right half
+  }, 180_000)
+
+  it.skipIf(!BLENDER)('wide pictures are stacked in a column, each still on its own face, at the larger scale a column allows', async () => {
+    const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 1 } } }
+    const solid = async (w: number, h: number, rgb: number[]): Promise<Uint8Array> =>
+      new Uint8Array(await sharp({ create: { width: w, height: h, channels: 3, background: { r: rgb[0], g: rgb[1], b: rgb[2] } } }).png().toBuffer())
+    const out = join(dir, 'projected-wide.raw.glb')
+    await runBuilder(spec, out, {}, [
+      { face: 'io', png: await solid(5000, 400, [200, 30, 30]) },
+      { face: 'top', png: await solid(5000, 400, [30, 200, 30]) },
+    ])
+    const doc = await new NodeIO().registerExtensions(ALL_EXTENSIONS).readBinary(new Uint8Array(await readFile(out)))
+    const tex = doc.getRoot().listMaterials()[0].getBaseColorTexture()!
+    const { data, info } = await sharp(Buffer.from(tex.getImage()!)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    expect(info.width).toBe(4096) // 5000 x 0.8192
+    expect(info.height).toBe(32 + 656) // the palette strip + two pictures of 328 px
+    const at = (x: number, y: number): number[] => Array.from(data.subarray((y * info.width + x) * 3, (y * info.width + x) * 3 + 3))
+    const near = (c: number[], d: number[]): boolean => c.every((v, i) => Math.abs(v - d[i]) <= 3)
+    // image rows run top-down: the stack is [top picture][io picture][palette] from the top, the first picture (io) sits just above the palette
+    expect(near(at(2000, 656 - 100), [200, 30, 30])).toBe(true)
+    expect(near(at(2000, 100), [30, 200, 30])).toBe(true)
+  }, 180_000)
 
   it.skipIf(!BLENDER)('two projections (io and top) land on their own faces in one atlas: the io picture on the io face, the top picture on the top face, swatches elsewhere', async () => {
     const spec: AssetSpecT = { ...realSpec('yamaha-rio3224-d2'), build: { shape: 'rack-box', params: { chamferMm: 1 } } }
@@ -424,8 +445,8 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     const prims = doc.getRoot().listMeshes().flatMap((m) => m.listPrimitives())
     const tex = doc.getRoot().listMaterials()[0].getBaseColorTexture()!
     const { data, info } = await sharp(Buffer.from(tex.getImage()!)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
-    expect(info.width).toBe(300 + 200) // the pictures side by side in one row
-    expect(info.height).toBe(32 + 150) // the palette strip + the tallest picture
+    expect(info.width).toBe(300) // 300 x 100 and 200 x 150 px: a row would be 500 px long, a column only 300 (x 250): the column wins
+    expect(info.height).toBe(32 + 250) // the palette strip + the two pictures stacked
     const texel = (u: number, v: number): number[] => {
       const x = Math.min(info.width - 1, Math.floor(u * info.width))
       const y = Math.min(info.height - 1, Math.floor(v * info.height))

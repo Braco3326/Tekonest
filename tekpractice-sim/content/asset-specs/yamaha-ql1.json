@@ -252,6 +252,14 @@
         "wMm": 50,
         "hMm": 20,
         "marginMm": 6
+      },
+      {
+        "face": "io",
+        "xMm": 306,
+        "yMm": 52,
+        "wMm": 50,
+        "hMm": 8,
+        "marginMm": 2
       }
     ]
   },
