@@ -473,65 +473,20 @@
     {
       "id": "shure-sm58",
       "optimized": true,
-      "tris": 10875,
+      "tris": 1976,
       "kind": "device",
       "ports": 1,
       "status": "ok",
+      "note": "restored by the founder choice over the Meshy rebuild: richer detail (normal map: grille weave, rings, switch, screws); CC-BY attribution required; Shure logo present: legal review before publishing",
+      "source": "download-ccby",
+      "sourceUrl": "https://sketchfab.com/3d-models/shure-sm58-89d38b9c53f8496a922ce1199ca57afc",
+      "author": "GRIP420",
+      "license": "Creative Commons Attribution",
+      "attributionText": "« Shure SM58 » par GRIP420 (https://sketchfab.com/3d-models/shure-sm58-89d38b9c53f8496a922ce1199ca57afc) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
+      "trademark": "branded-internal",
       "portEmpties": 1,
       "riggedAt": "2026-07-19",
-      "tool": "meshy",
-      "toolVersion": "meshy-7.1",
-      "date": "2026-11-04T17:22:56.361Z",
-      "specSource": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
-      "logosRemoved": true,
-      "photos": [
-        "front.webp",
-        "head-closeup.webp",
-        "three-quarter-base.webp",
-        "three-quarter-head.webp"
-      ],
-      "taskId": "01a1a750-7d9d-76e9-a9e3-e5487242d762",
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ],
-      "source": "ai-meshy",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal"
+      "legacyRestoredAt": "2026-11-06"
     },
     {
       "id": "shure-sm57",
