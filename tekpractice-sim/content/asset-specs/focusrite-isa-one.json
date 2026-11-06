@@ -71,5 +71,36 @@
       "url": "https://us.focusrite.com/mic-pres/isa-one/specifications",
       "note": "Focusrite ISA One specifications page (opened): feature list only (front DI jack, VU meter, headphone; rear XLR DI out, TRS cue inputs, insert point, optional A-D card). No dimensions on the page, they come from the user guide."
     }
-  ]
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 1.5
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 92,
+        "yMm": 41,
+        "wMm": 80,
+        "hMm": 15,
+        "marginMm": 4,
+        "fill": "#325a9f"
+      },
+      {
+        "face": "io",
+        "xMm": 15,
+        "yMm": 75,
+        "wMm": 40,
+        "hMm": 17,
+        "marginMm": 4
+      }
+    ]
+  }
 }

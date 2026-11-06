@@ -1040,18 +1040,63 @@
     {
       "id": "focusrite-isa-one",
       "optimized": true,
-      "tris": 144,
+      "tris": 44,
       "kind": "device",
       "ports": 3,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/tl-audio-fat-2-valve-preamp-compressor-a6b5c0e1bb9a4a3eba04bbaa66a2f3cb",
-      "author": "Lassi Kaukonen",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« TL Audio / Fat 2 valve preamp compressor » par Lassi Kaukonen (https://sketchfab.com/3d-models/tl-audio-fat-2-valve-preamp-compressor-a6b5c0e1bb9a4a3eba04bbaa66a2f3cb) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 3,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "front.jpg",
+        "rear.jpg"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal",
+      "date": "2026-11-06T19:10:10.359Z",
+      "specSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/ISA%20One%20User%20Guide%201.1%20-%20FR.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "grace-m905",
