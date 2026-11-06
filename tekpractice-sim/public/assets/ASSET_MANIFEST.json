@@ -987,7 +987,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-05T01:30:04.416Z",
+      "date": "2026-11-06T19:05:18.648Z",
       "specSource": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
       "logosRemoved": true,
       "photos": [
@@ -1159,11 +1159,12 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-05T01:29:56.141Z",
+      "date": "2026-11-06T19:06:45.951Z",
       "specSource": "https://images.equipboard.com/uploads/item/manual/73416/antelope-audio-ocx-hd-manual.pdf",
       "logosRemoved": true,
       "photos": [
-        "front.jpg"
+        "front.jpg",
+        "rear.jpg"
       ],
       "taskId": null,
       "gates": [

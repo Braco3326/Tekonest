@@ -120,7 +120,8 @@
         "yMm": 0,
         "wMm": 34,
         "hMm": 11,
-        "marginMm": 4
+        "marginMm": 4,
+        "fill": "#17171a"
       }
     ]
   },
