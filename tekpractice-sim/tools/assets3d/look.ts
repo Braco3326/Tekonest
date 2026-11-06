@@ -5,9 +5,10 @@
  * (metallic factor 1, a colour map made for a lit studio) is therefore black on every metal surface and very dark elsewhere:
  * the SM58 handle vanishes. The scripted builder solves the same problem by lifting its palette (build_from_spec.py lift_hex);
  * this step applies the same rule to a textured model:
- *  - the metallic factor is capped at LOOK_METALLIC (a lower factor is kept); the normal and metallic-roughness maps are DROPPED and the roughness
- *    set to LOOK_ROUGHNESS: the colour map already carries the detail a learner sees (grille weave, slats, labels), and full PBR with a normal map
- *    made two speakers slow enough in a software-rendered browser to starve the page's audio timers (e2e), and costs three textures of GPU memory;
+ *  - the metallic factor is capped at LOOK_METALLIC (a lower factor is kept); the metallic-roughness and occlusion maps are DROPPED and the roughness
+ *    set to LOOK_ROUGHNESS (a satin finish): two full-size PBR sets on 10k-triangle models starved a software-rendered browser (the page's audio
+ *    timers, e2e), and each map is a texture of GPU memory. The NORMAL map is kept: it is where the fine relief is (the weave of a grille, the
+ *    grooves of a ring, a switch plate), and the texture step downsizes it to DATA_TEXTURE_MAX_PX (512 px for a hero), a quarter of the colour map's pixels;
  *  - every pixel of the base-colour map is lifted: linear x LOOK_GAIN + LOOK_OFFSET, capped at LOOK_LINEAR_CAP, never darker than it was
  *    (a white label stays white); alpha is untouched.
  * A GLB without a base-colour texture comes back as the very same bytes.
@@ -51,7 +52,6 @@ export async function normaliseLook(bytes: Uint8Array): Promise<Uint8Array> {
   for (const m of materials) {
     m.setMetallicFactor(Math.min(m.getMetallicFactor(), LOOK_METALLIC))
     m.setRoughnessFactor(LOOK_ROUGHNESS)
-    m.setNormalTexture(null)
     m.setMetallicRoughnessTexture(null)
     m.setOcclusionTexture(null)
     const tex = m.getBaseColorTexture()!

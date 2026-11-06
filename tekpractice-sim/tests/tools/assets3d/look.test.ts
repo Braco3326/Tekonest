@@ -70,12 +70,14 @@ describe('normaliseLook', () => {
     expect(px).toEqual([expectedLift(40), expectedLift(40), expectedLift(42), 200])
   })
 
-  it('drops the normal, metallic-roughness and occlusion maps (the colour map carries the detail; full PBR is heavy in a software renderer) and keeps the colour map', async () => {
+  it('keeps the normal map byte for byte (the weave of a grille, the grooves of a ring: the detail a learner sees) and the colour map, and drops the metallic-roughness and occlusion maps (three full PBR maps on a 10k-triangle model starved a software-rendered browser)', async () => {
     const before = (await read(await texturedGlb([40, 40, 42, 255]))).getRoot().listMaterials()[0]
     expect(before.getNormalTexture(), 'the fixture has a normal map').not.toBeNull()
     expect(before.getMetallicRoughnessTexture(), 'the fixture has a metallic-roughness map').not.toBeNull()
+    const normalBefore = Buffer.from(before.getNormalTexture()!.getImage()!).toString('base64')
     const after = (await read(await normaliseLook(await texturedGlb([40, 40, 42, 255])))).getRoot().listMaterials()[0]
-    expect(after.getNormalTexture()).toBeNull()
+    expect(after.getNormalTexture()).not.toBeNull()
+    expect(Buffer.from(after.getNormalTexture()!.getImage()!).toString('base64')).toBe(normalBefore)
     expect(after.getMetallicRoughnessTexture()).toBeNull()
     expect(after.getOcclusionTexture()).toBeNull()
     expect(after.getBaseColorTexture()).not.toBeNull()
