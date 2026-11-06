@@ -57,8 +57,9 @@ interface Tri {
   px: [number, number][]
   /** 3D corners in millimetres (world, after the node transforms). */
   p: P3[]
-  /** Unit normal of the triangle (its sign depends on the winding, so only its direction is used). */
+  /** Unit normal of the triangle: pointing OUT of the surface when `oriented` (the model's vertex normals decided the sign), else its sign depends on the winding and only its direction counts. */
   n: P3
+  oriented: boolean
 }
 
 /** A region of the model: which 3D points are repainted and which are sampled for the automatic fill. */
@@ -77,6 +78,7 @@ interface Region {
 function triangles(prim: Primitive, world: ArrayLike<number>, w: number, h: number, bounds: { lo: number[]; hi: number[] }): Tri[] {
   const pos = prim.getAttribute('POSITION')
   const uv = prim.getAttribute('TEXCOORD_0')
+  const nrm = prim.getAttribute('NORMAL')
   if (!pos) return []
   if (!uv) throw new Error('blankBands: the model has no TEXCOORD_0, so its texture cannot be repainted')
   const idx = prim.getIndices()
@@ -87,8 +89,15 @@ function triangles(prim: Primitive, world: ArrayLike<number>, w: number, h: numb
   for (let t = 0; t + 2 < count; t += 3) {
     const px: [number, number][] = []
     const p: P3[] = []
+    const vn: P3 = [0, 0, 0] // the sum of the three vertex normals, in the file frame
     for (let k = 0; k < 3; k++) {
       const i = idx ? idx.getScalar(t + k) : t + k
+      if (nrm) {
+        nrm.getElement(i, v)
+        vn[0] += world[0] * v[0] + world[4] * v[1] + world[8] * v[2]
+        vn[1] += world[1] * v[0] + world[5] * v[1] + world[9] * v[2]
+        vn[2] += world[2] * v[0] + world[6] * v[1] + world[10] * v[2]
+      }
       pos.getElement(i, v)
       const wp: P3 = [
         (world[0] * v[0] + world[4] * v[1] + world[8] * v[2] + world[12]) * 1000,
@@ -107,7 +116,11 @@ function triangles(prim: Primitive, world: ArrayLike<number>, w: number, h: numb
     const e2 = [p[2][0] - p[0][0], p[2][1] - p[0][1], p[2][2] - p[0][2]]
     const c = [e1[1] * e2[2] - e1[2] * e2[1], e1[2] * e2[0] - e1[0] * e2[2], e1[0] * e2[1] - e1[1] * e2[0]]
     const len = Math.hypot(c[0], c[1], c[2]) || 1
-    out.push({ px, p, n: [c[0] / len, c[1] / len, c[2] / len] })
+    // the vertex normals say which side is out: flip the geometric normal to agree with them (a smooth-shaded sliver may sum to nothing: then only the direction counts)
+    const agree = c[0] * vn[0] + c[1] * vn[1] + c[2] * vn[2]
+    const oriented = nrm !== null && Math.abs(agree) > 1e-12
+    const sign = oriented && agree < 0 ? -1 : 1
+    out.push({ px, p, n: [(sign * c[0]) / len, (sign * c[1]) / len, (sign * c[2]) / len], oriented })
   }
   return out
 }
@@ -211,7 +224,10 @@ export async function blankBands(bytes: Uint8Array, bands: Band[], rects: Rect[]
       const local = (p: P3) => faceLocal(r.face, p[0] - cx, p[1] - lo[1], p[2] - cz, w, h, d)
       // the face's outward axis in the file frame (the triangle must look along it: a rectangle at the edge of a face must not repaint the adjoining face)
       const axis: P3 = { io: [0, 0, 1], opposite: [0, 0, -1], top: [0, 1, 0], bottom: [0, -1, 0], left: [-1, 0, 0], right: [1, 0, 0] }[r.face] as P3
-      const facing = (t: Tri): boolean => Math.abs(t.n[0] * axis[0] + t.n[1] * axis[1] + t.n[2] * axis[2]) > 0.5
+      const facing = (t: Tri): boolean => {
+        const dot = t.n[0] * axis[0] + t.n[1] * axis[1] + t.n[2] * axis[2]
+        return t.oriented ? dot > 0.5 : Math.abs(dot) > 0.5 // oriented: only a triangle that looks OUT of the face (the back of a front plate shares its area, not its picture)
+      }
       const within = (p: P3, t: Tri, grow: number): boolean => {
         const l = local(p)
         return facing(t) && l.depth <= depthMax && l.depth >= -2 && l.u >= r.xMm - grow && l.u <= r.xMm + r.wMm + grow && l.v >= r.yMm - grow && l.v <= r.yMm + r.hMm + grow

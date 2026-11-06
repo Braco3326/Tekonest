@@ -225,3 +225,51 @@ describe('blankBands rects: only the faces that look along the face axis, and no
     expect(await pixel(out, 12, 8)).toEqual(BLUE) // the top triangle (right half) keeps its colour
   })
 })
+
+describe('blankBands rects: a face rectangle repaints only triangles that LOOK OUT of that face (the model\'s own normals tell which way a triangle looks)', () => {
+  /**
+   * Two triangles overlapping the same face-local area of the io face, 1 mm behind the io plane: A looks out of the io face (normal +z), B looks the other way
+   * (normal -z, the back of a front plate); each has its own UV stripe. A third pair of triangles only gives the model a 100 x 60 x 40 mm bounding box.
+   */
+  async function backToBackGlb(): Promise<Uint8Array> {
+    const doc = new Document()
+    const buffer = doc.createBuffer()
+    const px = Buffer.alloc(16 * 16 * 3)
+    for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) px.set(x < 8 ? RED : BLUE, (y * 16 + x) * 3)
+    const png = new Uint8Array(await sharp(px, { raw: { width: 16, height: 16, channels: 3 } }).png().toBuffer())
+    const mat = doc.createMaterial('m').setBaseColorTexture(doc.createTexture('baseColor').setImage(png).setMimeType('image/png'))
+    const P = (x: number, y: number, z: number): number[] => [(x - 50) * MM, y * MM, z * MM]
+    const pos = [
+      ...P(40, 20, 19), ...P(60, 20, 19), ...P(50, 40, 19), // A: 1 mm behind the io plane (z = 20), counter-clockwise seen from +z
+      ...P(40, 20, 19), ...P(50, 40, 19), ...P(60, 20, 19), // B: the same place, the other winding
+      ...P(0, 0, -20), ...P(100, 0, -20), ...P(100, 60, -20), // bounds
+      ...P(0, 0, 20), ...P(100, 60, 20), ...P(0, 60, 20),
+    ]
+    const nrm = [0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1]
+    const uv = [0.1, 0.1, 0.4, 0.1, 0.25, 0.9, 0.6, 0.1, 0.75, 0.9, 0.9, 0.1, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9]
+    const prim = doc.createPrimitive().setMaterial(mat)
+      .setAttribute('POSITION', doc.createAccessor().setType('VEC3').setArray(new Float32Array(pos)).setBuffer(buffer))
+      .setAttribute('NORMAL', doc.createAccessor().setType('VEC3').setArray(new Float32Array(nrm)).setBuffer(buffer))
+      .setAttribute('TEXCOORD_0', doc.createAccessor().setType('VEC2').setArray(new Float32Array(uv)).setBuffer(buffer))
+    doc.createScene('s').addChild(doc.createNode('root').setMesh(doc.createMesh('mesh').addPrimitive(prim)))
+    return new NodeIO().writeBinary(doc)
+  }
+  const pixel = async (bytes: Uint8Array, x: number, y: number): Promise<Rgb> => {
+    const img = (await new NodeIO().readBinary(bytes)).getRoot().listMaterials()[0].getBaseColorTexture()!.getImage()!
+    const { data, info } = await sharp(Buffer.from(img)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    const o = (y * info.width + x) * 3
+    return [data[o], data[o + 1], data[o + 2]]
+  }
+
+  it('repaints the triangle that looks out of the io face and leaves the one that looks the other way (the back of a front plate shares the area)', async () => {
+    const out = await blankBands(await backToBackGlb(), [], [{ face: 'io', xMm: 35, yMm: 15, wMm: 30, hMm: 20, fill: '#00ff00', depthMm: 10 }])
+    expect(await pixel(out, 3, 8)).toEqual([0, 255, 0]) // A (stripe u 0.1-0.4): repainted
+    expect(await pixel(out, 12, 8)).toEqual(BLUE) // B (stripe u 0.6-0.9): untouched
+  })
+
+  it('and the opposite face does the reverse: it repaints B and leaves A', async () => {
+    const out = await blankBands(await backToBackGlb(), [], [{ face: 'opposite', xMm: 35, yMm: 15, wMm: 30, hMm: 20, fill: '#00ff00', depthMm: 80 }])
+    expect(await pixel(out, 12, 8)).toEqual([0, 255, 0])
+    expect(await pixel(out, 3, 8)).toEqual(RED)
+  })
+})

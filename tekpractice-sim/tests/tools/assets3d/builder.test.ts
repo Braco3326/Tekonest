@@ -44,7 +44,7 @@ const WAVE1: [string, AssetSpecT['build']][] = [
   ['xlr3-f', { shape: 'cylinder-plug', params: { frontLenMm: 12 } }],
   ['trs-quarter', { shape: 'trs-plug', params: { barrelMm: 30.5 } }],
   ['rj45', { shape: 'rj45-plug' }],
-  ['yamaha-rio3224-d2', { shape: 'stagebox-rio3224', params: { earMm: 27, flangeDepthMm: 190, frontStepMm: 11.5, rearStepMm: 6 } }],
+  ['yamaha-rio3224-d2', { shape: 'stagebox-rio3224', params: { earMm: 27, flangeDepthMm: 190, frontStepMm: 11.5, rearStepMm: 6 }, projection: ['io', 'opposite'] }],
 ]
 
 describe('wave-1 specs', () => {

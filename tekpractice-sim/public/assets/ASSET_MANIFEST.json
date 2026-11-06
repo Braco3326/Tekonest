@@ -415,17 +415,15 @@
       "portEmpties": 6,
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
-      "toolVersion": "blender-builder-1+meshy-7.1",
-      "date": "2026-11-05T01:30:16.906Z",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-06T19:03:14.036Z",
       "specSource": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
       "logosRemoved": true,
       "photos": [
         "front.jpg",
-        "rear.jpg",
-        "three-quarter-left.jpg",
-        "three-quarter-right.jpg"
+        "rear.jpg"
       ],
-      "taskId": "01a1a756-9480-724f-ad41-8ca08e0a218f",
+      "taskId": null,
       "gates": [
         {
           "gate": "size",
@@ -464,7 +462,7 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
+      "source": "hybrid: own scripted geometry + official photo as texture",
       "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
       "trademark": "branded-internal"
     },

@@ -77,25 +77,29 @@
       "flangeDepthMm": 190,
       "frontStepMm": 11.5,
       "rearStepMm": 6
-    }
+    },
+    "projection": [
+      "io",
+      "opposite"
+    ]
   },
   "texture": {
     "blankRects": [
       {
         "face": "io",
-        "xMm": 34,
-        "yMm": 201,
-        "wMm": 46,
-        "hMm": 17,
-        "marginMm": 6
+        "xMm": 32,
+        "yMm": 203,
+        "wMm": 42,
+        "hMm": 15,
+        "marginMm": 4
       },
       {
         "face": "io",
-        "xMm": 255,
-        "yMm": 163,
+        "xMm": 240,
+        "yMm": 161,
         "wMm": 30,
-        "hMm": 14,
-        "marginMm": 6
+        "hMm": 15,
+        "marginMm": 4
       },
       {
         "face": "io",
@@ -104,6 +108,38 @@
         "wMm": 80,
         "hMm": 17,
         "marginMm": 5
+      },
+      {
+        "face": "opposite",
+        "xMm": 163,
+        "yMm": 193,
+        "wMm": 44,
+        "hMm": 12,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 86,
+        "yMm": 196,
+        "wMm": 37,
+        "hMm": 12,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 345,
+        "yMm": 173,
+        "wMm": 22,
+        "hMm": 24,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 172,
+        "yMm": 142,
+        "wMm": 42,
+        "hMm": 18,
+        "marginMm": 3
       }
     ]
   },
