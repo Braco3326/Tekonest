@@ -160,3 +160,22 @@ test('each meter is two lines (name and level in Papier, the rest muted), and it
   expect(await spoken.evaluate((e) => !e.closest('[aria-hidden="true"]'))).toBe(true)
   await menu(page, 'Stop')
 })
+
+// ── Night 2 wave 4, item 4: the glyph has a plain fallback for old engines; in a current engine the accessible name stays the button text ─────────────
+test('wave 4 item 4: the glyph is drawn with its empty alternative here (the name is the word alone), in both states', async ({ page }) => {
+  await boot(page)
+  await showBlock(page)
+  await expect(btn(page)).toHaveAccessibleName('Lecture')
+  expect(await glyph(page), 'the alternative-text form wins in a current engine').toBe('"▶" / ""')
+  expect(await btn(page).evaluate((e) => e.getAttribute('aria-label'))).toBeNull()
+  await btn(page).click()
+  await page.waitForFunction(() => window.__creation!.audioState().state === 'playing', null, { timeout: 15_000 })
+  await expect(btn(page)).toHaveText('Stop')
+  await expect(btn(page)).toHaveAccessibleName('Stop')
+  expect(await glyph(page)).toBe('"■" / ""')
+  await btn(page).click()
+  await page.waitForFunction(() => window.__creation!.audioState().state === 'stopped', null, { timeout: 10_000 })
+  // the checkable menu items use the same form for their mark: the mark is not in their name either
+  await page.getByRole('menuitem', { name: 'Écoute', exact: true }).click()
+  await expect(page.getByRole('menuitemcheckbox', { name: 'Couverture' })).toHaveAccessibleName('Couverture')
+})

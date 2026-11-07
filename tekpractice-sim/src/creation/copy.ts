@@ -84,6 +84,37 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     shortcuts: 'Raccourcis clavier',
     siteBack: 'Retour au site Tekonest',
   },
+  /** « Raccourcis clavier » (night 2 wave 5, P2-1): the dialog of the Aide menu and the H key. Validé (tekuxwriter, night 2). */
+  shortcuts: {
+    title: 'Raccourcis clavier',
+    hint: 'Les raccourcis à une seule touche (lettres, chiffres, Espace, Suppr…) n’agissent que lorsque la vue 3D a le focus. Ils sont repérés par leur position sur le clavier.',
+    close: 'Fermer',
+    keyArrows: 'Flèches',
+    groupView: 'Vue 3D',
+    groupDevices: 'Appareils',
+    groupProject: 'Projet',
+    orbit: 'Orbiter autour de la scène',
+    quarterLeft: 'Quart de tour de la vue vers la gauche',
+    quarterRight: 'Quart de tour de la vue vers la droite',
+    points: 'Aller à un point d’écoute',
+    frame: 'Cadrer la sélection',
+    home: 'Vue d’ensemble',
+    picker: 'Choisir une vue',
+    walk: 'Marcher dans la salle',
+    next: 'Appareil suivant',
+    prev: 'Appareil précédent',
+    inventory: 'Ouvrir ou fermer l’inventaire',
+    rotateCw: 'Pivoter de 15° (Alt : 1°)',
+    rotateCcw: 'Pivoter de 15° dans l’autre sens',
+    snap: 'Activer ou désactiver le placement libre (pose ou déplacement)',
+    duplicate: 'Dupliquer l’appareil sélectionné',
+    delete: 'Supprimer l’appareil sélectionné',
+    cancel: 'Annuler la pose, le câble en main ou la sélection',
+    undo: 'Annuler la dernière action',
+    redo: 'Rétablir',
+    save: 'Enregistrer le projet',
+    help: 'Afficher cette liste',
+  },
   tree: {
     /** Root row; {place} = the place name, or `tree.noPlace`. */
     place: 'Lieu : {place}',
@@ -742,6 +773,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusCancelled: 'Pose annulée.',
     /** Status bar after Échap during a drag (announced). */
     statusMoveCancelled: 'Déplacement annulé : {device} est resté en place.',
+    /** Status bar once a drag starts on the selected device that stands on a stand: the view orbits instead, and this says how to move it (announced once per drag; night 2 wave 5, P3-3). Validé (tekuxwriter, night 2). */
+    dragStand: 'Sur pied : déplacez-le avec Propriétés › Position.',
+    /** Same for a flown device (announced once per drag). Validé (tekuxwriter, night 2). */
+    dragFlown: 'Accroché : déplacez-le avec Propriétés › Position.',
     /** Status bar if the device cannot be placed (announced). */
     statusRefused: 'Impossible de poser {device}.',
   },  /** Rotate, duplicate and delete the selected device (Task 25, CA-11). {device} = device name, {undo} = undo key label, {deg} = yaw in degrees. */

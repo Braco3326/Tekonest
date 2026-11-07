@@ -106,6 +106,7 @@ import {
   type SaveResult,
 } from './persistence'
 import { openNameDialog, openProjectList } from './shell/projectDialogs'
+import { openShortcutsDialog } from './shell/shortcutsDialog'
 import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
@@ -1457,6 +1458,15 @@ export async function bootCreation(): Promise<void> {
     selection.select(null)
     return true
   })
+  // « Raccourcis clavier » (night 2 wave 5, P2-1): H and Aide › Raccourcis clavier. The list is built from the live key map; the modal keeps the focus in, Échap closes it and gives the focus back.
+  // No status announcement (fix round S2): the shell is inert behind the dialog, and its name is announced when the focus lands in it.
+  const openShortcuts = async (): Promise<void> => {
+    await openShortcutsDialog(keys.bindings)
+  }
+  keys.onAction('TOGGLE_HELP', () => {
+    void openShortcuts()
+    return true
+  })
   keys.onAction('WALK_TOGGLE', () => {
     if (viewLocked()) return false
     toggleWalk()
@@ -2030,6 +2040,7 @@ export async function bootCreation(): Promise<void> {
   const actions: Record<string, () => void> = {
     'panel-tree': () => shell.setPanel('tree'),
     'panel-props': () => shell.setPanel('props'),
+    shortcuts: () => void openShortcuts(),
     site: () => location.assign(siteHref),
     // Lieu → « Choisir un lieu… »: the picker over the current place (Fermer / Échap go back).
     'choose-place': () => {

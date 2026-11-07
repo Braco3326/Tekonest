@@ -1,6 +1,8 @@
 # Mode Création : rapport de fin de Phase 5
 
-Date : 2026-11-04. État : tout est construit, testé et relu **en local**. La branche `feature/tekpractice-creative-mode` est poussée jusqu'à `d50cea9` (essai local demandé par le fondateur) ; trois commits plus récents (`94a1255`, `a5df830`, `2925539`) restent sur ce PC. **Rien n'est déployé en ligne pour la Phase 5.** Les phases 0 à 4 sont en ligne depuis le 2026-10-29 (https://tekonest.com/tekpractice/jouer/).
+Date : 2026-11-04. **Mise à jour du soir : la Phase 5 et le travail de nuit (L36 à L39 : durcissement, mise en page téléphone, passe de design, passe de texte) sont poussés (`feature/tekpractice-creative-mode` à `f3f3245`) et déployés** : https://tekonest.com/tekpractice/jouer/ (commit de déploiement du site `0742e42`, branche `design/tekonest-umbrella-brand`). Le build a été fait dans un dossier propre car `dist-site` est verrouillé sur ce PC (même commande Vite, mêmes nettoyages, garde de déploiement et test de fumée passés sur cette sortie). Restent à faire : le réaudit en ligne complet (CA-01 à CA-27), Safari/iOS, un vrai appareil tactile. Le texte ci-dessous décrit l'état de fin de Phase 5, avant la nuit.
+
+Texte d'origine : état tout est construit, testé et relu **en local**. La branche `feature/tekpractice-creative-mode` était poussée jusqu'à `d50cea9` (essai local demandé par le fondateur) ; trois commits plus récents (`94a1255`, `a5df830`, `2925539`) restaient sur ce PC. **Rien n'était déployé en ligne pour la Phase 5** à ce moment-là. Les phases 0 à 4 sont en ligne depuis le 2026-10-29 (https://tekonest.com/tekpractice/jouer/).
 
 ## Ce que la Phase 5 apporte
 

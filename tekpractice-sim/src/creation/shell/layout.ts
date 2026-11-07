@@ -77,9 +77,9 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   const root = el(doc, 'div', 'cr')
   root.id = 'creation-root'
   root.dataset.testid = 'creation-root'
-  // The page's h1 (Task 7 review): visually hidden, panels and the picker use h2.
+  // The page's h1 (Task 7 review): visually hidden, panels and the picker use h2. It is the first thing INSIDE the header landmark (night 2 wave 5, P3-7: outside every
+  // landmark it was the one node axe's `region` rule flagged on every screen); it stays first in the DOM, so the heading order and the skip link's target do not change.
   const h1 = el(doc, 'h1', 'cr-sr-only', S().appTitle)
-  root.appendChild(h1)
 
   // ── header: brand, menus, project title, back to the site
   const menubar = el(doc, 'header', 'cr-menubar')
@@ -90,7 +90,7 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   menus.setAttribute('aria-label', S().menubar!)
   const title = el(doc, 'span', 'cr-title', S().untitled)
   title.dataset.testid = 'project-title'
-  menubar.append(brand, menus, title)
+  menubar.append(h1, brand, menus, title)
   const site = doc.getElementById('site-link')
   if (site instanceof HTMLAnchorElement) {
     // One link, visible name = accessible name (no aria-label mismatch).
@@ -156,8 +156,34 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
     p === 'tree' ? (open ? S().treeCollapse! : S().treeExpand!) : open ? S().propsCollapse! : S().propsExpand!
   const isPanelOpen = (p: PanelId): boolean => root.dataset[p] !== 'collapsed'
   const panelListeners = new Set<(p: PanelId, open: boolean) => void>()
+  /** Below this width the two side panels cannot be open together (night 2 wave 4, item 1: Projet 200 + Propriétés 260 > 400). Same threshold as the CSS cap. */
+  const PHONE_PX = 760
+  const phone = (): boolean => !!win && win.innerWidth < PHONE_PX
+  let openOrder = 0
+  const openedAt: Record<PanelId, number> = { tree: 0, props: 0 }
+  const other = (p: PanelId): PanelId => (p === 'tree' ? 'props' : 'tree')
+  /**
+   * A panel the accordion folded (not the learner): it comes back when the window is wide again, unless the learner touched it since (any click, menu item or script on it clears this).
+   * Fix round S6: a wide-window choice is never lost for good by a narrow moment.
+   */
+  const autoFolded: Record<PanelId, boolean> = { tree: false, props: false }
+  /** The accordion folds `o`; a focus left in its body (display: none once folded) goes to its own button, never to the page (fix round S4, S5). */
+  const foldByAccordion = (o: PanelId): void => {
+    const body = o === 'tree' ? tree.body : props.body
+    const hadFocus = body.contains(doc.activeElement)
+    setPanel(o, false)
+    autoFolded[o] = true // after setPanel: setPanel is the learner's path and clears it
+    if (hadFocus) btnOf[o].focus()
+  }
   const setPanel = (p: PanelId, open = !isPanelOpen(p)): void => {
     const was = root.dataset[p]
+    autoFolded[p] = false // a click, a menu item or a script on this panel is a choice: the accordion no longer owns it
+    if (open && was !== 'open') {
+      openedAt[p] = ++openOrder
+      // Accordion on a phone: opening one panel folds the other (a user's own choice at a wide width is never touched).
+      const o = other(p)
+      if (phone() && isPanelOpen(o)) foldByAccordion(o)
+    }
     root.dataset[p] = open ? 'open' : 'collapsed'
     const b = btnOf[p]
     b.setAttribute('aria-expanded', String(open))
@@ -174,14 +200,28 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   // A narrow window starts with Propriétés folded so the 3D view keeps ≥ 60 %; a phone-sized one (< 760 px) folds Projet too (night wave 2, item A:
   // at 400 px the 200 px tree left the view 168 px wide). Only the first state: a click, a menu item or a script wins afterwards.
   const win = doc.defaultView
-  setPanel('tree', !(win && win.innerWidth < 760))
+  setPanel('tree', !phone())
   setPanel('props', !(win && win.innerWidth < 1200))
+
+  // The window crosses 760 px. Narrower with both panels open: the one opened longer ago folds (the same accordion, focus handed to its button). Wider again: a panel that only the
+  // accordion folded comes back (fix round S6); one the learner folded or opened stays as they left it.
+  const narrowQuery = win?.matchMedia ? win.matchMedia(`(max-width: ${PHONE_PX - 0.02}px)`) : null
+  narrowQuery?.addEventListener('change', (e) => {
+    if (e.matches) {
+      if (isPanelOpen('tree') && isPanelOpen('props')) foldByAccordion(openedAt.tree < openedAt.props ? 'tree' : 'props')
+      return
+    }
+    for (const p of ['tree', 'props'] as const) if (autoFolded[p] && !isPanelOpen(p)) setPanel(p, true) // not the learner's choice: back, and still not theirs
+    for (const p of ['tree', 'props'] as const) autoFolded[p] = false
+  })
 
   const liveMsg = createLiveText(statusMsg, (fn, ms) => (win ? win.setTimeout(fn, ms) : fn()))
   const setStatus = (place: string, message: string, state: 'idle' | 'busy' | 'ready' = 'idle', reannounce = false): void => {
     // Writes only on a change; the message itself goes through liveText (re-announced only for a learner's action).
     if (statusPlace.textContent !== place) statusPlace.textContent = place
     liveMsg(message, reannounce)
+    // the full text when the bar clips it (night 2 wave 4, item 7: the pose hints are 98 characters, the bar shows about 36 at 400 px); on a touch screen the CSS gives it two lines
+    if (statusMsg.title !== message) statusMsg.title = message
     if (statusMsg.dataset.state !== state) statusMsg.dataset.state = state
   }
   setStatus('', S().statusNoPlace!)

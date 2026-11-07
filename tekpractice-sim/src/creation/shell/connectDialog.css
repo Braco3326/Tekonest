@@ -18,7 +18,7 @@
   cursor: pointer;
   overflow-wrap: anywhere;
 }
-.cr-connect-opt:hover { background: var(--cr-panel-line); }
+@media (hover: hover) { .cr-connect-opt:hover { background: var(--cr-panel-line); } }
 /* The active option: a fill AND an Ambre bar (shape, not colour alone); focus stays in the field. */
 .cr-connect-opt[aria-selected='true'] { background: var(--cr-panel-line); box-shadow: inset 4px 0 0 var(--cr-ambre); font-weight: 500; }
 .cr-connect-toggle { margin-top: 12px; }

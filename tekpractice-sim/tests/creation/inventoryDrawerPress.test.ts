@@ -34,6 +34,10 @@ class FakeEl {
   replaceChildren(...c: FakeEl[]): void {
     this.children = c
   }
+  removeChild(c: FakeEl): FakeEl {
+    this.children = this.children.filter((x) => x !== c)
+    return c
+  }
   replaceWith(): void {}
   addEventListener(t: string, fn: Handler): void {
     this.listeners.set(t, [...(this.listeners.get(t) ?? []), fn])

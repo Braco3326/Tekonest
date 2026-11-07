@@ -964,3 +964,102 @@ describe('fix round R2 (Alt from the real key event, blur, end-of-pose reset)', 
     s.fire('pointerup', 213, 232)
   })
 })
+
+describe('a stand-mounted or flown device that is pressed and dragged says why the view orbits (night 2 wave 5, P3-3)', () => {
+  const mounted = (mount: 'stand' | 'flown', selected = true) => {
+    const s = setup()
+    s.history.do({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [2, 1, 3], mount })
+    if (selected) s.viewState.set({ selection: 'ql1' })
+    s.under('ql1')
+    s.announce.mockClear()
+    return s
+  }
+  const drag = (s: ReturnType<typeof setup>, extra: Record<string, unknown> = {}) => {
+    s.fire('pointerdown', 200, 300, extra)
+    s.fire('pointermove', 203, 300, extra) // inside the 5 px of a click: nothing yet
+    s.fire('pointermove', 260, 300, extra)
+    s.fire('pointermove', 330, 320, extra)
+    s.fire('pointermove', 400, 340, extra)
+    s.fire('pointerup', 400, 340, extra)
+  }
+
+  it('a drag from a stand-mounted device announces the stand hint, once for the whole drag, and moves nothing', () => {
+    const s = mounted('stand')
+    drag(s)
+    expect(s.announce).toHaveBeenCalledTimes(1)
+    expect(s.announce).toHaveBeenCalledWith(COPY.placement!.dragStand)
+    expect(s.history.inTransaction).toBe(false)
+    expect(s.store.design().placements[0].position_m).toEqual([2, 1, 3])
+  })
+
+  it('a flown device has its own wording', () => {
+    const s = mounted('flown')
+    drag(s)
+    expect(s.announce).toHaveBeenCalledTimes(1)
+    expect(s.announce).toHaveBeenCalledWith(COPY.placement!.dragFlown)
+  })
+
+  it('the next drag says it again (once per drag, not once per session)', () => {
+    const s = mounted('stand')
+    drag(s)
+    drag(s)
+    expect(s.announce).toHaveBeenCalledTimes(2)
+  })
+
+  it('the hint waits for a real drag: a click, or a press that moves 5 px or less, says nothing', () => {
+    const s = mounted('stand')
+    s.fire('pointerdown', 200, 300)
+    s.fire('pointerup', 200, 300)
+    s.fire('pointerdown', 200, 300)
+    s.fire('pointermove', 203, 304) // 5 px exactly
+    s.fire('pointerup', 203, 304)
+    expect(s.announce).not.toHaveBeenCalled()
+  })
+
+  it('the words use the texts of the deck and name the way to move it (Propriétés › Position)', () => {
+    expect(COPY.placement!.dragStand).toContain('Propriétés › Position')
+    expect(COPY.placement!.dragFlown).toContain('Propriétés › Position')
+    expect(COPY.placement!.dragStand).toMatch(/^Sur pied/)
+    expect(COPY.placement!.dragFlown).toMatch(/^Accroché/)
+  })
+
+  it('says nothing for a floor device (it moves), a device that is not under the pointer, one that is not selected, a touch, a pan gesture, or while placing', () => {
+    const floor = setup()
+    floor.history.do({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [2, 0, 3], mount: 'floor' })
+    floor.viewState.set({ selection: 'ql1' })
+    floor.under('ql1')
+    floor.announce.mockClear()
+    drag(floor)
+    expect(floor.announce).toHaveBeenCalledTimes(1)
+    expect(floor.announce).toHaveBeenCalledWith(expect.stringContaining('Déplacé'))
+    const away = mounted('stand')
+    away.under(null)
+    drag(away)
+    expect(away.announce).not.toHaveBeenCalled()
+    const unselected = mounted('stand', false)
+    drag(unselected)
+    expect(unselected.announce).not.toHaveBeenCalled()
+    const touch = mounted('stand')
+    drag(touch, { pointerType: 'touch' })
+    expect(touch.announce).not.toHaveBeenCalled()
+    const pan = mounted('stand')
+    drag(pan, { shiftKey: true })
+    expect(pan.announce).not.toHaveBeenCalled()
+    const placing = mounted('stand')
+    placing.ctrl.startPlacement('yamaha-ql1')
+    placing.announce.mockClear()
+    drag(placing)
+    expect(placing.announce).not.toHaveBeenCalledWith(COPY.placement!.dragStand)
+  })
+
+  it('a pointer cancel ends the press: its later moves say nothing, and the next drag still says it once', () => {
+    const s = mounted('stand')
+    s.fire('pointerdown', 200, 300)
+    s.fire('pointermove', 300, 300)
+    s.fire('pointercancel', 300, 300)
+    s.fire('pointermove', 340, 300) // no press any more: nothing
+    expect(s.announce).toHaveBeenCalledTimes(1)
+    drag(s)
+    expect(s.announce).toHaveBeenCalledTimes(2)
+  })
+})

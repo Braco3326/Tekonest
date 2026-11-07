@@ -7,7 +7,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import catalog from '../../content/catalog.json'
-import { IDLE_WINDOW_MS, SETTLE_SAMPLE_MS, quietWindow, waitRendersIdle } from './waits'
+import { IDLE_WINDOW_MS, quietWindow, waitRendersIdle, settleRenders as settle } from './waits'
 
 /** Task 29 (CA-15): the rule texts are the catalog's French fields, pinned exactly. */
 const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
@@ -35,17 +35,6 @@ const boot = async (page: Page): Promise<void> => {
   await page.waitForFunction(() => window.__creation!.design().rig.instances.length === 4)
   await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
   await settle(page)
-}
-/** The .glb models arrive after the placeholders and move the ports: wait until the page has stopped rendering. */
-const settle = async (page: Page): Promise<void> => {
-  let last = -1
-  for (let i = 0; i < 40; i++) {
-    const n = await page.evaluate(() => window.__creation!.renders())
-    if (n === last) return
-    last = n
-    await page.waitForTimeout(SETTLE_SAMPLE_MS)
-  }
-  throw new Error('the page never went idle')
 }
 const design = (page: Page) => page.evaluate(() => window.__creation!.design())
 const history = (page: Page) => page.evaluate(() => window.__creation!.historySize())

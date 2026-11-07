@@ -6,7 +6,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import catalog from '../../content/catalog.json'
-import { SETTLE_SAMPLE_MS, quietWindow } from './waits'
+import { quietWindow, settleRenders as settle } from './waits'
 
 /** Task 29 (CA-15): the rule texts are the catalog's French fields, pinned exactly. */
 const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
@@ -32,17 +32,6 @@ const boot = async (page: Page): Promise<void> => {
     c.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12-d', position: [-3, 0, -3] })
   })
   await select(page, 'ql1')
-}
-/** The .glb models arrive after the placeholders and move the ports: wait until the page has stopped rendering. */
-const settle = async (page: Page): Promise<void> => {
-  let last = -1
-  for (let i = 0; i < 40; i++) {
-    const n = await page.evaluate(() => window.__creation!.renders())
-    if (n === last) return
-    last = n
-    await page.waitForTimeout(SETTLE_SAMPLE_MS)
-  }
-  throw new Error('the page never went idle')
 }
 const select = async (page: Page, id: string): Promise<void> => {
   await page.locator('#renderCanvas').focus()

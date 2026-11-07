@@ -4,6 +4,7 @@
  * failure, keyboard focus blocked during a compare, in-app reduced motion.
  */
 import { expect, test, type Page } from '@playwright/test'
+import { quietWindow } from './waits'
 
 async function boot(page: Page): Promise<void> {
   await page.goto('/?level=sandbox')
@@ -51,6 +52,9 @@ test('the Essais chunk fails to load → a « recharger » toast, and the next c
   const failed = page.locator('.toast-error').filter({ hasText: "Le panneau Essais n'a pas pu se charger." })
   await expect(failed.first()).toBeVisible()
   await expect(failed.first()).toContainText('Rechargez la page')
+  // the legacy page handles this chunk itself: the entry guard of index.html must not cover it too (review C1)
+  await quietWindow(page, 400)
+  await expect(page.getByTestId('entry-failure')).toHaveCount(0)
   const before = await failed.count()
   block = false
   await page.getByRole('button', { name: 'Essais' }).click()

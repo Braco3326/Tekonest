@@ -24,6 +24,7 @@ import type { Registry, DeviceT } from '../engine/CatalogLoader'
 import type { PortRef } from '../engine/types'
 import { TOKENS } from '../design/tokens'
 import { assetUrl } from '../assetUrl'
+import { hasModel } from './modelIds'
 import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
@@ -293,7 +294,7 @@ export class DeviceSpawner {
    * port markers/pick-spheres/labels are RE-ANCHORED onto the real −Z face so
    * cables land on the visible model (not the placeholder grid).
    *
-   * Any failure (404, decode, Draco) keeps the box — gameplay never depends on
+   * A device with no shipped glb (scene/modelIds) never asks for one. Any failure (decode, Draco, network) keeps the box — gameplay never depends on
    * the model. Resolves true when the glb applied, false on fallback.
    */
   private tryLoadModel(
@@ -304,6 +305,9 @@ export class DeviceSpawner {
     instance: DeviceInstance
   ): Promise<boolean> {
     const deviceId = device.id
+    // No shipped file for this device (the manifest lists exactly the .glb that exist): keep the placeholder without asking for it, a
+    // request for a missing file is a visible 404 on the deployed site. Same result as a failed load (false), no network.
+    if (!hasModel(deviceId)) return Promise.resolve(false)
     return SceneLoader.ImportMeshAsync(null, assetUrl('assets/'), `${deviceId}.glb`, this.scene)
       .then(({ meshes }) => {
         // The instance was disposed while the model loaded (fast Essais compare

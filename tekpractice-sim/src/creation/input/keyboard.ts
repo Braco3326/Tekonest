@@ -56,6 +56,8 @@ export const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(
   'ROTATE_CW', 'ROTATE_CCW', 'DELETE',
   // G: the free-placement latch (Task 43b), only meaningful while a device follows the pointer or is dragged (canvas has focus then).
   'SNAP_TOGGLE',
+  // H: the shortcuts list (night 2 wave 5, P2-1). A character key like the others: only with the 3D view focused (WCAG 2.1.4); the Aide menu item opens it from anywhere.
+  'TOGGLE_HELP',
 ])
 
 /**

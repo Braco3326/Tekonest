@@ -6,7 +6,7 @@
  * and leaks nothing. Movement keys are HELD and polled (a tap can fall inside one frame).
  */
 import { expect, test, type Page } from '@playwright/test'
-import { quietWindow } from './waits'
+import { quietWindow, waitRendersIdle } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const boot = async (page: Page): Promise<void> => {
@@ -20,9 +20,9 @@ const view = (page: Page) => page.evaluate(() => window.__creation!.view())
 const walkCam = (page: Page) => page.evaluate(() => window.__creation!.walkCamera())
 const leases = (page: Page) => page.evaluate(() => window.__creation!.leases())
 const renders = (page: Page) => page.evaluate(() => window.__creation!.renders())
-/** Renders during `ms` with nothing touched (after a short settle). */
+/** Renders during `ms` with nothing touched (after the page went idle: a state wait; the `ms` window is a real quiet window). */
 const idleRenders = async (page: Page, ms = 2000): Promise<number> => {
-  await quietWindow(page, 300)
+  await waitRendersIdle(page)
   const r0 = await renders(page)
   await quietWindow(page, ms)
   return (await renders(page)) - r0
@@ -197,7 +197,7 @@ test('a place change while walking goes back to Orbit and leaks nothing (listene
   await boot(page)
   await page.evaluate(() => window.__creation!.choosePlace('blank'))
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
-  await quietWindow(page, 200)
+  await waitRendersIdle(page) // the baseline of the listeners count is read on an idle page
   const orbitListeners = await page.evaluate(() => window.__creation!.liveListeners())
   await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
   await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')

@@ -209,6 +209,8 @@ test('Label in Name: every row is named by the text it shows; an open group is o
   })
   expect(wired).toEqual([true, true])
   const tree = page.getByRole('tree', { name: 'Projet' })
+  // The Zones row only becomes a group once the place's layout has loaded: a click before that opens nothing (it flaked when the layout was slow, then failed every run)
+  await expect(tree.getByRole('treeitem', { name: /^Zones/ })).toHaveAttribute('aria-expanded', 'false')
   for (const name of [/^Zones/, /^Matériel/, /^Câbles/, /^Points d’écoute/]) await tree.getByRole('treeitem', { name }).click() // a click on a group opens it
   await expect(tree.locator('[role="treeitem"][aria-expanded="true"]')).toHaveCount(4)
   await page.getByRole('button', { name: 'Masquer Yamaha QL1 (ql1)' }).click() // a hidden row also carries a state word ("masqué") in its name

@@ -99,6 +99,8 @@ export class PlacementController {
   /** The primary press made while placing (a click drops, a drag orbits). */
   private press: { x: number; y: number; t: number } | null = null
   private drag: Drag | null = null
+  /** A press on the selected device that cannot be dragged (stand, flown): the view orbits; once it travels past the click threshold the hint is said, once (P3-3). */
+  private fixedPress: { pointerId: number; x: number; y: number; mount: 'stand' | 'flown'; said: boolean } | null = null
   private snap: boolean | null = null
   /** The placement was started by a drag out of the inventory: the drawer's window-level pointer events steer it (Task 43b). */
   private pointerDrag = false
@@ -277,7 +279,10 @@ export class PlacementController {
     if (e.pointerType === 'touch') return // a finger never grabs a placed device: the camera's orbit
     if (this.drag || this.host.walking) return
     const d = this.dragCandidate(e)
-    if (!d) return
+    if (!d) {
+      this.fixedPress = this.fixedPressOf(e)
+      return
+    }
     // Ours from here: not the orbit, not the click-to-select.
     e.stopImmediatePropagation()
     e.preventDefault()
@@ -301,6 +306,16 @@ export class PlacementController {
     }
     canvas.focus?.()
     this.setSnap(this.free(e))
+  }
+
+  /** The press on the selected device that is not floor-mounted (so the camera orbits instead of moving it), or null. */
+  private fixedPressOf(e: PointerEvent): PlacementController['fixedPress'] {
+    const sel = this.viewState.get().selection
+    if (sel === null) return null
+    const pl = this.store.design().placements.find((p) => p.instanceId === sel)
+    const mount = pl?.mount ?? 'floor'
+    if (mount === 'floor' || this.deviceAtPoint(e.offsetX, e.offsetY) !== sel) return null
+    return { pointerId: e.pointerId, x: e.offsetX, y: e.offsetY, mount, said: false }
   }
 
   /** The drag a press would start: on the selected, floor-mounted device. Null = the camera takes the press. */
@@ -356,6 +371,14 @@ export class PlacementController {
       }
       return
     }
+    const fixed = this.fixedPress
+    if (fixed && e.pointerId === fixed.pointerId) {
+      if (e.buttons === 0) this.fixedPress = null
+      else if (!fixed.said && Math.hypot(e.offsetX - fixed.x, e.offsetY - fixed.y) > DRAG_PX) {
+        fixed.said = true // once for the whole drag
+        this.opts.announce?.(fixed.mount === 'stand' ? COPY.placement!.dragStand! : COPY.placement!.dragFlown!)
+      }
+    }
     if (!this.placing || e.pointerType === 'touch') return
     this.setSnap(this.free(e))
     const hit = this.floorPointAtPx(e.offsetX, e.offsetY)
@@ -366,6 +389,7 @@ export class PlacementController {
   }
 
   private onUp(e: PointerEvent): void {
+    if (this.fixedPress && e.pointerId === this.fixedPress.pointerId) this.fixedPress = null
     const d = this.drag
     if (d) {
       if (e.pointerId !== d.pointerId) return
@@ -399,6 +423,7 @@ export class PlacementController {
   }
 
   private onPointerCancel(e: PointerEvent): void {
+    if (this.fixedPress && e.pointerId === this.fixedPress.pointerId) this.fixedPress = null
     if (this.drag && e.pointerId === this.drag.pointerId) this.endDrag(true)
     this.press = null
   }

@@ -56,6 +56,21 @@
   letter-spacing: 0.02em;
 }
 .cr-drawer-tabs { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; }
+/* The row scrolls sideways when the tabs do not fit: an edge fade on the side that has more (inventoryDrawer.ts sets data-fade-start / data-fade-end). A mask, not an element:
+   decoration only, nothing for assistive tech, and a tab under it stays clickable and focusable. */
+.cr-drawer-tabs { --cr-fade: 28px; }
+.cr-drawer-tabs[data-fade-end='true'] {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--cr-fade)), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--cr-fade)), transparent);
+}
+.cr-drawer-tabs[data-fade-start='true'] {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - var(--cr-fade)), transparent);
+  mask-image: linear-gradient(to left, #000 calc(100% - var(--cr-fade)), transparent);
+}
+.cr-drawer-tabs[data-fade-start='true'][data-fade-end='true'] {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--cr-fade), #000 calc(100% - var(--cr-fade)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--cr-fade), #000 calc(100% - var(--cr-fade)), transparent);
+}
 .cr .cr-drawer-tab, .cr .cr-drawer-close, .cr .cr-inv-item, .cr .cr-drawer-filter-input { transition: none; }
 /* the search field, above the tabs in reading order: a visible label and a bordered field (control edge 7.6:1, as the panel fields) */
 .cr-drawer-filter { display: flex; align-items: center; gap: 8px; margin: 4px 0; flex: 0 1 220px; min-width: 120px; }
@@ -72,7 +87,7 @@
   border: 1px solid var(--cr-ink-muted);
   font: 400 13px/1 var(--cr-font-ui);
 }
-.cr .cr-drawer-filter-input:hover { border-color: var(--cr-papier); }
+@media (hover: hover) { .cr .cr-drawer-filter-input:hover { border-color: var(--cr-papier); } }
 .cr .cr-drawer-tab {
   position: relative;
   flex: none;
@@ -82,7 +97,7 @@
   font: 500 13px/1 var(--cr-font-ui);
   white-space: nowrap;
 }
-.cr .cr-drawer-tab:hover { color: var(--cr-ambre); }
+@media (hover: hover) { .cr .cr-drawer-tab:hover { color: var(--cr-ambre); } }
 /* the open tab: Papier + a full-width Ambre bar at its foot (selection = Ambre) */
 .cr .cr-drawer-tab[aria-selected='true'] { color: var(--cr-papier); box-shadow: inset 0 -3px 0 var(--cr-ambre); }
 .cr .cr-drawer-tab:focus-visible { outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); }
@@ -95,7 +110,7 @@
   padding: 0 12px;
   border: 1px solid var(--cr-ink-muted);
 }
-.cr .cr-drawer-close:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }
+@media (hover: hover) { .cr .cr-drawer-close:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); } }
 
 /* ── panel: the devices of the open tab ───────────────────────────── */
 .cr-drawer-panel { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 8px 12px; }
@@ -124,14 +139,17 @@
 .cr .cr-inv-item { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 .cr-inv-thumb { pointer-events: none; } /* a long press on the picture must not open the image menu and cancel the drag */
 .cr-drawer-panel[data-scrolls='true'] .cr-inv-item { touch-action: pan-y; }
-.cr .cr-inv-item:hover { border-color: var(--cr-ambre); color: var(--cr-ambre); }
+@media (hover: hover) { .cr .cr-inv-item:hover { border-color: var(--cr-ambre); color: var(--cr-ambre); } }
 .cr-inv-text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .cr-inv-name { overflow-wrap: anywhere; }
 .cr-inv-badge { align-self: flex-start; padding: 0 4px; border: 1px solid var(--cr-ink-muted); color: var(--cr-ink-muted); font-size: 11px; line-height: 16px; }
+/* The Bêta status is always in the panel (a live region must exist before its text changes); with no text it takes no room. */
+.cr-drawer-beta-status { margin: 0; padding: 8px 0; color: var(--cr-ink-muted); overflow-wrap: anywhere; }
+.cr-drawer-beta-status:empty { padding: 0; }
 .cr-drawer-empty { margin: 0; padding: 8px 0; color: var(--cr-ink-muted); overflow-wrap: anywhere; }
 .cr-drawer-empty p { margin: 0 0 8px; }
 .cr .cr-drawer-clear { min-height: 28px; padding: 0 12px; border: 1px solid var(--cr-ink-muted); color: var(--cr-papier); transition: none; }
-.cr .cr-drawer-clear:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }
+@media (hover: hover) { .cr .cr-drawer-clear:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); } }
 
 /* the device picture (thumbnail): decorative, the same footprint as the silhouette's row */
 .cr-inv-thumb { flex: none; width: 40px; height: 36px; object-fit: contain; }

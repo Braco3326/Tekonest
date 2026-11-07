@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
+import { quietWindow } from './waits'
 
 const boot = async (page: Page): Promise<void> => {
   await page.goto('/')
@@ -179,6 +180,9 @@ test('a card that cannot be opened says so in the picker (and the status bar); n
   await expect(page.locator('.cr-status-msg')).toContainText('Rien n’a changé')
   await expect(page.getByTestId('place-picker')).toBeVisible()
   expect(await page.evaluate(() => window.__creation!.place())).toBeNull()
+  // a lazy chunk that fails AFTER the app started is the app's to handle (the line above): the entry guard of index.html must never cover the screen for it (review C1)
+  await quietWindow(page, 400) // past the guard's 100 ms wait
+  await expect(page.getByTestId('entry-failure')).toHaveCount(0)
   // the next choice clears it
   await page.locator('[data-place="blank"]').click()
   await page.waitForFunction(() => window.__creation!.place() === 'blank')

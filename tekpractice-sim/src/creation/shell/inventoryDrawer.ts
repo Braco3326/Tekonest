@@ -25,7 +25,7 @@
  * DOM only: it dispatches nothing itself and never touches the rig (C6).
  */
 import './inventoryDrawer.css'
-import manifest from '../../../public/assets/ASSET_MANIFEST.json'
+import { MODEL_IDS } from '../../scene/modelIds'
 import type { Registry } from '../../engine/CatalogLoader'
 import { COPY } from '../copy'
 import { assetUrl } from '../../assetUrl'
@@ -72,11 +72,6 @@ export interface InventoryDrawer {
   /** Ends a press in progress and removes its window listeners (the shell is going away). */
   dispose(): void
 }
-
-/** Devices that ship a `public/assets/<id>.glb` (the manifest lists exactly those files). */
-const MODEL_IDS: ReadonlySet<string> = new Set(
-  (manifest as { assets: { id: string; status: string }[] }).assets.filter((a) => a.status === 'ok').map((a) => a.id),
-)
 
 const I = (): Readonly<Record<string, string>> => COPY.inventory!
 const SVG = 'http://www.w3.org/2000/svg'
@@ -175,9 +170,54 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   filterBox.append(filterLabel, filter, filterStatus)
   head.append(title, filterBox, tablist)
 
+  // Night 2 wave 4, item 2: the tab row scrolls sideways when the tabs do not fit (a phone shows about two), and nothing said so. The side that has more tabs gets an edge fade
+  // (a mask in the CSS, driven by these two flags): no element, so nothing for assistive tech, and the keyboard reaches every tab as before.
+  const syncFade = (): void => {
+    const more = tablist.scrollWidth > tablist.clientWidth + 1
+    const start = more && tablist.scrollLeft > 1
+    const end = more && tablist.scrollLeft + tablist.clientWidth < tablist.scrollWidth - 1
+    if (tablist.dataset.fadeStart !== String(start)) tablist.dataset.fadeStart = String(start)
+    if (tablist.dataset.fadeEnd !== String(end)) tablist.dataset.fadeEnd = String(end)
+  }
+  tablist.addEventListener('scroll', syncFade, { passive: true })
+  // A tab the keyboard focuses is brought in CLEAR of the edge fade (fix round S7): the browser only scrolls a focused tab until it is visible, which can leave it under the fade and
+  // its focus ring half faded (measured: 10 px from the edge, the fade is 28). At an end of the row the scroll simply stops where it can, and there is no fade there.
+  tablist.addEventListener('focusin', (e) => {
+    const t = e.target as HTMLElement | null
+    if (!t || t.parentElement !== tablist) return
+    // Keyboard focus only (fix round 2): a mouse press focuses the tab too, and shifting the row between the press and the release would put the release off the tab,
+    // so the click (and its selection) would be lost. A pointer focus is not :focus-visible; a click cannot need the ring.
+    if (!t.matches(':focus-visible')) return
+    const fade = parseFloat(getComputedStyle(tablist).getPropertyValue('--cr-fade')) || 28
+    const box = tablist.getBoundingClientRect()
+    const r = t.getBoundingClientRect()
+    const left = r.left - box.left
+    const right = box.right - r.right
+    if (left < fade) tablist.scrollLeft -= fade - left
+    else if (right < fade) tablist.scrollLeft += fade - right
+  })
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncFade).observe(tablist)
+
   const panel = el(doc, 'div', 'cr-drawer-panel')
   panel.id = 'cr-inv-panel'
   panel.setAttribute('role', 'tabpanel')
+  // The Bêta status (night 2 wave 4, item 5; L36 open item 9): ONE live node, in the panel from the first build and never removed or replaced; only its text changes (loading,
+  // unavailable, empty, or nothing). A live region announces a change of text in a node that was already there: a node inserted with its text is not read by every screen reader.
+  const betaNote = el(doc, 'p', 'cr-drawer-beta-status')
+  betaNote.setAttribute('role', 'status')
+  betaNote.dataset.testid = 'inventory-beta-status'
+  betaNote.dataset.state = 'none'
+  panel.appendChild(betaNote)
+  const setBetaNote = (state: 'none' | 'loading' | 'unavailable' | 'empty'): void => {
+    const text = state === 'loading' ? I().betaLoading! : state === 'unavailable' ? I().betaUnavailable! : state === 'empty' ? I().empty! : ''
+    if (betaNote.dataset.state !== state) betaNote.dataset.state = state
+    if (betaNote.textContent !== text) betaNote.textContent = text
+  }
+  /** Empties the panel except the Bêta status node, then adds `nodes` after it. */
+  const resetPanel = (...nodes: Node[]): void => {
+    for (const c of Array.from(panel.children)) if (c !== betaNote) panel.removeChild(c)
+    panel.append(...nodes)
+  }
   const hint = el(doc, 'p', 'cr-drawer-hint')
   // DOM order = Tab order: « Filtrer », the tabs, the devices, then « Fermer » (placed top right by the CSS).
   root.append(head, panel, hint, close)
@@ -272,7 +312,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   const matches = (): InventoryItem[] | null => (filter.value.trim() === '' ? null : filterItems(items, filter.value))
 
   const renderItems = (tab: InventoryTab): void => {
-    panel.replaceChildren()
+    resetPanel()
     const found = matches()
     // A filter on: one list of the matches of every tab, named for what it is; no match is said (status) and shown.
     if (found) {
@@ -294,6 +334,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
         })
         box.append(clear)
         panel.appendChild(box)
+        setBetaNote('none')
         return
       }
     } else {
@@ -305,14 +346,12 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     const mine = found ?? items.filter((it) => it.tab === tab)
     if (!mine.length) {
       // The « Bêta » tab says where its sheets are; no other tab is ever held up by them.
-      const status = tab === 'beta' && !found ? d.betaStatus() : 'ready'
-      if (status === 'ready') panel.appendChild(el(doc, 'p', 'cr-drawer-empty', I().empty))
-      else {
-        const p = el(doc, 'p', 'cr-drawer-empty', status === 'loading' ? I().betaLoading : I().betaUnavailable)
-        p.dataset.testid = 'inventory-beta-status'
-        p.dataset.state = status
-        p.setAttribute('role', 'status')
-        panel.appendChild(p)
+      if (tab === 'beta' && !found) {
+        const status = d.betaStatus()
+        setBetaNote(status === 'ready' ? 'empty' : status) // the same node, only its text (once per render: no empty text in between, so a repeat is not read again)
+      } else {
+        panel.appendChild(el(doc, 'p', 'cr-drawer-empty', I().empty))
+        setBetaNote('none')
       }
       return
     }
@@ -355,6 +394,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       list.appendChild(li)
     }
     panel.appendChild(list)
+    setBetaNote('none')
     // A list that scrolls keeps its vertical touch pan (the CSS); one that does not can give the whole item to a drag.
     panel.dataset.scrolls = String(panel.scrollHeight > panel.clientHeight + 1)
   }
@@ -377,13 +417,15 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       tablist.appendChild(btn)
       return { tab, btn }
     })
+    syncFade() // the tabs changed (the « Bêta » tab came or went): the row may be longer or shorter now
     hint.textContent = I().hint!.replace('{key}', d.keyLabel())
     const first = tabs[0]?.tab
     const tab = selected !== null && tabs.some((t) => t.tab === selected) ? selected : first
     if (tab === undefined) {
       panel.removeAttribute('aria-labelledby')
       panel.removeAttribute('aria-label')
-      panel.replaceChildren(el(doc, 'p', 'cr-drawer-empty', I().empty))
+      setBetaNote('none')
+      resetPanel(el(doc, 'p', 'cr-drawer-empty', I().empty))
       return
     }
     showTab(tab, false)

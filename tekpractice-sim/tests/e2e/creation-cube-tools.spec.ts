@@ -10,7 +10,7 @@
  */
 import { expect, test, type Page } from '@playwright/test'
 import { nearestZone, zoneAngles, zoneLabel } from '../../src/camera/cubeZones'
-import { IDLE_WINDOW_MS, quietWindow } from './waits'
+import { IDLE_WINDOW_MS, quietWindow, waitRendersIdle } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 const boot = async (page: Page, reduced = true): Promise<void> => {
@@ -30,7 +30,7 @@ const angleDiff = (a: number, b: number): number => Math.abs(((((a - b) % (2 * M
 const dist = (a: readonly number[], b: readonly number[]): number => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2])
 const renders = (page: Page) => page.evaluate(() => window.__creation!.renders())
 const idleRenders = async (page: Page): Promise<number> => {
-  await quietWindow(page, 300)
+  await waitRendersIdle(page) // settle: a state wait; the window below is a real quiet window
   const r0 = await renders(page)
   await quietWindow(page, IDLE_WINDOW_MS)
   return (await renders(page)) - r0

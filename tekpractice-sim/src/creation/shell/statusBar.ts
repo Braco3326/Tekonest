@@ -183,6 +183,10 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
     setText(label, v.signal.label)
     setText(extra, v.extra ? ` · ${v.extra}` : '')
     setData(signal, 'kind', v.signal.kind)
+    // Night 2 wave 4, item 7: at 400 px a long button (« … · connexion refusée · 1 appareil non vérifié ») clips its tail. The label is never clipped (the CSS keeps it whole), so the title
+    // carries what is: the extra part, then the usual hint; it never repeats the label the button already names itself with (fix round N8).
+    const full = v.extra ? `${v.extra}\n${S().signalHint}` : S().signalHint!
+    if (signal.title !== full) signal.title = full
     if (isOpen) renderRows()
   }
 

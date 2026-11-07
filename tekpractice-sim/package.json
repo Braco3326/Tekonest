@@ -23,7 +23,7 @@
     "asset:sheet": "tsx tools/assets3d/make-sheet.ts",
     "gen:schema": "tsx tools/generate-schema.ts",
     "sync:kb": "tsx tools/build-kb-sheets.ts && tsx tools/sync-rooms.ts && tsx tools/build-coach-kb.ts && tsx tools/propose-content.ts",
-    "lint": "eslint src tools --ext .ts",
+    "lint": "eslint src tools --ext .ts && eslint tools/live-audit --ext .mjs",
     "format": "prettier --write \"src/**/*.ts\" \"tools/**/*.ts\""
   },
   "dependencies": {

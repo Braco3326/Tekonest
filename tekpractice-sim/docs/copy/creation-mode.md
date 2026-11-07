@@ -91,6 +91,41 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 
 Since Task 12, Lieu holds only « Choisir un lieu… »; the place names are on the picker cards (`content/rooms/*.json` `name_fr`, `picker.set-*`, `picker.blank`).
 
+## shortcuts
+
+Le dialogue « Raccourcis clavier » (menu Aide, touche H ; vague de nuit 2, vague 5, P2-1) : la liste des touches de la carte des touches, avec les étiquettes vivantes (une action reliée à une autre touche affiche la nouvelle ; une action sans touche n'apparaît pas). Textes de la vague 5, à relire par tekuxwriter.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `shortcuts.title` | Raccourcis clavier | validé | Titre du dialogue (même texte que l’entrée de menu `menu.shortcuts`) |
+| `shortcuts.hint` | Les raccourcis à une seule touche (lettres, chiffres, Espace, Suppr…) n’agissent que lorsque la vue 3D a le focus. Ils sont repérés par leur position sur le clavier. | validé (nuit 2026-11-05, relecture fondateur conseillée) | Phrase sous le titre (description du dialogue). Vrai du code : les touches simples (lettres, chiffres, Espace, Suppr…) n’agissent que sur la vue 3D (`CANVAS_ONLY`) ; Ctrl+Z, Ctrl+S, Ctrl+D, Alt+H et Échap agissent ailleurs aussi. Ancien texte : « ces touches » laissait croire que tout le tableau exigeait le focus de la vue 3D |
+| `shortcuts.close` | Fermer | validé | Bouton du dialogue (Échap ferme aussi) |
+| `shortcuts.keyArrows` | Flèches | validé | Nom de la touche pour orbiter (hors carte des touches : entrée de la caméra) |
+| `shortcuts.groupView` | Vue 3D | validé | Titre de groupe |
+| `shortcuts.groupDevices` | Appareils | validé | Titre de groupe |
+| `shortcuts.groupProject` | Projet | validé | Titre de groupe |
+| `shortcuts.orbit` | Orbiter autour de la scène | validé | Ligne : flèches |
+| `shortcuts.quarterLeft` | Quart de tour de la vue vers la gauche | validé | Ligne : pavé numérique 4 |
+| `shortcuts.quarterRight` | Quart de tour de la vue vers la droite | validé | Ligne : pavé numérique 6 |
+| `shortcuts.points` | Aller à un point d’écoute | validé | Ligne : 1, 2, 3 |
+| `shortcuts.frame` | Cadrer la sélection | validé | Ligne : F et Entrée |
+| `shortcuts.home` | Vue d’ensemble | validé | Ligne : Alt+H |
+| `shortcuts.picker` | Choisir une vue | validé | Ligne : V |
+| `shortcuts.walk` | Marcher dans la salle | validé | Ligne : Maj+V |
+| `shortcuts.next` | Appareil suivant | validé | Ligne : ] |
+| `shortcuts.prev` | Appareil précédent | validé | Ligne : [ |
+| `shortcuts.inventory` | Ouvrir ou fermer l’inventaire | validé | Ligne : Espace |
+| `shortcuts.rotateCw` | Pivoter de 15° (Alt : 1°) | validé | Ligne : R |
+| `shortcuts.rotateCcw` | Pivoter de 15° dans l’autre sens | validé | Ligne : Maj+R |
+| `shortcuts.snap` | Activer ou désactiver le placement libre (pose ou déplacement) | validé (nuit 2026-11-05, relecture fondateur conseillée) | Ligne : G. Verbe ajouté : G bascule le placement libre (comme « Ouvrir ou fermer l’inventaire ») ; l’ancien libellé nommait l’état sans dire ce que fait la touche |
+| `shortcuts.duplicate` | Dupliquer l’appareil sélectionné | validé | Ligne : Ctrl+D |
+| `shortcuts.delete` | Supprimer l’appareil sélectionné | validé | Ligne : Suppr |
+| `shortcuts.cancel` | Annuler la pose, le câble en main ou la sélection | validé | Ligne : Échap |
+| `shortcuts.undo` | Annuler la dernière action | validé | Ligne : Ctrl+Z |
+| `shortcuts.redo` | Rétablir | validé | Ligne : Ctrl+Y |
+| `shortcuts.save` | Enregistrer le projet | validé | Ligne : Ctrl+S |
+| `shortcuts.help` | Afficher cette liste | validé | Ligne : H |
+
 ## tree
 
 Arbre « Projet » (Task 9, modèle WAI-ARIA tree). Remplace les clés `shell.treePlace`, `shell.treeGear`, `shell.treeNoPlace` et `shell.treeNoGear` (Task 7), supprimées. Les lignes d'appareil s'affichent « {nom catalogue} ({id}) », ex. « Yamaha QL1 (ql1) » ; les câbles « {id} {port} → {id} {port} », ex. « ql1 out-main-l → k12-g in-line-a » (nom de port français quand le catalogue en aura un) ; les zones par leur type en français (section `zoneKind`), numérotées quand un type se répète (« Public », « Public 2 »).
@@ -590,6 +625,8 @@ Pose et déplacement d'un appareil dans la vue 3D (Task 24, CA-10). Choisir un a
 | `placement.statusMoved` | Déplacé : {device}. {undo} pour annuler. | validé | Barre d’état après un glisser (annoncé) |
 | `placement.statusCancelled` | Pose annulée. | validé | Barre d’état après Échap pendant la pose (annoncé) |
 | `placement.statusMoveCancelled` | Déplacement annulé : {device} est resté en place. | validé | Barre d’état après Échap pendant un glisser (annoncé) |
+| `placement.dragStand` | Sur pied : déplacez-le avec Propriétés › Position. | validé | Barre d’état (annoncé, une fois par glisser) quand un glisser commence sur l’appareil sélectionné posé sur pied : la vue tourne au lieu de le déplacer ; dit comment le déplacer (vague 5, P3-3) |
+| `placement.dragFlown` | Accroché : déplacez-le avec Propriétés › Position. | validé | Même ligne pour un appareil accroché |
 | `placement.statusRefused` | Impossible de poser {device}. | validé | Barre d’état si l’appareil ne peut pas être posé (annoncé) |
 
 ## edit
@@ -817,3 +854,12 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `listen.failedFile` | Ce fichier n’a pas pu être lu. Essayez un fichier MP3, WAV ou OGG. | validé | Annonce quand le navigateur ne décode pas le fichier choisi |
 | `listen.failed` | La lecture n’a pas pu démarrer. | validé | Annonce d’une erreur de démarrage (autre qu’un fichier illisible) |
 | `listen.loadFailed` | La lecture n’a pas pu se charger. Rechargez la page. | validé | Annonce quand le morceau de code du moteur audio ne se télécharge pas |
+
+## Textes hors COPY (index.html)
+
+Les seuls textes qui vivent dans `index.html` et non dans `copy.ts` : la garde d'entrée (vague de nuit 2, vague 5, P1-1 ; ronde de correction C1, C2). Quand le script d'entrée lui-même ne se charge pas (fichier absent, ou page HTML servie à sa place : la production répond 200 `text/html` pour un fichier manquant), `main.ts` ne tourne jamais et l'alerte de la section `boot` ne peut pas s'afficher : un petit script en ligne, sans module ni dépendance, **dit à l'utilisateur ce qui s'est passé** (`role="alert"`) et propose « Recharger la page ». **Ce que le lien fait, et ne fait pas :** il recharge `index.html` avec `?v=<heure>` sur l'adresse de la PAGE (le routeur ignore ce paramètre) ; il ne change pas l'adresse du script d'entrée (`/assets/main-<hash>.js`), donc si le serveur ou le cache garde du HTML sous cette adresse, l'échec revient : le vrai remède est côté site (un `404.html`, des en-têtes de cache, une purge après un déploiement). **Quand elle agit :** seulement avant que l'application ait démarré (`main.ts` pose `window.__tekBooted` quand le module de la route est chargé) ; un morceau paresseux qui échoue ensuite (fiches Bêta, couverture, tiroir, une salle, le panneau Essais…) est géré par l'application, jamais par cette garde. **Placement :** avant le module d'entrée dans le source, après lui dans le build ; elle fonctionne parce que l'événement `error` d'un script module part quand son téléchargement a échoué, une fois ce script en ligne exécuté. Une politique de sécurité de contenu (`script-src`) demanderait un empreinte (hash) ou un nonce pour ce script en ligne. `tests/creation/entryGuard.test.ts` tient `index.html` et cette section égaux.
+
+| Clé | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `index.html#entryFailure` | Le jeu n’a pas pu se charger. Rechargez la page en forçant le rafraîchissement (Ctrl+F5) ou ouvrez-la de nouveau. | validé | Corps de l'alerte de la garde d'entrée (texte donné par le brief de la vague 5) |
+| `index.html#entryReload` | Recharger la page | validé | Lien de l'alerte (même mot que `boot.reload`), reçoit le focus ; recharge avec `?v=<heure>` |

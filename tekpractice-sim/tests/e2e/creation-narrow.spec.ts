@@ -7,6 +7,7 @@
  *  D. Notes and toast during a pose: the notes stack is capped, the missing-devices list is out of the way, the toast clears « Annuler la pose ».
  */
 import { expect, test, type Page } from '@playwright/test'
+import { quietWindow } from './waits'
 
 const PLACE = 'room:concert-hall-medium'
 type Box = { x: number; y: number; width: number; height: number }
@@ -340,3 +341,309 @@ for (const width of [761, 800, 1024]) {
     })
   })
 }
+
+// ── Night 2 wave 4, item 1: below 760 px two open side panels overflowed (Projet 200 + Propriétés 260 > 400) ─────────────────────────────
+// Measured on 7d9d62f at 400 x 800 with both open: the view 0 px wide, Propriétés at x = 200..460 (60 px off screen), the Signal button at x = 325..448.
+// Propriétés alone left the view 108 px wide. Now: below 760 px opening one panel folds the other (an accordion), the open panel is capped so the view keeps
+// at least 140 px, and a wide window keeps the user's choices as before.
+const geometry = (page: Page) =>
+  page.evaluate(() => {
+    const b = (s: string) => {
+      const r = document.querySelector(s)!.getBoundingClientRect()
+      return { x: r.x, width: r.width }
+    }
+    return { scrollWidth: document.documentElement.scrollWidth, tree: b('[data-testid="project-tree"]'), view: b('[data-testid="viewport"]'), props: b('[data-testid="properties"]'), signal: b('[data-testid="signal-status"]') }
+  })
+test.describe('side panels at 400 x 800 (wave 4, item 1)', () => {
+  test.use({ viewport: { width: 400, height: 800 } })
+  for (const coarse of [false, true]) {
+    test.describe(coarse ? 'touch (coarse pointer)' : 'mouse', () => {
+      test.use({ hasTouch: coarse, isMobile: false })
+      test('opening Projet then Propriétés folds the other; nothing overflows, the view keeps 140 px, Signal stays on screen', async ({ page }) => {
+        await boot(page)
+        const tree = page.getByTestId('tree-collapse')
+        const props = page.getByTestId('props-collapse')
+        await expect(tree).toHaveAttribute('aria-expanded', 'false')
+        await expect(props).toHaveAttribute('aria-expanded', 'false')
+        const check = async (label: string): Promise<void> => {
+          // the grid animates nothing (reduced motion), but wait for the state, not for time
+          await expect.poll(async () => (await geometry(page)).tree.width + (await geometry(page)).props.width + (await geometry(page)).view.width, label).toBe(400)
+          const g = await geometry(page)
+          expect(g.scrollWidth, `${label}: no horizontal scroll`).toBeLessThanOrEqual(400)
+          expect(g.view.width, `${label}: the view keeps 140 px`).toBeGreaterThanOrEqual(140)
+          expect(g.props.x + g.props.width, `${label}: Propriétés inside the window`).toBeLessThanOrEqual(400)
+          expect(g.signal.x + g.signal.width, `${label}: Signal inside the window`).toBeLessThanOrEqual(400)
+          expect(g.signal.x, `${label}: Signal left edge`).toBeGreaterThanOrEqual(0)
+        }
+        await check('both folded')
+        await tree.click()
+        await expect(tree).toHaveAttribute('aria-expanded', 'true')
+        await check('Projet open')
+        await props.click()
+        await expect(props).toHaveAttribute('aria-expanded', 'true')
+        await expect(tree, 'Projet folded by the accordion').toHaveAttribute('aria-expanded', 'false')
+        await expect(page.getByRole('button', { name: 'Déplier le panneau Projet' })).toBeVisible()
+        await check('Propriétés open')
+        await tree.click()
+        await expect(props, 'and the other way round').toHaveAttribute('aria-expanded', 'false')
+        await expect(tree).toHaveAttribute('aria-expanded', 'true')
+        await check('Projet open again')
+        await tree.click()
+        await expect(tree, 'a panel can still be folded by hand').toHaveAttribute('aria-expanded', 'false')
+        await check('both folded again')
+      })
+    })
+  }
+  test('a panel opened from the Vue menu folds the other one too (the menu hands the focus back to its own title)', async ({ page }) => {
+    await boot(page)
+    await page.getByTestId('tree-collapse').click()
+    await page.getByRole('menuitem', { name: 'Vue' }).click()
+    await page.getByRole('menuitem', { name: 'Panneau Propriétés' }).click()
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByRole('menuitem', { name: 'Vue' })).toBeFocused() // never lost to the page
+  })
+
+  test('S4: the focus is inside Projet when a script opens Propriétés: Projet folds and its own button takes the focus (not the page)', async ({ page }) => {
+    await boot(page)
+    await page.getByTestId('tree-collapse').click()
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'true')
+    const row = page.getByRole('treeitem').first()
+    await row.focus()
+    expect(await page.evaluate(() => !!document.activeElement?.closest('[data-testid="project-tree"] [role="tree"]')), 'the focus is on a row of the tree (the test means something)').toBe(true)
+    // the focus stays on the row (a programmatic click moves nothing), as when the app opens Propriétés by itself
+    await page.evaluate(() => document.querySelector<HTMLElement>('[data-testid="props-collapse"]')!.click())
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByTestId('tree-collapse'), 'the focus went to the own button of the folded panel').toBeFocused()
+  })
+})
+
+// ── Fix round S5 / S6: the window crossing 760 px ───────────────────────────────────────────────────────────────────────────────────────────────
+test.describe('side panels when the window is resized across 760 px (fix round S5, S6)', () => {
+  test.use({ viewport: { width: 1366, height: 768 } })
+  const state = (page: Page) =>
+    page.evaluate(() => ({
+      tree: document.querySelector('[data-testid="tree-collapse"]')!.getAttribute('aria-expanded'),
+      props: document.querySelector('[data-testid="props-collapse"]')!.getAttribute('aria-expanded'),
+    }))
+  const bothOpen = async (page: Page): Promise<void> => {
+    await boot(page)
+    if ((await page.getByTestId('props-collapse').getAttribute('aria-expanded')) !== 'true') await page.getByTestId('props-collapse').click()
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+  }
+
+  test('S5: narrowing to 700 px with both open folds the older one (Projet) and a focus inside it goes to its own button', async ({ page }) => {
+    await bothOpen(page)
+    await page.getByRole('treeitem').first().focus()
+    await page.setViewportSize({ width: 700, height: 768 })
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByTestId('tree-collapse')).toBeFocused()
+    const g = await geometry(page)
+    expect(g.view.width, 'the view keeps 140 px').toBeGreaterThanOrEqual(140)
+    expect(g.scrollWidth).toBeLessThanOrEqual(700)
+  })
+
+  test('S6: a panel that only the accordion folded comes back when the window is wide again', async ({ page }) => {
+    await bothOpen(page)
+    await page.setViewportSize({ width: 700, height: 768 })
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await page.setViewportSize({ width: 1366, height: 768 })
+    await expect.poll(() => state(page)).toEqual({ tree: 'true', props: 'true' })
+  })
+
+  test('S6: opening the other panel by hand at 700 px folds the first by the accordion; wide again, both are open', async ({ page }) => {
+    await bothOpen(page)
+    await page.setViewportSize({ width: 700, height: 768 })
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await page.getByTestId('tree-collapse').click() // the learner opens Projet: Propriétés is folded by the accordion
+    await expect.poll(() => state(page)).toEqual({ tree: 'true', props: 'false' })
+    await page.setViewportSize({ width: 1366, height: 768 })
+    await expect.poll(() => state(page), 'Projet stays (opened by hand), Propriétés comes back').toEqual({ tree: 'true', props: 'true' })
+  })
+
+  test('S6: what the learner folded by hand stays folded when the window widens (only the accordion-folded panel comes back)', async ({ page }) => {
+    await bothOpen(page)
+    await page.setViewportSize({ width: 700, height: 768 })
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await page.getByTestId('tree-collapse').click() // the learner opens Projet (Propriétés is folded by the accordion)...
+    await page.getByTestId('tree-collapse').click() // ...and folds it again by hand: Projet is theirs now
+    await expect.poll(() => state(page)).toEqual({ tree: 'false', props: 'false' })
+    await page.setViewportSize({ width: 1366, height: 768 })
+    await expect.poll(() => state(page), 'Propriétés (the accordion) is back, Projet stays folded').toEqual({ tree: 'false', props: 'true' })
+    await quietWindow(page, 300) // a quiet window: nothing reopens Projet afterwards
+    expect(await state(page)).toEqual({ tree: 'false', props: 'true' })
+  })
+})
+
+test.describe('side panels at 1366 x 768 (wave 4, item 1: unchanged)', () => {
+  test.use({ viewport: { width: 1366, height: 768 } })
+  test('both panels can be open together, and folding one leaves the other as it was', async ({ page }) => {
+    await boot(page)
+    const tree = page.getByTestId('tree-collapse')
+    const props = page.getByTestId('props-collapse')
+    await expect(tree).toHaveAttribute('aria-expanded', 'true')
+    if ((await props.getAttribute('aria-expanded')) !== 'true') await props.click()
+    await expect(props).toHaveAttribute('aria-expanded', 'true')
+    await expect(tree).toHaveAttribute('aria-expanded', 'true')
+    const g = await geometry(page)
+    expect(g.tree.width).toBe(200)
+    expect(g.props.width).toBe(260)
+    expect(g.view.width).toBe(1366 - 200 - 260)
+    await tree.click()
+    await expect(tree).toHaveAttribute('aria-expanded', 'false')
+    await expect(props).toHaveAttribute('aria-expanded', 'true')
+    await tree.click()
+    await expect(props, 'opening Projet at a wide width does not fold Propriétés').toHaveAttribute('aria-expanded', 'true')
+  })
+})
+
+// ── Night 2 wave 4, item 7: the status bar's texts at 400 px, seen on real states for the first time ─────────────────────────────────────────────
+// Measured on 7d9d62f at 400 x 800 (real flows, not injected text): the place name, the selection and the playback line are display: none at this width (the place is a node of
+// Projet, the selection is in Propriétés, the playback line is in Écoute: nothing is clipped, the facts are elsewhere). Two things were wrong. (1) A Bêta device placed and a
+// connection refused make the Signal button 398 px wide ("Aucune erreur détectée · connexion refusée · 1 appareil non vérifié"): it ran from x = 20 to x = 418, 18 px off the
+// window, its last words cut with no full text. (2) A state message longer than ~36 characters (the pose hints are 120) is cut by an ellipsis with no title, and on a touch
+// screen (no hover) nothing could show it.
+/** Places the first Bêta proposal (drawer, tab, device, click in the view) and makes a refused connection: the longest realistic Signal button. */
+const betaAndRefusal = async (page: Page): Promise<void> => {
+  await canvas(page).focus()
+  await page.keyboard.press('Space')
+  await page.getByRole('tab', { name: 'Bêta' }).click()
+  await page.getByTestId('inventory-item').first().click()
+  await expect.poll(() => page.evaluate(() => window.__creation!.placing())).toBe(true)
+  await page.mouse.move(200, 300)
+  await page.mouse.move(210, 310)
+  await page.mouse.click(210, 310)
+  await expect.poll(() => page.evaluate(() => window.__creation!.design().rig.instances.length)).toBeGreaterThan(0)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'ql1', port: 'out-main-r' } }))
+}
+for (const touch of [false, true]) {
+  test.describe(`status bar texts at 400 x 800, ${touch ? 'touch' : 'mouse'} (wave 4, item 7)`, () => {
+    test.use({ viewport: { width: 400, height: 800 }, hasTouch: touch })
+
+    test('a Bêta device, a refused connection: the Signal button stays inside the window, its tail is clipped with the full text in its title, and it still opens the list', async ({ page }) => {
+      await boot(page, null)
+      await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
+      await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium' && window.__creation!.design().rig.instances.length === 5)
+      await betaAndRefusal(page)
+      const signal = page.getByTestId('signal-status')
+      await expect(signal).toContainText('appareil non vérifié') // the state the test is about is there
+      await expect(signal).toContainText('connexion refusée')
+      const s = await box(signal)
+      const bar = await box(page.getByTestId('status-bar'))
+      expect(s.x, 'Signal left edge').toBeGreaterThanOrEqual(0)
+      expect(s.x + s.width, 'Signal right edge inside the window').toBeLessThanOrEqual(400)
+      expect(s.y + s.height).toBeLessThanOrEqual(bar.y + bar.height + 0.5)
+      expect(await page.getByTestId('signal-label').evaluate((e) => e.getBoundingClientRect().right), 'the label itself is whole').toBeLessThanOrEqual(400)
+      const title = (await signal.getAttribute('title'))!
+      expect(title.replace(/\s+/g, ' '), 'the clipped part is carried by the title').toContain('connexion refusée · 1 appareil non vérifié')
+      expect(title, 'and the title does not repeat the label the button already has (fix round N8)').not.toContain('Aucune erreur détectée')
+      expect(await page.getByTestId('signal-label').textContent()).toMatch(/Aucune erreur détectée/)
+      await signal.click()
+      await expect(page.getByTestId('error-list')).toBeVisible()
+    })
+
+    test('a long state message: its full text is its title, and on a touch screen it takes two lines inside the bar', async ({ page }) => {
+      await boot(page)
+      await startPose(page)
+      const msg = page.locator('.cr-status-msg')
+      const text = (await msg.textContent())!
+      expect(text.length, 'the pose hints are long (the test means something)').toBeGreaterThan(60)
+      expect(await msg.getAttribute('title'), 'the full text is the title').toBe(text)
+      const m = await box(msg)
+      const bar = await box(page.getByTestId('status-bar'))
+      expect(m.y).toBeGreaterThanOrEqual(bar.y)
+      expect(m.y + m.height, 'inside the bar').toBeLessThanOrEqual(bar.y + bar.height + 0.5)
+      if (touch) expect(m.height, 'two lines on a touch screen (48 px bar)').toBeGreaterThan(20)
+      const sg = await box(page.getByTestId('signal-status'))
+      expect(meets(m, sg), 'the message does not run under Signal').toBe(false)
+    })
+
+    test('the autosave warning line: its full text is its title, Signal is not pushed out', async ({ page }) => {
+      await page.addInitScript(() => {
+        if (sessionStorage.getItem('seeded')) return
+        sessionStorage.setItem('seeded', '1')
+        const items = [0, 1, 2, 3, 4].map((i) => ({ at: 't', key: 'audio-sim/creation.v1', reason: 'corrupt', raw: `old${i}` }))
+        localStorage.setItem('audio-sim/creation.v1.quarantine', JSON.stringify({ version: 1, items }))
+        localStorage.setItem('audio-sim/creation.v1', '{sixth')
+      })
+      await boot(page)
+      await page.getByTestId('note-kept-full').getByRole('button', { name: 'Fermer la note' }).click()
+      const line = page.getByTestId('status-autosave-paused')
+      await expect(line).toBeVisible()
+      const text = page.locator('.cr-status-pause-text')
+      const full = (await text.textContent())!
+      expect(await text.getAttribute('title')).toBe(full)
+      const s = await box(page.getByTestId('signal-status'))
+      expect(s.x + s.width).toBeLessThanOrEqual(400)
+      const a = await box(page.getByTestId('status-autosave-action'))
+      expect(a.x + a.width).toBeLessThanOrEqual(400)
+      expect(meets(a, s)).toBe(false)
+      await page.getByTestId('signal-status').click()
+      await expect(page.getByTestId('error-list')).toBeVisible()
+    })
+  })
+}
+
+// ── Night 2 wave 5, P2-3: « Retour au site Tekonest » was pushed off the screen by the phone menubar ───────────────────────────────────────────
+// Measured on bb4e026: touch at 400 px the link ran from x 377.7 to 421.7 and the menubar scrollWidth was 422 (the seven menu titles are 44 px targets: 350 px, then the 44 px
+// link); with a mouse at 360 and 375 px it ran to 389.8. Below 440 px the titles and the link are tighter (less padding, 12 px type; the link is the « ← » alone, its name unchanged).
+const menubarGeometry = (page: Page) =>
+  page.evaluate(() => {
+    const bar = document.querySelector<HTMLElement>('[data-testid="menubar"]')!
+    const link = document.querySelector<HTMLElement>('#site-link')!.getBoundingClientRect()
+    const tops = [...document.querySelectorAll<HTMLElement>('.cr-menu-top')].map((e) => e.getBoundingClientRect())
+    return {
+      scrollWidth: bar.scrollWidth,
+      clientWidth: bar.clientWidth,
+      docScroll: document.documentElement.scrollWidth,
+      link: { x: link.x, right: link.right, height: link.height },
+      tops: tops.map((t) => ({ x: t.x, right: t.right, width: t.width })),
+    }
+  })
+for (const touch of [false, true]) {
+  for (const width of [360, 375, 400, 430]) {
+    test.describe(`menubar at ${width} px, ${touch ? 'touch' : 'mouse'} (wave 5, P2-3)`, () => {
+      test.use({ viewport: { width, height: 800 }, hasTouch: touch })
+      test('the link and every menu title are fully inside the window, nothing scrolls, the link keeps its name', async ({ page }) => {
+        await boot(page, null)
+        const g = await menubarGeometry(page)
+        expect(g.scrollWidth, 'the menubar does not overflow itself').toBeLessThanOrEqual(g.clientWidth)
+        expect(g.docScroll, 'no horizontal scroll').toBeLessThanOrEqual(width)
+        expect(g.link.x, 'link left edge').toBeGreaterThanOrEqual(0)
+        expect(g.link.right, 'link right edge').toBeLessThanOrEqual(width + 0.01)
+        for (const [i, t] of g.tops.entries()) expect(t.right, `menu title ${i} right edge`).toBeLessThanOrEqual(g.link.x + 0.5)
+        expect(g.tops.length).toBe(7)
+        const link = page.getByRole('link', { name: 'Retour au site Tekonest' })
+        await expect(link).toBeVisible()
+        await expect(link).toHaveAccessibleName('Retour au site Tekonest')
+        // a press on it reaches it (nothing covers it)
+        expect(await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.closest('#site-link') !== null, { x: g.link.x + (g.link.right - g.link.x) / 2, y: g.link.height / 2 })).toBe(true)
+        if (touch) {
+          expect(g.link.right - g.link.x, 'a 44 px target').toBeGreaterThanOrEqual(43.5)
+          for (const [i, t] of g.tops.entries()) expect(t.width, `menu title ${i} is a 44 px target`).toBeGreaterThanOrEqual(43.5)
+        }
+      })
+    })
+  }
+}
+test.describe('menubar above 440 px: unchanged (wave 5, P2-3)', () => {
+  for (const [width, link, tops] of [
+    [1366, 170.2, '54.7,44.3,67.8,67,60.2,42.2,46.3'],
+    [761, 170.2, '54.7,44.3,67.8,67,60.2,42.2,46.3'],
+    [760, 35.4, '46.7,36.3,59.8,59,52.2,34.2,38.3'],
+    [441, 35.4, '46.7,36.3,59.8,59,52.2,34.2,38.3'],
+  ] as const) {
+    test(`the link and the titles keep their measured widths at ${width} px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 })
+      await boot(page, null)
+      const g = await menubarGeometry(page)
+      expect(Math.abs(g.link.right - g.link.x - link)).toBeLessThan(0.3)
+      const got = g.tops.map((t) => t.width)
+      const want = tops.split(',').map(Number)
+      for (const [i, w] of want.entries()) expect(Math.abs(got[i] - w), `title ${i}`).toBeLessThan(0.3)
+    })
+  }
+})
