@@ -347,40 +347,21 @@
     {
       "id": "yamaha-ql1",
       "optimized": true,
-      "tris": 132,
+      "tris": 224,
       "kind": "device",
       "ports": 7,
       "status": "ok",
-      "source": "modeled",
-      "sourceUrl": "",
-      "author": "TekPractice (procédural interne, Blender)",
-      "license": "internal (own work)",
-      "attributionText": "",
-      "trademark": "generic",
       "portEmpties": 7,
-      "riggedAt": "2026-07-19"
-    },
-    {
-      "id": "yamaha-rio3224-d2",
-      "optimized": true,
-      "tris": 3704,
-      "kind": "device",
-      "ports": 6,
-      "status": "ok",
-      "source": "modeled",
-      "sourceUrl": "",
-      "author": "TekPractice (procédural interne, Blender)",
-      "license": "internal (own work)",
-      "attributionText": "",
-      "trademark": "generic",
-      "portEmpties": 6,
       "riggedAt": "2026-07-19",
-      "tool": "scripted",
+      "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-04T07:10:22.001Z",
-      "specSource": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+      "date": "2026-11-06T18:44:36.620Z",
+      "specSource": "https://usa.yamaha.com/files/download/other_assets/1/798481/ql5_1_en_om_d1.pdf",
       "logosRemoved": true,
-      "photos": [],
+      "photos": [
+        "top_rot180.jpg",
+        "rear.jpg"
+      ],
       "taskId": null,
       "gates": [
         {
@@ -419,16 +400,80 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "yamaha-rio3224-d2",
+      "optimized": true,
+      "tris": 3704,
+      "kind": "device",
+      "ports": 6,
+      "status": "ok",
+      "portEmpties": 6,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-06T19:03:14.036Z",
+      "specSource": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+      "logosRemoved": true,
+      "photos": [
+        "front.jpg",
+        "rear.jpg"
+      ],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "shure-sm58",
       "optimized": true,
-      "tris": 744,
+      "tris": 1976,
       "kind": "device",
       "ports": 1,
       "status": "ok",
-      "note": "v2 MCP live: taper + collar + ball grille",
+      "note": "restored by the founder choice over the Meshy rebuild: richer detail (normal map: grille weave, rings, switch, screws); CC-BY attribution required; Shure logo present: legal review before publishing",
       "source": "download-ccby",
       "sourceUrl": "https://sketchfab.com/3d-models/shure-sm58-89d38b9c53f8496a922ce1199ca57afc",
       "author": "GRIP420",
@@ -436,56 +481,196 @@
       "attributionText": "« Shure SM58 » par GRIP420 (https://sketchfab.com/3d-models/shure-sm58-89d38b9c53f8496a922ce1199ca57afc) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
       "trademark": "branded-internal",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "legacyRestoredAt": "2026-11-06"
     },
     {
       "id": "shure-sm57",
       "optimized": true,
-      "tris": 400,
+      "tris": 10826,
       "kind": "device",
       "ports": 1,
       "status": "ok",
-      "note": "v2 MCP live: tapered handle + flat grille cap",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/sm57-68a4fa6898b14f07b3ee9f56b342f469",
-      "author": "AstorMilanese",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« SM57 » par AstorMilanese (https://sketchfab.com/3d-models/sm57-68a4fa6898b14f07b3ee9f56b342f469) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:05.526Z",
+      "specSource": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "front.png",
+        "three-quarter-base.png",
+        "three-quarter-head.png"
+      ],
+      "taskId": "01a1a766-79f8-732a-893a-e30d1b5ead35",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "ai-meshy",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "qsc-k12-2",
       "optimized": true,
-      "tris": 196,
+      "tris": 308,
       "kind": "device",
       "ports": 3,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/qsc-k122-42ddb9057e8647dd831e065106630d28",
-      "author": "dantheman001robux",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« QSC K12.2 » par dantheman001robux (https://sketchfab.com/3d-models/qsc-k122-42ddb9057e8647dd831e065106630d28) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 3,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1+meshy-7.1",
+      "date": "2026-11-05T03:47:51.241Z",
+      "specSource": "https://www.qsc.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "closeup-rear-panel.png",
+        "front.png",
+        "rear.png",
+        "side-right.png"
+      ],
+      "taskId": "01a1a76c-3a26-76f4-86c7-723b02c93744",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "yamaha-dbr12",
       "optimized": true,
-      "tris": 196,
+      "tris": 332,
       "kind": "device",
       "ports": 3,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/stage-monitor-speaker-be94233262e24cbfa3723b607567afac",
-      "author": "Sousinho",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Stage Monitor Speaker » par Sousinho (https://sketchfab.com/3d-models/stage-monitor-speaker-be94233262e24cbfa3723b607567afac) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 3,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1+meshy-7.1",
+      "date": "2026-11-05T03:48:17.625Z",
+      "specSource": "https://usa.yamaha.com/files/download/other_assets/4/332514/VHN5580_DBR15_TS_En_B0_views.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "front.jpg",
+        "rear.jpg",
+        "side.jpg",
+        "three-quarter-left.jpg"
+      ],
+      "taskId": "01a1a76c-3baf-7308-93ae-32b8b6986962",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "km-210-9",
@@ -522,19 +707,63 @@
     {
       "id": "ev-re20",
       "optimized": true,
-      "tris": 868,
+      "tris": 9566,
       "kind": "device",
       "ports": 1,
       "status": "ok",
-      "note": "v2 MCP live: fat tan body, vent rings, domed end",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/shure-sm7b-microphone-blender-932fa222f4b14538828cac6da5747eec",
-      "author": "Marshal",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Shure SM7B Microphone | Blender » par Marshal (https://sketchfab.com/3d-models/shure-sm7b-microphone-blender-932fa222f4b14538828cac6da5747eec) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:14.055Z",
+      "specSource": "https://products.electrovoice.com/download/970110",
+      "logosRemoved": true,
+      "photos": [
+        "front-black-variant.png",
+        "front.png"
+      ],
+      "taskId": "01a1a766-7cf1-7757-980b-5488bbb55e10",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "ai-meshy",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "yellowtec-mika",
@@ -563,18 +792,65 @@
     {
       "id": "genelec-8030c",
       "optimized": true,
-      "tris": 196,
+      "tris": 220,
       "kind": "device",
       "ports": 2,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/genelec-8340a-raw-ce1bff22430e45bf8e3cc2e4f353f4d9",
-      "author": "holofichesystems",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Genelec 8340A RAW » par holofichesystems (https://sketchfab.com/3d-models/genelec-8340a-raw-ce1bff22430e45bf8e3cc2e4f353f4d9) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 2,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1+meshy-7.1",
+      "date": "2026-11-05T03:48:35.379Z",
+      "specSource": "https://assets.ctfassets.net/4zjnzn055a4v/1qUiHwGHNmumKgYugG6wws/837b26c2261771b9d58a94c44bb1cdc4/8030c_views.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "front.jpg",
+        "rear-three-quarter.jpg",
+        "rear.jpg",
+        "three-quarter-left.jpg"
+      ],
+      "taskId": "01a1a76c-3cde-7762-bedc-4bc3bd914ce9",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "playout-pc",
@@ -627,19 +903,62 @@
     {
       "id": "ev-re50",
       "optimized": true,
-      "tris": 468,
+      "tris": 9839,
       "kind": "device",
       "ports": 1,
       "status": "ok",
-      "note": "v2 MCP live: ENG handle + foam windscreen ball",
-      "source": "modeled",
-      "sourceUrl": "",
-      "author": "TekPractice (procédural interne, Blender)",
-      "license": "internal (own work)",
-      "attributionText": "",
-      "trademark": "generic",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:22.287Z",
+      "specSource": "https://products.electrovoice.com/download/970113",
+      "logosRemoved": true,
+      "photos": [
+        "front.png"
+      ],
+      "taskId": "01a1a766-804c-74a8-a230-3ac62bb220d9",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "ai-meshy",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "avid-protools-hdx",
@@ -660,34 +979,124 @@
     {
       "id": "avid-hd-io",
       "optimized": true,
-      "tris": 12,
+      "tris": 44,
       "kind": "device",
       "ports": 7,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/alesis-midiverb-iii-8e96f1582bfa476fb87655d91e66a25c",
-      "author": "Dave.Maak",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Alesis Midiverb III » par Dave.Maak (https://sketchfab.com/3d-models/alesis-midiverb-iii-8e96f1582bfa476fb87655d91e66a25c) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 7,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-06T19:05:18.648Z",
+      "specSource": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "rear.jpg",
+        "front.jpg"
+      ],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "focusrite-isa-one",
       "optimized": true,
-      "tris": 144,
+      "tris": 44,
       "kind": "device",
       "ports": 3,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/tl-audio-fat-2-valve-preamp-compressor-a6b5c0e1bb9a4a3eba04bbaa66a2f3cb",
-      "author": "Lassi Kaukonen",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« TL Audio / Fat 2 valve preamp compressor » par Lassi Kaukonen (https://sketchfab.com/3d-models/tl-audio-fat-2-valve-preamp-compressor-a6b5c0e1bb9a4a3eba04bbaa66a2f3cb) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 3,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "front.jpg",
+        "rear.jpg"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal",
+      "date": "2026-11-06T19:10:10.359Z",
+      "specSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/ISA%20One%20User%20Guide%201.1%20-%20FR.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "grace-m905",
@@ -708,19 +1117,65 @@
     {
       "id": "neumann-u87-ai",
       "optimized": true,
-      "tris": 636,
+      "tris": 10415,
       "kind": "device",
       "ports": 1,
       "status": "ok",
-      "note": "v2 MCP live: nickel body + large basket capsule",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/u87-0f0e14eee8fb4f56a9826bae9b061c55",
-      "author": "schwabbl1",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« U87 » par schwabbl1 (https://sketchfab.com/3d-models/u87-0f0e14eee8fb4f56a9826bae9b061c55) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "date": "2026-11-04T17:23:31.556Z",
+      "specSource": "https://www.neumann.com/en-en/products/microphones/u-87-ai/",
+      "logosRemoved": true,
+      "photos": [
+        "closeup-grille.jpg",
+        "closeup-pattern-switch.jpg",
+        "front.jpg",
+        "three-quarter.png"
+      ],
+      "taskId": "01a1a766-7b4b-7606-acee-84ef9a33786e",
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "ai-meshy",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "switchcraft-studiopatch-9625",
@@ -741,18 +1196,63 @@
     {
       "id": "antelope-ocx-hd",
       "optimized": true,
-      "tris": 144,
+      "tris": 44,
       "kind": "device",
       "ports": 3,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/alesis-midiverb-iii-8e96f1582bfa476fb87655d91e66a25c",
-      "author": "Dave.Maak",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Alesis Midiverb III » par Dave.Maak (https://sketchfab.com/3d-models/alesis-midiverb-iii-8e96f1582bfa476fb87655d91e66a25c) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 3,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-06T19:06:45.951Z",
+      "specSource": "https://images.equipboard.com/uploads/item/manual/73416/antelope-audio-ocx-hd-manual.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "front.jpg",
+        "rear.jpg"
+      ],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "mogami-gold-db25-xlrm",
