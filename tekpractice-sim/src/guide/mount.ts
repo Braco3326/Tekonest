@@ -12,6 +12,7 @@ import type { Registry } from '../engine/CatalogLoader'
 import { FEATURES, type Features } from '../features'
 import type { RuleRow } from '../creation/shell/statusModel'
 import { createTekPracticeBrain } from './brain'
+import { tpString } from './strings'
 import type { TpBridge, TpState } from './bridge/types'
 import { NAV_SELECTORS } from './bridge/creationBridge'
 import { isAnchor } from './anchors'
@@ -36,6 +37,30 @@ import { mountGuide } from './vendor/ui/widget'
 
 /** How long a resolved rect (or "not on screen") is reused. */
 export const RECT_CACHE_MS = 250
+/** The page's own bars: the menu bar across the top, the status bar across the bottom. The guide's icon and bubble rest clear of them. */
+const MENU_BAR = '[data-testid="menubar"]'
+const STATUS_BAR = '[data-testid="status-bar"]'
+export interface HostInsets {
+  top: number
+  right: number
+  bottom: number
+  left: number
+}
+/** Where the bars are now, from the DOM (read at each placement, so a bar that changes height is followed). Any failure, or a bar that is not on screen, is no bar. */
+export function hostInsets(doc: Document): HostInsets {
+  const none: HostInsets = { top: 0, right: 0, bottom: 0, left: 0 }
+  try {
+    const height = doc.documentElement.clientHeight
+    const menu = doc.querySelector(MENU_BAR)?.getBoundingClientRect()
+    const status = doc.querySelector(STATUS_BAR)?.getBoundingClientRect()
+    const top = menu !== undefined && menu.height > 0 && Number.isFinite(menu.bottom) ? Math.max(0, menu.bottom) : 0
+    const bottom = status !== undefined && status.height > 0 && Number.isFinite(status.top) && height > 0 ? Math.max(0, height - status.top) : 0
+    return { ...none, top, bottom }
+  } catch {
+    return none
+  }
+}
+
 /** More `deviceAdded` than this in one poll is a project being restored, not a learner adding devices. */
 export const RESTORE_BURST = 3
 /** The widget's layer: above the shell, below its dialogs. */
@@ -220,9 +245,17 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     })
     const rects = createRectResolver({ bridge, registry, now })
     cleanups.push(() => rects.clear())
+    // The widget holds text (the keyboard hint, the bubble) that must sit inside a landmark; it gets one of its own, a child of <body> so that a modal's
+    // `inert` on the body's other children still covers it. The landmark has no box of its own (the widget is fixed-positioned).
+    const landmark = doc.createElement('aside')
+    landmark.setAttribute('aria-label', tpString('landmark'))
+    doc.body.appendChild(landmark)
+    cleanups.push(() => landmark.remove())
     const handle = impl.mountGuide({
       controller,
       getRect: rects.getRect,
+      root: landmark,
+      insets: () => hostInsets(doc),
       zIndex: GUIDE_Z_INDEX,
       context: { page: 'workbench', mode: 'practice' },
       storage: deps.storage,

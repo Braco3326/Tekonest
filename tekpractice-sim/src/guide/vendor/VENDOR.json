@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "b53aeb5325a147f0ad52a40fd77ac43e197b5754",
+  "sourceCommit": "3c8c3d93e6321d5ec77cdf6e43a298637d2f5754",
   "tool": 1,
   "typescript": "5.9.3",
   "files": [
@@ -81,7 +81,7 @@
     },
     {
       "path": "ui/layout.ts",
-      "sha256": "65c8a24088f1b4e234fba94f9517c653c37fb08b6fb6aef1b1e3e90d09149649"
+      "sha256": "2a20ba8d6a9b5c7c0b782d3e2dbd255baa55d55cdcd3e355fc83638bc77e09af"
     },
     {
       "path": "ui/mascot.ts",
@@ -97,7 +97,7 @@
     },
     {
       "path": "ui/widget.ts",
-      "sha256": "9e54737cdf8150aa53d8108b6df9e60f0c0335eb04a1d69810e4887678652b27"
+      "sha256": "8fa0fdefba2a2fbb116df8431f1d4cdabbb632c2ecf6bf32ce4ad01c67c7ff57"
     }
   ]
 }

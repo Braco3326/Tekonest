@@ -18,12 +18,29 @@ export interface Viewport {
 export function isCorner(v: unknown): v is Corner {
     return typeof v === "string" && (CORNERS as readonly string[]).includes(v);
 }
-export function homePosition(corner: Corner, vp: Viewport): Point {
+export interface Insets {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+}
+export const NO_INSETS: Insets = Object.freeze({ top: 0, right: 0, bottom: 0, left: 0 });
+export function cleanInsets(raw: unknown, vp: Viewport): Insets {
+    if (raw === null || typeof raw !== "object")
+        return NO_INSETS;
+    const side = (key: string, span: number): number => {
+        const d = Object.getOwnPropertyDescriptor(raw, key);
+        const v = d !== undefined && "value" in d ? d.value : undefined;
+        return typeof v === "number" && Number.isFinite(v) && v > 0 ? Math.min(v, Math.max(0, span) / 4) : 0;
+    };
+    return { top: side("top", vp.h), right: side("right", vp.w), bottom: side("bottom", vp.h), left: side("left", vp.w) };
+}
+export function homePosition(corner: Corner, vp: Viewport, inset: Insets = NO_INSETS): Point {
     const maxX = Math.max(0, vp.w - ICON_SIZE);
     const maxY = Math.max(0, vp.h - ICON_SIZE);
     return {
-        x: clamp(corner[1] === "l" ? MARGIN : vp.w - ICON_SIZE - MARGIN, 0, maxX),
-        y: clamp(corner[0] === "t" ? MARGIN : vp.h - ICON_SIZE - MARGIN, 0, maxY),
+        x: clamp(corner[1] === "l" ? inset.left + MARGIN : vp.w - ICON_SIZE - MARGIN - inset.right, 0, maxX),
+        y: clamp(corner[0] === "t" ? inset.top + MARGIN : vp.h - ICON_SIZE - MARGIN - inset.bottom, 0, maxY),
     };
 }
 export function nearestCorner(p: Point, vp: Viewport): Corner {
@@ -50,14 +67,14 @@ export function cornerAfterKey(corner: Corner, key: string): Corner {
 export function placeBubble(corner: Corner, size: {
     w: number;
     h: number;
-}, vp: Viewport, avoid: readonly Rect[]): Point {
+}, vp: Viewport, avoid: readonly Rect[], inset: Insets = NO_INSETS): Point {
     const bottom = corner[0] === "b";
     const right = corner[1] === "r";
     const maxX = Math.max(0, vp.w - size.w);
     const maxY = Math.max(0, vp.h - size.h);
     const dock = (b: boolean, r: boolean): Point => ({
-        x: clamp(r ? vp.w - MARGIN - size.w : MARGIN, 0, maxX),
-        y: clamp(b ? vp.h - MARGIN - ICON_SIZE - BUBBLE_GAP - size.h : MARGIN + ICON_SIZE + BUBBLE_GAP, 0, maxY),
+        x: clamp(r ? vp.w - inset.right - MARGIN - size.w : inset.left + MARGIN, 0, maxX),
+        y: clamp(b ? vp.h - inset.bottom - MARGIN - ICON_SIZE - BUBBLE_GAP - size.h : inset.top + MARGIN + ICON_SIZE + BUBBLE_GAP, 0, maxY),
     });
     const options: Point[] = [dock(bottom, right), dock(!bottom, right), dock(bottom, !right), dock(!bottom, !right)];
     let best = options[0];

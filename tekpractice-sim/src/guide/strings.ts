@@ -28,6 +28,8 @@ export const TP_STRINGS = deepFreeze({
     noInformation: "Je n'ai pas encore d'information sur ce point.",
     examQuiet: 'Cette aide n’est pas disponible pendant un examen.',
   },
+  /** The name of the landmark that holds the guide, so none of its text sits outside a landmark of the page. */
+  landmark: 'Assistant',
   error: {
     calm: 'La réponse n’a pas pu être affichée. Réessayer dans un instant.',
   },

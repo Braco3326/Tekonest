@@ -4,8 +4,8 @@ import { makeRegistry } from '../helpers'
 import type { RuleRow } from '../../src/creation/shell/statusModel'
 import type { TpBridge, TpPortRef, TpState } from '../../src/guide/bridge/types'
 import { ACKNOWLEDGE, SUGGEST_FROM, SUGGEST_PHANTOM, SUGGEST_TO } from '../../src/guide/flows.creation'
-import { RECT_CACHE_MS, annotateToggle, collapseRestore, createRectResolver, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
-import { TP_STRINGS } from '../../src/guide/strings'
+import { RECT_CACHE_MS, annotateToggle, collapseRestore, createRectResolver, hostInsets, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
+import { TP_STRINGS, tpString } from '../../src/guide/strings'
 import { createController } from '../../src/guide/vendor/core/controller'
 import type { ControllerInput, GuideView, HostEvent, Rect } from '../../src/guide/vendor/core/types'
 
@@ -73,6 +73,7 @@ function fakeBridge(initial: TpState | null = EMPTY) {
 function fakeDoc() {
   const listeners = new Map<string, Set<EventListenerOrEventListenerObject>>()
   let appended = 0
+  const removed: unknown[] = []
   const doc = {
     addEventListener: vi.fn((t: string, fn: EventListenerOrEventListenerObject, _capture?: boolean) => {
       if (!listeners.has(t)) listeners.set(t, new Set())
@@ -81,17 +82,25 @@ function fakeDoc() {
     removeEventListener: vi.fn((t: string, fn: EventListenerOrEventListenerObject, _capture?: boolean) => {
       listeners.get(t)?.delete(fn)
     }),
-    createElement: vi.fn(() => {
+    createElement: vi.fn((tag: string) => {
       appended++
-      return {}
+      const attrs: Record<string, string> = {}
+      const el = {
+        tag,
+        attrs,
+        setAttribute: vi.fn((k: string, v: string) => void (attrs[k] = v)),
+        remove: vi.fn(() => void removed.push(el)),
+      }
+      return el
     }),
-    body: { appendChild: vi.fn(() => void appended++) },
+    body: { appendChild: vi.fn() },
   }
   return {
     doc: doc as unknown as Document,
     spies: doc,
     count: (): number => [...listeners.values()].reduce((n, s) => n + s.size, 0),
-    nodes: (): number => appended,
+    nodes: (): number => appended - removed.length,
+    removed: (): unknown[] => removed,
     click: (target: unknown): void => {
       for (const fn of [...(listeners.get('click') ?? [])]) (fn as (e: unknown) => void)({ target })
     },
@@ -212,6 +221,37 @@ describe('mountOscar gates', () => {
     expect(c.strings).toBeDefined()
   })
 
+  it('the widget lives inside a landmark of its own (an aside with a name), so no text of the guide sits outside a landmark; destroy removes it', () => {
+    const r = make()
+    const h = mountOscar(r.deps, r.f.impl)
+    const opts = r.f.impl.mountGuide.mock.calls[0][0] as { root?: { tag: string; attrs: Record<string, string> } }
+    expect(opts.root).toBeDefined()
+    expect(opts.root!.tag).toBe('aside')
+    expect(opts.root!.attrs['aria-label']).toBe(tpString('landmark'))
+    expect(opts.root!.attrs['aria-label']).not.toBe('')
+    expect(r.d.spies.body.appendChild).toHaveBeenCalledWith(opts.root)
+    expect(r.d.removed()).toHaveLength(0)
+    h!.destroy()
+    expect(r.d.removed()).toEqual([opts.root])
+  })
+
+  it('the widget is told where the page keeps its bars (menu bar on top, status bar at the bottom) through a getter, so the icon rests clear of them', () => {
+    const r = make()
+    mountOscar(r.deps, r.f.impl)
+    const opts = r.f.impl.mountGuide.mock.calls[0][0] as { insets?: () => unknown }
+    expect(typeof opts.insets).toBe('function')
+  })
+
+  it('a mount that fails after the landmark was made removes the landmark', () => {
+    const r = make()
+    r.f.impl.mountGuide.mockImplementation(() => {
+      throw new Error('boom')
+    })
+    vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+    expect(mountOscar(r.deps, r.f.impl)).toBeNull()
+    expect(r.d.removed()).toHaveLength(1)
+  })
+
   it('the storage goes to the controller and the widget when there is one, and neither gets a storage key otherwise', () => {
     const storage = { getItem: vi.fn(), setItem: vi.fn() } as unknown as Storage
     const withS = make({ storage })
@@ -302,6 +342,37 @@ describe('mountOscar failures', () => {
     })
     expect(() => h.destroy()).not.toThrow()
     expect(r.f.handle.destroy).toHaveBeenCalledTimes(1)
+  })
+})
+
+// ── the page's bars ────────────────────────────────────────────────────────────────────────────────────────────────
+
+describe('hostInsets', () => {
+  const rect = (y: number, h: number) => ({ top: y, bottom: y + h, height: h, width: 1280, left: 0, right: 1280, x: 0, y })
+  const docWith = (bars: Record<string, ReturnType<typeof rect> | null | 'throw'>, height = 800) =>
+    ({
+      documentElement: { clientHeight: height },
+      querySelector: (sel: string) => {
+        const b = bars[sel]
+        if (b === 'throw') throw new Error('bad selector')
+        return b ? { getBoundingClientRect: () => b } : null
+      },
+    }) as unknown as Document
+  const MENU = '[data-testid="menubar"]'
+  const STATUS = '[data-testid="status-bar"]'
+
+  it('top = the bottom edge of the menu bar, bottom = the viewport minus the top edge of the status bar', () => {
+    expect(hostInsets(docWith({ [MENU]: rect(0, 32), [STATUS]: rect(772, 28) }))).toEqual({ top: 32, bottom: 28, left: 0, right: 0 })
+    expect(hostInsets(docWith({ [MENU]: rect(0, 32), [STATUS]: rect(784, 28) }, 812))).toEqual({ top: 32, bottom: 28, left: 0, right: 0 })
+  })
+
+  it('a bar that is missing, empty, off screen or an answer that throws counts as no bar; never negative, never NaN', () => {
+    expect(hostInsets(docWith({}))).toEqual({ top: 0, bottom: 0, left: 0, right: 0 })
+    expect(hostInsets(docWith({ [MENU]: rect(0, 0), [STATUS]: rect(800, 0) }))).toEqual({ top: 0, bottom: 0, left: 0, right: 0 })
+    expect(hostInsets(docWith({ [MENU]: rect(-100, 32), [STATUS]: rect(900, 28) }))).toEqual({ top: 0, bottom: 0, left: 0, right: 0 })
+    expect(hostInsets(docWith({ [MENU]: 'throw', [STATUS]: 'throw' }))).toEqual({ top: 0, bottom: 0, left: 0, right: 0 })
+    expect(hostInsets({} as unknown as Document)).toEqual({ top: 0, bottom: 0, left: 0, right: 0 })
+    expect(hostInsets(docWith({ [STATUS]: { ...rect(772, 28), top: Number.NaN } }))).toEqual({ top: 0, bottom: 0, left: 0, right: 0 })
   })
 })
 

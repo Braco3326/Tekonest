@@ -5,8 +5,8 @@ import { glide } from "./anim.ts";
 import type { Running } from "./anim.ts";
 import { createBubble, fillChips, fillLive } from "./bubble.ts";
 import { afterFrame, clamp, clipState, elementRect, h, isAnchorId, queryAnchor, sameRect, setText, toRect, translate } from "./dom.ts";
-import { cornerAfterKey, homePosition, ICON_SIZE, loadCorner, nearestCorner, placeBubble, placeBubbleNear, saveCorner } from "./layout.ts";
-import type { Corner, UiStorage } from "./layout.ts";
+import { cleanInsets, cornerAfterKey, homePosition, ICON_SIZE, loadCorner, nearestCorner, NO_INSETS, placeBubble, placeBubbleNear, saveCorner } from "./layout.ts";
+import type { Corner, Insets, UiStorage } from "./layout.ts";
 import { labels as defaultLabels } from "./labels.ts";
 import type { Labels } from "./labels.ts";
 import { createMascot } from "./mascot.ts";
@@ -22,6 +22,7 @@ export interface MountOptions {
     document?: Document;
     reducedMotion?: boolean;
     zIndex?: number;
+    insets?: () => Partial<Insets> | null;
     context?: {
         page?: unknown;
         mode?: unknown;
@@ -112,6 +113,16 @@ export function mountGuide(options: MountOptions): GuideHandle {
         const de = doc.documentElement;
         return { w: de.clientWidth > 0 ? de.clientWidth : win.innerWidth, h: de.clientHeight > 0 ? de.clientHeight : win.innerHeight };
     };
+    const ins = (): Insets => {
+        if (options.insets === undefined)
+            return NO_INSETS;
+        try {
+            return cleanInsets(options.insets(), vp());
+        }
+        catch {
+            return NO_INSETS;
+        }
+    };
     const root = h(doc, "div", "oscar-guide", undefined, { "data-oscar-root": "", lang: "fr", dir: "ltr" });
     root.hidden = true;
     if (typeof options.zIndex === "number" && Number.isInteger(options.zIndex) && options.zIndex >= 0 && options.zIndex <= 2147483647) {
@@ -141,7 +152,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
     (options.root ?? doc.body ?? doc.documentElement).appendChild(root);
     let view: GuideView = controller.getView();
     let home: Corner = loadCorner(storage, storageKey);
-    let iconPos: Point = homePosition(home, vp());
+    let iconPos: Point = homePosition(home, vp(), ins());
     let running: Running | null = null;
     let current: Current | null = null;
     let replay = false;
@@ -204,13 +215,13 @@ export function mountGuide(options: MountOptions): GuideHandle {
         setIconPos(p);
     }
     function atHome(): boolean {
-        const hp = homePosition(home, vp());
+        const hp = homePosition(home, vp(), ins());
         const p = currentIconPos();
         return Math.abs(hp.x - p.x) < 1 && Math.abs(hp.y - p.y) < 1;
     }
     function goHome(instant: boolean): void {
         stopMotion();
-        const hp = homePosition(home, vp());
+        const hp = homePosition(home, vp(), ins());
         if (instant || isReduced() || root.hidden) {
             setIconPos(hp);
             refreshMascot();
@@ -385,7 +396,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
             return;
         if (!fresh && learnerMoved) {
             if (running === null)
-                setIconPos(homePosition(home, size));
+                setIconPos(homePosition(home, size, ins()));
             return;
         }
         const reduced = isReduced();
@@ -480,7 +491,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
             }
             avoid.push(...targets, iconRect);
         }
-        bubble.el.style.transform = translate(placeBubble(home, size, vp(), avoid));
+        bubble.el.style.transform = translate(placeBubble(home, size, vp(), avoid, ins()));
     }
     function renderBubble(v: GuideView): void {
         const b = v.bubble;
@@ -566,7 +577,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
         if (!wasVisible) {
             wasVisible = true;
             stopMotion();
-            setIconPos(homePosition(home, vp()));
+            setIconPos(homePosition(home, vp(), ins()));
         }
         renderBubble(v);
         refreshMascot();
@@ -636,7 +647,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
         },
         cancel() {
             dragging = false;
-            setIconPos(homePosition(home, vp()));
+            setIconPos(homePosition(home, vp(), ins()));
             scheduleResync();
         },
         move: setIconPos,
@@ -664,7 +675,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
     const stopObserver = watchPage(win, doc, root, {
         resize() {
             if (!dragging && running === null && (current === null || learnerMoved))
-                setIconPos(homePosition(home, vp()));
+                setIconPos(homePosition(home, vp(), ins()));
             scheduleResync();
         },
         scroll(source) {
