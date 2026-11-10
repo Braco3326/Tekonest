@@ -1,5 +1,6 @@
 /**
- * DeviceSpawner.tryLoadModel: a device with no shipped glb (multiprise-secteur) never asks for a file (a 404 on the deployed site),
+ * DeviceSpawner.tryLoadModel: a device with no shipped glb (a catalog-shaped clone whose id is not in the manifest; the multiprise ships a
+ * model since Wave 4b) never asks for a file (a 404 on the deployed site),
  * keeps its placeholder box, and modelReady / pendingModels behave as for any failed load. A device with a model still loads.
  */
 import { readFileSync } from 'node:fs'
@@ -35,16 +36,31 @@ afterEach(() => {
 const makeSpawner = () => new DeviceSpawner(new Scene(new NullEngine()), registry)
 
 describe('DeviceSpawner: no request for a model that does not ship', () => {
-  it('multiprise-secteur: ImportMeshAsync is never called, modelReady resolves false, the placeholder stays, pendingModels goes 1 -> 0', async () => {
+  it('a catalog device whose id is not in the manifest: ImportMeshAsync is never called, modelReady resolves false, the placeholder stays, pendingModels goes 1 -> 0', async () => {
     const spy = vi.spyOn(SceneLoader, 'ImportMeshAsync')
-    const spawner = makeSpawner()
-    const inst = spawner.spawn('multiprise-secteur', new Vector3(0, 0, 0), 'mp')
+    const reg = loadCatalog(catalogJson)
+    registerProposals(reg, [{ ...reg.deviceById.get('multiprise-secteur')!, id: 'no-glb-clone', label: 'Sans modèle' }])
+    const spawner = new DeviceSpawner(new Scene(new NullEngine()), reg)
+    const inst = spawner.spawn('no-glb-clone', new Vector3(0, 0, 0), 'mp')
     expect(spawner.pendingModels).toBe(1)
     await expect(inst.modelReady).resolves.toBe(false)
     expect(spawner.pendingModels).toBe(0)
     expect(spy).not.toHaveBeenCalled()
     expect(inst.assetStatus).toBe('placeholder')
     expect(inst.root.getChildMeshes(true).some((m) => m.name.startsWith('glb:'))).toBe(false)
+  })
+
+  it('multiprise-secteur ships a model since Wave 4b: it goes through the loader with its own file name and leaves the placeholder', async () => {
+    const glb = await makeBoxGlb({ sizeM: { w: 0.236, h: 0.044, d: 0.05 } })
+    const spy = vi.spyOn(SceneLoader, 'ImportMeshAsync').mockImplementation(((...args: unknown[]) =>
+      realImport(null, '', glb, args[3] as Scene, undefined, '.glb')) as unknown as typeof SceneLoader.ImportMeshAsync)
+    const spawner = makeSpawner()
+    const inst = spawner.spawn('multiprise-secteur', new Vector3(0, 0, 0), 'mp')
+    await expect(inst.modelReady).resolves.toBe(true)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy.mock.calls[0]![2]).toBe('multiprise-secteur.glb')
+    expect(spawner.pendingModels).toBe(0)
+    expect(inst.assetStatus).toBe('glb')
   })
 
   it('a device with a shipped model still goes through the loader, with its own file name', async () => {

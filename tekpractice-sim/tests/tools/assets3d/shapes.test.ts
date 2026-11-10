@@ -4,6 +4,8 @@
  */
 import { describe, expect, it } from 'vitest'
 import { BUILD_SHAPES, SHAPE_SPECS, validateBuild } from '../../../tools/assets3d/shapes'
+import { loadSpecs } from '../../../tools/assets3d/loadSpecs'
+import { AssetSpec } from '../../../tools/assets3d/specSchema'
 import type { AssetSpecT } from '../../../tools/assets3d/specSchema'
 
 /** A valid connector spec (XLR3-F like) with `build` and any overrides. */
@@ -370,5 +372,57 @@ describe('curved-cabinet midWidthMm (a cabinet that tapers from the front)', () 
   it('accepts a mid width narrower than the baffle, and refuses it together with sideBulgeMm', () => {
     expect(validateBuild(cabinet({ planFrontMm: 356, midWidthMm: 346, midDepthMm: 230, rearWidthMm: 168, frontRadiusMm: 30, backRadiusMm: 36, edgeRadiusMm: 18 }))).toEqual([])
     expect(validateBuild(cabinet({ planFrontMm: 356, midWidthMm: 346, sideBulgeMm: 4 }))[0]).toMatch(/midWidthMm and sideBulgeMm/)
+  })
+})
+
+describe('power-strip (multiprise-secteur)', () => {
+  const socket = (portId: string, xMm: number, over: Record<string, unknown> = {}): AssetSpecT['ports'][number] =>
+    ({ portId, face: 'io', xMm, yMm: 27, confidence: 'guess', openingMm: 25.4, insetMm: 9, ...over }) as AssetSpecT['ports'][number]
+  const device: Partial<AssetSpecT> = { kind: 'device', tier: 'standard', mating: undefined, realSizeMm: { w: 236, h: 52, d: 50 }, ports: [socket('out-1', 62), socket('out-2', 102)] }
+  const strip = (params: Record<string, number> = { sockets: 2 }, over: Partial<AssetSpecT> = {}): AssetSpecT => specWith({ shape: 'power-strip', params }, { ...device, ...over })
+
+  it('is registered as a device shape that uses the ports, with the documented params (the Python registry parity is in builder.test.ts)', () => {
+    expect(BUILD_SHAPES).toContain('power-strip')
+    expect(SHAPE_SPECS['power-strip']).toMatchObject({ kind: 'device', needsMatingOuter: false, usesPorts: true })
+    for (const name of ['sockets', 'socketDepthMm', 'switchMm', 'switchXMm', 'feetMm', 'filletMm', 'endTaperMm', 'cableDiaMm', 'lenMm']) {
+      expect(SHAPE_SPECS['power-strip'].params).toContain(name)
+    }
+  })
+
+  it('accepts the strip params and a bare shape (all defaults), and a spec with a triangle budget parses', () => {
+    expect(validateBuild(strip())).toEqual([])
+    expect(validateBuild(strip({}))).toEqual([])
+    expect(AssetSpec.safeParse(strip({}, { build: { shape: 'power-strip', budget: { min: 500, max: 2000 }, minFilletMm: 4.5 } })).success).toBe(true)
+  })
+
+  it('refuses a connector, an unknown param, a non-positive param and a stub as long as half the strip', () => {
+    expect(validateBuild(strip({}, { kind: 'connector', tier: 'connector' }))[0]).toMatch(/builds a device, but this asset is a connector/)
+    expect(validateBuild(strip({ pitchMm: 40 }))[0]).toMatch(/no param 'pitchMm'/)
+    expect(validateBuild(strip({ lenMm: 0 }))[0]).toMatch(/lenMm.*positive/)
+    expect(validateBuild(strip({ lenMm: 120 }))[0]).toMatch(/lenMm.*half the width/)
+  })
+
+  it('wants its sockets as io ports whose inset is the socket depth, and the socket count to match', () => {
+    expect(validateBuild(strip({}, { ports: [] }))[0]).toMatch(/needs its sockets as ports on the io face/)
+    expect(validateBuild(strip({}, { ports: [socket('out-1', 62, { face: 'top' })] })).join('\n')).toMatch(/io face only/)
+    expect(validateBuild(strip({}, { ports: [socket('out-1', 62, { insetMm: 3 })] }))[0]).toMatch(/needs insetMm 9/)
+    expect(validateBuild(strip({}, { ports: [socket('out-1', 62, { insetMm: undefined })] }))[0]).toMatch(/needs insetMm 9/)
+    expect(validateBuild(strip({ socketDepthMm: 6 }, { ports: [socket('out-1', 62, { insetMm: 6 })] }))).toEqual([])
+    expect(validateBuild(strip({ sockets: 3 }))[0]).toMatch(/'sockets' \(3\).*number of io ports \(2\)/)
+  })
+
+  it('checks that the section, the cord and the switch fit the size', () => {
+    expect(validateBuild(strip({ filletMm: 25 }))[0]).toMatch(/filletMm.*half the bar's section/)
+    expect(validateBuild(strip({ cableDiaMm: 24 }))[0]).toMatch(/cableDiaMm.*too thick/)
+    expect(validateBuild(strip({ switchMm: 40 }))[0]).toMatch(/switchMm.*flat front/)
+    expect(validateBuild(strip({ endTaperMm: 13 }))[0]).toMatch(/endTaperMm/)
+  })
+
+  it('the shipped multiprise spec validates, has four C13 sockets matching the catalog ports, and declares its budget and fillet', async () => {
+    const spec = loadSpecs().find((s) => s.id === 'multiprise-secteur')!
+    expect(validateBuild(spec)).toEqual([])
+    expect(spec.ports.map((p) => p.portId)).toEqual(['out-1', 'out-2', 'out-3', 'out-4'])
+    expect(spec.build).toMatchObject({ shape: 'power-strip', budget: { min: 500, max: 2000 }, minFilletMm: 4.5 })
+    expect(spec.sources.some((s) => /ESTIMATE/.test(s.note))).toBe(true)
   })
 })

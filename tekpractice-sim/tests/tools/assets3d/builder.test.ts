@@ -17,7 +17,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { buildAsset } from '../../../tools/assets3d/build-asset'
 import { findBlender } from '../../../tools/assets3d/env'
 import type { GateResult } from '../../../tools/assets3d/gates'
-import { runGates } from '../../../tools/assets3d/gates'
+import { checkDetail, checkFillet, runGates } from '../../../tools/assets3d/gates'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
 import type { GlbReport } from '../../../tools/assets3d/inspect'
 import { loadSpecs } from '../../../tools/assets3d/loadSpecs'
@@ -738,4 +738,95 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
       expect(x.equals(y), `${id}: the two raw GLBs differ (${x.length} vs ${y.length} bytes)`).toBe(true)
     }
   }, 180_000)
+
+  describe('power-strip (multiprise-secteur: C13 outlet recesses with the ports on their floors, rocker switch, feet, cord stub)', () => {
+    const strip = (): AssetSpecT => realSpec('multiprise-secteur')
+    const ports = (): { x: number; y: number }[] => strip().ports.map((p) => ({ x: p.xMm * MM - 118 * MM, y: p.yMm * MM }))
+
+    it.skipIf(!BLENDER)('the shipped spec builds at 236 x 52 x 50 mm to 0.01 mm, inside its declared 500 to 2000 triangles, through the fix-up unrotated, every gate green (the detail and fillet gates run here, portSurface in the next test)', async () => {
+      const spec = strip()
+      expect(spec.build?.shape).toBe('power-strip')
+      const { raw, fixed, gates, measure } = await expectBuiltTo(spec, 2000)
+      expect(raw.triangles).toBeGreaterThanOrEqual(spec.build?.budget?.min ?? 500)
+      expect(raw.triangles).toBeLessThanOrEqual(spec.build?.budget?.max ?? 2000)
+      expect(fixed.triangles).toBe(raw.triangles)
+      expect(measure.filletMm).toBe(5)
+      expect(checkDetail(fixed, spec)).toMatchObject({ gate: 'detail', ok: true })
+      expect(checkFillet(measure.filletMm ?? null, spec)).toMatchObject({ gate: 'fillet', ok: true })
+      expect(gates.filter((g) => !g.ok)).toEqual([])
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('every socket is a recess: its floor (9 mm behind the face) lies inside the outlet outline, the face plane has no vertex inside it, and the port sits on the floor within 0.5 mm', async () => {
+      const { fix, fixedBytes } = await buildAndFix(strip())
+      expect(fix.portSurface?.length).toBe(4)
+      for (const s of fix.portSurface ?? []) expect(Math.abs(s.offsetM ?? 1)).toBeLessThan(0.5 * MM)
+      const verts = await vertices(fixedBytes)
+      const front = 25 * MM
+      for (const { x, y } of ports()) {
+        const inside = (v: [number, number, number]): boolean => Math.abs(v[0] - x) < 12.71 * MM && Math.abs(v[1] - y) < 8.71 * MM
+        const floor = verts.filter((v) => Math.abs(v[2] - (front - 9 * MM)) < 0.01 * MM && inside(v))
+        expect(floor.length).toBeGreaterThanOrEqual(12) // the 6 corners of the floor, and the 3 slot boxes standing on it
+        expect(verts.filter((v) => Math.abs(v[2] - front) < 0.01 * MM && Math.abs(v[0] - x) < 12.5 * MM && Math.abs(v[1] - y) < 8.5 * MM)).toEqual([])
+      }
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('nothing stands in front of the face plane (the rocker is inside its window), the cord stub leaves the right end at mid height and reaches the full width, the feet touch the base', async () => {
+      const { fixedBytes } = await buildAndFix(strip())
+      const verts = await vertices(fixedBytes)
+      expect(Math.max(...verts.map((v) => v[2]))).toBeCloseTo(25 * MM, 6)
+      const orange = verts.filter((v) => v[0] < -118 * MM + 40 * MM && v[2] > 25 * MM - 6 * MM && v[2] < 25 * MM - 0.2 * MM && Math.abs(v[1] - 27 * MM) < 12 * MM)
+      expect(orange.length).toBeGreaterThan(0)
+      expect(Math.max(...orange.map((v) => v[2]))).toBeLessThanOrEqual(25 * MM - 0.5 * MM)
+      const stub = verts.filter((v) => v[0] > (118 - 28) * MM)
+      expect(Math.max(...stub.map((v) => v[0]))).toBeCloseTo(118 * MM, 6)
+      expect(Math.max(...stub.filter((v) => v[0] > (118 - 16) * MM).map((v) => Math.hypot(v[1] - 27 * MM, v[2])))).toBeLessThanOrEqual(4.51 * MM)
+      expect(Math.min(...verts.map((v) => v[1]))).toBeCloseTo(0, 7)
+      // the rounded section: the bar's top front corner is cut back by the 5 mm fillet
+      const topFront = verts.filter((v) => Math.abs(v[1] - 52 * MM) < 1e-7 && v[0] > -80 * MM && v[0] < 80 * MM)
+      expect(Math.max(...topFront.map((v) => v[2])) / MM).toBeLessThanOrEqual(25 - 5 + 0.01)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('two builds of the same spec are byte-identical', async () => {
+      const a = join(dir, 'strip-det-a.glb')
+      const b = join(dir, 'strip-det-b.glb')
+      await runBuilder(strip(), a)
+      await runBuilder(strip(), b)
+      expect(Buffer.compare(await readFile(a), await readFile(b))).toBe(0)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('three sockets build as well (the socket count is the number of io ports), and the extras carry the measured fillet', async () => {
+      const base = strip()
+      const spec: AssetSpecT = { ...base, ports: base.ports.slice(0, 3), build: { ...base.build!, params: { ...base.build!.params, sockets: 3 } } }
+      const { raw, gates, fixed } = await buildAndFix(spec)
+      expect(gates.filter((g) => !g.ok)).toEqual([])
+      expect(raw.triangles).toBeLessThan((await buildAndFix(base)).raw.triangles)
+      expect((fixed.extras as { tekpractice: { filletMm: number } }).tekpractice.filletMm).toBe(5)
+    }, 180_000)
+
+    /** Runs the builder script on a plan directly (no TypeScript pre-check) to see its own refusals; resolves with stderr, or 'built'. */
+    let planCount = 0
+    async function stripFails(over: { params?: Record<string, number>; ports?: { portId: string; xMm: number; yMm: number; insetMm?: number }[] }): Promise<string> {
+      const { execFile } = await import('node:child_process')
+      const { writeFile } = await import('node:fs/promises')
+      const good = strip().ports.map((p) => ({ portId: p.portId, xMm: p.xMm, yMm: p.yMm, insetMm: 9 }))
+      const plan = { id: 'multiprise-secteur', kind: 'device', shape: 'power-strip', sizeMm: { w: 236, h: 52, d: 50 }, params: over.params ?? {}, ports: over.ports ?? good }
+      const planPath = join(dir, `strip-plan-${planCount++}.json`)
+      await writeFile(planPath, JSON.stringify(plan))
+      return new Promise((resolveFail) => {
+        execFile(BLENDER as string, ['--background', '--factory-startup', '--python-exit-code', '1', '--python', BUILD_SCRIPT, '--', '--plan', planPath, '--out', join(dir, 'strip-never.glb')], (err, _stdout, stderr) => {
+          resolveFail(err ? stderr : 'built')
+        })
+      })
+    }
+
+    it.skipIf(!BLENDER)('raises BuildError for no ports, a port not on the socket floor, a wrong socket count, a socket off the flat front, two sockets touching, and a section too round', async () => {
+      expect(await stripFails({ ports: [] })).toMatch(/BUILD_FAIL.*needs its io ports/)
+      expect(await stripFails({ ports: [{ portId: 'a', xMm: 100, yMm: 27, insetMm: 3 }] })).toMatch(/BUILD_FAIL.*floor/)
+      expect(await stripFails({ params: { sockets: 5 } })).toMatch(/BUILD_FAIL.*params.sockets/)
+      expect(await stripFails({ ports: [{ portId: 'a', xMm: 100, yMm: 8, insetMm: 9 }] })).toMatch(/BUILD_FAIL.*does not fit on the flat front/)
+      expect(await stripFails({ ports: [{ portId: 'a', xMm: 100, yMm: 27, insetMm: 9 }, { portId: 'b', xMm: 120, yMm: 27, insetMm: 9 }] })).toMatch(/BUILD_FAIL.*apart/)
+      expect(await stripFails({ params: { filletMm: 30 } })).toMatch(/BUILD_FAIL.*too large/)
+      expect(await stripFails({ params: { lenMm: 230 } })).toMatch(/BUILD_FAIL.*lenMm/)
+    }, 240_000)
+  })
 })

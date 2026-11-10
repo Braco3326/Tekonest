@@ -3,8 +3,10 @@ import { expect, test, type Page } from '@playwright/test'
 import manifest from '../../public/assets/ASSET_MANIFEST.json'
 
 /**
- * Night 3 (L43): no request for a 3D model that does not exist. The multiprise (multiprise-secteur) never had a .glb: the spawner used to ask for
+ * Night 3 (L43): no request for a 3D model that does not exist. The multiprise (multiprise-secteur) had no .glb then: the spawner used to ask for
  * assets/multiprise-secteur.glb anyway and keep the placeholder box when it failed, a visible `404` console line since the site got a real 404 page.
+ * Wave 4b: the multiprise now ships its own model (public/assets/multiprise-secteur.glb, in the manifest), so it is asked for and answers 200 like any
+ * device; the "no file for an unshipped device" rule is still pinned by the Bêta test at the end (proposals never ship a model).
  *
  * Oracles: every request and response of the page is recorded (not the app's own counters). A `.glb` request must name a manifest `ok` id; none may
  * answer 404; no console error may come from a resource load; and a device with a model still loads (its file answers 200, pendingModels reaches 0).
@@ -39,14 +41,13 @@ function trace(page: Page): Trace {
 /** What the page did must be clean: only shipped models asked for, all answered 200, nothing 404, no resource-load console error. */
 function expectClean(t: Trace): void {
   expect(t.glbRequests.filter((id) => !SHIPPED.has(id))).toEqual([])
-  expect(t.glbRequests).not.toContain('multiprise-secteur')
   expect(t.glbResponses.filter((r) => r.status !== 200)).toEqual([])
   expect(t.notFound).toEqual([])
   expect(t.consoleErrors.filter((e) => /Failed to load resource|404/.test(e))).toEqual([])
   expect(t.consoleErrors).toEqual([])
 }
 
-test('Mode Création, « Concert simple (référence) »: the multiprise is a placeholder box and no file is asked for it; the other devices load', async ({ page }) => {
+test('Mode Création, « Concert simple (référence) »: the multiprise loads its model (asked for, 200) like the other devices, nothing unshipped is asked for', async ({ page }) => {
   const t = trace(page)
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/')
@@ -62,7 +63,8 @@ test('Mode Création, « Concert simple (référence) »: the multiprise is a pl
   // devices with a model: their file was asked for and answered 200 (the recorded response, not an app counter)
   expect(t.glbResponses.find((r) => r.id === 'yamaha-ql1')?.status).toBe(200)
   expect(t.glbResponses.find((r) => r.id === 'qsc-k12-2')?.status).toBe(200)
-  // the multiprise still has its placeholder box (a body to pick and to frame)
+  expect(t.glbResponses.find((r) => r.id === 'multiprise-secteur')?.status).toBe(200)
+  // the multiprise has a body to pick and to frame (its model)
   expect(await page.evaluate(() => window.__creation!.bodyBoundsInRoot('mains'))).not.toBeNull()
   // and a model-backed device has its body
   expect(await page.evaluate(() => window.__creation!.bodyBoundsInRoot('ql1'))).not.toBeNull()

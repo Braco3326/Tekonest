@@ -32,9 +32,9 @@ describe('ASSET_MANIFEST.json vs public/assets/*.glb', () => {
 })
 
 describe('hasModel', () => {
-  it('is true for a shipped model, false for the multiprise and for an unknown id', () => {
+  it('is true for a shipped model (the multiprise ships one since Wave 4b), false for an unknown id', () => {
     expect(hasModel('yamaha-ql1')).toBe(true)
-    expect(hasModel('multiprise-secteur')).toBe(false)
+    expect(hasModel('multiprise-secteur')).toBe(true)
     expect(hasModel('nope')).toBe(false)
   })
 
@@ -42,9 +42,9 @@ describe('hasModel', () => {
     expect([...MODEL_IDS].sort()).toEqual([...files].sort())
   })
 
-  it('the catalog devices without a model are known (only the multiprise today)', () => {
+  it('every catalog device ships a model (the multiprise was the last without one; a new device without a glb must be listed here on purpose)', () => {
     const devices = (catalogJson as { devices: { id: string }[] }).devices
-    expect(devices.filter((d) => !hasModel(d.id)).map((d) => d.id)).toEqual(['multiprise-secteur'])
+    expect(devices.filter((d) => !hasModel(d.id)).map((d) => d.id)).toEqual([])
   })
 })
 

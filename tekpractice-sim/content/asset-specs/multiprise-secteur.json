@@ -1,0 +1,84 @@
+{
+  "id": "multiprise-secteur",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 236,
+    "h": 52,
+    "d": 50
+  },
+  "ports": [
+    {
+      "portId": "out-1",
+      "face": "io",
+      "xMm": 62,
+      "yMm": 27,
+      "confidence": "guess",
+      "openingMm": 25.4,
+      "insetMm": 9
+    },
+    {
+      "portId": "out-2",
+      "face": "io",
+      "xMm": 102,
+      "yMm": 27,
+      "confidence": "guess",
+      "openingMm": 25.4,
+      "insetMm": 9
+    },
+    {
+      "portId": "out-3",
+      "face": "io",
+      "xMm": 142,
+      "yMm": 27,
+      "confidence": "guess",
+      "openingMm": 25.4,
+      "insetMm": 9
+    },
+    {
+      "portId": "out-4",
+      "face": "io",
+      "xMm": 182,
+      "yMm": 27,
+      "confidence": "guess",
+      "openingMm": 25.4,
+      "insetMm": 9
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "power-strip",
+    "params": {
+      "sockets": 4,
+      "socketDepthMm": 9,
+      "switchMm": 24,
+      "feetMm": 2,
+      "filletMm": 5,
+      "endTaperMm": 2.5,
+      "cableDiaMm": 9,
+      "lenMm": 30
+    },
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 4.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "content/catalog.json (devices[multiprise-secteur])",
+      "note": "The catalog entry: a generic strip (own work, no brand) with FOUR outputs out-1 to out-4, each an IEC C13 (mains-power, isMainsSource). Following its connector ids: C13 outlets, not Schuko. The catalog note says no switch, fuse or cord is modelled for the simulation: the rocker and the cord stub of the model are looks only (no control, no port, nothing to patch)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://en.wikipedia.org/wiki/IEC_60320",
+      "note": "IEC 60320 C13 outlet, the same outline and slots as the iec-c14 / iec-c13 specs: 25.4 x 17.4 mm opening with the two lower corners cut, line and neutral slots 14 mm apart at y -2, earth at y +2 (the standard sheets were not available: sizes are the repo's iec-c13 / iec-c14 estimates)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.assmann.com/product-pdf/4016032504023?PL=fr",
+      "note": "ESTIMATE of the strip's size from real horizontal C13 distribution bars (web search 2026-11-10; the 4-outlet datasheet itself was not found): a 12-outlet 1U Assmann bar is 45 mm high and 45 mm deep, Connectorco's 6-way horizontal PDU range is 60 x 45 mm in section. The model uses 52 mm high (a little taller than the 45 mm bars so that the 37.5 mm marker ring of a C13 lies on the flat front) x 50 mm deep. The outlet pitch of 40 mm, the 9 mm outlet depth, the 236 mm length (206 mm bar plus a 30 mm cord stub with its boot), the 5 mm rounded edges, the 2 mm feet and the 24 x 14 mm rocker window are ESTIMATES by us (a generic strip has no single product to measure). Every port position is a guess for that reason."
+    }
+  ]
+}

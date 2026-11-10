@@ -2983,10 +2983,7 @@
       "toolVersion": "blender-builder-1",
       "photos": [],
       "taskId": null,
-      "source": "modeled",
-      "license": "internal (own work)",
-      "trademark": "generic",
-      "date": "2026-11-10T21:12:54.948Z",
+      "date": "2026-11-10T21:22:10.292Z",
       "specSource": "content/catalog.json (devices[multiprise-secteur])",
       "logosRemoved": true,
       "gates": [
@@ -3034,7 +3031,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     }
   ],
   "environments": [
