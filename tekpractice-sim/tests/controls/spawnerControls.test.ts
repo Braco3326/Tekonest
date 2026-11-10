@@ -101,7 +101,7 @@ describe('controls on a spawned device', () => {
     expect(await plain.controlsReady).toBeNull()
 
     serve(await glbFor(true))
-    const noLayout = make(ticker).spawner.spawn('qsc-k12-2', new Vector3(0, 0, 0), 'k1')
+    const noLayout = make(ticker).spawner.spawn('shure-sm58', new Vector3(0, 0, 0), 'mic1')
     await noLayout.modelReady
     expect(await noLayout.controlsReady).toBeNull()
     expect(noLayout.controls).toBeNull()
