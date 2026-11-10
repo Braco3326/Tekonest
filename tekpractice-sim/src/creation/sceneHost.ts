@@ -1169,6 +1169,9 @@ export class SceneHost {
       const on = id === this.selected || near
       if (on !== rig.isActive) {
         rig.setActive(on)
+        // An off rig leaves the ticker altogether: no timer runs for consoles nobody is near.
+        if (on) this.controlTicker?.add(rig)
+        else this.controlTicker?.remove(rig)
         this.scheduler.invalidate()
       }
     }
