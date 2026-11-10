@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { NullEngine, Scene, Vector3 } from '@babylonjs/core'
+import { MeshBuilder, NullEngine, Scene, Vector3, type AbstractMesh } from '@babylonjs/core'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { DeviceSpawner } from '../../src/scene/DeviceSpawner'
 import { CREATION_DEVICE_THEME } from '../../src/creation/sceneTheme'
-import { createMarkerRing, ringVertexData } from '../../src/scene/portMarkerMesh'
+import { createMarkerRing, liftMarkerRing, LIFT_MAX_M, surfaceLiftM, ringVertexData } from '../../src/scene/portMarkerMesh'
 import { markerDiameterM } from '../../src/scene/portMarkerSize'
 
 const bounds = (positions: ArrayLike<number>): { min: number[]; max: number[] } => {
@@ -122,6 +122,82 @@ describe('spawned markers are rings sized from their connector', () => {
     const scene = new Scene(new NullEngine())
     const inst = new DeviceSpawner(scene, registry, CREATION_DEVICE_THEME).spawn('yamaha-ql1', Vector3.Zero(), 'ql1')
     for (const marker of inst.portMarkers.values()) expect(marker.material!.backFaceCulling).toBe(false)
+    scene.dispose()
+  })
+})
+
+describe('surfaceLiftM (a port in a pocket: the ring comes out onto the face around it)', () => {
+  const OUT = new Vector3(0, 0, -1)
+  const RIGHT = new Vector3(1, 0, 0)
+  const UP = new Vector3(0, 1, 0)
+  const box = (scene: Scene, name: string, w: number, h: number, d: number, at: [number, number, number]): AbstractMesh => {
+    const m = MeshBuilder.CreateBox(name, { width: w, height: h, depth: d }, scene)
+    m.position.set(...at)
+    m.computeWorldMatrix(true)
+    return m
+  }
+  /** A rear plate: the floor in the plane z = 0 (surface at z = 0) and a face `depth` m in front of it (surface at z = -depth) with a round-ish hole of `hole` m (four bars around a square opening). */
+  function pocketScene(depth: number, hole: number): { scene: Scene; meshes: AbstractMesh[] } {
+    const scene = new Scene(new NullEngine())
+    const t = 0.002
+    const z = -depth + t / 2 // outward is -Z: the face spans z in [-depth, -depth + t], so its front surface is at -depth
+    const bar = 0.1
+    const meshes = [
+      box(scene, 'floor', 0.3, 0.3, t, [0, 0, t / 2]), // front surface at z = 0
+      box(scene, 'left', bar, 0.3, t, [-(hole / 2 + bar / 2), 0, z]),
+      box(scene, 'right', bar, 0.3, t, [hole / 2 + bar / 2, 0, z]),
+      box(scene, 'top', hole, bar, t, [0, hole / 2 + bar / 2, z]),
+      box(scene, 'bottom', hole, bar, t, [0, -(hole / 2 + bar / 2), z]),
+    ]
+    return { scene, meshes }
+  }
+
+  it('finds the depth of a 13.8 mm pocket with a 24 mm opening, for a 30 mm ring', () => {
+    const { scene, meshes } = pocketScene(0.0138, 0.024)
+    const lift = surfaceLiftM(meshes, new Vector3(0, 0, 0), OUT, RIGHT, UP, 0.03)
+    expect(lift).toBeCloseTo(0.0138, 4)
+    scene.dispose()
+  })
+
+  it('a flat panel (no pocket) gives 0, so the ring stays on the port', () => {
+    const scene = new Scene(new NullEngine())
+    const panel = box(scene, 'panel', 0.3, 0.3, 0.004, [0, 0, 0.002])
+    expect(surfaceLiftM([panel], new Vector3(0, 0, 0), OUT, RIGHT, UP, 0.03)).toBe(0)
+    scene.dispose()
+  })
+
+  it('no surface at all, a bad ring size, or a recess deeper than 6 cm (another part of the body) give 0, never NaN', () => {
+    const empty = new Scene(new NullEngine())
+    expect(surfaceLiftM([], new Vector3(0, 0, 0), OUT, RIGHT, UP, 0.03)).toBe(0)
+    empty.dispose()
+    const deep = pocketScene(0.09, 0.024)
+    expect(surfaceLiftM(deep.meshes, new Vector3(0, 0, 0), OUT, RIGHT, UP, 0.03)).toBe(0)
+    expect(LIFT_MAX_M).toBeLessThan(0.09)
+    deep.scene.dispose()
+    const ok = pocketScene(0.02, 0.024)
+    for (const outer of [0, -1, Number.NaN]) expect(Number.isFinite(surfaceLiftM(ok.meshes, new Vector3(0, 0, 0), OUT, RIGHT, UP, outer))).toBe(true)
+    ok.scene.dispose()
+  })
+
+  it('a ring whose circle falls INSIDE the opening (a big pocket) is not lifted: the probes see the floor', () => {
+    const { scene, meshes } = pocketScene(0.0138, 0.1)
+    expect(surfaceLiftM(meshes, new Vector3(0, 0, 0), OUT, RIGHT, UP, 0.03)).toBe(0)
+    scene.dispose()
+  })
+
+  it('liftMarkerRing moves the ring outward (toward -Z) by its vertices and is idempotent: bounds extents, position and scale are unchanged', () => {
+    const scene = new Scene(new NullEngine())
+    const ring = createMarkerRing(scene, 'port:x:y', 0.03)
+    ring.position.set(1, 2, 3)
+    liftMarkerRing(ring, 0.0138)
+    const zs = ring.getVerticesData('position')!.filter((_, i) => i % 3 === 2)
+    for (const z of zs) expect(z).toBeCloseTo(-0.0138, 9)
+    expect(ring.getBoundingInfo().boundingBox.extendSize.x * 2).toBeCloseTo(0.03, 9)
+    expect([ring.position.x, ring.position.y, ring.position.z, ring.scaling.x]).toEqual([1, 2, 3, 1])
+    liftMarkerRing(ring, 0.0138) // again: no further move
+    for (const z of ring.getVerticesData('position')!.filter((_, i) => i % 3 === 2)) expect(z).toBeCloseTo(-0.0138, 9)
+    liftMarkerRing(ring, 0) // back
+    for (const z of ring.getVerticesData('position')!.filter((_, i) => i % 3 === 2)) expect(z).toBeCloseTo(0, 9)
     scene.dispose()
   })
 })

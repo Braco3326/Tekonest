@@ -28,7 +28,7 @@ import { hasModel } from './modelIds'
 import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
-import { createMarkerRing } from './portMarkerMesh'
+import { createMarkerRing, liftMarkerRing, surfaceLiftM } from './portMarkerMesh'
 import { markerDiameterM } from './portMarkerSize'
 import type { AttachedControls, attachControls } from '../controls/attach'
 import type { ControlTicker } from '../controls/ticker'
@@ -375,7 +375,7 @@ export class DeviceSpawner {
         const body = this.options.alignFront ? device.modelBody : undefined
         const scale = this.normalizeModel(deviceId, glbRoot, front, extras, body)
         const rear = front && glbRoot.parent instanceof TransformNode ? rearFace(glbRoot, glbRoot.parent) : null
-        this.reanchorPorts(device, instanceId, glbRoot, portMarkers, front === undefined, rear)
+        this.reanchorPorts(device, instanceId, glbRoot, portMarkers, front === undefined, rear, extras !== null)
         if (reportedFront) {
           instance.frontWorld = () => {
             if (glbRoot.isDisposed()) return null
@@ -541,7 +541,9 @@ export class DeviceSpawner {
     glbRoot: AbstractMesh,
     portMarkers: Map<string, Mesh>,
     useEmpties = true,
-    rear: RearFace | null = null
+    rear: RearFace | null = null,
+    /** A pipeline model (authored, with pockets behind its ports): the rings are lifted out of any pocket onto the surrounding face. */
+    liftRings = false
   ): void {
     if (device.ports.length === 0) return
     const root = glbRoot.parent as TransformNode
@@ -568,6 +570,11 @@ export class DeviceSpawner {
       glbRoot.parent instanceof TransformNode
         ? (glbRoot.parent as TransformNode).getAbsolutePosition()
         : Vector3.Zero()
+    // The model's own meshes, world matrices current (the ring lift probes them).
+    const body = liftRings ? glbRoot.getChildMeshes(false).filter((m) => m.getTotalVertices() > 0) : []
+    for (const m of body) m.computeWorldMatrix(true)
+    const rootMatrix = root.computeWorldMatrix(true)
+    const rootScale = root.absoluteScaling?.x && Number.isFinite(root.absoluteScaling.x) && root.absoluteScaling.x > 0 ? root.absoluteScaling.x : 1
     const locals = device.ports.map((port, i) => {
       // Real I/O empty from the rigged glb wins; the grid slot is the fallback.
       const empty = useEmpties ? this.portEmpty(glbRoot, port.portId) : null
@@ -588,6 +595,15 @@ export class DeviceSpawner {
         marker.scaling.setAll(1)
         marker.metadata = { ...(marker.metadata ?? {}), restScale: 1 }
         marker.computeWorldMatrix(true)
+        if (liftRings && body.length) {
+          // A port in a pocket (speaker amplifier plate): the ring comes out onto the face around it, or it would sit hidden behind the panel.
+          const outward = Vector3.TransformNormal(new Vector3(0, 0, -1), rootMatrix).normalize()
+          const right = Vector3.TransformNormal(new Vector3(1, 0, 0), rootMatrix).normalize()
+          const up = Vector3.TransformNormal(new Vector3(0, 1, 0), rootMatrix).normalize()
+          const ringD = marker.getBoundingInfo().boundingBox.extendSize.x * 2
+          const lift = surfaceLiftM(body, marker.getAbsolutePosition(), outward, right, up, ringD)
+          if (lift > 0) liftMarkerRing(marker, lift / Math.max(1e-6, rootScale))
+        }
       }
       // Looked up under THIS instance's root (never a same-id twin elsewhere in the scene).
       const own = (name: string) => root.getChildMeshes(true, (n) => n.name === name)[0]
