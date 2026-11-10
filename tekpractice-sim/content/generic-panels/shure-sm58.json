@@ -1,0 +1,20 @@
+{
+  "note": "Unrolled side surface of the SM58 lathe (build.projection 'wrap'): 160.22 mm around (pi x 51 mm) by 162 mm tall, y from the base like the profile. Generic artwork drawn by us: a plain handle with three seam rings, a neck ring and a diamond-weave grille (100 cells around so the picture repeats cleanly at the seam). No brand mark, no lettering.",
+  "faces": {
+    "wrap": {
+      "wMm": 160.22,
+      "hMm": 162,
+      "pxPerMm": 12.4,
+      "base": "#3b3b3e",
+      "items": [
+        { "kind": "rect", "x": 0, "y": 90.5, "w": 160.22, "h": 1.2, "fill": "#242427" },
+        { "kind": "rect", "x": 0, "y": 107.6, "w": 160.22, "h": 0.9, "fill": "#242427" },
+        { "kind": "rect", "x": 0, "y": 115.2, "w": 160.22, "h": 0.9, "fill": "#242427" },
+        { "kind": "rect", "x": 0, "y": 117.3, "w": 160.22, "h": 4.7, "fill": "#6d6e73" },
+        { "kind": "rect", "x": 0, "y": 119.3, "w": 160.22, "h": 0.5, "fill": "#2d2d30" },
+        { "kind": "rect", "x": 0, "y": 121.6, "w": 160.22, "h": 0.8, "fill": "#2d2d30" },
+        { "kind": "weave", "x": 0, "y": 122.4, "w": 160.22, "h": 39.6, "pitch": 1.6022, "line": 0.34, "fill": "#adafb4", "stroke": "#5f6166", "hole": "#3a3b3f" }
+      ]
+    }
+  }
+}

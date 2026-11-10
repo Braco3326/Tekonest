@@ -98,6 +98,7 @@ describe('photoProjection', () => {
 describe('parsePhotoArg', () => {
   it('parses face=file and face=file@x,y,w,h', () => {
     expect(parsePhotoArg('io=assets-source/x/photos/rear.jpg')).toEqual({ face: 'io', file: 'assets-source/x/photos/rear.jpg' })
+    expect(parsePhotoArg('wrap=g/_generic_wrap.png@0,0,1986,2009')).toEqual({ face: 'wrap', file: 'g/_generic_wrap.png', crop: [0, 0, 1986, 2009] })
     expect(parsePhotoArg('top=a b/c.jpg@10,20,300,400')).toEqual({ face: 'top', file: 'a b/c.jpg', crop: [10, 20, 300, 400] })
   })
   it('refuses an unknown face, a missing file and a bad crop', () => {

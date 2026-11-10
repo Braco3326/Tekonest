@@ -129,6 +129,7 @@ describe('AssetSpec build.projection', () => {
     expect(parse('io')).toBe(true)
     expect(parse(['top', 'io'])).toBe(true)
     expect(parse(['top', 'io', 'opposite', 'left'])).toBe(true)
+    expect(parse('wrap')).toBe(true) // a lathe's unrolled surface
   })
   it('rejects an empty list, an unknown face and more than four faces', () => {
     expect(parse([])).toBe(false)

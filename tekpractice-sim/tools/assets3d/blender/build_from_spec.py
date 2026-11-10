@@ -932,6 +932,7 @@ def wipe_scene() -> None:
 # --- projection: a picture of one face from a Meshy model, mapped onto our exact shape ---------------------------------------
 
 PROJECTION_COS = math.cos(math.radians(50.0))   # a face looks at the projection when its normal is within 50 degrees of the face normal (a console top slopes up to about 33)
+WRAP_MAX_NORMAL_Z = 0.9                         # a lathe's wrap picture covers the polygons whose normal is within about 64 degrees of horizontal; the flat ends and the crown of a ball take a swatch
 SWATCH_PX = 32                                  # one palette swatch in the atlas: 32 x 32 px
 ATLAS_MAX_PX = 4096                             # the longest side of the picture area of the atlas; longer than this, the pictures are scaled down together
 
@@ -963,6 +964,9 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
         "opposite": ((0.0, 1.0, 0.0), lambda co: (w / 2 - co.x, co.z), (w, h)),
         "top": ((0.0, 0.0, 1.0), lambda co: (co.x + w / 2, d / 2 + co.y), (w, d)),
         "left": ((-1.0, 0.0, 0.0), lambda co: (d / 2 - co.y, co.z), (d, h)),
+        # the unrolled side surface of a lathe: u = angle around the axis (a whole turn = the picture width), v = height. Needs a picture whose
+        # left and right edges match (the polygons at the seam reach past 1 and the texture repeats).
+        "wrap": ((0.0, 0.0, 0.0), None, (math.pi * w, h)),
     }
     pictures = []   # [(face, image, width px, height px, floats)]
     for proj in projections:
@@ -977,6 +981,8 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
         if iw < SWATCH_PX or ih < 2:
             raise BuildError(f"the projection image {proj['png']} is too small ({iw} x {ih})")
         pictures.append([face, img, iw, ih, None])
+    if any(p[0] == "wrap" for p in pictures) and len(pictures) != 1:
+        raise BuildError("the wrap picture covers the whole side of a lathe: it is the only projection (no other face)")
     # row or column: the layout whose longest side is shorter (a tie goes to the row)
     row_w, row_h = sum(p[2] for p in pictures), max(p[3] for p in pictures)
     col_w, col_h = max(p[2] for p in pictures), sum(p[3] for p in pictures)
@@ -1003,7 +1009,11 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
     swatch_of: dict[int, int] = {}
     for poly in me.polygons:
         for k, (face, _img, _iw, _ih, _px) in enumerate(pictures):
-            if poly.normal.dot(Vector(faces[face][0])) >= PROJECTION_COS:
+            if face == "wrap":
+                hit = abs(poly.normal.z) <= WRAP_MAX_NORMAL_Z
+            else:
+                hit = poly.normal.dot(Vector(faces[face][0])) >= PROJECTION_COS
+            if hit:
                 looks_at[poly.index] = k
                 break
         else:
@@ -1047,6 +1057,10 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
 
     uv = me.uv_layers.new(name="UVMap")
     for poly in me.polygons:
+        centre_u = 0.0
+        if poly.index in looks_at and pictures[looks_at[poly.index]][0] == "wrap":
+            cc = poly.center
+            centre_u = math.atan2(cc.y, cc.x) / (2 * math.pi) + 0.5
         for li in poly.loop_indices:
             co = me.vertices[me.loops[li].vertex_index].co
             if poly.index in swatch_of:
@@ -1055,9 +1069,17 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
                 k = looks_at[poly.index]
                 face, _img, iw, ih, _px = pictures[k]
                 _normal, local, (fw, fh) = faces[face]
-                u, v = local(co)
-                u = min(max(u / fw, 0.5 / iw), 1.0 - 0.5 / iw)
-                v = min(max(v / fh, 0.5 / ih), 1.0 - 0.5 / ih)
+                if face == "wrap":
+                    u = math.atan2(co.y, co.x) / (2 * math.pi) + 0.5
+                    if u - centre_u > 0.5:
+                        u -= 1.0
+                    elif u - centre_u < -0.5:
+                        u += 1.0
+                    v = min(max(co.z / fh, 0.5 / ih), 1.0 - 0.5 / ih)
+                else:
+                    u, v = local(co)
+                    u = min(max(u / fw, 0.5 / iw), 1.0 - 0.5 / iw)
+                    v = min(max(v / fh, 0.5 / ih), 1.0 - 0.5 / ih)
                 uv.data[li].uv = ((offsets[k][0] + u * iw) / atlas_w, (pal_rows + offsets[k][1] + v * ih) / total_h)
 
     # one material, the atlas as its base colour; no vertex colours any more

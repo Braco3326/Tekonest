@@ -494,7 +494,7 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     const spec = realSpec('shure-sm58')
     const profile = spec.build?.profile
     expect(profile?.length).toBeGreaterThanOrEqual(4)
-    const { raw, rawBytes, fixed, fixedBytes } = await expectBuiltTo(spec, 4000)
+    const { raw, rawBytes, fixed, fixedBytes } = await expectBuiltTo(spec, 5000)
     await expectLooks(rawBytes, raw.triangles, 2) // grille and handle zones
     await expectLooks(fixedBytes, fixed.triangles, 2)
     expect(raw.bboxM.min[1]).toBeCloseTo(0, 6)

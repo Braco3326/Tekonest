@@ -469,20 +469,63 @@
     {
       "id": "shure-sm58",
       "optimized": true,
-      "tris": 1976,
+      "tris": 4350,
       "kind": "device",
       "ports": 1,
       "status": "ok",
-      "note": "restored by the founder choice over the Meshy rebuild: richer detail (normal map: grille weave, rings, switch, screws); CC-BY attribution required; Shure logo present: legal review before publishing",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/shure-sm58-89d38b9c53f8496a922ce1199ca57afc",
-      "author": "GRIP420",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Shure SM58 » par GRIP420 (https://sketchfab.com/3d-models/shure-sm58-89d38b9c53f8496a922ce1199ca57afc) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 1,
       "riggedAt": "2026-07-19",
-      "legacyRestoredAt": "2026-11-06"
+      "legacyRestoredAt": "2026-11-06",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal",
+      "date": "2026-11-10T07:07:49.262Z",
+      "specSource": "content/generic-panels/shure-sm58.json",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "shure-sm57",

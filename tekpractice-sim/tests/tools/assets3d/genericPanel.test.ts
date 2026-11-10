@@ -24,6 +24,25 @@ describe('panelSizePx', () => {
   })
 })
 
+describe('renderPanel pxPerMm and weave', () => {
+  it('draws at the pixel density of the spec (pxPerMm) when it is given, still capped at PANEL_MAX_PX', async () => {
+    const fine = await renderPanel({ wMm: 100, hMm: 50, base: '#202020', items: [], pxPerMm: 12 })
+    const meta = await sharp(Buffer.from(fine)).metadata()
+    expect([meta.width, meta.height]).toEqual([1200, 600])
+    const capped = await renderPanel({ wMm: 300, hMm: 50, base: '#202020', items: [], pxPerMm: 12 })
+    expect((await sharp(Buffer.from(capped)).metadata()).width).toBeLessThanOrEqual(PANEL_MAX_PX)
+  })
+  it('draws a diamond weave: crossing diagonal lines (stroke) over a fill, in its area only', async () => {
+    const png = await renderPanel({ wMm: 40, hMm: 40, base: '#101010', pxPerMm: 12, items: [{ kind: 'weave', x: 10, y: 10, w: 20, h: 20, pitch: 2, line: 0.4, fill: '#cccccc', stroke: '#333333' }] })
+    const { data, info } = await sharp(Buffer.from(png)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    const at = (x: number, y: number): number => data[(y * info.width + x) * 3]
+    expect(at(5, 5)).toBe(0x10) // outside the weave: the base
+    const seen = new Set<number>()
+    for (let y = 150; y < 330; y++) for (let x = 150; x < 330; x++) seen.add(at(x, y) > 0x80 ? 1 : 0)
+    expect(seen.size).toBe(2) // inside: both the light fill and the dark lines
+  })
+})
+
 describe('renderPanel', () => {
   const spec: PanelSpec = {
     wMm: 100,

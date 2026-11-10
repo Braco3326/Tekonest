@@ -20,13 +20,14 @@
   "controls": [],
   "build": {
     "shape": "revolve",
+    "params": { "segments": 64 },
+    "projection": "wrap",
     "profile": [[0,23.51],[45.6,26],[91.28,31.18],[94.23,31.04],[95.7,31.61],[108.47,33.67],[115.34,33.38],[117.31,34.66],[118.78,37.72],[119.27,38.21],[120.75,38.57],[121.73,39.64],[122.22,40.7],[126.15,45.18],[130.08,47.87],[134.01,48.8],[135.48,51],[138.92,50.93],[139.41,50.57],[140.39,48.66],[141.86,47.95],[143.34,47.73],[144.32,46.81],[145.3,46.74],[146.28,45.67],[147.76,44.96],[148.74,43.47],[151.69,40.56],[152.18,39.14],[154.63,35.66],[157.58,28.7],[158.07,26.28],[159.54,22.02],[161.3,10.5],[162,0]],
     "colours": [
       { "fromMm": 0, "colour": "#3b3b3e" },
       { "fromMm": 119.5, "colour": "#9a9a9e" }
     ]
   },
-  "texture": { "blankBandsMm": [{ "fromMm": 111, "toMm": 121, "fill": "#2a2a2a" }] },
   "sources": [
     {
       "kind": "datasheet",
@@ -41,7 +42,7 @@
     {
       "kind": "photo",
       "url": "https://products.shureweb.eu/shure_product_db/product_images/files/48b/91a/7a-/original/b1982c056eb29e6a4f1cb26819c96334.webp",
-      "note": "build.profile: the silhouette of front.webp (3000 x 3000, transparent background, side-on, upright) measured row by row: the alpha mask gives the diameter at each height; the height scale is 162 mm over the 2309 px of the mic (0.0702 mm/px) and the diameters were scaled by 1.012 so the widest (the grille) is the 51 mm of the spec sheet (the photo gives 50.4). A median filter over 5 samples and a Douglas-Peucker simplification (0.2 mm) leave about 35 stations; the ball top is closed by hand (a pole at 162 mm). Accuracy about +/-0.5 mm on the diameter. build.colours: the photo shows a silver grille (about rgb 125-155 with highlights) above 119.5 mm from the base and a dark grey handle (about rgb 55-60) below; sRGB of the real part, lifted by the builder for the creation lighting."
+      "note": "build.profile: the silhouette of front.webp (3000 x 3000, transparent background, side-on, upright) measured row by row: the alpha mask gives the diameter at each height; the height scale is 162 mm over the 2309 px of the mic (0.0702 mm/px) and the diameters were scaled by 1.012 so the widest (the grille) is the 51 mm of the spec sheet (the photo gives 50.4). A median filter over 5 samples and a Douglas-Peucker simplification (0.2 mm) leave about 35 stations; the ball top is closed by hand (a pole at 162 mm). Accuracy about +/-0.5 mm on the diameter. build.colours: the photo shows a silver grille (about rgb 125-155 with highlights) above 119.5 mm from the base and a dark grey handle (about rgb 55-60) below; sRGB of the real part, lifted by the builder for the creation lighting. build.projection wrap: the surface picture is our own generic artwork (content/generic-panels/shure-sm58.json, drawn by npm run asset:panel, mapped with asset:build --scripted --project-photo wrap=...): an unrolled 160.22 x 162 mm panel with a plain handle, seam rings, a neck ring and a diamond weave on the grille (100 cells around so it repeats at the seam). It copies no photo and has no brand mark or lettering; the weave pitch (about 1.6 mm) is stylised, not measured."
     },
     {
       "kind": "photo",

@@ -53,6 +53,9 @@ describe('projectionFaceMm', () => {
     expect(projectionFaceMm('top', s)).toEqual({ w: 400, h: 200 })
     expect(projectionFaceMm('left', s)).toEqual({ w: 200, h: 100 })
   })
+  it('is the unrolled surface of a lathe on the wrap face: the circumference (pi x width) by the height', () => {
+    expect(projectionFaceMm('wrap', { w: 51, h: 162, d: 51 })).toEqual({ w: 160.22, h: 162 })
+  })
   it('refuses a face the renderer has no view for', () => {
     expect(() => projectionFaceMm('bottom' as never, { w: 1, h: 1, d: 1 })).toThrow(/bottom/)
   })

@@ -32,7 +32,7 @@ export interface PhotoArg {
   crop?: [number, number, number, number]
 }
 
-const FACES: ProjectionFace[] = ['io', 'opposite', 'top', 'left']
+const FACES: ProjectionFace[] = ['io', 'opposite', 'top', 'left', 'wrap']
 
 /** `face=file` or `face=file@left,top,width,height` (the CLI's --project-photo). */
 export function parsePhotoArg(arg: string): PhotoArg {

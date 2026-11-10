@@ -65,7 +65,7 @@ const ZoneColour = z.object({
   colour: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'colour must be #rrggbb'),
 }).strict()
 
-const ProjectionFaceEnum = z.enum(['io', 'opposite', 'top', 'left'])
+const ProjectionFaceEnum = z.enum(['io', 'opposite', 'top', 'left', 'wrap'])
 
 export const BuildSpec = z.object({
   shape: z.enum(BUILD_SHAPES).describe('Shape the scripted builder makes for this asset (tools/assets3d/shapes.ts).'),

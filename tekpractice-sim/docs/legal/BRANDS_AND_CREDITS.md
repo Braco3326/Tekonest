@@ -1,6 +1,6 @@
 # TekPractice: brands, credits and permissions register
 
-Status: DRAFT for the founder (updated 2026-11-10). Generated from `public/assets/ASSET_MANIFEST.json`, `content/asset-specs/*.json` and the Wave 2 research notes. It is NOT legal advice. The founder states that consent from the brands will be requested; this file lists what to ask for.
+Status: DRAFT for the founder (updated 2026-11-10, after the SM58 rebuild). Generated from `public/assets/ASSET_MANIFEST.json`, `content/asset-specs/*.json` and the Wave 2 research notes. It is NOT legal advice. The founder states that consent from the brands will be requested; this file lists what to ask for.
 
 ## 1. Brands and products shown in the simulator (permission page)
 
@@ -14,7 +14,7 @@ How each model was made:
 | Brand | Products shown | How made | Brand marks on the model |
 |---|---|---|---|
 | Yamaha | QL1 console, Rio3224-D2 stage box, DBR12 loudspeaker | photo-textured | logo and model badges repainted out; small marks (Dante, regulatory icons) may remain: review |
-| Shure | SM58 | CC-BY download (GRIP420) | Shure logo and "SM58" text are present |
+| Shure | SM58 | generic (our scripted lathe from the published dimensions and the product silhouette, with generic grille-weave artwork) | none: no logo, no lettering |
 | Shure | SM57 | Meshy-generated | lettering repainted out |
 | QSC | K12.2 loudspeaker | photo-textured (Meshy rear, official front photo) | badge and amp-panel logo repainted out |
 | Genelec | 8030C monitor | photo-textured | logo and web address repainted out |
@@ -44,7 +44,6 @@ Licence for all rows: Creative Commons Attribution (CC BY). Each was modified by
 
 | Model | Author | Title and link |
 |---|---|---|
-| Shure SM58 | GRIP420 | « Shure SM58 », https://sketchfab.com/3d-models/shure-sm58-89d38b9c53f8496a922ce1199ca57afc |
 | Room: live stage | Sameer.Uddin | « Music_concert_stage_Low_poly », https://sketchfab.com/3d-models/music-concert-stage-low-poly-89629aceff334b34a76c30d42f8327bd |
 | Room: theatre stage | mynameismary | « Theatre stage », https://sketchfab.com/3d-models/theatre-stage-5c53624a0a334242ad04d7a11a2dcf8e |
 | Room: radio booth | Amasah Blankson | « AB Radio Studio », https://sketchfab.com/3d-models/ab-radio-studio-44a60d726b194b1e87614d7bcedcb074 |

@@ -498,7 +498,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
             const photo = photos.find((p) => p.face === face)
             // a picture may be moved sideways (spec build.projectionShiftMm) so that it moves with the ports it shows
             const shifted = async (pr: Projection): Promise<Uint8Array> => {
-              const mm = spec.build?.projectionShiftMm?.[face]
+              const mm = face === 'wrap' ? undefined : spec.build?.projectionShiftMm?.[face]
               return mm ? shiftPictureX(pr.png, mm, pr.faceMm.w) : pr.png
             }
             if (photo) {
