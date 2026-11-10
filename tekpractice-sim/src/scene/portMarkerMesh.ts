@@ -5,7 +5,7 @@
  * Pure geometry (`ringVertexData`) plus one Babylon call (`createMarkerRing`). The material is the caller's: it must be double
  * sided (`backFaceCulling = false`) and may carry a small `zOffset`, since the ring lies on the connector's face.
  */
-import { Matrix, Mesh, Ray, VertexData, type AbstractMesh, type Scene, type Vector3 } from '@babylonjs/core'
+import { Matrix, Mesh, Quaternion, Ray, Vector3, VertexData, type AbstractMesh, type Scene } from '@babylonjs/core'
 import { FALLBACK_MM, RING_OVERSIZE } from './portMarkerSize'
 
 /** Segments around the ring. */
@@ -68,14 +68,17 @@ const PROBE_M = 0.1
 /** Anything outside this lift range is not a pocket (noise below, or a different part of the body above): the ring stays where it is. */
 export const LIFT_MIN_M = 0.0005
 export const LIFT_MAX_M = 0.06
-/** The probe rays around the ring, as a share of its outer radius. */
-const PROBE_RING = 0.95
+/** The probe rays around the ring start this far OUTSIDE its circle (m): a ring that fits inside a pocket's opening (the audit shrank the rings to the connector, a 23 mm XLR ring in a 24 mm hole) still finds the face around it. */
+const PROBE_BEYOND_M = 0.008
 
 /**
  * How far OUTWARD (m) the surface around a port is from the port's own plane, 0 when the port is on a flat surface. Probe rays are cast
  * back toward the port from `PROBE_M` in front of it: one down the middle (it lands on the pocket floor, or on the plain surface) and
- * four on the ring's circle at the plane axes (they land on the surrounding face). The lift is the SMALLEST drop the four see over the
- * middle one, so a curved body (a mic tube) or one open side gives 0 and only a real recess gives its depth.
+ * four on the ring's circle at the plane axes (8 mm beyond the ring: they land on the surrounding face, or still on the floor when the opening is wider than that on
+ * that axis). Per axis the drop is the SMALLER of its two probes (a face on BOTH sides); the lift is the LARGER of the two axes. So a ring that
+ * clears the opening on one axis only (a 24 mm ring on the 25 x 17 mm outlet of a power strip: it crosses the top and bottom edges, not the sides)
+ * still comes out onto the face, a ring that lies wholly inside a big opening stays on the floor, and one open side (no surface there at all)
+ * gives 0.
  * `outward` is the unit direction the marker faces; `right` / `up` its in-plane unit axes (all world space).
  */
 export function surfaceLiftM(meshes: readonly AbstractMesh[], port: Vector3, outward: Vector3, right: Vector3, up: Vector3, outerM: number): number {
@@ -91,12 +94,13 @@ export function surfaceLiftM(meshes: readonly AbstractMesh[], port: Vector3, out
   }
   const middle = probe(port)
   if (middle === null) return 0
-  const r = (Number.isFinite(outerM) && outerM > 0 ? outerM : 0.025) / 2 * PROBE_RING
-  let lift = Infinity
-  for (const dir of [right, right.scale(-1), up, up.scale(-1)]) {
-    const t = probe(port.add(dir.scale(r)))
-    if (t === null) return 0
-    lift = Math.min(lift, middle - t)
+  const r = (Number.isFinite(outerM) && outerM > 0 ? outerM : 0.025) / 2 + PROBE_BEYOND_M
+  let lift = 0
+  for (const axis of [right, up]) {
+    const a = probe(port.add(axis.scale(r)))
+    const b = probe(port.add(axis.scale(-r)))
+    if (a === null || b === null) return 0
+    lift = Math.max(lift, Math.min(middle - a, middle - b))
   }
   return lift >= LIFT_MIN_M && lift <= LIFT_MAX_M ? lift : 0
 }
@@ -108,4 +112,39 @@ export function liftMarkerRing(marker: Mesh, liftM: number): void {
   if (Math.abs(delta) < 1e-9) return
   marker.bakeTransformIntoVertices(Matrix.Translation(0, 0, -delta))
   marker.metadata = { ...(marker.metadata ?? {}), lift: had + delta }
+}
+
+// ── A port on a side or the base: the ring turns to face it ──────────────────────────────────────────────────────────────────────
+// The ring is built in the XY plane and faces -Z, the rear: right for every io / opposite port (it is drawn on both sides). A port on a SIDE
+// face (the Scoopy+ S's XLR and headphone jack on its right side) or on the BASE of a mic would show its ring edge-on, a thin line.
+
+/**
+ * The outward unit normal (+X / -X / +Y / -Y, in the frame of `lo` / `hi`) of the side or base face a port sits on, or null for a port on a
+ * rear / front face (+Z / -Z: the ring already faces it), inside the body or where no face is within `tolM`. A port within `tolM` of a Z
+ * face is a rear port whatever its other coordinates (a port in a pocket is further in than that and is a Z-face port by its position too).
+ */
+export function markerFaceNormal(local: Vector3, lo: Vector3, hi: Vector3, tolM = 0.002): Vector3 | null {
+  if (!(Number.isFinite(local.x + local.y + local.z) && Number.isFinite(lo.x + lo.y + lo.z) && Number.isFinite(hi.x + hi.y + hi.z))) return null
+  if (local.z - lo.z <= tolM || hi.z - local.z <= tolM) return null
+  const cands: [number, Vector3][] = [
+    [hi.x - local.x, new Vector3(1, 0, 0)],
+    [local.x - lo.x, new Vector3(-1, 0, 0)],
+    [hi.y - local.y, new Vector3(0, 1, 0)],
+    [local.y - lo.y, new Vector3(0, -1, 0)],
+  ]
+  let best: [number, Vector3] | null = null
+  for (const c of cands) if (c[0] <= tolM && (best === null || c[0] < best[0])) best = c
+  return best ? best[1] : null
+}
+
+/** Turn a marker ring so that it faces `normal` (a unit vector in its parent's frame); null puts it back to facing -Z. Position and scale are untouched. */
+export function orientMarkerRing(marker: Mesh, normal: Vector3 | null): void {
+  if (!normal) {
+    marker.rotationQuaternion = null
+    marker.rotation.set(0, 0, 0)
+    return
+  }
+  const q = new Quaternion()
+  Quaternion.FromUnitVectorsToRef(new Vector3(0, 0, -1), normal.normalizeToNew(), q)
+  marker.rotationQuaternion = q
 }

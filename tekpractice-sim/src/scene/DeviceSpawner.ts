@@ -28,7 +28,7 @@ import { hasModel } from './modelIds'
 import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
-import { createMarkerRing, liftMarkerRing, surfaceLiftM } from './portMarkerMesh'
+import { createMarkerRing, liftMarkerRing, markerFaceNormal, orientMarkerRing, surfaceLiftM } from './portMarkerMesh'
 import { markerDiameterM } from './portMarkerSize'
 import type { AttachedControls, attachControls } from '../controls/attach'
 import type { ControlTicker } from '../controls/ticker'
@@ -574,6 +574,19 @@ export class DeviceSpawner {
     const body = liftRings ? glbRoot.getChildMeshes(false).filter((m) => m.getTotalVertices() > 0) : []
     for (const m of body) m.computeWorldMatrix(true)
     const rootMatrix = root.computeWorldMatrix(true)
+    // The body's box in the root's frame: a port within 2 mm of a side or the base lies on that face, and its ring turns to face it.
+    let bodyLo: Vector3 | null = null
+    let bodyHi: Vector3 | null = null
+    if (liftRings && body.length) {
+      const toRoot = Matrix.Invert(rootMatrix)
+      for (const m of body) {
+        for (const c of m.getBoundingInfo().boundingBox.vectorsWorld) {
+          const v = Vector3.TransformCoordinates(c, toRoot)
+          bodyLo = bodyLo ? Vector3.Minimize(bodyLo, v) : v.clone()
+          bodyHi = bodyHi ? Vector3.Maximize(bodyHi, v) : v.clone()
+        }
+      }
+    }
     const rootScale = root.absoluteScaling?.x && Number.isFinite(root.absoluteScaling.x) && root.absoluteScaling.x > 0 ? root.absoluteScaling.x : 1
     const locals = device.ports.map((port, i) => {
       // Real I/O empty from the rigged glb wins; the grid slot is the fallback.
@@ -594,12 +607,13 @@ export class DeviceSpawner {
         // scale 1. The metadata stays as the "size it rests at" contract that PortProxies reads.
         marker.scaling.setAll(1)
         marker.metadata = { ...(marker.metadata ?? {}), restScale: 1 }
-        marker.computeWorldMatrix(true)
+        if (liftRings && bodyLo && bodyHi) orientMarkerRing(marker, markerFaceNormal(local, bodyLo, bodyHi, 0.002 / Math.max(1e-6, rootScale)))
+        const markerMatrix = marker.computeWorldMatrix(true)
         if (liftRings && body.length) {
           // A port in a pocket (speaker amplifier plate): the ring comes out onto the face around it, or it would sit hidden behind the panel.
-          const outward = Vector3.TransformNormal(new Vector3(0, 0, -1), rootMatrix).normalize()
-          const right = Vector3.TransformNormal(new Vector3(1, 0, 0), rootMatrix).normalize()
-          const up = Vector3.TransformNormal(new Vector3(0, 1, 0), rootMatrix).normalize()
+          const outward = Vector3.TransformNormal(new Vector3(0, 0, -1), markerMatrix).normalize()
+          const right = Vector3.TransformNormal(new Vector3(1, 0, 0), markerMatrix).normalize()
+          const up = Vector3.TransformNormal(new Vector3(0, 1, 0), markerMatrix).normalize()
           const ringD = marker.getBoundingInfo().boundingBox.extendSize.x * 2
           const lift = surfaceLiftM(body, marker.getAbsolutePosition(), outward, right, up, ringD)
           if (lift > 0) liftMarkerRing(marker, lift / Math.max(1e-6, rootScale))

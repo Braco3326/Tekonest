@@ -4,7 +4,7 @@ import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { DeviceSpawner } from '../../src/scene/DeviceSpawner'
 import { CREATION_DEVICE_THEME } from '../../src/creation/sceneTheme'
-import { createMarkerRing, liftMarkerRing, LIFT_MAX_M, surfaceLiftM, ringVertexData } from '../../src/scene/portMarkerMesh'
+import { createMarkerRing, liftMarkerRing, LIFT_MAX_M, markerFaceNormal, orientMarkerRing, surfaceLiftM, ringVertexData } from '../../src/scene/portMarkerMesh'
 import { markerDiameterM } from '../../src/scene/portMarkerSize'
 
 const bounds = (positions: ArrayLike<number>): { min: number[]; max: number[] } => {
@@ -94,7 +94,7 @@ describe('spawned markers are rings sized from their connector', () => {
     g.document = saved.document
   })
 
-  it('every port marker of every catalog device is the connector size x 1.25 (+- 1 %), restScale 1, not pickable', () => {
+  it('every port marker of every catalog device is the connector size x 1.2 (+- 1 %), restScale 1, not pickable', () => {
     const scene = new Scene(new NullEngine())
     const spawner = new DeviceSpawner(scene, registry, CREATION_DEVICE_THEME, { alignFront: true })
     let checked = 0
@@ -185,6 +185,33 @@ describe('surfaceLiftM (a port in a pocket: the ring comes out onto the face aro
     scene.dispose()
   })
 
+  it('a ring wider than a rectangular opening on ONE axis only (24 mm ring, 25.4 x 17.4 mm outlet, 9 mm deep) still comes out onto the face; with an opening much bigger than the ring (80 x 60 mm) it stays on the floor', () => {
+    const scene = new Scene(new NullEngine())
+    const t = 0.002
+    const rect = (w: number, h: number, depth: number): AbstractMesh[] => {
+      const z = -depth + t / 2
+      const bar = 0.1
+      return [
+        box(scene, 'floor', 0.3, 0.3, t, [0, 0, t / 2]),
+        box(scene, 'left', bar, 0.3, t, [-(w / 2 + bar / 2), 0, z]),
+        box(scene, 'right', bar, 0.3, t, [w / 2 + bar / 2, 0, z]),
+        box(scene, 'top', w, bar, t, [0, h / 2 + bar / 2, z]),
+        box(scene, 'bottom', w, bar, t, [0, -(h / 2 + bar / 2), z]),
+      ]
+    }
+    const outlet = rect(0.0254, 0.0174, 0.009)
+    expect(surfaceLiftM(outlet, new Vector3(0, 0, 0), OUT, RIGHT, UP, markerDiameterM('iec-c13'))).toBeCloseTo(0.009, 4)
+    const tall = rect(0.08, 0.06, 0.009)
+    expect(surfaceLiftM(tall, new Vector3(0, 0, 0), OUT, RIGHT, UP, markerDiameterM('iec-c13'))).toBe(0)
+    scene.dispose()
+  })
+
+  it('a ring that FITS in the opening (a 23.4 mm XLR ring in a 24 mm hole, 25.6 mm deep, the DBR12) is still lifted onto the face around it: the probes start 8 mm outside the ring', () => {
+    const { scene, meshes } = pocketScene(0.0256, 0.026)
+    expect(surfaceLiftM(meshes, new Vector3(0, 0, 0), OUT, RIGHT, UP, 0.0234)).toBeCloseTo(0.0256, 4)
+    scene.dispose()
+  })
+
   it('liftMarkerRing moves the ring outward (toward -Z) by its vertices and is idempotent: bounds extents, position and scale are unchanged', () => {
     const scene = new Scene(new NullEngine())
     const ring = createMarkerRing(scene, 'port:x:y', 0.03)
@@ -198,6 +225,43 @@ describe('surfaceLiftM (a port in a pocket: the ring comes out onto the face aro
     for (const z of ring.getVerticesData('position')!.filter((_, i) => i % 3 === 2)) expect(z).toBeCloseTo(-0.0138, 9)
     liftMarkerRing(ring, 0) // back
     for (const z of ring.getVerticesData('position')!.filter((_, i) => i % 3 === 2)) expect(z).toBeCloseTo(0, 9)
+    scene.dispose()
+  })
+})
+
+describe('markerFaceNormal / orientMarkerRing (a port on a side or the base: the ring faces it, no longer edge-on)', () => {
+  const lo = new Vector3(-0.0775, 0, -0.117)
+  const hi = new Vector3(0.0775, 0.08, 0.117) // a 155 x 80 x 234 mm box (the Scoopy+ S)
+  it('a port on the +x side is +X, on -x is -X, on the base is -Y, on the top is +Y', () => {
+    expect(markerFaceNormal(new Vector3(0.0775, 0.022, 0.05), lo, hi)!.asArray()).toEqual([1, 0, 0])
+    expect(markerFaceNormal(new Vector3(-0.0775, 0.022, 0.05), lo, hi)!.asArray()).toEqual([-1, 0, 0])
+    expect(markerFaceNormal(new Vector3(0, 0, 0), lo, hi)!.asArray()).toEqual([0, -1, 0])
+    expect(markerFaceNormal(new Vector3(0, 0.08, 0), lo, hi)!.asArray()).toEqual([0, 1, 0])
+  })
+  it('a rear / front port (on a z face, even near an edge or in a pocket), an interior point and bad numbers give null: the ring already faces z', () => {
+    expect(markerFaceNormal(new Vector3(0.0775, 0.022, -0.117), lo, hi)).toBeNull() // on the rear edge: a rear port
+    expect(markerFaceNormal(new Vector3(0.02, 0.04, -0.117), lo, hi)).toBeNull()
+    expect(markerFaceNormal(new Vector3(0.02, 0.04, 0.117), lo, hi)).toBeNull()
+    expect(markerFaceNormal(new Vector3(0.02, 0.04, -0.09), lo, hi)).toBeNull() // 27 mm deep pocket floor, away from the side faces
+    expect(markerFaceNormal(new Vector3(Number.NaN, 0, 0), lo, hi)).toBeNull()
+  })
+  it('orientMarkerRing turns the ring so that its -Z axis points along the normal; the bounds extent, position and scale stay; null puts it back', () => {
+    const scene = new Scene(new NullEngine())
+    const ring = createMarkerRing(scene, 'port:x:y', 0.03)
+    ring.position.set(0.07, 0.02, 0.05)
+    orientMarkerRing(ring, new Vector3(1, 0, 0))
+    ring.computeWorldMatrix(true)
+    const out = Vector3.TransformNormal(new Vector3(0, 0, -1), ring.getWorldMatrix())
+    expect([out.x, out.y + 0, out.z + 0].map((v) => Math.round(v * 1e6) / 1e6 + 0)).toEqual([1, 0, 0])
+    expect(ring.getBoundingInfo().boundingBox.extendSize.x * 2).toBeCloseTo(0.03, 9)
+    expect([ring.position.x, ring.position.y, ring.position.z, ring.scaling.x]).toEqual([0.07, 0.02, 0.05, 1])
+    orientMarkerRing(ring, new Vector3(0, -1, 0))
+    ring.computeWorldMatrix(true)
+    const down = Vector3.TransformNormal(new Vector3(0, 0, -1), ring.getWorldMatrix())
+    expect(down.y).toBeCloseTo(-1, 6)
+    orientMarkerRing(ring, null)
+    ring.computeWorldMatrix(true)
+    expect(Vector3.TransformNormal(new Vector3(0, 0, -1), ring.getWorldMatrix()).z).toBeCloseTo(-1, 6)
     scene.dispose()
   })
 })
