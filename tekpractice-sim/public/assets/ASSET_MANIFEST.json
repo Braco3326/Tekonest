@@ -2332,7 +2332,7 @@
     {
       "id": "aeta-scoopy-plus-s",
       "optimized": true,
-      "tris": 44,
+      "tris": 1536,
       "kind": "device",
       "ports": 3,
       "status": "ok",
@@ -2342,13 +2342,11 @@
       "toolVersion": "blender-builder-1",
       "photos": [
         "_generic_opposite.png",
-        "_generic_io.png"
+        "_generic_io.png",
+        "_generic_right.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
-      "date": "2026-11-10T01:25:35.845Z",
+      "date": "2026-11-10T21:33:34.154Z",
       "specSource": "https://www.aeta-audio.com/downloads/doc/manuals/manual_scoopy%2Bs.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2373,11 +2371,15 @@
           "ok": true
         },
         {
-          "gate": "proportionDrift",
+          "gate": "detail",
           "ok": true
         },
         {
-          "gate": "portSurface",
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
           "ok": true
         },
         {
@@ -2388,7 +2390,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "ev-re50",

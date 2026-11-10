@@ -46,7 +46,7 @@ const FILL_MAX_SHARE = 0.4
 /** How many pixels inside the product the fill takes its colour from (its edge pixels are anti-aliased blends with the background). */
 const FILL_EDGE_INSET = 4
 
-const FACES: ProjectionFace[] = ['io', 'opposite', 'top', 'left', 'wrap']
+const FACES: ProjectionFace[] = ['io', 'opposite', 'top', 'left', 'right', 'wrap']
 
 /** `face=file`, `face=file@left,top,width,height`, either with the suffix `,fill` (the CLI's --project-photo). */
 export function parsePhotoArg(arg: string): PhotoArg {

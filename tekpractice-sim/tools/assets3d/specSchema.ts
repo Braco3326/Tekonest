@@ -65,7 +65,7 @@ const ZoneColour = z.object({
   colour: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'colour must be #rrggbb'),
 }).strict()
 
-const ProjectionFaceEnum = z.enum(['io', 'opposite', 'top', 'left', 'wrap'])
+const ProjectionFaceEnum = z.enum(['io', 'opposite', 'top', 'left', 'right', 'wrap'])
 
 /** The triangle floor and ceiling a model must land in (gate 'detail'): a floor stops a plain box passing as a finished model. */
 const TriangleBudget = z.object({

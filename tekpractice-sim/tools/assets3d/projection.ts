@@ -33,7 +33,7 @@ const STDERR_TAIL = 2000
 const MM = 0.001
 
 /** wrap = the unrolled side surface of a lathe (circumference x height): a picture only, no render view. */
-export type ProjectionFace = 'io' | 'opposite' | 'top' | 'left' | 'wrap'
+export type ProjectionFace = 'io' | 'opposite' | 'top' | 'left' | 'right' | 'wrap'
 const VIEW_OF: Partial<Record<ProjectionFace, ViewName>> = { io: 'io', opposite: 'back', top: 'top', left: 'left' }
 
 export interface ProjectionDeps {
@@ -56,7 +56,8 @@ export function projectionFaceMm(face: ProjectionFace, s: { w: number; h: number
     case 'io':
     case 'opposite': return { w: s.w, h: s.h }
     case 'top': return { w: s.w, h: s.d }
-    case 'left': return { w: s.d, h: s.h }
+    case 'left':
+    case 'right': return { w: s.d, h: s.h }
     case 'wrap': return { w: round2(Math.PI * s.w), h: s.h }
     default: throw new Error(`cannot project the ${String(face)} face: only io, opposite, top and left have a render view`)
   }

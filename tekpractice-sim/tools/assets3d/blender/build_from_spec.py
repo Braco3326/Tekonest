@@ -2472,6 +2472,8 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
         "opposite": ((0.0, 1.0, 0.0), lambda co: (w / 2 - co.x, co.z), (w, h)),
         "top": ((0.0, 0.0, 1.0), lambda co: (co.x + w / 2, d / 2 + co.y), (w, d)),
         "left": ((-1.0, 0.0, 0.0), lambda co: (d / 2 - co.y, co.z), (d, h)),
+        # the right side seen from outside: x runs from the io (rear) edge to the front, like the spec's right-face ports
+        "right": ((1.0, 0.0, 0.0), lambda co: (d / 2 + co.y, co.z), (d, h)),
         # the unrolled side surface of a lathe: u = angle around the axis (a whole turn = the picture width), v = height. Needs a picture whose
         # left and right edges match (the polygons at the seam reach past 1 and the texture repeats).
         "wrap": ((0.0, 0.0, 0.0), None, (math.pi * w, h)),
