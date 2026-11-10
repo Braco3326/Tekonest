@@ -69,6 +69,8 @@ export interface FixupOpts {
    * Default: cut, as for Meshy models, whose panels are solid.
    */
   recess?: boolean
+  /** The edge fillet the scripted builder measured on its mesh, in millimetres: written into the extras as `filletMm` for the 'fillet' gate. */
+  filletMm?: number
 }
 
 export interface ExecResult {
@@ -123,7 +125,7 @@ export async function runFixup(
 
   const placement = buildPlacement(spec)
   const flipUpright = opts.flipUpright === true
-  const plan = { id: spec.id, kind: spec.kind, yawDeg, flipUpright, ...(opts.recess === false ? { recess: false } : {}), placement, extras: toExtras(spec, placement) }
+  const plan = { id: spec.id, kind: spec.kind, yawDeg, flipUpright, ...(opts.recess === false ? { recess: false } : {}), placement, extras: { ...toExtras(spec, placement), ...(opts.filletMm !== undefined ? { filletMm: opts.filletMm } : {}) } }
 
   const tmp = await mkdtemp(join(tmpdir(), 'tekpractice-fixup-'))
   try {

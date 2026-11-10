@@ -95,7 +95,7 @@ interface Calls {
   create: { images: string[]; targetPolycount: number; topology?: string }[]
   wait: string[]
   download: string[]
-  fixup: { inGlb: string; outGlb: string; yawDeg: number | undefined; flipUpright: boolean | undefined; recess: boolean | undefined; inBytes: Uint8Array }[]
+  fixup: { inGlb: string; outGlb: string; yawDeg: number | undefined; flipUpright: boolean | undefined; recess: boolean | undefined; filletMm: number | undefined; inBytes: Uint8Array }[]
   compress: { bits: number }[]
   optimize: { maxPx: number; dataMaxPx: number | undefined }[]
   /** The order the texture and Draco steps ran in. */
@@ -123,6 +123,8 @@ interface Rig {
   catalog?: CatalogT
   /** The contact sheet renderer; default a recorder, null = no Blender. */
   renderSheet?: BuildDeps['renderSheet']
+  /** What the fake scripted builder reports having measured (default nothing). */
+  measure?: { filletMm?: number }
   /** Runs inside the fake waitForTask, i.e. after the paid create and before the task finishes. */
   onWait?: (id: string) => void
 }
@@ -180,7 +182,7 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
       },
     },
     runFixup: async (inGlb, outGlb, _spec, opts) => {
-      calls.fixup.push({ inGlb, outGlb, yawDeg: opts?.yawDeg, flipUpright: opts?.flipUpright, recess: opts?.recess, inBytes: new Uint8Array(await readFile(inGlb)) })
+      calls.fixup.push({ inGlb, outGlb, yawDeg: opts?.yawDeg, flipUpright: opts?.flipUpright, recess: opts?.recess, filletMm: opts?.filletMm, inBytes: new Uint8Array(await readFile(inGlb)) })
       const bytes = rig.fixed[Math.min(attempt, rig.fixed.length - 1)]
       const report = rig.fixupReports ? rig.fixupReports[Math.min(attempt, rig.fixupReports.length - 1)] : (rig.fixupReport ?? FIXUP_OK)
       attempt++
@@ -190,6 +192,7 @@ function makeDeps(rig: Rig): Partial<BuildDeps> {
     runBuilder: async (spec, outGlb) => {
       calls.build.push({ specId: spec.id, outGlb })
       await writeFile(outGlb, RAW_BYTES)
+      return rig.measure ?? {}
     },
     compress:
       rig.compress ??
@@ -1717,6 +1720,52 @@ describe('scripted build (--scripted)', () => {
     expect(calls.build).toHaveLength(1)
     expect(calls.fixup).toHaveLength(1)
     expect(report.error).toMatch(/gate size failed/)
+  })
+
+  describe('declared gates: build.budget (detail) and build.minFilletMm (fillet)', () => {
+    /** A speaker-like device spec that declares both, and a fixed GLB whose root extras carry the measured fillet (or none). */
+    const declared = (): AssetSpecT => deviceSpec({ tier: 'hero', build: { shape: 'curved-cabinet', budget: { min: 10, max: 5000 }, minFilletMm: 12 } })
+    const glbWithFillet = async (spec: AssetSpecT, filletMm?: number): Promise<Uint8Array> => {
+      const placement = buildPlacement(spec)
+      const nodes = [...placement.ports.map((p) => ({ name: p.name, pos: p.pos })), ...placement.controls.map((c) => ({ name: c.name, pos: c.pos }))]
+      return makeBoxGlb({ sizeM: placement.sizeM, nodes, extras: { tekpractice: { schema: 1, ...(filletMm !== undefined ? { filletMm } : {}) } } })
+    }
+
+    it('passes the builder-measured fillet to the fix-up, runs detail and fillet after budget, and records them in the manifest', async () => {
+      const spec = declared()
+      const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true }, makeDeps({ spec, fixed: [await glbWithFillet(spec, 16)], measure: { filletMm: 16 } }))
+      expect(report.ok).toBe(true)
+      expect(calls.fixup[0].filletMm).toBe(16)
+      const names = report.attempts[0].gates.map((g) => g.gate)
+      expect(names).toEqual(['size', 'transform', 'parts', 'portPositions', 'budget', 'detail', 'fillet', 'proportionDrift', 'textures', 'validator'])
+      expect(report.attempts[0].gates.every((g) => g.ok)).toBe(true)
+      const entry = (await readManifest()).assets.find((a) => a.id === spec.id)
+      expect((entry?.gates as { gate: string }[]).map((g) => g.gate)).toContain('fillet')
+    })
+
+    it('fails (a pipeline defect, no retry) when the GLB carries a fillet under the declared minimum, naming the numbers', async () => {
+      const spec = declared()
+      const report = await buildAsset(spec.id, { maxAttempts: 3, scripted: true, dryRun: true }, makeDeps({ spec, fixed: [await glbWithFillet(spec, 6)], measure: { filletMm: 6 } }))
+      expect(report.ok).toBe(false)
+      expect(report.attempts).toHaveLength(1)
+      expect(report.error).toMatch(/gate fillet failed/)
+      expect(report.attempts[0].gates.find((g) => g.gate === 'fillet')?.detail).toMatch(/6.00 mm.*12 mm/)
+    })
+
+    it('fails closed when a minimum is declared and the GLB carries no measured fillet', async () => {
+      const spec = declared()
+      const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true, dryRun: true }, makeDeps({ spec, fixed: [await glbWithFillet(spec)] }))
+      expect(report.ok).toBe(false)
+      expect(report.error).toMatch(/gate fillet failed/)
+    })
+
+    it('fails the detail gate when the model is a plain box under the declared floor', async () => {
+      const spec = deviceSpec({ tier: 'hero', build: { shape: 'curved-cabinet', budget: { min: 1500, max: 3500 } } })
+      const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true, dryRun: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+      expect(report.ok).toBe(false)
+      expect(report.error).toMatch(/gate detail failed/)
+      expect(report.attempts[0].gates.find((g) => g.gate === 'detail')?.detail).toMatch(/12 triangles.*1500 to 3500/)
+    })
   })
 
   it('--raw together with scripted is refused by the library too', async () => {

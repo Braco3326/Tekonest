@@ -10,7 +10,7 @@
  * The GLB is the raw input of attempt 1 of buildAsset: the fix-up and every gate run on it unchanged.
  * `exec` and `blender` are injectable so the contract is unit-tested without Blender.
  */
-import { mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -28,6 +28,17 @@ export interface BuildProjection {
   png: Uint8Array
 }
 
+/** What the builder measured on the mesh it made (written by build_from_spec.py next to its output, read back here). */
+export interface BuilderMeasure {
+  /** The smallest edge fillet the builder built, in millimetres (curved-cabinet): the 'fillet' gate checks it against build.minFilletMm. */
+  filletMm?: number
+}
+
+/** Where the builder writes its measurements: next to the GLB, <name>.measure.json. */
+export function measurePathOf(outGlb: string): string {
+  return resolve(outGlb).replace(/\.glb$/i, '.measure.json')
+}
+
 /** Absolute path of the Python script Blender runs. */
 export const BUILD_SCRIPT = resolve(dirname(fileURLToPath(import.meta.url)), 'blender', 'build_from_spec.py')
 
@@ -41,7 +52,7 @@ const STDERR_TAIL = 2000
  * Builds the raw GLB `outGlb` for `spec` with Blender. Throws when the spec has no (valid) build block, Blender is
  * missing, or the script fails (the message carries the BUILD_FAIL reason). Nothing is created before the spec is checked.
  */
-export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDeps = {}, projection?: BuildProjection | BuildProjection[]): Promise<void> {
+export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDeps = {}, projection?: BuildProjection | BuildProjection[]): Promise<BuilderMeasure> {
   if (!spec.build) throw new Error(`${spec.id}: no build block in the spec, so it cannot be built with --scripted`)
   const errors = validateBuild(spec)
   if (errors.length > 0) throw new Error(errors.join('; '))
@@ -102,7 +113,28 @@ export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDe
       const reason = fail ? fail[1].trim() : res.stderr.trim().slice(-STDERR_TAIL) || '(no stderr)'
       throw new Error(`Blender build of ${spec.id} failed (exit ${res.code}): ${reason}`)
     }
+    return await readMeasure(measurePathOf(outGlb), spec.id)
   } finally {
     await rm(tmp, { recursive: true, force: true })
   }
+}
+
+/** Reads the measurements the builder wrote; {} when it wrote none (most shapes measure nothing). A malformed file is an error, never silently ignored. */
+async function readMeasure(path: string, id: string): Promise<BuilderMeasure> {
+  let text: string
+  try {
+    text = await readFile(path, 'utf8')
+  } catch {
+    return {}
+  }
+  let parsed: unknown
+  try {
+    parsed = JSON.parse(text)
+  } catch {
+    throw new Error(`Blender build of ${id} wrote a malformed measurement file (not JSON): ${path}`)
+  }
+  const fillet = parsed !== null && typeof parsed === 'object' ? (parsed as Record<string, unknown>).filletMm : undefined
+  if (fillet === undefined) return {}
+  if (typeof fillet !== 'number' || !Number.isFinite(fillet)) throw new Error(`Blender build of ${id} wrote a filletMm that is not a finite number: ${String(fillet)}`)
+  return { filletMm: fillet }
 }

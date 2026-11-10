@@ -356,6 +356,58 @@ export function checkValidator(v: GltfValidation): GateResult {
   return { gate, ok: !(v.errors > 0), detail: `glTF validator: ${counts}${list}` }
 }
 
+/**
+ * Detail gate (2026-11-10): the triangle count lies between the floor and the ceiling the spec declares in `build.budget` (a rack
+ * unit 1500 to 3500, a speaker up to 4000 ...). The ceiling is the budget gate's job per tier; the FLOOR is what stops a plain
+ * 44-triangle box from passing as a finished model. Passes when no budget is declared; fails closed on a non-finite count.
+ */
+export function checkDetail(report: GlbReport, spec: AssetSpecT): GateResult {
+  const gate = 'detail'
+  const budget = spec.build?.budget
+  if (!budget) return { gate, ok: true, detail: 'no budget declared in the spec (build.budget), nothing to check' }
+  if (!Number.isFinite(report.triangles)) return { gate, ok: false, detail: `the triangle count is not finite (${String(report.triangles)})` }
+  const range = `${budget.min} to ${budget.max}`
+  // written as a positive range test so a NaN that slipped through still fails
+  if (report.triangles >= budget.min && report.triangles <= budget.max) return { gate, ok: true, detail: `${report.triangles} triangles, inside the declared ${range}` }
+  const why = report.triangles < budget.min ? `${budget.min - report.triangles} under the floor: a plain box, not a finished model` : `${report.triangles - budget.max} over the ceiling`
+  return { gate, ok: false, detail: `${report.triangles} triangles, the declared budget is ${range} (${why})` }
+}
+
+/**
+ * Fillet gate (2026-11-10): the edge fillet the builder measured on its own mesh (written into the GLB extras as filletMm) is at
+ * least `build.minFilletMm`. Passes when no minimum is declared. Fails closed on NaN, Infinity, and on a missing measurement when
+ * a minimum is declared (a model that never went through a builder that measures it cannot prove its rounding).
+ */
+export function checkFillet(measuredMm: number | null, spec: AssetSpecT): GateResult {
+  const gate = 'fillet'
+  const min = spec.build?.minFilletMm
+  if (min === undefined) return { gate, ok: true, detail: 'no minimum fillet declared in the spec (build.minFilletMm), nothing to check' }
+  if (measuredMm === null) return { gate, ok: false, detail: `the spec asks for a fillet of at least ${min} mm but the GLB extras carry no measured filletMm (the builder did not write one)` }
+  if (!Number.isFinite(measuredMm)) return { gate, ok: false, detail: `the measured fillet is not finite (${String(measuredMm)})` }
+  if (!(measuredMm >= min - EPS_M * 1000)) return { gate, ok: false, detail: `the measured fillet is ${measuredMm.toFixed(2)} mm, the spec asks for at least ${min} mm` }
+  return { gate, ok: true, detail: `measured fillet ${measuredMm.toFixed(2)} mm, at least the declared ${min} mm` }
+}
+
+/** The measured fillet the builder wrote into the root extras (`tekpractice.filletMm`), or null when it is absent or not a finite number. */
+export function filletFromExtras(extras: unknown): number | null {
+  if (extras === null || typeof extras !== 'object') return null
+  const t = (extras as Record<string, unknown>).tekpractice
+  if (t === null || typeof t !== 'object') return null
+  const v = (t as Record<string, unknown>).filletMm
+  return typeof v === 'number' && Number.isFinite(v) ? v : null
+}
+
+/**
+ * The gates a spec's `build` block declares on top of the five asset gates: `detail` when it has a budget, `fillet` when it has a
+ * minimum fillet. Empty for every spec that declares neither, so the gate lists (and the manifest rows) of the other assets do not change.
+ */
+export function declaredGates(report: GlbReport, spec: AssetSpecT): GateResult[] {
+  const out: GateResult[] = []
+  if (spec.build?.budget) out.push(checkDetail(report, spec))
+  if (spec.build?.minFilletMm !== undefined) out.push(checkFillet(filletFromExtras(report.extras), spec))
+  return out
+}
+
 /** Runs the five asset gates in order (size, transform, parts, portPositions, budget). Never short-circuits. */
 export function runGates(report: GlbReport, spec: AssetSpecT, placement: Placement): GateResult[] {
   return [

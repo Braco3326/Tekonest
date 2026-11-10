@@ -3,7 +3,8 @@
  * temp-dir clean-up of the Node side of the scripted builder.
  */
 import { existsSync } from 'node:fs'
-import { readFile } from 'node:fs/promises'
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { BUILDER_VERSION, BUILD_SCRIPT, runBuilder } from '../../../tools/assets3d/runBuilder'
@@ -209,5 +210,46 @@ describe('runBuilder with a projection (unit, injected exec)', () => {
     }
     await runBuilder(boxSpec(), 'out/raw.glb', { exec, blender: 'C:/fake/blender.exe' }, [{ face: 'top', png: new Uint8Array([1]) }, { face: 'io', png: new Uint8Array([2, 3]) }])
     expect(files).toEqual(['top:1', 'io:2,3'])
+  })
+})
+
+describe('runBuilder measurements (the builder writes <out>.measure.json, runBuilder reads it back)', () => {
+  /** A fake exec that writes `content` as the measurement file next to the --out GLB. */
+  function measuringExec(content: string | null): (file: string, args: string[]) => Promise<ExecResult> {
+    return async (_file, args) => {
+      const out = argAfter(args, '--out')
+      if (content !== null) await writeFile(out.replace(/\.glb$/i, '.measure.json'), content)
+      return { code: 0, stdout: '', stderr: '' }
+    }
+  }
+  const speaker = (): AssetSpecT => plugSpec({ id: 'test-speaker', kind: 'device', tier: 'hero', mating: undefined, realSizeMm: { w: 189, h: 299, d: 178 }, build: { shape: 'curved-cabinet' } })
+
+  it('returns the measured fillet the script wrote', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'tekpractice-measure-'))
+    try {
+      const out = join(dir, 'raw.glb')
+      expect(await runBuilder(speaker(), out, { exec: measuringExec('{"filletMm": 21.5}'), blender: 'b' })).toEqual({ filletMm: 21.5 })
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('returns an empty measurement when the script wrote none (most shapes)', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'tekpractice-measure-'))
+    try {
+      expect(await runBuilder(speaker(), join(dir, 'raw.glb'), { exec: measuringExec(null), blender: 'b' })).toEqual({})
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('refuses a measurement file that is not JSON, or whose fillet is not a finite number', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'tekpractice-measure-'))
+    try {
+      await expect(runBuilder(speaker(), join(dir, 'a.glb'), { exec: measuringExec('not json'), blender: 'b' })).rejects.toThrow(/malformed measurement/)
+      await expect(runBuilder(speaker(), join(dir, 'b.glb'), { exec: measuringExec('{"filletMm": "big"}'), blender: 'b' })).rejects.toThrow(/filletMm.*finite/)
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
   })
 })

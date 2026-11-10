@@ -127,6 +127,14 @@ describe('runFixup (unit, injected exec)', () => {
     expect(calls[1].plan).not.toHaveProperty('recess')
   })
 
+  it('writes the builder-measured fillet into the extras of plan.json, next to the real size, only when given', async () => {
+    const { exec, calls } = fakeExec()
+    await runFixup('in.glb', 'out.glb', deviceSpec(), { filletMm: 21.5 }, { exec, blender: 'blender' })
+    await runFixup('in.glb', 'out.glb', deviceSpec(), {}, { exec, blender: 'blender' })
+    expect((calls[0].plan as { extras: unknown }).extras).toMatchObject({ schema: 1, realSizeMm: deviceSpec().realSizeMm, filletMm: 21.5 })
+    expect((calls[1].plan as { extras: object }).extras).not.toHaveProperty('filletMm')
+  })
+
   it('fixup.py skips the port recess cuts when the plan says recess false', () => {
     const py = readFileSync(FIXUP_SCRIPT, 'utf8')
     expect(py).toContain('recess = plan.get("recess", True) is not False')

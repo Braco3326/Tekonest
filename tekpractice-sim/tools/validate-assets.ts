@@ -19,7 +19,7 @@ import { existsSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { checkTextures, checkValidator, runGates } from './assets3d/gates'
+import { checkTextures, checkValidator, declaredGates, runGates } from './assets3d/gates'
 import type { GateResult } from './assets3d/gates'
 import { inspectGlb } from './assets3d/inspect'
 import { DEFAULT_SPEC_DIR } from './assets3d/loadSpecs'
@@ -93,7 +93,7 @@ async function validateOne(id: string, glbFile: string | undefined, specFile: st
     const report = await inspectGlb(bytes)
     // A legacy GLB (no pipeline extras) is not measured against the new spec: its rebuild is pending.
     if (!hasPipelineExtras(report.extras)) return { id, status: 'pending', results: [] }
-    results = [...runGates(report, spec, buildPlacement(spec)), checkTextures(report, spec), checkValidator(await validateGltf(bytes))]
+    results = [...runGates(report, spec, buildPlacement(spec)), ...declaredGates(report, spec), checkTextures(report, spec), checkValidator(await validateGltf(bytes))]
   } catch (e) {
     return { id, status: 'failed', results: [fail('glb', `cannot read ${basename(glbFile)}: ${message(e)}`)] }
   }

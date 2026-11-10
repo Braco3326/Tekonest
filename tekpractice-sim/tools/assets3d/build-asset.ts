@@ -67,7 +67,7 @@ import type { PhotoArg } from './photoProjection'
 import { renderProjection, shiftPictureX } from './projection'
 import { orientSlab } from './slab'
 import type { Projection, ProjectionFace } from './projection'
-import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, runGates, DATA_TEXTURE_MAX_PX, textureMaxPx, TRIANGLE_CEILING } from './gates'
+import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, declaredGates, runGates, DATA_TEXTURE_MAX_PX, textureMaxPx, TRIANGLE_CEILING } from './gates'
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
 import type { GlbReport } from './inspect'
@@ -81,7 +81,7 @@ import { createMultiImageTask, downloadGlb, MESHY_MODEL, MeshyError, waitForTask
 import type { MeshyOpts, MeshyTask } from './meshy'
 import { buildPlacement } from './placement'
 import { BUILDER_VERSION, runBuilder } from './runBuilder'
-import type { BuildProjection } from './runBuilder'
+import type { BuildProjection, BuilderMeasure } from './runBuilder'
 import { runFixup } from './runFixup'
 import type { FixupOpts, FixupReport, YawDeg } from './runFixup'
 import { validateBuild } from './shapes'
@@ -135,7 +135,7 @@ export interface BuildDeps {
   }
   runFixup: (inGlb: string, outGlb: string, spec: AssetSpecT, opts?: FixupOpts) => Promise<FixupReport>
   /** The scripted builder: writes the raw GLB of a spec with a `build` block (default: runBuilder with Blender). */
-  runBuilder: (spec: AssetSpecT, outGlb: string, projections?: BuildProjection[]) => Promise<void>
+  runBuilder: (spec: AssetSpecT, outGlb: string, projections?: BuildProjection[]) => Promise<BuilderMeasure | void>
   /** The flat image of one face of a fixed-up Meshy model (default: renderProjection with Blender). */
   renderProjection: (glb: string, face: ProjectionFace, expectedMm?: { w: number; h: number; d: number }) => Promise<Projection>
   /** The picture of a face made from a straight-on photo (default: photoProjection). */
@@ -306,7 +306,8 @@ async function writeAtomic(target: string, bytes: Uint8Array): Promise<void> {
 /** The five asset gates over the bytes of a GLB, measured fresh with inspectGlb (the report is kept for the textures gate). */
 async function measure(bytes: Uint8Array, spec: AssetSpecT): Promise<{ gates: GateResult[]; triangles: number; report: GlbReport }> {
   const report = await inspectGlb(bytes)
-  return { gates: runGates(report, spec, buildPlacement(spec)), triangles: report.triangles, report }
+  // the gates the spec's build block declares (detail, fillet) follow the five asset gates; none for a spec that declares nothing
+  return { gates: [...runGates(report, spec, buildPlacement(spec)), ...declaredGates(report, spec)], triangles: report.triangles, report }
 }
 
 /** The two gates that only make sense on the FINAL bytes: textures (sizes, file size) and the Khronos glTF validator. */
@@ -484,6 +485,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
     try {
       const rawPath = join(work, `attempt-${n}.raw.glb`)
       let raw: Uint8Array | null = null
+      let builderMeasure: BuilderMeasure = {}
       if (scripted) {
         let projections: BuildProjection[] | undefined
         if (hybrid) {
@@ -512,7 +514,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
           if (opts.rawTaskId) attempt.taskId = opts.rawTaskId
           d.log(`projecting ${faces.map((f) => (photos.some((p) => p.face === f) ? f + ' (photo)' : f + ' (Meshy)')).join(', ')}`)
         }
-        await d.runBuilder(spec, rawPath, projections)
+        builderMeasure = (await d.runBuilder(spec, rawPath, projections)) ?? {}
       } else if (rawBytes) {
         raw = opts.slab ? await orientSlab(rawBytes, spec.realSizeMm) : rawBytes
         if (opts.rawTaskId) attempt.taskId = opts.rawTaskId
@@ -534,7 +536,7 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
       if (raw) await writeFile(rawPath, raw)
       await persist()
 
-      const fixup = await d.runFixup(rawPath, fixedPath, spec, { yawDeg: opts.yawDeg ?? 0, flipUpright: opts.flipUpright === true, ...(scripted ? { recess: false } : {}) })
+      const fixup = await d.runFixup(rawPath, fixedPath, spec, { yawDeg: opts.yawDeg ?? 0, flipUpright: opts.flipUpright === true, ...(scripted ? { recess: false } : {}), ...(builderMeasure.filletMm !== undefined ? { filletMm: builderMeasure.filletMm } : {}) })
       await persist()
       if (d.renderSheet) {
         // The review image for this attempt (yaw / flip are read off it). Best effort: never fails the build.
