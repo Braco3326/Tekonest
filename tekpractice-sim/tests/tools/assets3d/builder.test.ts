@@ -136,7 +136,7 @@ describe('build_from_spec.py registry', () => {
 })
 
 /** Connector ids whose spec and GLB were migrated to the scripted builder in the 2026-11-10 night round (grows with each family). */
-const MIGRATED_CONNECTORS = ['xlr3-m', 'xlr5-m', 'xlr5-f', 'iec-c14', 'iec-c13', 'schuko-plug', 'schuko-socket', 'speakon-nl4', 'powercon-blue', 'powercon-true1', 'ts-quarter', 'trs-35mm', 'tt-bantam']
+const MIGRATED_CONNECTORS = ['xlr3-m', 'xlr5-m', 'xlr5-f', 'iec-c14', 'iec-c13', 'schuko-plug', 'schuko-socket', 'speakon-nl4', 'powercon-blue', 'powercon-true1', 'ts-quarter', 'trs-35mm', 'tt-bantam', 'usb-a', 'usb-b', 'usb-c']
 
 describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : 'SKIPPED, Blender not found: install Blender or set BLENDER_EXE'})`, () => {
   let dir = ''

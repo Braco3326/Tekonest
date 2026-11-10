@@ -1,0 +1,28 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "usb-a",
+  "realSizeMm": {
+    "w": 16,
+    "h": 9,
+    "d": 42
+  },
+  "mating": {
+    "role": "plug"
+  },
+  "build": {
+    "shape": "usb-plug",
+    "params": {
+      "type": 1
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://en.wikipedia.org/wiki/USB_hardware",
+      "note": "USB hardware article (opened, Dimensions table): Standard-A plug 12.0 x 4.5 mm, insertion length 11.75 mm minimum; receptacle opening 12.5 x 5.12 mm, 8.88 mm deep; 4 contacts (VBUS, D-, D+, GND). The model is the CABLE-END plug (the catalog usb-a matesWith usb-b). Estimated: shell wall 0.3 mm, insulator tongue and contact strips, black overmould and boot (the overmould box is the model size), cable 4.8 mm."
+    }
+  ]
+}

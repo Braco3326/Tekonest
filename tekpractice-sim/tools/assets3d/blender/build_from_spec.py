@@ -1292,6 +1292,73 @@ def build_locking_plug(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+USB_DIMS_MM = {
+    # type: (shell width, shell height, insertion length, contact count, chamfer of the two top corners)
+    1: (12.0, 4.5, 11.75, 4, 0.0),    # Standard-A plug
+    2: (8.0, 7.25, 11.75, 4, 1.4),    # USB 2 Standard-B plug
+    3: (8.25, 2.4, 6.51, 12, 0.0),    # Type-C plug (drawn with 12 contacts per side reduced to 6 strips)
+}
+
+
+def usb_shell_outline(kind: int, w: float, h: float, c: float) -> list[tuple[float, float]]:
+    """The outline of a USB plug shell, counter-clockwise: a rectangle (A), a rectangle with the two TOP corners cut (B), a stadium (C, 4 points per end)."""
+    if kind == 3:
+        r = h / 2.0
+        pts = []
+        for k in range(5):                                   # right end, bottom to top
+            a = -math.pi / 2 + math.pi * k / 4
+            pts.append((w / 2 - r + r * math.cos(a), r * math.sin(a)))
+        for k in range(5):                                   # left end, top to bottom
+            a = math.pi / 2 + math.pi * k / 4
+            pts.append((-w / 2 + r + r * math.cos(a), r * math.sin(a)))
+        return pts
+    if c > 0:
+        return [(-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2 - c), (w / 2 - c, h / 2), (-w / 2 + c, h / 2), (-w / 2, h / 2 - c)]
+    return [(-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2), (-w / 2, h / 2)]
+
+
+def build_usb_plug(plan: Plan) -> bpy.types.Object:
+    """A USB cable plug (params.type: 1 Standard-A, 2 USB 2 Standard-B, 3 Type-C), mating face at z = 0, cable at z = d.
+
+    A hollow nickel shell of the published size and insertion length (Wikipedia, USB hardware: A 12.0 x 4.5 mm, B 8.0 x 7.25 mm, C 8.25 x 2.4 mm), an
+    insulator tongue with gold contact strips inside it, a black overmould (the box width and height) and a tapering boot to the cable.
+    Estimated: wall 0.3 mm, tongue size, contact strips, overmould length, boot."""
+    w, h, d = size_m(plan)
+    mm = MM
+    kind = int((plan.get("params") or {}).get("type", 1))
+    if kind not in USB_DIMS_MM:
+        raise BuildError(f"params.type must be 1 (A), 2 (B) or 3 (C), got {kind}")
+    sw, sh, sl, nc, cham = (v * mm if i < 3 or i == 4 else v for i, v in enumerate(USB_DIMS_MM[kind]))
+    if w <= sw + 1.0 * mm or h <= sh + 1.0 * mm or d <= sl + 14.0 * mm:
+        raise BuildError("usb-plug: sizeMm must exceed the shell by 1 mm each way and be deeper than the shell plus 14 mm")
+    outer = usb_shell_outline(kind, sw, sh, cham)
+    wall = 0.3 * mm
+    inner = [(x * (sw / 2 - wall) / (sw / 2), y * (sh / 2 - wall) / (sh / 2)) for x, y in outer]
+    body = Body("usb-plug")
+    bm = body.bm
+    ring_wall(bm, outer, inner, 0.0, sl)
+    body.done(NICKEL)
+    # insulator tongue inside the shell (contacts on its face): for A and B it hangs under the roof of the shell, for C it is the centre paddle
+    tw = sw - 2.2 * mm if kind != 2 else sw - 2.4 * mm
+    th = 0.8 * mm if kind != 3 else 0.6 * mm
+    ty = (sh / 2 - wall - th / 2) if kind != 3 else 0.0
+    box(bm, -tw / 2, tw / 2, ty - th / 2, ty + th / 2, 1.0 * mm, sl - 0.2 * mm)
+    body.done(DARK)
+    strips = 4 if kind != 3 else 6
+    pitch = (tw - 1.0 * mm) / strips
+    for i in range(strips):
+        cx = -tw / 2 + 0.5 * mm + pitch * (i + 0.5)
+        box(bm, cx - pitch * 0.3, cx + pitch * 0.3, ty - th / 2 - 0.1 * mm, ty - th / 2 + 0.05 * mm, 2.0 * mm, sl - 0.8 * mm)
+    body.done(GOLD)
+    # overmould and boot
+    om_len = d - sl - 8.0 * mm
+    extrude_xy(bm, [(-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2), (-w / 2, h / 2)], sl, sl + om_len)
+    body.done(BLACK)
+    cylinder_between(bm, g2b(0.0, 0.0, sl + om_len - 0.5 * mm), g2b(0.0, 0.0, d), min(w, h) * 0.32, 2.4 * mm, segments=12)
+    body.done(BLACK)
+    return body.finish()
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "cylinder-plug": build_cylinder_plug,
@@ -1309,6 +1376,7 @@ SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "schuko-plug": build_schuko_plug,
     "schuko-socket": build_schuko_socket,
     "locking-plug": build_locking_plug,
+    "usb-plug": build_usb_plug,
     "cable-assembly": build_cable_assembly,
 }
 

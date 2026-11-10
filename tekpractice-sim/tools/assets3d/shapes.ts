@@ -9,7 +9,7 @@
 import type { AssetSpecT } from './specSchema'
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -58,6 +58,8 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   'schuko-socket': { kind: 'connector', params: [], needsMatingOuter: false },
   // A Neutrik twist-lock round cable connector (speakON, powerCON): contacts = 3 or 4 holes in the face, colour = 1 black, 2 blue, 3 grey housing.
   'locking-plug': { kind: 'connector', params: ['contacts', 'colour'], needsMatingOuter: false },
+  // A USB cable plug: type = 1 Standard-A, 2 USB 2 Standard-B, 3 Type-C (published shell sizes, black overmould, boot).
+  'usb-plug': { kind: 'connector', params: ['type'], needsMatingOuter: false },
 }
 
 /** Default diameter of a socket pocket when the port gives no openingMm, in millimetres (the builder uses the same). */

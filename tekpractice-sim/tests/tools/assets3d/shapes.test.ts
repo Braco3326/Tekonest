@@ -173,6 +173,13 @@ describe('xlr-male-plug and the pins param of cylinder-plug', () => {
   })
 })
 
+describe('usb-plug', () => {
+  it('is a connector shape with a type param (1 A, 2 B, 3 C)', () => {
+    expect(SHAPE_SPECS['usb-plug']).toMatchObject({ kind: 'connector', needsMatingOuter: false })
+    expect([...SHAPE_SPECS['usb-plug'].params]).toEqual(['type'])
+  })
+})
+
 describe('trs-plug params for the TS plug and the miniature plugs', () => {
   it('takes barrelMm, zScale and poles (2 = TS, 3 = TRS)', () => {
     expect([...SHAPE_SPECS['trs-plug'].params].sort()).toEqual(['barrelMm', 'poles', 'zScale'])
