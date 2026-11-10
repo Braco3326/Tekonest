@@ -29,7 +29,7 @@ export const PortSpec = z.object({
   face: Face,
   xMm: CoordMm,
   yMm: CoordMm,
-  confidence: z.enum(['manual', 'photo']).describe('manual = read from a manual or datasheet drawing; photo = read from a photo (a skeleton starts as photo, zeroed, for a human to fill).'),
+  confidence: z.enum(['manual', 'photo', 'guess']).describe('manual = read from a manual or datasheet drawing; photo = read from a photo (a skeleton starts as photo, zeroed, for a human to fill); guess = invented by us for a stand-in device that has no manual drawing and no photo of its real panel (the position is plausible, not measured).'),
   openingMm: PositiveMm.optional().describe('Diameter of the circular opening of the port, in millimetres (R3).'),
   insetMm: z.number().finite().min(0).max(200).optional().describe('How far behind the bounding-box face the real jack sits, in millimetres: a connector panel recessed into a speaker cabinet. The port node is placed that far inside the face plane (default 0 = on it).'),
 }).strict()

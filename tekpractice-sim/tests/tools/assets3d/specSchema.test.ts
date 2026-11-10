@@ -138,6 +138,19 @@ describe('AssetSpec build.projection', () => {
   })
 })
 
+describe('PortSpec confidence', () => {
+  const parse = (confidence: unknown): boolean => {
+    const base = specFor(fresh(), 'qsc-k12-2')
+    return AssetSpec.safeParse({ ...base, ports: [{ ...base.ports[0], confidence }] }).success
+  }
+  it('accepts manual, photo and guess (a position invented for a stand-in device that has no manual and no photo), and nothing else', () => {
+    expect(parse('manual')).toBe(true)
+    expect(parse('photo')).toBe(true)
+    expect(parse('guess')).toBe(true)
+    expect(parse('estimate')).toBe(false)
+  })
+})
+
 describe('AssetSpec build.projectionShiftMm', () => {
   const base = (): AssetSpecT => specFor(fresh(), 'qsc-k12-2')
   const parse = (projectionShiftMm: unknown): boolean => AssetSpec.safeParse({ ...base(), build: { shape: 'rack-box', projection: ['io', 'opposite'], projectionShiftMm } }).success

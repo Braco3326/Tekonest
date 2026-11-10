@@ -13,14 +13,14 @@
       "face": "io",
       "xMm": 85,
       "yMm": 150,
-      "confidence": "photo"
+      "confidence": "guess"
     },
     {
       "portId": "power-in",
       "face": "io",
       "xMm": 125,
       "yMm": 45,
-      "confidence": "photo"
+      "confidence": "guess"
     }
   ],
   "controls": [
@@ -55,7 +55,7 @@
     {
       "kind": "datasheet",
       "url": "https://www.avid.com/products/Pro-Tools-HDX",
-      "note": "Avid Pro Tools | HDX product page (opened): HDX card with two DigiLink ports (64 channels) and one DigiSerial port; no dimensions."
+      "note": "Avid Pro Tools | HDX product page (opened): HDX card with two DigiLink ports (64 channels) and one DigiSerial port; no dimensions.  PORT POSITIONS (both, confidence 'guess' since 2026-11-10): the box is a role-based workstation stand-in with no real panel; the DigiLink and the power inlet are placed at plausible positions on its rear plate. No source gives coordinates for them (searched again on 2026-11-10: Avid documents only the PCIe card, whose DigiLink Mini ports are on the card bracket, not on a workstation panel)."
     },
     {
       "kind": "manual",

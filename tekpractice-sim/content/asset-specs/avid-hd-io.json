@@ -129,7 +129,7 @@
     {
       "kind": "manual",
       "url": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
-      "note": "Avid HD I/O Guide v8.1 (opened, PDF text read and the two panel illustrations on p.5 and p.7 extracted locally): front panel = power button with LED ring, sample-rate and sync-mode LEDs, loop-master LED and 16x2 meters; back panel (8x8x8 configuration) = Bay 1 Analog In (two DB25: +4 dBu left, -10 dBV right), Bay 2 Analog Out (DB25), Bay 3 Digital I/O (AES/EBU DB25, TDIF DB25, ADAT optical, AES/EBU XLR in/out, S/PDIF RCA, WORD CLOCK and LOOP SYNC BNC in/out), Bay 4 empty, DigiLink EXPANSION and PRIMARY ports, ACCESSORY DB9, IEC inlet. The guide states no physical dimensions."
+      "note": "Avid HD I/O Guide v8.1 (opened, PDF text read and the two panel illustrations on p.5 and p.7 extracted locally): front panel = power button with LED ring, sample-rate and sync-mode LEDs, loop-master LED and 16x2 meters; back panel (8x8x8 configuration) = Bay 1 Analog In (two DB25: +4 dBu left, -10 dBV right), Bay 2 Analog Out (DB25), Bay 3 Digital I/O (AES/EBU DB25, TDIF DB25, ADAT optical, AES/EBU XLR in/out, S/PDIF RCA, WORD CLOCK and LOOP SYNC BNC in/out), Bay 4 empty, DigiLink EXPANSION and PRIMARY ports, ACCESSORY DB9, IEC inlet. The guide states no physical dimensions.  DEPTH 355.6 mm (14 in) is NOT sourced: searched again 2026-11-10, no Avid page or datasheet gives the chassis depth (retailers list only 2U and about 24 lb; an Avid forum thread (duc.avid.com, 2013) has users measuring about 13 in and about 14.75 in including the jacks), so 355.6 mm stays as a middle value, unconfirmed within about +/- 25 mm; the port y positions do not depend on it."
     },
     {
       "kind": "photo",

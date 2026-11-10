@@ -13,21 +13,21 @@
       "face": "io",
       "xMm": 95,
       "yMm": 45,
-      "confidence": "photo"
+      "confidence": "guess"
     },
     {
       "portId": "out-analog-consumer",
       "face": "io",
       "xMm": 45,
       "yMm": 68,
-      "confidence": "photo"
+      "confidence": "guess"
     },
     {
       "portId": "power-in",
       "face": "io",
       "xMm": 245,
       "yMm": 46,
-      "confidence": "photo"
+      "confidence": "guess"
     }
   ],
   "controls": [
@@ -64,7 +64,7 @@
     {
       "kind": "datasheet",
       "url": "https://www.dell.com/en-us/shop/desktops/small-form-factor/spd/optiplex-7010-small-ff",
-      "note": "Dell OptiPlex 7010 SFF shop page (opened): the specs section did not load, so it gave no dimensions or port layout. Nothing on this page was used for a number."
+      "note": "Dell OptiPlex 7010 SFF shop page (opened): the specs section did not load, so it gave no dimensions or port layout. Nothing on this page was used for a number.  PORT POSITIONS (all three, confidence 'guess' since 2026-11-10): invented for a stand-in small-form-factor PC, plausible places on its rear plate (RJ-45 left of centre, audio jack top left, power inlet right). Searched again on 2026-11-10: Dell's technical guidebook gives no coordinates for the rear connectors (its PDF link was not reachable), the owner's manual lists the connectors without positions."
     }
   ]
 }
