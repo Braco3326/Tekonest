@@ -91,17 +91,33 @@
       "kind": "datasheet",
       "url": "https://www.neutrik.com/en/product/nc3md-l-1",
       "note": "Neutrik NC3MD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". The QSC XLR/combo receptacles use the same D-size footprint (guess, from the photo), so openingMm = 24 for the two XLR ports."
+    },
+    {
+      "kind": "photo",
+      "url": "https://cdn.shopify.com/s/files/1/0687/4667/4285/files/q_spk_k2_12_img_front.png",
+      "note": "QSC K12.2 official front render (1172 x 2500 px, opened, silhouette profiled row by row; the mirrored floor reflection is cropped off): the body is 1115 px wide for 356 mm (3.13 px/mm) and 1842 px tall for 602 mm, its sides lose about 4 mm each at the top end and 3 mm at the bottom compared with the widest point near 195 mm above the base (curved-cabinet barrelMm 4, barrelCentreMm 195), and the top corners round off by about 17 mm horizontally over 24 mm vertically (edgeRadiusMm 18, edgeDropMm 24). The front picture is this render cropped to (36,46,1115,1842), the left picture the side render side.png cropped to (147,135,1150,1975), both with the white corners filled (--project-photo ...,fill); the rear picture is still the Meshy render (projectionShiftMm io 68 unchanged). The plan (front 356 mm, 346 mm wide 230 mm behind the baffle, rear polygon 168 mm, corner radii 30 / auto / 36 mm) is the old hexagon with rounded corners, an estimate: no top view exists. The rear amplifier recess, the side handles and the rigging points are not modelled."
     }
   ],
   "build": {
-    "shape": "speaker-cabinet",
+    "shape": "curved-cabinet",
     "params": {
-      "midWidthMm": 340,
+      "planFrontMm": 356,
+      "midWidthMm": 346,
+      "midDepthMm": 230,
       "rearWidthMm": 168,
-      "taperDepthMm": 120,
-      "chamferMm": 4,
-      "bevelSegments": 2
+      "frontRadiusMm": 30,
+      "backRadiusMm": 36,
+      "edgeRadiusMm": 18,
+      "edgeDropMm": 24,
+      "edgeSegments": 8,
+      "barrelMm": 4,
+      "barrelCentreMm": 195
     },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 15,
     "projection": [
       "io",
       "opposite",

@@ -99,17 +99,31 @@
       "kind": "datasheet",
       "url": "https://www.neutrik.com/en/product/nc3md-l-1",
       "note": "Neutrik NC3MD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". openingMm = 24 for the XLR ports by that convention (guess: the drawing shows the connector rings about 21 mm across)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://usa.yamaha.com/files/photoviewer_speaker_dbr12_side%20left_76132858e85bb3dac11ee872ed712381.jpg",
+      "note": "Yamaha DBR12 side-left photo (2500 x 4360 px, opened, silhouette profiled row by row): the cabinet is 2271 px deep for 348 mm (6.5 px/mm), and its rear edge is 28 mm shallower in the waist (the handle zone, 190 to 540 mm above the base) than at the top and bottom lobes, which the extruded plan does not follow (the picture does: the notch is filled with the body colour and the handle recess is painted). The front photo gives the top corners: 19 mm inset at the very top, full width 36 mm lower (edgeRadiusMm 20, edgeDropMm 30). The three pictures are the real front (113,180,2273,3618), rear (454,105,1092,1789) and side (114,198,2271,3963) photos with the white corners filled (--project-photo ...,fill). The plan (front 376 mm, 330 mm wide 250 mm behind the baffle, rear polygon 200 mm, corner radii 24 / auto / 40 mm) is an estimate from the 3/4 photos; the two rubber feet and the side handle recesses are not modelled."
     }
   ],
   "build": {
-    "shape": "speaker-cabinet",
+    "shape": "curved-cabinet",
     "params": {
-      "midWidthMm": 316,
-      "rearWidthMm": 190,
-      "taperDepthMm": 55,
-      "chamferMm": 4,
-      "bevelSegments": 2
+      "planFrontMm": 376,
+      "midWidthMm": 330,
+      "midDepthMm": 250,
+      "rearWidthMm": 200,
+      "frontRadiusMm": 24,
+      "backRadiusMm": 40,
+      "edgeRadiusMm": 20,
+      "edgeDropMm": 30,
+      "edgeSegments": 8
     },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 16,
     "projection": [
       "io",
       "opposite",
