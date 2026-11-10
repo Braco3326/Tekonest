@@ -131,6 +131,10 @@ A console is a few hundred small meshes (the QL1: about 380 drawn parts and as m
 The surface is therefore drawn only for the **selected** device and for devices within 3.5 m of the camera; an inactive rig draws nothing
 and its meters / screens neither run nor ask for frames, so an overview with consoles in it renders at the old cost and an idle page
 stays idle. Meters and live screens run on one ticker (30 fps, screens ~15 fps) and invalidate the render scheduler only when something redrew.
+**They run only while audio plays** (Écoute › Lecture: the app already holds a render lease for its own meters then; `host.setMetersLive`
+is driven from the listen controller's `onChange`). Otherwise every meter rests dark, no timer runs, and the page keeps its « idle = 0 renders »
+budget with a console selected; a screen still redraws at once when a value changes (a drag, the panel, undo). `debug.setMetersLive(true)`
+turns them on for a demo or a test.
 
 ## Not done (by design or by time)
 

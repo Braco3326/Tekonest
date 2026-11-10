@@ -1161,6 +1161,16 @@ export class SceneHost {
    * Level of detail of the hands-on surfaces: a console's few hundred small parts are drawn only for the selected device and the ones within
    * CONTROL_NEAR_M of the camera (they are specks from the overview, and meters must not keep the page rendering for nothing).
    */
+  /** Meters and live screens animate only while audio plays (the app already holds a render lease for its own meters then). */
+  private metersLive = false
+
+  setMetersLive(on: boolean): void {
+    if (on === this.metersLive) return
+    this.metersLive = on
+    this.updateControlLod()
+    this.scheduler.invalidate()
+  }
+
   private updateControlLod(): void {
     const cam = this._camera
     for (const [id, inst] of this.instances) {
@@ -1170,11 +1180,12 @@ export class SceneHost {
       const on = id === this.selected || near
       if (on !== rig.isActive) {
         rig.setActive(on)
-        // An off rig leaves the ticker altogether: no timer runs for consoles nobody is near.
-        if (on) this.controlTicker?.add(rig)
-        else this.controlTicker?.remove(rig)
         this.scheduler.invalidate()
       }
+      // Only a drawn rig with something to show runs a timer: no timer for consoles nobody is near, none while no audio plays.
+      rig.setLive(this.metersLive)
+      if (on && this.metersLive) this.controlTicker?.add(rig)
+      else this.controlTicker?.remove(rig)
     }
   }
 

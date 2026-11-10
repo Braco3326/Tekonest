@@ -52,6 +52,8 @@ interface Part {
   hover(on: boolean): void
   /** Advance to a level; true when what is DRAWN changed (the host asks for a frame only then). */
   meterStep?(levelDb: number, nowMs: number, dtMs: number): boolean
+  /** Back to rest at once (no signal, no ballistics tail). */
+  meterReset?(): void
   /** A screen part: the app on its canvas, redrawn when dirty or (live apps) at about 15 fps. */
   screen?: { app: ScreenApp; ctx: CanvasRenderingContext2D | null; tex: DynamicTexture | null; w: number; h: number; plane: Mesh; dirty: boolean; last: number }
   /** True for a fader: its cap slides along the control axis (slideOf gives the geometry). */
@@ -72,6 +74,8 @@ export class ControlRig {
   metersLive = true
   /** A device whose power setting is off: every meter reads silence. */
   powered = true
+  /** Meters and live screens move only while there is something to show (audio playing); otherwise they rest dark and nothing animates. */
+  private live = true
   /** Which meter buses carry signal (what is patched into the strips); every bus is live until the host sets it. */
   busLive: (bus: string) => boolean = () => true
   /** Every part hangs under this node: one switch takes the whole surface out of the render (a device far from the camera). */
@@ -98,7 +102,7 @@ export class ControlRig {
     }
     this.unsub = bank.subscribe((id, v) => {
       this.parts.get(id)?.apply(v)
-      for (const p of this.parts.values()) if (p.screen) p.screen.dirty = true
+      for (const p of this.parts.values()) if (p.screen) this.drawScreen(p, p.screen.last)
     })
   }
 
@@ -107,6 +111,20 @@ export class ControlRig {
     if (on === this.active) return
     this.active = on
     this.surface.setEnabled(on)
+  }
+
+  /** Whether the meters / screens animate. Off: every meter is dropped to rest at once and the screens redraw only when a value changes. */
+  setLive(on: boolean): void {
+    if (on === this.live) return
+    this.live = on
+    for (const p of this.parts.values()) {
+      if (!on) p.meterReset?.()
+      if (p.screen) this.drawScreen(p, p.screen.last)
+    }
+  }
+
+  get isLive(): boolean {
+    return this.live
   }
 
   get isActive(): boolean {
@@ -158,7 +176,7 @@ export class ControlRig {
 
   /** Advance every meter to `nowMs` (call from the ticker). Returns whether anything was redrawn. */
   update(nowMs: number): boolean {
-    if (!this.metersLive || !this.active) return false
+    if (!this.metersLive || !this.active || !this.live) return false
     let drewScreen = false
     for (const p of this.parts.values()) {
       const sc = p.screen
@@ -179,7 +197,7 @@ export class ControlRig {
 
   /** What a meter bus reads: its signal while the device is on and something is patched into it, silence otherwise. */
   private levelOf(bus: string, tSec: number): number {
-    return this.powered && this.busLive(bus) ? this.levels(bus, tSec) : -120
+    return this.live && this.powered && this.busLive(bus) ? this.levels(bus, tSec) : -120
   }
 
   private drawScreen(p: Part, nowMs: number): void {
@@ -556,6 +574,10 @@ export class ControlRig {
       pad: null,
       apply: () => undefined,
       hover: () => undefined,
+      meterReset: () => {
+        ball.reset()
+        draw(0, -1)
+      },
       meterStep: (db, now, dt) => {
         ball.step(db, now, dt)
         const r = barLit(ball.level, ball.peak, n, fromDb, toDb)
@@ -633,6 +655,10 @@ export class ControlRig {
       pad: null,
       apply: () => undefined,
       hover: () => undefined,
+      meterReset: () => {
+        ball.reset()
+        set(0)
+      },
       meterStep: (db, _now, dt) => set(ball.step(db, dt)),
     }
   }

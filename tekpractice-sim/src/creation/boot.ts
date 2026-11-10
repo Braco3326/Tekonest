@@ -1891,6 +1891,7 @@ export async function bootCreation(): Promise<void> {
           startDefault: () => void startListening(chosen, contextForClick()),
           onChange: () => {
             if (!listen) return
+            host.setMetersLive(listen.active) // the consoles' meters and live screens move while audio plays, and rest otherwise
             listenIntent = listen.active // an end, a failure or a rig change that stopped it: the menu follows
             if (!listen.active) forgetFile()
           },
@@ -2210,6 +2211,7 @@ export async function bootCreation(): Promise<void> {
       pad.computeWorldMatrix(true)
       return screen(pad.getAbsolutePosition())
     },
+    setMetersLive: (on) => host.setMetersLive(on),
     focusScreen: (instanceId, controlId) => host.focusScreen(instanceId, controlId),
     visible: (id) => host.visible(id),
     outlined: () => host.outlined(),

@@ -206,10 +206,12 @@ describe('ControlRig: reverse faders and screens', () => {
     const second = fills()
     expect(second).toBeGreaterThan(first)
     bank.set('fader-1', 0.4)
-    rig.update(1010) // within 66 ms of the last draw: not yet
-    expect(fills()).toBe(second)
+    const third = fills()
+    expect(third).toBeGreaterThan(second) // a changed value redraws the glass at once, with or without the ticker
+    rig.update(1010) // within 66 ms of the last draw: the clock waits
+    expect(fills()).toBe(third)
     rig.update(1100)
-    expect(fills()).toBeGreaterThan(second)
+    expect(fills()).toBeGreaterThan(third)
   })
 
   it('maps a picking ray to the canvas pixel under it, even past the glass edge, and a touch reaches the app', () => {
@@ -304,5 +306,23 @@ describe('ControlRig: redraw reporting', () => {
     const late: boolean[] = []
     for (let t = 3000; t < 3300; t += 16) late.push(rig.update(t))
     expect(late.every((x) => x === false)).toBe(true)
+  })
+})
+
+describe('ControlRig: live', () => {
+  it('not live: meters drop to rest at once, nothing animates, the screens still show the values; live again, they run', () => {
+    const { rig } = build()
+    const lit = (): number => rig.part('bar')!.node.getChildMeshes().filter((m) => m.material?.name.includes('bar-on')).length
+    rig.levels = () => -3
+    for (let t = 16; t < 800; t += 16) rig.update(t)
+    expect(lit()).toBeGreaterThanOrEqual(11)
+    rig.setLive(false)
+    expect(rig.isLive).toBe(false)
+    expect(lit()).toBe(0)
+    expect(rig.part('vu')!.mover.rotation.y).toBeCloseTo(-(50 * Math.PI) / 180, 6)
+    expect(rig.update(900)).toBe(false)
+    rig.setLive(true)
+    for (let t = 1000; t < 1800; t += 16) rig.update(t)
+    expect(lit()).toBeGreaterThanOrEqual(11)
   })
 })
