@@ -172,5 +172,52 @@
       "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Carousel_/IQ_StraightON_Carousel.png",
       "note": "iQ Main Frame (right) next to an expansion frame, straight-on view (opened, 2000x650): x scale 1.311 px/mm from the 519.3 mm frame width (681 px); depth scale 0.85 px/mm from the 100 mm fader slot (85 px), with the top-face y measured from the rear edge (photo y 203). The top-face x is mirrored (xMm = 519.3 - x_photo) because the face-local top view has the io (rear) edge at the bottom."
     }
-  ]
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        111.2
+      ],
+      [
+        45,
+        111.2
+      ],
+      [
+        70,
+        82
+      ],
+      [
+        300,
+        74
+      ],
+      [
+        430,
+        66
+      ],
+      [
+        482.9,
+        56
+      ]
+    ],
+    "params": {
+      "chamferMm": 2
+    },
+    "projection": [
+      "top"
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 82,
+        "yMm": 62,
+        "wMm": 30,
+        "hMm": 14,
+        "marginMm": 5
+      }
+    ]
+  }
 }
