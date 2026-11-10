@@ -10,7 +10,8 @@ On the **selected** device (a click on it selects it, as before), in Mode Créat
 | control | gesture |
 |---|---|
 | fader | press the cap and drag along its slot; the cap follows the pointer exactly (the pointer ray is projected on the slot). `Shift` = fine (1/5). Double-click = back to 0 dB |
-| knob | press and drag up / right to turn up (220 px = the whole sweep). `Shift` = fine. Double-click = default |
+| knob | press and drag up / right to turn up (220 px = the whole sweep). `Shift` = fine. Double-click = default. A knob with `detents` (an enum setting: balance, sample rate) clicks between its real positions |
+| fader / knob, by wheel | `Alt` + mouse wheel over it: 2 % a notch (`Shift` 0.5 %, a detented knob one click); the plain wheel stays the camera's |
 | key | click. A latching key stays pressed and lit; a momentary one is lit while held; keys of one **radio group** (an ON / OFF pair, SEL, fader bank) exclude each other |
 | switch | click steps to the next position |
 | meter | nothing to do: it moves (LED bars, VU needle with real ballistics) |
@@ -107,6 +108,15 @@ bank.snapshot(): Record<string, number>      bank.restore(values)
 * `window.__creation.controlValues(id)`, `setControlValue(id, control, v)`, `controlScreen(id, control)`, `focusScreen(id, control)`,
   `sceneStats()`, `renderBench(n)` are the test / debug seams.
 
+## Meters follow the patch (`busGraph.ts`)
+
+A layout may declare `"buses": { "ch1": { "ports": ["in-mic-1"] }, "st-l": { "follows": ["ch1", "ch2"] }, "ch3": {} }`: a bus with `ports`
+is live while one of those ports of the device is connected, one with `follows` while any of those buses is, and a bus declared with
+nothing carries no signal (no input modelled). With no `buses` at all every meter stays live (dressing). The scene host keeps
+`rig.busLive` in step with the design's connections, so patching a mic into the QL1 wakes strip 1 on the LED bars and on the screen, and
+unpatching silences it; a device whose `power` setting is off reads silence everywhere. `tests/controls/layoutParity.test.ts` checks the
+declared ports exist and every meter reads a declared bus. Levels themselves are still the demo signal (see the bank section).
+
 ## Simulation link (`catalogLink.ts`)
 
 A toggle maps to a key or switch (pressed = true; `invert` for a « mute » shown by an ON key), or to a fader (open above 5 % of the travel;
@@ -127,6 +137,8 @@ stays idle. Meters and live screens run on one ticker (30 fps, screens ~15 fps) 
 * Control values other than catalog-linked ones are not saved with the project (the bank has `snapshot` / `restore`; the store schema
   needs a `surface` map and an undo story: a decision for the founder).
 * Real signal on the meters (the audio engine does not expose per-channel buses yet).
-* Keyboard operation of controls, Alt + wheel on a knob, multi-touch (two faders at once).
+* Keyboard operation of controls and multi-touch (two faders at once).
+* Discoverability: nothing tells the learner that a selected device's caps can be dragged (a hint in the Properties panel or the status
+  bar is a copy + UI decision). Only the selected device is live: its first click selects it, as everywhere.
 * Layouts exist for the Axia iQ, QL1, ISA One, m905 and the generated power-key layouts; the Rio, mics and stands have none (nothing to operate).
 * Mesh merging (vertex-colour LED bars, merged slot plates) would cut the draw count further if the LOD radius ever needs to grow.
