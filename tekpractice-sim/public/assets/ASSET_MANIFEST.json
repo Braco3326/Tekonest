@@ -2583,7 +2583,7 @@
     {
       "id": "focusrite-isa-one",
       "optimized": true,
-      "tris": 44,
+      "tris": 2944,
       "kind": "device",
       "ports": 3,
       "status": "ok",
@@ -2596,10 +2596,7 @@
         "rear.jpg"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
-      "date": "2026-11-06T19:10:10.359Z",
+      "date": "2026-11-10T21:28:01.224Z",
       "specSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/ISA%20One%20User%20Guide%201.1%20-%20FR.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2624,11 +2621,15 @@
           "ok": true
         },
         {
-          "gate": "proportionDrift",
+          "gate": "detail",
           "ok": true
         },
         {
-          "gate": "portSurface",
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
           "ok": true
         },
         {
@@ -2639,7 +2640,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "grace-m905",

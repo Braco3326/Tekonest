@@ -75,23 +75,51 @@
   "build": {
     "shape": "rack-box",
     "params": {
-      "chamferMm": 1.5
+      "earThicknessMm": 3,
+      "plateFilletMm": 1,
+      "filletMm": 2,
+      "filletSegments": 10,
+      "rearInsetMm": 6,
+      "seamMm": 16,
+      "feetMm": 3,
+      "feetDiaMm": 10,
+      "ventSlots": 6,
+      "ventColumns": 9,
+      "ventSides": 1,
+      "ventSlotWidthMm": 3.4,
+      "ventSlotLenMm": 3.4,
+      "ventPitchMm": 6.5,
+      "ventColPitchMm": 6.5,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30
     },
     "projection": [
       "opposite",
       "io"
-    ]
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 0.9
   },
   "texture": {
     "blankRects": [
       {
         "face": "opposite",
-        "xMm": 92,
-        "yMm": 41,
-        "wMm": 80,
-        "hMm": 15,
-        "marginMm": 4,
-        "fill": "#325a9f"
+        "xMm": 95,
+        "yMm": 45,
+        "wMm": 75,
+        "hMm": 15.3,
+        "marginMm": 0.6
+      },
+      {
+        "face": "opposite",
+        "xMm": 98.8,
+        "yMm": 62,
+        "wMm": 5.4,
+        "hMm": 4.6,
+        "marginMm": 1.2
       },
       {
         "face": "io",
