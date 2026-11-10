@@ -67,12 +67,20 @@ const ZoneColour = z.object({
 
 const ProjectionFaceEnum = z.enum(['io', 'opposite', 'top', 'left', 'wrap'])
 
+/** The triangle floor and ceiling a model must land in (gate 'detail'): a floor stops a plain box passing as a finished model. */
+const TriangleBudget = z.object({
+  min: z.number().int().positive(),
+  max: z.number().int().positive(),
+}).strict().refine((b) => b.min <= b.max, { message: 'the budget min must not be above its max' })
+
 export const BuildSpec = z.object({
   shape: z.enum(BUILD_SHAPES).describe('Shape the scripted builder makes for this asset (tools/assets3d/shapes.ts).'),
   params: z.record(z.string(), z.number().finite()).optional().describe('Extra shape dimensions in millimetres (names per shape in SHAPE_SPECS). Sizes come from realSizeMm, never from here.'),
   profile: z.array(Station).min(4).optional().describe('Shape revolve only: the lathe profile, at least four [axial mm from the base, diameter mm] stations with strictly increasing positions; first at 0, last at the height, widest = the width.'),
   colours: z.array(ZoneColour).min(1).optional().describe('Shape revolve only: colour zones along the axis (first at 0, strictly increasing), sRGB hex of the real part.'),
   projection: z.union([ProjectionFaceEnum, z.array(ProjectionFaceEnum).min(1).max(4)]).optional().describe('The face(s) that take their picture from a Meshy model (asset:build --scripted --project <fixed.glb>); default io. Each picture is mapped planar onto the scripted faces that look that way; a face given twice or two faces looking the same way is refused.'),
+  budget: TriangleBudget.optional().describe("Triangles the finished GLB must have, from the class floor to the ceiling (gate 'detail'), e.g. speaker 1500 to 4000. Absent = no check."),
+  minFilletMm: z.number().finite().positive().optional().describe("The smallest edge fillet, in millimetres, the builder must have built (gate 'fillet'; the builder measures it and writes it into the GLB extras). Absent = no check."),
   projectionShiftMm: z.object({ io: z.number().finite(), opposite: z.number().finite(), top: z.number().finite(), left: z.number().finite() }).partial().strict().optional().describe("Millimetres to move the picture of a projected face sideways (face-local x, positive = right) before it is mapped: for a cabinet whose real panel sits where the Meshy model has it off-centre, so the picture moves with the ports."),
 }).strict().superRefine((b, ctx) => {
   const { profile, colours } = b

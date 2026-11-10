@@ -9,7 +9,7 @@
 import type { AssetSpecT } from './specSchema'
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -69,6 +69,18 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   'toslink-plug': { kind: 'connector', params: [], needsMatingOuter: false },
   // A Neutrik etherCON cable connector: an RJ45 head in a round shell with a latch lever.
   'ethercon-plug': { kind: 'connector', params: [], needsMatingOuter: false },
+  // A loudspeaker cabinet with a CURVED plan and filleted top and bottom edges (die-cast monitors, moulded PA boxes): a rounded polygon in plan
+  // (baffle corners planFrontMm apart, the sides bulge sideBulgeMm to their widest point midDepthMm behind the baffle, taper to rearWidthMm at the
+  // rear; corners rounded by frontRadiusMm, sideRadiusMm and backRadiusMm), extruded with an elliptic fillet of edgeRadiusMm (horizontal) by
+  // edgeDropMm (vertical) in edgeSegments steps on the top and the bottom. The baffle may bow forward crownMm. Optional round recesses on the
+  // baffle (a woofer ring and a tweeter ring with an optional conical waveguide dish) and a round pocket cut into the rear face behind each port
+  // that has an insetMm, as in speaker-cabinet. The builder measures the fillet it built (min of the two radii) for the 'fillet' gate.
+  'curved-cabinet': {
+    kind: 'device',
+    params: ['planFrontMm', 'sideBulgeMm', 'rearWidthMm', 'midDepthMm', 'frontRadiusMm', 'sideRadiusMm', 'backRadiusMm', 'edgeRadiusMm', 'edgeDropMm', 'edgeSegments', 'crownMm', 'wooferRingMm', 'wooferYMm', 'tweeterRingMm', 'tweeterYMm', 'ringDepthMm', 'waveguideMm', 'waveguideDepthMm'],
+    needsMatingOuter: false,
+    usesPorts: true,
+  },
 }
 
 /** Default diameter of a socket pocket when the port gives no openingMm, in millimetres (the builder uses the same). */
@@ -140,6 +152,7 @@ export function validateBuild(spec: AssetSpecT): string[] {
     }
   }
   if (build.shape === 'speaker-cabinet') errors.push(...validateSpeakerCabinet(spec))
+  if (build.shape === 'curved-cabinet') errors.push(...validateCurvedCabinet(spec))
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {
     errors.push(`${spec.id}: build shape '${build.shape}' needs mating.outerMm (the diameter of the mating end)`)
   }
@@ -176,6 +189,66 @@ function validateSpeakerCabinet(spec: AssetSpecT): string[] {
     const r = (port.openingMm ?? POCKET_DEFAULT_MM) / 2
     if (port.xMm - r < left || port.xMm + r > right || port.yMm - r < chamfer || port.yMm + r > h - chamfer) {
       errors.push(`${spec.id}: the pocket of port '${port.portId}' (x ${port.xMm}, y ${port.yMm}, radius ${r} mm) does not fit in the flat rear face (x ${left} to ${right} mm)`)
+    }
+    if (port.insetMm > d / 2) errors.push(`${spec.id}: port '${port.portId}' inset (${port.insetMm} mm) is deeper than half the depth`)
+  }
+  return errors
+}
+
+/** Defaults of the curved-cabinet params, in millimetres (the Python builder uses the same numbers). */
+export const CURVED_DEFAULTS = { frontRadiusMm: 24, backRadiusMm: 24, edgeRadiusMm: 16, edgeSegments: 8, ringDepthMm: 2, waveguideDepthMm: 8, midDepthFraction: 0.4 } as const
+/** How far the plan polygon may be from the width before the builder's final stretch to the exact width would be visible (a fraction of the width). */
+export const CURVED_WIDTH_SLACK = 0.12
+
+/** The checks of a curved-cabinet that need no geometry: radii and widths, edge segments, baffle rings, rear pockets. (The Python builder checks the fit of rings and pockets in the real outline.) */
+function validateCurvedCabinet(spec: AssetSpecT): string[] {
+  const errors: string[] = []
+  const { w, h, d } = spec.realSizeMm
+  const p = spec.build?.params ?? {}
+  const edge = p.edgeRadiusMm ?? CURVED_DEFAULTS.edgeRadiusMm
+  const drop = p.edgeDropMm ?? edge
+  const half = Math.min(w, h, d) / 2
+  if (edge >= half) errors.push(`${spec.id}: edgeRadiusMm (${edge}) must be less than half the smallest side (${half} mm)`)
+  if (drop * 2 >= h) errors.push(`${spec.id}: edgeDropMm (${drop}) must be less than half the height (${h / 2} mm)`)
+  for (const name of ['frontRadiusMm', 'sideRadiusMm', 'backRadiusMm'] as const) {
+    const r = name === 'sideRadiusMm' ? p[name] : (p[name] ?? CURVED_DEFAULTS[name])
+    if (r !== undefined && r < edge) errors.push(`${spec.id}: ${name} (${r}) must be at least edgeRadiusMm (${edge}): a tighter plan corner than the fillet would make the fillet fold over`)
+  }
+  const segments = p.edgeSegments
+  if (segments !== undefined && !(Number.isInteger(segments) && segments >= 4 && segments <= 16)) {
+    errors.push(`${spec.id}: param 'edgeSegments' must be a whole number from 4 to 16, got ${segments}`)
+  }
+  const bulge = p.sideBulgeMm ?? 0
+  const front = p.planFrontMm ?? w - 2 * bulge
+  const widest = front + 2 * bulge
+  if (front > w * (1 + CURVED_WIDTH_SLACK)) errors.push(`${spec.id}: planFrontMm (${front}) cannot be more than ${CURVED_WIDTH_SLACK * 100} % wider than the width ${w} mm`)
+  if (Math.abs(widest - w) > w * CURVED_WIDTH_SLACK) errors.push(`${spec.id}: planFrontMm + 2 x sideBulgeMm (${widest}) is more than ${CURVED_WIDTH_SLACK * 100} % away from the width ${w} mm: the final stretch to the exact width would show`)
+  const rear = p.rearWidthMm
+  if (rear !== undefined && rear > w * (1 + CURVED_WIDTH_SLACK)) errors.push(`${spec.id}: rearWidthMm (${rear}) cannot be more than ${CURVED_WIDTH_SLACK * 100} % wider than the width ${w} mm`)
+  if (p.midDepthMm !== undefined && p.midDepthMm >= d) errors.push(`${spec.id}: midDepthMm (${p.midDepthMm}) must be less than the depth ${d} mm`)
+
+  const rings: [string, string][] = [['wooferRingMm', 'wooferYMm'], ['tweeterRingMm', 'tweeterYMm']]
+  if (rings.some(([ring]) => p[ring] !== undefined) && p.crownMm !== undefined) {
+    errors.push(`${spec.id}: crownMm bows the baffle, but a ring is cut into a flat baffle: use no crownMm with a woofer or tweeter ring`)
+  }
+  for (const [ring, y] of rings) {
+    const dia = p[ring]
+    if (dia === undefined) continue
+    if (p[y] === undefined) errors.push(`${spec.id}: ${ring} needs ${y} (the height of its centre above the base, in mm)`)
+    else if (p[y] - dia / 2 < drop || p[y] + dia / 2 > h - drop) errors.push(`${spec.id}: ${ring} (${dia} mm at ${y} ${p[y]} mm) does not fit between the fillets of the baffle (${drop} to ${h - drop} mm)`)
+    const frontRadius = p.frontRadiusMm ?? CURVED_DEFAULTS.frontRadiusMm
+    if (dia + 2 * frontRadius * 0.9 > w) errors.push(`${spec.id}: ${ring} (${dia} mm) is too wide for the flat baffle of a ${w} mm cabinet with front corners of ${frontRadius} mm`)
+  }
+  if (p.waveguideMm !== undefined) {
+    if (p.tweeterRingMm === undefined) errors.push(`${spec.id}: waveguideMm needs tweeterRingMm (the waveguide floor is the tweeter ring)`)
+    else if (p.waveguideMm <= p.tweeterRingMm) errors.push(`${spec.id}: waveguideMm (${p.waveguideMm}) must be wider than tweeterRingMm (${p.tweeterRingMm})`)
+  } else if (p.waveguideDepthMm !== undefined) errors.push(`${spec.id}: waveguideDepthMm has no effect without waveguideMm`)
+
+  for (const port of spec.ports) {
+    if (!(port.insetMm !== undefined && port.insetMm > 0)) continue // no inset, no pocket
+    if (port.face !== 'io') {
+      errors.push(`${spec.id}: port '${port.portId}' has an insetMm but is on the ${port.face} face: a pocket is cut on the io face only`)
+      continue
     }
     if (port.insetMm > d / 2) errors.push(`${spec.id}: port '${port.portId}' inset (${port.insetMm} mm) is deeper than half the depth`)
   }

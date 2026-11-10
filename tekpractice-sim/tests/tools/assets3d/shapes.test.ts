@@ -278,3 +278,60 @@ describe('speaker-cabinet (plan hexagon, socket pockets)', () => {
     expect(validateBuild(cabinet(rear, { ports: [port('flush', 40, { insetMm: undefined })] }))).toEqual([]) // no inset, no pocket, no check
   })
 })
+
+describe('curved-cabinet (rounded plan, filleted edges, baffle rings, socket pockets)', () => {
+  const port = (portId: string, xMm: number, over: Record<string, unknown> = {}): AssetSpecT['ports'][number] =>
+    ({ portId, face: 'io', xMm, yMm: 150, confidence: 'photo', openingMm: 14, insetMm: 13.8, ...over }) as AssetSpecT['ports'][number]
+  const device: Partial<AssetSpecT> = { kind: 'device', tier: 'hero', mating: undefined, realSizeMm: { w: 189, h: 299, d: 178 }, ports: [port('in-analog', 137)] }
+  const GENELEC = { planFrontMm: 176, sideBulgeMm: 6, rearWidthMm: 150, backRadiusMm: 30, frontRadiusMm: 24, edgeRadiusMm: 20, edgeSegments: 8 }
+  const cabinet = (params: Record<string, number> = GENELEC, over: Partial<AssetSpecT> = {}): AssetSpecT =>
+    specWith({ shape: 'curved-cabinet', params }, { ...device, ...over })
+
+  it('is registered as a device shape that uses the ports, with the documented params', () => {
+    expect(BUILD_SHAPES).toContain('curved-cabinet')
+    expect(SHAPE_SPECS['curved-cabinet']).toMatchObject({ kind: 'device', needsMatingOuter: false, usesPorts: true })
+    for (const name of ['planFrontMm', 'sideBulgeMm', 'backRadiusMm', 'edgeRadiusMm', 'edgeSegments', 'crownMm', 'wooferRingMm', 'tweeterRingMm']) {
+      expect(SHAPE_SPECS['curved-cabinet'].params).toContain(name)
+    }
+  })
+
+  it('accepts the Genelec params, and a bare shape (all defaults)', () => {
+    expect(validateBuild(cabinet())).toEqual([])
+    expect(validateBuild(cabinet({}))).toEqual([])
+  })
+
+  it('refuses an edge radius larger than half the smallest side, naming the param', () => {
+    expect(validateBuild(cabinet({ ...GENELEC, edgeRadiusMm: 100 }))[0]).toMatch(/edgeRadiusMm.*100/)
+  })
+
+  it('refuses a plan corner radius smaller than the edge radius (the fillet would fold over)', () => {
+    expect(validateBuild(cabinet({ ...GENELEC, backRadiusMm: 10 }))[0]).toMatch(/backRadiusMm.*edgeRadiusMm/)
+    expect(validateBuild(cabinet({ ...GENELEC, frontRadiusMm: 10 }))[0]).toMatch(/frontRadiusMm.*edgeRadiusMm/)
+  })
+
+  it('takes a whole number of edge segments from 4 to 16', () => {
+    expect(validateBuild(cabinet({ ...GENELEC, edgeSegments: 12 }))).toEqual([])
+    expect(validateBuild(cabinet({ ...GENELEC, edgeSegments: 3 }))[0]).toMatch(/edgeSegments/)
+    expect(validateBuild(cabinet({ ...GENELEC, edgeSegments: 17 }))[0]).toMatch(/edgeSegments/)
+    expect(validateBuild(cabinet({ ...GENELEC, edgeSegments: 8.5 }))[0]).toMatch(/edgeSegments/)
+  })
+
+  it('keeps the plan widths inside the casing: the front and rear polygon cannot be wider than 1.12 x the width', () => {
+    expect(validateBuild(cabinet({ ...GENELEC, planFrontMm: 260 }))[0]).toMatch(/planFrontMm/)
+    expect(validateBuild(cabinet({ ...GENELEC, rearWidthMm: 260 }))[0]).toMatch(/rearWidthMm/)
+  })
+
+  it('a baffle ring needs a flat baffle: no crown with a woofer or tweeter ring, and a ring must fit the width', () => {
+    expect(validateBuild(cabinet({ ...GENELEC, wooferRingMm: 128, wooferYMm: 90 }))).toEqual([])
+    expect(validateBuild(cabinet({ ...GENELEC, wooferRingMm: 128, wooferYMm: 90, crownMm: 2 }))[0]).toMatch(/crownMm.*ring/)
+    expect(validateBuild(cabinet({ ...GENELEC, wooferRingMm: 200, wooferYMm: 90 }))[0]).toMatch(/wooferRingMm/)
+    expect(validateBuild(cabinet({ ...GENELEC, wooferRingMm: 128 }))[0]).toMatch(/wooferYMm/) // a ring needs its height
+    expect(validateBuild(cabinet({ ...GENELEC, tweeterRingMm: 36 }))[0]).toMatch(/tweeterYMm/)
+  })
+
+  it('checks every rear pocket: on the io face only, no deeper than half the depth', () => {
+    expect(validateBuild(cabinet(GENELEC, { ports: [port('side', 100, { face: 'left' })] }))[0]).toMatch(/side.*io face/)
+    expect(validateBuild(cabinet(GENELEC, { ports: [port('deep', 100, { insetMm: 120 })] }))[0]).toMatch(/deep.*inset/)
+    expect(validateBuild(cabinet(GENELEC, { ports: [port('flush', 100, { insetMm: undefined })] }))).toEqual([])
+  })
+})

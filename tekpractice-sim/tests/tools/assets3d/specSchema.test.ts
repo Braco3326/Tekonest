@@ -77,6 +77,30 @@ describe('AssetSpec build block', () => {
   })
 })
 
+describe('AssetSpec build.budget and build.minFilletMm', () => {
+  const base = (): ReturnType<typeof specFor> => specFor(catalog, 'yamaha-ql1')
+  const parse = (build: unknown): boolean => AssetSpec.safeParse({ ...base(), build }).success
+
+  it('parses a triangle budget with min <= max, and a minimum fillet', () => {
+    expect(parse({ shape: 'curved-cabinet', budget: { min: 1500, max: 3500 } })).toBe(true)
+    expect(parse({ shape: 'curved-cabinet', budget: { min: 1500, max: 1500 } })).toBe(true)
+    expect(parse({ shape: 'curved-cabinet', minFilletMm: 25 })).toBe(true)
+  })
+
+  it('rejects a budget whose min is above its max, a non-integer, zero, negative or an unknown key', () => {
+    expect(parse({ shape: 'curved-cabinet', budget: { min: 5, max: 1 } })).toBe(false)
+    expect(parse({ shape: 'curved-cabinet', budget: { min: 10.5, max: 20 } })).toBe(false)
+    expect(parse({ shape: 'curved-cabinet', budget: { min: 0, max: 20 } })).toBe(false)
+    expect(parse({ shape: 'curved-cabinet', budget: { min: -1, max: 20 } })).toBe(false)
+    expect(parse({ shape: 'curved-cabinet', budget: { min: 1, max: 2, floor: 3 } })).toBe(false)
+    expect(parse({ shape: 'curved-cabinet', budget: { min: 1 } })).toBe(false)
+  })
+
+  it('rejects a zero, negative or NaN minimum fillet', () => {
+    for (const v of [0, -3, Number.NaN]) expect(parse({ shape: 'curved-cabinet', minFilletMm: v })).toBe(false)
+  })
+})
+
 describe('AssetSpec build profile (revolve)', () => {
   const profile = [[0, 20], [40, 30], [100, 30], [162, 10]]
   const base = (): AssetSpecT => specFor(catalog, 'yamaha-ql1')
