@@ -1,0 +1,30 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "trs-35mm",
+  "realSizeMm": {
+    "w": 7,
+    "h": 7,
+    "d": 40
+  },
+  "mating": {
+    "role": "plug",
+    "outerMm": 3.5
+  },
+  "build": {
+    "shape": "trs-plug",
+    "params": {
+      "barrelMm": 15,
+      "zScale": 0.5
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://en.wikipedia.org/wiki/Phone_connector_(audio)",
+      "note": "Phone connector article (opened): the 3.5 mm (1/8 in, \"mini\") plug has a 3.5 mm sleeve diameter and a plug length of 15 mm. The model is the TRS plug shape drawn at that size (tip features and boot lengths scaled by 0.5). ESTIMATES: handle 7 mm diameter and 40 mm overall length (typical moulded mini plug), the position of the two insulator bands (scaled from the 6.35 mm plug)."
+    }
+  ]
+}

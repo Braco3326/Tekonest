@@ -1,0 +1,35 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "ts-quarter",
+  "realSizeMm": {
+    "w": 14.5,
+    "h": 14.5,
+    "d": 93
+  },
+  "mating": {
+    "role": "plug",
+    "outerMm": 6.35
+  },
+  "build": {
+    "shape": "trs-plug",
+    "params": {
+      "barrelMm": 30.5,
+      "poles": 2
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://en.wikipedia.org/wiki/Phone_connector_(audio)",
+      "note": "Phone connector article (opened): a TS plug has two contacts (tip and sleeve, mono audio), the 6.35 mm (1/4 in) plug has a 6.35 mm sleeve diameter; no length or handle size given there."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/media/8523/download/np3x-2.pdf?v=1",
+      "note": "Neutrik NP3X dimension drawing (opened for the trs-quarter spec): 6.35 mm tip and sleeve, 14.5 mm body, 93 mm overall. The TS plug (Neutrik NP2X class) is modelled with the SAME body and length as the TRS plug and one insulator band instead of two: an assumption (the NP2X drawing itself was not opened)."
+    }
+  ]
+}

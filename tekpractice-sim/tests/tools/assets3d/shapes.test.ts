@@ -173,6 +173,12 @@ describe('xlr-male-plug and the pins param of cylinder-plug', () => {
   })
 })
 
+describe('trs-plug params for the TS plug and the miniature plugs', () => {
+  it('takes barrelMm, zScale and poles (2 = TS, 3 = TRS)', () => {
+    expect([...SHAPE_SPECS['trs-plug'].params].sort()).toEqual(['barrelMm', 'poles', 'zScale'])
+  })
+})
+
 describe('mains and twist-lock connector shapes', () => {
   const connector: Partial<AssetSpecT> = { kind: 'connector', tier: 'connector', mating: undefined, realSizeMm: { w: 26.83, h: 30.34, d: 79.25 }, ports: [] }
   it('iec-inlet, iec-cable, schuko-plug and schuko-socket are connector shapes without params', () => {

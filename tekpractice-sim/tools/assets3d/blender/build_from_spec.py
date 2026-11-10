@@ -477,13 +477,18 @@ def build_trs_plug(plan: Plan) -> bpy.types.Object:
     body_r = min(w, h) / 2.0
     barrel_r = positive(plan.get("matingOuterMm"), "matingOuterMm") * MM / 2.0
     barrel_len = param_m(plan, "barrelMm", DEFAULT_BARREL_MM)
+    params = plan.get("params") or {}
+    zs = float(params.get("zScale", 1.0))          # a miniature plug (3.5 mm, TT bantam) is the same shape drawn shorter: every length of the tip features is scaled by this
+    poles = int(params.get("poles", 3))            # 3 = tip, ring, sleeve (TRS); 2 = tip and sleeve only (TS: one insulator band)
+    if poles not in (2, 3):
+        raise BuildError(f"params.poles must be 2 or 3, got {poles}")
     if barrel_r >= body_r:
         raise BuildError(f"matingOuterMm ({barrel_r * 2000:.2f}) must be smaller than the body diameter ({body_r * 2000:.2f})")
-    nose_len = 7.5 * MM
-    boot_len = 23.5 * MM
-    if barrel_len < 18.6 * MM or barrel_len + nose_len + boot_len + 8.0 * MM > d:
+    nose_len = 7.5 * MM * zs
+    boot_len = 23.5 * MM * zs
+    if barrel_len < 18.6 * MM * zs or barrel_len + nose_len + boot_len + 8.0 * MM * zs > d:
         # 18.6 mm: the second insulator band ends at 17.6 mm and the sleeve needs a little length after it
-        raise BuildError(f"params.barrelMm ({barrel_len / MM:.2f}) does not fit a plug of sizeMm.d {d / MM:.2f} (needs 18.6 mm to about {(d - nose_len - boot_len - 8.0 * MM) / MM:.0f} mm)")
+        raise BuildError(f"params.barrelMm ({barrel_len / MM:.2f}) does not fit a plug of sizeMm.d {d / MM:.2f} (needs {18.6 * zs:.1f} mm to about {(d - nose_len - boot_len - 8.0 * MM * zs) / MM:.0f} mm)")
 
     r = barrel_r
     k = r / (3.175 * MM)             # the profile below is drawn for a 6.35 mm barrel; scale the radii to the spec's
@@ -496,27 +501,27 @@ def build_trs_plug(plan: Plan) -> bpy.types.Object:
     # about 9.6 mm from the tip (1.6 mm wide) and the second about 16.7 mm (0.9 mm wide).
     profile: list[tuple[float, float]] = [
         (0.55 * mm * k, 0.0),            # small flat tip
-        (2.65 * mm * k, 4.0 * mm),       # the arrowhead cone
-        (2.65 * mm * k, 4.5 * mm),
-        (1.75 * mm * k, 4.9 * mm),       # neck
-        (1.75 * mm * k, 5.7 * mm),
-        (2.45 * mm * k, 6.5 * mm),       # bead
-        (2.50 * mm * k, 7.2 * mm),
-        (r, 8.1 * mm),                   # barrel
-        (r, 9.6 * mm),
-        (insulator_r, 9.6 * mm),         # insulator 1
-        (insulator_r, 11.2 * mm),
-        (r, 11.2 * mm),                  # ring
-        (r, 16.7 * mm),
-        (insulator_r, 16.7 * mm),        # insulator 2
-        (insulator_r, 17.6 * mm),
-        (r, 17.6 * mm),                  # sleeve
+        (2.65 * mm * k, 4.0 * mm * zs),       # the arrowhead cone
+        (2.65 * mm * k, 4.5 * mm * zs),
+        (1.75 * mm * k, 4.9 * mm * zs),       # neck
+        (1.75 * mm * k, 5.7 * mm * zs),
+        (2.45 * mm * k, 6.5 * mm * zs),       # bead
+        (2.50 * mm * k, 7.2 * mm * zs),
+        (r, 8.1 * mm * zs),                   # barrel
+        (r, 9.6 * mm * zs),
+        (insulator_r, 9.6 * mm * zs),         # insulator 1
+        (insulator_r, 11.2 * mm * zs),
+        (r, 11.2 * mm * zs),                  # ring
+        (r, 16.7 * mm * zs),
+        (insulator_r, 16.7 * mm * zs),        # insulator 2
+        (insulator_r, 17.6 * mm * zs),
+        (r, 17.6 * mm * zs),                  # sleeve
         (r, barrel_len),
-        (4.6 * mm, barrel_len),          # nose collar: a step, then a cone out to the shell
+        (4.6 * mm * k, barrel_len),          # nose collar: a step, then a cone out to the shell
         (body_r, shell_start),
         (body_r, boot_start),            # shell
         (body_r * 0.925, boot_start),
-        (body_r * 0.925, boot_start + 4.5 * mm),
+        (body_r * 0.925, boot_start + 4.5 * mm * zs),
         (body_r * 0.55, d),              # boot tapering to the cable
     ]
     colours = [
@@ -525,6 +530,8 @@ def build_trs_plug(plan: Plan) -> bpy.types.Object:
         NICKEL, NICKEL, NICKEL, NICKEL,                                    # sleeve, nose, shell
         BLACK, BLACK, BLACK,                                               # boot
     ]
+    if poles == 2:                                      # TS: the ring and the second insulator are sleeve metal
+        colours[12:15] = [NICKEL, NICKEL, NICKEL]
     body = Body("trs-plug")
     revolve(body, profile, colours, TRS_SEGMENTS, cap_first=True, cap_last=True)
     return body.finish()

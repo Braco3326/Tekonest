@@ -31,7 +31,7 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   'cylinder-plug': { kind: 'connector', params: ['frontLenMm', 'pins'], needsMatingOuter: true },
   // An XLR male cable plug (hollow 19 mm shell with the pins inside): pins = 3 or 5. The mating face is at z = 0 like every connector.
   'xlr-male-plug': { kind: 'connector', params: ['pins'], needsMatingOuter: false },
-  'trs-plug': { kind: 'connector', params: ['barrelMm'], needsMatingOuter: true },
+  'trs-plug': { kind: 'connector', params: ['barrelMm', 'zScale', 'poles'], needsMatingOuter: true },
   'rj45-plug': { kind: 'connector', params: [], needsMatingOuter: false },
   'rack-box': { kind: 'device', params: ['chamferMm'], needsMatingOuter: false },
   // The Yamaha Rio3224-D2 stage box: layout (connector grid, panel plates) is in the builder, only datasheet sizes are params.
