@@ -303,3 +303,43 @@ describe('ControlController: while a device is being placed', () => {
     expect(s.fire('pointerdown').stopped).toBe(true)
   })
 })
+
+describe('ControlController: Alt + wheel', () => {
+  const wheel = (s: ReturnType<typeof setup>, over: Record<string, unknown> = {}): { stopped: boolean } => {
+    const ev = new Event('wheel', { cancelable: true }) as Event & Record<string, unknown>
+    let stopped = false
+    const orig = ev.stopImmediatePropagation.bind(ev)
+    ev.stopImmediatePropagation = () => {
+      stopped = true
+      orig()
+    }
+    const props: Record<string, unknown> = { target: s.host.canvas, altKey: true, shiftKey: false, clientX: 5, clientY: 5, deltaY: -100, ...over }
+    for (const [k, v] of Object.entries(props)) Object.defineProperty(ev, k, { value: v })
+    s.win.dispatchEvent(ev)
+    return { stopped }
+  }
+
+  it('nudges a fader or knob 2 % a notch (0.5 % with Shift), tells the simulation once after the wheel is still, and leaves the plain wheel to the camera', () => {
+    const s = setup()
+    const committed = vi.fn()
+    ;(s.host as unknown as { committed: typeof committed }).committed = committed
+    s.state.at = 'knob'
+    expect(wheel(s).stopped).toBe(true)
+    expect(s.bank.get('knob')).toBeCloseTo(0.52, 6)
+    wheel(s, { deltaY: 100 })
+    wheel(s, { deltaY: 100, shiftKey: true })
+    expect(s.bank.get('knob')).toBeCloseTo(0.52 - 0.02 - 0.005, 6)
+    expect(committed).not.toHaveBeenCalled()
+    vi.advanceTimersByTime(400)
+    expect(committed).toHaveBeenCalledTimes(1)
+    expect(committed.mock.calls[0][1].id).toBe('knob')
+    // the plain wheel (no Alt) is the camera's; a key is not wheel-operated
+    expect(wheel(s, { altKey: false }).stopped).toBe(false)
+    s.state.at = 'on'
+    expect(wheel(s).stopped).toBe(false)
+    // not on the selected device, or while placing: inert
+    s.state.at = 'fader'
+    ;(s.host as unknown as { busy: () => boolean }).busy = () => true
+    expect(wheel(s).stopped).toBe(false)
+  })
+})

@@ -40,6 +40,8 @@ export interface ControlHost {
 const KNOB_PX = 220
 const FINE = 5
 const DOUBLE_MS = 350
+/** The wheel is « done » (and the simulation told) after this long without a notch. */
+const WHEEL_IDLE_MS = 350
 
 interface Drag {
   instanceId: string
@@ -59,6 +61,8 @@ export class ControlController {
   private hover: { instanceId: string; controlId: string } | null = null
   private lastClick: { id: string; t: number } | null = null
   private lastGlass: { id: string; t: number } | null = null
+  private wheelTimer: ReturnType<typeof setTimeout> | null = null
+  private wheelPending: { instanceId: string; def: ControlDef; key: string } | null = null
   private hud: HTMLElement | null = null
   private hudTimer: ReturnType<typeof setTimeout> | null = null
   private disposed = false
@@ -73,12 +77,14 @@ export class ControlController {
     bag.listen(win, 'pointermove', (e: PointerEvent) => this.onMove(e), { capture: true })
     bag.listen(win, 'pointerup', (e: PointerEvent) => this.onUp(e), { capture: true })
     bag.listen(win, 'pointercancel', (e: PointerEvent) => this.onUp(e), { capture: true })
+    bag.listen(win, 'wheel', (e: WheelEvent) => this.onWheel(e), { capture: true, passive: false })
     bag.add(() => {
       this.disposed = true
       this.endDrag()
       this.setHover(null)
       this.hud?.remove()
       if (this.hudTimer) clearTimeout(this.hudTimer)
+      if (this.wheelTimer) clearTimeout(this.wheelTimer)
     })
   }
 
@@ -105,6 +111,34 @@ export class ControlController {
   private point(e: PointerEvent): { x: number; y: number } {
     const r = this.host.canvas.getBoundingClientRect()
     return { x: e.clientX - r.left, y: e.clientY - r.top }
+  }
+
+  /**
+   * Alt + wheel over a fader or a knob nudges it (2 % a notch, Shift = 0.5 %), the alternative to dragging; the plain wheel stays the camera's.
+   * The simulation hears of it once, when the wheel has been still for WHEEL_IDLE_MS.
+   */
+  private onWheel(e: WheelEvent): void {
+    if (this.disposed || this.drag || this.host.busy?.() || !e.altKey || e.target !== this.host.canvas) return
+    const { x, y } = this.point(e as unknown as PointerEvent)
+    const found = this.controlAt(x, y)
+    if (!found || (found.def.kind !== 'fader' && found.def.kind !== 'knob')) return
+    e.preventDefault()
+    e.stopImmediatePropagation()
+    const bank = found.instance.controls!.bank
+    const step = (e.shiftKey ? 0.005 : 0.02) * (e.deltaY < 0 ? 1 : -1)
+    bank.set(found.def.id, bank.get(found.def.id) + step, 'user')
+    this.showValue(found.def, bank.get(found.def.id), e as unknown as PointerEvent)
+    this.scheduleHudHide()
+    const key = `${found.instance.instanceId}/${found.def.id}`
+    if (this.wheelTimer) clearTimeout(this.wheelTimer)
+    this.wheelPending = { instanceId: found.instance.instanceId, def: found.def, key }
+    this.wheelTimer = setTimeout(() => {
+      const p = this.wheelPending
+      this.wheelPending = null
+      const b = p ? this.host.instance(p.instanceId)?.controls?.bank : undefined
+      if (p && b) this.host.committed?.(p.instanceId, p.def, b.get(p.def.id))
+    }, WHEEL_IDLE_MS)
+    this.host.invalidate()
   }
 
   // ── events ────────────────────────────────────────────────────────────────────────────────────────────────
