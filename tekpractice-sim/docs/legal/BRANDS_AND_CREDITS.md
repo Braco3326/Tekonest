@@ -18,7 +18,8 @@ How each model was made:
 | Shure | SM57 | Meshy-generated | lettering repainted out |
 | QSC | K12.2 loudspeaker | photo-textured (Meshy rear, official front photo) | badge and amp-panel logo repainted out |
 | Genelec | 8030C monitor | photo-textured | logo and web address repainted out |
-| Electro-Voice | RE20, RE50/B microphones | Meshy-generated | lettering repainted out |
+| Electro-Voice | RE20 microphone | Meshy-generated | lettering repainted out |
+| Electro-Voice | RE50/B microphone | generic (our scripted lathe from the published dimensions and the product silhouette, with generic windscreen-weave artwork) | none: no logo, no badge, no lettering |
 | Neumann | U 87 Ai microphone | Meshy-generated | lettering repainted out |
 | Avid | HD I/O interface | photo-textured | Avid logo repainted out; "digidesign" mark on the rear may remain: review |
 | Avid | Pro Tools HDX workstation | generic (no photo exists) | none |
@@ -64,7 +65,7 @@ Raw downloads are kept outside git in `assets-source/_wave2-downloads/` (ignored
 
 ## 4. AI generation
 
-The Meshy-generated models (SM57, RE20, RE50/B, U87 Ai, K&M 210/9) and the Meshy pictures on the K12.2 rear were produced with a paid Meshy plan. Meshy states that paid plans own their generated assets provided the inputs do not infringe others' rights. The inputs were manufacturer photos: see section 1.
+The Meshy-generated models (SM57, RE20, U87 Ai, K&M 210/9) and the Meshy pictures on the K12.2 rear were produced with a paid Meshy plan. Meshy states that paid plans own their generated assets provided the inputs do not infringe others' rights. The inputs were manufacturer photos: see section 1.
 
 ## 5. To ask for, per brand
 

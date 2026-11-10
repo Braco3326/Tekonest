@@ -19,81 +19,19 @@
   "controls": [],
   "build": {
     "shape": "revolve",
-    "profile": [
-      [
-        0,
-        19.84
-      ],
-      [
-        11.5,
-        26.35
-      ],
-      [
-        130,
-        26.35
-      ],
-      [
-        130.2,
-        24.15
-      ],
-      [
-        140.1,
-        24.55
-      ],
-      [
-        144,
-        29.56
-      ],
-      [
-        153.7,
-        38.38
-      ],
-      [
-        157.8,
-        40.68
-      ],
-      [
-        167.3,
-        44.99
-      ],
-      [
-        170.4,
-        49
-      ],
-      [
-        174.5,
-        49
-      ],
-      [
-        177.8,
-        45.39
-      ],
-      [
-        177.9,
-        41.58
-      ],
-      [
-        192.4,
-        37.78
-      ],
-      [
-        196.4,
-        22.85
-      ],
-      [
-        197,
-        9.22
-      ]
-    ],
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [[0,8],[1,13.5],[2.5,17.2],[4.5,20.4],[7,22.9],[10,24.8],[13,25.8],[128,26],[128.6,26.4],[129.5,25.5],[137,25.5],[139,26.2],[141,30],[145,35.9],[149.5,40],[154.5,43.6],[158.5,45.2],[162,45.8],[165,45.8],[166.4,47.3],[168.3,48.7],[170,49],[173,49],[175,47.8],[176.5,46],[179,46],[181.5,45.1],[184,43.9],[186.5,42.8],[189,41.8],[191.5,40.2],[193.4,37],[194.8,33],[196,29.5],[196.8,25],[197,20]],
     "colours": [
-      {
-        "fromMm": 0,
-        "colour": "#2a2a2d"
-      },
-      {
-        "fromMm": 167,
-        "colour": "#6e7076"
-      }
+      { "fromMm": 0, "colour": "#222224" },
+      { "fromMm": 165, "colour": "#2a2a2d" },
+      { "fromMm": 176, "colour": "#2f3034" }
     ]
   },
   "sources": [
@@ -115,7 +53,12 @@
     {
       "kind": "photo",
       "url": "https://products.electrovoice.com/download/970113",
-      "note": "build.profile: the 16 stations of mic-profiles.json, read from the PDF path data of the official EV RE50/B data sheet (exact outline coordinates, scale from the labelled 197 mm); the drawn handle is 26.3 mm although the label says shank 25 mm (the drawing is inconsistent with its label by about 5 percent; the drawn values were kept). build.colours: ESTIMATED (black handle, grey windscreen), not measured."
+      "note": "build.profile (rebuilt 2026-11-10, Wave 4 Task 4.1): silhouette of assets-source/ev-re50/photos/front.png (331 x 1429, transparent background, side-on, upright) read row by row (alpha mask, radius from the median axis), height scale 197 mm over the 1429 px, diameters x1.080 so the widest (the rim) is the 49 mm of the data sheet, then simplified by hand to 37 stations. The photo agrees with the data-sheet drawing on every axial position (flare starts 139.5 against 140.1, rim at 170 against 170.4 to 174.5, top at 197) and on the handle (25.8 mm against the 26.3 drawn and the 25 labelled); it differs on the head, which is a convex bowl in the photo (43.6 mm at 154.5) where the coarse 16-station drawing is a straight cone (about 38 mm there), so the photo curve is kept. Accuracy about +/-0.4 mm (1 px = 0.14 mm). build.colours: near-black handle and head from the photo (sRGB about 30-45), lifted by the builder."
+    },
+    {
+      "kind": "photo",
+      "url": "https://products.electrovoice.com/download/970113",
+      "note": "build.projection wrap: the surface picture is our own generic artwork (content/generic-panels/ev-re50.json, asset:panel): an unrolled 153.94 x 197 mm panel with a plain handle, a plain neck band where the real mic carries a badge, a rim ring and a diamond weave on the windscreen above the rim (100 cells around so it repeats at the seam). It copies no photo and carries no brand mark or lettering; the weave pitch is stylised, not measured."
     }
   ]
 }

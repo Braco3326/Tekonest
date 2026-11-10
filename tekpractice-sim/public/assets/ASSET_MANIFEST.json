@@ -2388,21 +2388,21 @@
     {
       "id": "ev-re50",
       "optimized": true,
-      "tris": 9839,
+      "tris": 4604,
       "kind": "device",
       "ports": 1,
       "status": "ok",
       "portEmpties": 1,
       "riggedAt": "2026-07-19",
-      "tool": "meshy",
-      "toolVersion": "meshy-7.1",
-      "date": "2026-11-04T17:23:22.287Z",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-10T20:44:36.095Z",
       "specSource": "https://products.electrovoice.com/download/970113",
       "logosRemoved": true,
       "photos": [
-        "front.png"
+        "_generic_wrap.png"
       ],
-      "taskId": "01a1a766-804c-74a8-a230-3ac62bb220d9",
+      "taskId": null,
       "gates": [
         {
           "gate": "size",
@@ -2425,11 +2425,11 @@
           "ok": true
         },
         {
-          "gate": "proportionDrift",
+          "gate": "detail",
           "ok": true
         },
         {
-          "gate": "portSurface",
+          "gate": "proportionDrift",
           "ok": true
         },
         {
@@ -2441,7 +2441,7 @@
           "ok": true
         }
       ],
-      "source": "ai-meshy",
+      "source": "hybrid: own scripted geometry + official photo as texture",
       "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
       "trademark": "branded-internal"
     },

@@ -1,0 +1,20 @@
+{
+  "note": "Unrolled side surface of the RE50 lathe (build.projection 'wrap'): 153.94 mm around (pi x 49 mm) by 197 mm tall, y from the base like the profile. Generic artwork drawn by us: a plain black handle, a plain neck band where the real mic carries a badge, a rim ring and a diamond-weave windscreen above the rim (100 cells around so the picture repeats cleanly at the seam). No brand mark, no lettering.",
+  "faces": {
+    "wrap": {
+      "wMm": 153.94,
+      "hMm": 197,
+      "pxPerMm": 12.4,
+      "base": "#222224",
+      "items": [
+        { "kind": "rect", "x": 0, "y": 128, "w": 153.94, "h": 1.4, "fill": "#151517" },
+        { "kind": "rect", "x": 0, "y": 129.5, "w": 153.94, "h": 7.6, "fill": "#2b2b2e" },
+        { "kind": "rect", "x": 0, "y": 137.1, "w": 153.94, "h": 0.8, "fill": "#141416" },
+        { "kind": "rect", "x": 0, "y": 165, "w": 153.94, "h": 0.7, "fill": "#151517" },
+        { "kind": "rect", "x": 0, "y": 166, "w": 153.94, "h": 9.6, "fill": "#2d2d30" },
+        { "kind": "rect", "x": 0, "y": 175.4, "w": 153.94, "h": 0.8, "fill": "#151517" },
+        { "kind": "weave", "x": 0, "y": 176.2, "w": 153.94, "h": 20.8, "pitch": 1.5394, "line": 0.32, "fill": "#37383d", "stroke": "#1e1f22", "hole": "#0b0b0d" }
+      ]
+    }
+  }
+}
