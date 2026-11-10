@@ -1,0 +1,34 @@
+
+## Wave 0 - Outline port markers (2026-11-10)
+
+Commits: 5e58e8c (marker size from the connector), a62bf57 (rings replace the 50 mm discs), 8d571ed (screen-space floor and highlight rule), 1093a09 (rings lifted out of connector pockets), plus this log.
+
+### Before / after marker sizes
+- Before: every marker was an opaque 50 mm cylinder (20 mm thick). Mode Creation shrank it only to 0.9 x the nearest catalog neighbour (floor 0.3, so 15 mm), a hovered or pending one grew to at least 50 mm. On the QL1 rear (XLR pitch 25.3 mm) three yellow discs overlapped three connectors and the pending etherCON disc was about 50 mm over a 24 mm connector.
+- After: a flat double-sided outline ring (32 segments, 64 triangles, width 12 % of the diameter, at least 1.2 mm), outer diameter = connector size x 1.25 from `src/scene/portMarkerSize.ts`: XLR 30 mm, etherCON 30 mm, IEC C13/C14 37.5 mm, RJ45 20 mm, TRS 1/4" 17.5 mm, 3.5 mm jack 10 mm, BNC 17.5 mm, bantam 13.75 mm, DB25 / GPIO 50 mm, DigiLink 15 mm, unknown 25 mm. All 13 connector ids used by `content/catalog.json` are in the table (test lists any missing). restScale is 1 for every marker (metadata contract kept).
+- Screen-space rule (`portProxies.ts`): a ring is raised to 9 CSS px outer diameter when far (`ringScale`, `RING_MIN_PX`), left at its own size otherwise; a hovered / pending / ok ring reads `HIGHLIGHT_PX` (14 px), never under its rest size, never above 1.6 x rest when the camera is closer than 1 m. At 6 m on the QL1: XLR ring x2.05 (61 mm), pending etherCON ring x3.2 (96 mm, 14 px).
+- Click targets: the invisible pick spheres and their 12 px radius floor are untouched. `firstClickRadiusPx` and the tight radius in `portAt` now use the ring's real rest radius (15 mm for an XLR) instead of the fixed 25 mm of the old disc.
+
+### Decisions
+- The spec `openingMm` is not in the GLB extras (extras carry only portId and pos), so the runtime size comes from the connector table; `markerDiameterM(connector, openingMm?)` accepts it for later. The table has the same 24 mm for XLR as the specs.
+- No 25 % fill in hover / pending states (spec 4.1 allowed it, did not require it): the colour change plus the 14 px growth reads clearly in the browser.
+- Added beyond the plan: ports in a pocket (speaker amplifier plates: Genelec 13.8 mm, K12.2 25.8 / 27.5 / 38.9 mm, DBR12 about 25.6 mm, RE20 25.6 mm) sit on the pocket floor, so a flat ring there is hidden behind the panel (seen on the Genelec in the browser, no ring at all). On model load the spawner now probes the body (5 rays per port, once) and lifts the ring geometry by the recess it measures (`surfaceLiftM`, `liftMarkerRing`); the marker position (cable anchor) does not move. Measured lifts equal the spec insets (13.80, 27.49, 38.91, 25.80 mm). A flat panel, a curved body (mic tube), no surface, or a recess deeper than 6 cm measure 0 (unit tests).
+- Marker materials: `backFaceCulling = false` and `zOffset = -2` (the ring lies on the connector's face).
+
+### Tests
+- New: `tests/scene/portMarkerSize.test.ts` (6), `tests/scene/portMarkerMesh.test.ts` (12: ring geometry, every catalog device's markers sized from their connector, pocket lift on analytic bar geometry), `tests/creation/portProxies.test.ts` extended (35 tests: ringScale, 9 px floor at 20 m, <= 1.6 x at close range, idle refresh forces no matrix update, 14 px highlight, cap under 1 m with a 3.5 mm jack, restScale 0.5 kept through hover, first-click radius from the ring). `tests/scene/deviceSpawnerExtras.test.ts`: the test that pinned the neighbour shrink now pins ring size and scale 1 (the shrink is gone by design).
+- `npx vitest run tests/scene tests/creation tests/controls`: 111 files, 1457 tests, green. `npx tsc --noEmit` and `npx eslint src` clean.
+- E2E (private preview of a scratch build on port 4181): creation-keyboard-patch, creation-modal, focusPatch, a1: 14 passed. Also run: renderOnDemand, creation-budgets (idle = 0 renders), creation-patch (12 px targets, tight first clicks), creation-cables, creation-touch, creation-controls, creation-front, creation-connect-dialog: 97 passed. cameraFeel, viewCube, creation-look, creation-hardening, creation-polish, creation-views: 72 passed. No e2e read the old 50 mm size, so none was edited.
+
+### What the browser showed (dev server port 3072, stopped afterwards)
+- QL1 rear in Mode Creation: three yellow rings, one around each OMNI OUT 1/2/3 XLR; the connectors stay visible through them (adjacent rings touch because the pitch is 25 mm for a 30 mm ring, they do not hide anything). Two blue rings around INPUT 1/2, a lilac ring around the PRIMARY etherCON, a blue ring around the IEC inlet. With a cable in hand on the etherCON (`patchClick`): an orange ring of the same size around it (not a disc), the incompatible rings faded.
+- Observation, not a marker bug: the PRIMARY etherCON ring sits about 10 mm above the connector's centre and the XLR rings about 4 mm above theirs. That is the port `yMm` in `content/asset-specs/yamaha-ql1.json` (measured from the photo, spec says +/- 5 mm). Not changed here.
+- Genelec 8030C rear: before the lift no ring was visible; after it, one ring around the analog input position and one around the IEC inlet, on the plate surface.
+- Not driven: pointer hover (needs a real pointer on a port; restyle shares the same code path as the pending state shown) and a visual check of K12.2 / DBR12 pockets (lift values measured, not looked at).
+
+### Wave 0 review (read of `git diff 59b62d6..HEAD -- src tests`)
+- Click targets: pick spheres, `proxyRadius`, the 12 px floor and the resize guard untouched; e2e creation-patch green. Tight radius for an unselected device is now the ring's real radius (smaller than the old fixed 25 mm at close range; a click on the connector still patches).
+- Idle renders: rings are rescaled only inside `refresh()` (camera observer, resize, reconcile, glb load) and `restyle`; a refresh with the camera still forces no matrix update (unit test); creation-budgets idle = 0 renders green.
+- restScale: DeviceSpawner writes 1 at creation and at re-anchor; PortProxies reads it; a marker marked 0.5 returns to 0.5 after hover.
+- Found and fixed during the work: pocket rings hidden (above); the placeholder rings needed `backFaceCulling = false` or they vanish from behind.
+- Known / left: (1) legacy Focus & Patch glow uses `renderOutline`, which extrudes along normals; a flat ring (normals along z) gets a colour shift instead of an outward halo there. The legacy level screens still pass their tests; Mode Creation uses PortProxies and is unaffected. (2) A far-scaled lifted ring floats up to 3 x its lift (scale applies to the lift too): 41 mm for the Genelec, invisible at that distance. (3) The pocket probe costs 5 ray tests per port at model load, once per spawn; measured only through the e2e budgets staying green. (4) Rings of 25 mm-pitch XLR rows touch each other.
