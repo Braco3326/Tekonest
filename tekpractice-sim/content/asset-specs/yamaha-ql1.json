@@ -12,23 +12,23 @@
       "portId": "in-mic-1",
       "face": "io",
       "xMm": 420.1,
-      "yMm": 159.8,
+      "yMm": 151.3,
       "confidence": "photo",
       "openingMm": 24
     },
     {
       "portId": "in-mic-2",
       "face": "io",
-      "xMm": 396.2,
-      "yMm": 159.8,
+      "xMm": 396.6,
+      "yMm": 151.3,
       "confidence": "photo",
       "openingMm": 24
     },
     {
       "portId": "out-main-l",
       "face": "io",
-      "xMm": 219.1,
-      "yMm": 158.2,
+      "xMm": 219.3,
+      "yMm": 152,
       "confidence": "photo",
       "openingMm": 24
     },
@@ -36,30 +36,30 @@
       "portId": "out-main-r",
       "face": "io",
       "xMm": 193.8,
-      "yMm": 158.2,
+      "yMm": 152,
       "confidence": "photo",
       "openingMm": 24
     },
     {
       "portId": "out-mix-1",
       "face": "io",
-      "xMm": 168,
-      "yMm": 158.2,
+      "xMm": 168.2,
+      "yMm": 152,
       "confidence": "photo",
       "openingMm": 24
     },
     {
       "portId": "dante-primary",
       "face": "io",
-      "xMm": 317.4,
-      "yMm": 78.3,
+      "xMm": 318.7,
+      "yMm": 72.8,
       "confidence": "photo"
     },
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 147,
-      "yMm": 38.6,
+      "xMm": 147.9,
+      "yMm": 32.3,
       "confidence": "photo"
     }
   ],
@@ -68,8 +68,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 147,
-      "yMm": 78.5,
+      "xMm": 148,
+      "yMm": 71.5,
       "axis": "x",
       "sizeMm": {
         "w": 20.7,
@@ -204,12 +204,37 @@
       ]
     ],
     "params": {
-      "chamferMm": 1.5
+      "filletMm": 3.5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 5,
+      "baseMm": 30,
+      "feetMm": 12.7,
+      "feetWidthMm": 21.6,
+      "feetFromSideMm": 41.8,
+      "feetFromEndMm": 28,
+      "slotPlates": 2,
+      "slotPlateWMm": 121,
+      "slotPlateHMm": 40,
+      "slotPlateXMm": 193.6,
+      "slotPlateYMm": 15.7,
+      "slotPlatePitchMm": 127,
+      "slotPlateDepthMm": 1.2,
+      "frontRecessWMm": 100.6,
+      "frontRecessHMm": 22,
+      "frontRecessXMm": 335.6,
+      "frontRecessYMm": 18,
+      "frontRecessDepthMm": 2
     },
     "projection": [
       "top",
       "io"
-    ]
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 3
   },
   "texture": {
     "blankRects": [
@@ -231,34 +256,34 @@
       },
       {
         "face": "io",
-        "xMm": 30,
-        "yMm": 203,
-        "wMm": 132,
-        "hMm": 38,
+        "xMm": 38,
+        "yMm": 209.5,
+        "wMm": 123,
+        "hMm": 25,
         "marginMm": 6
       },
       {
         "face": "io",
-        "xMm": 362,
-        "yMm": 203,
-        "wMm": 80,
-        "hMm": 32,
+        "xMm": 364,
+        "yMm": 210.6,
+        "wMm": 67,
+        "hMm": 17,
         "marginMm": 6
       },
       {
         "face": "io",
-        "xMm": 360,
-        "yMm": 74,
-        "wMm": 50,
-        "hMm": 20,
-        "marginMm": 6
+        "xMm": 365,
+        "yMm": 83.3,
+        "wMm": 24,
+        "hMm": 6.6,
+        "marginMm": 3
       },
       {
         "face": "io",
-        "xMm": 306,
-        "yMm": 52,
-        "wMm": 50,
-        "hMm": 8,
+        "xMm": 305,
+        "yMm": 57.5,
+        "wMm": 46,
+        "hMm": 6.5,
         "marginMm": 2
       }
     ]
@@ -272,7 +297,17 @@
     {
       "kind": "photo",
       "url": "https://uk.yamaha.com/en/files/photoviewer_mixers_ql1_rear_tcm117-1687053.jpg",
-      "note": "Rear, straight-on (assets-source/yamaha-ql1/photos/rear.jpg, 2000x1281). The rear panel is the io face: all 7 modelled ports and the power switch are on it. Isotropic scale 3.68 px/mm (the width 468 mm gives 3.59 and the height 272 mm gives 3.77, the photo is not perfectly orthographic, so expect +/- 5 mm); x from the body centre (px 995), y from the bottom of the feet (px 1160). in-mic-1/2 = INPUT 1 and 2 (top row of the right-hand block, input 1 is rightmost seen from behind, pitch 23.9 mm). out-main-l/r and out-mix-1 = OMNI OUT 1, 2, 3 (right-hand end of the male block on the left, pitch 25.5 mm): the catalog simplifies, which OMNI OUT carries which bus is a guess, the first three are used. dante-primary = PRIMARY etherCON. power-in = AC IN (IEC C14, V-lock). power = the rocker above the AC inlet (20.7 x 33.2 mm visible housing; protrusion d = 12 mm is an estimate)."
+      "note": "Rear, straight-on (assets-source/yamaha-ql1/photos/rear.jpg, 2000x1281). The rear panel is the io face: all 7 modelled ports and the power switch are on it. Picture and numbers use ONE mapping (re-measured 2026-11-10, Wave 3): the picture of the io face is the crop 128,132,1731,1006 of this photo (the product spans x 153..1833 and y 132..1137, padded 25 px each side), so 1731 px = 468 mm and 1006 px = 272 mm: 3.6987 px/mm in both directions, y from the bottom of the feet (px 1137). Cross-checks of that scale on the panel itself: the Neutrik D-size etherCON flange is 95.7 x 115 px = 25.9 x 31.1 mm (26 x 31 published), the power rocker housing 76 x 125 px = 20.6 x 33.8 mm. Port = the centre of the connector read on a zoomed crop (+/- 1.5 px = +/- 0.4 mm): INPUT 1 and 2 (top row of the right-hand block, input 1 rightmost seen from behind, pitch 23.4 mm), OMNI OUT 1, 2, 3 = out-main-l, out-main-r, out-mix-1 (right-hand end of the male block on the left, pitch 25.5 mm; the catalog simplifies, which OMNI OUT carries which bus is a guess), PRIMARY etherCON = dante-primary, AC IN (IEC C14) = power-in, power = the rocker above the AC inlet (protrusion d = 8 mm is an estimate). The earlier positions (3.68 px/mm about the body centre, y from px 1160) put the XLR rows 8.5 mm, the etherCON 5.5 mm and the inlet 6.4 mm too high on the stretched picture."
+    },
+    {
+      "kind": "photo",
+      "url": "https://uk.yamaha.com/en/files/photoviewer_mixers_ql1_rear_tcm117-1687053.jpg",
+      "note": "Same rear photo, read for the body (Wave 3): the two option-slot plates SLOT 2 (left) and SLOT 1 (right) are dark plates 121 x 40 mm at x 193.6 and 320.6 mm, y 15.7 to 55.7 mm (px 844..1292 / 1314..1761, y 931..1079), modelled as 1.2 mm recesses (the depth is an estimate); the body underside is at 12.7 mm (px 1090) and the four feet are 12.7 mm tall, 21.6 mm across at the body and about 15.5 mm at the table, centred 41.8 mm from the sides (the rear pair measured; 28 mm from the front and rear edges is an estimate)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.getdante.com/wp-content/uploads/2024/01/Yamaha_ql1_front.jpg",
+      "note": "Front, elevated (assets-source/yamaha-ql1/photos/front.jpg, 2448x2216), read for the body (Wave 3): the phones panel (level knob and jack) is a recessed panel about 100.6 x 22 mm at 335.6 mm from the left edge on the lower front face (modelled 2 mm deep, an estimate), the top plate has a thick rounded front edge (the arm rest, modelled as a 14 mm roll) and the lower body is set back under it (3/4 photo: about 5 mm at the sides, base 30 mm tall above the feet, estimates). Brand marks are not modelled."
     },
     {
       "kind": "photo",

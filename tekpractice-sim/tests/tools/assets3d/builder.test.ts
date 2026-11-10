@@ -203,7 +203,7 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
   }, 120_000)
 
   /** Every wave-1 asset must come out of the builder at the spec size, inside the triangle budget, and through the fix-up unrotated. */
-  async function expectBuiltTo(spec: AssetSpecT, budget: number): Promise<Built> {
+  async function expectBuiltTo(spec: AssetSpecT, budget: number, fixupKeepsTriangles = true): Promise<Built> {
     const built = await buildAndFix(spec)
     const { w, h, d } = spec.realSizeMm
     const size = [0, 1, 2].map((k) => built.raw.bboxM.max[k] - built.raw.bboxM.min[k])
@@ -211,8 +211,10 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(built.raw.triangles).toBeLessThanOrEqual(budget)
     expect(built.raw.materials).toBe(1)
     expect(built.fix.rotatedDegrees).toBe(0)
-    // No recess boolean ran: the fix-up neither adds nor drops a triangle (a cut would have changed the count).
-    expect(built.fixed.triangles).toBe(built.raw.triangles)
+    // No recess boolean ran: the fix-up neither adds nor drops a triangle (a cut would have changed the count). The detailed console is the exception: its side plates
+    // lie against the core, and the fix-up's merge by distance removes the faces they hide (fixupKeepsTriangles = false: it may only drop).
+    if (fixupKeepsTriangles) expect(built.fixed.triangles).toBe(built.raw.triangles)
+    else expect(built.fixed.triangles).toBeLessThanOrEqual(built.raw.triangles)
     expect(built.gates.filter((g) => !g.ok)).toEqual([])
     return built
   }
@@ -527,8 +529,9 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
   it.skipIf(!BLENDER)('console-wedge builds yamaha-ql1 at 468 x 272 x 562 mm with its measured side profile, ports on the flat io face, every gate passing', async () => {
     const spec = realSpec('yamaha-ql1')
     expect(spec.build?.shape).toBe('console-wedge')
-    const { raw, fixed, fixedBytes, gates } = await expectBuiltTo(spec, 4000)
-    expect(raw.triangles).toBeLessThan(400)
+    const { raw, fixed, fixedBytes, gates } = await expectBuiltTo(spec, 4000, false)
+    expect(raw.triangles).toBeGreaterThan(1000) // the detailed v2 console (was a 224-triangle plain wedge)
+    expect(raw.triangles).toBeLessThan(6000)
     expect(gates.filter((g) => !g.ok)).toEqual([])
     const verts = await vertices(fixedBytes)
     const heightAt = (depthMm: number): number => {
@@ -536,9 +539,10 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
       return Math.max(...verts.filter((v) => Math.abs(v[2] - z) < 2 * MM).map((v) => v[1])) / MM
     }
     expect(heightAt(0.5)).toBeGreaterThan(270) // the tall rear
-    expect(Math.abs(heightAt(201) - 152)).toBeLessThan(2) // the sampling window is +-2 mm of depth, and the slope is 0.6
+    expect(Math.abs(heightAt(201) - 152)).toBeLessThan(4) // the sampling window is +-2 mm of depth (slope 0.6), and the 3.5 mm rim bevel slides a few vertices along the surface
     expect(heightAt(561.5)).toBeLessThan(100) // the low front edge
-    expect(fixed.triangles).toBeLessThan(400)
+    expect(fixed.triangles).toBeGreaterThan(1000)
+    expect(fixed.triangles).toBeLessThan(6000)
   }, 120_000)
 
   it.skipIf(!BLENDER)('tall pictures stay side by side in a row (a column would be twice as long) and are scaled by one common factor to the 4096 px limit, each still on its own face', async () => {

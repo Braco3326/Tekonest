@@ -97,7 +97,7 @@ controls.push({
 })
 
 // ── rear: the power switch (linked to the simulation) ──────────────────────────────────────────────────────────
-controls.push({ id: 'power', kind: 'switch', face: 'io', xMm: 147, yMm: 78.5, axis: 'x', default: 1, positions: 2, colour: '#d8dbe0', sizeMm: { w: 20.7, h: 33.2, d: 8 }, catalogControl: 'power' })
+controls.push({ id: 'power', kind: 'switch', face: 'io', xMm: 148, yMm: 71.5, axis: 'x', default: 1, positions: 2, colour: '#d8dbe0', sizeMm: { w: 20.7, h: 33.2, d: 8 }, catalogControl: 'power' })
 
 const layout = {
   schema: 1,

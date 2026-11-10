@@ -1454,7 +1454,7 @@
     {
       "id": "yamaha-ql1",
       "optimized": true,
-      "tris": 224,
+      "tris": 1712,
       "kind": "device",
       "ports": 7,
       "status": "ok",
@@ -1462,7 +1462,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-06T18:44:36.620Z",
+      "date": "2026-11-10T22:19:25.240Z",
       "specSource": "https://usa.yamaha.com/files/download/other_assets/1/798481/ql5_1_en_om_d1.pdf",
       "logosRemoved": true,
       "photos": [
@@ -1489,6 +1489,14 @@
         },
         {
           "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
           "ok": true
         },
         {
@@ -1901,7 +1909,7 @@
     {
       "id": "axia-iq",
       "optimized": true,
-      "tris": 92,
+      "tris": 1988,
       "kind": "device",
       "ports": 9,
       "status": "ok",
@@ -1913,10 +1921,7 @@
         "top_rectified.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
-      "date": "2026-11-10T00:59:06.621Z",
+      "date": "2026-11-10T22:19:37.162Z",
       "specSource": "https://www.telosalliance.com/consoles-audio-mixing/broadcast-consoles/axia-iq-family/axia-iq",
       "logosRemoved": true,
       "gates": [
@@ -1941,6 +1946,14 @@
           "ok": true
         },
         {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
           "gate": "proportionDrift",
           "ok": true
         },
@@ -1956,7 +1969,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "ev-re20",

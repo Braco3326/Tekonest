@@ -13,69 +13,75 @@
       "face": "io",
       "xMm": 53.6,
       "yMm": 25.8,
-      "confidence": "photo",
-      "openingMm": 24
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 2.5
     },
     {
       "portId": "in-line-1",
       "face": "io",
       "xMm": 79.1,
       "yMm": 25.8,
-      "confidence": "photo",
-      "openingMm": 24
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 2.5
     },
     {
       "portId": "out-monitor-l",
       "face": "io",
       "xMm": 130,
       "yMm": 25.8,
-      "confidence": "photo",
-      "openingMm": 24
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 2.5
     },
     {
       "portId": "out-monitor-r",
       "face": "io",
       "xMm": 156,
       "yMm": 25.8,
-      "confidence": "photo",
-      "openingMm": 24
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 2.5
     },
     {
       "portId": "out-program-aes",
       "face": "io",
       "xMm": 182,
       "yMm": 25.8,
-      "confidence": "photo",
-      "openingMm": 24
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 2.5
     },
     {
       "portId": "out-n1",
       "face": "io",
       "xMm": 208,
       "yMm": 25.8,
-      "confidence": "photo",
-      "openingMm": 24
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 2.5
     },
     {
       "portId": "gpio",
       "face": "io",
       "xMm": 346.7,
       "yMm": 77.8,
-      "confidence": "photo"
+      "confidence": "guess"
     },
     {
       "portId": "livewire",
       "face": "io",
       "xMm": 444.7,
       "yMm": 16.4,
-      "confidence": "photo"
+      "confidence": "guess"
     },
     {
       "portId": "power-in",
       "face": "io",
       "xMm": 86.2,
       "yMm": 71.3,
-      "confidence": "photo"
+      "confidence": "guess"
     }
   ],
   "controls": [
@@ -171,6 +177,11 @@
       "kind": "photo",
       "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Carousel_/IQ_StraightON_Carousel.png",
       "note": "iQ Main Frame (right) next to an expansion frame, straight-on view (opened, 2000x650): x scale 1.311 px/mm from the 519.3 mm frame width (681 px); depth scale 0.85 px/mm from the 100 mm fader slot (85 px), with the top-face y measured from the rear edge (photo y 203). The top-face x is mirrored (xMm = 519.3 - x_photo) because the face-local top view has the io (rear) edge at the bottom."
+    },
+    {
+      "kind": "photo",
+      "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/IQ%20Main%20Front_Silver.jpg",
+      "note": "Front, elevated (assets-source/axia-iq/photos/front.jpg), read for the body (Wave 3): the meter bridge at the rear is narrower than the deck (about 380 mm of the 519 mm; the layout puts its meters 300 mm wide on it, so it must be at least that), the deck has a thick rounded front edge (modelled as a 26 mm roll) and rounded rims (5 mm). Estimates: the roll and rim radii, the feet (6 mm tall, 32 mm across), and the 186 x 34 mm connector strip recessed 2.5 mm on the rear. Not modelled: the large rounded plan corners of the cheeks (this shape rounds the edges, not the plan) and the silver deck inset in its black frame (the picture carries it). PORTS (checked, Wave 3): there is no photo of the iQ main frame rear in the sources; the manual lists only Console (Molex), CANBus, D-sub backup PSU and IEC on it. The nine catalog ports are a layout copied from the StudioCore engine rear onto this rear, so their confidence is guess (not photo): the positions are plausible, not measured, and no picture is under them."
     }
   ],
   "build": {
@@ -202,11 +213,29 @@
       ]
     ],
     "params": {
-      "chamferMm": 2
+      "filletMm": 5,
+      "filletSegments": 8,
+      "armRestMm": 26,
+      "tierYMm": 82,
+      "tierWMm": 380,
+      "feetMm": 6,
+      "feetWidthMm": 32,
+      "feetFromSideMm": 55,
+      "feetFromEndMm": 45,
+      "rearRecessWMm": 186,
+      "rearRecessHMm": 34,
+      "rearRecessXMm": 38,
+      "rearRecessYMm": 9,
+      "rearRecessDepthMm": 2.5
     },
     "projection": [
       "top"
-    ]
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 4
   },
   "texture": {
     "blankRects": [
