@@ -1,8 +1,8 @@
-// Lazy entry of the guide: `void import('./guide').then((m) => m.bootGuide(decideRoute(location.search)), () => undefined)` in src/main.ts.
+// Lazy entry of the guide: src/main.ts imports it after the route has booted and calls `bootGuide(decideRoute(location.search))`.
 //
 // Nothing here runs before the gates are passed: this file statically imports only the two gate modules (already in the page's own chunk).
 // The widget, the controller, the bridge, the catalog and the style sheets are separate lazy chunks, fetched only when the guide will really mount,
-// so an exam URL, `?oscar=0` or an old browser never downloads them. `bootGuide` never throws and never rejects (W-12): the answer to any
+// so an exam URL, `?oscar=0` or an old browser never downloads them. `bootGuide` never throws and never rejects: the answer to any
 // failure is null and the app is untouched.
 import { guideEnabled, guideMode, type GuideRoute } from './mode'
 
@@ -14,7 +14,7 @@ export interface GuideHandle {
   destroy(): void
 }
 
-/** The guide uses `Object.hasOwn` and `String.prototype.toWellFormed`: without them it does not start (R5). */
+/** The guide uses `Object.hasOwn` and `String.prototype.toWellFormed`: without them it does not start. */
 function runtimeOk(): boolean {
   return typeof Object.hasOwn === 'function' && typeof ''.toWellFormed === 'function'
 }
@@ -65,6 +65,13 @@ export async function bootGuide(route: GuideRoute, target?: Window): Promise<Gui
       return null
     }
     if (!(await waitForHook(win))) return null
+    // The address is read again: the page may have moved to an exam address while the guide waited, and the gates must see that one.
+    try {
+      search = win.location.search
+    } catch {
+      return null
+    }
+    if (!guideEnabled(search) || guideMode(search, route) !== 'practice') return null
 
     const [{ createCreationBridge }, { mountOscar }, { loadCatalog }, catalog] = await Promise.all([
       import('./bridge/creationBridge'),

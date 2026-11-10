@@ -8,13 +8,18 @@ import type { TpState } from '../../src/guide/bridge/types'
 import {
   ACKNOWLEDGE,
   CREATION_FLOWS,
-  CREATION_FLOW_KEYWORDS,
   CREATION_STRINGS,
+  FLOW_PATH,
   SUGGEST_FROM,
   SUGGEST_PHANTOM,
   SUGGEST_TO,
+  benchStage,
   firstPhantom,
+  flowsFor,
+  keywordsFor,
+  montageFlowFor,
   nextConnectionStep,
+  type BenchStage,
 } from '../../src/guide/flows.creation'
 import { TP_STRINGS } from '../../src/guide/strings'
 import { ANCHOR_PATTERN, isValidAnchor } from '../../src/guide/vendor/core/planner'
@@ -77,9 +82,16 @@ describe('flows: anchors and texts', () => {
     }
   })
 
-  it('has the three flows, premier-montage first, none with a `when` predicate', () => {
-    expect(CREATION_FLOWS.map((f) => f.id)).toEqual(['premier-montage', 'alimentation-fantome', 'lire-le-statut'])
+  it('has the six flows of the path, none with a `when` predicate', () => {
+    expect(CREATION_FLOWS.map((f) => f.id)).toEqual([...FLOW_PATH])
     expect(CREATION_FLOWS.every((f) => f.when === undefined)).toBe(true)
+  })
+
+  it('every step text of TP_STRINGS is used by the flow it belongs to, and a flow says nothing else', () => {
+    for (const f of CREATION_FLOWS) {
+      const own = Object.values(TP_STRINGS.flows[f.id as keyof typeof TP_STRINGS.flows].steps)
+      expect([...new Set(f.steps.map((x) => x.say))].sort()).toEqual([...new Set(own)].sort())
+    }
   })
 
   it('premier-montage ends step 1 on placeChosen (R7), the cable step on connect, and the status step on acknowledge', () => {
@@ -91,15 +103,68 @@ describe('flows: anchors and texts', () => {
     expect(f.steps[f.steps.length - 1]).toMatchObject({ anchor: 'nav:status', action: 'read', done: { event: ACKNOWLEDGE } })
   })
 
-  it('alimentation-fantome is one toggle step done by a toggle to true; lire-le-statut is one read step on the status bar', () => {
-    expect(CREATION_FLOWS[1].steps).toEqual([expect.objectContaining({ anchor: SUGGEST_PHANTOM, action: 'toggle', done: { event: 'toggle', match: { value: true } } })])
-    expect(CREATION_FLOWS[2].steps).toEqual([expect.objectContaining({ anchor: 'nav:status', action: 'read', done: { event: ACKNOWLEDGE } })])
+  it('alimentation-fantome is one toggle step done by the suggested switch going on; lire-le-statut is one read step on the status bar', () => {
+    const byId = (id: string) => CREATION_FLOWS.find((f) => f.id === id)!
+    expect(byId('alimentation-fantome').steps).toEqual([expect.objectContaining({ anchor: SUGGEST_PHANTOM, action: 'toggle', done: { event: 'toggle', match: { value: true, suggested: true } } })])
+    expect(byId('lire-le-statut').steps).toEqual([expect.objectContaining({ anchor: 'nav:status', action: 'read', done: { event: ACKNOWLEDGE } })])
   })
 
-  it('every flow keyword table entry names a flow that exists', () => {
+  it('each small flow starts at its own thing: places, devices, the second device, the cable', () => {
+    const first = (id: string) => CREATION_FLOWS.find((f) => f.id === id)!.steps[0]
+    expect(first('premier-montage')).toMatchObject({ anchor: 'nav:place', done: { event: 'placeChosen' } })
+    expect(first('ajouter-des-appareils')).toMatchObject({ anchor: 'nav:inventory', done: { event: 'deviceAdded' } })
+    expect(first('deuxieme-appareil')).toMatchObject({ anchor: 'nav:inventory', done: { event: 'deviceAdded' } })
+    expect(CREATION_FLOWS.find((f) => f.id === 'deuxieme-appareil')!.steps).toHaveLength(1)
+    expect(first('premier-cable')).toMatchObject({ anchor: SUGGEST_FROM, to: SUGGEST_TO, action: 'drag', done: { event: 'connect' } })
+  })
+
+  it('every keyword table entry names a flow that exists, for every stage', () => {
     const ids = new Set(CREATION_FLOWS.map((f) => f.id))
-    expect(CREATION_FLOW_KEYWORDS.length).toBeGreaterThan(0)
-    for (const k of CREATION_FLOW_KEYWORDS) expect(ids.has(k.flowId)).toBe(true)
+    for (const stage of STAGES) {
+      const table = keywordsFor(stage)
+      expect(table.length).toBeGreaterThan(0)
+      for (const k of table) expect(ids.has(k.flowId), `${stage} ${k.flowId}`).toBe(true)
+    }
+  })
+})
+
+const STAGES: BenchStage[] = ['no-place', 'empty', 'one-device', 'connectable', 'settled']
+
+describe('bench stage and the flow that comes first', () => {
+  const PAIR: [string, string][] = [['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']]
+  const cable = [{ a: { instance: 'mic', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }]
+
+  it('five stages: no place, empty bench, one device, a cable can be drawn, everything else', () => {
+    expect(benchStage(null, registry)).toBe('no-place')
+    expect(benchStage({ ...stateOf([]), placeKnown: false }, registry)).toBe('no-place')
+    expect(benchStage({ ...stateOf(PAIR), placeKnown: false }, registry)).toBe('no-place')
+    expect(benchStage(stateOf([]), registry)).toBe('empty')
+    expect(benchStage(stateOf([['ql1', 'yamaha-ql1']]), registry)).toBe('one-device')
+    expect(benchStage(stateOf(PAIR), registry)).toBe('connectable')
+    expect(benchStage(stateOf(PAIR, cable), registry)).toBe('settled')
+    // two devices the app cannot cable together: nothing to draw, so not connectable
+    expect(benchStage(stateOf([['mic', 'shure-sm58'], ['spk', 'qsc-k12-2']]), registry)).toBe('settled')
+  })
+
+  it('the first flow of each stage is the one that starts at what is next', () => {
+    expect(STAGES.map((s) => flowsFor(s)[0].id)).toEqual(['premier-montage', 'ajouter-des-appareils', 'deuxieme-appareil', 'premier-cable', 'lire-le-statut'])
+  })
+
+  it('flowsFor keeps every flow (a running or restored flow is always found), the same objects, the path from the stage on first', () => {
+    for (const stage of STAGES) {
+      const list = flowsFor(stage)
+      expect(list).toHaveLength(CREATION_FLOWS.length)
+      expect(new Set(list)).toEqual(new Set(CREATION_FLOWS))
+    }
+    expect(flowsFor('connectable').map((f) => f.id)).toEqual(['premier-cable', 'lire-le-statut', 'alimentation-fantome', 'premier-montage', 'ajouter-des-appareils', 'deuxieme-appareil'])
+  })
+
+  it('the words « premier montage » open the flow of the stage while the montage is not done, the whole flow after', () => {
+    expect(STAGES.map((s) => montageFlowFor(s))).toEqual(['premier-montage', 'ajouter-des-appareils', 'deuxieme-appareil', 'premier-cable', 'premier-montage'])
+    for (const stage of STAGES) {
+      const montage = keywordsFor(stage).find((k) => k.keywords.includes('premier montage'))!
+      expect(montage.flowId).toBe(montageFlowFor(stage))
+    }
   })
 })
 
@@ -108,9 +173,9 @@ describe('flows: they run on the real controller', () => {
     ask: async () => ({ kind: 'refusal', text: 'x', lines: [], verdict: null }),
     judge: async () => ({ verdict: null, needInfo: null }),
   }
-  function run() {
+  function run(stage: BenchStage = 'no-place') {
     const clock = { t: 1 }
-    const c = createController({ brain, flows: CREATION_FLOWS, clock: () => clock.t++, strings: CREATION_STRINGS, flowKeywords: CREATION_FLOW_KEYWORDS })
+    const c = createController({ brain, flows: flowsFor(stage), clock: () => clock.t++, strings: CREATION_STRINGS, flowKeywords: keywordsFor(stage) })
     const send = (i: ControllerInput) => c.dispatch(i)
     const ev = (type: string, data?: HostEvent['data']) => send({ type: 'hostEvent', event: { type, at: clock.t++, ...(data ? { data } : {}) } })
     return { c, send, ev }
@@ -140,13 +205,16 @@ describe('flows: they run on the real controller', () => {
     expect(v.bubble?.lines[0].text).toContain('Premier montage')
   })
 
-  it('alimentation-fantome ends on a toggle to true only (the anchor of the event is not compared)', async () => {
+  it('alimentation-fantome ends on the suggested switch going on, and on nothing else', async () => {
     const { send, ev } = run()
     await send({ type: 'setContext', context: { page: 'workbench', mode: 'practice' } })
     await send({ type: 'flow', control: { action: 'start', flowId: 'alimentation-fantome' } })
-    let v = await ev('toggle', { control: 'control:isa.phantom-48v', anchor: 'control:isa.phantom-48v', value: false })
+    // the switch going off, or a switch that is not the suggested one (no `suggested` mark), does not end the step
+    let v = await ev('toggle', { control: 'control:isa.phantom-48v', anchor: 'control:isa.phantom-48v', value: false, suggested: true })
     expect(v.bubble?.kind).toBe('step')
-    v = await ev('toggle', { control: 'control:isa.phantom-48v', anchor: 'control:isa.phantom-48v', value: true })
+    v = await ev('toggle', { control: 'control:other.phantom-48v', anchor: 'control:other.phantom-48v', value: true })
+    expect(v.bubble?.kind).toBe('step')
+    v = await ev('toggle', { control: 'control:isa.phantom-48v', anchor: 'control:isa.phantom-48v', value: true, suggested: true })
     expect(v.bubble?.kind).toBe('celebrate')
   })
 
@@ -174,8 +242,9 @@ describe('flows: they run on the real controller', () => {
   })
 
   it('every text a flow shows is free of the old « relancer la vérification » wording', async () => {
-    const all = JSON.stringify([CREATION_FLOWS, CREATION_STRINGS.flows])
+    const all = JSON.stringify([CREATION_FLOWS, CREATION_STRINGS.flows, CREATION_STRINGS.planner])
     expect(all).not.toContain('vérification')
+    expect(all).not.toContain('relancer')
   })
 })
 

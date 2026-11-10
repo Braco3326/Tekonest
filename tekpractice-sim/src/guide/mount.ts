@@ -2,7 +2,7 @@
 //
 // Rules this file keeps:
 // - Exam, `?oscar=0` or the flag off: it returns null before it creates, reads or listens to anything (no controller, no widget, no bridge call).
-// - W-12: every call into the guide or the bridge is wrapped. A throw while mounting is one console.warn, everything built so far is torn down and
+// - Failure isolation: every call into the guide or the bridge is wrapped. A throw while mounting is one console.warn, everything built so far is torn down and
 //   the result is null; a throw later (a change, a click) is one console.warn for the whole mount, and the page goes on untouched.
 // - The widget asks for rects often (scroll, resize, every refresh of a step). A rect is cached per anchor for RECT_CACHE_MS, because
 //   `deviceScreen` is a heavy test seam (a grid pick) and the bridge rebuilds its table on a miss.
@@ -17,14 +17,15 @@ import { NAV_SELECTORS } from './bridge/creationBridge'
 import { isAnchor } from './anchors'
 import {
   ACKNOWLEDGE,
-  CREATION_FLOWS,
-  CREATION_FLOW_KEYWORDS,
   CREATION_STRINGS,
   NAV_STATUS,
   SUGGEST_FROM,
   SUGGEST_PHANTOM,
   SUGGEST_TO,
+  benchStage,
   firstPhantom,
+  flowsFor,
+  keywordsFor,
   nextConnectionStep,
 } from './flows.creation'
 import { guideEnabled, guideMode, type GuideRoute } from './mode'
@@ -65,15 +66,25 @@ export interface OscarHandle {
 // ── pure pieces ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
 /**
- * What the controller is told about the bench. The planner turns a verdict into the next step; the only verdicts worth a step are the ones the
- * learner can act on: a rule error to fix, or a chain that plays. A bench that is just not finished (no place, empty, no reason yet) gets no verdict,
- * so that the planner offers the guided flow (« premier montage ») instead of a "complete the missing information, then run the check again"
- * line, which has no meaning here (Mode Création has no check button).
+ * What the controller is told about the bench: a new revision for every change, whatever the stage. The planner then follows its own order: an
+ * error to fix (the app's rule text), a place or a device still missing (the verdict sentence), no cable yet (the signal path's first reason,
+ * verbatim), a chain that plays (good, with the next flow offered). Null only while the bridge has no state at all.
  */
 export function setupFor(state: TpState | null, revision: number): Setup | null {
   if (state === null) return null
-  const judgeable = state.playbackReady || state.events.some((e) => e.severity === 'error')
-  return judgeable ? { coveredFamilies: [], instances: [], connections: [], ctx: { revision } } : null
+  return { coveredFamilies: [], instances: [], connections: [], ctx: { revision } }
+}
+
+/**
+ * A toggle of the control the flow points at (the first phantom switch) is marked `suggested`, so that the phantom flow ends on that switch and not on
+ * any other. The data of every other event is untouched.
+ */
+export function annotateToggle(event: HostEvent, state: TpState | null, bridge: Pick<TpBridge, 'anchorOfControl'>): HostEvent {
+  if (event.type !== 'toggle' || state === null || event.data === undefined) return event
+  const target = firstPhantom(state)
+  if (target === null) return event
+  const anchor = bridge.anchorOfControl(target.instance, target.control)
+  return anchor !== '' && event.data.anchor === anchor ? { ...event, data: { ...event.data, suggested: true } } : event
 }
 
 /** One poll that brings a burst of devices is a restore: a single `restore` event replaces the whole burst. */
@@ -191,13 +202,21 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     const mode = (): 'practice' | 'exam' => guideMode(liveSearch(), deps.route)
 
     const brain = createTekPracticeBrain({ bridge, rules: registry.catalog.rules as unknown as readonly RuleRow[], mode })
+    // The controller reads these two lists by reference at every call: the mount keeps them in the order of the bench's stage (see flows.creation.ts).
+    const flows = flowsFor('no-place')
+    const keywords = keywordsFor('no-place')
+    const follow = (state: TpState | null): void => {
+      const stage = benchStage(state, registry)
+      flows.splice(0, flows.length, ...flowsFor(stage))
+      keywords.splice(0, keywords.length, ...keywordsFor(stage))
+    }
     const controller = impl.createController({
       brain,
-      flows: CREATION_FLOWS,
+      flows,
       clock: now,
       ...(deps.storage ? { storage: deps.storage } : {}),
       strings: CREATION_STRINGS,
-      flowKeywords: CREATION_FLOW_KEYWORDS,
+      flowKeywords: keywords,
     })
     const rects = createRectResolver({ bridge, registry, now })
     cleanups.push(() => rects.clear())
@@ -225,14 +244,19 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       guard(() => {
         revision++
         rects.clear()
+        follow(state)
         tell(state)
-        for (const e of collapseRestore(events)) hostEvent(e)
+        for (const e of collapseRestore(events)) hostEvent(annotateToggle(e, state, bridge))
       }),
     )
     cleanups.push(unsubscribe)
 
     // The bench as it is now (a restored project is already there when the guide arrives).
-    guard(() => tell(bridge.snapshot()))
+    guard(() => {
+      const state = bridge.snapshot()
+      follow(state)
+      tell(state)
+    })
 
     // « Lire la barre d’état »: a `read` step has no change of the bench to wait for, so a click inside the status bar is the learner reading it.
     const statusSelector = NAV_SELECTORS[NAV_STATUS][0]

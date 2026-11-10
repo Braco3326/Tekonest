@@ -31,6 +31,8 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
+// With `?oscar=0` or the flag off, nothing mounts, listens or polls. The small entry chunk of the guide is still fetched by the page; the gates inside
+// answer before anything heavier (the widget, the bridge, the catalog, the sheets) is requested.
 describe('bootGuide gates', () => {
   it.each([['?oscar=0'], ['?mode=exam'], ['?level=a1'], ['?legacy=1'], ['?%4Dode=exam']])('resolves null for %s and mounts nothing', async (search) => {
     const win = fakeWin(search)
@@ -43,7 +45,14 @@ describe('bootGuide gates', () => {
     expect(mount).not.toHaveBeenCalled()
   })
 
-  it('resolves null, with one console.warn, when Object.hasOwn is missing (R5), and starts no timer', async () => {
+  it.each([['?oscar=0'], ['?mode=exam'], ['?level=a1'], ['?legacy=1']])('starts no timer and fetches nothing for %s (the gates answer before the wait)', async (search) => {
+    vi.useFakeTimers()
+    await expect(bootGuide('creation', fakeWin(search, false))).resolves.toBeNull()
+    expect(vi.getTimerCount()).toBe(0)
+    expect(mount).not.toHaveBeenCalled()
+  })
+
+  it('resolves null, with one console.warn, when Object.hasOwn is missing, and starts no timer', async () => {
     vi.useFakeTimers()
     const orig = Object.hasOwn
     // @ts-expect-error the feature test is the point
@@ -58,7 +67,7 @@ describe('bootGuide gates', () => {
     expect(vi.getTimerCount()).toBe(0)
   })
 
-  it('resolves null, with one console.warn, when String.prototype.toWellFormed is missing (R5)', async () => {
+  it('resolves null, with one console.warn, when String.prototype.toWellFormed is missing', async () => {
     const proto = String.prototype as unknown as { toWellFormed?: () => string }
     const orig = proto.toWellFormed
     delete proto.toWellFormed
@@ -125,6 +134,35 @@ describe('bootGuide waits for window.__creation', () => {
     for (const m of ['snapshot', 'rectOf', 'anchorOfPort', 'anchorOfDevice', 'anchorOfControl', 'onChange', 'destroy']) expect(typeof bridge[m]).toBe('function')
   })
 
+  it('an address that turns into an exam address while the guide waits gives null, and nothing mounts', async () => {
+    vi.useFakeTimers()
+    const win = fakeWin('', false)
+    let result: unknown = 'pending'
+    void bootGuide('creation', win).then((r) => (result = r))
+    await vi.advanceTimersByTimeAsync(1000)
+    ;(win.location as { search: string }).search = '?mode=exam'
+    win.__creation = { design: vi.fn() } as never
+    await vi.advanceTimersByTimeAsync(WAIT_STEP_MS)
+    await vi.advanceTimersByTimeAsync(0)
+    expect(result).toBeNull()
+    expect(mount).not.toHaveBeenCalled()
+    expect(vi.getTimerCount()).toBe(0)
+  })
+
+  it('the address read after the wait is the one the mount gets', async () => {
+    vi.useFakeTimers()
+    const win = fakeWin('', false)
+    let result: unknown = 'pending'
+    void bootGuide('creation', win).then((r) => (result = r))
+    await vi.advanceTimersByTimeAsync(500)
+    ;(win.location as { search: string }).search = '?x=1'
+    win.__creation = { design: vi.fn() } as never
+    await vi.advanceTimersByTimeAsync(WAIT_STEP_MS)
+    vi.useRealTimers()
+    await vi.waitFor(() => expect(result).toBe(handle), { timeout: 20_000 })
+    expect((mount.mock.calls[0][0] as { search: string }).search).toBe('?x=1')
+  })
+
   it('a hook that is there at once mounts without waiting', async () => {
     const r = await bootGuide('creation', fakeWin())
     expect(r).toBe(handle)
@@ -144,7 +182,7 @@ describe('bootGuide waits for window.__creation', () => {
   })
 })
 
-describe('bootGuide failures (W-12)', () => {
+describe('bootGuide failures', () => {
   it('a throw in mountOscar resolves null with one console.warn', async () => {
     mount.mockImplementation(() => {
       throw new Error('boom')

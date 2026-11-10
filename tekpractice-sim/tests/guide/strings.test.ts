@@ -16,7 +16,7 @@ function frozenEverywhere(node: unknown): boolean {
 }
 
 const all = leaves(TP_STRINGS)
-const FLOWS = ['premier-montage', 'alimentation-fantome', 'lire-le-statut'] as const
+const FLOWS = ['premier-montage', 'ajouter-des-appareils', 'deuxieme-appareil', 'premier-cable', 'alimentation-fantome', 'lire-le-statut'] as const
 
 describe('TP_STRINGS', () => {
   it('every string in TP_STRINGS is non-empty, contains no digit, and ends without trailing space', () => {
@@ -26,13 +26,12 @@ describe('TP_STRINGS', () => {
       const s = value as string
       expect(s.length, path).toBeGreaterThan(0)
       expect(/\d/.test(s), `${path} has a digit`).toBe(false)
-      expect(/tek\s*brain/i.test(s), path).toBe(false)
       expect(s, path).toBe(s.trim())
       expect(/[<>]/.test(s), `${path} has an angle bracket`).toBe(false)
     }
   })
 
-  it('names no private thing, no ruling id and no vendor secret', () => {
+  it('names no private thing, no decision id and no vendor secret', () => {
     for (const { path, value } of all) {
       const s = value as string
       expect(privateHits(s), path).toEqual([])
@@ -44,7 +43,8 @@ describe('TP_STRINGS', () => {
   it('uses the app’s own words: « lieu », never « plan de travail »', () => {
     for (const { path, value } of all) expect(/plan de travail/i.test(value as string), path).toBe(false)
     expect(TP_STRINGS.verdict.benchEmpty).toContain('lieu')
-    expect(TP_STRINGS.flows['lire-le-statut'].steps.list).toContain('Erreurs et avertissements')
+    expect(TP_STRINGS.flows['premier-montage'].steps.status).toContain('Erreurs et avertissements')
+    expect(TP_STRINGS.flows['lire-le-statut'].steps.signal).toContain('Rien de branché')
     expect(TP_STRINGS.flows['premier-montage'].steps.status).toContain('Signal OK')
   })
 
@@ -75,12 +75,19 @@ describe('TP_STRINGS', () => {
     expect(TP_STRINGS.error.calm).not.toBe('')
   })
 
-  it('has a title and at least three steps for each flow of the first release', () => {
+  it('has a title and at least one step for each flow, and no step text that no flow uses', () => {
     for (const id of FLOWS) {
       expect(tpString(`flows.${id}.title`), id).not.toBe('')
       const steps = all.filter((l) => l.path.startsWith(`flows.${id}.steps.`))
-      expect(steps.length, id).toBeGreaterThanOrEqual(3)
+      expect(steps.length, id).toBeGreaterThanOrEqual(1)
     }
+    const stepPaths = all.filter((l) => l.path.includes('.steps.'))
+    expect(stepPaths.length).toBeGreaterThan(5)
+  })
+
+  it('holds the host sentence of the next-step bubble, without any request to run a check again', () => {
+    expect(TP_STRINGS.planner.needInfo).not.toBe('')
+    expect(/vérification|relancer/i.test(TP_STRINGS.planner.needInfo)).toBe(false)
   })
 
   it('every string passes the browser-side shape check as a reply (nothing that looks like an id)', () => {

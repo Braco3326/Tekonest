@@ -4,7 +4,8 @@ import { makeRegistry } from '../helpers'
 import type { RuleRow } from '../../src/creation/shell/statusModel'
 import type { TpBridge, TpPortRef, TpState } from '../../src/guide/bridge/types'
 import { ACKNOWLEDGE, SUGGEST_FROM, SUGGEST_PHANTOM, SUGGEST_TO } from '../../src/guide/flows.creation'
-import { RECT_CACHE_MS, collapseRestore, createRectResolver, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
+import { RECT_CACHE_MS, annotateToggle, collapseRestore, createRectResolver, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
+import { TP_STRINGS } from '../../src/guide/strings'
 import { createController } from '../../src/guide/vendor/core/controller'
 import type { ControllerInput, GuideView, HostEvent, Rect } from '../../src/guide/vendor/core/types'
 
@@ -206,7 +207,7 @@ describe('mountOscar gates', () => {
     expect(opts.zIndex).toBe(35)
     expect(opts.context).toEqual({ page: 'workbench', mode: 'practice' })
     const c = r.f.impl.createController.mock.calls[0][0] as { flows: { id: string }[]; clock: () => number; strings: unknown }
-    expect(c.flows.map((x) => x.id)).toEqual(['premier-montage', 'alimentation-fantome', 'lire-le-statut'])
+    expect(c.flows.map((x) => x.id)).toEqual(['premier-montage', 'ajouter-des-appareils', 'deuxieme-appareil', 'premier-cable', 'lire-le-statut', 'alimentation-fantome'])
     expect(c.clock()).toBe(1000)
     expect(c.strings).toBeDefined()
   })
@@ -224,7 +225,7 @@ describe('mountOscar gates', () => {
   })
 })
 
-// ── failure isolation (W-12) ────────────────────────────────────────────────────────────────────────────────────────────
+// ── failure isolation ────────────────────────────────────────────────────────────────────────────────────────────
 
 describe('mountOscar failures', () => {
   it('a throw in mountGuide is swallowed with one console.warn, mountOscar returns null, and what was built is stopped', () => {
@@ -397,13 +398,66 @@ describe('mountOscar forwarding', () => {
     expect(first.setup).toMatchObject({ coveredFamilies: [], instances: [], connections: [] })
   })
 
-  it('setupFor: a verdict only when something can be said (an error to fix, or a chain that plays), a revision each time, none for a half-built bench', () => {
+  it('setupFor: a new revision for every state, whatever the stage (the planner decides what to say); null only without a state', () => {
     expect(setupFor(null, 1)).toBeNull()
-    expect(setupFor(EMPTY, 1)).toBeNull()
-    expect(setupFor(stateOf([['a', 'yamaha-ql1']]), 1)).toBeNull()
-    expect(setupFor(stateOf([['a', 'yamaha-ql1']], { events: [{ ruleId: 'R5', severity: 'warning', subjects: [] }] }), 1)).toBeNull()
+    for (const st of [EMPTY, stateOf([['a', 'yamaha-ql1']]), stateOf([['a', 'yamaha-ql1']], { events: [{ ruleId: 'R5', severity: 'warning', subjects: [] }] })])
+      expect(setupFor(st, 3)).toEqual({ coveredFamilies: [], instances: [], connections: [], ctx: { revision: 3 } })
     expect(setupFor(stateOf([['a', 'yamaha-ql1']], { events: [{ ruleId: 'R5', severity: 'error', subjects: [] }] }), 7)).toEqual({ coveredFamilies: [], instances: [], connections: [], ctx: { revision: 7 } })
     expect(setupFor(stateOf([['a', 'yamaha-ql1']], { playbackReady: true }), 2)).toEqual({ coveredFamilies: [], instances: [], connections: [], ctx: { revision: 2 } })
+  })
+
+  it('every change sends a setup, an empty bench included (no stage hides a verdict)', () => {
+    const r = make({}, EMPTY)
+    mountOscar(r.deps, r.f.impl)
+    expect(contexts(r.f).at(-1)?.setup).not.toBeNull()
+    r.b.emit(stateOf([]))
+    expect(contexts(r.f).at(-1)?.setup).toMatchObject({ ctx: { revision: 1 } })
+    r.b.emit(PAIR)
+    expect(contexts(r.f).at(-1)?.setup).toMatchObject({ ctx: { revision: 2 } })
+  })
+
+  it('annotateToggle marks a toggle of the suggested phantom switch, and only that', () => {
+    const state = stateOf([['ql1', 'yamaha-ql1'], ['isa', 'focusrite-isa-one'], ['isa2', 'focusrite-isa-one']])
+    const bridge = { anchorOfControl: (i: string, c: string) => `control:${i}.${c}` }
+    const on = (anchor: string): HostEvent => ev('toggle', { control: anchor, anchor, value: true })
+    expect(annotateToggle(on('control:isa.phantom-48v'), state, bridge).data).toEqual({ control: 'control:isa.phantom-48v', anchor: 'control:isa.phantom-48v', value: true, suggested: true })
+    expect(annotateToggle(on('control:isa2.phantom-48v'), state, bridge)).toEqual(on('control:isa2.phantom-48v'))
+    expect(annotateToggle(on('control:ql1.power'), state, bridge)).toEqual(on('control:ql1.power'))
+    expect(annotateToggle(ev('connect', { a: 'x', b: 'y' }), state, bridge)).toEqual(ev('connect', { a: 'x', b: 'y' }))
+    expect(annotateToggle(on('control:isa.phantom-48v'), null, bridge)).toEqual(on('control:isa.phantom-48v'))
+    expect(annotateToggle(on('control:isa.phantom-48v'), stateOf([['ql1', 'yamaha-ql1']]), bridge)).toEqual(on('control:isa.phantom-48v'))
+    expect(annotateToggle({ type: 'toggle', at: 1 }, state, bridge)).toEqual({ type: 'toggle', at: 1 })
+  })
+
+  it('the toggle forwarded to the controller carries the suggested mark when it is the suggested switch', () => {
+    const state = stateOf([['isa', 'focusrite-isa-one']])
+    const r = make({}, state)
+    mountOscar(r.deps, r.f.impl)
+    r.f.handle.send.mockClear()
+    r.b.emit(state, [ev('toggle', { control: 'control:isa.phantom-48v', anchor: 'control:isa.phantom-48v', value: true })])
+    expect(hostEvents(r.f)[0].data).toMatchObject({ suggested: true, value: true })
+  })
+
+  it('the lists the controller reads follow the stage of the bench: flows in the order of the path, the words « premier montage » on the flow of the stage', () => {
+    const r = make({}, EMPTY)
+    mountOscar(r.deps, r.f.impl)
+    const deps = r.f.impl.createController.mock.calls[0][0] as { flows: { id: string }[]; flowKeywords: { flowId: string; keywords: string[] }[] }
+    const montage = (): string => deps.flowKeywords.find((k) => k.keywords.includes('premier montage'))!.flowId
+    const keep = deps.flows
+    expect(keep.map((f) => f.id)[0]).toBe('premier-montage')
+    r.b.emit(stateOf([]))
+    expect(deps.flows).toBe(keep) // the same array: the controller reads it by reference
+    expect(deps.flows.map((f) => f.id)[0]).toBe('ajouter-des-appareils')
+    expect(montage()).toBe('ajouter-des-appareils')
+    r.b.emit(stateOf([['ql1', 'yamaha-ql1']]))
+    expect(deps.flows[0].id).toBe('deuxieme-appareil')
+    r.b.emit(PAIR)
+    expect(deps.flows[0].id).toBe('premier-cable')
+    expect(montage()).toBe('premier-cable')
+    r.b.emit(stateOf([['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']], { connections: [{ a: { instance: 'mic', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }] }))
+    expect(deps.flows[0].id).toBe('lire-le-statut')
+    expect(montage()).toBe('premier-montage')
+    expect(deps.flows).toHaveLength(6) // a running or restored flow is always still there
   })
 
   it('a click inside the status bar is `acknowledge` (the end of a read step); a click elsewhere is nothing', () => {
@@ -555,6 +609,18 @@ describe('createRectResolver', () => {
     expect(resolver(stateOf([['ql1', 'yamaha-ql1']])).rr.getRect(SUGGEST_PHANTOM)).toBeNull()
   })
 
+  it('a device called « suggest » cannot shadow the reserved anchors: they are answered from the live suggestion, never looked up as written', () => {
+    // a device whose id slugs to `suggest`, with a port `from`, has the real anchor port:suggest.from; the reserved meaning wins, in the resolver
+    const { b, rr } = resolver(stateOf([['suggest', 'shure-sm58'], ['ql1', 'yamaha-ql1']]))
+    expect(rr.getRect(SUGGEST_FROM)).toEqual(R)
+    expect(b.spies.rectOf).not.toHaveBeenCalledWith(SUGGEST_FROM)
+    expect(b.spies.rectOf).toHaveBeenCalledWith('port:suggest.out-xlr')
+    // with nothing to suggest the answer is null even though an anchor of that name could exist
+    const none = resolver(stateOf([['suggest', 'qsc-k12-2']]))
+    expect(none.rr.getRect(SUGGEST_FROM)).toBeNull()
+    expect(none.b.spies.rectOf).not.toHaveBeenCalled()
+  })
+
   it('the widget gets this resolver: mountGuide receives a getRect that caches and resolves the reserved anchors', () => {
     const r = make({}, PAIR)
     mountOscar(r.deps, r.f.impl)
@@ -572,21 +638,144 @@ describe('createRectResolver', () => {
 
 // ── what the learner sees, on the real controller and the real brain ─────────────────────────────────────────────────────
 
-describe('mountOscar on the real controller', () => {
-  it('an empty bench: « Prochaine étape » offers premier-montage, and the offered chip starts it', async () => {
-    const r = make({}, EMPTY)
-    const impl: MountImpl = { createController, mountGuide: vi.fn(() => ({ destroy: vi.fn(), send: vi.fn(async () => ({}) as GuideView) })) as never }
-    mountOscar(r.deps, impl)
-    const controller = (impl.mountGuide as Mock).mock.calls[0][0].controller as ReturnType<typeof createController>
-    await controller.dispatch({ type: 'setContext', context: { page: 'workbench', mode: 'practice', setup: null } })
-    let v = await controller.dispatch({ type: 'chip', id: 'next' })
-    expect(v.bubble?.kind).toBe('info')
-    expect(v.bubble?.lines.map((l) => l.text)).toEqual(['Aucune étape en cours. Un parcours guidé peut être lancé.'])
+/** The whole wiring: the mount, the real controller and the real brain; the widget is replaced by a handle that hands every input to the controller. */
+function wired(initial: TpState | null) {
+  const r = make({}, initial)
+  let controller!: ReturnType<typeof createController>
+  const impl: MountImpl = {
+    createController: ((deps: Parameters<typeof createController>[0]) => (controller = createController(deps))) as typeof createController,
+    mountGuide: vi.fn((o: { controller: typeof controller; context: ControllerInput extends never ? never : Record<string, unknown> }) => {
+      void o.controller.dispatch({ type: 'setContext', context: o.context })
+      return { destroy: vi.fn(), send: (i: ControllerInput) => o.controller.dispatch(i) }
+    }) as never,
+  }
+  mountOscar(r.deps, impl)
+  const flush = (): Promise<void> => new Promise((res) => setTimeout(res, 0))
+  return {
+    r,
+    flush,
+    next: async () => {
+      await flush()
+      return controller.dispatch({ type: 'chip', id: 'next' })
+    },
+    ask: async (text: string) => {
+      await flush()
+      return controller.dispatch({ type: 'ask', text })
+    },
+    chip: (id: string) => controller.dispatch({ type: 'chip', id: id as never }),
+    go: async (state: TpState, events: HostEvent[] = []) => {
+      r.b.emit(state, events)
+      await flush()
+    },
+    controller: () => controller,
+  }
+}
+const texts = (v: GuideView): string[] => (v.bubble?.lines ?? []).map((l) => l.text)
+const NEEDS = TP_STRINGS.planner.needInfo
+
+describe('mountOscar on the real controller: what each bench state says, and what is offered first', () => {
+  it('1. no place: the verdict sentence and the neutral pointer, no flow chip; the words open premier-montage at the place', async () => {
+    const w = wired(EMPTY)
+    const v = await w.next()
+    expect(v.bubble?.kind).toBe('need-info')
+    expect(texts(v)).toEqual([TP_STRINGS.verdict.placeFirst, NEEDS])
+    expect(v.bubble?.chips.map((c) => c.id)).not.toContain('start')
+    const a = await w.ask('comment faire un premier montage ?')
+    expect(a.bubble?.title).toBe('Parcours « Premier montage » : étape 1 sur 5.')
+    expect(texts(a)).toEqual([TP_STRINGS.flows['premier-montage'].steps.place])
+    expect(a.target?.anchor).toBe('nav:place')
+  })
+
+  it('2. a place and no device: the empty-bench sentence; the words open the add-devices flow at the inventory', async () => {
+    const w = wired(EMPTY)
+    await w.go(stateOf([]))
+    const v = await w.next()
+    expect(v.bubble?.kind).toBe('need-info')
+    expect(texts(v)).toEqual([TP_STRINGS.verdict.benchEmpty, NEEDS])
+    const a = await w.ask('comment faire un premier montage ?')
+    expect(a.bubble?.title).toBe('Parcours « Ajouter des appareils » : étape 1 sur 2.')
+    expect(texts(a)).toEqual([TP_STRINGS.flows['ajouter-des-appareils'].steps.addFirst])
+    expect(a.target?.anchor).toBe('nav:inventory')
+  })
+
+  it('2b. one device: the signal path reason; the words open « deuxième appareil »', async () => {
+    const w = wired(EMPTY)
+    await w.go(stateOf([['ql1', 'yamaha-ql1']], { firstReason: { code: 'NO_SOURCE', text_fr: 'Aucune source n’est branchée.', subjects: [] } }))
+    const v = await w.next()
+    expect(texts(v)).toEqual(['Aucune source n’est branchée.', NEEDS])
+    const a = await w.ask('comment faire un premier montage ?')
+    expect(a.bubble?.title).toBe('Parcours « Ajouter un deuxième appareil » : étape 1 sur 1.')
+    expect(a.target?.anchor).toBe('nav:inventory')
+  })
+
+  it('3. devices and no cable: the signal path first reason, verbatim; the words open the cable flow, pointing at the cable to draw', async () => {
+    const w = wired(EMPTY)
+    const reason = 'Le micro n’est relié à aucune entrée de la console.'
+    await w.go(stateOf([['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']], { firstReason: { code: 'NO_CABLE', text_fr: reason, subjects: [] } }))
+    const v = await w.next()
+    expect(v.bubble?.kind).toBe('need-info')
+    expect(texts(v)).toEqual([reason, NEEDS])
+    const a = await w.ask('comment faire un premier montage ?')
+    expect(a.bubble?.title).toBe('Parcours « Premier câble » : étape 1 sur 2.')
+    expect(texts(a)).toEqual([TP_STRINGS.flows['premier-cable'].steps.connect])
+    expect(a.target?.anchor).toBe(SUGGEST_FROM)
+  })
+
+  it('3b. devices, no cable and no reason from the signal path: the not-yet sentence', async () => {
+    const w = wired(EMPTY)
+    await w.go(stateOf([['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']]))
+    expect(texts(await w.next())).toEqual([TP_STRINGS.verdict.notYet, NEEDS])
+  })
+
+  it('4. a rule error: the app’s own title and explanation, pointing at the first subject, no pointer sentence', async () => {
+    const rules = registry.catalog.rules as unknown as RuleRow[]
+    const rule = rules.find((x) => x.title_fr && x.teach_fr)!
+    const w = wired(EMPTY)
+    await w.go(stateOf([['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']], { events: [{ ruleId: rule.id, severity: 'error', subjects: [{ instance: 'mic', port: 'out-xlr' }] }] }))
+    const v = await w.next()
+    expect(v.bubble?.kind).toBe('fix')
+    expect(texts(v)).toEqual([rule.teach_fr])
+    expect(v.bubble?.title).toBe('Correction à apporter')
+    expect(v.target?.anchor).toMatch(/^port:/)
+    expect(JSON.stringify(v.bubble)).not.toContain(NEEDS)
+  })
+
+  it('5. playable: the good sentence with what the app checks, and the next flow offered; the chip starts it at the status bar', async () => {
+    const w = wired(EMPTY)
+    await w.go(
+      stateOf([['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']], {
+        playbackReady: true,
+        connections: [{ a: { instance: 'mic', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }],
+      }),
+    )
+    const v = await w.next()
+    expect(v.bubble?.kind).toBe('good')
+    expect(texts(v)).toEqual([TP_STRINGS.verdict.allGood, 'Pour continuer, un parcours guidé est proposé.'])
     expect(v.bubble?.chips.map((c) => c.id)).toContain('start')
-    v = await controller.dispatch({ type: 'chip', id: 'start' })
-    expect(v.bubble?.title).toBe('Parcours « Premier montage » : étape 1 sur 5.')
-    expect(v.bubble?.lines.map((l) => l.text)).toEqual(['Choisir un lieu pour commencer.'])
-    expect(v.target?.anchor).toBe('nav:place')
+    const s = await w.chip('start')
+    expect(s.bubble?.title).toBe('Parcours « Lire la barre d’état » : étape 1 sur 1.')
+    expect(s.target?.anchor).toBe('nav:status')
+  })
+
+  it('no bubble of any stage carries a request to run a check again', async () => {
+    const w = wired(EMPTY)
+    for (const st of [EMPTY, stateOf([]), stateOf([['a', 'yamaha-ql1']]), PAIR]) {
+      await w.go(st)
+      expect(JSON.stringify((await w.next()).bubble)).not.toMatch(/relancer|vérification/)
+    }
+  })
+
+  it('the offered flow is the one of the stage, and advances as the learner moves: place, devices, cable, status', async () => {
+    const w = wired(EMPTY)
+    const a = await w.ask('comment faire un premier montage ?')
+    expect(a.bubble?.title).toContain('étape 1 sur 5')
+    await w.go(stateOf([]), [ev('placeChosen')])
+    expect((await w.next()).bubble?.title ?? '').toContain('étape 2 sur 5')
+    await w.go(stateOf([['ql1', 'yamaha-ql1']]), [ev('deviceAdded', { device: 'device:ql1' }), ev('place')])
+    await w.go(PAIR, [ev('deviceAdded', { device: 'device:mic' })])
+    const c = await w.next()
+    expect(c.bubble?.title).toContain('étape 4 sur 5')
+    expect(c.target?.anchor).toBe(SUGGEST_FROM)
   })
 
   it('a rule error on the bench: the bubble is the app’s own cause and fix, nothing about « relancer la vérification »', async () => {

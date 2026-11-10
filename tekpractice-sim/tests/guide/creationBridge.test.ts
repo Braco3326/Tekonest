@@ -599,7 +599,7 @@ describe('derived host events', () => {
     expect(calls()[1][1][0].data).toEqual({ control: 'control:ql1.playback-usb', anchor: 'control:ql1.playback-usb', value: false })
   })
 
-  it('R6: the toggle data carries both `control` and `anchor`, the same valid anchor string, plus the value', () => {
+  it('the toggle data carries both `control` and `anchor`, the same valid anchor string, plus the value', () => {
     const r = make()
     const { calls } = subscribe(r)
     r.world.design.rig.controls.ql1['playback-usb'] = true
@@ -611,7 +611,7 @@ describe('derived host events', () => {
     expect(r.bridge.rectOf(String(data.anchor))).not.toBeNull()
   })
 
-  it('R7: placeChosen is emitted once when placeKnown goes false to true, and never for the other flips', () => {
+  it('placeChosen is emitted once when placeKnown goes false to true, and never for the other flips', () => {
     const w = benchWorld()
     w.design = emptyDesign()
     w.place = null
@@ -636,7 +636,7 @@ describe('derived host events', () => {
     expect(calls()).toHaveLength(3)
   })
 
-  it('R7: `place` keeps its meaning (the first device on an empty bench), placeChosen is separate', () => {
+  it('`place` keeps its meaning (the first device on an empty bench), placeChosen is separate', () => {
     const w = benchWorld()
     w.design = emptyDesign()
     w.place = null
@@ -649,7 +649,7 @@ describe('derived host events', () => {
     expect(types(calls()[0][1]).sort()).toEqual(['deviceAdded', 'place', 'placeChosen'])
   })
 
-  it('R6: anchorOfPort(null) and a malformed ref give an empty string, never a throw', () => {
+  it('anchorOfPort(null) and a malformed ref give an empty string, never a throw', () => {
     const r = make()
     expect(r.bridge.anchorOfPort(null as unknown as TpPortRef)).toBe('')
     expect(r.bridge.anchorOfPort(undefined as unknown as TpPortRef)).toBe('')

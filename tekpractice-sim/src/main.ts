@@ -34,6 +34,8 @@ else
       console.error('[creation] boot failed', e)
       showBootFailure(document, 'load')
     })
-
-// Oscar, the guide: its own lazy chunk, fetched after the route has started and never part of the creation start. A failure here is silent (W-12).
-void import('./guide').then((m) => m.bootGuide(decideRoute(location.search)), () => undefined)
+    // Oscar, the guide: its own lazy chunk, fetched only after the route has booted, so its wait for the app's debug hook never overlaps the download of the
+    // route chunk. It runs in the creation branch only for now. A failure here never reaches the page, and nothing in this tail can reject.
+    .then(() => import('./guide'))
+    .then((m) => m.bootGuide(decideRoute(location.search)))
+    .catch(() => undefined)

@@ -397,7 +397,7 @@ export function createController(deps: ControllerDeps): Controller {
         action: "refuse";
     }>): void {
         const f: Focus | null = d.anchor !== undefined && isValidAnchor(d.anchor) ? { anchor: d.anchor, gesture: "point" } : null;
-        showText("refusal", [lookupString(d.textKey) ?? text("quiz.refusal")], "learner", f);
+        showText("refusal", [tr(d.textKey) ?? text("quiz.refusal")], "learner", f);
         transient = "no";
     }
     function stepText(step: Step): string {
@@ -425,7 +425,7 @@ export function createController(deps: ControllerDeps): Controller {
         f: Focus | null;
     } {
         const kind = bubbleKindOf(ns.kind);
-        const keyed = ns.textKey !== undefined ? lookupString(ns.textKey) : null;
+        const keyed = ns.textKey !== undefined ? tr(ns.textKey) : null;
         const lines: BubbleLine[] = [];
         let title: string | undefined;
         if (ns.kind === "flow-step" && ns.step !== undefined) {

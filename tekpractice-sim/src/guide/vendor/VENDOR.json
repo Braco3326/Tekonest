@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "3d003575215497b100bdc9fb186ad2e441276d1d",
+  "sourceCommit": "393a4c9df0c6480ffa12ffa20f33c391b2ea4cf6",
   "tool": 1,
   "typescript": "5.9.3",
   "files": [
@@ -13,7 +13,7 @@
     },
     {
       "path": "core/controller.ts",
-      "sha256": "445ff90accc10987b1d8b5d8003ffcacfa95916c0a6e1f9d1fbd1ca34f2670de"
+      "sha256": "5744eed9e84e7bddee45dbb2d934ddfec033443efc67b43d91a31b90a8645399"
     },
     {
       "path": "core/course.ts",

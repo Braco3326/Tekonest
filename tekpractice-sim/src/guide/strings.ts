@@ -31,6 +31,11 @@ export const TP_STRINGS = deepFreeze({
   error: {
     calm: 'La réponse n’a pas pu être affichée. Réessayer dans un instant.',
   },
+  /** Sentences the controller shows with a next-step bubble: the host table replaces the vendored ones (see CREATION_STRINGS). */
+  planner: {
+    /** After a verdict sentence that says what is missing. Nothing here asks to run a check: Mode Création has no check button. */
+    needInfo: 'Pour un guidage pas à pas, demander « comment faire un premier montage ».',
+  },
   flows: {
     'premier-montage': {
       title: 'Premier montage',
@@ -42,23 +47,36 @@ export const TP_STRINGS = deepFreeze({
         status: 'Lire la barre d’état en bas de l’écran : elle indique « Signal OK » ou la liste « Erreurs et avertissements ».',
       },
     },
+    'ajouter-des-appareils': {
+      title: 'Ajouter des appareils',
+      steps: {
+        addFirst: 'Ajouter un premier appareil dans le lieu.',
+        addSecond: 'Ajouter un deuxième appareil à côté du premier.',
+      },
+    },
+    'deuxieme-appareil': {
+      title: 'Ajouter un deuxième appareil',
+      steps: {
+        add: 'Ajouter un deuxième appareil à côté du premier.',
+      },
+    },
+    'premier-cable': {
+      title: 'Premier câble',
+      steps: {
+        connect: 'Relier les deux appareils avec un câble, d’une sortie vers une entrée.',
+        status: 'Lire la barre d’état en bas de l’écran : elle indique « Signal OK » ou la liste « Erreurs et avertissements ».',
+      },
+    },
     'alimentation-fantome': {
       title: 'Alimentation fantôme',
       steps: {
-        pickMic: 'Sélectionner le micro concerné dans le lieu.',
-        findConsole: 'Repérer la console reliée à ce micro et l’ouvrir.',
-        findControl: 'Repérer la commande d’alimentation fantôme de la voie du micro.',
-        toggle: 'Basculer cette commande.',
-        status: 'Relire la barre d’état pour voir si le montage a changé.',
+        toggle: 'Basculer la commande d’alimentation fantôme de la voie du micro.',
       },
     },
     'lire-le-statut': {
       title: 'Lire la barre d’état',
       steps: {
-        open: 'Repérer la barre d’état en bas de l’écran.',
         signal: 'Lire le signal dans la barre d’état : « Signal OK », « Rien de branché » ou « Aucune erreur détectée ».',
-        list: 'Ouvrir la liste « Erreurs et avertissements », puis lire le titre et l’explication de la première.',
-        playback: 'Lire la ligne « Lecture » : elle donne « Lecture possible » ou la première raison qui empêche de lire le signal.',
       },
     },
   },

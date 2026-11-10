@@ -1,4 +1,4 @@
-// The guided flows of Mode Création, and the two pieces of live data they need that a static flow cannot hold.
+// The guided flows of Mode Création, which one is offered first, and the live data they need that a static flow cannot hold.
 //
 // A flow is static data (anchors and texts), but the bench is not: the cable to draw and the phantom switch to find depend on what the
 // learner placed. Those steps name RESERVED anchors, resolved at the time the widget asks for a rect (see mount.ts), from the live state:
@@ -10,6 +10,10 @@
 // How a flow step ends: the vendored controller finishes a step only on a host event (or the learner's « Passer cette étape »). The bridge derives
 // placeChosen, deviceAdded, connect and toggle from the bench itself; a `read` step has no change of the bench to wait for, so the mount sends
 // `acknowledge` when the learner clicks inside the status bar (the step is about reading it).
+//
+// Which flow comes first: the first step of an offered flow must be the thing that is actually next. The bench has five stages (BenchStage) and the
+// flows follow one path through them (FLOW_PATH); the mount keeps the controller's flow list in the order of the current stage, so the planner offers
+// the right one, and points the words « premier montage » at it.
 import { ConnectionGraph } from '../engine/ConnectionGraph'
 import type { DeviceT, Registry } from '../engine/CatalogLoader'
 import type { TpPortRef, TpState } from './bridge/types'
@@ -45,35 +49,97 @@ export const CREATION_FLOWS: Flow[] = [
     ],
   },
   {
-    id: 'alimentation-fantome',
-    titleKey: 'flows.alimentation-fantome',
-    steps: [{ id: 'toggle', anchor: SUGGEST_PHANTOM, action: 'toggle', say: F['alimentation-fantome'].steps.toggle, done: { event: 'toggle', match: { value: true } } }],
+    id: 'ajouter-des-appareils',
+    titleKey: 'flows.ajouter-des-appareils',
+    steps: [
+      { id: 'add-first', anchor: NAV_INVENTORY, action: 'point', say: F['ajouter-des-appareils'].steps.addFirst, done: { event: 'deviceAdded' } },
+      { id: 'add-second', anchor: NAV_INVENTORY, action: 'point', say: F['ajouter-des-appareils'].steps.addSecond, done: { event: 'deviceAdded' } },
+    ],
+  },
+  {
+    id: 'deuxieme-appareil',
+    titleKey: 'flows.deuxieme-appareil',
+    steps: [{ id: 'add', anchor: NAV_INVENTORY, action: 'point', say: F['deuxieme-appareil'].steps.add, done: { event: 'deviceAdded' } }],
+  },
+  {
+    id: 'premier-cable',
+    titleKey: 'flows.premier-cable',
+    steps: [
+      { id: 'connect', anchor: SUGGEST_FROM, to: SUGGEST_TO, action: 'drag', say: F['premier-cable'].steps.connect, done: { event: 'connect' } },
+      { id: 'status', anchor: NAV_STATUS, action: 'read', say: F['premier-cable'].steps.status, done: { event: ACKNOWLEDGE } },
+    ],
   },
   {
     id: 'lire-le-statut',
     titleKey: 'flows.lire-le-statut',
     steps: [{ id: 'signal', anchor: NAV_STATUS, action: 'read', say: F['lire-le-statut'].steps.signal, done: { event: ACKNOWLEDGE } }],
   },
+  {
+    id: 'alimentation-fantome',
+    titleKey: 'flows.alimentation-fantome',
+    // Done by the suggested switch going on: the mount marks a toggle of the suggested control with `suggested: true`.
+    steps: [{ id: 'toggle', anchor: SUGGEST_PHANTOM, action: 'toggle', say: F['alimentation-fantome'].steps.toggle, done: { event: 'toggle', match: { value: true, suggested: true } } }],
+  },
 ]
 
+/** The path a learner follows, in order: each stage of the bench has the flow that starts at what is next. */
+export const FLOW_PATH = ['premier-montage', 'ajouter-des-appareils', 'deuxieme-appareil', 'premier-cable', 'lire-le-statut', 'alimentation-fantome'] as const
+
+export type BenchStage = 'no-place' | 'empty' | 'one-device' | 'connectable' | 'settled'
+const STAGES: readonly BenchStage[] = ['no-place', 'empty', 'one-device', 'connectable', 'settled']
+
 /**
- * The controller's string table: the vendored default one (chips, planner, where-am-i...) with the flow titles of this app. A step text is passed
- * to the controller as the sentence itself (a text with no key behaves as its own text), so only the titles need a table entry.
+ * Where the bench is:
+ *   no-place     no place chosen yet
+ *   empty        a place, no device
+ *   one-device   a place, one device
+ *   connectable  two devices or more, no cable, and the app accepts a cable between two of them
+ *   settled      anything else (a cable exists, or no cable could be drawn)
+ */
+export function benchStage(state: TpState | null, registry: Registry): BenchStage {
+  if (state === null || !state.placeKnown) return 'no-place'
+  if (state.instances.length === 0) return 'empty'
+  if (state.instances.length === 1) return 'one-device'
+  if (state.connections.length === 0 && nextConnectionStep(state, registry) !== null) return 'connectable'
+  return 'settled'
+}
+
+/** The flows with the one that starts at what is next first, then the rest of the path, then what is behind the learner. Same flows, same objects. */
+export function flowsFor(stage: BenchStage): Flow[] {
+  const at = STAGES.indexOf(stage)
+  const ids: readonly string[] = [...FLOW_PATH.slice(at), ...FLOW_PATH.slice(0, at)]
+  return ids.map((id) => CREATION_FLOWS.find((f) => f.id === id) as Flow)
+}
+
+/** The flow that « premier montage » (and the other words of that family) opens: the one that starts at what is next while the montage is not done. */
+export function montageFlowFor(stage: BenchStage): string {
+  const at = STAGES.indexOf(stage)
+  return at <= 3 ? FLOW_PATH[at] : 'premier-montage'
+}
+
+const MONTAGE_WORDS = DEFAULT_FLOW_KEYWORDS.find((k) => k.flowId === 'premier-montage')?.keywords ?? []
+const PHANTOM_WORDS = DEFAULT_FLOW_KEYWORDS.find((k) => k.flowId === 'alimentation-fantome')?.keywords ?? []
+
+/** What a learner can type to reach a flow, for a stage. Folded (no accent, no apostrophe), as the vendored router expects. */
+export function keywordsFor(stage: BenchStage): FlowKeywords[] {
+  return [
+    { flowId: montageFlowFor(stage), keywords: [...MONTAGE_WORDS, 'premier cable', 'ajouter des appareils'] },
+    { flowId: 'alimentation-fantome', keywords: [...PHANTOM_WORDS] },
+    { flowId: 'lire-le-statut', keywords: ['lire le statut', 'lire la barre', 'barre d etat'] },
+  ]
+}
+
+/**
+ * The controller's string table: the vendored default one (chips, planner, where-am-i...) with the flow titles of this app and the host's own
+ * sentence after a need-info verdict (`planner.needInfo`: the vendored one asks to run a check again, and this app has no check button).
+ * A step text is passed to the controller as the sentence itself (a text with no key behaves as its own text), so only titles need an entry.
+ * Everything else of the default table that can reach a bubble was read: only `planner.needInfo` speaks of the demo's own screen.
  */
 export const CREATION_STRINGS = {
   ...defaultStrings,
-  flows: {
-    'premier-montage': F['premier-montage'].title,
-    'alimentation-fantome': F['alimentation-fantome'].title,
-    'lire-le-statut': F['lire-le-statut'].title,
-  },
+  planner: { ...defaultStrings.planner, needInfo: TP_STRINGS.planner.needInfo },
+  flows: Object.fromEntries(FLOW_PATH.map((id) => [id, F[id].title])) as Record<(typeof FLOW_PATH)[number], string>,
 }
-
-/** What a learner can type to reach a flow: the vendored words for the two it knows, and words for the status bar. Folded (no accent, no apostrophe). */
-export const CREATION_FLOW_KEYWORDS: readonly FlowKeywords[] = [
-  ...DEFAULT_FLOW_KEYWORDS.filter((k) => k.flowId === 'premier-montage' || k.flowId === 'alimentation-fantome'),
-  { flowId: 'lire-le-statut', keywords: ['lire le statut', 'lire la barre', 'barre d etat'] },
-]
 
 // ── the live suggestions ────────────────────────────────────────────────────────────────────────────────────────────
 
