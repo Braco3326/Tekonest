@@ -19,7 +19,7 @@ import {
   type Scene,
 } from '@babylonjs/core'
 import { ControlBank } from './controlBank'
-import type { ControlDef } from './controlTypes'
+import type { ControlDef, Face } from './controlTypes'
 import type { ControlHit } from './controlHit'
 import { faceFrame } from './faceFrame'
 import { BarBallistics, VuBallistics, barLit, demoLevelDb } from './meters'
@@ -229,9 +229,17 @@ export class ControlRig {
   }
 
   /** A flat textured plane lying on the face (u to the right, v up the face): a printed legend or a dial. */
-  private decal(name: string, parent: TransformNode, w: number, h: number, y: number, mat: StandardMaterial): Mesh {
+  private decal(name: string, parent: TransformNode, w: number, h: number, y: number, mat: StandardMaterial, face: Face = 'io'): Mesh {
     const d = MeshBuilder.CreatePlane(`ctl:${this.instanceId}:${name}`, { width: w, height: h }, this.scene)
-    d.parent = parent
+    let holder = parent
+    if (face === 'top' || face === 'bottom') {
+      // On a top face the operator stands at the FRONT, the far side of the face-local "up" (it runs from the I/O edge toward the front):
+      // a legend or a screen is turned half a turn about the face normal so it reads for the operator, like the printed top picture does.
+      holder = new TransformNode(`ctl:${this.instanceId}:${name}:turn`, this.scene)
+      holder.parent = parent
+      holder.rotation.y = Math.PI
+    }
+    d.parent = holder
     d.material = mat
     d.isPickable = false
     d.rotation.x = Math.PI / 2 // plane +y -> the face's up, its front toward the outside
@@ -360,12 +368,12 @@ export class ControlRig {
     const legend = !!def.label && !def.round
     const offMat = legend ? this.mat('btn-off', def.colour ?? '#e8e8e4') : this.mat('btn-off', base)
     const onMat = legend ? this.mat('btn-on', def.lit ?? '#e8453c', 0.55) : this.mat('btn-on', lit, 0.8)
-    const legendOff = legend ? this.keyMaterial(def.label!, def.colour ?? '#e8e8e4', '#202226', 0) : null
+    const legendOff = legend ? this.keyMaterial(def.label!, def.colour ?? '#e8e8e4', def.ink ?? '#202226', 0) : null
     const legendOn = legend ? this.keyMaterial(def.label!, def.lit ?? '#e8453c', '#ffffff', 0.55) : null
     const hoverMat = this.mat('btn-hover', base, 0.4)
     const cap = this.cap(def, 'cap', mover, sx, sy, sz, offMat)
     cap.position.y = sy / 2 + LIFT
-    const print = legend ? this.decal(`${def.id}:legend`, mover, sx * 0.94, sz * 0.94, sy + LIFT + 0.0002, legendOff!) : null
+    const print = legend ? this.decal(`${def.id}:legend`, mover, sx * 0.94, sz * 0.94, sy + LIFT + 0.0002, legendOff!, def.face) : null
     const depth = (def.travelMm ?? 1.5) * MM
     const pad = this.pad(def, mover, sx * 1.3, sy * 2 + 0.008, sz * 1.3)
     pad.position.y = sy / 2
@@ -532,7 +540,7 @@ export class ControlRig {
     } catch {
       mat.emissiveColor = Color3.FromHexString('#12151b') // headless: a plain dark glass
     }
-    const plane = this.decal(`${def.id}:glass`, node, sx, sz, thick + LIFT + 0.0003, mat)
+    const plane = this.decal(`${def.id}:glass`, node, sx, sz, thick + LIFT + 0.0003, mat, def.face)
     plane.isPickable = true
     const hit: ControlHit = { isControl: true, instanceId: this.instanceId, controlId: def.id }
     plane.metadata = hit
@@ -554,7 +562,7 @@ export class ControlRig {
     const thick = Math.max(sy, 0.002)
     const bezel = this.box('vu', node, sx, thick, sz, this.mat('vu-bezel', '#15171a'))
     bezel.position.y = thick / 2 + LIFT
-    this.decal(`${def.id}:dial`, node, sx - 0.003, sz - 0.003, thick + LIFT + 0.0003, this.dialMaterial(def.id, sx - 0.003, sz - 0.003))
+    this.decal(`${def.id}:dial`, node, sx - 0.003, sz - 0.003, thick + LIFT + 0.0003, this.dialMaterial(def.id, sx - 0.003, sz - 0.003), def.face)
     const mover = new TransformNode(`ctl:${this.instanceId}:${def.id}:needle`, this.scene)
     mover.parent = node
     mover.position = new Vector3(0, thick + LIFT + 0.0008, -sz * 0.36)

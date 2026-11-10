@@ -69,6 +69,8 @@ export interface ControlDef {
   /** Cap / body colour, and the colour a lit part glows with. sRGB hex. */
   colour?: string
   lit?: string
+  /** A key's printed legend colour (default dark ink, for a light cap). */
+  ink?: string
   /** fader: lay a dark slot plate under the cap, to hide the cap a photograph already shows there. */
   slot?: boolean
   /** fader: the plate's size when the photographed slot is not cap-sized: width across, length along the travel, centred on it. */
@@ -150,6 +152,7 @@ function parseOne(raw: Record<string, unknown>, id: string, errors: string[]): C
   if (isNum(raw.positions) && Number.isInteger(raw.positions) && raw.positions >= 2) def.positions = raw.positions
   if (typeof raw.colour === 'string' && HEX.test(raw.colour)) def.colour = raw.colour
   if (typeof raw.lit === 'string' && HEX.test(raw.lit)) def.lit = raw.lit
+  if (typeof raw.ink === 'string' && HEX.test(raw.ink)) def.ink = raw.ink
   if (raw.slot === true) def.slot = true
   if (isRec(raw.slotMm) && isNum(raw.slotMm.w) && isNum(raw.slotMm.len) && raw.slotMm.w > 0 && raw.slotMm.len > 0) def.slotMm = { w: raw.slotMm.w, len: raw.slotMm.len }
   if (typeof raw.group === 'string' && raw.group) def.group = raw.group
@@ -212,6 +215,7 @@ export function parseControlLayout(raw: unknown): { layout: ControlLayout | null
             // A group or a legend may carry {n} too (strip 3's ON / OFF pair, a numbered key).
             ...(typeof entry.group === 'string' ? { group: entry.group.replace('{n}', String(n)) } : {}),
             ...(typeof entry.label === 'string' ? { label: entry.label.replace('{n}', String(n)) } : {}),
+            ...(isRec(entry.meter) && typeof entry.meter.source === 'string' ? { meter: { ...entry.meter, source: entry.meter.source.replace('{n}', String(n)) } } : {}),
           },
         })
       }

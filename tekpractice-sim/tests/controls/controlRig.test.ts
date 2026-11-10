@@ -221,11 +221,12 @@ describe('ControlRig: reverse faders and screens', () => {
     // plane centre -> canvas centre
     expect(rig.screenPointAt('scr', down(0, 0))!.x).toBeCloseTo(200, 3)
     expect(rig.screenPointAt('scr', down(0, 0))!.y).toBeCloseTo(100, 3)
-    // 50 mm to the right of a 200 mm wide screen = 75 % of the width; toward the front (+z, the face\'s up) = toward the top of the canvas
+    // A screen on a TOP face is read from the front (the operator), so it is turned half a turn from the face axes: 50 mm toward the face's
+    // right (world +x) is toward the LEFT of the canvas, and 25 mm toward the front (+z, the face's up) is toward the BOTTOM of it.
     const p = rig.screenPointAt('scr', down(0.05, 0.025))!
-    expect(p.x).toBeCloseTo(300, 3)
-    expect(p.y).toBeCloseTo(50, 3)
-    expect(rig.screenPointAt('scr', down(0.2, 0))!.x).toBeGreaterThan(400) // beyond the edge: still a number
+    expect(p.x).toBeCloseTo(100, 3)
+    expect(p.y).toBeCloseTo(150, 3)
+    expect(rig.screenPointAt('scr', down(0.2, 0))!.x).toBeLessThan(0) // beyond the edge: still a number
     expect(rig.screenPointAt('nope', down(0, 0))).toBeNull()
     // a touch on the first strip's track moves the fader the strip stands for
     const r = rig.screenTouch('scr', 'down', 200, 80)

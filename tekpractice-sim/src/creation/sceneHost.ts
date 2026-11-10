@@ -1113,7 +1113,7 @@ export class SceneHost {
         .then((c) => {
           if (!c || this.instances.get(p.instanceId) !== inst) return
           this.syncControls(inst, this.applied)
-          this.scheduler.invalidate()
+          this.applyDecor() // the control parts join the scene: out of the stroke mask like every other small part (invalidates)
         })
       void inst.modelReady.then((ok) => {
         if (this.instances.get(p.instanceId) !== inst) return // removed or place changed meanwhile
