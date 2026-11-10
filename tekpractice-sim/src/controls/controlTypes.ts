@@ -51,6 +51,8 @@ export interface ControlDef {
   sweepDeg?: number
   /** button: stays pressed and lit after a click (default true); false = lit only while held. */
   latch?: boolean
+  /** button / led: a round cap (a cylinder of diameter w) instead of a rectangular one. */
+  round?: boolean
   /** switch: number of positions (default 2). */
   positions?: number
   /** Cap / body colour, and the colour a lit part glows with. sRGB hex. */
@@ -130,6 +132,7 @@ function parseOne(raw: Record<string, unknown>, id: string, errors: string[]): C
   if (isRec(raw.range) && isNum(raw.range.min) && isNum(raw.range.max) && typeof raw.range.unit === 'string') def.range = { min: raw.range.min, max: raw.range.max, unit: raw.range.unit }
   if (isNum(raw.sweepDeg) && raw.sweepDeg > 0 && raw.sweepDeg <= 360) def.sweepDeg = raw.sweepDeg
   if (typeof raw.latch === 'boolean') def.latch = raw.latch
+  if (raw.round === true) def.round = true
   if (isNum(raw.positions) && Number.isInteger(raw.positions) && raw.positions >= 2) def.positions = raw.positions
   if (typeof raw.colour === 'string' && HEX.test(raw.colour)) def.colour = raw.colour
   if (typeof raw.lit === 'string' && HEX.test(raw.lit)) def.lit = raw.lit
@@ -150,6 +153,8 @@ function parseOne(raw: Record<string, unknown>, id: string, errors: string[]): C
   }
   return def
 }
+
+const normaliseDefault = (def: ControlDef, v: number): number => (def.kind === 'button' || def.kind === 'led' ? (v >= 0.5 ? 1 : 0) : v)
 
 /** The layout of a raw JSON value, `repeat` expanded; `errors` lists every problem (an invalid layout is null, never half-built). */
 export function parseControlLayout(raw: unknown): { layout: ControlLayout | null; errors: string[] } {
@@ -208,6 +213,21 @@ export function parseControlLayout(raw: unknown): { layout: ControlLayout | null
     const ok = Array.isArray(tp) && tp.length >= 2 && tp.every((p, i) => Array.isArray(p) && p.length === 2 && isNum(p[0]) && isNum(p[1]) && p[1] > 0 && (i === 0 || p[0] > (tp[i - 1] as number[])[0]))
     if (ok) topProfile = (tp as [number, number][]).map((p) => [p[0], p[1]])
     else errors.push('topProfile needs at least two [depthMm, heightMm] points with increasing depth')
+  }
+  // Per-control overrides of an expanded row (strip 1's fader is the simulation's « Mic 1 fader »): only the link, the legend and the start value.
+  if (raw.overrides !== undefined) {
+    if (!isRec(raw.overrides)) errors.push('overrides must be an object of control id -> fields')
+    else
+      for (const [id, o] of Object.entries(raw.overrides)) {
+        const def = controls.find((c) => c.id === id)
+        if (!def || !isRec(o)) {
+          errors.push(`overrides: no control "${id}"`)
+          continue
+        }
+        if (typeof o.catalogControl === 'string') def.catalogControl = o.catalogControl
+        if (typeof o.label === 'string') def.label = o.label
+        if (isNum(o.default)) def.default = normaliseDefault(def, o.default)
+      }
   }
   if (errors.length) return { layout: null, errors }
   return { layout: { schema: 1, deviceId: raw.deviceId, ...(topProfile ? { topProfile } : {}), controls }, errors }

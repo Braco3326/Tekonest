@@ -174,6 +174,27 @@ export class ControlRig {
     return b
   }
 
+  /** A flat textured plane lying on the face (u to the right, v up the face): a printed legend or a dial. */
+  private decal(name: string, parent: TransformNode, w: number, h: number, y: number, mat: StandardMaterial): Mesh {
+    const d = MeshBuilder.CreatePlane(`ctl:${this.instanceId}:${name}`, { width: w, height: h }, this.scene)
+    d.parent = parent
+    d.material = mat
+    d.isPickable = false
+    d.rotation.x = Math.PI / 2 // plane +y -> the face's up, its front toward the outside
+    d.position.y = y
+    return d
+  }
+
+  /** A key / LED cap: a box, or a cylinder of diameter w for a round one. */
+  private cap(def: ControlDef, name: string, parent: TransformNode, sx: number, sy: number, sz: number, mat: StandardMaterial): Mesh {
+    if (!def.round) return this.box(name, parent, sx, sy, sz, mat)
+    const c = MeshBuilder.CreateCylinder(`ctl:${this.instanceId}:${name}`, { diameter: sx, height: sy, tessellation: 28 }, this.scene)
+    c.parent = parent
+    c.material = mat
+    c.isPickable = false
+    return c
+  }
+
   private pad(def: ControlDef, parent: TransformNode, w: number, h: number, d: number): Mesh {
     const pad = MeshBuilder.CreateBox(`ctlpad:${this.instanceId}:${def.id}`, { width: Math.max(MIN_PAD, w), height: Math.max(0.012, h), depth: Math.max(MIN_PAD, d) }, this.scene)
     pad.parent = parent
@@ -279,11 +300,15 @@ export class ControlRig {
     mover.parent = node
     const base = def.colour ?? '#3a3d42'
     const lit = def.lit ?? '#ffb347'
-    const offMat = def.label ? this.keyMaterial(def.label, def.colour ?? '#e8e8e4', '#202226', 0) : this.mat('btn-off', base)
-    const onMat = def.label ? this.keyMaterial(def.label, def.lit ?? '#e8453c', '#ffffff', 0.55) : this.mat('btn-on', lit, 0.8)
+    const legend = !!def.label && !def.round
+    const offMat = legend ? this.mat('btn-off', def.colour ?? '#e8e8e4') : this.mat('btn-off', base)
+    const onMat = legend ? this.mat('btn-on', def.lit ?? '#e8453c', 0.55) : this.mat('btn-on', lit, 0.8)
+    const legendOff = legend ? this.keyMaterial(def.label!, def.colour ?? '#e8e8e4', '#202226', 0) : null
+    const legendOn = legend ? this.keyMaterial(def.label!, def.lit ?? '#e8453c', '#ffffff', 0.55) : null
     const hoverMat = this.mat('btn-hover', base, 0.4)
-    const cap = this.box('cap', mover, sx, sy, sz, offMat)
+    const cap = this.cap(def, 'cap', mover, sx, sy, sz, offMat)
     cap.position.y = sy / 2 + LIFT
+    const print = legend ? this.decal(`${def.id}:legend`, mover, sx * 0.94, sz * 0.94, sy + LIFT + 0.0002, legendOff!) : null
     const depth = (def.travelMm ?? 1.5) * MM
     const pad = this.pad(def, mover, sx * 1.3, sy * 2 + 0.008, sz * 1.3)
     pad.position.y = sy / 2
@@ -291,6 +316,7 @@ export class ControlRig {
     let hov = false
     const paint = (): void => {
       cap.material = on ? onMat : hov ? hoverMat : offMat
+      if (print) print.material = on ? legendOn! : legendOff!
     }
     return {
       def,
@@ -339,7 +365,7 @@ export class ControlRig {
     const lit = def.lit ?? '#4be36d'
     const offMat = this.mat('led-off', this.dim(lit, 0.22))
     const onMat = this.mat('led-on', lit, 1)
-    const led = this.box('led', node, sx, Math.max(sy, 0.0008), sz, offMat)
+    const led = this.cap(def, 'led', node, sx, Math.max(sy, 0.0008), sz, offMat)
     led.position.y = Math.max(sy, 0.0008) / 2 + LIFT
     const mover = node
     return { def, node, mover, pad: null, apply: (v) => (led.material = v >= 0.5 ? onMat : offMat), hover: () => undefined }
@@ -428,11 +454,13 @@ export class ControlRig {
 
   private buildVu(def: ControlDef, node: TransformNode, sx: number, sy: number, sz: number): Part {
     const meter = def.meter!
-    const face = this.box('vu', node, sx, Math.max(sy, 0.002), sz, this.dialMaterial(def.id, sx, sz))
-    face.position.y = Math.max(sy, 0.002) / 2 + LIFT
+    const thick = Math.max(sy, 0.002)
+    const bezel = this.box('vu', node, sx, thick, sz, this.mat('vu-bezel', '#15171a'))
+    bezel.position.y = thick / 2 + LIFT
+    this.decal(`${def.id}:dial`, node, sx - 0.003, sz - 0.003, thick + LIFT + 0.0003, this.dialMaterial(def.id, sx - 0.003, sz - 0.003))
     const mover = new TransformNode(`ctl:${this.instanceId}:${def.id}:needle`, this.scene)
     mover.parent = node
-    mover.position = new Vector3(0, Math.max(sy, 0.002) + LIFT + 0.0004, -sz * 0.36)
+    mover.position = new Vector3(0, thick + LIFT + 0.0008, -sz * 0.36)
     const len = sz * 0.78
     const needle = this.box('needle', mover, 0.0009, 0.0005, len, this.mat('needle', '#111111'))
     needle.position.z = len / 2

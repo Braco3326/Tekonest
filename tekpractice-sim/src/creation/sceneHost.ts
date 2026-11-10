@@ -51,6 +51,8 @@ import { CREATION_TOKENS } from '../design/creationTokens'
 import { PortProxies, type PortMark } from './portProxies'
 import { ControlTicker } from '../controls/ticker'
 import { ControlController } from './controlController'
+import { fromCatalog, toCatalog, type CatalogControl } from '../controls/catalogLink'
+import type { ControlDef } from '../controls/controlTypes'
 import { CABLE_HIT_PX, nearestCable, type Pt } from './cablePick'
 import { cableColor, cableDash, connectionSignal, portInfoOf, type PortInfo } from './cableStyle'
 import type { RoomTheme } from '../scene/RoomBuilder'
@@ -201,6 +203,11 @@ export class SceneHost {
   private floor = { width: 20, length: 20 }
   /** The walk view started (true) or ended (false), including by a place change. */
   onWalkChange: ((walking: boolean) => void) | null = null
+  /**
+   * The learner finished operating a 3D control that stands for a setting of the simulation (the catalog's controls: power, a channel
+   * open, a master fader): the shell turns it into a SET_CONTROL intent (undoable, saved with the project). The label names it for the history.
+   */
+  onControlChange: ((instanceId: string, control: string, value: boolean | string, label: string) => void) | null = null
 
   /** The walk view is on. */
   get walking(): boolean {
@@ -975,7 +982,15 @@ export class SceneHost {
     )
     // Hands-on controls of the selected device (faders, knobs, keys): own pointer layer, disposed with the place's controllers.
     new ControlController(
-      { scene, camera, canvas: this.canvas, instance: (id) => this.instances.get(id), selected: () => this.selected, invalidate: () => this.scheduler.invalidate() },
+      {
+        scene,
+        camera,
+        canvas: this.canvas,
+        instance: (id) => this.instances.get(id),
+        selected: () => this.selected,
+        invalidate: () => this.scheduler.invalidate(),
+        committed: (instanceId, def, value) => this.commitControl(instanceId, def, value),
+      },
       this.controllers
     )
     this.cables = new CableRenderer(scene, undefined, {
@@ -1092,6 +1107,14 @@ export class SceneHost {
       this.pose(inst, p)
       touched.add(p.instanceId)
       // The .glb replaces the placeholder later: its ports move, its cables follow.
+      // The hands-on surface arrives after the model: show it the simulation's current settings.
+      void inst.modelReady
+        .then(() => inst.controlsReady)
+        .then((c) => {
+          if (!c || this.instances.get(p.instanceId) !== inst) return
+          this.syncControls(inst, this.applied)
+          this.scheduler.invalidate()
+        })
       void inst.modelReady.then((ok) => {
         if (this.instances.get(p.instanceId) !== inst) return // removed or place changed meanwhile
         if (ok) {
@@ -1109,11 +1132,44 @@ export class SceneHost {
       touched.add(p.instanceId)
     }
     this.applied = structuredClone(design)
+    for (const inst of this.instances.values()) this.syncControls(inst, this.applied)
     for (const c of ops.cablesAdd) this.drawCable(c.key, c.a, c.b)
     // Endpoints follow moved / respawned devices.
     this.redrawCablesOf(touched)
     this.proxies?.refresh() // new / moved devices: their port proxies are sized for the camera
     this.applyDecor() // invalidates
+  }
+
+  /** The catalog controls of a device (power, channel open, master fader…): what a 3D control can stand for. */
+  private catalogControls(deviceId: string): (CatalogControl & { label: string; default?: boolean; defaultOption?: string })[] {
+    const d = this.registry.deviceById.get(deviceId) as { controls?: unknown } | undefined
+    return Array.isArray(d?.controls) ? (d!.controls as (CatalogControl & { label: string })[]) : []
+  }
+
+  /** Show a 3D control surface the simulation's settings (design -> bank); a setting the design does not mention is at its catalog default. */
+  private syncControls(inst: DeviceInstance, design: DesignState | null): void {
+    const c = inst.controls
+    if (!c || !design) return
+    const cats = this.catalogControls(inst.deviceId)
+    const values = design.rig.controls[inst.instanceId] ?? {}
+    for (const def of c.bank.all()) {
+      if (!def.catalogControl) continue
+      const cat = cats.find((x) => x.id === def.catalogControl)
+      if (!cat) continue
+      const value = values[cat.id] ?? (cat.type === 'toggle' ? cat.default === true : cat.defaultOption)
+      if (value === undefined) continue
+      const next = fromCatalog(def, cat, value, c.bank.get(def.id))
+      if (next !== null) c.bank.set(def.id, next, 'software')
+    }
+  }
+
+  /** A 3D control was operated to its final value: carry it to the simulation when it stands for one of its settings. */
+  private commitControl(instanceId: string, def: ControlDef, value: number): void {
+    if (!def.catalogControl) return
+    const inst = this.instances.get(instanceId)
+    const cat = inst ? this.catalogControls(inst.deviceId).find((x) => x.id === def.catalogControl) : undefined
+    if (!cat) return
+    this.onControlChange?.(instanceId, cat.id, toCatalog(def, cat, value), cat.label)
   }
 
   private pose(inst: DeviceInstance, p: Placement): void {

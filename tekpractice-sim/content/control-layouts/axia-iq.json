@@ -386,6 +386,54 @@
     "fromDb": -48,
     "toDb": 0
    }
+  },
+  {
+   "id": "monitor-mute",
+   "kind": "button",
+   "face": "top",
+   "xMm": 395.2,
+   "yMm": 387.9,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "label": "MUTE",
+   "colour": "#f1f1ee",
+   "lit": "#e5463b",
+   "sizeMm": {
+    "w": 10,
+    "h": 10,
+    "d": 3.5
+   },
+   "travelMm": 1,
+   "catalogControl": "monitor-mute"
+  },
+  {
+   "id": "power",
+   "kind": "switch",
+   "face": "io",
+   "xMm": 125,
+   "yMm": 71.3,
+   "axis": "x",
+   "default": 1,
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "sizeMm": {
+    "w": 20,
+    "h": 14,
+    "d": 8
+   },
+   "catalogControl": "power"
   }
- ]
+ ],
+ "overrides": {
+  "fader-1": {
+   "catalogControl": "fader-in-mic-1"
+  },
+  "ch1-pgm1": {
+   "catalogControl": "route-in-mic-1-to-out-n1"
+  },
+  "ch2-pgm1": {
+   "catalogControl": "route-in-line-1-to-out-n1"
+  }
+ }
 }

@@ -1,0 +1,316 @@
+{
+ "schema": 1,
+ "deviceId": "focusrite-isa-one",
+ "controls": [
+  {
+   "id": "input-gain",
+   "kind": "knob",
+   "face": "opposite",
+   "xMm": 28.5,
+   "yMm": 77.8,
+   "axis": "z",
+   "default": 0.4,
+   "sweepDeg": 270,
+   "range": {
+    "min": 0,
+    "max": 60,
+    "unit": "dB"
+   },
+   "colour": "#ead88e",
+   "sizeMm": {
+    "w": 14.5,
+    "h": 14.5,
+    "d": 11
+   },
+   "label": "Gain"
+  },
+  {
+   "id": "trim",
+   "kind": "knob",
+   "face": "opposite",
+   "xMm": 55.2,
+   "yMm": 75.8,
+   "axis": "z",
+   "default": 0.5,
+   "sweepDeg": 270,
+   "range": {
+    "min": 0,
+    "max": 20,
+    "unit": "dB"
+   },
+   "colour": "#ead88e",
+   "sizeMm": {
+    "w": 14.5,
+    "h": 14.5,
+    "d": 11
+   },
+   "label": "Trim"
+  },
+  {
+   "id": "di-gain",
+   "kind": "knob",
+   "face": "opposite",
+   "xMm": 91.9,
+   "yMm": 26.2,
+   "axis": "z",
+   "default": 0.5,
+   "sweepDeg": 270,
+   "range": {
+    "min": 10,
+    "max": 40,
+    "unit": "dB"
+   },
+   "colour": "#ead88e",
+   "sizeMm": {
+    "w": 14.5,
+    "h": 14.5,
+    "d": 11
+   },
+   "label": "DI gain"
+  },
+  {
+   "id": "headphone-volume",
+   "kind": "knob",
+   "face": "opposite",
+   "xMm": 180.5,
+   "yMm": 26.2,
+   "axis": "z",
+   "default": 0.5,
+   "sweepDeg": 270,
+   "range": {
+    "min": 0,
+    "max": 10,
+    "unit": "dB"
+   },
+   "colour": "#ead88e",
+   "sizeMm": {
+    "w": 14.5,
+    "h": 14.5,
+    "d": 11
+   },
+   "label": "Volume"
+  },
+  {
+   "id": "pad-30-60",
+   "kind": "button",
+   "face": "opposite",
+   "xMm": 13.4,
+   "yMm": 49.3,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "round": true,
+   "colour": "#6b5a2a",
+   "lit": "#ffd86b",
+   "sizeMm": {
+    "w": 9,
+    "h": 9,
+    "d": 3
+   },
+   "travelMm": 1,
+   "label": "30-60"
+  },
+  {
+   "id": "phantom-48v",
+   "kind": "button",
+   "face": "opposite",
+   "xMm": 26.1,
+   "yMm": 49.3,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "round": true,
+   "colour": "#4a2830",
+   "lit": "#ff5a7a",
+   "sizeMm": {
+    "w": 9,
+    "h": 9,
+    "d": 3
+   },
+   "travelMm": 1,
+   "label": "+48V",
+   "catalogControl": "phantom-48v"
+  },
+  {
+   "id": "phase",
+   "kind": "button",
+   "face": "opposite",
+   "xMm": 38.8,
+   "yMm": 49.3,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "round": true,
+   "colour": "#6b5a2a",
+   "lit": "#ffd86b",
+   "sizeMm": {
+    "w": 9,
+    "h": 9,
+    "d": 3
+   },
+   "travelMm": 1,
+   "label": "Phase"
+  },
+  {
+   "id": "hpf",
+   "kind": "button",
+   "face": "opposite",
+   "xMm": 51.5,
+   "yMm": 49.3,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "round": true,
+   "colour": "#4a2830",
+   "lit": "#ff5a7a",
+   "sizeMm": {
+    "w": 9,
+    "h": 9,
+    "d": 3
+   },
+   "travelMm": 1,
+   "label": "HPF"
+  },
+  {
+   "id": "insert",
+   "kind": "button",
+   "face": "opposite",
+   "xMm": 64.2,
+   "yMm": 49.3,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "round": true,
+   "colour": "#4a2830",
+   "lit": "#ff5a7a",
+   "sizeMm": {
+    "w": 9,
+    "h": 9,
+    "d": 3
+   },
+   "travelMm": 1,
+   "label": "Insert"
+  },
+  {
+   "id": "vu-cal",
+   "kind": "button",
+   "face": "opposite",
+   "xMm": 79.3,
+   "yMm": 81.3,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "round": true,
+   "colour": "#4a2830",
+   "lit": "#ff7a9a",
+   "sizeMm": {
+    "w": 9,
+    "h": 9,
+    "d": 3
+   },
+   "travelMm": 1,
+   "label": "VU Cal"
+  },
+  {
+   "id": "post-insert",
+   "kind": "button",
+   "face": "opposite",
+   "xMm": 158.1,
+   "yMm": 81.3,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "round": true,
+   "colour": "#4a2830",
+   "lit": "#ff7a9a",
+   "sizeMm": {
+    "w": 9,
+    "h": 9,
+    "d": 3
+   },
+   "travelMm": 1,
+   "label": "Post Insert"
+  },
+  {
+   "id": "cue-mix",
+   "kind": "button",
+   "face": "opposite",
+   "xMm": 200.9,
+   "yMm": 26.2,
+   "axis": "z",
+   "default": 1,
+   "latch": true,
+   "round": true,
+   "colour": "#6b5a2a",
+   "lit": "#ffc15a",
+   "sizeMm": {
+    "w": 9,
+    "h": 9,
+    "d": 3
+   },
+   "travelMm": 1,
+   "label": "Cue Mix"
+  },
+  {
+   "id": "vu",
+   "kind": "meter",
+   "face": "opposite",
+   "xMm": 118.8,
+   "yMm": 75.1,
+   "axis": "y",
+   "default": 0,
+   "sizeMm": {
+    "w": 58.8,
+    "h": 33.7,
+    "d": 3
+   },
+   "meter": {
+    "style": "vu",
+    "source": "input",
+    "referenceDb": -18
+   }
+  },
+  {
+   "id": "meter-input",
+   "kind": "meter",
+   "face": "opposite",
+   "xMm": 167.2,
+   "yMm": 73.3,
+   "axis": "y",
+   "default": 0,
+   "sizeMm": {
+    "w": 3.6,
+    "h": 27.1,
+    "d": 1.4
+   },
+   "meter": {
+    "style": "bar",
+    "source": "input",
+    "segments": 6,
+    "fromDb": -42,
+    "toDb": 0
+   }
+  },
+  {
+   "id": "meter-di",
+   "kind": "meter",
+   "face": "opposite",
+   "xMm": 175.9,
+   "yMm": 73.3,
+   "axis": "y",
+   "default": 0,
+   "sizeMm": {
+    "w": 3.6,
+    "h": 27.1,
+    "d": 1.4
+   },
+   "meter": {
+    "style": "bar",
+    "source": "di",
+    "segments": 6,
+    "fromDb": -42,
+    "toDb": 0
+   }
+  }
+ ]
+}

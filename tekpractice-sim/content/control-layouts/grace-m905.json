@@ -1,0 +1,27 @@
+{
+ "schema": 1,
+ "deviceId": "grace-m905",
+ "controls": [
+  {
+   "id": "power",
+   "kind": "button",
+   "face": "opposite",
+   "xMm": 398,
+   "yMm": 46.2,
+   "axis": "z",
+   "default": 1,
+   "latch": true,
+   "round": true,
+   "colour": "#1b3a1f",
+   "lit": "#46ff5a",
+   "sizeMm": {
+    "w": 17,
+    "h": 17,
+    "d": 4
+   },
+   "travelMm": 1,
+   "catalogControl": "power",
+   "label": "Power"
+  }
+ ]
+}

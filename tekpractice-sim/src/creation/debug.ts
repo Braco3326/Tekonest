@@ -25,6 +25,10 @@ export interface CreationDebug {
   historySize(): number
   /** Body-mesh box centre of a device (independent oracle, src/scene/debugBody.ts), null when unknown / hidden. */
   deviceBodyCenter(id: string): [number, number, number] | null
+  /** Hands-on controls of a device (faders, knobs, keys, meters): the live values by control id, or null when it has none (yet). */
+  controlValues(id: string): Record<string, number> | null
+  /** Set a control of a device like the console software will (origin 'software': it moves the cap, it does not touch the simulation). False for an unknown control. */
+  setControlValue(id: string, control: string, value: number): boolean
   /** The device's root is enabled (not hidden by the tree's eye). */
   visible(id: string): boolean
   /** Devices drawn with the Ambre selection outline. */

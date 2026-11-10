@@ -66,6 +66,25 @@ export function faderPosition(db: number): number {
   return 1
 }
 
+/** dB of a fader control at normalised position `v`, on its own scale (the broadcast scale or the console one). */
+export function controlDb(def: ControlDef, v: number): number {
+  return def.taper === 'broadcast-db' ? interpolate(BROADCAST_DB, v) : faderDb(v)
+}
+
+/** The normalised position of `db` on a fader control's own scale. */
+export function controlPosition(def: ControlDef, db: number): number {
+  if (def.taper !== 'broadcast-db') return faderPosition(db)
+  if (!(db > BROADCAST_DB[0][1])) return 0
+  for (let i = 1; i < BROADCAST_DB.length; i++) {
+    const [x1, d1] = BROADCAST_DB[i]
+    if (db <= d1) {
+      const [x0, d0] = BROADCAST_DB[i - 1]
+      return x0 + ((db - d0) / (d1 - d0)) * (x1 - x0)
+    }
+  }
+  return 1
+}
+
 /** The text a control shows while it is held: « -6.0 dB », « −∞ », « 120 Hz », « ON ». */
 export function valueText(def: ControlDef, v: number): string {
   if (def.kind === 'button') return v >= 0.5 ? 'ON' : 'OFF'

@@ -1206,6 +1206,10 @@ export async function bootCreation(): Promise<void> {
   const WK = COPY.walk!
   const walkKey = (): string => bindingLabel(keys.bindings, 'WALK_TOGGLE') || 'Maj+V'
   const canvasLabel = canvas.getAttribute('aria-label')
+  // A 3D control that stands for a setting of the simulation (power, channel open, master fader) was operated: same undoable intent as the Properties panel.
+  host.onControlChange = (instance, control, value, label) => {
+    history.do({ type: 'SET_CONTROL', instance, control, value }, COPY.props!.adjust!.replace('{field}', label))
+  }
   host.onWalkChange = (on) => {
     listen?.refresh() // « Écoute depuis : … » names the walk camera while it listens
     if (on) canvas.setAttribute('aria-label', WK.canvas!.replace('{walk}', walkKey()))
@@ -2190,6 +2194,8 @@ export async function bootCreation(): Promise<void> {
       const inst = host.instance(id)
       return inst ? debugBodyCenter(inst) : null
     },
+    controlValues: (id) => host.instance(id)?.controls?.bank.snapshot() ?? null,
+    setControlValue: (id, control, value) => host.instance(id)?.controls?.bank.set(control, value, 'software') ?? false,
     visible: (id) => host.visible(id),
     outlined: () => host.outlined(),
     hovered: () => host.hovered(),

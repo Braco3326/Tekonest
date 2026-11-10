@@ -28,6 +28,8 @@ export interface ControlHost {
   selected(): string | null
   /** Ask for a frame. */
   invalidate(): void
+  /** An operation is finished (a key pressed, a drag released, a reset): the value to carry to the simulation, once, not on every pointer move. */
+  committed?(instanceId: string, def: ControlDef, value: number): void
 }
 
 /** Pointer travel (CSS px) for a knob to sweep its whole range; Shift divides the speed by FINE. */
@@ -124,6 +126,7 @@ export class ControlController {
         if (double) {
           bank.reset(def.id)
           this.showValue(def, bank.get(def.id), e)
+          this.host.committed?.(instance.instanceId, def, bank.get(def.id))
           this.host.invalidate()
           return
         }
@@ -135,6 +138,7 @@ export class ControlController {
         if (double) {
           bank.reset(def.id)
           this.showValue(def, bank.get(def.id), e)
+          this.host.committed?.(instance.instanceId, def, bank.get(def.id))
           this.host.invalidate()
           return
         }
@@ -143,11 +147,13 @@ export class ControlController {
         const now = bank.get(def.id)
         if (def.group && now === 1) break // radio: the pressed key of its group stays pressed
         bank.set(def.id, def.latch === false ? 1 : now ? 0 : 1, 'user')
+        this.host.committed?.(instance.instanceId, def, bank.get(def.id))
         break
       }
       case 'switch': {
         const n = def.positions ?? 2
         bank.set(def.id, (Math.round(bank.get(def.id)) + 1) % n, 'user')
+        this.host.committed?.(instance.instanceId, def, bank.get(def.id))
         break
       }
       default:
@@ -196,6 +202,7 @@ export class ControlController {
     e.stopImmediatePropagation()
     const bank = this.host.instance(d.instanceId)?.controls?.bank
     if (bank && d.def.kind === 'button' && d.def.latch === false) bank.set(d.def.id, 0, 'user') // momentary: released
+    if (bank && d.moved && (d.def.kind === 'fader' || d.def.kind === 'knob')) this.host.committed?.(d.instanceId, d.def, bank.get(d.def.id))
     this.endDrag()
     this.host.invalidate()
   }
