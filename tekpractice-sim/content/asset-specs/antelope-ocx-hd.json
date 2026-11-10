@@ -61,12 +61,28 @@
   "build": {
     "shape": "rack-box",
     "params": {
-      "chamferMm": 1
+      "bodyWidthMm": 441.6,
+      "earThicknessMm": 4,
+      "earHoleMm": 5,
+      "earHoleEdgeMm": 10.7,
+      "earDiagonal": 1,
+      "filletMm": 3,
+      "filletSegments": 12,
+      "plateFilletMm": 0.8,
+      "feetMm": 3,
+      "rearInsetMm": 7,
+      "seamMm": 20,
+      "plateRgb": 10791086
     },
     "projection": [
       "opposite",
       "io"
-    ]
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 0.8
   },
   "texture": {
     "blankRects": [
