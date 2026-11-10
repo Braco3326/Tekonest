@@ -13,96 +13,24 @@
       "face": "bottom",
       "xMm": 27.2,
       "yMm": 27.2,
-      "confidence": "photo",
-      "insetMm": 25.6
+      "confidence": "photo"
     }
   ],
   "controls": [],
   "build": {
     "shape": "revolve",
-    "profile": [
-      [
-        0,
-        24.3
-      ],
-      [
-        2.8,
-        31.3
-      ],
-      [
-        27,
-        31.4
-      ],
-      [
-        27.2,
-        33.3
-      ],
-      [
-        30.8,
-        42.4
-      ],
-      [
-        33.7,
-        45
-      ],
-      [
-        73.6,
-        48.8
-      ],
-      [
-        78.6,
-        49.2
-      ],
-      [
-        160.4,
-        49.8
-      ],
-      [
-        165.2,
-        53.7
-      ],
-      [
-        206.4,
-        53.6
-      ],
-      [
-        208.9,
-        54.4
-      ],
-      [
-        211,
-        48.3
-      ],
-      [
-        213.5,
-        48.5
-      ],
-      [
-        215,
-        41.8
-      ],
-      [
-        216.7,
-        36.1
-      ]
-    ],
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [[0,16],[0.6,21.5],[1.3,24],[2.3,25.3],[32,25.3],[32.7,32.3],[33.4,36.5],[35.2,40.5],[38.3,44.3],[43.5,45.5],[75.3,48.85],[78.6,48.85],[79,47.8],[83.2,47.8],[83.8,48.75],[161.3,48.7],[162,50.9],[165.8,54.1],[167.3,54.3],[202.5,54.4],[204.8,53.75],[207.3,51.6],[208.3,49.4],[210.3,48.1],[211.8,44],[212.8,39.4],[213.8,33.4],[215.5,24.3],[216.2,17],[216.7,8]],
     "colours": [
-      {
-        "fromMm": 0,
-        "colour": "#3d3f44"
-      },
-      {
-        "fromMm": 165,
-        "colour": "#7d8086"
-      }
-    ]
-  },
-  "texture": {
-    "blankBandsMm": [
-      {
-        "fromMm": 76,
-        "toMm": 86
-      }
+      { "fromMm": 0, "colour": "#8f9079" },
+      { "fromMm": 162, "colour": "#a4a281" }
     ]
   },
   "sources": [
@@ -112,19 +40,24 @@
       "note": "Electro-Voice RE20 data sheet (official, downloaded, text read, the page-2 dimension drawing rendered from its vector paths): length 216.7 mm (8.53 in.), widest diameter 54.4 mm (2.14 in.), body diameter 49.2 mm (1.94 in.). Connector: 3-pin XLR male. realSizeMm: w = d = 54.4 (widest diameter), h = 216.7 (length), upright with the XLR base end down (same convention as the shure-sm58 spec)."
     },
     {
+      "kind": "photo",
+      "url": "https://products.electrovoice.com/download/970110",
+      "note": "out-xlr: the catalog has one port, the male XLR. It sits on the bottom (XLR base end) face at its centre (x = y = 27.2 mm). The photo in the same data sheet shows the cable plugging straight into the rear barrel along the body axis, and the drawing shows a body of revolution, so the centre is by geometry: confidence photo. openingMm is left out (not published). The catalog lists no controls for the RE20. Rebuilt 2026-11-10 as a scripted lathe: the lathe has no cavity, so the 25.6 mm insetMm (a recessed XLR pocket in the Meshy model) is dropped and the port sits on the flat base face like the SM58; the real pocket is not modelled."
+    },
+    {
       "kind": "datasheet",
       "url": "https://products.electrovoice.com/download/970110",
-      "note": "Silhouette profile in mic-profiles.json: read from the vector dimension drawing on page 2 of the same data sheet (outline coordinates from the PDF path data, scaled by the labelled 54.4 mm and 216.7 mm). Axial positions carry up to about 4 percent uncertainty (the length extension line is about 9 mm beyond the drawn rear end)."
+      "note": "Silhouette profile in mic-profiles.json: read from the vector dimension drawing on page 2 of the same data sheet (outline coordinates from the PDF path data, scaled by the labelled 54.4 mm and 216.7 mm). Axial positions carry up to about 4 percent uncertainty (the length extension line is about 9 mm beyond the drawn rear end). Superseded for build.profile by the photo reading below (kept as the cross-check: head 54.4, body 49.2, length 216.7)."
     },
     {
       "kind": "photo",
-      "url": "https://products.electrovoice.com/download/970110",
-      "note": "out-xlr: the catalog has one port, the male XLR. It sits on the bottom (XLR base end) face at its centre (x = y = 27.2 mm). The photo in the same data sheet shows the cable plugging straight into the rear barrel along the body axis, and the drawing shows a body of revolution, so the centre is by geometry: confidence photo. openingMm is left out (not published). The catalog lists no controls for the RE20."
+      "url": "https://www.electrovoice.com/product/re20",
+      "note": "build.profile (rebuilt 2026-11-10, Wave 4 Task 4.1): silhouette of assets-source/ev-re20/photos/front.png (998 x 4076, transparent background, straight-on, upright; keenfinity CDN, see photos/SOURCES.md) read row by row (alpha mask, radius from the median axis so the ragged mount-bracket gap on the left does not count), 216.7 mm over the 4076 px, diameters x1.023 so the widest (the head) is the 54.4 mm of the data sheet; the body reads 48.7 to 48.9 mm against the 49.2 mm label (0.5 mm), the head step at 162 mm and the groove at 79 to 83 mm match the drawing. Differences from the drawing profile of the first dry run: the shank under the body is 25.3 mm in the photo (the drawing station list had 31.3 mm; the photo is the real product and a 25 mm tube is what the cable end of an RE20 looks like next to its 49 mm body), it flares into the body at 32 to 44 mm, the body tapers slightly from 45.5 mm (44 mm up) to 48.85 mm (75 mm up) and the head dome closes at 216.7 mm. Accuracy about +/-0.4 mm (1 px = 0.053 mm). build.colours: sampled from the photo (olive fawn #8a8b75 to #96977f body, #b4b49f ribs), the black variant is not built."
     },
     {
       "kind": "photo",
-      "url": "https://products.electrovoice.com/download/970110",
-      "note": "build.profile: the 16 stations of mic-profiles.json, read from the PDF path data of the official EV RE20 data sheet (dimension drawing, exact outline coordinates); diameters reproduce the labelled 54.4 and 49.2 mm; axial positions were stretched so the drawn silhouette equals the labelled 216.7 mm (the length extension line sits about 9 mm beyond the drawn rear end), so features along the length may be off by up to about 8 mm at the head end. build.colours: ESTIMATED (dark grey body, lighter head), not measured."
+      "url": "https://www.electrovoice.com/product/re20",
+      "note": "build.projection wrap: the surface picture is our own generic artwork (content/generic-panels/ev-re20.json, asset:panel): an unrolled 170.91 x 216.7 mm panel with a plain shank and lower body, a dark band where the real mic carries its printed legend, a small three-mark slide-switch plate, eight mesh windows on the front and the back of the body (each 122 degrees wide, as the photo shows them), four mesh windows per row in two rows on the head and a mesh dome (square wire mesh, not the photo mesh). Window heights and positions are read from the photo (body windows 86.7 to 159.3 mm, head rows 171.2 to 186.9 and 190.1 to 205.0 mm, bars 3 to 6 mm). It copies no photo and has no brand mark or lettering; the mesh pitch (2.01 mm, 85 cells around so it repeats at the seam) is stylised, not measured."
     }
   ]
 }

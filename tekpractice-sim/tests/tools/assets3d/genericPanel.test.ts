@@ -43,6 +43,22 @@ describe('renderPanel pxPerMm and weave', () => {
   })
 })
 
+describe('renderPanel grid', () => {
+  it('draws a square mesh: wires (stroke) over the hole colour (fill), in its area only', async () => {
+    const png = await renderPanel({ wMm: 40, hMm: 40, base: '#101010', pxPerMm: 12, items: [{ kind: 'grid', x: 10, y: 10, w: 20, h: 20, pitch: 2, line: 0.5, fill: '#202020', stroke: '#dddddd' }] })
+    const { data, info } = await sharp(Buffer.from(png)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    const at = (x: number, y: number): number => data[(y * info.width + x) * 3]
+    expect(at(5, 5)).toBe(0x10) // outside the mesh: the base
+    const seen = new Set<number>()
+    for (let y = 150; y < 330; y++) for (let x = 150; x < 330; x++) seen.add(at(x, y) > 0x80 ? 1 : 0)
+    expect(seen.size).toBe(2) // inside: both the light wires and the dark holes
+    // the area starts at pixel (120, 120) with 24 px cells: a wire runs along y = 132 + 24 k, so that row is all wire
+    let lit = 0
+    for (let x = 150; x < 330; x++) if (at(x, 156) > 0x80) lit++
+    expect(lit).toBeGreaterThan(170)
+  })
+})
+
 describe('renderPanel', () => {
   const spec: PanelSpec = {
     wMm: 100,

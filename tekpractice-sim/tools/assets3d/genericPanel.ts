@@ -21,6 +21,8 @@ export type PanelItem =
   | { kind: 'circle'; x: number; y: number; r: number; fill: string; stroke?: string }
   | { kind: 'vents'; x: number; y: number; w: number; h: number; pitch: number; r: number; fill: string }
   | { kind: 'weave'; x: number; y: number; w: number; h: number; pitch: number; line: number; fill: string; stroke: string; hole?: string }
+  /** A square mesh: vertical and horizontal wires (stroke, width line) over a dark hole colour (fill), pitch apart: a window of a studio microphone grille. */
+  | { kind: 'grid'; x: number; y: number; w: number; h: number; pitch: number; line: number; fill: string; stroke: string }
   | { kind: 'text'; x: number; y: number; size: number; text: string; fill: string; anchor?: 'start' | 'middle' | 'end' }
 
 export interface PanelSpec {
@@ -72,6 +74,14 @@ export async function renderPanel(spec: PanelSpec): Promise<Uint8Array> {
         `<pattern id="weave${idx}" x="${n(px(it.x))}" y="${n(py(it.y + it.h))}" width="${n(cell)}" height="${n(cell)}" patternUnits="userSpaceOnUse"><rect width="${n(cell)}" height="${n(cell)}" fill="${colour(it.fill, 'fill')}"/>${hole}<path d="M0 0 L${n(cell)} ${n(cell)} M${n(cell)} 0 L0 ${n(cell)}" stroke="${stroke}" stroke-width="${n(lw)}" fill="none"/></pattern>`,
       )
       parts.push(`<rect x="${n(px(it.x))}" y="${n(py(it.y + it.h))}" width="${n(px(it.w))}" height="${n(px(it.h))}" fill="url(#weave${idx})"/>`)
+    } else if (it.kind === 'grid') {
+      const cell = it.pitch * ppm
+      const lw = Math.max(0.5, it.line * ppm)
+      const wire = colour(it.stroke, 'stroke')
+      defs.push(
+        `<pattern id="grid${idx}" x="${n(px(it.x))}" y="${n(py(it.y + it.h))}" width="${n(cell)}" height="${n(cell)}" patternUnits="userSpaceOnUse"><rect width="${n(cell)}" height="${n(cell)}" fill="${colour(it.fill, 'fill')}"/><path d="M${n(cell / 2)} 0 V${n(cell)} M0 ${n(cell / 2)} H${n(cell)}" stroke="${wire}" stroke-width="${n(lw)}" fill="none"/></pattern>`,
+      )
+      parts.push(`<rect x="${n(px(it.x))}" y="${n(py(it.y + it.h))}" width="${n(px(it.w))}" height="${n(px(it.h))}" fill="url(#grid${idx})"/>`)
     } else if (it.kind === 'vents') {
       const fill = colour(it.fill, 'fill')
       for (let gx = it.pitch / 2; gx < it.w; gx += it.pitch) {
