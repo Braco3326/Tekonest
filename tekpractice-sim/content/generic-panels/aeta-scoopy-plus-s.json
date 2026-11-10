@@ -1,0 +1,229 @@
+{
+  "note": "Generic panel artwork (no brand marks), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+  "faces": {
+    "opposite": {
+      "wMm": 155,
+      "hMm": 80,
+      "base": "#2a2c30",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 5,
+          "y": 5,
+          "w": 145,
+          "h": 70,
+          "fill": "#2a2c30",
+          "stroke": "#3a3d42",
+          "radius": 5
+        },
+        {
+          "kind": "rect",
+          "x": 12,
+          "y": 30,
+          "w": 70,
+          "h": 38,
+          "fill": "#0a1a12",
+          "stroke": "#555a60",
+          "radius": 2
+        },
+        {
+          "kind": "text",
+          "x": 16,
+          "y": 58,
+          "size": 7,
+          "text": "ISDN / IP",
+          "fill": "#7dff9a"
+        },
+        {
+          "kind": "text",
+          "x": 16,
+          "y": 46,
+          "size": 6,
+          "text": "-18  -12  -6   0",
+          "fill": "#7dff9a"
+        },
+        {
+          "kind": "text",
+          "x": 16,
+          "y": 36,
+          "size": 5,
+          "text": "READY",
+          "fill": "#33ff77"
+        },
+        {
+          "kind": "circle",
+          "x": 104,
+          "y": 56,
+          "r": 5,
+          "fill": "#3c3f44",
+          "stroke": "#6b6e73"
+        },
+        {
+          "kind": "circle",
+          "x": 120,
+          "y": 56,
+          "r": 5,
+          "fill": "#3c3f44",
+          "stroke": "#6b6e73"
+        },
+        {
+          "kind": "circle",
+          "x": 136,
+          "y": 56,
+          "r": 5,
+          "fill": "#3c3f44",
+          "stroke": "#6b6e73"
+        },
+        {
+          "kind": "circle",
+          "x": 104,
+          "y": 40,
+          "r": 5,
+          "fill": "#3c3f44",
+          "stroke": "#6b6e73"
+        },
+        {
+          "kind": "circle",
+          "x": 120,
+          "y": 40,
+          "r": 5,
+          "fill": "#3c3f44",
+          "stroke": "#6b6e73"
+        },
+        {
+          "kind": "circle",
+          "x": 136,
+          "y": 40,
+          "r": 5,
+          "fill": "#3c3f44",
+          "stroke": "#6b6e73"
+        },
+        {
+          "kind": "circle",
+          "x": 128,
+          "y": 20,
+          "r": 9,
+          "fill": "#14161a",
+          "stroke": "#9aa0a6"
+        },
+        {
+          "kind": "circle",
+          "x": 128,
+          "y": 20,
+          "r": 2.5,
+          "fill": "#9aa0a6"
+        },
+        {
+          "kind": "circle",
+          "x": 100,
+          "y": 20,
+          "r": 3,
+          "fill": "#35d27a"
+        }
+      ]
+    },
+    "io": {
+      "wMm": 155,
+      "hMm": 80,
+      "base": "#1e2024",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 28.700000000000003,
+          "y": 43.4,
+          "w": 16,
+          "h": 14,
+          "fill": "#0b0b0c",
+          "stroke": "#6b6e73",
+          "radius": 1.5
+        },
+        {
+          "kind": "rect",
+          "x": 30.700000000000003,
+          "y": 45.4,
+          "w": 12,
+          "h": 2,
+          "fill": "#caa24a"
+        },
+        {
+          "kind": "text",
+          "x": 36.7,
+          "y": 40.4,
+          "size": 4,
+          "text": "IP",
+          "fill": "#9aa0a6",
+          "anchor": "middle"
+        },
+        {
+          "kind": "rect",
+          "x": 60,
+          "y": 44,
+          "w": 14,
+          "h": 6,
+          "fill": "#0b0b0c",
+          "stroke": "#6b6e73",
+          "radius": 1
+        },
+        {
+          "kind": "text",
+          "x": 60,
+          "y": 54,
+          "size": 4,
+          "text": "USB",
+          "fill": "#9aa0a6"
+        },
+        {
+          "kind": "circle",
+          "x": 100,
+          "y": 50,
+          "r": 3,
+          "fill": "#caa24a",
+          "stroke": "#6b6e73"
+        },
+        {
+          "kind": "text",
+          "x": 100,
+          "y": 42,
+          "size": 4,
+          "text": "ANT",
+          "fill": "#9aa0a6",
+          "anchor": "middle"
+        },
+        {
+          "kind": "circle",
+          "x": 130,
+          "y": 40,
+          "r": 4.5,
+          "fill": "#0b0b0c",
+          "stroke": "#3fb15a"
+        },
+        {
+          "kind": "circle",
+          "x": 130,
+          "y": 40,
+          "r": 1.8,
+          "fill": "#caa24a"
+        },
+        {
+          "kind": "text",
+          "x": 130,
+          "y": 32,
+          "size": 4,
+          "text": "DC IN",
+          "fill": "#9aa0a6",
+          "anchor": "middle"
+        },
+        {
+          "kind": "rect",
+          "x": 10,
+          "y": 10,
+          "w": 135,
+          "h": 8,
+          "fill": "#1a1c20",
+          "stroke": "#3a3d42",
+          "radius": 2
+        }
+      ]
+    }
+  }
+}
