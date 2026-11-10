@@ -1,0 +1,25 @@
+{
+ "schema": 1,
+ "deviceId": "genelec-8030c",
+ "generated": true,
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 94.5,
+   "yMm": 134.9,
+   "sizeMm": {
+    "w": 10,
+    "h": 10,
+    "d": 3
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

@@ -68,6 +68,8 @@ export class ControlRig {
   levels: LevelSource = demoLevelDb
   /** Whether the meters move at all (a device that is off does not). */
   metersLive = true
+  /** A device whose power setting is off: every meter reads silence. */
+  powered = true
   /** Every part hangs under this node: one switch takes the whole surface out of the render (a device far from the camera). */
   private readonly surface: TransformNode
   private active = true
@@ -166,7 +168,7 @@ export class ControlRig {
     let any = drewScreen
     for (const p of this.parts.values()) {
       if (!p.meterStep || !p.def.meter) continue
-      p.meterStep(this.levels(p.def.meter.source, nowMs / 1000), nowMs, dt)
+      p.meterStep(this.powered ? this.levels(p.def.meter.source, nowMs / 1000) : -120, nowMs, dt)
       any = true
     }
     return any
@@ -178,7 +180,7 @@ export class ControlRig {
     sc.last = nowMs
     sc.dirty = false
     if (!sc.ctx || !sc.tex) return
-    sc.app.draw(sc.ctx, sc.w, sc.h, { bank: this.bank, levels: this.levels, nowMs })
+    sc.app.draw(sc.ctx, sc.w, sc.h, { bank: this.bank, levels: this.powered ? this.levels : () => -120, nowMs })
     sc.tex.update()
   }
 

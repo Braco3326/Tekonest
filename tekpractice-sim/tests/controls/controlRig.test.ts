@@ -262,3 +262,19 @@ describe('ControlRig: level of detail', () => {
     expect(rig.update(200)).toBe(true)
   })
 })
+
+describe('ControlRig: power', () => {
+  it('a device that is off reads silence on its meters, and comes back when it is on', () => {
+    const { rig } = build()
+    const lit = (): number => rig.part('bar')!.node.getChildMeshes().filter((m) => m.material?.name.includes('bar-on')).length
+    rig.levels = () => -3
+    for (let t = 16; t < 800; t += 16) rig.update(t)
+    expect(lit()).toBeGreaterThanOrEqual(11)
+    rig.powered = false
+    for (let t = 800; t < 6000; t += 16) rig.update(t)
+    expect(lit()).toBe(0)
+    rig.powered = true
+    for (let t = 6000; t < 6800; t += 16) rig.update(t)
+    expect(lit()).toBeGreaterThanOrEqual(11)
+  })
+})

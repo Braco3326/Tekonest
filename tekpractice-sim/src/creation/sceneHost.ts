@@ -1185,6 +1185,9 @@ export class SceneHost {
       const next = fromCatalog(def, cat, value, c.bank.get(def.id))
       if (next !== null) c.bank.set(def.id, next, 'software')
     }
+    // A device whose power setting is off shows silent meters.
+    const power = cats.find((x) => x.id === 'power')
+    if (power) c.rig.powered = (values.power ?? power.default) !== false
   }
 
   /** A 3D control was operated to its final value: carry it to the simulation when it stands for one of its settings. */

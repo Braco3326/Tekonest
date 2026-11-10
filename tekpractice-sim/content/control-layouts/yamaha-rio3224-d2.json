@@ -1,0 +1,25 @@
+{
+ "schema": 1,
+ "deviceId": "yamaha-rio3224-d2",
+ "generated": true,
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 430.3,
+   "yMm": 191,
+   "sizeMm": {
+    "w": 20.6,
+    "h": 29.3,
+    "d": 10
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

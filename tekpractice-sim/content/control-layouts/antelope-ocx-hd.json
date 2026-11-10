@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "deviceId": "antelope-ocx-hd",
+ "generated": true,
+ "controls": [
+  {
+   "id": "sample-rate",
+   "face": "opposite",
+   "xMm": 319,
+   "yMm": 22.4,
+   "sizeMm": {
+    "w": 26,
+    "h": 26,
+    "d": 18
+   },
+   "label": "Sample rate",
+   "catalogControl": "sample-rate",
+   "kind": "knob",
+   "axis": "z",
+   "sweepDeg": 270,
+   "colour": "#1c1d20",
+   "default": 0.5
+  },
+  {
+   "id": "power",
+   "face": "opposite",
+   "xMm": 56.4,
+   "yMm": 23.8,
+   "sizeMm": {
+    "w": 17,
+    "h": 17,
+    "d": 5
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "button",
+   "axis": "z",
+   "latch": true,
+   "round": true,
+   "colour": "#1b3a1f",
+   "lit": "#46ff5a",
+   "travelMm": 1,
+   "default": 1
+  }
+ ]
+}

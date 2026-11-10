@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "deviceId": "avid-protools-hdx",
+ "generated": true,
+ "controls": [
+  {
+   "id": "sample-rate",
+   "face": "opposite",
+   "xMm": 84.5,
+   "yMm": 320,
+   "sizeMm": {
+    "w": 3,
+    "h": 3,
+    "d": 2
+   },
+   "label": "Sample rate",
+   "catalogControl": "sample-rate",
+   "kind": "led",
+   "axis": "z",
+   "round": true,
+   "lit": "#46ff5a",
+   "default": 1
+  },
+  {
+   "id": "power",
+   "face": "opposite",
+   "xMm": 84.5,
+   "yMm": 350,
+   "sizeMm": {
+    "w": 20,
+    "h": 20,
+    "d": 4
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "button",
+   "axis": "z",
+   "latch": true,
+   "round": true,
+   "colour": "#1b3a1f",
+   "lit": "#46ff5a",
+   "travelMm": 1,
+   "default": 1
+  }
+ ]
+}

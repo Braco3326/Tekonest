@@ -1,0 +1,25 @@
+{
+ "schema": 1,
+ "deviceId": "qsc-k12-2",
+ "generated": true,
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 207,
+   "yMm": 66,
+   "sizeMm": {
+    "w": 14.4,
+    "h": 20,
+    "d": 8
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

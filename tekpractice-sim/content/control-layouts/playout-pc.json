@@ -1,0 +1,28 @@
+{
+ "schema": 1,
+ "deviceId": "playout-pc",
+ "generated": true,
+ "controls": [
+  {
+   "id": "power",
+   "face": "opposite",
+   "xMm": 40,
+   "yMm": 70,
+   "sizeMm": {
+    "w": 18,
+    "h": 18,
+    "d": 4
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "button",
+   "axis": "z",
+   "latch": true,
+   "round": true,
+   "colour": "#1b3a1f",
+   "lit": "#46ff5a",
+   "travelMm": 1,
+   "default": 1
+  }
+ ]
+}
