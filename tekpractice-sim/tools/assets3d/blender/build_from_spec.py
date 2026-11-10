@@ -975,6 +975,73 @@ def build_boom_arm(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+CABLE_DEFAULTS_MM = {"hoodWidthMm": 62.0, "hoodHeightMm": 17.0, "hoodLenMm": 45.0, "plugDiaMm": 23.2, "plugLenMm": 62.0, "tailLenMm": 160.0, "trunkDiaMm": 11.5, "pitchMm": 24.0}
+CABLE_HOOD = "#b4b8c0"          # nickel D-sub shell and hood
+CABLE_BOOT = "#a83232"          # red strain relief
+CABLE_BLACK = "#33343a"         # trunk, tails and plug boots
+CABLE_SHELL = "#c9ccd0"         # XLR shell
+CABLE_SCREW = "#d4af37"         # thumbscrews
+
+
+def build_cable_assembly(plan: Plan) -> bpy.types.Object:
+    """A D-sub to XLR fan-out cable, see the shape table in shapes.ts. Built in spec millimetres: the io end (D-sub nose) at +z, the plug tips at -z,
+    the plug grid centred on the height; then centred on x, bottom at y = 0 and scaled to the exact spec size (at most ARM_MAX_SCALE_ERROR off)."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    p = {k: param_m(plan, k, v) for k, v in CABLE_DEFAULTS_MM.items() if k.endswith("Mm")}
+    cols, rows = int(params.get("columns", 4)), int(params.get("rows", 2))
+    if cols < 1 or rows < 1 or cols * rows > 16:
+        raise BuildError(f"cable-assembly needs 1 to 16 plugs, got {cols} x {rows}")
+    pitch, plug_r, plug_len = p["pitchMm"], p["plugDiaMm"] / 2.0, p["plugLenMm"]
+    tail_len, trunk_r = p["tailLenMm"], p["trunkDiaMm"] / 2.0
+    hood_w, hood_h, hood_len = p["hoodWidthMm"], p["hoodHeightMm"], p["hoodLenMm"]
+    nose_len = 10.0 * MM
+    tail_r = 3.0 * MM
+    z_tip, z_nose = -d / 2.0, d / 2.0
+    cy = h / 2.0
+    z_break = z_tip + plug_len + tail_len
+    plugs = [((c - (cols - 1) / 2.0) * pitch, cy + (r - (rows - 1) / 2.0) * pitch) for r in range(rows) for c in range(cols)]
+
+    def at(x: float, y: float, z: float) -> Vector:
+        return g2b(x, y, z)
+
+    body = Body("cable-assembly")
+    bm = body.bm
+    for x, y in plugs:                                                                  # plug shells
+        cylinder_between(bm, at(x, y, z_tip), at(x, y, z_tip + plug_len * 0.42), plug_r)
+    body.done(lift_hex(CABLE_SHELL))
+    for x, y in plugs:                                                                  # plug boots
+        cylinder_between(bm, at(x, y, z_tip + plug_len * 0.42), at(x, y, z_tip + plug_len), plug_r * 0.88, tail_r + 1.5 * MM)
+    body.done(lift_hex(CABLE_BLACK))
+    for i, (x, y) in enumerate(plugs):                                                  # tails fanning in to staggered points on the trunk axis
+        cylinder_between(bm, at(x, y, z_tip + plug_len), at(0.0, cy, z_break + 6.0 * MM * i), tail_r)
+    z_trunk_end = z_nose - hood_len
+    cylinder_between(bm, at(0.0, cy, z_break), at(0.0, cy, z_trunk_end), trunk_r)       # trunk
+    body.done(lift_hex(CABLE_BLACK))
+    z_hood_back = z_nose - hood_len + 7.0 * MM
+    cylinder_between(bm, at(0.0, cy, z_trunk_end), at(0.0, cy, z_hood_back), trunk_r * 1.55, trunk_r * 1.15)  # red strain relief
+    body.done(lift_hex(CABLE_BOOT))
+    box(bm, -hood_w / 2.0, hood_w / 2.0, cy - hood_h / 2.0, cy + hood_h / 2.0, z_hood_back, z_nose - nose_len)  # hood
+    box(bm, -26.5 * MM, 26.5 * MM, cy - 6.25 * MM, cy + 6.25 * MM, z_nose - nose_len, z_nose)               # D shell nose (53 x 12.5)
+    body.done(lift_hex(CABLE_HOOD))
+    for sx in (-1.0, 1.0):                                                              # thumbscrews standing out of the hood face
+        cylinder_between(bm, at(sx * 28.5 * MM, cy, z_nose - 24.0 * MM), at(sx * 28.5 * MM, cy, z_nose - 1.0 * MM), 3.0 * MM)
+    body.done(lift_hex(CABLE_SCREW))
+
+    xs = [v.co.x for v in bm.verts]
+    ys = [v.co.y for v in bm.verts]
+    zs = [v.co.z for v in bm.verts]
+    ex, ey, ez = max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs)
+    # Blender x = glTF x, Blender y = -glTF z (length), Blender z = glTF y (height)
+    for name, natural, wanted in (("width", ex, w), ("length", ey, d), ("height", ez, h)):
+        if abs(natural / wanted - 1.0) > ARM_MAX_SCALE_ERROR:
+            raise BuildError(f"the cable-assembly is {natural / MM:.1f} mm in {name}, the spec size says {wanted / MM:.1f} mm: change the spec size or the params")
+    bmesh.ops.translate(bm, vec=Vector((-(max(xs) + min(xs)) / 2.0, -(max(ys) + min(ys)) / 2.0, -min(zs))), verts=bm.verts[:])
+    bmesh.ops.scale(bm, vec=Vector((w / ex, d / ey, h / ez)), space=Matrix.Identity(4), verts=bm.verts[:])
+    log(f"cable assembly: natural {ex / MM:.1f} x {ez / MM:.1f} x {ey / MM:.1f} mm, scaled to the spec; {sum(len(f.verts) - 2 for f in bm.faces)} triangles")
+    return body.finish()
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "cylinder-plug": build_cylinder_plug,
@@ -986,6 +1053,7 @@ SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "console-wedge": build_console_wedge,
     "speaker-cabinet": build_speaker_cabinet,
     "boom-arm": build_boom_arm,
+    "cable-assembly": build_cable_assembly,
 }
 
 

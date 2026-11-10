@@ -9,7 +9,7 @@
 import type { AssetSpecT } from './specSchema'
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -46,6 +46,9 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   // at its top, a tube up to a raised elbow (elbowDxMm to the right and elbowDyMm above the shoulder), a second tube down to the head (headDxMm to the
   // right and headDyMm BELOW the elbow), and a head with a mic post hanging headDropMm below it. The width is the column diameter (d). All params in mm.
   'boom-arm': { kind: 'device', params: ['elbowDxMm', 'elbowDyMm', 'headDxMm', 'headDyMm', 'tubeDiaMm', 'jointDiaMm', 'columnHeightMm', 'rodLenMm', 'headDropMm'], needsMatingOuter: false },
+  // A cable assembly along z: a D-sub hood with a strain relief at the io end (+z), a trunk, and a fan-out of columns x rows XLR male plugs on a
+  // pitchMm grid whose tips form the opposite face (-z). The width and height come from the plug grid, the depth is the whole length.
+  'cable-assembly': { kind: 'device', params: ['hoodWidthMm', 'hoodHeightMm', 'hoodLenMm', 'plugDiaMm', 'plugLenMm', 'tailLenMm', 'trunkDiaMm', 'pitchMm', 'columns', 'rows'], needsMatingOuter: false },
 }
 
 /** Default diameter of a socket pocket when the port gives no openingMm, in millimetres (the builder uses the same). */

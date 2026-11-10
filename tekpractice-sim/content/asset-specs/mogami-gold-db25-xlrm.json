@@ -31,6 +31,10 @@
     }
   ],
   "controls": [],
+  "build": {
+    "shape": "cable-assembly",
+    "params": { "hoodWidthMm": 62, "hoodHeightMm": 17, "hoodLenMm": 45, "plugDiaMm": 23.2, "plugLenMm": 62, "tailLenMm": 160, "trunkDiaMm": 11.5, "pitchMm": 24, "columns": 4, "rows": 2 }
+  },
   "sources": [
     {
       "kind": "datasheet",
@@ -50,7 +54,7 @@
     {
       "kind": "photo",
       "url": "https://mogamicable.com/category/images/large/GoldDB25-XLRM.jpg",
-      "note": "Mogami product photo (opened, 250 px wide, oblique): metal DB25 hood with a red strain relief on the right, black trunk, the trunk splitting into 8 black tails of staggered length each ending in a black gold-pin XLR male. No scale visible. Every size in the model (block 96 x 48 mm, hood about 62 x 17 x 45 mm, XLR plug about 22 mm diameter x 62 mm, tails about 160 mm, stub about 150 mm, overall model length 500 mm) is an estimate from general D-sub and Neutrik XLR sizes, not from a source; the real cable is 5 to 50 ft long and the model is a short stub. No openingMm is given on the XLR ports (they are male plugs, there is no opening). The two XLR positions are the first two plugs of the top row of a 4 x 2 block at 24 mm pitch, seen from the mating end (guess)."
+      "note": "Mogami product photo (opened, 250 px wide, oblique): metal DB25 hood with a red strain relief on the right, black trunk, the trunk splitting into 8 black tails of staggered length each ending in a black gold-pin XLR male. No scale visible. Every size in the model (block 96 x 48 mm, hood about 62 x 17 x 45 mm, XLR plug about 22 mm diameter x 62 mm, tails about 160 mm, stub about 150 mm, overall model length 500 mm) is an estimate from general D-sub and Neutrik XLR sizes, not from a source; the real cable is 5 to 50 ft long and the model is a short stub. No openingMm is given on the XLR ports (they are male plugs, there is no opening). The two XLR positions are the first two plugs of the top row of a 4 x 2 block at 24 mm pitch, seen from the mating end (guess). Built since 2026-11-10 by build.shape cable-assembly: D-sub hood (62 x 17 x 45 mm, 53 x 12.5 mm nose, two thumbscrews, red strain relief) at the io end, an 11.5 mm trunk, eight 3 mm tails fanning in over 160 mm, and a 4 x 2 block of 23.2 mm XLR plugs (62 mm long, nickel shell and black boot) on the 24 mm pitch at the opposite end; the plug diameter is raised from the 22 mm guess to 23.2 mm so the block fills the 96 x 48 mm envelope. All dimensions are estimates, as above."
     }
   ]
 }

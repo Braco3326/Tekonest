@@ -32,7 +32,7 @@ How each model was made:
 | K&M | 210/9 microphone stand | Meshy-generated from the official photo | none readable |
 | Yellowtec | litt on-air light | scripted from the published dimensions | none |
 | Yellowtec | m!ka microphone arm | own work: scripted articulated arm in the raised pose of the product photo (no photo texture) | none |
-| Mogami | Gold DB25 to 8 XLR-M loom | own work (placeholder) | none |
+| Mogami | Gold DB25 to 8 XLR-M loom | own work: scripted cable assembly (D-sub hood, trunk, eight XLR plugs) from estimated dimensions | none |
 | Neutrik | XLR, TRS, speakON, powerCON, etherCON connectors | names and dimensions as reference (STEP files downloaded, geometry not shipped) | none |
 | Generic | Playout PC | generic (no photo exists) | none |
 

@@ -1748,18 +1748,60 @@
     {
       "id": "mogami-gold-db25-xlrm",
       "optimized": true,
-      "tris": 236,
+      "tris": 2600,
       "kind": "device",
       "ports": 3,
       "status": "ok",
-      "source": "modeled",
-      "sourceUrl": "",
-      "author": "TekPractice (procédural interne, Blender)",
-      "license": "internal (own work)",
-      "attributionText": "",
-      "trademark": "generic",
       "portEmpties": 3,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T07:19:16.216Z",
+      "specSource": "https://mogamicable.com/category/products/gold-DB25-XLRM.php",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     }
   ],
   "environments": [

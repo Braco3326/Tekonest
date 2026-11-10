@@ -175,6 +175,16 @@ describe('boom-arm (articulated mic arm in a posed side view)', () => {
   })
 })
 
+describe('cable-assembly (a D-sub hood, a trunk and a fan-out of XLR plugs)', () => {
+  const device: Partial<AssetSpecT> = { kind: 'device', tier: 'standard', mating: undefined, realSizeMm: { w: 96, h: 48, d: 500 }, ports: [] }
+  it('is a device shape with the hood, plug and cable sizes as params, and needs no profile', () => {
+    expect(SHAPE_SPECS['cable-assembly']).toMatchObject({ kind: 'device', needsMatingOuter: false })
+    expect([...SHAPE_SPECS['cable-assembly'].params].sort()).toEqual(['columns', 'hoodHeightMm', 'hoodLenMm', 'hoodWidthMm', 'pitchMm', 'plugDiaMm', 'plugLenMm', 'rows', 'tailLenMm', 'trunkDiaMm'])
+    expect(validateBuild(specWith({ shape: 'cable-assembly', params: { plugDiaMm: 22, columns: 4, rows: 2 } }, device))).toEqual([])
+    expect(validateBuild(specWith({ shape: 'cable-assembly', params: { columns: 0 } }, device))[0]).toMatch(/columns/)
+  })
+})
+
 describe('speaker-cabinet (plan hexagon, socket pockets)', () => {
   const port = (portId: string, xMm: number, over: Record<string, unknown> = {}): AssetSpecT['ports'][number] =>
     ({ portId, face: 'io', xMm, yMm: 300, confidence: 'photo', openingMm: 24, insetMm: 25, ...over }) as AssetSpecT['ports'][number]

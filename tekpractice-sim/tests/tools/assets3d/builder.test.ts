@@ -524,6 +524,20 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(far[1]).toBeLessThan(top[1] - 0.15) // the head end is well below the elbow
   }, 120_000)
 
+  it.skipIf(!BLENDER)('mogami-gold-db25-xlrm builds as a cable assembly at its spec size: D-sub hood at the io end, a 4 x 2 block of XLR plugs at the opposite end, its three ports on real surfaces', async () => {
+    const spec = realSpec('mogami-gold-db25-xlrm')
+    expect(spec.build?.shape).toBe('cable-assembly')
+    const { raw, rawBytes, fixed } = await expectBuiltTo(spec, 9000)
+    await expectLooks(rawBytes, raw.triangles, 4) // hood metal, red boot, black cable, plug shell
+    expect(fixed.nodes.filter((n) => n.name.startsWith('port_')).map((n) => n.name).sort()).toEqual(['port_in-db25', 'port_out-xlr-1', 'port_out-xlr-2'])
+    // eight plugs: the tip face at the opposite end holds eight separate flat discs (count the distinct vertex columns at that z)
+    const verts = await vertices(rawBytes)
+    const zMin = raw.bboxM.min[2]
+    const tip = verts.filter((v) => Math.abs(v[2] - zMin) < 1e-7)
+    const columns = new Set(tip.map((v) => Math.round(v[0] * 1e4)))
+    expect(columns.size).toBeGreaterThanOrEqual(8) // four plug columns, each with several rim vertices
+  }, 120_000)
+
   it.skipIf(!BLENDER)('a revolve profile with a station above the height is refused with BUILD_FAIL naming the station', async () => {
     const base = realSpec('shure-sm58')
     const bad = { ...base, build: { ...base.build!, profile: [[0, 20], [40, 30], [100, 51], [150, 30]] } } as AssetSpecT
