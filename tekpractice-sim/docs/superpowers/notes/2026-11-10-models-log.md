@@ -321,3 +321,114 @@ In Mode Création the rig's Axia knobs stand at the FRONT edge and its red ON ke
 - QL1 hand-grip pockets in the rear cheeks, a stepped rear (ledge above the connector panel), the real polished rim colour, the side label plate: not modelled.
 - Axia plan corners (large rounded cheek corners) and a vertical bridge face need a plan-rounding feature and a profile change (the profile is pinned to the layout).
 - `--ship-run` does not record the portSurface gate in the manifest row (the rows of Wave 2b share this); the two rows of this wave were shipped with `--scripted --ship` and carry all 11 gates.
+
+## Wave 5a: marker ring audit, ring-on-connector audit of the whole catalog, Axia layout, leftovers, catalog look audit, brands register (tasks 5.1 A to F)
+
+Commits: 5d98860 (ring sizes), b05e563 (ring lift and ring turn, `src/scene`), 626d89e (ports re-measured with the rebuilt GLBs, Axia layout, provenance wording, brands register), plus this log. Images: `docs/superpowers/notes/img/wave5-catalog.png` (the whole catalog, 25 devices, front and default framing), `wave5-ring-fixes.png` (the rings after the fixes, engine, straight-on), `wave5-axia-top-engine.png` (Axia iQ from the front with the rig on the printed controls). Everything below was seen in the engine (private dev server on port 3072 for the ring work, a private preview of a scratch build on 4181 for the audit and the e2e).
+
+### A. Marker ring sizes
+The first table was per connector and too big for the panels it sits on. Now ring = 1.2 x the connector's face (`RING_OVERSIZE` 1.2; the audit asked for 1.15 to 1.25), where the face is the opening of a round connector or the SMALLER side of a non-round one plus a little margin (a round ring cannot follow a 53 x 12.5 mm D-sub).
+
+| connector | old size / ring (mm) | new size / ring (mm) | why |
+|---|---|---|---|
+| xlr3 / xlr5 (f, m) | 24 / 30 | 19.5 / 23.4 | the D-size hole is 19.5 (the flange 24 x 26 is outside); pitches are 23.8 (Rio), 24.1 (Grace), 25.3 to 25.5 (QL1): rings no longer touch |
+| iec-c13 (strip outlets) | 30 / 37.5 | 20 / 24 | outlet 25.4 x 17.4 mm on a 52 mm bar: ring 0.46 of the bar, not 0.72 |
+| iec-c14 (inlets) | 30 / 37.5 | 22 / 26.4 | inlet 31 x 23 (panel cut 27.5 x 19.5) on a 44 mm 1U face |
+| ethercon, speakon, powercon | 24 to 30 / 30 to 37.5 | 25 / 30 | housing 26 x 31 mm, the ring goes round the 26 |
+| rj45 | 16 / 20 | 13 / 15.6 | |
+| trs 1/4 in, ts | 14 / 17.5 | 12 / 14.4 | bushing |
+| trs 3.5 mm | 8 / 10 | 7 / 8.4 | |
+| tt-bantam | 11 / 13.75 | 9 / 10.8 | StudioPatch jacks are 19 mm apart |
+| usb-a, usb-b, usb-c | 14, 12, 10 / 17.5, 15, 12.5 | 11, 12, 9 / 13.2, 14.4, 10.8 | |
+| bnc, rca, toslink | 14, 13, 9 / 17.5, 16.25, 11.25 | 12, 12, 8 / 14.4, 14.4, 9.6 | Antelope BNC pitch is 16.3 |
+| dsub25 | 40 / 50 | 14 / 16.8 | flange 53 x 12.5; the old ring was taller than a 1U face, the StudioPatch pairs are 18 mm apart |
+| gpio-terminal, digilink | 40, 12 / 50, 15 | 15, 10 / 18, 12 | |
+| schuko plug / socket (unused) | 30 / 37.5 | 35, 40 / 42, 48 | |
+| unknown connector | 20 / 25 | 20 / 24 | |
+
+Tests (`tests/scene/portMarkerSize.test.ts`, 10 tests, was 6): every entry is pinned against the connector specs' real sizes, no two rings of any catalog device overlap (every port pair on the same face of every spec, 30+ pairs), no ring is taller than 60 % of the smaller side of its face, the C13 ring is 24 mm on the 52 mm bar. Decision: table only. A spec `openingMm` is NOT read at runtime: it would need every GLB rebuilt to carry it in the extras, and the 24 mm of the XLR specs is the cutout of the flange, not the hole the ring goes round (it would give the 30 mm rings back). The audit found two real bugs in the code under the rings and fixed both (b05e563, tests in `tests/scene/portMarkerMesh.test.ts`, now 17):
+- A ring in a pocket is lifted onto the face around it by probing the surface. The probes sat ON the ring's circle and the lift was the smallest drop of the four: a ring that crossed the outlet's top and bottom edges but not its sides (24 mm ring, 25.4 x 17.4 mm outlet, 9 mm deep) kept the floor level and showed two arcs; the smaller rings of the new table that FIT inside a pocket's opening (a 23.4 mm XLR ring in the DBR12's 24 mm hole, 25.6 mm deep) were not lifted either and hid behind the pocket wall (K12.2, DBR12: arcs only). Now the probes start 8 mm outside the ring, per axis the smaller drop of the two probes, the larger of the two axes. Seen after: complete rings on the multiprise outlets, the DBR12, the K12.2 and the Genelec.
+- Every ring faced -Z (the rear). A port on a SIDE or the base showed its ring edge-on: the Scoopy+ S's side XLR and headphone jack were thin lines (and the mics' base rings). `markerFaceNormal` finds the side face a port lies on (within 2 mm of an x or y face and not of a z face) and `orientMarkerRing` turns the ring to it (position, scale and bounds unchanged). Seen after: the Scoopy's rings face the side and sit round the XLR and the jack.
+- `tools/assets3d/specSchema.ts`: `projectionShiftMm` accepts `right` (an existing `tsc` error since Wave 2b).
+
+### B. Ring-on-connector audit (every catalog device with ports on a picture)
+Method: for each device the camera was put straight on each port face in the engine (a script over `window.__creation`: `frameDevice`, `portWorld`, `turnCamera`, `setCameraRadius`, a drag to level the camera), 3x screenshots of crops round the ports, every one looked at. Where a ring was more than about 3 mm off its connector the position was re-measured on the picture the port sits on with a mm-grid overlay of the source photo (crop and face size of the build, 0.3 to 0.7 mm per read), the spec edited (confidence `manual` became `photo` where it was re-read on the photo, a source note added with the method), the device rebuilt through the DBL (`asset:build --scripted --project-photo ... --logos-removed --ship`), all gates green, the new work dir's atlas compared with the previous run's: pixel-identical for all eight (only the port empties moved).
+
+Within 3 mm already (no change): Yamaha QL1 (the Wave 3 correction holds), Antelope OCX HD, Focusrite ISA One (about 1 to 2 mm), Scoopy+ S (ip, side XLR, jack), Rio3224-D2 front (io) XLRs. Generic pictures drawn from the port positions (Playout PC, Pro Tools HDX): on their connectors by construction. Axia iQ rear: no picture (confidence `guess`, kept, nothing to measure). Multiprise: the rings sit on the outlets (they are modelled).
+
+Fixed (old to new, mm, face-local, y up):
+
+| device | port | old x, y | new x, y | what it was |
+|---|---|---|---|---|
+| aeta-scoop5-s | in-send | 65.4, 23.9 | 65.4, 18.7 | 5.2 mm above the XLR (the picture is 7.6 % short in y, positions had been read isotropically) |
+| | out-return | 116.7, 22.6 | 116.7, 20.0 | 2.6 mm above |
+| avid-hd-io | analog-in-db25 | 59.4, 71.7 | 43.0, 72.1 | 16 mm right of the DB25 (read on the manual drawing, not on the photo the picture is) |
+| | analog-out-db25 | 93.6, 30.0 | 79.0, 28.1 | 14.6 mm right |
+| | aes-io-db25 | 192.8, 62.0 | 187.0, 62.1 | 5.8 mm right |
+| | digilink | 332.0, 13.0 | 332.4, 9.8 | 3.2 mm high (PRIMARY PORT) |
+| | wordclock-in / -out | 430.0, 68.0 / 45.0 | 434.1, 68.2 / 434.5, 45.1 | 4 mm left of the BNCs |
+| | power-in | 448.0, 15.0 | 448.2, 15.1 | already on the inlet opening |
+| grace-m905 | in-analog-l / -r | 362.1 / 386.0, 25.6 | 378.6 / 405.8, 22.9 | 16 to 20 mm left (the rings sat between XLRs) |
+| | in-aes3 | 141.0, 59.2 | 129.2, 59.6 | between AES 1 and AES 2, now AES 1 |
+| | out-main-l / -r | 167.8 / 191.9, 25.6 | 159.0 / 186.9, 23.3 | 5 to 9 mm |
+| | out-headphone (front) | 344.6, 46.2 | 351.7, 43.3 | 7 mm left of the jack |
+| | power-in | 60.1, 65.4 | 36.7, 67.5 | 23 mm right of the inlet |
+| switchcraft-studiopatch-9625 | front-tt-1 / -2 | 31.0, 31.0 / 12.0 | 34.9, 29.1 / 38.8, 12.3 | first TT jack of each row (the photo is elevated, so a column leans) |
+| | rear-in-db25 / -out | 416.3, 31.5 / 13.5 | 434.0, 28.3 / 430.2, 10.0 | the 70 mm pitch was assumed, the photo gives these |
+| yamaha-dbr12 | in-line | 156.3, 410.0 | 158.5, 414.0 | 4.6 mm |
+| | link-out | 158.0, 290.0 | 158.2, 297.6 | 7.6 mm below the XLR |
+| | power-in | 167.5, 172.5 | 167.4, 183.2 | 10.7 mm below the inlet |
+| genelec-8030c | in-analog | 137.3, 70.0 | 135.9, 65.2 | on the label text, 4.9 mm above the XLR symbol (power-in kept: the photo shows only its MAINS INPUT label, no inlet) |
+| yamaha-rio3224-d2 | dante-primary (rear) | 57.5, 183.7 | 40.7, 184.3 | was on the SECONDARY etherCON |
+| | power-in (rear) | 80.1, 54.3 | 71.3, 54.8 | 9 mm right of inlet A |
+| qsc-k12-2 (task D) | in-line-a | 142.0, 129.0 | 143.5, 129.2 | |
+| | thru-out-a | 142.0, 98.0 | 144.3, 100.1 | |
+| | power-in | 181.0, 46.0 | 177.3, 57.7 | 11.7 mm below the inlet on the Meshy rear picture |
+
+Three findings that were not "a number off":
+- **StudioPatch 9625: the pictures were on the wrong faces.** With `frontOnIo` the model is built with the front at the projection face `opposite` and turned 180 degrees afterwards, so `io=front.jpg` put the jack field on the REAR and the DB25 pairs on the front, under rings of the wrong connectors (the Wave 2a sheets were judged without the rings). Rebuilt with `opposite=front.jpg`, `io=rear.jpg` (the spec's blank rectangles were already written for that assignment); the front now shows the 2 x 48 jacks, the rear the six DB25 pairs, the rings sit on the first jacks and on the right-hand INPUT / OUTPUT 1-8 pair. Seen in the engine.
+- **Rio3224-D2 rear: the scripted etherCON and IEC housings stood 9 to 29 mm beside the printed connectors** (research-report positions 80.1, 133.1, 57.5, 85.5). The rear picture is 1812 px wide inside a 2048 px atlas, so the face maps u over 0.885 of the atlas (checked against the GLB's rear-plate UVs); a first reading with the wrong width (2048) was caught in the engine (ring 8 mm beside inlet A) and redone: printed PRIMARY (40.7, 184.3), SECONDARY (69.7, 184.3), inlet A (71.3, 54.8), inlet B (127.5, 54.8). `build_stagebox_rio3224` now puts the housings there (the only Python edit: four coordinates, plus the spec ports); `portSurface` caught the first attempt (a port 5.4 mm in front of a recess). Seen in the engine: PRIMARY and inlet A have the ring, the printed connector and the 3D housing concentric.
+- Pocket cabinets (K12.2, DBR12, Genelec): the K12.2 rings sat on the wrong column / row of the Meshy picture (IEC 11.7 mm low); fixed above.
+
+Not fixed, honestly: the Genelec mains inlet (not visible on the photo); the Switchcraft first-jack positions are +/- 1.5 mm (perspective photo); the Scoop5 S picture is 7.6 % squeezed in y (the crop is 65 px for 44 mm) and the positions follow the picture, not the real unit.
+
+### C. Axia iQ controls layout
+The top picture (`top_rectified.png`, 2048 x 1904 px over 519.3 x 482.9 mm) is the original photo turned 180 degrees (rear at the bottom, front at the top, the monitor section at low x), which is the right frame for the face (`y` counted from the I/O edge, picture mapped `u = x`, `v = y`, checked on the GLB UVs). The strip and monitor controls had been written in the frame of the UNROTATED photo: x and y both mirrored (about the centre), the faders pointing the wrong way. The meters (y 18, 30 on the bridge) were already in the right frame and stay. Re-measured on the picture (mm grid, strips 1 and 8 read in zoomed crops, the slot positions by dark-column minima over the front 14 mm of the slots; the new numbers are mostly 482.9 - y of the old ones: the keys' 94 vs 111 doubt of Wave 3 was a misreading, PGM 1 / 2 are 93.9, PGM 3 / PHONE 113.0 on the picture):
+
+| control (ch 1 = the strip at high x, the operator's left) | old x, y (dx) | new x, y (dx) |
+|---|---|---|
+| fader (cap at value 0) | 68.8, 231.2 (+42.46) | 450.8, 250.0 (-42.5), `reverse`, travel 100, slot 128 long (the old travel went the wrong way: level up toward the operator) |
+| ON key | 68.8, 154.1 (+42.46) | 454.8, 330.5 (-43.5) |
+| OFF key | 68.8, 129.3 | 454.8, 355.1 (-43.5) |
+| PRE (the PREVIEW key) | 79.8, 175.0 | 443.5, 308.9 (-43.1) |
+| PGM 1 / PGM 2 | 56.6 / 74.8, 389.2 | 457.0 / 439.2, 93.9 (-41.6 / -41.7) |
+| PGM 3 / PHONE | 56.6 / 74.8, 369.6 | 457.0 / 439.2, 113.0 |
+| encoder | 64.6, 418.0 | 447.0, 72.0 (-41.3) |
+| headphones / monitor / ext / studio knob | 455.3, 141.1 / 412.2, 141.1 / 452.7, 198.5 / 448.8, 322.6 | 64.0, 341.8 / 107.1, 341.8 / 66.6, 284.4 / 70.5, 160.3 |
+| monitor-mute | 395.2, 387.9 | 124.1, 95.0 (the METER key) |
+
+Each row has its own pitch because the picture is a little keystoned (slots 42.5, ON / OFF 43.5, PGM keys 41.6 mm), so each repeat group has its own `dxMm`. The builder refused the first layout (flat-zone check: the encoders at y 58 to 86 reach the bridge slope and the narrower tier, which stood 380 mm wide, ends at x 449.6 while strip 1's encoder reaches 460.5): the tier is now 440 mm (`tierWMm` 380 to 440; the original top photo shows the bridge top about 460 mm wide, the 380 had been read on the elevated front photo), the model is 1988 triangles as before, all 11 gates, picture pixel-identical. New test `tests/controls/axiaLayoutFrame.test.ts` (6) pins the order front to back, the fader range inside the printed slot, the channel order and the per-row pitch. Parity (`tests/controls`) green. Engine, Axia selected, 0.75 m from the front: the encoders stand at the bridge foot on the printed knobs, the PGM / PHONE keys behind the faders, the faders in their slots with the caps at the rear end (value 0.8), SOFT / PREVIEW, ON (red) and OFF at the front on the printed keys, the monitor knobs on the right on their printed knobs, the meters on the bridge (`wave5-axia-top-engine.png`).
+Left: the spec's catalog controls (GLB empties `fader-in-mic-1` at x 483.4 and the route buttons) are in a third frame and are not the rig's; the rig does not use them for placement.
+
+### D. Leftovers
+- Genelec 8030C stepped photo boundary on the top corner: not attempted. The step is where the front photo ends on the top fillet; closing it needs a top picture (none exists) or a larger fillet blend, and a change of the curved-cabinet projection would touch three shipped speakers. Logged as open.
+- K12.2 rear: a real rear exists (`rear.png`, an official QSC render) but it is a 3/4 perspective view with the handle side showing (the amplifier panel is about a third of the face), so it cannot be mapped as a flat face like the DBR12's. The Meshy rear picture stays (the K12.2 is the only hybrid with a Meshy picture); its ports were re-measured on it (table above) and the engine shows the three rings on their connectors. The `projectionShiftMm io 68` is kept (it is what puts the Meshy connectors at x 143 to 177).
+- Manifest wording: `provenanceOf` (the pipeline's own function) now says, for a hybrid whose pictures are all `_generic_*.png` (SM58, SM57, RE20, RE50/B, Playout PC, Scoopy+ S, Pro Tools HDX), `hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)` and licence `internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark` (trademark stays `branded-internal`: it is a model of a real brand's product). The seven manifest rows were rewritten through `recordAsset` with that function (only source, license and the key order of trademark changed). No test pinned the old wording; `tests/tools/assets3d/provenance.test.ts` (4) pins both wordings and the Meshy case.
+
+### E. Whole-catalog look audit
+`AUDIT_OUT=<dir> E2E_PORT=4181 npx playwright test tests/e2e/look-audit.spec.ts` on a private preview of a build into a new scratch outDir, all 25 catalog devices (the brief says 26: the catalog has 25 devices, the 26 other manifest rows are connectors), four views each, 100 images, all looked at in 4-device montages; one sheet: `wave5-catalog.png` (front and default framing of every device). Findings: nothing reads as a plain box where a real silhouette exists, no ring hides a device, the rings in the default (rear) framing are thin and sit on their connectors. Still weak, and why:
+- Playout PC and Pro Tools HDX: role stand-ins (a small-form-factor PC and a tower) with generic pictures and drawn vents; there is no source for the real chassis. Read as a generic PC / tower.
+- AETA Scoopy+ S: a box where the real unit is a wedge with a sloped front (needs the wedge family with a sloped front block; Wave 2b open point).
+- Focusrite ISA One: vertical front (the real one is sloped) and no strap handle; the front picture carries it.
+- Yamaha Rio3224-D2, Avid HD I/O, Antelope, Grace, AETA Scoop5 S, StudioPatch: plain black or blue sides and tops (no photo of the sides); the big Rio reads as a flat-sided box from the side, its ears and front are right.
+- Microphones, the litt and the K&M stand are small in the 1.0x framing; the silhouettes are right in the Wave 4 sheets. The Neumann stays the Meshy model (round drum problem of Wave 4a).
+- Grace m905 front: a dark plate with one green knob (the straightened front photo is nearly black).
+
+### F. Brands register
+`docs/legal/BRANDS_AND_CREDITS.md` reconciled with `ASSET_MANIFEST.json`: new section 6 lists every catalog device with its tool, `source`, the origin of its picture, whether Meshy is involved and its trademark flag (25 rows; Meshy on two rows only: the U 87 Ai whole, the K12.2 rear picture); the Meshy definition in section 1 and the U 87 row say so; the status line is dated. No test reads the register.
+
+### Checks
+- E2E on the private preview (`vite preview --outDir <scratch> --port 4181`, a scratch config deleted afterwards): creation-controls and creation-front, 15 passed; the look audit, 1 passed.
+- Unit tests, validate:assets and tsc: see the final numbers in the hand-over report.
+- Not run (as agreed): the full Playwright suite.
+- Open: Genelec top-corner step; the Rio sides and the atlas-width quirk (a face maps u over the picture's own width inside a wider atlas: every measurement on an atlas must use the picture's width, 1812 px for the Rio rear); the Scoopy+ S wedge; the Axia rear (no photo); the Axia spec's catalog-control empties are in another frame.
