@@ -941,18 +941,63 @@
     {
       "id": "playout-pc",
       "optimized": true,
-      "tris": 24,
+      "tris": 44,
       "kind": "device",
       "ports": 3,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/computer-tower-ofice-pc-a55286be3fd54058b913d10b935c249e",
-      "author": "guato123xd",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Computer Tower Ofice Pc » par guato123xd (https://sketchfab.com/3d-models/computer-tower-ofice-pc-a55286be3fd54058b913d10b935c249e) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 3,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal",
+      "date": "2026-11-10T01:25:19.144Z",
+      "specSource": "https://cdn.shopify.com/s/files/1/1167/3148/files/Dell_OptiPlex-7010-Technical_Specifications.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "aeta-scoop5-s",

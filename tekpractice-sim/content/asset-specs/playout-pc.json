@@ -49,7 +49,11 @@
     "shape": "rack-box",
     "params": {
       "chamferMm": 2
-    }
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ]
   },
   "sources": [
     {
