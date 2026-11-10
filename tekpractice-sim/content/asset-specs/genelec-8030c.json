@@ -54,11 +54,11 @@
       },
       {
         "face": "opposite",
-        "xMm": 70,
-        "yMm": 34,
-        "wMm": 50,
-        "hMm": 22,
-        "marginMm": 8
+        "xMm": 61,
+        "yMm": 20,
+        "wMm": 58,
+        "hMm": 16,
+        "marginMm": 6
       },
       {
         "face": "io",
@@ -90,18 +90,45 @@
       "kind": "datasheet",
       "url": "https://www.neutrik.com/en/product/nc3md-l-1",
       "note": "Neutrik NC3MD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". openingMm = 24 for the XLR input is a guess by that convention (the photo ring is about 22.7 mm)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://images.ctfassets.net/4zjnzn055a4v/37Yluwn69OLB2BOtk0fYTl/d7ac8755a4ad5b397d1ccfff6d8b8eb8/8030CP-k01.jpg",
+      "note": "Genelec 8030CP straight-on front photo (2000 x 2000 px, opened, silhouette profiled row by row with the rear photo 8030_Back.jpg): the product is 985 px wide at its widest for 189 mm (5.21 px/mm) and its sides are a shallow arc in elevation, 175 mm wide 39 mm below the top, 189 mm at about 140 mm below the top and 172 mm at 250 mm below it, so the curved-cabinet params barrelMm 17.7 (half-width lost at the far end of the height, a parabola) centred at 159 mm above the base. The woofer grille measures 715 px = 137 mm across (ring 136 mm) with its centre 184 mm below the top of the body = 115 mm above the base; the tweeter ring 216 px = 41 mm, centre 66 mm below the top = 233 mm above the base. The picture of the front is this photo cropped to the body (501,195,985,1475 px, the Iso-Pod mostly cut), the rear picture 8030_Back.jpg cropped to (492,180,1068,1600); white corners are filled (--project-photo ...,fill). Plan radii (front 20, rear 26 mm), the plan taper (rear polygon 172 mm) and the 14 mm Iso-Pod pad (118 x 100 mm) are estimates read off the three-quarter photos; the side and top faces carry no picture."
     }
   ],
   "build": {
-    "shape": "speaker-cabinet",
+    "shape": "curved-cabinet",
     "params": {
-      "chamferMm": 12,
-      "bevelSegments": 3
+      "planFrontMm": 180,
+      "sideBulgeMm": 4.5,
+      "rearWidthMm": 172,
+      "frontRadiusMm": 20,
+      "backRadiusMm": 26,
+      "edgeRadiusMm": 18,
+      "edgeDropMm": 22,
+      "edgeSegments": 8,
+      "barrelMm": 17.7,
+      "barrelCentreMm": 159,
+      "footMm": 14,
+      "footWidthMm": 118,
+      "footDepthMm": 100,
+      "bodyGrey": 112,
+      "wooferRingMm": 136,
+      "wooferYMm": 115,
+      "tweeterRingMm": 41,
+      "tweeterYMm": 233,
+      "waveguideMm": 66,
+      "waveguideDepthMm": 8
     },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 16,
     "projection": [
       "io",
-      "opposite",
-      "left"
+      "opposite"
     ]
   }
 }

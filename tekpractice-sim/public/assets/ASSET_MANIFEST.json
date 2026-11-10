@@ -2120,24 +2120,22 @@
     {
       "id": "genelec-8030c",
       "optimized": true,
-      "tris": 220,
+      "tris": 2988,
       "kind": "device",
       "ports": 2,
       "status": "ok",
       "portEmpties": 2,
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
-      "toolVersion": "blender-builder-1+meshy-7.1",
-      "date": "2026-11-05T03:48:35.379Z",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-10T20:18:47.239Z",
       "specSource": "https://assets.ctfassets.net/4zjnzn055a4v/1qUiHwGHNmumKgYugG6wws/837b26c2261771b9d58a94c44bb1cdc4/8030c_views.pdf",
       "logosRemoved": true,
       "photos": [
-        "front.jpg",
-        "rear-three-quarter.jpg",
         "rear.jpg",
-        "three-quarter-left.jpg"
+        "front.jpg"
       ],
-      "taskId": "01a1a76c-3cde-7762-bedc-4bc3bd914ce9",
+      "taskId": null,
       "gates": [
         {
           "gate": "size",
@@ -2160,6 +2158,14 @@
           "ok": true
         },
         {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
           "gate": "proportionDrift",
           "ok": true
         },
@@ -2176,7 +2182,7 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
+      "source": "hybrid: own scripted geometry + official photo as texture",
       "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
       "trademark": "branded-internal"
     },
