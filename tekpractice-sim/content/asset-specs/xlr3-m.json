@@ -1,0 +1,34 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "xlr3-m",
+  "realSizeMm": {
+    "w": 20.3,
+    "h": 20.3,
+    "d": 69.6
+  },
+  "mating": {
+    "role": "plug",
+    "outerMm": 19
+  },
+  "build": {
+    "shape": "xlr-male-plug",
+    "params": {
+      "pins": 3
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/media/8225/download/nc3mxx-2.pdf?v=1",
+      "note": "Neutrik NC3MXX dimension drawing (opened earlier for the xlr3-f spec, rendered): the male cable connector is 19 mm in diameter and 68.1 - 70.1 mm long. What the model is: the CABLE-END male XLR (a loose plug on a cable, modelled on the NC3MXX), the one that goes onto an xlr3-f jack or plug. role = plug, outerMm = the 19 mm shell."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nc3mxx",
+      "note": "Neutrik NC3MXX product page: 3-pole male cable connector, nickel housing, IEC 61076-2-103; the bushing is the widest part. The box 20.3 x 20.3 x 69.6 mm is the bounding box of the manufacturer STEP model (20.33 x 20.33 x 69.64 mm, measured in a scratch copy kept outside the repo, geometry not shipped; the dimensions only are used). Pin layout as on the NC3 drawing (pin 2 and 1 left and right, pin 3 below); bore depth 14 mm, pin diameter 1.6 mm and the boot shape are estimates."
+    }
+  ]
+}

@@ -343,6 +343,16 @@ def bevel_faces(bm: bmesh.types.BMesh, faces: list[bmesh.types.BMFace], width: f
 
 # --- shapes -----------------------------------------------------------------------------------------------
 
+def xlr_pins_mm(count: int) -> list[tuple[float, float]]:
+    """Pin centres (x, y) in mm around the axis, seen from the mating face: the 3-pole layout measured on the Neutrik NC3 drawing (pins 2 and 1 left and
+    right, pin 3 below), and a 5-pole arc of 5 pins 45 degrees apart on a 4.6 mm radius over the lower half (the key and latch are on the top)."""
+    if count == 3:
+        return [(-4.05, 0.0), (4.05, 0.0), (0.0, -3.95)]
+    if count == 5:
+        return [(4.6 * math.sin(math.radians(a)), -4.6 * math.cos(math.radians(a))) for a in (-90.0, -45.0, 0.0, 45.0, 90.0)]
+    raise BuildError(f"params.pins must be 3 or 5, got {count}")
+
+
 def build_cylinder_plug(plan: Plan) -> bpy.types.Object:
     """3-pole female XLR cable plug (generic, Neutrik-NC3FXX-class proportions), mating face at z = 0.
 
@@ -395,7 +405,7 @@ def build_cylinder_plug(plan: Plan) -> bpy.types.Object:
     # Mating face: the outer ring filled around three pin holes and the key slot.
     outline = [bm.edges.get((rings[0][i], rings[0][(i + 1) % XLR_SEGMENTS])) for i in range(XLR_SEGMENTS)]
     holes = []
-    for px, py in ((-4.05, 0.0), (4.05, 0.0), (0.0, -3.95)):
+    for px, py in xlr_pins_mm(int((plan.get("params") or {}).get("pins", 3))):
         holes.append(blind_hole(bm, px * mm, axis_y + py * mm, 0.0, 1.25 * mm, 8, 3.0 * mm, 1.0))
     key_mouth, key_floor = rect_hole(bm, -2.3 * mm, 2.3 * mm, axis_y + 2.4 * mm, axis_y + 6.0 * mm, 0.0, 2.5 * mm, 1.0)
     holes.append(key_mouth)
@@ -415,6 +425,43 @@ def build_cylinder_plug(plan: Plan) -> bpy.types.Object:
     bm.faces.new(sections[0])
     bm.faces.new(sections[1][::-1])
     body.done(NICKEL)
+    return body.finish()
+
+
+def build_xlr_male_plug(plan: Plan) -> bpy.types.Object:
+    """XLR male cable plug (Neutrik NC3MXX / NC5MXX class), mating face at z = 0, cable at z = d, axis on the box centre.
+
+    A 19 mm nickel shell, hollow for 14 mm with the pin insulator at the bottom of the bore and `pins` (3 or 5) gold pins standing 10.5 mm
+    out of it, then a bushing (the box width), the boot cone and the tail. Verified: 19 mm shell, 68.1 to 70.1 mm length (Neutrik data via
+    retail listings), STEP bounding box 20.33 x 20.33 x 69.64 mm. Estimated: bore depth, pin diameter and length, boot shape."""
+    w, h, d = size_m(plan)
+    mm = MM
+    pins = int((plan.get("params") or {}).get("pins", 3))
+    bushing_r = min(w, h) / 2.0
+    shell_r = XLR_SHELL_RADIUS_MM * mm - 0.1 * mm          # 19.0 mm shell
+    bore_r = 7.95 * mm
+    bore_depth = 14.0 * mm
+    if bushing_r <= shell_r + 0.2 * mm:
+        raise BuildError(f"sizeMm.w/h ({bushing_r * 2 / mm:.2f}) must be wider than the 19 mm shell")
+    if d < 60.0 * mm:
+        raise BuildError(f"sizeMm.d ({d / mm:.2f}) is too short for an XLR plug (needs at least 60 mm)")
+    profile: list[tuple[float, float]] = [
+        (2.0 * mm, bore_depth),                # floor of the bore (a small disc)
+        (bore_r, bore_depth),                  # floor out to the bore wall
+        (bore_r, 0.0),                         # bore wall to the mating face
+        (shell_r, 0.0),                        # the shell's front ring
+        (shell_r, 30.0 * mm),                  # nickel shell
+        (bushing_r, 36.0 * mm),                # bushing ramp
+        (bushing_r, 47.0 * mm),
+        (bushing_r - 1.95 * mm, d - 10.5 * mm),  # boot cone
+        (bushing_r - 2.75 * mm, d),            # tail
+    ]
+    colours = [BLACK, BLACK, NICKEL, NICKEL, NICKEL, BLACK, BLACK, BLACK]
+    body = Body("xlr-male-plug")
+    revolve(body, profile, colours, XLR_SEGMENTS, cap_first=True, cap_last=True)
+    for px, py in xlr_pins_mm(pins):
+        cylinder_between(body.bm, g2b(px * mm, py * mm, bore_depth + 1.0 * mm), g2b(px * mm, py * mm, bore_depth - 10.5 * mm), 0.8 * mm, segments=8)
+    body.done(GOLD)
     return body.finish()
 
 
@@ -911,13 +958,13 @@ ARM_DEFAULTS_MM = {"elbowDxMm": 157.0, "elbowDyMm": 370.0, "headDxMm": 326.0, "h
 ARM_MAX_SCALE_ERROR = 0.02    # the natural size of the pose may differ this much from the spec size before the spec numbers must be corrected
 
 
-def cylinder_between(bm: bmesh.types.BMesh, a: Vector, b: Vector, radius: float, radius_b: float | None = None) -> None:
+def cylinder_between(bm: bmesh.types.BMesh, a: Vector, b: Vector, radius: float, radius_b: float | None = None, segments: int = ARM_SEGMENTS) -> None:
     """A closed solid cylinder (or cone) from point a to point b (Blender space), flat caps, ARM_SEGMENTS sides."""
     axis = b - a
     if axis.length < 1e-9:
         raise BuildError("a boom-arm part has zero length")
     matrix = Matrix.Translation((a + b) / 2.0) @ axis.to_track_quat("Z", "Y").to_matrix().to_4x4()
-    bmesh.ops.create_cone(bm, cap_ends=True, cap_tris=False, segments=ARM_SEGMENTS, radius1=radius, radius2=radius if radius_b is None else radius_b, depth=axis.length, matrix=matrix)
+    bmesh.ops.create_cone(bm, cap_ends=True, cap_tris=False, segments=segments, radius1=radius, radius2=radius if radius_b is None else radius_b, depth=axis.length, matrix=matrix)
 
 
 def build_boom_arm(plan: Plan) -> bpy.types.Object:
@@ -1053,6 +1100,7 @@ SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "console-wedge": build_console_wedge,
     "speaker-cabinet": build_speaker_cabinet,
     "boom-arm": build_boom_arm,
+    "xlr-male-plug": build_xlr_male_plug,
     "cable-assembly": build_cable_assembly,
 }
 

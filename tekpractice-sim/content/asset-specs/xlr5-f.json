@@ -1,0 +1,35 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "xlr5-f",
+  "realSizeMm": {
+    "w": 20.3,
+    "h": 21,
+    "d": 72.5
+  },
+  "mating": {
+    "role": "plug",
+    "outerMm": 15.75
+  },
+  "build": {
+    "shape": "cylinder-plug",
+    "params": {
+      "frontLenMm": 12,
+      "pins": 5
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/media/8223/download/nc3fxx-1.pdf?v=1",
+      "note": "Neutrik NC3FXX dimension drawing ST-NC3FXX (opened, see the xlr3-f spec): length 71.5 - 73.5 mm, shell 19.2 mm, mating front 15.75 mm, latch lug. The NC5FXX (5-pole female DMX cable connector) uses the same housing as the NC3FXX, so the model has the NC3FXX size and shape with five contact holes instead of three: an assumption (the NC5FXX drawing was not opened; retail listings give no dimensions for it)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.adamhall.com/shop/qa-en/cables-connectors/connectors/xlr-connectors/4908/nc5mxx",
+      "note": "Five-pole layout: five contact holes 45 degrees apart on about a 4.6 mm radius over the lower half, key on top; general XLR5 (DMX512) pinout, an estimate. The catalog id xlr5-f matesWith xlr5-m."
+    }
+  ]
+}

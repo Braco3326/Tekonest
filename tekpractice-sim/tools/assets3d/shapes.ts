@@ -9,7 +9,7 @@
 import type { AssetSpecT } from './specSchema'
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -28,7 +28,9 @@ export interface ShapeSpec {
 }
 
 export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
-  'cylinder-plug': { kind: 'connector', params: ['frontLenMm'], needsMatingOuter: true },
+  'cylinder-plug': { kind: 'connector', params: ['frontLenMm', 'pins'], needsMatingOuter: true },
+  // An XLR male cable plug (hollow 19 mm shell with the pins inside): pins = 3 or 5. The mating face is at z = 0 like every connector.
+  'xlr-male-plug': { kind: 'connector', params: ['pins'], needsMatingOuter: false },
   'trs-plug': { kind: 'connector', params: ['barrelMm'], needsMatingOuter: true },
   'rj45-plug': { kind: 'connector', params: [], needsMatingOuter: false },
   'rack-box': { kind: 'device', params: ['chamferMm'], needsMatingOuter: false },

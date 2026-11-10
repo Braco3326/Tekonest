@@ -1,0 +1,34 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "xlr5-m",
+  "realSizeMm": {
+    "w": 20.3,
+    "h": 20.3,
+    "d": 69.6
+  },
+  "mating": {
+    "role": "plug",
+    "outerMm": 19
+  },
+  "build": {
+    "shape": "xlr-male-plug",
+    "params": {
+      "pins": 5
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.adamhall.com/shop/qa-en/cables-connectors/connectors/xlr-connectors/4908/nc5mxx",
+      "note": "Adam Hall listing of the Neutrik NC5MXX (5-pole male XLR cable connector, DMX): diameter 19 mm, length 70.1 mm (a second retailer, Tanotis, quotes 0.75 in / 19 mm and 68.1 - 70.1 mm). The NC5MXX uses the same housing as the NC3MXX, so the box is the NC3MXX box (20.3 x 20.3 x 69.6 mm, the manufacturer STEP bounding box of the NC3MXX): an assumption, the NC5MXX drawing itself was not opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nc3mxx",
+      "note": "Pin layout of the 5-pole plug: an arc of five pins 45 degrees apart on about a 4.6 mm radius over the lower half, the key and latch on top; read from the general XLR5 (DMX512, ANSI E1.11) pinout drawing, not measured on a drawing of this connector: an estimate."
+    }
+  ]
+}

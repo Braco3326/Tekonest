@@ -165,6 +165,14 @@ describe('console-wedge (side profile)', () => {
   })
 })
 
+describe('xlr-male-plug and the pins param of cylinder-plug', () => {
+  it('xlr-male-plug is a connector shape with a pins param; cylinder-plug takes pins too, and neither needs a profile', () => {
+    expect(SHAPE_SPECS['xlr-male-plug']).toMatchObject({ kind: 'connector', needsMatingOuter: false })
+    expect([...SHAPE_SPECS['xlr-male-plug'].params]).toEqual(['pins'])
+    expect([...SHAPE_SPECS['cylinder-plug'].params].sort()).toEqual(['frontLenMm', 'pins'])
+  })
+})
+
 describe('boom-arm (articulated mic arm in a posed side view)', () => {
   const device: Partial<AssetSpecT> = { kind: 'device', tier: 'standard', mating: undefined, realSizeMm: { w: 525, h: 543, d: 51 }, ports: [] }
   it('is a device shape that takes the pose and the tube sizes as params, and needs no profile', () => {

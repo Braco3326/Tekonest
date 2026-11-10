@@ -135,6 +135,9 @@ describe('build_from_spec.py registry', () => {
   })
 })
 
+/** Connector ids whose spec and GLB were migrated to the scripted builder in the 2026-11-10 night round (grows with each family). */
+const MIGRATED_CONNECTORS = ['xlr3-m', 'xlr5-m', 'xlr5-f']
+
 describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : 'SKIPPED, Blender not found: install Blender or set BLENDER_EXE'})`, () => {
   let dir = ''
   beforeAll(async () => {
@@ -536,6 +539,15 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     const tip = verts.filter((v) => Math.abs(v[2] - zMin) < 1e-7)
     const columns = new Set(tip.map((v) => Math.round(v[0] * 1e4)))
     expect(columns.size).toBeGreaterThanOrEqual(8) // four plug columns, each with several rim vertices
+  }, 120_000)
+
+  // Connector families migrated on 2026-11-10: each builds at its spec size, mating face at z = 0, inside the 800-triangle connector budget, every gate green.
+  it.skipIf(!BLENDER).each(MIGRATED_CONNECTORS)('%s (migrated connector) builds at its spec size with the mating face at z = 0 and passes every gate', async (id) => {
+    const spec = realSpec(id)
+    const { raw, rawBytes } = await expectBuiltTo(spec, 800)
+    await expectLooks(rawBytes, raw.triangles, 2)
+    expect(Math.abs(raw.bboxM.min[2])).toBeLessThan(1e-6) // the mating face
+    expect(raw.bboxM.max[2]).toBeCloseTo(spec.realSizeMm.d * MM, 5)
   }, 120_000)
 
   it.skipIf(!BLENDER)('a revolve profile with a station above the height is refused with BUILD_FAIL naming the station', async () => {
