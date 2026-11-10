@@ -1,0 +1,391 @@
+{
+ "schema": 1,
+ "deviceId": "axia-iq",
+ "topProfile": [
+  [
+   0,
+   111.2
+  ],
+  [
+   45,
+   111.2
+  ],
+  [
+   70,
+   82
+  ],
+  [
+   300,
+   74
+  ],
+  [
+   430,
+   66
+  ],
+  [
+   482.9,
+   56
+  ]
+ ],
+ "controls": [
+  {
+   "repeat": {
+    "count": 8,
+    "dxMm": 42.46,
+    "dyMm": 0,
+    "idFormat": "fader-{n}"
+   },
+   "kind": "fader",
+   "face": "top",
+   "xMm": 68.8,
+   "yMm": 231.2,
+   "axis": "y",
+   "travelMm": 112,
+   "default": 0.8,
+   "taper": "broadcast-db",
+   "slot": true,
+   "slotMm": {
+    "w": 21,
+    "len": 126
+   },
+   "sizeMm": {
+    "w": 13,
+    "h": 30,
+    "d": 12
+   },
+   "colour": "#2b2d31",
+   "label": "Fader {n}"
+  },
+  {
+   "repeat": {
+    "count": 8,
+    "dxMm": 42.46,
+    "dyMm": 0,
+    "idFormat": "ch{n}-on"
+   },
+   "kind": "button",
+   "face": "top",
+   "xMm": 68.8,
+   "yMm": 154.1,
+   "axis": "z",
+   "default": 1,
+   "latch": true,
+   "group": "ch{n}",
+   "label": "ON",
+   "colour": "#f1f1ee",
+   "lit": "#e5463b",
+   "sizeMm": {
+    "w": 17,
+    "h": 19,
+    "d": 5
+   },
+   "travelMm": 1.2
+  },
+  {
+   "repeat": {
+    "count": 8,
+    "dxMm": 42.46,
+    "dyMm": 0,
+    "idFormat": "ch{n}-off"
+   },
+   "kind": "button",
+   "face": "top",
+   "xMm": 68.8,
+   "yMm": 129.3,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "group": "ch{n}",
+   "label": "OFF",
+   "colour": "#f1f1ee",
+   "lit": "#f1d34a",
+   "sizeMm": {
+    "w": 17,
+    "h": 19,
+    "d": 5
+   },
+   "travelMm": 1.2
+  },
+  {
+   "repeat": {
+    "count": 8,
+    "dxMm": 42.46,
+    "dyMm": 0,
+    "idFormat": "ch{n}-cue"
+   },
+   "kind": "button",
+   "face": "top",
+   "xMm": 79.8,
+   "yMm": 175,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "label": "PRE",
+   "colour": "#f1f1ee",
+   "lit": "#f1d34a",
+   "sizeMm": {
+    "w": 10,
+    "h": 11,
+    "d": 3.5
+   },
+   "travelMm": 1
+  },
+  {
+   "repeat": {
+    "count": 8,
+    "dxMm": 42.46,
+    "dyMm": 0,
+    "idFormat": "ch{n}-pgm1"
+   },
+   "kind": "button",
+   "face": "top",
+   "xMm": 56.6,
+   "yMm": 389.2,
+   "axis": "z",
+   "default": 1,
+   "latch": true,
+   "label": "1",
+   "colour": "#f1f1ee",
+   "lit": "#f1d34a",
+   "sizeMm": {
+    "w": 10,
+    "h": 10,
+    "d": 3.5
+   },
+   "travelMm": 1
+  },
+  {
+   "repeat": {
+    "count": 8,
+    "dxMm": 42.46,
+    "dyMm": 0,
+    "idFormat": "ch{n}-pgm2"
+   },
+   "kind": "button",
+   "face": "top",
+   "xMm": 74.8,
+   "yMm": 389.2,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "label": "2",
+   "colour": "#f1f1ee",
+   "lit": "#f1d34a",
+   "sizeMm": {
+    "w": 10,
+    "h": 10,
+    "d": 3.5
+   },
+   "travelMm": 1
+  },
+  {
+   "repeat": {
+    "count": 8,
+    "dxMm": 42.46,
+    "dyMm": 0,
+    "idFormat": "ch{n}-pgm3"
+   },
+   "kind": "button",
+   "face": "top",
+   "xMm": 56.6,
+   "yMm": 369.6,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "label": "3",
+   "colour": "#f1f1ee",
+   "lit": "#f1d34a",
+   "sizeMm": {
+    "w": 10,
+    "h": 10,
+    "d": 3.5
+   },
+   "travelMm": 1
+  },
+  {
+   "repeat": {
+    "count": 8,
+    "dxMm": 42.46,
+    "dyMm": 0,
+    "idFormat": "ch{n}-phone"
+   },
+   "kind": "button",
+   "face": "top",
+   "xMm": 74.8,
+   "yMm": 369.6,
+   "axis": "z",
+   "default": 0,
+   "latch": true,
+   "label": "PH",
+   "colour": "#f1f1ee",
+   "lit": "#f1d34a",
+   "sizeMm": {
+    "w": 10,
+    "h": 10,
+    "d": 3.5
+   },
+   "travelMm": 1
+  },
+  {
+   "repeat": {
+    "count": 8,
+    "dxMm": 42.46,
+    "dyMm": 0,
+    "idFormat": "ch{n}-encoder"
+   },
+   "kind": "knob",
+   "face": "top",
+   "xMm": 64.6,
+   "yMm": 418,
+   "axis": "z",
+   "default": 0.5,
+   "sweepDeg": 300,
+   "range": {
+    "min": -100,
+    "max": 100,
+    "unit": "%"
+   },
+   "colour": "#16171a",
+   "sizeMm": {
+    "w": 21,
+    "h": 21,
+    "d": 14
+   },
+   "label": "Encoder {n}"
+  },
+  {
+   "id": "headphones-level",
+   "kind": "knob",
+   "face": "top",
+   "xMm": 455.3,
+   "yMm": 141.1,
+   "axis": "z",
+   "default": 0.6,
+   "sweepDeg": 290,
+   "taper": "linear",
+   "range": {
+    "min": -60,
+    "max": 0,
+    "unit": "dB"
+   },
+   "colour": "#101113",
+   "sizeMm": {
+    "w": 24,
+    "h": 24,
+    "d": 16
+   },
+   "label": "Casque"
+  },
+  {
+   "id": "monitor-level",
+   "kind": "knob",
+   "face": "top",
+   "xMm": 412.2,
+   "yMm": 141.1,
+   "axis": "z",
+   "default": 0.7,
+   "sweepDeg": 290,
+   "taper": "linear",
+   "range": {
+    "min": -60,
+    "max": 0,
+    "unit": "dB"
+   },
+   "colour": "#101113",
+   "sizeMm": {
+    "w": 24,
+    "h": 24,
+    "d": 16
+   },
+   "label": "Monitor"
+  },
+  {
+   "id": "ext-level",
+   "kind": "knob",
+   "face": "top",
+   "xMm": 452.7,
+   "yMm": 198.5,
+   "axis": "z",
+   "default": 0.5,
+   "sweepDeg": 290,
+   "taper": "linear",
+   "range": {
+    "min": -60,
+    "max": 0,
+    "unit": "dB"
+   },
+   "colour": "#101113",
+   "sizeMm": {
+    "w": 24,
+    "h": 24,
+    "d": 16
+   },
+   "label": "Ext"
+  },
+  {
+   "id": "studio-level",
+   "kind": "knob",
+   "face": "top",
+   "xMm": 448.8,
+   "yMm": 322.6,
+   "axis": "z",
+   "default": 0.5,
+   "sweepDeg": 290,
+   "taper": "linear",
+   "range": {
+    "min": -60,
+    "max": 0,
+    "unit": "dB"
+   },
+   "colour": "#101113",
+   "sizeMm": {
+    "w": 24,
+    "h": 24,
+    "d": 16
+   },
+   "label": "Studio"
+  },
+  {
+   "id": "pgm1-meter-l",
+   "kind": "meter",
+   "face": "top",
+   "xMm": 260,
+   "yMm": 30,
+   "axis": "x",
+   "default": 0,
+   "sizeMm": {
+    "w": 300,
+    "h": 5,
+    "d": 1.5
+   },
+   "meter": {
+    "style": "bar",
+    "source": "pgm1-l",
+    "segments": 40,
+    "fromDb": -48,
+    "toDb": 0
+   }
+  },
+  {
+   "id": "pgm1-meter-r",
+   "kind": "meter",
+   "face": "top",
+   "xMm": 260,
+   "yMm": 18,
+   "axis": "x",
+   "default": 0,
+   "sizeMm": {
+    "w": 300,
+    "h": 5,
+    "d": 1.5
+   },
+   "meter": {
+    "style": "bar",
+    "source": "pgm1-r",
+    "segments": 40,
+    "fromDb": -48,
+    "toDb": 0
+   }
+  }
+ ]
+}

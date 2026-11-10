@@ -28,6 +28,8 @@ import { hasModel } from './modelIds'
 import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
+import type { AttachedControls } from '../controls/attach'
+import type { ControlTicker } from '../controls/ticker'
 
 export interface DeviceInstance {
   instanceId: string
@@ -46,6 +48,10 @@ export interface DeviceInstance {
    * the model is not loaded, for a device with no declared front, or when the spawner does not align fronts (legacy). Test hook and proof of L34.
    */
   frontWorld(): [number, number, number] | null
+  /** The hands-on surface (bank of values + the 3D parts), once built; null for a device with no layout or while the model loads. */
+  controls: AttachedControls | null
+  /** Resolves when the controls are built (null when the device has none). Never rejects. */
+  controlsReady: Promise<AttachedControls | null>
   dispose(): void
 }
 
@@ -115,6 +121,11 @@ export interface DeviceSpawnerOptions {
    * The legacy game never sets it: its models look exactly as before, byte for byte.
    */
   alignFront?: boolean
+  /**
+   * Mode Création: give a pipeline model that has a control layout (content/control-layouts) its hands-on surface (faders, knobs,
+   * buttons, meters) and register its meters with this ticker. Absent = no controls are built (the legacy game never has them).
+   */
+  controlTicker?: ControlTicker
 }
 
 /** A port marker's own diameter (m): its cylinder at scale 1. */
@@ -265,7 +276,16 @@ export class DeviceSpawner {
       // fully-formed before tryLoadModel can flip assetStatus.
       modelReady: Promise.resolve(false),
       frontWorld: () => null,
-      dispose: () => root.dispose(false, true),
+      controls: null,
+      controlsReady: Promise.resolve(null),
+      dispose: () => {
+        if (instance.controls) {
+          this.options.controlTicker?.remove(instance.controls.rig)
+          instance.controls.rig.dispose()
+          instance.controls = null
+        }
+        root.dispose(false, true)
+      },
     }
 
     // Async .glb replacement — assets NEVER block gameplay: the placeholder is
@@ -356,6 +376,25 @@ export class DeviceSpawner {
             const node = this.portEmpty(glbRoot, c.controlId, 'ctrl_')
             if (node) instance.controlNodes.set(c.controlId, node)
           }
+        // Hands-on surface (interactive controls): own chunk, built after the model so the parts sit on the real casing.
+        if (extras && this.options.controlTicker) {
+          const ticker = this.options.controlTicker
+          instance.controlsReady = import('../controls/attach')
+            .then((m) => m.attachControls(deviceId, instanceId, this.scene, root, extras.realSizeMm, ticker))
+            .then((c) => {
+              if (c && root.isDisposed()) {
+                ticker.remove(c.rig)
+                c.rig.dispose()
+                return null
+              }
+              instance.controls = c
+              return c
+            })
+            .catch((e: unknown) => {
+              console.warn(`[controls] ${deviceId}: not built`, e)
+              return null
+            })
+        }
 
         // THIS instance's box: a global name lookup could hit a respawned twin with the same id.
         root.getChildMeshes(true, (n) => n.name === `box:${instanceId}`)[0]?.setEnabled(false)

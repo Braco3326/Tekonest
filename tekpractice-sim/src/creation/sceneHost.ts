@@ -49,6 +49,8 @@ import { placeFromKey, placeKey, type PlaceRef } from './places'
 import { blankData, loadPlaceData, type PlaceData } from './placeData'
 import { CREATION_TOKENS } from '../design/creationTokens'
 import { PortProxies, type PortMark } from './portProxies'
+import { ControlTicker } from '../controls/ticker'
+import { ControlController } from './controlController'
 import { CABLE_HIT_PX, nearestCable, type Pt } from './cablePick'
 import { cableColor, cableDash, connectionSignal, portInfoOf, type PortInfo } from './cableStyle'
 import type { RoomTheme } from '../scene/RoomBuilder'
@@ -126,6 +128,8 @@ export class SceneHost {
   private _place: PlaceRef | null = null
   private orbitInput: DesignerOrbitPointersInput | null = null
   private spawner: DeviceSpawner | null = null
+  /** Steps the live meters of the devices in the scene (own loop, only while one has a meter). */
+  private controlTicker: ControlTicker | null = null
   private cables: CableRenderer | null = null
   private instances = new Map<string, DeviceInstance>()
   /** Scene plumbing (render loop, input invalidation): disposed after the scene's own objects. */
@@ -848,6 +852,8 @@ export class SceneHost {
     this.ghost = null // its meshes go with the scene; its materials are shared with the spawner's
     this.controllers?.dispose()
     this.cables?.dispose()
+    this.controlTicker?.dispose()
+    this.controlTicker = null
     for (const inst of this.instances.values()) inst.dispose()
     this.instances.clear()
     this._rig?.dispose()
@@ -959,12 +965,18 @@ export class SceneHost {
     const bag = new DisposableBag()
     this.bag = bag
     this.controllers = new DisposableBag()
-    this.spawner = new DeviceSpawner(scene, this.registry, CREATION_DEVICE_THEME, { alignFront: true })
+    this.controlTicker = new ControlTicker(() => this.scheduler.invalidate())
+    this.spawner = new DeviceSpawner(scene, this.registry, CREATION_DEVICE_THEME, { alignFront: true, controlTicker: this.controlTicker })
     // Disposed first with the place's other controllers (its camera observer goes before the camera does).
     this.proxies = new PortProxies(
       { scene, camera, canvas: this.canvas, instance: (id) => this.instances.get(id), instances: () => this.instances.values(), selected: () => this.selected },
       this.controllers,
       () => this.notifyView()
+    )
+    // Hands-on controls of the selected device (faders, knobs, keys): own pointer layer, disposed with the place's controllers.
+    new ControlController(
+      { scene, camera, canvas: this.canvas, instance: (id) => this.instances.get(id), selected: () => this.selected, invalidate: () => this.scheduler.invalidate() },
+      this.controllers
     )
     this.cables = new CableRenderer(scene, undefined, {
       pulses: false,
