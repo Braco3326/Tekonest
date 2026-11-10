@@ -53,5 +53,15 @@
       "url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_scoopy%2Bs.pdf",
       "note": "Figure 9 (left side panel photo as seen by the operator, 1075x375). Body depth 234 mm over about 1030 px, so 4.4 px/mm; the rear edge is at the left of the photo. As the io face is the rear, this operator-left side is the 'right' face (seen from behind it is on the right) and its x runs from the rear (io) edge towards the front, which matches the photo. in-mic = INPUT 1 XLR female (x 133.2, y 22.3); out-headphone = headphone socket 1, 6.35 mm jack (x 181, y 20.5). +/- 5 mm (the photo is slightly perspective). openingMm 24 is the standard D-size XLR cutout; the measured bezel is about 23 mm."
     }
-  ]
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 4
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ]
+  }
 }
