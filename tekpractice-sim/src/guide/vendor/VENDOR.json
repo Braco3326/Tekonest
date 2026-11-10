@@ -1,0 +1,103 @@
+{
+  "sourceCommit": "3d003575215497b100bdc9fb186ad2e441276d1d",
+  "tool": 1,
+  "typescript": "5.9.3",
+  "files": [
+    {
+      "path": "content/strings.fr.ts",
+      "sha256": "2fd02c2c5e9904b5037fe1fa1a5abdb5ca890b6e111d004daf9dcd52aba67d0c"
+    },
+    {
+      "path": "core/brain.ts",
+      "sha256": "674baf01f36a749188b6ebc875ff3c806c04992e150ce421fceb0d48894d8348"
+    },
+    {
+      "path": "core/controller.ts",
+      "sha256": "445ff90accc10987b1d8b5d8003ffcacfa95916c0a6e1f9d1fbd1ca34f2670de"
+    },
+    {
+      "path": "core/course.ts",
+      "sha256": "c101273314b52f02bb5af8442c93f1171dec463ff76b7efa02fb91e6e6995c5a"
+    },
+    {
+      "path": "core/flow.ts",
+      "sha256": "8ecaf60ca85e220b4bb0ca85aafed8c0969887674a08be15270fd07124f34da6"
+    },
+    {
+      "path": "core/guard.ts",
+      "sha256": "d30229eaf28bdffc1d3a8eb810ba322bd1273a235d7f609afa8f2868a2114604"
+    },
+    {
+      "path": "core/hints.ts",
+      "sha256": "ce71aaf945c85f8a291afd7a048f2262a04b50dfbcd515e2aee3c1347337ef6c"
+    },
+    {
+      "path": "core/motion.ts",
+      "sha256": "26b0a2daed418b342363c58642cca23f6274a017947fc0e875b36f3988ee188a"
+    },
+    {
+      "path": "core/planner.ts",
+      "sha256": "f4c6608d45e7dbd4aadbdc4c305798e7a64a91cead26949366d7b75d2aeb8b48"
+    },
+    {
+      "path": "core/router.ts",
+      "sha256": "454cf9eec3a9c7612d1e57098871b1a434c374084b72652992e36f8a64b7f861"
+    },
+    {
+      "path": "core/shape.ts",
+      "sha256": "32bbfbfcbd5f460c5c6ab4607b1ab6dcc58f65fd65342093a10da0fb72ecfb95"
+    },
+    {
+      "path": "core/types.ts",
+      "sha256": "da19b964a2383790ecc4c796806876dd85f4f8c582ece21531d8a4c7f1ce2377"
+    },
+    {
+      "path": "guide.css",
+      "sha256": "651dcfe7f586387038d5f2a2e9a23901bb33c84b30a229f085fdba165625c396"
+    },
+    {
+      "path": "hostTypes.ts",
+      "sha256": "341a9e1ece6ea35605e114222e8253f82daafe00203f316f4de3caf890a5da66"
+    },
+    {
+      "path": "ui/anim.ts",
+      "sha256": "25da1c887d1fe1cd41000409647c636db9eecea21b6eda2a131828818d2c110f"
+    },
+    {
+      "path": "ui/bubble.ts",
+      "sha256": "05c9775c9900b53e5bfd6c91c232beab50a0651d56b6eeedcd96b65f45764b24"
+    },
+    {
+      "path": "ui/dom.ts",
+      "sha256": "439007af492477c6f2749d7aa21b41fa97c7808a2d089cdaa9043798d49a54aa"
+    },
+    {
+      "path": "ui/drag.ts",
+      "sha256": "2258210c03b997b874f4cc790651c91a8a0b709a4aee45ce345764260def6917"
+    },
+    {
+      "path": "ui/labels.ts",
+      "sha256": "7ab8f3c78892585e3ab0283e6ffa63af6532db8225db649b8bcec2466d164cf6"
+    },
+    {
+      "path": "ui/layout.ts",
+      "sha256": "65c8a24088f1b4e234fba94f9517c653c37fb08b6fb6aef1b1e3e90d09149649"
+    },
+    {
+      "path": "ui/mascot.ts",
+      "sha256": "61f8b738d21bc756070f326163b1e5b59048118ce00191c44d8a728637880b54"
+    },
+    {
+      "path": "ui/overlay.ts",
+      "sha256": "400b7eddd779249b6d8ec41b39fd6c35e177d12fbe33cb1d97dda67b580dfd4f"
+    },
+    {
+      "path": "ui/watch.ts",
+      "sha256": "fc5104590a914f8ddee3484b6f7cf64ba385e4bf5383385e43240bf90ed3b983"
+    },
+    {
+      "path": "ui/widget.ts",
+      "sha256": "9e54737cdf8150aa53d8108b6df9e60f0c0335eb04a1d69810e4887678652b27"
+    }
+  ]
+}
