@@ -39,6 +39,16 @@ const rows: Row[] = [
   ['level with a trailing space is exam', '?level=a1%20', 'legacy', 'exam'],
   ['level with a plus sign for space is exam', '?level=+a1', 'legacy', 'exam'],
   ['level with a trailing newline is exam', '?level=a1%0A', 'legacy', 'exam'],
+  ['creation with an upper-case MODE key is exam', '?MODE=exam', 'creation', 'exam'],
+  ['creation with a mixed-case Mode key is exam', '?Mode=practice', 'creation', 'exam'],
+  ['creation with a percent-encoded mode key is exam', '?%6Dode=exam', 'creation', 'exam'],
+  ['creation with a duplicated empty then exam mode key is exam', '?mode=&mode=exam', 'creation', 'exam'],
+  ['legacy with an upper-case MODE key is exam', '?level=a1&MODE=exam', 'legacy', 'exam'],
+  ['legacy with a percent-encoded mode key is exam', '?level=a1&%6Dode=exam', 'legacy', 'exam'],
+  ['legacy with a duplicated empty then exam mode key is exam', '?level=a1&mode=&mode=exam', 'legacy', 'exam'],
+  ['legacy level written with a percent-encoded digit decodes to a1 and is practice', '?level=a%31', 'legacy', 'practice'],
+  ['creation with a legacy key is exam', '?legacy=1', 'creation', 'exam'],
+  ['creation with a level key is exam', '?level=a1', 'creation', 'exam'],
 ]
 
 describe('guideMode', () => {
@@ -51,8 +61,12 @@ describe('guideMode', () => {
     expect(guideMode('level=a1&mode=exam', 'legacy')).toBe('exam')
   })
 
-  it('a creation level parameter does not matter, a legacy mode parameter always matters', () => {
-    expect(guideMode('?level=a1', 'creation')).toBe('practice')
+  it('a creation route that carries a level or legacy key is exam, a mode key always matters', () => {
+    expect(guideMode('?level=a1', 'creation')).toBe('exam')
+    expect(guideMode('?level=sandbox', 'creation')).toBe('exam')
+    expect(guideMode('?legacy=1', 'creation')).toBe('exam')
+    expect(guideMode('?LEVEL=a1', 'creation')).toBe('exam')
+    expect(guideMode('?%6Cevel=a1', 'creation')).toBe('exam')
     expect(guideMode('?level=a1&mode=exam', 'creation')).toBe('exam')
   })
 
@@ -110,6 +124,25 @@ describe('guideEnabled', () => {
     expect(guideEnabled('', off)).toBe(false)
     expect(guideEnabled('?oscar=1', off)).toBe(false)
     expect(guideEnabled('?oscar=0', off)).toBe(false)
+  })
+
+  it('is false when any oscar parameter is 0, whatever the order or the case of the key', () => {
+    expect(guideEnabled('?oscar=1&oscar=0')).toBe(false)
+    expect(guideEnabled('?oscar=0&oscar=1')).toBe(false)
+    expect(guideEnabled('?OSCAR=0')).toBe(false)
+    expect(guideEnabled('?Oscar=0')).toBe(false)
+    expect(guideEnabled('?%6Fscar=0')).toBe(false)
+    expect(guideEnabled('?oscar=1&OSCAR=0')).toBe(false)
+  })
+
+  it('a missing or non-string search never throws and follows the flag alone', () => {
+    const on = { levels: false, guide: true }
+    const off = { levels: false, guide: false }
+    for (const s of [undefined, null, 0, {}, []] as unknown[]) {
+      expect(() => guideEnabled(s as string)).not.toThrow()
+      expect(guideEnabled(s as string, on)).toBe(true)
+      expect(guideEnabled(s as string, off)).toBe(false)
+    }
   })
 
   it('is true when features.guide is true and the query does not switch it off', () => {

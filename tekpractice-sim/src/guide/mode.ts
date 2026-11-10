@@ -16,8 +16,15 @@ function parse(search: unknown): URLSearchParams | null {
   }
 }
 
+/** The decoded keys of the query, lower-cased (so MODE, Mode and %6Dode all read as mode). */
+function lowerKeys(params: URLSearchParams): Set<string> {
+  const out = new Set<string>()
+  for (const k of params.keys()) out.add(k.toLowerCase())
+  return out
+}
+
 /**
- * "practice" only for (a) the creation route with no `mode` parameter at all, and (b) the legacy route
+ * "practice" only for (a) the creation route with no `mode`, `level` or `legacy` parameter at all, and (b) the legacy route
  * with `level` exactly one of a1, b1, c1, d1 (case-sensitive, no whitespace) and no `mode` parameter.
  * Every other input, including any `mode` value (even empty) and unparsable input, is "exam".
  */
@@ -25,8 +32,9 @@ export function guideMode(search: string, route: GuideRoute): GuideMode {
   try {
     const params = parse(search)
     if (!params) return 'exam'
-    if (params.has('mode')) return 'exam'
-    if (route === 'creation') return 'practice'
+    const keys = lowerKeys(params)
+    if (keys.has('mode')) return 'exam'
+    if (route === 'creation') return keys.has('level') || keys.has('legacy') ? 'exam' : 'practice'
     if (route === 'legacy') {
       const levels = params.getAll('level')
       return levels.length === 1 && PRACTICE_LEVELS.includes(levels[0]) ? 'practice' : 'exam'
@@ -37,9 +45,15 @@ export function guideMode(search: string, route: GuideRoute): GuideMode {
   }
 }
 
-/** False when the flag is off or the query carries `oscar=0`. */
+/** False when the flag is off or any `oscar` parameter (any key case) is 0. A missing search follows the flag alone. */
 export function guideEnabled(search: string, features: Features = FEATURES): boolean {
   if (!features.guide) return false
-  const params = parse(search)
-  return !(params && params.get('oscar') === '0')
+  try {
+    const params = parse(search)
+    if (!params) return true
+    for (const [k, v] of params) if (k.toLowerCase() === 'oscar' && v === '0') return false
+    return true
+  } catch {
+    return true
+  }
 }
