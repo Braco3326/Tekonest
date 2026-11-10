@@ -1,5 +1,7 @@
 // The guide's own words in TekPractice: one frozen table of impersonal French (infinitives and nominal forms, no digit).
 // Rule titles and explanations are never written here: they are quoted from the app's catalog through ruleTextFor.
+// Words follow the app's own (« lieu », « Signal OK », « Erreurs et avertissements », « Lecture »). Apostrophes are ’, except in the one
+// pinned sentence `ask.noInformation`, which keeps the straight apostrophes of the sentence as it was specified.
 
 function deepFreeze<T>(node: T): T {
   if (node !== null && typeof node === 'object') {
@@ -12,51 +14,51 @@ function deepFreeze<T>(node: T): T {
 export const TP_STRINGS = deepFreeze({
   verdict: {
     /** The app is not ready yet (no state to read). */
-    nothingToJudge: "Rien à vérifier pour le moment : le plan de travail n'est pas encore prêt.",
-    benchEmpty: "Le plan de travail est vide. Ajouter un premier appareil pour commencer.",
-    placeFirst: "Aucun lieu n'est encore choisi. Choisir d'abord un lieu, puis ajouter des appareils.",
+    nothingToJudge: 'Rien à vérifier pour le moment : le lieu n’est pas encore prêt.',
+    benchEmpty: 'Le lieu est vide. Ajouter un premier appareil pour commencer.',
+    placeFirst: 'Aucun lieu n’est encore choisi. Choisir d’abord un lieu, puis ajouter des appareils.',
     /** Said only when the signal can play and the app lists no error: the scope is what the app itself checks. */
-    allGood: "Lecture possible : aucune erreur détectée par l'application. Cette vérification ne couvre que les contrôles de l'application.",
+    allGood: 'Lecture possible : aucune erreur détectée par l’application. Cette vérification ne couvre que les contrôles de l’application.',
     /** No error, not playable, and the signal path gave no reason. */
-    notYet: "Aucune erreur détectée pour le moment, mais le signal ne peut pas encore être lu. Continuer le montage.",
+    notYet: 'Aucune erreur détectée pour le moment, mais le signal ne peut pas encore être lu. Continuer le montage.',
     /** Last resort when a rule has no readable title. */
-    toFix: "Une correction est à apporter.",
+    toFix: 'Une correction est à apporter.',
   },
   ask: {
     noInformation: "Je n'ai pas encore d'information sur ce point.",
-    examQuiet: "Cette aide n'est pas disponible pendant un examen.",
+    examQuiet: 'Cette aide n’est pas disponible pendant un examen.',
   },
   error: {
-    calm: "La réponse n'a pas pu être affichée. Réessayer dans un instant.",
+    calm: 'La réponse n’a pas pu être affichée. Réessayer dans un instant.',
   },
   flows: {
     'premier-montage': {
       title: 'Premier montage',
       steps: {
         place: 'Choisir un lieu pour commencer.',
-        addFirst: 'Ajouter un premier appareil sur le plan de travail.',
+        addFirst: 'Ajouter un premier appareil dans le lieu.',
         addSecond: 'Ajouter un deuxième appareil à côté du premier.',
-        connect: "Relier les deux appareils avec un câble, d'une sortie vers une entrée.",
-        status: "Lire la barre d'état en bas de l'écran pour voir ce que dit l'application du montage.",
+        connect: 'Relier les deux appareils avec un câble, d’une sortie vers une entrée.',
+        status: 'Lire la barre d’état en bas de l’écran : elle indique « Signal OK » ou la liste « Erreurs et avertissements ».',
       },
     },
     'alimentation-fantome': {
       title: 'Alimentation fantôme',
       steps: {
-        pickMic: 'Sélectionner le micro concerné sur le plan de travail.',
-        findConsole: "Repérer la console reliée à ce micro et l'ouvrir.",
-        findControl: "Repérer la commande d'alimentation fantôme de la voie du micro.",
+        pickMic: 'Sélectionner le micro concerné dans le lieu.',
+        findConsole: 'Repérer la console reliée à ce micro et l’ouvrir.',
+        findControl: 'Repérer la commande d’alimentation fantôme de la voie du micro.',
         toggle: 'Basculer cette commande.',
-        status: "Relire la barre d'état pour voir si le montage a changé.",
+        status: 'Relire la barre d’état pour voir si le montage a changé.',
       },
     },
     'lire-le-statut': {
-      title: "Lire la barre d'état",
+      title: 'Lire la barre d’état',
       steps: {
-        open: "Repérer la barre d'état en bas de l'écran.",
-        signal: "Lire la ligne du signal : elle indique s'il y a des erreurs ou non.",
-        list: "Ouvrir la liste des erreurs, puis lire le titre et l'explication de la première.",
-        playback: "Lire la ligne de lecture : elle donne la première raison qui empêche d'entendre le signal.",
+        open: 'Repérer la barre d’état en bas de l’écran.',
+        signal: 'Lire le signal dans la barre d’état : « Signal OK », « Rien de branché » ou « Aucune erreur détectée ».',
+        list: 'Ouvrir la liste « Erreurs et avertissements », puis lire le titre et l’explication de la première.',
+        playback: 'Lire la ligne « Lecture » : elle donne « Lecture possible » ou la première raison qui empêche de lire le signal.',
       },
     },
   },

@@ -1,5 +1,5 @@
 // The guide's verdict, built only from the app's own data: its rule events, the catalog's rule texts (through ruleTextFor) and the
-// signal path's first reason. Nothing here is invented: a fix is the catalog's explanation verbatim, or empty.
+// signal path's first reason. Nothing here is invented: a fix is the catalog's explanation verbatim (or, when a rule has none, the app's own title text).
 import type { RuleText } from '../creation/shell/statusModel'
 import { stateHash } from './bridge/creationBridge'
 import type { TpPortRef, TpState } from './bridge/types'
@@ -49,16 +49,18 @@ export function buildVerdict(state: TpState, ruleText: RuleText): Verdict {
 
   if (first !== undefined) {
     const t = textOf(ruleText, first.ruleId)
+    // A rule with no explanation (an id missing from the catalog) is shown by its title alone: the fix is that same text, never a made-up one.
+    const cause = t.title !== '' ? t.title : TP_STRINGS.verdict.toFix
     return {
       ...base,
       result: 'a-corriger',
-      labelFr: t.title !== '' ? t.title : TP_STRINGS.verdict.toFix,
+      labelFr: cause,
       reason: 'setup-error',
       primary: {
         ruleId: first.ruleId,
         subjects: copyRefs(first.subjects),
-        causeFr: t.title !== '' ? t.title : TP_STRINGS.verdict.toFix,
-        fixFr: t.detail,
+        causeFr: cause,
+        fixFr: t.detail !== '' ? t.detail : cause,
         factIds: [],
       },
       alsoFound: state.events.filter((_, i) => i !== firstAt).map((e) => ({ ruleId: e.ruleId, subjects: copyRefs(e.subjects) })),

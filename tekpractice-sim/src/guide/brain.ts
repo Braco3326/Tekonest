@@ -11,9 +11,8 @@ import type { Verdict } from './vendor/hostTypes'
 const BADGE = 'À vérifier (non signé)'
 /** A question longer than this is cut before anything reads it. */
 const MAX_QUESTION_CHARS = 2000
-/** A word shorter than this never counts, and a lone word must be at least this long to find a rule on its own. */
+/** A word shorter than this never counts. */
 const MIN_WORD = 3
-const MIN_LONE_WORD = 6
 
 // Words that say nothing about a rule (already folded: no accent, lower case).
 const STOP = new Set(
@@ -37,53 +36,52 @@ function wordsOf(text: string): Set<string> {
   return out
 }
 
-interface Hit {
+interface Candidate {
   row: RuleRow
-  /** Distinct question words found in the rule's text. */
-  matched: number
-  /** A word found in the title counts double. */
+  /** Question words found in the rule's title, plus those found anywhere in its text: a title hit counts twice. */
   score: number
+  titleHits: number
 }
 
-/** The rule a question is about, or null. At least two distinct words must match, or one long word found in exactly one title. */
+/**
+ * The rule a question is about, or null (a refusal is better than a guess).
+ *  - Only words that occur in some rule's text count ("known" words); the rest of the question is ignored.
+ *  - A lone known word finds a rule only if it occurs in exactly one rule's whole text (title and explanation).
+ *  - With several known words, a rule needs at least two of them, at least one that occurs in no other rule, and either one hit in its title
+ *    or three overlaps. Of two rules that tie, the one with strictly more title hits wins; otherwise nothing is answered.
+ */
 function findRule(question: string, rules: readonly RuleRow[]): RuleRow | null {
   const q = wordsOf(question)
   if (q.size === 0) return null
   const indexed = Array.from(rules, (row) => {
     const usable = row !== null && typeof row === 'object' && typeof row.title_fr === 'string' && row.title_fr !== ''
-    return {
-      row,
-      title: usable ? wordsOf(row.title_fr as string) : new Set<string>(),
-      teach: usable && typeof row.teach_fr === 'string' ? wordsOf(row.teach_fr) : new Set<string>(),
-      usable,
-    }
+    const title = usable ? wordsOf(row.title_fr as string) : new Set<string>()
+    const teach = usable && typeof row.teach_fr === 'string' ? wordsOf(row.teach_fr) : new Set<string>()
+    return { row, title, all: new Set<string>([...title, ...teach]), usable }
   }).filter((r) => r.usable)
 
-  let best: Hit | null = null
-  for (const r of indexed) {
-    let matched = 0
-    let score = 0
-    for (const w of q) {
-      if (r.title.has(w)) {
-        matched += 1
-        score += 2
-      } else if (r.teach.has(w)) {
-        matched += 1
-        score += 1
-      }
-    }
-    if (matched >= 2 && (best === null || score > best.score)) best = { row: r.row, matched, score }
-  }
-  if (best !== null) return best.row
+  const rulesWith = new Map<string, number>()
+  for (const r of indexed) for (const w of r.all) rulesWith.set(w, (rulesWith.get(w) ?? 0) + 1)
+  const known = [...q].filter((w) => rulesWith.has(w))
+  if (known.length === 0) return null
 
-  if (q.size === 1) {
-    const word = [...q][0] as string
-    if (word.length >= MIN_LONE_WORD) {
-      const inTitle = indexed.filter((r) => r.title.has(word))
-      if (inTitle.length === 1) return (inTitle[0] as (typeof indexed)[number]).row
-    }
+  if (known.length === 1) {
+    const word = known[0] as string
+    return rulesWith.get(word) === 1 ? ((indexed.find((r) => r.all.has(word)) as (typeof indexed)[number]).row) : null
   }
-  return null
+
+  const found: Candidate[] = []
+  for (const r of indexed) {
+    const overlaps = known.filter((w) => r.all.has(w))
+    const titleHits = overlaps.filter((w) => r.title.has(w)).length
+    const distinctive = overlaps.some((w) => rulesWith.get(w) === 1)
+    if (overlaps.length >= 2 && distinctive && (titleHits >= 1 || overlaps.length >= 3)) found.push({ row: r.row, score: overlaps.length + titleHits, titleHits })
+  }
+  found.sort((a, b) => b.score - a.score || b.titleHits - a.titleHits)
+  const [top, next] = found
+  if (top === undefined) return null
+  if (next !== undefined && next.score === top.score && next.titleHits === top.titleHits) return null
+  return top.row
 }
 
 const reply = (kind: BrainReply['kind'], text: string, lines: BrainReply['lines'] = []): BrainReply => ({ kind, text, lines, verdict: null })

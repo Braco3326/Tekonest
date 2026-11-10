@@ -120,7 +120,7 @@ describe('buildVerdict: errors', () => {
     expect(v.result).toBe('bon')
   })
 
-  it("a rule id absent from the catalog degrades to the app's unknown-rule text with an empty fix, no throw", () => {
+  it("a rule id absent from the catalog degrades to the app's unknown-rule text, which also stands for the fix (no blank bubble, nothing invented), no throw", () => {
     let v: ReturnType<typeof buildVerdict> | undefined
     expect(() => {
       v = buildVerdict(state({ events: [{ ruleId: 'R99', severity: 'error', subjects: [P1] }] }), ruleText)
@@ -128,7 +128,15 @@ describe('buildVerdict: errors', () => {
     expect(v!.result).toBe('a-corriger')
     expect(v!.primary!.causeFr).toBe(ruleText('R99').title)
     expect(v!.primary!.causeFr).not.toBe('')
-    expect(v!.primary!.fixFr).toBe('')
+    expect(ruleText('R99').detail).toBe('')
+    expect(v!.primary!.fixFr).toBe(ruleText('R99').title)
+  })
+
+  it('a rule with a title but no explanation: the fix is the title again, never a made-up sentence', () => {
+    const rt = ruleTextFor([{ id: 'X1', title: 'e', teach: 'e', title_fr: 'Règle sans explication', teach_fr: '' }])
+    const v = buildVerdict(state({ events: [{ ruleId: 'X1', severity: 'error', subjects: [P1] }] }), rt)
+    expect(v.primary!.causeFr).toBe('Règle sans explication')
+    expect(v.primary!.fixFr).toBe('Règle sans explication')
   })
 
   it('an error with no subject keeps an empty subject list', () => {
@@ -136,13 +144,13 @@ describe('buildVerdict: errors', () => {
     expect(v.primary!.subjects).toEqual([])
   })
 
-  it('a rule text lookup that throws gives a calm a-corriger with an empty fix, never an invented one', () => {
+  it('a rule text lookup that throws gives a calm a-corriger whose fix repeats the calm sentence, never an invented one', () => {
     const boom = (): { title: string; detail: string } => {
       throw new Error('catalog gone')
     }
     const v = buildVerdict(state({ events: [{ ruleId: 'R4', severity: 'error', subjects: [P1] }] }), boom)
     expect(v.result).toBe('a-corriger')
-    expect(v.primary!.fixFr).toBe('')
+    expect(v.primary!.fixFr).toBe(TP_STRINGS.verdict.toFix)
     expect(v.primary!.causeFr).toBe(TP_STRINGS.verdict.toFix)
   })
 

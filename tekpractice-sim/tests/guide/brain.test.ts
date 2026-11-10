@@ -84,6 +84,15 @@ describe('exam mode', () => {
     expect(bridge.snapshot).toHaveBeenCalledTimes(1)
   })
 
+  it('a mode getter that returns a non-string (number, object, null, undefined, array) is exam too', async () => {
+    for (const odd of [1, 0, {}, { toString: () => 'practice' }, ['practice'], null, undefined, true]) {
+      const { brain, bridge } = brainWith({ mode: () => odd as unknown as 'practice' })
+      expect(await brain.judge(SETUP, 'practice'), String(odd)).toEqual({ verdict: null, needInfo: null, withheld: true })
+      expect((await ask(brain, 'alimentation fantôme')).kind, String(odd)).toBe('withheld')
+      expect(bridge.snapshot).not.toHaveBeenCalled()
+    }
+  })
+
   it('a mode getter that throws is exam too', async () => {
     const { brain, bridge } = brainWith({
       mode: () => {
@@ -135,9 +144,70 @@ describe('ask', () => {
     expect((await ask(brain, 'un invité entend sa propre voix en écho')).lines[0]!.text).toContain(ruleText('R7').title)
   })
 
-  it('one distinctive word of a rule title is enough', async () => {
+  it('one distinctive word of a rule is enough', async () => {
     const { brain } = brainWith()
     expect((await ask(brain, 'larsen ?')).lines[0]!.text).toContain(ruleText('R6').title)
+    expect((await ask(brain, 'Qu’est-ce que le larsen sur scène ?')).lines[0]!.text).toContain(ruleText('R6').title)
+    expect((await ask(brain, 'alimentation fantôme')).lines[0]!.text).toContain(ruleText('R4').title)
+    expect((await ask(brain, 'enceintes de studio micro ouvert')).lines[0]!.text).toContain(ruleText('R6').title)
+  })
+
+  it('a generic question is refused, not guessed: a lone word found in several rules, two generic words, other languages, odd input', async () => {
+    const { brain } = brainWith()
+    const vague = [
+      'signal',
+      'signal micro',
+      'micro',
+      'signal ?',
+      'How do I connect a microphone to the mixing desk?',
+      'What is the signal flow',
+      '__proto__',
+      'constructor',
+      'toString hasOwnProperty',
+      '(.*)+',
+      '[[[',
+      '\\',
+      '(?<a>',
+      'comment ça marche',
+      'Comment ça marche ?',
+    ]
+    for (const q of vague) {
+      const r = await ask(brain, q)
+      expect(r.kind, q).toBe('refusal')
+      expect(r.text, q).toBe(NO_INFO)
+      expect(r.lines, q).toEqual([])
+    }
+  })
+
+  it('a lone word is accepted only when it occurs in exactly one rule’s whole text', async () => {
+    const odd: RuleRow[] = [
+      { id: 'A1', title: 'a', teach: 'a', title_fr: 'Réglage du gain', teach_fr: 'Le niveau se règle avec prudence.' },
+      { id: 'A2', title: 'b', teach: 'b', title_fr: 'Réglage du retour', teach_fr: 'Le gain du retour reste bas.' },
+      { id: 'A3', title: 'c', teach: 'c', title_fr: 'Câblage symétrique', teach_fr: 'Deux conducteurs portent le signal.' },
+    ]
+    const { brain } = brainWith({ rules: odd })
+    expect((await ask(brain, 'gain')).kind).toBe('refusal')
+    expect((await ask(brain, 'prudence')).lines[0]!.text).toContain('Réglage du gain')
+    expect((await ask(brain, 'conducteurs')).lines[0]!.text).toContain('Câblage symétrique')
+  })
+
+  it('two rules that tie are not guessed between; strictly more title hits wins', async () => {
+    const twins: RuleRow[] = [
+      { id: 'T1', title: 'a', teach: 'a', title_fr: 'Prise jack', teach_fr: 'Une fiche mono dans une prise.' },
+      { id: 'T2', title: 'b', teach: 'b', title_fr: 'Prise XLR', teach_fr: 'Une fiche trois broches dans une prise.' },
+    ]
+    const { brain } = brainWith({ rules: twins })
+    expect((await ask(brain, 'prise fiche')).kind).toBe('refusal')
+    expect((await ask(brain, 'prise jack xlr')).kind).toBe('refusal')
+    expect((await ask(brain, 'prise jack')).lines[0]!.text).toBe('Prise jack : Une fiche mono dans une prise.')
+
+    const lopsided: RuleRow[] = [
+      { id: 'L1', title: 'a', teach: 'a', title_fr: 'Alpha bravo', teach_fr: 'Charlie golf' },
+      { id: 'L2', title: 'b', teach: 'b', title_fr: 'Delta', teach_fr: 'Alpha bravo charlie echo foxtrot hotel' },
+    ]
+    const { brain: lop } = brainWith({ rules: lopsided })
+    // Same score (six each); the first rule has strictly more title hits.
+    expect((await ask(lop, 'alpha bravo charlie golf echo foxtrot hotel')).lines[0]!.text).toContain('Alpha bravo')
   })
 
   it('a 5,000 character question is cut and answered', async () => {
@@ -262,7 +332,7 @@ describe('judge', () => {
     expect((await empty.brain.judge(SETUP, 'practice')).verdict!.labelFr).toBe(TP_STRINGS.verdict.benchEmpty)
     const missing = brainWith({ bridge: fakeBridge(() => benchState({ events: [{ ruleId: 'R99', severity: 'error', subjects: [] }] })) })
     const bv = await missing.brain.judge(SETUP, 'practice')
-    expect(bv.verdict!.primary!.fixFr).toBe('')
     expect(bv.verdict!.primary!.causeFr).toBe(ruleText('R99').title)
+    expect(bv.verdict!.primary!.fixFr).toBe(ruleText('R99').title)
   })
 })

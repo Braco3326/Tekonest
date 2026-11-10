@@ -41,6 +41,21 @@ describe('TP_STRINGS', () => {
     }
   })
 
+  it('uses the app’s own words: « lieu », never « plan de travail »', () => {
+    for (const { path, value } of all) expect(/plan de travail/i.test(value as string), path).toBe(false)
+    expect(TP_STRINGS.verdict.benchEmpty).toContain('lieu')
+    expect(TP_STRINGS.flows['lire-le-statut'].steps.list).toContain('Erreurs et avertissements')
+    expect(TP_STRINGS.flows['premier-montage'].steps.status).toContain('Signal OK')
+  })
+
+  it('writes every apostrophe as ’ except in the one pinned sentence, which stays byte-identical to the brief', () => {
+    for (const { path, value } of all) {
+      if (path === 'ask.noInformation') continue
+      expect((value as string).includes("'"), path).toBe(false)
+    }
+    expect(TP_STRINGS.ask.noInformation).toBe("Je n'ai pas encore d'information sur ce point.")
+  })
+
   it('is frozen at every level', () => {
     expect(frozenEverywhere(TP_STRINGS)).toBe(true)
     expect(() => {
