@@ -362,3 +362,13 @@ describe('curved-cabinet barrel, foot and body grey', () => {
     expect(validateBuild(cabinet({ bodyGrey: 250 }))[0]).toMatch(/bodyGrey/)
   })
 })
+
+describe('curved-cabinet midWidthMm (a cabinet that tapers from the front)', () => {
+  const device: Partial<AssetSpecT> = { kind: 'device', tier: 'hero', mating: undefined, realSizeMm: { w: 356, h: 602, d: 350 }, ports: [] }
+  const cabinet = (params: Record<string, number>): AssetSpecT => specWith({ shape: 'curved-cabinet', params }, device)
+
+  it('accepts a mid width narrower than the baffle, and refuses it together with sideBulgeMm', () => {
+    expect(validateBuild(cabinet({ planFrontMm: 356, midWidthMm: 346, midDepthMm: 230, rearWidthMm: 168, frontRadiusMm: 30, backRadiusMm: 36, edgeRadiusMm: 18 }))).toEqual([])
+    expect(validateBuild(cabinet({ planFrontMm: 356, midWidthMm: 346, sideBulgeMm: 4 }))[0]).toMatch(/midWidthMm and sideBulgeMm/)
+  })
+})

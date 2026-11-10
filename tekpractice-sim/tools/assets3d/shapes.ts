@@ -70,7 +70,7 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   // A Neutrik etherCON cable connector: an RJ45 head in a round shell with a latch lever.
   'ethercon-plug': { kind: 'connector', params: [], needsMatingOuter: false },
   // A loudspeaker cabinet with a CURVED plan and filleted top and bottom edges (die-cast monitors, moulded PA boxes): a rounded polygon in plan
-  // (baffle corners planFrontMm apart, the sides bulge sideBulgeMm to their widest point midDepthMm behind the baffle, taper to rearWidthMm at the
+  // (baffle corners planFrontMm apart, the sides bulge sideBulgeMm to their widest point midDepthMm behind the baffle (or midWidthMm apart there: a cabinet that tapers from the front), taper to rearWidthMm at the
   // rear; corners rounded by frontRadiusMm, sideRadiusMm and backRadiusMm), extruded with an elliptic fillet of edgeRadiusMm (horizontal) by
   // edgeDropMm (vertical) in edgeSegments steps on the top and the bottom; barrelMm makes the sides a shallow arc in elevation (widest at barrelCentreMm,
   // barrelMm narrower on each side at the farther end of the height); footMm adds a rubber pad (footWidthMm x footDepthMm) under the body, which then starts footMm
@@ -79,7 +79,7 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   // that has an insetMm, as in speaker-cabinet. The builder measures the fillet it built (min of the two radii) for the 'fillet' gate.
   'curved-cabinet': {
     kind: 'device',
-    params: ['planFrontMm', 'sideBulgeMm', 'rearWidthMm', 'midDepthMm', 'frontRadiusMm', 'sideRadiusMm', 'backRadiusMm', 'edgeRadiusMm', 'edgeDropMm', 'edgeSegments', 'crownMm', 'barrelMm', 'barrelCentreMm', 'footMm', 'footWidthMm', 'footDepthMm', 'bodyGrey', 'wooferRingMm', 'wooferYMm', 'tweeterRingMm', 'tweeterYMm', 'ringDepthMm', 'waveguideMm', 'waveguideDepthMm'],
+    params: ['planFrontMm', 'sideBulgeMm', 'midWidthMm', 'rearWidthMm', 'midDepthMm', 'frontRadiusMm', 'sideRadiusMm', 'backRadiusMm', 'edgeRadiusMm', 'edgeDropMm', 'edgeSegments', 'crownMm', 'barrelMm', 'barrelCentreMm', 'footMm', 'footWidthMm', 'footDepthMm', 'bodyGrey', 'wooferRingMm', 'wooferYMm', 'tweeterRingMm', 'tweeterYMm', 'ringDepthMm', 'waveguideMm', 'waveguideDepthMm'],
     needsMatingOuter: false,
     usesPorts: true,
   },
@@ -222,7 +222,8 @@ function validateCurvedCabinet(spec: AssetSpecT): string[] {
   }
   const bulge = p.sideBulgeMm ?? 0
   const front = p.planFrontMm ?? w - 2 * bulge
-  const widest = front + 2 * bulge
+  if (p.midWidthMm !== undefined && p.sideBulgeMm !== undefined) errors.push(`${spec.id}: midWidthMm and sideBulgeMm both set the widest points: give one`)
+  const widest = p.midWidthMm !== undefined ? Math.max(front, p.midWidthMm) : front + 2 * bulge
   if (front > w * (1 + CURVED_WIDTH_SLACK)) errors.push(`${spec.id}: planFrontMm (${front}) cannot be more than ${CURVED_WIDTH_SLACK * 100} % wider than the width ${w} mm`)
   if (Math.abs(widest - w) > w * CURVED_WIDTH_SLACK) errors.push(`${spec.id}: planFrontMm + 2 x sideBulgeMm (${widest}) is more than ${CURVED_WIDTH_SLACK * 100} % away from the width ${w} mm: the final stretch to the exact width would show`)
   if (p.barrelMm !== undefined && p.barrelMm >= w / 4) errors.push(`${spec.id}: barrelMm (${p.barrelMm}) must be less than a quarter of the width (${w / 4} mm)`)

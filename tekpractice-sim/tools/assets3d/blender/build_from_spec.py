@@ -911,7 +911,12 @@ def build_curved_cabinet(plan: Plan) -> bpy.types.Object:
     bulge = opt("sideBulgeMm", 0.0) if "sideBulgeMm" in params else 0.0
     front_w = param_m(plan, "planFrontMm", 0.0) if "planFrontMm" in params else w - 2.0 * bulge
     a = front_w / 2.0
-    b = a + bulge
+    if "midWidthMm" in params:
+        if "sideBulgeMm" in params:
+            raise BuildError("params.midWidthMm and params.sideBulgeMm both set the widest points: give one")
+        b = param_m(plan, "midWidthMm", 0.0) / 2.0   # the widest points may be narrower than the baffle corners: a cabinet that tapers from the front
+    else:
+        b = a + bulge
     c = param_m(plan, "rearWidthMm", 0.0) / 2.0 if "rearWidthMm" in params else b
     crown = param_m(plan, "crownMm", 0.0) if "crownMm" in params else 0.0
     ring_depth = opt("ringDepthMm", CURVED_DEFAULT_RING_MM)
@@ -967,12 +972,17 @@ def build_curved_cabinet(plan: Plan) -> bpy.types.Object:
     # a barrelled wall gets intermediate rings (the arc is sampled in them); a straight wall is one band
     barrel_on = "barrelMm" in params
     wall_steps = 8 if barrel_on else 1
-    wall_mid = [(0.0, foot_h + drop + (h - foot_h - 2.0 * drop) * k / wall_steps) for k in range(1, wall_steps)]
+    wall_lo = foot_h + drop
+    wall_hi = h - drop
+    wall_ys = [wall_lo + (wall_hi - wall_lo) * k / wall_steps for k in range(1, wall_steps)]
+    barrel = param_m(plan, "barrelMm", 0.0) if "barrelMm" in params else 0.0
+    barrel_y = param_m(plan, "barrelCentreMm", 0.0) if "barrelCentreMm" in params else h / 2.0
+    if barrel_on and wall_lo + MM < barrel_y < wall_hi - MM and all(abs(barrel_y - y) > MM for y in wall_ys):
+        wall_ys = sorted(wall_ys + [barrel_y])   # a ring exactly at the widest height, so the cabinet reaches its width
+    wall_mid = [(0.0, y) for y in wall_ys]
     stations = bottom + wall_mid + top
     cache: dict[float, list[tuple[float, float]]] = {}
     rings: list[list[bmesh.types.BMVert]] = []
-    barrel = param_m(plan, "barrelMm", 0.0) if "barrelMm" in params else 0.0
-    barrel_y = param_m(plan, "barrelCentreMm", 0.0) if "barrelCentreMm" in params else h / 2.0
     if barrel >= w / 4.0:
         raise BuildError(f"params.barrelMm ({barrel / MM:.1f}) must be less than a quarter of the width")
     barrel_far = max(barrel_y, h - barrel_y)
@@ -993,7 +1003,7 @@ def build_curved_cabinet(plan: Plan) -> bpy.types.Object:
     bm.faces.new(rings[-1])
 
     # measure what was built: the setback of the top face from the wall, and how far down the wall starts
-    wall_top = rings[segments + wall_steps]
+    wall_top = rings[len(bottom) + len(wall_mid)]
     wall_poly = [(v.co.x, -v.co.y) for v in wall_top]
     cap = [(v.co.x, -v.co.y) for v in rings[-1]]
     horizontal = min(point_to_polygon_distance(p, wall_poly) for p in cap)

@@ -43,6 +43,8 @@ export interface PhotoArg {
 
 /** The most of the picture the border-connected white may cover before it is taken for a white product and left alone. */
 const FILL_MAX_SHARE = 0.4
+/** How many pixels inside the product the fill takes its colour from (its edge pixels are anti-aliased blends with the background). */
+const FILL_EDGE_INSET = 4
 
 const FACES: ProjectionFace[] = ['io', 'opposite', 'top', 'left', 'wrap']
 
@@ -161,8 +163,11 @@ export function fillBorderBackground(data: Buffer, width: number, height: number
     }
     if (first < 0) continue
     rowHasProduct[y] = 1
-    for (let x = 0; x < first; x++) data.copyWithin((y * width + x) * 3, (y * width + first) * 3, (y * width + first) * 3 + 3)
-    for (let x = last + 1; x < width; x++) data.copyWithin((y * width + x) * 3, (y * width + last) * 3, (y * width + last) * 3 + 3)
+    // the colour comes a few pixels inside the product: its anti-aliased edge pixels are blends with the white background and would paint a light fringe
+    const fromLeft = Math.min(first + FILL_EDGE_INSET, last)
+    const fromRight = Math.max(last - FILL_EDGE_INSET, first)
+    for (let x = 0; x < first; x++) data.copyWithin((y * width + x) * 3, (y * width + fromLeft) * 3, (y * width + fromLeft) * 3 + 3)
+    for (let x = last + 1; x < width; x++) data.copyWithin((y * width + x) * 3, (y * width + fromRight) * 3, (y * width + fromRight) * 3 + 3)
   }
   for (let y = 0; y < height; y++) {
     if (rowHasProduct[y] === 1) continue

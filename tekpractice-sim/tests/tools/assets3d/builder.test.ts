@@ -509,6 +509,16 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
       expect(await buildFails({ ...GENELEC, bodyGrey: 300 })).toMatch(/BUILD_FAIL.*bodyGrey/)
     }, 180_000)
 
+    it.skipIf(!BLENDER).each(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12'])('the shipped spec of %s builds as curved-cabinet at its real size inside its declared budget, with its fillet and every gate', async (id) => {
+      const spec = realSpec(id)
+      expect(spec.build?.shape).toBe('curved-cabinet')
+      const { raw, measure, gates } = await expectBuiltTo(spec, 4000)
+      expect(gates.filter((g) => !g.ok)).toEqual([])
+      expect(raw.triangles).toBeGreaterThanOrEqual(spec.build?.budget?.min ?? 1500)
+      expect(raw.triangles).toBeLessThanOrEqual(spec.build?.budget?.max ?? 4000)
+      expect(measure.filletMm).toBeGreaterThanOrEqual(spec.build?.minFilletMm ?? 0)
+    }, 180_000)
+
     it.skipIf(!BLENDER)('raises BuildError for a ring that does not fit the flat baffle', async () => {
       expect(await buildFails({ ...GENELEC, wooferRingMm: 175 })).toMatch(/BUILD_FAIL.*wooferRingMm.*does not fit/)
     }, 180_000)
