@@ -435,5 +435,29 @@
   "ch2-pgm1": {
    "catalogControl": "route-in-line-1-to-out-n1"
   }
+ },
+ "buses": {
+  "mic1": {
+   "ports": [
+    "in-mic-1"
+   ]
+  },
+  "line1": {
+   "ports": [
+    "in-line-1"
+   ]
+  },
+  "pgm1-l": {
+   "follows": [
+    "mic1",
+    "line1"
+   ]
+  },
+  "pgm1-r": {
+   "follows": [
+    "mic1",
+    "line1"
+   ]
+  }
  }
 }

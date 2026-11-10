@@ -51,6 +51,7 @@ import { CREATION_TOKENS } from '../design/creationTokens'
 import { PortProxies, type PortMark } from './portProxies'
 import { ControlTicker } from '../controls/ticker'
 import { screenViewPose } from '../controls/screenView'
+import { busLive } from '../controls/busGraph'
 import { ControlController } from './controlController'
 import { fromCatalog, toCatalog, type CatalogControl } from '../controls/catalogLink'
 import type { ControlDef } from '../controls/controlTypes'
@@ -1191,6 +1192,14 @@ export class SceneHost {
       const next = fromCatalog(def, cat, value, c.bank.get(def.id))
       if (next !== null) c.bank.set(def.id, next, 'software')
     }
+    // Which meter buses carry signal: the strips whose input is patched (the layout's bus map), read from the design's connections.
+    const connected = new Set<string>()
+    for (const { a, b } of design.rig.connections) {
+      if (a.instance === inst.instanceId) connected.add(a.port)
+      if (b.instance === inst.instanceId) connected.add(b.port)
+    }
+    const buses = c.buses
+    c.rig.busLive = (bus) => busLive(buses, bus, connected)
     // A device whose power setting is off shows silent meters.
     const power = cats.find((x) => x.id === 'power')
     if (power) c.rig.powered = (values.power ?? power.default) !== false

@@ -71,6 +71,8 @@ export class ControlRig {
   metersLive = true
   /** A device whose power setting is off: every meter reads silence. */
   powered = true
+  /** Which meter buses carry signal (what is patched into the strips); every bus is live until the host sets it. */
+  busLive: (bus: string) => boolean = () => true
   /** Every part hangs under this node: one switch takes the whole surface out of the render (a device far from the camera). */
   private readonly surface: TransformNode
   private active = true
@@ -169,10 +171,15 @@ export class ControlRig {
     let any = drewScreen
     for (const p of this.parts.values()) {
       if (!p.meterStep || !p.def.meter) continue
-      p.meterStep(this.powered ? this.levels(p.def.meter.source, nowMs / 1000) : -120, nowMs, dt)
+      p.meterStep(this.levelOf(p.def.meter.source, nowMs / 1000), nowMs, dt)
       any = true
     }
     return any
+  }
+
+  /** What a meter bus reads: its signal while the device is on and something is patched into it, silence otherwise. */
+  private levelOf(bus: string, tSec: number): number {
+    return this.powered && this.busLive(bus) ? this.levels(bus, tSec) : -120
   }
 
   private drawScreen(p: Part, nowMs: number): void {
@@ -181,7 +188,7 @@ export class ControlRig {
     sc.last = nowMs
     sc.dirty = false
     if (!sc.ctx || !sc.tex) return
-    sc.app.draw(sc.ctx, sc.w, sc.h, { bank: this.bank, levels: this.powered ? this.levels : () => -120, nowMs })
+    sc.app.draw(sc.ctx, sc.w, sc.h, { bank: this.bank, levels: (bus, t) => this.levelOf(bus, t), nowMs })
     sc.tex.update()
   }
 

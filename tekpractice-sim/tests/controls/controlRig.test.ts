@@ -278,3 +278,17 @@ describe('ControlRig: power', () => {
     expect(lit()).toBeGreaterThanOrEqual(11)
   })
 })
+
+describe('ControlRig: buses', () => {
+  it('a meter whose bus carries no signal reads silence; patching it in brings it back', () => {
+    const { rig } = build()
+    const lit = (): number => rig.part('bar')!.node.getChildMeshes().filter((m) => m.material?.name.includes('bar-on')).length
+    rig.levels = () => -3
+    rig.busLive = () => false
+    for (let t = 16; t < 3000; t += 16) rig.update(t)
+    expect(lit()).toBe(0)
+    rig.busLive = (bus) => bus === 'bus' // the layout's meters read the bus called "bus"
+    for (let t = 3000; t < 3800; t += 16) rig.update(t)
+    expect(lit()).toBeGreaterThanOrEqual(11)
+  })
+})

@@ -104,6 +104,9 @@ const layout = {
   deviceId: 'yamaha-ql1',
   // The spec's build.profile (depth from the I/O edge, height): the surface the faders and keys sit on.
   topProfile: [[0, 272], [6, 272], [20, 266], [40, 257], [80, 231], [120, 205], [161, 178], [201, 152], [241, 140], [281, 132], [321, 126], [361, 121], [401, 112], [442, 110], [482, 104], [522, 98], [562, 95]],
+  // Which meters carry signal, from what is patched: the two mic inputs the catalog models feed strips 1 and 2; the other strips have no input
+  // modelled (declared with no ports: silent); the masters follow strips 1 and 2.
+  buses: { ch1: { ports: ['in-mic-1'] }, ch2: { ports: ['in-mic-2'] }, ...Object.fromEntries(Array.from({ length: 14 }, (_, i) => [`ch${i + 3}`, {}])), 'st-l': { follows: ['ch1', 'ch2'] }, 'st-r': { follows: ['ch1', 'ch2'] }, 'mono-l': { follows: ['ch1', 'ch2'] } },
   controls,
   overrides: {
     'fader-st': { catalogControl: 'fader-master' },

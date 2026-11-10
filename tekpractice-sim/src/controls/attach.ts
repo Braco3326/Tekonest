@@ -4,6 +4,7 @@
  * ticker. A device with no layout, or a model without extras (no real size), gets nothing and costs nothing.
  */
 import type { Scene, TransformNode } from '@babylonjs/core'
+import type { BusMap } from './busGraph'
 import { ControlBank } from './controlBank'
 import { ControlRig } from './controlRig'
 import { parseControlLayout, type ControlLayout } from './controlTypes'
@@ -30,6 +31,8 @@ export async function layoutFor(deviceId: string): Promise<ControlLayout | null>
 export interface AttachedControls {
   bank: ControlBank
   rig: ControlRig
+  /** The layout's bus map (which meters carry signal, from what is patched), absent = all live. */
+  buses: BusMap | undefined
 }
 
 /** Build the bank and the rig for one instance; null when the device has no layout. */
@@ -46,5 +49,5 @@ export async function attachControls(
   const bank = new ControlBank(layout.controls)
   const rig = new ControlRig(scene, root, instanceId, bank, sizeMm, layout.topProfile)
   ticker?.add(rig)
-  return { bank, rig }
+  return { bank, rig, buses: layout.buses }
 }

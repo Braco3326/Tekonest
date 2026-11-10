@@ -69,3 +69,17 @@ describe('control layouts vs the model they sit on', () => {
     if (layout.topProfile && spec.build?.profile) expect(layout.topProfile, `${f}: topProfile`).toEqual(spec.build.profile)
   })
 })
+
+describe('control layouts: meter buses', () => {
+  it.each(files)('%s: the ports a bus is fed from exist on the device, every follows names a declared bus, and every meter reads a declared bus', (f) => {
+    const layout = load(f)
+    if (!layout.buses) return
+    const dev = (catalogJson.devices as { id: string; ports: { portId: string }[] }[]).find((d) => d.id === layout.deviceId)!
+    const portIds = new Set(dev.ports.map((p) => p.portId))
+    for (const [name, spec] of Object.entries(layout.buses)) {
+      for (const p of spec.ports ?? []) expect(portIds.has(p), `${f}: bus ${name} -> port "${p}" is not a port of ${layout.deviceId}`).toBe(true)
+      for (const b of spec.follows ?? []) expect(layout.buses![b], `${f}: bus ${name} follows undeclared "${b}"`).toBeDefined()
+    }
+    for (const c of layout.controls) if (c.meter) expect(layout.buses[c.meter.source], `${f}: meter ${c.id} reads undeclared bus "${c.meter.source}"`).toBeDefined()
+  })
+})

@@ -9,6 +9,8 @@
  * along `axis` ('x' or 'y' of the face) toward +. For a knob / button / switch / led the (xMm, yMm) is the centre.
  */
 
+import { parseBuses, type BusMap } from './busGraph'
+
 export const FACES = ['io', 'opposite', 'top', 'bottom', 'left', 'right'] as const
 export type Face = (typeof FACES)[number]
 
@@ -91,6 +93,8 @@ export interface ControlLayout {
   deviceId: string
   /** A sloped top (a console wedge): [depth from the I/O edge mm, height mm] points, as the spec's build.profile. Controls on 'top' sit on it. */
   topProfile?: [number, number][]
+  /** Which meter buses carry signal, from what is patched (busGraph.ts); absent = every bus is live. */
+  buses?: BusMap
   controls: ControlDef[]
 }
 
@@ -256,6 +260,12 @@ export function parseControlLayout(raw: unknown): { layout: ControlLayout | null
         if (isNum(o.default)) def.default = normaliseDefault(def, o.default)
       }
   }
+  let buses: BusMap | undefined
+  if (raw.buses !== undefined) {
+    const b = parseBuses(raw.buses)
+    if (b) buses = b
+    else errors.push('buses must be an object of { ports?: string[], follows?: string[] }')
+  }
   if (errors.length) return { layout: null, errors }
-  return { layout: { schema: 1, deviceId: raw.deviceId, ...(topProfile ? { topProfile } : {}), controls }, errors }
+  return { layout: { schema: 1, deviceId: raw.deviceId, ...(topProfile ? { topProfile } : {}), ...(buses ? { buses } : {}), controls }, errors }
 }
