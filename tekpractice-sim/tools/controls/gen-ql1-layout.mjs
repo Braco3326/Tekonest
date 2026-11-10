@@ -38,7 +38,7 @@ const masters = [
 ]
 const strips = [
   ...stripX.map((px, i) => ({ id: `${i + 1}`, px, n: i + 1 })),
-  ...masters.map((m) => ({ id: m.id, px: m.px, n: null })),
+  ...masters.map((m) => ({ id: m.id, px: m.px, n: null, label: m.label })),
 ]
 
 for (const s of strips) {

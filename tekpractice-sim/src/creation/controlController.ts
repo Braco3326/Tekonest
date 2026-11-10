@@ -12,7 +12,7 @@
  * is left alone, untouched. The controls of an unselected device are not live (its first click selects it, as everywhere).
  */
 import type { ArcRotateCamera, Scene, AbstractMesh } from '@babylonjs/core'
-import { Vector3 } from '@babylonjs/core'
+import { Vector3, type Ray } from '@babylonjs/core'
 import type { DeviceInstance } from '../scene/DeviceSpawner'
 import type { DisposableBag } from '../util/disposable'
 import { controlHit } from '../controls/controlHit'
@@ -79,10 +79,12 @@ export class ControlController {
     bag.listen(win, 'pointermove', (e: PointerEvent) => this.onMove(e), { capture: true })
     bag.listen(win, 'pointerup', (e: PointerEvent) => this.onUp(e), { capture: true })
     bag.listen(win, 'pointercancel', (e: PointerEvent) => this.onUp(e), { capture: true })
+    bag.listen(win, 'blur', () => this.abort())
     bag.listen(win, 'wheel', (e: WheelEvent) => this.onWheel(e), { capture: true, passive: false })
     bag.add(() => {
+      this.flushWheel()
       this.disposed = true
-      this.endDrag()
+      this.abort()
       this.setHover(null)
       this.hud?.remove()
       if (this.hudTimer) clearTimeout(this.hudTimer)
@@ -110,6 +112,11 @@ export class ControlController {
     return def ? { instance: inst, def } : null
   }
 
+  /** The picking ray of the camera that renders (the walker's when walking), the same one `scene.pick` used. */
+  private ray(x: number, y: number): Ray {
+    return this.host.scene.createPickingRay(x, y, null, this.host.scene.activeCamera ?? this.host.camera)
+  }
+
   private point(e: PointerEvent): { x: number; y: number } {
     const r = this.host.canvas.getBoundingClientRect()
     return { x: e.clientX - r.left, y: e.clientY - r.top }
@@ -133,14 +140,10 @@ export class ControlController {
     this.showValue(found.def, bank.get(found.def.id), e as unknown as PointerEvent)
     this.scheduleHudHide()
     const key = `${found.instance.instanceId}/${found.def.id}`
+    if (this.wheelPending && this.wheelPending.key !== key) this.flushWheel() // another control: the first one is reported now, not lost
     if (this.wheelTimer) clearTimeout(this.wheelTimer)
     this.wheelPending = { instanceId: found.instance.instanceId, def: found.def, key }
-    this.wheelTimer = setTimeout(() => {
-      const p = this.wheelPending
-      this.wheelPending = null
-      const b = p ? this.host.instance(p.instanceId)?.controls?.bank : undefined
-      if (p && b) this.host.committed?.(p.instanceId, p.def, b.get(p.def.id))
-    }, WHEEL_IDLE_MS)
+    this.wheelTimer = setTimeout(() => this.flushWheel(), WHEEL_IDLE_MS)
     this.host.invalidate()
   }
 
@@ -158,7 +161,7 @@ export class ControlController {
     const rig = instance.controls!.rig
     if (def.kind === 'screen') {
       // A touch on the glass belongs to the screen's app; one it does not take (a gap between widgets) falls through to the camera.
-      const pt = rig.screenPointAt(def.id, this.host.scene.createPickingRay(x, y, null, this.host.camera))
+      const pt = rig.screenPointAt(def.id, this.ray(x, y))
       const r = pt ? rig.screenTouch(def.id, 'down', pt.x, pt.y) : { handled: false }
       if (!r.handled) {
         // Two quick presses on bare glass (nothing of the app under them) go into the screen; one alone is the camera's / the selection's.
@@ -184,7 +187,7 @@ export class ControlController {
     const t = e.timeStamp
     const id = `${instance.instanceId}/${def.id}`
     const double = this.lastClick && this.lastClick.id === id && t - this.lastClick.t <= DOUBLE_MS
-    this.lastClick = { id, t }
+    this.lastClick = null
     const drag: Drag = { instanceId: instance.instanceId, def, pointerId: e.pointerId, lastX: e.clientX, lastY: e.clientY, moved: false, lastSlide: 0, start: bank.get(def.id), raw: bank.get(def.id) }
     switch (def.kind) {
       case 'fader': {
@@ -241,13 +244,15 @@ export class ControlController {
       return
     }
     if (e.pointerId !== d.pointerId) return
+    // The button was released where this page could not see it (another window, outside the browser): the drag is over.
+    if (e.buttons === 0) return this.finish(d, e, false)
     e.stopImmediatePropagation()
     const inst = this.host.instance(d.instanceId)
     const bank = inst?.controls?.bank
     if (!inst || !bank) return this.endDrag()
     if (d.def.kind === 'screen') {
       const { x, y } = this.point(e)
-      const pt = inst.controls?.rig.screenPointAt(d.def.id, this.host.scene.createPickingRay(x, y, null, this.host.camera))
+      const pt = inst.controls?.rig.screenPointAt(d.def.id, this.ray(x, y))
       if (pt) inst.controls!.rig.screenTouch(d.def.id, 'move', pt.x, pt.y)
       this.host.invalidate()
       return
@@ -258,7 +263,9 @@ export class ControlController {
       const { x, y } = this.point(e)
       const slide = this.slideValue(inst, d.def, x, y)
       if (slide !== null) {
-        bank.set(d.def.id, bank.get(d.def.id) + (slide - d.lastSlide) * fine, 'user')
+        // unclamped: dragging past the end of the slot and back must bring the cap back to where the pointer is
+        d.raw += (slide - d.lastSlide) * fine
+        bank.set(d.def.id, d.raw, 'user')
         d.lastSlide = slide
       }
     } else if (d.def.kind === 'knob') {
@@ -275,11 +282,17 @@ export class ControlController {
   private onUp(e: PointerEvent): void {
     const d = this.drag
     if (!d || e.pointerId !== d.pointerId) return
-    e.stopImmediatePropagation()
+    if (e.type === 'pointerup' && e.pointerType === 'mouse' && e.button !== 0) return // another button let go: the left drag goes on
+    this.finish(d, e, true)
+  }
+
+  /** End the drag: the last touch of a screen, the release of a momentary key, the one report to the simulation. */
+  private finish(d: Drag, e: PointerEvent, stop: boolean): void {
+    if (stop) e.stopImmediatePropagation()
     if (d.def.kind === 'screen') {
       const inst = this.host.instance(d.instanceId)
       const { x, y } = this.point(e)
-      const pt = inst?.controls?.rig.screenPointAt(d.def.id, this.host.scene.createPickingRay(x, y, null, this.host.camera))
+      const pt = inst?.controls?.rig.screenPointAt(d.def.id, this.ray(x, y))
       const r = inst?.controls?.rig.screenTouch(d.def.id, 'up', pt?.x ?? 0, pt?.y ?? 0)
       if (r?.changed) this.commitById(d.instanceId, r.changed)
       this.endDrag()
@@ -289,8 +302,30 @@ export class ControlController {
     const bank = this.host.instance(d.instanceId)?.controls?.bank
     if (bank && d.def.kind === 'button' && d.def.latch === false) bank.set(d.def.id, 0, 'user') // momentary: released
     if (bank && d.moved && (d.def.kind === 'fader' || d.def.kind === 'knob')) this.host.committed?.(d.instanceId, d.def, bank.get(d.def.id))
+    // A press that did not move is the first half of a possible double-click (a re-grab after an adjustment is not).
+    if (d.def.kind === 'fader' || d.def.kind === 'knob') this.lastClick = d.moved ? null : { id: `${d.instanceId}/${d.def.id}`, t: e.timeStamp }
     this.endDrag()
     this.host.invalidate()
+  }
+
+  /** The drag is dropped without a report (the window lost focus, the controller is going away): a momentary key is let go. */
+  private abort(): void {
+    const d = this.drag
+    if (d) {
+      const bank = this.host.instance(d.instanceId)?.controls?.bank
+      if (bank && d.def.kind === 'button' && d.def.latch === false) bank.set(d.def.id, 0, 'user')
+    }
+    this.endDrag()
+  }
+
+  /** Report a wheel burst that is still waiting (another control is being nudged, or the controller ends). */
+  private flushWheel(): void {
+    if (this.wheelTimer) clearTimeout(this.wheelTimer)
+    this.wheelTimer = null
+    const p = this.wheelPending
+    this.wheelPending = null
+    const b = p ? this.host.instance(p.instanceId)?.controls?.bank : undefined
+    if (p && b) this.host.committed?.(p.instanceId, p.def, b.get(p.def.id))
   }
 
   /** A control changed from a screen (not from a pointer on its own cap): carry it to the simulation like any other. */
@@ -302,6 +337,7 @@ export class ControlController {
 
   private endDrag(): void {
     if (this.drag) this.host.instance(this.drag.instanceId)?.controls?.rig.setHover(null)
+    this.hover = null // the next move over a control lights it again
     this.drag = null
     this.scheduleHudHide()
   }
@@ -312,7 +348,7 @@ export class ControlController {
   private slideValue(inst: DeviceInstance, def: ControlDef, x: number, y: number): number | null {
     const g = inst.controls?.rig.slideOf(def.id)
     if (!g) return null
-    const ray = this.host.scene.createPickingRay(x, y, null, this.host.camera)
+    const ray = this.ray(x, y)
     const denom = Vector3.Dot(ray.direction, g.normal)
     if (Math.abs(denom) < 1e-4) return null
     const t = Vector3.Dot(g.origin.subtract(ray.origin), g.normal) / denom
@@ -333,6 +369,7 @@ export class ControlController {
       // A key's legend is on its cap (« ON » on all sixteen): name it by its id, which says the strip.
       const keyLike = found.def.kind === 'button' || found.def.kind === 'switch'
       this.showValue(found.def, found.instance.controls!.bank.get(found.def.id), e, keyLike ? found.def.id : undefined)
+      this.scheduleHudHide()
     } else if (this.hud) this.hud.style.opacity = '0'
     this.host.canvas.style.cursor = found ? (found.def.kind === 'fader' ? 'ns-resize' : found.def.kind === 'knob' ? 'grab' : found.def.kind === 'screen' ? 'default' : 'pointer') : ''
   }

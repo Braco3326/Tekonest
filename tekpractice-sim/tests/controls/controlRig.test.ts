@@ -292,3 +292,17 @@ describe('ControlRig: buses', () => {
     expect(lit()).toBeGreaterThanOrEqual(11)
   })
 })
+
+describe('ControlRig: redraw reporting', () => {
+  it('update() reports a redraw only while something drawn changes: steady meters on a still signal stop asking for frames', () => {
+    const { rig } = build()
+    rig.levels = () => -20
+    let redraws = 0
+    for (let t = 16; t < 3000; t += 16) if (rig.update(t)) redraws++
+    expect(redraws).toBeGreaterThan(0)
+    // settled: bars fall nowhere, the needle sits still
+    const late: boolean[] = []
+    for (let t = 3000; t < 3300; t += 16) late.push(rig.update(t))
+    expect(late.every((x) => x === false)).toBe(true)
+  })
+})

@@ -50,7 +50,8 @@ interface Part {
   apply(v: number): void
   /** Hover tint on / off. */
   hover(on: boolean): void
-  meterStep?(levelDb: number, nowMs: number, dtMs: number): void
+  /** Advance to a level; true when what is DRAWN changed (the host asks for a frame only then). */
+  meterStep?(levelDb: number, nowMs: number, dtMs: number): boolean
   /** A screen part: the app on its canvas, redrawn when dirty or (live apps) at about 15 fps. */
   screen?: { app: ScreenApp; ctx: CanvasRenderingContext2D | null; tex: DynamicTexture | null; w: number; h: number; plane: Mesh; dirty: boolean; last: number }
   /** True for a fader: its cap slides along the control axis (slideOf gives the geometry). */
@@ -171,8 +172,7 @@ export class ControlRig {
     let any = drewScreen
     for (const p of this.parts.values()) {
       if (!p.meterStep || !p.def.meter) continue
-      p.meterStep(this.levelOf(p.def.meter.source, nowMs / 1000), nowMs, dt)
-      any = true
+      if (p.meterStep(this.levelOf(p.def.meter.source, nowMs / 1000), nowMs, dt)) any = true
     }
     return any
   }
@@ -241,7 +241,11 @@ export class ControlRig {
     this.unsub = null
     for (const p of this.parts.values()) p.node.dispose(false, true)
     this.parts.clear()
-    for (const m of this.materials.values()) m.dispose()
+    for (const m of this.materials.values()) {
+      m.diffuseTexture?.dispose() // the key legends and the dial: each variant, not only the one a mesh wore last
+      m.emissiveTexture?.dispose()
+      m.dispose()
+    }
     this.materials.clear()
   }
 
@@ -538,11 +542,12 @@ export class ControlRig {
     const ball = new BarBallistics()
     let litCount = -1
     let peakIdx = -2
-    const draw = (lit: number, peak: number): void => {
-      if (lit === litCount && peak === peakIdx) return
+    const draw = (lit: number, peak: number): boolean => {
+      if (lit === litCount && peak === peakIdx) return false
       litCount = lit
       peakIdx = peak
       segs.forEach((s, i) => (s.mesh.material = i < lit || i === peak ? s.on : s.off))
+      return true
     }
     return {
       def,
@@ -554,7 +559,7 @@ export class ControlRig {
       meterStep: (db, now, dt) => {
         ball.step(db, now, dt)
         const r = barLit(ball.level, ball.peak, n, fromDb, toDb)
-        draw(r.lit, r.peak)
+        return draw(r.lit, r.peak)
       },
     }
   }
@@ -613,8 +618,12 @@ export class ControlRig {
     needle.position.z = len / 2
     const ball = new VuBallistics(meter.referenceDb ?? -18)
     const sweep = (100 * Math.PI) / 180
-    const set = (pos: number): void => {
+    let shown = -1
+    const set = (pos: number): boolean => {
+      if (Math.abs(pos - shown) < 0.002) return false // under a fifth of a degree: not worth a frame
+      shown = pos
       mover.rotation.y = (pos - 0.5) * sweep
+      return true
     }
     set(0)
     return {

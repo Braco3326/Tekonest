@@ -1224,7 +1224,11 @@ export class SceneHost {
     const inst = this.instances.get(instanceId)
     const cat = inst ? this.catalogControls(inst.deviceId).find((x) => x.id === def.catalogControl) : undefined
     if (!cat) return
-    this.onControlChange?.(instanceId, cat.id, toCatalog(def, cat, value), cat.label)
+    const next = toCatalog(def, cat, value)
+    // A release that lands on the setting the design already has (a fader wiggled inside one dB step, a reset at default) is not a step of its own.
+    const now = this.applied?.rig.controls[instanceId]?.[cat.id] ?? (cat.type === 'toggle' ? cat.default === true : cat.defaultOption)
+    if (now === next) return
+    this.onControlChange?.(instanceId, cat.id, next, cat.label)
   }
 
   private pose(inst: DeviceInstance, p: Placement): void {

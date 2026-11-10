@@ -360,3 +360,83 @@ describe('ControlController: detented knob', () => {
     s.fire('pointerup')
   })
 })
+
+describe('ControlController: review fixes', () => {
+  it('a drag whose release was never seen ends on the next move with no button down (and the move is not swallowed), and a blur drops it', () => {
+    const s = setup()
+    s.state.at = 'fader'
+    s.rayAt(0.075)
+    s.fire('pointerdown')
+    s.rayAt(0.045)
+    expect(s.fire('pointermove', { buttons: 1 }).stopped).toBe(true)
+    // released outside the page: the next move arrives with no button down
+    expect(s.fire('pointermove', { buttons: 0 }).stopped).toBe(false)
+    s.state.at = 'knob'
+    expect(s.fire('pointerdown').stopped).toBe(true) // free again: a new press is taken
+    s.fire('pointerup')
+    // blur: a momentary key is let go
+    s.state.at = 'push'
+    s.fire('pointerdown')
+    expect(s.bank.get('push')).toBe(1)
+    s.win.dispatchEvent(new Event('blur'))
+    expect(s.bank.get('push')).toBe(0)
+  })
+
+  it('releasing another mouse button mid-drag does not end the left drag', () => {
+    const s = setup()
+    s.state.at = 'knob'
+    s.fire('pointerdown', { clientX: 0, clientY: 300 })
+    s.fire('pointerup', { button: 2, pointerType: 'mouse' })
+    s.fire('pointermove', { clientX: 0, clientY: 256, buttons: 1 })
+    expect(s.bank.get('knob')).toBeCloseTo(0.7, 6) // still dragging
+  })
+
+  it('a fader dragged past the end of its slot and back returns to where the pointer is', () => {
+    const s = setup()
+    s.bank.set('fader', 0.9)
+    s.state.at = 'fader'
+    s.rayAt(0.09)
+    s.fire('pointerdown')
+    s.rayAt(0.12) // 0.3 past the top
+    s.fire('pointermove', { buttons: 1 })
+    expect(s.bank.get('fader')).toBe(1)
+    s.rayAt(0.09) // back where it started
+    s.fire('pointermove', { buttons: 1 })
+    expect(s.bank.get('fader')).toBeCloseTo(0.9, 6)
+  })
+
+  it('grabbing again right after an adjustment is not a double-click; two quick untouched presses are', () => {
+    const s = setup()
+    s.state.at = 'knob'
+    s.fire('pointerdown', { clientX: 0, clientY: 300 })
+    s.fire('pointermove', { clientX: 0, clientY: 256, buttons: 1 })
+    s.fire('pointerup')
+    s.advance(100)
+    s.fire('pointerdown', { clientX: 0, clientY: 300 })
+    expect(s.bank.get('knob')).toBeCloseTo(0.7, 6) // not reset
+    s.fire('pointerup')
+    s.advance(100)
+    s.fire('pointerdown', { clientX: 0, clientY: 300 })
+    expect(s.bank.get('knob')).toBe(0.5) // the quick second press of an untouched grab resets
+  })
+
+  it('Alt + wheel on a second control reports the first one at once instead of losing it', () => {
+    const s = setup()
+    const committed = vi.fn()
+    ;(s.host as unknown as { committed: typeof committed }).committed = committed
+    const wheel = (): void => {
+      const ev = new Event('wheel', { cancelable: true }) as Event & Record<string, unknown>
+      for (const [k, v] of Object.entries({ target: s.host.canvas, altKey: true, shiftKey: false, clientX: 1, clientY: 1, deltaY: -100 })) Object.defineProperty(ev, k, { value: v })
+      s.win.dispatchEvent(ev)
+    }
+    s.state.at = 'knob'
+    wheel()
+    s.state.at = 'fader'
+    wheel()
+    expect(committed).toHaveBeenCalledTimes(1)
+    expect(committed.mock.calls[0][1].id).toBe('knob')
+    vi.advanceTimersByTime(400)
+    expect(committed).toHaveBeenCalledTimes(2)
+    expect(committed.mock.calls[1][1].id).toBe('fader')
+  })
+})

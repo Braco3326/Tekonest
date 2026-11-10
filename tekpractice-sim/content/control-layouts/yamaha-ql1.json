@@ -1834,7 +1834,7 @@
     "h": 27,
     "d": 11
    },
-   "label": "Fader undefined"
+   "label": "Fader ST"
   },
   {
    "id": "st-sel",
@@ -1940,7 +1940,7 @@
     "h": 27,
     "d": 11
    },
-   "label": "Fader undefined"
+   "label": "Fader MONO"
   },
   {
    "id": "mono-sel",
