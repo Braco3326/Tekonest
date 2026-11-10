@@ -11,56 +11,56 @@
     {
       "portId": "in-analog-l",
       "face": "io",
-      "xMm": 362.1,
-      "yMm": 25.6,
-      "confidence": "manual",
+      "xMm": 378.6,
+      "yMm": 22.9,
+      "confidence": "photo",
       "openingMm": 24
     },
     {
       "portId": "in-analog-r",
       "face": "io",
-      "xMm": 386,
-      "yMm": 25.6,
-      "confidence": "manual",
+      "xMm": 405.8,
+      "yMm": 22.9,
+      "confidence": "photo",
       "openingMm": 24
     },
     {
       "portId": "in-aes3",
       "face": "io",
-      "xMm": 141,
-      "yMm": 59.2,
-      "confidence": "manual",
+      "xMm": 129.2,
+      "yMm": 59.6,
+      "confidence": "photo",
       "openingMm": 24
     },
     {
       "portId": "out-main-l",
       "face": "io",
-      "xMm": 167.8,
-      "yMm": 25.6,
-      "confidence": "manual",
+      "xMm": 159,
+      "yMm": 23.3,
+      "confidence": "photo",
       "openingMm": 24
     },
     {
       "portId": "out-main-r",
       "face": "io",
-      "xMm": 191.9,
-      "yMm": 25.6,
-      "confidence": "manual",
+      "xMm": 186.9,
+      "yMm": 23.3,
+      "confidence": "photo",
       "openingMm": 24
     },
     {
       "portId": "out-headphone",
       "face": "opposite",
-      "xMm": 344.6,
-      "yMm": 46.2,
-      "confidence": "manual"
+      "xMm": 351.7,
+      "yMm": 43.3,
+      "confidence": "photo"
     },
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 60.1,
-      "yMm": 65.4,
-      "confidence": "manual"
+      "xMm": 36.7,
+      "yMm": 67.5,
+      "confidence": "photo"
     }
   ],
   "controls": [
@@ -119,6 +119,11 @@
       "kind": "datasheet",
       "url": "https://gracedesign.com/products/monitor-controllers/m905/",
       "note": "Grace Design m905 product page (opened): lists main chassis 3.5 in x 10.5 in x 17 in (axes unlabelled). Read as H 3.5 in = 2U 88.9 mm, D 10.5 in = 266.7 mm, 17 in = chassis width without rack ears; with the ears the drawing is 19 in = 482.6 mm wide, so w = 482.6 is used (rack ears included, like the Rio3224-D2 spec)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://gracedesign.com/products/m905/",
+      "note": "Wave 5 re-measure on the pictures the ports sit on (io: rear.jpg crop 78,188,877,162 over 482.6 x 88.9 mm, 1.82 px/mm; opposite: front_rectified.png over the same face, 4.24 px/mm; read on a mm grid): the manual-based positions were 5 to 23 mm off the connectors of the photos. IEC inlet (36.7, 67.5), AES 1 XLR (129.2, 59.6), SPEAKER 1 XLRs (159.0, 23.3) and (186.9, 23.3), BALANCED IN XLRs (378.6, 22.9) and (405.8, 22.9), headphone jack on the front (351.7, 43.3). +/- 0.7 mm."
     }
   ],
   "texture": {

@@ -11,8 +11,8 @@
     {
       "portId": "in-analog",
       "face": "io",
-      "xMm": 137.3,
-      "yMm": 70,
+      "xMm": 135.9,
+      "yMm": 65.2,
       "confidence": "photo",
       "openingMm": 14,
       "insetMm": 13.8
@@ -95,6 +95,11 @@
       "kind": "photo",
       "url": "https://images.ctfassets.net/4zjnzn055a4v/37Yluwn69OLB2BOtk0fYTl/d7ac8755a4ad5b397d1ccfff6d8b8eb8/8030CP-k01.jpg",
       "note": "Genelec 8030CP straight-on front photo (2000 x 2000 px, opened, silhouette profiled row by row with the rear photo 8030_Back.jpg): the product is 985 px wide at its widest for 189 mm (5.21 px/mm) and its sides are a shallow arc in elevation, 175 mm wide 39 mm below the top, 189 mm at about 140 mm below the top and 172 mm at 250 mm below it, so the curved-cabinet params barrelMm 17.7 (half-width lost at the far end of the height, a parabola) centred at 159 mm above the base. The woofer grille measures 715 px = 137 mm across (ring 136 mm) with its centre 184 mm below the top of the body = 115 mm above the base; the tweeter ring 216 px = 41 mm, centre 66 mm below the top = 233 mm above the base. The picture of the front is this photo cropped to the body (501,195,985,1475 px, the Iso-Pod mostly cut), the rear picture 8030_Back.jpg cropped to (492,180,1068,1600); white corners are filled (--project-photo ...,fill). Plan radii (front 20, rear 26 mm), the plan taper (rear polygon 172 mm) and the 14 mm Iso-Pod pad (118 x 100 mm) are estimates read off the three-quarter photos; the side and top faces carry no picture."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.genelec.com/8030c",
+      "note": "Wave 5 re-measure on the rear picture (rear.jpg crop 492,180,1068,1600 over 189 x 299 mm, read on a mm grid): the ANALOG IN XLR symbol centre is (135.9, 65.2), the first position (137.3, 70) sat 4.9 mm above it; the mains inlet is not visible on the photo (only its MAINS INPUT label), so power-in is kept. +/- 1 mm."
     }
   ],
   "build": {

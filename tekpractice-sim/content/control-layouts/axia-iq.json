@@ -31,22 +31,22 @@
   {
    "repeat": {
     "count": 8,
-    "dxMm": 42.46,
+    "dxMm": -42.5,
     "dyMm": 0,
     "idFormat": "fader-{n}"
    },
    "kind": "fader",
    "face": "top",
-   "xMm": 68.8,
-   "yMm": 231.2,
+   "xMm": 450.8,
+   "yMm": 250,
    "axis": "y",
-   "travelMm": 112,
+   "travelMm": 100,
    "default": 0.8,
    "taper": "broadcast-db",
    "slot": true,
    "slotMm": {
     "w": 21,
-    "len": 126
+    "len": 128
    },
    "sizeMm": {
     "w": 13,
@@ -54,19 +54,20 @@
     "d": 12
    },
    "colour": "#2b2d31",
-   "label": "Fader {n}"
+   "label": "Fader {n}",
+   "reverse": true
   },
   {
    "repeat": {
     "count": 8,
-    "dxMm": 42.46,
+    "dxMm": -43.5,
     "dyMm": 0,
     "idFormat": "ch{n}-on"
    },
    "kind": "button",
    "face": "top",
-   "xMm": 68.8,
-   "yMm": 154.1,
+   "xMm": 454.8,
+   "yMm": 330.5,
    "axis": "z",
    "default": 1,
    "latch": true,
@@ -84,14 +85,14 @@
   {
    "repeat": {
     "count": 8,
-    "dxMm": 42.46,
+    "dxMm": -43.5,
     "dyMm": 0,
     "idFormat": "ch{n}-off"
    },
    "kind": "button",
    "face": "top",
-   "xMm": 68.8,
-   "yMm": 129.3,
+   "xMm": 454.8,
+   "yMm": 355.1,
    "axis": "z",
    "default": 0,
    "latch": true,
@@ -109,14 +110,14 @@
   {
    "repeat": {
     "count": 8,
-    "dxMm": 42.46,
+    "dxMm": -43.1,
     "dyMm": 0,
     "idFormat": "ch{n}-cue"
    },
    "kind": "button",
    "face": "top",
-   "xMm": 79.8,
-   "yMm": 175,
+   "xMm": 443.5,
+   "yMm": 308.9,
    "axis": "z",
    "default": 0,
    "latch": true,
@@ -133,14 +134,14 @@
   {
    "repeat": {
     "count": 8,
-    "dxMm": 42.46,
+    "dxMm": -41.6,
     "dyMm": 0,
     "idFormat": "ch{n}-pgm1"
    },
    "kind": "button",
    "face": "top",
-   "xMm": 56.6,
-   "yMm": 389.2,
+   "xMm": 457,
+   "yMm": 93.9,
    "axis": "z",
    "default": 1,
    "latch": true,
@@ -157,14 +158,14 @@
   {
    "repeat": {
     "count": 8,
-    "dxMm": 42.46,
+    "dxMm": -41.7,
     "dyMm": 0,
     "idFormat": "ch{n}-pgm2"
    },
    "kind": "button",
    "face": "top",
-   "xMm": 74.8,
-   "yMm": 389.2,
+   "xMm": 439.2,
+   "yMm": 93.9,
    "axis": "z",
    "default": 0,
    "latch": true,
@@ -181,14 +182,14 @@
   {
    "repeat": {
     "count": 8,
-    "dxMm": 42.46,
+    "dxMm": -41.6,
     "dyMm": 0,
     "idFormat": "ch{n}-pgm3"
    },
    "kind": "button",
    "face": "top",
-   "xMm": 56.6,
-   "yMm": 369.6,
+   "xMm": 457,
+   "yMm": 113,
    "axis": "z",
    "default": 0,
    "latch": true,
@@ -205,14 +206,14 @@
   {
    "repeat": {
     "count": 8,
-    "dxMm": 42.46,
+    "dxMm": -41.7,
     "dyMm": 0,
     "idFormat": "ch{n}-phone"
    },
    "kind": "button",
    "face": "top",
-   "xMm": 74.8,
-   "yMm": 369.6,
+   "xMm": 439.2,
+   "yMm": 113,
    "axis": "z",
    "default": 0,
    "latch": true,
@@ -229,14 +230,14 @@
   {
    "repeat": {
     "count": 8,
-    "dxMm": 42.46,
+    "dxMm": -41.3,
     "dyMm": 0,
     "idFormat": "ch{n}-encoder"
    },
    "kind": "knob",
    "face": "top",
-   "xMm": 64.6,
-   "yMm": 418,
+   "xMm": 447,
+   "yMm": 72,
    "axis": "z",
    "default": 0.5,
    "sweepDeg": 300,
@@ -257,8 +258,8 @@
    "id": "headphones-level",
    "kind": "knob",
    "face": "top",
-   "xMm": 455.3,
-   "yMm": 141.1,
+   "xMm": 64,
+   "yMm": 341.8,
    "axis": "z",
    "default": 0.6,
    "sweepDeg": 290,
@@ -280,8 +281,8 @@
    "id": "monitor-level",
    "kind": "knob",
    "face": "top",
-   "xMm": 412.2,
-   "yMm": 141.1,
+   "xMm": 107.1,
+   "yMm": 341.8,
    "axis": "z",
    "default": 0.7,
    "sweepDeg": 290,
@@ -303,8 +304,8 @@
    "id": "ext-level",
    "kind": "knob",
    "face": "top",
-   "xMm": 452.7,
-   "yMm": 198.5,
+   "xMm": 66.6,
+   "yMm": 284.4,
    "axis": "z",
    "default": 0.5,
    "sweepDeg": 290,
@@ -326,8 +327,8 @@
    "id": "studio-level",
    "kind": "knob",
    "face": "top",
-   "xMm": 448.8,
-   "yMm": 322.6,
+   "xMm": 70.5,
+   "yMm": 160.3,
    "axis": "z",
    "default": 0.5,
    "sweepDeg": 290,
@@ -391,8 +392,8 @@
    "id": "monitor-mute",
    "kind": "button",
    "face": "top",
-   "xMm": 395.2,
-   "yMm": 387.9,
+   "xMm": 124.1,
+   "yMm": 95,
    "axis": "z",
    "default": 0,
    "latch": true,

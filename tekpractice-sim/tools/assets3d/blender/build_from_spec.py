@@ -1963,8 +1963,12 @@ def build_stagebox_rio3224(plan: Plan) -> bpy.types.Object:
     # Dante plate behind the two etherCON ports (flush, a shade lighter than the black back).
     box(bm, 121.5 * mm, 215.5 * mm, 163.0 * mm, 204.0 * mm, back_plate - 0.6 * mm, back_plate)
     body.done(PLATE_OUT)
-    for cx, cy, bw, bh, core_w, core_h in ((159.9, 54.3, 39.0, 23.0, 31.0, 15.0), (106.9, 54.3, 39.0, 23.0, 31.0, 15.0),
-                                           (182.5, 183.7, 21.0, 21.0, 14.0, 14.0), (154.5, 183.7, 21.0, 21.0, 14.0, 14.0)):
+    # Centres re-read in Wave 5 on the rear photo the picture is made from (x here = 240 - the spec's face x, which is counted from the left as
+    # seen from behind): IEC inlets A and B at face x 71.3 and 127.5, y 54.8; etherCON SECONDARY and PRIMARY at face x 69.7 and 40.7, y 184.3
+    # (the rear picture is 1812 px wide in a 2048 px atlas, 3.775 px/mm). They stood at 80.1 / 133.1 / 57.5 / 85.5 (research report positions),
+    # 9 to 29 mm beside the connectors of the picture.
+    for cx, cy, bw, bh, core_w, core_h in ((168.7, 54.8, 39.0, 23.0, 31.0, 15.0), (112.5, 54.8, 39.0, 23.0, 31.0, 15.0),
+                                           (199.3, 184.3, 21.0, 21.0, 14.0, 14.0), (170.3, 184.3, 21.0, 21.0, 14.0, 14.0)):
         # The housing stops 0.5 mm short of the tip; the dark core is the part that reaches the box face.
         box(bm, (cx - bw / 2.0) * mm, (cx + bw / 2.0) * mm, (cy - bh / 2.0) * mm, (cy + bh / 2.0) * mm, z_back + 0.5 * mm, back_plate)
         body.done(INLET if bw > 30.0 else STEEL)

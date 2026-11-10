@@ -1531,7 +1531,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-06T19:03:14.036Z",
+      "date": "2026-11-10T23:15:13.071Z",
       "specSource": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
       "logosRemoved": true,
       "photos": [
@@ -1597,9 +1597,6 @@
         "_generic_wrap.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
       "date": "2026-11-10T07:07:49.262Z",
       "specSource": "content/generic-panels/shure-sm58.json",
       "logosRemoved": true,
@@ -1640,7 +1637,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "id": "shure-sm57",
@@ -1698,8 +1698,8 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
       "trademark": "branded-internal"
     },
     {
@@ -1713,7 +1713,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1+meshy-7.1",
-      "date": "2026-11-10T20:28:50.960Z",
+      "date": "2026-11-10T23:17:29.567Z",
       "specSource": "https://www.qsc.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
       "logosRemoved": true,
       "photos": [
@@ -1785,7 +1785,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-10T20:29:11.117Z",
+      "date": "2026-11-10T23:05:28.986Z",
       "specSource": "https://usa.yamaha.com/files/download/other_assets/4/332514/VHN5580_DBR15_TS_En_B0_views.pdf",
       "logosRemoved": true,
       "photos": [
@@ -1921,7 +1921,7 @@
         "top_rectified.png"
       ],
       "taskId": null,
-      "date": "2026-11-10T22:19:37.162Z",
+      "date": "2026-11-10T23:22:18.743Z",
       "specSource": "https://www.telosalliance.com/consoles-audio-mixing/broadcast-consoles/axia-iq-family/axia-iq",
       "logosRemoved": true,
       "gates": [
@@ -2030,8 +2030,8 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
       "trademark": "branded-internal"
     },
     {
@@ -2159,7 +2159,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-10T20:28:35.296Z",
+      "date": "2026-11-10T23:05:41.479Z",
       "specSource": "https://assets.ctfassets.net/4zjnzn055a4v/1qUiHwGHNmumKgYugG6wws/837b26c2261771b9d58a94c44bb1cdc4/8030c_views.pdf",
       "logosRemoved": true,
       "photos": [
@@ -2278,8 +2278,8 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
       "trademark": "branded-internal"
     },
     {
@@ -2298,7 +2298,7 @@
         "rear_padded.png"
       ],
       "taskId": null,
-      "date": "2026-11-10T21:04:37.340Z",
+      "date": "2026-11-10T23:04:40.174Z",
       "specSource": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S-IP_ENG.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2413,8 +2413,8 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
       "trademark": "branded-internal"
     },
     {
@@ -2473,8 +2473,8 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
       "trademark": "branded-internal"
     },
     {
@@ -2538,8 +2538,8 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
       "trademark": "branded-internal"
     },
     {
@@ -2553,7 +2553,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-10T21:03:53.157Z",
+      "date": "2026-11-10T23:04:49.219Z",
       "specSource": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
       "logosRemoved": true,
       "photos": [
@@ -2692,7 +2692,7 @@
         "rear.jpg"
       ],
       "taskId": null,
-      "date": "2026-11-10T21:04:10.684Z",
+      "date": "2026-11-10T23:04:57.967Z",
       "specSource": "https://gracedesign.com/wp-content/uploads/2018/06/m905_owners_manual_reve.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2824,7 +2824,7 @@
         "rear.jpg"
       ],
       "taskId": null,
-      "date": "2026-11-10T21:04:23.275Z",
+      "date": "2026-11-10T23:05:05.424Z",
       "specSource": "https://datasheet.chipsmall.com/6425/362759.pdf",
       "logosRemoved": true,
       "gates": [

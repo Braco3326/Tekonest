@@ -11,8 +11,8 @@
     {
       "portId": "in-line-a",
       "face": "io",
-      "xMm": 142,
-      "yMm": 129,
+      "xMm": 143.5,
+      "yMm": 129.2,
       "confidence": "photo",
       "openingMm": 24,
       "insetMm": 27.5
@@ -20,8 +20,8 @@
     {
       "portId": "thru-out-a",
       "face": "io",
-      "xMm": 142,
-      "yMm": 98,
+      "xMm": 144.3,
+      "yMm": 100.1,
       "confidence": "photo",
       "openingMm": 24,
       "insetMm": 38.9
@@ -29,8 +29,8 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 181,
-      "yMm": 46,
+      "xMm": 177.3,
+      "yMm": 57.7,
       "confidence": "photo",
       "insetMm": 25.8
     }
@@ -96,6 +96,11 @@
       "kind": "photo",
       "url": "https://cdn.shopify.com/s/files/1/0687/4667/4285/files/q_spk_k2_12_img_front.png",
       "note": "QSC K12.2 official front render (1172 x 2500 px, opened, silhouette profiled row by row; the mirrored floor reflection is cropped off): the body is 1115 px wide for 356 mm (3.13 px/mm) and 1842 px tall for 602 mm, its sides lose about 4 mm each at the top end and 3 mm at the bottom compared with the widest point near 195 mm above the base (curved-cabinet barrelMm 4, barrelCentreMm 195), and the top corners round off by about 17 mm horizontally over 24 mm vertically (edgeRadiusMm 18, edgeDropMm 24). The front picture is this render cropped to (36,46,1115,1842), the left picture the side render side.png cropped to (147,135,1150,1975), both with the white corners filled (--project-photo ...,fill); the rear picture is still the Meshy render (projectionShiftMm io 68 unchanged). The plan (front 356 mm, 346 mm wide 230 mm behind the baffle, rear polygon 168 mm, corner radii 30 / auto / 36 mm) is the old hexagon with rounded corners, an estimate: no top view exists. The rear amplifier recess, the side handles and the rigging points are not modelled."
+    },
+    {
+      "kind": "photo",
+      "url": "https://cdn.shopify.com/s/files/1/0687/4667/4285/files/q_spk_k2_12_img_back.png",
+      "note": "Wave 5 re-measure on the rear picture the ports sit on (the Meshy render, shifted 68 mm by projectionShiftMm; read on the atlas with the GLB rear-flat UV fit u = 0.9655 x + 0.172, v = 0.9844 - 1.6353 y, i.e. 3.33 px/mm both ways; mm grid): MIC/LINE A combo (143.5, 129.2), the male XLR below it (144.3, 100.1), IEC inlet opening (177.3, 57.7). The IEC position was 11.7 mm too low and 3.7 mm too far right (181, 46). The real rear render (rear.png) is a 3/4 perspective view with the handle side showing, so it cannot be mapped as a flat face; the amplifier panel on it is almost frontal but only about 1/3 of the face, so the Meshy rear picture stays. +/- 1 mm."
     }
   ],
   "build": {

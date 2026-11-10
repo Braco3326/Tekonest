@@ -11,50 +11,50 @@
     {
       "portId": "digilink",
       "face": "io",
-      "xMm": 332,
-      "yMm": 13,
+      "xMm": 332.4,
+      "yMm": 9.8,
       "confidence": "photo"
     },
     {
       "portId": "analog-in-db25",
       "face": "io",
-      "xMm": 59.4,
-      "yMm": 71.7,
+      "xMm": 43,
+      "yMm": 72.1,
       "confidence": "photo"
     },
     {
       "portId": "analog-out-db25",
       "face": "io",
-      "xMm": 93.6,
-      "yMm": 30,
+      "xMm": 79,
+      "yMm": 28.1,
       "confidence": "photo"
     },
     {
       "portId": "aes-io-db25",
       "face": "io",
-      "xMm": 192.8,
-      "yMm": 62,
+      "xMm": 187,
+      "yMm": 62.1,
       "confidence": "photo"
     },
     {
       "portId": "wordclock-in",
       "face": "io",
-      "xMm": 430,
-      "yMm": 68,
+      "xMm": 434.1,
+      "yMm": 68.2,
       "confidence": "photo"
     },
     {
       "portId": "wordclock-out",
       "face": "io",
-      "xMm": 430,
-      "yMm": 45,
+      "xMm": 434.5,
+      "yMm": 45.1,
       "confidence": "photo"
     },
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 448,
-      "yMm": 15,
+      "xMm": 448.2,
+      "yMm": 15.1,
       "confidence": "photo"
     }
   ],
@@ -155,6 +155,11 @@
       "kind": "photo",
       "url": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
       "note": "Front panel illustration embedded in the same PDF (p.5, extracted locally, 867x243 px, front straight-on with the top surface visible). Scale 1.727 px/mm from the ear slots (131.6 px = 76.2 mm). power = round button with green LED ring; sample-rate = the 48 kHz LED of the SAMPLE RATE row (the real unit has no sample-rate control, the rate is set in Pro Tools and only shown on LEDs)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
+      "note": "Wave 5 re-measure on the rear picture itself (rear.jpg crop 12,610,1476,272 over 482.6 x 88.9 mm, 3.06 px/mm, read on a mm grid): the first positions were taken from the manual illustration and sat 10 to 16 mm off the connectors of the photo. Shell centres incl. ears: ANALOG INPUT +4 dBu DB25 (43.0, 72.1), ANALOG OUTPUT DB25 (79.0, 28.1), AES/EBU DB25 (187.0, 62.1), DigiLink PRIMARY PORT (332.4, 9.8), WD CLK in BNC (434.1, 68.2), WD CLK out BNC (434.5, 45.1), AC inlet opening unchanged (448.2, 15.1). +/- 0.5 mm."
     }
   ]
 }

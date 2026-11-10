@@ -43,15 +43,15 @@
     {
       "portId": "dante-primary",
       "face": "opposite",
-      "xMm": 57.5,
-      "yMm": 183.7,
+      "xMm": 40.7,
+      "yMm": 184.3,
       "confidence": "photo"
     },
     {
       "portId": "power-in",
       "face": "opposite",
-      "xMm": 80.1,
-      "yMm": 54.3,
+      "xMm": 71.3,
+      "yMm": 54.8,
       "confidence": "photo"
     }
   ],
@@ -168,6 +168,11 @@
       "kind": "datasheet",
       "url": "https://www.neutrik.com/en/product/ne8fdp.pdf",
       "note": "Neutrik NE8FDP datasheet (opened): D-shape etherCON chassis connector, fits the standardised entertainment-industry panels and accepts any standard RJ45 plug. No cutout number is stated, so no openingMm is given for the Dante port or for the rectangular IEC inlet."
+    },
+    {
+      "kind": "photo",
+      "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+      "note": "Wave 5 re-measure of the two rear ports on the rear picture (rear.jpg crop 94,47,1812,890 over 480 x 220 mm, 3.775 px/mm across and 4.05 up; the picture is 1812 px wide in a 2048 px atlas, so the face maps u over 0.885 of it: read on the atlas rows and converted with 3.775 px/mm, checked against the GLB rear-plate UVs): the first positions were on the SECONDARY etherCON and 9 mm right of IEC inlet A. PRIMARY etherCON (40.7, 184.3), IEC inlet A opening (71.3, 54.8). The scripted etherCON and IEC housings of the shape moved with them (they stood 9 to 29 mm beside the printed connectors). +/- 0.7 mm."
     }
   ]
 }

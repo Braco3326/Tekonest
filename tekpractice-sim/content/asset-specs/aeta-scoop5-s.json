@@ -12,7 +12,7 @@
       "portId": "in-send",
       "face": "io",
       "xMm": 65.4,
-      "yMm": 23.9,
+      "yMm": 18.7,
       "confidence": "photo",
       "openingMm": 24
     },
@@ -20,7 +20,7 @@
       "portId": "out-return",
       "face": "io",
       "xMm": 116.7,
-      "yMm": 22.6,
+      "yMm": 20,
       "confidence": "photo",
       "openingMm": 24
     },
@@ -100,6 +100,11 @@
       "kind": "photo",
       "url": "https://www.aeta-audio.com/wp-content/uploads/2018/10/Scoop5S_1-1.png",
       "note": "AETA front photo (opened as image, 800x621, three-quarter view, so only a rough position). Opposite face = front. power = the round on/off key at the top-left of the front panel, about 10 mm diameter; read 15 mm from the faceplate left edge plus an assumed 17.5 mm rack ear, 30.6 mm from the bottom (+/- 6 mm). Protrusion d = 3 mm is an estimate."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.aeta-audio.com/wp-content/uploads/2018/10/Scoop5S_2-1.png",
+      "note": "Wave 5 re-measure of the XLR rows on rear_padded.png (the picture the ports sit on, 1.587 px/mm across and 1.477 px/mm up, read on an 8x grid): INPUT A female XLR centre y 18.7 mm (was 23.9, 5.2 mm above the connector), OUTPUT A male XLR y 20.0 (was 22.6); x unchanged (65.4 and 116.7 agree within 0.1 mm). +/- 0.5 mm."
     }
   ],
   "texture": {

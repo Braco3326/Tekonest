@@ -696,6 +696,9 @@ export async function shipRun(id: string, runDir: string, opts: ShipRunOpts = {}
   return { id, ok: true, attempts: stored.attempts, dryRun: false, workDir: dir, builtGlb: finalPath, finalGlb: target, ...(scripted ? { scripted: true as const } : {}), ...(hybrid ? { hybrid: true as const } : {}) }
 }
 
+/** File names of the pipeline's own generic pictures (npm run asset:panel writes them as _generic_<face>.png). */
+const GENERIC_PICTURE_PREFIX = '_generic_'
+
 /** The manifest's provenance fields of one build: how it was made, with what, from which photos, and what that means for the licence fields. */
 export function provenanceOf(i: {
   scripted: boolean
@@ -711,6 +714,18 @@ export function provenanceOf(i: {
   const meshyInvolved = i.taskId !== null && (!i.scripted || i.meshyPicture)
   const photos = [...new Set([...(meshyInvolved ? i.referencePhotos : []), ...i.projectPhotos])]
   const FROM_PHOTOS = 'generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed'
+  if (i.hybrid && !i.meshyPicture && photos.length > 0 && photos.every((n) => n.startsWith(GENERIC_PICTURE_PREFIX))) {
+    // The pictures are generic artwork drawn by the pipeline (npm run asset:panel / content/generic-panels), not a manufacturer image: say so.
+    return {
+      tool: 'hybrid',
+      toolVersion: BUILDER_VERSION,
+      photos,
+      taskId: null,
+      source: 'hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)',
+      license: 'internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark',
+      trademark: 'branded-internal',
+    }
+  }
   if (i.hybrid) {
     return {
       tool: 'hybrid',

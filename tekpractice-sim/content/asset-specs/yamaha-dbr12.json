@@ -11,27 +11,27 @@
     {
       "portId": "in-line",
       "face": "io",
-      "xMm": 156.3,
-      "yMm": 410,
-      "confidence": "manual",
+      "xMm": 158.5,
+      "yMm": 414,
+      "confidence": "photo",
       "openingMm": 24,
       "insetMm": 25.7
     },
     {
       "portId": "link-out",
       "face": "io",
-      "xMm": 158,
-      "yMm": 290,
-      "confidence": "manual",
+      "xMm": 158.2,
+      "yMm": 297.6,
+      "confidence": "photo",
       "openingMm": 24,
       "insetMm": 25.6
     },
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 167.5,
-      "yMm": 172.5,
-      "confidence": "manual",
+      "xMm": 167.4,
+      "yMm": 183.2,
+      "confidence": "photo",
       "insetMm": 25.5
     }
   ],
@@ -104,6 +104,11 @@
       "kind": "photo",
       "url": "https://usa.yamaha.com/files/photoviewer_speaker_dbr12_side%20left_76132858e85bb3dac11ee872ed712381.jpg",
       "note": "Yamaha DBR12 side-left photo (2500 x 4360 px, opened, silhouette profiled row by row): the cabinet is 2271 px deep for 348 mm (6.5 px/mm), and its rear edge is 28 mm shallower in the waist (the handle zone, 190 to 540 mm above the base) than at the top and bottom lobes, which the extruded plan does not follow (the picture does: the notch is filled with the body colour and the handle recess is painted). The front photo gives the top corners: 19 mm inset at the very top, full width 36 mm lower (edgeRadiusMm 20, edgeDropMm 30). The three pictures are the real front (113,180,2273,3618), rear (454,105,1092,1789) and side (114,198,2271,3963) photos with the white corners filled (--project-photo ...,fill). The plan (front 376 mm, 330 mm wide 250 mm behind the baffle, rear polygon 200 mm, corner radii 24 / auto / 40 mm) is an estimate from the 3/4 photos; the two rubber feet and the side handle recesses are not modelled."
+    },
+    {
+      "kind": "photo",
+      "url": "https://usa.yamaha.com/products/proaudio/speakers/dbr_series/index.html",
+      "note": "Wave 5 re-measure on the rear picture (rear.jpg crop 454,105,1092,1789 over 376 x 601 mm, 2.90 px/mm across and 2.98 up, read on a mm grid): the manual-based positions were 2 to 11 mm off. MIC/LINE 1 combo jack (158.5, 414.0), CH1+2 MIX male XLR (158.2, 297.6), AC IN inlet (167.4, 183.2). +/- 0.7 mm."
     }
   ],
   "build": {

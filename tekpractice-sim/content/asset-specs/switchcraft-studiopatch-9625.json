@@ -11,29 +11,29 @@
     {
       "portId": "front-tt-1",
       "face": "io",
-      "xMm": 31,
-      "yMm": 31,
+      "xMm": 34.9,
+      "yMm": 29.1,
       "confidence": "photo"
     },
     {
       "portId": "front-tt-2",
       "face": "io",
-      "xMm": 31,
-      "yMm": 12,
+      "xMm": 38.8,
+      "yMm": 12.3,
       "confidence": "photo"
     },
     {
       "portId": "rear-in-db25",
       "face": "opposite",
-      "xMm": 416.3,
-      "yMm": 31.5,
+      "xMm": 434,
+      "yMm": 28.3,
       "confidence": "photo"
     },
     {
       "portId": "rear-out-db25",
       "face": "opposite",
-      "xMm": 416.3,
-      "yMm": 13.5,
+      "xMm": 430.2,
+      "yMm": 10,
       "confidence": "photo"
     }
   ],
@@ -83,6 +83,11 @@
       "kind": "photo",
       "url": "https://datasheet.chipsmall.com/6425/362759.pdf",
       "note": "Embedded press photo of the 9625 rear (same PDF, 1029x482, three-quarter view): six DB25 pairs, INPUT over OUTPUT, labelled 41-48 at the left end up to 1-8 at the right end as seen from behind. The rear is the opposite face. Perspective makes the photo pitch non-uniform, so the six pairs are placed symmetrically about the 241.3 mm centre at an assumed 70 mm pitch (x = 241.3 + (k - 2.5) x 70, k = 0..5 from the left as seen from behind); INPUT 1-8 and OUTPUT 1-8 are the rightmost pair (x 416.3). Row heights from the left end of the photo (plate about 44 mm = 88 px): INPUT row y about 31.5, OUTPUT row y about 13.5 (+/- 4 mm)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.redco.com/Switchcraft-9625.html",
+      "note": "Wave 5 re-measure after the pictures were put on the right faces (front.jpg on the io face, rear.jpg on the opposite face: with frontOnIo the projection faces name the build frame, so they were swapped and the DB25 pairs sat on the front). Read on the crops 2,232,996,86 (2.06 px/mm across, 1.94 up, elevated 30 degree photos, so a column leans): first TT jack of the top row (34.9, 29.1), of the bottom row (38.8, 12.3); INPUT 1-8 DB25 shell centre (434.0, 28.3), OUTPUT 1-8 (430.2, 10.0). +/- 1.5 mm (perspective)."
     }
   ],
   "texture": {
