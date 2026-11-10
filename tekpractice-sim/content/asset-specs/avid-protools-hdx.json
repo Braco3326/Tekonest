@@ -66,11 +66,32 @@
   "build": {
     "shape": "rack-box",
     "params": {
-      "chamferMm": 3
+      "earThicknessMm": 18,
+      "plateFilletMm": 8,
+      "plateRgb": 3816770,
+      "filletMm": 8,
+      "filletSegments": 12,
+      "rearInsetMm": 8,
+      "feetMm": 6,
+      "feetDiaMm": 22,
+      "ventSlots": 20,
+      "ventColumns": 3,
+      "ventSides": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 90,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 105,
+      "ventDepthMm": 2,
+      "ventFromRearMm": 60
     },
     "projection": [
       "opposite",
       "io"
-    ]
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 3
   }
 }

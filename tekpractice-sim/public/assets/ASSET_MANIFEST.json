@@ -2462,7 +2462,7 @@
     {
       "id": "avid-protools-hdx",
       "optimized": true,
-      "tris": 44,
+      "tris": 3028,
       "kind": "device",
       "ports": 2,
       "status": "ok",
@@ -2475,10 +2475,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
-      "date": "2026-11-10T01:25:28.409Z",
+      "date": "2026-11-10T21:35:47.169Z",
       "specSource": "https://www.avid.com/products/Pro-Tools-HDX",
       "logosRemoved": true,
       "gates": [
@@ -2503,11 +2500,15 @@
           "ok": true
         },
         {
-          "gate": "proportionDrift",
+          "gate": "detail",
           "ok": true
         },
         {
-          "gate": "portSurface",
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
           "ok": true
         },
         {
@@ -2518,7 +2519,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "avid-hd-io",
