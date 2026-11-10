@@ -1180,18 +1180,63 @@
     {
       "id": "switchcraft-studiopatch-9625",
       "optimized": true,
-      "tris": 144,
+      "tris": 44,
       "kind": "device",
       "ports": 4,
       "status": "ok",
-      "source": "modeled",
-      "sourceUrl": "",
-      "author": "TekPractice (procédural interne, Blender)",
-      "license": "internal (own work)",
-      "attributionText": "",
-      "trademark": "generic",
       "portEmpties": 4,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "front.jpg",
+        "rear.jpg"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal",
+      "date": "2026-11-10T00:54:15.252Z",
+      "specSource": "https://datasheet.chipsmall.com/6425/362759.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "antelope-ocx-hd",

@@ -42,7 +42,11 @@
     "shape": "rack-box",
     "params": {
       "chamferMm": 1
-    }
+    },
+    "projection": [
+      "io",
+      "opposite"
+    ]
   },
   "sources": [
     {
@@ -65,5 +69,45 @@
       "url": "https://datasheet.chipsmall.com/6425/362759.pdf",
       "note": "Embedded press photo of the 9625 rear (same PDF, 1029x482, three-quarter view): six DB25 pairs, INPUT over OUTPUT, labelled 41-48 at the left end up to 1-8 at the right end as seen from behind. The rear is the opposite face. Perspective makes the photo pitch non-uniform, so the six pairs are placed symmetrically about the 241.3 mm centre at an assumed 70 mm pitch (x = 241.3 + (k - 2.5) x 70, k = 0..5 from the left as seen from behind); INPUT 1-8 and OUTPUT 1-8 are the rightmost pair (x 416.3). Row heights from the left end of the photo (plate about 44 mm = 88 px): INPUT row y about 31.5, OUTPUT row y about 13.5 (+/- 4 mm)."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "io",
+        "xMm": 3,
+        "yMm": 26,
+        "wMm": 26,
+        "hMm": 15,
+        "marginMm": 3,
+        "fill": "#b8e9ef"
+      },
+      {
+        "face": "io",
+        "xMm": 455,
+        "yMm": 10,
+        "wMm": 26,
+        "hMm": 26,
+        "marginMm": 3,
+        "fill": "#b8e9ef"
+      },
+      {
+        "face": "opposite",
+        "xMm": 236,
+        "yMm": 32,
+        "wMm": 20,
+        "hMm": 9,
+        "marginMm": 3,
+        "fill": "#a7d6e1"
+      },
+      {
+        "face": "opposite",
+        "xMm": 174,
+        "yMm": 1,
+        "wMm": 26,
+        "hMm": 8,
+        "marginMm": 2,
+        "fill": "#a7d6e1"
+      }
+    ]
+  }
 }
