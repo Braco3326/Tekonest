@@ -393,10 +393,58 @@
     {
       "id": "rca",
       "optimized": true,
-      "tris": 196,
+      "tris": 464,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:31:04.876Z",
+      "specSource": "https://en.wikipedia.org/wiki/RCA_connector",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "rj45",
@@ -454,10 +502,58 @@
     {
       "id": "ethercon",
       "optimized": true,
-      "tris": 116,
+      "tris": 260,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "date": "2026-11-10T08:33:54.501Z",
+      "specSource": "https://www.neutrik.com/en/product/ne8mc-1.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "id": "speakon-nl4",
@@ -854,10 +950,58 @@
     {
       "id": "bnc",
       "optimized": true,
-      "tris": 224,
+      "tris": 408,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:32:15.988Z",
+      "specSource": "https://en.wikipedia.org/wiki/BNC_connector",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "tt-bantam",
@@ -918,18 +1062,114 @@
     {
       "id": "dsub25",
       "optimized": true,
-      "tris": 24,
+      "tris": 428,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:31:37.646Z",
+      "specSource": "https://en.wikipedia.org/wiki/D-subminiature",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "toslink",
       "optimized": true,
-      "tris": 24,
+      "tris": 112,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "date": "2026-11-10T08:38:30.928Z",
+      "specSource": "https://en.wikipedia.org/wiki/TOSLINK",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "id": "usb-a",
@@ -1102,18 +1342,114 @@
     {
       "id": "digilink",
       "optimized": true,
-      "tris": 24,
+      "tris": 164,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:33:30.062Z",
+      "specSource": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "gpio-terminal",
       "optimized": true,
-      "tris": 124,
+      "tris": 428,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:31:58.167Z",
+      "specSource": "https://www.phoenixcontact.com/en-pc/products/pcb-connectors",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "yamaha-ql1",

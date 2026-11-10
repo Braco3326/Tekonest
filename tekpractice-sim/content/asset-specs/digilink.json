@@ -1,0 +1,28 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "digilink",
+  "realSizeMm": {
+    "w": 12,
+    "h": 8,
+    "d": 35
+  },
+  "mating": {
+    "role": "plug"
+  },
+  "build": {
+    "shape": "usb-plug",
+    "params": {
+      "type": 4
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
+      "note": "Avid HD I/O Guide v8.1 (opened for the avid-hd-io spec): DigiLink PRIMARY and EXPANSION ports. The DigiLink Mini plug is modelled with the shape of a mini DisplayPort plug (7.5 x 4.6 mm shell, 9 mm long, one chamfered side): that resemblance is from general knowledge, not from this guide, and every size is an ESTIMATE."
+    }
+  ]
+}

@@ -1297,6 +1297,7 @@ USB_DIMS_MM = {
     1: (12.0, 4.5, 11.75, 4, 0.0),    # Standard-A plug
     2: (8.0, 7.25, 11.75, 4, 1.4),    # USB 2 Standard-B plug
     3: (8.25, 2.4, 6.51, 12, 0.0),    # Type-C plug (drawn with 12 contacts per side reduced to 6 strips)
+    4: (7.5, 4.6, 9.0, 4, 1.0),       # mini-DisplayPort style plug (Avid DigiLink Mini)
 }
 
 
@@ -1318,7 +1319,7 @@ def usb_shell_outline(kind: int, w: float, h: float, c: float) -> list[tuple[flo
 
 
 def build_usb_plug(plan: Plan) -> bpy.types.Object:
-    """A USB cable plug (params.type: 1 Standard-A, 2 USB 2 Standard-B, 3 Type-C), mating face at z = 0, cable at z = d.
+    """A USB cable plug (params.type: 1 Standard-A, 2 USB 2 Standard-B, 3 Type-C, 4 mini-DisplayPort style), mating face at z = 0, cable at z = d.
 
     A hollow nickel shell of the published size and insertion length (Wikipedia, USB hardware: A 12.0 x 4.5 mm, B 8.0 x 7.25 mm, C 8.25 x 2.4 mm), an
     insulator tongue with gold contact strips inside it, a black overmould (the box width and height) and a tapering boot to the cable.
@@ -1327,7 +1328,7 @@ def build_usb_plug(plan: Plan) -> bpy.types.Object:
     mm = MM
     kind = int((plan.get("params") or {}).get("type", 1))
     if kind not in USB_DIMS_MM:
-        raise BuildError(f"params.type must be 1 (A), 2 (B) or 3 (C), got {kind}")
+        raise BuildError(f"params.type must be 1 (A), 2 (B), 3 (C) or 4 (mini-DP), got {kind}")
     sw, sh, sl, nc, cham = (v * mm if i < 3 or i == 4 else v for i, v in enumerate(USB_DIMS_MM[kind]))
     if w <= sw + 1.0 * mm or h <= sh + 1.0 * mm or d <= sl + 14.0 * mm:
         raise BuildError("usb-plug: sizeMm must exceed the shell by 1 mm each way and be deeper than the shell plus 14 mm")
@@ -1359,6 +1360,155 @@ def build_usb_plug(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+TERMINAL_GREEN = "#4f7a4a"
+
+
+def build_dsub_plug(plan: Plan) -> bpy.types.Object:
+    """A 25-pin D-sub male cable plug (shell size B), mating face at z = 0, cable at z = d.
+
+    The trapezoid D shell (hollow, 8 mm long) with the 13 + 12 pins of the normal-density layout (2.76 mm pitch in a row, rows 2.84 mm apart, rows offset
+    by half a pitch: Wikipedia, D-subminiature) standing on an insulator, the mounting flange, a metal hood and a boot. Estimated (the shell
+    drawing was not available): shell 38.96 x 8.36 mm, flange 53.04 mm wide, hood and boot sizes, pin diameter 1 mm and length 5 mm."""
+    w, h, d = size_m(plan)
+    mm = MM
+    if w < 54.0 * mm or h < 13.0 * mm or d < 40.0 * mm:
+        raise BuildError("dsub-plug: sizeMm must be at least 54 x 13 x 40 mm")
+    shell = [(-19.48 * mm, 4.18 * mm), (19.48 * mm, 4.18 * mm), (17.4 * mm, -4.18 * mm), (-17.4 * mm, -4.18 * mm)]
+    inner = [(x * 0.97, y * 0.9) for x, y in shell]
+    body = Body("dsub-plug")
+    bm = body.bm
+    ring_wall(bm, shell, inner, 0.0, 8.0 * mm)
+    body.done(NICKEL)
+    extrude_xy(bm, inner, 4.0 * mm, 9.0 * mm)                                   # insulator block the pins stand on
+    body.done(DARK)
+    pitch, row = 2.76 * mm, 2.84 * mm
+    for r, count in ((0, 13), (1, 12)):
+        y = (row / 2.0) if r == 0 else (-row / 2.0)
+        for i in range(count):
+            x = (i - (count - 1) / 2.0) * pitch
+            cylinder_between(bm, g2b(x, y, 6.0 * mm), g2b(x, y, 1.0 * mm), 0.5 * mm, segments=4)
+    body.done(GOLD)
+    box(bm, -26.52 * mm, 26.52 * mm, -6.25 * mm, 6.25 * mm, 8.0 * mm, 9.5 * mm)   # mounting flange
+    body.done(NICKEL)
+    hood = [(-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2), (-w / 2, h / 2)]
+    extrude_xy(bm, hood, 9.5 * mm, d - 14.0 * mm)
+    body.done(NICKEL)
+    cylinder_between(bm, g2b(0.0, 0.0, d - 14.5 * mm), g2b(0.0, 0.0, d), h * 0.4, 4.5 * mm, segments=16)
+    body.done(BLACK)
+    return body.finish()
+
+
+def build_terminal_block(plan: Plan) -> bpy.types.Object:
+    """A pluggable screw-terminal block (GPIO / logic port), params.poles poles at params.pitchMm (x100 for a whole number; 508 = 5.08 mm), mating face
+    (the contact side) at z = 0, wire entries on the back face at z = d, one screw head per pole on top.
+
+    Every size is an estimate of a typical 5.08 mm pitch pluggable block (no published dimension was verified for this connector): width = poles x pitch + 2 mm."""
+    w, h, d = size_m(plan)
+    mm = MM
+    params = plan.get("params") or {}
+    poles = int(params.get("poles", 8))
+    pitch = float(params.get("pitchHundredthsMm", 508)) / 100.0 * mm
+    if poles < 2 or poles > 16 or abs(w - (poles * pitch + 2.0 * mm)) > 0.5 * mm:
+        raise BuildError(f"terminal-block: sizeMm.w ({w / mm:.2f}) must be poles x pitch + 2 mm ({(poles * pitch + 2.0 * mm) / mm:.2f})")
+    body = Body("terminal-block")
+    bm = body.bm
+    extrude_xy(bm, [(-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2), (-w / 2, h / 2)], 0.0, d)
+    face_edges = take_face(bm, d)
+    holes = []
+    for i in range(poles):
+        x = (i - (poles - 1) / 2.0) * pitch
+        mouth, floor = rect_hole(bm, x - 1.8 * mm, x + 1.8 * mm, -h / 2 + 2.0 * mm, -h / 2 + 5.6 * mm, d, 7.0 * mm, -1.0)
+        bm.faces.new(floor)
+        holes.append(mouth)
+    body.done(DARK)
+    fill_with_holes(bm, face_edges, holes, (0.0, 0.0, 1.0))
+    body.done(TERMINAL_GREEN)
+    for i in range(poles):
+        x = (i - (poles - 1) / 2.0) * pitch
+        cylinder_between(bm, g2b(x, h / 2 - 3.0 * mm, d * 0.55), g2b(x, h / 2 - 0.2 * mm, d * 0.55), 2.1 * mm, segments=10)
+    body.done(NICKEL)
+    return body.finish()
+
+
+def build_coax_plug(plan: Plan) -> bpy.types.Object:
+    """A coaxial cable plug (params.type: 1 BNC, 2 RCA), mating face at z = 0, cable at z = d, built as one revolved profile.
+
+    BNC: a 12.2 mm coupling nut hollow for 16 mm around a 1.6 mm centre pin standing on the dielectric; body 11 mm to a boot. RCA: a 3.2 mm centre pin
+    from the tip, a 8.8 mm ring (hollow) behind it, a 12.5 mm handle and a boot. Estimated: all sizes (typical crimp plugs; the BNC bayonet slots are
+    not modelled)."""
+    w, h, d = size_m(plan)
+    mm = MM
+    kind = int((plan.get("params") or {}).get("type", 1))
+    if kind not in (1, 2):
+        raise BuildError(f"params.type must be 1 (BNC) or 2 (RCA), got {kind}")
+    body_r = min(w, h) / 2.0
+    body = Body("coax-plug")
+    bm = body.bm
+    if kind == 1:
+        if d < 30.0 * mm or body_r < 5.8 * mm:
+            raise BuildError("coax-plug BNC: sizeMm must be at least 11.6 mm across and 30 mm long")
+        profile = [(2.0 * mm, 12.0 * mm), (4.7 * mm, 12.0 * mm), (4.7 * mm, 0.0), (body_r, 0.0), (body_r, 16.0 * mm), (body_r - 0.8 * mm, 16.0 * mm),
+                   (body_r - 0.8 * mm, d - 12.0 * mm), (body_r * 0.45, d)]
+        revolve(body, profile, [DARK, BLACK, NICKEL, NICKEL, NICKEL, NICKEL, BLACK], 24, cap_first=True, cap_last=True)
+        cylinder_between(bm, g2b(0.0, 0.0, 12.5 * mm), g2b(0.0, 0.0, 3.0 * mm), 0.8 * mm, segments=8)
+        body.done(GOLD)
+    else:
+        if d < 30.0 * mm or body_r < 6.0 * mm:
+            raise BuildError("coax-plug RCA: sizeMm must be at least 12 mm across and 30 mm long")
+        ring_front = 3.5 * mm
+        profile = [(1.7 * mm, 15.0 * mm), (3.9 * mm, 15.0 * mm), (3.9 * mm, ring_front), (4.4 * mm, ring_front), (4.4 * mm, 15.0 * mm), (body_r * 0.8, 17.0 * mm),
+                   (body_r, 20.0 * mm), (body_r, d - 10.0 * mm), (body_r * 0.4, d)]
+        revolve(body, profile, [DARK, NICKEL, NICKEL, NICKEL, NICKEL, BLACK, BLACK, BLACK], 24, cap_first=True, cap_last=True)
+        cylinder_between(bm, g2b(0.0, 0.0, 15.5 * mm), g2b(0.0, 0.0, 0.0), 1.6 * mm, segments=10)       # the centre pin: its tip is the mating face
+        body.done(GOLD)
+    return body.finish()
+
+
+def build_toslink_plug(plan: Plan) -> bpy.types.Object:
+    """A TOSLINK (EIAJ / JIS F05) optical plug, mating face at z = 0, cable at z = d.
+
+    A 5 x 5 mm square head 12 mm long with its tip edges chamfered, a 2.2 mm light-guide disc in the tip face, a stepped body (the box width and
+    height) and a boot. Estimated: all sizes (no drawing was available)."""
+    w, h, d = size_m(plan)
+    mm = MM
+    if w < 7.0 * mm or h < 7.0 * mm or d < 25.0 * mm:
+        raise BuildError("toslink-plug: sizeMm must be at least 7 x 7 x 25 mm")
+    body = Body("toslink-plug")
+    bm = body.bm
+    box(bm, -2.5 * mm, 2.5 * mm, -2.5 * mm, 2.5 * mm, 0.02 * mm, 12.0 * mm)
+    body.done(BLACK)
+    cylinder_between(bm, g2b(0.0, 0.0, 0.0), g2b(0.0, 0.0, 1.0 * mm), 1.1 * mm, segments=12)      # the light guide stands 0.02 mm proud of the head: the mating face
+    body.done(LOCK_GREY)
+    box(bm, -w / 2, w / 2, -h / 2, h / 2, 12.0 * mm, d - 9.0 * mm)
+    body.done(BLACK)
+    cylinder_between(bm, g2b(0.0, 0.0, d - 9.5 * mm), g2b(0.0, 0.0, d), min(w, h) * 0.38, 2.2 * mm, segments=12)
+    body.done(BLACK)
+    return body.finish()
+
+
+def build_ethercon_plug(plan: Plan) -> bpy.types.Object:
+    """A Neutrik etherCON cable connector (NE8MC class): an RJ45 plug standing out of a round metal shell with a latch, mating face (the RJ45 tip) at z = 0.
+
+    The RJ45 head 11.68 x 8 mm (the rj45 model's size), 14 mm long, in front of a 22 mm shell 26 mm long, a 24.5 mm body, a boot to the cable and a
+    latch lever on top (the box is taller than wide). Estimated: every size except the RJ45 head (the NE8MC drawing was not available; the DXF is
+    on Neutrik's page but was not retrieved)."""
+    w, h, d = size_m(plan)
+    mm = MM
+    body_r = w / 2.0
+    if h <= w + 0.5 * mm or d < 60.0 * mm or w < 24.0 * mm:
+        raise BuildError("ethercon-plug: sizeMm.w must be at least 24 mm, h larger than w (the latch lever) and d at least 60 mm")
+    axis_y = body_r - h / 2.0
+    body = Body("ethercon-plug")
+    bm = body.bm
+    box(bm, -5.84 * mm, 5.84 * mm, axis_y - 4.0 * mm, axis_y + 4.0 * mm, 0.0, 15.0 * mm)
+    body.done(PALE)                                                                     # the clear RJ45 housing, drawn as pale blue-grey like the rj45 model
+    profile = [(11.0 * mm, 14.0 * mm), (11.0 * mm, 40.0 * mm), (body_r, 43.0 * mm), (body_r, d - 20.0 * mm), (body_r * 0.5, d)]
+    revolve(body, profile, [NICKEL, NICKEL, BLACK, BLACK], 24, cap_first=True, cap_last=True, cy=axis_y)
+    box(bm, -4.0 * mm, 4.0 * mm, axis_y + body_r - 1.0 * mm, axis_y + body_r + (h - w), 44.0 * mm, 62.0 * mm)
+    body.done(BLACK)
+    return body.finish()
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "cylinder-plug": build_cylinder_plug,
@@ -1377,6 +1527,11 @@ SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "schuko-socket": build_schuko_socket,
     "locking-plug": build_locking_plug,
     "usb-plug": build_usb_plug,
+    "dsub-plug": build_dsub_plug,
+    "terminal-block": build_terminal_block,
+    "coax-plug": build_coax_plug,
+    "toslink-plug": build_toslink_plug,
+    "ethercon-plug": build_ethercon_plug,
     "cable-assembly": build_cable_assembly,
 }
 

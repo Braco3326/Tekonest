@@ -173,6 +173,15 @@ describe('xlr-male-plug and the pins param of cylinder-plug', () => {
   })
 })
 
+describe('D-sub, terminal block, coax, TOSLINK and etherCON connector shapes', () => {
+  it('are connector shapes; only the terminal block and the coax plug take params', () => {
+    for (const id of ['dsub-plug', 'toslink-plug', 'ethercon-plug'] as const) expect([...SHAPE_SPECS[id].params], id).toEqual([])
+    expect([...SHAPE_SPECS['terminal-block'].params].sort()).toEqual(['pitchHundredthsMm', 'poles'])
+    expect([...SHAPE_SPECS['coax-plug'].params]).toEqual(['type'])
+    for (const id of ['dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug'] as const) expect(SHAPE_SPECS[id].kind, id).toBe('connector')
+  })
+})
+
 describe('usb-plug', () => {
   it('is a connector shape with a type param (1 A, 2 B, 3 C)', () => {
     expect(SHAPE_SPECS['usb-plug']).toMatchObject({ kind: 'connector', needsMatingOuter: false })

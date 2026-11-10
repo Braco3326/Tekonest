@@ -34,6 +34,7 @@ How each model was made:
 | Yellowtec | m!ka microphone arm | own work: scripted articulated arm in the raised pose of the product photo (no photo texture) | none |
 | Mogami | Gold DB25 to 8 XLR-M loom | own work: scripted cable assembly (D-sub hood, trunk, eight XLR plugs) from estimated dimensions | none |
 | Neutrik | XLR, TRS, speakON, powerCON, etherCON connectors | names and dimensions as reference (STEP files downloaded, geometry not shipped) | none |
+| Generic | All connector models (XLR, jacks, USB, mains, speakON, powerCON, D-sub, BNC, RCA, TOSLINK, etherCON, DigiLink, terminal block) | own work: scripted plugs from published dimensions where a source is cited in the spec, otherwise estimates | none: no logo or lettering |
 | Generic | Playout PC | generic (no photo exists) | none |
 
 Trademark note: CLAUDE.md rule is "generic visual equivalents only; real references stay internal". Photo-textured models deliberately show the real front, rear or top panels, so brand permission is needed before public release for the rows marked photo-textured.

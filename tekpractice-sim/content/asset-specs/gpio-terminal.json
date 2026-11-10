@@ -1,0 +1,29 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "gpio-terminal",
+  "realSizeMm": {
+    "w": 42.64,
+    "h": 15,
+    "d": 20
+  },
+  "mating": {
+    "role": "plug"
+  },
+  "build": {
+    "shape": "terminal-block",
+    "params": {
+      "poles": 8,
+      "pitchHundredthsMm": 508
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.phoenixcontact.com/en-pc/products/pcb-connectors",
+      "note": "Pluggable 5.08 mm pitch screw-terminal blocks (Phoenix Contact class): no dimension of a specific part was verified. The model is a generic 8-pole block, 5.08 mm pitch, 42.64 x 15 x 20 mm (width = 8 x 5.08 + 2 mm), screw heads on top, wire entries on the back: every size is an ESTIMATE. The catalog gpio-terminal is a GPIO terminal block / D-sub logic port; the block was chosen."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "bnc",
+  "realSizeMm": {
+    "w": 12.2,
+    "h": 12.2,
+    "d": 40
+  },
+  "mating": {
+    "role": "plug"
+  },
+  "build": {
+    "shape": "coax-plug",
+    "params": {
+      "type": 1
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://en.wikipedia.org/wiki/BNC_connector",
+      "note": "BNC connector article (not opened for numbers): a 75 ohm bayonet coaxial plug. The model is a typical crimp BNC plug: 12.2 mm coupling nut hollow for 16 mm around a 1.6 mm centre pin, body to 40 mm: every size is an ESTIMATE; the bayonet slots are not modelled."
+    }
+  ]
+}

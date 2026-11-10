@@ -9,7 +9,7 @@
 import type { AssetSpecT } from './specSchema'
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -60,6 +60,15 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   'locking-plug': { kind: 'connector', params: ['contacts', 'colour'], needsMatingOuter: false },
   // A USB cable plug: type = 1 Standard-A, 2 USB 2 Standard-B, 3 Type-C (published shell sizes, black overmould, boot).
   'usb-plug': { kind: 'connector', params: ['type'], needsMatingOuter: false },
+  // A 25-pin D-sub male cable plug (shell size B): sizes in the spec, nothing else.
+  'dsub-plug': { kind: 'connector', params: [], needsMatingOuter: false },
+  // A pluggable screw-terminal block: poles and pitchHundredthsMm (508 = 5.08 mm); width = poles x pitch + 2 mm.
+  'terminal-block': { kind: 'connector', params: ['poles', 'pitchHundredthsMm'], needsMatingOuter: false },
+  // A coaxial cable plug: type = 1 BNC, 2 RCA.
+  'coax-plug': { kind: 'connector', params: ['type'], needsMatingOuter: false },
+  'toslink-plug': { kind: 'connector', params: [], needsMatingOuter: false },
+  // A Neutrik etherCON cable connector: an RJ45 head in a round shell with a latch lever.
+  'ethercon-plug': { kind: 'connector', params: [], needsMatingOuter: false },
 }
 
 /** Default diameter of a socket pocket when the port gives no openingMm, in millimetres (the builder uses the same). */
