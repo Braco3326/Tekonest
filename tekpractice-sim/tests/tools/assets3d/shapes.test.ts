@@ -173,6 +173,21 @@ describe('xlr-male-plug and the pins param of cylinder-plug', () => {
   })
 })
 
+describe('mains and twist-lock connector shapes', () => {
+  const connector: Partial<AssetSpecT> = { kind: 'connector', tier: 'connector', mating: undefined, realSizeMm: { w: 26.83, h: 30.34, d: 79.25 }, ports: [] }
+  it('iec-inlet, iec-cable, schuko-plug and schuko-socket are connector shapes without params', () => {
+    for (const id of ['iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket'] as const) {
+      expect(SHAPE_SPECS[id], id).toMatchObject({ kind: 'connector', needsMatingOuter: false })
+      expect([...SHAPE_SPECS[id].params], id).toEqual([])
+    }
+  })
+  it('locking-plug takes contacts and colour, and refuses a param it does not know', () => {
+    expect([...SHAPE_SPECS['locking-plug'].params].sort()).toEqual(['colour', 'contacts'])
+    expect(validateBuild(specWith({ shape: 'locking-plug', params: { contacts: 4, colour: 1 } }, connector))).toEqual([])
+    expect(validateBuild(specWith({ shape: 'locking-plug', params: { poles: 4 } }, connector))[0]).toMatch(/poles/)
+  })
+})
+
 describe('boom-arm (articulated mic arm in a posed side view)', () => {
   const device: Partial<AssetSpecT> = { kind: 'device', tier: 'standard', mating: undefined, realSizeMm: { w: 525, h: 543, d: 51 }, ports: [] }
   it('is a device shape that takes the pose and the tube sizes as params, and needs no profile', () => {

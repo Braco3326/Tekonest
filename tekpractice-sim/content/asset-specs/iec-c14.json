@@ -1,0 +1,30 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "iec-c14",
+  "realSizeMm": {
+    "w": 31,
+    "h": 23,
+    "d": 26
+  },
+  "mating": {
+    "role": "socket"
+  },
+  "build": {
+    "shape": "iec-inlet"
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://azcus.digikey.com/en/products/detail/schurter-inc/6130-5630/641221",
+      "note": "Schurter 6130.5630 C14 inlet listing (opened via a search result): panel cutout 27.5 x 19.5 mm. Schurter C14 inlets use 6.3 x 0.8 mm blades for line and neutral (retail datasheet snippets). The shroud of the model is that 27.5 x 19.5 mm outline with the two lower corners cut."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://en.wikipedia.org/wiki/IEC_60320",
+      "note": "IEC 60320 article (opened): C14 is the appliance inlet with pin contacts and an earth contact, polarised; pin spacing \"14 (H) 4 (V)\" mm (read as line-neutral 14 mm apart; the vertical 4 mm is the earth offset). The dimensions are in the standard sheets, which were not available. ESTIMATES: flange 31 x 23 x 1.5 mm, pocket depth 12 mm, wall 1.3 mm, back shell to 26 mm, chamfer 3 mm, blade length 10.5 mm, blade positions (L and N at y -2, earth at +2 mm)."
+    }
+  ]
+}

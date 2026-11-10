@@ -1,0 +1,25 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "schuko-plug",
+  "realSizeMm": {
+    "w": 35,
+    "h": 36.2,
+    "d": 60
+  },
+  "mating": {
+    "role": "plug"
+  },
+  "build": {
+    "shape": "schuko-plug"
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://en.wikipedia.org/wiki/Schuko",
+      "note": "Schuko article (opened, CEE 7/4 plug): line and neutral pins 4.8 mm diameter, 19 mm long, centres 19 mm apart; the earth contacts are flat areas on the top and bottom of the plug (no size given). ESTIMATES: round body 35 mm diameter (it must fit the 36 mm recess of the socket model), 60 mm overall length with the cable boot, earth strips 10 x 12 mm. The mating face z = 0 is the pins tips."
+    }
+  ]
+}

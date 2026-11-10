@@ -363,58 +363,394 @@
     {
       "id": "speakon-nl4",
       "optimized": true,
-      "tris": 208,
+      "tris": 424,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:08:56.109Z",
+      "specSource": "https://www.neutrik.com/en/product/nl4fxx",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "powercon-blue",
       "optimized": true,
-      "tris": 208,
+      "tris": 392,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:09:02.425Z",
+      "specSource": "https://www.neutrik.com/en/product/nl4fxx",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "powercon-true1",
       "optimized": true,
-      "tris": 208,
+      "tris": 392,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:09:17.321Z",
+      "specSource": "https://www.neutrik.com/en/product/nl4fxx",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "iec-c13",
       "optimized": true,
-      "tris": 12,
+      "tris": 148,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:08:36.672Z",
+      "specSource": "https://en.wikipedia.org/wiki/IEC_60320",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "iec-c14",
       "optimized": true,
-      "tris": 120,
+      "tris": 152,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:08:30.680Z",
+      "specSource": "https://azcus.digikey.com/en/products/detail/schurter-inc/6130-5630/641221",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "schuko-plug",
       "optimized": true,
-      "tris": 192,
+      "tris": 348,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:08:42.859Z",
+      "specSource": "https://en.wikipedia.org/wiki/Schuko",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "schuko-socket",
       "optimized": true,
-      "tris": 92,
+      "tris": 588,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:08:49.816Z",
+      "specSource": "https://en.wikipedia.org/wiki/Schuko",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "bnc",

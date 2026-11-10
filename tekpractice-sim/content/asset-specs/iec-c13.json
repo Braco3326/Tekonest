@@ -1,0 +1,30 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "iec-c13",
+  "realSizeMm": {
+    "w": 31,
+    "h": 22,
+    "d": 56
+  },
+  "mating": {
+    "role": "plug"
+  },
+  "build": {
+    "shape": "iec-cable"
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://en.wikipedia.org/wiki/IEC_60320",
+      "note": "IEC 60320 article (opened): C13 is the connector (cable end, socket contacts) that mates with the C14 inlet (matesWith iec-c14 in the catalog). The standard sheet and a manufacturer outline drawing were not available: the head 24.8 x 16.8 mm (fits the 25.4 x 17.4 mm pocket of the modelled inlet) with the same cut lower corners and three slots, 22 mm long, a 31 x 22 mm body 12 mm long and a tapering boot to 56 mm overall are ESTIMATES. Retail pages quote a C13 body 22.78 mm wide at the base and 15.6 mm high (secondary, not used for a number)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://azcus.digikey.com/en/products/detail/schurter-inc/6130-5630/641221",
+      "note": "The C14 inlet it plugs into: shroud 27.5 x 19.5 mm (Schurter)."
+    }
+  ]
+}

@@ -1089,6 +1089,202 @@ def build_cable_assembly(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+def chamfered_rect(w: float, h: float, c: float) -> list[tuple[float, float]]:
+    """A rectangle w x h centred on the origin with the two LOWER corners cut by c (the outline of IEC 60320 C13 / C14 and many D-sub shells), counter-clockwise."""
+    return [(-w / 2 + c, -h / 2), (w / 2 - c, -h / 2), (w / 2, -h / 2 + c), (w / 2, h / 2), (-w / 2, h / 2), (-w / 2, -h / 2 + c)]
+
+
+def offset_pts(pts: list[tuple[float, float]], t: float) -> list[tuple[float, float]]:
+    """The polygon scaled about its centre so that every side moves inward by about t (exact for the axis-aligned sides of a centred outline)."""
+    xs = [p[0] for p in pts]
+    ys = [p[1] for p in pts]
+    sx = (max(xs) - t) / max(xs)
+    sy = (max(ys) - t) / max(ys)
+    return [(x * sx, y * sy) for x, y in pts]
+
+
+def ring_wall(bm: bmesh.types.BMesh, outer: list[tuple[float, float]], inner: list[tuple[float, float]], z0: float, z1: float) -> None:
+    """A hollow prism: the band between the outer and the inner polygon (same vertex count), from z0 to z1, closed by an annulus at each end."""
+    n = len(outer)
+    if len(inner) != n:
+        raise BuildError("ring_wall: the two polygons need the same number of points")
+    o0 = [bm.verts.new(g2b(x, y, z0)) for x, y in outer]
+    o1 = [bm.verts.new(g2b(x, y, z1)) for x, y in outer]
+    i0 = [bm.verts.new(g2b(x, y, z0)) for x, y in inner]
+    i1 = [bm.verts.new(g2b(x, y, z1)) for x, y in inner]
+    for k in range(n):
+        j = (k + 1) % n
+        bm.faces.new((o0[k], o0[j], o1[j], o1[k]))     # outside
+        bm.faces.new((i0[j], i0[k], i1[k], i1[j]))     # inside
+        bm.faces.new((o0[j], o0[k], i0[k], i0[j]))     # front annulus (z0)
+        bm.faces.new((o1[k], o1[j], i1[j], i1[k]))     # back annulus (z1)
+
+
+def build_iec_inlet(plan: Plan) -> bpy.types.Object:
+    """IEC 60320 C14 appliance inlet (the chassis socket with three blades), mating face at z = 0, body behind it toward +z.
+
+    A flange (the box w x h, 1.5 mm thick) around a shroud of 27.5 x 19.5 mm (the panel cutout it snaps into) with its two lower corners cut, a hollow
+    pocket 12 mm deep with the three 6.3 x 0.8 mm blades standing on its floor (line and neutral 14 mm apart, earth above), and the solid back shell
+    to z = d. Sourced: cutout 27.5 x 19.5 mm and 6.3 x 0.8 mm blades (Schurter inlet datasheets), line-neutral spacing 14 mm (IEC 60320 article).
+    Estimated: flange size and thickness, pocket depth, wall, blade length, back shell depth, chamfer."""
+    w, h, d = size_m(plan)
+    mm = MM
+    shroud_w, shroud_h, wall, pocket, chamfer = 27.5 * mm, 19.5 * mm, 1.3 * mm, 12.0 * mm, 3.0 * mm
+    if w <= shroud_w or h <= shroud_h or d <= pocket + 4.0 * mm:
+        raise BuildError("iec-inlet: sizeMm must exceed the 27.5 x 19.5 mm shroud and be deeper than the pocket plus 4 mm")
+    outer = chamfered_rect(shroud_w, shroud_h, chamfer)
+    inner = offset_pts(outer, wall)
+    body = Body("iec-inlet")
+    bm = body.bm
+    flange = chamfered_rect(w, h, chamfer + 1.0 * mm)
+    ring_wall(bm, flange, inner_for_flange(flange, inner), 0.0, 1.5 * mm)                  # the flange: a ring around the pocket mouth
+    body.done(BLACK)
+    ring_wall(bm, outer, inner, 0.0, pocket)
+    body.done(BLACK)
+    extrude_xy(bm, outer, pocket, d)                                                       # solid back shell with the pocket floor at z = pocket
+    body.done(BLACK)
+    for x, y in ((-7.0, -2.0), (7.0, -2.0), (0.0, 2.0)):                                    # L, N and earth blades
+        box(bm, (x - 3.15) * mm, (x + 3.15) * mm, (y - 0.4) * mm, (y + 0.4) * mm, 2.0 * mm, pocket + 0.5 * mm)
+    body.done(NICKEL)
+    return body.finish()
+
+
+def inner_for_flange(flange: list[tuple[float, float]], inner: list[tuple[float, float]]) -> list[tuple[float, float]]:
+    """The flange ring needs an inner polygon with as many points as its outer one: the pocket outline mapped point by point (both are chamfered rectangles of 6 points)."""
+    if len(flange) != len(inner):
+        raise BuildError("flange and pocket outlines must have the same number of points")
+    return inner
+
+
+def build_iec_cable(plan: Plan) -> bpy.types.Object:
+    """IEC 60320 C13 cable connector (the female end that goes into a C14 inlet), mating face at z = 0, cable at z = d.
+
+    A head of 24.8 x 16.8 mm (it slides into the 25.4 x 17.4 mm pocket of the inlet) with its lower corners cut, 22 mm long, with three blade
+    slots in its face; behind it a wider body (the box width and height) 12 mm long, then a round boot that tapers to the cable. The three slots mirror the
+    inlet's blades. Sourced: the inlet pocket it fits (see the inlet). Estimated: every other size (the standard sheet was not available)."""
+    w, h, d = size_m(plan)
+    mm = MM
+    head = chamfered_rect(24.8 * mm, 16.8 * mm, 3.0 * mm)
+    head_len, body_len = 22.0 * mm, 12.0 * mm
+    if w <= 25.0 * mm or h <= 17.0 * mm or d <= head_len + body_len + 10.0 * mm:
+        raise BuildError("iec-cable: sizeMm must exceed the 24.8 x 16.8 mm head and be deeper than the head, the body and a 10 mm boot")
+    body = Body("iec-cable")
+    bm = body.bm
+    extrude_xy(bm, head, 0.0, head_len)
+    face_edges = take_face(bm, 0.0)
+    slots = []
+    for x, y in ((-7.0, -2.0), (7.0, -2.0), (0.0, 2.0)):
+        mouth, floor = rect_hole(bm, (x - 3.3) * mm, (x + 3.3) * mm, (y - 0.5) * mm, (y + 0.5) * mm, 0.0, 8.0 * mm, 1.0)
+        bm.faces.new(floor[::-1])
+        slots.append(mouth)
+    body.done(DARK)
+    fill_with_holes(bm, face_edges, slots, (0.0, 0.0, -1.0))
+    body.done(BLACK)
+    extrude_xy(bm, chamfered_rect(w, h, 4.0 * mm), head_len, head_len + body_len)
+    body.done(BLACK)
+    cylinder_between(bm, g2b(0.0, 0.0, head_len + body_len - 0.5 * mm), g2b(0.0, 0.0, d), min(w, h) * 0.34, 4.5 * mm, segments=16)
+    body.done(BLACK)
+    return body.finish()
+
+
+def build_schuko_plug(plan: Plan) -> bpy.types.Object:
+    """Schuko (CEE 7/4, 7/7 style) mains plug, mating face at z = 0 (the pins' tips), cable at z = d.
+
+    Two round pins of 4.8 mm diameter, 19 mm long, 19 mm apart (Wikipedia, Schuko), standing out of a round plastic body whose diameter is the box
+    width; two flat nickel earth strips on the top and bottom of the body's rim; a moulded back with a cable boot. Estimated: body diameter and
+    length, strip size, boot."""
+    w, h, d = size_m(plan)
+    mm = MM
+    pin_len = 19.0 * mm
+    if d <= pin_len + 20.0 * mm or min(w, h) < 34.0 * mm:
+        raise BuildError("schuko-plug: sizeMm must be at least 34 mm across and deeper than the 19 mm pins plus 20 mm")
+    body_r = min(w, h) / 2.0
+    body = Body("schuko-plug")
+    bm = body.bm
+    for sx in (-1.0, 1.0):
+        cylinder_between(bm, g2b(sx * 9.5 * mm, 0.0, 0.0), g2b(sx * 9.5 * mm, 0.0, pin_len + 1.0 * mm), 2.4 * mm, segments=12)
+    body.done(NICKEL)
+    profile = [(body_r - 1.5 * mm, pin_len), (body_r, pin_len + 1.5 * mm), (body_r, d - 12.0 * mm), (body_r * 0.45, d - 1.0 * mm), (body_r * 0.38, d)]
+    revolve(body, profile, [BLACK, BLACK, BLACK, BLACK], 24, cap_first=True, cap_last=True)
+    box(bm, -5.0 * mm, 5.0 * mm, body_r - 0.3 * mm, body_r + 0.6 * mm, pin_len + 2.0 * mm, pin_len + 14.0 * mm)      # earth strip, top of the rim
+    box(bm, -5.0 * mm, 5.0 * mm, -(body_r + 0.6 * mm), -(body_r - 0.3 * mm), pin_len + 2.0 * mm, pin_len + 14.0 * mm)  # and bottom
+    body.done(NICKEL)
+    return body.finish()
+
+
+def build_schuko_socket(plan: Plan) -> bpy.types.Object:
+    """Schuko (CEE 7/3) wall socket, mating face at z = 0, body behind it toward +z.
+
+    A square plate (the box w x h, 3 mm) around a round recess 17.5 mm deep (Wikipedia, Schuko) of 36 mm diameter, two 4.8 mm pin holes 19 mm apart
+    drawn as dark discs on the floor, and two earth clips on the sides; behind it a solid back of the recess diameter to z = d. Estimated: recess
+    diameter, plate size, clips, back."""
+    w, h, d = size_m(plan)
+    mm = MM
+    recess_r, recess_depth = 18.0 * mm, 17.5 * mm
+    if min(w, h) < 2 * recess_r + 8.0 * mm or d <= recess_depth + 6.0 * mm:
+        raise BuildError("schuko-socket: sizeMm must be wider than the 36 mm recess plus 8 mm and deeper than the 17.5 mm recess plus 6 mm")
+    body = Body("schuko-socket")
+    bm = body.bm
+    n = 24
+    mouth = [(math.cos(2 * math.pi * k / n) * recess_r, math.sin(2 * math.pi * k / n) * recess_r) for k in range(n)]
+    shell = [(x * 1.12, y * 1.12) for x, y in mouth]
+    half = min(w, h) / 2.0
+    square = [(math.cos(2 * math.pi * k / n) * half / max(abs(math.cos(2 * math.pi * k / n)), abs(math.sin(2 * math.pi * k / n))), math.sin(2 * math.pi * k / n) * half / max(abs(math.cos(2 * math.pi * k / n)), abs(math.sin(2 * math.pi * k / n)))) for k in range(n)]
+    ring_wall(bm, square, shell, 0.0, 3.0 * mm)                                              # the plate: a square ring around the recess shell
+    body.done(BLACK)
+    ring_wall(bm, shell, mouth, 0.0, recess_depth)                                           # recess wall
+    body.done(BLACK)
+    extrude_xy(bm, shell, recess_depth, d)                                                   # back and recess floor
+    body.done(BLACK)
+    for sx in (-1.0, 1.0):
+        cylinder_between(bm, g2b(sx * 9.5 * mm, 0.0, recess_depth - 0.2 * mm), g2b(sx * 9.5 * mm, 0.0, recess_depth + 0.4 * mm), 2.7 * mm, segments=12)
+    body.done(DARK)
+    for sx in (-1.0, 1.0):                                                                   # earth clips on the sides of the recess
+        box(bm, sx * (recess_r - 2.0 * mm) - 3.0 * mm, sx * (recess_r - 2.0 * mm) + 3.0 * mm, -4.0 * mm, 4.0 * mm, 6.0 * mm, recess_depth - 0.3 * mm)
+    body.done(NICKEL)
+    return body.finish()
+
+
+LOCK_BLUE = "#4a78c0"
+LOCK_GREY = "#a9adb3"
+
+
+def build_locking_plug(plan: Plan) -> bpy.types.Object:
+    """A Neutrik twist-lock round cable connector (speakON NL4FXX, powerCON NAC3FCA / TRUE1 class), mating face at z = 0, cable at z = d.
+
+    A 24.8 mm nose (steel) with its flat face carrying `contacts` contact holes on a 6.7 mm radius (4 at 45 degrees for speakON; 3 for powerCON at
+    90, 210 and 330 degrees), a 26.8 mm body in the housing colour (params.colour: 1 black, 2 blue, 3 grey), a boot tapering to the cable, and a
+    latch lever on the top that makes the box taller than wide (the axis sits below the box centre, like the XLR plug). Verified: the box of the
+    Neutrik NL4FXX STEP model (26.83 x 30.34 x 79.25 mm; dimensions only). Estimated: nose and body split, hole size and depth, boot, lever."""
+    w, h, d = size_m(plan)
+    mm = MM
+    params = plan.get("params") or {}
+    contacts, colour = int(params.get("contacts", 4)), int(params.get("colour", 1))
+    if contacts not in (3, 4) or colour not in (1, 2, 3):
+        raise BuildError(f"params.contacts must be 3 or 4 and params.colour 1, 2 or 3, got {contacts} and {colour}")
+    body_r = w / 2.0
+    if h <= w + 0.5 * mm or d < 60.0 * mm:
+        raise BuildError("locking-plug: sizeMm.h must exceed the width (the latch lever) and sizeMm.d be at least 60 mm")
+    axis_y = body_r - h / 2.0
+    housing = (BLACK, LOCK_BLUE, LOCK_GREY)[colour - 1]
+    nose_r = 12.4 * mm
+    profile = [(nose_r, 0.0), (nose_r, 28.0 * mm), (body_r, 31.0 * mm), (body_r, d - 18.0 * mm), (body_r * 0.7, d - 6.0 * mm), (body_r * 0.45, d)]
+    body = Body("locking-plug")
+    bm = body.bm
+    rings = revolve(body, profile, [NICKEL, NICKEL, housing, housing, BLACK], 24, cap_last=True, cy=axis_y)
+    outline = [bm.edges.get((rings[0][i], rings[0][(i + 1) % 24])) for i in range(24)]
+    holes = []
+    angles = (45.0, 135.0, 225.0, 315.0) if contacts == 4 else (90.0, 210.0, 330.0)
+    for a in angles:
+        holes.append(blind_hole(bm, 6.7 * mm * math.cos(math.radians(a)), axis_y + 6.7 * mm * math.sin(math.radians(a)), 0.0, 1.7 * mm, 8, 4.0 * mm, 1.0))
+    body.done(DARK)
+    fill_with_holes(bm, outline, holes, (0.0, 0.0, -1.0))
+    body.done(NICKEL)
+    box(bm, -4.0 * mm, 4.0 * mm, axis_y + body_r - 1.0 * mm, axis_y + body_r + (h - w), 33.0 * mm, 60.0 * mm)   # the latch lever: its top is the top of the box
+    body.done(housing)
+    return body.finish()
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "cylinder-plug": build_cylinder_plug,
@@ -1101,6 +1297,11 @@ SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "speaker-cabinet": build_speaker_cabinet,
     "boom-arm": build_boom_arm,
     "xlr-male-plug": build_xlr_male_plug,
+    "iec-inlet": build_iec_inlet,
+    "iec-cable": build_iec_cable,
+    "schuko-plug": build_schuko_plug,
+    "schuko-socket": build_schuko_socket,
+    "locking-plug": build_locking_plug,
     "cable-assembly": build_cable_assembly,
 }
 

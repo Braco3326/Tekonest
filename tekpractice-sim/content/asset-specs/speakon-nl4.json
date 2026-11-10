@@ -1,0 +1,29 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "speakon-nl4",
+  "realSizeMm": {
+    "w": 26.83,
+    "h": 30.34,
+    "d": 79.25
+  },
+  "mating": {
+    "role": "plug"
+  },
+  "build": {
+    "shape": "locking-plug",
+    "params": {
+      "contacts": 4,
+      "colour": 1
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nl4fxx",
+      "note": "Neutrik speakON NL4FXX cable connector (STEP model downloaded from the manufacturer page into a scratch folder outside the repo; only its bounding box is used): 26.83 x 30.34 x 79.25 mm. The 30.34 mm height includes the latch lever on top. ESTIMATES: nose 24.8 mm diameter 28 mm long, four contact holes of 3.4 mm on a 6.7 mm radius at 45 degrees, boot taper, lever 8 mm wide."
+    }
+  ]
+}

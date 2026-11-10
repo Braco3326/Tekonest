@@ -9,7 +9,7 @@
 import type { AssetSpecT } from './specSchema'
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -51,6 +51,13 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   // A cable assembly along z: a D-sub hood with a strain relief at the io end (+z), a trunk, and a fan-out of columns x rows XLR male plugs on a
   // pitchMm grid whose tips form the opposite face (-z). The width and height come from the plug grid, the depth is the whole length.
   'cable-assembly': { kind: 'device', params: ['hoodWidthMm', 'hoodHeightMm', 'hoodLenMm', 'plugDiaMm', 'plugLenMm', 'tailLenMm', 'trunkDiaMm', 'pitchMm', 'columns', 'rows'], needsMatingOuter: false },
+  // Mains and twist-lock connectors, mating face at z = 0 (sizes in spec.realSizeMm, nothing else needs a param except the locking plug).
+  'iec-inlet': { kind: 'connector', params: [], needsMatingOuter: false },
+  'iec-cable': { kind: 'connector', params: [], needsMatingOuter: false },
+  'schuko-plug': { kind: 'connector', params: [], needsMatingOuter: false },
+  'schuko-socket': { kind: 'connector', params: [], needsMatingOuter: false },
+  // A Neutrik twist-lock round cable connector (speakON, powerCON): contacts = 3 or 4 holes in the face, colour = 1 black, 2 blue, 3 grey housing.
+  'locking-plug': { kind: 'connector', params: ['contacts', 'colour'], needsMatingOuter: false },
 }
 
 /** Default diameter of a socket pocket when the port gives no openingMm, in millimetres (the builder uses the same). */

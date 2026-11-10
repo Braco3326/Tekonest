@@ -1,0 +1,29 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "powercon-blue",
+  "realSizeMm": {
+    "w": 26.83,
+    "h": 30.34,
+    "d": 79.25
+  },
+  "mating": {
+    "role": "plug"
+  },
+  "build": {
+    "shape": "locking-plug",
+    "params": {
+      "contacts": 3,
+      "colour": 2
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nl4fxx",
+      "note": "Neutrik powerCON (NAC3FCA, the blue power-in connector) shares the housing of the speakON range (same 26.8 mm round body and latch), so the model uses the NL4FXX STEP bounding box 26.83 x 30.34 x 79.25 mm with a BLUE housing and three contact holes (L, N, PE at 90, 210 and 330 degrees on a 6.7 mm radius). The powerCON drawing itself was not opened: the shared box is an assumption."
+    }
+  ]
+}

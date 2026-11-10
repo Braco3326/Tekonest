@@ -1,0 +1,29 @@
+{
+  "kind": "connector",
+  "tier": "connector",
+  "ports": [],
+  "controls": [],
+  "id": "powercon-true1",
+  "realSizeMm": {
+    "w": 26.83,
+    "h": 30.34,
+    "d": 79.25
+  },
+  "mating": {
+    "role": "plug"
+  },
+  "build": {
+    "shape": "locking-plug",
+    "params": {
+      "contacts": 3,
+      "colour": 3
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nl4fxx",
+      "note": "Neutrik powerCON TRUE1 (NAC3FX-W-TOP class) is built in the same round housing as powerCON and speakON: same box (NL4FXX STEP bounding box 26.83 x 30.34 x 79.25 mm) with a light grey housing (the powerCON out / TRUE1 colour) and three contact holes. The TRUE1 drawing was not opened: the shared box is an assumption."
+    }
+  ]
+}
