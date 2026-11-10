@@ -58,7 +58,11 @@
     "shape": "rack-box",
     "params": {
       "chamferMm": 1
-    }
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ]
   },
   "sources": [
     {
@@ -81,5 +85,25 @@
       "url": "https://www.aeta-audio.com/wp-content/uploads/2018/10/Scoop5S_1-1.png",
       "note": "AETA front photo (opened as image, 800x621, three-quarter view, so only a rough position). Opposite face = front. power = the round on/off key at the top-left of the front panel, about 10 mm diameter; read 15 mm from the faceplate left edge plus an assumed 17.5 mm rack ear, 30.6 mm from the bottom (+/- 6 mm). Protrusion d = 3 mm is an estimate."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 210,
+        "yMm": 6,
+        "wMm": 94,
+        "hMm": 36,
+        "marginMm": 3
+      },
+      {
+        "face": "io",
+        "xMm": 398,
+        "yMm": 0,
+        "wMm": 24,
+        "hMm": 6,
+        "marginMm": 2
+      }
+    ]
+  }
 }

@@ -915,18 +915,63 @@
     {
       "id": "aeta-scoop5-s",
       "optimized": true,
-      "tris": 144,
+      "tris": 44,
       "kind": "device",
       "ports": 4,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/audio-interface-iem-transmitter-50ea58413e214a50b16e5bc726291190",
-      "author": "Leykoplaster",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Audio Interface | IEM Transmitter » par Leykoplaster (https://sketchfab.com/3d-models/audio-interface-iem-transmitter-50ea58413e214a50b16e5bc726291190) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 4,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "front_rectified.png",
+        "rear.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal",
+      "date": "2026-11-10T01:01:34.650Z",
+      "specSource": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S-IP_ENG.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "aeta-scoopy-plus-s",
