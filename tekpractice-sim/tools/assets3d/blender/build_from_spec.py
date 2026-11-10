@@ -986,6 +986,364 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+# --- console-wedge v2 --------------------------------------------------------------------------------------
+
+CONSOLE_V2_NAMES = (
+    "filletMm", "filletSegments", "armRestMm", "cheekMm", "baseMm", "tierYMm", "tierWMm", "tierXMm",
+    "feetMm", "feetWidthMm", "feetFromSideMm", "feetFromEndMm",
+    "slotPlates", "slotPlateWMm", "slotPlateHMm", "slotPlateXMm", "slotPlateYMm", "slotPlatePitchMm", "slotPlateDepthMm",
+    "frontRecessWMm", "frontRecessHMm", "frontRecessXMm", "frontRecessYMm", "frontRecessDepthMm",
+    "rearRecessWMm", "rearRecessHMm", "rearRecessXMm", "rearRecessYMm", "rearRecessDepthMm",
+)
+CONSOLE_RECESS = "#1b1c20"        # the walls of a recess (the floor of a slot plate carries the picture)
+CONSOLE_FEET_DEFAULT_MM = {"feetWidthMm": 22.0, "feetFromSideMm": 42.0, "feetFromEndMm": 28.0}
+CONSOLE_FOOT_TAPER = 0.72         # diameter at the table over diameter at the body
+CONSOLE_FOOT_SEGMENTS = 14
+CONSOLE_RECESS_DEPTH_MM = 1.2
+CONSOLE_ARC_FACTOR = 1.6          # radius of the outline corners the rim bevel runs round, in fillets
+CONSOLE_ZONE_TOL_MM = 0.05        # how far the surface under a control may differ from the unmodified profile
+CONSOLE_ZONE_GRID = 5             # rays per side of a control zone
+
+
+def clip_chain(chain: list[tuple[float, float]], y_cap: float) -> list[tuple[float, float]]:
+    """The profile chain of (z, y) points with every height capped at y_cap (new points where it crosses the cap; the run along the cap keeps its two ends)."""
+    out: list[tuple[float, float]] = []
+    for i, (z, y) in enumerate(chain):
+        if i > 0:
+            pz, py = chain[i - 1]
+            if (py - y_cap) * (y - y_cap) < 0.0:
+                k = (y_cap - py) / (y - py)
+                out.append((pz + (z - pz) * k, y_cap))
+        out.append((z, min(y, y_cap)))
+    res: list[tuple[float, float]] = []
+    for i, p in enumerate(out):
+        if 0 < i < len(out) - 1 and abs(p[1] - y_cap) < 1e-12 and abs(out[i - 1][1] - y_cap) < 1e-12 and abs(out[i + 1][1] - y_cap) < 1e-12:
+            continue
+        res.append(p)
+    return res
+
+
+def chain_height_at(stations: list[tuple[float, float]], t: float) -> float:
+    """The profile height at depth t (metres from the io face), linear between the stations; None-safe: beyond the ends it is the end height."""
+    if t <= stations[0][0]:
+        return stations[0][1]
+    for (t0, h0), (t1, h1) in zip(stations, stations[1:]):
+        if t <= t1:
+            return h0 + (h1 - h0) * (t - t0) / (t1 - t0)
+    return stations[-1][1]
+
+
+def console_cap_bevel(bm: bmesh.types.BMesh, cap: bmesh.types.BMFace, outline: list[tuple[float, float]], width: float, segments: int, skip_y: float | None) -> float:
+    """Rounds the rim of the cap face `cap` (an extruded profile's end) by `width` (OFFSET bevel, `segments` steps); edges lying on the height skip_y are left
+    sharp (where a tier sits on the deck). Returns the smallest inset the bevel made on the cap, in metres, measured on the final cap outline against
+    `outline` (the (z, y) points of the cap before the bevel); the vertices of a skipped edge do not count."""
+    x_cap = cap.verts[0].co.x
+    edges = [e for e in cap.edges if not (skip_y is not None and all(abs(v.co.z - skip_y) < 1e-9 for v in e.verts))]
+    edges = list(dict.fromkeys(edges))
+    bmesh.ops.bevel(bm, geom=edges, offset=width, offset_type="OFFSET", segments=segments, affect="EDGES")
+    faces = [f for f in bm.faces if len(f.verts) >= 3 and all(abs(v.co.x - x_cap) < FLAT_FACE_TOL for v in f.verts)]
+    if not faces:
+        raise BuildError(f"the rim bevel left no cap face at x = {x_cap / MM:.2f} mm")
+    cap_face = max(faces, key=lambda f: f.calc_area())
+    inset = float("inf")
+    for v in cap_face.verts:
+        dist = point_to_polygon_distance((-v.co.y, v.co.z), outline)
+        if dist > 1e-7:
+            inset = min(inset, dist)
+    return inset
+
+
+def take_face_containing(bm: bmesh.types.BMesh, axis: int, value: float, lo: tuple[float, float], hi: tuple[float, float]) -> list[bmesh.types.BMEdge]:
+    """Removes the one flat face in the glTF plane (axis 0 = x, 2 = z) = value whose outline spans the rectangle lo..hi (the other two glTF coordinates: for the z plane
+    (x, y), for the x plane (z, y)) and returns its edges, to be refilled around holes. Raises when there is not exactly one."""
+    def comp(co: Vector) -> float:
+        return (co.x, co.z, -co.y)[axis]
+
+    def span(co: Vector) -> tuple[float, float]:
+        return (co.x, co.z) if axis == 2 else (-co.y, co.z)
+
+    found = []
+    for f in bm.faces:
+        if not all(abs(comp(v.co) - value) < FLAT_FACE_TOL for v in f.verts):
+            continue
+        pts = [span(v.co) for v in f.verts]
+        if min(p[0] for p in pts) <= lo[0] + FLAT_FACE_TOL and max(p[0] for p in pts) >= hi[0] - FLAT_FACE_TOL and min(p[1] for p in pts) <= lo[1] + FLAT_FACE_TOL and max(p[1] for p in pts) >= hi[1] - FLAT_FACE_TOL:
+            found.append(f)
+    if len(found) != 1:
+        raise BuildError(f"expected one flat face in the plane {'xyz'[axis]} = {value / MM:.2f} mm spanning the recess, found {len(found)}: the recess does not fit in the flat part of the face")
+    edges = list(found[0].edges)
+    bmesh.ops.delete(bm, geom=found, context="FACES_ONLY")
+    return edges
+
+
+def console_zone_check(plan: Plan, bm: bmesh.types.BMesh, w: float, h: float, d: float, stations: list[tuple[float, float]]) -> None:
+    """Raises when the surface under a control zone is not the plain surface of the profile: casts a grid of rays on every zone of the 'top' face (down; the
+    expected height is the profile's at that depth), the 'io' face (from behind; expected the plane z = d/2) and the 'opposite' face (expected z = -d/2), on the
+    mesh as built. A fillet, a roll, a tier edge, a recess or the missing end of a narrower tier under a control all fail here."""
+    zones = plan.get("flatZones") or []
+    if not zones:
+        return
+    from mathutils.bvhtree import BVHTree
+    tree = BVHTree.FromBMesh(bm)
+    tol = CONSOLE_ZONE_TOL_MM * MM
+    n = CONSOLE_ZONE_GRID
+    for z in zones:
+        face = z.get("face")
+        if face not in ("top", "io", "opposite"):
+            continue
+        for iu in range(n):
+            for iv in range(n):
+                u = (z["x0"] + (z["x1"] - z["x0"]) * iu / (n - 1)) * MM
+                v = (z["y0"] + (z["y1"] - z["y0"]) * iv / (n - 1)) * MM
+                gx = u - w / 2.0
+                if face == "top":
+                    gz = d / 2.0 - v
+                    origin, direction = Vector((gx, -gz, h + 0.05)), Vector((0.0, 0.0, -1.0))
+                    want = chain_height_at(stations, v)
+                    got_of = lambda hit: hit.z
+                elif face == "io":
+                    gy = v
+                    origin, direction = Vector((gx, -d / 2.0 - 0.05, gy)), Vector((0.0, 1.0, 0.0))
+                    want = d / 2.0
+                    got_of = lambda hit: -hit.y
+                else:
+                    gx = w / 2.0 - u
+                    gy = v
+                    origin, direction = Vector((gx, d / 2.0 + 0.05, gy)), Vector((0.0, -1.0, 0.0))
+                    want = -d / 2.0
+                    got_of = lambda hit: -hit.y
+                hit = tree.ray_cast(origin, direction)
+                loc = hit[0]
+                what = f"x {z['x0']:.1f} to {z['x1']:.1f}, y {z['y0']:.1f} to {z['y1']:.1f} mm on the {face} face"
+                if loc is None:
+                    raise BuildError(f"a flat zone of a control ({what}) has no surface at x {u / MM:.1f}, y {v / MM:.1f} mm: the model has a hole or ends there (a narrower tier, a rounded rim)")
+                if abs(got_of(loc) - want) > tol:
+                    raise BuildError(f"modelled detail reaches a flat zone of a control ({what}) near x {u / MM:.1f}, y {v / MM:.1f} mm: the surface is {(got_of(loc) - want) / MM:+.2f} mm off the plain one. The controls rig draws that area: move the fillet, roll, tier or recess away from it")
+
+
+def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: list[tuple[float, float]]) -> bpy.types.Object:
+    """The detailed console (see CONSOLE_V2_NAMES): the side profile extruded across the width with its rim rounded, a thick front roll, cheeks over a set-back base,
+    a narrower tier (meter bridge), rubber feet and shallow recesses (option-slot plates, a front panel, a rear connector field). Pivot bottom-centre, the io face
+    (the tall rear) at z = +d/2, the front at z = -d/2. Parts: the deck (one extrusion; with cheeks the deck is the base-width core and two side plates), the tier,
+    four feet, then the recesses cut into the flat rear / front faces. The surface under every control zone is verified on the mesh at the end."""
+    params = plan.get("params") or {}
+    unknown = [k for k in params if k != "chamferMm" and k not in CONSOLE_V2_NAMES]
+    if unknown:
+        raise BuildError(f"console-wedge has no param {unknown[0]!r}")
+    fillet = rack_opt(plan, "filletMm")
+    segs = rack_whole(plan, "filletSegments", 1, 12) or 4
+    arm = rack_opt(plan, "armRestMm")
+    cheek = rack_opt(plan, "cheekMm")
+    base_h = rack_opt(plan, "baseMm")
+    tier_y = rack_opt(plan, "tierYMm")
+    tier_w = rack_opt(plan, "tierWMm")
+    tier_x = rack_opt(plan, "tierXMm") or 0.0
+    feet = rack_opt(plan, "feetMm") or 0.0
+    if segs != 4 and fillet is None:
+        raise BuildError("params.filletSegments has no effect without params.filletMm")
+    if arm is not None and (fillet is None or arm < CONSOLE_ARC_FACTOR * fillet - 1e-9):
+        raise BuildError(f"params.armRestMm needs params.filletMm and must be at least {CONSOLE_ARC_FACTOR} times as large (the rim bevel runs round the roll)")
+    if (cheek is None) != (base_h is None):
+        raise BuildError("params.cheekMm and params.baseMm go together")
+    if (tier_y is None) != (tier_w is None):
+        raise BuildError("params.tierYMm and params.tierWMm go together")
+    low = min(s[1] for s in stations)
+    if fillet is not None and fillet * 2.0 >= min(w, low):
+        raise BuildError(f"params.filletMm ({fillet / MM:.1f}) must be smaller than half the smallest side")
+    if cheek is not None and fillet is not None and fillet > cheek - 0.2 * MM:
+        raise BuildError(f"params.filletMm ({fillet / MM:.2f}) must be less than params.cheekMm ({cheek / MM:.2f}): the side plate is only that thick")
+    y_base_top = feet + (base_h or 0.0)
+    if cheek is not None and y_base_top + (arm or fillet or 0.0) >= low:
+        raise BuildError("params.baseMm and params.feetMm leave no room for the shell under the lowest station of the profile")
+
+    chain = [(d / 2.0 - t, hh) for t, hh in reversed(stations)]          # front -> rear, (z, y)
+    deck_chain = chain
+    tier_poly: list[tuple[float, float]] | None = None
+    tier_first = 0
+    if tier_y is not None:
+        above = [i for i, p in enumerate(chain) if p[1] > tier_y + 1e-9]
+        if not above or above[-1] != len(chain) - 1 or above != list(range(above[0], len(chain))):
+            raise BuildError("params.tierYMm must cut the profile into a lower deck and one block at the rear (the io end)")
+        if above[0] == 0:
+            raise BuildError("params.tierYMm is below the front station: the tier would reach the front")
+        tier_first = above[0]
+        prev = chain[tier_first - 1]
+        if abs(prev[1] - tier_y) < 1e-9:
+            cross = prev
+        else:
+            nxt = chain[tier_first]
+            k = (tier_y - prev[1]) / (nxt[1] - prev[1])
+            cross = (prev[0] + (nxt[0] - prev[0]) * k, tier_y)
+        tier_poly = [cross] + chain[tier_first:] + [(d / 2.0, tier_y)]
+        deck_chain = clip_chain(chain, tier_y)
+        if tier_w >= w - 1e-9 or abs(tier_x) + tier_w / 2.0 > w / 2.0 + 1e-9:
+            raise BuildError("params.tierWMm must be narrower than the width and inside it")
+
+    # the rim bevel runs round every corner of the outline: a corner arc must be rounder than the bevel is wide (inner offset of an arc of radius r by w >= r collapses)
+    corner_r = CONSOLE_ARC_FACTOR * (fillet or 0.0)
+    r_top_front = arm if arm is not None else corner_r
+    r_rear = 0.0 if tier_y is not None else corner_r   # under a tier the deck keeps its rear-top corner sharp: the tier's rear face continues the deck's
+    rear_edge = math.hypot(chain[-1][0] - chain[-2][0], chain[-1][1] - chain[-2][1])
+    if tier_y is None and r_rear > 0.0 and rear_edge - r_rear < 2.0 * MM:
+        r_rear = min(r_rear * 1.5, rear_edge)    # a sliver of a flat left between the rear-top arc and the next station trips the rim bevel: the arc takes the whole edge
+
+    def deck_outline(bottom: list[tuple[float, float]], bottom_radii: list[float]) -> tuple[list[tuple[float, float]], list[float]]:
+        pts = list(bottom) + list(deck_chain)
+        radii = list(bottom_radii) + [r_top_front] + [0.0] * (len(deck_chain) - 2) + [r_rear]
+        return pts, radii
+
+    body = Body("console-wedge")
+    bm = body.bm
+    measured: list[float] = []
+
+    def add_prism(pts: list[tuple[float, float]], radii: list[float], x0: float, x1: float) -> tuple[list[bmesh.types.BMFace], list[tuple[float, float]]]:
+        outline = rounded_polygon(pts, radii, 10) if any(r > 0.0 for r in radii) else list(pts)
+        return extrude_zy(bm, outline, x0, x1), outline
+
+    if cheek is None:
+        bottom_pts = [(d / 2.0, feet), (-d / 2.0, feet)]
+        pts, radii = deck_outline(bottom_pts, [0.0, corner_r])
+        faces, outline = add_prism(pts, radii, -w / 2.0, w / 2.0)
+        if fillet is not None:
+            for cap in faces[:2]:
+                measured.append(console_cap_bevel(bm, cap, outline, fillet, segs, None))
+        body.done(CHASSIS)
+    else:
+        # the core: base width, stepped back at the front under the shell; the rear stays flush
+        core_pts = [(d / 2.0, feet), (-d / 2.0 + cheek, feet), (-d / 2.0 + cheek, y_base_top), (-d / 2.0, y_base_top)]
+        pts, radii = deck_outline(core_pts, [0.0, 0.0, 0.0, 0.0])
+        add_prism(pts, radii, -w / 2.0 + cheek, w / 2.0 - cheek)
+        body.done(CHASSIS)
+        # the two side plates (the cheeks), cheek thick, above the base
+        plate_pts = [(d / 2.0, y_base_top), (-d / 2.0, y_base_top)]
+        pts, radii = deck_outline(plate_pts, [0.0, corner_r])
+        for sign in (-1.0, 1.0):
+            x_in, x_out = sign * (w / 2.0 - cheek), sign * w / 2.0
+            faces, outline = add_prism(pts, radii, min(x_in, x_out), max(x_in, x_out))
+            if fillet is not None:
+                cap = faces[0] if sign < 0 else faces[1]
+                measured.append(console_cap_bevel(bm, cap, outline, fillet, segs, None))
+        body.done(CHASSIS)
+
+    if tier_poly is not None:
+        radii = [0.0] * len(tier_poly)
+        if fillet is not None:
+            radii[1] = corner_r        # the front-top corner of the bridge
+            radii[-2] = corner_r       # its rear-top corner
+        x_c = tier_x
+        faces, outline = add_prism(tier_poly, radii, x_c - tier_w / 2.0, x_c + tier_w / 2.0)
+        if fillet is not None:
+            for cap in faces[:2]:
+                measured.append(console_cap_bevel(bm, cap, outline, fillet, segs, tier_y))
+        body.done(CHASSIS)
+
+    # --- feet: four rubber feet, round, a truncated cone (wide at the body, 0.72 of it at the table) with a rounded lower edge --------------
+    if feet > 0.0:
+        fw = rack_opt(plan, "feetWidthMm") or CONSOLE_FEET_DEFAULT_MM["feetWidthMm"] * MM
+        fs = rack_opt(plan, "feetFromSideMm") or CONSOLE_FEET_DEFAULT_MM["feetFromSideMm"] * MM
+        fe = rack_opt(plan, "feetFromEndMm") or CONSOLE_FEET_DEFAULT_MM["feetFromEndMm"] * MM
+        if fs + fw / 2.0 > w / 2.0 or fe + fw / 2.0 > d / 2.0:
+            raise BuildError("the feet do not fit under the console")
+        r_top, r_bot = fw / 2.0, fw / 2.0 * CONSOLE_FOOT_TAPER
+        round_h = min(1.0 * MM, feet / 3.0)
+        levels = [(0.0, r_bot - round_h), (round_h, r_bot), (feet, r_top)]
+        for sx in (-1.0, 1.0):
+            for sz in (-1.0, 1.0):
+                cx, cz = sx * (w / 2.0 - fs), sz * (d / 2.0 - fe)
+                rings_ = []
+                for y_, r_ in levels:
+                    rings_.append([bm.verts.new(g2b(cx + r_ * math.cos(2 * math.pi * k / CONSOLE_FOOT_SEGMENTS), y_, cz + r_ * math.sin(2 * math.pi * k / CONSOLE_FOOT_SEGMENTS))) for k in range(CONSOLE_FOOT_SEGMENTS)])
+                for lo_, hi_ in zip(rings_, rings_[1:]):
+                    band(bm, lo_, hi_)
+                bm.faces.new(rings_[0][::-1])
+                bm.faces.new(rings_[-1])
+        body.done(FOOT)
+
+    # --- recesses ---------------------------------------------------------------------------------------------------------------------
+    flat = plan.get("flatZones") or []
+
+    def rects_io() -> list[tuple[str, float, float, float, float, float]]:
+        out: list[tuple[str, float, float, float, float, float]] = []
+        n_slots = rack_whole(plan, "slotPlates", 1, 4)
+        if n_slots is not None:
+            wd, ht = rack_opt(plan, "slotPlateWMm"), rack_opt(plan, "slotPlateHMm")
+            x0, y0 = rack_opt(plan, "slotPlateXMm"), rack_opt(plan, "slotPlateYMm")
+            pitch = rack_opt(plan, "slotPlatePitchMm")
+            if None in (wd, ht, x0, y0) or (n_slots >= 2 and pitch is None):
+                raise BuildError("the slot plates need params.slotPlateWMm, slotPlateHMm, slotPlateXMm, slotPlateYMm (and slotPlatePitchMm for more than one)")
+            depth = rack_opt(plan, "slotPlateDepthMm") or CONSOLE_RECESS_DEPTH_MM * MM
+            for i in range(n_slots):
+                out.append(("a slot plate", x0 + i * (pitch or 0.0), y0, wd, ht, depth))
+        rw = rack_opt(plan, "rearRecessWMm")
+        if rw is not None or any(k in params for k in ("rearRecessHMm", "rearRecessXMm", "rearRecessYMm", "rearRecessDepthMm")):
+            rh, rx, ry = rack_opt(plan, "rearRecessHMm"), rack_opt(plan, "rearRecessXMm"), rack_opt(plan, "rearRecessYMm")
+            if None in (rw, rh, rx, ry):
+                raise BuildError("the rear recess needs params.rearRecessWMm, rearRecessHMm, rearRecessXMm, rearRecessYMm")
+            out.append(("the rear recess", rx, ry, rw, rh, rack_opt(plan, "rearRecessDepthMm") or 2.0 * MM))
+        return out
+
+    io_rects = rects_io()
+    for what, x0, y0, wd, ht, depth in io_rects:
+        u0, u1, v0, v1 = x0 / MM, (x0 + wd) / MM, y0 / MM, (y0 + ht) / MM
+        for zn in flat:
+            if zn.get("face") == "io" and u0 < zn["x1"] and u1 > zn["x0"] and v0 < zn["y1"] and v1 > zn["y0"]:
+                raise BuildError(f"{what} (x {u0:.1f} to {u1:.1f}, y {v0:.1f} to {v1:.1f} mm on the io face) overlaps a flat zone of a control (x {zn['x0']:.1f} to {zn['x1']:.1f}, y {zn['y0']:.1f} to {zn['y1']:.1f} mm)")
+        for p in plan.get("ports") or []:
+            r = float(p.get("openingMm") or POCKET_DEFAULT_MM) / 2.0
+            px, py = float(p["xMm"]), float(p["yMm"])
+            inside = px - r >= u0 - 1e-9 and px + r <= u1 + 1e-9 and py - r >= v0 - 1e-9 and py + r <= v1 + 1e-9
+            touches = px + r > u0 and px - r < u1 and py + r > v0 and py - r < v1
+            inset = float(p.get("insetMm") or 0.0) * MM
+            if touches and not inside:
+                raise BuildError(f"{what} (x {u0:.1f} to {u1:.1f}, y {v0:.1f} to {v1:.1f} mm) cuts through the connector of port {p.get('portId')!r}")
+            if inside and abs(inset - depth) > 0.05 * MM:
+                raise BuildError(f"port {p.get('portId')!r} lies in {what} (depth {depth / MM:.2f} mm): its insetMm must be {depth / MM:.2f}, got {inset / MM:.2f}")
+            if not touches and inset > 0.0:
+                raise BuildError(f"port {p.get('portId')!r} has an insetMm but lies in no recess of this console")
+    if io_rects:
+        gx0 = min(r[1] for r in io_rects) - w / 2.0
+        gx1 = max(r[1] + r[3] for r in io_rects) - w / 2.0
+        gy0 = min(r[2] for r in io_rects)
+        gy1 = max(r[2] + r[4] for r in io_rects)
+        outline = take_face_containing(bm, 2, d / 2.0, (gx0, gy0), (gx1, gy1))
+        loops = []
+        for _what, x0, y0, wd, ht, depth in io_rects:
+            a0, a1 = x0 - w / 2.0, x0 + wd - w / 2.0
+            pts = [(a0, y0), (a1, y0), (a1, y0 + ht), (a0, y0 + ht)]
+            mouth, _floor = cut_recess(bm, pts, lambda a, b: (a, b, d / 2.0), (0.0, 0.0, -1.0), depth, False)
+            loops.append(mouth)
+        body.done(CONSOLE_RECESS)
+        fill_with_holes(bm, outline, loops, (0.0, 0.0, 1.0))
+        body.done(CHASSIS)
+
+    fw_ = rack_opt(plan, "frontRecessWMm")
+    if fw_ is not None or any(k in params for k in ("frontRecessHMm", "frontRecessXMm", "frontRecessYMm", "frontRecessDepthMm")):
+        fh_, fx_, fy_ = rack_opt(plan, "frontRecessHMm"), rack_opt(plan, "frontRecessXMm"), rack_opt(plan, "frontRecessYMm")
+        if None in (fw_, fh_, fx_, fy_):
+            raise BuildError("the front recess needs params.frontRecessWMm, frontRecessHMm, frontRecessXMm, frontRecessYMm")
+        f_depth = rack_opt(plan, "frontRecessDepthMm") or 2.0 * MM
+        z_front = -d / 2.0 + (cheek if cheek is not None and fy_ + fh_ <= y_base_top + 1e-9 else 0.0)
+        a0, a1 = w / 2.0 - fx_ - fw_, w / 2.0 - fx_      # 'opposite' face: u runs from the left as seen from the front
+        outline = take_face_containing(bm, 2, z_front, (a0, fy_), (a1, fy_ + fh_))
+        pts = [(a0, fy_), (a1, fy_), (a1, fy_ + fh_), (a0, fy_ + fh_)]
+        mouth, _floor = cut_recess(bm, pts, lambda a, b: (a, b, z_front), (0.0, 0.0, 1.0), f_depth, False)
+        body.done(CONSOLE_RECESS)
+        fill_with_holes(bm, outline, [mouth], (0.0, 0.0, -1.0))
+        body.done(CHASSIS)
+
+    # --- checks ------------------------------------------------------------------------------------------------------------------------
+    ys = [v.co.z for v in bm.verts]
+    xs = [v.co.x for v in bm.verts]
+    zs = [-v.co.y for v in bm.verts]
+    for got, want, name in ((max(xs) - min(xs), w, "width"), (max(ys) - min(ys), h, "height"), (max(zs) - min(zs), d, "depth")):
+        if abs(got - want) > 0.005 * MM:
+            raise BuildError(f"the detailed console is {got / MM:.3f} mm {name}, the spec says {want / MM:.3f} mm: the rounded outline must keep the tallest station on a flat (the rim and roll radii are too large for the top of the profile)")
+    console_zone_check(plan, bm, w, h, d, stations)
+    if measured:
+        MEASURE["filletMm"] = round(min(measured) / MM, 4)
+    return body.finish()
+
+
 def build_console_wedge(plan: Plan) -> bpy.types.Object:
     """A console or any wedge-shaped casing: plan.profile is the SIDE profile [[depth mm from the io face, height mm], ...] (first
     station at depth 0, last at depth d, the tallest = h), extruded across the width w, bottom flat on y = 0, every edge chamfered by
@@ -1003,6 +1361,8 @@ def build_console_wedge(plan: Plan) -> bpy.types.Object:
         if stations and not (st[0] * MM > stations[-1][0]):
             raise BuildError(f"profile station {i} depth {st[0]} must be beyond the previous station")
         stations.append((float(st[0]) * MM, float(st[1]) * MM))
+    if any(k in (plan.get("params") or {}) for k in CONSOLE_V2_NAMES):
+        return build_console_wedge_v2(plan, w, h, d, stations)
     chamfer = param_m(plan, "chamferMm", DEFAULT_CHAMFER_MM)
     if chamfer >= min(w, min(s[1] for s in stations)) / 2.0:
         raise BuildError(f"params.chamferMm ({chamfer / MM:.2f}) must be smaller than half the smallest side")

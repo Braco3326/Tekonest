@@ -17,6 +17,20 @@ export const RACK_V2_PARAMS = [
   'feetMm', 'feetDiaMm', 'bodyWidthMm', 'rearInsetMm', 'frontOnIo', 'plateFilletMm', 'seamMm', 'plateRgb', 'bodyRgb',
 ] as const
 
+/** The optional params of the detailed console-wedge (all in mm unless said otherwise; counts are plain numbers). Any of them switches the detailed build on. */
+export const CONSOLE_V2_PARAMS = [
+  'filletMm', 'filletSegments', 'armRestMm',
+  'cheekMm', 'baseMm',
+  'tierYMm', 'tierWMm', 'tierXMm',
+  'feetMm', 'feetWidthMm', 'feetFromSideMm', 'feetFromEndMm',
+  'slotPlates', 'slotPlateWMm', 'slotPlateHMm', 'slotPlateXMm', 'slotPlateYMm', 'slotPlatePitchMm', 'slotPlateDepthMm',
+  'frontRecessWMm', 'frontRecessHMm', 'frontRecessXMm', 'frontRecessYMm', 'frontRecessDepthMm',
+  'rearRecessWMm', 'rearRecessHMm', 'rearRecessXMm', 'rearRecessYMm', 'rearRecessDepthMm',
+] as const
+
+/** The corners of a console's outline are rounded with this many fillet radii (the rim bevel runs round them: an arc must be rounder than the bevel is wide). The Python builder uses the same number: CONSOLE_ARC_FACTOR. */
+export const CONSOLE_ARC_FACTOR = 1.6
+
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
 export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
@@ -56,8 +70,14 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   'stagebox-rio3224': { kind: 'device', params: ['earMm', 'flangeDepthMm', 'frontStepMm', 'rearStepMm'], needsMatingOuter: false },
   // A surface of revolution about the vertical axis from a measured profile (microphones, later stands and lamps).
   revolve: { kind: 'device', params: ['segments'], needsMatingOuter: false, usesProfile: true, profileKind: 'lathe' },
-  // A console or any wedge-shaped casing: the side profile [depth from the io face mm, height mm] extruded across the width, edges chamfered.
-  'console-wedge': { kind: 'device', params: ['chamferMm'], needsMatingOuter: false, usesProfile: true, profileKind: 'side' },
+  // A console or any wedge-shaped casing: the side profile [depth from the io face mm, height mm] extruded across the width, edges chamfered (chamferMm only = the
+  // old plain wedge, byte-identical to the first builder). Any of CONSOLE_V2_PARAMS switches on the detailed build: filletMm rounds the side rims in filletSegments steps
+  // (and the profile's rear-top corner), armRestMm rounds the front-top edge into a thick roll, cheekMm + baseMm make the upper shell overhang a lower base (cheeks: side
+  // plates cheekMm thick, base baseMm tall above the feet, set back cheekMm at the sides and the front, flush at the rear), tierYMm / tierWMm / tierXMm make everything above
+  // that height a narrower tier (a meter bridge), feetMm four round rubber feet (feetWidthMm across at the body, 0.72 of it at the table, centres feetFromSideMm / feetFromEndMm from the edges), slotPlates shallow
+  // rectangular recesses on the io face (slotPlateWMm x slotPlateHMm, first lower-left corner at slotPlateXMm / slotPlateYMm, slotPlatePitchMm apart, slotPlateDepthMm deep),
+  // frontRecess* one recess on the front face, rearRecess* one more on the io face (the ports inside it need insetMm = its depth). The builder refuses detail over a control zone.
+  'console-wedge': { kind: 'device', params: ['chamferMm', ...CONSOLE_V2_PARAMS], needsMatingOuter: false, usesProfile: true, profileKind: 'side', usesFlatZones: true, usesPorts: true },
   // A loudspeaker cabinet: a hexagon in plan (full width at the baffle, midWidthMm where the rear taper starts taperDepthMm from the io face,
   // rearWidthMm at the io face; mid and rear default to the width, rear to the mid width, so a plain box or trapezoid needs fewer params),
   // bevelled, with a round pocket cut into the io face behind each port that has an insetMm (depth = the inset, diameter = openingMm or 24 mm).
@@ -194,6 +214,7 @@ export function validateBuild(spec: AssetSpecT): string[] {
   if (build.shape === 'speaker-cabinet') errors.push(...validateSpeakerCabinet(spec))
   if (build.shape === 'curved-cabinet') errors.push(...validateCurvedCabinet(spec))
   if (build.shape === 'rack-box') errors.push(...validateRackBox(spec))
+  if (build.shape === 'console-wedge') errors.push(...validateConsoleWedge(spec))
   if (build.shape === 'power-strip') errors.push(...validatePowerStrip(spec))
   if (build.shape === 'tripod-stand') errors.push(...validateTripodStand(spec))
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {
@@ -277,6 +298,68 @@ function validateRackBox(spec: AssetSpecT): string[] {
     const onFront = [...spec.ports.map((x) => [x.portId, x.face] as const), ...spec.controls.map((x) => [x.controlId, x.face] as const)].filter(([, face]) => face === front)
     if (onFront.length > 0) errors.push(`${id}: handles move the front plate back, but ${onFront.map(([n]) => n).join(', ')} sit on the front face (${front}): a unit with ports or controls on its front has no handles in this shape`)
   }
+  return errors
+}
+
+/** The checks of a detailed console-wedge that need no geometry (the Python builder checks the fit in the real outline and against the flat zones). */
+function validateConsoleWedge(spec: AssetSpecT): string[] {
+  const p = spec.build?.params ?? {}
+  if (!CONSOLE_V2_PARAMS.some((n) => p[n] !== undefined)) return []
+  const errors: string[] = []
+  const { w, h } = spec.realSizeMm
+  const id = spec.id
+  const profile = spec.build?.profile ?? []
+  const lowest = profile.length > 0 ? Math.min(...profile.map((st) => st[1])) : h
+  const whole = (name: string, lo: number, hi: number): void => {
+    const v = p[name]
+    if (v !== undefined && !(Number.isInteger(v) && v >= lo && v <= hi)) errors.push(`${id}: param '${name}' must be a whole number from ${lo} to ${hi}, got ${v}`)
+  }
+  whole('filletSegments', 1, 12)
+  whole('slotPlates', 1, 4)
+  if (p.filletSegments !== undefined && p.filletMm === undefined) errors.push(`${id}: filletSegments has no effect without filletMm`)
+  if (p.filletMm !== undefined && p.filletMm * 2 >= Math.min(w, lowest)) errors.push(`${id}: filletMm (${p.filletMm}) must be smaller than half the smallest side (${Math.min(w, lowest) / 2} mm)`)
+  if (p.armRestMm !== undefined) {
+    if (p.filletMm === undefined) errors.push(`${id}: armRestMm needs filletMm (the rest of the rim)`)
+    else if (p.armRestMm < CONSOLE_ARC_FACTOR * p.filletMm) errors.push(`${id}: armRestMm (${p.armRestMm}) must be at least ${CONSOLE_ARC_FACTOR} times filletMm (${p.filletMm}): it is the thick roll of the front edge and the rim bevel runs round it`)
+    if (p.armRestMm * 2 >= lowest) errors.push(`${id}: armRestMm (${p.armRestMm}) must be smaller than half the lowest station of the profile (${lowest / 2} mm)`)
+  }
+  const feet = p.feetMm ?? 0
+  if (p.cheekMm !== undefined && p.baseMm === undefined) errors.push(`${id}: cheekMm needs baseMm (the height of the base the cheeks overhang)`)
+  if (p.baseMm !== undefined && p.cheekMm === undefined) errors.push(`${id}: baseMm has no effect without cheekMm`)
+  if (p.cheekMm !== undefined && p.cheekMm * 4 >= w) errors.push(`${id}: cheekMm (${p.cheekMm}) must be less than a quarter of the width ${w} mm`)
+  if (p.baseMm !== undefined && feet + p.baseMm + (p.armRestMm ?? p.filletMm ?? 0) >= lowest) errors.push(`${id}: baseMm (${p.baseMm}) + feetMm (${feet}) leaves no room for the shell under the lowest station of the profile (${lowest} mm)`)
+  for (const n of ['feetWidthMm', 'feetFromSideMm', 'feetFromEndMm'] as const) {
+    if (p[n] !== undefined && p.feetMm === undefined) errors.push(`${id}: ${n} has no effect without feetMm`)
+  }
+  if (p.feetMm !== undefined && p.feetMm * 4 >= lowest) errors.push(`${id}: feetMm (${p.feetMm}) must be less than a quarter of the lowest station of the profile (${lowest} mm)`)
+  if ((p.tierYMm === undefined) !== (p.tierWMm === undefined)) errors.push(`${id}: tierYMm and tierWMm go together (the height above which the body is narrower, and its width)`)
+  if (p.tierXMm !== undefined && p.tierWMm === undefined) errors.push(`${id}: tierXMm has no effect without tierYMm and tierWMm`)
+  if (p.tierYMm !== undefined && !(p.tierYMm >= lowest && p.tierYMm < h)) errors.push(`${id}: tierYMm (${p.tierYMm}) must be from the lowest station of the profile (${lowest} mm) up to below the height ${h} mm`)
+  if (p.tierWMm !== undefined && !(p.tierWMm < w)) errors.push(`${id}: tierWMm (${p.tierWMm}) must be narrower than the width ${w} mm`)
+  if (p.tierWMm !== undefined && Math.abs(p.tierXMm ?? 0) + p.tierWMm / 2 > w / 2) errors.push(`${id}: the tier (width ${p.tierWMm}, offset ${p.tierXMm ?? 0} mm) sticks out of the width ${w} mm`)
+  const group = (prefix: string, names: string[], what: string): void => {
+    const given = names.filter((n) => p[n] !== undefined)
+    if (given.length > 0 && given.length < names.length) errors.push(`${id}: ${what} needs ${names.join(', ')} (missing ${names.filter((n) => p[n] === undefined).join(', ')})`)
+    if (given.length === 0 && p[`${prefix}DepthMm`] !== undefined) errors.push(`${id}: ${prefix}DepthMm has no effect without ${names.join(', ')}`)
+    const depth = p[`${prefix}DepthMm`]
+    if (depth !== undefined && depth > 20) errors.push(`${id}: ${prefix}DepthMm (${depth}) is deeper than 20 mm`)
+    const x = p[`${prefix}XMm`]
+    const ww = p[`${prefix}WMm`]
+    if (x !== undefined && ww !== undefined && x + ww > w) errors.push(`${id}: ${what} (x ${x} to ${x + ww} mm) is outside the width ${w} mm`)
+  }
+  group('frontRecess', ['frontRecessWMm', 'frontRecessHMm', 'frontRecessXMm', 'frontRecessYMm'], 'the front recess')
+  group('rearRecess', ['rearRecessWMm', 'rearRecessHMm', 'rearRecessXMm', 'rearRecessYMm'], 'the rear recess')
+  const slotNames = ['slotPlateWMm', 'slotPlateHMm', 'slotPlateXMm', 'slotPlateYMm']
+  const slotGiven = [...slotNames, 'slotPlates'].filter((n) => p[n] !== undefined)
+  if (slotGiven.length > 0 && slotGiven.length < slotNames.length + 1) errors.push(`${id}: the slot plates need slotPlates, ${slotNames.join(', ')} (missing ${[...slotNames, 'slotPlates'].filter((n) => p[n] === undefined).join(', ')})`)
+  if (slotGiven.length === 0 && (p.slotPlatePitchMm !== undefined || p.slotPlateDepthMm !== undefined)) errors.push(`${id}: slotPlatePitchMm and slotPlateDepthMm have no effect without the slot plates`)
+  if (p.slotPlates !== undefined && p.slotPlates >= 2) {
+    if (p.slotPlatePitchMm === undefined) errors.push(`${id}: ${p.slotPlates} slot plates need slotPlatePitchMm (the distance between the lower-left corners)`)
+    else if (p.slotPlateWMm !== undefined && p.slotPlatePitchMm < p.slotPlateWMm) errors.push(`${id}: slotPlatePitchMm (${p.slotPlatePitchMm}) must be at least slotPlateWMm (${p.slotPlateWMm}): the plates would overlap`)
+    else if (p.slotPlateXMm !== undefined && p.slotPlateWMm !== undefined && p.slotPlateXMm + p.slotPlateWMm + (p.slotPlates - 1) * p.slotPlatePitchMm > w) errors.push(`${id}: the slot plates reach past the width ${w} mm`)
+  } else if (p.slotPlatePitchMm !== undefined) errors.push(`${id}: slotPlatePitchMm has no effect with a single slot plate`)
+  if (p.slotPlateDepthMm !== undefined && p.slotPlateDepthMm > 20) errors.push(`${id}: slotPlateDepthMm (${p.slotPlateDepthMm}) is deeper than 20 mm`)
+  if (p.slotPlateYMm !== undefined && p.slotPlateHMm !== undefined && p.slotPlateYMm + p.slotPlateHMm > h) errors.push(`${id}: the slot plates reach above the height ${h} mm`)
   return errors
 }
 
