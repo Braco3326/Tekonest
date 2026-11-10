@@ -2,8 +2,8 @@
  * ControlRig on a headless scene (NullEngine): the parts exist at the right place, a value moves its part the right way, a hit pad
  * carries the control's identity, meters step, and disposal leaves nothing behind.
  */
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { NullEngine, Scene, TransformNode, Vector3 } from '@babylonjs/core'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { NullEngine, Ray, Scene, TransformNode, Vector3 } from '@babylonjs/core'
 import { ControlBank } from '../../src/controls/controlBank'
 import { ControlRig } from '../../src/controls/controlRig'
 import { controlHit } from '../../src/controls/controlHit'
@@ -160,5 +160,88 @@ describe('ControlRig', () => {
     expect(rig.size).toBe(0)
     expect(scene.getTransformNodeByName('ctl:d1:fader')).toBeNull()
     expect(() => bank.set('fader', 0.5)).not.toThrow()
+  })
+})
+
+describe('ControlRig: reverse faders and screens', () => {
+  const RAW2 = {
+    schema: 1,
+    deviceId: 'dev',
+    controls: [
+      // value 0 at the front (y = 300 mm from the I/O edge), value 1 100 mm nearer the edge
+      { id: 'rev', kind: 'fader', face: 'top', xMm: 100, yMm: 250, axis: 'y', travelMm: 100, reverse: true, default: 0, slot: true, sizeMm: { w: 14, h: 30, d: 12 } },
+      { id: 'fader-1', kind: 'fader', face: 'top', xMm: 200, yMm: 250, axis: 'y', travelMm: 100, taper: 'fader-db', default: 0.75, sizeMm: { w: 14, h: 30, d: 12 } },
+      { id: 'scr', kind: 'screen', face: 'top', xMm: 200, yMm: 100, sizeMm: { w: 200, h: 100, d: 2 }, screen: { app: 'mixer-overview', pxW: 400, pxH: 200 } },
+    ],
+  }
+
+  function buildWithScreen() {
+    let fills = 0
+    const ctx = new Proxy({}, { get: (_t, k) => (k === 'fillRect' ? () => fills++ : () => ({ width: 10, addColorStop() {} })), set: () => true })
+    g.document = { createElement: () => ({ width: 1, height: 1, style: {}, getContext: () => ctx }), addEventListener() {}, removeEventListener() {} }
+    const scene = new Scene(new NullEngine())
+    const root = new TransformNode('dev', scene)
+    const { layout, errors } = parseControlLayout(RAW2)
+    expect(errors).toEqual([])
+    const bank = new ControlBank(layout!.controls)
+    const rig = new ControlRig(scene, root, 'd1', bank, SIZE)
+    return { scene, bank, rig, fills: () => fills }
+  }
+
+  it('a reverse fader travels toward the I/O edge: its cap moves to -z and its slide direction points toward the edge', () => {
+    const { rig, bank } = buildWithScreen()
+    bank.set('rev', 1)
+    expect(rig.part('rev')!.mover.position.z).toBeCloseTo(-0.1, 9)
+    const s = rig.slideOf('rev')!
+    expect(s.dir.z).toBeCloseTo(-1, 6) // top face y grows toward +z; reverse flips it
+    expect(rig.slideOf('fader-1')!.dir.z).toBeCloseTo(1, 6)
+  })
+
+  it('a screen draws its app on build, is a live part (the ticker runs for it), and redraws when a value changes or on the clock', () => {
+    const { rig, bank, fills } = buildWithScreen()
+    expect(rig.hasMeters).toBe(true)
+    const first = fills()
+    expect(first).toBeGreaterThan(0) // drawn when built
+    expect(rig.update(1000)).toBe(true) // animated app: redraws on the clock
+    const second = fills()
+    expect(second).toBeGreaterThan(first)
+    bank.set('fader-1', 0.4)
+    rig.update(1010) // within 66 ms of the last draw: not yet
+    expect(fills()).toBe(second)
+    rig.update(1100)
+    expect(fills()).toBeGreaterThan(second)
+  })
+
+  it('maps a picking ray to the canvas pixel under it, even past the glass edge, and a touch reaches the app', () => {
+    const { rig, bank } = buildWithScreen()
+    const part = rig.part('scr')!
+    part.node.computeWorldMatrix(true)
+    const c = part.node.getAbsolutePosition()
+    const down = (dx: number, dz: number): Ray => new Ray(new Vector3(c.x + dx, c.y + 0.5, c.z + dz), new Vector3(0, -1, 0))
+    // plane centre -> canvas centre
+    expect(rig.screenPointAt('scr', down(0, 0))!.x).toBeCloseTo(200, 3)
+    expect(rig.screenPointAt('scr', down(0, 0))!.y).toBeCloseTo(100, 3)
+    // 50 mm to the right of a 200 mm wide screen = 75 % of the width; toward the front (+z, the face\'s up) = toward the top of the canvas
+    const p = rig.screenPointAt('scr', down(0.05, 0.025))!
+    expect(p.x).toBeCloseTo(300, 3)
+    expect(p.y).toBeCloseTo(50, 3)
+    expect(rig.screenPointAt('scr', down(0.2, 0))!.x).toBeGreaterThan(400) // beyond the edge: still a number
+    expect(rig.screenPointAt('nope', down(0, 0))).toBeNull()
+    // a touch on the first strip's track moves the fader the strip stands for
+    const r = rig.screenTouch('scr', 'down', 200, 80)
+    expect(r.handled).toBe(true)
+    expect(bank.get('fader-1')).not.toBe(0.75)
+    expect(rig.screenTouch('nope', 'down', 0, 0)).toEqual({ handled: false })
+  })
+
+  it('a screen whose app is unknown is skipped (logged), the rest of the layout still builds', () => {
+    const scene = new Scene(new NullEngine())
+    const root = new TransformNode('dev', scene)
+    const { layout } = parseControlLayout({ ...RAW2, controls: [{ ...RAW2.controls[2], screen: { app: 'nope', pxW: 100, pxH: 100 } }, RAW2.controls[1]] })
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const rig = new ControlRig(scene, root, 'd1', new ControlBank(layout!.controls), SIZE)
+    expect(rig.size).toBe(1)
+    expect(warn).toHaveBeenCalled()
+    warn.mockRestore()
   })
 })

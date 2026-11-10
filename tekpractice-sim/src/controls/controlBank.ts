@@ -20,6 +20,7 @@ export function normaliseValue(def: ControlDef, raw: number): number {
       return Math.min(top, Math.max(0, Math.round(raw)))
     }
     case 'meter':
+    case 'screen':
       return 0
     default:
       return Math.min(1, Math.max(0, raw))

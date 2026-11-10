@@ -111,11 +111,23 @@ export class ControlController {
     const { x, y } = this.point(e)
     const found = this.controlAt(x, y)
     if (!found) return
-    e.preventDefault()
-    e.stopImmediatePropagation()
     const { instance, def } = found
     const bank = instance.controls!.bank
     const rig = instance.controls!.rig
+    if (def.kind === 'screen') {
+      // A touch on the glass belongs to the screen's app; one it does not take (a gap between widgets) falls through to the camera.
+      const pt = rig.screenPointAt(def.id, this.host.scene.createPickingRay(x, y, null, this.host.camera))
+      const r = pt ? rig.screenTouch(def.id, 'down', pt.x, pt.y) : { handled: false }
+      if (!r.handled) return
+      e.preventDefault()
+      e.stopImmediatePropagation()
+      this.drag = { instanceId: instance.instanceId, def, pointerId: e.pointerId, lastX: e.clientX, lastY: e.clientY, moved: false, lastSlide: 0, start: 0 }
+      if (r.changed) this.commitById(instance.instanceId, r.changed)
+      this.host.invalidate()
+      return
+    }
+    e.preventDefault()
+    e.stopImmediatePropagation()
     const t = e.timeStamp
     const id = `${instance.instanceId}/${def.id}`
     const double = this.lastClick && this.lastClick.id === id && t - this.lastClick.t <= DOUBLE_MS
@@ -177,6 +189,13 @@ export class ControlController {
     const inst = this.host.instance(d.instanceId)
     const bank = inst?.controls?.bank
     if (!inst || !bank) return this.endDrag()
+    if (d.def.kind === 'screen') {
+      const { x, y } = this.point(e)
+      const pt = inst.controls?.rig.screenPointAt(d.def.id, this.host.scene.createPickingRay(x, y, null, this.host.camera))
+      if (pt) inst.controls!.rig.screenTouch(d.def.id, 'move', pt.x, pt.y)
+      this.host.invalidate()
+      return
+    }
     const fine = e.shiftKey ? 1 / FINE : 1
     if (Math.hypot(e.clientX - d.lastX, e.clientY - d.lastY) > 0) d.moved = true
     if (d.def.kind === 'fader') {
@@ -200,11 +219,28 @@ export class ControlController {
     const d = this.drag
     if (!d || e.pointerId !== d.pointerId) return
     e.stopImmediatePropagation()
+    if (d.def.kind === 'screen') {
+      const inst = this.host.instance(d.instanceId)
+      const { x, y } = this.point(e)
+      const pt = inst?.controls?.rig.screenPointAt(d.def.id, this.host.scene.createPickingRay(x, y, null, this.host.camera))
+      const r = inst?.controls?.rig.screenTouch(d.def.id, 'up', pt?.x ?? 0, pt?.y ?? 0)
+      if (r?.changed) this.commitById(d.instanceId, r.changed)
+      this.endDrag()
+      this.host.invalidate()
+      return
+    }
     const bank = this.host.instance(d.instanceId)?.controls?.bank
     if (bank && d.def.kind === 'button' && d.def.latch === false) bank.set(d.def.id, 0, 'user') // momentary: released
     if (bank && d.moved && (d.def.kind === 'fader' || d.def.kind === 'knob')) this.host.committed?.(d.instanceId, d.def, bank.get(d.def.id))
     this.endDrag()
     this.host.invalidate()
+  }
+
+  /** A control changed from a screen (not from a pointer on its own cap): carry it to the simulation like any other. */
+  private commitById(instanceId: string, controlId: string): void {
+    const inst = this.host.instance(instanceId)
+    const def = inst?.controls?.bank.def(controlId)
+    if (inst && def) this.host.committed?.(instanceId, def, inst.controls!.bank.get(controlId))
   }
 
   private endDrag(): void {
@@ -234,7 +270,7 @@ export class ControlController {
     const { x, y } = this.point(e)
     const found = this.controlAt(x, y)
     this.setHover(found ? { instanceId: found.instance.instanceId, controlId: found.def.id } : null)
-    this.host.canvas.style.cursor = found ? (found.def.kind === 'fader' ? 'ns-resize' : found.def.kind === 'knob' ? 'grab' : 'pointer') : ''
+    this.host.canvas.style.cursor = found ? (found.def.kind === 'fader' ? 'ns-resize' : found.def.kind === 'knob' ? 'grab' : found.def.kind === 'screen' ? 'default' : 'pointer') : ''
   }
 
   private setHover(next: { instanceId: string; controlId: string } | null): void {

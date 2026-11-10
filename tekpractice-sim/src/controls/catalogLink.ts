@@ -30,7 +30,7 @@ export function optionDb(option: string): number | null {
 
 /** The catalog value a 3D control's value stands for. */
 export function toCatalog(def: ControlDef, cat: CatalogControl, v: number): CatalogValue {
-  if (cat.type === 'toggle') return def.kind === 'fader' ? v > CLOSED_BELOW : v >= 0.5
+  if (cat.type === 'toggle') return (def.kind === 'fader' ? v > CLOSED_BELOW : v >= 0.5) !== (def.invert === true)
   const options = cat.options ?? []
   if (!options.length) return ''
   if (def.kind === 'fader' && options.every((o) => optionDb(o) !== null)) {
@@ -58,7 +58,7 @@ export function toCatalog(def: ControlDef, cat: CatalogControl, v: number): Cata
  */
 export function fromCatalog(def: ControlDef, cat: CatalogControl, value: CatalogValue, current: number): number | null {
   if (cat.type === 'toggle') {
-    const want = value === true
+    const want = (value === true) !== (def.invert === true)
     if (def.kind === 'fader') {
       if (want === current > CLOSED_BELOW) return null
       return want ? OPEN_AT : 0

@@ -12,7 +12,7 @@
 export const FACES = ['io', 'opposite', 'top', 'bottom', 'left', 'right'] as const
 export type Face = (typeof FACES)[number]
 
-export const KINDS = ['fader', 'knob', 'button', 'switch', 'led', 'meter'] as const
+export const KINDS = ['fader', 'knob', 'button', 'switch', 'led', 'meter', 'screen'] as const
 export type ControlKind = (typeof KINDS)[number]
 
 export interface MeterSpec {
@@ -29,6 +29,13 @@ export interface MeterSpec {
   referenceDb?: number
 }
 
+/** A screen: the app it runs (screenApp.ts) and the resolution of its canvas. */
+export interface ScreenSpec {
+  app: string
+  pxW: number
+  pxH: number
+}
+
 export interface ControlDef {
   id: string
   kind: ControlKind
@@ -39,6 +46,10 @@ export interface ControlDef {
   sizeMm: { w: number; h: number; d: number }
   /** fader: the travel axis on the face ('z' is not valid for it). Others: 'z' (out of the face). */
   axis: 'x' | 'y' | 'z'
+  /** fader: the cap travels toward the I/O edge (-) instead of away from it (+): value 0 sits at (xMm, yMm), value 1 is travelMm nearer the edge. */
+  reverse?: boolean
+  /** With catalogControl on a toggle: the control is the opposite of the setting (an ON key lit = « mute » false). */
+  invert?: boolean
   /** fader: cap travel. button: how far a press sinks (default 1.5). */
   travelMm?: number
   /** Normalised start value (fader / knob 0..1, button 0 or 1, switch an index). */
@@ -65,6 +76,7 @@ export interface ControlDef {
   /** button: keys with the same group are radio (pressing one releases the others): an ON / OFF pair. */
   group?: string
   meter?: MeterSpec
+  screen?: ScreenSpec
   /** The catalog control this one is (« power », « fader-master ») when it stands for one. */
   catalogControl?: string
   label?: string
@@ -133,6 +145,8 @@ function parseOne(raw: Record<string, unknown>, id: string, errors: string[]): C
   if (isNum(raw.sweepDeg) && raw.sweepDeg > 0 && raw.sweepDeg <= 360) def.sweepDeg = raw.sweepDeg
   if (typeof raw.latch === 'boolean') def.latch = raw.latch
   if (raw.round === true) def.round = true
+  if (raw.reverse === true && kind === 'fader') def.reverse = true
+  if (raw.invert === true) def.invert = true
   if (isNum(raw.positions) && Number.isInteger(raw.positions) && raw.positions >= 2) def.positions = raw.positions
   if (typeof raw.colour === 'string' && HEX.test(raw.colour)) def.colour = raw.colour
   if (typeof raw.lit === 'string' && HEX.test(raw.lit)) def.lit = raw.lit
@@ -141,6 +155,11 @@ function parseOne(raw: Record<string, unknown>, id: string, errors: string[]): C
   if (typeof raw.group === 'string' && raw.group) def.group = raw.group
   if (typeof raw.catalogControl === 'string') def.catalogControl = raw.catalogControl
   if (typeof raw.label === 'string') def.label = raw.label
+  if (kind === 'screen') {
+    const sc = raw.screen
+    if (!isRec(sc) || typeof sc.app !== 'string' || !sc.app || !isNum(sc.pxW) || !isNum(sc.pxH) || sc.pxW < 64 || sc.pxH < 64 || sc.pxW > 2048 || sc.pxH > 2048) return fail(errors, `${at}: a screen needs screen.app and screen.pxW / pxH (64 … 2048)`)
+    def.screen = { app: sc.app, pxW: Math.round(sc.pxW), pxH: Math.round(sc.pxH) }
+  }
   if (kind === 'meter') {
     const m = raw.meter
     if (!isRec(m) || (m.style !== 'vu' && m.style !== 'bar') || typeof m.source !== 'string' || !m.source) return fail(errors, `${at}: a meter needs meter.style (vu | bar) and meter.source`)
@@ -225,6 +244,7 @@ export function parseControlLayout(raw: unknown): { layout: ControlLayout | null
           continue
         }
         if (typeof o.catalogControl === 'string') def.catalogControl = o.catalogControl
+        if (o.invert === true) def.invert = true
         if (typeof o.label === 'string') def.label = o.label
         if (isNum(o.default)) def.default = normaliseDefault(def, o.default)
       }

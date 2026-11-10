@@ -12,6 +12,7 @@ import {
   MeshBuilder,
   Quaternion,
   StandardMaterial,
+  type Ray,
   TransformNode,
   Vector3,
   type Mesh,
@@ -22,6 +23,7 @@ import type { ControlDef } from './controlTypes'
 import type { ControlHit } from './controlHit'
 import { faceFrame } from './faceFrame'
 import { BarBallistics, VuBallistics, barLit, demoLevelDb } from './meters'
+import { createScreenApp, type ScreenApp, type TouchKind } from './screenApp'
 
 const MM = 0.001
 /** A part rests this far above its face so it never z-fights with the model. */
@@ -48,6 +50,8 @@ interface Part {
   /** Hover tint on / off. */
   hover(on: boolean): void
   meterStep?(levelDb: number, nowMs: number, dtMs: number): void
+  /** A screen part: the app on its canvas, redrawn when dirty or (live apps) at about 15 fps. */
+  screen?: { app: ScreenApp; ctx: CanvasRenderingContext2D | null; tex: DynamicTexture | null; w: number; h: number; plane: Mesh; dirty: boolean; last: number }
   /** True for a fader: its cap slides along the control axis (slideOf gives the geometry). */
   slides?: boolean
 }
@@ -81,7 +85,10 @@ export class ControlRig {
         part.apply(bank.get(def.id))
       }
     }
-    this.unsub = bank.subscribe((id, v) => this.parts.get(id)?.apply(v))
+    this.unsub = bank.subscribe((id, v) => {
+      this.parts.get(id)?.apply(v)
+      for (const p of this.parts.values()) if (p.screen) p.screen.dirty = true
+    })
   }
 
   get size(): number {
@@ -90,7 +97,7 @@ export class ControlRig {
 
   /** Whether any meter is in the layout (the ticker only runs for these). */
   get hasMeters(): boolean {
-    return [...this.parts.values()].some((p) => p.meterStep)
+    return [...this.parts.values()].some((p) => p.meterStep || p.screen?.app.animated)
   }
 
   part(id: string): Part | undefined {
@@ -116,6 +123,7 @@ export class ControlRig {
     p.node.computeWorldMatrix(true)
     const m = p.node.getWorldMatrix()
     const axisLocal = p.def.axis === 'x' ? new Vector3(1, 0, 0) : new Vector3(0, 0, 1)
+    if (p.def.reverse) axisLocal.scaleInPlace(-1)
     const dir = Vector3.TransformNormal(axisLocal, m)
     const scale = dir.length() || 1
     return {
@@ -129,15 +137,61 @@ export class ControlRig {
   /** Advance every meter to `nowMs` (call from the ticker). Returns whether anything was redrawn. */
   update(nowMs: number): boolean {
     if (!this.metersLive) return false
+    let drewScreen = false
+    for (const p of this.parts.values()) {
+      const sc = p.screen
+      if (sc && (sc.dirty || sc.app.animated) && nowMs - sc.last >= 66) {
+        this.drawScreen(p, nowMs)
+        drewScreen = true
+      }
+    }
     const dt = this.lastMeterMs ? Math.min(100, nowMs - this.lastMeterMs) : 16
     this.lastMeterMs = nowMs
-    let any = false
+    let any = drewScreen
     for (const p of this.parts.values()) {
       if (!p.meterStep || !p.def.meter) continue
       p.meterStep(this.levels(p.def.meter.source, nowMs / 1000), nowMs, dt)
       any = true
     }
     return any
+  }
+
+  private drawScreen(p: Part, nowMs: number): void {
+    const sc = p.screen
+    if (!sc) return
+    sc.last = nowMs
+    sc.dirty = false
+    if (!sc.ctx || !sc.tex) return
+    sc.app.draw(sc.ctx, sc.w, sc.h, { bank: this.bank, levels: this.levels, nowMs })
+    sc.tex.update()
+  }
+
+  /** Canvas pixel of a picking ray on a screen's plane (the ray meets the plane; works beyond its edges too), or null for no screen / a parallel ray. */
+  screenPointAt(id: string, ray: Ray): { x: number; y: number } | null {
+    const sc = this.parts.get(id)?.screen
+    if (!sc) return null
+    sc.plane.computeWorldMatrix(true)
+    const inv = sc.plane.getWorldMatrix().clone().invert()
+    const o = Vector3.TransformCoordinates(ray.origin, inv)
+    const d = Vector3.TransformNormal(ray.direction, inv)
+    if (Math.abs(d.z) < 1e-9) return null
+    const t = -o.z / d.z
+    if (t < 0) return null
+    const lx = o.x + d.x * t
+    const ly = o.y + d.y * t
+    const w = sc.plane.getBoundingInfo().boundingBox.extendSize.x * 2
+    const h = sc.plane.getBoundingInfo().boundingBox.extendSize.y * 2
+    return { x: (lx / w + 0.5) * sc.w, y: (0.5 - ly / h) * sc.h }
+  }
+
+  /** A touch on a screen: the app takes it (and may name a control it changed). */
+  screenTouch(id: string, kind: TouchKind, x: number, y: number): { handled: boolean; changed?: string } {
+    const p = this.parts.get(id)
+    const sc = p?.screen
+    if (!p || !sc) return { handled: false }
+    const r = sc.app.pointer(kind, x, y, { bank: this.bank, levels: this.levels, nowMs: sc.last }, sc.w, sc.h)
+    sc.dirty = true
+    return r
   }
 
   dispose(): void {
@@ -232,6 +286,8 @@ export class ControlRig {
         return this.buildLed(def, node, sx, sy, sz)
       case 'meter':
         return def.meter?.style === 'vu' ? this.buildVu(def, node, sx, sy, sz) : this.buildBar(def, node, sx, sz)
+      case 'screen':
+        return this.buildScreen(def, node, sx, sy, sz)
     }
   }
 
@@ -242,9 +298,10 @@ export class ControlRig {
       const len = def.slotMm ? def.slotMm.len * MM : travel + (alongX ? sx : sz) + 0.004
       const across = def.slotMm ? def.slotMm.w * MM : (alongX ? sz : sx) + 0.004
       const plate = this.box('slot', node, alongX ? len : across, 0.0004, alongX ? across : len, this.mat('slot', '#16181b'))
-      plate.position = alongX ? new Vector3(travel / 2, 0.0002 + LIFT / 2, 0) : new Vector3(0, 0.0002 + LIFT / 2, travel / 2)
+      const mid = (def.reverse ? -travel : travel) / 2
+      plate.position = alongX ? new Vector3(mid, 0.0002 + LIFT / 2, 0) : new Vector3(0, 0.0002 + LIFT / 2, mid)
       const groove = this.box('groove', node, alongX ? len - 0.012 : 0.0026, 0.0005, alongX ? 0.0026 : len - 0.012, this.mat('groove', '#050607'))
-      groove.position = alongX ? new Vector3(travel / 2, 0.0004 + LIFT / 2, 0) : new Vector3(0, 0.0004 + LIFT / 2, travel / 2)
+      groove.position = alongX ? new Vector3(mid, 0.0004 + LIFT / 2, 0) : new Vector3(0, 0.0004 + LIFT / 2, mid)
     }
     const mover = new TransformNode(`ctl:${this.instanceId}:${def.id}:cap`, this.scene)
     mover.parent = node
@@ -263,7 +320,7 @@ export class ControlRig {
       pad,
       slides: true,
       apply: (v) => {
-        const p = v * travel
+        const p = v * travel * (def.reverse ? -1 : 1)
         mover.position = alongX ? new Vector3(p, 0, 0) : new Vector3(0, 0, p)
       },
       hover: (on) => (cap.material = on ? hoverMat : capMat),
@@ -450,6 +507,46 @@ export class ControlRig {
         draw(r.lit, r.peak)
       },
     }
+  }
+
+  private buildScreen(def: ControlDef, node: TransformNode, sx: number, sy: number, sz: number): Part | null {
+    const spec = def.screen
+    const app = spec ? createScreenApp(spec.app) : null
+    if (!spec || !app) {
+      console.warn(`[controls] ${this.instanceId}: screen "${def.id}" has no app "${spec?.app}"`)
+      return null
+    }
+    const thick = Math.max(sy, 0.0015)
+    const bezel = this.box(`${def.id}:bezel`, node, sx + 0.004, thick, sz + 0.004, this.mat('screen-bezel', '#07080a'))
+    bezel.position.y = thick / 2 + LIFT
+    const mat = new StandardMaterial(`ctlmat:${this.instanceId}:screen:${def.id}`, this.scene)
+    mat.specularColor = Color3.Black()
+    mat.disableLighting = true
+    let ctx: CanvasRenderingContext2D | null = null
+    let tex: DynamicTexture | null = null
+    try {
+      tex = new DynamicTexture(`ctltex:${this.instanceId}:${def.id}`, { width: spec.pxW, height: spec.pxH }, this.scene, false)
+      ctx = tex.getContext() as CanvasRenderingContext2D
+      mat.emissiveTexture = tex
+      mat.diffuseColor = Color3.Black()
+    } catch {
+      mat.emissiveColor = Color3.FromHexString('#12151b') // headless: a plain dark glass
+    }
+    const plane = this.decal(`${def.id}:glass`, node, sx, sz, thick + LIFT + 0.0003, mat)
+    plane.isPickable = true
+    const hit: ControlHit = { isControl: true, instanceId: this.instanceId, controlId: def.id }
+    plane.metadata = hit
+    const part: Part = {
+      def,
+      node,
+      mover: node,
+      pad: plane,
+      apply: () => undefined,
+      hover: () => undefined,
+      screen: { app, ctx, tex, w: spec.pxW, h: spec.pxH, plane, dirty: true, last: 0 },
+    }
+    this.drawScreen(part, 0)
+    return part
   }
 
   private buildVu(def: ControlDef, node: TransformNode, sx: number, sy: number, sz: number): Part {

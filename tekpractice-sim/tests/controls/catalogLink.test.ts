@@ -91,3 +91,15 @@ describe('enum by index (a knob or a switch)', () => {
     expect(toCatalog(def({ kind: 'knob' }), { id: 'e', type: 'enum' }, 0.5)).toBe('')
   })
 })
+
+describe('invert (an ON key that is the opposite of a « mute » setting)', () => {
+  const on = def({ kind: 'button', invert: true })
+  const mute: CatalogControl = { id: 'mute-master', type: 'toggle' }
+  it('a lit ON key means not muted, both ways', () => {
+    expect(toCatalog(on, mute, 1)).toBe(false)
+    expect(toCatalog(on, mute, 0)).toBe(true)
+    expect(fromCatalog(on, mute, true, 1)).toBe(0) // muted from the panel: the key goes off
+    expect(fromCatalog(on, mute, false, 0)).toBe(1)
+    expect(fromCatalog(on, mute, false, 1)).toBeNull()
+  })
+})
