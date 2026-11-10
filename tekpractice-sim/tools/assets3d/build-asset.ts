@@ -270,7 +270,7 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
     runFixup: deps.runFixup ?? ((inGlb, outGlb, spec, opts) => runFixup(inGlb, outGlb, spec, opts)),
     runBuilder: deps.runBuilder ?? ((spec, outGlb, projections) => runBuilder(spec, outGlb, {}, projections)),
     renderProjection: deps.renderProjection ?? ((glb, face, expectedMm) => renderProjection(glb, face, {}, expectedMm)),
-    photoProjection: deps.photoProjection ?? ((photo, face, sizeMm) => photoProjection(photo.file, face, sizeMm, photo.crop ? { crop: photo.crop } : {})),
+    photoProjection: deps.photoProjection ?? ((photo, face, sizeMm) => photoProjection(photo.file, face, sizeMm, { ...(photo.crop ? { crop: photo.crop } : {}), ...(photo.fillBackground ? { fillBackground: true } : {}) })),
     compress: deps.compress ?? dracoCompress,
     optimizeTextures: deps.optimizeTextures ?? optimizeTextures,
     loadSpec:
@@ -756,7 +756,7 @@ const USAGE = [
   '  --ship        also write public/assets/<id>.glb and the manifest entry (needs --logos-removed)',
   '  --logos-removed  you checked the textures: no brand logos (recorded as logosRemoved: true)',
   '  --raw         use a hand-made raw GLB: no Meshy call, one attempt',
-  '  --project-photo  with --scripted: face=file[@left,top,width,height]: the picture of that face is a straight-on photo (repeatable); other faces come from --project',
+  '  --project-photo  with --scripted: face=file[@left,top,width,height][,fill]: the picture of that face is a straight-on photo (repeatable); other faces come from --project; ,fill repaints the white corners of a rounded product with its nearest colour',
   '  --slab        with --raw: the GLB is a thin Meshy panel: turn its thin axis into the depth and restore the spec depth proportion before the fix-up',
   '  --meshy-task  with --raw: the id of the Meshy task the GLB was downloaded from; the manifest records Meshy provenance',
   '  --ship-run    ship the final.glb of an earlier passing run (re-gated) without building again: no Meshy call, no fix-up',

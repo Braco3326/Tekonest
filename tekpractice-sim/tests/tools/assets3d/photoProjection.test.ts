@@ -108,3 +108,72 @@ describe('parsePhotoArg', () => {
     expect(() => parsePhotoArg('nonsense')).toThrow(/face=file/)
   })
 })
+
+describe('photoProjection background fill (the corners of a rounded product)', () => {
+  /** A 400 x 100 px dark-grey ellipse on white: after the trim its four corners are white background. */
+  async function blob(dir: string): Promise<string> {
+    const W = 520
+    const H = 180
+    const px = Buffer.alloc(W * H * 3, 255)
+    for (let y = 40; y < 140; y++) {
+      for (let x = 60; x < 460; x++) {
+        const dx = (x - 260) / 200
+        const dy = (y - 90) / 50
+        if (dx * dx + dy * dy <= 1) px.set([90, 90, 94], (y * W + x) * 3)
+      }
+    }
+    const file = join(dir, 'blob.png')
+    await writeFile(file, await sharp(px, { raw: { width: W, height: H, channels: 3 } }).png().toBuffer())
+    return file
+  }
+
+  it('paints the background that touches the border with the nearest product colour, so a rounded corner never lands white on the model', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'photoproj-'))
+    try {
+      const out = await photoProjection(await blob(dir), 'io', SIZE, { fillBackground: true })
+      const { data, info } = await sharp(Buffer.from(out.png)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+      const at = (x: number, y: number): number[] => Array.from(data.subarray((y * info.width + x) * 3, (y * info.width + x) * 3 + 3))
+      for (const [x, y] of [[1, 1], [info.width - 2, 1], [1, info.height - 2], [info.width - 2, info.height - 2]]) {
+        expect(at(x, y), `corner ${x},${y}`).toEqual([liftChannel(90), liftChannel(90), liftChannel(94)])
+      }
+      expect(at(200, 50)).toEqual([liftChannel(90), liftChannel(90), liftChannel(94)]) // the product itself is unchanged
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('does nothing unless asked: the corners stay as photographed', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'photoproj-'))
+    try {
+      const out = await photoProjection(await blob(dir), 'io', SIZE)
+      const { data, info } = await sharp(Buffer.from(out.png)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+      expect(data[(1 * info.width + 1) * 3]).toBeGreaterThan(200)
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('leaves a white product alone (the border-connected white is most of the picture)', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'photoproj-'))
+    try {
+      const W = 520
+      const H = 180
+      const px = Buffer.alloc(W * H * 3, 255)
+      for (let y = 40; y < 140; y++) for (let x = 60; x < 460; x++) px.set(x < 80 ? [60, 60, 60] : [250, 250, 250], (y * W + x) * 3)
+      const file = join(dir, 'white.png')
+      await writeFile(file, await sharp(px, { raw: { width: W, height: H, channels: 3 } }).png().toBuffer())
+      const out = await photoProjection(file, 'io', SIZE, { crop: [60, 40, 400, 100], fillBackground: true })
+      const { data, info } = await sharp(Buffer.from(out.png)).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+      expect(data[(50 * info.width + 300) * 3]).toBe(liftChannel(250))
+      expect(data[(50 * info.width + 5) * 3]).toBe(liftChannel(60))
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
+  })
+
+  it('parses ,fill after a crop in --project-photo and sets the option', () => {
+    expect(parsePhotoArg('io=rear.jpg@1,2,300,400,fill')).toEqual({ face: 'io', file: 'rear.jpg', crop: [1, 2, 300, 400], fillBackground: true })
+    expect(parsePhotoArg('io=rear.jpg,fill')).toEqual({ face: 'io', file: 'rear.jpg', fillBackground: true })
+    expect(parsePhotoArg('io=rear.jpg@1,2,300,400')).toEqual({ face: 'io', file: 'rear.jpg', crop: [1, 2, 300, 400] })
+  })
+})

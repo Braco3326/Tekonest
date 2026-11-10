@@ -72,12 +72,14 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   // A loudspeaker cabinet with a CURVED plan and filleted top and bottom edges (die-cast monitors, moulded PA boxes): a rounded polygon in plan
   // (baffle corners planFrontMm apart, the sides bulge sideBulgeMm to their widest point midDepthMm behind the baffle, taper to rearWidthMm at the
   // rear; corners rounded by frontRadiusMm, sideRadiusMm and backRadiusMm), extruded with an elliptic fillet of edgeRadiusMm (horizontal) by
-  // edgeDropMm (vertical) in edgeSegments steps on the top and the bottom. The baffle may bow forward crownMm. Optional round recesses on the
+  // edgeDropMm (vertical) in edgeSegments steps on the top and the bottom; barrelMm makes the sides a shallow arc in elevation (widest at barrelCentreMm,
+  // barrelMm narrower on each side at the farther end of the height); footMm adds a rubber pad (footWidthMm x footDepthMm) under the body, which then starts footMm
+  // above the base; bodyGrey (20 to 200) sets the grey of the body's untextured faces. The baffle may bow forward crownMm. Optional round recesses on the
   // baffle (a woofer ring and a tweeter ring with an optional conical waveguide dish) and a round pocket cut into the rear face behind each port
   // that has an insetMm, as in speaker-cabinet. The builder measures the fillet it built (min of the two radii) for the 'fillet' gate.
   'curved-cabinet': {
     kind: 'device',
-    params: ['planFrontMm', 'sideBulgeMm', 'rearWidthMm', 'midDepthMm', 'frontRadiusMm', 'sideRadiusMm', 'backRadiusMm', 'edgeRadiusMm', 'edgeDropMm', 'edgeSegments', 'crownMm', 'wooferRingMm', 'wooferYMm', 'tweeterRingMm', 'tweeterYMm', 'ringDepthMm', 'waveguideMm', 'waveguideDepthMm'],
+    params: ['planFrontMm', 'sideBulgeMm', 'rearWidthMm', 'midDepthMm', 'frontRadiusMm', 'sideRadiusMm', 'backRadiusMm', 'edgeRadiusMm', 'edgeDropMm', 'edgeSegments', 'crownMm', 'barrelMm', 'barrelCentreMm', 'footMm', 'footWidthMm', 'footDepthMm', 'bodyGrey', 'wooferRingMm', 'wooferYMm', 'tweeterRingMm', 'tweeterYMm', 'ringDepthMm', 'waveguideMm', 'waveguideDepthMm'],
     needsMatingOuter: false,
     usesPorts: true,
   },
@@ -223,6 +225,14 @@ function validateCurvedCabinet(spec: AssetSpecT): string[] {
   const widest = front + 2 * bulge
   if (front > w * (1 + CURVED_WIDTH_SLACK)) errors.push(`${spec.id}: planFrontMm (${front}) cannot be more than ${CURVED_WIDTH_SLACK * 100} % wider than the width ${w} mm`)
   if (Math.abs(widest - w) > w * CURVED_WIDTH_SLACK) errors.push(`${spec.id}: planFrontMm + 2 x sideBulgeMm (${widest}) is more than ${CURVED_WIDTH_SLACK * 100} % away from the width ${w} mm: the final stretch to the exact width would show`)
+  if (p.barrelMm !== undefined && p.barrelMm >= w / 4) errors.push(`${spec.id}: barrelMm (${p.barrelMm}) must be less than a quarter of the width (${w / 4} mm)`)
+  if (p.barrelCentreMm !== undefined && p.barrelCentreMm >= h) errors.push(`${spec.id}: barrelCentreMm (${p.barrelCentreMm}) must be inside the height ${h} mm`)
+  const foot = p.footMm
+  if (foot !== undefined && foot >= h / 3) errors.push(`${spec.id}: footMm (${foot}) must be less than a third of the height (${h / 3} mm)`)
+  if (foot === undefined && (p.footWidthMm !== undefined || p.footDepthMm !== undefined)) errors.push(`${spec.id}: footWidthMm and footDepthMm have no effect without footMm`)
+  if (p.footWidthMm !== undefined && p.footWidthMm > w) errors.push(`${spec.id}: footWidthMm (${p.footWidthMm}) cannot be wider than the cabinet (${w} mm)`)
+  if (p.footDepthMm !== undefined && p.footDepthMm > d) errors.push(`${spec.id}: footDepthMm (${p.footDepthMm}) cannot be deeper than the cabinet (${d} mm)`)
+  if (p.bodyGrey !== undefined && !(p.bodyGrey >= 20 && p.bodyGrey <= 200)) errors.push(`${spec.id}: bodyGrey (${p.bodyGrey}) must be a grey level from 20 to 200`)
   const rear = p.rearWidthMm
   if (rear !== undefined && rear > w * (1 + CURVED_WIDTH_SLACK)) errors.push(`${spec.id}: rearWidthMm (${rear}) cannot be more than ${CURVED_WIDTH_SLACK * 100} % wider than the width ${w} mm`)
   if (p.midDepthMm !== undefined && p.midDepthMm >= d) errors.push(`${spec.id}: midDepthMm (${p.midDepthMm}) must be less than the depth ${d} mm`)

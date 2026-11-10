@@ -335,3 +335,30 @@ describe('curved-cabinet (rounded plan, filleted edges, baffle rings, socket poc
     expect(validateBuild(cabinet(GENELEC, { ports: [port('flush', 100, { insetMm: undefined })] }))).toEqual([])
   })
 })
+
+describe('curved-cabinet barrel, foot and body grey', () => {
+  const device: Partial<AssetSpecT> = { kind: 'device', tier: 'hero', mating: undefined, realSizeMm: { w: 189, h: 299, d: 178 }, ports: [] }
+  const base = { planFrontMm: 176, sideBulgeMm: 6, rearWidthMm: 150, backRadiusMm: 30, frontRadiusMm: 24, edgeRadiusMm: 20, edgeSegments: 8 }
+  const cabinet = (extra: Record<string, number>): AssetSpecT => specWith({ shape: 'curved-cabinet', params: { ...base, ...extra } }, device)
+
+  it('accepts a barrel, a foot and a body grey', () => {
+    expect(validateBuild(cabinet({ barrelMm: 17.7, barrelCentreMm: 159, footMm: 14, footWidthMm: 118, footDepthMm: 100, bodyGrey: 112 }))).toEqual([])
+  })
+
+  it('refuses a barrel of a quarter of the width or more, and a barrel centre outside the height', () => {
+    expect(validateBuild(cabinet({ barrelMm: 60 }))[0]).toMatch(/barrelMm/)
+    expect(validateBuild(cabinet({ barrelCentreMm: 300 }))[0]).toMatch(/barrelCentreMm/)
+  })
+
+  it('refuses a foot taller than a third of the height, a foot size without a foot, and a foot wider than the cabinet', () => {
+    expect(validateBuild(cabinet({ footMm: 120 }))[0]).toMatch(/footMm/)
+    expect(validateBuild(cabinet({ footWidthMm: 100 }))[0]).toMatch(/footWidthMm.*without footMm/)
+    expect(validateBuild(cabinet({ footMm: 14, footWidthMm: 200 }))[0]).toMatch(/footWidthMm/)
+    expect(validateBuild(cabinet({ footMm: 14, footDepthMm: 200 }))[0]).toMatch(/footDepthMm/)
+  })
+
+  it('takes a body grey from 20 to 200 only', () => {
+    expect(validateBuild(cabinet({ bodyGrey: 10 }))[0]).toMatch(/bodyGrey/)
+    expect(validateBuild(cabinet({ bodyGrey: 250 }))[0]).toMatch(/bodyGrey/)
+  })
+})

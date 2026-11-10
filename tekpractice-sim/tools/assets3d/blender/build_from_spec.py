@@ -649,6 +649,7 @@ def build_console_wedge(plan: Plan) -> bpy.types.Object:
 
 CABINET = "#3d3f46"          # lifted black plastic: the creation scene's night backdrop swallows a true black
 CABINET_POCKET = "#25262b"   # the inside of a socket pocket, a shade darker than the cabinet
+FOOT = "#2b2b30"             # rubber foot of a curved cabinet
 POCKET_DEFAULT_MM = 24.0
 POCKET_SEGMENTS = 16
 FLAT_FACE_TOL = 1e-6         # metres: how far a vertex may be from a plane and still lie in it (bmesh stores float32)
@@ -826,14 +827,33 @@ def offset_outline(pts: list[tuple[float, float]], s: float) -> list[tuple[float
     return out
 
 
-def flat_face_bounds(bm: bmesh.types.BMesh, z: float) -> tuple[float, float, float, float]:
-    """(x0, x1, y0, y1) in glTF metres of the one flat face lying in the plane z."""
+def flat_face_polygon(bm: bmesh.types.BMesh, z: float) -> list[tuple[float, float]]:
+    """Joins the wall faces lying in the plane z (a barrelled cabinet has one quad per wall step) into the one flat face, and returns its outline as (x, y) points
+    in glTF metres. Raises when there is no such face."""
     found = [f for f in bm.faces if all(abs(-v.co.y - z) < FLAT_FACE_TOL for v in f.verts)]
-    if len(found) != 1:
-        raise BuildError(f"expected one flat face in the plane z = {z / MM:.2f} mm, found {len(found)}")
-    xs = [v.co.x for v in found[0].verts]
-    ys = [v.co.z for v in found[0].verts]
-    return min(xs), max(xs), min(ys), max(ys)
+    if not found:
+        raise BuildError(f"expected a flat face in the plane z = {z / MM:.2f} mm, found none")
+    if len(found) > 1:
+        bmesh.ops.dissolve_faces(bm, faces=found, use_verts=False)
+        found = [f for f in bm.faces if all(abs(-v.co.y - z) < FLAT_FACE_TOL for v in f.verts)]
+        if len(found) != 1:
+            raise BuildError(f"the wall faces in the plane z = {z / MM:.2f} mm did not join into one face")
+    return [(v.co.x, v.co.z) for v in found[0].verts]
+
+
+def circle_fits(poly: list[tuple[float, float]], cx: float, cy: float, radius: float, margin: float) -> bool:
+    """True when the circle (centre cx, cy, radius) lies inside the polygon `poly` (x, y points) with `margin` to spare."""
+    for k in range(48):
+        ph = 2.0 * math.pi * k / 48
+        x, y = cx + radius * math.cos(ph), cy + radius * math.sin(ph)
+        inside = False
+        for i in range(len(poly)):
+            a, b = poly[i], poly[(i + 1) % len(poly)]
+            if (a[1] > y) != (b[1] > y) and x < a[0] + (b[0] - a[0]) * (y - a[1]) / (b[1] - a[1]):
+                inside = not inside
+        if not inside or point_to_polygon_distance((x, y), poly) < margin:
+            return False
+    return True
 
 
 def dish_hole(bm: bmesh.types.BMesh, cx: float, cy: float, z: float, r_mouth: float, r_floor: float, n: int, depth: float, sign: float) -> list[bmesh.types.BMEdge]:
@@ -871,8 +891,15 @@ def build_curved_cabinet(plan: Plan) -> bpy.types.Object:
     half_min = min(w, h, d) / 2.0
     if edge >= half_min:
         raise BuildError(f"params.edgeRadiusMm ({edge / MM:.1f}) must be less than half the smallest side ({half_min / MM:.1f} mm)")
-    if drop * 2.0 >= h:
-        raise BuildError(f"params.edgeDropMm ({drop / MM:.1f}) must be less than half the height ({h / 2.0 / MM:.1f} mm)")
+    foot_h = param_m(plan, "footMm", 0.0) if "footMm" in params else 0.0
+    if foot_h >= h / 3.0:
+        raise BuildError(f"params.footMm ({foot_h / MM:.1f}) must be less than a third of the height")
+    if drop * 2.0 >= h - foot_h:
+        raise BuildError(f"params.edgeDropMm ({drop / MM:.1f}) must be less than half the height above the foot ({(h - foot_h) / 2.0 / MM:.1f} mm)")
+    grey = params.get("bodyGrey")
+    if grey is not None and (isinstance(grey, bool) or not isinstance(grey, (int, float)) or not 20 <= grey <= 200):
+        raise BuildError(f"params.bodyGrey must be a number from 20 to 200, got {grey!r}")
+    cabinet_colour = CABINET if grey is None else "#%02x%02x%02x" % (round(grey), round(grey) + 2, round(grey) + 9)
     segments = params.get("edgeSegments", CURVED_DEFAULT_SEGMENTS)
     if isinstance(segments, bool) or not isinstance(segments, int) or not 4 <= segments <= 16:
         raise BuildError(f"params.edgeSegments must be a whole number from 4 to 16, got {segments!r}")
@@ -935,45 +962,69 @@ def build_curved_cabinet(plan: Plan) -> bpy.types.Object:
     for k in range(segments + 1):
         ph = (math.pi / 2.0) * k / segments
         levels.append((edge * (1.0 - math.sin(ph)), drop * (1.0 - math.cos(ph))))
-    bottom = levels
+    bottom = [(ins, foot_h + dy) for ins, dy in levels]
     top = [(ins, h - dy) for ins, dy in reversed(levels)]
-    stations = bottom + top
+    # a barrelled wall gets intermediate rings (the arc is sampled in them); a straight wall is one band
+    barrel_on = "barrelMm" in params
+    wall_steps = 8 if barrel_on else 1
+    wall_mid = [(0.0, foot_h + drop + (h - foot_h - 2.0 * drop) * k / wall_steps) for k in range(1, wall_steps)]
+    stations = bottom + wall_mid + top
     cache: dict[float, list[tuple[float, float]]] = {}
     rings: list[list[bmesh.types.BMVert]] = []
+    barrel = param_m(plan, "barrelMm", 0.0) if "barrelMm" in params else 0.0
+    barrel_y = param_m(plan, "barrelCentreMm", 0.0) if "barrelCentreMm" in params else h / 2.0
+    if barrel >= w / 4.0:
+        raise BuildError(f"params.barrelMm ({barrel / MM:.1f}) must be less than a quarter of the width")
+    barrel_far = max(barrel_y, h - barrel_y)
+
+    def barrel_factor(y: float) -> float:
+        # the elevation of the real sides is a shallow arc: widest at barrel_y, barrelMm narrower (each side) at the farther end of the height
+        return 1.0 - barrel * ((y - barrel_y) / barrel_far) ** 2 / (w / 2.0)
+
     for ins, y in stations:
         key = round(ins, 12)
         if key not in cache:
             cache[key] = offset_outline(outline, ins)
-        rings.append([bm.verts.new(g2b(x, y, z)) for x, z in cache[key]])
+        f = barrel_factor(y)
+        rings.append([bm.verts.new(g2b(x * f, y, z)) for x, z in cache[key]])
     bm.faces.new(rings[0][::-1])
     for i in range(len(rings) - 1):
         band(bm, rings[i], rings[i + 1])
     bm.faces.new(rings[-1])
 
     # measure what was built: the setback of the top face from the wall, and how far down the wall starts
-    wall_top = rings[segments + 1]
+    wall_top = rings[segments + wall_steps]
     wall_poly = [(v.co.x, -v.co.y) for v in wall_top]
     cap = [(v.co.x, -v.co.y) for v in rings[-1]]
     horizontal = min(point_to_polygon_distance(p, wall_poly) for p in cap)
     vertical = h - wall_top[0].co.z
     MEASURE["filletMm"] = round(min(horizontal, vertical) / MM, 3)
-    body.done(CABINET)
+    body.done(cabinet_colour)
+
+    if foot_h > 0.0:
+        # the rubber foot (an Iso-Pod): a rounded pad under the body, its top 1 mm inside it so the two solids overlap
+        foot_w = param_m(plan, "footWidthMm", 0.0) if "footWidthMm" in params else 0.6 * w
+        foot_d = param_m(plan, "footDepthMm", 0.0) if "footDepthMm" in params else 0.55 * d
+        corner = min(foot_w, foot_d) * 0.25
+        pad = rounded_polygon([(-foot_w / 2.0, -foot_d / 2.0), (foot_w / 2.0, -foot_d / 2.0), (foot_w / 2.0, foot_d / 2.0), (-foot_w / 2.0, foot_d / 2.0)], [corner] * 4, 6)
+        extrude_xz(bm, pad, 0.0, foot_h + 1.0 * MM)
+        body.done(FOOT)
 
     pockets = [p for p in (plan.get("ports") or []) if isinstance(p.get("insetMm"), (int, float)) and p["insetMm"] > 0]
     if pockets:
-        x0, x1, y0, y1 = flat_face_bounds(bm, d / 2.0)
+        flat = flat_face_polygon(bm, d / 2.0)
         outline_edges = take_flat_face(bm, d / 2.0)
         holes = []
         for p in pockets:
             radius = float(p.get("openingMm") or POCKET_DEFAULT_MM) * MM / 2.0
             cx = float(p["xMm"]) * MM - w / 2.0
             cy = float(p["yMm"]) * MM
-            if cx - radius < x0 + CURVED_FIT_MARGIN_MM * MM or cx + radius > x1 - CURVED_FIT_MARGIN_MM * MM or cy - radius < y0 + CURVED_FIT_MARGIN_MM * MM or cy + radius > y1 - CURVED_FIT_MARGIN_MM * MM:
-                raise BuildError(f"the pocket of port {p.get('portId')!r} (x {cx / MM:.1f}, y {cy / MM:.1f}, radius {radius / MM:.1f} mm) does not fit in the flat rear face (x {x0 / MM:.1f} to {x1 / MM:.1f}, y {y0 / MM:.1f} to {y1 / MM:.1f} mm)")
+            if not circle_fits(flat, cx, cy, radius, CURVED_FIT_MARGIN_MM * MM):
+                raise BuildError(f"the pocket of port {p.get('portId')!r} (x {cx / MM:.1f}, y {cy / MM:.1f}, radius {radius / MM:.1f} mm) does not fit in the flat rear face (x {min(q[0] for q in flat) / MM:.1f} to {max(q[0] for q in flat) / MM:.1f}, y {min(q[1] for q in flat) / MM:.1f} to {max(q[1] for q in flat) / MM:.1f} mm)")
             holes.append(blind_hole(bm, cx, cy, d / 2.0, radius, POCKET_SEGMENTS, float(p["insetMm"]) * MM, -1.0))
         body.done(CABINET_POCKET)
         fill_with_holes(bm, outline_edges, holes, (0.0, 0.0, 1.0))
-        body.done(CABINET)
+        body.done(cabinet_colour)
 
     recesses: list[tuple[str, float, float, float, float]] = []   # (name, centre y, mouth radius, floor radius, depth)
     if "wooferRingMm" in params:
@@ -990,16 +1041,16 @@ def build_curved_cabinet(plan: Plan) -> bpy.types.Object:
             for rb in recesses[i + 1:]:
                 if abs(ra[1] - rb[1]) < ra[2] + rb[2] + CURVED_FIT_MARGIN_MM * MM:
                     raise BuildError(f"the {ra[0]} and {rb[0]} recesses overlap on the baffle")
-        x0, x1, y0, y1 = flat_face_bounds(bm, -d / 2.0)
+        flat = flat_face_polygon(bm, -d / 2.0)
         outline_edges = take_flat_face(bm, -d / 2.0)
         holes = []
         for name, cy, r_mouth, r_floor, depth in recesses:
-            if r_mouth > x1 - CURVED_FIT_MARGIN_MM * MM or -r_mouth < x0 + CURVED_FIT_MARGIN_MM * MM or cy - r_mouth < y0 + CURVED_FIT_MARGIN_MM * MM or cy + r_mouth > y1 - CURVED_FIT_MARGIN_MM * MM:
-                raise BuildError(f"params.{name}: the recess (radius {r_mouth / MM:.1f} mm at y {cy / MM:.1f}) does not fit the flat baffle (x {x0 / MM:.1f} to {x1 / MM:.1f}, y {y0 / MM:.1f} to {y1 / MM:.1f} mm): widen planFrontMm or lower frontRadiusMm")
+            if not circle_fits(flat, 0.0, cy, r_mouth, CURVED_FIT_MARGIN_MM * MM):
+                raise BuildError(f"params.{name}: the recess (radius {r_mouth / MM:.1f} mm at y {cy / MM:.1f}) does not fit the flat baffle (x {min(q[0] for q in flat) / MM:.1f} to {max(q[0] for q in flat) / MM:.1f}, y {min(q[1] for q in flat) / MM:.1f} to {max(q[1] for q in flat) / MM:.1f} mm): widen planFrontMm or lower frontRadiusMm")
             holes.append(dish_hole(bm, 0.0, cy, -d / 2.0, r_mouth, r_floor, CURVED_RING_SEGMENTS, depth, 1.0))
         body.done(CABINET_POCKET)
         fill_with_holes(bm, outline_edges, holes, (0.0, 0.0, -1.0))
-        body.done(CABINET)
+        body.done(cabinet_colour)
     return body.finish()
 
 

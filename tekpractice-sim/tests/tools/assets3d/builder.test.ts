@@ -482,6 +482,33 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
       expect(await buildFails({ ...GENELEC, backRadiusMm: 120, frontRadiusMm: 120 })).toMatch(/BUILD_FAIL.*radii are too large/)
     }, 180_000)
 
+    it.skipIf(!BLENDER)('a barrelled cabinet on a rubber foot: the sides arc in elevation, the foot sits under the body inside its footprint, the body grey is set, every gate passes', async () => {
+      const real = { planFrontMm: 180, sideBulgeMm: 4.5, rearWidthMm: 172, frontRadiusMm: 20, backRadiusMm: 26, edgeRadiusMm: 18, edgeDropMm: 22, edgeSegments: 8, barrelMm: 17.7, barrelCentreMm: 159, footMm: 14, footWidthMm: 118, footDepthMm: 100, bodyGrey: 112, wooferRingMm: 136, wooferYMm: 115, tweeterRingMm: 41, tweeterYMm: 233, waveguideMm: 66, waveguideDepthMm: 8 }
+      const spec = genelec(real)
+      const { raw, rawBytes, fixedBytes, gates } = await expectBuiltTo(spec, 4000)
+      expect(gates.filter((g) => !g.ok)).toEqual([])
+      expect(raw.triangles).toBeGreaterThanOrEqual(1500)
+      const verts = await vertices(fixedBytes)
+      // elevation: widest near the barrel centre (y = 159 mm), clearly narrower at the top end of the wall (y = 277 mm: 17.7 x (118 / 159)^2 = 9.7 mm less)
+      const halfAt = (y: number): number => Math.max(...verts.filter((v) => Math.abs(v[1] / MM - y) < 0.6).map((v) => Math.abs(v[0]))) / MM
+      expect(halfAt(156.6)).toBeGreaterThan(94.3)
+      expect(halfAt(277)).toBeLessThan(86)
+      expect(halfAt(277)).toBeGreaterThan(83)
+      // the foot: the lowest 13 mm lie inside 118 x 100 mm and reach the base
+      const low = verts.filter((v) => v[1] < 13 * MM)
+      expect(low.length).toBeGreaterThan(20)
+      expect(Math.min(...verts.map((v) => v[1]))).toBeCloseTo(0, 7)
+      expect(Math.max(...low.map((v) => Math.abs(v[0]))) / MM).toBeLessThanOrEqual(59.01)
+      expect(Math.max(...low.map((v) => Math.abs(v[2]))) / MM).toBeLessThanOrEqual(50.01)
+      // the body grey: sRGB 112 is 0.162 linear
+      expect([...(await looks(rawBytes)).colours].some((c) => c.startsWith('0.162,'))).toBe(true)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('raises BuildError for a foot as tall as a third of the cabinet and for a body grey out of range', async () => {
+      expect(await buildFails({ ...GENELEC, footMm: 120 })).toMatch(/BUILD_FAIL.*footMm/)
+      expect(await buildFails({ ...GENELEC, bodyGrey: 300 })).toMatch(/BUILD_FAIL.*bodyGrey/)
+    }, 180_000)
+
     it.skipIf(!BLENDER)('raises BuildError for a ring that does not fit the flat baffle', async () => {
       expect(await buildFails({ ...GENELEC, wooferRingMm: 175 })).toMatch(/BUILD_FAIL.*wooferRingMm.*does not fit/)
     }, 180_000)
