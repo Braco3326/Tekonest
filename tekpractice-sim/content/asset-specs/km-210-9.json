@@ -19,7 +19,30 @@
       "kind": "datasheet",
       "url": "https://www.k-m.de/us/products/mic-stands/floor-stands/210-9-microphone-stand-black?c=232",
       "note": "K&M product page for the 210/9 black (opened): same technical data as the data sheet (900-1,605 mm, boom 435-745 mm, folded 105 x 85 x 985 mm, 3.1 kg, 3/8 in thread). No base diameter, no tube diameters, no drawing: the 700 x 700 mm footprint is a photo estimate (leg tips about 650 mm apart in the data sheet photo, scaled on the 1,605 mm height), not a published figure."
+    },
+    {
+      "kind": "photo",
+      "url": "assets-source/km-210-9/photos/three-quarter.jpg (K&M product photo, art. 21090-300-55)",
+      "note": "The scripted model is read from this photo and the data sheet, ESTIMATES by us except the published figures (height 1605, boom 435 to 745 mm, 3/8 in thread, folded 105 x 85 x 985). Photo scale: the stand spans 1605 mm from the foot bottoms to the thread tip. From the photo: the clutch sleeve at 1028 to 1120 mm (64 to 70 % of the height), a stop collar about 105 mm under it, the pivot at about 1453 mm, the boom rising about 20 degrees to the front with the tip as the highest point, a rubber counterweight grip at the rear end, three clamps (two with thumbscrews), a conical hub with a wing screw, three round legs with rubber feet (about 34 mm). Estimated: tube diameters 21.8 mm lower and 19 mm upper, leg tube 16 mm, hub 88 mm, front arm 445 mm and rear arm 300 mm (445 + 300 = the 745 mm total), the 15 degree leg angle (it gives 700 mm along x and along z for the 418 mm leg radius that follows from the 700 x 700 footprint, itself a photo estimate), the boom over one leg. No logo, no lettering."
     }
   ],
-  "driftLimit": 0.12
+  "driftLimit": 0.12,
+  "build": {
+    "shape": "tripod-stand",
+    "params": {
+      "legAngleDeg": 15,
+      "footDiaMm": 34,
+      "boomMm": 745,
+      "frontMm": 445,
+      "boomAngleDeg": 20,
+      "boomAzimuthDeg": 135,
+      "tubeDiaMm": 21.8,
+      "upperTubeDiaMm": 19,
+      "clutchFromMm": 1028
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    }
+  }
 }

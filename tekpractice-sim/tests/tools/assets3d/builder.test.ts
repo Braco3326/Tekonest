@@ -829,4 +829,60 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
       expect(await stripFails({ params: { lenMm: 230 } })).toMatch(/BUILD_FAIL.*lenMm/)
     }, 240_000)
   })
+
+  describe('tripod-stand (km-210-9: tripod, telescopic tube with clutch, tilt head, boom with counterweight and mic thread)', () => {
+    const stand = (): AssetSpecT => realSpec('km-210-9')
+
+    it.skipIf(!BLENDER)('the shipped spec builds at 700 x 1605 x 700 mm to 0.01 mm, inside its declared 1500 to 4000 triangles, through the fix-up unrotated, every gate green', async () => {
+      const spec = stand()
+      expect(spec.build?.shape).toBe('tripod-stand')
+      const { raw, fixed, gates } = await expectBuiltTo(spec, 4000)
+      expect(raw.triangles).toBeGreaterThanOrEqual(spec.build?.budget?.min ?? 1500)
+      expect(fixed.triangles).toBe(raw.triangles)
+      expect(checkDetail(fixed, spec)).toMatchObject({ gate: 'detail', ok: true })
+      expect(gates.filter((g) => !g.ok)).toEqual([])
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('three rubber feet touch the floor at the corners of an equilateral triangle, the tip of the boom is the highest point and lies over one of the legs', async () => {
+      const { fixedBytes } = await buildAndFix(stand())
+      const verts = await vertices(fixedBytes)
+      expect(Math.min(...verts.map((v) => v[1]))).toBeCloseTo(0, 7)
+      expect(Math.max(...verts.map((v) => v[1]))).toBeCloseTo(1605 * MM, 6)
+      const low = verts.filter((v) => v[1] < 0.5 * MM)
+      const feet: { x: number; z: number; n: number }[] = []
+      for (const v of low) {
+        const hit = feet.find((f) => Math.hypot(f.x / f.n - v[0], f.z / f.n - v[2]) < 60 * MM)
+        if (hit) { hit.x += v[0]; hit.z += v[2]; hit.n++ } else feet.push({ x: v[0], z: v[2], n: 1 })
+      }
+      expect(feet).toHaveLength(3)
+      for (const f of feet) expect(f.n).toBeGreaterThanOrEqual(12) // a 16-sided foot
+      const c = feet.map((f) => [f.x / f.n, f.z / f.n])
+      const sides = [Math.hypot(c[0][0] - c[1][0], c[0][1] - c[1][1]), Math.hypot(c[1][0] - c[2][0], c[1][1] - c[2][1]), Math.hypot(c[0][0] - c[2][0], c[0][1] - c[2][1])]
+      expect(Math.max(...sides) / Math.min(...sides)).toBeLessThan(1.03)
+      // the hub is the centre of the feet; the highest vertex (the thread's tip) lies on the line hub -> one foot, within 3 degrees
+      const hub = [(c[0][0] + c[1][0] + c[2][0]) / 3, (c[0][1] + c[1][1] + c[2][1]) / 3]
+      const tip = verts.reduce((a, v) => (v[1] > a[1] ? v : a))
+      const tipAngle = Math.atan2(tip[2] - hub[1], tip[0] - hub[0])
+      const gap = Math.min(...c.map((f) => Math.abs(((Math.atan2(f[1] - hub[1], f[0] - hub[0]) - tipAngle + 3 * Math.PI) % (2 * Math.PI)) - Math.PI)))
+      expect(gap).toBeLessThan((3 * Math.PI) / 180)
+      // the vertical tube stands over the hub: the clutch sleeve (the 16.5 mm rings near 1030 mm) is centred on it within 2 mm
+      const ring = verts.filter((v) => Math.abs(v[1] / MM - 1028 * 1605 / 1609.5) < 3 && Math.hypot(v[0] - hub[0], v[2] - hub[1]) < 20 * MM)
+      expect(ring.length).toBeGreaterThanOrEqual(24)
+      expect(Math.abs(ring.reduce((a, v) => a + v[0], 0) / ring.length - hub[0])).toBeLessThan(2 * MM)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('two builds of the same spec are byte-identical', async () => {
+      const a = join(dir, 'stand-det-a.glb')
+      const b = join(dir, 'stand-det-b.glb')
+      await runBuilder(stand(), a)
+      await runBuilder(stand(), b)
+      expect(Buffer.compare(await readFile(a), await readFile(b))).toBe(0)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('refuses a spec size the pose cannot fill (width 900 mm) and a boom angle out of range, naming them', async () => {
+      const base = stand()
+      await expect(runBuilder({ ...base, realSizeMm: { ...base.realSizeMm, w: 900 } }, join(dir, 'stand-bad-1.glb'))).rejects.toThrow(/tripod pose is .* in (width|depth)/)
+      await expect(runBuilder({ ...base, build: { ...base.build!, params: { ...base.build!.params, boomAngleDeg: 60 } } }, join(dir, 'stand-bad-2.glb'))).rejects.toThrow(/boomAngleDeg/)
+    }, 180_000)
+  })
 })

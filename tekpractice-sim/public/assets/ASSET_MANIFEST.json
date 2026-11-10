@@ -1839,22 +1839,17 @@
     {
       "id": "km-210-9",
       "optimized": true,
-      "tris": 2715,
+      "tris": 2204,
       "kind": "device",
       "ports": 0,
       "status": "ok",
       "portEmpties": 0,
       "riggedAt": "2026-07-19",
-      "tool": "meshy",
-      "toolVersion": "meshy-7.1",
-      "photos": [
-        "three-quarter.jpg"
-      ],
-      "taskId": "01a1c30f-c186-7256-b084-99475ddcd9d8",
-      "source": "ai-meshy",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
-      "date": "2026-11-10T01:29:25.766Z",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "date": "2026-11-10T21:42:23.943Z",
       "specSource": "https://www.k-m.de/en/downloads/01994d9eb9907194b59b7d910e75132d/datasheet",
       "logosRemoved": true,
       "gates": [
@@ -1879,6 +1874,10 @@
           "ok": true
         },
         {
+          "gate": "detail",
+          "ok": true
+        },
+        {
           "gate": "proportionDrift",
           "ok": true
         },
@@ -1894,7 +1893,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "id": "axia-iq",

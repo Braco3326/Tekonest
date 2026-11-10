@@ -426,3 +426,38 @@ describe('power-strip (multiprise-secteur)', () => {
     expect(spec.sources.some((s) => /ESTIMATE/.test(s.note))).toBe(true)
   })
 })
+
+describe('tripod-stand (km-210-9)', () => {
+  const device: Partial<AssetSpecT> = { kind: 'device', tier: 'standard', mating: undefined, realSizeMm: { w: 700, h: 1605, d: 700 }, ports: [] }
+  const stand = (params: Record<string, number> = {}, over: Partial<AssetSpecT> = {}): AssetSpecT => specWith({ shape: 'tripod-stand', params }, { ...device, ...over })
+
+  it('is registered as a device shape without ports, with the documented params (the Python registry parity is in builder.test.ts)', () => {
+    expect(BUILD_SHAPES).toContain('tripod-stand')
+    expect(SHAPE_SPECS['tripod-stand']).toMatchObject({ kind: 'device', needsMatingOuter: false })
+    for (const name of ['legAngleDeg', 'footDiaMm', 'boomMm', 'frontMm', 'boomAngleDeg', 'boomAzimuthDeg', 'tubeDiaMm', 'upperTubeDiaMm', 'clutchFromMm']) expect(SHAPE_SPECS['tripod-stand'].params).toContain(name)
+  })
+
+  it('accepts a bare shape and the K&M params, refuses a connector, an unknown param and a prop with ports', () => {
+    expect(validateBuild(stand())).toEqual([])
+    expect(validateBuild(stand({ legAngleDeg: 15, footDiaMm: 34, boomMm: 745, frontMm: 445, boomAngleDeg: 20, boomAzimuthDeg: 135, tubeDiaMm: 21.8, upperTubeDiaMm: 19, clutchFromMm: 1028 }))).toEqual([])
+    expect(validateBuild(stand({}, { kind: 'connector', tier: 'connector' }))[0]).toMatch(/builds a device, but this asset is a connector/)
+    expect(validateBuild(stand({ legSpanMm: 400 }))[0]).toMatch(/no param 'legSpanMm'/)
+    expect(validateBuild(stand({}, { ports: [{ portId: 'p', face: 'io', xMm: 1, yMm: 1, confidence: 'guess' }] }))[0]).toMatch(/no ports \(it is a prop\)/)
+  })
+
+  it('checks the boom angle, the arm lengths, the clutch height and the tube order', () => {
+    expect(validateBuild(stand({ boomAngleDeg: 60 }))[0]).toMatch(/boomAngleDeg/)
+    expect(validateBuild(stand({ boomAngleDeg: 3 }))[0]).toMatch(/boomAngleDeg/)
+    expect(validateBuild(stand({ frontMm: 200 }))[0]).toMatch(/frontMm/)
+    expect(validateBuild(stand({ frontMm: 700 }))[0]).toMatch(/frontMm/)
+    expect(validateBuild(stand({ clutchFromMm: 1400 }))[0]).toMatch(/clutchFromMm/)
+    expect(validateBuild(stand({ upperTubeDiaMm: 30 }))[0]).toMatch(/upperTubeDiaMm/)
+  })
+
+  it('the shipped K&M spec validates, keeps its photo estimate note and declares a budget under the standard ceiling', () => {
+    const spec = loadSpecs().find((s) => s.id === 'km-210-9')!
+    expect(validateBuild(spec)).toEqual([])
+    expect(spec.build).toMatchObject({ shape: 'tripod-stand', budget: { min: 1500, max: 4000 } })
+    expect(spec.sources.some((s) => s.kind === 'photo' && /ESTIMATES/.test(s.note))).toBe(true)
+  })
+})

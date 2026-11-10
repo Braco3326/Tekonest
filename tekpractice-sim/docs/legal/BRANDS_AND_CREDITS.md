@@ -30,9 +30,10 @@ How each model was made:
 | AETA | Scoop5 S codec | photo-textured (rear photo, front straightened from a 3/4 photo) | AETA logo repainted out |
 | AETA | Scoopy+ S codec | generic (no photo exists) | none |
 | Switchcraft | StudioPatch 9625 patch bay | photo-textured (front and rear photos) | wordmarks on the ears and rear repainted out; the name may remain on the unprojected top: review |
-| K&M | 210/9 microphone stand | Meshy-generated from the official photo | none readable |
+| K&M | 210/9 microphone stand | own work: scripted tripod boom stand (hub, telescopic tube with clutch, tilt head, boom with counterweight and mic thread) read from the product photo and the data sheet, no photo texture | none: no logo, no lettering |
 | Yellowtec | litt on-air light | scripted from the published dimensions | none |
 | Yellowtec | m!ka microphone arm | own work: scripted articulated arm in the raised pose of the product photo (no photo texture) | none |
+| (generic) | multiprise secteur power strip | own work: scripted power strip with four IEC C13 outlets from estimated dimensions, no photo | none |
 | Mogami | Gold DB25 to 8 XLR-M loom | own work: scripted cable assembly (D-sub hood, trunk, eight XLR plugs) from estimated dimensions | none |
 | Neutrik | XLR, TRS, speakON, powerCON, etherCON connectors | names and dimensions as reference (STEP files downloaded, geometry not shipped) | none |
 | Generic | All connector models (XLR, jacks, USB, mains, speakON, powerCON, D-sub, BNC, RCA, TOSLINK, etherCON, DigiLink, terminal block) | own work: scripted plugs from published dimensions where a source is cited in the spec, otherwise estimates | none: no logo or lettering |
@@ -65,7 +66,7 @@ Raw downloads are kept outside git in `assets-source/_wave2-downloads/` (ignored
 
 ## 4. AI generation
 
-The Meshy-generated models (U87 Ai, K&M 210/9) and the Meshy pictures on the K12.2 rear were produced with a paid Meshy plan. Meshy states that paid plans own their generated assets provided the inputs do not infringe others' rights. The inputs were manufacturer photos: see section 1.
+The Meshy-generated model (U87 Ai) and the Meshy pictures on the K12.2 rear were produced with a paid Meshy plan. Meshy states that paid plans own their generated assets provided the inputs do not infringe others' rights. The inputs were manufacturer photos: see section 1.
 
 ## 5. To ask for, per brand
 

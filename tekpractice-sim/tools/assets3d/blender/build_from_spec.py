@@ -2394,8 +2394,144 @@ def build_power_strip(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+# --- tripod-stand -----------------------------------------------------------------------------------------
+
+TRIPOD_DEFAULTS_MM = {"legAngleDeg": 15.0, "footDiaMm": 34.0, "boomMm": 745.0, "frontMm": 445.0, "boomAngleDeg": 20.0, "boomAzimuthDeg": 135.0,
+                      "tubeDiaMm": 21.8, "upperTubeDiaMm": 19.0, "clutchFromMm": 1028.0}
+TRIPOD_RUBBER = "#26272b"
+TRIPOD_MAX_SCALE_ERROR = 0.03
+
+
+def ball(bm: bmesh.types.BMesh, cx: float, cy: float, cz: float, r: float, n: int = 12, m: int = 6) -> None:
+    """A closed sphere of radius r about (cx, cy, cz) (glTF space), n sides and m latitude bands, made of rings and two pole fans.
+    (bmesh.ops.create_uvsphere is not used: it orders its faces differently from run to run, which broke byte-identical builds.)"""
+    top = bm.verts.new(g2b(cx, cy + r, cz))
+    bottom = bm.verts.new(g2b(cx, cy - r, cz))
+    rings = [[bm.verts.new(g2b(cx + r * math.sin(math.pi * j / m) * math.cos(2 * math.pi * i / n), cy + r * math.cos(math.pi * j / m), cz + r * math.sin(math.pi * j / m) * math.sin(2 * math.pi * i / n))) for i in range(n)] for j in range(1, m)]
+    for i in range(n):
+        k = (i + 1) % n
+        bm.faces.new((top, rings[0][k], rings[0][i]))
+        bm.faces.new((bottom, rings[-1][i], rings[-1][k]))
+    for lo, hi in zip(rings, rings[1:]):
+        band(bm, lo, hi)
+
+
+def build_tripod_stand(plan: Plan) -> bpy.types.Object:
+    """A microphone boom stand (K&M 210/9 class): a tripod of three splayed legs with rubber feet around a conical hub with a wing screw, a vertical
+    telescopic tube (a thicker lower section, a stop collar, the ribbed clutch sleeve, a thinner upper section), a tilt head and a boom that rises
+    boomAngleDeg to the front over the leg at boomAzimuthDeg: a rear arm ending in the rubber counterweight grip, two telescopic sections with
+    three clamps (two of them with thumbscrews), and the 3/8 inch mic thread. Bottom (the feet) at y = 0, centred on x and z.
+
+    The pose is built in glTF space with the hub on the origin, the legs at legAngleDeg, +120 and +240 degrees (angle from +x towards +z, so the
+    default 15 degrees gives the same extent along x and along z), their length solved from the spec width, the boom's tip at the spec height; the
+    box is then centred and stretched to the exact spec size, refused when that needs more than TRIPOD_MAX_SCALE_ERROR (the spec size and the pose
+    params disagree). Params in TRIPOD_DEFAULTS_MM. Estimated from the product photo and the data sheet, see the spec."""
+    w, h, d = size_m(plan)
+    p = {k: param_m(plan, k, v) / MM for k, v in TRIPOD_DEFAULTS_MM.items()}   # kept in millimetres here, converted on use
+    a0, theta, az = p["legAngleDeg"], p["boomAngleDeg"], p["boomAzimuthDeg"]
+    boom, front = p["boomMm"], p["frontMm"]
+    if not 5.0 < theta < 45.0 or front >= boom - 120.0 or front <= 250.0:
+        raise BuildError("the boom needs boomAngleDeg between 5 and 45 degrees and frontMm between 250 mm and boomMm - 120 mm")
+    if p["clutchFromMm"] + 100.0 >= h / MM - 250.0:
+        raise BuildError("params.clutchFromMm leaves no room for the upper tube under the boom")
+    foot_r = p["footDiaMm"] / 2.0 * MM
+    angles = [math.radians(a0 + 120.0 * k) for k in range(3)]
+    cos_span = max(math.cos(a) for a in angles) - min(math.cos(a) for a in angles)
+    leg_r = (w - 2.0 * foot_r) / cos_span                      # distance hub axis -> foot centre, from the spec width
+    foot_h, leg_y_tip, leg_y_hub = 32.0 * MM, 24.0 * MM, 84.0 * MM
+    sin_a, cos_t = math.sin(math.radians(theta)), math.cos(math.radians(theta))
+    f = (math.cos(math.radians(az)), math.sin(math.radians(az)))   # horizontal direction of the boom's front (x, z)
+    perp = (-f[1], f[0])
+    pivot_y = h - front * MM * sin_a
+    u = (f[0] * cos_t, sin_a, f[1] * cos_t)                       # unit vector of the boom (glTF x, y, z), pointing to the front
+    up_w = (-f[0] * sin_a, cos_t, -f[1] * sin_a)                  # perpendicular to the boom, in its vertical plane, pointing up
+
+    def at(x: float, y: float, z: float) -> Vector:
+        return g2b(x, y, z)
+
+    def along(s_mm: float, off: tuple[float, float, float] = (0.0, 0.0, 0.0), k: float = 0.0) -> Vector:
+        """The point s mm along the boom from the pivot, moved k mm along the offset direction `off`."""
+        s = s_mm * MM
+        return at(u[0] * s + off[0] * k * MM, pivot_y + u[1] * s + off[1] * k * MM, u[2] * s + off[2] * k * MM)
+
+    def tube(a: Vector, b: Vector, r_mm: float, rb_mm: float | None = None, seg: int = 20) -> None:
+        cylinder_between(bm, a, b, r_mm * MM, None if rb_mm is None else rb_mm * MM, segments=seg)
+
+    body = Body("tripod-stand")
+    bm = body.bm
+    tube_c, joint_c, rubber_c, metal_c = lift_hex(ARM_TUBE), lift_hex(ARM_JOINT), lift_hex(TRIPOD_RUBBER), lift_hex(ARM_METAL)
+    # legs: a round tube from inside the hub down to the foot, a rubber foot on its end
+    for a in angles:
+        tube(at(20.0 * MM * math.cos(a), leg_y_hub, 20.0 * MM * math.sin(a)), at(leg_r * math.cos(a), leg_y_tip + 2.0 * MM, leg_r * math.sin(a)), 8.0, seg=12)
+    body.done(tube_c)
+    for a in angles:
+        tube(at(leg_r * math.cos(a), 0.0, leg_r * math.sin(a)), at(leg_r * math.cos(a), foot_h, leg_r * math.sin(a)), p["footDiaMm"] / 2.0, p["footDiaMm"] / 2.0 * 0.9, seg=16)
+    body.done(rubber_c)
+    # hub: a die-cast cone with a wing screw between two legs
+    tube(at(0.0, 38.0 * MM, 0.0), at(0.0, 62.0 * MM, 0.0), 44.0, 41.0, seg=24)
+    tube(at(0.0, 60.0 * MM, 0.0), at(0.0, 112.0 * MM, 0.0), 40.5, 15.0, seg=24)   # starts inside the lower cone: no two coincident rings (the fix-up's weld would drop faces)
+    mid = math.radians(a0 + 60.0)
+    tube(at(14.0 * MM * math.cos(mid), 92.0 * MM, 14.0 * MM * math.sin(mid)), at(40.0 * MM * math.cos(mid), 92.0 * MM, 40.0 * MM * math.sin(mid)), 4.0, seg=12)
+    body.done(joint_c)
+    tube(at(36.0 * MM * math.cos(mid), 92.0 * MM, 36.0 * MM * math.sin(mid)), at(52.0 * MM * math.cos(mid), 92.0 * MM, 52.0 * MM * math.sin(mid)), 9.5, seg=12)   # the wing screw's knob
+    body.done(rubber_c)
+    # the vertical tube
+    clutch = p["clutchFromMm"]
+    tube(at(0.0, 100.0 * MM, 0.0), at(0.0, (clutch + 4.0) * MM, 0.0), p["tubeDiaMm"] / 2.0, seg=24)
+    tube(at(0.0, (clutch + 86.0) * MM, 0.0), at(0.0, pivot_y - 36.0 * MM, 0.0), p["upperTubeDiaMm"] / 2.0, seg=24)
+    body.done(tube_c)
+    tube(at(0.0, (clutch - 123.0) * MM, 0.0), at(0.0, (clutch - 103.0) * MM, 0.0), 12.8, seg=24)           # stop collar on the lower section
+    tube(at(0.0, clutch * MM, 0.0), at(0.0, (clutch + 8.0) * MM, 0.0), 16.5, seg=24)                        # clutch sleeve: end ring, ribbed body, end ring
+    tube(at(0.0, (clutch + 8.0) * MM, 0.0), at(0.0, (clutch + 84.0) * MM, 0.0), 14.5, seg=24)
+    tube(at(0.0, (clutch + 84.0) * MM, 0.0), at(0.0, (clutch + 92.0) * MM, 0.0), 16.5, seg=24)
+    body.done(joint_c)
+    # the tilt head: a post under the pivot and a horizontal barrel across the boom with its lever
+    tube(at(0.0, pivot_y - 40.0 * MM, 0.0), at(0.0, pivot_y - 6.0 * MM, 0.0), 14.0, seg=24)
+    tube(at(-perp[0] * 17.0 * MM, pivot_y, -perp[1] * 17.0 * MM), at(perp[0] * 17.0 * MM, pivot_y, perp[1] * 17.0 * MM), 12.5, seg=24)
+    tube(at(perp[0] * 17.0 * MM, pivot_y, perp[1] * 17.0 * MM), at(perp[0] * 17.0 * MM - f[0] * 34.0 * MM, pivot_y - 62.0 * MM, perp[1] * 17.0 * MM - f[1] * 34.0 * MM), 3.2, seg=10)
+    body.done(joint_c)
+    ball(bm, perp[0] * 17.0 * MM - f[0] * 34.0 * MM, pivot_y - 62.0 * MM, perp[1] * 17.0 * MM - f[1] * 34.0 * MM, 6.5 * MM)
+    body.done(rubber_c)
+    # the boom: rear arm and the first section as one tube, the counterweight grip, the thinner front section, three clamps, the mic thread
+    tube(along(-225.0), along(142.0), 8.2, seg=20)
+    tube(along(132.0), along(front - 18.0), 6.6, seg=20)
+    body.done(tube_c)
+    tube(along(-boom + front), along(-222.0), 12.5, seg=20)                                                  # the counterweight grip
+    body.done(rubber_c)
+    for s0, s1, r in ((84.0, 116.0, 12.8), (226.0, 250.0, 10.5), (330.0, 352.0, 9.8)):
+        tube(along(s0), along(s1), r, seg=20)
+    for s, r in ((238.0, 10.5), (341.0, 9.8)):                                                               # thumbscrews on the two front clamps, sideways
+        tube(along(s, perp_vec(perp), 8.0), along(s, perp_vec(perp), 24.0), 3.6, seg=10)
+    body.done(joint_c)
+    for s, r in ((238.0, 10.5), (341.0, 9.8)):
+        tube(along(s, perp_vec(perp), 22.0), along(s, perp_vec(perp), 31.0), 6.2, seg=10)
+    body.done(rubber_c)
+    tube(along(front - 22.0), along(front - 17.0), 9.0, seg=20)                                              # stop disc
+    tube(along(front - 17.0), along(front), 4.76, seg=14)                                                    # the 3/8 inch thread
+    body.done(metal_c)
+
+    # natural box -> centred on x and z, the feet at y = 0, stretched to the exact spec size (Blender: y = -glTF z, z = glTF y)
+    xs = [v.co.x for v in bm.verts]
+    ys = [v.co.y for v in bm.verts]
+    zs = [v.co.z for v in bm.verts]
+    ex, ey, ez = max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs)
+    for name, natural, wanted in (("width", ex, w), ("depth", ey, d), ("height", ez, h)):
+        if abs(natural / wanted - 1.0) > TRIPOD_MAX_SCALE_ERROR:
+            raise BuildError(f"the tripod pose is {natural / MM:.1f} mm in {name}, the spec size says {wanted / MM:.1f} mm: change the spec size, legAngleDeg or the boom params")
+    bmesh.ops.translate(bm, vec=Vector((-(max(xs) + min(xs)) / 2.0, -(max(ys) + min(ys)) / 2.0, -min(zs))), verts=bm.verts[:])
+    bmesh.ops.scale(bm, vec=Vector((w / ex, d / ey, h / ez)), space=Matrix.Identity(4), verts=bm.verts[:])
+    log(f"tripod stand: natural {ex / MM:.1f} x {ez / MM:.1f} x {ey / MM:.1f} mm, scaled to the spec; legs {leg_r / MM:.1f} mm; {sum(len(f_.verts) - 2 for f_ in bm.faces)} triangles")
+    return body.finish()
+
+
+def perp_vec(perp: tuple[float, float]) -> tuple[float, float, float]:
+    """A horizontal direction (x, z) as a 3-vector (x, 0, z), for build_tripod_stand's boom offsets."""
+    return (perp[0], 0.0, perp[1])
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
+    "tripod-stand": build_tripod_stand,
     "power-strip": build_power_strip,
     "cylinder-plug": build_cylinder_plug,
     "trs-plug": build_trs_plug,

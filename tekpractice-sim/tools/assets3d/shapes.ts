@@ -18,7 +18,7 @@ export const RACK_V2_PARAMS = [
 ] as const
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -111,6 +111,16 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
     needsMatingOuter: false,
     usesPorts: true,
   },
+  // A microphone boom stand (tripod, telescopic tube with clutch, tilt head and boom with counterweight and mic thread). The pose is built from these params,
+  // then centred and stretched to the spec size (refused when that needs more than 3 %): the three legs are legAngleDeg, +120 and +240 degrees from +x towards +z
+  // (15 degrees gives the same extent along x and z) with their length solved from the width, footDiaMm rubber feet, the boom of boomMm in all (frontMm of it in
+  // front of the pivot) rises boomAngleDeg over the leg at boomAzimuthDeg and its tip is the top of the model; tubeDiaMm / upperTubeDiaMm are the lower and upper tube,
+  // clutchFromMm the height of the clutch sleeve's bottom.
+  'tripod-stand': {
+    kind: 'device',
+    params: ['legAngleDeg', 'footDiaMm', 'boomMm', 'frontMm', 'boomAngleDeg', 'boomAzimuthDeg', 'tubeDiaMm', 'upperTubeDiaMm', 'clutchFromMm'],
+    needsMatingOuter: false,
+  },
 }
 
 /** Default diameter of a socket pocket when the port gives no openingMm, in millimetres (the builder uses the same). */
@@ -185,6 +195,7 @@ export function validateBuild(spec: AssetSpecT): string[] {
   if (build.shape === 'curved-cabinet') errors.push(...validateCurvedCabinet(spec))
   if (build.shape === 'rack-box') errors.push(...validateRackBox(spec))
   if (build.shape === 'power-strip') errors.push(...validatePowerStrip(spec))
+  if (build.shape === 'tripod-stand') errors.push(...validateTripodStand(spec))
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {
     errors.push(`${spec.id}: build shape '${build.shape}' needs mating.outerMm (the diameter of the mating end)`)
   }
@@ -299,6 +310,23 @@ function validatePowerStrip(spec: AssetSpecT): string[] {
   if (num('endTaperMm') * 4 >= Math.min(bar, d)) errors.push(`${spec.id}: endTaperMm (${num('endTaperMm')}) is too large for the bar's section`)
   if (num('cableDiaMm') * 2.4 >= bar) errors.push(`${spec.id}: cableDiaMm (${num('cableDiaMm')}) is too thick for the bar's height ${bar} mm`)
   if (num('switchMm') >= bar - 2 * num('filletMm')) errors.push(`${spec.id}: switchMm (${num('switchMm')}) does not fit on the flat front (${bar - 2 * num('filletMm')} mm)`)
+  return errors
+}
+
+/** Defaults of the tripod-stand params (angles in degrees, the rest in millimetres; the Python builder uses the same numbers: TRIPOD_DEFAULTS_MM). */
+export const TRIPOD_DEFAULTS = { legAngleDeg: 15, footDiaMm: 34, boomMm: 745, frontMm: 445, boomAngleDeg: 20, boomAzimuthDeg: 135, tubeDiaMm: 21.8, upperTubeDiaMm: 19, clutchFromMm: 1028 } as const
+
+/** The checks of a tripod-stand that need no geometry (the builder checks that the pose fits the spec size). */
+function validateTripodStand(spec: AssetSpecT): string[] {
+  const errors: string[] = []
+  const { h } = spec.realSizeMm
+  const p = spec.build?.params ?? {}
+  const num = (name: keyof typeof TRIPOD_DEFAULTS): number => p[name] ?? TRIPOD_DEFAULTS[name]
+  if (spec.ports.length > 0) errors.push(`${spec.id}: a tripod-stand has no ports (it is a prop)`)
+  if (!(num('boomAngleDeg') > 5 && num('boomAngleDeg') < 45)) errors.push(`${spec.id}: boomAngleDeg (${num('boomAngleDeg')}) must be between 5 and 45 degrees`)
+  if (num('frontMm') <= 250 || num('frontMm') >= num('boomMm') - 120) errors.push(`${spec.id}: frontMm (${num('frontMm')}) must be more than 250 mm and at least 120 mm less than boomMm (${num('boomMm')})`)
+  if (num('clutchFromMm') + 100 >= h - 250) errors.push(`${spec.id}: clutchFromMm (${num('clutchFromMm')}) leaves no room for the upper tube under the boom (height ${h} mm)`)
+  if (num('upperTubeDiaMm') > num('tubeDiaMm')) errors.push(`${spec.id}: upperTubeDiaMm (${num('upperTubeDiaMm')}) cannot be thicker than tubeDiaMm (${num('tubeDiaMm')}): the upper section slides in the lower one`)
   return errors
 }
 
