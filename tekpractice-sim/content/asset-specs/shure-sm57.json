@@ -20,90 +20,19 @@
   "controls": [],
   "build": {
     "shape": "revolve",
-    "profile": [
-      [
-        0,
-        17.03
-      ],
-      [
-        4.2,
-        23.59
-      ],
-      [
-        17,
-        24.31
-      ],
-      [
-        37,
-        25.44
-      ],
-      [
-        57,
-        27.38
-      ],
-      [
-        77,
-        29.44
-      ],
-      [
-        93,
-        31.28
-      ],
-      [
-        125.6,
-        31.28
-      ],
-      [
-        127.6,
-        27.49
-      ],
-      [
-        130,
-        28.82
-      ],
-      [
-        132.5,
-        31.69
-      ],
-      [
-        139,
-        32
-      ],
-      [
-        154.1,
-        29.74
-      ],
-      [
-        155,
-        26.36
-      ],
-      [
-        156.1,
-        17.03
-      ],
-      [
-        157,
-        0
-      ]
-    ],
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [[0,16],[0.4,19.4],[1,21.6],[2,22.9],[3.4,23.5],[20,24.4],[36,25.3],[52,26.6],[68,28.3],[84,30.1],[93.2,31],[94.2,29.9],[95,30.8],[124.7,31.1],[125.7,30.8],[126,30.3],[126.4,29.1],[126.8,28.6],[127,27.3],[128.3,28.9],[129.7,29],[130,30.6],[130.8,31.35],[137.5,32],[146.8,31.2],[153,30.3],[153.8,29.8],[154.3,28.9],[154.5,27.3],[155,21.6],[156,20],[156.6,16],[156.85,10],[157,5]],
     "colours": [
-      {
-        "fromMm": 0,
-        "colour": "#3b3b3e"
-      },
-      {
-        "fromMm": 126,
-        "colour": "#9a9a9e"
-      }
-    ]
-  },
-  "texture": {
-    "blankBandsMm": [
-      {
-        "fromMm": 126,
-        "toMm": 140,
-        "fill": "#202020"
-      }
+      { "fromMm": 0, "colour": "#2f3236" },
+      { "fromMm": 126, "colour": "#1c1e21" },
+      { "fromMm": 154.8, "colour": "#8d9094" }
     ]
   },
   "sources": [
@@ -124,8 +53,13 @@
     },
     {
       "kind": "photo",
-      "url": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
-      "note": "build.profile: the 16 stations of mic-profiles.json (E:/CLAUDE BU/research_notes/wave4-specs, measured by the research session from the product image inside the Shure spec sheet, 157 mm over 860 px), diameters rescaled x1.026 so the widest is the 32 mm of the sheet. About +/-0.5 mm; the two small grooves at 127.6 and 133.4 mm and the mesh dome (about R 40 mm) are simplified. build.colours: ESTIMATED (dark grey handle, silver grille by analogy with the SM58 photo), not measured."
+      "url": "https://products.shureweb.eu/shure_product_db/product_images/files/179/4ce/9a-/original/8c80cb144e8a6494c5e10517dc121683.png",
+      "note": "build.profile (rebuilt 2026-11-10, Wave 4 Task 4.1): the silhouette of the official Shure product image shure-sm57/photos/front.png (3069 x 3069, transparent background, side-on, upright, private reference, see photos/SOURCES.md) read row by row (alpha mask, radius from the median axis), 157 mm over the 2450 px of the mic, diameters x1.019 so the widest (the cage) is the 32 mm of the spec sheet. It agrees with the 16 stations of the first dry run to 0.3 mm (handle 23.5 mm at 3 mm, 31.0 mm under the groove at 94 mm) and adds the curve of the handle, the seam groove at 94.5 mm, the small neck ring at 127 to 128 mm, the cage shoulder (31.35 at 130.8 to 32.0 at 137.5), the cage top step (27.3 at 154.5) and the 21.6 mm mesh disc with its rounded top, 34 stations. Accuracy about +/-0.3 mm (1 px = 0.064 mm). build.colours: sampled from the photo (handle about #2f3236, i.e. the photo #44474a darkened to match its shading under the creation light, black band #181b1e), the mesh disc silver (#8d9094, photo mean of the mesh), no brand legend."
+    },
+    {
+      "kind": "photo",
+      "url": "https://products.shureweb.eu/shure_product_db/product_images/files/2c7/687/b8-/original/107542115b37d132fe22aac10848f90b.png",
+      "note": "build.projection wrap: the surface picture is our own generic artwork (content/generic-panels/shure-sm57.json, asset:panel): an unrolled 100.53 x 157 mm panel with a plain dark handle and seam groove, a perforated neck ring, a plain black band where the real mic carries its printed name (left blank), and 28 chunky vertical cage ribs read from the 3/4 head photo (rib about 2 mm, gap about 1.6 mm, the gaps a touch lighter). The silver mesh disc on top is a flat colour (the top of a lathe takes no wrap picture). It copies no photo and has no brand mark or lettering. The scalloped top edge of the real cage is not modelled."
     }
   ]
 }

@@ -15,7 +15,7 @@ How each model was made:
 |---|---|---|---|
 | Yamaha | QL1 console, Rio3224-D2 stage box, DBR12 loudspeaker | photo-textured | logo and model badges repainted out; small marks (Dante, regulatory icons) may remain: review |
 | Shure | SM58 | generic (our scripted lathe from the published dimensions and the product silhouette, with generic grille-weave artwork) | none: no logo, no lettering |
-| Shure | SM57 | Meshy-generated | lettering repainted out |
+| Shure | SM57 | generic (our scripted lathe from the published dimensions and the product silhouette, with generic cage-rib artwork) | none: no logo, no printed legend, no lettering |
 | QSC | K12.2 loudspeaker | photo-textured (Meshy rear, official front photo) | badge and amp-panel logo repainted out |
 | Genelec | 8030C monitor | photo-textured | logo and web address repainted out |
 | Electro-Voice | RE20 microphone | generic (our scripted lathe from the published dimensions and the product silhouette, with generic mesh-window artwork) | none: no logo, no printed legend, no lettering |
@@ -65,7 +65,7 @@ Raw downloads are kept outside git in `assets-source/_wave2-downloads/` (ignored
 
 ## 4. AI generation
 
-The Meshy-generated models (SM57, U87 Ai, K&M 210/9) and the Meshy pictures on the K12.2 rear were produced with a paid Meshy plan. Meshy states that paid plans own their generated assets provided the inputs do not infringe others' rights. The inputs were manufacturer photos: see section 1.
+The Meshy-generated models (U87 Ai, K&M 210/9) and the Meshy pictures on the K12.2 rear were produced with a paid Meshy plan. Meshy states that paid plans own their generated assets provided the inputs do not infringe others' rights. The inputs were manufacturer photos: see section 1.
 
 ## 5. To ask for, per brand
 
