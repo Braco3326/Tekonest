@@ -378,7 +378,7 @@ export class SceneHost {
     this.hideGhost()
     let inst: DeviceInstance
     try {
-      inst = spawner.spawn(deviceId, Vector3.FromArray(at), `ghost-${++this.ghostSeq}`)
+      inst = spawner.spawn(deviceId, Vector3.FromArray(at), `ghost-${++this.ghostSeq}`, false)
     } catch (e) {
       console.warn(`[creation] ${deviceId}: appareil inconnu, pas de fantôme`, e)
       return false
@@ -979,7 +979,7 @@ export class SceneHost {
     this.bag = bag
     this.controllers = new DisposableBag()
     this.controlTicker = new ControlTicker(() => this.scheduler.invalidate())
-    this.spawner = new DeviceSpawner(scene, this.registry, CREATION_DEVICE_THEME, { alignFront: true, controlTicker: this.controlTicker })
+    this.spawner = new DeviceSpawner(scene, this.registry, CREATION_DEVICE_THEME, { alignFront: true, controls: { ticker: this.controlTicker, load: () => import('../controls/attach') } })
     // Disposed first with the place's other controllers (its camera observer goes before the camera does).
     this.proxies = new PortProxies(
       { scene, camera, canvas: this.canvas, instance: (id) => this.instances.get(id), instances: () => this.instances.values(), selected: () => this.selected },
@@ -1158,7 +1158,7 @@ export class SceneHost {
 
   /** Show a 3D control surface the simulation's settings (design -> bank); a setting the design does not mention is at its catalog default. */
   /**
-   * Level of detail of the hands-on surfaces: a console's few hundred small parts are drawn only for the selected device and the ones within
+   * Level of detail of the hands-on surfaces: a console's few hundred small parts are drawn (and operable) only for the devices within
    * CONTROL_NEAR_M of the camera (they are specks from the overview, and meters must not keep the page rendering for nothing).
    */
   /** Meters and live screens animate only while audio plays (the app already holds a render lease for its own meters then). */
@@ -1173,11 +1173,12 @@ export class SceneHost {
 
   private updateControlLod(): void {
     const cam = this._camera
-    for (const [id, inst] of this.instances) {
+    for (const inst of this.instances.values()) {
       const rig = inst.controls?.rig
       if (!rig) continue
       const near = cam ? Vector3.Distance(cam.position, inst.root.getAbsolutePosition()) < CONTROL_NEAR_M : false
-      const on = id === this.selected || near
+      // Near only: from the overview a console is a 20 px speck whose hit pads would cover it and steal the press that moves the device.
+      const on = near
       if (on !== rig.isActive) {
         rig.setActive(on)
         this.scheduler.invalidate()

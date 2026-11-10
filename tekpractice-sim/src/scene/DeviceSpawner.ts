@@ -28,7 +28,7 @@ import { hasModel } from './modelIds'
 import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
-import type { AttachedControls } from '../controls/attach'
+import type { AttachedControls, attachControls } from '../controls/attach'
 import type { ControlTicker } from '../controls/ticker'
 
 export interface DeviceInstance {
@@ -123,9 +123,11 @@ export interface DeviceSpawnerOptions {
   alignFront?: boolean
   /**
    * Mode Création: give a pipeline model that has a control layout (content/control-layouts) its hands-on surface (faders, knobs,
-   * buttons, meters) and register its meters with this ticker. Absent = no controls are built (the legacy game never has them).
+   * buttons, meters) and register its meters with `ticker`. Absent = no controls are built (the legacy game never has them).
+   * The module is handed in (`load`) rather than imported here, so this shared spawner has no dynamic import of its own: the legacy
+   * page's chunk graph stays exactly what it was.
    */
-  controlTicker?: ControlTicker
+  controls?: { ticker: ControlTicker; load: () => Promise<{ attachControls: typeof attachControls }> }
 }
 
 /** A port marker's own diameter (m): its cylinder at scale 1. */
@@ -256,7 +258,8 @@ export class DeviceSpawner {
     private options: DeviceSpawnerOptions = {}
   ) {}
 
-  spawn(deviceId: string, position: Vector3, instanceId = deviceId): DeviceInstance {
+  /** `surface` false: no hands-on controls (a placement ghost follows the pointer and is thrown away; it must cost nothing and animate nothing). */
+  spawn(deviceId: string, position: Vector3, instanceId = deviceId, surface = true): DeviceInstance {
     const device = this.registry.deviceById.get(deviceId)
     if (!device) throw new Error(`content bug: unknown deviceId "${deviceId}"`)
 
@@ -280,7 +283,7 @@ export class DeviceSpawner {
       controlsReady: Promise.resolve(null),
       dispose: () => {
         if (instance.controls) {
-          this.options.controlTicker?.remove(instance.controls.rig)
+          this.options.controls?.ticker.remove(instance.controls.rig)
           instance.controls.rig.dispose()
           instance.controls = null
         }
@@ -292,7 +295,11 @@ export class DeviceSpawner {
     // live immediately, the model swaps in (and re-anchors the ports) when (and
     // only when) it loads. Engine + interaction depend only on marker metadata.
     this.pending++
-    instance.modelReady = this.tryLoadModel(device, instanceId, root, portMarkers, instance).finally(() => {
+    // A device is ready when its hands-on surface is built too (it never rejects): `pendingModels` and every `modelReady` wait cover it.
+    instance.modelReady = this.tryLoadModel(device, instanceId, root, portMarkers, instance, surface).then(async (ok) => {
+      if (ok) await instance.controlsReady
+      return ok
+    }).finally(() => {
       this.pending-- // after the model applied (or, for a dead root, was dropped): runs before any `modelReady.then`
     })
 
@@ -325,7 +332,8 @@ export class DeviceSpawner {
     instanceId: string,
     root: TransformNode,
     portMarkers: Map<string, Mesh>,
-    instance: DeviceInstance
+    instance: DeviceInstance,
+    surface: boolean
   ): Promise<boolean> {
     const deviceId = device.id
     // No shipped file for this device (the manifest lists exactly the .glb that exist): keep the placeholder without asking for it, a
@@ -377,9 +385,9 @@ export class DeviceSpawner {
             if (node) instance.controlNodes.set(c.controlId, node)
           }
         // Hands-on surface (interactive controls): own chunk, built after the model so the parts sit on the real casing.
-        if (extras && this.options.controlTicker) {
-          const ticker = this.options.controlTicker
-          instance.controlsReady = import('../controls/attach')
+        if (surface && extras && this.options.controls) {
+          const { ticker, load } = this.options.controls
+          instance.controlsReady = load()
             .then((m) => m.attachControls(deviceId, instanceId, this.scene, root, extras.realSizeMm, ticker))
             .then((c) => {
               if (c && root.isDisposed()) {

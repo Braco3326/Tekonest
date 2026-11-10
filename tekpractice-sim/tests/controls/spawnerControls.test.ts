@@ -46,7 +46,7 @@ function serve(glb: Uint8Array) {
 
 const make = (ticker?: ControlTicker) => {
   const scene = new Scene(new NullEngine())
-  return { scene, spawner: new DeviceSpawner(scene, registry, undefined, { alignFront: true, ...(ticker ? { controlTicker: ticker } : {}) }) }
+  return { scene, spawner: new DeviceSpawner(scene, registry, undefined, { alignFront: true, ...(ticker ? { controls: { ticker, load: () => import('../../src/controls/attach') } } : {}) }) }
 }
 
 describe('controls on a spawned device', () => {
@@ -105,5 +105,29 @@ describe('controls on a spawned device', () => {
     await noLayout.modelReady
     expect(await noLayout.controlsReady).toBeNull()
     expect(noLayout.controls).toBeNull()
+  })
+})
+
+describe('a placement ghost', () => {
+  it('gets no control surface and starts no ticker (spawn(…, surface = false))', async () => {
+    serve(await glbFor(true))
+    const ticker = new ControlTicker(() => undefined, () => 0, () => 1, () => undefined)
+    const { scene, spawner } = make(ticker)
+    const ghost = spawner.spawn('axia-iq', new Vector3(0, 0, 0), 'ghost-1', false)
+    await ghost.modelReady
+    expect(await ghost.controlsReady).toBeNull()
+    expect(ghost.controls).toBeNull()
+    expect(ticker.running).toBe(false)
+    expect(scene.getTransformNodeByName('ctl:ghost-1:fader-1')).toBeNull()
+  })
+
+  it('modelReady waits for the surface: when it resolves the controls exist (pendingModels covers them)', async () => {
+    serve(await glbFor(true))
+    const ticker = new ControlTicker(() => undefined, () => 0, () => 1, () => undefined)
+    const { spawner } = make(ticker)
+    const inst = spawner.spawn('axia-iq', new Vector3(0, 0, 0), 'q9')
+    await inst.modelReady
+    expect(inst.controls).not.toBeNull()
+    expect(spawner.pendingModels).toBe(0)
   })
 })

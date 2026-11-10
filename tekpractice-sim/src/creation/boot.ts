@@ -14,6 +14,7 @@ import { projectToScreen } from '../scene/project'
 import { useSameOriginDraco } from '../render/draco'
 import { DisposableBag } from '../util/disposable'
 import { COPY } from './copy'
+import { controlHit } from '../controls/controlHit'
 import { showBootFailure, type BootFailureKind } from './bootFailure'
 import { CreationStore, creationEvaluator } from './store'
 import { History } from './history'
@@ -2174,14 +2175,19 @@ export async function bootCreation(): Promise<void> {
       .design()
       .rig.instances.flatMap((i) => [...(host.instance(i.instanceId)?.portMarkers.keys() ?? [])].map((port) => screen(host.portWorld({ instance: i.instanceId, port }))))
       .filter((q): q is { x: number; y: number } => q !== null)
-    const clear = (q: { x: number; y: number }): boolean => pickDevice(host.scene, q.x - rect.left, q.y - rect.top) === id && ports.every((r) => Math.hypot(r.x - q.x, r.y - q.y) >= PORT_CLEAR_PX)
+    // A console's top is covered with controls (a press on one operates it instead of grabbing the body): not a free point either.
+    const onControl = (q: { x: number; y: number }): boolean => !!host.scene?.pick(q.x - rect.left, q.y - rect.top, (m) => controlHit(m)?.instanceId === id && m.isEnabled())?.hit
+    const clear = (q: { x: number; y: number }): boolean => pickDevice(host.scene, q.x - rect.left, q.y - rect.top) === id && !onControl(q) && ports.every((r) => Math.hypot(r.x - q.x, r.y - q.y) >= PORT_CLEAR_PX)
     if (clear(c)) return c
     let best: { x: number; y: number } | null = null
-    for (let dx = -60; dx <= 60; dx += 2)
-      for (let dy = -45; dy <= 45; dy += 2) {
-        const q = { x: c.x + dx, y: c.y + dy }
-        if (clear(q) && (!best || Math.hypot(dx, dy) < Math.hypot(best.x - c.x, best.y - c.y))) best = q
-      }
+    for (const [rx, ry, step] of [[60, 45, 2], [200, 150, 4]] as const) {
+      for (let dx = -rx; dx <= rx; dx += step)
+        for (let dy = -ry; dy <= ry; dy += step) {
+          const q = { x: c.x + dx, y: c.y + dy }
+          if (clear(q) && (!best || Math.hypot(dx, dy) < Math.hypot(best.x - c.x, best.y - c.y))) best = q
+        }
+      if (best) break // a wider ring only when the near one has no free point (a console)
+    }
     return best ?? c
   }
   window.__creation = {

@@ -128,7 +128,7 @@ design change (panel, undo, load) is shown back on the caps (`syncControls`). A 
 ## Cost
 
 A console is a few hundred small meshes (the QL1: about 380 drawn parts and as many hit pads, 7.7 ms of extra frame time on a software GL).
-The surface is therefore drawn only for the **selected** device and for devices within 3.5 m of the camera; an inactive rig draws nothing
+The surface is therefore drawn (and operable) only for devices within 3.5 m of the camera, selected or not: from the overview a console is a ~20 px speck whose hit pads would cover it and steal the press that drags the device; an inactive rig draws nothing
 and its meters / screens neither run nor ask for frames, so an overview with consoles in it renders at the old cost and an idle page
 stays idle. Meters and live screens run on one ticker (30 fps, screens ~15 fps) and invalidate the render scheduler only when something redrew.
 **They run only while audio plays** (Écoute › Lecture: the app already holds a render lease for its own meters then; `host.setMetersLive`
