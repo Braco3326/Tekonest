@@ -724,6 +724,319 @@ def build_speaker_cabinet(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+# --- curved-cabinet ---------------------------------------------------------------------------------------
+
+CURVED_SEG90 = 10                 # arc samples per quarter turn of a plan corner
+CURVED_DEFAULT_FRONT_R_MM = 24.0  # mirrored in shapes.ts CURVED_DEFAULTS
+CURVED_DEFAULT_BACK_R_MM = 24.0
+CURVED_DEFAULT_EDGE_MM = 16.0
+CURVED_DEFAULT_SEGMENTS = 8
+CURVED_DEFAULT_RING_MM = 2.0
+CURVED_DEFAULT_GUIDE_MM = 8.0
+CURVED_DEFAULT_MID_FRACTION = 0.4
+CURVED_RING_SEGMENTS = 32
+CURVED_FIT_MARGIN_MM = 0.5
+MEASURE: dict[str, float] = {}    # what the builder measured on its mesh; run() writes it next to the GLB (<out>.measure.json)
+
+
+def rounded_polygon(pts: list[tuple[float, float]], radii: list[float], seg90: int = CURVED_SEG90) -> list[tuple[float, float]]:
+    """Rounds the corners of the convex counter-clockwise polygon `pts` of (x, z) points: corner i gets a tangent arc of radius radii[i]
+    (0 = left sharp). Returns the outline, an arc sampled with at least two steps and about `seg90` per quarter turn. Raises BuildError when the
+    two tangent lengths of an edge are longer than the edge."""
+    n = len(pts)
+    corners: list[tuple[tuple[float, float], tuple[float, float], tuple[float, float], float, float] | None] = []
+    for i in range(n):
+        p0, p1, p2 = pts[i - 1], pts[i], pts[(i + 1) % n]
+        r = radii[i]
+        ax, az = p0[0] - p1[0], p0[1] - p1[1]
+        bx, bz = p2[0] - p1[0], p2[1] - p1[1]
+        la, lb = math.hypot(ax, az), math.hypot(bx, bz)
+        if la < 1e-9 or lb < 1e-9:
+            raise BuildError("the plan polygon has two corners at the same place")
+        ax, az, bx, bz = ax / la, az / la, bx / lb, bz / lb
+        ang = math.acos(max(-1.0, min(1.0, ax * bx + az * bz)))   # interior angle
+        if r <= 0.0 or ang > math.pi - 1e-6:
+            corners.append(None)
+            continue
+        t = r / math.tan(ang / 2.0)
+        corners.append(((p1[0] + ax * t, p1[1] + az * t), (p1[0] + bx * t, p1[1] + bz * t), _arc_centre(p1, (ax, az), (bx, bz), r, ang), t, ang))
+    for i in range(n):
+        nxt = (i + 1) % n
+        t_here = corners[i][3] if corners[i] else 0.0
+        t_next = corners[nxt][3] if corners[nxt] else 0.0
+        edge = math.hypot(pts[nxt][0] - pts[i][0], pts[nxt][1] - pts[i][1])
+        if t_here + t_next > edge + 1e-9:
+            raise BuildError(f"the plan corner radii are too large: corners {i} and {nxt} need {(t_here + t_next) / MM:.1f} mm of an edge that is {edge / MM:.1f} mm long")
+    out: list[tuple[float, float]] = []
+    for i in range(n):
+        c = corners[i]
+        if c is None:
+            out.append(pts[i])
+            continue
+        a, b, centre, _t, ang = c
+        a0 = math.atan2(a[1] - centre[1], a[0] - centre[0])
+        a1 = math.atan2(b[1] - centre[1], b[0] - centre[0])
+        delta = (a1 - a0 + math.pi) % (2.0 * math.pi) - math.pi
+        r = math.hypot(a[0] - centre[0], a[1] - centre[1])
+        steps = max(2, math.ceil(abs(delta) / (math.pi / 2.0) * seg90))
+        for s in range(steps + 1):
+            ph = a0 + delta * s / steps
+            out.append((centre[0] + r * math.cos(ph), centre[1] + r * math.sin(ph)))
+    clean: list[tuple[float, float]] = []
+    for p in out:
+        if not clean or math.hypot(p[0] - clean[-1][0], p[1] - clean[-1][1]) > 1e-7:
+            clean.append(p)
+    if len(clean) > 1 and math.hypot(clean[0][0] - clean[-1][0], clean[0][1] - clean[-1][1]) <= 1e-7:
+        clean.pop()
+    return clean
+
+
+def _arc_centre(p1: tuple[float, float], a: tuple[float, float], b: tuple[float, float], r: float, ang: float) -> tuple[float, float]:
+    """Centre of the fillet circle of radius r tangent to both edges at the corner p1 (a, b = unit vectors along the edges away from it)."""
+    bx, bz = a[0] + b[0], a[1] + b[1]
+    lb = math.hypot(bx, bz)
+    d = r / math.sin(ang / 2.0)
+    return (p1[0] + bx / lb * d, p1[1] + bz / lb * d)
+
+
+def offset_outline(pts: list[tuple[float, float]], s: float) -> list[tuple[float, float]]:
+    """The counter-clockwise outline `pts` moved inward by s (mitre at every vertex). Raises BuildError when an edge flips: the inset is deeper than
+    a corner of the outline is round."""
+    n = len(pts)
+    if s <= 0.0:
+        return list(pts)
+    normals = []
+    for i in range(n):
+        dx, dz = pts[(i + 1) % n][0] - pts[i][0], pts[(i + 1) % n][1] - pts[i][1]
+        ln = math.hypot(dx, dz)
+        normals.append((-dz / ln, dx / ln))
+    out = []
+    for i in range(n):
+        n0, n1 = normals[i - 1], normals[i]
+        k = 1.0 + n0[0] * n1[0] + n0[1] * n1[1]
+        if k < 1e-6:
+            raise BuildError("the plan outline turns back on itself: cannot inset it")
+        out.append((pts[i][0] + (n0[0] + n1[0]) / k * s, pts[i][1] + (n0[1] + n1[1]) / k * s))
+    for i in range(n):
+        j = (i + 1) % n
+        ex, ez = pts[j][0] - pts[i][0], pts[j][1] - pts[i][1]
+        ox, oz = out[j][0] - out[i][0], out[j][1] - out[i][1]
+        if ex * ox + ez * oz <= 0.0:
+            raise BuildError(f"the fillet folds over at the plan corner near x = {pts[i][0] / MM:.1f} mm, z = {pts[i][1] / MM:.1f} mm: the plan corner radius there is tighter than the {s / MM:.1f} mm inset (raise frontRadiusMm / sideRadiusMm / backRadiusMm or lower edgeRadiusMm)")
+    return out
+
+
+def flat_face_bounds(bm: bmesh.types.BMesh, z: float) -> tuple[float, float, float, float]:
+    """(x0, x1, y0, y1) in glTF metres of the one flat face lying in the plane z."""
+    found = [f for f in bm.faces if all(abs(-v.co.y - z) < FLAT_FACE_TOL for v in f.verts)]
+    if len(found) != 1:
+        raise BuildError(f"expected one flat face in the plane z = {z / MM:.2f} mm, found {len(found)}")
+    xs = [v.co.x for v in found[0].verts]
+    ys = [v.co.z for v in found[0].verts]
+    return min(xs), max(xs), min(ys), max(ys)
+
+
+def dish_hole(bm: bmesh.types.BMesh, cx: float, cy: float, z: float, r_mouth: float, r_floor: float, n: int, depth: float, sign: float) -> list[bmesh.types.BMEdge]:
+    """A round recess whose mouth ring (radius r_mouth) is at z and whose floor ring (radius r_floor, a cone when it differs) is `depth` away along
+    sign. Walls and floor are built; the mouth's edges are returned for fill_with_holes."""
+    mouth = ring(bm, r_mouth, z, n, cx, cy)
+    floor = ring(bm, r_floor, z + sign * depth, n, cx, cy)
+    band(bm, mouth, floor)
+    bm.faces.new(floor[::-1])
+    return [bm.edges.get((mouth[i], mouth[(i + 1) % n])) for i in range(n)]
+
+
+def build_curved_cabinet(plan: Plan) -> bpy.types.Object:
+    """A loudspeaker cabinet w x h x d with a curved plan and filleted top and bottom edges, bottom at y = 0, centred on x and z, the io (rear)
+    face at z = +d/2 and the baffle at z = -d/2.
+
+    Plan (seen from above, x to the right, the baffle at the top): a convex polygon with the baffle corners planFrontMm apart (default w - 2 x sideBulgeMm),
+    the widest points sideBulgeMm outside them at midDepthMm behind the baffle (default 0.4 d), and the rear corners rearWidthMm apart (default the widest
+    width), each corner rounded by its own radius: frontRadiusMm (default 24), sideRadiusMm (default: the roundest the edges allow, which makes the
+    sides arcs) and backRadiusMm (default 24). The outline is stretched in x to exactly w. The baffle may bow forward crownMm.
+    Edges: the top and the bottom are rounded by an elliptic profile, edgeRadiusMm inward by edgeDropMm down (default the same), in edgeSegments
+    steps (default 8). The measured fillet (the smaller of the two, as built) goes to MEASURE for the 'fillet' gate.
+    Baffle: wooferRingMm / tweeterRingMm round recesses (ringDepthMm deep, default 2) centred on x = 0 at wooferYMm / tweeterYMm; with waveguideMm the
+    tweeter recess is a cone from that diameter at the baffle down to the tweeter ring, waveguideDepthMm (default 8) deep.
+    Rear: a round pocket behind every io port with an insetMm (floor insetMm behind the face, diameter openingMm or 24 mm), exactly as speaker-cabinet.
+    One colour (CABINET) and a darker one for recesses and pockets; a projection puts the real baffle, rear panel and side on it."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+
+    def opt(name: str, default_mm: float) -> float:
+        return param_m(plan, name, default_mm) if name in params else default_mm * MM
+
+    edge = opt("edgeRadiusMm", CURVED_DEFAULT_EDGE_MM)
+    drop = opt("edgeDropMm", edge / MM)
+    half_min = min(w, h, d) / 2.0
+    if edge >= half_min:
+        raise BuildError(f"params.edgeRadiusMm ({edge / MM:.1f}) must be less than half the smallest side ({half_min / MM:.1f} mm)")
+    if drop * 2.0 >= h:
+        raise BuildError(f"params.edgeDropMm ({drop / MM:.1f}) must be less than half the height ({h / 2.0 / MM:.1f} mm)")
+    segments = params.get("edgeSegments", CURVED_DEFAULT_SEGMENTS)
+    if isinstance(segments, bool) or not isinstance(segments, int) or not 4 <= segments <= 16:
+        raise BuildError(f"params.edgeSegments must be a whole number from 4 to 16, got {segments!r}")
+    front_r = opt("frontRadiusMm", CURVED_DEFAULT_FRONT_R_MM)
+    back_r = opt("backRadiusMm", CURVED_DEFAULT_BACK_R_MM)
+    for name, r in (("frontRadiusMm", front_r), ("backRadiusMm", back_r)):
+        if r < edge - 1e-9:
+            raise BuildError(f"params.{name} ({r / MM:.1f}) must be at least edgeRadiusMm ({edge / MM:.1f}): the fillet would fold over")
+    bulge = opt("sideBulgeMm", 0.0) if "sideBulgeMm" in params else 0.0
+    front_w = param_m(plan, "planFrontMm", 0.0) if "planFrontMm" in params else w - 2.0 * bulge
+    a = front_w / 2.0
+    b = a + bulge
+    c = param_m(plan, "rearWidthMm", 0.0) / 2.0 if "rearWidthMm" in params else b
+    crown = param_m(plan, "crownMm", 0.0) if "crownMm" in params else 0.0
+    ring_depth = opt("ringDepthMm", CURVED_DEFAULT_RING_MM)
+    has_ring = "wooferRingMm" in params or "tweeterRingMm" in params
+    if crown > 0.0 and has_ring:
+        raise BuildError("params.crownMm bows the baffle, but a ring is cut into a flat baffle: use no crownMm with a woofer or tweeter ring")
+    mid_z = -d / 2.0 + (param_m(plan, "midDepthMm", 0.0) if "midDepthMm" in params else CURVED_DEFAULT_MID_FRACTION * d)
+    if not -d / 2.0 < mid_z < d / 2.0:
+        raise BuildError("params.midDepthMm must lie inside the depth")
+    z_front = -d / 2.0 + crown
+    poly = [(-a, z_front), (a, z_front), (b, mid_z), (c, d / 2.0), (-c, d / 2.0), (-b, mid_z)]
+    # the roundness of the side corners: the roundest the two edges allow when the plan gives none
+    if "sideRadiusMm" in params:
+        side_r = param_m(plan, "sideRadiusMm", 0.0)
+        if side_r < edge - 1e-9:
+            raise BuildError(f"params.sideRadiusMm ({side_r / MM:.1f}) must be at least edgeRadiusMm ({edge / MM:.1f})")
+    else:
+        v1 = (a - b, z_front - mid_z)
+        v2 = (c - b, d / 2.0 - mid_z)
+        l1, l2 = math.hypot(*v1), math.hypot(*v2)
+        ang = math.acos(max(-1.0, min(1.0, (v1[0] * v2[0] + v1[1] * v2[1]) / (l1 * l2))))
+        # the tangent length of a corner is r x tan(pi / 2 - ang / 2): taking 0.4 of the shorter edge leaves room for the neighbouring corners' arcs
+        side_r = 0.0 if ang > math.pi - 1e-6 else 0.4 * min(l1, l2) * math.tan(ang / 2.0)
+    for i in range(6):
+        e0 = (poly[(i + 1) % 6][0] - poly[i][0], poly[(i + 1) % 6][1] - poly[i][1])
+        e1 = (poly[(i + 2) % 6][0] - poly[(i + 1) % 6][0], poly[(i + 2) % 6][1] - poly[(i + 1) % 6][1])
+        if e0[0] * e1[1] - e0[1] * e1[0] < -1e-12:
+            raise BuildError('the plan polygon is not convex: the widest points must lie outside the baffle corners and the rear must not be wider than them (planFrontMm, sideBulgeMm, rearWidthMm)')
+    radii = [front_r, front_r, side_r, back_r, back_r, side_r]
+    outline = rounded_polygon(poly, radii)
+    if crown > 0.0:
+        # sample the flat baffle edge as a parabola bowing forward by `crown` in the middle
+        outline = bow_baffle(outline, z_front, crown)
+    span = max(abs(p[0]) for p in outline)
+    if span <= 1e-9:
+        raise BuildError("the plan outline has no width")
+    stretch = (w / 2.0) / span
+    if not 0.85 < stretch < 1.15:
+        raise BuildError(f"the plan outline is {span * 2.0 / MM:.1f} mm wide, the spec width is {w / MM:.1f} mm: planFrontMm and sideBulgeMm leave the shape too far from it")
+    outline = [(p[0] * stretch, p[1]) for p in outline]
+    if sum(outline[i][0] * outline[(i + 1) % len(outline)][1] - outline[(i + 1) % len(outline)][0] * outline[i][1] for i in range(len(outline))) <= 0.0:
+        raise BuildError("the plan outline is not counter-clockwise: check the plan widths")
+
+    body = Body("curved-cabinet")
+    bm = body.bm
+    n = len(outline)
+    levels: list[tuple[float, float]] = []   # (inset, y) bottom to top: the elliptic fillet up the bottom edge, then down from the top
+    for k in range(segments + 1):
+        ph = (math.pi / 2.0) * k / segments
+        levels.append((edge * (1.0 - math.sin(ph)), drop * (1.0 - math.cos(ph))))
+    bottom = levels
+    top = [(ins, h - dy) for ins, dy in reversed(levels)]
+    stations = bottom + top
+    cache: dict[float, list[tuple[float, float]]] = {}
+    rings: list[list[bmesh.types.BMVert]] = []
+    for ins, y in stations:
+        key = round(ins, 12)
+        if key not in cache:
+            cache[key] = offset_outline(outline, ins)
+        rings.append([bm.verts.new(g2b(x, y, z)) for x, z in cache[key]])
+    bm.faces.new(rings[0][::-1])
+    for i in range(len(rings) - 1):
+        band(bm, rings[i], rings[i + 1])
+    bm.faces.new(rings[-1])
+
+    # measure what was built: the setback of the top face from the wall, and how far down the wall starts
+    wall_top = rings[segments + 1]
+    wall_poly = [(v.co.x, -v.co.y) for v in wall_top]
+    cap = [(v.co.x, -v.co.y) for v in rings[-1]]
+    horizontal = min(point_to_polygon_distance(p, wall_poly) for p in cap)
+    vertical = h - wall_top[0].co.z
+    MEASURE["filletMm"] = round(min(horizontal, vertical) / MM, 3)
+    body.done(CABINET)
+
+    pockets = [p for p in (plan.get("ports") or []) if isinstance(p.get("insetMm"), (int, float)) and p["insetMm"] > 0]
+    if pockets:
+        x0, x1, y0, y1 = flat_face_bounds(bm, d / 2.0)
+        outline_edges = take_flat_face(bm, d / 2.0)
+        holes = []
+        for p in pockets:
+            radius = float(p.get("openingMm") or POCKET_DEFAULT_MM) * MM / 2.0
+            cx = float(p["xMm"]) * MM - w / 2.0
+            cy = float(p["yMm"]) * MM
+            if cx - radius < x0 + CURVED_FIT_MARGIN_MM * MM or cx + radius > x1 - CURVED_FIT_MARGIN_MM * MM or cy - radius < y0 + CURVED_FIT_MARGIN_MM * MM or cy + radius > y1 - CURVED_FIT_MARGIN_MM * MM:
+                raise BuildError(f"the pocket of port {p.get('portId')!r} (x {cx / MM:.1f}, y {cy / MM:.1f}, radius {radius / MM:.1f} mm) does not fit in the flat rear face (x {x0 / MM:.1f} to {x1 / MM:.1f}, y {y0 / MM:.1f} to {y1 / MM:.1f} mm)")
+            holes.append(blind_hole(bm, cx, cy, d / 2.0, radius, POCKET_SEGMENTS, float(p["insetMm"]) * MM, -1.0))
+        body.done(CABINET_POCKET)
+        fill_with_holes(bm, outline_edges, holes, (0.0, 0.0, 1.0))
+        body.done(CABINET)
+
+    recesses: list[tuple[str, float, float, float, float]] = []   # (name, centre y, mouth radius, floor radius, depth)
+    if "wooferRingMm" in params:
+        r = param_m(plan, "wooferRingMm", 0.0) / 2.0
+        recesses.append(("wooferRingMm", param_m(plan, "wooferYMm", 0.0), r, r, ring_depth))
+    if "tweeterRingMm" in params:
+        r = param_m(plan, "tweeterRingMm", 0.0) / 2.0
+        if "waveguideMm" in params:
+            recesses.append(("tweeterRingMm", param_m(plan, "tweeterYMm", 0.0), param_m(plan, "waveguideMm", 0.0) / 2.0, r, opt("waveguideDepthMm", CURVED_DEFAULT_GUIDE_MM)))
+        else:
+            recesses.append(("tweeterRingMm", param_m(plan, "tweeterYMm", 0.0), r, r, ring_depth))
+    if recesses:
+        for i, ra in enumerate(recesses):
+            for rb in recesses[i + 1:]:
+                if abs(ra[1] - rb[1]) < ra[2] + rb[2] + CURVED_FIT_MARGIN_MM * MM:
+                    raise BuildError(f"the {ra[0]} and {rb[0]} recesses overlap on the baffle")
+        x0, x1, y0, y1 = flat_face_bounds(bm, -d / 2.0)
+        outline_edges = take_flat_face(bm, -d / 2.0)
+        holes = []
+        for name, cy, r_mouth, r_floor, depth in recesses:
+            if r_mouth > x1 - CURVED_FIT_MARGIN_MM * MM or -r_mouth < x0 + CURVED_FIT_MARGIN_MM * MM or cy - r_mouth < y0 + CURVED_FIT_MARGIN_MM * MM or cy + r_mouth > y1 - CURVED_FIT_MARGIN_MM * MM:
+                raise BuildError(f"params.{name}: the recess (radius {r_mouth / MM:.1f} mm at y {cy / MM:.1f}) does not fit the flat baffle (x {x0 / MM:.1f} to {x1 / MM:.1f}, y {y0 / MM:.1f} to {y1 / MM:.1f} mm): widen planFrontMm or lower frontRadiusMm")
+            holes.append(dish_hole(bm, 0.0, cy, -d / 2.0, r_mouth, r_floor, CURVED_RING_SEGMENTS, depth, 1.0))
+        body.done(CABINET_POCKET)
+        fill_with_holes(bm, outline_edges, holes, (0.0, 0.0, -1.0))
+        body.done(CABINET)
+    return body.finish()
+
+
+def bow_baffle(outline: list[tuple[float, float]], z_front: float, crown: float) -> list[tuple[float, float]]:
+    """Replaces the straight baffle edge (the longest run of outline points at z = z_front) by a parabola that bows forward by `crown` in the middle."""
+    n = len(outline)
+    best = None
+    for i in range(n):
+        p, q = outline[i], outline[(i + 1) % n]
+        if abs(p[1] - z_front) < 1e-9 and abs(q[1] - z_front) < 1e-9 and (best is None or abs(q[0] - p[0]) > abs(outline[best[1]][0] - outline[best[0]][0])):
+            best = (i, (i + 1) % n)
+    if best is None:
+        raise BuildError("crownMm: the plan has no flat baffle edge to bow")
+    i, j = best
+    x_a, x_b = outline[i][0], outline[j][0]
+    half = abs(x_b - x_a) / 2.0
+    mid = (x_a + x_b) / 2.0
+    pts = []
+    steps = 12
+    for s in range(1, steps):
+        x = x_a + (x_b - x_a) * s / steps
+        pts.append((x, z_front - crown * (1.0 - ((x - mid) / half) ** 2)))
+    return outline[:i + 1] + pts + outline[j:] if j > i else outline[:i + 1] + pts
+
+
+def point_to_polygon_distance(p: tuple[float, float], poly: list[tuple[float, float]]) -> float:
+    """Shortest distance from the point p to the closed polygon `poly` (its edges), in the plane."""
+    best = float("inf")
+    for i in range(len(poly)):
+        a, b = poly[i], poly[(i + 1) % len(poly)]
+        dx, dz = b[0] - a[0], b[1] - a[1]
+        l2 = dx * dx + dz * dz
+        t = 0.0 if l2 == 0.0 else max(0.0, min(1.0, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / l2))
+        best = min(best, math.hypot(p[0] - (a[0] + t * dx), p[1] - (a[1] + t * dz)))
+    return best
+
+
 def build_stagebox_rio3224(plan: Plan) -> bpy.types.Object:
     """Yamaha Rio3224-D2 style 5U stage box (research report, "Rio3224-D2"; generic: no logo, no model name).
 
@@ -1519,6 +1832,7 @@ SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "revolve": build_revolve,
     "console-wedge": build_console_wedge,
     "speaker-cabinet": build_speaker_cabinet,
+    "curved-cabinet": build_curved_cabinet,
     "boom-arm": build_boom_arm,
     "xlr-male-plug": build_xlr_male_plug,
     "iec-inlet": build_iec_inlet,
@@ -1749,6 +2063,10 @@ def run() -> None:
     if builder is None:
         raise BuildError(f"unknown shape {shape!r} (known: {', '.join(sorted(SHAPES))})")
     wipe_scene()
+    measure_path = os.path.splitext(args['out'])[0] + '.measure.json'
+    if os.path.exists(measure_path):
+        os.remove(measure_path)   # never leave the measurements of an earlier run next to this output
+    MEASURE.clear()
     builder(plan)
     if plan.get("projections"):
         meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
@@ -1756,6 +2074,9 @@ def run() -> None:
             raise BuildError(f"a projection needs exactly one mesh object, the build made {len(meshes)}")
         apply_projection(meshes[0], plan, os.path.splitext(args["out"])[0] + ".atlas.png")
     export_glb(args["out"])
+    if MEASURE:
+        with open(measure_path, 'w', encoding='utf-8') as f:
+            json.dump(MEASURE, f)
     log(f"{plan.get('id')}: built {shape}")
 
 

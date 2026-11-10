@@ -23,6 +23,7 @@ import type { GlbReport } from '../../../tools/assets3d/inspect'
 import { loadSpecs } from '../../../tools/assets3d/loadSpecs'
 import { buildPlacement } from '../../../tools/assets3d/placement'
 import { BUILD_SCRIPT, runBuilder } from '../../../tools/assets3d/runBuilder'
+import type { BuilderMeasure } from '../../../tools/assets3d/runBuilder'
 import { runFixup } from '../../../tools/assets3d/runFixup'
 import type { FixupReport } from '../../../tools/assets3d/runFixup'
 import { BUILD_SHAPES } from '../../../tools/assets3d/shapes'
@@ -56,6 +57,8 @@ describe('wave-1 specs', () => {
 interface Built {
   raw: GlbReport
   rawBytes: Uint8Array
+  /** What the builder measured on its own mesh (curved-cabinet: filletMm). */
+  measure: BuilderMeasure
   fix: FixupReport
   fixed: GlbReport
   fixedBytes: Uint8Array
@@ -156,13 +159,13 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
       hit = (async () => {
         const rawPath = join(dir, `${spec.id}-${cache.size}.raw.glb`)
         const fixedPath = join(dir, `${spec.id}-${cache.size}.fixed.glb`)
-        await runBuilder(spec, rawPath)
+        const measure = await runBuilder(spec, rawPath)
         const rawBytes = new Uint8Array(await readFile(rawPath))
         // As buildAsset does for a scripted build: the builder models its own sockets, the fix-up cuts no recess.
-        const fix = await runFixup(rawPath, fixedPath, spec, { recess: false })
+        const fix = await runFixup(rawPath, fixedPath, spec, { recess: false, ...(measure.filletMm !== undefined ? { filletMm: measure.filletMm } : {}) })
         const fixedBytes = new Uint8Array(await readFile(fixedPath))
         const fixed = await inspectGlb(fixedBytes)
-        return { raw: await inspectGlb(rawBytes), rawBytes, fix, fixed, fixedBytes, gates: runGates(fixed, spec, buildPlacement(spec)) }
+        return { raw: await inspectGlb(rawBytes), rawBytes, measure, fix, fixed, fixedBytes, gates: runGates(fixed, spec, buildPlacement(spec)) }
       })()
       cache.set(key, hit)
     }
@@ -376,6 +379,113 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(raw.triangles).toBeGreaterThan(60) // a bare box is 12; three bevel segments round every edge
     expect(gates.filter((g) => !g.ok)).toEqual([])
   }, 120_000)
+
+  describe('curved-cabinet (the Genelec 8030C shape)', () => {
+    /** The 8030C: 189 x 299 x 178 mm, round baffle ring recesses, two rear pockets, rounded plan and an elliptic fillet. */
+    const GENELEC = { planFrontMm: 176, sideBulgeMm: 6, rearWidthMm: 150, backRadiusMm: 30, frontRadiusMm: 24, edgeRadiusMm: 20, edgeDropMm: 26, edgeSegments: 8, wooferRingMm: 126, wooferYMm: 100, tweeterRingMm: 36, tweeterYMm: 215 }
+    const genelec = (params: Record<string, number> = GENELEC): AssetSpecT => ({
+      ...realSpec('genelec-8030c'),
+      controls: [],
+      texture: undefined,
+      build: { shape: 'curved-cabinet', params },
+    })
+
+    it.skipIf(!BLENDER)('builds at the spec size to 0.01 mm, inside 1500 to 4000 triangles, through the fix-up unrotated with every gate passing', async () => {
+      const spec = genelec()
+      const { raw, fixed, gates } = await expectBuiltTo(spec, 4000)
+      expect(raw.triangles).toBeGreaterThanOrEqual(1500)
+      expect(fixed.triangles).toBe(raw.triangles)
+      expect(gates.filter((g) => !g.ok)).toEqual([])
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('no vertex lies outside the width, and the plan really is curved (many distinct depths along a wall at mid height, not a hexagon)', async () => {
+      const spec = genelec()
+      const { fixedBytes } = await buildAndFix(spec)
+      const verts = await vertices(fixedBytes)
+      expect(Math.max(...verts.map((v) => Math.abs(v[0])))).toBeLessThanOrEqual(94.5 * MM + 1e-7)
+      const wall = verts.filter((v) => Math.abs(v[1] - 273 * MM) < 1e-6) // the top end of the vertical wall: the plan outline, one vertex per point
+      expect(new Set(wall.map((v) => Math.round((v[2] / MM) * 10))).size).toBeGreaterThan(18)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('rounds the top and the bottom: both faces are set back from the wall, which reaches the full width between the fillets', async () => {
+      const { fixedBytes } = await buildAndFix(genelec())
+      const verts = await vertices(fixedBytes)
+      const topWidth = Math.max(...verts.filter((v) => Math.abs(v[1] - 299 * MM) < 1e-7).map((v) => Math.abs(v[0])))
+      const bottomWidth = Math.max(...verts.filter((v) => Math.abs(v[1]) < 1e-7).map((v) => Math.abs(v[0])))
+      expect(topWidth / MM).toBeLessThan(94.5 - 15)
+      expect(bottomWidth / MM).toBeLessThan(94.5 - 15)
+      expect(Math.max(...verts.filter((v) => v[1] > 25 * MM && v[1] < 275 * MM).map((v) => Math.abs(v[0]))) / MM).toBeGreaterThan(94.4)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('writes the measured fillet: at least 0.9 x the edge radius, and it lands in the GLB extras next to the real size', async () => {
+      const { measure, fixed } = await buildAndFix(genelec())
+      expect(measure.filletMm).toBeGreaterThanOrEqual(0.9 * 20)
+      expect(measure.filletMm).toBeLessThanOrEqual(26 + 1)
+      const tek = (fixed.extras as { tekpractice: { realSizeMm: unknown; filletMm: number } }).tekpractice
+      expect(tek.realSizeMm).toEqual({ w: 189, h: 299, d: 178 })
+      expect(tek.filletMm).toBe(measure.filletMm)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('two builds of the same spec are byte-identical', async () => {
+      const spec = genelec()
+      const a = join(dir, 'det-a.glb')
+      const b = join(dir, 'det-b.glb')
+      await runBuilder(spec, a)
+      await runBuilder(spec, b)
+      expect(Buffer.compare(await readFile(a), await readFile(b))).toBe(0)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('cuts a round pocket behind each inset port, so the port sits on a real surface (portSurface within 0.5 mm), and a recess for each baffle ring', async () => {
+      const spec = genelec()
+      const { fix, fixedBytes } = await buildAndFix(spec)
+      expect(fix.portSurface?.length).toBe(2)
+      for (const s of fix.portSurface ?? []) expect(Math.abs(s.offsetM ?? 1)).toBeLessThan(0.5 * MM)
+      const verts = await vertices(fixedBytes)
+      const halfD = 89 * MM
+      // rear pocket of the XLR (x 137.3 - 94.5, y 70, radius 7, floor 13.8 behind the face)
+      const floor = verts.filter((v) => Math.abs(v[2] - (halfD - 13.8 * MM)) < 0.01 * MM && Math.hypot(v[0] - 42.8 * MM, v[1] - 70 * MM) < 7.01 * MM)
+      expect(floor.length).toBeGreaterThanOrEqual(12)
+      // baffle: the woofer ring floor, 2 mm behind the baffle plane, radius 63 mm, centred on x = 0 at y = 100 mm
+      const ringFloor = verts.filter((v) => Math.abs(v[2] - (-halfD + 2 * MM)) < 0.01 * MM && Math.hypot(v[0], v[1] - 100 * MM) < 63.01 * MM)
+      expect(ringFloor.length).toBeGreaterThanOrEqual(24)
+      const tweeterFloor = verts.filter((v) => Math.abs(v[2] - (-halfD + 2 * MM)) < 0.01 * MM && Math.hypot(v[0], v[1] - 215 * MM) < 18.01 * MM)
+      expect(tweeterFloor.length).toBeGreaterThanOrEqual(24)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('a conical waveguide around the tweeter ring is cut deeper than the plain ring', async () => {
+      const spec = genelec({ ...GENELEC, waveguideMm: 80, waveguideDepthMm: 9 })
+      const { fixedBytes, gates } = await buildAndFix(spec)
+      expect(gates.filter((g) => !g.ok)).toEqual([])
+      const verts = await vertices(fixedBytes)
+      expect(verts.some((v) => Math.abs(v[2] - (-89 * MM + 9 * MM)) < 0.01 * MM && Math.hypot(v[0], v[1] - 215 * MM) < 18.01 * MM)).toBe(true)
+      expect(verts.some((v) => Math.abs(v[2] + 89 * MM) < 0.01 * MM && Math.abs(Math.hypot(v[0], v[1] - 215 * MM) - 40 * MM) < 0.01 * MM)).toBe(true)
+    }, 180_000)
+
+    /** Runs the builder script directly on a plan (no TypeScript pre-check), to see its own refusals; resolves with stderr, or 'built'. */
+    let planCount = 0
+    async function buildFails(params: Record<string, number>): Promise<string> {
+      const { execFile } = await import('node:child_process')
+      const { writeFile } = await import('node:fs/promises')
+      const plan = { id: 'genelec-8030c', kind: 'device', shape: 'curved-cabinet', sizeMm: { w: 189, h: 299, d: 178 }, params, ports: [] }
+      const planPath = join(dir, `plan-${planCount++}.json`)
+      await writeFile(planPath, JSON.stringify(plan))
+      return new Promise((resolveFail) => {
+        execFile(BLENDER as string, ['--background', '--factory-startup', '--python-exit-code', '1', '--python', BUILD_SCRIPT, '--', '--plan', planPath, '--out', join(dir, 'never.glb')], (err, _stdout, stderr) => {
+          resolveFail(err ? stderr : 'built')
+        })
+      })
+    }
+
+    it.skipIf(!BLENDER)('raises BuildError for an edge radius over half the smallest side, a corner tighter than the fillet, and corners too round for their edges', async () => {
+      expect(await buildFails({ edgeRadiusMm: 100 })).toMatch(/BUILD_FAIL.*edgeRadiusMm.*half the smallest side/)
+      expect(await buildFails({ edgeRadiusMm: 30, frontRadiusMm: 40, backRadiusMm: 20 })).toMatch(/BUILD_FAIL.*backRadiusMm.*edgeRadiusMm/)
+      expect(await buildFails({ ...GENELEC, backRadiusMm: 120, frontRadiusMm: 120 })).toMatch(/BUILD_FAIL.*radii are too large/)
+    }, 180_000)
+
+    it.skipIf(!BLENDER)('raises BuildError for a ring that does not fit the flat baffle', async () => {
+      expect(await buildFails({ ...GENELEC, wooferRingMm: 175 })).toMatch(/BUILD_FAIL.*wooferRingMm.*does not fit/)
+    }, 180_000)
+  })
 
   it.skipIf(!BLENDER)('console-wedge builds yamaha-ql1 at 468 x 272 x 562 mm with its measured side profile, ports on the flat io face, every gate passing', async () => {
     const spec = realSpec('yamaha-ql1')
