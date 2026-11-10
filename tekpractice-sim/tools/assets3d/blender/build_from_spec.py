@@ -2253,8 +2253,150 @@ def build_ethercon_plug(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+# --- power-strip ------------------------------------------------------------------------------------------
+
+STRIP_BODY = "#a3a8b1"      # light grey moulded plastic (lifted a little for the creation scene)
+STRIP_WALL = "#34363d"      # the inside walls of a socket or of the switch window
+STRIP_FLOOR = "#4b4e57"     # a socket floor (the port sits on it)
+STRIP_SLOT = "#101114"      # the three blade slots of a C13 outlet
+STRIP_ROCKER = "#e8832a"    # the lit rocker switch (orange: a lamp inside)
+STRIP_RUBBER = "#2c2d32"    # feet
+STRIP_CORD = "#202125"      # the cord stub and its boot
+STRIP_DEFAULTS_MM = {"socketDepthMm": 9.0, "switchMm": 24.0, "feetMm": 2.0, "filletMm": 7.0, "endTaperMm": 2.5, "cableDiaMm": 9.0, "lenMm": 30.0}
+STRIP_OUTLINE_MM = (25.4, 17.4, 3.0)   # the IEC 60320 C13 outlet opening, lower corners cut (same outline as the iec-cable head's pocket)
+STRIP_SLOTS_MM = ((-7.0, -2.0), (7.0, -2.0), (0.0, 2.0))   # line, neutral and earth slot centres (6.6 x 1.0 mm), as on the iec-inlet blades
+STRIP_SWITCH_W_MM = 14.0
+STRIP_ARC_STEPS = 5          # steps per rounded corner of the bar's section
+STRIP_GAP_MM = 3.0           # least distance between two openings and from an opening to the flat zone's edge
+
+
+def strip_section(d: float, y0: float, y1: float, r: float, steps: int) -> list[tuple[float, float]]:
+    """The bar's section as (z, y) points: a rectangle d deep from y0 to y1 with its four corners rounded by r, front edge last (counter-clockwise)."""
+    pts: list[tuple[float, float]] = []
+    for cz, cy, a0 in ((d / 2.0 - r, y1 - r, 0.0), (-d / 2.0 + r, y1 - r, 90.0), (-d / 2.0 + r, y0 + r, 180.0), (d / 2.0 - r, y0 + r, 270.0)):
+        for k in range(steps + 1):
+            a = math.radians(a0 + 90.0 * k / steps)
+            pts.append((cz + r * math.cos(a), cy + r * math.sin(a)))
+    return pts
+
+
+def build_power_strip(plan: Plan) -> bpy.types.Object:
+    """A power strip w x h x d lying with its sockets facing the io face (z = +d/2): a rounded bar along x with tapered ends, one C13 outlet recess per io
+    port (the port sits on the recess floor, socketDepthMm behind the face), a lit rocker switch in a window at the left end, four rubber feet and a cord
+    stub with a boot leaving the right end (lenMm of the width is the stub). Bottom at y = 0, centred on x and z.
+
+    Sizes come from the spec; the socket centres come from the io ports (face-local x, y as everywhere). Params in mm, defaults in STRIP_DEFAULTS_MM:
+    sockets (checked against the number of io ports), socketDepthMm, switchMm (window height, 14 mm wide), switchXMm (its centre), feetMm, filletMm (the
+    section's corner radius, also written as the measured fillet), endTaperMm, cableDiaMm, lenMm."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+
+    def mm_param(name: str) -> float:
+        return param_m(plan, name, STRIP_DEFAULTS_MM[name])
+
+    depth, win_h, feet, fillet, taper = (mm_param(n) for n in ("socketDepthMm", "switchMm", "feetMm", "filletMm", "endTaperMm"))
+    cable_r, stub = mm_param("cableDiaMm") / 2.0, mm_param("lenMm")
+    ports = [p for p in (plan.get("ports") or []) if isinstance(p, dict)]
+    if not ports:
+        raise BuildError("power-strip needs its io ports: they are the socket centres")
+    if "sockets" in params and int(params["sockets"]) != len(ports):
+        raise BuildError(f"params.sockets ({params['sockets']}) must equal the number of io ports ({len(ports)})")
+    for p in ports:
+        if abs(float(p.get("insetMm") or 0.0) * MM - depth) > 0.05 * MM:
+            raise BuildError(f"port {p.get('portId')!r} sits {p.get('insetMm')!r} mm inside the face, the sockets are {depth / MM:.2f} mm deep: the port is on the floor, give both the same")
+    body_len = w - stub
+    if stub <= 0.0 or body_len <= 6.0 * fillet:
+        raise BuildError(f"params.lenMm ({stub / MM:.1f}) leaves no bar in a width of {w / MM:.1f} mm")
+    if feet < 0.0 or 2.0 * fillet >= min(h - feet, d) or taper * 4.0 >= min(h - feet, d):
+        raise BuildError("params.filletMm, endTaperMm or feetMm are too large for the bar's section")
+    if cable_r * 2.4 >= h - feet:
+        raise BuildError(f"params.cableDiaMm ({cable_r * 2 / MM:.1f}) is too thick for the bar's height")
+    y0, y1 = feet, h
+    yc = (y0 + y1) / 2.0
+    x0, x1 = -w / 2.0, -w / 2.0 + body_len
+    flat_y = (y0 + fillet, y1 - fillet)
+    ow, oh, oc = (v * MM for v in STRIP_OUTLINE_MM)
+    gap = STRIP_GAP_MM * MM
+    # every opening is a rectangle (x0, x1, y0, y1) on the flat front: the sockets, then the switch window
+    openings: list[tuple[str, float, float, float, float]] = []
+    for p in ports:
+        cx, cy = float(p["xMm"]) * MM - w / 2.0, float(p["yMm"]) * MM
+        openings.append((str(p.get("portId")), cx - ow / 2.0, cx + ow / 2.0, cy - oh / 2.0, cy + oh / 2.0))
+    first_left = min(o[1] for o in openings)
+    switch_x = (x0 + taper + first_left) / 2.0 if "switchXMm" not in params else float(params["switchXMm"]) * MM - w / 2.0
+    openings.append(("switch", switch_x - STRIP_SWITCH_W_MM * MM / 2.0, switch_x + STRIP_SWITCH_W_MM * MM / 2.0, yc - win_h / 2.0, yc + win_h / 2.0))
+    for name, a, b, c, e in openings:
+        if a < x0 + taper + gap or b > x1 - taper - gap or c < flat_y[0] + 1e-9 or e > flat_y[1] - 1e-9:
+            raise BuildError(f"the opening of {name!r} does not fit on the flat front of the bar")
+    for i, o in enumerate(openings):
+        for q in openings[i + 1:]:
+            if o[1] < q[2] + gap and q[1] < o[2] + gap and o[3] < q[4] + gap and q[3] < o[4] + gap:
+                raise BuildError(f"the openings of {o[0]!r} and {q[0]!r} are less than {STRIP_GAP_MM:.0f} mm apart")
+
+    body = Body("power-strip")
+    bm = body.bm
+    # the bar: four sections (a shrunk end, the full section twice, a shrunk end) lofted along x; the middle front quad is the one flat face the openings are cut in
+    section = strip_section(d, y0, y1, fillet, STRIP_ARC_STEPS)
+    sz, sy = (d / 2.0 - taper) / (d / 2.0), ((y1 - y0) / 2.0 - taper) / ((y1 - y0) / 2.0)
+    rings = []
+    for x, k in ((x0, 1), (x0 + taper, 0), (x1 - taper, 0), (x1, 1)):
+        rings.append([bm.verts.new(g2b(x, yc + (y - yc) * (sy if k else 1.0), z * (sz if k else 1.0))) for z, y in section])
+    for a, b in zip(rings, rings[1:]):
+        band(bm, a, b)
+    bm.faces.new(rings[0])
+    bm.faces.new(rings[-1])
+    body.done(STRIP_BODY)
+
+    outline = take_flat_face(bm, d / 2.0)
+    mouth_edges: list[list[bmesh.types.BMEdge]] = []
+    floors: list[list[bmesh.types.BMVert]] = []
+    z_front = d / 2.0
+    outline_pts = chamfered_rect(ow, oh, oc)
+    for p in ports:
+        cx, cy = float(p["xMm"]) * MM - w / 2.0, float(p["yMm"]) * MM
+        mouth = [bm.verts.new(g2b(cx + x, cy + y, z_front)) for x, y in outline_pts]
+        floor = [bm.verts.new(g2b(cx + x, cy + y, z_front - depth)) for x, y in outline_pts]
+        band(bm, mouth, floor)
+        mouth_edges.append([bm.edges.get((mouth[i], mouth[(i + 1) % len(mouth)])) for i in range(len(mouth))])
+        floors.append(floor)
+    switch = openings[-1]
+    sw_edges, sw_floor = rect_hole(bm, switch[1], switch[2], switch[3], switch[4], z_front, 6.0 * MM, -1.0)
+    mouth_edges.append(sw_edges)
+    body.done(STRIP_WALL)
+    for floor in floors:
+        bm.faces.new(floor[::-1])
+    bm.faces.new(sw_floor[::-1])
+    body.done(STRIP_FLOOR)
+    for p in ports:
+        cx, cy = float(p["xMm"]) * MM - w / 2.0, float(p["yMm"]) * MM
+        for sx, sy_ in STRIP_SLOTS_MM:   # blade slots: dark flat boxes 0.3 mm proud of the floor (the floor stays solid under the port)
+            box(bm, cx + (sx - 3.3) * MM, cx + (sx + 3.3) * MM, cy + (sy_ - 0.5) * MM, cy + (sy_ + 0.5) * MM, z_front - depth, z_front - depth + 0.3 * MM)
+    body.done(STRIP_SLOT)
+    # the rocker: a tilted block in the window, its high edge 0.6 mm behind the face, so nothing stands out of the bounding box
+    zf = z_front
+    box_pts = [(zf - 6.0 * MM + 0.5 * MM, switch[3] + 1.0 * MM), (zf - 1.8 * MM, switch[3] + 1.0 * MM), (zf - 0.6 * MM, yc + 1.5 * MM), (zf - 2.2 * MM, switch[4] - 1.0 * MM), (zf - 6.0 * MM + 0.5 * MM, switch[4] - 1.0 * MM)]
+    extrude_zy(bm, box_pts, switch[1] + 0.6 * MM, switch[2] - 0.6 * MM)
+    body.done(STRIP_ROCKER)
+    fill_with_holes(bm, outline, mouth_edges, (0.0, 0.0, 1.0))
+    body.done(STRIP_BODY)
+
+    # rubber feet under the bar and the cord stub (a boot tapering to the cord) out of the right end
+    for fx in (x0 + 22.0 * MM, x1 - 22.0 * MM):
+        for fz in (-d / 2.0 + 11.0 * MM, d / 2.0 - 11.0 * MM):
+            if feet > 0.0:
+                cylinder_between(bm, g2b(fx, 0.0, fz), g2b(fx, feet + 0.5 * MM, fz), 5.5 * MM, 5.0 * MM, segments=12)
+    body.done(STRIP_RUBBER)
+    boot = min(12.0 * MM, stub * 0.5)
+    cylinder_between(bm, g2b(x1 - 0.5 * MM, yc, 0.0), g2b(x1 + boot, yc, 0.0), min(cable_r * 1.35, (y1 - y0) * 0.4), cable_r, segments=16)
+    cylinder_between(bm, g2b(x1 + boot - 1.0 * MM, yc, 0.0), g2b(x1 + stub, yc, 0.0), cable_r, segments=16)
+    body.done(STRIP_CORD)
+    MEASURE["filletMm"] = fillet / MM
+    return body.finish()
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
+    "power-strip": build_power_strip,
     "cylinder-plug": build_cylinder_plug,
     "trs-plug": build_trs_plug,
     "rj45-plug": build_rj45_plug,

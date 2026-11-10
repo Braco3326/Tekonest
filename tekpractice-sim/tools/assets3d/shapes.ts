@@ -18,7 +18,7 @@ export const RACK_V2_PARAMS = [
 ] as const
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -101,6 +101,16 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
     needsMatingOuter: false,
     usesPorts: true,
   },
+  // A power strip lying with its outlets facing the io face: a bar along x with a rounded section (filletMm) and tapered ends (endTaperMm), one IEC C13 outlet
+  // recess socketDepthMm deep per io port (the port sits on its floor, so each io port needs insetMm = socketDepthMm; the port x / y are the socket centres),
+  // a lit rocker switch in a window switchMm high at the left end (switchXMm = its centre, default halfway to the first socket), feetMm rubber feet and a cord stub
+  // (lenMm of the width, cableDiaMm thick) out of the right end. `sockets` is only a check against the number of io ports. The builder writes filletMm as measured.
+  'power-strip': {
+    kind: 'device',
+    params: ['sockets', 'socketDepthMm', 'switchMm', 'switchXMm', 'feetMm', 'filletMm', 'endTaperMm', 'cableDiaMm', 'lenMm'],
+    needsMatingOuter: false,
+    usesPorts: true,
+  },
 }
 
 /** Default diameter of a socket pocket when the port gives no openingMm, in millimetres (the builder uses the same). */
@@ -174,6 +184,7 @@ export function validateBuild(spec: AssetSpecT): string[] {
   if (build.shape === 'speaker-cabinet') errors.push(...validateSpeakerCabinet(spec))
   if (build.shape === 'curved-cabinet') errors.push(...validateCurvedCabinet(spec))
   if (build.shape === 'rack-box') errors.push(...validateRackBox(spec))
+  if (build.shape === 'power-strip') errors.push(...validatePowerStrip(spec))
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {
     errors.push(`${spec.id}: build shape '${build.shape}' needs mating.outerMm (the diameter of the mating end)`)
   }
@@ -255,6 +266,39 @@ function validateRackBox(spec: AssetSpecT): string[] {
     const onFront = [...spec.ports.map((x) => [x.portId, x.face] as const), ...spec.controls.map((x) => [x.controlId, x.face] as const)].filter(([, face]) => face === front)
     if (onFront.length > 0) errors.push(`${id}: handles move the front plate back, but ${onFront.map(([n]) => n).join(', ')} sit on the front face (${front}): a unit with ports or controls on its front has no handles in this shape`)
   }
+  return errors
+}
+
+/** Defaults of the power-strip params, in millimetres (the Python builder uses the same numbers: STRIP_DEFAULTS_MM). */
+export const STRIP_DEFAULTS = { socketDepthMm: 9, switchMm: 24, feetMm: 2, filletMm: 7, endTaperMm: 2.5, cableDiaMm: 9, lenMm: 30 } as const
+
+/** The checks of a power-strip that need no geometry: the sockets are the io ports and sit on their floors; the stub, the section and the sockets fit the size. (The builder checks the fit of every opening on the flat front.) */
+function validatePowerStrip(spec: AssetSpecT): string[] {
+  const errors: string[] = []
+  const { w, h, d } = spec.realSizeMm
+  const p = spec.build?.params ?? {}
+  const num = (name: keyof typeof STRIP_DEFAULTS): number => p[name] ?? STRIP_DEFAULTS[name]
+  const sockets = spec.ports.filter((x) => x.face === 'io')
+  const off = spec.ports.filter((x) => x.face !== 'io')
+  if (sockets.length === 0) errors.push(`${spec.id}: a power-strip needs its sockets as ports on the io face`)
+  if (off.length > 0) errors.push(`${spec.id}: a power-strip has its sockets on the io face only, but ${off.map((x) => x.portId).join(', ')} are on another face`)
+  if (p.sockets !== undefined && (!Number.isInteger(p.sockets) || p.sockets !== sockets.length)) {
+    errors.push(`${spec.id}: param 'sockets' (${p.sockets}) must be the number of io ports (${sockets.length})`)
+  }
+  const depth = num('socketDepthMm')
+  for (const s of sockets) {
+    if (s.insetMm === undefined || Math.abs(s.insetMm - depth) > 0.05) {
+      errors.push(`${spec.id}: port '${s.portId}' needs insetMm ${depth} (the socket depth): the port sits on the socket floor`)
+    }
+  }
+  const lenMm = num('lenMm')
+  if (lenMm >= w / 2) errors.push(`${spec.id}: lenMm (${lenMm}) must be less than half the width ${w} mm`)
+  const feet = num('feetMm')
+  const bar = h - feet
+  if (num('filletMm') * 2 >= Math.min(bar, d)) errors.push(`${spec.id}: filletMm (${num('filletMm')}) must be less than half the bar's section (${Math.min(bar, d)} mm)`)
+  if (num('endTaperMm') * 4 >= Math.min(bar, d)) errors.push(`${spec.id}: endTaperMm (${num('endTaperMm')}) is too large for the bar's section`)
+  if (num('cableDiaMm') * 2.4 >= bar) errors.push(`${spec.id}: cableDiaMm (${num('cableDiaMm')}) is too thick for the bar's height ${bar} mm`)
+  if (num('switchMm') >= bar - 2 * num('filletMm')) errors.push(`${spec.id}: switchMm (${num('switchMm')}) does not fit on the flat front (${bar - 2 * num('filletMm')} mm)`)
   return errors
 }
 
