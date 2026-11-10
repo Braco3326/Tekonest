@@ -19,81 +19,13 @@
   "controls": [],
   "build": {
     "shape": "revolve",
-    "profile": [
-      [
-        0,
-        8.8
-      ],
-      [
-        2,
-        17
-      ],
-      [
-        5.6,
-        26.4
-      ],
-      [
-        20,
-        43.7
-      ],
-      [
-        30,
-        43.1
-      ],
-      [
-        60,
-        45.8
-      ],
-      [
-        100,
-        49.1
-      ],
-      [
-        120,
-        50.5
-      ],
-      [
-        122,
-        53.5
-      ],
-      [
-        135,
-        54.1
-      ],
-      [
-        138,
-        52.8
-      ],
-      [
-        170,
-        54.9
-      ],
-      [
-        190,
-        56
-      ],
-      [
-        195,
-        54.7
-      ],
-      [
-        198,
-        50.3
-      ],
-      [
-        199.5,
-        44.5
-      ],
-      [
-        200,
-        0
-      ]
-    ],
+    "profile": [[0,14],[0.7,16.8],[1.5,17.4],[3.8,17.8],[4.1,19],[4.6,21.8],[5.3,25.3],[6.5,28.4],[16.3,39.5],[20.3,43.5],[22.8,42.7],[30.3,42.8],[117,49.6],[120.7,50.1],[121.7,52.7],[122.5,53.2],[124.6,53.2],[124.8,52.3],[126.7,53.1],[135.3,53.9],[136,53.75],[137.2,52.5],[138.3,52.5],[186.5,56],[192.3,56],[194.3,55.4],[196.5,53.2],[198,50.5],[198.8,48.6],[199.5,45],[199.85,41],[200,38]],
     "colours": [
-      {
-        "fromMm": 0,
-        "colour": "#8a8c90"
-      }
+      { "fromMm": 0, "colour": "#9c9a96" },
+      { "fromMm": 4.3, "colour": "#b09a7e" },
+      { "fromMm": 20, "colour": "#bba98f" },
+      { "fromMm": 138, "colour": "#ad9c85" },
+      { "fromMm": 199, "colour": "#b3a287" }
     ]
   },
   "texture": {
@@ -131,7 +63,7 @@
     {
       "kind": "photo",
       "url": "https://assets.sennheiser.com/assets/U-87-Ai-Frontal_Neumann-Studio-Microphone_G.jpg/Zz0xNzY0NzUwYWU3YzYxMWYwYWE5OGVhNTViNWQyZmI4Ng==?width=1600&format=webp&quality=80",
-      "note": "build.profile: the 17 stations of mic-profiles.json, measured by the research session from the official Neumann \"Frontal\" image (1600 x 3657, 200 mm over 3374 px; the widest reads 56.1 mm against the published 56). The body taper (50.5 mm under the ring to 43.1 mm at the base) comes from this one photo; slight perspective cannot be excluded. build.colours: ESTIMATED (satin nickel), not measured."
+      "note": "build.profile (rebuilt 2026-11-10, Wave 4 Task 4.1): the silhouette of assets-source/neumann-u87-ai/photos/front.jpg (1750 x 4000 px, white background, mic from row 219 to 3907 = 3689 px for 200 mm, private reference, see photos/SOURCES.md) read row by row (non-white mask, radius from the median axis), diameters x0.987 so the widest (the head basket top) is the 56 mm of the product page; 31 stations. It keeps the features of the first dry run (cone from the connector stub, body widening from 42.8 to 49.6 mm, collar with its groove at 120.7 to 124.8 mm) and corrects the rest: the connector stub is 17.8 mm over 4 mm, the cone reaches 43.5 mm at 20 mm, the collar is 53.2 to 53.9 mm up to 137 mm and the head basket flares from 52.5 mm (138 mm) to 56 mm (186 to 192 mm) with a rounded top (flat 38 mm cap). The front is the only straight-on photo: the 3/4 photo shows that the real head basket is flat-faced and thinner in the other direction (a rounded box), which a lathe cannot make: see the limits in the log. Accuracy about +/-0.4 mm (1 px = 0.054 mm). build.colours: satin nickel sampled from the photo (body #c7bcaf in the studio light, taken a little darker here), stub chrome. NOT SHIPPED: the shipped model stays the Meshy GLB (Wave 4 Task 4.1 A/B, see docs/superpowers/notes/2026-11-10-models-log.md): a lathe makes a round head basket where the real one is a flat-faced rounded box, so this profile is kept as data for a builder with an oval section."
     }
   ]
 }
