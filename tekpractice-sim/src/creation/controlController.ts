@@ -54,6 +54,8 @@ interface Drag {
   lastSlide: number
   /** Value at the press. */
   start: number
+  /** knob: the unquantised value the drag has reached (a detented knob must still be able to cross to the next click). */
+  raw: number
 }
 
 export class ControlController {
@@ -125,7 +127,8 @@ export class ControlController {
     e.preventDefault()
     e.stopImmediatePropagation()
     const bank = found.instance.controls!.bank
-    const step = (e.shiftKey ? 0.005 : 0.02) * (e.deltaY < 0 ? 1 : -1)
+    const notch = found.def.detents ? 1 / (found.def.detents - 1) : e.shiftKey ? 0.005 : 0.02 // a detented knob moves a click a notch
+    const step = notch * (e.deltaY < 0 ? 1 : -1)
     bank.set(found.def.id, bank.get(found.def.id) + step, 'user')
     this.showValue(found.def, bank.get(found.def.id), e as unknown as PointerEvent)
     this.scheduleHudHide()
@@ -171,7 +174,7 @@ export class ControlController {
       this.lastGlass = null
       e.preventDefault()
       e.stopImmediatePropagation()
-      this.drag = { instanceId: instance.instanceId, def, pointerId: e.pointerId, lastX: e.clientX, lastY: e.clientY, moved: false, lastSlide: 0, start: 0 }
+      this.drag = { instanceId: instance.instanceId, def, pointerId: e.pointerId, lastX: e.clientX, lastY: e.clientY, moved: false, lastSlide: 0, start: 0, raw: 0 }
       if (r.changed) this.commitById(instance.instanceId, r.changed)
       this.host.invalidate()
       return
@@ -182,7 +185,7 @@ export class ControlController {
     const id = `${instance.instanceId}/${def.id}`
     const double = this.lastClick && this.lastClick.id === id && t - this.lastClick.t <= DOUBLE_MS
     this.lastClick = { id, t }
-    const drag: Drag = { instanceId: instance.instanceId, def, pointerId: e.pointerId, lastX: e.clientX, lastY: e.clientY, moved: false, lastSlide: 0, start: bank.get(def.id) }
+    const drag: Drag = { instanceId: instance.instanceId, def, pointerId: e.pointerId, lastX: e.clientX, lastY: e.clientY, moved: false, lastSlide: 0, start: bank.get(def.id), raw: bank.get(def.id) }
     switch (def.kind) {
       case 'fader': {
         if (double) {
@@ -260,7 +263,8 @@ export class ControlController {
       }
     } else if (d.def.kind === 'knob') {
       const dv = ((d.lastY - e.clientY) + (e.clientX - d.lastX) * 0.5) / KNOB_PX
-      bank.set(d.def.id, bank.get(d.def.id) + dv * fine, 'user')
+      d.raw = Math.min(1, Math.max(0, d.raw + dv * fine))
+      bank.set(d.def.id, d.raw, 'user')
     }
     d.lastX = e.clientX
     d.lastY = e.clientY

@@ -65,3 +65,16 @@ describe('ControlBank', () => {
     expect(fn).toHaveBeenCalledWith('on', 0, 'user')
   })
 })
+
+describe('detented knobs', () => {
+  it('a knob with detents sits only on its clicks (an enum with 5 options: 0, .25, .5, .75, 1)', () => {
+    const bank = new ControlBank([d({ id: 'pan', detents: 5, default: 0.5 })])
+    bank.set('pan', 0.36)
+    expect(bank.get('pan')).toBe(0.25)
+    bank.set('pan', 0.4)
+    expect(bank.get('pan')).toBe(0.5)
+    bank.set('pan', 9)
+    expect(bank.get('pan')).toBe(1)
+    expect(normaliseValue(d({ id: 'x', detents: 2 }), 0.4)).toBe(0)
+  })
+})

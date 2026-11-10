@@ -22,6 +22,10 @@ export function normaliseValue(def: ControlDef, raw: number): number {
     case 'meter':
     case 'screen':
       return 0
+    case 'knob': {
+      const v = Math.min(1, Math.max(0, raw))
+      return def.detents ? Math.round(v * (def.detents - 1)) / (def.detents - 1) : v
+    }
     default:
       return Math.min(1, Math.max(0, raw))
   }

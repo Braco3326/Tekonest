@@ -58,6 +58,8 @@ export interface ControlDef {
   taper?: 'linear' | 'fader-db' | 'broadcast-db'
   /** Display range of a linear control (« -20 … +60 dB ») for its value text. */
   range?: { min: number; max: number; unit: string }
+  /** knob: it clicks between this many evenly spaced positions (an enum setting: sample rate, balance) instead of turning freely. */
+  detents?: number
   /** knob: sweep of the pointer in degrees (default 270). */
   sweepDeg?: number
   /** button: stays pressed and lit after a click (default true); false = lit only while held. */
@@ -145,6 +147,7 @@ function parseOne(raw: Record<string, unknown>, id: string, errors: string[]): C
   if (raw.taper === 'linear' || raw.taper === 'fader-db' || raw.taper === 'broadcast-db') def.taper = raw.taper
   if (isRec(raw.range) && isNum(raw.range.min) && isNum(raw.range.max) && typeof raw.range.unit === 'string') def.range = { min: raw.range.min, max: raw.range.max, unit: raw.range.unit }
   if (isNum(raw.sweepDeg) && raw.sweepDeg > 0 && raw.sweepDeg <= 360) def.sweepDeg = raw.sweepDeg
+  if (kind === 'knob' && isNum(raw.detents) && Number.isInteger(raw.detents) && raw.detents >= 2 && raw.detents <= 64) def.detents = raw.detents
   if (typeof raw.latch === 'boolean') def.latch = raw.latch
   if (raw.round === true) def.round = true
   if (raw.reverse === true && kind === 'fader') def.reverse = true

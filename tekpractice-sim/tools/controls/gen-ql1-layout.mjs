@@ -63,7 +63,7 @@ for (const s of strips) {
 const knob = (id, label, px, py, d, colour, range, def = 0.5) => ({ id, kind: 'knob', face: 'top', xMm: X(px), yMm: Y(py), axis: 'z', default: def, sweepDeg: 290, colour, range, label, sizeMm: { w: d, h: d, d: 11 } })
 controls.push(
   knob('gain', 'Gain', 1150, 335, 15, '#e6e8ec', { min: -6, max: 66, unit: 'dB' }, 0.25),
-  knob('pan', 'Pan', 1150, 405, 15, '#c1272d', { min: -100, max: 100, unit: '%' }),
+  { ...knob('pan', 'Pan', 1150, 405, 15, '#c1272d', { min: -100, max: 100, unit: '%' }), detents: 5 }, // the balance setting has five positions
   knob('hpf', 'HPF', 1200, 470, 15, '#2aa7a0', { min: 20, max: 600, unit: 'Hz' }, 0.2),
   knob('eq-high', 'EQ high', 1130, 527, 15, '#2aa7a0', { min: -18, max: 18, unit: 'dB' }),
   knob('eq-mid', 'EQ mid', 1200, 545, 15, '#2aa7a0', { min: -18, max: 18, unit: 'dB' }),

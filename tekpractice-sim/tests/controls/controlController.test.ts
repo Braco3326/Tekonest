@@ -343,3 +343,20 @@ describe('ControlController: Alt + wheel', () => {
     expect(wheel(s).stopped).toBe(false)
   })
 })
+
+describe('ControlController: detented knob', () => {
+  it('a slow drag still crosses to the next click (the drag keeps its own unquantised value), and the wheel moves a click a notch', () => {
+    const s = setup()
+    // make the knob a 5-position one by re-reading the layout with detents
+    const { layout } = parseControlLayout({ ...RAW, controls: RAW.controls.map((c) => (c.id === 'knob' ? { ...c, detents: 5 } : c)) })
+    const bank = new ControlBank(layout!.controls)
+    const inst = (s.host.instance('d1') as unknown as { controls: { bank: ControlBank } })
+    inst.controls.bank = bank
+    s.state.at = 'knob'
+    s.fire('pointerdown', { clientX: 0, clientY: 300 })
+    expect(bank.get('knob')).toBe(0.5)
+    for (let i = 1; i <= 12; i++) s.fire('pointermove', { clientX: 0, clientY: 300 - i * 4, buttons: 1 }) // 4 px a step: 0.018 each, 0.22 in all
+    expect(bank.get('knob')).toBe(0.75) // 0.5 + 0.218 -> crossed one click, not stuck at 0.5
+    s.fire('pointerup')
+  })
+})

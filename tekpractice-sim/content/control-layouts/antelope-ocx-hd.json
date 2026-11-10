@@ -19,7 +19,8 @@
    "axis": "z",
    "sweepDeg": 270,
    "colour": "#1c1d20",
-   "default": 0.5
+   "default": 0.5,
+   "detents": 3
   },
   {
    "id": "power",

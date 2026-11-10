@@ -34,7 +34,7 @@ for (const file of readdirSync(specs).filter((f) => f.endsWith('.json'))) {
       controls.push({ ...base, kind: 'switch', axis: c.axis === 'z' ? 'x' : c.axis, positions: 2, colour: '#d8dbe0', default: cc?.type === 'toggle' && cc.default === false ? 0 : 1 })
     } else if (c.kind === 'knob') {
       const idx = cc?.type === 'enum' && cc.options ? Math.max(0, cc.options.indexOf(cc.defaultOption)) / Math.max(1, cc.options.length - 1) : 0.5
-      controls.push({ ...base, kind: 'knob', axis: 'z', sweepDeg: 270, colour: '#1c1d20', default: idx })
+      controls.push({ ...base, kind: 'knob', axis: 'z', sweepDeg: 270, colour: '#1c1d20', default: idx, ...(cc?.type === 'enum' && cc.options?.length >= 2 ? { detents: cc.options.length } : {}) })
     } else if (c.kind === 'led') {
       controls.push({ ...base, kind: 'led', axis: 'z', round: true, lit: GREEN, default: 1 })
     } else if (c.kind === 'fader') {
