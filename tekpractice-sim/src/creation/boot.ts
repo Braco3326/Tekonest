@@ -2204,6 +2204,12 @@ export async function bootCreation(): Promise<void> {
       for (let i = 0; i < frames; i++) sc.render()
       return (performance.now() - t0) / Math.max(1, frames)
     },
+    controlScreen: (instanceId, controlId) => {
+      const pad = host.instance(instanceId)?.controls?.rig.part(controlId)?.pad
+      if (!pad) return null
+      pad.computeWorldMatrix(true)
+      return screen(pad.getAbsolutePosition())
+    },
     focusScreen: (instanceId, controlId) => host.focusScreen(instanceId, controlId),
     visible: (id) => host.visible(id),
     outlined: () => host.outlined(),
