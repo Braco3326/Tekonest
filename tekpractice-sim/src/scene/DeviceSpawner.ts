@@ -117,6 +117,9 @@ export interface DeviceSpawnerOptions {
   alignFront?: boolean
 }
 
+/** A port marker's own diameter (m): its cylinder at scale 1. */
+const MARKER_DIAMETER = 0.05
+
 /** A port slot in the −Z grid: local position of its marker + its pick radius. */
 interface PortSlot {
   local: Vector3
@@ -513,7 +516,7 @@ export class DeviceSpawner {
       glbRoot.parent instanceof TransformNode
         ? (glbRoot.parent as TransformNode).getAbsolutePosition()
         : Vector3.Zero()
-    device.ports.forEach((port, i) => {
+    const locals = device.ports.map((port, i) => {
       // Real I/O empty from the rigged glb wins; the grid slot is the fallback.
       const empty = useEmpties ? this.portEmpty(glbRoot, port.portId) : null
       let local = slots[i].local
@@ -521,9 +524,25 @@ export class DeviceSpawner {
         empty.computeWorldMatrix(true)
         local = inverseRoot ? Vector3.TransformCoordinates(empty.getAbsolutePosition(), inverseRoot) : empty.getAbsolutePosition().subtract(rootOrigin)
       }
+      return local
+    })
+    device.ports.forEach((port, i) => {
+      const local = locals[i]
       const marker = portMarkers.get(port.portId)
       if (marker) {
         marker.position = local.clone()
+        // Mode Création: real connectors can sit closer together (XLR combos ~25 mm) than the 50 mm marker is wide, which
+        // painted overlapping blobs. A marker shrinks to fit its nearest neighbour (a lone port keeps the full size); the
+        // size it rests at is kept in metadata so the hover / patch restyle puts it back to that, not to 1.
+        if (this.options.alignFront) {
+          let nearest = Infinity
+          locals.forEach((other, j) => {
+            if (j !== i) nearest = Math.min(nearest, Vector3.Distance(local, other))
+          })
+          const rest = Number.isFinite(nearest) ? Math.min(1, Math.max(0.3, (nearest * 0.9) / MARKER_DIAMETER)) : 1
+          marker.scaling.setAll(rest)
+          marker.metadata = { ...(marker.metadata ?? {}), restScale: rest }
+        }
         marker.computeWorldMatrix(true)
       }
       // Looked up under THIS instance's root (never a same-id twin elsewhere in the scene).
@@ -671,7 +690,7 @@ export class DeviceSpawner {
 
       const marker = MeshBuilder.CreateCylinder(
         `port:${instanceId}:${port.portId}`,
-        { diameter: 0.05, height: 0.02, tessellation: 16 },
+        { diameter: MARKER_DIAMETER, height: 0.02, tessellation: 16 },
         this.scene
       )
       marker.rotation.x = Math.PI / 2

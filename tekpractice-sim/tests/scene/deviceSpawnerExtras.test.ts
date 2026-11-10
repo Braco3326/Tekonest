@@ -302,3 +302,40 @@ describe('the acoustic front of an extras model (Mode Création, alignFront)', (
     expect(b.frontWorld()).toBeNull()
   })
 })
+
+describe('port markers that would overlap (Mode Création, alignFront)', () => {
+  // Real connectors (XLR combos) sit ~25 mm apart; the marker is 50 mm wide. A marker shrinks to fit its nearest neighbour, a lone port keeps
+  // the full size, and the size it rests at is recorded for the hover / patch restyle (PortProxies) to put back.
+  const closeGlb = (): Promise<Uint8Array> =>
+    makeBoxGlb({
+      sizeM: SIZE,
+      extras: { tekpractice: extras() },
+      nodes: [
+        { name: 'port_in-line-a', pos: [0.1, 0.3, SIZE.d / 2] },
+        { name: 'port_thru-out-a', pos: [0.125, 0.3, SIZE.d / 2] },
+        { name: 'port_power-in', pos: [-0.1, 0.3, SIZE.d / 2] },
+      ],
+    })
+
+  it('shrinks the two markers 25 mm apart to 0.9 of their gap, keeps the distant one at full size, and records it', async () => {
+    serveGlb(await closeGlb())
+    const inst = makeSpawner({ alignFront: true }).spawner.spawn(DEVICE, new Vector3(0, 0, 0), 'k12')
+    await inst.modelReady
+    const wide = (0.025 * 0.9) / 0.05
+    for (const id of ['in-line-a', 'thru-out-a']) {
+      const m = inst.portMarkers.get(id)!
+      expect(m.scaling.x).toBeCloseTo(wide, 5)
+      expect(m.metadata.restScale).toBeCloseTo(wide, 5)
+    }
+    const lone = inst.portMarkers.get('power-in')!
+    expect(lone.scaling.x).toBe(1)
+    expect(lone.metadata.restScale).toBe(1)
+  })
+
+  it('leaves the legacy spawner (no alignFront) at full size', async () => {
+    serveGlb(await closeGlb())
+    const inst = makeSpawner().spawner.spawn(DEVICE, new Vector3(0, 0, 0), 'k12')
+    await inst.modelReady
+    for (const id of ['in-line-a', 'thru-out-a', 'power-in']) expect(inst.portMarkers.get(id)!.scaling.x).toBe(1)
+  })
+})

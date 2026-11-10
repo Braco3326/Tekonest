@@ -52,6 +52,12 @@ export const HIGHLIGHT_PX = 14
 /** A marker's own diameter (m): DeviceSpawner's cylinder. */
 const MARKER_DIAMETER_M = 0.05
 
+/** The scale a marker rests at: DeviceSpawner shrinks one whose neighbour is closer than its diameter and records it (1 otherwise). */
+const restScale = (m: Mesh): number => {
+  const s = m.metadata?.restScale
+  return typeof s === 'number' && s > 0 ? s : 1
+}
+
 /** World metres that one CSS pixel spans at `distanceM` (perspective camera, vertical fov). */
 export function worldPerPx(distanceM: number, fovRad: number, viewportHeightPx: number): number {
   const d = Number.isFinite(distanceM) ? Math.max(distanceM, 0.01) : 0.01
@@ -320,12 +326,12 @@ export class PortProxies {
       if (!this.styled.has(marker)) this.styled.set(marker, { material: marker.material, visibility: marker.visibility })
       if (w.kind === 'dim') {
         marker.visibility = 0.3
-        marker.scaling.setAll(1)
+        marker.scaling.setAll(restScale(marker))
       } else {
         marker.visibility = 1
         if (w.kind) marker.material = this.material(w.kind)
         const size = h > 0 ? labelScale(Vector3.Distance(camera.position, marker.getAbsolutePosition()), HIGHLIGHT_PX, camera.fov, h) : MARKER_DIAMETER_M
-        marker.scaling.setAll(w.grow ? Math.max(1, size / MARKER_DIAMETER_M) : 1)
+        marker.scaling.setAll(w.grow ? Math.max(1, size / MARKER_DIAMETER_M) : restScale(marker))
       }
       marker.computeWorldMatrix(true)
     }
@@ -337,7 +343,7 @@ export class PortProxies {
     if (!was || m.isDisposed()) return
     m.material = was.material
     m.visibility = was.visibility
-    m.scaling.setAll(1)
+    m.scaling.setAll(restScale(m))
     m.computeWorldMatrix(true)
   }
 
