@@ -11,7 +11,7 @@ describe('boot failure notice (Phase 1 review, Important 1)', () => {
   })
   it('the 2D link lands on the legacy 2D board, even on a machine that HAS WebGL', () => {
     const search = new URL(TWO_D_HREF, 'http://x/').search
-    expect(decideRoute(search, { levels: false })).toBe('legacy')
+    expect(decideRoute(search, { levels: false, guide: true })).toBe('legacy')
     const p = new URLSearchParams(search)
     expect(p.get('level')).toBe('a1')
     expect(
