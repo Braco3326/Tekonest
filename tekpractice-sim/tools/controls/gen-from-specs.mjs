@@ -36,7 +36,9 @@ for (const file of readdirSync(specs).filter((f) => f.endsWith('.json'))) {
       const idx = cc?.type === 'enum' && cc.options ? Math.max(0, cc.options.indexOf(cc.defaultOption)) / Math.max(1, cc.options.length - 1) : 0.5
       controls.push({ ...base, kind: 'knob', axis: 'z', sweepDeg: 270, colour: '#1c1d20', default: idx, ...(cc?.type === 'enum' && cc.options?.length >= 2 ? { detents: cc.options.length } : {}) })
     } else if (c.kind === 'led') {
-      controls.push({ ...base, kind: 'led', axis: 'z', round: true, lit: GREEN, default: 1 })
+      // A status LED shows, it is not a setting: no link (an LED cannot stand for an enum).
+      const { catalogControl: _unlinked, ...plain } = base
+      controls.push({ ...plain, kind: 'led', axis: 'z', round: true, lit: GREEN, default: 1 })
     } else if (c.kind === 'fader') {
       controls.push({ ...base, kind: 'fader', axis: c.axis === 'x' ? 'x' : 'y', travelMm: c.travelMm ?? 60, taper: 'fader-db', default: 0.75, colour: '#2b2d31' })
     }
