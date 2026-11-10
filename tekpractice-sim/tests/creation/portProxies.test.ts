@@ -1,11 +1,12 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { NullEngine, Scene, ArcRotateCamera, Matrix, Vector3 } from '@babylonjs/core'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { DeviceSpawner } from '../../src/scene/DeviceSpawner'
 import { CREATION_DEVICE_THEME } from '../../src/creation/sceneTheme'
 import { DisposableBag } from '../../src/util/disposable'
-import { labelScale, PortProxies, proxyRadius, screenRadiusPx, worldPerPx } from '../../src/creation/portProxies'
+import { markerDiameterM } from '../../src/scene/portMarkerSize'
+import { HIGHLIGHT_PX, labelScale, PortProxies, proxyRadius, RING_MAX_GROW, RING_MIN_PX, ringScale, screenRadiusPx, worldPerPx } from '../../src/creation/portProxies'
 
 const FOV = 0.8
 const H = 708
@@ -55,6 +56,45 @@ describe('labelScale (a label never exceeds maxPx on screen)', () => {
   it('defaults (no camera numbers) still cap', () => {
     expect(labelScale(10, 100) / worldPerPx(10, 0.8, 708)).toBeLessThanOrEqual(100 + 1e-6)
     expect(Number.isFinite(labelScale(0, 100))).toBe(true)
+  })
+})
+
+describe('ringScale (a marker ring never draws under 9 CSS px, never grows past 1.6x at close range)', () => {
+  it('exports the rule: 9 px floor, 1.6x cap', () => {
+    expect(RING_MIN_PX).toBe(9)
+    expect(RING_MAX_GROW).toBe(1.6)
+  })
+
+  it('close: a 30 mm ring at 0.3 m is far over 9 px, so the scale stays 1', () => {
+    expect(ringScale(0.03, 0.3, FOV, H)).toBe(1)
+  })
+
+  it('far: at 20 m a 30 mm ring is scaled up until it spans >= 9 px (and not much more)', () => {
+    const s = ringScale(0.03, 20, FOV, H)
+    const px = (0.03 * s) / worldPerPx(20, FOV, H)
+    expect(px).toBeGreaterThanOrEqual(RING_MIN_PX - 1e-9)
+    expect(px).toBeLessThan(RING_MIN_PX + 0.5)
+    expect(s).toBeGreaterThan(1)
+  })
+
+  it('never shrinks a ring and never grows one that already spans >= 9 px (so never past 1.6x at close range)', () => {
+    for (const d of [0.05, 0.2, 0.5, 1, 2, 3, 6, 12, 30, 80]) {
+      for (const rest of [0.008, 0.015, 0.03, 0.05]) {
+        const s = ringScale(rest, d, FOV, H)
+        expect(s, `${rest}@${d}`).toBeGreaterThanOrEqual(1)
+        const px = rest / worldPerPx(d, FOV, H)
+        if (px >= RING_MIN_PX) expect(s, `${rest}@${d}`).toBe(1)
+        else expect((rest * s) / worldPerPx(d, FOV, H), `${rest}@${d}`).toBeGreaterThanOrEqual(RING_MIN_PX - 1e-9)
+      }
+    }
+  })
+
+  it('is finite for degenerate input (distance 0 / NaN / negative, no viewport, bad size)', () => {
+    for (const [rest, d, h] of [[0.03, 0, H], [0.03, Number.NaN, H], [0.03, -2, H], [0.03, 5, 0], [0, 5, H], [Number.NaN, 5, H], [-1, 5, H]] as const) {
+      const s = ringScale(rest, d, FOV, h)
+      expect(Number.isFinite(s), `${rest},${d},${h}`).toBe(true)
+      expect(s).toBeGreaterThanOrEqual(1)
+    }
   })
 })
 
@@ -154,12 +194,13 @@ describe('PortProxies on a real (headless) scene', () => {
     const ma = inst.portMarkers.get(a)!
     const mb = inst.portMarkers.get(b)!
     const baseMat = ma.material
+    const rest = ma.scaling.x // the ring at rest from here: 1, or a little over it where the 9 px floor of a far view applies
     proxies.mark({ instance: 'ql1', port: a }, new Map([[`ql1\u0000${b}`, 'dim']]))
-    expect(ma.scaling.x).toBeGreaterThan(1) // the hovered port is drawn big enough to see
+    expect(ma.scaling.x).toBeGreaterThan(rest) // the hovered port is drawn big enough to see
     expect(ma.material).not.toBe(baseMat)
     expect(mb.visibility).toBeLessThan(1)
     proxies.mark(null, null)
-    expect(ma.scaling.x).toBe(1)
+    expect(ma.scaling.x).toBe(rest)
     expect(ma.material).toBe(baseMat)
     expect(mb.visibility).toBe(1)
     const before = camera.onViewMatrixChangedObservable.observers.length
@@ -397,6 +438,176 @@ describe('PortProxies on a real (headless) scene', () => {
     expect(t.proxies.portAt(q!.x, q!.y)).toEqual(FRONT) // selected: 12 px
     t.selected.id = null
     expect(t.proxies.portAt(q!.x, q!.y)).toBeNull() // unselected, over an unselected body: tight
+    t.scene.dispose()
+  })
+
+  // ── Outline rings: screen-space floor and highlight rule (Wave 0, Task 0.3) ──────────────────────
+  /** World matrices up to date, as after a render (the proxies read absolute positions). */
+  const prime = (t: ReturnType<typeof setup>): void => {
+    for (const m of t.scene.meshes) m.computeWorldMatrix(true)
+  }
+  /** Aim the camera at a port's ring from `distance` m (a close view of the rear panel; the ring is the camera target, so that is its distance). */
+  const lookAt = (t: ReturnType<typeof setup>, port: string, distance: number): void => {
+    prime(t)
+    t.camera.setTarget(t.inst.portMarkers.get(port)!.getAbsolutePosition().clone())
+    t.camera.radius = distance
+    t.camera.getViewMatrix(true)
+    prime(t)
+  }
+  /** A marker ring's outer diameter on screen, in CSS px. */
+  function ringPx(t: ReturnType<typeof setup>, port: string): number {
+    const m = t.inst.portMarkers.get(port)!
+    m.computeWorldMatrix(true)
+    const world = m.getBoundingInfo().boundingBox.extendSize.x * 2 * m.scaling.x
+    return world / worldPerPx(Vector3.Distance(t.camera.position, m.getAbsolutePosition()), FOV, H)
+  }
+  const restPx = (t: ReturnType<typeof setup>, port: string): number => {
+    const m = t.inst.portMarkers.get(port)!
+    return (m.getBoundingInfo().boundingBox.extendSize.x * 2) / worldPerPx(Vector3.Distance(t.camera.position, m.getAbsolutePosition()), FOV, H)
+  }
+
+  it('far camera (20 m): every ring spans >= 9 px (the floor); a ring that already does is left at 1', () => {
+    const t = setup(20)
+    prime(t)
+    t.camera.getViewMatrix(true)
+    t.proxies.refresh()
+    for (const port of t.inst.portMarkers.keys()) {
+      expect(ringPx(t, port), port).toBeGreaterThanOrEqual(RING_MIN_PX - 1e-6)
+      expect(t.inst.portMarkers.get(port)!.metadata.restScale, port).toBe(1) // the metadata contract is untouched by the floor
+    }
+    t.scene.dispose()
+  })
+
+  it('close camera (0.5 m from a ring): rings keep their own size (scale 1), none above 1.6x rest', () => {
+    const t = setup(5)
+    const [first] = [...t.inst.portMarkers.keys()]
+    lookAt(t, first, 0.5)
+    t.proxies.refresh()
+    expect(restPx(t, first)).toBeGreaterThan(RING_MIN_PX * 3) // really close: the ring is big on screen
+    for (const port of t.inst.portMarkers.keys()) {
+      const m = t.inst.portMarkers.get(port)!
+      expect(m.scaling.x, port).toBeLessThanOrEqual(RING_MAX_GROW + 1e-9)
+      if (restPx(t, port) >= RING_MIN_PX) expect(m.scaling.x, port).toBe(1)
+    }
+    t.scene.dispose()
+  })
+
+  it('zooming back in puts a far-scaled ring back to its rest size', () => {
+    const t = setup(20)
+    prime(t)
+    t.camera.getViewMatrix(true)
+    t.proxies.refresh()
+    const port = [...t.inst.portMarkers.keys()][0]
+    expect(t.inst.portMarkers.get(port)!.scaling.x).toBeGreaterThan(1.5)
+    t.camera.radius = 0.8
+    t.camera.getViewMatrix(true) // the observer refreshes
+    expect(t.inst.portMarkers.get(port)!.scaling.x).toBe(1)
+    t.scene.dispose()
+  })
+
+  it('a refresh with the camera where it was forces no marker matrix update (an idle page does no work)', () => {
+    const t = setup(20)
+    prime(t)
+    t.camera.getViewMatrix(true)
+    t.proxies.refresh()
+    const before = [...t.inst.portMarkers.values()].map((m) => m.scaling.x)
+    const spies = [...t.inst.portMarkers.values()].map((m) => vi.spyOn(m, 'computeWorldMatrix'))
+    t.proxies.refresh()
+    t.proxies.refresh()
+    for (const sp of spies) expect(sp.mock.calls.filter((c) => c[0] === true)).toHaveLength(0) // (getAbsolutePosition calls the cheap, unforced one)
+    expect([...t.inst.portMarkers.values()].map((m) => m.scaling.x)).toEqual(before)
+    t.scene.dispose()
+  })
+
+  it('a pending / hovered ring far away reads as HIGHLIGHT_PX wide, never smaller than its rest size', () => {
+    const t = setup(20)
+    prime(t)
+    t.camera.getViewMatrix(true)
+    t.proxies.refresh()
+    const [a, b] = [...t.inst.portMarkers.keys()]
+    t.proxies.mark({ instance: 'ql1', port: a }, new Map([[`ql1\u0000${b}`, 'pending']]))
+    for (const port of [a, b]) {
+      expect(ringPx(t, port), port).toBeLessThanOrEqual(HIGHLIGHT_PX + 1e-6)
+      expect(ringPx(t, port), port).toBeGreaterThanOrEqual(Math.max(RING_MIN_PX, restPx(t, port)) - 1e-6)
+    }
+    t.camera.radius = 12 // still far: it follows the camera, 14 px
+    t.camera.getViewMatrix(true)
+    expect(ringPx(t, b)).toBeCloseTo(HIGHLIGHT_PX, 3)
+    t.proxies.mark(null, null)
+    t.scene.dispose()
+  })
+
+  it('close range (0.45 m): a pending ring on a 24 mm connector is at most 1.6x its ring, not a 50 mm disc; lifting the mark puts it back', () => {
+    const t = setup(5)
+    const dev = registry.deviceById.get('yamaha-ql1')!
+    const port = dev.ports.find((p) => p.connector === 'xlr3-f' || p.connector === 'xlr3-m')!.portId
+    lookAt(t, port, 0.45)
+    t.proxies.refresh()
+    const m = t.inst.portMarkers.get(port)!
+    const ring = markerDiameterM('xlr3-f')
+    t.proxies.mark(null, new Map([[`ql1\u0000${port}`, 'pending']]))
+    const world = m.getBoundingInfo().boundingBox.extendSize.x * 2 * m.scaling.x
+    expect(world).toBeLessThanOrEqual(ring * RING_MAX_GROW + 1e-9)
+    expect(world).toBeGreaterThanOrEqual(ring - 1e-9)
+    expect(world).toBeLessThan(0.05)
+    t.proxies.mark(null, null)
+    expect(m.scaling.x).toBe(1)
+    t.scene.dispose()
+  })
+
+  it('under 1 m a highlight of a SMALL ring (3.5 mm jack: 10 mm) is capped at 1.6x: 14 px would be 1.65x there; at 1.2 m it follows the 14 px', () => {
+    const t = setup(5)
+    const pc = new DeviceSpawner(t.scene, registry, CREATION_DEVICE_THEME).spawn('playout-pc', new Vector3(0, 0, 0), 'pc')
+    t.instances.set('pc', pc)
+    const m = pc.portMarkers.get('out-analog-consumer')!
+    const ring = markerDiameterM('trs-35mm')
+    const world = (): number => m.getBoundingInfo().boundingBox.extendSize.x * 2 * m.scaling.x
+    const view = (d: number): void => {
+      for (const x of t.scene.meshes) x.computeWorldMatrix(true)
+      t.camera.setTarget(m.getAbsolutePosition().clone())
+      t.camera.radius = d
+      t.camera.getViewMatrix(true)
+      for (const x of t.scene.meshes) x.computeWorldMatrix(true)
+    }
+    view(0.99)
+    t.proxies.mark({ instance: 'pc', port: 'out-analog-consumer' }, null)
+    expect(labelScale(0.99, HIGHLIGHT_PX, FOV, H)).toBeGreaterThan(ring * RING_MAX_GROW) // the premise: 14 px is over the cap here
+    expect(world()).toBeCloseTo(ring * RING_MAX_GROW, 9)
+    view(1.2)
+    expect(world()).toBeCloseTo(labelScale(1.2, HIGHLIGHT_PX, FOV, H), 9)
+    t.proxies.mark(null, null)
+    t.scene.dispose()
+  })
+
+  it('the restScale metadata is the size a marker rests at: a marker marked 0.5 stays at 0.5 (near) after a hover and back', () => {
+    const t = setup(5)
+    const port = [...t.inst.portMarkers.keys()][0]
+    const m = t.inst.portMarkers.get(port)!
+    m.metadata = { ...m.metadata, restScale: 0.5 }
+    lookAt(t, port, 0.4)
+    t.proxies.refresh()
+    expect(m.scaling.x).toBe(0.5)
+    t.proxies.mark({ instance: 'ql1', port }, null)
+    expect(m.scaling.x).toBeGreaterThanOrEqual(0.5)
+    t.proxies.mark(null, null)
+    expect(m.scaling.x).toBe(0.5)
+    t.scene.dispose()
+  })
+
+  it('the first-click radius uses the rest radius of its marker, i.e. the real rest radius (a 24 mm XLR ring: 15 mm), not the old 25 mm disc, on an unselected device', () => {
+    const t = setup(1.2)
+    const s = screens(t)
+    const dev = registry.deviceById.get('yamaha-ql1')!
+    let checked = 0
+    for (const p of s.at.filter((q) => s.bodyAt(q.x, q.y) === 'ql1')) {
+      const connector = dev.ports.find((x) => x.portId === p.port)!.connector
+      const marker = t.inst.portMarkers.get(p.port)!
+      const depth = Vector3.Distance(t.camera.position, marker.getAbsolutePosition())
+      const want = Math.min(t.proxies.hitRadiusPx({ instance: 'ql1', port: p.port }), Math.max(6, screenRadiusPx(markerDiameterM(connector) / 2, depth, FOV, H)))
+      expect(t.proxies.firstClickRadiusPx({ instance: 'ql1', port: p.port }), p.port).toBeCloseTo(want, 6)
+      checked++
+    }
+    expect(checked).toBeGreaterThan(0)
     t.scene.dispose()
   })
 })

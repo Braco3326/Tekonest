@@ -49,13 +49,25 @@ export const TIGHT_PX = 6
 const DEPTH_TIE_M = 0.1
 /** A highlighted marker (hover, patch glow) reads as about this many CSS px across. */
 export const HIGHLIGHT_PX = 14
-/** A marker's own diameter (m): DeviceSpawner's cylinder. */
-const MARKER_DIAMETER_M = 0.05
+/** A marker ring is never drawn under this many CSS px across (outer diameter): far views keep a visible outline. */
+export const RING_MIN_PX = 9
+/** At close range (under CLOSE_M) a highlighted ring never grows past this many times its rest size. */
+export const RING_MAX_GROW = 1.6
+/** "Close range" for the grow cap (m). */
+const CLOSE_M = 1
+/** A marker ring's rest diameter when its mesh has no usable bounds (m): the fallback connector's ring (20 mm x 1.25). */
+const FALLBACK_RING_M = 0.025
 
-/** The scale a marker rests at: DeviceSpawner shrinks one whose neighbour is closer than its diameter and records it (1 otherwise). */
+/** The scale a marker rests at (DeviceSpawner records it in the metadata; 1 for every ring now, the diameter being per connector). */
 const restScale = (m: Mesh): number => {
   const s = m.metadata?.restScale
   return typeof s === 'number' && s > 0 ? s : 1
+}
+
+/** A marker ring's own outer diameter at scale 1, local metres (the half-extent of its local bounding box, doubled). */
+const ringLocalDiameter = (m: Mesh): number => {
+  const d = m.getBoundingInfo().boundingBox.extendSize.x * 2
+  return Number.isFinite(d) && d > 0 ? d : FALLBACK_RING_M
 }
 
 /** World metres that one CSS pixel spans at `distanceM` (perspective camera, vertical fov). */
@@ -83,6 +95,17 @@ export function labelScale(distanceM: number, maxPx: number, fovRad = 0.8, viewp
   return maxPx * worldPerPx(distanceM, fovRad, viewportHeightPx)
 }
 
+/**
+ * The uniform scale for a marker ring of rest outer diameter `restM` (world metres) seen from `distanceM`: 1 while the ring spans
+ * at least RING_MIN_PX on screen (close and middle range: it keeps its own size), otherwise the scale that makes it span exactly
+ * RING_MIN_PX (far views keep a visible outline). Never below 1, never grows a ring that is big enough, always finite.
+ */
+export function ringScale(restM: number, distanceM: number, fovRad: number, viewportPx: number): number {
+  if (!Number.isFinite(restM) || restM <= 0) return 1
+  const px = restM / worldPerPx(distanceM, fovRad, viewportPx)
+  return px >= RING_MIN_PX ? 1 : RING_MIN_PX / px
+}
+
 /** A stable map key for a port. */
 export const portKey = (r: PortRef): string => `${r.instance}\u0000${r.port}`
 
@@ -105,6 +128,8 @@ interface Entry {
   sphere: Mesh | undefined
   /** The sphere's unscaled radius (local, m). */
   base: number
+  /** The marker ring (the outline drawn around the connector). */
+  marker: Mesh | undefined
   label: AbstractMesh | undefined
 }
 
@@ -158,6 +183,16 @@ export class PortProxies {
           s.scaling.setAll(scale)
           s.computeWorldMatrix(true)
         }
+        // The outline ring: never under RING_MIN_PX on screen. Same skip as the pick sphere (a change under 2 % is not worth a matrix
+        // update). A ring restyled by hover / marks is sized by `restyle` (called below), not here.
+        const m = e.marker
+        if (m && !m.isDisposed() && !this.styled.has(m)) {
+          const target = this.ringTarget(m, false)
+          if (Math.abs(m.scaling.x - target) > target * 0.02) {
+            m.scaling.setAll(target)
+            m.computeWorldMatrix(true)
+          }
+        }
       }
     }
     this.restyle(false)
@@ -190,7 +225,8 @@ export class PortProxies {
       const centre = mesh.getAbsolutePosition()
       const d = ray.direction.cross(centre.subtract(ray.origin)).length()
       const depth = Vector3.Distance(ray.origin, centre)
-      const sharp = d <= this.tightWorld(depth, camera.fov, h)
+      const marker = this.host.instance(ref.instance)?.portMarkers.get(ref.port)
+      const sharp = d <= this.tightWorld(depth, camera.fov, h, marker && !marker.isDisposed() ? this.restRadius(marker) : FALLBACK_RING_M / 2)
       if (overUnselected && ref.instance !== selected && !sharp) continue
       near.push({ ref: { instance: ref.instance, port: ref.port }, d, depth, sharp })
     }
@@ -223,12 +259,40 @@ export class PortProxies {
     const { camera, canvas } = this.host
     if (!marker || marker.isDisposed()) return wide
     const depth = Vector3.Distance(camera.position, marker.getAbsolutePosition())
-    return Math.min(wide, Math.max(TIGHT_PX, screenRadiusPx(MARKER_DIAMETER_M / 2, depth, camera.fov, canvas.clientHeight)))
+    return Math.min(wide, Math.max(TIGHT_PX, screenRadiusPx(this.restRadius(marker), depth, camera.fov, canvas.clientHeight)))
   }
 
-  /** The tight radius, in world metres at `depth`: TIGHT_PX, or the connector's own radius when that is bigger (a close view). */
-  private tightWorld(depth: number, fov: number, h: number): number {
-    return Math.max(TIGHT_PX * worldPerPx(depth, fov, h), MARKER_DIAMETER_M / 2)
+  /** The tight radius, in world metres at `depth`: TIGHT_PX, or the connector's own (ring) radius when that is bigger (a close view). */
+  private tightWorld(depth: number, fov: number, h: number, restRadiusM: number): number {
+    return Math.max(TIGHT_PX * worldPerPx(depth, fov, h), restRadiusM)
+  }
+
+  /** A marker ring's rest radius in world metres (its real size at rest, scale = restScale: the connector's, not a fixed 25 mm). */
+  private restRadius(marker: Mesh): number {
+    return (ringLocalDiameter(marker) * restScale(marker) * this.parentScale((marker.parent as TransformNode | null) ?? null)) / 2
+  }
+
+  /**
+   * The scale a marker ring should have now, from the camera. At rest: restScale, raised so the ring spans RING_MIN_PX on screen.
+   * `grow` (hover / patch glow): it reads HIGHLIGHT_PX wide at least (so a small connector's ring is visible), never under its rest
+   * size, and closer than CLOSE_M never past RING_MAX_GROW x its rest size.
+   */
+  private ringTarget(marker: Mesh, grow: boolean): number {
+    const rest = restScale(marker)
+    const { camera, canvas } = this.host
+    const h = canvas.clientHeight
+    if (!(h > 0)) return rest
+    const local = ringLocalDiameter(marker)
+    const parent = this.parentScale((marker.parent as TransformNode | null) ?? null)
+    const restWorld = local * rest * parent
+    const d = Vector3.Distance(camera.position, marker.getAbsolutePosition())
+    const floored = restWorld * ringScale(restWorld, d, camera.fov, h)
+    let world = floored
+    if (grow) {
+      const want = Math.max(floored, labelScale(d, HIGHLIGHT_PX, camera.fov, h))
+      world = d < CLOSE_M ? Math.max(floored, Math.min(want, restWorld * RING_MAX_GROW)) : want
+    }
+    return world / (local * parent)
   }
 
   /** A device body that is not the selected one lies along this ray (the nearest body decides). */
@@ -274,6 +338,7 @@ export class PortProxies {
           sphere,
           // The half-extent of the local box = the sphere's radius (Babylon's boundingSphere hugs the box corners: 1.73x too big).
           base: sphere ? sphere.getBoundingInfo().boundingBox.extendSize.x : 0.04,
+          marker: inst.portMarkers.get(port),
           label: own(`portlabel:${inst.instanceId}:${port}`),
         }
       })
@@ -282,8 +347,8 @@ export class PortProxies {
     return list
   }
 
-  private parentScale(root: TransformNode): number {
-    const s = root.absoluteScaling?.x
+  private parentScale(root: TransformNode | null): number {
+    const s = root?.absoluteScaling?.x
     return s && Number.isFinite(s) && s > 0 ? s : 1
   }
 
@@ -296,6 +361,9 @@ export class PortProxies {
       m.specularColor = Color3.Black()
       m.emissiveColor = Color3.FromHexString(hex)
       m.disableLighting = true
+      // The marker is a flat ring on the connector's face: seen from either side, pulled toward the camera (as DeviceSpawner's own).
+      m.backFaceCulling = false
+      m.zOffset = -2
       this.materials.set(kind, m)
     }
     return m
@@ -304,8 +372,6 @@ export class PortProxies {
   /** Apply the hover / marks to the markers (`full`: also put back the ones no longer marked). */
   private restyle(full: boolean): void {
     if (!this.hover && !this.marks && this.styled.size === 0) return
-    const { camera, canvas } = this.host
-    const h = canvas.clientHeight
     const want = new Map<Mesh, { kind: PortMark | 'hover' | null; grow: boolean }>()
     const consider = (ref: PortRef, kind: PortMark | 'hover' | null, grow: boolean): void => {
       const marker = this.host.instance(ref.instance)?.portMarkers.get(ref.port)
@@ -326,12 +392,11 @@ export class PortProxies {
       if (!this.styled.has(marker)) this.styled.set(marker, { material: marker.material, visibility: marker.visibility })
       if (w.kind === 'dim') {
         marker.visibility = 0.3
-        marker.scaling.setAll(restScale(marker))
+        marker.scaling.setAll(this.ringTarget(marker, false))
       } else {
         marker.visibility = 1
         if (w.kind) marker.material = this.material(w.kind)
-        const size = h > 0 ? labelScale(Vector3.Distance(camera.position, marker.getAbsolutePosition()), HIGHLIGHT_PX, camera.fov, h) : MARKER_DIAMETER_M
-        marker.scaling.setAll(w.grow ? Math.max(1, size / MARKER_DIAMETER_M) : restScale(marker))
+        marker.scaling.setAll(this.ringTarget(marker, w.grow))
       }
       marker.computeWorldMatrix(true)
     }
@@ -343,7 +408,7 @@ export class PortProxies {
     if (!was || m.isDisposed()) return
     m.material = was.material
     m.visibility = was.visibility
-    m.scaling.setAll(restScale(m))
+    m.scaling.setAll(this.ringTarget(m, false))
     m.computeWorldMatrix(true)
   }
 
