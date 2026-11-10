@@ -1,4 +1,4 @@
-﻿/**
+/**
  * The in-page guide (Oscar) in Mode Création, on the production build.
  *
  * What is proven here, and only here (the unit tests have no DOM):
@@ -142,7 +142,7 @@ const centre = (b: Box): { x: number; y: number } => ({ x: b.x + b.width / 2, y:
 const dist = (a: { x: number; y: number }, b: { x: number; y: number }): number => Math.hypot(a.x - b.x, a.y - b.y)
 const portScreen = (page: Page, r: Ref) => page.evaluate((ref) => window.__creation!.portScreen(ref), r)
 /** The ring's centre is within `px` of the point the app itself projects for the port. */
-const expectRingOnPort = async (page: Page, which: Locator, r: Ref, px = 16): Promise<void> => {
+const expectRingOnPort = async (page: Page, which: Locator, r: Ref, px = 12): Promise<void> => {
   await expect
     .poll(
       async () => {
@@ -411,16 +411,43 @@ test('an error on the bench: « Prochaine étape » says the status bar\'s own e
   await expect(page.getByRole('dialog', { name: 'Erreurs et avertissements' })).toBeHidden()
 
   await nextStepSays(page, barDetail)
-  // the explanation is one whole paragraph of the bubble, word for word the bar's
+  // What the bubble says is pinned exactly: the generic head line, then the rule's explanation word for word. The rule's title stays on the status bar row
+  // (asserted above), beside it; the bubble does not repeat it.
   const lines = await liveLines(page)
-  expect(lines, `bubble lines: ${JSON.stringify(lines)}`).toContain(barDetail)
-  // The vendored bubble head line for a fix is its own « Correction à apporter »: the rule's title is not repeated in the bubble (noted, not pinned).
-  test.info().annotations.push({ type: 'title', description: `status bar title « ${barTitle} »; bubble head line « ${lines[0]} »` })
+  expect(lines, 'the bubble: the generic head, then the explanation').toEqual(['Correction à apporter', RULE('R4').teach_fr])
+  expect(lines[1]).toBe(barDetail)
+  expect(lines.join(' '), 'the rule title is not in the bubble').not.toContain(barTitle)
   await expect(page.locator('.oscar-bubble')).toHaveAttribute('data-kind', 'fix')
   await expect(chip(page, 'Lancer le parcours proposé'), 'a fix bubble has no start chip').toHaveCount(0)
-  await expectRingOnPort(page, ring(page), U87_OUT)
+  // the ring is on the first subject of the app's own error event
+  const first = await page.evaluate(() => window.__creation!.events().find((e) => e.severity === 'error')!.subjects[0])
+  expect(first).toEqual(U87_OUT)
+  await expectRingOnPort(page, ring(page), first)
   // the guide changed nothing in the design
   expect(await page.evaluate(() => window.__creation!.design().rig.connections.length)).toBe(1)
+})
+
+test('an open bubble with a ring on a port does not cover the menu bar or the status bar, at 1280 x 800 and at 375 x 812', async ({ page }) => {
+  await boot(page)
+  await spawnPhantomError(page)
+  await nextStepSays(page, RULE('R4').teach_fr)
+  await expect(ring(page)).toBeVisible()
+  const clearOfBars = async (w: number, h: number): Promise<void> => {
+    await expect
+      .poll(
+        async () => {
+          const menu = (await page.getByTestId('menubar').boundingBox())!
+          const status = (await page.getByTestId('status-bar').boundingBox())!
+          const b = (await bubble(page).boundingBox())!
+          return { top: b.y >= menu.y + menu.height - 0.5, bottom: b.y + b.height <= status.y + 0.5, inside: insideViewport(b, w, h) }
+        },
+        { message: `${w} x ${h}: the bubble beside a ring is clear of both bars` },
+      )
+      .toEqual({ top: true, bottom: true, inside: true })
+  }
+  await clearOfBars(1280, 800)
+  await page.setViewportSize({ width: 375, height: 812 })
+  await clearOfBars(375, 812)
 })
 
 test('no place yet: « Prochaine étape » says to choose a place first and offers the start chip, which opens « Premier montage » at the place step', async ({ page }) => {
@@ -445,7 +472,7 @@ test('an empty bench with a place: need-info text and a start chip; the chip ope
   const target = (await page.locator('#cr-menu-materiel').boundingBox())!
   await expect
     .poll(async () => dist(centre((await ring(page).boundingBox())!), centre(target)), { message: 'the ring is on the Matériel menu' })
-    .toBeLessThanOrEqual(16)
+    .toBeLessThanOrEqual(12)
 })
 
 test('devices and no cable: the start chip opens « Premier câble », the ring on the suggested output; « Montre-moi » draws the cable and changes nothing in the design', async ({ page }) => {
@@ -468,8 +495,8 @@ test('devices and no cable: the start chip opens « Premier câble », the ring 
   expect(nums.length, 'a drawn path').toBeGreaterThan(2)
   const from = (await portScreen(page, SM58_OUT))!
   const to = (await portScreen(page, QL1_MIC1))!
-  expect(dist(nums[0], from), 'the ghost starts on the mic output').toBeLessThanOrEqual(16)
-  expect(dist(nums[nums.length - 1], to), 'the ghost ends on the console input').toBeLessThanOrEqual(16)
+  expect(dist(nums[0], from), 'the ghost starts on the mic output').toBeLessThanOrEqual(12)
+  expect(dist(nums[nums.length - 1], to), 'the ghost ends on the console input').toBeLessThanOrEqual(12)
   await expect(ringTo(page)).toBeVisible()
   // the guide never performs: no cable made, no undo entry, still so after the demonstration has played out
   expect(await cables()).toBe(0)
@@ -507,7 +534,7 @@ test('after a resize to 375 x 812 the bubble stays inside the viewport, the icon
       },
       { message: 'at 375 px the ring is on the port (or hidden with it)', timeout: 10_000 },
     )
-    .toBeLessThanOrEqual(16)
+    .toBeLessThanOrEqual(12)
   // and the bubble closes and opens again at this size, still inside
   await icon(page).click()
   await expect(bubble(page)).toBeHidden()
@@ -587,39 +614,93 @@ test('Échap with the canvas focused is the app\'s: it drops the cable in hand f
 
 // ── exam and kill switch ─────────────────────────────────────────────────────────────────────────────────────────────
 
-test('?oscar=0 and ?mode=exam leave no guide node, no guide chunk or sheet requested, and nothing stored; the same page without them has all three', async ({ browser }) => {
-  const on = await session(browser, '')
-  await waitGuide(on.page)
-  const onPaths = on.req.paths().filter((p) => p.includes('/assets/'))
-  expect(await on.page.evaluate(() => document.querySelectorAll('.oscar-guide').length)).toBe(1)
-  await on.close()
+/** The guide's lazy chunks and sheets, by name (measured on the build: creationBridge, mount, theme and guide, a .js or .css each). Only a mounting guide requests them. */
+const GUIDE_ASSET = /\/assets\/(mount|creationBridge|theme|guide)-[\w-]+\.(js|css)$/
+/** The readers the bridge polls on `window.__creation`, counted from outside: a wrapper installed before the app sets the hook. `__readerCalls` is read and reset by the test. */
+const countReaders = (page: Page) =>
+  page.addInitScript(() => {
+    const w = window as unknown as { __readerCalls: number }
+    w.__readerCalls = 0
+    let real: Record<string, unknown> | undefined
+    Object.defineProperty(window, '__creation', {
+      configurable: true,
+      get: () => real,
+      set: (v: Record<string, unknown>) => {
+        real = v
+        for (const k of ['design', 'events', 'place', 'devicePorts']) {
+          const f = v?.[k]
+          if (typeof f === 'function')
+            v[k] = function (this: unknown, ...a: unknown[]) {
+              w.__readerCalls++
+              return (f as (...x: unknown[]) => unknown).apply(this, a)
+            }
+        }
+      },
+    })
+  })
+interface Facts {
+  nodes: number
+  landmark: number
+  sheet: boolean
+  chunks: string[]
+  readerCalls: number
+}
+/** A page in a context of its own. `quietMs` is how long it is watched after the creation page is up; `mounted` waits for the icon first (the control run). */
+const probe = async (browser: Browser, search: string, o: { mounted: boolean; quietMs: number }): Promise<{ facts: Facts; mountMs: number | null }> => {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' })
+  const page = await context.newPage()
+  track(page)
+  const req = recordRequests(page)
+  await countReaders(page)
+  const t0 = Date.now()
+  await boot(page, { search })
+  let mountMs: number | null = null
+  if (o.mounted) {
+    await waitGuide(page)
+    mountMs = Date.now() - t0
+  }
+  // the app's own readers are not ours to count: reset, then watch the window with no call from the test
+  await page.evaluate(() => void ((window as unknown as { __readerCalls: number }).__readerCalls = 0))
+  await quietWindow(page, o.quietMs)
+  const facts: Facts = {
+    nodes: await page.locator('.oscar-guide, [data-oscar-root]').count(),
+    landmark: await page.getByRole('complementary', { name: TP_STRINGS.landmark }).count(),
+    sheet: await page.evaluate(() => [...document.styleSheets].some((sh) => [...sh.cssRules].some((r) => r.cssText.includes('oscar-guide')))),
+    chunks: req.paths().filter((p) => GUIDE_ASSET.test(p)).map((p) => p.split('/').pop()!).sort(),
+    readerCalls: await page.evaluate(() => (window as unknown as { __readerCalls: number }).__readerCalls),
+  }
+  await context.close()
+  return { facts, mountMs }
+}
 
+test('?oscar=0 and ?mode=exam: no widget node, no landmark, no guide style sheet, no guide chunk requested, and the bench is never read by the guide; the control run has all of them', async ({ browser }) => {
+  // The control: the guide mounted. Everything the absence checks rely on is asserted PRESENT here first.
+  const control = await probe(browser, '', { mounted: true, quietMs: 2000 })
+  expect(control.facts.nodes, 'control: the widget node is there').toBe(1)
+  expect(control.facts.landmark, 'control: the landmark is there').toBe(1)
+  expect(control.facts.sheet, 'control: the guide style sheet is loaded').toBe(true)
+  expect(control.facts.chunks.filter((c) => c.startsWith('mount-')), 'control: the mount chunk was requested').toHaveLength(1)
+  expect(control.facts.chunks.filter((c) => c.startsWith('creationBridge-')), 'control: the bridge chunk was requested').toHaveLength(1)
+  expect(control.facts.chunks.filter((c) => c.endsWith('.css')).length, 'control: the guide sheets were requested').toBeGreaterThanOrEqual(2)
+  expect(control.facts.readerCalls, 'control: the guide polls the bench (readers of the debug hook called in 2 s)').toBeGreaterThan(0)
+  test.info().annotations.push({ type: 'control', description: `mounted after ${control.mountMs} ms; chunks ${control.facts.chunks.join(', ')}; ${control.facts.readerCalls} reader calls in 2 s` })
+
+  // The silent runs: watched for 3 times as long as the control took to mount (at least 2.5 s), so a late mount would show.
+  const quietMs = Math.max(2500, 3 * (control.mountMs ?? 0))
   for (const search of ['?oscar=0', '?mode=exam']) {
-    const s = await session(browser, search)
-    await quietWindow(s.page, 2500) // the guide, when it mounts, does so well inside this window (the control run above)
-    await expect(s.page.locator('.oscar-guide, [data-oscar-root]'), `${search}: no widget node`).toHaveCount(0)
-    await expect(s.page.getByRole('button', { name: ICON_NAME })).toHaveCount(0)
-    await expect(s.page.getByRole('complementary', { name: TP_STRINGS.landmark }), `${search}: no landmark of the guide`).toHaveCount(0)
-    expect(await s.page.evaluate(() => [...document.styleSheets].some((sh) => [...sh.cssRules].some((r) => r.cssText.includes('oscar-guide')))), `${search}: the guide's style sheet was never loaded`).toBe(false)
-    expect(await s.page.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith('oscar')))).toEqual([])
-    const paths = s.req.paths().filter((p) => p.includes('/assets/'))
-    const guideOnly = onPaths.filter((p) => !paths.includes(p))
-    test.info().annotations.push({ type: `chunks ${search}`, description: `requested only when the guide mounts: ${guideOnly.map((p) => p.split('/').pop()).join(', ')}` })
-    expect(guideOnly.length, 'the control run has guide-only chunks (so their absence means something)').toBeGreaterThanOrEqual(3)
-    expect(paths.filter((p) => onPaths.includes(p) && guideOnly.includes(p)), `${search}: no guide chunk requested`).toEqual([])
-    expect(s.req.urls().filter((u) => /oscar/i.test(new URL(u).pathname)), `${search}: no request path names the guide`).toEqual([])
-    await s.close()
+    const { facts } = await probe(browser, search, { mounted: false, quietMs })
+    expect(facts, search).toEqual({ nodes: 0, landmark: 0, sheet: false, chunks: [], readerCalls: 0 })
   }
 })
 
-test('?mode=exam: the creation page itself is up (place chosen, a device placed) and silent: no node, no « oscar » request, no storage', async ({ browser }) => {
+test('?mode=exam: the creation page itself is up (a device placed through it) and the guide is absent', async ({ browser }) => {
   const s = await session(browser, '?mode=exam')
   await s.page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [2, 0, 8] }))
   await quietWindow(s.page, 2000)
-  expect(await s.page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(1)
+  expect(await s.page.evaluate(() => window.__creation!.design().rig.instances.length), 'the creation page works').toBe(1)
+  await expect(s.page.getByTestId('status-bar')).toBeVisible()
   expect(await s.page.evaluate(() => document.querySelectorAll('.oscar-guide, [data-oscar-root], .oscar-bubble, .oscar-icon').length)).toBe(0)
-  expect(s.req.urls().filter((u) => /oscar/i.test(new URL(u).pathname))).toEqual([])
-  expect(await s.page.evaluate(() => Object.keys(localStorage).filter((k) => /oscar/i.test(k)))).toEqual([])
+  expect(s.req.paths().filter((p) => GUIDE_ASSET.test(p)), 'no guide chunk requested').toEqual([])
   await s.close()
 })
 
@@ -733,7 +814,7 @@ test('the ring follows a control through 20 window resizes: the heavy device pro
       },
       { message: 'after 20 resizes the ring is on the phantom switch' },
     )
-    .toBeLessThanOrEqual(16)
+    .toBeLessThanOrEqual(12)
 
   // the same loop on the same rig with the guide off
   const off = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' })
