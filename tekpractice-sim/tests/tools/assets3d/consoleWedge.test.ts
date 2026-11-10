@@ -269,7 +269,7 @@ describe(`console-wedge v2 with real Blender (${BLENDER ? `using ${BLENDER}` : '
       const ql1 = loadSpecs().find((s) => s.id === 'yamaha-ql1') as AssetSpecT
       await expect(runBuilder({ ...ql1, build: { shape: 'console-wedge', profile: QL1_OLD_PROFILE, params: QL1_V2 } }, join(dir, 'ql1-layout.glb'))).resolves.toBeTruthy()
       const axia = loadSpecs().find((s) => s.id === 'axia-iq') as AssetSpecT
-      const tiered = (params: Record<string, number>): AssetSpecT => ({ ...axia, ports: [], build: { shape: 'console-wedge', profile: AXIA_OLD_PROFILE, params: { tierYMm: 82, tierWMm: 380, ...params } } })
+      const tiered = (params: Record<string, number>): AssetSpecT => ({ ...axia, ports: [], build: { shape: 'console-wedge', profile: AXIA_OLD_PROFILE, params: { tierYMm: 82, tierWMm: 440, ...params } } }) // 440: the bridge tier of the shipped spec (Wave 5: the encoders of strip 1 reach x 460.5, a 380 tier ended at 449.6)
       await expect(runBuilder(tiered({ filletMm: 5, armRestMm: 26 }), join(dir, 'axia-ok.glb'))).resolves.toBeTruthy()
       // the meters start 12.5 mm from the rear edge of the bridge: a 10 mm fillet makes the rear-top corner 16 mm round
       await expect(runBuilder(tiered({ filletMm: 10, armRestMm: 26 }), join(dir, 'axia-round.glb'))).rejects.toThrow(/flat zone of a control/)
