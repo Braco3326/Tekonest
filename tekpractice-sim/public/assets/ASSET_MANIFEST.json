@@ -2202,7 +2202,7 @@
     {
       "id": "playout-pc",
       "optimized": true,
-      "tris": 44,
+      "tris": 2240,
       "kind": "device",
       "ports": 3,
       "status": "ok",
@@ -2215,10 +2215,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
-      "date": "2026-11-10T01:25:19.144Z",
+      "date": "2026-11-10T21:34:45.747Z",
       "specSource": "https://cdn.shopify.com/s/files/1/1167/3148/files/Dell_OptiPlex-7010-Technical_Specifications.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2243,11 +2240,15 @@
           "ok": true
         },
         {
-          "gate": "proportionDrift",
+          "gate": "detail",
           "ok": true
         },
         {
-          "gate": "portSurface",
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
           "ok": true
         },
         {
@@ -2258,7 +2259,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "aeta-scoop5-s",
