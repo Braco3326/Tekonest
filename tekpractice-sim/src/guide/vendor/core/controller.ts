@@ -168,7 +168,10 @@ export function createController(deps: ControllerDeps): Controller {
         }
         return lastNow;
     };
-    const tr = (key: string): string | null => lookupIn(table, key) ?? lookupString(key);
+    const tr = (key: string): string | null => {
+        const own = lookupIn(table, key);
+        return own !== null && own.trim() !== "" ? own : lookupString(key);
+    };
     const text = (key: string): string => tr(key) ?? "";
     const fillT = (key: string, vars: Readonly<Record<string, string | number>>): string => text(key).replace(/\{([a-z]+)\}/gu, (m, name: string) => (Object.hasOwn(vars, name) ? String(vars[name]) : m));
     const plain = (t: string): BubbleLine => ({ text: t, badge: null, citation: null });

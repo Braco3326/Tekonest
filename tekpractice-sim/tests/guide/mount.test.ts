@@ -456,7 +456,7 @@ describe('mountOscar forwarding', () => {
     expect(montage()).toBe('premier-cable')
     r.b.emit(stateOf([['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']], { connections: [{ a: { instance: 'mic', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }] }))
     expect(deps.flows[0].id).toBe('lire-le-statut')
-    expect(montage()).toBe('premier-montage')
+    expect(montage()).toBe('lire-le-statut')
     expect(deps.flows).toHaveLength(6) // a running or restored flow is always still there
   })
 
@@ -672,26 +672,34 @@ function wired(initial: TpState | null) {
 }
 const texts = (v: GuideView): string[] => (v.bubble?.lines ?? []).map((l) => l.text)
 const NEEDS = TP_STRINGS.planner.needInfo
+const CHIPS_WITH_START = ['next', 'show', 'hint', 'where', 'start', 'mute', 'close']
+const CHIPS_NO_START = ['next', 'show', 'hint', 'where', 'mute', 'close']
 
 describe('mountOscar on the real controller: what each bench state says, and what is offered first', () => {
-  it('1. no place: the verdict sentence and the neutral pointer, no flow chip; the words open premier-montage at the place', async () => {
+  it('1. no place: the verdict sentence and the neutral line, with the start chip; the chip and the words both open premier-montage at the place', async () => {
     const w = wired(EMPTY)
     const v = await w.next()
     expect(v.bubble?.kind).toBe('need-info')
     expect(texts(v)).toEqual([TP_STRINGS.verdict.placeFirst, NEEDS])
-    expect(v.bubble?.chips.map((c) => c.id)).not.toContain('start')
+    expect(v.bubble?.chips.map((c) => c.id)).toEqual(CHIPS_WITH_START)
+    const started = await w.chip('start')
+    expect(started.bubble?.title).toBe('Parcours « Premier montage » : étape 1 sur 5.')
+    expect(started.target?.anchor).toBe('nav:place')
     const a = await w.ask('comment faire un premier montage ?')
     expect(a.bubble?.title).toBe('Parcours « Premier montage » : étape 1 sur 5.')
     expect(texts(a)).toEqual([TP_STRINGS.flows['premier-montage'].steps.place])
     expect(a.target?.anchor).toBe('nav:place')
   })
 
-  it('2. a place and no device: the empty-bench sentence; the words open the add-devices flow at the inventory', async () => {
+  it('2. a place and no device: the empty-bench sentence; the chip and the words open the add-devices flow at the inventory', async () => {
     const w = wired(EMPTY)
     await w.go(stateOf([]))
     const v = await w.next()
     expect(v.bubble?.kind).toBe('need-info')
     expect(texts(v)).toEqual([TP_STRINGS.verdict.benchEmpty, NEEDS])
+    expect(v.bubble?.chips.map((c) => c.id)).toEqual(CHIPS_WITH_START)
+    const started = await w.chip('start')
+    expect(started.bubble?.title).toBe('Parcours « Ajouter des appareils » : étape 1 sur 2.')
     const a = await w.ask('comment faire un premier montage ?')
     expect(a.bubble?.title).toBe('Parcours « Ajouter des appareils » : étape 1 sur 2.')
     expect(texts(a)).toEqual([TP_STRINGS.flows['ajouter-des-appareils'].steps.addFirst])
@@ -703,6 +711,8 @@ describe('mountOscar on the real controller: what each bench state says, and wha
     await w.go(stateOf([['ql1', 'yamaha-ql1']], { firstReason: { code: 'NO_SOURCE', text_fr: 'Aucune source n’est branchée.', subjects: [] } }))
     const v = await w.next()
     expect(texts(v)).toEqual(['Aucune source n’est branchée.', NEEDS])
+    expect(v.bubble?.chips.map((c) => c.id)).toEqual(CHIPS_WITH_START)
+    expect((await w.chip('start')).bubble?.title).toBe('Parcours « Ajouter un deuxième appareil » : étape 1 sur 1.')
     const a = await w.ask('comment faire un premier montage ?')
     expect(a.bubble?.title).toBe('Parcours « Ajouter un deuxième appareil » : étape 1 sur 1.')
     expect(a.target?.anchor).toBe('nav:inventory')
@@ -715,6 +725,10 @@ describe('mountOscar on the real controller: what each bench state says, and wha
     const v = await w.next()
     expect(v.bubble?.kind).toBe('need-info')
     expect(texts(v)).toEqual([reason, NEEDS])
+    expect(v.bubble?.chips.map((c) => c.id)).toEqual(CHIPS_WITH_START)
+    const started = await w.chip('start')
+    expect(started.bubble?.title).toBe('Parcours « Premier câble » : étape 1 sur 2.')
+    expect(started.target?.anchor).toBe(SUGGEST_FROM)
     const a = await w.ask('comment faire un premier montage ?')
     expect(a.bubble?.title).toBe('Parcours « Premier câble » : étape 1 sur 2.')
     expect(texts(a)).toEqual([TP_STRINGS.flows['premier-cable'].steps.connect])
@@ -724,7 +738,9 @@ describe('mountOscar on the real controller: what each bench state says, and wha
   it('3b. devices, no cable and no reason from the signal path: the not-yet sentence', async () => {
     const w = wired(EMPTY)
     await w.go(stateOf([['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']]))
-    expect(texts(await w.next())).toEqual([TP_STRINGS.verdict.notYet, NEEDS])
+    const v = await w.next()
+    expect(texts(v)).toEqual([TP_STRINGS.verdict.notYet, NEEDS])
+    expect(v.bubble?.chips.map((c) => c.id)).toEqual(CHIPS_WITH_START)
   })
 
   it('4. a rule error: the app’s own title and explanation, pointing at the first subject, no pointer sentence', async () => {
@@ -738,6 +754,7 @@ describe('mountOscar on the real controller: what each bench state says, and wha
     expect(v.bubble?.title).toBe('Correction à apporter')
     expect(v.target?.anchor).toMatch(/^port:/)
     expect(JSON.stringify(v.bubble)).not.toContain(NEEDS)
+    expect(v.bubble?.chips.map((c) => c.id)).toEqual(CHIPS_NO_START)
   })
 
   it('5. playable: the good sentence with what the app checks, and the next flow offered; the chip starts it at the status bar', async () => {

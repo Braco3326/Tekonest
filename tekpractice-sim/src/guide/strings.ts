@@ -33,8 +33,8 @@ export const TP_STRINGS = deepFreeze({
   },
   /** Sentences the controller shows with a next-step bubble: the host table replaces the vendored ones (see CREATION_STRINGS). */
   planner: {
-    /** After a verdict sentence that says what is missing. Nothing here asks to run a check: Mode Création has no check button. */
-    needInfo: 'Pour un guidage pas à pas, demander « comment faire un premier montage ».',
+    /** After a verdict sentence that says what is missing. Nothing here asks to run a check: Mode Création has no check button. The offered flow comes as a chip. */
+    needInfo: 'La barre d’état, en bas de l’écran, résume l’état du montage.',
   },
   flows: {
     'premier-montage': {

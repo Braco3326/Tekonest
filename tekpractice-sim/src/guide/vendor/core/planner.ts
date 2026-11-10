@@ -75,7 +75,11 @@ export function nextStep(ctx: GuideContext, flows: Flow[], flowState: FlowState 
         }
         if (verdict.result === "indetermine") {
             const text = typeof needInfo === "string" && needInfo.trim() !== "" ? needInfo : verdict.labelFr;
-            return { kind: "need-info", textKey: "planner.needInfo", text };
+            const out: NextStep = { kind: "need-info", textKey: "planner.needInfo", text };
+            const offer = nextFlowToOffer(ctx, flows, flowState);
+            if (offer !== undefined)
+                out.flowId = offer.id;
+            return out;
         }
         if (verdict.result === "bon") {
             const offer = nextFlowToOffer(ctx, flows, flowState);

@@ -111,10 +111,9 @@ export function flowsFor(stage: BenchStage): Flow[] {
   return ids.map((id) => CREATION_FLOWS.find((f) => f.id === id) as Flow)
 }
 
-/** The flow that « premier montage » (and the other words of that family) opens: the one that starts at what is next while the montage is not done. */
+/** The flow that « premier montage » (and the other words of that family) opens: the one that starts at what is next, on a settled bench the status bar. */
 export function montageFlowFor(stage: BenchStage): string {
-  const at = STAGES.indexOf(stage)
-  return at <= 3 ? FLOW_PATH[at] : 'premier-montage'
+  return FLOW_PATH[STAGES.indexOf(stage)]
 }
 
 const MONTAGE_WORDS = DEFAULT_FLOW_KEYWORDS.find((k) => k.flowId === 'premier-montage')?.keywords ?? []

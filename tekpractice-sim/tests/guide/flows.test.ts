@@ -94,7 +94,7 @@ describe('flows: anchors and texts', () => {
     }
   })
 
-  it('premier-montage ends step 1 on placeChosen (R7), the cable step on connect, and the status step on acknowledge', () => {
+  it('premier-montage ends step 1 on placeChosen, the cable step on connect, and the status step on acknowledge', () => {
     const f = CREATION_FLOWS[0]
     expect(f.steps[0].done).toEqual({ event: 'placeChosen' })
     expect(f.steps.filter((s) => s.done.event === 'deviceAdded')).toHaveLength(2)
@@ -159,8 +159,9 @@ describe('bench stage and the flow that comes first', () => {
     expect(flowsFor('connectable').map((f) => f.id)).toEqual(['premier-cable', 'lire-le-statut', 'alimentation-fantome', 'premier-montage', 'ajouter-des-appareils', 'deuxieme-appareil'])
   })
 
-  it('the words « premier montage » open the flow of the stage while the montage is not done, the whole flow after', () => {
-    expect(STAGES.map((s) => montageFlowFor(s))).toEqual(['premier-montage', 'ajouter-des-appareils', 'deuxieme-appareil', 'premier-cable', 'premier-montage'])
+  it('the words « premier montage » open the flow of the stage, and on a settled bench the status-bar flow', () => {
+    expect(STAGES.map((s) => montageFlowFor(s))).toEqual(['premier-montage', 'ajouter-des-appareils', 'deuxieme-appareil', 'premier-cable', 'lire-le-statut'])
+    expect(montageFlowFor('settled')).toBe('lire-le-statut')
     for (const stage of STAGES) {
       const montage = keywordsFor(stage).find((k) => k.keywords.includes('premier montage'))!
       expect(montage.flowId).toBe(montageFlowFor(stage))
