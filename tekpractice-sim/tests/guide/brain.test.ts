@@ -37,6 +37,7 @@ function fakeBridge(snap: () => TpState | null = () => benchState()): TpBridge &
     rectOf: vi.fn(() => null),
     anchorOfPort: vi.fn(() => 'port:x.y'),
     anchorOfDevice: vi.fn(() => 'device:x'),
+    anchorOfControl: vi.fn(() => 'control:x.y'),
     onChange: vi.fn(() => () => undefined),
     destroy: vi.fn(),
   }

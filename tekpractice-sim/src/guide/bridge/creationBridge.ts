@@ -227,6 +227,8 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
   function derive(prev: Table, next: Table): HostEvent[] {
     const at = now()
     const out: HostEvent[] = []
+    // `placeChosen`: a place appears on screen (placeKnown false to true). `place` below keeps its own meaning (the first device).
+    if (!prev.state.placeKnown && next.state.placeKnown) out.push({ type: 'placeChosen', at })
     const had = new Set(prev.state.instances.map((i) => i.id))
     const added = next.state.instances.filter((i) => !had.has(i.id))
     for (const i of added) out.push({ type: 'deviceAdded', at, data: { device: deviceAnchor(next, i.id) } })
@@ -243,7 +245,11 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
       const old = prev.state.controls[id]
       if (!old) continue
       for (const [name, v] of Object.entries(values)) {
-        if (typeof v === 'boolean' && name in old && old[name] !== v) out.push({ type: 'toggle', at, data: { control: controlAnchor(next, id, name), value: v } })
+        if (typeof v === 'boolean' && name in old && old[name] !== v) {
+          // `control` and `anchor` are the same anchor string: the flows contract reads `anchor`, the first bridge tests read `control`.
+          const a = controlAnchor(next, id, name)
+          out.push({ type: 'toggle', at, data: { control: a, anchor: a, value: v } })
+        }
       }
     }
     return out
@@ -358,8 +364,28 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
   return {
     snapshot: () => build()?.state ?? null,
     rectOf,
-    anchorOfPort: (ref) => portAnchor(current, ref),
-    anchorOfDevice: (id) => deviceAnchor(current, id),
+    anchorOfPort: (ref) => {
+      try {
+        if (!ref || typeof ref.instance !== 'string' || typeof ref.port !== 'string') return ''
+        return portAnchor(current, ref)
+      } catch {
+        return ''
+      }
+    },
+    anchorOfDevice: (id) => {
+      try {
+        return typeof id === 'string' ? deviceAnchor(current, id) : ''
+      } catch {
+        return ''
+      }
+    },
+    anchorOfControl: (instance, control) => {
+      try {
+        return typeof instance === 'string' && typeof control === 'string' ? controlAnchor(current, instance, control) : ''
+      } catch {
+        return ''
+      }
+    },
     onChange(cb) {
       if (destroyed) return () => {}
       listeners.add(cb)

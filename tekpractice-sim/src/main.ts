@@ -34,3 +34,6 @@ else
       console.error('[creation] boot failed', e)
       showBootFailure(document, 'load')
     })
+
+// Oscar, the guide: its own lazy chunk, fetched after the route has started and never part of the creation start. A failure here is silent (W-12).
+void import('./guide').then((m) => m.bootGuide(decideRoute(location.search)), () => undefined)

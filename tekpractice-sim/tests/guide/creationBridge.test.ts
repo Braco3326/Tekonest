@@ -8,7 +8,7 @@ import { Template } from '../../src/creation/templateSchema'
 import { signalPath } from '../../src/flow/signalPath'
 import { isAnchor } from '../../src/guide/anchors'
 import { createCreationBridge, NAV_SELECTORS, POLL_MS, stateHash, type CreationReader } from '../../src/guide/bridge/creationBridge'
-import type { TpBridge, TpState } from '../../src/guide/bridge/types'
+import type { TpBridge, TpPortRef, TpState } from '../../src/guide/bridge/types'
 import type { HostEvent } from '../../src/guide/vendor/core/types'
 import type { PortRef, TeachingEvent } from '../../src/engine/types'
 import type { DesignState } from '../../src/trials/trial'
@@ -593,10 +593,76 @@ describe('derived host events', () => {
     r.timers.tick()
     const events = calls()[0][1]
     expect(types(events)).toEqual(['toggle'])
-    expect(events[0].data).toEqual({ control: 'control:ql1.playback-usb', value: true })
+    expect(events[0].data).toEqual({ control: 'control:ql1.playback-usb', anchor: 'control:ql1.playback-usb', value: true })
     r.world.design.rig.controls.ql1['playback-usb'] = false
     r.timers.tick()
-    expect(calls()[1][1][0].data).toEqual({ control: 'control:ql1.playback-usb', value: false })
+    expect(calls()[1][1][0].data).toEqual({ control: 'control:ql1.playback-usb', anchor: 'control:ql1.playback-usb', value: false })
+  })
+
+  it('R6: the toggle data carries both `control` and `anchor`, the same valid anchor string, plus the value', () => {
+    const r = make()
+    const { calls } = subscribe(r)
+    r.world.design.rig.controls.ql1['playback-usb'] = true
+    r.timers.tick()
+    const data = calls()[0][1][0].data as Record<string, string | boolean>
+    expect(Object.keys(data).sort()).toEqual(['anchor', 'control', 'value'])
+    expect(data.control).toBe(data.anchor)
+    expect(isAnchor(String(data.anchor))).toBe(true)
+    expect(r.bridge.rectOf(String(data.anchor))).not.toBeNull()
+  })
+
+  it('R7: placeChosen is emitted once when placeKnown goes false to true, and never for the other flips', () => {
+    const w = benchWorld()
+    w.design = emptyDesign()
+    w.place = null
+    const r = make(w)
+    const { calls } = subscribe(r)
+    r.world.place = 'room:concert-hall-medium'
+    r.timers.tick()
+    expect(types(calls()[0][1])).toEqual(['placeChosen'])
+    expect(calls()[0][1][0].data).toBeUndefined()
+    // a quiet poll, then the place going away and a different place: no new placeChosen unless it comes back from none
+    r.timers.tick()
+    expect(calls()).toHaveLength(1)
+    r.world.place = null
+    r.timers.tick()
+    expect(types(calls()[1][1])).toEqual([])
+    r.world.place = 'room:x'
+    r.timers.tick()
+    expect(types(calls()[2][1])).toEqual(['placeChosen'])
+    // another place while one is known is not a state change for the guide at all (only `placeKnown` is kept)
+    r.world.place = 'room:y'
+    r.timers.tick()
+    expect(calls()).toHaveLength(3)
+  })
+
+  it('R7: `place` keeps its meaning (the first device on an empty bench), placeChosen is separate', () => {
+    const w = benchWorld()
+    w.design = emptyDesign()
+    w.place = null
+    const r = make(w)
+    const { calls } = subscribe(r)
+    r.world.place = 'room:a'
+    r.world.design.rig.instances = [{ instanceId: 'ql1', deviceId: 'yamaha-ql1' }]
+    r.world.design.rig.controls = { ql1: { power: true } }
+    r.timers.tick()
+    expect(types(calls()[0][1]).sort()).toEqual(['deviceAdded', 'place', 'placeChosen'])
+  })
+
+  it('R6: anchorOfPort(null) and a malformed ref give an empty string, never a throw', () => {
+    const r = make()
+    expect(r.bridge.anchorOfPort(null as unknown as TpPortRef)).toBe('')
+    expect(r.bridge.anchorOfPort(undefined as unknown as TpPortRef)).toBe('')
+    expect(r.bridge.anchorOfPort({ instance: 1, port: 'x' } as unknown as TpPortRef)).toBe('')
+    expect(r.bridge.anchorOfDevice(null as unknown as string)).toBe('')
+  })
+
+  it('anchorOfControl gives the control anchor the toggle event uses, and a valid anchor for an unlisted one', () => {
+    const r = make()
+    r.bridge.snapshot()
+    expect(r.bridge.anchorOfControl('ql1', 'playback-usb')).toBe('control:ql1.playback-usb')
+    expect(isAnchor(r.bridge.anchorOfControl('nobody', 'x y'))).toBe(true)
+    expect(r.bridge.anchorOfControl(null as unknown as string, 'x')).toBe('')
   })
 
   it('an enum control change changes the state but emits no toggle', () => {

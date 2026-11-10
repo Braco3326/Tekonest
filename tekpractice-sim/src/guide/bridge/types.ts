@@ -22,8 +22,11 @@ export type TpBridge = {
   snapshot(): TpState | null
   /** Where an anchor is on the page now (CSS px), or null when it is unknown, hidden or off screen. */
   rectOf(anchor: string): Rect | null
+  /** The anchor of a port; '' for a malformed ref (never throws). */
   anchorOfPort(ref: TpPortRef): string
   anchorOfDevice(id: string): string
+  /** The anchor of a hands-on control (the one `toggle` events carry); '' for a malformed id. */
+  anchorOfControl(instance: string, control: string): string
   /** Called on a change only (never on a poll that saw none). Returns the way to stop listening. */
   onChange(cb: (state: TpState, events: HostEvent[]) => void): () => void
   /** Stops the poll, drops every listener and the page listener. Safe to call twice. */
