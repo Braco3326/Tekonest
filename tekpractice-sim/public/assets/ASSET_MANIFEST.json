@@ -820,18 +820,60 @@
     {
       "id": "yellowtec-litt",
       "optimized": true,
-      "tris": 184,
+      "tris": 380,
       "kind": "device",
       "ports": 1,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/warning-light-3df0b1fc0e0a445c8edcaddf3dd6ceb5",
-      "author": "Morgan Skilly",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Warning Light » par Morgan Skilly (https://sketchfab.com/3d-models/warning-light-3df0b1fc0e0a445c8edcaddf3dd6ceb5) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 1,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T01:22:04.266Z",
+      "specSource": "https://www.yellowtec.com/fileadmin/downloads/Product-Brief-litt-web.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "genelec-8030c",
