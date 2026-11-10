@@ -62,5 +62,15 @@
       "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_HDX_Guide.pdf",
       "note": "Pro Tools | HDX Getting Started guide (downloaded to a scratch folder outside the repo, text read): HDX PCIe card = 2 DigiLink Mini ports + 1 DigiSerial (8-pin mini-DIN), needs a full-length slot; installs in any qualified Mac/Windows workstation. No card or bracket dimensions, no workstation dimensions: the box is a role-based stand-in (see notes)."
     }
-  ]
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "chamferMm": 3
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ]
+  }
 }
