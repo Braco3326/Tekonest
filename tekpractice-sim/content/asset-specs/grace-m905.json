@@ -82,7 +82,11 @@
     "shape": "rack-box",
     "params": {
       "chamferMm": 1
-    }
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ]
   },
   "sources": [
     {
@@ -95,5 +99,49 @@
       "url": "https://gracedesign.com/products/monitor-controllers/m905/",
       "note": "Grace Design m905 product page (opened): lists main chassis 3.5 in x 10.5 in x 17 in (axes unlabelled). Read as H 3.5 in = 2U 88.9 mm, D 10.5 in = 266.7 mm, 17 in = chassis width without rack ears; with the ears the drawing is 19 in = 482.6 mm wide, so w = 482.6 is used (rack ears included, like the Rio3224-D2 spec)."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 197,
+        "yMm": 76,
+        "wMm": 108,
+        "hMm": 13,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 60,
+        "yMm": 66,
+        "wMm": 80,
+        "hMm": 17,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 62,
+        "yMm": 4,
+        "wMm": 50,
+        "hMm": 10,
+        "marginMm": 3
+      },
+      {
+        "face": "io",
+        "xMm": 2,
+        "yMm": 79,
+        "wMm": 84,
+        "hMm": 10,
+        "marginMm": 3
+      },
+      {
+        "face": "io",
+        "xMm": 8,
+        "yMm": 2,
+        "wMm": 38,
+        "hMm": 10,
+        "marginMm": 3
+      }
+    ]
+  }
 }
