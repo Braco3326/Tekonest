@@ -28,6 +28,8 @@ import { hasModel } from './modelIds'
 import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
+import { createMarkerRing } from './portMarkerMesh'
+import { markerDiameterM } from './portMarkerSize'
 import type { AttachedControls, attachControls } from '../controls/attach'
 import type { ControlTicker } from '../controls/ticker'
 
@@ -130,8 +132,11 @@ export interface DeviceSpawnerOptions {
   controls?: { ticker: ControlTicker; load: () => Promise<{ attachControls: typeof attachControls }> }
 }
 
-/** A port marker's own diameter (m): its cylinder at scale 1. */
-const MARKER_DIAMETER = 0.05
+/**
+ * Depth bias of a marker ring's material: the ring lies on the connector's face, so it is pulled toward the camera by polygon
+ * offset (survives a far view's depth precision) instead of floating off the panel.
+ */
+const MARKER_Z_OFFSET = -2
 
 /** A port slot in the −Z grid: local position of its marker + its pick radius. */
 interface PortSlot {
@@ -578,18 +583,10 @@ export class DeviceSpawner {
       const marker = portMarkers.get(port.portId)
       if (marker) {
         marker.position = local.clone()
-        // Mode Création: real connectors can sit closer together (XLR combos ~25 mm) than the 50 mm marker is wide, which
-        // painted overlapping blobs. A marker shrinks to fit its nearest neighbour (a lone port keeps the full size); the
-        // size it rests at is kept in metadata so the hover / patch restyle puts it back to that, not to 1.
-        if (this.options.alignFront) {
-          let nearest = Infinity
-          locals.forEach((other, j) => {
-            if (j !== i) nearest = Math.min(nearest, Vector3.Distance(local, other))
-          })
-          const rest = Number.isFinite(nearest) ? Math.min(1, Math.max(0.3, (nearest * 0.9) / MARKER_DIAMETER)) : 1
-          marker.scaling.setAll(rest)
-          marker.metadata = { ...(marker.metadata ?? {}), restScale: rest }
-        }
+        // The marker is a ring sized from its own connector (the old 50 mm disc had to shrink to its nearest neighbour), so it rests at
+        // scale 1. The metadata stays as the "size it rests at" contract that PortProxies reads.
+        marker.scaling.setAll(1)
+        marker.metadata = { ...(marker.metadata ?? {}), restScale: 1 }
         marker.computeWorldMatrix(true)
       }
       // Looked up under THIS instance's root (never a same-id twin elsewhere in the scene).
@@ -735,12 +732,11 @@ export class DeviceSpawner {
       const { local, pickDiameter } = slots[i]
       const ref: PortRef = { instance: instanceId, port: port.portId }
 
-      const marker = MeshBuilder.CreateCylinder(
-        `port:${instanceId}:${port.portId}`,
-        { diameter: MARKER_DIAMETER, height: 0.02, tessellation: 16 },
-        this.scene
-      )
-      marker.rotation.x = Math.PI / 2
+      // An outline RING sized from the connector (a fixed 50 mm disc covered three XLRs on a 25 mm pitch). It is flat and faces -Z, the
+      // rear, so it needs no turn. The spec's `openingMm` is not in the GLB extras, so the size comes from the connector table.
+      const marker = createMarkerRing(this.scene, `port:${instanceId}:${port.portId}`, markerDiameterM(port.connector))
+      // restScale: the size a marker rests at, as a scale (1 for every marker now, the diameter being per connector); PortProxies reads it.
+      marker.metadata = { restScale: 1 }
       marker.parent = root
       marker.position = local
       marker.material = theme
@@ -751,6 +747,9 @@ export class DeviceSpawner {
             theme.portGlow
           )
         : this.material(`dir:${port.dir}`, undefined, DIR_COLOR[port.dir])
+      // The ring is seen from either side and lies on the connector's face.
+      marker.material.backFaceCulling = false
+      marker.material.zOffset = MARKER_Z_OFFSET
       marker.isPickable = false
 
       // Invisible, enlarged pick target — capped by grid spacing ONLY along
