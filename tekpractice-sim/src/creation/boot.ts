@@ -2196,6 +2196,14 @@ export async function bootCreation(): Promise<void> {
     },
     controlValues: (id) => host.instance(id)?.controls?.bank.snapshot() ?? null,
     setControlValue: (id, control, value) => host.instance(id)?.controls?.bank.set(control, value, 'software') ?? false,
+    sceneStats: () => ({ meshes: host.scene?.meshes.length ?? 0, materials: host.scene?.materials.length ?? 0, fps: Math.round(host.engine.getFps()) }),
+    renderBench: (frames) => {
+      const sc = host.scene
+      if (!sc) return 0
+      const t0 = performance.now()
+      for (let i = 0; i < frames; i++) sc.render()
+      return (performance.now() - t0) / Math.max(1, frames)
+    },
     visible: (id) => host.visible(id),
     outlined: () => host.outlined(),
     hovered: () => host.hovered(),

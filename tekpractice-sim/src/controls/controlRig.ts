@@ -68,16 +68,21 @@ export class ControlRig {
   levels: LevelSource = demoLevelDb
   /** Whether the meters move at all (a device that is off does not). */
   metersLive = true
+  /** Every part hangs under this node: one switch takes the whole surface out of the render (a device far from the camera). */
+  private readonly surface: TransformNode
+  private active = true
 
   constructor(
     private readonly scene: Scene,
-    private readonly root: TransformNode,
+    root: TransformNode,
     readonly instanceId: string,
     readonly bank: ControlBank,
     private readonly sizeMm: { w: number; h: number; d: number },
     /** A sloped top (console wedge): parts on the 'top' face sit on it. */
     private readonly topProfile?: readonly [number, number][]
   ) {
+    this.surface = new TransformNode(`ctl:${instanceId}:surface`, scene)
+    this.surface.parent = root
     for (const def of bank.all()) {
       const part = this.build(def)
       if (part) {
@@ -89,6 +94,17 @@ export class ControlRig {
       this.parts.get(id)?.apply(v)
       for (const p of this.parts.values()) if (p.screen) p.screen.dirty = true
     })
+  }
+
+  /** The surface is drawn and its meters run only while a device is near the camera or selected (hundreds of small meshes on a console). */
+  setActive(on: boolean): void {
+    if (on === this.active) return
+    this.active = on
+    this.surface.setEnabled(on)
+  }
+
+  get isActive(): boolean {
+    return this.active
   }
 
   get size(): number {
@@ -136,7 +152,7 @@ export class ControlRig {
 
   /** Advance every meter to `nowMs` (call from the ticker). Returns whether anything was redrawn. */
   update(nowMs: number): boolean {
-    if (!this.metersLive) return false
+    if (!this.metersLive || !this.active) return false
     let drewScreen = false
     for (const p of this.parts.values()) {
       const sc = p.screen
@@ -270,7 +286,7 @@ export class ControlRig {
   private build(def: ControlDef): Part | null {
     const f = faceFrame(def.face, def.xMm, def.yMm, this.sizeMm, this.topProfile)
     const node = new TransformNode(`ctl:${this.instanceId}:${def.id}`, this.scene)
-    node.parent = this.root
+    node.parent = this.surface
     node.position = new Vector3(f.pos[0], f.pos[1], f.pos[2])
     const right = new Vector3(...f.right)
     const out = new Vector3(...f.out)

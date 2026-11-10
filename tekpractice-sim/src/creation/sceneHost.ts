@@ -114,6 +114,9 @@ export function strokeTargets(inst: DeviceInstance): Set<Mesh> {
   )
 }
 
+/** A device's control surface is drawn when the camera is nearer than this (m) to it, or when it is selected. */
+const CONTROL_NEAR_M = 3.5
+
 type RoomBuild = (
   scene: Scene,
   file: Extract<PlaceData, { kind: 'room' }>['file'],
@@ -638,6 +641,7 @@ export class SceneHost {
   /** Outline the selected device (Ambre, brief §2); survives respawns and place reloads. */
   setSelected(id: string | null): void {
     this.selected = id
+    this.updateControlLod()
     this.applyDecor()
   }
 
@@ -993,6 +997,7 @@ export class SceneHost {
       },
       this.controllers
     )
+    bag.observe(camera.onViewMatrixChangedObservable, () => this.updateControlLod())
     this.cables = new CableRenderer(scene, undefined, {
       pulses: false,
       // C18: the colour (and the dash) of a cable is its signal's, read from the catalog's port definitions.
@@ -1113,6 +1118,7 @@ export class SceneHost {
         .then((c) => {
           if (!c || this.instances.get(p.instanceId) !== inst) return
           this.syncControls(inst, this.applied)
+          this.updateControlLod()
           this.applyDecor() // the control parts join the scene: out of the stroke mask like every other small part (invalidates)
         })
       void inst.modelReady.then((ok) => {
@@ -1147,6 +1153,24 @@ export class SceneHost {
   }
 
   /** Show a 3D control surface the simulation's settings (design -> bank); a setting the design does not mention is at its catalog default. */
+  /**
+   * Level of detail of the hands-on surfaces: a console's few hundred small parts are drawn only for the selected device and the ones within
+   * CONTROL_NEAR_M of the camera (they are specks from the overview, and meters must not keep the page rendering for nothing).
+   */
+  private updateControlLod(): void {
+    const cam = this._camera
+    for (const [id, inst] of this.instances) {
+      const rig = inst.controls?.rig
+      if (!rig) continue
+      const near = cam ? Vector3.Distance(cam.position, inst.root.getAbsolutePosition()) < CONTROL_NEAR_M : false
+      const on = id === this.selected || near
+      if (on !== rig.isActive) {
+        rig.setActive(on)
+        this.scheduler.invalidate()
+      }
+    }
+  }
+
   private syncControls(inst: DeviceInstance, design: DesignState | null): void {
     const c = inst.controls
     if (!c || !design) return

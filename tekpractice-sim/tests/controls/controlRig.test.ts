@@ -246,3 +246,19 @@ describe('ControlRig: reverse faders and screens', () => {
     warn.mockRestore()
   })
 })
+
+describe('ControlRig: level of detail', () => {
+  it('an inactive surface is out of the render and its meters do not run; active again, they do', () => {
+    const { rig } = build()
+    const cap = rig.part('fader')!.node.getChildMeshes()[0]
+    expect(rig.isActive).toBe(true)
+    expect(cap.isEnabled()).toBe(true)
+    rig.setActive(false)
+    expect(rig.isActive).toBe(false)
+    expect(cap.isEnabled()).toBe(false) // the whole surface is disabled with its parent
+    expect(rig.update(100)).toBe(false)
+    rig.setActive(true)
+    expect(cap.isEnabled()).toBe(true)
+    expect(rig.update(200)).toBe(true)
+  })
+})

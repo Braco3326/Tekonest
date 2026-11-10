@@ -29,6 +29,10 @@ export interface CreationDebug {
   controlValues(id: string): Record<string, number> | null
   /** Set a control of a device like the console software will (origin 'software': it moves the cap, it does not touch the simulation). False for an unknown control. */
   setControlValue(id: string, control: string, value: number): boolean
+  /** Render cost snapshot (meshes in the scene, active meshes, engine fps) for a performance check. */
+  sceneStats(): { meshes: number; materials: number; fps: number }
+  /** Render `frames` frames back to back and return the mean CPU+GL submit time of one, in ms (a performance check, not a benchmark of the GPU). */
+  renderBench(frames: number): number
   /** The device's root is enabled (not hidden by the tree's eye). */
   visible(id: string): boolean
   /** Devices drawn with the Ambre selection outline. */
