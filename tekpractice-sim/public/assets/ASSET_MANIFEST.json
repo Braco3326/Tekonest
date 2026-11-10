@@ -675,18 +675,62 @@
     {
       "id": "km-210-9",
       "optimized": true,
-      "tris": 292,
+      "tris": 2715,
       "kind": "device",
       "ports": 0,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/microphone-stand-with-boom-arm-legged-9bee76120cd8472b9f68db91d820f5ff",
-      "author": "JMGameDev",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Microphone Stand With Boom Arm (Legged) » par JMGameDev (https://sketchfab.com/3d-models/microphone-stand-with-boom-arm-legged-9bee76120cd8472b9f68db91d820f5ff) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 0,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "meshy",
+      "toolVersion": "meshy-7.1",
+      "photos": [
+        "three-quarter.jpg"
+      ],
+      "taskId": "01a1c30f-c186-7256-b084-99475ddcd9d8",
+      "source": "ai-meshy",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal",
+      "date": "2026-11-10T01:29:25.766Z",
+      "specSource": "https://www.k-m.de/en/downloads/01994d9eb9907194b59b7d910e75132d/datasheet",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "axia-iq",
