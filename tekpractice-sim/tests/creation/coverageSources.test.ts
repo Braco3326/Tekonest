@@ -287,7 +287,7 @@ describe('front verification (Task 43c, L34): which contributing speakers have a
   it('the real catalog: the DBR12 declares no front, the 8030C and the K12.2 do', () => {
     const by = (id: string): unknown => registry.deviceById.get(id)!.modelFront
     expect(by('yamaha-dbr12')).toBeUndefined()
-    expect(by('qsc-k12-2')).toMatchObject({ axis: '+z' })
-    expect(by('genelec-8030c')).toMatchObject({ axis: '-x' })
+    expect(by('qsc-k12-2')).toMatchObject({ axis: '-z' }) // the pipeline model's baffle face (glTF -z)
+    expect(by('genelec-8030c')).toMatchObject({ axis: '-z' })
   })
 })

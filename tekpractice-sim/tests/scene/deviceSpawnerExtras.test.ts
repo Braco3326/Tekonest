@@ -262,7 +262,7 @@ describe('the acoustic front of an extras model (Mode Création, alignFront)', (
   it('reports +Z at yaw 0 for an extras model whose device declares modelFront, whatever axis the catalog gives for the OLD file', async () => {
     serveGlb(await extrasGlb())
     const { spawner } = makeSpawner({ alignFront: true })
-    expect(registry.deviceById.get(DEVICE)!.modelFront?.axis).toBe('+z') // the legacy file's axis: ignored for a pipeline model
+    expect(registry.deviceById.get(DEVICE)!.modelFront?.axis).toBe('-z') // the catalog states the pipeline model's own front axis; the spawner reports -z for a pipeline model whatever it says
     const inst = spawner.spawn(DEVICE, new Vector3(1, 0, 2), 'k12')
     await expect(inst.modelReady).resolves.toBe(true)
     const f = inst.frontWorld()

@@ -31,7 +31,7 @@ const catalog = JSON.parse(readFileSync(resolve(root, 'content/catalog.json'), '
   devices: { id: string; acoustic?: unknown; modelFront?: { axis: FrontAxis; evidence: string } }[]
 }
 
-const MEASURED: Record<string, FrontAxis | null> = { 'qsc-k12-2': '+z', 'genelec-8030c': '-x', 'yamaha-dbr12': null }
+const MEASURED: Record<string, FrontAxis | null> = { 'qsc-k12-2': '-z', 'genelec-8030c': '-z', 'yamaha-dbr12': null }
 
 async function read(id: string) {
   const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'draco3d.decoder': await draco3d.createDecoderModule() })

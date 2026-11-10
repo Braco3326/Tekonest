@@ -77,38 +77,17 @@ function measuredBaseFraction(pts: number[][]): number {
   return (lastThin + 1) / bands
 }
 
-describe('the 8030C cabinet starts where the catalog says (night wave 1, item 8)', () => {
-  it('modelBody.baseFraction is the share of the model that is stand, measured on the shipped file (± 2 %)', async () => {
+describe('the 8030C has no floor stand any more (rebuilt), so the catalog declares no modelBody (2026-11-10)', () => {
+  it('the shipped 8030C is a pipeline model whose footprint has no stand neck, and the catalog declares no modelBody for it', async () => {
     const dev = catalog.devices.find((d) => d.id === 'genelec-8030c')!
-    expect(dev.modelBody, 'the catalog declares where the cabinet starts').toBeDefined()
-    const measured = measuredBaseFraction(await vertices('genelec-8030c'))
-    if (await isPipelineModel('genelec-8030c')) {
-      // Rebuilt (Meshy, fixed up to the spec): the cabinet and its four Iso-Pod feet at the real 299 mm, NO floor stand. The catalog's modelBody describes the
-      // LEGACY scan and is not applied to a pipeline model (DeviceSpawner skips the height normalisation for models with the extras), so it is inert data until
-      // the catalog is revised (content/catalog.json is not edited by the 3D pipeline: remove modelBody for this device there).
-      expect(measured, 'no stand under the rebuilt cabinet').toBeLessThan(0.05)
-      return
-    }
-    expect(measured).toBeGreaterThan(0.2) // a real stand under it
-    expect(measured).toBeLessThan(0.4)
-    expect(Math.abs(dev.modelBody!.baseFraction - measured)).toBeLessThan(0.02)
-    expect(dev.modelBody!.evidence.length, 'evidence: how it was measured').toBeGreaterThan(40)
+    expect(dev.modelBody, 'the stand data of the legacy scan was removed with the legacy scan').toBeUndefined()
+    expect(await isPipelineModel('genelec-8030c'), 'the tekpractice extras: the spawner applies no height normalisation to it').toBe(true)
+    // Rebuilt (Meshy, fixed up to the spec): the cabinet and its four Iso-Pod feet at the real 299 mm, NO floor stand.
+    expect(measuredBaseFraction(await vertices('genelec-8030c')), 'no stand under the rebuilt cabinet').toBeLessThan(0.05)
   })
 
-  it('modelBody.cabinetHeightM is the height WITHOUT the Iso-Pod (285 mm), because the cut removes the stand from the measurement', () => {
-    const kb = JSON.parse(readFileSync(resolve(root, '../knowledge-base/equipment/studio-monitors.json'), 'utf8')) as {
-      devices: { id: string; key_specs: { dimensions: string } }[]
-    }
-    const dims = kb.devices.find((d) => d.id === 'genelec-8030c')!.key_specs.dimensions
-    expect(dims).toMatch(/285 mm without/) // the source of the number, read from the file
-    const dev = catalog.devices.find((d) => d.id === 'genelec-8030c')!
-    expect(dev.modelBody!.cabinetHeightM).toBe(0.285)
-    expect(dev.modelBody!.evidence).toContain('285 mm')
-    expect(dev.modelBody!.evidence).not.toContain('REAL_SIZE_M') // the legacy table (299 mm with Iso-Pod) is not the source of this number
-  })
-
-  it('the other loudspeaker models are single cabinets: no device but the 8030C declares a stand', () => {
-    expect(catalog.devices.filter((d) => d.modelBody !== undefined).map((d) => d.id)).toEqual(['genelec-8030c'])
+  it('no device declares a stand: every loudspeaker model is a single cabinet at its real size', () => {
+    expect(catalog.devices.filter((d) => d.modelBody !== undefined).map((d) => d.id)).toEqual([])
   })
 })
 

@@ -157,8 +157,8 @@
         { "from": "in-line-a", "to": ["thru-out-a"], "passive": true }
       ],
       "modelFront": {
-        "axis": "+z",
-        "evidence": "Measured on public/assets/qsc-k12-2.glb (Task 43c, L34): the +z face is the grille plate (a 4-triangle quad over 12.5 x 23.2 in, z in [-1.64, 0] in, the face of the max-z end) and the cabinet is widest there (14 in, the catalog width) while the -z end is narrow (6.6 in) and carries the recessed amplifier panel, and the handles; a 12 in woofer cannot sit on the 6.6 in end. Its port_* empties sit on the grille face (z = +0.023), so the spawner ignores them for this device."
+        "axis": "-z",
+        "evidence": "Rebuilt QSC K12.2 (public/assets/qsc-k12-2.glb) (pipeline model with the tekpractice extras): its I/O face, the connectors and the port_* empties sit at glTF +z (tests/assets/modelFront.test.ts asserts every empty within the jack recess of the +z face), so the baffle is the opposite face, glTF -z, which the scene's z mirror sends to Babylon +z at yaw 0 where the acoustics aim. DeviceSpawner turns nothing for a pipeline model and reports -z whatever the axis says; the field stays so that the device counts as having an established front (coverage verified). Replaces the legacy-scan measurement (2026-11-10)."
       },
       "acoustic": {
         "coverage_h_deg": { "value": 75, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.coverage « 75° nominal, axisymmetric »", "retrieved": "2026-10-22" } },
@@ -290,13 +290,8 @@
         { "from": "in-analog", "to": ["transducer"] }
       ],
       "modelFront": {
-        "axis": "-x",
-        "evidence": "Measured on public/assets/genelec-8030c.glb (Task 43c, L34), a textured scan: seen from -x (glTF space) the face carries the woofer cone and the tweeter; seen from +x it is the rear plate (amplifier panel, cable entry). Its port_* empties sit on a side face (z = +0.144), not on the rear one, so the spawner ignores them for this device."
-      },
-      "modelBody": {
-        "baseFraction": 0.285,
-        "cabinetHeightM": 0.285,
-        "evidence": "Measured on public/assets/genelec-8030c.glb (night wave 1, L36): the file is ONE mesh that includes a floor stand. Cut in 1 % bands of the model height, the footprint is a base plate at the bottom, then a thin neck (a few centimetres across) up to 28.5 % of the height, then the cabinet (about 0.21 x 0.23 model units) up to the top. Mode Création scales the cabinet (71.5 % of the model) to cabinetHeightM = 0.285 m, the knowledge base's value WITHOUT the Iso-Pod (knowledge-base/equipment/studio-monitors.json key_specs.dimensions: 'Height 299 mm with Iso-Pod (285 mm without)'), because the cut takes the stand out of the measurement; the stand keeps its scan proportions. tests/assets/modelBody.test.ts re-measures baseFraction on the file and reads the 285 mm from the knowledge base."
+        "axis": "-z",
+        "evidence": "Rebuilt Genelec 8030C (public/assets/genelec-8030c.glb) (pipeline model with the tekpractice extras): its I/O face, the connectors and the port_* empties sit at glTF +z (tests/assets/modelFront.test.ts asserts every empty within the jack recess of the +z face), so the baffle is the opposite face, glTF -z, which the scene's z mirror sends to Babylon +z at yaw 0 where the acoustics aim. DeviceSpawner turns nothing for a pipeline model and reports -z whatever the axis says; the field stays so that the device counts as having an established front (coverage verified). Replaces the legacy-scan measurement (2026-11-10)."
       },
       "acoustic": {
         "coverage_h_deg": { "value": 90, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur dans la KB)", "retrieved": "2026-10-22" } },
