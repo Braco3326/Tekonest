@@ -2263,7 +2263,7 @@
     {
       "id": "aeta-scoop5-s",
       "optimized": true,
-      "tris": 44,
+      "tris": 1840,
       "kind": "device",
       "ports": 4,
       "status": "ok",
@@ -2272,14 +2272,11 @@
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
       "photos": [
-        "front_rectified.png",
-        "rear.png"
+        "front_padded.png",
+        "rear_padded.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
-      "date": "2026-11-10T01:01:34.650Z",
+      "date": "2026-11-10T21:04:37.340Z",
       "specSource": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S-IP_ENG.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2304,6 +2301,14 @@
           "ok": true
         },
         {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
           "gate": "proportionDrift",
           "ok": true
         },
@@ -2319,7 +2324,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "aeta-scoopy-plus-s",
@@ -2506,7 +2514,7 @@
     {
       "id": "avid-hd-io",
       "optimized": true,
-      "tris": 44,
+      "tris": 1632,
       "kind": "device",
       "ports": 7,
       "status": "ok",
@@ -2514,7 +2522,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-06T19:05:18.648Z",
+      "date": "2026-11-10T21:03:53.157Z",
       "specSource": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
       "logosRemoved": true,
       "photos": [
@@ -2541,6 +2549,14 @@
         },
         {
           "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
           "ok": true
         },
         {
@@ -2628,7 +2644,7 @@
     {
       "id": "grace-m905",
       "optimized": true,
-      "tris": 44,
+      "tris": 1920,
       "kind": "device",
       "ports": 7,
       "status": "ok",
@@ -2641,10 +2657,7 @@
         "rear.jpg"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
-      "date": "2026-11-10T01:00:28.210Z",
+      "date": "2026-11-10T21:04:10.684Z",
       "specSource": "https://gracedesign.com/wp-content/uploads/2018/06/m905_owners_manual_reve.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2669,6 +2682,14 @@
           "ok": true
         },
         {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
           "gate": "proportionDrift",
           "ok": true
         },
@@ -2684,7 +2705,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "neumann-u87-ai",
@@ -2752,7 +2776,7 @@
     {
       "id": "switchcraft-studiopatch-9625",
       "optimized": true,
-      "tris": 44,
+      "tris": 1632,
       "kind": "device",
       "ports": 4,
       "status": "ok",
@@ -2765,10 +2789,7 @@
         "rear.jpg"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
-      "date": "2026-11-10T00:54:15.252Z",
+      "date": "2026-11-10T21:04:23.275Z",
       "specSource": "https://datasheet.chipsmall.com/6425/362759.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2793,6 +2814,14 @@
           "ok": true
         },
         {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
           "gate": "proportionDrift",
           "ok": true
         },
@@ -2808,12 +2837,15 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "antelope-ocx-hd",
       "optimized": true,
-      "tris": 44,
+      "tris": 1624,
       "kind": "device",
       "ports": 3,
       "status": "ok",
@@ -2821,7 +2853,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-06T19:06:45.951Z",
+      "date": "2026-11-10T21:03:39.038Z",
       "specSource": "https://images.equipboard.com/uploads/item/manual/73416/antelope-audio-ocx-hd-manual.pdf",
       "logosRemoved": true,
       "photos": [
@@ -2848,6 +2880,14 @@
         },
         {
           "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
           "ok": true
         },
         {
@@ -2909,6 +2949,69 @@
         },
         {
           "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "multiprise-secteur",
+      "kind": "device",
+      "tris": 756,
+      "ports": 4,
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T21:12:54.948Z",
+      "specSource": "content/catalog.json (devices[multiprise-secteur])",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
           "ok": true
         },
         {
