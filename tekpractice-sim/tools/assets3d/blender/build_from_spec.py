@@ -36,7 +36,7 @@ from typing import Any, Callable
 
 import bmesh
 import bpy
-from mathutils import Vector
+from mathutils import Matrix, Vector
 
 MM = 0.001
 SEGMENTS = 32
@@ -902,6 +902,79 @@ def build_revolve(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+# Colours of the boom arm (real-part sRGB, lifted by lift_hex): matt black tubes, slightly lighter joints, bare metal rod and mic thread.
+ARM_TUBE = "#3a3b41"
+ARM_JOINT = "#4c4d54"
+ARM_METAL = "#8c8e93"
+ARM_SEGMENTS = 24
+ARM_DEFAULTS_MM = {"elbowDxMm": 157.0, "elbowDyMm": 370.0, "headDxMm": 326.0, "headDyMm": 232.0, "tubeDiaMm": 26.0, "jointDiaMm": 46.0, "columnHeightMm": 95.0, "rodLenMm": 50.0, "headDropMm": 80.0}
+ARM_MAX_SCALE_ERROR = 0.02    # the natural size of the pose may differ this much from the spec size before the spec numbers must be corrected
+
+
+def cylinder_between(bm: bmesh.types.BMesh, a: Vector, b: Vector, radius: float, radius_b: float | None = None) -> None:
+    """A closed solid cylinder (or cone) from point a to point b (Blender space), flat caps, ARM_SEGMENTS sides."""
+    axis = b - a
+    if axis.length < 1e-9:
+        raise BuildError("a boom-arm part has zero length")
+    matrix = Matrix.Translation((a + b) / 2.0) @ axis.to_track_quat("Z", "Y").to_matrix().to_4x4()
+    bmesh.ops.create_cone(bm, cap_ends=True, cap_tris=False, segments=ARM_SEGMENTS, radius1=radius, radius2=radius if radius_b is None else radius_b, depth=axis.length, matrix=matrix)
+
+
+def build_boom_arm(plan: Plan) -> bpy.types.Object:
+    """An articulated mic arm in a posed side view, tubes in the plane z = 0 (glTF), see the shape table in shapes.ts.
+
+    The natural pose is built in millimetres-as-metres from the params, then moved so that its box is centred on x and z with the bottom
+    at y = 0 and scaled to the exact spec size (refused when that needs more than ARM_MAX_SCALE_ERROR: the spec numbers then do not match the pose)."""
+    w, h, d = size_m(plan)
+    p = {k: param_m(plan, k, v) for k, v in ARM_DEFAULTS_MM.items()}
+    col_r = d / 2.0                      # the column's diameter is the depth of the model
+    tube_r = p["tubeDiaMm"] / 2.0
+    joint_r = p["jointDiaMm"] / 2.0
+    head_r = joint_r * 0.37              # head joint
+    joint_len = 34.0 * MM
+    shoulder = (0.0, 0.0)
+    elbow = (p["elbowDxMm"], p["elbowDyMm"])
+    head = (elbow[0] + p["headDxMm"], elbow[1] - p["headDyMm"])
+    col_top = -5.0 * MM                  # the column stops just under the shoulder hinge, which stands on it
+    col_bottom = col_top - p["columnHeightMm"]
+    rod_bottom = col_bottom - p["rodLenMm"]
+    drop = p["headDropMm"]
+
+    def at(x: float, y: float, z: float = 0.0) -> Vector:
+        return g2b(x, y, z)
+
+    body = Body("boom-arm")
+    bm = body.bm
+    cylinder_between(bm, at(0.0, col_bottom), at(0.0, col_top), col_r)                       # column housing
+    body.done(lift_hex(ARM_JOINT))
+    cylinder_between(bm, at(0.0, rod_bottom), at(0.0, col_bottom), 8.0 * MM)                 # threaded rod under it
+    body.done(lift_hex(ARM_METAL))
+    for (jx, jy), r, ln in ((shoulder, joint_r, joint_len), (elbow, joint_r, joint_len), (head, head_r, 30.0 * MM)):
+        cylinder_between(bm, at(jx, jy, -ln / 2), at(jx, jy, ln / 2), r)                      # a hinge: axis along z
+    body.done(lift_hex(ARM_JOINT))
+    cylinder_between(bm, at(*shoulder), at(*elbow), tube_r)                                   # lower arm
+    cylinder_between(bm, at(*elbow), at(*head), tube_r * 0.92)                                # upper arm (a touch slimmer)
+    body.done(lift_hex(ARM_TUBE))
+    post_r = head_r * 0.75
+    cylinder_between(bm, at(head[0], head[1]), at(head[0], head[1] - drop * 0.62), post_r)    # head block under the hinge
+    body.done(lift_hex(ARM_TUBE))
+    cylinder_between(bm, at(head[0], head[1] - drop * 0.62), at(head[0], head[1] - drop), 7.0 * MM)  # the 5/8 inch mic thread
+    body.done(lift_hex(ARM_METAL))
+
+    # natural box (Blender x = glTF x, Blender y = -glTF z, Blender z = glTF y) -> centred, bottom at 0, exact spec size
+    xs = [v.co.x for v in bm.verts]
+    ys = [v.co.y for v in bm.verts]
+    zs = [v.co.z for v in bm.verts]
+    ex, ey, ez = max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs)
+    for name, natural, wanted in (("width", ex, w), ("depth", ey, d), ("height", ez, h)):
+        if abs(natural / wanted - 1.0) > ARM_MAX_SCALE_ERROR:
+            raise BuildError(f"the boom-arm pose is {natural / MM:.1f} mm in {name}, the spec size says {wanted / MM:.1f} mm: change the spec size or the pose params")
+    bmesh.ops.translate(bm, vec=Vector((-(max(xs) + min(xs)) / 2.0, -(max(ys) + min(ys)) / 2.0, -min(zs))), verts=bm.verts[:])
+    bmesh.ops.scale(bm, vec=Vector((w / ex, d / ey, h / ez)), space=Matrix.Identity(4), verts=bm.verts[:])
+    log(f"boom arm: natural {ex / MM:.1f} x {ez / MM:.1f} x {ey / MM:.1f} mm, scaled to the spec; {sum(len(f.verts) - 2 for f in bm.faces)} triangles")
+    return body.finish()
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "cylinder-plug": build_cylinder_plug,
@@ -912,6 +985,7 @@ SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "revolve": build_revolve,
     "console-wedge": build_console_wedge,
     "speaker-cabinet": build_speaker_cabinet,
+    "boom-arm": build_boom_arm,
 }
 
 

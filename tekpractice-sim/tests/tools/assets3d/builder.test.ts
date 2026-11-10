@@ -510,6 +510,20 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(surface?.worldPos[1]).toBeCloseTo(0, 6)
   }, 120_000)
 
+  it.skipIf(!BLENDER)('yellowtec-mika builds as a posed arm at its spec size: a column on a rod, two tubes meeting at a raised elbow, a head with a mic post, no ports', async () => {
+    const spec = realSpec('yellowtec-mika')
+    expect(spec.build?.shape).toBe('boom-arm')
+    const { raw, rawBytes, fixed } = await expectBuiltTo(spec, 6000)
+    await expectLooks(rawBytes, raw.triangles, 3) // tube, joint, metal
+    expect(fixed.nodes.filter((n) => n.name.startsWith('port_'))).toEqual([])
+    // the elbow is the highest point and lies over the base side, the head hangs below it on the far side
+    const verts = await vertices(rawBytes)
+    const top = verts.reduce((a, b) => (b[1] > a[1] ? b : a))
+    const far = verts.reduce((a, b) => (b[0] > a[0] ? b : a))
+    expect(top[0]).toBeLessThan(0) // the elbow stands left of centre (the base column is the left end)
+    expect(far[1]).toBeLessThan(top[1] - 0.15) // the head end is well below the elbow
+  }, 120_000)
+
   it.skipIf(!BLENDER)('a revolve profile with a station above the height is refused with BUILD_FAIL naming the station', async () => {
     const base = realSpec('shure-sm58')
     const bad = { ...base, build: { ...base.build!, profile: [[0, 20], [40, 30], [100, 51], [150, 30]] } } as AssetSpecT

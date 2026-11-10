@@ -3,17 +3,21 @@
   "kind": "device",
   "tier": "standard",
   "realSizeMm": {
-    "w": 787,
-    "h": 162,
+    "w": 525,
+    "h": 543,
     "d": 51
   },
   "ports": [],
+  "build": {
+    "shape": "boom-arm",
+    "params": { "elbowDxMm": 157, "elbowDyMm": 370, "headDxMm": 326, "headDyMm": 232, "tubeDiaMm": 26, "jointDiaMm": 46, "columnHeightMm": 95, "rodLenMm": 50, "headDropMm": 80 }
+  },
   "controls": [],
   "sources": [
     {
       "kind": "datasheet",
       "url": "https://www.yellowtec.com/fileadmin/user_upload/mika/pdf/mika_pdf_MicArms_EN.pdf",
-      "note": "Yellowtec m!ka Microphone Arms brochure (opened, 2 pages rendered). Page 1: m!ka Mic Arm M max length 31 in (78.7 cm), 1.05 kg net, max mic weight 2 kg (XS 53.5 cm, XL 107.5 cm). Page 2 'Dimensional Drawings', m!ka Mic Arms M (YT3201 / YT3205 / YT3601 / YT3605): two arm segments of 400 mm pivot to pivot, column housing diameter 51 mm, post diameter 16 mm and 66 mm long, 5/8 in-27 UNS 2A microphone thread, base rotatable by 360 degrees, joint travel 100 / 155 / 39.5 degrees, cable exits >450 mm and >1500 mm, 0.5-1.5 kg mic load. The M size was chosen (typical radio studio arm; the catalog does not say which size). The realSizeMm is the arm stretched out horizontally, 787 mm = 'max length' 78.7 cm; h = 66 mm post + about 45 mm housing + about 51 mm hub (the 45 and 51 are read from the drawing at 0.61 px/mm, guess +/- 8 mm); d = 51 mm (hub width, guess)."
+      "note": "Yellowtec m!ka Microphone Arms brochure (opened, 2 pages rendered). Page 1: m!ka Mic Arm M max length 31 in (78.7 cm), 1.05 kg net, max mic weight 2 kg (XS 53.5 cm, XL 107.5 cm). Page 2 'Dimensional Drawings', m!ka Mic Arms M (YT3201 / YT3205 / YT3601 / YT3605): two arm segments of 400 mm pivot to pivot, column housing diameter 51 mm, post diameter 16 mm and 66 mm long, 5/8 in-27 UNS 2A microphone thread, base rotatable by 360 degrees, joint travel 100 / 155 / 39.5 degrees, cable exits >450 mm and >1500 mm, 0.5-1.5 kg mic load. The M size was chosen (typical radio studio arm; the catalog does not say which size). POSE OF realSizeMm: since 2026-11-10 the size is the arm in the RAISED pose of the official product photo (assets-source/yellowtec-mika/photos/front.png, front arm = the M with two equal segments), not the 787 mm stretched-out maximum length: base column vertical on its threaded rod, lower arm up to an elbow 157 mm to the right of and 370 mm above the shoulder hinge (402 mm pivot to pivot), upper arm down to the head 326 mm further right and 232 mm lower (400 mm pivot to pivot, the brochure value), mic thread hanging below the head. Pose numbers read off the photo at 1.667 mm per px (400 mm over the 240 px segment), accuracy about +/-15 mm; tube and hinge diameters (26 / 46 mm), column height 95 mm and the rod length 50 mm are estimates from the photo and the 51 mm column of the drawing. The box that results is 525 x 543 x 51 mm (w = column left edge to head right edge, h = rod bottom to the top of the elbow hinge, d = 51 mm column housing). No ports, no controls."
     },
     {
       "kind": "datasheet",

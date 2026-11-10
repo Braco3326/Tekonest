@@ -899,10 +899,58 @@
     {
       "id": "yellowtec-mika",
       "optimized": true,
-      "tris": 292,
+      "tris": 828,
       "kind": "device",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "date": "2026-11-10T07:16:29.425Z",
+      "specSource": "https://www.yellowtec.com/fileadmin/user_upload/mika/pdf/mika_pdf_MicArms_EN.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "id": "yellowtec-litt",
