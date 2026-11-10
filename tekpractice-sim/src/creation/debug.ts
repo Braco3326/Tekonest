@@ -29,6 +29,8 @@ export interface CreationDebug {
   controlValues(id: string): Record<string, number> | null
   /** Set a control of a device like the console software will (origin 'software': it moves the cap, it does not touch the simulation). False for an unknown control. */
   setControlValue(id: string, control: string, value: number): boolean
+  /** Take the camera into a console screen (what a double-click on its glass does). False when there is no such screen. */
+  focusScreen(instanceId: string, controlId: string): boolean
   /** Render cost snapshot (meshes in the scene, active meshes, engine fps) for a performance check. */
   sceneStats(): { meshes: number; materials: number; fps: number }
   /** Render `frames` frames back to back and return the mean CPU+GL submit time of one, in ms (a performance check, not a benchmark of the GPU). */

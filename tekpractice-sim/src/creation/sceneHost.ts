@@ -50,6 +50,7 @@ import { blankData, loadPlaceData, type PlaceData } from './placeData'
 import { CREATION_TOKENS } from '../design/creationTokens'
 import { PortProxies, type PortMark } from './portProxies'
 import { ControlTicker } from '../controls/ticker'
+import { screenViewPose } from '../controls/screenView'
 import { ControlController } from './controlController'
 import { fromCatalog, toCatalog, type CatalogControl } from '../controls/catalogLink'
 import type { ControlDef } from '../controls/controlTypes'
@@ -993,7 +994,9 @@ export class SceneHost {
         instance: (id) => this.instances.get(id),
         selected: () => this.selected,
         invalidate: () => this.scheduler.invalidate(),
+        busy: () => this.ghost !== null,
         committed: (instanceId, def, value) => this.commitControl(instanceId, def, value),
+        focusScreen: (instanceId, controlId) => void this.focusScreen(instanceId, controlId),
       },
       this.controllers
     )
@@ -1188,6 +1191,19 @@ export class SceneHost {
     // A device whose power setting is off shows silent meters.
     const power = cats.find((x) => x.id === 'power')
     if (power) c.rig.powered = (values.power ?? power.default) !== false
+  }
+
+  /** Take the camera into a console screen: face it from the operator's side, the whole glass in view. False when there is no such screen. */
+  focusScreen(instanceId: string, controlId: string): boolean {
+    const rig = this.instances.get(instanceId)?.controls?.rig
+    const camera = this._camera
+    const frame = rig?.screenFrame(controlId)
+    if (!frame || !camera || !this._rig) return false
+    const aspect = this.canvas.clientWidth / Math.max(1, this.canvas.clientHeight)
+    const pose = screenViewPose(frame, camera.fov, aspect)
+    this._rig.flyToPreset({ alpha: pose.alpha, beta: pose.beta, radius: pose.radius, target: new Vector3(...pose.target) })
+    this.scheduler.invalidate()
+    return true
   }
 
   /** A 3D control was operated to its final value: carry it to the simulation when it stands for one of its settings. */

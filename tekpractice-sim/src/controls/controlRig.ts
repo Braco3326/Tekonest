@@ -24,6 +24,7 @@ import type { ControlHit } from './controlHit'
 import { faceFrame } from './faceFrame'
 import { BarBallistics, VuBallistics, barLit, demoLevelDb } from './meters'
 import { createScreenApp, type ScreenApp, type TouchKind } from './screenApp'
+import type { ScreenFrame } from './screenView'
 
 const MM = 0.001
 /** A part rests this far above its face so it never z-fights with the model. */
@@ -200,6 +201,22 @@ export class ControlRig {
     const w = sc.plane.getBoundingInfo().boundingBox.extendSize.x * 2
     const h = sc.plane.getBoundingInfo().boundingBox.extendSize.y * 2
     return { x: (lx / w + 0.5) * sc.w, y: (0.5 - ly / h) * sc.h }
+  }
+
+  /** Where a screen is in the world and how it faces (the camera goes there to "go into" it), or null for no screen. */
+  screenFrame(id: string): ScreenFrame | null {
+    const sc = this.parts.get(id)?.screen
+    if (!sc) return null
+    sc.plane.computeWorldMatrix(true)
+    const m = sc.plane.getWorldMatrix()
+    const ex = Vector3.TransformNormal(new Vector3(1, 0, 0), m)
+    const ey = Vector3.TransformNormal(new Vector3(0, 1, 0), m)
+    const n = Vector3.TransformNormal(new Vector3(0, 0, -1), m).normalize() // a Babylon plane shows its front toward -z
+    const c = sc.plane.getAbsolutePosition()
+    const w = sc.plane.getBoundingInfo().boundingBox.extendSize.x * 2 * ex.length()
+    const h = sc.plane.getBoundingInfo().boundingBox.extendSize.y * 2 * ey.length()
+    const up = ey.normalize()
+    return { center: [c.x, c.y, c.z], normal: [n.x, n.y, n.z], up: [up.x, up.y, up.z], w, h }
   }
 
   /** A touch on a screen: the app takes it (and may name a control it changed). */

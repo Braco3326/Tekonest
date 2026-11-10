@@ -233,3 +233,73 @@ describe('ControlController', () => {
     expect(s.fire('pointerdown').stopped).toBe(false)
   })
 })
+
+describe('ControlController: going into a screen', () => {
+  it('two quick presses on bare glass (nothing of the app under them) ask the host to go into the screen and are stopped; a single press is left alone', () => {
+    const win = new FakeWindow()
+    g.window = win
+    g.document = { createElement: () => ({ style: {}, setAttribute() {}, remove() {} }), body: { appendChild() {} } }
+    const scene = new Scene(new NullEngine())
+    const root = new TransformNode('dev', scene)
+    const { layout } = parseControlLayout({
+      schema: 1,
+      deviceId: 'dev',
+      controls: [{ id: 'scr', kind: 'screen', face: 'top', xMm: 200, yMm: 100, sizeMm: { w: 200, h: 100, d: 2 }, screen: { app: 'mixer-overview', pxW: 400, pxH: 200 } }],
+    })
+    const bank = new ControlBank(layout!.controls)
+    const rig = new ControlRig(scene, root, 'd1', bank, { w: 400, h: 100, d: 300 })
+    const inst = { instanceId: 'd1', controls: { bank, rig } } as unknown as DeviceInstance
+    const canvas = { getBoundingClientRect: () => ({ left: 0, top: 0 }), style: { cursor: '' } } as unknown as HTMLElement
+    const pad = rig.pads()[0]
+    const focusScreen = vi.fn()
+    const part = rig.part('scr')!
+    part.node.computeWorldMatrix(true)
+    const c = part.node.getAbsolutePosition()
+    const ray = new Ray(new Vector3(c.x, c.y + 0.5, c.z), new Vector3(0, -1, 0))
+    const host = {
+      scene: { pick: () => ({ hit: true, pickedMesh: pad, distance: 1 }), createPickingRay: () => ray } as unknown as Scene,
+      camera: {} as ArcRotateCamera,
+      canvas,
+      instance: (id: string) => (id === 'd1' ? inst : undefined),
+      selected: () => 'd1',
+      invalidate: vi.fn(),
+      focusScreen,
+    }
+    const bag = new DisposableBag()
+    new ControlController(host, bag)
+    let t = 1000
+    const press = (): boolean => {
+      const ev = new Event('pointerdown', { cancelable: true }) as Event & Record<string, unknown>
+      let stopped = false
+      const orig = ev.stopImmediatePropagation.bind(ev)
+      ev.stopImmediatePropagation = () => {
+        stopped = true
+        orig()
+      }
+      for (const [k, v] of Object.entries({ target: canvas, button: 0, isPrimary: true, pointerId: 1, clientX: 0, clientY: 0, ctrlKey: false, metaKey: false, altKey: false, shiftKey: false, timeStamp: t }))
+        Object.defineProperty(ev, k, { value: v })
+      win.dispatchEvent(ev)
+      return stopped
+    }
+    expect(press()).toBe(false) // first press on a screen with no app under it: the camera's
+    expect(focusScreen).not.toHaveBeenCalled()
+    t += 200
+    expect(press()).toBe(true) // second, quickly: into the screen
+    expect(focusScreen).toHaveBeenCalledWith('d1', 'scr')
+    t += 900
+    expect(press()).toBe(false) // too slow: a new first press
+    bag.dispose()
+  })
+})
+
+describe('ControlController: while a device is being placed', () => {
+  it('is inert: a press on a control belongs to the placement', () => {
+    const s = setup()
+    s.state.at = 'fader'
+    s.rayAt(0.075)
+    ;(s.host as unknown as { busy: () => boolean }).busy = () => true
+    expect(s.fire('pointerdown').stopped).toBe(false)
+    ;(s.host as unknown as { busy: () => boolean }).busy = () => false
+    expect(s.fire('pointerdown').stopped).toBe(true)
+  })
+})

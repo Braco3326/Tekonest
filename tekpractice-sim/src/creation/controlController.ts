@@ -30,6 +30,10 @@ export interface ControlHost {
   invalidate(): void
   /** An operation is finished (a key pressed, a drag released, a reset): the value to carry to the simulation, once, not on every pointer move. */
   committed?(instanceId: string, def: ControlDef, value: number): void
+  /** A device is being placed (its ghost follows the pointer): the press belongs to the placement, the controls are inert. */
+  busy?(): boolean
+  /** A double-click on bare glass: take the camera into the screen. */
+  focusScreen?(instanceId: string, controlId: string): void
 }
 
 /** Pointer travel (CSS px) for a knob to sweep its whole range; Shift divides the speed by FINE. */
@@ -54,6 +58,7 @@ export class ControlController {
   private drag: Drag | null = null
   private hover: { instanceId: string; controlId: string } | null = null
   private lastClick: { id: string; t: number } | null = null
+  private lastGlass: { id: string; t: number } | null = null
   private hud: HTMLElement | null = null
   private hudTimer: ReturnType<typeof setTimeout> | null = null
   private disposed = false
@@ -105,7 +110,7 @@ export class ControlController {
   // ── events ────────────────────────────────────────────────────────────────────────────────────────────────
 
   private onDown(e: PointerEvent): void {
-    if (this.disposed || this.drag) return
+    if (this.disposed || this.drag || this.host.busy?.()) return
     if (e.target !== this.host.canvas || e.button !== 0 || !e.isPrimary) return
     if (e.ctrlKey || e.metaKey || e.altKey) return // camera gestures stay the camera's
     const { x, y } = this.point(e)
@@ -118,7 +123,18 @@ export class ControlController {
       // A touch on the glass belongs to the screen's app; one it does not take (a gap between widgets) falls through to the camera.
       const pt = rig.screenPointAt(def.id, this.host.scene.createPickingRay(x, y, null, this.host.camera))
       const r = pt ? rig.screenTouch(def.id, 'down', pt.x, pt.y) : { handled: false }
-      if (!r.handled) return
+      if (!r.handled) {
+        // Two quick presses on bare glass (nothing of the app under them) go into the screen; one alone is the camera's / the selection's.
+        const key = `${instance.instanceId}/${def.id}`
+        if (this.lastGlass && this.lastGlass.id === key && e.timeStamp - this.lastGlass.t <= DOUBLE_MS) {
+          this.lastGlass = null
+          e.preventDefault()
+          e.stopImmediatePropagation()
+          this.host.focusScreen?.(instance.instanceId, def.id)
+        } else this.lastGlass = { id: key, t: e.timeStamp }
+        return
+      }
+      this.lastGlass = null
       e.preventDefault()
       e.stopImmediatePropagation()
       this.drag = { instanceId: instance.instanceId, def, pointerId: e.pointerId, lastX: e.clientX, lastY: e.clientY, moved: false, lastSlide: 0, start: 0 }
@@ -181,7 +197,10 @@ export class ControlController {
     if (this.disposed) return
     const d = this.drag
     if (!d) {
-      if (e.target === this.host.canvas && e.buttons === 0) this.updateHover(e)
+      if (e.target === this.host.canvas && e.buttons === 0) {
+        if (this.host.busy?.()) this.setHover(null)
+        else this.updateHover(e)
+      }
       return
     }
     if (e.pointerId !== d.pointerId) return
@@ -270,6 +289,13 @@ export class ControlController {
     const { x, y } = this.point(e)
     const found = this.controlAt(x, y)
     this.setHover(found ? { instanceId: found.instance.instanceId, controlId: found.def.id } : null)
+    // The control's name and value follow the pointer while it rests on one (a console has a hundred identical keys).
+    if (found && found.def.kind !== 'screen') {
+      if (this.hudTimer) clearTimeout(this.hudTimer)
+      // A key's legend is on its cap (« ON » on all sixteen): name it by its id, which says the strip.
+      const keyLike = found.def.kind === 'button' || found.def.kind === 'switch'
+      this.showValue(found.def, found.instance.controls!.bank.get(found.def.id), e, keyLike ? found.def.id : undefined)
+    } else if (this.hud) this.hud.style.opacity = '0'
     this.host.canvas.style.cursor = found ? (found.def.kind === 'fader' ? 'ns-resize' : found.def.kind === 'knob' ? 'grab' : found.def.kind === 'screen' ? 'default' : 'pointer') : ''
   }
 
@@ -285,7 +311,7 @@ export class ControlController {
 
   // ── value readout ─────────────────────────────────────────────────────────────────────────────────────────
 
-  private showValue(def: ControlDef, value: number, e: PointerEvent): void {
+  private showValue(def: ControlDef, value: number, e: PointerEvent, name: string | undefined = def.label): void {
     if (typeof document === 'undefined') return
     if (!this.hud) {
       const el = document.createElement('div')
@@ -297,7 +323,7 @@ export class ControlController {
       this.hud = el
     }
     if (this.hudTimer) clearTimeout(this.hudTimer)
-    this.hud.textContent = `${def.label ? `${def.label} · ` : ''}${valueText(def, value)}`
+    this.hud.textContent = `${name ? `${name} · ` : ''}${valueText(def, value)}`
     this.hud.style.left = `${e.clientX + 16}px`
     this.hud.style.top = `${e.clientY - 30}px`
     this.hud.style.opacity = '1'
