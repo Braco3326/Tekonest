@@ -600,6 +600,8 @@ def build_rj45_plug(plan: Plan) -> bpy.types.Object:
 def build_rack_box(plan: Plan) -> bpy.types.Object:
     """Plain box w x h x d, centred on x and z with its bottom at y = 0, every edge chamfered by chamferMm (one segment).
     No panel inset and no ear flanges in wave 1: ports sit on the bounding-box face (2026-10-29 spec 4.5)."""
+    if any(k in (plan.get("params") or {}) for k in RACK_V2_NAMES):
+        return build_rack_device(plan)
     w, h, d = size_m(plan)
     chamfer = param_m(plan, "chamferMm", DEFAULT_CHAMFER_MM)
     if chamfer >= min(w, h, d) / 2.0:
@@ -613,6 +615,374 @@ def build_rack_box(plan: Plan) -> bpy.types.Object:
         bm.faces.new([v[i] for i in q])
     bmesh.ops.bevel(bm, geom=bm.edges[:], offset=chamfer, offset_type="OFFSET", segments=1, affect="EDGES")
     body.done(CHASSIS)  # lifted grey: a near-black box vanishes against the creation scene's night background
+    return body.finish()
+
+
+# --- rack-box v2: plate, ears, chassis, handles, vents, feet, fillets ----------------------------------------------
+# Used when the spec gives any of RACK_V2_NAMES (mirrors RACK_V2_PARAMS in tools/assets3d/shapes.ts); without them build_rack_box is the old plain box,
+# byte for byte. Built in a frame with the FRONT PANEL at -z; frontOnIo = 1 turns the finished model 180 degrees about y (so the face-local
+# coordinates a spec gives for its front face stay valid) and the control layouts' flat zones are checked in the final frame.
+
+RACK_V2_NAMES = (
+    "earWidthMm", "earThicknessMm", "earHoleMm", "earHoleEdgeMm", "earHoleRowMm", "earDiagonal",
+    "handleCount", "handleProjectionMm", "handleDiaMm",
+    "plateInsetMm", "filletMm", "filletSegments",
+    "ventSlots", "ventColumns", "ventDepthMm", "ventSlotLenMm", "ventSlotWidthMm", "ventPitchMm", "ventColPitchMm", "ventFromRearMm", "ventSides",
+    "feetMm", "feetDiaMm", "bodyWidthMm", "rearInsetMm", "frontOnIo", "plateFilletMm", "seamMm", "plateRgb", "bodyRgb",
+)
+RACK_PLATE = "#5a5c66"        # the front plate (lifted: a black panel vanishes against the night backdrop)
+RACK_SLOT = "#17171b"         # inside a slot, vent or other recess
+RACK_HANDLE = "#8c8e93"
+RACK_PLATE_T_MM = 4.0         # default plate and ear thickness
+RACK_EIA_U_MM = 44.45
+RACK_EIA_SPACING_MM = 465.1   # EIA-310 horizontal distance between the mounting holes of the two ears
+RACK_EIA_HOLE_ROW_MM = 6.35   # the outer holes of a rack unit sit 6.35 mm from its edge
+RACK_SLOT_ASPECT = 2.5        # EIA slot 15.9 x 6.35 mm
+RACK_SLOT_SEGMENTS = 24
+RACK_FEET_SEGMENTS = 14
+RACK_HANDLE_SEGMENTS = 16
+RACK_FIT_MM = 0.3             # a feature may touch the edge of the flat region this closely
+
+
+def rack_opt(plan: Plan, name: str) -> float | None:
+    """The shape param `name` in metres, or None when the plan does not give it (validated when given)."""
+    params = plan.get("params") or {}
+    return positive(params[name], f"params.{name}") * MM if name in params else None
+
+
+def rack_whole(plan: Plan, name: str, lo: int, hi: int) -> int | None:
+    params = plan.get("params") or {}
+    if name not in params:
+        return None
+    v = params[name]
+    if isinstance(v, bool) or not isinstance(v, (int, float)) or v != int(v) or not lo <= int(v) <= hi:
+        raise BuildError(f"params.{name} must be a whole number from {lo} to {hi}, got {v!r}")
+    return int(v)
+
+
+def rack_rgb(plan: Plan, name: str, default: str) -> str:
+    """A colour param: the whole number 0xRRGGBB (e.g. 4890544 = #4a99b0), as '#rrggbb'; the default when the plan gives none."""
+    params = plan.get("params") or {}
+    if name not in params:
+        return default
+    v = params[name]
+    if isinstance(v, bool) or not isinstance(v, (int, float)) or v != int(v) or not 1 <= int(v) <= 0xFFFFFF:
+        raise BuildError(f"params.{name} must be a colour as a whole number from 1 to 16777215 (0xRRGGBB), got {v!r}")
+    return "#%06x" % int(v)
+
+
+def stadium_outline(cx: float, cy: float, length: float, height: float, n: int) -> list[tuple[float, float]]:
+    """A slot (two half circles joined by straight sides), counter-clockwise, n + 2 points; `length` is the overall length."""
+    r = height / 2.0
+    half = max(length / 2.0 - r, 0.0)
+    m = n // 2
+    pts = []
+    for i in range(m + 1):
+        a = -math.pi / 2.0 + math.pi * i / m
+        pts.append((cx + half + r * math.cos(a), cy + r * math.sin(a)))
+    for i in range(m + 1):
+        a = math.pi / 2.0 + math.pi * i / m
+        pts.append((cx - half + r * math.cos(a), cy + r * math.sin(a)))
+    return pts
+
+
+def cut_recess(bm: bmesh.types.BMesh, pts: list[tuple[float, float]], to_g: Callable[[float, float], tuple[float, float, float]], into: tuple[float, float, float], depth: float, through: bool) -> tuple[list[bmesh.types.BMEdge], list[bmesh.types.BMEdge]]:
+    """The walls (and the floor, unless `through`) of a recess whose outline `pts` (2D) is placed on a face by `to_g` (to glTF space), going `depth` along the
+    glTF direction `into`. Returns the mouth edges and the floor-ring edges (a through hole is closed by filling the back face against them)."""
+    n = len(pts)
+    off = Vector(into) * depth
+    mouth = [bm.verts.new(g2b(*to_g(a, b))) for a, b in pts]
+    floor = [bm.verts.new(g2b(*(Vector(to_g(a, b)) + off))) for a, b in pts]
+    band(bm, mouth, floor)
+    if not through:
+        bm.faces.new(floor[::-1])
+    mouth_edges = [bm.edges.get((mouth[i], mouth[(i + 1) % n])) for i in range(n)]
+    floor_edges = [bm.edges.get((floor[i], floor[(i + 1) % n])) for i in range(n)]
+    return mouth_edges, floor_edges
+
+
+def take_plane_face(bm: bmesh.types.BMesh, axis: int, value: float, z_range: tuple[float, float] | None = None, y_range: tuple[float, float] | None = None) -> list[bmesh.types.BMEdge]:
+    """Removes the one flat face lying in the glTF plane (axis 0 = x, 1 = y, 2 = z) = value, whose centre z lies in z_range (when given), and returns its
+    edges. Raises when there is not exactly one."""
+    def comp(co: Vector) -> float:
+        return (co.x, co.z, -co.y)[axis]
+    found = []
+    for f in bm.faces:
+        if not all(abs(comp(v.co) - value) < FLAT_FACE_TOL for v in f.verts):
+            continue
+        if z_range is not None:
+            zc = sum(-v.co.y for v in f.verts) / len(f.verts)
+            if not z_range[0] - FLAT_FACE_TOL <= zc <= z_range[1] + FLAT_FACE_TOL:
+                continue
+        if y_range is not None:
+            yc = sum(v.co.z for v in f.verts) / len(f.verts)
+            if not y_range[0] - FLAT_FACE_TOL <= yc <= y_range[1] + FLAT_FACE_TOL:
+                continue
+        found.append(f)
+    if len(found) != 1:
+        raise BuildError(f"expected one flat face in the plane {'xyz'[axis]} = {value / MM:.2f} mm, found {len(found)}")
+    edges = list(found[0].edges)
+    bmesh.ops.delete(bm, geom=found, context="FACES_ONLY")
+    return edges
+
+
+def rack_bevel(bm: bmesh.types.BMesh, faces: list[bmesh.types.BMFace], width: float, segments: int) -> None:
+    edges = list(dict.fromkeys(e for f in faces for e in f.edges))
+    bmesh.ops.bevel(bm, geom=edges, offset=width, offset_type="OFFSET", segments=segments, affect="EDGES")
+
+
+def rack_to_face(face: str, flipped: bool, w: float, d: float, gx: float, gy: float, gz: float) -> tuple[float, float]:
+    """A point of the model in the frame it is built in (front panel at -z) -> face-local (u, v) in metres on `face` of the FINISHED model
+    (rotated 180 degrees about y when the front is the io face): x from the left as seen from outside, y up (top: v from the io edge toward the front)."""
+    if flipped:
+        gx, gz = -gx, -gz
+    if face == "io":
+        return gx + w / 2.0, gy
+    if face == "opposite":
+        return w / 2.0 - gx, gy
+    if face == "top":
+        return gx + w / 2.0, d / 2.0 - gz
+    if face == "bottom":
+        return gx + w / 2.0, gz + d / 2.0
+    if face == "left":
+        return d / 2.0 + gz, gy
+    return d / 2.0 - gz, gy   # right
+
+
+def rack_zone_check(plan: Plan, flipped: bool, w: float, d: float, face: str, what: str, corners: list[tuple[float, float, float]]) -> None:
+    """Raises when the rectangle spanned by `corners` (glTF points of one feature on `face`, built frame) overlaps a flat zone of that face."""
+    zones = plan.get("flatZones") or []
+    if not zones:
+        return
+    uv = [rack_to_face(face, flipped, w, d, *c) for c in corners]
+    u0, u1 = min(p[0] for p in uv) / MM, max(p[0] for p in uv) / MM
+    v0, v1 = min(p[1] for p in uv) / MM, max(p[1] for p in uv) / MM
+    for z in zones:
+        if z.get("face") != face:
+            continue
+        if u0 < z["x1"] and u1 > z["x0"] and v0 < z["y1"] and v1 > z["y0"]:
+            raise BuildError(f"{what} (x {u0:.1f} to {u1:.1f}, y {v0:.1f} to {v1:.1f} mm on the {face} face) overlaps a flat zone of a control (x {z['x0']:.1f} to {z['x1']:.1f}, y {z['y0']:.1f} to {z['y1']:.1f} mm): the controls rig draws that area")
+
+
+def build_rack_device(plan: Plan) -> bpy.types.Object:
+    """The detailed rack unit (see RACK_V2_NAMES): plate with ears and slots, chassis, handles, vents, feet, fillets. Pivot bottom-centre, front panel
+    face on the bounding box (z = -d/2, or +d/2 with frontOnIo = 1), rear panel face on the opposite side."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    unknown = [k for k in params if k != "chamferMm" and k not in RACK_V2_NAMES]
+    if unknown:
+        raise BuildError(f"rack-box has no param {unknown[0]!r}")
+    plate_col = rack_rgb(plan, "plateRgb", RACK_PLATE)
+    body_col = rack_rgb(plan, "bodyRgb", CHASSIS)
+    flipped = rack_whole(plan, "frontOnIo", 1, 1) == 1
+    front_face = "io" if flipped else "opposite"
+    plate_t = rack_opt(plan, "earThicknessMm") or RACK_PLATE_T_MM * MM
+    plate_inset = rack_opt(plan, "plateInsetMm") or 0.0
+    feet = rack_opt(plan, "feetMm") or 0.0
+    rear_inset = rack_opt(plan, "rearInsetMm") or 0.0
+    handle_count = rack_whole(plan, "handleCount", 2, 2)
+    handle_proj = rack_opt(plan, "handleProjectionMm") or 0.0
+    handle_r = (rack_opt(plan, "handleDiaMm") or 10.0 * MM) / 2.0
+    fillet = rack_opt(plan, "filletMm")
+    seg_n = rack_whole(plan, "filletSegments", 1, 12) or 3
+    if handle_count and handle_proj < 2.0 * handle_r + 2.0 * MM:
+        raise BuildError(f"params.handleProjectionMm ({handle_proj / MM:.1f}) must be at least the handle diameter plus 2 mm ({(2 * handle_r + 2 * MM) / MM:.1f})")
+    if handle_proj and not handle_count:
+        raise BuildError("params.handleProjectionMm has no effect without params.handleCount")
+
+    # widths: the ears are the plate beyond the chassis
+    body_w = rack_opt(plan, "bodyWidthMm")
+    ear_w = rack_opt(plan, "earWidthMm")
+    if body_w is not None and body_w > w + 1e-9:
+        raise BuildError(f"params.bodyWidthMm ({body_w / MM:.1f}) cannot be wider than the width ({w / MM:.1f})")
+    if body_w is not None and ear_w is not None and abs((w - body_w) / 2.0 - ear_w) > 0.5 * MM:
+        raise BuildError(f"params.earWidthMm ({ear_w / MM:.1f}) and params.bodyWidthMm ({body_w / MM:.1f}) disagree: each ear is (w - bodyWidthMm) / 2 = {(w - body_w) / 2.0 / MM:.1f} mm")
+    if body_w is None:
+        body_w = w - 2.0 * ear_w if ear_w is not None else w
+    if body_w < w * 0.3:
+        raise BuildError("the chassis is narrower than a third of the width")
+    ear_w = (w - body_w) / 2.0
+
+    seg = seg_n if fillet is not None else 1
+    cham = fillet if fillet is not None else param_m(plan, "chamferMm", DEFAULT_CHAMFER_MM)
+    plate_fillet = rack_opt(plan, "plateFilletMm")
+    plate_cham = plate_fillet if plate_fillet is not None else min(cham, 0.45 * plate_t)
+    if plate_cham >= 0.5 * plate_t:
+        raise BuildError(f"the plate edge fillet ({plate_cham / MM:.2f} mm) must be less than half the plate thickness ({plate_t / MM:.2f} mm)")
+    seam = rack_opt(plan, "seamMm")
+    if cham >= min(body_w, h, d) / 2.0:
+        raise BuildError(f"the fillet or chamfer ({cham / MM:.2f} mm) must be smaller than half the smallest side")
+
+    z_front = -d / 2.0 + handle_proj          # the plate's front face
+    y_plate0 = feet                            # plate bottom
+    y_c0, y_c1 = feet + plate_inset, h - plate_inset
+    z_c0, z_c1 = z_front + plate_t, d / 2.0 - rear_inset
+    if y_c1 - y_c0 < 4.0 * cham or z_c1 - z_c0 < 4.0 * cham:
+        raise BuildError("the chassis is too small for the plate inset, the feet, the rear inset or the fillet")
+
+    body = Body("rack-box")
+    bm = body.bm
+
+    # --- the front plate, with the slotted ear holes -------------------------------------------------------------------
+    plate_pts = [(-w / 2.0, y_plate0), (w / 2.0, y_plate0), (w / 2.0, h), (-w / 2.0, h)]
+    pf = extrude_xy(bm, plate_pts, z_front, z_front + plate_t)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    rack_bevel(bm, pf, plate_cham, seg)
+    body.done(plate_col)
+    hole_h = rack_opt(plan, "earHoleMm")
+    diagonal = rack_whole(plan, "earDiagonal", 1, 1) == 1
+    holes = 0
+    if hole_h is not None:
+        edge = rack_opt(plan, "earHoleEdgeMm")
+        if edge is None:
+            edge = (w - RACK_EIA_SPACING_MM * MM) / 2.0 if w > (RACK_EIA_SPACING_MM + 10.0) * MM else max(ear_w / 2.0, hole_h * RACK_SLOT_ASPECT / 2.0 + MM)
+        slot_len = hole_h * RACK_SLOT_ASPECT
+        units = max(1, round(h / (RACK_EIA_U_MM * MM)))   # rack units, counted from the bottom of the bounding box (the feet, when there are any)
+        row_mm = rack_opt(plan, "earHoleRowMm") or RACK_EIA_HOLE_ROW_MM * MM   # distance of the slot centres from the plate's bottom and top (EIA: 6.35 mm from the edge of a rack unit)
+        rows = [row_mm, units * RACK_EIA_U_MM * MM - row_mm]
+        if rows[1] > h - hole_h / 2.0 - plate_cham or rows[0] < y_plate0 + hole_h / 2.0 + plate_cham:
+            rows = [y_plate0 + (h - y_plate0) / 2.0] * 2   # a plate too short for two rows: one slot per ear, at mid height
+        through = ear_w > 1e-9
+        # face-local u (from the left, seen from the front) of each slot centre; the built frame has gx = w / 2 - u
+        spots = [(edge, rows[1]), (w - edge, rows[0])] if diagonal else [(edge, rows[1]), (edge, rows[0]), (w - edge, rows[1]), (w - edge, rows[0])]
+        slots = list(dict.fromkeys((w / 2.0 - u, row) for u, row in spots))
+        slot_t = plate_t if through else min(plate_t, 3.0 * MM)
+        for gx, gy in slots:
+            x0, x1 = gx - slot_len / 2.0, gx + slot_len / 2.0
+            y0, y1 = gy - hole_h / 2.0, gy + hole_h / 2.0
+            if through:
+                if x0 * x1 < 0 or min(abs(x0), abs(x1)) < body_w / 2.0 + RACK_FIT_MM * MM or max(abs(x0), abs(x1)) > w / 2.0 - RACK_FIT_MM * MM:
+                    raise BuildError(f"an ear slot (x {abs(x0) / MM:.1f} to {abs(x1) / MM:.1f} mm from the centre) does not lie in the ear (chassis half width {body_w / 2 / MM:.1f}, plate half width {w / 2 / MM:.1f}): change earHoleEdgeMm or earHoleMm")
+            elif max(abs(x0), abs(x1)) > w / 2.0 - RACK_FIT_MM * MM:
+                raise BuildError("an ear slot does not fit in the plate")
+            rack_zone_check(plan, flipped, w, d, front_face, "an ear slot", [(x0, y0, z_front), (x1, y1, z_front)])
+            holes += 1
+        front_edges = take_plane_face(bm, 2, z_front, (z_front, z_front + plate_t))
+        back_edges = take_plane_face(bm, 2, z_front + plate_t, (z_front, z_front + plate_t)) if through else []
+        loops_front: list[list[bmesh.types.BMEdge]] = []
+        loops_back: list[list[bmesh.types.BMEdge]] = []
+        for gx, gy in slots:
+            outline = stadium_outline(gx, gy, slot_len, hole_h, RACK_SLOT_SEGMENTS)
+            m_edges, f_edges = cut_recess(bm, outline, lambda a, b: (a, b, z_front), (0.0, 0.0, 1.0), slot_t, through)
+            loops_front.append(m_edges)
+            loops_back.append(f_edges)
+        body.done(RACK_SLOT)
+        fill_with_holes(bm, front_edges, loops_front, (0.0, 0.0, -1.0))
+        if through:
+            fill_with_holes(bm, back_edges, loops_back, (0.0, 0.0, 1.0))
+        body.done(plate_col)
+
+    # --- the chassis (and, with rearInsetMm, the rear panel as a shell of its own: a seam) ----------------------------------
+    min_fillet = plate_cham
+    y_seam = y_c0 + seam if seam is not None else None
+    if y_seam is not None and not y_c0 + 3.0 * cham < y_seam < y_c1 - 3.0 * cham:
+        raise BuildError(f"params.seamMm ({seam / MM:.1f}) must leave room for the fillet above and below it in the chassis height")
+    shells = [(z_c0, z_c1, y_c0, y_seam), (z_c0, z_c1, y_seam, y_c1)] if y_seam is not None else [(z_c0, z_c1, y_c0, y_c1)]
+    if rear_inset > 0.0:
+        shells.append((z_c1, d / 2.0, y_c0, y_c1))
+    for za, zb, ya, yb in shells:
+        pts = [(-body_w / 2.0, ya), (body_w / 2.0, ya), (body_w / 2.0, yb), (-body_w / 2.0, yb)]
+        faces = extrude_xy(bm, pts, za, zb)
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+        # a shell thinner than twice the fillet (the rear panel) takes a smaller one: a bevel wider than half the wall folds the big faces inside out
+        shell_cham = min(cham, 0.45 * (zb - za), 0.45 * (yb - ya))
+        rack_bevel(bm, faces, shell_cham, seg)
+        body.done(body_col)
+        min_fillet = min(min_fillet, shell_cham)
+
+    # --- vents: rectangular recesses in the top (or both sides) of the chassis ------------------------------------------
+    vent_n = rack_whole(plan, "ventSlots", 1, 40)
+    vents = 0
+    if vent_n:
+        cols = rack_whole(plan, "ventColumns", 1, 20) or 1
+        v_len = rack_opt(plan, "ventSlotLenMm") or 40.0 * MM
+        v_wid = rack_opt(plan, "ventSlotWidthMm") or 3.0 * MM
+        v_pitch = rack_opt(plan, "ventPitchMm") or v_wid * 2.0
+        v_cpitch = rack_opt(plan, "ventColPitchMm") or v_len * 1.25
+        v_depth = rack_opt(plan, "ventDepthMm") or 2.0 * MM
+        sides = rack_whole(plan, "ventSides", 1, 1) == 1
+        block_len = (cols - 1) * v_cpitch + v_len
+        block_w = (vent_n - 1) * v_pitch + v_wid
+        zs0, zs1 = z_c0, z_c1   # the flat run of the chassis (the rear shell, when there is one, has no vents)
+        from_rear = rack_opt(plan, "ventFromRearMm")
+        z_end = zs1 - cham - from_rear if from_rear is not None else (zs0 + zs1) / 2.0 + block_len / 2.0
+        z_start = z_end - block_len
+        if z_start < zs0 + cham + RACK_FIT_MM * MM or z_end > zs1 - cham + 1e-9:
+            raise BuildError(f"the vent block ({block_len / MM:.1f} mm long) does not fit in the flat part of the chassis ({(zs1 - zs0 - 2 * cham) / MM:.1f} mm)")
+        vy0 = y_seam if y_seam is not None else y_c0   # with a seam the vents are in the upper shell (the lid)
+        if sides:
+            avail = y_c1 - vy0 - 2.0 * cham
+            if block_w > avail:
+                raise BuildError(f"the vent slots ({block_w / MM:.1f} mm tall) do not fit in the side wall ({avail / MM:.1f} mm)")
+            a_start = (vy0 + y_c1) / 2.0 - block_w / 2.0
+        else:
+            avail = body_w - 2.0 * cham
+            if block_w > avail:
+                raise BuildError(f"the vent slots ({block_w / MM:.1f} mm wide) do not fit in the top ({avail / MM:.1f} mm)")
+            a_start = -block_w / 2.0
+        slot_list: list[tuple[float, float, float, float]] = []   # (a0, a1, z0, z1): a = x for the top, y for the sides
+        for c in range(cols):
+            for k in range(vent_n):
+                a0 = a_start + k * v_pitch
+                z0 = z_start + c * v_cpitch
+                slot_list.append((a0, a0 + v_wid, z0, z0 + v_len))
+        targets = [("x", -1.0), ("x", 1.0)] if sides else [("y", 1.0)]
+        for kind, sign in targets:
+            if kind == "y":
+                plane, axis, face = y_c1, 1, "top"
+                to_g = lambda a, b, p=plane: (a, p, b)
+                into = (0.0, -1.0, 0.0)
+            else:
+                plane, axis, face = sign * body_w / 2.0, 0, "right" if sign > 0 else "left"
+                to_g = lambda a, b, p=plane: (p, a, b)
+                into = (-sign, 0.0, 0.0)
+            for a0, a1, z0, z1 in slot_list:
+                rack_zone_check(plan, flipped, w, d, face, "a vent slot", [to_g(a0, z0), to_g(a1, z1)])
+            edges = take_plane_face(bm, axis, plane, (z_c0, z_c1), (vy0, y_c1))
+            loops = []
+            for a0, a1, z0, z1 in slot_list:
+                rect = [(a0, z0), (a1, z0), (a1, z1), (a0, z1)]
+                m_edges, _f = cut_recess(bm, rect, to_g, into, v_depth, False)
+                loops.append(m_edges)
+            body.done(RACK_SLOT)
+            nrm = (0.0, 1.0, 0.0) if kind == "y" else (sign, 0.0, 0.0)
+            fill_with_holes(bm, edges, loops, nrm)
+            body.done(body_col)
+            vents += len(slot_list)
+
+    # --- feet ---------------------------------------------------------------------------------------------------------------------
+    if feet > 0.0:
+        fd = (rack_opt(plan, "feetDiaMm") or 14.0 * MM) / 2.0
+        inset = max(fd + 8.0 * MM, 20.0 * MM)
+        for sx in (-1.0, 1.0):
+            for zc in (z_c0 + inset, z_c1 - inset):
+                cylinder_between(bm, g2b(sx * (body_w / 2.0 - inset), 0.0, zc), g2b(sx * (body_w / 2.0 - inset), y_c0 + 0.0005, zc), fd, fd, RACK_FEET_SEGMENTS)
+        body.done(FOOT)
+
+    # --- handles ------------------------------------------------------------------------------------------------------------------
+    if handle_count:
+        margin = max(6.0 * MM, 0.15 * (h - y_plate0))
+        zc = -d / 2.0 + handle_r
+        for sx in (-1.0, 1.0):
+            hx = sx * (w / 2.0 - handle_r - 4.0 * MM)
+            ya, yb = y_plate0 + margin, h - margin
+            if yb - ya < 4.0 * handle_r:
+                raise BuildError("the plate is too short for a handle of this size")
+            rack_zone_check(plan, flipped, w, d, front_face, "a handle", [(hx - handle_r, ya, -d / 2.0), (hx + handle_r, yb, -d / 2.0)])
+            cylinder_between(bm, g2b(hx, ya, zc), g2b(hx, yb, zc), handle_r, handle_r, RACK_HANDLE_SEGMENTS)
+            for yy in (ya + handle_r, yb - handle_r):
+                cylinder_between(bm, g2b(hx, yy, zc), g2b(hx, yy, z_front + 0.2 * MM), handle_r * 0.8, handle_r * 0.8, RACK_HANDLE_SEGMENTS)
+        body.done(RACK_HANDLE)
+
+    if flipped:
+        for v in bm.verts:
+            v.co.x = -v.co.x
+            v.co.y = -v.co.y
+    if fillet is not None:
+        MEASURE["filletMm"] = round(min_fillet / MM, 4)
+    MEASURE["ioFaceOffsetMm"] = round(plate_t / MM, 4)
+    MEASURE["earHoles"] = float(holes)
+    MEASURE["ventSlots"] = float(vents)
     return body.finish()
 
 

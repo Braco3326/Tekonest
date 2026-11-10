@@ -6,7 +6,7 @@
  *
  *   blender --background --factory-startup --python-exit-code 1 --python build_from_spec.py -- --plan <plan.json> --out <glb>
  *
- * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours?, ports? (io-face ports, for shapes that cut socket pockets), projections? } (profile and colours only for revolve and console-wedge; projections = [{ face, png }] map a picture of each face onto the shape). Sizes always come from the spec's realSizeMm.
+ * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours?, ports? (io-face ports, for shapes that cut socket pockets), flatZones? (control rectangles the shape must keep flat), projections? } (profile and colours only for revolve and console-wedge; projections = [{ face, png }] map a picture of each face onto the shape). Sizes always come from the spec's realSizeMm.
  * The GLB is the raw input of attempt 1 of buildAsset: the fix-up and every gate run on it unchanged.
  * `exec` and `blender` are injectable so the contract is unit-tested without Blender.
  */
@@ -15,6 +15,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { findBlender } from './env'
+import { flatZonesFor } from './flatZones'
 import type { ProjectionFace } from './projection'
 import { SHAPE_SPECS } from './shapes'
 import { defaultExec } from './runFixup'
@@ -30,8 +31,13 @@ export interface BuildProjection {
 
 /** What the builder measured on the mesh it made (written by build_from_spec.py next to its output, read back here). */
 export interface BuilderMeasure {
-  /** The smallest edge fillet the builder built, in millimetres (curved-cabinet): the 'fillet' gate checks it against build.minFilletMm. */
+  /** The smallest edge fillet the builder built, in millimetres (curved-cabinet, detailed rack-box): the 'fillet' gate checks it against build.minFilletMm. */
   filletMm?: number
+  /** rack-box v2: how far the front plate stands in front of the chassis (the plate face is the bounding-box face the ports sit on), in millimetres. */
+  ioFaceOffsetMm?: number
+  /** rack-box v2: slotted ear holes and vent slots the builder cut. */
+  earHoles?: number
+  ventSlots?: number
 }
 
 /** Where the builder writes its measurements: next to the GLB, <name>.measure.json. */
@@ -73,6 +79,8 @@ export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDe
     params: spec.build.params ?? {},
     ...(spec.build.profile ? { profile: spec.build.profile } : {}),
     ...(spec.build.colours ? { colours: spec.build.colours } : {}),
+    // a shape that keeps the controls rig's areas flat needs where they are (the device's control layout; none = no zones)
+    ...(SHAPE_SPECS[spec.build.shape].usesFlatZones ? { flatZones: flatZonesFor(spec.id) } : {}),
     // a shape that cuts a pocket behind each inset port needs where they are (io face only: that is the face it cuts)
     ...(SHAPE_SPECS[spec.build.shape].usesPorts
       ? {
@@ -133,8 +141,13 @@ async function readMeasure(path: string, id: string): Promise<BuilderMeasure> {
   } catch {
     throw new Error(`Blender build of ${id} wrote a malformed measurement file (not JSON): ${path}`)
   }
-  const fillet = parsed !== null && typeof parsed === 'object' ? (parsed as Record<string, unknown>).filletMm : undefined
-  if (fillet === undefined) return {}
-  if (typeof fillet !== 'number' || !Number.isFinite(fillet)) throw new Error(`Blender build of ${id} wrote a filletMm that is not a finite number: ${String(fillet)}`)
-  return { filletMm: fillet }
+  if (parsed === null || typeof parsed !== 'object') return {}
+  const out: BuilderMeasure = {}
+  for (const key of ['filletMm', 'ioFaceOffsetMm', 'earHoles', 'ventSlots'] as const) {
+    const v = (parsed as Record<string, unknown>)[key]
+    if (v === undefined) continue
+    if (typeof v !== 'number' || !Number.isFinite(v)) throw new Error(`Blender build of ${id} wrote a ${key} that is not a finite number: ${String(v)}`)
+    out[key] = v
+  }
+  return out
 }

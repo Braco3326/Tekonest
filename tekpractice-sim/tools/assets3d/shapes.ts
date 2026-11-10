@@ -8,6 +8,15 @@
  */
 import type { AssetSpecT } from './specSchema'
 
+/** The optional params of the detailed rack-box (all in mm unless said otherwise; counts and flags are plain numbers). */
+export const RACK_V2_PARAMS = [
+  'earWidthMm', 'earThicknessMm', 'earHoleMm', 'earHoleEdgeMm', 'earHoleRowMm', 'earDiagonal',
+  'handleCount', 'handleProjectionMm', 'handleDiaMm',
+  'plateInsetMm', 'filletMm', 'filletSegments',
+  'ventSlots', 'ventColumns', 'ventDepthMm', 'ventSlotLenMm', 'ventSlotWidthMm', 'ventPitchMm', 'ventColPitchMm', 'ventFromRearMm', 'ventSides',
+  'feetMm', 'feetDiaMm', 'bodyWidthMm', 'rearInsetMm', 'frontOnIo', 'plateFilletMm', 'seamMm', 'plateRgb', 'bodyRgb',
+] as const
+
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
 export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
@@ -25,6 +34,8 @@ export interface ShapeSpec {
   profileKind?: 'lathe' | 'side'
   /** True when the builder also needs the spec's ports (it cuts a pocket behind each inset port): runBuilder then puts them in plan.json. */
   usesPorts?: boolean
+  /** True when the builder must keep the control rectangles of content/control-layouts/<id>.json flat (runBuilder puts them in plan.json as flatZones). */
+  usesFlatZones?: boolean
 }
 
 export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
@@ -33,7 +44,14 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   'xlr-male-plug': { kind: 'connector', params: ['pins'], needsMatingOuter: false },
   'trs-plug': { kind: 'connector', params: ['barrelMm', 'zScale', 'poles'], needsMatingOuter: true },
   'rj45-plug': { kind: 'connector', params: [], needsMatingOuter: false },
-  'rack-box': { kind: 'device', params: ['chamferMm'], needsMatingOuter: false },
+  // A rack unit, desktop box or tower. Only chamferMm = the old plain chamfered box (44 triangles, byte-identical to the first builder). Any of the RACK_V2_PARAMS
+  // switches on the detailed build: a full-width front plate (earThicknessMm thick, its face is the bounding-box face so ports and controls sit on it) with
+  // slotted rack-ear holes (EIA-310: hole centres earHoleEdgeMm from the plate end, default 8.75 so they are 465.1 mm apart on a 482.6 plate; earHoleRowMm = distance of the slot centres from the plate bottom and top, default 6.35; slot earHoleMm high, 2.5 x that long; earDiagonal = 1 gives one slot per ear, top on the left and bottom on the right),
+  // a chassis bodyWidthMm wide behind it (the ears are the plate beyond it: earWidthMm = (w - bodyWidthMm) / 2, give either), the chassis inset plateInsetMm from the plate
+  // outline at top and bottom, two handles (handleCount 2) standing handleProjectionMm in front of the plate (the plate then moves back, so the unit must have no port
+  // or control on the front face), vent slots (ventSlots in a row, ventColumns rows of them) on the top or, with ventSides, on both sides, rubber feet (feetMm tall),
+  // a rear panel rearInsetMm deep as a separate shell (a seam), a horizontal seam seamMm above the chassis bottom (a base and a lid shell, each filleted, so the seam is a groove; vents then lie in the lid), filletMm round chassis edges in filletSegments steps (plateFilletMm for the plate edges, default 0.45 x the plate thickness at most); plateRgb and bodyRgb colour the faces no picture covers (the whole number 0xRRGGBB, e.g. 0x2f6db8 = 3042744; default a lifted grey). frontOnIo = 1 when the front panel is the io face.
+  'rack-box': { kind: 'device', params: ['chamferMm', ...RACK_V2_PARAMS], needsMatingOuter: false, usesFlatZones: true },
   // The Yamaha Rio3224-D2 stage box: layout (connector grid, panel plates) is in the builder, only datasheet sizes are params.
   'stagebox-rio3224': { kind: 'device', params: ['earMm', 'flangeDepthMm', 'frontStepMm', 'rearStepMm'], needsMatingOuter: false },
   // A surface of revolution about the vertical axis from a measured profile (microphones, later stands and lamps).
@@ -155,6 +173,7 @@ export function validateBuild(spec: AssetSpecT): string[] {
   }
   if (build.shape === 'speaker-cabinet') errors.push(...validateSpeakerCabinet(spec))
   if (build.shape === 'curved-cabinet') errors.push(...validateCurvedCabinet(spec))
+  if (build.shape === 'rack-box') errors.push(...validateRackBox(spec))
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {
     errors.push(`${spec.id}: build shape '${build.shape}' needs mating.outerMm (the diameter of the mating end)`)
   }
@@ -193,6 +212,48 @@ function validateSpeakerCabinet(spec: AssetSpecT): string[] {
       errors.push(`${spec.id}: the pocket of port '${port.portId}' (x ${port.xMm}, y ${port.yMm}, radius ${r} mm) does not fit in the flat rear face (x ${left} to ${right} mm)`)
     }
     if (port.insetMm > d / 2) errors.push(`${spec.id}: port '${port.portId}' inset (${port.insetMm} mm) is deeper than half the depth`)
+  }
+  return errors
+}
+
+/** The checks of a detailed rack-box that need no geometry (the Python builder checks the fit of slots and vents in the real outline and against the flat zones). */
+function validateRackBox(spec: AssetSpecT): string[] {
+  const p = spec.build?.params ?? {}
+  if (!RACK_V2_PARAMS.some((n) => p[n] !== undefined)) return []
+  const errors: string[] = []
+  const { w, h, d } = spec.realSizeMm
+  const id = spec.id
+  const whole = (name: string, lo: number, hi: number): void => {
+    const v = p[name]
+    if (v !== undefined && !(Number.isInteger(v) && v >= lo && v <= hi)) errors.push(`${id}: param '${name}' must be a whole number from ${lo} to ${hi}, got ${v}`)
+  }
+  whole('handleCount', 2, 2)
+  whole('filletSegments', 1, 12)
+  whole('ventSlots', 1, 40)
+  whole('ventColumns', 1, 20)
+  whole('ventSides', 1, 1)
+  whole('frontOnIo', 1, 1)
+  whole('earDiagonal', 1, 1)
+  whole('plateRgb', 1, 0xffffff)
+  whole('bodyRgb', 1, 0xffffff)
+  if (p.bodyWidthMm !== undefined && p.bodyWidthMm > w) errors.push(`${id}: bodyWidthMm (${p.bodyWidthMm}) cannot be wider than the width ${w} mm`)
+  if (p.bodyWidthMm !== undefined && p.earWidthMm !== undefined && Math.abs((w - p.bodyWidthMm) / 2 - p.earWidthMm) > 0.5) {
+    errors.push(`${id}: earWidthMm (${p.earWidthMm}) and bodyWidthMm (${p.bodyWidthMm}) disagree: the ears are (${w} - bodyWidthMm) / 2 = ${(w - p.bodyWidthMm) / 2} mm wide each; give one of them`)
+  }
+  if (p.earWidthMm !== undefined && p.earWidthMm * 2 >= w) errors.push(`${id}: earWidthMm (${p.earWidthMm}) must be less than half the width`)
+  if (p.plateInsetMm !== undefined && p.plateInsetMm * 4 >= h) errors.push(`${id}: plateInsetMm (${p.plateInsetMm}) must be less than a quarter of the height ${h} mm`)
+  if (p.feetMm !== undefined && p.feetMm * 4 >= h) errors.push(`${id}: feetMm (${p.feetMm}) must be less than a quarter of the height ${h} mm`)
+  if (p.rearInsetMm !== undefined && p.rearInsetMm * 4 >= d) errors.push(`${id}: rearInsetMm (${p.rearInsetMm}) must be less than a quarter of the depth ${d} mm`)
+  if (p.earHoleMm !== undefined && p.earHoleMm * 2 > h) errors.push(`${id}: earHoleMm (${p.earHoleMm}) is too tall for the height ${h} mm`)
+  if (p.ventColumns !== undefined && p.ventSlots === undefined) errors.push(`${id}: ventColumns has no effect without ventSlots`)
+  if (p.ventSides !== undefined && p.ventSlots === undefined) errors.push(`${id}: ventSides has no effect without ventSlots`)
+  if (p.handleProjectionMm !== undefined && p.handleCount === undefined) errors.push(`${id}: handleProjectionMm has no effect without handleCount`)
+  if (p.handleCount !== undefined) {
+    if (p.handleProjectionMm === undefined) errors.push(`${id}: handleCount needs handleProjectionMm (how far the handles stand in front of the plate)`)
+    // handles stand in the bounding box: the plate moves back, so a port or control on the front face would float in front of it
+    const front = p.frontOnIo === 1 ? 'io' : 'opposite'
+    const onFront = [...spec.ports.map((x) => [x.portId, x.face] as const), ...spec.controls.map((x) => [x.controlId, x.face] as const)].filter(([, face]) => face === front)
+    if (onFront.length > 0) errors.push(`${id}: handles move the front plate back, but ${onFront.map(([n]) => n).join(', ')} sit on the front face (${front}): a unit with ports or controls on its front has no handles in this shape`)
   }
   return errors
 }
