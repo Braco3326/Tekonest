@@ -743,7 +743,7 @@ def rack_to_face(face: str, flipped: bool, w: float, d: float, gx: float, gy: fl
     if face == "top":
         return gx + w / 2.0, d / 2.0 - gz
     if face == "bottom":
-        return gx + w / 2.0, gz + d / 2.0
+        return w / 2.0 - gx, d / 2.0 - gz   # as placement.ts onFace: seen from below, x mirrored, y from the io edge toward the front
     if face == "left":
         return d / 2.0 + gz, gy
     return d / 2.0 - gz, gy   # right
