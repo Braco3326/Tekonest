@@ -127,7 +127,6 @@ export function createLegacyBridge(deps: LegacyBridgeDeps): TpBridge {
         .map((rc) => ({ a: copyRef(rc.from), b: copyRef(rc.to) }))
       // The first unmet link, as the app's own checklist words it (the level keeps the chain in the order the checklist shows).
       const next = ls.missing[0]
-      const objective = (level as { objective?: unknown }).objective
 
       const state: TpState = {
         route: 'legacy',
@@ -139,7 +138,6 @@ export function createLegacyBridge(deps: LegacyBridgeDeps): TpBridge {
         playbackReady: ls.won === true,
         firstReason: next ? { code: MISSING_LINK, text_fr: chainLabel(registry, level, next), subjects: [copyRef(next.from), copyRef(next.to)] } : null,
       }
-      if (typeof objective === 'string' && objective.trim() !== '') state.objective = objective
 
       // Anchors: every device first (a collision between devices is settled before any port), then each device's catalog ports, then whatever a cable,
       // an event or the first reason names that the catalog did not list.

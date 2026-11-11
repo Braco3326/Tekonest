@@ -13,9 +13,9 @@ import {
   LEGACY_NAV_OBJECTIVES,
   LEGACY_STORAGE_KEY,
   LEGACY_STRINGS,
-  legacyFlows,
   legacyFlowsFor,
   legacyKeywords,
+  legacyStorageKey,
   nextLegacyLink,
 } from '../../src/guide/flows.legacy'
 import { ACKNOWLEDGE, SUGGEST_FROM, SUGGEST_TO } from '../../src/guide/flows.creation'
@@ -31,7 +31,6 @@ const registry = makeRegistry()
 const level = makeLevel('a1')
 const rules = registry.catalog.rules as unknown as readonly RuleRow[]
 const ruleText = ruleTextFor(rules)
-const OBJECTIVE = (level as unknown as { objective: string }).objective
 
 const P = (instance: string, port: string): TpPortRef => ({ instance, port })
 const NEXT = level.requiredChain[2]
@@ -46,7 +45,6 @@ function legacyState(over: Partial<TpState> = {}): TpState {
     events: [],
     playbackReady: false,
     firstReason: { code: 'missing-link', text_fr: 'Premier lien à faire', subjects: [P('sm58-1', 'out-xlr'), P('rio-1', 'in-mic-1')] },
-    objective: OBJECTIVE,
     ...over,
   }
 }
@@ -91,10 +89,9 @@ describe('LEGACY_FLOWS', () => {
   })
 
   it('the texts are impersonal French with no digit written by the guide, and no step nudges on its own', () => {
-    for (const f of legacyFlows(OBJECTIVE))
+    for (const f of LEGACY_FLOWS)
       for (const s of f.steps) {
-        const own = s.say.replace(OBJECTIVE, '')
-        expect(/\d/.test(own), s.say).toBe(false)
+        expect(/\d/.test(s.say), s.say).toBe(false)
         expect(s.say.length).toBeGreaterThan(10)
         expect(s.hintAfterMs).toBeUndefined()
       }
@@ -102,13 +99,15 @@ describe('LEGACY_FLOWS', () => {
     expect(/\d/.test(LEGACY_STRINGS.planner.needInfo)).toBe(false)
   })
 
-  it('the objective step quotes the level’s own objective word for word, in guillemets; without one it says no more than the panel', () => {
-    const quoted = legacyFlows(OBJECTIVE)[0].steps[0].say
-    expect(quoted).toContain(`« ${OBJECTIVE} »`)
-    const bare = legacyFlows(undefined)[0].steps[0].say
-    expect(bare).not.toContain('«')
-    expect(bare).toBe(LEGACY_FLOWS[0].steps[0].say)
-    expect(legacyFlows('   ')[0].steps[0].say).toBe(bare)
+  it('quotes nothing (the page shows English text the guide does not repeat) and every sentence stands without a ring', () => {
+    for (const f of LEGACY_FLOWS)
+      for (const s of f.steps) {
+        expect(s.say, s.say).not.toContain('«')
+        expect(s.say.toLowerCase(), 'a ring may be missing (the 2D board projects nothing): the text must not rely on one').not.toMatch(/indiqu|surlign|entour|cercle/)
+      }
+    // the reading step names the card's own parts, the cable step the page's own list
+    expect(LEGACY_FLOWS[0].steps[0].say).toContain('liste des connexions requises')
+    expect(LEGACY_FLOWS[1].steps[0].say).toContain('liste des connexions requises')
   })
 })
 
@@ -120,11 +119,10 @@ describe('legacyFlowsFor: the flow that starts at what is next, by the level’s
     expect(legacyFlowsFor(null).map((f) => f.id)).toEqual(['lire-l-objectif', 'premier-cable'])
   })
 
-  it('quotes the objective the state carries, and the same objective gives the same flow objects', () => {
+  it('gives the same flow objects every time (only the order changes)', () => {
     const a = legacyFlowsFor(legacyState())
-    expect(a[0].steps[0].say).toContain(`« ${OBJECTIVE} »`)
     expect(legacyFlowsFor(legacyState())[0]).toBe(a[0])
-    expect(legacyFlowsFor(legacyState({ objective: undefined }))[0].steps[0].say).not.toContain('«')
+    expect(legacyFlowsFor(legacyState({ connections: made(1) }))[0]).toBe(a[1])
   })
 
   it('a level with no required link offers the objective only', () => {
@@ -188,6 +186,17 @@ describe('wording of the legacy route', () => {
   it('the storage key of the legacy guide is its own (a flow of the other route is never restored here)', () => {
     expect(LEGACY_STORAGE_KEY).not.toBe('oscar-guide.state.v1')
     expect(LEGACY_STORAGE_KEY.startsWith('oscar-guide')).toBe(true)
+  })
+
+  it('the storage key is per level, the level taken from the address and validated, so a flow left running on one level is not restored on another', () => {
+    const levels = ['a1', 'b1', 'c1', 'd1']
+    const keys = levels.map((l) => legacyStorageKey(`?level=${l}`))
+    expect(new Set(keys).size).toBe(4)
+    levels.forEach((l, i) => expect(keys[i]).toBe(`${LEGACY_STORAGE_KEY}.${l}`))
+    expect(legacyStorageKey('?level=a1&oscar=1')).toBe(`${LEGACY_STORAGE_KEY}.a1`)
+    // anything else gets the base key, never a key made of the address
+    for (const bad of ['', '?level=zz', '?level=A1', '?level=a1&level=b1', '?level=sandbox', '?level=a1.x', '?level=%00', '?legacy=1']) expect(legacyStorageKey(bad), bad).toBe(LEGACY_STORAGE_KEY)
+    expect(legacyStorageKey(undefined as unknown as string)).toBe(LEGACY_STORAGE_KEY)
   })
 })
 
@@ -339,7 +348,9 @@ describe('mountOscar on the legacy route', () => {
     const c = f.impl.createController.mock.calls[0][0] as { flows: { id: string }[]; strings: { flows: Record<string, string> }; storageKey?: string; flowKeywords: { flowId: string }[] }
     expect(c.flows.map((x) => x.id)).toEqual(['lire-l-objectif', 'premier-cable'])
     expect(c.strings.flows['lire-l-objectif']).toBe(LEGACY_STRINGS.flows['lire-l-objectif'])
-    expect(c.storageKey).toBe(LEGACY_STORAGE_KEY)
+    expect(c.storageKey).toBe(`${LEGACY_STORAGE_KEY}.a1`)
+    const other = mountLegacy({ search: '?level=b1', win: { location: { search: '?level=b1' } } as unknown as Window })
+    expect((other.f.impl.createController.mock.calls[0][0] as { storageKey?: string }).storageKey).toBe(`${LEGACY_STORAGE_KEY}.b1`)
     expect(c.flowKeywords.map((k) => k.flowId).sort()).toEqual(['lire-l-objectif', 'premier-cable'])
     expect((f.impl.mountGuide.mock.calls[0][0] as { context: unknown }).context).toEqual({ page: 'workbench', mode: 'practice' })
   })
@@ -353,10 +364,10 @@ describe('mountOscar on the legacy route', () => {
     expect(r.b.bridge.snapshot).not.toHaveBeenCalled()
   })
 
-  it('the quote of the objective reaches the flows the controller reads, and the order follows the bench (the list is the controller’s by reference)', () => {
+  it('the order of the flows follows the bench (the list is the controller’s by reference)', () => {
     const { f, b } = mountLegacy()
     const flows = (f.impl.createController.mock.calls[0][0] as { flows: { id: string; steps: { say: string }[] }[] }).flows
-    expect(flows[0].steps[0].say).toContain(`« ${OBJECTIVE} »`)
+    expect(flows.map((x) => x.id)).toEqual(['lire-l-objectif', 'premier-cable'])
     b.emit(legacyState({ connections: made(1) }), [{ type: 'connect', at: 1, data: { a: 'port:x.y', b: 'port:z.w' } }])
     expect(flows.map((x) => x.id)).toEqual(['premier-cable', 'lire-l-objectif'])
   })

@@ -51,16 +51,15 @@ export const TP_STRINGS = deepFreeze({
     },
     flows: {
       'lire-l-objectif': {
-        title: 'Lire l’objectif',
+        title: 'Lire le niveau',
         steps: {
-          read: 'Lire l’objectif du niveau dans le cadre en haut à gauche.',
-          readQuoted: 'Lire l’objectif du niveau dans le cadre en haut à gauche :',
+          read: 'Lire le titre, la consigne et la liste des connexions requises dans le cadre du niveau, en haut à gauche.',
         },
       },
       'premier-cable': {
         title: 'Premier câble',
         steps: {
-          connect: 'Relier les deux appareils indiqués avec un câble, d’une sortie vers une entrée.',
+          connect: 'Relier, d’une sortie vers une entrée, les deux appareils de la première ligne non cochée de la liste des connexions requises.',
           check: 'Lire la liste des connexions requises dans le cadre du niveau : la ligne du câble posé est cochée.',
         },
       },

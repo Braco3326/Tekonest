@@ -29,7 +29,7 @@ import {
   keywordsFor,
   nextConnectionStep,
 } from './flows.creation'
-import { LEGACY_ACK_SELECTOR, LEGACY_NAV_OBJECTIVES, LEGACY_STORAGE_KEY, LEGACY_STRINGS, legacyFlowsFor, legacyKeywords, nextLegacyLink } from './flows.legacy'
+import { LEGACY_ACK_SELECTOR, LEGACY_NAV_OBJECTIVES, LEGACY_STRINGS, legacyFlowsFor, legacyKeywords, legacyStorageKey, nextLegacyLink } from './flows.legacy'
 import { guideEnabled, guideMode, type GuideRoute } from './mode'
 import { createController } from './vendor/core/controller'
 import type { HostEvent, Rect } from './vendor/core/types'
@@ -242,7 +242,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     const legacy = deps.route === 'legacy'
     const brain = createTekPracticeBrain({ bridge, rules: registry.catalog.rules as unknown as readonly RuleRow[], mode, route: legacy ? 'legacy' : 'creation' })
     // The controller reads these two lists by reference at every call: the mount keeps them in the order of the bench's stage (see flows.creation.ts).
-    // Level play has its own two flows (the level's objective is quoted, the order follows the required connections made).
+    // Level play has its own two flows (the order follows the required connections made).
     const flows = legacy ? legacyFlowsFor(null).slice() : flowsFor('no-place')
     const keywords = legacy ? legacyKeywords() : keywordsFor('no-place')
     const follow = (state: TpState | null): void => {
@@ -261,7 +261,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       ...(deps.storage ? { storage: deps.storage } : {}),
       strings: legacy ? LEGACY_STRINGS : CREATION_STRINGS,
       flowKeywords: keywords,
-      ...(legacy ? { storageKey: LEGACY_STORAGE_KEY } : {}),
+      ...(legacy ? { storageKey: legacyStorageKey(deps.search) } : {}),
     })
     const rects = createRectResolver({ bridge, registry, now, route: deps.route })
     cleanups.push(() => rects.clear())

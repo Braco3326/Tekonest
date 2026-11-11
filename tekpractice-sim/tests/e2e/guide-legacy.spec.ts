@@ -9,7 +9,8 @@
  *    chunk requested, no call on the hook, the exam's timer and score unchanged against a run with `?oscar=0`;
  *  - the page's own « Conseils d'Oscar » toast and the rule toast are untouched, and the guide does not repeat them (it speaks only when asked, in French, from the
  *    catalog);
- *  - the guide quotes the app: the level's own objective, the first required connection in the checklist's own words, the rule's own text for an error.
+ *  - the guide quotes the app: the first required connection in the checklist's own words, the rule's own French text for an error; it quotes nothing else;
+ *  - the 2D board (`?render=2d`, nothing to project, so no ring): the guide is there, its sentences stand without one, and the exam address is silent there too.
  * No console error, no page error and no `guide:` warning during any test of this file.
  */
 import AxeBuilder from '@axe-core/playwright'
@@ -55,7 +56,12 @@ test.afterEach(() => {
 
 type Ref = { instance: string; port: string }
 const CHAIN = a1.requiredChain as { from: Ref; to: Ref }[]
-const OBJECTIVE = (a1 as unknown as { objective: string }).objective
+/** The exam budget of a1, in seconds (the page's own level data). */
+const EXAM_SECONDS = (a1 as unknown as { examSeconds: number }).examSeconds
+const clockSeconds = (text: string): number => {
+  const m = /^(\d+):(\d\d)$/.exec(text.trim())
+  return m ? Number(m[1]) * 60 + Number(m[2]) : Number.NaN
+}
 
 const boot = async (page: Page, search = '?level=a1'): Promise<void> => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
@@ -408,7 +414,7 @@ const probe = async (browser: Browser, search: string, o: { mounted: boolean; qu
   return { facts, mountMs }
 }
 
-test('?level=a1&mode=exam shows no guide node, makes no network call for it, calls nothing on the hook, and the exam timer and score are unchanged versus a run with ?oscar=0 (same score)', async ({ browser }) => {
+test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny entry every legacy page fetches) or call on the hook; the exam timer and score are those of a run with ?oscar=0 (same score)', async ({ browser }) => {
   // The control: the guide mounted on the practice level. Everything the absence checks rely on is asserted PRESENT here first.
   const control = await probe(browser, '?level=a1', { mounted: true, quietMs: 2000 })
   expect(control.facts.nodes, 'control: the widget node is there').toBe(1)
@@ -433,7 +439,9 @@ test('?level=a1&mode=exam shows no guide node, makes no network call for it, cal
     const s = await session(browser, search, { init: spyOnHook })
     await s.page.evaluate(() => window.localStorage.clear())
     await expect(s.page.locator('#exam-timer')).toBeVisible()
-    const first = await s.page.locator('#exam-timer').innerText()
+    const first = clockSeconds(await s.page.locator('#exam-timer').innerText())
+    await quietWindow(s.page, 1300) // the clock must tick: two reads of the same page
+    const second = clockSeconds(await s.page.locator('#exam-timer').innerText())
     await s.page.evaluate(() => {
       const sim = window.__audioSim!
       sim.dispatch({ type: 'CONNECT', a: { instance: 'sm57-1', port: 'out-xlr' }, b: { instance: 'k12-1', port: 'in-line-a' } })
@@ -445,7 +453,7 @@ test('?level=a1&mode=exam shows no guide node, makes no network call for it, cal
       score: ((await s.page.locator('.exam-card h2').textContent()) ?? '').trim(),
       detail: ((await s.page.locator('.exam-card').innerText()) ?? '').replace(/\d+:\d\d/g, 'T'),
       exams: await s.page.evaluate(() => (JSON.parse(window.localStorage.getItem('audio-sim/progress')!).exams as { levelId: string; score20: number; mistakes: number }[]).map((e) => [e.levelId, e.score20, e.mistakes])),
-      timerShown: /^\d+:\d\d$/.test(first.trim()),
+      clock: { first, drop: first - second },
       toast: ((await s.page.locator('.toast-error strong').first().textContent()) ?? '').trim(),
       nodes: await guideNodes(s.page),
       chunks: s.req.paths().filter((p) => GUIDE_ASSET.test(p)),
@@ -463,7 +471,15 @@ test('?level=a1&mode=exam shows no guide node, makes no network call for it, cal
   expect(withGates.detail, 'the report is the same').toBe(withoutGuide.detail)
   expect(withGates.toast, 'the refused connect says nothing of the rule in the exam, with and without the guide').toBe('Connexion refusée')
   expect(withoutGuide.toast).toBe('Connexion refusée')
-  expect(withGates.timerShown && withoutGuide.timerShown, 'the exam timer shows a clock in both runs').toBe(true)
+  // the timer by value: it starts at the level's own budget, it ticks (about the 1.3 s between the two reads), and it does so alike with and without the guide
+  for (const r of [withGates, withoutGuide]) {
+    expect(r.clock.first, 'the clock starts within seconds of the level budget').toBeGreaterThanOrEqual(EXAM_SECONDS - 15)
+    expect(r.clock.first).toBeLessThanOrEqual(EXAM_SECONDS)
+    expect(r.clock.drop, 'the clock ticked between two reads').toBeGreaterThanOrEqual(1)
+    expect(r.clock.drop).toBeLessThanOrEqual(4)
+  }
+  expect(Math.abs(withGates.clock.drop - withoutGuide.clock.drop), 'the clock runs at the same pace with and without the guide').toBeLessThanOrEqual(1)
+  expect(Math.abs(withGates.clock.first - withoutGuide.clock.first), 'and starts at the same value').toBeLessThanOrEqual(3)
   for (const r of [withGates, withoutGuide]) {
     expect(r.nodes).toBe(0)
     expect(r.chunks, 'no guide chunk was requested').toEqual([])
@@ -524,15 +540,16 @@ test('an unknown level, a mode key in any case, and a second level key show no g
 
 // ── the page's own coach and the guide ───────────────────────────────────────────────────────────────────────────────
 
-test('in a1 the existing coach toast and its « Pourquoi ? » button still work and the guide does not duplicate the toast text', async ({ page }) => {
+/** The page's own coach: a wrong cable in a1 makes its rule toast (English) and its « Conseil d'Oscar » tip. */
+const wrongCable = (page: Page) =>
+  page.evaluate(() => window.__audioSim!.dispatch({ type: 'CONNECT', a: { instance: 'sm57-1', port: 'out-xlr' }, b: { instance: 'k12-1', port: 'in-line-a' } }))
+
+test('in a1 the page\'s own coach toast and rule toast still appear untouched and the guide does not duplicate their text, asked or not', async ({ page }) => {
   await boot(page)
   await waitGuide(page)
   await guideSees(page)
   const r2 = RULE('R2')
-  // a wrong cable: the page's own toast says the rule (its English title and explanation) and « Conseil d'Oscar » comes with it
-  await page.evaluate(() =>
-    window.__audioSim!.dispatch({ type: 'CONNECT', a: { instance: 'sm57-1', port: 'out-xlr' }, b: { instance: 'k12-1', port: 'in-line-a' } }),
-  )
+  await wrongCable(page)
   const toast = page.locator('.toast-error')
   await expect(toast).toBeVisible()
   await expect(toast.locator('strong')).toHaveText(r2.title)
@@ -541,37 +558,53 @@ test('in a1 the existing coach toast and its « Pourquoi ? » button still work 
   await expect(tip, 'the page\'s own coach toast appears').toBeVisible()
   await expect(tip.locator('strong')).toHaveText('Conseil d’Oscar')
   const tipText = ((await tip.innerText()) ?? '').trim()
-  // « Pourquoi ? »: present only when the build holds a coach key (none here), and then it works
-  const why = toast.getByRole('button', { name: 'Pourquoi ?' })
-  const whyCount = await why.count()
-  test.info().annotations.push({ type: 'pourquoi', description: whyCount === 0 ? 'no coach key in this build: the page offers no « Pourquoi ? » button (as without the guide)' : 'button present' })
-  if (whyCount > 0) {
-    // The coach's request never leaves the machine: a stub answers (a sentence the grounding check rejects, which the page shows as its own calm message).
-    const cors = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' }
-    await page.route('https://api.anthropic.com/**', (route) =>
-      route.request().method() === 'OPTIONS'
-        ? route.fulfill({ status: 204, headers: cors })
-        : route.fulfill({
-            status: 200,
-            headers: { ...cors, 'content-type': 'application/json' },
-            body: JSON.stringify({ id: 'msg_stub', type: 'message', role: 'assistant', model: 'stub', content: [{ type: 'text', text: 'stub' }], stop_reason: 'end_turn', usage: { input_tokens: 1, output_tokens: 1 } }),
-          }),
-    )
-    await why.click()
-    await expect(toast.locator('.toast-ai-zone')).toBeVisible()
-    await expect(toast.getByRole('button', { name: 'Fermer' })).toBeVisible({ timeout: 15_000 })
-  }
-  // the guide said nothing: no bubble, and none of the page's toast words inside the guide's landmark
+  // unasked, the guide says nothing; the page's text holds the toast's sentence once: the guide is not a second copy
   await quietWindow(page, 1500)
   await expect(bubble(page)).toBeHidden()
-  const inGuide = await page.getByRole('complementary', { name: TP_STRINGS.landmark }).innerText()
-  for (const t of [r2.title, r2.teach, tipText, 'Conseil d’Oscar']) expect(inGuide.includes(t), `the guide does not say: ${t.slice(0, 40)}`).toBe(false)
-  // the page's text holds the toast's sentence once: the guide is not a second copy
   const bodyText = await page.locator('body').innerText()
   expect(bodyText.split(r2.teach).length - 1, 'the rule explanation is on the page once (the toast)').toBe(1)
   // the toast and the tip are the page's, in its container, untouched by the guide
   expect(await toast.evaluate((el) => el.closest('#hud-toasts') != null)).toBe(true)
   expect(await tip.evaluate((el) => el.closest('#hud-toasts') != null)).toBe(true)
+  // asked, with the bubble open and a French answer in it, the landmark holds none of the toast words (its English title and explanation, the tip)
+  await openBubble(page)
+  await chip(page, 'Prochaine étape').click()
+  await expect(page.locator('.oscar-live')).not.toHaveText('')
+  const inGuide = await page.getByRole('complementary', { name: TP_STRINGS.landmark }).innerText()
+  expect(inGuide.length, 'the landmark holds the open bubble').toBeGreaterThan(50)
+  for (const t of [r2.title, r2.teach, tipText, 'Conseil d’Oscar']) expect(inGuide.includes(t), `the guide does not say: ${t.slice(0, 40)}`).toBe(false)
+  // and the guide renders no toast of its own
+  expect(await page.locator('.oscar-guide [class*="toast"], aside[aria-label="Assistant"] [class*="toast"]').count()).toBe(0)
+})
+
+/** E2E_EXPECT_COACH_KEY=1: the build under test holds a coach key, so the « Pourquoi ? » button MUST be there (its absence fails). Without it a keyless build skips the test, visibly. */
+const EXPECT_COACH_KEY = process.env.E2E_EXPECT_COACH_KEY === '1'
+test('the page\'s « Pourquoi ? » button still works with the guide on (needs a build with a coach key; skipped, and said so, on a keyless build)', async ({ page }) => {
+  await boot(page)
+  await waitGuide(page)
+  await guideSees(page)
+  await wrongCable(page)
+  const toast = page.locator('.toast-error')
+  await expect(toast).toBeVisible()
+  const why = toast.getByRole('button', { name: 'Pourquoi ?' })
+  const count = await why.count()
+  if (EXPECT_COACH_KEY) expect(count, 'E2E_EXPECT_COACH_KEY=1: this build must offer « Pourquoi ? »').toBe(1)
+  test.skip(count === 0, 'keyless build: the page offers no « Pourquoi ? » button (as without the guide); run against a build made with VITE_AI_COACH_KEY set and E2E_EXPECT_COACH_KEY=1')
+  // The coach's request never leaves the machine: a stub answers (a sentence the grounding check rejects, which the page shows as its own calm message).
+  const cors = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' }
+  await page.route('https://api.anthropic.com/**', (route) =>
+    route.request().method() === 'OPTIONS'
+      ? route.fulfill({ status: 204, headers: cors })
+      : route.fulfill({
+          status: 200,
+          headers: { ...cors, 'content-type': 'application/json' },
+          body: JSON.stringify({ id: 'msg_stub', type: 'message', role: 'assistant', model: 'stub', content: [{ type: 'text', text: 'stub' }], stop_reason: 'end_turn', usage: { input_tokens: 1, output_tokens: 1 } }),
+        }),
+  )
+  await why.click()
+  await expect(toast.locator('.toast-ai-zone')).toBeVisible()
+  await expect(toast.getByRole('button', { name: 'Fermer' })).toBeVisible({ timeout: 15_000 })
+  await expect(bubble(page), 'the guide did not open for it').toBeHidden()
 })
 
 test('asked, the guide answers in French from the catalog: an error is the rule\'s own French title-and-explanation, the ring on the faulty port, the page\'s English toast not repeated', async ({ page }) => {
@@ -599,7 +632,7 @@ test('asked, the guide answers in French from the catalog: an error is the rule\
 
 // ── the flows ────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-test('« Prochaine étape » at the start says the first required connection in the checklist\'s own words; « Lire l\'objectif » quotes the level\'s own objective and ends when the card is read', async ({ page }) => {
+test('« Prochaine étape » at the start says the first required connection in the checklist\'s own words; « Lire le niveau » says what the card holds and ends when it is read', async ({ page }) => {
   await boot(page)
   await openBubble(page)
   const firstRow = (await page.locator('#hud-checklist li').first().innerText()).trim()
@@ -607,8 +640,8 @@ test('« Prochaine étape » at the start says the first required connection in 
   expect(await liveLines(page)).toContain(`${TP_STRINGS.verdict.nextLink} ${firstRow}`)
   await expect(chip(page, 'Lancer le parcours proposé')).toBeVisible()
   await chip(page, 'Lancer le parcours proposé').click()
-  await expect(page.locator('.oscar-live')).toContainText('Parcours « Lire l’objectif » : étape 1 sur 1.')
-  expect(await live(page)).toContain(`« ${OBJECTIVE} »`)
+  await expect(page.locator('.oscar-live')).toContainText('Parcours « Lire le niveau » : étape 1 sur 1.')
+  expect(await liveLines(page)).toContain('Lire le titre, la consigne et la liste des connexions requises dans le cadre du niveau, en haut à gauche.')
   // the ring is on the level card
   await expect(ring(page)).toBeVisible()
   const card = (await page.locator('#hud-objectives').boundingBox())!
@@ -716,3 +749,40 @@ const connect2 = (page: Page): Promise<void> =>
     const c = window.__audioSim!.level.requiredChain[0]
     window.__audioSim!.dispatch({ type: 'CONNECT', a: c.from, b: c.to })
   })
+
+// ── the 2D board: nothing to project, so no ring ─────────────────────────────────────────────────────────────────────
+
+test('?level=a1&render=2d: the icon is there and the bubble opens; the cable step shows its sentence with no ring and no ghost cable; no console error', async ({ page }) => {
+  await boot(page, '?level=a1&render=2d')
+  expect(await page.evaluate(() => window.__audioSim!.portScreen({ instance: 'sm58-1', port: 'out-xlr' })), 'the 2D board projects nothing').toBeNull()
+  await waitGuide(page)
+  await expect(icon(page)).toHaveAccessibleName(ICON_NAME)
+  await openBubble(page)
+  const firstRow = (await page.locator('#hud-checklist li').first().innerText()).trim()
+  await nextStepSays(page, firstRow)
+  // the cable step
+  await page.getByRole('textbox', { name: /Poser une question/ }).fill('comment faire le premier câble')
+  await page.getByRole('textbox', { name: /Poser une question/ }).press('Enter')
+  await expect(page.locator('.oscar-live')).toContainText('Parcours « Premier câble » : étape 1 sur 2.')
+  expect(await live(page)).toContain('Relier, d’une sortie vers une entrée, les deux appareils de la première ligne non cochée de la liste des connexions requises.')
+  // no ring and no cable can be placed (a quiet window: a late ring would show), and « Montre-moi » says the same without drawing anything
+  await quietWindow(page, 1500)
+  await expect(ring(page)).toBeHidden()
+  await chip(page, 'Montre-moi').click()
+  await quietWindow(page, 800)
+  await expect(ring(page)).toBeHidden()
+  await expect(page.locator('.oscar-cable')).toBeHidden()
+  expect(await state(page), 'the guide changed nothing on the board').toMatchObject({ connectedRequired: 0 })
+  // the page's own board still works: the learner makes the cable, the step follows
+  await connect(page, 0)
+  await expect(page.locator('.oscar-live')).toContainText('étape 2 sur 2', { timeout: 10_000 })
+})
+
+test('?level=a1&mode=exam&render=2d: no guide node, no guide chunk, no call on the hook', async ({ browser }) => {
+  const s = await session(browser, '?level=a1&mode=exam&render=2d', { init: spyOnHook })
+  await quietWindow(s.page, 2500)
+  expect(await guideNodes(s.page)).toBe(0)
+  expect(s.req.paths().filter((p) => GUIDE_ASSET.test(p)), 'no guide chunk requested').toEqual([])
+  expect(await guideCalls(s.page), 'the guide called nothing on the hook').toEqual({})
+  await s.close()
+})

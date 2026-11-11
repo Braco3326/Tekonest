@@ -18,8 +18,6 @@ export type TpState = {
   playbackReady: boolean
   /** The first reason the signal path gives for not playing, verbatim, or null. */
   firstReason: { code: string; text_fr: string; subjects: TpPortRef[] } | null
-  /** Legacy level play only: the level's own objective sentence, verbatim (absent in Mode Création). */
-  objective?: string
 }
 
 export type TpBridge = {
