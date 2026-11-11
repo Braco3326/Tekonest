@@ -1533,7 +1533,7 @@
       "toolVersion": "blender-builder-1",
       "date": "2026-11-10T23:15:13.071Z",
       "specSource": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
-      "logosRemoved": true,
+      "logosRemoved": false,
       "photos": [
         "front.jpg",
         "rear.jpg"
@@ -2169,7 +2169,7 @@
       "toolVersion": "blender-builder-1",
       "date": "2026-11-10T23:05:41.479Z",
       "specSource": "https://assets.ctfassets.net/4zjnzn055a4v/1qUiHwGHNmumKgYugG6wws/837b26c2261771b9d58a94c44bb1cdc4/8030c_views.pdf",
-      "logosRemoved": true,
+      "logosRemoved": false,
       "photos": [
         "rear.jpg",
         "front.jpg"
@@ -2722,7 +2722,7 @@
       "taskId": null,
       "date": "2026-11-10T23:04:57.967Z",
       "specSource": "https://gracedesign.com/wp-content/uploads/2018/06/m905_owners_manual_reve.pdf",
-      "logosRemoved": true,
+      "logosRemoved": false,
       "gates": [
         {
           "gate": "size",
