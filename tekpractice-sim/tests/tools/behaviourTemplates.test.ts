@@ -240,3 +240,48 @@ describe('short port ids', () => {
     expect(ports.map((p) => p.portId)).toEqual(['in-mic-1', 'in-mic-2', 'in-mic-3', 'usb'])
   })
 })
+
+describe('short port ids keep the channel number (finding 4: the regex was /^d+$/ instead of /^\d+$/)', () => {
+  type RealDevice = { id: string; ports: { portId: string; dir: 'in' | 'out' | 'bidir'; connector: string; signal: string }[] }
+  const realDevices = (JSON.parse(readFileSync('content/proposals/catalog-proposals.json', 'utf8')) as { devices: RealDevice[] }).devices
+  const expandReal = (d: RealDevice) =>
+    expandPorts(d.ports.map((p) => ({ id: p.portId, role: 'port', dir: p.dir, connector: p.connector, signal: p.signal })))
+
+  it('in-mic-preamp-input-balanced-per-channel-1 and -2 stay distinct by their own number, not by an accidental suffix', () => {
+    const a = shortPortId('in-mic-preamp-input-balanced-per-channel-1')
+    const b = shortPortId('in-mic-preamp-input-balanced-per-channel-2')
+    expect(a).toMatch(/-1$/)
+    expect(b).toMatch(/-2$/)
+    expect(a).not.toBe(b)
+    expect(a.length).toBeLessThanOrEqual(19)
+  })
+
+  it('on every real Bêta proposal the shortened id keeps the trailing channel number of its long id, and expandPorts gives unique ids of at most 19 characters', () => {
+    let longIds = 0
+    for (const d of realDevices) {
+      const { ports } = expandReal(d)
+      const ids = ports.map((p) => p.portId)
+      expect(new Set(ids).size, d.id).toBe(ids.length)
+      for (const raw of d.ports.map((p) => p.portId)) {
+        const short = shortPortId(raw)
+        expect(short.length, `${d.id}: ${raw}`).toBeLessThanOrEqual(19)
+        const m = /-(\d+)$/.exec(raw)
+        if (m && raw.length > 19) {
+          longIds++
+          expect(short, `${d.id}: ${raw} lost its channel number`).toMatch(new RegExp(`-${m[1]}$`))
+        }
+      }
+      for (const p of ports) expect(p.portId.length, d.id).toBeLessThanOrEqual(19)
+    }
+    expect(longIds).toBeGreaterThan(50) // the check really ran over the long numbered ids
+  })
+
+  it('the TF5 combo inputs 1 and 2 and the MOTU 828 pairs keep their numbers', () => {
+    for (const id of ['yamaha-tf5', 'motu-828']) {
+      const d = realDevices.find((x) => x.id === id)!
+      const { ports } = expandReal(d)
+      expect(ports[0]!.portId, id).toMatch(/-1$/)
+      expect(ports[1]!.portId, id).toMatch(/-2$/)
+    }
+  })
+})

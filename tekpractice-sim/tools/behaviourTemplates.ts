@@ -164,7 +164,7 @@ export function shortPortId(raw: string): string {
   if (words[0] === 'bidir' && words.length > 1) words = words.slice(1)
   const first = words[0]!
   const keepFirst = first === 'in' || first === 'out' || first === 'thru'
-  const last = words.length > 1 && /^d+$/.test(words[words.length - 1]!) ? words[words.length - 1]! : undefined
+  const last = words.length > 1 && /^\d+$/.test(words[words.length - 1]!) ? words[words.length - 1]! : undefined
   const head = keepFirst ? [first] : []
   const tail = last ? [last] : []
   const mid = words.slice(keepFirst ? 1 : 0, last ? -1 : undefined)
