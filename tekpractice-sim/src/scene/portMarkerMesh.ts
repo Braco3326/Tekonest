@@ -5,7 +5,7 @@
  * Pure geometry (`ringVertexData`) plus one Babylon call (`createMarkerRing`). The material is the caller's: it must be double
  * sided (`backFaceCulling = false`) and may carry a small `zOffset`, since the ring lies on the connector's face.
  */
-import { Matrix, Mesh, Quaternion, Ray, Vector3, VertexData, type AbstractMesh, type Scene } from '@babylonjs/core'
+import { Color3, Matrix, Mesh, Quaternion, Ray, StandardMaterial, Vector3, VertexData, type AbstractMesh, type Scene } from '@babylonjs/core'
 import { FALLBACK_MM, RING_OVERSIZE } from './portMarkerSize'
 
 /** Segments around the ring. */
@@ -55,6 +55,61 @@ export function createMarkerRing(scene: Scene, name: string, outerM: number): Me
   ringVertexData(outerM).applyToMesh(mesh)
   mesh.isPickable = false
   return mesh
+}
+
+// ── The glow of a compatible port ────────────────────────────────────────────────────────────────────────────────────────────────
+// Babylon's renderOutline extrudes a mesh along its normals; a flat ring has the same normal (-Z) everywhere, so the "outline" came out as a copy
+// pushed toward the camera (a doubled, shifted ring when seen at an angle) and never as a halo. A halo is instead a second, wider flat annulus, a child
+// of the ring (it scales, lifts and turns with it) lying a hair behind it, drawn with a translucent emissive colour.
+
+/** A soft band around the ring: from 85 % of the ring's inner radius to 125 % of its outer radius (flat, in the XY plane, normals toward -Z). */
+export function haloVertexData(outerM: number): VertexData {
+  const ring = ringVertexData(outerM)
+  const outer = Number.isFinite(outerM) && outerM > 0 ? outerM : (FALLBACK_MM * RING_OVERSIZE) / 1000
+  const rOut = outer / 2
+  let rIn = rOut
+  for (let i = 0; i < ring.positions!.length; i += 3) rIn = Math.min(rIn, Math.hypot(ring.positions![i], ring.positions![i + 1]))
+  const a = rIn * 0.85
+  const b = rOut * 1.25
+  const positions: number[] = []
+  const normals: number[] = []
+  const indices: number[] = []
+  for (let i = 0; i < RING_SEGMENTS; i++) {
+    const t = (i / RING_SEGMENTS) * Math.PI * 2
+    positions.push(Math.cos(t) * b, Math.sin(t) * b, 0, Math.cos(t) * a, Math.sin(t) * a, 0)
+    normals.push(0, 0, -1, 0, 0, -1)
+    const o0 = 2 * i
+    const o1 = 2 * ((i + 1) % RING_SEGMENTS)
+    indices.push(o0, o1, o0 + 1, o0 + 1, o1, o1 + 1)
+  }
+  const vd = new VertexData()
+  vd.positions = positions
+  vd.normals = normals
+  vd.indices = indices
+  return vd
+}
+
+/** How far behind its ring the halo lies (m): under the ring in depth, so the ring itself stays crisp on top. */
+export const HALO_BEHIND_M = 0.0004
+
+/** The halo of `ring` in `colour` (translucent, emissive, double sided, not pickable); a child of the ring, so it goes with it, scale and dispose included. */
+export function attachMarkerHalo(scene: Scene, ring: Mesh, colour: Color3): Mesh {
+  const halo = new Mesh(`${ring.name}:halo`, scene)
+  // the ring's own outer diameter, from its bounds at scale 1 (a lifted or turned ring has the same extents)
+  const outer = ring.getBoundingInfo().boundingBox.extendSize.x * 2
+  haloVertexData(outer).applyToMesh(halo)
+  const mat = new StandardMaterial(`${ring.name}:halo-mat`, scene)
+  mat.disableLighting = true
+  mat.emissiveColor = colour
+  mat.alpha = 0.55
+  mat.backFaceCulling = false
+  mat.zOffset = -1
+  halo.material = mat
+  halo.isPickable = false
+  halo.parent = ring
+  halo.position.z = HALO_BEHIND_M
+  halo.onDisposeObservable.add(() => mat.dispose())
+  return halo
 }
 
 // ── Sitting on the surface: a connector in a pocket ──────────────────────────────────────────────────────────────────────────────

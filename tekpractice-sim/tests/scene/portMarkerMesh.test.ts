@@ -265,3 +265,37 @@ describe('markerFaceNormal / orientMarkerRing (a port on a side or the base: the
     scene.dispose()
   })
 })
+
+describe('marker halo (Wave 5c E2: the compatible-port glow of a flat ring)', () => {
+  it('haloVertexData is a flat annulus wider than the ring on both sides, in the same plane', async () => {
+    const { haloVertexData } = await import('../../src/scene/portMarkerMesh')
+    const ring = bounds(ringVertexData(0.03).positions!)
+    const halo = haloVertexData(0.03)
+    const hb = bounds(halo.positions!)
+    expect(hb.max[0]).toBeGreaterThan(ring.max[0]) // reaches past the outer edge
+    expect(hb.max[2] - hb.min[2]).toBe(0)
+    // and inward of the ring's inner edge: the smallest radius of the halo is under the ring's
+    const rad = (p: ArrayLike<number>): number[] => Array.from({ length: p.length / 3 }, (_, i) => Math.hypot(p[3 * i], p[3 * i + 1]))
+    expect(Math.min(...rad(halo.positions!))).toBeLessThan(Math.min(...rad(ringVertexData(0.03).positions!)))
+    for (const v of [...halo.positions!, ...halo.indices!]) expect(Number.isFinite(v)).toBe(true)
+  })
+
+  it('attachMarkerHalo parents a halo to the ring (it scales, lifts and turns with it), sits a hair behind, is not pickable, and disposes with the ring', async () => {
+    const { attachMarkerHalo } = await import('../../src/scene/portMarkerMesh')
+    const { Color3 } = await import('@babylonjs/core')
+    const scene = new Scene(new NullEngine())
+    const ring = createMarkerRing(scene, 'ring', 0.03)
+    const halo = attachMarkerHalo(scene, ring, Color3.FromHexString('#ff8800'))
+    expect(halo.parent).toBe(ring)
+    expect(halo.isPickable).toBe(false)
+    expect(halo.position.z).toBeGreaterThan(0) // behind the ring (the ring faces -Z)
+    expect(halo.position.z).toBeLessThan(0.002)
+    ring.scaling.set(3, 3, 1)
+    ring.computeWorldMatrix(true)
+    halo.computeWorldMatrix(true)
+    expect(halo.getAbsolutePosition().z).toBeCloseTo(halo.position.z, 9) // z scale stays 1: the halo does not drift
+    ring.dispose()
+    expect(halo.isDisposed()).toBe(true)
+    scene.dispose()
+  })
+})

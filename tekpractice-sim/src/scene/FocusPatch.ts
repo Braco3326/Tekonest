@@ -38,6 +38,7 @@ import { motionEnabled, TOKENS } from '../design/tokens'
 import { confirmWindowMs, DeferredEmptyClick } from './deferredEmptyClick'
 import { floorPointAt } from './pivotPick'
 import { DisposableBag } from '../util/disposable'
+import { attachMarkerHalo } from './portMarkerMesh'
 
 export interface FocusPatchDeps {
   /** Dry-run verdict — ConnectionGraph.canConnect, injected by the bootstrap. */
@@ -72,6 +73,8 @@ export class FocusPatch {
   private bag = new DisposableBag()
   private state: FocusState = initialState()
   private glowing = new Set<AbstractMesh>()
+  /** The halo meshes of the glowing port rings (children of the rings; disposed with the hints). */
+  private halos: Mesh[] = []
   private dimmed = new Set<Mesh>()
   private hoverRef: PortRef | null = null
   private outlineColor = Color3.FromHexString(TOKENS.focus.glowOutline)
@@ -462,9 +465,8 @@ export class FocusPatch {
       const ref = { instance: focused.instanceId, port: portId }
       if (same(ref, held)) continue
       if (this.deps.canConnect(held, ref).ok) {
-        marker.renderOutline = true
-        marker.outlineColor = this.outlineColor
-        marker.outlineWidth = TOKENS.focus.glowOutlineWidth / 2
+        // A flat ring has one normal everywhere: renderOutline would push a copy toward the camera (a doubled ring), so the glow is a halo mesh.
+        this.halos.push(attachMarkerHalo(this.scene, marker, this.outlineColor))
         this.glowing.add(marker)
       } else {
         marker.visibility = TOKENS.focus.dimVisibility
@@ -479,6 +481,8 @@ export class FocusPatch {
       mesh.renderOverlay = false
     }
     for (const mesh of this.dimmed) mesh.visibility = 1
+    for (const h of this.halos) if (!h.isDisposed()) h.dispose()
+    this.halos = []
     this.glowing.clear()
     this.dimmed.clear()
   }
