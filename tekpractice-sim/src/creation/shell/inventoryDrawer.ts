@@ -370,13 +370,16 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       const text = el(doc, 'span', 'cr-inv-text')
       text.appendChild(el(doc, 'span', 'cr-inv-name', it.label))
       if (it.badge) {
-        const badge = el(doc, 'span', 'cr-inv-badge', I().badgeUnverified)
+        // Wave 0: a proposal that has a model at an estimated size says so (« Bêta — dimensions estimées »), still never verified.
+        const estimated = it.badge === 'dimensions estimées'
+        const badge = el(doc, 'span', 'cr-inv-badge', estimated ? I().badgeEstimated : I().badgeUnverified)
         badge.dataset.testid = 'inventory-badge'
         text.appendChild(badge)
         // A proposal never looks verified (S5): the tooltip says it is approximate, and screen readers get it as the description.
-        b.title = I().tipUnverified!
+        const tipText = estimated ? I().tipEstimated! : I().tipUnverified!
+        b.title = tipText
         b.dataset.beta = 'true'
-        const tip = el(doc, 'span', 'cr-sr-only', I().tipUnverified)
+        const tip = el(doc, 'span', 'cr-sr-only', tipText)
         tip.id = `cr-inv-tip-${at}`
         b.setAttribute('aria-describedby', tip.id)
         li.appendChild(tip)

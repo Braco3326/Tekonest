@@ -581,6 +581,8 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.empty` | Aucun appareil disponible pour le moment. | validé | État vide d’un onglet sans appareil |
 | `inventory.badgeUnverified` | non vérifié | validé | Pastille sur un appareil proposé : onglet Bêta, arbre Projet et Propriétés une fois posé (Task 30) |
 | `inventory.tipUnverified` | Fiche proposée, pas encore vérifiée : comportement approximatif. | validé | Info-bulle d’un appareil Bêta (tiroir) et description de l’appareil posé (Propriétés) |
+| `inventory.badgeEstimated` | Bêta — dimensions estimées | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Pastille d’un appareil proposé qui a un modèle 3D aux dimensions estimées (onglet Bêta) ; remplace « non vérifié » sur cet appareil |
+| `inventory.tipEstimated` | Modèle 3D aux dimensions estimées : fiche non vérifiée, comportement approximatif. | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Info-bulle de cet appareil (tiroir) |
 | `inventory.missingTitle` | Appareils non rechargés | validé | Titre de la note quand un projet rouvert contient des appareils dont la fiche n’existe plus |
 | `inventory.missingBody` | La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés. | validé | Corps de la note ; les identifiants des appareils suivent en liste |
 | `inventory.unavailableTitle` | Projet non rouvert | validé | Titre de la note quand les fiches Bêta dont un projet enregistré a besoin n’ont pas pu être chargées (réseau, délai de 5 s) : le projet n’est ni ouvert ni modifié |

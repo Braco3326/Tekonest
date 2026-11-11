@@ -708,6 +708,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     badgeUnverified: 'non vérifié',
     /** Tooltip of a Bêta item, and the description of a placed one (Properties). */
     tipUnverified: 'Fiche proposée, pas encore vérifiée : comportement approximatif.',
+    /** Badge of a Bêta item that has a 3D model at an ESTIMATED size (Wave 0, beta-modelled): never reads as verified. */
+    badgeEstimated: 'Bêta — dimensions estimées',
+    /** Tooltip of that item. */
+    tipEstimated: 'Modèle 3D aux dimensions estimées : fiche non vérifiée, comportement approximatif.',
     /** Note title when a reopened project has devices whose sheet is gone (a proposal no longer offered, an unknown device). */
     missingTitle: 'Appareils non rechargés',
     /** Note body; the device ids follow as a list. */

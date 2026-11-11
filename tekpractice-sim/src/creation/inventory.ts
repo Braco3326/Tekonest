@@ -19,7 +19,11 @@ export interface InventoryItem {
   tab: InventoryTab
   /** A public/assets/<deviceId>.glb exists; otherwise the placeholder box ships. */
   hasModel: boolean
-  badge?: 'non vérifié'
+  /**
+   * A proposal's mark: « non vérifié » (the plain Bêta badge), or « dimensions estimées » once a model ships for it (Wave 0, beta-modelled:
+   * a model at an estimated size, still unverified and patch-only). A catalog device carries none.
+   */
+  badge?: 'non vérifié' | 'dimensions estimées'
 }
 
 /** Tab names: the `inventory.tab*` strings of copy.ts (the one place for shell wording). */
@@ -138,7 +142,7 @@ export function inventory(
       label: p.label,
       tab: 'beta',
       hasModel: opts.modelIds.has(p.deviceId),
-      badge: 'non vérifié',
+      badge: opts.modelIds.has(p.deviceId) ? 'dimensions estimées' : 'non vérifié',
     })
   }
   const used = new Set(items.map((i) => i.tab))

@@ -149,7 +149,7 @@ describe('inventory', () => {
     for (const i of inventory(registry, none).items) expect(i.badge, i.deviceId).toBeUndefined()
   })
 
-  it('puts proposals only in « bêta », badged « non vérifié »', () => {
+  it('puts proposals only in « bêta », badged (« non vérifié », or « dimensions estimées » when a model ships)', () => {
     const r = inventory(registry, {
       proposals: [
         { deviceId: 'rallonge-test', label: 'Rallonge' },
@@ -159,7 +159,8 @@ describe('inventory', () => {
     })
     const betas = r.items.filter((i) => i.tab === 'beta')
     expect(betas.map((i) => i.deviceId)).toEqual(['rallonge-test', 'projecteur-par'])
-    for (const b of betas) expect(b.badge).toBe('non vérifié')
+    // Wave 0: a proposal with a shipped model reads « dimensions estimées », one without keeps the plain « non vérifié »; neither is ever unbadged
+    expect(betas.map((b) => b.badge)).toEqual(['dimensions estimées', 'non vérifié'])
     expect(betas[0].hasModel).toBe(true)
     expect(betas[1].hasModel).toBe(false)
     expect(r.items.filter((i) => i.tab !== 'beta' && i.badge)).toEqual([])

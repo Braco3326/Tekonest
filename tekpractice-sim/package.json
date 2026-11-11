@@ -27,7 +27,8 @@
     "format": "prettier --write \"src/**/*.ts\" \"tools/**/*.ts\"",
     "asset:rectify": "tsx tools/assets3d/rectify.ts",
     "asset:panel": "tsx tools/assets3d/genericPanel.ts",
-    "promote": "tsx tools/promote-device.ts"
+    "promote": "tsx tools/promote-device.ts",
+    "register": "tsx tools/brandsRegister.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.112.1",

@@ -1,0 +1,108 @@
+/**
+ * Wave 0, Task 0.6: docs/legal/BRANDS_AND_CREDITS.md section 6 is GENERATED from the manifest and the asset specs, so it cannot drift:
+ * one row per manifest device row, stable output, the committed document equals the generator's output.
+ */
+import { readFileSync, readdirSync } from 'node:fs'
+import { join } from 'node:path'
+import { describe, expect, it } from 'vitest'
+import { BEGIN, END, deviceLabels, readSpecsLoose, renderRegister, replaceBlock, type RegisterAsset } from '../../tools/brandsRegister'
+
+const manifest = JSON.parse(readFileSync('public/assets/ASSET_MANIFEST.json', 'utf8').replace(/^\uFEFF/, '')) as { assets: RegisterAsset[] }
+const specs = readSpecsLoose('content/asset-specs')
+const catalog = JSON.parse(readFileSync('content/catalog.json', 'utf8')) as { devices: { id: string; label: string }[] }
+const proposals = JSON.parse(readFileSync('content/proposals/catalog-proposals.json', 'utf8')) as { devices: { id: string; label: string }[] }
+const labels = deviceLabels(catalog, proposals)
+const deviceRows = manifest.assets.filter((a) => a.kind === 'device')
+const doc = readFileSync('docs/legal/BRANDS_AND_CREDITS.md', 'utf8')
+
+/** The table rows of a rendered block (lines that start with `| ` and carry a backticked id). */
+const rowsOf = (block: string): string[] => block.split('\n').filter((l) => l.startsWith('| ') && /\(`[a-z0-9-]+`\)/.test(l))
+
+describe('renderRegister', () => {
+  it('has exactly one row per manifest device row (no connector rows, none missing, none twice)', () => {
+    const block = renderRegister(manifest, specs, labels)
+    const rows = rowsOf(block)
+    expect(rows).toHaveLength(deviceRows.length)
+    for (const a of deviceRows) expect(rows.filter((r) => r.includes(`(\`${a.id}\`)`)), a.id).toHaveLength(1)
+    for (const a of manifest.assets.filter((x) => x.kind === 'connector').slice(0, 5)) expect(block).not.toContain(`(\`${a.id}\`)`)
+  })
+
+  it('is stable: the same inputs give the same text, and replacing the block twice changes nothing (second run, no diff)', () => {
+    const a = renderRegister(manifest, specs, labels)
+    expect(renderRegister(manifest, specs, labels)).toBe(a)
+    const once = replaceBlock(doc, a)
+    expect(replaceBlock(once, a)).toBe(once)
+    // order does not depend on the manifest's own order
+    const shuffled = { ...manifest, assets: [...manifest.assets].reverse() }
+    expect(renderRegister(shuffled, specs, labels)).toBe(a)
+  })
+
+  it('the committed document holds exactly the generated block (run `npm run register` after a manifest or spec change)', () => {
+    expect(replaceBlock(doc, renderRegister(manifest, specs, labels))).toBe(doc)
+  })
+
+  it('carries, per device: tool, source of dimensions (a URL), picture origin, Meshy yes/no, trademark flag', () => {
+    const rows = rowsOf(renderRegister(manifest, specs, labels))
+    for (const r of rows) {
+      const cells = r.split(' | ').map((c) => c.trim())
+      expect(cells.length, r).toBeGreaterThanOrEqual(7)
+      expect(['scripted', 'hybrid', 'meshy', 'raw'], r).toContain(cells[1])
+      expect(cells[3], r).toMatch(/\S/) // a URL, the repo file an estimate comes from (power strip, loom), or a dash
+      expect(cells[5], r).toMatch(/^(no|yes)/)
+      expect(cells[6].replace(/\s*\|$/, ''), r).toMatch(/^(generic|branded-internal)/)
+    }
+  })
+
+  it('Meshy appears on the Meshy rows only, and no generic-artwork row says Meshy', () => {
+    const rows = rowsOf(renderRegister(manifest, specs, labels))
+    for (const r of rows) {
+      const cells = r.split(' | ').map((c) => c.trim())
+      if (cells[4].startsWith('generic artwork')) expect(cells[5], r).toBe('no')
+    }
+    const yes = rows.filter((r) => /\| yes/.test(r)).length
+    expect(yes).toBe(deviceRows.filter((a) => a.tool === 'meshy' || /Meshy render/.test(a.source ?? '')).length)
+  })
+
+  it('a device that is only a Bêta proposal (a beta-modelled model) is labelled from the proposals; an unknown id falls back to the id; a pipe in a cell cannot break the table', () => {
+    const fake: RegisterAsset = { id: 'fx-beta', kind: 'device', status: 'ok', tool: 'hybrid', source: 'hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)', trademark: 'branded-internal', specSource: 'https://example.com/a|b' }
+    const block = renderRegister({ assets: [fake, { ...fake, id: 'fx-unknown' }] }, [], new Map([['fx-beta', 'Acme | Beta']]))
+    const rows = rowsOf(block)
+    expect(rows).toHaveLength(2)
+    expect(block).toContain('Acme \\| Beta (`fx-beta`)')
+    expect(block).toContain('(`fx-unknown`)')
+    expect(block).toContain('https://example.com/a\\|b')
+    expect(block).toContain('generic artwork drawn by us')
+  })
+
+  it('picture origin by source: photo, generic artwork, flat colours, Meshy', () => {
+    const mk = (over: Partial<RegisterAsset>): string => rowsOf(renderRegister({ assets: [{ id: 'x', kind: 'device', tool: 'hybrid', trademark: 'generic', ...over }] }, [], new Map()))[0]!
+    expect(mk({ source: 'hybrid: own scripted geometry + official photo as texture', photos: ['front.jpg', 'rear.jpg'] })).toContain('official manufacturer photos (front.jpg, rear.jpg)')
+    expect(mk({ source: 'modeled', tool: 'scripted' })).toContain('none (flat colours)')
+    expect(mk({ source: 'ai-meshy', tool: 'meshy' })).toContain('Meshy model and its texture')
+    expect(mk({ source: 'ai-meshy', tool: 'meshy' })).toMatch(/\| yes/)
+  })
+
+  it('the spec supplies the dimension source when the manifest has none', () => {
+    const row = rowsOf(renderRegister({ assets: [{ id: 'x', kind: 'device', tool: 'scripted', source: 'modeled', trademark: 'generic' }] }, [{ id: 'x', sources: [{ url: 'https://example.com/ds.pdf' }] }], new Map()))[0]!
+    expect(row).toContain('https://example.com/ds.pdf')
+  })
+})
+
+describe('replaceBlock', () => {
+  it('replaces only what is between the markers and refuses a document without them', () => {
+    const d = `before\n${BEGIN}\nold\n${END}\nafter\n`
+    expect(replaceBlock(d, 'new')).toBe(`before\n${BEGIN}\nnew\n${END}\nafter\n`)
+    expect(() => replaceBlock('no markers here', 'x')).toThrow(/markers/)
+    expect(() => replaceBlock(`${END}\n${BEGIN}`, 'x')).toThrow(/markers/)
+  })
+})
+
+describe('the inputs', () => {
+  it('every manifest device id has a label (catalogue or proposal) or is reported by its id', () => {
+    const missing = deviceRows.filter((a) => !labels.has(a.id)).map((a) => a.id)
+    expect(missing).toEqual([]) // every shipped device is a catalogue device today; a beta-modelled one is a proposal
+  })
+  it('readSpecsLoose reads every spec file (it never throws on an unfinished one)', () => {
+    expect(specs.length).toBe(readdirSync(join('content', 'asset-specs')).filter((f) => f.endsWith('.json')).length)
+  })
+})
