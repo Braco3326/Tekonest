@@ -3,12 +3,13 @@
  * (reads content/control-layouts); the builder refusals run the real Blender builder and are skipped without it.
  */
 import { execFile } from 'node:child_process'
+import { readdirSync, readFileSync } from 'node:fs'
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { findBlender } from '../../../tools/assets3d/env'
-import { FLAT_ZONE_MARGIN_MM, flatZonesFor } from '../../../tools/assets3d/flatZones'
+import { DEFAULT_LAYOUT_DIR, FLAT_ZONE_MARGIN_MM, flatZonesFor } from '../../../tools/assets3d/flatZones'
 import { loadSpecs } from '../../../tools/assets3d/loadSpecs'
 import { BUILD_SCRIPT, runBuilder } from '../../../tools/assets3d/runBuilder'
 import type { AssetSpecT } from '../../../tools/assets3d/specSchema'
@@ -127,4 +128,41 @@ describe(`the builder keeps modelled detail out of the flat zones (${BLENDER ? `
     const fine: AssetSpecT = { ...isa, build: { shape: 'rack-box', params: { earThicknessMm: 4, earHoleMm: 5, earHoleEdgeMm: 9, earHoleRowMm: 6.5, filletMm: 1.5, ventSlots: 3, ventColumns: 2, ventSlotLenMm: 40 } } }
     await expect(runBuilder(fine, join(dir, 'fine.glb'))).resolves.toBeTruthy()
   }, 240_000)
+})
+
+describe('flatZonesFor expands `repeat` exactly like the layout parser (Wave 5c finding A)', () => {
+  it('has one zone per expanded control for every shipped layout', async () => {
+    const { parseControlLayout } = await import('../../../src/controls/controlTypes')
+    const files = readdirSync(DEFAULT_LAYOUT_DIR).filter((f) => f.endsWith('.json'))
+    expect(files.length).toBeGreaterThan(3)
+    for (const f of files) {
+      const id = f.replace(/\.json$/, '')
+      const { layout, errors } = parseControlLayout(JSON.parse(readFileSync(join(DEFAULT_LAYOUT_DIR, f), 'utf8')))
+      expect(errors, id).toEqual([])
+      expect(flatZonesFor(id).length, id).toBe(layout?.controls.length)
+    }
+  })
+
+  it('axia-iq: 8 strips of 9 repeated controls are all zones, strip 8 included', () => {
+    const zones = flatZonesFor('axia-iq')
+    expect(zones.length).toBe(80)
+    // fader of strip 8 = base x + 7 * dxMm (-42.5): a zone must sit there
+    const layout = JSON.parse(readFileSync(join(DEFAULT_LAYOUT_DIR, 'axia-iq.json'), 'utf8')) as { controls: { id?: string; xMm: number; face: string; repeat?: { dxMm: number } }[] }
+    const f = layout.controls.find((c) => c.repeat && c.id === 'fader-1') ?? layout.controls.find((c) => c.repeat)
+    const x8 = (f?.xMm ?? 0) + 7 * (f?.repeat?.dxMm ?? 0)
+    expect(zones.some((z) => z.x0 < x8 && z.x1 > x8 && z.face === f?.face)).toBe(true)
+  })
+
+  it('a layout in another folder: repeat count 3 with a step gives 3 shifted zones; a bad repeat throws', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'tekpractice-layout-rep-'))
+    try {
+      await writeFile(join(dir, 'r.json'), JSON.stringify({ controls: [{ id: 'f-{n}', face: 'top', xMm: 100, yMm: 50, sizeMm: { w: 10, h: 20 }, repeat: { count: 3, dxMm: -40, dyMm: 0, idFormat: 'f-{n}' } }] }))
+      const z = flatZonesFor('r', dir)
+      expect(z.map((q) => q.x0)).toEqual([92, 52, 12])
+      await writeFile(join(dir, 'rb.json'), JSON.stringify({ controls: [{ face: 'top', xMm: 1, yMm: 1, sizeMm: { w: 1, h: 1 }, repeat: { count: 0 } }] }))
+      expect(() => flatZonesFor('rb', dir)).toThrow(/repeat/)
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
+  })
 })

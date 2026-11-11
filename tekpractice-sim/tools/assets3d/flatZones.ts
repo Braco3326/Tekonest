@@ -11,6 +11,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { expandControlEntry } from '../../src/controls/controlTypes'
 
 /** Default folder of the layouts: content/control-layouts. */
 export const DEFAULT_LAYOUT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', 'content', 'control-layouts')
@@ -51,7 +52,20 @@ export function flatZonesFor(deviceId: string, dir: string = DEFAULT_LAYOUT_DIR)
   }
   const controls = (layout as { controls?: unknown }).controls
   if (!Array.isArray(controls)) throw new Error(`control layout ${path} has no controls list`)
-  return controls.map((c: LayoutControl, i: number) => {
+  // `repeat` is expanded by the layout parser's own function (8 channel strips are 8 zones, not one)
+  const expanded: LayoutControl[] = []
+  controls.forEach((entry: unknown, i: number) => {
+    if (typeof entry !== 'object' || entry === null || Array.isArray(entry)) throw new Error(`control layout ${path}: control ${i} has no face, position or size`)
+    const raw = entry as Record<string, unknown>
+    if (raw.repeat === undefined) {
+      expanded.push(raw as unknown as LayoutControl)
+      return
+    }
+    const ex = expandControlEntry(raw)
+    if (ex.error) throw new Error(`control layout ${path}: control ${i}: ${ex.error}`)
+    for (const e of ex.expanded) expanded.push(e.raw as unknown as LayoutControl)
+  })
+  return expanded.map((c: LayoutControl, i: number) => {
     const ok = typeof c?.face === 'string' && Number.isFinite(c.xMm) && Number.isFinite(c.yMm) && Number.isFinite(c.sizeMm?.w) && Number.isFinite(c.sizeMm?.h)
     if (!ok) throw new Error(`control layout ${path}: control ${i} has no face, position or size`)
     let x0 = c.xMm - c.sizeMm.w / 2

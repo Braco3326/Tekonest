@@ -185,6 +185,38 @@ function parseOne(raw: Record<string, unknown>, id: string, errors: string[]): C
 
 const normaliseDefault = (def: ControlDef, v: number): number => (def.kind === 'button' || def.kind === 'led' ? (v >= 0.5 ? 1 : 0) : v)
 
+/**
+ * One raw layout entry as the controls it stands for: itself, or `repeat.count` copies shifted by (dxMm, dyMm) with the {n} of the id,
+ * group, label and meter source replaced. The single expansion shared by the layout parser and the 3D tool's flat zones (tools/assets3d/flatZones.ts).
+ */
+export function expandControlEntry(entry: Record<string, unknown>): { expanded: { id: string; raw: Record<string, unknown> }[]; error?: string } {
+  const rep = entry.repeat
+  const expanded: { id: string; raw: Record<string, unknown> }[] = []
+  if (rep === undefined) {
+    if (typeof entry.id !== 'string' || !entry.id) return { expanded, error: 'a control has no id' }
+    return { expanded: [{ id: entry.id, raw: entry }] }
+  }
+  const r = rep as Partial<Repeat>
+  if (!isRec(rep) || !isNum(r.count) || !Number.isInteger(r.count) || r.count < 1 || !isNum(r.dxMm) || !isNum(r.dyMm) || typeof r.idFormat !== 'string' || !r.idFormat.includes('{n}')) {
+    return { expanded, error: 'repeat needs count (integer ≥ 1), dxMm, dyMm and idFormat containing {n}' }
+  }
+  for (let n = 1; n <= r.count; n++) {
+    expanded.push({
+      id: r.idFormat.replace('{n}', String(n)),
+      raw: {
+        ...entry,
+        xMm: (entry.xMm as number) + (n - 1) * r.dxMm,
+        yMm: (entry.yMm as number) + (n - 1) * r.dyMm,
+        // A group or a legend may carry {n} too (strip 3's ON / OFF pair, a numbered key).
+        ...(typeof entry.group === 'string' ? { group: entry.group.replace('{n}', String(n)) } : {}),
+        ...(typeof entry.label === 'string' ? { label: entry.label.replace('{n}', String(n)) } : {}),
+        ...(isRec(entry.meter) && typeof entry.meter.source === 'string' ? { meter: { ...entry.meter, source: entry.meter.source.replace('{n}', String(n)) } } : {}),
+      },
+    })
+  }
+  return { expanded }
+}
+
 /** The layout of a raw JSON value, `repeat` expanded; `errors` lists every problem (an invalid layout is null, never half-built). */
 export function parseControlLayout(raw: unknown): { layout: ControlLayout | null; errors: string[] } {
   const errors: string[] = []
@@ -198,35 +230,12 @@ export function parseControlLayout(raw: unknown): { layout: ControlLayout | null
       errors.push('a control entry is not an object')
       continue
     }
-    const rep = entry.repeat
-    let expanded: { id: string; raw: Record<string, unknown> }[] = []
-    if (rep === undefined) {
-      if (typeof entry.id !== 'string' || !entry.id) {
-        errors.push('a control has no id')
-        continue
-      }
-      expanded = [{ id: entry.id, raw: entry }]
-    } else {
-      const r = rep as Partial<Repeat>
-      if (!isRec(rep) || !isNum(r.count) || !Number.isInteger(r.count) || r.count < 1 || !isNum(r.dxMm) || !isNum(r.dyMm) || typeof r.idFormat !== 'string' || !r.idFormat.includes('{n}')) {
-        errors.push('repeat needs count (integer ≥ 1), dxMm, dyMm and idFormat containing {n}')
-        continue
-      }
-      for (let n = 1; n <= r.count; n++) {
-        expanded.push({
-          id: r.idFormat.replace('{n}', String(n)),
-          raw: {
-            ...entry,
-            xMm: (entry.xMm as number) + (n - 1) * r.dxMm,
-            yMm: (entry.yMm as number) + (n - 1) * r.dyMm,
-            // A group or a legend may carry {n} too (strip 3's ON / OFF pair, a numbered key).
-            ...(typeof entry.group === 'string' ? { group: entry.group.replace('{n}', String(n)) } : {}),
-            ...(typeof entry.label === 'string' ? { label: entry.label.replace('{n}', String(n)) } : {}),
-            ...(isRec(entry.meter) && typeof entry.meter.source === 'string' ? { meter: { ...entry.meter, source: entry.meter.source.replace('{n}', String(n)) } } : {}),
-          },
-        })
-      }
+    const ex = expandControlEntry(entry)
+    if (ex.error) {
+      errors.push(ex.error)
+      continue
     }
+    const expanded = ex.expanded
     for (const { id, raw: r } of expanded) {
       if (seen.has(id)) {
         errors.push(`control "${id}" is defined twice`)
