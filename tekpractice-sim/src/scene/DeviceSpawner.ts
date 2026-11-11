@@ -25,6 +25,7 @@ import type { PortRef } from '../engine/types'
 import { TOKENS } from '../design/tokens'
 import { assetUrl } from '../assetUrl'
 import { hasModel } from './modelIds'
+import { deviceFootprint } from './placeholderSize'
 import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
@@ -56,26 +57,6 @@ export interface DeviceInstance {
   controlsReady: Promise<AttachedControls | null>
   dispose(): void
 }
-
-/** Rough placeholder footprints per realWorld.category (meters: w, h, d). */
-const SIZE_BY_CATEGORY: Record<string, [number, number, number]> = {
-  console: [1.0, 0.25, 0.55],
-  stagebox: [0.48, 0.18, 0.4],
-  microphone: [0.07, 0.22, 0.07],
-  'powered-speaker': [0.4, 0.62, 0.36],
-  'studio-monitor': [0.2, 0.3, 0.25],
-  accessory: [0.06, 1.6, 0.06],
-  signaling: [0.12, 0.28, 0.12],
-  computer: [0.45, 0.45, 0.2],
-  codec: [0.48, 0.09, 0.32],
-  'monitor-controller': [0.26, 0.1, 0.3],
-  'mic-preamp': [0.24, 0.09, 0.26],
-  'master-clock': [0.48, 0.09, 0.26],
-  patchbay: [0.48, 0.14, 0.22],
-  cable: [0.3, 0.06, 0.12],
-  'audio-interface': [0.48, 0.13, 0.3],
-}
-const DEFAULT_SIZE: [number, number, number] = [0.4, 0.3, 0.3]
 
 /**
  * Real-world outer dimensions per device id (meters: w=width, h=height, d=depth).
@@ -695,7 +676,8 @@ export class DeviceSpawner {
     instanceId: string,
     root: TransformNode
   ): Map<string, Mesh> {
-    const [w, h, d] = SIZE_BY_CATEGORY[device.realWorld.category] ?? DEFAULT_SIZE
+    // Wave 0: a Bêta proposal carries the equipment plan's size (sizeMm); else the category footprint, else 0.4 x 0.3 x 0.3 m.
+    const { w, h, d } = deviceFootprint(device)
 
     const theme = this.theme
     let box: Mesh
