@@ -86,7 +86,7 @@ function findRule(question: string, rules: readonly RuleRow[]): RuleRow | null {
 
 const reply = (kind: BrainReply['kind'], text: string, lines: BrainReply['lines'] = []): BrainReply => ({ kind, text, lines, verdict: null })
 
-export function createTekPracticeBrain(deps: { bridge: TpBridge; rules: readonly RuleRow[]; mode: () => 'practice' | 'exam' }): GuideBrain {
+export function createTekPracticeBrain(deps: { bridge: TpBridge; rules: readonly RuleRow[]; mode: () => 'practice' | 'exam'; route?: TpState['route'] }): GuideBrain {
   // Fail closed: anything but "practice", or a getter that throws, is exam.
   const practice = (): boolean => {
     try {
@@ -99,8 +99,9 @@ export function createTekPracticeBrain(deps: { bridge: TpBridge; rules: readonly
   const withheld = (): BrainReply => reply('withheld', TP_STRINGS.ask.examQuiet)
 
   const nothingToJudge = (rules: readonly RuleRow[]): Verdict => {
-    const empty: TpState = { route: 'creation', placeKnown: false, instances: [], connections: [], controls: {}, events: [], playbackReady: false, firstReason: null }
-    return { ...buildVerdict(empty, ruleTextFor(rules)), labelFr: TP_STRINGS.verdict.nothingToJudge }
+    const legacy = deps.route === 'legacy'
+    const empty: TpState = { route: legacy ? 'legacy' : 'creation', placeKnown: legacy, instances: [], connections: [], controls: {}, events: [], playbackReady: false, firstReason: null }
+    return { ...buildVerdict(empty, ruleTextFor(rules)), labelFr: legacy ? TP_STRINGS.verdict.legacyNothingToJudge : TP_STRINGS.verdict.nothingToJudge }
   }
 
   return {

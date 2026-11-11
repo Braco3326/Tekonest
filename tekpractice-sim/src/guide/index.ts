@@ -4,11 +4,15 @@
 // The widget, the controller, the bridge, the catalog and the style sheets are separate lazy chunks, fetched only when the guide will really mount,
 // so an exam URL, `?oscar=0` or an old browser never downloads them. `bootGuide` never throws and never rejects: the answer to any
 // failure is null and the app is untouched.
+import type { Registry } from '../engine/CatalogLoader'
+import type { TpBridge } from './bridge/types'
 import { guideEnabled, guideMode, type GuideRoute } from './mode'
 
-/** How long the guide waits for `window.__creation` (the debug hook the bridge reads), and how often it looks. */
+/** How long the guide waits for the route's debug hook (`window.__creation`, or `window.__audioSim` on the level page), and how often it looks. */
 export const WAIT_LIMIT_MS = 10_000
 export const WAIT_STEP_MS = 250
+
+type MakeBridge = (deps: { win: Window; registry: Registry; doc: Document; now: () => number }) => TpBridge
 
 export interface GuideHandle {
   destroy(): void
@@ -28,13 +32,16 @@ function warn(message: string, e?: unknown): void {
   }
 }
 
-/** Resolves true once `win.__creation` exists, false after the limit. The timers are cleared in both cases. */
-function waitForHook(win: Window): Promise<boolean> {
+/** The debug hook each route's bridge reads. */
+const HOOK: Record<GuideRoute, '__creation' | '__audioSim'> = { creation: '__creation', legacy: '__audioSim' }
+
+/** Resolves true once the route's hook exists on `win`, false after the limit. The timers are cleared in both cases. */
+function waitForHook(win: Window, hook: string): Promise<boolean> {
   return new Promise<boolean>((resolve) => {
     let waited = 0
     const look = (): void => {
       try {
-        if ((win as { __creation?: unknown }).__creation) return resolve(true)
+        if ((win as unknown as Record<string, unknown>)[hook]) return resolve(true)
       } catch {
         return resolve(false)
       }
@@ -57,14 +64,13 @@ export async function bootGuide(route: GuideRoute, target?: Window): Promise<Gui
       return null // no readable address: fail closed (the mode cannot be known)
     }
     if (!guideEnabled(search)) return null
-    // The legacy route comes with the legacy task; until then the guide is creation only.
-    if (route !== 'creation') return null
+    if (route !== 'creation' && route !== 'legacy') return null
     if (guideMode(search, route) !== 'practice') return null
     if (!runtimeOk()) {
       warn('guide: this browser lacks Object.hasOwn or String.prototype.toWellFormed, the guide stays off')
       return null
     }
-    if (!(await waitForHook(win))) return null
+    if (!(await waitForHook(win, HOOK[route]))) return null
     // The address is read again: the page may have moved to an exam address while the guide waited, and the gates must see that one.
     try {
       search = win.location.search
@@ -73,8 +79,11 @@ export async function bootGuide(route: GuideRoute, target?: Window): Promise<Gui
     }
     if (!guideEnabled(search) || guideMode(search, route) !== 'practice') return null
 
-    const [{ createCreationBridge }, { mountOscar }, { loadCatalog }, catalog] = await Promise.all([
-      import('./bridge/creationBridge'),
+    const [makeBridge, { mountOscar }, { loadCatalog }, catalog] = await Promise.all([
+      // One bridge per route: Mode Création reads `window.__creation`, the level page `window.__audioSim`. Each is its own lazy chunk.
+      route === 'creation'
+        ? import('./bridge/creationBridge').then((m): MakeBridge => (d) => m.createCreationBridge(d))
+        : import('./bridge/legacyBridge').then((m): MakeBridge => (d) => m.createLegacyBridge(d)),
       import('./mount'),
       import('../engine/CatalogLoader'),
       import('../../content/catalog.json'),
@@ -91,7 +100,7 @@ export async function bootGuide(route: GuideRoute, target?: Window): Promise<Gui
       storage = null
     }
     const now = (): number => performance.now()
-    const bridge = createCreationBridge({ win, registry, doc, now })
+    const bridge = makeBridge({ win, registry, doc, now })
     return mountOscar({ win, doc, route, search, bridge, registry, storage, now })
   } catch (e) {
     warn('guide: could not start, the page is untouched', e)

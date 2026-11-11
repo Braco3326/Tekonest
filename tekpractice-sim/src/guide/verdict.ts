@@ -1,7 +1,7 @@
 // The guide's verdict, built only from the app's own data: its rule events, the catalog's rule texts (through ruleTextFor) and the
 // signal path's first reason. Nothing here is invented: a fix is the catalog's explanation verbatim (or, when a rule has none, the app's own title text).
 import type { RuleText } from '../creation/shell/statusModel'
-import { stateHash } from './bridge/creationBridge'
+import { stateHash } from './bridge/shared'
 import type { TpPortRef, TpState } from './bridge/types'
 import { TP_STRINGS } from './strings'
 import type { Verdict } from './vendor/hostTypes'
@@ -44,7 +44,9 @@ function textOf(ruleText: RuleText, ruleId: string): { title: string; detail: st
  */
 export function buildVerdict(state: TpState, ruleText: RuleText): Verdict {
   const base = { setupHash: digestOf(stateHash(state)), coveredFamilies: [] as string[], note: null, notEvaluated: [] as Verdict['notEvaluated'] }
-  const firstAt = state.events.findIndex((e) => e.severity === 'error')
+  // Level play: the checks a level declares are its lesson, so any event blocks the win, a warning as well (severity only styles the app's own toast).
+  const legacy = state.route === 'legacy'
+  const firstAt = state.events.findIndex((e) => legacy || e.severity === 'error')
   const first = firstAt < 0 ? undefined : state.events[firstAt]
 
   if (first !== undefined) {
@@ -69,9 +71,9 @@ export function buildVerdict(state: TpState, ruleText: RuleText): Verdict {
 
   const indetermine = (labelFr: string, reason: NonNullable<Verdict['reason']>): Verdict => ({ ...base, result: 'indetermine', labelFr, reason, primary: null, alsoFound: [] })
 
-  if (state.playbackReady) return { ...base, result: 'bon', labelFr: TP_STRINGS.verdict.allGood, reason: null, primary: null, alsoFound: [] }
+  if (state.playbackReady) return { ...base, result: 'bon', labelFr: legacy ? TP_STRINGS.verdict.legacyWon : TP_STRINGS.verdict.allGood, reason: null, primary: null, alsoFound: [] }
   if (!state.placeKnown) return indetermine(TP_STRINGS.verdict.placeFirst, 'missing-input')
   if (state.instances.length === 0) return indetermine(TP_STRINGS.verdict.benchEmpty, 'missing-input')
-  if (state.firstReason !== null && state.firstReason.text_fr !== '') return indetermine(state.firstReason.text_fr, 'missing-input')
+  if (state.firstReason !== null && state.firstReason.text_fr !== '') return indetermine(legacy ? `${TP_STRINGS.verdict.nextLink} ${state.firstReason.text_fr}` : state.firstReason.text_fr, 'missing-input')
   return indetermine(TP_STRINGS.verdict.notYet, 'no-coverage')
 }

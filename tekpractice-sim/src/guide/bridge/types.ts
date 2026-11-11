@@ -1,6 +1,9 @@
 // The guide's view of the bench: one plain-data state, and the bridge that produces it. No Babylon, no DOM.
 import type { Rect, HostEvent } from '../vendor/core/types'
 
+/** The code of the first reason in level play: a required connection of the level that is not made yet. */
+export const MISSING_LINK = 'missing-link'
+
 export type TpPortRef = { instance: string; port: string }
 
 export type TpState = {
@@ -15,6 +18,8 @@ export type TpState = {
   playbackReady: boolean
   /** The first reason the signal path gives for not playing, verbatim, or null. */
   firstReason: { code: string; text_fr: string; subjects: TpPortRef[] } | null
+  /** Legacy level play only: the level's own objective sentence, verbatim (absent in Mode Création). */
+  objective?: string
 }
 
 export type TpBridge = {

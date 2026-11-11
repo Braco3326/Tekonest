@@ -23,6 +23,12 @@ export const TP_STRINGS = deepFreeze({
     notYet: 'Aucune erreur détectée pour le moment, mais le signal ne peut pas encore être lu. Continuer le montage.',
     /** Last resort when a rule has no readable title. */
     toFix: 'Une correction est à apporter.',
+    /** Level play: the chain the level asks for is complete and the app lists no error. */
+    legacyWon: 'La chaîne demandée est complète : aucune erreur détectée par l’application. Cette vérification ne couvre que les contrôles de l’application.',
+    /** Level play: the lead of the next required connection (the checklist's own words follow it). */
+    nextLink: 'Connexion requise à faire :',
+    /** Level play: the level is not readable yet. */
+    legacyNothingToJudge: 'Rien à vérifier pour le moment : le niveau n’est pas encore prêt.',
   },
   ask: {
     noInformation: "Je n'ai pas encore d'information sur ce point.",
@@ -37,6 +43,28 @@ export const TP_STRINGS = deepFreeze({
   planner: {
     /** After a verdict sentence that says what is missing. Nothing here asks to run a check: Mode Création has no check button. The offered flow comes as a chip. */
     needInfo: 'La barre d’état, en bas de l’écran, résume l’état du montage.',
+  },
+  /** Level play (the legacy page): the planner line and the two flows. The objectives card is the page's own (title, brief, checklist of required connections). */
+  legacy: {
+    planner: {
+      needInfo: 'Le cadre du niveau, en haut à gauche, liste les connexions requises.',
+    },
+    flows: {
+      'lire-l-objectif': {
+        title: 'Lire l’objectif',
+        steps: {
+          read: 'Lire l’objectif du niveau dans le cadre en haut à gauche.',
+          readQuoted: 'Lire l’objectif du niveau dans le cadre en haut à gauche :',
+        },
+      },
+      'premier-cable': {
+        title: 'Premier câble',
+        steps: {
+          connect: 'Relier les deux appareils indiqués avec un câble, d’une sortie vers une entrée.',
+          check: 'Lire la liste des connexions requises dans le cadre du niveau : la ligne du câble posé est cochée.',
+        },
+      },
+    },
   },
   flows: {
     'premier-montage': {

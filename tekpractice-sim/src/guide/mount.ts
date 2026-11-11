@@ -14,7 +14,7 @@ import type { RuleRow } from '../creation/shell/statusModel'
 import { createTekPracticeBrain } from './brain'
 import { tpString } from './strings'
 import type { TpBridge, TpState } from './bridge/types'
-import { NAV_SELECTORS } from './bridge/creationBridge'
+import { NAV_SELECTORS } from './bridge/shared'
 import { isAnchor } from './anchors'
 import {
   ACKNOWLEDGE,
@@ -29,6 +29,7 @@ import {
   keywordsFor,
   nextConnectionStep,
 } from './flows.creation'
+import { LEGACY_ACK_SELECTOR, LEGACY_NAV_OBJECTIVES, LEGACY_STORAGE_KEY, LEGACY_STRINGS, legacyFlowsFor, legacyKeywords, nextLegacyLink } from './flows.legacy'
 import { guideEnabled, guideMode, type GuideRoute } from './mode'
 import { createController } from './vendor/core/controller'
 import type { HostEvent, Rect } from './vendor/core/types'
@@ -121,9 +122,15 @@ export function collapseRestore(events: readonly HostEvent[]): HostEvent[] {
 
 type Suggestion = { step: ReturnType<typeof nextConnectionStep>; phantom: ReturnType<typeof firstPhantom> }
 
+const legacyStep = (state: TpState): Suggestion['step'] => {
+  const link = nextLegacyLink(state)
+  return link === null ? null : { ...link, say: '' }
+}
+
 /** `getRect` for the widget: the bridge's rects, the reserved suggestion anchors, and the per-anchor cache. */
-export function createRectResolver(deps: { bridge: TpBridge; registry: Registry; now: () => number }): { getRect(anchor: string): Rect | null; clear(): void } {
+export function createRectResolver(deps: { bridge: TpBridge; registry: Registry; now: () => number; route?: GuideRoute }): { getRect(anchor: string): Rect | null; clear(): void } {
   const { bridge, registry, now } = deps
+  const legacy = deps.route === 'legacy'
   const cache = new Map<string, { at: number; rect: Rect | null }>()
   let live: { at: number; value: Suggestion } | null = null
 
@@ -131,7 +138,13 @@ export function createRectResolver(deps: { bridge: TpBridge; registry: Registry;
   function suggestion(t: number): Suggestion {
     if (live !== null && t - live.at < RECT_CACHE_MS) return live.value
     const state = bridge.snapshot()
-    const value: Suggestion = state === null ? { step: null, phantom: null } : { step: nextConnectionStep(state, registry), phantom: firstPhantom(state) }
+    // Level play: the cable to draw is the first required connection the level still misses; the page has no phantom switch to point at.
+    const value: Suggestion =
+      state === null
+        ? { step: null, phantom: null }
+        : legacy
+          ? { step: legacyStep(state), phantom: null }
+          : { step: nextConnectionStep(state, registry), phantom: firstPhantom(state) }
     live = { at: t, value }
     return value
   }
@@ -226,11 +239,17 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     }
     const mode = (): 'practice' | 'exam' => guideMode(liveSearch(), deps.route)
 
-    const brain = createTekPracticeBrain({ bridge, rules: registry.catalog.rules as unknown as readonly RuleRow[], mode })
+    const legacy = deps.route === 'legacy'
+    const brain = createTekPracticeBrain({ bridge, rules: registry.catalog.rules as unknown as readonly RuleRow[], mode, route: legacy ? 'legacy' : 'creation' })
     // The controller reads these two lists by reference at every call: the mount keeps them in the order of the bench's stage (see flows.creation.ts).
-    const flows = flowsFor('no-place')
-    const keywords = keywordsFor('no-place')
+    // Level play has its own two flows (the level's objective is quoted, the order follows the required connections made).
+    const flows = legacy ? legacyFlowsFor(null).slice() : flowsFor('no-place')
+    const keywords = legacy ? legacyKeywords() : keywordsFor('no-place')
     const follow = (state: TpState | null): void => {
+      if (legacy) {
+        flows.splice(0, flows.length, ...legacyFlowsFor(state))
+        return
+      }
       const stage = benchStage(state, registry)
       flows.splice(0, flows.length, ...flowsFor(stage))
       keywords.splice(0, keywords.length, ...keywordsFor(stage))
@@ -240,10 +259,11 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       flows,
       clock: now,
       ...(deps.storage ? { storage: deps.storage } : {}),
-      strings: CREATION_STRINGS,
+      strings: legacy ? LEGACY_STRINGS : CREATION_STRINGS,
       flowKeywords: keywords,
+      ...(legacy ? { storageKey: LEGACY_STORAGE_KEY } : {}),
     })
-    const rects = createRectResolver({ bridge, registry, now })
+    const rects = createRectResolver({ bridge, registry, now, route: deps.route })
     cleanups.push(() => rects.clear())
     // The widget holds text (the keyboard hint, the bubble) that must sit inside a landmark; it gets one of its own, a child of <body> so that a modal's
     // `inert` on the body's other children still covers it. The landmark has no box of its own (the widget is fixed-positioned).
@@ -291,12 +311,14 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       tell(state)
     })
 
-    // « Lire la barre d’état »: a `read` step has no change of the bench to wait for, so a click inside the status bar is the learner reading it.
-    const statusSelector = NAV_SELECTORS[NAV_STATUS][0]
+    // « Lire la barre d’état »: a `read` step has no change of the bench to wait for, so a click inside the status bar is the learner reading it. On the level page it is
+    // the objectives card.
+    const statusSelector = legacy ? LEGACY_ACK_SELECTOR : NAV_SELECTORS[NAV_STATUS][0]
+    const ackAnchor = legacy ? LEGACY_NAV_OBJECTIVES : NAV_STATUS
     const onClick = (e: Event): void =>
       guard(() => {
         const target = e.target as { closest?: (selector: string) => unknown } | null
-        if (target && typeof target.closest === 'function' && target.closest(statusSelector)) hostEvent({ type: ACKNOWLEDGE, at: now(), data: { anchor: NAV_STATUS } })
+        if (target && typeof target.closest === 'function' && target.closest(statusSelector)) hostEvent({ type: ACKNOWLEDGE, at: now(), data: { anchor: ackAnchor } })
       })
     doc.addEventListener('click', onClick, true)
     cleanups.push(() => doc.removeEventListener('click', onClick, true))

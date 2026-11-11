@@ -18,12 +18,17 @@ const booted = (): void => {
 }
 
 if (decideRoute(location.search) === 'legacy')
-  void import('./legacyMain').then(booted, (e: unknown) => {
-    console.error('[legacy] boot failed', e)
-    const alert = guard().__tekEntryFailed
-    if (alert) alert()
-    else showBootFailure(document, 'load')
-  })
+  void import('./legacyMain')
+    .then(booted, (e: unknown) => {
+      console.error('[legacy] boot failed', e)
+      const alert = guard().__tekEntryFailed
+      if (alert) alert()
+      else showBootFailure(document, 'load')
+    })
+    // Oscar, the guide, on the level page: the same lazy entry, started once the page has booted (a failed boot leaves `__tekBooted` unset and starts nothing). The
+    // guide's own gates keep it silent on an exam address, the sandbox, the dashboard and `?oscar=0`. Nothing in this tail can reject.
+    .then(() => (guard().__tekBooted === true ? import('./guide').then((m) => m.bootGuide(decideRoute(location.search))) : undefined))
+    .catch(() => undefined)
 else
   void import('./creation/boot')
     .then((m) => {
@@ -35,7 +40,7 @@ else
       showBootFailure(document, 'load')
     })
     // Oscar, the guide: its own lazy chunk, fetched only after the route has booted, so its wait for the app's debug hook never overlaps the download of the
-    // route chunk. It runs in the creation branch only for now. A failure here never reaches the page, and nothing in this tail can reject.
+    // route chunk. A failure here never reaches the page, and nothing in this tail can reject.
     .then(() => import('./guide'))
     .then((m) => m.bootGuide(decideRoute(location.search)))
     .catch(() => undefined)
