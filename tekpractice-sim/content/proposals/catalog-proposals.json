@@ -582,7 +582,12 @@
      "connector": "iec-c14",
      "signal": "mains-power"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 483,
+    "d": 146,
+    "h": 44
+   }
   },
   {
    "id": "meyer-sound-galileo-galaxy-816",
@@ -1398,7 +1403,12 @@
      "connector": "iec-c14",
      "signal": "mains-power"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 330,
+    "d": 376,
+    "h": 102
+   }
   },
   {
    "id": "allen-heath-zed-22fx",
@@ -2112,7 +2122,12 @@
      "connector": "trs-quarter",
      "signal": "gpio-tally"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 866,
+    "d": 599,
+    "h": 225
+   }
   },
   {
    "id": "behringer-x32",
@@ -2266,7 +2281,12 @@
      "connector": "xlr3-m",
      "signal": "mic-level"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 127,
+    "d": 84.1,
+    "h": 45.5
+   }
   },
   {
    "id": "radial-prodi",
@@ -2298,7 +2318,12 @@
      "connector": "xlr3-m",
      "signal": "mic-level"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 108,
+    "d": 70,
+    "h": 44
+   }
   },
   {
    "id": "radial-j48",
@@ -2362,7 +2387,12 @@
      "connector": "xlr3-m",
      "signal": "mic-level"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 127,
+    "d": 77,
+    "h": 45
+   }
   },
   {
    "id": "radial-jpc",
@@ -2681,7 +2711,12 @@
      "connector": "trs-quarter",
      "signal": "headphone-level"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 139.7,
+    "d": 139.7,
+    "h": 44.45
+   }
   },
   {
    "id": "spl-phonitor-x",
@@ -3155,7 +3190,12 @@
      "connector": "usb-c",
      "signal": "usb-audio"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 180,
+    "d": 117,
+    "h": 47.5
+   }
   },
   {
    "id": "motu-828",
@@ -3277,7 +3317,12 @@
      "connector": "iec-c14",
      "signal": "mains-power"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 483,
+    "d": 311,
+    "h": 44.5
+   }
   },
   {
    "id": "focusrite-rednet-x2p",
@@ -4077,7 +4122,12 @@
      "connector": "usb-c",
      "signal": "usb-audio"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 52,
+    "d": 52,
+    "h": 189
+   }
   },
   {
    "id": "beyerdynamic-m-160",
@@ -4117,7 +4167,11 @@
      "connector": "xlr3-m",
      "signal": "mic-level"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 25,
+    "h": 155.7
+   }
   },
   {
    "id": "coles-4038",
@@ -4581,7 +4635,12 @@
      "connector": "xlr3-m",
      "signal": "line-level-pro"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 480,
+    "d": 310,
+    "h": 44
+   }
   },
   {
    "id": "universal-audio-6176",
@@ -5579,7 +5638,12 @@
      "connector": "usb-b",
      "signal": "usb-audio"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 482,
+    "d": 225,
+    "h": 89
+   }
   },
   {
    "id": "rme-m-32-ad",
@@ -5805,7 +5869,12 @@
      "connector": "iec-c14",
      "signal": "mains-power"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 483,
+    "d": 220,
+    "h": 137
+   }
   },
   {
    "id": "digico-sd-rack",
@@ -6117,7 +6186,12 @@
      "connector": "iec-c14",
      "signal": "mains-power"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 182,
+    "d": 227,
+    "h": 287
+   }
   },
   {
    "id": "adam-audio-s3h",
@@ -6535,7 +6609,12 @@
      "connector": "trs-35mm",
      "signal": "line-level-pro"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 197,
+    "d": 152,
+    "h": 42
+   }
   },
   {
    "id": "shure-axient-digital-ad4d",
@@ -6647,7 +6726,12 @@
      "connector": "trs-35mm",
      "signal": "headphone-level"
     }
-   ]
+   ],
+   "sizeMm": {
+    "w": 198,
+    "d": 172,
+    "h": 43
+   }
   },
   {
    "id": "shure-psm-900",

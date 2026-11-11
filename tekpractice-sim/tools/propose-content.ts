@@ -2,6 +2,9 @@
  * Proposals for Oscar (master prompt B3) — NEVER writes catalog.json or a live level.
  *  1. content/proposals/catalog-proposals.json: catalog-ready device entries built
  *     from sourced KB equipment records (validated with the catalog's Device schema).
+ *     The result goes through mergeProposals (tools/proposalMerge.ts, Wave 0 Task 0.2): an id that was promoted
+ *     (catalog.json, or a plan row flagged `promoted`) is never brought back, a beta-modelled entry is kept as it is,
+ *     and each proposal carries the plan's size for its placeholder box.
  *  2. content/levels/drafts/<scenario>.json: level drafts from TEK Brain scenarios;
  *     each scenario edge is resolved to a real port pair with the engine's own
  *     dry-run (ConnectionGraph.canConnect), then validated with loadLevel.
@@ -11,6 +14,8 @@
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { Device } from './schemas'
+import { loadPlan } from './equipmentPlan'
+import { mergeProposals, type Proposal } from './proposalMerge'
 import { loadCatalog, loadLevel } from '../src/engine/CatalogLoader'
 import { ConnectionGraph } from '../src/engine/ConnectionGraph'
 
@@ -93,10 +98,24 @@ for (const file of readdirSync(join(KB, 'equipment')).filter((f) => f.endsWith('
   }
 }
 mkdirSync(join(ROOT, 'content', 'proposals'), { recursive: true })
+const PROPOSALS_PATH = join(ROOT, 'content', 'proposals', 'catalog-proposals.json')
+let existingProposals: Proposal[] = []
+try {
+  existingProposals = (JSON.parse(readFileSync(PROPOSALS_PATH, 'utf8')) as { devices?: Proposal[] }).devices ?? []
+} catch {
+  /* first run: nothing to keep */
+}
+const merged = mergeProposals(
+  proposals as Proposal[],
+  existingProposals,
+  loadPlan(),
+  new Set((catalogRaw.devices as { id: string }[]).map((d) => d.id)),
+)
+for (const d of merged.dropped) console.log(`  guard: ${d.id} not proposed (${d.reason})`)
 writeFileSync(
-  join(ROOT, 'content', 'proposals', 'catalog-proposals.json'),
+  PROPOSALS_PATH,
   JSON.stringify(
-    { generated: today, status: "proposal — needs Oscar's review; shown in the TekPractice Bêta tab badged « non vérifié » (approximate behaviour), never as verified gear; catalog.json is the source of truth and is NOT modified", devices: proposals, skipped },
+    { generated: today, status: "proposal — needs Oscar's review; shown in the TekPractice Bêta tab badged « non vérifié » (approximate behaviour), never as verified gear; catalog.json is the source of truth and is NOT modified", devices: merged.devices, skipped },
     null,
     1,
   ) + '\n',
@@ -174,4 +193,4 @@ for (const f of readdirSync(join(KB, 'tek-brain', 'scenarios'))) {
   }
 }
 writeFileSync(join(draftsDir, 'index.json'), JSON.stringify({ generated: today, drafts: index }, null, 1) + '\n')
-console.log(`catalog proposals: ${proposals.length} devices (${skipped.length} skipped) · level drafts: ${index.length}`)
+console.log(`catalog proposals: ${merged.devices.length} devices (${skipped.length} skipped) · level drafts: ${index.length}`)
