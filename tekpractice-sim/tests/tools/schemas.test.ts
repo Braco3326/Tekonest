@@ -547,3 +547,86 @@ describe('content/catalog.schema.json: the modelFront hunk matches the generator
     expect(bad({ axis: '+z', evidence: 'x', extra: 1 })).toBe(false)
   })
 })
+
+/**
+ * Wave 0, Task 0.3 (build-all-equipment): additive schema fields the equipment waves need, batched once so the pinned tests change once.
+ * New port flags (ribbon, unbalanced, insert, send/return, mix-minus, tally) and device fields (speaker / amplifier loads, the Bêta placeholder size).
+ */
+describe('Wave 0 schema additions: new port flags and device fields', () => {
+  const NEW_FLAGS = ['isRibbon', 'isUnbalanced', 'isInsert', 'isSendReturn', 'isMixMinus', 'isTally'] as const
+  const port = (flags?: string[]) => ({ portId: 'out', dir: 'out', connector: 'xlr3-m', signal: 'mic-level', ...(flags ? { flags } : {}) })
+  const device = (over: Record<string, unknown> = {}) => ({
+    id: 'fixture-device',
+    label: 'Fixture',
+    levels: [],
+    realWorld: { brand: 'B', model: 'M', category: 'microphone', typicalUse: 'u', notes: '' },
+    ports: [port()],
+    ...over,
+  })
+
+  it('accepts every new flag on a port, alone and together with an old one', () => {
+    for (const f of NEW_FLAGS) expect(Port.safeParse(port([f])).success, f).toBe(true)
+    expect(Port.safeParse(port(['isMicInput', 'isRibbon', 'isUnbalanced'])).success).toBe(true)
+  })
+  it('rejects an unknown flag, with the path of the flag', () => {
+    const r = Port.safeParse(port(['isRibbonn']))
+    expect(r.success).toBe(false)
+    expect(paths(r)).toContain('flags.0')
+    expect(PortFlag.safeParse('isTally').success).toBe(true)
+    expect(PortFlag.safeParse('isTallyy').success).toBe(false)
+  })
+  it('keeps every old flag (the new ones are additions, nothing renamed)', () => {
+    for (const f of ['providesPhantom', 'requiresPhantom', 'isClockMaster', 'isClockSlave', 'isMicInput', 'isMonitorOut', 'isOnAirTally', 'isDantePrimary', 'isMainsSource'])
+      expect(PortFlag.options, f).toContain(f)
+    for (const f of NEW_FLAGS) expect(PortFlag.options, f).toContain(f)
+  })
+  it('accepts the load / impedance / size fields on a device and rejects a zero, negative or non-numeric value', () => {
+    expect(Device.safeParse(device({ loadOhms: 8, minLoadOhms: 4, impedanceOhms: 8, sizeMm: { w: 483, d: 400, h: 88 } })).success).toBe(true)
+    expect(Device.safeParse(device({ sizeMm: { w: 25, h: 155.7 } })).success).toBe(true) // a partial size (the plan's estimate rows)
+    for (const bad of [{ loadOhms: 0 }, { minLoadOhms: -4 }, { impedanceOhms: Number.NaN }, { impedanceOhms: '8' }, { sizeMm: { w: 0 } }, { sizeMm: { w: -1, d: 1, h: 1 } }, { sizeMm: { x: 1 } }])
+      expect(Device.safeParse(device(bad)).success, JSON.stringify(bad)).toBe(false)
+  })
+  it('the fields are optional: a device without them parses and comes back without the keys', () => {
+    const d = Device.parse(device())
+    for (const k of ['loadOhms', 'minLoadOhms', 'impedanceOhms', 'sizeMm']) expect(k in d, k).toBe(false)
+  })
+  it('the existing 25 devices still validate unchanged: parsing returns every one of them deep-equal to its catalog.json entry', () => {
+    expect(catalogJson.devices).toHaveLength(25)
+    for (const d of catalogJson.devices) expect(Device.parse(d), d.id).toEqual(d)
+  })
+})
+
+describe('Wave 0 connectors: the twelve new ids', () => {
+  const NEW = ['dc-barrel', 'midi-din5', 'xlr4', 'bnc-antenna-50ohm', 'mini-xlr-ta4', 'euroblock', 'speakon-nl8', 'binding-post', 'opticalcon', 'sc-fibre', 'lemo', 'hirose']
+  const byId = new Map(catalogJson.connectorTypes.map((c) => [c.id, c]))
+
+  it('all twelve exist, with a label and a gender', () => {
+    for (const id of NEW) {
+      const c = byId.get(id)
+      expect(c, id).toBeDefined()
+      expect(c!.label, id).toMatch(/\S/)
+      expect(['male', 'female', 'universal'], id).toContain(c!.gender)
+    }
+  })
+  it('each new connector has matesWith both ways (it mates with something that mates back)', () => {
+    for (const id of NEW) {
+      const c = byId.get(id)!
+      expect(c.matesWith.length, id).toBeGreaterThan(0)
+      for (const m of c.matesWith) {
+        expect(byId.has(m), `${id} mates unknown ${m}`).toBe(true)
+        expect(byId.get(m)!.matesWith, `${m} must mate back with ${id}`).toContain(id)
+      }
+    }
+  })
+  it('every connector of the catalog mates both ways, new or old (the validate-catalog symmetry rule, held here too)', () => {
+    for (const c of catalogJson.connectorTypes) for (const m of c.matesWith) expect(byId.get(m)?.matesWith, `${c.id} -> ${m}`).toContain(c.id)
+  })
+  it('ids are unique and the catalog has the 26 old connectors plus the 12 new ones', () => {
+    expect(new Set(catalogJson.connectorTypes.map((c) => c.id)).size).toBe(catalogJson.connectorTypes.length)
+    expect(catalogJson.connectorTypes).toHaveLength(26 + NEW.length)
+  })
+  it('the French hover label of each new connector exists in copy.ts (no raw id reaches the UI)', async () => {
+    const { COPY } = await import('../../src/creation/copy')
+    for (const id of NEW) expect(COPY.connector![id], id).toMatch(/\S/)
+  })
+})

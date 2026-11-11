@@ -358,3 +358,49 @@ describe('checkCatalog, mains (Task 32, C7)', () => {
     expect(e.map((i) => i.path)).toEqual(['devices["multiprise-secteur"].ports["out-2"]'])
   })
 })
+
+describe('checkCatalog, Wave 0 data rules (Task 0.3)', () => {
+  it('errors on a port id longer than 19 characters (the catalog maximum; Bêta proposals may exceed it, the catalog may not)', () => {
+    const c = fresh()
+    const d = dev(c, 'shure-sm58')
+    d.ports[0] = { ...d.ports[0], portId: 'x'.repeat(20) }
+    const e = errors(c)
+    expect(e.some((i) => /19/.test(i.message) && i.path.includes('ports'))).toBe(true)
+    d.ports[0] = { ...d.ports[0], portId: 'x'.repeat(19) }
+    expect(errors(c)).toEqual([])
+  })
+  it('the longest port id of the real catalog is within the limit (no existing device breaks the new rule)', () => {
+    for (const d of base.devices) for (const p of d.ports) expect(p.portId.length, `${d.id}.${p.portId}`).toBeLessThanOrEqual(19)
+  })
+  it('isRibbon belongs to a mic-level output and never to a port that requires phantom (a ribbon is not phantom-powered)', () => {
+    const c = fresh()
+    const d = dev(c, 'shure-sm58')
+    d.ports[0] = { ...d.ports[0], flags: ['isRibbon'] }
+    expect(errors(c)).toEqual([])
+    d.ports[0] = { ...d.ports[0], flags: ['isRibbon', 'requiresPhantom'] }
+    expect(errors(c).some((i) => /ribbon/i.test(i.message))).toBe(true)
+    d.ports[0] = { ...d.ports[0], flags: ['isRibbon'], signal: 'line-level-pro' }
+    expect(errors(c).some((i) => /ribbon/i.test(i.message))).toBe(true)
+    d.ports[0] = { ...d.ports[0], flags: ['isRibbon'], signal: 'mic-level', dir: 'in' }
+    expect(errors(c).some((i) => /ribbon/i.test(i.message))).toBe(true)
+  })
+  it('isTally belongs to a gpio-tally port', () => {
+    const c = fresh()
+    const d = dev(c, 'shure-sm58')
+    d.ports[0] = { ...d.ports[0], flags: ['isTally'] }
+    expect(errors(c).some((i) => /tally/i.test(i.message))).toBe(true)
+    const t = dev(c, 'yellowtec-litt')
+    t.ports[0] = { ...t.ports[0], flags: [...(t.ports[0].flags ?? []), 'isTally'] }
+    expect(errors(c).filter((i) => /tally/i.test(i.message) && i.path.includes('yellowtec-litt'))).toEqual([])
+  })
+  it('minLoadOhms may not exceed loadOhms (the zod schema keeps both positive; the checker holds the order)', () => {
+    const c = fresh()
+    const d = dev(c, 'shure-sm58')
+    d.minLoadOhms = 8
+    d.loadOhms = 4
+    expect(errors(c).some((i) => /minLoadOhms/.test(i.message))).toBe(true)
+    d.minLoadOhms = 4
+    d.loadOhms = 8
+    expect(errors(c)).toEqual([])
+  })
+})

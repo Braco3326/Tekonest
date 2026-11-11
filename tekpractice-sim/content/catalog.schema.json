@@ -170,9 +170,15 @@
                           "isMonitorOut",
                           "isOnAirTally",
                           "isDantePrimary",
-                          "isMainsSource"
+                          "isMainsSource",
+                          "isRibbon",
+                          "isUnbalanced",
+                          "isInsert",
+                          "isSendReturn",
+                          "isMixMinus",
+                          "isTally"
                         ],
-                        "description": "A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing."
+                        "description": "A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing. Wave 0 (build all equipment) additions, data only until a rule reads them: isRibbon (a ribbon microphone output: must not receive phantom), isUnbalanced (a TS / RCA style unbalanced connection), isInsert (a TRS insert send/return point), isSendReturn (an effects send or return), isMixMinus (a mix-minus / N-1 bus output), isTally (a tally or on-air lamp port on a gpio-tally signal)."
                       }
                     }
                   },
@@ -221,9 +227,15 @@
                                 "isMonitorOut",
                                 "isOnAirTally",
                                 "isDantePrimary",
-                                "isMainsSource"
+                                "isMainsSource",
+                                "isRibbon",
+                                "isUnbalanced",
+                                "isInsert",
+                                "isSendReturn",
+                                "isMixMinus",
+                                "isTally"
                               ],
-                              "description": "A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing."
+                              "description": "A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing. Wave 0 (build all equipment) additions, data only until a rule reads them: isRibbon (a ribbon microphone output: must not receive phantom), isUnbalanced (a TS / RCA style unbalanced connection), isInsert (a TRS insert send/return point), isSendReturn (an effects send or return), isMixMinus (a mix-minus / N-1 bus output), isTally (a tally or on-air lamp port on a gpio-tally signal)."
                             },
                             "ports": {
                               "type": "array",
@@ -605,6 +617,40 @@
                   "additionalProperties": false
                 },
                 "description": "Signal routes of the device (C8): consumed by the signal path only. Verified data: a Bêta proposal never carries routing (parseProposals drops it)."
+              },
+              "loadOhms": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Wave 0: the load in ohms the device presents or is rated at: the nominal load of a passive loudspeaker input, or the load the stated power of an amplifier is quoted into. Absent = not stated."
+              },
+              "minLoadOhms": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Wave 0: the lowest load in ohms an amplifier output is rated to drive (per channel). Must not exceed loadOhms when both are given. Absent = not stated."
+              },
+              "impedanceOhms": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Wave 0: the nominal impedance in ohms of a loudspeaker, or of an input / output the datasheet states (a line input, an instrument Hi-Z input). Absent = not stated."
+              },
+              "sizeMm": {
+                "type": "object",
+                "properties": {
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "d": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "h": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Wave 0: the real size in millimetres from the equipment plan, any subset of w (width), d (depth), h (height). Read only for the placeholder box of a device that has no model yet (a Bêta proposal): a device with a model takes its size from the model. Absent = category footprint."
               }
             },
             "required": [

@@ -149,3 +149,24 @@ describe('the opening branch is dormant (Wave 5c finding H)', () => {
     expect(markerDiameterM('xlr3-f', undefined)).toBe(markerDiameterM('xlr3-f'))
   })
 })
+
+describe('Wave 0: every connector TYPE of the catalog has a marker size (not only the ones a device uses today)', () => {
+  it('CONNECTOR_MM has an entry for every catalog connectorTypes id, so no new connector falls back to the 20 mm default by accident', () => {
+    const missing = catalogJson.connectorTypes.map((c) => c.id).filter((id) => !(id in CONNECTOR_MM))
+    expect(missing, `connector types with no CONNECTOR_MM entry: ${missing.join(', ')}`).toEqual([])
+  })
+  it('and the table has no entry for a connector the catalog does not know (a typo would silently never apply)', () => {
+    const ids = new Set(catalogJson.connectorTypes.map((c) => c.id))
+    const stray = Object.keys(CONNECTOR_MM).filter((id) => !ids.has(id))
+    expect(stray).toEqual([])
+  })
+  it('the new connectors get a documented size, ring = 1.2 x face, finite and positive', () => {
+    for (const id of ['dc-barrel', 'midi-din5', 'xlr4', 'bnc-antenna-50ohm', 'mini-xlr-ta4', 'euroblock', 'speakon-nl8', 'binding-post', 'opticalcon', 'sc-fibre', 'lemo', 'hirose']) {
+      expect(CONNECTOR_MM[id], id).toBeGreaterThan(0)
+      expect(markerDiameterM(id), id).toBeCloseTo((CONNECTOR_MM[id] * 1.2) / 1000, 9)
+    }
+    // the D-size housings share the XLR / speakON face: the same 25 mm as etherCON and NL4
+    expect(CONNECTOR_MM['speakon-nl8']).toBe(CONNECTOR_MM['speakon-nl4'])
+    expect(CONNECTOR_MM['xlr4']).toBe(CONNECTOR_MM['xlr3-f'])
+  })
+})

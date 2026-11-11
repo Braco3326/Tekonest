@@ -53,6 +53,31 @@ export const CONNECTOR_MM: Readonly<Record<string, number>> = {
   dsub25: 14,
   'gpio-terminal': 15,
   digilink: 10,
+  // Wave 0 (build all equipment): sizes of the connectors the plan's 315 devices need, from the manufacturers' panel-cut drawings where known,
+  // otherwise a documented estimate (marked "est."): the marker ring is a hint, the spec's real positions rule where a port sits.
+  // DC barrel jack: 5.5 mm plug, bore 6.5 mm -> 7 (as the 3.5 mm mini-jack); MIDI DIN 5-pin socket: 13.2 mm barrel + margin
+  'dc-barrel': 7,
+  'midi-din5': 14,
+  // XLR4 is the D-size XLR housing, the same 19.5 mm opening as XLR3
+  xlr4: 19.5,
+  // BNC 50 ohm antenna jack: the BNC bayonet 12 mm of the 75 ohm connector
+  'bnc-antenna-50ohm': 12,
+  // Mini-XLR TA4 (Switchcraft / Neutrik TA4): about 10 mm (est.)
+  'mini-xlr-ta4': 10,
+  // Euroblock 3-pin 5.08 mm: 15 x 8.5 -> the smaller side + margin
+  euroblock: 10,
+  // speakON NL8 is the D-size housing like NL4
+  'speakon-nl8': 25,
+  // binding post cap about 16 mm (est.)
+  'binding-post': 16,
+  // opticalCON DUO is the D-size housing like etherCON and speakON
+  opticalcon: 25,
+  // SC simplex adapter 9 x 13 mm -> 9
+  'sc-fibre': 9,
+  // LEMO 0B 4-pin socket 7.2 mm -> 8 (est.)
+  lemo: 8,
+  // Hirose 4-pin DC socket (HR10A) about 12 mm (est.)
+  hirose: 12,
 }
 
 /**

@@ -9,8 +9,9 @@ import { z } from 'zod'
 export const PortFlag = z.enum([
   'providesPhantom', 'requiresPhantom', 'isClockMaster', 'isClockSlave',
   'isMicInput', 'isMonitorOut', 'isOnAirTally', 'isDantePrimary', 'isMainsSource',
+  'isRibbon', 'isUnbalanced', 'isInsert', 'isSendReturn', 'isMixMinus', 'isTally',
 ]).describe(
-  'A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing.',
+  'A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing. Wave 0 (build all equipment) additions, data only until a rule reads them: isRibbon (a ribbon microphone output: must not receive phantom), isUnbalanced (a TS / RCA style unbalanced connection), isInsert (a TRS insert send/return point), isSendReturn (an effects send or return), isMixMinus (a mix-minus / N-1 bus output), isTally (a tally or on-air lamp port on a gpio-tally signal).',
 )
 
 export const Port = z.object({
@@ -131,6 +132,13 @@ export const ModelBody = z.object({
   evidence: z.string().min(1).describe('How it was measured on public/assets/<id>.glb: where the neck ends and the cabinet starts, and where cabinetHeightM comes from.'),
 }).strict()
 
+/** Width / depth / height in millimetres, any subset (the equipment plan may know only some axes). Every given axis is positive. */
+export const SizeMm = z.object({
+  w: z.number().finite().positive().optional(),
+  d: z.number().finite().positive().optional(),
+  h: z.number().finite().positive().optional(),
+}).strict()
+
 export const Device = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'device id must be a kebab-case slug'),
   label: z.string().min(1),
@@ -155,6 +163,18 @@ export const Device = z.object({
   ),
   routing: z.array(Route).optional().describe(
     'Signal routes of the device (C8): consumed by the signal path only. Verified data: a Bêta proposal never carries routing (parseProposals drops it).',
+  ),
+  loadOhms: z.number().finite().positive().optional().describe(
+    'Wave 0: the load in ohms the device presents or is rated at: the nominal load of a passive loudspeaker input, or the load the stated power of an amplifier is quoted into. Absent = not stated.',
+  ),
+  minLoadOhms: z.number().finite().positive().optional().describe(
+    'Wave 0: the lowest load in ohms an amplifier output is rated to drive (per channel). Must not exceed loadOhms when both are given. Absent = not stated.',
+  ),
+  impedanceOhms: z.number().finite().positive().optional().describe(
+    'Wave 0: the nominal impedance in ohms of a loudspeaker, or of an input / output the datasheet states (a line input, an instrument Hi-Z input). Absent = not stated.',
+  ),
+  sizeMm: SizeMm.optional().describe(
+    'Wave 0: the real size in millimetres from the equipment plan, any subset of w (width), d (depth), h (height). Read only for the placeholder box of a device that has no model yet (a Bêta proposal): a device with a model takes its size from the model. Absent = category footprint.',
   ),
 })
 

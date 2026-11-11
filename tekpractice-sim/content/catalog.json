@@ -34,7 +34,19 @@
     { "id": "usb-b",          "label": "USB Type-B",                "gender": "universal", "matesWith": ["usb-a"] },
     { "id": "usb-c",          "label": "USB Type-C / Thunderbolt 3", "gender": "universal", "matesWith": ["usb-c"] },
     { "id": "digilink",       "label": "Avid DigiLink",             "gender": "universal", "matesWith": ["digilink"] },
-    { "id": "gpio-terminal",  "label": "GPIO terminal block / D-sub logic port", "gender": "universal", "matesWith": ["gpio-terminal"] }
+    { "id": "gpio-terminal",  "label": "GPIO terminal block / D-sub logic port", "gender": "universal", "matesWith": ["gpio-terminal"] },
+    { "id": "dc-barrel",         "label": "DC barrel jack (low-voltage power supply)", "gender": "universal", "matesWith": ["dc-barrel"] },
+    { "id": "midi-din5",         "label": "MIDI DIN 5-pin",                           "gender": "universal", "matesWith": ["midi-din5"] },
+    { "id": "xlr4",              "label": "XLR4 (intercom / headset / 12 V DC)",      "gender": "universal", "matesWith": ["xlr4"] },
+    { "id": "bnc-antenna-50ohm", "label": "BNC 50 Ω (RF antenna)",                    "gender": "universal", "matesWith": ["bnc-antenna-50ohm"] },
+    { "id": "mini-xlr-ta4",      "label": "Mini-XLR TA4 (lavalier / bodypack)",       "gender": "universal", "matesWith": ["mini-xlr-ta4"] },
+    { "id": "euroblock",         "label": "Euroblock screw terminal (3.5 / 5.08 mm)", "gender": "universal", "matesWith": ["euroblock"] },
+    { "id": "speakon-nl8",       "label": "Neutrik Speakon NL8",                      "gender": "universal", "matesWith": ["speakon-nl8"] },
+    { "id": "binding-post",      "label": "Binding post (bare wire / banana)",        "gender": "universal", "matesWith": ["binding-post"] },
+    { "id": "opticalcon",        "label": "Neutrik opticalCON (ruggedized fibre)",    "gender": "universal", "matesWith": ["opticalcon"] },
+    { "id": "sc-fibre",          "label": "SC fibre connector",                       "gender": "universal", "matesWith": ["sc-fibre"] },
+    { "id": "lemo",              "label": "LEMO push-pull (multipin)",                "gender": "universal", "matesWith": ["lemo"] },
+    { "id": "hirose",            "label": "Hirose multipin (camera / DC)",            "gender": "universal", "matesWith": ["hirose"] }
   ],
 
   "signalTypes": [

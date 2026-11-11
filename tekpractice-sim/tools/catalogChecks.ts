@@ -13,6 +13,8 @@
  *  4. optional `acoustic` (council C12; Task 35) is validated when present: the shape is the zod `Acoustic` (a source
  *     on every value), `nominal` only as the coverage PAIR 90 x 60 with « valeur nominale »; a speaker (a device with a
  *     route to `transducer`) without `acoustic` is a WARNING
+ *  4b. Wave 0 data rules: a catalogue port id is at most 19 characters (PORT_ID_MAX; Bêta proposals may exceed it, the catalogue may
+ *     not); isRibbon only on a mic-level OUT port that does not require phantom; isTally only on a gpio-tally port; minLoadOhms <= loadOhms
  *  5. mains (C7, Task 32): a device with a `power-in` port carries the toggle
  *     `power` (label « Alimentation », default on); `isMainsSource` sits only on an
  *     OUT port that carries `mains-power`, and every verified `mains-power` OUT port
@@ -60,7 +62,11 @@ export function checkCatalog(catalog: CatalogT, opts: { modelIds: ReadonlySet<st
     for (const p of d.ports) {
       if (seen.has(p.portId)) error(`${at}.ports["${p.portId}"]`, `duplicate port id "${p.portId}" in ${d.id}`)
       seen.add(p.portId)
+      if (p.portId.length > PORT_ID_MAX) error(`${at}.ports["${p.portId}"]`, `port id "${p.portId}" is ${p.portId.length} characters: the catalogue maximum is ${PORT_ID_MAX}`)
+      checkPortFlags(`${at}.ports["${p.portId}"]`, p, error)
     }
+    if (d.minLoadOhms !== undefined && d.loadOhms !== undefined && d.minLoadOhms > d.loadOhms)
+      error(`${at}.minLoadOhms`, `minLoadOhms (${d.minLoadOhms}) is above loadOhms (${d.loadOhms}): the lowest rated load cannot exceed the rated load`)
 
     checkMains(at, d, error)
 
@@ -70,6 +76,19 @@ export function checkCatalog(catalog: CatalogT, opts: { modelIds: ReadonlySet<st
     else if (isSpeaker(loose.routing)) warning(`${at}.acoustic`, `${d.id} is a loudspeaker (a route feeds its transducer) but has no sourced acoustic data (coverage): nothing to draw or compute from`)
   }
   return issues
+}
+
+/** The longest port id of a catalogue device (the Bêta proposals, generated from the knowledge base, are not held to it). */
+export const PORT_ID_MAX = 19
+
+/** The Wave 0 flags that only make sense on some ports (the zod schema cannot see a port's other fields from a flag). */
+function checkPortFlags(at: string, p: Port, error: (path: string, message: string) => void): void {
+  const flags = p.flags ?? []
+  if (flags.includes('isRibbon')) {
+    if (p.dir !== 'out' || p.signal !== 'mic-level') error(at, 'isRibbon belongs to a mic-level output port (a ribbon microphone output)')
+    if (flags.includes('requiresPhantom')) error(at, 'a ribbon output never requires phantom power (isRibbon and requiresPhantom together): +48 V can damage a ribbon')
+  }
+  if (flags.includes('isTally') && p.signal !== 'gpio-tally') error(at, 'isTally belongs to a gpio-tally port')
 }
 
 /** The label of the `power` toggle every device with a `power-in` carries (Task 32; French UI data, like the other labels). */

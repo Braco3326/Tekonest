@@ -742,6 +742,18 @@ Noms français des connecteurs du catalogue (`connectorTypes[].id`), repris dans
 | `connector.usb-c` | USB Type-C / Thunderbolt 3 | validé | Étiquette de prise |
 | `connector.digilink` | Avid DigiLink | validé | Étiquette de prise |
 | `connector.gpio-terminal` | Bornier GPIO / port logique D-sub | validé | Étiquette de prise |
+| `connector.dc-barrel` | Jack d’alimentation DC (cylindrique) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.midi-din5` | MIDI DIN 5 broches | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.xlr4` | XLR4 (intercom / casque / 12 V DC) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.bnc-antenna-50ohm` | BNC 50 Ω (antenne HF) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.mini-xlr-ta4` | Mini-XLR TA4 (cravate / émetteur ceinture) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.euroblock` | Bornier à vis Euroblock | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.speakon-nl8` | Neutrik Speakon NL8 | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.binding-post` | Borne à vis (fil nu / banane) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.opticalcon` | Neutrik opticalCON (fibre renforcée) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.sc-fibre` | Fibre optique SC | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.lemo` | LEMO push-pull (multibroche) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.hirose` | Hirose multibroche (caméra / DC) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
 
 ## coverage
 
