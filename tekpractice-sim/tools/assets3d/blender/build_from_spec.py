@@ -32,7 +32,7 @@ import math
 import os
 import sys
 import traceback
-from typing import Any, Callable
+from typing import Any, Callable, Iterable
 
 import bmesh
 import bpy
@@ -731,6 +731,24 @@ def rack_bevel(bm: bmesh.types.BMesh, faces: list[bmesh.types.BMFace], width: fl
     bmesh.ops.bevel(bm, geom=edges, offset=width, offset_type="OFFSET", segments=segments, affect="EDGES")
 
 
+def flat_face_inset(verts: Iterable[bmesh.types.BMVert], lo: tuple[float, float, float], hi: tuple[float, float, float], axes: tuple[int, ...] = (0, 1, 2)) -> float:
+    """What a rounding really took off a box: the smallest gap, in metres, between the outline of a flat face of the finished mesh and the edge of the box
+    lo .. hi (glTF coordinates) it was cut from. For each box plane (on the given axes) the vertices lying on it are the flat face's boundary; their extent along
+    the other axes, against the box, is the width of the bevel or the radius of the rounded corner on that face. 0.0 when a plane has no vertex on it
+    (a measurement that finds nothing must not pass a gate). It measures the mesh itself, never the parameter that asked for the rounding."""
+    pts = [(v.co.x, v.co.z, -v.co.y) for v in verts]
+    best = math.inf
+    for a in axes:
+        for plane in (lo[a], hi[a]):
+            on = [p for p in pts if abs(p[a] - plane) < 1e-7]
+            if not on:
+                return 0.0
+            for b in axes:
+                if b != a:
+                    best = min(best, min(p[b] for p in on) - lo[b], hi[b] - max(p[b] for p in on))
+    return 0.0 if best is math.inf else max(best, 0.0)
+
+
 def rack_to_face(face: str, flipped: bool, w: float, d: float, gx: float, gy: float, gz: float) -> tuple[float, float]:
     """A point of the model in the frame it is built in (front panel at -z) -> face-local (u, v) in metres on `face` of the FINISHED model
     (rotated 180 degrees about y when the front is the io face): x from the left as seen from outside, y up (top: v from the io edge toward the front)."""
@@ -825,9 +843,11 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
 
     # --- the front plate, with the slotted ear holes -------------------------------------------------------------------
     plate_pts = [(-w / 2.0, y_plate0), (w / 2.0, y_plate0), (w / 2.0, h), (-w / 2.0, h)]
+    before = set(bm.verts)
     pf = extrude_xy(bm, plate_pts, z_front, z_front + plate_t)
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
     rack_bevel(bm, pf, plate_cham, seg)
+    min_fillet = flat_face_inset((v for v in bm.verts if v not in before), (-w / 2.0, y_plate0, z_front), (w / 2.0, h, z_front + plate_t))
     body.done(plate_col)
     hole_h = rack_opt(plan, "earHoleMm")
     diagonal = rack_whole(plan, "earDiagonal", 1, 1) == 1
@@ -873,7 +893,6 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
         body.done(plate_col)
 
     # --- the chassis (and, with rearInsetMm, the rear panel as a shell of its own: a seam) ----------------------------------
-    min_fillet = plate_cham
     y_seam = y_c0 + seam if seam is not None else None
     if y_seam is not None and not y_c0 + 3.0 * cham < y_seam < y_c1 - 3.0 * cham:
         raise BuildError(f"params.seamMm ({seam / MM:.1f}) must leave room for the fillet above and below it in the chassis height")
@@ -882,13 +901,14 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
         shells.append((z_c1, d / 2.0, y_c0, y_c1))
     for za, zb, ya, yb in shells:
         pts = [(-body_w / 2.0, ya), (body_w / 2.0, ya), (body_w / 2.0, yb), (-body_w / 2.0, yb)]
+        before = set(bm.verts)
         faces = extrude_xy(bm, pts, za, zb)
         bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
         # a shell thinner than twice the fillet (the rear panel) takes a smaller one: a bevel wider than half the wall folds the big faces inside out
         shell_cham = min(cham, 0.45 * (zb - za), 0.45 * (yb - ya))
         rack_bevel(bm, faces, shell_cham, seg)
+        min_fillet = min(min_fillet, flat_face_inset((v for v in bm.verts if v not in before), (-body_w / 2.0, ya, za), (body_w / 2.0, yb, zb)))
         body.done(body_col)
-        min_fillet = min(min_fillet, shell_cham)
 
     # --- vents: rectangular recesses in the top (or both sides) of the chassis ------------------------------------------
     vent_n = rack_whole(plan, "ventSlots", 1, 40)
@@ -2754,7 +2774,8 @@ def build_power_strip(plan: Plan) -> bpy.types.Object:
     cylinder_between(bm, g2b(x1 - 0.5 * MM, yc, 0.0), g2b(x1 + boot, yc, 0.0), min(cable_r * 1.35, (y1 - y0) * 0.4), cable_r, segments=16)
     cylinder_between(bm, g2b(x1 + boot - 1.0 * MM, yc, 0.0), g2b(x1 + stub, yc, 0.0), cable_r, segments=16)
     body.done(STRIP_CORD)
-    MEASURE["filletMm"] = fillet / MM
+    # measured on the finished bar: the full section (the middle ring rings[1]) against the box it was rounded from
+    MEASURE["filletMm"] = round(flat_face_inset(rings[1], (x0, y0, -d / 2.0), (x1, y1, d / 2.0), axes=(1, 2)) / MM, 4)
     return body.finish()
 
 
