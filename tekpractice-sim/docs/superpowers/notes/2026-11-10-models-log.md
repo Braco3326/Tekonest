@@ -432,3 +432,39 @@ Left: the spec's catalog controls (GLB empties `fader-in-mic-1` at x 483.4 and t
 - Unit tests, validate:assets and tsc: see the final numbers in the hand-over report.
 - Not run (as agreed): the full Playwright suite.
 - Open: Genelec top-corner step; the Rio sides and the atlas-width quirk (a face maps u over the picture's own width inside a wider atlas: every measurement on an atlas must use the picture's width, 1812 px for the Rio rear); the Scoopy+ S wedge; the Axia rear (no photo); the Axia spec's catalog-control empties are in another frame.
+
+## Wave 5b verification
+
+Run on the tree at 65438d9 (HEAD of `assets/3d-rebuild` when the run started; the tree was clean, nothing was changed in `src`, `tools`, `content` or `public` by this wave). No code fix was needed. Environment: Windows, 12 logical cores, headless Chromium with software GL, `BLENDER_EXE=D:\Blender\blender.exe`. Nothing pushed or deployed, no Meshy call.
+
+| # | check | command | result |
+|---|---|---|---|
+| 1 | types | `npx tsc --noEmit` (tsconfig includes `src`, `tools`, `tests`) | exit 0, 16 s |
+| 2 | lint | `npm run lint` (`eslint src tools --ext .ts` + `eslint tools/live-audit --ext .mjs`) | exit 0, no warnings. `tests/` is not linted by the repo script and was not linted here |
+| 3 | assets | `npm run validate:assets` | 51 ok, 0 failed, 0 pending, 0 unmigrated |
+| 3 | catalog | `npm run validate:catalog` | VALID: 26 connector types, 16 signal types, 25 devices (79 ports, 25 controls), 8 rules, levels a1 / b1 / c1 / d1 solvable |
+| 4 | unit | `npx vitest run` (all files, Blender on) | 224 files, 3514 tests, 3514 passed, 0 failed, 0 skipped, 222.8 s; `builder.test.ts` ran its 77 Blender tests (218 s), so none were skipped |
+| 5 | build | `npm run build -- --outDir <scratch>/dist5b` (room thumbs, tsc, vite) | exit 0, vite 13.1 s; the build rewrote no tracked file (`git status` clean) |
+| 5 | chunk budget | `node tools/chunk-budget.mjs <scratch>/dist5b` | OK. Creation start: 7 chunks, js 5,832,869 + css 61,463 = 5,894,332 bytes against a limit of 6,746,044 (legacy start 5,866,126). Decimal MB: 5.89 of 6.75, was 5.87 of 6.73 (+0.02 MB). Without the Babylon chunk: 537,835 (creation) vs 509,629 (legacy). Babylon chunk 5,356.49 kB. `public/assets/*.glb`: 51 files, 4,643,624 bytes |
+| 6 | e2e, run A | private preview of dist5b on 4181 (`vite preview --outDir`, scratch config without webServer), `playwright test`, 6 workers | 643 tests: 605 passed, 25 skipped, 13 failed (14.8 min) |
+| 6 | e2e, the 13 alone | the same 13 tests by file:line, `--workers=1` | 13 passed (1.5 min) |
+| 6 | e2e, run B | full suite again, 2 workers | 643 tests: 617 passed, 25 skipped, 1 failed (21.6 min): `finalReview.spec.ts:28` "Repartir de cet essai" |
+| 6 | the flake alone | `finalReview.spec.ts:28`, 3 runs on the new build and 3 on a build of f6327ff (the tree before this run, test file unchanged) | new: 1 pass / 2 fail; f6327ff: 1 pass / 2 fail. Same rate, so pre-existing |
+| 7 | frame cost | scratch spec on the reference rig (Concert simple: QL1, SM58, two K12.2, multiprise; 5 devices), `renderBench(40)` median of 7, three rounds interleaved with a build of f6327ff on 4182 | median ms per frame, f6327ff: 6.70 / 4.21 / 6.21; now: 4.13 / 4.65 / 4.76. `sceneStats`: meshes 623 -> 625, materials 167 -> 168. Idle renders in 2.5 s: 0 on both |
+| 7 | triangles | `ASSET_MANIFEST.json` at f6327ff and now | devices 24 -> 25 (multiprise added), device triangles 56,795 -> 67,881, largest device 10,415; connectors 10,832 -> 10,832. Reference rig: QL1 224 -> 1712, SM58 4350 -> 4350, K12.2 308 -> 2684, multiprise none -> 756, K&M 2715 -> 2204 (not in the 5-device rig) |
+| 8 | determinism | `npm run asset:build -- <id> --scripted ...` as dry runs (nothing written to `public/assets` or the manifest) | see below |
+
+### Failures and what they were
+- Run A, 13 failures, all passed alone with one worker. Evidence that it was load and not the code: three of them are Chromium crashes in the log (`GPU process exited unexpectedly: exit_code=-1`, `Target crashed`, `Target page, context or browser has been closed` on `creation-listen-gesture`, `creation-props-scroller`, `creation-touch`, `explore:313`); two more (`explore:329`, `sandbox:139`) were cut by the same closed browser; the others are timing assertions that need a quiet machine (a 1500 ms toast window read 1440, two idle-render windows read 8 vs 7 and 16 vs 12 renders, a 5-click burst read 5 undo entries, a 15 s audio peak counter, one pick on the floor). Run B (2 workers) did not reproduce any of them.
+- "Repartir de cet essai": the page snapshot of a failure shows « Montage actuel: identique à l'essai A », i.e. the setup is not different from the frozen trial when the test clicks restore, so no confirm dialog appears and `#es-confirm-ok` never shows. It passes about one run in three on f6327ff as well as on the current tree. Not fixed here: it is a race inside the test (it freezes and removes in the same turn as the spawns) and none of this run's code touches that flow.
+- No run of the full suite was entirely green; every test passed at least once on this tree and every failure is classified above. The pre-run figure was 618 passed / 25 skipped / 0 failed.
+
+### Determinism
+- Geometry only (`--scripted`, no pictures): Genelec 8030C, 3 builds, `final.glb` sha256 `0c23d450d8c96896...` and `attempt-1.raw.glb` `b4888f157e337a32...` every time; QL1, 2 builds, `final.glb` `951565fdd7ab7eee...`, raw `487a1b6953f9f222...` both times.
+- Hybrid Genelec with the pictures of the log (`--project-photo io=<photos>/rear.jpg@492,180,1068,1600,fill --project-photo opposite=<photos>/front.jpg@501,195,985,1475,fill`), 2 builds: both `8f729f184edc370dc2c1f097c32df73941d3999436ce016da1a7463a2105060b`, byte-identical to the shipped `public/assets/genelec-8030c.glb`.
+- Hybrid QL1: the shipped bytes (`714ec3d3a65c71c5...`) were NOT reproduced: the crop of its top picture (`top_rot180.jpg`) is not recorded in the log or the commit (the rear crop `128,132,1731,1006,fill` is). Two guessed top crops each built twice with identical bytes (`89da83bf...`, `b751f280...`), and the shipped bytes were identical across two earlier ship runs of 11-10 (`714ec3d3...` in work runs 22-10-02 and 22-19-14), so the QL1 repeatability is shown but the match with the committed file is not.
+- No shipped GLB was overwritten; `git status` was clean afterwards (the dry-run work folders are under the ignored `assets-source/`).
+
+### Not verified
+- No GPU: frame costs are software-GL numbers on a noisy machine (the spread inside one measurement is 1.4 to 8 ms), so a regression under about 30 % cannot be ruled out or in; the result is "no measurable regression, 0 idle renders".
+- `tests/` is not linted. The live site and the deployed build were not looked at. The QL1 hybrid file was not reproduced byte for byte (see above).
