@@ -57,6 +57,7 @@ import type { CameraPose } from './scene/CameraRig'
 import type { EssaisHost, EssaisPanel } from './ui/essaisPanel'
 import type { DeepReadonly, DesignState } from './trials/trial'
 import { rigToDesign, sanitizePlacements } from './scene/designApplier'
+import { applyGameRingFloor } from './scene/ringFloor'
 import { applyOrbitFeel, ENSEMBLE_LOWER_RADIUS, orbitMotion } from './camera/orbitFeel'
 import { installDesignerOrbitInput } from './scene/designerOrbitInput'
 import { roomWalls, type Box } from './explore/collision'
@@ -312,6 +313,9 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
 
   // ── orchestrator: intents → engine → scene/UI notifications ──────────────
   const cables = new CableRenderer(scene)
+  // Port rings keep a small screen-space floor (a ring is 2 px at the 8.5 m Ensemble view otherwise): re-applied whenever the view changes.
+  const ringFloor = (): void => applyGameRingFloor(instances, camera, canvas.clientHeight)
+  camera.onViewMatrixChangedObservable.add(ringFloor)
 
   // When a .glb finishes loading, its ports are RE-ANCHORED onto the real model
   // (DeviceSpawner). Refresh this instance's portPoints from the moved markers,
@@ -330,6 +334,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
         portPoints.push({ ref: { instance: inst.instanceId, port: portId }, x: p.x, y: p.y, z: p.z })
       }
     }
+    ringFloor() // the re-anchored rings may sit at another distance
     for (const conn of graph.getConnections()) {
       if (conn.a.instance !== inst.instanceId && conn.b.instance !== inst.instanceId) continue
       const id = graph.connectionAt(conn.a)

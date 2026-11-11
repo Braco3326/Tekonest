@@ -503,7 +503,7 @@ describe('PortProxies on a real (headless) scene', () => {
       m.scaling.setAll(1) // as the spawner leaves it, before the camera floor scales it
       liftMarkerRing(m, LIFT)
       m.computeWorldMatrix(true)
-      const parentScale = (m.parent as { absoluteScaling: Vector3 }).absoluteScaling.x
+      const parentScale = (m.parent as unknown as { absoluteScaling: Vector3 }).absoluteScaling.x
       const gap = (): number => Vector3.Distance(m.getBoundingInfo().boundingBox.centerWorld, m.getAbsolutePosition())
       expect(gap()).toBeCloseTo(LIFT * parentScale, 6)
       t.camera.getViewMatrix(true)
