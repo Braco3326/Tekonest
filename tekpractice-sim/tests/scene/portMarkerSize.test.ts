@@ -135,3 +135,17 @@ describe('markerDiameterM (outer ring diameter of a port marker, metres)', () =>
     expect(markerDiameterM('iec-c13') * 1000).toBeLessThan(25.4 * 1.0) // narrower than the outlet is wide
   })
 })
+
+describe('the opening branch is dormant (Wave 5c finding H)', () => {
+  it('DeviceSpawner sizes every ring from the connector table alone: it calls markerDiameterM(port.connector) with no opening', async () => {
+    const { readFileSync } = await import('node:fs')
+    const src = readFileSync(new URL('../../src/scene/DeviceSpawner.ts', import.meta.url), 'utf8')
+    const calls = src.match(/markerDiameterM\([^)]*\)/g) ?? []
+    expect(calls).toEqual(['markerDiameterM(port.connector)'])
+  })
+
+  it('the table size and the opening size differ, so an opening passed later would change the rings (the branch is live code, just unused)', () => {
+    expect(markerDiameterM('xlr3-f', 30)).not.toBe(markerDiameterM('xlr3-f'))
+    expect(markerDiameterM('xlr3-f', undefined)).toBe(markerDiameterM('xlr3-f'))
+  })
+})

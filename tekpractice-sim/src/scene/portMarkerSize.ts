@@ -58,6 +58,10 @@ export const CONNECTOR_MM: Readonly<Record<string, number>> = {
 /**
  * Outer diameter (m) of the marker ring for a connector. `openingMm` (the spec's opening for that port) wins when it is
  * finite and > 0; otherwise the table; otherwise `FALLBACK_MM`. Always finite and > 0.
+ *
+ * NOTE (Wave 5c, finding H): the `openingMm` branch is NOT used at runtime. The spec's opening is not in the GLB extras and DeviceSpawner calls
+ * `markerDiameterM(port.connector)` only, so every ring is sized from the connector table (deliberate, see the models log, Wave 0 decisions). The
+ * parameter is kept for a later change that carries the opening into the extras; tests/scene/portMarkerSize.test.ts pins the table-only call.
  */
 export function markerDiameterM(connector: string, openingMm?: number): number {
   const size =
