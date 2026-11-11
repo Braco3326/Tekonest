@@ -736,10 +736,16 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     tabConsoles: 'Consoles',
     /** Tab « Enceintes » (inventory category). */
     tabEnceintes: 'Enceintes',
+    /** Tab « Amplis » (inventory category, Wave 0). */
+    tabAmplis: 'Amplis',
     /** Tab « Sources » (inventory category). */
     tabSources: 'Sources',
     /** Tab « Réseau » (inventory category). */
     tabReseau: 'Réseau',
+    /** Tab « Câbles et DI » (inventory category, Wave 0). */
+    tabCables: 'Câbles et DI',
+    /** Tab « Pieds et accroches » (inventory category, Wave 0). */
+    tabPieds: 'Pieds et accroches',
     /** Tab « Secteur » (inventory category). */
     tabSecteur: 'Secteur',
     /** Tab « Éclairage » (inventory category). */

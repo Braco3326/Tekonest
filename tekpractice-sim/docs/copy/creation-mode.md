@@ -595,12 +595,15 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.tabMicros` | Micros | validé | Onglet ; Micros, d’après la catégorie « microphone » du catalogue ; les onglets vides sont masqués |
 | `inventory.tabConsoles` | Consoles | validé | Onglet ; Consoles, stageboxes, préamplis et contrôleurs d’écoute ; les onglets vides sont masqués |
 | `inventory.tabEnceintes` | Enceintes | validé | Onglet ; Enceintes amplifiées et moniteurs de studio ; les onglets vides sont masqués |
+| `inventory.tabAmplis` | Amplis | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Onglet ; Amplificateurs de puissance (catégorie « amplifier ») ; masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
 | `inventory.tabSources` | Sources | validé | Onglet ; Ordinateurs et interfaces audio ; les onglets vides sont masqués |
 | `inventory.tabReseau` | Réseau | validé | Onglet ; Codecs et horloges maîtresses ; les onglets vides sont masqués |
+| `inventory.tabCables` | Câbles et DI | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Onglet ; Câbles, boîtiers de direct (DI) et splitters ; les onglets vides sont masqués |
+| `inventory.tabPieds` | Pieds et accroches | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Onglet ; Pieds de micro, bras, suspensions et filtres anti-pop ; les onglets vides sont masqués |
 | `inventory.tabSecteur` | Secteur | validé | Onglet ; Alimentation secteur ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
 | `inventory.tabEclairage` | Éclairage | validé | Onglet ; Éclairage ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
 | `inventory.tabBeta` | Bêta | validé | Onglet ; Propositions seulement (jamais un appareil du catalogue), badge « non vérifié » (Task 30) ; masqué sans proposition ; les onglets vides sont masqués |
-| `inventory.tabAutres` | Autres | validé | Onglet ; Accessoires, câbles, signalisation, patchbays et catégories inconnues ; toujours en dernier ; les onglets vides sont masqués |
+| `inventory.tabAutres` | Autres | validé | Onglet ; Signalisation, patchbays, mobilier et catégories inconnues ; toujours en dernier ; les onglets vides sont masqués |
 
 ## Glossaire
 

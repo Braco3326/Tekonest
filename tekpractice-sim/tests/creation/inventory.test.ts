@@ -1,9 +1,20 @@
+import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { makeRegistry } from '../helpers'
+import { makeRegistry, rawCatalog } from '../helpers'
 import { COPY } from '../../src/creation/copy'
 import { CATEGORY_TAB, TAB_LABELS, filterItems, inventory, tabFor, type InventoryTab } from '../../src/creation/inventory'
 
 const registry = makeRegistry()
+/** Counts the catalogue has TODAY, read from content/catalog.json, never typed here: a promotion changes the file, not this test (Wave 0, derived pins). */
+const catalogDevices = (rawCatalog() as { devices: { id: string; realWorld: { category: string } }[] }).devices
+const CATALOG_DEVICE_COUNT = catalogDevices.length
+const CATALOG_CATEGORIES = new Set(catalogDevices.map((d) => d.realWorld.category))
+/** The declared display order of the tabs (the test's own copy: a tab added to the code but not here fails the order test). */
+const DECLARED_ORDER: readonly InventoryTab[] = ['micros', 'consoles', 'enceintes', 'amplis', 'sources', 'reseau', 'cables', 'pieds', 'secteur', 'eclairage', 'beta', 'autres']
+const tabsPresent = (extra: readonly InventoryTab[] = []): InventoryTab[] => {
+  const used = new Set<InventoryTab>([...catalogDevices.map((d) => CATEGORY_TAB[d.realWorld.category] ?? 'autres'), ...extra])
+  return DECLARED_ORDER.filter((x) => used.has(x))
+}
 const allIds = [...registry.deviceById.keys()]
 const allModels: ReadonlySet<string> = new Set(allIds)
 const none = { proposals: [], modelIds: allModels }
@@ -11,13 +22,16 @@ const none = { proposals: [], modelIds: allModels }
 const tabOf = (id: string, r = inventory(registry, none)) => r.items.find((i) => i.deviceId === id)?.tab
 
 describe('TAB_LABELS', () => {
-  it('names the nine tabs in French', () => {
+  it('names the twelve tabs in French (the nine of Task 22 and Amplis, Câbles et DI, Pieds et accroches, Wave 0)', () => {
     expect(TAB_LABELS).toEqual({
       micros: 'Micros',
       consoles: 'Consoles',
       enceintes: 'Enceintes',
+      amplis: 'Amplis',
       sources: 'Sources',
       reseau: 'Réseau',
+      cables: 'Câbles et DI',
+      pieds: 'Pieds et accroches',
       secteur: 'Secteur',
       eclairage: 'Éclairage',
       beta: 'Bêta',
@@ -29,7 +43,7 @@ describe('TAB_LABELS', () => {
 describe('tabFor', () => {
   it('maps every category value present in the catalog explicitly (no silent fallback)', () => {
     const categories = new Set([...registry.deviceById.values()].map((d) => d.realWorld.category))
-    expect(categories.size).toBe(16) // 15 + « power-strip » (Task 32)
+    expect(categories).toEqual(CATALOG_CATEGORIES) // derived from content/catalog.json: the registry holds exactly the catalogue's categories
     for (const c of categories) expect(Object.keys(CATEGORY_TAB), c).toContain(c)
   })
 
@@ -45,9 +59,9 @@ describe('tabFor', () => {
     'audio-interface': 'sources',
     codec: 'reseau',
     'master-clock': 'reseau',
-    accessory: 'autres',
+    accessory: 'pieds',
     signaling: 'autres',
-    cable: 'autres',
+    cable: 'cables',
     patchbay: 'autres',
     'power-strip': 'secteur',
   }
@@ -71,9 +85,9 @@ describe('tabFor', () => {
 })
 
 describe('inventory', () => {
-  it('lists each catalog device in exactly one tab (24 before Task 32, 25 with the power strip)', () => {
+  it('lists each catalog device in exactly one tab (the count is the one of content/catalog.json, not a literal)', () => {
     expect(allIds).toHaveLength(registry.catalog.devices.length)
-    expect(allIds).toHaveLength(25)
+    expect(allIds).toHaveLength(CATALOG_DEVICE_COUNT)
     const r = inventory(registry, none)
     expect(r.items).toHaveLength(allIds.length)
     for (const id of allIds) expect(r.items.filter((i) => i.deviceId === id), id).toHaveLength(1)
@@ -101,7 +115,7 @@ describe('inventory', () => {
 
   it('keeps « autres » last and the other tabs in declaration order', () => {
     const { tabs } = inventory(registry, none)
-    expect(tabs).toEqual(['micros', 'consoles', 'enceintes', 'sources', 'reseau', 'secteur', 'autres'])
+    expect(tabs).toEqual(tabsPresent())
     expect(tabs[tabs.length - 1]).toBe('autres')
   })
 
@@ -109,7 +123,7 @@ describe('inventory', () => {
     const base = inventory(registry, none).tabs
     for (const beta of ['loading', 'unavailable'] as const) {
       const r = inventory(registry, { ...none, beta })
-      expect(r.tabs, beta).toEqual(['micros', 'consoles', 'enceintes', 'sources', 'reseau', 'secteur', 'beta', 'autres'])
+      expect(r.tabs, beta).toEqual(tabsPresent(['beta']))
       expect(r.items.filter((i) => i.tab === 'beta')).toEqual([])
       expect(r.tabs.filter((t) => t !== 'beta')).toEqual(base)
     }
@@ -229,5 +243,56 @@ describe('filterItems (the drawer search, final review 4)', () => {
   })
   it('every catalog device is found by its own label', () => {
     for (const it of r.items) expect(filterItems(r.items, it.label).map((i) => i.deviceId), it.label).toContain(it.deviceId)
+  })
+})
+
+describe('Wave 0 tabs: no category falls into « Autres » by accident, no id is in two tabs, the pins derive from the catalogue', () => {
+  const proposalsFile = JSON.parse(readFileSync('content/proposals/catalog-proposals.json', 'utf8')) as { devices: { id: string; label: string; realWorld: { category: string } }[] }
+  const plan = JSON.parse(readFileSync('content/proposals/equipment-plan.json', 'utf8')) as { rows: { id: string; category: string }[] }
+  /** The categories that belong in « Autres » on purpose. */
+  const INTENDED_AUTRES = new Set(['signaling', 'patchbay', 'furniture'])
+
+  it('every catalogue category, every proposal category and every plan category has a CATEGORY_TAB line (an unlisted one would silently land in « Autres » when promoted)', () => {
+    const all = new Set([...CATALOG_CATEGORIES, ...proposalsFile.devices.map((d) => d.realWorld.category), ...plan.rows.map((r) => r.category)])
+    const missing = [...all].filter((c) => !Object.prototype.hasOwnProperty.call(CATEGORY_TAB, c))
+    expect(missing, `categories with no tab: ${missing.join(', ')}`).toEqual([])
+    const autres = [...all].filter((c) => CATEGORY_TAB[c] === 'autres' && !INTENDED_AUTRES.has(c))
+    expect(autres, `categories sent to « Autres » that nobody decided on: ${autres.join(', ')}`).toEqual([])
+  })
+
+  it('the nine categories that only exist as Bêta (amplifier, speaker, outboard, wireless, di-box, broadcast, headphones, recorder, measurement) each have a tab, and the three new tabs are fed', () => {
+    for (const c of ['amplifier', 'speaker', 'outboard', 'wireless', 'di-box', 'broadcast', 'headphones', 'recorder', 'measurement']) expect(CATEGORY_TAB[c], c).toBeDefined()
+    const targets = new Set(Object.values(CATEGORY_TAB))
+    for (const tab of ['amplis', 'cables', 'pieds'] as const) expect(targets.has(tab), tab).toBe(true)
+    expect(CATEGORY_TAB['amplifier']).toBe('amplis')
+    expect(CATEGORY_TAB['di-box']).toBe('cables')
+    expect(CATEGORY_TAB['stand-arm']).toBe('pieds')
+  })
+
+  it('every tab named by CATEGORY_TAB is a declared tab with a French label, and never « beta »', () => {
+    for (const [c, tab] of Object.entries(CATEGORY_TAB)) {
+      expect(DECLARED_ORDER, c).toContain(tab)
+      expect(TAB_LABELS[tab], c).toMatch(/\S/)
+      expect(tab, c).not.toBe('beta')
+    }
+  })
+
+  it('no id is listed in two tabs, with the real proposals loaded next to the real catalogue (a promoted id leaves « Bêta » when it joins the catalogue)', () => {
+    const r = inventory(registry, { proposals: proposalsFile.devices.map((d) => ({ deviceId: d.id, label: d.label })), modelIds: allModels })
+    const seen = new Map<string, string>()
+    for (const i of r.items) {
+      expect(seen.has(i.deviceId), `${i.deviceId} is in ${seen.get(i.deviceId)} and ${i.tab}`).toBe(false)
+      seen.set(i.deviceId, i.tab)
+    }
+    expect(r.items).toHaveLength(CATALOG_DEVICE_COUNT + proposalsFile.devices.filter((d) => !catalogDevices.some((c) => c.id === d.id)).length)
+  })
+
+  it('the pinned counts are derived: the registry and the inventory agree with content/catalog.json, whatever it holds today', () => {
+    expect(registry.catalog.devices).toHaveLength(CATALOG_DEVICE_COUNT)
+    expect(new Set(registry.catalog.devices.map((d) => d.realWorld.category))).toEqual(CATALOG_CATEGORIES)
+    expect(inventory(registry, none).items).toHaveLength(CATALOG_DEVICE_COUNT)
+    const present = tabsPresent()
+    expect(inventory(registry, none).tabs).toEqual(present)
+    expect(present[present.length - 1]).toBe('autres')
   })
 })

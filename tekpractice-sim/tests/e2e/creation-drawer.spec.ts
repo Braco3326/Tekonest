@@ -136,7 +136,7 @@ test('the « Secteur » tab exists (the power strip is in the catalogue) and hol
   await open(page)
   const tabs = page.getByRole('tablist').getByRole('tab')
   const labels = await tabs.allInnerTexts()
-  expect(labels).toEqual(['Micros', 'Consoles', 'Enceintes', 'Sources', 'Réseau', 'Secteur', 'Bêta', 'Autres'])
+  expect(labels).toEqual(['Micros', 'Consoles', 'Enceintes', 'Sources', 'Réseau', 'Câbles et DI', 'Pieds et accroches', 'Secteur', 'Bêta', 'Autres'])
   await page.getByRole('tab', { name: 'Secteur' }).click()
   const items = page.getByRole('tabpanel').getByTestId('inventory-item')
   await expect(items).toHaveCount(1)
