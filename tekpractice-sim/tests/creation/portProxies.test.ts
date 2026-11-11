@@ -6,6 +6,7 @@ import { DeviceSpawner } from '../../src/scene/DeviceSpawner'
 import { CREATION_DEVICE_THEME } from '../../src/creation/sceneTheme'
 import { DisposableBag } from '../../src/util/disposable'
 import { markerDiameterM } from '../../src/scene/portMarkerSize'
+import { liftMarkerRing } from '../../src/scene/portMarkerMesh'
 import { HIGHLIGHT_PX, labelScale, PortProxies, proxyRadius, RING_MAX_GROW, RING_MIN_PX, ringScale, screenRadiusPx, worldPerPx } from '../../src/creation/portProxies'
 
 const FOV = 0.8
@@ -490,6 +491,31 @@ describe('PortProxies on a real (headless) scene', () => {
       if (restPx(t, port) >= RING_MIN_PX) expect(m.scaling.x, port).toBe(1)
     }
     t.scene.dispose()
+  })
+
+  it('a lifted ring (a connector in a pocket) keeps its lift when the far floor scales it: it grows about its own centre, it does not float off the panel (Wave 5c finding E3)', () => {
+    const LIFT = 0.039 // a K12.2 XLR pocket
+    for (const dist of [20, 5]) {
+      const t = setup(dist)
+      prime(t)
+      const port = [...t.inst.portMarkers.keys()][0]
+      const m = t.inst.portMarkers.get(port)!
+      m.scaling.setAll(1) // as the spawner leaves it, before the camera floor scales it
+      liftMarkerRing(m, LIFT)
+      m.computeWorldMatrix(true)
+      const parentScale = (m.parent as { absoluteScaling: Vector3 }).absoluteScaling.x
+      const gap = (): number => Vector3.Distance(m.getBoundingInfo().boundingBox.centerWorld, m.getAbsolutePosition())
+      expect(gap()).toBeCloseTo(LIFT * parentScale, 6)
+      t.camera.getViewMatrix(true)
+      t.proxies.refresh()
+      if (dist === 20) expect(m.scaling.x).toBeGreaterThan(1.5) // the floor really scaled it
+      m.computeWorldMatrix(true)
+      expect(gap(), `ring centre off the port at ${dist} m`).toBeCloseTo(LIFT * parentScale, 6)
+      t.proxies.mark({ instance: 'ql1', port }, null) // hover: the 14 px highlight scales it too
+      m.computeWorldMatrix(true)
+      expect(gap(), 'after the highlight growth').toBeCloseTo(LIFT * parentScale, 6)
+      t.scene.dispose()
+    }
   })
 
   it('zooming back in puts a far-scaled ring back to its rest size', () => {

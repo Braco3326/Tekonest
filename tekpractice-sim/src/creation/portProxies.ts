@@ -64,6 +64,15 @@ const restScale = (m: Mesh): number => {
   return typeof s === 'number' && s > 0 ? s : 1
 }
 
+/**
+ * Scales a marker ring in its plane only (x and y). A ring in a connector pocket has its lift baked into its vertices (liftMarkerRing: the ring
+ * sits z = -lift in front of the port); a uniform scale would multiply that lift (a 39 mm lift at 2.1 x floated the ring 82 mm off the panel).
+ * The ring is flat, so z carries nothing but the lift, which stays as it is.
+ */
+const setRingScale = (m: Mesh, s: number): void => {
+  m.scaling.set(s, s, 1)
+}
+
 /** A marker ring's own outer diameter at scale 1, local metres (the half-extent of its local bounding box, doubled). */
 const ringLocalDiameter = (m: Mesh): number => {
   const d = m.getBoundingInfo().boundingBox.extendSize.x * 2
@@ -189,7 +198,7 @@ export class PortProxies {
         if (m && !m.isDisposed() && !this.styled.has(m)) {
           const target = this.ringTarget(m, false)
           if (Math.abs(m.scaling.x - target) > target * 0.02) {
-            m.scaling.setAll(target)
+            setRingScale(m, target)
             m.computeWorldMatrix(true)
           }
         }
@@ -392,11 +401,11 @@ export class PortProxies {
       if (!this.styled.has(marker)) this.styled.set(marker, { material: marker.material, visibility: marker.visibility })
       if (w.kind === 'dim') {
         marker.visibility = 0.3
-        marker.scaling.setAll(this.ringTarget(marker, false))
+        setRingScale(marker, this.ringTarget(marker, false))
       } else {
         marker.visibility = 1
         if (w.kind) marker.material = this.material(w.kind)
-        marker.scaling.setAll(this.ringTarget(marker, w.grow))
+        setRingScale(marker, this.ringTarget(marker, w.grow))
       }
       marker.computeWorldMatrix(true)
     }
@@ -408,7 +417,7 @@ export class PortProxies {
     if (!was || m.isDisposed()) return
     m.material = was.material
     m.visibility = was.visibility
-    m.scaling.setAll(this.ringTarget(m, false))
+    setRingScale(m, this.ringTarget(m, false))
     m.computeWorldMatrix(true)
   }
 
