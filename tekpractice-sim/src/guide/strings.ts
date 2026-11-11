@@ -44,6 +44,11 @@ export const TP_STRINGS = deepFreeze({
     /** After a verdict sentence that says what is missing. Nothing here asks to run a check: Mode Création has no check button. The offered flow comes as a chip. */
     needInfo: 'La barre d’état, en bas de l’écran, résume l’état du montage.',
   },
+  /** « Où j’en suis » with no flow running: the place the learner is in, in the app’s own words (the vendored default spoke of a workbench). */
+  where: {
+    creation: 'Mode Création ouvert.',
+    legacy: 'Niveau ouvert.',
+  },
   /** Level play (the legacy page): the planner line and the two flows. The objectives card is the page's own (title, brief, checklist of required connections). */
   legacy: {
     planner: {
@@ -99,7 +104,7 @@ export const TP_STRINGS = deepFreeze({
     'alimentation-fantome': {
       title: 'Alimentation fantôme',
       steps: {
-        toggle: 'Basculer la commande d’alimentation fantôme de la voie du micro.',
+        toggle: 'Basculer la commande d’alimentation fantôme du premier appareil qui en a une.',
       },
     },
     'lire-le-statut': {

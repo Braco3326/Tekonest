@@ -1,5 +1,7 @@
 // The guide's own words: one frozen table, impersonal French, nothing private, no digit.
 import { describe, expect, it } from 'vitest'
+import { CREATION_STRINGS } from '../../src/guide/flows.creation'
+import { LEGACY_STRINGS } from '../../src/guide/flows.legacy'
 import { TP_STRINGS, tpString } from '../../src/guide/strings'
 import { shapeReply } from '../../src/guide/vendor/core/shape'
 import { privateHits, roleHits } from './privateTokens'
@@ -112,5 +114,27 @@ describe('tpString', () => {
     }
     expect(tpString(undefined as unknown as string)).toBe('')
     expect(tpString(5 as unknown as string)).toBe('')
+  })
+})
+
+describe('the strings the controller reads', () => {
+  const table = (t: unknown): { path: string; value: unknown }[] => leaves(t)
+
+  it('no string of either route table says « plan de travail » (the vendored default did, on both routes)', () => {
+    for (const [name, t] of [['creation', CREATION_STRINGS], ['legacy', LEGACY_STRINGS]] as const)
+      for (const { path, value } of table(t)) expect(/plan de travail/i.test(String(value)), `${name} ${path}`).toBe(false)
+  })
+
+  it('« Où j’en suis » with no flow running says the app’s own place, per route, with no digit', () => {
+    expect(CREATION_STRINGS.where.workbench).toBe(TP_STRINGS.where.creation)
+    expect(LEGACY_STRINGS.where.workbench).toBe(TP_STRINGS.where.legacy)
+    expect(TP_STRINGS.where.creation).toContain('Mode Création')
+    for (const s of [TP_STRINGS.where.creation, TP_STRINGS.where.legacy]) expect(/\d/.test(s)).toBe(false)
+    // the rest of the host table is the vendored one: a step count is the controller's own, not written here
+    expect(CREATION_STRINGS.where.flow).toContain('{flow}')
+  })
+
+  it('the phantom step claims nothing the data does not back (no « micro » channel: the app picks the first device that has the switch)', () => {
+    expect(TP_STRINGS.flows['alimentation-fantome'].steps.toggle).not.toMatch(/micro|voie/i)
   })
 })
