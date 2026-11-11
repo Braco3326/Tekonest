@@ -662,7 +662,10 @@ export async function shipRun(id: string, runDir: string, opts: ShipRunOpts = {}
   if (!drift || !drift.ok) throw new Error(`the run in ${dir} has no passing proportionDrift result: rebuild it`)
   const bytes = new Uint8Array(await readFile(finalPath))
   const measured = await measure(bytes, spec)
-  const gates = [...measured.gates, drift, ...(await finalGates(bytes, measured.report, spec))]
+  // The ray-cast portSurface result of the run (the fix-up's, on the same geometry as the final bytes) is carried into the manifest row like the drift result:
+  // the fix-up is not run again, but a shipped row must not lose the gate (Wave 5c: seven rows had none).
+  const surface = last?.gates.find((g) => g.gate === 'portSurface')
+  const gates = [...measured.gates, drift, ...(surface ? [surface] : []), ...(await finalGates(bytes, measured.report, spec))]
   const failed = failingNames(gates)
   if (failed.length > 0) throw new Error(`the final.glb in ${dir} no longer passes: gate${failed.length === 1 ? '' : 's'} ${failed.join(', ')} failed`)
 

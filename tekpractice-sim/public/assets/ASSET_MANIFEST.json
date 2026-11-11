@@ -1653,7 +1653,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-10T20:53:34.888Z",
+      "date": "2026-11-11T00:52:26.426Z",
       "specSource": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
       "logosRemoved": true,
       "photos": [
@@ -1687,6 +1687,10 @@
         },
         {
           "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
           "ok": true
         },
         {
@@ -1985,7 +1989,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-10T20:50:32.212Z",
+      "date": "2026-11-11T00:52:28.588Z",
       "specSource": "https://products.electrovoice.com/download/970110",
       "logosRemoved": true,
       "photos": [
@@ -2019,6 +2023,10 @@
         },
         {
           "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
           "ok": true
         },
         {
@@ -2233,7 +2241,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "date": "2026-11-10T21:34:45.747Z",
+      "date": "2026-11-11T00:52:32.920Z",
       "specSource": "https://cdn.shopify.com/s/files/1/1167/3148/files/Dell_OptiPlex-7010-Technical_Specifications.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2267,6 +2275,10 @@
         },
         {
           "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
           "ok": true
         },
         {
@@ -2368,7 +2380,7 @@
         "_generic_right.png"
       ],
       "taskId": null,
-      "date": "2026-11-10T21:33:34.154Z",
+      "date": "2026-11-11T00:52:35.122Z",
       "specSource": "https://www.aeta-audio.com/downloads/doc/manuals/manual_scoopy%2Bs.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2405,6 +2417,10 @@
           "ok": true
         },
         {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
           "gate": "textures",
           "ok": true
         },
@@ -2428,7 +2444,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-10T20:44:36.095Z",
+      "date": "2026-11-11T00:52:30.811Z",
       "specSource": "https://products.electrovoice.com/download/970113",
       "logosRemoved": true,
       "photos": [
@@ -2465,6 +2481,10 @@
           "ok": true
         },
         {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
           "gate": "textures",
           "ok": true
         },
@@ -2493,7 +2513,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "date": "2026-11-10T21:35:47.169Z",
+      "date": "2026-11-11T00:52:37.244Z",
       "specSource": "https://www.avid.com/products/Pro-Tools-HDX",
       "logosRemoved": true,
       "gates": [
@@ -2527,6 +2547,10 @@
         },
         {
           "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
           "ok": true
         },
         {
@@ -2627,7 +2651,7 @@
         "rear.jpg"
       ],
       "taskId": null,
-      "date": "2026-11-10T21:28:01.224Z",
+      "date": "2026-11-11T00:52:39.436Z",
       "specSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/ISA%20One%20User%20Guide%201.1%20-%20FR.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2661,6 +2685,10 @@
         },
         {
           "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
           "ok": true
         },
         {

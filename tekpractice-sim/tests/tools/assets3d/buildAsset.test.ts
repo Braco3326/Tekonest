@@ -1831,6 +1831,18 @@ describe('ship from a finished run (--ship-run)', () => {
     expect((entry?.gates as { gate: string; ok: boolean }[]).every((g) => g.ok)).toBe(true)
   })
 
+  it('records the portSurface gate of the run it ships (Wave 5c finding B): carried from the stored run, not dropped; a stored failing result refuses the ship', async () => {
+    const spec = deviceSpec()
+    const flush = { ...FIXUP_OK, portSurface: [{ name: 'port_in-mic-1', offsetM: 0 }] }
+    const first = await dryRun(spec, { fixupReports: [flush] })
+    expect(first.attempts[0].gates.map((g) => g.gate)).toContain('portSurface')
+    await shipRun(spec.id, first.workDir, { logosRemoved: true }, makeDeps({ spec, fixed: [await goodGlb(spec)] }))
+    const entry = (await readManifest()).assets.find((a) => a.id === 'test-mixer')
+    const names = (entry?.gates as { gate: string; ok: boolean }[]).map((g) => g.gate)
+    expect(names).toContain('portSurface')
+    expect((entry?.gates as { gate: string; ok: boolean }[]).find((g) => g.gate === 'portSurface')?.ok).toBe(true)
+  })
+
   it('a scripted run ships without --logos-removed; a Meshy run is refused without it, and nothing is written', async () => {
     const jack = connectorSpec({ build: { shape: 'cylinder-plug' } })
     const scripted = await buildAsset(jack.id, { maxAttempts: 1, scripted: true, dryRun: true }, makeDeps({ spec: jack, fixed: [await goodGlb(jack)], fixupReport: { ...FIXUP_OK, preScaleSizeM: { w: 6, h: 6, d: 20 } } }))
