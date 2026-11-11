@@ -65,6 +65,10 @@ export function checkCatalog(catalog: CatalogT, opts: { modelIds: ReadonlySet<st
       if (p.portId.length > PORT_ID_MAX) error(`${at}.ports["${p.portId}"]`, `port id "${p.portId}" is ${p.portId.length} characters: the catalogue maximum is ${PORT_ID_MAX}`)
       checkPortFlags(`${at}.ports["${p.portId}"]`, p, error)
     }
+    for (const [old, now] of Object.entries(d.portAliases ?? {})) {
+      if (!seen.has(now)) error(`${at}.portAliases["${old}"]`, `alias target "${now}" is not a port of ${d.id}`)
+      if (seen.has(old)) error(`${at}.portAliases["${old}"]`, `alias "${old}" is also a current port of ${d.id}: an alias is an OLD id`)
+    }
     if (d.minLoadOhms !== undefined && d.loadOhms !== undefined && d.minLoadOhms > d.loadOhms)
       error(`${at}.minLoadOhms`, `minLoadOhms (${d.minLoadOhms}) is above loadOhms (${d.loadOhms}): the lowest rated load cannot exceed the rated load`)
 

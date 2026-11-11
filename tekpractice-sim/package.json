@@ -26,7 +26,8 @@
     "lint": "eslint src tools --ext .ts && eslint tools/live-audit --ext .mjs",
     "format": "prettier --write \"src/**/*.ts\" \"tools/**/*.ts\"",
     "asset:rectify": "tsx tools/assets3d/rectify.ts",
-    "asset:panel": "tsx tools/assets3d/genericPanel.ts"
+    "asset:panel": "tsx tools/assets3d/genericPanel.ts",
+    "promote": "tsx tools/promote-device.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.112.1",

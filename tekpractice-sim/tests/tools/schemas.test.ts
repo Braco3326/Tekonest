@@ -586,9 +586,13 @@ describe('Wave 0 schema additions: new port flags and device fields', () => {
     for (const bad of [{ loadOhms: 0 }, { minLoadOhms: -4 }, { impedanceOhms: Number.NaN }, { impedanceOhms: '8' }, { sizeMm: { w: 0 } }, { sizeMm: { w: -1, d: 1, h: 1 } }, { sizeMm: { x: 1 } }])
       expect(Device.safeParse(device(bad)).success, JSON.stringify(bad)).toBe(false)
   })
+  it('portAliases maps an old port id to the current one (strings only, non-empty)', () => {
+    expect(Device.safeParse(device({ portAliases: { 'in-old-long-id-1': 'in-1' } })).success).toBe(true)
+    for (const bad of [{ portAliases: { a: '' } }, { portAliases: { a: 3 } }, { portAliases: 'in-1' }]) expect(Device.safeParse(device(bad)).success, JSON.stringify(bad)).toBe(false)
+  })
   it('the fields are optional: a device without them parses and comes back without the keys', () => {
     const d = Device.parse(device())
-    for (const k of ['loadOhms', 'minLoadOhms', 'impedanceOhms', 'sizeMm']) expect(k in d, k).toBe(false)
+    for (const k of ['loadOhms', 'minLoadOhms', 'impedanceOhms', 'sizeMm', 'portAliases']) expect(k in d, k).toBe(false)
   })
   it('the existing 25 devices still validate unchanged: parsing returns every one of them deep-equal to its catalog.json entry', () => {
     expect(catalogJson.devices).toHaveLength(25)

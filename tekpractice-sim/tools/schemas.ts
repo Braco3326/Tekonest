@@ -173,6 +173,9 @@ export const Device = z.object({
   impedanceOhms: z.number().finite().positive().optional().describe(
     'Wave 0: the nominal impedance in ohms of a loudspeaker, or of an input / output the datasheet states (a line input, an instrument Hi-Z input). Absent = not stated.',
   ),
+  portAliases: z.record(z.string().min(1), z.string().min(1)).optional().describe(
+    'Wave 0: old port id -> current port id, for a device promoted from a Bêta proposal whose long knowledge-base port ids were shortened. A saved project that still cables the old id is loaded onto the new one (CreationStore.build). Absent = no id changed.',
+  ),
   sizeMm: SizeMm.optional().describe(
     'Wave 0: the real size in millimetres from the equipment plan, any subset of w (width), d (depth), h (height). Read only for the placeholder box of a device that has no model yet (a Bêta proposal): a device with a model takes its size from the model. Absent = category footprint.',
   ),

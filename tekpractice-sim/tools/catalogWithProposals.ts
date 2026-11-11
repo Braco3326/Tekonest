@@ -1,0 +1,39 @@
+/**
+ * catalogWithProposals: the catalogue as the asset pipeline sees it: content/catalog.json plus the Bêta proposals (Wave 0, Task 0.4).
+ *
+ * A beta-modelled device (spec 4.1) has an asset spec and a GLB but is not in the catalogue: it is a proposal. The pipeline checks a spec's port and
+ * control ids against "the catalogue" (checkSpecParity), so for such a device the proposals must be visible to it. A proposal is read as the app
+ * reads it (src/creation/betaDevices.ts parseProposals): ports only, no controls, no routing, no acoustic, no model front or body, never a
+ * mains source; an id the catalogue has is left to the catalogue. Pure.
+ */
+import { Device, type CatalogT } from './schemas'
+
+type Obj = Record<string, unknown>
+const isObj = (v: unknown): v is Obj => typeof v === 'object' && v !== null && !Array.isArray(v)
+
+/** The catalogue with every usable proposal appended to `devices` (a bad or duplicate entry is skipped, as the app skips it). */
+export function catalogWithProposals(catalog: CatalogT, proposalsFile: unknown): CatalogT {
+  if (!isObj(proposalsFile) || !Array.isArray(proposalsFile.devices)) return catalog
+  const seen = new Set(catalog.devices.map((d) => d.id))
+  const extra: CatalogT['devices'] = []
+  for (const entry of proposalsFile.devices as unknown[]) {
+    if (!isObj(entry)) continue
+    const { routing: _r, acoustic: _a, modelFront: _f, modelBody: _b, controls: _c, ...declared } = entry
+    void _r
+    void _a
+    void _f
+    void _b
+    void _c
+    const parsed = Device.safeParse(declared)
+    if (!parsed.success || seen.has(parsed.data.id) || !parsed.data.ports.length) continue
+    seen.add(parsed.data.id)
+    extra.push({
+      ...parsed.data,
+      ports: parsed.data.ports.map(({ flags, ...p }) => {
+        const kept = (flags ?? []).filter((f) => f !== 'isMainsSource')
+        return kept.length ? { ...p, flags: kept } : p
+      }),
+    })
+  }
+  return extra.length ? { ...catalog, devices: [...catalog.devices, ...extra] } : catalog
+}

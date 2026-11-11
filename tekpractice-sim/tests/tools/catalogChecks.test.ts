@@ -404,3 +404,16 @@ describe('checkCatalog, Wave 0 data rules (Task 0.3)', () => {
     expect(errors(c)).toEqual([])
   })
 })
+
+describe('checkCatalog, portAliases (Wave 0)', () => {
+  it('an alias must point at a port the device has, and an old id must not be one of its current ports', () => {
+    const c = fresh()
+    const d = dev(c, 'shure-sm58')
+    d.portAliases = { 'in-old-long-port-id-1': 'out-xlr' }
+    expect(errors(c)).toEqual([])
+    d.portAliases = { 'in-old': 'no-such-port' }
+    expect(errors(c).some((i) => /portAliases/.test(i.path) && /no-such-port/.test(i.message))).toBe(true)
+    d.portAliases = { 'out-xlr': 'out-xlr' }
+    expect(errors(c).some((i) => /portAliases/.test(i.path) && /current port/.test(i.message))).toBe(true)
+  })
+})

@@ -71,6 +71,7 @@ import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, 
 import type { GateResult } from './gates'
 import { inspectGlb } from './inspect'
 import type { GlbReport } from './inspect'
+import { catalogWithProposals } from '../catalogWithProposals'
 import { Catalog } from '../schemas'
 import type { CatalogT } from '../schemas'
 import { checkSpecParity, loadSpecs } from './loadSpecs'
@@ -280,7 +281,14 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
         if (!spec) throw new Error(`no asset spec "${id}" in content/asset-specs (create it with npm run asset:spec)`)
         return spec
       }),
-    loadCatalog: deps.loadCatalog ?? (() => Catalog.parse(JSON.parse(readFileSync(join(REPO_ROOT, 'content', 'catalog.json'), 'utf8')))),
+    // The catalogue AND the Bêta proposals: a beta-modelled device (Wave 0) has a spec and a model but lives in the proposals file.
+    loadCatalog:
+      deps.loadCatalog ??
+      (() => {
+        const catalog = Catalog.parse(JSON.parse(readFileSync(join(REPO_ROOT, 'content', 'catalog.json'), 'utf8')))
+        const proposals = join(REPO_ROOT, 'content', 'proposals', 'catalog-proposals.json')
+        return existsSync(proposals) ? catalogWithProposals(catalog, JSON.parse(readFileSync(proposals, 'utf8'))) : catalog
+      }),
     readPhotos: deps.readPhotos ?? ((id) => readPhotosFrom(join(paths.sourceDir, id, 'photos'))),
     paths,
     now: deps.now ?? (() => new Date()),

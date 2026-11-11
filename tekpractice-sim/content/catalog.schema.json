@@ -633,6 +633,17 @@
                 "exclusiveMinimum": 0,
                 "description": "Wave 0: the nominal impedance in ohms of a loudspeaker, or of an input / output the datasheet states (a line input, an instrument Hi-Z input). Absent = not stated."
               },
+              "portAliases": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "propertyNames": {
+                  "minLength": 1
+                },
+                "description": "Wave 0: old port id -> current port id, for a device promoted from a Bêta proposal whose long knowledge-base port ids were shortened. A saved project that still cables the old id is loaded onto the new one (CreationStore.build). Absent = no id changed."
+              },
               "sizeMm": {
                 "type": "object",
                 "properties": {

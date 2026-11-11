@@ -51,6 +51,13 @@ describe('mergeProposals', () => {
     expect(r.devices.map((d) => d.id)).toEqual(['a'])
   })
 
+  it('but a new row that was beta-modelled keeps its hand-built proposal (the sync neither drops nor regenerates it)', () => {
+    const bm = prop('nb', { sizeMm: { w: 1, d: 1, h: 1 } })
+    const r = mergeProposals([prop('a')], [bm], [row('nb', { status: 'new', betaModelled: true })], new Set())
+    expect(r.devices.map((d) => d.id)).toEqual(['a', 'nb'])
+    expect(r.devices[1]).toBe(bm)
+  })
+
   it("does not overwrite a beta-modelled proposal: the existing entry (its sizeMm, ports, label) is kept as it is", () => {
     const existing = prop('bm', { label: 'Edité', sizeMm: { w: 100, d: 50, h: 20 }, ports: [{ portId: 'main-out', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' }] })
     const generated = prop('bm', { label: 'Régénéré' })

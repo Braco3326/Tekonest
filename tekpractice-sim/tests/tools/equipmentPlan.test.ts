@@ -45,10 +45,12 @@ describe('the plan file', () => {
     expect(rows.filter((r) => r.status === 'new')).toHaveLength(181)
   })
 
-  it('every beta row id exists in catalog-proposals.json, and no new row does (one id, one place)', () => {
+  it('every beta row id (not yet promoted) exists in catalog-proposals.json, and no new row does unless it is beta-modelled (one id, one place)', () => {
     const proposalIds = new Set(proposals.devices.map((d) => d.id))
-    for (const r of rows.filter((x) => x.status === 'beta')) expect(proposalIds.has(r.id), r.id).toBe(true)
-    for (const r of rows.filter((x) => x.status === 'new')) expect(proposalIds.has(r.id), `${r.id} is in the proposals`).toBe(false)
+    for (const r of rows.filter((x) => x.status === 'beta' && !x.promoted)) expect(proposalIds.has(r.id), r.id).toBe(true)
+    for (const r of rows.filter((x) => x.promoted)) expect(proposalIds.has(r.id), `${r.id} is promoted but still a proposal`).toBe(false)
+    for (const r of rows.filter((x) => x.status === 'new' && !x.betaModelled)) expect(proposalIds.has(r.id), `${r.id} is in the proposals`).toBe(false)
+    for (const r of rows.filter((x) => x.status === 'new' && x.betaModelled)) expect(proposalIds.has(r.id), `${r.id} is beta-modelled but not in the proposals`).toBe(true)
   })
 
   it('no row id exists in catalog.json (promoted ids are flagged on the row and leave the proposals, never the reverse)', () => {

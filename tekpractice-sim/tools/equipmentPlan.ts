@@ -15,6 +15,7 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { z } from 'zod'
+import { PortFlag } from './schemas'
 
 /** Shape families the plan may name: the existing ones, then the new ones of Tasks 2.1 to 4.1. */
 export const KNOWN_FAMILIES = [
@@ -55,6 +56,27 @@ export function effectiveQuality(grade: DataQualityT, size: SizeMmT): DataQualit
   return grade
 }
 
+/**
+ * One port (or a run of identical ports) of a plan row, as the datasheet documents it. `id` is optional: when absent the id is built
+ * from the direction and the role ("in" + "mic" + count 2 gives in-mic-1, in-mic-2); a given id is kept when valid and short, else shortened.
+ */
+export const PlanPort = z
+  .object({
+    id: z.string().min(1).optional(),
+    role: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'a role is a kebab-case slug'),
+    dir: z.enum(['in', 'out', 'bidir']),
+    connector: z.string().min(1),
+    signal: z.string().min(1),
+    flags: z.array(PortFlag).optional(),
+    count: z.number().int().min(1).max(16).optional(),
+  })
+  .strict()
+export type PlanPort = z.infer<typeof PlanPort>
+
+/** What the plan knows about how the device behaves, where the category alone cannot say (a condenser needs phantom, a ribbon must not get it). */
+export const Trait = z.enum(['condenser', 'ribbon', 'active', 'passive', 'processor'])
+export type TraitT = z.infer<typeof Trait>
+
 export const PlanRow = z
   .object({
     id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'plan id must be a kebab-case slug'),
@@ -72,6 +94,9 @@ export const PlanRow = z
     wave: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
     sources: z.array(z.string().regex(/^https?:\/\/\S+$/, 'a source is an http(s) URL')),
     notes: z.string(),
+    /** The documented connector set (optional: absent = the category template's default ports, or the KB proposal's for a Bêta row). */
+    ports: z.array(PlanPort).optional(),
+    traits: z.array(Trait).optional(),
     promoted: z.boolean().optional(),
     betaModelled: z.boolean().optional(),
   })

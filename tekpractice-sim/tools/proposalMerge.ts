@@ -4,7 +4,7 @@
  * The proposals file is regenerated wholesale from the knowledge base, so without a guard a sync would
  *  - bring back a device that was promoted into content/catalog.json (resurrection: one id in two places),
  *  - overwrite the hand-edited entry of a beta-modelled device (its ports, its size),
- *  - or make a proposal of a plan row that is a NEW device (status `new`: not a KB proposal).
+ *  - or make a proposal of a plan row that is a NEW device (status `new`: not a KB proposal) unless it was beta-modelled: then its proposal is hand-built and kept.
  * The merge decides what survives; it never reads or writes a file (propose-content.ts does, and is a script: importing it would run it).
  */
 import type { PlanRow } from './equipmentPlan'
@@ -46,7 +46,7 @@ export function mergeProposals(
     if (catalogIds.has(id)) return 'already in the catalogue (content/catalog.json is the source of truth)'
     const row = rowById.get(id)
     if (row?.promoted === true) return 'promoted: the plan row is flagged promoted'
-    if (row?.status === 'new') return 'plan row is a new device, not a knowledge-base proposal'
+    if (row?.status === 'new' && row.betaModelled !== true) return 'plan row is a new device, not a knowledge-base proposal'
     return undefined
   }
 
