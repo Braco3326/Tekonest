@@ -1,4 +1,10 @@
 
+> **PUSH BLOCKER (2026-11-11): do not push `assets/3d-rebuild` as it stands, the creative-mode repository is public.**
+> `docs/superpowers/notes/img/*` (about 68 MB, 100+ files) holds contact sheets that embed the manufacturers' product photos with their wordmarks visible. They are now untracked and ignored (`.gitignore`, `git rm --cached`, files kept on disk), but every commit since 042ff01 (the plan commit; origin holds nothing newer than f6327ff) still carries them in history. History was NOT rewritten. Before any push the unpushed range `f6327ff..HEAD` must be squashed or filtered by the founder (an interactive squash, or `git filter-repo --path docs/superpowers/notes/img --invert-paths` on a copy of the branch), then checked with `git log --all --format=%h -- docs/superpowers/notes/img` (must print nothing).
+> Commits that ADDED images (`git log --diff-filter=A --format=%h -- docs/superpowers/notes/img`): 65438d9 cdb9110 cb3f2d8 a6bea74 d118b08 ff07d00 488cd7f 1230273 649d9ce 6d17826 22556db.
+> Separate, shipped-textures policy (report only, nothing changed): the GLB textures of Yamaha Rio3224-D2, Genelec 8030C and Grace m905 still show a manufacturer name in their pictures (see section "Wave 5c fixes" and `docs/legal/BRANDS_AND_CREDITS.md`); every photo-textured model wears manufacturer photographs by design.
+
+
 ## Wave 0 - Outline port markers (2026-11-10)
 
 Commits: 5e58e8c (marker size from the connector), a62bf57 (rings replace the 50 mm discs), 8d571ed (screen-space floor and highlight rule), 1093a09 (rings lifted out of connector pockets), plus this log.
