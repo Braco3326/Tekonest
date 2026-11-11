@@ -34,6 +34,8 @@ const sample = (over: Partial<PlanRow> = {}): PlanRow => ({
   wave: 1,
   sources: [],
   notes: '',
+  traits: [],
+  sizeConfidence: 'ok',
   ...over,
 })
 
@@ -123,10 +125,10 @@ describe('parsePlan (the loader)', () => {
   })
 
   it('rejects a datasheet or dealer row with a partial size, and a negative or zero size', () => {
-    expect(() => parsePlan(file([sample({ sizeMm: { w: 10, h: 10 } })]))).toThrow(/size/i)
+    expect(() => parsePlan(file([sample({ sizeMm: { w: 10, h: 10 }, sizeConfidence: 'partial' })]))).toThrow(/size/i)
     expect(() => parsePlan(file([sample({ sizeMm: { w: 0, d: 10, h: 10 } })]))).toThrow()
     expect(() => parsePlan(file([sample({ sizeMm: { w: -1, d: 10, h: 10 } })]))).toThrow()
-    expect(parsePlan(file([sample({ dataQuality: 'estimate', sizeMm: { w: 10 } })]))).toHaveLength(1)
+    expect(parsePlan(file([sample({ dataQuality: 'estimate', sizeMm: { w: 10 }, sizeConfidence: 'partial' })]))).toHaveLength(1)
     expect(parsePlan(file([sample({ dataQuality: 'missing', sizeMm: {} })]))).toHaveLength(1)
   })
 
@@ -151,6 +153,16 @@ describe('effectiveQuality (what the research graded vs what a size actually sup
     expect(effectiveQuality('missing', {})).toBe('missing')
     expect(effectiveQuality('estimate', { w: 1, d: 1, h: 1 })).toBe('estimate')
     expect(effectiveQuality('missing', { w: 1, d: 1, h: 1 })).toBe('missing') // the research said no source: stay blocked
+  })
+
+  it('a full size is promotable only when its sizeConfidence is ok: an assumed axis order, a conflict or a partial size is an estimate', () => {
+    const full = { w: 1, d: 1, h: 1 }
+    expect(effectiveQuality('datasheet', full, 'ok')).toBe('datasheet')
+    expect(effectiveQuality('dealer', full, 'axis-assumed')).toBe('estimate')
+    expect(effectiveQuality('datasheet', full, 'conflict')).toBe('estimate')
+    expect(effectiveQuality('datasheet', full, 'partial')).toBe('estimate')
+    expect(effectiveQuality('datasheet', { w: 1, h: 1 }, 'ok')).toBe('estimate')
+    expect(effectiveQuality('datasheet', {}, 'conflict')).toBe('missing')
   })
 })
 
@@ -178,6 +190,8 @@ describe('the importer (CSV to plan row)', () => {
     expect(row.family).toBe('rack-box-v3-slope')
     expect(row.sourceGrade).toBe('datasheet')
     expect(row.dataQuality).toBe('estimate')
+    expect(row.sizeConfidence).toBe('partial')
+    expect(row.traits).toEqual([])
     expect(row.sources).toEqual(['https://z.example/a'])
     expect([row.tier, row.wave, row.status]).toEqual([2, 3, 'new'])
   })

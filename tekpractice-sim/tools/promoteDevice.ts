@@ -114,8 +114,7 @@ const isFullSize = (s: PlanRow['sizeMm']): boolean => (s.w ?? 0) > 0 && (s.d ?? 
 const fmtSize = (s: { w: number; d: number; h: number }): string => `${s.w} x ${s.d} x ${s.h} mm (w x d x h)`
 
 /** Plan ports for a row: its own list, else the Bêta proposal's ports (old ids kept so they can be aliased), else none (the template default). */
-function givenPorts(row: PlanRow, proposal: Record<string, unknown> | undefined): { ports: PlanPort[]; from: 'plan' | 'proposal' | 'template' } {
-  if (row.ports?.length) return { ports: row.ports, from: 'plan' }
+function givenPorts(_row: PlanRow, proposal: Record<string, unknown> | undefined): { ports: PlanPort[]; from: 'plan' | 'proposal' | 'template' } {
   const ports = (proposal?.ports as { portId: string; dir: 'in' | 'out' | 'bidir'; connector: string; signal: string; flags?: PlanPort['flags'] }[] | undefined) ?? []
   if (!ports.length) return { ports: [], from: 'template' }
   return {

@@ -30,6 +30,8 @@ const base = (over: Partial<PlanRow>): PlanRow => ({
   wave: 1,
   sources: ['https://example.com/datasheet.pdf'],
   notes: '',
+  traits: [],
+  sizeConfidence: 'ok',
   ...over,
 })
 
@@ -38,8 +40,8 @@ const ROWS: PlanRow[] = [
   base({ id: 'fx-stagebox', status: 'beta', category: 'stagebox', manufacturer: 'Acme', product: 'SB16', family: 'rack-box-v2', sizeMm: { w: 483, d: 220, h: 137 }, dataQuality: 'dealer', sourceGrade: 'dealer' }),
   base({ id: 'fx-monitor', category: 'studio-monitor', manufacturer: 'Acme', product: 'M5', family: 'curved-cabinet', sizeMm: { w: 185, d: 160, h: 300 }, dataQuality: 'dealer', sourceGrade: 'dealer' }),
   base({ id: 'fx-missing', category: 'amplifier', family: 'rack-box-v2', sizeMm: {}, dataQuality: 'missing', sourceGrade: 'missing', sources: [] }),
-  base({ id: 'fx-estimate-new', category: 'recorder', family: 'moulded-box', sizeMm: { w: 150, h: 40 }, dataQuality: 'estimate', sourceGrade: 'datasheet', sources: [] }),
-  base({ id: 'fx-estimate-beta', status: 'beta', category: 'audio-interface', family: 'rack-box-v2', sizeMm: { w: 482.6, h: 44.5 }, dataQuality: 'estimate', sourceGrade: 'dealer' }),
+  base({ id: 'fx-estimate-new', category: 'recorder', family: 'moulded-box', sizeMm: { w: 150, h: 40 }, dataQuality: 'estimate', sizeConfidence: 'partial', sourceGrade: 'datasheet', sources: [] }),
+  base({ id: 'fx-estimate-beta', status: 'beta', category: 'audio-interface', family: 'rack-box-v2', sizeMm: { w: 482.6, h: 44.5 }, dataQuality: 'estimate', sizeConfidence: 'partial', sourceGrade: 'dealer' }),
   base({ id: 'fx-cable', category: 'cable', family: 'cable-assembly-v2' }),
   base({ id: 'fx-nosource', category: 'microphone', sources: [] }),
 ]

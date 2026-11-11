@@ -25,6 +25,8 @@ const row = (over: Partial<PlanRow> = {}): PlanRow => ({
   wave: 1,
   sources: ['https://example.com/ds.pdf'],
   notes: '',
+  traits: [],
+  sizeConfidence: 'ok',
   ...over,
 })
 

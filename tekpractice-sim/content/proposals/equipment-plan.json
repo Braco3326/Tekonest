@@ -23,7 +23,11 @@
    "sources": [
     "https://www.proacousticsusa.com/allen-heath-ar2412-audiorack.html"
    ],
-   "notes": "KB first-promotion #7 (SQ-6 + AR2412). Dealer data: 483x220x137 mm (3U), 5 kg, 70 W. Source: https://www.proacousticsusa.com/allen-heath-ar2412-audiorack.html"
+   "notes": "KB first-promotion #7 (SQ-6 + AR2412). Dealer data: 483x220x137 mm (3U), 5 kg, 70 W. Source: https://www.proacousticsusa.com/allen-heath-ar2412-audiorack.html",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ams-neve-1073spx",
@@ -46,7 +50,11 @@
    "sources": [
     "https://www.ams-neve.com/1073spx-21-p.asp"
    ],
-   "notes": "Manufacturer page [M]: 480x310x44 mm (1U), 5 kg; a dealer lists the SPX-D at 360 mm depth and 5.47 kg. KB W/H/D also parsable. Neve 1073 is on education lists (Bakersfield). Demand: 1 TEK Brain scenarios. Source: https://www.ams-neve.com/1073spx-21-p.asp"
+   "notes": "Manufacturer page [M]: 480x310x44 mm (1U), 5 kg; a dealer lists the SPX-D at 360 mm depth and 5.47 kg. KB W/H/D also parsable. Neve 1073 is on education lists (Bakersfield). Demand: 1 TEK Brain scenarios. Source: https://www.ams-neve.com/1073spx-21-p.asp",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "focusrite-scarlett-2i2-4th-gen",
@@ -62,14 +70,18 @@
    "weightKg": 0.595,
    "portsSummary": "8 modelled (9 listed in KB); no mains-power port declared in the proposal | real unit: USB-C desktop 2 in / 2 out; connector table not retrieved",
    "family": "rack-box-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 1,
    "wave": 1,
    "sources": [
     "https://userguides.focusrite.com/hc/en-gb/articles/28594384158482"
    ],
-   "notes": "Rank 1 interface in the notes. User guide via search [M]. CONFLICT depth 117 (Focusrite) vs 99 (dealers). Connector table not retrieved (page 403/404). Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios. Source: https://userguides.focusrite.com/hc/en-gb/articles/28594384158482"
+   "notes": "Rank 1 interface in the notes. User guide via search [M]. CONFLICT depth 117 (Focusrite) vs 99 (dealers). Connector table not retrieved (page 403/404). Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios. Source: https://userguides.focusrite.com/hc/en-gb/articles/28594384158482",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "conflict"
   },
   {
    "id": "mackie-profx12v3",
@@ -93,7 +105,11 @@
     "https://mackie.com/img/file_resources/PROFXV3+_SERIES_SS.pdf",
     "https://thomannmusic.com/mackie_profx12v3.htm"
    ],
-   "notes": "Manufacturer sheet is for v3+ (read via pdftotext, hosted by Mackie); dealers give same footprint for v3. Notes: 12 ch, USB 2.0, XLR main + 1/4in main/sub/aux (counts n/s), IEC, 48 V. Source: https://mackie.com/img/file_resources/PROFXV3+_SERIES_SS.pdf"
+   "notes": "Manufacturer sheet is for v3+ (read via pdftotext, hosted by Mackie); dealers give same footprint for v3. Notes: 12 ch, USB 2.0, XLR main + 1/4in main/sub/aux (counts n/s), IEC, 48 V. Source: https://mackie.com/img/file_resources/PROFXV3+_SERIES_SS.pdf",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "midas-dl16",
@@ -109,14 +125,18 @@
    "weightKg": 4.7,
    "portsSummary": "7 modelled (33 listed in KB); no mains-power port declared in the proposal | real unit: 16 XLR mic pre (+48 V), 8 XLR out, AES50 etherCON x2, ULTRANET, 2 TOSLINK ADAT out, headphone out; 45 W",
    "family": "rack-box-v2",
-   "dataQuality": "dealer",
+   "dataQuality": "estimate",
    "sourceGrade": "dealer",
    "tier": 1,
    "wave": 1,
    "sources": [
     "https://markertek.com/product/midas-dl16/midas-dl16-16-input-8-output-stage-box"
    ],
-   "notes": "KB first-promotion #7 (with X32). Dealer data (Markertek): 482x225x89 mm, 4.7 kg; two dealers give depth 270 or 220 and 4.9 kg (conflict). Same chassis as Behringer S16. Demand: 1 TEK Brain scenarios. Source: https://markertek.com/product/midas-dl16/midas-dl16-16-input-8-output-stage-box"
+   "notes": "KB first-promotion #7 (with X32). Dealer data (Markertek): 482x225x89 mm, 4.7 kg; two dealers give depth 270 or 220 and 4.9 kg (conflict). Same chassis as Behringer S16. Demand: 1 TEK Brain scenarios. Source: https://markertek.com/product/midas-dl16/midas-dl16-16-input-8-output-stage-box",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "conflict"
   },
   {
    "id": "neumann-kh-120-ii",
@@ -139,7 +159,11 @@
    "sources": [
     "https://www.neumann.com/en-en/products/monitors/kh-120-ii/"
    ],
-   "notes": "Manufacturer page [M]: 287 H x 182 W x 227 D, 5.4 kg. Fully documented connector set (XLR in, S/PDIF RCA in/out, RJ45, IEC). 4 placements in 3 rooms. Plan is near-rectangular: confirm curved-cabinet fit with a spike. Demand: 4/3 room placements/rooms. Source: https://www.neumann.com/en-en/products/monitors/kh-120-ii/"
+   "notes": "Manufacturer page [M]: 287 H x 182 W x 227 D, 5.4 kg. Fully documented connector set (XLR in, S/PDIF RCA in/out, RJ45, IEC). 4 placements in 3 rooms. Plan is near-rectangular: confirm curved-cabinet fit with a spike. Demand: 4/3 room placements/rooms. Source: https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "radial-j48",
@@ -155,7 +179,12 @@
    "tier": 1,
    "wave": 1,
    "sources": [],
-   "notes": "KB first-promotion #1 (DI + phantom lesson). No dims in notes (cables note wrongly says no DI data; J48 itself is indeed absent). Manual datasheet pass. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios."
+   "notes": "KB first-promotion #1 (DI + phantom lesson). No dims in notes (cables note wrongly says no DI data; J48 itself is indeed absent). Manual datasheet pass. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios.",
+   "traits": [
+    "active",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "radial-jdi",
@@ -171,14 +200,20 @@
    "weightKg": 0.703,
    "portsSummary": "3 modelled (3 listed in KB); no mains-power port declared in the proposal | real unit: 1/4in in, 1/4in thru, XLR balanced out; pad, merge, 180 deg polarity, ground lift, speaker filter; passive",
    "family": "rack-box-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 1,
    "wave": 1,
    "sources": [
-    "https://www.radialeng.com/product/jdi/specifications/"
+    "https://www.radialeng.com/product/jdi/specifications/",
+    "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf",
+    "https://www.markertek.com/product/rad-jdi/radial-jdi-passive-direct-box-with-jensen-transformer"
    ],
-   "notes": "Radial spec page [M]. Axis order not printed in the notes (assumed W x D x H). Spike needed: does rack-box-v2 pass for a small steel DI? Demand: 2/2 room placements/rooms, 2 TEK Brain scenarios. Source: https://www.radialeng.com/product/jdi/specifications/"
+   "notes": "Radial spec page [M]. Axis order not printed in the notes (assumed W x D x H). Spike needed: does rack-box-v2 pass for a small steel DI? Demand: 2/2 room placements/rooms, 2 TEK Brain scenarios. Source: https://www.radialeng.com/product/jdi/specifications/",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "radial-prodi",
@@ -194,15 +229,18 @@
    "weightKg": 0.54,
    "portsSummary": "3 modelled (3 listed in KB); no mains-power port declared in the proposal | real unit: unbalanced in (140 kOhm), XLR out (150 ohm); pad, ground lift; passive",
    "family": "rack-box-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 1,
    "wave": 1,
    "sources": [
-    "https://www.radialeng.com/product/prodi/specifications",
-    "https://libraryguides.mcgill.ca/EquipmentGuide/microphones"
+    "https://www.radialeng.com/product/prodi/specifications"
    ],
-   "notes": "Radial spec page [M]. Axis order assumed W x D x H. In McGill and TMU inventories. Source: https://www.radialeng.com/product/prodi/specifications"
+   "notes": "Radial spec page [M]. Axis order assumed W x D x H. In McGill and TMU inventories. Source: https://www.radialeng.com/product/prodi/specifications",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "rode-nt1-5th-gen",
@@ -225,7 +263,12 @@
    "sources": [
     "https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf"
    ],
-   "notes": "Datasheet [M]. Round body (52 mm), XLR plus USB-C; phantom on XLR, 5 V on USB-C. Most common low-cost studio condenser (rank 18). Demand: 1/1 room placements/rooms. Source: https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf"
+   "notes": "Datasheet [M]. Round body (52 mm), XLR plus USB-C; phantom on XLR, 5 V on USB-C. Most common low-cost studio condenser (rank 18). Demand: 1/1 room placements/rooms. Source: https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "royer-r-121",
@@ -248,7 +291,12 @@
     "https://royerlabs.com/pdf/cutsheets/R-121cutsheet.pdf",
     "https://www.royerlabs.com/r-121"
    ],
-   "notes": "Cut sheet [M]: 155.7 mm long x 25 mm \"width\" (taken as diameter for w=d; depth not stated). Passive ribbon, figure-8; R4 phantom-danger lesson needs isRibbon. Demand: 1/1 room placements/rooms. Source: https://royerlabs.com/pdf/cutsheets/R-121cutsheet.pdf"
+   "notes": "Cut sheet [M]: 155.7 mm long x 25 mm \"width\" (taken as diameter for w=d; depth not stated). Passive ribbon, figure-8; R4 phantom-danger lesson needs isRibbon. Demand: 1/1 room placements/rooms. Source: https://royerlabs.com/pdf/cutsheets/R-121cutsheet.pdf",
+   "traits": [
+    "ribbon",
+    "passive"
+   ],
+   "sizeConfidence": "partial"
   },
   {
    "id": "shure-psm-300",
@@ -269,10 +317,14 @@
    "tier": 1,
    "wave": 1,
    "sources": [
-    "https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf",
-    "https://www.shure.com/en-EU/products/in-ear-monitoring/psm300"
+    "https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf"
    ],
-   "notes": "Shure spec sheet [M]. P3T: 43 H x 198 W x 172 D, 783 g, 12-15 V DC. P3R: 110x64x21 mm without batteries (axis order unlabelled), 98 g. Bêta record bundles both: split. 2 scenarios in notes ranking (rank 9). Source: https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf"
+   "notes": "Shure spec sheet [M]. P3T: 43 H x 198 W x 172 D, 783 g, 12-15 V DC. P3R: 110x64x21 mm without batteries (axis order unlabelled), 98 g. Bêta record bundles both: split. 2 scenarios in notes ranking (rank 9). Source: https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf",
+   "traits": [
+    "transmitter",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-slx-d",
@@ -293,10 +345,14 @@
    "tier": 1,
    "wave": 1,
    "sources": [
-    "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
-    "https://pubs.shure.com/view/guide/SLXD/en-US.pdf"
+    "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf"
    ],
-   "notes": "Shure spec sheet [M]. Receiver SLXD4: 42 H x 197 W x 152 D, 816 g (dual SLXD4D 42x393x152, 1451 g). Bêta record bundles transmitters: SLXD1 98x68x25.5 mm 89 g; SLXD2 37.1 dia x 176 mm 147 g (as summarised, full length with capsule not confirmed); SLXD3 126x41x41 mm 200 g. Demand: 1/1 room placements/rooms. Source: https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf"
+   "notes": "Shure spec sheet [M]. Receiver SLXD4: 42 H x 197 W x 152 D, 816 g (dual SLXD4D 42x393x152, 1451 g). Bêta record bundles transmitters: SLXD1 98x68x25.5 mm 89 g; SLXD2 37.1 dia x 176 mm 147 g (as summarised, full length with capsule not confirmed); SLXD3 126x41x41 mm 200 g. Demand: 1/1 room placements/rooms. Source: https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
+   "traits": [
+    "receiver",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-tf5",
@@ -312,14 +368,18 @@
    "weightKg": 20,
    "portsSummary": "11 modelled (57 listed in KB); no mains-power port declared in the proposal | real unit: 40 ch; TF series I/O (16 combo in, 2 RCA in, 16 XLR omni out, 1 expansion slot, USB); TF5 per-unit I/O counts not separated in notes",
    "family": "console-wedge-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 1,
    "wave": 1,
    "sources": [
     "https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24"
    ],
-   "notes": "Manual hosted on manualslib (M-host, via search summary). KB W/H/D also parsable (repo). 2 rooms, 2 scenarios. TF1 and TF3 are size variants in the notes. Demand: 2/2 room placements/rooms, 2 TEK Brain scenarios. Source: https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24"
+   "notes": "Manual hosted on manualslib (M-host, via search summary). KB W/H/D also parsable (repo). 2 rooms, 2 scenarios. TF1 and TF3 are size variants in the notes. Demand: 2/2 room placements/rooms, 2 TEK Brain scenarios. Source: https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "apple-mac-mini",
@@ -342,7 +402,11 @@
    "sources": [
     "https://www.apple.com/mac-mini/specs/"
    ],
-   "notes": "Apple page [M]: 127x127x50 mm, 0.67 kg (0.73 kg M5 Pro), silver. Front 2 USB-C + 3.5 mm; rear 2.5 GbE, HDMI, 3 Thunderbolt. Source: https://www.apple.com/mac-mini/specs/"
+   "notes": "Apple page [M]: 127x127x50 mm, 0.67 kg (0.73 kg M5 Pro), silver. Front 2 USB-C + 3.5 mm; rear 2.5 GbE, HDMI, 3 Thunderbolt. Source: https://www.apple.com/mac-mini/specs/",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-s16",
@@ -365,7 +429,11 @@
    "sources": [
     "https://www.adorama.com/behringer-s16-digital-stage-box/p/bes16a"
    ],
-   "notes": "Same chassis as the Midas DL16: 482x225x89 mm, 4.7 kg (Adorama); 16 mic pres, 8 XLR out, AES50. Source: https://www.adorama.com/behringer-s16-digital-stage-box/p/bes16a"
+   "notes": "Same chassis as the Midas DL16: 482x225x89 mm, 4.7 kg (Adorama); 16 mic pres, 8 XLR out, AES50. Source: https://www.adorama.com/behringer-s16-digital-stage-box/p/bes16a",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "focusrite-scarlett-18i20-3rd-gen",
@@ -386,11 +454,13 @@
    "tier": 1,
    "wave": 1,
    "sources": [
-    "https://userguides.focusrite.com/hc/en-gb/articles/23031286748306-Scarlett-18i20-3rd-Gen-specifications",
-    "https://ccrma.stanford.edu/docs/studios/Recording-Studio.html",
-    "https://wwwprod101.american.edu/cas/audio-technology/facilities.cfm"
+    "https://userguides.focusrite.com/hc/en-gb/articles/23031286748306-Scarlett-18i20-3rd-Gen-specifications"
    ],
-   "notes": "Rank 2. Focusrite spec page [M]: 482.6x259.8x46.6 mm (1U), 3.195 kg. Connector table not retrieved. Source: https://userguides.focusrite.com/hc/en-gb/articles/23031286748306-Scarlett-18i20-3rd-Gen-specifications"
+   "notes": "Rank 2. Focusrite spec page [M]: 482.6x259.8x46.6 mm (1U), 3.195 kg. Connector table not retrieved. Source: https://userguides.focusrite.com/hc/en-gb/articles/23031286748306-Scarlett-18i20-3rd-Gen-specifications",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "furman-m-8x2",
@@ -406,14 +476,18 @@
    "weightKg": 2.2,
    "portsSummary": "IEC/captive cord in; 9 switched outlets",
    "family": "rack-box-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 1,
    "wave": 1,
    "sources": [
     "https://cdn.shopify.com/s/files/1/0884/1006/3168/files/m-8x_datasheet.pdf"
    ],
-   "notes": "Curricula tier 1 conditioner. Datasheet copy: 44 H x 482 W x 95 D mm (1U), 2.2 kg; 9 outlets (8 rear, 1 front), 6 ft cord. CONFLICT depth 4.137 in (Crutchfield) / 3.8 in; M-8Lx and M-8Dx siblings are deeper (7.5 in). Source: https://cdn.shopify.com/s/files/1/0884/1006/3168/files/m-8x_datasheet.pdf"
+   "notes": "Curricula tier 1 conditioner. Datasheet copy: 44 H x 482 W x 95 D mm (1U), 2.2 kg; 9 outlets (8 rear, 1 front), 6 ft cord. CONFLICT depth 4.137 in (Crutchfield) / 3.8 in; M-8Lx and M-8Dx siblings are deeper (7.5 in). Source: https://cdn.shopify.com/s/files/1/0884/1006/3168/files/m-8x_datasheet.pdf",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "conflict"
   },
   {
    "id": "jk-audio-broadcast-host",
@@ -437,7 +511,12 @@
     "https://avlgear.com/products/jk-audio-host-broadcast-host-desktop-digital-telephone-hybrid",
     "https://decibel.ch/upfiles/documents/jk-audio-broadcast-host-datasheet-27723.pdf"
    ],
-   "notes": "Broadcast tier 1 (telephone hybrid + mix-minus, curricula exercise 5). Datasheet copy: ~7x6x1.6 in = 178x152x41 mm, 0.99 kg (2.2 lb); XLR send 1, 3.5 mm send 2, RJ11 line + aux, 9 VDC 2.1 mm. Source: https://avlgear.com/products/jk-audio-host-broadcast-host-desktop-digital-telephone-hybrid"
+   "notes": "Broadcast tier 1 (telephone hybrid + mix-minus, curricula exercise 5). Datasheet copy: ~7x6x1.6 in = 178x152x41 mm, 0.99 kg (2.2 lb); XLR send 1, 3.5 mm send 2, RJ11 line + aux, 9 VDC 2.1 mm. Source: https://avlgear.com/products/jk-audio-host-broadcast-host-desktop-digital-telephone-hybrid",
+   "traits": [
+    "processor",
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "k-m-25400",
@@ -454,9 +533,14 @@
    "tier": 1,
    "wave": 1,
    "sources": [
-    "https://www.k-m.de/en/products/microphone-stands/floor-stands/microphone-stands-with-boom/25400-microphone-stand-black"
+    "https://www.k-m.de/en/products/microphone-stands/floor-stands/microphone-stands-with-boom/25400-microphone-stand-black",
+    "https://www.k-m.de/us/kmPdf/datasheet/ordernumber/US-25400-500-55"
    ],
-   "notes": "Datasheet [M]. Pose-dependent: height 890-1600, boom 805, folded 95x80x865 mm, 1.84 kg; 3/8in (EU) or 5/8in (US). Notes say \"base 660 mm\" is likely the leg span, not a diameter (conflict flagged). Same family as the verified 210/9. Source: https://www.k-m.de/en/products/microphone-stands/floor-stands/microphone-stands-with-boom/25400-microphone-stand-black"
+   "notes": "Datasheet [M]. Pose-dependent: height 890-1600, boom 805, folded 95x80x865 mm, 1.84 kg; 3/8in (EU) or 5/8in (US). Notes say \"base 660 mm\" is likely the leg span, not a diameter (conflict flagged). Same family as the verified 210/9. Source: https://www.k-m.de/en/products/microphone-stands/floor-stands/microphone-stands-with-boom/25400-microphone-stand-black",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "mackie-1202vlz4",
@@ -479,7 +563,11 @@
    "sources": [
     "https://www.manualowl.com/m/Mackie/1202-VLZ4/Manual/401959?page=24"
    ],
-   "notes": "Rank 10; radio/podcast side-chain use. Manual summary (manualowl): printed 10.7x11.9x3.0 in, 11.9 in taken as width: 303x272x75 mm, 3.0 kg. Source: https://www.manualowl.com/m/Mackie/1202-VLZ4/Manual/401959?page=24"
+   "notes": "Rank 10; radio/podcast side-chain use. Manual summary (manualowl): printed 10.7x11.9x3.0 in, 11.9 in taken as width: 303x272x75 mm, 3.0 kg. Source: https://www.manualowl.com/m/Mackie/1202-VLZ4/Manual/401959?page=24",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-rodecaster-pro-ii",
@@ -503,7 +591,11 @@
     "https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf",
     "https://rode.com/en/products/rodecaster-pro-ii"
    ],
-   "notes": "Rank 15, podcast standard (Ohio University). Datasheet [M]: 305x270x60 mm (length x width x height as printed), 1.96 kg, black or white. 4 combo in, 2 line out, 4 phones, 2 USB-C, Bluetooth, microSD. Source: https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf"
+   "notes": "Rank 15, podcast standard (Ohio University). Datasheet [M]: 305x270x60 mm (length x width x height as printed), 1.96 kg, black or white. 4 combo in, 2 line out, 4 phones, 2 USB-C, Bluetooth, microSD. Source: https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-md-421-ii",
@@ -519,7 +611,7 @@
    "weightKg": 0.385,
    "portsSummary": "1 XLR-3 out; passive",
    "family": "revolve",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 1,
    "wave": 1,
@@ -527,7 +619,12 @@
     "https://www.sennheiser.com/globalassets/digizuite/47848-en-md-421-ii-product-specification-v1.1-en.pdf",
     "https://www.sennheiser.com/en-us/catalog/products/microphones/md-421-ii/md-421-ii-000984"
    ],
-   "notes": "Rank 2; in 4 of 5 school inventories; 3 room placements. Spec v1.1 [M]: 215x46x49 mm (another page 215x48x48; revolve needs w=d). Weight CONFLICT 354 g (catalog) / 385 (spec) / 450 g (story page). Five-position bass roll-off. Source: https://www.sennheiser.com/globalassets/digizuite/47848-en-md-421-ii-product-specification-v1.1-en.pdf"
+   "notes": "Rank 2; in 4 of 5 school inventories; 3 room placements. Spec v1.1 [M]: 215x46x49 mm (another page 215x48x48; revolve needs w=d). Weight CONFLICT 354 g (catalog) / 385 (spec) / 450 g (story page). Five-position bass roll-off. Source: https://www.sennheiser.com/globalassets/digizuite/47848-en-md-421-ii-product-specification-v1.1-en.pdf",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "conflict"
   },
   {
    "id": "shure-beta-58a",
@@ -551,7 +648,12 @@
     "https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf",
     "https://pubs.shure.com/view/guide/BETA58A/en-US.pdf"
    ],
-   "notes": "Rank 7. Shure guide and spec sheet [M]: 160 mm long x 50 mm dia, 278 g. Same recipe as the verified SM58. Source: https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf"
+   "notes": "Rank 7. Shure guide and spec sheet [M]: 160 mm long x 50 mm dia, 278 g. Same recipe as the verified SM58. Source: https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-slxd2-handheld",
@@ -574,7 +676,13 @@
    "sources": [
     "https://pubs.shure.com/view/guide/SLXD/en-US.pdf"
    ],
-   "notes": "Part of the Bêta shure-slx-d record, split out. 37.1 dia x 176 mm (as summarised; full length with capsule not confirmed), 147 g, aluminium. Source: https://pubs.shure.com/view/guide/SLXD/en-US.pdf"
+   "notes": "Part of the Bêta shure-slx-d record, split out. 37.1 dia x 176 mm (as summarised; full length with capsule not confirmed), 147 g, aluminium. Source: https://pubs.shure.com/view/guide/SLXD/en-US.pdf",
+   "traits": [
+    "transmitter",
+    "handheld",
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-sm7b",
@@ -599,7 +707,12 @@
     "https://www.shure.com/en-US/products/microphones/sm7b",
     "https://www.fullcompass.com/common/files/84824-SM7BSpecSheet.pdf"
    ],
-   "notes": "Rank 1 in notes; 4 room placements reference it but it exists in neither catalogue nor Bêta. Dims RETAILER ONLY (Crutchfield): 62 dia x 192.5 mm; Shure drawing not extractable, check before modelling. Body only: yoke and cover plate not coverable by revolve (assembly later). Switches: bass roll-off, presence. Source: https://www.crutchfield.com/S-kiyVVVkHwlc/p_183SM7B/Shure-SM7B.html"
+   "notes": "Rank 1 in notes; 4 room placements reference it but it exists in neither catalogue nor Bêta. Dims RETAILER ONLY (Crutchfield): 62 dia x 192.5 mm; Shure drawing not extractable, check before modelling. Body only: yoke and cover plate not coverable by revolve (assembly later). Switches: bass roll-off, presence. Source: https://www.crutchfield.com/S-kiyVVVkHwlc/p_183SM7B/Shure-SM7B.html",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ua-1176ln",
@@ -623,7 +736,12 @@
     "https://www.uaudio.com/hardware/compressors/1176ln.html",
     "https://avlgear.com/collections/preamplifiers/products/universal-audio-1176ln-classic-limiting-amplifier"
    ],
-   "notes": "Iconic FET compressor (curricula tier 1 dynamics). UA page + AVL dealer: 483x89x311 mm (2U), ~5.0 kg; XLR + barrier strip, 600 ohm. Source: https://www.uaudio.com/hardware/compressors/1176ln.html"
+   "notes": "Iconic FET compressor (curricula tier 1 dynamics). UA page + AVL dealer: 483x89x311 mm (2U), ~5.0 kg; XLR + barrier strip, 600 ohm. Source: https://www.uaudio.com/hardware/compressors/1176ln.html",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-hs5",
@@ -639,14 +757,18 @@
    "weightKg": 5.3,
    "portsSummary": "XLR + 1/4in TRS balanced in; level, HF trim, room control",
    "family": "curved-cabinet",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 1,
    "wave": 1,
    "sources": [
     "https://jp.yamaha.com/files/download/other_assets/4/322334/HS_Series.pdf"
    ],
-   "notes": "Ubiquitous entry-level monitor. Yamaha brochure via search summary: 285 H x 170 W x 222 D mm, ~5.3 kg; XLR + TRS in; 45 W LF + 25 W HF. Rectangular box: confirm curved-cabinet fit (spike). Source: https://jp.yamaha.com/files/download/other_assets/4/322334/HS_Series.pdf"
+   "notes": "Ubiquitous entry-level monitor. Yamaha brochure via search summary: 285 H x 170 W x 222 D mm, ~5.3 kg; XLR + TRS in; 45 W LF + 25 W HF. Rectangular box: confirm curved-cabinet fit (spike). Source: https://jp.yamaha.com/files/download/other_assets/4/322334/HS_Series.pdf",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "behringer-ha400",
@@ -665,7 +787,11 @@
     "https://manuals.plus/m/3668209bc356648263b7a9b53f0eec8c6a088eb7559a2a63e502d3e345f668bb",
     "https://www.ldlc.com/en/product/PB00747881.html"
    ],
-   "notes": "Demand: 4 rooms, 3 scenarios. Manual (manuals.plus, M-host) gives about 47x57x104 mm / 0.37 kg but no axis order, so dims are left blank; KB W/H/D also parsable. Discontinued per a UK retailer. Demand: 4/4 room placements/rooms, 3 TEK Brain scenarios. Source: https://manuals.plus/m/3668209bc356648263b7a9b53f0eec8c6a088eb7559a2a63e502d3e345f668bb"
+   "notes": "Demand: 4 rooms, 3 scenarios. Manual (manuals.plus, M-host) gives about 47x57x104 mm / 0.37 kg but no axis order, so dims are left blank; KB W/H/D also parsable. Discontinued per a UK retailer. Demand: 4/4 room placements/rooms, 3 TEK Brain scenarios. Source: https://manuals.plus/m/3668209bc356648263b7a9b53f0eec8c6a088eb7559a2a63e502d3e345f668bb",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "countryman-type-85",
@@ -681,7 +807,7 @@
    "weightKg": 0.52,
    "portsSummary": "3 modelled (3 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 2,
    "wave": 1,
@@ -689,7 +815,12 @@
     "https://countryman.com/product/type-85-direct-box/",
     "https://countryman.com/wp-content/uploads/2017/07/type_85_di_box_datasheet.pdf"
    ],
-   "notes": "Countryman page [M]. Connectors, switches and power not retrieved. Axis order assumed. In Emerson and USC inventories. Source: https://countryman.com/product/type-85-direct-box/"
+   "notes": "Countryman page [M]. Connectors, switches and power not retrieved. Axis order assumed. In Emerson and USC inventories. Source: https://countryman.com/product/type-85-direct-box/",
+   "traits": [
+    "active",
+    "battery"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "dbx-driverack-pa2",
@@ -712,7 +843,12 @@
    "sources": [
     "https://www.dbxpro.com/en/products/driverack-pa2"
    ],
-   "notes": "Manufacturer page [M]; dims normalised from 44 H x 483 W x 146 D. Classic student speaker processor (pair with DCX2496). Source: https://www.dbxpro.com/en/products/driverack-pa2"
+   "notes": "Manufacturer page [M]; dims normalised from 44 H x 483 W x 146 D. Classic student speaker processor (pair with DCX2496). Source: https://www.dbxpro.com/en/products/driverack-pa2",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "mutec-mc-3-plus",
@@ -728,7 +864,11 @@
    "tier": 2,
    "wave": 1,
    "sources": [],
-   "notes": "KB first-promotion #8 (word clock, bnc + wordclock). No data in notes."
+   "notes": "KB first-promotion #8 (word clock, bnc + wordclock). No data in notes.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "presonus-hp4",
@@ -750,7 +890,11 @@
    "sources": [
     "https://www.presonus.com/products/hp4-4-channel-headphone-amplifiers"
    ],
-   "notes": "Manufacturer page [M]: 44.45 H x 139.7 W x 139.7 D (1/3 rack). Listed weight 5 lb looks anomalous, left blank. Supply: +12 V DC (French page says AC 16 V). Demand: 2 TEK Brain scenarios. Source: https://www.presonus.com/products/hp4-4-channel-headphone-amplifiers"
+   "notes": "Manufacturer page [M]: 44.45 H x 139.7 W x 139.7 D (1/3 rack). Listed weight 5 lb looks anomalous, left blank. Supply: +12 V DC (French page says AC 16 V). Demand: 2 TEK Brain scenarios. Source: https://www.presonus.com/products/hp4-4-channel-headphone-amplifiers",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "samson-s-patch-plus",
@@ -766,7 +910,12 @@
    "tier": 2,
    "wave": 1,
    "sources": [],
-   "notes": "KB first-promotion #9. Switchcraft 9625 is the verified precedent. No data in notes."
+   "notes": "KB first-promotion #9. Switchcraft 9625 is the verified precedent. No data in notes.",
+   "traits": [
+    "passive",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-ew-100-g4",
@@ -785,7 +934,12 @@
    "sources": [
     "https://docs.cloud.sennheiser.com/en-us/ew-g4/specifications-em100g4.html"
    ],
-   "notes": "Manufacturer docs [M], values given as \"about\": receiver ~190x212x43 mm (axis order unlabelled), ~980 g. Bêta record bundles receiver + SKM/SK transmitters (SKM 100 G4 ~50 dia x 265 mm ~450 g; SK 100 G4 ~82x64x24 ~160 g): split them. Dims left blank (order not stated). Demand: 2/2 room placements/rooms. Source: https://docs.cloud.sennheiser.com/en-us/ew-g4/specifications-em100g4.html"
+   "notes": "Manufacturer docs [M], values given as \"about\": receiver ~190x212x43 mm (axis order unlabelled), ~980 g. Bêta record bundles receiver + SKM/SK transmitters (SKM 100 G4 ~50 dia x 265 mm ~450 g; SK 100 G4 ~82x64x24 ~160 g): split them. Dims left blank (order not stated). Demand: 2/2 room placements/rooms. Source: https://docs.cloud.sennheiser.com/en-us/ew-g4/specifications-em100g4.html",
+   "traits": [
+    "receiver",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "apple-mac-studio",
@@ -808,7 +962,11 @@
    "sources": [
     "https://www.apple.com/mac-studio/specs/"
    ],
-   "notes": "Apple page [M]: 197x197x95 mm, 2.7 kg (M5 Max) / 3.6 kg (Ultra), silver aluminium. Source: https://www.apple.com/mac-studio/specs/"
+   "notes": "Apple page [M]: 197x197x95 mm, 2.7 kg (M5 Max) / 3.6 kg (Ultra), silver aluminium. Source: https://www.apple.com/mac-studio/specs/",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-ada8200",
@@ -831,7 +989,11 @@
    "sources": [
     "https://www.fullcompass.com/common/files/19008-ULTRAGAINDIGITALADA8200Brochure.pdf"
    ],
-   "notes": "Rank 25, patch-rich 8-ch pre + ADAT. Brochure (M-host): 482.6x217x44.5 mm, 2.1 kg. Source: https://www.fullcompass.com/common/files/19008-ULTRAGAINDIGITALADA8200Brochure.pdf"
+   "notes": "Rank 25, patch-rich 8-ch pre + ADAT. Brochure (M-host): 482.6x217x44.5 mm, 2.1 kg. Source: https://www.fullcompass.com/common/files/19008-ULTRAGAINDIGITALADA8200Brochure.pdf",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-dcx2496",
@@ -855,7 +1017,12 @@
     "https://m.thomann.de/gb/3DView_AR_162451.html",
     "https://manualmachine.com/behringer/dcx2496/1942632-specification-sheet"
    ],
-   "notes": "Dealer: 44.5x482.6x217 mm (H x W x D, 1U), ~3 kg (retailer 2-3 kg); 3 in, 6 out, AES/EBU. Not the DCX2496LE. Source: https://m.thomann.de/gb/3DView_AR_162451.html"
+   "notes": "Dealer: 44.5x482.6x217 mm (H x W x D, 1U), ~3 kg (retailer 2-3 kg); 3 in, 6 out, AES/EBU. Not the DCX2496LE. Source: https://m.thomann.de/gb/3DView_AR_162451.html",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "dbx-286s",
@@ -878,7 +1045,11 @@
    "sources": [
     "https://files.hdtvsupply.com/dbx-dbx286sv-datasheet.pdf"
    ],
-   "notes": "Rank 24 (podcast/radio voice processor). Datasheet hosted by a dealer (M-host): 485x146x44.5 mm, 2.04 kg, 15 W. Source: https://files.hdtvsupply.com/dbx-dbx286sv-datasheet.pdf"
+   "notes": "Rank 24 (podcast/radio voice processor). Datasheet hosted by a dealer (M-host): 485x146x44.5 mm, 2.04 kg, 15 W. Source: https://files.hdtvsupply.com/dbx-dbx286sv-datasheet.pdf",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "jbl-305p-mkii",
@@ -894,7 +1065,7 @@
    "weightKg": 4.73,
    "portsSummary": "",
    "family": "curved-cabinet",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 2,
    "wave": 1,
@@ -902,7 +1073,11 @@
     "https://global.jbl.com/studio-monitors/305PMKII.html",
     "https://jblpro.com/en-US/products/305p-mkii"
    ],
-   "notes": "JBL global spec page: 298 H x 185 W x 231 D mm, 4.73 kg. JBL US page prints depth 9.9 in (CONFLICT with 231 mm = 9.1 in). Connectors not confirmed (XLR + TRS is an unverified estimate). Source: https://global.jbl.com/studio-monitors/305PMKII.html"
+   "notes": "JBL global spec page: 298 H x 185 W x 231 D mm, 4.73 kg. JBL US page prints depth 9.9 in (CONFLICT with 231 mm = 9.1 in). Connectors not confirmed (XLR + TRS is an unverified estimate). Source: https://global.jbl.com/studio-monitors/305PMKII.html",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "conflict"
   },
   {
    "id": "k-m-210-6",
@@ -921,7 +1096,11 @@
    "sources": [
     "https://www.k-m.de/en/products/microphone-stands/floor-stands/microphone-stands-with-boom/210-6-microphone-stand-black"
    ],
-   "notes": "Datasheet [M]: height 925-1630, boom 805, folded 105x85x960 mm, 3.04 kg, 3/8in; zinc die-cast base. Source: https://www.k-m.de/en/products/microphone-stands/floor-stands/microphone-stands-with-boom/210-6-microphone-stand-black"
+   "notes": "Datasheet [M]: height 925-1630, boom 805, folded 105x85x960 mm, 3.04 kg, 3/8in; zinc die-cast base. Source: https://www.k-m.de/en/products/microphone-stands/floor-stands/microphone-stands-with-boom/210-6-microphone-stand-black",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "k-m-232",
@@ -944,7 +1123,11 @@
    "sources": [
     "https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black"
    ],
-   "notes": "Round cast-iron base 130 mm dia, height 170 mm, 1.34 kg, 3/8in (US 5/8in). Pure lathe shape. Source: https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black"
+   "notes": "Round cast-iron base 130 mm dia, height 170 mm, 1.34 kg, 3/8in (US 5/8in). Pure lathe shape. Source: https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "k-m-259",
@@ -963,7 +1146,11 @@
    "sources": [
     "https://www.k-m.de/en/products/microphone-stands/floor-stands/special-stands-with-boom/259-microphone-stand-black"
    ],
-   "notes": "Datasheet [M]: height 425-645, boom 435-745, folded 115x85x580 mm, 2.08 kg (2023 catalogue 2.2 kg for 25500-300-55). Kick/low boom. Source: https://www.k-m.de/en/products/microphone-stands/floor-stands/special-stands-with-boom/259-microphone-stand-black"
+   "notes": "Datasheet [M]: height 425-645, boom 435-745, folded 115x85x580 mm, 2.08 kg (2023 catalogue 2.2 kg for 25500-300-55). Kick/low boom. Source: https://www.k-m.de/en/products/microphone-stands/floor-stands/special-stands-with-boom/259-microphone-stand-black",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-km-184",
@@ -986,7 +1173,12 @@
    "sources": [
     "https://www.neumann.com/en-us/products/microphones/km-184-series-180"
    ],
-   "notes": "4 room placements. Manufacturer page [M]: 22 dia x 107 mm (KM 184 A nx page: 108), ~80 g. Connector, powering, finish not retrieved. Source: https://www.neumann.com/en-us/products/microphones/km-184-series-180"
+   "notes": "4 room placements. Manufacturer page [M]: 22 dia x 107 mm (KM 184 A nx page: 108), ~80 g. Connector, powering, finish not retrieved. Source: https://www.neumann.com/en-us/products/microphones/km-184-series-180",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-tlm-103",
@@ -1009,7 +1201,12 @@
    "sources": [
     "https://www.neumann.com/en-en/products/microphones/tlm-103/"
    ],
-   "notes": "Rank 13. Manufacturer page [M]: 60 dia x 132 mm, ~450 g, XLR-3 female, P48 3 mA, no pad/filter. Source: https://www.neumann.com/en-en/products/microphones/tlm-103/"
+   "notes": "Rank 13. Manufacturer page [M]: 60 dia x 132 mm, ~450 g, XLR-3 female, P48 3 mA, no pad/filter. Source: https://www.neumann.com/en-en/products/microphones/tlm-103/",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-e-835",
@@ -1032,7 +1229,12 @@
    "sources": [
     "https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf"
    ],
-   "notes": "Product spec [M]: 48 dia x 180 mm, ~330 g (a multipack page says 346 g). Cardioid handheld. Source: https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf"
+   "notes": "Product spec [M]: 48 dia x 180 mm, ~330 g (a multipack page says 346 g). Cardioid handheld. Source: https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-mkh-416",
@@ -1056,7 +1258,12 @@
     "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
     "https://www.sennheiser.com/en-us/catalog/products/microphones/mkh-416/mkh-416-001511"
    ],
-   "notes": "Broadcast/film shotgun standard (rank 21); 3 room placements. Spec page [M]: 19 dia x 250 mm, 175 g, 48 V. Source: https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html"
+   "notes": "Broadcast/film shotgun standard (rank 21); 3 room placements. Spec page [M]: 19 dia x 250 mm, 175 g, 48 V. Source: https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "soundcraft-ui24r",
@@ -1080,7 +1287,11 @@
     "https://www.soundcraft.com/en/products/ui24r",
     "https://thomannmusic.com/soundcraft_ui24.htm"
    ],
-   "notes": "Rank 14. Soundcraft page [M] (4U, inputs), dims from a dealer: 482.6x165.1x177.8 mm, ~5.1 kg. Browser/Wi-Fi control, no faders. Source: https://www.soundcraft.com/en/products/ui24r"
+   "notes": "Rank 14. Soundcraft page [M] (4U, inputs), dims from a dealer: 482.6x165.1x177.8 mm, ~5.1 kg. Browser/Wi-Fi control, no faders. Source: https://www.soundcraft.com/en/products/ui24r",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ua-apollo-twin-x",
@@ -1103,7 +1314,11 @@
    "sources": [
     "https://www.bhphotovideo.com/c/product/1780895-REG/universal_audio_apltwxdu_he_apollo_twin_x_duo.html"
    ],
-   "notes": "Rank 20. Dealer (B&H): 160x157x66 mm, 1.0-1.1 kg; connectors not retrieved. Source: https://www.bhphotovideo.com/c/product/1780895-REG/universal_audio_apltwxdu_he_apollo_twin_x_duo.html"
+   "notes": "Rank 20. Dealer (B&H): 160x157x66 mm, 1.0-1.1 kg; connectors not retrieved. Source: https://www.bhphotovideo.com/c/product/1780895-REG/universal_audio_apltwxdu_he_apollo_twin_x_duo.html",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "allen-heath-sq-6",
@@ -1119,7 +1334,11 @@
    "tier": 1,
    "wave": 2,
    "sources": [],
-   "notes": "KB first-promotion #7 (school desks). 1 room, 2 scenarios. SQ-5 sibling: 440x514.9x198 mm, 10.5 kg (A&H weights sheet, figures via search because the fetch got 403); SQ-6 sheet still needed. Demand: 1/1 room placements/rooms, 2 TEK Brain scenarios."
+   "notes": "KB first-promotion #7 (school desks). 1 room, 2 scenarios. SQ-5 sibling: 440x514.9x198 mm, 10.5 kg (A&H weights sheet, figures via search because the fetch got 403); SQ-6 sheet still needed. Demand: 1/1 room placements/rooms, 2 TEK Brain scenarios.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-x32",
@@ -1136,11 +1355,13 @@
    "wave": 2,
    "sources": [
     "https://www.thomann.co.uk/behringer_x_32.htm",
-    "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
-    "https://www.markertek.com/product/m32live/midas-m32-live-digital-console-for-live-studio-40-input-channels-32-midas-pro-mic-preamps-25-mix-buses",
     "https://global.channelonline.com/acme/ccs/Products/overview/M025221227"
    ],
-   "notes": "CONFLICT: 900x528x200 mm vs 900x550x230 mm (two dealers) vs Midas M32 sibling 891x612x256 mm, 25 kg (manufacturer sheet). Dims left blank until a photo check. KB status \"not found\", secondary sources only. I/O inferred from M32 (E). Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios. Source: https://www.thomann.co.uk/behringer_x_32.htm"
+   "notes": "CONFLICT: 900x528x200 mm vs 900x550x230 mm (two dealers) vs Midas M32 sibling 891x612x256 mm, 25 kg (manufacturer sheet). Dims left blank until a photo check. KB status \"not found\", secondary sources only. I/O inferred from M32 (E). Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios. Source: https://www.thomann.co.uk/behringer_x_32.htm Sibling reference only (a different product, NOT a source of this size): Midas M32 data sheet https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "crown-xls-2502",
@@ -1156,7 +1377,12 @@
    "tier": 1,
    "wave": 2,
    "sources": [],
-   "notes": "KB first-promotion #2 with d&b Y10P (first speakON / speaker-level chain). No dims in notes; the XTi 4002 (482.6x311.2x88.9 mm) is a different product, do not reuse. Needs amp load/impedance schema fields. v2 refuses front handles plus front controls (wait for v3b). Demand: 1/1 room placements/rooms."
+   "notes": "KB first-promotion #2 with d&b Y10P (first speakON / speaker-level chain). No dims in notes; the XTi 4002 (482.6x311.2x88.9 mm) is a different product, do not reuse. Needs amp load/impedance schema fields. v2 refuses front handles plus front controls (wait for v3b). Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "genelec-8341a",
@@ -1174,7 +1400,11 @@
    "sources": [
     "https://www.genelec.com/8351"
    ],
-   "notes": "10 placements in 2 rooms, 3 scenarios. Notes cover the 8351B (433x287x278 mm, 14.3 kg, via search excerpt), a bigger sibling: do not reuse. Genelec 8030C is the verified precedent. Demand: 10/2 room placements/rooms, 3 TEK Brain scenarios. Source: https://www.genelec.com/8351"
+   "notes": "10 placements in 2 rooms, 3 scenarios. Notes cover the 8351B (433x287x278 mm, 14.3 kg, via search excerpt), a bigger sibling: do not reuse. Genelec 8030C is the verified precedent. Demand: 10/2 room placements/rooms, 3 TEK Brain scenarios. Source: https://www.genelec.com/8351",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "mackie-1604vlz4",
@@ -1189,11 +1419,12 @@
    "sourceGrade": "missing",
    "tier": 1,
    "wave": 2,
-   "sources": [
-    "https://mackie.com/en/blog/all/SAE_INSTITUTE_1604VLZ4_ANALOG_SIMULATOR.html",
-    "https://www.musicconnection.com/mackie-launches-free-mixer-simulator/"
+   "sources": [],
+   "notes": "SAE built a free simulator around it (cables note). Not in the notes: only sibling 1202VLZ4 (303x272x75 mm, 3.0 kg, dealer/manual summary). Needs a datasheet pass. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "desk"
    ],
-   "notes": "SAE built a free simulator around it (cables note). Not in the notes: only sibling 1202VLZ4 (303x272x75 mm, 3.0 kg, dealer/manual summary). Needs a datasheet pass. Demand: 1/1 room placements/rooms."
+   "sizeConfidence": "ok"
   },
   {
    "id": "telos-hx2",
@@ -1209,7 +1440,12 @@
    "tier": 1,
    "wave": 2,
    "sources": [],
-   "notes": "KB first-promotion #4 (phone mix-minus, extends R7). 3 rooms, 2 scenarios. Telos Hx/VX not researched in notes (only Telos VX docs and JK Audio Broadcast Host). Needs mix-minus flags. Demand: 3/3 room placements/rooms, 2 TEK Brain scenarios."
+   "notes": "KB first-promotion #4 (phone mix-minus, extends R7). 3 rooms, 2 scenarios. Telos Hx/VX not researched in notes (only Telos VX docs and JK Audio Broadcast Host). Needs mix-minus flags. Demand: 3/3 room placements/rooms, 2 TEK Brain scenarios.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "akg-c414-xlii",
@@ -1233,7 +1469,12 @@
     "https://www.akg.com/microphones/condenser-microphones/C414+XLII.html",
     "https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw4bf1cc65/pdfs/AKG_CutSheet_C414&C414XLII_072516.pdf"
    ],
-   "notes": "Rank 3; best multi-switch teaching mic (9 patterns, 3 pads, 3 HPFs, overload LED, 48 V). AKG page [M]: 50 W x 38 D x 160 H, 300 g. Rooms reference akg-c414-xls (3 placements): XLS vs XLII naming mismatch to settle. Rectangular section needs revolve-v2 oval. Source: https://www.akg.com/microphones/condenser-microphones/C414+XLII.html"
+   "notes": "Rank 3; best multi-switch teaching mic (9 patterns, 3 pads, 3 HPFs, overload LED, 48 V). AKG page [M]: 50 W x 38 D x 160 H, 300 g. Rooms reference akg-c414-xls (3 placements): XLS vs XLII naming mismatch to settle. Rectangular section needs revolve-v2 oval. Source: https://www.akg.com/microphones/condenser-microphones/C414+XLII.html",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "allen-heath-sq-5",
@@ -1249,7 +1490,7 @@
    "weightKg": 10.5,
    "portsSummary": "16 XLR local mic/line, 3 stereo in, XLR talkback, 12 XLR + 2 TRS out, phones, USB-B 32x32, USB-A, 1 I/O port",
    "family": "console-wedge-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 1,
    "wave": 2,
@@ -1257,7 +1498,11 @@
     "https://www.allen-heath.com/content/uploads/2023/05/Weights-and-Measures-SQ-5.pdf",
     "https://www.sonovente.com/en-gb/allen-heath-sq-5-p59985.html"
    ],
-   "notes": "Rank 5; in Toronto, Chester, Stanford lists. A&H weights sheet (fetch got 403, figures via search): 440x514.9x198 mm, 10.5 kg. CONFLICT 12 XLR + 2 TRS outputs vs 10 XLR + 2 TRS (dealers). Source: https://www.allen-heath.com/content/uploads/2023/05/Weights-and-Measures-SQ-5.pdf"
+   "notes": "Rank 5; in Toronto, Chester, Stanford lists. A&H weights sheet (fetch got 403, figures via search): 440x514.9x198 mm, 10.5 kg. CONFLICT 12 XLR + 2 TRS outputs vs 10 XLR + 2 TRS (dealers). Source: https://www.allen-heath.com/content/uploads/2023/05/Weights-and-Measures-SQ-5.pdf",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "api-512c",
@@ -1279,11 +1524,13 @@
    "wave": 2,
    "sources": [
     "https://www.economik.com/products/512c",
-    "https://apiaudio.com/product/512c-mic-pre/",
-    "https://www.bakersfieldcollege.edu/academics/pathways/ach/music/commercial-music-gear-list.html",
-    "https://college.berklee.edu/node/2435451"
+    "https://apiaudio.com/product/512c-mic-pre/"
    ],
-   "notes": "Rank 22; Bakersfield and Berklee lists. API page [M] + dealer dims: 38x178x133 mm (older manual 6 in deep), 0.64 kg. 500-series module: needs a lunchbox host (not researched). Source: https://www.economik.com/products/512c (dims, dealer); product page https://apiaudio.com/product/512c-mic-pre/"
+   "notes": "Rank 22; Bakersfield and Berklee lists. API page [M] + dealer dims: 38x178x133 mm (older manual 6 in deep), 0.64 kg. 500-series module: needs a lunchbox host (not researched). Source: https://www.economik.com/products/512c (dims, dealer); product page https://apiaudio.com/product/512c-mic-pre/",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-x32-compact",
@@ -1307,7 +1554,11 @@
     "https://www.manualslib.com/manual/722557/Behringer-X32.html?page=25",
     "https://www.thomann.de/ie/behringer_x_32_compact.htm"
    ],
-   "notes": "Rank 3 (X32 family). Manual (manualslib, M-host; table scrambled by extraction): 625x510x215 mm, 15.4 kg (dealer 631x512x213, 15.5 kg). 16 XLR mic, 8 XLR out, 17 motorised faders. Source: https://www.manualslib.com/manual/722557/Behringer-X32.html?page=25"
+   "notes": "Rank 3 (X32 family). Manual (manualslib, M-host; table scrambled by extraction): 625x510x215 mm, 15.4 kg (dealer 631x512x213, 15.5 kg). 16 XLR mic, 8 XLR out, 17 motorised faders. Source: https://www.manualslib.com/manual/722557/Behringer-X32.html?page=25",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-xr18",
@@ -1323,7 +1574,7 @@
    "weightKg": 3.2,
    "portsSummary": "16 XLR/TRS combo mic, 2 line/aux in, 2 XLR main out, USB-B, Ethernet, MIDI, Ultranet; Wi-Fi",
    "family": "rack-box-v2",
-   "dataQuality": "dealer",
+   "dataQuality": "estimate",
    "sourceGrade": "dealer",
    "tier": 1,
    "wave": 2,
@@ -1331,7 +1582,11 @@
     "https://www.thomann.co.uk/behringer_x_air_xr18.htm",
     "https://www.woodbrass.com/es-es/images/woodbrass/BEHRINGER+XR+18.PDF"
    ],
-   "notes": "Rank 4. Dealer: 333x150x140 mm (3U with side panels and front brackets; 311 mm wide without panels; order inferred from 3U), 3.2 kg. CONFLICT: line/aux input TRS vs RCA between dealers; aux output count unverified. Source: https://www.thomann.co.uk/behringer_x_air_xr18.htm"
+   "notes": "Rank 4. Dealer: 333x150x140 mm (3U with side panels and front brackets; 311 mm wide without panels; order inferred from 3U), 3.2 kg. CONFLICT: line/aux input TRS vs RCA between dealers; aux output count unverified. Source: https://www.thomann.co.uk/behringer_x_air_xr18.htm",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "cisco-sg350-managed-switch",
@@ -1349,7 +1604,11 @@
    "sources": [
     "https://service.shure.com/articles/en_US/Knowledge/configuring-sg350-switch-for-shure-devices-and-dante"
    ],
-   "notes": "Named as known-good for Dante by Shure and Sonifex; Dante L1-L3 certification is a curricula pillar. Physical dims NOT retrieved; Netgear M4250 AV line is the alternative. Source: https://service.shure.com/articles/en_US/Knowledge/configuring-sg350-switch-for-shure-devices-and-dante"
+   "notes": "Named as known-good for Dante by Shure and Sonifex; Dante L1-L3 certification is a curricula pillar. Physical dims NOT retrieved; Netgear M4250 AV line is the alternative. Source: https://service.shure.com/articles/en_US/Knowledge/configuring-sg350-switch-for-shure-devices-and-dante",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "presonus-monitor-station-v2",
@@ -1368,7 +1627,12 @@
     "https://www.prosoundweb.com/presonus-unveils-new-monitor-station-v2-desktop-studio-monitor-source-controller/",
     "https://www.zzounds.com/pagearea--61/item--PRSMONSTATV2"
    ],
-   "notes": "Curricula tier 1 monitor controller (talkback/cue). Dims not retrieved; 4 TRS headphone outs, 3 speaker sets, built-in talkback mic. Source: https://www.prosoundweb.com/presonus-unveils-new-monitor-station-v2-desktop-studio-monitor-source-controller/"
+   "notes": "Curricula tier 1 monitor controller (talkback/cue). Dims not retrieved; 4 TRS headphone outs, 3 speaker sets, built-in talkback mic. Source: https://www.prosoundweb.com/presonus-unveils-new-monitor-station-v2-desktop-studio-monitor-source-controller/",
+   "traits": [
+    "monitor-controller",
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-dm3",
@@ -1384,14 +1648,18 @@
    "weightKg": 6.5,
    "portsSummary": "",
    "family": "console-wedge-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 1,
    "wave": 2,
    "sources": [
     "https://europe.yamaha.com/en/audio/portable-pa/products/mixers/dm3/"
    ],
-   "notes": "Rank 7; in the Chester list. Yamaha Europe (via search): printed 320x140x455 (W x H x D), re-ordered to 320x455x140 mm, 6.5 kg. I/O not retrieved. Source: https://europe.yamaha.com/en/audio/portable-pa/products/mixers/dm3/"
+   "notes": "Rank 7; in the Chester list. Yamaha Europe (via search): printed 320x140x455 (W x H x D), re-ordered to 320x455x140 mm, 6.5 kg. I/O not retrieved. Source: https://europe.yamaha.com/en/audio/portable-pa/products/mixers/dm3/",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "yamaha-mg16xu",
@@ -1415,7 +1683,11 @@
     "https://norge.thomann.de/yamaha_mg16xu.htm",
     "https://fr.yamaha.com/files/download/other_assets/4/1522684/mg16x_en_ts_a0.pdf"
    ],
-   "notes": "Rank 8 (default analog desk with USB). Dealer (Thomann): 444x500x130 mm, 6.8 kg; Yamaha PDF 403. Sibling of the Bêta MG10XU. Source: https://norge.thomann.de/yamaha_mg16xu.htm"
+   "notes": "Rank 8 (default analog desk with USB). Dealer (Thomann): 444x500x130 mm, 6.8 kg; Yamaha PDF 403. Sibling of the Bêta MG10XU. Source: https://norge.thomann.de/yamaha_mg16xu.htm",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-tf1",
@@ -1431,14 +1703,19 @@
    "weightKg": 13.5,
    "portsSummary": "16 combo in, 2 stereo RCA, 16 XLR omni out, USB 2.0, 1 expansion slot",
    "family": "console-wedge-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 1,
    "wave": 2,
    "sources": [
-    "https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24"
+    "https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24",
+    "https://www.la-bs.com/Objets/TF1_dt.pdf"
    ],
-   "notes": "Rank 6. Manual (M-host via search): 510x599x225 mm, 13.5 kg; 16 combo in, 2 RCA, 16 XLR omni out, USB 34x34, 1 slot (NY64-D). TF3 716x599x225, 17 kg. Source: https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24"
+   "notes": "Rank 6. Manual (M-host via search): 510x599x225 mm, 13.5 kg; 16 combo in, 2 RCA, 16 XLR omni out, USB 34x34, 1 slot (NY64-D). TF3 716x599x225, 17 kg. Source: https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "zoom-h6-essential",
@@ -1459,10 +1736,13 @@
    "tier": 1,
    "wave": 2,
    "sources": [
-    "https://www.thomann.co.uk/zoom_h6essential.htm",
-    "https://www.musicradar.com/music-tech/recording/zoom-h6-essential-review"
+    "https://www.thomann.co.uk/zoom_h6essential.htm"
    ],
-   "notes": "Field-recorder tier 1. Thomann: 78.1 W x 160.1 D x 42.8 H mm, 381 g with batteries (other listings 242-450 g: CONFLICT). Source: https://www.thomann.co.uk/zoom_h6essential.htm"
+   "notes": "Field-recorder tier 1. Thomann: 78.1 W x 160.1 D x 42.8 H mm, 381 g with batteries (other listings 242-450 g: CONFLICT). Source: https://www.thomann.co.uk/zoom_h6essential.htm",
+   "traits": [
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "audinate-dante-avio-analog-input-2ch",
@@ -1480,7 +1760,9 @@
    "sources": [
     "https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf"
    ],
-   "notes": "2 rooms. The notes give 150.7x53.8x38.1 mm, 145 g (Audinate sales guide [M]) for the newer AVIO Install SKUs (AVIO-A-2IN-EB...), a different part number, so it is not reused here. Demand: 2/2 room placements/rooms. Source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf"
+   "notes": "2 rooms. The notes give 150.7x53.8x38.1 mm, 145 g (Audinate sales guide [M]) for the newer AVIO Install SKUs (AVIO-A-2IN-EB...), a different part number, so it is not reused here. Demand: 2/2 room placements/rooms. Source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
+   "traits": [],
+   "sizeConfidence": "ok"
   },
   {
    "id": "clear-com-ms-702",
@@ -1496,7 +1778,11 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "KB first-promotion #10; needs xlr4 + intercom signal and RS-701 (which is in the skipped list). KB W/H/D parsable, values not in notes. Demand: 1/1 room placements/rooms."
+   "notes": "KB first-promotion #10; needs xlr4 + intercom signal and RS-701 (which is in the skipped list). KB W/H/D parsable, values not in notes. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "db-audiotechnik-d80",
@@ -1512,7 +1798,12 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "1 room, 2 scenarios. No data in notes. Demand: 1/1 room placements/rooms, 2 TEK Brain scenarios."
+   "notes": "1 room, 2 scenarios. No data in notes. Demand: 1/1 room placements/rooms, 2 TEK Brain scenarios.",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "dbx-166xs",
@@ -1528,7 +1819,12 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "Compressor/gate; teaches dynamics (curricula tier 1). Notes cover dbx 160A and 286s, not this unit."
+   "notes": "Compressor/gate; teaches dynamics (curricula tier 1). Notes cover dbx 160A and 286s, not this unit.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "dbx-231s",
@@ -1544,7 +1840,12 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "1 scenario. Graphic EQ; Klark Teknik DN360 (133x482x205, H x W x D) is the only EQ researched. Demand: 1 TEK Brain scenarios."
+   "notes": "1 scenario. Graphic EQ; Klark Teknik DN360 (133x482x205, H x W x D) is the only EQ researched. Demand: 1 TEK Brain scenarios.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-la12x",
@@ -1560,7 +1861,12 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "5 room placements, 2 scenarios. No data in notes; manual datasheet pass. Demand: 5/5 room placements/rooms, 2 TEK Brain scenarios."
+   "notes": "5 room placements, 2 scenarios. No data in notes; manual datasheet pass. Demand: 5/5 room placements/rooms, 2 TEK Brain scenarios.",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "radial-jcr",
@@ -1576,7 +1882,11 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "Reamp teaching (curricula tier 2). No data in notes."
+   "notes": "Reamp teaching (curricula tier 2). No data in notes.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "radial-jpc",
@@ -1592,7 +1902,12 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "1 scenario; 2 phantom-flag ports. No data in notes. Demand: 1 TEK Brain scenarios."
+   "notes": "1 scenario; 2 phantom-flag ports. No data in notes. Demand: 1 TEK Brain scenarios.",
+   "traits": [
+    "active",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "radial-js2",
@@ -1608,7 +1923,11 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "KB first-promotion #5. Needs isUnbalanced/pad semantics. No data in notes (JS3 is a different box)."
+   "notes": "KB first-promotion #5. Needs isUnbalanced/pad semantics. No data in notes (JS3 is a different box).",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rme-fireface-ufx-iii",
@@ -1626,7 +1945,11 @@
    "sources": [
     "https://www.adorama.com/rmufxp.html"
    ],
-   "notes": "2 scenarios. Notes cover the predecessor UFX+ only (440x210x44 mm, 483 incl. ears, depth up to 240, 3 kg, dealer; UFX+ listed discontinued): do not reuse for the UFX III. Demand: 2 TEK Brain scenarios. Source: https://www.adorama.com/rmufxp.html"
+   "notes": "2 scenarios. Notes cover the predecessor UFX+ only (440x210x44 mm, 483 incl. ears, depth up to 240, 3 kg, dealer; UFX+ listed discontinued): do not reuse for the UFX III. Demand: 2 TEK Brain scenarios. Source: https://www.adorama.com/rmufxp.html",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-ew-dx-em-2",
@@ -1644,7 +1967,12 @@
    "sources": [
     "https://docs.cloud.sennheiser.com/en-us/ew-d/ew-d/specifications-ew-d-em.html"
    ],
-   "notes": "1 scenario. Notes cover the EW-D EM (212x44x189 mm, ~1 kg), a different line. Demand: 2/2 room placements/rooms, 1 TEK Brain scenarios. Source: https://docs.cloud.sennheiser.com/en-us/ew-d/ew-d/specifications-ew-d-em.html"
+   "notes": "1 scenario. Notes cover the EW-D EM (212x44x189 mm, ~1 kg), a different line. Demand: 2/2 room placements/rooms, 1 TEK Brain scenarios. Source: https://docs.cloud.sennheiser.com/en-us/ew-d/ew-d/specifications-ew-d-em.html",
+   "traits": [
+    "receiver",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-mv7-plus",
@@ -1660,7 +1988,11 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "Podcaster persona (XLR + USB). Not researched; SM7B and PodMic are the researched podcast dynamics."
+   "notes": "Podcaster persona (XLR + USB). Not researched; SM7B and PodMic are the researched podcast dynamics.",
+   "traits": [
+    "dynamic"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-psm-900",
@@ -1677,10 +2009,14 @@
    "tier": 2,
    "wave": 2,
    "sources": [
-    "https://pubs.shure.com/view/guide/PSM900/en-US.pdf",
-    "https://pubs.shure.com/view/guide/PSM900-RA/en-US.pdf"
+    "https://pubs.shure.com/view/guide/PSM900/en-US.pdf"
    ],
-   "notes": "Shure guide [M], generation CONFLICT: P9T 42x197x177 mm (2014 guide: 166 deep), 850 g; P9RA 83x65x22 (2014: 99x66x23), 154 g. Dims left blank until the generation is fixed. 1 room, 2 scenarios. Demand: 1/1 room placements/rooms, 2 TEK Brain scenarios. Source: https://pubs.shure.com/view/guide/PSM900/en-US.pdf"
+   "notes": "Shure guide [M], generation CONFLICT: P9T 42x197x177 mm (2014 guide: 166 deep), 850 g; P9RA 83x65x22 (2014: 99x66x23), 154 g. Dims left blank until the generation is fixed. 1 room, 2 scenarios. Demand: 1/1 room placements/rooms, 2 TEK Brain scenarios. Source: https://pubs.shure.com/view/guide/PSM900/en-US.pdf",
+   "traits": [
+    "transmitter",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sonifex-rb-mm1",
@@ -1696,7 +2032,12 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "KB alternative for the mix-minus lesson. No data in notes."
+   "notes": "KB alternative for the mix-minus lesson. No data in notes.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ssl-the-bus-plus",
@@ -1712,7 +2053,12 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "1 room. Named in the speakers note as an unresearched slot. Demand: 1/1 room placements/rooms."
+   "notes": "1 room. Named in the speakers note as an unresearched slot. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "tascam-ss-cdr250n",
@@ -1728,7 +2074,11 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "1 room, 1 scenario; 14 ports. KB W/H/D parsable, values not in notes. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios."
+   "notes": "1 room, 1 scenario; 14 ports. KB W/H/D parsable, values not in notes. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "universal-audio-6176",
@@ -1744,7 +2094,12 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "Notes cover the LA-610 MkII (483x311x89 mm, dealer), a related but different unit."
+   "notes": "Notes cover the LA-610 MkII (483x311x89 mm, dealer), a related but different unit.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-mg10xu",
@@ -1760,7 +2115,11 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "1 room, 1 scenario. Sibling MG16XU is in the notes (444x500x130 mm, 6.8 kg, dealer) but is a different chassis. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios."
+   "notes": "1 room, 1 scenario. Sibling MG16XU is in the notes (444x500x130 mm, 6.8 kg, dealer) but is a different chassis. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-xmv8280-d",
@@ -1776,7 +2135,12 @@
    "tier": 2,
    "wave": 2,
    "sources": [],
-   "notes": "2 rooms, 2 scenarios. KB has labelled W/H/D (repo: asset:spec can parse it) but the values are not in the notes; manual pass. Demand: 2/2 room placements/rooms, 2 TEK Brain scenarios."
+   "notes": "2 rooms, 2 scenarios. KB has labelled W/H/D (repo: asset:spec can parse it) but the values are not in the notes; manual pass. Demand: 2/2 room placements/rooms, 2 TEK Brain scenarios.",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ams-neve-1073dpd",
@@ -1799,7 +2163,11 @@
    "sources": [
     "https://www.ams-neve.com/?p=1408"
    ],
-   "notes": "AMS Neve page [M]: 482x254x45 mm (1U), 5 kg. Source: https://www.ams-neve.com/?p=1408"
+   "notes": "AMS Neve page [M]: 482x254x45 mm (1U), 5 kg. Source: https://www.ams-neve.com/?p=1408",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ams-neve-1073lb",
@@ -1822,7 +2190,11 @@
    "sources": [
     "https://ams-neve.com/1073lb/"
    ],
-   "notes": "AMS Neve page [M]: 38x145x132 mm, 1.1 kg. Source: https://ams-neve.com/1073lb/"
+   "notes": "AMS Neve page [M]: 38x145x132 mm, 1.1 kg. Source: https://ams-neve.com/1073lb/",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "audinate-dante-avio-install",
@@ -1845,7 +2217,9 @@
    "sources": [
     "https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf"
    ],
-   "notes": "Audinate sales guide [M]: 150.7x53.8x38.1 mm, 145 g (Markertek 180 g). PoE or external power. Source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf"
+   "notes": "Audinate sales guide [M]: 150.7x53.8x38.1 mm, 145 g (Markertek 180 g). PoE or external power. Source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
+   "traits": [],
+   "sizeConfidence": "ok"
   },
   {
    "id": "avid-s1",
@@ -1868,7 +2242,11 @@
    "sources": [
     "https://www.adorama.com/av990074096.html"
    ],
-   "notes": "Adorama: 316x377 mm, 29 mm front to 103 mm rear (a true wedge profile), 1.9 kg; 8 motorised faders (E); chain up to four (+~312 mm each). Source: https://www.adorama.com/av990074096.html"
+   "notes": "Adorama: 316x377 mm, 29 mm front to 103 mm rear (a true wedge profile), 1.9 kg; 8 motorised faders (E); chain up to four (+~312 mm each). Source: https://www.adorama.com/av990074096.html",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-umc202hd",
@@ -1888,7 +2266,11 @@
     "https://www.behringer.com/en/products/0805-AAR",
     "https://www.bhphotovideo.com/c/product/1113600-REG/behringer_umc202hd_audiophile_2x2_24_bit_192_khz.html"
    ],
-   "notes": "B&H 17x12.4x4.6 cm, orientation (E): left blank; ~0.5 kg; 2 combo in, 2 TRS out, phones, USB-B. Source: https://www.behringer.com/en/products/0805-AAR"
+   "notes": "B&H 17x12.4x4.6 cm, orientation (E): left blank; ~0.5 kg; 2 combo in, 2 TRS out, phones, USB-B. Source: https://www.behringer.com/en/products/0805-AAR",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-xenyx-q1202usb",
@@ -1907,7 +2289,11 @@
    "sources": [
     "https://www.bhphotovideo.com/c/product/939338-REG/behringer_xenyx_q1202usb_12_input_2_bus.html/overview"
    ],
-   "notes": "Rank 11. B&H: about 250x248x50 mm, order ambiguous (E), left blank; ~1.5 kg; USB-B 2-in/2-out. Source: https://www.bhphotovideo.com/c/product/939338-REG/behringer_xenyx_q1202usb_12_input_2_bus.html/overview"
+   "notes": "Rank 11. B&H: about 250x248x50 mm, order ambiguous (E), left blank; ~1.5 kg; USB-B 2-in/2-out. Source: https://www.bhphotovideo.com/c/product/939338-REG/behringer_xenyx_q1202usb_12_input_2_bus.html/overview",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "crown-xti-4002",
@@ -1930,7 +2316,12 @@
    "sources": [
     "https://www.crownaudio.com/en/products/xti-4002"
    ],
-   "notes": "Crown page [M]: 88.9 H x 482.6 W x 311.2 D mm (2U), 8.4 kg; IEC 15 A; audio connectors not listed on the page read. Source: https://www.crownaudio.com/en/products/xti-4002"
+   "notes": "Crown page [M]: 88.9 H x 482.6 W x 311.2 D mm (2U), 8.4 kg; IEC 15 A; audio connectors not listed on the page read. Source: https://www.crownaudio.com/en/products/xti-4002",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "eaton-5p-1u-ups",
@@ -1948,7 +2339,11 @@
    "sources": [
     "https://www.eaton.com/us/en-us/skuPage.5P1000R.html"
    ],
-   "notes": "Tier 1-2 UPS. Dims and weight not extracted; 5P1000R: 1000 VA / 770 W, 5 outlets, true sine. Source: https://www.eaton.com/us/en-us/skuPage.5P1000R.html"
+   "notes": "Tier 1-2 UPS. Dims and weight not extracted; 5P1000R: 1000 VA / 770 W, 5 outlets, true sine. Source: https://www.eaton.com/us/en-us/skuPage.5P1000R.html",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "empirical-labs-distressor",
@@ -1971,7 +2366,12 @@
    "sources": [
     "https://www.zzounds.com/item--EMPEL8DIST"
    ],
-   "notes": "Retailer data only: 483x254x44 mm (1U), ~5.5 kg. Source: https://www.zzounds.com/item--EMPEL8DIST"
+   "notes": "Retailer data only: 483x254x44 mm (1U), ~5.5 kg. Source: https://www.zzounds.com/item--EMPEL8DIST",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "focusrite-clarett-plus-8pre",
@@ -1994,7 +2394,11 @@
    "sources": [
     "https://userguides.focusrite.com/hc/en-gb/articles/18577946999570-Clarett-8Pre-technical-specifications"
    ],
-   "notes": "Focusrite spec page [M]: 482.5x291x43.9 mm, 4.08 kg. Source: https://userguides.focusrite.com/hc/en-gb/articles/18577946999570-Clarett-8Pre-technical-specifications"
+   "notes": "Focusrite spec page [M]: 482.5x291x43.9 mm, 4.08 kg. Source: https://userguides.focusrite.com/hc/en-gb/articles/18577946999570-Clarett-8Pre-technical-specifications",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "genelec-8040b",
@@ -2018,7 +2422,11 @@
     "https://www.genelec.com/8040b",
     "https://assets.ctfassets.net/4zjnzn055a4v/r3fD1Y5Q2x94TjJUvhZFk/cd8f56d80ca1cfbb48cbd8357a26e1de/8040B_datasheet_2023.pdf"
    ],
-   "notes": "Genelec page [M]: 365 H (incl. Iso-Pod; 350 without) x 237 W x 223 D mm, 9.4 kg; 1 XLR in. Discontinued but common. Source: https://www.genelec.com/8040b"
+   "notes": "Genelec page [M]: 365 H (incl. Iso-Pod; 350 without) x 237 W x 223 D mm, 9.4 kg; 1 XLR in. Discontinued but common. Source: https://www.genelec.com/8040b",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "krk-rokit-5-g4",
@@ -2041,7 +2449,11 @@
    "sources": [
     "https://www.adorama.com/us1355768.html"
    ],
-   "notes": "Dealer only (Adorama): ~285x190x241 mm (H x W x D), 4.85 kg; KRK page 429. Marketplaces show nonsense dims. Source: https://www.adorama.com/us1355768.html"
+   "notes": "Dealer only (Adorama): ~285x190x241 mm (H x W x D), 4.85 kg; KRK page 429. Marketplaces show nonsense dims. Source: https://www.adorama.com/us1355768.html",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "mackie-big-knob-studio",
@@ -2061,7 +2473,12 @@
     "https://chucklevins.com/products/mackie-big-knob-studio-monitor-controller-and-interface-mint-open-box-1",
     "https://www.kirstein.de/en/Live-Studio/Studio/Studio-Monitoring/Monitoring-Controller/Mackie-Big-Knob-Studio-mhk.html"
    ],
-   "notes": "CONFLICT across sellers: 79x137x142 / 81x251x163 mm / 3.2x9.9x6.4 in. Dims left blank. Source: https://www.fullcompass.com/prod/525801-mackie-big-knob-studio-4x3-studio-monitor-controller-192khz-usb-i-o"
+   "notes": "CONFLICT across sellers: 79x137x142 / 81x251x163 mm / 3.2x9.9x6.4 in. Dims left blank. Source: https://www.fullcompass.com/prod/525801-mackie-big-knob-studio-4x3-studio-monitor-controller-192khz-usb-i-o",
+   "traits": [
+    "monitor-controller",
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "midas-m32",
@@ -2082,9 +2499,14 @@
    "tier": 2,
    "wave": 2,
    "sources": [
-    "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf"
+    "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
+    "https://www.markertek.com/product/m32live/midas-m32-live-digital-console-for-live-studio-40-input-channels-32-midas-pro-mic-preamps-25-mix-buses"
    ],
-   "notes": "Manufacturer data sheet [M], read via pdftotext: 891x612x256 mm, 25 kg; 32 XLR mic pre, 16 XLR out, 2 AES50, card slot, ULTRANET, USB-A top, USB-B and RJ45 rear (positions from the M32 table). X32 sibling. Source: https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf"
+   "notes": "Manufacturer data sheet [M], read via pdftotext: 891x612x256 mm, 25 kg; 32 XLR mic pre, 16 XLR out, 2 AES50, card slot, ULTRANET, USB-A top, USB-B and RJ45 rear (positions from the M32 table). X32 sibling. Source: https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "netgear-m4250-av-switch",
@@ -2102,7 +2524,11 @@
    "sources": [
     "https://www.netgear.com/se/business/wired/switches/fully-managed/m4250/"
    ],
-   "notes": "Dante/AES67 profiles; dims not retrieved. Source: https://www.netgear.com/se/business/wired/switches/fully-managed/m4250/"
+   "notes": "Dante/AES67 profiles; dims not retrieved. Source: https://www.netgear.com/se/business/wired/switches/fully-managed/m4250/",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "neutrik-nys-spp-l1",
@@ -2118,7 +2544,7 @@
    "weightKg": 1.25,
    "portsSummary": "2x24 front TRS jacks + rear solder/PCB points",
    "family": "rack-box-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 2,
    "wave": 2,
@@ -2126,7 +2552,12 @@
     "https://www.canford.de/ProductResources/resources/N/Neutrik/Patchbays/NEUTRIK%20NYS-SPP-L%20A-gauge%20jackfield%20specifications.pdf",
     "https://steinigke.de/en/mpn30226750-neutrik-nys-spp-l1-patchpanel.html"
    ],
-   "notes": "Neutrik sheet [M]: 482x64x44 mm (Markertek 71, ModularGrid 100 depth: CONFLICT), ~1.25 kg; 48 TRS points. Source: https://www.canford.de/ProductResources/resources/N/Neutrik/Patchbays/NEUTRIK%20NYS-SPP-L%20A-gauge%20jackfield%20specifications.pdf"
+   "notes": "Neutrik sheet [M]: 482x64x44 mm (Markertek 71, ModularGrid 100 depth: CONFLICT), ~1.25 kg; 48 TRS points. Source: https://www.canford.de/ProductResources/resources/N/Neutrik/Patchbays/NEUTRIK%20NYS-SPP-L%20A-gauge%20jackfield%20specifications.pdf",
+   "traits": [
+    "passive",
+    "rack"
+   ],
+   "sizeConfidence": "conflict"
   },
   {
    "id": "orban-optimod-6300",
@@ -2149,7 +2580,12 @@
     "https://www.orban.com/specifications-optimod6300",
     "https://static1.squarespace.com/static/58f8d954b8a79b4ccf726c3b/t/5d77b06aa69abd5acee8310c/1568125060297/6300+A3+brochure.pdf"
    ],
-   "notes": "Orban page [M]: 483x362x45 mm (1U). Net weight NOT found (shipping 8.2 kg, possibly copied from the AM9300 page); I/O not confirmed. Different product from the Bêta Omnia.11. Source: https://www.orban.com/specifications-optimod6300"
+   "notes": "Orban page [M]: 483x362x45 mm (1U). Net weight NOT found (shipping 8.2 kg, possibly copied from the AM9300 page); I/O not confirmed. Different product from the Bêta Omnia.11. Source: https://www.orban.com/specifications-optimod6300",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "qsc-k10-2",
@@ -2165,7 +2601,7 @@
    "weightKg": 14.5,
    "portsSummary": "",
    "family": "curved-cabinet",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 2,
    "wave": 2,
@@ -2173,7 +2609,11 @@
     "https://chucklevins.com/products/qsc-k10-2-10-inch-2000w-2-way-powered-loudspeaker",
     "https://www.qsc.com/index.php?id=12708"
    ],
-   "notes": "QSC page via search + Chuck Levin dealer: 519 H x 320 W x 300 D mm, 14.5 kg. Same family as the verified K12.2. Source: https://chucklevins.com/products/qsc-k10-2-10-inch-2000w-2-way-powered-loudspeaker"
+   "notes": "QSC page via search + Chuck Levin dealer: 519 H x 320 W x 300 D mm, 14.5 kg. Same family as the verified K12.2. Source: https://chucklevins.com/products/qsc-k10-2-10-inch-2000w-2-way-powered-loudspeaker",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "radial-js3",
@@ -2192,7 +2632,11 @@
    "sources": [
     "https://shop.solotech.com/products/radial-js3-passive-mic-splitter"
    ],
-   "notes": "FOH/monitor split lesson (curricula tier 1 live). Retailer (Solotech) 84x127x48 mm, 0.7 kg (axis order unclear; older guide 3.25x5x1.875 in, 2 lb: CONFLICT) so dims left blank. Jensen transformer, ground lifts. Source: https://shop.solotech.com/products/radial-js3-passive-mic-splitter"
+   "notes": "FOH/monitor split lesson (curricula tier 1 live). Retailer (Solotech) 84x127x48 mm, 0.7 kg (axis order unclear; older guide 3.25x5x1.875 in, 2 lb: CONFLICT) so dims left blank. Jensen transformer, ground lifts. Source: https://shop.solotech.com/products/radial-js3-passive-mic-splitter",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-podmic",
@@ -2215,7 +2659,12 @@
    "sources": [
     "https://edge.rode.com//pdf/products/108/PodMic_Datasheet_07_FA.pdf"
    ],
-   "notes": "Rank 19; podcast dynamic. Datasheet [M]: 172 length x 109 width x 62 height (swing mount included), 937 g. Body-only revolve; mount needs assembly. Source: https://edge.rode.com//pdf/products/108/PodMic_Datasheet_07_FA.pdf"
+   "notes": "Rank 19; podcast dynamic. Datasheet [M]: 172 length x 109 width x 62 height (swing mount included), 937 g. Body-only revolve; mount needs assembly. Source: https://edge.rode.com//pdf/products/108/PodMic_Datasheet_07_FA.pdf",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-rodecaster-duo",
@@ -2239,7 +2688,11 @@
     "https://edge.rode.com/pdf/products/1187/RODECaster_Duo_ds_V03.pdf",
     "https://www.thomann.co.uk/rode_rodecaster_duo.htm"
    ],
-   "notes": "Datasheet [M] (dealer-quoted): 235x225x76 mm, 1.131 kg; 2 combo in, 3 phones, USB-C. Source: https://edge.rode.com/pdf/products/1187/RODECaster_Duo_ds_V03.pdf"
+   "notes": "Datasheet [M] (dealer-quoted): 235x225x76 mm, 1.131 kg; 2 combo in, 3 phones, USB-C. Source: https://edge.rode.com/pdf/products/1187/RODECaster_Duo_ds_V03.pdf",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-e-609-silver",
@@ -2263,7 +2716,12 @@
     "https://www.sennheiser.com/globalassets/digizuite/41674-en-sp_1206_v1.0_e_609_silver_product_specification_en.pdf",
     "https://docs.cloud.sennheiser.com/en-us/evolution-wired/evolution-wired/specifications-e609.html"
    ],
-   "notes": "Rank 11 (guitar cab). Product spec [M]: 55x34x134 mm, 140 g. Flat-profile body: not round, so not revolve. Same body as e 906. Source: https://www.sennheiser.com/globalassets/digizuite/41674-en-sp_1206_v1.0_e_609_silver_product_specification_en.pdf"
+   "notes": "Rank 11 (guitar cab). Product spec [M]: 55x34x134 mm, 140 g. Flat-profile body: not round, so not revolve. Same body as e 906. Source: https://www.sennheiser.com/globalassets/digizuite/41674-en-sp_1206_v1.0_e_609_silver_product_specification_en.pdf",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-qlx-d-receiver",
@@ -2286,7 +2744,12 @@
    "sources": [
     "https://pubs.shure.com/view/guide/QLXD/en-US.pdf"
    ],
-   "notes": "Rank 25 with UA874/UA844+. QLX-D guide [M]: 41 H x 197 W x 151 D, 777 g. Source: https://pubs.shure.com/view/guide/QLXD/en-US.pdf"
+   "notes": "Rank 25 with UA874/UA844+. QLX-D guide [M]: 41 H x 197 W x 151 D, 777 g. Source: https://pubs.shure.com/view/guide/QLXD/en-US.pdf",
+   "traits": [
+    "receiver",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-slxd1-bodypack",
@@ -2309,7 +2772,13 @@
    "sources": [
     "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf"
    ],
-   "notes": "98x68x25.5 mm, 89 g, TA4M input (Shure spec sheet [M]); axis order as printed. Source: https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf"
+   "notes": "98x68x25.5 mm, 89 g, TA4M input (Shure spec sheet [M]); axis order as printed. Source: https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
+   "traits": [
+    "transmitter",
+    "bodypack",
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-sm81",
@@ -2329,7 +2798,12 @@
     "https://pubs.shure.com/view/guide/SM81/en-US.pdf",
     "https://www.shure.com/en-US/products/microphones/sm81"
    ],
-   "notes": "Rank 20. Body dimensions only in a drawing (a third-party sheet suggests ~212 long, ambiguous): left blank. 230 g; low-cut selector, 0/10 dB pad; phantom 12-48 V. Source: https://pubs.shure.com/view/guide/SM81/en-US.pdf"
+   "notes": "Rank 20. Body dimensions only in a drawing (a third-party sheet suggests ~212 long, ambiguous): left blank. 230 g; low-cut selector, 0/10 dB pad; phantom 12-48 V. Source: https://pubs.shure.com/view/guide/SM81/en-US.pdf",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-ua874",
@@ -2352,7 +2826,11 @@
    "sources": [
     "https://pubs.shure.com/view/guide/UA874/en-US.pdf"
    ],
-   "notes": "316 H x 359 W x 36 D mm (UA874X/XA/Z variants 224x234x36), 317 g; needs 10-15 V DC bias over coax. Antenna teaching (rank 25). Source: https://pubs.shure.com/view/guide/UA874/en-US.pdf"
+   "notes": "316 H x 359 W x 36 D mm (UA874X/XA/Z variants 224x234x36), 317 g; needs 10-15 V DC bias over coax. Antenna teaching (rank 25). Source: https://pubs.shure.com/view/guide/UA874/en-US.pdf",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-ulx-d-receiver",
@@ -2371,7 +2849,12 @@
    "sources": [
     "https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf"
    ],
-   "notes": "3 room placements for shure-ulx-d. 197x171x42 mm, 913 g without antennas (axis order unlabelled, left blank); dual and quad 44x482x274 mm, 3.36-3.45 kg. Source: https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf"
+   "notes": "3 room placements for shure-ulx-d. 197x171x42 mm, 913 g without antennas (axis order unlabelled, left blank); dual and quad 44x482x274 mm, 3.36-3.45 kg. Source: https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf",
+   "traits": [
+    "receiver",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sound-devices-mixpre-6-ii",
@@ -2395,7 +2878,11 @@
     "https://store.sounddevices.com/product/mixpre-6-ii/",
     "https://www.fullcompass.com/common/files/39279-MixPre6IISpecificationsSheet.pdf"
    ],
-   "notes": "Sound Devices store [M]: 36 H x 166 W x 118 D mm, 560 g without batteries. Source: https://store.sounddevices.com/product/mixpre-6-ii/"
+   "notes": "Sound Devices store [M]: 36 H x 166 W x 118 D mm, 560 g without batteries. Source: https://store.sounddevices.com/product/mixpre-6-ii/",
+   "traits": [
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "tascam-model-12",
@@ -2418,7 +2905,11 @@
    "sources": [
     "https://www.tascam.com/us/product/model_12/spec"
    ],
-   "notes": "Rank 17. TASCAM spec page [M]: 343x360x98.8 mm incl. side panels/knobs, 4.3 kg; 8 combo in, 10 TRS in, 8 Hi-Z, 2 inserts, XLR main, USB-C, MIDI, Bluetooth. Source: https://www.tascam.com/us/product/model_12/spec"
+   "notes": "Rank 17. TASCAM spec page [M]: 343x360x98.8 mm incl. side panels/knobs, 4.3 kg; 8 combo in, 10 TRS in, 8 Hi-Z, 2 inserts, XLR main, USB-C, MIDI, Bluetooth. Source: https://www.tascam.com/us/product/model_12/spec",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ua-la-2a",
@@ -2442,7 +2933,12 @@
     "https://www.adorama.com/uala2ad.html",
     "https://www.bhphotovideo.com/c/product/342382-REG/universal_audio_la2a_teletronix_la_2a_classic_leveling.html"
    ],
-   "notes": "Dealer: 483 W x 133 H x 184 D mm (3U), ~5.9 kg. Source: https://www.adorama.com/uala2ad.html"
+   "notes": "Dealer: 483 W x 133 H x 184 D mm (3U), ~5.9 kg. Source: https://www.adorama.com/uala2ad.html",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-dxr12-mkii",
@@ -2466,7 +2962,11 @@
     "https://usa.yamaha.com/products/proaudio/speakers/dxr/specs.html",
     "https://ro.yamaha.com/files/download/brochure/1/1259541/Yamaha_DXRmkII_leaflet.pdf"
    ],
-   "notes": "Yamaha specs [M]: 601 H x 362 W x 350 D incl. feet; 18.6 kg (US spec page 19.3: CONFLICT). 1 combo, 2 TRS, 2 RCA in, XLR thru/link out, pole socket, rigging points (M8 vs M10 disagree). Source: https://usa.yamaha.com/products/proaudio/speakers/dxr/specs.html"
+   "notes": "Yamaha specs [M]: 601 H x 362 W x 350 D incl. feet; 18.6 kg (US spec page 19.3: CONFLICT). 1 combo, 2 TRS, 2 RCA in, XLR thru/link out, pole socket, rigging points (M8 vs M10 disagree). Source: https://usa.yamaha.com/products/proaudio/speakers/dxr/specs.html",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "zoom-podtrak-p4",
@@ -2489,7 +2989,12 @@
    "sources": [
     "https://www.thomann.de/be/zoom_podtrak_p4.htm"
    ],
-   "notes": "Rank 16. Dealer: 112x155x47 mm, 290 g; 4 XLR mic (48 V), 4 phones, SD, 2 USB-C. Source: https://www.thomann.de/be/zoom_podtrak_p4.htm"
+   "notes": "Rank 16. Dealer: 112x155x47 mm, 290 g; 4 XLR mic (48 V), 4 phones, SD, 2 USB-C. Source: https://www.thomann.de/be/zoom_podtrak_p4.htm",
+   "traits": [
+    "battery",
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "canare-162u-x21",
@@ -2505,7 +3010,12 @@
    "tier": 3,
    "wave": 2,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "passive",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "motu-828",
@@ -2528,7 +3038,11 @@
    "sources": [
     "https://fullcompass.com/prod/630010-motu-828-28x32-usb3-audio-interface-with-mixing-and-effects"
    ],
-   "notes": "Dealer data only (Full Compass), 28x32 USB3 1U. 5 kg looks heavy for the size; verify. Predecessor 828es is 483x177.5x44.5 mm (another product). Source: https://fullcompass.com/prod/630010-motu-828-28x32-usb3-audio-interface-with-mixing-and-effects"
+   "notes": "Dealer data only (Full Compass), 28x32 USB3 1U. 5 kg looks heavy for the size; verify. Predecessor 828es is 483x177.5x44.5 mm (another product). Source: https://fullcompass.com/prod/630010-motu-828-28x32-usb3-audio-interface-with-mixing-and-effects",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "neutrik-nppa-tt-pt",
@@ -2544,7 +3058,12 @@
    "tier": 3,
    "wave": 2,
    "sources": [],
-   "notes": "Notes cover NYS-SPP-L1 (482x64x44), not this panel."
+   "notes": "Notes cover NYS-SPP-L1 (482x64x44), not this panel.",
+   "traits": [
+    "passive",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "schoeps-cmc-6-mk-4",
@@ -2560,7 +3079,12 @@
    "tier": 3,
    "wave": 2,
    "sources": [],
-   "notes": "3 rooms. Not researched. Demand: 3/3 room placements/rooms."
+   "notes": "3 rooms. Not researched. Demand: 3/3 room placements/rooms.",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "schoeps-mstc-74",
@@ -2576,7 +3100,12 @@
    "tier": 3,
    "wave": 2,
    "sources": [],
-   "notes": "1 room, 1 scenario. Not researched. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios."
+   "notes": "1 room, 1 scenario. Not researched. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios.",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-ew-iem-g4",
@@ -2595,7 +3124,12 @@
    "sources": [
     "https://docs.cloud.sennheiser.com/en-us/ew-iem-g4/ew-iem-g4/ew-iem-g4-sr-technical-data.html"
    ],
-   "notes": "Manufacturer docs [M], \"about\" values: SR IEM G4 ~202x212x43 mm ~980 g (order unlabelled); EK IEM G4 ~82x64x24 ~125 g with batteries. KB status \"not found\". Demand: 1/1 room placements/rooms. Source: https://docs.cloud.sennheiser.com/en-us/ew-iem-g4/ew-iem-g4/ew-iem-g4-sr-technical-data.html"
+   "notes": "Manufacturer docs [M], \"about\" values: SR IEM G4 ~202x212x43 mm ~980 g (order unlabelled); EK IEM G4 ~82x64x24 ~125 g with batteries. KB status \"not found\". Demand: 1/1 room placements/rooms. Source: https://docs.cloud.sennheiser.com/en-us/ew-iem-g4/ew-iem-g4/ew-iem-g4-sr-technical-data.html",
+   "traits": [
+    "transmitter",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-mkh-418-s",
@@ -2611,7 +3145,12 @@
    "tier": 3,
    "wave": 2,
    "sources": [],
-   "notes": "Notes cover the MKH 416 (19x250 mm, 175 g), a different mic."
+   "notes": "Notes cover the MKH 416 (19x250 mm, 175 g), a different mic.",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-europower-ep4000",
@@ -2635,7 +3174,12 @@
     "https://www.adorama.com/BEEP4000.html",
     "https://www.manualowl.com/m/Behringer/EP4000/Manual/462181?page=4"
    ],
-   "notes": "Manual excerpts + Adorama: 88 H x 483 W x 402 D mm, ~16.6 kg (packaged figures 17.4-21.7 vary). Source: https://www.adorama.com/BEEP4000.html"
+   "notes": "Manual excerpts + Adorama: 88 H x 483 W x 402 D mm, ~16.6 kg (packaged figures 17.4-21.7 vary). Source: https://www.adorama.com/BEEP4000.html",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "bss-ar-133",
@@ -2655,7 +3199,12 @@
     "https://goknight.com/content/documentation/ar133ds.pdf",
     "https://goknight.com/content/documentation/ar133um.pdf"
    ],
-   "notes": "650 g excl. battery; dims not retrieved; phantom with 9 V battery fallback; pad 0/-20/-40. Source: https://goknight.com/content/documentation/ar133ds.pdf"
+   "notes": "650 g excl. battery; dims not retrieved; phantom with 9 V battery fallback; pad 0/-20/-40. Source: https://goknight.com/content/documentation/ar133ds.pdf",
+   "traits": [
+    "active",
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ev-re320",
@@ -2676,10 +3225,14 @@
    "tier": 3,
    "wave": 2,
    "sources": [
-    "https://products.electrovoice.com/ap/en/re320",
-    "https://www.mcgill.ca/library/files/library/re320_eds_rev_3.pdf"
+    "https://products.electrovoice.com/ap/en/re320"
    ],
-   "notes": "EV datasheet [M]: 216.7 mm long, 54.4 widest dia (49.2 body), 681 g; two-position kick/general switch. Source: https://products.electrovoice.com/ap/en/re320"
+   "notes": "EV datasheet [M]: 216.7 mm long, 54.4 widest dia (49.2 body), 681 g; two-position kick/general switch. Source: https://products.electrovoice.com/ap/en/re320",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "k-m-26125",
@@ -2701,7 +3254,11 @@
    "sources": [
     "https://www.k-m.de/en/microphone-stands-without-boom/26125-microphone-stand-black"
    ],
-   "notes": "Base 275 mm dia, height 1000-1700, 3.36 kg; thread and finish not retrieved. Needs a round-base variant of tripod-stand (S). Source: https://www.k-m.de/en/microphone-stands-without-boom/26125-microphone-stand-black"
+   "notes": "Base 275 mm dia, height 1000-1700, 3.36 kg; thread and finish not retrieved. Needs a round-base variant of tripod-stand (S). Source: https://www.k-m.de/en/microphone-stands-without-boom/26125-microphone-stand-black",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "partial"
   },
   {
    "id": "klark-teknik-dn100",
@@ -2719,7 +3276,12 @@
    "sources": [
     "https://www.markertek.com/product/kt-dn100/klark-teknik-dn100-direct-injection-box-with-balanced-i-o"
    ],
-   "notes": "CONFLICT between generations: original 145x106x60 mm / 0.8 kg (Markertek) vs V2 118x63x112 mm / 0.44 kg (Thomann); dims left blank until the current revision is fixed. Source: https://www.markertek.com/product/kt-dn100/klark-teknik-dn100-direct-injection-box-with-balanced-i-o"
+   "notes": "CONFLICT between generations: original 145x106x60 mm / 0.8 kg (Markertek) vs V2 118x63x112 mm / 0.44 kg (Thomann); dims left blank until the current revision is fixed. Source: https://www.markertek.com/product/kt-dn100/klark-teknik-dn100-direct-injection-box-with-balanced-i-o",
+   "traits": [
+    "active",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "klark-teknik-dn360",
@@ -2742,7 +3304,12 @@
     "https://www.canford.co.uk/Products/93-866",
     "https://www.markertek.com/product/kt-dn360/klark-teknik-dn360-two-channel-30-band-1-3-octave-classic-graphic-eq"
    ],
-   "notes": "Canford/Markertek: 133 H x 482 W x 205 D mm (3U); weight CONFLICT 5-5.8 kg; discontinued. Source: https://www.canford.co.uk/Products/93-866"
+   "notes": "Canford/Markertek: 133 H x 482 W x 205 D mm (3U); weight CONFLICT 5-5.8 kg; discontinued. Source: https://www.canford.co.uk/Products/93-866",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-nt5",
@@ -2765,7 +3332,12 @@
    "sources": [
     "https://edge.rode.com/pdf/products/79/NT5_Datasheet_05_FA.pdf"
    ],
-   "notes": "Datasheet [M]: 118 x 20 mm dia, 101 g (another sheet 110 g). Source: https://edge.rode.com/pdf/products/79/NT5_Datasheet_05_FA.pdf"
+   "notes": "Datasheet [M]: 118 x 20 mm dia, 101 g (another sheet 110 g). Source: https://edge.rode.com/pdf/products/79/NT5_Datasheet_05_FA.pdf",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-ntg3",
@@ -2788,7 +3360,12 @@
    "sources": [
     "http://ci.rode.com/microphones/ntg-3"
    ],
-   "notes": "Product page [M]: 255x19x19 mm, 163 g, brass body. Source: http://ci.rode.com/microphones/ntg-3"
+   "notes": "Product page [M]: 255x19x19 mm, 163 g, brass body. Source: http://ci.rode.com/microphones/ntg-3",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-procaster",
@@ -2809,10 +3386,14 @@
    "tier": 3,
    "wave": 2,
    "sources": [
-    "https://edge.rode.com/pdf/page/356/modules/1253/procaster_datasheet.pdf",
-    "https://www.zzounds.com/item--RODPSM1"
+    "https://edge.rode.com/pdf/page/356/modules/1253/procaster_datasheet.pdf"
    ],
-   "notes": "Datasheet [M]: 214 x 53 mm dia; 695 g (product page says 745 g: CONFLICT). Source: https://edge.rode.com/pdf/page/356/modules/1253/procaster_datasheet.pdf"
+   "notes": "Datasheet [M]: 214 x 53 mm dia; 695 g (product page says 745 g: CONFLICT). Source: https://edge.rode.com/pdf/page/356/modules/1253/procaster_datasheet.pdf",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rolls-ha43-pro",
@@ -2836,7 +3417,11 @@
     "https://markertek.com/product/ha-43pro/rolls-ha43-pro-4-channel-stereo-headphone-amp",
     "https://www.bhphotovideo.com/c/product/155408-REG/Rolls_HA43_PRO_HA43_4_Output.html"
    ],
-   "notes": "Dims are retailer inches converted in the notes (4.15x3.45x1.16 in, est.): 105x88x29 mm; ~0.45 kg. Source: https://markertek.com/product/ha-43pro/rolls-ha43-pro-4-channel-stereo-headphone-amp"
+   "notes": "Dims are retailer inches converted in the notes (4.15x3.45x1.16 in, est.): 105x88x29 mm; ~0.45 kg. Source: https://markertek.com/product/ha-43pro/rolls-ha43-pro-4-channel-stereo-headphone-amp",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "sennheiser-e-906",
@@ -2859,7 +3444,12 @@
    "sources": [
     "https://www.sennheiser.com/globalassets/digizuite/41690-en-e_906_product_specification_v1.1_en.pdf"
    ],
-   "notes": "Same body as e 609 (55x34x134 mm, 140 g) so one base model serves both; switch positions not confirmed. Source: https://www.sennheiser.com/globalassets/digizuite/41690-en-e_906_product_specification_v1.1_en.pdf"
+   "notes": "Same body as e 609 (55x34x134 mm, 140 g) so one base model serves both; switch positions not confirmed. Source: https://www.sennheiser.com/globalassets/digizuite/41690-en-e_906_product_specification_v1.1_en.pdf",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-ua844-plus",
@@ -2875,7 +3465,7 @@
    "weightKg": 1.62,
    "portsSummary": "",
    "family": "rack-box-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 3,
    "wave": 2,
@@ -2883,7 +3473,12 @@
     "https://pubs.shure.com/view/guide/UA844/en-US.pdf",
     "https://shure.com/americas/products/accessories/wireless-systems/wireless-systems-antennas/ua844-plus-v"
    ],
-   "notes": "45 H x 483 W x 172 D mm (1U), 1.62 kg. CONFLICT: guide text mixes UA874 spec text, sources disagree on 4-way vs 5-way splitting; figures taken from the apparent own table. Source: https://pubs.shure.com/view/guide/UA844/en-US.pdf"
+   "notes": "45 H x 483 W x 172 D mm (1U), 1.62 kg. CONFLICT: guide text mixes UA874 spec text, sources disagree on 4-way vs 5-way splitting; figures taken from the apparent own table. Source: https://pubs.shure.com/view/guide/UA844/en-US.pdf",
+   "traits": [
+    "active",
+    "rack"
+   ],
+   "sizeConfidence": "conflict"
   },
   {
    "id": "db-audiotechnik-y10p",
@@ -2899,7 +3494,11 @@
    "tier": 1,
    "wave": 3,
    "sources": [],
-   "notes": "KB first-promotion #2 (pair with Crown XLS 2502 for the speakON chain). KB W/H/D parsable, values not in notes. A spike may show curved-cabinet or rack-box-v2 is an acceptable stand-in earlier (untested). Demand: 3/1 room placements/rooms."
+   "notes": "KB first-promotion #2 (pair with Crown XLS 2502 for the speakON chain). KB W/H/D parsable, values not in notes. A spike may show curved-cabinet or rack-box-v2 is an acceptable stand-in earlier (untested). Demand: 3/1 room placements/rooms.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-kara-ii",
@@ -2915,9 +3514,14 @@
    "tier": 1,
    "wave": 3,
    "sources": [
-    "https://l-acoustics.com/products/Kara-II"
+    "https://l-acoustics.com/products/Kara-II",
+    "https://monthany.com/wp-content/uploads/2023/04/L-acoustics_KARA-II_Datasheet_monthany.pdf"
    ],
-   "notes": "Highest room demand (10 placements in 5 rooms). SOURCE CONFLICT: 701x252x403 mm and 21 kg net (L-Acoustics FR page) vs about 9.9x28.9x19 in (ProSoundWeb); 26 kg flying / 41 kg transport elsewhere. Dims left blank. Needs trapezoid elevation (new family); rigging is out of scope (CLAUDE.md, P3 max). Demand: 10/5 room placements/rooms, 1 TEK Brain scenarios. Source: https://l-acoustics.com/products/Kara-II"
+   "notes": "Highest room demand (10 placements in 5 rooms). SOURCE CONFLICT: 701x252x403 mm and 21 kg net (L-Acoustics FR page) vs about 9.9x28.9x19 in (ProSoundWeb); 26 kg flying / 41 kg transport elsewhere. Dims left blank. Needs trapezoid elevation (new family); rigging is out of scope (CLAUDE.md, P3 max). Demand: 10/5 room placements/rooms, 1 TEK Brain scenarios. Source: https://l-acoustics.com/products/Kara-II",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "cat6-ethercon-cable-family",
@@ -2935,7 +3539,11 @@
    "sources": [
     "https://www.neutrik.com/en/products/data/ethercon"
    ],
-   "notes": "Dante and AES50 links; etherCON is a ruggedised RJ45. Source: https://www.neutrik.com/en/products/data/ethercon"
+   "notes": "Dante and AES50 links; etherCON is a ruggedised RJ45. Source: https://www.neutrik.com/en/products/data/ethercon",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "laptop-generic",
@@ -2951,7 +3559,11 @@
    "tier": 1,
    "wave": 3,
    "sources": [],
-   "notes": "Hinged laptop needs moulded-box lidAngleDeg; MacBook Pro and Windows workstation NOT researched."
+   "notes": "Hinged laptop needs moulded-box lidAngleDeg; MacBook Pro and Windows workstation NOT researched.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "powercon-iec-cable-family",
@@ -2969,7 +3581,11 @@
    "sources": [
     "https://www.neutrik.com/en/neutrik/products/powercon-r/powercon-r-true1/powercon-r-true1-cable-connectors"
    ],
-   "notes": "French default: type E (CEE 7/7) and 230 V/16 A powerCON TRUE1; NEMA as secondary variant (domain knowledge, unsourced). Source: https://www.neutrik.com/en/neutrik/products/powercon-r/powercon-r-true1/powercon-r-true1-cable-connectors"
+   "notes": "French default: type E (CEE 7/7) and 230 V/16 A powerCON TRUE1; NEMA as secondary variant (domain knowledge, unsourced). Source: https://www.neutrik.com/en/neutrik/products/powercon-r/powercon-r-true1/powercon-r-true1-cable-connectors",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "speakon-cable-family",
@@ -2987,7 +3603,11 @@
    "sources": [
     "https://www.neutrik.us/en-us/neutrik/products/speakon-r-loudspeaker-connectors/speakon-r-cable-connectors/fxx-series"
    ],
-   "notes": "NL4FXX-W-S (6-12 mm) and -W-L (10-16 mm) per Neutrik; needed for the amp-to-speaker chain. Source: https://www.neutrik.us/en-us/neutrik/products/speakon-r-loudspeaker-connectors/speakon-r-cable-connectors/fxx-series"
+   "notes": "NL4FXX-W-S (6-12 mm) and -W-L (10-16 mm) per Neutrik; needed for the amp-to-speaker chain. Source: https://www.neutrik.us/en-us/neutrik/products/speakon-r-loudspeaker-connectors/speakon-r-cable-connectors/fxx-series",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "trs-ts-jack-cable-family",
@@ -3003,7 +3623,11 @@
    "tier": 1,
    "wave": 3,
    "sources": [],
-   "notes": "Typed cable item; adapters XLR-TRS, RCA-TS."
+   "notes": "Typed cable item; adapters XLR-TRS, RCA-TS.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "xlr3-cable-family",
@@ -3019,7 +3643,11 @@
    "tier": 1,
    "wave": 3,
    "sources": [],
-   "notes": "Typed cable item (connector A/B, balanced, length), not an SKU. Neutrik part numbers not collected. Decide first whether cables are devices (see decisions)."
+   "notes": "Typed cable item (connector A/B, balanced, length), not an SKU. Neutrik part numbers not collected. Decide first whether cables are devices (see decisions).",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "avid-protools-mtrx-studio",
@@ -3035,7 +3663,11 @@
    "tier": 2,
    "wave": 3,
    "sources": [],
-   "notes": "2 rooms, 1 scenario. No data in notes. Demand: 2/2 room placements/rooms, 1 TEK Brain scenarios."
+   "notes": "2 rooms, 1 scenario. No data in notes. Demand: 2/2 room placements/rooms, 1 TEK Brain scenarios.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "dbx-afs2",
@@ -3051,7 +3683,12 @@
    "tier": 2,
    "wave": 3,
    "sources": [],
-   "notes": "Feedback suppression (live-sound lesson). Not researched."
+   "notes": "Feedback suppression (live-sound lesson). Not researched.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "digico-sd-rack",
@@ -3067,7 +3704,11 @@
    "tier": 2,
    "wave": 3,
    "sources": [],
-   "notes": "1 room. Pairs with the SD12. No data in notes. Demand: 1/1 room placements/rooms."
+   "notes": "1 room. Pairs with the SD12. No data in notes. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "digico-sd12",
@@ -3083,7 +3724,11 @@
    "tier": 2,
    "wave": 3,
    "sources": [],
-   "notes": "1 room, 2 scenarios. S21 sibling 763x586x295 mm (dealer) is a different desk. Rig cost for a large surface. Demand: 1/1 room placements/rooms, 2 TEK Brain scenarios."
+   "notes": "1 room, 2 scenarios. S21 sibling 763x586x295 mm (dealer) is a different desk. Rig cost for a large surface. Demand: 1/1 room placements/rooms, 2 TEK Brain scenarios.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "genelec-7360a",
@@ -3099,7 +3744,11 @@
    "tier": 2,
    "wave": 3,
    "sources": [],
-   "notes": "2 rooms, 2 scenarios. Subwoofer is \"partly\" coverable by curved-cabinet (builder note). No data in notes. Demand: 2/2 room placements/rooms, 2 TEK Brain scenarios."
+   "notes": "2 rooms, 2 scenarios. Subwoofer is \"partly\" coverable by curved-cabinet (builder note). No data in notes. Demand: 2/2 room placements/rooms, 2 TEK Brain scenarios.",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-x15-hiq",
@@ -3115,7 +3764,11 @@
    "tier": 2,
    "wave": 3,
    "sources": [],
-   "notes": "7 placements in 5 rooms. Stage wedge: console-wedge profile extruded already works for the wedge (builder note). No data in notes. Demand: 7/5 room placements/rooms."
+   "notes": "7 placements in 5 rooms. Stage wedge: console-wedge profile extruded already works for the wedge (builder note). No data in notes. Demand: 7/5 room placements/rooms.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "nti-audio-minirator-mr-pro",
@@ -3131,7 +3784,11 @@
    "tier": 2,
    "wave": 3,
    "sources": [],
-   "notes": "KB first-promotion #12; 1 scenario. Not researched. Demand: 1 TEK Brain scenarios."
+   "notes": "KB first-promotion #12; 1 scenario. Not researched. Demand: 1 TEK Brain scenarios.",
+   "traits": [
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "nti-audio-xl2",
@@ -3147,7 +3804,11 @@
    "tier": 2,
    "wave": 3,
    "sources": [],
-   "notes": "5 room placements, 1 scenario. Not researched (test and measurement returned no data). Demand: 5/5 room placements/rooms, 1 TEK Brain scenarios."
+   "notes": "5 room placements, 1 scenario. Not researched (test and measurement returned no data). Demand: 5/5 room placements/rooms, 1 TEK Brain scenarios.",
+   "traits": [
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-axient-digital-ad4d",
@@ -3165,7 +3826,12 @@
    "sources": [
     "https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf"
    ],
-   "notes": "5 room placements. No AD4D data in notes; ULX-D receiver (197x171x42, 913 g, axis order unlabelled) is a sibling only. Demand: 5/5 room placements/rooms. Source: https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf"
+   "notes": "5 room placements. No AD4D data in notes; ULX-D receiver (197x171x42, 913 g, axis order unlabelled) is a sibling only. Demand: 5/5 room placements/rooms. Source: https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf",
+   "traits": [
+    "receiver",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-scm820",
@@ -3181,7 +3847,12 @@
    "tier": 2,
    "wave": 3,
    "sources": [],
-   "notes": "3 rooms, 1 scenario. Not researched. Demand: 3/3 room placements/rooms, 1 TEK Brain scenarios."
+   "notes": "3 rooms, 1 scenario. Not researched. Demand: 3/3 room placements/rooms, 1 TEK Brain scenarios.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "allen-heath-dx168",
@@ -3197,14 +3868,18 @@
    "weightKg": 4.6,
    "portsSummary": "",
    "family": "rack-box-v2",
-   "dataQuality": "dealer",
+   "dataQuality": "estimate",
    "sourceGrade": "dealer",
    "tier": 2,
    "wave": 3,
    "sources": [
     "https://manualshive.com/en/manual/allen-and-heath/dx168/2898648?page=4"
    ],
-   "notes": "Manual hosted by manualshive (via search): 410x190x185 mm, 4.6 kg; Dante 16 mic. Source: https://manualshive.com/en/manual/allen-and-heath/dx168/2898648?page=4"
+   "notes": "Manual hosted by manualshive (via search): 410x190x185 mm, 4.6 kg; Dante 16 mic. Source: https://manualshive.com/en/manual/allen-and-heath/dx168/2898648?page=4",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "allen-heath-qu-16",
@@ -3220,7 +3895,7 @@
    "weightKg": 10,
    "portsSummary": "",
    "family": "console-wedge-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 2,
    "wave": 3,
@@ -3228,7 +3903,11 @@
     "https://www.allen-heath.com/content/uploads/2023/06/Qu-16-Dimensions_D.pdf",
     "https://www.proacousticsusa.com/allen-heath-qu-16-rackmountable-digital-mixer.html"
    ],
-   "notes": "A&H drawing via search: 440x500x186 mm desk, 10 kg (Studiospares: 471 depth, CONFLICT); one dealer lists it discontinued. Source: https://www.allen-heath.com/content/uploads/2023/06/Qu-16-Dimensions_D.pdf"
+   "notes": "A&H drawing via search: 440x500x186 mm desk, 10 kg (Studiospares: 471 depth, CONFLICT); one dealer lists it discontinued. Source: https://www.allen-heath.com/content/uploads/2023/06/Qu-16-Dimensions_D.pdf",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "conflict"
   },
   {
    "id": "arrakis-arc-8",
@@ -3250,7 +3929,11 @@
    "sources": [
     "https://broadcaststoreeurope.com/upload_dir/docs/ARC-8-lowres.pdf"
    ],
-   "notes": "Dealer sheet in inches, converted in the notes (E): 18 x 11.5 x 2 in, order not confirmed. Source: https://broadcaststoreeurope.com/upload_dir/docs/ARC-8-lowres.pdf"
+   "notes": "Dealer sheet in inches, converted in the notes (E): 18 x 11.5 x 2 in, order not confirmed. Source: https://broadcaststoreeurope.com/upload_dir/docs/ARC-8-lowres.pdf",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "genelec-8351b",
@@ -3274,7 +3957,11 @@
     "https://www.genelec.com/8351",
     "https://reverb.com/item/44334662-genelec-8351b-pair-white"
    ],
-   "notes": "Search excerpt of the Genelec page: 433 (454 with Iso-Pod) x 287 x 278 mm, 14.3 kg (retailer 14.1); 1 XLR analog, XLR AES in and out, 2 RJ45 (GLM). Source: https://www.genelec.com/8351"
+   "notes": "Search excerpt of the Genelec page: 433 (454 with Iso-Pod) x 287 x 278 mm, 14.3 kg (retailer 14.1); 1 XLR analog, XLR AES in and out, 2 RJ45 (GLM). Source: https://www.genelec.com/8351",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "power-sequencer-distribution",
@@ -3290,7 +3977,11 @@
    "tier": 2,
    "wave": 3,
    "sources": [],
-   "notes": "Under-documented: no Panamax, Lightning or Middle Atlantic data. Flagged as a discovery task."
+   "notes": "Under-documented: no Panamax, Lightning or Middle Atlantic data. Flagged as a discovery task.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "powercon-distro",
@@ -3308,7 +3999,11 @@
    "sources": [
     "https://www.neutrik.com/en/neutrik/products/powercon-r/powercon-r-true1/powercon-r-true1-cable-connectors"
    ],
-   "notes": "Not researched; powerCON TRUE1 facts only (~16 A EU / 20 A US). Source: https://www.neutrik.com/en/neutrik/products/powercon-r/powercon-r-true1/powercon-r-true1-cable-connectors"
+   "notes": "Not researched; powerCON TRUE1 facts only (~16 A EU / 20 A US). Source: https://www.neutrik.com/en/neutrik/products/powercon-r/powercon-r-true1/powercon-r-true1-cable-connectors",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rme-babyface-pro-fs",
@@ -3331,7 +4026,11 @@
    "sources": [
     "https://www.rme-audio.de/babyface-pro-fs.html"
    ],
-   "notes": "Rank 21. RME page [M]: printed 108x35x181 (W x H x D), re-ordered 108x181x35 mm, 680 g. Distinctive wedge, needs its own mesh. 2 combo in, 2 TS in, 2 XLR out, 2 phones, TOSLINK, MIDI breakout, USB. Source: https://www.rme-audio.de/babyface-pro-fs.html"
+   "notes": "Rank 21. RME page [M]: printed 108x35x181 (W x H x D), re-ordered 108x181x35 mm, 680 g. Distinctive wedge, needs its own mesh. 2 combo in, 2 TS in, 2 XLR out, 2 phones, TOSLINK, MIDI breakout, USB. Source: https://www.rme-audio.de/babyface-pro-fs.html",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-beta-91a",
@@ -3350,7 +4049,12 @@
    "sources": [
     "https://content-files.shure.com/Pubs/BETA91A/pdf_beta91a_specification_sheet.pdf"
    ],
-   "notes": "5 room placements. 470 g; body dims not extractable from the garbled sheet. Boundary mic, 2-position contour switch, phantom 11-52 V. Source: https://content-files.shure.com/Pubs/BETA91A/pdf_beta91a_specification_sheet.pdf"
+   "notes": "5 room placements. 470 g; body dims not extractable from the garbled sheet. Boundary mic, 2-position contour switch, phantom 11-52 V. Source: https://content-files.shure.com/Pubs/BETA91A/pdf_beta91a_specification_sheet.pdf",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sonifex-s0-v2",
@@ -3374,7 +4078,11 @@
     "https://www.manualslib.com/manual/1646175/Sonifex-S0-V2.html",
     "https://deathcloud.com/products/sonifex-s0v2"
    ],
-   "notes": "Analog radio classic. Handbook [M]: 483x356x125 mm external; ~8.5 kg (18.7 lb per a US reseller, [D]). Connector counts not retrieved. Source: https://www.manualslib.com/manual/1646175/Sonifex-S0-V2.html"
+   "notes": "Analog radio classic. Handbook [M]: 483x356x125 mm external; ~8.5 kg (18.7 lb per a US reseller, [D]). Connector counts not retrieved. Source: https://www.manualslib.com/manual/1646175/Sonifex-S0-V2.html",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "wheatstone-l-12",
@@ -3392,7 +4100,11 @@
    "sources": [
     "https://bswusa.com/wheatstone-l-12/"
    ],
-   "notes": "Radio-console counterpart to Axia iQ (rank 18). Dimensions NOT published in the notes' sources: WheatNet-IP, 12 hot-swap fader modules, OLED source names, cue speaker. Source: https://bswusa.com/wheatstone-l-12/"
+   "notes": "Radio-console counterpart to Axia iQ (rank 18). Dimensions NOT published in the notes' sources: WheatNet-IP, 12 hot-swap fader modules, OLED source names, cue speaker. Source: https://bswusa.com/wheatstone-l-12/",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "whirlwind-medusa-standard-snake",
@@ -3410,7 +4122,11 @@
    "sources": [
     "https://www.fullcompass.com/common/files/17258-Specifications.pdf"
    ],
-   "notes": "Multipair spec only (24 AWG, foil shield); stage box data sheet not read. Do NOT use the name \"Medusa Standard Splitter\" (not confirmed). Source: https://www.fullcompass.com/common/files/17258-Specifications.pdf"
+   "notes": "Multipair spec only (24 AWG, foil shield); stage box data sheet not read. Do NOT use the name \"Medusa Standard Splitter\" (not confirmed). Source: https://www.fullcompass.com/common/files/17258-Specifications.pdf",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "aea-r84",
@@ -3426,7 +4142,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "KB alternative ribbon. Not researched."
+   "notes": "KB alternative ribbon. Not researched.",
+   "traits": [
+    "ribbon",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "aeta-scoopteam",
@@ -3442,7 +4163,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "KB W/H/D parsable (repo) but values not in notes. Siblings Scoop5 S and Scoopy+ S are verified."
+   "notes": "KB W/H/D parsable (repo) but values not in notes. Siblings Scoop5 S and Scoopy+ S are verified.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "allen-heath-zed-22fx",
@@ -3458,7 +4183,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "1 scenario. Not in notes (ZED-14 sibling ~385x465x95-98 mm, 6.5 kg vs 7.5 kg conflict, dealer). Demand: 1 TEK Brain scenarios."
+   "notes": "1 scenario. Not in notes (ZED-14 sibling ~385x465x95-98 mm, 6.5 kg vs 7.5 kg conflict, dealer). Demand: 1 TEK Brain scenarios.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "antelope-orion-32-plus-gen4",
@@ -3474,7 +4203,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "avid-protools-sync-x",
@@ -3490,7 +4223,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "1 scenario. No data in notes. Demand: 1 TEK Brain scenarios."
+   "notes": "1 scenario. No data in notes. Demand: 1 TEK Brain scenarios.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "beyerdynamic-m-160",
@@ -3506,7 +4243,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "Not researched."
+   "notes": "Not researched.",
+   "traits": [
+    "ribbon",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "coles-4038",
@@ -3525,7 +4267,12 @@
     "https://www.andertons.co.uk/coles/coles-4038-studio-ribbon-microphone",
     "https://www.canford.co.uk/Products/92-391_COLES-4038-MICROPHONE-Ribbon"
    ],
-   "notes": "Retailer only (Andertons/Canford): 197x83x61 mm, about 1.08 kg; axis order not stated, dims left blank. Passive ribbon. Demand: 2/2 room placements/rooms. Source: https://www.andertons.co.uk/coles/coles-4038-studio-ribbon-microphone"
+   "notes": "Retailer only (Andertons/Canford): 197x83x61 mm, about 1.08 kg; axis order not stated, dims left blank. Passive ribbon. Demand: 2/2 room placements/rooms. Source: https://www.andertons.co.uk/coles/coles-4038-studio-ribbon-microphone",
+   "traits": [
+    "ribbon",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "db-audiotechnik-d40",
@@ -3541,7 +4288,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "drawmer-mc2-1",
@@ -3557,7 +4309,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "Notes cover PreSonus Monitor Station V2, Mackie Big Knob and Dangerous Monitor ST instead."
+   "notes": "Notes cover PreSonus Monitor Station V2, Mackie Big Knob and Dangerous Monitor ST instead.",
+   "traits": [
+    "monitor-controller",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ebtech-hum-eliminator-he-2",
@@ -3573,7 +4330,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "Discontinued per KB; ground-loop teaching only. No data in notes."
+   "notes": "Discontinued per KB; ground-loop teaching only. No data in notes.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "focusrite-rednet-x2p",
@@ -3589,7 +4350,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "No data in notes (RedNet MP8R and A16R researched, different units)."
+   "notes": "No data in notes (RedNet MP8R and A16R researched, different units).",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "galaxy-audio-cricket-cpts",
@@ -3605,7 +4370,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "Polarity tester, teaches R-polarity. Not researched."
+   "notes": "Polarity tester, teaches R-polarity. Not researched.",
+   "traits": [
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-la4x",
@@ -3621,7 +4390,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "No data in notes. Demand: 2/2 room placements/rooms."
+   "notes": "No data in notes. Demand: 2/2 room placements/rooms.",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "lexicon-pcm96",
@@ -3637,7 +4411,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "1 scenario. Not researched. Demand: 1 TEK Brain scenarios."
+   "notes": "1 scenario. Not researched. Demand: 1 TEK Brain scenarios.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "lynx-aurora-n",
@@ -3653,7 +4432,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "1 room. No data in notes. Demand: 1/1 room placements/rooms."
+   "notes": "1 room. No data in notes. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-m-149-tube",
@@ -3669,7 +4452,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "Not researched. Demand: 3/1 room placements/rooms."
+   "notes": "Not researched. Demand: 3/1 room placements/rooms.",
+   "traits": [
+    "condenser",
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-u-67",
@@ -3685,7 +4473,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "Not researched."
+   "notes": "Not researched.",
+   "traits": [
+    "condenser",
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-usm-69-i",
@@ -3701,7 +4494,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "Not researched."
+   "notes": "Not researched.",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "nexo-nxamp4x4mk2",
@@ -3717,7 +4515,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "No data in notes. Demand: 1/1 room placements/rooms."
+   "notes": "No data in notes. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rme-digiface-dante",
@@ -3733,7 +4536,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rme-m-32-ad",
@@ -3749,7 +4556,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "1 room. KB W/H/D parsable, values not in notes. Demand: 1/1 room placements/rooms."
+   "notes": "1 room. KB W/H/D parsable, values not in notes. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-nt4",
@@ -3765,7 +4576,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "KB W/H/D parsable, values not in notes."
+   "notes": "KB W/H/D parsable, values not in notes.",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rupert-neve-designs-shelford-channel",
@@ -3781,7 +4597,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-em-6000",
@@ -3797,7 +4618,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "No data in notes. Demand: 1/1 room placements/rooms."
+   "notes": "No data in notes. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "receiver",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-ua845uwb",
@@ -3815,7 +4641,12 @@
    "sources": [
     "https://pubs.shure.com/view/guide/UA844/en-US.pdf"
    ],
-   "notes": "1 scenario. Notes cover UA844+ (483x172x45 mm, 1.62 kg) and UA874 instead. Demand: 1 TEK Brain scenarios. Source: https://pubs.shure.com/view/guide/UA844/en-US.pdf"
+   "notes": "1 scenario. Notes cover UA844+ (483x172x45 mm, 1.62 kg) and UA874 instead. Demand: 1 TEK Brain scenarios. Source: https://pubs.shure.com/view/guide/UA844/en-US.pdf",
+   "traits": [
+    "active",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sound-devices-833",
@@ -3831,7 +4662,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "1 scenario. The notes cover the MixPre-6 II (36x166x118 mm H x W x D), not the 833. Demand: 1 TEK Brain scenarios."
+   "notes": "1 scenario. The notes cover the MixPre-6 II (36x166x118 mm H x W x D), not the 833. Demand: 1 TEK Brain scenarios.",
+   "traits": [
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "spl-phonitor-x",
@@ -3847,7 +4682,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "13 ports, mains. No data in notes."
+   "notes": "13 ports, mains. No data in notes.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-px10",
@@ -3863,7 +4702,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "No data in notes (Yamaha PX not researched)."
+   "notes": "No data in notes (Yamaha PX not researched).",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "zoom-f8n-pro",
@@ -3879,7 +4723,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "Notes cover the H6 Essential, not the F8n Pro."
+   "notes": "Notes cover the H6 Essential, not the F8n Pro.",
+   "traits": [
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "akai-mpk-mini-mk3",
@@ -3902,7 +4750,11 @@
    "sources": [
     "https://musicradar.com/reviews/akai-mpk-mini-mk3"
    ],
-   "notes": "Review figure: 318x181x44 mm, 0.75 kg. Source: https://musicradar.com/reviews/akai-mpk-mini-mk3"
+   "notes": "Review figure: 318x181x44 mm, 0.75 kg. Source: https://musicradar.com/reviews/akai-mpk-mini-mk3",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "allen-heath-ab168",
@@ -3922,7 +4774,11 @@
     "https://woodbrass.com/en/products/allen-heath-ab168-stage-rack-16-8-217492",
     "https://manuals.plus/m/b7c6338bf4a97f16896814168d818f38da51b3d1ff9b218015cbe08e67ba3d78"
    ],
-   "notes": "CONFLICT: 412x189x182 / 411x189x154 (dealers) vs 389.6 W x 189 D x 165 H (datasheet). Dims left blank; 4.8 kg. Source: https://woodbrass.com/en/products/allen-heath-ab168-stage-rack-16-8-217492"
+   "notes": "CONFLICT: 412x189x182 / 411x189x154 (dealers) vs 389.6 W x 189 D x 165 H (datasheet). Dims left blank; 4.8 kg. Source: https://woodbrass.com/en/products/allen-heath-ab168-stage-rack-16-8-217492",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "allen-heath-zed-14",
@@ -3941,7 +4797,11 @@
     "https://reverb.com/item/94390426-allen-heath-zed-14-14-channel-analog-live-mixer",
     "https://ae.thomann.de/allenheath_zed14.htm"
    ],
-   "notes": "Dealer: ~385x465x95-98 mm; weight CONFLICT 6.5 kg vs 7.5 kg (Thomann). Dims left blank. Source: https://reverb.com/item/94390426-allen-heath-zed-14-14-channel-analog-live-mixer"
+   "notes": "Dealer: ~385x465x95-98 mm; weight CONFLICT 6.5 kg vs 7.5 kg (Thomann). Dims left blank. Source: https://reverb.com/item/94390426-allen-heath-zed-14-14-channel-analog-live-mixer",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "apogee-duet-3",
@@ -3964,7 +4824,11 @@
    "sources": [
     "https://www.apogeedigital.com/products/duet"
    ],
-   "notes": "Apogee page [M]: 225x180x90 mm, 0.95 kg; 2 USB-C. Source: https://www.apogeedigital.com/products/duet"
+   "notes": "Apogee page [M]: 225x180x90 mm, 0.95 kg; 2 USB-C. Source: https://www.apogeedigital.com/products/duet",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "audient-id14-mkii",
@@ -3986,7 +4850,11 @@
    "sources": [
     "https://www.thomann.de/be/audient_id14_mkii.htm"
    ],
-   "notes": "Dealer: 173x120x62 mm; weight CONFLICT 0.77-0.9 kg (up to 1.25). Source: https://www.thomann.de/be/audient_id14_mkii.htm"
+   "notes": "Dealer: 173x120x62 mm; weight CONFLICT 0.77-0.9 kg (up to 1.25). Source: https://www.thomann.de/be/audient_id14_mkii.htm",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "audio-technica-atw-r3210",
@@ -4009,7 +4877,12 @@
    "sources": [
     "https://www.audio-technica.com/en-sea/atw-r3210"
    ],
-   "notes": "210 W x 191 D x 43.4 H mm, 1100 g (AT page [M]). Source: https://www.audio-technica.com/en-sea/atw-r3210"
+   "notes": "210 W x 191 D x 43.4 H mm, 1100 g (AT page [M]). Source: https://www.audio-technica.com/en-sea/atw-r3210",
+   "traits": [
+    "receiver",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-flow-8",
@@ -4032,7 +4905,11 @@
    "sources": [
     "https://www.andertons.co.uk/live-mixers/behringer-flow-8-8-input-digital-mixer-with-bluetooth-audio-app-contro"
    ],
-   "notes": "Dealer: 229x172x48 mm, 1.4 kg; one UK dealer lists it discontinued. Source: https://www.andertons.co.uk/live-mixers/behringer-flow-8-8-input-digital-mixer-with-bluetooth-audio-app-contro"
+   "notes": "Dealer: 229x172x48 mm, 1.4 kg; one UK dealer lists it discontinued. Source: https://www.andertons.co.uk/live-mixers/behringer-flow-8-8-input-digital-mixer-with-bluetooth-audio-app-contro",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-px3000",
@@ -4055,7 +4932,12 @@
    "sources": [
     "https://www.manualowl.com/m/Behringer/ULTRAPATCH-PRO-PX3000/Manual/334577"
    ],
-   "notes": "Spec sheet (M-host): 482.6x93x44.5 mm, ~1.8 kg; dealer says discontinued. Only bay with normal/half-normal/through switches. Source: https://www.manualowl.com/m/Behringer/ULTRAPATCH-PRO-PX3000/Manual/334577"
+   "notes": "Spec sheet (M-host): 482.6x93x44.5 mm, ~1.8 kg; dealer says discontinued. Only bay with normal/half-normal/through switches. Source: https://www.manualowl.com/m/Behringer/ULTRAPATCH-PRO-PX3000/Manual/334577",
+   "traits": [
+    "passive",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "crown-pzm-30d",
@@ -4079,7 +4961,12 @@
     "https://www.zzounds.com/item--CWNPZM30D",
     "https://support.harmanaudio.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw085e2bb5/pdfs/AKG_PZM30D_PZM6D_Cutsheet.pdf"
    ],
-   "notes": "Retailer (zZounds) 15.2x12.7x1.9 cm, 184 g; AKG/Harman cut sheet linked but not read for dims. Source: https://www.zzounds.com/item--CWNPZM30D"
+   "notes": "Retailer (zZounds) 15.2x12.7x1.9 cm, 184 g; AKG/Harman cut sheet linked but not read for dims. Source: https://www.zzounds.com/item--CWNPZM30D",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "dbx-160a",
@@ -4103,7 +4990,12 @@
     "https://manualmachine.com/dbxpro/160a/1285223-user-manual",
     "https://c3.zzounds.com/media/160ACutSheet-160ae9a0b6f5c925275ab71466c59d56.pdf"
    ],
-   "notes": "dbx manual [M]: 44 H x 483 W x 165 D mm (1U), ~2.0 kg; discontinued. Source: https://manualmachine.com/dbxpro/160a/1285223-user-manual"
+   "notes": "dbx manual [M]: 44 H x 483 W x 165 D mm (1U), ~2.0 kg; discontinued. Source: https://manualmachine.com/dbxpro/160a/1285223-user-manual",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "elgato-stream-deck-mk2",
@@ -4126,7 +5018,11 @@
    "sources": [
     "https://help.elgato.com/hc/en-us/articles/18208816152333-Elgato-Stream-Deck-MK-2-Technical-Specifications"
    ],
-   "notes": "Elgato help centre [M]: 118x84x25 mm, 145 g (270 g with stand). Source: https://help.elgato.com/hc/en-us/articles/18208816152333-Elgato-Stream-Deck-MK-2-Technical-Specifications"
+   "notes": "Elgato help centre [M]: 118x84x25 mm, 145 g (270 g with stand). Source: https://help.elgato.com/hc/en-us/articles/18208816152333-Elgato-Stream-Deck-MK-2-Technical-Specifications",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "eventide-h9000",
@@ -4150,7 +5046,12 @@
     "https://www.eventideaudio.com/rackmount/h9000/",
     "https://www.andertons.co.uk/eventide-h9000-flagship-effects-processor/"
    ],
-   "notes": "Eventide page + Andertons: 89 H x 483 W x 318 D mm (2U), 6.4 kg. Source: https://www.eventideaudio.com/rackmount/h9000/"
+   "notes": "Eventide page + Andertons: 89 H x 483 W x 318 D mm (2U), 6.4 kg. Source: https://www.eventideaudio.com/rackmount/h9000/",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "focusrite-rednet-a16r-mkii",
@@ -4168,7 +5069,11 @@
    "sources": [
     "https://ae.thomann.de/focusrite_rednet_a16r_mkii.htm"
    ],
-   "notes": "Depth CONFLICT 327-352 mm; height 43-44.5; 4.5-5.0 kg. Left blank. Source: https://ae.thomann.de/focusrite_rednet_a16r_mkii.htm"
+   "notes": "Depth CONFLICT 327-352 mm; height 43-44.5; 4.5-5.0 kg. Left blank. Source: https://ae.thomann.de/focusrite_rednet_a16r_mkii.htm",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "focusrite-rednet-mp8r",
@@ -4190,7 +5095,11 @@
    "sources": [
     "https://www.proaudiodesign.com/collections/focusrite/products/focusrite-rednet-mp8r"
    ],
-   "notes": "482.6 x ~394 (manual shows 390; CONFLICT) x 44.5 mm, ~5.75 kg: depth left blank. Source: https://www.proaudiodesign.com/collections/focusrite/products/focusrite-rednet-mp8r"
+   "notes": "482.6 x ~394 (manual shows 390; CONFLICT) x 44.5 mm, ~5.75 kg: depth left blank. Source: https://www.proaudiodesign.com/collections/focusrite/products/focusrite-rednet-mp8r",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "partial"
   },
   {
    "id": "jbl-eon715",
@@ -4209,7 +5118,11 @@
    "sources": [
     "https://jblpro.com/en-US/products/jbl-eon715"
    ],
-   "notes": "CONFLICT: 716x438x358 mm vs 702x438x351 mm (two JBL pages), H x W x D; 17 kg net. Dims left blank. Source: https://jblpro.com/en-US/products/jbl-eon715"
+   "notes": "CONFLICT: 716x438x358 mm vs 702x438x351 mm (two JBL pages), H x W x D; 17 kg net. Dims left blank. Source: https://jblpro.com/en-US/products/jbl-eon715",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-x8",
@@ -4225,7 +5138,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "4 placements. Not researched."
+   "notes": "4 placements. Not researched.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "meyer-upjunior-upj-1p",
@@ -4249,7 +5166,11 @@
     "https://www.pssl.com/products/meyer-sound-upjunior-powered-loudspeaker",
     "https://www.manualsdir.com/manuals/118204/meyer-sound-upjunior.html?page=10"
    ],
-   "notes": "484 H x 229 W x 259 D mm, 12.7 kg (manual hosted by manualsdir + PSSL). Standard UPJ-1P, not the XP. Source: https://www.pssl.com/products/meyer-sound-upjunior-powered-loudspeaker"
+   "notes": "484 H x 229 W x 259 D mm, 12.7 kg (manual hosted by manualsdir + PSSL). Standard UPJ-1P, not the XP. Source: https://www.pssl.com/products/meyer-sound-upjunior-powered-loudspeaker",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "motu-828es",
@@ -4265,14 +5186,18 @@
    "weightKg": 1.9,
    "portsSummary": "",
    "family": "rack-box-v2",
-   "dataQuality": "datasheet",
+   "dataQuality": "estimate",
    "sourceGrade": "datasheet",
    "tier": 3,
    "wave": 3,
    "sources": [
     "https://motu.com/products/proaudio/828es/specs.html"
    ],
-   "notes": "MOTU page via search: 483 incl. brackets x 177.5 x 44.5 mm (438 without brackets), ~1.9 kg. Source: https://motu.com/products/proaudio/828es/specs.html"
+   "notes": "MOTU page via search: 483 incl. brackets x 177.5 x 44.5 mm (438 without brackets), ~1.9 kg. Source: https://motu.com/products/proaudio/828es/specs.html",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "presonus-faderport-8",
@@ -4295,7 +5220,11 @@
    "sources": [
     "https://www.thomann.de/be/presonus_faderport_8.htm"
    ],
-   "notes": "Dealer: 334x301x57 mm, 2.3 kg (up to 2.7). Source: https://www.thomann.de/be/presonus_faderport_8.htm"
+   "notes": "Dealer: 334x301x57 mm, 2.3 kg (up to 2.7). Source: https://www.thomann.de/be/presonus_faderport_8.htm",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "presonus-studio-24c",
@@ -4318,7 +5247,11 @@
    "sources": [
     "https://www.proacousticsusa.com/presonus-studio-24c-2x2-usb-c-compatible-audio-interface.html"
    ],
-   "notes": "Dealer: 180x144x44 mm, 0.9 kg. Source: https://www.proacousticsusa.com/presonus-studio-24c-2x2-usb-c-compatible-audio-interface.html"
+   "notes": "Dealer: 180x144x44 mm, 0.9 kg. Source: https://www.proacousticsusa.com/presonus-studio-24c-2x2-usb-c-compatible-audio-interface.html",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "qsc-ks118",
@@ -4334,7 +5267,11 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "Not researched (named as needs data)."
+   "notes": "Not researched (named as needs data).",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-ntg5",
@@ -4356,7 +5293,12 @@
     "https://rode.com/en-us/products/ntg5",
     "https://edge.rode.com/pdf/page/1857/modules/4396/ntg5_datasheet.pdf"
    ],
-   "notes": "203 mm long, 76 g; width/height not retrieved. Source: https://rode.com/en-us/products/ntg5"
+   "notes": "203 mm long, 76 g; width/height not retrieved. Source: https://rode.com/en-us/products/ntg5",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "partial"
   },
   {
    "id": "schoeps-cmc-6-mk-41",
@@ -4372,7 +5314,12 @@
    "tier": 3,
    "wave": 3,
    "sources": [],
-   "notes": "3 room placements for an id in neither catalogue nor Bêta. Not researched."
+   "notes": "3 room placements for an id in neither catalogue nor Bêta. Not researched.",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-ew-d-em",
@@ -4391,7 +5338,12 @@
    "sources": [
     "https://docs.cloud.sennheiser.com/en-us/ew-d/ew-d/specifications-ew-d-em.html"
    ],
-   "notes": "212x44x189 mm (axis order unlabelled, left blank), ~1000 g without antennas. Source: https://docs.cloud.sennheiser.com/en-us/ew-d/ew-d/specifications-ew-d-em.html"
+   "notes": "212x44x189 mm (axis order unlabelled, left blank), ~1000 g without antennas. Source: https://docs.cloud.sennheiser.com/en-us/ew-d/ew-d/specifications-ew-d-em.html",
+   "traits": [
+    "receiver",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-ew-d-skm-s",
@@ -4414,7 +5366,13 @@
    "sources": [
     "https://docs.cloud.sennheiser.com/en-us/ew-d/ew-d/specifications-ew-d-skm-s.html"
    ],
-   "notes": "50 dia x 268 mm with MMD 835 module, ~304 g (195 g without module). Source: https://docs.cloud.sennheiser.com/en-us/ew-d/ew-d/specifications-ew-d-skm-s.html"
+   "notes": "50 dia x 268 mm with MMD 835 module, ~304 g (195 g without module). Source: https://docs.cloud.sennheiser.com/en-us/ew-d/ew-d/specifications-ew-d-skm-s.html",
+   "traits": [
+    "transmitter",
+    "handheld",
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-qlxd2-handheld",
@@ -4438,7 +5396,13 @@
     "https://pubs.shure.com/view/guide/QLXD/en-US.pdf",
     "https://www.shure.com/en-US/products/wireless-systems/qlx-d_digital_wireless/qlxd2_beta58a"
    ],
-   "notes": "269 length x 51 dia mm, 307 g without batteries; QLXD2/B58A capsule variant exists. Source: https://pubs.shure.com/view/guide/QLXD/en-US.pdf"
+   "notes": "269 length x 51 dia mm, 307 g without batteries; QLXD2/B58A capsule variant exists. Source: https://pubs.shure.com/view/guide/QLXD/en-US.pdf",
+   "traits": [
+    "transmitter",
+    "handheld",
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-ulxd2-handheld",
@@ -4461,7 +5425,13 @@
    "sources": [
     "https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf"
    ],
-   "notes": "256 x 51 mm dia (V50/V51 bands 278), 340 g without batteries. Source: https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf"
+   "notes": "256 x 51 mm dia (V50/V51 bands 278), 340 g without batteries. Source: https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf",
+   "traits": [
+    "transmitter",
+    "handheld",
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "soundcraft-signature-12mtk",
@@ -4480,7 +5450,11 @@
    "sources": [
     "https://www.boullard.ch/en/product/sono-studio/mixers/non-amplified-mixer/168752-soundcraft-signature12mtk-12-14-12-live-rec-desk-usb-mtk/"
    ],
-   "notes": "Dealer: 388x380x113 mm, order ambiguous (E, one dealer depth 313): left blank; 5.86 kg; USB 14-in/12-out. Source: https://www.boullard.ch/en/product/sono-studio/mixers/non-amplified-mixer/168752-soundcraft-signature12mtk-12-14-12-live-rec-desk-usb-mtk/"
+   "notes": "Dealer: 388x380x113 mm, order ambiguous (E, one dealer depth 313): left blank; 5.86 kg; USB 14-in/12-out. Source: https://www.boullard.ch/en/product/sono-studio/mixers/non-amplified-mixer/168752-soundcraft-signature12mtk-12-14-12-live-rec-desk-usb-mtk/",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "tc-electronic-m3000",
@@ -4504,7 +5478,12 @@
     "https://www.zzounds.com/item--TCE9505000",
     "https://cf3.zzounds.com/media/M3000_US-23e213692884cf658eee80e8a9bb7fea.pdf"
    ],
-   "notes": "Dealer: 483x44x208 mm (W x H x D, 1U), ~2.35 kg; discontinued. Source: https://www.zzounds.com/item--TCE9505000"
+   "notes": "Dealer: 483x44x208 mm (W x H x D, 1U), ~2.35 kg; discontinued. Source: https://www.zzounds.com/item--TCE9505000",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "telos-zephyr-xstream",
@@ -4529,7 +5508,11 @@
     "https://docs.telosalliance.com/docs/specifications-and-warranty",
     "https://bswusa.com/telos-xstream-isdn-codec/"
    ],
-   "notes": "Manual specs: panel 19 in, body ~483x318x89 mm; weight CONFLICT 4 kg (manual) vs 17 lb (dealer). 2 combo XLR/TRS in, 100Base-T, 8 contact closures. Legacy product. Source: https://telosalliance.com/Telos/XSTREAM"
+   "notes": "Manual specs: panel 19 in, body ~483x318x89 mm; weight CONFLICT 4 kg (manual) vs 17 lb (dealer). 2 combo XLR/TRS in, 100Base-T, 8 contact closures. Legacy product. Source: https://telosalliance.com/Telos/XSTREAM",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ua-la-610-mkii",
@@ -4552,7 +5535,11 @@
    "sources": [
     "https://www.adorama.com/uala610m2d.html"
    ],
-   "notes": "Dealer (Adorama): 483x311x89 mm (2U), ~5.4 kg; mic impedance 500/2k ohm selectable. Source: https://www.adorama.com/uala610m2d.html"
+   "notes": "Dealer (Adorama): 483x311x89 mm (2U), ~5.4 kg; mic impedance 500/2k ohm selectable. Source: https://www.adorama.com/uala610m2d.html",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "warm-audio-wa73-eq",
@@ -4575,7 +5562,11 @@
    "sources": [
     "https://www.zzounds.com/item--WAUWA73EQ"
    ],
-   "notes": "Dealer: 483x254x44 mm, ~5 kg. Source: https://www.zzounds.com/item--WAUWA73EQ"
+   "notes": "Dealer: 483x254x44 mm, ~5 kg. Source: https://www.zzounds.com/item--WAUWA73EQ",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "whirlwind-sp1x3",
@@ -4591,11 +5582,13 @@
    "tier": 3,
    "wave": 3,
    "sources": [
-    "https://www.americanmusical.com/p/whirlwind-sp1x3-1x3-microphone-splitter",
-    "https://www.adorama.com/wwsplit6.html",
-    "https://www.rentex.com/wp-content/uploads/2018/08/SPLIT6-Manual.pdf"
+    "https://www.americanmusical.com/p/whirlwind-sp1x3-1x3-microphone-splitter"
    ],
-   "notes": "Retailer lists level and response only; no dims. Source: https://www.americanmusical.com/p/whirlwind-sp1x3-1x3-microphone-splitter"
+   "notes": "Retailer lists level and response only; no dims. Source: https://www.americanmusical.com/p/whirlwind-sp1x3-1x3-microphone-splitter",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-ns-10m",
@@ -4612,10 +5605,13 @@
    "tier": 3,
    "wave": 3,
    "sources": [
-    "https://www.altomusic.com/products/yamaha-ns-10m-studio-passive-monitors-pair",
-    "https://erinsaudiocorner.com/loudspeakers/yamaha_ns10m_studio"
+    "https://www.altomusic.com/products/yamaha-ns-10m-studio-passive-monitors-pair"
    ],
-   "notes": "Dealer ~382x215x199 mm, ~6 kg; orientation caveat, dims left blank. Passive: speaker terminals only; needs an amp in the chain. Source: https://www.altomusic.com/products/yamaha-ns-10m-studio-passive-monitors-pair"
+   "notes": "Dealer ~382x215x199 mm, ~6 kg; orientation caveat, dims left blank. Passive: speaker terminals only; needs an amp in the chain. Source: https://www.altomusic.com/products/yamaha-ns-10m-studio-passive-monitors-pair",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "audio-technica-ath-m50x",
@@ -4635,7 +5631,11 @@
     "https://www.audio-technica.com/en-us/ath-m50x",
     "https://docs.audio-technica.com/eu/M-Series_leaflet_ENG_L00053_V1.0.pdf"
    ],
-   "notes": "Rank 14, most common student headphone. 285 g without cable; 3 detachable cables; impedance not retrieved. Source: https://www.audio-technica.com/en-us/ath-m50x"
+   "notes": "Rank 14, most common student headphone. 285 g without cable; 3 detachable cables; impedance not retrieved. Source: https://www.audio-technica.com/en-us/ath-m50x",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "beyerdynamic-dt-770-pro",
@@ -4654,7 +5654,11 @@
    "sources": [
     "https://europe.beyerdynamic.com/p/dt-770-pro"
    ],
-   "notes": "Rank 16; 8 room placements (most demanded missing id after l-acoustics-ks28). 32/80/250 ohm; weight 375 g with cable (270 g without per B-Stock page). Source: https://europe.beyerdynamic.com/p/dt-770-pro"
+   "notes": "Rank 16; 8 room placements (most demanded missing id after l-acoustics-ks28). 32/80/250 ohm; weight 375 g with cable (270 g without per B-Stock page). Source: https://europe.beyerdynamic.com/p/dt-770-pro",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "pop-filter-generic",
@@ -4670,7 +5674,11 @@
    "tier": 1,
    "wave": 4,
    "sources": [],
-   "notes": "Curricula tier 1 accessory; Stedman/Rode pop filters NOT researched; no dims."
+   "notes": "Curricula tier 1 accessory; Stedman/Rode pop filters NOT researched; no dims.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rack-generic-6u-16u",
@@ -4686,7 +5694,11 @@
    "tier": 1,
    "wave": 4,
    "sources": [],
-   "notes": "Curricula tier 1; only the Middle Atlantic SRK has citable dims."
+   "notes": "Curricula tier 1; only the Middle Atlantic SRK has citable dims.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-hd-25",
@@ -4703,10 +5715,13 @@
    "tier": 1,
    "wave": 4,
    "sources": [
-    "https://www.sennheiser.com/en-us/catalog/products/headphones/hd-25/hd-25-506909",
-    "https://www.sennheiser.com/en-us/catalog/products/headphones/headphone-accessories/hd-25-coiled-cable-3m-523877"
+    "https://www.sennheiser.com/en-us/catalog/products/headphones/hd-25/hd-25-506909"
    ],
-   "notes": "Rank 17 (DJ/radio/ENG); 5 room placements. Manufacturer page: ~140 g without cable, 70 ohm, 3.5 mm + 6.3 adapter, cable ~1.5 m. No cup/headband dims published. Source: https://www.sennheiser.com/en-us/catalog/products/headphones/hd-25/hd-25-506909"
+   "notes": "Rank 17 (DJ/radio/ENG); 5 room placements. Manufacturer page: ~140 g without cable, 70 ohm, 3.5 mm + 6.3 adapter, cable ~1.5 m. No cup/headband dims published. Source: https://www.sennheiser.com/en-us/catalog/products/headphones/hd-25/hd-25-506909",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sony-mdr-7506",
@@ -4725,7 +5740,11 @@
     "https://pro.sony/ue_US/pdf/mdr-7506",
     "https://www.sony.com.au/electronics/headband-headphones/mdr-7506/specifications"
    ],
-   "notes": "Rank 15, broadcast/studio reference. 230-260 g (regional listings differ), fixed 3 m cord, 63 ohm. Source: https://pro.sony/ue_US/pdf/mdr-7506"
+   "notes": "Rank 15, broadcast/studio reference. 230-260 g (regional listings differ), fixed 3 m cord, 63 ohm. Source: https://pro.sony/ue_US/pdf/mdr-7506",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "beyerdynamic-dt-297-pv-mkii",
@@ -4741,7 +5760,12 @@
    "tier": 2,
    "wave": 4,
    "sources": [],
-   "notes": "Broadcast headset; not researched in notes. 3 placements in 2 rooms. Demand: 3/2 room placements/rooms."
+   "notes": "Broadcast headset; not researched in notes. 3 placements in 2 rooms. Demand: 3/2 room placements/rooms.",
+   "traits": [
+    "passive",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "db-audiotechnik-v8",
@@ -4757,7 +5781,11 @@
    "tier": 2,
    "wave": 4,
    "sources": [],
-   "notes": "Line-array element, 2 scenarios. KB W/H/D parsable, values not in notes. Demand: 2 TEK Brain scenarios."
+   "notes": "Line-array element, 2 scenarios. KB W/H/D parsable, values not in notes. Demand: 2 TEK Brain scenarios.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "akg-d112-mkii",
@@ -4781,7 +5809,12 @@
     "https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwef0475a5/pdfs/AKG_d112_mkII_cutsheet.pdf",
     "https://www.akg.com/D112MkII.html"
    ],
-   "notes": "Rank 12 (kick). Cut sheet [M]: 115 length x 126 height x 70 dia, 300 g net (quick guide says 455 g: CONFLICT). Bent body; no existing shape. Source: https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwef0475a5/pdfs/AKG_d112_mkII_cutsheet.pdf"
+   "notes": "Rank 12 (kick). Cut sheet [M]: 115 length x 126 height x 70 dia, 300 g net (quick guide says 455 g: CONFLICT). Bent body; no existing shape. Source: https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwef0475a5/pdfs/AKG_d112_mkII_cutsheet.pdf",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "digital-audio-cable-family",
@@ -4797,7 +5830,11 @@
    "tier": 2,
    "wave": 4,
    "sources": [],
-   "notes": "Pinouts are DOMAIN KNOWLEDGE, UNSOURCED in the notes; verify against AES14/AES-3 and Neutrik/Hosa before use. Mogami DB25 loom is already verified."
+   "notes": "Pinouts are DOMAIN KNOWLEDGE, UNSOURCED in the notes; verify against AES14/AES-3 and Neutrik/Hosa before use. Mogami DB25 loom is already verified.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "dpa-4060",
@@ -4814,9 +5851,15 @@
    "tier": 2,
    "wave": 4,
    "sources": [
-    "https://www.dpamicrophones.com/microphones/lavalier/4060?variant=32"
+    "https://www.dpamicrophones.com/microphones/lavalier/4060?variant=32",
+    "https://www.dpamicrophones.com/microphones/lavalier/4060lmk/"
    ],
-   "notes": "Capsule 5.4 dia x 12.7 mm, 7.5 g with cable; MicroLock/TA4F/LEMO/mini-jack/MicroDot, cable 1.8 m. The KB id dpa-4060 is in the repo skipped list (no connector maps to the catalog). Inspection-scale view needed. Source: https://www.dpamicrophones.com/microphones/lavalier/4060?variant=32"
+   "notes": "Capsule 5.4 dia x 12.7 mm, 7.5 g with cable; MicroLock/TA4F/LEMO/mini-jack/MicroDot, cable 1.8 m. The KB id dpa-4060 is in the repo skipped list (no connector maps to the catalog). Inspection-scale view needed. Source: https://www.dpamicrophones.com/microphones/lavalier/4060?variant=32",
+   "traits": [
+    "condenser",
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-ks28",
@@ -4832,7 +5875,11 @@
    "tier": 2,
    "wave": 4,
    "sources": [],
-   "notes": "Most-placed id (11 placements) that exists in neither catalogue nor Bêta. Not researched."
+   "notes": "Most-placed id (11 placements) that exists in neither catalogue nor Bêta. Not researched.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "middle-atlantic-srk",
@@ -4847,16 +5894,19 @@
    },
    "portsSummary": "",
    "family": "assembly",
-   "dataQuality": "dealer",
+   "dataQuality": "estimate",
    "sourceGrade": "dealer",
    "tier": 2,
    "wave": 4,
    "sources": [
     "https://soundpro.com/middle-atlantic-srk-series-rack",
-    "https://www.adiglobaldistribution.pr/Product/NO-SRK",
-    "https://media.iewc.com/SpecificationSheets/RK2.pdf"
+    "https://www.adiglobaldistribution.pr/Product/NO-SRK"
    ],
-   "notes": "Retail: depth 406 mm, 16 U + 12 U on a 25 degree slope, width 20.38 in converted = 518 mm, 200 lb max load; height 1387 mm is indicative and FLAGGED inconsistent in the notes. Source: https://soundpro.com/middle-atlantic-srk-series-rack"
+   "notes": "Retail: depth 406 mm, 16 U + 12 U on a 25 degree slope, width 20.38 in converted = 518 mm, 200 lb max load; height 1387 mm is indicative and FLAGGED inconsistent in the notes. Source: https://soundpro.com/middle-atlantic-srk-series-rack",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "conflict"
   },
   {
    "id": "rode-psa1",
@@ -4873,9 +5923,14 @@
    "tier": 2,
    "wave": 4,
    "sources": [
-    "https://edge.rode.com/pdf/page/202/modules/8/2-1-PSA1_Datasheet.pdf"
+    "https://edge.rode.com/pdf/page/202/modules/8/2-1-PSA1_Datasheet.pdf",
+    "https://rode.com/en-us/products/psa1"
    ],
-   "notes": "Datasheet [M]: horizontal reach 820, vertical 840, desk insert 70 mm, 1.74 kg, 3/8in. Spring/scissor arm: boom-arm family (one fixed pose) does not cover it. Source: https://edge.rode.com/pdf/page/202/modules/8/2-1-PSA1_Datasheet.pdf"
+   "notes": "Datasheet [M]: horizontal reach 820, vertical 840, desk insert 70 mm, 1.74 kg, 3/8in. Spring/scissor arm: boom-arm family (one fixed pose) does not cover it. Source: https://edge.rode.com/pdf/page/202/modules/8/2-1-PSA1_Datasheet.pdf",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-hd-280-pro",
@@ -4895,7 +5950,11 @@
     "https://www.sennheiser.com/en-us/catalog/products/headphones/hd-280-pro/hd-280-pro-506845",
     "https://www.sennheiser.com/globalassets/digizuite/40985-en-hd_280_pro_product_specification_en.pdf"
    ],
-   "notes": "285 g without cable, 64 ohm. Source: https://www.sennheiser.com/en-us/catalog/products/headphones/hd-280-pro/hd-280-pro-506845"
+   "notes": "285 g without cable, 64 ohm. Source: https://www.sennheiser.com/en-us/catalog/products/headphones/hd-280-pro/hd-280-pro-506845",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shock-mount-generic",
@@ -4911,7 +5970,11 @@
    "tier": 2,
    "wave": 4,
    "sources": [],
-   "notes": "Curricula tier 2; no data (Neumann EA 1, AKG H85 not researched)."
+   "notes": "Curricula tier 2; no data (Neumann EA 1, AKG H85 not researched).",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "adam-audio-s3h",
@@ -4927,7 +5990,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "KB W/H/D parsable, values not in notes."
+   "notes": "KB W/H/D parsable, values not in notes.",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "allen-heath-zed-436",
@@ -4943,7 +6010,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "Large analog desk, rig cost. No data in notes."
+   "notes": "Large analog desk, rig cost. No data in notes.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "audient-asp8024-he",
@@ -4959,7 +6030,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "Large analog desk, 1 scenario. No data in notes. Demand: 1 TEK Brain scenarios."
+   "notes": "Large analog desk, 1 scenario. No data in notes. Demand: 1 TEK Brain scenarios.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "clear-com-freespeak-ii",
@@ -4974,12 +6049,12 @@
    "sourceGrade": "missing",
    "tier": 3,
    "wave": 4,
-   "sources": [
-    "https://www.clearcom.com/Products/Products-By-Name/Station-IC/fsii-bp24",
-    "https://www.clearcom.com/Products/Products-By-Name/Station-IC/fse-bp50",
-    "https://cdn.shopify.com/s/files/1/0708/6197/9946/files/FSE-BP50_FreeSpeakEdge_Beltpack_Datasheet.pdf"
+   "sources": [],
+   "notes": "Notes only cover the FSII-BP24 beltpack (XLR-4M headset, 2.4 GHz, no dims), a different SKU.",
+   "traits": [
+    "rack"
    ],
-   "notes": "Notes only cover the FSII-BP24 beltpack (XLR-4M headset, 2.4 GHz, no dims), a different SKU."
+   "sizeConfidence": "ok"
   },
   {
    "id": "db-audiotechnik-ds10",
@@ -4995,7 +6070,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "db-audiotechnik-ds20",
@@ -5011,7 +6090,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "db-audiotechnik-v-sub",
@@ -5027,7 +6110,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "2 scenarios. No data in notes. Demand: 2 TEK Brain scenarios."
+   "notes": "2 scenarios. No data in notes. Demand: 2 TEK Brain scenarios.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "genelec-1234a",
@@ -5043,7 +6130,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No data in notes. Demand: 2/1 room placements/rooms."
+   "notes": "No data in notes. Demand: 2/1 room placements/rooms.",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-a15-focus",
@@ -5059,7 +6150,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-p1",
@@ -5075,7 +6170,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "lexicon-pcm92",
@@ -5091,7 +6191,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "Not researched."
+   "notes": "Not researched.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "meyer-sound-galileo-galaxy-816",
@@ -5107,7 +6212,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "1 room, 1 scenario. No data in notes. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios."
+   "notes": "1 room, 1 scenario. No data in notes. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "meyer-sound-lina",
@@ -5123,7 +6233,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No data in notes (UPJunior researched, different product)."
+   "notes": "No data in notes (UPJunior researched, different product).",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-kh-750-dsp",
@@ -5139,7 +6253,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "1 room. No data in notes. Demand: 1/1 room placements/rooms."
+   "notes": "1 room. No data in notes. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-ku-100",
@@ -5155,7 +6273,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "KB W/H/D parsable, values not in notes."
+   "notes": "KB W/H/D parsable, values not in notes.",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "nexo-45n12",
@@ -5171,7 +6294,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "KB W/H/D parsable (repo), values not in notes."
+   "notes": "KB W/H/D parsable (repo), values not in notes.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "nexo-p12",
@@ -5187,7 +6314,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No data in notes. Demand: 2/1 room placements/rooms."
+   "notes": "No data in notes. Demand: 2/1 room placements/rooms.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "omnia-11",
@@ -5203,7 +6334,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "1 scenario. The researched Orban OPTIMOD 6300 is a different product. No data in notes. Demand: 1 TEK Brain scenarios."
+   "notes": "1 scenario. The researched Orban OPTIMOD 6300 is a different product. No data in notes. Demand: 1 TEK Brain scenarios.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rcf-hdl-30-a",
@@ -5219,7 +6355,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "Powered line-array element. KB W/H/D parsable, values not in notes."
+   "notes": "Powered line-array element. KB W/H/D parsable, values not in notes.",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-lavalier-ii",
@@ -5235,7 +6375,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "Tiny lavalier. Not researched."
+   "notes": "Tiny lavalier. Not researched.",
+   "traits": [
+    "condenser",
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-nt-sf1",
@@ -5251,7 +6396,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "Ambisonic 4-capsule head. Not researched."
+   "notes": "Ambisonic 4-capsule head. Not researched.",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sanken-cos-11d",
@@ -5267,7 +6417,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "Tiny lavalier; needs inspection scale. Not researched."
+   "notes": "Tiny lavalier; needs inspection scale. Not researched.",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-hmd-26",
@@ -5283,7 +6438,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "Headset; not researched. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios."
+   "notes": "Headset; not researched. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-mke-2",
@@ -5299,7 +6458,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "Lavalier; the notes cover the ME 2-II lavalier (6.5 mm capsule) instead. Demand: 1/1 room placements/rooms."
+   "notes": "Lavalier; the notes cover the ME 2-II lavalier (6.5 mm capsule) instead. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "condenser",
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sommer-cable-the-boxx-mp-08-04",
@@ -5315,7 +6479,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sonifex-dhy-04s",
@@ -5331,7 +6499,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ssl-origin",
@@ -5347,7 +6520,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "Large analog desk. No data in notes. Demand: 1/1 room placements/rooms."
+   "notes": "Large analog desk. No data in notes. Demand: 1/1 room placements/rooms.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "tascam-da-6400",
@@ -5363,7 +6540,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "tieline-gateway",
@@ -5379,7 +6560,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "1 room, 1 scenario. KB has no manual URL. No data in notes. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios."
+   "notes": "1 room, 1 scenario. KB has no manual URL. No data in notes. Demand: 1/1 room placements/rooms, 1 TEK Brain scenarios.",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "wisycom-mcr54",
@@ -5395,7 +6580,12 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "KB W/H/D parsable, values not in notes."
+   "notes": "KB W/H/D parsable, values not in notes.",
+   "traits": [
+    "receiver",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "akg-k240-studio",
@@ -5414,7 +6604,11 @@
    "sources": [
     "https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw70f3ec32/pdfs/AKG_K240_Studio_Spec_Sheet.pdf"
    ],
-   "notes": "240 g; 3-pin mini-XLR at the earcup (not a catalog connector). Source: https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw70f3ec32/pdfs/AKG_K240_Studio_Spec_Sheet.pdf"
+   "notes": "240 g; 3-pin mini-XLR at the earcup (not a catalog connector). Source: https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw70f3ec32/pdfs/AKG_K240_Studio_Spec_Sheet.pdf",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "allen-heath-avantis",
@@ -5435,10 +6629,13 @@
    "tier": 3,
    "wave": 4,
    "sources": [
-    "https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series",
-    "https://reverb.com/item/76842341-allen-heath-avantis-solo-64-channel-12-fader-digital-mixing-console-with-15-6-inch-hd-capacitive-touchscreen"
+    "https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series"
    ],
-   "notes": "Dealer: 917x627x269 mm, 26 kg, 24 faders; I/O not retrieved. Source: https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series"
+   "notes": "Dealer: 917x627x269 mm, 26 kg, 24 faders; I/O not retrieved. Source: https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "aphex-channel",
@@ -5461,7 +6658,11 @@
    "sources": [
     "https://aphex.com/products/channel"
    ],
-   "notes": "Aphex page [M]: 483x210x44 mm, 2.73 kg. Source: https://aphex.com/products/channel"
+   "notes": "Aphex page [M]: 483x210x44 mm, 2.73 kg. Source: https://aphex.com/products/channel",
+   "traits": [
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "apogee-symphony-desktop",
@@ -5484,7 +6685,11 @@
    "sources": [
     "https://www.thomannmusic.com/apogee_symphony_desktop.htm"
    ],
-   "notes": "Dealer: 199x125x64 mm, 0.8 kg. Source: https://www.thomannmusic.com/apogee_symphony_desktop.htm"
+   "notes": "Dealer: 199x125x64 mm, 0.8 kg. Source: https://www.thomannmusic.com/apogee_symphony_desktop.htm",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "argosy-universal-workstation",
@@ -5502,7 +6707,11 @@
    "sources": [
     "https://argosyconsole.com/about"
    ],
-   "notes": "Modular desk with rack bays (29.2 in segments); no standard single dims. Source: https://argosyconsole.com/about"
+   "notes": "Modular desk with rack bays (29.2 in segments); no standard single dims. Source: https://argosyconsole.com/about",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "axia-pulsar",
@@ -5520,7 +6729,11 @@
    "sources": [
     "https://docs.telosalliance.com/docs/axia-iqs-aes67-mixing-console"
    ],
-   "notes": "Compact AoIP, 100 mm motorised faders; no dims. Axia Quasar XR/SR and StudioCore engine (4 mic/line in + 8 analog in + 8 analog out on RJ-45) also lack dims. Source: https://docs.telosalliance.com/docs/axia-iqs-aes67-mixing-console"
+   "notes": "Compact AoIP, 100 mm motorised faders; no dims. Axia Quasar XR/SR and StudioCore engine (4 mic/line in + 8 analog in + 8 analog out on RJ-45) also lack dims. Source: https://docs.telosalliance.com/docs/axia-iqs-aes67-mixing-console",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-x-touch-universal",
@@ -5543,7 +6756,11 @@
    "sources": [
     "https://www.bhphotovideo.com/c/product/1821236-REG/behringer_x_touch_universal_control_surface.html"
    ],
-   "notes": "Dealer: 452x301x100 mm, 4.3 kg. Source: https://www.bhphotovideo.com/c/product/1821236-REG/behringer_x_touch_universal_control_surface.html"
+   "notes": "Dealer: 452x301x100 mm, 4.3 kg. Source: https://www.bhphotovideo.com/c/product/1821236-REG/behringer_x_touch_universal_control_surface.html",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "beyerdynamic-dt-990-pro",
@@ -5562,7 +6779,11 @@
     "https://europe.beyerdynamic.com/p/dt-990-pro",
     "https://north-america.beyerdynamic.com/p/dt-990-pro"
    ],
-   "notes": "Open back; weight CONFLICT 375 g (EU, with cable) vs 250 g (NA, without). Source: https://europe.beyerdynamic.com/p/dt-990-pro"
+   "notes": "Open back; weight CONFLICT 375 g (EU, with cable) vs 250 g (NA, without). Source: https://europe.beyerdynamic.com/p/dt-990-pro",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "clear-com-fsii-bp24",
@@ -5580,7 +6801,12 @@
    "sources": [
     "https://www.clearcom.com/Products/Products-By-Name/Station-IC/fsii-bp24"
    ],
-   "notes": "XLR-4M headset connector, 2.4 GHz; dims not retrieved. Source: https://www.clearcom.com/Products/Products-By-Name/Station-IC/fsii-bp24"
+   "notes": "XLR-4M headset connector, 2.4 GHz; dims not retrieved. Source: https://www.clearcom.com/Products/Products-By-Name/Station-IC/fsii-bp24",
+   "traits": [
+    "bodypack",
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "countryman-e6",
@@ -5600,7 +6826,12 @@
     "https://countryman.com/product/e6-earset/",
     "https://countryman.com/wp-content/uploads/2017/07/e6_earset_datasheet.pdf"
    ],
-   "notes": "Capsule 2.5 dia mm, cable 1 or 2 mm, 5 ft, 2 g; connector varies by wireless brand. Source: https://countryman.com/product/e6-earset/"
+   "notes": "Capsule 2.5 dia mm, cable 1 or 2 mm, 5 ft, 2 g; connector varies by wireless brand. Source: https://countryman.com/product/e6-earset/",
+   "traits": [
+    "condenser",
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "dangerous-music-monitor-st",
@@ -5619,7 +6850,12 @@
     "https://www.sweetwater.com/store/detail/MonitorSTdm",
     "https://proaudiola.com/Dangerous-Music-MONITOR-ST-p/dangerous-monitor_st-blk.htm"
    ],
-   "notes": "1U, 4 in / 3 speaker out, cue/talkback; dims not retrieved. Source: https://www.sweetwater.com/store/detail/MonitorSTdm"
+   "notes": "1U, 4 in / 3 speaker out, cue/talkback; dims not retrieved. Source: https://www.sweetwater.com/store/detail/MonitorSTdm",
+   "traits": [
+    "monitor-controller",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "digico-s21",
@@ -5640,9 +6876,14 @@
    "tier": 3,
    "wave": 4,
    "sources": [
-    "https://www.sonovente.com/en-gb/digico-digico-s21-p74455.html"
+    "https://www.sonovente.com/en-gb/digico-digico-s21-p74455.html",
+    "https://soundpro.com/content/product-documents/S21-Brochure-V9.pdf"
    ],
-   "notes": "Dealer: 763x586x295 mm, ~19 kg bare, 21 motorised faders, two 10in screens. Source: https://www.sonovente.com/en-gb/digico-digico-s21-p74455.html"
+   "notes": "Dealer: 763x586x295 mm, ~19 kg bare, 21 motorised faders, two 10in screens. Source: https://www.sonovente.com/en-gb/digico-digico-s21-p74455.html",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "flight-case-generic",
@@ -5658,7 +6899,11 @@
    "tier": 3,
    "wave": 4,
    "sources": [],
-   "notes": "No specs found."
+   "notes": "No specs found.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "k-m-26772",
@@ -5677,7 +6922,11 @@
    "sources": [
     "https://www.adorama.com/km2677256.html"
    ],
-   "notes": "Height 167-254 mm, 150x170 mm plate, ~3.1 kg, 15 kg max load (retailers). Source: https://www.adorama.com/km2677256.html"
+   "notes": "Height 167-254 mm, 150x170 mm plate, ~3.1 kg, 15 kg max load (retailers). Source: https://www.adorama.com/km2677256.html",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "mackie-mcu-pro",
@@ -5700,7 +6949,11 @@
    "sources": [
     "https://shop.pssl.com/products/mackie-mc-universal-pro-8-channel-control-surface-with-usb"
    ],
-   "notes": "Dealer: 419x429x113 mm, 7.6 kg (some 5.4). Source: https://shop.pssl.com/products/mackie-mc-universal-pro-8-channel-control-surface-with-usb"
+   "notes": "Dealer: 419x429x113 mm, 7.6 kg (some 5.4). Source: https://shop.pssl.com/products/mackie-mc-universal-pro-8-channel-control-surface-with-usb",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "oc-white-proboom-elite-14199-b",
@@ -5718,7 +6971,11 @@
    "sources": [
     "https://www.markertek.com/product/ocw-14199-b/o-c-white-14199-b-proboom-elite-45-inch-microphone-arm-only"
    ],
-   "notes": "Retailer only: reach 1143 mm, 5/8in-27 stud; weight capacity 2.5 lb. Notes could not find the \"ML-45\" name. Source: https://www.markertek.com/product/ocw-14199-b/o-c-white-14199-b-proboom-elite-45-inch-microphone-arm-only"
+   "notes": "Retailer only: reach 1143 mm, 5/8in-27 stud; weight capacity 2.5 lb. Notes could not find the \"ML-45\" name. Source: https://www.markertek.com/product/ocw-14199-b/o-c-white-14199-b-proboom-elite-45-inch-microphone-arm-only",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "presonus-studiolive-iii-se-16",
@@ -5741,7 +6998,11 @@
    "sources": [
     "https://www.thomann.co.uk/presonus_studiolive_series_iii_se_16.htm"
    ],
-   "notes": "Dealer: 447x584x165 mm, 10.5 kg. Source: https://www.thomann.co.uk/presonus_studiolive_series_iii_se_16.htm"
+   "notes": "Dealer: 447x584x165 mm, 10.5 kg. Source: https://www.thomann.co.uk/presonus_studiolive_series_iii_se_16.htm",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-psa1-plus",
@@ -5757,9 +7018,14 @@
    "tier": 3,
    "wave": 4,
    "sources": [
-    "https://rode.com/en-us/products/psa1-plus"
+    "https://rode.com/en-us/products/psa1-plus",
+    "https://edge.rode.com/pdf/products/1212/PSA1%20Black%20White_Data%20Sheet_FA.pdf"
    ],
-   "notes": "Reach 940 horizontal, 860 vertical; black or white. Source: https://rode.com/en-us/products/psa1-plus"
+   "notes": "Reach 940 horizontal, 860 vertical; black or white. Source: https://rode.com/en-us/products/psa1-plus",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rode-psm1",
@@ -5782,7 +7048,11 @@
    "sources": [
     "https://www.zzounds.com/item--RODPSM1"
    ],
-   "notes": "Retailer (zZounds): 122x110x155 mm, 390 g. Neumann EA 1 and AKG H85/H100 not researched. Source: https://www.zzounds.com/item--RODPSM1"
+   "notes": "Retailer (zZounds): 122x110x155 mm, 390 g. Neumann EA 1 and AKG H85/H100 not researched. Source: https://www.zzounds.com/item--RODPSM1",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-me-2-ii",
@@ -5801,7 +7071,12 @@
     "https://www.sennheiser.com/en-us/catalog/products/microphones/me-2/me-2-ii-507437",
     "https://sennheiser.com/globalassets/digizuite/41600-en-sp_1166_v1.0_me_2_product_specification_en.pdf"
    ],
-   "notes": "Capsule 6.5 mm dia; 3.5 mm locking jack, cable ~1.6 m; 7.5 V supply; weight not stated. Source: https://www.sennheiser.com/en-us/catalog/products/microphones/me-2/me-2-ii-507437"
+   "notes": "Capsule 6.5 mm dia; 3.5 mm locking jack, cable ~1.6 m; 7.5 V supply; weight not stated. Source: https://www.sennheiser.com/en-us/catalog/products/microphones/me-2/me-2-ii-507437",
+   "traits": [
+    "condenser",
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-mx418d",
@@ -5821,7 +7096,11 @@
     "https://www.shure.com/en-US/products/microphones/mx418",
     "https://content-files.shure.com/Pubs/MX412/mx412d.pdf"
    ],
-   "notes": "18 in (457 mm) gooseneck with base, 0.82 kg; connector position not retrieved. Source: https://www.shure.com/en-US/products/microphones/mx418"
+   "notes": "18 in (457 mm) gooseneck with base, 0.82 kg; connector position not retrieved. Source: https://www.shure.com/en-US/products/microphones/mx418",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-wl93",
@@ -5841,7 +7120,12 @@
     "https://pubs.shure.com/view/guide/WL93-SM93/en-US.pdf",
     "https://www.shure.com/en-US/products/microphones/wl93"
    ],
-   "notes": "16 g; ~1.27 m cable ending in TA4F; capsule dims not retrieved. Source: https://pubs.shure.com/view/guide/WL93-SM93/en-US.pdf"
+   "notes": "16 g; ~1.27 m cable ending in TA4F; capsule dims not retrieved. Source: https://pubs.shure.com/view/guide/WL93-SM93/en-US.pdf",
+   "traits": [
+    "condenser",
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "studer-onair-1500",
@@ -5857,10 +7141,13 @@
    "tier": 3,
    "wave": 4,
    "sources": [
-    "https://www.audinate.com/products/dante-enabled/studer/studer-onair-1500",
-    "https://tvtechnology.com/equipment/studer-debuts-onair-1500-radio-console-announces-initial-order"
+    "https://www.audinate.com/products/dante-enabled/studer/studer-onair-1500"
    ],
-   "notes": "Dante AoIP radio console; dims not retrieved; some listings show it discontinued. Source: https://www.audinate.com/products/dante-enabled/studer/studer-onair-1500"
+   "notes": "Dante AoIP radio console; dims not retrieved; some listings show it discontinued. Source: https://www.audinate.com/products/dante-enabled/studer/studer-onair-1500",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "wheatstone-lx-24",
@@ -5878,7 +7165,11 @@
    "sources": [
     "https://www.radioworld.com/uncategorized/wheatstone-lx24"
    ],
-   "notes": "No dims found. Source: https://www.radioworld.com/uncategorized/wheatstone-lx24"
+   "notes": "No dims found. Source: https://www.radioworld.com/uncategorized/wheatstone-lx24",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "avid-venue-s6l",
@@ -5894,7 +7185,11 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "Large format; recommend keeping Bêta (rig cost, no data)."
+   "notes": "Large format; recommend keeping Bêta (rig cost, no data).",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "focal-utopia-main-112",
@@ -5910,7 +7205,11 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "nagra-vi",
@@ -5926,7 +7225,11 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "Discontinued; KB W/H/D parsable, values not in notes."
+   "notes": "Discontinued; KB W/H/D parsable, values not in notes.",
+   "traits": [
+    "battery"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "neutrik-ne8mx",
@@ -5942,7 +7245,11 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "A connector, not a device; connector GLBs are not rendered in the scene (repo design)."
+   "notes": "A connector, not a device; connector GLBs are not rendered in the scene (repo design).",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "nexo-geo-m10",
@@ -5958,7 +7265,11 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "No data in notes."
+   "notes": "No data in notes.",
+   "traits": [
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "qsc-rmx-1450",
@@ -5974,7 +7285,12 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "Discontinued per KB; recommend keeping Bêta (legacy). No data in notes."
+   "notes": "Discontinued per KB; recommend keeping Bêta (legacy). No data in notes.",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "qsc-rmx-850",
@@ -5990,7 +7306,12 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "Discontinued per KB; recommend keeping Bêta (legacy). No data in notes."
+   "notes": "Discontinued per KB; recommend keeping Bêta (legacy). No data in notes.",
+   "traits": [
+    "power-amp",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-spx2000",
@@ -6006,7 +7327,12 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "Discontinued; KB W/H/D parsable, values not in notes."
+   "notes": "Discontinued; KB W/H/D parsable, values not in notes.",
+   "traits": [
+    "processor",
+    "rack"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "audix-d6",
@@ -6024,7 +7350,12 @@
    "sources": [
     "https://audixusa.com/products/d6"
    ],
-   "notes": "Dimensions and weight not retrieved (page lists an implausible 46.06 in). Source: https://audixusa.com/products/d6"
+   "notes": "Dimensions and weight not retrieved (page lists an implausible 46.06 in). Source: https://audixusa.com/products/d6",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "audix-i5",
@@ -6042,7 +7373,12 @@
    "sources": [
     "https://audixusa.com/products/i5"
    ],
-   "notes": "Dimensions, weight and connector not retrieved. Source: https://audixusa.com/products/i5"
+   "notes": "Dimensions, weight and connector not retrieved. Source: https://audixusa.com/products/i5",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "ev-evolve-50m-g2",
@@ -6058,7 +7394,11 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "3 placements. Not researched."
+   "notes": "3 placements. Not researched.",
+   "traits": [
+    "active"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "heil-pr-40",
@@ -6078,7 +7418,12 @@
     "https://heilsound.com/wp-content/uploads/sites/2/2021/02/Heil_PR40_PS.pdf",
     "https://heilsound.com/product/pr-40/"
    ],
-   "notes": "383 g (spec sheet); dimensions not confirmed. Source: https://heilsound.com/wp-content/uploads/sites/2/2021/02/Heil_PR40_PS.pdf"
+   "notes": "383 g (spec sheet); dimensions not confirmed. Source: https://heilsound.com/wp-content/uploads/sites/2/2021/02/Heil_PR40_PS.pdf",
+   "traits": [
+    "dynamic",
+    "passive"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "lawo-crystal",
@@ -6096,7 +7441,11 @@
    "sources": [
     "https://www.redtech.pro/lawo-unveils-new-crystal-radio-console/"
    ],
-   "notes": "Compact radio console (Oct 2023); dims not retrieved. Source: https://www.redtech.pro/lawo-unveils-new-crystal-radio-console/"
+   "notes": "Compact radio console (Oct 2023); dims not retrieved. Source: https://www.redtech.pro/lawo-unveils-new-crystal-radio-console/",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "roland-vr-6hd",
@@ -6119,7 +7468,11 @@
    "sources": [
     "https://www.3dbroadcastsales.com/roland-vr-6hd-ultra-compact-audio-video-mixer-rol-vr-6hd"
    ],
-   "notes": "AV mixer/streaming; dealer 370x242x100 mm, 3.4 kg. Source: https://www.3dbroadcastsales.com/roland-vr-6hd-ultra-compact-audio-video-mixer-rol-vr-6hd"
+   "notes": "AV mixer/streaming; dealer 370x242x100 mm, 3.4 kg. Source: https://www.3dbroadcastsales.com/roland-vr-6hd-ultra-compact-audio-video-mixer-rol-vr-6hd",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "rtw-touchmonitor-tm7",
@@ -6135,7 +7488,11 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "5 room placements for an id in neither catalogue nor Bêta (loudness meter, EBU R128 teaching). Not researched."
+   "notes": "5 room placements for an id in neither catalogue nor Bêta (loudness meter, EBU R128 teaching). Not researched.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-cl5",
@@ -6151,7 +7508,11 @@
    "tier": 3,
    "wave": 5,
    "sources": [],
-   "notes": "5 room placements for an id that exists in neither catalogue nor Bêta. Not researched."
+   "notes": "5 room placements for an id that exists in neither catalogue nor Bêta. Not researched.",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-dm7",
@@ -6170,7 +7531,11 @@
    "sources": [
     "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html"
    ],
-   "notes": "Manual prints 793x324x564 incl. feet; axis order assumed (E), so dims left blank; 23.5 kg. DM7 Compact 468x564x324 (same caveat), 16.5 kg. Source: https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html"
+   "notes": "Manual prints 793x324x564 incl. feet; axis order assumed (E), so dims left blank; 23.5 kg. DM7 Compact 468x564x324 (same caveat), 16.5 kg. Source: https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
   }
  ]
 }

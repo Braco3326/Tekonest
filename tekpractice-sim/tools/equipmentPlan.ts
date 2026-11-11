@@ -10,7 +10,12 @@
  *    three dimensions is an `estimate` (the missing axes would be guessed), and one with none is `missing`. Promotion reads
  *    `dataQuality`, so a partial size can never reach the verified catalogue as if it were measured (Review Focus 3).
  *
- * `promoted` / `betaModelled` are set by tools/promoteDevice.ts (Task 0.4) and read by tools/propose-content.ts (Task 0.2).
+ * A third axis of doubt, `sizeConfidence` (Wave 0b finding 7): a full size can still be unsure (the axis order was assumed, two sources disagree on
+ * a dimension, the number came from a search summary, only some axes are known). `effectiveQuality` lets a row stay datasheet / dealer (promotable)
+ * only when the confidence is 'ok'; anything else is an estimate (beta-modelled at best).
+ *
+ * `staged` / `promoted` / `betaModelled` are set by tools/promoteDevice.ts (stage 1 sets `staged`, stage 2 sets `promoted` or `betaModelled`)
+ * and read by tools/propose-content.ts (Task 0.2).
  */
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
@@ -47,12 +52,29 @@ export type SizeMmT = z.infer<typeof SizeMm>
 
 const hasFullSize = (s: SizeMmT): boolean => (s.w ?? 0) > 0 && (s.d ?? 0) > 0 && (s.h ?? 0) > 0
 
-/** The grade a size supports: the research grade only when all three dimensions are there; a partial size is an estimate; none is missing. */
-export function effectiveQuality(grade: DataQualityT, size: SizeMmT): DataQualityT {
-  if (grade === 'missing') return 'missing' // the research found no source: stay blocked even if a number is parsable
-  const n = [size.w, size.d, size.h].filter((v) => (v ?? 0) > 0).length
+/**
+ * How far a size can be trusted beyond "it is there":
+ *  - ok            labelled axes, one source (or sources that agree);
+ *  - axis-assumed  the axis order was assumed, inferred, re-ordered by us or read from a search summary instead of the document;
+ *  - conflict      two sources disagree on a dimension of the size (not only on the weight);
+ *  - partial       one or two axes only (the missing ones would be guessed).
+ */
+export const SizeConfidence = z.enum(['ok', 'axis-assumed', 'conflict', 'partial'])
+export type SizeConfidenceT = z.infer<typeof SizeConfidence>
+
+/** How many of the three axes are present. */
+export const axisCount = (s: SizeMmT): number => [s.w, s.d, s.h].filter((v) => (v ?? 0) > 0).length
+
+/**
+ * The grade a size supports. A row is promotable (datasheet or dealer) only when ALL THREE axes are present AND its sizeConfidence is 'ok';
+ * a partial size, an assumed axis order or a conflict between sources makes it an estimate (beta-modelled at best, never in the verified
+ * catalogue); no axis at all is missing. The research found no source (grade missing): blocked even if a number is parsable.
+ */
+export function effectiveQuality(grade: DataQualityT, size: SizeMmT, confidence: SizeConfidenceT = 'ok'): DataQualityT {
+  if (grade === 'missing') return 'missing'
+  const n = axisCount(size)
   if (n === 0) return 'missing'
-  if (n < 3) return 'estimate'
+  if (n < 3 || confidence !== 'ok') return 'estimate'
   return grade
 }
 
@@ -73,8 +95,24 @@ export const PlanPort = z
   .strict()
 export type PlanPort = z.infer<typeof PlanPort>
 
-/** What the plan knows about how the device behaves, where the category alone cannot say (a condenser needs phantom, a ribbon must not get it). */
-export const Trait = z.enum(['condenser', 'ribbon', 'active', 'passive', 'processor'])
+/**
+ * What the plan knows about how the device behaves, where the category alone cannot say (a condenser needs phantom, a ribbon must not get it, a
+ * body-pack runs on batteries, a DriveRack is a processor although its category says amplifier). tools/behaviourTemplates.ts reads them.
+ *  condenser / ribbon / dynamic   capsule type of a microphone;
+ *  phantom-powered                a microphone (or DI) that needs 48 V phantom from the chain;
+ *  battery                        runs on batteries, no mains inlet (body-packs, handhelds, field recorders on batteries);
+ *  receiver / transmitter         the two halves of a wireless or IEM system (a rack transmitter has the `rack` trait too and a mains inlet);
+ *  bodypack / handheld            the battery transmitter forms: never a mains inlet, no power toggle;
+ *  processor / power-amp          signal processors (compressors, EQs, speaker processors) and power amplifiers, whatever their category;
+ *  monitor-controller             a monitor controller;
+ *  active / passive               powered speaker or DI that needs power / passive parts, or an externally powered microphone;
+ *  rack / desk                    a rack-mounted unit / a desk, console or desktop unit.
+ */
+export const TRAITS = [
+  'condenser', 'ribbon', 'dynamic', 'phantom-powered', 'battery', 'receiver', 'transmitter', 'bodypack', 'handheld', 'processor', 'power-amp',
+  'passive', 'active', 'monitor-controller', 'rack', 'desk',
+] as const
+export const Trait = z.enum(TRAITS)
 export type TraitT = z.infer<typeof Trait>
 
 export const PlanRow = z
@@ -94,9 +132,12 @@ export const PlanRow = z
     wave: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
     sources: z.array(z.string().regex(/^https?:\/\/\S+$/, 'a source is an http(s) URL')),
     notes: z.string(),
-    /** The documented connector set (optional: absent = the category template's default ports, or the KB proposal's for a Bêta row). */
-    ports: z.array(PlanPort).optional(),
-    traits: z.array(Trait).optional(),
+    /** Behaviour traits (see TRAITS): required on every row, possibly empty. */
+    traits: z.array(Trait),
+    /** Whether the size can be trusted beyond being present (see SizeConfidence). */
+    sizeConfidence: SizeConfidence,
+    /** Stage 1 of the promotion has run (asset-spec skeleton written); stage 2 (--commit) turns it into promoted or beta-modelled. */
+    staged: z.boolean().optional(),
     promoted: z.boolean().optional(),
     betaModelled: z.boolean().optional(),
   })
@@ -104,6 +145,14 @@ export const PlanRow = z
   .refine((r) => (r.dataQuality !== 'datasheet' && r.dataQuality !== 'dealer') || hasFullSize(r.sizeMm), {
     path: ['sizeMm'],
     message: 'a datasheet or dealer row needs all three sizes (w, d, h) positive; a partial size is an estimate',
+  })
+  .refine((r) => (r.dataQuality !== 'datasheet' && r.dataQuality !== 'dealer') || r.sizeConfidence === 'ok', {
+    path: ['sizeConfidence'],
+    message: 'a datasheet or dealer row needs sizeConfidence ok; an assumed axis order, a conflict between sources or a partial size makes the row an estimate',
+  })
+  .refine((r) => (axisCount(r.sizeMm) >= 1 && axisCount(r.sizeMm) <= 2) === (r.sizeConfidence === 'partial'), {
+    path: ['sizeConfidence'],
+    message: "sizeConfidence is 'partial' exactly when one or two of the three axes are known",
   })
 export type PlanRow = z.infer<typeof PlanRow>
 

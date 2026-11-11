@@ -30,6 +30,8 @@ const row = (id: string, over: Partial<PlanRow> = {}): PlanRow => ({
   wave: 1,
   sources: [],
   notes: '',
+  traits: [],
+  sizeConfidence: 'ok',
   ...over,
 })
 
