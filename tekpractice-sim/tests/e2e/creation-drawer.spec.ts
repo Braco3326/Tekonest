@@ -560,6 +560,7 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
   })
 
   test('S7: a tab reached with the arrows is scrolled in clear of the fade: fully inside the unmasked part of the row, so its focus ring is whole', async ({ page }) => {
+    // Tolerance 1 px: a browser snaps scrollLeft to whole pixels, so a tab at a fractional offset (longer tab names since Wave 0) can end up to a pixel inside the fade.
     await boot(page)
     await open(page)
     const FADE = 28
@@ -567,7 +568,7 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
       row(page).evaluate((e) => {
         const f = document.activeElement!.getBoundingClientRect()
         const b = e.getBoundingClientRect()
-        return { left: f.left - b.left, right: b.right - f.right, start: (e as HTMLElement).dataset.fadeStart, end: (e as HTMLElement).dataset.fadeEnd }
+        return { wide: f.width > b.width - 2 * 28, left: f.left - b.left, right: b.right - f.right, start: (e as HTMLElement).dataset.fadeStart, end: (e as HTMLElement).dataset.fadeEnd }
       })
     const clear = async (label: string): Promise<void> => {
       // the flags follow the scroll (a scroll event): wait until they say the same as the geometry before reading the margins
@@ -580,8 +581,14 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
         )
         .toBe(true)
       const r = await read()
-      if (r.start === 'true') expect(r.left, label + ': clear of the start fade').toBeGreaterThanOrEqual(FADE - 0.5)
-      if (r.end === 'true') expect(r.right, label + ': clear of the end fade').toBeGreaterThanOrEqual(FADE - 0.5)
+      // A tab too wide to be clear of both fades (the row is 152 px at 400 px wide) must at least be whole inside the row.
+      if (r.wide) {
+        expect(r.left, label + ': a wide tab is whole (start)').toBeGreaterThanOrEqual(-1)
+        expect(r.right, label + ': a wide tab is whole (end)').toBeGreaterThanOrEqual(-1)
+        return
+      }
+      if (r.start === 'true') expect(r.left, label + ': clear of the start fade').toBeGreaterThanOrEqual(FADE - 1)
+      if (r.end === 'true') expect(r.right, label + ': clear of the end fade').toBeGreaterThanOrEqual(FADE - 1)
     }
     await row(page).getByRole('tab').first().focus()
     const n = await row(page).getByRole('tab').count()

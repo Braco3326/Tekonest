@@ -62,3 +62,66 @@ Consequence: Task 1.2 DI boxes (JDI, ProDI, J48, Type 85, and similar small boxe
 - Q2 PASS: Task 1.4 unchanged; no rounded-box fallback needed.
 - Q3 PASS: Task 1.2 unchanged; DI boxes use the plate-thickness rule above.
 - Scratch contact sheets (not committed): `C:\Users\braco\AppData\Local\Temp\claude\dd4283adc5f44d8e\4e0e33cf-26fa-4a45-94ed-a586d8113ebb\scratchpad\spike\out-scC2\src\spike-scarlett-c\work\2026-11-11T22-44-46-392Z\attempt-1.sheet.png`, `...\spike\out-kh-1\src\spike-kh120\work\2026-11-11T22-45-44-303Z\attempt-1.sheet.png`, `...\spike\out-jdi2\src\spike-radial-jdi\work\2026-11-11T22-43-32-613Z\attempt-1.sheet.png`.
+
+
+## Wave 0 foundations (Tasks 0.1 to 0.6)
+
+Nothing pushed, nothing deployed, no Meshy, no real device promoted (the only content changes are the plan JSON, the proposals' `sizeMm`, schema, connectors, tabs, tools, tests, docs).
+
+### Commits
+
+| Task | Commit | What |
+|---|---|---|
+| 0.1 | d97e178 | `content/proposals/equipment-plan.json` (315 rows), `tools/equipmentPlan.ts` (zod, `loadPlan`, `planRows`), `tools/import-equipment-plan.ts` (one-off CSV to JSON, refuses to overwrite without `--force`) |
+| 0.2 | f3fbb00 | `tools/proposalMerge.ts` (pure `mergeProposals`), wired into `propose-content.ts`; proposals carry the plan `sizeMm` |
+| 0.3 | 297768f | 6 port flags, `loadOhms` / `minLoadOhms` / `impedanceOhms` / `sizeMm` on Device, 12 connector types (marker sizes, French labels), catalogue rules (port id at most 19, ribbon / tally flags, minLoad <= load) |
+| 0.5a | 3a2cb7c | `src/scene/placeholderSize.ts`: placeholder box from the plan size, then category footprint, then 0.4 x 0.3 x 0.3 m (table moved out of the spawner unchanged) |
+| 0.4 | ab03531 | `tools/behaviourTemplates.ts`, `tools/promoteDevice.ts`, `npm run promote`, `tools/catalogWithProposals.ts`, `Device.portAliases` + store migration |
+| 0.5b | 5f870de | 12 tabs, `CATEGORY_TAB` for the 38 plan + 21 proposal + 16 catalogue categories, derived pins |
+| 0.6 | b111d80 | `tools/brandsRegister.ts` (`npm run register`, `--check`), generated section 6 of the register, badge « Bêta — dimensions estimées » |
+| gate | see git log | README of the proposals folder, drawer tab-focus fix, this log |
+
+### The plan table (315 rows)
+
+By `dataQuality` (what the size supports) and wave:
+
+| Wave | datasheet | dealer | estimate | missing | total |
+|---|---|---|---|---|---|
+| 1 | 32 | 8 | 1 | 8 | 49 |
+| 2 | 30 | 12 | 2 | 43 | 87 |
+| 3 | 16 | 10 | 3 | 63 | 92 |
+| 4 | 2 | 8 | 0 | 60 | 70 |
+| 5 | 0 | 1 | 0 | 16 | 17 |
+| all | 80 | 39 | 6 | 190 | 315 |
+
+134 Bêta rows (13 datasheet, 3 dealer, 1 estimate, 117 missing) and 181 new rows (67, 36, 5, 73). 197 rows carry at least one source URL (the notes column first, then the research notes by product match on a table row or on the start of a bullet); none was invented. Wave 1 rows blocked on a size today: radial-j48, k-m-25400, behringer-ha400, mutec-mc-3-plus, samson-s-patch-plus, sennheiser-ew-100-g4, k-m-210-6, k-m-259 (the three K&M stands cite a datasheet URL: the Wave 1 agent has to read the heights and put them in the plan row).
+
+### Decisions where the plan left a choice
+
+1. **Two grades per row.** The CSV grades 34 rows `datasheet` or `dealer` that have no (or only some) of the three dimensions (e.g. `royer-r-121` 25 x ? x 155.7, the K&M stands 'xx'). The plan test requires a datasheet or dealer row to have all three sizes. So `sourceGrade` keeps the research grade and `dataQuality` is what the size supports: partial gives `estimate`, none gives `missing` (38 rows changed grade: 19 datasheet to missing, 11 dealer to missing, 4 estimate to missing, 3 datasheet to estimate, 1 dealer to estimate). Nothing partial can be promoted as measured.
+2. **Family name** `rack-box-v3-sloped` in the CSV is `rack-box-v3-slope` in the plan (Task 3.3 name).
+3. **`mergeProposals` lives in `tools/proposalMerge.ts`**, not exported from `propose-content.ts` (importing that script would run it). A plan row of status `new` is never a proposal unless it was beta-modelled. `generated` dates and note dates of the proposals file were not rewritten (sizes were merged in place).
+4. **`sizeMm` on Device** (optional, any subset of w, d, h) is how the placeholder gets the plan size: proposals carry it, the plan file is not shipped to the browser.
+5. **Category = plan category.** A promoted device keeps the plan's category (`console-analog`, `stand-arm`, ...); `CATEGORY_TAB` and `CATEGORY_KIND` list all of them (tests fail on a new unlisted category). Tabs: `amplifier` to Amplis; `cable`, `di-box`, `splitter` to Câbles et DI; `accessory`, `stand-arm`, `mic-arm`, `shock-mount`, `pop-filter` to Pieds et accroches; headphones and headphone amps to Enceintes; wireless and IEM to Micros; outboard, broadcast, hybrids to Consoles; recorder, measurement, controller to Sources; codec, clock, switch, intercom, interface to Réseau; furniture, patchbay, signaling to Autres. **[validate]** This moves the K&M 210/9, the Yellowtec m!ka and the Mogami loom from Autres to the new tabs (visible change on shipped devices; e2e list updated and run).
+6. **Outcomes.** `promoted` needs datasheet or dealer grade with all three sizes AND at least one source URL; `beta-modelled` for `estimate` (the proposal stays, ports unchanged so saved cables survive, a new row gets a proposal built from the template, the spec gets a complete size with the estimated axes said in its sources and `guess` ports, no controls); `blocked` for `missing`, a cable row without documented ports, or an id collision. Plan rows gain optional `ports` (documented connector set), `traits` (condenser, ribbon, active, passive, processor), `promoted`, `betaModelled`.
+7. **Short port ids** are a pure function (direction word and trailing number kept, filler words such as input / per / channel dropped, then words dropped from the end): `in-balanced-input-per-channel-1` gives `in-balanced-1`. Old Bêta ids go in the new additive `Device.portAliases` (old to current) and `CreationStore.build` loads a saved cable that names an old id onto the new one (tested). A mains inlet is always `power-in` with the toggle `power`.
+8. **The asset pipeline sees proposals** (`catalogWithProposals`, used as the default `loadCatalog` of `asset:build`), otherwise a beta-modelled spec would fail the parity check.
+9. **Spec skeleton** written by `promote`: ports at 0,0 marked `guess`; controls get placeholder positions (power on `io`, the others on `top`): measure them before running `tools/controls/gen-from-specs.mjs`.
+10. **Badge**: inventory item badge is « Bêta — dimensions estimées » when a model ships for a proposal, else « non vérifié ». The Project tree and Properties still say « non vérifié » for such a device (not changed, still true).
+11. Connector sizes of the 12 new connectors: documented estimates (marked `est.` in the table), the ring is only a hint.
+
+### Open items
+
+- **aoip split (spike, NOT shipped).** Tried in the tree and reverted: added `dante`, `aes67`, `avb`, `aes50`, moved QL1 and Rio3224-D2 to `dante`, Axia iQ, playout-pc and the two AETA codecs to `aes67`, added the four to the clock module's digital set. Result: `validate:catalog` valid, all four levels solvable, every logic / engine test green including R5 to R8; the only red tests were the 11 of `cableStyle.test.ts` (four more colours must be found with the existing 16 fixed, plus French labels and deck rows). Not shipped because (a) it changes the signal of 6 founder-verified devices and the Livewire / codec to AES67 mapping is a modelling call, and (b) 26 proposals (39 ports) carry `aoip`: unless the promotion maps each to the right protocol, a promoted Dante device would not connect to the migrated QL1. Recipe if the founder agrees: signals + palette search + labels + migration above + a protocol field in the plan row read by `promote`.
+- **No signal types for RF antenna, DC supply or MIDI.** The connectors `bnc-antenna-50ohm`, `dc-barrel`, `midi-din5` exist but no signal fits (Task 0.3 lists none). Wireless and recorder templates therefore omit antenna and DC ports; adding `rf-antenna`, `dc-power`, `midi` needs three more cable colours (same palette search).
+- Port ids in `portAliases` are aliased for cables only, not for control ids (a Bêta device has no controls, so none to alias).
+- The templates are skeletons: a promoted device still needs its French `realWorld` copy, real port positions and, for speakers, a measured `modelFront` and real coverage (the template writes the 90 x 60 nominal, with its source).
+- Hand-made notes per device (`notes`) are English template text.
+
+### Gate numbers (2026-11-12)
+
+- `npx tsc --noEmit`: clean. `npm run lint`: clean. `npm run validate:catalog`: valid (25 devices, 79 ports, 38 connector types, 16 signal types, 8 rules). `npm run validate:assets`: 51 ok, 0 failed.
+- `npx vitest run` with `BLENDER_EXE=D:\Blender\blender.exe`: 235 files, 3669 tests, all passed (baseline before Wave 0: 228 files, 3541 tests).
+- Build: `npx tsx tools/room-thumbs.ts`, `npx tsc`, `npx vite build --outDir <scratch>` (not blocked; `npm run build` itself cannot take an outDir), `node tools/chunk-budget.mjs <scratch>`: budget OK (creation start 5,899,986 B of the 6,761,988 limit). `room-thumbs` left no diff.
+- Playwright on a private preview of the scratch build (`E2E_PORT=4181`, scratch config): `creation-drawer` and `creation-beta`, 60 passed, 1 skipped. One test needed a change: at 400 px wide the tab row is 152 px and « Pieds et accroches » (135 px) cannot clear both edge fades, so the focus handler of the drawer now centres a tab that wide (whole, not half out) and the S7 spec asserts that case separately.
+- Independent read-only review (plan Review Focus): not run by this agent.

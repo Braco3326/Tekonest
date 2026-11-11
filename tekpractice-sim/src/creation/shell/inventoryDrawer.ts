@@ -193,7 +193,9 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     const r = t.getBoundingClientRect()
     const left = r.left - box.left
     const right = box.right - r.right
-    if (left < fade) tablist.scrollLeft -= fade - left
+    // A tab too wide to be clear of BOTH fades (« Pieds et accroches » in the 152 px row of a 400 px phone) is centred instead: whole, never half out of the row.
+    if (r.width > box.width - 2 * fade) tablist.scrollLeft += left + r.width / 2 - box.width / 2
+    else if (left < fade) tablist.scrollLeft -= fade - left
     else if (right < fade) tablist.scrollLeft += fade - right
   })
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncFade).observe(tablist)
