@@ -1,0 +1,1 @@
+const t=1,e="qsc-k12-2",c=!0,o=[{id:"power",face:"io",xMm:207,yMm:66,sizeMm:{w:14.4,h:20,d:8},label:"Alimentation",catalogControl:"power",kind:"switch",axis:"x",positions:2,colour:"#d8dbe0",default:1}],s={schema:1,deviceId:e,generated:!0,controls:o};export{o as controls,s as default,e as deviceId,c as generated,t as schema};

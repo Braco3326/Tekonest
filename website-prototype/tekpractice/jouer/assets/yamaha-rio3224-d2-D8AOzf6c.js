@@ -1,0 +1,1 @@
+const a=1,e="yamaha-rio3224-d2",t=!0,o=[{id:"power",face:"io",xMm:430.3,yMm:191,sizeMm:{w:20.6,h:29.3,d:10},label:"Alimentation",catalogControl:"power",kind:"switch",axis:"x",positions:2,colour:"#d8dbe0",default:1}],c={schema:1,deviceId:e,generated:!0,controls:o};export{o as controls,c as default,e as deviceId,t as generated,a as schema};

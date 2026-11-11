@@ -1,0 +1,1 @@
+const o=1,e="yamaha-dbr12",t=!0,a=[{id:"power",face:"io",xMm:214.9,yMm:213.6,sizeMm:{w:11.8,h:17.2,d:8},label:"Alimentation",catalogControl:"power",kind:"switch",axis:"x",positions:2,colour:"#d8dbe0",default:1}],c={schema:1,deviceId:e,generated:!0,controls:a};export{a as controls,c as default,e as deviceId,t as generated,o as schema};

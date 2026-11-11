@@ -1,0 +1,1 @@
+const t=1,e="grace-m905",o=[{id:"power",kind:"button",face:"opposite",xMm:398,yMm:46.2,axis:"z",default:1,latch:!0,round:!0,colour:"#1b3a1f",lit:"#46ff5a",sizeMm:{w:17,h:17,d:4},travelMm:1,catalogControl:"power",label:"Power"}],a={schema:1,deviceId:e,controls:o};export{o as controls,a as default,e as deviceId,t as schema};

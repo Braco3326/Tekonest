@@ -4,10 +4,58 @@
     {
       "id": "xlr3-m",
       "optimized": true,
-      "tris": 292,
+      "tris": 440,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "date": "2026-11-10T08:02:01.866Z",
+      "specSource": "https://www.neutrik.com/media/8225/download/nc3mxx-2.pdf?v=1",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "id": "xlr3-f",
@@ -65,18 +113,114 @@
     {
       "id": "xlr5-m",
       "optimized": true,
-      "tris": 364,
+      "tris": 496,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:02:08.549Z",
+      "specSource": "https://www.adamhall.com/shop/qa-en/cables-connectors/connectors/xlr-connectors/4908/nc5mxx",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "xlr5-f",
       "optimized": true,
-      "tris": 184,
+      "tris": 704,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:01:51.058Z",
+      "specSource": "https://www.neutrik.com/media/8223/download/nc3fxx-1.pdf?v=1",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "trs-quarter",
@@ -87,7 +231,7 @@
       "status": "ok",
       "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-04T07:10:03.593Z",
+      "date": "2026-11-10T08:22:06.500Z",
       "specSource": "https://www.neutrik.com/media/8523/download/np3x-2.pdf?v=1",
       "logosRemoved": true,
       "photos": [],
@@ -129,31 +273,178 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "id": "ts-quarter",
       "optimized": true,
-      "tris": 320,
+      "tris": 732,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:13:30.529Z",
+      "specSource": "https://en.wikipedia.org/wiki/Phone_connector_(audio)",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "trs-35mm",
       "optimized": true,
-      "tris": 320,
+      "tris": 732,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:13:48.953Z",
+      "specSource": "https://en.wikipedia.org/wiki/Phone_connector_(audio)",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "rca",
       "optimized": true,
-      "tris": 196,
+      "tris": 464,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:31:04.876Z",
+      "specSource": "https://en.wikipedia.org/wiki/RCA_connector",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     },
     {
       "id": "rj45",
@@ -211,158 +502,17 @@
     {
       "id": "ethercon",
       "optimized": true,
-      "tris": 116,
+      "tris": 260,
       "kind": "connector",
       "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "speakon-nl4",
-      "optimized": true,
-      "tris": 208,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "powercon-blue",
-      "optimized": true,
-      "tris": 208,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "powercon-true1",
-      "optimized": true,
-      "tris": 208,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "iec-c13",
-      "optimized": true,
-      "tris": 12,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "iec-c14",
-      "optimized": true,
-      "tris": 120,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "schuko-plug",
-      "optimized": true,
-      "tris": 192,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "schuko-socket",
-      "optimized": true,
-      "tris": 92,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "bnc",
-      "optimized": true,
-      "tris": 224,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "tt-bantam",
-      "optimized": true,
-      "tris": 320,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "dsub25",
-      "optimized": true,
-      "tris": 24,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "toslink",
-      "optimized": true,
-      "tris": 24,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "usb-a",
-      "optimized": true,
-      "tris": 24,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "usb-b",
-      "optimized": true,
-      "tris": 24,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "usb-c",
-      "optimized": true,
-      "tris": 24,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "digilink",
-      "optimized": true,
-      "tris": 24,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "gpio-terminal",
-      "optimized": true,
-      "tris": 124,
-      "kind": "connector",
-      "ports": 0,
-      "status": "ok"
-    },
-    {
-      "id": "yamaha-ql1",
-      "optimized": true,
-      "tris": 224,
-      "kind": "device",
-      "ports": 7,
       "status": "ok",
-      "portEmpties": 7,
-      "riggedAt": "2026-07-19",
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-06T18:44:36.620Z",
-      "specSource": "https://usa.yamaha.com/files/download/other_assets/1/798481/ql5_1_en_om_d1.pdf",
-      "logosRemoved": true,
-      "photos": [
-        "top_rot180.jpg",
-        "rear.jpg"
-      ],
+      "photos": [],
       "taskId": null,
+      "date": "2026-11-10T08:33:54.501Z",
+      "specSource": "https://www.neutrik.com/en/product/ne8mc-1.pdf",
+      "logosRemoved": true,
       "gates": [
         {
           "gate": "size",
@@ -401,6 +551,971 @@
           "ok": true
         }
       ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
+    },
+    {
+      "id": "speakon-nl4",
+      "optimized": true,
+      "tris": 424,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:08:56.109Z",
+      "specSource": "https://www.neutrik.com/en/product/nl4fxx",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "powercon-blue",
+      "optimized": true,
+      "tris": 392,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:09:02.425Z",
+      "specSource": "https://www.neutrik.com/en/product/nl4fxx",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "powercon-true1",
+      "optimized": true,
+      "tris": 392,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:09:17.321Z",
+      "specSource": "https://www.neutrik.com/en/product/nl4fxx",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "iec-c13",
+      "optimized": true,
+      "tris": 148,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:08:36.672Z",
+      "specSource": "https://en.wikipedia.org/wiki/IEC_60320",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "iec-c14",
+      "optimized": true,
+      "tris": 152,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:08:30.680Z",
+      "specSource": "https://azcus.digikey.com/en/products/detail/schurter-inc/6130-5630/641221",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "schuko-plug",
+      "optimized": true,
+      "tris": 348,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:08:42.859Z",
+      "specSource": "https://en.wikipedia.org/wiki/Schuko",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "schuko-socket",
+      "optimized": true,
+      "tris": 588,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:08:49.816Z",
+      "specSource": "https://en.wikipedia.org/wiki/Schuko",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "bnc",
+      "optimized": true,
+      "tris": 408,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:32:15.988Z",
+      "specSource": "https://en.wikipedia.org/wiki/BNC_connector",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "tt-bantam",
+      "optimized": true,
+      "tris": 732,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:14:08.715Z",
+      "specSource": "https://en.wikipedia.org/wiki/Phone_connector_(audio)",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "dsub25",
+      "optimized": true,
+      "tris": 428,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:31:37.646Z",
+      "specSource": "https://en.wikipedia.org/wiki/D-subminiature",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "toslink",
+      "optimized": true,
+      "tris": 112,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "date": "2026-11-10T08:38:30.928Z",
+      "specSource": "https://en.wikipedia.org/wiki/TOSLINK",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
+    },
+    {
+      "id": "usb-a",
+      "optimized": true,
+      "tris": 148,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:20:58.643Z",
+      "specSource": "https://en.wikipedia.org/wiki/USB_hardware",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "usb-b",
+      "optimized": true,
+      "tris": 164,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:21:10.811Z",
+      "specSource": "https://en.wikipedia.org/wiki/USB_hardware",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "usb-c",
+      "optimized": true,
+      "tris": 220,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:21:25.438Z",
+      "specSource": "https://en.wikipedia.org/wiki/USB_hardware",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "digilink",
+      "optimized": true,
+      "tris": 164,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:33:30.062Z",
+      "specSource": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "gpio-terminal",
+      "optimized": true,
+      "tris": 428,
+      "kind": "connector",
+      "ports": 0,
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T08:31:58.167Z",
+      "specSource": "https://www.phoenixcontact.com/en-pc/products/pcb-connectors",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "yamaha-ql1",
+      "optimized": true,
+      "tris": 1712,
+      "kind": "device",
+      "ports": 7,
+      "status": "ok",
+      "portEmpties": 7,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-10T22:19:25.240Z",
+      "specSource": "https://usa.yamaha.com/files/download/other_assets/1/798481/ql5_1_en_om_d1.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "top_rot180.jpg",
+        "rear.jpg"
+      ],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
       "source": "hybrid: own scripted geometry + official photo as texture",
       "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
       "trademark": "branded-internal"
@@ -416,9 +1531,9 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-06T19:03:14.036Z",
+      "date": "2026-11-10T23:15:13.071Z",
       "specSource": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
-      "logosRemoved": true,
+      "logosRemoved": false,
       "photos": [
         "front.jpg",
         "rear.jpg"
@@ -469,41 +1584,22 @@
     {
       "id": "shure-sm58",
       "optimized": true,
-      "tris": 1976,
-      "kind": "device",
-      "ports": 1,
-      "status": "ok",
-      "note": "restored by the founder choice over the Meshy rebuild: richer detail (normal map: grille weave, rings, switch, screws); CC-BY attribution required; Shure logo present: legal review before publishing",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/shure-sm58-89d38b9c53f8496a922ce1199ca57afc",
-      "author": "GRIP420",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Shure SM58 » par GRIP420 (https://sketchfab.com/3d-models/shure-sm58-89d38b9c53f8496a922ce1199ca57afc) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
-      "portEmpties": 1,
-      "riggedAt": "2026-07-19",
-      "legacyRestoredAt": "2026-11-06"
-    },
-    {
-      "id": "shure-sm57",
-      "optimized": true,
-      "tris": 10826,
+      "tris": 4350,
       "kind": "device",
       "ports": 1,
       "status": "ok",
       "portEmpties": 1,
       "riggedAt": "2026-07-19",
-      "tool": "meshy",
-      "toolVersion": "meshy-7.1",
-      "date": "2026-11-04T17:23:05.526Z",
-      "specSource": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
-      "logosRemoved": true,
+      "legacyRestoredAt": "2026-11-06",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
       "photos": [
-        "front.png",
-        "three-quarter-base.png",
-        "three-quarter-head.png"
+        "_generic_wrap.png"
       ],
-      "taskId": "01a1a766-79f8-732a-893a-e30d1b5ead35",
+      "taskId": null,
+      "date": "2026-11-10T07:07:49.262Z",
+      "specSource": "content/generic-panels/shure-sm58.json",
+      "logosRemoved": true,
       "gates": [
         {
           "gate": "size",
@@ -542,14 +1638,78 @@
           "ok": true
         }
       ],
-      "source": "ai-meshy",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "shure-sm57",
+      "optimized": true,
+      "tris": 4348,
+      "kind": "device",
+      "ports": 1,
+      "status": "ok",
+      "portEmpties": 1,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-11T00:52:26.426Z",
+      "specSource": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
       "trademark": "branded-internal"
     },
     {
       "id": "qsc-k12-2",
       "optimized": true,
-      "tris": 308,
+      "tris": 2684,
       "kind": "device",
       "ports": 3,
       "status": "ok",
@@ -557,14 +1717,15 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1+meshy-7.1",
-      "date": "2026-11-05T03:47:51.241Z",
+      "date": "2026-11-10T23:17:29.567Z",
       "specSource": "https://www.qsc.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
       "logosRemoved": true,
       "photos": [
         "closeup-rear-panel.png",
         "front.png",
         "rear.png",
-        "side-right.png"
+        "side-right.png",
+        "side.png"
       ],
       "taskId": "01a1a76c-3a26-76f4-86c7-723b02c93744",
       "gates": [
@@ -586,6 +1747,14 @@
         },
         {
           "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
           "ok": true
         },
         {
@@ -612,24 +1781,23 @@
     {
       "id": "yamaha-dbr12",
       "optimized": true,
-      "tris": 332,
+      "tris": 1988,
       "kind": "device",
       "ports": 3,
       "status": "ok",
       "portEmpties": 3,
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
-      "toolVersion": "blender-builder-1+meshy-7.1",
-      "date": "2026-11-05T03:48:17.625Z",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-10T23:05:28.986Z",
       "specSource": "https://usa.yamaha.com/files/download/other_assets/4/332514/VHN5580_DBR15_TS_En_B0_views.pdf",
       "logosRemoved": true,
       "photos": [
-        "front.jpg",
         "rear.jpg",
-        "side.jpg",
-        "three-quarter-left.jpg"
+        "front.jpg",
+        "side.jpg"
       ],
-      "taskId": "01a1a76c-3baf-7308-93ae-32b8b6986962",
+      "taskId": null,
       "gates": [
         {
           "gate": "size",
@@ -652,6 +1820,14 @@
           "ok": true
         },
         {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
           "gate": "proportionDrift",
           "ok": true
         },
@@ -668,61 +1844,26 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
+      "source": "hybrid: own scripted geometry + official photo as texture",
       "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
       "trademark": "branded-internal"
     },
     {
       "id": "km-210-9",
       "optimized": true,
-      "tris": 292,
+      "tris": 2204,
       "kind": "device",
       "ports": 0,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/microphone-stand-with-boom-arm-legged-9bee76120cd8472b9f68db91d820f5ff",
-      "author": "JMGameDev",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Microphone Stand With Boom Arm (Legged) » par JMGameDev (https://sketchfab.com/3d-models/microphone-stand-with-boom-arm-legged-9bee76120cd8472b9f68db91d820f5ff) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 0,
-      "riggedAt": "2026-07-19"
-    },
-    {
-      "id": "axia-iq",
-      "optimized": true,
-      "tris": 132,
-      "kind": "device",
-      "ports": 9,
-      "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/8-channel-audio-mixer-e28440b16df348dbaffbc7f20d7cb8bf",
-      "author": "nofnol",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« 8-channel Audio Mixer » par nofnol (https://sketchfab.com/3d-models/8-channel-audio-mixer-e28440b16df348dbaffbc7f20d7cb8bf) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
-      "portEmpties": 9,
-      "riggedAt": "2026-07-19"
-    },
-    {
-      "id": "ev-re20",
-      "optimized": true,
-      "tris": 9566,
-      "kind": "device",
-      "ports": 1,
-      "status": "ok",
-      "portEmpties": 1,
       "riggedAt": "2026-07-19",
-      "tool": "meshy",
-      "toolVersion": "meshy-7.1",
-      "date": "2026-11-04T17:23:14.055Z",
-      "specSource": "https://products.electrovoice.com/download/970110",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "date": "2026-11-10T21:42:23.943Z",
+      "specSource": "https://www.k-m.de/en/downloads/01994d9eb9907194b59b7d910e75132d/datasheet",
       "logosRemoved": true,
-      "photos": [
-        "front-black-variant.png",
-        "front.png"
-      ],
-      "taskId": "01a1a766-7cf1-7757-980b-5488bbb55e10",
       "gates": [
         {
           "gate": "size",
@@ -745,6 +1886,10 @@
           "ok": true
         },
         {
+          "gate": "detail",
+          "ok": true
+        },
+        {
           "gate": "proportionDrift",
           "ok": true
         },
@@ -761,303 +1906,216 @@
           "ok": true
         }
       ],
-      "source": "ai-meshy",
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
+    },
+    {
+      "id": "axia-iq",
+      "optimized": true,
+      "tris": 1988,
+      "kind": "device",
+      "ports": 9,
+      "status": "ok",
+      "portEmpties": 9,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "top_rectified.png"
+      ],
+      "taskId": null,
+      "date": "2026-11-10T23:22:18.743Z",
+      "specSource": "https://www.telosalliance.com/consoles-audio-mixing/broadcast-consoles/axia-iq-family/axia-iq",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
       "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "ev-re20",
+      "optimized": true,
+      "tris": 3836,
+      "kind": "device",
+      "ports": 1,
+      "status": "ok",
+      "portEmpties": 1,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-11T00:52:28.588Z",
+      "specSource": "https://products.electrovoice.com/download/970110",
+      "logosRemoved": true,
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
       "trademark": "branded-internal"
     },
     {
       "id": "yellowtec-mika",
       "optimized": true,
-      "tris": 292,
+      "tris": 828,
       "kind": "device",
       "ports": 0,
-      "status": "ok"
+      "status": "ok",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "date": "2026-11-10T07:16:29.425Z",
+      "specSource": "https://www.yellowtec.com/fileadmin/user_upload/mika/pdf/mika_pdf_MicArms_EN.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "id": "yellowtec-litt",
       "optimized": true,
-      "tris": 184,
-      "kind": "device",
-      "ports": 1,
-      "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/warning-light-3df0b1fc0e0a445c8edcaddf3dd6ceb5",
-      "author": "Morgan Skilly",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Warning Light » par Morgan Skilly (https://sketchfab.com/3d-models/warning-light-3df0b1fc0e0a445c8edcaddf3dd6ceb5) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
-      "portEmpties": 1,
-      "riggedAt": "2026-07-19"
-    },
-    {
-      "id": "genelec-8030c",
-      "optimized": true,
-      "tris": 220,
-      "kind": "device",
-      "ports": 2,
-      "status": "ok",
-      "portEmpties": 2,
-      "riggedAt": "2026-07-19",
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1+meshy-7.1",
-      "date": "2026-11-05T03:48:35.379Z",
-      "specSource": "https://assets.ctfassets.net/4zjnzn055a4v/1qUiHwGHNmumKgYugG6wws/837b26c2261771b9d58a94c44bb1cdc4/8030c_views.pdf",
-      "logosRemoved": true,
-      "photos": [
-        "front.jpg",
-        "rear-three-quarter.jpg",
-        "rear.jpg",
-        "three-quarter-left.jpg"
-      ],
-      "taskId": "01a1a76c-3cde-7762-bedc-4bc3bd914ce9",
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ],
-      "source": "hybrid: own scripted geometry + Meshy render and/or official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal"
-    },
-    {
-      "id": "playout-pc",
-      "optimized": true,
-      "tris": 24,
-      "kind": "device",
-      "ports": 3,
-      "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/computer-tower-ofice-pc-a55286be3fd54058b913d10b935c249e",
-      "author": "guato123xd",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Computer Tower Ofice Pc » par guato123xd (https://sketchfab.com/3d-models/computer-tower-ofice-pc-a55286be3fd54058b913d10b935c249e) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
-      "portEmpties": 3,
-      "riggedAt": "2026-07-19"
-    },
-    {
-      "id": "aeta-scoop5-s",
-      "optimized": true,
-      "tris": 144,
-      "kind": "device",
-      "ports": 4,
-      "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/audio-interface-iem-transmitter-50ea58413e214a50b16e5bc726291190",
-      "author": "Leykoplaster",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Audio Interface | IEM Transmitter » par Leykoplaster (https://sketchfab.com/3d-models/audio-interface-iem-transmitter-50ea58413e214a50b16e5bc726291190) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
-      "portEmpties": 4,
-      "riggedAt": "2026-07-19"
-    },
-    {
-      "id": "aeta-scoopy-plus-s",
-      "optimized": true,
-      "tris": 144,
-      "kind": "device",
-      "ports": 3,
-      "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/zoom-h6-handy-recorder-ef5389ec84b248e389c5a70097454159",
-      "author": "kirimar",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Zoom H6 Handy Recorder » par kirimar (https://sketchfab.com/3d-models/zoom-h6-handy-recorder-ef5389ec84b248e389c5a70097454159) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
-      "portEmpties": 3,
-      "riggedAt": "2026-07-19"
-    },
-    {
-      "id": "ev-re50",
-      "optimized": true,
-      "tris": 9839,
+      "tris": 380,
       "kind": "device",
       "ports": 1,
       "status": "ok",
       "portEmpties": 1,
       "riggedAt": "2026-07-19",
-      "tool": "meshy",
-      "toolVersion": "meshy-7.1",
-      "date": "2026-11-04T17:23:22.287Z",
-      "specSource": "https://products.electrovoice.com/download/970113",
-      "logosRemoved": true,
-      "photos": [
-        "front.png"
-      ],
-      "taskId": "01a1a766-804c-74a8-a230-3ac62bb220d9",
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ],
-      "source": "ai-meshy",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal"
-    },
-    {
-      "id": "avid-protools-hdx",
-      "optimized": true,
-      "tris": 24,
-      "kind": "device",
-      "ports": 2,
-      "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/computer-tower-ofice-pc-a55286be3fd54058b913d10b935c249e",
-      "author": "guato123xd",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Computer Tower Ofice Pc » par guato123xd (https://sketchfab.com/3d-models/computer-tower-ofice-pc-a55286be3fd54058b913d10b935c249e) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
-      "portEmpties": 2,
-      "riggedAt": "2026-07-19"
-    },
-    {
-      "id": "avid-hd-io",
-      "optimized": true,
-      "tris": 44,
-      "kind": "device",
-      "ports": 7,
-      "status": "ok",
-      "portEmpties": 7,
-      "riggedAt": "2026-07-19",
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-06T19:05:18.648Z",
-      "specSource": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
-      "logosRemoved": true,
-      "photos": [
-        "rear.jpg",
-        "front.jpg"
-      ],
+      "photos": [],
       "taskId": null,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ],
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal"
-    },
-    {
-      "id": "focusrite-isa-one",
-      "optimized": true,
-      "tris": 44,
-      "kind": "device",
-      "ports": 3,
-      "status": "ok",
-      "portEmpties": 3,
-      "riggedAt": "2026-07-19",
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "front.jpg",
-        "rear.jpg"
-      ],
-      "taskId": null,
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal",
-      "date": "2026-11-06T19:10:10.359Z",
-      "specSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/ISA%20One%20User%20Guide%201.1%20-%20FR.pdf",
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T01:22:04.266Z",
+      "specSource": "https://www.yellowtec.com/fileadmin/downloads/Product-Brief-litt-web.pdf",
       "logosRemoved": true,
       "gates": [
         {
@@ -1099,20 +2157,621 @@
       ]
     },
     {
-      "id": "grace-m905",
+      "id": "genelec-8030c",
       "optimized": true,
-      "tris": 144,
+      "tris": 3088,
+      "kind": "device",
+      "ports": 2,
+      "status": "ok",
+      "portEmpties": 2,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-10T23:05:41.479Z",
+      "specSource": "https://assets.ctfassets.net/4zjnzn055a4v/1qUiHwGHNmumKgYugG6wws/837b26c2261771b9d58a94c44bb1cdc4/8030c_views.pdf",
+      "logosRemoved": false,
+      "photos": [
+        "rear.jpg",
+        "front.jpg"
+      ],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "playout-pc",
+      "optimized": true,
+      "tris": 2240,
+      "kind": "device",
+      "ports": 3,
+      "status": "ok",
+      "portEmpties": 3,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "date": "2026-11-11T00:52:32.920Z",
+      "specSource": "https://cdn.shopify.com/s/files/1/1167/3148/files/Dell_OptiPlex-7010-Technical_Specifications.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "aeta-scoop5-s",
+      "optimized": true,
+      "tris": 1840,
+      "kind": "device",
+      "ports": 4,
+      "status": "ok",
+      "portEmpties": 4,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "front_padded.png",
+        "rear_padded.png"
+      ],
+      "taskId": null,
+      "date": "2026-11-10T23:04:40.174Z",
+      "specSource": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S-IP_ENG.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "aeta-scoopy-plus-s",
+      "optimized": true,
+      "tris": 1536,
+      "kind": "device",
+      "ports": 3,
+      "status": "ok",
+      "portEmpties": 3,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png",
+        "_generic_right.png"
+      ],
+      "taskId": null,
+      "date": "2026-11-11T00:52:35.122Z",
+      "specSource": "https://www.aeta-audio.com/downloads/doc/manuals/manual_scoopy%2Bs.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "ev-re50",
+      "optimized": true,
+      "tris": 4604,
+      "kind": "device",
+      "ports": 1,
+      "status": "ok",
+      "portEmpties": 1,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-11T00:52:30.811Z",
+      "specSource": "https://products.electrovoice.com/download/970113",
+      "logosRemoved": true,
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "avid-protools-hdx",
+      "optimized": true,
+      "tris": 3028,
+      "kind": "device",
+      "ports": 2,
+      "status": "ok",
+      "portEmpties": 2,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "date": "2026-11-11T00:52:37.244Z",
+      "specSource": "https://www.avid.com/products/Pro-Tools-HDX",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "avid-hd-io",
+      "optimized": true,
+      "tris": 1632,
       "kind": "device",
       "ports": 7,
       "status": "ok",
-      "source": "download-ccby",
-      "sourceUrl": "https://sketchfab.com/3d-models/headphone-amplifier-b0c9d5c992e7416786c4bb5dad416f31",
-      "author": "mhuang97",
-      "license": "Creative Commons Attribution",
-      "attributionText": "« Headphone Amplifier » par mhuang97 (https://sketchfab.com/3d-models/headphone-amplifier-b0c9d5c992e7416786c4bb5dad416f31) — Creative Commons Attribution — modifié (rig port_*, échelle, optimisation)",
-      "trademark": "branded-internal",
       "portEmpties": 7,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "date": "2026-11-10T23:04:49.219Z",
+      "specSource": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
+      "logosRemoved": true,
+      "photos": [
+        "rear.jpg",
+        "front.jpg"
+      ],
+      "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "focusrite-isa-one",
+      "optimized": true,
+      "tris": 2944,
+      "kind": "device",
+      "ports": 3,
+      "status": "ok",
+      "portEmpties": 3,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "front.jpg",
+        "rear.jpg"
+      ],
+      "taskId": null,
+      "date": "2026-11-11T00:52:39.436Z",
+      "specSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/ISA%20One%20User%20Guide%201.1%20-%20FR.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "grace-m905",
+      "optimized": true,
+      "tris": 1920,
+      "kind": "device",
+      "ports": 7,
+      "status": "ok",
+      "portEmpties": 7,
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "front_rectified.png",
+        "rear.jpg"
+      ],
+      "taskId": null,
+      "date": "2026-11-10T23:04:57.967Z",
+      "specSource": "https://gracedesign.com/wp-content/uploads/2018/06/m905_owners_manual_reve.pdf",
+      "logosRemoved": false,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "neumann-u87-ai",
@@ -1180,23 +2839,76 @@
     {
       "id": "switchcraft-studiopatch-9625",
       "optimized": true,
-      "tris": 144,
+      "tris": 1632,
       "kind": "device",
       "ports": 4,
       "status": "ok",
-      "source": "modeled",
-      "sourceUrl": "",
-      "author": "TekPractice (procédural interne, Blender)",
-      "license": "internal (own work)",
-      "attributionText": "",
-      "trademark": "generic",
       "portEmpties": 4,
-      "riggedAt": "2026-07-19"
+      "riggedAt": "2026-07-19",
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "front.jpg",
+        "rear.jpg"
+      ],
+      "taskId": null,
+      "date": "2026-11-10T23:05:05.424Z",
+      "specSource": "https://datasheet.chipsmall.com/6425/362759.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
     },
     {
       "id": "antelope-ocx-hd",
       "optimized": true,
-      "tris": 44,
+      "tris": 1624,
       "kind": "device",
       "ports": 3,
       "status": "ok",
@@ -1204,7 +2916,7 @@
       "riggedAt": "2026-07-19",
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
-      "date": "2026-11-06T19:06:45.951Z",
+      "date": "2026-11-10T21:03:39.038Z",
       "specSource": "https://images.equipboard.com/uploads/item/manual/73416/antelope-audio-ocx-hd-manual.pdf",
       "logosRemoved": true,
       "photos": [
@@ -1212,6 +2924,75 @@
         "rear.jpg"
       ],
       "taskId": null,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + official photo as texture",
+      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
+      "trademark": "branded-internal"
+    },
+    {
+      "id": "mogami-gold-db25-xlrm",
+      "optimized": true,
+      "tris": 2600,
+      "kind": "device",
+      "ports": 3,
+      "status": "ok",
+      "portEmpties": 3,
+      "riggedAt": "2026-07-19",
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic",
+      "date": "2026-11-10T07:19:16.216Z",
+      "specSource": "https://mogamicable.com/category/products/gold-DB25-XLRM.php",
+      "logosRemoved": true,
       "gates": [
         {
           "gate": "size",
@@ -1249,26 +3030,70 @@
           "gate": "validator",
           "ok": true
         }
-      ],
-      "source": "hybrid: own scripted geometry + official photo as texture",
-      "license": "generated or textured from manufacturer reference photos (private modelling reference, not redistributed); brand marks repainted where noticed",
-      "trademark": "branded-internal"
+      ]
     },
     {
-      "id": "mogami-gold-db25-xlrm",
-      "optimized": true,
-      "tris": 236,
-      "kind": "device",
-      "ports": 3,
       "status": "ok",
+      "id": "multiprise-secteur",
+      "kind": "device",
+      "tris": 756,
+      "ports": 4,
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "date": "2026-11-10T21:22:10.292Z",
+      "specSource": "content/catalog.json (devices[multiprise-secteur])",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
       "source": "modeled",
-      "sourceUrl": "",
-      "author": "TekPractice (procédural interne, Blender)",
       "license": "internal (own work)",
-      "attributionText": "",
-      "trademark": "generic",
-      "portEmpties": 3,
-      "riggedAt": "2026-07-19"
+      "trademark": "generic"
     }
   ],
   "environments": [

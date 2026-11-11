@@ -1,0 +1,1 @@
+const o=1,e="aeta-scoop5-s",a=!0,t=[{id:"power",face:"opposite",xMm:32,yMm:30.6,sizeMm:{w:10,h:10,d:3},label:"Alimentation",catalogControl:"power",kind:"button",axis:"z",latch:!0,round:!0,colour:"#1b3a1f",lit:"#46ff5a",travelMm:1,default:1}],c={schema:1,deviceId:e,generated:!0,controls:t};export{t as controls,c as default,e as deviceId,a as generated,o as schema};
