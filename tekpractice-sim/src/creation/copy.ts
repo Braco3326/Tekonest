@@ -222,11 +222,13 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     spdif: 'S/PDIF numérique',
     madi: 'MADI multicanal',
     aoip: 'Audio sur IP (Dante)',
+    aes50: 'AES50 numérique (consoles Behringer / Midas, pas du Dante)',
     wordclock: 'Word clock',
     'usb-audio': 'Audio USB',
     'gpio-tally': 'GPIO / tally',
     dmx512: 'DMX512',
     'ethernet-control': 'Réseau de contrôle (Ethernet, sans audio)',
+    'usb-control': 'Liaison USB de contrôle (MIDI, sans audio)',
     'phantom-48v': 'Alimentation fantôme +48 V',
     'mains-power': 'Secteur 230 V',
   },
@@ -534,7 +536,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     reasonSilent: 'le fader master est à −inf',
     reasonBalance: 'la balance de la console coupe ces enceintes',
     reasonUnverified: 'appareil non vérifié (Bêta)',
-    reasonNoAcoustic: 'enceinte sans donnée de couverture : valeur non vérifiée',
+    reasonNoAcoustic: 'couverture non calculée faute de valeur vérifiée',
+    noSourceNoData: 'Couverture non calculée : aucune valeur vérifiée pour ce modèle (statut à valider). L’écoute n’est pas concernée.',
     noDataNote: 'Couverture non calculée pour {names} : valeur non vérifiée (aucune donnée constructeur retenue pour ce modèle).',
     reasonUnpowered: 'enceinte hors tension',
     reasonOther: 'enceinte non utilisable',
@@ -722,6 +725,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     missingTitle: 'Appareils non rechargés',
     /** Note body; the device ids follow as a list. */
     missingBody: 'La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés.',
+    /** Note title when a reopened project has cables on ports that no longer exist (a Bêta device that was promoted and lost a port). */
+    droppedCablesTitle: 'Câbles non rechargés',
+    /** Note body (statut à valider); the cables follow as a list. */
+    droppedCablesBody: 'Ces câbles menaient à des prises qui n’existent plus sur la fiche mise à jour de l’appareil (à valider) : ils n’ont pas été rechargés, le reste du projet l’est.',
     /** Note title when the Bêta sheets a saved project needs could not be fetched (network or timeout): the project is NOT opened and NOT touched. */
     unavailableTitle: 'Projet non rouvert',
     /** Note body, status line and place-picker line for the same case. */

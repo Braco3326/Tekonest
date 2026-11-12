@@ -149,6 +149,9 @@ export function noSourceMessage(path: PathResult, excluded: readonly { instanceI
   if (excluded.length === 0) {
     const why = path.reasons[0]?.text_fr.replace(/\.$/, '')
     reason = why ? fill(L.reasonNotFed!, { why: why.charAt(0).toLowerCase() + why.slice(1) }) : L.reasonNotFedBare!
+  } else if (excluded.every((e) => e.reason === 'no-acoustic')) {
+    // the speakers are fed and may well be heard (listening plays them): only their coverage is not computed (review fix 14)
+    return L.noSourceNoData!
   } else {
     const texts: string[] = []
     for (const e of excluded) {

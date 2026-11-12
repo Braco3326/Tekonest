@@ -91,10 +91,6 @@ export function coverageSourcesDetail(design: DesignState, registry: Registry, p
       continue
     }
     const ac = dev.acoustic
-    if (!ac) {
-      skip('no-acoustic')
-      continue
-    }
     if (feed.muted) {
       skip('muted')
       continue
@@ -107,6 +103,11 @@ export function coverageSourcesDetail(design: DesignState, registry: Registry, p
     const gainDb = feed.gainDb + speakerBalanceDb(feed.balance, feed.channels)
     if (!(gainDb > -Infinity) || Number.isNaN(gainDb)) {
       skip('balance')
+      continue
+    }
+    // a real reason to be silent wins over the missing datum (review fix 14): the speaker is muted / at -inf / balanced out whether or not its coverage is known
+    if (!ac) {
+      skip('no-acoustic')
       continue
     }
     if (!isPowered(design, registry, feed.instanceId)) {

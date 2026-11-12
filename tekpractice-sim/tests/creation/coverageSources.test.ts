@@ -143,9 +143,16 @@ describe('coverageSources: the speakers that make sound', () => {
     expect(r.sources).toEqual([])
     expect(r.excluded.map((e) => e.reason)).toEqual(['no-acoustic', 'no-acoustic'])
     expect(() => computeField(r.sources, new Float32Array([0, 1.2, 0]))).not.toThrow()
-    expect(noSourceMessage(pathOf(d, reg), r.excluded)).toBe('Aucune enceinte audible : enceinte sans donnée de couverture : valeur non vérifiée.')
+    expect(noSourceMessage(pathOf(d, reg), r.excluded)).toBe('Couverture non calculée : aucune valeur vérifiée pour ce modèle (statut à valider). L’écoute n’est pas concernée.')
+    expect(noSourceMessage(pathOf(d, reg), r.excluded)).not.toMatch(/audible|:.*:/)
     // the panel says so in its note too, naming each speaker left out
     expect(noDataNote(r.excluded)).toBe('Couverture non calculée pour k12-d, k12-g : valeur non vérifiée (aucune donnée constructeur retenue pour ce modèle).')
+  })
+  it('a muted speaker without coverage data is excluded as muted, not as no-acoustic (a real reason wins; review fix 14)', () => {
+    const reg = catalogWith((dev) => void delete dev['qsc-k12-2'].acoustic)
+    const d = rig({ controls: { 'mute-master': true } }, reg)
+    const r = coverageSourcesDetail(d, reg, pathOf(d, reg))
+    expect(r.excluded.every((e) => e.reason !== 'no-acoustic')).toBe(true)
   })
   it('MIXED rig (data rule): the speaker without coverage data is left out with the reason no-acoustic and never made up (no 90 x 60), the other still makes the field; the note names only the first', () => {
     const reg = catalogWith((dev) => void delete dev['qsc-k12-2'].acoustic)

@@ -75,6 +75,7 @@ import { audioStats, closeAudioContext, openAudioContext } from '../audio/contex
 import type { ListenerPose } from './listenVoices'
 import type { BetaPrep } from './betaDevices'
 import { isUnverified, markUnverified, parseProposals, prepareBeta, proposalEntries, registerProposals, within, type BetaLoad } from './betaDevices'
+import { droppedCableItems } from './droppedCables'
 import { signalPath } from '../flow/signalPath'
 import type { DeviceT } from '../engine/CatalogLoader'
 import type { DesignState } from '../trials/trial'
@@ -270,6 +271,11 @@ export async function bootCreation(): Promise<void> {
    */
   const noteNoMains = (): void => {
     if (needsMainsHint(store.design(), registry)) announcer.say(COPY.project!.noMains!)
+  }
+  const noteDroppedCables = (cables: readonly { a: { instance: string; port: string }; b: { instance: string; port: string } }[] | undefined): void => {
+    if (!cables?.length) return
+    const I = COPY.inventory!
+    notes.show({ id: 'dropped-cables', title: I.droppedCablesTitle!, body: I.droppedCablesBody!, items: droppedCableItems(cables) })
   }
   const noteMissing = (ids: readonly string[]): void => {
     if (!ids.length) return
@@ -893,6 +899,7 @@ export async function bootCreation(): Promise<void> {
       }
     }
     noteMissing(missing)
+    if (r.ok) noteDroppedCables(r.dropped?.cables)
     if (!r.ok) {
       notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
       return false
