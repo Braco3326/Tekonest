@@ -26,6 +26,9 @@ html[data-surface] :is(.cr-tree, .cr-props, .cr-drawer, .cr-pick, .cr-dialog, .c
   --cr-accent-text: var(--cr-role-accent-text);
   --cr-band: var(--cr-role-band);
   --cr-band-ink: var(--cr-role-band-ink);
+  /* The surface's own ink: text and buttons that name no colour (`.cr button { color: inherit }`) inherit it from here, not the light ink `.cr` sets for the dark shell
+     (Papier text on a Papier sheet was found on the screenshots, not by axe). Today's ink on a dark surface, so nothing moves where the ink is Papier. */
+  color: var(--cr-papier);
 }
 html[data-surface] :is(.cr-tree, .cr-props, .cr-drawer) { --cr-nuit: var(--cr-role-inset); }
 html[data-surface] :is(.cr-pick, .cr-dialog, .cr-errlist, .cr-checklist, .cr-notes) { --cr-nuit: var(--cr-role-ground); }

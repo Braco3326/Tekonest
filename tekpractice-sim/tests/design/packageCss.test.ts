@@ -60,6 +60,12 @@ describe('Ambre is a role, not a literal, outside the fixed chrome', () => {
     for (const r of all) expect(CHROME.test(r.selector), r.selector).toBe(true)
   })
 
+  it('a chrome class reused inside a surface is re-pointed there (the checklist pop-over buttons wear .cr-status-action: Ambre on Papier was found by the browser audit)', () => {
+    const rules = rulesOf(readFileSync(join(SHELL, 'creation.css'), 'utf8'))
+    expect(rules.some((r) => r.selector === '.cr-checklist .cr-status-action' && /border-color:\s*var\(--cr-select\)/.test(r.body))).toBe(true)
+    expect(rules.some((r) => r.selector === '.cr-checklist .cr-status-action:hover' && /background:\s*var\(--cr-accent\)/.test(r.body))).toBe(true)
+  })
+
   it('the role tokens used by the shell are all defined by the plain map (a typo would silently fall back to nothing)', () => {
     const defined = new Set(['--cr-focus', '--cr-select', '--cr-accent', '--cr-accent-ink', '--cr-accent-edge', '--cr-accent-text', '--cr-band', '--cr-band-ink'])
     for (const f of files) {

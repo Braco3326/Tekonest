@@ -1055,6 +1055,9 @@ body:has(.cr-viewport[data-placing='true']) :is(.cr-errlist, .cr-checklist) { bo
 .cr .cr-checklist-chip[aria-expanded='true'] { background: var(--cr-nuit); }
 @media (hover: hover) { .cr .cr-checklist-chip:hover { background: var(--cr-nuit); } }
 .cr .cr-checklist-chip:focus-visible { outline-offset: -2px; box-shadow: none; } /* the bar clips: the ring is drawn inward */
+/* « Aller à » and « Je branche pour vous » reuse the status bar's button box (.cr-status-action, Ambre on the dark bar) but sit in this pop-over, a surface a design package restyles: the role colours, not the chrome's Ambre (on Papier it is 2.16 : 1; found by tests/e2e/onboarding-contrast.spec.ts). */
+.cr-checklist .cr-status-action { border-color: var(--cr-select); }
+@media (hover: hover) { .cr-checklist .cr-status-action:hover { background: var(--cr-accent); color: var(--cr-accent-ink); } }
 .cr-checklist-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .cr-checklist-row { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 10px; background: var(--cr-panel); border-left: 3px solid var(--cr-ink-muted); }
 .cr-checklist-row[data-state='blocked'] { border-left-color: var(--cr-select); }
