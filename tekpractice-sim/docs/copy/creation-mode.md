@@ -8,6 +8,7 @@ Status column:
 - **brief** — wording given verbatim by the plan (Task 7 brief / council), validated with it.
 - **validé** — reviewed and accepted (or rewritten) by tekuxwriter; the Phase 1 pass (L9) signed off every string authored by tekfrontenddesigner.
 - **à trancher (Oscar)** — tekuxwriter could not decide alone; the question is in the notes column.
+- **à valider (tekuxwriter)** — written by the developer for the onboarding packs (2026-11-12), not yet read by tekuxwriter: French « vous », no figure, no success, safety or fidelity claim; to be reviewed before anything ships.
 
 Typography: plain spaces before « : ; ! ? » and inside « » (no U+00A0 / U+202F), as every shipped string does.
 
@@ -854,6 +855,30 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `listen.failedFile` | Ce fichier n’a pas pu être lu. Essayez un fichier MP3, WAV ou OGG. | validé | Annonce quand le navigateur ne décode pas le fichier choisi |
 | `listen.failed` | La lecture n’a pas pu démarrer. | validé | Annonce d’une erreur de démarrage (autre qu’un fichier illisible) |
 | `listen.loadFailed` | La lecture n’a pas pu se charger. Rechargez la page. | validé | Annonce quand le morceau de code du moteur audio ne se télécharge pas |
+
+## checklist
+
+« Pourquoi je n’entends rien ? » (packs d’accueil, T1.3) : une liste en lecture seule sur les raisons de lecture du moteur (`playback.*`, citées mot pour mot, jamais reformulées ici). Une pastille dans la barre d’état, une ligne sous les éléments grisés du menu Écoute. Elle ne modifie jamais le projet. Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `checklist.title` | Pourquoi je n’entends rien ? | à valider (tekuxwriter) | Pastille de la barre d’état et titre de la liste (visible lieu ouvert, tant que la lecture n’est pas possible) |
+| `checklist.chipHint` | Afficher ce qui empêche la lecture | à valider (tekuxwriter) | Infobulle de la pastille |
+| `checklist.intro` | Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne seulement un appareil. | à valider (tekuxwriter) | Sous le titre de la liste |
+| `checklist.close` | Fermer la liste | à valider (tekuxwriter) | Nom accessible du bouton ×, Échap fait de même et rend le focus à la pastille |
+| `checklist.rowSource` | Une source de lecture | à valider (tekuxwriter) | Ligne 1 (raison NO_SOURCE) |
+| `checklist.rowConsole` | Lecture console | à valider (tekuxwriter) | Ligne 2 (raison SOURCE_OFF) ; même nom que la commande de la console dans Propriétés |
+| `checklist.rowPower` | Alimentation | à valider (tekuxwriter) | Ligne 3 (raisons HOST_UNPOWERED, SPEAKER_UNPOWERED) |
+| `checklist.rowCable` | Câblage jusqu’à une enceinte | à valider (tekuxwriter) | Ligne 4 (raisons NO_PATH, RULE_ERROR) |
+| `checklist.rowMic` | Micro | à valider (tekuxwriter) | Ligne à part, sans état : le texte est celui du moteur (NO_MIC) ou la phrase `micCabled` |
+| `checklist.tagBlocked` | Bloqué | à valider (tekuxwriter) | Étiquette d’une ligne bloquée ; son texte est la raison du moteur, mot pour mot |
+| `checklist.tagUnchecked` | Pas encore vérifié | à valider (tekuxwriter) | Étiquette d’une ligne après la première ligne bloquée : le moteur ne l’a pas regardée |
+| `checklist.tagOk` | Vérifié | à valider (tekuxwriter) | Étiquette d’une ligne que le moteur a dépassée avant de s’arrêter (source présente, Lecture console active) |
+| `checklist.micCabled` | Le micro est câblé mais n’est pas entendu : le signal de test entre à la console. | à valider (tekuxwriter) | Ligne micro quand un micro vérifié est câblé sur une entrée micro d’une console ; sinon le texte NO_MIC du moteur |
+| `checklist.goTo` | Aller à | à valider (tekuxwriter) | Bouton d’une ligne bloquée : sélectionne l’appareil concerné (ou ouvre l’inventaire, onglet Consoles) ; ne change pas le projet |
+| `checklist.goToLabel` | Aller à : {target} | à valider (tekuxwriter) | Nom accessible du bouton ; `{target}` = l’appareil ou `checklist.targetInventory` |
+| `checklist.targetInventory` | l’inventaire, onglet Consoles | à valider (tekuxwriter) | Cible de « Aller à » pour la ligne « Une source de lecture » |
+| `checklist.menuHint` | Voir « Pourquoi je n’entends rien ? » dans la barre d’état. | à valider (tekuxwriter) | Sous la raison, sur chaque élément grisé du menu Écoute dont la raison vient de la chaîne de lecture |
 
 ## Textes hors COPY (index.html)
 

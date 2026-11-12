@@ -911,4 +911,36 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     digilink: 'Avid DigiLink',
     'gpio-terminal': 'Bornier GPIO / port logique D-sub',
   },
+  /**
+   * « Pourquoi je n’entends rien ? » (onboarding packs, T1.3): a read-only list over the engine's own playback reasons (`playback.*`, quoted
+   * verbatim, never reworded here). Every string here: à valider (tekuxwriter, 2026-11-12).
+   */
+  checklist: {
+    /** Chip in the status bar and title of the list. */
+    title: 'Pourquoi je n’entends rien ?',
+    /** The chip's tooltip. */
+    chipHint: 'Afficher ce qui empêche la lecture',
+    /** Under the title: what the list is, and that it changes nothing. */
+    intro: 'Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne seulement un appareil.',
+    close: 'Fermer la liste',
+    /** Row names. */
+    rowSource: 'Une source de lecture',
+    rowConsole: 'Lecture console',
+    rowPower: 'Alimentation',
+    rowCable: 'Câblage jusqu’à une enceinte',
+    rowMic: 'Micro',
+    /** State tags (with a glyph: never colour alone). */
+    tagBlocked: 'Bloqué',
+    tagUnchecked: 'Pas encore vérifié',
+    tagOk: 'Vérifié',
+    /** The mic line when a verified mic is cabled to a console mic input (the playback test signal does not come from the mic). */
+    micCabled: 'Le micro est câblé mais n’est pas entendu : le signal de test entre à la console.',
+    /** Row button. */
+    goTo: 'Aller à',
+    /** The button's accessible name; {target} = the device (« Yamaha QL1 (ql1) ») or the inventory tab. */
+    goToLabel: 'Aller à : {target}',
+    targetInventory: 'l’inventaire, onglet Consoles',
+    /** Under a greyed Écoute item (after the engine's reason). */
+    menuHint: 'Voir « Pourquoi je n’entends rien ? » dans la barre d’état.',
+  },
 }
