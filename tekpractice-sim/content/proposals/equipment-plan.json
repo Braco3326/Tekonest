@@ -163,7 +163,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "radial-j48",
@@ -779,7 +780,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "behringer-ha400",
@@ -1105,7 +1107,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "conflict"
+   "sizeConfidence": "conflict",
+   "staged": true
   },
   {
    "id": "k-m-210-6",

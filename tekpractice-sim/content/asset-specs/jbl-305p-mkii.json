@@ -1,0 +1,110 @@
+{
+  "id": "jbl-305p-mkii",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 185,
+    "h": 298,
+    "d": 231
+  },
+  "ports": [
+    {
+      "portId": "in-xlr",
+      "face": "io",
+      "xMm": 62,
+      "yMm": 205,
+      "confidence": "guess",
+      "openingMm": 20,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-trs",
+      "face": "io",
+      "xMm": 124,
+      "yMm": 205,
+      "confidence": "guess",
+      "openingMm": 12,
+      "insetMm": 3,
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 92,
+      "yMm": 75,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://support.harmanaudio.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwadea3a58/pdfs/JBL_3_Series_MkII_Owners_Manual_French.pdf",
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 185,
+      "rearWidthMm": 185,
+      "frontRadiusMm": 8,
+      "backRadiusMm": 8,
+      "edgeRadiusMm": 6,
+      "edgeDropMm": 6,
+      "edgeSegments": 8,
+      "wooferRingMm": 118,
+      "wooferYMm": 105,
+      "tweeterRingMm": 28,
+      "tweeterYMm": 258,
+      "waveguideMm": 62,
+      "waveguideDepthMm": 6
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 5,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://global.jbl.com/studio-monitors/305PMKII.html",
+      "note": "equipment plan source (research grade: datasheet); size 185 x 231 x 298 mm (w x d x h) (sources disagree on a dimension); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://jblpro.com/en-US/products/305p-mkii",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://jblpro.com/en-US/products/305p-mkii",
+      "note": "JBL Professional 305P MkII page (read): \"Input Connectors: 1 x XLR female, 1 x TRS female, balanced\", \"Cabinet Dimensions (H x W x D): 298 x 185 x 231 mm (11.75 x 7.3 x 9.9 in)\" (the plan keeps 231 mm; 9.9 in would be 251 mm: SIZE CONFLICT inside the page, so the size is an estimate and the device is beta-modelled), \"LF Driver 126 mm (5 in)\", \"HF Driver 25 mm (1 in) soft dome\", \"Enclosure Finish: Matte black PVC\"."
+    },
+    {
+      "kind": "manual",
+      "url": "https://support.harmanaudio.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwadea3a58/pdfs/JBL_3_Series_MkII_Owners_Manual_French.pdf",
+      "note": "JBL 3 Series MkII owner manual (French edition, downloaded and read as text; it covers the 305P MkII): \"entrees XLR et 6 mm (1/4 in) TRS symetriques\", \"Raccordez le cable electrique IEC inclus a chaque enceinte de la Serie 3\", universal power supply. Documents the connector set (portsDocumented): balanced XLR in, balanced TRS in, IEC mains inlet."
+    },
+    {
+      "kind": "reference",
+      "url": "https://jblpro.com/en-US/products/305p-mkii",
+      "note": "build params: the Wave 0 spike family (curved-cabinet carrying a near-rectangular monitor: plan radius 8, edge radius 6) with a 118 mm woofer ring at 105 mm and a 28 mm tweeter ring at 258 mm in a 62 mm waveguide dish. Recess positions are estimates. Port and control positions on the rear: no drawing or photo was opened, so every position is a plausible guess (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://jblpro.com/en-US/products/305p-mkii",
+      "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with a woofer grille and a tweeter dish; no photo copy, no brand mark, no lettering. Colours: the datasheet finish where it states one, else a studio-monitor default. Matte black enclosure (the page states the finish)."
+    }
+  ]
+}

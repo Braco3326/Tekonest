@@ -1,0 +1,138 @@
+{
+  "id": "neumann-kh-120-ii",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 182,
+    "h": 287,
+    "d": 227
+  },
+  "ports": [
+    {
+      "portId": "in-analog",
+      "face": "io",
+      "xMm": 91,
+      "yMm": 190,
+      "confidence": "guess",
+      "openingMm": 20,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-spdif",
+      "face": "io",
+      "xMm": 58,
+      "yMm": 150,
+      "confidence": "guess",
+      "openingMm": 12,
+      "insetMm": 3,
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "out-spdif",
+      "face": "io",
+      "xMm": 124,
+      "yMm": 150,
+      "confidence": "guess",
+      "openingMm": 12,
+      "insetMm": 3,
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-network",
+      "face": "io",
+      "xMm": 91,
+      "yMm": 118,
+      "confidence": "guess",
+      "openingMm": 14,
+      "insetMm": 3,
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 55,
+      "yMm": 60,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 130,
+      "yMm": 60,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "portsDocumented": true,
+  "portsSource": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 182,
+      "rearWidthMm": 182,
+      "frontRadiusMm": 8,
+      "backRadiusMm": 8,
+      "edgeRadiusMm": 6,
+      "edgeDropMm": 6,
+      "edgeSegments": 8,
+      "wooferRingMm": 130,
+      "wooferYMm": 105,
+      "tweeterRingMm": 28,
+      "tweeterYMm": 232,
+      "waveguideMm": 72,
+      "waveguideDepthMm": 8
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 5,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
+      "note": "equipment plan source (research grade: datasheet); size 182 x 227 x 287 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
+      "note": "Neumann KH 120 II product page (downloaded and read): \"Dimensions 287 x 182 x 227 mm\" (H x W x D), \"XLR: analog electronically balanced\", \"RCA (75 ohm): S/PDIF\" for both an input and an output, \"Remote control: MA 1 software via an RJ45 connector carrying standard IP data\", \"Mains Switch\", \"Universal Power Supply 100 V ... 240 V\", finish \"Painted; metallic anthracite (RAL 7021) / Black (RAL 9005)\" (front / back), 130 mm woofer and 25 mm tweeter with metal grilles. Documents the connector set (portsDocumented): XLR in, S/PDIF RCA in and out, RJ45, and the mains inlet. The page does not name the inlet connector type: iec-c14 is taken from the Neumann operating manual (\"IEC power socket\" in a search summary, the manual itself was not opened) and the shipped Genelec 8030C. The RJ45 carries IP data for MA 1: it keeps the proposal signal aoip (the closest catalogue signal)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
+      "note": "build params: the Wave 0 spike (curved-cabinet carrying a near-rectangular monitor: plan radius 8, edge radius 6, no width stretch, flat baffle with a 130 mm woofer ring and a 72 mm waveguide dish around the 28 mm tweeter; all 11 gates passed). The baffle recess positions (woofer 105 mm, tweeter 232 mm above the base) are estimates from the datasheet outline, not measured. Port and control positions on the rear: no drawing or photo was opened, so every position is a plausible guess (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
+      "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with a woofer grille and a tweeter dish; no photo copy, no brand mark, no lettering. Colours: the datasheet finish where it states one, else a studio-monitor default. Anthracite front, black rear (RAL 7021 / RAL 9005 lifted for the creation lighting)."
+    }
+  ]
+}
