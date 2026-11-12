@@ -8,6 +8,7 @@
  */
 import { readFileSync } from 'node:fs'
 import AxeBuilder from '@axe-core/playwright'
+import manifest from '../../public/assets/ASSET_MANIFEST.json'
 import { expect, test, type Page } from '@playwright/test'
 import { AUTOSAVE_KEY, quietWindow, waitForAutosave } from './waits'
 test.use({ viewport: { width: 1366, height: 768 } })
@@ -23,6 +24,9 @@ const AMP_XLR = AMP.ports.find((p) => p.connector === 'xlr3-f' && p.signal === '
 const AMP_RCA = AMP.ports.find((p) => p.connector === 'rca')!
 const PLACE = 'room:concert-hall-medium'
 const TIP = 'Fiche proposée, pas encore vérifiée : comportement approximatif.'
+// Wave 1: a beta-modelled proposal (a model ships for it) says « Bêta — dimensions estimées » and its own tooltip; the others keep « non vérifié »
+const TIP_ESTIMATED = 'Modèle 3D aux dimensions estimées : fiche non vérifiée, comportement approximatif.'
+const MODELLED = new Set((manifest as { assets: { id: string; status: string }[] }).assets.filter((a) => a.status === 'ok').map((a) => a.id))
 
 const boot = async (page: Page): Promise<void> => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
@@ -73,7 +77,7 @@ test('the file the sync wrote has proposals, none already in the catalogue', asy
   expect(new Set(proposals.map((p) => p.id)).size).toBe(proposals.length)
 })
 
-test('« Bêta » is shown (the file has proposals), just before « Autres » ; one item per proposal, each badged « non vérifié » with the tooltip', async ({ page }) => {
+test('« Bêta » is shown (the file has proposals), just before « Autres » ; one item per proposal, each badged (« non vérifié », or « Bêta — dimensions estimées » when a model ships) with its tooltip', async ({ page }) => {
   await boot(page)
   await open(page)
   const tabs = page.getByRole('tablist').getByRole('tab')
@@ -86,17 +90,22 @@ test('« Bêta » is shown (the file has proposals), just before « Autres » ; 
   await expect(items).toHaveCount(proposals.length)
   expect(await items.evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.deviceId))).toEqual(proposals.map((p) => p.id))
   // every item: the visible badge, the tooltip, the sentence as its description
-  const bad = await items.evaluateAll((els, tip) =>
-    els.flatMap((e) => {
-      const b = e as HTMLButtonElement
-      const badge = b.querySelector('[data-testid="inventory-badge"]')
-      const desc = b.getAttribute('aria-describedby')
-      const why: string[] = []
-      if (badge?.textContent !== 'non vérifié') why.push('badge')
-      if (b.title !== tip) why.push('title')
-      if (!desc || b.ownerDocument.getElementById(desc)?.textContent !== tip) why.push('description')
-      return why.length ? [`${b.dataset.deviceId}: ${why.join(',')}`] : []
-    }), TIP)
+  const bad = await items.evaluateAll(
+    (els, k) =>
+      els.flatMap((e) => {
+        const b = e as HTMLButtonElement
+        const modelled = k.modelled.includes(b.dataset.deviceId ?? '')
+        const tip = modelled ? k.tipEstimated : k.tip
+        const badge = b.querySelector('[data-testid="inventory-badge"]')
+        const desc = b.getAttribute('aria-describedby')
+        const why: string[] = []
+        if (badge?.textContent !== (modelled ? 'Bêta — dimensions estimées' : 'non vérifié')) why.push('badge')
+        if (b.title !== tip) why.push('title')
+        if (!desc || b.ownerDocument.getElementById(desc)?.textContent !== tip) why.push('description')
+        return why.length ? [`${b.dataset.deviceId}: ${why.join(',')}`] : []
+      }),
+    { tip: TIP, tipEstimated: TIP_ESTIMATED, modelled: proposals.filter((p) => MODELLED.has(p.id)).map((p) => p.id) },
+  )
   expect(bad).toEqual([])
   await expect(page.getByTestId('inventory-badge').first()).toBeVisible()
   await expect(page.getByTestId('inventory-badge')).toHaveCount(proposals.length)
