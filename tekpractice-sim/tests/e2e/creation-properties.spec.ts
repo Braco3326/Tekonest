@@ -87,7 +87,13 @@ test('« Augmenter Lacet » clicked 5 times quickly = one undo entry (stepper bu
   const up = props.getByRole('button', { name: 'Augmenter Lacet' })
   await expect(props.getByRole('button', { name: 'Diminuer Lacet' })).toBeVisible()
   const u0 = await undoSize(page)
-  for (let i = 0; i < 5; i++) await up.click()
+  // Five steps inside ONE page task. Five separate Playwright clicks take 250 to 650 ms EACH in this headless Chromium (actionability waits on a 3D room that renders slowly), so
+  // two of them could land more than the 600 ms burst window apart and make two entries: the test then measured the machine, not the product (T4 fix round 2: it fails the same way,
+  // 5 of 5, on 24b49d8, before any T4 commit; the neighbouring test below already works this way for the same reason).
+  await up.evaluate((b: HTMLButtonElement) => {
+    b.focus()
+    for (let i = 0; i < 5; i++) b.click()
+  })
   await expect(up).toBeFocused() // the button survives the store updates
   await expect(props.getByRole('textbox', { name: 'Lacet', exact: true })).toHaveValue('75')
   await expect.poll(() => undoSize(page)).toBe(u0 + 1)
