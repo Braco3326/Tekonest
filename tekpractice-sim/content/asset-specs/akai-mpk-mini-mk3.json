@@ -1,0 +1,64 @@
+{
+  "id": "akai-mpk-mini-mk3",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 318,
+    "h": 44,
+    "d": 181
+  },
+  "ports": [
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 159,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 8,
+      "edgeRadiusMm": 3,
+      "edgeSegments": 8
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.adorama.com/akai-mpk-mini-mk3-25-key-usb-midi-keyboard-controller/p/mpkmini3",
+  "sources": [
+    {
+      "kind": "reference",
+      "url": "https://musicradar.com/reviews/akai-mpk-mini-mk3",
+      "note": "equipment plan source (research grade: dealer); size 318 x 181 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/akai-mpk-mini-mk3-25-key-usb-midi-keyboard-controller/p/mpkmini3",
+      "note": "Dealer pages (B&H, Adorama, Music Radar review) and the manual read through a search summary 2026-11-12: one USB Type-B port (bus powered, class compliant, MIDI over USB) and one 1/4 in TS sustain-pedal jack; no DIN MIDI. The pedal jack has no catalogue signal (not a port). 318 x 181 x 44 mm (dealer, size ok); the real unit is a slightly sloped slab, modelled as a flat rounded box (the family has no profile). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/akai-mpk-mini-mk3-25-key-usb-midi-keyboard-controller/p/mpkmini3",
+      "note": "Dealer pages (B&H, Adorama, Music Radar review) and the manual read through a search summary 2026-11-12: one USB Type-B port (bus powered, class compliant, MIDI over USB) and one 1/4 in TS sustain-pedal jack; no DIN MIDI. The pedal jack has no catalogue signal (not a port). 318 x 181 x 44 mm (dealer, size ok); the real unit is a slightly sloped slab, modelled as a flat rounded box (the family has no profile). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/akai-mpk-mini-mk3-25-key-usb-midi-keyboard-controller/p/mpkmini3",
+      "note": "Dealer pages (B&H, Adorama, Music Radar review) and the manual read through a search summary 2026-11-12: one USB Type-B port (bus powered, class compliant, MIDI over USB) and one 1/4 in TS sustain-pedal jack; no DIN MIDI. The pedal jack has no catalogue signal (not a port). 318 x 181 x 44 mm (dealer, size ok); the real unit is a slightly sloped slab, modelled as a flat rounded box (the family has no profile). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

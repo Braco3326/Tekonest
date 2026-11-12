@@ -1,0 +1,65 @@
+{
+  "id": "crown-pzm-30d",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 152,
+    "h": 19,
+    "d": 127
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "io",
+      "xMm": 76,
+      "yMm": 9.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "flags": [
+        "requiresPhantom"
+      ]
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 10,
+      "edgeRadiusMm": 2.5,
+      "edgeSegments": 8
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--CWNPZM30D",
+      "note": "equipment plan source (research grade: dealer); size 152 x 127 x 19 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://support.harmanaudio.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw085e2bb5/pdfs/AKG_PZM30D_PZM6D_Cutsheet.pdf",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--CWNPZM30D",
+      "note": "Harman support page (CROWN PZM30D, read through a search summary 2026-11-12): balanced 3-pin male XLR output, phantom 12 to 48 V, detachable cable, 152 x 127 x 19 mm, 240 ohm. The cable end is modelled as the output on the rear edge of the plate, a stand-in position: the XLR ring (23 mm) is taller than the 19 mm plate, so the device could not meet the catalogue ring rule and is beta-modelled. 152 x 127 x 19 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--CWNPZM30D",
+      "note": "Harman support page (CROWN PZM30D, read through a search summary 2026-11-12): balanced 3-pin male XLR output, phantom 12 to 48 V, detachable cable, 152 x 127 x 19 mm, 240 ohm. The cable end is modelled as the output on the rear edge of the plate, a stand-in position: the XLR ring (23 mm) is taller than the 19 mm plate, so the device could not meet the catalogue ring rule and is beta-modelled. 152 x 127 x 19 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

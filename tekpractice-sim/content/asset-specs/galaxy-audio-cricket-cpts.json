@@ -1,0 +1,102 @@
+{
+  "id": "galaxy-audio-cricket-cpts",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 87.88,
+    "h": 48.26,
+    "d": 162
+  },
+  "ports": [
+    {
+      "portId": "out-send-unit-balanced-pulse-output",
+      "face": "io",
+      "xMm": 22,
+      "yMm": 24.13,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-send-unit-1-4-balanced-pulse-output",
+      "face": "io",
+      "xMm": 44.2,
+      "yMm": 24.13,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-send-unit-1-4-speaker-output-2-ohm-or-greater",
+      "face": "right",
+      "xMm": 17.2,
+      "yMm": 24.13,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "in-receive-unit-balanced-xlr-input",
+      "face": "left",
+      "xMm": 22,
+      "yMm": 24.13,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-receive-unit-balanced-1-4-input",
+      "face": "left",
+      "xMm": 44.2,
+      "yMm": 24.13,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 8,
+      "edgeRadiusMm": 3,
+      "edgeSegments": 8
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.galaxyaudio.com/products/cpts",
+      "note": "equipment plan source (research grade: datasheet); size 87.88 x 162 x 48.26 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/content/documentation/CRICKET.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.galaxyaudio.com/products/cpts",
+      "note": "Galaxy Audio CPTS page (read by a research pass 2026-11-12): the sender has a 1/4 in speaker output (2 ohm or more), a 1/4 in balanced line output and an XLR line output (Hi, Low or Speaker selectable); the receiver has a 1/4 in balanced input and an XLR balanced input, one 9 V battery in each unit. The product is a two-unit set; one 87.88 x 162 x 48.26 mm box carries the ports of both (the proposal ports), so the set is modelled as one device, beta-modelled. XLR genders are not stated. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.galaxyaudio.com/products/cpts",
+      "note": "Galaxy Audio CPTS page (read by a research pass 2026-11-12): the sender has a 1/4 in speaker output (2 ohm or more), a 1/4 in balanced line output and an XLR line output (Hi, Low or Speaker selectable); the receiver has a 1/4 in balanced input and an XLR balanced input, one 9 V battery in each unit. The product is a two-unit set; one 87.88 x 162 x 48.26 mm box carries the ports of both (the proposal ports), so the set is modelled as one device, beta-modelled. XLR genders are not stated. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "id": "allen-heath-qu-16",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 440,
+    "h": 186,
+    "d": 500
+  },
+  "ports": [
+    {
+      "portId": "in-xlr-1",
+      "face": "io",
+      "xMm": 26,
+      "yMm": 93,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-xlr-2",
+      "face": "io",
+      "xMm": 53,
+      "yMm": 93,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-trs-1",
+      "face": "io",
+      "xMm": 75.2,
+      "yMm": 93,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-trs-2",
+      "face": "io",
+      "xMm": 92.6,
+      "yMm": 93,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr-1",
+      "face": "io",
+      "xMm": 114.8,
+      "yMm": 93,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-xlr-2",
+      "face": "io",
+      "xMm": 141.8,
+      "yMm": 93,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 168.8,
+      "yMm": 93,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 191,
+      "yMm": 93,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net-snake",
+      "face": "io",
+      "xMm": 208.7,
+      "yMm": 93,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 226.7,
+      "yMm": 93,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        186
+      ],
+      [
+        40,
+        186
+      ],
+      [
+        160,
+        150
+      ],
+      [
+        330,
+        100
+      ],
+      [
+        500,
+        70
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 40,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.allen-heath.com/content/uploads/2023/06/Qu-16-Dimensions_D.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 440 x 500 x 186 mm (w x d x h) (sources disagree on a dimension); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.proacousticsusa.com/allen-heath-qu-16-rackmountable-digital-mixer.html",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.soundonsound.com/reviews/allen-heath-qu16",
+      "note": "Sound On Sound review read by a research pass 2026-11-12 (the plan sources are a dimensions PDF and a dealer page): rear 16 XLR mic and 16 TRS line inputs, two stereo TRS inputs, 12 XLR outputs (main L / R and ten mixes), an AES3 stereo digital output, one USB-B streaming port, one Cat5 snake port and one Ethernet network port, a talkback input; the mains connection is not stated. Axis order and a depth conflict mean the plan size is an estimate (440 x 500 x 186 mm), so beta-modelled; modelled subset of 10 ports. The sloped profile is an estimate. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.soundonsound.com/reviews/allen-heath-qu16",
+      "note": "Sound On Sound review read by a research pass 2026-11-12 (the plan sources are a dimensions PDF and a dealer page): rear 16 XLR mic and 16 TRS line inputs, two stereo TRS inputs, 12 XLR outputs (main L / R and ten mixes), an AES3 stereo digital output, one USB-B streaming port, one Cat5 snake port and one Ethernet network port, a talkback input; the mains connection is not stated. Axis order and a depth conflict mean the plan size is an estimate (440 x 500 x 186 mm), so beta-modelled; modelled subset of 10 ports. The sloped profile is an estimate. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.soundonsound.com/reviews/allen-heath-qu16",
+      "note": "Sound On Sound review read by a research pass 2026-11-12 (the plan sources are a dimensions PDF and a dealer page): rear 16 XLR mic and 16 TRS line inputs, two stereo TRS inputs, 12 XLR outputs (main L / R and ten mixes), an AES3 stereo digital output, one USB-B streaming port, one Cat5 snake port and one Ethernet network port, a talkback input; the mains connection is not stated. Axis order and a depth conflict mean the plan size is an estimate (440 x 500 x 186 mm), so beta-modelled; modelled subset of 10 ports. The sloped profile is an estimate. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

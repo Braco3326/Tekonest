@@ -4144,7 +4144,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "genelec-7360a",
@@ -4171,7 +4172,11 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "l-acoustics-x15-hiq",
@@ -4226,7 +4231,8 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "nti-audio-xl2",
@@ -4366,7 +4372,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "conflict"
+   "sizeConfidence": "conflict",
+   "staged": true
   },
   {
    "id": "arrakis-arc-8",
@@ -4420,7 +4427,11 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "power-sequencer-distribution",
@@ -4684,7 +4695,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "antelope-orion-32-plus-gen4",
@@ -4917,7 +4929,8 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "l-acoustics-la4x",
@@ -5415,7 +5428,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "allen-heath-ab168",
@@ -5639,7 +5653,8 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "dbx-160a",
@@ -5696,7 +5711,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "eventide-h9000",

@@ -1,0 +1,151 @@
+{
+  "id": "genelec-8351b",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 287,
+    "h": 433,
+    "d": 278
+  },
+  "ports": [
+    {
+      "portId": "in-analog",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 270,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 270,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 190,
+      "yMm": 270,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "net-1",
+      "face": "io",
+      "xMm": 100,
+      "yMm": 200,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir",
+      "insetMm": 3,
+      "openingMm": 14
+    },
+    {
+      "portId": "net-2",
+      "face": "io",
+      "xMm": 130,
+      "yMm": 200,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir",
+      "insetMm": 3,
+      "openingMm": 14
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 190,
+      "yMm": 200,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in",
+      "insetMm": 3,
+      "openingMm": 24
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 230,
+      "yMm": 135,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 281,
+      "sideBulgeMm": 3,
+      "rearWidthMm": 271,
+      "frontRadiusMm": 34,
+      "backRadiusMm": 41,
+      "edgeRadiusMm": 24,
+      "edgeDropMm": 31,
+      "edgeSegments": 8,
+      "barrelMm": 24,
+      "barrelCentreMm": 243,
+      "tweeterRingMm": 73,
+      "tweeterYMm": 317,
+      "waveguideMm": 126,
+      "waveguideDepthMm": 14
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 22,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.genelec.com/8351",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.genelec.com/8351",
+      "note": "equipment plan source (research grade: datasheet); size 287 x 278 x 433 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://reverb.com/item/44334662-genelec-8351b-pair-white",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.genelec.com/8351",
+      "note": "Genelec 8351 page and manual pages read by a research pass 2026-11-12: one XLR female analog input, one XLR female AES/EBU input, one XLR male AES/EBU output (thru), two RJ45 GLM network ports (control data, not Ethernet audio: modelled as aoip like the 8341A and the template takes no audio route), a rear MAINS INPUT 100-240 V (the inlet type is not named: iec-c14 follows the 8341A precedent and is listed in the plan as assumedConnectors). The panel layout is not stated (positions guessed). Build params: the shipped 8341A recipe scaled by the width ratio 287 / 237 (a 126 mm coaxial dish at 317 mm); the woofer drivers are not read, so the baffle picture shows the coaxial dish only. 287 x 278 x 433 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.genelec.com/8351",
+      "note": "Genelec 8351 page and manual pages read by a research pass 2026-11-12: one XLR female analog input, one XLR female AES/EBU input, one XLR male AES/EBU output (thru), two RJ45 GLM network ports (control data, not Ethernet audio: modelled as aoip like the 8341A and the template takes no audio route), a rear MAINS INPUT 100-240 V (the inlet type is not named: iec-c14 follows the 8341A precedent and is listed in the plan as assumedConnectors). The panel layout is not stated (positions guessed). Build params: the shipped 8341A recipe scaled by the width ratio 287 / 237 (a 126 mm coaxial dish at 317 mm); the woofer drivers are not read, so the baffle picture shows the coaxial dish only. 287 x 278 x 433 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

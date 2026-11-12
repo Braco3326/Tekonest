@@ -1,0 +1,199 @@
+{
+  "id": "genelec-7360a",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 462,
+    "h": 527,
+    "d": 363
+  },
+  "ports": [
+    {
+      "portId": "in-analog-1",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 430,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "in-analog-2",
+      "face": "io",
+      "xMm": 130,
+      "yMm": 430,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "in-lfe",
+      "face": "io",
+      "xMm": 170,
+      "yMm": 430,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 210,
+      "yMm": 430,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "out-analog-1",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 360,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "out-analog-2",
+      "face": "io",
+      "xMm": 130,
+      "yMm": 360,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "out-lfe",
+      "face": "io",
+      "xMm": 170,
+      "yMm": 360,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 210,
+      "yMm": 360,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out",
+      "insetMm": 3,
+      "openingMm": 20
+    },
+    {
+      "portId": "net-1",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 300,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir",
+      "insetMm": 3,
+      "openingMm": 14
+    },
+    {
+      "portId": "net-2",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 300,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir",
+      "insetMm": 3,
+      "openingMm": 14
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 230,
+      "yMm": 300,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in",
+      "insetMm": 3,
+      "openingMm": 24
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 280,
+      "yMm": 300,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 462,
+      "rearWidthMm": 440,
+      "frontRadiusMm": 44,
+      "backRadiusMm": 44,
+      "edgeRadiusMm": 24,
+      "edgeDropMm": 30,
+      "edgeSegments": 8
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 22,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "portsDocumented": true,
+  "portsSource": "https://genelec.com/7360A",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.genelec.com/7360a",
+      "note": "equipment plan source (research grade: datasheet); size 462 x 363 x 527 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://genelec.com/7360A",
+      "note": "Genelec 7360A product page and manual pages 2 and 3 (read by a research pass 2026-11-12): seven XLR female analog inputs (7.1) and seven XLR male analog outputs, an LFE XLR input and an LFE XLR output, an XLR female AES/EBU input and an XLR male AES/EBU output (thru), a Link in and out of an unstated type, two RJ45 GLM ports, a bypass contact, and a rear MAINS INPUT 100-240 V, 300 W (the inlet type is not named: iec-c14 follows the 8341A precedent, listed in the plan as assumedConnectors). Modelled subset: 2 analog in and out, LFE in and out, AES in and out, 2 GLM ports, the inlet. The panel layout and the driver layout are not stated: the cabinet is a plain rounded box with no drivers drawn (nothing in the page read gives the baffle). 462 x 363 x 527 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://genelec.com/7360A",
+      "note": "Genelec 7360A product page and manual pages 2 and 3 (read by a research pass 2026-11-12): seven XLR female analog inputs (7.1) and seven XLR male analog outputs, an LFE XLR input and an LFE XLR output, an XLR female AES/EBU input and an XLR male AES/EBU output (thru), a Link in and out of an unstated type, two RJ45 GLM ports, a bypass contact, and a rear MAINS INPUT 100-240 V, 300 W (the inlet type is not named: iec-c14 follows the 8341A precedent, listed in the plan as assumedConnectors). Modelled subset: 2 analog in and out, LFE in and out, AES in and out, 2 GLM ports, the inlet. The panel layout and the driver layout are not stated: the cabinet is a plain rounded box with no drivers drawn (nothing in the page read gives the baffle). 462 x 363 x 527 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}
