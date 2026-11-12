@@ -1,0 +1,253 @@
+{
+  "id": "rode-rodecaster-pro-ii",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 305,
+    "h": 60,
+    "d": 270
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 80,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-3",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-4",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 200,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 224,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "usb-1",
+      "face": "io",
+      "xMm": 248,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb-2",
+      "face": "io",
+      "xMm": 264,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 286,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "opposite",
+      "xMm": 80,
+      "yMm": 24,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-2",
+      "face": "opposite",
+      "xMm": 112,
+      "yMm": 24,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-3",
+      "face": "opposite",
+      "xMm": 144,
+      "yMm": 24,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-4",
+      "face": "opposite",
+      "xMm": 176,
+      "yMm": 24,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "balance-master",
+      "kind": "knob",
+      "face": "top",
+      "xMm": 280,
+      "yMm": 60,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 12
+      }
+    },
+    {
+      "controlId": "fader-master",
+      "kind": "fader",
+      "face": "top",
+      "xMm": 280,
+      "yMm": 120,
+      "axis": "y",
+      "travelMm": 90,
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 11
+      }
+    },
+    {
+      "controlId": "mute-master",
+      "kind": "button",
+      "face": "top",
+      "xMm": 280,
+      "yMm": 235,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        60
+      ],
+      [
+        40,
+        60
+      ],
+      [
+        200,
+        52
+      ],
+      [
+        270,
+        48
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "feetMm": 3,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 20,
+      "feetFromEndMm": 24
+    },
+    "projection": [
+      "top",
+      "io",
+      "opposite"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf",
+      "note": "RODE RODECaster Pro II datasheet (read as text 2026-11-12): length 305 mm x width 270 mm x height 60 mm, 1960 g, black or white; 4 x combo jack inputs (microphone, line, instrument), 2 x balanced line outputs, 4 x headphone outputs, 2 USB-C interfaces (USB 1: 2-in/16-out multichannel and 2-in/2-out mix-minus; USB 2), Bluetooth, microSD, Wi-Fi and Ethernet; power 30 W USB-C PD (15 V 2 A) from the supplied adaptor, so NO mains inlet and no power control. The datasheet does not say where the connectors are: the combos, line outputs, USB-C and Ethernet are placed on the rear face and the four headphone jacks on the front lip (GUESSES, no drawing read). Ethernet is modelled as rj45 / aoip like the other network ports; microSD, Bluetooth and Wi-Fi are not ports. The slab profile is an estimate (the sheet gives only the outer sizes): 60 mm at the rear, 48 mm at the front lip."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://rode.com/en-us/microphones/interfaces-mixers/rodecaster-pro-ii",
+      "note": "Rode product page. Its comparison table lists 1/4 in (6.35 mm) headphone outputs, 4 for the Pro II (read from a web-search summary on 2026-11-12, the page itself was not opened); the line outputs are 6.35 mm TRS per the same summary."
+    }
+  ]
+}

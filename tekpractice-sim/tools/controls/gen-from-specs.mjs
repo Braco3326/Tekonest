@@ -44,7 +44,9 @@ for (const file of readdirSync(specs).filter((f) => f.endsWith('.json'))) {
     }
   }
   if (!controls.length) continue
-  writeFileSync(target, JSON.stringify({ schema: 1, deviceId: spec.id, generated: true, controls }, null, 1))
+  // A console wedge: the controls of its sloped top follow the spec's side profile (the layout parity test pins the two together).
+  const topProfile = spec.build?.shape === 'console-wedge' && Array.isArray(spec.build.profile) ? { topProfile: spec.build.profile } : {}
+  writeFileSync(target, JSON.stringify({ schema: 1, deviceId: spec.id, generated: true, ...topProfile, controls }, null, 1))
   written++
   console.log(`${spec.id}: ${controls.length} control(s)${controls.some((c) => c.catalogControl) ? ' (linked: ' + controls.filter((c) => c.catalogControl).map((c) => c.catalogControl).join(', ') + ')' : ''}`)
 }

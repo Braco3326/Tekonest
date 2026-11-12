@@ -1,0 +1,333 @@
+{
+  "id": "mackie-profx12v3",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 330,
+    "h": 102,
+    "d": 376
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 28,
+      "yMm": 80,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 61,
+      "yMm": 80,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "io",
+      "xMm": 94,
+      "yMm": 80,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "io",
+      "xMm": 127,
+      "yMm": 80,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-5",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 80,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-6",
+      "face": "io",
+      "xMm": 193,
+      "yMm": 80,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-7",
+      "face": "io",
+      "xMm": 226,
+      "yMm": 80,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-stereo-35",
+      "face": "io",
+      "xMm": 262,
+      "yMm": 80,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 28,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 62,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mon",
+      "face": "io",
+      "xMm": 100,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-fx",
+      "face": "io",
+      "xMm": 122,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-sub-1",
+      "face": "io",
+      "xMm": 144,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-sub-2",
+      "face": "io",
+      "xMm": 166,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 190,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "in-fx-footswitch",
+      "face": "io",
+      "xMm": 212,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "gpio-tally",
+      "dir": "in"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 240,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 290,
+      "yMm": 40,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 290,
+      "yMm": 72,
+      "axis": "x",
+      "sizeMm": {
+        "w": 20,
+        "h": 14.4,
+        "d": 8
+      }
+    },
+    {
+      "controlId": "fader-master",
+      "kind": "fader",
+      "face": "top",
+      "xMm": 300,
+      "yMm": 110,
+      "axis": "y",
+      "travelMm": 70,
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 11
+      }
+    },
+    {
+      "controlId": "mute-master",
+      "kind": "button",
+      "face": "top",
+      "xMm": 300,
+      "yMm": 250,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 4
+      }
+    },
+    {
+      "controlId": "balance-master",
+      "kind": "knob",
+      "face": "top",
+      "xMm": 300,
+      "yMm": 300,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 12
+      }
+    }
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        102
+      ],
+      [
+        40,
+        102
+      ],
+      [
+        110,
+        86
+      ],
+      [
+        250,
+        68
+      ],
+      [
+        376,
+        56
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 28,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 800,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://thomannmusic.com/mackie_profx12v3.htm",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://thomannmusic.com/mackie_profx12v3.htm",
+      "note": "Thomann ProFX12v3 page (opened 2026-11-12): 102 x 330 x 376 mm (H x W x D), 3.6 kg; 7 mic inputs (channels 1-2 combo with Hi-Z), 5 mono line inputs, 4 stereo inputs, one 3.5 mm stereo input, USB-B (the page says 4 in / 2 out in one place and 2 in / 4 out in another), one footswitch input, an XLR master output, 2 aux / monitor outputs, one headphone jack, 48 V phantom. The mains inlet (3-pin IEC line cord) and the 1/4 in main and sub outputs come from the Mackie ProFXv3+ specification sheet and the knowledge base (the v3+ sheet read as text: 102 x 330 x 376 mm, 3.6 kg, the same footprint); the plan treats the v3 as the same footprint. MODELLED SUBSET (documented): 7 mic XLR inputs, the 3.5 mm stereo input, the main XLR L / R, the monitor and FX sends, 2 sub outs, the headphone jack, the footswitch, USB-B and the IEC inlet (18 ports); the 1/4 in line inputs of the mono and stereo channels, the inserts and the direct outs are not modelled. Positions are GUESSES: the real unit has its channel inputs on the top rear panel, here every connector sits on the rear face (no drawing was read). The profile is an estimate: the sources give the three outer sizes only, the sheet drawings were not readable as text."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://mackie.com/img/file_resources/PROFXV3+_SERIES_SS.pdf",
+      "note": "Mackie ProFXv3+ series specification sheet (read as text): ProFX12v3+ 4.0 x 13.0 x 14.8 in = 102 x 330 x 376 mm, 7.9 lb = 3.6 kg; 1/4 in and XLR main outputs, 1/4 in sub outputs, aux outputs, USB 2.0 (2 in 4 out), stereo 1/8 in input, headphone output, 3-pin IEC line cord."
+    }
+  ]
+}
