@@ -1,0 +1,104 @@
+{
+  "id": "eventide-h9000",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 89,
+    "d": 318
+  },
+  "ports": [
+    {
+      "portId": "in-xlr-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr-1",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-xlr-2",
+      "face": "io",
+      "xMm": 137,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 60,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "plateRgb": 2500909,
+      "bodyRgb": 1579292
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.eventideaudio.com/rackmount/h9000/",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.eventideaudio.com/rackmount/h9000/",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 318 x 89 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.andertons.co.uk/eventide-h9000-flagship-effects-processor/",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.eventideaudio.com/rackmount/h9000/",
+      "note": "Eventide H9000 page (opened 2026-11-12): stereo analog I/O on XLR (modelled as two inputs and two outputs), 8-channel analog I/O on DB25 (Tascam standard), AES DB-25 and XLR, S-PDIF RCA, optical, 8-channel ADAT, three MIDI DIN jacks, two TRS remote inputs, LAN. The page gives no direction or count for the AES XLR and RCA connectors and no power connection, so those are not modelled (documented subset: the XLR audio I/O). 483 x 318 x 89 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

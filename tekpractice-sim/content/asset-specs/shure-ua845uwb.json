@@ -1,0 +1,92 @@
+{
+  "id": "shure-ua845uwb",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 44.5,
+    "d": 295.3
+  },
+  "ports": [
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 423.6,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 22.25,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 2895667,
+      "bodyRgb": 1710878
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.shure.com/en-US/products/accessories/ua845uwb",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://pubs.shure.com/view/guide/UA844/en-US.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 295.3 x 44.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.shure.com/en-US/products/accessories/ua845uwb",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://media.musson.com/mti/docs/u/a/ua845uwb_guide_en-us.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.shure.com/en-US/products/accessories/ua845uwb",
+      "note": "Shure UA845UWB page and user guide summary (read through search summaries 2026-11-12): an antenna and power distribution system with an internal power supply (mains inlet 100-240 V; the connector type is not named, so IEC C14 is an assumed connector listed in the plan), BNC antenna inputs, BNC cascade ports and DC power outputs to receivers. No catalogue signal fits the RF or DC connectors, so the only patchable port is the mains inlet (like the Mac mini, a device with one mains port). 482.6 x 295.3 x 44.5 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

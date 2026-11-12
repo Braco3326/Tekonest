@@ -1,0 +1,177 @@
+{
+  "id": "audient-id14-mkii",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 173,
+    "h": 62,
+    "d": 120
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 24,
+      "yMm": 39.7,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 51,
+      "yMm": 39.7,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-optical",
+      "face": "io",
+      "xMm": 70.8,
+      "yMm": 39.7,
+      "confidence": "guess",
+      "connector": "toslink",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 84,
+      "yMm": 39.7,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-line-1",
+      "face": "io",
+      "xMm": 19.2,
+      "yMm": 17.8,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-2",
+      "face": "io",
+      "xMm": 36.6,
+      "yMm": 17.8,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-3",
+      "face": "io",
+      "xMm": 54,
+      "yMm": 17.8,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-4",
+      "face": "io",
+      "xMm": 71.4,
+      "yMm": 17.8,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "io",
+      "xMm": 88.8,
+      "yMm": 17.8,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-2",
+      "face": "io",
+      "xMm": 103.2,
+      "yMm": 17.8,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "in-inst",
+      "face": "opposite",
+      "xMm": 130,
+      "yMm": 31,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 10,
+      "plateFilletMm": 4.4,
+      "filletMm": 5,
+      "filletSegments": 10,
+      "feetMm": 3,
+      "feetDiaMm": 12,
+      "plateRgb": 2763824,
+      "bodyRgb": 1776671
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 4
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.thomann.de/be/audient_id14_mkii.htm",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.de/be/audient_id14_mkii.htm",
+      "note": "equipment plan source (research grade: dealer); size 173 x 120 x 62 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.de/be/audient_id14_mkii.htm",
+      "note": "Thomann page (opened 2026-11-12): two combined XLR / jack mic-line inputs, one discrete JFET instrument input on the front, one combined ADAT / S-PDIF TOSLINK input, four 6.3 mm line outputs, one 6.3 mm and one 3.5 mm headphone output, one USB-C port, USB bus powered (no mains). Only the instrument input has a stated panel (front); the rest are modelled on the rear. 173 x 120 x 62 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.de/be/audient_id14_mkii.htm",
+      "note": "Thomann page (opened 2026-11-12): two combined XLR / jack mic-line inputs, one discrete JFET instrument input on the front, one combined ADAT / S-PDIF TOSLINK input, four 6.3 mm line outputs, one 6.3 mm and one 3.5 mm headphone output, one USB-C port, USB bus powered (no mains). Only the instrument input has a stated panel (front); the rest are modelled on the rear. 173 x 120 x 62 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.de/be/audient_id14_mkii.htm",
+      "note": "Thomann page (opened 2026-11-12): two combined XLR / jack mic-line inputs, one discrete JFET instrument input on the front, one combined ADAT / S-PDIF TOSLINK input, four 6.3 mm line outputs, one 6.3 mm and one 3.5 mm headphone output, one USB-C port, USB bus powered (no mains). Only the instrument input has a stated panel (front); the rest are modelled on the rear. 173 x 120 x 62 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

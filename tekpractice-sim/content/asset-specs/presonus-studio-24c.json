@@ -1,0 +1,117 @@
+{
+  "id": "presonus-studio-24c",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 180,
+    "h": 44,
+    "d": 144
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "opposite",
+      "xMm": 24,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "opposite",
+      "xMm": 51,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-main-1",
+      "face": "io",
+      "xMm": 19.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-2",
+      "face": "io",
+      "xMm": 36.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 54,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 69.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 10,
+      "plateFilletMm": 4.4,
+      "filletMm": 5,
+      "filletSegments": 10,
+      "feetMm": 3,
+      "feetDiaMm": 12,
+      "plateRgb": 3158840,
+      "bodyRgb": 2237480
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 4
+  },
+  "portsDocumented": true,
+  "portsSource": "https://manualmachine.com/presonus/studio24c/8126865-user-manual",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.proacousticsusa.com/presonus-studio-24c-2x2-usb-c-compatible-audio-interface.html",
+      "note": "equipment plan source (research grade: dealer); size 180 x 144 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.andertons.co.uk/presonus-studio-2-4c-2x2-192-khz-usb-c-interface-w-midi-i-o-studio24c",
+      "note": "Dealer page (Andertons) and the owner manual, both read through search summaries 2026-11-12 (the manual PDF was not readable): two combo XLR / TRS mic-line-instrument inputs on the front, two balanced 1/4 in TRS main outputs, a headphone output, MIDI in and out, one USB-C port, USB bus power (no mains). The MIDI jacks have no catalogue signal (not ports); the headphone jack placement differs between summaries (modelled on the rear). 180 x 144 x 44 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

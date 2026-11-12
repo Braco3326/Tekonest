@@ -1,0 +1,167 @@
+{
+  "id": "sennheiser-em-6000",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44,
+    "d": 373
+  },
+  "ports": [
+    {
+      "portId": "out-xlr-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-xlr-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-14-1",
+      "face": "io",
+      "xMm": 105.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-14-2",
+      "face": "io",
+      "xMm": 122.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 144.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "in-wclk",
+      "face": "io",
+      "xMm": 167,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "out-wclk",
+      "face": "io",
+      "xMm": 184.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 424,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    },
+    {
+      "portId": "out-phones",
+      "face": "opposite",
+      "xMm": 120,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 2895667,
+      "bodyRgb": 1710878
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://docs.cloud.sennheiser.com/en-us/digital-6000/digital-6000/specs-em6000.html",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.sennheiser.com/en-au/catalog/products/wireless-systems/em-6000",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 373 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.la-bs.com/Objets/EM6000DANTE_dt.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://docs.cloud.sennheiser.com/en-us/digital-6000/digital-6000/specs-em6000.html",
+      "note": "Sennheiser EM 6000 specifications page (opened 2026-11-12): two XLR-3 and two 6.3 mm balanced audio outputs, an XLR-3 AES3 output, BNC word clock in and out, a 6.3 mm headphone output, 3-pin IEC/EN 60320-1 mains inlet 100-240 V. The page also lists one RJ45; a search summary says only the EM 6000 DANTE has network ports, so the RJ45 is left out (conflict). The BNC antenna inputs and daisy-chain outputs have no catalogue signal. 483 x 373 x 44 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

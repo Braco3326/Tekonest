@@ -4280,7 +4280,11 @@
     "receiver",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "shure-scm820",
@@ -5223,7 +5227,8 @@
     "receiver",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "shure-ua845uwb",
@@ -5253,7 +5258,11 @@
     "active",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "sound-devices-833",
@@ -5471,7 +5480,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "audient-id14-mkii",
@@ -5497,7 +5507,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "audio-technica-atw-r3210",
@@ -5525,7 +5536,8 @@
     "receiver",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "behringer-flow-8",
@@ -5694,7 +5706,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "focusrite-rednet-a16r-mkii",
@@ -5899,7 +5912,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "qsc-ks118",
@@ -6141,7 +6155,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "telos-zephyr-xstream",
@@ -6170,7 +6185,11 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "ua-la-610-mkii",

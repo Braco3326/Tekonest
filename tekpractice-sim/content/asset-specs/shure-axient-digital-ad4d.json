@@ -1,0 +1,207 @@
+{
+  "id": "shure-axient-digital-ad4d",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44,
+    "d": 333
+  },
+  "ports": [
+    {
+      "portId": "out-xlr-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-xlr-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-14-1",
+      "face": "io",
+      "xMm": 105.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-14-2",
+      "face": "io",
+      "xMm": 122.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 144.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "net-1",
+      "face": "io",
+      "xMm": 167.3,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net-2",
+      "face": "io",
+      "xMm": 185.3,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net-3",
+      "face": "io",
+      "xMm": 203.3,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net-4",
+      "face": "io",
+      "xMm": 221.3,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-wclk",
+      "face": "io",
+      "xMm": 239,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "out-wclk",
+      "face": "io",
+      "xMm": 256.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 424,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    },
+    {
+      "portId": "out-phones",
+      "face": "opposite",
+      "xMm": 120,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 2895667,
+      "bodyRgb": 1710878
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.shure.com/en-US/products/wireless-systems/axient_digital/ad4d",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 333 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/content/documentation/Axient-Digital_Specification-Sheet_AD600_Letter_EN%20(1)%20(2).pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.shure.com/en-US/products/wireless-systems/axient_digital/ad4d",
+      "note": "Shure AD4D page (opened 2026-11-12) plus a dealer page (Go Knight, opened) and a search summary: per receiver two XLR and two 1/4 in transformer-balanced outputs, an XLR AES3 output, four RJ45 network ports (Dante / AES67 and control: modelled as aoip, the template takes no audio route through them), a BNC word-clock input and thru, a 1/4 in headphone jack on the front, and a locking AC inlet (the Shure page says \"locking AC\"; the IEC C14 type comes from the dealer wording and the knowledge base, so it is listed as assumedConnectors in the plan). The BNC antenna inputs, cascade outputs and the AC cascade output have no catalogue signal and are not ports. 483 x 333 x 44 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

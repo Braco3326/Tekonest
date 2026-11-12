@@ -1,0 +1,183 @@
+{
+  "id": "tc-electronic-m3000",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44,
+    "d": 208
+  },
+  "ports": [
+    {
+      "portId": "in-xlr-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr-1",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-xlr-2",
+      "face": "io",
+      "xMm": 137,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 164,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 191,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "in-spdif",
+      "face": "io",
+      "xMm": 213.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "out-spdif",
+      "face": "io",
+      "xMm": 230.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "out"
+    },
+    {
+      "portId": "in-optical",
+      "face": "io",
+      "xMm": 245.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "toslink",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "out-optical",
+      "face": "io",
+      "xMm": 258.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "toslink",
+      "signal": "spdif",
+      "dir": "out"
+    },
+    {
+      "portId": "in-wclk",
+      "face": "io",
+      "xMm": 273.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "wordclock",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3356219,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.soundonsound.com/reviews/tc-electronic-m3000",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--TCE9505000",
+      "note": "equipment plan source (research grade: dealer); size 483 x 208 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://cf3.zzounds.com/media/M3000_US-23e213692884cf658eee80e8a9bb7fea.pdf",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--TCE9505000",
+      "note": "TC Electronic M3000 read through a search summary 2026-11-12 (the zzounds page answered 403) of the Sound On Sound review and the manufacturer specification pages: a pair of balanced XLR analog inputs and outputs, XLR AES/EBU in and out, RCA S/PDIF in and out, optical (TOSLINK, ADAT or S/PDIF) in and out, a phono word clock input, MIDI in, out and thru (no catalogue signal, not ports). The mains connection is not stated, so no mains inlet is modelled. 483 x 208 x 44 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--TCE9505000",
+      "note": "TC Electronic M3000 read through a search summary 2026-11-12 (the zzounds page answered 403) of the Sound On Sound review and the manufacturer specification pages: a pair of balanced XLR analog inputs and outputs, XLR AES/EBU in and out, RCA S/PDIF in and out, optical (TOSLINK, ADAT or S/PDIF) in and out, a phono word clock input, MIDI in, out and thru (no catalogue signal, not ports). The mains connection is not stated, so no mains inlet is modelled. 483 x 208 x 44 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--TCE9505000",
+      "note": "TC Electronic M3000 read through a search summary 2026-11-12 (the zzounds page answered 403) of the Sound On Sound review and the manufacturer specification pages: a pair of balanced XLR analog inputs and outputs, XLR AES/EBU in and out, RCA S/PDIF in and out, optical (TOSLINK, ADAT or S/PDIF) in and out, a phono word clock input, MIDI in, out and thru (no catalogue signal, not ports). The mains connection is not stated, so no mains inlet is modelled. 483 x 208 x 44 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

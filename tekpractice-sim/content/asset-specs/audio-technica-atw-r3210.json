@@ -1,0 +1,78 @@
+{
+  "id": "audio-technica-atw-r3210",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 210,
+    "h": 43.4,
+    "d": 191
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "io",
+      "xMm": 26,
+      "yMm": 21.7,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-14",
+      "face": "io",
+      "xMm": 48.2,
+      "yMm": 21.7,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 6,
+      "plateFilletMm": 2.6,
+      "filletMm": 3,
+      "filletSegments": 10,
+      "rearInsetMm": 5,
+      "seamMm": 14,
+      "feetMm": 2,
+      "feetDiaMm": 12,
+      "ventSlots": 7,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 2.4,
+      "ventSlotLenMm": 30,
+      "ventPitchMm": 6,
+      "ventDepthMm": 1.2,
+      "ventFromRearMm": 30,
+      "plateRgb": 2763824,
+      "bodyRgb": 1710878
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.fullcompass.com/prod/548523-audio-technica-atw-r3210-3000-series-4th-gen-uhf-diversity-receiver",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.audio-technica.com/en-sea/atw-r3210",
+      "note": "equipment plan source (research grade: datasheet); size 210 x 191 x 43.4 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.fullcompass.com/prod/548523-audio-technica-atw-r3210-3000-series-4th-gen-uhf-diversity-receiver",
+      "note": "Dealer pages (Full Compass, Go Knight, SoundPro, Adorama) read through a search summary 2026-11-12: rear panel balanced XLR output and unbalanced 1/4 in output, two detachable BNC antennas (switchable 12 VDC antenna power), 12 VDC supply with an external AC adapter (no mains inlet, no power control). The BNC antennas and the DC jack have no catalogue signal (not ports). 210 x 191 x 43.4 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}
