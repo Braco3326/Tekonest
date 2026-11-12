@@ -26,7 +26,7 @@
       "portId": "bidir-usb",
       "face": "bottom",
       "xMm": 26,
-      "yMm": 41.5,
+      "yMm": 44,
       "confidence": "guess",
       "openingMm": 8,
       "connector": "usb-c",

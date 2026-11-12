@@ -1,0 +1,84 @@
+{
+ "schema": 1,
+ "deviceId": "rode-rodecaster-pro-ii",
+ "generated": true,
+ "topProfile": [
+  [
+   0,
+   60
+  ],
+  [
+   40,
+   60
+  ],
+  [
+   200,
+   52
+  ],
+  [
+   270,
+   48
+  ]
+ ],
+ "controls": [
+  {
+   "id": "balance-master",
+   "face": "top",
+   "xMm": 280,
+   "yMm": 60,
+   "sizeMm": {
+    "w": 12,
+    "h": 12,
+    "d": 12
+   },
+   "label": "Balance",
+   "catalogControl": "balance-master",
+   "kind": "knob",
+   "axis": "z",
+   "sweepDeg": 270,
+   "colour": "#1c1d20",
+   "default": 0.5,
+   "detents": 5
+  },
+  {
+   "id": "fader-master",
+   "face": "top",
+   "xMm": 280,
+   "yMm": 120,
+   "sizeMm": {
+    "w": 12,
+    "h": 12,
+    "d": 11
+   },
+   "label": "Fader master",
+   "catalogControl": "fader-master",
+   "kind": "fader",
+   "axis": "y",
+   "travelMm": 90,
+   "taper": "fader-db",
+   "default": 0.75,
+   "colour": "#2b2d31"
+  },
+  {
+   "id": "mute-master",
+   "face": "top",
+   "xMm": 280,
+   "yMm": 235,
+   "sizeMm": {
+    "w": 12,
+    "h": 12,
+    "d": 4
+   },
+   "label": "Mute master",
+   "catalogControl": "mute-master",
+   "kind": "button",
+   "axis": "z",
+   "latch": true,
+   "round": true,
+   "colour": "#1b3a1f",
+   "lit": "#46ff5a",
+   "travelMm": 1,
+   "default": 0
+  }
+ ]
+}

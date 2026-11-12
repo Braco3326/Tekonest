@@ -543,6 +543,457 @@
         { "portId": "out-3", "dir": "out", "connector": "iec-c13", "signal": "mains-power", "flags": ["isMainsSource"] },
         { "portId": "out-4", "dir": "out", "connector": "iec-c13", "signal": "mains-power", "flags": ["isMainsSource"] }
       ]
+    },
+    {
+      "id": "mackie-profx12v3",
+      "label": "Mackie ProFX12v3",
+      "levels": [],
+      "realWorld": {
+        "brand": "Mackie", "model": "ProFX12v3", "category": "console-analog",
+        "typicalUse": "small PA",
+        "notes": "Built from the equipment plan (2026-11-12); size 330 x 376 x 102 mm (w x d x h) (datasheet, size confidence ok). Size source: https://mackie.com/img/file_resources/PROFXV3+_SERIES_SS.pdf. Ports: documented in the asset spec (https://thomannmusic.com/mackie_profx12v3.htm)."
+      },
+      "ports": [
+        { "portId": "in-mic-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-5", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-6", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-7", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-stereo-35", "dir": "in", "connector": "trs-35mm", "signal": "line-level-consumer" },
+        { "portId": "out-main-l", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-main-r", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-mon", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-fx", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-sub-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-sub-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "in-fx-footswitch", "dir": "in", "connector": "trs-quarter", "signal": "gpio-tally" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true },
+        { "id": "mute-master", "type": "toggle", "label": "Mute master", "default": false },
+        { "id": "fader-master", "type": "enum", "label": "Fader master", "options": ["-inf", "-30", "-20", "-10", "-6", "-3", "0", "+6", "+10"], "defaultOption": "0" },
+        { "id": "balance-master", "type": "enum", "label": "Balance", "options": ["G100", "G50", "C", "D50", "D100"], "defaultOption": "C" }
+      ],
+      "routing": [
+        { "from": "in-mic-1", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-2", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-3", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-4", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-5", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-6", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-7", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-stereo-35", "to": ["out-main-l", "out-main-r"] }
+      ],
+      "portAliases": {
+        "in-mic-inputs-1": "in-mic-1",
+        "in-mic-inputs-2": "in-mic-2",
+        "in-1-8-in-stereo-line-input-ch-11-12": "in-stereo-35",
+        "out-main-mix-outputs-1": "out-main-l",
+        "out-main-mix-outputs-2": "out-main-r",
+        "bidir-usb-audio-interface": "usb",
+        "in-mains-in-3-pin-iec": "power-in"
+      }
+    },
+    {
+      "id": "rode-nt1-5th-gen",
+      "label": "RØDE NT1 5th Generation",
+      "levels": [],
+      "realWorld": {
+        "brand": "RODE", "model": "NT1 5th Generation", "category": "microphone",
+        "typicalUse": "home and project studio vocals",
+        "notes": "Built from the equipment plan (2026-11-12); size 52 x 52 x 189 mm (w x d x h) (datasheet, size confidence ok). Size source: https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf. Ports: documented in the asset spec (https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level", "flags": ["requiresPhantom"] },
+        { "portId": "bidir-usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" }
+      ],
+      "portAliases": {
+        "out-analogue-balanced-mic-output-needs-p48": "out-xlr",
+        "bidir-digital-audio-to-computer-bus-powered": "bidir-usb"
+      }
+    },
+    {
+      "id": "mutec-mc-3-plus",
+      "label": "MUTEC MC-3+ Smart Clock",
+      "levels": [],
+      "realWorld": {
+        "brand": "MUTEC", "model": "MC-3+ Smart Clock", "category": "master-clock",
+        "typicalUse": "master word clock for a small studio",
+        "notes": "Built from the equipment plan (2026-11-12); size 196 x 156 x 42 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.markertek.com/Attachments/Manuals/MUTEC/8015-102-Manual.pdf. Ports: documented in the asset spec (https://www.markertek.com/Attachments/Manuals/MUTEC/8015-102-Manual.pdf)."
+      },
+      "ports": [
+        { "portId": "out-wclk-1", "dir": "out", "connector": "bnc", "signal": "wordclock", "flags": ["isClockMaster"] },
+        { "portId": "out-wclk-2", "dir": "out", "connector": "bnc", "signal": "wordclock", "flags": ["isClockMaster"] },
+        { "portId": "out-wclk-3", "dir": "out", "connector": "bnc", "signal": "wordclock", "flags": ["isClockMaster"] },
+        { "portId": "out-wclk-4", "dir": "out", "connector": "bnc", "signal": "wordclock", "flags": ["isClockMaster"] },
+        { "portId": "out-wclk-5", "dir": "out", "connector": "bnc", "signal": "wordclock", "flags": ["isClockMaster"] },
+        { "portId": "out-wclk-6", "dir": "out", "connector": "bnc", "signal": "wordclock", "flags": ["isClockMaster"] },
+        { "portId": "in-wclk", "dir": "in", "connector": "bnc", "signal": "wordclock", "flags": ["isClockSlave"] },
+        { "portId": "out-spdif-rca", "dir": "out", "connector": "rca", "signal": "spdif" },
+        { "portId": "in-spdif-rca", "dir": "in", "connector": "rca", "signal": "spdif" },
+        { "portId": "out-spdif-opt", "dir": "out", "connector": "toslink", "signal": "spdif" },
+        { "portId": "in-spdif-opt", "dir": "in", "connector": "toslink", "signal": "spdif" },
+        { "portId": "in-aes3", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "out-aes3", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-spdif-rca", "to": ["out-spdif-rca"] },
+        { "from": "in-spdif-opt", "to": ["out-spdif-opt"] },
+        { "from": "in-aes3", "to": ["out-aes3"] }
+      ],
+      "portAliases": {
+        "out-word-clock-outputs-3-pairs-1": "out-wclk-1",
+        "out-word-clock-outputs-3-pairs-2": "out-wclk-2",
+        "in-word-clock-10-mhz-input": "in-wclk",
+        "in-aes3-aes11-input": "in-aes3",
+        "out-aes3-aes11-output": "out-aes3",
+        "in-ac-mains-in": "power-in"
+      }
+    },
+    {
+      "id": "samson-s-patch-plus",
+      "label": "Samson S-Patch Plus",
+      "levels": [],
+      "realWorld": {
+        "brand": "Samson", "model": "S-Patch Plus", "category": "patchbay",
+        "typicalUse": "home studio",
+        "notes": "Built from the equipment plan (2026-11-12); size 482.6 x 68.5 x 44.45 mm (w x d x h) (datasheet, size confidence ok). Size source: https://goknight.com/content/documentation/s-patchplus%20Spec%20Sheet.pdf. Ports: documented in the asset spec (https://goknight.com/content/documentation/s-patchplus%20Spec%20Sheet.pdf)."
+      },
+      "ports": [
+        { "portId": "front-1", "dir": "bidir", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "front-2", "dir": "bidir", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "rear-1", "dir": "bidir", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "rear-2", "dir": "bidir", "connector": "trs-quarter", "signal": "line-level-pro" }
+      ],
+      "routing": [
+        { "from": "front-1", "to": ["rear-1"] },
+        { "from": "front-2", "to": ["rear-2"] },
+        { "from": "rear-1", "to": ["front-1"] },
+        { "from": "rear-2", "to": ["front-2"] }
+      ],
+      "portAliases": {
+        "bidir-front-patch-jacks-top-and-bottom-rows-1": "front-1",
+        "bidir-front-patch-jacks-top-and-bottom-rows-2": "front-2",
+        "bidir-rear-connection-jacks-1": "rear-1",
+        "bidir-rear-connection-jacks-2": "rear-2"
+      }
+    },
+    {
+      "id": "jk-audio-broadcast-host",
+      "label": "JK Audio Broadcast Host",
+      "levels": [],
+      "realWorld": {
+        "brand": "JK Audio", "model": "Broadcast Host", "category": "telephone-hybrid",
+        "typicalUse": "Desktop telephone hybrid that puts a caller on air with a clean send for radio and podcasts",
+        "notes": "Built from the equipment plan (2026-11-12); size 178 x 152 x 41 mm (w x d x h) (datasheet, size confidence ok). Size source: https://avlgear.com/products/jk-audio-host-broadcast-host-desktop-digital-telephone-hybrid. Ports: documented in the asset spec (https://decibel.ch/upfiles/documents/jk-audio-broadcast-host-datasheet-27723.pdf)."
+      },
+      "ports": [
+        { "portId": "in-send-xlr", "dir": "in", "connector": "xlr3-f", "signal": "mic-level" },
+        { "portId": "in-send-2", "dir": "in", "connector": "trs-35mm", "signal": "line-level-consumer" },
+        { "portId": "out-caller-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-stereo", "dir": "out", "connector": "trs-35mm", "signal": "line-level-consumer" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" }
+      ],
+      "routing": [
+        { "from": "in-send-xlr", "to": ["out-caller-xlr"] },
+        { "from": "in-send-2", "to": ["out-stereo"] }
+      ]
+    },
+    {
+      "id": "apple-mac-mini",
+      "label": "Apple Mac mini",
+      "levels": [],
+      "realWorld": {
+        "brand": "Apple", "model": "Mac mini", "category": "computer",
+        "typicalUse": "Compact computer that runs the DAW or the playout in a small studio",
+        "notes": "Built from the equipment plan (2026-11-12); size 127 x 127 x 50 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.apple.com/mac-mini/specs/. Ports: documented in the asset spec (https://www.apple.com/mac-mini/specs/)."
+      },
+      "ports": [
+        { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "aoip" },
+        { "portId": "tb-1", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "tb-2", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "tb-3", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "usb-c-front-1", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "usb-c-front-2", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" }
+      ]
+    },
+    {
+      "id": "apple-mac-studio",
+      "label": "Apple Mac Studio",
+      "levels": [],
+      "realWorld": {
+        "brand": "Apple", "model": "Mac Studio", "category": "computer",
+        "typicalUse": "Workstation-class computer for DAW, post-production and broadcast work",
+        "notes": "Built from the equipment plan (2026-11-12); size 197 x 197 x 95 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.apple.com/mac-studio/specs/. Ports: documented in the asset spec (https://www.apple.com/mac-studio/specs/)."
+      },
+      "ports": [
+        { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "aoip" },
+        { "portId": "usb-a-1", "dir": "bidir", "connector": "usb-a", "signal": "usb-audio" },
+        { "portId": "usb-a-2", "dir": "bidir", "connector": "usb-a", "signal": "usb-audio" },
+        { "portId": "tb-1", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "tb-2", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "tb-3", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "tb-4", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" },
+        { "portId": "usb-c-front-1", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "usb-c-front-2", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" }
+      ]
+    },
+    {
+      "id": "rode-rodecaster-pro-ii",
+      "label": "RODE Rodecaster Pro II",
+      "levels": [],
+      "realWorld": {
+        "brand": "RODE", "model": "Rodecaster Pro II", "category": "console-podcast",
+        "typicalUse": "Integrated podcast and streaming production console with four microphone inputs",
+        "notes": "Built from the equipment plan (2026-11-12); size 305 x 270 x 60 mm (w x d x h) (datasheet, size confidence ok). Size source: https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf. Ports: documented in the asset spec (https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf)."
+      },
+      "ports": [
+        { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-main-l", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-main-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "usb-1", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "usb-2", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "aoip" },
+        { "portId": "out-phones-1", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-phones-2", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-phones-3", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-phones-4", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" }
+      ],
+      "controls": [
+        { "id": "mute-master", "type": "toggle", "label": "Mute master", "default": false },
+        { "id": "fader-master", "type": "enum", "label": "Fader master", "options": ["-inf", "-30", "-20", "-10", "-6", "-3", "0", "+6", "+10"], "defaultOption": "0" },
+        { "id": "balance-master", "type": "enum", "label": "Balance", "options": ["G100", "G50", "C", "D50", "D100"], "defaultOption": "C" }
+      ],
+      "routing": [
+        { "from": "in-combo-1", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-2", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-3", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-4", "to": ["out-main-l", "out-main-r"] }
+      ]
+    },
+    {
+      "id": "shure-beta-58a",
+      "label": "Shure Beta 58A",
+      "levels": [],
+      "realWorld": {
+        "brand": "Shure", "model": "Beta 58A", "category": "microphone",
+        "typicalUse": "Supercardioid dynamic vocal microphone for live stages",
+        "notes": "Built from the equipment plan (2026-11-12); size 50 x 50 x 160 mm (w x d x h) (datasheet, size confidence ok). Size source: https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf. Ports: documented in the asset spec (https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level" }
+      ]
+    },
+    {
+      "id": "shure-sm7b",
+      "label": "Shure SM7B",
+      "levels": [],
+      "realWorld": {
+        "brand": "Shure", "model": "SM7B", "category": "microphone",
+        "typicalUse": "Dynamic voice microphone for broadcast, podcast and studio vocals",
+        "notes": "Built from the equipment plan (2026-11-12); size 62 x 62 x 192.5 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.crutchfield.com/S-kiyVVVkHwlc/p_183SM7B/Shure-SM7B.html. Ports: documented in the asset spec (https://www.crutchfield.com/S-kiyVVVkHwlc/p_183SM7B/Shure-SM7B.html)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level" }
+      ]
+    },
+    {
+      "id": "neumann-km-184",
+      "label": "Neumann KM 184",
+      "levels": [],
+      "realWorld": {
+        "brand": "Neumann", "model": "KM 184", "category": "microphone",
+        "typicalUse": "Small-diaphragm cardioid condenser microphone for instruments, overheads and ensembles",
+        "notes": "Built from the equipment plan (2026-11-12); size 22 x 22 x 107 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.neumann.com/en-us/products/microphones/km-184-series-180. Ports: documented in the asset spec (https://www.neumann.com/en-us/products/microphones/km-184-series-180)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level", "flags": ["requiresPhantom"] }
+      ]
+    },
+    {
+      "id": "neumann-tlm-103",
+      "label": "Neumann TLM 103",
+      "levels": [],
+      "realWorld": {
+        "brand": "Neumann", "model": "TLM 103", "category": "microphone",
+        "typicalUse": "Large-diaphragm cardioid condenser microphone for studio voice and instruments",
+        "notes": "Built from the equipment plan (2026-11-12); size 60 x 60 x 132 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.neumann.com/en-en/products/microphones/tlm-103/. Ports: documented in the asset spec (https://www.neumann.com/en-en/products/microphones/tlm-103/)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level", "flags": ["requiresPhantom"] }
+      ]
+    },
+    {
+      "id": "sennheiser-e-835",
+      "label": "Sennheiser e 835",
+      "levels": [],
+      "realWorld": {
+        "brand": "Sennheiser", "model": "e 835", "category": "microphone",
+        "typicalUse": "Cardioid dynamic handheld microphone for live vocals",
+        "notes": "Built from the equipment plan (2026-11-12); size 48 x 48 x 180 mm (w x d x h) (datasheet, size confidence ok). Size source: https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf. Ports: documented in the asset spec (https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level" }
+      ]
+    },
+    {
+      "id": "sennheiser-mkh-416",
+      "label": "Sennheiser MKH 416-P48U3",
+      "levels": [],
+      "realWorld": {
+        "brand": "Sennheiser", "model": "MKH 416-P48U3", "category": "microphone",
+        "typicalUse": "Short shotgun condenser microphone for dialogue in film, TV and broadcast",
+        "notes": "Built from the equipment plan (2026-11-12); size 19 x 19 x 250 mm (w x d x h) (datasheet, size confidence ok). Size source: https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html. Ports: documented in the asset spec (https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level", "flags": ["requiresPhantom"] }
+      ]
+    },
+    {
+      "id": "k-m-232",
+      "label": "K&M 232 table stand",
+      "levels": [],
+      "realWorld": {
+        "brand": "K&M", "model": "232 table stand", "category": "stand-arm",
+        "typicalUse": "Compact table stand for a microphone",
+        "notes": "Built from the equipment plan (2026-11-12); size 130 x 130 x 170 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black. Ports: documented in the asset spec (https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black)."
+      },
+      "ports": []
+    },
+    {
+      "id": "shure-psm-300",
+      "label": "Shure PSM 300",
+      "levels": [],
+      "realWorld": {
+        "brand": "Shure", "model": "PSM 300 (P3T transmitter, P3R bodypack)", "category": "iem",
+        "typicalUse": "band in-ear monitoring",
+        "notes": "Built from the equipment plan (2026-11-12); size 198 x 172 x 43 mm (w x d x h) (datasheet, size confidence ok). Size source: https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf. Ports: documented in the asset spec (https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf)."
+      },
+      "ports": [
+        { "portId": "in-1", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-2", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-loop-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-loop-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" }
+      ],
+      "portAliases": {
+        "in-p3t-audio-inputs-balanced-1": "in-1",
+        "in-p3t-audio-inputs-balanced-2": "in-2",
+        "out-p3t-audio-loop-outputs-1": "out-loop-1",
+        "out-p3t-audio-loop-outputs-2": "out-loop-2"
+      }
+    },
+    {
+      "id": "shure-slx-d",
+      "label": "Shure SLX-D",
+      "levels": [],
+      "realWorld": {
+        "brand": "Shure", "model": "SLX-D (SLXD4 receiver + SLXD1/2/3)", "category": "wireless",
+        "typicalUse": "live vocals",
+        "notes": "Built from the equipment plan (2026-11-12); size 197 x 152 x 42 mm (w x d x h) (datasheet, size confidence ok). Size source: https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf. Ports: documented in the asset spec (https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-14", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "aoip" }
+      ],
+      "portAliases": {
+        "out-slxd4-balanced-output-mic-line-switch": "out-xlr",
+        "out-slxd4-balanced-1-4-output": "out-14",
+        "bidir-slxd4-ethernet-10-100": "net"
+      }
+    },
+    {
+      "id": "neumann-kh-120-ii",
+      "label": "Neumann KH 120 II",
+      "levels": [],
+      "realWorld": {
+        "brand": "Neumann", "model": "KH 120 II", "category": "studio-monitor",
+        "typicalUse": "near-field mixing",
+        "notes": "Built from the equipment plan (2026-11-12); size 182 x 227 x 287 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.neumann.com/en-en/products/monitors/kh-120-ii/. Ports: documented in the asset spec (https://www.neumann.com/en-en/products/monitors/kh-120-ii/). Nominal coverage 90 x 60 (valeur nominale): no manufacturer coverage recorded in the plan."
+      },
+      "ports": [
+        { "portId": "in-analog", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-spdif", "dir": "in", "connector": "rca", "signal": "spdif" },
+        { "portId": "out-spdif", "dir": "out", "connector": "rca", "signal": "spdif" },
+        { "portId": "bidir-network", "dir": "bidir", "connector": "rj45", "signal": "aoip" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "acoustic": {
+        "coverage_h_deg": { "value": 90, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur retenue dans le plan)", "retrieved": "2026-11-12" } },
+        "coverage_v_deg": { "value": 60, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur retenue dans le plan)", "retrieved": "2026-11-12" } }
+      },
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted curved-cabinet model (public/assets/neumann-kh-120-ii.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "in-analog", "to": ["transducer"] },
+        { "from": "in-spdif", "to": ["transducer"] }
+      ],
+      "portAliases": {
+        "in-analog-input": "in-analog",
+        "in-digital-s-pdif-input": "in-spdif",
+        "out-digital-s-pdif-output-daisy-chain": "out-spdif",
+        "bidir-network-control-ma-1-neumann-control": "bidir-network",
+        "in-mains-in": "power-in"
+      }
+    },
+    {
+      "id": "dbx-driverack-pa2",
+      "label": "dbx DriveRack PA2",
+      "levels": [],
+      "realWorld": {
+        "brand": "dbx", "model": "DriveRack PA2", "category": "outboard",
+        "typicalUse": "small / medium PA",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 146 x 44 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.dbxpro.com/en/products/driverack-pa2. Ports: documented in the asset spec (https://www.dbxpro.com/en/products/driverack-pa2)."
+      },
+      "ports": [
+        { "portId": "out-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-3", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-4", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-5", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-6", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "in-rta-mic", "dir": "in", "connector": "xlr3-f", "signal": "mic-level" },
+        { "portId": "in-line-1", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-line-2", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "aoip" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-rta-mic", "to": ["out-1", "out-2", "out-3", "out-4", "out-5", "out-6"] },
+        { "from": "in-line-1", "to": ["out-1", "out-2", "out-3", "out-4", "out-5", "out-6"] },
+        { "from": "in-line-2", "to": ["out-1", "out-2", "out-3", "out-4", "out-5", "out-6"] }
+      ],
+      "portAliases": {
+        "in-line-inputs-1": "in-line-1",
+        "in-line-inputs-2": "in-line-2",
+        "in-rta-mic-input-15vdc": "in-rta-mic",
+        "out-line-outputs-low-mid-high-1": "out-1",
+        "out-line-outputs-low-mid-high-2": "out-2",
+        "bidir-ethernet-control-firmware": "net",
+        "in-iec-ac-power-inlet": "power-in"
+      }
     }
   ],
 

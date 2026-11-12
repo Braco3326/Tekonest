@@ -28,7 +28,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "ams-neve-1073spx",
@@ -56,7 +56,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "focusrite-scarlett-2i2-4th-gen",
@@ -84,7 +84,7 @@
     "desk"
    ],
    "sizeConfidence": "conflict",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "mackie-profx12v3",
@@ -112,7 +112,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "promoted": true
   },
   {
    "id": "midas-dl16",
@@ -140,7 +141,7 @@
     "rack"
    ],
    "sizeConfidence": "conflict",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "neumann-kh-120-ii",
@@ -168,7 +169,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "radial-j48",
@@ -177,6 +178,7 @@
    "manufacturer": "Radial Engineering",
    "product": "J48 (MK2)",
    "sizeMm": {},
+   "weightKg": 0.72,
    "portsSummary": "3 modelled (3 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -192,8 +194,7 @@
     "active",
     "phantom-powered"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 0.72
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "radial-jdi",
@@ -223,7 +224,7 @@
     "passive"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "radial-prodi",
@@ -251,7 +252,7 @@
     "passive"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "rode-nt1-5th-gen",
@@ -280,7 +281,7 @@
     "phantom-powered"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "royer-r-121",
@@ -309,7 +310,7 @@
     "passive"
    ],
    "sizeConfidence": "partial",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "shure-psm-300",
@@ -333,11 +334,13 @@
     "https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf"
    ],
    "notes": "Shure spec sheet [M]. P3T: 43 H x 198 W x 172 D, 783 g, 12-15 V DC. P3R: 110x64x21 mm without batteries (axis order unlabelled), 98 g. Bêta record bundles both: split. 2 scenarios in notes ranking (rank 9). Source: https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf",
+   "label": "Shure PSM 300",
    "traits": [
     "transmitter",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "promoted": true
   },
   {
    "id": "shure-slx-d",
@@ -361,11 +364,13 @@
     "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf"
    ],
    "notes": "Shure spec sheet [M]. Receiver SLXD4: 42 H x 197 W x 152 D, 816 g (dual SLXD4D 42x393x152, 1451 g). Bêta record bundles transmitters: SLXD1 98x68x25.5 mm 89 g; SLXD2 37.1 dia x 176 mm 147 g (as summarised, full length with capsule not confirmed); SLXD3 126x41x41 mm 200 g. Demand: 1/1 room placements/rooms. Source: https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
+   "label": "Shure SLX-D",
    "traits": [
     "receiver",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "promoted": true
   },
   {
    "id": "yamaha-tf5",
@@ -392,7 +397,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "betaModelled": true
   },
   {
    "id": "apple-mac-mini",
@@ -416,10 +422,12 @@
     "https://www.apple.com/mac-mini/specs/"
    ],
    "notes": "Apple page [M]: 127x127x50 mm, 0.67 kg (0.73 kg M5 Pro), silver. Front 2 USB-C + 3.5 mm; rear 2.5 GbE, HDMI, 3 Thunderbolt. Source: https://www.apple.com/mac-mini/specs/",
+   "typicalUse": "Compact computer that runs the DAW or the playout in a small studio",
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "promoted": true
   },
   {
    "id": "behringer-s16",
@@ -447,7 +455,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "focusrite-scarlett-18i20-3rd-gen",
@@ -475,7 +483,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "furman-m-8x2",
@@ -502,7 +510,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "conflict"
+   "sizeConfidence": "conflict",
+   "betaModelled": true
   },
   {
    "id": "jk-audio-broadcast-host",
@@ -527,11 +536,13 @@
     "https://decibel.ch/upfiles/documents/jk-audio-broadcast-host-datasheet-27723.pdf"
    ],
    "notes": "Broadcast tier 1 (telephone hybrid + mix-minus, curricula exercise 5). Datasheet copy: ~7x6x1.6 in = 178x152x41 mm, 0.99 kg (2.2 lb); XLR send 1, 3.5 mm send 2, RJ11 line + aux, 9 VDC 2.1 mm. Source: https://avlgear.com/products/jk-audio-host-broadcast-host-desktop-digital-telephone-hybrid",
+   "typicalUse": "Desktop telephone hybrid that puts a caller on air with a clean send for radio and podcasts",
    "traits": [
     "processor",
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "promoted": true
   },
   {
    "id": "k-m-25400",
@@ -584,7 +595,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "betaModelled": true
   },
   {
    "id": "rode-rodecaster-pro-ii",
@@ -609,10 +621,12 @@
     "https://rode.com/en/products/rodecaster-pro-ii"
    ],
    "notes": "Rank 15, podcast standard (Ohio University). Datasheet [M]: 305x270x60 mm (length x width x height as printed), 1.96 kg, black or white. 4 combo in, 2 line out, 4 phones, 2 USB-C, Bluetooth, microSD. Source: https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf",
+   "typicalUse": "Integrated podcast and streaming production console with four microphone inputs",
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "promoted": true
   },
   {
    "id": "sennheiser-md-421-ii",
@@ -642,7 +656,7 @@
     "passive"
    ],
    "sizeConfidence": "conflict",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "shure-beta-58a",
@@ -667,12 +681,13 @@
     "https://pubs.shure.com/view/guide/BETA58A/en-US.pdf"
    ],
    "notes": "Rank 7. Shure guide and spec sheet [M]: 160 mm long x 50 mm dia, 278 g. Same recipe as the verified SM58. Source: https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf",
+   "typicalUse": "Supercardioid dynamic vocal microphone for live stages",
    "traits": [
     "dynamic",
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "shure-slxd2-handheld",
@@ -727,12 +742,13 @@
     "https://www.fullcompass.com/common/files/84824-SM7BSpecSheet.pdf"
    ],
    "notes": "Rank 1 in notes; 4 room placements reference it but it exists in neither catalogue nor Bêta. Dims RETAILER ONLY (Crutchfield): 62 dia x 192.5 mm; Shure drawing not extractable, check before modelling. Body only: yoke and cover plate not coverable by revolve (assembly later). Switches: bass roll-off, presence. Source: https://www.crutchfield.com/S-kiyVVVkHwlc/p_183SM7B/Shure-SM7B.html",
+   "typicalUse": "Dynamic voice microphone for broadcast, podcast and studio vocals",
    "traits": [
     "dynamic",
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "ua-1176ln",
@@ -761,7 +777,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "betaModelled": true
   },
   {
    "id": "yamaha-hs5",
@@ -789,7 +806,7 @@
     "active"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "behringer-ha400",
@@ -798,6 +815,7 @@
    "manufacturer": "Behringer",
    "product": "MicroAMP HA400",
    "sizeMm": {},
+   "weightKg": 0.37,
    "portsSummary": "3 modelled (6 listed in KB); no mains-power port declared in the proposal | real unit: inputs + four phone outs (connector list not retrieved); 12 V DC adapter",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -814,8 +832,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 0.37
+   "sizeConfidence": "conflict"
   },
   {
    "id": "countryman-type-85",
@@ -845,12 +862,12 @@
     "battery"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "dbx-driverack-pa2",
    "status": "beta",
-   "category": "amplifier",
+   "category": "outboard",
    "manufacturer": "dbx",
    "product": "DriveRack PA2",
    "sizeMm": {
@@ -873,7 +890,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "promoted": true
   },
   {
    "id": "mutec-mc-3-plus",
@@ -901,7 +919,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "presonus-hp4",
@@ -928,7 +946,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "samson-s-patch-plus",
@@ -957,7 +975,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "sennheiser-ew-100-g4",
@@ -1005,10 +1023,12 @@
     "https://www.apple.com/mac-studio/specs/"
    ],
    "notes": "Apple page [M]: 197x197x95 mm, 2.7 kg (M5 Max) / 3.6 kg (Ultra), silver aluminium. Source: https://www.apple.com/mac-studio/specs/",
+   "typicalUse": "Workstation-class computer for DAW, post-production and broadcast work",
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "promoted": true
   },
   {
    "id": "behringer-ada8200",
@@ -1036,12 +1056,12 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "behringer-dcx2496",
    "status": "new",
-   "category": "amplifier",
+   "category": "outboard",
    "manufacturer": "Behringer",
    "product": "DCX2496 Ultradrive Pro",
    "sizeMm": {
@@ -1065,7 +1085,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "betaModelled": true
   },
   {
    "id": "dbx-286s",
@@ -1093,7 +1114,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "jbl-305p-mkii",
@@ -1122,7 +1143,7 @@
     "active"
    ],
    "sizeConfidence": "conflict",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "k-m-210-6",
@@ -1169,11 +1190,12 @@
     "https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black"
    ],
    "notes": "Round cast-iron base 130 mm dia, height 170 mm, 1.34 kg, 3/8in (US 5/8in). Pure lathe shape. Source: https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black",
+   "typicalUse": "Compact table stand for a microphone",
    "traits": [
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "k-m-259",
@@ -1222,12 +1244,13 @@
     "https://www.neumann.com/en-us/products/microphones/km-184-series-180"
    ],
    "notes": "4 room placements. Manufacturer page [M]: 22 dia x 107 mm (KM 184 A nx page: 108), ~80 g. Connector, powering, finish not retrieved. Source: https://www.neumann.com/en-us/products/microphones/km-184-series-180",
+   "typicalUse": "Small-diaphragm cardioid condenser microphone for instruments, overheads and ensembles",
    "traits": [
     "condenser",
     "phantom-powered"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "neumann-tlm-103",
@@ -1251,12 +1274,13 @@
     "https://www.neumann.com/en-en/products/microphones/tlm-103/"
    ],
    "notes": "Rank 13. Manufacturer page [M]: 60 dia x 132 mm, ~450 g, XLR-3 female, P48 3 mA, no pad/filter. Source: https://www.neumann.com/en-en/products/microphones/tlm-103/",
+   "typicalUse": "Large-diaphragm cardioid condenser microphone for studio voice and instruments",
    "traits": [
     "condenser",
     "phantom-powered"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "sennheiser-e-835",
@@ -1280,12 +1304,13 @@
     "https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf"
    ],
    "notes": "Product spec [M]: 48 dia x 180 mm, ~330 g (a multipack page says 346 g). Cardioid handheld. Source: https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf",
+   "typicalUse": "Cardioid dynamic handheld microphone for live vocals",
    "traits": [
     "dynamic",
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "sennheiser-mkh-416",
@@ -1310,12 +1335,13 @@
     "https://www.sennheiser.com/en-us/catalog/products/microphones/mkh-416/mkh-416-001511"
    ],
    "notes": "Broadcast/film shotgun standard (rank 21); 3 room placements. Spec page [M]: 19 dia x 250 mm, 175 g, 48 V. Source: https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
+   "typicalUse": "Short shotgun condenser microphone for dialogue in film, TV and broadcast",
    "traits": [
     "condenser",
     "phantom-powered"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "soundcraft-ui24r",
@@ -1343,7 +1369,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "betaModelled": true
   },
   {
    "id": "ua-apollo-twin-x",
@@ -1371,7 +1398,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "allen-heath-sq-6",
@@ -1384,6 +1411,7 @@
     "d": 514.9,
     "h": 198
    },
+   "weightKg": 14.5,
    "portsSummary": "17 modelled (53 listed in KB); mains-power port declared",
    "family": "console-wedge-v2",
    "dataQuality": "datasheet",
@@ -1399,8 +1427,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 14.5
+   "sizeConfidence": "ok"
   },
   {
    "id": "behringer-x32",
@@ -1432,6 +1459,7 @@
    "manufacturer": "Crown",
    "product": "XLS 2502",
    "sizeMm": {},
+   "weightKg": 4.9,
    "portsSummary": "9 modelled (11 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -1446,8 +1474,7 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 4.9
+   "sizeConfidence": "conflict"
   },
   {
    "id": "genelec-8341a",
@@ -1460,6 +1487,7 @@
     "d": 243,
     "h": 351
    },
+   "weightKg": 9.8,
    "portsSummary": "6 modelled (6 listed in KB); mains-power port declared",
    "family": "curved-cabinet",
    "dataQuality": "datasheet",
@@ -1474,8 +1502,7 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 9.8
+   "sizeConfidence": "ok"
   },
   {
    "id": "mackie-1604vlz4",
@@ -1484,6 +1511,7 @@
    "manufacturer": "Mackie",
    "product": "1604VLZ4",
    "sizeMm": {},
+   "weightKg": 9.1,
    "portsSummary": "14 modelled (59 listed in KB); no mains-power port declared in the proposal",
    "family": "console-wedge-v2",
    "dataQuality": "missing",
@@ -1499,8 +1527,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 9.1
+   "sizeConfidence": "conflict"
   },
   {
    "id": "telos-hx2",
@@ -1679,6 +1706,7 @@
     "d": 202,
     "h": 44
    },
+   "weightKg": 2.75,
    "portsSummary": "8-24 gigabit RJ45 + SFP",
    "family": "rack-box-v2",
    "dataQuality": "estimate",
@@ -1694,8 +1722,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 2.75
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "presonus-monitor-station-v2",
@@ -1844,6 +1871,7 @@
    "manufacturer": "Audinate",
    "product": "Dante AVIO Analog Input 2-Ch (ADP-DAI-AU-2x0)",
    "sizeMm": {},
+   "weightKg": 0.165,
    "portsSummary": "3 modelled (3 listed in KB); no mains-power port declared in the proposal",
    "family": "moulded-box",
    "dataQuality": "missing",
@@ -1856,8 +1884,7 @@
    ],
    "notes": "2 rooms. The notes give 150.7x53.8x38.1 mm, 145 g (Audinate sales guide [M]) for the newer AVIO Install SKUs (AVIO-A-2IN-EB...), a different part number, so it is not reused here. Demand: 2/2 room placements/rooms. Source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf [Wave 0c size research, grade datasheet, sizeConfidence ok: labelled axes, no disagreement in the notes] Monacor datasheet for the Audinate-made ADP-DAI-2X0 (opened): net weight 165 g (gross 195 g), black, PoE, packaging 0.035 x 0.085 x 0.2 m. No unit dimensions published in that sheet. The 150.7 x 53.8 x 38.1 mm / 145 g figure in earlier notes belongs to the newer AVIO Install AVIO-A-2IN-EB, a different SKU, so it is NOT applied here. Audinate's own ADP-DAI-AU-2x0 datasheet was not reachable. Colour (research): Black.",
    "traits": [],
-   "sizeConfidence": "ok",
-   "weightKg": 0.165
+   "sizeConfidence": "ok"
   },
   {
    "id": "clear-com-ms-702",
@@ -1870,6 +1897,7 @@
     "d": 165,
     "h": 44
    },
+   "weightKg": 2.8,
    "portsSummary": "2 modelled (5 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -1884,8 +1912,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 2.8
+   "sizeConfidence": "ok"
   },
   {
    "id": "db-audiotechnik-d80",
@@ -1898,6 +1925,7 @@
     "d": 530,
     "h": 88.9
    },
+   "weightKg": 19,
    "portsSummary": "13 modelled (21 listed in KB); mains-power port declared",
    "family": "rack-box-v3b",
    "dataQuality": "estimate",
@@ -1912,8 +1940,7 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 19
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "dbx-166xs",
@@ -1926,6 +1953,7 @@
     "d": 171.5,
     "h": 44.5
    },
+   "weightKg": 2.29,
    "portsSummary": "9 modelled (11 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "estimate",
@@ -1940,8 +1968,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 2.29
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "dbx-231s",
@@ -1954,6 +1981,7 @@
     "d": 152.4,
     "h": 89
    },
+   "weightKg": 2.81,
    "portsSummary": "9 modelled (9 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "estimate",
@@ -1968,8 +1996,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 2.81
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "l-acoustics-la12x",
@@ -1978,6 +2005,7 @@
    "manufacturer": "L-Acoustics",
    "product": "LA12X",
    "sizeMm": {},
+   "weightKg": 14.5,
    "portsSummary": "9 modelled (14 listed in KB); mains-power port declared",
    "family": "rack-box-v3b",
    "dataQuality": "missing",
@@ -1993,8 +2021,7 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "partial",
-   "weightKg": 14.5
+   "sizeConfidence": "partial"
   },
   {
    "id": "radial-jcr",
@@ -2003,6 +2030,7 @@
    "manufacturer": "Radial Engineering",
    "product": "JCR Reamp",
    "sizeMm": {},
+   "weightKg": 0.6,
    "portsSummary": "3 modelled (3 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -2017,8 +2045,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 0.6
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "radial-jpc",
@@ -2027,6 +2054,7 @@
    "manufacturer": "Radial Engineering",
    "product": "JPC",
    "sizeMm": {},
+   "weightKg": 0.72,
    "portsSummary": "9 modelled (9 listed in KB); no mains-power port declared in the proposal; 2 requiresPhantom",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -2042,8 +2070,7 @@
     "active",
     "phantom-powered"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 0.72
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "radial-js2",
@@ -2052,6 +2079,7 @@
    "manufacturer": "Radial Engineering",
    "product": "JS2",
    "sizeMm": {},
+   "weightKg": 0.7,
    "portsSummary": "4 modelled (4 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -2066,8 +2094,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 0.7
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "rme-fireface-ufx-iii",
@@ -2104,6 +2131,7 @@
    "manufacturer": "Sennheiser",
    "product": "EW-DX EM 2",
    "sizeMm": {},
+   "weightKg": 1,
    "portsSummary": "6 modelled (9 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -2120,8 +2148,7 @@
     "receiver",
     "rack"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 1
+   "sizeConfidence": "conflict"
   },
   {
    "id": "shure-mv7-plus",
@@ -2130,6 +2157,7 @@
    "manufacturer": "Shure",
    "product": "MV7+",
    "sizeMm": {},
+   "weightKg": 0.5735,
    "portsSummary": "3 modelled (3 listed in KB); no mains-power port declared in the proposal",
    "family": "revolve",
    "dataQuality": "missing",
@@ -2145,8 +2173,7 @@
    "traits": [
     "dynamic"
    ],
-   "sizeConfidence": "partial",
-   "weightKg": 0.5735
+   "sizeConfidence": "partial"
   },
   {
    "id": "shure-psm-900",
@@ -2186,6 +2213,7 @@
     "d": 108,
     "h": 43
    },
+   "weightKg": 1.1,
    "portsSummary": "5 modelled (5 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -2201,8 +2229,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 1.1
+   "sizeConfidence": "ok"
   },
   {
    "id": "ssl-the-bus-plus",
@@ -2244,6 +2271,7 @@
     "d": 300.5,
     "h": 45
    },
+   "weightKg": 3.2,
    "portsSummary": "14 modelled (18 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -2258,8 +2286,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 3.2
+   "sizeConfidence": "ok"
   },
   {
    "id": "universal-audio-6176",
@@ -2268,6 +2295,7 @@
    "manufacturer": "Universal Audio",
    "product": "6176 Vintage Channel Strip",
    "sizeMm": {},
+   "weightKg": 5.4,
    "portsSummary": "7 modelled (7 listed in KB); mains-power port declared",
    "family": "rack-box-v3b",
    "dataQuality": "missing",
@@ -2284,8 +2312,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "partial",
-   "weightKg": 5.4
+   "sizeConfidence": "partial"
   },
   {
    "id": "yamaha-mg10xu",
@@ -2298,6 +2325,7 @@
     "d": 294,
     "h": 71
    },
+   "weightKg": 2.1,
    "portsSummary": "11 modelled (22 listed in KB); no mains-power port declared in the proposal",
    "family": "console-wedge-v2",
    "dataQuality": "datasheet",
@@ -2312,8 +2340,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 2.1
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-xmv8280-d",
@@ -2326,6 +2353,7 @@
     "d": 422,
     "h": 88
    },
+   "weightKg": 10.1,
    "portsSummary": "2 modelled (13 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v3b",
    "dataQuality": "dealer",
@@ -2342,8 +2370,7 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 10.1
+   "sizeConfidence": "ok"
   },
   {
    "id": "ams-neve-1073dpd",
@@ -2544,6 +2571,7 @@
     "d": 508,
     "h": 43
    },
+   "weightKg": 14.7,
    "portsSummary": "",
    "family": "rack-box-v2",
    "dataQuality": "estimate",
@@ -2558,8 +2586,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 14.7
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "empirical-labs-distressor",
@@ -2678,6 +2705,7 @@
    "manufacturer": "Mackie",
    "product": "Big Knob Studio",
    "sizeMm": {},
+   "weightKg": 1.6,
    "portsSummary": "",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -2695,8 +2723,7 @@
     "monitor-controller",
     "desk"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 1.6
+   "sizeConfidence": "conflict"
   },
   {
    "id": "midas-m32",
@@ -2737,6 +2764,7 @@
     "d": 257,
     "h": 43.2
    },
+   "weightKg": 4.3,
    "portsSummary": "",
    "family": "rack-box-v2",
    "dataQuality": "estimate",
@@ -2752,8 +2780,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 4.3
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "neutrik-nys-spp-l1",
@@ -3291,6 +3318,7 @@
     "d": 178,
     "h": 44
    },
+   "weightKg": 2.9,
    "portsSummary": "2 modelled (384 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "estimate",
@@ -3306,8 +3334,7 @@
     "passive",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 2.9
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "schoeps-cmc-6-mk-4",
@@ -3341,6 +3368,7 @@
    "manufacturer": "Schoeps",
    "product": "MSTC 74",
    "sizeMm": {},
+   "weightKg": 0.232,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal; 1 requiresPhantom",
    "family": "revolve",
    "dataQuality": "missing",
@@ -3356,8 +3384,7 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.232
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-ew-iem-g4",
@@ -3391,6 +3418,7 @@
    "manufacturer": "Sennheiser",
    "product": "MKH 418-S",
    "sizeMm": {},
+   "weightKg": 0.22,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal; 1 requiresPhantom",
    "family": "revolve",
    "dataQuality": "missing",
@@ -3406,8 +3434,7 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 0.22
+   "sizeConfidence": "conflict"
   },
   {
    "id": "behringer-europower-ep4000",
@@ -3753,6 +3780,7 @@
     "d": 341,
     "h": 580
    },
+   "weightKg": 18,
    "portsSummary": "2 modelled (2 listed in KB); no mains-power port declared in the proposal",
    "family": "speaker-cabinet-v2",
    "dataQuality": "datasheet",
@@ -3766,8 +3794,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 18
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-kara-ii",
@@ -3776,6 +3803,7 @@
    "manufacturer": "L-Acoustics",
    "product": "Kara II",
    "sizeMm": {},
+   "weightKg": 26,
    "portsSummary": "2 modelled (2 listed in KB); no mains-power port declared in the proposal",
    "family": "speaker-cabinet-v2",
    "dataQuality": "missing",
@@ -3791,8 +3819,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 26
+   "sizeConfidence": "conflict"
   },
   {
    "id": "cat6-ethercon-cable-family",
@@ -3971,6 +3998,7 @@
     "d": 146,
     "h": 44
    },
+   "weightKg": 2.04,
    "portsSummary": "8 modelled (8 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "estimate",
@@ -3985,8 +4013,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 2.04
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "digico-sd-rack",
@@ -4028,6 +4055,7 @@
     "d": 795,
     "h": 389
    },
+   "weightKg": 42,
    "portsSummary": "20 modelled (44 listed in KB); mains-power port declared",
    "family": "console-wedge-v2",
    "dataQuality": "datasheet",
@@ -4041,8 +4069,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 42
+   "sizeConfidence": "ok"
   },
   {
    "id": "genelec-7360a",
@@ -4055,6 +4082,7 @@
     "d": 363,
     "h": 527
    },
+   "weightKg": 27,
    "portsSummary": "11 modelled (21 listed in KB); mains-power port declared",
    "family": "curved-cabinet",
    "dataQuality": "datasheet",
@@ -4068,8 +4096,7 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 27
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-x15-hiq",
@@ -4082,6 +4109,7 @@
     "d": 375,
     "h": 580
    },
+   "weightKg": 21,
    "portsSummary": "2 modelled (2 listed in KB); no mains-power port declared in the proposal",
    "family": "speaker-cabinet-v2",
    "dataQuality": "estimate",
@@ -4095,8 +4123,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 21
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "nti-audio-minirator-mr-pro",
@@ -4109,6 +4136,7 @@
     "d": 152,
     "h": 43
    },
+   "weightKg": 0.31,
    "portsSummary": "3 modelled (5 listed in KB); no mains-power port declared in the proposal",
    "family": "moulded-box",
    "dataQuality": "datasheet",
@@ -4123,8 +4151,7 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.31
+   "sizeConfidence": "ok"
   },
   {
    "id": "nti-audio-xl2",
@@ -4137,6 +4164,7 @@
     "d": 180,
     "h": 45
    },
+   "weightKg": 0.48,
    "portsSummary": "5 modelled (7 listed in KB); no mains-power port declared in the proposal",
    "family": "moulded-box",
    "dataQuality": "datasheet",
@@ -4151,8 +4179,7 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.48
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-axient-digital-ad4d",
@@ -4165,6 +4192,7 @@
     "d": 333,
     "h": 44
    },
+   "weightKg": 4.6,
    "portsSummary": "9 modelled (17 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -4180,8 +4208,7 @@
     "receiver",
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 4.6
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-scm820",
@@ -4499,6 +4526,7 @@
     "d": 64,
     "h": 295
    },
+   "weightKg": 1.36,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal",
    "family": "revolve-v2-oval",
    "dataQuality": "datasheet",
@@ -4514,8 +4542,7 @@
     "ribbon",
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 1.36
+   "sizeConfidence": "ok"
   },
   {
    "id": "aeta-scoopteam",
@@ -4528,6 +4555,7 @@
     "d": 236,
     "h": 102
    },
+   "weightKg": 2.1,
    "portsSummary": "8 modelled (11 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -4543,8 +4571,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 2.1
+   "sizeConfidence": "ok"
   },
   {
    "id": "allen-heath-zed-22fx",
@@ -4557,6 +4584,7 @@
     "d": 465,
     "h": 98
    },
+   "weightKg": 10.5,
    "portsSummary": "7 modelled (39 listed in KB); no mains-power port declared in the proposal",
    "family": "console-wedge-v2",
    "dataQuality": "dealer",
@@ -4571,8 +4599,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 10.5
+   "sizeConfidence": "ok"
   },
   {
    "id": "antelope-orion-32-plus-gen4",
@@ -4608,6 +4635,7 @@
    "manufacturer": "Avid",
    "product": "Pro Tools | Sync X",
    "sizeMm": {},
+   "weightKg": 4.45,
    "portsSummary": "15 modelled (25 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -4622,8 +4650,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 4.45
+   "sizeConfidence": "conflict"
   },
   {
    "id": "beyerdynamic-m-160",
@@ -4632,6 +4659,7 @@
    "manufacturer": "beyerdynamic",
    "product": "M 160",
    "sizeMm": {},
+   "weightKg": 0.156,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal",
    "family": "revolve-v2-oval",
    "dataQuality": "missing",
@@ -4646,8 +4674,7 @@
     "ribbon",
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.156
+   "sizeConfidence": "ok"
   },
   {
    "id": "coles-4038",
@@ -4656,6 +4683,7 @@
    "manufacturer": "Coles Electroacoustics",
    "product": "4038",
    "sizeMm": {},
+   "weightKg": 1.08,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal",
    "family": "revolve-v2-oval",
    "dataQuality": "missing",
@@ -4672,8 +4700,7 @@
     "ribbon",
     "passive"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 1.08
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "db-audiotechnik-d40",
@@ -4686,6 +4713,7 @@
     "d": 512,
     "h": 88.9
    },
+   "weightKg": 13.8,
    "portsSummary": "11 modelled (21 listed in KB); mains-power port declared",
    "family": "rack-box-v3b",
    "dataQuality": "estimate",
@@ -4700,8 +4728,7 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 13.8
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "drawmer-mc2-1",
@@ -4710,6 +4737,7 @@
    "manufacturer": "Drawmer",
    "product": "MC2.1",
    "sizeMm": {},
+   "weightKg": 2.5,
    "portsSummary": "14 modelled (18 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -4726,8 +4754,7 @@
     "monitor-controller",
     "rack"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 2.5
+   "sizeConfidence": "conflict"
   },
   {
    "id": "ebtech-hum-eliminator-he-2",
@@ -4760,6 +4787,7 @@
    "manufacturer": "Focusrite",
    "product": "RedNet X2P",
    "sizeMm": {},
+   "weightKg": 1.04,
    "portsSummary": "5 modelled (8 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -4774,8 +4802,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "partial",
-   "weightKg": 1.04
+   "sizeConfidence": "partial"
   },
   {
    "id": "galaxy-audio-cricket-cpts",
@@ -4788,6 +4815,7 @@
     "d": 162,
     "h": 48.26
    },
+   "weightKg": 0.408,
    "portsSummary": "5 modelled (5 listed in KB); no mains-power port declared in the proposal",
    "family": "moulded-box",
    "dataQuality": "datasheet",
@@ -4802,8 +4830,7 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.408
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-la4x",
@@ -4812,6 +4839,7 @@
    "manufacturer": "L-Acoustics",
    "product": "LA4X",
    "sizeMm": {},
+   "weightKg": 11.3,
    "portsSummary": "9 modelled (15 listed in KB); mains-power port declared",
    "family": "rack-box-v3b",
    "dataQuality": "missing",
@@ -4828,8 +4856,7 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 11.3
+   "sizeConfidence": "conflict"
   },
   {
    "id": "lexicon-pcm96",
@@ -4842,6 +4869,7 @@
     "d": 317.5,
     "h": 44.5
    },
+   "weightKg": 3.9,
    "portsSummary": "8 modelled (13 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "estimate",
@@ -4857,8 +4885,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 3.9
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "lynx-aurora-n",
@@ -4897,6 +4924,7 @@
     "d": 70,
     "h": 201
    },
+   "weightKg": 0.73,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal",
    "family": "revolve",
    "dataQuality": "datasheet",
@@ -4913,8 +4941,7 @@
     "condenser",
     "active"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.73
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-u-67",
@@ -4927,6 +4954,7 @@
     "d": 56,
     "h": 200
    },
+   "weightKg": 0.56,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal",
    "family": "revolve",
    "dataQuality": "datasheet",
@@ -4942,8 +4970,7 @@
     "condenser",
     "active"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.56
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-usm-69-i",
@@ -4952,6 +4979,7 @@
    "manufacturer": "Neumann",
    "product": "USM 69 i",
    "sizeMm": {},
+   "weightKg": 0.51,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal; 1 requiresPhantom",
    "family": "revolve-v2-oval",
    "dataQuality": "missing",
@@ -4967,8 +4995,7 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 0.51
+   "sizeConfidence": "conflict"
   },
   {
    "id": "nexo-nxamp4x4mk2",
@@ -4981,6 +5008,7 @@
     "d": 502,
     "h": 133.4
    },
+   "weightKg": 24.9,
    "portsSummary": "7 modelled (11 listed in KB); mains-power port declared",
    "family": "rack-box-v3b",
    "dataQuality": "estimate",
@@ -4995,8 +5023,7 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 24.9
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "rme-digiface-dante",
@@ -5005,6 +5032,7 @@
    "manufacturer": "RME",
    "product": "Digiface Dante",
    "sizeMm": {},
+   "weightKg": 0.5,
    "portsSummary": "4 modelled (9 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -5020,8 +5048,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 0.5
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "rme-m-32-ad",
@@ -5030,6 +5057,7 @@
    "manufacturer": "RME",
    "product": "M-32 AD",
    "sizeMm": {},
+   "weightKg": 3,
    "portsSummary": "2 modelled (12 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -5044,8 +5072,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 3
+   "sizeConfidence": "conflict"
   },
   {
    "id": "rode-nt4",
@@ -5054,6 +5081,7 @@
    "manufacturer": "RODE",
    "product": "NT4",
    "sizeMm": {},
+   "weightKg": 0.48,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal; 1 requiresPhantom",
    "family": "revolve-v2-oval",
    "dataQuality": "missing",
@@ -5068,8 +5096,7 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 0.48
+   "sizeConfidence": "conflict"
   },
   {
    "id": "rupert-neve-designs-shelford-channel",
@@ -5078,6 +5105,7 @@
    "manufacturer": "Rupert Neve Designs",
    "product": "Shelford Channel (5035)",
    "sizeMm": {},
+   "weightKg": 4.3,
    "portsSummary": "7 modelled (10 listed in KB); mains-power port declared",
    "family": "rack-box-v3b",
    "dataQuality": "missing",
@@ -5094,8 +5122,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 4.3
+   "sizeConfidence": "conflict"
   },
   {
    "id": "sennheiser-em-6000",
@@ -5108,6 +5135,7 @@
     "d": 373,
     "h": 44
    },
+   "weightKg": 5.2,
    "portsSummary": "10 modelled (16 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -5123,8 +5151,7 @@
     "receiver",
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 5.2
+   "sizeConfidence": "ok"
   },
   {
    "id": "shure-ua845uwb",
@@ -5137,6 +5164,7 @@
     "d": 295.3,
     "h": 44.5
    },
+   "weightKg": 3.32,
    "portsSummary": "2 modelled (18 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -5153,8 +5181,7 @@
     "active",
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 3.32
+   "sizeConfidence": "ok"
   },
   {
    "id": "sound-devices-833",
@@ -5167,6 +5194,7 @@
     "d": 170,
     "h": 51
    },
+   "weightKg": 1.25,
    "portsSummary": "9 modelled (22 listed in KB); no mains-power port declared in the proposal",
    "family": "moulded-box",
    "dataQuality": "datasheet",
@@ -5181,8 +5209,7 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 1.25
+   "sizeConfidence": "ok"
   },
   {
    "id": "spl-phonitor-x",
@@ -5191,6 +5218,7 @@
    "manufacturer": "SPL",
    "product": "Phonitor x",
    "sizeMm": {},
+   "weightKg": 4.4,
    "portsSummary": "13 modelled (14 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -5207,8 +5235,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 4.4
+   "sizeConfidence": "conflict"
   },
   {
    "id": "yamaha-px10",
@@ -5221,6 +5248,7 @@
     "d": 388,
     "h": 88
    },
+   "weightKg": 7.4,
    "portsSummary": "9 modelled (11 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v3b",
    "dataQuality": "estimate",
@@ -5237,8 +5265,7 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 7.4
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "zoom-f8n-pro",
@@ -5251,6 +5278,7 @@
     "d": 140.3,
     "h": 54.3
    },
+   "weightKg": 1.2,
    "portsSummary": "4 modelled (18 listed in KB); no mains-power port declared in the proposal",
    "family": "moulded-box",
    "dataQuality": "datasheet",
@@ -5264,8 +5292,7 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 1.2
+   "sizeConfidence": "ok"
   },
   {
    "id": "akai-mpk-mini-mk3",
@@ -5677,6 +5704,7 @@
    "manufacturer": "L-Acoustics",
    "product": "X8",
    "sizeMm": {},
+   "weightKg": 12,
    "portsSummary": "",
    "family": "speaker-cabinet-v2",
    "dataQuality": "missing",
@@ -5690,8 +5718,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 12
+   "sizeConfidence": "conflict"
   },
   {
    "id": "meyer-upjunior-upj-1p",
@@ -5809,6 +5836,7 @@
    "manufacturer": "QSC",
    "product": "KS118 (sub)",
    "sizeMm": {},
+   "weightKg": 47,
    "portsSummary": "",
    "family": "speaker-cabinet-v2",
    "dataQuality": "missing",
@@ -5824,8 +5852,7 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 47
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "rode-ntg5",
@@ -6332,6 +6359,7 @@
    "manufacturer": "beyerdynamic",
    "product": "DT 297 PV MK II",
    "sizeMm": {},
+   "weightKg": 0.24,
    "portsSummary": "2 modelled (4 listed in KB); no mains-power port declared in the proposal; 1 requiresPhantom",
    "family": "assembly",
    "dataQuality": "missing",
@@ -6347,8 +6375,7 @@
     "passive",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.24
+   "sizeConfidence": "ok"
   },
   {
    "id": "db-audiotechnik-v8",
@@ -6357,6 +6384,7 @@
    "manufacturer": "d&b audiotechnik",
    "product": "V8",
    "sizeMm": {},
+   "weightKg": 34,
    "portsSummary": "2 modelled (2 listed in KB); no mains-power port declared in the proposal",
    "family": "speaker-cabinet-v2",
    "dataQuality": "missing",
@@ -6370,8 +6398,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 34
+   "sizeConfidence": "conflict"
   },
   {
    "id": "akg-d112-mkii",
@@ -6467,6 +6494,7 @@
     "d": 719,
     "h": 550
    },
+   "weightKg": 79,
    "portsSummary": "",
    "family": "speaker-cabinet-v2",
    "dataQuality": "datasheet",
@@ -6480,8 +6508,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 79
+   "sizeConfidence": "ok"
   },
   {
    "id": "middle-atlantic-srk",
@@ -6596,6 +6623,7 @@
     "d": 380,
     "h": 280
    },
+   "weightKg": 26.6,
    "portsSummary": "5 modelled (5 listed in KB); mains-power port declared",
    "family": "speaker-cabinet-v2",
    "dataQuality": "datasheet",
@@ -6609,8 +6637,7 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 26.6
+   "sizeConfidence": "ok"
   },
   {
    "id": "allen-heath-zed-436",
@@ -6619,6 +6646,7 @@
    "manufacturer": "Allen & Heath",
    "product": "ZED-436",
    "sizeMm": {},
+   "weightKg": 22,
    "portsSummary": "7 modelled (72 listed in KB); no mains-power port declared in the proposal",
    "family": "console-wedge-v2",
    "dataQuality": "missing",
@@ -6634,8 +6662,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 22
+   "sizeConfidence": "conflict"
   },
   {
    "id": "audient-asp8024-he",
@@ -6693,6 +6720,7 @@
     "d": 232,
     "h": 44.5
    },
+   "weightKg": 3.75,
    "portsSummary": "7 modelled (16 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -6706,8 +6734,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 3.75
+   "sizeConfidence": "ok"
   },
   {
    "id": "db-audiotechnik-ds20",
@@ -6720,6 +6747,7 @@
     "d": 232,
     "h": 44.5
    },
+   "weightKg": 3.8,
    "portsSummary": "5 modelled (16 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -6733,8 +6761,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 3.8
+   "sizeConfidence": "ok"
   },
   {
    "id": "db-audiotechnik-v-sub",
@@ -6747,6 +6774,7 @@
     "d": 728,
     "h": 606
    },
+   "weightKg": 64,
    "portsSummary": "2 modelled (2 listed in KB); no mains-power port declared in the proposal",
    "family": "speaker-cabinet-v2",
    "dataQuality": "datasheet",
@@ -6760,8 +6788,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 64
+   "sizeConfidence": "ok"
   },
   {
    "id": "genelec-1234a",
@@ -6774,6 +6801,7 @@
     "d": 383,
     "h": 700
    },
+   "weightKg": 73,
    "portsSummary": "8 modelled (8 listed in KB); mains-power port declared",
    "family": "curved-cabinet",
    "dataQuality": "datasheet",
@@ -6787,8 +6815,7 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 73
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-a15-focus",
@@ -6801,6 +6828,7 @@
     "d": 522,
     "h": 427
    },
+   "weightKg": 35,
    "portsSummary": "2 modelled (2 listed in KB); no mains-power port declared in the proposal",
    "family": "speaker-cabinet-v2",
    "dataQuality": "datasheet",
@@ -6814,16 +6842,16 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 35
+   "sizeConfidence": "ok"
   },
   {
    "id": "l-acoustics-p1",
    "status": "beta",
-   "category": "amplifier",
+   "category": "outboard",
    "manufacturer": "L-Acoustics",
    "product": "P1",
    "sizeMm": {},
+   "weightKg": 3.7,
    "portsSummary": "13 modelled (25 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "missing",
@@ -6840,8 +6868,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 3.7
+   "sizeConfidence": "ok"
   },
   {
    "id": "lexicon-pcm92",
@@ -6871,7 +6898,7 @@
   {
    "id": "meyer-sound-galileo-galaxy-816",
    "status": "beta",
-   "category": "amplifier",
+   "category": "outboard",
    "manufacturer": "Meyer Sound",
    "product": "Galileo GALAXY 816",
    "sizeMm": {},
@@ -6905,6 +6932,7 @@
     "d": 389,
     "h": 213
    },
+   "weightKg": 19.5,
    "portsSummary": "3 modelled (4 listed in KB); mains-power port declared",
    "family": "speaker-cabinet-v2",
    "dataQuality": "datasheet",
@@ -6918,8 +6946,7 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 19.5
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-kh-750-dsp",
@@ -6932,6 +6959,7 @@
     "d": 383,
     "h": 383
    },
+   "weightKg": 19.5,
    "portsSummary": "6 modelled (8 listed in KB); mains-power port declared",
    "family": "speaker-cabinet-v2",
    "dataQuality": "datasheet",
@@ -6945,8 +6973,7 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 19.5
+   "sizeConfidence": "ok"
   },
   {
    "id": "neumann-ku-100",
@@ -6959,6 +6986,7 @@
     "d": 220,
     "h": 280
    },
+   "weightKg": 3.5,
    "portsSummary": "1 modelled (2 listed in KB); no mains-power port declared in the proposal; 1 requiresPhantom",
    "family": "assembly",
    "dataQuality": "datasheet",
@@ -6973,8 +7001,7 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 3.5
+   "sizeConfidence": "ok"
   },
   {
    "id": "nexo-45n12",
@@ -6987,6 +7014,7 @@
     "d": 576,
     "h": 392
    },
+   "weightKg": 24,
    "portsSummary": "2 modelled (2 listed in KB); no mains-power port declared in the proposal",
    "family": "speaker-cabinet-v2",
    "dataQuality": "datasheet",
@@ -7000,8 +7028,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 24
+   "sizeConfidence": "ok"
   },
   {
    "id": "nexo-p12",
@@ -7014,6 +7041,7 @@
     "d": 314,
     "h": 534
    },
+   "weightKg": 20,
    "portsSummary": "2 modelled (4 listed in KB); no mains-power port declared in the proposal",
    "family": "speaker-cabinet-v2",
    "dataQuality": "datasheet",
@@ -7027,8 +7055,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 20
+   "sizeConfidence": "ok"
   },
   {
    "id": "omnia-11",
@@ -7041,6 +7068,7 @@
     "d": 508,
     "h": 177.8
    },
+   "weightKg": 16.3,
    "portsSummary": "11 modelled (13 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -7056,8 +7084,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 16.3
+   "sizeConfidence": "ok"
   },
   {
    "id": "rcf-hdl-30-a",
@@ -7066,6 +7093,7 @@
    "manufacturer": "RCF",
    "product": "HDL 30-A",
    "sizeMm": {},
+   "weightKg": 25,
    "portsSummary": "3 modelled (6 listed in KB); mains-power port declared",
    "family": "speaker-cabinet-v2",
    "dataQuality": "missing",
@@ -7081,8 +7109,7 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 25
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "rode-lavalier-ii",
@@ -7091,6 +7118,7 @@
    "manufacturer": "RODE",
    "product": "Lavalier II",
    "sizeMm": {},
+   "weightKg": 0.009,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal",
    "family": "assembly",
    "dataQuality": "missing",
@@ -7106,8 +7134,7 @@
     "condenser",
     "active"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 0.009
+   "sizeConfidence": "conflict"
   },
   {
    "id": "rode-nt-sf1",
@@ -7120,6 +7147,7 @@
     "d": 45.7,
     "h": 192.3
    },
+   "weightKg": 0.286,
    "portsSummary": "2 modelled (4 listed in KB); no mains-power port declared in the proposal; 2 requiresPhantom",
    "family": "assembly",
    "dataQuality": "datasheet",
@@ -7134,8 +7162,7 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.286
+   "sizeConfidence": "ok"
   },
   {
    "id": "sanken-cos-11d",
@@ -7172,6 +7199,7 @@
    "manufacturer": "Sennheiser",
    "product": "HMD 26",
    "sizeMm": {},
+   "weightKg": 0.2,
    "portsSummary": "2 modelled (4 listed in KB); no mains-power port declared in the proposal",
    "family": "assembly",
    "dataQuality": "missing",
@@ -7185,8 +7213,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.2
+   "sizeConfidence": "ok"
   },
   {
    "id": "sennheiser-mke-2",
@@ -7195,6 +7222,7 @@
    "manufacturer": "Sennheiser",
    "product": "MKE 2",
    "sizeMm": {},
+   "weightKg": 0.017,
    "portsSummary": "1 modelled (1 listed in KB); no mains-power port declared in the proposal",
    "family": "assembly",
    "dataQuality": "missing",
@@ -7210,8 +7238,7 @@
     "condenser",
     "active"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.017
+   "sizeConfidence": "ok"
   },
   {
    "id": "sommer-cable-the-boxx-mp-08-04",
@@ -7246,6 +7273,7 @@
     "d": 175,
     "h": 45
    },
+   "weightKg": 1.45,
    "portsSummary": "4 modelled (6 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "estimate",
@@ -7262,8 +7290,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 1.45
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "ssl-origin",
@@ -7276,6 +7303,7 @@
     "d": 1080,
     "h": 1000
    },
+   "weightKg": 150,
    "portsSummary": "3 modelled (5 listed in KB); no mains-power port declared in the proposal",
    "family": "console-wedge-v2",
    "dataQuality": "estimate",
@@ -7289,8 +7317,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 150
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "tascam-da-6400",
@@ -7327,6 +7354,7 @@
     "d": 300,
     "h": 44.45
    },
+   "weightKg": 4,
    "portsSummary": "9 modelled (14 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -7341,8 +7369,7 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 4
+   "sizeConfidence": "ok"
   },
   {
    "id": "wisycom-mcr54",
@@ -7355,6 +7382,7 @@
     "d": 25,
     "h": 104
    },
+   "weightKg": 0.23,
    "portsSummary": "1 modelled (6 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -7370,8 +7398,7 @@
     "receiver",
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.23
+   "sizeConfidence": "ok"
   },
   {
    "id": "akg-k240-studio",
@@ -7569,6 +7596,7 @@
    "manufacturer": "beyerdynamic",
    "product": "DT 990 PRO",
    "sizeMm": {},
+   "weightKg": 0.25,
    "portsSummary": "",
    "family": "assembly",
    "dataQuality": "missing",
@@ -7587,8 +7615,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.25
+   "sizeConfidence": "ok"
   },
   {
    "id": "clear-com-fsii-bp24",
@@ -7832,6 +7859,7 @@
    "manufacturer": "RODE",
    "product": "PSA1+ studio arm",
    "sizeMm": {},
+   "weightKg": 1.52,
    "portsSummary": "",
    "family": "assembly",
    "dataQuality": "missing",
@@ -7848,8 +7876,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "partial",
-   "weightKg": 1.52
+   "sizeConfidence": "partial"
   },
   {
    "id": "rode-psm1",
@@ -8011,6 +8038,7 @@
    "manufacturer": "Avid",
    "product": "VENUE / S6L",
    "sizeMm": {},
+   "weightKg": 54,
    "portsSummary": "15 modelled (41 listed in KB); no mains-power port declared in the proposal",
    "family": "console-wedge-v2",
    "dataQuality": "missing",
@@ -8024,8 +8052,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "conflict",
-   "weightKg": 54
+   "sizeConfidence": "conflict"
   },
   {
    "id": "focal-utopia-main-112",
@@ -8038,6 +8065,7 @@
     "d": 460,
     "h": 940
    },
+   "weightKg": 77.6,
    "portsSummary": "3 modelled (4 listed in KB); mains-power port declared",
    "family": "speaker-cabinet-v2",
    "dataQuality": "estimate",
@@ -8053,8 +8081,7 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 77.6
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "nagra-vi",
@@ -8067,6 +8094,7 @@
     "d": 285,
     "h": 74
    },
+   "weightKg": 3.8,
    "portsSummary": "9 modelled (18 listed in KB); no mains-power port declared in the proposal",
    "family": "moulded-box",
    "dataQuality": "datasheet",
@@ -8080,8 +8108,7 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 3.8
+   "sizeConfidence": "ok"
   },
   {
    "id": "neutrik-ne8mx",
@@ -8116,6 +8143,7 @@
     "d": 355,
     "h": 288
    },
+   "weightKg": 21,
    "portsSummary": "2 modelled (2 listed in KB); no mains-power port declared in the proposal",
    "family": "speaker-cabinet-v2",
    "dataQuality": "estimate",
@@ -8129,8 +8157,7 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 21
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "qsc-rmx-1450",
@@ -8139,6 +8166,7 @@
    "manufacturer": "QSC",
    "product": "RMX 1450",
    "sizeMm": {},
+   "weightKg": 18.2,
    "portsSummary": "7 modelled (11 listed in KB); mains-power port declared",
    "family": "rack-box-v3b",
    "dataQuality": "missing",
@@ -8154,8 +8182,7 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 18.2
+   "sizeConfidence": "ok"
   },
   {
    "id": "qsc-rmx-850",
@@ -8164,6 +8191,7 @@
    "manufacturer": "QSC",
    "product": "RMX 850",
    "sizeMm": {},
+   "weightKg": 15.9,
    "portsSummary": "7 modelled (11 listed in KB); mains-power port declared",
    "family": "rack-box-v3b",
    "dataQuality": "missing",
@@ -8179,8 +8207,7 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 15.9
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-spx2000",
@@ -8193,6 +8220,7 @@
     "d": 372.5,
     "h": 45
    },
+   "weightKg": 4,
    "portsSummary": "12 modelled (14 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "estimate",
@@ -8208,8 +8236,7 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 4
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "audix-d6",
@@ -8222,6 +8249,7 @@
     "d": 51,
     "h": 117
    },
+   "weightKg": 0.254,
    "portsSummary": "",
    "family": "revolve",
    "dataQuality": "datasheet",
@@ -8237,8 +8265,7 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.254
+   "sizeConfidence": "ok"
   },
   {
    "id": "audix-i5",
@@ -8251,6 +8278,7 @@
     "d": 37.5,
     "h": 141.5
    },
+   "weightKg": 0.183,
    "portsSummary": "",
    "family": "revolve",
    "dataQuality": "datasheet",
@@ -8266,8 +8294,7 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 0.183
+   "sizeConfidence": "ok"
   },
   {
    "id": "ev-evolve-50m-g2",
@@ -8280,6 +8307,7 @@
     "d": 470,
     "h": 2093
    },
+   "weightKg": 25.2,
    "portsSummary": "",
    "family": "speaker-cabinet-v2",
    "dataQuality": "estimate",
@@ -8295,8 +8323,7 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "axis-assumed",
-   "weightKg": 25.2
+   "sizeConfidence": "axis-assumed"
   },
   {
    "id": "heil-pr-40",
@@ -8415,6 +8442,7 @@
     "d": 667,
     "h": 299
    },
+   "weightKg": 36,
    "portsSummary": "",
    "family": "console-wedge-v2",
    "dataQuality": "datasheet",
@@ -8428,8 +8456,7 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok",
-   "weightKg": 36
+   "sizeConfidence": "ok"
   },
   {
    "id": "yamaha-dm7",

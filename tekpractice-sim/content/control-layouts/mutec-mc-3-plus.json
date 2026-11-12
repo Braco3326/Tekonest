@@ -1,0 +1,28 @@
+{
+ "schema": 1,
+ "deviceId": "mutec-mc-3-plus",
+ "generated": true,
+ "controls": [
+  {
+   "id": "power",
+   "face": "opposite",
+   "xMm": 180,
+   "yMm": 21,
+   "sizeMm": {
+    "w": 9,
+    "h": 9,
+    "d": 3
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "button",
+   "axis": "z",
+   "latch": true,
+   "round": true,
+   "colour": "#1b3a1f",
+   "lit": "#46ff5a",
+   "travelMm": 1,
+   "default": 1
+  }
+ ]
+}

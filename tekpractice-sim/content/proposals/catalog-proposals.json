@@ -596,67 +596,6 @@
    }
   },
   {
-   "id": "dbx-driverack-pa2",
-   "label": "dbx DriveRack PA2",
-   "levels": [],
-   "realWorld": {
-    "brand": "dbx",
-    "model": "DriveRack PA2",
-    "category": "amplifier",
-    "typicalUse": "small / medium PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Classic console-to-amp insert point: 2 XLR in, 6 XLR out (low/mid/high), measurement mic input: crossover wiring lesson."
-   },
-   "ports": [
-    {
-     "portId": "in-line-inputs-1",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-line-inputs-2",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-rta-mic-input-15vdc",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "mic-level"
-    },
-    {
-     "portId": "out-line-outputs-low-mid-high-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-line-outputs-low-mid-high-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "bidir-ethernet-control-firmware",
-     "dir": "bidir",
-     "connector": "rj45",
-     "signal": "aoip"
-    },
-    {
-     "portId": "in-iec-ac-power-inlet",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 483,
-    "d": 146,
-    "h": 44
-   }
-  },
-  {
    "id": "meyer-sound-galileo-galaxy-816",
    "label": "Meyer Sound Galileo GALAXY 816",
    "levels": [],
@@ -1505,73 +1444,6 @@
     "w": 244,
     "d": 294,
     "h": 71
-   }
-  },
-  {
-   "id": "mackie-profx12v3",
-   "label": "Mackie ProFX12v3",
-   "levels": [],
-   "realWorld": {
-    "brand": "Mackie",
-    "model": "ProFX12v3",
-    "category": "console",
-    "typicalUse": "small PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. TRS insert points, sub outs and a 3.5 mm consumer input on one small desk give clear insert-cable and level-matching exercises."
-   },
-   "ports": [
-    {
-     "portId": "in-mic-inputs-1",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "mic-level"
-    },
-    {
-     "portId": "in-mic-inputs-2",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "mic-level"
-    },
-    {
-     "portId": "in-1-8-in-stereo-line-input-ch-11-12",
-     "dir": "in",
-     "connector": "trs-35mm",
-     "signal": "line-level-consumer"
-    },
-    {
-     "portId": "out-main-mix-outputs-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-main-mix-outputs-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-fx-footswitch",
-     "dir": "in",
-     "connector": "trs-quarter",
-     "signal": "gpio-tally"
-    },
-    {
-     "portId": "bidir-usb-audio-interface",
-     "dir": "bidir",
-     "connector": "usb-b",
-     "signal": "usb-audio"
-    },
-    {
-     "portId": "in-mains-in-3-pin-iec",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 330,
-    "d": 376,
-    "h": 102
    }
   },
   {
@@ -3671,85 +3543,6 @@
    }
   },
   {
-   "id": "mutec-mc-3-plus",
-   "label": "MUTEC MC-3+ Smart Clock",
-   "levels": [],
-   "realWorld": {
-    "brand": "MUTEC",
-    "model": "MC-3+ Smart Clock",
-    "category": "master-clock",
-    "typicalUse": "master word clock for a small studio",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Termination (75 Ω) and star distribution lesson, plus AES11 vs word clock and S/PDIF optical vs coaxial."
-   },
-   "ports": [
-    {
-     "portId": "out-word-clock-outputs-3-pairs-1",
-     "dir": "out",
-     "connector": "bnc",
-     "signal": "wordclock"
-    },
-    {
-     "portId": "out-word-clock-outputs-3-pairs-2",
-     "dir": "out",
-     "connector": "bnc",
-     "signal": "wordclock"
-    },
-    {
-     "portId": "in-word-clock-10-mhz-input",
-     "dir": "in",
-     "connector": "bnc",
-     "signal": "wordclock"
-    },
-    {
-     "portId": "in-aes3-aes11-input",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "aes3"
-    },
-    {
-     "portId": "out-aes3-aes11-output",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "aes3"
-    },
-    {
-     "portId": "bidir-s-pdif-coaxial-in-out-1",
-     "dir": "bidir",
-     "connector": "rca",
-     "signal": "spdif"
-    },
-    {
-     "portId": "bidir-s-pdif-coaxial-in-out-2",
-     "dir": "bidir",
-     "connector": "rca",
-     "signal": "spdif"
-    },
-    {
-     "portId": "bidir-s-pdif-optical-in-out-1",
-     "dir": "bidir",
-     "connector": "toslink",
-     "signal": "spdif"
-    },
-    {
-     "portId": "bidir-s-pdif-optical-in-out-2",
-     "dir": "bidir",
-     "connector": "toslink",
-     "signal": "spdif"
-    },
-    {
-     "portId": "in-ac-mains-in",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 196,
-    "d": 156,
-    "h": 42
-   }
-  },
-  {
    "id": "avid-protools-sync-x",
    "label": "Avid Pro Tools | Sync X",
    "levels": [],
@@ -4426,40 +4219,6 @@
    }
   },
   {
-   "id": "rode-nt1-5th-gen",
-   "label": "RØDE NT1 5th Generation",
-   "levels": [],
-   "realWorld": {
-    "brand": "RØDE",
-    "model": "NT1 5th Generation",
-    "category": "microphone",
-    "typicalUse": "home and project studio vocals",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-condenser.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. One mic with two output paths (XLR needing P48, USB-C bus-powered digital): good lesson on where phantom applies and where it does not."
-   },
-   "ports": [
-    {
-     "portId": "out-analogue-balanced-mic-output-needs-p48",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "mic-level",
-     "flags": [
-      "requiresPhantom"
-     ]
-    },
-    {
-     "portId": "bidir-digital-audio-to-computer-bus-powered",
-     "dir": "bidir",
-     "connector": "usb-c",
-     "signal": "usb-audio"
-    }
-   ],
-   "sizeMm": {
-    "w": 52,
-    "d": 52,
-    "h": 189
-   }
-  },
-  {
    "id": "beyerdynamic-m-160",
    "label": "Beyerdynamic M 160",
    "levels": [],
@@ -4854,49 +4613,6 @@
     "w": 482,
     "d": 178,
     "h": 44
-   }
-  },
-  {
-   "id": "samson-s-patch-plus",
-   "label": "Samson S-Patch Plus",
-   "levels": [],
-   "realWorld": {
-    "brand": "Samson",
-    "model": "S-Patch Plus",
-    "category": "patchbay",
-    "typicalUse": "home studio",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/patchbays.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. One front toggle per channel makes the N/HN/Thru comparison very clear for students; uses existing trs-quarter ids"
-   },
-   "ports": [
-    {
-     "portId": "bidir-front-patch-jacks-top-and-bottom-rows-1",
-     "dir": "bidir",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "bidir-front-patch-jacks-top-and-bottom-rows-2",
-     "dir": "bidir",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "bidir-rear-connection-jacks-1",
-     "dir": "bidir",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "bidir-rear-connection-jacks-2",
-     "dir": "bidir",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    }
-   ],
-   "sizeMm": {
-    "w": 482.6,
-    "d": 68.5,
-    "h": 44.45
    }
   },
   {
@@ -6616,55 +6332,6 @@
    }
   },
   {
-   "id": "neumann-kh-120-ii",
-   "label": "Neumann KH 120 II",
-   "levels": [],
-   "realWorld": {
-    "brand": "Neumann",
-    "model": "KH 120 II",
-    "category": "studio-monitor",
-    "typicalUse": "near-field mixing",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Analog XLR plus S/PDIF RCA in/out daisy-chain with L/R channel select: clear digital-vs-analog monitor wiring lesson."
-   },
-   "ports": [
-    {
-     "portId": "in-analog-input",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-digital-s-pdif-input",
-     "dir": "in",
-     "connector": "rca",
-     "signal": "spdif"
-    },
-    {
-     "portId": "out-digital-s-pdif-output-daisy-chain",
-     "dir": "out",
-     "connector": "rca",
-     "signal": "spdif"
-    },
-    {
-     "portId": "bidir-network-control-ma-1-neumann-control",
-     "dir": "bidir",
-     "connector": "rj45",
-     "signal": "aoip"
-    },
-    {
-     "portId": "in-mains-in",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 182,
-    "d": 227,
-    "h": 287
-   }
-  },
-  {
    "id": "adam-audio-s3h",
    "label": "ADAM Audio S3H",
    "levels": [],
@@ -7065,61 +6732,6 @@
    }
   },
   {
-   "id": "shure-slx-d",
-   "label": "Shure SLX-D (SLXD4 / SLXD4D receivers, SLXD1 / SLXD2 / SLXD3 transmitters, SLXD5 portable receiver)",
-   "levels": [],
-   "realWorld": {
-    "brand": "Shure",
-    "model": "SLX-D (SLXD4 / SLXD4D receivers, SLXD1 / SLXD2 / SLXD3 transmitters, SLXD5 portable receiver)",
-    "category": "wireless",
-    "typicalUse": "live vocals",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR mic/line switch on receiver, TA4 bodypack input and a phantom-powering plug-on transmitter cover many wiring lessons."
-   },
-   "ports": [
-    {
-     "portId": "out-slxd4-balanced-output-mic-line-switch",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-slxd4-balanced-1-4-output",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "bidir-slxd4-ethernet-10-100",
-     "dir": "bidir",
-     "connector": "rj45",
-     "signal": "aoip"
-    },
-    {
-     "portId": "in-slxd1-bodypack-mic-input-ta4m",
-     "dir": "in",
-     "connector": "mini-xlr-ta4",
-     "signal": "mic-level"
-    },
-    {
-     "portId": "out-slxd5-portable-receiver-outputs-camera-headphone-1",
-     "dir": "out",
-     "connector": "trs-35mm",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-slxd5-portable-receiver-outputs-camera-headphone-2",
-     "dir": "out",
-     "connector": "trs-35mm",
-     "signal": "line-level-pro"
-    }
-   ],
-   "sizeMm": {
-    "w": 197,
-    "d": 152,
-    "h": 42
-   }
-  },
-  {
    "id": "shure-axient-digital-ad4d",
    "label": "Shure Axient Digital AD4D (dual-channel receiver; AD1/AD2 transmitters)",
    "levels": [],
@@ -7190,55 +6802,6 @@
     "w": 483,
     "d": 333,
     "h": 44
-   }
-  },
-  {
-   "id": "shure-psm-300",
-   "label": "Shure PSM 300 (P3T transmitter, P3R / P3RA bodypack receivers)",
-   "levels": [],
-   "realWorld": {
-    "brand": "Shure",
-    "model": "PSM 300 (P3T transmitter, P3R / P3RA bodypack receivers)",
-    "category": "wireless",
-    "typicalUse": "band in-ear monitoring",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Classic IEM lesson: console aux sends into jack inputs, with loop-through, a BNC antenna and a 3.5 mm bodypack output."
-   },
-   "ports": [
-    {
-     "portId": "in-p3t-audio-inputs-balanced-1",
-     "dir": "in",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-p3t-audio-inputs-balanced-2",
-     "dir": "in",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-p3t-audio-loop-outputs-1",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-p3t-audio-loop-outputs-2",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-p3r-headphone-output",
-     "dir": "out",
-     "connector": "trs-35mm",
-     "signal": "headphone-level"
-    }
-   ],
-   "sizeMm": {
-    "w": 198,
-    "d": 172,
-    "h": 43
    }
   },
   {
@@ -7383,6 +6946,751 @@
     "w": 85,
     "d": 25,
     "h": 104
+   }
+  },
+  {
+   "id": "behringer-s16",
+   "label": "Behringer S16",
+   "levels": [],
+   "realWorld": {
+    "brand": "Behringer",
+    "model": "S16",
+    "category": "stagebox",
+    "typicalUse": "Behringer S16 (stagebox)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 482 x 225 x 89 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "out-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "aes50-a",
+     "dir": "bidir",
+     "connector": "ethercon",
+     "signal": "aoip"
+    }
+   ],
+   "sizeMm": {
+    "w": 482,
+    "d": 225,
+    "h": 89
+   }
+  },
+  {
+   "id": "focusrite-scarlett-18i20-3rd-gen",
+   "label": "Focusrite Scarlett 18i20 (3rd Gen)",
+   "levels": [],
+   "realWorld": {
+    "brand": "Focusrite",
+    "model": "Scarlett 18i20 (3rd Gen)",
+    "category": "audio-interface",
+    "typicalUse": "Focusrite Scarlett 18i20 (3rd Gen) (audio-interface)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 482.6 x 259.8 x 46.6 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "out-phones-1",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "out-line-1",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-line-2",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-c",
+     "signal": "usb-audio"
+    }
+   ],
+   "sizeMm": {
+    "w": 482.6,
+    "d": 259.8,
+    "h": 46.6
+   }
+  },
+  {
+   "id": "furman-m-8x2",
+   "label": "Furman M-8x2 power conditioner",
+   "levels": [],
+   "realWorld": {
+    "brand": "Furman",
+    "model": "M-8x2 power conditioner",
+    "category": "power",
+    "typicalUse": "Furman M-8x2 power conditioner (power)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 482 x 95 x 44 mm (w x d x h) (sources disagree on a dimension) (estimate, size confidence conflict); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "out-1",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-2",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-3",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-4",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-5",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-6",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-7",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-8",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-front",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    }
+   ],
+   "sizeMm": {
+    "w": 482,
+    "d": 95,
+    "h": 44
+   }
+  },
+  {
+   "id": "mackie-1202vlz4",
+   "label": "Mackie 1202VLZ4",
+   "levels": [],
+   "realWorld": {
+    "brand": "Mackie",
+    "model": "1202VLZ4",
+    "category": "console-analog",
+    "typicalUse": "Mackie 1202VLZ4 (console-analog)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 303 x 272 x 75 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "out-aux-1",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-aux-2",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    }
+   ],
+   "sizeMm": {
+    "w": 303,
+    "d": 272,
+    "h": 75
+   }
+  },
+  {
+   "id": "sennheiser-md-421-ii",
+   "label": "Sennheiser MD 421-II",
+   "levels": [],
+   "realWorld": {
+    "brand": "Sennheiser",
+    "model": "MD 421-II",
+    "category": "microphone",
+    "typicalUse": "Sennheiser MD 421-II (microphone)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 46 x 49 x 215 mm (w x d x h) (sources disagree on a dimension) (estimate, size confidence conflict); ports from the asset spec (documented: https://www.sennheiser.com/globalassets/digizuite/47848-en-md-421-ii-product-specification-v1.1-en.pdf)."
+   },
+   "ports": [
+    {
+     "portId": "out-xlr",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "mic-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 46,
+    "d": 49,
+    "h": 215
+   }
+  },
+  {
+   "id": "ua-1176ln",
+   "label": "Universal Audio 1176LN",
+   "levels": [],
+   "realWorld": {
+    "brand": "Universal Audio",
+    "model": "1176LN",
+    "category": "outboard",
+    "typicalUse": "Universal Audio 1176LN (outboard)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 483 x 311 x 89 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-xlr",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-xlr",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    }
+   ],
+   "sizeMm": {
+    "w": 483,
+    "d": 311,
+    "h": 89
+   }
+  },
+  {
+   "id": "yamaha-hs5",
+   "label": "Yamaha HS5",
+   "levels": [],
+   "realWorld": {
+    "brand": "Yamaha",
+    "model": "HS5",
+    "category": "studio-monitor",
+    "typicalUse": "Yamaha HS5 (studio-monitor)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 170 x 222 x 285 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-xlr",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-trs",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "power-in",
+     "dir": "in",
+     "connector": "iec-c14",
+     "signal": "mains-power"
+    }
+   ],
+   "sizeMm": {
+    "w": 170,
+    "d": 222,
+    "h": 285
+   }
+  },
+  {
+   "id": "behringer-ada8200",
+   "label": "Behringer ADA8200",
+   "levels": [],
+   "realWorld": {
+    "brand": "Behringer",
+    "model": "ADA8200",
+    "category": "mic-preamp",
+    "typicalUse": "Behringer ADA8200 (mic-preamp)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 482.6 x 217 x 44.5 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "out-line-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-line-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "wordclock-in",
+     "dir": "in",
+     "connector": "bnc",
+     "signal": "wordclock"
+    }
+   ],
+   "sizeMm": {
+    "w": 482.6,
+    "d": 217,
+    "h": 44.5
+   }
+  },
+  {
+   "id": "dbx-286s",
+   "label": "dbx 286s",
+   "levels": [],
+   "realWorld": {
+    "brand": "dbx",
+    "model": "286s",
+    "category": "mic-preamp",
+    "typicalUse": "dbx 286s (mic-preamp)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 485 x 146 x 44.5 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-line",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-line",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    }
+   ],
+   "sizeMm": {
+    "w": 485,
+    "d": 146,
+    "h": 44.5
+   }
+  },
+  {
+   "id": "jbl-305p-mkii",
+   "label": "JBL 305P MkII",
+   "levels": [],
+   "realWorld": {
+    "brand": "JBL",
+    "model": "305P MkII",
+    "category": "studio-monitor",
+    "typicalUse": "JBL 305P MkII (studio-monitor)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 185 x 231 x 298 mm (w x d x h) (sources disagree on a dimension) (estimate, size confidence conflict); ports from the asset spec (documented: https://support.harmanaudio.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwadea3a58/pdfs/JBL_3_Series_MkII_Owners_Manual_French.pdf)."
+   },
+   "ports": [
+    {
+     "portId": "in-xlr",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-trs",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "power-in",
+     "dir": "in",
+     "connector": "iec-c14",
+     "signal": "mains-power"
+    }
+   ],
+   "sizeMm": {
+    "w": 185,
+    "d": 231,
+    "h": 298
+   }
+  },
+  {
+   "id": "soundcraft-ui24r",
+   "label": "Soundcraft Ui24R",
+   "levels": [],
+   "realWorld": {
+    "brand": "Soundcraft",
+    "model": "Ui24R",
+    "category": "console-digital",
+    "typicalUse": "Soundcraft Ui24R (console-digital)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 482.6 x 165.1 x 177.8 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-combo-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-xlr-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-combo-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-xlr-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-combo-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-xlr-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-combo-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-xlr-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-combo-5",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-xlr-5",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-combo-6",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-xlr-6",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-combo-7",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-xlr-7",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-combo-8",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-xlr-8",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-combo-9",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-xlr-9",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-combo-10",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-xlr-10",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-line-1",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-line-2",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "net",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    }
+   ],
+   "sizeMm": {
+    "w": 482.6,
+    "d": 165.1,
+    "h": 177.8
+   }
+  },
+  {
+   "id": "ua-apollo-twin-x",
+   "label": "Universal Audio Apollo Twin X",
+   "levels": [],
+   "realWorld": {
+    "brand": "Universal Audio",
+    "model": "Apollo Twin X",
+    "category": "audio-interface",
+    "typicalUse": "Universal Audio Apollo Twin X (audio-interface)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 160 x 157 x 66 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "out-mon-l",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-mon-r",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones-1",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 160,
+    "d": 157,
+    "h": 66
+   }
+  },
+  {
+   "id": "behringer-dcx2496",
+   "label": "Behringer DCX2496 Ultradrive Pro",
+   "levels": [],
+   "realWorld": {
+    "brand": "Behringer",
+    "model": "DCX2496 Ultradrive Pro",
+    "category": "outboard",
+    "typicalUse": "Behringer DCX2496 Ultradrive Pro (outboard)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 482.6 x 217 x 44.5 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "out-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-3",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-4",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-5",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-6",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-a",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-b",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-c",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    }
+   ],
+   "sizeMm": {
+    "w": 482.6,
+    "d": 217,
+    "h": 44.5
    }
   }
  ],

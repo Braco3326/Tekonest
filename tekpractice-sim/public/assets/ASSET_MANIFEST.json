@@ -3351,10 +3351,7 @@
         "_generic_wrap.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T00:56:54.959Z",
+      "date": "2026-11-12T01:27:41.472Z",
       "specSource": "https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf",
       "logosRemoved": true,
       "gates": [
@@ -3398,7 +3395,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
@@ -3707,154 +3707,22 @@
     },
     {
       "status": "ok",
-      "id": "neumann-kh-120-ii",
+      "id": "dbx-driverack-pa2",
       "kind": "device",
-      "tris": 2372,
-      "ports": 5,
+      "tris": 1920,
+      "ports": 11,
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
       "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
+        "_generic_opposite.png",
+        "_generic_io.png"
       ],
       "taskId": null,
       "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
       "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
       "trademark": "branded-internal",
-      "date": "2026-11-12T00:58:48.438Z",
-      "specSource": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ]
-    },
-    {
-      "status": "ok",
-      "id": "yamaha-hs5",
-      "kind": "device",
-      "tris": 2244,
-      "ports": 3,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
-      "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T00:58:50.071Z",
-      "specSource": "https://jp.yamaha.com/files/download/other_assets/4/322334/HS_Series.pdf",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ]
-    },
-    {
-      "status": "ok",
-      "id": "jbl-305p-mkii",
-      "kind": "device",
-      "tris": 2244,
-      "ports": 3,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
-      "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T00:58:52.137Z",
-      "specSource": "https://global.jbl.com/studio-monitors/305PMKII.html",
+      "date": "2026-11-12T00:57:18.366Z",
+      "specSource": "https://www.dbxpro.com/en/products/driverack-pa2",
       "logosRemoved": true,
       "gates": [
         {
@@ -4367,6 +4235,72 @@
     },
     {
       "status": "ok",
+      "id": "neumann-kh-120-ii",
+      "kind": "device",
+      "tris": 2372,
+      "ports": 5,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_io.png",
+        "_generic_opposite.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:48.438Z",
+      "specSource": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
       "id": "allen-heath-ar2412",
       "kind": "device",
       "tris": 1632,
@@ -4433,6 +4367,72 @@
     },
     {
       "status": "ok",
+      "id": "yamaha-hs5",
+      "kind": "device",
+      "tris": 2244,
+      "ports": 3,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_io.png",
+        "_generic_opposite.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:50.071Z",
+      "specSource": "https://jp.yamaha.com/files/download/other_assets/4/322334/HS_Series.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
       "id": "focusrite-scarlett-18i20-3rd-gen",
       "kind": "device",
       "tris": 1632,
@@ -4449,6 +4449,72 @@
       "trademark": "branded-internal",
       "date": "2026-11-12T00:58:51.671Z",
       "specSource": "https://userguides.focusrite.com/hc/en-gb/articles/23031286748306-Scarlett-18i20-3rd-Gen-specifications",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "jbl-305p-mkii",
+      "kind": "device",
+      "tris": 2244,
+      "ports": 3,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_io.png",
+        "_generic_opposite.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:52.137Z",
+      "specSource": "https://global.jbl.com/studio-monitors/305PMKII.html",
       "logosRemoved": true,
       "gates": [
         {
@@ -4848,72 +4914,6 @@
       "trademark": "branded-internal",
       "date": "2026-11-12T00:59:06.790Z",
       "specSource": "https://userguides.focusrite.com/hc/en-gb/articles/28594384158482",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ]
-    },
-    {
-      "status": "ok",
-      "id": "dbx-driverack-pa2",
-      "kind": "device",
-      "tris": 1920,
-      "ports": 11,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
-      "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T00:57:18.366Z",
-      "specSource": "https://www.dbxpro.com/en/products/driverack-pa2",
       "logosRemoved": true,
       "gates": [
         {
