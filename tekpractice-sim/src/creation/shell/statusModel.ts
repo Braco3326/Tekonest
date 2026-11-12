@@ -46,8 +46,9 @@ export interface Rejection {
 }
 
 /**
- * A rule as Mode Création shows it: `title` = the catalog's `title_fr`, `detail` = its `teach_fr`.
- * `ruleTextFor` is the ONE place that picks them; the status list, the pinned refusal and the « Connecter à… » reasons all read through it.
+ * A rule as a surface shows it: `title` = the row's `title_fr`, `detail` = its `teach_fr`.
+ * `ruleTextFor` is the ONE place that picks them from a list of rows. Mode Création hands it the rows through `creationRuleRows` (src/creation/ruleTexts.ts: R1 to R5
+ * reworded, T1.5), the legacy level page the catalog rows as they are; the status list, the pinned refusal, the « Connecter à… » reasons and Oscar all read through it.
  */
 export type RuleText = (ruleId: string) => { title: string; detail: string }
 

@@ -1,5 +1,5 @@
 // The guide's own words in TekPractice: one frozen table of impersonal French (infinitives and nominal forms, no digit).
-// Rule titles and explanations are never written here: they are quoted from the app's catalog through ruleTextFor.
+// Rule titles and explanations are never written here: they are quoted from the rows the host hands the brain (the catalog's, or Mode Création's wording of R1 to R5) through ruleTextFor.
 // Words follow the app's own (« lieu », « Signal OK », « Erreurs et avertissements », « Lecture »). Apostrophes are ’, except in the one
 // pinned sentence `ask.noInformation`, which keeps the straight apostrophes of the sentence as it was specified.
 

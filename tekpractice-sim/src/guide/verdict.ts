@@ -1,5 +1,5 @@
-// The guide's verdict, built only from the app's own data: its rule events, the catalog's rule texts (through ruleTextFor) and the
-// signal path's first reason. Nothing here is invented: a fix is the catalog's explanation verbatim (or, when a rule has none, the app's own title text).
+// The guide's verdict, built only from the app's own data: its rule events, the rule texts it is handed (through ruleTextFor: Mode Création's wording
+// of R1 to R5, the catalog row elsewhere) and the signal path's first reason. Nothing here is invented: a fix is that explanation verbatim (or, when a rule has none, the app's own title text).
 import { COPY } from '../creation/copy'
 import type { RuleText } from '../creation/shell/statusModel'
 import type { ReasonCode } from '../flow/signalPath'

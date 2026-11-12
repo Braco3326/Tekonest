@@ -182,12 +182,13 @@ Create: `src/design/packages.ts`, `src/design/packages.css`, `src/design/events.
 - **Depends:** T0.1. **Tier:** standard. **Hot:** copy.ts.
 
 ### T1.5b Use the accessor at the four read sites
-- **Files:** `src/creation/boot.ts` (line 281), `src/creation/shell/connectModel.ts` (line 62 default), `src/guide/mount.ts` (line 243: creation
-  route passes `creationRuleRows(rules)`; legacy passes the catalog rows), `tests/creation/ruleTexts.test.ts`, create
-  `tests/e2e/rule-texts.spec.ts`.
+- **Files:** `src/creation/boot.ts` (status list: `creationRuleText`), `src/creation/shell/connectModel.ts` (default reason), `src/guide/mount.ts` (the rows
+  handed to the brain: `ruleRowsFor(route, rows)`, creation = `creationRuleRows`, legacy = the catalog rows), `tests/creation/ruleTexts.test.ts`, create
+  `tests/e2e/rule-texts.spec.ts`. The accessor is `ruleText(ruleId, rows)` (the caller owns the rows).
 - **Tests first:** e2e for R1 (an XLR into a jack), R2 (mic into a line input), R3 (out to out): the status list, the connect dialog's
-  « Incompatibles » reason, Oscar's answer to the rule's title and the verdict bubble all show the same override text; on `?level=a1` the old text
-  remains (legacy untouched).
+  « Incompatibles » reason and Oscar's answer to the rule's title show the same override text. **The verdict bubble never receives R1 to R3** (refusals, not
+  rule events; R5 is a warning and the verdict reads errors only), so it is pinned with R4 (and R6 shows the catalog text); on `?level=a1` the old text
+  remains (legacy untouched). Amended after G4 (reviewed): the original wording required the verdict for R1 to R3, which the code cannot produce.
 - **Depends:** T1.5a. **Tier:** standard. **Hot:** boot.ts, mount.ts.
 
 ### T1.6 Playable template, honest pitches

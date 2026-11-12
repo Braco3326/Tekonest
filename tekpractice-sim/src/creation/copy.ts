@@ -1,5 +1,6 @@
 /**
- * Every Mode Création shell string except the R1–R8 rule texts, which are catalog data (`title_fr` / `teach_fr`); wording owned by tekuxwriter. Grows task by task.
+ * Every Mode Création shell string; wording owned by tekuxwriter. The rule texts R1–R8 are catalog data (`title_fr` / `teach_fr`, never edited here); the section `ruleOverride`
+ * holds Mode Création's own wording of R1 to R5 (the catalog text stays for the legacy level page). Grows task by task.
  * Mirror of the copy deck docs/copy/creation-mode.md: change both together.
  */
 export const COPY: { readonly [section: string]: Readonly<Record<string, string>> } = {
@@ -976,11 +977,11 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     R1: 'Dans le simulateur, un XLR mâle se branche sur un XLR femelle et une fiche TT sur un jack TT. Deux connecteurs qui ne vont pas ensemble sont refusés : choisissez une autre prise ou un autre câble.',
     /** R2 « Types de signal incompatibles » (the engine refuses SIGNAL_MISMATCH: the two ports must carry the same signal type). */
     R2: 'Dans le simulateur, les deux prises doivent porter le même type de signal : niveau micro, niveau ligne pro, niveau ligne grand public, numérique AES3… Un type différent est refusé : un micro va sur une entrée micro, une sortie ligne sur une entrée ligne.',
-    /** R3 « Sens de connexion incorrect » (the engine refuses out to out and in to in). */
-    R3: 'Dans le simulateur, un câble va d’une sortie vers une entrée. Deux sorties reliées entre elles, ou deux entrées, sont refusées.',
+    /** R3 « Sens de connexion incorrect » (the engine refuses out to out and in to in; a `bidir` port, 12 in the catalog, accepts either end). */
+    R3: 'Dans le simulateur, un câble va d’une sortie vers une entrée. Deux sorties reliées entre elles, ou deux entrées, sont refusées. Les ports bidirectionnels (réseau, patchbay…) acceptent les deux sens.',
     /** R4 « Alimentation fantôme (+48 V) » (a rule event of the evaluator, not a refusal). */
     R4: 'Dans le simulateur, un micro à condensateur (U 87) reste muet sans alimentation fantôme +48 V ; un micro dynamique (SM58, RE20) fonctionne avec ou sans.',
-    /** R5 « Voyant ON-AIR (tally) » (a rule event of the evaluator). */
-    R5: 'Dans le simulateur, le voyant ON-AIR doit être allumé dès qu’un micro est ouvert, et éteint sinon.',
+    /** R5 « Voyant ON-AIR (tally) » (a WARNING event of the evaluator, src/logic/gpio.ts: an open mic fader and no console tally output cabled to an ON-AIR light). */
+    R5: 'Dans le simulateur, quand un micro est ouvert, la sortie tally de la console doit être reliée à un voyant ON-AIR ; sinon un avertissement s’affiche.',
   },
 }

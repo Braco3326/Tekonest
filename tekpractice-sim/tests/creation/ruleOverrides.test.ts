@@ -30,9 +30,9 @@ const offends = (s: string): string[] => offendsShared(s, 'learner')
 const APPENDIX_A: Record<string, string> = {
   R1: 'Dans le simulateur, un XLR mâle se branche sur un XLR femelle et une fiche TT sur un jack TT. Deux connecteurs qui ne vont pas ensemble sont refusés : choisissez une autre prise ou un autre câble.',
   R2: 'Dans le simulateur, les deux prises doivent porter le même type de signal : niveau micro, niveau ligne pro, niveau ligne grand public, numérique AES3… Un type différent est refusé : un micro va sur une entrée micro, une sortie ligne sur une entrée ligne.',
-  R3: 'Dans le simulateur, un câble va d’une sortie vers une entrée. Deux sorties reliées entre elles, ou deux entrées, sont refusées.',
+  R3: 'Dans le simulateur, un câble va d’une sortie vers une entrée. Deux sorties reliées entre elles, ou deux entrées, sont refusées. Les ports bidirectionnels (réseau, patchbay…) acceptent les deux sens.',
   R4: 'Dans le simulateur, un micro à condensateur (U 87) reste muet sans alimentation fantôme +48 V ; un micro dynamique (SM58, RE20) fonctionne avec ou sans.',
-  R5: 'Dans le simulateur, le voyant ON-AIR doit être allumé dès qu’un micro est ouvert, et éteint sinon.',
+  R5: 'Dans le simulateur, quand un micro est ouvert, la sortie tally de la console doit être reliée à un voyant ON-AIR ; sinon un avertissement s’affiche.',
 }
 
 describe('creationRuleRows / ruleText: the override applies to R1 to R5 (triggers)', () => {
