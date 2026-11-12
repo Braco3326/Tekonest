@@ -321,3 +321,66 @@ Gates: the ten of a lathe are size, transform, parts, portPositions, budget, det
 - `npm run validate:assets`: my 13 devices ok (8 or 9 gates as the validator runs them); whole run 83 ok, 10 failed: the 10 are other agents' staged rows whose GLBs are not shipped yet.
 - `npx vitest run tests/tools tests/scene/modelIds.test.ts` with `BLENDER_EXE=D:\Blender\blender.exe`: before the test fix 3 files failed (promoteDevice 14, brandsRegister 2, modelIds 1); `promoteDevice.test.ts` is green after the fix (36 tests). The remaining reds are the ones in finding 1.
 - Not run: tsc, lint, the creation e2e, chunk budget, the in-engine look audit (the wave gate does them).
+
+## Wave 1B: rack-box small gear (DI boxes, stage boxes, preamps, interfaces, headphone amps, patchbay, master clock)
+
+Agent B of the Wave 1 build. Stage 1 only (`npm run promote -- <id>`): nothing in `content/catalog.json` or `catalog-proposals.json` was touched, `promote --commit` was not run. All 15 devices below are `staged`; a later serial step runs the stage-2 commits. Nothing pushed, no Meshy, no manufacturer photo, no logo (generic panels only, drawn from the spec port positions). Commits: fc8c7f5 (10 devices), 36fb468 (5 devices), this log.
+
+### Rows (`planRows({wave: 1, family: 'rack-box-v2'})`, categories di-box, stagebox, mic-preamp, audio-interface, headphone-amp, patchbay, master-clock, splitter): 17
+
+`allen-heath-ar2412, ams-neve-1073spx, focusrite-scarlett-2i2-4th-gen, midas-dl16, radial-j48, radial-jdi, radial-prodi, behringer-s16, focusrite-scarlett-18i20-3rd-gen, behringer-ha400, countryman-type-85, mutec-mc-3-plus, presonus-hp4, samson-s-patch-plus, behringer-ada8200, dbx-286s, ua-apollo-twin-x`. (The brief's `motu-828` and `splitter` rows are not Wave 1 / not in this family in the plan: none came back; the other 11 Wave 1 rack-box rows are agent C's.)
+
+### Outcomes
+
+Counts: 15 built and shipped (GLB, manifest row, all gates green), 2 blocked, 0 failed. By expected stage-2 outcome (what `promote --commit --dry-run` printed for each): **2 promoted candidates, 13 beta-modelled, 2 blocked**.
+
+| Device | Outcome | Triangles | Size error | Gates | Notes |
+|---|---|---|---|---|---|
+| samson-s-patch-plus | shipped, **promotable** (dry run: promoted, 4 documented ports, aliases to the 4 old ids) | 1632 | 0.01 mm | 11 of 11 | spec sheet documents 48 front + 48 rear 1/4 in jacks; 4 of 96 modelled |
+| mutec-mc-3-plus | shipped, **promotable** (dry run: promoted, 14 ports, 1 control) | 1408 | 0.01 mm | 11 of 11 | manual documents the rear set; see "ring test" below |
+| ams-neve-1073spx | shipped, beta-modelled | 1632 | 0.01 mm | 11 of 11 | size datasheet/ok but page gives no counts or panels for the connectors |
+| allen-heath-ar2412 | shipped, beta-modelled | 1632 | 0.01 mm | 11 of 11 | dealer lists types and counts, no panel assignment |
+| behringer-s16 | shipped, beta-modelled | 1632 | 0.01 mm | 11 of 11 | new row: 5 ports from the plan summary |
+| behringer-ada8200 | shipped, beta-modelled | 1632 | 0.01 mm | 11 of 11 | new row: 5 ports, set read from retailer descriptions via search, not opened |
+| dbx-286s | shipped, beta-modelled | 1632 | 0.01 mm | 11 of 11 | new row: 3 ports (types from the dbx page, no panel) |
+| focusrite-scarlett-18i20-3rd-gen | shipped, beta-modelled | 1632 | 0.01 mm | 11 of 11 | new row: 6 ports; spec page 403 |
+| ua-apollo-twin-x | shipped, beta-modelled | 712 | 0.00 mm | 11 of 11 | new row: 5 ports (no connector table retrieved); plain rounded box, not the real sloped top |
+| presonus-hp4 | shipped, beta-modelled | 712 | 0.00 mm | 11 of 11 | proposal ports, panel sides undocumented (page 429) |
+| midas-dl16 | shipped, beta-modelled (size estimate: depth conflict) | 1632 | 0.01 mm | 11 of 11 | dealer page lists the connector counts, only USB is placed |
+| radial-jdi | shipped, beta-modelled (axis order assumed) | 712 | 0.00 mm | 11 of 11 | spike params |
+| radial-prodi | shipped, beta-modelled (axis order assumed) | 712 | 0.00 mm | 11 of 11 | spike params |
+| countryman-type-85 | shipped, beta-modelled (axis order assumed) | 712 | 0.00 mm | 11 of 11 | spike params; battery / phantom, no mains |
+| focusrite-scarlett-2i2-4th-gen | shipped, beta-modelled (depth conflict 117 vs 99 mm) | 754 | 0.00 mm | 11 of 11 | console-wedge spike variant C |
+| radial-j48 | **blocked** | - | - | - | plan row `missing`: the Radial page prints 84 x 127 x 48 mm as L x W x D without saying which edge is the height (the same chassis as the JDI/JCR/JPC at 127 x 84.1 x 45.5 would be a guess); a datasheet drawing or the manual settles it |
+| behringer-ha400 | **blocked** | - | - | - | plan row `missing` (conflict): Behringer manuals map the 47 x 57 x 104 mm differently (H x W x D vs H x D x W); only the 47 mm height is common |
+
+Size error is the largest axis difference the `size` gate reports (0.00 to 0.01 mm). Why so few promoted: promoted needs the connector set stated with panel (front/rear). Pages opened today: Radial JDI and ProDI (no connector names), Countryman (input only), A&H dealer page (types and counts, no panels), AMS Neve (front and rear described, no counts), dBx (types), Midas via Markertek (counts, only USB placed), Focusrite, PreSonus, Behringer, B&H pages (HTTP 403, 429, 500, 403). The two documented sets come from the Wave 0c research (manual / spec sheet text read then). No port was added from memory: ports are the Bêta proposal set, the plan summary, or what a page lists; every position is `guess`; `portsDocumented` is false everywhere but the two.
+
+### Rack-box recipe notes (params that worked, for later waves)
+
+All on `rack-box` (v2 params) unless said; pictures are generic (`npm run asset:panel`), built as dry runs with `--project-photo <face>=assets-source/<id>/photos/_generic_<face>.png` for every face of `build.projection`, shipped with `--ship-run <work dir> --logos-removed` (the pipeline records `tool hybrid`, generic artwork).
+
+- **1U rack unit** (AMS Neve, ADA8200, 286s, 18i20, S-Patch, AR2412 3U, S16/DL16 2U): `bodyWidthMm 440, earThicknessMm 4 (5 for 2U/3U), earHoleMm 6.35, filletMm 2.5, filletSegments 12, plateFilletMm 0.8 (1 for 5 mm plates), rearInsetMm 8, seamMm 18 to 60 (shorter for shallow units, longer for 2U/3U)`, plate `plateRgb` dark, body `bodyRgb` darker; projection `["opposite","io"]`; budget 1500 to 3500, `minFilletMm 0.8` (1 for 2U/3U). Result 1632 triangles every time (the params fix the count; features on the pictures are free). Gotcha: a unit exactly 480 mm wide (1073SPX) needs `earHoleEdgeMm 10`: the default EIA hole centre (w - 465.1) / 2 = 7.45 puts the slot 0.5 mm outside the plate. Front connectors forbid handles (TS check), so none are modelled.
+- **Half-rack / third-rack desktop 1U** (MUTEC MC-3+ 196 x 156 x 42): no `bodyWidthMm` (plate and chassis are one width), `earThicknessMm 4, plateFilletMm 1.2, filletMm 2.5, filletSegments 12, rearInsetMm 6, seamMm 20, feetMm 2.5, feetDiaMm 10`, `plateRgb` aluminium `#b8bcc2` (research colour), 1408 triangles, budget floor set to 800 (below the rack class floor; the unit is half-rack).
+- **Third-rack box with plate width of the plan size** (HP4 139.7 x 139.7 x 44.45): the DI-box recipe below. Adding `rearInsetMm` and `seamMm` to a small box lowers the measured fillet (the HP4 and Apollo measured 2.7 mm with them against 3.5 and 5.0 without): leave both off on boxes under about 200 mm.
+- **DI box** (JDI, ProDI, Type 85, the Wave 0 spike recipe confirmed): `earThicknessMm 8, plateFilletMm 3.5, filletMm 4, filletSegments 10, feetMm 2, feetDiaMm 8`, one colour for plate and body; 712 triangles; budget 600 to 2000, `minFilletMm 3` (measured 3.50). Input and thru jacks on `opposite` (the thick plate), XLR on `io`, a `top` picture with generic switch art (PAD, LIFT) as the third projection face.
+- **Desktop interface in a rounded box** (Apollo Twin X 160 x 157 x 66): `earThicknessMm 12, plateFilletMm 5, filletMm 6, filletSegments 10, feetMm 3, feetDiaMm 12`, 712 triangles, `minFilletMm 4.5` (measured 5.00). The real unit's sloped top and big knob are only picture (it would be a wedge with a profile; the Wave 0 spike result applies if a founder note asks for it).
+- **Sloped desktop interface** (Scarlett 2i2): `console-wedge` with the spike profile `[[0,47.5],[70,47.5],[95,47.5],[117,26]]`, `filletMm 1.5, filletSegments 5`, budget 500 to 2000, 754 triangles, `minFilletMm 1`. The `opposite` picture must cover the full 180 x 47.5 mm face (the picture aspect is checked against the bounding face, not the 26 mm lip): draw the lip content in the lower 26 mm. Front-lip ports at y 13 passed `portSurface`.
+- **Stage box** (S16, DL16 482 x 225 x 89, AR2412 483 x 220 x 137): the 1U recipe with `earThicknessMm 5, plateFilletMm 1, seamMm 40 (60 for 3U), rearInsetMm 8 (10 for 3U)`; all XLR rows on `opposite` (a stage box is patched from the front), network, USB, optical and mains inlet on `io`.
+- **Patchbay** (S-Patch 482.6 x 68.5): 1U recipe with `seamMm 18, rearInsetMm 6`; two jack rows at y 30 / 14 (pitch 18, ring 14.4 mm needs at least 14.4 mm between ports: 16 mm rows pass) front and mirrored on the rear (first channel on the right seen from behind).
+- **Combo inputs** (1073SPX, 2i2): the XLR part and the jack part are two ports at one position (concentric rings); ring-overlap tests only look at catalogue devices, so a Bêta device may do this. A promoted device with a combo needs a decision (two separate ports at distinct places) before it gets documented.
+- Panel art: the `conn()` helper of my generator draws every connector under its port from the connector id (XLR, TRS, RJ45 / etherCON, BNC, RCA, TOSLINK, IEC C14, USB-B/C), so rings and printed connectors coincide by construction. The generator lives in the session scratch folder, not in the repo: the committed specs and panels are the output.
+
+### Findings for the stage-2 step and the wave gate
+
+1. **Ring-height test vs the MC-3+ (42 mm tall).** `tests/scene/portMarkerSize.test.ts` refuses a catalogue ring taller than 60 % of the smaller face side. The C14 ring is 26.4 mm; 60 % of 42 mm is 25.2 mm. When `mutec-mc-3-plus` is committed into the catalogue that test will fail. Either keep the MC-3+ beta-modelled (set `portsDocumented` false in its spec) or give a half-rack 1U face an exception in the test; I changed neither.
+2. **`modelIds.test.ts` "no proposal id is a shipped glb"** fails as soon as any beta-modelled device is committed (by design: a beta-modelled proposal keeps its id and gets a GLB). It currently fails on the shipped models of all three Wave 1 agents; the test should allow ids whose plan row is `betaModelled` or `staged`.
+3. **`brandsRegister` tests** (`every manifest device id has a label` and the committed block): the 5 new rows of mine without a proposal or catalogue entry yet (ada8200, 286s, s16, 18i20, apollo) have no label until stage 2 adds their proposal; run `npm run register` after the stage-2 step.
+4. **Generated power layout for MC-3+.** Its `power` control (a front button at x 180, y 21, a guess) gets a layout from `tools/controls/gen-from-specs.mjs` only after stage 2 puts the device in the catalogue; rebuild with the layout present to confirm the flat zone is clear (the front plate is flat there).
+5. The AR2412, DL16, S16 and 2U/3U units draw 8 to 36 XLR in the pictures but model only 2 of each group (the proposals' "N modelled of M" convention).
+
+### Verification
+
+- Per device: dry-run build, 11 gates green (size, transform, parts, portPositions, budget, detail, fillet, proportionDrift, portSurface, textures, validator), contact sheets (io / back / left / top ortho renders) looked at in two montages of five; shipped with `--ship-run ... --logos-removed`; `npm run validate:assets`: my 15 ok (the failures it listed were other agents' staged rows with no GLB yet).
+- `npx vitest run tests/tools tests/scene/modelIds.test.ts` (`BLENDER_EXE=D:\Blender\blender.exe`): 3 files and 17 tests failed, none about my rows' content: modelIds (finding 2), brandsRegister (finding 3), and `promoteDevice.test.ts`, which copies real plan rows (neumann-tlm-103, yamaha-tf5, mackie-profx12v3) that agents A and C had staged by then (their spec files exist, the test fixtures expect them absent).
+- Not run: tsc, lint, e2e, chunk budget, the in-engine look audit, 3/4 views (the contact sheet renders four orthographic views; I did not make a perspective render). Not verified: the real connector layouts and panel assignments of the 13 beta-modelled devices (guesses, said so in each spec's sources and `portsTodo`).
