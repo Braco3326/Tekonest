@@ -55,19 +55,6 @@
   ],
   "controls": [
     {
-      "controlId": "gain",
-      "kind": "knob",
-      "face": "opposite",
-      "xMm": 90,
-      "yMm": 50,
-      "axis": "z",
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 12
-      }
-    },
-    {
       "controlId": "phantom-48v",
       "kind": "button",
       "face": "opposite",

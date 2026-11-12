@@ -10,7 +10,7 @@
  *  - preamp          focusrite-isa-one (mic in with providesPhantom gated by a phantom-48v toggle, line out, power)
  *  - interface       yamaha-rio3224-d2, avid-hd-io (mic ins isMicInput + providesPhantom, line outs, a Dante / USB port, power)
  *  - console         yamaha-ql1 (mic ins, main L/R, power, mute-master / fader-master / balance-master when documented, routes in -> mains), axia-iq
- *  - speaker-active  genelec-8030c, qsc-k12-2, yamaha-dbr12 (line in, power-in, route in -> transducer, nominal acoustic with a source)
+ *  - speaker-active  genelec-8030c, qsc-k12-2, yamaha-dbr12 (line in, power-in, route in -> transducer; NO acoustic numbers: data rule)
  *  - outboard        grace-m905 (line in / out, power) and the thru routes of qsc-k12-2
  *  - accessory       km-210-9, yellowtec-mika (no port)
  *  - power           multiprise-secteur (mains outlets flagged isMainsSource)
@@ -18,7 +18,13 @@
  *
  * Rules every template keeps (catalogChecks enforces them): a mains inlet is the port `power-in` and the device carries the toggle `power`
  * (label « Alimentation », default on); port ids are at most 19 characters and unique; a route starts at an input and ends at an output
- * or `transducer`. A template never invents a measured value: a nominal coverage says « valeur nominale ».
+ * or `transducer`.
+ *
+ * DATA RULE (founder, 2026-11-12): a template adds STRUCTURE only (power toggle, routes, classification flags). It never writes a number or a capability
+ * that the model's own manufacturer sheet has not stated: no coverage angle (a promoted speaker carries no `acoustic`; the app says « valeur non vérifiée »),
+ * no gain range, no fader range, no pad value, and no phantom need or supply derived from a trait (those are port flags the SPEC carries, because the
+ * person who filled the spec read them on the sheet). A control that is a switch on the real device (phantom, pad, ground lift, master mute) is written
+ * only when the spec lists it. Unknown stays unknown.
  *
  * Pure: no file access. tools/promoteDevice.ts reads the plan and writes the files.
  */
@@ -197,12 +203,12 @@ export interface Template {
 
 const POWER: CatalogControl = { id: 'power', type: 'toggle', label: 'Alimentation', default: true }
 
-/** The master controls of a desk (the QL1 pattern), in this order; a promoted desk carries only those its spec documents (Wave 1b finding 8). */
-const DESK_MASTER_CONTROLS: readonly CatalogControl[] = [
-  { id: 'mute-master', type: 'toggle', label: 'Mute master', default: false },
-  { id: 'fader-master', type: 'enum', label: 'Fader master', options: ['-inf', '-30', '-20', '-10', '-6', '-3', '0', '+6', '+10'], defaultOption: '0' },
-  { id: 'balance-master', type: 'enum', label: 'Balance', options: ['G100', 'G50', 'C', 'D50', 'D100'], defaultOption: 'C' },
-]
+/**
+ * The only master control a template may write for a desk, and only when its spec lists it (Wave 1b finding 8, data rule): a master MUTE is a switch with
+ * no number. The main fader and the balance knob are NOT written: their option lists (dB steps, G100 .. D100) would be a range that no sheet of that
+ * model states (a desk without them passes its signal at unity, which the signal path already does).
+ */
+const DESK_MASTER_TOGGLES: readonly CatalogControl[] = [{ id: 'mute-master', type: 'toggle', label: 'Mute master', default: false }]
 
 const flagged = (p: CatalogPort, f: NonNullable<CatalogPort['flags']>[number]): boolean => (p.flags ?? []).includes(f)
 const withFlag = (p: CatalogPort, ...fs: NonNullable<CatalogPort['flags']>): CatalogPort => {
@@ -225,21 +231,6 @@ function dropEmptyFlags(p: CatalogPort): CatalogPort {
 /** Inputs / outputs that carry audio (not mains, clock, gpio, dmx, phantom). */
 const audioIns = (ps: readonly CatalogPort[]): CatalogPort[] => ps.filter((p) => p.dir !== 'out' && AUDIO_IN.includes(p.signal))
 const audioOuts = (ps: readonly CatalogPort[]): CatalogPort[] => ps.filter((p) => p.dir !== 'in' && AUDIO_OUT.includes(p.signal))
-
-const nominalAcoustic = (today: string): CatalogAcoustic => {
-  const source = { kind: 'nominal' as const, ref: 'valeur nominale (pas de donnée constructeur retenue dans le plan)', retrieved: today }
-  return { coverage_h_deg: { value: 90, source }, coverage_v_deg: { value: 60, source } }
-}
-
-/**
- * Whether a microphone-level output of a device with these traits requires phantom power from the chain: a phantom-powered device, or a condenser
- * that is not fed another way (an externally powered tube or lavalier is `active`, a battery one `battery`). A ribbon and a dynamic never do.
- */
-export function requiresPhantomByTraits(traits: readonly TraitT[], kind: Kind): boolean {
-  if (traits.includes('ribbon') || traits.includes('dynamic')) return false
-  if (kind === 'di') return traits.includes('phantom-powered') || (traits.includes('active') && !traits.includes('battery'))
-  return traits.includes('phantom-powered') || (traits.includes('condenser') && !traits.includes('active') && !traits.includes('battery'))
-}
 
 /**
  * The routes of a DESK (a console of any category): every audio input is routed to the main outputs. The main outputs are the documented ports whose
@@ -339,10 +330,12 @@ function patchbayRouting(ports: readonly CatalogPort[]): CatalogRoute[] {
  * The behaviour template for a device of `category`. `given` are the ports the DATASHEET documents (the asset spec's ports, each with connector,
  * signal, direction, flags): Wave 0b finding 1: a template never invents ports. It only adds behaviour on top of them:
  *  - a power toggle for every mains inlet (the first is the port `power-in`, the one the toggle gates);
- *  - the phantom requirement and the ribbon flag for microphones, by traits (see requiresPhantomByTraits);
- *  - the controls of its kind (DI ground lift and pad, preamp phantom switch and gain, desk master controls: only those the spec documents);
+ *  - the ribbon flag of a ribbon microphone (a trait) and the isMicInput classification of a mic input; a dynamic or ribbon microphone never carries
+ *    requiresPhantom. The phantom need (requiresPhantom) and the phantom supply (providesPhantom) are the SPEC's port flags and nothing else (data rule);
+ *  - the switches of its kind that the spec LISTS (DI ground lift and pad, preamp phantom switch, desk master mute): never a gain range, a fader range,
+ *    a balance range or a pad value;
  *  - the routes (speaker -> transducer, amplifier in -> out, processor / preamp / DI in -> out, desk in -> main outs);
- *  - a nominal acoustic for speakers.
+ *  - NO acoustic data: a speaker carries coverage numbers only when a sheet gives them, and no spec field carries them yet.
  * Traits decide where the category cannot: a hand-held or body-pack transmitter (traits handheld / bodypack / battery) has no mains inlet and no
  * power toggle, and documenting one is an error; a `processor` is routed like outboard gear even when filed under amplifier; a `passive` studio
  * monitor is a passive speaker.
@@ -351,8 +344,8 @@ export function applyTemplate(
   category: string,
   row: Pick<PlanRow, 'traits'>,
   given: readonly PlanPort[],
-  today: string = new Date().toISOString().slice(0, 10),
-  /** The ids of the controls the spec documents (a desk only gets those of its master controls that are in this list). Undefined: the main fader only. */
+  _today: string = new Date().toISOString().slice(0, 10),
+  /** The ids of the controls the spec documents: a switch is written only when it is in this list. Undefined: none. */
   documentedControls?: readonly string[],
 ): Template {
   const traits = row.traits ?? []
@@ -380,13 +373,12 @@ export function applyTemplate(
     const micIn = p.dir === 'in' && p.signal === 'mic-level'
     if ((kind === 'mic' || kind === 'di') && p.dir === 'out' && p.signal === 'mic-level') {
       let q = p
-      if (requiresPhantomByTraits(traits, kind)) q = withFlag(q, 'requiresPhantom')
-      else if (traits.includes('ribbon') || traits.includes('dynamic')) q = withoutFlag(q, 'requiresPhantom')
+      // data rule: the phantom need is the spec's flag; the traits only REMOVE a flag that cannot be true (a dynamic or a ribbon never needs phantom)
+      if (traits.includes('ribbon') || traits.includes('dynamic')) q = withoutFlag(q, 'requiresPhantom')
       if (traits.includes('ribbon') && !flagged(q, 'isRibbon')) q = withFlag(q, 'isRibbon')
       return q
     }
-    if (kind !== 'mic' && kind !== 'di' && p.dir === 'out' && p.signal === 'mic-level' && traits.includes('phantom-powered')) return withFlag(p, 'requiresPhantom')
-    if (micIn && (kind === 'interface' || kind === 'console' || kind === 'preamp')) return withFlag(p, 'isMicInput', 'providesPhantom')
+    if (micIn && (kind === 'interface' || kind === 'console' || kind === 'preamp')) return withFlag(p, 'isMicInput') // providesPhantom is the spec's flag (data rule)
     return p
   })
   ports = ports.map(dropEmptyFlags)
@@ -395,17 +387,16 @@ export function applyTemplate(
   if (ports.some((p) => p.portId === 'power-in')) controls.push({ ...POWER })
   else if (!battery && (MAINS_ALWAYS_NOTE.has(kind) || traits.includes('receiver') || traits.includes('rack')) && !traits.includes('passive') && ports.length)
     issues.push(`no mains inlet is documented for this ${kind}: it will have no power control (list the mains inlet if the datasheet has one)`)
+  const wanted = documentedControls ?? []
   const micPorts = ports.filter((p) => p.dir === 'in' && p.signal === 'mic-level' && flagged(p, 'providesPhantom')).map((p) => p.portId)
   if (kind === 'di') {
-    controls.push({ id: 'ground-lift', type: 'toggle', label: 'Ground lift', default: false }, { id: 'pad', type: 'toggle', label: 'Pad', default: false })
+    if (wanted.includes('ground-lift')) controls.push({ id: 'ground-lift', type: 'toggle', label: 'Ground lift', default: false })
+    if (wanted.includes('pad')) controls.push({ id: 'pad', type: 'toggle', label: 'Pad', default: false }) // a switch, no dB value: the value is unknown unless a sheet says
   } else if (kind === 'preamp') {
-    if (micPorts.length) controls.push({ id: 'phantom-48v', type: 'toggle', label: '+48V phantom', default: false, enables: { flag: 'providesPhantom', ports: micPorts } })
-    controls.push({ id: 'gain', type: 'enum', label: 'Gain (dB)', options: ['0', '20', '40', '60'], defaultOption: '20' })
+    if (wanted.includes('phantom-48v') && micPorts.length) controls.push({ id: 'phantom-48v', type: 'toggle', label: '+48V phantom', default: false, enables: { flag: 'providesPhantom', ports: micPorts } })
   } else if (kind === 'console') {
-    // Wave 1b finding 8: a desk only gets the master controls its spec DOCUMENTS (the datasheets list a main fader, not a master mute or a balance
-    // knob). With no spec list given (a bare template call) it gets the main fader only.
-    const wanted = documentedControls ?? ['fader-master']
-    for (const c of DESK_MASTER_CONTROLS) if (wanted.includes(c.id)) controls.push({ ...c })
+    // Wave 1b finding 8 and the data rule: a desk gets only the master switches its spec DOCUMENTS (no fader range, no balance range)
+    for (const c of DESK_MASTER_TOGGLES) if (wanted.includes(c.id)) controls.push({ ...c })
   }
 
   // routes, from the final ports (a route that has no end is not written)
@@ -444,9 +435,6 @@ export function applyTemplate(
 
   const tpl: Template = { kind, ports, controls, renamed, notes, issues }
   if (routing.length) tpl.routing = routing
-  if (kind === 'speaker-active' || kind === 'speaker-passive') {
-    tpl.acoustic = nominalAcoustic(today)
-    notes.push('nominal coverage 90 x 60 (valeur nominale): no manufacturer coverage recorded in the plan')
-  }
+  if (kind === 'speaker-active' || kind === 'speaker-passive') notes.push('no coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it')
   return tpl
 }

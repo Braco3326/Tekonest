@@ -55,7 +55,7 @@ const FIXTURES: PlanRow[] = [
 
 const MIC_OUT = { portId: 'out-xlr', face: 'io', xMm: 20, yMm: 10, confidence: 'guess', connector: 'xlr3-m', signal: 'mic-level', dir: 'out' } as const
 const POWER_CTRL = { controlId: 'power', kind: 'switch', face: 'io', axis: 'x', xMm: 30, yMm: 20, sizeMm: { w: 10, h: 10, d: 3 } } as const
-const DESK_CONTROLS = [POWER_CTRL, ...['mute-master', 'fader-master', 'balance-master'].map((id) => ({ controlId: id, kind: 'knob', face: 'top', axis: 'y', xMm: 100, yMm: 100, sizeMm: { w: 15, h: 15, d: 10 } }))]
+const DESK_CONTROLS = [POWER_CTRL, ...['mute-master'].map((id) => ({ controlId: id, kind: 'knob', face: 'top', axis: 'y', xMm: 100, yMm: 100, sizeMm: { w: 15, h: 15, d: 10 } }))]
 const port = (portId: string, dir: 'in' | 'out' | 'bidir', connector: string, signal: string, extra: Record<string, unknown> = {}) => ({ portId, face: 'io', xMm: 10, yMm: 10, confidence: 'guess', connector, signal, dir, ...extra })
 
 let dir: string
@@ -213,9 +213,9 @@ describe('stage 2 refuses until the model shipped', () => {
 })
 
 describe('stage 2, promoted outcome: documented ports only', () => {
-  it('a real promotable microphone (fx-tlm-103): the catalogue port is the documented one, phantom required by its traits, no power control; the spec matches', () => {
+  it('a real promotable microphone (fx-tlm-103): the catalogue port is the documented one with the phantom flag the SPEC carries, no power control; the spec matches', () => {
     stage1('fx-tlm-103')
-    fillSpec('fx-tlm-103', [MIC_OUT], [])
+    fillSpec('fx-tlm-103', [{ ...MIC_OUT, flags: ['requiresPhantom'] }], [])
     ship('fx-tlm-103')
     const r = stage2('fx-tlm-103')
     expect(r.outcome).toBe('promoted')
@@ -261,12 +261,12 @@ describe('stage 2, promoted outcome: documented ports only', () => {
     expect(() => savePlan([{ ...r, typicalUse: 'x' }], paths.plan)).toThrow()
     expect(() => savePlan([{ ...r, typicalUse: 'y'.repeat(200) }], paths.plan)).toThrow()
   })
-  it('a real promotable desk (fx-m32): routing is generated from the documented out-main outputs, the QL1 controls come with it (finding 8)', () => {
+  it('a real promotable desk (fx-m32): routing is generated from the documented out-main outputs, only the documented master mute comes with it, never a fader or balance range (finding 8, data rule)', () => {
     stage1('fx-m32')
     fillSpec(
       'fx-m32',
       [port('in-mic-1', 'in', 'xlr3-f', 'mic-level'), port('in-mic-2', 'in', 'xlr3-f', 'mic-level'), port('out-main-l', 'out', 'xlr3-m', 'line-level-pro'), port('out-main-r', 'out', 'xlr3-m', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')],
-      [POWER_CTRL, ...['mute-master', 'fader-master', 'balance-master'].map((id) => ({ controlId: id, kind: 'knob', face: 'top', axis: 'y', xMm: 100, yMm: 100, sizeMm: { w: 15, h: 15, d: 10 } }))],
+      [POWER_CTRL, ...['mute-master'].map((id) => ({ controlId: id, kind: 'knob', face: 'top', axis: 'y', xMm: 100, yMm: 100, sizeMm: { w: 15, h: 15, d: 10 } }))],
     )
     ship('fx-m32')
     expect(stage2('fx-m32').outcome).toBe('promoted')
@@ -275,18 +275,18 @@ describe('stage 2, promoted outcome: documented ports only', () => {
       { from: 'in-mic-1', to: ['out-main-l', 'out-main-r'] },
       { from: 'in-mic-2', to: ['out-main-l', 'out-main-r'] },
     ])
-    expect(d.controls!.map((c) => c.id)).toEqual(['power', 'mute-master', 'fader-master', 'balance-master'])
+    expect(d.controls!.map((c) => c.id)).toEqual(['power', 'mute-master'])
   })
 
-  it('an active monitor: routes in to the transducer, nominal acoustic with a source, power', () => {
+  it('an active monitor: routes in to the transducer, power, and NO acoustic data (data rule: unknown stays unknown)', () => {
     stage1('fx-monitor')
     fillSpec('fx-monitor', [port('in-analog', 'in', 'xlr3-f', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], [POWER_CTRL])
     ship('fx-monitor')
     stage2('fx-monitor')
     const d = Catalog.parse(JSON.parse(read(paths.catalog))).devices.find((x) => x.id === 'fx-monitor')!
     expect(d.routing).toEqual([{ from: 'in-analog', to: ['transducer'] }])
-    expect(d.acoustic!.coverage_h_deg.source.kind).toBe('nominal')
-    expect(d.acoustic!.coverage_h_deg.source.retrieved).toBe('2026-11-12')
+    expect(d.acoustic).toBeUndefined()
+    expect(d.realWorld.notes).toContain('valeur non vérifiée')
   })
 
   it('a speaker built on our curved-cabinet shape gets its model front (-z, with evidence); one on another shape or a non-speaker does not (Wave 1 stage 2)', () => {
@@ -305,7 +305,7 @@ describe('stage 2, promoted outcome: documented ports only', () => {
     expect(cab.modelFront).toMatchObject({ axis: '-z' })
     expect(cab.modelFront!.evidence.length).toBeGreaterThan(40)
     expect(cab.modelFront!.evidence).toContain('fx-monitor.glb')
-    expect(cab.acoustic).toBeDefined()
+    expect(cab.acoustic).toBeUndefined() // the model front is by construction, the coverage numbers are not invented
     expect(run('fx-condenser', 'revolve').modelFront).toBeUndefined()
   })
 
@@ -326,7 +326,7 @@ describe('stage 2, promoted outcome: documented ports only', () => {
     const proposal = proposals.devices.find((d) => d.id === 'fx-profx12')!
     const old = proposal.ports.find((p) => p.dir === 'in' && p.signal === 'mic-level')!
     stage1('fx-profx12')
-    fillSpec('fx-profx12', [port('in-mic-1', 'in', old.connector, 'mic-level'), port('out-main-l', 'out', 'xlr3-m', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], [POWER_CTRL, ...['mute-master', 'fader-master', 'balance-master'].map((id) => ({ controlId: id, kind: 'knob', face: 'top', axis: 'y', xMm: 100, yMm: 100, sizeMm: { w: 15, h: 15, d: 10 } }))])
+    fillSpec('fx-profx12', [port('in-mic-1', 'in', old.connector, 'mic-level'), port('out-main-l', 'out', 'xlr3-m', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], [POWER_CTRL, ...['mute-master'].map((id) => ({ controlId: id, kind: 'knob', face: 'top', axis: 'y', xMm: 100, yMm: 100, sizeMm: { w: 15, h: 15, d: 10 } }))])
     ship('fx-profx12')
     const r = stage2('fx-profx12')
     expect(r.outcome).toBe('promoted')

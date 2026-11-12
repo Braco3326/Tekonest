@@ -823,7 +823,8 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.reasonSilent` | le fader master est à −inf | validé | Toutes les enceintes alimentées sont à −inf |
 | `coverage.reasonBalance` | la balance de la console coupe ces enceintes | validé | Raison dite quand la balance (G100 / D100) coupe tous les côtés qui alimentent les enceintes branchées |
 | `coverage.reasonUnverified` | appareil non vérifié (Bêta) | validé | Enceinte Bêta : aucune donnée acoustique vérifiée |
-| `coverage.reasonNoAcoustic` | enceinte sans données acoustiques | validé | Enceinte du catalogue sans angles de couverture |
+| `coverage.reasonNoAcoustic` | enceinte sans donnée de couverture : valeur non vérifiée | à valider | Enceinte du catalogue sans angles de couverture sourcés (règle des données : aucun chiffre sans la fiche du modèle) ; texte précédent : « enceinte sans données acoustiques » |
+| `coverage.noDataNote` | Couverture non calculée pour {names} : valeur non vérifiée (aucune donnée constructeur retenue pour ce modèle). | à valider | Sous le bloc Couverture quand une enceinte alimentée n’a pas de couverture sourcée : elle n’entre pas dans le calcul, aucun nombre n’est affiché pour elle ; {names} = identifiants d’instance |
 | `coverage.reasonUnpowered` | enceinte hors tension | validé | Enceinte alimentée en signal mais sans secteur |
 | `coverage.reasonOther` | enceinte non utilisable | validé | Raison de repli (position ou couverture invalide) |
 | `coverage.reasonsJoin` |  ;  | validé | Séparateur de plusieurs raisons |

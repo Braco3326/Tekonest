@@ -17,10 +17,7 @@
       "openingMm": 3,
       "connector": "xlr3-m",
       "signal": "mic-level",
-      "dir": "out",
-      "flags": [
-        "requiresPhantom"
-      ]
+      "dir": "out"
     }
   ],
   "controls": [],

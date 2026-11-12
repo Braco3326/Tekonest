@@ -19,7 +19,7 @@
  *
  * Nothing is invented. The ports of a promoted device are the ones the datasheet documents (the spec's `ports`, each with connector, signal and
  * direction): the category template (tools/behaviourTemplates.ts) only adds behaviour on top (power toggle for every mains inlet, phantom, routes,
- * acoustic, controls). A spec without `portsDocumented: true` can never be promoted. A Bêta row's proposal ports go into the skeleton as a TO-DO NOTE
+ * controls; NO acoustic or gain numbers: data rule). A spec without `portsDocumented: true` can never be promoted. A Bêta row's proposal ports go into the skeleton as a TO-DO NOTE
  * (text), never as ports.
  *
  * The asset pipeline sees a staged device as the catalogue it would become (`stagedDevices`, used as the default catalogue of `asset:build`), so the
@@ -76,7 +76,7 @@ export interface PromoteOptions {
   /** With revert of stage 1: delete the spec even when it has hand edits. */
   discardSpec?: boolean
   paths?: Partial<Paths>
-  /** YYYY-MM-DD, for the notes and the nominal-coverage source (default today). */
+  /** YYYY-MM-DD, for the notes (default today). */
   today?: string
   /** Test hook: called with each target path just before its temporary file is renamed into place (throw to simulate a failure). */
   beforeRename?: (path: string) => void
@@ -371,7 +371,7 @@ export function deviceFromSpec(row: PlanRow, spec: AssetSpecT, proposal: Json | 
     ports: template.ports,
     ...(template.controls.length ? { controls: template.controls } : {}),
     ...(template.acoustic ? { acoustic: template.acoustic } : {}),
-    ...(template.acoustic && (spec.build?.shape === 'curved-cabinet' || spec.build?.shape === 'speaker-cabinet-v2') ? { modelFront: scriptedCabinetFront(row.id, spec.build.shape) } : {}),
+    ...((template.kind === 'speaker-active' || template.kind === 'speaker-passive') && (spec.build?.shape === 'curved-cabinet' || spec.build?.shape === 'speaker-cabinet-v2') ? { modelFront: scriptedCabinetFront(row.id, spec.build.shape) } : {}),
     ...(template.routing ? { routing: template.routing } : {}),
     ...(Object.keys(aliases).length ? { portAliases: aliases } : {}),
   })

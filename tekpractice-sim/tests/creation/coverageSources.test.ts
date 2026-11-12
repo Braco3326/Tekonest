@@ -12,7 +12,7 @@ import { templateToDesign } from '../../src/creation/templates'
 import { Template } from '../../src/creation/templateSchema'
 import { signalPath, type PathResult } from '../../src/flow/signalPath'
 import { coverageSources, coverageSourcesDetail, provenanceOf, splEstimateEligible, type UsedSpeaker } from '../../src/creation/coverageSources'
-import { noSourceMessage, sourceLine } from '../../src/creation/coverageModel'
+import { noDataNote, noSourceMessage, sourceLine } from '../../src/creation/coverageModel'
 import { makeRegistry, rawCatalog } from '../helpers'
 import type { ControlValue, PortRef } from '../../src/engine/types'
 import type { DesignState } from '../../src/trials/trial'
@@ -143,7 +143,21 @@ describe('coverageSources: the speakers that make sound', () => {
     expect(r.sources).toEqual([])
     expect(r.excluded.map((e) => e.reason)).toEqual(['no-acoustic', 'no-acoustic'])
     expect(() => computeField(r.sources, new Float32Array([0, 1.2, 0]))).not.toThrow()
-    expect(noSourceMessage(pathOf(d, reg), r.excluded)).toBe('Aucune enceinte audible : enceinte sans données acoustiques.')
+    expect(noSourceMessage(pathOf(d, reg), r.excluded)).toBe('Aucune enceinte audible : enceinte sans donnée de couverture : valeur non vérifiée.')
+    // the panel says so in its note too, naming each speaker left out
+    expect(noDataNote(r.excluded)).toBe('Couverture non calculée pour k12-d, k12-g : valeur non vérifiée (aucune donnée constructeur retenue pour ce modèle).')
+  })
+  it('MIXED rig (data rule): the speaker without coverage data is left out with the reason no-acoustic and never made up (no 90 x 60), the other still makes the field; the note names only the first', () => {
+    const reg = catalogWith((dev) => void delete dev['qsc-k12-2'].acoustic)
+    const d = rig({}, reg)
+    const path = pathOf(d, reg)
+    d.rig.instances.find((i) => i.instanceId === 'k12-d')!.deviceId = 'genelec-8030c' // a catalogue speaker that keeps its sourced coverage
+    const r = coverageSourcesDetail(d, reg, path)
+    expect(r.sources.map((s) => s.id)).toEqual(['k12-d'])
+    expect(r.excluded).toEqual([{ instanceId: 'k12-g', reason: 'no-acoustic' }])
+    expect(noDataNote(r.excluded)).toContain('pour k12-g :')
+    expect(noDataNote(r.excluded)).not.toContain('k12-d')
+    expect(() => computeField(r.sources, new Float32Array([0, 1.2, 0]))).not.toThrow()
   })
   it('a Bêta (unverified) device is never a source, whatever the path says: it is not a catalog device', () => {
     const d = rig()

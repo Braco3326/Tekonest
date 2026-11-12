@@ -246,8 +246,9 @@ export function mountCoveragePanel(doc: Document, container: HTMLElement, before
         active === unpin ? { kind: 'unpin' } : active instanceof HTMLElement && points.contains(active) && active.dataset.point ? { kind: 'point', id: active.dataset.point } : { kind: 'none' }
       status.textContent = view.message
       status.dataset.status = view.status
-      caveat.textContent = view.frontNote ?? ''
-      caveat.hidden = view.frontNote === null
+      const notes = [view.frontNote, view.noDataNote].filter((n): n is string => n !== null && n !== undefined)
+      caveat.textContent = notes.join(' ')
+      caveat.hidden = notes.length === 0
       const has = view.status === 'ready'
       ready.hidden = !has
       if (!has) return

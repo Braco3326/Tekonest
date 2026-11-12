@@ -31,8 +31,8 @@ const row = (over: Partial<PlanRow> = {}): PlanRow => ({
 })
 
 /** The template as a catalogue device, run through the zod Device schema and the catalogue's own checks. */
-function asDevice(category: string, r: Partial<PlanRow>, given: PlanPort[] = []) {
-  const t = applyTemplate(category, row({ category, ...r }), given, '2026-11-11')
+function asDevice(category: string, r: Partial<PlanRow>, given: PlanPort[] = [], documentedControls?: string[]) {
+  const t = applyTemplate(category, row({ category, ...r }), given, '2026-11-11', documentedControls)
   const device = {
     id: 'fixture',
     label: 'Fixture',
@@ -83,21 +83,26 @@ describe('microphone template (SM58 / U87), by traits', () => {
     expect(issues).toEqual([])
     expect(asDevice('microphone', { traits: ['dynamic'] }, [{ ...XLR_OUT, flags: ['requiresPhantom'] }]).t.ports[0]!.flags).toBeUndefined()
   })
-  it('a phantom-powered condenser requires phantom (the U87 pattern); a ribbon is flagged isRibbon and never requires phantom, even if the proposal said so', () => {
-    expect(asDevice('microphone', { traits: ['condenser', 'phantom-powered'] }, [XLR_OUT]).t.ports[0]!.flags).toEqual(['requiresPhantom'])
-    expect(asDevice('microphone', { traits: ['condenser'] }, [XLR_OUT]).t.ports[0]!.flags).toEqual(['requiresPhantom'])
+  it('DATA RULE: the phantom need is the spec port flag, never a trait: a condenser or phantom-powered trait writes no requiresPhantom, a flag the spec carries is kept', () => {
+    expect(asDevice('microphone', { traits: ['condenser', 'phantom-powered'] }, [XLR_OUT]).t.ports[0]!.flags).toBeUndefined()
+    expect(asDevice('microphone', { traits: ['condenser'] }, [XLR_OUT]).t.ports[0]!.flags).toBeUndefined()
+    expect(asDevice('microphone', { traits: ['condenser', 'phantom-powered'] }, [{ ...XLR_OUT, flags: ['requiresPhantom'] }]).t.ports[0]!.flags).toEqual(['requiresPhantom'])
+  })
+  it('a ribbon is flagged isRibbon and never requires phantom, even if the proposal said so', () => {
     const ribbon = asDevice('microphone', { traits: ['ribbon', 'passive'] }, [{ ...XLR_OUT, flags: ['requiresPhantom'] }])
     expect(ribbon.t.ports[0]!.flags).toEqual(['isRibbon'])
     expect(ribbon.issues).toEqual([])
   })
-  it('an externally powered condenser (tube with its supply, lavalier on a bias) is NOT phantom-powered; a battery condenser neither', () => {
+  it('an externally powered or battery condenser carries no phantom flag unless its spec says so', () => {
     expect(asDevice('microphone', { traits: ['condenser', 'active'] }, [XLR_OUT]).t.ports[0]!.flags).toBeUndefined()
     expect(asDevice('microphone', { traits: ['condenser', 'battery'] }, [XLR_OUT]).t.ports[0]!.flags).toBeUndefined()
   })
-  it('real rows: neumann-tlm-103 and akg-c414-xlii come out phantom-required, royer-r-121 as a ribbon', () => {
+  it('real rows: neumann-tlm-103 and akg-c414-xlii keep the phantom flag only from the spec port; royer-r-121 comes out as a ribbon', () => {
     for (const id of ['neumann-tlm-103', 'akg-c414-xlii']) {
       const r = planRow(id)
-      const { t, issues } = asDevice(r.category, { traits: r.traits }, [XLR_OUT])
+      const none = asDevice(r.category, { traits: r.traits }, [XLR_OUT])
+      expect(none.t.ports[0]!.flags, id).toBeUndefined() // no spec flag, no phantom need: unknown stays unknown
+      const { t, issues } = asDevice(r.category, { traits: r.traits }, [{ ...XLR_OUT, flags: ['requiresPhantom'] }])
       expect(t.ports[0]!.flags, id).toEqual(['requiresPhantom'])
       expect(t.controls, id).toEqual([])
       expect(issues, id).toEqual([])
@@ -186,8 +191,8 @@ describe('processors and desks by traits (findings 3 and 8)', () => {
         { from: 'in-mic-1', to: ['out-main-l', 'out-main-r'] },
         { from: 'in-mic-2', to: ['out-main-l', 'out-main-r'] },
       ])
-      // Wave 1b finding 8: a bare template gives the main fader only; mute / balance only when the spec documents them
-      expect(t.controls.map((c) => c.id), id).toEqual(['power', 'fader-master'])
+      // data rule: no fader or balance range is ever written by a template; the master mute only when the spec lists it
+      expect(t.controls.map((c) => c.id), id).toEqual(['power'])
       expect(issues, id).toEqual([])
     }
   })
@@ -221,7 +226,8 @@ describe('every documented mains port gets a power toggle', () => {
     expect(t.ports.map((p) => p.portId)).toEqual(['in-mic-1', 'in-mic-2', 'out-line-1', 'out-line-2', 'dante-primary', 'power-in'])
     expect(t.ports.find((p) => p.portId === 'power-in')).toMatchObject({ dir: 'in', connector: 'iec-c14', signal: 'mains-power' })
     expect(t.controls).toContainEqual({ id: 'power', type: 'toggle', label: 'Alimentation', default: true })
-    expect(t.ports.filter((p) => p.signal === 'mic-level').every((p) => p.flags?.includes('isMicInput') && p.flags.includes('providesPhantom'))).toBe(true)
+    expect(t.ports.filter((p) => p.signal === 'mic-level').every((p) => p.flags?.includes('isMicInput'))).toBe(true)
+    expect(t.ports.some((p) => p.flags?.includes('providesPhantom'))).toBe(false) // the phantom supply is the spec's flag (data rule)
     expect(issues).toEqual([])
   })
   it('a documented mains inlet of any connector is renamed power-in and gets the toggle (a powerCON device)', () => {
@@ -251,17 +257,16 @@ describe('every documented mains port gets a power toggle', () => {
 
 describe('active speaker template (Genelec 8030C / K12.2)', () => {
   const given: PlanPort[] = [{ id: 'in-analog', role: 'analog', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' }, MAINS]
-  it('routes every line input to the transducer, carries a nominal coverage WITH a source, keeps power-in and the power toggle', () => {
+  it('routes every line input to the transducer, keeps power-in and the power toggle, and carries NO acoustic data (data rule: no coverage default)', () => {
     const { t, parsed, issues } = asDevice('studio-monitor', { traits: ['active'] }, given)
     expect(t.routing).toEqual([{ from: 'in-analog', to: ['transducer'] }])
     expect(t.ports.map((p) => p.portId)).toEqual(['in-analog', 'power-in'])
     expect(t.controls).toEqual([{ id: 'power', type: 'toggle', label: 'Alimentation', default: true }])
-    const a = parsed.acoustic!
-    expect(a.coverage_h_deg.value).toBe(90)
-    expect(a.coverage_v_deg.value).toBe(60)
-    expect(a.coverage_h_deg.source).toMatchObject({ kind: 'nominal', retrieved: '2026-11-11' })
-    expect(a.coverage_h_deg.source.ref).toContain('valeur nominale')
-    expect(issues).toEqual([]) // the 90 x 60 nominal pair is the only nominal the catalogue accepts
+    expect(t.acoustic).toBeUndefined()
+    expect(parsed.acoustic).toBeUndefined()
+    expect(t.notes.join(' ')).toMatch(/valeur non vérifiée/)
+    // the catalogue's own check says so too, as a WARNING (not an error): a loudspeaker without sourced coverage is allowed, the app shows « valeur non vérifiée »
+    expect(issues.map((i) => [i.level, i.path])).toEqual([['warning', 'devices["fixture"].acoustic']])
   })
   it('never routes a mains or mic-level port to the transducer', () => {
     const { t } = asDevice('powered-speaker', { traits: ['active'] }, [
@@ -320,13 +325,13 @@ describe('an Ethernet control port takes no audio route (Wave 1 stage 2)', () =>
 })
 
 describe('the other kinds', () => {
-  it('passive speaker: speaker-level in routed to the transducer, nominal acoustic, no power', () => {
+  it('passive speaker: speaker-level in routed to the transducer, no acoustic data, no power', () => {
     const { t, issues } = asDevice('speaker', { traits: ['passive'] }, [{ id: 'in-speaker', role: 'speaker', dir: 'in', connector: 'speakon-nl4', signal: 'speaker-level' }])
     expect(t.ports).toEqual([{ portId: 'in-speaker', dir: 'in', connector: 'speakon-nl4', signal: 'speaker-level' }])
     expect(t.routing).toEqual([{ from: 'in-speaker', to: ['transducer'] }])
     expect(t.controls).toEqual([])
-    expect(t.acoustic).toBeDefined()
-    expect(issues).toEqual([])
+    expect(t.acoustic).toBeUndefined()
+    expect(issues.map((i) => i.level)).toEqual(['warning']) // « no sourced acoustic data », a warning only
     expect(kindOf('speaker', ['active'])).toBe('speaker-active')
   })
   it('amplifier: line in routed to speaker-level out, power; a processor trait makes it an outboard device', () => {
@@ -341,41 +346,50 @@ describe('the other kinds', () => {
     expect(issues).toEqual([])
     expect(kindOf('amplifier', ['processor'])).toBe('outboard')
   })
-  it('DI box: ground-lift and pad controls, passive routes, phantom only if active without a battery', () => {
+  it('DI box: ground-lift and pad only when the spec lists them (a switch, no dB value), passive routes, no phantom flag from a trait', () => {
     const given: PlanPort[] = [
       { id: 'in-instrument', role: 'instrument', dir: 'in', connector: 'trs-quarter', signal: 'instrument-hiz' },
       { id: 'out-xlr', role: 'xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' },
     ]
     const passive = asDevice('di-box', { traits: ['passive'] }, given)
-    expect(passive.t.controls.map((c) => c.id)).toEqual(['ground-lift', 'pad'])
+    expect(passive.t.controls.map((c) => c.id)).toEqual([]) // no spec list: no switch is invented
+    expect(asDevice('di-box', { traits: ['passive'] }, given, ['pad', 'ground-lift']).t.controls).toEqual([
+      { id: 'ground-lift', type: 'toggle', label: 'Ground lift', default: false },
+      { id: 'pad', type: 'toggle', label: 'Pad', default: false },
+    ])
     expect(passive.t.routing).toEqual([{ from: 'in-instrument', to: ['out-xlr'], passive: true }])
     expect(passive.t.ports.some((p) => p.flags?.includes('requiresPhantom'))).toBe(false)
     const active = asDevice('di-box', { traits: ['active', 'phantom-powered'] }, given)
-    expect(active.t.ports.find((p) => p.signal === 'mic-level')!.flags).toEqual(['requiresPhantom'])
+    expect(active.t.ports.find((p) => p.signal === 'mic-level')!.flags).toBeUndefined() // a trait is no sheet: the phantom need is the spec flag
+    expect(asDevice('di-box', { traits: ['active', 'phantom-powered'] }, [given[0]!, { ...given[1]!, flags: ['requiresPhantom'] }]).t.ports.find((p) => p.signal === 'mic-level')!.flags).toEqual(['requiresPhantom'])
     expect(active.t.routing!.some((r) => r.passive === true)).toBe(false)
     const battery = asDevice('di-box', { traits: ['active', 'battery'] }, given)
     expect(battery.t.ports.find((p) => p.signal === 'mic-level')!.flags).toBeUndefined() // phantom or a battery: not required
     expect(passive.issues).toEqual([])
     expect(active.issues).toEqual([])
   })
-  it('preamp: phantom toggle gates providesPhantom on the mic in (ISA One pattern), gain enum, power', () => {
-    const { t, issues } = asDevice('mic-preamp', {}, [{ id: 'in-mic', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' }, LINE_OUT, MAINS])
-    expect(t.controls.map((c) => c.id)).toEqual(['power', 'phantom-48v', 'gain'])
+  it('preamp (data rule): the phantom switch only when the spec lists it AND the mic input carries the spec flag providesPhantom; never a gain range', () => {
+    const mic: PlanPort = { id: 'in-mic', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' }
+    const bare = asDevice('mic-preamp', {}, [mic, LINE_OUT, MAINS])
+    expect(bare.t.controls.map((c) => c.id)).toEqual(['power']) // no gain enum (0 / 20 / 40 / 60 was a default no sheet states), no phantom switch
+    expect(bare.t.ports.find((p) => p.portId === 'in-mic')!.flags).toEqual(['isMicInput']) // a classification, not a phantom claim
+    const { t, issues } = asDevice('mic-preamp', {}, [{ ...mic, flags: ['providesPhantom'] }, LINE_OUT, MAINS], ['gain', 'phantom-48v'])
+    expect(t.controls.map((c) => c.id)).toEqual(['power', 'phantom-48v'])
     const ph = t.controls.find((c) => c.id === 'phantom-48v')!
     expect(ph).toMatchObject({ type: 'toggle', default: false, enables: { flag: 'providesPhantom', ports: ['in-mic'] } })
     expect(issues).toEqual([])
   })
-  it('console: mains, master outs, the main fader (mute and balance only when documented), every input routed to the mains', () => {
+  it('console (data rule): mains, master outs, no fader or balance range, the master mute only when the spec lists it, every input routed to the mains', () => {
     const { t, issues } = asDevice('console-digital', { traits: ['desk'] }, [
       { role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level', count: 2 },
       { id: 'out-main-l', role: 'main-l', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
       { id: 'out-main-r', role: 'main-r', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
       MAINS,
     ])
-    expect(t.controls.map((c) => c.id)).toEqual(['power', 'fader-master'])
-    // a spec that documents all three master controls gets all three (the QL1 pattern), in the catalogue order
+    expect(t.controls.map((c) => c.id)).toEqual(['power'])
+    // the spec lists a master mute: written (a switch, no number); its fader and balance are NOT written whatever the spec lists (their option lists are a range no sheet states)
     const full = applyTemplate('console-digital', row({ traits: ['desk'] }), [{ id: 'out-main-l', role: 'main-l', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' }, MAINS], '2026-11-11', ['balance-master', 'fader-master', 'mute-master'])
-    expect(full.controls.map((c) => c.id)).toEqual(['power', 'mute-master', 'fader-master', 'balance-master'])
+    expect(full.controls.map((c) => c.id)).toEqual(['power', 'mute-master'])
     const none = applyTemplate('console-digital', row({ traits: ['desk'] }), [MAINS], '2026-11-11', [])
     expect(none.controls.map((c) => c.id)).toEqual(['power'])
     expect(t.routing).toEqual([

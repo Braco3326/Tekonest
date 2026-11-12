@@ -4312,10 +4312,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T00:58:48.904Z",
+      "date": "2026-11-12T02:39:01.515Z",
       "specSource": "https://www.proacousticsusa.com/allen-heath-ar2412-audiorack.html",
       "logosRemoved": true,
       "gates": [
@@ -4363,7 +4360,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
@@ -5569,7 +5569,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "date": "2026-11-12T01:10:19.247Z",
+      "date": "2026-11-12T02:32:53.805Z",
       "specSource": "https://thomannmusic.com/mackie_profx12v3.htm",
       "logosRemoved": true,
       "gates": [
@@ -5636,10 +5636,7 @@
         "_generic_opposite.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T01:10:29.969Z",
+      "date": "2026-11-12T02:33:06.954Z",
       "specSource": "https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf",
       "logosRemoved": true,
       "gates": [
@@ -5687,7 +5684,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
@@ -5769,10 +5769,7 @@
         "_generic_opposite.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T01:12:17.251Z",
+      "date": "2026-11-12T02:39:14.045Z",
       "specSource": "https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24",
       "logosRemoved": true,
       "gates": [
@@ -5820,7 +5817,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
@@ -7786,17 +7786,11 @@
       "kind": "device",
       "tris": 1180,
       "ports": 12,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T02:27:08.887Z",
+      "date": "2026-11-12T06:38:48.947Z",
       "specSource": "https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf",
       "logosRemoved": true,
       "gates": [
@@ -7844,7 +7838,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -7852,18 +7849,11 @@
       "kind": "device",
       "tris": 1446,
       "ports": 25,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T02:27:28.425Z",
+      "date": "2026-11-12T06:38:54.515Z",
       "specSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
       "logosRemoved": true,
       "gates": [
@@ -7911,7 +7901,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -8571,6 +8564,74 @@
     },
     {
       "status": "ok",
+      "id": "zoom-h6-essential",
+      "kind": "device",
+      "tris": 1740,
+      "ports": 7,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png",
+        "_generic_left.png",
+        "_generic_right.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T04:58:14.992Z",
+      "specSource": "https://www.thomann.co.uk/zoom_h6essential.htm",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
       "id": "sennheiser-e-609-silver",
       "kind": "device",
       "tris": 1652,
@@ -8721,74 +8782,6 @@
       "trademark": "branded-internal",
       "date": "2026-11-12T04:58:38.637Z",
       "specSource": "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ]
-    },
-    {
-      "status": "ok",
-      "id": "zoom-h6-essential",
-      "kind": "device",
-      "tris": 1740,
-      "ports": 7,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png",
-        "_generic_left.png",
-        "_generic_right.png"
-      ],
-      "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T04:58:14.992Z",
-      "specSource": "https://www.thomann.co.uk/zoom_h6essential.htm",
       "logosRemoved": true,
       "gates": [
         {
@@ -8990,6 +8983,72 @@
       "trademark": "branded-internal",
       "date": "2026-11-12T04:58:55.943Z",
       "specSource": "https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "warm-audio-wa73-eq",
+      "kind": "device",
+      "tris": 1776,
+      "ports": 5,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T04:59:01.073Z",
+      "specSource": "https://www.zzounds.com/item--WAUWA73EQ",
       "logosRemoved": true,
       "gates": [
         {
@@ -9898,204 +9957,6 @@
     },
     {
       "status": "ok",
-      "id": "audient-id14-mkii",
-      "kind": "device",
-      "tris": 712,
-      "ports": 11,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
-      "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:12:29.451Z",
-      "specSource": "https://www.thomann.de/be/audient_id14_mkii.htm",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ]
-    },
-    {
-      "status": "ok",
-      "id": "tc-electronic-m3000",
-      "kind": "device",
-      "tris": 1776,
-      "ports": 11,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
-      "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:12:39.483Z",
-      "specSource": "https://www.zzounds.com/item--TCE9505000",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ]
-    },
-    {
-      "status": "ok",
-      "id": "warm-audio-wa73-eq",
-      "kind": "device",
-      "tris": 1776,
-      "ports": 5,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
-      "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T04:59:01.073Z",
-      "specSource": "https://www.zzounds.com/item--WAUWA73EQ",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ]
-    },
-    {
-      "status": "ok",
       "id": "allen-heath-dx168",
       "kind": "device",
       "tris": 712,
@@ -10298,6 +10159,69 @@
       "kind": "device",
       "tris": 1920,
       "ports": 4,
+      "tool": "scripted",
+      "toolVersion": "blender-builder-1",
+      "photos": [],
+      "taskId": null,
+      "date": "2026-11-12T06:39:06.569Z",
+      "specSource": "https://www.adorama.com/uala610m2d.html",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
+    },
+    {
+      "status": "ok",
+      "id": "audient-id14-mkii",
+      "kind": "device",
+      "tris": 712,
+      "ports": 11,
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
       "photos": [
@@ -10308,8 +10232,74 @@
       "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
       "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
       "trademark": "branded-internal",
-      "date": "2026-11-12T05:10:51.526Z",
-      "specSource": "https://www.adorama.com/uala610m2d.html",
+      "date": "2026-11-12T05:12:29.451Z",
+      "specSource": "https://www.thomann.de/be/audient_id14_mkii.htm",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "tc-electronic-m3000",
+      "kind": "device",
+      "tris": 1776,
+      "ports": 11,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T05:12:39.483Z",
+      "specSource": "https://www.zzounds.com/item--TCE9505000",
       "logosRemoved": true,
       "gates": [
         {
@@ -11033,270 +11023,6 @@
       "taskId": null,
       "date": "2026-11-12T05:26:53.928Z",
       "specSource": "https://reverb.com/item/94390426-allen-heath-zed-14-14-channel-analog-live-mixer",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ],
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal"
-    },
-    {
-      "status": "ok",
-      "id": "yamaha-px10",
-      "kind": "device",
-      "tris": 1920,
-      "ports": 11,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
-      "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:24:10.774Z",
-      "specSource": "https://ca.yamaha.com/en/products/proaudio/amplifiers/px10/specs.html",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ]
-    },
-    {
-      "status": "ok",
-      "id": "sonifex-s0-v2",
-      "kind": "device",
-      "tris": 1370,
-      "ports": 14,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png"
-      ],
-      "taskId": null,
-      "date": "2026-11-12T05:26:17.142Z",
-      "specSource": "https://www.manualslib.com/manual/1646175/Sonifex-S0-V2.html",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ],
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal"
-    },
-    {
-      "status": "ok",
-      "id": "behringer-flow-8",
-      "kind": "device",
-      "tris": 1408,
-      "ports": 8,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png"
-      ],
-      "taskId": null,
-      "date": "2026-11-12T05:26:28.729Z",
-      "specSource": "https://www.andertons.co.uk/live-mixers/behringer-flow-8-8-input-digital-mixer-with-bluetooth-audio-app-contro",
-      "logosRemoved": true,
-      "gates": [
-        {
-          "gate": "size",
-          "ok": true
-        },
-        {
-          "gate": "transform",
-          "ok": true
-        },
-        {
-          "gate": "parts",
-          "ok": true
-        },
-        {
-          "gate": "portPositions",
-          "ok": true
-        },
-        {
-          "gate": "budget",
-          "ok": true
-        },
-        {
-          "gate": "detail",
-          "ok": true
-        },
-        {
-          "gate": "fillet",
-          "ok": true
-        },
-        {
-          "gate": "proportionDrift",
-          "ok": true
-        },
-        {
-          "gate": "portSurface",
-          "ok": true
-        },
-        {
-          "gate": "textures",
-          "ok": true
-        },
-        {
-          "gate": "validator",
-          "ok": true
-        }
-      ],
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal"
-    },
-    {
-      "status": "ok",
-      "id": "presonus-faderport-8",
-      "kind": "device",
-      "tris": 1428,
-      "ports": 1,
-      "tool": "hybrid",
-      "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png"
-      ],
-      "taskId": null,
-      "date": "2026-11-12T05:26:40.732Z",
-      "specSource": "https://www.thomann.de/be/presonus_faderport_8.htm",
       "logosRemoved": true,
       "gates": [
         {
@@ -12388,6 +12114,270 @@
           "ok": true
         }
       ]
+    },
+    {
+      "status": "ok",
+      "id": "yamaha-px10",
+      "kind": "device",
+      "tris": 1920,
+      "ports": 11,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T05:24:10.774Z",
+      "specSource": "https://ca.yamaha.com/en/products/proaudio/amplifiers/px10/specs.html",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "sonifex-s0-v2",
+      "kind": "device",
+      "tris": 1370,
+      "ports": 14,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "date": "2026-11-12T05:26:17.142Z",
+      "specSource": "https://www.manualslib.com/manual/1646175/Sonifex-S0-V2.html",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
+    },
+    {
+      "status": "ok",
+      "id": "behringer-flow-8",
+      "kind": "device",
+      "tris": 1408,
+      "ports": 8,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "date": "2026-11-12T05:26:28.729Z",
+      "specSource": "https://www.andertons.co.uk/live-mixers/behringer-flow-8-8-input-digital-mixer-with-bluetooth-audio-app-contro",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
+    },
+    {
+      "status": "ok",
+      "id": "presonus-faderport-8",
+      "kind": "device",
+      "tris": 1428,
+      "ports": 1,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "date": "2026-11-12T05:26:40.732Z",
+      "specSource": "https://www.thomann.de/be/presonus_faderport_8.htm",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
@@ -13626,17 +13616,11 @@
       "kind": "device",
       "tris": 1776,
       "ports": 10,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:02:38.828Z",
+      "date": "2026-11-12T06:39:12.456Z",
       "specSource": "https://aphex.com/products/channel",
       "logosRemoved": true,
       "gates": [
@@ -13684,7 +13668,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -13692,17 +13679,11 @@
       "kind": "device",
       "tris": 1776,
       "ports": 11,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:06:40.193Z",
+      "date": "2026-11-12T06:39:00.513Z",
       "specSource": "https://www.ams-neve.com/?p=1408",
       "logosRemoved": true,
       "gates": [
@@ -13750,7 +13731,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",

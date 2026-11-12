@@ -308,46 +308,6 @@
         "h": 14.4,
         "d": 8
       }
-    },
-    {
-      "controlId": "balance-master",
-      "kind": "knob",
-      "face": "top",
-      "xMm": 860,
-      "yMm": 100,
-      "axis": "z",
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 12
-      }
-    },
-    {
-      "controlId": "fader-master",
-      "kind": "fader",
-      "face": "top",
-      "xMm": 860,
-      "yMm": 300,
-      "axis": "y",
-      "travelMm": 150,
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 11
-      }
-    },
-    {
-      "controlId": "mute-master",
-      "kind": "button",
-      "face": "top",
-      "xMm": 860,
-      "yMm": 520,
-      "axis": "z",
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 4
-      }
     }
   ],
   "build": {

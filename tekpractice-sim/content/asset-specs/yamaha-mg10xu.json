@@ -145,48 +145,7 @@
       "dir": "bidir"
     }
   ],
-  "controls": [
-    {
-      "controlId": "balance-master",
-      "kind": "knob",
-      "face": "top",
-      "xMm": 222,
-      "yMm": 60,
-      "axis": "z",
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 12
-      }
-    },
-    {
-      "controlId": "fader-master",
-      "kind": "fader",
-      "face": "top",
-      "xMm": 222,
-      "yMm": 150,
-      "axis": "y",
-      "travelMm": 60,
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 11
-      }
-    },
-    {
-      "controlId": "mute-master",
-      "kind": "button",
-      "face": "top",
-      "xMm": 222,
-      "yMm": 235,
-      "axis": "z",
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 4
-      }
-    }
-  ],
+  "controls": [],
   "build": {
     "shape": "console-wedge",
     "profile": [
