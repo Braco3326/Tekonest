@@ -16,77 +16,80 @@ import type { Rect } from '../../src/guide/vendor/core/types'
 const VENDOR = join('src', 'guide', 'vendor')
 const read = (p: string): string => readFileSync(p, 'utf8')
 
-// ── the original placeBeside, kept verbatim as the oracle for « no list = the same answer » ──────────────────────────────────
+// ── the original placeBeside, pasted from commit 56b7866 (the vendored file before any patch) as the oracle for « no list = the same answer » ─────────────
+// Only the indentation was changed (2 spaces) and the export dropped; the helpers it uses are the ones of that file, pasted too.
 
 type Side = 'right' | 'left' | 'below' | 'above'
+type Point = { x: number; y: number }
+const GAPS: readonly number[] = [8, 4, 0]
+const SIDES: readonly Side[] = ['right', 'left', 'below', 'above']
+function clamp(v: number, lo: number, hi: number): number {
+  return v < lo ? lo : v > hi ? hi : v
+}
+function overlapArea(a: Rect, b: Rect): number {
+  const w = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x)
+  const h = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y)
+  return w > 0 && h > 0 ? w * h : 0
+}
+function rectsIntersectOld(a: Rect, b: Rect): boolean {
+  return overlapArea(a, b) > 0
+}
+function insideViewport(r: Rect, vp: { w: number; h: number }): boolean {
+  return r.x >= 0 && r.y >= 0 && r.x + r.w <= vp.w && r.y + r.h <= vp.h
+}
 interface Place {
   x: number
   y: number
   side: Side
   crowded: boolean
 }
-const SIDES: readonly Side[] = ['right', 'left', 'below', 'above']
-const GAPS: readonly number[] = [8, 4, 0]
-const clamp = (v: number, lo: number, hi: number): number => (v < lo ? lo : v > hi ? hi : v)
-const overlapArea = (a: Rect, b: Rect): number => {
-  const w = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x)
-  const h = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y)
-  return w > 0 && h > 0 ? w * h : 0
-}
-const inside = (r: Rect, vp: { w: number; h: number }): boolean => r.x >= 0 && r.y >= 0 && r.x + r.w <= vp.w && r.y + r.h <= vp.h
-function candidates(t: Rect, vp: { w: number; h: number }, s: number): { q: { x: number; y: number }; side: Side; gap: number; primaryOk: boolean }[] {
-  const maxX = Math.max(0, vp.w - s)
-  const maxY = Math.max(0, vp.h - s)
-  const cy = t.y + t.h / 2 - s / 2
-  const cx = t.x + t.w / 2 - s / 2
-  const raw = (side: Side, gap: number): { x: number; y: number } => {
+function originalPlaceBeside(t: Rect, vp: {
+  w: number;
+  h: number;
+}, s: number): Place {
+  const maxX = Math.max(0, vp.w - s);
+  const maxY = Math.max(0, vp.h - s);
+  const cy = t.y + t.h / 2 - s / 2;
+  const cx = t.x + t.w / 2 - s / 2;
+  const raw = (side: Side, gap: number): Point => {
     switch (side) {
-      case 'right':
-        return { x: t.x + t.w + gap, y: cy }
-      case 'left':
-        return { x: t.x - gap - s, y: cy }
-      case 'below':
-        return { x: cx, y: t.y + t.h + gap }
+      case "right":
+        return { x: t.x + t.w + gap, y: cy };
+      case "left":
+        return { x: t.x - gap - s, y: cy };
+      case "below":
+        return { x: cx, y: t.y + t.h + gap };
       default:
-        return { x: cx, y: t.y - gap - s }
+        return { x: cx, y: t.y - gap - s };
     }
-  }
-  const out: { q: { x: number; y: number }; side: Side; gap: number; primaryOk: boolean }[] = []
-  for (const gap of GAPS)
-    for (const side of SIDES) {
-      const p = raw(side, gap)
-      const horizontal = side === 'right' || side === 'left'
-      const primaryOk = horizontal ? p.x >= 0 && p.x <= maxX : p.y >= 0 && p.y <= maxY
-      out.push({ q: { x: clamp(p.x, 0, maxX), y: clamp(p.y, 0, maxY) }, side, gap, primaryOk })
-    }
-  return out
-}
-function originalPlaceBeside(t: Rect, vp: { w: number; h: number }, s: number): Place {
-  const maxX = Math.max(0, vp.w - s)
-  const maxY = Math.max(0, vp.h - s)
-  const box = (p: { x: number; y: number }): Rect => ({ x: p.x, y: p.y, w: s, h: s })
+  };
+  const box = (p: Point): Rect => ({ x: p.x, y: p.y, w: s, h: s });
   if (vp.w >= s && vp.h >= s) {
-    for (const c of candidates(t, vp, s)) {
-      if (!c.primaryOk) continue
-      if (!overlapArea(box(c.q), t) && inside(box(c.q), vp)) return { ...c.q, side: c.side, crowded: false }
+    for (const gap of GAPS) {
+      for (const side of SIDES) {
+        const p = raw(side, gap);
+        const horizontal = side === "right" || side === "left";
+        const primaryOk = horizontal ? p.x >= 0 && p.x <= maxX : p.y >= 0 && p.y <= maxY;
+        if (!primaryOk)
+          continue;
+        const q = { x: clamp(p.x, 0, maxX), y: clamp(p.y, 0, maxY) };
+        if (!rectsIntersectOld(box(q), t) && insideViewport(box(q), vp))
+          return { ...q, side, crowded: false };
+      }
     }
   }
-  let best: Place | null = null
-  let bestArea = Infinity
-  const cy = t.y + t.h / 2 - s / 2
-  const cx = t.x + t.w / 2 - s / 2
-  const rawGap8 = (side: Side): { x: number; y: number } =>
-    side === 'right' ? { x: t.x + t.w + 8, y: cy } : side === 'left' ? { x: t.x - 8 - s, y: cy } : side === 'below' ? { x: cx, y: t.y + t.h + 8 } : { x: cx, y: t.y - 8 - s }
+  let best: Place | null = null;
+  let bestArea = Infinity;
   for (const side of SIDES) {
-    const p = rawGap8(side)
-    const q = { x: clamp(p.x, 0, maxX), y: clamp(p.y, 0, maxY) }
-    const area = overlapArea(box(q), t)
+    const p = raw(side, GAP);
+    const q = { x: clamp(p.x, 0, maxX), y: clamp(p.y, 0, maxY) };
+    const area = overlapArea(box(q), t);
     if (area < bestArea) {
-      bestArea = area
-      best = { ...q, side, crowded: true }
+      bestArea = area;
+      best = { ...q, side, crowded: true };
     }
   }
-  return best as Place
+  return best as Place;
 }
 
 // ── placeBeside ───────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -130,7 +133,7 @@ describe('placeBeside: the list of rects to stay clear of', () => {
     expect(placeBeside(T, VP, S, junk)).toEqual(base)
   })
 
-  it('CHARACTERIZATION (passes on the original code): with no list, an empty list, or no rect near, the answer is the original code answer over a sweep of targets and viewports', () => {
+  it('CHARACTERIZATION (passes on the original code, which is pasted above from 56b7866): with no list, an empty list, or no rect near, the answer is the original code answer over a sweep of targets and viewports', () => {
     let n = 0
     let seed = 12345
     const rnd = (): number => {
@@ -243,13 +246,25 @@ describe('clearOf: the nearest place clear of the host rects', () => {
     expect(all).toEqual({ x: 100, y: 100, crowded: true }) // every place is equal: where it started
   })
 
-  it('is deterministic, and many rects stay cheap (400 rects, a few milliseconds)', () => {
-    const rects: Rect[] = Array.from({ length: 400 }, (_, i) => ({ x: (i % 20) * 60, y: Math.floor(i / 20) * 36, w: 55, h: 32 }))
-    const t0 = performance.now()
+  it('is deterministic, and many rects stay bounded: 400 rects cost a counted number of rect reads, not a wall-clock time', () => {
+    let reads = 0
+    const rects: Rect[] = Array.from({ length: 400 }, (_, i) => {
+      const r = { y: Math.floor(i / 20) * 36, w: 55, h: 32 } as Rect
+      Object.defineProperty(r, 'x', {
+        enumerable: true,
+        get: () => {
+          reads++
+          return (i % 20) * 60
+        },
+      })
+      return r
+    })
     const a = clearOf({ x: 300, y: 300 }, SIZE, VP, rects)
-    const dt = performance.now() - t0
+    const once = reads
     expect(clearOf({ x: 300, y: 300 }, SIZE, VP, rects)).toEqual(a)
-    expect(dt).toBeLessThan(250)
+    expect(reads - once).toBe(once) // the same work twice
+    // the search is bounded: 4 rounds of at most 48 places, one grid of 24 px: a few million reads at the very most for 400 rects
+    expect(once).toBeLessThan(4_000_000)
   })
 })
 
@@ -301,6 +316,29 @@ function written(): { id: string; files: string[]; symbols: string[]; marker: st
   }
   return out
 }
+
+describe('the third patch: the page watcher sees the attributes the shell changes', () => {
+  it('ui/watch.ts observes data-props, data-tree, data-open and inert as well as its original five, so a panel fold or a drawer closing moves the icon with no other event', () => {
+    const text = read(join(VENDOR, 'ui', 'watch.ts'))
+    const filter = /attributeFilter:\s*\[([^\]]*)\]/.exec(text)
+    expect(filter, 'the observer has an attributeFilter').not.toBeNull()
+    const names = [...filter![1].matchAll(/"([^"]+)"/g)].map((m) => m[1])
+    for (const n of ['class', 'style', 'hidden', 'open', 'data-oscar-anchor', 'data-props', 'data-tree', 'data-open', 'inert']) expect(names, n).toContain(n)
+  })
+})
+
+describe('VENDOR.json keeps the upstream hash of every patched file', () => {
+  it('a file named by a patch has an upstreamSha256 different from its own sha256; a file no patch names has none', () => {
+    const m = JSON.parse(read(join(VENDOR, 'VENDOR.json'))) as { files: { path: string; sha256: string; upstreamSha256?: string }[]; patches: Patch[] }
+    const patched = new Set(m.patches.flatMap((p) => p.files))
+    for (const f of m.files) {
+      if (patched.has(f.path)) {
+        expect(f.upstreamSha256, `${f.path} has the upstream hash`).toMatch(/^[0-9a-f]{64}$/)
+        expect(f.upstreamSha256, `${f.path} differs from upstream`).not.toBe(f.sha256)
+      } else expect(f.upstreamSha256, `${f.path} is not patched`).toBeUndefined()
+    }
+  })
+})
 
 describe('VENDOR-PATCHES.md and VENDOR.json agree', () => {
   it('there is at least one patch, and the write-up and the manifest name the same ones', () => {

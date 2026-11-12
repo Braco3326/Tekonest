@@ -132,7 +132,7 @@ Create: `src/design/packages.ts`, `src/design/packages.css`, `src/design/events.
 
 ### T1.1 Resting insets for the open panels and the drawer
 - **Files:** `src/guide/mount.ts` (`hostInsets`), `tests/guide/mount.test.ts`, create `tests/e2e/guide-overlap.spec.ts`.
-- **Tests first:** unit: props open → right 260; collapsed → 32; drawer open → bottom includes it; none → bars only; throw → zero. e2e at
+- **Tests first:** unit: props open → right 260; collapsed → 32; none → bars only; throw → zero (the open drawer is **not** a `hostInsets` entry: it is an obstacle, `hostObstacles`, T1.2b; its height exceeds the widget's inset cap). e2e at
   1366 x 768: rect intersection of the resting icon with every visible shell control = none (red today: « Connecter à… »).
 - **Acceptance:** 1366 x 768 green. The 1024 and 820 cases are **not** in this task (they need T1.2; no `fixme`).
 - **Depends:** T0.1. **Tier:** standard. **Hot:** mount.ts.

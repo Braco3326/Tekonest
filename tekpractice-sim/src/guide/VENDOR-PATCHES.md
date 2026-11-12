@@ -8,6 +8,9 @@ a file or a symbol it names is gone, or when its marker comment is gone, which i
 After a patch the file hashes in `VENDOR.json` are the hashes of the patched files, not upstream's. A re-vendor must start from upstream, re-apply
 every patch below, then recompute the hashes.
 
+`VENDOR.json` also keeps, for every patched file, `upstreamSha256`: the hash of the file as it was vendored, before any patch, so a drift from upstream can be seen in
+both directions (`sha256` is the patched file, `upstreamSha256` is upstream).
+
 Each patch is one `### Patch <id>` section with `File:`, `Symbol:` and `Marker:` lines (the pin test reads them).
 
 ### Patch placeBeside-avoid
@@ -33,6 +36,8 @@ pickup and the drop of `planMotion`.
 - No list, an empty list, or rects that are not usable (not finite, no area): the answer is exactly the original code's answer
   (`tests/guide/vendorPatches.test.ts` compares with a verbatim copy of the original over a sweep).
 
+**Depends on.** patch `widget-obstacles`: the slide and the fallback call `clearOf`, which lives there; re-apply that patch with this one.
+
 **Used by.** the widget (`ui/widget.ts`), which passes the host's obstacles (patch `widget-obstacles`); with no obstacles nothing passes a list and nothing changes.
 
 ### Patch widget-obstacles
@@ -48,8 +53,9 @@ full of buttons, a drawer, a menu) were invisible to the module, so the icon and
 
 **What.**
 
-- `MountOptions.obstacles?(fresh?)` (widget): a getter of rects in viewport pixels. `fresh` is true when the widget has just seen the page change (a view,
-  a resize, a scroll, a mutation), so the host re-reads then and may serve a cached list otherwise.
+- `MountOptions.obstacles?(fresh?)` (widget): a getter of rects in viewport pixels. `fresh` is true after a view or a resize (discrete events), so the host re-reads then. A
+  mutation or a scroll does not force a read: the widget asks for one fresh read after 250 ms (`trailObstacles`, at most one pending), so a burst of changes
+  costs at most four scans a second and the last change of the burst is always seen.
 - `clearOf(from, size, vp, avoid)` (motion): the nearest place for a box that overlaps none of the rects. It pushes the box past the edge of each rect it
   hits (four rounds, a bounded frontier), then tries a coarse grid; when nothing is clear it returns the least overlapping place seen with `crowded`. The
   starting place is returned untouched when it is already clear or when no rect is usable.
@@ -60,3 +66,17 @@ full of buttons, a drawer, a menu) were invisible to the module, so the icon and
   beside it. This is what keeps a step that points at a whole screen (the place picker) from being steered by the cards inside it.
 - No `obstacles` option, or a getter that answers with no rect or throws: every position is the one the original code gave (the legacy level page passes
   the getter but has no shell, so it answers with no rect).
+
+### Patch watch-attributes
+
+- File: `ui/watch.ts`
+- Symbol: `attributeFilter`
+- Marker: `PATCHED: watch-attributes`
+
+**Why.** The page watcher (a `MutationObserver`) only looked at the attributes `class style hidden open data-oscar-anchor`. The host shell folds a side panel by
+writing `data-props` / `data-tree` on its root and opens or closes the inventory drawer by writing `data-open` and `inert`, and nothing else: with the original
+filter the icon only noticed those changes by luck (another mutation fired in the same click) or at the next 5 s tick.
+
+**What.** The filter also lists `data-props`, `data-tree`, `data-open` and `inert`. The mutation still goes through the watcher's 150 ms throttle, and the host's
+obstacle list is then re-read after at most 250 ms (patch `widget-obstacles`). `tests/guide/vendorPatches.test.ts` reads the filter, and the e2e
+`guide-overlap` changes only those attributes by script and waits for the icon.

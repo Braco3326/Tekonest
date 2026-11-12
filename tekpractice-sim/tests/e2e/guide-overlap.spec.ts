@@ -35,10 +35,11 @@ const SIZES: Size[] = [
 type Bench = 0 | 1 | 2 | 3 | 4
 
 /** Seed: a place (unless `place` is false), the devices of `bench`, `ql1` selected when there is one so that Propriétés lists its ports. */
-async function boot(page: Page, size: Size, opts: { bench?: Bench; place?: boolean; select?: boolean } = {}): Promise<void> {
+async function boot(page: Page, size: Size, opts: { bench?: Bench; place?: boolean; select?: boolean; motion?: boolean } = {}): Promise<void> {
   const bench = opts.bench ?? 4
   await page.setViewportSize(size)
-  await page.emulateMedia({ reducedMotion: 'reduce' })
+  // reduced motion makes the guide cut instead of glide; `motion: true` keeps the animated path (the glide, then `destClear` on arrival)
+  await page.emulateMedia({ reducedMotion: opts.motion === true ? 'no-preference' : 'reduce' })
   await page.goto('/')
   await page.waitForFunction(() => !!window.__creation)
   if (opts.place !== false) {
@@ -78,16 +79,25 @@ async function settle(page: Page): Promise<void> {
   await settleRenders(page)
   await page.evaluate(() => new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r()))))
   await page.waitForTimeout(400)
+  // a glide may still be running: wait until the icon has not moved for 300 ms
+  let last = ''
+  for (let i = 0; i < 40; i++) {
+    const b = await page.locator('.oscar-icon').boundingBox()
+    const now = b === null ? '' : `${Math.round(b.x)},${Math.round(b.y)}`
+    if (now === last) break
+    last = now
+    await page.waitForTimeout(300)
+  }
 }
 
 /** The visible controls of the page that the box of `what` overlaps by more than a pixel in both directions (controls inside a ring are the target: skipped). */
-async function controlsUnder(page: Page, what: '.oscar-icon' | '.oscar-bubble'): Promise<Hit[]> {
-  return page.evaluate((selector) => {
+async function controlsUnder(page: Page, what: '.oscar-icon' | '.oscar-bubble' | Box, opts: { exemptRings?: boolean } = {}): Promise<Hit[]> {
+  return page.evaluate(({ what: w, exempt }) => {
     const guideRoot = document.querySelector('[data-oscar-root]')
-    const target = document.querySelector(selector)
-    if (target === null) return [{ name: `no ${selector}`, box: { x: 0, y: 0, w: 0, h: 0 }, overlap: { x: 0, y: 0, w: 1, h: 1 } }]
-    const t = target.getBoundingClientRect()
-    const rings = [...document.querySelectorAll('.oscar-ring')].filter((r) => !(r as HTMLElement).hidden && r.getBoundingClientRect().width > 0).map((r) => r.getBoundingClientRect())
+    const target = typeof w === 'string' ? document.querySelector(w) : null
+    if (typeof w === 'string' && target === null) return [{ name: `no ${w}`, box: { x: 0, y: 0, w: 0, h: 0 }, overlap: { x: 0, y: 0, w: 1, h: 1 } }]
+    const t = typeof w === 'string' ? target!.getBoundingClientRect() : new DOMRect(w.x, w.y, w.w, w.h)
+    const rings = (exempt ? [...document.querySelectorAll('.oscar-ring')] : []).filter((r) => !(r as HTMLElement).hidden && r.getBoundingClientRect().width > 0).map((r) => r.getBoundingClientRect())
     const CONTROLS = 'button, a[href], input, select, textarea, summary, [role="button"], [role="menuitem"], [role="tab"], [role="option"], [role="combobox"], [tabindex]:not([tabindex="-1"])'
     const clipOf = (el: Element, r: DOMRect): DOMRect | null => {
       let x0 = r.left
@@ -131,7 +141,7 @@ async function controlsUnder(page: Page, what: '.oscar-icon' | '.oscar-bubble'):
       }
     }
     return hits
-  }, what)
+  }, { what, exempt: opts.exemptRings !== false })
 }
 
 const iconBox = async (page: Page): Promise<Box> => {
@@ -171,6 +181,16 @@ test.describe('1366 x 768', () => {
     // the premise: Propriétés lists « Connecter à… » buttons, so there is something to land on
     await expect(page.locator('[data-key^="connect:"]').first()).toBeVisible()
     expect(await controlsUnder(page, '.oscar-icon')).toEqual([])
+  })
+
+  test('the premise of the fix: the old home of the icon (bottom right, no inset) lay on visible controls of Propriétés', async ({ page }) => {
+    await boot(page, SIZES[0])
+    const oldHome: Box = { x: 1366 - 56 - 16, y: 768 - 28 - 16 - 56, w: 56, h: 56 }
+    const under = await controlsUnder(page, oldHome)
+    expect(under.length, 'controls under the old home rect').toBeGreaterThan(0)
+    // and the icon is not there any more
+    const icn = await iconBox(page)
+    expect(icn.x + icn.w <= oldHome.x || icn.x >= oldHome.x + oldHome.w || icn.y + icn.h <= oldHome.y || icn.y >= oldHome.y + oldHome.h).toBe(true)
   })
 
   test('the icon rests left of Propriétés and above the status bar', async ({ page }) => {
@@ -218,6 +238,73 @@ for (const size of SIZES) {
       expect(inside({ x: b.x, y: b.y, w: b.width, h: b.height }, size)).toBe(true)
     })
 
+    const near = (a: Box, b: Box): boolean => Math.abs(a.x - b.x) <= 1 && Math.abs(a.y - b.y) <= 1
+    const settled = async (page: Page, want: (b: Box) => boolean, message: string, timeout = 8_000): Promise<void> => {
+      await expect.poll(async () => want(await iconBox(page)), { message, timeout }).toBe(true)
+    }
+    // The widget also re-reads the page on its own 5 s tick, which would bring the icon home whatever the watcher does: the attribute-only cases switch that
+    // interval off (before the page loads) and give the watcher 2.5 s, so only the MutationObserver can move the icon.
+    const WATCHER_MS = 2_500
+    const noTick = async (page: Page): Promise<void> => {
+      await page.addInitScript(() => {
+        const si = window.setInterval.bind(window) as (fn: TimerHandler, ms?: number, ...a: unknown[]) => number
+        ;(window as unknown as { setInterval: unknown }).setInterval = (fn: TimerHandler, ms?: number, ...a: unknown[]): number => (ms === 5000 ? 0 : si(fn, ms, ...a))
+      })
+    }
+
+    test('the inventory drawer closed again (Fermer): the icon comes back to its home rect with no other event', async ({ page }) => {
+      await boot(page, size, { bench: 0 })
+      const home = await iconBox(page)
+      await page.locator('#renderCanvas').focus()
+      await page.keyboard.press('Space')
+      await expect(page.getByTestId('inventory-drawer')).toHaveAttribute('data-open', 'true')
+      await settled(page, (b) => !near(b, home), 'the open drawer moved the icon off its home')
+      await page.getByTestId('inventory-close').click()
+      await expect(page.getByTestId('inventory-drawer')).toHaveAttribute('data-open', 'false')
+      await settled(page, (b) => near(b, home), 'the icon is back at its home rect after Fermer')
+    })
+
+    test('Propriétés folded then unfolded (a click and nothing else): the icon follows the rail, then returns to its home rect', async ({ page }) => {
+      await boot(page, size)
+      const home = await iconBox(page)
+      await page.getByTestId('props-collapse').click()
+      await expect(page.locator('.cr[data-props="collapsed"]')).toHaveCount(1)
+      await settled(page, (b) => !near(b, home), 'the icon left the home it had beside the open panel')
+      expect(await controlsUnder(page, '.oscar-icon')).toEqual([])
+      await page.getByTestId('props-collapse').click()
+      await expect(page.locator('.cr[data-props="collapsed"]')).toHaveCount(0)
+      await settled(page, (b) => near(b, home), 'the icon is back at its home rect')
+    })
+
+    // The two real clicks above also fire other mutations (the focus return, the chevron). These two change ONLY the attributes the shell writes
+    // (`data-props` on the shell root; `data-open` and `inert` on the drawer), which is what the page watcher has to notice by itself.
+    test('only data-props changes on the shell root: the icon follows the panel, then returns', async ({ page }) => {
+      await noTick(page)
+      await boot(page, size)
+      const home = await iconBox(page)
+      await page.evaluate(() => document.querySelector('.cr')!.setAttribute('data-props', 'collapsed'))
+      await settled(page, (b) => !near(b, home), 'the icon moved off the home it had beside the open panel', WATCHER_MS)
+      expect(await controlsUnder(page, '.oscar-icon')).toEqual([])
+      await page.evaluate(() => document.querySelector('.cr')!.setAttribute('data-props', 'open'))
+      await settled(page, (b) => near(b, home), 'the icon is back at its home rect', WATCHER_MS)
+    })
+
+    test('only data-open and inert change on the drawer: the icon returns to its home rect', async ({ page }) => {
+      await noTick(page)
+      await boot(page, size, { bench: 0 })
+      const home = await iconBox(page)
+      await page.locator('#renderCanvas').focus()
+      await page.keyboard.press('Space')
+      await expect(page.getByTestId('inventory-drawer')).toHaveAttribute('data-open', 'true')
+      await settled(page, (b) => !near(b, home), 'the open drawer moved the icon off its home')
+      await page.evaluate(() => {
+        const d = document.querySelector<HTMLElement>('[data-testid="inventory-drawer"]')!
+        d.dataset.open = 'false'
+        d.inert = true
+      })
+      await settled(page, (b) => near(b, home), 'the icon is back at its home rect', WATCHER_MS)
+    })
+
     test('the inventory drawer open: the icon and the bubble stay off its tabs, its search field and its items', async ({ page }) => {
       await boot(page, size, { bench: 0 })
       await page.locator('#renderCanvas').focus()
@@ -239,31 +326,41 @@ for (const size of SIZES) {
       { name: 'a pair without a cable (step: the cable, from the output to the input)', bench: 2, place: true, select: false },
       { name: 'a cabled pair (step: the status bar)', bench: 3, place: true },
     ]
+    const runStage = async (page: Page, stage: (typeof STAGES)[number], motion: boolean): Promise<void> => {
+      await boot(page, size, { bench: stage.bench, place: stage.place, motion, ...(stage.select === false ? { select: false } : {}) })
+      await openBubble(page)
+      // the guide reads the bench with « Prochaine étape » and then offers the flow of the stage (it may need a poll or two to have read the bench)
+      const start = page.locator('.oscar-chips').getByRole('button', { name: 'Lancer le parcours proposé', exact: true })
+      await expect
+        .poll(
+          async () => {
+            if (await page.locator('.oscar-bubble').isHidden()) await icon(page).click()
+            await page.locator('.oscar-chips').getByRole('button', { name: 'Prochaine étape', exact: true }).click()
+            return start.count()
+          },
+          { message: 'the guide offers a start chip', timeout: 15_000 },
+        )
+        .toBe(1)
+      await start.click()
+      await expect(page.locator('.oscar-ring:not(.oscar-ring-drop)')).toBeVisible()
+      await settle(page)
+      expect(await controlsUnder(page, '.oscar-icon')).toEqual([])
+      expect(await controlsUnder(page, '.oscar-bubble')).toEqual([])
+      if (!stage.place) {
+        // the ring is the whole place picker, so the check above lets everything under it pass: the menu bar is outside it and must stay free
+        const menu = (await controlsUnder(page, '.oscar-icon', { exemptRings: false })).filter((h) => h.box.y < 32)
+        expect(menu, 'the icon is off the menu items').toEqual([])
+      }
+      expect(inside(await iconBox(page), size)).toBe(true)
+      const b = (await page.locator('.oscar-bubble').boundingBox())!
+      expect(inside({ x: b.x, y: b.y, w: b.width, h: b.height }, size)).toBe(true)
+    }
     for (const stage of STAGES) {
-      test(`${stage.name}: the icon and the bubble overlap no control but the one pointed at`, async ({ page }) => {
-        await boot(page, size, { bench: stage.bench, place: stage.place, ...(stage.select === false ? { select: false } : {}) })
-        await openBubble(page)
-        // the guide reads the bench with « Prochaine étape » and then offers the flow of the stage (it may need a poll or two to have read the bench)
-        const start = page.locator('.oscar-chips').getByRole('button', { name: 'Lancer le parcours proposé', exact: true })
-        await expect
-          .poll(
-            async () => {
-              if (await page.locator('.oscar-bubble').isHidden()) await icon(page).click()
-              await page.locator('.oscar-chips').getByRole('button', { name: 'Prochaine étape', exact: true }).click()
-              return start.count()
-            },
-            { message: 'the guide offers a start chip', timeout: 15_000 },
-          )
-          .toBe(1)
-        await start.click()
-        await expect(page.locator('.oscar-ring:not(.oscar-ring-drop)')).toBeVisible()
-        await settle(page)
-        expect(await controlsUnder(page, '.oscar-icon')).toEqual([])
-        expect(await controlsUnder(page, '.oscar-bubble')).toEqual([])
-        expect(inside(await iconBox(page), size)).toBe(true)
-        const b = (await page.locator('.oscar-bubble').boundingBox())!
-        expect(inside({ x: b.x, y: b.y, w: b.width, h: b.height }, size)).toBe(true)
-      })
+      test(`${stage.name}: the icon and the bubble overlap no control but the one pointed at`, async ({ page }) => runStage(page, stage, false))
+    }
+    // The same with the animation on (no reduced motion): the icon glides to the step, and `destClear` judges where it arrived.
+    for (const stage of [STAGES[2], STAGES[3], STAGES[4]]) {
+      test(`${stage.name}, animated: the icon and the bubble overlap no control but the one pointed at`, async ({ page }) => runStage(page, stage, true))
     }
   })
 }

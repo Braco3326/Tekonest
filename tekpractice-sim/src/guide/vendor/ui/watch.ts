@@ -37,6 +37,8 @@ export function watchPage(win: Window, doc: Document, own: Node, hooks: WatchHoo
             hooks.change();
         }, MUTATION_THROTTLE_MS);
     });
-    observer.observe(doc.body ?? doc.documentElement, { attributes: true, attributeFilter: ["class", "style", "hidden", "open", "data-oscar-anchor"], childList: true, subtree: true });
+    // PATCHED: watch-attributes (see src/guide/VENDOR-PATCHES.md): the host shell writes data-props / data-tree (a panel folds) and data-open / inert (the drawer)
+    // and nothing else, so the original five attributes did not see them.
+    observer.observe(doc.body ?? doc.documentElement, { attributes: true, attributeFilter: ["class", "style", "hidden", "open", "data-oscar-anchor", "data-props", "data-tree", "data-open", "inert"], childList: true, subtree: true });
     return () => observer.disconnect();
 }

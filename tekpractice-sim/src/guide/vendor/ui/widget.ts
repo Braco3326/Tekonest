@@ -46,6 +46,7 @@ const HOLD_MS = 1600;
 const SETTLE_FIRST_MS = 300;
 const SETTLE_AGAIN_MS = 120;
 const SETTLE_MAX_MS = 1500;
+const OBSTACLE_TRAIL_MS = 250;
 interface Current {
     key: string;
     rect: Rect;
@@ -352,8 +353,19 @@ export function mountGuide(options: MountOptions): GuideHandle {
         fire({ type: "anchorRects", rects });
         return true;
     }
+    // PATCHED: widget-obstacles. A mutation or a scroll does not force a re-read of the host's controls (the host serves its cache for 250 ms); it asks for ONE
+    // fresh read after that time, so the last change of a burst is always seen and a burst costs at most four scans a second.
+    let obstacleTrail: number | null = null;
+    function trailObstacles(): void {
+        if (destroyed || obstacleTrail !== null)
+            return;
+        obstacleTrail = later(() => {
+            obstacleTrail = null;
+            obstaclesDirty = true;
+            scheduleResync();
+        }, OBSTACLE_TRAIL_MS);
+    }
     function scheduleResync(): void {
-        obstaclesDirty = true;
         if (destroyed || resyncCancel !== null)
             return;
         resyncCancel = afterFrame(win, () => {
@@ -747,9 +759,13 @@ export function mountGuide(options: MountOptions): GuideHandle {
                 else
                     scrollTimer = later(settleScroll, SETTLE_AGAIN_MS);
             }
+            trailObstacles();
             scheduleResync();
         },
-        change: scheduleResync,
+        change() {
+            trailObstacles();
+            scheduleResync();
+        },
         hostEvent(type, data) {
             const event: {
                 type: string;

@@ -357,7 +357,7 @@ role tokens (default = Ambre, so nothing changes without `?design`), and tests c
 ## 8. First-sound and honesty fixes that stand alone (default and every package)
 
 1. **Oscar never rests or points on a control.**
-   - `hostInsets` (mount.ts) adds the open Projet / Propriétés widths (200 / 260 px, rail 32 px) and the open drawer's height. **Limit (verified):**
+   - `hostInsets` (mount.ts) adds the open Projet / Propriétés widths (200 / 260 px, rail 32 px); the open inventory drawer is NOT an inset but an entry of `hostObstacles` (8.1, T1.2b: its height exceeds the cap below, and an inset of it made the icon rest on its « Fermer » button). **Limit (verified):**
      the vendored `cleanInsets` caps each side at a quarter of the viewport, so an open Propriétés (260 px) is clipped to 256 px at 1024 px wide
      (4 px overlap) and to **205 px at 820 px (about 55 px overlap)**. Insets alone cannot fix it.
    - **The vendored patch is needed and allowed** (controller ruling): an `avoid` list in `placeBeside` / `MotionInput` and an `obstacles` callback

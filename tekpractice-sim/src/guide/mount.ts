@@ -89,23 +89,46 @@ const MAX_OBSTACLE_SHARE = 0.4
 /** The most controls kept (a page with thousands of rows is not steered around row by row). */
 const MAX_OBSTACLES = 400
 
-/** The part of `el` that shows: its box cut to the viewport and to every scroll area (up to `root`) that holds it; null when nothing shows. */
-function shownBox(el: Element, view: Window, root: Element, vw: number, vh: number, own?: Rect): Rect | null {
-  const b = el.getBoundingClientRect()
-  let x0 = Math.max(0, own?.x ?? b.left)
-  let y0 = Math.max(0, own?.y ?? b.top)
-  let x1 = Math.min(vw, (own?.x ?? b.left) + (own?.w ?? b.width))
-  let y1 = Math.min(vh, (own?.y ?? b.top) + (own?.h ?? b.height))
-  for (let p = el.parentElement; p !== null && p !== root; p = p.parentElement) {
-    const s = view.getComputedStyle(p)
-    if (s.overflowX === 'visible' && s.overflowY === 'visible') continue
-    const pb = p.getBoundingClientRect()
-    x0 = Math.max(x0, pb.left)
-    y0 = Math.max(y0, pb.top)
-    x1 = Math.min(x1, pb.right)
-    y1 = Math.min(y1, pb.bottom)
-  }
+/** What a scan remembers: the clip that an element's scroll-area ancestors put on everything inside it (null = nothing shows; the infinite box = no clip). */
+type ClipMemo = Map<Element, Rect | null>
+const NO_CLIP: Rect = { x: -1e9, y: -1e9, w: 2e9, h: 2e9 }
+const meet = (a: Rect, b: Rect): Rect | null => {
+  const x0 = Math.max(a.x, b.x)
+  const y0 = Math.max(a.y, b.y)
+  const x1 = Math.min(a.x + a.w, b.x + b.w)
+  const y1 = Math.min(a.y + a.h, b.y + b.h)
   return x1 > x0 && y1 > y0 ? { x: x0, y: y0, w: x1 - x0, h: y1 - y0 } : null
+}
+/**
+ * The clip that `el` and the ancestors above it (up to `root`) put on what they hold: their own box when their overflow is not visible, met with the clip of
+ * their parent. Remembered per element for the scan, so a scroll area that holds forty controls is read once (one style, one box), not forty times.
+ * A `position: fixed` descendant of a scroll area is not really clipped by it; the shell has none (its fixed parts are the root and the dialogs, outside), and
+ * if one appears this would hide it behind a clip that does not apply, which only makes the icon avoid less, never more.
+ */
+function clipAbove(el: Element | null, view: Window, root: Element, memo: ClipMemo): Rect | null {
+  if (el === null || el === root) return NO_CLIP
+  const known = memo.get(el)
+  if (known !== undefined) return known
+  const above = clipAbove(el.parentElement, view, root, memo)
+  let clip = above
+  if (above !== null) {
+    const s = view.getComputedStyle(el)
+    if (s.overflowX !== 'visible' || s.overflowY !== 'visible') {
+      const b = el.getBoundingClientRect()
+      clip = meet(above, { x: b.left, y: b.top, w: b.width, h: b.height })
+    }
+  }
+  memo.set(el, clip)
+  return clip
+}
+/** The part of `el` that shows: its box cut to the viewport and to every scroll area (up to `root`) that holds it; null when nothing shows. */
+function shownBox(el: Element, view: Window, root: Element, vw: number, vh: number, memo: ClipMemo, own?: Rect): Rect | null {
+  const b = el.getBoundingClientRect()
+  const box: Rect = { x: own?.x ?? b.left, y: own?.y ?? b.top, w: own?.w ?? b.width, h: own?.h ?? b.height }
+  const inView = meet(box, { x: 0, y: 0, w: vw, h: vh })
+  if (inView === null) return null
+  const clip = clipAbove(el.parentElement, view, root, memo)
+  return clip === null ? null : meet(inView, clip)
 }
 const usable = (el: Element, view: Window): boolean => {
   if (el.tagName === 'CANVAS' || el.closest('[inert]') !== null) return false
@@ -128,9 +151,10 @@ export function hostObstacles(doc: Document): Rect[] {
     const vh = doc.documentElement.clientHeight
     if (root === null || view === null || !(vw > 0) || !(vh > 0)) return []
     const out: Rect[] = []
+    const memo: ClipMemo = new Map()
     for (const sel of [PROPS_PANEL, TREE_PANEL]) {
       const panel = root.querySelector(sel)
-      const box = panel !== null && usable(panel, view) ? shownBox(panel, view, root, vw, vh) : null
+      const box = panel !== null && usable(panel, view) ? shownBox(panel, view, root, vw, vh, memo) : null
       if (box !== null) out.push(box)
     }
     const drawer = root.querySelector(INVENTORY_DRAWER)
@@ -139,14 +163,17 @@ export function hostObstacles(doc: Document): Rect[] {
       const b = drawer.getBoundingClientRect()
       const holder = drawer.parentElement?.getBoundingClientRect()
       const h = (drawer as HTMLElement).offsetHeight || b.height
-      const box = shownBox(drawer, view, root, vw, vh, holder !== undefined ? { x: b.left, y: holder.bottom - h, w: b.width, h } : undefined)
+      const box = shownBox(drawer, view, root, vw, vh, memo, holder !== undefined ? { x: b.left, y: holder.bottom - h, w: b.width, h } : undefined)
       if (box !== null) out.push(box)
     }
+    const wholes = out.length
     for (const el of Array.from(root.querySelectorAll(OBSTACLE_CONTROLS))) {
       if (out.length >= MAX_OBSTACLES) break
       if (!usable(el, view)) continue
-      const box = shownBox(el, view, root, vw, vh)
+      const box = shownBox(el, view, root, vw, vh, memo)
       if (box === null || box.w < MIN_OBSTACLE_PX || box.h < MIN_OBSTACLE_PX || box.w * box.h > MAX_OBSTACLE_SHARE * vw * vh) continue
+      // already inside a panel or the drawer, which are obstacles whole: listing it again only makes the icon's search longer
+      if (out.slice(0, wholes).some((w) => box.x >= w.x && box.y >= w.y && box.x + box.w <= w.x + w.w && box.y + box.h <= w.y + w.h)) continue
       out.push(box)
     }
     return out

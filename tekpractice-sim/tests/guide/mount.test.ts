@@ -529,6 +529,35 @@ describe('hostObstacles: the page controls the icon and the bubble keep clear of
     expect(hostObstacles(world([], undefined, undefined, { [DRAWER]: sliding }))).toEqual([{ x: 200, y: 740 - 255, w: 906, h: 255 }])
   })
 
+  it('a control inside a panel or the open drawer is not listed again: the panel is the obstacle', () => {
+    const inProps = el('button', 1119, 300, 235, 40)
+    const outside = el('button', 300, 300, 40, 20)
+    expect(hostObstacles(world([inProps, outside], undefined, undefined, { [PROPS]: el('aside', 1106, 32, 260, 708) }))).toEqual([
+      { x: 1106, y: 32, w: 260, h: 708 },
+      { x: 300, y: 300, w: 40, h: 20 },
+    ])
+  })
+
+  it('one scan reads the style of each ancestor once, however many controls it holds (the clip of an ancestor is remembered)', () => {
+    let reads = 0
+    const scroller = el('aside', 0, 40, 400, 400, { style: { overflowY: 'auto', overflowX: 'hidden' } })
+    const inner = el('div', 0, 40, 400, 900, { parent: scroller })
+    const base = { ...scroller.style }
+    for (const e of [scroller, inner]) {
+      Object.defineProperty(e, 'style', {
+        get: () => {
+          reads++
+          return base
+        },
+      })
+    }
+    const buttons = Array.from({ length: 12 }, (_, i) => el('button', 10, 50 + i * 30, 100, 24, { parent: inner }))
+    const out = hostObstacles(world(buttons))
+    expect(out).toHaveLength(12)
+    // two ancestors, read once each by the first control; no control after it reads them again
+    expect(reads).toBe(2)
+  })
+
   it('a panel is cut to the viewport like any control', () => {
     expect(hostObstacles(world([], { w: 400, h: 600 }, undefined, { [PROPS]: el('aside', 300, 32, 260, 1120) }))).toEqual([{ x: 300, y: 32, w: 100, h: 568 }])
   })
