@@ -30,11 +30,11 @@ export interface PlaceCardInput {
  * tests/creation/placePickerModel.test.ts.
  */
 export const WITH_GEAR_ROOMS: readonly string[] = [
+  'post-atmos-mix-room-medium',
   'radio-talk-studio-medium',
-  'radio-studio-self-op-small',
-  'wedding-event-hall-medium',
-  'podcast-room-small',
+  'concert-hall-medium',
   'foley-dubbing-stage-medium',
+  'radio-studio-self-op-small',
 ]
 
 /** « Salle vide neutre »: the BLANK_SIZE of placeData.ts. */

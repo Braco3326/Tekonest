@@ -20,6 +20,14 @@
   {
    "instanceId": "hdx",
    "deviceId": "avid-protools-hdx"
+  },
+  {
+   "instanceId": "mon-l",
+   "deviceId": "genelec-8341a"
+  },
+  {
+   "instanceId": "mon-r",
+   "deviceId": "genelec-8341a"
   }
  ],
  "requiredChain": [
@@ -38,20 +46,20 @@
  "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
  "draft": {
   "status": "draft — needs Oscar's review",
-  "generated": "2026-10-22",
+  "generated": "2026-11-12",
   "from_scenario": "knowledge-base/tek-brain/scenarios/post-immersive.json#post-dub-session-adr-foley",
   "room_id": "foley-dubbing-stage-medium",
   "difficulty": 3,
   "unmapped_nodes": [
    "Micro ADR",
    "Micro bruitage",
-   "Sync X",
-   "Écoute G",
-   "Écoute D"
+   "Sync X"
   ],
   "unresolved_edges": [
    "pre1 → io (line-level-pro)",
-   "pre2 → io (line-level-pro)"
+   "pre2 → io (line-level-pro)",
+   "io → mon-l (line-level-pro)",
+   "io → mon-r (line-level-pro)"
   ]
  }
 }

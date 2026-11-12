@@ -1,0 +1,85 @@
+{
+ "id": "draft-podcast-host-three-guests",
+ "version": 1,
+ "domain": "post",
+ "title": "[BROUILLON] Podcast avec un animateur et 3 invités",
+ "brief": "Quatre voix autour d'une table dans une petite pièce traitée. Un SM7B par personne, chacun sur sa piste ISO de l'enregistreur, règle 3:1 entre micros, casque fermé pour tous via un ampli 4 canaux. Test de 30 s, enregistrement sans écrêtage, sauvegarde 3-2-1 en fin d'émission.",
+ "devices": [
+  {
+   "instanceId": "m1",
+   "deviceId": "shure-sm7b"
+  },
+  {
+   "instanceId": "m2",
+   "deviceId": "shure-sm7b"
+  },
+  {
+   "instanceId": "m3",
+   "deviceId": "shure-sm7b"
+  },
+  {
+   "instanceId": "m4",
+   "deviceId": "shure-sm7b"
+  },
+  {
+   "instanceId": "rec",
+   "deviceId": "sound-devices-mixpre-6-ii"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "m1",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "rec",
+    "port": "in-xlr-1"
+   }
+  },
+  {
+   "from": {
+    "instance": "m2",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "rec",
+    "port": "in-xlr-2"
+   }
+  },
+  {
+   "from": {
+    "instance": "m3",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "rec",
+    "port": "in-xlr-3"
+   }
+  },
+  {
+   "from": {
+    "instance": "m4",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "rec",
+    "port": "in-xlr-4"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-11-12",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/studio-recording.json#podcast-host-three-guests",
+  "room_id": "podcast-room-small",
+  "difficulty": 2,
+  "unmapped_nodes": [
+   "Ampli casque",
+   "Casques (x4)"
+  ],
+  "unresolved_edges": []
+ }
+}

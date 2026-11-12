@@ -12,6 +12,18 @@
   {
    "instanceId": "io",
    "deviceId": "avid-hd-io"
+  },
+  {
+   "instanceId": "front",
+   "deviceId": "genelec-8341a"
+  },
+  {
+   "instanceId": "surr",
+   "deviceId": "genelec-8341a"
+  },
+  {
+   "instanceId": "sub",
+   "deviceId": "genelec-7360a"
   }
  ],
  "requiredChain": [
@@ -30,16 +42,17 @@
  "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
  "draft": {
   "status": "draft — needs Oscar's review",
-  "generated": "2026-10-22",
+  "generated": "2026-11-12",
   "from_scenario": "knowledge-base/tek-brain/scenarios/post-immersive.json#tv-documentary-final-mix",
   "room_id": "studio-control-room-large",
   "difficulty": 3,
   "unmapped_nodes": [
-   "Mesureur RTW TM7",
-   "L / C / R",
-   "LS / RS (100–120°)",
-   "Caisson LFE"
+   "Mesureur RTW TM7"
   ],
-  "unresolved_edges": []
+  "unresolved_edges": [
+   "io → front (line-level-pro)",
+   "io → surr (line-level-pro)",
+   "io → sub (line-level-pro)"
+  ]
  }
 }

@@ -580,7 +580,10 @@
      "portId": "bidir-dante-primary-secondary-1",
      "dir": "bidir",
      "connector": "rj45",
-     "signal": "aoip"
+     "signal": "aoip",
+     "flags": [
+      "isDantePrimary"
+     ]
     },
     {
      "portId": "bidir-dante-primary-secondary-2",
@@ -4041,6 +4044,31 @@
      ]
     }
    ]
+  },
+  {
+   "id": "dpa-4060",
+   "label": "DPA 4060 lavalier",
+   "levels": [],
+   "realWorld": {
+    "brand": "DPA",
+    "model": "4060 lavalier",
+    "category": "microphone",
+    "typicalUse": "DPA 4060 lavalier (microphone)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 5.4 x 5.4 x 12.7 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "out-ta4",
+     "dir": "out",
+     "connector": "mini-xlr-ta4",
+     "signal": "mic-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 5.4,
+    "d": 5.4,
+    "h": 12.7
+   }
   },
   {
    "id": "dpa-4088",
@@ -8877,31 +8905,6 @@
     "w": 215,
     "d": 197.5,
     "h": 381.5
-   }
-  },
-  {
-   "id": "dpa-4060",
-   "label": "DPA 4060 lavalier",
-   "levels": [],
-   "realWorld": {
-    "brand": "DPA",
-    "model": "4060 lavalier",
-    "category": "microphone",
-    "typicalUse": "DPA 4060 lavalier (microphone)",
-    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 5.4 x 5.4 x 12.7 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
-   },
-   "ports": [
-    {
-     "portId": "out-ta4",
-     "dir": "out",
-     "connector": "mini-xlr-ta4",
-     "signal": "mic-level"
-    }
-   ],
-   "sizeMm": {
-    "w": 5.4,
-    "d": 5.4,
-    "h": 12.7
    }
   },
   {

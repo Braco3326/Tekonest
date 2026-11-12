@@ -1,0 +1,62 @@
+{
+ "id": "draft-orchestra-recording-concert-hall",
+ "version": 1,
+ "domain": "post",
+ "title": "[BROUILLON] Enregistrement d'un orchestre en salle de concert",
+ "brief": "Un orchestre symphonique (placement allemand) joue un programme Beethoven dans une salle de concert d'environ 2 s de réverbération. Installer un arbre Decca avec flancs, quatre appoints de pupitre retardés, et enregistrer en multipiste via un stagebox Dante.",
+ "devices": [
+  {
+   "instanceId": "rio",
+   "deviceId": "yamaha-rio3224-d2"
+  },
+  {
+   "instanceId": "desk",
+   "deviceId": "yamaha-cl5"
+  },
+  {
+   "instanceId": "mon",
+   "deviceId": "genelec-8030c"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "rio",
+    "port": "dante-primary"
+   },
+   "to": {
+    "instance": "desk",
+    "port": "net-dante-1"
+   }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-omni-1"
+   },
+   "to": {
+    "instance": "mon",
+    "port": "in-analog"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-11-12",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/orchestra-classical.json#orchestra-recording-concert-hall",
+  "room_id": "concert-hall-medium",
+  "difficulty": 4,
+  "unmapped_nodes": [
+   "Arbre gauche",
+   "Arbre centre",
+   "Arbre droite",
+   "Outrigger gauche",
+   "Outrigger droite",
+   "Appoint violons 2 (à droite, placement allemand)",
+   "Enregistreur multipiste"
+  ],
+  "unresolved_edges": []
+ }
+}

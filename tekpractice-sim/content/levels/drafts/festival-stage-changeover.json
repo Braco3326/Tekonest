@@ -14,8 +14,16 @@
    "deviceId": "yamaha-rio3224-d2"
   },
   {
+   "instanceId": "foh",
+   "deviceId": "yamaha-cl5"
+  },
+  {
    "instanceId": "mon",
    "deviceId": "yamaha-ql1"
+  },
+  {
+   "instanceId": "sub",
+   "deviceId": "l-acoustics-ks28"
   }
  ],
  "requiredChain": [
@@ -34,17 +42,15 @@
  "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
  "draft": {
   "status": "draft — needs Oscar's review",
-  "generated": "2026-10-22",
+  "generated": "2026-11-12",
   "from_scenario": "knowledge-base/tek-brain/scenarios/live-sound.json#festival-stage-changeover",
   "room_id": "festival-open-air-large",
   "difficulty": 4,
   "unmapped_nodes": [
    "Grosse caisse",
    "Switch Dante",
-   "Console façade",
    "Contrôleur amplifié",
    "Line array",
-   "Caissons",
    "Émetteur ears"
   ],
   "unresolved_edges": []

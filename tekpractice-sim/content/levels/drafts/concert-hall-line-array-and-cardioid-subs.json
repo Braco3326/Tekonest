@@ -1,0 +1,48 @@
+{
+ "id": "draft-concert-hall-line-array-and-cardioid-subs",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Salle de concert : line array passif et subs cardioïdes",
+ "brief": "Deux lignes de V8 accrochées et des V-SUB au sol, alimentés par des D80. Piège pédagogique : les V8 utilisent les broches speakON 1± et les V-SUB 2± ; un sub raccordé sur une sortie qui ne porte que 1± reste muet. Objectifs : respecter 2 enceintes par canal, charger les bons presets (CPL identique sur toute la ligne), câbler les paires correctes, puis aligner subs et ligne au point de référence.",
+ "devices": [
+  {
+   "instanceId": "desk",
+   "deviceId": "yamaha-ql1"
+  },
+  {
+   "instanceId": "sub1",
+   "deviceId": "db-audiotechnik-v-sub"
+  },
+  {
+   "instanceId": "sub2",
+   "deviceId": "db-audiotechnik-v-sub"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "sub1",
+    "port": "bidir-nl4-1"
+   },
+   "to": {
+    "instance": "sub2",
+    "port": "bidir-nl4-1"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-11-12",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/loudspeakers-system-tuning.json#concert-hall-line-array-and-cardioid-subs",
+  "room_id": "concert-hall-medium",
+  "difficulty": 4,
+  "unmapped_nodes": [
+   "D80 côté gauche",
+   "V8 haut (1±)",
+   "V8 chaînée (1±)"
+  ],
+  "unresolved_edges": []
+ }
+}

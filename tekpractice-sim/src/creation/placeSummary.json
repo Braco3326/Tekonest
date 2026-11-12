@@ -10,7 +10,7 @@
     53,
     15.6
    ],
-   "catalogGear": 2
+   "catalogGear": 6
   },
   {
    "id": "auditorium-amphitheatre-medium",
@@ -22,7 +22,7 @@
     16,
     6.5
    ],
-   "catalogGear": 1
+   "catalogGear": 3
   },
   {
    "id": "bar-club-stage-small",
@@ -34,7 +34,7 @@
     9.8,
     4.7
    ],
-   "catalogGear": 3
+   "catalogGear": 7
   },
   {
    "id": "church-worship-medium",
@@ -58,7 +58,7 @@
     7,
     3
    ],
-   "catalogGear": 2
+   "catalogGear": 3
   },
   {
    "id": "concert-hall-medium",
@@ -70,7 +70,7 @@
     18.1,
     9
    ],
-   "catalogGear": 2
+   "catalogGear": 8
   },
   {
    "id": "conference-room-small",
@@ -94,7 +94,7 @@
     9.8,
     4.7
    ],
-   "catalogGear": 3
+   "catalogGear": 6
   },
   {
    "id": "eng-outdoor-reportage",
@@ -106,7 +106,7 @@
     15,
     12
    ],
-   "catalogGear": 2
+   "catalogGear": 3
   },
   {
    "id": "festival-open-air-large",
@@ -118,7 +118,7 @@
     80,
     13.1
    ],
-   "catalogGear": 2
+   "catalogGear": 6
   },
   {
    "id": "foley-dubbing-stage-medium",
@@ -130,7 +130,7 @@
     10,
     5
    ],
-   "catalogGear": 4
+   "catalogGear": 8
   },
   {
    "id": "hybrid-meeting-room-small",
@@ -166,7 +166,7 @@
     6.2,
     3.3
    ],
-   "catalogGear": 2
+   "catalogGear": 3
   },
   {
    "id": "museum-installed-sound-medium",
@@ -202,7 +202,7 @@
     24,
     21
    ],
-   "catalogGear": 2
+   "catalogGear": 3
   },
   {
    "id": "podcast-room-small",
@@ -226,7 +226,7 @@
     5.49,
     3.05
    ],
-   "catalogGear": 4
+   "catalogGear": 12
   },
   {
    "id": "radio-studio-self-op-small",
@@ -274,7 +274,7 @@
     160,
     46
    ],
-   "catalogGear": 3
+   "catalogGear": 7
   },
   {
    "id": "studio-control-room-large",
@@ -286,7 +286,7 @@
     5.8,
     3.5
    ],
-   "catalogGear": 1
+   "catalogGear": 2
   },
   {
    "id": "studio-control-room-small",
@@ -310,7 +310,7 @@
     8.1,
     5
    ],
-   "catalogGear": 3
+   "catalogGear": 4
   },
   {
    "id": "studio-vocal-booth-small",
@@ -346,7 +346,7 @@
     16,
     10.5
    ],
-   "catalogGear": 3
+   "catalogGear": 4
   },
   {
    "id": "tv-gallery-regie-medium",
@@ -358,7 +358,7 @@
     13.5,
     3
    ],
-   "catalogGear": 4
+   "catalogGear": 5
   },
   {
    "id": "tv-studio-plateau-large",
@@ -370,7 +370,7 @@
     30.5,
     13.4
    ],
-   "catalogGear": 4
+   "catalogGear": 5
   },
   {
    "id": "wedding-event-hall-medium",
@@ -414,13 +414,11 @@
  "gearNames": {
   "akg-c414-xls": "AKG C414 XLS (sister model C414 XLII)",
   "akg-c451-b": "AKG C451 B",
-  "akg-d112-mkii": "AKG D 112 MKII",
   "allen-heath-sq-6": "Allen & Heath SQ-6",
   "audinate-dante-avio-analog-input-2ch": "Audinate Dante AVIO Analog Input Adapter 2-Ch (ADP-DAI-AU-2x0)",
   "audinate-dante-virtual-soundcard": "Audinate Dante Virtual Soundcard (DVS / DVS Pro)",
   "audio-technica-ath-m50x": "Audio-Technica ATH-M50x",
   "avid-protools-mtrx-studio": "Avid Pro Tools | MTRX Studio",
-  "avid-s1": "Avid S1",
   "avid-s6": "Avid S6",
   "behringer-ha400": "Behringer MicroAMP HA400",
   "behringer-x32": "Behringer X32",
@@ -437,7 +435,6 @@
   "comrex-access-nx": "Comrex ACCESS NX",
   "crown-xls-2502": "Crown XLS 2502 (XLS DriveCore 2 Series)",
   "db-audiotechnik-d80": "d&b audiotechnik D80",
-  "db-audiotechnik-y10p": "d&b audiotechnik Y10P",
   "dbx-driverack-venu360": "dbx DriveRack VENU360",
   "dhd-rx2": "DHD audio RX2 (Series 52)",
   "digico-sd-rack": "DiGiCo SD-Rack",
@@ -451,12 +448,9 @@
   "focal-trio6": "Focal Trio6 (ST6 series)",
   "focusrite-scarlett-2i2-4th-gen": "Focusrite Scarlett 2i2 (4th Gen)",
   "genelec-1234a": "Genelec 1234A SAM",
-  "genelec-7360a": "Genelec 7360A SAM",
-  "genelec-8341a": "Genelec 8341A (The Ones, SAM)",
   "klark-teknik-dn100-v2": "Klark Teknik DN100 V2",
   "l-acoustics-k2": "L-Acoustics K2",
   "l-acoustics-kara-ii": "L-Acoustics Kara II",
-  "l-acoustics-ks28": "L-Acoustics KS28",
   "l-acoustics-la12x": "L-Acoustics LA12X",
   "l-acoustics-la4x": "L-Acoustics LA4X",
   "l-acoustics-x15-hiq": "L-Acoustics X15 HiQ",
@@ -471,11 +465,9 @@
   "minidsp-umik-1": "miniDSP UMIK-1",
   "netgear-m4250-10g2xf-poe-plus": "NETGEAR M4250-10G2XF-PoE+ (GSM4212PX), AV Line",
   "neumann-kh-420": "Neumann KH 420",
-  "neumann-kh-750-dsp": "Neumann KH 750 DSP",
   "neumann-m-149-tube": "Neumann M 149 Tube",
   "neumann-u-47-fet-i": "Neumann U 47 fet i (reissue of the U 47 fet)",
   "nexo-nxamp4x4mk2": "NEXO NXAMP4x4MK2",
-  "nexo-p12": "NEXO P12",
   "nti-audio-xl2": "NTi Audio XL2 Audio & Acoustic Analyzer (with M2230 microphone for class 1)",
   "nti-audio-xl3": "NTi Audio XL3 Acoustic Analyzer",
   "nugen-audio-vislm": "NUGEN Audio VisLM",
@@ -492,8 +484,6 @@
   "schoeps-cmc-6-mk-4": "Schoeps CMC 6 + MK 4 (Colette modular system)",
   "schoeps-cmc-6-mk-41": "Schoeps CMC 6 + MK 41 (Colette supercardioid)",
   "schoeps-mstc-74": "SCHOEPS MSTC 74 (ORTF stereo microphone)",
-  "sennheiser-e-906": "Sennheiser e 906",
-  "sennheiser-em-6000": "Sennheiser Digital 6000 EM 6000 / EM 6000 DANTE",
   "sennheiser-ew-100-g4": "Sennheiser ew 100 G4 (EM 100 G4 receiver + SKM 100 G4 / SK 100 G4 transmitters)",
   "sennheiser-ew-dp-ek": "Sennheiser EW-DP EK portable camera receiver",
   "sennheiser-ew-dx-em-2": "Sennheiser EW-DX EM 2 (Evolution Wireless Digital two-channel receiver)",
@@ -504,7 +494,6 @@
   "sennheiser-mke-2": "Sennheiser MKE 2",
   "sennheiser-mkh-50": "Sennheiser MKH 50-P48",
   "sennheiser-mkh-8040": "Sennheiser MKH 8040",
-  "shure-axient-digital-ad4d": "Shure Axient Digital AD4D (dual-channel receiver; AD1/AD2 transmitters)",
   "shure-beta-52a": "Shure Beta 52A",
   "shure-beta-91a": "Shure Beta 91A",
   "shure-psm-1000": "Shure PSM 1000 (P10T dual transmitter, P10R+ diversity bodypack)",
@@ -513,7 +502,6 @@
   "shure-scm820": "Shure SCM820 IntelliMix Digital Automatic Mixer",
   "shure-ulx-d": "Shure ULX-D (ULXD4 / ULXD4D / ULXD4Q receivers, ULXD1 / ULXD2 transmitters)",
   "sound-devices-888": "Sound Devices 888",
-  "sound-devices-mixpre-6-ii": "Sound Devices MixPre-6 II",
   "ssl-origin": "Solid State Logic ORIGIN (16 / 32)",
   "ssl-the-bus-plus": "Solid State Logic (SSL) THE BUS+",
   "ssl-uf8": "Solid State Logic UF8",
@@ -526,10 +514,7 @@
   "universal-audio-1176ln": "Universal Audio 1176LN Classic Limiting Amplifier",
   "universal-audio-apollo-twin-x-gen2": "Universal Audio Apollo Twin X (Gen 2)",
   "universal-audio-teletronix-la-2a": "Universal Audio Teletronix LA-2A Classic Leveling Amplifier",
-  "yamaha-cl5": "Yamaha CL5",
-  "yamaha-dm7": "Yamaha DM7",
   "yamaha-hs8": "Yamaha HS8",
-  "yamaha-mg10xu": "Yamaha MG10XU",
   "yamaha-rivage-pm10": "Yamaha RIVAGE PM10 (CS-R10 + DSP-RX / DSP-RX-EX)",
   "yamaha-tf5": "Yamaha TF5",
   "yamaha-tio1608-d": "Yamaha Tio1608-D",
