@@ -8,8 +8,8 @@
  * `data-design` reads and `DESIGN_PACKAGES[` out of every file but this one.
  *
  * PLACEHOLDERS (replaced by plan T4.1, spec 7.2 / 7.3): the colour maps are
- * today's tokens, the same for the five packages; `framing` is the default
- * camera of the blank room (T2.5 measures and tunes it); `nameKey` is a COPY
+ * today's tokens, the same for the five packages; `framing` is the first-sound
+ * camera of the neutral room, tuned in T2.5 (`firstSoundFraming`); `nameKey` is a COPY
  * key that T4.1 creates (not shown anywhere yet); `tell` is a design note, not
  * a user string. The layout presets and pacing are the spec 7.2 values.
  */
@@ -111,11 +111,16 @@ const todayColours: RoleColours = {
 }
 
 /**
- * PLACEHOLDER: the default camera of the blank room (sceneHost.ts buildScene). 19.2 m is that default's radius, not a tuned value:
- * clamp(max(w, l) x 0.8, 8, 55) with the blank room's 24 x 14 m gives 19.2. T2.5 measures the real framing (spec 5: about 7 m,
- * unverified) and replaces it.
+ * First-sound framing of the neutral room (T2.5, spec 5), measured and tuned 2026-11-12, 1366 x 768, Babylon's vertical fov 0.8 (the canvas is about 709 px high):
+ * the default overview of the blank room is radius 19.2 m (clamp(max(w, l) x 0.8, 8, 55), sceneHost.ts buildScene), where a placed SM58 body (0.051 x 0.162 m) is
+ * 7.1 px on its widest axis, a QL1 23 px, a K12.2 30 px. The spec's 7 m estimate was about twice too far: 7 m gives the SM58 about 19 px. 40 px for the SM58 needs a
+ * radius of about 3 m, and the zone of placements it holds for (x within 1.2 m, z within 0.5 m of the target, the SM58 the smallest of the three first devices)
+ * about 2.7 m. This pose: radius 2.7 m (above the 2 m orbit limit), from the front like the default (alpha pi/2), beta 1.1, target 0.4 m above the floor at the
+ * room's centre, so the floor devices sit near the middle of the view (a target at 1 m would put them in its lower third). It shows about 3.5 x 2.6 m of floor. Measured in
+ * the browser: tests/e2e/onboarding-framing.spec.ts (QL1, SM58, K12.2 each >= 40 px; the plain game still opens at 19.2 m). The five packages share it until a package
+ * changes its panels or its bars (T4.3): the radius does not depend on the canvas width (the fov is vertical).
  */
-const defaultFraming: FramingPose = { alpha: Math.PI / 2, beta: 1.05, radius: 19.2, target: [0, 1, 0] }
+const firstSoundFraming: FramingPose = { alpha: Math.PI / 2, beta: 1.1, radius: 2.7, target: [0, 0.4, 0] }
 
 const ALL_STEPS: readonly StepId[] = [
   'console',
@@ -158,7 +163,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
     pacing: { steps: ALL_STEPS, hintAfterMs: 20_000 },
     presenter: 'step-card',
     oscar: { leads: true, proactive: true },
-    framing: defaultFraming,
+    framing: firstSoundFraming,
   },
   2: {
     id: 2,
@@ -178,7 +183,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
     pacing: { steps: ALL_STEPS, hintAfterMs: 30_000 },
     presenter: 'checklist',
     oscar: { leads: false, proactive: true },
-    framing: defaultFraming,
+    framing: firstSoundFraming,
   },
   3: {
     id: 3,
@@ -198,7 +203,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
     pacing: { steps: ALL_STEPS, hintAfterMs: 20_000 },
     presenter: 'step-card',
     oscar: { leads: true, proactive: true },
-    framing: defaultFraming,
+    framing: firstSoundFraming,
   },
   4: {
     id: 4,
@@ -218,7 +223,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
     pacing: { steps: ALL_STEPS, hintAfterMs: 0 },
     presenter: 'checklist',
     oscar: { leads: false, proactive: false },
-    framing: defaultFraming,
+    framing: firstSoundFraming,
   },
   5: {
     id: 5,
@@ -238,7 +243,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
     pacing: { steps: ['ecoute', 'debrancher', 'rebrancher'], hintAfterMs: 25_000 },
     presenter: 'step-card',
     oscar: { leads: true, proactive: true },
-    framing: defaultFraming,
+    framing: firstSoundFraming,
   },
 })
 

@@ -931,6 +931,12 @@ export async function bootCreation(opts: { tutorialAllowed?: boolean } = {}): Pr
     picker,
     placeOpen: () => store.design().roomId !== null,
     openNeutralRoom: () => pick(cards.find((c) => c.key === 'blank')!, 'empty'),
+    frameNeutralRoom: () => {
+      const f = designPkg?.framing
+      if (!f || !host.rig) return
+      host.rig.flyToPreset({ alpha: f.alpha, beta: f.beta, radius: f.radius, target: Vector3.FromArray([...f.target]) }) // a cut under reduced motion; no engine change
+      scheduler.invalidate()
+    },
     setPanel: (p, open) => shell.setPanel(p, open),
     openInventory: (tab) => setInventory(true, { tab, focus: false }),
     returnFocus: () => canvas.focus(),

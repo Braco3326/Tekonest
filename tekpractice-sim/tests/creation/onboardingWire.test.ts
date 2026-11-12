@@ -49,6 +49,7 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
       await Promise.resolve()
       if (!opts.roomFails) place = true
     },
+    frameNeutralRoom: () => void log.push('frame'),
     setPanel: (p, open) => void log.push(`panel:${p}:${open}`),
     openInventory: (tab) => void log.push(`drawer:${tab}`),
     returnFocus: () => void log.push('focus'),
@@ -104,7 +105,7 @@ describe('the start screen answer (T2.4a)', () => {
     h.startOpts().onProfile('etudie')
     h.startOpts().onResult({ kind: 'chosen', profile: 'etudie', offer: 'skipped' })
     await settle()
-    expect(h.log).toEqual(['showStart', 'room', 'panel:tree:true', 'panel:props:true', 'drawer:consoles'])
+    expect(h.log).toEqual(['showStart', 'room', 'frame', 'panel:tree:true', 'panel:props:true', 'drawer:consoles'])
     expect(h.record()).toMatchObject({ profile: 'etudie', offer: 'skipped', request: 0 })
   })
   it('a profile that leaves the panels to the package takes the package\'s layout', async () => {
@@ -113,7 +114,7 @@ describe('the start screen answer (T2.4a)', () => {
     h.startOpts().onProfile('decouvre')
     h.startOpts().onResult({ kind: 'chosen', profile: 'decouvre', offer: 'taken' })
     await settle()
-    expect(h.log.slice(1)).toEqual(['room', 'panel:tree:false', 'panel:props:true', 'drawer:consoles'])
+    expect(h.log.slice(1)).toEqual(['room', 'frame', 'panel:tree:false', 'panel:props:true', 'drawer:consoles'])
     expect(h.record()).toMatchObject({ profile: 'decouvre', offer: 'taken', request: 1 })
   })
   it('a room that did not open applies nothing (the picker has the error)', async () => {
@@ -155,7 +156,7 @@ describe('tutorialAllowed: false (?oscar=0, an exam address) (T2.4b)', () => {
     h.startOpts().onResult({ kind: 'chosen', profile: 'projet', offer: null })
     await settle()
     expect(h.record()).toEqual({ v: 1, profile: 'projet', offer: null, request: 0, shown: [] })
-    expect(h.log).toEqual(['showStart', 'room', 'panel:tree:false', 'panel:props:false', 'drawer:consoles'])
+    expect(h.log).toEqual(['showStart', 'room', 'frame', 'panel:tree:false', 'panel:props:false', 'drawer:consoles'])
   })
   it('there is no « Premiers pas », and asking for it does nothing (no request, no room)', async () => {
     const h = harness({ tutorialAllowed: false })
@@ -171,7 +172,7 @@ describe('Aide « Premiers pas » (T2.4b)', () => {
     const h = harness()
     expect(h.ob.premiersPas).toBe(true)
     await h.ob.requestTutorial()
-    expect(h.log).toEqual(['room'])
+    expect(h.log).toEqual(['room', 'frame'])
     expect(h.record()).toMatchObject({ request: 1 })
     expect(h.ob.snapshot().record!.request).toBe(1)
   })

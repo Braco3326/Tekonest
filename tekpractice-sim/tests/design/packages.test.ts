@@ -13,6 +13,7 @@ import {
   type DesignId,
 } from '../../src/design/packages'
 import { TUTORIAL_EVENT } from '../../src/design/events'
+import { ENSEMBLE_LOWER_RADIUS } from '../../src/camera/orbitFeel'
 import { CREATION_TOKENS } from '../../src/design/creationTokens'
 
 describe('designFromSearch', () => {
@@ -171,5 +172,18 @@ describe('the table is frozen (the colour map, steps and framing are shared betw
     expect(() => {
       ;(packageById(3).framing.target as unknown as number[])[1] = 9
     }).toThrow(TypeError)
+  })
+})
+
+describe('first-sound framing (T2.5, spec 5)', () => {
+  it('every package frames the neutral room closer than its 19.2 m overview and not closer than the orbit camera\'s own 2 m lower limit', () => {
+    for (const id of DESIGN_IDS) {
+      const f = packageById(id).framing
+      expect(f.radius, `package ${id}`).toBeGreaterThanOrEqual(ENSEMBLE_LOWER_RADIUS)
+      expect(f.radius, `package ${id}`).toBeLessThan(19.2)
+      expect(Number.isFinite(f.alpha) && Number.isFinite(f.beta) && f.target.every(Number.isFinite), `package ${id}`).toBe(true)
+      expect(f.beta, `package ${id}: above the floor, short of straight down`).toBeGreaterThan(0.1)
+      expect(f.beta, `package ${id}`).toBeLessThan(Math.PI / 2)
+    }
   })
 })

@@ -75,6 +75,8 @@ export interface OnboardingWiring {
   placeOpen(): boolean
   /** Open the neutral room through the picker's own choice path (the `blank` card, « Salle vide », no dialog). Resolves when that is over, whatever the result. */
   openNeutralRoom(): Promise<void>
+  /** The camera goes to the active package's `framing` (first-sound framing, T2.5). Called only right after the neutral room was opened by the start screen or by Aide « Premiers pas »; never over a room that was already open. */
+  frameNeutralRoom(): void
   setPanel(p: 'tree' | 'props', open: boolean): void
   /** The inventory drawer opens on this tab; the focus stays where it is (the 3D view). */
   openInventory(tab: InventoryTab): void
@@ -176,6 +178,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
           } else {
             await w.openNeutralRoom()
             if (!w.placeOpen()) return // the picker shows why
+            w.frameNeutralRoom()
           }
           applyProfile(r.profile)
         })()
@@ -202,6 +205,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
         if (!w.placeOpen()) {
           await w.openNeutralRoom()
           if (!w.placeOpen()) return
+          w.frameNeutralRoom()
         }
         store.dispatch({ type: 'request' })
       })().finally(() => {
