@@ -1016,4 +1016,31 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Its `title`. */
     chipHint: 'Changer de profil : l’écran de départ se rouvre.',
   },
+  /**
+   * The tutorial « Premiers pas » (onboarding packs, T3.1, spec 6.3 and 7.2): Oscar's one sentence per step, what to do and where, never an outcome that is
+   * not true yet (no sound before Écoute). Keys follow the step ids of src/guide/tutorial.ts. `{console}` and `{micro}` = the catalog labels of the source
+   * console and of the SM58. The flow title is `menu.firstSteps` (by key). After the last step the bubble says `listen.simple` and the checklist's own mic line
+   * (`checklist.micCabled`) by key: no new wording. Every string here: à valider (tekuxwriter, 2026-11-12).
+   */
+  tutorial: {
+    console: 'Ouvrez l’inventaire (Espace), onglet Consoles, et posez la {console} sur le sol.',
+    micro: 'Posez le micro {micro}, onglet Micros.',
+    enceinte: 'Posez une enceinte, onglet Enceintes : c’est elle qui diffuse le son.',
+    consoleEnceinte: 'Sélectionnez la console, puis « Connecter à… » : la prise proposée vers l’enceinte est compatible.',
+    microConsole: 'Faites de même du micro vers la console : la prise proposée est compatible.',
+    lectureConsole: 'Sélectionnez la console, puis activez « Lecture console » dans Propriétés : c’est la source de test du simulateur.',
+    multiprise: 'Dans ce simulateur, la console et l’enceinte ont besoin de courant : posez une multiprise, onglet Secteur.',
+    /** Said with `multiprise`, in the same bubble. */
+    powerNote: 'Ici, la multiprise est la source de courant : le simulateur ne vérifie ni la prise murale ni la puissance.',
+    courantConsole: 'Reliez la console à la multiprise.',
+    courantEnceinte: 'Reliez aussi l’enceinte à la multiprise.',
+    ecoute: 'Ouvrez Écoute, puis Signal de test.',
+    /** Package 5 only, after `ecoute` (a sound is playing): one of two speakers is unplugged. */
+    debrancher: 'Débranchez le câble de la console vers l’une des enceintes : cette enceinte se tait, l’autre continue.',
+    rebrancher: 'Rebranchez-le : la prise proposée est compatible.',
+    /** An accepted connection (with a nod, T5): the only acknowledgement; never « bien réglé », « bravo », « correct ». */
+    accepted: 'Connexion acceptée.',
+    /** Oscar's offer of the power helper (T3.3 and T3.4 wire it): cabling only, in the simulator. */
+    helperOffer: 'Je peux brancher pour vous, dans le simulateur.',
+  },
 }

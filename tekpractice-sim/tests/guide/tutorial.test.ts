@@ -2,6 +2,8 @@
 // for, the ONE step list (ids, completing events), and the anchor resolvers. Pure: no DOM; the vendored `matchesDone` decides what ends a step.
 import { describe, expect, it } from 'vitest'
 import { makeRegistry } from '../helpers'
+import { offends } from '../creation/honestyLists'
+import { COPY } from '../../src/creation/copy'
 import { ConnectionGraph } from '../../src/engine/ConnectionGraph'
 import { registerProposals } from '../../src/creation/betaDevices'
 import type { DeviceT } from '../../src/engine/CatalogLoader'
@@ -13,6 +15,7 @@ import {
   annotateDevice,
   annotatePlayback,
   annotateTutorialEvent,
+  closingLines,
   nextConnectionStepFor,
   pairOf,
   resolveTutorialAnchor,
@@ -438,5 +441,72 @@ describe('anchor resolvers (pure, on a fake page)', () => {
       throw new Error('page')
     }
     expect(resolveTutorialAnchor(step('console'), bad)).toBeNull()
+  })
+})
+
+// ── T3.1b: the tutorial's words (COPY `tutorial`, deck rows checked by tests/creation/copyDeck.test.ts, banned list by tests/creation/honesty.test.ts too) ──
+
+describe('tutorial copy', () => {
+  const T = (): Readonly<Record<string, string>> => COPY.tutorial ?? {}
+  const words = (s: string): number => s.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length
+  const text = (key: string): string => {
+    const [section, name] = key.split('.')
+    return COPY[section]?.[name] ?? ''
+  }
+  /** Keys that no step says: the accepted-connection line and the helper offer (wired by T5 and T3.3). */
+  const EXTRA = ['accepted', 'helperOffer']
+
+  it('every step key exists, and every tutorial key is said by a step or is one of the two extras', () => {
+    for (const s of TUTORIAL_STEPS) for (const k of s.sayKeys) expect(text(k), k).not.toBe('')
+    const said = new Set(TUTORIAL_STEPS.flatMap((s) => s.sayKeys.map((k) => k.slice('tutorial.'.length))))
+    expect(Object.keys(T()).filter((k) => !said.has(k) && !EXTRA.includes(k))).toEqual([])
+    for (const k of EXTRA) expect(T()[k], k).toBeTruthy()
+  })
+
+  it('the spec 6.3 lines, the power note and the helper offer, as written', () => {
+    expect(T().powerNote).toBe('Ici, la multiprise est la source de courant : le simulateur ne vérifie ni la prise murale ni la puissance.')
+    expect(T().helperOffer).toBe('Je peux brancher pour vous, dans le simulateur.')
+    expect(T().accepted).toBe('Connexion acceptée.')
+    expect(T().ecoute).toBe('Ouvrez Écoute, puis Signal de test.')
+    // the learner places the strip: the line asks them to, it never says it is placed for them
+    expect(T().multiprise).toContain('posez une multiprise')
+  })
+
+  it('at most 200 words: the whole section with listen.simple, and each package path with listen.simple and the mic line', () => {
+    const section = Object.values(T()).reduce((n, s) => n + words(s), 0) + words(COPY.listen!.simple!)
+    expect(section).toBeLessThanOrEqual(200)
+    for (const d of DESIGN_IDS) {
+      const path = stepsFor(packageById(d).pacing.steps).flatMap((s) => s.sayKeys.map(text))
+      const n = [...path, T().accepted!, T().helperOffer!, COPY.listen!.simple!, COPY.checklist!.micCabled!].reduce((m, s) => m + words(s), 0)
+      expect(n, `package ${d}`).toBeLessThanOrEqual(200)
+    }
+  })
+
+  it('no banned phrase (shared list, learner scope), « vous » only, no « tu »', () => {
+    for (const [k, s] of Object.entries(T())) {
+      expect(offends(s, 'learner'), k).toEqual([])
+      expect(s, k).not.toMatch(/\b(tu|toi|ton|ta|tes)\b/i)
+    }
+  })
+
+  it('no line claims a sound before Écoute: steps before `ecoute` never say entendre, jouer or « en cours »; `debrancher` always comes after `ecoute`', () => {
+    const before = TUTORIAL_STEPS.slice(0, TUTORIAL_STEPS.findIndex((s) => s.id === 'ecoute'))
+    for (const s of before) for (const k of s.sayKeys) expect(text(k), k).not.toMatch(/entend|\bjou|en cours|se tait|continue/i)
+    for (const d of DESIGN_IDS) {
+      const ids = packageById(d).pacing.steps
+      if (ids.includes('debrancher')) expect(ids.indexOf('ecoute'), `package ${d}`).toBeLessThan(ids.indexOf('debrancher'))
+    }
+  })
+
+  it('the only acknowledgement is « Connexion acceptée. »: no other tutorial line says accepté, réussi, bravo or bien', () => {
+    for (const [k, s] of Object.entries(T())) if (k !== 'accepted') expect(s, k).not.toMatch(/accept|réussi|bravo|\bbien\b/i)
+  })
+
+  it('after the last step: listen.simple by key, then the mic line (the checklist’s own, by key) or the engine’s NO_MIC text', () => {
+    const noMic = { code: 'NO_MIC', text_fr: 'texte du moteur' }
+    expect(closingLines({ micOk: false, micReasons: [noMic] })).toEqual([COPY.listen!.simple, 'texte du moteur'])
+    expect(closingLines({ micOk: true, micReasons: [] })).toEqual([COPY.listen!.simple, COPY.checklist!.micCabled])
+    // a mic is cabled but has its own reason (console off, an error on its port): still cabled
+    expect(closingLines({ micOk: false, micReasons: [{ code: 'HOST_UNPOWERED', text_fr: 'x' }] })).toEqual([COPY.listen!.simple, COPY.checklist!.micCabled])
   })
 })

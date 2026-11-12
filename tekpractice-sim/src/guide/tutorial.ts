@@ -24,6 +24,7 @@
 import type { DeviceT, Registry } from '../engine/CatalogLoader'
 import { ConnectionGraph } from '../engine/ConnectionGraph'
 import { isUnverified } from '../creation/betaDevices'
+import { COPY } from '../creation/copy'
 import { tabFor } from '../creation/inventory'
 import type { StepId } from '../design/packages'
 import { MENU_MATERIEL, inventoryItemSelector, inventoryTabSelector, propsKeySelector, refKey } from './bridge/shared'
@@ -387,4 +388,18 @@ export function resolveTutorialAnchor(anchor: string, env: AnchorEnv): Rect | nu
   } catch {
     return null
   }
+}
+
+// ── after the last step ─────────────────────────────────────────────────────────────────────────────────────────────
+
+/**
+ * What is said once the test signal plays (spec 6.3): `listen.simple` by key (the pinned sentence), then the mic line: the checklist's own
+ * `checklist.micCabled` when a mic is cabled to a console mic input (`micOk`, or a mic reason that is not NO_MIC), else the engine's NO_MIC text verbatim.
+ * Both are true while a sound plays: Écoute plays a song, a file or the test signal, never the mic.
+ */
+export function closingLines(mic: { micOk: boolean; micReasons: readonly { code: string; text_fr: string }[] }): string[] {
+  const simple = COPY.listen?.simple ?? ''
+  const noMic = mic.micReasons.find((r) => r.code === 'NO_MIC')
+  const line = mic.micOk || noMic === undefined ? (COPY.checklist?.micCabled ?? '') : noMic.text_fr
+  return [simple, line].filter((s) => s !== '')
 }
