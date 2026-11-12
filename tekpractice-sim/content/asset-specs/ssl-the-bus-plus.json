@@ -1,0 +1,160 @@
+{
+  "id": "ssl-the-bus-plus",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 89,
+    "d": 303
+  },
+  "ports": [
+    {
+      "portId": "in-main-audio-inputs-ch1-ch2-1",
+      "face": "io",
+      "xMm": 45,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-main-audio-inputs-ch1-ch2-2",
+      "face": "io",
+      "xMm": 75,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-audio-outputs-ch1-ch2-1",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-audio-outputs-ch1-ch2-2",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-ext-s-c-in-external-side-chain-inputs-1",
+      "face": "io",
+      "xMm": 45,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-ext-s-c-in-external-side-chain-inputs-2",
+      "face": "io",
+      "xMm": 75,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-ext-send-side-chain-sends-1",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-ext-send-side-chain-sends-2",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-mains-in-auto-ranging-psu-rocker-switch",
+      "face": "io",
+      "xMm": 410,
+      "yMm": 40,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6.35,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 70,
+      "windowWMm": 80,
+      "windowHMm": 30,
+      "windowXMm": 120,
+      "windowYMm": 30,
+      "windowDepthMm": 2.5
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.bhphotovideo.com/c/product/1702222-REG/solid_state_logic_729743x2_bus_next_generation_bus.html",
+      "note": "equipment plan source (research grade: dealer); size 483 x 303 x 89 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.bhphotovideo.com/c/product/1702222-REG/solid_state_logic_729743x2_bus_next_generation_bus.html",
+      "note": "Plan size source: B&H via a search summary (page returned 403): 19 x 3.5 x 11.9 in, 2U (the axis order is assumed: size estimate, beta-modelled)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.soundonsound.com/reviews/ssl-the-bus-plus",
+      "note": "Sound On Sound review (read through a search summary, not opened): the rear panel has an IEC inlet with its switch and two quartets of XLR: a main electronically balanced input and output for each channel, and another pair each for the side-chain. The count of side-chain connectors is not confirmed by a manufacturer page (the SSL product page lists no connector), so the connector set is not documented: beta-modelled. All positions are GUESSES."
+    },
+    {
+      "kind": "reference",
+      "url": "https://solidstatelogic.com/products/the-bus-plus",
+      "note": "build: rack-box with a gain-reduction window (an ESTIMATE, no photo or drawing opened). build.projection: our own generic artwork; no photo, no logo, no lettering."
+    }
+  ]
+}

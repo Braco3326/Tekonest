@@ -1,0 +1,163 @@
+{
+  "id": "behringer-europower-ep4000",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 88,
+    "d": 402
+  },
+  "ports": [
+    {
+      "portId": "in-xlr-1",
+      "face": "io",
+      "xMm": 45,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-2",
+      "face": "io",
+      "xMm": 75,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-trs-1",
+      "face": "io",
+      "xMm": 45,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-trs-2",
+      "face": "io",
+      "xMm": 75,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-spk-1",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-spk-2",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-post-1",
+      "face": "io",
+      "xMm": 230,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "binding-post",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-post-2",
+      "face": "io",
+      "xMm": 230,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "binding-post",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 410,
+      "yMm": 40,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6.35,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 70,
+      "frontVentSlots": 5,
+      "frontVentRows": 7,
+      "frontVentSlotLenMm": 36,
+      "frontVentSlotWidthMm": 3,
+      "frontVentColPitchMm": 42,
+      "frontVentRowPitchMm": 8.5,
+      "frontVentXMm": 130,
+      "frontVentYMm": 44
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/BEEP4000.html",
+      "note": "equipment plan source (research grade: dealer); size 483 x 402 x 88 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/BEEP4000.html",
+      "note": "Plan size source: Adorama and the Behringer manual excerpts, 88 H x 483 W x 402 D mm."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.adorama.com/col/productManuals/BEEP4000.pdf",
+      "note": "Behringer EUROPOWER EP4000 user manual (downloaded, read as text on 2026-11-12): per channel a balanced XLR input and a stereo 1/4 in TRS input; two \"professional speaker connectors (compatible with Neutrik Speakon connectors)\" and two pairs of binding posts as outputs; power through an IEC connector with the cord supplied. The manual does not name the speakON type (NL4 assumed) nor the IEC inlet type (C14 assumed), so the connector set is not counted as documented: beta-modelled. All positions are GUESSES."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.adorama.com/col/productManuals/BEEP4000.pdf",
+      "note": "build: rack-box v3b front vent block (an ESTIMATE of the usual front layout of this amplifier class, no photo opened). build.projection: our own generic artwork; no photo, no logo, no lettering."
+    }
+  ]
+}

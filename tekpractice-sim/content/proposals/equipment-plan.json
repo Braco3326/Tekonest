@@ -1969,7 +1969,8 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "dbx-166xs",
@@ -2291,7 +2292,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "tascam-ss-cdr250n",
@@ -2405,7 +2407,8 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "ams-neve-1073dpd",
@@ -2592,11 +2595,15 @@
     "https://www.crownaudio.com/en/products/xti-4002"
    ],
    "notes": "Crown page [M]: 88.9 H x 482.6 W x 311.2 D mm (2U), 8.4 kg; IEC 15 A; audio connectors not listed on the page read. Source: https://www.crownaudio.com/en/products/xti-4002",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "eaton-5p-1u-ups",
@@ -3521,7 +3528,8 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "bss-ar-133",
