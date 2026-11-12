@@ -596,7 +596,7 @@ test('the page\'s « Pourquoi ? » button still works with the guide on (needs a
   test.skip(count === 0, 'keyless build: the page offers no « Pourquoi ? » button (as without the guide); run against a build made with VITE_AI_COACH_KEY set and E2E_EXPECT_COACH_KEY=1')
   // The coach's request never leaves the machine: a stub answers (a sentence the grounding check rejects, which the page shows as its own calm message).
   const cors = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' }
-  await page.route('https://api.anthropic.com/**', (route) =>
+  await page.route(/\/v1\/messages$/, (route) =>
     route.request().method() === 'OPTIONS'
       ? route.fulfill({ status: 204, headers: cors })
       : route.fulfill({
