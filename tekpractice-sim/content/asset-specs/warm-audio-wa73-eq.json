@@ -1,0 +1,119 @@
+{
+  "id": "warm-audio-wa73-eq",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44,
+    "d": 254
+  },
+  "ports": [
+    {
+      "portId": "in-mic-xlr",
+      "face": "io",
+      "xMm": 55.7,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    },
+    {
+      "portId": "in-line-trs",
+      "face": "io",
+      "xMm": 77.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr",
+      "face": "io",
+      "xMm": 99.5,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-trs",
+      "face": "io",
+      "xMm": 121.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-di-ts",
+      "face": "opposite",
+      "xMm": 440,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 0.8,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 440,
+      "earHoleMm": 6.35,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3093046,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 0.8
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--WAUWA73EQ",
+      "note": "equipment plan source (research grade: dealer); size 483 x 254 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.fullcompass.com/prod/541631-warm-audio-wa-73eq-wa73-eq",
+      "note": "Dealer listings read through a search summary 2026-11-12 (the zzounds page answered 403): a front-panel 1/4 in TS DI input, XLR mic input, balanced TRS line input, balanced XLR and TRS outputs, TS insert send and return; listings disagree on whether the XLR mic input is on the front or the rear, and none names the mains connection. So beta-modelled: modelled subset only (XLR mic in, TRS line in, XLR out, TRS out on the rear, DI on the front), no mains inlet, no inserts. 1U 483 x 254 x 44 mm (dealer, w x d x h). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): the face pictures are connectors and knobs drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.fullcompass.com/prod/541631-warm-audio-wa-73eq-wa73-eq",
+      "note": "Dealer listings read through a search summary 2026-11-12 (the zzounds page answered 403): a front-panel 1/4 in TS DI input, XLR mic input, balanced TRS line input, balanced XLR and TRS outputs, TS insert send and return; listings disagree on whether the XLR mic input is on the front or the rear, and none names the mains connection. So beta-modelled: modelled subset only (XLR mic in, TRS line in, XLR out, TRS out on the rear, DI on the front), no mains inlet, no inserts. 1U 483 x 254 x 44 mm (dealer, w x d x h). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): the face pictures are connectors and knobs drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.fullcompass.com/prod/541631-warm-audio-wa-73eq-wa73-eq",
+      "note": "Dealer listings read through a search summary 2026-11-12 (the zzounds page answered 403): a front-panel 1/4 in TS DI input, XLR mic input, balanced TRS line input, balanced XLR and TRS outputs, TS insert send and return; listings disagree on whether the XLR mic input is on the front or the rear, and none names the mains connection. So beta-modelled: modelled subset only (XLR mic in, TRS line in, XLR out, TRS out on the rear, DI on the front), no mains inlet, no inserts. 1U 483 x 254 x 44 mm (dealer, w x d x h). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): the face pictures are connectors and knobs drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

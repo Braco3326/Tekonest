@@ -1,0 +1,141 @@
+{
+  "id": "lexicon-pcm96",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 44.5,
+    "d": 317.5
+  },
+  "ports": [
+    {
+      "portId": "in-analog-input-l-r-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-analog-input-l-r-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-analog-output-l-r-1",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-analog-output-l-r-2",
+      "face": "io",
+      "xMm": 137,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes-ebu-input",
+      "face": "io",
+      "xMm": 164,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes-ebu-output",
+      "face": "io",
+      "xMm": 191,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "in-word-clock-input",
+      "face": "io",
+      "xMm": 213.2,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mains-in-3-pin-iec",
+      "face": "io",
+      "xMm": 238.4,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 2895667,
+      "bodyRgb": 1710878
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://shop.solotech.com/products/lexicon-pcm96-digital-multi-effects-processor",
+      "note": "equipment plan source (research grade: dealer); size 482.6 x 317.5 x 44.5 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/lexicon-pcm96-reverb-processor/",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/lexicon-pcm96-reverb-processor/",
+      "note": "Go Knight dealer page (read by a research pass 2026-11-12; the datasheet PDF was unreadable): two XLR analog inputs and outputs, XLR AES/EBU in and out, BNC word clock input, two FireWire, two RJ-45, MIDI in, out and thru, a 3-pin IEC inlet (from a summary). The size has an assumed axis order, so beta-modelled; the ports are the Bêta proposal ports (8 of 13 listed). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

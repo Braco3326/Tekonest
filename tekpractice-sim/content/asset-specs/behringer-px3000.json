@@ -1,0 +1,89 @@
+{
+  "id": "behringer-px3000",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 44.5,
+    "d": 93
+  },
+  "ports": [
+    {
+      "portId": "front-1",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 30,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "bidir"
+    },
+    {
+      "portId": "front-2",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 14,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "bidir"
+    },
+    {
+      "portId": "rear-1",
+      "face": "io",
+      "xMm": 440,
+      "yMm": 30,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "bidir"
+    },
+    {
+      "portId": "rear-2",
+      "face": "io",
+      "xMm": 440,
+      "yMm": 14,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 0.8,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 440,
+      "earHoleMm": 6.35,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "plateRgb": 2500652,
+      "bodyRgb": 1579292
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 0.8
+  },
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://www.manualowl.com/m/Behringer/ULTRAPATCH-PRO-PX3000/Manual/334577",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 93 x 44.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.manualowl.com/m/Behringer/ULTRAPATCH-PRO-PX3000/Manual/334577",
+      "note": "Behringer ULTRAPATCH PRO PX3000 specification sheet and dealer listings read through a search summary 2026-11-12: a 48-point balanced patchbay on 1/4 in TRS jacks, front and rear, with per-pair mode switches; the point counts per panel are not stated clearly, so beta-modelled with a 4-jack subset (2 front, 2 rear, same layout as the S-Patch Plus). 482.6 x 93 x 44.5 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

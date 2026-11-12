@@ -1,0 +1,192 @@
+{
+  "id": "motu-828es",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44.5,
+    "d": 177.5
+  },
+  "ports": [
+    {
+      "portId": "in-line-1",
+      "face": "io",
+      "xMm": 51.2,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-2",
+      "face": "io",
+      "xMm": 68.6,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-1",
+      "face": "io",
+      "xMm": 86,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-2",
+      "face": "io",
+      "xMm": 103.4,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-1",
+      "face": "io",
+      "xMm": 125.6,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-2",
+      "face": "io",
+      "xMm": 152.6,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-spdif",
+      "face": "io",
+      "xMm": 174.8,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "out-spdif",
+      "face": "io",
+      "xMm": 192.2,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "out"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 209.9,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 227.6,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 424,
+      "yMm": 22.25,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-1",
+      "face": "opposite",
+      "xMm": 120,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "opposite",
+      "xMm": 160,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 2895667,
+      "bodyRgb": 1710878
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://motu.com/products/proaudio/828es/specs.html",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 177.5 x 44.5 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.long-mcquade.com/94050/Pro-Audio-Recording/Audio-Interfaces/Mark-Of-The-Unicorn/828-ES-28x32-Thunderbolt-USB2-Audio-Interface.htm",
+      "note": "Long and McQuade page and the Sound On Sound review (read 2026-11-12): front two XLR / TRS combo inputs and two headphone jacks; rear eight TRS line inputs and outputs, two XLR main outputs, optical ADAT banks, RCA S/PDIF in and out, Thunderbolt, USB, RJ45 AVB, MIDI, BNC word clock, a foot-switch jack and an IEC mains socket (the Sound On Sound review names IEC). The motu.com 828es URL now describes the newer USB-C-only 828, so it was not used. The size (483 x 177.5 x 44.5 mm) has an assumed axis order, so beta-modelled; modelled subset only (headphone jacks, ADAT, MIDI, Thunderbolt and word clock not modelled). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "id": "allen-heath-dx168",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 410,
+    "h": 185,
+    "d": 190
+  },
+  "ports": [
+    {
+      "portId": "in-xlr-1",
+      "face": "io",
+      "xMm": 32,
+      "yMm": 107.2,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    },
+    {
+      "portId": "in-xlr-2",
+      "face": "io",
+      "xMm": 59,
+      "yMm": 107.2,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    },
+    {
+      "portId": "out-xlr-1",
+      "face": "io",
+      "xMm": 86,
+      "yMm": 107.2,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-xlr-2",
+      "face": "io",
+      "xMm": 113,
+      "yMm": 107.2,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 141,
+      "yMm": 107.2,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 35,
+      "yMm": 76,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 12,
+      "plateFilletMm": 5,
+      "filletMm": 6,
+      "filletSegments": 10,
+      "feetMm": 3,
+      "feetDiaMm": 12,
+      "plateRgb": 2763824,
+      "bodyRgb": 1776671
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 4.5
+  },
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://manualshive.com/en/manual/allen-and-heath/dx168/2898648?page=4",
+      "note": "equipment plan source (research grade: dealer); size 410 x 190 x 185 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://manualmachine.com/allenheath/dx168/2536919-user-manual",
+      "note": "Read through a search summary 2026-11-12 (the A&H support page answered 403): 16 XLR mic/line inputs, 8 XLR outputs, an etherCON DX port (sellers list two, the manual summary one) and a 3-pin IEC inlet 100-240 V. Axis order of the size is assumed (410 x 190 x 185 mm, w x d x h) and the counts conflict, so beta-modelled; modelled subset: 2 inputs, 2 outputs, one DX link, the inlet. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

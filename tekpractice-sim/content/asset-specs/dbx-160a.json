@@ -1,0 +1,113 @@
+{
+  "id": "dbx-160a",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44,
+    "d": 165
+  },
+  "ports": [
+    {
+      "portId": "in-xlr",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-trs",
+      "face": "io",
+      "xMm": 78.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr",
+      "face": "io",
+      "xMm": 100.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-trs",
+      "face": "io",
+      "xMm": 122.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3093046,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://manualmachine.com/dbxpro/160a/1285223-user-manual",
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://manualmachine.com/dbxpro/160a/1285223-user-manual",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 165 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://c3.zzounds.com/media/160ACutSheet-160ae9a0b6f5c925275ab71466c59d56.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "manual",
+      "url": "https://manualmachine.com/dbxpro/160a/1285223-user-manual",
+      "note": "dbx 160A user manual and cut sheet read through a search summary 2026-11-12: floating balanced XLR and 1/4 in TRS inputs, a floating balanced XLR output and an unbalanced 1/4 in TRS output; a DETECTOR (side-chain) input jack whose connector type no result states (not modelled); no power connection stated (none modelled). 483 x 165 x 44 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://manualmachine.com/dbxpro/160a/1285223-user-manual",
+      "note": "dbx 160A user manual and cut sheet read through a search summary 2026-11-12: floating balanced XLR and 1/4 in TRS inputs, a floating balanced XLR output and an unbalanced 1/4 in TRS output; a DETECTOR (side-chain) input jack whose connector type no result states (not modelled); no power connection stated (none modelled). 483 x 165 x 44 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://manualmachine.com/dbxpro/160a/1285223-user-manual",
+      "note": "dbx 160A user manual and cut sheet read through a search summary 2026-11-12: floating balanced XLR and 1/4 in TRS inputs, a floating balanced XLR output and an unbalanced 1/4 in TRS output; a DETECTOR (side-chain) input jack whose connector type no result states (not modelled); no power connection stated (none modelled). 483 x 165 x 44 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

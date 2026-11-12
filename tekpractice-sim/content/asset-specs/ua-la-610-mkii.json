@@ -1,0 +1,135 @@
+{
+  "id": "ua-la-610-mkii",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 89,
+    "d": 311
+  },
+  "ports": [
+    {
+      "portId": "in-mic-xlr",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-line-xlr",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-hiz",
+      "face": "opposite",
+      "xMm": 440,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "gain",
+      "kind": "knob",
+      "face": "opposite",
+      "xMm": 90,
+      "yMm": 50,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 12
+      }
+    },
+    {
+      "controlId": "phantom-48v",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 130,
+      "yMm": 50,
+      "axis": "z",
+      "sizeMm": {
+        "w": 9,
+        "h": 9,
+        "d": 3
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 60,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "plateRgb": 2961717,
+      "bodyRgb": 1711135
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.zzounds.com/item--UADLA610MK2",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/uala610m2d.html",
+      "note": "equipment plan source (research grade: dealer); size 483 x 311 x 89 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--UADLA610MK2",
+      "note": "Dealer listings (zzounds, B&H, American Musical, Full Compass data sheet) and the manual, read through a search summary 2026-11-12: rear panel balanced XLR mic input, balanced XLR line input and balanced XLR line output; a 1/4 in Hi-Z instrument input on the front panel; the mains connection is not stated (none modelled). The plan lists the family rack-box-v3b; no meter window, front vent block or handles are modelled because no page read states them, so the rack-box v2 params are used. 483 x 311 x 89 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--UADLA610MK2",
+      "note": "Dealer listings (zzounds, B&H, American Musical, Full Compass data sheet) and the manual, read through a search summary 2026-11-12: rear panel balanced XLR mic input, balanced XLR line input and balanced XLR line output; a 1/4 in Hi-Z instrument input on the front panel; the mains connection is not stated (none modelled). The plan lists the family rack-box-v3b; no meter window, front vent block or handles are modelled because no page read states them, so the rack-box v2 params are used. 483 x 311 x 89 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

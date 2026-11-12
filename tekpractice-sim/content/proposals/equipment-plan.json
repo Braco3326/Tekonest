@@ -4057,7 +4057,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "dbx-afs2",
@@ -4085,7 +4086,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "digico-sd-rack",
@@ -4114,7 +4116,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "digico-sd12",
@@ -4334,7 +4337,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "allen-heath-qu-16",
@@ -4961,7 +4965,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "lynx-aurora-n",
@@ -5592,7 +5597,8 @@
     "passive",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "crown-pzm-30d",
@@ -5650,7 +5656,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "elgato-stream-deck-mk2",
@@ -5858,7 +5865,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "presonus-faderport-8",
@@ -6216,7 +6224,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "warm-audio-wa73-eq",
@@ -6243,7 +6252,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "whirlwind-sp1x3",
