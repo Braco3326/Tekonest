@@ -37,3 +37,16 @@ export function catalogWithProposals(catalog: CatalogT, proposalsFile: unknown):
   }
   return extra.length ? { ...catalog, devices: [...catalog.devices, ...extra] } : catalog
 }
+
+/**
+ * The catalogue as the pipeline sees it between the two promotion stages (tools/promoteDevice.ts `stagedDevices`): the devices that stage 2 would
+ * write replace a Bêta proposal of the same id (a promoted device leaves the proposals) or are appended (a new beta-modelled device). A device of
+ * the real catalogue (`realIds`) is never replaced. Pure.
+ */
+export function catalogWithStaged(catalog: CatalogT, staged: CatalogT['devices'], realIds: ReadonlySet<string>): CatalogT {
+  if (!staged.length) return catalog
+  const byId = new Map(staged.filter((d) => !realIds.has(d.id)).map((d) => [d.id, d]))
+  const replaced = catalog.devices.map((d) => byId.get(d.id) ?? d)
+  const present = new Set(catalog.devices.map((d) => d.id))
+  return { ...catalog, devices: [...replaced, ...[...byId.values()].filter((d) => !present.has(d.id))] }
+}

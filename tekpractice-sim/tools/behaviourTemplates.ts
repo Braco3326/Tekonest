@@ -1,5 +1,9 @@
 /**
- * behaviourTemplates: per-category port / control / routing / acoustic templates for a promoted device (Wave 0, Task 0.4).
+ * behaviourTemplates: per-category and per-trait control / routing / acoustic templates for a promoted device (Wave 0, Task 0.4; Wave 0b).
+ *
+ * Wave 0b: a template never invents PORTS. The ports come from the connector set the datasheet documents (the asset spec's ports); the template adds
+ * behaviour on top of them, chosen by category AND by the plan row's traits (condenser / ribbon / phantom-powered, handheld / bodypack / battery,
+ * receiver, processor, passive / active, desk). See applyTemplate.
  *
  * The templates are DERIVED from how the 25 verified devices of content/catalog.json are written, not invented:
  *  - microphone      shure-sm58, shure-sm57, ev-re20 (one out-xlr mic-level, no power); neumann-u87-ai (condenser: requiresPhantom)
@@ -84,61 +88,19 @@ export function kindOf(category: string, traits: readonly TraitT[] = []): Kind {
   const k = CATEGORY_KIND[category]
   if (!k) throw new Error(`no behaviour template for category "${category}": add it to CATEGORY_KIND`)
   if (k === 'speaker-passive' && traits.includes('active')) return 'speaker-active'
+  if (k === 'speaker-active' && traits.includes('passive') && !traits.includes('active')) return 'speaker-passive'
   if (k === 'amp' && traits.includes('processor')) return 'outboard'
   return k
 }
 
-/** Kinds that always have a mains inlet (a device with a plug in the wall). The others get one only when the documented ports list it. */
-const MAINS_ALWAYS: ReadonlySet<Kind> = new Set(['preamp', 'console', 'speaker-active', 'amp', 'outboard', 'interface', 'wireless'])
-
-const MAINS_PORT: PlanPort = { id: 'power-in', role: 'power', dir: 'in', connector: 'iec-c14', signal: 'mains-power' }
+const MAINS_ALWAYS_NOTE: ReadonlySet<Kind> = new Set(['preamp', 'console', 'speaker-active', 'amp', 'outboard', 'interface'])
 const AUDIO_IN = ['mic-level', 'line-level-pro', 'line-level-consumer', 'instrument-hiz', 'aes3', 'spdif', 'madi', 'aoip', 'usb-audio']
 const AUDIO_OUT = ['mic-level', 'line-level-pro', 'line-level-consumer', 'instrument-hiz', 'speaker-level', 'headphone-level', 'aes3', 'spdif', 'madi', 'aoip', 'usb-audio']
 
-/** Default ports when the plan documents none (a template guess, said so in the notes). */
-const DEFAULT_PORTS: Readonly<Record<Kind, readonly PlanPort[]>> = {
-  mic: [{ id: 'out-xlr', role: 'xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' }],
-  di: [
-    { id: 'in-instrument', role: 'instrument', dir: 'in', connector: 'trs-quarter', signal: 'instrument-hiz' },
-    { id: 'thru-out', role: 'thru', dir: 'out', connector: 'ts-quarter', signal: 'instrument-hiz' },
-    { id: 'out-xlr', role: 'xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' },
-  ],
-  preamp: [
-    { id: 'in-mic', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' },
-    { id: 'out-line', role: 'line', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
-  ],
-  interface: [
-    { role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level', count: 2 },
-    { role: 'line', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro', count: 2 },
-    { id: 'usb', role: 'usb', dir: 'bidir', connector: 'usb-c', signal: 'usb-audio' },
-  ],
-  console: [
-    { role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level', count: 2 },
-    { id: 'out-main-l', role: 'main-l', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
-    { id: 'out-main-r', role: 'main-r', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
-  ],
-  'speaker-active': [{ id: 'in-analog', role: 'analog', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' }],
-  'speaker-passive': [{ id: 'in-speaker', role: 'speaker', dir: 'in', connector: 'speakon-nl4', signal: 'speaker-level' }],
-  amp: [
-    { role: 'line', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro', count: 2 },
-    { role: 'spk', dir: 'out', connector: 'speakon-nl4', signal: 'speaker-level', count: 2 },
-  ],
-  outboard: [
-    { role: 'line', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro', count: 2 },
-    { role: 'line', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro', count: 2 },
-  ],
-  wireless: [{ id: 'out-xlr', role: 'xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' }],
-  headphones: [{ id: 'in-35mm', role: '35mm', dir: 'in', connector: 'trs-35mm', signal: 'headphone-level' }],
-  recorder: [
-    { id: 'in-mic', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level', flags: ['isMicInput'] },
-    { id: 'out-phones', role: 'phones', dir: 'out', connector: 'trs-35mm', signal: 'headphone-level' },
-    { id: 'usb', role: 'usb', dir: 'bidir', connector: 'usb-c', signal: 'usb-audio' },
-  ],
-  computer: [{ id: 'usb', role: 'usb', dir: 'bidir', connector: 'usb-c', signal: 'usb-audio' }],
-  power: [{ role: 'out', dir: 'out', connector: 'iec-c13', signal: 'mains-power', count: 4, flags: ['isMainsSource'] }],
-  accessory: [],
-  cable: [],
-}
+/** Traits that mean the device runs on batteries: it has no mains inlet and no power toggle, whatever its category says. */
+const BATTERY_TRAITS: readonly TraitT[] = ['battery', 'handheld', 'bodypack']
+const isBatteryDevice = (traits: readonly TraitT[]): boolean => traits.some((t) => BATTERY_TRAITS.includes(t))
+
 
 // ── port ids ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -229,6 +191,8 @@ export interface Template {
   renamed: Record<string, string>
   /** What the template added or assumed, for the entry's notes and the tool's report. */
   notes: string[]
+  /** Things a person must look at (a receiver with no mains inlet documented, a desk with no outputs): reported by the promotion tool, never silently fixed. */
+  issues: string[]
 }
 
 const POWER: CatalogControl = { id: 'power', type: 'toggle', label: 'Alimentation', default: true }
@@ -239,6 +203,7 @@ const withFlag = (p: CatalogPort, ...fs: NonNullable<CatalogPort['flags']>): Cat
   for (const f of fs) if (!merged.includes(f)) merged.push(f)
   return { ...p, flags: merged }
 }
+const withoutFlag = (p: CatalogPort, f: NonNullable<CatalogPort['flags']>[number]): CatalogPort => ({ ...p, flags: (p.flags ?? []).filter((x) => x !== f) })
 
 /** A port whose flag list ended up empty carries no `flags` key at all (the catalogue style). */
 function dropEmptyFlags(p: CatalogPort): CatalogPort {
@@ -260,36 +225,64 @@ const nominalAcoustic = (today: string): CatalogAcoustic => {
 }
 
 /**
- * The template for a device of `category`: `given` are the ports the datasheet / the Bêta proposal document (an empty list = the kind's default
- * ports); the template completes them (mains inlet, flags), adds the controls of its kind and builds the routes from the final ports.
+ * Whether a microphone-level output of a device with these traits requires phantom power from the chain: a phantom-powered device, or a condenser
+ * that is not fed another way (an externally powered tube or lavalier is `active`, a battery one `battery`). A ribbon and a dynamic never do.
  */
-export function applyTemplate(category: string, row: Pick<PlanRow, 'traits' | 'portsSummary'>, given: readonly PlanPort[], today: string = new Date().toISOString().slice(0, 10)): Template {
+export function requiresPhantomByTraits(traits: readonly TraitT[], kind: Kind): boolean {
+  if (traits.includes('ribbon') || traits.includes('dynamic')) return false
+  if (kind === 'di') return traits.includes('phantom-powered') || (traits.includes('active') && !traits.includes('battery'))
+  return traits.includes('phantom-powered') || (traits.includes('condenser') && !traits.includes('active') && !traits.includes('battery'))
+}
+
+/**
+ * The routes of a DESK (a console of any category): every audio input is routed to the main outputs. The main outputs are the documented ports whose
+ * id starts with `out-main` (the QL1 pattern: out-main-l, out-main-r); a desk with none routes every input to all its non-headphone, non-speaker
+ * audio outputs. So a promoted desk always passes signal when its spec lists at least one audio output (a desk with none is reported as an issue).
+ */
+function deskRouting(ins: readonly CatalogPort[], outs: readonly CatalogPort[]): CatalogRoute[] {
+  const usable = outs.filter((q) => q.signal !== 'headphone-level' && q.signal !== 'speaker-level')
+  const main = usable.filter((q) => q.portId.startsWith('out-main'))
+  const to = (main.length ? main : usable).map((q) => q.portId)
+  if (!to.length) return []
+  return ins.filter((q) => q.signal === 'mic-level' || q.signal === 'line-level-pro' || q.signal === 'line-level-consumer' || q.signal === 'instrument-hiz').map((p) => ({ from: p.portId, to }))
+}
+
+/**
+ * The behaviour template for a device of `category`. `given` are the ports the DATASHEET documents (the asset spec's ports, each with connector,
+ * signal, direction, flags): Wave 0b finding 1: a template never invents ports. It only adds behaviour on top of them:
+ *  - a power toggle for every mains inlet (the first is the port `power-in`, the one the toggle gates);
+ *  - the phantom requirement and the ribbon flag for microphones, by traits (see requiresPhantomByTraits);
+ *  - the controls of its kind (DI ground lift and pad, preamp phantom switch and gain, console master mute / fader / balance);
+ *  - the routes (speaker -> transducer, amplifier in -> out, processor / preamp / DI in -> out, desk in -> main outs);
+ *  - a nominal acoustic for speakers.
+ * Traits decide where the category cannot: a hand-held or body-pack transmitter (traits handheld / bodypack / battery) has no mains inlet and no
+ * power toggle, and documenting one is an error; a `processor` is routed like outboard gear even when filed under amplifier; a `passive` studio
+ * monitor is a passive speaker.
+ */
+export function applyTemplate(category: string, row: Pick<PlanRow, 'traits'>, given: readonly PlanPort[], today: string = new Date().toISOString().slice(0, 10)): Template {
   const traits = row.traits ?? []
   const kind = kindOf(category, traits)
   const notes: string[] = []
-  const base: PlanPort[] = given.length ? [...given] : [...DEFAULT_PORTS[kind]]
-  if (!given.length && DEFAULT_PORTS[kind].length) notes.push(`ports of the ${kind} template (the plan documents none): to be checked against the datasheet`)
-  const hasMains = base.some(isMainsIn)
-  if (!hasMains && MAINS_ALWAYS.has(kind) && !traits.includes('passive')) {
-    base.push({ ...MAINS_PORT })
-    notes.push('mains inlet added (power-in, IEC C14) with its power toggle')
-  }
-  const { ports: expanded, renamed } = expandPorts(base)
+  const issues: string[] = []
+  const battery = isBatteryDevice(traits)
+  const mainsGiven = given.filter(isMainsIn)
+  if (battery && mainsGiven.length)
+    throw new Error(`a battery device (traits ${traits.filter((t) => BATTERY_TRAITS.includes(t)).join(', ')}) cannot list a mains inlet (${mainsGiven.map((p) => p.id ?? p.role).join(', ')}): fix the documented ports`)
+  const { ports: expanded, renamed } = expandPorts(given)
 
-  // flags by kind (derived from QL1 / Rio3224 / ISA One / U87)
   let ports = expanded.map((p) => {
     // isMainsSource: only a mains-power OUT port has it, and every such port must (catalogChecks, C7); a proposal's stray flag elsewhere is dropped
     if (p.dir === 'out' && p.signal === 'mains-power') return withFlag(p, 'isMainsSource')
-    if (flagged(p, 'isMainsSource')) return { ...p, flags: (p.flags ?? []).filter((f) => f !== 'isMainsSource') }
+    if (flagged(p, 'isMainsSource')) return withoutFlag(p, 'isMainsSource')
     const micIn = p.dir === 'in' && p.signal === 'mic-level'
-    if (kind === 'mic' && p.dir === 'out' && p.signal === 'mic-level') {
+    if ((kind === 'mic' || kind === 'di') && p.dir === 'out' && p.signal === 'mic-level') {
       let q = p
-      if (traits.includes('condenser') && !flagged(q, 'requiresPhantom')) q = withFlag(q, 'requiresPhantom')
+      if (requiresPhantomByTraits(traits, kind)) q = withFlag(q, 'requiresPhantom')
+      else if (traits.includes('ribbon') || traits.includes('dynamic')) q = withoutFlag(q, 'requiresPhantom')
       if (traits.includes('ribbon') && !flagged(q, 'isRibbon')) q = withFlag(q, 'isRibbon')
-      if (traits.includes('ribbon')) q = { ...q, flags: (q.flags ?? []).filter((f) => f !== 'requiresPhantom') } // a ribbon never requires phantom
       return q
     }
-    if (kind === 'di' && traits.includes('active') && p.dir === 'out' && p.signal === 'mic-level') return withFlag(p, 'requiresPhantom')
+    if (kind !== 'mic' && kind !== 'di' && p.dir === 'out' && p.signal === 'mic-level' && traits.includes('phantom-powered')) return withFlag(p, 'requiresPhantom')
     if (micIn && (kind === 'interface' || kind === 'console' || kind === 'preamp')) return withFlag(p, 'isMicInput', 'providesPhantom')
     return p
   })
@@ -297,6 +290,8 @@ export function applyTemplate(category: string, row: Pick<PlanRow, 'traits' | 'p
 
   const controls: CatalogControl[] = []
   if (ports.some((p) => p.portId === 'power-in')) controls.push({ ...POWER })
+  else if (!battery && (MAINS_ALWAYS_NOTE.has(kind) || traits.includes('receiver') || traits.includes('rack')) && !traits.includes('passive') && ports.length)
+    issues.push(`no mains inlet is documented for this ${kind}: it will have no power control (list the mains inlet if the datasheet has one)`)
   const micPorts = ports.filter((p) => p.dir === 'in' && p.signal === 'mic-level' && flagged(p, 'providesPhantom')).map((p) => p.portId)
   if (kind === 'di') {
     controls.push({ id: 'ground-lift', type: 'toggle', label: 'Ground lift', default: false }, { id: 'pad', type: 'toggle', label: 'Pad', default: false })
@@ -312,7 +307,7 @@ export function applyTemplate(category: string, row: Pick<PlanRow, 'traits' | 'p
   }
 
   // routes, from the final ports (a route that has no end is not written)
-  const routing: CatalogRoute[] = []
+  let routing: CatalogRoute[] = []
   const ins = audioIns(ports)
   const outs = audioOuts(ports)
   if (kind === 'speaker-active') {
@@ -327,19 +322,19 @@ export function applyTemplate(category: string, row: Pick<PlanRow, 'traits' | 'p
       if (target.length) routing.push({ from: p.portId, to: target })
     })
   } else if (kind === 'console') {
-    const mains = outs.filter((q) => q.portId.startsWith('out-main'))
-    if (mains.length)
-      for (const p of ins.filter((q) => q.signal === 'mic-level' || q.signal === 'line-level-pro')) routing.push({ from: p.portId, to: mains.map((q) => q.portId) })
+    routing = deskRouting(ins, outs)
+    if (!routing.length) issues.push('a desk with no audio input routed to an audio output: list its output ports (main outputs named out-main-l, out-main-r) so that it passes signal')
   } else if (kind === 'outboard' || kind === 'preamp' || kind === 'di') {
     const o = outs.filter((q) => q.signal !== 'speaker-level' && q.signal !== 'headphone-level')
     if (o.length)
       ins.forEach((p, i) => {
-        const to = o[i % o.length]!
-        routing.push({ from: p.portId, to: [to.portId], ...(kind === 'di' && !traits.includes('active') ? { passive: true } : {}) })
+        // a processor with more outputs than inputs (a speaker processor: 2 in, 6 out) feeds every output from each input
+        const to = o.length > ins.length ? o : [o[i % o.length]!]
+        routing.push({ from: p.portId, to: to.map((q) => q.portId), ...(kind === 'di' && !traits.includes('active') ? { passive: true } : {}) })
       })
   }
 
-  const tpl: Template = { kind, ports, controls, renamed, notes }
+  const tpl: Template = { kind, ports, controls, renamed, notes, issues }
   if (routing.length) tpl.routing = routing
   if (kind === 'speaker-active' || kind === 'speaker-passive') {
     tpl.acoustic = nominalAcoustic(today)

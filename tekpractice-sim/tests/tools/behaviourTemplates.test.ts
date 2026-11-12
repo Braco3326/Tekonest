@@ -49,28 +49,171 @@ function asDevice(category: string, r: Partial<PlanRow>, given: PlanPort[] = [])
   return { t, parsed, issues }
 }
 
-describe('microphone template (SM58 / U87)', () => {
-  it('a dynamic microphone: one mic-level out, no power control, no flags', () => {
-    const { t, issues } = asDevice('microphone', {})
+const planRow = (id: string): PlanRow => {
+  const r = loadPlan().find((x) => x.id === id)
+  if (!r) throw new Error('no plan row ' + id)
+  return r
+}
+
+// Documented port sets used as the `given` of the templates: a template never invents ports (Wave 0b finding 1).
+const XLR_OUT: PlanPort = { id: 'out-xlr', role: 'xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' }
+const MAINS: PlanPort = { id: 'power-in', role: 'power', dir: 'in', connector: 'iec-c14', signal: 'mains-power' }
+const LINE_IN: PlanPort = { id: 'in-line', role: 'line', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' }
+const LINE_OUT: PlanPort = { id: 'out-line', role: 'line', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' }
+
+describe('a template never invents ports (finding 1)', () => {
+  it('with no documented port a device has no port at all, whatever its category', () => {
+    for (const c of ['microphone', 'di-box', 'mic-preamp', 'audio-interface', 'console-digital', 'powered-speaker', 'speaker', 'amplifier', 'outboard', 'wireless', 'headphones', 'recorder', 'computer', 'power', 'cable'])
+      expect(asDevice(c, {}).t.ports, c).toEqual([])
+  })
+  it('no mains inlet and no power toggle are added: the documented ports decide, and a mains device without one is reported as an issue', () => {
+    const { t } = asDevice('amplifier', { traits: ['power-amp'] }, [LINE_IN, { ...LINE_OUT, connector: 'speakon-nl4', signal: 'speaker-level' }])
+    expect(t.ports.some((p) => p.signal === 'mains-power')).toBe(false)
+    expect(t.controls).toEqual([])
+    expect(t.issues.join(' ')).toMatch(/no mains inlet/)
+  })
+})
+
+describe('microphone template (SM58 / U87), by traits', () => {
+  it('a dynamic microphone: the documented mic-level out, no power control, no flags, never requires phantom even if a proposal said so', () => {
+    const { t, issues } = asDevice('microphone', { traits: ['dynamic', 'passive'] }, [XLR_OUT])
     expect(t.ports).toEqual([{ portId: 'out-xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' }])
     expect(t.controls).toEqual([])
     expect(t.routing).toBeUndefined()
     expect(issues).toEqual([])
+    expect(asDevice('microphone', { traits: ['dynamic'] }, [{ ...XLR_OUT, flags: ['requiresPhantom'] }]).t.ports[0]!.flags).toBeUndefined()
   })
-  it('a condenser requires phantom (the U87 pattern); a ribbon is flagged isRibbon and never requires phantom, even if the proposal said so', () => {
-    expect(asDevice('microphone', { traits: ['condenser'] }).t.ports[0]!.flags).toEqual(['requiresPhantom'])
-    const ribbon = asDevice('microphone', { traits: ['ribbon'] }, [{ role: 'xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level', flags: ['requiresPhantom'] }])
+  it('a phantom-powered condenser requires phantom (the U87 pattern); a ribbon is flagged isRibbon and never requires phantom, even if the proposal said so', () => {
+    expect(asDevice('microphone', { traits: ['condenser', 'phantom-powered'] }, [XLR_OUT]).t.ports[0]!.flags).toEqual(['requiresPhantom'])
+    expect(asDevice('microphone', { traits: ['condenser'] }, [XLR_OUT]).t.ports[0]!.flags).toEqual(['requiresPhantom'])
+    const ribbon = asDevice('microphone', { traits: ['ribbon', 'passive'] }, [{ ...XLR_OUT, flags: ['requiresPhantom'] }])
     expect(ribbon.t.ports[0]!.flags).toEqual(['isRibbon'])
     expect(ribbon.issues).toEqual([])
   })
+  it('an externally powered condenser (tube with its supply, lavalier on a bias) is NOT phantom-powered; a battery condenser neither', () => {
+    expect(asDevice('microphone', { traits: ['condenser', 'active'] }, [XLR_OUT]).t.ports[0]!.flags).toBeUndefined()
+    expect(asDevice('microphone', { traits: ['condenser', 'battery'] }, [XLR_OUT]).t.ports[0]!.flags).toBeUndefined()
+  })
+  it('real rows: neumann-tlm-103 and akg-c414-xlii come out phantom-required, royer-r-121 as a ribbon', () => {
+    for (const id of ['neumann-tlm-103', 'akg-c414-xlii']) {
+      const r = planRow(id)
+      const { t, issues } = asDevice(r.category, { traits: r.traits }, [XLR_OUT])
+      expect(t.ports[0]!.flags, id).toEqual(['requiresPhantom'])
+      expect(t.controls, id).toEqual([])
+      expect(issues, id).toEqual([])
+    }
+    const r121 = planRow('royer-r-121')
+    expect(asDevice(r121.category, { traits: r121.traits }, [XLR_OUT]).t.ports[0]!.flags).toEqual(['isRibbon'])
+  })
 })
 
-describe('every mains port gets a power toggle', () => {
-  it('a rack stage box (Rio3224 pattern): mains inlet is power-in, the toggle is « Alimentation » on by default, mic ins flagged', () => {
+describe('wireless by traits (finding 2): battery transmitters have no mains, receivers have mains and outputs', () => {
+  const mini: PlanPort = { id: 'in-mic', role: 'mic', dir: 'in', connector: 'mini-xlr-ta4', signal: 'mic-level' }
+  it('real row shure-slxd1-bodypack: no mains inlet, no power toggle, no XLR out, only what is documented (its TA4M input)', () => {
+    const r = planRow('shure-slxd1-bodypack')
+    const { t, issues } = asDevice(r.category, { traits: r.traits }, [mini])
+    expect(t.ports.map((p) => p.portId)).toEqual(['in-mic'])
+    expect(t.ports.some((p) => p.signal === 'mains-power')).toBe(false)
+    expect(t.ports.some((p) => p.connector === 'xlr3-m')).toBe(false)
+    expect(t.controls).toEqual([])
+    expect(issues).toEqual([])
+  })
+  it('real row shure-slxd2-handheld: no port, no control (the capsule is part of the transmitter)', () => {
+    const r = planRow('shure-slxd2-handheld')
+    const { t } = asDevice(r.category, { traits: r.traits }, [])
+    expect(t.ports).toEqual([])
+    expect(t.controls).toEqual([])
+  })
+  it('documenting a mains inlet on a body-pack, a handheld or a battery device is an error, not something to fix silently', () => {
+    for (const traits of [['bodypack', 'transmitter', 'battery'], ['handheld', 'transmitter', 'battery'], ['battery']] as PlanRow['traits'][])
+      expect(() => applyTemplate('wireless', row({ traits }), [MAINS], '2026-11-12')).toThrow(/battery device.*mains inlet/)
+  })
+  it('real row shure-qlx-d-receiver: documented mains inlet + XLR out + antenna-less audio out come out with power-in and the power toggle', () => {
+    const r = planRow('shure-qlx-d-receiver')
+    const { t, issues } = asDevice(r.category, { traits: r.traits }, [
+      { id: 'out-xlr', role: 'xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' },
+      { id: 'out-line', role: 'line', dir: 'out', connector: 'trs-quarter', signal: 'line-level-pro' },
+      MAINS,
+    ])
+    expect(t.ports.map((p) => p.portId)).toEqual(['out-xlr', 'out-line', 'power-in'])
+    expect(t.controls).toEqual([{ id: 'power', type: 'toggle', label: 'Alimentation', default: true }])
+    expect(issues).toEqual([])
+  })
+  it('a receiver with no mains inlet documented is reported', () => {
+    const r = planRow('shure-qlx-d-receiver')
+    const { t } = asDevice(r.category, { traits: r.traits }, [{ id: 'out-xlr', role: 'xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' }])
+    expect(t.controls).toEqual([])
+    expect(t.issues.join(' ')).toMatch(/no mains inlet/)
+  })
+})
+
+describe('processors and desks by traits (findings 3 and 8)', () => {
+  it('real row dbx-driverack-pa2 (category amplifier, trait processor): routed like outboard gear, inputs to the outputs, no speaker-level, power toggle', () => {
+    const r = planRow('dbx-driverack-pa2')
+    expect(r.category).toBe('amplifier')
+    expect(kindOf(r.category, r.traits)).toBe('outboard')
+    const given: PlanPort[] = [
+      { id: 'in-line-1', role: 'line', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },
+      { id: 'in-line-2', role: 'line', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },
+      ...[1, 2, 3, 4, 5, 6].map((n): PlanPort => ({ id: `out-line-${n}`, role: 'line', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' })),
+      MAINS,
+    ]
+    const { t, issues } = asDevice(r.category, { traits: r.traits }, given)
+    expect(t.routing).toHaveLength(2)
+    expect(t.routing![0]!.to).toEqual(['out-line-1', 'out-line-2', 'out-line-3', 'out-line-4', 'out-line-5', 'out-line-6'])
+    expect(t.controls).toEqual([{ id: 'power', type: 'toggle', label: 'Alimentation', default: true }])
+    expect(issues).toEqual([])
+  })
+  it('a real power amplifier (crown-xls-2502, trait power-amp) routes line in to speaker out', () => {
+    const r = planRow('crown-xls-2502')
+    expect(kindOf(r.category, r.traits)).toBe('amp')
+  })
+  it('real rows yamaha-tf5 and allen-heath-sq-5 (traits desk): the desk comes out WITH routing, every input to the out-main outputs', () => {
+    for (const id of ['yamaha-tf5', 'allen-heath-sq-5']) {
+      const r = planRow(id)
+      const given: PlanPort[] = [
+        { id: 'in-mic-1', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' },
+        { id: 'in-mic-2', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' },
+        { id: 'out-main-l', role: 'main-l', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
+        { id: 'out-main-r', role: 'main-r', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
+        { id: 'out-aux-1', role: 'aux', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
+        { id: 'out-phones', role: 'phones', dir: 'out', connector: 'trs-35mm', signal: 'headphone-level' },
+        MAINS,
+      ]
+      const { t, issues } = asDevice(r.category, { traits: r.traits }, given)
+      expect(t.routing, id).toEqual([
+        { from: 'in-mic-1', to: ['out-main-l', 'out-main-r'] },
+        { from: 'in-mic-2', to: ['out-main-l', 'out-main-r'] },
+      ])
+      expect(t.controls.map((c) => c.id), id).toEqual(['power', 'mute-master', 'fader-master', 'balance-master'])
+      expect(issues, id).toEqual([])
+    }
+  })
+  it('the naming rule of a desk: main outputs are the ports whose id starts with out-main; a desk with none routes to every non-headphone output; a desk with no output is reported', () => {
+    const mic: PlanPort = { id: 'in-mic-1', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' }
+    const omni = (n: number): PlanPort => ({ id: `out-omni-${n}`, role: 'omni', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' })
+    expect(asDevice('console-digital', { traits: ['desk'] }, [mic, omni(1), omni(2), MAINS]).t.routing).toEqual([{ from: 'in-mic-1', to: ['out-omni-1', 'out-omni-2'] }])
+    const none = asDevice('console-analog', { traits: ['desk'] }, [mic, MAINS]).t
+    expect(none.routing).toBeUndefined()
+    expect(none.issues.join(' ')).toMatch(/out-main/)
+  })
+  it('a passive studio monitor (NS-10M, trait passive) is a passive speaker: speaker-level in to the transducer, no power', () => {
+    expect(kindOf('studio-monitor', ['passive'])).toBe('speaker-passive')
+    expect(kindOf('speaker', ['active'])).toBe('speaker-active')
+    const spk: PlanPort = { id: 'in-speaker', role: 'speaker', dir: 'in', connector: 'speakon-nl4', signal: 'speaker-level' }
+    const { t } = asDevice('studio-monitor', { traits: ['passive'] }, [spk])
+    expect(t.routing).toEqual([{ from: 'in-speaker', to: ['transducer'] }])
+    expect(t.controls).toEqual([])
+  })
+})
+
+describe('every documented mains port gets a power toggle', () => {
+  it('a rack stage box (Rio3224 pattern): the documented mains inlet is power-in, the toggle is « Alimentation » on by default, mic ins flagged', () => {
     const given: PlanPort[] = [
       { role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level', count: 2 },
       { role: 'line', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro', count: 2 },
       { id: 'dante-primary', role: 'dante', dir: 'bidir', connector: 'ethercon', signal: 'aoip', flags: ['isDantePrimary'] },
+      MAINS,
     ]
     const { t, issues } = asDevice('stagebox', {}, given)
     expect(t.ports.map((p) => p.portId)).toEqual(['in-mic-1', 'in-mic-2', 'out-line-1', 'out-line-2', 'dante-primary', 'power-in'])
@@ -85,7 +228,7 @@ describe('every mains port gets a power toggle', () => {
       { role: 'spk', dir: 'out', connector: 'speakon-nl4', signal: 'speaker-level' },
       { role: 'line', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },
     ]
-    const { t, issues } = asDevice('amplifier', {}, given)
+    const { t, issues } = asDevice('amplifier', { traits: ['power-amp'] }, given)
     expect(t.ports.find((p) => p.signal === 'mains-power')!.portId).toBe('power-in')
     expect(t.controls.map((c) => c.id)).toContain('power')
     expect(t.renamed['in-mains-in-powercon-32-a-closest-id-see-notes']).toBe('power-in')
@@ -95,21 +238,19 @@ describe('every mains port gets a power toggle', () => {
     const given: PlanPort[] = [
       { role: 'mains', dir: 'in', connector: 'iec-c14', signal: 'mains-power' },
       { role: 'mains', dir: 'in', connector: 'iec-c14', signal: 'mains-power' },
-      { role: 'line', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },
-      { role: 'line', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
+      LINE_IN,
+      LINE_OUT,
     ]
-    const { t } = asDevice('outboard', {}, given)
+    const { t } = asDevice('outboard', { traits: ['processor'] }, given)
     expect(t.ports.filter((p) => p.signal === 'mains-power').map((p) => p.portId)).toEqual(['power-in', 'power-in-2'])
     expect(t.controls.filter((c) => c.id === 'power')).toHaveLength(1)
-  })
-  it('a passive kind (microphone, DI, headphones, accessory) gets no mains inlet unless its documented ports list one', () => {
-    for (const c of ['microphone', 'di-box', 'headphones', 'stand-arm']) expect(asDevice(c, {}).t.ports.some((p) => p.signal === 'mains-power'), c).toBe(false)
   })
 })
 
 describe('active speaker template (Genelec 8030C / K12.2)', () => {
+  const given: PlanPort[] = [{ id: 'in-analog', role: 'analog', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' }, MAINS]
   it('routes every line input to the transducer, carries a nominal coverage WITH a source, keeps power-in and the power toggle', () => {
-    const { t, parsed, issues } = asDevice('studio-monitor', {})
+    const { t, parsed, issues } = asDevice('studio-monitor', { traits: ['active'] }, given)
     expect(t.routing).toEqual([{ from: 'in-analog', to: ['transducer'] }])
     expect(t.ports.map((p) => p.portId)).toEqual(['in-analog', 'power-in'])
     expect(t.controls).toEqual([{ id: 'power', type: 'toggle', label: 'Alimentation', default: true }])
@@ -121,9 +262,10 @@ describe('active speaker template (Genelec 8030C / K12.2)', () => {
     expect(issues).toEqual([]) // the 90 x 60 nominal pair is the only nominal the catalogue accepts
   })
   it('never routes a mains or mic-level port to the transducer', () => {
-    const { t } = asDevice('powered-speaker', {}, [
-      { role: 'xlr', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },
-      { role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' },
+    const { t } = asDevice('powered-speaker', { traits: ['active'] }, [
+      { id: 'in-xlr', role: 'xlr', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },
+      { id: 'in-mic', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' },
+      MAINS,
     ])
     expect(t.routing).toEqual([{ from: 'in-xlr', to: ['transducer'] }])
   })
@@ -131,7 +273,7 @@ describe('active speaker template (Genelec 8030C / K12.2)', () => {
 
 describe('the other kinds', () => {
   it('passive speaker: speaker-level in routed to the transducer, nominal acoustic, no power', () => {
-    const { t, issues } = asDevice('speaker', {})
+    const { t, issues } = asDevice('speaker', { traits: ['passive'] }, [{ id: 'in-speaker', role: 'speaker', dir: 'in', connector: 'speakon-nl4', signal: 'speaker-level' }])
     expect(t.ports).toEqual([{ portId: 'in-speaker', dir: 'in', connector: 'speakon-nl4', signal: 'speaker-level' }])
     expect(t.routing).toEqual([{ from: 'in-speaker', to: ['transducer'] }])
     expect(t.controls).toEqual([])
@@ -140,32 +282,48 @@ describe('the other kinds', () => {
     expect(kindOf('speaker', ['active'])).toBe('speaker-active')
   })
   it('amplifier: line in routed to speaker-level out, power; a processor trait makes it an outboard device', () => {
-    const { t, issues } = asDevice('amplifier', {})
+    const given: PlanPort[] = [
+      { role: 'line', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro', count: 2 },
+      { role: 'spk', dir: 'out', connector: 'speakon-nl4', signal: 'speaker-level', count: 2 },
+      MAINS,
+    ]
+    const { t, issues } = asDevice('amplifier', { traits: ['power-amp'] }, given)
     expect(t.routing).toEqual([{ from: 'in-line-1', to: ['out-spk-1'] }, { from: 'in-line-2', to: ['out-spk-2'] }])
     expect(t.controls.map((c) => c.id)).toEqual(['power'])
     expect(issues).toEqual([])
     expect(kindOf('amplifier', ['processor'])).toBe('outboard')
   })
-  it('DI box: ground-lift and pad controls, passive routes, phantom only if active', () => {
-    const passive = asDevice('di-box', {})
+  it('DI box: ground-lift and pad controls, passive routes, phantom only if active without a battery', () => {
+    const given: PlanPort[] = [
+      { id: 'in-instrument', role: 'instrument', dir: 'in', connector: 'trs-quarter', signal: 'instrument-hiz' },
+      { id: 'out-xlr', role: 'xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' },
+    ]
+    const passive = asDevice('di-box', { traits: ['passive'] }, given)
     expect(passive.t.controls.map((c) => c.id)).toEqual(['ground-lift', 'pad'])
-    expect(passive.t.routing!.every((r) => r.passive === true)).toBe(true)
+    expect(passive.t.routing).toEqual([{ from: 'in-instrument', to: ['out-xlr'], passive: true }])
     expect(passive.t.ports.some((p) => p.flags?.includes('requiresPhantom'))).toBe(false)
-    const active = asDevice('di-box', { traits: ['active'] })
+    const active = asDevice('di-box', { traits: ['active', 'phantom-powered'] }, given)
     expect(active.t.ports.find((p) => p.signal === 'mic-level')!.flags).toEqual(['requiresPhantom'])
     expect(active.t.routing!.some((r) => r.passive === true)).toBe(false)
+    const battery = asDevice('di-box', { traits: ['active', 'battery'] }, given)
+    expect(battery.t.ports.find((p) => p.signal === 'mic-level')!.flags).toBeUndefined() // phantom or a battery: not required
     expect(passive.issues).toEqual([])
     expect(active.issues).toEqual([])
   })
   it('preamp: phantom toggle gates providesPhantom on the mic in (ISA One pattern), gain enum, power', () => {
-    const { t, issues } = asDevice('mic-preamp', {})
+    const { t, issues } = asDevice('mic-preamp', {}, [{ id: 'in-mic', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' }, LINE_OUT, MAINS])
     expect(t.controls.map((c) => c.id)).toEqual(['power', 'phantom-48v', 'gain'])
     const ph = t.controls.find((c) => c.id === 'phantom-48v')!
     expect(ph).toMatchObject({ type: 'toggle', default: false, enables: { flag: 'providesPhantom', ports: ['in-mic'] } })
     expect(issues).toEqual([])
   })
   it('console: mains, master outs, mute / fader / balance (QL1 pattern), every input routed to the mains', () => {
-    const { t, issues } = asDevice('console-digital', {})
+    const { t, issues } = asDevice('console-digital', { traits: ['desk'] }, [
+      { role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level', count: 2 },
+      { id: 'out-main-l', role: 'main-l', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
+      { id: 'out-main-r', role: 'main-r', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
+      MAINS,
+    ])
     expect(t.controls.map((c) => c.id)).toEqual(['power', 'mute-master', 'fader-master', 'balance-master'])
     expect(t.routing).toEqual([
       { from: 'in-mic-1', to: ['out-main-l', 'out-main-r'] },
@@ -173,16 +331,20 @@ describe('the other kinds', () => {
     ])
     expect(issues).toEqual([])
   })
-  it('interface, outboard, wireless, headphones, recorder, computer, power, accessory: each produces a catalogue-valid device', () => {
-    for (const c of ['audio-interface', 'outboard', 'wireless', 'iem', 'headphones', 'recorder', 'measurement', 'computer', 'controller', 'power', 'accessory', 'pop-filter']) {
-      const { issues } = asDevice(c, {})
-      expect(issues, c).toEqual([])
-    }
-    expect(asDevice('power', {}).t.ports.every((p) => p.flags?.includes('isMainsSource'))).toBe(true)
-    expect(asDevice('pop-filter', {}).t.ports).toEqual([])
-  })
-  it('a cable row without documented ports has no default ports: the promotion tool refuses it', () => {
-    expect(asDevice('cable', {}).t.ports).toEqual([])
+  it('interface, wireless, headphones, recorder, computer, power, accessory: each produces a catalogue-valid device from a documented set', () => {
+    const usb: PlanPort = { id: 'usb', role: 'usb', dir: 'bidir', connector: 'usb-c', signal: 'usb-audio' }
+    const outlets: PlanPort = { role: 'out', dir: 'out', connector: 'iec-c13', signal: 'mains-power', count: 4 }
+    const cases: [string, PlanPort[]][] = [
+      ['audio-interface', [{ id: 'in-mic-1', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' }, usb, MAINS]],
+      ['wireless', [{ id: 'out-xlr', role: 'xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level' }, MAINS]],
+      ['headphones', [{ id: 'in-35mm', role: '35mm', dir: 'in', connector: 'trs-35mm', signal: 'headphone-level' }]],
+      ['recorder', [{ id: 'in-mic', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' }, usb]],
+      ['computer', [usb]],
+      ['power', [MAINS, outlets]],
+      ['pop-filter', []],
+    ]
+    for (const [c, given] of cases) expect(asDevice(c, c === 'wireless' ? { traits: ['receiver', 'rack'] } : {}, given).issues, c).toEqual([])
+    expect(asDevice('power', {}, [MAINS, outlets]).t.ports.filter((p) => p.dir === 'out').every((p) => p.flags?.includes('isMainsSource'))).toBe(true)
   })
 })
 
@@ -243,7 +405,7 @@ describe('short port ids', () => {
   })
 })
 
-describe('short port ids keep the channel number (finding 4: the regex was /^d+$/ instead of /^\d+$/)', () => {
+describe('short port ids keep the channel number (finding 4: the regex was /^d+$/ instead of the digit class)', () => {
   type RealDevice = { id: string; ports: { portId: string; dir: 'in' | 'out' | 'bidir'; connector: string; signal: string }[] }
   const realDevices = (JSON.parse(readFileSync('content/proposals/catalog-proposals.json', 'utf8')) as { devices: RealDevice[] }).devices
   const expandReal = (d: RealDevice) =>
