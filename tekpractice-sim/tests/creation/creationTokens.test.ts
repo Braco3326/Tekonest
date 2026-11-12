@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { CREATION_TOKENS, contrastRatio } from '../../src/design/creationTokens'
+import { CREATION_TOKENS, contrastRatio, injectCreationTokens, type RoleColours } from '../../src/design/creationTokens'
+import { DESIGN_IDS, packageById } from '../../src/design/packages'
 
 const C = CREATION_TOKENS.color
 
@@ -104,5 +105,92 @@ describe('creation tokens (brief §2, P11)', () => {
   })
   it('no radius token exists (square corners)', () => {
     expect(JSON.stringify(CREATION_TOKENS)).not.toMatch(/radius/i)
+  })
+})
+
+/** A root that records `setProperty` (vitest runs in `node`: no DOM). */
+function fakeRoot(): { root: HTMLElement; props: Map<string, string> } {
+  const props = new Map<string, string>()
+  const root = { style: { setProperty: (k: string, v: string) => void props.set(k, v) } } as unknown as HTMLElement
+  return { root, props }
+}
+
+/**
+ * T4.2 characterization (it passes on the code before T4.2): with no package, `injectCreationTokens` writes EXACTLY these `--cr-*` values (the table below was read from the
+ * code at c51dc87's successor, before the role tokens). Every name here must keep its value on the plain address (and on an exam address).
+ */
+const TODAY: readonly (readonly [string, string])[] = [
+  ['--cr-nuit', '#131114'],
+  ['--cr-papier', '#F3EDE3'],
+  ['--cr-ambre', '#DD9349'],
+  ['--cr-prune', '#612D45'],
+  ['--cr-panel', '#1C191D'],
+  ['--cr-panel-line', '#3A3339'],
+  ['--cr-ink-muted', '#B3AAA0'],
+  ['--cr-danger', '#F08A7E'],
+  ['--cr-ok', '#8CCB9B'],
+  ['--cr-font-title', "'Tektur', 'IBM Plex Sans', system-ui, sans-serif"],
+  ['--cr-font-ui', "'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif"],
+  ['--cr-menubar-h', '32px'],
+  ['--cr-status-h', '28px'],
+  ['--cr-tree-w', '200px'],
+  ['--cr-props-w', '260px'],
+  ['--cr-rail-w', '32px'],
+  ['--cr-drawer-ms', '180ms'],
+  ['--cr-fly-ms', '450ms'],
+]
+
+describe('T4.2: injectCreationTokens (roles)', () => {
+  it('CHARACTERIZATION: with no package every token that existed keeps exactly its value', () => {
+    const { root, props } = fakeRoot()
+    injectCreationTokens(root)
+    for (const [k, v] of TODAY) expect(props.get(k), k).toBe(v)
+  })
+
+  it('no package: the resolved role tokens are today\'s Ambre / Nuit (focus, select, accent, hover text, band)', () => {
+    const { root, props } = fakeRoot()
+    injectCreationTokens(root)
+    expect(props.get('--cr-focus')).toBe(C.ambre)
+    expect(props.get('--cr-select')).toBe(C.ambre)
+    expect(props.get('--cr-accent')).toBe(C.ambre)
+    expect(props.get('--cr-accent-ink')).toBe(C.nuit)
+    expect(props.get('--cr-accent-edge')).toBe(C.ambre)
+    expect(props.get('--cr-accent-text')).toBe(C.ambre)
+    expect(props.get('--cr-band')).toBe(C.panel)
+    expect(props.get('--cr-band-ink')).toBe(C.papier)
+  })
+
+  it('no package: the role sources (--cr-role-*) are the plain map: panel surface, Nuit ground, Papier ink', () => {
+    const { root, props } = fakeRoot()
+    injectCreationTokens(root)
+    expect(props.get('--cr-role-ground')).toBe(C.nuit)
+    expect(props.get('--cr-role-surface')).toBe(C.panel)
+    expect(props.get('--cr-role-inset')).toBe(C.nuit)
+    expect(props.get('--cr-role-ink')).toBe(C.papier)
+    expect(props.get('--cr-role-focus')).toBe(C.ambre)
+    expect(props.get('--cr-role-danger')).toBe(C.danger)
+  })
+
+  it('package 3 resolves its focus role to Nuit and its selection to Prune, and leaves the chrome tokens at today\'s Ambre', () => {
+    const { root, props } = fakeRoot()
+    injectCreationTokens(root, packageById(3).colours)
+    expect(props.get('--cr-role-focus')).toBe(C.nuit)
+    expect(props.get('--cr-role-select')).toBe(C.prune)
+    expect(props.get('--cr-role-surface')).toBe(C.papier)
+    expect(props.get('--cr-role-ink')).toBe(C.nuit)
+    // the menubar and the status bar stay Nuit / panel (spec 7.3): the tokens they read are not the package's
+    expect(props.get('--cr-focus')).toBe(C.ambre)
+    expect(props.get('--cr-accent-text')).toBe(C.ambre)
+    for (const [k, v] of TODAY) expect(props.get(k), k).toBe(v)
+  })
+
+  it('every package writes the same set of property names (a map never adds or drops one)', () => {
+    const names = (roles?: RoleColours): string => {
+      const { root, props } = fakeRoot()
+      injectCreationTokens(root, roles)
+      return [...props.keys()].sort().join(',')
+    }
+    const plain = names()
+    for (const id of DESIGN_IDS) expect(names(packageById(id).colours), `package ${id}`).toBe(plain)
   })
 })

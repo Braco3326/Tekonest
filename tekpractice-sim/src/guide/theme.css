@@ -12,6 +12,10 @@
  *     .oscar-guide itself (and again in its dark media query), and a value set on :root would lose to
  *     that. "html .oscar-guide" is one element more specific than both of those rules.
  *
+ * Design packages (plan T4.2, spec 7.3): the widget is a dark card on every package (Papier on panel 14.95, Ambre on panel 6.92: the declared pairs of the plain map), so it reads
+ * the ROOT values of the role tokens (--cr-accent, --cr-accent-ink, --cr-accent-text: Ambre / Nuit, which the package surfaces re-point only inside themselves), never a
+ * package's own. The spotlight ring keeps Ambre over its Nuit halo: it points at a panel on Papier AND at a device on the dark 3D view, and the halo carries the contrast on both.
+ *
  * Look: square corners everywhere except the mascot's round icon, visible focus ring in both palettes.
  */
 
@@ -21,8 +25,8 @@
   --og-muted: var(--cr-ink-muted, #b3aaa0);
   --og-border: var(--cr-panel-line, #3a3339);
   --og-soft: var(--cr-panel-line, #3a3339);
-  --og-accent: var(--cr-ambre, #dd9349);
-  --og-accent-fg: var(--cr-nuit, #131114);
+  --og-accent: var(--cr-accent, #dd9349);
+  --og-accent-fg: var(--cr-accent-ink, #131114);
   --og-focus: var(--cr-papier, #f3ede3);
   --og-ring: var(--cr-ambre, #dd9349);
   --og-ring-halo: rgba(19, 17, 20, 0.75);
@@ -30,7 +34,7 @@
   --og-fix-bg: var(--cr-prune, #612d45);
   --og-good-bg: #20302a;
   --og-badge-bg: var(--cr-panel-line, #3a3339);
-  --og-badge-fg: var(--cr-ambre, #dd9349);
+  --og-badge-fg: var(--cr-accent-text, #dd9349);
   --og-error: var(--cr-danger, #f08a7e);
   --og-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
   --og-font: var(--cr-font-ui, 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif);

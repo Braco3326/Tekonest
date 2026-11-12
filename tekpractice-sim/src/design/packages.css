@@ -1,0 +1,71 @@
+/*
+ * The design packages' look (onboarding packs, T4.2 / T4.3, spec 7.2 and 7.3). The ONLY stylesheet that may speak of a package, and it speaks of none by number:
+ * `mountShell` (src/creation/shell/layout.ts) writes `data-surface` and `data-density` on <html> from the active package's layout preset, and its colours as
+ * `--cr-role-*` (src/design/creationTokens.ts `injectCreationTokens`). On a plain address, an exam address or the legacy route none of it is written, so no rule here applies.
+ *
+ * Mechanism. creation.css is written in the shell's palette tokens (--cr-nuit, --cr-papier, --cr-panel, --cr-ink-muted, --cr-panel-line, --cr-danger, --cr-ok) and the
+ * role tokens (--cr-focus, --cr-select, --cr-accent, --cr-accent-ink, --cr-accent-edge, --cr-accent-text, --cr-band, --cr-band-ink: Ambre / Nuit by default). Inside the
+ * SURFACES a package restyles, this file re-points those tokens at the package's roles; everything outside them (the menubar, the status bar, the labels and buttons over the
+ * 3D view, the toast, the guide) keeps today's values, which is spec 7.3's « menubar and status bar stay Nuit / panel ». A surface nobody lists here fails safe: today's look.
+ *
+ *  Group A, the SURFACES: side panels and the drawer. `--cr-nuit` is the INSET tone there (a field's ground, a hover wash), `--cr-panel` the surface.
+ *  Group B, the GROUNDS: the place picker and start screen, dialogs, the two pop-overs, the notes. `--cr-nuit` is the ground, `--cr-panel` the raised card.
+ */
+html[data-surface] :is(.cr-tree, .cr-props, .cr-drawer, .cr-pick, .cr-dialog, .cr-errlist, .cr-checklist, .cr-notes) {
+  --cr-papier: var(--cr-role-ink);
+  --cr-ink-muted: var(--cr-role-ink-muted);
+  --cr-panel: var(--cr-role-surface);
+  --cr-panel-line: var(--cr-role-line);
+  --cr-danger: var(--cr-role-danger);
+  --cr-ok: var(--cr-role-ok);
+  --cr-focus: var(--cr-role-focus);
+  --cr-select: var(--cr-role-select);
+  --cr-accent: var(--cr-role-accent);
+  --cr-accent-ink: var(--cr-role-accent-ink);
+  --cr-accent-edge: var(--cr-role-accent-edge);
+  --cr-accent-text: var(--cr-role-accent-text);
+  --cr-band: var(--cr-role-band);
+  --cr-band-ink: var(--cr-role-band-ink);
+}
+html[data-surface] :is(.cr-tree, .cr-props, .cr-drawer) { --cr-nuit: var(--cr-role-inset); }
+html[data-surface] :is(.cr-pick, .cr-dialog, .cr-errlist, .cr-checklist, .cr-notes) { --cr-nuit: var(--cr-role-ground); }
+
+/* ── surfaceStyle: banded (a study sheet: the panel heads and section heads are bands) ── */
+html[data-surface='banded'] :is(.cr-panel-head, .cr-legend-toggle, .cr-listen-toggle, .cr-cov-toggle) {
+  background: var(--cr-role-band);
+  color: var(--cr-role-band-ink);
+  --cr-ink-muted: var(--cr-role-band-ink);
+  --cr-focus: var(--cr-role-band-ink);
+  --cr-accent-text: var(--cr-role-band-ink);
+}
+
+/* ── surfaceStyle: framed (a stage frame around the 3D view: drawn over the view's edge, no layout change, never a click) ── */
+html[data-surface='framed'] .cr-viewport::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border: 6px solid var(--cr-role-band);
+  pointer-events: none;
+}
+
+/* ── surfaceStyle: flat (a hairline console: nothing is raised, no shadow) ── */
+html[data-surface='flat'] :is(.cr-menu-panel, .cr-note, .cr-errlist, .cr-checklist, .cr-pick-confirm-box) { box-shadow: none; }
+
+/* ── surfaceStyle: sheet (Papier): the Ambre fill carries a 2 px edge in the accent edge colour (Nuit on Papier), and the washes are the sheet's inset tone ── */
+html[data-surface='sheet'] :is(.cr-toggle[aria-pressed='true'] .cr-toggle-state, .cr-listen-btn, .cr-btn-primary, .cr-dialog-btn-primary) { border-width: 2px; }
+html[data-surface='sheet'] .cr-connect-opt[aria-selected='true'] { background: var(--cr-role-inset); }
+@media (hover: hover) {
+  html[data-surface='sheet'] :is(.cr-connect-opt, .cr .cr-errlist-row):hover { background: var(--cr-role-inset); }
+}
+
+/* ── density: dense (rows at the 24 px target floor of WCAG 2.5.8; a coarse pointer keeps its 44 px) ── */
+@media (pointer: fine) {
+  html[data-density='dense'] .cr-tree-item { min-height: 24px; }
+  html[data-density='dense'] .cr-field { min-height: 28px; }
+  html[data-density='dense'] :is(.cr-field-input, .cr-select) { height: 24px; }
+  html[data-density='dense'] .cr .cr-step { flex-basis: 24px; width: 24px; height: 24px; }
+  html[data-density='dense'] .cr .cr-toggle { min-height: 28px; padding: 2px 8px; }
+  html[data-density='dense'] .cr-panel-body { padding: 4px 0; }
+  html[data-density='dense'] .cr-props-section fieldset { padding: 6px 0 8px; }
+}

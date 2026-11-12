@@ -160,8 +160,41 @@ export const CREATION_TOKENS = {
 
 const kebab = (s: string): string => s.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase())
 
-/** Sets every token as a `--cr-*` custom property on `root` (default: <html>). */
-export function injectCreationTokens(root: HTMLElement = document.documentElement): void {
+/**
+ * The plain map: today's look, role by role. What the shell wears without `?design`, and what the chrome (menubar, status bar, view overlays) wears under every package
+ * (spec 7.3: they stay Nuit / panel). Package 1 is this map too, as its own table row.
+ */
+export const DEFAULT_ROLES: Readonly<RoleColours> = Object.freeze({
+  ground: CREATION_TOKENS.color.nuit,
+  surface: CREATION_TOKENS.color.panel,
+  inset: CREATION_TOKENS.color.nuit,
+  ink: CREATION_TOKENS.color.papier,
+  inkMuted: CREATION_TOKENS.color.inkMuted,
+  accent: CREATION_TOKENS.color.ambre,
+  accentInk: CREATION_TOKENS.color.nuit,
+  accentEdge: CREATION_TOKENS.color.ambre,
+  accentText: CREATION_TOKENS.color.ambre,
+  secondary: CREATION_TOKENS.color.prune,
+  secondaryInk: CREATION_TOKENS.color.papier,
+  band: CREATION_TOKENS.color.panel,
+  bandInk: CREATION_TOKENS.color.papier,
+  focus: CREATION_TOKENS.color.ambre,
+  select: CREATION_TOKENS.color.ambre,
+  line: CREATION_TOKENS.color.panelLine,
+  danger: CREATION_TOKENS.color.danger,
+  ok: CREATION_TOKENS.color.ok,
+}) as Readonly<RoleColours>
+
+/**
+ * Sets every token as a `--cr-*` custom property on `root` (default: <html>).
+ *
+ * Roles (plan T4.2): `roles` is the active package's colour map (none: the plain map). It is written as `--cr-role-*` (the SOURCES; nothing reads them but
+ * `src/design/packages.css`, which re-points the resolved tokens inside the surfaces a package restyles: side panels, the drawer, the place picker, dialogs, pop-overs).
+ * The RESOLVED tokens `--cr-focus`, `--cr-select`, `--cr-accent`, `--cr-accent-ink`, `--cr-accent-edge`, `--cr-accent-text`, `--cr-band`, `--cr-band-ink`
+ * are written here from the PLAIN map whatever the package: that is what the chrome (menubar, status bar, the 3D view's overlays) reads, so it never changes (spec 7.3),
+ * and a surface nobody re-pointed fails safe (today's Ambre on a dark ground).
+ */
+export function injectCreationTokens(root: HTMLElement = document.documentElement, roles: Readonly<RoleColours> = DEFAULT_ROLES): void {
   const T = CREATION_TOKENS
   for (const [k, v] of Object.entries(T.color)) root.style.setProperty(`--cr-${kebab(k)}`, v)
   root.style.setProperty('--cr-font-title', T.font.title)
@@ -173,6 +206,16 @@ export function injectCreationTokens(root: HTMLElement = document.documentElemen
   root.style.setProperty('--cr-rail-w', `${T.size.rail}px`)
   root.style.setProperty('--cr-drawer-ms', `${T.motion.drawerMs}ms`)
   root.style.setProperty('--cr-fly-ms', `${T.motion.flyMs}ms`)
+  for (const [k, v] of Object.entries(roles)) root.style.setProperty(`--cr-role-${kebab(k)}`, v)
+  const d = DEFAULT_ROLES
+  root.style.setProperty('--cr-focus', d.focus)
+  root.style.setProperty('--cr-select', d.select)
+  root.style.setProperty('--cr-accent', d.accent)
+  root.style.setProperty('--cr-accent-ink', d.accentInk)
+  root.style.setProperty('--cr-accent-edge', d.accentEdge)
+  root.style.setProperty('--cr-accent-text', d.accentText)
+  root.style.setProperty('--cr-band', d.band)
+  root.style.setProperty('--cr-band-ink', d.bandInk)
 }
 
 const channel = (c: number): number => {

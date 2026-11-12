@@ -20,7 +20,7 @@
 }
 @media (hover: hover) { .cr-connect-opt:hover { background: var(--cr-panel-line); } }
 /* The active option: a fill AND an Ambre bar (shape, not colour alone); focus stays in the field. */
-.cr-connect-opt[aria-selected='true'] { background: var(--cr-panel-line); box-shadow: inset 4px 0 0 var(--cr-ambre); font-weight: 500; }
+.cr-connect-opt[aria-selected='true'] { background: var(--cr-panel-line); box-shadow: inset 4px 0 0 var(--cr-select); font-weight: 500; }
 .cr-connect-toggle { margin-top: 12px; }
 .cr-connect-toggle[hidden], .cr-connect-rejected[hidden] { display: none; }
 .cr-connect-toggle[aria-expanded='true'] { border-color: var(--cr-papier); }
