@@ -29,6 +29,19 @@ export const NAV_SELECTORS: Readonly<Record<string, readonly string[]>> = {
   'nav:status': ['[data-testid="status-bar"]'],
 }
 
+// ── the tutorial's shell pieces (src/guide/tutorial.ts resolves its reserved anchors with these; read only, set by the shell itself) ──
+//   the « Matériel » menu button   menuBar.ts `cr-menu-<menu id>`, menu id `materiel`
+//   a drawer tab                   inventoryDrawer.ts: role="tab", data-tab = the InventoryTab (inventory.ts); only while the drawer is open
+//   an inventory card              inventoryDrawer.ts: data-testid="inventory-item", data-device-id; only the cards of the tab shown are in the panel
+//   a Propriétés row button        propertiesPanel.ts: data-key `connect:<port>` (« Connecter à… » of a free port), `unplug:<port>` (« Débrancher »),
+//                                  `ctl:<control>` (a toggle); Propriétés lists the SELECTED device only
+
+const DRAWER_OPEN = '[data-testid="inventory-drawer"][data-open="true"]'
+export const MENU_MATERIEL = '#cr-menu-materiel'
+export const inventoryTabSelector = (tab: string): string => `${DRAWER_OPEN} [role="tab"][data-tab="${tab}"]`
+export const inventoryItemSelector = (deviceId: string): string => `${DRAWER_OPEN} [data-testid="inventory-item"][data-device-id="${deviceId}"]`
+export const propsKeySelector = (key: string): string => `[data-testid="properties-content"] [data-key="${key}"]`
+
 // ── state hash ──────────────────────────────────────────────────────────────────────────────────────────────────────
 
 export const SEP = '\u0000'
