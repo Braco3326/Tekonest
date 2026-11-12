@@ -10,7 +10,7 @@ describe('decideRoute', () => {
   })
   it('?legacy=0 or other params → creation', () => expect(decideRoute('?legacy=0&room=x')).toBe('creation'))
   it('FEATURES.levels = true sends the default URL to legacy', () =>
-    expect(decideRoute('', { levels: true, guide: true })).toBe('legacy'))
+    expect(decideRoute('', { levels: true, guide: true, guideLegacy: false })).toBe('legacy'))
 })
 
 describe('decideRoute ignores a v query (night 2 wave 5, P1-1: the entry guard refreshes the page with ?v=<time>)', () => {

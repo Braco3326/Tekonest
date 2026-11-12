@@ -194,10 +194,37 @@ describe('bootGuide waits for window.__creation', () => {
   })
 })
 
+describe('bootGuide: level play ships dark', () => {
+  it.each([['?level=a1'], ['?level=b1'], ['?level=c1'], ['?level=d1']])('resolves null for plain %s: the guide is off by default on level pages, no timer, no mount', async (search) => {
+    vi.useFakeTimers()
+    await expect(bootGuide('legacy', fakeWin(search, false, '__audioSim'))).resolves.toBeNull()
+    expect(vi.getTimerCount()).toBe(0)
+    expect(mount).not.toHaveBeenCalled()
+  })
+
+  it.each([['?level=a1&mode=exam&oscar=legacy'], ['?level=sandbox&oscar=legacy'], ['?legacy=1&oscar=legacy'], ['?level=zz&oscar=legacy'], ['?level=a1&oscar=legacy&oscar=0'], ['?level=a1&oscar=0&oscar=legacy'], ['?level=a1&oscar=legacy&%4Dode=exam']])(
+    'the opt-in does not start it at %s: exam, sandbox, dashboard, unknown level and oscar=0 stay silent, with no timer',
+    async (search) => {
+      vi.useFakeTimers()
+      await expect(bootGuide('legacy', fakeWin(search, false, '__audioSim'))).resolves.toBeNull()
+      expect(vi.getTimerCount()).toBe(0)
+      expect(mount).not.toHaveBeenCalled()
+    },
+  )
+
+  it('the opt-in oscar=legacy starts it on a practice level, and Mode Création is on without any opt-in', async () => {
+    await expect(bootGuide('legacy', fakeWin('?level=a1&oscar=legacy', true, '__audioSim'))).resolves.toBe(handle)
+    expect(mount).toHaveBeenCalledTimes(1)
+    mount.mockClear()
+    await expect(bootGuide('creation', fakeWin('', true))).resolves.toBe(handle)
+    expect(mount).toHaveBeenCalledTimes(1)
+  })
+})
+
 describe('bootGuide on the legacy route', () => {
   it('waits for window.__audioSim (not __creation), looks every 250 ms, and mounts with the legacy bridge', async () => {
     vi.useFakeTimers()
-    const win = fakeWin('?level=a1', false)
+    const win = fakeWin('?level=a1&oscar=legacy', false)
     win.__creation = { design: vi.fn() } as never // the other route's hook does not count
     let result: unknown = 'pending'
     void bootGuide('legacy', win).then((r) => (result = r))
@@ -211,7 +238,7 @@ describe('bootGuide on the legacy route', () => {
     expect(mount).toHaveBeenCalledTimes(1)
     const deps = mount.mock.calls[0][0] as Record<string, unknown>
     expect(deps.route).toBe('legacy')
-    expect(deps.search).toBe('?level=a1')
+    expect(deps.search).toBe('?level=a1&oscar=legacy')
     expect(deps.win).toBe(win)
     const bridge = deps.bridge as Record<string, unknown>
     for (const m of ['snapshot', 'rectOf', 'anchorOfPort', 'anchorOfDevice', 'anchorOfControl', 'onChange', 'destroy']) expect(typeof bridge[m]).toBe('function')
@@ -221,7 +248,7 @@ describe('bootGuide on the legacy route', () => {
 
   it('gives up quietly after the limit when the hook never comes, leaving no timer', async () => {
     vi.useFakeTimers()
-    const win = fakeWin('?level=a1', false)
+    const win = fakeWin('?level=a1&oscar=legacy', false)
     let result: unknown = 'pending'
     void bootGuide('legacy', win).then((r) => (result = r))
     await vi.advanceTimersByTimeAsync(WAIT_LIMIT_MS + WAIT_STEP_MS)
@@ -232,11 +259,11 @@ describe('bootGuide on the legacy route', () => {
 
   it('an address that turns into an exam address while the guide waits gives null, and nothing mounts', async () => {
     vi.useFakeTimers()
-    const win = fakeWin('?level=a1', false)
+    const win = fakeWin('?level=a1&oscar=legacy', false)
     let result: unknown = 'pending'
     void bootGuide('legacy', win).then((r) => (result = r))
     await vi.advanceTimersByTimeAsync(1000)
-    ;(win.location as { search: string }).search = '?level=a1&mode=exam'
+    ;(win.location as { search: string }).search = '?level=a1&mode=exam&oscar=legacy'
     win.__audioSim = { state: vi.fn() } as never
     await vi.advanceTimersByTimeAsync(WAIT_STEP_MS)
     await vi.advanceTimersByTimeAsync(0)

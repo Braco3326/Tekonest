@@ -30,7 +30,7 @@ import {
   nextConnectionStep,
 } from './flows.creation'
 import { LEGACY_ACK_SELECTOR, LEGACY_NAV_OBJECTIVES, LEGACY_STRINGS, legacyFlowsFor, legacyKeywords, legacyStorageKey, nextLegacyLink } from './flows.legacy'
-import { guideEnabled, guideMode, type GuideRoute } from './mode'
+import { guideMode, guideRouteAllowed, type GuideRoute } from './mode'
 import { createController } from './vendor/core/controller'
 import type { HostEvent, Rect } from './vendor/core/types'
 import type { Setup } from './vendor/hostTypes'
@@ -191,7 +191,7 @@ export function createRectResolver(deps: { bridge: TpBridge; registry: Registry;
 
 export function mountOscar(deps: MountDeps, impl: MountImpl = { createController, mountGuide }): OscarHandle | null {
   // The gates come first and touch nothing.
-  if (!guideEnabled(deps.search, deps.features ?? FEATURES)) return null
+  if (!guideRouteAllowed(deps.search, deps.route, deps.features ?? FEATURES)) return null
   if (guideMode(deps.search, deps.route) !== 'practice') return null
 
   let warned = false

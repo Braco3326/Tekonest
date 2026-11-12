@@ -324,7 +324,7 @@ function mountLegacy(over: Partial<MountDeps> = {}, state: TpState | null = lega
   const b = fakeBridge(state)
   const d = fakeDoc()
   const f = fakeImpl()
-  const search = '?level=a1'
+  const search = '?level=a1&oscar=legacy'
   const deps: MountDeps = {
     win: { location: { search } } as unknown as Window,
     doc: d.doc,
@@ -349,13 +349,20 @@ describe('mountOscar on the legacy route', () => {
     expect(c.flows.map((x) => x.id)).toEqual(['lire-l-objectif', 'premier-cable'])
     expect(c.strings.flows['lire-l-objectif']).toBe(LEGACY_STRINGS.flows['lire-l-objectif'])
     expect(c.storageKey).toBe(`${LEGACY_STORAGE_KEY}.a1`)
-    const other = mountLegacy({ search: '?level=b1', win: { location: { search: '?level=b1' } } as unknown as Window })
+    const other = mountLegacy({ search: '?level=b1&oscar=legacy', win: { location: { search: '?level=b1&oscar=legacy' } } as unknown as Window })
     expect((other.f.impl.createController.mock.calls[0][0] as { storageKey?: string }).storageKey).toBe(`${LEGACY_STORAGE_KEY}.b1`)
     expect(c.flowKeywords.map((k) => k.flowId).sort()).toEqual(['lire-l-objectif', 'premier-cable'])
     expect((f.impl.mountGuide.mock.calls[0][0] as { context: unknown }).context).toEqual({ page: 'workbench', mode: 'practice' })
   })
 
-  it.each([['?level=a1&mode=exam'], ['?level=sandbox'], ['?legacy=1'], ['?level=zz'], ['?level=a1&MODE=exam'], ['?level=a1&oscar=0']])('stays silent for %s: no controller, no widget, no bridge call', (search) => {
+  it('the level-play flag turns it on for a plain practice level, and the exam address stays silent even then', () => {
+    const flags = { levels: false, guide: true, guideLegacy: true }
+    expect(mountLegacy({ search: '?level=a1', features: flags, win: { location: { search: '?level=a1' } } as unknown as Window }).handle).not.toBeNull()
+    expect(mountLegacy({ search: '?level=a1&mode=exam', features: flags, win: { location: { search: '?level=a1&mode=exam' } } as unknown as Window }).handle).toBeNull()
+    expect(mountLegacy({ search: '?level=a1&oscar=0', features: flags }).handle).toBeNull()
+  })
+
+  it.each([['?level=a1'], ['?level=a1&mode=exam&oscar=legacy'], ['?level=a1&oscar=0&oscar=legacy'], ['?level=a1&mode=exam'], ['?level=sandbox'], ['?legacy=1'], ['?level=zz'], ['?level=a1&MODE=exam'], ['?level=a1&oscar=0']])('stays silent for %s: no controller, no widget, no bridge call', (search) => {
     const r = mountLegacy({ search })
     expect(r.handle).toBeNull()
     expect(r.f.impl.createController).not.toHaveBeenCalled()

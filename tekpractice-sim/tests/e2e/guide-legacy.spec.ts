@@ -2,6 +2,7 @@
  * The in-page guide (Oscar) on the legacy level page (`?level=a1|b1|c1|d1`), on the production build.
  *
  * What is proven here, and only here (the unit tests have no DOM):
+ *  - level play ships dark: no guide on a plain level address, the icon with the explicit opt-in oscar=legacy (every positive case below uses it);
  *  - the icon on a practice level, its accessible name, the keyboard path (Tab, Entrée, Échap), the landmark that holds it, axe with the bubble open;
  *  - the guide costs the page nothing at rest: 0 renders in 3 s, and a pinned set of extra listeners against the same page with `?oscar=0`;
  *  - the guide only reads: every call it makes on `window.__audioSim` is one of four readers, and `dispatch`, `hints` and the rest are never called by it;
@@ -63,7 +64,9 @@ const clockSeconds = (text: string): number => {
   return m ? Number(m[1]) * 60 + Number(m[2]) : Number.NaN
 }
 
-const boot = async (page: Page, search = '?level=a1'): Promise<void> => {
+/** Level play ships dark: the guide shows on a level page only with the explicit opt-in (or the level-play flag, off in the shipped build). */
+const OPT_IN = '&oscar=legacy'
+const boot = async (page: Page, search = `?level=a1${OPT_IN}`): Promise<void> => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/' + search)
   await page.waitForFunction(() => !!window.__audioSim)
@@ -416,7 +419,7 @@ const probe = async (browser: Browser, search: string, o: { mounted: boolean; qu
 
 test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny entry every legacy page fetches) or call on the hook; the exam timer and score are those of a run with ?oscar=0 (same score)', async ({ browser }) => {
   // The control: the guide mounted on the practice level. Everything the absence checks rely on is asserted PRESENT here first.
-  const control = await probe(browser, '?level=a1', { mounted: true, quietMs: 2000 })
+  const control = await probe(browser, `?level=a1${OPT_IN}`, { mounted: true, quietMs: 2000 })
   expect(control.facts.nodes, 'control: the widget node is there').toBe(1)
   expect(control.facts.landmark, 'control: the landmark is there').toBe(1)
   expect(control.facts.sheet, 'control: the guide style sheet is loaded').toBe(true)
@@ -429,7 +432,7 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
   // The silent runs: watched for 3 times as long as the control took to mount (at least 2.5 s), so a late mount would show.
   const quietMs = Math.max(2500, 3 * (control.mountMs ?? 0))
   const silent = { nodes: 0, landmark: 0, sheet: false, chunks: [], guideCalls: {} }
-  for (const search of ['?level=a1&mode=exam', '?level=a1&oscar=0']) {
+  for (const search of [`?level=a1&mode=exam${OPT_IN}`, '?level=a1&oscar=0', '?level=a1']) {
     const { facts } = await probe(browser, search, { mounted: false, quietMs })
     expect(facts, search).toEqual(silent)
   }
@@ -462,7 +465,7 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
     await s.close()
     return out
   }
-  const withGates = await play('?level=a1&mode=exam')
+  const withGates = await play(`?level=a1&mode=exam${OPT_IN}`)
   const withoutGuide = await play('?level=a1&mode=exam&oscar=0')
   test.info().annotations.push({ type: 'exam', description: `score ${withGates.score} (gates open) vs ${withoutGuide.score} (?oscar=0)` })
   expect(withGates.score).toMatch(/^[\d.]+\/20$/)
@@ -493,11 +496,11 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
     await s.close()
     return p
   }
-  expect(await paths('?level=a1&mode=exam')).toEqual(await paths('?level=a1&mode=exam&oscar=0'))
+  expect(await paths(`?level=a1&mode=exam${OPT_IN}`)).toEqual(await paths('?level=a1&mode=exam&oscar=0'))
 })
 
 test('?level=sandbox shows no guide node', async ({ browser }) => {
-  const s = await session(browser, '?level=sandbox', { init: spyOnHook })
+  const s = await session(browser, `?level=sandbox${OPT_IN}`, { init: spyOnHook })
   await quietWindow(s.page, 2500)
   expect(await guideNodes(s.page)).toBe(0)
   expect(s.req.paths().filter((p) => GUIDE_ASSET.test(p)), 'no guide chunk requested').toEqual([])
@@ -509,7 +512,7 @@ test('?level=sandbox shows no guide node', async ({ browser }) => {
 })
 
 test('teacher.html shows no guide node', async ({ browser }) => {
-  const s = await session(browser, 'teacher.html', { hook: false })
+  const s = await session(browser, 'teacher.html?oscar=legacy', { hook: false })
   await expect(s.page.locator('body')).toBeVisible()
   await quietWindow(s.page, 2000)
   expect(await guideNodes(s.page)).toBe(0)
@@ -518,7 +521,7 @@ test('teacher.html shows no guide node', async ({ browser }) => {
 })
 
 test('?legacy=1 alone shows no guide node (the dashboard has no level)', async ({ browser }) => {
-  const s = await session(browser, '?legacy=1', { hook: false })
+  const s = await session(browser, `?legacy=1${OPT_IN}`, { hook: false })
   await expect(s.page.locator('body')).toBeVisible()
   await quietWindow(s.page, 2500)
   expect(await guideNodes(s.page)).toBe(0)
@@ -527,7 +530,8 @@ test('?legacy=1 alone shows no guide node (the dashboard has no level)', async (
 })
 
 test('an unknown level, a mode key in any case, and a second level key show no guide node and request no guide chunk', async ({ browser }) => {
-  for (const search of ['?level=zz', '?level=a1&MODE=exam', '?level=a1&Mode=', '?level=a1&%6Dode=exam', '?level=a1&level=b1', '?level=A1']) {
+  for (const base of ['?level=zz', '?level=a1&MODE=exam', '?level=a1&Mode=', '?level=a1&%6Dode=exam', '?level=a1&level=b1', '?level=A1']) {
+    const search = base + OPT_IN // the opt-in is on: only the address decides
     const s = await session(browser, search, { hook: false, init: spyOnHook })
     await s.page.waitForFunction(() => !!window.__audioSim, undefined, { timeout: 20_000 }).catch(() => undefined)
     await quietWindow(s.page, 2500)
@@ -608,7 +612,7 @@ test('the page\'s « Pourquoi ? » button still works with the guide on (needs a
 })
 
 test('asked, the guide answers in French from the catalog: an error is the rule\'s own French title-and-explanation, the ring on the faulty port, the page\'s English toast not repeated', async ({ page }) => {
-  await boot(page, '?level=d1')
+  await boot(page, `?level=d1${OPT_IN}`)
   await waitGuide(page)
   await guideSees(page)
   await page.evaluate(() => {
@@ -733,7 +737,7 @@ test('axe: the guide adds no serious or critical violation with the bubble open 
   const ctx2 = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' })
   const p2 = await ctx2.newPage()
   track(p2)
-  await boot(p2, '?level=d1')
+  await boot(p2, `?level=d1${OPT_IN}`)
   await openBubble(p2)
   await guideSees(p2)
   await connect2(p2)
@@ -750,10 +754,23 @@ const connect2 = (page: Page): Promise<void> =>
     window.__audioSim!.dispatch({ type: 'CONNECT', a: c.from, b: c.to })
   })
 
+// ── level play ships dark ──────────────────────────────────────────────────────────────────────────────────────────
+
+test('a plain ?level=a1 shows no guide node (dark by default), ?level=a1&oscar=legacy shows the icon, and the exam address stays silent even with the opt-in', async ({ browser }) => {
+  const on = await probe(browser, `?level=a1${OPT_IN}`, { mounted: true, quietMs: 1500 })
+  expect(on.facts.nodes, 'the opt-in shows the guide').toBe(1)
+  expect(on.facts.chunks.filter((c) => c.startsWith('mount-')), 'its chunk was requested').toHaveLength(1)
+  const silent = { nodes: 0, landmark: 0, sheet: false, chunks: [], guideCalls: {} }
+  for (const search of ['?level=a1', '?level=b1', `?level=a1&mode=exam${OPT_IN}`, `?level=a1&oscar=0${OPT_IN}`]) {
+    const { facts } = await probe(browser, search, { mounted: false, quietMs: 2500 })
+    expect(facts, search).toEqual(silent)
+  }
+})
+
 // ── the 2D board: nothing to project, so no ring ─────────────────────────────────────────────────────────────────────
 
 test('?level=a1&render=2d: the icon is there and the bubble opens; the cable step shows its sentence with no ring and no ghost cable; no console error', async ({ page }) => {
-  await boot(page, '?level=a1&render=2d')
+  await boot(page, `?level=a1&render=2d${OPT_IN}`)
   expect(await page.evaluate(() => window.__audioSim!.portScreen({ instance: 'sm58-1', port: 'out-xlr' })), 'the 2D board projects nothing').toBeNull()
   await waitGuide(page)
   await expect(icon(page)).toHaveAccessibleName(ICON_NAME)
@@ -779,7 +796,7 @@ test('?level=a1&render=2d: the icon is there and the bubble opens; the cable ste
 })
 
 test('?level=a1&mode=exam&render=2d: no guide node, no guide chunk, no call on the hook', async ({ browser }) => {
-  const s = await session(browser, '?level=a1&mode=exam&render=2d', { init: spyOnHook })
+  const s = await session(browser, `?level=a1&mode=exam&render=2d${OPT_IN}`, { init: spyOnHook })
   await quietWindow(s.page, 2500)
   expect(await guideNodes(s.page)).toBe(0)
   expect(s.req.paths().filter((p) => GUIDE_ASSET.test(p)), 'no guide chunk requested').toEqual([])

@@ -1,6 +1,7 @@
 // The guide's mode gate fails closed: "practice" only on the two practice surfaces, "exam" for anything else.
 import { describe, expect, it } from 'vitest'
-import { guideEnabled, guideMode, type GuideMode, type GuideRoute } from '../../src/guide/mode'
+import type { Features } from '../../src/features'
+import { guideEnabled, guideMode, guideRouteAllowed, type GuideMode, type GuideRoute } from '../../src/guide/mode'
 import { FEATURES } from '../../src/features'
 
 type Row = [name: string, search: string, route: GuideRoute, expected: GuideMode]
@@ -120,7 +121,7 @@ describe('guideEnabled', () => {
   })
 
   it('is false when features.guide is false, whatever the query', () => {
-    const off = { levels: false, guide: false }
+    const off = { levels: false, guide: false, guideLegacy: false }
     expect(guideEnabled('', off)).toBe(false)
     expect(guideEnabled('?oscar=1', off)).toBe(false)
     expect(guideEnabled('?oscar=0', off)).toBe(false)
@@ -136,8 +137,8 @@ describe('guideEnabled', () => {
   })
 
   it('a missing or non-string search never throws and follows the flag alone', () => {
-    const on = { levels: false, guide: true }
-    const off = { levels: false, guide: false }
+    const on = { levels: false, guide: true, guideLegacy: false }
+    const off = { levels: false, guide: false, guideLegacy: false }
     for (const s of [undefined, null, 0, {}, []] as unknown[]) {
       expect(() => guideEnabled(s as string)).not.toThrow()
       expect(guideEnabled(s as string, on)).toBe(true)
@@ -146,11 +147,71 @@ describe('guideEnabled', () => {
   })
 
   it('is true when features.guide is true and the query does not switch it off', () => {
-    expect(guideEnabled('', { levels: true, guide: true })).toBe(true)
+    expect(guideEnabled('', { levels: true, guide: true, guideLegacy: false })).toBe(true)
   })
 
   it('never throws on garbage and does not enable on unparsable input beyond the default', () => {
     for (const s of ['%', '%E0%A4%A', '\u0000', '&&&']) expect(() => guideEnabled(s)).not.toThrow()
     expect(guideEnabled('x'.repeat(100_000))).toBe(true)
+  })
+})
+
+describe('guideRouteAllowed: Mode Création is on by default, level play ships dark', () => {
+  const F = (over: Partial<Features> = {}): Features => ({ levels: false, guide: true, guideLegacy: false, ...over })
+
+  it('the shipped flags: the guide is on in Mode Création and off for level play', () => {
+    expect(FEATURES.guide).toBe(true)
+    expect(FEATURES.guideLegacy).toBe(false)
+    expect(guideRouteAllowed('', 'creation')).toBe(true)
+    expect(guideRouteAllowed('?level=a1', 'legacy')).toBe(false)
+  })
+
+  it('Mode Création does not depend on the level-play flag or on the opt-in', () => {
+    for (const s of ['', '?oscar=legacy', '?room=x']) {
+      expect(guideRouteAllowed(s, 'creation', F()), s).toBe(true)
+      expect(guideRouteAllowed(s, 'creation', F({ guideLegacy: true })), s).toBe(true)
+    }
+  })
+
+  it('level play needs the flag or the explicit opt-in oscar=legacy', () => {
+    expect(guideRouteAllowed('?level=a1', 'legacy', F())).toBe(false)
+    expect(guideRouteAllowed('?level=a1', 'legacy', F({ guideLegacy: true }))).toBe(true)
+    expect(guideRouteAllowed('?level=a1&oscar=legacy', 'legacy', F())).toBe(true)
+    expect(guideRouteAllowed('?oscar=legacy&level=d1', 'legacy', F())).toBe(true)
+    for (const s of ['?level=a1&oscar=1', '?level=a1&oscar=', '?level=a1&oscar=Legacy', '?level=a1&oscar=legacy2', '?level=a1&oscar=yes', '?level=a1&legacy=1'])
+      expect(guideRouteAllowed(s, 'legacy', F()), s).toBe(false)
+  })
+
+  it('oscar=0 wins over everything, the flag and the opt-in, in any order and key case', () => {
+    for (const s of ['?level=a1&oscar=0', '?level=a1&oscar=legacy&oscar=0', '?level=a1&oscar=0&oscar=legacy', '?level=a1&OSCAR=0&oscar=legacy', '?level=a1&%6Fscar=0&oscar=legacy']) {
+      expect(guideRouteAllowed(s, 'legacy', F()), s).toBe(false)
+      expect(guideRouteAllowed(s, 'legacy', F({ guideLegacy: true })), s).toBe(false)
+    }
+  })
+
+  it('a repeated opt-in key is handled like the oscar key: any occurrence, any key case', () => {
+    expect(guideRouteAllowed('?level=a1&oscar=1&oscar=legacy', 'legacy', F())).toBe(true)
+    expect(guideRouteAllowed('?level=a1&oscar=legacy&oscar=1', 'legacy', F())).toBe(true)
+    expect(guideRouteAllowed('?level=a1&OSCAR=legacy', 'legacy', F())).toBe(true)
+    expect(guideRouteAllowed('?level=a1&%6Fscar=legacy', 'legacy', F())).toBe(true)
+  })
+
+  it('the master flag still wins: guide false is off everywhere, the opt-in included', () => {
+    expect(guideRouteAllowed('?level=a1&oscar=legacy', 'legacy', F({ guide: false }))).toBe(false)
+    expect(guideRouteAllowed('', 'creation', F({ guide: false }))).toBe(false)
+  })
+
+  it('the opt-in never opens the exam gate: the mode is the address alone', () => {
+    for (const s of ['?level=a1&mode=exam&oscar=legacy', '?level=sandbox&oscar=legacy', '?legacy=1&oscar=legacy', '?level=zz&oscar=legacy', '?level=a1&MODE=&oscar=legacy', '?level=a1&level=b1&oscar=legacy'])
+      expect(guideMode(s, 'legacy'), s).toBe('exam')
+    expect(guideMode('?level=a1&oscar=legacy', 'legacy')).toBe('practice')
+    expect(guideMode('?oscar=legacy', 'creation')).toBe('practice')
+  })
+
+  it('never throws on garbage and a non-string address is dark for level play', () => {
+    for (const s of [undefined, null, 0, {}, [], '%', '%E0%A4%A', '\u0000', '&&&']) expect(() => guideRouteAllowed(s as string, 'legacy', F())).not.toThrow()
+    expect(guideRouteAllowed(undefined as unknown as string, 'legacy', F())).toBe(false)
+    expect(guideRouteAllowed(undefined as unknown as string, 'legacy', F({ guideLegacy: true }))).toBe(true)
+    expect(guideRouteAllowed('', 'nowhere' as GuideRoute, F({ guideLegacy: true }))).toBe(false)
   })
 })

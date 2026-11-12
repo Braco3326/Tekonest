@@ -6,7 +6,7 @@
 // failure is null and the app is untouched.
 import type { Registry } from '../engine/CatalogLoader'
 import type { TpBridge } from './bridge/types'
-import { guideEnabled, guideMode, type GuideRoute } from './mode'
+import { guideMode, guideRouteAllowed, type GuideRoute } from './mode'
 
 /** How long the guide waits for the route's debug hook (`window.__creation`, or `window.__audioSim` on the level page), and how often it looks. */
 export const WAIT_LIMIT_MS = 10_000
@@ -63,8 +63,8 @@ export async function bootGuide(route: GuideRoute, target?: Window): Promise<Gui
     } catch {
       return null // no readable address: fail closed (the mode cannot be known)
     }
-    if (!guideEnabled(search)) return null
     if (route !== 'creation' && route !== 'legacy') return null
+    if (!guideRouteAllowed(search, route)) return null
     if (guideMode(search, route) !== 'practice') return null
     if (!runtimeOk()) {
       warn('guide: this browser lacks Object.hasOwn or String.prototype.toWellFormed, the guide stays off')
@@ -77,7 +77,7 @@ export async function bootGuide(route: GuideRoute, target?: Window): Promise<Gui
     } catch {
       return null
     }
-    if (!guideEnabled(search) || guideMode(search, route) !== 'practice') return null
+    if (!guideRouteAllowed(search, route) || guideMode(search, route) !== 'practice') return null
 
     const [makeBridge, { mountOscar }, { loadCatalog }, catalog] = await Promise.all([
       // One bridge per route: Mode Création reads `window.__creation`, the level page `window.__audioSim`. Each is its own lazy chunk.

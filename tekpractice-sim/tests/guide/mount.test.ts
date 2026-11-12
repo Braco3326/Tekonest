@@ -198,7 +198,7 @@ describe('mountOscar gates', () => {
   })
 
   it('returns null when the feature flag is off', () => {
-    const r = make({ features: { levels: false, guide: false } })
+    const r = make({ features: { levels: false, guide: false, guideLegacy: false } })
     expect(mountOscar(r.deps, r.f.impl)).toBeNull()
     expect(r.f.impl.createController).not.toHaveBeenCalled()
     expect(r.f.impl.mountGuide).not.toHaveBeenCalled()

@@ -57,3 +57,28 @@ export function guideEnabled(search: string, features: Features = FEATURES): boo
     return true
   }
 }
+
+/** The explicit opt-in of the level page: any oscar parameter (any key case) whose value is exactly legacy. */
+function legacyOptIn(search: unknown): boolean {
+  const params = parse(search)
+  if (!params) return false
+  for (const [k, v] of params) if (k.toLowerCase() === 'oscar' && v === 'legacy') return true
+  return false
+}
+
+/**
+ * Whether the guide may start on a route: guideEnabled (the master flag; oscar=0 wins over everything), and for level play also the level flag or the
+ * explicit opt-in oscar=legacy. Mode Création needs nothing more. This is not the mode gate: the opt-in never makes an exam address practice (guideMode decides
+ * that from the address alone).
+ */
+export function guideRouteAllowed(search: string, route: GuideRoute, features: Features = FEATURES): boolean {
+  if (!guideEnabled(search, features)) return false
+  if (route === 'creation') return true
+  if (route !== 'legacy') return false
+  if (features.guideLegacy) return true
+  try {
+    return legacyOptIn(search)
+  } catch {
+    return false
+  }
+}
