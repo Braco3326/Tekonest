@@ -1,7 +1,7 @@
 /**
  * Task 32 (C7): the mains source is a flag on catalog data, `isMainsSource`, and it belongs to `multiprise-secteur`'s
- * outputs ONLY. The Bêta proposals shure-axient-digital-ad4d and shure-ua845uwb declare `mains-power` OUT ports without the
- * flag (unverified KB data): wired to a power-in they are accepted by the engine (same connector, same signal) but they
+ * outputs ONLY. The Bêta proposals that declare `mains-power` OUT ports (today the outlets of the Furman M-8x2; the two Shure daisy-chain
+ * outputs were Bêta until their Wave 3 promotion) have no flag (unverified KB data): wired to a power-in they are accepted by the engine (same connector, same signal) but they
  * are NOT a mains source, and Task 34's « powered » test reads this flag.
  */
 import { readFileSync } from 'node:fs'
@@ -38,12 +38,10 @@ describe('isMainsSource is only on the generic power strip', () => {
   it('Bêta proposals: not one declares isMainsSource (unverified data does not power anything)', () => {
     const r = withBeta()
     const mainsOutBeta = [...r.deviceById.values()].filter((d) => !r.catalog.devices.some((c) => c.id === d.id)).flatMap((d) => d.ports.filter((p) => p.signal === 'mains-power' && p.dir === 'out').map((p) => `${d.id} ${p.portId}`))
-    // the premise of this test: the proposals that have a mains OUT port are really in the registry: the two Shure daisy-chain outputs, and (Wave 1,
-    // beta-modelled) the nine outlets of the Furman M-8x2 power conditioner, which stay unflagged until the device is promoted with documented outlets
+    // the premise of this test: the proposals that have a mains OUT port are really in the registry: (Wave 1, beta-modelled) the nine outlets of the Furman M-8x2 power conditioner, which stay unflagged until the device is promoted with documented outlets
     expect(mainsOutBeta).toEqual([
-      'shure-axient-digital-ad4d out-ac-power-cascade-locking',
-      'shure-ua845uwb out-ac-power-output-daisy-chain',
       ...['out-1', 'out-2', 'out-3', 'out-4', 'out-5', 'out-6', 'out-7', 'out-8', 'out-front'].map((p) => `furman-m-8x2 ${p}`),
+      ...['out-1', 'out-2', 'out-3', 'out-4', 'out-5'].map((p) => `eaton-5p-1u-ups ${p}`), // Wave 3, beta-modelled: the UPS outlets, unflagged until it is promoted with documented outlets
     ])
     for (const d of r.deviceById.values())
       if (!r.catalog.devices.some((c) => c.id === d.id)) for (const p of d.ports) expect(p.flags ?? [], `${d.id} ${p.portId}`).not.toContain('isMainsSource')
@@ -56,8 +54,8 @@ describe('isMainsSource is only on the generic power strip', () => {
     expect(isMainsSourcePort(get('multiprise-secteur'), 'out-4')).toBe(true)
     expect(isMainsSourcePort(get('multiprise-secteur'), 'out-5')).toBe(false)
     expect(isMainsSourcePort(get('qsc-k12-2'), 'power-in')).toBe(false)
-    expect(isMainsSourcePort(get('shure-axient-digital-ad4d'), 'out-ac-power-cascade-locking')).toBe(false)
-    expect(isMainsSourcePort(get('shure-ua845uwb'), 'out-ac-power-output-daisy-chain')).toBe(false)
+    expect(isMainsSourcePort(get('furman-m-8x2'), 'out-1')).toBe(false)
+    expect(isMainsSourcePort(get('furman-m-8x2'), 'out-front')).toBe(false)
     expect(isMainsSourcePort(undefined, 'out-1')).toBe(false)
   })
 })
@@ -90,8 +88,8 @@ describe('the strip powers a K12.2 through the engine invariants (R1-R3), a Bêt
   })
 
   it.each([
-    ['shure-axient-digital-ad4d', 'out-ac-power-cascade-locking'],
-    ['shure-ua845uwb', 'out-ac-power-output-daisy-chain'],
+    ['furman-m-8x2', 'out-1'],
+    ['furman-m-8x2', 'out-front'],
   ])('a Bêta %s %s wired to a K12.2 power-in is accepted by the engine and is NOT mains', (deviceId, portId) => {
     const r = withBeta()
     const g = new ConnectionGraph(r, [{ instanceId: 'beta', deviceId }, { instanceId: 'k12-g', deviceId: 'qsc-k12-2' }])
@@ -146,7 +144,7 @@ describe('isMainsSourceRef(registry, instances, ref): the registry-aware reader 
   const instances = [
     { instanceId: 'mains', deviceId: 'multiprise-secteur' },
     { instanceId: 'k12-g', deviceId: 'qsc-k12-2' },
-    { instanceId: 'beta', deviceId: 'shure-axient-digital-ad4d' },
+    { instanceId: 'beta', deviceId: 'furman-m-8x2' },
   ]
 
   it('true for a catalog strip output, false for its sibling inlets, unknown instances and unknown ports', () => {
@@ -159,8 +157,8 @@ describe('isMainsSourceRef(registry, instances, ref): the registry-aware reader 
 
   it('false for a registered Bêta device port, EVEN IF the flag is set on it directly in the registry object afterwards', () => {
     const r = withBeta()
-    const beta = r.deviceById.get('shure-axient-digital-ad4d')!
-    const port = beta.ports.find((p) => p.portId === 'out-ac-power-cascade-locking')!
+    const beta = r.deviceById.get('furman-m-8x2')!
+    const port = beta.ports.find((p) => p.portId === 'out-1')!
     expect(isMainsSourceRef(r, instances, { instance: 'beta', port: port.portId })).toBe(false)
     port.flags = [...(port.flags ?? []), 'isMainsSource'] // tampering after registration
     expect(isMainsSourcePort(beta, port.portId)).toBe(true) // the device-level reader trusts the data it is given...

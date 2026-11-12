@@ -11,16 +11,23 @@ const fresh = (): CatalogT => structuredClone(base)
 type LooseDevice = Omit<CatalogT['devices'][number], 'acoustic' | 'routing'> & Record<string, any>
 const dev = (c: CatalogT, id: string) => c.devices.find((d) => d.id === id) as LooseDevice
 const errors = (c: CatalogT) => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'error')
+/** The speakers of a catalogue (a route feeds a transducer), and the ones among them that carry no acoustic block. */
+const speakersOf = (c: CatalogT) => c.devices.filter((d) => (d as LooseDevice).routing?.some((r: { to: string[] }) => r.to.includes('transducer')))
+const bareSpeakers = (c: CatalogT): string[] => speakersOf(c).filter((d) => (d as LooseDevice).acoustic === undefined).map((d) => d.id)
+const acousticWarnings = (c: CatalogT): string[] => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'warning' && i.path.endsWith('.acoustic')).map((i) => i.path)
 
 describe('checkCatalog, models', () => {
-  it('the real catalog has no issue when every device has a model', () => {
-    expect(checkCatalog(fresh(), { modelIds: allModels })).toEqual([])
+  it('the real catalog has no error when every device has a model; its only warnings are the speakers WITHOUT sourced acoustic data (founder data rule: no coverage default)', () => {
+    const issues = checkCatalog(fresh(), { modelIds: allModels })
+    expect(issues.filter((i) => i.level === 'error')).toEqual([])
+    expect(issues.filter((i) => !(i.level === 'warning' && i.path.endsWith('.acoustic')))).toEqual([])
+    expect(issues.map((i) => i.path).sort()).toEqual(bareSpeakers(fresh()).map((id) => `devices["${id}"].acoustic`).sort())
   })
 
   it('warns (never errors) for a device without a .glb: the placeholder ships', () => {
     const models = new Set(allModels)
     models.delete('shure-sm58')
-    const issues = checkCatalog(fresh(), { modelIds: models })
+    const issues = checkCatalog(fresh(), { modelIds: models }).filter((i) => !i.path.endsWith('.acoustic')) // the acoustic warnings are another test's
     expect(issues).toHaveLength(1)
     expect(issues[0].level).toBe('warning')
     expect(issues[0].path).toBe('devices["shure-sm58"]')
@@ -197,11 +204,20 @@ describe('checkCatalog, acoustic (Task 35, C12)', () => {
     return c
   }
 
-  it('the real catalog has an acoustic block on every speaker, with no issue at all (no warning either)', () => {
-    const speakers = fresh().devices.filter((d) => (d as LooseDevice).routing?.some((r: { to: string[] }) => r.to.includes('transducer')))
-    expect(speakers.map((d) => d.id).sort()).toEqual(['genelec-8030c', 'neumann-kh-120-ii', 'qsc-k12-2', 'yamaha-dbr12'])
-    for (const d of speakers) expect((d as LooseDevice).acoustic, d.id).toBeDefined()
-    expect(checkCatalog(fresh(), { modelIds: allModels })).toEqual([])
+  it('the four hand-written speakers and the Wave 1 KH 120 II keep their acoustic block; every other real speaker has NONE (promoted since the data rule) and is warned about, nothing else is', () => {
+    const speakers = speakersOf(fresh())
+    for (const id of ['genelec-8030c', 'neumann-kh-120-ii', 'qsc-k12-2', 'yamaha-dbr12']) {
+      expect(speakers.map((d) => d.id), id).toContain(id)
+      expect((dev(fresh(), id)).acoustic, id).toBeDefined()
+    }
+    for (const d of speakers) {
+      const a = (d as LooseDevice).acoustic
+      // a speaker promoted without a sourced coverage carries nothing: no nominal block, no number (the template no longer writes any)
+      if (a === undefined) continue
+      expect(['genelec-8030c', 'neumann-kh-120-ii', 'qsc-k12-2', 'yamaha-dbr12'], `${d.id} carries an acoustic block`).toContain(d.id)
+    }
+    expect(acousticWarnings(fresh()).sort()).toEqual(bareSpeakers(fresh()).map((id) => `devices["${id}"].acoustic`).sort())
+    expect(bareSpeakers(fresh()).length).toBeGreaterThan(10)
   })
 
   it('accepts a sourced block, with the optional fields', () => {
@@ -270,36 +286,38 @@ describe('checkCatalog, acoustic (Task 35, C12)', () => {
   })
 
   describe('a speaker (a device with a `transducer` route) without acoustic is a WARNING', () => {
-    const warnings = (c: CatalogT) => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'warning')
+    /** The acoustic warnings of ONE device (the real catalogue also warns about its bare speakers). */
+    const warnings = (c: CatalogT, id: string) => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'warning' && i.path === `devices["${id}"].acoustic`)
 
     it('warns for each of the real speakers once its acoustic is removed, and never errors', () => {
       for (const id of ['qsc-k12-2', 'yamaha-dbr12', 'genelec-8030c']) {
         const c = fresh()
         delete dev(c, id).acoustic
-        expect(warnings(c).map((i) => i.path), id).toEqual([`devices["${id}"].acoustic`])
-        expect(warnings(c)[0].message, id).toMatch(/speaker.*acoustic|acoustic/)
+        expect(warnings(c, id).map((i) => i.path), id).toEqual([`devices["${id}"].acoustic`])
+        expect(warnings(c, id)[0].message, id).toMatch(/speaker.*acoustic|acoustic/)
         expect(errors(c), id).toEqual([])
       }
     })
     it('is derived from the routing, not from an id list: any device that feeds `transducer` is a speaker', () => {
       const c = fresh()
       ;(dev(c, 'yamaha-ql1').routing as unknown[]).push({ from: 'in-mic-1', to: ['transducer'] })
-      expect(warnings(c).map((i) => i.path)).toEqual(['devices["yamaha-ql1"].acoustic'])
+      expect(warnings(c, 'yamaha-ql1').map((i) => i.path)).toEqual(['devices["yamaha-ql1"].acoustic'])
     })
     it('a device that does not feed a transducer is not asked for acoustic (the console, a microphone)', () => {
       expect(dev(fresh(), 'yamaha-ql1').acoustic).toBeUndefined()
       expect(dev(fresh(), 'shure-sm58').acoustic).toBeUndefined()
-      expect(warnings(fresh())).toEqual([])
+      expect(warnings(fresh(), 'yamaha-ql1')).toEqual([])
+      expect(warnings(fresh(), 'shure-sm58')).toEqual([])
     })
     it('does not fall over on a malformed routing (the routing check reports it, the speaker test just says no)', () => {
       const c = fresh()
       dev(c, 'shure-sm58').routing = 'x'
-      expect(warnings(c)).toEqual([])
+      expect(warnings(c, 'shure-sm58')).toEqual([])
       dev(c, 'shure-sm58').routing = ['x', { to: 'transducer' }, null]
-      expect(warnings(c)).toEqual([])
+      expect(warnings(c, 'shure-sm58')).toEqual([])
     })
     it('a speaker that has acoustic is not warned about', () => {
-      expect(warnings(fresh())).toEqual([])
+      for (const id of ['qsc-k12-2', 'yamaha-dbr12', 'genelec-8030c', 'neumann-kh-120-ii']) expect(warnings(fresh(), id), id).toEqual([])
     })
   })
 })

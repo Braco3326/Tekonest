@@ -378,6 +378,19 @@ export function deviceFromSpec(row: PlanRow, spec: AssetSpecT, proposal: Json | 
   return { device, template, ...(Object.keys(aliases).length ? { aliases } : {}) }
 }
 
+/**
+ * The ports of a kept Bêta proposal with the flags the SPEC declares for the same port id added (Wave 2-5 gate: the spec parity test found a proposal whose spec
+ * says isDantePrimary). A proposal never carries isMainsSource (verified data only); no flag is removed and no port is added or renamed (saved projects keep
+ * their cables).
+ */
+export function mergeSpecFlags(proposalPorts: readonly ProposalPort[], specPorts: readonly PlanPort[]): ProposalPort[] {
+  return proposalPorts.map((p) => {
+    const sp = specPorts.find((s) => s.id === p.portId)
+    const add = (sp?.flags ?? []).filter((f) => f !== 'isMainsSource' && !(p.flags ?? []).includes(f))
+    return add.length ? { ...p, flags: [...(p.flags ?? []), ...add] } : p
+  })
+}
+
 /** A Bêta proposal entry for a new row from the spec's ports (patch-only: no controls, routing or acoustic, never a mains source). */
 function proposalFromSpec(row: PlanRow, spec: AssetSpecT, today: string, sizeNote: string): Json {
   const ports = planPortsOf(spec).map((p) => {
@@ -553,8 +566,8 @@ export function promoteDevice(id: string, opts: PromoteOptions = {}): PromotionR
       const extra = [...specIds].filter((p) => !propIds.includes(p))
       if (missing.length || extra.length)
         return blocked(`a beta-modelled device keeps its proposal ports (saved projects keep their cables): the spec ports must be exactly ${propIds.join(', ')}${missing.length ? ` (missing ${missing.join(', ')})` : ''}${extra.length ? ` (extra ${extra.join(', ')})` : ''}`)
-      entry = { ...proposal, sizeMm: planSize(row!) }
-      changes.push(`proposals: update ${id} (sizeMm from the plan, ports unchanged: saved projects keep their cables)`)
+      entry = { ...proposal, sizeMm: planSize(row!), ports: mergeSpecFlags(proposal.ports as ProposalPort[], planPortsOf(spec)) }
+      changes.push(`proposals: update ${id} (sizeMm from the plan, port ids unchanged: saved projects keep their cables; the flags the spec declares are added)`)
     } else {
       if (!spec.ports.length) return blocked(`the spec of ${id} lists no ports: a Bêta proposal needs at least the ports that are documented; fill the spec first`)
       try {
@@ -576,6 +589,7 @@ export function promoteDevice(id: string, opts: PromoteOptions = {}): PromotionR
 
   // ── revert ─────────────────────────────────────────────────────────────────────────────────────────────────────────
   function regen(): PromotionResult {
+    if (row!.betaModelled === true) return regenBeta()
     if (row!.promoted !== true) return blocked(`${id} is not promoted: --regen only re-derives a device that is already in the catalogue`)
     const spec = readSpecFile(paths.specDir, id)
     const catalogText = readFileSync(paths.catalog, 'utf8')
@@ -595,6 +609,18 @@ export function promoteDevice(id: string, opts: PromoteOptions = {}): PromotionR
     const parity = checkSpecParity(spec, next)
     if (parity.length) return blocked(`the spec does not match the regenerated entry:\n  ${parity.join('\n  ')}`)
     return commit([{ path: paths.catalog, content: nextText }], { id, outcome: 'promoted', changes: [`catalog: regenerate devices["${id}"] in place from its spec and the templates`], ...(template.issues.length ? { issues: template.issues } : {}) })
+  }
+
+  /** --regen of a beta-modelled row: re-merge the spec's port flags into its proposal (nothing else changes). */
+  function regenBeta(): PromotionResult {
+    const spec = readSpecFile(paths.specDir, id)
+    const proposalFile = existsSync(paths.proposals) ? readJson<ProposalFile>(paths.proposals) : undefined
+    const proposal = proposalFile?.devices.find((d) => d.id === id)
+    if (!proposalFile || !proposal) return blocked(`${id} is beta-modelled but has no proposal`)
+    const ports = mergeSpecFlags(proposal.ports as ProposalPort[], planPortsOf(spec))
+    if (JSON.stringify(ports) === JSON.stringify(proposal.ports)) return { id, outcome: 'beta-modelled', changes: [], reason: 'regen: the proposal already carries the spec flags' }
+    const next: ProposalFile = { ...proposalFile, devices: proposalFile.devices.map((d) => (d.id === id ? { ...d, ports } : d)) }
+    return commit([{ path: paths.proposals, content: stringify(next) }], { id, outcome: 'beta-modelled', changes: [`proposals: add the spec's port flags to ${id}`] })
   }
 
   function revert(): PromotionResult {

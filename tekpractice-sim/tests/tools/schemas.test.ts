@@ -253,13 +253,13 @@ describe('Routing and console sound controls in the catalog (Task 33)', () => {
     ])
     expect(dev('genelec-8030c').routing).toEqual([{ from: 'in-analog', to: ['transducer'] }])
   })
-  it('no other device carries routing (the four verified ones and the Wave 1 promoted devices that route), and only the two KB parallel links are passive', () => {
-    expect(devices.filter((d) => d.routing !== undefined).map((d) => d.id).sort()).toEqual(
-      [
-        'genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12', 'yamaha-ql1', // the verified devices of the first catalogue
-        'dbx-driverack-pa2', 'jk-audio-broadcast-host', 'mackie-profx12v3', 'mutec-mc-3-plus', 'neumann-kh-120-ii', 'rode-rodecaster-pro-ii', 'samson-s-patch-plus', // Wave 1 (template routes)
-      ].sort(),
-    )
+  it('no other device carries routing than the four verified ones and the promoted plan rows (derived from the plan, not listed), and only the two KB parallel links are passive', () => {
+    const promoted = new Set((JSON.parse(readFileSync('content/proposals/equipment-plan.json', 'utf8')) as { rows: { id: string; promoted?: boolean }[] }).rows.filter((r) => r.promoted === true).map((r) => r.id))
+    const verified = ['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12', 'yamaha-ql1'] // the verified devices of the first catalogue
+    const withRouting = devices.filter((d) => d.routing !== undefined).map((d) => d.id)
+    for (const id of verified) expect(withRouting, id).toContain(id)
+    expect(withRouting.filter((id) => !verified.includes(id) && !promoted.has(id)), 'a device with routing that is neither verified nor a promoted plan row').toEqual([])
+    expect(withRouting.filter((id) => promoted.has(id)).length, 'promoted devices that route (template routes)').toBeGreaterThan(30)
     const passive = devices.flatMap((d) => (d.routing ?? []).filter((r) => r.passive === true).map((r) => `${d.id}:${String(r.from)}`)).sort()
     expect(passive).toEqual(['qsc-k12-2:in-line-a', 'yamaha-dbr12:in-line'])
   })

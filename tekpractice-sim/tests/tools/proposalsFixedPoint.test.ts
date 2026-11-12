@@ -7,7 +7,9 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { existsSync } from 'node:fs'
 import { loadPlan } from '../../tools/equipmentPlan'
+import { mergeSpecFlags } from '../../tools/promoteDevice'
 import { buildProposalsFile, generateProposals, type GenerateInput, type KbDev, type ProposalsFile } from '../../tools/proposalGenerate'
 
 const KB = join('..', 'knowledge-base', 'equipment')
@@ -45,10 +47,20 @@ describe('sync:kb on the real inputs', () => {
     const fresh = buildProposalsFile(input(committed.generated), undefined, plan)
     const undated = (v: unknown): unknown => JSON.parse(JSON.stringify(v).replace(/PROPOSITION \(\d{4}-\d{2}-\d{2}\)/g, 'PROPOSITION (date)'))
     // Wave 1 stage 2: a beta-modelled plan row of status « new » has no KB entry; its proposal is built from its asset spec (promoteDevice), so the generator
-    // cannot rebuild it. Everything else (every Bêta row and every other KB device) is rebuilt identically.
+    // cannot rebuild it. Waves 2 to 5: dpa-4060 is such a row whose KB entry was skipped for want of the mini-XLR connector and is now generated from the KB
+    // as well; the spec-built proposal in the file wins (mergeProposals keeps a beta-modelled one untouched), so both sides leave the spec-built ids out.
+    // Everything else (every Bêta row and every other KB device) is rebuilt identically.
     const fromSpec = new Set(plan.filter((r) => r.status === 'new' && r.betaModelled).map((r) => r.id))
     expect(committed.devices.filter((d) => fromSpec.has(d.id as string)).length, 'the specs-built proposals are in the file').toBe(fromSpec.size)
-    expect(undated(fresh.file.devices)).toEqual(undated(committed.devices.filter((d) => !fromSpec.has(d.id as string))))
+    // a beta-modelled proposal also carries the port flags its spec declares (mergeSpecFlags, Waves 2 to 5 stage 2: yamaha-xmv8280-d isDantePrimary), which
+    // the KB does not have: the rebuilt side gets the same merge, so every other difference still fails
+    const withSpecFlags = (d: Record<string, unknown>): Record<string, unknown> => {
+      const path = `content/asset-specs/${d.id as string}.json`
+      if (!plan.some((r) => r.id === d.id && r.betaModelled) || !existsSync(path)) return d
+      const spec = JSON.parse(readFileSync(path, 'utf8')) as { ports: { portId: string; flags?: string[] }[] }
+      return { ...d, ports: mergeSpecFlags(d.ports as never, spec.ports.map((p) => ({ id: p.portId, role: 'port', dir: 'in', connector: 'x', signal: 'x', flags: p.flags as never }))) }
+    }
+    expect(undated(fresh.file.devices.filter((d) => !fromSpec.has(d.id as string)).map(withSpecFlags))).toEqual(undated(committed.devices.filter((d) => !fromSpec.has(d.id as string))))
     expect(fresh.file.skipped).toEqual(committed.skipped)
   })
 

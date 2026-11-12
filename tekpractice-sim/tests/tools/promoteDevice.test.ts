@@ -15,7 +15,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { catalogWithProposals, catalogWithStaged } from '../../tools/catalogWithProposals'
 import { checkCatalog } from '../../tools/catalogChecks'
 import { loadPlan, savePlan, type PlanRow } from '../../tools/equipmentPlan'
-import { appendDevice, formatDevice, promoteDevice, removeDevice, stagedDevices, type Paths } from '../../tools/promoteDevice'
+import { appendDevice, formatDevice, mergeSpecFlags, promoteDevice, removeDevice, stagedDevices, type Paths } from '../../tools/promoteDevice'
 import { checkSpecParity } from '../../tools/assets3d/loadSpecs'
 import { AssetSpec, type AssetSpecT } from '../../tools/assets3d/specSchema'
 import { Catalog } from '../../tools/schemas'
@@ -688,5 +688,18 @@ describe('--regen re-derives a promoted device in place', () => {
   it('refuses a device that is not promoted', () => {
     stage1('fx-monitor')
     expect(promoteDevice('fx-monitor', { paths, regen: true }).outcome).toBe('blocked')
+  })
+})
+
+describe('mergeSpecFlags: a kept Bêta proposal gets the flags its spec declares (Waves 2 to 5 gate, yamaha-xmv8280-d isDantePrimary)', () => {
+  const prop = [{ portId: 'dante-1', dir: 'bidir' as const, connector: 'rj45', signal: 'aoip' }, { portId: 'out', dir: 'out' as const, connector: 'xlr3-m', signal: 'mic-level', flags: ['isRibbon'] }]
+  it('adds the declared flags, keeps the existing ones, never adds isMainsSource, never touches an id or a port the spec lacks', () => {
+    const spec = [
+      { id: 'dante-1', role: 'port', dir: 'bidir' as const, connector: 'rj45', signal: 'aoip', flags: ['isDantePrimary', 'isMainsSource'] as ('isDantePrimary' | 'isMainsSource')[] },
+      { id: 'out', role: 'port', dir: 'out' as const, connector: 'xlr3-m', signal: 'mic-level', flags: ['isRibbon'] as 'isRibbon'[] },
+      { id: 'extra', role: 'port', dir: 'in' as const, connector: 'xlr3-f', signal: 'mic-level' },
+    ]
+    expect(mergeSpecFlags(prop, spec)).toEqual([{ ...prop[0], flags: ['isDantePrimary'] }, prop[1]])
+    expect(mergeSpecFlags(prop, [])).toEqual(prop)
   })
 })

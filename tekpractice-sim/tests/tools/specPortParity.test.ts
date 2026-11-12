@@ -4,7 +4,9 @@
  * `isRibbon` flag its spec has (R4 reads the proposal's flags).
  *
  * Compared: every flag the spec lists must be on the device port (a catalogue device may carry MORE flags than the spec lists: the template adds
- * requiresPhantom, isMicInput, providesPhantom and isMainsSource from traits; a proposal never carries isMainsSource, so that one is not compared there).
+ * isMicInput, isRibbon and isMainsSource; since the data rule it never adds a phantom flag; a proposal never carries isMainsSource, so that one is not compared
+ * there). One declared difference: the template retypes an RJ45 `aoip` port of a device that is not network audio to the control signal `ethernet-control`
+ * (Wave 1b finding 9), so a spec `aoip` on an `rj45` agrees with a device `ethernet-control`.
  */
 import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
@@ -22,7 +24,8 @@ export function portDisagreements(specPorts: readonly SpecPort[], devPorts: read
   for (const sp of specPorts) {
     const dp = devPorts.find((p) => p.portId === sp.portId)
     if (!dp) continue // id parity is checkSpecParity's job
-    for (const k of ['connector', 'signal', 'dir'] as const) if (sp[k] !== undefined && sp[k] !== dp[k]) out.push(`${sp.portId}: ${k} is ${sp[k]} in the spec, ${dp[k]} on the device`)
+    const retyped = sp.signal === 'aoip' && dp.signal === 'ethernet-control' && dp.connector === 'rj45'
+    for (const k of ['connector', 'signal', 'dir'] as const) if (sp[k] !== undefined && sp[k] !== dp[k] && !(k === 'signal' && retyped)) out.push(`${sp.portId}: ${k} is ${sp[k]} in the spec, ${dp[k]} on the device`)
     for (const f of sp.flags ?? []) {
       if (isProposal && f === 'isMainsSource') continue
       if (!(dp.flags ?? []).includes(f)) out.push(`${sp.portId}: the spec flags ${f}, the device port does not`)
@@ -36,6 +39,11 @@ describe('portDisagreements (synthetic)', () => {
   it('a flag the spec has and the device port lacks is reported (the royer-r-121 case)', () => {
     expect(portDisagreements([{ portId: 'out', flags: ['isRibbon'] }], dev, true)).toEqual(['out: the spec flags isRibbon, the device port does not'])
   })
+  it('the control-Ethernet retyping is the one signal difference that agrees (rj45 aoip in the spec, ethernet-control on the device)', () => {
+    const net: DevPort[] = [{ portId: 'net', dir: 'bidir', connector: 'rj45', signal: 'ethernet-control' }]
+    expect(portDisagreements([{ portId: 'net', connector: 'rj45', signal: 'aoip', dir: 'bidir' }], net, false)).toEqual([])
+    expect(portDisagreements([{ portId: 'net', connector: 'xlr3-f', signal: 'aoip', dir: 'bidir' }], net, false)).toHaveLength(1)
+  })
   it('connector, signal and direction are compared when the spec declares them, a device may have more flags', () => {
     expect(portDisagreements([{ portId: 'out', connector: 'trs-quarter', signal: 'aoip', dir: 'in' }], dev, false)).toHaveLength(3)
     expect(portDisagreements([{ portId: 'out', connector: 'xlr3-m', signal: 'mic-level', dir: 'out' }], [{ ...dev[0]!, flags: ['requiresPhantom'] }], false)).toEqual([])
@@ -45,6 +53,7 @@ describe('portDisagreements (synthetic)', () => {
 describe('on the real Wave 1 rows (promoted: the catalogue entry; beta-modelled: the proposal)', () => {
   const rows = loadPlan().filter((r) => r.promoted === true || r.betaModelled === true)
   it('there are rows to check', () => expect(rows.length).toBeGreaterThanOrEqual(42))
+  it('the Wave 1 to 5 rows are all checked (more than 180 devices)', () => expect(rows.length).toBeGreaterThanOrEqual(180))
   for (const r of rows) {
     const specPath = `content/asset-specs/${r.id}.json`
     if (!existsSync(specPath)) continue
