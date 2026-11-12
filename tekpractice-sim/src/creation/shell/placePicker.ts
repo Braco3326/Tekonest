@@ -58,6 +58,8 @@ export interface PlacePicker {
 }
 
 export interface PickerStartOpts {
+  /** The start stage was reopened over a place that is on screen (the profile chip): « Tous les lieux » then shows closable grids (« Fermer » and Échap go back to the place). */
+  closable?: boolean
   stepCount: number
   offerAllowed: boolean
   onProfile(id: ProfileId): void
@@ -404,7 +406,7 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
       if (focus) current(places)?.el.focus()
     },
     showStart(o) {
-      closable = false
+      closable = false // the start stage is never closable itself; `o.closable` only says what the grids are once the learner reaches them
       close.hidden = true
       error.hidden = true
       open = true
@@ -421,6 +423,8 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
           onResult: (r) => {
             if (r.kind === 'all-places') {
               leaveStart()
+              closable = startOpts?.closable === true
+              close.hidden = !closable
               current(places)?.el.focus() // the learner asked for the places: the keyboard lands on the first card
             }
             startOpts?.onResult(r)

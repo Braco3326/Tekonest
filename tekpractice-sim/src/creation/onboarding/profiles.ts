@@ -43,3 +43,12 @@ export function profileById(id: ProfileId): ProfilePreset {
 export function profileByKey(key: string): ProfilePreset | undefined {
   return PROFILES.find((p) => p.key === key)
 }
+
+/**
+ * The side panels the first room opens with: the profile's own, or, for `'package'`, the active package's layout (`layout.panels`). A fresh object: the
+ * frozen tables are never handed to code that may keep them.
+ */
+export function panelsFor(preset: ProfilePreset, packagePanels: { tree: boolean; props: boolean }): { tree: boolean; props: boolean } {
+  const p = preset.panels === 'package' ? packagePanels : preset.panels
+  return { tree: p.tree, props: p.props }
+}

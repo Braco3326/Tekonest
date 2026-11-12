@@ -502,3 +502,24 @@ describe('Matériel › Pivoter, Dupliquer, Supprimer (Task 25)', () => {
     })
   })
 })
+
+describe('Aide › Premiers pas (onboarding T2.4b)', () => {
+  const aide = (menus: ReturnType<typeof buildMenus>): MenuItem[] => menus.find((m) => m.id === 'aide')!.items
+  it('is absent unless the page registered its action (no ?design, or the tutorial is not allowed here): Aide is today\'s two items', () => {
+    expect(aide(buildMenus(ctx())).map((i) => i.id)).toEqual(['shortcuts', 'site'])
+    expect(aide(buildMenus(ctx({ actions: { shortcuts: () => undefined } }))).map((i) => i.label)).toEqual(['Raccourcis clavier', 'Retour au site Tekonest'])
+  })
+  it('is the first Aide item once its action is registered, named « Premiers pas », enabled, and runs that action', () => {
+    let ran = 0
+    const items = aide(buildMenus(ctx({ actions: { 'first-steps': () => void ran++ } })))
+    expect(items.map((i) => i.id)).toEqual(['first-steps', 'shortcuts', 'site'])
+    expect(items[0].label).toBe('Premiers pas')
+    expect(items[0].enabled()).toBe(true)
+    items[0].run()
+    expect(ran).toBe(1)
+  })
+  it('is live with no place open and under the place picker (it opens the neutral room itself): never gated on the view', () => {
+    const items = aide(buildMenus(ctx({ actions: { 'first-steps': () => undefined }, viewLocked: () => true, historyLocked: () => true })))
+    expect(items[0].enabled()).toBe(true)
+  })
+})

@@ -147,3 +147,60 @@ test('axe: no violation with the shortcuts dialog open (1366 and 400 px)', async
   r = await new AxeBuilder({ page }).include('[data-testid="cr-shortcuts-dialog"]').analyze()
   expect(r.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(' | ')}`)).toEqual([])
 })
+
+// ── Aide › Premiers pas (onboarding T2.4b): only under ?design where the tutorial is allowed; with no place open it opens the neutral room first.
+const aideItems = async (page: Page): Promise<string[]> => {
+  await page.getByRole('menuitem', { name: 'Aide', exact: true }).click()
+  const names = await page.getByRole('menu').getByRole('menuitem').allInnerTexts()
+  await page.keyboard.press('Escape')
+  return names.map((n) => n.replace(/\s+/g, ' ').trim())
+}
+const onboardingKey = 'audio-sim/creation-onboarding.v1'
+const bootDesign = async (page: Page, query: string, record: unknown = null): Promise<void> => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/' + query)
+  await page.evaluate(([k, r]) => {
+    window.localStorage.clear()
+    if (r) window.localStorage.setItem(k as string, JSON.stringify(r))
+  }, [onboardingKey, record] as const)
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+}
+const answered = { v: 1, profile: 'etudie', offer: 'skipped', request: 0, shown: [] }
+
+test('Aide has today\'s two items without ?design (no « Premiers pas »)', async ({ page }) => {
+  await boot(page, null)
+  expect(await aideItems(page)).toEqual([expect.stringContaining('Raccourcis clavier'), 'Retour au site Tekonest'])
+})
+
+test('Aide › Premiers pas is the first item under ?design and not on ?oscar=0 or an exam address', async ({ page }) => {
+  await bootDesign(page, '?design=1', answered)
+  expect((await aideItems(page))[0]).toBe('Premiers pas')
+  for (const q of ['?design=1&oscar=0', '?design=1&mode=exam']) {
+    await bootDesign(page, q, answered)
+    expect(await aideItems(page), q).not.toContain('Premiers pas')
+    expect(await page.evaluate(() => window.__creation!.onboarding().tutorialAllowed), q).toBe(false)
+  }
+})
+
+test('Aide › Premiers pas with no place open opens the neutral room first, then raises the tutorial request once; the picker is gone', async ({ page }) => {
+  await bootDesign(page, '?design=1', answered)
+  await expect(page.getByTestId('place-picker')).toBeVisible() // a record exists: today's picker, nothing opened
+  expect(await page.evaluate(() => window.__creation!.place())).toBeNull()
+  await page.getByRole('menuitem', { name: 'Aide', exact: true }).click()
+  await page.getByRole('menuitem', { name: 'Premiers pas' }).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  await expect.poll(() => page.evaluate(() => window.__creation!.onboarding().record?.request)).toBe(1)
+  expect(await page.evaluate((k) => JSON.parse(window.localStorage.getItem(k)!), onboardingKey)).toMatchObject({ profile: 'etudie', offer: 'skipped', request: 1 })
+})
+
+test('Aide › Premiers pas with a place already open does not replace it: the request goes up, the place stays', async ({ page }) => {
+  await bootDesign(page, '?design=1', answered)
+  await page.evaluate((p) => window.__creation!.choosePlace(p), PLACE)
+  await page.waitForFunction((p) => window.__creation!.place() === p, PLACE)
+  await page.getByRole('menuitem', { name: 'Aide', exact: true }).click()
+  await page.getByRole('menuitem', { name: 'Premiers pas' }).click()
+  await expect.poll(() => page.evaluate(() => window.__creation!.onboarding().record?.request)).toBe(1)
+  expect(await page.evaluate(() => window.__creation!.place())).toBe('room:concert-hall-medium')
+})

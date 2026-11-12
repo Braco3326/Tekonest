@@ -64,7 +64,11 @@ export interface InventoryDrawerDeps {
 export interface InventoryDrawer {
   readonly root: HTMLElement
   readonly isOpen: boolean
-  open(): void
+  /**
+   * Opens the drawer. `tab`: the tab to show (as `preselect`, also when it is already open). `focus: false`: the focus stays where it is (the first room of the start
+   * screen leaves it on the 3D view); the default moves it to the selected tab.
+   */
+  open(opts?: { tab?: InventoryTab; focus?: boolean }): void
   /** The tab the drawer shows (now when open, else when it next opens): `open()` keeps the last tab, a caller that knows better says which. An unknown tab is ignored. */
   preselect(tab: InventoryTab): void
   /** The Bêta sheets arrived or failed: rebuild the tabs in place (same tab, same filter, focus kept). No-op while closed. */
@@ -492,14 +496,15 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     get isOpen() {
       return root.dataset.open === 'true'
     },
-    open() {
+    open(opts) {
+      if (opts?.tab) api.preselect(opts.tab)
       if (api.isOpen) return
       filter.value = ''
       build()
       root.inert = false
       root.getBoundingClientRect() // the closed pose is laid out before the slide starts
       root.dataset.open = 'true'
-      ;(tabs.find((t) => t.tab === selected)?.btn ?? close).focus()
+      if (opts?.focus !== false) (tabs.find((t) => t.tab === selected)?.btn ?? close).focus()
     },
     preselect(tab) {
       if (!Object.prototype.hasOwnProperty.call(TAB_LABELS, tab)) return // an unknown tab is ignored, open or not

@@ -262,6 +262,7 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
         act('panel-props', M.panelProps!),
       ],
     },
-    { id: 'aide', label: M.aide!, items: [act('shortcuts', M.shortcuts!), act('site', M.siteBack!)] },
+    // « Premiers pas » (onboarding T2.4b) exists only where the page registered its action (`?design`, tutorial allowed); it is never gated on the view: with no place open it opens the neutral room itself.
+    { id: 'aide', label: M.aide!, items: [...(registered('first-steps') ? [act('first-steps', M.firstSteps!)] : []), act('shortcuts', M.shortcuts!), act('site', M.siteBack!)] },
   ]
 }

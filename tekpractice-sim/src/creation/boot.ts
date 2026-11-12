@@ -67,6 +67,7 @@ import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
 import { bindingLabel, creationActionsFor, loadCreationBindings, type CreationAction } from './input/creationActions'
 import type { InventoryDrawer } from './shell/inventoryDrawer'
+import type { InventoryTab } from './inventory'
 import type { CoverageController, CoverageDebug } from './coverageController'
 import type { ListenController, ListenDebug } from './listenController'
 import type { ListenSource } from './listenModel'
@@ -113,7 +114,7 @@ import { openShortcutsDialog } from './shell/shortcutsDialog'
 import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
-import { startFirstVisit, wireChecklist } from './onboarding/wire'
+import { wireChecklist, wireOnboarding } from './onboarding/wire'
 import { createAnnouncer } from './shell/announcer'
 import { armCancelFallback } from './fileDialogGuard'
 import {
@@ -138,7 +139,11 @@ const roomName = (id: string): string =>
   (roomIndexJson as { rooms: { id: string; name_fr: string }[] }).rooms.find((r) => r.id === id)
     ?.name_fr ?? id
 
-export async function bootCreation(): Promise<void> {
+/**
+ * `tutorialAllowed` (src/main.ts: the guide may run here, in practice mode) decides whether the start screen offers the tutorial and Aide has « Premiers pas »;
+ * creation may not import the guide, so it is passed in. Missing = false (fail closed, like the guide's own mode gate).
+ */
+export async function bootCreation(opts: { tutorialAllowed?: boolean } = {}): Promise<void> {
   injectCreationTokens()
   const designPkg = applyDesignAttribute(document.documentElement, location.search) // marks <html> only for a valid ?design=1..5 (T0.1)
   useSameOriginDraco() // CA-24: the Draco decoder comes from public/draco/, never from cdn.babylonjs.com (before any .glb is loaded)
@@ -914,17 +919,25 @@ export async function bootCreation(): Promise<void> {
   }
   refreshSignal()
   refreshAutosave()
+  // Onboarding (T2.3 to T2.4b), under ?design only: the start screen (a stage of the picker), the profile applied to the first room, the profile chip, Aide « Premiers pas ».
+  const onboarding = wireOnboarding({
+    design: designPkg !== null,
+    storage,
+    stepCount: designPkg?.pacing.steps.length ?? 0,
+    tutorialAllowed: opts.tutorialAllowed === true,
+    panels: designPkg?.layout.panels ?? { tree: true, props: true },
+    doc: document,
+    chipSlot: statusBar.checklistSlot,
+    picker,
+    placeOpen: () => store.design().roomId !== null,
+    openNeutralRoom: () => pick(cards.find((c) => c.key === 'blank')!, 'empty'),
+    setPanel: (p, open) => shell.setPanel(p, open),
+    openInventory: (tab) => setInventory(true, { tab, focus: false }),
+    returnFocus: () => canvas.focus(),
+  })
   if (!(await restore())) {
-    // First visit under ?design (T2.3): the start screen, a stage of the picker; otherwise (no ?design, or already asked) the picker as it always was.
-    const first = startFirstVisit({
-      design: designPkg !== null,
-      storage,
-      stepCount: designPkg?.pacing.steps.length ?? 0,
-      offerAllowed: true, // T2.4b: main.ts passes `tutorialAllowed` (guide not allowed on this address = no offer)
-      picker,
-      openNeutralRoom: () => void pick(cards.find((c) => c.key === 'blank')!, 'empty'),
-    })
-    if (!first.shown) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
+    // First visit under ?design: the start screen, a stage of the picker; otherwise (no ?design, or already asked) the picker as it always was.
+    if (!onboarding.startFirstVisit()) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
     if (betaHold) picker.showError(COPY.inventory!.unavailable!) // the picker covers the notes: it says it too
   }
   // While the picker covers the workspace, « Aller à la vue 3D » lands on its highlighted card.
@@ -1553,11 +1566,11 @@ export async function bootCreation(): Promise<void> {
       shellBag.add(() => drawer?.dispose())
       return drawer
     }))
-  const setInventory = (open: boolean, opts: { returnFocus?: boolean } = {}): void => {
+  const setInventory = (open: boolean, opts: { returnFocus?: boolean; tab?: InventoryTab; focus?: boolean } = {}): void => {
     drawerWanted = open
     if (drawer) {
       if (open) {
-        drawer.open()
+        drawer.open({ tab: opts.tab, focus: opts.focus })
         patch.dismissRefusal() // the drawer took the learner's attention: the refusal pinned in the view has been read (not when the open was refused)
         syncBeta()
       } else drawer.close(opts)
@@ -1570,7 +1583,7 @@ export async function bootCreation(): Promise<void> {
       (d) => {
         showStatus()
         if (drawerWanted && !viewLocked()) {
-          d.open()
+          d.open({ tab: opts.tab, focus: opts.focus })
           patch.dismissRefusal()
           syncBeta()
         } else drawerWanted = false
@@ -2059,6 +2072,7 @@ export async function bootCreation(): Promise<void> {
     'panel-tree': () => shell.setPanel('tree'),
     'panel-props': () => shell.setPanel('props'),
     shortcuts: () => void openShortcuts(),
+    ...(onboarding.premiersPas ? { 'first-steps': () => void onboarding.requestTutorial() } : {}),
     site: () => location.assign(siteHref),
     // Lieu → « Choisir un lieu… »: the picker over the current place (Fermer / Échap go back).
     'choose-place': () => {
@@ -2217,6 +2231,7 @@ export async function bootCreation(): Promise<void> {
     return best ?? c
   }
   window.__creation = {
+    onboarding: () => onboarding.snapshot(),
     dispatch: (intent) => history.do(intent),
     design: () => store.design(),
     events: () => store.events(),

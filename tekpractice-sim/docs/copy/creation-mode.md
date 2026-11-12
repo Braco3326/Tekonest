@@ -89,6 +89,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.panelProps` | Panneau Propriétés | validé | Vue ; idem |
 | `menu.shortcuts` | Raccourcis clavier | validé | Aide ; affiche « H » depuis Task 8, inactif jusqu'au panneau d'aide |
 | `menu.siteBack` | Retour au site Tekonest | validé | Aide ; même libellé que `shell.siteBack` |
+| `menu.firstSteps` | Premiers pas | à valider (tekuxwriter) | Aide ; première entrée, seulement sous `?design` et là où le tutoriel est permis (ni `?oscar=0` ni adresse d’examen). Sans lieu ouvert, ouvre d’abord la salle vide neutre, puis demande le tutoriel |
 
 Since Task 12, Lieu holds only « Choisir un lieu… »; the place names are on the picker cards (`content/rooms/*.json` `name_fr`, `picker.set-*`, `picker.blank`).
 
@@ -924,6 +925,8 @@ Première visite (packs d’accueil, T2) : l’écran de départ, uniquement sou
 | `onboarding.offerLead` | Il vous guide pour poser le matériel et le brancher vous-même, dans une salle vide. Il est conseillé à tout le monde. | à valider (tekuxwriter) | Sous le titre de l’offre : la décision du fondateur (passer est permis, le tutoriel est conseillé à tous) |
 | `onboarding.offerTutorial` | Faire le tutoriel (conseillé · {n} étapes, à votre rythme) | à valider (tekuxwriter) | Premier des deux boutons égaux de l’offre ; `{n}` = nombre d’étapes du tutoriel du paquet actif (jamais une durée : aucune minute dans l’interface) |
 | `onboarding.offerSkip` | Passer, je connais | à valider (tekuxwriter) | Second bouton égal de l’offre (et Échap sur cette étape) ; la question ne revient pas |
+| `onboarding.chip` | Profil : {profile} · changer | à valider (tekuxwriter) | Pastille de la barre d’état une fois un profil choisi (sous `?design`) ; `{profile}` = le libellé du profil ; rouvre l’écran de départ |
+| `onboarding.chipHint` | Changer de profil : l’écran de départ se rouvre. | à valider (tekuxwriter) | Infobulle (`title`) de la pastille de profil |
 
 ## Textes hors COPY (index.html)
 

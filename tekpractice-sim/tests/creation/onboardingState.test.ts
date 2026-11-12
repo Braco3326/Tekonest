@@ -4,6 +4,7 @@
  */
 import { describe, expect, it } from 'vitest'
 import {
+  chipProfile,
   createOnboardingStore,
   entryStage,
   ONBOARDING_KEY,
@@ -166,5 +167,17 @@ describe('createOnboardingStore: storage, memory fallback, replacement of a corr
     s.dispatch({ type: 'profile', id: 'etudie' })
     expect(s.blocked).toBe(true)
     expect(s.read()?.profile).toBe('etudie')
+  })
+})
+
+describe('chipProfile: the chip « Profil : X · changer » (T2.4b)', () => {
+  it('is the stored profile, under ?design only, once a profile was chosen (the offer answer does not matter)', () => {
+    expect(chipProfile({ design: true, record: { ...fresh, profile: 'etudie' } })).toBe('etudie')
+    expect(chipProfile({ design: true, record: { ...fresh, profile: 'projet', offer: 'taken', request: 2 } })).toBe('projet')
+  })
+  it('does not show without ?design, without a record, or when the learner left the profile stage without choosing', () => {
+    expect(chipProfile({ design: false, record: { ...fresh, profile: 'etudie' } })).toBeNull()
+    expect(chipProfile({ design: true, record: null })).toBeNull()
+    expect(chipProfile({ design: true, record: fresh })).toBeNull()
   })
 })

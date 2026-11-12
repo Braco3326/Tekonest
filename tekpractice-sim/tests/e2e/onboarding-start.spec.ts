@@ -351,3 +351,182 @@ test('Oscar\'s icon never rests on the start buttons (profile and offer stages, 
     await clear('offer stage')
   }
 })
+
+// ── T2.4a / T2.4b: the profile is applied to the neutral room; the chip; the offer only where the guide may run; the double answer.
+const root = (page: Page) => page.getByTestId('creation-root')
+const panels = (page: Page) => root(page).evaluate((r) => ({ tree: (r as HTMLElement).dataset.tree, props: (r as HTMLElement).dataset.props }))
+const drawer = (page: Page) => page.getByTestId('inventory-drawer')
+const chip = (page: Page) => page.getByTestId('profile-chip')
+const onboarding = (page: Page) => page.evaluate(() => window.__creation!.onboarding())
+
+test('profile 2 + « Passer, je connais »: the neutral room, both side panels open, the drawer open on Consoles, the focus left on the 3D view', async ({ page }) => {
+  await openFresh(page)
+  await page.keyboard.press('2')
+  await skipButton(page).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  await expect.poll(() => panels(page)).toEqual({ tree: 'open', props: 'open' })
+  await expect(drawer(page)).toHaveAttribute('data-open', 'true')
+  await expect(drawer(page).getByRole('tab', { name: 'Consoles' })).toHaveAttribute('aria-selected', 'true')
+  await expect(page.locator('#renderCanvas')).toBeFocused() // spec 4.3: after the offer the canvas has the focus
+  expect(await inertCovers(page)).toEqual([false, false, false])
+})
+
+test('a profile that leaves the panels to the package takes the package layout: package 1 folds both, package 2 opens both (the drawer is on Consoles in both)', async ({ page }) => {
+  for (const [query, want] of [
+    ['?design=1', { tree: 'collapsed', props: 'collapsed' }],
+    ['?design=2', { tree: 'open', props: 'open' }],
+  ] as const) {
+    await openFresh(page, query)
+    await page.keyboard.press('1')
+    await skipButton(page).click()
+    await page.waitForFunction(() => window.__creation!.place() === 'blank')
+    await expect.poll(() => panels(page), query).toEqual(want)
+    await expect(drawer(page), query).toHaveAttribute('data-open', 'true')
+    await expect(drawer(page).getByRole('tab', { name: 'Consoles' }), query).toHaveAttribute('aria-selected', 'true')
+  }
+})
+
+test('reload with the project kept: no start screen, the room is back, and the chip « Profil : J’étudie le son · changer » names the profile', async ({ page }) => {
+  await openFresh(page)
+  await expect(chip(page)).toBeHidden() // nothing chosen yet
+  await page.keyboard.press('2')
+  await skipButton(page).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await expect(chip(page)).toHaveText('Profil : J’étudie le son · changer')
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('audio-sim/creation.v1') !== null)).toBe(true)
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation && window.__creation.place() === 'blank')
+  await expect(start(page)).toHaveCount(0)
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(1)
+  await expect(chip(page)).toBeVisible()
+  await expect(chip(page)).toHaveText('Profil : J’étudie le son · changer')
+  expect((await onboarding(page)).chip).toBe('Profil : J’étudie le son · changer')
+})
+
+test('the chip over a kept project reopens the start stage; a new profile is applied WITHOUT replacing the room, the picker closes, and « Tous les lieux » closes back to the project', async ({ page }) => {
+  await openFresh(page)
+  await page.keyboard.press('1')
+  await skipButton(page).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
+  await chip(page).click()
+  await expect(start(page)).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: /situation/ })).toBeVisible()
+  // « Tous les lieux » over a project: the grids close back to the project (Échap)
+  await allPlaces(page).click()
+  await expect(page.getByTestId('place-grid')).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(1)
+  // again, and choose the engineer: skipped, both panels open, same room, same device
+  await chip(page).click()
+  await page.keyboard.press('4')
+  await skipButton(page).click()
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  await expect(chip(page)).toHaveText('Profil : Je travaille dans le son · changer')
+  expect(await page.evaluate(() => ({ place: window.__creation!.place(), n: window.__creation!.design().rig.instances.length }))).toEqual({ place: 'blank', n: 1 })
+  await expect.poll(() => panels(page)).toEqual({ tree: 'open', props: 'open' })
+  await expect(page.locator('#renderCanvas')).toBeFocused()
+  expect(JSON.parse((await record(page))!)).toMatchObject({ profile: 'metier', offer: 'skipped' })
+})
+
+test('with a record and no autosave the picker shows today\'s grids and the chip reopens the start screen', async ({ page }) => {
+  await openFresh(page)
+  await page.keyboard.press('3') // a profile chosen, the offer not answered: the record is written
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  await expect(page.getByRole('heading', { name: 'Choisir un lieu' })).toBeVisible()
+  await expect(chip(page)).toHaveText('Profil : Je monte un projet · changer')
+  await chip(page).click()
+  await expect(start(page)).toBeVisible()
+  await expect(profileButton(page, PROFILES[0].label)).toBeFocused()
+})
+
+test('no ?design: no chip and the onboarding reader says so; leaving without a profile (« Tous les lieux ») shows no chip either', async ({ page }) => {
+  await page.goto('/')
+  await page.waitForFunction(() => !!window.__creation)
+  await expect(chip(page)).toHaveCount(0)
+  expect(await onboarding(page)).toMatchObject({ design: false, record: null, premiersPas: false, chip: null })
+  await openFresh(page)
+  await allPlaces(page).click()
+  await expect(chip(page)).toBeHidden()
+  expect(await onboarding(page)).toMatchObject({ design: true, tutorialAllowed: true, premiersPas: true, chip: null, record: { profile: null } })
+})
+
+for (const query of ['?design=1&oscar=0', '?design=1&mode=exam']) {
+  test(`${query}: the start stage shows the profile choice only, a choice is final (no offer), the room opens with the profile, no « Premiers pas »`, async ({ page }) => {
+    await openFresh(page, query)
+    expect(await onboarding(page)).toMatchObject({ design: true, tutorialAllowed: false, premiersPas: false })
+    await expect(start(page)).toBeVisible()
+    await page.keyboard.press('2')
+    // no offer: the room opens at once
+    await page.waitForFunction(() => window.__creation!.place() === 'blank')
+    await expect(tutorialButton(page)).toHaveCount(0)
+    await expect(page.getByText('Faire le tutoriel')).toHaveCount(0) // not in the page at all, not only hidden
+    await expect(page.getByText('Passer, je connais')).toHaveCount(0)
+    await expect(page.getByTestId('place-picker')).toBeHidden()
+    expect(JSON.parse((await record(page))!)).toEqual({ v: 1, profile: 'etudie', offer: null, request: 0, shown: [] })
+    await expect.poll(() => panels(page)).toEqual({ tree: 'open', props: 'open' })
+    await expect(drawer(page)).toHaveAttribute('data-open', 'true')
+    await expect(chip(page)).toHaveText('Profil : J’étudie le son · changer')
+    // reopened with the chip: still no offer, still final
+    await chip(page).click()
+    await expect(start(page)).toBeVisible()
+    await page.keyboard.press('4')
+    await expect(start(page)).toBeHidden()
+    expect((await onboarding(page)).record).toMatchObject({ profile: 'metier', offer: null, request: 0 })
+    await page.getByRole('menuitem', { name: 'Aide', exact: true }).click()
+    await expect(page.getByRole('menuitem', { name: 'Premiers pas' })).toHaveCount(0)
+  })
+}
+
+test('a double click on « Faire le tutoriel » raises the request once and opens the room once (G6 concern 5); so does Enter twice', async ({ page }) => {
+  await openFresh(page)
+  await page.keyboard.press('1')
+  await tutorialButton(page).dblclick()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  expect((await onboarding(page)).record).toMatchObject({ profile: 'decouvre', offer: 'taken', request: 1 })
+  expect(JSON.parse((await record(page))!).request).toBe(1)
+  expect(await page.evaluate(() => window.__creation!.scenes())).toBe(1)
+  await openFresh(page)
+  await page.keyboard.press('3')
+  await page.keyboard.press('Enter')
+  await page.keyboard.press('Enter')
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  expect(JSON.parse((await record(page))!).request).toBe(1)
+})
+
+for (const size of [
+  { width: 1366, height: 768 },
+  { width: 1024, height: 768 },
+  { width: 820, height: 1180 },
+  { width: 375, height: 812 },
+]) {
+  test(`${size.width} x ${size.height}: the profile chip is in the status bar, inside the window, clear of the Signal button, with no serious axe finding`, async ({ page }) => {
+    await page.setViewportSize(size)
+    await openFresh(page)
+    await page.keyboard.press('1')
+    await skipButton(page).click()
+    await page.waitForFunction(() => window.__creation!.place() === 'blank')
+    await expect(chip(page)).toBeVisible()
+    const rect = async (id: string) => (await page.getByTestId(id).boundingBox())!
+    const c = await rect('profile-chip')
+    const bar = await rect('status-bar')
+    const sig = await rect('signal-status')
+    expect(c.x, 'inside on the left').toBeGreaterThanOrEqual(0)
+    expect(c.x + c.width, 'inside on the right').toBeLessThanOrEqual(size.width)
+    expect(c.y, 'inside the status bar (top)').toBeGreaterThanOrEqual(bar.y - 1)
+    expect(c.y + c.height, 'inside the status bar (bottom)').toBeLessThanOrEqual(bar.y + bar.height + 1)
+    expect(c.height, 'a target of its own').toBeGreaterThanOrEqual(24)
+    const overlap = Math.min(c.x + c.width, sig.x + sig.width) - Math.max(c.x, sig.x)
+    expect(overlap, 'clear of the Signal button').toBeLessThanOrEqual(0)
+    expect(sig.x + sig.width, 'the Signal button stays inside the window').toBeLessThanOrEqual(size.width)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), 'no horizontal scroll').toBe(true)
+    const axe = await new AxeBuilder({ page }).analyze()
+    expect(axe.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical')).toEqual([])
+  })
+}

@@ -134,3 +134,11 @@ export function createOnboardingStore(storage: StorageLike | null): OnboardingSt
     },
   }
 }
+
+/**
+ * The profile the chip « Profil : X · changer » names, or null (no chip). Only under `?design`, and only once a profile was chosen: leaving the
+ * profile stage (« Tous les lieux », Échap) stores `profile: null`, and then there is nothing to name. The offer's answer does not matter.
+ */
+export function chipProfile(i: { design: boolean; record: OnboardingRecord | null }): ProfileId | null {
+  return i.design && i.record !== null ? i.record.profile : null
+}

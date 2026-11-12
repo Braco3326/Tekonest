@@ -91,3 +91,26 @@ describe('level page tail', () => {
     expect(bootGuide).not.toHaveBeenCalled()
   })
 })
+
+describe('tutorialAllowed (onboarding T2.4b: main.ts computes it, creation may not import the guide)', () => {
+  const allowedFor = async (search: string): Promise<unknown> => {
+    bootCreation.mockClear()
+    await run(search)
+    expect(bootCreation).toHaveBeenCalledTimes(1)
+    return (bootCreation.mock.calls[0] as unknown[])[0]
+  }
+  it('is true on a plain address and under ?design', async () => {
+    expect(await allowedFor('')).toEqual({ tutorialAllowed: true })
+    expect(await allowedFor('?design=1')).toEqual({ tutorialAllowed: true })
+  })
+  it('is false on an exam address (any mode parameter, even with ?design) and with ?oscar=0', async () => {
+    expect(await allowedFor('?design=1&mode=exam')).toEqual({ tutorialAllowed: false })
+    expect(await allowedFor('?mode=exam')).toEqual({ tutorialAllowed: false })
+    expect(await allowedFor('?design=1&MODE=practice')).toEqual({ tutorialAllowed: false })
+    expect(await allowedFor('?design=1&oscar=0')).toEqual({ tutorialAllowed: false })
+  })
+  it('the guide is still started exactly as before on each of them (the gate is the guide\'s own)', async () => {
+    await run('?design=1&oscar=0')
+    expect(bootGuide).toHaveBeenCalledWith('creation')
+  })
+})

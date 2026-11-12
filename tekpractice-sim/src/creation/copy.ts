@@ -84,6 +84,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     panelProps: 'Panneau Propriétés',
     shortcuts: 'Raccourcis clavier',
     siteBack: 'Retour au site Tekonest',
+    /** Aide › Premiers pas (onboarding T2.4b): present only under `?design` where the tutorial is allowed. À valider (tekuxwriter, 2026-11-12). */
+    firstSteps: 'Premiers pas',
   },
   /** « Raccourcis clavier » (night 2 wave 5, P2-1): the dialog of the Aide menu and the H key. Validé (tekuxwriter, night 2). */
   shortcuts: {
@@ -1009,5 +1011,9 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** The two EQUAL answers. {n} = number of steps of the active tutorial (a count of steps, never a duration). */
     offerTutorial: 'Faire le tutoriel (conseillé · {n} étapes, à votre rythme)',
     offerSkip: 'Passer, je connais',
+    /** The profile chip in the status bar (reopens the start stage). {profile} = the profile's label. */
+    chip: 'Profil : {profile} · changer',
+    /** Its `title`. */
+    chipHint: 'Changer de profil : l’écran de départ se rouvre.',
   },
 }

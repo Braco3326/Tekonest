@@ -5,7 +5,7 @@
 import { describe, expect, it } from 'vitest'
 import { COPY } from '../../src/creation/copy'
 import { TAB_LABELS } from '../../src/creation/inventory'
-import { PROFILES, profileById, profileByKey } from '../../src/creation/onboarding/profiles'
+import { PROFILES, panelsFor, profileById, profileByKey } from '../../src/creation/onboarding/profiles'
 import { PROFILE_IDS } from '../../src/creation/onboarding/state'
 
 describe('PROFILES (spec 3)', () => {
@@ -54,5 +54,22 @@ describe('PROFILES (spec 3)', () => {
   it('the table is frozen: no code can change a profile at run time', () => {
     expect(Object.isFrozen(PROFILES)).toBe(true)
     for (const p of PROFILES) expect(Object.isFrozen(p), p.id).toBe(true)
+  })
+})
+
+describe('panelsFor: which side panels a profile opens the first room with (T2.4a)', () => {
+  const pkg = { tree: false, props: true }
+  it('a profile with its own panels uses them, whatever the package says', () => {
+    expect(panelsFor(profileById('etudie'), pkg)).toEqual({ tree: true, props: true })
+    expect(panelsFor(profileById('metier'), { tree: false, props: false })).toEqual({ tree: true, props: true })
+  })
+  it('a profile that leaves it to the package uses the active package\'s layout', () => {
+    expect(panelsFor(profileById('decouvre'), pkg)).toEqual({ tree: false, props: true })
+    expect(panelsFor(profileById('projet'), { tree: true, props: false })).toEqual({ tree: true, props: false })
+  })
+  it('returns a copy: the frozen tables are never handed out', () => {
+    const r = panelsFor(profileById('etudie'), pkg)
+    expect(r).not.toBe(profileById('etudie').panels)
+    expect(Object.isFrozen(r)).toBe(false)
   })
 })

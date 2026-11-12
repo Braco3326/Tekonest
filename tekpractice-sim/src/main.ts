@@ -2,6 +2,8 @@
 import { decideRoute } from './routing'
 // Static: it must render when the creation chunk itself fails to download.
 import { showBootFailure } from './creation/bootFailure'
+// The guide's two small gate modules (pure, query only; the guide chunk itself stays lazy): the creation boot may not import the guide, so the answer is passed in.
+import { guideMode, guideRouteAllowed } from './guide/mode'
 
 /**
  * The inline entry guard of index.html (night 2 wave 5, P1-1; fix round C1) acts ONLY until the route module has loaded: a file that fails later (a lazy chunk: the Bêta sheets, coverage,
@@ -35,7 +37,9 @@ else {
   void import('./creation/boot')
     .then((m) => {
       booted() // the route chunk is here: from now on a failing lazy chunk is the app's to handle, never the entry guard's
-      return m.bootCreation()
+      // Onboarding T2.4b: the start screen offers the tutorial, and Aide has « Premiers pas », only where the guide may run in practice mode (not `?oscar=0`, not an exam address).
+      const search = location.search
+      return m.bootCreation({ tutorialAllowed: guideRouteAllowed(search, 'creation') && guideMode(search, 'creation') === 'practice' })
     })
     .catch((e: unknown) => {
       creationFailed = true

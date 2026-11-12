@@ -116,7 +116,9 @@ export function mountStartScreen(d: StartScreenDeps): StartScreen {
   offerRow.append(tutorial, skip)
   offerStage.append(offerProfile, offerLead, offerRow)
 
-  root.append(title, lead, profileStage, offerStage)
+  // Where the guide may not run (`?oscar=0`, an exam address) the offer is not in the page at all, not only hidden.
+  root.append(title, lead, profileStage)
+  if (d.offerAllowed) root.append(offerStage)
   d.parent.appendChild(root)
 
   let stage: 'profile' | 'offer' | null = null
