@@ -930,8 +930,12 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     chipHint: 'Afficher ce qui empêche la lecture',
     /** Under the title: what the list is, and that it changes nothing. */
     intro: 'Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne un appareil ou ouvre l’inventaire.',
-    /** The intro where the power helper exists (`?design`, T3.3): its button is the one thing in the list that adds something. */
-    introHelper: '« Aller à » sélectionne un appareil ou ouvre l’inventaire. Seul « Je branche pour vous » ajoute des câbles secteur ; Ctrl+Z les retire.',
+    /**
+     * The intro while the power helper's button is in the list (`?design`, T3.3; T3 close review N2: only while the button is shown): its button is the one thing
+     * in the list that adds something. No undo key here (S10: « Ctrl+Z les retire » was true only while the helper's entry was the last one; the status line
+     * after the click names the app's own undo key).
+     */
+    introHelper: 'Chaque ligne dit où en est la lecture. « Aller à » sélectionne un appareil ou ouvre l’inventaire ; seul « Je branche pour vous » ajoute des câbles secteur.',
     close: 'Fermer la liste',
     /** Row names. */
     rowSource: 'Une source de lecture',
@@ -961,14 +965,17 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
      * real mains.
      */
     helperButton: 'Je branche pour vous (dans le simulateur)',
-    /** Under the enabled button: exactly what a click does; {devices} = « Yamaha QL1 (ql1), QSC K12.2 (k12) ». */
-    helperWhat: 'Relie à la multiprise posée : {devices}. Rien n’est posé ni réglé.',
-    /** Under the disabled button during a tutorial run, until Oscar offers it (spec 6.5, verbatim). */
-    helperLocked: 'Essayez d’abord de relier vous-même ; je pourrai brancher pour vous ensuite.',
+    /** Under the enabled button: exactly what a click does (a statement, not a « tu » imperative: T3 close review S6); {devices} = « Yamaha QL1 (ql1), QSC K12.2 (k12) ». */
+    helperWhat: 'Ce bouton relie à la multiprise posée : {devices}. Rien n’est posé ni réglé.',
+    /**
+     * Under the disabled button during a tutorial run while a power step is current or ahead, until Oscar offers it (spec 6.5; T3 close review S7: the list works
+     * without Oscar, so no first person, and « relier » names what to cable).
+     */
+    helperLocked: 'Essayez d’abord de relier la console et l’enceinte à la multiprise ; l’aide sera proposée ensuite.',
     /** Under the disabled button during a tutorial run where no power step is current or ahead (T3 close review S5): it makes no promise. */
     helperLockedRun: 'Pendant le tutoriel, ce bouton reste inactif : reliez vous-même la console et l’enceinte à la multiprise.',
-    /** The status line after the helper: exactly what was added. */
-    helperDone: 'Branché au courant : {devices}. Ctrl+Z pour annuler.',
+    /** The status line after the helper: exactly what was added. {undo} = the app's undo key label (T3 close review S10), as the other status lines. */
+    helperDone: 'Branché au courant : {devices}. {undo} pour annuler.',
     /** The status line when a cable was refused on the way (everything was undone). */
     helperFailed: 'Le branchement n’a pas été fait : rien n’a changé.',
     /** The status line when another action is still in progress (a drag: T3 close review S9); nothing was done. */

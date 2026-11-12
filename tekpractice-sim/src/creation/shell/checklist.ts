@@ -77,8 +77,9 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
   x.setAttribute('aria-label', C().close!)
   x.title = C().close!
   head.append(h, x)
-  // With the helper the list can add cables (one button), so its intro says so instead of « Rien n’est modifié ici ».
-  const intro = el(doc, 'p', 'cr-errlist-hint', d.helper ? C().introHelper : C().intro)
+  // While the helper's button is in the list, the list can add cables (one button): its intro says so instead of « Rien n’est modifié ici ». Set at each
+  // render of the rows (T3 close review N2: not whenever a helper is wired, the button is often absent).
+  const intro = el(doc, 'p', 'cr-errlist-hint', C().intro)
   intro.id = 'cr-checklist-intro'
   const list = el(doc, 'ol', 'cr-checklist-rows')
   list.dataset.testid = 'checklist-rows'
@@ -154,9 +155,12 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
   }
 
   const renderRows = (v: ChecklistView): void => {
-    const key = JSON.stringify([v.rows.map((r) => [r.id, r.state, r.detail, r.goTo]), v.mic, helperView()])
+    const helper = helperView()
+    const key = JSON.stringify([v.rows.map((r) => [r.id, r.state, r.detail, r.goTo]), v.mic, helper])
     if (key === built) return
     built = key
+    // the helper's button sits on the « Alimentation » row only: the intro says what the list can change only while that button is there
+    intro.textContent = helper.shown && v.rows.some((r) => r.id === 'power') ? C().introHelper! : C().intro!
     const focusedRow = (doc.activeElement as HTMLElement | null)?.closest?.('[data-row]')?.getAttribute('data-row') ?? null
     list.textContent = ''
     for (const r of v.rows) list.appendChild(rowEl(r))

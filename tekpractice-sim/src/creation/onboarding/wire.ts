@@ -33,6 +33,8 @@ export interface HelperWiring {
   tutorialAllowed: boolean
   /** The page's storage (the guide's record, read for the gate until the guide's first event), or null when blocked. */
   storage(): Storage | null
+  /** The app's undo key label (boot.ts `undoLabel`, « Ctrl+Z » by default) for the status line after the helper (T3 close review S10). */
+  undoLabel?(): string
   /** The helper's code (default: the lazy chunk). */
   load?(): Promise<PowerHelperModule>
 }
@@ -116,7 +118,7 @@ export function wirePowerHelper(
     const r = mod.runPowerHelper(h.store, h.history, h.registry, A().helperEntry!)
     if (r.ok) {
       used = { n: used.n + 1, instances: [...r.instances] }
-      h.announce(A().helperDone!.replace('{devices}', names(r.instances)))
+      h.announce(A().helperDone!.replace('{devices}', names(r.instances)).replace('{undo}', h.undoLabel?.() || 'Ctrl+Z'))
     } else h.announce(r.why === 'busy' ? A().helperBusy! : A().helperFailed!) // S9: the list closed on the click, so every refusal is said
   }
   /** S3: the button would be shown now, and enabled once the tutorial gate opens (the guide offers the helper only then). False before the chunk is loaded. */

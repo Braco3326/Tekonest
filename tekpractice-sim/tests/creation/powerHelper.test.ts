@@ -292,7 +292,7 @@ describe('wirePowerHelper', () => {
 
   it('outside a run: enabled, the note says exactly what a click cables; the click cables, counts the use (S2: no storage), and the status line lists what was added', async () => {
     const w = await wired({ storage: () => null })
-    expect(w.h.view()).toEqual({ shown: true, enabled: true, note: 'Relie à la multiprise posée : «ql1», «k12». Rien n’est posé ni réglé.' })
+    expect(w.h.view()).toEqual({ shown: true, enabled: true, note: 'Ce bouton relie à la multiprise posée : «ql1», «k12». Rien n’est posé ni réglé.' })
     expect(w.h.offered()).toBe(true)
     expect(w.h.uses()).toEqual({ n: 0, instances: [] })
     w.h.run()
@@ -422,5 +422,21 @@ describe('wireChecklist: the helper chunk waits for an open place (the first-vis
     subs.forEach((f) => f())
     subs.forEach((f) => f())
     expect(loads).toBe(1)
+  })
+})
+
+describe('S10 (T3 close review): the status line after the helper names the app’s own undo key', () => {
+  it('{undo} = the owner’s undo label; « Ctrl+Z » when none is handed', async () => {
+    for (const [label, expected] of [[() => 'Cmd+Z', 'Cmd+Z'], [undefined, 'Ctrl+Z']] as const) {
+      const { store, history, registry } = setup([...PLAYING, STRIP])
+      const said: string[] = []
+      const h = wirePowerHelper(
+        { store, history, registry, announce: (m) => said.push(m), tutorialAllowed: false, storage: () => null, load: async () => powerHelperModule, ...(label ? { undoLabel: label } : {}) },
+        { win: null, deviceLabel: (id) => id, render: () => undefined },
+      )
+      await h.load()
+      h.run()
+      expect(said).toEqual([`Branché au courant : ql1, k12. ${expected} pour annuler.`])
+    }
   })
 })

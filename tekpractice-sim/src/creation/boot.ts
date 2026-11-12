@@ -2219,7 +2219,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     openInventory: (tab) => void loadDrawer().then((d) => d.preselect(tab), () => undefined).then(() => setInventory(true)),
     returnFocus: () => canvas.focus(),
     // T3.3 « Je branche pour vous »: the same gate as the first visit (a valid ?design, practice address); its code is a lazy chunk (wire.ts).
-    ...(onboardingOn ? { helper: { store, history, registry, announce: (m: string) => announcer.say(m), tutorialAllowed: opts.tutorialAllowed === true, storage: () => { try { return window.localStorage } catch { return null } } } } : {}),
+    ...(onboardingOn ? { helper: { store, history, registry, announce: (m: string) => announcer.say(m), tutorialAllowed: opts.tutorialAllowed === true, storage: () => { try { return window.localStorage } catch { return null } }, undoLabel } } : {}),
   })
 
   /** The coverage is off or its chunk is not loaded: the debug hook says so without loading anything. */
