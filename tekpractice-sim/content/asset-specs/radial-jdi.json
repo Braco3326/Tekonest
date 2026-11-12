@@ -1,0 +1,89 @@
+{
+  "id": "radial-jdi",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 127,
+    "h": 45.5,
+    "d": 84.1
+  },
+  "ports": [
+    {
+      "portId": "in-instrument-input-l-input-when-merge-on",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "bidir-thru-to-instrument-amp-r-input-when-merge-on",
+      "face": "opposite",
+      "xMm": 87,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-balanced-mic-level-output-to-mixer-snake",
+      "face": "io",
+      "xMm": 63.5,
+      "yMm": 22.75,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 8,
+      "plateFilletMm": 3.5,
+      "filletMm": 4,
+      "filletSegments": 10,
+      "feetMm": 2,
+      "feetDiaMm": 8,
+      "plateRgb": 1842464,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io",
+      "top"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 3
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.radialeng.com/product/jdi/specifications/",
+      "note": "equipment plan source (research grade: datasheet); size 127 x 84.1 x 45.5 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.markertek.com/product/rad-jdi/radial-jdi-passive-direct-box-with-jensen-transformer",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.radialeng.com/product/jdi/specifications/",
+      "note": "Radial spec page (opened 2026-11-12): L x W x D 5 x 3.3 x 1.8 in = 127 x 84.1 x 45.5 mm (plan size; the page labels them L x W x D, so which edge is the height is an assumption: estimate), 14-gauge steel chassis with powder coat, colour not stated; features: input pad, mono sum, 180 degree polarity reverse, ground lift, speaker filter; impedances 140 kOhm in / 150 ohm out. The page names no connectors: the 3 ports (1/4 in input, 1/4 in thru, XLR male output) are the Beta proposal set, panel assignments are guesses (input and thru on the front end, XLR on the other end; top-face switches are picture only). Build parameters from the Wave 0 spike (plate 8 mm, plate fillet 3.5 mm). portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Radial page names no connectors: read the JDI manual before promotion."
+}

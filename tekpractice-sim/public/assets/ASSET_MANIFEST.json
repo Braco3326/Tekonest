@@ -4562,6 +4562,339 @@
           "ok": true
         }
       ]
+    },
+    {
+      "status": "ok",
+      "id": "presonus-hp4",
+      "kind": "device",
+      "tris": 712,
+      "ports": 6,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:56.783Z",
+      "specSource": "https://www.presonus.com/products/hp4-4-channel-headphone-amplifiers",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "radial-jdi",
+      "kind": "device",
+      "tris": 712,
+      "ports": 3,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png",
+        "_generic_top.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:59.015Z",
+      "specSource": "https://www.radialeng.com/product/jdi/specifications/",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "radial-prodi",
+      "kind": "device",
+      "tris": 712,
+      "ports": 3,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png",
+        "_generic_top.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:59:01.783Z",
+      "specSource": "https://www.radialeng.com/product/prodi/specifications",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "countryman-type-85",
+      "kind": "device",
+      "tris": 712,
+      "ports": 3,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png",
+        "_generic_top.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:59:04.050Z",
+      "specSource": "https://countryman.com/product/type-85-direct-box/",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "focusrite-scarlett-2i2-4th-gen",
+      "kind": "device",
+      "tris": 754,
+      "ports": 8,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:59:06.790Z",
+      "specSource": "https://userguides.focusrite.com/hc/en-gb/articles/28594384158482",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     }
   ],
   "environments": [

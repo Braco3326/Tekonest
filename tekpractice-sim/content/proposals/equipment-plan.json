@@ -83,7 +83,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "conflict"
+   "sizeConfidence": "conflict",
+   "staged": true
   },
   {
    "id": "mackie-profx12v3",
@@ -221,7 +222,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "radial-prodi",
@@ -248,7 +250,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "rode-nt1-5th-gen",
@@ -841,7 +844,8 @@
     "active",
     "battery"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "dbx-driverack-pa2",
@@ -923,7 +927,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "samson-s-patch-plus",

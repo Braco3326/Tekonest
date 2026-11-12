@@ -1,0 +1,145 @@
+{
+  "id": "focusrite-scarlett-2i2-4th-gen",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 180,
+    "h": 47.5,
+    "d": 117
+  },
+  "ports": [
+    {
+      "portId": "in-mic-inputs-1-2-rear-1",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 13,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-inputs-1-2-rear-2",
+      "face": "opposite",
+      "xMm": 140,
+      "yMm": 13,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-instrument-inputs-1-2-front-ts-or-trs-1",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 13,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-instrument-inputs-1-2-front-ts-or-trs-2",
+      "face": "opposite",
+      "xMm": 140,
+      "yMm": 13,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "out-speaker-outputs-l-r-balanced-1",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 24,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-speaker-outputs-l-r-balanced-2",
+      "face": "io",
+      "xMm": 80,
+      "yMm": 24,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-headphone-output",
+      "face": "opposite",
+      "xMm": 90,
+      "yMm": 13,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-usb-host-bus-power",
+      "face": "io",
+      "xMm": 130,
+      "yMm": 24,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        47.5
+      ],
+      [
+        70,
+        47.5
+      ],
+      [
+        95,
+        47.5
+      ],
+      [
+        117,
+        26
+      ]
+    ],
+    "params": {
+      "filletMm": 1.5,
+      "filletSegments": 5
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://userguides.focusrite.com/hc/en-gb/articles/28594384158482",
+      "note": "equipment plan source (research grade: datasheet); size 180 x 117 x 47.5 mm (w x d x h) (sources disagree on a dimension); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "reference",
+      "url": "https://userguides.focusrite.com/hc/en-gb/articles/28594384158482",
+      "note": "Plan size 180 x 117 x 47.5 mm, 0.595 kg from the Focusrite user guide found by search (conflict on the depth: 117 mm Focusrite against 99 mm dealers: estimate). Connector table not retrieved (page 403 / 404): the 8 ports are the Beta proposal set; the real unit has its combo inputs and headphone socket on the front and the outputs and USB-C on the rear, positions are guesses (the combos' XLR and jack parts share one hole and are drawn concentric). Sloped-front desktop unit on console-wedge v2 with the Wave 0 spike profile (a 26 mm vertical lip carries the front connectors). portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://userguides.focusrite.com/hc/en-gb/articles/28594384158482",
+      "note": "Plan size 180 x 117 x 47.5 mm, 0.595 kg from the Focusrite user guide found by search (conflict on the depth: 117 mm Focusrite against 99 mm dealers: estimate). Connector table not retrieved (page 403 / 404): the 8 ports are the Beta proposal set; the real unit has its combo inputs and headphone socket on the front and the outputs and USB-C on the rear, positions are guesses (the combos' XLR and jack parts share one hole and are drawn concentric). Sloped-front desktop unit on console-wedge v2 with the Wave 0 spike profile (a 26 mm vertical lip carries the front connectors). portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Connector table not retrieved: read the Scarlett 2i2 4th Gen user guide before promotion."
+}

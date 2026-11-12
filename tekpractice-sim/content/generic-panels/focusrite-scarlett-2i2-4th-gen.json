@@ -1,0 +1,227 @@
+{
+ "note": "Generic panel artwork (no brand marks, no logos), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+ "faces": {
+  "opposite": {
+   "wMm": 180,
+   "hMm": 47.5,
+   "base": "#2a2d31",
+   "items": [
+    {
+     "kind": "rect",
+     "x": 4,
+     "y": 2,
+     "w": 172,
+     "h": 22,
+     "fill": "#34383e",
+     "stroke": "#3d4148",
+     "radius": 2
+    },
+    {
+     "kind": "text",
+     "x": 40,
+     "y": 21,
+     "size": 3.4,
+     "text": "COMBO 1",
+     "fill": "#d8dbe0",
+     "anchor": "middle"
+    },
+    {
+     "kind": "text",
+     "x": 140,
+     "y": 21,
+     "size": 3.4,
+     "text": "COMBO 2",
+     "fill": "#d8dbe0",
+     "anchor": "middle"
+    },
+    {
+     "kind": "text",
+     "x": 90,
+     "y": 21,
+     "size": 3.4,
+     "text": "PHONES",
+     "fill": "#d8dbe0",
+     "anchor": "middle"
+    },
+    {
+     "kind": "circle",
+     "x": 40,
+     "y": 13,
+     "r": 9.75,
+     "fill": "#0b0b0c",
+     "stroke": "#6b6e73"
+    },
+    {
+     "kind": "circle",
+     "x": 37,
+     "y": 15.5,
+     "r": 1.2,
+     "fill": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 43,
+     "y": 15.5,
+     "r": 1.2,
+     "fill": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 40,
+     "y": 9.5,
+     "r": 1.2,
+     "fill": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 140,
+     "y": 13,
+     "r": 9.75,
+     "fill": "#0b0b0c",
+     "stroke": "#6b6e73"
+    },
+    {
+     "kind": "circle",
+     "x": 137,
+     "y": 15.5,
+     "r": 1.2,
+     "fill": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 143,
+     "y": 15.5,
+     "r": 1.2,
+     "fill": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 140,
+     "y": 9.5,
+     "r": 1.2,
+     "fill": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 40,
+     "y": 13,
+     "r": 4.8,
+     "fill": "#0b0b0c",
+     "stroke": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 40,
+     "y": 13,
+     "r": 2.2,
+     "fill": "#2a2d31"
+    },
+    {
+     "kind": "circle",
+     "x": 140,
+     "y": 13,
+     "r": 4.8,
+     "fill": "#0b0b0c",
+     "stroke": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 140,
+     "y": 13,
+     "r": 2.2,
+     "fill": "#2a2d31"
+    },
+    {
+     "kind": "circle",
+     "x": 90,
+     "y": 13,
+     "r": 4.8,
+     "fill": "#0b0b0c",
+     "stroke": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 90,
+     "y": 13,
+     "r": 2.2,
+     "fill": "#2a2d31"
+    }
+   ]
+  },
+  "io": {
+   "wMm": 180,
+   "hMm": 47.5,
+   "base": "#2a2d31",
+   "items": [
+    {
+     "kind": "rect",
+     "x": 4,
+     "y": 4,
+     "w": 172,
+     "h": 39.5,
+     "fill": "#34383e",
+     "stroke": "#3d4148",
+     "radius": 2
+    },
+    {
+     "kind": "text",
+     "x": 65,
+     "y": 36,
+     "size": 3.4,
+     "text": "OUTPUTS",
+     "fill": "#d8dbe0",
+     "anchor": "middle"
+    },
+    {
+     "kind": "text",
+     "x": 130,
+     "y": 36,
+     "size": 3.4,
+     "text": "USB-C",
+     "fill": "#d8dbe0",
+     "anchor": "middle"
+    },
+    {
+     "kind": "circle",
+     "x": 50,
+     "y": 24,
+     "r": 4.8,
+     "fill": "#0b0b0c",
+     "stroke": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 50,
+     "y": 24,
+     "r": 2.2,
+     "fill": "#2a2d31"
+    },
+    {
+     "kind": "circle",
+     "x": 80,
+     "y": 24,
+     "r": 4.8,
+     "fill": "#0b0b0c",
+     "stroke": "#9aa0a6"
+    },
+    {
+     "kind": "circle",
+     "x": 80,
+     "y": 24,
+     "r": 2.2,
+     "fill": "#2a2d31"
+    },
+    {
+     "kind": "rect",
+     "x": 125.5,
+     "y": 22.4,
+     "w": 9,
+     "h": 3.2,
+     "fill": "#0b0b0c",
+     "stroke": "#6b6e73",
+     "radius": 1.6
+    }
+   ]
+  }
+ }
+}
