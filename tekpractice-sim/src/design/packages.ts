@@ -7,18 +7,21 @@
  * its id: `tests/design/noDesignBranching.test.ts` keeps `design ===`,
  * `data-design` reads and `DESIGN_PACKAGES[` out of every file but this one.
  *
- * PLACEHOLDERS (replaced by plan T4.1, spec 7.2 / 7.3): the colour maps are
- * today's tokens, the same for the five packages; `framing` is the first-sound
- * camera of the neutral room, tuned in T2.5 (`firstSoundFraming`); `nameKey` is a COPY
- * key that T4.1 creates (not shown anywhere yet); `tell` is a design note, not
- * a user string. The layout presets and pacing are the spec 7.2 values.
+ * The five colour maps are the spec 7.2 / 7.3 balances of the brand family (T4.1):
+ * Nuit, Papier, Ambre, Prune and the derived tokens, one balance per package, no
+ * two alike. Every declared pair is computed in tests/design/packageContrast.test.ts
+ * (text >= 4.5, UI >= 3); Ambre is never text and never a boundary on Papier (2.16).
+ * `framing` is the first-sound camera of the neutral room, tuned in T2.5
+ * (`firstSoundFraming`); `nameKey` is a COPY key (section `design`; not shown
+ * anywhere yet); `tell` is a design note, not a user string. The layout presets
+ * and pacing are the spec 7.2 values.
  */
-import { CREATION_TOKENS } from './creationTokens'
+import { CREATION_TOKENS, type Hex, type RoleColours } from './creationTokens'
+
+export type { Hex, RoleColours }
 
 export type DesignId = 1 | 2 | 3 | 4 | 5
 export const DESIGN_IDS: readonly DesignId[] = [1, 2, 3, 4, 5]
-
-export type Hex = `#${string}`
 
 /** Tutorial step ids (spec 6.3; package 5 adds the two unplug steps of 7.2). The tutorial data (T3.1a) owns the list. */
 export type StepId =
@@ -34,22 +37,6 @@ export type StepId =
   | 'ecoute'
   | 'debrancher'
   | 'rebrancher'
-
-/** Brand colours or a declared derived tint, each with its computed pairs (T4.1). */
-export interface RoleColours {
-  ground: Hex
-  surface: Hex
-  ink: Hex
-  inkMuted: Hex
-  accent: Hex
-  accentInk: Hex
-  secondary: Hex
-  secondaryInk: Hex
-  /** `--cr-focus`: replaces the hard-coded Ambre of the focus outline (T4.2). */
-  focus: Hex
-  /** `--cr-select`: selection and hover borders (T4.2). */
-  select: Hex
-}
 
 export interface LayoutPreset {
   panels: { tree: boolean; props: boolean }
@@ -96,18 +83,71 @@ export interface DesignPackage {
 
 const T = CREATION_TOKENS.color
 
-/** PLACEHOLDER: today's tokens (T4.1 declares the five real maps). */
-const todayColours: RoleColours = {
-  ground: T.nuit as Hex,
-  surface: T.panel as Hex,
-  ink: T.papier as Hex,
-  inkMuted: T.inkMuted as Hex,
-  accent: T.ambre as Hex,
-  accentInk: T.nuit as Hex,
-  secondary: T.prune as Hex,
-  secondaryInk: T.papier as Hex,
-  focus: T.ambre as Hex,
-  select: T.ambre as Hex,
+/**
+ * Derived tints the packages declare (spec 7.3), each with its computed pairs in tests/design/packageContrast.test.ts. Nothing else outside the brand four and the
+ * existing derived tokens (panel, panelLine, inkMuted, danger, ok) is allowed in a colour map (`ALLOWED_COLOURS`).
+ *  - sheetInkMuted: Nuit 65 % over Papier, 5.53 on Papier, 4.90 on sheetInset.
+ *  - sheetInset: Papier 94 % + Nuit 6 %, the second tone of a Papier sheet (hover and selection wash, a field's ground): Nuit 14.32, sheetInkMuted 4.90, Prune 8.13.
+ *  - dangerOnSheet / okOnSheet: the error and success text on Papier (the bright ones, 2.09 and 1.62 on Papier, stay on the Nuit chrome): 6.50 and 5.48.
+ *  - dangerOnPrune: the error text on a Prune panel (the bright one is 4.39 there): 5.49.
+ */
+const D = {
+  sheetInkMuted: '#615E5C' as Hex,
+  sheetInset: '#E6E0D7' as Hex,
+  dangerOnSheet: '#9B2C20' as Hex,
+  okOnSheet: '#2F6B3E' as Hex,
+  dangerOnPrune: '#F7A59B' as Hex,
+}
+
+/** Every colour a package map may use: the brand four, the existing derived tokens, and the declared tints above (upper case). */
+export const ALLOWED_COLOURS: ReadonlySet<string> = new Set(
+  [T.nuit, T.papier, T.ambre, T.prune, T.panel, T.panelLine, T.inkMuted, T.danger, T.ok, ...Object.values(D)].map((h) => h.toUpperCase()),
+)
+
+const nuit = T.nuit as Hex
+const papier = T.papier as Hex
+const ambre = T.ambre as Hex
+const prune = T.prune as Hex
+const panel = T.panel as Hex
+const panelLine = T.panelLine as Hex
+const inkMuted = T.inkMuted as Hex
+const danger = T.danger as Hex
+const ok = T.ok as Hex
+
+/** 1 « Pas à pas »: one lit thing (Ambre, the next target) on a dark screen; Prune about 3 % (the step card). Today's map, role by role. */
+const coloursPasAPas: RoleColours = {
+  ground: nuit, surface: panel, inset: nuit, ink: papier, inkMuted,
+  accent: ambre, accentInk: nuit, accentEdge: ambre, accentText: ambre,
+  secondary: prune, secondaryInk: papier, band: panel, bandInk: papier,
+  focus: ambre, select: ambre, line: panelLine, danger, ok,
+}
+/** 2 « Atelier »: the same dark panels with Prune study-sheet bands (panel heads), about 20 % Prune; Ambre on the panels, Papier on the bands. */
+const coloursAtelier: RoleColours = {
+  ground: nuit, surface: panel, inset: nuit, ink: papier, inkMuted,
+  accent: ambre, accentInk: nuit, accentEdge: ambre, accentText: ambre,
+  secondary: prune, secondaryInk: papier, band: prune, bandInk: papier,
+  focus: ambre, select: ambre, line: panelLine, danger, ok,
+}
+/** 3 « Salle d'abord »: a daylight Papier sheet. Ink and focus Nuit, links, selection and accent text Prune; the Ambre fill carries Nuit text and a 2 px Nuit edge. */
+const coloursSalle: RoleColours = {
+  ground: papier, surface: papier, inset: D.sheetInset, ink: nuit, inkMuted: D.sheetInkMuted,
+  accent: ambre, accentInk: nuit, accentEdge: nuit, accentText: prune,
+  secondary: prune, secondaryInk: papier, band: papier, bandInk: nuit,
+  focus: nuit, select: prune, line: D.sheetInkMuted, danger: D.dangerOnSheet, ok: D.okOnSheet,
+}
+/** 4 « Pupitre »: flat, a hairline console, no raised panel, no Prune; the Ambre LED state on Nuit, Papier focus. */
+const coloursPupitre: RoleColours = {
+  ground: nuit, surface: nuit, inset: panel, ink: papier, inkMuted,
+  accent: ambre, accentInk: nuit, accentEdge: ambre, accentText: ambre,
+  secondary: nuit, secondaryInk: papier, band: nuit, bandInk: papier,
+  focus: papier, select: ambre, line: inkMuted, danger, ok,
+}
+/** 5 « Modèle d'abord »: a Prune stage frame and Prune panels around the 3D view, about 45 % Prune; Papier ink and focus, Ambre fill with Nuit text, Nuit insets. */
+const coloursModele: RoleColours = {
+  ground: nuit, surface: prune, inset: nuit, ink: papier, inkMuted,
+  accent: ambre, accentInk: nuit, accentEdge: ambre, accentText: papier,
+  secondary: nuit, secondaryInk: papier, band: prune, bandInk: papier,
+  focus: papier, select: ambre, line: inkMuted, danger: D.dangerOnPrune, ok,
 }
 
 /**
@@ -158,9 +198,9 @@ function deepFreeze<T>(value: T): T {
 const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
   1: {
     id: 1,
-    nameKey: 'design.1.name',
+    nameKey: 'design.name1',
     tell: 'one lit thing on a dark screen',
-    colours: todayColours,
+    colours: coloursPasAPas,
     layout: {
       panels: { tree: false, props: false },
       drawer: 'stay-open',
@@ -178,9 +218,9 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
   },
   2: {
     id: 2,
-    nameKey: 'design.2.name',
+    nameKey: 'design.name2',
     tell: 'Prune study-sheet bands',
-    colours: todayColours,
+    colours: coloursAtelier,
     layout: {
       panels: { tree: true, props: true },
       drawer: 'stay-open',
@@ -198,9 +238,9 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
   },
   3: {
     id: 3,
-    nameKey: 'design.3.name',
+    nameKey: 'design.name3',
     tell: 'a daylight Papier sheet',
-    colours: todayColours,
+    colours: coloursSalle,
     layout: {
       panels: { tree: false, props: true },
       drawer: 'stay-open',
@@ -218,9 +258,9 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
   },
   4: {
     id: 4,
-    nameKey: 'design.4.name',
+    nameKey: 'design.name4',
     tell: 'flat, hairline console, no raised panel',
-    colours: todayColours,
+    colours: coloursPupitre,
     layout: {
       panels: { tree: true, props: true },
       drawer: 'close-after-place',
@@ -238,9 +278,9 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
   },
   5: {
     id: 5,
-    nameKey: 'design.5.name',
+    nameKey: 'design.name5',
     tell: 'a Prune stage frame around the 3D view',
-    colours: todayColours,
+    colours: coloursModele,
     layout: {
       panels: { tree: true, props: false },
       drawer: 'close-after-place',

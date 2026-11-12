@@ -1088,4 +1088,16 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** One item of `alreadyInPlace`; {k} = the step's number in the tutorial. */
     alreadyStep: 'étape {k}',
   },
+  /**
+   * The names of the five design packages (onboarding packs, T4.1, spec 7.2), read through `DesignPackage.nameKey` (`design.name1` .. `design.name5`). Not displayed
+   * anywhere yet (the packages are chosen by the address, `?design=1..5`); the founder's local run and the tester guide name them. Every string here: à valider
+   * (tekuxwriter, 2026-11-12).
+   */
+  design: {
+    name1: 'Pas à pas',
+    name2: 'Atelier',
+    name3: 'Salle d’abord',
+    name4: 'Pupitre',
+    name5: 'Modèle d’abord',
+  },
 }

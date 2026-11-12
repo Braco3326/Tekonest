@@ -8,6 +8,45 @@
  * Contrast (WCAG 2.1, tested in tests/creation/creationTokens.test.ts):
  * Papier/Nuit 16.1, Papier/panel 14.95, inkMuted/panel ≥ 4.5, Ambre/Nuit 7.5.
  */
+export type Hex = `#${string}`
+
+/**
+ * The colour roles of a design package (onboarding spec 7.3, plan T4.1): brand colours or a declared derived tint, each pair computed in tests/design/packageContrast.test.ts.
+ * The role says WHAT a colour is for; the package table (src/design/packages.ts) says which colour. Roles reach the CSS as `--cr-role-*` (see `injectCreationTokens`).
+ */
+export interface RoleColours {
+  /** The ground of a screen (the place picker, a dialog, a pop-over). */
+  ground: Hex
+  /** The surface of a side panel, the drawer, a card. */
+  surface: Hex
+  /** The second tone of a surface: a field's ground, a hover or selection wash. */
+  inset: Hex
+  ink: Hex
+  /** Secondary text; contrast computed on the surface, the ground and the inset. */
+  inkMuted: Hex
+  /** A fill (a pressed state chip, a primary button) and its text. */
+  accent: Hex
+  accentInk: Hex
+  /** The edge of an accent fill against the surface (UI, >= 3): Ambre where Ambre is legible, Nuit on Papier. */
+  accentEdge: Hex
+  /** Emphasised text and glyphs (a hover, a warning tag): Ambre on dark surfaces, Prune on Papier, never Ambre on Papier. */
+  accentText: Hex
+  secondary: Hex
+  secondaryInk: Hex
+  /** A band (a panel head): the colour and its ink. */
+  band: Hex
+  bandInk: Hex
+  /** The focus ring: UI against the surface, the ground and the inset. */
+  focus: Hex
+  /** Selection and hover borders and bars: UI against the surface, the ground and the inset. */
+  select: Hex
+  /** Hairlines between panels: decorative, never the only boundary of a control (controls use inkMuted). */
+  line: Hex
+  /** Error and success text on the surface. */
+  danger: Hex
+  ok: Hex
+}
+
 export const CREATION_TOKENS = {
   color: {
     nuit: '#131114',

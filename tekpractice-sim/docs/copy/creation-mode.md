@@ -972,6 +972,18 @@ Le tutoriel « Premiers pas » (packs d’accueil, T3.1 ; spec 6.3 et 7.2) : une
 | `tutorial.alreadyInPlace` | Déjà en place : {steps}. | à valider (tekuxwriter) | Avant la phrase de l’étape suivante quand des étapes étaient déjà faites sur le montage (revue G8 C2) ; `{steps}` = les éléments `tutorial.alreadyStep` séparés par une virgule ; aucun « bravo » |
 | `tutorial.alreadyStep` | étape {k} | à valider (tekuxwriter) | Un élément de `alreadyInPlace` ; `{k}` = le numéro de l’étape dans le tutoriel |
 
+## design
+
+Les noms des cinq paquets de design (packs d’accueil, T4.1 ; spec 7.2), lus par `DesignPackage.nameKey` (`design.name1` à `design.name5`). Pas encore affichés : le paquet se choisit par l’adresse (`?design=1` à `?design=5`) ; la commande locale du fondateur et le guide de test les nomment. Un nom dit le parti pris du paquet, jamais une promesse (ni durée, ni examen, ni sécurité). Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `design.name1` | Pas à pas | à valider (tekuxwriter) | Paquet 1 : un seul élément allumé sur un écran sombre ; Oscar mène, la fiche d’étape |
+| `design.name2` | Atelier | à valider (tekuxwriter) | Paquet 2 : des bandes Prune de feuille d’étude, la liste « Pourquoi je n’entends rien ? » en panneau, Oscar à la demande |
+| `design.name3` | Salle d’abord | à valider (tekuxwriter) | Paquet 3 : une feuille Papier de plein jour, des mots simples pour les rôles |
+| `design.name4` | Pupitre | à valider (tekuxwriter) | Paquet 4 : à plat, des filets fins, pas de panneau en relief ; le clavier d’abord |
+| `design.name5` | Modèle d’abord | à valider (tekuxwriter) | Paquet 5 : un cadre Prune autour de la vue 3D ; un modèle déjà câblé (T6.3) |
+
 ## Textes hors COPY (index.html)
 
 Les seuls textes qui vivent dans `index.html` et non dans `copy.ts` : la garde d'entrée (vague de nuit 2, vague 5, P1-1 ; ronde de correction C1, C2). Quand le script d'entrée lui-même ne se charge pas (fichier absent, ou page HTML servie à sa place : la production répond 200 `text/html` pour un fichier manquant), `main.ts` ne tourne jamais et l'alerte de la section `boot` ne peut pas s'afficher : un petit script en ligne, sans module ni dépendance, **dit à l'utilisateur ce qui s'est passé** (`role="alert"`) et propose « Recharger la page ». **Ce que le lien fait, et ne fait pas :** il recharge `index.html` avec `?v=<heure>` sur l'adresse de la PAGE (le routeur ignore ce paramètre) ; il ne change pas l'adresse du script d'entrée (`/assets/main-<hash>.js`), donc si le serveur ou le cache garde du HTML sous cette adresse, l'échec revient : le vrai remède est côté site (un `404.html`, des en-têtes de cache, une purge après un déploiement). **Quand elle agit :** seulement avant que l'application ait démarré (`main.ts` pose `window.__tekBooted` quand le module de la route est chargé) ; un morceau paresseux qui échoue ensuite (fiches Bêta, couverture, tiroir, une salle, le panneau Essais…) est géré par l'application, jamais par cette garde. **Placement :** avant le module d'entrée dans le source, après lui dans le build ; elle fonctionne parce que l'événement `error` d'un script module part quand son téléchargement a échoué, une fois ce script en ligne exécuté. Une politique de sécurité de contenu (`script-src`) demanderait un empreinte (hash) ou un nonce pour ce script en ligne. `tests/creation/entryGuard.test.ts` tient `index.html` et cette section égaux.

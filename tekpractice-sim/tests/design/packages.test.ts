@@ -4,7 +4,10 @@
  * no active package, i.e. today's behaviour.
  */
 import { describe, expect, it } from 'vitest'
+import { COPY } from '../../src/creation/copy'
+import { TUTORIAL_STEPS } from '../../src/guide/tutorial'
 import {
+  ALLOWED_COLOURS,
   DESIGN_IDS,
   activePackage,
   applyDesignAttribute,
@@ -83,13 +86,24 @@ describe('the table skeleton', () => {
     for (const p of all) expect(['br', 'bl', 'tr']).toContain(p.layout.oscarCorner)
   })
 
-  it("placeholder colours are today's tokens (T4.1 replaces them; the distinct-colour-map test lands there)", () => {
-    for (const p of all) {
-      expect(p.colours.ground).toBe(CREATION_TOKENS.color.nuit)
-      expect(p.colours.ink).toBe(CREATION_TOKENS.color.papier)
-      expect(p.colours.accent).toBe(CREATION_TOKENS.color.ambre)
-      expect(p.colours.focus).toBe(CREATION_TOKENS.color.ambre)
-    }
+  it('no two packages share a colour map (T4.1: five balances of the brand family, one per package)', () => {
+    const keys = all.map((p) => JSON.stringify(p.colours))
+    expect(new Set(keys).size).toBe(5)
+  })
+
+  it('every colour of every map is a brand colour or a declared derived tint (nothing outside the family)', () => {
+    for (const p of all) for (const [role, hex] of Object.entries(p.colours)) expect(ALLOWED_COLOURS.has(hex.toUpperCase()), `package ${p.id} ${role} ${hex}`).toBe(true)
+  })
+
+  it('every package carries a COPY name key that exists, and the five names differ', () => {
+    const nameOf = (key: string): string | undefined => COPY.design?.[key.replace(/^design\./, '')]
+    for (const p of all) expect(typeof nameOf(p.nameKey), `package ${p.id} ${p.nameKey}`).toBe('string')
+    expect(new Set(all.map((p) => nameOf(p.nameKey))).size).toBe(5)
+  })
+
+  it('every pacing step id exists in the tutorial step list (the twelve of the one list)', () => {
+    const known = new Set<string>(TUTORIAL_STEPS.map((s) => s.id))
+    for (const p of all) for (const id of p.pacing.steps) expect(known.has(id), `package ${p.id} step ${id}`).toBe(true)
   })
 
   it('package 5 starts on the playable model and paces three steps; package 4 has no hint', () => {
