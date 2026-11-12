@@ -109,12 +109,12 @@
     "https://thomannmusic.com/mackie_profx12v3.htm"
    ],
    "notes": "Manufacturer sheet is for v3+ (read via pdftotext, hosted by Mackie); dealers give same footprint for v3. Notes: 12 ch, USB 2.0, XLR main + 1/4in main/sub/aux (counts n/s), IEC, 48 V. Source: https://mackie.com/img/file_resources/PROFXV3+_SERIES_SS.pdf",
+   "typicalUse": "Compact analogue mixing desk with seven microphone inputs, 48 V phantom power, USB and an XLR main output",
    "traits": [
     "desk"
    ],
    "sizeConfidence": "ok",
-   "promoted": true,
-   "typicalUse": "Compact analogue mixing desk with seven microphone inputs, 48 V phantom power, USB and an XLR main output"
+   "promoted": true
   },
   {
    "id": "midas-dl16",
@@ -166,15 +166,15 @@
     "https://www.neumann.com/en-en/products/monitors/kh-120-ii/"
    ],
    "notes": "Manufacturer page [M]: 287 H x 182 W x 227 D, 5.4 kg. Fully documented connector set (XLR in, S/PDIF RCA in/out, RJ45, IEC). 4 placements in 3 rooms. Plan is near-rectangular: confirm curved-cabinet fit with a spike. Demand: 4/3 room placements/rooms. Source: https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
+   "typicalUse": "Two-way active nearfield studio monitor (130 mm woofer, 25 mm tweeter) with analogue XLR and S/PDIF inputs",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "active"
    ],
    "sizeConfidence": "ok",
-   "promoted": true,
-   "typicalUse": "Two-way active nearfield studio monitor (130 mm woofer, 25 mm tweeter) with analogue XLR and S/PDIF inputs",
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "promoted": true
   },
   {
    "id": "radial-j48",
@@ -281,13 +281,13 @@
     "https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf"
    ],
    "notes": "Datasheet [M]. Round body (52 mm), XLR plus USB-C; phantom on XLR, 5 V on USB-C. Most common low-cost studio condenser (rank 18). Demand: 1/1 room placements/rooms. Source: https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf",
+   "typicalUse": "Studio condenser microphone with an XLR output (48 V phantom power) and a USB-C digital output",
    "traits": [
     "condenser",
     "phantom-powered"
    ],
    "sizeConfidence": "ok",
-   "promoted": true,
-   "typicalUse": "Studio condenser microphone with an XLR output (48 V phantom power) and a USB-C digital output"
+   "promoted": true
   },
   {
    "id": "royer-r-121",
@@ -340,14 +340,14 @@
     "https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf"
    ],
    "notes": "Shure spec sheet [M]. P3T: 43 H x 198 W x 172 D, 783 g, 12-15 V DC. P3R: 110x64x21 mm without batteries (axis order unlabelled), 98 g. Bêta record bundles both: split. 2 scenarios in notes ranking (rank 9). Source: https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf",
+   "typicalUse": "Half-rack in-ear monitor transmitter (P3T) with balanced 6.35 mm inputs, loop outputs and a detachable antenna",
    "label": "Shure PSM 300",
    "traits": [
     "transmitter",
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true,
-   "typicalUse": "Half-rack in-ear monitor transmitter (P3T) with balanced 6.35 mm inputs, loop outputs and a detachable antenna"
+   "promoted": true
   },
   {
    "id": "shure-slx-d",
@@ -371,14 +371,14 @@
     "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf"
    ],
    "notes": "Shure spec sheet [M]. Receiver SLXD4: 42 H x 197 W x 152 D, 816 g (dual SLXD4D 42x393x152, 1451 g). Bêta record bundles transmitters: SLXD1 98x68x25.5 mm 89 g; SLXD2 37.1 dia x 176 mm 147 g (as summarised, full length with capsule not confirmed); SLXD3 126x41x41 mm 200 g. Demand: 1/1 room placements/rooms. Source: https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
+   "typicalUse": "Single-channel digital wireless microphone receiver with XLR and 6.35 mm outputs, BNC antenna inputs and an Ethernet interface",
    "label": "Shure SLX-D",
    "traits": [
     "receiver",
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true,
-   "typicalUse": "Single-channel digital wireless microphone receiver with XLR and 6.35 mm outputs, BNC antenna inputs and an Ethernet interface"
+   "promoted": true
   },
   {
    "id": "yamaha-tf5",
@@ -894,17 +894,17 @@
     "https://www.dbxpro.com/en/products/driverack-pa2"
    ],
    "notes": "Manufacturer page [M]; dims normalised from 44 H x 483 W x 146 D. Classic student speaker processor (pair with DCX2496). Source: https://www.dbxpro.com/en/products/driverack-pa2",
+   "typicalUse": "Loudspeaker processor with two XLR line inputs, an RTA microphone input and six XLR outputs",
+   "assumedConnectors": [
+    "net",
+    "power-in"
+   ],
    "traits": [
     "processor",
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true,
-   "typicalUse": "Loudspeaker processor with two XLR line inputs, an RTA microphone input and six XLR outputs",
-   "assumedConnectors": [
-    "net",
-    "power-in"
-   ]
+   "promoted": true
   },
   {
    "id": "mutec-mc-3-plus",
@@ -928,12 +928,12 @@
     "https://www.markertek.com/Attachments/Manuals/MUTEC/8015-102-Manual.pdf"
    ],
    "notes": "KB first-promotion #8 (word clock, bnc + wordclock). No data in notes. [Wave 0c size research, grade datasheet, sizeConfidence ok: labelled axes, no disagreement in the notes] Manual technical data (opened): cover 196 x 42 x 156 mm W x H x D without connectors; front panel 198 x 44 x 4 mm (WxHxD); weight approx 1260 g; 9.5 inch half-rack housing. sizeMm is the cover (w196,d156,h42); front panel is 2 mm wider and taller. Thomann lists the USB variant at 1350 g and black variant at 1260 g (dealer, snippet only); manual figure used. Colour (research): Cover matte-black powder-coated steel; front panel aluminium-colour (item 8015-100) or black (8015-101).",
+   "typicalUse": "Master clock with six word-clock outputs, S/PDIF and AES3 inputs and outputs, and a word-clock or 10 MHz reference input",
    "traits": [
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true,
-   "typicalUse": "Master clock with six word-clock outputs, S/PDIF and AES3 inputs and outputs, and a word-clock or 10 MHz reference input"
+   "promoted": true
   },
   {
    "id": "presonus-hp4",
@@ -984,13 +984,13 @@
     "https://goknight.com/content/documentation/s-patchplus%20Spec%20Sheet.pdf"
    ],
    "notes": "KB first-promotion #9. Switchcraft 9625 is the verified precedent. No data in notes. [Wave 0c size research, grade datasheet, sizeConfidence ok: labelled axes, no disagreement in the notes] Samson spec sheet (opened; hosted by goknight): Dimensions (H x W x D) 1 3/4 x 19 x 3 in = 44.45 x 482.6 x 68.5 mm; weight 3.8 lb (1.72 kg). Juno (dealer, snippet) lists 44 x 67 x 482 mm and 1724 g, consistent. Colour not stated. Supersedes the 'about 1.3-1.7 kg' guess seen in search summaries.",
+   "typicalUse": "Rack patchbay with 48 front and 48 rear 1/4 in balanced jacks on 24 channels, normal, half-normal or thru per channel",
    "traits": [
     "passive",
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true,
-   "typicalUse": "Rack patchbay with 48 front and 48 rear 1/4 in balanced jacks on 24 channels, normal, half-normal or thru per channel"
+   "promoted": true
   },
   {
    "id": "sennheiser-ew-100-g4",
@@ -1443,7 +1443,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "behringer-x32",
@@ -1519,7 +1519,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "mackie-1604vlz4",
@@ -1599,7 +1599,7 @@
     "phantom-powered"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "allen-heath-sq-5",
@@ -1628,7 +1628,7 @@
     "desk"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "api-512c",
@@ -1657,7 +1657,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "behringer-x32-compact",
@@ -1686,7 +1686,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "behringer-xr18",
@@ -1715,7 +1715,7 @@
     "desk"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "cisco-sg350-managed-switch",
@@ -1745,7 +1745,7 @@
     "rack"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "presonus-monitor-station-v2",
@@ -1776,7 +1776,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "yamaha-dm3",
@@ -1804,7 +1804,7 @@
     "desk"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "yamaha-mg16xu",
@@ -1833,7 +1833,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "yamaha-tf1",
@@ -1862,7 +1862,7 @@
     "desk"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "zoom-h6-essential",
@@ -1890,7 +1890,7 @@
     "battery"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "audinate-dante-avio-analog-input-2ch",
@@ -1941,7 +1941,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "db-audiotechnik-d80",
@@ -1970,7 +1970,7 @@
     "rack"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "dbx-166xs",
@@ -1999,7 +1999,7 @@
     "rack"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "dbx-231s",
@@ -2028,7 +2028,7 @@
     "rack"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "l-acoustics-la12x",
@@ -2155,7 +2155,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "sennheiser-ew-dx-em-2",
@@ -2263,7 +2263,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "ssl-the-bus-plus",
@@ -2293,7 +2293,7 @@
     "rack"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "tascam-ss-cdr250n",
@@ -2322,7 +2322,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "universal-audio-6176",
@@ -2377,7 +2377,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "yamaha-xmv8280-d",
@@ -2408,7 +2408,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "ams-neve-1073dpd",
@@ -2432,14 +2432,14 @@
     "https://www.ams-neve.com/?p=1408"
    ],
    "notes": "AMS Neve page [M]: 482x254x45 mm (1U), 5 kg. Source: https://www.ams-neve.com/?p=1408",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "promoted": true
   },
   {
    "id": "ams-neve-1073lb",
@@ -2467,7 +2467,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "audinate-dante-avio-install",
@@ -2690,14 +2690,14 @@
     "https://userguides.focusrite.com/hc/en-gb/articles/18577946999570-Clarett-8Pre-technical-specifications"
    ],
    "notes": "Focusrite spec page [M]: 482.5x291x43.9 mm, 4.08 kg. Source: https://userguides.focusrite.com/hc/en-gb/articles/18577946999570-Clarett-8Pre-technical-specifications",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "genelec-8040b",
@@ -4181,14 +4181,14 @@
     "https://www.genelec.com/7360a"
    ],
    "notes": "2 rooms, 2 scenarios. Subwoofer is \"partly\" coverable by curved-cabinet (builder note). No data in notes. Demand: 2/2 room placements/rooms, 2 TEK Brain scenarios. [Wave 0c size research, grade datasheet, sizeConfidence ok: labelled axes, no disagreement in the notes] Page: 'H 527 x W 462 x D 363 mm', 27 kg (59.5 lb); not stated whether this includes feet. Page has a 'Color options' heading but no names came through in the text.",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "l-acoustics-x15-hiq",
@@ -4299,15 +4299,15 @@
     "https://goknight.com/content/documentation/Axient-Digital_Specification-Sheet_AD600_Letter_EN%20(1)%20(2).pdf"
    ],
    "notes": "5 room placements. No AD4D data in notes; ULX-D receiver (197x171x42, 913 g, axis order unlabelled) is a sibling only. Demand: 5/5 room placements/rooms. Source: https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf [Wave 0c size research, grade datasheet, sizeConfidence ok: spec sheet labels H x W x D; \"inferred\" refers to the rear connector counts, not the size] Shure Axient Digital spec sheet (2022) prints 1.7 x 19.0 x 13.1 in (44 x 483 x 333 mm) labelled H x W x D, 1RU. Weight 10.1 lb (4.6 kg) without antennas. Housing steel with extruded aluminium; no finish colour stated. The AD4Q quad is 4.8 kg with the same size. Rear connector counts are read from the printed back-panel diagram and partly inferred, rear vs front not stated in text except the headphone jack.",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "receiver",
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "shure-scm820",
@@ -4439,14 +4439,14 @@
     "https://reverb.com/item/44334662-genelec-8351b-pair-white"
    ],
    "notes": "Search excerpt of the Genelec page: 433 (454 with Iso-Pod) x 287 x 278 mm, 14.3 kg (retailer 14.1); 1 XLR analog, XLR AES in and out, 2 RJ45 (GLM). Source: https://www.genelec.com/8351",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "power-sequencer-distribution",
@@ -4569,14 +4569,14 @@
     "https://deathcloud.com/products/sonifex-s0v2"
    ],
    "notes": "Analog radio classic. Handbook [M]: 483x356x125 mm external; ~8.5 kg (18.7 lb per a US reseller, [D]). Connector counts not retrieved. Source: https://www.manualslib.com/manual/1646175/Sonifex-S0-V2.html",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "wheatstone-l-12",
@@ -5299,15 +5299,15 @@
     "https://media.musson.com/mti/docs/u/a/ua845uwb_guide_en-us.pdf"
    ],
    "notes": "1 scenario. Notes cover UA844+ (483x172x45 mm, 1.62 kg) and UA874 instead. Demand: 1 TEK Brain scenarios. Source: https://pubs.shure.com/view/guide/UA844/en-US.pdf [Wave 0c size research, grade datasheet, sizeConfidence ok: guide labels H x W x D; \"inferred\" refers to the output count, not the size] Shure UA845UWB guide (copy hosted by a dealer) labels 44.5 x 482.6 x 295.3 mm (1.75 x 19 x 11.6 in) as H x W x D; net weight 3.32 kg (7.3 lb). 1RU. Output count of 8 is inferred from 'up to four receivers' per channel. Finish colour not stated.",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "active",
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "sound-devices-833",
@@ -5883,14 +5883,14 @@
     "https://www.manualsdir.com/manuals/118204/meyer-sound-upjunior.html?page=10"
    ],
    "notes": "484 H x 229 W x 259 D mm, 12.7 kg (manual hosted by manualsdir + PSSL). Standard UPJ-1P, not the XP. Source: https://www.pssl.com/products/meyer-sound-upjunior-powered-loudspeaker",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "motu-828es",
@@ -6243,14 +6243,14 @@
     "https://bswusa.com/telos-xstream-isdn-codec/"
    ],
    "notes": "Manual specs: panel 19 in, body ~483x318x89 mm; weight CONFLICT 4 kg (manual) vs 17 lb (dealer). 2 combo XLR/TRS in, 100Base-T, 8 contact closures. Legacy product. Source: https://telosalliance.com/Telos/XSTREAM",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "ua-la-610-mkii",
@@ -6792,14 +6792,14 @@
     "https://adam-audio.com/s-serie/s3h"
    ],
    "notes": "KB W/H/D parsable, values not in notes. [Wave 0c size research, grade datasheet, sizeConfidence ok: labelled axes, no disagreement in the notes] Page: 280 x 585 x 380 mm (H x W x D), 26.6 kg (58.6 lb) per speaker. Colour not stated.",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "allen-heath-zed-436",
@@ -7138,15 +7138,15 @@
     "https://www.neumann.com/en-en/products/monitors/kh-750-dsp/"
    ],
    "notes": "1 room. No data in notes. Demand: 1/1 room placements/rooms. [Wave 0c size research, grade datasheet, sizeConfidence ok: page labels H x W x D; the search summary only gives packed dimensions] Page: 383 x 330 x 383 mm (H x W x D), 19.5 kg (43 lb). Search summary: packed 515 x 395 x 490 mm, 22 kg (not used). Colour (research): Painted, metallic anthracite (RAL 7021) front / black (RAL 9005) rear; black metal woofer grille.",
+   "assumedConnectors": [
+    "net",
+    "power-in"
+   ],
    "traits": [
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "net",
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "neumann-ku-100",
@@ -7255,15 +7255,15 @@
     "https://www.manualsdir.com/manuals/782579/omnia-audio-omnia11.html?page=87"
    ],
    "notes": "1 scenario. The researched Orban OPTIMOD 6300 is a different product. No data in notes. Demand: 1 TEK Brain scenarios. [Wave 0c size research, grade datasheet, sizeConfidence ok: labelled axes, no disagreement in the notes] Axis order from source: 19 in W x 7 in H x 20 in D (48 x 18 x 51 cm) including connectors, four EIA rack spaces. The weight 36 lb / 16.3 kg is described as SHIPPING weight; net weight not stated. One dealer calls it 1RU with 16.5 kg: contradicts the manual (4 rack spaces), not used. A Telos docs page 'Performance Specifications' (2U, 482 x 428 x 86 mm, 6.57 kg) belongs to a different product.",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "processor",
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "rcf-hdl-30-a",
@@ -7467,15 +7467,15 @@
     "https://radioactive.org.uk/?p=11402"
    ],
    "notes": "No data in notes. [Wave 0c size research, grade datasheet, sizeConfidence axis-assumed: values from a search-result excerpt of the Sonifex table (the page returned 404); the base DHY-04 differs] Not read directly: the Sonifex German page returned 404 on fetch, so the DHY-04S values (48.3 cm W x 17.5 cm D x 4.5 cm H, 1U; net 1.45 kg, gross 2.3 kg) come from a search-result excerpt of Sonifex's table and match the Radioactive dealer listing. The fetched base DHY-04 page gives 21.8 x 17.5 x 4.5 cm and 1.4 kg (desktop). A third listing (notice-facile, 'USB audio interface 483 x 200 x 44 mm, 2.5 kg') is a different product and ignored. Depth is measured to the end of the rear connectors. Verify the S figures against the DHY-04 handbook if a hard source is needed. [Wave 4A: size 4.5 cm H x 48.3 cm W x 17.5 cm D read in the opened Sonifex DHY-04 handbook rev 1.06 (table header order Height, Width, Depth, DHY-04S row), so the axis order is labelled, not assumed.]",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "processor",
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "ssl-origin",
@@ -7635,14 +7635,14 @@
     "https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series"
    ],
    "notes": "Dealer: 917x627x269 mm, 26 kg, 24 faders; I/O not retrieved. Source: https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "aphex-channel",
@@ -7781,14 +7781,14 @@
     "https://www.bhphotovideo.com/c/product/1821236-REG/behringer_x_touch_universal_control_surface.html"
    ],
    "notes": "Dealer: 452x301x100 mm, 4.3 kg. Source: https://www.bhphotovideo.com/c/product/1821236-REG/behringer_x_touch_universal_control_surface.html",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "beyerdynamic-dt-990-pro",
@@ -8050,14 +8050,14 @@
     "https://www.thomann.co.uk/presonus_studiolive_series_iii_se_16.htm"
    ],
    "notes": "Dealer: 447x584x165 mm, 10.5 kg. Source: https://www.thomann.co.uk/presonus_studiolive_series_iii_se_16.htm",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "rode-psa1-plus",
@@ -8442,15 +8442,15 @@
     "https://usa.yamaha.com/products/proaudio/processors/spx2000/specs.html"
    ],
    "notes": "Discontinued; KB W/H/D parsable, values not in notes. [Wave 0c size research, grade datasheet, sizeConfidence axis-assumed: notes: Search summary citing the Yamaha datasheet and spec page: 480 x 45 x 372.5 mm (W x H x D),] Search summary citing the Yamaha datasheet and spec page: 480 x 45 x 372.5 mm (W x H x D), 4 kg (8.8 lb), 1U, discontinued. The Yamaha PDF and pages returned 403 so were not read directly. [Wave 4A: size 480 x 45 x 372.5 mm (W x H x D) read in the opened Yamaha owner manual (dimension drawing and spec table) and the Yamaha Malaysia spec page, so the axis order is labelled, not assumed.]",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "processor",
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "audix-d6",
@@ -8671,14 +8671,14 @@
     "https://www.rentex.com/wp-content/uploads/2020/01/CL5-Data-Sheet.pdf"
    ],
    "notes": "5 room placements for an id that exists in neither catalogue nor Bêta. Not researched. [Wave 0c size research, grade datasheet, sizeConfidence ok: labelled axes, no disagreement in the notes] Yamaha datasheet (opened): 1053 x 299 x 667 mm printed as W x H x D (architectural text '1053 (W) x 299 (H) x 667 (D) mm'), net weight 36 kg (79.4 lb). Yamaha US page marks the CL series discontinued.",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   },
   {
    "id": "yamaha-dm7",
@@ -8702,14 +8702,14 @@
     "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html"
    ],
    "notes": "Manual prints 793x324x564 incl. feet; axis order assumed (E), so dims left blank; 23.5 kg. DM7 Compact 468x564x324 (same caveat), 16.5 kg. Source: https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html [Wave 0c size research, grade datasheet, sizeConfidence ok: labelled axes, no disagreement in the notes] Yamaha reference manual 'General specifications' (opened): Dimensions (W x H x D) 793 x 324 x 564 mm including rubber feet; weight 23.5 kg. This settles the axis-order question left open in the existing row. DM7 Compact is 468 x 324 x 564 mm, 16.5 kg (search snippet); DM7 Control 191 x 323 x 562 mm, 7 kg (snippet).",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true,
-   "assumedConnectors": [
-    "power-in"
-   ]
+   "staged": true
   }
  ]
 }

@@ -991,6 +991,193 @@
         "bidir-ethernet-control-firmware": "net",
         "in-iec-ac-power-inlet": "power-in"
       }
+    },
+    {
+      "id": "genelec-8341a",
+      "label": "Genelec 8341A (The Ones, SAM)",
+      "levels": [],
+      "realWorld": {
+        "brand": "Genelec", "model": "8341A (The Ones, SAM)", "category": "studio-monitor",
+        "typicalUse": "near-field mixing",
+        "notes": "Built from the equipment plan (2026-11-12); size 237 x 243 x 351 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.genelec.com/8351. Ports: documented in the asset spec (https://www.genelec.com/8341a). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "in-analog", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-aes", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "bidir-net-1", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "bidir-net-2", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted curved-cabinet model (public/assets/genelec-8341a.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "in-analog", "to": ["transducer"] },
+        { "from": "in-aes", "to": ["transducer"] }
+      ],
+      "portAliases": {
+        "in-analog-input": "in-analog",
+        "in-aes-ebu-digital-input": "in-aes",
+        "out-aes-ebu-digital-thru-output": "out-aes",
+        "in-mains-in": "power-in"
+      }
+    },
+    {
+      "id": "akg-c414-xlii",
+      "label": "AKG C414 XLII",
+      "levels": [],
+      "realWorld": {
+        "brand": "AKG", "model": "C414 XLII", "category": "microphone",
+        "typicalUse": "AKG C414 XLII (microphone)",
+        "notes": "Built from the equipment plan (2026-11-12); size 50 x 38 x 160 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.akg.com/microphones/condenser-microphones/C414+XLII.html. Ports: documented in the asset spec (https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw4bf1cc65/pdfs/AKG_CutSheet_C414&C414XLII_072516.pdf)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level", "flags": ["requiresPhantom"] }
+      ]
+    },
+    {
+      "id": "presonus-monitor-station-v2",
+      "label": "PreSonus Monitor Station V2",
+      "levels": [],
+      "realWorld": {
+        "brand": "PreSonus", "model": "Monitor Station V2", "category": "monitor-controller",
+        "typicalUse": "PreSonus Monitor Station V2 (monitor-controller)",
+        "notes": "Built from the equipment plan (2026-11-12); size 228.6 x 216 x 63.5 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.prosoundweb.com/presonus-unveils-new-monitor-station-v2-desktop-studio-monitor-source-controller/. Ports: documented in the asset spec (https://goknight.com/presonus-monitor-station-2-desktop-studio-control-center-with-spdif-input/)."
+      },
+      "ports": [
+        { "portId": "in-a-l", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-a-r", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-b-l", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-b-r", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-aux-l", "dir": "in", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "in-aux-r", "dir": "in", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "in-spdif", "dir": "in", "connector": "rca", "signal": "spdif" },
+        { "portId": "in-aux-35", "dir": "in", "connector": "trs-35mm", "signal": "line-level-consumer" },
+        { "portId": "out-main-l", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-main-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-spk-a-l", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-spk-a-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-spk-b-l", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-spk-b-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-spk-c-l", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-spk-c-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-cue-l", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-cue-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-phones-1", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-phones-2", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-phones-3", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-phones-4", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" }
+      ],
+      "routing": [
+        { "from": "in-a-l", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
+        { "from": "in-a-r", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
+        { "from": "in-b-l", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
+        { "from": "in-b-r", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
+        { "from": "in-aux-l", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
+        { "from": "in-aux-r", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
+        { "from": "in-spdif", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
+        { "from": "in-aux-35", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] }
+      ]
+    },
+    {
+      "id": "zoom-h6-essential",
+      "label": "Zoom H6 Essential",
+      "levels": [],
+      "realWorld": {
+        "brand": "Zoom", "model": "H6 Essential", "category": "recorder",
+        "typicalUse": "Zoom H6 Essential (recorder)",
+        "notes": "Built from the equipment plan (2026-11-12); size 78.1 x 160.1 x 42.8 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.thomann.co.uk/zoom_h6essential.htm. Ports: documented in the asset spec (https://zoomcorp.com/en/us/handheld-recorders/handheld-recorders/h6essential/)."
+      },
+      "ports": [
+        { "portId": "in-xlr-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-xlr-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-xlr-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-xlr-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-line", "dir": "out", "connector": "trs-35mm", "signal": "line-level-consumer" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" }
+      ]
+    },
+    {
+      "id": "yamaha-mg10xu",
+      "label": "Yamaha MG10XU",
+      "levels": [],
+      "realWorld": {
+        "brand": "Yamaha", "model": "MG10XU", "category": "console-analog",
+        "typicalUse": "small PA",
+        "notes": "Built from the equipment plan (2026-11-12); size 244 x 294 x 71 mm (w x d x h) (datasheet, size confidence ok). Size source: https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf. Ports: documented in the asset spec (https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf)."
+      },
+      "ports": [
+        { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-line-l", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-line-r", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-rca-l", "dir": "in", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "in-rca-r", "dir": "in", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "out-main-l", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-main-r", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" }
+      ],
+      "routing": [
+        { "from": "in-combo-1", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-2", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-3", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-4", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-line-l", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-line-r", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-rca-l", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-rca-r", "to": ["out-main-l", "out-main-r"] }
+      ],
+      "portAliases": {
+        "in-mic-line-input-ch-1-4-combo-xlr-part-1": "in-combo-1",
+        "in-mic-line-input-ch-1-4-combo-xlr-part-2": "in-combo-2",
+        "in-mic-line-input-ch-1-4-combo-jack-part-1": "in-line-l",
+        "in-mic-line-input-ch-1-4-combo-jack-part-2": "in-line-r",
+        "out-stereo-out-l-r-xlr-1": "out-main-l",
+        "out-stereo-out-l-r-xlr-2": "out-main-r",
+        "bidir-usb-2-0-audio-to-computer": "usb"
+      }
+    },
+    {
+      "id": "ams-neve-1073dpd",
+      "label": "AMS Neve 1073DPD",
+      "levels": [],
+      "realWorld": {
+        "brand": "AMS Neve", "model": "1073DPD", "category": "mic-preamp",
+        "typicalUse": "AMS Neve 1073DPD (mic-preamp)",
+        "notes": "Built from the equipment plan (2026-11-12); size 482 x 254 x 45 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.ams-neve.com/?p=1408. Ports: documented in the asset spec (https://www.ams-neve.com/1073dpd/), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-mic-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-line-1", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-line-2", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-line-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-line-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-aes-1", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "out-aes-2", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "in-wclk", "dir": "in", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "out-wclk", "dir": "out", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true },
+        { "id": "phantom-48v", "type": "toggle", "label": "+48V phantom", "default": false, "enables": { "flag": "providesPhantom", "ports": ["in-mic-1", "in-mic-2"] } }
+      ],
+      "routing": [
+        { "from": "in-mic-1", "to": ["out-line-1"] },
+        { "from": "in-mic-2", "to": ["out-line-2"] },
+        { "from": "in-line-1", "to": ["out-aes-1"] },
+        { "from": "in-line-2", "to": ["out-aes-2"] }
+      ]
     }
   ],
 

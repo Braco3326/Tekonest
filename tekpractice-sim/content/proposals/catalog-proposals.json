@@ -1356,97 +1356,6 @@
    ]
   },
   {
-   "id": "yamaha-mg10xu",
-   "label": "Yamaha MG10XU",
-   "levels": [],
-   "realWorld": {
-    "brand": "Yamaha",
-    "model": "MG10XU",
-    "category": "console",
-    "typicalUse": "small PA",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Combo XLR/jack inputs, single global phantom switch, RCA consumer inputs and USB make it a good first-mixer wiring and gain-staging lesson."
-   },
-   "ports": [
-    {
-     "portId": "in-mic-line-input-ch-1-4-combo-xlr-part-1",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "mic-level"
-    },
-    {
-     "portId": "in-mic-line-input-ch-1-4-combo-xlr-part-2",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "mic-level"
-    },
-    {
-     "portId": "in-mic-line-input-ch-1-4-combo-jack-part-1",
-     "dir": "in",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-mic-line-input-ch-1-4-combo-jack-part-2",
-     "dir": "in",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-stereo-line-inputs-ch-5-6-to-9-10-l-r-1",
-     "dir": "in",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-stereo-line-inputs-ch-5-6-to-9-10-l-r-2",
-     "dir": "in",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-stereo-out-l-r-xlr-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-stereo-out-l-r-xlr-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-phones",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "headphone-level"
-    },
-    {
-     "portId": "in-foot-sw-effects-on-off",
-     "dir": "in",
-     "connector": "ts-quarter",
-     "signal": "gpio-tally"
-    },
-    {
-     "portId": "bidir-usb-2-0-audio-to-computer",
-     "dir": "bidir",
-     "connector": "usb-b",
-     "signal": "usb-audio"
-    },
-    {
-     "portId": "in-ac-adaptor-in-locking-connector-for-pa-10-adaptor",
-     "dir": "in",
-     "connector": "dc-barrel",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 244,
-    "d": 294,
-    "h": 71
-   }
-  },
-  {
    "id": "allen-heath-zed-22fx",
    "label": "Allen & Heath ZED-22FX",
    "levels": [],
@@ -6128,61 +6037,6 @@
    ]
   },
   {
-   "id": "genelec-8341a",
-   "label": "Genelec 8341A (The Ones, SAM)",
-   "levels": [],
-   "realWorld": {
-    "brand": "Genelec",
-    "model": "8341A (The Ones, SAM)",
-    "category": "studio-monitor",
-    "typicalUse": "near-field mixing",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Analog vs AES3 auto-select, AES thru daisy-chain and separate RJ45 control network that is NOT Ethernet: rich wiring lessons."
-   },
-   "ports": [
-    {
-     "portId": "in-analog-input",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-aes-ebu-digital-input",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "aes3"
-    },
-    {
-     "portId": "out-aes-ebu-digital-thru-output",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "aes3"
-    },
-    {
-     "portId": "bidir-glm-control-network-proprietary-daisy-chain-1",
-     "dir": "bidir",
-     "connector": "rj45",
-     "signal": "gpio-tally"
-    },
-    {
-     "portId": "bidir-glm-control-network-proprietary-daisy-chain-2",
-     "dir": "bidir",
-     "connector": "rj45",
-     "signal": "gpio-tally"
-    },
-    {
-     "portId": "in-mains-in",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 237,
-    "d": 243,
-    "h": 351
-   }
-  },
-  {
    "id": "genelec-1234a",
    "label": "Genelec 1234A SAM",
    "levels": [],
@@ -7694,6 +7548,951 @@
     "w": 482.6,
     "d": 217,
     "h": 44.5
+   }
+  },
+  {
+   "id": "allen-heath-sq-5",
+   "label": "Allen & Heath SQ-5",
+   "levels": [],
+   "realWorld": {
+    "brand": "Allen & Heath",
+    "model": "SQ-5",
+    "category": "console-digital",
+    "typicalUse": "Allen & Heath SQ-5 (console-digital)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 440 x 514.9 x 198 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-5",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-6",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-7",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-8",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-talkback",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-mix-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-mix-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "usb-b",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "usb-a",
+     "dir": "bidir",
+     "connector": "usb-a",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "slink",
+     "dir": "bidir",
+     "connector": "ethercon",
+     "signal": "aoip"
+    }
+   ],
+   "sizeMm": {
+    "w": 440,
+    "d": 514.9,
+    "h": 198
+   }
+  },
+  {
+   "id": "api-512c",
+   "label": "API 512c (500-series)",
+   "levels": [],
+   "realWorld": {
+    "brand": "API",
+    "model": "512c (500-series)",
+    "category": "mic-preamp",
+    "typicalUse": "API 512c (500-series) (mic-preamp)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 38 x 178 x 133 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-front",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-inst-front",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "instrument-hiz"
+    }
+   ],
+   "sizeMm": {
+    "w": 38,
+    "d": 178,
+    "h": 133
+   }
+  },
+  {
+   "id": "behringer-x32-compact",
+   "label": "Behringer X32 Compact",
+   "levels": [],
+   "realWorld": {
+    "brand": "Behringer",
+    "model": "X32 Compact",
+    "category": "console-digital",
+    "typicalUse": "Behringer X32 Compact (console-digital)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 625 x 510 x 215 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-5",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-6",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-7",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-8",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-mix-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-mix-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "aes50-a",
+     "dir": "bidir",
+     "connector": "ethercon",
+     "signal": "aoip"
+    },
+    {
+     "portId": "aes50-b",
+     "dir": "bidir",
+     "connector": "ethercon",
+     "signal": "aoip"
+    },
+    {
+     "portId": "usb-a",
+     "dir": "bidir",
+     "connector": "usb-a",
+     "signal": "usb-audio"
+    }
+   ],
+   "sizeMm": {
+    "w": 625,
+    "d": 510,
+    "h": 215
+   }
+  },
+  {
+   "id": "behringer-xr18",
+   "label": "Behringer X AIR XR18",
+   "levels": [],
+   "realWorld": {
+    "brand": "Behringer",
+    "model": "X AIR XR18",
+    "category": "console-digital",
+    "typicalUse": "Behringer X AIR XR18 (console-digital)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 333 x 150 x 140 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-combo-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-5",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-6",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-7",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-8",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "net",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    }
+   ],
+   "sizeMm": {
+    "w": 333,
+    "d": 150,
+    "h": 140
+   }
+  },
+  {
+   "id": "cisco-sg350-managed-switch",
+   "label": "Cisco SG350 managed switch",
+   "levels": [],
+   "realWorld": {
+    "brand": "Cisco",
+    "model": "SG350 managed switch",
+    "category": "network-switch",
+    "typicalUse": "Cisco SG350 managed switch (network-switch)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 440 x 202 x 44 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "port-1",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-2",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-3",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-4",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-5",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-6",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-7",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-8",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    }
+   ],
+   "sizeMm": {
+    "w": 440,
+    "d": 202,
+    "h": 44
+   }
+  },
+  {
+   "id": "yamaha-dm3",
+   "label": "Yamaha DM3 Standard",
+   "levels": [],
+   "realWorld": {
+    "brand": "Yamaha",
+    "model": "DM3 Standard",
+    "category": "console-digital",
+    "typicalUse": "Yamaha DM3 Standard (console-digital)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 320 x 455 x 140 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-5",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-6",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-7",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-8",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-mix-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-mix-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "usb-b",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "dante",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    }
+   ],
+   "sizeMm": {
+    "w": 320,
+    "d": 455,
+    "h": 140
+   }
+  },
+  {
+   "id": "yamaha-mg16xu",
+   "label": "Yamaha MG16XU",
+   "levels": [],
+   "realWorld": {
+    "brand": "Yamaha",
+    "model": "MG16XU",
+    "category": "console-analog",
+    "typicalUse": "Yamaha MG16XU (console-analog)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 444 x 500 x 130 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-combo-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-line-1",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-line-2",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-line-3",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-line-4",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    }
+   ],
+   "sizeMm": {
+    "w": 444,
+    "d": 500,
+    "h": 130
+   }
+  },
+  {
+   "id": "yamaha-tf1",
+   "label": "Yamaha TF1",
+   "levels": [],
+   "realWorld": {
+    "brand": "Yamaha",
+    "model": "TF1",
+    "category": "console-digital",
+    "typicalUse": "Yamaha TF1 (console-digital)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 510 x 599 x 225 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-combo-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-5",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-6",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-7",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-8",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-rca-l",
+     "dir": "in",
+     "connector": "rca",
+     "signal": "line-level-consumer"
+    },
+    {
+     "portId": "in-rca-r",
+     "dir": "in",
+     "connector": "rca",
+     "signal": "line-level-consumer"
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-omni-3",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-omni-4",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "net",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    }
+   ],
+   "sizeMm": {
+    "w": 510,
+    "d": 599,
+    "h": 225
+   }
+  },
+  {
+   "id": "ams-neve-1073lb",
+   "label": "AMS Neve 1073LB (500-series)",
+   "levels": [],
+   "realWorld": {
+    "brand": "AMS Neve",
+    "model": "1073LB (500-series)",
+    "category": "mic-preamp",
+    "typicalUse": "AMS Neve 1073LB (500-series) (mic-preamp)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 38 x 145 x 132 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-combo-front",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 38,
+    "d": 145,
+    "h": 132
    }
   }
  ],
