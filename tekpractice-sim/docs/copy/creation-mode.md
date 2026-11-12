@@ -7,6 +7,7 @@ Rules: French first, English technical terms kept as students meet them (XLR, Da
 Status column:
 - **brief** — wording given verbatim by the plan (Task 7 brief / council), validated with it.
 - **validé** — reviewed and accepted (or rewritten) by tekuxwriter; the Phase 1 pass (L9) signed off every string authored by tekfrontenddesigner.
+- **à valider** — wording written by an agent in the Wave 0 build-all-equipment run (2026-11-11: the new tabs, the « Bêta — dimensions estimées » badge and its tooltip, the twelve new connector names, the reworded « Autres » tab); not yet read by tekuxwriter or the founder. It ships, but it is not « validé » until someone signs it off.
 - **à trancher (Oscar)** — tekuxwriter could not decide alone; the question is in the notes column.
 
 Typography: plain spaces before « : ; ! ? » and inside « » (no U+00A0 / U+202F), as every shipped string does.
@@ -581,8 +582,8 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.empty` | Aucun appareil disponible pour le moment. | validé | État vide d’un onglet sans appareil |
 | `inventory.badgeUnverified` | non vérifié | validé | Pastille sur un appareil proposé : onglet Bêta, arbre Projet et Propriétés une fois posé (Task 30) |
 | `inventory.tipUnverified` | Fiche proposée, pas encore vérifiée : comportement approximatif. | validé | Info-bulle d’un appareil Bêta (tiroir) et description de l’appareil posé (Propriétés) |
-| `inventory.badgeEstimated` | Bêta — dimensions estimées | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Pastille d’un appareil proposé qui a un modèle 3D aux dimensions estimées (onglet Bêta) ; remplace « non vérifié » sur cet appareil |
-| `inventory.tipEstimated` | Modèle 3D aux dimensions estimées : fiche non vérifiée, comportement approximatif. | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Info-bulle de cet appareil (tiroir) |
+| `inventory.badgeEstimated` | Bêta — dimensions estimées | à valider | Pastille d’un appareil proposé qui a un modèle 3D aux dimensions estimées (onglet Bêta) ; remplace « non vérifié » sur cet appareil |
+| `inventory.tipEstimated` | Modèle 3D aux dimensions estimées : fiche non vérifiée, comportement approximatif. | à valider | Info-bulle de cet appareil (tiroir) |
 | `inventory.missingTitle` | Appareils non rechargés | validé | Titre de la note quand un projet rouvert contient des appareils dont la fiche n’existe plus |
 | `inventory.missingBody` | La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés. | validé | Corps de la note ; les identifiants des appareils suivent en liste |
 | `inventory.unavailableTitle` | Projet non rouvert | validé | Titre de la note quand les fiches Bêta dont un projet enregistré a besoin n’ont pas pu être chargées (réseau, délai de 5 s) : le projet n’est ni ouvert ni modifié |
@@ -597,15 +598,15 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.tabMicros` | Micros | validé | Onglet ; Micros, d’après la catégorie « microphone » du catalogue ; les onglets vides sont masqués |
 | `inventory.tabConsoles` | Consoles | validé | Onglet ; Consoles, stageboxes, préamplis et contrôleurs d’écoute ; les onglets vides sont masqués |
 | `inventory.tabEnceintes` | Enceintes | validé | Onglet ; Enceintes amplifiées et moniteurs de studio ; les onglets vides sont masqués |
-| `inventory.tabAmplis` | Amplis | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Onglet ; Amplificateurs de puissance (catégorie « amplifier ») ; masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
+| `inventory.tabAmplis` | Amplis | à valider | Onglet ; Amplificateurs de puissance (catégorie « amplifier ») ; masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
 | `inventory.tabSources` | Sources | validé | Onglet ; Ordinateurs et interfaces audio ; les onglets vides sont masqués |
 | `inventory.tabReseau` | Réseau | validé | Onglet ; Codecs et horloges maîtresses ; les onglets vides sont masqués |
-| `inventory.tabCables` | Câbles et DI | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Onglet ; Câbles, boîtiers de direct (DI) et splitters ; les onglets vides sont masqués |
-| `inventory.tabPieds` | Pieds et accroches | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Onglet ; Pieds de micro, bras, suspensions et filtres anti-pop ; les onglets vides sont masqués |
+| `inventory.tabCables` | Câbles et DI | à valider | Onglet ; Câbles, boîtiers de direct (DI) et splitters ; les onglets vides sont masqués |
+| `inventory.tabPieds` | Pieds et accroches | à valider | Onglet ; Pieds de micro, bras, suspensions et filtres anti-pop ; les onglets vides sont masqués |
 | `inventory.tabSecteur` | Secteur | validé | Onglet ; Alimentation secteur ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
 | `inventory.tabEclairage` | Éclairage | validé | Onglet ; Éclairage ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
 | `inventory.tabBeta` | Bêta | validé | Onglet ; Propositions seulement (jamais un appareil du catalogue), badge « non vérifié » (Task 30) ; masqué sans proposition ; les onglets vides sont masqués |
-| `inventory.tabAutres` | Autres | validé | Onglet ; Signalisation, patchbays, mobilier et catégories inconnues ; toujours en dernier ; les onglets vides sont masqués |
+| `inventory.tabAutres` | Autres | à valider | Onglet ; Signalisation, patchbays, mobilier et catégories inconnues ; toujours en dernier ; les onglets vides sont masqués |
 
 ## Glossaire
 
@@ -747,18 +748,18 @@ Noms français des connecteurs du catalogue (`connectorTypes[].id`), repris dans
 | `connector.usb-c` | USB Type-C / Thunderbolt 3 | validé | Étiquette de prise |
 | `connector.digilink` | Avid DigiLink | validé | Étiquette de prise |
 | `connector.gpio-terminal` | Bornier GPIO / port logique D-sub | validé | Étiquette de prise |
-| `connector.dc-barrel` | Jack d’alimentation DC (cylindrique) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.midi-din5` | MIDI DIN 5 broches | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.xlr4` | XLR4 (intercom / casque / 12 V DC) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.bnc-antenna-50ohm` | BNC 50 Ω (antenne HF) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.mini-xlr-ta4` | Mini-XLR TA4 (cravate / émetteur ceinture) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.euroblock` | Bornier à vis Euroblock | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.speakon-nl8` | Neutrik Speakon NL8 | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.binding-post` | Borne à vis (fil nu / banane) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.opticalcon` | Neutrik opticalCON (fibre renforcée) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.sc-fibre` | Fibre optique SC | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.lemo` | LEMO push-pull (multibroche) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
-| `connector.hirose` | Hirose multibroche (caméra / DC) | validé (Wave 0 2026-11-11, relecture fondateur conseillée) | Étiquette de prise |
+| `connector.dc-barrel` | Jack d’alimentation DC (cylindrique) | à valider | Étiquette de prise |
+| `connector.midi-din5` | MIDI DIN 5 broches | à valider | Étiquette de prise |
+| `connector.xlr4` | XLR4 (intercom / casque / 12 V DC) | à valider | Étiquette de prise |
+| `connector.bnc-antenna-50ohm` | BNC 50 Ω (antenne HF) | à valider | Étiquette de prise |
+| `connector.mini-xlr-ta4` | Mini-XLR TA4 (cravate / émetteur ceinture) | à valider | Étiquette de prise |
+| `connector.euroblock` | Bornier à vis Euroblock | à valider | Étiquette de prise |
+| `connector.speakon-nl8` | Neutrik Speakon NL8 | à valider | Étiquette de prise |
+| `connector.binding-post` | Borne à vis (fil nu / banane) | à valider | Étiquette de prise |
+| `connector.opticalcon` | Neutrik opticalCON (fibre renforcée) | à valider | Étiquette de prise |
+| `connector.sc-fibre` | Fibre optique SC | à valider | Étiquette de prise |
+| `connector.lemo` | LEMO push-pull (multibroche) | à valider | Étiquette de prise |
+| `connector.hirose` | Hirose multibroche (caméra / DC) | à valider | Étiquette de prise |
 
 ## coverage
 

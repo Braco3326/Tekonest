@@ -5,7 +5,7 @@ Plan: `docs/superpowers/plans/2026-11-11-build-all-equipment.md`. Each agent add
 
 ## Wave 0 spikes (Task 0.7)
 
-Throwaway dry runs, nothing shipped. Method: scratch specs in `C:\Users\braco\AppData\Local\Temp\claude\dd4283adc5f44d8e\4e0e33cf-26fa-4a45-94ed-a586d8113ebb\scratchpad\spike\` (outside the repo), driven through the real `buildAsset(id, { scripted: true, dryRun: true })` with injected `loadSpec`, a synthetic one-device `loadCatalog`, and scratch `paths`. So every run went through `validateBuild` (TS), the Blender builder, the fix-up, the contact sheet and all the gates (size, transform, parts, portPositions, budget, detail, fillet, proportionDrift, portSurface, textures, validator = 11 gates). Nothing was written to `content/`, `public/assets` or the manifest. `BLENDER_EXE=D:\Blender\blender.exe`. All specs: tier `standard`; sizes in the order (w, d, h) as given in the task; port and control positions are guesses (the spike tests the shape, not the layout). The driver is `spike/driver.mts` (about 25 lines, not committed).
+Throwaway dry runs, nothing shipped. Method: scratch specs in a temporary folder outside the repo (not committed), driven through the real `buildAsset(id, { scripted: true, dryRun: true })` with injected `loadSpec`, a synthetic one-device `loadCatalog`, and scratch `paths`. So every run went through `validateBuild` (TS), the Blender builder, the fix-up, the contact sheet and all the gates (size, transform, parts, portPositions, budget, detail, fillet, proportionDrift, portSurface, textures, validator = 11 gates). Nothing was written to `content/`, `public/assets` or the manifest. `BLENDER_EXE=D:\Blender\blender.exe`. All specs: tier `standard`; sizes in the order (w, d, h) as given in the task; port and control positions are guesses (the spike tests the shape, not the layout). The driver is a throwaway script (about 25 lines, not committed).
 
 Sanity check of the method: the shipped `genelec-8030c` spec run through the same driver gives 3088 triangles and 11 of 11 gates, the same as its manifest row.
 
@@ -61,7 +61,7 @@ Consequence: Task 1.2 DI boxes (JDI, ProDI, J48, Type 85, and similar small boxe
 - Q1 PASS: Task 3.3 `rack-box-v3-slope` stays optional (skip unless a sloped RACK device needs it); sloped desktop gear goes on `console-wedge` v2 (Task 1.3 and the later desktop-interface rows), with the lip rule above.
 - Q2 PASS: Task 1.4 unchanged; no rounded-box fallback needed.
 - Q3 PASS: Task 1.2 unchanged; DI boxes use the plate-thickness rule above.
-- Scratch contact sheets (not committed): `C:\Users\braco\AppData\Local\Temp\claude\dd4283adc5f44d8e\4e0e33cf-26fa-4a45-94ed-a586d8113ebb\scratchpad\spike\out-scC2\src\spike-scarlett-c\work\2026-11-11T22-44-46-392Z\attempt-1.sheet.png`, `...\spike\out-kh-1\src\spike-kh120\work\2026-11-11T22-45-44-303Z\attempt-1.sheet.png`, `...\spike\out-jdi2\src\spike-radial-jdi\work\2026-11-11T22-43-32-613Z\attempt-1.sheet.png`.
+- Scratch contact sheets (kept in the temporary folder, not committed): the Scarlett (variant C), KH 120 II and Radial JDI runs each left an `attempt-1.sheet.png` there.
 
 
 ## Wave 0 foundations (Tasks 0.1 to 0.6)

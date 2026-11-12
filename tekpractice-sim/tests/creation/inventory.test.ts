@@ -288,6 +288,18 @@ describe('Wave 0 tabs: no category falls into « Autres » by accident, no id is
     expect(r.items).toHaveLength(CATALOG_DEVICE_COUNT + proposalsFile.devices.filter((d) => !catalogDevices.some((c) => c.id === d.id)).length)
   })
 
+  it('independent of the test helpers (finding 11): the registry holds exactly the devices[] of content/catalog.json read here, and every plan row flagged promoted has a device in it', () => {
+    // The derived pins above read the catalogue through the same helper that built the registry, so a bug there would pass both. This one reads the file itself.
+    const direct = JSON.parse(readFileSync('content/catalog.json', 'utf8')) as { devices: { id: string }[] }
+    expect(registry.deviceById.size).toBe(direct.devices.length)
+    expect(registry.catalog.devices).toHaveLength(direct.devices.length)
+    expect([...registry.deviceById.keys()].sort()).toEqual(direct.devices.map((d) => d.id).sort())
+    const rows = (JSON.parse(readFileSync('content/proposals/equipment-plan.json', 'utf8')) as { rows: { id: string; promoted?: boolean }[] }).rows
+    const promoted = rows.filter((r) => r.promoted === true)
+    for (const r of promoted) expect(registry.deviceById.has(r.id), `${r.id} is flagged promoted in the plan but is not in the catalogue`).toBe(true)
+    for (const r of rows.filter((x) => x.promoted !== true)) expect(registry.deviceById.has(r.id), `${r.id} is in the catalogue but its plan row is not flagged promoted`).toBe(false)
+  })
+
   it('the pinned counts are derived: the registry and the inventory agree with content/catalog.json, whatever it holds today', () => {
     expect(registry.catalog.devices).toHaveLength(CATALOG_DEVICE_COUNT)
     expect(new Set(registry.catalog.devices.map((d) => d.realWorld.category))).toEqual(CATALOG_CATEGORIES)

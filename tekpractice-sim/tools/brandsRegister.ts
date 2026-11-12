@@ -4,13 +4,16 @@
  * committed document differs from what the manifest and specs say, so the register cannot drift (a test holds the same).
  *
  * One row per manifest row of kind `device`: the device (label from the catalogue, else from the Bêta proposals, else its id), `tool` (how the GLB
- * was made), the manifest `source` text, the source of its dimensions (the manifest `specSource`, else the first source of its spec), the picture
+ * was made), the manifest `source` text, the source of its dimensions (Wave 0b: ALWAYS an http(s) URL or the literal « catalogue (ours) », never a local file
+ * path: the first source of the equipment plan row, else the manifest `specSource`, else the first source of its spec, each only when it is an http(s) URL;
+ * a device with none of them says « catalogue (ours) »: its numbers are ours), the picture
  * origin, whether Meshy took part, and the trademark flag. Picture origin and Meshy are derived from the manifest's own fields, except for the
  * facts only a person knows (`KNOWN`).
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { loadPlan } from './equipmentPlan'
 import { isMainModule } from './assets3d/mainModule'
 import type { ManifestEntry } from './assets3d/manifest'
 
@@ -50,14 +53,29 @@ const meshyOf = (a: RegisterAsset): string => {
   return 'no'
 }
 
-/** The text of section 6's generated part (everything between the markers). */
-export function renderRegister(manifest: { assets: readonly RegisterAsset[] }, specs: readonly LooseSpec[], labels: ReadonlyMap<string, string>): string {
+/** What the Dimensions source cell says for a device whose size has no web source (the 25 devices measured by hand, the power strip, the loom). */
+export const OURS = 'catalogue (ours)'
+
+const httpUrl = (u: string | undefined): string | undefined => (u !== undefined && /^https?:\/\/\S+$/.test(u) ? u : undefined)
+
+/** The Dimensions source cell of a device: an http(s) URL or OURS, never a file path (a test holds it). */
+export function dimensionsSource(a: RegisterAsset, spec: LooseSpec | undefined, planSource: string | undefined): string {
+  return httpUrl(planSource) ?? httpUrl(a.specSource) ?? httpUrl(spec?.sources?.[0]?.url) ?? OURS
+}
+
+/** The text of section 6's generated part (everything between the markers). `planSources` is the first source URL of each equipment-plan row, by id. */
+export function renderRegister(
+  manifest: { assets: readonly RegisterAsset[] },
+  specs: readonly LooseSpec[],
+  labels: ReadonlyMap<string, string>,
+  planSources: ReadonlyMap<string, string> = new Map(),
+): string {
   const specById = new Map(specs.map((s) => [s.id, s]))
   const rows = manifest.assets
     .filter((a) => a.kind === 'device')
     .map((a) => {
       const label = labels.get(a.id) ?? a.id
-      const dim = a.specSource && a.specSource !== 'spec' ? a.specSource : (specById.get(a.id)?.sources?.[0]?.url ?? '—')
+      const dim = dimensionsSource(a, specById.get(a.id), planSources.get(a.id))
       return { label, id: a.id, line: `| ${cell(label)} (\`${a.id}\`) | ${cell(a.tool ?? 'unknown')} | ${cell(a.source ?? '—')} | ${cell(dim)} | ${cell(pictureOf(a))} | ${cell(meshyOf(a))} | ${cell(a.trademark ?? '—')} |`, meshy: meshyOf(a).startsWith('yes') }
     })
     .sort((x, y) => x.label.localeCompare(y.label, 'en', { sensitivity: 'base' }) || (x.id < y.id ? -1 : x.id > y.id ? 1 : 0))
@@ -109,7 +127,8 @@ function main(argv: string[]): number {
   const catalog = JSON.parse(readFileSync(join(ROOT, 'content', 'catalog.json'), 'utf8')) as { devices: { id: string; label: string }[] }
   const proposalsPath = join(ROOT, 'content', 'proposals', 'catalog-proposals.json')
   const proposals = existsSync(proposalsPath) ? (JSON.parse(readFileSync(proposalsPath, 'utf8')) as { devices: { id: string; label: string }[] }) : null
-  const block = renderRegister(manifest, readSpecsLoose(join(ROOT, 'content', 'asset-specs')), deviceLabels(catalog, proposals))
+  const planSources = new Map(loadPlan().flatMap((r) => (r.sources[0] ? [[r.id, r.sources[0]] as [string, string]] : [])))
+  const block = renderRegister(manifest, readSpecsLoose(join(ROOT, 'content', 'asset-specs')), deviceLabels(catalog, proposals), planSources)
   const doc = readFileSync(docPath, 'utf8')
   const next = replaceBlock(doc, block)
   if (next === doc) {

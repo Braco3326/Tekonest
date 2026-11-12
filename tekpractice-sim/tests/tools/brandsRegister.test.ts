@@ -5,13 +5,15 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { BEGIN, END, deviceLabels, readSpecsLoose, renderRegister, replaceBlock, type RegisterAsset } from '../../tools/brandsRegister'
+import { BEGIN, END, OURS, deviceLabels, dimensionsSource, readSpecsLoose, renderRegister, replaceBlock, type RegisterAsset } from '../../tools/brandsRegister'
+import { loadPlan } from '../../tools/equipmentPlan'
 
 const manifest = JSON.parse(readFileSync('public/assets/ASSET_MANIFEST.json', 'utf8').replace(/^\uFEFF/, '')) as { assets: RegisterAsset[] }
 const specs = readSpecsLoose('content/asset-specs')
 const catalog = JSON.parse(readFileSync('content/catalog.json', 'utf8')) as { devices: { id: string; label: string }[] }
 const proposals = JSON.parse(readFileSync('content/proposals/catalog-proposals.json', 'utf8')) as { devices: { id: string; label: string }[] }
 const labels = deviceLabels(catalog, proposals)
+const planSources = new Map(loadPlan().flatMap((r) => (r.sources[0] ? [[r.id, r.sources[0]] as [string, string]] : [])))
 const deviceRows = manifest.assets.filter((a) => a.kind === 'device')
 const doc = readFileSync('docs/legal/BRANDS_AND_CREDITS.md', 'utf8')
 
@@ -20,7 +22,7 @@ const rowsOf = (block: string): string[] => block.split('\n').filter((l) => l.st
 
 describe('renderRegister', () => {
   it('has exactly one row per manifest device row (no connector rows, none missing, none twice)', () => {
-    const block = renderRegister(manifest, specs, labels)
+    const block = renderRegister(manifest, specs, labels, planSources)
     const rows = rowsOf(block)
     expect(rows).toHaveLength(deviceRows.length)
     for (const a of deviceRows) expect(rows.filter((r) => r.includes(`(\`${a.id}\`)`)), a.id).toHaveLength(1)
@@ -28,33 +30,34 @@ describe('renderRegister', () => {
   })
 
   it('is stable: the same inputs give the same text, and replacing the block twice changes nothing (second run, no diff)', () => {
-    const a = renderRegister(manifest, specs, labels)
-    expect(renderRegister(manifest, specs, labels)).toBe(a)
+    const a = renderRegister(manifest, specs, labels, planSources)
+    expect(renderRegister(manifest, specs, labels, planSources)).toBe(a)
     const once = replaceBlock(doc, a)
     expect(replaceBlock(once, a)).toBe(once)
     // order does not depend on the manifest's own order
     const shuffled = { ...manifest, assets: [...manifest.assets].reverse() }
-    expect(renderRegister(shuffled, specs, labels)).toBe(a)
+    expect(renderRegister(shuffled, specs, labels, planSources)).toBe(a)
   })
 
   it('the committed document holds exactly the generated block (run `npm run register` after a manifest or spec change)', () => {
-    expect(replaceBlock(doc, renderRegister(manifest, specs, labels))).toBe(doc)
+    expect(replaceBlock(doc, renderRegister(manifest, specs, labels, planSources))).toBe(doc)
   })
 
   it('carries, per device: tool, source of dimensions (a URL), picture origin, Meshy yes/no, trademark flag', () => {
-    const rows = rowsOf(renderRegister(manifest, specs, labels))
+    const rows = rowsOf(renderRegister(manifest, specs, labels, planSources))
     for (const r of rows) {
       const cells = r.split(' | ').map((c) => c.trim())
       expect(cells.length, r).toBeGreaterThanOrEqual(7)
       expect(['scripted', 'hybrid', 'meshy', 'raw'], r).toContain(cells[1])
-      expect(cells[3], r).toMatch(/\S/) // a URL, the repo file an estimate comes from (power strip, loom), or a dash
+      // Wave 0b: an http(s) URL or the literal « catalogue (ours) », never a local file path, a dash or a repo path
+      expect(cells[3] === OURS || /^https?:\/\/\S+$/.test(cells[3]!), `${r}: Dimensions source "${cells[3]}"`).toBe(true)
       expect(cells[5], r).toMatch(/^(no|yes)/)
       expect(cells[6].replace(/\s*\|$/, ''), r).toMatch(/^(generic|branded-internal)/)
     }
   })
 
   it('Meshy appears on the Meshy rows only, and no generic-artwork row says Meshy', () => {
-    const rows = rowsOf(renderRegister(manifest, specs, labels))
+    const rows = rowsOf(renderRegister(manifest, specs, labels, planSources))
     for (const r of rows) {
       const cells = r.split(' | ').map((c) => c.trim())
       if (cells[4].startsWith('generic artwork')) expect(cells[5], r).toBe('no')
@@ -80,6 +83,26 @@ describe('renderRegister', () => {
     expect(mk({ source: 'modeled', tool: 'scripted' })).toContain('none (flat colours)')
     expect(mk({ source: 'ai-meshy', tool: 'meshy' })).toContain('Meshy model and its texture')
     expect(mk({ source: 'ai-meshy', tool: 'meshy' })).toMatch(/\| yes/)
+  })
+
+  it('the Dimensions source cell is the first source of the plan row, then the manifest URL, then the spec URL, each only when it is an http(s) URL; a local file path never reaches the register', () => {
+    const asset = (over: Partial<RegisterAsset>): RegisterAsset => ({ id: 'x', kind: 'device', tool: 'scripted', source: 'modeled', trademark: 'generic', ...over })
+    const spec = { id: 'x', sources: [{ url: 'https://example.com/spec.pdf' }] }
+    expect(dimensionsSource(asset({ specSource: 'https://example.com/manifest.pdf' }), spec, 'https://example.com/plan.pdf')).toBe('https://example.com/plan.pdf')
+    expect(dimensionsSource(asset({ specSource: 'https://example.com/manifest.pdf' }), spec, undefined)).toBe('https://example.com/manifest.pdf')
+    expect(dimensionsSource(asset({}), spec, undefined)).toBe('https://example.com/spec.pdf')
+    expect(dimensionsSource(asset({ specSource: 'content/generic-panels/shure-sm58.json' }), undefined, undefined)).toBe(OURS)
+    expect(dimensionsSource(asset({ specSource: 'content/catalog.json (devices[multiprise-secteur])' }), { id: 'x', sources: [{ url: 'C:/Users/x/a.pdf' }] }, 'not a url')).toBe(OURS)
+    expect(dimensionsSource(asset({}), undefined, undefined)).toBe(OURS)
+  })
+
+  it('on the real manifest: the devices measured by hand say « catalogue (ours) », no cell is a repo path or a dash, and a plan source is shown for its device', () => {
+    const block = renderRegister(manifest, specs, labels, planSources)
+    expect(block).toContain('| catalogue (ours) |')
+    expect(block).not.toContain('content/generic-panels')
+    expect(block).not.toContain('content/catalog.json')
+    const fake = renderRegister({ assets: [{ id: 'x', kind: 'device', tool: 'scripted', source: 'modeled', trademark: 'generic', specSource: 'content/catalog.json (devices[x])' }] }, [], new Map(), new Map([['x', 'https://example.com/plan.pdf']]))
+    expect(fake).toContain('https://example.com/plan.pdf')
   })
 
   it('the spec supplies the dimension source when the manifest has none', () => {
