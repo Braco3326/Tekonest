@@ -1159,49 +1159,6 @@
    ]
   },
   {
-   "id": "sonifex-dhy-04s",
-   "label": "Sonifex DHY-04S",
-   "levels": [],
-   "realWorld": {
-    "brand": "Sonifex",
-    "model": "DHY-04S",
-    "category": "broadcast",
-    "typicalUse": "phone-ins to air",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR in/out that is either analog or AES3 plus an RJ11 line: good 'same connector, different signal' lesson."
-   },
-   "ports": [
-    {
-     "portId": "in-mic-line-aes-ebu-input-send-to-caller",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-line-aes-ebu-output-caller-audio",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "bidir-remotes-9-way-d-type",
-     "dir": "bidir",
-     "connector": "gpio-terminal",
-     "signal": "gpio-tally"
-    },
-    {
-     "portId": "in-mains-inlet",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 483,
-    "d": 175,
-    "h": 45
-   }
-  },
-  {
    "id": "sonifex-rb-mm1",
    "label": "Sonifex Redbox RB-MM1 Mix-Minus Generator",
    "levels": [],
@@ -4826,97 +4783,6 @@
    ]
   },
   {
-   "id": "yamaha-spx2000",
-   "label": "Yamaha SPX2000",
-   "levels": [],
-   "realWorld": {
-    "brand": "Yamaha",
-    "model": "SPX2000",
-    "category": "outboard",
-    "typicalUse": "live FOH reverb/delay rack",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Classic live-rack effect with XLR+TRS, +4/-10 level switch, AES3 and word clock: teaches level matching and digital clocking; pairs naturally with the Yamaha QL1 already in the catalog."
-   },
-   "ports": [
-    {
-     "portId": "in-analog-input-l-r-xlr-1",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-analog-input-l-r-xlr-2",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-analog-input-l-r-trs-balanced-1",
-     "dir": "in",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-analog-input-l-r-trs-balanced-2",
-     "dir": "in",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-output-l-r-xlr-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-output-l-r-xlr-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-output-l-r-trs-1",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-output-l-r-trs-2",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-aes-ebu-in",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "aes3"
-    },
-    {
-     "portId": "out-aes-ebu-out",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "aes3"
-    },
-    {
-     "portId": "in-word-clock-in",
-     "dir": "in",
-     "connector": "bnc",
-     "signal": "wordclock"
-    },
-    {
-     "portId": "bidir-usb-to-host-editor-remote-control",
-     "dir": "bidir",
-     "connector": "usb-b",
-     "signal": "usb-audio"
-    }
-   ],
-   "sizeMm": {
-    "w": 480,
-    "d": 372.5,
-    "h": 45
-   }
-  },
-  {
    "id": "dbx-afs2",
    "label": "dbx AFS2 Advanced Feedback Suppression Processor",
    "levels": [],
@@ -5074,79 +4940,6 @@
     "w": 220,
     "d": 170,
     "h": 51
-   }
-  },
-  {
-   "id": "nagra-vi",
-   "label": "Nagra (Kudelski) Nagra VI",
-   "levels": [],
-   "realWorld": {
-    "brand": "Nagra (Kudelski)",
-    "model": "Nagra VI",
-    "category": "recorder",
-    "typicalUse": "film / TV location sound",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/recorders-playback.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR4 DC input, Hirose DC outputs for receivers, LEMO 5-pin timecode and AES on XLR: classic location-recorder wiring."
-   },
-   "ports": [
-    {
-     "portId": "in-mic-line-inputs-1-4-48v-phantom-1",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "mic-level"
-    },
-    {
-     "portId": "in-mic-line-inputs-1-4-48v-phantom-2",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "mic-level"
-    },
-    {
-     "portId": "in-aes-3-digital-inputs-shared-with-analogue-inputs-5-6-1",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "aes3"
-    },
-    {
-     "portId": "in-aes-3-digital-inputs-shared-with-analogue-inputs-5-6-2",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "aes3"
-    },
-    {
-     "portId": "out-analogue-line-outputs-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analogue-line-outputs-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-aes-3-digital-output",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "aes3"
-    },
-    {
-     "portId": "out-headphone-outputs-6-3-mm-50-1",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "headphone-level"
-    },
-    {
-     "portId": "out-headphone-outputs-6-3-mm-50-2",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "headphone-level"
-    }
-   ],
-   "sizeMm": {
-    "w": 310,
-    "d": 285,
-    "h": 74
    }
   },
   {
@@ -9109,6 +8902,397 @@
     "w": 5.4,
     "d": 5.4,
     "h": 12.7
+   }
+  },
+  {
+   "id": "apogee-symphony-desktop",
+   "label": "Apogee Symphony Desktop",
+   "levels": [],
+   "realWorld": {
+    "brand": "Apogee",
+    "model": "Symphony Desktop",
+    "category": "audio-interface",
+    "typicalUse": "Apogee Symphony Desktop (audio-interface)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 199 x 125 x 64 mm (w x d x h) (sources disagree on a dimension) (estimate, size confidence conflict); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-xlr-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-xlr-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-jack-1",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "instrument-hiz"
+    },
+    {
+     "portId": "in-jack-2",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "instrument-hiz"
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-optical",
+     "dir": "in",
+     "connector": "toslink",
+     "signal": "spdif"
+    },
+    {
+     "portId": "out-optical",
+     "dir": "out",
+     "connector": "toslink",
+     "signal": "spdif"
+    },
+    {
+     "portId": "out-phones-2",
+     "dir": "out",
+     "connector": "trs-35mm",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-c",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "in-inst",
+     "dir": "in",
+     "connector": "ts-quarter",
+     "signal": "instrument-hiz"
+    },
+    {
+     "portId": "out-phones-1",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 199,
+    "d": 125,
+    "h": 64
+   }
+  },
+  {
+   "id": "axia-pulsar",
+   "label": "Telos Alliance (Axia) Pulsar",
+   "levels": [],
+   "realWorld": {
+    "brand": "Telos Alliance (Axia)",
+    "model": "Pulsar",
+    "category": "console-radio",
+    "typicalUse": "Telos Alliance (Axia) Pulsar (console-radio)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 463 x 396 x 55 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "net",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "rj45",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "rj45",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-line",
+     "dir": "in",
+     "connector": "rj45",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-line",
+     "dir": "out",
+     "connector": "rj45",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 463,
+    "d": 396,
+    "h": 55
+   }
+  },
+  {
+   "id": "dangerous-music-monitor-st",
+   "label": "Dangerous Music Monitor ST",
+   "levels": [],
+   "realWorld": {
+    "brand": "Dangerous Music",
+    "model": "Monitor ST",
+    "category": "monitor-controller",
+    "typicalUse": "Dangerous Music Monitor ST (monitor-controller)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 482.6 x 241.3 x 44.45 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-main",
+     "dir": "in",
+     "connector": "dsub25",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main",
+     "dir": "out",
+     "connector": "dsub25",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-aux-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-aux-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-slate",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-cue-amp",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "headphone-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 482.6,
+    "d": 241.3,
+    "h": 44.45
+   }
+  },
+  {
+   "id": "digico-s21",
+   "label": "DiGiCo S21",
+   "levels": [],
+   "realWorld": {
+    "brand": "DiGiCo",
+    "model": "S21",
+    "category": "console-digital",
+    "typicalUse": "DiGiCo S21 (console-digital)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 763 x 586 x 295 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-5",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-6",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-7",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-8",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "out-line-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-line-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-line-3",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-line-4",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-aes",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "aes3"
+    },
+    {
+     "portId": "out-aes",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "aes3"
+    },
+    {
+     "portId": "in-wclk",
+     "dir": "in",
+     "connector": "bnc",
+     "signal": "wordclock"
+    },
+    {
+     "portId": "out-wclk",
+     "dir": "out",
+     "connector": "bnc",
+     "signal": "wordclock"
+    },
+    {
+     "portId": "net",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "ethernet-control"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "power-in",
+     "dir": "in",
+     "connector": "iec-c14",
+     "signal": "mains-power"
+    }
+   ],
+   "sizeMm": {
+    "w": 763,
+    "d": 586,
+    "h": 295
+   }
+  },
+  {
+   "id": "ev-evolve-50m-g2",
+   "label": "Electro-Voice Evolve 50M G2",
+   "levels": [],
+   "realWorld": {
+    "brand": "Electro-Voice",
+    "model": "Evolve 50M G2",
+    "category": "powered-speaker",
+    "typicalUse": "Electro-Voice Evolve 50M G2 (powered-speaker)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 344 x 470 x 2093 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-combo-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput"
+     ]
+    },
+    {
+     "portId": "in-combo-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput"
+     ]
+    },
+    {
+     "portId": "out-mix",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-aux",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    }
+   ],
+   "sizeMm": {
+    "w": 344,
+    "d": 470,
+    "h": 2093
    }
   }
  ],

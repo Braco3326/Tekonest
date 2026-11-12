@@ -2389,6 +2389,440 @@
         "bidir-ethernet-remote-control-livewire": "net-livewire",
         "in-mains-inlet-iec-male": "power-in"
       }
+    },
+    {
+      "id": "sonifex-dhy-04s",
+      "label": "Sonifex DHY-04S",
+      "levels": [],
+      "realWorld": {
+        "brand": "Sonifex", "model": "DHY-04S", "category": "telephone-hybrid",
+        "typicalUse": "phone-ins to air",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 175 x 45 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.sonifex.co.uk/de/tbu/dhy04.shtml. Ports: documented in the asset spec (https://cdn.abicart.com/shop/ws42/76342/art73/159887173-02cecc-sonifex_dhy04_manual.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-send-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-caller-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "portAliases": {
+        "in-mic-line-aes-ebu-input-send-to-caller": "in-send-xlr",
+        "out-line-aes-ebu-output-caller-audio": "out-caller-xlr",
+        "in-mains-inlet": "power-in"
+      }
+    },
+    {
+      "id": "allen-heath-avantis",
+      "label": "Allen & Heath Avantis",
+      "levels": [],
+      "realWorld": {
+        "brand": "Allen & Heath", "model": "Avantis", "category": "console-digital",
+        "typicalUse": "Allen & Heath Avantis (console-digital)",
+        "notes": "Built from the equipment plan (2026-11-12); size 917 x 627 x 269 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series. Ports: documented in the asset spec (https://goknight.com/content/documentation/AVANTIS%20Spec%20Sheet.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-mic-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-mic-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-mic-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-mic-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-mic-5", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-mic-6", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-mic-7", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-mic-8", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "out-line-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-line-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-line-3", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-line-4", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-line-5", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-line-6", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-line-7", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-line-8", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "in-aes", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "out-aes-1", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "out-aes-2", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "wclk", "dir": "bidir", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "net-1", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "net-2", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" },
+        { "portId": "out-phones-6mm", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-phones-3mm", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-mic-1", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
+        { "from": "in-mic-2", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
+        { "from": "in-mic-3", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
+        { "from": "in-mic-4", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
+        { "from": "in-mic-5", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
+        { "from": "in-mic-6", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
+        { "from": "in-mic-7", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
+        { "from": "in-mic-8", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] }
+      ]
+    },
+    {
+      "id": "aphex-channel",
+      "label": "Aphex Channel",
+      "levels": [],
+      "realWorld": {
+        "brand": "Aphex", "model": "Channel", "category": "mic-preamp",
+        "typicalUse": "Aphex Channel (mic-preamp)",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 210 x 44 mm (w x d x h) (datasheet, size confidence ok). Size source: https://aphex.com/products/channel. Ports: documented in the asset spec (https://aphex.com/products/channel), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-mic", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-trs", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "out-spdif", "dir": "out", "connector": "rca", "signal": "spdif" },
+        { "portId": "out-optical", "dir": "out", "connector": "toslink", "signal": "spdif" },
+        { "portId": "in-wclk", "dir": "in", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "out-wclk", "dir": "out", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" },
+        { "portId": "in-inst", "dir": "in", "connector": "ts-quarter", "signal": "instrument-hiz" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true },
+        { "id": "phantom-48v", "type": "toggle", "label": "+48V phantom", "default": false, "enables": { "flag": "providesPhantom", "ports": ["in-mic"] } }
+      ],
+      "routing": [
+        { "from": "in-mic", "to": ["out-xlr", "out-trs", "out-aes", "out-spdif", "out-optical"] },
+        { "from": "in-inst", "to": ["out-xlr", "out-trs", "out-aes", "out-spdif", "out-optical"] }
+      ]
+    },
+    {
+      "id": "behringer-x-touch-universal",
+      "label": "Behringer X-Touch Universal",
+      "levels": [],
+      "realWorld": {
+        "brand": "Behringer", "model": "X-Touch Universal", "category": "controller",
+        "typicalUse": "Behringer X-Touch Universal (controller)",
+        "notes": "Built from the equipment plan (2026-11-12); size 452 x 301 x 100 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.bhphotovideo.com/c/product/1821236-REG/behringer_x_touch_universal_control_surface.html. Ports: documented in the asset spec (https://www.allfordj.ru/upload/iblock/da8/rukovodstvo_polzovatelya_behringer_x_touch.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "net-remote", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "usb-pc", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ]
+    },
+    {
+      "id": "presonus-studiolive-iii-se-16",
+      "label": "PreSonus StudioLive Series III SE 16",
+      "levels": [],
+      "realWorld": {
+        "brand": "PreSonus", "model": "StudioLive Series III SE 16", "category": "console-digital",
+        "typicalUse": "PreSonus StudioLive Series III SE 16 (console-digital)",
+        "notes": "Built from the equipment plan (2026-11-12); size 447 x 584 x 165 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.thomann.co.uk/presonus_studiolive_series_iii_se_16.htm. Ports: documented in the asset spec (https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-talkback", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "out-main-l", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-main-r", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-main-c", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-mix-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-mix-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-mix-3", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-mix-4", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "out-mon-l", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-mon-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-aux-1", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-aux-2", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-aux-3", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-aux-4", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-tape-l", "dir": "in", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "in-tape-r", "dir": "in", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "out-tape-l", "dir": "out", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "out-tape-r", "dir": "out", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "net-avb", "dir": "bidir", "connector": "ethercon", "signal": "aoip" },
+        { "portId": "net-ctl", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-combo-1", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-combo-2", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-combo-3", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-combo-4", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-mic-1", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-mic-2", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-mic-3", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-mic-4", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-talkback", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-aux-1", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-aux-2", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-aux-3", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-aux-4", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-tape-l", "to": ["out-main-l", "out-main-r", "out-main-c"] },
+        { "from": "in-tape-r", "to": ["out-main-l", "out-main-r", "out-main-c"] }
+      ]
+    },
+    {
+      "id": "nagra-vi",
+      "label": "Nagra (Kudelski) Nagra VI",
+      "levels": [],
+      "realWorld": {
+        "brand": "Nagra (Kudelski)", "model": "Nagra VI", "category": "recorder",
+        "typicalUse": "film / TV location sound",
+        "notes": "Built from the equipment plan (2026-11-12); size 310 x 285 x 74 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.nagraaudio.com/de/product/nagra-vi-film/. Ports: documented in the asset spec (https://www.nagraaudio.com/de/product/nagra-vi-film/)."
+      },
+      "ports": [
+        { "portId": "in-mic-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level" },
+        { "portId": "in-mic-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level" },
+        { "portId": "in-mic-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level" },
+        { "portId": "in-mic-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level" },
+        { "portId": "in-line-5", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-line-6", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-line-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-line-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "out-phones-1", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-phones-2", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" }
+      ],
+      "portAliases": {
+        "in-mic-line-inputs-1-4-48v-phantom-1": "in-mic-1",
+        "in-mic-line-inputs-1-4-48v-phantom-2": "in-mic-2",
+        "out-analogue-line-outputs-1": "out-line-1",
+        "out-analogue-line-outputs-2": "out-line-2",
+        "out-aes-3-digital-output": "out-aes",
+        "out-headphone-outputs-6-3-mm-50-1": "out-phones-1",
+        "out-headphone-outputs-6-3-mm-50-2": "out-phones-2"
+      }
+    },
+    {
+      "id": "yamaha-spx2000",
+      "label": "Yamaha SPX2000",
+      "levels": [],
+      "realWorld": {
+        "brand": "Yamaha", "model": "SPX2000", "category": "outboard",
+        "typicalUse": "live FOH reverb/delay rack",
+        "notes": "Built from the equipment plan (2026-11-12); size 480 x 372.5 x 45 mm (w x d x h) (datasheet, size confidence ok). Size source: https://my.yamaha.com/files/download/other_assets/3/322303/SPX2000_datasheet.pdf. Ports: documented in the asset spec (https://usa.yamaha.com/files/download/other_assets/1/323961/spx2000_en_om_f0.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-xlr-l", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-xlr-r", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-trs-l", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-trs-r", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-xlr-l", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-xlr-r", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-trs-l", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-trs-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-aes", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "in-wclk", "dir": "in", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "usb-host", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-xlr-l", "to": ["out-xlr-l"] },
+        { "from": "in-xlr-r", "to": ["out-xlr-r"] },
+        { "from": "in-trs-l", "to": ["out-trs-l"] },
+        { "from": "in-trs-r", "to": ["out-trs-r"] },
+        { "from": "in-aes", "to": ["out-aes"] }
+      ],
+      "portAliases": {
+        "in-analog-input-l-r-xlr-1": "in-xlr-l",
+        "in-analog-input-l-r-xlr-2": "in-xlr-r",
+        "in-analog-input-l-r-trs-balanced-1": "in-trs-l",
+        "in-analog-input-l-r-trs-balanced-2": "in-trs-r",
+        "out-analog-output-l-r-xlr-1": "out-xlr-l",
+        "out-analog-output-l-r-xlr-2": "out-xlr-r",
+        "out-analog-output-l-r-trs-1": "out-trs-l",
+        "out-analog-output-l-r-trs-2": "out-trs-r",
+        "in-aes-ebu-in": "in-aes",
+        "out-aes-ebu-out": "out-aes",
+        "in-word-clock-in": "in-wclk",
+        "bidir-usb-to-host-editor-remote-control": "usb-host"
+      }
+    },
+    {
+      "id": "audix-d6",
+      "label": "Audix D6",
+      "levels": [],
+      "realWorld": {
+        "brand": "Audix", "model": "D6", "category": "microphone",
+        "typicalUse": "Audix D6 (microphone)",
+        "notes": "Built from the equipment plan (2026-11-12); size 51 x 51 x 117 mm (w x d x h) (datasheet, size confidence ok). Size source: https://audixusa.com/products/d6. Ports: documented in the asset spec (https://audixusa.com/cdn/shop/files/D6_V3_1221.pdf)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level" }
+      ]
+    },
+    {
+      "id": "audix-i5",
+      "label": "Audix i5",
+      "levels": [],
+      "realWorld": {
+        "brand": "Audix", "model": "i5", "category": "microphone",
+        "typicalUse": "Audix i5 (microphone)",
+        "notes": "Built from the equipment plan (2026-11-12); size 37.5 x 37.5 x 141.5 mm (w x d x h) (datasheet, size confidence ok). Size source: https://audixusa.com/products/i5. Ports: documented in the asset spec (https://im.static-thomann.de/pics/atg/atgdata/document/manual/178792.pdf)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level" }
+      ]
+    },
+    {
+      "id": "roland-vr-6hd",
+      "label": "Roland VR-6HD",
+      "levels": [],
+      "realWorld": {
+        "brand": "Roland", "model": "VR-6HD", "category": "console-digital",
+        "typicalUse": "Roland VR-6HD (console-digital)",
+        "notes": "Built from the equipment plan (2026-11-12); size 370 x 242 x 100 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.3dbroadcastsales.com/roland-vr-6hd-ultra-compact-audio-video-mixer-rol-vr-6hd. Ports: documented in the asset spec (https://img.audiomania.ru/data/roland_vr-6hd.pdf)."
+      },
+      "ports": [
+        { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-5", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-6", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-line-7", "dir": "in", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "in-line-8", "dir": "in", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "out-main-l", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-main-r", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-rca-l", "dir": "out", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "out-rca-r", "dir": "out", "connector": "rca", "signal": "line-level-consumer" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "net-stream", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" }
+      ],
+      "routing": [
+        { "from": "in-combo-1", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-2", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-3", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-4", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-5", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-combo-6", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-line-7", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-line-8", "to": ["out-main-l", "out-main-r"] }
+      ]
+    },
+    {
+      "id": "yamaha-cl5",
+      "label": "Yamaha CL5",
+      "levels": [],
+      "realWorld": {
+        "brand": "Yamaha", "model": "CL5", "category": "console-digital",
+        "typicalUse": "Yamaha CL5 (console-digital)",
+        "notes": "Built from the equipment plan (2026-11-12); size 1053 x 667 x 299 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.rentex.com/wp-content/uploads/2020/01/CL5-Data-Sheet.pdf. Ports: documented in the asset spec (https://www.rentex.com/wp-content/uploads/2020/01/CL5-Data-Sheet.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-omni-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-omni-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-omni-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-omni-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-omni-5", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-omni-6", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-omni-7", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-omni-8", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-omni-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-3", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-4", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-5", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-6", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-7", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-8", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "net-dante-1", "dir": "bidir", "connector": "ethercon", "signal": "aoip", "flags": ["isDantePrimary"] },
+        { "portId": "net-dante-2", "dir": "bidir", "connector": "ethercon", "signal": "aoip" },
+        { "portId": "net-ctl", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "in-wclk", "dir": "in", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "out-wclk", "dir": "out", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" },
+        { "portId": "in-talkback", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-omni-1", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
+        { "from": "in-omni-2", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
+        { "from": "in-omni-3", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
+        { "from": "in-omni-4", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
+        { "from": "in-omni-5", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
+        { "from": "in-omni-6", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
+        { "from": "in-omni-7", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
+        { "from": "in-omni-8", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
+        { "from": "in-talkback", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] }
+      ]
+    },
+    {
+      "id": "yamaha-dm7",
+      "label": "Yamaha DM7",
+      "levels": [],
+      "realWorld": {
+        "brand": "Yamaha", "model": "DM7", "category": "console-digital",
+        "typicalUse": "Yamaha DM7 (console-digital)",
+        "notes": "Built from the equipment plan (2026-11-12); size 793 x 564 x 324 mm (w x d x h) (datasheet, size confidence ok). Size source: https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html. Ports: documented in the asset spec (https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-5", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-6", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-7", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-8", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-omni-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-3", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-4", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-5", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-6", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-7", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-omni-8", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "in-aes-1", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "in-aes-2", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "out-aes-1", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "out-aes-2", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "net-dante-1", "dir": "bidir", "connector": "ethercon", "signal": "aoip", "flags": ["isDantePrimary"] },
+        { "portId": "net-dante-2", "dir": "bidir", "connector": "ethercon", "signal": "aoip" },
+        { "portId": "net-ctl", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "in-wclk", "dir": "in", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "out-wclk", "dir": "out", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-1", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
+        { "from": "in-2", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
+        { "from": "in-3", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
+        { "from": "in-4", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
+        { "from": "in-5", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
+        { "from": "in-6", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
+        { "from": "in-7", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
+        { "from": "in-8", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] }
+      ]
     }
   ],
 

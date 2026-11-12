@@ -7371,7 +7371,7 @@
     "phantom-powered"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "sennheiser-hmd-26",
@@ -7475,7 +7475,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "ssl-origin",
@@ -7555,7 +7555,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "wisycom-mcr54",
@@ -7585,7 +7585,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "akg-k240-studio",
@@ -7642,7 +7642,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "aphex-channel",
@@ -7673,7 +7673,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "apogee-symphony-desktop",
@@ -7701,7 +7701,7 @@
     "desk"
    ],
    "sizeConfidence": "conflict",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "argosy-universal-workstation",
@@ -7757,7 +7757,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "behringer-x-touch-universal",
@@ -7788,7 +7788,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "beyerdynamic-dt-990-pro",
@@ -7898,7 +7898,7 @@
     "rack"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "digico-s21",
@@ -7927,7 +7927,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "flight-case-generic",
@@ -8057,7 +8057,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "rode-psa1-plus",
@@ -8289,7 +8289,7 @@
     "active"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "nagra-vi",
@@ -8317,7 +8317,7 @@
     "battery"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "neutrik-ne8mx",
@@ -8367,7 +8367,7 @@
     "passive"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "qsc-rmx-1450",
@@ -8450,7 +8450,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "audix-d6",
@@ -8480,7 +8480,7 @@
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "audix-i5",
@@ -8510,7 +8510,7 @@
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "ev-evolve-50m-g2",
@@ -8540,7 +8540,7 @@
     "active"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "heil-pr-40",
@@ -8624,7 +8624,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "rtw-touchmonitor-tm7",
@@ -8678,7 +8678,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "yamaha-dm7",
@@ -8709,7 +8709,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   }
  ]
 }

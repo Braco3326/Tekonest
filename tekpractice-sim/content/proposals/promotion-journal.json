@@ -5067,6 +5067,521 @@
     }
    },
    "proposalIndex": 77
+  },
+  "sanken-cos-11d": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "sanken-cos-11d",
+    "label": "Sanken COS-11D",
+    "levels": [],
+    "realWorld": {
+     "brand": "Sanken",
+     "model": "COS-11D",
+     "category": "microphone",
+     "typicalUse": "film and TV dialogue on wireless bodypacks",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Same capsule on XLR/P48, AA battery, or bodypack bias via TA4/LEMO: an ideal lesson on lavalier powering and connectors."
+    },
+    "ports": [
+     {
+      "portId": "out-mic-output-on-the-48-v-interface-cos-11d",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "flags": [
+       "requiresPhantom"
+      ]
+     }
+    ],
+    "sizeMm": {
+     "w": 4,
+     "d": 4,
+     "h": 16.1
+    }
+   },
+   "proposalIndex": 70
+  },
+  "sonifex-dhy-04s": {
+   "outcome": "promoted",
+   "proposalBefore": {
+    "id": "sonifex-dhy-04s",
+    "label": "Sonifex DHY-04S",
+    "levels": [],
+    "realWorld": {
+     "brand": "Sonifex",
+     "model": "DHY-04S",
+     "category": "broadcast",
+     "typicalUse": "phone-ins to air",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR in/out that is either analog or AES3 plus an RJ11 line: good 'same connector, different signal' lesson."
+    },
+    "ports": [
+     {
+      "portId": "in-mic-line-aes-ebu-input-send-to-caller",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-line-aes-ebu-output-caller-audio",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "bidir-remotes-9-way-d-type",
+      "dir": "bidir",
+      "connector": "gpio-terminal",
+      "signal": "gpio-tally"
+     },
+     {
+      "portId": "in-mains-inlet",
+      "dir": "in",
+      "connector": "iec-c14",
+      "signal": "mains-power"
+     }
+    ],
+    "sizeMm": {
+     "w": 483,
+     "d": 175,
+     "h": 45
+    }
+   },
+   "proposalIndex": 18
+  },
+  "tieline-gateway": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "tieline-gateway",
+    "label": "Tieline Gateway",
+    "levels": [],
+    "realWorld": {
+     "brand": "Tieline",
+     "model": "Gateway",
+     "category": "codec",
+     "typicalUse": "studio codec hub for many remotes",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Analog/AES3 on RJ45 plus AES67/ST 2110 ports, BNC sync and DB-25 GPIO: many distinct studio-side signals."
+    },
+    "ports": [
+     {
+      "portId": "bidir-gigabit-wan-lan-ports-1",
+      "dir": "bidir",
+      "connector": "rj45",
+      "signal": "aoip"
+     },
+     {
+      "portId": "bidir-gigabit-wan-lan-ports-2",
+      "dir": "bidir",
+      "connector": "rj45",
+      "signal": "aoip"
+     },
+     {
+      "portId": "bidir-sync-in-out-wordclock-aes11-ptp-1",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "wordclock"
+     },
+     {
+      "portId": "bidir-sync-in-out-wordclock-aes11-ptp-2",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "wordclock"
+     },
+     {
+      "portId": "bidir-control-ports-gpio-1",
+      "dir": "bidir",
+      "connector": "dsub25",
+      "signal": "gpio-tally"
+     },
+     {
+      "portId": "bidir-control-ports-gpio-2",
+      "dir": "bidir",
+      "connector": "dsub25",
+      "signal": "gpio-tally"
+     },
+     {
+      "portId": "out-front-headphone",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "headphone-level"
+     },
+     {
+      "portId": "in-dual-ac-inlets-1",
+      "dir": "in",
+      "connector": "iec-c14",
+      "signal": "mains-power"
+     },
+     {
+      "portId": "in-dual-ac-inlets-2",
+      "dir": "in",
+      "connector": "iec-c14",
+      "signal": "mains-power"
+     }
+    ],
+    "sizeMm": {
+     "w": 482,
+     "d": 300,
+     "h": 44.45
+    }
+   },
+   "proposalIndex": 13
+  },
+  "wisycom-mcr54": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "wisycom-mcr54",
+    "label": "Wisycom MCR54 4-channel multiband camera receiver",
+    "levels": [],
+    "realWorld": {
+     "brand": "Wisycom",
+     "model": "MCR54 4-channel multiband camera receiver",
+     "category": "wireless",
+     "typicalUse": "film location sound (bag or camera)",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Location-sound wiring: SMA antennas, TA5 analog/AES3 output and Hirose DC teach film-bag interconnects."
+    },
+    "ports": [
+     {
+      "portId": "out-audio-output-5-pin-mini-xlr-female-ta5-closest-id-used",
+      "dir": "out",
+      "connector": "mini-xlr-ta4",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-monitor-headphone-jack-3-5-mm",
+      "dir": "out",
+      "connector": "trs-35mm",
+      "signal": "headphone-level"
+     }
+    ],
+    "sizeMm": {
+     "w": 85,
+     "d": 25,
+     "h": 104
+    }
+   },
+   "proposalIndex": 110
+  },
+  "allen-heath-avantis": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "aphex-channel": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "apogee-symphony-desktop": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "axia-pulsar": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "behringer-x-touch-universal": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "dangerous-music-monitor-st": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "digico-s21": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "presonus-studiolive-iii-se-16": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "focal-utopia-main-112": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "focal-utopia-main-112",
+    "label": "Focal Utopia Main 112",
+    "levels": [],
+    "realWorld": {
+     "brand": "Focal",
+     "model": "Utopia Main 112",
+     "category": "studio-monitor",
+     "typicalUse": "main monitors in large control rooms",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Remote amplifier to speaker via Speakon NL8 + NL4 with documented pin assignment: multi-way speaker-level wiring lesson."
+    },
+    "ports": [
+     {
+      "portId": "in-audio-signal-input-amplifier",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-amplifier-output-to-speaker-woofer-midrange",
+      "dir": "out",
+      "connector": "speakon-nl8",
+      "signal": "speaker-level"
+     },
+     {
+      "portId": "out-amplifier-output-to-speaker-tweeter-front-led",
+      "dir": "out",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level"
+     },
+     {
+      "portId": "in-mains-in-fuse-holder-mains-socket-on-amplifier",
+      "dir": "in",
+      "connector": "iec-c14",
+      "signal": "mains-power"
+     }
+    ],
+    "sizeMm": {
+     "w": 530,
+     "d": 460,
+     "h": 940
+    }
+   },
+   "proposalIndex": 104
+  },
+  "nagra-vi": {
+   "outcome": "promoted",
+   "proposalBefore": {
+    "id": "nagra-vi",
+    "label": "Nagra (Kudelski) Nagra VI",
+    "levels": [],
+    "realWorld": {
+     "brand": "Nagra (Kudelski)",
+     "model": "Nagra VI",
+     "category": "recorder",
+     "typicalUse": "film / TV location sound",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/recorders-playback.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR4 DC input, Hirose DC outputs for receivers, LEMO 5-pin timecode and AES on XLR: classic location-recorder wiring."
+    },
+    "ports": [
+     {
+      "portId": "in-mic-line-inputs-1-4-48v-phantom-1",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "in-mic-line-inputs-1-4-48v-phantom-2",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "in-aes-3-digital-inputs-shared-with-analogue-inputs-5-6-1",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "aes3"
+     },
+     {
+      "portId": "in-aes-3-digital-inputs-shared-with-analogue-inputs-5-6-2",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "aes3"
+     },
+     {
+      "portId": "out-analogue-line-outputs-1",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-analogue-line-outputs-2",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-aes-3-digital-output",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "aes3"
+     },
+     {
+      "portId": "out-headphone-outputs-6-3-mm-50-1",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "headphone-level"
+     },
+     {
+      "portId": "out-headphone-outputs-6-3-mm-50-2",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "headphone-level"
+     }
+    ],
+    "sizeMm": {
+     "w": 310,
+     "d": 285,
+     "h": 74
+    }
+   },
+   "proposalIndex": 92
+  },
+  "nexo-geo-m10": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "nexo-geo-m10",
+    "label": "NEXO GEO M10 (GEO M1012 / GEO M1025)",
+    "levels": [],
+    "realWorld": {
+     "brand": "NEXO",
+     "model": "GEO M10 (GEO M1012 / GEO M1025)",
+     "category": "speaker",
+     "typicalUse": "theatre / mid-size venue main PA",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. NL4 pin 2+/2- vs 1+/1- pass-through is a distinctive speakON lesson; needs NXAMP."
+    },
+    "ports": [
+     {
+      "portId": "bidir-2-x-nl4-1-1-through-2-2-geo-m10-touring-version-1",
+      "dir": "bidir",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level"
+     },
+     {
+      "portId": "bidir-2-x-nl4-1-1-through-2-2-geo-m10-touring-version-2",
+      "dir": "bidir",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level"
+     }
+    ],
+    "sizeMm": {
+     "w": 531,
+     "d": 355,
+     "h": 288
+    }
+   },
+   "proposalIndex": 55
+  },
+  "yamaha-spx2000": {
+   "outcome": "promoted",
+   "proposalBefore": {
+    "id": "yamaha-spx2000",
+    "label": "Yamaha SPX2000",
+    "levels": [],
+    "realWorld": {
+     "brand": "Yamaha",
+     "model": "SPX2000",
+     "category": "outboard",
+     "typicalUse": "live FOH reverb/delay rack",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Classic live-rack effect with XLR+TRS, +4/-10 level switch, AES3 and word clock: teaches level matching and digital clocking; pairs naturally with the Yamaha QL1 already in the catalog."
+    },
+    "ports": [
+     {
+      "portId": "in-analog-input-l-r-xlr-1",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-analog-input-l-r-xlr-2",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-analog-input-l-r-trs-balanced-1",
+      "dir": "in",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-analog-input-l-r-trs-balanced-2",
+      "dir": "in",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-analog-output-l-r-xlr-1",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-analog-output-l-r-xlr-2",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-analog-output-l-r-trs-1",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-analog-output-l-r-trs-2",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-aes-ebu-in",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "aes3"
+     },
+     {
+      "portId": "out-aes-ebu-out",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "aes3"
+     },
+     {
+      "portId": "in-word-clock-in",
+      "dir": "in",
+      "connector": "bnc",
+      "signal": "wordclock"
+     },
+     {
+      "portId": "bidir-usb-to-host-editor-remote-control",
+      "dir": "bidir",
+      "connector": "usb-b",
+      "signal": "usb-audio"
+     }
+    ],
+    "sizeMm": {
+     "w": 480,
+     "d": 372.5,
+     "h": 45
+    }
+   },
+   "proposalIndex": 88
+  },
+  "audix-d6": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "audix-i5": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "ev-evolve-50m-g2": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "roland-vr-6hd": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "yamaha-cl5": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "yamaha-dm7": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
   }
  }
 }
