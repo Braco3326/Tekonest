@@ -1,6 +1,7 @@
 /**
  * Screens of the five design packages for the founder to look at (onboarding packs, plan T4, spec 12): 1366 x 768, one start screen and one room per package, written to
  * test-results/screens/pkg-<n>-start.png and pkg-<n>-room.png (git-ignored; Playwright empties test-results at the start of each run, so run this file LAST).
+ * OFF unless `ONBOARDING_SCREENS=1` (it asserts nothing, so baselines skip it): `$env:ONBOARDING_SCREENS='1'; $env:E2E_PORT='4391'; npx.cmd playwright test onboarding-screens` after a fresh build.
  * The room is the neutral room opened through « Je découvre » + « Passer »: the panels are the package's own, the drawer is open on Consoles, a QL1, an SM58 and a K12.2
  * stand on the floor and the QL1 is selected. Nothing is asserted but that the page drew (the colours are measured in onboarding-contrast.spec.ts).
  */
@@ -9,6 +10,7 @@ import { expect, test } from '@playwright/test'
 import { DESIGN_IDS } from '../../src/design/packages'
 
 test.use({ viewport: { width: 1366, height: 768 } })
+test.skip(process.env.ONBOARDING_SCREENS !== '1', 'screens for the founder: set ONBOARDING_SCREENS=1')
 const OUT = 'test-results/screens'
 
 for (const id of DESIGN_IDS) {

@@ -4,7 +4,7 @@ import { decideRoute } from './routing'
 import { showBootFailure } from './creation/bootFailure'
 // The guide's two small gate modules (pure, query only; the guide chunk itself stays lazy): the creation boot may not import the guide, so the answer is passed in.
 import { guideMode, guideRouteAllowed } from './guide/mode'
-import { PRACTICE_CLASS } from './design/packages'
+import { PRACTICE_CLASS } from './design/practice'
 
 /**
  * What the creation boot may do of the onboarding (packs T2.4b, ruling R-A): the creation code may not import the guide, so the guide's own gates are read here.

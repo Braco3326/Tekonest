@@ -14,7 +14,8 @@
  *
  * Design packages (plan T4.2, spec 7.3): the widget is a dark card on every package (Papier on panel 14.95, Ambre on panel 6.92: the declared pairs of the plain map), so it reads
  * the ROOT values of the role tokens (--cr-accent, --cr-accent-ink, --cr-accent-text: Ambre / Nuit, which the package surfaces re-point only inside themselves), never a
- * package's own. The spotlight ring keeps Ambre over its Nuit halo: it points at a panel on Papier AND at a device on the dark 3D view, and the halo carries the contrast on both.
+ * package's own. The spotlight ring keeps Ambre over its Nuit halo: it points at a panel on Papier AND at a device on the dark 3D view. That is a DESIGN CHOICE, not a measured
+ * one (T4 fix round, S3, controller ruling): the suite does not measure the ring or its halo against Papier, and it is an open decision for the founder (spec erratum, T4 review).
  *
  * Look: square corners everywhere except the mascot's round icon, visible focus ring in both palettes.
  */

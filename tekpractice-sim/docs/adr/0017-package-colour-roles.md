@@ -31,14 +31,16 @@ Ambre sur Papier : 2,16 : 1, sous 4,5 (texte) et sous 3 (interface). Ambre sur P
 |---|---|---|---|---|
 | 1 Pas à pas | sombre ; une seule chose allumée (Ambre) ; la carte d’étape en Prune | ~3 % | Ambre | Ambre |
 | 2 Atelier | mêmes panneaux sombres + bandeaux Prune de feuille d’étude | ~20 % | Ambre (Papier sur un bandeau) | Ambre |
-| 3 Salle d’abord | feuille Papier de plein jour, encre Nuit | encre et sélection | Nuit | Prune |
+| 3 Salle d’abord | feuille Papier de plein jour, encre Nuit | sélection, liens et texte d’emphase (l’encre est Nuit) | Nuit | Prune |
 | 4 Pupitre | à plat, filets fins, aucun Prune | 0 % | Papier | Ambre |
 | 5 Modèle d’abord | panneaux et cadre Prune autour de la vue 3D | ~45 % | Papier | Ambre |
 
-Le guide (Oscar) reste une carte sombre sur tous les paquets : il lit les valeurs **racine** des jetons, et son anneau garde Ambre sur son halo Nuit, qui porte le contraste sur Papier comme sur la vue sombre.
+Le guide (Oscar) reste une carte sombre sur tous les paquets : il lit les valeurs **racine** des jetons, et son anneau garde Ambre sur son halo Nuit. C’est un **choix de conception, non mesuré par la suite** : l’anneau et son halo ne sont pas mesurés contre Papier (décision ouverte pour le fondateur, voir l’erratum de la spécification).
 
 ## Conséquences
 
 - Ajouter un paquet ou changer une couleur est une édition de table ; si une paire déclarée tombe sous son seuil, le test dit laquelle.
-- La mise en page (panneaux initiaux, tiroir qui reste ouvert, coin d’Oscar) suit la même règle : des champs du paquet lus par la coque, jamais son numéro. L’accordéon sous 760 px l’emporte sur tout préréglage.
+- La mise en page (panneaux initiaux, tiroir qui reste ouvert, coin d’Oscar) suit la même règle : des champs du paquet lus par la coque, jamais son numéro. L’accordéon sous 760 px l’emporte sur tout préréglage **et sur tout profil** : ce que la coque ouvre d’elle-même (état initial, profil de première visite) est borné par la largeur (`panelFits` : Projet dès 760 px, Propriétés dès 1200 px, la vue 3D garde au moins 60 %) ; un clic de l’apprenant n’est jamais borné. Les profils 2 et 4 gardent leur intention là où la fenêtre le permet.
+- Les lignes de la boîte « Connecter à… » (survol, option active) prennent le ton `inset` (`--cr-wash`), jamais la couleur de filet `line` : `line` n’est pas un aplat (ink sur `line` : 1,97 : 1 aux paquets 4 et 5).
+- Compromis d’usage connu (`stay-open`, mot du fondateur : « reste ouvert après une pose ») : le tiroir rouvert recouvre le tiers bas de la vue ; un appareil posé bas passe sous lui. Il se referme d’un geste (Échap, Espace, « Fermer »).
 - À revoir par le fondateur : les cinq équilibres sur écran (captures dans `test-results/screens/`), et le nom de chaque paquet.

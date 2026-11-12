@@ -17,6 +17,7 @@
  * and pacing are the spec 7.2 values.
  */
 import { CREATION_TOKENS, type Hex, type RoleColours } from './creationTokens'
+import { PRACTICE_CLASS } from './practice'
 
 export type { Hex, RoleColours }
 
@@ -345,11 +346,7 @@ export function applyDesignAttribute(root: AttributeRoot, search: string): Desig
   return pkg
 }
 
-/**
- * The class `src/main.ts` puts on <html> on a PRACTICE address (the guide's own mode gate: no `?mode=`, `?level=` or `?legacy=`; ruling R-A). On an exam address a valid `?design`
- * still marks `data-design` (T0.1) but the layout and the look do not apply: « exam addresses: unchanged ».
- */
-export const PRACTICE_CLASS = 'cr-practice'
+export { PRACTICE_CLASS }
 
 /** The slice of `<html>` that says which package's look applies (tests pass a fake). */
 export interface LookRoot {
