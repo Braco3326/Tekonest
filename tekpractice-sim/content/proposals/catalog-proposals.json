@@ -4254,7 +4254,10 @@
      "portId": "out-mic-output-male-xlr-3-pin-pin-2-hot",
      "dir": "out",
      "connector": "xlr3-m",
-     "signal": "mic-level"
+     "signal": "mic-level",
+     "flags": [
+      "isRibbon"
+     ]
     }
    ],
    "sizeMm": {

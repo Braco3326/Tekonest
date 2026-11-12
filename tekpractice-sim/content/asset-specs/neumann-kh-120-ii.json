@@ -53,7 +53,7 @@
       "openingMm": 14,
       "insetMm": 3,
       "connector": "rj45",
-      "signal": "aoip",
+      "signal": "ethernet-control",
       "dir": "bidir"
     },
     {

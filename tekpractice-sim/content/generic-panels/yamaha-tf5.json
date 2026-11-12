@@ -2699,7 +2699,7 @@
      "x": 80,
      "y": 156,
      "size": 3.6,
-     "text": "OMNI 1",
+     "text": "OUT 1",
      "fill": "#9aa0a6",
      "anchor": "middle"
     },
@@ -2737,7 +2737,7 @@
      "x": 120,
      "y": 156,
      "size": 3.6,
-     "text": "OMNI 2",
+     "text": "OUT 2",
      "fill": "#9aa0a6",
      "anchor": "middle"
     },

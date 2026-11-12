@@ -105,7 +105,7 @@
       "yMm": 22,
       "confidence": "guess",
       "connector": "rj45",
-      "signal": "aoip",
+      "signal": "ethernet-control",
       "dir": "bidir"
     },
     {

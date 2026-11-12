@@ -111,7 +111,7 @@
       "yMm": 32,
       "confidence": "guess",
       "connector": "rj45",
-      "signal": "aoip",
+      "signal": "ethernet-control",
       "dir": "bidir"
     },
     {
@@ -157,19 +157,6 @@
   ],
   "controls": [
     {
-      "controlId": "balance-master",
-      "kind": "knob",
-      "face": "top",
-      "xMm": 280,
-      "yMm": 60,
-      "axis": "z",
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 12
-      }
-    },
-    {
       "controlId": "fader-master",
       "kind": "fader",
       "face": "top",
@@ -181,19 +168,6 @@
         "w": 12,
         "h": 12,
         "d": 11
-      }
-    },
-    {
-      "controlId": "mute-master",
-      "kind": "button",
-      "face": "top",
-      "xMm": 280,
-      "yMm": 235,
-      "axis": "z",
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 4
       }
     }
   ],

@@ -137,6 +137,12 @@ export const PlanRow = z
     typicalUse: z.string().min(8).max(160).optional(),
     /** The name shown in the inventory when the Bêta proposal's label is a long list of variants (a catalogue label is a short brand and model, 60 characters at most). */
     label: z.string().min(3).max(60).optional(),
+    /**
+     * Port ids (of the asset spec) whose CONNECTOR TYPE no cited page states (a mains inlet or an Ethernet port taken from a knowledge-base summary). Wave 1b
+     * finding 14: the `portsDocumented` claim is per port. Such a port may stay in a promoted device only when it carries no audio (a mains inlet or a
+     * control-network port); the catalogue notes say it is assumed; an assumed AUDIO connector blocks the promotion.
+     */
+    assumedConnectors: z.array(z.string().min(1)).optional(),
     /** Behaviour traits (see TRAITS): required on every row, possibly empty. */
     traits: z.array(Trait),
     /** Whether the size can be trusted beyond being present (see SizeConfidence). */

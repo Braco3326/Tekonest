@@ -68,6 +68,11 @@ export interface PromoteOptions {
   commit?: boolean
   /** Undo the latest stage. */
   revert?: boolean
+  /**
+   * Re-derive an already PROMOTED device from its spec and the (possibly fixed) templates and replace its catalogue entry in place. Everything else is
+   * untouched; the entry's build date is kept. A no-op when nothing changed.
+   */
+  regen?: boolean
   /** With revert of stage 1: delete the spec even when it has hand edits. */
   discardSpec?: boolean
   paths?: Partial<Paths>
@@ -161,6 +166,18 @@ export function removeDevice(catalogText: string, id: string): string {
   const before = catalogText.slice(0, start)
   if (!before.endsWith(',')) throw new Error(`content/catalog.json: unexpected text before device "${id}"`)
   return before.slice(0, -1) + after
+}
+
+/**
+ * The catalogue text with the device `id` replaced IN PLACE by `device` (same position, everything else byte-identical). Used by `--regen`: a template or
+ * spec fix is applied to an already promoted device by re-deriving it from its spec, never by editing content/catalog.json by hand.
+ */
+export function replaceDevice(catalogText: string, id: string, device: CatalogDevice): string {
+  const start = catalogText.indexOf(`\n    {\n      "id": ${JSON.stringify(id)},`)
+  if (start < 0) throw new Error(`content/catalog.json: device "${id}" not found in the file's device layout`)
+  const end = catalogText.indexOf('\n    }', start + 1)
+  if (end < 0) throw new Error(`content/catalog.json: cannot find the end of device "${id}"`)
+  return `${catalogText.slice(0, start)}\n${formatDevice(device)}${catalogText.slice(end + '\n    }'.length)}`
 }
 
 // ── atomic writes ────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -284,7 +301,8 @@ function planPortsOf(spec: AssetSpecT): PlanPort[] {
  * (channel 1 to channel 1), as many as both sides have. A pairing is a modelling call, so the report lists the aliases it wrote.
  */
 function aliasesFor(proposalPorts: readonly ProposalPort[], specPorts: readonly PlanPort[]): Record<string, string> {
-  const key = (p: { dir: string; connector: string; signal: string }): string => `${p.dir}|${p.connector}|${p.signal}`
+  // a control-network RJ45 (Wave 1b finding 9) takes the place of the Bêta proposal's `aoip` RJ45, so the old port id still maps to it
+  const key = (p: { dir: string; connector: string; signal: string }): string => `${p.dir}|${p.connector}|${p.signal === 'ethernet-control' ? 'aoip' : p.signal}`
   const out: Record<string, string> = {}
   const groups = new Set(proposalPorts.map(key))
   for (const g of groups) {
@@ -311,7 +329,15 @@ const scriptedCabinetFront = (id: string): { axis: '-z'; evidence: string } => (
 function buildNotes(row: PlanRow, today: string, t: Template, size: string, spec: AssetSpecT): string {
   const src = row.sources[0] ? ` Size source: ${row.sources[0]}.` : ''
   const extra = t.notes.length ? ` ${t.notes.map((n) => n.charAt(0).toUpperCase() + n.slice(1)).join('. ')}.` : ''
-  const ports = spec.portsDocumented === true ? `documented in the asset spec (${spec.portsSource})` : 'listed in the asset spec (not documented)'
+  // Wave 1b finding 14: the claim is per port. A port whose connector type no cited page states is named, so the notes never say more than the sources do.
+  const assumed = (row.assumedConnectors ?? []).map((id) => {
+    const p = spec.ports.find((x) => x.portId === id)
+    return p?.connector ? `${id} (${p.connector})` : id
+  })
+  const ports =
+    spec.portsDocumented === true
+      ? `documented in the asset spec (${spec.portsSource})${assumed.length ? `, except the connector type of ${assumed.join(', ')}, assumed: no cited page states it` : ''}`
+      : 'listed in the asset spec (not documented)'
   return `Built from the equipment plan (${today}); size ${size} (${row.dataQuality}, size confidence ${row.sizeConfidence}).${src} Ports: ${ports}.${extra}`
 }
 
@@ -321,7 +347,7 @@ function buildNotes(row: PlanRow, today: string, t: Template, size: string, spec
  */
 export function deviceFromSpec(row: PlanRow, spec: AssetSpecT, proposal: Json | undefined, today: string, sizeNote: string): { device: CatalogDevice; template: Template; aliases?: Record<string, string> } {
   const given = planPortsOf(spec)
-  const template = applyTemplate(row.category, row, given, today)
+  const template = applyTemplate(row.category, row, given, today, spec.controls.map((c) => c.controlId))
   const specIds = spec.ports.map((p) => p.portId)
   const ids = template.ports.map((p) => p.portId)
   if (JSON.stringify(ids) !== JSON.stringify(specIds)) {
@@ -385,6 +411,12 @@ export function promotionBlockers(row: PlanRow, spec: AssetSpecT): string[] {
   if (!isPromotable(row)) why.push(`the size is ${row.dataQuality} (size confidence ${row.sizeConfidence}): only a datasheet or dealer size with confidence ok is promoted`)
   if (isPromotable(row) && !row.sources.length) why.push('no source URL is recorded for the size')
   if (spec.portsDocumented !== true) why.push('the spec does not say portsDocumented: true (the connector set is not documented)')
+  // per port (Wave 1b finding 14): an assumed connector may stay only on a port that carries no audio (a mains inlet, a control network port)
+  for (const id of row.assumedConnectors ?? []) {
+    const p = spec.ports.find((x) => x.portId === id)
+    if (!p) why.push(`the plan lists "${id}" as an assumed connector but the spec has no such port`)
+    else if (p.signal !== 'mains-power' && p.signal !== 'ethernet-control') why.push(`the connector type of the audio port "${id}" is assumed (no cited page states it): only a mains inlet or a control port may be assumed in a promoted device`)
+  }
   if (isPromotable(row)) {
     const r = spec.realSizeMm
     const p = row.sizeMm
@@ -433,6 +465,7 @@ export function promoteDevice(id: string, opts: PromoteOptions = {}): PromotionR
   }
 
   if (opts.revert) return revert()
+  if (opts.regen) return regen()
 
   if (opts.commit) return stage2()
   return stage1()
@@ -542,6 +575,28 @@ export function promoteDevice(id: string, opts: PromoteOptions = {}): PromotionR
   }
 
   // ── revert ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  function regen(): PromotionResult {
+    if (row!.promoted !== true) return blocked(`${id} is not promoted: --regen only re-derives a device that is already in the catalogue`)
+    const spec = readSpecFile(paths.specDir, id)
+    const catalogText = readFileSync(paths.catalog, 'utf8')
+    const catalog = Catalog.parse(JSON.parse(catalogText))
+    const current = catalog.devices.find((d) => d.id === id)
+    if (!current) throw new Error(`promote --regen: "${id}" is flagged promoted but is not in content/catalog.json`)
+    const blockers = promotionBlockers(row!, spec)
+    if (blockers.length) return blocked(`${id} no longer meets the promotion rules with its spec: ${blockers.join('; ')}`)
+    const entry = loadJournal(paths.journal).entries[id]
+    const built = /\((\d{4}-\d{2}-\d{2})\)/.exec(current.realWorld.notes ?? '')?.[1] ?? today
+    const { device, template } = deviceFromSpec(row!, spec, (entry?.proposalBefore ?? undefined) as Json | undefined, built, fmtSize(spec.realSizeMm))
+    const nextText = replaceDevice(catalogText, id, device)
+    if (nextText === catalogText) return { id, outcome: 'promoted', changes: [], reason: 'regen: the entry is already what the spec and the templates give' }
+    const next = Catalog.parse(JSON.parse(nextText))
+    const hard = checkCatalog(next, { modelIds: new Set(next.devices.map((d) => d.id)) }).filter((i) => i.level === 'error')
+    if (hard.length) throw new Error(`promote --regen ${id}: the regenerated device fails the catalogue checks:\n  ${hard.map((i) => `${i.path}: ${i.message}`).join('\n  ')}`)
+    const parity = checkSpecParity(spec, next)
+    if (parity.length) return blocked(`the spec does not match the regenerated entry:\n  ${parity.join('\n  ')}`)
+    return commit([{ path: paths.catalog, content: nextText }], { id, outcome: 'promoted', changes: [`catalog: regenerate devices["${id}"] in place from its spec and the templates`], ...(template.issues.length ? { issues: template.issues } : {}) })
+  }
+
   function revert(): PromotionResult {
     const journal = loadJournal(paths.journal)
     const entry = journal.entries[id]

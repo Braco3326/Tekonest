@@ -5,6 +5,7 @@
  *   npm run promote -- <id> --commit [--dry-run]     stage 2 (after the GLB shipped and the gates are green): catalogue entry (promoted) or proposal update
  *                                                    (beta-modelled)
  *   npm run promote -- <id> --revert [--discard-spec] [--dry-run]   undo the latest stage completely
+ *   npm run promote -- <id> --regen [--dry-run]      re-derive an already promoted device from its spec and the templates, in place (after a template or spec fix)
  *
  * Exit code 0 for staged / promoted / beta-modelled / reverted (also a no-op), 3 for blocked (nothing written), 1 for an error.
  */
@@ -23,7 +24,7 @@ function main(argv: string[]): number {
   }
   try {
     const dryRun = flag('--dry-run')
-    const r = promoteDevice(id, { dryRun, commit: flag('--commit'), revert: flag('--revert'), discardSpec: flag('--discard-spec') })
+    const r = promoteDevice(id, { dryRun, commit: flag('--commit'), revert: flag('--revert'), regen: flag('--regen'), discardSpec: flag('--discard-spec') })
     console.log(`${r.id}: ${r.outcome}${dryRun ? ' (dry run: nothing written)' : ''}`)
     for (const c of r.changes) console.log(`  - ${c}`)
     for (const i of r.issues ?? []) console.log(`  ! ${i}`)

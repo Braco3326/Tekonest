@@ -34,7 +34,7 @@ const label = (id: string): string => COPY.signal?.[id] ?? id
 /**
  * In the catalog's order: analog, digital, control, power.
  *
- * The 16 colours were FOUND, not picked: `node tools/cable-palette-search.mjs` (seed 27, 12 restarts of a seeded hill
+ * The first 16 colours were FOUND, not picked: `node tools/cable-palette-search.mjs` (seed 27, 12 restarts of a seeded hill
  * climb) maximises the worst pairwise distance as seen through simulated protanopia, deuteranopia and tritanopia
  * (Machado 2009, severity 1.0) under these constraints: normal-vision distance >= 70, contrast >= 3:1 against Nuit AND the
  * panel colour, luminance <= 0.7, >= 60 from Papier and Ambre. Result: worst colour-blind pair 60.5 (test floor 30),
@@ -56,6 +56,7 @@ const COLORS: ReadonlyArray<readonly [id: string, color: string, dash?: true]> =
   ['usb-audio', '#618569'],
   ['gpio-tally', '#7CC953'],
   ['dmx512', '#B616C4'],
+  ['ethernet-control', '#8D72FC'],
   ['phantom-48v', '#2D7B01'],
   ['mains-power', '#F8093E', true],
 ]

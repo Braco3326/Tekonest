@@ -9,7 +9,7 @@
  *  - microphone      shure-sm58, shure-sm57, ev-re20 (one out-xlr mic-level, no power); neumann-u87-ai (condenser: requiresPhantom)
  *  - preamp          focusrite-isa-one (mic in with providesPhantom gated by a phantom-48v toggle, line out, power)
  *  - interface       yamaha-rio3224-d2, avid-hd-io (mic ins isMicInput + providesPhantom, line outs, a Dante / USB port, power)
- *  - console         yamaha-ql1 (mic ins, main L/R, power, mute-master / fader-master / balance-master, routes in -> mains), axia-iq
+ *  - console         yamaha-ql1 (mic ins, main L/R, power, mute-master / fader-master / balance-master when documented, routes in -> mains), axia-iq
  *  - speaker-active  genelec-8030c, qsc-k12-2, yamaha-dbr12 (line in, power-in, route in -> transducer, nominal acoustic with a source)
  *  - outboard        grace-m905 (line in / out, power) and the thru routes of qsc-k12-2
  *  - accessory       km-210-9, yellowtec-mika (no port)
@@ -197,6 +197,13 @@ export interface Template {
 
 const POWER: CatalogControl = { id: 'power', type: 'toggle', label: 'Alimentation', default: true }
 
+/** The master controls of a desk (the QL1 pattern), in this order; a promoted desk carries only those its spec documents (Wave 1b finding 8). */
+const DESK_MASTER_CONTROLS: readonly CatalogControl[] = [
+  { id: 'mute-master', type: 'toggle', label: 'Mute master', default: false },
+  { id: 'fader-master', type: 'enum', label: 'Fader master', options: ['-inf', '-30', '-20', '-10', '-6', '-3', '0', '+6', '+10'], defaultOption: '0' },
+  { id: 'balance-master', type: 'enum', label: 'Balance', options: ['G100', 'G50', 'C', 'D50', 'D100'], defaultOption: 'C' },
+]
+
 const flagged = (p: CatalogPort, f: NonNullable<CatalogPort['flags']>[number]): boolean => (p.flags ?? []).includes(f)
 const withFlag = (p: CatalogPort, ...fs: NonNullable<CatalogPort['flags']>): CatalogPort => {
   const merged = [...(p.flags ?? [])]
@@ -247,35 +254,84 @@ function deskRouting(ins: readonly CatalogPort[], outs: readonly CatalogPort[]):
   return ins.filter((q) => q.signal === 'mic-level' || q.signal === 'line-level-pro' || q.signal === 'line-level-consumer' || q.signal === 'instrument-hiz').map((p) => ({ from: p.portId, to }))
 }
 
-/** Categories of outboard kind whose Ethernet port really carries audio (network audio is their job), as opposed to a control / firmware port. */
-const NETWORK_AUDIO_CATEGORIES: ReadonlySet<string> = new Set(['codec', 'broadcast', 'network-switch', 'intercom'])
+/**
+ * Categories whose RJ45 port is network audio by nature (codecs, broadcast processors and consoles, switches, intercoms, digital desks, interfaces
+ * and stage boxes). Every other device (speaker, amplifier, wireless receiver, speaker processor, computer, podcast or analogue desk) has an RJ45 that
+ * is a control / firmware / LAN port.
+ */
+const NETWORK_AUDIO_CATEGORIES: ReadonlySet<string> = new Set([
+  'codec', 'broadcast', 'network-switch', 'intercom', 'stagebox', 'audio-interface', 'interface', 'console', 'console-digital', 'console-radio',
+])
+
+/** The signal of a control / firmware / LAN Ethernet port (Wave 1b finding 9): it carries no audio, so R2 refuses to patch it to an `aoip` port. */
+export const CONTROL_NETWORK_SIGNAL = 'ethernet-control'
 
 /**
- * An RJ45 port of signal `aoip` on a speaker, a power amplifier, a speaker processor or a wireless receiver is the CONTROL / firmware port (Neumann
- * control app, HiQnet, Wireless Workbench), not an audio input or output: the catalogue has no control-network signal, so `aoip` stands in for it. It
- * is kept as a port (cables, the connector rules) but takes no audio route. Interfaces, desks, preamps, computers, codecs, broadcast processors,
- * switches and intercoms keep it as network audio, and an EtherCON port (Dante primary or secondary) is always audio.
+ * Whether the RJ45 `aoip` ports of a device are control ports: the device is not network audio by category and has no EtherCON / Dante primary port
+ * (a device with a Dante port keeps its other RJ45 as audio too: it is a Dante device). The retyping only touches a port the spec gave as `aoip`; a spec
+ * that already says `ethernet-control`, or a network-audio device, is left alone.
  */
-function isControlNetwork(p: CatalogPort, kind: Kind, category: string): boolean {
-  if (p.signal !== 'aoip' || p.connector !== 'rj45' || p.dir !== 'bidir') return false
-  if (kind === 'speaker-active' || kind === 'speaker-passive' || kind === 'amp' || kind === 'wireless') return true
-  return kind === 'outboard' && !NETWORK_AUDIO_CATEGORIES.has(category)
+function hasControlOnlyEthernet(category: string, ports: readonly CatalogPort[]): boolean {
+  if (NETWORK_AUDIO_CATEGORIES.has(category)) return false
+  return !ports.some((p) => p.connector === 'ethercon' || (p.flags ?? []).includes('isDantePrimary'))
+}
+
+/** A measurement / RTA / analyser input feeds the analyser, not the outputs: it is never routed (Wave 1b finding 4). By port id. */
+const MEASUREMENT_PORT = /(^|-)(rta|meas|measure|measurement|analy[sz]er)(-|$)/
+const isMeasurementInput = (p: CatalogPort): boolean => p.dir === 'in' && MEASUREMENT_PORT.test(p.portId)
+
+/**
+ * The routes of a TELEPHONE HYBRID (Wave 1b finding 5). The hybrid cancels what the studio sends from what the caller returns (that is what makes a
+ * mix-minus on the phone line work), so a `send` input is NEVER routed to the caller / receive output: it goes to the other outputs (the datasheet's
+ * stereo output carries the send on its left channel) and, on the telephone line, which is not a catalogue port. A caller / line input is routed to the
+ * receive (caller, receive, studio, return) outputs only. Without any caller output documented, a line input goes to every non-send output.
+ */
+function hybridRouting(ins: readonly CatalogPort[], outs: readonly CatalogPort[]): CatalogRoute[] {
+  const usable = outs.filter((q) => q.signal !== 'speaker-level' && q.signal !== 'headphone-level')
+  const isReceive = (q: CatalogPort): boolean => /(^|-)(caller|receive|rx|studio|return)(-|$)/.test(q.portId)
+  const isSend = (q: CatalogPort): boolean => /(^|-)send(-|\d|$)/.test(q.portId)
+  const receive = usable.filter(isReceive)
+  const others = usable.filter((q) => !isReceive(q))
+  const routes: CatalogRoute[] = []
+  for (const p of ins) {
+    const to = isSend(p) ? others : receive.length ? receive : others
+    if (to.length) routes.push({ from: p.portId, to: to.map((q) => q.portId) })
+  }
+  return routes
 }
 
 /**
- * The routes of a PATCHBAY: a normalled jack pair. A jack named `front-N` is joined to the jack named `rear-N` and the other way round (the half-normalled
- * default of a studio patchbay, taught as "the rear is what is wired in, the front is where you re-patch"). Jacks not named front / rear get no route, like
- * the shipped StudioPatch: never a route from a port to itself.
+ * The routes of a PATCHBAY. Two layers of wiring, both one jack to another, never a route from a port to itself:
+ *  1. each jack's own wiring: `front-N` is joined to `rear-N`, both ways (the rear is what is wired in, the front is where you re-patch);
+ *  2. the DEFAULT NORMALLING (Wave 1b finding 6): inside the rear, the TOP-row jack of a column is joined to the BOTTOM-row jack, top to bottom only
+ *     (that is what the real "normal" mode is: the signal of the top jack reaches the bottom one while nothing is patched). Rows are named either
+ *     `rear-top-N` / `rear-bottom-N` (or upper / lower), paired by N, or, when the spec lists plain `rear-N`, in order: rear-1 is the top and rear-2 the
+ *     bottom jack of the first column, rear-3 and rear-4 of the second, and so on. A jack whose partner is not documented gets no normalling.
+ * Jacks not named front / rear get no route, like the shipped StudioPatch. Every patchbay built from the template inherits both layers.
  */
 function patchbayRouting(ports: readonly CatalogPort[]): CatalogRoute[] {
   const audio = ports.filter((p) => p.dir === 'bidir' && AUDIO_IN.includes(p.signal))
-  const side = (kind: 'front' | 'rear') => audio.filter((p) => new RegExp(`^${kind}-\\d+$`).test(p.portId))
+  const side = (kind: 'front' | 'rear') => audio.filter((p) => new RegExp(`^${kind}-[0-9]+$`).test(p.portId))
   const num = (p: CatalogPort): string => p.portId.replace(/^\D+-/, '')
   const rear = new Map(side('rear').map((p) => [num(p), p.portId]))
   const front = new Map(side('front').map((p) => [num(p), p.portId]))
   const out: CatalogRoute[] = []
   for (const [n, f] of front) if (rear.has(n)) out.push({ from: f, to: [rear.get(n)!] })
   for (const [n, r] of rear) if (front.has(n)) out.push({ from: r, to: [front.get(n)!] })
+  const row = (names: string): Map<string, string> => {
+    const re = new RegExp(`^rear-(?:${names})-([0-9]+)$`)
+    return new Map(audio.flatMap((p): [string, string][] => { const m = re.exec(p.portId); return m ? [[m[1]!, p.portId]] : [] }))
+  }
+  const top = row('top|upper')
+  const bottom = row('bottom|lower')
+  if (top.size && bottom.size) {
+    for (const [n, t] of top) if (bottom.has(n)) out.push({ from: t, to: [bottom.get(n)!] })
+  } else {
+    for (const [n, r] of rear) {
+      const k = Number(n)
+      if (k % 2 === 1 && rear.has(String(k + 1))) out.push({ from: r, to: [rear.get(String(k + 1))!] })
+    }
+  }
   return out
 }
 
@@ -284,14 +340,21 @@ function patchbayRouting(ports: readonly CatalogPort[]): CatalogRoute[] {
  * signal, direction, flags): Wave 0b finding 1: a template never invents ports. It only adds behaviour on top of them:
  *  - a power toggle for every mains inlet (the first is the port `power-in`, the one the toggle gates);
  *  - the phantom requirement and the ribbon flag for microphones, by traits (see requiresPhantomByTraits);
- *  - the controls of its kind (DI ground lift and pad, preamp phantom switch and gain, console master mute / fader / balance);
+ *  - the controls of its kind (DI ground lift and pad, preamp phantom switch and gain, desk master controls: only those the spec documents);
  *  - the routes (speaker -> transducer, amplifier in -> out, processor / preamp / DI in -> out, desk in -> main outs);
  *  - a nominal acoustic for speakers.
  * Traits decide where the category cannot: a hand-held or body-pack transmitter (traits handheld / bodypack / battery) has no mains inlet and no
  * power toggle, and documenting one is an error; a `processor` is routed like outboard gear even when filed under amplifier; a `passive` studio
  * monitor is a passive speaker.
  */
-export function applyTemplate(category: string, row: Pick<PlanRow, 'traits'>, given: readonly PlanPort[], today: string = new Date().toISOString().slice(0, 10)): Template {
+export function applyTemplate(
+  category: string,
+  row: Pick<PlanRow, 'traits'>,
+  given: readonly PlanPort[],
+  today: string = new Date().toISOString().slice(0, 10),
+  /** The ids of the controls the spec documents (a desk only gets those of its master controls that are in this list). Undefined: the main fader only. */
+  documentedControls?: readonly string[],
+): Template {
   const traits = row.traits ?? []
   const kind = kindOf(category, traits)
   const notes: string[] = []
@@ -300,7 +363,15 @@ export function applyTemplate(category: string, row: Pick<PlanRow, 'traits'>, gi
   const mainsGiven = given.filter(isMainsIn)
   if (battery && mainsGiven.length)
     throw new Error(`a battery device (traits ${traits.filter((t) => BATTERY_TRAITS.includes(t)).join(', ')}) cannot list a mains inlet (${mainsGiven.map((p) => p.id ?? p.role).join(', ')}): fix the documented ports`)
-  const { ports: expanded, renamed } = expandPorts(given)
+  const { ports: expandedRaw, renamed } = expandPorts(given)
+  // Wave 1b finding 9: a control / firmware / LAN Ethernet port is not audio over IP; finding 1: a master clock's reference input is optional, so it is no slave input
+  const controlEthernet = hasControlOnlyEthernet(category, expandedRaw)
+  const expanded = expandedRaw.map((p) => {
+    let q = p
+    if (controlEthernet && q.connector === 'rj45' && q.signal === 'aoip') q = { ...q, signal: CONTROL_NETWORK_SIGNAL }
+    if (category === 'master-clock' && flagged(q, 'isClockSlave')) q = withoutFlag(q, 'isClockSlave')
+    return q
+  })
 
   let ports = expanded.map((p) => {
     // isMainsSource: only a mains-power OUT port has it, and every such port must (catalogChecks, C7); a proposal's stray flag elsewhere is dropped
@@ -331,18 +402,17 @@ export function applyTemplate(category: string, row: Pick<PlanRow, 'traits'>, gi
     if (micPorts.length) controls.push({ id: 'phantom-48v', type: 'toggle', label: '+48V phantom', default: false, enables: { flag: 'providesPhantom', ports: micPorts } })
     controls.push({ id: 'gain', type: 'enum', label: 'Gain (dB)', options: ['0', '20', '40', '60'], defaultOption: '20' })
   } else if (kind === 'console') {
-    controls.push(
-      { id: 'mute-master', type: 'toggle', label: 'Mute master', default: false },
-      { id: 'fader-master', type: 'enum', label: 'Fader master', options: ['-inf', '-30', '-20', '-10', '-6', '-3', '0', '+6', '+10'], defaultOption: '0' },
-      { id: 'balance-master', type: 'enum', label: 'Balance', options: ['G100', 'G50', 'C', 'D50', 'D100'], defaultOption: 'C' },
-    )
+    // Wave 1b finding 8: a desk only gets the master controls its spec DOCUMENTS (the datasheets list a main fader, not a master mute or a balance
+    // knob). With no spec list given (a bare template call) it gets the main fader only.
+    const wanted = documentedControls ?? ['fader-master']
+    for (const c of DESK_MASTER_CONTROLS) if (wanted.includes(c.id)) controls.push({ ...c })
   }
 
   // routes, from the final ports (a route that has no end is not written)
   let routing: CatalogRoute[] = []
-  const audioPorts = ports.filter((p) => !isControlNetwork(p, kind, category))
-  const ins = audioIns(audioPorts)
-  const outs = audioOuts(audioPorts)
+  // inputs that feed an analyser (RTA / measurement mic) are not signal inputs; the control-network signal is not an audio signal at all
+  const ins = audioIns(ports).filter((p) => !isMeasurementInput(p))
+  const outs = audioOuts(ports)
   if (kind === 'speaker-active') {
     for (const p of ins.filter((q) => q.signal !== 'mic-level' && q.signal !== 'speaker-level')) routing.push({ from: p.portId, to: ['transducer'] })
   } else if (kind === 'speaker-passive') {
@@ -359,8 +429,11 @@ export function applyTemplate(category: string, row: Pick<PlanRow, 'traits'>, gi
     if (!routing.length) issues.push('a desk with no audio input routed to an audio output: list its output ports (main outputs named out-main-l, out-main-r) so that it passes signal')
   } else if (category === 'patchbay') {
     routing = patchbayRouting(ports)
+  } else if (category === 'telephone-hybrid') {
+    routing = hybridRouting(ins, outs)
   } else if (kind === 'outboard' || kind === 'preamp' || kind === 'di') {
-    const o = outs.filter((q) => q.signal !== 'speaker-level' && q.signal !== 'headphone-level')
+    // a headphone amplifier's job is its headphone outputs (Wave 1b finding 15); no other outboard device is routed to a headphone output
+    const o = outs.filter((q) => q.signal !== 'speaker-level' && (category === 'headphone-amp' || q.signal !== 'headphone-level'))
     if (o.length)
       ins.forEach((p, i) => {
         // a processor with more outputs than inputs (a speaker processor: 2 in, 6 out) feeds every output from each input

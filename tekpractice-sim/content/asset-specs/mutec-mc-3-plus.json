@@ -94,10 +94,7 @@
       "confidence": "guess",
       "connector": "bnc",
       "signal": "wordclock",
-      "dir": "in",
-      "flags": [
-        "isClockSlave"
-      ]
+      "dir": "in"
     },
     {
       "portId": "out-spdif-rca",

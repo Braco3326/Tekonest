@@ -61,46 +61,6 @@
    "taper": "fader-db",
    "default": 0.75,
    "colour": "#2b2d31"
-  },
-  {
-   "id": "mute-master",
-   "face": "top",
-   "xMm": 300,
-   "yMm": 250,
-   "sizeMm": {
-    "w": 12,
-    "h": 12,
-    "d": 4
-   },
-   "label": "Mute master",
-   "catalogControl": "mute-master",
-   "kind": "button",
-   "axis": "z",
-   "latch": true,
-   "round": true,
-   "colour": "#1b3a1f",
-   "lit": "#46ff5a",
-   "travelMm": 1,
-   "default": 0
-  },
-  {
-   "id": "balance-master",
-   "face": "top",
-   "xMm": 300,
-   "yMm": 300,
-   "sizeMm": {
-    "w": 12,
-    "h": 12,
-    "d": 12
-   },
-   "label": "Balance",
-   "catalogControl": "balance-master",
-   "kind": "knob",
-   "axis": "z",
-   "sweepDeg": 270,
-   "colour": "#1c1d20",
-   "default": 0.5,
-   "detents": 5
   }
  ]
 }

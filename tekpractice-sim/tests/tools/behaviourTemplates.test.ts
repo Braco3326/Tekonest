@@ -186,7 +186,8 @@ describe('processors and desks by traits (findings 3 and 8)', () => {
         { from: 'in-mic-1', to: ['out-main-l', 'out-main-r'] },
         { from: 'in-mic-2', to: ['out-main-l', 'out-main-r'] },
       ])
-      expect(t.controls.map((c) => c.id), id).toEqual(['power', 'mute-master', 'fader-master', 'balance-master'])
+      // Wave 1b finding 8: a bare template gives the main fader only; mute / balance only when the spec documents them
+      expect(t.controls.map((c) => c.id), id).toEqual(['power', 'fader-master'])
       expect(issues, id).toEqual([])
     }
   })
@@ -281,6 +282,7 @@ describe('patchbay (Wave 1 stage 2): no route ever returns to its own port', () 
       { from: 'front-2', to: ['rear-2'] },
       { from: 'rear-1', to: ['front-1'] },
       { from: 'rear-2', to: ['front-2'] },
+      { from: 'rear-1', to: ['rear-2'] }, // default normalling, rear top row to rear bottom row (finding 6)
     ])
     for (const r of t.routing ?? []) expect(r.to).not.toContain(r.from)
     expect(issues).toEqual([])
@@ -363,14 +365,19 @@ describe('the other kinds', () => {
     expect(ph).toMatchObject({ type: 'toggle', default: false, enables: { flag: 'providesPhantom', ports: ['in-mic'] } })
     expect(issues).toEqual([])
   })
-  it('console: mains, master outs, mute / fader / balance (QL1 pattern), every input routed to the mains', () => {
+  it('console: mains, master outs, the main fader (mute and balance only when documented), every input routed to the mains', () => {
     const { t, issues } = asDevice('console-digital', { traits: ['desk'] }, [
       { role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level', count: 2 },
       { id: 'out-main-l', role: 'main-l', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
       { id: 'out-main-r', role: 'main-r', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
       MAINS,
     ])
-    expect(t.controls.map((c) => c.id)).toEqual(['power', 'mute-master', 'fader-master', 'balance-master'])
+    expect(t.controls.map((c) => c.id)).toEqual(['power', 'fader-master'])
+    // a spec that documents all three master controls gets all three (the QL1 pattern), in the catalogue order
+    const full = applyTemplate('console-digital', row({ traits: ['desk'] }), [{ id: 'out-main-l', role: 'main-l', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' }, MAINS], '2026-11-11', ['balance-master', 'fader-master', 'mute-master'])
+    expect(full.controls.map((c) => c.id)).toEqual(['power', 'mute-master', 'fader-master', 'balance-master'])
+    const none = applyTemplate('console-digital', row({ traits: ['desk'] }), [MAINS], '2026-11-11', [])
+    expect(none.controls.map((c) => c.id)).toEqual(['power'])
     expect(t.routing).toEqual([
       { from: 'in-mic-1', to: ['out-main-l', 'out-main-r'] },
       { from: 'in-mic-2', to: ['out-main-l', 'out-main-r'] },
@@ -493,5 +500,144 @@ describe('short port ids keep the channel number (finding 4: the regex was /^d+$
       expect(ports[0]!.portId, id).toMatch(/-1$/)
       expect(ports[1]!.portId, id).toMatch(/-2$/)
     }
+  })
+})
+
+// ── Wave 1b review fixes: findings 1, 4, 5, 6, 9, 15, tested on the REAL rows (their asset specs hold the documented ports) ──────────────
+
+/** The documented ports of a real row, as the promotion tool reads them from its spec. */
+function specGiven(id: string): PlanPort[] {
+  const spec = JSON.parse(readFileSync(new URL(`../../content/asset-specs/${id}.json`, import.meta.url), 'utf8')) as { ports: { portId: string; dir: 'in' | 'out' | 'bidir'; connector: string; signal: string; flags?: string[] }[] }
+  return spec.ports.map((p) => ({ id: p.portId, role: 'port', dir: p.dir, connector: p.connector, signal: p.signal, ...(p.flags?.length ? { flags: p.flags as never } : {}) }))
+}
+const routesFrom = (t: { routing?: { from: string; to: string[] }[] }, from: string): string[] => (t.routing ?? []).filter((r) => r.from === from).flatMap((r) => r.to)
+
+describe('a master clock keeps its word-clock reference optional (finding 1)', () => {
+  it('real row mutec-mc-3-plus: no port is isClockSlave, the outputs stay isClockMaster', () => {
+    const r = planRow('mutec-mc-3-plus')
+    const withSlave = specGiven('mutec-mc-3-plus').map((p) => (p.id === 'in-wclk' ? { ...p, flags: ['isClockSlave' as const] } : p))
+    const { t } = asDevice(r.category, { traits: r.traits }, withSlave)
+    expect(t.ports.filter((p) => p.flags?.includes('isClockSlave'))).toEqual([])
+    expect(t.ports.filter((p) => p.flags?.includes('isClockMaster')).length).toBe(6)
+  })
+})
+
+describe('measurement / RTA inputs feed an analyser, not the outputs (finding 4)', () => {
+  it('real row dbx-driverack-pa2: in-rta-mic has no route, the line inputs still feed the six outputs', () => {
+    const r = planRow('dbx-driverack-pa2')
+    const { t } = asDevice(r.category, { traits: r.traits }, specGiven('dbx-driverack-pa2'))
+    expect(routesFrom(t, 'in-rta-mic')).toEqual([])
+    expect(routesFrom(t, 'in-line-1')).toEqual(['out-1', 'out-2', 'out-3', 'out-4', 'out-5', 'out-6'])
+    expect(routesFrom(t, 'in-line-2')).toEqual(['out-1', 'out-2', 'out-3', 'out-4', 'out-5', 'out-6'])
+  })
+  it('the rule is by port role, on any kind: a measurement input on a synthetic processor is not routed either', () => {
+    const given: PlanPort[] = [
+      { id: 'in-meas-mic', role: 'port', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' },
+      { id: 'in-line', role: 'port', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },
+      { id: 'out-1', role: 'port', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
+    ]
+    const { t } = asDevice('outboard', { traits: ['processor'] }, given)
+    expect(routesFrom(t, 'in-meas-mic')).toEqual([])
+    expect(routesFrom(t, 'in-line')).toEqual(['out-1'])
+  })
+})
+
+describe('a telephone hybrid has its own routing (finding 5)', () => {
+  it('real row jk-audio-broadcast-host: no send input is routed to the caller output (the send is cancelled from it)', () => {
+    const r = planRow('jk-audio-broadcast-host')
+    expect(r.category).toBe('telephone-hybrid')
+    const { t } = asDevice(r.category, { traits: r.traits }, specGiven('jk-audio-broadcast-host'))
+    for (const send of ['in-send-xlr', 'in-send-2']) expect(routesFrom(t, send), send).not.toContain('out-caller-xlr')
+    // the documented stereo output carries the send on its left channel: that route stays
+    expect(routesFrom(t, 'in-send-xlr')).toEqual(['out-stereo'])
+  })
+  it('a caller / line input is routed to the receive (caller) output only', () => {
+    const given: PlanPort[] = [
+      { id: 'in-line', role: 'port', dir: 'in', connector: 'rca', signal: 'line-level-consumer' },
+      { id: 'in-send', role: 'port', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },
+      { id: 'out-caller', role: 'port', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
+      { id: 'out-stereo', role: 'port', dir: 'out', connector: 'trs-35mm', signal: 'line-level-consumer' },
+    ]
+    const { t } = asDevice('telephone-hybrid', { traits: [] }, given)
+    expect(routesFrom(t, 'in-line')).toEqual(['out-caller'])
+    expect(routesFrom(t, 'in-send')).not.toContain('out-caller')
+  })
+})
+
+describe('patchbay default normalling joins the rear top row to the rear bottom row (finding 6)', () => {
+  it('real row samson-s-patch-plus: rear-1 (top row) is normalled to rear-2 (bottom row), plus the front / rear wiring of each jack; never the reverse, never to itself', () => {
+    const r = planRow('samson-s-patch-plus')
+    const { t } = asDevice(r.category, { traits: r.traits }, specGiven('samson-s-patch-plus'))
+    expect(routesFrom(t, 'rear-1')).toContain('rear-2')
+    expect(routesFrom(t, 'rear-2')).not.toContain('rear-1')
+    expect(routesFrom(t, 'front-1')).toEqual(['rear-1'])
+    expect(routesFrom(t, 'front-2')).toEqual(['rear-2'])
+    for (const route of t.routing ?? []) expect(route.to).not.toContain(route.from)
+  })
+  it('a synthetic patchbay with four rear jacks (2 columns): rear-1 -> rear-2, rear-3 -> rear-4; an odd leftover jack gets none', () => {
+    const jack = (id: string): PlanPort => ({ id, role: 'port', dir: 'bidir', connector: 'trs-quarter', signal: 'line-level-pro' })
+    const { t } = asDevice('patchbay', { traits: ['passive'] }, [1, 2, 3, 4].flatMap((n) => [jack(`front-${n}`), jack(`rear-${n}`)]))
+    expect(routesFrom(t, 'rear-1')).toContain('rear-2')
+    expect(routesFrom(t, 'rear-3')).toContain('rear-4')
+    expect(routesFrom(t, 'rear-2')).not.toContain('rear-3')
+    const odd = asDevice('patchbay', { traits: ['passive'] }, [1, 2, 3].flatMap((n) => [jack(`front-${n}`), jack(`rear-${n}`)])).t
+    expect(routesFrom(odd, 'rear-3')).toEqual(['front-3'])
+  })
+  it('explicitly named rows (rear-top-N / rear-bottom-N) pair by N', () => {
+    const jack = (id: string): PlanPort => ({ id, role: 'port', dir: 'bidir', connector: 'trs-quarter', signal: 'line-level-pro' })
+    const { t } = asDevice('patchbay', { traits: ['passive'] }, [jack('rear-top-1'), jack('rear-bottom-1'), jack('rear-top-2'), jack('rear-bottom-2')])
+    expect(routesFrom(t, 'rear-top-1')).toEqual(['rear-bottom-1'])
+    expect(routesFrom(t, 'rear-top-2')).toEqual(['rear-bottom-2'])
+  })
+})
+
+describe('a headphone amplifier feeds its headphone outputs (finding 15)', () => {
+  it('real row presonus-hp4: line inputs are routed to the headphone outputs', () => {
+    const r = planRow('presonus-hp4')
+    expect(r.category).toBe('headphone-amp')
+    const { t } = asDevice(r.category, { traits: r.traits }, specGiven('presonus-hp4'))
+    const phones = t.ports.filter((p) => p.signal === 'headphone-level').map((p) => p.portId)
+    expect(phones.length).toBe(2)
+    const ins = t.ports.filter((p) => p.dir === 'in' && p.signal === 'line-level-pro')
+    expect(ins.length).toBe(2)
+    for (const i of ins) expect(routesFrom(t, i.portId), i.portId).toEqual(expect.arrayContaining(phones))
+  })
+  it('an outboard device that is not a headphone amplifier still never routes to a headphone output', () => {
+    const given: PlanPort[] = [
+      { id: 'in-1', role: 'port', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },
+      { id: 'out-1', role: 'port', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' },
+      { id: 'out-phones', role: 'port', dir: 'out', connector: 'trs-quarter', signal: 'headphone-level' },
+    ]
+    const { t } = asDevice('outboard', { traits: [] }, given)
+    expect(routesFrom(t, 'in-1')).toEqual(['out-1'])
+  })
+})
+
+describe('control-network Ethernet is its own signal (finding 9)', () => {
+  const rj = (id: string): PlanPort => ({ id, role: 'port', dir: 'bidir', connector: 'rj45', signal: 'aoip' })
+  it.each([
+    ['dbx-driverack-pa2', 'net'],
+    ['neumann-kh-120-ii', 'bidir-network'],
+    ['shure-slx-d', 'net'],
+    ['apple-mac-mini', 'net'],
+    ['apple-mac-studio', 'net'],
+    ['rode-rodecaster-pro-ii', 'net'],
+  ])('real row %s: its RJ45 port %s is ethernet-control and routes nowhere', (id, portId) => {
+    const r = planRow(id)
+    const { t } = asDevice(r.category, { traits: r.traits }, specGiven(id))
+    const p = t.ports.find((x) => x.portId === portId)!
+    expect(p.connector).toBe('rj45')
+    expect(p.signal).toBe('ethernet-control')
+    expect((t.routing ?? []).some((x) => x.from === portId || x.to.includes(portId))).toBe(false)
+  })
+  it('a template retypes an rj45 aoip port of a non-network-audio device, and keeps it for network-audio devices (codec, digital stage box, etherCON Dante)', () => {
+    expect(asDevice('studio-monitor', { traits: ['active'] }, [rj('lan')]).t.ports[0]!.signal).toBe('ethernet-control')
+    expect(asDevice('codec', { traits: [] }, [rj('ip')]).t.ports[0]!.signal).toBe('aoip')
+    expect(asDevice('stagebox', { traits: [] }, [rj('lan')]).t.ports[0]!.signal).toBe('aoip')
+    const dante: PlanPort = { id: 'dante-primary', role: 'port', dir: 'bidir', connector: 'ethercon', signal: 'aoip', flags: ['isDantePrimary'] }
+    expect(asDevice('wireless', { traits: ['receiver'] }, [dante, rj('lan')]).t.ports.map((p) => p.signal)).toEqual(['aoip', 'aoip'])
+  })
+  it('the catalogue declares the signal', () => {
+    expect(makeRegistry().signalById.get('ethernet-control')).toBeTruthy()
   })
 })

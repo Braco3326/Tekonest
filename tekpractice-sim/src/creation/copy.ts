@@ -226,6 +226,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     'usb-audio': 'Audio USB',
     'gpio-tally': 'GPIO / tally',
     dmx512: 'DMX512',
+    'ethernet-control': 'Réseau de contrôle (Ethernet, sans audio)',
     'phantom-48v': 'Alimentation fantôme +48 V',
     'mains-power': 'Secteur 230 V',
   },
@@ -712,6 +713,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     badgeEstimated: 'Bêta — dimensions estimées',
     /** Tooltip of that item. */
     tipEstimated: 'Modèle 3D aux dimensions estimées : fiche non vérifiée, comportement approximatif.',
+    /** Badge of a Bêta item whose 3D model has the SIZE of a datasheet or a dealer page (Wave 1b): only its connectors are not verified. */
+    badgePorts: 'Bêta — connecteurs non vérifiés',
+    /** Tooltip of that item. */
+    tipPorts: 'Modèle 3D aux dimensions de la fiche constructeur ou revendeur ; les connecteurs ne sont pas vérifiés : comportement approximatif.',
     /** Note title when a reopened project has devices whose sheet is gone (a proposal no longer offered, an unknown device). */
     missingTitle: 'Appareils non rechargés',
     /** Note body; the device ids follow as a list. */

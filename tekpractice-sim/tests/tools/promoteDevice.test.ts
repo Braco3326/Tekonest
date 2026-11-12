@@ -609,3 +609,72 @@ describe('the spec fields of the documented set', () => {
     expect(AssetSpec.safeParse({ ...base(), sources: [{ kind: 'dealer', url: 'https://x.example/', note: 'n' }, { kind: 'reference', url: 'https://x.example/', note: 'n' }] }).success).toBe(true)
   })
 })
+
+describe('the portsDocumented claim is per port (Wave 1b finding 14)', () => {
+  const setAssumed = (id: string, assumed: string[]): void => {
+    const rows = loadPlan(paths.plan).map((r) => (r.id === id ? { ...r, assumedConnectors: assumed } : r))
+    savePlan(rows, paths.plan, '2026-11-12')
+  }
+  const monitorPorts = [port('in-analog', 'in', 'xlr3-f', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')]
+
+  it('an assumed mains inlet may stay in a promoted device, and the notes say it is assumed (the claim never covers it)', () => {
+    stage1('fx-monitor')
+    setAssumed('fx-monitor', ['power-in'])
+    fillSpec('fx-monitor', monitorPorts, [POWER_CTRL])
+    ship('fx-monitor')
+    expect(stage2('fx-monitor').outcome).toBe('promoted')
+    const d = Catalog.parse(JSON.parse(read(paths.catalog))).devices.find((x) => x.id === 'fx-monitor')!
+    expect(d.realWorld.notes).toContain('except the connector type of power-in (iec-c14), assumed: no cited page states it')
+  })
+  it('an assumed AUDIO connector blocks the promotion: the device is beta-modelled', () => {
+    stage1('fx-monitor')
+    setAssumed('fx-monitor', ['in-analog'])
+    fillSpec('fx-monitor', monitorPorts, [POWER_CTRL])
+    ship('fx-monitor')
+    const r = stage2('fx-monitor')
+    expect(r.outcome).toBe('beta-modelled')
+    expect(r.reason).toMatch(/audio port "in-analog" is assumed/)
+  })
+  it('a plan row that lists an assumed connector the spec does not have is refused as a blocker, not silently ignored', () => {
+    stage1('fx-monitor')
+    setAssumed('fx-monitor', ['no-such-port'])
+    fillSpec('fx-monitor', monitorPorts, [POWER_CTRL])
+    ship('fx-monitor')
+    expect(stage2('fx-monitor').reason).toMatch(/no such port/)
+  })
+  it('the real rows: DriveRack PA2 and KH 120 II list exactly the connectors no cited page states, all non-audio', () => {
+    const real = loadPlan()
+    expect(real.find((r) => r.id === 'neumann-kh-120-ii')!.assumedConnectors).toEqual(['power-in'])
+    expect(real.find((r) => r.id === 'dbx-driverack-pa2')!.assumedConnectors).toEqual(['net', 'power-in'])
+    const cat = JSON.parse(read('content/catalog.json')) as { devices: { id: string; realWorld: { notes: string } }[] }
+    for (const id of ['neumann-kh-120-ii', 'dbx-driverack-pa2']) expect(cat.devices.find((d) => d.id === id)!.realWorld.notes, id).toContain('assumed: no cited page states it')
+  })
+})
+
+describe('--regen re-derives a promoted device in place', () => {
+  it('is a no-op right after stage 2; a plan text change rewrites only that entry, at the same position', () => {
+    stage1('fx-monitor')
+    fillSpec('fx-monitor', [port('in-analog', 'in', 'xlr3-f', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], [POWER_CTRL])
+    ship('fx-monitor')
+    stage2('fx-monitor')
+    const before = read(paths.catalog)
+    const again = promoteDevice('fx-monitor', { paths, today: '2026-11-13', regen: true })
+    expect(again.changes).toEqual([]) // the build date of the entry is kept, not today's
+    expect(read(paths.catalog)).toBe(before)
+    const rows = loadPlan(paths.plan).map((r) => (r.id === 'fx-monitor' ? { ...r, typicalUse: 'A different, accurate sentence for the monitor' } : r))
+    savePlan(rows, paths.plan, '2026-11-12')
+    const r = promoteDevice('fx-monitor', { paths, today: '2026-11-13', regen: true })
+    expect(r.changes).toHaveLength(1)
+    const after = read(paths.catalog)
+    expect(after).toContain('A different, accurate sentence for the monitor')
+    // only that entry changed: everything before and after it is byte-identical
+    const start = before.indexOf('"id": "fx-monitor"')
+    expect(after.slice(0, start)).toBe(before.slice(0, start))
+    expect(after.replace('A different, accurate sentence for the monitor', '').length).toBeGreaterThan(0)
+    expect(JSON.parse(after).devices.map((d: { id: string }) => d.id)).toEqual(JSON.parse(before).devices.map((d: { id: string }) => d.id))
+  })
+  it('refuses a device that is not promoted', () => {
+    stage1('fx-monitor')
+    expect(promoteDevice('fx-monitor', { paths, regen: true }).outcome).toBe('blocked')
+  })
+})

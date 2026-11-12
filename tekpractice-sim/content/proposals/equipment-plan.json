@@ -113,7 +113,8 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "typicalUse": "Compact analogue mixing desk with seven microphone inputs, 48 V phantom power, USB and an XLR main output"
   },
   {
    "id": "midas-dl16",
@@ -169,7 +170,11 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "typicalUse": "Two-way active nearfield studio monitor (130 mm woofer, 25 mm tweeter) with analogue XLR and S/PDIF inputs",
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "radial-j48",
@@ -281,7 +286,8 @@
     "phantom-powered"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "typicalUse": "Studio condenser microphone with an XLR output (48 V phantom power) and a USB-C digital output"
   },
   {
    "id": "royer-r-121",
@@ -317,7 +323,7 @@
    "status": "beta",
    "category": "iem",
    "manufacturer": "Shure",
-   "product": "PSM 300 (P3T transmitter, P3R bodypack)",
+   "product": "PSM 300 (P3T transmitter)",
    "sizeMm": {
     "w": 198,
     "d": 172,
@@ -340,14 +346,15 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "typicalUse": "Half-rack in-ear monitor transmitter (P3T) with balanced 6.35 mm inputs, loop outputs and a detachable antenna"
   },
   {
    "id": "shure-slx-d",
    "status": "beta",
    "category": "wireless",
    "manufacturer": "Shure",
-   "product": "SLX-D (SLXD4 receiver + SLXD1/2/3)",
+   "product": "SLX-D (SLXD4 receiver)",
    "sizeMm": {
     "w": 197,
     "d": 152,
@@ -370,7 +377,8 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "typicalUse": "Single-channel digital wireless microphone receiver with XLR and 6.35 mm outputs, BNC antenna inputs and an Ethernet interface"
   },
   {
    "id": "yamaha-tf5",
@@ -891,7 +899,12 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "typicalUse": "Loudspeaker processor with two XLR line inputs, an RTA microphone input and six XLR outputs",
+   "assumedConnectors": [
+    "net",
+    "power-in"
+   ]
   },
   {
    "id": "mutec-mc-3-plus",
@@ -919,7 +932,8 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "typicalUse": "Master clock with six word-clock outputs, S/PDIF and AES3 inputs and outputs, and a word-clock or 10 MHz reference input"
   },
   {
    "id": "presonus-hp4",
@@ -975,7 +989,8 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "typicalUse": "Rack patchbay with 48 front and 48 rear 1/4 in balanced jacks on 24 channels, normal, half-normal or thru per channel"
   },
   {
    "id": "sennheiser-ew-100-g4",

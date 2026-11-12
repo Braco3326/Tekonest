@@ -240,6 +240,7 @@ Types de signal du catalogue (`signalTypes[].id`), tels que Propriétés les nom
 | `signal.usb-audio` | Audio USB | validé | Idem |
 | `signal.gpio-tally` | GPIO / tally | validé | Idem |
 | `signal.dmx512` | DMX512 | validé | Idem |
+| `signal.ethernet-control` | Réseau de contrôle (Ethernet, sans audio) | à valider | Wave 1b : la prise RJ45 d'un appareil qui n'est pas un appareil audio réseau (mise à jour, logiciel de réglage) ; ne se branche pas sur une prise Dante |
 | `signal.phantom-48v` | Alimentation fantôme +48 V | validé | Idem |
 | `signal.mains-power` | Secteur 230 V | validé | Idem |
 
@@ -584,6 +585,8 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.tipUnverified` | Fiche proposée, pas encore vérifiée : comportement approximatif. | validé | Info-bulle d’un appareil Bêta (tiroir) et description de l’appareil posé (Propriétés) |
 | `inventory.badgeEstimated` | Bêta — dimensions estimées | à valider | Pastille d’un appareil proposé qui a un modèle 3D aux dimensions estimées (onglet Bêta) ; remplace « non vérifié » sur cet appareil |
 | `inventory.tipEstimated` | Modèle 3D aux dimensions estimées : fiche non vérifiée, comportement approximatif. | à valider | Info-bulle de cet appareil (tiroir) |
+| `inventory.badgePorts` | Bêta — connecteurs non vérifiés | à valider | Pastille d’un appareil proposé dont le modèle 3D a la taille d’une fiche constructeur ou revendeur (confiance ok) : seuls ses connecteurs ne sont pas vérifiés (Wave 1b) |
+| `inventory.tipPorts` | Modèle 3D aux dimensions de la fiche constructeur ou revendeur ; les connecteurs ne sont pas vérifiés : comportement approximatif. | à valider | Info-bulle de cet appareil (tiroir) |
 | `inventory.missingTitle` | Appareils non rechargés | validé | Titre de la note quand un projet rouvert contient des appareils dont la fiche n’existe plus |
 | `inventory.missingBody` | La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés. | validé | Corps de la note ; les identifiants des appareils suivent en liste |
 | `inventory.unavailableTitle` | Projet non rouvert | validé | Titre de la note quand les fiches Bêta dont un projet enregistré a besoin n’ont pas pu être chargées (réseau, délai de 5 s) : le projet n’est ni ouvert ni modifié |
