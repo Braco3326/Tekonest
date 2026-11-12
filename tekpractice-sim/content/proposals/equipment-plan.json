@@ -2493,7 +2493,7 @@
    "notes": "Audinate sales guide [M]: 150.7x53.8x38.1 mm, 145 g (Markertek 180 g). PoE or external power. Source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
    "traits": [],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "avid-s1",
@@ -2521,7 +2521,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "behringer-umc202hd",
@@ -2576,7 +2576,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "crown-xti-4002",
@@ -2608,7 +2608,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "eaton-5p-1u-ups",
@@ -2637,7 +2637,7 @@
     "rack"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "empirical-labs-distressor",
@@ -2666,7 +2666,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "focusrite-clarett-plus-8pre",
@@ -2697,7 +2697,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "genelec-8040b",
@@ -2726,7 +2726,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "krk-rokit-5-g4",
@@ -2754,7 +2754,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "mackie-big-knob-studio",
@@ -2810,7 +2810,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "netgear-m4250-av-switch",
@@ -2840,7 +2840,7 @@
     "rack"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "neutrik-nys-spp-l1",
@@ -2870,7 +2870,7 @@
     "rack"
    ],
    "sizeConfidence": "conflict",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "orban-optimod-6300",
@@ -2899,7 +2899,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "qsc-k10-2",
@@ -2928,7 +2928,7 @@
     "active"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "radial-js3",
@@ -3010,7 +3010,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "sennheiser-e-609-silver",
@@ -3040,7 +3040,7 @@
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "shure-qlx-d-receiver",
@@ -3069,7 +3069,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "shure-slxd1-bodypack",
@@ -3099,7 +3099,7 @@
     "battery"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "shure-sm81",
@@ -3207,7 +3207,7 @@
     "battery"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "tascam-model-12",
@@ -3235,7 +3235,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "ua-la-2a",
@@ -3265,7 +3265,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "yamaha-dxr12-mkii",
@@ -3294,7 +3294,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "zoom-podtrak-p4",
@@ -3323,7 +3323,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "canare-162u-x21",
@@ -3351,7 +3351,7 @@
     "rack"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "motu-828",
@@ -3379,7 +3379,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "neutrik-nppa-tt-pt",

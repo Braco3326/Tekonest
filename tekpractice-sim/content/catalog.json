@@ -1178,6 +1178,334 @@
         { "from": "in-line-1", "to": ["out-aes-1"] },
         { "from": "in-line-2", "to": ["out-aes-2"] }
       ]
+    },
+    {
+      "id": "audinate-dante-avio-install",
+      "label": "Audinate Dante AVIO Install (2IN / 2OUT / 2IN2OUT)",
+      "levels": [],
+      "realWorld": {
+        "brand": "Audinate", "model": "Dante AVIO Install (2IN / 2OUT / 2IN2OUT)", "category": "stagebox",
+        "typicalUse": "Audinate Dante AVIO Install (2IN / 2OUT / 2IN2OUT) (stagebox)",
+        "notes": "Built from the equipment plan (2026-11-12); size 150.7 x 53.8 x 38.1 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf. Ports: documented in the asset spec (https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf)."
+      },
+      "ports": [
+        { "portId": "in-analog", "dir": "in", "connector": "euroblock", "signal": "line-level-pro" },
+        { "portId": "dante", "dir": "bidir", "connector": "rj45", "signal": "aoip", "flags": ["isDantePrimary"] }
+      ]
+    },
+    {
+      "id": "avid-s1",
+      "label": "Avid S1",
+      "levels": [],
+      "realWorld": {
+        "brand": "Avid", "model": "S1", "category": "controller",
+        "typicalUse": "Avid S1 (controller)",
+        "notes": "Built from the equipment plan (2026-11-12); size 316 x 377 x 103 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.adorama.com/av990074096.html. Ports: documented in the asset spec (https://resources.avid.com/SupportFiles/ProMixing/Avid_S1_Guide_v2025.6.pdf)."
+      },
+      "ports": [
+        { "portId": "net-eucon", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" }
+      ]
+    },
+    {
+      "id": "crown-xti-4002",
+      "label": "Crown XTi 4002",
+      "levels": [],
+      "realWorld": {
+        "brand": "Crown", "model": "XTi 4002", "category": "amplifier",
+        "typicalUse": "Crown XTi 4002 (amplifier)",
+        "notes": "Built from the equipment plan (2026-11-12); size 482.6 x 311.2 x 88.9 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.crownaudio.com/en/products/xti-4002. Ports: documented in the asset spec (https://www.crownaudio.com/en/product_documents/5021481_spec_mnl_xti2_operation_06-12-pdf-79fc4575-cd03-479c-bfd7-cefc370cd3b9), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-xlr-1", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-xlr-2", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-spk-1", "dir": "out", "connector": "speakon-nl4", "signal": "speaker-level" },
+        { "portId": "out-spk-2", "dir": "out", "connector": "speakon-nl4", "signal": "speaker-level" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-xlr-1", "to": ["out-spk-1"] },
+        { "from": "in-xlr-2", "to": ["out-spk-2"] }
+      ]
+    },
+    {
+      "id": "focusrite-clarett-plus-8pre",
+      "label": "Focusrite Clarett+ 8Pre",
+      "levels": [],
+      "realWorld": {
+        "brand": "Focusrite", "model": "Clarett+ 8Pre", "category": "audio-interface",
+        "typicalUse": "Focusrite Clarett+ 8Pre (audio-interface)",
+        "notes": "Built from the equipment plan (2026-11-12); size 482.5 x 291 x 43.9 mm (w x d x h) (datasheet, size confidence ok). Size source: https://userguides.focusrite.com/hc/en-gb/articles/18577946999570-Clarett-8Pre-technical-specifications. Ports: documented in the asset spec (https://www.adorama.com/col/productManuals/FRCLPLUS8PRE.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-phones-1", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-phones-2", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "in-combo-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-5", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-6", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-7", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-8", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-monitor-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro", "flags": ["isMonitorOut"] },
+        { "portId": "out-monitor-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro", "flags": ["isMonitorOut"] },
+        { "portId": "out-line-3", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-line-4", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-line-5", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-line-6", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "in-optical", "dir": "in", "connector": "toslink", "signal": "spdif" },
+        { "portId": "out-optical", "dir": "out", "connector": "toslink", "signal": "spdif" },
+        { "portId": "in-spdif", "dir": "in", "connector": "rca", "signal": "spdif" },
+        { "portId": "out-spdif", "dir": "out", "connector": "rca", "signal": "spdif" },
+        { "portId": "out-wclk", "dir": "out", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ]
+    },
+    {
+      "id": "genelec-8040b",
+      "label": "Genelec 8040B",
+      "levels": [],
+      "realWorld": {
+        "brand": "Genelec", "model": "8040B", "category": "studio-monitor",
+        "typicalUse": "Genelec 8040B (studio-monitor)",
+        "notes": "Built from the equipment plan (2026-11-12); size 237 x 223 x 365 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.genelec.com/8040b. Ports: documented in the asset spec (https://www.genelec.com/8040b). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "in-analog", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted curved-cabinet model (public/assets/genelec-8040b.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "in-analog", "to": ["transducer"] }
+      ]
+    },
+    {
+      "id": "midas-m32",
+      "label": "Midas M32",
+      "levels": [],
+      "realWorld": {
+        "brand": "Midas", "model": "M32", "category": "console-digital",
+        "typicalUse": "Midas M32 (console-digital)",
+        "notes": "Built from the equipment plan (2026-11-12); size 891 x 612 x 256 mm (w x d x h) (datasheet, size confidence ok). Size source: https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf. Ports: documented in the asset spec (https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf)."
+      },
+      "ports": [
+        { "portId": "in-mic-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-5", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-6", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-7", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-8", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-talkback", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-main-l", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-main-r", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-mono", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-mix-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-mix-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-mix-3", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "in-aux-1", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-aux-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-mon-l", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-mon-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "aes50-a", "dir": "bidir", "connector": "ethercon", "signal": "aoip" },
+        { "portId": "aes50-b", "dir": "bidir", "connector": "ethercon", "signal": "aoip" },
+        { "portId": "usb-a", "dir": "bidir", "connector": "usb-a", "signal": "usb-audio" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-mic-1", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-2", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-3", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-4", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-5", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-6", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-7", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-mic-8", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-talkback", "to": ["out-main-l", "out-main-r"] },
+        { "from": "in-aux-1", "to": ["out-main-l", "out-main-r"] }
+      ]
+    },
+    {
+      "id": "orban-optimod-6300",
+      "label": "Orban OPTIMOD 6300",
+      "levels": [],
+      "realWorld": {
+        "brand": "Orban", "model": "OPTIMOD 6300", "category": "broadcast",
+        "typicalUse": "Orban OPTIMOD 6300 (broadcast)",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 362 x 45 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.orban.com/specifications-optimod6300. Ports: documented in the asset spec (https://www.orban.com/specifications-optimod6300)."
+      },
+      "ports": [
+        { "portId": "in-analog-l", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-analog-r", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-aes", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "in-sync", "dir": "in", "connector": "bnc", "signal": "wordclock", "flags": ["isClockSlave"] },
+        { "portId": "out-analog-l", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-analog-r", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-aes-1", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "out-aes-2", "dir": "out", "connector": "xlr3-m", "signal": "aes3" }
+      ],
+      "routing": [
+        { "from": "in-analog-l", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2"] },
+        { "from": "in-analog-r", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2"] },
+        { "from": "in-aes", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2"] }
+      ]
+    },
+    {
+      "id": "sennheiser-e-609-silver",
+      "label": "Sennheiser e 609 silver",
+      "levels": [],
+      "realWorld": {
+        "brand": "Sennheiser", "model": "e 609 silver", "category": "microphone",
+        "typicalUse": "Sennheiser e 609 silver (microphone)",
+        "notes": "Built from the equipment plan (2026-11-12); size 55 x 34 x 134 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.sennheiser.com/globalassets/digizuite/41674-en-sp_1206_v1.0_e_609_silver_product_specification_en.pdf. Ports: documented in the asset spec (https://sennheiser.com/globalassets/digizuite/50153-en-e609_quick_guide_06_2024.pdf)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level" }
+      ]
+    },
+    {
+      "id": "shure-qlx-d-receiver",
+      "label": "Shure QLX-D QLXD4 receiver",
+      "levels": [],
+      "realWorld": {
+        "brand": "Shure", "model": "QLX-D QLXD4 receiver", "category": "wireless",
+        "typicalUse": "Shure QLX-D QLXD4 receiver (wireless)",
+        "notes": "Built from the equipment plan (2026-11-12); size 197 x 151 x 41 mm (w x d x h) (datasheet, size confidence ok). Size source: https://pubs.shure.com/view/guide/QLXD/en-US.pdf. Ports: documented in the asset spec (https://pubs.shure.com/view/guide/QLXD/en-US.pdf)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-14", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" }
+      ]
+    },
+    {
+      "id": "shure-slxd1-bodypack",
+      "label": "Shure SLXD1 bodypack transmitter",
+      "levels": [],
+      "realWorld": {
+        "brand": "Shure", "model": "SLXD1 bodypack transmitter", "category": "wireless",
+        "typicalUse": "Shure SLXD1 bodypack transmitter (wireless)",
+        "notes": "Built from the equipment plan (2026-11-12); size 98 x 68 x 25.5 mm (w x d x h) (datasheet, size confidence ok). Size source: https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf. Ports: documented in the asset spec (https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf)."
+      },
+      "ports": [
+        { "portId": "in-ta4", "dir": "in", "connector": "mini-xlr-ta4", "signal": "mic-level", "flags": ["isUnbalanced"] }
+      ]
+    },
+    {
+      "id": "sound-devices-mixpre-6-ii",
+      "label": "Sound Devices MixPre-6 II",
+      "levels": [],
+      "realWorld": {
+        "brand": "Sound Devices", "model": "MixPre-6 II", "category": "recorder",
+        "typicalUse": "Sound Devices MixPre-6 II (recorder)",
+        "notes": "Built from the equipment plan (2026-11-12); size 166 x 118 x 36 mm (w x d x h) (datasheet, size confidence ok). Size source: https://store.sounddevices.com/product/mixpre-6-ii/. Ports: documented in the asset spec (https://www.toneart-shop.de/media/specs/sound-devices-mixpre-6-ii.pdf)."
+      },
+      "ports": [
+        { "portId": "in-xlr-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-xlr-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-xlr-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-xlr-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-main", "dir": "out", "connector": "trs-35mm", "signal": "line-level-consumer" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" }
+      ]
+    },
+    {
+      "id": "ua-la-2a",
+      "label": "Universal Audio LA-2A",
+      "levels": [],
+      "realWorld": {
+        "brand": "Universal Audio", "model": "LA-2A", "category": "outboard",
+        "typicalUse": "Universal Audio LA-2A (outboard)",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 184 x 133 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.adorama.com/uala2ad.html. Ports: documented in the asset spec (https://www.adorama.com/col/productManuals/UALA2AD.pdf)."
+      },
+      "ports": [
+        { "portId": "in-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" }
+      ],
+      "routing": [
+        { "from": "in-xlr", "to": ["out-xlr"] }
+      ]
+    },
+    {
+      "id": "yamaha-dxr12-mkii",
+      "label": "Yamaha DXR12 mkII",
+      "levels": [],
+      "realWorld": {
+        "brand": "Yamaha", "model": "DXR12 mkII", "category": "powered-speaker",
+        "typicalUse": "Yamaha DXR12 mkII (powered-speaker)",
+        "notes": "Built from the equipment plan (2026-11-12); size 362 x 350 x 601 mm (w x d x h) (datasheet, size confidence ok). Size source: https://usa.yamaha.com/products/proaudio/speakers/dxr/specs.html. Ports: documented in the asset spec (https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-DXR12MKII_userGuide.pdf). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "in-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-phone", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro", "flags": ["isUnbalanced"] },
+        { "portId": "thru-out", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "in-rca-l", "dir": "in", "connector": "rca", "signal": "line-level-consumer", "flags": ["isUnbalanced"] },
+        { "portId": "in-rca-r", "dir": "in", "connector": "rca", "signal": "line-level-consumer", "flags": ["isUnbalanced"] },
+        { "portId": "link-out", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted curved-cabinet model (public/assets/yamaha-dxr12-mkii.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "in-xlr", "to": ["transducer"] },
+        { "from": "in-phone", "to": ["transducer"] },
+        { "from": "in-rca-l", "to": ["transducer"] },
+        { "from": "in-rca-r", "to": ["transducer"] }
+      ]
+    },
+    {
+      "id": "zoom-podtrak-p4",
+      "label": "Zoom PodTrak P4",
+      "levels": [],
+      "realWorld": {
+        "brand": "Zoom", "model": "PodTrak P4", "category": "console-podcast",
+        "typicalUse": "Zoom PodTrak P4 (console-podcast)",
+        "notes": "Built from the equipment plan (2026-11-12); size 112 x 155 x 47 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.thomann.de/be/zoom_podtrak_p4.htm. Ports: documented in the asset spec (https://www.thomannmusic.com/zoom_podtrak_p4.htm)."
+      },
+      "ports": [
+        { "portId": "in-mic-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-phones-1", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" },
+        { "portId": "out-phones-2", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" },
+        { "portId": "out-phones-3", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" },
+        { "portId": "out-phones-4", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" },
+        { "portId": "in-phone", "dir": "in", "connector": "trs-35mm", "signal": "line-level-consumer" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" }
+      ],
+      "routing": [
+        { "from": "in-mic-1", "to": ["usb"] },
+        { "from": "in-mic-2", "to": ["usb"] },
+        { "from": "in-mic-3", "to": ["usb"] },
+        { "from": "in-mic-4", "to": ["usb"] },
+        { "from": "in-phone", "to": ["usb"] }
+      ]
     }
   ],
 

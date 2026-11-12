@@ -2209,6 +2209,323 @@
    "outcome": "beta-modelled",
    "proposalBefore": null,
    "proposalIndex": null
+  },
+  "audinate-dante-avio-install": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "avid-s1": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "behringer-xenyx-q1202usb": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "crown-xti-4002": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "eaton-5p-1u-ups": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "empirical-labs-distressor": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "focusrite-clarett-plus-8pre": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "genelec-8040b": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "krk-rokit-5-g4": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "midas-m32": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "netgear-m4250-av-switch": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "neutrik-nys-spp-l1": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "orban-optimod-6300": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "qsc-k10-2": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "rode-rodecaster-duo": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "sennheiser-e-609-silver": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "shure-qlx-d-receiver": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "shure-slxd1-bodypack": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "sound-devices-mixpre-6-ii": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "tascam-model-12": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "ua-la-2a": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "yamaha-dxr12-mkii": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "zoom-podtrak-p4": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "canare-162u-x21": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "canare-162u-x21",
+    "label": "Canare 162U-X21 (pre-loaded XLR connector panel)",
+    "levels": [],
+    "realWorld": {
+     "brand": "Canare",
+     "model": "162U-X21 (pre-loaded XLR connector panel)",
+     "category": "patchbay",
+     "typicalUse": "tie lines between rooms",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/patchbays.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Teaches tie lines and XLR gender flipping (male front/female rear and the reverse) with existing xlr3 ids"
+    },
+    "ports": [
+     {
+      "portId": "bidir-front-upper-row-xj3m-p3fa-1",
+      "dir": "bidir",
+      "connector": "xlr3-m",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "bidir-front-upper-row-xj3m-p3fa-2",
+      "dir": "bidir",
+      "connector": "xlr3-m",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "bidir-rear-upper-row-xj3m-p3fa-1",
+      "dir": "bidir",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "bidir-rear-upper-row-xj3m-p3fa-2",
+      "dir": "bidir",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "bidir-front-lower-row-xj3f-p3ma-1",
+      "dir": "bidir",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "bidir-front-lower-row-xj3f-p3ma-2",
+      "dir": "bidir",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "bidir-rear-lower-row-xj3f-p3ma-1",
+      "dir": "bidir",
+      "connector": "xlr3-m",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "bidir-rear-lower-row-xj3f-p3ma-2",
+      "dir": "bidir",
+      "connector": "xlr3-m",
+      "signal": "mic-level"
+     }
+    ],
+    "sizeMm": {
+     "w": 482.6,
+     "d": 217,
+     "h": 88.1
+    }
+   },
+   "proposalIndex": 88
+  },
+  "motu-828": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "motu-828",
+    "label": "MOTU 828 (2024)",
+    "levels": [],
+    "realWorld": {
+     "brand": "MOTU",
+     "model": "828 (2024)",
+     "category": "audio-interface",
+     "typicalUse": "project studio hub with ADAT expansion",
+     "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Mic inserts, ADAT banks, S/PDIF coax, word clock thru and XLR mains: a complete studio-hub wiring exercise."
+    },
+    "ports": [
+     {
+      "portId": "in-mic-line-instrument-combo-inputs-xlr-trs-combo-1",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "in-mic-line-instrument-combo-inputs-xlr-trs-combo-2",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "bidir-mic-insert-send-return-1",
+      "dir": "bidir",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "bidir-mic-insert-send-return-2",
+      "dir": "bidir",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-line-inputs-1",
+      "dir": "in",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-line-inputs-2",
+      "dir": "in",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-main-outputs-1",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-main-outputs-2",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-line-outputs-dc-coupled-1",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-line-outputs-dc-coupled-2",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-headphone-outputs-1",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "headphone-level"
+     },
+     {
+      "portId": "out-headphone-outputs-2",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "headphone-level"
+     },
+     {
+      "portId": "bidir-s-pdif-coax-in-out-1",
+      "dir": "bidir",
+      "connector": "rca",
+      "signal": "spdif"
+     },
+     {
+      "portId": "bidir-s-pdif-coax-in-out-2",
+      "dir": "bidir",
+      "connector": "rca",
+      "signal": "spdif"
+     },
+     {
+      "portId": "bidir-word-clock-in-out-thru-1",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "wordclock"
+     },
+     {
+      "portId": "bidir-word-clock-in-out-thru-2",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "wordclock"
+     },
+     {
+      "portId": "bidir-usb-host",
+      "dir": "bidir",
+      "connector": "usb-c",
+      "signal": "usb-audio"
+     },
+     {
+      "portId": "in-ac-mains-in",
+      "dir": "in",
+      "connector": "iec-c14",
+      "signal": "mains-power"
+     }
+    ],
+    "sizeMm": {
+     "w": 483,
+     "d": 311,
+     "h": 44.5
+    }
+   },
+   "proposalIndex": 50
   }
  }
 }

@@ -8494,6 +8494,589 @@
     "d": 145,
     "h": 132
    }
+  },
+  {
+   "id": "behringer-xenyx-q1202usb",
+   "label": "Behringer Xenyx Q1202USB",
+   "levels": [],
+   "realWorld": {
+    "brand": "Behringer",
+    "model": "Xenyx Q1202USB",
+    "category": "console-analog",
+    "typicalUse": "Behringer Xenyx Q1202USB (console-analog)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 250 x 248 x 50 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-st-l",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-st-r",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    }
+   ],
+   "sizeMm": {
+    "w": 250,
+    "d": 248,
+    "h": 50
+   }
+  },
+  {
+   "id": "eaton-5p-1u-ups",
+   "label": "Eaton 5P 1U rack UPS (5P1000R / 5P1500R)",
+   "levels": [],
+   "realWorld": {
+    "brand": "Eaton",
+    "model": "5P 1U rack UPS (5P1000R / 5P1500R)",
+    "category": "power",
+    "typicalUse": "Eaton 5P 1U rack UPS (5P1000R / 5P1500R) (power)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 442 x 508 x 43 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "out-1",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-2",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-3",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-4",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "out-5",
+     "dir": "out",
+     "connector": "iec-c13",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    }
+   ],
+   "sizeMm": {
+    "w": 442,
+    "d": 508,
+    "h": 43
+   }
+  },
+  {
+   "id": "empirical-labs-distressor",
+   "label": "Empirical Labs Distressor EL8",
+   "levels": [],
+   "realWorld": {
+    "brand": "Empirical Labs",
+    "model": "Distressor EL8",
+    "category": "outboard",
+    "typicalUse": "Empirical Labs Distressor EL8 (outboard)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 483 x 254 x 44 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-xlr",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-trs",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-xlr",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-trs",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    }
+   ],
+   "sizeMm": {
+    "w": 483,
+    "d": 254,
+    "h": 44
+   }
+  },
+  {
+   "id": "krk-rokit-5-g4",
+   "label": "KRK Rokit 5 G4",
+   "levels": [],
+   "realWorld": {
+    "brand": "KRK",
+    "model": "Rokit 5 G4",
+    "category": "studio-monitor",
+    "typicalUse": "KRK Rokit 5 G4 (studio-monitor)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 190 x 241 x 285 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-combo",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "power-in",
+     "dir": "in",
+     "connector": "iec-c14",
+     "signal": "mains-power"
+    }
+   ],
+   "sizeMm": {
+    "w": 190,
+    "d": 241,
+    "h": 285
+   }
+  },
+  {
+   "id": "netgear-m4250-av-switch",
+   "label": "Netgear M4250 AV managed switch",
+   "levels": [],
+   "realWorld": {
+    "brand": "Netgear",
+    "model": "M4250 AV managed switch",
+    "category": "network-switch",
+    "typicalUse": "Netgear M4250 AV managed switch (network-switch)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 440 x 257 x 43.2 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "port-1",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-2",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-3",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-4",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-5",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-6",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-7",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "port-8",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    }
+   ],
+   "sizeMm": {
+    "w": 440,
+    "d": 257,
+    "h": 43.2
+   }
+  },
+  {
+   "id": "neutrik-nys-spp-l1",
+   "label": "Neutrik NYS-SPP-L1",
+   "levels": [],
+   "realWorld": {
+    "brand": "Neutrik",
+    "model": "NYS-SPP-L1",
+    "category": "patchbay",
+    "typicalUse": "Neutrik NYS-SPP-L1 (patchbay)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 482 x 64 x 44 mm (w x d x h) (sources disagree on a dimension) (estimate, size confidence conflict); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "front-1",
+     "dir": "bidir",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "front-2",
+     "dir": "bidir",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "rear-1",
+     "dir": "bidir",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "rear-2",
+     "dir": "bidir",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    }
+   ],
+   "sizeMm": {
+    "w": 482,
+    "d": 64,
+    "h": 44
+   }
+  },
+  {
+   "id": "qsc-k10-2",
+   "label": "QSC K10.2",
+   "levels": [],
+   "realWorld": {
+    "brand": "QSC",
+    "model": "K10.2",
+    "category": "powered-speaker",
+    "typicalUse": "QSC K10.2 (powered-speaker)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 320 x 300 x 519 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (documented: https://www.qscaudio.com/index.php?id=12708)."
+   },
+   "ports": [
+    {
+     "portId": "in-combo-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-combo-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-aux",
+     "dir": "in",
+     "connector": "trs-35mm",
+     "signal": "line-level-consumer"
+    },
+    {
+     "portId": "thru-out-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-mix",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "power-in",
+     "dir": "in",
+     "connector": "iec-c14",
+     "signal": "mains-power"
+    }
+   ],
+   "sizeMm": {
+    "w": 320,
+    "d": 300,
+    "h": 519
+   }
+  },
+  {
+   "id": "rode-rodecaster-duo",
+   "label": "RODE Rodecaster Duo",
+   "levels": [],
+   "realWorld": {
+    "brand": "RODE",
+    "model": "Rodecaster Duo",
+    "category": "console-podcast",
+    "typicalUse": "RODE Rodecaster Duo (console-podcast)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 235 x 225 x 76 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-combo-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "usb-1",
+     "dir": "bidir",
+     "connector": "usb-c",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "usb-2",
+     "dir": "bidir",
+     "connector": "usb-c",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "net",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "out-phones-1",
+     "dir": "out",
+     "connector": "trs-35mm",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "out-phones-2",
+     "dir": "out",
+     "connector": "trs-35mm",
+     "signal": "headphone-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 235,
+    "d": 225,
+    "h": 76
+   }
+  },
+  {
+   "id": "tascam-model-12",
+   "label": "TASCAM Model 12",
+   "levels": [],
+   "realWorld": {
+    "brand": "TASCAM",
+    "model": "Model 12",
+    "category": "console-analog",
+    "typicalUse": "TASCAM Model 12 (console-analog)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 343 x 360 x 98.8 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-combo-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-3",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-combo-4",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-line-1",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-line-2",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-line-3",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-line-4",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-l",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-r",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones-1",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "out-phones-2",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-c",
+     "signal": "usb-audio"
+    }
+   ],
+   "sizeMm": {
+    "w": 343,
+    "d": 360,
+    "h": 98.8
+   }
   }
  ],
  "skipped": [
