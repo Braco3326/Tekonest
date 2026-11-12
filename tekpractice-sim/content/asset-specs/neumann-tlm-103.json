@@ -1,0 +1,131 @@
+{
+  "id": "neumann-tlm-103",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 60,
+    "h": 132,
+    "d": 60
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 30,
+      "yMm": 30,
+      "confidence": "guess",
+      "openingMm": 19,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.neumann.com/en-en/products/microphones/tlm-103/",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        44
+      ],
+      [
+        2,
+        50
+      ],
+      [
+        5,
+        54
+      ],
+      [
+        9,
+        56
+      ],
+      [
+        50,
+        56
+      ],
+      [
+        74,
+        56
+      ],
+      [
+        76,
+        58
+      ],
+      [
+        79,
+        60
+      ],
+      [
+        100,
+        60
+      ],
+      [
+        121,
+        60
+      ],
+      [
+        124,
+        59.4
+      ],
+      [
+        127,
+        57
+      ],
+      [
+        129.6,
+        50
+      ],
+      [
+        131.2,
+        36
+      ],
+      [
+        132,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#b4b6b9"
+      },
+      {
+        "fromMm": 76,
+        "colour": "#bfc1c4"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-en/products/microphones/tlm-103/",
+      "note": "equipment plan source (research grade: datasheet); size 60 x 60 x 132 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-en/products/microphones/tlm-103/",
+      "note": "Neumann TLM 103 page (opened and read): \"Matching connector: XLR 3 F\" (so the microphone has the male XLR-3: the plan summary says \"XLR-3 female\", which is the cable-side connector), \"Supply voltage (P48, IEC 61938): 48 V +/- 4 V\", \"Current consumption 3 mA\", Diameter 60 mm, Length 132 mm, weight about 450 g, color nickel (TLM 103 mt is black). Documents one XLR output and P48 (condenser: requiresPhantom)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.neumann.com/en-en/products/microphones/tlm-103/",
+      "note": "build.profile: a 56 mm body, a step to the 60 mm head basket at 76 mm, and a rounded top. No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.neumann.com/en-en/products/microphones/tlm-103/",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/neumann-tlm-103.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A satin-nickel body with a seam ring and a wire-mesh basket on the head. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess."
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "id": "royer-r-121",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 25,
+    "h": 155.7,
+    "d": 25
+  },
+  "ports": [
+    {
+      "portId": "out-mic-output-male-xlr-3-pin-pin-2-hot",
+      "face": "bottom",
+      "xMm": 12.5,
+      "yMm": 12.5,
+      "confidence": "guess",
+      "openingMm": 17,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "flags": [
+        "isRibbon"
+      ]
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://royerlabs.com/pdf/cutsheets/R-121cutsheet.pdf",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        19
+      ],
+      [
+        2,
+        22.5
+      ],
+      [
+        4,
+        24
+      ],
+      [
+        44,
+        24
+      ],
+      [
+        47,
+        25
+      ],
+      [
+        100,
+        25
+      ],
+      [
+        118,
+        25
+      ],
+      [
+        121,
+        24
+      ],
+      [
+        145,
+        24
+      ],
+      [
+        149,
+        23.4
+      ],
+      [
+        152,
+        20
+      ],
+      [
+        154.4,
+        12
+      ],
+      [
+        155.7,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#9b9da1"
+      },
+      {
+        "fromMm": 118,
+        "colour": "#8c8e92"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://royerlabs.com/pdf/cutsheets/R-121cutsheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 25 x 25 x 155.7 mm (w x d x h) with d ESTIMATED from the category footprint; port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.royerlabs.com/r-121",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://royerlabs.com/pdf/cutsheets/R-121cutsheet.pdf",
+      "note": "Royer R-121 cut sheet (downloaded and read as text): \"Output Connector: Male XLR 3-pin (Pin 2 Hot)\", \"Dimensions: 156mm L X 25mm W (6.25 in L X 1 in W)\", weight 244 g, finish Dull Satin Nickel (Matte Black Chrome optional), passive ribbon, figure-8. SIZE IS AN ESTIMATE (plan sizeConfidence partial): the sheet gives length and width only, no depth; the plan row carries 155.7 mm and 25 mm. A revolve needs a round footprint, so the depth is ASSUMED equal to the width (25 mm): that is a guess, the real head block may be rectangular. Documents one male XLR output (portsDocumented; the port id is the Bêta proposal id, kept so saved cables survive)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.royerlabs.com/r-121",
+      "note": "build.profile: a 24 mm lower tube, a 25 mm body and head, a rounded top; the real head is a rectangular ribbon block, not modelled. No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.royerlabs.com/r-121",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/royer-r-121.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A satin-nickel tube with a seam ring and vertical ribbon-slot windows on the head (not a copy of any photo). out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess."
+    }
+  ]
+}

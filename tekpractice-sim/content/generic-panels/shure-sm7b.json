@@ -1,0 +1,75 @@
+{
+  "note": "Unrolled side surface of the SM7B lathe (build.projection wrap): 194.77 mm around (pi x 62) by 192.5 mm tall. Generic artwork: plain dark body with seam rings, a switch-plate window on the back of the body and a fine dark foam grid on the head. No brand mark, no lettering.",
+  "faces": {
+    "wrap": {
+      "wMm": 194.78,
+      "hMm": 192.5,
+      "pxPerMm": 8,
+      "base": "#3c3e42",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 111,
+          "w": 194.78,
+          "h": 1,
+          "fill": "#25262a"
+        },
+        {
+          "kind": "rect",
+          "x": 132.08,
+          "y": 62,
+          "w": 28,
+          "h": 18,
+          "fill": "#1e1f22",
+          "radius": 1.5
+        },
+        {
+          "kind": "rect",
+          "x": 137.08,
+          "y": 69,
+          "w": 7,
+          "h": 4,
+          "fill": "#8a8c90",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 148.08,
+          "y": 69,
+          "w": 7,
+          "h": 4,
+          "fill": "#8a8c90",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 117,
+          "w": 194.78,
+          "h": 75.5,
+          "fill": "#2a2b2e"
+        },
+        {
+          "kind": "grid",
+          "x": 0,
+          "y": 119,
+          "w": 194.78,
+          "h": 72,
+          "pitch": 1.5,
+          "line": 0.28,
+          "fill": "#232427",
+          "stroke": "#303135"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 117,
+          "w": 194.78,
+          "h": 1.2,
+          "fill": "#1c1d1f"
+        }
+      ]
+    }
+  }
+}

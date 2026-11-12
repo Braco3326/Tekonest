@@ -1,0 +1,141 @@
+{
+  "id": "rode-nt1-5th-gen",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 52,
+    "h": 189,
+    "d": 52
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 26,
+      "yMm": 26,
+      "confidence": "guess",
+      "openingMm": 16,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "flags": [
+        "requiresPhantom"
+      ]
+    },
+    {
+      "portId": "bidir-usb",
+      "face": "bottom",
+      "xMm": 26,
+      "yMm": 41.5,
+      "confidence": "guess",
+      "openingMm": 8,
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        38
+      ],
+      [
+        2,
+        42
+      ],
+      [
+        5,
+        44
+      ],
+      [
+        100,
+        44
+      ],
+      [
+        103,
+        45
+      ],
+      [
+        106,
+        48
+      ],
+      [
+        109,
+        51
+      ],
+      [
+        112,
+        52
+      ],
+      [
+        150,
+        52
+      ],
+      [
+        183,
+        52
+      ],
+      [
+        185.5,
+        51
+      ],
+      [
+        187.5,
+        47
+      ],
+      [
+        188.6,
+        36
+      ],
+      [
+        189,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#2b2c2f"
+      },
+      {
+        "fromMm": 106,
+        "colour": "#2f3033"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 52 x 52 x 189 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf",
+      "note": "RODE NT1 5th Generation datasheet (downloaded and read as text): \"Analogue Output Connection: 3-pin XLR\", \"Analogue Power Requirements: Via XLR: P48\", \"Digital Output Connection: USB-C\", \"Digital Power Requirements: Via USB: 5V\", dimensions Length 52 / Width 52 / Height 189 mm, available in black and silver. Documents the connector set: XLR plus USB-C (portsDocumented). The XLR needs phantom (requiresPhantom, condenser trait)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf",
+      "note": "build.profile: a 44 mm body tube and a 52 mm cylindrical basket with rounded top (a side-address large-diaphragm condenser) above a short neck ring. No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess). The datasheet prints 52 x 52 x 189 mm."
+    },
+    {
+      "kind": "reference",
+      "url": "https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/rode-nt1-5th-gen.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A plain black body and a fine metal-mesh basket. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess. bidir-usb: the USB-C port sits on the same base face 15.5 mm from the XLR; the datasheet does not say where, so the position is a guess (the two outline rings may touch)."
+    }
+  ]
+}

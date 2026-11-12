@@ -1,0 +1,149 @@
+{
+  "id": "shure-sm7b",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 62,
+    "h": 192.5,
+    "d": 62
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 31,
+      "yMm": 31,
+      "confidence": "guess",
+      "openingMm": 19,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.crutchfield.com/S-kiyVVVkHwlc/p_183SM7B/Shure-SM7B.html",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        36
+      ],
+      [
+        2,
+        42
+      ],
+      [
+        6,
+        46
+      ],
+      [
+        10,
+        49
+      ],
+      [
+        60,
+        49
+      ],
+      [
+        100,
+        49
+      ],
+      [
+        112,
+        49
+      ],
+      [
+        114,
+        52
+      ],
+      [
+        118,
+        58
+      ],
+      [
+        123,
+        62
+      ],
+      [
+        160,
+        62
+      ],
+      [
+        180,
+        62
+      ],
+      [
+        184,
+        61.5
+      ],
+      [
+        188,
+        59
+      ],
+      [
+        190.5,
+        52
+      ],
+      [
+        192,
+        42
+      ],
+      [
+        192.5,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#3c3e42"
+      },
+      {
+        "fromMm": 118,
+        "colour": "#2a2b2e"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.crutchfield.com/S-kiyVVVkHwlc/p_183SM7B/Shure-SM7B.html",
+      "note": "equipment plan source (research grade: dealer); size 62 x 62 x 192.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.shure.com/en-US/products/microphones/sm7b",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.fullcompass.com/common/files/84824-SM7BSpecSheet.pdf",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.crutchfield.com/S-kiyVVVkHwlc/p_183SM7B/Shure-SM7B.html",
+      "note": "Crutchfield SM7B page (the plan source; the page returned 403 here, its content was read through a web search summary: \"Male XLR\", 62 mm dia x 192.5 mm). The Shure user guide (la-bs.com copy, opened and read) shows one XLR connector (boom configuration drawing), pin 2 hot, dark gray enamel aluminium and steel case with a dark gray foam windscreen, 189.7 mm overall length in its yoke. Documents one male XLR output (portsDocumented)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.la-bs.com/Objets/SM7B_me.pdf",
+      "note": "build.profile: a 49 mm body tube, a step to the 62 mm foam head at about 118 mm and a domed foam top; the yoke, the rear switch cover and the cover plate are not modelled (revolve cannot build them). No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess). The Shure guide drawing prints 48 mm and 63.5 mm, which are not mapped to a part here."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.la-bs.com/Objets/SM7B_me.pdf",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/shure-sm7b.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A plain dark body with seam rings and a fine dark foam texture on the head. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess."
+    }
+  ]
+}

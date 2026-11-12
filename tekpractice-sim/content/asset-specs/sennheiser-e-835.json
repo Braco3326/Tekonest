@@ -1,0 +1,211 @@
+{
+  "id": "sennheiser-e-835",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 48,
+    "h": 180,
+    "d": 48
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 24,
+      "yMm": 24,
+      "confidence": "guess",
+      "openingMm": 19,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        22.13
+      ],
+      [
+        53.95,
+        24.47
+      ],
+      [
+        108,
+        29.35
+      ],
+      [
+        111,
+        29.21
+      ],
+      [
+        112.5,
+        29.75
+      ],
+      [
+        125.5,
+        31.69
+      ],
+      [
+        132.5,
+        31.42
+      ],
+      [
+        134.5,
+        32.62
+      ],
+      [
+        136,
+        35.5
+      ],
+      [
+        136.5,
+        35.96
+      ],
+      [
+        138,
+        36.3
+      ],
+      [
+        139,
+        37.31
+      ],
+      [
+        139.5,
+        38.31
+      ],
+      [
+        143.5,
+        42.52
+      ],
+      [
+        147.5,
+        45.05
+      ],
+      [
+        151.5,
+        45.93
+      ],
+      [
+        153,
+        48
+      ],
+      [
+        156.5,
+        47.93
+      ],
+      [
+        157,
+        47.6
+      ],
+      [
+        158,
+        45.8
+      ],
+      [
+        159.5,
+        45.13
+      ],
+      [
+        161,
+        44.92
+      ],
+      [
+        162,
+        44.06
+      ],
+      [
+        163,
+        43.99
+      ],
+      [
+        164,
+        42.98
+      ],
+      [
+        165.5,
+        42.32
+      ],
+      [
+        166.5,
+        40.91
+      ],
+      [
+        169.5,
+        38.17
+      ],
+      [
+        170,
+        36.84
+      ],
+      [
+        172.5,
+        33.56
+      ],
+      [
+        175.5,
+        27.01
+      ],
+      [
+        176,
+        24.73
+      ],
+      [
+        177.5,
+        20.72
+      ],
+      [
+        179.29,
+        9.88
+      ],
+      [
+        180,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#35363a"
+      },
+      {
+        "fromMm": 108,
+        "colour": "#8d8f94"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 48 x 48 x 180 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf",
+      "note": "Sennheiser e 835 product specification (the plan source; read through a web search summary that quotes \"Connector XLR-3, Dimensions diameter 48 x 180 mm\"; the PDF itself did not download). Documents one XLR-3 output; the gender is not printed, a microphone output is male by convention (documented mating cable end is female)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.sennheiser.com/en-us/catalog/products/microphones/e-835",
+      "note": "build.profile: the lathe profile of the shipped Shure SM58 (a ball-grille handheld) with the head scaled to 48 mm wide and the handle stretched so that the head starts 108 mm up, 180 mm in all. No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.sennheiser.com/en-us/catalog/products/microphones/e-835",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/sennheiser-e-835.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess."
+    }
+  ]
+}

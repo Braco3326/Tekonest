@@ -1,0 +1,45 @@
+{
+  "note": "Unrolled side surface of the K&M 232 lathe (build.projection wrap): 408.41 mm around (pi x 130) by 170 mm tall. Generic artwork: black powder-coated base with two concentric seam rings, plain rod, a lighter thread stub. No brand mark.",
+  "faces": {
+    "wrap": {
+      "wMm": 408.41,
+      "hMm": 170,
+      "pxPerMm": 5,
+      "base": "#2a2b2e",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 14.5,
+          "w": 408.41,
+          "h": 0.8,
+          "fill": "#1a1b1d"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 3.2,
+          "w": 408.41,
+          "h": 0.6,
+          "fill": "#3a3b3f"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 33,
+          "w": 408.41,
+          "h": 0.7,
+          "fill": "#4a4c51"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 160,
+          "w": 408.41,
+          "h": 10,
+          "fill": "#8a8c91"
+        }
+      ]
+    }
+  }
+}

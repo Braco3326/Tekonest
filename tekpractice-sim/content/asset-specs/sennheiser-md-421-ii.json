@@ -1,0 +1,167 @@
+{
+  "id": "sennheiser-md-421-ii",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 49,
+    "h": 215,
+    "d": 49
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 24.5,
+      "yMm": 24.5,
+      "confidence": "guess",
+      "openingMm": 19,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.sennheiser.com/globalassets/digizuite/47848-en-md-421-ii-product-specification-v1.1-en.pdf",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        24
+      ],
+      [
+        2,
+        28
+      ],
+      [
+        5,
+        30
+      ],
+      [
+        38,
+        30
+      ],
+      [
+        42,
+        32
+      ],
+      [
+        70,
+        32
+      ],
+      [
+        75,
+        29
+      ],
+      [
+        88,
+        29
+      ],
+      [
+        98,
+        31
+      ],
+      [
+        108,
+        35
+      ],
+      [
+        120,
+        42
+      ],
+      [
+        135,
+        47.5
+      ],
+      [
+        146,
+        49
+      ],
+      [
+        184,
+        49
+      ],
+      [
+        196,
+        48.5
+      ],
+      [
+        205,
+        46
+      ],
+      [
+        211,
+        40
+      ],
+      [
+        214,
+        30
+      ],
+      [
+        215,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#3a3c40"
+      },
+      {
+        "fromMm": 146,
+        "colour": "#4a4c51"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.sennheiser.com/globalassets/digizuite/47848-en-md-421-ii-product-specification-v1.1-en.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 46 x 49 x 215 mm (w x d x h) (sources disagree on a dimension); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.sennheiser.com/en-us/catalog/products/microphones/md-421-ii/md-421-ii-000984",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.sennheiser.com/globalassets/digizuite/47848-en-md-421-ii-product-specification-v1.1-en.pdf",
+      "note": "Sennheiser MD 421-II product specification v1.1 (downloaded and read as text): \"Connector XLR-3\", \"Dimensions 215 x 46 x 49 mm\", weight about 385 g, five-position bass roll-off switch. SIZE IS AN ESTIMATE (plan sizeConfidence conflict: the sheet prints 46 x 49 mm and another page 48 x 48): a revolve needs a round footprint, so the widest of the sheet, 49 mm, is used for w and d; the 3 mm difference to the 46 mm axis is not modelled. Documents one XLR-3 output (gender not printed; male by convention)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.sennheiser.com/en-us/catalog/products/microphones/md-421-ii/md-421-ii-000984",
+      "note": "build.profile: a 30 mm handle with a slim bass-switch waist, a flared neck and a 49 mm cylindrical head. No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.sennheiser.com/en-us/catalog/products/microphones/md-421-ii/md-421-ii-000984",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/sennheiser-md-421-ii.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A plain handle, a five-notch bass-switch ring and slotted head rings. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.sennheiser.com/globalassets/digizuite/47848-en-md-421-ii-product-specification-v1.1-en.pdf",
+      "note": "Sennheiser MD 421-II product specification v1.1 (downloaded and read as text): \"Connector XLR-3\", \"Dimensions 215 x 46 x 49 mm\", weight about 385 g, five-position bass roll-off switch. SIZE IS AN ESTIMATE (plan sizeConfidence conflict: the sheet prints 46 x 49 mm and another page 48 x 48): a revolve needs a round footprint, so the widest of the sheet, 49 mm, is used for w and d; the 3 mm difference to the 46 mm axis is not modelled. Documents one XLR-3 output (gender not printed; male by convention)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.sennheiser.com/en-us/catalog/products/microphones/md-421-ii/md-421-ii-000984",
+      "note": "build.profile: a 30 mm handle with a slim bass-switch waist, a flared neck and a 49 mm cylindrical head. No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.sennheiser.com/en-us/catalog/products/microphones/md-421-ii/md-421-ii-000984",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/sennheiser-md-421-ii.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A plain handle, a five-notch bass-switch ring and slotted head rings. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess."
+    }
+  ]
+}

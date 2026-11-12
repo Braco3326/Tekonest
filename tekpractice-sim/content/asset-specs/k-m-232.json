@@ -1,0 +1,127 @@
+{
+  "id": "k-m-232",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 130,
+    "h": 170,
+    "d": 130
+  },
+  "ports": [],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 48
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "profile": [
+      [
+        0,
+        118
+      ],
+      [
+        1.5,
+        126
+      ],
+      [
+        3.5,
+        130
+      ],
+      [
+        14,
+        130
+      ],
+      [
+        17,
+        125
+      ],
+      [
+        22,
+        80
+      ],
+      [
+        26,
+        44
+      ],
+      [
+        30,
+        26
+      ],
+      [
+        34,
+        22
+      ],
+      [
+        80,
+        20
+      ],
+      [
+        120,
+        20
+      ],
+      [
+        158,
+        20
+      ],
+      [
+        160,
+        16
+      ],
+      [
+        163,
+        13
+      ],
+      [
+        168,
+        12
+      ],
+      [
+        169.5,
+        9
+      ],
+      [
+        170,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#2a2b2e"
+      },
+      {
+        "fromMm": 34,
+        "colour": "#35363a"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black",
+      "note": "equipment plan source (research grade: datasheet); size 130 x 130 x 170 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black",
+      "note": "K&M 232 page (opened and read through the fetch summary): variant 23200-300-55 black, base diameter 130 mm, height 170 mm, thread 3/8 in, weight 1.34 kg, \"sound-absorbing cast-iron base with black powder-coated screw-in rod\". A mechanical stand with no electrical connector: the connector set is documented as empty (portsDocumented, no ports), like the shipped K&M 210/9."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black",
+      "note": "build.profile: a 130 mm round cast-iron base with a raised cone in the centre, a 20 mm rod and a 3/8 in thread stub at 170 mm; the rod and thread diameters are estimates. No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/k-m-232.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A black powder-coated base with a concentric ring and a plain rod. No ports, nothing to patch."
+    }
+  ]
+}

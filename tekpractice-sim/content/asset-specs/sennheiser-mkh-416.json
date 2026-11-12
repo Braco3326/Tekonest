@@ -1,0 +1,128 @@
+{
+  "id": "sennheiser-mkh-416",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 19,
+    "h": 250,
+    "d": 19
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 9.5,
+      "yMm": 9.5,
+      "confidence": "guess",
+      "openingMm": 15,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        15
+      ],
+      [
+        1.5,
+        18
+      ],
+      [
+        3,
+        19
+      ],
+      [
+        40,
+        19
+      ],
+      [
+        96,
+        19
+      ],
+      [
+        97.5,
+        18.4
+      ],
+      [
+        150,
+        18.4
+      ],
+      [
+        200,
+        18.4
+      ],
+      [
+        236,
+        18.4
+      ],
+      [
+        240,
+        18.2
+      ],
+      [
+        244,
+        17
+      ],
+      [
+        247,
+        13
+      ],
+      [
+        249,
+        7
+      ],
+      [
+        250,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#3a3b3f"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
+      "note": "equipment plan source (research grade: datasheet); size 19 x 19 x 250 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.sennheiser.com/en-us/catalog/products/microphones/mkh-416/mkh-416-001511",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
+      "note": "Sennheiser MKH 416 specs page (opened and read through the fetch summary): \"3-pol. XLR connector\" (gender not printed; male by convention), \"48 V +/- 4 V phantom powering\", \"approx. 2 mA\", \"diameter 19 x 250 mm\", matt black. Documents one XLR output and P48 (condenser, phantom-powered: requiresPhantom)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
+      "note": "build.profile: a 19 mm body ring section and a 18.4 mm interference tube (a shotgun), 250 mm long, a rounded cap; the real tube is also 19 mm over most of its length, the 0.6 mm step only marks the seam. No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/sennheiser-mkh-416.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A matt black tube with six columns of long interference slots. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess. The budget floor is 1000 (a slim pencil tube): the 1500 floor of the mic class would need extra stations that this smooth tube does not have."
+    }
+  ]
+}

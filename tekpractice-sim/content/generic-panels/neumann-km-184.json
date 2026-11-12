@@ -1,0 +1,49 @@
+{
+  "note": "Unrolled side surface of the KM 184 lathe (build.projection wrap): 69.12 mm around (pi x 22) by 107 mm tall. Generic artwork: nickel tube, seam rings, fine mesh capsule head. No brand mark.",
+  "faces": {
+    "wrap": {
+      "wMm": 69.12,
+      "hMm": 107,
+      "pxPerMm": 14,
+      "base": "#a9abaf",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 74.5,
+          "w": 69.12,
+          "h": 0.6,
+          "fill": "#7c7e83"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 77.5,
+          "w": 69.12,
+          "h": 0.6,
+          "fill": "#7c7e83"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 83.2,
+          "w": 69.12,
+          "h": 0.9,
+          "fill": "#6f7176"
+        },
+        {
+          "kind": "weave",
+          "x": 0,
+          "y": 86.5,
+          "w": 69.12,
+          "h": 20,
+          "pitch": 1.15,
+          "line": 0.2,
+          "fill": "#cdcfd2",
+          "stroke": "#8b8d92",
+          "hole": "#4a4c51"
+        }
+      ]
+    }
+  }
+}

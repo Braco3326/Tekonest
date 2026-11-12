@@ -1,0 +1,216 @@
+{
+  "id": "shure-beta-58a",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 50,
+    "h": 160,
+    "d": 50
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 25,
+      "yMm": 25,
+      "confidence": "guess",
+      "openingMm": 19,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        23.05
+      ],
+      [
+        45.04,
+        25.49
+      ],
+      [
+        90.15,
+        30.57
+      ],
+      [
+        93.07,
+        30.43
+      ],
+      [
+        94.52,
+        30.99
+      ],
+      [
+        107.13,
+        33.01
+      ],
+      [
+        113.92,
+        32.73
+      ],
+      [
+        115.86,
+        33.98
+      ],
+      [
+        117.31,
+        36.98
+      ],
+      [
+        117.8,
+        37.46
+      ],
+      [
+        119.26,
+        37.81
+      ],
+      [
+        120.23,
+        38.86
+      ],
+      [
+        120.71,
+        39.9
+      ],
+      [
+        124.59,
+        44.29
+      ],
+      [
+        128.47,
+        46.93
+      ],
+      [
+        132.36,
+        47.84
+      ],
+      [
+        133.81,
+        50
+      ],
+      [
+        137.2,
+        49.93
+      ],
+      [
+        137.69,
+        49.58
+      ],
+      [
+        138.66,
+        47.71
+      ],
+      [
+        140.11,
+        47.01
+      ],
+      [
+        141.57,
+        46.79
+      ],
+      [
+        142.54,
+        45.89
+      ],
+      [
+        143.51,
+        45.82
+      ],
+      [
+        144.47,
+        44.77
+      ],
+      [
+        145.94,
+        44.08
+      ],
+      [
+        146.9,
+        42.62
+      ],
+      [
+        149.82,
+        39.76
+      ],
+      [
+        150.3,
+        38.37
+      ],
+      [
+        152.72,
+        34.96
+      ],
+      [
+        155.63,
+        28.14
+      ],
+      [
+        156.12,
+        25.76
+      ],
+      [
+        157.57,
+        21.59
+      ],
+      [
+        159.31,
+        10.29
+      ],
+      [
+        160,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#3b3b3e"
+      },
+      {
+        "fromMm": 118.02,
+        "colour": "#9a9a9e"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 50 x 50 x 160 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://pubs.shure.com/view/guide/BETA58A/en-US.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf",
+      "note": "Shure Beta 58A specification sheet (downloaded and read as text): \"Connector: Three-pin professional audio (XLR), male\", dynamic (moving coil) supercardioid, net weight 0.278 kg. Documents the connector set: one male XLR output (portsDocumented). The page size drawings do not print a length: 160 mm x 50 mm come from the plan row (Shure guide)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.shure.com/en-US/products/microphones/sm58",
+      "note": "build.profile: the lathe profile of the shipped Shure SM58 (read from its photo, content/asset-specs/shure-sm58.json) scaled by 160/162 along the axis and 50/51 across, because the Beta 58A has the same handle-and-ball-grille layout as the SM58. No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/shure-beta-58a.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A plain handle with seam rings, a neck ring and a diamond-weave grille. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess."
+    }
+  ]
+}

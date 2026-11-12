@@ -1,0 +1,41 @@
+{
+  "note": "Unrolled side surface of the TLM 103 lathe (build.projection wrap): 188.5 mm around (pi x 60) by 132 mm tall. Generic artwork: nickel body, a seam ring, a wire-mesh basket on the head. No brand mark.",
+  "faces": {
+    "wrap": {
+      "wMm": 188.5,
+      "hMm": 132,
+      "pxPerMm": 10,
+      "base": "#b4b6b9",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 74.5,
+          "w": 188.5,
+          "h": 1.2,
+          "fill": "#7f8185"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 76.2,
+          "w": 188.5,
+          "h": 2.5,
+          "fill": "#9fa1a5"
+        },
+        {
+          "kind": "weave",
+          "x": 0,
+          "y": 80,
+          "w": 188.5,
+          "h": 50,
+          "pitch": 1.57,
+          "line": 0.28,
+          "fill": "#d0d2d5",
+          "stroke": "#8d8f94",
+          "hole": "#44464a"
+        }
+      ]
+    }
+  }
+}

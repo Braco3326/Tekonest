@@ -272,7 +272,8 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "royer-r-121",
@@ -300,7 +301,8 @@
     "ribbon",
     "passive"
    ],
-   "sizeConfidence": "partial"
+   "sizeConfidence": "partial",
+   "staged": true
   },
   {
    "id": "shure-psm-300",
@@ -630,7 +632,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "conflict"
+   "sizeConfidence": "conflict",
+   "staged": true
   },
   {
    "id": "shure-beta-58a",
@@ -659,7 +662,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "shure-slxd2-handheld",
@@ -718,7 +722,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "ua-1176ln",
@@ -1150,7 +1155,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "k-m-259",
@@ -1203,7 +1209,8 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "neumann-tlm-103",
@@ -1231,7 +1238,8 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "sennheiser-e-835",
@@ -1259,7 +1267,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "sennheiser-mkh-416",
@@ -1288,7 +1297,8 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "soundcraft-ui24r",

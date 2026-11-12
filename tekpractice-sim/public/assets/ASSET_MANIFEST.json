@@ -3094,6 +3094,616 @@
       "source": "modeled",
       "license": "internal (own work)",
       "trademark": "generic"
+    },
+    {
+      "status": "ok",
+      "id": "shure-beta-58a",
+      "kind": "device",
+      "tris": 4350,
+      "ports": 1,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:56:42.881Z",
+      "specSource": "https://content-files.shure.com/Pubs/BETA58A/beta58a-specification-sheet-english.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "sennheiser-e-835",
+      "kind": "device",
+      "tris": 4350,
+      "ports": 1,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:56:48.831Z",
+      "specSource": "https://assets.sennheiser.com/global-downloads/file/10874/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "shure-sm7b",
+      "kind": "device",
+      "tris": 2046,
+      "ports": 1,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:56:51.230Z",
+      "specSource": "https://www.crutchfield.com/S-kiyVVVkHwlc/p_183SM7B/Shure-SM7B.html",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "sennheiser-md-421-ii",
+      "kind": "device",
+      "tris": 2302,
+      "ports": 1,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:56:52.976Z",
+      "specSource": "https://www.sennheiser.com/globalassets/digizuite/47848-en-md-421-ii-product-specification-v1.1-en.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "rode-nt1-5th-gen",
+      "kind": "device",
+      "tris": 1662,
+      "ports": 2,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:56:54.959Z",
+      "specSource": "https://edge.rode.com/pdf/products/1184/NT1%205th%20GEN_Datasheet.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "neumann-km-184",
+      "kind": "device",
+      "tris": 1918,
+      "ports": 1,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:56:57.247Z",
+      "specSource": "https://www.neumann.com/en-us/products/microphones/km-184-series-180",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "neumann-tlm-103",
+      "kind": "device",
+      "tris": 1790,
+      "ports": 1,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:56:59.069Z",
+      "specSource": "https://www.neumann.com/en-en/products/microphones/tlm-103/",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "sennheiser-mkh-416",
+      "kind": "device",
+      "tris": 1662,
+      "ports": 1,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:57:01.383Z",
+      "specSource": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "royer-r-121",
+      "kind": "device",
+      "tris": 1534,
+      "ports": 1,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:57:03.060Z",
+      "specSource": "https://royerlabs.com/pdf/cutsheets/R-121cutsheet.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "k-m-232",
+      "kind": "device",
+      "tris": 1534,
+      "ports": 0,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_wrap.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:57:05.150Z",
+      "specSource": "https://www.k-m.de/en/products/microphone-stands/table-stands-table-bases/232-table-microphone-stand-black",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     }
   ],
   "environments": [

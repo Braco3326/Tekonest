@@ -1,0 +1,57 @@
+{
+  "note": "Unrolled side surface of the e 835 lathe (build.projection wrap): 150.8 mm around (pi x 48) by 180 mm tall. Generic artwork: plain handle, seam rings, neck ring, diamond-weave grille. No brand mark.",
+  "faces": {
+    "wrap": {
+      "wMm": 150.8,
+      "hMm": 180,
+      "pxPerMm": 12.4,
+      "base": "#35363a",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 100,
+          "w": 150.8,
+          "h": 1.2,
+          "fill": "#202124"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 105,
+          "w": 150.8,
+          "h": 0.9,
+          "fill": "#202124"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 112,
+          "w": 150.8,
+          "h": 4.2,
+          "fill": "#6d6e73"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 113.8,
+          "w": 150.8,
+          "h": 0.5,
+          "fill": "#2d2d30"
+        },
+        {
+          "kind": "weave",
+          "x": 0,
+          "y": 116.5,
+          "w": 150.8,
+          "h": 63.5,
+          "pitch": 1.6,
+          "line": 0.34,
+          "fill": "#adafb4",
+          "stroke": "#5f6166",
+          "hole": "#3a3b3f"
+        }
+      ]
+    }
+  }
+}

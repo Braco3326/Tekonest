@@ -1,0 +1,135 @@
+{
+  "id": "neumann-km-184",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 22,
+    "h": 107,
+    "d": 22
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 11,
+      "yMm": 11,
+      "confidence": "guess",
+      "openingMm": 15,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.neumann.com/en-us/products/microphones/km-184-series-180",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        17
+      ],
+      [
+        1.5,
+        20
+      ],
+      [
+        3.5,
+        22
+      ],
+      [
+        40,
+        22
+      ],
+      [
+        74,
+        22
+      ],
+      [
+        76,
+        21
+      ],
+      [
+        78,
+        22
+      ],
+      [
+        82,
+        22
+      ],
+      [
+        84,
+        21.4
+      ],
+      [
+        86,
+        22
+      ],
+      [
+        96,
+        22
+      ],
+      [
+        100,
+        21.2
+      ],
+      [
+        103,
+        19
+      ],
+      [
+        105.5,
+        14
+      ],
+      [
+        106.6,
+        7
+      ],
+      [
+        107,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#a9abaf"
+      },
+      {
+        "fromMm": 84,
+        "colour": "#c3c5c8"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-us/products/microphones/km-184-series-180",
+      "note": "equipment plan source (research grade: datasheet); size 22 x 22 x 107 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-us/products/microphones/km-184-series-180",
+      "note": "Neumann KM 184 page (opened and read): \"Matching connector: XLR 3 F\" (so the microphone itself has the male XLR-3), \"Supply voltage (P48, IEC 61938): 48 V +/- 4 V\", Diameter 22 mm, Length 107 mm, weight about 80 g, color nickel. Documents one XLR output (portsDocumented) and the P48 supply (condenser: requiresPhantom)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.neumann.com/en-us/products/microphones/km-184-series-180",
+      "note": "build.profile: a straight 22 mm pencil tube with two fine seam rings and a rounded grille cap. No product photo was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured from a photo or drawing: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.neumann.com/en-us/products/microphones/km-184-series-180",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/neumann-km-184.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A satin-nickel tube with seam rings and a fine mesh over the capsule head. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess. The XLR opening is 15 mm because the base of the 22 mm tube is narrower than a full XLR shell."
+    }
+  ]
+}

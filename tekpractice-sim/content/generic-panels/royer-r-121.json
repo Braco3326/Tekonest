@@ -1,0 +1,181 @@
+{
+  "note": "Unrolled side surface of the R-121 lathe (build.projection wrap): 78.54 mm around (pi x 25) by 155.7 mm tall. Generic artwork: satin-nickel tube, seam rings, a head with vertical ribbon slits. No brand mark.",
+  "faces": {
+    "wrap": {
+      "wMm": 78.54,
+      "hMm": 155.7,
+      "pxPerMm": 12,
+      "base": "#9b9da1",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 44,
+          "w": 78.54,
+          "h": 0.8,
+          "fill": "#6f7176"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 116,
+          "w": 78.54,
+          "h": 1.2,
+          "fill": "#6f7176"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 118,
+          "w": 78.54,
+          "h": 28,
+          "fill": "#5a5c61"
+        },
+        {
+          "kind": "rect",
+          "x": 1.2,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 5.56,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 9.93,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 14.29,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 18.65,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 23.02,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 27.38,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 31.74,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 36.11,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 40.47,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 44.83,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 49.2,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 53.56,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 57.92,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 62.29,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 66.65,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 71.01,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        },
+        {
+          "kind": "rect",
+          "x": 75.38,
+          "y": 118,
+          "w": 1.1,
+          "h": 28,
+          "fill": "#2b2c30"
+        }
+      ]
+    }
+  }
+}
