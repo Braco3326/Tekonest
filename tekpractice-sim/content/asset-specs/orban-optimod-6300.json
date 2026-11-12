@@ -1,0 +1,152 @@
+{
+  "id": "orban-optimod-6300",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 45,
+    "d": 362
+  },
+  "ports": [
+    {
+      "portId": "in-analog-l",
+      "face": "io",
+      "xMm": 34,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-analog-r",
+      "face": "io",
+      "xMm": 60.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 86.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "in-sync",
+      "face": "io",
+      "xMm": 113.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in",
+      "flags": [
+        "isClockSlave"
+      ]
+    },
+    {
+      "portId": "out-analog-l",
+      "face": "io",
+      "xMm": 144.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-analog-r",
+      "face": "io",
+      "xMm": 171,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes-1",
+      "face": "io",
+      "xMm": 197.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes-2",
+      "face": "io",
+      "xMm": 223.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 70,
+      "plateRgb": 1908257,
+      "bodyRgb": 2763566
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.orban.com/specifications-optimod6300",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.orban.com/specifications-optimod6300",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 362 x 45 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "reference",
+      "url": "https://static1.squarespace.com/static/58f8d954b8a79b4ccf726c3b/t/5d77b06aa69abd5acee8310c/1568125060297/6300+A3+brochure.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.orban.com/specifications-optimod6300",
+      "note": "Orban OPTIMOD 6300 specifications page (opened 2026-11-12): analog stereo input on two XLR-type female connectors, analog stereo output on two XLR-type male connectors (pin 2 positive, electronically balanced)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://static1.squarespace.com/static/58f8d954b8a79b4ccf726c3b/t/5d77b06aa69abd5acee8310c/1568125060297/6300+A3+brochure.pdf",
+      "note": "Orban 6300 brochure (downloaded, read as text): digital AES audio, 1 stereo input on XLR, 2 stereo outputs on XLR, 1 word clock or AES11id (75 ohm) sync input (taken as BNC: the type is the usual one for 75 ohm sync, the sheet does not name it), Ethernet for remote control. Not modelled: Ethernet (a control port: the category template would route audio through it) and the mains inlet (not named in the pages read, so no power control). Size 483 x 362 x 45 mm (1U, manufacturer). All positions are guesses (no panel drawing read)."
+    }
+  ]
+}

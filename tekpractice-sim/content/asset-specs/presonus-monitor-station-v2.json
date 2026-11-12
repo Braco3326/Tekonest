@@ -1,0 +1,284 @@
+{
+  "id": "presonus-monitor-station-v2",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 228.6,
+    "h": 63.5,
+    "d": 216
+  },
+  "ports": [
+    {
+      "portId": "in-a-l",
+      "face": "io",
+      "xMm": 14,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-a-r",
+      "face": "io",
+      "xMm": 32,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-b-l",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-b-r",
+      "face": "io",
+      "xMm": 68,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aux-l",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aux-r",
+      "face": "io",
+      "xMm": 108,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "in-spdif",
+      "face": "io",
+      "xMm": 126,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aux-35",
+      "face": "io",
+      "xMm": 144,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 14,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 32,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-spk-a-l",
+      "face": "io",
+      "xMm": 54,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-spk-a-r",
+      "face": "io",
+      "xMm": 72,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-spk-b-l",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-spk-b-r",
+      "face": "io",
+      "xMm": 108,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-spk-c-l",
+      "face": "io",
+      "xMm": 126,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-spk-c-r",
+      "face": "io",
+      "xMm": 144,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-cue-l",
+      "face": "io",
+      "xMm": 166,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-cue-r",
+      "face": "io",
+      "xMm": 184,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "opposite",
+      "xMm": 20,
+      "yMm": 14,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-2",
+      "face": "opposite",
+      "xMm": 42,
+      "yMm": 14,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-3",
+      "face": "opposite",
+      "xMm": 64,
+      "yMm": 14,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-4",
+      "face": "opposite",
+      "xMm": 86,
+      "yMm": 14,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 10,
+      "plateFilletMm": 4.4,
+      "filletMm": 5,
+      "filletSegments": 10,
+      "feetMm": 3,
+      "feetDiaMm": 12,
+      "plateRgb": 2763566,
+      "bodyRgb": 1908257
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 400,
+      "max": 2000
+    },
+    "minFilletMm": 3.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://goknight.com/presonus-monitor-station-2-desktop-studio-control-center-with-spdif-input/",
+  "sources": [
+    {
+      "kind": "reference",
+      "url": "https://www.prosoundweb.com/presonus-unveils-new-monitor-station-v2-desktop-studio-monitor-source-controller/",
+      "note": "equipment plan source (research grade: dealer); size 228.6 x 216 x 63.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/pagearea--61/item--PRSMONSTATV2",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/presonus-monitor-station-2-desktop-studio-control-center-with-spdif-input/",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.westenddj.co.uk/products/presonus-monitor-station-2",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/presonus-monitor-station-2-desktop-studio-control-center-with-spdif-input/",
+      "note": "Dealer listings read by the Wave 0c research (Goknight spec table, ProSoundWeb release, zZounds): inputs 4 x 1/4 in TRS balanced (2 stereo pairs), 2 x RCA aux, 1 x RCA coaxial S/PDIF, 1 x 1/8 in TRS; outputs 6 x 1/4 in TRS (3 stereo speaker pairs), 2 x 1/4 in TRS main, 2 x 1/4 in TRS cue, 4 x 1/4 in TRS headphone; 18 VDC barrel power from an external supply (no mains inlet: not a port). Size 228.6 x 216 x 63.5 mm (9 x 8.5 x 2.5 in, labelled W x D x H, converted). The rear versus front split is not stated: guesses (inputs and outputs on the rear, the four headphone jacks on the front). Talkback mic not listed by the dealer: not modelled. The big knob and buttons are a picture only."
+    }
+  ]
+}

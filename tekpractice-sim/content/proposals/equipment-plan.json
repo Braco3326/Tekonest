@@ -1695,7 +1695,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "cisco-sg350-managed-switch",
@@ -1724,7 +1725,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "presonus-monitor-station-v2",
@@ -1754,7 +1756,8 @@
     "monitor-controller",
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "yamaha-dm3",
@@ -2595,7 +2598,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "empirical-labs-distressor",
@@ -2792,7 +2796,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "neutrik-nys-spp-l1",
@@ -2821,7 +2826,8 @@
     "passive",
     "rack"
    ],
-   "sizeConfidence": "conflict"
+   "sizeConfidence": "conflict",
+   "staged": true
   },
   {
    "id": "orban-optimod-6300",
@@ -2849,7 +2855,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "qsc-k10-2",
@@ -3016,7 +3023,8 @@
     "receiver",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "shure-slxd1-bodypack",
@@ -3292,7 +3300,8 @@
     "passive",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "motu-828",
@@ -3348,7 +3357,8 @@
     "passive",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "schoeps-cmc-6-mk-4",

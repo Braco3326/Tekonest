@@ -1,0 +1,88 @@
+{
+  "id": "shure-qlx-d-receiver",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 197,
+    "h": 41,
+    "d": 151
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "io",
+      "xMm": 88,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-14",
+      "face": "io",
+      "xMm": 114.4,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 131.8,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 6,
+      "plateFilletMm": 2.6,
+      "filletMm": 3,
+      "filletSegments": 10,
+      "rearInsetMm": 5,
+      "seamMm": 14,
+      "feetMm": 2,
+      "feetDiaMm": 12,
+      "ventSlots": 7,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 2.4,
+      "ventSlotLenMm": 30,
+      "ventPitchMm": 6,
+      "ventDepthMm": 1.2,
+      "ventFromRearMm": 30,
+      "plateRgb": 1908257,
+      "bodyRgb": 2500395
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "portsDocumented": true,
+  "portsSource": "https://pubs.shure.com/view/guide/QLXD/en-US.pdf",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://pubs.shure.com/view/guide/QLXD/en-US.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 197 x 151 x 41 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://pubs.shure.com/view/guide/QLXD/en-US.pdf",
+      "note": "Shure QLX-D user guide (downloaded and read as text 2026-11-12): the receiver has an XLR audio output, a 1/4 in instrument / auxiliary output, an Ethernet port, BNC antenna connectors and a DC power supply jack (external PS24 supply, so no mains inlet and no power control). Modelled: XLR out, 1/4 in out, Ethernet (aoip, a control and scanning port, takes no audio route); the BNC antennas and the DC jack have no signal type and are not ports. Size 197 x 151 x 41 mm (\"41 H x 197 W x 151 D\", the guide), receiver only: the transmitters are separate devices. Positions are guesses (the guide says \"rear\"); same layout as the SLX-D receiver."
+    }
+  ]
+}

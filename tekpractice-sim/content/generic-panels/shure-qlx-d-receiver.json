@@ -1,0 +1,155 @@
+{
+ "note": "Generic panel artwork (no brand marks, no logos), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+ "faces": {
+  "opposite": {
+   "wMm": 197,
+   "hMm": 41,
+   "base": "#1d1e21",
+   "items": [
+    {
+     "kind": "rect",
+     "x": 14,
+     "y": 8,
+     "w": 78,
+     "h": 26,
+     "fill": "#0a141a",
+     "stroke": "#4a4d52",
+     "radius": 1.5
+    },
+    {
+     "kind": "rect",
+     "x": 16,
+     "y": 10,
+     "w": 74,
+     "h": 22,
+     "fill": "#0f2a3a",
+     "stroke": "#2a5a7a",
+     "radius": 1
+    },
+    {
+     "kind": "circle",
+     "x": 120,
+     "y": 21,
+     "r": 8,
+     "fill": "#2b2d31",
+     "stroke": "#9aa0a6"
+    },
+    {
+     "kind": "rect",
+     "x": 119.4,
+     "y": 21,
+     "w": 1.2,
+     "h": 6.4,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 150,
+     "y": 28,
+     "r": 1.3,
+     "fill": "#35d27a"
+    },
+    {
+     "kind": "circle",
+     "x": 158,
+     "y": 28,
+     "r": 1.3,
+     "fill": "#35d27a"
+    },
+    {
+     "kind": "circle",
+     "x": 166,
+     "y": 28,
+     "r": 1.3,
+     "fill": "#35d27a"
+    },
+    {
+     "kind": "circle",
+     "x": 174,
+     "y": 28,
+     "r": 1.3,
+     "fill": "#35d27a"
+    },
+    {
+     "kind": "rect",
+     "x": 172,
+     "y": 8.5,
+     "w": 12,
+     "h": 7,
+     "fill": "#4a4d52",
+     "stroke": "#9aa0a6",
+     "radius": 1
+    }
+   ]
+  },
+  "io": {
+   "wMm": 197,
+   "hMm": 41,
+   "base": "#1d1e21",
+   "items": [
+    {
+     "kind": "circle",
+     "x": 88,
+     "y": 21,
+     "r": 9.75,
+     "fill": "#0c0d0f",
+     "stroke": "#7a7e84"
+    },
+    {
+     "kind": "circle",
+     "x": 84.5,
+     "y": 23.5,
+     "r": 1.3,
+     "fill": "#c9a23a"
+    },
+    {
+     "kind": "circle",
+     "x": 91.5,
+     "y": 23.5,
+     "r": 1.3,
+     "fill": "#c9a23a"
+    },
+    {
+     "kind": "circle",
+     "x": 88,
+     "y": 17.2,
+     "r": 1.3,
+     "fill": "#c9a23a"
+    },
+    {
+     "kind": "circle",
+     "x": 114.4,
+     "y": 21,
+     "r": 6,
+     "fill": "#0c0d0f",
+     "stroke": "#8a8e94"
+    },
+    {
+     "kind": "circle",
+     "x": 114.4,
+     "y": 21,
+     "r": 2.3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 125.80000000000001,
+     "y": 15.5,
+     "w": 12,
+     "h": 11,
+     "fill": "#0c0d0f",
+     "stroke": "#6b6f75",
+     "radius": 1
+    },
+    {
+     "kind": "rect",
+     "x": 127.30000000000001,
+     "y": 17,
+     "w": 9,
+     "h": 2,
+     "fill": "#c9a23a"
+    }
+   ]
+  }
+ }
+}

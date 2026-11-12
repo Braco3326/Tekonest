@@ -1,0 +1,214 @@
+{
+  "id": "behringer-xr18",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 333,
+    "h": 140,
+    "d": 150
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 26,
+      "yMm": 98,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 52.4,
+      "yMm": 98,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-3",
+      "face": "io",
+      "xMm": 78.8,
+      "yMm": 98,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-4",
+      "face": "io",
+      "xMm": 105.2,
+      "yMm": 98,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-5",
+      "face": "io",
+      "xMm": 26,
+      "yMm": 68,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-6",
+      "face": "io",
+      "xMm": 52.4,
+      "yMm": 68,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-7",
+      "face": "io",
+      "xMm": 78.8,
+      "yMm": 68,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-8",
+      "face": "io",
+      "xMm": 105.2,
+      "yMm": 68,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 26,
+      "yMm": 30,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 52.4,
+      "yMm": 30,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 88.8,
+      "yMm": 30,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 106.2,
+      "yMm": 30,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 8,
+      "plateFilletMm": 3.5,
+      "filletMm": 4,
+      "filletSegments": 10,
+      "rearInsetMm": 6,
+      "seamMm": 30,
+      "feetMm": 3,
+      "feetDiaMm": 14,
+      "ventSlots": 7,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 50,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 25,
+      "plateRgb": 1908257,
+      "bodyRgb": 2763566
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2500
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.co.uk/behringer_x_air_xr18.htm",
+      "note": "equipment plan source (research grade: dealer); size 333 x 150 x 140 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.woodbrass.com/es-es/images/woodbrass/BEHRINGER+XR+18.PDF",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.co.uk/behringer_x_air_xr18.htm",
+      "note": "Dealer listing and knowledge base summary: 16 XLR / TRS combo inputs, line / aux inputs, 2 XLR main outputs, USB-B, Ethernet, MIDI, Ultranet; the dealers disagree on the line / aux input connector (TRS or RCA) and the aux output count, so this is beta-modelled. Modelled: 8 of 16 combos (XLR part), main L / R, USB-B, Ethernet (aoip, a control and Wi-Fi port). Size 333 x 150 x 140 mm: 3U with side panels, axis order inferred from 3U (not labelled), so an estimate. Positions guesses; the XR18 has no front panel controls (a picture of the status LEDs only)."
+    }
+  ]
+}
