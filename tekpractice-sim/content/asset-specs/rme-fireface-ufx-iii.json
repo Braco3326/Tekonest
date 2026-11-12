@@ -1,0 +1,247 @@
+{
+  "id": "rme-fireface-ufx-iii",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44,
+    "d": 210
+  },
+  "ports": [
+    {
+      "portId": "in-mic-instrument-line-combo-inputs-9-12-xlr-trs-combo-1",
+      "face": "opposite",
+      "xMm": 140,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-instrument-line-combo-inputs-9-12-xlr-trs-combo-2",
+      "face": "opposite",
+      "xMm": 166.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-inputs-1-8-1",
+      "face": "io",
+      "xMm": 42,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-inputs-1-8-2",
+      "face": "io",
+      "xMm": 59.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-monitor-outputs-1-2-1",
+      "face": "io",
+      "xMm": 82.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-monitor-outputs-1-2-2",
+      "face": "io",
+      "xMm": 109.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-outputs-3-8-1",
+      "face": "io",
+      "xMm": 141.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-outputs-3-8-2",
+      "face": "io",
+      "xMm": 159,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-headphone-outputs-1",
+      "face": "opposite",
+      "xMm": 198.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-headphone-outputs-2",
+      "face": "opposite",
+      "xMm": 216.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-madi-optical-in-out-1",
+      "face": "io",
+      "xMm": 243.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "sc-fibre",
+      "signal": "madi",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-madi-optical-in-out-2",
+      "face": "io",
+      "xMm": 258.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "sc-fibre",
+      "signal": "madi",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-aes-ebu-in",
+      "face": "io",
+      "xMm": 184.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes-ebu-out",
+      "face": "io",
+      "xMm": 210.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-word-clock-in-out-switchable-to-coaxial-madi-1",
+      "face": "io",
+      "xMm": 273.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-word-clock-in-out-switchable-to-coaxial-madi-2",
+      "face": "io",
+      "xMm": 290.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-usb-3-host-connection",
+      "face": "io",
+      "xMm": 308,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-ac-mains-in",
+      "face": "io",
+      "xMm": 456,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 70,
+      "plateRgb": 1908257,
+      "bodyRgb": 2500395
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/rmufxp.html",
+      "note": "equipment plan source (research grade: dealer); size 483 x 210 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.rme-audio.de/fireface-ufx-iii.html",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.co.uk/rme_fireface_ufx_iii.htm",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.co.uk/rme_fireface_ufx_iii.htm",
+      "note": "Thomann spec table (opened by the Wave 0c research): 4 mic, 8 line, 4 instrument inputs, 8 line outputs, 2 headphone outputs, 2 S/PDIF, 2 ADAT, 1 AES/EBU, 1 MADI, word clock in and out, USB 3 type B, 2 MIDI in and out; front and rear split and connector types not stated, so beta-modelled with the 18 Beta proposal ports (16 of 38 listed modelled). Size 483 x 210 x 44 mm (W / D / H labelled, with ears). Positions guesses: combos and headphones on the front, the rest on the rear."
+    }
+  ]
+}

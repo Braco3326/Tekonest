@@ -1,0 +1,202 @@
+{
+  "id": "tascam-ss-cdr250n",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 45,
+    "d": 300.5
+  },
+  "ports": [
+    {
+      "portId": "in-balanced-analog-input-l-r-line-or-mic-with-phantom-1",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-balanced-analog-input-l-r-line-or-mic-with-phantom-2",
+      "face": "io",
+      "xMm": 56.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-balanced-analog-output-l-r-1",
+      "face": "io",
+      "xMm": 135.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-balanced-analog-output-l-r-2",
+      "face": "io",
+      "xMm": 162,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-unbalanced-analog-input-l-r-1",
+      "face": "io",
+      "xMm": 86.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "in-unbalanced-analog-input-l-r-2",
+      "face": "io",
+      "xMm": 104.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-unbalanced-analog-output-l-r-1",
+      "face": "io",
+      "xMm": 192.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "out-unbalanced-analog-output-l-r-2",
+      "face": "io",
+      "xMm": 209.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes-ebu-digital-input",
+      "face": "io",
+      "xMm": 241.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes-ebu-digital-output",
+      "face": "io",
+      "xMm": 267.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "in-s-pdif-coaxial-in",
+      "face": "io",
+      "xMm": 298,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "out-s-pdif-coaxial-out",
+      "face": "io",
+      "xMm": 315.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "opposite",
+      "xMm": 330,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-parallel-remote-d-sub-25-pin-gpio-type",
+      "face": "io",
+      "xMm": 440,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "gpio-tally",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 70,
+      "plateRgb": 1908257,
+      "bodyRgb": 2763566
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.fullcompass.com/common/files/29301-TASCAMSSR250NSpecSheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 300.5 x 45 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.hhb.co.uk/prod/tascam/ss-cdr250n/",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.fullcompass.com/common/files/29301-TASCAMSSR250NSpecSheet.pdf",
+      "note": "TASCAM SS-CDR250N spec sheet (research read): analog in XLR-3-31 balanced (line or mic, phantom) and RCA pair, analog out XLR-3-32 and RCA pair, AES/EBU XLR in and out, S/PDIF RCA in and out, 6.3 mm phones, remote 2.5 mm TRS, USB-A, RS-232C DB9, parallel DB25, RJ45; the sheet is ambiguous on whether the XLR input is one jack or an L/R pair, so beta-modelled with the 14 Beta proposal ports (L/R XLR pairs), positions guesses (phones on the front). Size 482.6 x 300.5 x 45 mm (W x H x D, labelled). Not modelled: media (two SD slots, CD drive: a picture only), DB9, 2.5 mm remote, USB-A, Ethernet, mains inlet (not stated)."
+    }
+  ]
+}

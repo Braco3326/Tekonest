@@ -1,0 +1,54 @@
+{
+  "id": "ams-neve-1073lb",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 38,
+    "h": 132,
+    "d": 145
+  },
+  "ports": [
+    {
+      "portId": "in-combo-front",
+      "face": "opposite",
+      "xMm": 19,
+      "yMm": 112,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 6,
+      "plateFilletMm": 2.6,
+      "filletMm": 3,
+      "filletSegments": 10,
+      "plateRgb": 3820124,
+      "bodyRgb": 2105894
+    },
+    "projection": [
+      "opposite"
+    ],
+    "budget": {
+      "min": 400,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://ams-neve.com/1073lb/",
+      "note": "equipment plan source (research grade: datasheet); size 38 x 145 x 132 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://ams-neve.com/1073lb/",
+      "note": "AMS Neve 1073LB page (opened): 500-series mic / line preamp with a front combi-XLR connector (intelligent phantom switching); the output and the line input are on the 500-series edge connector, which the catalogue cannot represent, so only the front combi input is a port and the module is beta-modelled (a lunchbox host is not in the catalogue). Size 38 x 145 x 132 mm (W x D x H per the plan). Position guess."
+    }
+  ]
+}

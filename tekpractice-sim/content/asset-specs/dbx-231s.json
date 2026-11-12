@@ -1,0 +1,147 @@
+{
+  "id": "dbx-231s",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 89,
+    "d": 152.4
+  },
+  "ports": [
+    {
+      "portId": "in-audio-input-ch1-ch2-1",
+      "face": "io",
+      "xMm": 34,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-audio-input-ch1-ch2-2",
+      "face": "io",
+      "xMm": 60.4,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-audio-input-ch1-ch2-1-b",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-audio-input-ch1-ch2-2-b",
+      "face": "io",
+      "xMm": 110.2,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-audio-output-ch1-ch2-1",
+      "face": "io",
+      "xMm": 149.6,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-audio-output-ch1-ch2-2",
+      "face": "io",
+      "xMm": 176,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-audio-output-ch1-ch2-1-b",
+      "face": "io",
+      "xMm": 208.4,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-audio-output-ch1-ch2-2-b",
+      "face": "io",
+      "xMm": 225.8,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-mains-in-iec",
+      "face": "io",
+      "xMm": 430,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 25,
+      "ventColPitchMm": 60,
+      "plateRgb": 12106946,
+      "bodyRgb": 2105894
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbxpro.com/en/products/231s",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 152.4 x 89 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbxpro.com/en/products/231s",
+      "note": "dbx 231s page (opened 2026-11-12): two 31-band channels, XLR and TRS inputs and outputs (XLR pin 2 hot), counts and panel not stated. Size 482.6 x 152.4 x 89 mm read as W x D x H from \"3.5 x 19 x 6 in\" with unlabelled axes (3.5 in is 2U): axis order assumed, so beta-modelled. Ports are the Beta proposal ports (knowledge base), positions guesses; the front picture is a generic 2 x 31 slider panel."
+    }
+  ]
+}

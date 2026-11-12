@@ -1638,7 +1638,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "behringer-x32-compact",
@@ -1913,7 +1914,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "db-audiotechnik-d80",
@@ -1969,7 +1971,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "dbx-231s",
@@ -1997,7 +2000,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "l-acoustics-la12x",
@@ -2123,7 +2127,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "sennheiser-ew-dx-em-2",
@@ -2230,7 +2235,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "ssl-the-bus-plus",
@@ -2287,7 +2293,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "universal-audio-6176",
@@ -2425,7 +2432,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "audinate-dante-avio-install",
@@ -2615,7 +2623,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "focusrite-clarett-plus-8pre",
@@ -3719,7 +3728,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "sennheiser-e-906",
