@@ -112,6 +112,7 @@ import { openShortcutsDialog } from './shell/shortcutsDialog'
 import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
+import { wireChecklist } from './onboarding/wire'
 import { createAnnouncer } from './shell/announcer'
 import { armCancelFallback } from './fileDialogGuard'
 import {
@@ -2152,6 +2153,20 @@ export async function bootCreation(): Promise<void> {
     }),
     { onTopIntent: (id) => void (id === 'ecoute' && ensureSongs()) } // the songs list is fetched when the learner reaches for Écoute
   )
+
+  // « Pourquoi je n’entends rien ? » (T1.3): a read-only view over `path`, registered after the store subscriber that recomputes it.
+  wireChecklist({
+    doc: document,
+    slot: statusBar.checklistSlot,
+    root: shell.root,
+    path: () => path,
+    placeOpen: () => store.design().roomId !== null,
+    subscribe: (fn) => store.subscribe(fn),
+    deviceLabel: deviceName,
+    select: (id) => selection.select(id),
+    openInventory: (tab) => void loadDrawer().then((d) => d.preselect(tab), () => undefined).then(() => setInventory(true)),
+    returnFocus: () => canvas.focus(),
+  })
 
   /** The coverage is off or its chunk is not loaded: the debug hook says so without loading anything. */
   const COVERAGE_OFF = (): CoverageDebug => ({ on: false, status: 'off', pending: false, worker: false, points: 0, step: null, stats: null, plain: 0, hatched: 0, meshes: [], hidden: false, bins: [], sources: [], aim: [], message: '', pinned: null, probes: [], maxLevelDb: null, spl: false })

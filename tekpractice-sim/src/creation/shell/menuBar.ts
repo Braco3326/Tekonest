@@ -179,6 +179,17 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[], hooks: Me
           d.textContent = why
           b.appendChild(d)
           b.setAttribute('aria-describedby', d.id)
+          // A second line (T1.3b): where to read more. Visible, and part of the accessible description after the reason (never part of the NAME).
+          const more = item.hint?.()
+          if (more) {
+            const h = doc.createElement('span')
+            h.className = 'cr-menu-desc cr-menu-hint'
+            h.id = `cr-menu-hint-${item.id}`
+            h.setAttribute('aria-hidden', 'true')
+            h.textContent = more
+            b.appendChild(h)
+            b.setAttribute('aria-describedby', `${d.id} ${h.id}`)
+          }
         }
       }
       return b

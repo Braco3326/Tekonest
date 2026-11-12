@@ -921,11 +921,15 @@ body:has(.cr-viewport[data-placing='true']) .cr-status-place { display: none; }
   .cr-status-action { flex: none; }
   /* The Signal button gives up the tail of its text (an ellipsis; the title carries it, the list opens from the button) before it leaves the window; its glyph and label stay whole. */
   .cr .cr-signal { flex: 0 1 auto; min-width: 0; max-width: 100%; }
+  /* the chip is the way to « why is it silent »: it stays on a phone, gives up the tail of its text before it pushes the Signal button out */
+  .cr-status-checklist { display: flex; flex: 0 1 auto; min-width: 0; }
+  .cr .cr-checklist-chip { flex: 0 1 auto; min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
   .cr-signal-glyph, .cr-signal-label { flex: none; }
   .cr-signal-extra { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   /* the live message is still rendered (and read) but clipped to nothing while the autosave warning needs the room */
   .cr-status:has(.cr-status-pause:not([hidden])) .cr-status-summary { flex: 0 0 0; overflow: hidden; }
   .cr-status:has(.cr-status-pause:not([hidden])) .cr-status-right { flex: 1 1 0; min-width: 0; }
+  .cr-status:has(.cr-status-pause:not([hidden])) .cr-status-checklist { display: none; } /* the paused-autosave warning and its button have the room first; the chip is back when it is resolved */
 }
 
 /* Touch, phone width (wave 4, item 7): a state message gets two lines in the 48 px bar (a title is not there to be hovered); a mouse keeps one line and its title. */
@@ -934,7 +938,7 @@ body:has(.cr-viewport[data-placing='true']) .cr-status-place { display: none; }
 }
 
 /* The persistent error list (non-modal pop-over above the signal button). */
-.cr-errlist {
+.cr-errlist, .cr-checklist {
   position: fixed;
   right: 12px;
   bottom: calc(var(--cr-status-h) + 4px);
@@ -949,11 +953,11 @@ body:has(.cr-viewport[data-placing='true']) .cr-status-place { display: none; }
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
   color: var(--cr-papier);
 }
-.cr-errlist[hidden] { display: none; }
+.cr-errlist[hidden], .cr-checklist[hidden] { display: none; }
 /* Task 44 S4: this pop-over is fixed to the window (up to 440 px wide), so in a narrow window it spans the bottom left corner where « Annuler la pose » lives (44 px
    target, 12 px from the view's bottom: it ends 56 px above the status bar). While a pose runs the view carries data-placing (as for the notes above): the list then stands
    ABOVE the button, 68 px over the status bar, the same offset the notes use. :has() because the list is not inside the view. */
-body:has(.cr-viewport[data-placing='true']) .cr-errlist { bottom: calc(var(--cr-status-h) + 68px); }
+body:has(.cr-viewport[data-placing='true']) :is(.cr-errlist, .cr-checklist) { bottom: calc(var(--cr-status-h) + 68px); }
 .cr-errlist-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .cr-errlist-title { margin: 0; font: 500 14px/1.3 var(--cr-font-ui); }
 .cr .cr-errlist-close { width: 28px; height: 28px; font-size: 18px; line-height: 1; color: var(--cr-ink-muted); }
@@ -984,6 +988,24 @@ body:has(.cr-viewport[data-placing='true']) .cr-errlist { bottom: calc(var(--cr-
 .cr-errlist-rtitle { font-weight: 500; }
 .cr-errlist-detail { color: var(--cr-ink-muted); font-size: 12px; }
 .cr-errlist-ports { color: var(--cr-papier); font-size: 12px; }
+/* T1.3b: « Pourquoi je n’entends rien ? » (the list shares the error list's pop-over, head, hint and close button above). */
+.cr .cr-checklist-chip { flex: none; min-height: 24px; padding: 0 8px; border: 1px solid var(--cr-ambre); color: var(--cr-papier); font-weight: 500; white-space: nowrap; }
+.cr .cr-checklist-chip[hidden] { display: none; }
+.cr .cr-checklist-chip[aria-expanded='true'] { background: var(--cr-nuit); }
+@media (hover: hover) { .cr .cr-checklist-chip:hover { background: var(--cr-nuit); } }
+.cr .cr-checklist-chip:focus-visible { outline-offset: -2px; box-shadow: none; } /* the bar clips: the ring is drawn inward */
+.cr-checklist-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.cr-checklist-row { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 10px; background: var(--cr-panel); border-left: 3px solid var(--cr-ink-muted); }
+.cr-checklist-row[data-state='blocked'] { border-left-color: var(--cr-ambre); }
+.cr-checklist-row[data-state='ok'] { border-left-color: var(--cr-ok); }
+.cr-checklist-top { display: flex; gap: 6px; align-items: baseline; }
+.cr-checklist-label { font-weight: 500; }
+.cr-checklist-tag { color: var(--cr-ink-muted); }
+.cr-checklist-row[data-state='blocked'] .cr-errlist-glyph, .cr-checklist-row[data-state='blocked'] .cr-checklist-tag { color: var(--cr-ambre); }
+.cr-checklist-detail { font-size: 12px; }
+.cr .cr-checklist-go { margin-top: 4px; }
+.cr-checklist-mic { margin: 8px 0 0; font-size: 12px; color: var(--cr-ink-muted); }
+.cr-checklist-mic-label { font-weight: 500; color: var(--cr-papier); }
 /* ── Touch (night wave 2, item I): every control a finger can meet is at least 44 x 44 px ─────────────────────────────────────────────────
    Only for a coarse primary pointer: with a mouse nothing here applies and the desktop pixels are the ones above, unchanged. The two bars are 48 px: a 44 px
    control inside a bar loses 1 px to its border. The rails and the panel heads are 45 px (44 + the panel's 1 px border) so their buttons are 44. The settings go one column (label above the control) so a 44 px
@@ -1014,7 +1036,7 @@ body:has(.cr-viewport[data-placing='true']) .cr-errlist { bottom: calc(var(--cr-
   .cr .cr-note-action { min-height: 44px; }
   .cr .cr-errlist-close { width: 44px; height: 44px; }
   .cr .cr-errlist-row { min-height: 44px; }
-  .cr .cr-status-action, .cr .cr-signal { min-height: 44px; }
+  .cr .cr-status-action, .cr .cr-signal, .cr .cr-checklist-chip { min-height: 44px; }
   .cr-pick-filter select, .cr .cr-pick-close { height: 44px; }
   .cr .cr-btn { height: 44px; }
   .cr-pick-mode { min-height: 44px; }

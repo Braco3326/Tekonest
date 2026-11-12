@@ -35,6 +35,11 @@ export interface MenuItem {
    * set as the item's accessible DESCRIPTION while it is disabled (the item stays focusable, APG). Never shown on an enabled item.
    */
   description?(): string | undefined
+  /**
+   * A second line under `description` on a disabled item (T1.3b): where to read more (« Pourquoi je n’entends rien ? »). Same rules as `description`;
+   * it never replaces it, and the item's accessible description reads both.
+   */
+  hint?(): string | undefined
 }
 
 /**
@@ -195,10 +200,12 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
   const canStart = (): boolean => viewFree() && !!ctx.playbackReady?.()
   // The chain's first reason; with a valid chain but the place picker over the view, the picker is the reason (an item must never be off with no word why).
   const why = (): string | undefined => ctx.playbackReason?.() || (viewFree() ? undefined : M.playLocked!)
+  /** The checklist « Pourquoi je n’entends rien ? » explains a chain reason only (not the place picker lock, not a chain that can play). */
+  const chainHint = (): string | undefined => (!ctx.playbackReady?.() && ctx.playbackReason?.() ? COPY.checklist!.menuHint! : undefined)
   /** A source item: runs its action when the chain is valid. */
   const source = (id: string, label: string, action = id): MenuItem => {
     const on = (): boolean => registered(action) && canStart()
-    return { id, label, enabled: on, run: () => void (on() && ctx.actions[action]()), description: () => (on() ? undefined : why()) }
+    return { id, label, enabled: on, run: () => void (on() && ctx.actions[action]()), description: () => (on() ? undefined : why()), hint: () => (on() ? undefined : chainHint()) }
   }
   // The item runs what it was RENDERED as. The menu is rebuilt only when it opens: if the sound ends while it is open, a « Stop » must still only stop
   // (its own action), never start playback from the live state.
@@ -211,11 +218,12 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     enabled: playOn,
     run: () => void (playOn() && ctx.actions[playAction]()),
     description: () => (playOn() ? undefined : why()),
+    hint: () => (playOn() ? undefined : chainHint()),
   }
   const songList = ctx.songs?.() ?? []
   const songItems = songList.map((s) => source(`song:${s.id}`, s.title))
   const songs: MenuItem[] = songList.length
-    ? [{ id: 'songs', label: M.song!, enabled: () => songItems.some((i) => i.enabled()), run: () => {}, children: songItems, description: () => (songItems.some((i) => i.enabled()) ? undefined : why()) }]
+    ? [{ id: 'songs', label: M.song!, enabled: () => songItems.some((i) => i.enabled()), run: () => {}, children: songItems, description: () => (songItems.some((i) => i.enabled()) ? undefined : why()), hint: () => (songItems.some((i) => i.enabled()) ? undefined : chainHint()) }]
     : []
   return [
     {

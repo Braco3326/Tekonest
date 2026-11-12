@@ -418,6 +418,25 @@ describe('Matériel › Pivoter, Dupliquer, Supprimer (Task 25)', () => {
       const on = buildMenus(live({ songs: () => [{ id: 'demo-1', title: 'Titre' }] }))
       for (const id of ['choose-file', 'test-signal', 'songs', 'song:demo-1']) expect(find(on, id).enabled(), id).toBe(true)
     })
+    it('T1.3b hint (does trigger): a source greyed by the chain points to the checklist, under the unchanged reason', () => {
+      const HINT = 'Voir « Pourquoi je n’entends rien ? » dans la barre d’état.'
+      const off = buildMenus(live({ playbackReady: () => false, playbackReason: () => REASON, songs: () => [{ id: 'demo-1', title: 'Titre' }] }))
+      for (const id of ['play', 'choose-file', 'test-signal', 'songs', 'song:demo-1']) {
+        expect(find(off, id).hint!(), id).toBe(HINT)
+        expect(find(off, id).description!(), id).toBe(REASON) // the reason is not touched
+      }
+    })
+    it('T1.3b hint (does not trigger): none on an enabled item, none while Stop is live, none when the only reason is the place picker', () => {
+      const on = buildMenus(live({ songs: () => [{ id: 'demo-1', title: 'Titre' }] }))
+      for (const id of ['play', 'choose-file', 'test-signal', 'songs', 'song:demo-1']) expect(find(on, id).hint!(), id).toBeUndefined()
+      const stop = find(buildMenus(live({ playing: () => true, playbackReady: () => false, playbackReason: () => REASON })), 'play')
+      expect(stop.hint!()).toBeUndefined()
+      const locked = buildMenus(live({ viewLocked: () => true })) // a valid chain, the picker over the view: the picker is the reason, not the chain
+      for (const id of ['play', 'choose-file', 'test-signal']) {
+        expect(find(locked, id).description!(), id).toBe('Indisponible pendant le choix du lieu.')
+        expect(find(locked, id).hint!(), id).toBeUndefined()
+      }
+    })
     it('a disabled item never runs; an enabled one runs its action', () => {
       run.length = 0
       const off = buildMenus(live({ playbackReady: () => false }))

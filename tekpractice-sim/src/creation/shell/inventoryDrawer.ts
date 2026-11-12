@@ -65,6 +65,8 @@ export interface InventoryDrawer {
   readonly root: HTMLElement
   readonly isOpen: boolean
   open(): void
+  /** The tab the drawer shows (now when open, else when it next opens): `open()` keeps the last tab, a caller that knows better says which. An unknown tab is ignored. */
+  preselect(tab: InventoryTab): void
   /** The Bêta sheets arrived or failed: rebuild the tabs in place (same tab, same filter, focus kept). No-op while closed. */
   refresh(): void
   /** `returnFocus: false` when something else takes focus right after (the place picker). */
@@ -498,6 +500,15 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       root.getBoundingClientRect() // the closed pose is laid out before the slide starts
       root.dataset.open = 'true'
       ;(tabs.find((t) => t.tab === selected)?.btn ?? close).focus()
+    },
+    preselect(tab) {
+      if (!api.isOpen) {
+        selected = tab // `build()` falls back to the first tab when this one does not exist
+        return
+      }
+      if (!tabs.some((t) => t.tab === tab)) return
+      filter.value = '' // a tab is its own list
+      showTab(tab, false)
     },
     refresh() {
       if (!api.isOpen) return

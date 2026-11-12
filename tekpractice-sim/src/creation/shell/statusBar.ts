@@ -27,6 +27,8 @@ export interface StatusBarDeps {
 export interface StatusBar {
   render(v: StatusView): void
   renderAutosave(a: AutosaveView): void
+  /** Where the checklist chip « Pourquoi je n’entends rien ? » goes (T1.3b), left of the signal button; empty until it is mounted. */
+  readonly checklistSlot: HTMLElement
   readonly isOpen: boolean
   open(): void
   close(returnFocus?: boolean): void
@@ -97,8 +99,9 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
   extra.dataset.testid = 'signal-extra'
   signal.append(glyph, label, extra)
 
+  const checklistSlot = el(doc, 'span', 'cr-status-checklist')
   const right = el(doc, 'div', 'cr-status-right')
-  right.append(selection, snapping, save, pause, playback, mic, signal)
+  right.append(selection, snapping, save, pause, playback, mic, checklistSlot, signal)
   d.bar.append(right)
 
   // ── the pop-over (non-modal dialog)
@@ -246,6 +249,7 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
   return {
     render,
     renderAutosave,
+    checklistSlot,
     get isOpen() {
       return isOpen
     },

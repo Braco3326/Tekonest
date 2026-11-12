@@ -95,12 +95,13 @@ test('(a) an unpowered console: « Lecture » is aria-disabled, focusable, descr
   await openEcoute(page)
   const lecture = item(page, 'Lecture')
   await expect(lecture).toHaveAttribute('aria-disabled', 'true')
-  await expect(lecture).toHaveAccessibleDescription('La console n’est pas alimentée.')
+  // T1.3b: the description reads the engine's reason, then the pointer to « Pourquoi je n’entends rien ? » (the visible reason line below stays exact).
+  await expect(lecture).toHaveAccessibleDescription('La console n’est pas alimentée. Voir « Pourquoi je n’entends rien ? » dans la barre d’état.')
   await expect(page.locator('#cr-menu-desc-play')).toBeVisible() // the reason is on screen too, not only announced
   await expect(page.locator('#cr-menu-desc-play')).toHaveText('La console n’est pas alimentée.')
   for (const name of ['Choisir un fichier audio…', 'Signal de test']) {
     await expect(item(page, name)).toHaveAttribute('aria-disabled', 'true')
-    await expect(item(page, name)).toHaveAccessibleDescription('La console n’est pas alimentée.')
+    await expect(item(page, name)).toHaveAccessibleDescription('La console n’est pas alimentée. Voir « Pourquoi je n’entends rien ? » dans la barre d’état.')
   }
   // still focusable (APG): the keyboard reaches it
   await item(page, 'Lecture').focus()

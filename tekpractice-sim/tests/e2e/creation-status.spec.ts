@@ -186,3 +186,128 @@ test('the playback line follows the live signal path: ready on the powered rig, 
   await page.evaluate(() => window.__creation!.undo())
   await expect(playback).toHaveText('Lecture possible')
 })
+
+// ── T1.3b: « Pourquoi je n’entends rien ? » (read-only checklist over the engine's own playback reasons) ───────────────────────────────────
+
+const TITLE = 'Pourquoi je n’entends rien ?'
+const bootBlank = async (page: Page, search = ''): Promise<void> => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/' + search)
+  await page.waitForFunction(() => !!window.__creation)
+  await page.evaluate(() => window.__creation!.choosePlace('blank'))
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+}
+const chip = (page: Page) => page.getByTestId('checklist-chip')
+const panel = (page: Page) => page.getByRole('dialog', { name: TITLE })
+const crow = (page: Page, id: string) => page.getByTestId(`checklist-row-${id}`)
+const design = (page: Page): Promise<string> => page.evaluate(() => JSON.stringify(window.__creation!.design()))
+const spawnConsole = (page: Page): Promise<unknown> =>
+  page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 2] }))
+
+test('checklist: the chip shows on a silent rig in the blank room, also with ?oscar=0; the list is non-modal and says what blocks, row by row', async ({ page }) => {
+  await bootBlank(page, '?oscar=0')
+  await expect(chip(page)).toBeVisible()
+  await expect(chip(page)).toHaveText(TITLE)
+  await expect(chip(page)).toHaveAttribute('aria-expanded', 'false')
+  const inertBefore = await page.locator('[inert]').count()
+  await chip(page).click()
+  await expect(panel(page)).toBeVisible()
+  await expect(chip(page)).toHaveAttribute('aria-expanded', 'true')
+  await expect(panel(page)).not.toHaveAttribute('aria-modal', 'true')
+  expect(await page.locator('[inert]').count(), 'a non-modal list makes nothing inert').toBe(inertBefore)
+  await expect(page.getByTestId('signal-status')).toBeEnabled() // the rest of the page stays live
+  // An empty room: the first row is blocked with the engine's words; the others are not yet checked, never ticked.
+  await expect(crow(page, 'source')).toHaveAttribute('data-state', 'blocked')
+  await expect(crow(page, 'source')).toContainText('Aucune source de lecture dans le projet.')
+  for (const id of ['console', 'power', 'cable']) {
+    await expect(crow(page, id)).toHaveAttribute('data-state', 'unchecked')
+    await expect(crow(page, id)).toContainText('Pas encore vérifié')
+  }
+  await expect(page.getByTestId('checklist-mic')).toHaveText('Aucun micro branché sur une entrée micro.') // the engine's NO_MIC words
+  // A console with Lecture console off: the second row is the blocked one, the first passed.
+  await spawnConsole(page)
+  await expect(crow(page, 'source')).toHaveAttribute('data-state', 'ok')
+  await expect(crow(page, 'console')).toHaveAttribute('data-state', 'blocked')
+  await expect(crow(page, 'console')).toContainText('La lecture console est coupée.')
+  await expect(crow(page, 'power')).toHaveAttribute('data-state', 'unchecked')
+})
+
+test('checklist: « Aller à » selects the device and leaves the design untouched; the inventory opens on Consoles for a missing source', async ({ page }) => {
+  await bootBlank(page)
+  await chip(page).click()
+  const before = await design(page)
+  await page.getByTestId('checklist-goto-source').click()
+  await expect(panel(page)).toBeHidden()
+  await expect(page.getByRole('tab', { name: 'Consoles' })).toHaveAttribute('aria-selected', 'true') // the drawer opened on its Consoles tab
+  expect(await design(page), 'opening the inventory changes nothing').toBe(before)
+  await page.keyboard.press('Escape')
+  await spawnConsole(page)
+  const withConsole = await design(page)
+  await chip(page).click()
+  await page.getByTestId('checklist-goto-console').click()
+  await expect(panel(page)).toBeHidden()
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1')
+  expect(await design(page), '« Aller à » only selects').toBe(withConsole)
+})
+
+test('checklist: Échap closes it and gives the focus back to the chip; a click outside closes it too; axe is clean', async ({ page }) => {
+  await bootBlank(page)
+  await spawnConsole(page)
+  await chip(page).focus()
+  await page.keyboard.press('Enter')
+  await expect(panel(page)).toBeVisible()
+  const axe = await new AxeBuilder({ page }).include('[data-testid="checklist"]').include('[data-testid="status-bar"]').analyze()
+  expect(axe.violations.map((v) => v.id)).toEqual([])
+  await page.keyboard.press('Escape')
+  await expect(panel(page)).toBeHidden()
+  await expect(chip(page)).toBeFocused()
+  await expect(chip(page)).toHaveAttribute('aria-expanded', 'false')
+  await chip(page).click()
+  await expect(panel(page)).toBeVisible()
+  await page.getByTestId('status-bar').click({ position: { x: 5, y: 5 } })
+  await expect(panel(page)).toBeHidden()
+})
+
+test('checklist: the mic line says « câblé mais pas entendu » only when a mic is cabled; it is hidden, chip included, once the rig can play and shows again when it cannot', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/')
+  await page.waitForFunction(() => !!window.__creation)
+  await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium' && window.__creation!.design().rig.instances.length === 5)
+  await expect(chip(page)).toBeVisible() // the reference template is silent (Lecture console off, no speaker cable)
+  await chip(page).click()
+  await expect(page.getByTestId('checklist-mic')).toHaveText('Le micro est câblé mais n’est pas entendu : le signal de test entre à la console.')
+  await expect(crow(page, 'console')).toHaveAttribute('data-state', 'blocked')
+  await page.evaluate(() => {
+    const c = window.__creation!
+    c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12-g', port: 'in-line-a' } })
+    c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-r' }, b: { instance: 'k12-d', port: 'in-line-a' } })
+  })
+  await expect(crow(page, 'cable')).toHaveAttribute('data-state', 'unchecked') // still behind the blocked console row
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: true }))
+  await expect(page.getByTestId('status-playback')).toHaveText('Lecture possible')
+  await expect(panel(page)).toBeHidden() // it goes with the problem
+  await expect(chip(page)).toBeHidden()
+  await page.evaluate(() => window.__creation!.undo())
+  await expect(chip(page)).toBeVisible()
+  // no mic cable at all: the engine's NO_MIC words
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }))
+  await chip(page).click()
+  await expect(page.getByTestId('checklist-mic')).toHaveText('Aucun micro branché sur une entrée micro.')
+})
+
+test('checklist: no chip before a place is open; the greyed Écoute items point to it under the engine reason', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/')
+  await page.waitForFunction(() => !!window.__creation)
+  await expect(chip(page)).toBeHidden() // the very first screen: the place picker only
+  await page.evaluate(() => window.__creation!.choosePlace('blank'))
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await spawnConsole(page)
+  await page.getByRole('menuitem', { name: 'Écoute', exact: true }).click()
+  const play = page.getByRole('menuitem', { name: 'Lecture', exact: true })
+  await expect(page.locator('#cr-menu-desc-play')).toHaveText('La lecture console est coupée.') // the engine's reason, unchanged
+  await expect(page.locator('#cr-menu-hint-play')).toBeVisible()
+  await expect(page.locator('#cr-menu-hint-play')).toHaveText('Voir « Pourquoi je n’entends rien ? » dans la barre d’état.')
+  await expect(play).toHaveAccessibleDescription('La lecture console est coupée. Voir « Pourquoi je n’entends rien ? » dans la barre d’état.')
+})
