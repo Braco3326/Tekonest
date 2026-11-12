@@ -126,7 +126,7 @@ function setup(over: Partial<InventoryDrawerDeps> = {}, look: { drawer?: string 
   const down = (it = item, id = 1, x = 100, y = 100, extra: Record<string, unknown> = {}) =>
     it.fire('pointerdown', { pointerId: id, isPrimary: true, button: 0, clientX: x, clientY: y, buttons: 1, altKey: false, ...extra })
   const ev = (id: number, x: number, y: number, extra: Record<string, unknown> = {}) => ({ pointerId: id, clientX: x, clientY: y, buttons: 1, altKey: false, ...extra })
-  return { win, drawer, calls, items, item, down, ev, parent }
+  return { win, drawer, calls, items, item, down, ev, parent, created }
 }
 
 describe('drawer press and drag (pointer events)', () => {
@@ -300,14 +300,43 @@ describe('stay-open (design package layout, plan T4.3): the drawer comes back wh
     }
   })
 
-  it('a choice the host refused (no pose started) arms nothing: a later pose does not open the drawer', () => {
+  it('S5 (a): a choice the host refused (no pose started) brings the drawer back at once and arms nothing: a later pose is not the drawer own', () => {
     const s = open()
     s.item.fire('click', { detail: 1 })
-    expect(s.drawer.isOpen).toBe(false)
+    expect(s.drawer.isOpen).toBe(true)
     expect(s.win.observers.size).toBe(0)
+    s.drawer.close()
     poseOn(s)
     poseOff(s)
     expect(s.drawer.isOpen).toBe(false)
+  })
+
+  it('S5 (b): the filter text the learner typed is still there when the drawer comes back after a pose (a normal open clears it)', () => {
+    let s!: ReturnType<typeof setup>
+    s = open({ onChoose: () => poseOn(s) })
+    const field = s.created.find((e) => e.className === 'cr-drawer-filter-input')!
+    ;(field as unknown as { value: string }).value = 'sm58'
+    s.item.fire('click', { detail: 1 })
+    poseOff(s)
+    expect(s.drawer.isOpen).toBe(true)
+    expect((field as unknown as { value: string }).value).toBe('sm58')
+    s.drawer.close()
+    s.drawer.open() // by hand: the field is cleared as it always was
+    expect((field as unknown as { value: string }).value).toBe('')
+  })
+
+  it('S5 (c): with a host path (`reopen`) the return goes through it, not around it (the host dismisses a pinned refusal, syncs the Bêta sheets, refuses while the view is locked)', () => {
+    const reopen = vi.fn()
+    let s!: ReturnType<typeof setup>
+    s = open({ onChoose: () => poseOn(s), reopen })
+    s.item.fire('click', { detail: 1 })
+    expect(reopen).not.toHaveBeenCalled() // the pose is on
+    poseOff(s)
+    expect(reopen).toHaveBeenCalledTimes(1)
+    expect(s.drawer.isOpen).toBe(false) // the host decides when it opens (here a spy: it did not)
+    // a refused choice goes through the same path, at once
+    s.item.fire('click', { detail: 1 }) // closed drawer: nothing to choose from, no second call
+    expect(reopen).toHaveBeenCalledTimes(1)
   })
 
   it('a pose that ends while the place picker covers the workspace does not bring the drawer back over it', () => {

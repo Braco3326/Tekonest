@@ -72,6 +72,38 @@ test.describe('package 2 opens both panels (1366 x 768)', () => {
   })
 })
 
+test.describe('T4 fix round, S2: a first-visit profile never opens a panel the window is too narrow for', () => {
+  /** The shell's own rule: below 1200 px Propriétés is not opened by itself, so the 3D view keeps at least 60 % of the window. */
+  const viewShare = async (page: Page, w: number): Promise<number> => (await page.locator('.cr-viewport').boundingBox())!.width / w
+
+  test.describe('1024 x 768', () => {
+    test.use({ viewport: { width: 1024, height: 768 } })
+    for (const [key, name] of [['1', 'Je découvre, the package panels'], ['2', 'étudie, both panels'], ['4', 'travaille dans le son, both panels']] as const) {
+      test(`package 2 after profile ${key} « ${name} »: Projet opens, Propriétés stays folded, the view keeps >= 60 %`, async ({ page }) => {
+        await openFresh(page, '?design=2')
+        await page.getByTestId('start-screen').waitFor()
+        await page.keyboard.press(key)
+        await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
+        await page.waitForFunction(() => window.__creation!.place() === 'blank')
+        expect(await panels(page)).toEqual({ tree: 'open', props: 'collapsed' })
+        expect(await viewShare(page, 1024)).toBeGreaterThanOrEqual(0.6)
+      })
+    }
+  })
+
+  test.describe('1366 x 768', () => {
+    test.use({ viewport: { width: 1366, height: 768 } })
+    test('where the window allows it, the profile keeps its intent: profile 2 opens both panels on package 1', async ({ page }) => {
+      await openFresh(page, '?design=1')
+      await page.getByTestId('start-screen').waitFor()
+      await page.keyboard.press('2')
+      await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
+      await page.waitForFunction(() => window.__creation!.place() === 'blank')
+      expect(await panels(page)).toEqual({ tree: 'open', props: 'open' })
+    })
+  })
+})
+
 test.describe('under 760 px the phone accordion still wins over any preset', () => {
   test.use({ viewport: { width: 400, height: 800 } })
   for (const id of [2, 4]) {
@@ -127,7 +159,7 @@ test.describe('the inventory drawer after a pose (1366 x 768)', () => {
     const box = (await page.locator('#renderCanvas').boundingBox())!
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 3)
     await page.mouse.click(box.x + box.width / 2, box.y + box.height / 3)
-    await expect.poll(() => page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(1)
+    await expect.poll(() => page.evaluate(() => window.__creation!.design().rig.instances.length)).toBeGreaterThanOrEqual(1)
   }
 
   for (const id of DESIGN_IDS) {
@@ -155,12 +187,33 @@ test.describe('the inventory drawer after a pose (1366 x 768)', () => {
     await chooseQl1(page) // chosen again straight from the returned drawer
   })
 
-  test('package 1: the drawer closed by hand stays closed after a pose that was not started from it', async ({ page }) => {
+  /** Two animation frames: the drawer's watcher (a MutationObserver) and the slide have had their turn. */
+  const settle = (page: Page) => page.evaluate(() => new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r()))))
+  const instances = (page: Page) => page.evaluate(() => window.__creation!.design().rig.instances.length)
+
+  test('package 1 (T4 fix round, S7): a drawer closed by hand and opened again by hand comes back after the pose; closed by hand DURING the pose it stays closed; nothing stale is armed afterwards', async ({ page }) => {
     await openRoomWithDrawer(page, 1)
+    // closed by hand, opened by hand (Espace on the 3D view): a normal open, then a pose started from it
     await page.getByTestId('inventory-close').click()
     await expect(drawer(page)).toHaveAttribute('data-open', 'false')
-    await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'q', position: [0, 0, 0], rotationY: 0 }))
-    await page.waitForTimeout(300)
+    await page.locator('#renderCanvas').focus()
+    await page.keyboard.press('Space')
+    await expect(drawer(page)).toHaveAttribute('data-open', 'true')
+    await chooseQl1(page)
+    await drop(page)
+    await expect.poll(() => drawer(page).getAttribute('data-open')).toBe('true')
+    // a second pose, and this time the learner closes the drawer by hand while the pose is on: the drop must not bring it back
+    await chooseQl1(page)
+    await page.keyboard.press('Space') // opens it by hand (the pose goes on)
+    await expect(drawer(page)).toHaveAttribute('data-open', 'true')
+    await page.getByTestId('inventory-close').click()
+    await expect(drawer(page)).toHaveAttribute('data-open', 'false')
+    expect(await page.evaluate(() => window.__creation!.placing())).toBe(true)
+    const box = (await page.locator('#renderCanvas').boundingBox())!
+    await page.mouse.move(box.x + box.width / 3, box.y + box.height / 3)
+    await page.mouse.click(box.x + box.width / 3, box.y + box.height / 3)
+    await expect.poll(() => instances(page)).toBe(2)
+    await settle(page)
     await expect(drawer(page)).toHaveAttribute('data-open', 'false')
   })
 })

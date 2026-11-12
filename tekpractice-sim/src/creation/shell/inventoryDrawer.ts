@@ -46,6 +46,11 @@ export interface InventoryDrawerDeps {
   onChoose(deviceId: string): void
   /** Hands focus back to the 3D view when the drawer closes. */
   returnFocus(): void
+  /**
+   * The way back after a pose under a stay-open package (T4 fix round, S5): the host's own open (it dismisses a pinned refusal, syncs the Bêta sheets and refuses while the view
+   * is locked), asked with the focus where it is and the filter text kept. Absent: the drawer opens itself.
+   */
+  reopen?(): void
   /** The key event is the inventory key (remappable); Space by default. */
   isToggleKey(e: KeyboardEvent): boolean
   /** Label of the inventory key for the hint (« Espace »). */
@@ -66,9 +71,9 @@ export interface InventoryDrawer {
   readonly isOpen: boolean
   /**
    * Opens the drawer. `tab`: the tab to show (as `preselect`, also when it is already open). `focus: false`: the focus stays where it is (the first room of the start
-   * screen leaves it on the 3D view); the default moves it to the selected tab.
+   * screen leaves it on the 3D view); the default moves it to the selected tab. `keepFilter: true` (the way back after a pose) keeps the text in the filter field; a normal open clears it.
    */
-  open(opts?: { tab?: InventoryTab; focus?: boolean }): void
+  open(opts?: { tab?: InventoryTab; focus?: boolean; keepFilter?: boolean }): void
   /** The tab the drawer shows (now when open, else when it next opens): `open()` keeps the last tab, a caller that knows better says which. An unknown tab is ignored. */
   preselect(tab: InventoryTab): void
   /** The Bêta sheets arrived or failed: rebuild the tabs in place (same tab, same filter, focus kept). No-op while closed. */
@@ -261,16 +266,23 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     watcher?.disconnect()
     watcher = null
   }
-  /** Call right after a pose started from the drawer (and after it closed): reopen it when the pose is over. */
+  /** The way back: the host's path when it gave one, else the drawer opens itself, focus and filter left as they are. */
+  const comeBack = (): void => {
+    if (d.reopen) d.reopen()
+    else api.open({ focus: false, keepFilter: true })
+  }
+  /** Call right after a pose was asked for from the drawer (and after it closed): come back now when no pose started (a refused choice), else when the pose is over. */
   const reopenAfterPose = (wasOpenAndStays: boolean): void => {
-    if (!wasOpenAndStays || !posing() || !win || typeof win.MutationObserver !== 'function') return
+    if (!wasOpenAndStays) return
+    if (!posing()) return comeBack()
+    if (!win || typeof win.MutationObserver !== 'function') return
     disarm()
     armed = true
     watcher = new win.MutationObserver(() => {
       if (!armed || posing()) return
       disarm()
       if (doc.querySelector('.cr-pick:not([hidden])')) return // the picker covers the workspace: nothing to come back to
-      api.open({ focus: false })
+      comeBack()
     })
     watcher.observe(d.parent, { attributes: true, attributeFilter: ['data-placing'] })
   }
@@ -532,7 +544,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       disarm() // a drawer opened by hand (or back from a pose) owns itself: nothing is waiting for a pose to end
       if (opts?.tab) api.preselect(opts.tab)
       if (api.isOpen) return
-      filter.value = ''
+      if (opts?.keepFilter !== true) filter.value = ''
       build()
       root.inert = false
       root.getBoundingClientRect() // the closed pose is laid out before the slide starts

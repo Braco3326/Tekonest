@@ -33,6 +33,11 @@ export interface ShellDom {
   /** Collapse / expand a side panel (toggles when `open` is omitted). */
   setPanel(p: PanelId, open?: boolean): void
   /**
+   * Whether the window is wide enough for this panel to be OPENED by something other than the learner (the first visit's profile, a design package's preset): the tree needs
+   * 760 px (the phone accordion), Propriétés 1200 px (the 3D view keeps >= 60 %). The learner's own click, menu item or key is never bound by it.
+   */
+  panelFits(p: PanelId): boolean
+  /**
    * Status bar: the place on screen ('' = none) and the state message.
    * `reannounce`: an answer to a learner action, read again even when the text did not change.
    */
@@ -168,6 +173,8 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   const panelListeners = new Set<(p: PanelId, open: boolean) => void>()
   /** Below this width the two side panels cannot be open together (night 2 wave 4, item 1: Projet 200 + Propriétés 260 > 400). Same threshold as the CSS cap. */
   const PHONE_PX = 760
+  /** Propriétés (260 px) opens by itself only from this width on, so the 3D view keeps >= 60 % next to the 200 px tree (also the initial rule of a narrow window). */
+  const PROPS_WIDE_PX = 1200
   const phone = (): boolean => !!win && win.innerWidth < PHONE_PX
   let openOrder = 0
   const openedAt: Record<PanelId, number> = { tree: 0, props: 0 }
@@ -209,11 +216,12 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
 
   // A narrow window starts with Propriétés folded so the 3D view keeps ≥ 60 %; a phone-sized one (< 760 px) folds Projet too (night wave 2, item A:
   // at 400 px the 200 px tree left the view 168 px wide). Only the first state: a click, a menu item or a script wins afterwards.
-  // A design package's preset (T4.3) says which panels it wants; the width rules above stay the upper bound, so the phone accordion (< 760 px) and the 60 % rule still win over any preset.
+  // A design package's preset (T4.3) says which panels it wants; the width rules (`panelFits`) bound every opening that is not the learner's (this initial state, and the first visit's profile through `panelFits` in boot.ts), so the phone accordion (< 760 px) and the 60 % rule win over any preset and any profile.
   const win = doc.defaultView
+  const panelFits = (p: PanelId): boolean => (p === 'tree' ? !phone() : !(win && win.innerWidth < PROPS_WIDE_PX))
   const want = look?.layout.panels ?? { tree: true, props: true }
-  setPanel('tree', want.tree && !phone())
-  setPanel('props', want.props && !(win && win.innerWidth < 1200))
+  setPanel('tree', want.tree && panelFits('tree'))
+  setPanel('props', want.props && panelFits('props'))
 
   // The window crosses 760 px. Narrower with both panels open: the one opened longer ago folds (the same accordion, focus handed to its button). Wider again: a panel that only the
   // accordion folded comes back (fix round S6); one the learner folded or opened stays as they left it.
@@ -256,6 +264,7 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
       return () => void panelListeners.delete(fn)
     },
     setPanel,
+    panelFits,
     setStatus,
   }
 }

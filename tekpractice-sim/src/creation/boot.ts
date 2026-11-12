@@ -957,7 +957,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
         host.rig.flyToPreset({ alpha: pose.alpha, beta: pose.beta, radius: pose.radius, target: Vector3.FromArray([...pose.target]) }) // a cut under reduced motion; no engine change
         scheduler.invalidate()
       },
-      setPanel: (p, open) => shell.setPanel(p, open),
+      // The profile (and the package panels it hands on) may not open a panel the window is too narrow for (the shell's own width rules: tree 760 px, Propriétés 1200 px); it may always close one.
+      setPanel: (p, open) => shell.setPanel(p, open && shell.panelFits(p)),
       openInventory: (tab) => setInventory(true, { tab, focus: false }),
       returnFocus: () => canvas.focus(),
     })
@@ -1570,6 +1571,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
         proposals: () => proposalEntries(betaDevices), // « Bêta » shows only if there are any, or while they load / failed
         betaStatus: () => betaStatus,
         onChoose: (deviceId) => void chooseDevice(deviceId),
+        // stay-open (T4 fix round, S5): the way back after a pose is the normal open, so a pinned refusal is dismissed, the Bêta sheets are synced and a locked view is respected
+        reopen: () => setInventory(true, { focus: false, keepFilter: true }),
         // Drag-and-drop out of the drawer (Task 43b): the same placement, steered by the window-level pointer events of the press.
         onDragStart: (deviceId, at, alt) => {
           if (!chooseDevice(deviceId, { pointerDrag: true })) return false // refused: the drawer stays open (an earlier pose does not count)
@@ -1593,11 +1596,11 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       shellBag.add(() => drawer?.dispose())
       return drawer
     }))
-  const setInventory = (open: boolean, opts: { returnFocus?: boolean; tab?: InventoryTab; focus?: boolean } = {}): void => {
+  const setInventory = (open: boolean, opts: { returnFocus?: boolean; tab?: InventoryTab; focus?: boolean; keepFilter?: boolean } = {}): void => {
     drawerWanted = open
     if (drawer) {
       if (open) {
-        drawer.open({ tab: opts.tab, focus: opts.focus })
+        drawer.open({ tab: opts.tab, focus: opts.focus, keepFilter: opts.keepFilter })
         patch.dismissRefusal() // the drawer took the learner's attention: the refusal pinned in the view has been read (not when the open was refused)
         syncBeta()
       } else drawer.close(opts)
@@ -1610,7 +1613,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       (d) => {
         showStatus()
         if (drawerWanted && !viewLocked()) {
-          d.open({ tab: opts.tab, focus: opts.focus })
+          d.open({ tab: opts.tab, focus: opts.focus, keepFilter: opts.keepFilter })
           patch.dismissRefusal()
           syncBeta()
         } else drawerWanted = false
