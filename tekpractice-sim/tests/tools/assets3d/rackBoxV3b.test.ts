@@ -263,7 +263,7 @@ describe(`rack-box v3b with real Blender (${BLENDER ? `using ${BLENDER}` : 'SKIP
     await expect(build(ONE_U, { ...BASE, frontVentSlots: 1, frontVentRows: 1, frontVentSlotLenMm: 10, frontVentSlotWidthMm: 3, frontVentXMm: 10, frontVentYMm: 22 })).rejects.toThrow(/front vent block .*chassis/)
   }, 120_000)
 
-  it.skipIf(!BLENDER)('two builds with all three features are byte-identical, and so are twelve builds of the vents alone (no triangulation that depends on memory addresses)', async () => {
+  it.skipIf(!BLENDER)('two builds with all three features are byte-identical, and so are twelve builds of the vents alone (no triangulation or face order that depends on memory addresses)', async () => {
     const params = { ...BASE, ...VENTS, ...WINDOW, ...EAR_HANDLES, frontVentXMm: 330, frontVentSlots: 6, frontVentColPitchMm: 18, frontVentSlotLenMm: 12, windowXMm: 30 }
     const a = await build(TWO_U, params)
     const b = await build(TWO_U, params)

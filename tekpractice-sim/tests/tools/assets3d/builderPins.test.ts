@@ -10,7 +10,7 @@
  * bmesh `triangle_fill(use_beauty=True)`) are NOT byte-stable: Blender's beauty fill breaks ties by memory address, so their triangulation (the same vertices, other
  * diagonals and another triangle order) depends on the heap layout. Measured: antelope-ocx-hd gives 3 different files in 10 runs of an unchanged script, and adding ONE
  * unused function to the script changes the bytes of 40 of the 93 plans (not a comment: the code size matters), the vertex set never. So for those the pin can only be
- * the fingerprint. New code of Wave 2 that fills a face uses `use_beauty=False` and is byte-stable.
+ * the fingerprint. The Wave 2 builders fill faces with our own triangulation (fill_with_holes_det, triangulate_det) and sort the faces (canonical_face_order): byte-stable.
  */
 import { mkdtemp, readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'

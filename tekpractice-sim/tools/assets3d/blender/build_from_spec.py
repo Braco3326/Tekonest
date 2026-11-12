@@ -323,9 +323,175 @@ def take_face(bm: bmesh.types.BMesh, z: float) -> list[bmesh.types.BMEdge]:
     return edges
 
 
+def ring_of(edges: list[bmesh.types.BMEdge]) -> list[bmesh.types.BMVert]:
+    """The vertices of the closed loop made by `edges` (in the order of the first edge's direction), walking the edges by their vertices."""
+    nxt: dict[int, list[bmesh.types.BMVert]] = {}
+    for e in edges:
+        a, b = e.verts
+        nxt.setdefault(a.index, []).append(b)
+        nxt.setdefault(b.index, []).append(a)
+    start = edges[0].verts[0]
+    out = [start]
+    prev, cur = None, start
+    while True:
+        cands = [v for v in nxt[cur.index] if prev is None or v.index != prev.index]
+        if not cands:
+            raise BuildError("fill: an edge loop is not closed")
+        step = cands[0] if prev is not None else edges[0].verts[1]
+        if step.index == start.index:
+            break
+        out.append(step)
+        prev, cur = cur, step
+        if len(out) > len(edges) + 1:
+            raise BuildError("fill: an edge loop does not close")
+    return out
+
+
+def _area2(a: tuple[float, float, float], b: tuple[float, float, float], c: tuple[float, float, float]) -> float:
+    return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+
+
+def _segments_cross(p1: tuple[float, float], p2: tuple[float, float], p3: tuple[float, float], p4: tuple[float, float], eps: float) -> bool:
+    """True when the segments p1p2 and p3p4 cross at a point that is interior to both (touching at an end or running along each other does not count)."""
+    d1 = (p4[0] - p3[0]) * (p1[1] - p3[1]) - (p4[1] - p3[1]) * (p1[0] - p3[0])
+    d2 = (p4[0] - p3[0]) * (p2[1] - p3[1]) - (p4[1] - p3[1]) * (p2[0] - p3[0])
+    d3 = (p2[0] - p1[0]) * (p3[1] - p1[1]) - (p2[1] - p1[1]) * (p3[0] - p1[0])
+    d4 = (p2[0] - p1[0]) * (p4[1] - p1[1]) - (p2[1] - p1[1]) * (p4[0] - p1[0])
+    return ((d1 > eps and d2 < -eps) or (d1 < -eps and d2 > eps)) and ((d3 > eps and d4 < -eps) or (d3 < -eps and d4 > eps))
+
+
+def triangulate_with_holes(outer: list[tuple[float, float, int]], holes: list[list[tuple[float, float, int]]]) -> list[tuple[int, int, int]]:
+    """Triangulates a polygon with holes, deterministically (pure arithmetic, no heap or pointer order): each hole is joined to the outline by a bridge to the nearest vertex it can
+    see, then the one ring is cut into triangles by ear clipping, always the first ear in ring order. Points are (x, y, id); returns triples of ids, counter-clockwise in the (x, y)
+    chart. Every vertex given is used (a collinear one makes a degenerate triangle rather than a hole). Raises BuildError when it cannot finish."""
+    eps = 1e-14
+    def signed_area(ring: list[tuple[float, float, int]]) -> float:
+        return sum(ring[i][0] * ring[(i + 1) % len(ring)][1] - ring[(i + 1) % len(ring)][0] * ring[i][1] for i in range(len(ring))) / 2.0
+    ring = list(outer) if signed_area(outer) > 0 else list(reversed(outer))
+    hs = [list(h) if signed_area(h) < 0 else list(reversed(h)) for h in holes]
+    hs.sort(key=lambda h: (-max(p[0] for p in h), -max(p[1] for p in h), min(p[2] for p in h)))
+    pending = list(hs)
+    for hole in hs:
+        pending.remove(hole)
+        m_i = max(range(len(hole)), key=lambda i: (hole[i][0], hole[i][1], -hole[i][2]))
+        m = hole[m_i]
+        edges: list[tuple[tuple[float, float], tuple[float, float]]] = [((ring[i][0], ring[i][1]), (ring[(i + 1) % len(ring)][0], ring[(i + 1) % len(ring)][1])) for i in range(len(ring))]
+        for other in pending + [hole]:
+            edges += [((other[i][0], other[i][1]), (other[(i + 1) % len(other)][0], other[(i + 1) % len(other)][1])) for i in range(len(other))]
+        pts_all = [(p[0], p[1]) for p in ring] + [(p[0], p[1]) for other in pending + [hole] for p in other]
+        order = sorted(range(len(ring)), key=lambda i: ((ring[i][0] - m[0]) ** 2 + (ring[i][1] - m[1]) ** 2, ring[i][2], i))
+        chosen = -1
+        for i in order:
+            p = ring[i]
+            if (p[0], p[1]) == (m[0], m[1]):
+                continue
+            a, b = (m[0], m[1]), (p[0], p[1])
+            if any(_segments_cross(a, b, e0, e1, eps) for e0, e1 in edges):
+                continue
+            # no other vertex may lie on the open segment
+            dx, dy = b[0] - a[0], b[1] - a[1]
+            length2 = dx * dx + dy * dy
+            if any(q != a and q != b and abs(dx * (q[1] - a[1]) - dy * (q[0] - a[0])) <= 1e-9 * length2 ** 0.5 and 0 < ((q[0] - a[0]) * dx + (q[1] - a[1]) * dy) < length2 for q in pts_all):
+                continue
+            # the bridge must run inside the region: its midpoint is inside the ring (even-odd), outside every pending hole and this hole
+            mid = ((a[0] + b[0]) / 2.0, (a[1] + b[1]) / 2.0)
+            def inside(poly: list[tuple[float, float, int]], pt: tuple[float, float]) -> bool:
+                c = False
+                for k in range(len(poly)):
+                    p0, p1 = poly[k], poly[(k + 1) % len(poly)]
+                    if (p0[1] > pt[1]) != (p1[1] > pt[1]) and pt[0] < p0[0] + (p1[0] - p0[0]) * (pt[1] - p0[1]) / (p1[1] - p0[1]):
+                        c = not c
+                return c
+            if not inside(ring, mid) or any(inside(o, mid) for o in pending + [hole]):
+                continue
+            chosen = i
+            break
+        if chosen < 0:
+            raise BuildError("fill: a hole could not be joined to the outline (no vertex of it sees one of the outline)")
+        walk = [hole[(m_i + k) % len(hole)] for k in range(len(hole))]
+        ring = ring[:chosen + 1] + walk + [m, ring[chosen]] + ring[chosen + 1:]
+
+    tris: list[tuple[int, int, int]] = []
+    n_left = len(ring)
+    idx = 0
+    guard = 0
+    while len(ring) > 3:
+        guard += 1
+        if guard > 4 * n_left * n_left + 100:
+            raise BuildError("fill: ear clipping did not finish")
+        n = len(ring)
+        best = -1
+        weak = -1
+        for step in range(n):
+            i = (idx + step) % n
+            a, b, c = ring[i - 1], ring[i], ring[(i + 1) % n]
+            ar = _area2(a, b, c)
+            if ar <= eps:
+                if weak < 0 and ar >= -eps:
+                    weak = i
+                continue
+            ok = True
+            for q in ring:
+                if q is a or q is b or q is c:
+                    continue
+                if (q[0], q[1]) in ((a[0], a[1]), (b[0], b[1]), (c[0], c[1])):
+                    continue
+                if _area2(a, b, q) >= -eps and _area2(b, c, q) >= -eps and _area2(c, a, q) >= -eps:
+                    ok = False
+                    break
+            if ok:
+                best = i
+                break
+        if best < 0:
+            best = weak
+        if best < 0:
+            raise BuildError("fill: no ear found (the polygon is not simple)")
+        a, b, c = ring[best - 1], ring[best], ring[(best + 1) % n]
+        tris.append((a[2], b[2], c[2]))
+        del ring[best]
+        idx = max(0, best - 1) % max(1, len(ring))
+    if len(ring) == 3:
+        tris.append((ring[0][2], ring[1][2], ring[2][2]))
+    return tris
+
+
+def fill_with_holes_det(bm: bmesh.types.BMesh, outline: list[bmesh.types.BMEdge], holes: list[list[bmesh.types.BMEdge]], normal_g: tuple[float, float, float]) -> None:
+    """fill_with_holes without bmesh's scan fill (whose triangles depend on the heap layout): the same planar region, triangulated by triangulate_with_holes."""
+    if any(e is None for e in outline) or any(e is None for h in holes for e in h):
+        raise BuildError("fill_with_holes: an outline edge does not exist")
+    bm.verts.index_update()
+    axis = max(range(3), key=lambda k: abs(normal_g[k]))
+    flip = normal_g[axis] < 0
+    def chart(v: bmesh.types.BMVert) -> tuple[float, float, int]:
+        g = (v.co.x, v.co.z, -v.co.y)   # glTF coordinates
+        u, w = [g[k] for k in range(3) if k != axis]
+        return (-u if flip else u, w, v.index)
+    def canonical(ring: list[tuple[float, float, int]]) -> list[tuple[float, float, int]]:
+        first = min(range(len(ring)), key=lambda i: ring[i][2])   # the edge list may start anywhere from one run to the next
+        return ring[first:] + ring[:first]
+    outer = canonical([chart(v) for v in ring_of(outline)])
+    inner = [canonical([chart(v) for v in ring_of(h)]) for h in holes]
+    by_index = {v.index: v for e in outline + [e for h in holes for e in h] for v in e.verts}
+    made = 0
+    for a, b, c in triangulate_with_holes(outer, inner):
+        if len({a, b, c}) < 3:
+            continue
+        try:
+            bm.faces.new((by_index[a], by_index[b], by_index[c]))
+            made += 1
+        except ValueError:
+            pass   # a face that already exists (a degenerate duplicate): skip
+    if made == 0:
+        raise BuildError("could not fill a face around its holes")
+
+
 def fill_with_holes(bm: bmesh.types.BMesh, outline: list[bmesh.types.BMEdge], holes: list[list[bmesh.types.BMEdge]], normal_g: tuple[float, float, float], beauty: bool = True) -> None:
-    """Fills the planar region bounded by `outline` (edges) minus the loops `holes` with triangles. `beauty` (the default, and what every v1 and v2 build uses) lets
-    Blender rotate edges for nicer triangles, but its tie-breaking depends on memory addresses: use beauty = False where two builds must be byte-identical."""
+    """Fills the planar region bounded by `outline` (edges) minus the loops `holes` with triangles. `beauty` True (the default, and what every v1 and v2 build uses) is bmesh's scan
+    fill with beauty rotation; its triangles depend on the heap layout (measured: the same plan, other diagonals, from one session to the next, also with use_beauty False).
+    `beauty` False is fill_with_holes_det: our own bridge and ear-clip triangulation, pure arithmetic, so two builds are byte-identical. The Wave 2 builders use it."""
+    if not beauty:
+        fill_with_holes_det(bm, outline, holes, normal_g)
+        return
     edges = list(outline)
     for hole in holes:
         edges += hole
@@ -632,8 +798,9 @@ RACK_V2_NAMES = (
     "feetMm", "feetDiaMm", "bodyWidthMm", "rearInsetMm", "frontOnIo", "plateFilletMm", "seamMm", "plateRgb", "bodyRgb",
 )
 # rack-box v3b (mirrors RACK_V3B_PARAMS in shapes.ts, which documents each one): front vent slots through the plate, a meter window recess, ear handles clear of the rack-ear slots.
-# Any of them switches the detailed build on, and (so that two builds are byte-identical) makes every flat face filled round holes use the plain triangle fill:
-# bmesh's beauty fill breaks ties by memory address, which gave different triangles from one Blender session to the next in the v2 builds (not changed there: their output is pinned).
+# Any of them switches the detailed build on, and (so that two builds are byte-identical) makes every flat face filled round holes use fill_with_holes_det and ends with
+# canonical_face_order (own triangulation, canonical order): bmesh's scan fill and the exporter's triangulation break ties by memory address, which gives different triangles from one
+# Blender session to the next in the v2 builds (not changed there: their output is pinned).
 RACK_V3B_NAMES = (
     "frontVentSlots", "frontVentRows", "frontVentSlotLenMm", "frontVentSlotWidthMm", "frontVentColPitchMm", "frontVentRowPitchMm", "frontVentXMm", "frontVentYMm", "frontVentDepthMm",
     "windowWMm", "windowHMm", "windowXMm", "windowYMm", "windowDepthMm",
@@ -795,10 +962,60 @@ def rack_zone_check(plan: Plan, flipped: bool, w: float, d: float, face: str, wh
             raise BuildError(f"{what} (x {u0:.1f} to {u1:.1f}, y {v0:.1f} to {v1:.1f} mm on the {face} face) overlaps a flat zone of a control (x {z['x0']:.1f} to {z['x1']:.1f}, y {z['y0']:.1f} to {z['y1']:.1f} mm): the controls rig draws that area")
 
 
+def triangulate_det(bm: bmesh.types.BMesh) -> None:
+    """Cuts every quad and n-gon of `bm` into triangles with pure arithmetic (bmesh.ops.triangulate breaks ties between equal diagonals by memory address, measured): a quad along its
+    shorter diagonal (a tie: the diagonal through the vertex of the lowest index), a larger face by ear clipping in its own plane (triangulate_with_holes). The part colour tag is kept."""
+    bm.verts.index_update()
+    bm.faces.index_update()
+    tag = bm.faces.layers.int.get("part")
+    big = sorted((f for f in bm.faces if len(f.verts) > 3), key=lambda f: sorted(v.index for v in f.verts))
+    for f in big:
+        vs = list(f.verts)
+        first = min(range(len(vs)), key=lambda i: vs[i].index)
+        vs = vs[first:] + vs[:first]   # the loop may start at any vertex of the face from one run to the next: start at the lowest index
+        if len(vs) == 4:
+            a, b, c, d = vs
+            d1, d2 = (a.co - c.co).length, (b.co - d.co).length
+            if abs(d1 - d2) <= 1e-12:
+                low = min(vs, key=lambda v: v.index)
+                use_ac = low in (a, c)
+            else:
+                use_ac = d1 < d2
+            tris = [(a, b, c), (a, c, d)] if use_ac else [(a, b, d), (b, c, d)]
+        else:
+            nx = ny = nz = 0.0
+            for i in range(len(vs)):
+                p, q = vs[i].co, vs[(i + 1) % len(vs)].co
+                nx += (p.y - q.y) * (p.z + q.z)
+                ny += (p.z - q.z) * (p.x + q.x)
+                nz += (p.x - q.x) * (p.y + q.y)
+            n = (nx, ny, nz)
+            axis = max(range(3), key=lambda k: abs(n[k]))
+            keep = [(axis + 1) % 3, (axis + 2) % 3]
+            flip = n[axis] < 0
+            chart = [((-vs[i].co[keep[0]] if flip else vs[i].co[keep[0]]), vs[i].co[keep[1]], i) for i in range(len(vs))]
+            tris = [(vs[i], vs[j], vs[k]) for i, j, k in triangulate_with_holes(chart, [])]
+        value = f[tag] if tag is not None else 0
+        for tri in tris:
+            if len({v.index for v in tri}) < 3:
+                continue
+            try:
+                nf = bm.faces.new(tri)
+            except ValueError:
+                continue
+            if tag is not None:
+                nf[tag] = value
+    if big:
+        bmesh.ops.delete(bm, geom=big, context="FACES_ONLY")
+
+
 def canonical_face_order(bm: bmesh.types.BMesh) -> None:
     """Sorts the faces of `bm` by their (sorted) vertex indices. bmesh's triangle fill and bevel create the same faces in an order that varies with the heap layout
     (measured: the same plan gave two different files in 24 builds run in parallel, same vertices, same face set, other face order); the vertex order does not vary, so
-    this makes the file byte-stable. Used by the Wave 2 builders only: the older builders' output is pinned as it was."""
+    this makes the file byte-stable. It also cuts every quad and n-gon into triangles itself (ear clip, short edge): the glTF exporter would otherwise do it, and its beauty
+    triangulation of a regular n-gon (the cap of a handle, a foot or a lathe: every diagonal ties) breaks ties by memory address, another source of two different files from one plan.
+    Used by the Wave 2 builders only: the older builders' output is pinned as it was."""
+    triangulate_det(bm)
     bm.verts.index_update()
     bm.faces.index_update()
     keyed = {f.index: tuple(sorted(v.index for v in f.verts)) for f in bm.faces}
@@ -1053,6 +1270,17 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
             slot_rects.append((x0, x1, y0, y1))
             slot_inner_from_end = max(slot_inner_from_end, w / 2.0 - min(abs(x0), abs(x1)))
             holes += 1
+        if v3b and slots:
+            # the plate's flat face ends at its edge bevel, and the v3b fill needs every hole inside it: an EIA slot that reaches into the bevel loses its outer end (the inner end stays)
+            reach = w / 2.0 - plate_cham - RACK_FIT_MM * MM
+            over = max(max(abs(r[0]), abs(r[1])) for r in slot_rects) - reach
+            if over > 0.0:
+                if slot_len - over < hole_h:
+                    raise BuildError("an ear slot does not fit in the flat part of the plate edge: lower plateFilletMm / filletMm or raise earHoleEdgeMm")
+                slot_len -= over
+                slots = [(gx - math.copysign(over / 2.0, gx), gy) for gx, gy in slots]
+                slot_rects = [(gx - slot_len / 2.0, gx + slot_len / 2.0, gy - hole_h / 2.0, gy + hole_h / 2.0) for gx, gy in slots]
+                slot_inner_from_end = max(w / 2.0 - min(abs(r[0]), abs(r[1])) for r in slot_rects)
 
     # rack-box v3b: front vent slots and the meter window (cut in the same pass as the ear slots, the plate face is filled once), and the ear handles' places
     cuts: list[tuple[list[tuple[float, float]], float, bool]] = []   # (outline, depth, through)
