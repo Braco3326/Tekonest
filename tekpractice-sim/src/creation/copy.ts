@@ -921,7 +921,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** The chip's tooltip. */
     chipHint: 'Afficher ce qui empêche la lecture',
     /** Under the title: what the list is, and that it changes nothing. */
-    intro: 'Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne seulement un appareil.',
+    intro: 'Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne un appareil ou ouvre l’inventaire.',
     close: 'Fermer la liste',
     /** Row names. */
     rowSource: 'Une source de lecture',
@@ -932,9 +932,12 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** State tags (with a glyph: never colour alone). */
     tagBlocked: 'Bloqué',
     tagUnchecked: 'Pas encore vérifié',
-    tagOk: 'Vérifié',
-    /** The mic line when a verified mic is cabled to a console mic input (the playback test signal does not come from the mic). */
-    micCabled: 'Le micro est câblé mais n’est pas entendu : le signal de test entre à la console.',
+    tagOk: 'En place',
+    /**
+     * The mic line when a verified mic is cabled to a console mic input. Shown only while the rig cannot play, and true there: Écoute plays a song, a file
+     * or the test signal (`menu.song`, `menu.chooseFile`, `menu.testSignal`), never the mic (src/creation/listenController.ts reads no mic).
+     */
+    micCabled: 'Le micro est câblé, mais Écoute ne le fait pas entendre : elle lit un morceau, un fichier ou le signal de test.',
     /** Row button. */
     goTo: 'Aller à',
     /** The button's accessible name; {target} = the device (« Yamaha QL1 (ql1) ») or the inventory tab. */
@@ -945,11 +948,11 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Oscar's verdict (T1.4): after the engine's reason (`playback.*`, quoted verbatim by src/guide/verdict.ts) one sentence on what to do. One per
-   * signal-path reason; none for RULE_ERROR (the rule's own explanation is the fix). No figure, no promise. Every string here: à valider (tekuxwriter, 2026-11-12).
+   * signal-path reason the verdict can carry (`path.reasons[0]`); none for RULE_ERROR (the rule's own explanation is the fix) nor NO_MIC (a mic reason, never a playback one). No figure, no promise. Every string here: à valider (tekuxwriter, 2026-11-12).
    */
   assist: {
-    /** After `playback.noSource` (NO_SOURCE). */
-    noSource: 'Ajoutez la console depuis l’inventaire (onglet « Consoles »).',
+    /** After `playback.noSource` (NO_SOURCE): a source is a console that has the « Lecture console » command (the Axia iQ has none). */
+    noSource: 'Ajoutez une console qui a la commande « Lecture console » (onglet « Consoles »).',
     /** After `playback.sourceOff` (SOURCE_OFF). */
     sourceOff: 'Sélectionnez la console, puis activez « Lecture console » dans Propriétés.',
     /** After `playback.hostUnpowered` (HOST_UNPOWERED). */
@@ -958,7 +961,5 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     noPath: 'Reliez une sortie principale de la console à l’entrée d’une enceinte.',
     /** After `playback.speakerUnpowered` (SPEAKER_UNPOWERED). */
     speakerUnpowered: 'Reliez la prise secteur de l’enceinte à une multiprise et vérifiez que « Alimentation » est activée.',
-    /** After `playback.noMic` (NO_MIC). */
-    noMic: 'Reliez un micro à une entrée micro de la console.',
   },
 }

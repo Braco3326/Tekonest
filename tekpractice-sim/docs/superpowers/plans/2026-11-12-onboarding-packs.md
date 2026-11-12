@@ -155,7 +155,9 @@ Create: `src/design/packages.ts`, `src/design/packages.css`, `src/design/events.
 ### T1.3a Checklist model (pure)
 - **Files:** create `src/creation/checklistModel.ts`, `tests/creation/checklistModel.test.ts`.
 - **Tests first:** exhaustive `Record<ReasonCode, Row | 'mic'>`; blocked row = `text_fr` verbatim; rows after the first blocked gate =
-  not-yet-checked; all ticked only when `playbackReady` (triggers / does not); the mic line: « câblé mais pas entendu » only with a mic cable,
+  not-yet-checked; tick rule (amended after the G3 review, spec 6.4): all rows ticked when `playbackReady` (triggers / does not), and the Source and
+  « Lecture console » rows ticked when a later row is blocked (`signalPath.ts` returns early at lines 149 and 151); Alimenté and Câblé only when ready
+  (Alimenté is conservative); the mic line: `checklist.micCabled` (« …Écoute ne le fait pas entendre… », true while blocked) only with a mic cable,
   `NO_MIC` text otherwise.
 - **Depends:** T0.1. **Tier:** standard.
 

@@ -864,7 +864,7 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 |---|---|---|---|
 | `checklist.title` | Pourquoi je n’entends rien ? | à valider (tekuxwriter) | Pastille de la barre d’état et titre de la liste (visible lieu ouvert, tant que la lecture n’est pas possible) |
 | `checklist.chipHint` | Afficher ce qui empêche la lecture | à valider (tekuxwriter) | Infobulle de la pastille |
-| `checklist.intro` | Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne seulement un appareil. | à valider (tekuxwriter) | Sous le titre de la liste |
+| `checklist.intro` | Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne un appareil ou ouvre l’inventaire. | à valider (tekuxwriter) | Sous le titre de la liste |
 | `checklist.close` | Fermer la liste | à valider (tekuxwriter) | Nom accessible du bouton ×, Échap fait de même et rend le focus à la pastille |
 | `checklist.rowSource` | Une source de lecture | à valider (tekuxwriter) | Ligne 1 (raison NO_SOURCE) |
 | `checklist.rowConsole` | Lecture console | à valider (tekuxwriter) | Ligne 2 (raison SOURCE_OFF) ; même nom que la commande de la console dans Propriétés |
@@ -873,8 +873,8 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `checklist.rowMic` | Micro | à valider (tekuxwriter) | Ligne à part, sans état : le texte est celui du moteur (NO_MIC) ou la phrase `micCabled` |
 | `checklist.tagBlocked` | Bloqué | à valider (tekuxwriter) | Étiquette d’une ligne bloquée ; son texte est la raison du moteur, mot pour mot |
 | `checklist.tagUnchecked` | Pas encore vérifié | à valider (tekuxwriter) | Étiquette d’une ligne après la première ligne bloquée : le moteur ne l’a pas regardée |
-| `checklist.tagOk` | Vérifié | à valider (tekuxwriter) | Étiquette d’une ligne que le moteur a dépassée avant de s’arrêter (source présente, Lecture console active) |
-| `checklist.micCabled` | Le micro est câblé mais n’est pas entendu : le signal de test entre à la console. | à valider (tekuxwriter) | Ligne micro quand un micro vérifié est câblé sur une entrée micro d’une console ; sinon le texte NO_MIC du moteur |
+| `checklist.tagOk` | En place | à valider (tekuxwriter) | Étiquette d’une ligne que le moteur a dépassée avant de s’arrêter (source présente, Lecture console active) ; pas « Vérifié » : le mot est déjà celui des fiches (Bêta : « non vérifié ») |
+| `checklist.micCabled` | Le micro est câblé, mais Écoute ne le fait pas entendre : elle lit un morceau, un fichier ou le signal de test. | à valider (tekuxwriter) | Ligne micro quand un micro vérifié est câblé sur une entrée micro d’une console ; sinon le texte NO_MIC du moteur. Vrai tant que la liste est affichée (la lecture est bloquée) : Écoute ne lit que ces trois sources, jamais le micro ; aucune affirmation sur ce qui « entre » dans la console |
 | `checklist.goTo` | Aller à | à valider (tekuxwriter) | Bouton d’une ligne bloquée : sélectionne l’appareil concerné (ou ouvre l’inventaire, onglet Consoles) ; ne change pas le projet |
 | `checklist.goToLabel` | Aller à : {target} | à valider (tekuxwriter) | Nom accessible du bouton ; `{target}` = l’appareil ou `checklist.targetInventory` |
 | `checklist.targetInventory` | l’inventaire, onglet Consoles | à valider (tekuxwriter) | Cible de « Aller à » pour la ligne « Une source de lecture » |
@@ -882,16 +882,15 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 
 ## assist
 
-Oscar dit quoi faire (packs d’accueil, T1.4) : dans le verdict d’Oscar, la raison du moteur (`playback.*`, mot pour mot) est suivie d’une phrase sur ce qu’il y a à faire, une par raison de lecture. Aucune pour RULE_ERROR : l’explication de la règle fait office de correction. Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
+Oscar dit quoi faire (packs d’accueil, T1.4) : dans le verdict d’Oscar, la raison du moteur (`playback.*`, mot pour mot) est suivie d’une phrase sur ce qu’il y a à faire, une par raison de lecture que le verdict peut porter (la première raison du chemin du signal). Aucune pour RULE_ERROR (l’explication de la règle fait office de correction) ni pour NO_MIC (raison du micro, jamais de la lecture). Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `assist.noSource` | Ajoutez la console depuis l’inventaire (onglet « Consoles »). | à valider (tekuxwriter) | Après `playback.noSource` (NO_SOURCE) |
+| `assist.noSource` | Ajoutez une console qui a la commande « Lecture console » (onglet « Consoles »). | à valider (tekuxwriter) | Après `playback.noSource` (NO_SOURCE) ; une source = un appareil avec cette commande (l’Axia iQ n’en a pas : « la console » seule induirait en erreur) |
 | `assist.sourceOff` | Sélectionnez la console, puis activez « Lecture console » dans Propriétés. | à valider (tekuxwriter) | Après `playback.sourceOff` (SOURCE_OFF) ; « Lecture console » = le nom de la commande du catalogue |
 | `assist.hostUnpowered` | Reliez la prise secteur de la console à une multiprise (onglet « Secteur » de l’inventaire) et vérifiez que « Alimentation » est activée. | à valider (tekuxwriter) | Après `playback.hostUnpowered` (HOST_UNPOWERED) |
 | `assist.noPath` | Reliez une sortie principale de la console à l’entrée d’une enceinte. | à valider (tekuxwriter) | Après `playback.noPath` (NO_PATH) |
 | `assist.speakerUnpowered` | Reliez la prise secteur de l’enceinte à une multiprise et vérifiez que « Alimentation » est activée. | à valider (tekuxwriter) | Après `playback.speakerUnpowered` (SPEAKER_UNPOWERED) |
-| `assist.noMic` | Reliez un micro à une entrée micro de la console. | à valider (tekuxwriter) | Après `playback.noMic` (NO_MIC) ; le moteur ne le met pas dans la première raison de lecture : prévu pour le jour où il y serait |
 
 ## Textes hors COPY (index.html)
 

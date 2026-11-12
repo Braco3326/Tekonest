@@ -185,7 +185,14 @@ describe('the mic line', () => {
     expect(v.mic.text).not.toBe(C.micCabled)
   })
 
-  it('the fixed line is the pinned sentence', () => {
-    expect(C.micCabled).toBe('Le micro est câblé mais n’est pas entendu : le signal de test entre à la console.')
+  it('the fixed line is the pinned sentence, true while the list is shown (the rig cannot play): it says what Écoute plays, nothing about what enters the console', () => {
+    expect(C.micCabled).toBe('Le micro est câblé, mais Écoute ne le fait pas entendre : elle lit un morceau, un fichier ou le signal de test.')
+    expect(C.micCabled).not.toMatch(/entre|console/i)
+  })
+
+  it('the three state tags are pinned; « En place » does not collide with the Bêta « vérifié / non vérifié » wording, and the intro names both « Aller à » actions', () => {
+    expect([C.tagBlocked, C.tagUnchecked, C.tagOk]).toEqual(['Bloqué', 'Pas encore vérifié', 'En place'])
+    expect(C.tagOk).not.toMatch(/vérifi/i)
+    expect(C.intro).toBe('Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne un appareil ou ouvre l’inventaire.')
   })
 })

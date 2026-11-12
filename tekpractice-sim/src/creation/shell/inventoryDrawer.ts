@@ -502,8 +502,9 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       ;(tabs.find((t) => t.tab === selected)?.btn ?? close).focus()
     },
     preselect(tab) {
+      if (!Object.prototype.hasOwnProperty.call(TAB_LABELS, tab)) return // an unknown tab is ignored, open or not
       if (!api.isOpen) {
-        selected = tab // `build()` falls back to the first tab when this one does not exist
+        selected = tab // `build()` falls back to the first tab when the rig has none of this name (Bêta may be absent)
         return
       }
       if (!tabs.some((t) => t.tab === tab)) return

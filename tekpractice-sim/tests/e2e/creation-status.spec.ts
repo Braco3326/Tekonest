@@ -229,6 +229,7 @@ test('checklist: the chip shows on a silent rig in the blank room, also with ?os
   await expect(crow(page, 'source')).toHaveAttribute('data-state', 'ok')
   await expect(crow(page, 'console')).toHaveAttribute('data-state', 'blocked')
   await expect(crow(page, 'console')).toContainText('La lecture console est coupée.')
+  await expect(crow(page, 'source')).toContainText('En place') // the engine got past the source gate (not « Vérifié »: that word is the sheets')
   await expect(crow(page, 'power')).toHaveAttribute('data-state', 'unchecked')
 })
 
@@ -239,6 +240,7 @@ test('checklist: « Aller à » selects the device and leaves the design untouch
   await page.getByTestId('checklist-goto-source').click()
   await expect(panel(page)).toBeHidden()
   await expect(page.getByRole('tab', { name: 'Consoles' })).toHaveAttribute('aria-selected', 'true') // the drawer opened on its Consoles tab
+  await expect(page.getByRole('tab', { name: 'Consoles' })).toBeFocused() // the list's button went away with the list: the focus is not left on the page body
   expect(await design(page), 'opening the inventory changes nothing').toBe(before)
   await page.keyboard.press('Escape')
   await spawnConsole(page)
@@ -276,7 +278,7 @@ test('checklist: the mic line says « câblé mais pas entendu » only when a mi
   await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium' && window.__creation!.design().rig.instances.length === 5)
   await expect(chip(page)).toBeVisible() // the reference template is silent (Lecture console off, no speaker cable)
   await chip(page).click()
-  await expect(page.getByTestId('checklist-mic')).toHaveText('Le micro est câblé mais n’est pas entendu : le signal de test entre à la console.')
+  await expect(page.getByTestId('checklist-mic')).toHaveText('Le micro est câblé, mais Écoute ne le fait pas entendre : elle lit un morceau, un fichier ou le signal de test.')
   await expect(crow(page, 'console')).toHaveAttribute('data-state', 'blocked')
   await page.evaluate(() => {
     const c = window.__creation!
@@ -310,4 +312,13 @@ test('checklist: no chip before a place is open; the greyed Écoute items point 
   await expect(page.locator('#cr-menu-hint-play')).toBeVisible()
   await expect(page.locator('#cr-menu-hint-play')).toHaveText('Voir « Pourquoi je n’entends rien ? » dans la barre d’état.')
   await expect(play).toHaveAccessibleDescription('La lecture console est coupée. Voir « Pourquoi je n’entends rien ? » dans la barre d’état.')
+})
+
+test('checklist: the legacy page and a level page have no chip (Mode Création only; exams are the level route)', async ({ page }) => {
+  for (const url of ['/?legacy=1', '/?level=a1']) {
+    await page.goto(url)
+    await expect(page.locator('#hud')).toBeAttached()
+    await expect(page.getByTestId('checklist-chip'), url).toHaveCount(0)
+    expect(await page.evaluate(() => !!window.__creation), url).toBe(false)
+  }
 })

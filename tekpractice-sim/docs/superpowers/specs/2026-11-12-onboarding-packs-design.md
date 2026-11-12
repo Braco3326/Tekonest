@@ -228,11 +228,17 @@ a chip in the status bar and a line under the greyed Écoute items (`#cr-menu-de
 | Lecture console | `SOURCE_OFF` | verbatim | selects the console |
 | Alimenté | `HOST_UNPOWERED`, `SPEAKER_UNPOWERED` | verbatim | selects the first subject's device; helper button (6.5) |
 | Câblé | `NO_PATH`, `RULE_ERROR` | verbatim | selects the first subject's device |
-| Micro (separate line) | `NO_MIC` or the mic line of 6.3 | `NO_MIC` text, or « Le micro est câblé mais n’est pas entendu… » only when a mic is cabled | — |
+| Micro (separate line) | `NO_MIC` or `checklist.micCabled` | `NO_MIC` text, or « Le micro est câblé, mais Écoute ne le fait pas entendre : elle lit un morceau, un fichier ou le signal de test. » only when a mic is cabled | — |
 
 - `Record<ReasonCode, Row | 'mic'>`: a new code fails to compile until placed.
-- **Tri-state, never a false tick:** the first three gates return early, so rows after the first blocked one read « pas encore vérifié »; every
-  row is ticked only when `playbackReady`.
+- **Tri-state, never a false tick (amended 2026-11-12 after the G3 review):** the first three gates return early, so rows after the first blocked one read
+  « pas encore vérifié ». Tick rule: **every row is ticked when `playbackReady`** (the list is hidden then), and **the Source and « Lecture console » rows are
+  also ticked (tag « En place ») when a LATER row is the blocked one**, because `signalPath.ts` returns early at exactly those gates (line 149 `NO_SOURCE`,
+  line 151 `SOURCE_OFF`): reaching a later reason proves both passed. The Alimenté and Câblé rows are ticked only when ready: the speakers' supply is evaluated
+  in the same pass as the cables (lines 211 to 215), and a blocked cable leaves it unknown. The Alimenté row is therefore conservative: it reads « pas encore
+  vérifié » above a blocked cable row although line 153 proved the console's own power; the row mixes the console's supply (checked early) and the speakers' (not).
+- **The mic line is the checklist's own** (`checklist.micCabled`), not the 6.3 tutorial line: the list is shown only while playback is blocked, so a sentence about
+  the test signal entering the console would be false there. It says only what Écoute plays (a song, a file or the test signal, never the mic).
 - It changes nothing: « Aller à » only selects or opens.
 
 ### 6.5 The power helper « Je branche pour vous (dans le simulateur) »
@@ -368,7 +374,9 @@ role tokens (default = Ambre, so nothing changes without `?design`), and tests c
      applied host-side through the `storage` wrapper handed to `mountGuide` (returns the package corner when nothing is stored).
 2. **The checklist** (6.4).
 3. **Oscar says what to do.** The verdict (src/guide/verdict.ts, last branch) keeps the reason verbatim and adds one « vous » action sentence
-   per `ReasonCode` (COPY `assist.*`).
+   per playback `ReasonCode` the verdict can carry (COPY `assist.*`: NO_SOURCE, SOURCE_OFF, HOST_UNPOWERED, NO_PATH, SPEAKER_UNPOWERED). `RULE_ERROR` adds nothing (the
+   rule's own explanation is the fix) and `NO_MIC` never reaches the verdict (it lives in `micReasons`; the bridge reads `reasons[0]`). The NO_SOURCE sentence asks for
+   a console that has the « Lecture console » command, because the Axia iQ is a console without one.
 4. **Rule texts: one accessor, an override map, no catalog edit.** `src/creation/ruleTexts.ts` exports `creationRuleRows(rows)` (the catalog rows
    with Mode Création's `teach_fr` overrides applied, keyed by rule id) and `ruleText(ruleId)`; default = the catalog text. It is used at **all four
    read sites** (verified): the status list (`boot.ts:281` `ruleTextFor(registry.catalog.rules)`), the connect dialog's default

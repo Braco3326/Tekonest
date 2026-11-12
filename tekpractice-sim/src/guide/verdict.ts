@@ -36,7 +36,7 @@ const ACTION_KEY: Readonly<Record<ReasonCode, string | null>> = {
   NO_PATH: 'noPath',
   SPEAKER_UNPOWERED: 'speakerUnpowered',
   RULE_ERROR: null,
-  NO_MIC: 'noMic',
+  NO_MIC: null, // a mic reason (path.micReasons): the bridge reads path.reasons[0] only, so it never reaches the verdict
 }
 
 /** The sentence that follows a reason, or '' (a code of the level page, a code this app does not know, a rule error). Own keys only. */

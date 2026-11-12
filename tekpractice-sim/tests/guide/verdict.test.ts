@@ -9,7 +9,9 @@ import { buildVerdict, digestOf } from '../../src/guide/verdict'
 import { shapeBrainVerdict } from '../../src/guide/vendor/core/shape'
 import { ruleTextFor, type RuleRow } from '../../src/creation/shell/statusModel'
 import { COPY } from '../../src/creation/copy'
-import type { ReasonCode } from '../../src/flow/signalPath'
+import { signalPath, type ReasonCode } from '../../src/flow/signalPath'
+import { CreationStore, creationEvaluator } from '../../src/creation/store'
+import { makeRegistry } from '../helpers'
 
 const catalog = JSON.parse(readFileSync(resolve(process.cwd(), 'content/catalog.json'), 'utf8')) as { rules: RuleRow[] }
 const ruleText = ruleTextFor(catalog.rules)
@@ -252,7 +254,8 @@ describe('buildVerdict: what to do (T1.4)', () => {
     HOST_UNPOWERED: { reason: P.hostUnpowered!, action: A.hostUnpowered! },
     NO_PATH: { reason: P.noPath!, action: A.noPath! },
     SPEAKER_UNPOWERED: { reason: P.speakerUnpowered!, action: A.speakerUnpowered! },
-    NO_MIC: { reason: P.noMic!, action: A.noMic! },
+    // NO_MIC never reaches the verdict (the bridge reads path.reasons[0], NO_MIC lives in micReasons): no sentence, no dead copy.
+    NO_MIC: { reason: P.noMic!, action: null },
     RULE_ERROR: { reason: P.ruleError!, action: null },
   }
   const withReason = (code: string, text_fr: string, over: Partial<TpState> = {}): TpState => state({ firstReason: { code, text_fr, subjects: [] }, ...over })
@@ -269,10 +272,25 @@ describe('buildVerdict: what to do (T1.4)', () => {
     })
   }
 
-  it('RULE_ERROR (does not trigger): the reason alone, nothing added (the rule’s own fix is the one to read)', () => {
-    const v = buildVerdict(withReason('RULE_ERROR', P.ruleError!), ruleText)
-    expect(v.labelFr).toBe(P.ruleError)
-    expect(CODES.RULE_ERROR.action).toBeNull()
+  it('RULE_ERROR and NO_MIC (do not trigger): the reason alone, nothing added (the rule’s own fix is the one to read; NO_MIC is not a playback reason)', () => {
+    expect(buildVerdict(withReason('RULE_ERROR', P.ruleError!), ruleText).labelFr).toBe(P.ruleError)
+    expect(buildVerdict(withReason('NO_MIC', P.noMic!), ruleText).labelFr).toBe(P.noMic)
+    expect(Object.keys(A).sort()).toEqual(['hostUnpowered', 'noPath', 'noSource', 'sourceOff', 'speakerUnpowered']) // no key for a code that adds nothing
+  })
+
+  it('NO_SOURCE with the Axia iQ placed (the console that has no « Lecture console » control): the sentence asks for a console WITH that command, and the command is the catalog’s own', () => {
+    const registry = makeRegistry()
+    const store = new CreationStore(registry, creationEvaluator(registry))
+    expect(store.dispatch({ type: 'SPAWN', deviceId: 'axia-iq', instanceId: 'iq' }).ok).toBe(true)
+    const path = signalPath(store.design(), registry, [])
+    expect(path.reasons.map((r) => r.code)).toEqual(['NO_SOURCE']) // premise: a console is on the bench and the engine still has no source
+    const v = buildVerdict(withReason('NO_SOURCE', path.reasons[0].text_fr), ruleText)
+    expect(v.labelFr).toBe(`${P.noSource} ${A.noSource}`)
+    expect(A.noSource).toContain('une console qui a la commande « Lecture console »')
+    // every device that has a playback source (a `control:` route) carries a control labelled exactly like that
+    const withSource = registry.catalog.devices.filter((d) => (d.routing ?? []).some((r) => r.from.startsWith('control:')))
+    expect(withSource.length).toBeGreaterThan(0)
+    for (const d of withSource) for (const r of d.routing!.filter((x) => x.from.startsWith('control:'))) expect(d.controls!.find((c) => c.id === r.from.slice('control:'.length))!.label, d.id).toBe('Lecture console')
   })
 
   it('a rule error event (does not trigger): the verdict is the rule’s own text, byte for byte as before; no action sentence anywhere', () => {
@@ -304,7 +322,7 @@ describe('buildVerdict: what to do (T1.4)', () => {
 
   it('every action sentence says what to do (one sentence, « vous » form, no digit) and trips no banned phrase', () => {
     const sentences = Object.entries(A)
-    expect(sentences.length).toBe(Object.values(CODES).filter((c) => c.action !== null).length) // one per code with an action, no stray key
+    expect(sentences.length).toBe(Object.values(CODES).filter((c) => c.action !== null).length) // one per code with an action, no stray key (no dead copy)
     for (const [key, s] of sentences) {
       expect(s, key).toMatch(/^[A-ZÉ][^.!?]*\.$/) // one sentence
       expect(s, key).toMatch(/^(Ajoutez|Activez|Sélectionnez|Reliez|Branchez)\b/) // the imperative « vous » form

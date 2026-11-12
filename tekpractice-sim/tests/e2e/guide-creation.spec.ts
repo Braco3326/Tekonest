@@ -16,6 +16,7 @@ import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Browser, type Locator, type Page } from '@playwright/test'
 import catalog from '../../content/catalog.json'
 import { COPY } from '../../src/creation/copy'
+import { shownRuleDetail } from './ruleTexts'
 import { TP_STRINGS } from '../../src/guide/strings'
 import { quietWindow, settleRenders } from './waits'
 
@@ -526,7 +527,7 @@ test('T1.4: a silent rig, « Prochaine étape » says the engine\'s reason and t
   })
   await page.waitForFunction(() => window.__creation!.events().some((e) => e.severity === 'error'))
   await guideSees(page)
-  await nextStepSays(page, RULE('R4').teach_fr)
+  await nextStepSays(page, shownRuleDetail('R4'))
   const said = await live(page)
   for (const a of Object.values(COPY.assist!)) expect(said).not.toContain(a)
 })

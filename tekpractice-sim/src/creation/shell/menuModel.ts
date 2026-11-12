@@ -200,8 +200,11 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
   const canStart = (): boolean => viewFree() && !!ctx.playbackReady?.()
   // The chain's first reason; with a valid chain but the place picker over the view, the picker is the reason (an item must never be off with no word why).
   const why = (): string | undefined => ctx.playbackReason?.() || (viewFree() ? undefined : M.playLocked!)
-  /** The checklist « Pourquoi je n’entends rien ? » explains a chain reason only (not the place picker lock, not a chain that can play). */
-  const chainHint = (): string | undefined => (!ctx.playbackReady?.() && ctx.playbackReason?.() ? COPY.checklist!.menuHint! : undefined)
+  /**
+   * The checklist « Pourquoi je n’entends rien ? » explains a chain reason only: not a chain that can play, and not while no place is on screen or the picker
+   * covers it (`viewFree`): the chip is shown for an open place only, so the hint would point to nothing.
+   */
+  const chainHint = (): string | undefined => (viewFree() && !ctx.playbackReady?.() && ctx.playbackReason?.() ? COPY.checklist!.menuHint! : undefined)
   /** A source item: runs its action when the chain is valid. */
   const source = (id: string, label: string, action = id): MenuItem => {
     const on = (): boolean => registered(action) && canStart()

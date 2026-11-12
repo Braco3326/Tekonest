@@ -13,7 +13,10 @@ export interface ChecklistWiring {
   slot: HTMLElement
   /** The shell root the list is appended to while open. */
   root: HTMLElement
-  /** The signal path of the live design, recomputed by the owner BEFORE this wiring's store subscriber runs (it is registered later). */
+  /**
+   * The signal path of the live design, read AT RENDER TIME (never cached here). The owner computes it from the store on each call, so the order of the store's
+   * subscribers cannot leave the list one change behind (tests/creation/wire.test.ts).
+   */
   path(): Pick<PathResult, 'playbackReady' | 'reasons' | 'micReasons'>
   /** A place is open (the design has a room). */
   placeOpen(): boolean
@@ -29,9 +32,9 @@ export interface ChecklistWiring {
   returnFocus(): void
 }
 
-export function wireChecklist(w: ChecklistWiring): Checklist {
+export function wireChecklist(w: ChecklistWiring, mount: typeof mountChecklist = mountChecklist): Checklist {
   const goTo = (t: GoTo): void => (t.kind === 'select' ? w.select(t.instance) : w.openInventory(t.tab))
-  const list = mountChecklist({
+  const list = mount({
     doc: w.doc,
     slot: w.slot,
     root: w.root,

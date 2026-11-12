@@ -2154,12 +2154,12 @@ export async function bootCreation(): Promise<void> {
     { onTopIntent: (id) => void (id === 'ecoute' && ensureSongs()) } // the songs list is fetched when the learner reaches for Écoute
   )
 
-  // « Pourquoi je n’entends rien ? » (T1.3): a read-only view over `path`, registered after the store subscriber that recomputes it.
+  // « Pourquoi je n’entends rien ? » (T1.3): a read-only view over the signal path, recomputed from the live design on each read (so no subscriber order matters).
   wireChecklist({
     doc: document,
     slot: statusBar.checklistSlot,
     root: shell.root,
-    path: () => path,
+    path: () => signalPath(store.design(), registry, store.events()),
     placeOpen: () => store.design().roomId !== null,
     subscribe: (fn) => store.subscribe(fn),
     deviceLabel: deviceName,

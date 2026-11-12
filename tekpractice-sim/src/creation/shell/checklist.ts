@@ -104,7 +104,9 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
       b.dataset.testid = `checklist-goto-${r.id}`
       b.setAttribute('aria-label', C().goToLabel!.replace('{target}', targetName(go)))
       b.addEventListener('click', () => {
-        close(go.kind === 'select') // the inventory takes the focus itself; a selection leaves it on the chip
+        // The button is about to be removed with the list: the focus goes to the chip first (a selection leaves it there; the inventory takes it itself
+        // once its chunk is loaded, and if that fails the focus is still on a live control, never on the page body).
+        close(true)
         d.goTo(go)
       })
       li.append(b)

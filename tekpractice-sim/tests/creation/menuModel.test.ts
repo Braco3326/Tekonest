@@ -436,6 +436,9 @@ describe('Matériel › Pivoter, Dupliquer, Supprimer (Task 25)', () => {
         expect(find(locked, id).description!(), id).toBe('Indisponible pendant le choix du lieu.')
         expect(find(locked, id).hint!(), id).toBeUndefined()
       }
+      // no place on screen / the picker over it, AND a chain that cannot play: the chip is not there to point to (the picker lock wins over the chain reason)
+      const lockedAndSilent = buildMenus(live({ viewLocked: () => true, playbackReady: () => false, playbackReason: () => REASON, songs: () => [{ id: 'demo-1', title: 'Titre' }] }))
+      for (const id of ['play', 'choose-file', 'test-signal', 'songs', 'song:demo-1']) expect(find(lockedAndSilent, id).hint!(), id).toBeUndefined()
     })
     it('a disabled item never runs; an enabled one runs its action', () => {
       run.length = 0

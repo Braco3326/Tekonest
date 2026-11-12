@@ -76,6 +76,9 @@ test.describe('phone sized window, 400 x 800', () => {
 
   test('B: the autosave WARNING survives, and « Annuler la pose » is not overlapped by the open list during a pose', async ({ page }) => {
     await boot(page)
+    // The place change scheduled an autosave: about a second later its result re-renders the autosave part of the bar and would hide the node this test un-hides by
+    // hand (the flake: 1 run in 25). Wait for that render (state « saved »); after it nothing re-renders until the design changes again.
+    await expect(page.getByTestId('status-autosave')).toHaveAttribute('data-state', 'saved')
     // a paused autosave is a warning, not an extra: it stays in the bar at this width
     await page.evaluate(() => {
       const p = document.querySelector<HTMLElement>('[data-testid="status-autosave-paused"]')!
