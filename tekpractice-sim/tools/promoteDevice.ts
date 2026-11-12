@@ -317,13 +317,13 @@ function aliasesFor(proposalPorts: readonly ProposalPort[], specPorts: readonly 
 }
 
 /**
- * The model front of a loudspeaker built by our curved-cabinet shape: the I/O face with the connector empties is at glTF +z and the baffle (woofer, tweeter) is
+ * The model front of a loudspeaker built by our curved-cabinet or speaker-cabinet-v2 shape: the I/O face with the connector empties is at glTF +z and the baffle (woofer, tweeter) is
  * the opposite face, glTF -z, the same construction as the rebuilt Genelec 8030C. The coverage panel counts a speaker without `modelFront` as « face avant
  * non vérifiée », which would be wrong for a model whose front is fixed by construction; tests/assets/modelFront.test.ts measures it on the file.
  */
-const scriptedCabinetFront = (id: string): { axis: '-z'; evidence: string } => ({
+const scriptedCabinetFront = (id: string, shape: string): { axis: '-z'; evidence: string } => ({
   axis: '-z',
-  evidence: `Scripted curved-cabinet model (public/assets/${id}.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts.`,
+  evidence: `Scripted ${shape} model (public/assets/${id}.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts.`,
 })
 
 function buildNotes(row: PlanRow, today: string, t: Template, size: string, spec: AssetSpecT): string {
@@ -371,7 +371,7 @@ export function deviceFromSpec(row: PlanRow, spec: AssetSpecT, proposal: Json | 
     ports: template.ports,
     ...(template.controls.length ? { controls: template.controls } : {}),
     ...(template.acoustic ? { acoustic: template.acoustic } : {}),
-    ...(template.acoustic && spec.build?.shape === 'curved-cabinet' ? { modelFront: scriptedCabinetFront(row.id) } : {}),
+    ...(template.acoustic && (spec.build?.shape === 'curved-cabinet' || spec.build?.shape === 'speaker-cabinet-v2') ? { modelFront: scriptedCabinetFront(row.id, spec.build.shape) } : {}),
     ...(template.routing ? { routing: template.routing } : {}),
     ...(Object.keys(aliases).length ? { portAliases: aliases } : {}),
   })

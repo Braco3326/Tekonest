@@ -46,6 +46,14 @@ export interface BuilderMeasure {
   recessDepthMm?: number
   seamDepthMm?: number
   lidAngleDeg?: number
+  /** speaker-cabinet-v2: the recesses the builder cut (counts, depths and the pole socket diameter, all as built, in millimetres). */
+  handleRecesses?: number
+  handleDepthMm?: number
+  poleSocketDiaMm?: number
+  poleSocketDepthMm?: number
+  rigPoints?: number
+  rigDepthMm?: number
+  grilleDepthMm?: number
 }
 
 /** Where the builder writes its measurements: next to the GLB, <name>.measure.json. */
@@ -151,7 +159,7 @@ async function readMeasure(path: string, id: string): Promise<BuilderMeasure> {
   }
   if (parsed === null || typeof parsed !== 'object') return {}
   const out: BuilderMeasure = {}
-  for (const key of ['filletMm', 'ioFaceOffsetMm', 'earHoles', 'ventSlots', 'frontVents', 'windows', 'earHandles', 'recessDepthMm', 'seamDepthMm', 'lidAngleDeg'] as const) {
+  for (const key of ['filletMm', 'ioFaceOffsetMm', 'earHoles', 'ventSlots', 'frontVents', 'windows', 'earHandles', 'recessDepthMm', 'seamDepthMm', 'lidAngleDeg', 'handleRecesses', 'handleDepthMm', 'poleSocketDiaMm', 'poleSocketDepthMm', 'rigPoints', 'rigDepthMm', 'grilleDepthMm'] as const) {
     const v = (parsed as Record<string, unknown>)[key]
     if (v === undefined) continue
     if (typeof v !== 'number' || !Number.isFinite(v)) throw new Error(`Blender build of ${id} wrote a ${key} that is not a finite number: ${String(v)}`)

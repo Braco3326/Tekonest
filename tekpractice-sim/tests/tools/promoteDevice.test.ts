@@ -309,6 +309,18 @@ describe('stage 2, promoted outcome: documented ports only', () => {
     expect(run('fx-condenser', 'revolve').modelFront).toBeUndefined()
   })
 
+  it('a speaker built on speaker-cabinet-v2 gets the same model front (the io face with the ports at +z, the baffle at -z, by construction)', () => {
+    stage1('fx-monitor')
+    fillSpec('fx-monitor', [port('in-analog', 'in', 'xlr3-f', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], [POWER_CTRL])
+    const spec = JSON.parse(read(specPath('fx-monitor'))) as Record<string, unknown>
+    writeFileSync(specPath('fx-monitor'), JSON.stringify({ ...spec, build: { shape: 'speaker-cabinet-v2', params: {}, budget: { min: 200, max: 4000 } } }, null, 2) + '\n')
+    ship('fx-monitor')
+    stage2('fx-monitor')
+    const d = Catalog.parse(JSON.parse(read(paths.catalog))).devices.find((x) => x.id === 'fx-monitor')!
+    expect(d.modelFront).toMatchObject({ axis: '-z' })
+    expect(d.modelFront!.evidence).toContain('speaker-cabinet-v2')
+  })
+
   it('a Bêta row (fx-profx12): the proposal leaves the file with the catalogue entry, the old long port ids become portAliases, the journal remembers the proposal', () => {
     const proposals = JSON.parse(read(paths.proposals)) as { devices: { id: string; ports: { portId: string; dir: string; connector: string; signal: string }[] }[] }
     const proposal = proposals.devices.find((d) => d.id === 'fx-profx12')!

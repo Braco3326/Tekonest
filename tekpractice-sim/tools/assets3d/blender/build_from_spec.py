@@ -3807,8 +3807,608 @@ def build_moulded_box(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+# --- speaker-cabinet-v2 (Wave 3, Task 3.1) -----------------------------------------------------------------------
+# A loudspeaker enclosure with an elevation profile, handles, pole socket, rigging points, a grille recess and rear pockets. Mirrors SPEAKER_V2_PARAMS in
+# tools/assets3d/shapes.ts, which documents every param. The solid is a convex polytope made by clipping a big box with half-spaces (the planes of the plan outline and of the
+# elevation quadrilateral); its edges are rounded by more planes (the support function of the polytope shrunk by the radius, plus the radius: a rounded polytope by flat facets) and
+# every face is then built from its own polygon, so a recess can be cut into any flat face (a tilted baffle, a sloped side) with our own triangulation (fill_with_holes_det), and the
+# faces are put in a canonical order: two builds are byte-identical. Pure arithmetic only (no bmesh bevel, no boolean).
+
+SPK2_NAMES = (
+    "frontTopSetMm", "frontBottomSetMm", "frontTopDropMm", "frontBottomRiseMm", "rearTopDropMm", "rearBottomRiseMm",
+    "midWidthMm", "rearWidthMm", "taperDepthMm",
+    "edgeRadiusMm", "edgeSegments", "bodyGrey",
+    "grilleMarginMm", "grilleDepthMm",
+    "handleCount", "handleLenMm", "handleWidthMm", "handleDepthMm", "handleFromRearMm", "handleYMm", "handlePitchMm",
+    "poleSocketDiaMm", "poleSocketDepthMm", "poleSocketFromRearMm",
+    "rigPoints", "rigDiaMm", "rigDepthMm", "rigInsetMm",
+)
+SPK2_DEFAULTS_MM = {"edgeRadiusMm": 5.0, "grilleDepthMm": 1.5, "handleDepthMm": 12.0, "poleSocketDepthMm": 30.0, "rigDiaMm": 14.0, "rigDepthMm": 0.8}   # mirrored in shapes.ts SPEAKER_V2_DEFAULTS
+SPK2_DEFAULT_SEGMENTS = 3
+SPK2_MIN_FACE_MM = 20.0        # mirrored in shapes.ts SPEAKER_V2_MIN_FACE_MM
+SPK2_EPS = 1e-9                # metres: a point this close to a plane lies on it
+SPK2_MERGE = 1e-8              # metres: two points this close are one vertex
+SPK2_MIN_ARC_DEG = 3.0         # an edge between two faces turning less than this is not rounded
+SPK2_FIT_MM = 0.5              # a recess may come this close to the edge of its flat face
+SPK2_STRETCH_MAX = 0.03        # the rounding takes a little off the extreme corners; the body is stretched back to the exact size, by at most this fraction
+SPK2_POCKET_SEG = 16
+SPK2_HANDLE_SEG = 24
+SPK2_POLE_SEG = 24
+SPK2_RIG_SEG = 16
+Vec3 = tuple[float, float, float]
+
+
+def v3_dot(a: Vec3, b: Vec3) -> float:
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+
+
+def v3_sub(a: Vec3, b: Vec3) -> Vec3:
+    return (a[0] - b[0], a[1] - b[1], a[2] - b[2])
+
+
+def v3_add(a: Vec3, b: Vec3) -> Vec3:
+    return (a[0] + b[0], a[1] + b[1], a[2] + b[2])
+
+
+def v3_mul(a: Vec3, s: float) -> Vec3:
+    return (a[0] * s, a[1] * s, a[2] * s)
+
+
+def v3_cross(a: Vec3, b: Vec3) -> Vec3:
+    return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
+
+
+def v3_len(a: Vec3) -> float:
+    return math.sqrt(v3_dot(a, a))
+
+
+def v3_unit(a: Vec3) -> Vec3:
+    n = v3_len(a)
+    if n < 1e-15:
+        raise BuildError("a face has no area")
+    return (a[0] / n, a[1] / n, a[2] / n)
+
+
+def spk_dedupe(pts: list[Vec3]) -> list[Vec3]:
+    """The polygon without consecutive points closer than SPK2_MERGE (also across the end)."""
+    out: list[Vec3] = []
+    for p in pts:
+        if not out or v3_len(v3_sub(p, out[-1])) > SPK2_MERGE:
+            out.append(p)
+    while len(out) > 1 and v3_len(v3_sub(out[0], out[-1])) <= SPK2_MERGE:
+        out.pop()
+    return out
+
+
+def spk_area_vec(pts: list[Vec3]) -> Vec3:
+    """Twice the area vector of the polygon (Newell): its length is twice the area, its direction the normal (counter-clockwise seen from the tip)."""
+    ax = ay = az = 0.0
+    for i in range(len(pts)):
+        c = v3_cross(pts[i], pts[(i + 1) % len(pts)])
+        ax += c[0]
+        ay += c[1]
+        az += c[2]
+    return (ax, ay, az)
+
+
+def spk_box(half: float) -> list[list[Any]]:
+    """The six faces of the cube of side 2 x half, as [name, normal, offset, points], points counter-clockwise seen from outside."""
+    faces: list[list[Any]] = []
+    for axis in range(3):
+        for sign in (1.0, -1.0):
+            n = [0.0, 0.0, 0.0]
+            n[axis] = sign
+            i, j = (axis + 1) % 3, (axis + 2) % 3
+            pts: list[Vec3] = []
+            for a, b in ((-1.0, -1.0), (1.0, -1.0), (1.0, 1.0), (-1.0, 1.0)):
+                p = [0.0, 0.0, 0.0]
+                p[axis] = sign * half
+                p[i] = a * half
+                p[j] = b * half
+                pts.append((p[0], p[1], p[2]))
+            if sign < 0:
+                pts.reverse()
+            faces.append([f"box{axis}{'p' if sign > 0 else 'n'}", (n[0], n[1], n[2]), half, pts])
+    return faces
+
+
+def spk_cap(cut: list[Vec3], n: Vec3, c: float, name: str) -> list[Any] | None:
+    """The face of the plane n.p = c made by the points a clip cut on it (counter-clockwise seen from outside), None when they do not span an area."""
+    uniq: list[Vec3] = []
+    for p in cut:
+        if all(v3_len(v3_sub(p, q)) > SPK2_MERGE for q in uniq):
+            uniq.append(p)
+    if len(uniq) < 3:
+        return None
+    cen = (sum(p[0] for p in uniq) / len(uniq), sum(p[1] for p in uniq) / len(uniq), sum(p[2] for p in uniq) / len(uniq))
+    axis = min(range(3), key=lambda k: abs(n[k]))
+    e = (1.0 if axis == 0 else 0.0, 1.0 if axis == 1 else 0.0, 1.0 if axis == 2 else 0.0)
+    u = v3_unit(v3_cross(n, e))
+    v = v3_cross(n, u)
+    uniq.sort(key=lambda p: (math.atan2(v3_dot(v3_sub(p, cen), v), v3_dot(v3_sub(p, cen), u)), p))
+    if v3_len(spk_area_vec(uniq)) <= 2e-12:
+        return None
+    return [name, n, c, uniq]
+
+
+def spk_clip(faces: list[list[Any]], n: Vec3, c: float, name: str) -> list[list[Any]]:
+    """The convex polytope `faces` cut by the half-space n.p <= c: every face clipped (Sutherland-Hodgman), plus the new face on the plane. A plane that is already a face is skipped."""
+    for f in faces:
+        if v3_dot(f[1], n) > 1.0 - 1e-12 and abs(f[2] - c) < SPK2_EPS:
+            return faces
+    out: list[list[Any]] = []
+    cut: list[Vec3] = []
+    for f in faces:
+        pts: list[Vec3] = f[3]
+        d = [v3_dot(n, p) - c for p in pts]
+        res: list[Vec3] = []
+        for i in range(len(pts)):
+            j = (i + 1) % len(pts)
+            a, b, da, db = pts[i], pts[j], d[i], d[j]
+            if da <= SPK2_EPS:
+                res.append(a)
+                if da >= -SPK2_EPS:
+                    cut.append(a)
+            if (da < -SPK2_EPS and db > SPK2_EPS) or (da > SPK2_EPS and db < -SPK2_EPS):
+                t = da / (da - db)
+                q = (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t)
+                res.append(q)
+                cut.append(q)
+        res = spk_dedupe(res)
+        if len(res) >= 3 and v3_len(spk_area_vec(res)) > 2e-12:
+            out.append([f[0], f[1], f[2], res])
+    cap = spk_cap(cut, n, c, name)
+    if cap is not None:
+        out.append(cap)
+    return out
+
+
+def spk_vertex_ids(faces: list[list[Any]]) -> tuple[list[Vec3], list[list[int]]]:
+    """The distinct vertices of the polytope (points closer than SPK2_MERGE are one) and each face as a list of vertex ids."""
+    verts: list[Vec3] = []
+    ids: list[list[int]] = []
+    for f in faces:
+        row: list[int] = []
+        for p in f[3]:
+            found = -1
+            for k, q in enumerate(verts):
+                if abs(p[0] - q[0]) <= SPK2_MERGE and abs(p[1] - q[1]) <= SPK2_MERGE and abs(p[2] - q[2]) <= SPK2_MERGE:
+                    found = k
+                    break
+            if found < 0:
+                verts.append(p)
+                found = len(verts) - 1
+            row.append(found)
+        ids.append(row)
+    return verts, ids
+
+
+def spk_round_normals(inner: list[list[Any]], segments: int) -> list[Vec3]:
+    """The normals of the facets that round the edges (`segments` per edge, equally spaced between the normals of the two faces) and the corners (the sum of the normals of the faces that meet) of `inner`."""
+    _verts, ids = spk_vertex_ids(inner)
+    edges: dict[tuple[int, int], list[int]] = {}
+    at_vertex: dict[int, list[int]] = {}
+    for fi, row in enumerate(ids):
+        for k in range(len(row)):
+            a, b = row[k], row[(k + 1) % len(row)]
+            edges.setdefault((min(a, b), max(a, b)), []).append(fi)
+            at_vertex.setdefault(a, []).append(fi)
+    found: dict[tuple[float, float, float], Vec3] = {}
+
+    def add(n: Vec3) -> None:
+        n = v3_unit(n)
+        found.setdefault((round(n[0], 9), round(n[1], 9), round(n[2], 9)), n)
+
+    for key in sorted(edges):
+        fs = edges[key]
+        if len(fs) != 2:
+            continue
+        n1, n2 = inner[fs[0]][1], inner[fs[1]][1]
+        theta = math.acos(max(-1.0, min(1.0, v3_dot(n1, n2))))
+        if theta < math.radians(SPK2_MIN_ARC_DEG):
+            continue
+        for s in range(1, segments + 1):
+            t = s / (segments + 1)
+            k1, k2 = math.sin((1.0 - t) * theta) / math.sin(theta), math.sin(t * theta) / math.sin(theta)
+            add(v3_add(v3_mul(n1, k1), v3_mul(n2, k2)))
+    for vi in sorted(at_vertex):
+        fs = sorted(set(at_vertex[vi]))
+        if len(fs) >= 3:
+            total: Vec3 = (0.0, 0.0, 0.0)
+            for fi in fs:
+                total = v3_add(total, inner[fi][1])
+            if v3_len(total) > 1e-6:
+                add(total)
+    return list(found.values())
+
+
+def spk_basis(n: Vec3) -> tuple[Vec3, Vec3]:
+    """An in-plane frame (u, v) of the plane with normal n, right-handed with n (u x v = n): v is the world up projected on the plane (the world z for a horizontal plane), so on a vertical face u is the x of
+    the picture seen from outside, the convention of the face-local coordinates of the ports."""
+    ref: Vec3 = (0.0, 1.0, 0.0) if abs(n[1]) < 0.9 else (0.0, 0.0, 1.0)
+    v = v3_unit(v3_sub(ref, v3_mul(n, v3_dot(ref, n))))
+    return v3_cross(v, n), v
+
+
+def spk_lift(n: Vec3, c: float, a: float, b: float) -> Vec3:
+    """The point of the plane n.p = c whose two coordinates other than the dominant axis of n are (a, b): side faces (x dominant) take (z, y), top and bottom (y dominant) take (x, z), front and rear (z dominant) (x, y)."""
+    k = max(range(3), key=lambda i: abs(n[i]))
+    if k == 0:
+        return ((c - n[1] * b - n[2] * a) / n[0], b, a)
+    if k == 1:
+        return (a, (c - n[0] * a - n[2] * b) / n[1], b)
+    return (a, b, (c - n[0] * a - n[1] * b) / n[2])
+
+
+def spk_inside(poly: list[tuple[float, float]], pt: tuple[float, float], margin: float) -> bool:
+    """True when pt lies inside the convex counter-clockwise polygon, at least `margin` from every edge."""
+    for i in range(len(poly)):
+        a, b = poly[i], poly[(i + 1) % len(poly)]
+        ex, ey = b[0] - a[0], b[1] - a[1]
+        ln = math.hypot(ex, ey)
+        if ln < 1e-12:
+            continue
+        if (ex * (pt[1] - a[1]) - ey * (pt[0] - a[0])) / ln < margin:
+            return False
+    return True
+
+
+def spk_circle(cx: float, cy: float, r: float, n: int) -> list[tuple[float, float]]:
+    return [(cx + r * math.cos(2.0 * math.pi * i / n), cy + r * math.sin(2.0 * math.pi * i / n)) for i in range(n)]
+
+
+def spk_bbox(pts: list[tuple[float, float]]) -> tuple[float, float, float, float]:
+    return (min(p[0] for p in pts), max(p[0] for p in pts), min(p[1] for p in pts), max(p[1] for p in pts))
+
+
+def spk_to_uv(face: list[Any], p: Vec3) -> tuple[float, float]:
+    u, v = spk_basis(face[1])
+    d = v3_sub(p, face[3][0])
+    return (v3_dot(d, u), v3_dot(d, v))
+
+
+def spk_face_uv(face: list[Any]) -> list[tuple[float, float]]:
+    return [spk_to_uv(face, p) for p in face[3]]
+
+
+def spk_from_uv(face: list[Any], a: float, b: float) -> Vec3:
+    u, v = spk_basis(face[1])
+    return v3_add(face[3][0], v3_add(v3_mul(u, a), v3_mul(v, b)))
+
+
+def spk_recess(bm: bmesh.types.BMesh, face: list[Any], outline_uv: list[tuple[float, float]], depth: float) -> list[bmesh.types.BMVert]:
+    """The walls and the floor of a recess `depth` deep into the flat face (outline in the face's (u, v) frame); returns the mouth vertices, to be filled round."""
+    off = v3_mul(face[1], -depth)
+    mouth_pts = [spk_from_uv(face, a, b) for a, b in outline_uv]
+    mouth = [bm.verts.new(g2b(*p)) for p in mouth_pts]
+    floor = [bm.verts.new(g2b(*v3_add(p, off))) for p in mouth_pts]
+    band(bm, mouth, floor)
+    bm.faces.new(floor[::-1])
+    return mouth
+
+
+def build_speaker_cabinet_v2(plan: Plan) -> bpy.types.Object:
+    """See SPK2_NAMES. Frame: bottom at y = 0, centred on x and z, the io (rear) face at +z, the baffle at the front (-z). The spec size is the exact size."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    unknown = [k for k in params if k not in SPK2_NAMES]
+    if unknown:
+        raise BuildError(f"speaker-cabinet-v2 has no param {unknown[0]!r}")
+
+    def opt(name: str) -> float | None:
+        return positive(params[name], f"params.{name}") * MM if name in params else None
+
+    def dflt(name: str) -> float:
+        v = opt(name)
+        return v if v is not None else SPK2_DEFAULTS_MM[name] * MM
+
+    def whole(name: str, lo: int, hi: int, default: int | None = None) -> int | None:
+        v = params.get(name, default)
+        if v is None:
+            return None
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or v != int(v) or not lo <= int(v) <= hi:
+            raise BuildError(f"params.{name} must be a whole number from {lo} to {hi}, got {v!r}")
+        return int(v)
+
+    edge = dflt("edgeRadiusMm")
+    segments = whole("edgeSegments", 1, 8, SPK2_DEFAULT_SEGMENTS) or SPK2_DEFAULT_SEGMENTS
+    grey = params.get("bodyGrey")
+    if grey is not None and (isinstance(grey, bool) or not isinstance(grey, (int, float)) or not 20 <= grey <= 200):
+        raise BuildError(f"params.bodyGrey must be a number from 20 to 200, got {grey!r}")
+    colour = CABINET if grey is None else "#%02x%02x%02x" % (round(grey), round(grey) + 2, round(grey) + 9)
+
+    # the elevation quadrilateral (z, y), counter-clockwise: front-bottom, rear-bottom, rear-top, front-top
+    fb = (-d / 2.0 + (opt("frontBottomSetMm") or 0.0), opt("frontBottomRiseMm") or 0.0)
+    rb = (d / 2.0, opt("rearBottomRiseMm") or 0.0)
+    rt = (d / 2.0, h - (opt("rearTopDropMm") or 0.0))
+    ft = (-d / 2.0 + (opt("frontTopSetMm") or 0.0), h - (opt("frontTopDropMm") or 0.0))
+    corners = [fb, rb, rt, ft]
+    for i in range(4):
+        a, b, c3 = corners[i], corners[(i + 1) % 4], corners[(i + 2) % 4]
+        if (b[0] - a[0]) * (c3[1] - b[1]) - (b[1] - a[1]) * (c3[0] - b[0]) < -1e-12:
+            raise BuildError("the elevation is not convex: the top and the bottom must not cross")
+    if rt[1] - rb[1] < SPK2_MIN_FACE_MM * MM:
+        raise BuildError(f"the rear face is only {(rt[1] - rb[1]) / MM:.1f} mm high: the io face needs at least {SPK2_MIN_FACE_MM:.0f} mm")
+    planes: list[tuple[str, Vec3, float]] = []
+    for k, nm in enumerate(("bottom", "rear", "top", "front")):
+        a, b = corners[k], corners[(k + 1) % 4]
+        dz, dy = b[0] - a[0], b[1] - a[1]
+        ln = math.hypot(dz, dy)
+        if ln < 1e-9:
+            raise BuildError(f"the {nm} edge of the elevation has no length")
+        n3: Vec3 = (0.0, -dz / ln, dy / ln)
+        planes.append((nm, n3, n3[1] * a[1] + n3[2] * a[0]))
+    # the plan (hexagon as speaker-cabinet): full width at the baffle, midWidth where the rear taper starts, rearWidth at the io face
+    mid = opt("midWidthMm") or w
+    rear = opt("rearWidthMm") or mid
+    taper = opt("taperDepthMm")
+    if mid > w + 1e-9:
+        raise BuildError(f"params.midWidthMm ({mid / MM:.1f}) cannot be wider than the width ({w / MM:.1f})")
+    if rear > mid + 1e-9:
+        raise BuildError(f"params.rearWidthMm ({rear / MM:.1f}) cannot be wider than midWidthMm ({mid / MM:.1f})")
+    right: list[tuple[float, float]] = [(w / 2.0, -d / 2.0)]
+    if rear < mid - 1e-9:
+        if taper is None or not 0.0 < taper < d:
+            raise BuildError("a rear narrower than the middle needs params.taperDepthMm, less than the depth")
+        right.append((mid / 2.0, d / 2.0 - taper))
+    right.append((rear / 2.0, d / 2.0))
+    for side, sign in (("R", 1.0), ("L", -1.0)):
+        for k in range(len(right) - 1):
+            (x0, z0), (x1, z1) = right[k], right[k + 1]
+            dx, dz = x1 - x0, z1 - z0
+            ln = math.hypot(dx, dz)
+            if ln < 1e-9:
+                continue
+            nx, nz = dz / ln, -dx / ln
+            planes.append((f"side{side}{k}", (sign * nx, 0.0, nz), nx * x0 + nz * z0))
+
+    # the sharp polytope, then its rounding
+    big = 3.0 * max(w, h, d)
+    sharp = spk_box(big)
+    for nm, n3, c in planes:
+        sharp = spk_clip(sharp, n3, c, nm)
+    sharp = [f for f in sharp if not f[0].startswith("box")]
+    names = [nm for nm, _n, _c in planes]
+    if sorted(f[0] for f in sharp) != sorted(names):
+        raise BuildError(f"the elevation and the plan leave no solid with all their faces (found {sorted(f[0] for f in sharp)}, wanted {sorted(names)})")
+    inner = spk_box(big)
+    for nm, n3, c in planes:
+        inner = spk_clip(inner, n3, c - edge, nm)
+    inner = [f for f in inner if not f[0].startswith("box")]
+    if sorted(f[0] for f in inner) != sorted(names):
+        raise BuildError(f"params.edgeRadiusMm ({edge / MM:.1f}) is too large for this cabinet: the rounding would swallow a face")
+    inner_verts, _ids = spk_vertex_ids(inner)
+    final = sharp
+    for n3 in spk_round_normals(inner, segments):
+        final = spk_clip(final, n3, max(v3_dot(n3, p) for p in inner_verts) + edge, "round")
+    if sorted(f[0] for f in final if f[0] in names) != sorted(names):
+        raise BuildError(f"params.edgeRadiusMm ({edge / MM:.1f}) is too large for this cabinet: the rounding swallows a flat face")
+
+    # the rounding takes a little off the extreme corners: stretch to the exact size, so that every flat face and feature below is built in its final place
+    pts_all = [p for f in final for p in f[3]]
+    lo = (min(p[0] for p in pts_all), min(p[1] for p in pts_all), min(p[2] for p in pts_all))
+    hi = (max(p[0] for p in pts_all), max(p[1] for p in pts_all), max(p[2] for p in pts_all))
+    sx, sy, sz = w / (2.0 * max(hi[0], -lo[0])), h / (hi[1] - lo[1]), d / (hi[2] - lo[2])
+    for what, s in (("width", sx), ("height", sy), ("depth", sz)):
+        if abs(s - 1.0) > SPK2_STRETCH_MAX:
+            raise BuildError(f"the rounded cabinet is {abs(s - 1.0) * 100:.1f} % off the spec {what}: the rounding takes too much off the extreme corners (lower params.edgeRadiusMm, or check the elevation and the plan)")
+
+    def fit(p: Vec3) -> Vec3:
+        return (p[0] * sx, (p[1] - lo[1]) * sy, (p[2] - lo[2]) * sz - d / 2.0)
+
+    def remap(fs: list[list[Any]]) -> list[list[Any]]:
+        out: list[list[Any]] = []
+        for f in fs:
+            q = [fit(p) for p in f[3]]
+            nv = v3_unit(spk_area_vec(q))
+            out.append([f[0], nv, v3_dot(nv, q[0]), q])
+        return out
+
+    sharp, final = remap(sharp), remap(final)
+    flat = {f[0]: f for f in final if f[0] in names}
+    sharp_by_name = {f[0]: f for f in sharp}
+
+    # the smallest edge fillet as built: from every flat face, how far its outline stands in from each sharp edge, turned into a radius by the angle the edge turns
+    best = math.inf
+    for nm, f in sharp_by_name.items():
+        spts = f[3]
+        for i in range(len(spts)):
+            a, b = spts[i], spts[(i + 1) % len(spts)]
+            nb = next((o for on, o in sharp_by_name.items() if on != nm and any(v3_len(v3_sub(a, q)) < 1e-6 for q in o[3]) and any(v3_len(v3_sub(b, q)) < 1e-6 for q in o[3])), None)
+            if nb is None:
+                continue
+            theta = math.acos(max(-1.0, min(1.0, v3_dot(f[1], nb[1]))))
+            if theta < math.radians(SPK2_MIN_ARC_DEG):
+                continue
+            e_dir = v3_unit(v3_sub(b, a))
+            inset_here = min(v3_len(v3_cross(e_dir, v3_sub(q, a))) for q in flat[nm][3])
+            best = min(best, inset_here / math.tan(theta / 2.0))
+    MEASURE["filletMm"] = round(0.0 if best is math.inf else best / MM, 3)
+
+    # features: each is an outline in the (u, v) frame of the flat face it is cut into, checked to fit
+    fit_margin = SPK2_FIT_MM * MM
+    features: list[dict[str, Any]] = []
+
+    def zone_corners(face: list[Any], outline: list[tuple[float, float]]) -> list[Vec3]:
+        pts3 = [spk_from_uv(face, a, b) for a, b in outline]
+        return [(min(p[0] for p in pts3), min(p[1] for p in pts3), min(p[2] for p in pts3)), (max(p[0] for p in pts3), max(p[1] for p in pts3), max(p[2] for p in pts3))]
+
+    def place(face_names: list[str], centre_chart: tuple[float, float], shape: Callable[[float, float], list[tuple[float, float]]], depth: float, what: str, zone_face: str) -> None:
+        """Cuts `shape(cu, cv)` (an outline round a centre, in the face's (u, v) frame) into the first of `face_names` that holds it whole."""
+        for nm in face_names:
+            f = flat.get(nm)
+            if f is None:
+                continue
+            cu, cv = spk_to_uv(f, spk_lift(f[1], f[2], centre_chart[0], centre_chart[1]))
+            outline = shape(cu, cv)
+            if not all(spk_inside(spk_face_uv(f), p, fit_margin) for p in outline):
+                continue
+            nbb = spk_bbox(outline)
+            for other in features:
+                if other["face"] == nm:
+                    ob = spk_bbox(other["outline"])
+                    if ob[0] < nbb[1] + fit_margin and ob[1] > nbb[0] - fit_margin and ob[2] < nbb[3] + fit_margin and ob[3] > nbb[2] - fit_margin:
+                        raise BuildError(f"{what} overlaps {other['what']} on the {nm} face")
+            rack_zone_check(plan, False, w, d, zone_face, what, zone_corners(f, outline))
+            features.append({"face": nm, "outline": outline, "depth": depth, "what": what})
+            return
+        extent = ""
+        f0 = flat.get(face_names[0])
+        if f0 is not None:
+            bb = spk_bbox(spk_face_uv(f0))
+            extent = f" (the flat {face_names[0]} face is {(bb[1] - bb[0]) / MM:.1f} x {(bb[3] - bb[2]) / MM:.1f} mm)"
+        raise BuildError(f"{what} does not fit in the flat {'/'.join(face_names)} face{extent}: move it in or make it smaller")
+
+    # rear pockets behind the inset io ports
+    for p in (plan.get("ports") or []):
+        if not (isinstance(p.get("insetMm"), (int, float)) and p["insetMm"] > 0):
+            continue
+        r = float(p.get("openingMm") or POCKET_DEFAULT_MM) * MM / 2.0
+        cx, cy = float(p["xMm"]) * MM - w / 2.0, float(p["yMm"]) * MM
+        place(["rear"], (cx, cy), lambda a, b, r=r: spk_circle(a, b, r, SPK2_POCKET_SEG), float(p["insetMm"]) * MM,
+              f"the pocket of port {p.get('portId')!r} (x {float(p['xMm']):.1f}, y {float(p['yMm']):.1f}, radius {r / MM:.1f} mm)", "io")
+
+    # grille panel recess in the baffle
+    grille = opt("grilleMarginMm")
+    grille_depth = 0.0
+    if grille is not None:
+        grille_depth = dflt("grilleDepthMm")
+        f = flat["front"]
+        try:
+            panel = offset_outline(spk_face_uv(f), grille)
+        except BuildError as exc:
+            raise BuildError(f"params.grilleMarginMm ({grille / MM:.1f}): {exc}") from exc
+        if sum(panel[i][0] * panel[(i + 1) % len(panel)][1] - panel[(i + 1) % len(panel)][0] * panel[i][1] for i in range(len(panel))) <= 0.0:
+            raise BuildError(f"params.grilleMarginMm ({grille / MM:.1f}) leaves no grille panel on the baffle")
+        rack_zone_check(plan, False, w, d, "opposite", "the grille recess", zone_corners(f, panel))
+        features.append({"face": "front", "outline": panel, "depth": grille_depth, "what": "the grille recess"})
+
+    # handles, both sides
+    handle_count = whole("handleCount", 1, 2)
+    handle_depth = 0.0
+    if handle_count is not None:
+        need = ("handleLenMm", "handleWidthMm", "handleFromRearMm", "handleYMm")
+        missing = [k for k in need if k not in params]
+        if missing:
+            raise BuildError(f"the handles need {', '.join('params.' + k for k in need)} (missing {', '.join(missing)})")
+        hl, hw = opt("handleLenMm") or 0.0, opt("handleWidthMm") or 0.0
+        handle_depth = dflt("handleDepthMm")
+        pitch = opt("handlePitchMm")
+        if handle_count == 2 and pitch is None:
+            raise BuildError("two handles need params.handlePitchMm")
+        for side in ("L", "R"):
+            sides = sorted(n for n in flat if n.startswith(f"side{side}"))
+            for k in range(handle_count):
+                zc = d / 2.0 - (opt("handleFromRearMm") or 0.0) - k * (pitch or 0.0)
+                place(sides, (zc, opt("handleYMm") or 0.0), lambda a, b: stadium_outline(a, b, hl, hw, SPK2_HANDLE_SEG), handle_depth,
+                      f"handle {k + 1} of the {'left' if side == 'L' else 'right'} side (centre {(d / 2.0 - zc) / MM:.1f} mm from the io face, {(opt('handleYMm') or 0.0) / MM:.1f} mm high, {hl / MM:.1f} x {hw / MM:.1f} mm)",
+                      "left" if side == "L" else "right")
+
+    # pole socket in the bottom face
+    pole = opt("poleSocketDiaMm")
+    pole_depth = 0.0
+    if pole is not None:
+        pole_depth = dflt("poleSocketDepthMm")
+        if abs(flat["bottom"][1][1] + 1.0) > 1e-9:
+            raise BuildError("a pole socket needs a bottom that stands flat on the floor (no params.frontBottomRiseMm / rearBottomRiseMm)")
+        from_rear = opt("poleSocketFromRearMm")
+        zc = d / 2.0 - (d / 2.0 if from_rear is None else from_rear)
+        place(["bottom"], (0.0, zc), lambda a, b: spk_circle(a, b, pole / 2.0, SPK2_POLE_SEG), pole_depth,
+              f"the pole socket ({pole / MM:.1f} mm, {(d / 2.0 - zc) / MM:.1f} mm from the io face)", "bottom")
+
+    # rigging points, both sides: round shallow recesses in from the corners of the side face
+    rig_points = whole("rigPoints", 2, 4)
+    rig_count = 0
+    rig_depth = 0.0
+    if rig_points is not None:
+        if rig_points == 3:
+            raise BuildError("params.rigPoints must be 2 (the two top corners) or 4 (all four)")
+        rig_dia = dflt("rigDiaMm")
+        rig_depth = dflt("rigDepthMm")
+        rig_inset = opt("rigInsetMm") or 1.5 * rig_dia
+        cz = sum(c3[0] for c3 in corners) / 4.0
+        cy = sum(c3[1] for c3 in corners) / 4.0
+        order = [("front-top", ft), ("rear-top", rt), ("front-bottom", fb), ("rear-bottom", rb)][:rig_points]
+        for side in ("L", "R"):
+            sides = sorted(n for n in flat if n.startswith(f"side{side}"))
+            for label, (czn, cyn) in order:
+                zc = czn + (rig_inset if cz > czn else -rig_inset)
+                yc = cyn + (rig_inset if cy > cyn else -rig_inset)
+                place(sides, (zc, yc), lambda a, b: spk_circle(a, b, rig_dia / 2.0, SPK2_RIG_SEG), rig_depth,
+                      f"the {label} rigging point of the {'left' if side == 'L' else 'right'} side", "left" if side == "L" else "right")
+                rig_count += 1
+
+    # build the mesh: the recess walls and floors first (dark), then every face of the cabinet, the faces with recesses filled round them
+    body = Body("speaker-cabinet-v2")
+    bm = body.bm
+    mouths: dict[str, list[list[bmesh.types.BMVert]]] = {}
+    for feat in features:
+        mouths.setdefault(feat["face"], []).append(spk_recess(bm, flat[feat["face"]], feat["outline"], feat["depth"]))
+    body.done(CABINET_POCKET)
+    pool_pts: list[Vec3] = []
+    pool_verts: list[bmesh.types.BMVert] = []
+
+    def vertex(p: Vec3) -> bmesh.types.BMVert:
+        for q, bv in zip(pool_pts, pool_verts):
+            if abs(p[0] - q[0]) <= SPK2_MERGE and abs(p[1] - q[1]) <= SPK2_MERGE and abs(p[2] - q[2]) <= SPK2_MERGE:
+                return bv
+        bv = bm.verts.new(g2b(*p))
+        pool_pts.append(p)
+        pool_verts.append(bv)
+        return bv
+
+    for f in final:
+        row: list[bmesh.types.BMVert] = []
+        for bv in [vertex(p) for p in f[3]]:
+            if not row or bv is not row[-1]:
+                row.append(bv)
+        while len(row) > 1 and row[0] is row[-1]:
+            row.pop()
+        if len(row) < 3:
+            continue
+        holes_here = mouths.get(f[0])
+        if holes_here:
+            outline_edges = [bm.edges.get((row[i], row[(i + 1) % len(row)])) or bm.edges.new((row[i], row[(i + 1) % len(row)])) for i in range(len(row))]
+            hole_edges = [[bm.edges.get((m[i], m[(i + 1) % len(m)])) for i in range(len(m))] for m in holes_here]
+            fill_with_holes(bm, outline_edges, hole_edges, f[1], False)
+        else:
+            try:
+                bm.faces.new(row)
+            except ValueError:
+                pass   # the same face twice: keep one
+    body.done(colour)
+
+    for key, value in (("grilleDepthMm", grille_depth), ("handleDepthMm", handle_depth), ("poleSocketDiaMm", pole or 0.0), ("poleSocketDepthMm", pole_depth), ("rigDepthMm", rig_depth)):
+        if value > 0.0:
+            MEASURE[key] = round(value / MM, 4)
+    if handle_count is not None:
+        MEASURE["handleRecesses"] = float(2 * handle_count)
+    if rig_count:
+        MEASURE["rigPoints"] = float(rig_count)
+    canonical_face_order(bm)
+    log(f"speaker-cabinet-v2: {len(final)} faces, {len(features)} recesses, fillet {MEASURE['filletMm']} mm")
+    ob = body.finish()
+    # smooth shading would blend the normal of a big flat face into the rounding facets next to it (a gradient across the face): keep the outline of every flat face sharp
+    def key(p: Vec3) -> tuple[int, int, int]:
+        return (round(p[0] * 1e7), round(p[1] * 1e7), round(p[2] * 1e7))
+    outline_keys: set[tuple[tuple[int, int, int], tuple[int, int, int]]] = set()
+    for nm in names:
+        pts_f = flat[nm][3]
+        for i in range(len(pts_f)):
+            ka, kb = key(pts_f[i]), key(pts_f[(i + 1) % len(pts_f)])
+            outline_keys.add((min(ka, kb), max(ka, kb)))
+    me = ob.data
+    for e in me.edges:
+        a, b = me.vertices[e.vertices[0]].co, me.vertices[e.vertices[1]].co
+        ka, kb = key((a.x, a.z, -a.y)), key((b.x, b.z, -b.y))
+        if (min(ka, kb), max(ka, kb)) in outline_keys:
+            e.use_edge_sharp = True
+    return ob
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
+    "speaker-cabinet-v2": build_speaker_cabinet_v2,
     "moulded-box": build_moulded_box,
     "revolve-oval": build_revolve_oval,
     "round-base-stand": build_round_base_stand,

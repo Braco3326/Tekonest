@@ -113,8 +113,67 @@ export function mouldedHingePose(p: Readonly<Record<string, number>>): { h: numb
 export const ROUND_BASE_PARAMS = ['baseDiaMm', 'baseHeightMm', 'hubDiaMm', 'tubeDiaMm', 'upperTubeDiaMm', 'clutchFromMm', 'boomMm', 'frontMm', 'boomAngleDeg', 'boomAzimuthDeg'] as const
 export const ROUND_BASE_DEFAULTS = { baseHeightMm: 26, hubDiaMm: 44, tubeDiaMm: 22, upperTubeDiaMm: 19, boomAngleDeg: 20, boomAzimuthDeg: 135 } as const
 
+/**
+ * speaker-cabinet-v2 (Wave 3, Task 3.1; plan family `speaker-cabinet-v2`): a loudspeaker enclosure with an ELEVATION (side) profile, for line-array elements, floor wedges, subwoofers,
+ * pole-mount boxes and trapezoid cabinets. The solid is the intersection of a plan outline (a hexagon as in speaker-cabinet: the full width at the baffle, `midWidthMm` / `rearWidthMm`
+ * toward the rear) and an elevation quadrilateral, every edge rounded by flat facets. Frame: bottom at y = 0, centred on x and z, the io (rear) face at z = +d/2, the baffle at the front
+ * (z = -d/2, or set back by frontTopSetMm / frontBottomSetMm). The spec size is the bounding box and is exact. All lengths in millimetres, all optional (a missing one is 0 or the default).
+ *   Elevation (side profile, seen from the right, the io face on the right): the quadrilateral front-bottom, rear-bottom, rear-top, front-top. The REAR face is always vertical at z = +d/2
+ *     (the io face the ports sit on). rearTopDropMm / rearBottomRiseMm: how far the rear face stops short of the top (height h) and of the base (y = 0). frontTopDropMm / frontBottomRiseMm: the same
+ *     for the front face's two ends. frontTopSetMm / frontBottomSetMm: how far the front face's top / bottom end is set BACK from the baffle plane (z = -d/2): a floor wedge's tilted baffle is
+ *     frontTopSetMm; a vertical baffle gives none. The shape must touch the whole bounding box: one of the two top drops, one of the two bottom rises and one of the two front sets must be absent.
+ *     A line-array element (front taller than the rear, top and bottom converging) is rearTopDropMm + rearBottomRiseMm; a box has none of them.
+ *   Plan (as speaker-cabinet): midWidthMm, rearWidthMm, taperDepthMm. The plan hexagon is full width w at the baffle, midWidthMm where the rear taper starts taperDepthMm short of the io face and rearWidthMm
+ *     at the io face (mid defaults to w, rear to mid; a narrower rear needs taperDepthMm).
+ *   Rounding: edgeRadiusMm (default 5) rounds every edge, edgeSegments (1 to 8, default 3) = the number of facets of the arc (1 = a chamfer); bodyGrey (20 to 200) sets the grey of the cabinet.
+ *   Grille panel: grilleMarginMm (turns it on) = the margin between the baffle's flat face and the grille recess, grilleDepthMm (default 1.5) deep, measured in the plane of the baffle.
+ *   Handles: handleCount (1 or 2 per side, both sides) with handleLenMm (along the depth) x handleWidthMm (high) stadium recesses handleDepthMm deep (default 12), the first centred handleFromRearMm
+ *     from the io face and handleYMm above the base; the second handlePitchMm further toward the front (required with 2). They are cut into the flat side faces: a side face too short, a handle over the
+ *     rounding or over a flat zone of the left or right face is refused.
+ *   Pole socket: poleSocketDiaMm (turns it on, typically 36) x poleSocketDepthMm (default 30) in the BOTTOM face, centred on x, poleSocketFromRearMm from the io face (default: the middle of the depth).
+ *     The bottom must be flat on the floor (no bottom rise).
+ *   Rigging points: rigPoints (2 = the two top corners, 4 = all four corners of the side face) on each side, round shallow recesses rigDiaMm (default 14) x rigDepthMm (default 0.8) whose centres are
+ *     rigInsetMm (default 1.5 x the diameter) in from the corner in both directions.
+ *   Rear pockets: every io port with insetMm gets a round pocket in the rear face (diameter openingMm or 24 mm, floor insetMm behind the face), exactly as speaker-cabinet and curved-cabinet.
+ * The builder measures the smallest edge fillet as built (the radius, not the parameter) for the 'fillet' gate, the recess depths and the counts of handles and rigging points.
+ */
+export const SPEAKER_V2_PARAMS = [
+  'frontTopSetMm', 'frontBottomSetMm', 'frontTopDropMm', 'frontBottomRiseMm', 'rearTopDropMm', 'rearBottomRiseMm',
+  'midWidthMm', 'rearWidthMm', 'taperDepthMm',
+  'edgeRadiusMm', 'edgeSegments', 'bodyGrey',
+  'grilleMarginMm', 'grilleDepthMm',
+  'handleCount', 'handleLenMm', 'handleWidthMm', 'handleDepthMm', 'handleFromRearMm', 'handleYMm', 'handlePitchMm',
+  'poleSocketDiaMm', 'poleSocketDepthMm', 'poleSocketFromRearMm',
+  'rigPoints', 'rigDiaMm', 'rigDepthMm', 'rigInsetMm',
+] as const
+
+/** Defaults of the speaker-cabinet-v2 params, in millimetres (the Python builder uses the same numbers: SPK2_DEFAULTS_MM). */
+export const SPEAKER_V2_DEFAULTS = { edgeRadiusMm: 5, edgeSegments: 3, grilleDepthMm: 1.5, handleDepthMm: 12, poleSocketDepthMm: 30, rigDiaMm: 14, rigDepthMm: 0.8 } as const
+/** The shortest rear face and front face of a speaker-cabinet-v2 elevation, in millimetres (a rear face is where the ports and pockets go). */
+export const SPEAKER_V2_MIN_FACE_MM = 20
+
+/** The elevation quadrilateral of a speaker-cabinet-v2: the four corners as [z, y] in millimetres in the centred frame (z from -d/2 at the baffle to +d/2 at the io face, y from 0 at the base). Pure: the Python builder computes the same. */
+export interface SpeakerElevation {
+  fb: [number, number]
+  rb: [number, number]
+  rt: [number, number]
+  ft: [number, number]
+  /** Height of the rear (io) face and of the front face as drawn, in millimetres. */
+  rearHeightMm: number
+  frontHeightMm: number
+}
+
+export function speakerV2Elevation(size: { w: number; h: number; d: number }, p: Readonly<Record<string, number>>): SpeakerElevation {
+  const { h, d } = size
+  const fb: [number, number] = [-d / 2 + (p.frontBottomSetMm ?? 0), p.frontBottomRiseMm ?? 0]
+  const rb: [number, number] = [d / 2, p.rearBottomRiseMm ?? 0]
+  const rt: [number, number] = [d / 2, h - (p.rearTopDropMm ?? 0)]
+  const ft: [number, number] = [-d / 2 + (p.frontTopSetMm ?? 0), h - (p.frontTopDropMm ?? 0)]
+  return { fb, rb, rt, ft, rearHeightMm: rt[1] - rb[1], frontHeightMm: Math.hypot(ft[0] - fb[0], ft[1] - fb[1]) }
+}
+
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval', 'round-base-stand'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval', 'round-base-stand', 'speaker-cabinet-v2'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -223,6 +282,8 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   'round-base-stand': { kind: 'device', params: ROUND_BASE_PARAMS, needsMatingOuter: false },
   // A rounded-plan box with filleted edges for recorders, body-packs, small interfaces, controllers, boundary mics and hinged laptops (see MOULDED_PARAMS).
   'moulded-box': { kind: 'device', params: MOULDED_PARAMS, needsMatingOuter: false, usesPorts: true, usesFlatZones: true },
+  // A loudspeaker enclosure with an elevation profile, handles, pole socket, rigging points, a grille recess and rear pockets (see SPEAKER_V2_PARAMS).
+  'speaker-cabinet-v2': { kind: 'device', params: SPEAKER_V2_PARAMS, needsMatingOuter: false, usesPorts: true, usesFlatZones: true },
   // A microphone boom stand (tripod, telescopic tube with clutch, tilt head and boom with counterweight and mic thread). The pose is built from these params,
   // then centred and stretched to the spec size (refused when that needs more than 3 %): the three legs are legAngleDeg, +120 and +240 degrees from +x towards +z
   // (15 degrees gives the same extent along x and z) with their length solved from the width, footDiaMm rubber feet, the boom of boomMm in all (frontMm of it in
@@ -322,6 +383,7 @@ export function validateBuild(spec: AssetSpecT): string[] {
   if (build.shape === 'power-strip') errors.push(...validatePowerStrip(spec))
   if (build.shape === 'tripod-stand') errors.push(...validateTripodStand(spec))
   if (build.shape === 'moulded-box') errors.push(...validateMouldedBox(spec))
+  if (build.shape === 'speaker-cabinet-v2') errors.push(...validateSpeakerV2(spec))
   if (build.shape === 'round-base-stand') errors.push(...validateRoundBaseStand(spec))
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {
     errors.push(`${spec.id}: build shape '${build.shape}' needs mating.outerMm (the diameter of the mating end)`)
@@ -686,6 +748,116 @@ function validateMouldedBox(spec: AssetSpecT): string[] {
         errors.push(`${id}: the open pose is ${w} x ${pose.h.toFixed(1)} x ${pose.d.toFixed(1)} mm (w x h x d) but the spec size is ${w} x ${h} x ${d} mm: the stretch to the spec would show (more than ${MOULDED_POSE_SLACK * 100} %); change the spec size, the angle or the base and lid sizes`)
       }
     }
+  }
+  return errors
+}
+
+/** The checks of a speaker-cabinet-v2 that need no geometry: the elevation touches the bounding box and is convex, groups of params come whole, ranges, rear pockets. The Python builder checks the fit of every recess in the real faces and against the flat zones. */
+function validateSpeakerV2(spec: AssetSpecT): string[] {
+  const errors: string[] = []
+  const { w, h, d } = spec.realSizeMm
+  const p = spec.build?.params ?? {}
+  const id = spec.id
+  const num = (name: keyof typeof SPEAKER_V2_DEFAULTS): number => p[name] ?? SPEAKER_V2_DEFAULTS[name]
+  const whole = (name: string, lo: number, hi: number): boolean => {
+    const v = p[name]
+    if (v === undefined || (Number.isInteger(v) && v >= lo && v <= hi)) return true
+    errors.push(`${id}: param '${name}' must be a whole number from ${lo} to ${hi}, got ${v}`)
+    return false
+  }
+  /** One error when some of a group is given and a core name is missing; true when the group is given in full. */
+  const group = (what: string, core: string[], all: string[]): boolean => {
+    if (!all.some((n) => p[n] !== undefined)) return false
+    const missing = core.filter((n) => p[n] === undefined)
+    if (missing.length > 0) {
+      errors.push(`${id}: ${what} need${what.endsWith('s') ? '' : 's'} ${core.join(', ')} (missing ${missing.join(', ')})`)
+      return false
+    }
+    return true
+  }
+
+  // elevation: it must touch the whole bounding box (the size is exact), stay convex and leave a rear face that can hold the ports
+  const elev = speakerV2Elevation(spec.realSizeMm, p)
+  for (const [names, what] of [[['rearTopDropMm', 'frontTopDropMm'], 'top (a top drop on the rear AND the front face leaves nothing at the height h)'], [['rearBottomRiseMm', 'frontBottomRiseMm'], 'base (a bottom rise at the rear AND the front leaves nothing on the floor)'], [['frontTopSetMm', 'frontBottomSetMm'], 'baffle plane (both ends of the front face are set back, so nothing reaches the depth d)']] as const) {
+    if (names.every((n) => p[n] !== undefined)) errors.push(`${id}: the elevation must touch the ${what}: give at most one of ${names.join(' and ')}`)
+  }
+  const corners = [elev.fb, elev.rb, elev.rt, elev.ft]
+  let convex = true
+  for (let i = 0; i < 4; i++) {
+    const a = corners[i]
+    const b = corners[(i + 1) % 4]
+    const c = corners[(i + 2) % 4]
+    if ((b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0]) < -1e-9) convex = false
+  }
+  if (!convex) errors.push(`${id}: the elevation (front ${elev.fb[1]} to ${elev.ft[1]} mm, rear ${elev.rb[1]} to ${elev.rt[1]} mm) is not convex: the top and the bottom must not cross`)
+  if (elev.rearHeightMm < SPEAKER_V2_MIN_FACE_MM) errors.push(`${id}: the rear face is only ${elev.rearHeightMm.toFixed(1)} mm high: the io face needs at least ${SPEAKER_V2_MIN_FACE_MM} mm (lower rearTopDropMm / rearBottomRiseMm)`)
+  if (elev.frontHeightMm < SPEAKER_V2_MIN_FACE_MM) errors.push(`${id}: the front face is only ${elev.frontHeightMm.toFixed(1)} mm long: it needs at least ${SPEAKER_V2_MIN_FACE_MM} mm (lower the front drops, rises and sets)`)
+
+  // plan (as speaker-cabinet)
+  const mid = p.midWidthMm ?? w
+  const rear = p.rearWidthMm ?? mid
+  if (mid > w) errors.push(`${id}: midWidthMm (${mid}) cannot be wider than the width ${w} mm`)
+  if (rear > mid) errors.push(`${id}: rearWidthMm (${rear}) cannot be wider than midWidthMm (${mid})`)
+  if (rear < mid && p.taperDepthMm === undefined) errors.push(`${id}: a rear narrower than the middle needs taperDepthMm (how far from the io face the sides start to narrow)`)
+  if (rear >= mid && p.taperDepthMm !== undefined) errors.push(`${id}: taperDepthMm (${p.taperDepthMm}) has no effect when rearWidthMm is not narrower than midWidthMm`)
+  if (p.taperDepthMm !== undefined && p.taperDepthMm >= d) errors.push(`${id}: taperDepthMm (${p.taperDepthMm}) must be less than the depth ${d} mm`)
+
+  // rounding and colour
+  const edge = num('edgeRadiusMm')
+  const smallest = Math.min(w, d, elev.rearHeightMm, elev.frontHeightMm)
+  if (edge * 2 >= smallest) errors.push(`${id}: edgeRadiusMm (${edge}) must be less than half the smallest side (${smallest / 2} mm)`)
+  whole('edgeSegments', 1, 8)
+  if (p.bodyGrey !== undefined && !(p.bodyGrey >= 20 && p.bodyGrey <= 200)) errors.push(`${id}: bodyGrey (${p.bodyGrey}) must be a grey level from 20 to 200`)
+  const depthLimit = Math.min(w, h, d) / 4
+
+  // grille panel on the baffle
+  if (p.grilleMarginMm === undefined) {
+    if (p.grilleDepthMm !== undefined) errors.push(`${id}: grilleDepthMm has no effect without grilleMarginMm`)
+  } else if (num('grilleDepthMm') >= depthLimit) errors.push(`${id}: grilleDepthMm (${num('grilleDepthMm')}) must be less than a quarter of the smallest side (${depthLimit} mm)`)
+
+  // handles
+  const handleNames = ['handleCount', 'handleLenMm', 'handleWidthMm', 'handleDepthMm', 'handleFromRearMm', 'handleYMm', 'handlePitchMm']
+  if (group('the handles', ['handleCount', 'handleLenMm', 'handleWidthMm', 'handleFromRearMm', 'handleYMm'], handleNames)) {
+    if (whole('handleCount', 1, 2)) {
+      if (p.handleCount === 2 && p.handlePitchMm === undefined) errors.push(`${id}: two handles need handlePitchMm (the distance between their centres, toward the front)`)
+      if (p.handleCount === 1 && p.handlePitchMm !== undefined) errors.push(`${id}: handlePitchMm has no effect with one handle per side`)
+      if (p.handleCount === 2 && p.handlePitchMm !== undefined && p.handlePitchMm < p.handleLenMm) errors.push(`${id}: handlePitchMm (${p.handlePitchMm}) must be at least handleLenMm (${p.handleLenMm}): the handles would overlap`)
+    }
+    if (p.handleWidthMm > p.handleLenMm) errors.push(`${id}: handleWidthMm (${p.handleWidthMm}) is higher than handleLenMm (${p.handleLenMm}) is long: a handle recess is a horizontal slot`)
+    if (num('handleDepthMm') >= depthLimit) errors.push(`${id}: handleDepthMm (${num('handleDepthMm')}) must be less than a quarter of the smallest side (${depthLimit} mm)`)
+    if (p.handleFromRearMm - p.handleLenMm / 2 < 0) errors.push(`${id}: the handle (centre ${p.handleFromRearMm} mm from the rear, ${p.handleLenMm} mm long) runs out of the io face`)
+    const lastFromRear = p.handleFromRearMm + (p.handleCount === 2 ? (p.handlePitchMm ?? 0) : 0) + p.handleLenMm / 2
+    if (lastFromRear > d) errors.push(`${id}: the handles reach ${lastFromRear} mm from the io face, beyond the depth ${d} mm`)
+    if (p.handleYMm - p.handleWidthMm / 2 < 0 || p.handleYMm + p.handleWidthMm / 2 > h) errors.push(`${id}: the handle (centre ${p.handleYMm} mm high, ${p.handleWidthMm} mm) is outside the height ${h} mm`)
+  }
+
+  // pole socket
+  if (p.poleSocketDiaMm === undefined) {
+    for (const n of ['poleSocketDepthMm', 'poleSocketFromRearMm'] as const) if (p[n] !== undefined) errors.push(`${id}: ${n} has no effect without poleSocketDiaMm`)
+  } else {
+    if (p.frontBottomRiseMm !== undefined || p.rearBottomRiseMm !== undefined) errors.push(`${id}: a pole socket is cut into a bottom that stands flat on the floor: give no frontBottomRiseMm / rearBottomRiseMm with poleSocketDiaMm`)
+    if (p.poleSocketDiaMm >= Math.min(w, d)) errors.push(`${id}: poleSocketDiaMm (${p.poleSocketDiaMm}) must be less than the smallest side of the bottom (${Math.min(w, d)} mm)`)
+    if (num('poleSocketDepthMm') >= depthLimit * 2) errors.push(`${id}: poleSocketDepthMm (${num('poleSocketDepthMm')}) must be less than half the smallest side (${depthLimit * 2} mm)`)
+    if (p.poleSocketFromRearMm !== undefined && p.poleSocketFromRearMm >= d) errors.push(`${id}: poleSocketFromRearMm (${p.poleSocketFromRearMm}) must be less than the depth ${d} mm`)
+  }
+
+  // rigging points
+  if (p.rigPoints === undefined) {
+    for (const n of ['rigDiaMm', 'rigDepthMm', 'rigInsetMm'] as const) if (p[n] !== undefined) errors.push(`${id}: ${n} has no effect without rigPoints`)
+  } else {
+    if (!(p.rigPoints === 2 || p.rigPoints === 4)) errors.push(`${id}: rigPoints must be 2 (the two top corners) or 4 (all four), got ${p.rigPoints}`)
+    if (num('rigDepthMm') >= num('rigDiaMm') / 2) errors.push(`${id}: rigDepthMm (${num('rigDepthMm')}) must be less than the radius of the marker (${num('rigDiaMm') / 2} mm): a rigging point is a shallow recess`)
+    if (num('rigDepthMm') >= depthLimit) errors.push(`${id}: rigDepthMm (${num('rigDepthMm')}) must be less than a quarter of the smallest side (${depthLimit} mm)`)
+  }
+
+  // rear pockets (the Python builder checks that each fits the flat rear face)
+  for (const port of spec.ports) {
+    if (!(port.insetMm !== undefined && port.insetMm > 0)) continue
+    if (port.face !== 'io') {
+      errors.push(`${id}: port '${port.portId}' has an insetMm but is on the ${port.face} face: a pocket is cut on the io face only`)
+      continue
+    }
+    if (port.insetMm > d / 2) errors.push(`${id}: port '${port.portId}' inset (${port.insetMm} mm) is deeper than half the depth`)
   }
   return errors
 }
