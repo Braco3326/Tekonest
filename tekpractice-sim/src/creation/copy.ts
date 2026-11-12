@@ -962,4 +962,22 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** After `playback.speakerUnpowered` (SPEAKER_UNPOWERED). */
     speakerUnpowered: 'Reliez la prise secteur de l’enceinte à une multiprise et vérifiez que « Alimentation » est activée.',
   },
+  /**
+   * Mode Création's own wording of the simulator rules R1 to R5 (T1.5a, spec 6.5 and Appendix A): `teach_fr` only, keyed by the RULE ID (R1 to R5), applied by
+   * `creationRuleRows` (src/creation/ruleTexts.ts). The catalog text is not edited (the legacy Essais fingerprint covers it) and the legacy route keeps it.
+   * Each text says what the simulator accepts or refuses: no hardware outcome, no safety claim, no figure that has no source record. R6 to R8 have no
+   * override. Every string here: à valider (tekuxwriter, 2026-11-12).
+   */
+  ruleOverride: {
+    /** R1 « Connecteurs incompatibles » (the engine refuses a connector mismatch). */
+    R1: 'Dans le simulateur, un XLR mâle se branche sur un XLR femelle et une fiche TT sur un jack TT. Deux connecteurs qui ne vont pas ensemble sont refusés : choisissez une autre prise ou un autre câble.',
+    /** R2 « Types de signal incompatibles » (the engine refuses SIGNAL_MISMATCH: the two ports must carry the same signal type). */
+    R2: 'Dans le simulateur, les deux prises doivent porter le même type de signal : niveau micro, niveau ligne pro, niveau ligne grand public, numérique AES3… Un type différent est refusé : un micro va sur une entrée micro, une sortie ligne sur une entrée ligne.',
+    /** R3 « Sens de connexion incorrect » (the engine refuses out to out and in to in). */
+    R3: 'Dans le simulateur, un câble va d’une sortie vers une entrée. Deux sorties reliées entre elles, ou deux entrées, sont refusées.',
+    /** R4 « Alimentation fantôme (+48 V) » (a rule event of the evaluator, not a refusal). */
+    R4: 'Dans le simulateur, un micro à condensateur (U 87) reste muet sans alimentation fantôme +48 V ; un micro dynamique (SM58, RE20) fonctionne avec ou sans.',
+    /** R5 « Voyant ON-AIR (tally) » (a rule event of the evaluator). */
+    R5: 'Dans le simulateur, le voyant ON-AIR doit être allumé dès qu’un micro est ouvert, et éteint sinon.',
+  },
 }
