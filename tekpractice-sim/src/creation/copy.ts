@@ -911,7 +911,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     'rj45': 'RJ45 (Cat5e/6)',
     ethercon: 'Neutrik etherCON (RJ45 renforcé)',
     'speakon-nl4': 'Neutrik Speakon NL4',
-    'powercon-blue': 'Neutrik powerCON (bleu, entrée secteur)',
+    'powercon-blue': 'Neutrik powerCON (bleu, entrée secteur ; un cordon powerCON vers IEC C13 le relie à une prise C13)',
     'powercon-true1': 'Neutrik powerCON TRUE1',
     'iec-c13': 'IEC C13 (fiche secteur)',
     'iec-c14': 'IEC C14 (embase secteur)',

@@ -63,7 +63,8 @@ describe('cable-assembly-v2 params (no Blender)', () => {
     expect(connector(CABLE_END_KINDS[1].connector).matesWith).toEqual(['xlr3-f'])
     // a powerCON to IEC cable: the blue plug goes into a powerCON port, the C13 end into a C14 inlet
     expect(connector(CABLE_END_KINDS[6].connector).matesWith).toContain('powercon-blue')
-    expect(connector(CABLE_END_KINDS[12].connector).matesWith).toEqual(['iec-c14'])
+    // the C13 end goes into a C14 inlet, and (waves 2 to 5 review, finding 2) into the powerCON end of a powerCON to IEC adapter cable, so the strip outlets reach the Meyer speakers
+    expect(connector(CABLE_END_KINDS[12].connector).matesWith).toEqual(['iec-c14', 'powercon-blue'])
     // an etherCON plug also goes into a plain RJ45 port
     expect(connector(CABLE_END_KINDS[7].connector).matesWith).toContain('rj45')
   })
