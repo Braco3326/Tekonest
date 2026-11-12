@@ -113,7 +113,7 @@ import { openShortcutsDialog } from './shell/shortcutsDialog'
 import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
-import { wireChecklist } from './onboarding/wire'
+import { startFirstVisit, wireChecklist } from './onboarding/wire'
 import { createAnnouncer } from './shell/announcer'
 import { armCancelFallback } from './fileDialogGuard'
 import {
@@ -140,7 +140,7 @@ const roomName = (id: string): string =>
 
 export async function bootCreation(): Promise<void> {
   injectCreationTokens()
-  applyDesignAttribute(document.documentElement, location.search) // marks <html> only for a valid ?design=1..5 (T0.1)
+  const designPkg = applyDesignAttribute(document.documentElement, location.search) // marks <html> only for a valid ?design=1..5 (T0.1)
   useSameOriginDraco() // CA-24: the Draco decoder comes from public/draco/, never from cdn.babylonjs.com (before any .glb is loaded)
   const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
   const shell = mountShell(document, canvas)
@@ -915,7 +915,16 @@ export async function bootCreation(): Promise<void> {
   refreshSignal()
   refreshAutosave()
   if (!(await restore())) {
-    picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
+    // First visit under ?design (T2.3): the start screen, a stage of the picker; otherwise (no ?design, or already asked) the picker as it always was.
+    const first = startFirstVisit({
+      design: designPkg !== null,
+      storage,
+      stepCount: designPkg?.pacing.steps.length ?? 0,
+      offerAllowed: true, // T2.4b: main.ts passes `tutorialAllowed` (guide not allowed on this address = no offer)
+      picker,
+      openNeutralRoom: () => void pick(cards.find((c) => c.key === 'blank')!, 'empty'),
+    })
+    if (!first.shown) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
     if (betaHold) picker.showError(COPY.inventory!.unavailable!) // the picker covers the notes: it says it too
   }
   // While the picker covers the workspace, « Aller à la vue 3D » lands on its highlighted card.

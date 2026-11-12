@@ -994,5 +994,20 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     profileEtudie: 'J’étudie le son',
     profileProjet: 'Je monte un projet',
     profileMetier: 'Je travaille dans le son',
+    /** Heading of the profile stage of the start screen (no accented letter: the title font (Tektur) draws an acute as a macron at small sizes, see .cr-pick-confirm-title). */
+    startTitle: 'Bienvenue : quelle est votre situation ?',
+    /** Under the heading of the profile stage. */
+    startLead: 'Vous pourrez changer de profil à tout moment.',
+    /** Button under the four profiles: the place picker as it is without a start screen. */
+    allPlaces: 'Tous les lieux',
+    /** Heading of the offer stage. */
+    offerTitle: 'Un tutoriel pour votre premier son ?',
+    /** The profile just chosen, above the offer; {profile} = its label. */
+    offerProfile: 'Votre profil : {profile}',
+    /** Under the offer heading: what the tutorial is, and that it is advised to everyone. */
+    offerLead: 'Il vous guide pour poser le matériel et le brancher vous-même, dans une salle vide. Il est conseillé à tout le monde.',
+    /** The two EQUAL answers. {n} = number of steps of the active tutorial (a count of steps, never a duration). */
+    offerTutorial: 'Faire le tutoriel (conseillé · {n} étapes, à votre rythme)',
+    offerSkip: 'Passer, je connais',
   },
 }

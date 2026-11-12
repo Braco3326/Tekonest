@@ -11,9 +11,14 @@
  *   modèle » (radio group + « Ouvrir ») in a small modal dialog.
  * - A filter by type; lazy thumbnails (`<img loading="lazy" alt="">`, the card text names the place).
  * - No transitions anywhere (reduced motion is the default here).
+ * - Onboarding (T2.3, only under `?design`): `showStart` shows the start screen (src/creation/onboarding/startScreen.ts) as a STAGE of this same
+ *   section: the head and the grids hide, the start panel shows, and `inert` stays owned here (`show`, `hide`). « Tous les lieux » leaves the stage for
+ *   the grids; a place chosen elsewhere closes the picker through `hide` as a card does. Never called without `?design`: the DOM is then today's.
  * DOM only: choosing calls `onChoose`, the shell owns the place change.
  */
 import { COPY } from '../copy'
+import { mountStartScreen, type StartResult, type StartScreen } from '../onboarding/startScreen'
+import type { ProfileId } from '../onboarding/state'
 import { gridMove, type GridKey, type PlaceCard } from './placePickerModel'
 
 export type { PlaceCard } from './placePickerModel'
@@ -45,6 +50,18 @@ export interface PlacePicker {
   setBusy(on: boolean): void
   /** An error line in the picker head (`role="alert"`); null clears it. */
   showError(message: string | null): void
+  /**
+   * The start screen of the first visit: a stage of this picker (not closable, covers inert like `show`). `onProfile` hears the profile choice,
+   * `onResult` the end of the screen; on `all-places` the picker has already switched to its grids.
+   */
+  showStart(opts: PickerStartOpts): void
+}
+
+export interface PickerStartOpts {
+  stepCount: number
+  offerAllowed: boolean
+  onProfile(id: ProfileId): void
+  onResult(r: StartResult): void
 }
 
 const P = (): Readonly<Record<string, string>> => COPY.picker!
@@ -245,6 +262,9 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
   let closable = false
   let busy = false
   let pending: { grid: Grid; card: PlaceCard } | null = null
+  /** The start screen, mounted on the first `showStart` (a page without `?design` never has it in its DOM). */
+  let start: StartScreen | null = null
+  let startOpts: PickerStartOpts | null = null
 
   const visible = (g: Grid): number[] => g.cards.map((c, i) => (c.el.hidden ? -1 : i)).filter((i) => i >= 0)
   const current = (g: Grid): { card: PlaceCard; el: HTMLElement } | undefined => g.cards[g.at]
@@ -292,6 +312,15 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
   const setInert = (on: boolean): void => {
     head.inert = on
     scroll.inert = on
+    start?.setInert(on) // the start panel is reachable by no key while the dialog is open
+  }
+  /** Back to the head and the grids (the start stage ends: « Tous les lieux », a failure, a place opened, `show`). */
+  const leaveStart = (): void => {
+    if (!start) return
+    start.close()
+    head.hidden = false
+    scroll.hidden = false
+    root.setAttribute('aria-labelledby', 'cr-picker-title')
   }
   function openConfirm(grid: Grid, card: PlaceCard): void {
     pending = { grid, card }
@@ -343,6 +372,7 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
     if (pending) closeConfirm()
     open = false
     root.hidden = true
+    leaveStart()
     for (const c of d.covers) c.inert = false
   }
   close.addEventListener('click', () => {
@@ -364,6 +394,7 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
       return open
     },
     show({ closable: c, focus }) {
+      leaveStart()
       closable = c
       close.hidden = !c
       error.hidden = true
@@ -372,16 +403,51 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
       for (const cov of d.covers) cov.inert = true
       if (focus) current(places)?.el.focus()
     },
+    showStart(o) {
+      closable = false
+      close.hidden = true
+      error.hidden = true
+      open = true
+      root.hidden = false
+      for (const cov of d.covers) cov.inert = true
+      startOpts = o // the callbacks follow the latest call; the screen's step count and offer are those of the first (one start screen per page)
+      if (!start)
+        start = mountStartScreen({
+          doc,
+          parent: root,
+          stepCount: o.stepCount,
+          offerAllowed: o.offerAllowed,
+          onProfile: (id) => startOpts?.onProfile(id),
+          onResult: (r) => {
+            if (r.kind === 'all-places') {
+              leaveStart()
+              current(places)?.el.focus() // the learner asked for the places: the keyboard lands on the first card
+            }
+            startOpts?.onResult(r)
+          },
+        })
+      head.hidden = true
+      scroll.hidden = true
+      root.setAttribute('aria-labelledby', start.titleId)
+      start.open()
+    },
     hide,
     focus() {
-      current(places)?.el.focus()
+      if (start?.stage) start.focus()
+      else current(places)?.el.focus()
     },
     setBusy(on) {
       busy = on
+      start?.setBusy(on)
       root.setAttribute('aria-busy', String(on))
       if (on) error.hidden = true
     },
     showError(message) {
+      if (message !== null && start?.stage) {
+        // A room chosen from the start screen could not open: the error line lives in the head, so the grids come back where it can be read.
+        leaveStart()
+        current(places)?.el.focus()
+      }
       error.textContent = message ?? ''
       error.hidden = message === null
     },

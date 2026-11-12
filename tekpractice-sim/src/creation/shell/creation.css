@@ -718,6 +718,53 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr .cr-pick-close[hidden] { display: none; }
 
 .cr-pick-scroll { flex: 1; min-height: 0; overflow-x: hidden; overflow-y: auto; padding: 4px 24px 24px; }
+
+/* ── The start screen (T2.3): a stage of the picker, shown instead of its head and grids. Only built under ?design=1..5. ── */
+/* The picker's head and grid area set a display, which beats the UA's [hidden]: restated for the stage switch. */
+.cr-pick-head[hidden], .cr-pick-scroll[hidden], .cr-start[hidden], .cr-start-stage[hidden], .cr-start-lead[hidden] { display: none; }
+.cr-start { flex: 1; min-height: 0; overflow-x: hidden; overflow-y: auto; padding: 32px 24px 24px; }
+.cr-start > * { max-width: 960px; margin-left: auto; margin-right: auto; }
+.cr-start:focus { outline: none; } /* the panel only keeps the keys when the empty space is clicked; the buttons carry the focus ring */
+.cr-start-lead { margin-top: 8px; }
+.cr-start-profile-name { margin: 8px auto 0; color: var(--cr-papier); font-weight: 500; }
+/* Four EQUAL buttons: equal columns, equal rows (the tallest label sets the row), the same box at every width. */
+.cr-start-profiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 16px; margin-top: 28px; }
+.cr-start-offer { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 16px; margin-top: 24px; }
+.cr .cr-start-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 120px;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  text-align: left;
+  color: var(--cr-papier);
+  background: var(--cr-panel);
+  border: 1px solid var(--cr-ambre);
+  font: 500 18px/1.25 var(--cr-font-ui);
+}
+.cr .cr-start-answer { min-height: 96px; justify-content: center; }
+.cr-start-key {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--cr-ambre);
+  border: 1px solid var(--cr-ambre);
+  font: 600 13px/1 var(--cr-font-title);
+}
+.cr-start-places { margin-top: 20px; }
+@media (hover: hover) {
+  .cr .cr-start-btn:hover { color: var(--cr-nuit); background: var(--cr-ambre); }
+  .cr .cr-start-btn:hover .cr-start-key { color: var(--cr-nuit); border-color: var(--cr-nuit); }
+}
+@media (max-width: 900px) { .cr-start-profiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) {
+  .cr-start-profiles, .cr-start-offer { grid-template-columns: minmax(0, 1fr); }
+  .cr .cr-start-btn { min-height: 72px; }
+}
 .cr-pick-rowhead { display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; margin: 16px 0 10px; }
 .cr-pick-rowhead .cr-pick-row { margin: 0; }
 .cr-pick-pitch { margin: 0; color: var(--cr-ink-muted); font-size: 12px; line-height: 1.3; }

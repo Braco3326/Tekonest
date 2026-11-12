@@ -916,6 +916,14 @@ Première visite (packs d’accueil, T2) : l’écran de départ, uniquement sou
 | `onboarding.profileEtudie` | J’étudie le son | à valider (tekuxwriter) | Bouton de profil 2 (touche 2) : étudiant ; le focus de l’offre va sur « Passer, je connais » |
 | `onboarding.profileProjet` | Je monte un projet | à valider (tekuxwriter) | Bouton de profil 3 (touche 3) : entrepreneur qui apprend, aussi pour son propre matériel ; le focus de l’offre va sur « Faire le tutoriel » |
 | `onboarding.profileMetier` | Je travaille dans le son | à valider (tekuxwriter) | Bouton de profil 4 (touche 4) : professionnel ; l’offre est montrée, le focus va sur « Passer, je connais » |
+| `onboarding.startTitle` | Bienvenue : quelle est votre situation ? | à valider (tekuxwriter) | Titre (`h2`) de l’écran de départ, étape « profil » ; nomme la section du sélecteur de lieu. Sans lettre accentuée : la police du titre (Tektur) dessine l’aigu comme un macron aux petites tailles |
+| `onboarding.startLead` | Vous pourrez changer de profil à tout moment. | à valider (tekuxwriter) | Sous le titre, étape « profil » |
+| `onboarding.allPlaces` | Tous les lieux | à valider (tekuxwriter) | Bouton sous les quatre profils (et Échap sur cette étape) : le sélecteur de lieu tel qu’il est sans écran de départ |
+| `onboarding.offerTitle` | Un tutoriel pour votre premier son ? | à valider (tekuxwriter) | Titre de l’étape « offre » (même panneau) |
+| `onboarding.offerProfile` | Votre profil : {profile} | à valider (tekuxwriter) | Au-dessus de l’offre ; `{profile}` = le libellé du profil choisi |
+| `onboarding.offerLead` | Il vous guide pour poser le matériel et le brancher vous-même, dans une salle vide. Il est conseillé à tout le monde. | à valider (tekuxwriter) | Sous le titre de l’offre : la décision du fondateur (passer est permis, le tutoriel est conseillé à tous) |
+| `onboarding.offerTutorial` | Faire le tutoriel (conseillé · {n} étapes, à votre rythme) | à valider (tekuxwriter) | Premier des deux boutons égaux de l’offre ; `{n}` = nombre d’étapes du tutoriel du paquet actif (jamais une durée : aucune minute dans l’interface) |
+| `onboarding.offerSkip` | Passer, je connais | à valider (tekuxwriter) | Second bouton égal de l’offre (et Échap sur cette étape) ; la question ne revient pas |
 
 ## Textes hors COPY (index.html)
 
