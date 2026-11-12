@@ -2435,7 +2435,11 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "ams-neve-1073lb",
@@ -2688,7 +2692,11 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "genelec-8040b",
@@ -3255,7 +3263,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "yamaha-dxr12-mkii",
@@ -3665,7 +3674,8 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "rode-nt5",
@@ -6884,7 +6894,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "db-audiotechnik-ds20",
@@ -6911,7 +6922,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "db-audiotechnik-v-sub",
@@ -7244,7 +7256,11 @@
     "processor",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "rcf-hdl-30-a",
@@ -7438,7 +7454,7 @@
    "weightKg": 1.45,
    "portsSummary": "4 modelled (6 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
-   "dataQuality": "estimate",
+   "dataQuality": "datasheet",
    "sourceGrade": "datasheet",
    "tier": 3,
    "wave": 4,
@@ -7447,12 +7463,16 @@
     "https://sonifex.co.uk/product/dhy-04/",
     "https://radioactive.org.uk/?p=11402"
    ],
-   "notes": "No data in notes. [Wave 0c size research, grade datasheet, sizeConfidence axis-assumed: values from a search-result excerpt of the Sonifex table (the page returned 404); the base DHY-04 differs] Not read directly: the Sonifex German page returned 404 on fetch, so the DHY-04S values (48.3 cm W x 17.5 cm D x 4.5 cm H, 1U; net 1.45 kg, gross 2.3 kg) come from a search-result excerpt of Sonifex's table and match the Radioactive dealer listing. The fetched base DHY-04 page gives 21.8 x 17.5 x 4.5 cm and 1.4 kg (desktop). A third listing (notice-facile, 'USB audio interface 483 x 200 x 44 mm, 2.5 kg') is a different product and ignored. Depth is measured to the end of the rear connectors. Verify the S figures against the DHY-04 handbook if a hard source is needed.",
+   "notes": "No data in notes. [Wave 0c size research, grade datasheet, sizeConfidence axis-assumed: values from a search-result excerpt of the Sonifex table (the page returned 404); the base DHY-04 differs] Not read directly: the Sonifex German page returned 404 on fetch, so the DHY-04S values (48.3 cm W x 17.5 cm D x 4.5 cm H, 1U; net 1.45 kg, gross 2.3 kg) come from a search-result excerpt of Sonifex's table and match the Radioactive dealer listing. The fetched base DHY-04 page gives 21.8 x 17.5 x 4.5 cm and 1.4 kg (desktop). A third listing (notice-facile, 'USB audio interface 483 x 200 x 44 mm, 2.5 kg') is a different product and ignored. Depth is measured to the end of the rear connectors. Verify the S figures against the DHY-04 handbook if a hard source is needed. [Wave 4A: size 4.5 cm H x 48.3 cm W x 17.5 cm D read in the opened Sonifex DHY-04 handbook rev 1.06 (table header order Height, Width, Depth, DHY-04S row), so the axis order is labelled, not assumed.]",
    "traits": [
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "ssl-origin",
@@ -7637,10 +7657,14 @@
     "https://aphex.com/products/channel"
    ],
    "notes": "Aphex page [M]: 483x210x44 mm, 2.73 kg. Source: https://aphex.com/products/channel",
+   "assumedConnectors": [
+    "power-in"
+   ],
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "apogee-symphony-desktop",
@@ -8387,7 +8411,7 @@
    "weightKg": 4,
    "portsSummary": "12 modelled (14 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
-   "dataQuality": "estimate",
+   "dataQuality": "datasheet",
    "sourceGrade": "datasheet",
    "tier": 3,
    "wave": 5,
@@ -8395,12 +8419,16 @@
     "https://my.yamaha.com/files/download/other_assets/3/322303/SPX2000_datasheet.pdf",
     "https://usa.yamaha.com/products/proaudio/processors/spx2000/specs.html"
    ],
-   "notes": "Discontinued; KB W/H/D parsable, values not in notes. [Wave 0c size research, grade datasheet, sizeConfidence axis-assumed: notes: Search summary citing the Yamaha datasheet and spec page: 480 x 45 x 372.5 mm (W x H x D),] Search summary citing the Yamaha datasheet and spec page: 480 x 45 x 372.5 mm (W x H x D), 4 kg (8.8 lb), 1U, discontinued. The Yamaha PDF and pages returned 403 so were not read directly.",
+   "notes": "Discontinued; KB W/H/D parsable, values not in notes. [Wave 0c size research, grade datasheet, sizeConfidence axis-assumed: notes: Search summary citing the Yamaha datasheet and spec page: 480 x 45 x 372.5 mm (W x H x D),] Search summary citing the Yamaha datasheet and spec page: 480 x 45 x 372.5 mm (W x H x D), 4 kg (8.8 lb), 1U, discontinued. The Yamaha PDF and pages returned 403 so were not read directly. [Wave 4A: size 480 x 45 x 372.5 mm (W x H x D) read in the opened Yamaha owner manual (dimension drawing and spec table) and the Yamaha Malaysia spec page, so the axis order is labelled, not assumed.]",
    "traits": [
     "processor",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "audix-d6",

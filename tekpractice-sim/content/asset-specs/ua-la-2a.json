@@ -1,0 +1,81 @@
+{
+  "id": "ua-la-2a",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 133,
+    "d": 184
+  },
+  "ports": [
+    {
+      "portId": "in-xlr",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 66,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr",
+      "face": "io",
+      "xMm": 190,
+      "yMm": 66,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 10,
+      "seamMm": 60,
+      "plateRgb": 3356219,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/uala2ad.html",
+      "note": "equipment plan source (research grade: dealer); size 483 x 184 x 133 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.bhphotovideo.com/c/product/342382-REG/universal_audio_la2a_teletronix_la_2a_classic_leveling.html",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
+      "note": "Universal Audio LA-2A manual (Adorama-hosted copy of the manufacturer manual), opened 2026-11-12: panel 19 in x 5.25 in, depth behind the panel 7.25 in (482.6 x 133.4 x 184.2 mm; the plan size is the same), audio input and output on XLR (600 ohm balanced, gender and panel not stated: input female and output male by convention, drawn on the rear), a 10-position barrier terminal strip (no catalogue connector, not modelled). The manual and the product page do not name the mains connector: no mains inlet is modelled, so the device has no power control. Chassis vents are not stated and are not modelled. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.uaudio.com/hardware/la-2a.html",
+      "note": "UA LA-2A product page, opened 2026-11-12: 19 in rackmount chassis, 3U, 13 lb, Jones barrier terminals and XLR connectors."
+    }
+  ]
+}

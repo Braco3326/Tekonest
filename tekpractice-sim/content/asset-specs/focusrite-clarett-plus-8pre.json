@@ -1,0 +1,345 @@
+{
+  "id": "focusrite-clarett-plus-8pre",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.5,
+    "h": 43.9,
+    "d": 291
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "opposite",
+      "xMm": 66,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "opposite",
+      "xMm": 330,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-2",
+      "face": "opposite",
+      "xMm": 350,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "in-combo-3",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-4",
+      "face": "io",
+      "xMm": 76,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-5",
+      "face": "io",
+      "xMm": 102,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-6",
+      "face": "io",
+      "xMm": 128,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-7",
+      "face": "io",
+      "xMm": 154,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-8",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-monitor-1",
+      "face": "io",
+      "xMm": 215,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out",
+      "flags": [
+        "isMonitorOut"
+      ]
+    },
+    {
+      "portId": "out-monitor-2",
+      "face": "io",
+      "xMm": 231,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out",
+      "flags": [
+        "isMonitorOut"
+      ]
+    },
+    {
+      "portId": "out-line-3",
+      "face": "io",
+      "xMm": 247,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-4",
+      "face": "io",
+      "xMm": 263,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-5",
+      "face": "io",
+      "xMm": 279,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-6",
+      "face": "io",
+      "xMm": 295,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-optical",
+      "face": "io",
+      "xMm": 312,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "toslink",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "out-optical",
+      "face": "io",
+      "xMm": 326,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "toslink",
+      "signal": "spdif",
+      "dir": "out"
+    },
+    {
+      "portId": "in-spdif",
+      "face": "io",
+      "xMm": 345,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "out-spdif",
+      "face": "io",
+      "xMm": 361,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "out"
+    },
+    {
+      "portId": "out-wclk",
+      "face": "io",
+      "xMm": 380,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 398,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 430,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "opposite",
+      "xMm": 455,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 30,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3356219,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.adorama.com/col/productManuals/FRCLPLUS8PRE.pdf",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://userguides.focusrite.com/hc/en-gb/articles/18577946999570-Clarett-8Pre-technical-specifications",
+      "note": "equipment plan source (research grade: datasheet); size 482.5 x 291 x 43.9 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.adorama.com/col/productManuals/FRCLPLUS8PRE.pdf",
+      "note": "Focusrite Clarett+ 8Pre User Guide v4 (Adorama-hosted copy of the manufacturer guide), opened 2026-11-12, hardware features and technical specifications: 482.5 x 43.9 x 291 mm (W x H x D), 4.08 kg; inputs 1-2 combos on the front, inputs 3-8 combos on the rear (modelled as their XLR half), monitor 1 and 2 and line outputs 3-10 TRS on the rear (6 of 10 modelled), headphones 1 and 2 (1/4 in TRS) on the front, optical in and out (TOSLINK, ADAT), S/PDIF in and out (phono), word clock output BNC, USB-C, MIDI in and out (no signal type, not modelled), IEC mains connector (type letter not named: iec-c14 assumed, plan assumedConnectors power-in), AC power switch on the front panel. The Focusrite technical-specifications article cited by the plan answered 403 and was not opened. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "reference",
+      "url": "https://userguides.focusrite.com/hc/en-gb/articles/18577946999570-Clarett-8Pre-technical-specifications",
+      "note": "Ring check: the IEC C14 marker ring is 26.4 mm and the unit is 43.9 mm tall (60.1 percent against the 60 percent limit of tests/scene/portMarkerSize.test.ts): the stage-2 step needs a per-device ring-height exception like the MUTEC MC-3+ one."
+    }
+  ]
+}

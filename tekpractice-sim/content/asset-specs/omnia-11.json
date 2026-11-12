@@ -1,0 +1,172 @@
+{
+  "id": "omnia-11",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 177.8,
+    "d": 508
+  },
+  "ports": [
+    {
+      "portId": "in-analog-l",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-analog-r",
+      "face": "io",
+      "xMm": 86,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-analog-l",
+      "face": "io",
+      "xMm": 112,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-analog-r",
+      "face": "io",
+      "xMm": 138,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes-1",
+      "face": "io",
+      "xMm": 86,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes-2",
+      "face": "io",
+      "xMm": 112,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "net-livewire",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 50,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 400,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 400,
+      "yMm": 130,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 10,
+      "seamMm": 60,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 50,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3356219,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "portsDocumented": true,
+  "portsSource": "https://docs.telosalliance.com/docs/chapter-1-installation",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://docs.telosalliance.com/docs/appendix-a-performance-specifications",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 508 x 177.8 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.manualsdir.com/manuals/782579/omnia-audio-omnia11.html?page=87",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "manual",
+      "url": "https://docs.telosalliance.com/docs/chapter-1-installation",
+      "note": "Omnia.11 manual, installation chapter, opened 2026-11-12 (read through the fetch tool): four EIA rack spaces, rear panel with analog XLR in and out (left and right), AES in, AES out 1 and 2, AES sync in, a composite AES out, four BNCs (composite 1 and 2, 19 kHz, SCA in), two RJ-45 (the top jack carries remote control and Livewire I/O, the bottom jack is \"not fully implemented\"), two DB-9 serial ports, one DB-15 GPI, and an EMI-filtered IEC male power inlet (type letter not named: iec-c14 assumed, plan assumedConnectors power-in). The manual states \"There is no power switch\": the `power` control of the catalogue entry is the simulator toggle for the unit being powered, drawn as a rocker next to the inlet only because the template requires one per mains inlet. Not modelled: AES sync in, composite AES out, BNCs, DB-9, DB-15 (no signal type or not audio). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://docs.telosalliance.com/docs/appendix-a-performance-specifications",
+      "note": "Omnia.11 appendix A performance specifications, opened 2026-11-12: 19 in x 7 in x 20 in (W x H x D) including connectors (482.6 x 177.8 x 508 mm), shipping weight 36 lb. The Telos \"Performance Specifications\" page that lists 2U 482 x 428 x 86 mm belongs to another product."
+    }
+  ]
+}

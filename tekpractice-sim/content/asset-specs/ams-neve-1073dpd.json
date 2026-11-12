@@ -1,0 +1,221 @@
+{
+  "id": "ams-neve-1073dpd",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482,
+    "h": 45,
+    "d": 254
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 76,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-line-1",
+      "face": "io",
+      "xMm": 102,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-2",
+      "face": "io",
+      "xMm": 128,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-1",
+      "face": "io",
+      "xMm": 154,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-2",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes-1",
+      "face": "io",
+      "xMm": 206,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes-2",
+      "face": "io",
+      "xMm": 232,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "in-wclk",
+      "face": "io",
+      "xMm": 270,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "out-wclk",
+      "face": "io",
+      "xMm": 288,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 420,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "opposite",
+      "xMm": 455,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    },
+    {
+      "controlId": "gain",
+      "kind": "knob",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 20,
+        "h": 20,
+        "d": 12
+      }
+    },
+    {
+      "controlId": "phantom-48v",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 100,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 10,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 30,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3356219,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.ams-neve.com/1073dpd/",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.ams-neve.com/?p=1408",
+      "note": "equipment plan source (research grade: datasheet); size 482 x 254 x 45 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.ams-neve.com/1073dpd/",
+      "note": "AMS Neve 1073DPD product page, opened 2026-11-12: 1U, 482 x 45 x 254 mm (W x H x D), 5 kg. The plan source link (?p=1408) is the 1073LBEQ page, not this product."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.ams-neve.com/wp-content/uploads/2021/08/1073dpadpdusermanual-1-1-.pdf",
+      "note": "1073DPA and 1073DPD User Guide issue 3, opened 2026-11-12 (read as text): rear panel mic in 1 and 2 (XLR), line in 1 and 2 (XLR/TRS combos, modelled as their XLR half), line out 1 and 2 (XLR), ADC in 1 and 2 (TRS inserts, not modelled), AES out 1 and 2 (XLR), AES sync in, word clock in and out (BNC), DSD out (BNC, no signal type), IEC mains connector (type letter not named: iec-c14 assumed, plan assumedConnectors power-in); front panel gain, trim, 48 V and input selector; a mains switch exists but its panel is not stated (drawn on the front). The DPD has no EQ. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

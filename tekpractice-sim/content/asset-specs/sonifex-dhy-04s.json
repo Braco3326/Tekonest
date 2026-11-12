@@ -1,0 +1,122 @@
+{
+  "id": "sonifex-dhy-04s",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 45,
+    "d": 175
+  },
+  "ports": [
+    {
+      "portId": "in-send-xlr",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-caller-xlr",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 420,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 380,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 25,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3356219,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://cdn.abicart.com/shop/ws42/76342/art73/159887173-02cecc-sonifex_dhy04_manual.pdf",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.sonifex.co.uk/de/tbu/dhy04.shtml",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 175 x 45 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://sonifex.co.uk/product/dhy-04/",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "reference",
+      "url": "https://radioactive.org.uk/?p=11402",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "manual",
+      "url": "https://cdn.abicart.com/shop/ws42/76342/art73/159887173-02cecc-sonifex_dhy04_manual.pdf",
+      "note": "Sonifex DHY-04 handbook rev 1.06 (dealer-hosted copy of the manufacturer document), opened 2026-11-12, rows for the DHY-04S: physical specification 4.5 cm H x 48.3 cm W x 17.5 cm D, 1U, 1.45 kg net (the plan size is the same; its axis assumption is settled by the handbook header order Height, Width, Depth). Rear panel: input XLR (mic/line and AES/EBU, auto-sensing), output XLR, telephone line and handset RJ11 (no catalogue connector, not modelled), conference RJ45 (analog audio, not Ethernet: not modelled), 9-way D remotes (no signal), Ethernet RJ45 (configuration), RS232, earth bond screw, filtered IEC mains (CEE22; iec-c14 assumed, plan assumedConnectors power-in). The handbook lists no power switch: the `power` control is the simulator toggle drawn as a rocker next to the inlet because the template requires one per mains inlet. The XLR input is modelled as the line-level send to the caller (it also accepts mic level and AES3). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}
