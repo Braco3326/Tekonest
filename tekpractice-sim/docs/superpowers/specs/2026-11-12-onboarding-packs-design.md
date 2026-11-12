@@ -571,3 +571,6 @@ claim and no figure).
 | R3 | Le signal circule dans un seul sens : source → destination. Deux sorties qui se battent peuvent endommager le matériel. | Dans le simulateur, un câble va d’une sortie vers une entrée. Deux sorties reliées entre elles, ou deux entrées, sont refusées. | damage claim; the engine refuses out-out and in-in (ConnectionGraph R3) |
 | R4 | Les micros à condensateur (U 87) restent muets sans alimentation fantôme +48 V. Les micros dynamiques (SM58, RE20) l’ignorent. Les micros à ruban d’époque peuvent être endommagés par elle. | Dans le simulateur, un micro à condensateur (U 87) reste muet sans alimentation fantôme +48 V ; un micro dynamique (SM58, RE20) fonctionne avec ou sans. | damage claim about ribbon mics |
 | R5 | Le voyant rouge est un contrat de sécurité : micro ouvert = ON-AIR allumé, sinon quelqu’un entrera en parlant pendant le journal. | Dans le simulateur, le voyant ON-AIR doit être allumé dès qu’un micro est ouvert, et éteint sinon. | « contrat de sécurité » and a claim about people |
+
+
+**Erratum (G1 fix, 2026-11-12):** the code in `src/design/packages.ts` uses `FramingPose` (a plain `{ alpha, beta, radius, target: [x, y, z] }`, no Babylon import) where section 7.1 says `CameraPose`, and a `StepId` type (the ten step ids of 6.3 plus `debrancher` and `rebrancher` of 7.2) for `Pacing.steps`.

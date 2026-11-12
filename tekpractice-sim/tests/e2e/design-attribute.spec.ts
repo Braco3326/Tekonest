@@ -25,3 +25,36 @@ for (const bad of ['?design=0', '?design=6', '?design=abc', '?design=', '?design
     expect(await page.evaluate(() => document.documentElement.hasAttribute('data-design'))).toBe(false)
   })
 }
+
+// Legacy addresses never reach the creation boot, so they never carry the attribute (a legacy page cold-boots slowly: 30 s budget).
+const LEGACY_BOOT_MS = 30_000
+const noAttr = (page: import('@playwright/test').Page) =>
+  page.evaluate(() => document.documentElement.hasAttribute('data-design'))
+
+test('?legacy=1&design=2: the legacy home boots and carries no data-design attribute', async ({ page }) => {
+  await page.goto('/?legacy=1&design=2')
+  await expect(page.locator('#dashboard')).toBeVisible({ timeout: LEGACY_BOOT_MS })
+  await expect(page.getByTestId('place-picker')).toHaveCount(0)
+  expect(await noAttr(page)).toBe(false)
+})
+
+test('?level=a1&design=2: the legacy level boots and carries no data-design attribute', async ({ page }) => {
+  await page.goto('/?level=a1&design=2')
+  await page.waitForFunction(() => !!window.__audioSim, undefined, { timeout: LEGACY_BOOT_MS })
+  await expect(page.getByTestId('place-picker')).toHaveCount(0)
+  expect(await noAttr(page)).toBe(false)
+})
+
+test('?level=a1&mode=exam&design=2: the exam address carries no data-design attribute', async ({ page }) => {
+  await page.goto('/?level=a1&mode=exam&design=2')
+  await page.waitForFunction(() => !!window.__audioSim, undefined, { timeout: LEGACY_BOOT_MS })
+  await expect(page.locator('#exam-timer')).toBeVisible()
+  expect(await noAttr(page)).toBe(false)
+})
+
+// Not an exam address: decideRoute sends only ?level= and ?legacy=1 to the legacy app, so `mode=exam` alone is Mode Création.
+test('?design=2&mode=exam (no level) still routes to Mode Création and carries the attribute', async ({ page }) => {
+  await page.goto('/?design=2&mode=exam')
+  await expect(page.getByTestId('place-picker')).toBeVisible()
+  await expect(page.locator('html')).toHaveAttribute('data-design', '2')
+})

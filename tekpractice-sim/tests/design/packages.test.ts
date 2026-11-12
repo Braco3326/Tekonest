@@ -149,3 +149,27 @@ describe('events', () => {
     expect(TUTORIAL_EVENT).toBe('tekpractice:tutorial')
   })
 })
+
+describe('the table is frozen (the colour map, steps and framing are shared between packages)', () => {
+  const frozen = (o: unknown) => Object.isFrozen(o)
+
+  it('every package and every nested object / array is frozen', () => {
+    for (const id of DESIGN_IDS) {
+      const p = packageById(id)
+      for (const o of [p, p.colours, p.layout, p.layout.panels, p.pacing, p.pacing.steps, p.oscar, p.framing, p.framing.target]) {
+        expect(frozen(o), `package ${id}`).toBe(true)
+      }
+    }
+  })
+
+  it('a write to a shared object throws instead of leaking into the four other packages', () => {
+    const shared = packageById(1).colours as { accent: string }
+    expect(() => {
+      shared.accent = '#000000'
+    }).toThrow(TypeError)
+    expect(packageById(2).colours.accent).toBe(CREATION_TOKENS.color.ambre)
+    expect(() => {
+      ;(packageById(3).framing.target as unknown as number[])[1] = 9
+    }).toThrow(TypeError)
+  })
+})

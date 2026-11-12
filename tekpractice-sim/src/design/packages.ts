@@ -110,7 +110,11 @@ const todayColours: RoleColours = {
   select: T.ambre as Hex,
 }
 
-/** PLACEHOLDER: the default camera of the blank room (sceneHost.ts buildScene; radius clamp(24 x 0.8, 8, 55) = 19.2). */
+/**
+ * PLACEHOLDER: the default camera of the blank room (sceneHost.ts buildScene). 19.2 m is that default's radius, not a tuned value:
+ * clamp(max(w, l) x 0.8, 8, 55) with the blank room's 24 x 14 m gives 19.2. T2.5 measures the real framing (spec 5: about 7 m,
+ * unverified) and replaces it.
+ */
 const defaultFraming: FramingPose = { alpha: Math.PI / 2, beta: 1.05, radius: 19.2, target: [0, 1, 0] }
 
 const ALL_STEPS: readonly StepId[] = [
@@ -126,7 +130,16 @@ const ALL_STEPS: readonly StepId[] = [
   'ecoute',
 ]
 
-const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = {
+/** Recursively freezes plain objects and arrays: the colour map, the step list and the framing are SHARED between packages, one write would leak into all. */
+function deepFreeze<T>(value: T): T {
+  if (value !== null && typeof value === 'object' && !Object.isFrozen(value)) {
+    Object.freeze(value)
+    for (const v of Object.values(value as Record<string, unknown>)) deepFreeze(v)
+  }
+  return value
+}
+
+const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
   1: {
     id: 1,
     nameKey: 'design.1.name',
@@ -227,7 +240,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = {
     oscar: { leads: true, proactive: true },
     framing: defaultFraming,
   },
-}
+})
 
 /** Exactly one `design` key whose value is '1'..'5'; anything else (none, two keys, '0', '6', '01', '') is null. */
 export function designFromSearch(search: string): DesignId | null {
