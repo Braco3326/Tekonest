@@ -1,0 +1,28 @@
+{
+ "schema": 1,
+ "deviceId": "ua-la-610-mkii",
+ "generated": true,
+ "controls": [
+  {
+   "id": "phantom-48v",
+   "face": "opposite",
+   "xMm": 130,
+   "yMm": 50,
+   "sizeMm": {
+    "w": 9,
+    "h": 9,
+    "d": 3
+   },
+   "label": "+48V phantom",
+   "catalogControl": "phantom-48v",
+   "kind": "button",
+   "axis": "z",
+   "latch": true,
+   "round": true,
+   "colour": "#1b3a1f",
+   "lit": "#46ff5a",
+   "travelMm": 1,
+   "default": 0
+  }
+ ]
+}

@@ -6072,17 +6072,11 @@
       "kind": "device",
       "tris": 3108,
       "ports": 6,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T02:12:32.110Z",
+      "date": "2026-11-12T07:26:11.308Z",
       "specSource": "https://www.genelec.com/8351",
       "logosRemoved": true,
       "gates": [
@@ -6130,7 +6124,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -6138,17 +6135,11 @@
       "kind": "device",
       "tris": 3104,
       "ports": 2,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T02:12:34.378Z",
+      "date": "2026-11-12T07:26:03.161Z",
       "specSource": "https://www.genelec.com/8040b",
       "logosRemoved": true,
       "gates": [
@@ -6196,7 +6187,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -6336,17 +6330,11 @@
       "kind": "device",
       "tris": 2172,
       "ports": 7,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T02:12:45.311Z",
+      "date": "2026-11-12T07:28:37.876Z",
       "specSource": "https://usa.yamaha.com/products/proaudio/speakers/dxr/specs.html",
       "logosRemoved": true,
       "gates": [
@@ -6394,7 +6382,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -7853,7 +7844,7 @@
       "toolVersion": "blender-builder-1",
       "photos": [],
       "taskId": null,
-      "date": "2026-11-12T06:38:54.515Z",
+      "date": "2026-11-12T07:26:40.841Z",
       "specSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
       "logosRemoved": true,
       "gates": [
@@ -9103,17 +9094,11 @@
       "kind": "device",
       "tris": 2896,
       "ports": 5,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T04:59:23.077Z",
+      "date": "2026-11-12T07:25:39.866Z",
       "specSource": "https://www.crownaudio.com/en/products/xti-4002",
       "logosRemoved": true,
       "gates": [
@@ -9161,7 +9146,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -9433,17 +9421,11 @@
       "kind": "device",
       "tris": 1776,
       "ports": 13,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:05:16.186Z",
+      "date": "2026-11-12T07:27:26.389Z",
       "specSource": "https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf",
       "logosRemoved": true,
       "gates": [
@@ -9491,7 +9473,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -9499,17 +9484,11 @@
       "kind": "device",
       "tris": 1776,
       "ports": 9,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:05:41.910Z",
+      "date": "2026-11-12T07:27:11.902Z",
       "specSource": "https://www.sennheiser.com/en-au/catalog/products/wireless-systems/em-6000",
       "logosRemoved": true,
       "gates": [
@@ -9557,7 +9536,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -9565,17 +9547,11 @@
       "kind": "device",
       "tris": 1920,
       "ports": 8,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:05:56.076Z",
+      "date": "2026-11-12T07:28:00.773Z",
       "specSource": "https://telosalliance.com/Telos/XSTREAM",
       "logosRemoved": true,
       "gates": [
@@ -9623,7 +9599,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -9829,17 +9808,11 @@
       "kind": "device",
       "tris": 1776,
       "ports": 1,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:06:54.074Z",
+      "date": "2026-11-12T07:27:38.837Z",
       "specSource": "https://pubs.shure.com/view/guide/UA844/en-US.pdf",
       "logosRemoved": true,
       "gates": [
@@ -9887,7 +9860,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -10163,7 +10139,7 @@
       "toolVersion": "blender-builder-1",
       "photos": [],
       "taskId": null,
-      "date": "2026-11-12T06:39:06.569Z",
+      "date": "2026-11-12T07:28:09.565Z",
       "specSource": "https://www.adorama.com/uala610m2d.html",
       "logosRemoved": true,
       "gates": [
@@ -11278,17 +11254,11 @@
       "kind": "device",
       "tris": 3108,
       "ports": 6,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:20:35.522Z",
+      "date": "2026-11-12T07:26:19.130Z",
       "specSource": "https://www.genelec.com/8351",
       "logosRemoved": true,
       "gates": [
@@ -11336,7 +11306,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -11344,17 +11317,11 @@
       "kind": "device",
       "tris": 2572,
       "ports": 11,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:20:50.068Z",
+      "date": "2026-11-12T07:25:55.215Z",
       "specSource": "https://www.genelec.com/7360a",
       "logosRemoved": true,
       "gates": [
@@ -11402,7 +11369,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -12187,14 +12157,11 @@
       "kind": "device",
       "tris": 1370,
       "ports": 14,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "date": "2026-11-12T05:26:17.142Z",
+      "date": "2026-11-12T07:27:54.171Z",
       "specSource": "https://www.manualslib.com/manual/1646175/Sonifex-S0-V2.html",
       "logosRemoved": true,
       "gates": [
@@ -12243,9 +12210,9 @@
           "ok": true
         }
       ],
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal"
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -12649,17 +12616,11 @@
       "kind": "device",
       "tris": 428,
       "ports": 3,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:57:41.869Z",
+      "date": "2026-11-12T07:26:26.202Z",
       "specSource": "https://docs.meyersound.com/products/en/datasheet---lina.html",
       "logosRemoved": true,
       "gates": [
@@ -12707,7 +12668,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -12715,17 +12679,11 @@
       "kind": "device",
       "tris": 428,
       "ports": 3,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:57:43.633Z",
+      "date": "2026-11-12T07:26:34.413Z",
       "specSource": "https://www.pssl.com/products/meyer-sound-upjunior-powered-loudspeaker",
       "logosRemoved": true,
       "gates": [
@@ -12773,7 +12731,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -12847,17 +12808,11 @@
       "kind": "device",
       "tris": 492,
       "ports": 4,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:57:47.822Z",
+      "date": "2026-11-12T07:25:00.050Z",
       "specSource": "https://adam-audio.com/s-serie/s3h",
       "logosRemoved": true,
       "gates": [
@@ -12905,7 +12860,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -12979,17 +12937,11 @@
       "kind": "device",
       "tris": 748,
       "ports": 8,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:57:51.855Z",
+      "date": "2026-11-12T07:26:49.081Z",
       "specSource": "https://www.neumann.com/en-en/products/monitors/kh-750-dsp/",
       "logosRemoved": true,
       "gates": [
@@ -13037,7 +12989,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -13620,7 +13575,7 @@
       "toolVersion": "blender-builder-1",
       "photos": [],
       "taskId": null,
-      "date": "2026-11-12T06:39:12.456Z",
+      "date": "2026-11-12T07:25:23.879Z",
       "specSource": "https://aphex.com/products/channel",
       "logosRemoved": true,
       "gates": [
@@ -13683,7 +13638,7 @@
       "toolVersion": "blender-builder-1",
       "photos": [],
       "taskId": null,
-      "date": "2026-11-12T06:39:00.513Z",
+      "date": "2026-11-12T07:25:15.524Z",
       "specSource": "https://www.ams-neve.com/?p=1408",
       "logosRemoved": true,
       "gates": [
@@ -13742,17 +13697,11 @@
       "kind": "device",
       "tris": 1776,
       "ports": 23,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:06:43.673Z",
+      "date": "2026-11-12T07:25:46.992Z",
       "specSource": "https://userguides.focusrite.com/hc/en-gb/articles/18577946999570-Clarett-8Pre-technical-specifications",
       "logosRemoved": true,
       "gates": [
@@ -13800,7 +13749,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -13808,17 +13760,11 @@
       "kind": "device",
       "tris": 1776,
       "ports": 13,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:06:47.038Z",
+      "date": "2026-11-12T07:28:45.866Z",
       "specSource": "https://my.yamaha.com/files/download/other_assets/3/322303/SPX2000_datasheet.pdf",
       "logosRemoved": true,
       "gates": [
@@ -13866,7 +13812,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -14006,17 +13955,11 @@
       "kind": "device",
       "tris": 1920,
       "ports": 9,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:06:56.038Z",
+      "date": "2026-11-12T07:26:56.637Z",
       "specSource": "https://docs.telosalliance.com/docs/appendix-a-performance-specifications",
       "logosRemoved": true,
       "gates": [
@@ -14064,7 +14007,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -14072,17 +14018,11 @@
       "kind": "device",
       "tris": 1776,
       "ports": 4,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_opposite.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:06:59.461Z",
+      "date": "2026-11-12T07:27:46.260Z",
       "specSource": "https://www.sonifex.co.uk/de/tbu/dhy04.shtml",
       "logosRemoved": true,
       "gates": [
@@ -14130,7 +14070,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -14790,17 +14733,11 @@
       "kind": "device",
       "tris": 1474,
       "ports": 25,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:19:15.516Z",
+      "date": "2026-11-12T07:25:07.029Z",
       "specSource": "https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series",
       "logosRemoved": true,
       "gates": [
@@ -14848,7 +14785,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -14922,17 +14862,11 @@
       "kind": "device",
       "tris": 1393,
       "ports": 3,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:19:22.074Z",
+      "date": "2026-11-12T07:25:31.046Z",
       "specSource": "https://www.bhphotovideo.com/c/product/1821236-REG/behringer_x_touch_universal_control_surface.html",
       "logosRemoved": true,
       "gates": [
@@ -14980,7 +14914,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -15054,18 +14991,11 @@
       "kind": "device",
       "tris": 1443,
       "ports": 32,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:19:30.028Z",
+      "date": "2026-11-12T07:27:04.042Z",
       "specSource": "https://www.thomann.co.uk/presonus_studiolive_series_iii_se_16.htm",
       "logosRemoved": true,
       "gates": [
@@ -15113,7 +15043,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -15188,18 +15121,11 @@
       "kind": "device",
       "tris": 1500,
       "ports": 25,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:19:38.352Z",
+      "date": "2026-11-12T07:28:18.178Z",
       "specSource": "https://www.rentex.com/wp-content/uploads/2020/01/CL5-Data-Sheet.pdf",
       "logosRemoved": true,
       "gates": [
@@ -15247,7 +15173,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",
@@ -15255,18 +15184,11 @@
       "kind": "device",
       "tris": 1460,
       "ports": 28,
-      "tool": "hybrid",
+      "tool": "scripted",
       "toolVersion": "blender-builder-1",
-      "photos": [
-        "_generic_top.png",
-        "_generic_io.png",
-        "_generic_opposite.png"
-      ],
+      "photos": [],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T06:19:41.187Z",
+      "date": "2026-11-12T07:28:26.689Z",
       "specSource": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html",
       "logosRemoved": true,
       "gates": [
@@ -15314,7 +15236,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "modeled",
+      "license": "internal (own work)",
+      "trademark": "generic"
     },
     {
       "status": "ok",

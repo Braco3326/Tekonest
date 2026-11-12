@@ -1,0 +1,43 @@
+{
+ "schema": 1,
+ "deviceId": "sonifex-s0-v2",
+ "generated": true,
+ "topProfile": [
+  [
+   0,
+   125
+  ],
+  [
+   40,
+   125
+  ],
+  [
+   150,
+   95
+  ],
+  [
+   356,
+   55
+  ]
+ ],
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 416,
+   "yMm": 49.3,
+   "sizeMm": {
+    "w": 20,
+    "h": 14.4,
+    "d": 8
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

@@ -1,0 +1,51 @@
+{
+ "schema": 1,
+ "deviceId": "midas-m32",
+ "generated": true,
+ "topProfile": [
+  [
+   0,
+   256
+  ],
+  [
+   40,
+   256
+  ],
+  [
+   140,
+   205
+  ],
+  [
+   300,
+   150
+  ],
+  [
+   460,
+   110
+  ],
+  [
+   612,
+   85
+  ]
+ ],
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 845,
+   "yMm": 60,
+   "sizeMm": {
+    "w": 20,
+    "h": 14.4,
+    "d": 8
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}
