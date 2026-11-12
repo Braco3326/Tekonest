@@ -5,6 +5,7 @@ import type { PortRef } from '../../src/engine/types'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { rejectionOf, ruleTextFor, statusView, type RuleRow } from '../../src/creation/shell/statusModel'
 import { candidates } from '../../src/creation/shell/connectModel'
+import { ruleRowsFor, ruleText as creationText } from '../../src/creation/ruleTexts'
 
 /**
  * Task 29 (C17, CA-15): the catalog's French rule texts, and the ONE function (`ruleTextFor`) that
@@ -17,6 +18,8 @@ const fr = (id: string) => rules.find((r) => r.id === id)!
 const registry = loadCatalog(catalogJson)
 const ruleText = ruleTextFor(registry.catalog.rules as unknown as readonly RuleRow[])
 const text = (e: unknown, s: readonly PortRef[]) => rejectionOf(e as { code: string; message: string; ruleId?: string }, s, ruleText)
+
+const ruleText1 = (id: string) => creationText(id, rules)
 
 const K12_POWER: PortRef = { instance: 'k12-g', port: 'power-in' }
 const MIC2: PortRef = { instance: 'ql1', port: 'in-mic-2' }
@@ -111,5 +114,36 @@ describe('the « Connecter à… » model gives a rejected port the rule title A
     const thru = q.rejected.find((e) => e.ref.instance === 'k12-g' && e.ref.port === 'thru-out-a')!
     expect(thru.reason).toBe(fr('R3').title_fr)
     expect(thru.detail).toBe(fr('R3').teach_fr)
+  })
+})
+
+// ── T1.5b: the read sites use the accessor (Mode Création), the legacy route keeps the catalog ──────────────────────────────────────────────────
+describe('T1.5b: the « Connecter à… » default reason reads the Mode Création text; an explicit rejectionText still wins', () => {
+  it('no rejectionText given: R1 and R3 carry the title and the OVERRIDE text; the catalog row is unchanged', () => {
+    const store = rig()
+    const c = candidates(store, registry, SM58_OUT)
+    const power = c.rejected.find((e) => e.ref.instance === 'k12-g' && e.ref.port === 'power-in')!
+    expect(power.reason).toBe(fr('R1').title_fr)
+    expect(power.detail).toBe(ruleText1('R1').detail)
+    expect(power.detail).not.toBe(fr('R1').teach_fr)
+    const thru = candidates(store, registry, QL_L).rejected.find((e) => e.ref.instance === 'k12-g' && e.ref.port === 'thru-out-a')!
+    expect(thru.detail).toBe(ruleText1('R3').detail)
+  })
+  it('an explicit rejectionText (the status bar\'s function) is used as given, never overridden by the default', () => {
+    const store = rig()
+    const power = candidates(store, registry, SM58_OUT, text).rejected.find((e) => e.ref.port === 'power-in')!
+    expect(power.detail).toBe(fr('R1').teach_fr)
+  })
+})
+
+describe('T1.5b: ruleRowsFor(route, rows): the creation route gets the override, the legacy route the catalog rows unchanged', () => {
+  it('creation: R1 to R5 overridden (triggers)', () => {
+    const rows = ruleRowsFor('creation', rules)
+    for (const id of ['R1', 'R2', 'R3', 'R4', 'R5']) expect(rows.find((r) => r.id === id)!.teach_fr, id).not.toBe(fr(id).teach_fr)
+  })
+  it('legacy: the very same rows, text for text (does not trigger)', () => {
+    const rows = ruleRowsFor('legacy', rules)
+    expect(rows).toBe(rules)
+    for (const id of ['R1', 'R2', 'R3', 'R4', 'R5']) expect(rows.find((r) => r.id === id)!.teach_fr, id).toBe(fr(id).teach_fr)
   })
 })

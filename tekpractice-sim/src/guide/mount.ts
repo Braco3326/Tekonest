@@ -10,6 +10,7 @@
 //   current state, never by the bridge's reverse table (see flows.creation.ts).
 import type { Registry } from '../engine/CatalogLoader'
 import { FEATURES, type Features } from '../features'
+import { ruleRowsFor } from '../creation/ruleTexts'
 import type { RuleRow } from '../creation/shell/statusModel'
 import { createTekPracticeBrain } from './brain'
 import { tpString } from './strings'
@@ -377,7 +378,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     const mode = (): 'practice' | 'exam' => guideMode(liveSearch(), deps.route)
 
     const legacy = deps.route === 'legacy'
-    const brain = createTekPracticeBrain({ bridge, rules: registry.catalog.rules as unknown as readonly RuleRow[], mode, route: legacy ? 'legacy' : 'creation' })
+    const brain = createTekPracticeBrain({ bridge, rules: ruleRowsFor(legacy ? 'legacy' : 'creation', registry.catalog.rules as unknown as readonly RuleRow[]), mode, route: legacy ? 'legacy' : 'creation' })
     // The controller reads these two lists by reference at every call: the mount keeps them in the order of the bench's stage (see flows.creation.ts).
     // Level play has its own two flows (the order follows the required connections made).
     const flows = legacy ? legacyFlowsFor(null).slice() : flowsFor('no-place')

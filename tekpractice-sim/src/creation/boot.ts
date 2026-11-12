@@ -14,6 +14,7 @@ import { projectToScreen } from '../scene/project'
 import { useSameOriginDraco } from '../render/draco'
 import { DisposableBag } from '../util/disposable'
 import { COPY } from './copy'
+import { creationRuleText } from './ruleTexts'
 import { controlHit } from '../controls/controlHit'
 import { showBootFailure, type BootFailureKind } from './bootFailure'
 import { CreationStore, creationEvaluator } from './store'
@@ -120,7 +121,6 @@ import {
   playbackAnnouncement,
   playbackNoticeState,
   rejectionOf,
-  ruleTextFor,
   statusView,
   type AutosavePause,
   type Rejection,
@@ -281,7 +281,7 @@ export async function bootCreation(): Promise<void> {
   }
 
   // ── Status bar (Task 14, CA-15, C17): selection, snapping, autosave state, signal + the persistent error list.
-  const ruleText = ruleTextFor(registry.catalog.rules as readonly RuleRow[])
+  const ruleText = creationRuleText(registry.catalog.rules as readonly RuleRow[])
   /** The rule events of the last store change (the count changes on store changes only). */
   let events = store.events()
   /** Cables in the rig at the last store change (0 → « Rien de branché »). */

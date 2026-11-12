@@ -6,9 +6,10 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import catalog from '../../content/catalog.json'
+import { shownRuleDetail } from './ruleTexts'
 import { quietWindow, settleRenders as settle } from './waits'
 
-/** Task 29 (CA-15): the rule texts are the catalog's French fields, pinned exactly. */
+/** Task 29 (CA-15): the rule TITLES are the catalog's French field, pinned exactly; the explanation is what Mode Création shows (ruleTexts.ts seam, T1.5). */
 const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
 test.use({ viewport: { width: 1366, height: 768 } })
 
@@ -83,10 +84,10 @@ test('an incompatible port sits in the collapsed « Incompatibles » group with 
   await expect(toggle).toHaveAttribute('aria-expanded', 'true')
   const power = page.getByTestId('connect-rejected').getByRole('listitem').filter({ hasText: '(k12-g) · power-in' })
   await expect(power.locator('.cr-connect-reason')).toHaveText(RULE('R1').title_fr)
-  await expect(power.locator('.cr-connect-teach')).toHaveText(RULE('R1').teach_fr)
+  await expect(power.locator('.cr-connect-teach')).toHaveText(shownRuleDetail('R1'))
   const thru = page.getByTestId('connect-rejected').getByRole('listitem').filter({ hasText: '(k12-g) · thru-out-a' })
   await expect(thru.locator('.cr-connect-reason')).toHaveText(RULE('R3').title_fr)
-  await expect(thru.locator('.cr-connect-teach')).toHaveText(RULE('R3').teach_fr)
+  await expect(thru.locator('.cr-connect-teach')).toHaveText(shownRuleDetail('R3'))
   // never an option
   for (const o of await options.all()) await expect(o).not.toContainText('power-in')
   await expect(dialog(page).getByRole('option', { name: /power-in|thru-out-a/ })).toHaveCount(0)

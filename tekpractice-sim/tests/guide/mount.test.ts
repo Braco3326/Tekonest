@@ -6,6 +6,7 @@ import type { TpBridge, TpPortRef, TpState } from '../../src/guide/bridge/types'
 import { ACKNOWLEDGE, SUGGEST_FROM, SUGGEST_PHANTOM, SUGGEST_TO } from '../../src/guide/flows.creation'
 import { RECT_CACHE_MS, annotateToggle, collapseRestore, createObstacleSource, createRectResolver, hostInsets, hostObstacles, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
 import { COPY } from '../../src/creation/copy'
+import { ruleText as modeCreationRuleText } from '../../src/creation/ruleTexts'
 import { TP_STRINGS, tpString } from '../../src/guide/strings'
 import { createController } from '../../src/guide/vendor/core/controller'
 import type { ControllerInput, GuideView, HostEvent, Rect } from '../../src/guide/vendor/core/types'
@@ -1070,7 +1071,9 @@ describe('mountOscar on the real controller: what each bench state says, and wha
     await w.go(stateOf([['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']], { events: [{ ruleId: rule.id, severity: 'error', subjects: [{ instance: 'mic', port: 'out-xlr' }] }] }))
     const v = await w.next()
     expect(v.bubble?.kind).toBe('fix')
-    expect(texts(v)).toEqual([rule.teach_fr])
+    // T1.5b: the creation route quotes Mode Création's wording of the rule (ruleOverride), not the catalog row (R1 here)
+    expect(texts(v)).toEqual([modeCreationRuleText(rule.id, rules).detail])
+    expect(texts(v)).not.toEqual([rule.teach_fr])
     expect(v.bubble?.title).toBe('Correction à apporter')
     expect(v.target?.anchor).toMatch(/^port:/)
     expect(JSON.stringify(v.bubble)).not.toContain(NEEDS)
@@ -1127,7 +1130,8 @@ describe('mountOscar on the real controller: what each bench state says, and wha
     const v = await controller.dispatch({ type: 'chip', id: 'next' })
     expect(v.bubble?.kind).toBe('fix')
     const all = JSON.stringify(v.bubble)
-    expect(all).toContain(rule.teach_fr as string)
+    expect(all).toContain(modeCreationRuleText(rule.id, rules).detail) // T1.5b: Mode Création's wording, not the catalog row
+    expect(all).not.toContain(rule.teach_fr as string)
     expect(all).not.toContain('relancer')
     expect(v.target?.anchor).toMatch(/^port:/)
   })

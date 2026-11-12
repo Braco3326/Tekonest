@@ -6,7 +6,7 @@
  * - `candidates` lists every FREE port of every OTHER device, split by `store.canConnect` (a dry run): the compatible ones
  *   are choosable, the others are shown in an « Incompatibles » group with the rule that refuses them (teaching value).
  *   The reason (the rule's `title_fr`) and its teaching line (`teach_fr`, Task 29) come from the same function as the
- *   status bar's and the mouse path's (`rejectionText`, i.e. `rejectionOf` over `ruleTextFor`), so the three always agree.
+ *   status bar's and the mouse path's (`rejectionText`, i.e. `rejectionOf` over `creationRuleText`: the Mode Création wording of the rule, T1.5), so the three always agree.
  * - `ConnectSession` is the dialog without the DOM: the filter, the active option, and the one action. Its guards are
  *   the lessons of Tasks 23-27: a held key never repeats the action, a spent or stale session dispatches nothing, a
  *   target whose device left the rig is never sent, and a refusal is a message, never an exception.
@@ -18,7 +18,8 @@ import { COPY } from '../copy'
 import type { History } from '../history'
 import type { CreationStore, DispatchFail } from '../store'
 import { connectorName, shortName, signalName } from './propertiesModel'
-import { rejectionOf, ruleTextFor, type RuleRow } from './statusModel'
+import { creationRuleText } from '../ruleTexts'
+import { rejectionOf, type RuleRow } from './statusModel'
 
 export interface Candidate {
   ref: PortRef
@@ -59,7 +60,7 @@ export function candidates(
   const originPort = origin && registry.deviceById.get(origin.deviceId)?.ports.find((p) => p.portId === from.port)
   if (!originPort || store.connectionAt(from) !== undefined) return out
   const text: RejectionText =
-    rejectionText ?? ((error, subjects) => rejectionOf(error, subjects, ruleTextFor(registry.catalog.rules as readonly RuleRow[])))
+    rejectionText ?? ((error, subjects) => rejectionOf(error, subjects, creationRuleText(registry.catalog.rules as readonly RuleRow[])))
   for (const inst of design.rig.instances) {
     if (inst.instanceId === from.instance) continue
     const device = registry.deviceById.get(inst.deviceId)

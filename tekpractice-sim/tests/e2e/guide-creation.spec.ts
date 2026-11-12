@@ -351,7 +351,7 @@ test(`idle for ${IDLE_MS} ms adds 0 renders (bubble closed, then open) and no he
     expect(await renders(), `renders in ${IDLE_MS} ms ${what}`).toBe(before)
   }
   await idle('with the bubble closed')
-  await nextStepSays(page, RULE('R4').teach_fr) // a ring is on the faulty port now
+  await nextStepSays(page, shownRuleDetail('R4')) // a ring is on the faulty port now
   await expect(ring(page)).toBeVisible()
   await settleRenders(page)
   await idle('with the bubble open and a ring on a port')
@@ -408,7 +408,7 @@ test('an error on the bench: « Prochaine étape » says the status bar\'s own e
   const barTitle = (await row.locator('.cr-errlist-rtitle').textContent())!.trim()
   const barDetail = (await row.locator('.cr-errlist-detail').textContent())!.trim()
   expect(barTitle, 'the bar says the catalog title').toBe(RULE('R4').title_fr)
-  expect(barDetail, 'the bar says the catalog explanation').toBe(RULE('R4').teach_fr)
+  expect(barDetail, 'the bar says the explanation Mode Création shows for the rule').toBe(shownRuleDetail('R4'))
   await page.keyboard.press('Escape')
   await expect(page.getByRole('dialog', { name: 'Erreurs et avertissements' })).toBeHidden()
 
@@ -416,7 +416,7 @@ test('an error on the bench: « Prochaine étape » says the status bar\'s own e
   // What the bubble says is pinned exactly: the generic head line, then the rule's explanation word for word. The rule's title stays on the status bar row
   // (asserted above), beside it; the bubble does not repeat it.
   const lines = await liveLines(page)
-  expect(lines, 'the bubble: the generic head, then the explanation').toEqual(['Correction à apporter', RULE('R4').teach_fr])
+  expect(lines, 'the bubble: the generic head, then the explanation').toEqual(['Correction à apporter', shownRuleDetail('R4')])
   expect(lines[1]).toBe(barDetail)
   expect(lines.join(' '), 'the rule title is not in the bubble').not.toContain(barTitle)
   await expect(page.locator('.oscar-bubble')).toHaveAttribute('data-kind', 'fix')
@@ -432,7 +432,7 @@ test('an error on the bench: « Prochaine étape » says the status bar\'s own e
 test('an open bubble with a ring on a port does not cover the menu bar or the status bar, at 1280 x 800 and at 375 x 812', async ({ page }) => {
   await boot(page)
   await spawnPhantomError(page)
-  await nextStepSays(page, RULE('R4').teach_fr)
+  await nextStepSays(page, shownRuleDetail('R4'))
   await expect(ring(page)).toBeVisible()
   const clearOfBars = async (w: number, h: number): Promise<void> => {
     await expect
@@ -535,7 +535,7 @@ test('T1.4: a silent rig, « Prochaine étape » says the engine\'s reason and t
 test('after a resize to 375 x 812 the bubble stays inside the viewport, the icon is on screen and reachable, the ring follows the port', async ({ page }) => {
   await boot(page)
   await spawnPhantomError(page)
-  await nextStepSays(page, RULE('R4').teach_fr)
+  await nextStepSays(page, shownRuleDetail('R4'))
   await expectRingOnPort(page, ring(page), U87_OUT)
   await page.setViewportSize({ width: 375, height: 812 })
   await expect.poll(async () => insideViewport((await bubble(page).boundingBox())!, 375, 812), { message: 'the bubble is inside 375 x 812' }).toBe(true)
@@ -572,7 +572,7 @@ test('after a resize to 375 x 812 the bubble stays inside the viewport, the icon
 test('after a resize to 375 x 812 the open bubble never covers the icon, in any frame of the next 1.5 s', async ({ page }) => {
   await boot(page)
   await spawnPhantomError(page)
-  await nextStepSays(page, RULE('R4').teach_fr)
+  await nextStepSays(page, shownRuleDetail('R4'))
   await expectRingOnPort(page, ring(page), U87_OUT)
   type Probe = { frames: number; worst: number; done: boolean; at: string }
   await page.evaluate(() => {
@@ -774,7 +774,7 @@ test('axe: no serious or critical violation with the bubble open (empty bench, a
   expect(r.guideContrastNodes, 'axe looked at the guide\'s text contrast (it is not blind)').toBeGreaterThan(0)
 
   await spawnPhantomError(page)
-  await nextStepSays(page, RULE('R4').teach_fr)
+  await nextStepSays(page, shownRuleDetail('R4'))
   await expect(ring(page)).toBeVisible()
   r = await seriousViolations(page)
   expect(r.bad, 'bubble open on an error with the ring on the port').toEqual([])

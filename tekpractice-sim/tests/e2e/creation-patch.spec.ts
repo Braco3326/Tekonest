@@ -7,9 +7,10 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import catalog from '../../content/catalog.json'
+import { shownRuleDetail } from './ruleTexts'
 import { IDLE_WINDOW_MS, quietWindow, waitRendersIdle, settleRenders as settle } from './waits'
 
-/** Task 29 (CA-15): the rule texts are the catalog's French fields, pinned exactly. */
+/** Task 29 (CA-15): the rule TITLES are the catalog's French field, pinned exactly; the explanation is what Mode Création shows (ruleTexts.ts seam, T1.5). */
 const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
 test.use({ viewport: { width: 1366, height: 768 } })
 
@@ -145,7 +146,7 @@ test('a refused connection (R3) is pinned at the second port as an alert and lis
   const rows = page.getByRole('dialog', { name: 'Erreurs et avertissements' }).locator('.cr-errlist-row')
   await expect(rows.first()).toHaveAttribute('data-severity', 'rejection')
   await expect(rows.first()).toContainText(RULE('R3').title_fr)
-  await expect(rows.first()).toContainText(RULE('R3').teach_fr)
+  await expect(rows.first()).toContainText(shownRuleDetail('R3'))
   await page.keyboard.press('Escape')
   expect(errors).toEqual([])
 })

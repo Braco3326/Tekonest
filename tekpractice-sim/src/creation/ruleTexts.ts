@@ -35,3 +35,11 @@ export function creationRuleText(rows: readonly RuleRow[]): RuleText {
 export function ruleText(ruleId: string, rows: readonly RuleRow[]): { title: string; detail: string } {
   return creationRuleText(rows)(ruleId)
 }
+
+/**
+ * The rows Oscar quotes (answers and verdict): the creation route gets Mode Création's wording, the legacy route (level play, `?level=...`) the catalog rows
+ * themselves, unchanged (the level page keeps the old texts).
+ */
+export function ruleRowsFor<T extends RuleRow>(route: 'creation' | 'legacy', rows: readonly T[]): readonly T[] {
+  return route === 'legacy' ? rows : creationRuleRows(rows)
+}
