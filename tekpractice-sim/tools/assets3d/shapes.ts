@@ -179,8 +179,59 @@ export function speakerV2Elevation(size: { w: number; h: number; d: number }, p:
   return { fb, rb, rt, ft, rearHeightMm: rt[1] - rb[1], frontHeightMm: Math.hypot(ft[0] - fb[0], ft[1] - fb[1]) }
 }
 
+/**
+ * cable-assembly-v2 (Wave 3, Task 3.2; plan family `cable-assembly-v2`): a typed cable, a plug of one END KIND at each end of a trunk, optionally a fan-out of plugs at the B end (a snake). The model is a SHORT
+ * stand-in for the cable (the real length is data, never geometry): end A (params.endA) at +z, the io face; end B (params.endB) at -z, the opposite face; the trunk fills the depth. The old cable-assembly
+ * (the Mogami DB25 to XLR loom) is unchanged and keeps its own shape.
+ *   endA, endB: the end-kind code (whole numbers 1 to 14, see CABLE_END_KINDS): the plug the cable carries at that end, named by the catalogue connector id it is (xlr3-m = the male plug that goes into an xlr3-f port).
+ *   fanColumns x fanRows (default 1 x 1, at most 16 plugs): a fan of end-B plugs on a fanPitchMm grid (default the plug size + 2 mm), each on its own tail tailLenMm long (default 120) joining the trunk.
+ *   trunkDiaMm: the diameter of the trunk (default 6).
+ * The spec size is exact: the depth is the whole model (at least both plugs, the tails and a 30 mm trunk), the width and height must be within 2 % of the natural cross-section (cableV2Natural). Ports sit on the
+ * io face (end A) and the opposite face (end B) at the plug axis; a cable has no pocket (no insetMm).
+ */
+export const CABLE_V2_PARAMS = ['endA', 'endB', 'fanColumns', 'fanRows', 'fanPitchMm', 'tailLenMm', 'trunkDiaMm'] as const
+
+/** The end kinds of cable-assembly-v2: code to the plug (name = the catalogue connector id it is, cross-section and length of the plug in millimetres). Mirrored in build_from_spec.py (CABLE2_KINDS). */
+export const CABLE_END_KINDS = {
+  1: { name: 'xlr3-m', connector: 'xlr3-m', wMm: 22, hMm: 22, lenMm: 62 },
+  2: { name: 'xlr3-f', connector: 'xlr3-f', wMm: 22, hMm: 22, lenMm: 62 },
+  3: { name: 'trs-quarter', connector: 'trs-quarter', wMm: 12, hMm: 12, lenMm: 62 },
+  4: { name: 'ts-quarter', connector: 'ts-quarter', wMm: 12, hMm: 12, lenMm: 62 },
+  5: { name: 'speakon-nl4', connector: 'speakon-nl4', wMm: 24, hMm: 24, lenMm: 68 },
+  6: { name: 'powercon-blue', connector: 'powercon-blue', wMm: 24, hMm: 24, lenMm: 62 },
+  7: { name: 'ethercon', connector: 'ethercon', wMm: 26, hMm: 26, lenMm: 66 },
+  8: { name: 'rj45', connector: 'rj45', wMm: 14, hMm: 15, lenMm: 52 },
+  9: { name: 'bnc', connector: 'bnc', wMm: 15, hMm: 15, lenMm: 52 },
+  10: { name: 'dsub25', connector: 'dsub25', wMm: 62, hMm: 17, lenMm: 45 },
+  11: { name: 'toslink', connector: 'toslink', wMm: 10, hMm: 9, lenMm: 36 },
+  12: { name: 'iec-c13', connector: 'iec-c13', wMm: 28, hMm: 24, lenMm: 52 },
+  13: { name: 'rca', connector: 'rca', wMm: 14, hMm: 14, lenMm: 40 },
+  14: { name: 'trs-35mm', connector: 'trs-35mm', wMm: 8, hMm: 8, lenMm: 40 },
+} as const satisfies Record<number, { name: string; connector: string; wMm: number; hMm: number; lenMm: number }>
+export type CableEndKind = keyof typeof CABLE_END_KINDS
+
+/** Defaults of the cable-assembly-v2 params, in millimetres (the Python builder uses the same numbers). */
+export const CABLE_V2_DEFAULTS = { trunkDiaMm: 6, tailLenMm: 120, trunkMinMm: 30, sizeSlack: 0.02 } as const
+
+/** The natural cross-section (width, height) of a cable-assembly-v2 and the shortest depth that holds its ends, in millimetres, from its params: what the spec size has to be (within 2 % across, at least that long). Pure: the Python builder computes the same. */
+export function cableV2Natural(p: Readonly<Record<string, number>>): { w: number; h: number; minD: number } {
+  const a = CABLE_END_KINDS[p.endA as CableEndKind]
+  const b = CABLE_END_KINDS[p.endB as CableEndKind]
+  const cols = p.fanColumns ?? 1
+  const rows = p.fanRows ?? 1
+  const fan = cols * rows > 1
+  const pitch = p.fanPitchMm ?? Math.max(b.wMm, b.hMm) + 2
+  const gridW = (cols - 1) * pitch + b.wMm
+  const gridH = (rows - 1) * pitch + b.hMm
+  return {
+    w: Math.max(a.wMm, fan ? gridW : b.wMm),
+    h: Math.max(a.hMm, fan ? gridH : b.hMm),
+    minD: a.lenMm + b.lenMm + (fan ? (p.tailLenMm ?? CABLE_V2_DEFAULTS.tailLenMm) : 0) + CABLE_V2_DEFAULTS.trunkMinMm,
+  }
+}
+
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval', 'round-base-stand', 'speaker-cabinet-v2'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval', 'round-base-stand', 'speaker-cabinet-v2', 'cable-assembly-v2'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -291,6 +342,8 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   'moulded-box': { kind: 'device', params: MOULDED_PARAMS, needsMatingOuter: false, usesPorts: true, usesFlatZones: true },
   // A loudspeaker enclosure with an elevation profile, handles, pole socket, rigging points, a grille recess and rear pockets (see SPEAKER_V2_PARAMS).
   'speaker-cabinet-v2': { kind: 'device', params: SPEAKER_V2_PARAMS, needsMatingOuter: false, usesPorts: true, usesFlatZones: true },
+  // A typed cable: a plug of one end kind at each end of a trunk, optionally a fan-out at the B end (see CABLE_V2_PARAMS).
+  'cable-assembly-v2': { kind: 'device', params: CABLE_V2_PARAMS, needsMatingOuter: false },
   // A microphone boom stand (tripod, telescopic tube with clutch, tilt head and boom with counterweight and mic thread). The pose is built from these params,
   // then centred and stretched to the spec size (refused when that needs more than 3 %): the three legs are legAngleDeg, +120 and +240 degrees from +x towards +z
   // (15 degrees gives the same extent along x and z) with their length solved from the width, footDiaMm rubber feet, the boom of boomMm in all (frontMm of it in
@@ -391,6 +444,7 @@ export function validateBuild(spec: AssetSpecT): string[] {
   if (build.shape === 'tripod-stand') errors.push(...validateTripodStand(spec))
   if (build.shape === 'moulded-box') errors.push(...validateMouldedBox(spec))
   if (build.shape === 'speaker-cabinet-v2') errors.push(...validateSpeakerV2(spec))
+  if (build.shape === 'cable-assembly-v2') errors.push(...validateCableV2(spec))
   if (build.shape === 'round-base-stand') errors.push(...validateRoundBaseStand(spec))
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {
     errors.push(`${spec.id}: build shape '${build.shape}' needs mating.outerMm (the diameter of the mating end)`)
@@ -875,6 +929,49 @@ function validateSpeakerV2(spec: AssetSpecT): string[] {
       continue
     }
     if (port.insetMm > d / 2) errors.push(`${id}: port '${port.portId}' inset (${port.insetMm} mm) is deeper than half the depth`)
+  }
+  return errors
+}
+
+/** The checks of a cable-assembly-v2 that need no geometry: end kinds, fan-out, trunk, and that the spec size is the natural size of the plugs. */
+function validateCableV2(spec: AssetSpecT): string[] {
+  const errors: string[] = []
+  const { w, h, d } = spec.realSizeMm
+  const p = spec.build?.params ?? {}
+  const id = spec.id
+  const kinds = Object.keys(CABLE_END_KINDS).map(Number)
+  const kindList = kinds.map((k) => `${k} ${CABLE_END_KINDS[k as CableEndKind].name}`).join(', ')
+  let ends = true
+  for (const n of ['endA', 'endB'] as const) {
+    if (p[n] === undefined) {
+      errors.push(`${id}: a cable needs ${n}, the end kind code (${kindList})`)
+      ends = false
+    } else if (!kinds.includes(p[n])) {
+      errors.push(`${id}: ${n} (${p[n]}) is not an end kind: use one of ${kindList}`)
+      ends = false
+    }
+  }
+  for (const n of ['fanColumns', 'fanRows'] as const) {
+    if (p[n] !== undefined && !(Number.isInteger(p[n]) && p[n] >= 1 && p[n] <= 16)) errors.push(`${id}: param '${n}' must be a whole number from 1 to 16, got ${p[n]}`)
+  }
+  const fan = (p.fanColumns ?? 1) * (p.fanRows ?? 1) > 1
+  if ((p.fanColumns ?? 1) * (p.fanRows ?? 1) > 16) errors.push(`${id}: the fan-out has ${(p.fanColumns ?? 1) * (p.fanRows ?? 1)} plugs: at most 16`)
+  for (const n of ['fanPitchMm', 'tailLenMm'] as const) {
+    if (!fan && p[n] !== undefined) errors.push(`${id}: ${n} has no effect without a fan-out (fanColumns or fanRows above 1)`)
+  }
+  if (p.trunkDiaMm !== undefined && ends) {
+    const smallest = Math.min(...[p.endA, p.endB].map((k) => Math.min(CABLE_END_KINDS[k as CableEndKind].wMm, CABLE_END_KINDS[k as CableEndKind].hMm)))
+    if (p.trunkDiaMm >= smallest) errors.push(`${id}: trunkDiaMm (${p.trunkDiaMm}) must be less than the smallest plug side (${smallest} mm)`)
+  }
+  if (ends && errors.length === 0) {
+    const nat = cableV2Natural(p)
+    if (Math.abs(nat.w / w - 1) > CABLE_V2_DEFAULTS.sizeSlack) errors.push(`${id}: the width of the cable is ${nat.w} mm (the widest plug or the fan-out grid) but the spec size says ${w} mm`)
+    if (Math.abs(nat.h / h - 1) > CABLE_V2_DEFAULTS.sizeSlack) errors.push(`${id}: the height of the cable is ${nat.h} mm (the widest plug or the fan-out grid) but the spec size says ${h} mm`)
+    if (d < nat.minD) errors.push(`${id}: the depth ${d} mm is too short for these ends: at least ${nat.minD} mm (both plugs, the tails and a ${CABLE_V2_DEFAULTS.trunkMinMm} mm trunk)`)
+  }
+  for (const port of spec.ports) {
+    if (port.insetMm !== undefined && port.insetMm > 0) errors.push(`${id}: port '${port.portId}' has an insetMm: a cable end has no pocket`)
+    if (port.face !== 'io' && port.face !== 'opposite') errors.push(`${id}: port '${port.portId}' is on the ${port.face} face: the ports of a cable sit on its two ends (io and opposite)`)
   }
   return errors
 }

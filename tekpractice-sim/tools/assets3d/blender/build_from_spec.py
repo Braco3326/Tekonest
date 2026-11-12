@@ -4465,8 +4465,215 @@ def build_speaker_cabinet_v2(plan: Plan) -> bpy.types.Object:
     return ob
 
 
+# --- cable-assembly-v2 (Wave 3, Task 3.2) ------------------------------------------------------------------------
+# A typed cable model: a plug of one end kind at each end of a trunk, optionally a fan-out of plugs at the B end. Mirrors CABLE_V2_PARAMS and CABLE_END_KINDS in tools/assets3d/shapes.ts
+# (the end-kind table: code, catalogue connector, cross-section and length of the plug). The cable is a SHORT model of a cable (the real length is data, not geometry): end A at +z (the io
+# face), end B at -z (the opposite face), the trunk fills the depth. Every plug is built from lathe stacks and boxes, deterministic (canonical face order).
+
+CABLE2_NAMES = ("endA", "endB", "fanColumns", "fanRows", "fanPitchMm", "tailLenMm", "trunkDiaMm")
+CABLE2_KINDS: dict[int, tuple[str, str, float, float, float]] = {
+    1: ("xlr3-m", "xlr3-m", 22.0, 22.0, 62.0),
+    2: ("xlr3-f", "xlr3-f", 22.0, 22.0, 62.0),
+    3: ("trs-quarter", "trs-quarter", 12.0, 12.0, 62.0),
+    4: ("ts-quarter", "ts-quarter", 12.0, 12.0, 62.0),
+    5: ("speakon-nl4", "speakon-nl4", 24.0, 24.0, 68.0),
+    6: ("powercon-blue", "powercon-blue", 24.0, 24.0, 62.0),
+    7: ("ethercon", "ethercon", 26.0, 26.0, 66.0),
+    8: ("rj45", "rj45", 14.0, 15.0, 52.0),
+    9: ("bnc", "bnc", 15.0, 15.0, 52.0),
+    10: ("dsub25", "dsub25", 62.0, 17.0, 45.0),
+    11: ("toslink", "toslink", 10.0, 9.0, 36.0),
+    12: ("iec-c13", "iec-c13", 28.0, 24.0, 52.0),
+    13: ("rca", "rca", 14.0, 14.0, 40.0),
+    14: ("trs-35mm", "trs-35mm", 8.0, 8.0, 40.0),
+}   # mirrored in shapes.ts CABLE_END_KINDS: (name, catalogue connector id, width, height, plug length) in mm
+CABLE2_SEG = 20
+CABLE2_TRUNK_MIN_MM = 30.0
+CABLE2_DEFAULT_TRUNK_MM = 6.0
+CABLE2_DEFAULT_TAIL_MM = 120.0
+CABLE2_FIT = 0.02             # the natural cross-section may differ this much from the spec size before the spec numbers must be corrected
+C2_SHELL = "#c9ccd0"
+C2_BLACK = "#33343a"
+C2_GOLD = "#d4af37"
+C2_DARK = "#17181b"
+C2_BLUE = "#4a78c0"
+C2_GREY = "#a9adb3"
+C2_RED = "#a83232"
+
+
+def cable2_lathe(body: Body, cx: float, cy: float, tip_z: float, sgn: float, stack: list[tuple[float, float]], colours: list[str], n: int = CABLE2_SEG) -> None:
+    """A closed lathe about the z axis through (cx, cy): `stack` is (distance from the tip toward the cable in mm, radius in mm), one colour per band; flat caps at both ends."""
+    bm = body.bm
+    rings = [ring(bm, r * MM, tip_z + sgn * t * MM, n, cx, cy) for t, r in stack]
+    bm.faces.new(rings[0][::-1] if sgn > 0 else rings[0])
+    body.done(colours[0])
+    for i in range(len(rings) - 1):
+        band(bm, rings[i], rings[i + 1])
+        body.done(colours[i])
+    bm.faces.new(rings[-1] if sgn > 0 else rings[-1][::-1])
+    body.done(colours[-1])
+
+
+def cable2_box(body: Body, cx: float, cy: float, tip_z: float, sgn: float, w: float, h: float, t0: float, t1: float, colour: str, dx: float = 0.0, dy: float = 0.0) -> None:
+    """A box w x h mm centred on (cx + dx, cy + dy), from t0 to t1 mm from the tip toward the cable."""
+    za, zb = tip_z + sgn * t0 * MM, tip_z + sgn * t1 * MM
+    box(body.bm, cx + (dx - w / 2.0) * MM, cx + (dx + w / 2.0) * MM, cy + (dy - h / 2.0) * MM, cy + (dy + h / 2.0) * MM, min(za, zb), max(za, zb))
+    body.done(colour)
+
+
+def cable2_plug(body: Body, kind: int, cx: float, cy: float, tip_z: float, sgn: float) -> None:
+    """The plug of end kind `kind` with its mating face at tip_z, the cable leaving toward sgn (+1 toward +z)."""
+    name = CABLE2_KINDS[kind][0]
+    if name in ("xlr3-m", "xlr3-f"):
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 9.6), (24, 9.6)], [C2_SHELL])
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(24, 9.6), (26, 11.0), (50, 9.5), (62, 5.5)], [C2_BLACK, C2_BLACK, C2_BLACK])
+        for px, py in xlr_pins_mm(3):
+            if name == "xlr3-m":
+                cable2_lathe(body, cx + px * MM, cy + py * MM, tip_z, sgn, [(-0.3, 1.1), (0.5, 1.1)], [C2_GOLD], 8)
+            else:
+                cable2_lathe(body, cx + px * MM, cy + py * MM, tip_z, sgn, [(-0.3, 1.4), (0.5, 1.4)], [C2_DARK], 8)
+        cable2_box(body, cx, cy, tip_z, sgn, 6.0, 1.4, 6.0, 22.0, C2_SHELL, 0.0, 9.6 + 0.5)
+    elif name in ("trs-quarter", "ts-quarter"):
+        trs = name == "trs-quarter"
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 1.2), (2.5, 3.175), (6.0, 3.175)], [C2_SHELL, C2_SHELL], 16)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(6.0, 2.8), (7.5, 2.8)], [C2_DARK], 16)
+        sleeve_from = 7.5
+        if trs:
+            cable2_lathe(body, cx, cy, tip_z, sgn, [(7.5, 3.175), (11.0, 3.175)], [C2_SHELL], 16)
+            cable2_lathe(body, cx, cy, tip_z, sgn, [(11.0, 2.8), (12.5, 2.8)], [C2_DARK], 16)
+            sleeve_from = 12.5
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(sleeve_from, 3.175), (22.0, 3.175)], [C2_SHELL], 16)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(22.0, 6.0), (44.0, 6.0), (62.0, 3.5)], [C2_BLACK, C2_BLACK], 16)
+    elif name in ("speakon-nl4", "powercon-blue"):
+        accent = C2_BLACK if name == "speakon-nl4" else C2_BLUE
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 11.0), (30, 11.0)], [accent])
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(30, 11.0), (32, 12.0), (46, 12.0), (68 if name == "speakon-nl4" else 62, 6.0)], [C2_BLACK, C2_BLACK, C2_BLACK])
+        for k in range(4 if name == "speakon-nl4" else 3):
+            ang = math.pi / 4.0 + k * math.pi / 2.0 if name == "speakon-nl4" else math.pi / 2.0 + k * 2.0 * math.pi / 3.0
+            cable2_lathe(body, cx + 5.0 * MM * math.cos(ang), cy + 5.0 * MM * math.sin(ang), tip_z, sgn, [(-0.3, 1.6), (0.5, 1.6)], [C2_GOLD], 8)
+        cable2_box(body, cx, cy, tip_z, sgn, 5.0, 1.0, 8.0, 30.0, C2_GREY, 0.0, 11.0 + 0.5)
+    elif name in ("ethercon", "rj45"):
+        if name == "ethercon":
+            cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 12.0), (30, 12.0)], [C2_SHELL])
+            cable2_box(body, cx, cy, tip_z, sgn, 11.7, 8.5, -0.3, 20.0, C2_DARK, 0.0, 0.0)
+            cable2_lathe(body, cx, cy, tip_z, sgn, [(30, 12.0), (33, 13.0), (50, 13.0), (66, 6.0)], [C2_BLACK, C2_BLACK, C2_BLACK])
+        else:
+            cable2_box(body, cx, cy, tip_z, sgn, 11.7, 8.5, 0.0, 24.0, C2_PALE, 0.0, -2.0)
+            cable2_box(body, cx, cy, tip_z, sgn, 6.0, 2.5, 4.0, 22.0, C2_GREY, 0.0, 4.0)
+            cable2_box(body, cx, cy, tip_z, sgn, 14.0, 15.0, 24.0, 52.0, C2_BLACK, 0.0, 0.0)
+    elif name == "bnc":
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 6.5), (24, 6.5)], [C2_SHELL])
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(-4.0, 1.6), (0.5, 1.6)], [C2_GOLD], 8)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(24, 6.5), (26, 7.5), (40, 7.5), (52, 4.5)], [C2_BLACK, C2_BLACK, C2_BLACK])
+    elif name == "dsub25":
+        cable2_box(body, cx, cy, tip_z, sgn, 53.0, 12.5, 0.0, 10.0, C2_SHELL)
+        cable2_box(body, cx, cy, tip_z, sgn, 62.0, 17.0, 10.0, 38.0, C2_SHELL)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(38, 8.0), (45, 5.0)], [C2_RED], 16)
+    elif name == "toslink":
+        cable2_box(body, cx, cy, tip_z, sgn, 8.0, 7.0, 0.0, 14.0, C2_BLACK)
+        cable2_box(body, cx, cy, tip_z, sgn, 10.0, 9.0, 14.0, 24.0, C2_GREY)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(24, 4.0), (36, 2.5)], [C2_BLACK], 12)
+    elif name == "iec-c13":
+        cable2_box(body, cx, cy, tip_z, sgn, 25.4, 17.4, 0.0, 18.0, C2_DARK)
+        cable2_box(body, cx, cy, tip_z, sgn, 28.0, 24.0, 18.0, 42.0, C2_BLACK)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(42, 8.0), (52, 5.0)], [C2_BLACK], 16)
+    elif name == "rca":
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 4.5), (14, 4.5)], [C2_SHELL], 16)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(-4.0, 1.5), (0.5, 1.5)], [C2_GOLD], 8)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(14, 7.0), (30, 7.0), (40, 3.5)], [C2_RED, C2_BLACK], 16)
+    elif name == "trs-35mm":
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 1.0), (2.0, 1.75), (14.0, 1.75)], [C2_SHELL, C2_SHELL], 12)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(14, 4.0), (30, 4.0), (40, 2.5)], [C2_BLACK, C2_BLACK], 12)
+    else:
+        raise BuildError(f"cable-assembly-v2 has no plug for end kind {kind}")
+
+
+C2_PALE = "#b4cfe0"
+
+
+def build_cable_assembly_v2(plan: Plan) -> bpy.types.Object:
+    """See CABLE2_NAMES. Frame: bottom at y = 0, centred on x and z, end A (params.endA) at +z, end B (params.endB) at -z. The spec size is the exact size: its depth is the whole model
+    (the trunk fills it), its width and height must be within 2 % of the natural cross-section of the plugs (or of the fan-out grid), which the message gives."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    unknown = [k for k in params if k not in CABLE2_NAMES]
+    if unknown:
+        raise BuildError(f"cable-assembly-v2 has no param {unknown[0]!r}")
+
+    def whole(name: str, lo: int, hi: int, default: int | None = None) -> int:
+        v = params.get(name, default)
+        if v is None:
+            raise BuildError(f"cable-assembly-v2 needs params.{name} (the end kind code, {', '.join(f'{k} {CABLE2_KINDS[k][0]}' for k in CABLE2_KINDS)})")
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or v != int(v) or not lo <= int(v) <= hi:
+            raise BuildError(f"params.{name} must be a whole number from {lo} to {hi}, got {v!r}")
+        return int(v)
+
+    kind_a = whole("endA", 1, max(CABLE2_KINDS))
+    kind_b = whole("endB", 1, max(CABLE2_KINDS))
+    cols, rows = whole("fanColumns", 1, 16, 1), whole("fanRows", 1, 16, 1)
+    if cols * rows > 16:
+        raise BuildError(f"the fan-out has {cols * rows} plugs: at most 16")
+    fan = cols * rows > 1
+    wa, ha, la = CABLE2_KINDS[kind_a][2:]
+    wb, hb, lb = CABLE2_KINDS[kind_b][2:]
+    pitch = param_m(plan, "fanPitchMm", max(wb, hb) + 2.0) if "fanPitchMm" in params else (max(wb, hb) + 2.0) * MM
+    tail = param_m(plan, "tailLenMm", CABLE2_DEFAULT_TAIL_MM) if fan or "tailLenMm" in params else 0.0
+    if "tailLenMm" in params and not fan:
+        raise BuildError("params.tailLenMm has no effect without a fan-out (fanColumns or fanRows above 1)")
+    if "fanPitchMm" in params and not fan:
+        raise BuildError("params.fanPitchMm has no effect without a fan-out (fanColumns or fanRows above 1)")
+    trunk_r = (param_m(plan, "trunkDiaMm", CABLE2_DEFAULT_TRUNK_MM) if "trunkDiaMm" in params else CABLE2_DEFAULT_TRUNK_MM * MM) / 2.0
+    grid_w = (cols - 1) * pitch + wb * MM
+    grid_h = (rows - 1) * pitch + hb * MM
+    nat_w = max(wa * MM, grid_w if fan else wb * MM)
+    nat_h = max(ha * MM, grid_h if fan else hb * MM)
+    for what, nat, want in (("width", nat_w, w), ("height", nat_h, h)):
+        if abs(nat / want - 1.0) > CABLE2_FIT:
+            raise BuildError(f"the cable's {what} is {nat / MM:.1f} mm (the widest plug or the fan-out grid) but the spec size says {want / MM:.1f} mm: change the spec size or the params")
+    min_d = (la + lb) * MM + (tail if fan else 0.0) + CABLE2_TRUNK_MIN_MM * MM
+    if d < min_d:
+        raise BuildError(f"the depth {d / MM:.1f} mm is too short for these ends: at least {min_d / MM:.1f} mm (both plugs, the tails and a {CABLE2_TRUNK_MIN_MM:.0f} mm trunk)")
+    cy = nat_h / 2.0
+    body = Body("cable-assembly-v2")
+    bm = body.bm
+    # end A at +z, one plug on the axis
+    cable2_plug(body, kind_a, 0.0, cy, d / 2.0, -1.0)
+    z_a_end = d / 2.0 - la * MM
+    # end B at -z: one plug, or the grid with its tails
+    if fan:
+        z_b_end = -d / 2.0 + lb * MM
+        z_break = z_b_end + tail
+        plugs = [((c - (cols - 1) / 2.0) * pitch, cy + (r - (rows - 1) / 2.0) * pitch) for r in range(rows) for c in range(cols)]
+        for x, y in plugs:
+            cable2_plug(body, kind_b, x, y, -d / 2.0, 1.0)
+        for i, (x, y) in enumerate(plugs):
+            cylinder_between(bm, g2b(x, y, z_b_end), g2b(0.0, cy, z_break + 6.0 * MM * i), 3.0 * MM)
+        body.done(C2_BLACK)
+        cylinder_between(bm, g2b(0.0, cy, z_break), g2b(0.0, cy, z_a_end), trunk_r)
+        body.done(C2_BLACK)
+    else:
+        cable2_plug(body, kind_b, 0.0, cy, -d / 2.0, 1.0)
+        z_b_end = -d / 2.0 + lb * MM
+        cylinder_between(bm, g2b(0.0, cy, z_b_end), g2b(0.0, cy, z_a_end), trunk_r)
+        body.done(C2_BLACK)
+    xs = [v.co.x for v in bm.verts]
+    ys = [v.co.z for v in bm.verts]
+    zs = [-v.co.y for v in bm.verts]
+    ex, ey, ez = max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs)
+    for what, nat, want in (("width", ex, w), ("height", ey, h), ("length", ez, d)):
+        if abs(nat / want - 1.0) > CABLE2_FIT:
+            raise BuildError(f"the cable is {nat / MM:.1f} mm in {what}, the spec size says {want / MM:.1f} mm: change the spec size or the params")
+    cx_mid, y_min, z_mid = (max(xs) + min(xs)) / 2.0, min(ys), (max(zs) + min(zs)) / 2.0
+    for v in bm.verts:
+        v.co = g2b((v.co.x - cx_mid) * (w / ex), (v.co.z - y_min) * (h / ey), (-v.co.y - z_mid) * (d / ez))
+    canonical_face_order(bm)
+    log(f"cable-assembly-v2: ends {CABLE2_KINDS[kind_a][0]} / {CABLE2_KINDS[kind_b][0]}{' fan ' + str(cols) + 'x' + str(rows) if fan else ''}, natural {ex / MM:.1f} x {ey / MM:.1f} x {ez / MM:.1f} mm")
+    return body.finish()
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
+    "cable-assembly-v2": build_cable_assembly_v2,
     "speaker-cabinet-v2": build_speaker_cabinet_v2,
     "moulded-box": build_moulded_box,
     "revolve-oval": build_revolve_oval,
