@@ -253,6 +253,13 @@ describe('Routing and console sound controls in the catalog (Task 33)', () => {
     ])
     expect(dev('genelec-8030c').routing).toEqual([{ from: 'in-analog', to: ['transducer'] }])
   })
+  /** The promoted devices whose spec declares a thru / link / loop output that is not processed: they carry a passive route (review fix 7). */
+  const passiveFromSpecs = (): string[] => {
+    const rows = (JSON.parse(readFileSync('content/proposals/equipment-plan.json', 'utf8')) as { rows: { id: string; promoted?: boolean }[] }).rows.filter((r) => r.promoted === true)
+    return rows
+      .filter((r) => (JSON.parse(readFileSync(`content/asset-specs/${r.id}.json`, 'utf8')) as { ports: { thruOf?: string; thruProcessed?: boolean }[] }).ports.some((q) => q.thruOf !== undefined && q.thruProcessed !== true))
+      .map((r) => r.id)
+  }
   it('no other device carries routing than the four verified ones and the promoted plan rows (derived from the plan, not listed), and only the two KB parallel links are passive', () => {
     const promoted = new Set((JSON.parse(readFileSync('content/proposals/equipment-plan.json', 'utf8')) as { rows: { id: string; promoted?: boolean }[] }).rows.filter((r) => r.promoted === true).map((r) => r.id))
     const verified = ['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12', 'yamaha-ql1'] // the verified devices of the first catalogue
@@ -261,13 +268,16 @@ describe('Routing and console sound controls in the catalog (Task 33)', () => {
     expect(withRouting.filter((id) => !verified.includes(id) && !promoted.has(id)), 'a device with routing that is neither verified nor a promoted plan row').toEqual([])
     expect(withRouting.filter((id) => promoted.has(id)).length, 'promoted devices that route (template routes)').toBeGreaterThan(30)
     const passive = devices.flatMap((d) => (d.routing ?? []).filter((r) => r.passive === true).map((r) => `${d.id}:${String(r.from)}`)).sort()
-    expect(passive).toEqual(['qsc-k12-2:in-line-a', 'yamaha-dbr12:in-line'])
+    // review fix 7: the two KB parallel links plus the thru / link / loop outputs the promoted specs declare (`thruOf`, not processed)
+    expect(passive.filter((x) => x.startsWith('qsc-k12-2:') || x.startsWith('yamaha-dbr12:'))).toEqual(['qsc-k12-2:in-line-a', 'yamaha-dbr12:in-line'])
+    expect(passiveFromSpecs().length, 'the specs declare thru outputs').toBeGreaterThan(8)
+    expect([...new Set(passive.map((x) => x.split(':')[0]))].sort()).toEqual(['qsc-k12-2', 'yamaha-dbr12', ...passiveFromSpecs()].sort())
   })
   it('every passive route is labelled as the P7 assumption (unsourced): in the schema description and in the notes of its device', () => {
     const shape = (Route as unknown as { _def: { schema: { shape: Record<string, { description?: string }> } } })._def.schema.shape
     expect(shape.passive.description, 'schema description').toContain('Hypothèse pédagogique du plan (P7), non sourcée')
     const passiveDevices = (catalogJson.devices as unknown as { id: string; realWorld: { notes: string }; routing?: { passive?: boolean }[] }[]).filter((d) => (d.routing ?? []).some((r) => r.passive === true))
-    expect(passiveDevices.map((d) => d.id).sort()).toEqual(['qsc-k12-2', 'yamaha-dbr12'])
+    expect(passiveDevices.map((d) => d.id).sort()).toEqual(['qsc-k12-2', 'yamaha-dbr12', ...passiveFromSpecs()].sort())
     for (const d of passiveDevices) expect(d.realWorld.notes, d.id).toContain('hypothèse pédagogique du plan (P7), non sourcée')
   })
   it('the KB phrases quoted in the data are verbatim (read from the KB file, not retyped)', () => {
@@ -456,10 +466,9 @@ describe('Acoustic data of the speakers (Task 35, C12)', () => {
     for (const [id, f] of [['qsc-k12-2', 'max_spl_db'], ['yamaha-dbr12', 'coverage_v_deg'], ['yamaha-dbr12', 'coverage_h_deg'], ['yamaha-dbr12', 'max_spl_db']] as const)
       expect((ac(id)[f] as Sv).source.ref, `${id}.${f}: only the K12.2 vertical angle is deduced`).not.toContain('déduit')
   })
-  it('only the three speakers carry sourced acoustic, plus the Wave 1 Neumann KH 120 II whose coverage is the template nominal (kind nominal, no kb value)', () => {
-    expect(devices.filter((d) => d.acoustic !== undefined).map((d) => d.id).sort()).toEqual(['genelec-8030c', 'neumann-kh-120-ii', 'qsc-k12-2', 'yamaha-dbr12'])
-    const kh = devices.find((d) => d.id === 'neumann-kh-120-ii')!.acoustic as Record<string, { source: { kind: string } }>
-    for (const v of Object.values(kh)) expect(v.source.kind).toBe('nominal')
+  it('only the three speakers carry sourced acoustic; the Wave 1 Neumann KH 120 II lost its template nominal 90 x 60 (review fix 13: no sheet states it)', () => {
+    expect(devices.filter((d) => d.acoustic !== undefined).map((d) => d.id).sort()).toEqual(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12'])
+    expect(devices.find((d) => d.id === 'neumann-kh-120-ii')!.acoustic).toBeUndefined()
   })
   it('every kb value cites the KB entry and field it comes from, quotes the KB text verbatim, and carries the KB note date', () => {
     const kbValues = devices.flatMap((d) => Object.entries(d.acoustic ?? {}).map(([field, s]) => ({ id: d.id, field, s: s as Sv }))).filter((x) => x.s.source.kind === 'kb')

@@ -20,7 +20,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.behringer.com/en/products/0603-AEW"
     },
     {
       "portId": "in-mic-2",
@@ -34,7 +35,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.behringer.com/en/products/0603-AEW"
     },
     {
       "portId": "in-combo-3",
@@ -46,8 +48,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -60,8 +61,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -173,6 +173,17 @@
       "kind": "dealer",
       "url": "https://www.thomann.de/be/behringer_flow_8.htm",
       "note": "Thomann, Reverb, Adorama and Andertons listings read through a search summary 2026-11-12 (Behringer's own page not found): two mic channels on XLR with 48 V phantom, two XLR / TRS combo channels, two TRS line inputs and two Hi-Z instrument inputs, two balanced XLR main outputs, two balanced 1/4 in TRS monitor outputs, one 1/4 in TRS headphone output, one USB-B audio port (10 in, 2 out), 5 V power over micro-USB (no mains). The listings agree on the connector types. Modelled subset: 4 XLR inputs, the XLR mains, headphones and USB. 229 x 172 x 48 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.behringer.com/en/products/0603-AEW",
+      "note": "Phantom power (review fix, the manufacturer page itself was read 2026-11-12): the Behringer FLOW 8 page lists two XLR jacks (inputs 1 / 2) with +48 V, switchable (inputs 1 / 2 only), and two XLR / TRS combo jacks (inputs 3 / 4) with no phantom. The two combo ports no longer claim a phantom supply (the earlier dealer reading flagged four)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.behringer.com/en/products/0603-AEW",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the FLOW 8 listings read through search summaries (the Behringer page lists no mains inlet) give power over micro-USB, no mains. No mains inlet is modelled for this device and the entry says so."
     }
-  ]
+  ],
+  "powerNote": "alimentation non modélisée : l'appareil utilise une alimentation par USB micro, sans entrée secteur"
 }

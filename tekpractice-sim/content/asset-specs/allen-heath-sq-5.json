@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -46,8 +44,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -60,8 +57,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -74,8 +70,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -88,8 +83,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -102,8 +96,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -116,8 +109,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -130,8 +122,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -277,5 +268,6 @@
       "url": "https://www.sonovente.com/en-gb/allen-heath-sq-5-p59985.html",
       "note": "Plan summary from the knowledge base and the A&H weights sheet (fetch 403, figures via search): 16 XLR local mic / line, 3 stereo inputs, XLR talkback, 12 XLR + 2 TRS outputs (dealers disagree: 10 XLR + 2 TRS), phones, USB-B 32 x 32, USB-A, one I/O (S-Link) port. Modelled subset: 8 of 16 mics, talkback, 4 XLR outputs, phones, USB-B, USB-A, S-Link as etherCON (aoip). Size 440 x 514.9 x 198 mm: axis order assumed, so an estimate and beta-modelled. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses; no mains inlet modelled (not documented in the text read)."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 9 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }

@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -174,5 +172,6 @@
       "url": "https://reverb.com/item/94390426-allen-heath-zed-14-14-channel-analog-live-mixer",
       "note": "Dealer listings (Reverb, Thomann, zZounds, B&H, Perfect Circuit) read through a search summary 2026-11-12: six mono channels with XLR mic inputs and 1/4 in line inputs, four stereo channels, balanced XLR stereo main outputs, a 1/4 in mono main output, RCA record and alt outputs, 1/4 in insert jacks, 1/4 in and 3.5 mm headphone outputs, one USB-B port (2 in, 2 out). The listings disagree on the mic and insert counts and no mains connection is stated, so beta-modelled with a subset (2 mic, 2 line, main L / R, phones, USB). The sloped profile is an estimate. 385 x 465 x 98 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 2 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }

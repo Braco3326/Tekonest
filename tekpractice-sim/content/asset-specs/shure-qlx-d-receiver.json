@@ -19,7 +19,7 @@
       "dir": "out"
     },
     {
-      "portId": "out-14",
+      "portId": "out-quarter",
       "face": "io",
       "xMm": 114.4,
       "yMm": 21,
@@ -84,5 +84,8 @@
       "url": "https://pubs.shure.com/view/guide/QLXD/en-US.pdf",
       "note": "Shure QLX-D user guide (downloaded and read as text 2026-11-12): the receiver has an XLR audio output, a 1/4 in instrument / auxiliary output, an Ethernet port, BNC antenna connectors and a DC power supply jack (external PS24 supply, so no mains inlet and no power control). Modelled: XLR out, 1/4 in out, Ethernet (aoip, a control and scanning port, takes no audio route); the BNC antennas and the DC jack have no signal type and are not ports. Size 197 x 151 x 41 mm (\"41 H x 197 W x 151 D\", the guide), receiver only: the transmitters are separate devices. Positions are guesses (the guide says \"rear\"); same layout as the SLX-D receiver."
     }
-  ]
+  ],
+  "portAliases": {
+    "out-14": "out-quarter"
+  }
 }

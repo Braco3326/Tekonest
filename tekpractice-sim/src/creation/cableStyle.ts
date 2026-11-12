@@ -52,11 +52,13 @@ const COLORS: ReadonlyArray<readonly [id: string, color: string, dash?: true]> =
   ['spdif', '#8EEDB7'],
   ['madi', '#03BD89'],
   ['aoip', '#B4EA30'],
+  ['aes50', '#F07800'],
   ['wordclock', '#9F71A9'],
   ['usb-audio', '#618569'],
   ['gpio-tally', '#7CC953'],
   ['dmx512', '#B616C4'],
   ['ethernet-control', '#8D72FC'],
+  ['usb-control', '#48D8A0'],
   ['phantom-48v', '#2D7B01'],
   ['mains-power', '#F8093E', true],
 ]

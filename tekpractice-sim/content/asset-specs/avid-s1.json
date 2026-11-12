@@ -77,6 +77,12 @@
       "kind": "dealer",
       "url": "https://www.adorama.com/av990074096.html",
       "note": "Dealer size 316 x 377 mm, 29 mm front to 103 mm rear, 1.9 kg (the plan source)."
+    },
+    {
+      "kind": "manual",
+      "url": "https://resources.avid.com/SupportFiles/ProMixing/Avid_S1_Guide_v2024.10.pdf",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the Avid S1 guide says the AC cord plugs into an external power adapter whose DC cable goes to the DC In jack. No mains inlet is modelled for this device and the entry says so."
     }
-  ]
+  ],
+  "powerNote": "alimentation non modélisée : l'appareil utilise un adaptateur secteur externe"
 }

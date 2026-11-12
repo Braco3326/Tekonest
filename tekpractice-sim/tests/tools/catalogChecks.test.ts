@@ -206,15 +206,17 @@ describe('checkCatalog, acoustic (Task 35, C12)', () => {
 
   it('the four hand-written speakers and the Wave 1 KH 120 II keep their acoustic block; every other real speaker has NONE (promoted since the data rule) and is warned about, nothing else is', () => {
     const speakers = speakersOf(fresh())
-    for (const id of ['genelec-8030c', 'neumann-kh-120-ii', 'qsc-k12-2', 'yamaha-dbr12']) {
+    for (const id of ['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12']) {
       expect(speakers.map((d) => d.id), id).toContain(id)
       expect((dev(fresh(), id)).acoustic, id).toBeDefined()
     }
+    // review fix 13: the KH 120 II lost its template nominal coverage (no sheet states it) and is warned about like the other promoted speakers
+    expect((dev(fresh(), 'neumann-kh-120-ii')).acoustic).toBeUndefined()
     for (const d of speakers) {
       const a = (d as LooseDevice).acoustic
       // a speaker promoted without a sourced coverage carries nothing: no nominal block, no number (the template no longer writes any)
       if (a === undefined) continue
-      expect(['genelec-8030c', 'neumann-kh-120-ii', 'qsc-k12-2', 'yamaha-dbr12'], `${d.id} carries an acoustic block`).toContain(d.id)
+      expect(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12'], `${d.id} carries an acoustic block`).toContain(d.id)
     }
     expect(acousticWarnings(fresh()).sort()).toEqual(bareSpeakers(fresh()).map((id) => `devices["${id}"].acoustic`).sort())
     expect(bareSpeakers(fresh()).length).toBeGreaterThan(10)
@@ -317,7 +319,7 @@ describe('checkCatalog, acoustic (Task 35, C12)', () => {
       expect(warnings(c, 'shure-sm58')).toEqual([])
     })
     it('a speaker that has acoustic is not warned about', () => {
-      for (const id of ['qsc-k12-2', 'yamaha-dbr12', 'genelec-8030c', 'neumann-kh-120-ii']) expect(warnings(fresh(), id), id).toEqual([])
+      for (const id of ['qsc-k12-2', 'yamaha-dbr12', 'genelec-8030c']) expect(warnings(fresh(), id), id).toEqual([])
     })
   })
 })

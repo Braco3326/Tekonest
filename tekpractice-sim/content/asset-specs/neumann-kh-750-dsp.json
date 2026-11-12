@@ -42,7 +42,9 @@
       "openingMm": 20,
       "connector": "xlr3-m",
       "signal": "line-level-pro",
-      "dir": "out"
+      "dir": "out",
+      "thruOf": "in-analog-1",
+      "thruProcessed": true
     },
     {
       "portId": "out-analog-2",
@@ -54,7 +56,9 @@
       "openingMm": 20,
       "connector": "xlr3-m",
       "signal": "line-level-pro",
-      "dir": "out"
+      "dir": "out",
+      "thruOf": "in-analog-2",
+      "thruProcessed": true
     },
     {
       "portId": "in-aes",
@@ -78,7 +82,9 @@
       "openingMm": 14,
       "connector": "bnc",
       "signal": "aes3",
-      "dir": "out"
+      "dir": "out",
+      "thruOf": "in-aes",
+      "thruProcessed": true
     },
     {
       "portId": "net",

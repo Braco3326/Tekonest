@@ -37,6 +37,9 @@ export const PortSpec = z.object({
   signal: z.string().min(1).optional().describe('Catalogue signal type of this port (see connector).'),
   dir: z.enum(['in', 'out', 'bidir']).optional().describe('Direction of this port (see connector).'),
   flags: z.array(PortFlag).optional().describe('Behaviour flags the datasheet supports (isMicInput, providesPhantom, ...). The behaviour template adds the ones its category and traits imply.'),
+  flagsSource: z.string().regex(/^https?:\/\/\S+$/, 'flagsSource is an http(s) URL').optional().describe('The manufacturer page or manual that states the capability flags of this port (a phantom supply or need): the data rule says no phantom claim without its page (Waves 2 to 5 review, finding 4).'),
+  thruOf: z.string().min(1).optional().describe('Id of the input port whose signal this OUTPUT repeats (a thru, link, loop or daisy-chain connector, as the sheet calls it): the behaviour template writes a route from that input to this port (finding 7). It is `passive` (works with the device off) unless thruProcessed is true.'),
+  thruProcessed: z.boolean().optional().describe('With thruOf: the repeated signal is processed (a high-pass filter on a subwoofer daisy chain): the route needs power, so it is not passive.'),
 }).strict()
 
 export const ControlSpec = z.object({
@@ -135,6 +138,8 @@ export const AssetSpec = z.object({
   texture: TextureSpec.optional(),
   portsDocumented: z.boolean().optional().describe('true when the ports of this spec are the connector set the datasheet documents (set by the person who fills the spec in, with portsSource). Only a device with portsDocumented true can be promoted into the verified catalogue; without it the device stays a Bêta proposal (beta-modelled).'),
   portsSource: z.string().regex(/^https?:\/\/\S+$/, 'portsSource is an http(s) URL').optional().describe('The page that documents the connector set (a manufacturer page or manual).'),
+  powerNote: z.string().min(3).optional().describe('One French sentence about the mains of this device that the catalogue entry\'s realWorld.notes carries (findings 5 and 16): what the sheet says when no inlet or no switch is modelled (« alimentation non modélisée (source non lue) », « pas d\'interrupteur secteur selon le manuel »).'),
+  portAliases: z.record(z.string().min(1), z.string().min(1)).optional().describe('Old port id -> the id this spec gives the port now (a rename): merged into the device portAliases so saved cables follow (findings 8, 18 and 19).'),
   portsTodo: z.string().optional().describe('A to-do note for the person filling the spec: the ports of the Bêta proposal or the plan ports summary, as TEXT (never as ports: nothing is invented).'),
   driftLimit: z.number().finite().gt(0).max(0.35).optional().describe('Proportion drift the fix-up may absorb, as a fraction (default 0.05). A Meshy model whose depth was guessed from front photos (a speaker cabinet) may need more; the founder accepts it per device.'),
   sources: z.array(SpecSource),

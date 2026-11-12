@@ -30,7 +30,8 @@
       "openingMm": 26,
       "connector": "speakon-nl4",
       "signal": "speaker-level",
-      "dir": "bidir"
+      "dir": "bidir",
+      "thruOf": "bidir-nl4-1"
     }
   ],
   "controls": [],

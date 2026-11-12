@@ -30,7 +30,8 @@
       "openingMm": 20,
       "connector": "xlr3-m",
       "signal": "line-level-pro",
-      "dir": "out"
+      "dir": "out",
+      "thruOf": "in-xlr"
     },
     {
       "portId": "power-in",

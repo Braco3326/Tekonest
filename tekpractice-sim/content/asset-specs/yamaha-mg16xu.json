@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -46,8 +44,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -60,8 +57,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -206,5 +202,6 @@
       "url": "https://norge.thomann.de/yamaha_mg16xu.htm",
       "note": "Thomann (opened): 444 x 500 x 130 mm, 6.8 kg; the summary lists 10 mic + 16 line inputs, USB and built-in SPX effects (the Yamaha PDF returned 403). Output connectors were not read: the XLR main L / R follow the sibling MG10XU data sheet (an assumption, said here), so beta-modelled. Modelled subset: 4 combos (XLR part), 4 line jacks, main L / R, phones, USB-B. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 4 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }

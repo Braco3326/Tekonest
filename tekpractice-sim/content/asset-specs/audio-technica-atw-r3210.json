@@ -19,7 +19,7 @@
       "dir": "out"
     },
     {
-      "portId": "out-14",
+      "portId": "out-quarter",
       "face": "io",
       "xMm": 48.2,
       "yMm": 21.7,
@@ -73,6 +73,15 @@
       "kind": "dealer",
       "url": "https://www.fullcompass.com/prod/548523-audio-technica-atw-r3210-3000-series-4th-gen-uhf-diversity-receiver",
       "note": "Dealer pages (Full Compass, Go Knight, SoundPro, Adorama) read through a search summary 2026-11-12: rear panel balanced XLR output and unbalanced 1/4 in output, two detachable BNC antennas (switchable 12 VDC antenna power), 12 VDC supply with an external AC adapter (no mains inlet, no power control). The BNC antennas and the DC jack have no catalogue signal (not ports). 210 x 191 x 43.4 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://docs.audio-technica.com/us/wireless3000_um_232416960_v2_en_web_200306.pdf",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the Wireless 3000 manual lists a DC input terminal fed by the supplied switched-mode AC adapter (12 VDC, 1 A, centre positive) and no IEC inlet. No mains inlet is modelled for this device and the entry says so."
     }
-  ]
+  ],
+  "powerNote": "alimentation non modélisée : l'appareil utilise un adaptateur secteur externe 12 V continu",
+  "portAliases": {
+    "out-14": "out-quarter"
+  }
 }

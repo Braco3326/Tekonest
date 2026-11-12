@@ -42,7 +42,8 @@
       "insetMm": 3,
       "connector": "xlr3-m",
       "signal": "aes3",
-      "dir": "out"
+      "dir": "out",
+      "thruOf": "in-aes"
     },
     {
       "portId": "bidir-net-1",

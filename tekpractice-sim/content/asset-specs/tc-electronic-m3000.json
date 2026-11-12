@@ -117,9 +117,33 @@
       "connector": "rca",
       "signal": "wordclock",
       "dir": "in"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 430,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
     }
   ],
-  "controls": [],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 395,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
   "build": {
     "shape": "rack-box",
     "params": {
@@ -178,6 +202,11 @@
       "kind": "dealer",
       "url": "https://www.zzounds.com/item--TCE9505000",
       "note": "TC Electronic M3000 read through a search summary 2026-11-12 (the zzounds page answered 403) of the Sound On Sound review and the manufacturer specification pages: a pair of balanced XLR analog inputs and outputs, XLR AES/EBU in and out, RCA S/PDIF in and out, optical (TOSLINK, ADAT or S/PDIF) in and out, a phono word clock input, MIDI in, out and thru (no catalogue signal, not ports). The mains connection is not stated, so no mains inlet is modelled. 483 x 208 x 44 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.manualsdir.com/manuals/280323/tc-electronic-m3000.html?page=10",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass, a manualsdir copy of the manual): the rear panel lists a power input and a rear power switch, and the manual says to leave the rear switch on and use the front Easy-Touch switch. The connector type is not named on the page read: iec-c14 is assumed (plan assumedConnectors power-in). The simulator's Alimentation control stands for the switches. Positions: guesses."
     }
   ]
 }

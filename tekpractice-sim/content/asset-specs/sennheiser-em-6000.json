@@ -29,7 +29,7 @@
       "dir": "out"
     },
     {
-      "portId": "out-14-1",
+      "portId": "out-quarter-1",
       "face": "io",
       "xMm": 105.2,
       "yMm": 22,
@@ -39,7 +39,7 @@
       "dir": "out"
     },
     {
-      "portId": "out-14-2",
+      "portId": "out-quarter-2",
       "face": "io",
       "xMm": 122.6,
       "yMm": 22,
@@ -163,5 +163,11 @@
       "url": "https://docs.cloud.sennheiser.com/en-us/digital-6000/digital-6000/specs-em6000.html",
       "note": "Sennheiser EM 6000 specifications page (opened 2026-11-12): two XLR-3 and two 6.3 mm balanced audio outputs, an XLR-3 AES3 output, BNC word clock in and out, a 6.3 mm headphone output, 3-pin IEC/EN 60320-1 mains inlet 100-240 V. The page also lists one RJ45; a search summary says only the EM 6000 DANTE has network ports, so the RJ45 is left out (conflict). The BNC antenna inputs and daisy-chain outputs have no catalogue signal. 483 x 373 x 44 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
     }
-  ]
+  ],
+  "portAliases": {
+    "out-14-1": "out-quarter-1",
+    "out-14-2": "out-quarter-2",
+    "bidir-word-clock-in-out-75-1": "in-wclk",
+    "bidir-word-clock-in-out-75-2": "out-wclk"
+  }
 }

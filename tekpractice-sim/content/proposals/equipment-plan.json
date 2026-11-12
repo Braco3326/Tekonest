@@ -1519,7 +1519,10 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "mackie-1604vlz4",
@@ -2474,7 +2477,7 @@
    "status": "new",
    "category": "stagebox",
    "manufacturer": "Audinate",
-   "product": "Dante AVIO Install (2IN / 2OUT / 2IN2OUT)",
+   "product": "Dante AVIO Install 2IN (AVIO-A-2IN-EB)",
    "sizeMm": {
     "w": 150.7,
     "d": 53.8,
@@ -2493,7 +2496,9 @@
    "notes": "Audinate sales guide [M]: 150.7x53.8x38.1 mm, 145 g (Markertek 180 g). PoE or external power. Source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
    "traits": [],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "label": "Audinate Dante AVIO Install (2IN)",
+   "typicalUse": "Dante analogue input adapter, 2 channels, Euroblock, PoE"
   },
   {
    "id": "avid-s1",
@@ -2726,7 +2731,10 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "krk-rokit-5-g4",
@@ -2810,7 +2818,10 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "netgear-m4250-av-switch",
@@ -2899,7 +2910,10 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "qsc-k10-2",
@@ -3294,7 +3308,10 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "zoom-podtrak-p4",
@@ -4307,7 +4324,8 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "label": "Shure Axient Digital AD4D (dual-channel receiver)"
   },
   {
    "id": "shure-scm820",
@@ -5273,7 +5291,8 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "label": "Sennheiser EM 6000 (Digital 6000 receiver)"
   },
   {
    "id": "shure-ua845uwb",
@@ -5704,7 +5723,10 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "elgato-stream-deck-mk2",
@@ -5762,7 +5784,10 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "focusrite-rednet-a16r-mkii",
@@ -6217,7 +6242,10 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "telos-zephyr-xstream",
@@ -6278,7 +6306,10 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "promoted": true
+   "promoted": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "warm-audio-wa73-eq",

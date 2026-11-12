@@ -20,7 +20,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/clarett_8_pre_user_guide_v4_english.pdf"
     },
     {
       "portId": "in-combo-2",
@@ -34,7 +35,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/clarett_8_pre_user_guide_v4_english.pdf"
     },
     {
       "portId": "out-phones-1",
@@ -68,7 +70,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/clarett_8_pre_user_guide_v4_english.pdf"
     },
     {
       "portId": "in-combo-4",
@@ -82,7 +85,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/clarett_8_pre_user_guide_v4_english.pdf"
     },
     {
       "portId": "in-combo-5",
@@ -96,7 +100,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/clarett_8_pre_user_guide_v4_english.pdf"
     },
     {
       "portId": "in-combo-6",
@@ -110,7 +115,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/clarett_8_pre_user_guide_v4_english.pdf"
     },
     {
       "portId": "in-combo-7",
@@ -124,7 +130,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/clarett_8_pre_user_guide_v4_english.pdf"
     },
     {
       "portId": "in-combo-8",
@@ -138,7 +145,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/clarett_8_pre_user_guide_v4_english.pdf"
     },
     {
       "portId": "out-monitor-1",
@@ -340,6 +348,11 @@
       "kind": "reference",
       "url": "https://userguides.focusrite.com/hc/en-gb/articles/18577946999570-Clarett-8Pre-technical-specifications",
       "note": "Ring check: the IEC C14 marker ring is 26.4 mm and the unit is 43.9 mm tall (60.1 percent against the 60 percent limit of tests/scene/portMarkerSize.test.ts): the stage-2 step needs a per-device ring-height exception like the MUTEC MC-3+ one."
+    },
+    {
+      "kind": "manual",
+      "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/clarett_8_pre_user_guide_v4_english.pdf",
+      "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the Clarett+ 8Pre user guide (PDF p.8 front panel, p.23 specifications) says two 48V switches serve the mic inputs 1-4 and 5-8, one red LED each: eight inputs, switched per group of four."
     }
   ]
 }

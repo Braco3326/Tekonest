@@ -20,7 +20,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf"
     },
     {
       "portId": "in-mic-2",
@@ -34,7 +35,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf"
     },
     {
       "portId": "in-mic-3",
@@ -48,7 +50,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf"
     },
     {
       "portId": "in-mic-4",
@@ -62,7 +65,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf"
     },
     {
       "portId": "in-mic-5",
@@ -76,7 +80,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf"
     },
     {
       "portId": "in-mic-6",
@@ -90,7 +95,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf"
     },
     {
       "portId": "in-mic-7",
@@ -104,7 +110,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf"
     },
     {
       "portId": "in-mic-8",
@@ -118,7 +125,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf"
     },
     {
       "portId": "in-talkback",
@@ -130,8 +138,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -261,7 +268,7 @@
       "yMm": 150,
       "confidence": "guess",
       "connector": "ethercon",
-      "signal": "aoip",
+      "signal": "aes50",
       "dir": "bidir"
     },
     {
@@ -271,7 +278,7 @@
       "yMm": 150,
       "confidence": "guess",
       "connector": "ethercon",
-      "signal": "aoip",
+      "signal": "aes50",
       "dir": "bidir"
     },
     {
@@ -377,6 +384,11 @@
       "kind": "datasheet",
       "url": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
       "note": "Midas M32 product information document (downloaded, read with pdftotext 2026-11-12): connectors 32 Midas PRO microphone preamps (XLR), 1 talkback microphone input (XLR), 2 RCA in / out, 16 XLR outputs, 2 monitoring outputs (XLR / 1/4 in TRS balanced), 6 aux in / out (1/4 in TRS balanced), phones output 2 (stereo, 1/4 in TRS), AES/EBU out (XLR), 2 AES50 ports (Klark Teknik SuperMAC), expansion card interface, Ultranet P-16, 1 MIDI in / out, USB type A (audio and data import / export), USB type B and RJ45 for remote control (rear panel); power: auto-ranging 100-240 VAC switch-mode supply (the sheet does not name the inlet: IEC C14 is taken as the usual connector, said here). Modelled subset: 8 of 32 mic inputs, talkback, 6 of 16 XLR outputs (main L / R, mono, 3 mixes), 1 aux in and out, 2 monitor outputs as TRS, 1 of the 2 headphone outputs, AES out, AES50 A / B (the sheet does not name the connector: etherCON assumed), USB-A, the mains inlet. Not modelled: RCA, card slot, Ultranet, MIDI, USB-B and RJ45 (remote control). Size 891 x 612 x 256 mm, 25 kg (sheet). Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. All connector positions are guesses (the sheet has no drawing); the top picture is a generic 16-strip layout."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
+      "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the Midas M32 data sheet lists 32 XLR mic preamps with +48 V phantom, switchable per input (the eight modelled mic inputs). It says nothing of phantom on the TALKBACK input, so that port no longer claims it (phantom to-check)."
     }
   ]
 }

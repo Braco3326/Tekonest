@@ -230,20 +230,6 @@
         "h": 14.4,
         "d": 8
       }
-    },
-    {
-      "controlId": "fader-master",
-      "kind": "fader",
-      "face": "top",
-      "xMm": 300,
-      "yMm": 110,
-      "axis": "y",
-      "travelMm": 70,
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 11
-      }
     }
   ],
   "build": {

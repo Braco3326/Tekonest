@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -46,8 +44,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -60,8 +57,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -155,22 +151,7 @@
       "dir": "out"
     }
   ],
-  "controls": [
-    {
-      "controlId": "fader-master",
-      "kind": "fader",
-      "face": "top",
-      "xMm": 280,
-      "yMm": 120,
-      "axis": "y",
-      "travelMm": 90,
-      "sizeMm": {
-        "w": 12,
-        "h": 12,
-        "d": 11
-      }
-    }
-  ],
+  "controls": [],
   "build": {
     "shape": "console-wedge",
     "profile": [
@@ -222,6 +203,11 @@
       "kind": "dealer",
       "url": "https://rode.com/en-us/microphones/interfaces-mixers/rodecaster-pro-ii",
       "note": "Rode product page. Its comparison table lists 1/4 in (6.35 mm) headphone outputs, 4 for the Pro II (read from a web-search summary on 2026-11-12, the page itself was not opened); the line outputs are 6.35 mm TRS per the same summary."
+    },
+    {
+      "kind": "reference",
+      "url": "https://rode.com/en-us/user-guides/rodecaster-pro-ii/how-to-get-started-with-the-rodecaster-pro-ii",
+      "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the RODECaster Pro II getting-started guide says the channel setup screen can switch phantom power, but no page read states how many of the four combo inputs have it, so the four ports claim no phantom supply (phantom to-check)."
     }
   ]
 }

@@ -9,7 +9,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { existsSync } from 'node:fs'
 import { loadPlan } from '../../tools/equipmentPlan'
-import { mergeSpecFlags } from '../../tools/promoteDevice'
+import { promoteDevice } from '../../tools/promoteDevice'
 import { buildProposalsFile, generateProposals, type GenerateInput, type KbDev, type ProposalsFile } from '../../tools/proposalGenerate'
 
 const KB = join('..', 'knowledge-base', 'equipment')
@@ -52,16 +52,49 @@ describe('sync:kb on the real inputs', () => {
     // Everything else (every Bêta row and every other KB device) is rebuilt identically.
     const fromSpec = new Set(plan.filter((r) => r.status === 'new' && r.betaModelled).map((r) => r.id))
     expect(committed.devices.filter((d) => fromSpec.has(d.id as string)).length, 'the specs-built proposals are in the file').toBe(fromSpec.size)
-    // a beta-modelled proposal also carries the port flags its spec declares (mergeSpecFlags, Waves 2 to 5 stage 2: yamaha-xmv8280-d isDantePrimary), which
-    // the KB does not have: the rebuilt side gets the same merge, so every other difference still fails
-    const withSpecFlags = (d: Record<string, unknown>): Record<string, unknown> => {
-      const path = `content/asset-specs/${d.id as string}.json`
-      if (!plan.some((r) => r.id === d.id && r.betaModelled) || !existsSync(path)) return d
-      const spec = JSON.parse(readFileSync(path, 'utf8')) as { ports: { portId: string; flags?: string[] }[] }
-      return { ...d, ports: mergeSpecFlags(d.ports as never, spec.ports.map((p) => ({ id: p.portId, role: 'port', dir: 'in', connector: 'x', signal: 'x', flags: p.flags as never }))) }
+    // Review fix 20: NO merge is applied on the generated side any more (it hid flag drift). The generated and the committed proposals are compared as they are; the
+    // ONLY differences allowed are the ones promoteDevice writes on a beta-modelled proposal from its spec, each checked against that rule below:
+    // a flag the KB does not have, only a non-capability one unless the spec documents the ports or the port names its page (flagsSource), and a signal retyped to
+    // aes50 / usb-control. The committed side is also the exact fixed point of `promote --regen` (next test).
+    const generated = new Map(fresh.file.devices.map((d) => [d.id as string, d]))
+    type P = { portId: string; signal: string; flags?: string[] }
+    const diffs: string[] = []
+    for (const d of committed.devices.filter((x) => !fromSpec.has(x.id as string))) {
+      const g = generated.get(d.id as string)
+      if (!g) {
+        diffs.push(`${d.id as string}: not generated`)
+        continue
+      }
+      const spec = existsSync(`content/asset-specs/${d.id as string}.json`) ? (JSON.parse(readFileSync(`content/asset-specs/${d.id as string}.json`, 'utf8')) as { portsDocumented?: boolean; ports: { portId: string; flagsSource?: string }[] }) : undefined
+      expect(undated({ ...d, ports: undefined }), `${d.id as string} (everything but the ports)`).toEqual(undated({ ...g, ports: undefined }))
+      const gp = g.ports as P[]
+      for (const p of d.ports as P[]) {
+        const q = gp.find((x) => x.portId === p.portId)
+        if (!q) {
+          diffs.push(`${d.id as string}.${p.portId}: not generated`)
+          continue
+        }
+        if (p.signal !== q.signal && !(p.signal === 'aes50' || p.signal === 'usb-control')) diffs.push(`${d.id as string}.${p.portId}: signal ${q.signal} -> ${p.signal}`)
+        for (const f of p.flags ?? []) {
+          if ((q.flags ?? []).includes(f)) continue
+          const capability = f === 'providesPhantom' || f === 'requiresPhantom'
+          const cited = spec?.portsDocumented === true || spec?.ports.find((x) => x.portId === p.portId)?.flagsSource !== undefined
+          if (capability && !cited) diffs.push(`${d.id as string}.${p.portId}: the capability flag ${f} is not in the KB and not cited by its spec`)
+        }
+        for (const f of q.flags ?? []) if (!(p.flags ?? []).includes(f)) diffs.push(`${d.id as string}.${p.portId}: the KB flag ${f} is missing from the file`)
+      }
+      // a kept beta-modelled proposal does not take ports the KB gained later (saved cables keep their ids): every port it has is a generated one, the generated side may have more
+      expect((d.ports as P[]).every((x) => gp.some((y) => y.portId === x.portId)), d.id + " ports are generated ports").toBe(true)
     }
-    expect(undated(fresh.file.devices.filter((d) => !fromSpec.has(d.id as string)).map(withSpecFlags))).toEqual(undated(committed.devices.filter((d) => !fromSpec.has(d.id as string))))
+    expect(diffs).toEqual([])
     expect(fresh.file.skipped).toEqual(committed.skipped)
+  })
+
+  it('review fix 20: every beta-modelled proposal is the exact fixed point of `promote --regen` (no flag drift hides behind a merge in the test)', () => {
+    for (const r of plan.filter((x) => x.betaModelled)) {
+      const res = promoteDevice(r.id, { regen: true, dryRun: true })
+      expect(res.changes, `${r.id}: ${res.reason ?? ''}`).toEqual([])
+    }
   })
 
   it('the file carries the ports and the new proposals that use the twelve Wave 0.3 connectors (the generation with the old connector set has fewer)', () => {

@@ -15,7 +15,7 @@
       "yMm": 28.5,
       "confidence": "guess",
       "connector": "usb-b",
-      "signal": "usb-audio",
+      "signal": "usb-control",
       "dir": "bidir"
     }
   ],

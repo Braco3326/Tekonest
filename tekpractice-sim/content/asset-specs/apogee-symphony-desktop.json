@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -171,5 +169,6 @@
       "url": "https://22712264.fs1.hubspotusercontent-na1.net/hubfs/22712264/Users%20Guides%20and%20Documentation%20PDFs/Symphony%20Desktop/SymphonyDesktopUsersGuide.pdf",
       "note": "Apogee Symphony Desktop User Guide v1.30a (Apogee-owned CDN copy), opened 2026-11-12 (pdftotext): 8.0 in W x 4.75 in D x 1.25 in to 2.5 in H (203.2 x 120.7 x 31.8 to 63.5 mm), 1.85 lb. This differs from the dealer size of the plan row (199 x 125 x 64 mm): the plan row is marked conflict (estimate), so the device is beta-modelled with the plan size. Connectors per the guide: rear XLR inputs 1-2 and 1/4 in inputs 1-2, instrument input on the front, main outputs 1-2 (panel not stated: drawn on the rear), headphone 1 (1/4 in, front) and 2 (3.5 mm, rear), optical in and out (the number of outputs is not stated), USB-C, USB host (type not named: not modelled), locking DC barrel input from the external supply (no signal type: not modelled, so no mains inlet and no power control). The guide panel tour is a picture, so every position is a guess. The sloped top and the touch screen are only picture. The Thomann page of the plan is delisted (no spec text). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 2 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }

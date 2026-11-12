@@ -17,7 +17,10 @@
       "openingMm": 15,
       "connector": "xlr3-m",
       "signal": "mic-level",
-      "dir": "out"
+      "dir": "out",
+      "flags": [
+        "requiresPhantom"
+      ]
     }
   ],
   "controls": [],
@@ -123,6 +126,11 @@
       "kind": "reference",
       "url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
       "note": "build.projection wrap: our own generic artwork (content/generic-panels/sennheiser-mkh-416.json, drawn by npm run asset:panel): plain bands, rings and a stylised grille; no photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo unless a datasheet says the colour. A matt black tube with six columns of long interference slots. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess. The budget floor is 1000 (a slim pencil tube): the 1500 floor of the mic class would need extra stations that this smooth tube does not have."
+    },
+    {
+      "kind": "reference",
+      "url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s/specs-mkh-416.html",
+      "note": "Phantom need (review fix 2026-11-12): the requiresPhantom flag was written by the Wave 1 template from the condenser trait and kept on the data-rule pass without a re-read of the manufacturer sheet; it is now declared in the spec so a regeneration keeps it. NOT re-confirmed against the sheet (phantom to-check, see the equipment log)."
     }
   ]
 }

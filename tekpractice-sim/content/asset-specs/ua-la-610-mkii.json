@@ -20,7 +20,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://media.uaudio.com/assetlibrary/l/a/la-610mkii_manual.pdf"
     },
     {
       "portId": "in-line-xlr",
@@ -51,6 +52,16 @@
       "connector": "ts-quarter",
       "signal": "instrument-hiz",
       "dir": "in"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 430,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
     }
   ],
   "controls": [
@@ -65,6 +76,19 @@
         "w": 9,
         "h": 9,
         "d": 3
+      }
+    },
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 66,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
       }
     }
   ],
@@ -117,6 +141,16 @@
       "kind": "dealer",
       "url": "https://www.zzounds.com/item--UADLA610MK2",
       "note": "Dealer listings (zzounds, B&H, American Musical, Full Compass data sheet) and the manual, read through a search summary 2026-11-12: rear panel balanced XLR mic input, balanced XLR line input and balanced XLR line output; a 1/4 in Hi-Z instrument input on the front panel; the mains connection is not stated (none modelled). The plan lists the family rack-box-v3b; no meter window, front vent block or handles are modelled because no page read states them, so the rack-box v2 params are used. 483 x 311 x 89 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://media.uaudio.com/assetlibrary/l/a/la-610mkii_manual.pdf",
+      "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the LA-610 MKII manual, printed p.5 item 5 and p.25 (PDF pp.9 and 29), says a front toggle applies +48 V to the single MIC INPUT. One mic input, switched on the input."
+    },
+    {
+      "kind": "manual",
+      "url": "https://media.uaudio.com/assetlibrary/l/a/la-610mkii_manual.pdf",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the LA-610 MKII manual (rear-panel item 4, specifications \"Power Connector\") says a supplied detachable IEC cable goes into the rear connector, 100-240 V auto-sensing, and a front power switch exists. The inlet type letter is not named: iec-c14 is assumed (plan assumedConnectors power-in). Position of the inlet and of the switch: guesses."
     }
   ]
 }

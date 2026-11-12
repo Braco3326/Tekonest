@@ -90,9 +90,33 @@
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 430,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
     }
   ],
-  "controls": [],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 395,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
   "build": {
     "shape": "rack-box",
     "params": {
@@ -147,6 +171,12 @@
       "kind": "datasheet",
       "url": "https://static1.squarespace.com/static/58f8d954b8a79b4ccf726c3b/t/5d77b06aa69abd5acee8310c/1568125060297/6300+A3+brochure.pdf",
       "note": "Orban 6300 brochure (downloaded, read as text): digital AES audio, 1 stereo input on XLR, 2 stereo outputs on XLR, 1 word clock or AES11id (75 ohm) sync input (taken as BNC: the type is the usual one for 75 ohm sync, the sheet does not name it), Ethernet for remote control. Not modelled: Ethernet (a control port: the category template would route audio through it) and the mains inlet (not named in the pages read, so no power control). Size 483 x 362 x 45 mm (1U, manufacturer). All positions are guesses (no panel drawing read)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.orban.com/specifications-optimod6300",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the Orban OPTIMOD 6300 specifications page says an IEC inlet with EMI suppression, 100-264 VAC, a detachable 3-wire cord. It does not mention a power switch and the manual was not opened: the type letter is not named (iec-c14 assumed, plan assumedConnectors power-in) and the switch is not documented. The catalogue keeps the simulator's Alimentation control and the entry says it is not a documented switch. Positions: guesses."
     }
-  ]
+  ],
+  "powerNote": "Interrupteur secteur non documenté par la page lue : la commande Alimentation est celle du simulateur"
 }

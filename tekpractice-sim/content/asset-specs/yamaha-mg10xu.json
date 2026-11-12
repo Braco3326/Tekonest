@@ -201,6 +201,16 @@
       "kind": "datasheet",
       "url": "https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf",
       "note": "Yamaha MG10XU technical data sheet (opened, copy hosted by la-bs.com): 4 mic inputs (combo jack, XLR / TRS, 48 V phantom) on mono channels 1-4, 10 line inputs (4 mono + 3 stereo pairs, phone jacks and RCA pins), stereo outputs on XLR-3-32 and phone jacks, monitor out, aux / FX send, stereo phone jack for headphones, USB standard-B (2 in / 2 out); the mixer is supplied from an external PA-10 adaptor, so no mains inlet is modelled. Modelled subset: 4 combos (XLR part), one stereo line pair, one RCA pair, XLR main L / R, phones, USB; the monitor out, aux send and foot switch are not modelled. Size 244 x 294 x 71 mm (W x D x H, labelled). Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions of connectors on the rear face are guesses; the top picture is a generic strip layout."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.la-bs.com/Objets/MG10XU_dt.pdf",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the Yamaha MG10XU data sheet (a third-party host copy) lists an external AC adaptor (PA-10) among the accessories and as the power supply type, and no IEC inlet. No mains inlet is modelled for this device and the entry says so."
     }
-  ]
+  ],
+  "powerNote": "alimentation non modélisée : l'appareil utilise un adaptateur secteur externe",
+  "portAliases": {
+    "in-stereo-line-inputs-ch-5-6-to-9-10-l-r-1": "in-line-l",
+    "in-stereo-line-inputs-ch-5-6-to-9-10-l-r-2": "in-line-r"
+  }
 }

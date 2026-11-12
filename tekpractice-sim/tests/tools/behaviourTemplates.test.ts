@@ -196,10 +196,12 @@ describe('processors and desks by traits (findings 3 and 8)', () => {
       expect(issues, id).toEqual([])
     }
   })
-  it('the naming rule of a desk: main outputs are the ports whose id starts with out-main; a desk with none routes to every non-headphone output; a desk with no output is reported', () => {
+  it('the naming rule of a desk: main outputs are the ports whose id starts with out-main; a desk with none of the documented main / mix / monitor analogue outputs routes nothing (review fix 10: no omni, no AES, no USB); a desk with no output is reported', () => {
     const mic: PlanPort = { id: 'in-mic-1', role: 'mic', dir: 'in', connector: 'xlr3-f', signal: 'mic-level' }
     const omni = (n: number): PlanPort => ({ id: `out-omni-${n}`, role: 'omni', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' })
-    expect(asDevice('console-digital', { traits: ['desk'] }, [mic, omni(1), omni(2), MAINS]).t.routing).toEqual([{ from: 'in-mic-1', to: ['out-omni-1', 'out-omni-2'] }])
+    expect(asDevice('console-digital', { traits: ['desk'] }, [mic, omni(1), omni(2), MAINS]).t.routing).toBeUndefined()
+    const main = (id: string): PlanPort => ({ id, role: 'main', dir: 'out', connector: 'xlr3-m', signal: 'line-level-pro' })
+    expect(asDevice('console-digital', { traits: ['desk'] }, [mic, omni(1), main('out-main-l'), main('out-main-r'), MAINS]).t.routing).toEqual([{ from: 'in-mic-1', to: ['out-main-l', 'out-main-r'] }])
     const none = asDevice('console-analog', { traits: ['desk'] }, [mic, MAINS]).t
     expect(none.routing).toBeUndefined()
     expect(none.issues.join(' ')).toMatch(/out-main/)
@@ -320,7 +322,9 @@ describe('an Ethernet control port takes no audio route (Wave 1 stage 2)', () =>
   })
   it('a codec (network audio by nature) keeps the RJ45 as audio', () => {
     const codec = asDevice('codec', { traits: ['processor'] }, [LINE_IN, { ...LINE_OUT, id: 'out-1' }, { ...LINE_OUT, id: 'out-2' }, net, MAINS])
-    expect(codec.t.routing?.[0]?.to).toContain('net')
+    expect(codec.t.ports.find((q) => q.portId === 'net')?.signal).toBe('aoip')
+    // review fix 6: a codec has no documented through-route, so none is invented (its send inputs never feed its outputs)
+    expect(codec.t.routing).toBeUndefined()
   })
 })
 

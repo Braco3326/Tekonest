@@ -5239,10 +5239,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T01:05:06.947Z",
+      "date": "2026-11-12T20:06:48.806Z",
       "specSource": "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
       "logosRemoved": true,
       "gates": [
@@ -5290,7 +5287,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
@@ -5569,7 +5569,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "date": "2026-11-12T02:32:53.805Z",
+      "date": "2026-11-12T20:06:32.110Z",
       "specSource": "https://thomannmusic.com/mackie_profx12v3.htm",
       "logosRemoved": true,
       "gates": [
@@ -5636,7 +5636,7 @@
         "_generic_opposite.png"
       ],
       "taskId": null,
-      "date": "2026-11-12T02:33:06.954Z",
+      "date": "2026-11-12T20:06:41.384Z",
       "specSource": "https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf",
       "logosRemoved": true,
       "gates": [
@@ -7067,10 +7067,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T02:24:29.226Z",
+      "date": "2026-11-12T20:06:56.168Z",
       "specSource": "https://pubs.shure.com/view/guide/QLXD/en-US.pdf",
       "logosRemoved": true,
       "gates": [
@@ -7118,14 +7115,17 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
       "id": "orban-optimod-6300",
       "kind": "device",
       "tris": 1920,
-      "ports": 8,
+      "ports": 9,
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
       "photos": [
@@ -7133,10 +7133,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T02:24:39.744Z",
+      "date": "2026-11-12T20:06:14.078Z",
       "specSource": "https://www.orban.com/specifications-optimod6300",
       "logosRemoved": true,
       "gates": [
@@ -7184,7 +7181,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
@@ -9447,7 +9447,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "date": "2026-11-12T08:56:49.232Z",
+      "date": "2026-11-12T20:07:11.784Z",
       "specSource": "https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf",
       "logosRemoved": true,
       "gates": [
@@ -9513,7 +9513,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "date": "2026-11-12T08:57:00.201Z",
+      "date": "2026-11-12T20:07:18.893Z",
       "specSource": "https://www.sennheiser.com/en-au/catalog/products/wireless-systems/em-6000",
       "logosRemoved": true,
       "gates": [
@@ -9777,10 +9777,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:06:40.408Z",
+      "date": "2026-11-12T20:07:03.537Z",
       "specSource": "https://www.audio-technica.com/en-sea/atw-r3210",
       "logosRemoved": true,
       "gates": [
@@ -9828,7 +9825,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
@@ -9901,7 +9901,7 @@
       "id": "eventide-h9000",
       "kind": "device",
       "tris": 1920,
-      "ports": 4,
+      "ports": 5,
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
       "photos": [
@@ -9909,10 +9909,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:07:14.731Z",
+      "date": "2026-11-12T20:06:06.319Z",
       "specSource": "https://www.eventideaudio.com/rackmount/h9000/",
       "logosRemoved": true,
       "gates": [
@@ -9960,7 +9957,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
@@ -10165,7 +10165,7 @@
       "id": "ua-la-610-mkii",
       "kind": "device",
       "tris": 1920,
-      "ports": 4,
+      "ports": 5,
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
       "photos": [
@@ -10173,7 +10173,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "date": "2026-11-12T08:57:41.733Z",
+      "date": "2026-11-12T20:05:51.015Z",
       "specSource": "https://www.adorama.com/uala610m2d.html",
       "logosRemoved": true,
       "gates": [
@@ -10297,7 +10297,7 @@
       "id": "tc-electronic-m3000",
       "kind": "device",
       "tris": 1776,
-      "ports": 11,
+      "ports": 12,
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
       "photos": [
@@ -10305,10 +10305,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:12:39.483Z",
+      "date": "2026-11-12T20:06:21.897Z",
       "specSource": "https://www.zzounds.com/item--TCE9505000",
       "logosRemoved": true,
       "gates": [
@@ -10356,14 +10353,17 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",
       "id": "dbx-160a",
       "kind": "device",
       "tris": 1776,
-      "ports": 4,
+      "ports": 5,
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
       "photos": [
@@ -10371,10 +10371,7 @@
         "_generic_io.png"
       ],
       "taskId": null,
-      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
-      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
-      "trademark": "branded-internal",
-      "date": "2026-11-12T05:12:49.994Z",
+      "date": "2026-11-12T20:05:58.450Z",
       "specSource": "https://manualmachine.com/dbxpro/160a/1285223-user-manual",
       "logosRemoved": true,
       "gates": [
@@ -10422,7 +10419,10 @@
           "gate": "validator",
           "ok": true
         }
-      ]
+      ],
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal"
     },
     {
       "status": "ok",

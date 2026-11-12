@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -46,8 +44,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -60,8 +57,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -74,8 +70,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -88,8 +83,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -102,8 +96,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -116,8 +109,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -167,7 +159,7 @@
       "yMm": 110,
       "confidence": "guess",
       "connector": "ethercon",
-      "signal": "aoip",
+      "signal": "aes50",
       "dir": "bidir"
     },
     {
@@ -177,7 +169,7 @@
       "yMm": 110,
       "confidence": "guess",
       "connector": "ethercon",
-      "signal": "aoip",
+      "signal": "aes50",
       "dir": "bidir"
     },
     {
@@ -253,5 +245,6 @@
       "url": "https://www.manualslib.com/manual/722557/Behringer-X32.html?page=25",
       "note": "Behringer X32 manual (manualslib, research read; table scrambled by the extraction): 625 x 510 x 215 mm, 15.4 kg (dealer 631 x 512 x 213); 16 XLR mic inputs, 8 XLR outputs, 17 motorised faders; summary: 2 AES50, card slot, USB-A top, USB-B and Ethernet rear. The connector table could not be read cleanly, so beta-modelled: 8 of 16 mics, 4 XLR outputs, 2 AES50 as etherCON (aoip), USB-A (recording). USB-B / Ethernet (remote control), card slot and mains not modelled. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 8 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }

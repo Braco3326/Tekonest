@@ -20,7 +20,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://pae-web.presonusmusic.com/downloads/products/pdf/STUDIO24c_OwnersManual_EN_25052022.pdf"
     },
     {
       "portId": "in-combo-2",
@@ -34,7 +35,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://pae-web.presonusmusic.com/downloads/products/pdf/STUDIO24c_OwnersManual_EN_25052022.pdf"
     },
     {
       "portId": "out-main-1",
@@ -112,6 +114,11 @@
       "kind": "dealer",
       "url": "https://www.andertons.co.uk/presonus-studio-2-4c-2x2-192-khz-usb-c-interface-w-midi-i-o-studio24c",
       "note": "Dealer page (Andertons) and the owner manual, both read through search summaries 2026-11-12 (the manual PDF was not readable): two combo XLR / TRS mic-line-instrument inputs on the front, two balanced 1/4 in TRS main outputs, a headphone output, MIDI in and out, one USB-C port, USB bus power (no mains). The MIDI jacks have no catalogue signal (not ports); the headphone jack placement differs between summaries (modelled on the rear). 180 x 144 x 44 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://pae-web.presonusmusic.com/downloads/products/pdf/STUDIO24c_OwnersManual_EN_25052022.pdf",
+      "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the Studio 24c owner's manual (PDF p.5) says the 48V button switches phantom power on and off for ALL microphone inputs (one global switch) and that both input channels have combo jacks."
     }
   ]
 }

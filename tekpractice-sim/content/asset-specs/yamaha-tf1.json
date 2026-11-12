@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -46,8 +44,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -60,8 +57,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -74,8 +70,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -88,8 +83,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -102,8 +96,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -116,8 +109,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -285,5 +277,6 @@
       "url": "https://www.la-bs.com/Objets/TF1_dt.pdf",
       "note": "Yamaha TF series data sheet (opened): local connectors analog input 16 mic / line + 2 stereo line (combo jack XLR-3-31 or TRS, RCA pin), analog output 16 (OMNI OUT XLR-3-32), phones (TRS), USB (B type to host, A type for iPad), Ethernet, 1 NY slot; power 100-240 V. Modelled subset: 8 of 16 combos (XLR part), RCA pair, 4 of 16 outputs, phones, USB-B, Ethernet (aoip, control). The sheet gives no size per model: 510 x 599 x 225 mm is the manual's value with the axis order assumed (the TF3 is 716 wide), so an estimate and beta-modelled. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 8 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }

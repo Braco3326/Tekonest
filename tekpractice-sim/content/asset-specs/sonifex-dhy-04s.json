@@ -117,6 +117,12 @@
       "kind": "manual",
       "url": "https://cdn.abicart.com/shop/ws42/76342/art73/159887173-02cecc-sonifex_dhy04_manual.pdf",
       "note": "Sonifex DHY-04 handbook rev 1.06 (dealer-hosted copy of the manufacturer document), opened 2026-11-12, rows for the DHY-04S: physical specification 4.5 cm H x 48.3 cm W x 17.5 cm D, 1U, 1.45 kg net (the plan size is the same; its axis assumption is settled by the handbook header order Height, Width, Depth). Rear panel: input XLR (mic/line and AES/EBU, auto-sensing), output XLR, telephone line and handset RJ11 (no catalogue connector, not modelled), conference RJ45 (analog audio, not Ethernet: not modelled), 9-way D remotes (no signal), Ethernet RJ45 (configuration), RS232, earth bond screw, filtered IEC mains (CEE22; iec-c14 assumed, plan assumedConnectors power-in). The handbook lists no power switch: the `power` control is the simulator toggle drawn as a rocker next to the inlet because the template requires one per mains inlet. The XLR input is modelled as the line-level send to the caller (it also accepts mic level and AES3). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "manual",
+      "url": "https://cdn.abicart.com/shop/ws42/76342/art73/159887173-02cecc-sonifex_dhy04_manual.pdf",
+      "note": "Mains switch (review fix, read 2026-11-12 by a research pass): the DHY-04 manual (covers the DHY-04S) lists a power LED, reset, speed-dial, AES lock and line hold / connect on the front panel and no power switch; mains enters through a filtered IEC inlet 85-264 V and the manual says to disconnect the lead before opening the unit. The manual does not state outright that there is no switch. The simulator's Alimentation control is not a documented switch."
     }
-  ]
+  ],
+  "powerNote": "Aucun interrupteur secteur n'est cité sur la face avant du manuel : la commande Alimentation est celle du simulateur"
 }

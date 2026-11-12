@@ -103,6 +103,12 @@
       "kind": "dealer",
       "url": "https://avlgear.com/products/jk-audio-host-broadcast-host-desktop-digital-telephone-hybrid",
       "note": "AVL dealer page (equipment plan source; its fetch answered HTTP 429 in this run)."
+    },
+    {
+      "kind": "manual",
+      "url": "https://decibel.ch/upfiles/documents/jk-audio-broadcast-host-user-guide-51016.pdf",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the Broadcast Host user guide says the power jack is only for the supplied regulated 9 VDC supply. No mains inlet is modelled for this device and the entry says so."
     }
-  ]
+  ],
+  "powerNote": "alimentation non modélisée : l'appareil utilise une alimentation externe 9 V continu"
 }

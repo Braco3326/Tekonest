@@ -20,7 +20,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://docs.audient.com/id14/front-panel/"
     },
     {
       "portId": "in-combo-2",
@@ -34,7 +35,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://docs.audient.com/id14/front-panel/"
     },
     {
       "portId": "in-optical",
@@ -172,6 +174,11 @@
       "kind": "dealer",
       "url": "https://www.thomann.de/be/audient_id14_mkii.htm",
       "note": "Thomann page (opened 2026-11-12): two combined XLR / jack mic-line inputs, one discrete JFET instrument input on the front, one combined ADAT / S-PDIF TOSLINK input, four 6.3 mm line outputs, one 6.3 mm and one 3.5 mm headphone output, one USB-C port, USB bus powered (no mains). Only the instrument input has a stated panel (front); the rest are modelled on the rear. 173 x 120 x 62 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://docs.audient.com/id14/front-panel/",
+      "note": "Phantom power (review fix, read 2026-11-12 by a research pass, through a summarising fetch tool): the Audient iD14 front-panel guide says the two mic inputs have +48 V, each switchable on its own; the tech-specs page gives 48 V +/- 4 V at 10 mA per channel (https://audient.com/products/audio-interfaces/id14/tech-specs/)."
     }
   ]
 }

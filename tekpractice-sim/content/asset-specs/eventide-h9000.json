@@ -47,9 +47,33 @@
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 430,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
     }
   ],
-  "controls": [],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 66,
+      "axis": "z",
+      "sizeMm": {
+        "w": 14,
+        "h": 14,
+        "d": 4
+      }
+    }
+  ],
   "build": {
     "shape": "rack-box",
     "params": {
@@ -99,6 +123,11 @@
       "kind": "datasheet",
       "url": "https://www.eventideaudio.com/rackmount/h9000/",
       "note": "Eventide H9000 page (opened 2026-11-12): stereo analog I/O on XLR (modelled as two inputs and two outputs), 8-channel analog I/O on DB25 (Tascam standard), AES DB-25 and XLR, S-PDIF RCA, optical, 8-channel ADAT, three MIDI DIN jacks, two TRS remote inputs, LAN. The page gives no direction or count for the AES XLR and RCA connectors and no power connection, so those are not modelled (documented subset: the XLR audio I/O). 483 x 318 x 89 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://downloads.eventideaudio.com/manuals/h9000/H9000UsersManual.pdf",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the H9000 user's manual (rear and front panel sections) says to connect a standard IEC power cable, the supply is international-voltage, and a latching front button powers the unit on and off. The inlet type letter is not named: iec-c14 is assumed (plan assumedConnectors power-in). Positions: guesses."
     }
   ]
 }

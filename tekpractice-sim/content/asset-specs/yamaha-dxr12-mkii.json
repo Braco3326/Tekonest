@@ -45,7 +45,8 @@
       "insetMm": 3,
       "connector": "xlr3-m",
       "signal": "line-level-pro",
-      "dir": "out"
+      "dir": "out",
+      "thruOf": "in-xlr"
     },
     {
       "portId": "in-rca-l",
@@ -87,7 +88,8 @@
       "insetMm": 3,
       "connector": "xlr3-m",
       "signal": "line-level-pro",
-      "dir": "out"
+      "dir": "out",
+      "thruOf": "in-xlr"
     },
     {
       "portId": "power-in",

@@ -219,5 +219,11 @@
       "url": "https://www.markertek.com/Attachments/Manuals/MUTEC/8015-102-Manual.pdf",
       "note": "MUTEC MC-3+ manual, technical data (opened by the Wave 0c research): cover 196 x 42 x 156 mm (W x H x D, without connectors), front panel 198 x 44 x 4 mm, about 1260 g, 9.5 inch half-rack housing; rear: 3 pairs of BNC word-clock outputs (6 BNC, 75 ohm), S/P-DIF out on RCA and TOSLINK, AES3 out XLR male, AES3 in XLR female, S/P-DIF in RCA and TOSLINK, 1 BNC WCLK / 10 MHz input, a USB port (type not stated: not modelled), the mains inlet. The size is the cover; the front panel is 2 mm wider and taller (not modelled). Colours: cover matte black powder-coat, front panel aluminium-colour (item 8015-100). Documented ports: all the rear connectors above; positions on the rear panel are guesses (no drawing read). The front power button, its position and the display layout are guesses."
     }
-  ]
+  ],
+  "portAliases": {
+    "bidir-s-pdif-coaxial-in-out-1": "in-spdif-rca",
+    "bidir-s-pdif-coaxial-in-out-2": "out-spdif-rca",
+    "bidir-s-pdif-optical-in-out-1": "in-spdif-opt",
+    "bidir-s-pdif-optical-in-out-2": "out-spdif-opt"
+  }
 }

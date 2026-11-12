@@ -55,7 +55,7 @@
       "yMm": 60,
       "confidence": "guess",
       "connector": "ethercon",
-      "signal": "aoip",
+      "signal": "aes50",
       "dir": "bidir"
     }
   ],

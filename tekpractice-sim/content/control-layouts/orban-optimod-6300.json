@@ -1,0 +1,25 @@
+{
+ "schema": 1,
+ "deviceId": "orban-optimod-6300",
+ "generated": true,
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 395,
+   "yMm": 22,
+   "sizeMm": {
+    "w": 12,
+    "h": 18,
+    "d": 6
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

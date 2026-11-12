@@ -4,7 +4,7 @@
  *  - 13: realWorld.model names what is modelled (the PSM 300 is the P3T transmitter only, the SLX-D the SLXD4 receiver only) and typicalUse is an accurate
  *    short English sentence, not a raw knowledge-base leftover ("small PA" for a mixer, "home studio" for a patchbay, "live vocals" for a receiver).
  */
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { loadPlan } from '../../tools/equipmentPlan'
 
@@ -21,9 +21,12 @@ describe('desk controls come from the spec (finding 8)', () => {
       expect(ids).not.toContain('balance-master')
       const spec = JSON.parse(readFileSync(`content/asset-specs/${id}.json`, 'utf8')) as { controls: { controlId: string }[] }
       expect([...spec.controls.map((c) => c.controlId)].sort()).toEqual([...ids].sort())
+      // review fix 13: the master fader range is not on any sheet read, so the Rodecaster has no control and no layout at all
+      if (!existsSync(`content/control-layouts/${id}.json`)) return expect(ids, id).toEqual([])
       const layout = JSON.parse(readFileSync(`content/control-layouts/${id}.json`, 'utf8')) as { controls: { catalogControl?: string }[] }
       expect(layout.controls.map((c) => c.catalogControl)).not.toContain('mute-master')
       expect(layout.controls.map((c) => c.catalogControl)).not.toContain('balance-master')
+      expect(layout.controls.map((c) => c.catalogControl)).not.toContain('fader-master')
     })
   }
 })

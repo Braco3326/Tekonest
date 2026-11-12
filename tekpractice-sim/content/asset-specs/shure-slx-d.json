@@ -19,7 +19,7 @@
       "dir": "out"
     },
     {
-      "portId": "out-14",
+      "portId": "out-quarter",
       "face": "io",
       "xMm": 120,
       "yMm": 21,
@@ -78,6 +78,15 @@
       "kind": "datasheet",
       "url": "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
       "note": "Shure SLX-D spec sheet (read as text on 2026-11-12), SLXD4 single-channel receiver: 42 x 197 x 152 mm (H x W x D), 816 g without antennas, 15 V DC external supply; BNC antenna inputs, a balanced XLR output with a mic / line switch, a balanced 6.35 mm (1/4 in) output, a single-port Ethernet 10/100 interface. The BNC antennas and the DC input have no catalogue signal type: drawn on the picture only. The SLXD1 / SLXD2 / SLXD3 transmitters and the SLXD5 portable receiver in the same record are separate devices. Positions are GUESSES (no panel drawing read)."
+    },
+    {
+      "kind": "manual",
+      "url": "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the SLX-D specification sheet lists an external DC supply (15 VDC, 600 mA, tip positive) and no IEC inlet. No mains inlet is modelled for this device and the entry says so."
     }
-  ]
+  ],
+  "powerNote": "alimentation non modélisée : l'appareil utilise une alimentation externe 15 V continu",
+  "portAliases": {
+    "out-14": "out-quarter"
+  }
 }

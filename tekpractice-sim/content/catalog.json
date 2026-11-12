@@ -60,11 +60,13 @@
     { "id": "spdif",               "label": "S/PDIF digital stereo",                     "class": "digital" },
     { "id": "madi",                "label": "MADI (AES10) multichannel",                 "class": "digital" },
     { "id": "aoip",                "label": "Audio over IP (Dante / AES67 / Livewire+ / codec stream — simplified)", "class": "digital" },
+    { "id": "aes50",               "label": "AES50 (SuperMAC) digital audio over Cat5 — Behringer / Midas consoles and stage boxes only; not Dante", "class": "digital" },
     { "id": "wordclock",           "label": "Word clock sync",                           "class": "digital" },
     { "id": "usb-audio",           "label": "Computer audio link (USB / Thunderbolt / DigiLink — simplified)", "class": "digital" },
     { "id": "gpio-tally",          "label": "GPIO logic / tally",                        "class": "control" },
     { "id": "dmx512",              "label": "DMX512 lighting control",                   "class": "control" },
     { "id": "ethernet-control",   "label": "Control network Ethernet (firmware, remote software, LAN: carries no audio)", "class": "control" },
+    { "id": "usb-control",         "label": "USB control link (MIDI / control surface: carries no audio)", "class": "control" },
     { "id": "phantom-48v",         "label": "Phantom power +48 V (carried on mic lines)", "class": "power" },
     { "id": "mains-power",         "label": "Mains power 230 V",                         "class": "power" }
   ],
@@ -575,8 +577,7 @@
         { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
       ],
       "controls": [
-        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true },
-        { "id": "fader-master", "type": "enum", "label": "Fader master", "options": ["-inf", "-30", "-20", "-10", "-6", "-3", "0", "+6", "+10"], "defaultOption": "0" }
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ],
       "routing": [
         { "from": "in-mic-1", "to": ["out-main-l", "out-main-r"] },
@@ -655,7 +656,11 @@
         "in-word-clock-10-mhz-input": "in-wclk",
         "in-aes3-aes11-input": "in-aes3",
         "out-aes3-aes11-output": "out-aes3",
-        "in-ac-mains-in": "power-in"
+        "in-ac-mains-in": "power-in",
+        "bidir-s-pdif-coaxial-in-out-1": "in-spdif-rca",
+        "bidir-s-pdif-coaxial-in-out-2": "out-spdif-rca",
+        "bidir-s-pdif-optical-in-out-1": "in-spdif-opt",
+        "bidir-s-pdif-optical-in-out-2": "out-spdif-opt"
       }
     },
     {
@@ -694,7 +699,7 @@
       "realWorld": {
         "brand": "JK Audio", "model": "Broadcast Host", "category": "telephone-hybrid",
         "typicalUse": "Desktop telephone hybrid that puts a caller on air with a clean send for radio and podcasts",
-        "notes": "Built from the equipment plan (2026-11-12); size 178 x 152 x 41 mm (w x d x h) (datasheet, size confidence ok). Size source: https://avlgear.com/products/jk-audio-host-broadcast-host-desktop-digital-telephone-hybrid. Ports: documented in the asset spec (https://decibel.ch/upfiles/documents/jk-audio-broadcast-host-datasheet-27723.pdf)."
+        "notes": "Built from the equipment plan (2026-11-12); size 178 x 152 x 41 mm (w x d x h) (datasheet, size confidence ok). Size source: https://avlgear.com/products/jk-audio-host-broadcast-host-desktop-digital-telephone-hybrid. Ports: documented in the asset spec (https://decibel.ch/upfiles/documents/jk-audio-broadcast-host-datasheet-27723.pdf). Alimentation non modélisée : l'appareil utilise une alimentation externe 9 V continu."
       },
       "ports": [
         { "portId": "in-send-xlr", "dir": "in", "connector": "xlr3-f", "signal": "mic-level" },
@@ -756,13 +761,13 @@
       "realWorld": {
         "brand": "RODE", "model": "Rodecaster Pro II", "category": "console-podcast",
         "typicalUse": "Integrated podcast and streaming production console with four microphone inputs",
-        "notes": "Built from the equipment plan (2026-11-12); size 305 x 270 x 60 mm (w x d x h) (datasheet, size confidence ok). Size source: https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf. Ports: documented in the asset spec (https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf)."
+        "notes": "Built from the equipment plan (2026-11-12); size 305 x 270 x 60 mm (w x d x h) (datasheet, size confidence ok). Size source: https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf. Ports: documented in the asset spec (https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf). Alimentation non modélisée (source non lue)."
       },
       "ports": [
-        { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
-        { "portId": "in-combo-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
-        { "portId": "in-combo-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
-        { "portId": "in-combo-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-combo-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-combo-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-combo-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
         { "portId": "out-main-l", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
         { "portId": "out-main-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
         { "portId": "usb-1", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
@@ -772,9 +777,6 @@
         { "portId": "out-phones-2", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
         { "portId": "out-phones-3", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
         { "portId": "out-phones-4", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" }
-      ],
-      "controls": [
-        { "id": "fader-master", "type": "enum", "label": "Fader master", "options": ["-inf", "-30", "-20", "-10", "-6", "-3", "0", "+6", "+10"], "defaultOption": "0" }
       ],
       "routing": [
         { "from": "in-combo-1", "to": ["out-main-l", "out-main-r"] },
@@ -879,7 +881,7 @@
       "realWorld": {
         "brand": "Shure", "model": "PSM 300 (P3T transmitter)", "category": "iem",
         "typicalUse": "Half-rack in-ear monitor transmitter (P3T) with balanced 6.35 mm inputs, loop outputs and a detachable antenna",
-        "notes": "Built from the equipment plan (2026-11-12); size 198 x 172 x 43 mm (w x d x h) (datasheet, size confidence ok). Size source: https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf. Ports: documented in the asset spec (https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf)."
+        "notes": "Built from the equipment plan (2026-11-12); size 198 x 172 x 43 mm (w x d x h) (datasheet, size confidence ok). Size source: https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf. Ports: documented in the asset spec (https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf). Alimentation non modélisée : l'appareil utilise une alimentation externe PS24."
       },
       "ports": [
         { "portId": "in-1", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
@@ -901,17 +903,18 @@
       "realWorld": {
         "brand": "Shure", "model": "SLX-D (SLXD4 receiver)", "category": "wireless",
         "typicalUse": "Single-channel digital wireless microphone receiver with XLR and 6.35 mm outputs, BNC antenna inputs and an Ethernet interface",
-        "notes": "Built from the equipment plan (2026-11-12); size 197 x 152 x 42 mm (w x d x h) (datasheet, size confidence ok). Size source: https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf. Ports: documented in the asset spec (https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf)."
+        "notes": "Built from the equipment plan (2026-11-12); size 197 x 152 x 42 mm (w x d x h) (datasheet, size confidence ok). Size source: https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf. Ports: documented in the asset spec (https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf). Alimentation non modélisée : l'appareil utilise une alimentation externe 15 V continu."
       },
       "ports": [
         { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
-        { "portId": "out-14", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-quarter", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
         { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" }
       ],
       "portAliases": {
         "out-slxd4-balanced-output-mic-line-switch": "out-xlr",
-        "out-slxd4-balanced-1-4-output": "out-14",
-        "bidir-slxd4-ethernet-10-100": "net"
+        "out-slxd4-balanced-1-4-output": "out-quarter",
+        "bidir-slxd4-ethernet-10-100": "net",
+        "out-14": "out-quarter"
       }
     },
     {
@@ -921,7 +924,7 @@
       "realWorld": {
         "brand": "Neumann", "model": "KH 120 II", "category": "studio-monitor",
         "typicalUse": "Two-way active nearfield studio monitor (130 mm woofer, 25 mm tweeter) with analogue XLR and S/PDIF inputs",
-        "notes": "Built from the equipment plan (2026-11-12); size 182 x 227 x 287 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.neumann.com/en-en/products/monitors/kh-120-ii/. Ports: documented in the asset spec (https://www.neumann.com/en-en/products/monitors/kh-120-ii/), except the connector type of power-in (iec-c14), assumed: no cited page states it. Nominal coverage 90 x 60 (valeur nominale): no manufacturer coverage recorded in the plan."
+        "notes": "Built from the equipment plan (2026-11-12); size 182 x 227 x 287 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.neumann.com/en-en/products/monitors/kh-120-ii/. Ports: documented in the asset spec (https://www.neumann.com/en-en/products/monitors/kh-120-ii/), except the connector type of power-in (iec-c14), assumed: no cited page states it. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "in-analog", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -933,10 +936,6 @@
       "controls": [
         { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ],
-      "acoustic": {
-        "coverage_h_deg": { "value": 90, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur retenue dans le plan)", "retrieved": "2026-11-12" } },
-        "coverage_v_deg": { "value": 60, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur retenue dans le plan)", "retrieved": "2026-11-12" } }
-      },
       "modelFront": {
         "axis": "-z",
         "evidence": "Scripted curved-cabinet model (public/assets/neumann-kh-120-ii.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
@@ -999,7 +998,7 @@
       "realWorld": {
         "brand": "Genelec", "model": "8341A (The Ones, SAM)", "category": "studio-monitor",
         "typicalUse": "near-field mixing",
-        "notes": "Built from the equipment plan (2026-11-12); size 237 x 243 x 351 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.genelec.com/8351. Ports: documented in the asset spec (https://www.genelec.com/8341a). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 237 x 243 x 351 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.genelec.com/8351. Ports: documented in the asset spec (https://www.genelec.com/8341a), except the connector type of power-in (iec-c14), assumed: no cited page states it. Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "in-analog", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -1018,7 +1017,8 @@
       },
       "routing": [
         { "from": "in-analog", "to": ["transducer"] },
-        { "from": "in-aes", "to": ["transducer"] }
+        { "from": "in-aes", "to": ["transducer"] },
+        { "from": "in-aes", "to": ["out-aes"], "passive": true }
       ],
       "portAliases": {
         "in-analog-input": "in-analog",
@@ -1047,7 +1047,7 @@
       "realWorld": {
         "brand": "PreSonus", "model": "Monitor Station V2", "category": "monitor-controller",
         "typicalUse": "PreSonus Monitor Station V2 (monitor-controller)",
-        "notes": "Built from the equipment plan (2026-11-12); size 228.6 x 216 x 63.5 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.prosoundweb.com/presonus-unveils-new-monitor-station-v2-desktop-studio-monitor-source-controller/. Ports: documented in the asset spec (https://goknight.com/presonus-monitor-station-2-desktop-studio-control-center-with-spdif-input/)."
+        "notes": "Built from the equipment plan (2026-11-12); size 228.6 x 216 x 63.5 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.prosoundweb.com/presonus-unveils-new-monitor-station-v2-desktop-studio-monitor-source-controller/. Ports: documented in the asset spec (https://goknight.com/presonus-monitor-station-2-desktop-studio-control-center-with-spdif-input/). Alimentation non modélisée (source non lue)."
       },
       "ports": [
         { "portId": "in-a-l", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
@@ -1072,16 +1072,6 @@
         { "portId": "out-phones-2", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
         { "portId": "out-phones-3", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
         { "portId": "out-phones-4", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" }
-      ],
-      "routing": [
-        { "from": "in-a-l", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
-        { "from": "in-a-r", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
-        { "from": "in-b-l", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
-        { "from": "in-b-r", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
-        { "from": "in-aux-l", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
-        { "from": "in-aux-r", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
-        { "from": "in-spdif", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] },
-        { "from": "in-aux-35", "to": ["out-main-l", "out-main-r", "out-spk-a-l", "out-spk-a-r", "out-spk-b-l", "out-spk-b-r", "out-spk-c-l", "out-spk-c-r", "out-cue-l", "out-cue-r"] }
       ]
     },
     {
@@ -1110,7 +1100,7 @@
       "realWorld": {
         "brand": "Yamaha", "model": "MG10XU", "category": "console-analog",
         "typicalUse": "small PA",
-        "notes": "Built from the equipment plan (2026-11-12); size 244 x 294 x 71 mm (w x d x h) (datasheet, size confidence ok). Size source: https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf. Ports: documented in the asset spec (https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf)."
+        "notes": "Built from the equipment plan (2026-11-12); size 244 x 294 x 71 mm (w x d x h) (datasheet, size confidence ok). Size source: https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf. Ports: documented in the asset spec (https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf). Alimentation non modélisée : l'appareil utilise un adaptateur secteur externe."
       },
       "ports": [
         { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
@@ -1143,7 +1133,9 @@
         "in-mic-line-input-ch-1-4-combo-jack-part-2": "in-line-r",
         "out-stereo-out-l-r-xlr-1": "out-main-l",
         "out-stereo-out-l-r-xlr-2": "out-main-r",
-        "bidir-usb-2-0-audio-to-computer": "usb"
+        "bidir-usb-2-0-audio-to-computer": "usb",
+        "in-stereo-line-inputs-ch-5-6-to-9-10-l-r-1": "in-line-l",
+        "in-stereo-line-inputs-ch-5-6-to-9-10-l-r-2": "in-line-r"
       }
     },
     {
@@ -1175,18 +1167,18 @@
       "routing": [
         { "from": "in-mic-1", "to": ["out-line-1"] },
         { "from": "in-mic-2", "to": ["out-line-2"] },
-        { "from": "in-line-1", "to": ["out-aes-1"] },
-        { "from": "in-line-2", "to": ["out-aes-2"] }
+        { "from": "in-line-1", "to": ["out-line-1"] },
+        { "from": "in-line-2", "to": ["out-line-2"] }
       ]
     },
     {
       "id": "audinate-dante-avio-install",
-      "label": "Audinate Dante AVIO Install (2IN / 2OUT / 2IN2OUT)",
+      "label": "Audinate Dante AVIO Install (2IN)",
       "levels": [],
       "realWorld": {
-        "brand": "Audinate", "model": "Dante AVIO Install (2IN / 2OUT / 2IN2OUT)", "category": "stagebox",
-        "typicalUse": "Audinate Dante AVIO Install (2IN / 2OUT / 2IN2OUT) (stagebox)",
-        "notes": "Built from the equipment plan (2026-11-12); size 150.7 x 53.8 x 38.1 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf. Ports: documented in the asset spec (https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf)."
+        "brand": "Audinate", "model": "Dante AVIO Install 2IN (AVIO-A-2IN-EB)", "category": "stagebox",
+        "typicalUse": "Dante analogue input adapter, 2 channels, Euroblock, PoE",
+        "notes": "Built from the equipment plan (2026-11-12); size 150.7 x 53.8 x 38.1 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf. Ports: documented in the asset spec (https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf). Alimentation non modélisée (source non lue)."
       },
       "ports": [
         { "portId": "in-analog", "dir": "in", "connector": "euroblock", "signal": "line-level-pro" },
@@ -1200,7 +1192,7 @@
       "realWorld": {
         "brand": "Avid", "model": "S1", "category": "controller",
         "typicalUse": "Avid S1 (controller)",
-        "notes": "Built from the equipment plan (2026-11-12); size 316 x 377 x 103 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.adorama.com/av990074096.html. Ports: documented in the asset spec (https://resources.avid.com/SupportFiles/ProMixing/Avid_S1_Guide_v2025.6.pdf)."
+        "notes": "Built from the equipment plan (2026-11-12); size 316 x 377 x 103 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.adorama.com/av990074096.html. Ports: documented in the asset spec (https://resources.avid.com/SupportFiles/ProMixing/Avid_S1_Guide_v2025.6.pdf). Alimentation non modélisée : l'appareil utilise un adaptateur secteur externe."
       },
       "ports": [
         { "portId": "net-eucon", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" }
@@ -1275,7 +1267,7 @@
       "realWorld": {
         "brand": "Genelec", "model": "8040B", "category": "studio-monitor",
         "typicalUse": "Genelec 8040B (studio-monitor)",
-        "notes": "Built from the equipment plan (2026-11-12); size 237 x 223 x 365 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.genelec.com/8040b. Ports: documented in the asset spec (https://www.genelec.com/8040b). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 237 x 223 x 365 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.genelec.com/8040b. Ports: documented in the asset spec (https://www.genelec.com/8040b), except the connector type of power-in (iec-c14), assumed: no cited page states it. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "in-analog", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -1299,7 +1291,7 @@
       "realWorld": {
         "brand": "Midas", "model": "M32", "category": "console-digital",
         "typicalUse": "Midas M32 (console-digital)",
-        "notes": "Built from the equipment plan (2026-11-12); size 891 x 612 x 256 mm (w x d x h) (datasheet, size confidence ok). Size source: https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf. Ports: documented in the asset spec (https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf)."
+        "notes": "Built from the equipment plan (2026-11-12); size 891 x 612 x 256 mm (w x d x h) (datasheet, size confidence ok). Size source: https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf. Ports: documented in the asset spec (https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it."
       },
       "ports": [
         { "portId": "in-mic-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
@@ -1310,7 +1302,7 @@
         { "portId": "in-mic-6", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
         { "portId": "in-mic-7", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
         { "portId": "in-mic-8", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
-        { "portId": "in-talkback", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-talkback", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
         { "portId": "out-main-l", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
         { "portId": "out-main-r", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
         { "portId": "out-mono", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
@@ -1323,8 +1315,8 @@
         { "portId": "out-mon-r", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
         { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
         { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
-        { "portId": "aes50-a", "dir": "bidir", "connector": "ethercon", "signal": "aoip" },
-        { "portId": "aes50-b", "dir": "bidir", "connector": "ethercon", "signal": "aoip" },
+        { "portId": "aes50-a", "dir": "bidir", "connector": "ethercon", "signal": "aes50" },
+        { "portId": "aes50-b", "dir": "bidir", "connector": "ethercon", "signal": "aes50" },
         { "portId": "usb-a", "dir": "bidir", "connector": "usb-a", "signal": "usb-audio" },
         { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
       ],
@@ -1340,7 +1332,6 @@
         { "from": "in-mic-6", "to": ["out-main-l", "out-main-r"] },
         { "from": "in-mic-7", "to": ["out-main-l", "out-main-r"] },
         { "from": "in-mic-8", "to": ["out-main-l", "out-main-r"] },
-        { "from": "in-talkback", "to": ["out-main-l", "out-main-r"] },
         { "from": "in-aux-1", "to": ["out-main-l", "out-main-r"] }
       ]
     },
@@ -1351,7 +1342,7 @@
       "realWorld": {
         "brand": "Orban", "model": "OPTIMOD 6300", "category": "broadcast",
         "typicalUse": "Orban OPTIMOD 6300 (broadcast)",
-        "notes": "Built from the equipment plan (2026-11-12); size 483 x 362 x 45 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.orban.com/specifications-optimod6300. Ports: documented in the asset spec (https://www.orban.com/specifications-optimod6300)."
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 362 x 45 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.orban.com/specifications-optimod6300. Ports: documented in the asset spec (https://www.orban.com/specifications-optimod6300), except the connector type of power-in (iec-c14), assumed: no cited page states it. Interrupteur secteur non documenté par la page lue : la commande Alimentation est celle du simulateur."
       },
       "ports": [
         { "portId": "in-analog-l", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -1361,12 +1352,16 @@
         { "portId": "out-analog-l", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
         { "portId": "out-analog-r", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
         { "portId": "out-aes-1", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
-        { "portId": "out-aes-2", "dir": "out", "connector": "xlr3-m", "signal": "aes3" }
+        { "portId": "out-aes-2", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ],
       "routing": [
-        { "from": "in-analog-l", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2"] },
-        { "from": "in-analog-r", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2"] },
-        { "from": "in-aes", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2"] }
+        { "from": "in-analog-l", "to": ["out-analog-l"] },
+        { "from": "in-analog-r", "to": ["out-analog-r"] },
+        { "from": "in-aes", "to": ["out-aes-1", "out-aes-2"] }
       ]
     },
     {
@@ -1389,13 +1384,16 @@
       "realWorld": {
         "brand": "Shure", "model": "QLX-D QLXD4 receiver", "category": "wireless",
         "typicalUse": "Shure QLX-D QLXD4 receiver (wireless)",
-        "notes": "Built from the equipment plan (2026-11-12); size 197 x 151 x 41 mm (w x d x h) (datasheet, size confidence ok). Size source: https://pubs.shure.com/view/guide/QLXD/en-US.pdf. Ports: documented in the asset spec (https://pubs.shure.com/view/guide/QLXD/en-US.pdf)."
+        "notes": "Built from the equipment plan (2026-11-12); size 197 x 151 x 41 mm (w x d x h) (datasheet, size confidence ok). Size source: https://pubs.shure.com/view/guide/QLXD/en-US.pdf. Ports: documented in the asset spec (https://pubs.shure.com/view/guide/QLXD/en-US.pdf). Alimentation non modélisée (source non lue)."
       },
       "ports": [
         { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
-        { "portId": "out-14", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-quarter", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
         { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" }
-      ]
+      ],
+      "portAliases": {
+        "out-14": "out-quarter"
+      }
     },
     {
       "id": "shure-slxd1-bodypack",
@@ -1436,7 +1434,7 @@
       "realWorld": {
         "brand": "Universal Audio", "model": "LA-2A", "category": "outboard",
         "typicalUse": "Universal Audio LA-2A (outboard)",
-        "notes": "Built from the equipment plan (2026-11-12); size 483 x 184 x 133 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.adorama.com/uala2ad.html. Ports: documented in the asset spec (https://www.adorama.com/col/productManuals/UALA2AD.pdf)."
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 184 x 133 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.adorama.com/uala2ad.html. Ports: documented in the asset spec (https://www.adorama.com/col/productManuals/UALA2AD.pdf). Alimentation non modélisée (connecteur et interrupteur non confirmés par une page lue)."
       },
       "ports": [
         { "portId": "in-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -1453,7 +1451,7 @@
       "realWorld": {
         "brand": "Yamaha", "model": "DXR12 mkII", "category": "powered-speaker",
         "typicalUse": "Yamaha DXR12 mkII (powered-speaker)",
-        "notes": "Built from the equipment plan (2026-11-12); size 362 x 350 x 601 mm (w x d x h) (datasheet, size confidence ok). Size source: https://usa.yamaha.com/products/proaudio/speakers/dxr/specs.html. Ports: documented in the asset spec (https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-DXR12MKII_userGuide.pdf). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 362 x 350 x 601 mm (w x d x h) (datasheet, size confidence ok). Size source: https://usa.yamaha.com/products/proaudio/speakers/dxr/specs.html. Ports: documented in the asset spec (https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-DXR12MKII_userGuide.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it. Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "in-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -1475,7 +1473,9 @@
         { "from": "in-xlr", "to": ["transducer"] },
         { "from": "in-phone", "to": ["transducer"] },
         { "from": "in-rca-l", "to": ["transducer"] },
-        { "from": "in-rca-r", "to": ["transducer"] }
+        { "from": "in-rca-r", "to": ["transducer"] },
+        { "from": "in-xlr", "to": ["thru-out"], "passive": true },
+        { "from": "in-xlr", "to": ["link-out"], "passive": true }
       ]
     },
     {
@@ -1498,13 +1498,6 @@
         { "portId": "out-phones-4", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" },
         { "portId": "in-phone", "dir": "in", "connector": "trs-35mm", "signal": "line-level-consumer" },
         { "portId": "usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" }
-      ],
-      "routing": [
-        { "from": "in-mic-1", "to": ["usb"] },
-        { "from": "in-mic-2", "to": ["usb"] },
-        { "from": "in-mic-3", "to": ["usb"] },
-        { "from": "in-mic-4", "to": ["usb"] },
-        { "from": "in-phone", "to": ["usb"] }
       ]
     },
     {
@@ -1579,7 +1572,7 @@
       "realWorld": {
         "brand": "d&b audiotechnik", "model": "Y10P", "category": "speaker",
         "typicalUse": "small/medium FOH",
-        "notes": "Built from the equipment plan (2026-11-12); size 257 x 341 x 580 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.dbaudio.com/global/en/products/series/y-series/y10p/. Ports: documented in the asset spec (https://www.dbaudio.com/assets/products/downloads/architectural-specifications/dbaudio-arch-specs-y10p-en.txt). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 257 x 341 x 580 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.dbaudio.com/global/en/products/series/y-series/y10p/. Ports: documented in the asset spec (https://www.dbaudio.com/assets/products/downloads/architectural-specifications/dbaudio-arch-specs-y10p-en.txt). Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "bidir-nl4-1", "dir": "bidir", "connector": "speakon-nl4", "signal": "speaker-level" },
@@ -1591,7 +1584,9 @@
       },
       "routing": [
         { "from": "bidir-nl4-1", "to": ["transducer"] },
-        { "from": "bidir-nl4-2", "to": ["transducer"] }
+        { "from": "bidir-nl4-2", "to": ["transducer"] },
+        { "from": "bidir-nl4-1", "to": ["bidir-nl4-2"], "passive": true },
+        { "from": "bidir-nl4-2", "to": ["bidir-nl4-1"], "passive": true }
       ],
       "portAliases": {
         "bidir-2-x-nlt4-f-m-option-2-x-nl4-m-or-ep5-pins-1-1-1": "bidir-nl4-1",
@@ -1605,7 +1600,7 @@
       "realWorld": {
         "brand": "Genelec", "model": "7360A SAM (sub)", "category": "studio-monitor",
         "typicalUse": "bass management for stereo / 5.1 / 7.1 monitoring",
-        "notes": "Built from the equipment plan (2026-11-12); size 462 x 363 x 527 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.genelec.com/7360a. Ports: documented in the asset spec (https://genelec.com/7360A), except the connector type of power-in (iec-c14), assumed: no cited page states it. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 462 x 363 x 527 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.genelec.com/7360a. Ports: documented in the asset spec (https://genelec.com/7360A), except the connector type of power-in (iec-c14), assumed: no cited page states it. Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "in-analog-1", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -1631,7 +1626,8 @@
         { "from": "in-analog-1", "to": ["transducer"] },
         { "from": "in-analog-2", "to": ["transducer"] },
         { "from": "in-lfe", "to": ["transducer"] },
-        { "from": "in-aes", "to": ["transducer"] }
+        { "from": "in-aes", "to": ["transducer"] },
+        { "from": "in-aes", "to": ["out-aes"], "passive": true }
       ],
       "portAliases": {
         "in-analog-main-channel-inputs-7-1-1": "in-analog-1",
@@ -1647,7 +1643,7 @@
     },
     {
       "id": "shure-axient-digital-ad4d",
-      "label": "Shure Axient Digital AD4D (dual-channel receiver; AD1/AD2 transmitters)",
+      "label": "Shure Axient Digital AD4D (dual-channel receiver)",
       "levels": [],
       "realWorld": {
         "brand": "Shure", "model": "Axient Digital AD4D", "category": "wireless",
@@ -1657,13 +1653,13 @@
       "ports": [
         { "portId": "out-xlr-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
         { "portId": "out-xlr-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
-        { "portId": "out-14-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
-        { "portId": "out-14-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-quarter-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-quarter-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
         { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
-        { "portId": "net-1", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
-        { "portId": "net-2", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
-        { "portId": "net-3", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
-        { "portId": "net-4", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "net-dante-1", "dir": "bidir", "connector": "rj45", "signal": "aoip" },
+        { "portId": "net-dante-2", "dir": "bidir", "connector": "rj45", "signal": "aoip" },
+        { "portId": "net-ctl-1", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "net-ctl-2", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
         { "portId": "in-wclk", "dir": "in", "connector": "bnc", "signal": "wordclock" },
         { "portId": "out-wclk", "dir": "out", "connector": "bnc", "signal": "wordclock" },
         { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" },
@@ -1675,10 +1671,18 @@
       "portAliases": {
         "out-transformer-balanced-audio-out-per-channel-1": "out-xlr-1",
         "out-transformer-balanced-audio-out-per-channel-2": "out-xlr-2",
-        "out-1-4-transformer-balanced-out-per-channel-1": "out-14-1",
-        "out-1-4-transformer-balanced-out-per-channel-2": "out-14-2",
+        "out-1-4-transformer-balanced-out-per-channel-1": "out-quarter-1",
+        "out-1-4-transformer-balanced-out-per-channel-2": "out-quarter-2",
         "out-aes3-digital-audio-output": "out-aes",
-        "in-ac-power-input-iec-locking": "power-in"
+        "in-ac-power-input-iec-locking": "power-in",
+        "net-1": "net-dante-1",
+        "net-2": "net-dante-2",
+        "net-3": "net-ctl-1",
+        "net-4": "net-ctl-2",
+        "out-14-1": "out-quarter-1",
+        "out-14-2": "out-quarter-2",
+        "bidir-word-clock-input-and-thru-1": "in-wclk",
+        "bidir-word-clock-input-and-thru-2": "out-wclk"
       }
     },
     {
@@ -1688,7 +1692,7 @@
       "realWorld": {
         "brand": "Genelec", "model": "8351B", "category": "studio-monitor",
         "typicalUse": "Genelec 8351B (studio-monitor)",
-        "notes": "Built from the equipment plan (2026-11-12); size 287 x 278 x 433 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.genelec.com/8351. Ports: documented in the asset spec (https://www.genelec.com/8351), except the connector type of power-in (iec-c14), assumed: no cited page states it. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 287 x 278 x 433 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.genelec.com/8351. Ports: documented in the asset spec (https://www.genelec.com/8351), except the connector type of power-in (iec-c14), assumed: no cited page states it. Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "in-analog", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -1707,7 +1711,8 @@
       },
       "routing": [
         { "from": "in-analog", "to": ["transducer"] },
-        { "from": "in-aes", "to": ["transducer"] }
+        { "from": "in-aes", "to": ["transducer"] },
+        { "from": "in-aes", "to": ["out-aes"], "passive": true }
       ]
     },
     {
@@ -1765,7 +1770,7 @@
     },
     {
       "id": "sennheiser-em-6000",
-      "label": "Sennheiser Digital 6000 EM 6000 / EM 6000 DANTE",
+      "label": "Sennheiser EM 6000 (Digital 6000 receiver)",
       "levels": [],
       "realWorld": {
         "brand": "Sennheiser", "model": "EM 6000 / EM 6000 DANTE", "category": "wireless",
@@ -1775,8 +1780,8 @@
       "ports": [
         { "portId": "out-xlr-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
         { "portId": "out-xlr-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
-        { "portId": "out-14-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
-        { "portId": "out-14-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-quarter-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-quarter-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
         { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
         { "portId": "in-wclk", "dir": "in", "connector": "bnc", "signal": "wordclock" },
         { "portId": "out-wclk", "dir": "out", "connector": "bnc", "signal": "wordclock" },
@@ -1789,11 +1794,15 @@
       "portAliases": {
         "out-analog-audio-out-per-channel-transformer-balanced-1": "out-xlr-1",
         "out-analog-audio-out-per-channel-transformer-balanced-2": "out-xlr-2",
-        "out-analog-audio-out-per-channel-6-3-mm-transformer-balanced-1": "out-14-1",
-        "out-analog-audio-out-per-channel-6-3-mm-transformer-balanced-2": "out-14-2",
+        "out-analog-audio-out-per-channel-6-3-mm-transformer-balanced-1": "out-quarter-1",
+        "out-analog-audio-out-per-channel-6-3-mm-transformer-balanced-2": "out-quarter-2",
         "out-aes3-digital-out-2-ch": "out-aes",
         "out-headphone-output-6-3-mm": "out-phones",
-        "in-mains-inlet-iec-60320-c14": "power-in"
+        "in-mains-inlet-iec-60320-c14": "power-in",
+        "out-14-1": "out-quarter-1",
+        "out-14-2": "out-quarter-2",
+        "bidir-word-clock-in-out-75-1": "in-wclk",
+        "bidir-word-clock-in-out-75-2": "out-wclk"
       }
     },
     {
@@ -1848,7 +1857,7 @@
         "notes": "Built from the equipment plan (2026-11-12); size 318 x 181 x 44 mm (w x d x h) (dealer, size confidence ok). Size source: https://musicradar.com/reviews/akai-mpk-mini-mk3. Ports: documented in the asset spec (https://www.adorama.com/akai-mpk-mini-mk3-25-key-usb-midi-keyboard-controller/p/mpkmini3)."
       },
       "ports": [
-        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" }
+        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-control" }
       ]
     },
     {
@@ -1858,7 +1867,7 @@
       "realWorld": {
         "brand": "Apogee", "model": "Duet 3", "category": "audio-interface",
         "typicalUse": "Apogee Duet 3 (audio-interface)",
-        "notes": "Built from the equipment plan (2026-11-12); size 225 x 180 x 90 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.apogeedigital.com/products/duet. Ports: documented in the asset spec (https://www.apogeedigital.com/products/duet)."
+        "notes": "Built from the equipment plan (2026-11-12); size 225 x 180 x 90 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.apogeedigital.com/products/duet. Ports: documented in the asset spec (https://www.apogeedigital.com/products/duet). Alimentation non modélisée (source non lue)."
       },
       "ports": [
         { "portId": "in-inst-1", "dir": "in", "connector": "ts-quarter", "signal": "instrument-hiz" },
@@ -1876,7 +1885,7 @@
       "realWorld": {
         "brand": "Audient", "model": "iD14 MkII", "category": "audio-interface",
         "typicalUse": "Audient iD14 MkII (audio-interface)",
-        "notes": "Built from the equipment plan (2026-11-12); size 173 x 120 x 62 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.thomann.de/be/audient_id14_mkii.htm. Ports: documented in the asset spec (https://www.thomann.de/be/audient_id14_mkii.htm)."
+        "notes": "Built from the equipment plan (2026-11-12); size 173 x 120 x 62 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.thomann.de/be/audient_id14_mkii.htm. Ports: documented in the asset spec (https://www.thomann.de/be/audient_id14_mkii.htm). Alimentation non modélisée (source non lue)."
       },
       "ports": [
         { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
@@ -1899,12 +1908,15 @@
       "realWorld": {
         "brand": "Audio-Technica", "model": "ATW-R3210 receiver", "category": "wireless",
         "typicalUse": "Audio-Technica ATW-R3210 receiver (wireless)",
-        "notes": "Built from the equipment plan (2026-11-12); size 210 x 191 x 43.4 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.audio-technica.com/en-sea/atw-r3210. Ports: documented in the asset spec (https://www.fullcompass.com/prod/548523-audio-technica-atw-r3210-3000-series-4th-gen-uhf-diversity-receiver)."
+        "notes": "Built from the equipment plan (2026-11-12); size 210 x 191 x 43.4 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.audio-technica.com/en-sea/atw-r3210. Ports: documented in the asset spec (https://www.fullcompass.com/prod/548523-audio-technica-atw-r3210-3000-series-4th-gen-uhf-diversity-receiver). Alimentation non modélisée : l'appareil utilise un adaptateur secteur externe 12 V continu."
       },
       "ports": [
         { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
-        { "portId": "out-14", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" }
-      ]
+        { "portId": "out-quarter", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" }
+      ],
+      "portAliases": {
+        "out-14": "out-quarter"
+      }
     },
     {
       "id": "behringer-flow-8",
@@ -1913,13 +1925,13 @@
       "realWorld": {
         "brand": "Behringer", "model": "Flow 8", "category": "console-digital",
         "typicalUse": "Behringer Flow 8 (console-digital)",
-        "notes": "Built from the equipment plan (2026-11-12); size 229 x 172 x 48 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.andertons.co.uk/live-mixers/behringer-flow-8-8-input-digital-mixer-with-bluetooth-audio-app-contro. Ports: documented in the asset spec (https://www.thomann.de/be/behringer_flow_8.htm)."
+        "notes": "Built from the equipment plan (2026-11-12); size 229 x 172 x 48 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.andertons.co.uk/live-mixers/behringer-flow-8-8-input-digital-mixer-with-bluetooth-audio-app-contro. Ports: documented in the asset spec (https://www.thomann.de/be/behringer_flow_8.htm). Alimentation non modélisée : l'appareil utilise une alimentation par USB micro, sans entrée secteur."
       },
       "ports": [
         { "portId": "in-mic-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
         { "portId": "in-mic-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
-        { "portId": "in-combo-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
-        { "portId": "in-combo-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
+        { "portId": "in-combo-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput"] },
         { "portId": "out-main-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
         { "portId": "out-main-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
         { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
@@ -1939,13 +1951,17 @@
       "realWorld": {
         "brand": "dbx", "model": "160A", "category": "outboard",
         "typicalUse": "dbx 160A (outboard)",
-        "notes": "Built from the equipment plan (2026-11-12); size 483 x 165 x 44 mm (w x d x h) (datasheet, size confidence ok). Size source: https://manualmachine.com/dbxpro/160a/1285223-user-manual. Ports: documented in the asset spec (https://manualmachine.com/dbxpro/160a/1285223-user-manual)."
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 165 x 44 mm (w x d x h) (datasheet, size confidence ok). Size source: https://manualmachine.com/dbxpro/160a/1285223-user-manual. Ports: documented in the asset spec (https://manualmachine.com/dbxpro/160a/1285223-user-manual), except the connector type of power-in (iec-c14), assumed: no cited page states it. Pas d'interrupteur secteur selon le manuel (l'appareil reste branché) : la commande Alimentation est celle du simulateur."
       },
       "ports": [
         { "portId": "in-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
         { "portId": "in-trs", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
         { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
-        { "portId": "out-trs", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" }
+        { "portId": "out-trs", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ],
       "routing": [
         { "from": "in-xlr", "to": ["out-xlr"] },
@@ -1959,13 +1975,17 @@
       "realWorld": {
         "brand": "Eventide", "model": "H9000", "category": "outboard",
         "typicalUse": "Eventide H9000 (outboard)",
-        "notes": "Built from the equipment plan (2026-11-12); size 483 x 318 x 89 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.eventideaudio.com/rackmount/h9000/. Ports: documented in the asset spec (https://www.eventideaudio.com/rackmount/h9000/)."
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 318 x 89 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.eventideaudio.com/rackmount/h9000/. Ports: documented in the asset spec (https://www.eventideaudio.com/rackmount/h9000/), except the connector type of power-in (iec-c14), assumed: no cited page states it."
       },
       "ports": [
         { "portId": "in-xlr-1", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
         { "portId": "in-xlr-2", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
         { "portId": "out-xlr-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
-        { "portId": "out-xlr-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" }
+        { "portId": "out-xlr-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ],
       "routing": [
         { "from": "in-xlr-1", "to": ["out-xlr-1"] },
@@ -1979,7 +1999,7 @@
       "realWorld": {
         "brand": "Meyer Sound", "model": "UPJunior (UPJ-1P)", "category": "powered-speaker",
         "typicalUse": "Meyer Sound UPJunior (UPJ-1P) (powered-speaker)",
-        "notes": "Built from the equipment plan (2026-11-12); size 229 x 259 x 484 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.pssl.com/products/meyer-sound-upjunior-powered-loudspeaker. Ports: documented in the asset spec (https://www.manualsdir.com/manuals/118204/meyer-sound-upjunior.html?page=10), except the connector type of power-in (powercon-blue), assumed: no cited page states it. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 229 x 259 x 484 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.pssl.com/products/meyer-sound-upjunior-powered-loudspeaker. Ports: documented in the asset spec (https://www.manualsdir.com/manuals/118204/meyer-sound-upjunior.html?page=10), except the connector type of power-in (powercon-blue), assumed: no cited page states it. Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "in-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -1994,7 +2014,8 @@
         "evidence": "Scripted speaker-cabinet-v2 model (public/assets/meyer-upjunior-upj-1p.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
       },
       "routing": [
-        { "from": "in-xlr", "to": ["transducer"] }
+        { "from": "in-xlr", "to": ["transducer"] },
+        { "from": "in-xlr", "to": ["out-xlr-loop"], "passive": true }
       ]
     },
     {
@@ -2007,7 +2028,7 @@
         "notes": "Built from the equipment plan (2026-11-12); size 334 x 301 x 57 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.thomann.de/be/presonus_faderport_8.htm. Ports: documented in the asset spec (https://goknight.com/presonus-faderport-8-mix-production-controller/)."
       },
       "ports": [
-        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" }
+        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-control" }
       ]
     },
     {
@@ -2017,7 +2038,7 @@
       "realWorld": {
         "brand": "PreSonus", "model": "Studio 24c", "category": "audio-interface",
         "typicalUse": "PreSonus Studio 24c (audio-interface)",
-        "notes": "Built from the equipment plan (2026-11-12); size 180 x 144 x 44 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.proacousticsusa.com/presonus-studio-24c-2x2-usb-c-compatible-audio-interface.html. Ports: documented in the asset spec (https://manualmachine.com/presonus/studio24c/8126865-user-manual)."
+        "notes": "Built from the equipment plan (2026-11-12); size 180 x 144 x 44 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.proacousticsusa.com/presonus-studio-24c-2x2-usb-c-compatible-audio-interface.html. Ports: documented in the asset spec (https://manualmachine.com/presonus/studio24c/8126865-user-manual). Alimentation non modélisée (source non lue)."
       },
       "ports": [
         { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
@@ -2035,7 +2056,7 @@
       "realWorld": {
         "brand": "TC Electronic", "model": "M3000", "category": "outboard",
         "typicalUse": "TC Electronic M3000 (outboard)",
-        "notes": "Built from the equipment plan (2026-11-12); size 483 x 208 x 44 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.zzounds.com/item--TCE9505000. Ports: documented in the asset spec (https://www.soundonsound.com/reviews/tc-electronic-m3000)."
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 208 x 44 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.zzounds.com/item--TCE9505000. Ports: documented in the asset spec (https://www.soundonsound.com/reviews/tc-electronic-m3000), except the connector type of power-in (iec-c14), assumed: no cited page states it."
       },
       "ports": [
         { "portId": "in-xlr-1", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -2048,7 +2069,11 @@
         { "portId": "out-spdif", "dir": "out", "connector": "rca", "signal": "spdif" },
         { "portId": "in-optical", "dir": "in", "connector": "toslink", "signal": "spdif" },
         { "portId": "out-optical", "dir": "out", "connector": "toslink", "signal": "spdif" },
-        { "portId": "in-wclk", "dir": "in", "connector": "rca", "signal": "wordclock" }
+        { "portId": "in-wclk", "dir": "in", "connector": "rca", "signal": "wordclock" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ],
       "routing": [
         { "from": "in-xlr-1", "to": ["out-xlr-1"] },
@@ -2079,11 +2104,6 @@
       ],
       "controls": [
         { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
-      ],
-      "routing": [
-        { "from": "in-send-1", "to": ["out-recv-1"] },
-        { "from": "in-send-2", "to": ["out-recv-2"] },
-        { "from": "in-aes", "to": ["out-aes"] }
       ]
     },
     {
@@ -2093,15 +2113,17 @@
       "realWorld": {
         "brand": "Universal Audio", "model": "LA-610 MkII", "category": "mic-preamp",
         "typicalUse": "Universal Audio LA-610 MkII (mic-preamp)",
-        "notes": "Built from the equipment plan (2026-11-12); size 483 x 311 x 89 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.adorama.com/uala610m2d.html. Ports: documented in the asset spec (https://www.zzounds.com/item--UADLA610MK2)."
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 311 x 89 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.adorama.com/uala610m2d.html. Ports: documented in the asset spec (https://www.zzounds.com/item--UADLA610MK2), except the connector type of power-in (iec-c14), assumed: no cited page states it."
       },
       "ports": [
         { "portId": "in-mic-xlr", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
         { "portId": "in-line-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
         { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
-        { "portId": "in-hiz", "dir": "in", "connector": "ts-quarter", "signal": "instrument-hiz" }
+        { "portId": "in-hiz", "dir": "in", "connector": "ts-quarter", "signal": "instrument-hiz" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
       ],
       "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true },
         { "id": "phantom-48v", "type": "toggle", "label": "+48V phantom", "default": false, "enables": { "flag": "providesPhantom", "ports": ["in-mic-xlr"] } }
       ],
       "routing": [
@@ -2150,7 +2172,7 @@
       "realWorld": {
         "brand": "ADAM Audio", "model": "S3H", "category": "studio-monitor",
         "typicalUse": "midfield monitoring",
-        "notes": "Built from the equipment plan (2026-11-12); size 585 x 380 x 280 mm (w x d x h) (datasheet, size confidence ok). Size source: https://adam-audio.com/s-serie/s3h. Ports: documented in the asset spec (https://www.adam-audio.com/content/uploads/2018/03/adam-audio-s-series-quick-start-guide-english.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 585 x 380 x 280 mm (w x d x h) (datasheet, size confidence ok). Size source: https://adam-audio.com/s-serie/s3h. Ports: documented in the asset spec (https://www.adam-audio.com/content/uploads/2018/03/adam-audio-s-series-quick-start-guide-english.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it. Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "in-analog", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -2167,7 +2189,8 @@
       },
       "routing": [
         { "from": "in-analog", "to": ["transducer"] },
-        { "from": "in-aes", "to": ["transducer"] }
+        { "from": "in-aes", "to": ["transducer"] },
+        { "from": "in-aes", "to": ["out-aes"], "passive": true }
       ],
       "portAliases": {
         "in-analog-input": "in-analog",
@@ -2183,7 +2206,7 @@
       "realWorld": {
         "brand": "d&b audiotechnik", "model": "V-SUB", "category": "speaker",
         "typicalUse": "flown sub with V-Series",
-        "notes": "Built from the equipment plan (2026-11-12); size 700 x 728 x 606 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.dbaudio.com/global/en/products/series/v-series/v-sub/. Ports: documented in the asset spec (https://www.dbaudio.com/global/en/products/series/v-series/v-sub/). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 700 x 728 x 606 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.dbaudio.com/global/en/products/series/v-series/v-sub/. Ports: documented in the asset spec (https://www.dbaudio.com/global/en/products/series/v-series/v-sub/). Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "bidir-nl4-1", "dir": "bidir", "connector": "speakon-nl4", "signal": "speaker-level" },
@@ -2195,7 +2218,9 @@
       },
       "routing": [
         { "from": "bidir-nl4-1", "to": ["transducer"] },
-        { "from": "bidir-nl4-2", "to": ["transducer"] }
+        { "from": "bidir-nl4-2", "to": ["transducer"] },
+        { "from": "bidir-nl4-1", "to": ["bidir-nl4-2"], "passive": true },
+        { "from": "bidir-nl4-2", "to": ["bidir-nl4-1"], "passive": true }
       ],
       "portAliases": {
         "bidir-2-x-nlt4-f-m-option-2-x-nl4-m-or-ep5-pins-2-2-1": "bidir-nl4-1",
@@ -2209,7 +2234,7 @@
       "realWorld": {
         "brand": "L-Acoustics", "model": "A15 Focus", "category": "speaker",
         "typicalUse": "small/medium venue main PA",
-        "notes": "Built from the equipment plan (2026-11-12); size 764 x 522 x 427 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.l-acoustics.com/products/A15-focus. Ports: documented in the asset spec (https://www.l-acoustics.com/products/A15-focus). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 764 x 522 x 427 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.l-acoustics.com/products/A15-focus. Ports: documented in the asset spec (https://www.l-acoustics.com/products/A15-focus). Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "in-nl4", "dir": "in", "connector": "speakon-nl4", "signal": "speaker-level" },
@@ -2220,7 +2245,8 @@
         "evidence": "Scripted speaker-cabinet-v2 model (public/assets/l-acoustics-a15-focus.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
       },
       "routing": [
-        { "from": "in-nl4", "to": ["transducer"] }
+        { "from": "in-nl4", "to": ["transducer"] },
+        { "from": "in-nl4", "to": ["out-nl4-link"], "passive": true }
       ],
       "portAliases": {
         "in-in-1-4-point-speakon": "in-nl4",
@@ -2234,7 +2260,7 @@
       "realWorld": {
         "brand": "Meyer Sound", "model": "LINA", "category": "speaker",
         "typicalUse": "theatre and concert hall main PA",
-        "notes": "Built from the equipment plan (2026-11-12); size 515 x 389 x 213 mm (w x d x h) (datasheet, size confidence ok). Size source: https://docs.meyersound.com/products/en/datasheet---lina.html. Ports: documented in the asset spec (https://docs.meyersound.com/products/en/datasheet---lina.html). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 515 x 389 x 213 mm (w x d x h) (datasheet, size confidence ok). Size source: https://docs.meyersound.com/products/en/datasheet---lina.html. Ports: documented in the asset spec (https://docs.meyersound.com/products/en/datasheet---lina.html). Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "in-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -2249,7 +2275,8 @@
         "evidence": "Scripted speaker-cabinet-v2 model (public/assets/meyer-sound-lina.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
       },
       "routing": [
-        { "from": "in-xlr", "to": ["transducer"] }
+        { "from": "in-xlr", "to": ["transducer"] },
+        { "from": "in-xlr", "to": ["out-xlr-loop"], "passive": true }
       ],
       "portAliases": {
         "in-audio-input-optional-xlr-5-pin-for-audio-rms": "in-xlr",
@@ -2286,7 +2313,10 @@
       "routing": [
         { "from": "in-analog-1", "to": ["transducer"] },
         { "from": "in-analog-2", "to": ["transducer"] },
-        { "from": "in-aes", "to": ["transducer"] }
+        { "from": "in-aes", "to": ["transducer"] },
+        { "from": "in-analog-1", "to": ["out-analog-1"] },
+        { "from": "in-analog-2", "to": ["out-analog-2"] },
+        { "from": "in-aes", "to": ["out-aes"] }
       ],
       "portAliases": {
         "in-analog-inputs-l-r-1": "in-analog-1",
@@ -2304,7 +2334,7 @@
       "realWorld": {
         "brand": "NEXO", "model": "45N-12", "category": "speaker",
         "typicalUse": "stage monitor wedge",
-        "notes": "Built from the equipment plan (2026-11-12); size 492 x 576 x 392 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.nexo-sa.com/products/45n12/. Ports: documented in the asset spec (https://www.nexo-sa.com/products/45n12/). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 492 x 576 x 392 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.nexo-sa.com/products/45n12/. Ports: documented in the asset spec (https://www.nexo-sa.com/products/45n12/). Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "bidir-nl4-1", "dir": "bidir", "connector": "speakon-nl4", "signal": "speaker-level" },
@@ -2316,7 +2346,9 @@
       },
       "routing": [
         { "from": "bidir-nl4-1", "to": ["transducer"] },
-        { "from": "bidir-nl4-2", "to": ["transducer"] }
+        { "from": "bidir-nl4-2", "to": ["transducer"] },
+        { "from": "bidir-nl4-1", "to": ["bidir-nl4-2"], "passive": true },
+        { "from": "bidir-nl4-2", "to": ["bidir-nl4-1"], "passive": true }
       ],
       "portAliases": {
         "bidir-2-x-nl4mp-speakon-4-pole-active-1-1-lf-2-2-hf-passive-2-2-lf-hf-1": "bidir-nl4-1",
@@ -2330,7 +2362,7 @@
       "realWorld": {
         "brand": "NEXO", "model": "P12", "category": "speaker",
         "typicalUse": "small/medium FOH",
-        "notes": "Built from the equipment plan (2026-11-12); size 432 x 314 x 534 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.nexo-sa.com/products/p12/. Ports: documented in the asset spec (https://www.nexo-sa.com/products/p12/). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+        "notes": "Built from the equipment plan (2026-11-12); size 432 x 314 x 534 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.nexo-sa.com/products/p12/. Ports: documented in the asset spec (https://www.nexo-sa.com/products/p12/). Thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
       },
       "ports": [
         { "portId": "bidir-nl4-1", "dir": "bidir", "connector": "speakon-nl4", "signal": "speaker-level" },
@@ -2342,7 +2374,9 @@
       },
       "routing": [
         { "from": "bidir-nl4-1", "to": ["transducer"] },
-        { "from": "bidir-nl4-2", "to": ["transducer"] }
+        { "from": "bidir-nl4-2", "to": ["transducer"] },
+        { "from": "bidir-nl4-1", "to": ["bidir-nl4-2"], "passive": true },
+        { "from": "bidir-nl4-2", "to": ["bidir-nl4-1"], "passive": true }
       ],
       "portAliases": {
         "bidir-4-x-nl4-1-per-handle-2-at-the-back-touring-version-1": "bidir-nl4-1",
@@ -2356,7 +2390,7 @@
       "realWorld": {
         "brand": "Omnia (Telos Alliance)", "model": "Omnia.11", "category": "broadcast",
         "typicalUse": "FM on-air processing",
-        "notes": "Built from the equipment plan (2026-11-12); size 482.6 x 508 x 177.8 mm (w x d x h) (datasheet, size confidence ok). Size source: https://docs.telosalliance.com/docs/appendix-a-performance-specifications. Ports: documented in the asset spec (https://docs.telosalliance.com/docs/chapter-1-installation), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+        "notes": "Built from the equipment plan (2026-11-12); size 482.6 x 508 x 177.8 mm (w x d x h) (datasheet, size confidence ok). Size source: https://docs.telosalliance.com/docs/appendix-a-performance-specifications. Ports: documented in the asset spec (https://docs.telosalliance.com/docs/chapter-1-installation), except the connector type of power-in (iec-c14), assumed: no cited page states it. Pas d'interrupteur secteur selon le manuel (on coupe en retirant le cordon) : la commande Alimentation est celle du simulateur."
       },
       "ports": [
         { "portId": "in-analog-l", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -2373,10 +2407,9 @@
         { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ],
       "routing": [
-        { "from": "in-analog-l", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2", "net-livewire"] },
-        { "from": "in-analog-r", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2", "net-livewire"] },
-        { "from": "in-aes", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2", "net-livewire"] },
-        { "from": "net-livewire", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2"] }
+        { "from": "in-analog-l", "to": ["out-analog-l"] },
+        { "from": "in-analog-r", "to": ["out-analog-r"] },
+        { "from": "in-aes", "to": ["out-aes-1", "out-aes-2"] }
       ],
       "portAliases": {
         "in-analog-inputs-l-r-1": "in-analog-l",
@@ -2397,7 +2430,7 @@
       "realWorld": {
         "brand": "Sonifex", "model": "DHY-04S", "category": "telephone-hybrid",
         "typicalUse": "phone-ins to air",
-        "notes": "Built from the equipment plan (2026-11-12); size 483 x 175 x 45 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.sonifex.co.uk/de/tbu/dhy04.shtml. Ports: documented in the asset spec (https://cdn.abicart.com/shop/ws42/76342/art73/159887173-02cecc-sonifex_dhy04_manual.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 175 x 45 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.sonifex.co.uk/de/tbu/dhy04.shtml. Ports: documented in the asset spec (https://cdn.abicart.com/shop/ws42/76342/art73/159887173-02cecc-sonifex_dhy04_manual.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it. Aucun interrupteur secteur n'est cité sur la face avant du manuel : la commande Alimentation est celle du simulateur."
       },
       "ports": [
         { "portId": "in-send-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
@@ -2452,16 +2485,6 @@
       ],
       "controls": [
         { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
-      ],
-      "routing": [
-        { "from": "in-mic-1", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
-        { "from": "in-mic-2", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
-        { "from": "in-mic-3", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
-        { "from": "in-mic-4", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
-        { "from": "in-mic-5", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
-        { "from": "in-mic-6", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
-        { "from": "in-mic-7", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] },
-        { "from": "in-mic-8", "to": ["out-line-1", "out-line-2", "out-line-3", "out-line-4", "out-line-5", "out-line-6", "out-line-7", "out-line-8", "out-aes-1", "out-aes-2"] }
       ]
     },
     {
@@ -2490,8 +2513,8 @@
         { "id": "phantom-48v", "type": "toggle", "label": "+48V phantom", "default": false, "enables": { "flag": "providesPhantom", "ports": ["in-mic"] } }
       ],
       "routing": [
-        { "from": "in-mic", "to": ["out-xlr", "out-trs", "out-aes", "out-spdif", "out-optical"] },
-        { "from": "in-inst", "to": ["out-xlr", "out-trs", "out-aes", "out-spdif", "out-optical"] }
+        { "from": "in-mic", "to": ["out-xlr", "out-trs"] },
+        { "from": "in-inst", "to": ["out-xlr", "out-trs"] }
       ]
     },
     {
@@ -2505,7 +2528,7 @@
       },
       "ports": [
         { "portId": "net-remote", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
-        { "portId": "usb-pc", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" },
+        { "portId": "usb-pc", "dir": "bidir", "connector": "usb-b", "signal": "usb-control" },
         { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
       ],
       "controls": [
@@ -2567,7 +2590,6 @@
         { "from": "in-mic-2", "to": ["out-main-l", "out-main-r", "out-main-c"] },
         { "from": "in-mic-3", "to": ["out-main-l", "out-main-r", "out-main-c"] },
         { "from": "in-mic-4", "to": ["out-main-l", "out-main-r", "out-main-c"] },
-        { "from": "in-talkback", "to": ["out-main-l", "out-main-r", "out-main-c"] },
         { "from": "in-aux-1", "to": ["out-main-l", "out-main-r", "out-main-c"] },
         { "from": "in-aux-2", "to": ["out-main-l", "out-main-r", "out-main-c"] },
         { "from": "in-aux-3", "to": ["out-main-l", "out-main-r", "out-main-c"] },
@@ -2690,7 +2712,7 @@
       "realWorld": {
         "brand": "Roland", "model": "VR-6HD", "category": "console-digital",
         "typicalUse": "Roland VR-6HD (console-digital)",
-        "notes": "Built from the equipment plan (2026-11-12); size 370 x 242 x 100 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.3dbroadcastsales.com/roland-vr-6hd-ultra-compact-audio-video-mixer-rol-vr-6hd. Ports: documented in the asset spec (https://img.audiomania.ru/data/roland_vr-6hd.pdf)."
+        "notes": "Built from the equipment plan (2026-11-12); size 370 x 242 x 100 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.3dbroadcastsales.com/roland-vr-6hd-ultra-compact-audio-video-mixer-rol-vr-6hd. Ports: documented in the asset spec (https://img.audiomania.ru/data/roland_vr-6hd.pdf). Alimentation non modélisée : l'appareil utilise un adaptateur secteur externe."
       },
       "ports": [
         { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
@@ -2758,17 +2780,6 @@
       ],
       "controls": [
         { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
-      ],
-      "routing": [
-        { "from": "in-omni-1", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
-        { "from": "in-omni-2", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
-        { "from": "in-omni-3", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
-        { "from": "in-omni-4", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
-        { "from": "in-omni-5", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
-        { "from": "in-omni-6", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
-        { "from": "in-omni-7", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
-        { "from": "in-omni-8", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] },
-        { "from": "in-talkback", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes", "net-dante-1", "net-dante-2"] }
       ]
     },
     {
@@ -2812,16 +2823,6 @@
       ],
       "controls": [
         { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
-      ],
-      "routing": [
-        { "from": "in-1", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
-        { "from": "in-2", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
-        { "from": "in-3", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
-        { "from": "in-4", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
-        { "from": "in-5", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
-        { "from": "in-6", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
-        { "from": "in-7", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] },
-        { "from": "in-8", "to": ["out-omni-1", "out-omni-2", "out-omni-3", "out-omni-4", "out-omni-5", "out-omni-6", "out-omni-7", "out-omni-8", "out-aes-1", "out-aes-2", "net-dante-1", "net-dante-2", "usb"] }
       ]
     }
   ],

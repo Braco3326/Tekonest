@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -46,8 +44,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -60,8 +57,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -74,8 +70,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -88,8 +83,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -102,8 +96,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -116,8 +109,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -247,5 +239,6 @@
       "url": "https://europe.yamaha.com/en/audio/portable-pa/products/mixers/dm3/",
       "note": "Yamaha DM3 page (opened): 16 mic / line inputs (12 XLR + 4 XLR / TRS phones combo), 8 XLR outputs, Dante 16 in / 16 out (DM3 model), USB 18 / 18; the I/O counts are stated, the panel positions and the Dante connector are not. Modelled subset: 8 of 16 inputs, 4 of 8 XLR outputs, phones, USB-B, the Dante network port as rj45 (aoip). Size 320 x 455 x 140 mm: Yamaha Europe prints 320 x 140 x 455 (W x H x D) via search, re-ordered by us: an estimate, beta-modelled. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 8 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }

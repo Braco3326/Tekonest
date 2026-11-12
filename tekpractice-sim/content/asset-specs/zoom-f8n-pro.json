@@ -20,7 +20,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://zoomcorp.com/en/us/field-recorders/field-recorders/f8n-pro/"
     },
     {
       "portId": "in-combo-2",
@@ -34,7 +35,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://zoomcorp.com/en/us/field-recorders/field-recorders/f8n-pro/"
     },
     {
       "portId": "usb",
@@ -107,6 +109,11 @@
       "kind": "manual",
       "url": "https://zoomcorp.com/manuals/f8n_pro-en/",
       "note": "Zoom F8n Pro operation manual and product page (opened by a research pass 2026-11-12): eight locking XLR / TRS combo inputs (1-4 on the left panel, 5-8 on the right), a 10-pin capsule input, two TA3 main outputs, a stereo 3.5 mm sub output and a headphone jack (right panel), BNC timecode in and out, a mini-B USB port (left), two SD slots, 12 V DC in (AD-19), a Hirose 4-pin external DC input and eight AA batteries. Modelled subset: two combo inputs, USB, the sub output and the headphone jack; the TA3 outputs (no catalogue connector), BNC timecode, DC inputs and SD slots are not ports. No mains inlet (battery or DC), so no power control. 178.2 x 140.3 x 54.3 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://zoomcorp.com/en/us/field-recorders/field-recorders/f8n-pro/",
+      "note": "Phantom power (review fix, read 2026-11-12 by a research pass, through a summarising fetch tool, not the raw page): the Zoom F8n Pro page lists inputs 1-8 with +24 / +48 V phantom, 10 mA maximum per channel. How the supply is switched was not confirmed."
     }
   ]
 }

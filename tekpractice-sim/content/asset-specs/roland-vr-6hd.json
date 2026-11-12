@@ -242,6 +242,12 @@
       "kind": "dealer",
       "url": "https://www.3dbroadcastsales.com/roland-vr-6hd-ultra-compact-audio-video-mixer-rol-vr-6hd",
       "note": "Dealer size 370 x 242 x 100 mm, 3.4 kg (the plan source)."
+    },
+    {
+      "kind": "manual",
+      "url": "https://leisuretec.co.uk/cdn/shop/files/VR-6HD_Startup_Guide.pdf",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the VR-6HD startup guide (a retailer host copy) says power comes from an external AC adaptor into the DC IN jack, with a POWER switch on the rear. No mains inlet is modelled for this device and the entry says so."
     }
-  ]
+  ],
+  "powerNote": "alimentation non modélisée : l'appareil utilise un adaptateur secteur externe"
 }

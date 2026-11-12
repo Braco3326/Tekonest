@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -163,5 +161,6 @@
       "url": "https://edge.rode.com/pdf/products/1187/RODECaster_Duo_ds_V03.pdf",
       "note": "RODECaster Duo datasheet (downloaded, read as text): 2 x combo jack (mic, instrument, line), 1 x 3.5 mm TRRS headset jack (I/O), two balanced 1/4 in line outputs, two high-power headphone outputs plus the TRRS headset output, USB interface 1 and 2 (USB-C), Ethernet, microSD, Bluetooth, Wi-Fi; power USB-C PD (so no mains inlet and no power control). The datasheet does not state the connector size of the two headphone outputs: 3.5 mm is assumed for this small unit, so beta-modelled. Size 235 x 225 x 76 mm, 1.131 kg (datasheet). TRRS headset not modelled. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses; headphones on the front lip."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 2 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }

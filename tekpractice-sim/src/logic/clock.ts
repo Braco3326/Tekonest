@@ -19,7 +19,7 @@
 import type { RigSnapshot, ViolationDraft } from '../engine/types'
 import { isConnected, portOf, sameRef } from './helpers'
 
-const DIGITAL_AUDIO = new Set(['aes3', 'spdif', 'madi', 'aoip', 'usb-audio'])
+const DIGITAL_AUDIO = new Set(['aes3', 'spdif', 'madi', 'aoip', 'aes50', 'usb-audio'])
 const SAMPLE_RATE = 'sample-rate'
 
 export const clockCheck = (snapshot: RigSnapshot): ViolationDraft[] => {

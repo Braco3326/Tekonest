@@ -76,6 +76,12 @@
       "kind": "datasheet",
       "url": "https://www.uaudio.com/hardware/la-2a.html",
       "note": "UA LA-2A product page, opened 2026-11-12: 19 in rackmount chassis, 3U, 13 lb, Jones barrier terminals and XLR connectors."
+    },
+    {
+      "kind": "reference",
+      "url": "https://media.uaudio.com/assetlibrary/l/a/la-2a_manual.pdf",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the older LA-2A manual never names the inlet; a search summary of UA's pages lists 35 W, 120 / 240 V, 50 / 60 Hz. No page read confirms the inlet connector or a switch, so none is modelled and the entry says so."
     }
-  ]
+  ],
+  "powerNote": "alimentation non modélisée (connecteur et interrupteur non confirmés par une page lue)"
 }

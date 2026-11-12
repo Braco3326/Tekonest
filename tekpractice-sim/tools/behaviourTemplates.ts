@@ -100,8 +100,8 @@ export function kindOf(category: string, traits: readonly TraitT[] = []): Kind {
 }
 
 const MAINS_ALWAYS_NOTE: ReadonlySet<Kind> = new Set(['preamp', 'console', 'speaker-active', 'amp', 'outboard', 'interface'])
-const AUDIO_IN = ['mic-level', 'line-level-pro', 'line-level-consumer', 'instrument-hiz', 'aes3', 'spdif', 'madi', 'aoip', 'usb-audio']
-const AUDIO_OUT = ['mic-level', 'line-level-pro', 'line-level-consumer', 'instrument-hiz', 'speaker-level', 'headphone-level', 'aes3', 'spdif', 'madi', 'aoip', 'usb-audio']
+const AUDIO_IN = ['mic-level', 'line-level-pro', 'line-level-consumer', 'instrument-hiz', 'aes3', 'spdif', 'madi', 'aoip', 'aes50', 'usb-audio']
+const AUDIO_OUT = ['mic-level', 'line-level-pro', 'line-level-consumer', 'instrument-hiz', 'speaker-level', 'headphone-level', 'aes3', 'spdif', 'madi', 'aoip', 'aes50', 'usb-audio']
 
 /** Traits that mean the device runs on batteries: it has no mains inlet and no power toggle, whatever its category says. */
 const BATTERY_TRAITS: readonly TraitT[] = ['battery', 'handheld', 'bodypack']
@@ -110,8 +110,13 @@ const isBatteryDevice = (traits: readonly TraitT[]): boolean => traits.some((t) 
 
 // ── port ids ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
+/**
+ * A quarter-inch connector is written « 1/4 in », « 1/4-inch », « 1-4 » or « 1/4 » in the sources: slugged blindly it becomes the token « 14 » and an
+ * id like « out-14 » reads as OUTPUT NUMBER 14 (Waves 2 to 5 review, finding 19). It becomes the word « quarter » instead (« out-quarter-1 »).
+ */
+const QUARTER_INCH = /(^|[^0-9])1\s*[/-]\s*4(?:\s*[- ]?\s*(?:in|inch|"))?(?![0-9])/gi
 const fold = (s: string): string =>
-  s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+  s.replace(QUARTER_INCH, '$1quarter ').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 
 /** Words that carry no meaning in a port id (the direction prefix already says input / output) and go first when an id is too long. */
 const FILLER = new Set([
@@ -161,10 +166,11 @@ function unique(id: string, used: Set<string>): string {
 const isMainsIn = (p: { dir: string; signal: string }): boolean => p.dir === 'in' && p.signal === 'mains-power'
 
 /** Expand plan ports (count runs, id rules, mains inlets) into catalogue ports with short unique ids, in order. Old id -> new id for explicit ids. */
-export function expandPorts(plan: readonly PlanPort[]): { ports: CatalogPort[]; renamed: Record<string, string> } {
+export function expandPorts(plan: readonly PlanPort[]): { ports: CatalogPort[]; renamed: Record<string, string>; thru: Record<string, { of: string; processed: boolean }> } {
   const used = new Set<string>()
   const ports: CatalogPort[] = []
   const renamed: Record<string, string> = {}
+  const thru: Record<string, { of: string; processed: boolean }> = {}
   let mains = 0
   for (const p of plan) {
     const n = p.count ?? 1
@@ -179,10 +185,13 @@ export function expandPorts(plan: readonly PlanPort[]): { ports: CatalogPort[]; 
       }
       const final = unique(id, used)
       if (p.id !== undefined && n === 1 && final !== p.id) renamed[p.id] = final
+      if (p.thruOf !== undefined) thru[final] = { of: p.thruOf, processed: p.thruProcessed === true }
       ports.push({ portId: final, dir: p.dir, connector: p.connector, signal: p.signal, ...(p.flags?.length ? { flags: [...p.flags] } : {}) })
     }
   }
-  return { ports, renamed }
+  // a thruOf names the GIVEN id of the input: it follows a rename
+  for (const t of Object.values(thru)) t.of = renamed[t.of] ?? t.of
+  return { ports, renamed, thru }
 }
 
 // ── the template ─────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -233,16 +242,75 @@ const audioIns = (ps: readonly CatalogPort[]): CatalogPort[] => ps.filter((p) =>
 const audioOuts = (ps: readonly CatalogPort[]): CatalogPort[] => ps.filter((p) => p.dir !== 'in' && AUDIO_OUT.includes(p.signal))
 
 /**
- * The routes of a DESK (a console of any category): every audio input is routed to the main outputs. The main outputs are the documented ports whose
- * id starts with `out-main` (the QL1 pattern: out-main-l, out-main-r); a desk with none routes every input to all its non-headphone, non-speaker
- * audio outputs. So a promoted desk always passes signal when its spec lists at least one audio output (a desk with none is reported as an issue).
+ * The routes of a DESK (a console of any category). Waves 2 to 5 review, finding 10: only what the spec documents.
+ *  - the targets are the ANALOGUE line outputs documented as main (`out-main*`), else as mix or monitor (`out-mix*`, `out-mon*`): never an AES, Dante,
+ *    USB, headphone or speaker output, never an « omni » output (an assignable output is not a documented destination of every input);
+ *  - a channel input (mic, line, instrument) routes to those targets; a TALKBACK input routes nowhere (it goes to the mix buses, never to the mains);
+ *  - a desk with no documented target routes nothing (reported as an issue).
  */
 function deskRouting(ins: readonly CatalogPort[], outs: readonly CatalogPort[]): CatalogRoute[] {
-  const usable = outs.filter((q) => q.signal !== 'headphone-level' && q.signal !== 'speaker-level')
-  const main = usable.filter((q) => q.portId.startsWith('out-main'))
-  const to = (main.length ? main : usable).map((q) => q.portId)
+  const analog = outs.filter((q) => q.signal === 'line-level-pro' || q.signal === 'line-level-consumer')
+  const main = analog.filter((q) => /^out-main(-|$)/.test(q.portId))
+  const other = analog.filter((q) => /^out-(mix|mon|monitor)(-|$)/.test(q.portId))
+  const to = (main.length ? main : other).map((q) => q.portId)
   if (!to.length) return []
-  return ins.filter((q) => q.signal === 'mic-level' || q.signal === 'line-level-pro' || q.signal === 'line-level-consumer' || q.signal === 'instrument-hiz').map((p) => ({ from: p.portId, to }))
+  return ins
+    .filter((q) => (q.signal === 'mic-level' || q.signal === 'line-level-pro' || q.signal === 'line-level-consumer' || q.signal === 'instrument-hiz') && !TALKBACK.test(q.portId))
+    .map((p) => ({ from: p.portId, to }))
+}
+const TALKBACK = /(^|-)(talkback|tb)(-|$)/
+
+/** The signal families: an input is only ever routed to an output of its own family (an analogue input does not come out of a digital port: that needs a converter nobody documented). */
+const ANALOG_SIGNALS = new Set(['mic-level', 'line-level-pro', 'line-level-consumer', 'instrument-hiz'])
+const DIGITAL_SIGNALS = new Set(['aes3', 'spdif', 'madi', 'aoip', 'aes50', 'usb-audio'])
+const familyOf = (signal: string): string => (ANALOG_SIGNALS.has(signal) ? 'analog' : DIGITAL_SIGNALS.has(signal) ? 'digital' : signal)
+/** The channel number a port id ends with (`in-mic-2` gives 2), if any. */
+const channelOf = (id: string): string | undefined => /-(\d+)$/.exec(id)?.[1]
+
+/**
+ * The routes of a PREAMP or channel strip (finding 6): each mic / line / instrument input goes to the ANALOGUE line output of the same channel number
+ * (`in-mic-2` and `in-line-2` to `out-line-2`), or to the only line output when there is one. Never to a digital output: a converter output is routed
+ * only where a sheet documents the path (none does for the ports modelled so far), and never by position.
+ */
+function preampRouting(ins: readonly CatalogPort[], outs: readonly CatalogPort[]): CatalogRoute[] {
+  const line = outs.filter((q) => q.signal === 'line-level-pro' || q.signal === 'line-level-consumer')
+  const routes: CatalogRoute[] = []
+  for (const p of ins.filter((q) => ANALOG_SIGNALS.has(q.signal))) {
+    const n = channelOf(p.portId)
+    let to = n === undefined ? [] : line.filter((q) => channelOf(q.portId) === n)
+    // a single-channel strip (no channel number anywhere on its ports): every analogue line output is that channel's (XLR and TRS in parallel)
+    if (!to.length && (line.length === 1 || (n === undefined && !line.some((q) => channelOf(q.portId) !== undefined)))) to = line
+    if (to.length) routes.push({ from: p.portId, to: to.map((q) => q.portId) })
+  }
+  return routes
+}
+
+/**
+ * The routes of other OUTBOARD gear (finding 6): an input goes to an output of the same signal (else of the same family), matched by channel number or,
+ * failing that, by order inside that group; a processor with more outputs than inputs of that signal feeds every one of them (a speaker processor: 2 in,
+ * 6 out). A codec has no through-route at all (see applyTemplate): its send inputs never feed its receive outputs.
+ */
+function outboardRouting(ins: readonly CatalogPort[], outs: readonly CatalogPort[]): CatalogRoute[] {
+  const routes: CatalogRoute[] = []
+  for (const p of ins) {
+    const sameFamily = outs.filter((q) => familyOf(q.signal) === familyOf(p.signal) && q.portId !== p.portId)
+    const exact = sameFamily.filter((q) => q.signal === p.signal)
+    // analogue levels convert freely between them (a line input to a line output of another level); a digital format never turns into another one (AES3 to USB, Dante to AES3) without a documented converter
+    const pool = exact.length ? exact : ANALOG_SIGNALS.has(p.signal) ? sameFamily : []
+    if (!pool.length) continue
+    const peers = ins.filter((q) => (exact.length ? q.signal === p.signal : familyOf(q.signal) === familyOf(p.signal)))
+    let to: CatalogPort[]
+    if (pool.length > peers.length) to = pool
+    else {
+      // the same name after the direction word (analog-l to analog-l), else the same channel number, else the same place in the group
+      const bare = (id: string): string => id.replace(/^(in|out)-/, '')
+      const byName = pool.find((q) => bare(q.portId) === bare(p.portId))
+      const byChannel = channelOf(p.portId) === undefined ? undefined : pool.find((q) => channelOf(q.portId) === channelOf(p.portId))
+      to = [byName ?? byChannel ?? pool[peers.indexOf(p) % pool.length]!]
+    }
+    routes.push({ from: p.portId, to: to.map((q) => q.portId) })
+  }
+  return routes
 }
 
 /**
@@ -264,8 +332,10 @@ export const CONTROL_NETWORK_SIGNAL = 'ethernet-control'
  */
 function hasControlOnlyEthernet(category: string, ports: readonly CatalogPort[]): boolean {
   if (NETWORK_AUDIO_CATEGORIES.has(category)) return false
-  return !ports.some((p) => p.connector === 'ethercon' || (p.flags ?? []).includes('isDantePrimary'))
+  // a port the spec NAMES as a Dante / AES67 port keeps its audio type, and so does the device (Waves 2 to 5 review, finding 8: the AD4D has two Dante and two control ports)
+  return !ports.some((p) => p.connector === 'ethercon' || (p.flags ?? []).includes('isDantePrimary') || (p.connector === 'rj45' && p.signal === 'aoip' && NETWORK_AUDIO_PORT_ID.test(p.portId)))
 }
+const NETWORK_AUDIO_PORT_ID = /(^|-)(dante|aes67|ravenna|livewire)(-|$)/
 
 /** A measurement / RTA / analyser input feeds the analyser, not the outputs: it is never routed (Wave 1b finding 4). By port id. */
 const MEASUREMENT_PORT = /(^|-)(rta|meas|measure|measurement|analy[sz]er)(-|$)/
@@ -347,6 +417,8 @@ export function applyTemplate(
   _today: string = new Date().toISOString().slice(0, 10),
   /** The ids of the controls the spec documents: a switch is written only when it is in this list. Undefined: none. */
   documentedControls?: readonly string[],
+  /** What the spec says about the mains when no inlet or no switch is modelled (see the spec's `powerNote`). */
+  extra: { powerNote?: string } = {},
 ): Template {
   const traits = row.traits ?? []
   const kind = kindOf(category, traits)
@@ -356,7 +428,7 @@ export function applyTemplate(
   const mainsGiven = given.filter(isMainsIn)
   if (battery && mainsGiven.length)
     throw new Error(`a battery device (traits ${traits.filter((t) => BATTERY_TRAITS.includes(t)).join(', ')}) cannot list a mains inlet (${mainsGiven.map((p) => p.id ?? p.role).join(', ')}): fix the documented ports`)
-  const { ports: expandedRaw, renamed } = expandPorts(given)
+  const { ports: expandedRaw, renamed, thru } = expandPorts(given)
   // Wave 1b finding 9: a control / firmware / LAN Ethernet port is not audio over IP; finding 1: a master clock's reference input is optional, so it is no slave input
   const controlEthernet = hasControlOnlyEthernet(category, expandedRaw)
   const expanded = expandedRaw.map((p) => {
@@ -387,6 +459,10 @@ export function applyTemplate(
   if (ports.some((p) => p.portId === 'power-in')) controls.push({ ...POWER })
   else if (!battery && (MAINS_ALWAYS_NOTE.has(kind) || traits.includes('receiver') || traits.includes('rack')) && !traits.includes('passive') && ports.length)
     issues.push(`no mains inlet is documented for this ${kind}: it will have no power control (list the mains inlet if the datasheet has one)`)
+  // finding 5: a mains device with no modelled inlet is treated as always powered by the signal path: the entry says so, in French, where the person sees it
+  const unmodelledPower = issues.some((i) => i.startsWith('no mains inlet'))
+  if (extra.powerNote) notes.push(extra.powerNote)
+  else if (unmodelledPower) notes.push('alimentation non modélisée (source non lue)')
   const wanted = documentedControls ?? []
   const micPorts = ports.filter((p) => p.dir === 'in' && p.signal === 'mic-level' && flagged(p, 'providesPhantom')).map((p) => p.portId)
   if (kind === 'di') {
@@ -422,7 +498,13 @@ export function applyTemplate(
     routing = patchbayRouting(ports)
   } else if (category === 'telephone-hybrid') {
     routing = hybridRouting(ins, outs)
-  } else if (kind === 'outboard' || kind === 'preamp' || kind === 'di') {
+  } else if (category === 'codec' || category === 'monitor-controller') {
+    // a codec has no documented through-route (its send inputs never feed its receive outputs), and a monitor controller's sheet gives no default speaker pair: unrouted is honest (finding 6 and 10)
+  } else if (kind === 'preamp') {
+    routing = preampRouting(ins, outs)
+  } else if (kind === 'outboard' && category !== 'headphone-amp') {
+    routing = outboardRouting(ins, outs.filter((q) => q.signal !== 'speaker-level' && q.signal !== 'headphone-level'))
+  } else if (kind === 'outboard' || kind === 'di') {
     // a headphone amplifier's job is its headphone outputs (Wave 1b finding 15); no other outboard device is routed to a headphone output
     const o = outs.filter((q) => q.signal !== 'speaker-level' && (category === 'headphone-amp' || q.signal !== 'headphone-level'))
     if (o.length)
@@ -432,6 +514,23 @@ export function applyTemplate(
         if (to.length) routing.push({ from: p.portId, to: to.map((q) => q.portId), ...(kind === 'di' && !traits.includes('active') ? { passive: true } : {}) })
       })
   }
+
+  // finding 7: a thru / link / loop output the spec declares repeats the signal of its input. The route is passive (it works with the device off) unless the repeated
+  // signal is processed; a parallel pair of bidir sockets repeats both ways. That a thru works unpowered is the plan's assumption (P7), said in the notes.
+  let passiveThru = false
+  for (const [outId, t] of Object.entries(thru)) {
+    const out = ports.find((q) => q.portId === outId)
+    const from = ports.find((q) => q.portId === t.of)
+    if (!out || !from || out.dir === 'in' || from.dir === 'out') continue
+    const add = (a: string, b: string): void => {
+      if (routing.some((r) => r.from === a && r.to.includes(b))) return
+      routing.push({ from: a, to: [b], ...(t.processed ? {} : { passive: true }) })
+      if (!t.processed) passiveThru = true
+    }
+    add(from.portId, out.portId)
+    if (out.dir === 'bidir' && from.dir === 'bidir') add(out.portId, from.portId)
+  }
+  if (passiveThru) notes.push('thru, link and loop outputs pass the signal of their input even with the device off: hypothèse pédagogique du plan (P7), non sourcée')
 
   const tpl: Template = { kind, ports, controls, renamed, notes, issues }
   if (routing.length) tpl.routing = routing

@@ -20,7 +20,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.tascam.com/us/product/model_12/spec"
     },
     {
       "portId": "in-combo-2",
@@ -34,7 +35,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.tascam.com/us/product/model_12/spec"
     },
     {
       "portId": "in-combo-3",
@@ -48,7 +50,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.tascam.com/us/product/model_12/spec"
     },
     {
       "portId": "in-combo-4",
@@ -62,7 +65,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.tascam.com/us/product/model_12/spec"
     },
     {
       "portId": "in-line-1",

@@ -93,6 +93,12 @@
       "kind": "manual",
       "url": "https://www.shure.com/fr-FR/docs/guide/PSM300",
       "note": "Shure PSM 300 user guide as listed by the knowledge base (the page returned navigation only when opened in this run)."
+    },
+    {
+      "kind": "manual",
+      "url": "https://pubs.shure.com/guide/PSM300/en-US",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass): the PSM 300 guide says the P3T transmitter has a Power Input jack fed by the external PS24 supply and no IEC inlet. No mains inlet is modelled for this device and the entry says so."
     }
-  ]
+  ],
+  "powerNote": "alimentation non modélisée : l'appareil utilise une alimentation externe PS24"
 }

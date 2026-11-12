@@ -29,7 +29,7 @@
       "dir": "out"
     },
     {
-      "portId": "out-14-1",
+      "portId": "out-quarter-1",
       "face": "io",
       "xMm": 105.2,
       "yMm": 22,
@@ -39,7 +39,7 @@
       "dir": "out"
     },
     {
-      "portId": "out-14-2",
+      "portId": "out-quarter-2",
       "face": "io",
       "xMm": 122.6,
       "yMm": 22,
@@ -59,7 +59,7 @@
       "dir": "out"
     },
     {
-      "portId": "net-1",
+      "portId": "net-dante-1",
       "face": "io",
       "xMm": 167.3,
       "yMm": 22,
@@ -69,7 +69,7 @@
       "dir": "bidir"
     },
     {
-      "portId": "net-2",
+      "portId": "net-dante-2",
       "face": "io",
       "xMm": 185.3,
       "yMm": 22,
@@ -79,23 +79,23 @@
       "dir": "bidir"
     },
     {
-      "portId": "net-3",
+      "portId": "net-ctl-1",
       "face": "io",
       "xMm": 203.3,
       "yMm": 22,
       "confidence": "guess",
       "connector": "rj45",
-      "signal": "aoip",
+      "signal": "ethernet-control",
       "dir": "bidir"
     },
     {
-      "portId": "net-4",
+      "portId": "net-ctl-2",
       "face": "io",
       "xMm": 221.3,
       "yMm": 22,
       "confidence": "guess",
       "connector": "rj45",
-      "signal": "aoip",
+      "signal": "ethernet-control",
       "dir": "bidir"
     },
     {
@@ -202,6 +202,21 @@
       "kind": "datasheet",
       "url": "https://www.shure.com/en-US/products/wireless-systems/axient_digital/ad4d",
       "note": "Shure AD4D page (opened 2026-11-12) plus a dealer page (Go Knight, opened) and a search summary: per receiver two XLR and two 1/4 in transformer-balanced outputs, an XLR AES3 output, four RJ45 network ports (Dante / AES67 and control: modelled as aoip, the template takes no audio route through them), a BNC word-clock input and thru, a 1/4 in headphone jack on the front, and a locking AC inlet (the Shure page says \"locking AC\"; the IEC C14 type comes from the dealer wording and the knowledge base, so it is listed as assumedConnectors in the plan). The BNC antenna inputs, cascade outputs and the AC cascade output have no catalogue signal and are not ports. 483 x 333 x 44 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://pubs.shure.com/view/guide/AD4D/en-US.pdf",
+      "note": "Network ports (review fix, read 2026-11-12 by a research pass): the AD4D guide says four Ethernet ports, two control (ctrl 1, ctrl 2) and the Dante primary and secondary ports (switch modes: split-redundant 2 + 2, switched 4 + 4), and mentions AES67 output. The two Dante ports are typed aoip, the two control ports ethernet-control; which physical jack is which is a guess."
     }
-  ]
+  ],
+  "portAliases": {
+    "net-1": "net-dante-1",
+    "net-2": "net-dante-2",
+    "net-3": "net-ctl-1",
+    "net-4": "net-ctl-2",
+    "out-14-1": "out-quarter-1",
+    "out-14-2": "out-quarter-2",
+    "bidir-word-clock-input-and-thru-1": "in-wclk",
+    "bidir-word-clock-input-and-thru-2": "out-wclk"
+  }
 }

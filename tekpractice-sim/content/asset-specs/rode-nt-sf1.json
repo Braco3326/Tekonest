@@ -20,7 +20,8 @@
       "dir": "out",
       "flags": [
         "requiresPhantom"
-      ]
+      ],
+      "flagsSource": "https://edge.rode.com/pdf/page/1859/modules/4438/ntsf1_datasheet.pdf"
     },
     {
       "portId": "out-one-balanced-output-per-capsule-lf-1-rf-2-lb-3-rb-4-on-the-supplied-4-x-xlr-breakout-cable-2",
@@ -34,7 +35,8 @@
       "dir": "out",
       "flags": [
         "requiresPhantom"
-      ]
+      ],
+      "flagsSource": "https://edge.rode.com/pdf/page/1859/modules/4438/ntsf1_datasheet.pdf"
     }
   ],
   "controls": [],

@@ -30,7 +30,8 @@
       "openingMm": 26,
       "connector": "speakon-nl4",
       "signal": "speaker-level",
-      "dir": "out"
+      "dir": "out",
+      "thruOf": "in-nl4"
     }
   ],
   "controls": [],

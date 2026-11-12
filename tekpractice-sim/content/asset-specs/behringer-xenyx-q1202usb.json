@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -46,8 +44,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -60,8 +57,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -185,5 +181,6 @@
       "url": "https://www.rentaround.nl/analoge-mengtafels/behringer-q1202usb",
       "note": "Rentaround (opened) lists W x D x H 250 x 248 x 50 mm; a Behringer manual snippet agrees as H x W x D (not opened). B&H text read: XLR mic (balanced), 1/4 in TRS line (balanced), dual 1/4 in TRS stereo inputs, dual RCA tape, USB-B (2 in / 2 out), 1/4 in TRS aux send, main outs, control-room outs, 1/4 in TRS stereo headphone out; counts not given, so beta-modelled with a small subset (4 mics, one stereo pair, main L / R as TRS, phones, USB-B). The XLR / TRS genders and the main-out connector are our assumption. Weight conflict (1.5 vs 1.23 kg): not stored. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses; all ports on the 50 mm rear face (one row)."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 4 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }

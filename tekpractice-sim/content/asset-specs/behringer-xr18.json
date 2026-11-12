@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -46,8 +44,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -60,8 +57,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -74,8 +70,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -88,8 +83,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -102,8 +96,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -116,8 +109,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -210,5 +202,6 @@
       "url": "https://www.thomann.co.uk/behringer_x_air_xr18.htm",
       "note": "Dealer listing and knowledge base summary: 16 XLR / TRS combo inputs, line / aux inputs, 2 XLR main outputs, USB-B, Ethernet, MIDI, Ultranet; the dealers disagree on the line / aux input connector (TRS or RCA) and the aux output count, so this is beta-modelled. Modelled: 8 of 16 combos (XLR part), main L / R, USB-B, Ethernet (aoip, a control and Wi-Fi port). Size 333 x 150 x 140 mm: 3U with side panels, axis order inferred from 3U (not labelled), so an estimate. Positions guesses; the XR18 has no front panel controls (a picture of the status LEDs only)."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 8 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }

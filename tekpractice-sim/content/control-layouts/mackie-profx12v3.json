@@ -42,25 +42,6 @@
    "positions": 2,
    "colour": "#d8dbe0",
    "default": 1
-  },
-  {
-   "id": "fader-master",
-   "face": "top",
-   "xMm": 300,
-   "yMm": 110,
-   "sizeMm": {
-    "w": 12,
-    "h": 12,
-    "d": 11
-   },
-   "label": "Fader master",
-   "catalogControl": "fader-master",
-   "kind": "fader",
-   "axis": "y",
-   "travelMm": 70,
-   "taper": "fader-db",
-   "default": 0.75,
-   "colour": "#2b2d31"
   }
  ]
 }

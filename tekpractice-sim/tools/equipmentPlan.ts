@@ -92,6 +92,11 @@ export const PlanPort = z
     signal: z.string().min(1),
     flags: z.array(PortFlag).optional(),
     count: z.number().int().min(1).max(16).optional(),
+    /** The input this output repeats (thru / link / loop): see the spec's `thruOf`. */
+    thruOf: z.string().min(1).optional(),
+    thruProcessed: z.boolean().optional(),
+    /** The page that states this port's phantom flags (the spec's `flagsSource`): a beta proposal takes a phantom flag only with it. */
+    flagsSource: z.string().optional(),
   })
   .strict()
 export type PlanPort = z.infer<typeof PlanPort>

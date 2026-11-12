@@ -20,7 +20,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf"
     },
     {
       "portId": "in-combo-2",
@@ -34,7 +35,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf"
     },
     {
       "portId": "in-combo-3",
@@ -48,7 +50,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf"
     },
     {
       "portId": "in-combo-4",
@@ -62,7 +65,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf"
     },
     {
       "portId": "in-mic-1",
@@ -76,7 +80,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf"
     },
     {
       "portId": "in-mic-2",
@@ -90,7 +95,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf"
     },
     {
       "portId": "in-mic-3",
@@ -104,7 +110,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf"
     },
     {
       "portId": "in-mic-4",
@@ -118,7 +125,8 @@
       "flags": [
         "isMicInput",
         "providesPhantom"
-      ]
+      ],
+      "flagsSource": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf"
     },
     {
       "portId": "in-talkback",
@@ -439,6 +447,11 @@
       "kind": "datasheet",
       "url": "https://www.fmicassets.com/Damroot/Original/10154/TS_StudioLive-SE-16_EN.pdf",
       "note": "StudioLive SE 16 technical specifications, opened 2026-11-12: 6.51 in H x 17.59 in W x 22.97 in D (165.4 x 446.7 x 583.5 mm), 23.15 lb (10.5 kg). The sheet says \"12 (6 XLRM, 4 TRS)\" FlexMix outputs, which sums to 10: the manual table (6 + 4) is used."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf",
+      "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the StudioLive Series III SE owner's manual (SE 16 I/O table PDF p.16, phantom PDF p.19) says phantom is individually switchable per microphone input: 16 mic inputs (8 combo, 8 XLR); the eight modelled ports are a subset."
     }
   ]
 }

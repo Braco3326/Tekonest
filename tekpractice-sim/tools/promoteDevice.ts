@@ -292,7 +292,12 @@ function skeletonSpec(row: PlanRow, proposal: Json | undefined): { spec: AssetSp
 function planPortsOf(spec: AssetSpecT): PlanPort[] {
   return spec.ports.map((p) => {
     if (p.connector === undefined || p.signal === undefined || p.dir === undefined) throw new Error(`spec port "${p.portId}" lacks its connector, signal or dir`)
-    return { id: p.portId, role: 'port', dir: p.dir, connector: p.connector, signal: p.signal, ...(p.flags?.length ? { flags: p.flags } : {}) }
+    return {
+      id: p.portId, role: 'port', dir: p.dir, connector: p.connector, signal: p.signal,
+      ...(p.flags?.length ? { flags: p.flags } : {}),
+      ...(p.thruOf ? { thruOf: p.thruOf, ...(p.thruProcessed ? { thruProcessed: true } : {}) } : {}),
+      ...(p.flagsSource ? { flagsSource: p.flagsSource } : {}),
+    }
   })
 }
 
@@ -347,7 +352,7 @@ function buildNotes(row: PlanRow, today: string, t: Template, size: string, spec
  */
 export function deviceFromSpec(row: PlanRow, spec: AssetSpecT, proposal: Json | undefined, today: string, sizeNote: string): { device: CatalogDevice; template: Template; aliases?: Record<string, string> } {
   const given = planPortsOf(spec)
-  const template = applyTemplate(row.category, row, given, today, spec.controls.map((c) => c.controlId))
+  const template = applyTemplate(row.category, row, given, today, spec.controls.map((c) => c.controlId), { ...(spec.powerNote ? { powerNote: spec.powerNote } : {}) })
   const specIds = spec.ports.map((p) => p.portId)
   const ids = template.ports.map((p) => p.portId)
   if (JSON.stringify(ids) !== JSON.stringify(specIds)) {
@@ -355,7 +360,9 @@ export function deviceFromSpec(row: PlanRow, spec: AssetSpecT, proposal: Json | 
     throw new Error(`the spec port ids must be the catalogue ids (at most 19 characters, unique, the mains inlet named power-in): rename ${moved.map((s) => `"${s}" to "${ids[specIds.indexOf(s)] ?? shortPortId(s)}"`).join(', ')} in the spec`)
   }
   const proposalPorts = (proposal?.ports as ProposalPort[] | undefined) ?? []
-  const aliases = proposalPorts.length ? aliasesFor(proposalPorts, given) : {}
+  const aliases: Record<string, string> = { ...(proposalPorts.length ? aliasesFor(proposalPorts, given) : {}) }
+  // a port the spec renamed (findings 8, 18, 19): the old id follows, unless it is still a port
+  for (const [old, now] of Object.entries(spec.portAliases ?? {})) if (!specIds.includes(old) && specIds.includes(now)) aliases[old] = now
   const rw = proposal?.realWorld as { typicalUse?: string } | undefined
   const device = Device.parse({
     id: row.id,
@@ -383,18 +390,30 @@ export function deviceFromSpec(row: PlanRow, spec: AssetSpecT, proposal: Json | 
  * says isDantePrimary). A proposal never carries isMainsSource (verified data only); no flag is removed and no port is added or renamed (saved projects keep
  * their cables).
  */
-export function mergeSpecFlags(proposalPorts: readonly ProposalPort[], specPorts: readonly PlanPort[]): ProposalPort[] {
+export function mergeSpecFlags(proposalPorts: readonly ProposalPort[], specPorts: readonly PlanPort[], documented = false): ProposalPort[] {
   return proposalPorts.map((p) => {
     const sp = specPorts.find((s) => s.id === p.portId)
-    const add = (sp?.flags ?? []).filter((f) => f !== 'isMainsSource' && !(p.flags ?? []).includes(f))
-    return add.length ? { ...p, flags: [...(p.flags ?? []), ...add] } : p
+    // Waves 2 to 5 review, finding 3: a phantom flag is a CAPABILITY claim. It crosses to a proposal only from a spec whose ports are documented (portsDocumented) or from a port that
+    // names its page (flagsSource): a Bêta spec whose connector set is not documented never puts a phantom supply on a proposal.
+    const cited = documented || sp?.flagsSource !== undefined
+    const add = (sp?.flags ?? []).filter((f) => f !== 'isMainsSource' && !(p.flags ?? []).includes(f) && (cited || !CAPABILITY_FLAGS.includes(f)))
+    let q: ProposalPort = add.length ? { ...p, flags: [...(p.flags ?? []), ...add] } : p
+    // the port id says it is AES50 / a USB control link (structure, not capability): the spec's signal wins (findings 9 and 11)
+    if (sp && SPEC_TYPED_SIGNALS.has(sp.signal) && q.signal !== sp.signal) q = { ...q, signal: sp.signal }
+    return q
   })
 }
+
+/** The flags that state what a manufacturer sheet must support: a phantom supply or need. */
+export const CAPABILITY_FLAGS: readonly string[] = ['providesPhantom', 'requiresPhantom']
+/** Signals a spec may retype on a Bêta proposal port (the port id says AES50, or a USB control link). */
+const SPEC_TYPED_SIGNALS: ReadonlySet<string> = new Set(['aes50', 'usb-control'])
 
 /** A Bêta proposal entry for a new row from the spec's ports (patch-only: no controls, routing or acoustic, never a mains source). */
 function proposalFromSpec(row: PlanRow, spec: AssetSpecT, today: string, sizeNote: string): Json {
   const ports = planPortsOf(spec).map((p) => {
-    const kept = (p.flags ?? []).filter((f) => f !== 'isMainsSource')
+    const cited = spec.portsDocumented === true || p.flagsSource !== undefined
+    const kept = (p.flags ?? []).filter((f) => f !== 'isMainsSource' && (cited || !CAPABILITY_FLAGS.includes(f)))
     return { portId: p.id!, dir: p.dir, connector: p.connector, signal: p.signal, ...(kept.length ? { flags: kept } : {}) }
   })
   const entry = {
@@ -566,7 +585,7 @@ export function promoteDevice(id: string, opts: PromoteOptions = {}): PromotionR
       const extra = [...specIds].filter((p) => !propIds.includes(p))
       if (missing.length || extra.length)
         return blocked(`a beta-modelled device keeps its proposal ports (saved projects keep their cables): the spec ports must be exactly ${propIds.join(', ')}${missing.length ? ` (missing ${missing.join(', ')})` : ''}${extra.length ? ` (extra ${extra.join(', ')})` : ''}`)
-      entry = { ...proposal, sizeMm: planSize(row!), ports: mergeSpecFlags(proposal.ports as ProposalPort[], planPortsOf(spec)) }
+      entry = { ...proposal, sizeMm: planSize(row!), ports: mergeSpecFlags(proposal.ports as ProposalPort[], planPortsOf(spec), spec.portsDocumented === true) }
       changes.push(`proposals: update ${id} (sizeMm from the plan, port ids unchanged: saved projects keep their cables; the flags the spec declares are added)`)
     } else {
       if (!spec.ports.length) return blocked(`the spec of ${id} lists no ports: a Bêta proposal needs at least the ports that are documented; fill the spec first`)
@@ -599,7 +618,8 @@ export function promoteDevice(id: string, opts: PromoteOptions = {}): PromotionR
     const blockers = promotionBlockers(row!, spec)
     if (blockers.length) return blocked(`${id} no longer meets the promotion rules with its spec: ${blockers.join('; ')}`)
     const entry = loadJournal(paths.journal).entries[id]
-    const built = /\((\d{4}-\d{2}-\d{2})\)/.exec(current.realWorld.notes ?? '')?.[1] ?? today
+    // deterministic (finding 19): the date the entry already carries, else the plan's own date: never the clock
+    const built = /\((\d{4}-\d{2}-\d{2})\)/.exec(current.realWorld.notes ?? '')?.[1] ?? readJson<{ generated: string }>(paths.plan).generated
     const { device, template } = deviceFromSpec(row!, spec, (entry?.proposalBefore ?? undefined) as Json | undefined, built, fmtSize(spec.realSizeMm))
     const nextText = replaceDevice(catalogText, id, device)
     if (nextText === catalogText) return { id, outcome: 'promoted', changes: [], reason: 'regen: the entry is already what the spec and the templates give' }
@@ -617,10 +637,15 @@ export function promoteDevice(id: string, opts: PromoteOptions = {}): PromotionR
     const proposalFile = existsSync(paths.proposals) ? readJson<ProposalFile>(paths.proposals) : undefined
     const proposal = proposalFile?.devices.find((d) => d.id === id)
     if (!proposalFile || !proposal) return blocked(`${id} is beta-modelled but has no proposal`)
-    const ports = mergeSpecFlags(proposal.ports as ProposalPort[], planPortsOf(spec))
+    // The base is the proposal as it was BEFORE stage 2 (the journal), so a flag a later rule refuses is removed, not just never added; a new row has no such base and
+    // takes its ports from the spec.
+    const base = loadJournal(paths.journal).entries[id]?.proposalBefore?.ports as ProposalPort[] | undefined
+    const ports = base
+      ? mergeSpecFlags(base, planPortsOf(spec), spec.portsDocumented === true)
+      : (proposalFromSpec(row!, spec, readJson<{ generated: string }>(paths.plan).generated, '').ports as ProposalPort[])
     if (JSON.stringify(ports) === JSON.stringify(proposal.ports)) return { id, outcome: 'beta-modelled', changes: [], reason: 'regen: the proposal already carries the spec flags' }
     const next: ProposalFile = { ...proposalFile, devices: proposalFile.devices.map((d) => (d.id === id ? { ...d, ports } : d)) }
-    return commit([{ path: paths.proposals, content: stringify(next) }], { id, outcome: 'beta-modelled', changes: [`proposals: add the spec's port flags to ${id}`] })
+    return commit([{ path: paths.proposals, content: stringify(next) }], { id, outcome: 'beta-modelled', changes: [`proposals: re-derive the port flags and signals of ${id} from its spec`] })
   }
 
   function revert(): PromotionResult {

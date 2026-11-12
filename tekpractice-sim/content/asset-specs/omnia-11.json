@@ -167,6 +167,12 @@
       "kind": "datasheet",
       "url": "https://docs.telosalliance.com/docs/appendix-a-performance-specifications",
       "note": "Omnia.11 appendix A performance specifications, opened 2026-11-12: 19 in x 7 in x 20 in (W x H x D) including connectors (482.6 x 177.8 x 508 mm), shipping weight 36 lb. The Telos \"Performance Specifications\" page that lists 2U 482 x 428 x 86 mm belongs to another product."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.manualsdir.com/manuals/782579/omnia-audio-omnia11.html?page=23",
+      "note": "Mains switch (review fix, read 2026-11-12 by a research pass, a manualsdir copy): the Omnia.11 manual says the unit is powered up by connecting the AC cord and states there is no power switch. The simulator's Alimentation control is not a switch of the real unit."
     }
-  ]
+  ],
+  "powerNote": "Pas d'interrupteur secteur selon le manuel (on coupe en retirant le cordon) : la commande Alimentation est celle du simulateur"
 }

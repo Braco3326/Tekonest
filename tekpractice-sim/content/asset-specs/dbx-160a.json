@@ -47,9 +47,33 @@
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 430,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
     }
   ],
-  "controls": [],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 395,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
   "build": {
     "shape": "rack-box",
     "params": {
@@ -108,6 +132,12 @@
       "kind": "manual",
       "url": "https://manualmachine.com/dbxpro/160a/1285223-user-manual",
       "note": "dbx 160A user manual and cut sheet read through a search summary 2026-11-12: floating balanced XLR and 1/4 in TRS inputs, a floating balanced XLR output and an unbalanced 1/4 in TRS output; a DETECTOR (side-chain) input jack whose connector type no result states (not modelled); no power connection stated (none modelled). 483 x 165 x 44 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.la-bs.com/Objets/160A_me.pdf",
+      "note": "Mains (review fix, read 2026-11-12 by a research pass, a third-party host copy of the dbx manual): the \"AC Power Jack\" section says the jack takes an IEC-type cord, the unit has NO power switch and is meant to stay on. The inlet type letter is not named: iec-c14 is assumed (plan assumedConnectors power-in). The catalogue keeps the simulator's Alimentation control (a mains inlet always carries it): it is not a switch of the real unit, and the entry says so. Positions: guesses."
     }
-  ]
+  ],
+  "powerNote": "Pas d'interrupteur secteur selon le manuel (l'appareil reste branché) : la commande Alimentation est celle du simulateur"
 }

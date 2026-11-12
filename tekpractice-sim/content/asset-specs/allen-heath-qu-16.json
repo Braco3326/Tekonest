@@ -18,8 +18,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -32,8 +31,7 @@
       "signal": "mic-level",
       "dir": "in",
       "flags": [
-        "isMicInput",
-        "providesPhantom"
+        "isMicInput"
       ]
     },
     {
@@ -188,5 +186,6 @@
       "url": "https://www.soundonsound.com/reviews/allen-heath-qu16",
       "note": "Sound On Sound review read by a research pass 2026-11-12 (the plan sources are a dimensions PDF and a dealer page): rear 16 XLR mic and 16 TRS line inputs, two stereo TRS inputs, 12 XLR outputs (main L / R and ten mixes), an AES3 stereo digital output, one USB-B streaming port, one Cat5 snake port and one Ethernet network port, a talkback input; the mains connection is not stated. Axis order and a depth conflict mean the plan size is an estimate (440 x 500 x 186 mm), so beta-modelled; modelled subset of 10 ports. The sloped profile is an estimate. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
     }
-  ]
+  ],
+  "portsTodo": "Phantom (review fix 2026-11-12): 2 providesPhantom flag(s) removed, no page read documents them (phantom to-check)."
 }
