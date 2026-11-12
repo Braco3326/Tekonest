@@ -1,0 +1,100 @@
+{
+  "id": "behringer-s16",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482,
+    "h": 89,
+    "d": 225
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "opposite",
+      "xMm": 38,
+      "yMm": 66,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "opposite",
+      "xMm": 68,
+      "yMm": 66,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-1",
+      "face": "opposite",
+      "xMm": 272,
+      "yMm": 51,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-2",
+      "face": "opposite",
+      "xMm": 298,
+      "yMm": 51,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "aes50-a",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "bodyWidthMm": 440,
+      "earThicknessMm": 5,
+      "earHoleMm": 6.35,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "plateFilletMm": 1,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "plateRgb": 2303531,
+      "bodyRgb": 1711136
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/behringer-s16-digital-stage-box/p/bes16a",
+      "note": "equipment plan source (research grade: dealer); size 482 x 225 x 89 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/behringer-s16-digital-stage-box/p/bes16a",
+      "note": "Plan size from Adorama: 482 x 225 x 89 mm, 4.7 kg (same chassis as the Midas DL16; the dealer page itself could not be re-opened, HTTP 403). Ports from the plan summary: 16 XLR mic in, 8 XLR out, AES50 (Cat5e). 5 modelled; which panel carries what, the 440 mm chassis width and the etherCON housing are guesses. portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Plan summary only (16 XLR mic, 8 XLR out, AES50): document the panels from the Behringer manual before promotion."
+}

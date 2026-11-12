@@ -1,0 +1,110 @@
+{
+  "id": "focusrite-scarlett-18i20-3rd-gen",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 46.6,
+    "d": 259.8
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "opposite",
+      "xMm": 50,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "opposite",
+      "xMm": 84,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "opposite",
+      "xMm": 400,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-1",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-2",
+      "face": "io",
+      "xMm": 85,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 380,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "bodyWidthMm": 440,
+      "earThicknessMm": 4,
+      "earHoleMm": 6.35,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "plateFilletMm": 0.8,
+      "rearInsetMm": 8,
+      "seamMm": 30,
+      "plateRgb": 2303531,
+      "bodyRgb": 1711136
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 0.8
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://userguides.focusrite.com/hc/en-gb/articles/23031286748306-Scarlett-18i20-3rd-Gen-specifications",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 259.8 x 46.6 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://userguides.focusrite.com/hc/en-gb/articles/23031286748306-Scarlett-18i20-3rd-Gen-specifications",
+      "note": "Plan size 482.6 x 259.8 x 46.6 mm (1U), 3.195 kg from the Focusrite specifications page (the page returned HTTP 403 when re-opened today). Connector set from a web search summary only (not opened): 8 XLR / TRS combo inputs of which 2 on the front, front headphone outputs, line outputs, USB type C, ADAT optical, MIDI. 6 ports are modelled with guessed positions (2 mic inputs and a headphone output on the front, 2 line outputs and USB on the rear; the combo's jack part is not modelled). portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Connector table not retrieved (page 403): read the Focusrite specifications before promotion."
+}

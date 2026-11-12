@@ -1,0 +1,226 @@
+{
+  "id": "mutec-mc-3-plus",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 196,
+    "h": 42,
+    "d": 156
+  },
+  "ports": [
+    {
+      "portId": "out-wclk-1",
+      "face": "io",
+      "xMm": 14,
+      "yMm": 31,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out",
+      "flags": [
+        "isClockMaster"
+      ]
+    },
+    {
+      "portId": "out-wclk-2",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 31,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out",
+      "flags": [
+        "isClockMaster"
+      ]
+    },
+    {
+      "portId": "out-wclk-3",
+      "face": "io",
+      "xMm": 46,
+      "yMm": 31,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out",
+      "flags": [
+        "isClockMaster"
+      ]
+    },
+    {
+      "portId": "out-wclk-4",
+      "face": "io",
+      "xMm": 62,
+      "yMm": 31,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out",
+      "flags": [
+        "isClockMaster"
+      ]
+    },
+    {
+      "portId": "out-wclk-5",
+      "face": "io",
+      "xMm": 78,
+      "yMm": 31,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out",
+      "flags": [
+        "isClockMaster"
+      ]
+    },
+    {
+      "portId": "out-wclk-6",
+      "face": "io",
+      "xMm": 14,
+      "yMm": 11,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out",
+      "flags": [
+        "isClockMaster"
+      ]
+    },
+    {
+      "portId": "in-wclk",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 11,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in",
+      "flags": [
+        "isClockSlave"
+      ]
+    },
+    {
+      "portId": "out-spdif-rca",
+      "face": "io",
+      "xMm": 46,
+      "yMm": 11,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "out"
+    },
+    {
+      "portId": "in-spdif-rca",
+      "face": "io",
+      "xMm": 62,
+      "yMm": 11,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "out-spdif-opt",
+      "face": "io",
+      "xMm": 78,
+      "yMm": 11,
+      "confidence": "guess",
+      "connector": "toslink",
+      "signal": "spdif",
+      "dir": "out"
+    },
+    {
+      "portId": "in-spdif-opt",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 11,
+      "confidence": "guess",
+      "connector": "toslink",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aes3",
+      "face": "io",
+      "xMm": 108,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes3",
+      "face": "io",
+      "xMm": 134,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 170,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 180,
+      "yMm": 21,
+      "axis": "z",
+      "sizeMm": {
+        "w": 9,
+        "h": 9,
+        "d": 3
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.2,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "rearInsetMm": 6,
+      "seamMm": 20,
+      "feetMm": 2.5,
+      "feetDiaMm": 10,
+      "plateRgb": 12106946,
+      "bodyRgb": 1908514
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 800,
+      "max": 3500
+    },
+    "minFilletMm": 1.2
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.markertek.com/Attachments/Manuals/MUTEC/8015-102-Manual.pdf",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.markertek.com/Attachments/Manuals/MUTEC/8015-102-Manual.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 196 x 156 x 42 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.markertek.com/Attachments/Manuals/MUTEC/8015-102-Manual.pdf",
+      "note": "MUTEC MC-3+ manual, technical data (opened by the Wave 0c research): cover 196 x 42 x 156 mm (W x H x D, without connectors), front panel 198 x 44 x 4 mm, about 1260 g, 9.5 inch half-rack housing; rear: 3 pairs of BNC word-clock outputs (6 BNC, 75 ohm), S/P-DIF out on RCA and TOSLINK, AES3 out XLR male, AES3 in XLR female, S/P-DIF in RCA and TOSLINK, 1 BNC WCLK / 10 MHz input, a USB port (type not stated: not modelled), the mains inlet. The size is the cover; the front panel is 2 mm wider and taller (not modelled). Colours: cover matte black powder-coat, front panel aluminium-colour (item 8015-100). Documented ports: all the rear connectors above; positions on the rear panel are guesses (no drawing read). The front power button, its position and the display layout are guesses."
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "id": "behringer-ada8200",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 44.5,
+    "d": 217
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "opposite",
+      "xMm": 45,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "opposite",
+      "xMm": 73,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-1",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-2",
+      "face": "io",
+      "xMm": 88,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "wordclock-in",
+      "face": "io",
+      "xMm": 300,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "bodyWidthMm": 440,
+      "earThicknessMm": 4,
+      "earHoleMm": 6.35,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "plateFilletMm": 0.8,
+      "rearInsetMm": 8,
+      "seamMm": 24,
+      "plateRgb": 2303531,
+      "bodyRgb": 1711136
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 0.8
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.fullcompass.com/common/files/19008-ULTRAGAINDIGITALADA8200Brochure.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 217 x 44.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.fullcompass.com/common/files/19008-ULTRAGAINDIGITALADA8200Brochure.pdf",
+      "note": "Brochure: 482.6 x 217 x 44.5 mm, 2.1 kg (the plan size). Connector set read from retailer descriptions found by web search (not opened as pages): per channel an XLR mic input and a 1/4 in TRS line input on the front, 8 XLR line outputs on the rear, ADAT TOSLINK in / out, BNC word clock in. Only 5 ports are modelled (2 of 8 channels each way and the word clock): this is a Beta stand-in, the panel assignment is a guess. portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Connector set from retailer descriptions only; document it against the Behringer manual (front or rear per connector) before promotion."
+}

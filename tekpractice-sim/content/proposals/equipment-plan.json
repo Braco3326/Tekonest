@@ -27,7 +27,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "ams-neve-1073spx",
@@ -54,7 +55,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "focusrite-scarlett-2i2-4th-gen",
@@ -136,7 +138,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "conflict"
+   "sizeConfidence": "conflict",
+   "staged": true
   },
   {
    "id": "neumann-kh-120-ii",
@@ -440,7 +443,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "focusrite-scarlett-18i20-3rd-gen",
@@ -467,7 +471,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "furman-m-8x2",
@@ -877,6 +882,7 @@
     "d": 156,
     "h": 42
    },
+   "weightKg": 1.26,
    "portsSummary": "10 modelled (14 listed in KB); mains-power port declared",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -891,7 +897,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "weightKg": 1.26
+   "staged": true
   },
   {
    "id": "presonus-hp4",
@@ -930,6 +936,7 @@
     "d": 68.5,
     "h": 44.45
    },
+   "weightKg": 1.72,
    "portsSummary": "4 modelled (96 listed in KB); no mains-power port declared in the proposal",
    "family": "rack-box-v2",
    "dataQuality": "datasheet",
@@ -945,7 +952,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "weightKg": 1.72
+   "staged": true
   },
   {
    "id": "sennheiser-ew-100-g4",
@@ -1023,7 +1030,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "behringer-dcx2496",
@@ -1079,7 +1087,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "jbl-305p-mkii",
@@ -1356,7 +1365,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "allen-heath-sq-6",

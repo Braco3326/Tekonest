@@ -3902,6 +3902,666 @@
           "ok": true
         }
       ]
+    },
+    {
+      "status": "ok",
+      "id": "ams-neve-1073spx",
+      "kind": "device",
+      "tris": 1632,
+      "ports": 7,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:32.220Z",
+      "specSource": "https://www.ams-neve.com/1073spx-21-p.asp",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "behringer-ada8200",
+      "kind": "device",
+      "tris": 1632,
+      "ports": 5,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:34.515Z",
+      "specSource": "https://www.fullcompass.com/common/files/19008-ULTRAGAINDIGITALADA8200Brochure.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "dbx-286s",
+      "kind": "device",
+      "tris": 1632,
+      "ports": 3,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:37.016Z",
+      "specSource": "https://files.hdtvsupply.com/dbx-dbx286sv-datasheet.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "samson-s-patch-plus",
+      "kind": "device",
+      "tris": 1632,
+      "ports": 4,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:39.159Z",
+      "specSource": "https://goknight.com/content/documentation/s-patchplus%20Spec%20Sheet.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "mutec-mc-3-plus",
+      "kind": "device",
+      "tris": 1408,
+      "ports": 14,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:41.785Z",
+      "specSource": "https://www.markertek.com/Attachments/Manuals/MUTEC/8015-102-Manual.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "behringer-s16",
+      "kind": "device",
+      "tris": 1632,
+      "ports": 5,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:43.895Z",
+      "specSource": "https://www.adorama.com/behringer-s16-digital-stage-box/p/bes16a",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "midas-dl16",
+      "kind": "device",
+      "tris": 1632,
+      "ports": 7,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:46.561Z",
+      "specSource": "https://markertek.com/product/midas-dl16/midas-dl16-16-input-8-output-stage-box",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "allen-heath-ar2412",
+      "kind": "device",
+      "tris": 1632,
+      "ports": 8,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:48.904Z",
+      "specSource": "https://www.proacousticsusa.com/allen-heath-ar2412-audiorack.html",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "focusrite-scarlett-18i20-3rd-gen",
+      "kind": "device",
+      "tris": 1632,
+      "ports": 6,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:51.671Z",
+      "specSource": "https://userguides.focusrite.com/hc/en-gb/articles/23031286748306-Scarlett-18i20-3rd-Gen-specifications",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "ua-apollo-twin-x",
+      "kind": "device",
+      "tris": 712,
+      "ports": 5,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_opposite.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T00:58:53.993Z",
+      "specSource": "https://www.bhphotovideo.com/c/product/1780895-REG/universal_audio_apltwxdu_he_apollo_twin_x_duo.html",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     }
   ],
   "environments": [
