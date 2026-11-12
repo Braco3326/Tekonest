@@ -1502,7 +1502,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "mackie-1604vlz4",
@@ -2669,7 +2670,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "krk-rokit-5-g4",
@@ -2696,7 +2698,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "mackie-big-knob-studio",
@@ -2865,7 +2868,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "radial-js3",
@@ -3223,7 +3227,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "zoom-podtrak-p4",
@@ -3517,7 +3522,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "k-m-26125",
@@ -3626,7 +3632,8 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "rode-ntg3",
@@ -3654,7 +3661,8 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "rode-procaster",
@@ -3682,7 +3690,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "rolls-ha43-pro",

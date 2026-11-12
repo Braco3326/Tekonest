@@ -1,0 +1,59 @@
+{
+  "note": "Unrolled side surface of the ev-re320 lathe (build.projection wrap): 170.9 mm around (pi x 54.4) by 216.7 mm tall. Generic artwork: matt black body, a collar ring, the head with a steel-mesh grille and a small slide switch (kick and flat voicing) drawn on the body. No brand mark.",
+  "faces": {
+    "wrap": {
+      "wMm": 170.9,
+      "hMm": 216.7,
+      "pxPerMm": 8,
+      "base": "#2a2b2e",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 138,
+          "w": 170.9,
+          "h": 1,
+          "fill": "#1a1b1d"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 139,
+          "w": 170.9,
+          "h": 8,
+          "fill": "#4b4d52"
+        },
+        {
+          "kind": "weave",
+          "x": 0,
+          "y": 148,
+          "w": 170.9,
+          "h": 66,
+          "pitch": 1.8,
+          "line": 0.3,
+          "fill": "#8b8e94",
+          "stroke": "#4a4c51",
+          "hole": "#222326"
+        },
+        {
+          "kind": "rect",
+          "x": 42.73,
+          "y": 80,
+          "w": 8,
+          "h": 16,
+          "fill": "#101112",
+          "radius": 2
+        },
+        {
+          "kind": "rect",
+          "x": 44.73,
+          "y": 82,
+          "w": 4,
+          "h": 6,
+          "fill": "#9a9da3",
+          "radius": 1
+        }
+      ]
+    }
+  }
+}

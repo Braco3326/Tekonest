@@ -1,0 +1,88 @@
+{
+  "id": "krk-rokit-5-g4",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 190,
+    "h": 285,
+    "d": 241
+  },
+  "ports": [
+    {
+      "portId": "in-combo",
+      "face": "io",
+      "xMm": 70,
+      "yMm": 200,
+      "confidence": "guess",
+      "openingMm": 22,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 118,
+      "yMm": 90,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": false,
+  "portsTodo": "Plan ports summary: (none). Fill `ports` with the connector set the datasheet documents (portId at most 19 characters, connector, signal, dir, face, xMm, yMm, confidence), the mains inlet as power-in, and the matching controls; then set portsDocumented true and portsSource to the page that documents it. Without portsDocumented the device cannot be promoted (it stays a Bêta proposal).",
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 190,
+      "rearWidthMm": 190,
+      "frontRadiusMm": 12,
+      "backRadiusMm": 12,
+      "edgeRadiusMm": 8,
+      "edgeDropMm": 8,
+      "edgeSegments": 8,
+      "wooferRingMm": 130,
+      "wooferYMm": 140,
+      "tweeterRingMm": 28,
+      "tweeterYMm": 242,
+      "waveguideMm": 62,
+      "waveguideDepthMm": 6
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 7,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/us1355768.html",
+      "note": "equipment plan source (research grade: dealer); size 190 x 241 x 285 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/us1355768.html",
+      "note": "Adorama listing (the plan source; read through a search summary, the page itself was not opened): 285 H x 190 W x 241 D mm, 4.85 kg (the KRK page itself answers 429). A review and the user manual (found through a search summary, not opened) say the Rokit G4 has ONE combo input jack taking a balanced XLR or a 6.3 mm TRS, and no RCA input. The mains inlet type is not named by any page read. PORTS NOT DOCUMENTED (portsDocumented false): the combo is modelled as one xlr3-f port (the TRS half is not a second port) and the inlet is a guess (iec-c14), so the device can only be beta-modelled."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.adorama.com/us1355768.html",
+      "note": "build params: the Wave 0 spike family (curved-cabinet carrying a near-rectangular monitor: plan radius 12, edge radius 8) with a 130 mm woofer recess at 140 mm and a 28 mm tweeter recess at 242 mm in a 62 mm waveguide dish. The front slot port under the woofer is not modelled by this shape: it is drawn on the baffle picture only. Recess positions are estimates. Port and control positions on the rear: no drawing or photo was opened, so every position is a plausible guess (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.adorama.com/us1355768.html",
+      "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with drivers drawn at the datasheet sizes; no photo copy, no brand mark, no lettering. Colour: a black cabinet with a yellow woofer cone (a studio-monitor default, not sampled from a photo)."
+    }
+  ]
+}

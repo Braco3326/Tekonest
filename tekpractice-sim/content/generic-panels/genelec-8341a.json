@@ -1,0 +1,236 @@
+{
+  "note": "Generic artwork for genelec-8341a: rear panel (io face, 237 x 351 mm) with sockets at the port positions and a plain plate; baffle (opposite face) drawn from the datasheet driver sizes. No brand mark, no lettering.",
+  "faces": {
+    "opposite": {
+      "wMm": 237,
+      "hMm": 351,
+      "pxPerMm": 6,
+      "base": "#2b2d30",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 40,
+          "y": 40,
+          "w": 157,
+          "h": 64,
+          "fill": "#16171a",
+          "radius": 30
+        },
+        {
+          "kind": "rect",
+          "x": 48,
+          "y": 48,
+          "w": 141,
+          "h": 48,
+          "fill": "#2c2e31",
+          "radius": 22
+        },
+        {
+          "kind": "rect",
+          "x": 40,
+          "y": 118,
+          "w": 157,
+          "h": 64,
+          "fill": "#16171a",
+          "radius": 30
+        },
+        {
+          "kind": "rect",
+          "x": 48,
+          "y": 126,
+          "w": 141,
+          "h": 48,
+          "fill": "#2c2e31",
+          "radius": 22
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 262,
+          "r": 56,
+          "fill": "#3c3f43"
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 262,
+          "r": 52,
+          "fill": "#17181a"
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 262,
+          "r": 45,
+          "fill": "#3c3f43"
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 262,
+          "r": 30,
+          "fill": "#17181a"
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 262,
+          "r": 9.5,
+          "fill": "#8b8e94"
+        }
+      ]
+    },
+    "io": {
+      "wMm": 237,
+      "hMm": 351,
+      "pxPerMm": 6,
+      "base": "#1d1e20",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": 20,
+          "w": 221,
+          "h": 311,
+          "fill": "#2a2c2f",
+          "radius": 4
+        },
+        {
+          "kind": "circle",
+          "x": 80,
+          "y": 215,
+          "r": 12.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 80,
+          "y": 215,
+          "r": 10,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 80,
+          "y": 215,
+          "r": 3.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 120,
+          "y": 215,
+          "r": 12.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 120,
+          "y": 215,
+          "r": 10,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 120,
+          "y": 215,
+          "r": 3.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 215,
+          "r": 12.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 215,
+          "r": 10,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 215,
+          "r": 3.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 100,
+          "y": 170,
+          "r": 9.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 100,
+          "y": 170,
+          "r": 7,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 100,
+          "y": 170,
+          "r": 2.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 138,
+          "y": 170,
+          "r": 9.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 138,
+          "y": 170,
+          "r": 7,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 138,
+          "y": 170,
+          "r": 2.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 110,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 110,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 110,
+          "r": 4,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "rect",
+          "x": 162,
+          "y": 101,
+          "w": 12,
+          "h": 18,
+          "fill": "#8d8f94",
+          "radius": 1.5
+        }
+      ]
+    }
+  }
+}

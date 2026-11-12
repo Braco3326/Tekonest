@@ -1,0 +1,118 @@
+{
+  "id": "rode-ntg3",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 19,
+    "h": 255,
+    "d": 19
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 9.5,
+      "yMm": 9.5,
+      "confidence": "guess",
+      "openingMm": 15,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "flags": [
+        "requiresPhantom"
+      ]
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://edge.rode.com/pdf/products/86/NTG3%20Datasheet_02_FA.pdf",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        14
+      ],
+      [
+        1.5,
+        17.5
+      ],
+      [
+        3,
+        19
+      ],
+      [
+        35,
+        19
+      ],
+      [
+        37,
+        17.8
+      ],
+      [
+        80,
+        17.8
+      ],
+      [
+        200,
+        17.8
+      ],
+      [
+        245,
+        17.8
+      ],
+      [
+        249,
+        16
+      ],
+      [
+        252,
+        11
+      ],
+      [
+        254,
+        5
+      ],
+      [
+        255,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#34353a"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "http://ci.rode.com/microphones/ntg-3",
+      "note": "equipment plan source (research grade: datasheet); size 19 x 19 x 255 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://edge.rode.com/pdf/products/86/NTG3%20Datasheet_02_FA.pdf",
+      "note": "RODE NTG3 datasheet (read through a search summary; the PDF itself was not opened): \"3 pin XLR, balanced output between Pin 2 (+), Pin 3 (-) and Pin 1 (ground)\", \"48V Phantom Power (44-52V min 5mA)\", W 19 mm, H 255 mm. Documents one XLR output and P48 (condenser: requiresPhantom)."
+    },
+    {
+      "kind": "reference",
+      "url": "http://ci.rode.com/microphones/ntg-3",
+      "note": "build.profile: a 19 mm base ring, then a slim 17.8 mm interference tube with a rounded end, 255 mm long (a shotgun). No product photo or drawing was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "http://ci.rode.com/microphones/ntg-3",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/rode-ntg3.json, drawn by npm run asset:panel): matt black tube with three columns of long interference slots. No photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess. Budget floor 1000: a slim pencil tube cannot reach the 1500 floor of the mic class without invented stations."
+    }
+  ]
+}

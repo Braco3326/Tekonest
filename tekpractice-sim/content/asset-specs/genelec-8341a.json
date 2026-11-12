@@ -1,0 +1,151 @@
+{
+  "id": "genelec-8341a",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 237,
+    "h": 351,
+    "d": 243
+  },
+  "ports": [
+    {
+      "portId": "in-analog",
+      "face": "io",
+      "xMm": 80,
+      "yMm": 215,
+      "confidence": "guess",
+      "openingMm": 20,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 215,
+      "confidence": "guess",
+      "openingMm": 20,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 215,
+      "confidence": "guess",
+      "openingMm": 20,
+      "insetMm": 3,
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-net-1",
+      "face": "io",
+      "xMm": 100,
+      "yMm": 170,
+      "confidence": "guess",
+      "openingMm": 14,
+      "insetMm": 3,
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-net-2",
+      "face": "io",
+      "xMm": 138,
+      "yMm": 170,
+      "confidence": "guess",
+      "openingMm": 14,
+      "insetMm": 3,
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 118,
+      "yMm": 110,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 168,
+      "yMm": 110,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "portsDocumented": true,
+  "portsSource": "https://www.genelec.com/8341a",
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 232,
+      "sideBulgeMm": 2.5,
+      "rearWidthMm": 224,
+      "frontRadiusMm": 28,
+      "backRadiusMm": 34,
+      "edgeRadiusMm": 20,
+      "edgeDropMm": 26,
+      "edgeSegments": 8,
+      "barrelMm": 20,
+      "barrelCentreMm": 200,
+      "tweeterRingMm": 60,
+      "tweeterYMm": 262,
+      "waveguideMm": 104,
+      "waveguideDepthMm": 12
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 16,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.genelec.com/8351",
+      "note": "equipment plan source (research grade: datasheet); size 237 x 243 x 351 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.genelec.com/8341a",
+      "note": "Genelec 8341A product page (downloaded and read): analog input \"XLR female, balanced 10 kOhm\", AES/EBU \"Digital signal input connector XLR female 110 Ohm\", AES/EBU \"output / Thru connector XLR male 110 Ohm\", \"Two CAT5 (RJ45) GLM Network connectors\", mains \"100-240 VAC 50/60Hz\" (the inlet type is not named: iec-c14 follows the Genelec 8030C and the KH 120 II precedents), dimensions \"Height 351 mm, Width 237 mm, Depth 243 mm\" without Iso-Pod (370 mm with), driver sizes bass racetrack 2 x 170 x 90 mm, coaxial midrange 90 mm and 19 mm metal dome. Documents the connector set (portsDocumented): analog XLR in, AES/EBU in and thru, two GLM network ports, mains inlet. The GLM ports carry control data, not audio: they keep the catalogue signal aoip, as the KH 120 II RJ45 does."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.genelec.com/8341a",
+      "note": "build params: the shipped Genelec 8030C recipe (curved-cabinet: a rounded polygon plan, elliptic fillets, a shallow barrel arc) scaled to 237 x 243 x 351, plus a 104 mm coaxial waveguide dish around the 60 mm coax recess at 262 mm. The two racetrack bass drivers (170 x 90 mm) are not round, so they are drawn on the baffle picture only (their position is a guess); the real unit and its Iso-Pod stand are not modelled (the plan size excludes the Iso-Pod). The recess positions and the barrel are estimates from the datasheet outline, not measured. Port and control positions on the rear: no drawing or photo was opened, so every position is a plausible guess (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.genelec.com/8341a",
+      "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with drivers drawn at the datasheet sizes; no photo copy, no brand mark, no lettering. Colour: a studio-monitor default (the page lists white, dark grey, black and raw finishes), lifted for the creation lighting."
+    }
+  ]
+}

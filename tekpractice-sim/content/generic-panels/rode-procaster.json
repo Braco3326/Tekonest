@@ -1,0 +1,41 @@
+{
+  "note": "Unrolled side surface of the rode-procaster lathe (build.projection wrap): 166.5 mm around (pi x 53) by 214 mm tall. Generic artwork: matt black body, a metal collar ring and a fine steel-mesh grille on the head. No brand mark.",
+  "faces": {
+    "wrap": {
+      "wMm": 166.5,
+      "hMm": 214,
+      "pxPerMm": 8,
+      "base": "#2b2c2f",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 117,
+          "w": 166.5,
+          "h": 1,
+          "fill": "#1a1b1d"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 118,
+          "w": 166.5,
+          "h": 6,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "weave",
+          "x": 0,
+          "y": 124,
+          "w": 166.5,
+          "h": 85,
+          "pitch": 1.6,
+          "line": 0.3,
+          "fill": "#8b8e94",
+          "stroke": "#4a4c51",
+          "hole": "#222326"
+        }
+      ]
+    }
+  }
+}

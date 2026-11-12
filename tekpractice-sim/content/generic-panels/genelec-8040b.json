@@ -1,0 +1,130 @@
+{
+  "note": "Generic artwork for genelec-8040b: rear panel (io face, 237 x 365 mm) with sockets at the port positions and a plain plate; baffle (opposite face) drawn from the datasheet driver sizes. No brand mark, no lettering.",
+  "faces": {
+    "opposite": {
+      "wMm": 237,
+      "hMm": 365,
+      "pxPerMm": 6,
+      "base": "#2b2d30",
+      "items": [
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 135,
+          "r": 88,
+          "fill": "#3c3f43"
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 135,
+          "r": 84,
+          "fill": "#16171a"
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 135,
+          "r": 62,
+          "fill": "#2c2e31"
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 135,
+          "r": 26,
+          "fill": "#16171a"
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 290,
+          "r": 48,
+          "fill": "#3c3f43"
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 290,
+          "r": 46,
+          "fill": "#2a2c2f"
+        },
+        {
+          "kind": "circle",
+          "x": 118.5,
+          "y": 290,
+          "r": 16,
+          "fill": "#8b8e94"
+        }
+      ]
+    },
+    "io": {
+      "wMm": 237,
+      "hMm": 365,
+      "pxPerMm": 6,
+      "base": "#1d1e20",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": 20,
+          "w": 221,
+          "h": 325,
+          "fill": "#2a2c2f",
+          "radius": 4
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 215,
+          "r": 12.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 215,
+          "r": 10,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 215,
+          "r": 3.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 130,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 130,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 130,
+          "r": 4,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "rect",
+          "x": 164,
+          "y": 121,
+          "w": 12,
+          "h": 18,
+          "fill": "#8d8f94",
+          "radius": 1.5
+        }
+      ]
+    }
+  }
+}

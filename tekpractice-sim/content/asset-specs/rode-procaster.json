@@ -1,0 +1,119 @@
+{
+  "id": "rode-procaster",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 53,
+    "h": 214,
+    "d": 53
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 26.5,
+      "yMm": 26.5,
+      "confidence": "guess",
+      "openingMm": 19,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://edge.rode.com/pdf/page/356/modules/1253/procaster_datasheet.pdf",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        38
+      ],
+      [
+        2,
+        43
+      ],
+      [
+        5,
+        46
+      ],
+      [
+        60,
+        46
+      ],
+      [
+        110,
+        46
+      ],
+      [
+        118,
+        50
+      ],
+      [
+        124,
+        53
+      ],
+      [
+        200,
+        53
+      ],
+      [
+        205,
+        52.4
+      ],
+      [
+        209,
+        50
+      ],
+      [
+        212,
+        44
+      ],
+      [
+        213.4,
+        32
+      ],
+      [
+        214,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#2b2c2f"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://edge.rode.com/pdf/page/356/modules/1253/procaster_datasheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 53 x 53 x 214 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://edge.rode.com/pdf/page/356/modules/1253/procaster_datasheet.pdf",
+      "note": "RODE Procaster datasheet (downloaded, read as text): \"Length - 214mm (8.425in)\", \"Diameter - 53mm (2.086in)\", \"3 pin XLR, balanced output between Pin 2 (+), Pin 3 (-) and Pin 1 (ground)\", net weight 695 g, dynamic cardioid, passive (no phantom). Documents one XLR output (gender not printed: male by convention)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://edge.rode.com/pdf/page/356/modules/1253/procaster_datasheet.pdf",
+      "note": "build.profile: a 46 mm body tube, a collar and a 53 mm cylindrical head with a rounded top (a broadcast end-address dynamic), 214 mm long. No product photo or drawing was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://edge.rode.com/pdf/page/356/modules/1253/procaster_datasheet.pdf",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/rode-procaster.json, drawn by npm run asset:panel): matt black body, a metal collar ring and a fine steel-mesh grille on the head. No photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess."
+    }
+  ]
+}

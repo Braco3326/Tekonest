@@ -1,0 +1,49 @@
+{
+  "note": "Unrolled side surface of the rode-nt5 lathe (build.projection wrap): 62.83 mm around (pi x 20) by 118 mm tall. Generic artwork: plain satin metal tube, two seam rings and a fine grille band at the capsule. No brand mark.",
+  "faces": {
+    "wrap": {
+      "wMm": 62.83,
+      "hMm": 118,
+      "pxPerMm": 14,
+      "base": "#b4b7bc",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 20,
+          "w": 62.83,
+          "h": 0.6,
+          "fill": "#6f7277"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 86,
+          "w": 62.83,
+          "h": 1.2,
+          "fill": "#8b8e94"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 93.5,
+          "w": 62.83,
+          "h": 0.8,
+          "fill": "#6f7277"
+        },
+        {
+          "kind": "weave",
+          "x": 0,
+          "y": 96,
+          "w": 62.83,
+          "h": 16,
+          "pitch": 1.2,
+          "line": 0.3,
+          "fill": "#a2a5ab",
+          "stroke": "#4a4c51",
+          "hole": "#222326"
+        }
+      ]
+    }
+  }
+}

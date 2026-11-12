@@ -1,0 +1,172 @@
+{
+  "id": "yamaha-dxr12-mkii",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 362,
+    "h": 601,
+    "d": 350
+  },
+  "ports": [
+    {
+      "portId": "in-xlr",
+      "face": "io",
+      "xMm": 135,
+      "yMm": 400,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-phone",
+      "face": "io",
+      "xMm": 181,
+      "yMm": 400,
+      "confidence": "guess",
+      "openingMm": 14,
+      "insetMm": 3,
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in",
+      "flags": [
+        "isUnbalanced"
+      ]
+    },
+    {
+      "portId": "thru-out",
+      "face": "io",
+      "xMm": 227,
+      "yMm": 400,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-rca-l",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 350,
+      "confidence": "guess",
+      "openingMm": 12,
+      "insetMm": 3,
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in",
+      "flags": [
+        "isUnbalanced"
+      ]
+    },
+    {
+      "portId": "in-rca-r",
+      "face": "io",
+      "xMm": 190,
+      "yMm": 350,
+      "confidence": "guess",
+      "openingMm": 12,
+      "insetMm": 3,
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in",
+      "flags": [
+        "isUnbalanced"
+      ]
+    },
+    {
+      "portId": "link-out",
+      "face": "io",
+      "xMm": 227,
+      "yMm": 350,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 260,
+      "confidence": "guess",
+      "openingMm": 26,
+      "insetMm": 3,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 205,
+      "yMm": 260,
+      "axis": "z",
+      "sizeMm": {
+        "w": 14,
+        "h": 20,
+        "d": 8
+      }
+    }
+  ],
+  "portsDocumented": true,
+  "portsSource": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-DXR12MKII_userGuide.pdf",
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 362,
+      "midWidthMm": 318,
+      "midDepthMm": 240,
+      "rearWidthMm": 192,
+      "frontRadiusMm": 24,
+      "backRadiusMm": 38,
+      "edgeRadiusMm": 20,
+      "edgeDropMm": 28,
+      "edgeSegments": 8
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 16,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://usa.yamaha.com/products/proaudio/speakers/dxr/specs.html",
+      "note": "equipment plan source (research grade: datasheet); size 362 x 350 x 601 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-DXR12MKII_userGuide.pdf",
+      "note": "Yamaha DXRmkII series owner manual (a dealer-hosted copy, downloaded and read as text; it covers DXR12mkII): \"a balanced XLR input jack (INPUT 1), unbalanced phones (INPUT 2) and RCA pin input jacks (INPUT 3)\", \"THRU jack: a balanced XLR output\", \"LINK OUT jack: this XLR jack outputs signals\", \"AC IN inlet: connect the supplied AC power cord\", a power switch. The inlet type is not named in the text (iec-c14 by the DBR12 and QSC K12.2 precedents). This CONTRADICTS the plan notes (XLR/TRS combo, 2 TRS): the owner manual is the source used here. Documents the connector set (portsDocumented): XLR in, phones in, 2 RCA in, XLR thru and link out, AC inlet, power switch."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://usa.yamaha.com/products/proaudio/speakers/dxr/specs.html",
+      "note": "Yamaha DXR specs page (the plan source; answers 403 here): 601 H x 362 W x 350 D mm including the rubber feet, 18.6 kg (plan notes)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-DXR12MKII_userGuide.pdf",
+      "note": "build params: the shipped Yamaha DBR12 recipe (a curved-cabinet that tapers from the front: midWidth, midDepth, rearWidth) scaled by 0.96 to 362 x 350 x 601. The grille, the 12 inch woofer, the horn, the pole socket and the handles are picture only. Port positions on the rear and the plan are estimates, not measured. Port and control positions on the rear: no drawing or photo was opened, so every position is a plausible guess (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-DXR12MKII_userGuide.pdf",
+      "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with drivers drawn at the datasheet sizes; no photo copy, no brand mark, no lettering. Colour: black polymer cabinet, steel grille (a PA default)."
+    }
+  ]
+}

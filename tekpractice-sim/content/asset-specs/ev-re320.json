@@ -1,0 +1,119 @@
+{
+  "id": "ev-re320",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 54.4,
+    "h": 216.7,
+    "d": 54.4
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 27.2,
+      "yMm": 27.2,
+      "confidence": "guess",
+      "openingMm": 19,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.adorama.com/electro-voice-re320-variable-d-dynamic-vocal-instrument-microphone/p/evre320",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1500,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        40
+      ],
+      [
+        2,
+        45
+      ],
+      [
+        5,
+        49.2
+      ],
+      [
+        110,
+        49.2
+      ],
+      [
+        125,
+        50.5
+      ],
+      [
+        140,
+        53.4
+      ],
+      [
+        148,
+        54.4
+      ],
+      [
+        200,
+        54.4
+      ],
+      [
+        206,
+        53.6
+      ],
+      [
+        211,
+        50
+      ],
+      [
+        214.5,
+        40
+      ],
+      [
+        216,
+        24
+      ],
+      [
+        216.7,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#2a2b2e"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://products.electrovoice.com/ap/en/re320",
+      "note": "equipment plan source (research grade: datasheet); size 54.4 x 54.4 x 216.7 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/electro-voice-re320-variable-d-dynamic-vocal-instrument-microphone/p/evre320",
+      "note": "Dealer spec listing (Adorama, read through a search summary; the page itself was not opened): \"3-pin XLR\" output, height 216.7 mm (8.53 in), 681 g, a variable-D dynamic. The Electro-Voice product page lists only 150 ohm balanced and a dual-voicing switch (kick-drum curve or flat), not the connector. One dealer lists a 49.2 mm diameter and another 54.4 mm: the plan keeps the datasheet widest diameter 54.4 mm and this build uses 49.2 mm for the body tube. Documents one XLR output (gender not printed: male by convention)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://products.electrovoice.com/ap/en/re320",
+      "note": "build.profile: a 49.2 mm body tube widening to the 54.4 mm widest head diameter (49.2 body and 54.4 widest are the plan figures from the EV datasheet), rounded top, 216.7 mm long. No product photo or drawing was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://products.electrovoice.com/ap/en/re320",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/ev-re320.json, drawn by npm run asset:panel): matt black body, a collar ring, the head with a steel-mesh grille and a small slide switch (kick and flat voicing) drawn on the body. No photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess."
+    }
+  ]
+}
