@@ -3,7 +3,12 @@
  * (does not trigger), then the REAL scan over every visible-text surface that exists today. The list lives in honestyLists.ts (one list, shared).
  *
  * Surfaces scanned: COPY (every section), the copy deck's « Texte » column, the guide's own words (TP_STRINGS, CREATION_STRINGS, the creation
- * flow steps), the rule override texts (a COPY section, also scanned as learner text), the template names, the picker pitch and the template notes.
+ * flow steps), the rule override texts (a COPY section, also scanned as learner text), the template names, the picker pitch and the template notes,
+ * the venue and set names of the picker cards and the catalog's French rule titles (these three with the families that apply everywhere).
+ * Surfaces NOT scanned (said here and in spec 9, so this file claims no more than it does): the catalog's device and port labels (brand/model names and
+ * connector names, the catalog's own data), the catalog's `teach_fr` texts (reported: each one that trips has an override, see ruleOverrides.test.ts), the
+ * room files' other text (descriptions, gear notes), the vendored guide table (strings.fr.ts) beyond the keys listed in KNOWN, `index.html` and the legacy
+ * level page. The runtime scan of what is on screen is T7.1c.
  * Learner scope (figures, success and school, Oscar's voice): the sections checklist, assist, ruleOverride, onboarding, tutorial and the guide's words.
  */
 import { readFileSync, readdirSync } from 'node:fs'
@@ -11,6 +16,8 @@ import { describe, expect, it } from 'vitest'
 import { COPY } from '../../src/creation/copy'
 import { CREATION_FLOWS, CREATION_STRINGS } from '../../src/guide/flows.creation'
 import { TP_STRINGS } from '../../src/guide/strings'
+import catalogJson from '../../content/catalog.json'
+import { placeSummary } from '../../src/creation/placeSummary'
 import { FAMILIES, NAMES, offends } from './honestyLists'
 
 // ── helpers ────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -68,6 +75,10 @@ function surfaces(): Item[] {
     if (note !== undefined) items.push({ where: `template ${t.id} note`, text: note, scope: 'learner' })
   }
   items.push({ where: 'picker.templatesPitch', text: COPY.picker!.templatesPitch!, scope: 'learner' })
+  // The venue and set names of the picker cards and the French rule titles (T1 close review 6): shown to every visitor, so the families that apply everywhere are checked.
+  for (const r of placeSummary().rooms) items.push({ where: `place ${r.id} name`, text: r.name_fr, scope: 'everywhere' })
+  for (const st of placeSummary().sets) items.push({ where: `set ${st.envId} name`, text: st.name, scope: 'everywhere' })
+  for (const r of catalogJson.rules) items.push({ where: `rule ${r.id} title_fr`, text: r.title_fr, scope: 'everywhere' })
   return items
 }
 
@@ -138,21 +149,24 @@ describe('T1.7 the banned list: near misses pass (does not trigger)', () => {
  * Strings that trip the list today and that this task must NOT change (validated copy, pinned copy or the catalog's own text), each with its reason.
  * The test asserts the offender list EQUALS this table: a new offender fails it, and so does a table entry that no longer offends (dead weight).
  */
-const VENDORED_COURSE = 'Vendored default strings (the guide’s vendored string table, strings.fr.ts), kept verbatim: vendor files are not edited here. They state the legacy exam gate and promise nothing; the host (src/guide/mount.ts, index.ts) passes no course, so the line is not reached (the T7 runtime scan covers what is shown).'
+const VENDORED_COURSE = 'Vendored default strings (the guide’s vendored string table, strings.fr.ts), kept verbatim: vendor files are not edited here. They state the exam gate and promise nothing. They are reached through hard() / guarded() (vendor/core/controller.ts:819 and :1089, `course.withheld`) when the mode is not « practice »; the controller is told the exam mode first and the whole mount is then torn down (src/guide/mount.ts, `tell`), so no exam page shows them (the T7 runtime scan covers what is shown).'
 const KNOWN: Record<string, { families: string[]; why: string }> = {
   'CREATION_STRINGS.course.lockedExam': { families: ['success and school'], why: VENDORED_COURSE },
   'CREATION_STRINGS.course.lockedExamOther': { families: ['success and school'], why: VENDORED_COURSE },
   'CREATION_STRINGS.course.nextExam': { families: ['success and school'], why: VENDORED_COURSE },
   'CREATION_STRINGS.course.withheld': { families: ['success and school'], why: VENDORED_COURSE },
-  // Our own sentence, said only where the help is withheld (the exam address, where Oscar is absent anyway): it states a fact, it promises nothing about the exam.
-  'TP_STRINGS.ask.examQuiet': { families: ['success and school'], why: 'States that the help is off during an exam: a fact of the legacy route, no promise, and Oscar is absent on exam addresses.' },
+  // Our own sentence, the brain's answer when the mode is not « practice »: Oscar never speaks in an exam (the mount is torn down in exam mode, src/guide/mount.ts `tell`),
+  // so this is a defence in depth that no learner sees. Spec section 9 carries the exception (« examen » banned except this one withheld sentence).
+  'TP_STRINGS.ask.examQuiet': { families: ['success and school'], why: 'The withheld answer of the brain; never spoken in an exam (the guide is torn down in exam mode, mount.ts), and it states a fact, it promises nothing.' },
 }
 
 describe('T1.7 the real scan over every visible-text surface', () => {
   const items = surfaces()
   it('the surfaces are not empty (the scan is not vacuous)', () => {
     const kinds = new Set(items.map((i) => i.where.split(/[. ]/)[0]))
-    expect([...kinds].sort()).toEqual(['COPY', 'CREATION_STRINGS', 'TP_STRINGS', 'deck', 'flow', 'picker', 'template'])
+    expect([...kinds].sort()).toEqual(['COPY', 'CREATION_STRINGS', 'TP_STRINGS', 'deck', 'flow', 'picker', 'place', 'rule', 'set', 'template'])
+    expect(items.filter((i) => i.where.startsWith('place ')).length).toBeGreaterThan(30) // the 32 venues
+    expect(items.filter((i) => i.where.startsWith('rule ')).length).toBe(8)
     expect(items.filter((i) => i.where.startsWith('COPY.')).length).toBeGreaterThan(600)
     expect(items.filter((i) => i.where.startsWith('deck ')).length).toBeGreaterThan(600)
     expect(items.filter((i) => i.where.startsWith('template ')).length).toBe(templates.length * 2) // a name and a note each

@@ -11,7 +11,7 @@ with the stand-alone honesty and first-sound fixes first.
 
 **Spec (read it first):** `docs/superpowers/specs/2026-11-12-onboarding-packs-design.md` (version 2).
 
-**Ledger:** `E:\dev\Tekonest-wt\onboarding\.superpowers\ledger.md` (git-excluded). After each task: task id, commit, gate result (with the failing
+**Ledger:** a git-excluded file kept by the controller outside the tracked tree. After each task: task id, commit, gate result (with the failing
 assertion line pasted for the red run), reviewer verdict, anything parked.
 
 **Tech:** TypeScript strict, Babylon.js 7, Vite, zod, vitest (environment `node`: no DOM; logic in pure modules, DOM proven in e2e), Playwright with

@@ -239,7 +239,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** One line under « Modèles » (night wave 2, E; rewritten T1.6): what a template is, no promise beyond the placed gear. */
     templatesPitch: 'Un lieu avec du matériel déjà posé.',
     /** Note line of a template card (T1.6), key `templateNote-<template id>`: what the model already does, or what is left to do. */
-    'templateNote-premier-son-pret': 'Joue dès l’ouverture : déjà câblé et alimenté.',
+    'templateNote-premier-son-pret': 'Prêt à écouter dès l’ouverture : déjà câblé et alimenté.',
     'templateNote-concert-simple-reference': 'À compléter : sorties de la console vers les enceintes, Lecture console.',
     /** Plan legend under the hint (the thumbnails: seen from the audience, stage at the top). */
     legendIntro: 'Plans vus depuis le public, scène en haut :',
@@ -955,8 +955,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
    * signal-path reason the verdict can carry (`path.reasons[0]`); none for RULE_ERROR (the rule's own explanation is the fix) nor NO_MIC (a mic reason, never a playback one). No figure, no promise. Every string here: à valider (tekuxwriter, 2026-11-12).
    */
   assist: {
-    /** After `playback.noSource` (NO_SOURCE): a source is a console that has the « Lecture console » command (the Axia iQ has none). */
-    noSource: 'Ajoutez une console qui a la commande « Lecture console » (onglet « Consoles »).',
+    /** After `playback.noSource` (NO_SOURCE): a source is a console that has the « Lecture console » command: today only the Yamaha QL1 (the Axia iQ has none), so the sentence NAMES it; tests/guide/verdict.test.ts fails when the catalog gets another source console. */
+    noSource: 'Ajoutez la Yamaha QL1 (onglet « Consoles ») : c’est la console qui a la commande « Lecture console ».',
     /** After `playback.sourceOff` (SOURCE_OFF). */
     sourceOff: 'Sélectionnez la console, puis activez « Lecture console » dans Propriétés.',
     /** After `playback.hostUnpowered` (HOST_UNPOWERED). */
@@ -967,7 +967,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     speakerUnpowered: 'Reliez la prise secteur de l’enceinte à une multiprise et vérifiez que « Alimentation » est activée.',
   },
   /**
-   * Mode Création's own wording of the simulator rules R1 to R5 (T1.5a, spec 6.5 and Appendix A): `teach_fr` only, keyed by the RULE ID (R1 to R5), applied by
+   * Mode Création's own wording of the simulator rules R1 to R5 (T1.5a, spec 8.4 and Appendix A): `teach_fr` only, keyed by the RULE ID (R1 to R5), applied by
    * `creationRuleRows` (src/creation/ruleTexts.ts). The catalog text is not edited (the legacy Essais fingerprint covers it) and the legacy route keeps it.
    * Each text says what the simulator accepts or refuses: no hardware outcome, no safety claim, no figure that has no source record. R6 to R8 have no
    * override. Every string here: à valider (tekuxwriter, 2026-11-12).
@@ -979,10 +979,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     R2: 'Dans le simulateur, les deux prises doivent porter le même type de signal : niveau micro, niveau ligne pro, niveau ligne grand public, numérique AES3… Un type différent est refusé : un micro va sur une entrée micro, une sortie ligne sur une entrée ligne.',
     /** R3 « Sens de connexion incorrect » (the engine refuses out to out and in to in; a `bidir` port, 12 in the catalog, accepts either end). */
     R3: 'Dans le simulateur, un câble va d’une sortie vers une entrée. Deux sorties reliées entre elles, ou deux entrées, sont refusées. Les ports bidirectionnels (réseau, patchbay…) acceptent les deux sens.',
-    /** R4 « Alimentation fantôme (+48 V) » (a rule event of the evaluator, not a refusal). */
-    R4: 'Dans le simulateur, un micro à condensateur (U 87) reste muet sans alimentation fantôme +48 V ; un micro dynamique (SM58, RE20) fonctionne avec ou sans.',
-    /** R5 « Voyant ON-AIR (tally) » (a WARNING event of the evaluator, src/logic/gpio.ts: an open mic fader and no console tally output cabled to an ON-AIR light). */
-    R5: 'Dans le simulateur, quand un micro est ouvert, la sortie tally de la console doit être reliée à un voyant ON-AIR ; sinon un avertissement s’affiche.',
+    /** R4 « Alimentation fantôme (+48 V) » (an ERROR event of the evaluator, not a refusal: the mic's input has no +48 V; the cable then gets no « Micro OK »). */
+    R4: 'Dans le simulateur, un micro à condensateur (U 87) branché sur une entrée sans alimentation fantôme +48 V est signalé en erreur et n’obtient pas « Micro OK » ; un micro dynamique (SM58, RE20) n’est pas concerné.',
+    /** R5 « Voyant ON-AIR (tally) » (a WARNING event of the evaluator, src/logic/gpio.ts: an open mic fader channel and no console tally output cabled to an ON-AIR light; it fires with no mic plugged, the Axia iQ ships with its mic 1 fader open). */
+    R5: 'Dans le simulateur, quand la voie micro d’une console est ouverte (même sans micro branché), sa sortie tally doit être reliée à un voyant ON-AIR ; sinon un avertissement s’affiche.',
   },
   /**
    * The first visit (onboarding packs, T2): the start screen, only under `?design=1..5`. Profile labels say the learner's situation. French « vous », no

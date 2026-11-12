@@ -1,5 +1,5 @@
 /**
- * T1.5b (onboarding packs, spec 6.5): Mode Création shows its own wording of the simulator rules R1 to R5 (COPY.ruleOverride, Appendix A) at every place it
+ * T1.5b (onboarding packs, spec 8.4): Mode Création shows its own wording of the simulator rules R1 to R5 (COPY.ruleOverride, Appendix A) at every place it
  * quotes a rule, and the legacy route keeps the catalog text. The catalog is never edited.
  *
  * R1 (an XLR into a TT jack), R2 (a mic into a line input) and R3 (out to out) are REFUSALS of the engine: they reach the status list, the connect dialog

@@ -19,7 +19,7 @@ test('« Choisir un lieu »: 36 place cards and the two template cards (T1.6: «
   await expect(templates.first()).toContainText('Concert simple (référence)')
   await expect(templates.first()).toContainText('À compléter : sorties de la console vers les enceintes, Lecture console.')
   await expect(templates.nth(1)).toContainText('Premier son (déjà câblé et alimenté)')
-  await expect(templates.nth(1)).toContainText('Joue dès l’ouverture : déjà câblé et alimenté.')
+  await expect(templates.nth(1)).toContainText('Prêt à écouter dès l’ouverture : déjà câblé et alimenté.')
   // each card: a thumbnail (decorative, lazy), a name, « L × l × h m », a type
   // the accessible name starts with the place name, then size, type (and badge)
   await expect(page.getByRole('option', { name: /^Salle vide neutre 24 × 14 m Salle neutre$/ })).toHaveCount(1)

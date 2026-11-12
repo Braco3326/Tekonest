@@ -172,10 +172,24 @@ describe('the mic line', () => {
     expect(v.mic).toEqual({ cabled: true, text: C.micCabled })
   })
 
-  it('a mic cabled to a console that is switched off: still the fixed line (the power reason is on the power row)', () => {
+  it('a mic cabled to a console that is switched off: the fixed line, then the own reason of the mic given by the engine (T1 close review 11), verbatim', () => {
     const { path, v } = view(rig((s) => ok(s.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'power', value: false }), 'off')))
     expect(path.micReasons.map((r) => r.code)).toEqual(['HOST_UNPOWERED'])
-    expect(v.mic).toEqual({ cabled: true, text: C.micCabled })
+    expect(v.mic).toEqual({ cabled: true, text: `${C.micCabled} ${P.hostUnpowered}` })
+  })
+
+  it('a condenser mic on a preamp input with +48 V off (the mic itself has an error): the fixed line, then the RULE_ERROR text of the engine; with +48 V on, the fixed line alone', () => {
+    const s = storeOf(registry)
+    for (const [id, deviceId] of [['mic', 'neumann-u87-ai'], ['isa', 'focusrite-isa-one'], ['mains', 'multiprise-secteur']] as const) ok(s.dispatch({ type: 'SPAWN', deviceId, instanceId: id }), id)
+    ok(s.dispatch({ type: 'CONNECT', a: ref('mains out-1'), b: ref('isa power-in') }), 'mains')
+    ok(s.dispatch({ type: 'CONNECT', a: ref('mic out-xlr'), b: ref('isa in-mic') }), 'mic cable')
+    const off = view(s.design(), s.events())
+    expect(off.path.micReasons.map((r) => r.code)).toEqual(['RULE_ERROR'])
+    expect(off.v.mic).toEqual({ cabled: true, text: `${C.micCabled} ${P.ruleError}` })
+    ok(s.dispatch({ type: 'SET_CONTROL', instance: 'isa', control: 'phantom-48v', value: true }), 'phantom')
+    const on = view(s.design(), s.events())
+    expect(on.path.micOk).toBe(true)
+    expect(on.v.mic).toEqual({ cabled: true, text: C.micCabled })
   })
 
   it('no mic cabled (does not trigger the fixed line): the engine NO_MIC text, verbatim', () => {

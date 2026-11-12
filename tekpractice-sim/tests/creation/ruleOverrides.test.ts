@@ -6,6 +6,9 @@ import { COPY } from '../../src/creation/copy'
 import { creationRuleRows, ruleText, RULE_OVERRIDE_IDS } from '../../src/creation/ruleTexts'
 import { ruleTextFor, type RuleRow } from '../../src/creation/shell/statusModel'
 import { rulesRevOf } from '../../src/trials/fingerprint'
+import { makeRegistry } from '../helpers'
+import { CreationStore, creationEvaluator } from '../../src/creation/store'
+import { signalPath } from '../../src/flow/signalPath'
 import { FAMILIES, offends as offendsShared } from './honestyLists'
 
 /**
@@ -31,8 +34,8 @@ const APPENDIX_A: Record<string, string> = {
   R1: 'Dans le simulateur, un XLR mâle se branche sur un XLR femelle et une fiche TT sur un jack TT. Deux connecteurs qui ne vont pas ensemble sont refusés : choisissez une autre prise ou un autre câble.',
   R2: 'Dans le simulateur, les deux prises doivent porter le même type de signal : niveau micro, niveau ligne pro, niveau ligne grand public, numérique AES3… Un type différent est refusé : un micro va sur une entrée micro, une sortie ligne sur une entrée ligne.',
   R3: 'Dans le simulateur, un câble va d’une sortie vers une entrée. Deux sorties reliées entre elles, ou deux entrées, sont refusées. Les ports bidirectionnels (réseau, patchbay…) acceptent les deux sens.',
-  R4: 'Dans le simulateur, un micro à condensateur (U 87) reste muet sans alimentation fantôme +48 V ; un micro dynamique (SM58, RE20) fonctionne avec ou sans.',
-  R5: 'Dans le simulateur, quand un micro est ouvert, la sortie tally de la console doit être reliée à un voyant ON-AIR ; sinon un avertissement s’affiche.',
+  R4: 'Dans le simulateur, un micro à condensateur (U 87) branché sur une entrée sans alimentation fantôme +48 V est signalé en erreur et n’obtient pas « Micro OK » ; un micro dynamique (SM58, RE20) n’est pas concerné.',
+  R5: 'Dans le simulateur, quand la voie micro d’une console est ouverte (même sans micro branché), sa sortie tally doit être reliée à un voyant ON-AIR ; sinon un avertissement s’affiche.',
 }
 
 describe('creationRuleRows / ruleText: the override applies to R1 to R5 (triggers)', () => {
@@ -126,5 +129,51 @@ describe('honesty of the texts', () => {
       else expect(t, `${id} / ${b.name}`).not.toMatch(b.re)
     }
     expect(t).not.toMatch(/peuvent endommager le matériel|il ne faut jamais forcer|contrat de sécurité|STI|SPL|réaliste/i)
+  })
+})
+
+// ── what the texts claim, checked against the engine (T1 close review 2 and 3) ────────────────────────────────────────────────────────────────────
+describe('R4 and R5 override texts are true of the engine', () => {
+  const registry = makeRegistry()
+  const fresh = () => new CreationStore(registry, creationEvaluator(registry))
+
+  it('R5 fires with NO mic plugged: the Axia iQ ships with its mic fader open, so a console alone raises the warning (the text says « même sans micro branché »)', () => {
+    const store = fresh()
+    store.dispatch({ type: 'SPAWN', deviceId: 'axia-iq', instanceId: 'iq' })
+    expect(store.design().rig.connections).toHaveLength(0)
+    const r5 = store.events().filter((e) => e.ruleId === 'R5')
+    expect(r5.length).toBeGreaterThan(0)
+    expect(r5[0]!.severity).toBe('warning') // a warning, as the text says (« un avertissement »)
+    expect(O().R5).toContain('même sans micro branché')
+    expect(O().R5).toContain('un avertissement')
+  })
+
+  it('R4: a condenser mic on a preamp input with +48 V off is an ERROR event and gets no « Micro OK »; with +48 V on it is clean and gets Micro OK; a dynamic mic is not concerned (the text claims nothing about hearing or muting)', () => {
+    const rig = (micDevice: string) => {
+      const store = fresh()
+      store.dispatch({ type: 'SPAWN', deviceId: micDevice, instanceId: 'mic' })
+      store.dispatch({ type: 'SPAWN', deviceId: 'focusrite-isa-one', instanceId: 'isa' })
+      store.dispatch({ type: 'SPAWN', deviceId: 'multiprise-secteur', instanceId: 'mains' })
+      store.dispatch({ type: 'CONNECT', a: { instance: 'mains', port: 'out-1' }, b: { instance: 'isa', port: 'power-in' } })
+      store.dispatch({ type: 'CONNECT', a: { instance: 'mic', port: 'out-xlr' }, b: { instance: 'isa', port: 'in-mic' } })
+      return store
+    }
+    const read = (store: CreationStore) => ({ events: store.events().filter((e) => e.ruleId === 'R4'), path: signalPath(store.design(), registry, store.events()) })
+    const condenser = rig('neumann-u87-ai')
+    const off = read(condenser)
+    expect(off.events.length).toBeGreaterThan(0)
+    expect(off.events[0]!.severity).toBe('error')
+    expect(off.path.micOk).toBe(false)
+    expect(off.path.micReasons.map((r) => r.code)).toEqual(['RULE_ERROR'])
+    condenser.dispatch({ type: 'SET_CONTROL', instance: 'isa', control: 'phantom-48v', value: true })
+    const on = read(condenser)
+    expect(on.events).toHaveLength(0)
+    expect(on.path.micOk).toBe(true)
+    const dynamic = read(rig('shure-sm58'))
+    expect(dynamic.events).toHaveLength(0) // a dynamic mic is not concerned
+    expect(dynamic.path.micOk).toBe(true)
+    expect(O().R4).toContain('est signalé en erreur')
+    expect(O().R4).toContain('« Micro OK »')
+    expect(O().R4).not.toMatch(/muet|entend|fonctionne/) // no claim about what is heard or muted
   })
 })

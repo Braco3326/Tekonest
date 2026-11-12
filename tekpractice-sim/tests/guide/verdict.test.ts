@@ -12,7 +12,7 @@ import { COPY } from '../../src/creation/copy'
 import { signalPath, type ReasonCode } from '../../src/flow/signalPath'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { makeRegistry } from '../helpers'
-import { FAMILIES } from '../creation/honestyLists'
+import { FAMILIES, offends } from '../creation/honestyLists'
 
 const catalog = JSON.parse(readFileSync(resolve(process.cwd(), 'content/catalog.json'), 'utf8')) as { rules: RuleRow[] }
 const ruleText = ruleTextFor(catalog.rules)
@@ -270,7 +270,7 @@ describe('buildVerdict: what to do (T1.4)', () => {
     expect(Object.keys(A).sort()).toEqual(['hostUnpowered', 'noPath', 'noSource', 'sourceOff', 'speakerUnpowered']) // no key for a code that adds nothing
   })
 
-  it('NO_SOURCE with the Axia iQ placed (the console that has no « Lecture console » control): the sentence asks for a console WITH that command, and the command is the catalog’s own', () => {
+  it('NO_SOURCE with the Axia iQ placed (the console that has no « Lecture console » control): the sentence names the console WITH that command, and the command is the catalog’s own', () => {
     const registry = makeRegistry()
     const store = new CreationStore(registry, creationEvaluator(registry))
     expect(store.dispatch({ type: 'SPAWN', deviceId: 'axia-iq', instanceId: 'iq' }).ok).toBe(true)
@@ -278,7 +278,7 @@ describe('buildVerdict: what to do (T1.4)', () => {
     expect(path.reasons.map((r) => r.code)).toEqual(['NO_SOURCE']) // premise: a console is on the bench and the engine still has no source
     const v = buildVerdict(withReason('NO_SOURCE', path.reasons[0].text_fr), ruleText)
     expect(v.labelFr).toBe(`${P.noSource} ${A.noSource}`)
-    expect(A.noSource).toContain('une console qui a la commande « Lecture console »')
+    expect(A.noSource).toContain('la console qui a la commande « Lecture console »') // names the Yamaha QL1 (see the every-source-console test below)
     // every device that has a playback source (a `control:` route) carries a control labelled exactly like that
     const withSource = registry.catalog.devices.filter((d) => (d.routing ?? []).some((r) => r.from.startsWith('control:')))
     expect(withSource.length).toBeGreaterThan(0)
@@ -318,8 +318,16 @@ describe('buildVerdict: what to do (T1.4)', () => {
     for (const [key, s] of sentences) {
       expect(s, key).toMatch(/^[A-ZÉ][^.!?]*\.$/) // one sentence
       expect(s, key).toMatch(/^(Ajoutez|Activez|Sélectionnez|Reliez|Branchez)\b/) // the imperative « vous » form
-      for (const b of BANNED) expect(s, `${key} / ${b.name}`).not.toMatch(b.re)
+      expect(offends(s), key).toEqual([]) // names with digits (QL1) are catalog facts, not figures (honestyLists NAMES)
     }
+  })
+
+  it('assist.noSource names EVERY console that has a « Lecture console » source (a route from a control), so the learner can act on it; a new source console fails here', () => {
+    const registry = makeRegistry()
+    const sources = registry.catalog.devices.filter((d) => (d.routing ?? []).some((r) => r.from.startsWith('control:')))
+    expect(sources.map((d) => d.id), 'the catalog today: one source console').toEqual(['yamaha-ql1'])
+    for (const d of sources) expect(A.noSource!, d.id).toContain(`${d.realWorld.brand} ${d.realWorld.model}`)
+    expect(A.noSource!).not.toMatch(/Ajoutez une console qui a/) // the old sentence named no device
   })
 
   it('the banned list does trip on a crafted sentence of each family (the scan is not vacuous)', () => {

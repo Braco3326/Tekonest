@@ -198,3 +198,37 @@ test('hover: Papier outline on the device under the pointer, never the selection
   await page.mouse.move(2, 2)
   await expect.poll(() => page.evaluate(() => window.__creation!.hovered())).toBeNull()
 })
+
+// T1 close review 8: the « Premier son (déjà câblé et alimenté) » template had never been looked at in 3D (derived heights: mic stand 1.5 m, speaker stands 1.4 m).
+// A screenshot for the founder (git-ignored, test-results/screens/t1-premier-son-<w>x<h>.png; the run never rewrites the reviewed copies under docs/) and a geometry check:
+// the five devices are on screen, inside the 3D view, the two speakers stand apart on either side of the mic, and the cabled rig does not stack the mic on a speaker.
+for (const [w, h] of [
+  [1366, 768],
+  [1920, 1080],
+] as const) {
+  test(`« Premier son » template in 3D at ${w}×${h}: every device is in view, the speakers flank the mic, screenshot for review`, async ({ page }) => {
+    await page.setViewportSize({ width: w, height: h })
+    await boot(page)
+    await page.getByTestId('template-grid').getByRole('option', { name: /Premier son/ }).click()
+    await page.waitForFunction(() => window.__creation!.place() === 'blank' && window.__creation!.design().rig.instances.length === 5)
+    await page.waitForFunction(() => ['ql1', 'sm58', 'k12-g', 'k12-d', 'mains'].every((id) => !!window.__creation!.deviceScreen(id)))
+    await settle(page)
+    const view = await page.getByTestId('viewport').boundingBox()
+    expect(view).not.toBeNull()
+    const at = await page.evaluate(() => Object.fromEntries(['ql1', 'sm58', 'k12-g', 'k12-d', 'mains'].map((id) => [id, window.__creation!.deviceScreen(id)])))
+    for (const [id, p] of Object.entries(at)) {
+      expect(p, id).not.toBeNull()
+      expect(p!.x, `${id} x inside the 3D view`).toBeGreaterThan(view!.x)
+      expect(p!.x, `${id} x inside the 3D view`).toBeLessThan(view!.x + view!.width)
+      expect(p!.y, `${id} y inside the 3D view`).toBeGreaterThan(view!.y)
+      expect(p!.y, `${id} y inside the 3D view`).toBeLessThan(view!.y + view!.height)
+    }
+    const apart = (a: string, b: string): number => Math.hypot(at[a]!.x - at[b]!.x, at[a]!.y - at[b]!.y)
+    expect(apart('k12-g', 'k12-d'), 'the two speakers are apart').toBeGreaterThan(80)
+    expect(apart('sm58', 'k12-g'), 'the mic is not on a speaker').toBeGreaterThan(40)
+    expect(apart('sm58', 'k12-d'), 'the mic is not on a speaker').toBeGreaterThan(40)
+    expect(Math.min(at['k12-g']!.x, at['k12-d']!.x), 'a speaker on each side of the mic').toBeLessThan(at.sm58!.x)
+    expect(Math.max(at['k12-g']!.x, at['k12-d']!.x)).toBeGreaterThan(at.sm58!.x)
+    await page.screenshot({ path: `${SHOTS}/t1-premier-son-${w}x${h}.png` })
+  })
+}

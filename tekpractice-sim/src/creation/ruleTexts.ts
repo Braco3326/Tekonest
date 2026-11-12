@@ -1,5 +1,5 @@
 /**
- * Mode Création's rule texts (T1.5, spec 6.5 and Appendix A): the ONE host-side accessor.
+ * Mode Création's rule texts (T1.5, spec 8.4 and Appendix A): the ONE host-side accessor.
  *
  * The catalog's `teach_fr` of R1 to R5 says things a simulator must not say (« il ne faut jamais forcer », « peuvent endommager le matériel »,
  * « contrat de sécurité », two figures with no source record). `content/catalog.json` is never edited (the legacy Essais hash `rulesRevOf(catalog.rules)`

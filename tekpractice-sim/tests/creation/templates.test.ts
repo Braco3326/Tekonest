@@ -175,7 +175,7 @@ describe('T1.6: templates and first sound', () => {
       const t = read(f)
       const note = noteOf(t.id)
       expect(note, `${t.id} has a note`).toBeTypeOf('string')
-      if (pathOf(f).path.playbackReady) expect(note, t.id).toMatch(/^Joue dès l’ouverture/)
+      if (pathOf(f).path.playbackReady) expect(note, t.id).toMatch(/^Prêt à écouter dès l’ouverture/)
       else expect(note, t.id).toMatch(/^À compléter/)
     }
   })
@@ -190,7 +190,7 @@ describe('T1.6: templates and first sound', () => {
       ],
       places,
     )
-    expect(cards[0].note).toMatch(/^Joue dès l’ouverture/)
+    expect(cards[0].note).toMatch(/^Prêt à écouter dès l’ouverture/)
     expect(cards.map((c) => c.note)).toEqual([noteOf('premier-son-pret'), noteOf('concert-simple-reference'), undefined])
   })
 

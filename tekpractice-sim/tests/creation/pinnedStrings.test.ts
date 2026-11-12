@@ -1,7 +1,8 @@
 /**
  * Pinned honesty strings (onboarding packs, T1.7; spec section 9): the sentences that say what the numbers are and are not stay byte-identical,
  * whatever the onboarding packs add around them. CHARACTERIZATION tests: they pass on today's code (the literals below were copied from COPY
- * before any onboarding change) and each carries one MUTATION that must turn it red (labelled « mutation »). Changing one of these strings is a
+ * before any onboarding change). The mutation tests run THE pin check (`pinDrift`, one function) on a clone of COPY or of the deck with one string
+ * changed and expect exactly that key to be reported, so a pin that stops comparing turns them red. Changing one of these strings is a
  * decision of its own (the founder / tekuxwriter), never a side effect: edit the literal here in the same commit and say why in the ledger.
  */
 import { readFileSync } from 'node:fs'
@@ -9,7 +10,8 @@ import { describe, expect, it } from 'vitest'
 import { COPY } from '../../src/creation/copy'
 
 const deck = readFileSync(new URL('../../docs/copy/creation-mode.md', import.meta.url), 'utf8')
-const sections = COPY as Record<string, Record<string, string>>
+type Sections = Readonly<Record<string, Readonly<Record<string, string>>>>
+const sections: Sections = COPY
 
 /** [section, key, the literal]. Typographic apostrophes (’), plain spaces before « : » as the deck's typography rule says; « ≈ » is U+2248, « 3D » is plain. */
 const PINNED: readonly (readonly [string, string, string])[] = [
@@ -31,8 +33,23 @@ const PINNED: readonly (readonly [string, string, string])[] = [
 ]
 
 const label = (s: string, k: string): string => `${s}.${k}`
-/** What the pin check compares: the exact UTF-16 sequence, so a plain space, a no-break space and a straight apostrophe all differ. */
-const same = (actual: string, literal: string): boolean => actual === literal
+
+/**
+ * THE pin check: the labels of the pinned strings that are not byte-identical to their literal in `copy` (the exact UTF-16 sequence: a plain space, a no-break
+ * space and a straight apostrophe all differ), or whose deck row does not carry the literal. It takes the COPY object and the deck text as arguments so the
+ * mutation tests below run THIS function, unchanged, on a clone with one string patched: there is no second implementation of the comparison to drift from.
+ */
+function pinDrift(copy: Sections, deckText: string): string[] {
+  const rows = deckText.split('\n')
+  return PINNED.filter(([section, key, literal]) => {
+    const actual = copy[section]?.[key]
+    if (typeof actual !== 'string' || !Buffer.from(actual, 'utf8').equals(Buffer.from(literal, 'utf8'))) return true
+    const row = rows.find((l) => l.startsWith('| `' + section + '.' + key + '` |'))
+    return row === undefined || !row.includes('| ' + literal + ' |')
+  }).map(([section, key]) => label(section, key))
+}
+/** A clone of COPY with one string replaced (COPY itself is never touched). */
+const patched = (section: string, key: string, value: string): Sections => ({ ...sections, [section]: { ...sections[section], [key]: value } })
 
 describe('pinned honesty strings (characterization: green today)', () => {
   it('the table covers every `coverage.source*` key that exists (a new source label would be unpinned otherwise)', () => {
@@ -40,13 +57,8 @@ describe('pinned honesty strings (characterization: green today)', () => {
     expect(sources.sort()).toEqual(PINNED.filter(([s, k]) => s === 'coverage' && k.startsWith('source')).map(([, k]) => k).sort())
   })
 
-  it.each(PINNED.map((p) => [label(p[0], p[1]), p] as const))('%s is byte-identical to the pinned literal and to the deck row', (_name, [section, key, literal]) => {
-    const actual = sections[section][key]
-    expect(actual).toBe(literal)
-    expect(Buffer.from(actual, 'utf8').equals(Buffer.from(literal, 'utf8'))).toBe(true)
-    const row = deck.split('\n').find((l) => l.startsWith(`| \`${section}.${key}\` |`))
-    expect(row, `deck row ${section}.${key}`).toBeDefined()
-    expect(row!).toContain(`| ${literal} |`)
+  it('every pinned string in COPY is byte-identical to its literal and to its deck row (no drift)', () => {
+    expect(pinDrift(sections, deck)).toEqual([])
   })
 
   it('the pinned chip says « estimation », and the two always-visible honesty sentences keep their negations', () => {
@@ -58,29 +70,33 @@ describe('pinned honesty strings (characterization: green today)', () => {
   })
 })
 
-describe('mutation: each kind of drift turns the pin check red (the pins are not vacuous)', () => {
-  /** One mutation per pinned string, of the kinds a careless edit makes: the first letter, a typographic apostrophe, a plain space, a trailing space, the decimal-free unit. */
-  const mutate = (s: string): string[] => [
-    s.replace(/^./, (c) => (c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase())), // the first letter's case
-    s.replace(/ /, ' '), // a no-break space instead of the first plain space
-    s.includes('’') ? s.replace('’', "'") : s.replace('e', 'é'), // a straight apostrophe, or an accent
-    `${s} `, // a trailing space
-    s.slice(0, -1), // the last character dropped
-  ].filter((m) => m !== s) // a mutation that leaves the string unchanged (no space to swap) is no mutation
-  it.each(PINNED.map((p) => [label(p[0], p[1]), p] as const))('%s: every mutated copy fails the comparison', (_name, [, , literal]) => {
-    expect(mutate(literal).length).toBeGreaterThanOrEqual(3)
-    for (const m of mutate(literal)) {
-      expect(m).not.toBe(literal)
-      expect(same(m, literal), JSON.stringify(m)).toBe(false)
-    }
-    expect(same(literal, literal)).toBe(true)
+describe('mutation: the pin check, run on a clone of COPY (or of the deck) with ONE string changed, reports exactly that key', () => {
+  /** The kinds of drift a careless edit makes: the first letter's case, a no-break space, a straight apostrophe or an accent, a trailing space, a dropped last character. */
+  const mutate = (s: string): string[] =>
+    [
+      s.replace(/^./, (c) => (c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase())),
+      s.replace(/ /, ' '),
+      s.includes('’') ? s.replace('’', "'") : s.replace('e', 'é'),
+      s + ' ',
+      s.slice(0, -1),
+    ].filter((m) => m !== s) // a mutation that leaves the string unchanged (no space to swap) is no mutation
+
+  it.each(PINNED.map((p) => [label(p[0], p[1]), p] as const))('%s: every mutated copy of COPY is reported, and only this key', (name, [section, key, literal]) => {
+    const mutations = mutate(literal)
+    expect(mutations.length).toBeGreaterThanOrEqual(3)
+    for (const m of mutations) expect(pinDrift(patched(section, key, m), deck), JSON.stringify(m)).toEqual([name])
   })
-  it('a pinned string edited in COPY is caught by the real comparison: the pin check, run on a copy of COPY with one change, reports exactly that key', () => {
-    const drifted = (section: string, key: string, value: string): string[] =>
-      PINNED.filter(([s, k, lit]) => !same(s === section && k === key ? value : sections[s][k], lit)).map(([s, k]) => label(s, k))
-    expect(drifted('none', 'none', '')).toEqual([])
-    expect(drifted('coverage', 'chip', 'Estimation')).toEqual(['coverage.chip'])
-    expect(drifted('listen', 'playing', 'Lecture en cours : {source}.')).toEqual(['listen.playing'])
-    expect(drifted('inventory', 'tipUnverified', 'Fiche vérifiée.')).toEqual(['inventory.tipUnverified'])
+
+  it.each(PINNED.map((p) => [label(p[0], p[1]), p] as const))('%s: a deck row that drifts from the literal is reported too', (name, [, , literal]) => {
+    const drifted = deck.replace('| ' + literal + ' |', '| ' + literal.slice(0, -1) + ' |')
+    expect(drifted).not.toBe(deck) // the row exists and was changed
+    expect(pinDrift(sections, drifted)).toEqual([name])
+  })
+
+  it('a missing key and a missing section are reported (never silently skipped)', () => {
+    const noKey: Sections = { ...sections, coverage: Object.fromEntries(Object.entries(sections.coverage).filter(([k]) => k !== 'chip')) }
+    expect(pinDrift(noKey, deck)).toEqual(['coverage.chip'])
+    const noSection: Sections = Object.fromEntries(Object.entries(sections).filter(([k]) => k !== 'inventory'))
+    expect(pinDrift(noSection, deck)).toEqual(['inventory.tipUnverified'])
   })
 })
