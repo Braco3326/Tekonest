@@ -930,6 +930,16 @@ Première visite (packs d’accueil, T2) : l’écran de départ, uniquement sou
 | `onboarding.chipChoose` | Choisir un profil | à valider (tekuxwriter) | Pastille de la barre d’état tant qu’aucun profil n’est enregistré (écran quitté par « Tous les lieux » / Échap, ou jamais répondu) : rouvre l’étape « profil ». Rend vraie la phrase « Vous pourrez changer de profil à tout moment » |
 | `onboarding.chipHint` | Rouvre l’écran de départ. | à valider (tekuxwriter) | Infobulle (`title`) de la pastille, pour ses deux textes |
 
+## tutorialUi
+
+Aide pendant que le tutoriel tourne (plan T3.2) : trois éléments à la place de « Premiers pas ». Rien ne relance le tutoriel tout seul ; après « Passer le tutoriel », Aide propose de nouveau « Premiers pas ». Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `tutorialUi.resume` | Reprendre à l’étape {k} | à valider (tekuxwriter) | Aide, premier élément quand un tutoriel est en cours (lu dans `oscar-guide.onboarding.v1`) ; `{k}` = l’étape en cours ; montre de nouveau la bulle de l’étape |
+| `tutorialUi.restart` | Recommencer le tutoriel | à valider (tekuxwriter) | Aide, tutoriel en cours : revient à l’étape 1 (le montage n’est pas touché ; les étapes déjà faites sur le montage passent « déjà en place ») |
+| `tutorialUi.skip` | Passer le tutoriel | à valider (tekuxwriter) | Aide, tutoriel en cours : l’arrête ; il ne revient pas tout seul, Aide propose de nouveau « Premiers pas » |
+
 ## tutorial
 
 Le tutoriel « Premiers pas » (packs d’accueil, T3.1 ; spec 6.3 et 7.2) : une phrase d’Oscar par étape, ce qu’il faut faire et où, jamais un résultat qui n’est pas encore vrai (aucun son avant Écoute). Les clés suivent les identifiants d’étape de `src/guide/tutorial.ts`. `{console}` et `{micro}` = les libellés du catalogue de la console source (aujourd’hui la Yamaha QL1) et du SM58. Le titre du parcours est `menu.firstSteps` (par clé) ; l’étape 6 dit `assist.sourceOff` (par clé). `closingLines()` (`listen.simple` puis la ligne micro de la liste, `checklist.micCabled`, par clé) : pas encore affiché (T6.1, la fiche d’étape). La fin d’un parcours dit « Parcours « {flow} » : fin des étapes. » (texte du guide, pas COPY : une étape a pu être passée). Au plus 200 mots avec `listen.simple` (testé). Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).

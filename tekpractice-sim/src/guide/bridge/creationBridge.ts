@@ -13,6 +13,7 @@ import { anchorOf, isAnchor, rectFromPoint } from '../anchors'
 import type { HostEvent, Rect } from '../vendor/core/types'
 import { NAV_SELECTORS, POLL_MS, SEP, cableKey, firstRect, refKey, stateHash, type BridgeDoc, type BridgeElement } from './shared'
 import type { TpBridge, TpPortRef, TpState } from './types'
+import type { TutorialRequest } from '../tutorial'
 
 export { NAV_SELECTORS, POLL_MS, stateHash }
 export type { BridgeDoc, BridgeElement }
@@ -22,7 +23,7 @@ export type { BridgeDoc, BridgeElement }
  * optional: a hook without them is still a hook, the bridge then emits no `playStarted` and knows no selection.
  */
 export type CreationReader = Pick<CreationDebug, 'design' | 'events' | 'place' | 'devicePorts' | 'portScreen' | 'deviceScreen' | 'controlScreen'> &
-  Partial<Pick<CreationDebug, 'audioState' | 'selection'>>
+  Partial<Pick<CreationDebug, 'audioState' | 'selection' | 'onboarding'>>
 
 export interface CreationBridgeDeps {
   win: { __creation?: CreationReader; innerWidth?: number; innerHeight?: number }
@@ -110,6 +111,20 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
   let destroyed = false
   /** The source Écoute was playing at the last look (null = not playing): a `playStarted` is a change to a playing source. */
   let playing: string | null = null
+
+  /** The onboarding request (`onboarding()`): its counter, its kind, whether the tutorial may run; null without the onboarding (`?design`), a record or the reader. */
+  function requestNow(): TutorialRequest | null {
+    try {
+      const o = win.__creation?.onboarding?.()
+      if (!o || !o.design || !o.record || typeof o.record.request !== 'number') return null
+      const kind = o.requestKind === 'restart' || o.requestKind === 'skip' ? o.requestKind : 'start'
+      return { n: o.record.request, kind, allowed: o.tutorialAllowed === true && o.premiersPas === true }
+    } catch {
+      return null
+    }
+  }
+  /** The request counter at the last look (a change is a `tutorialRequest` event: the guide acts on it, the bench did not change). */
+  let requested: number | null = null
 
   /** The source playing now (`state` 'playing' only: 'starting' is not a sound yet), or null; null when the hook has no reader or it throws. */
   function playingNow(): string | null {
@@ -240,8 +255,14 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
       const sound = playingNow()
       const started = prev !== null && sound !== null && sound !== playing
       playing = sound
+      const req = requestNow()?.n ?? null
+      const asked = prev !== null && req !== null && req !== requested
+      requested = req
       if (!prev) return notify(next.state, [])
-      const extra: HostEvent[] = started ? [{ type: 'playStarted', at: now(), data: { source: sound } }] : []
+      const extra: HostEvent[] = [
+        ...(started ? [{ type: 'playStarted', at: now(), data: { source: sound } }] : []),
+        ...(asked ? [{ type: 'tutorialRequest', at: now(), data: { n: req } }] : []),
+      ]
       if (prev.hash === hash && extra.length === 0) return
       notify(next.state, [...(prev.hash === hash ? [] : derive(prev.table, next)), ...extra])
     } catch {
@@ -336,6 +357,8 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
         return ''
       }
     },
+    tutorialRequest: () => requestNow(),
+    playing: () => playingNow(),
     selection: () => {
       try {
         const s = win.__creation?.selection?.()
@@ -358,6 +381,7 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
         const base = build()
         last = base ? { table: base, hash: stateHash(base.state) } : null
         playing = playingNow() // a sound already playing when the guide arrives is not a start
+        requested = requestNow()?.n ?? null // the mount reads the request itself at its first look
         if (!watching) {
           watching = true
           doc.addEventListener('visibilitychange', onVisibility)

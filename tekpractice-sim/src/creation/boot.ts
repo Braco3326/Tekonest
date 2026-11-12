@@ -932,6 +932,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     premiersPas: false,
     startFirstVisit: () => false,
     requestTutorial: () => Promise.resolve(),
+    progress: () => null,
     waiting: () => undefined,
     snapshot: () => ({ design: false, tutorialAllowed: opts.tutorialAllowed === true, record: null, blocked: false, premiersPas: false, chip: null }),
   }
@@ -2098,7 +2099,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     'panel-tree': () => shell.setPanel('tree'),
     'panel-props': () => shell.setPanel('props'),
     shortcuts: () => void openShortcuts(),
-    ...(onboarding.premiersPas ? { 'first-steps': () => void onboarding.requestTutorial() } : {}),
+    ...(onboarding.premiersPas ? { 'first-steps': () => void onboarding.requestTutorial(), 'first-steps-restart': () => void onboarding.requestTutorial('restart'), 'first-steps-skip': () => void onboarding.requestTutorial('skip') } : {}),
     site: () => location.assign(siteHref),
     // Lieu → « Choisir un lieu… »: the picker over the current place (Fermer / Échap go back).
     'choose-place': () => {
@@ -2188,6 +2189,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       bindingLabel: menuShortcut,
       historyLocked: () => picker.isOpen, // Phase 1 review: « Annuler » never edits the rig under the picker
       firstStepsHold: () => onboarding.waiting(), // « Premiers pas » waits for the start screen
+      tutorialProgress: () => onboarding.progress(), // T3.2: « Reprendre à l’étape {k} » while the guide's tutorial runs
       hasSelection: () => viewState.get().selection !== null && !placement.placing && !dragOpen(),
       viewLocked,
       walking: () => host.walking,

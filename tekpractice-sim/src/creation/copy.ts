@@ -1026,6 +1026,15 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
    * console and of the SM58. The flow title is `menu.firstSteps` (by key); step 6 says `assist.sourceOff` (by key). `closingLines()` (src/guide/tutorial.ts) is `listen.simple` then
    * the checklist's own mic line (`checklist.micCabled`) by key: NOT DISPLAYED YET (plan T6.1: the step card shows it). Every string here: à valider (tekuxwriter, 2026-11-12).
    */
+  /**
+   * Aide while the tutorial runs (plan T3.2): the three items that replace « Premiers pas ». {k} = the step to resume at. Every string here: à valider
+   * (tekuxwriter, 2026-11-12).
+   */
+  tutorialUi: {
+    resume: 'Reprendre à l’étape {k}',
+    restart: 'Recommencer le tutoriel',
+    skip: 'Passer le tutoriel',
+  },
   tutorial: {
     console: 'Ouvrez Matériel, puis Inventaire, onglet Consoles, et posez la {console} sur le sol.',
     micro: 'Posez le micro {micro}, onglet Micros.',

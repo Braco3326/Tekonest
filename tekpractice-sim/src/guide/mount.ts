@@ -19,7 +19,7 @@ import { createTekPracticeBrain } from './brain'
 import { tpString } from './strings'
 import type { TpBridge, TpState } from './bridge/types'
 import { NAV_SELECTORS, firstRect, type BridgeDoc } from './bridge/shared'
-import { PLAY_STARTED, annotateTutorialEvent, isTutorialAnchor, resolveTutorialAnchor } from './tutorial'
+import { PLAY_STARTED, TUTORIAL_REQUEST, annotateTutorialEvent, createTutorialRuntime, isTutorialAnchor, resolveTutorialAnchor } from './tutorial'
 import { isAnchor } from './anchors'
 import {
   ACKNOWLEDGE,
@@ -38,7 +38,7 @@ import {
 import { LEGACY_ACK_SELECTOR, LEGACY_NAV_OBJECTIVES, LEGACY_STRINGS, legacyFlowsFor, legacyKeywords, legacyStorageKey, nextLegacyLink } from './flows.legacy'
 import { guideMode, guideRouteAllowed, type GuideRoute } from './mode'
 import { createController } from './vendor/core/controller'
-import type { HostEvent, Rect } from './vendor/core/types'
+import type { ControllerInput, HostEvent, Rect } from './vendor/core/types'
 import type { Setup } from './vendor/hostTypes'
 import { mountGuide } from './vendor/ui/widget'
 
@@ -405,6 +405,9 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     // The tutorial (under `?design` only) is always the last flow: a running or restored tutorial is always found, the path keeps its order before it.
     const tutorial = legacy ? null : tutorialFlowFor(deps.search, registry)
     const own = tutorial === null ? [] : [tutorial]
+    // Start / resume / skip on the onboarding request, the guide record, « déjà en place » (plan T3.2): it hands the controller the storage it observes.
+    let late: (input: ControllerInput) => void = () => {}
+    const runtime = tutorial === null ? null : createTutorialRuntime({ flow: tutorial, registry, storage: deps.storage, now, send: (i) => late(i) })
     const flows = legacy ? legacyFlowsFor(null).slice() : [...flowsFor('no-place'), ...own]
     const keywords = legacy ? legacyKeywords() : keywordsFor('no-place')
     const follow = (state: TpState | null): void => {
@@ -420,7 +423,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       brain,
       flows,
       clock: now,
-      ...(deps.storage ? { storage: deps.storage } : {}),
+      ...(runtime ? { storage: runtime.storage } : deps.storage ? { storage: deps.storage } : {}),
       strings: legacy ? LEGACY_STRINGS : CREATION_STRINGS,
       flowKeywords: keywords,
       ...(legacy ? { storageKey: legacyStorageKey(deps.search) } : {}),
@@ -458,6 +461,9 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
         if (p !== undefined && typeof p.catch === 'function') p.catch(warn)
       })
     const hostEvent = (e: HostEvent): void => send({ type: 'hostEvent', event: e })
+    late = send
+    const tutorialLook = (state: TpState | null): void =>
+      guard(() => runtime?.update({ state, audio: bridge.playing?.() ?? null, request: bridge.tutorialRequest?.() ?? null }))
 
     let revision = 0
     // The mode is read live. When the address turns to an exam one the controller is told first (it withholds everything), then the whole mount is torn down:
@@ -473,8 +479,11 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     let before: TpState | null = null
     const unsubscribe = bridge.onChange((state, events) =>
       guard(() => {
-        const list = tutorial === null ? events.filter((e) => e.type !== PLAY_STARTED) : events
-        if (list.length === 0 && events.length > 0) return
+        const list = events.filter((e) => e.type !== TUTORIAL_REQUEST && (tutorial !== null || e.type !== PLAY_STARTED))
+        if (list.length === 0 && events.length > 0) {
+          tutorialLook(state) // only the request went up: no change of the bench to tell the controller
+          return
+        }
         const prev = before
         before = state
         revision++
@@ -485,6 +494,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
           const marked = annotateToggle(e, state, bridge)
           hostEvent(tutorial === null ? marked : annotateTutorialEvent(marked, { state, prev, bridge, registry }))
         }
+        tutorialLook(state)
       }),
     )
     cleanups.push(unsubscribe)
@@ -495,6 +505,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       before = state
       follow(state)
       tell(state)
+      tutorialLook(state)
     })
 
     // « Lire la barre d’état »: a `read` step has no change of the bench to wait for, so a click inside the status bar is the learner reading it. On the level page it is

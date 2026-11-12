@@ -1259,3 +1259,51 @@ describe('createRectResolver: the tutorial anchors on a fake bridge and a fake p
     expect(rr.getRect('nav:inventory.item.yamaha-ql1')).toBeNull() // no page to read
   })
 })
+
+describe('the tutorial at run time in the mount (T3.2)', () => {
+  const designRig = (search: string, state: TpState | null = EMPTY): Rig => {
+    const r = make({ search }, state)
+    r.win.location.search = search
+    return r
+  }
+  const flush = (): Promise<void> => new Promise((res) => setTimeout(res, 0))
+  const withRequest = (r: Rig, req: { n: number; kind: 'start' | 'restart' | 'skip'; allowed: boolean } | null): void => {
+    Object.assign(r.b.bridge, { tutorialRequest: () => req, playing: () => null })
+  }
+
+  it('?design: a request above the guide record starts premiers-pas (at mount, the request came first); no second start on the same request', async () => {
+    const r = designRig('?design=1', stateOf([]))
+    withRequest(r, { n: 1, kind: 'start', allowed: true })
+    mountOscar(r.deps, r.f.impl)
+    await flush()
+    expect(sent(r.f).filter((i) => i.type === 'flow')).toEqual([{ type: 'flow', control: { action: 'start', flowId: 'premiers-pas' } }])
+    r.b.emit(stateOf([]), [ev('tutorialRequest', { n: 1 })])
+    await flush()
+    expect(sent(r.f).filter((i) => i.type === 'flow')).toHaveLength(1)
+    // the `tutorialRequest` event is the mount's, never the controller's
+    expect(hostEvents(r.f).map((e) => e.type)).not.toContain('tutorialRequest')
+  })
+
+  it('?design: the controller gets the tutorial’s observed storage, not the page’s; without ?design the page’s own (or none)', () => {
+    const storage = { getItem: () => null, setItem: () => undefined, removeItem: () => undefined } as unknown as Storage
+    const r = designRig('?design=1')
+    r.deps.storage = storage
+    withRequest(r, null)
+    mountOscar(r.deps, r.f.impl)
+    const got = (r.f.impl.createController.mock.calls[0][0] as { storage?: unknown }).storage
+    expect(got).toBeDefined()
+    expect(got).not.toBe(storage)
+    const plain = make({ storage })
+    mountOscar(plain.deps, plain.f.impl)
+    expect((plain.f.impl.createController.mock.calls[0][0] as { storage?: unknown }).storage).toBe(storage)
+  })
+
+  it('without ?design a request does nothing: no flow control is ever sent', async () => {
+    const r = make({}, stateOf([]))
+    withRequest(r, { n: 5, kind: 'start', allowed: true })
+    mountOscar(r.deps, r.f.impl)
+    r.b.emit(stateOf([]), [ev('tutorialRequest', { n: 5 })])
+    await flush()
+    expect(sent(r.f).filter((i) => i.type === 'flow')).toEqual([])
+  })
+})

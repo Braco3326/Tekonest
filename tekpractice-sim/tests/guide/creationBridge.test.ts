@@ -1017,3 +1017,52 @@ describe('tutorial readers: audioState (playStarted) and selection', () => {
     expect(r.bridge.rectOf('nav:ecoute')).toEqual({ x: 5, y: 6, w: 70, h: 28 })
   })
 })
+
+describe('tutorial readers (T3.2): the onboarding request and the sound playing', () => {
+  type Ob = ReturnType<NonNullable<CreationReader['onboarding']>>
+  const ob = (request: number, over: Partial<Ob> = {}): Ob => ({
+    design: true,
+    tutorialAllowed: true,
+    record: { v: 1, profile: 'decouvre', offer: 'taken', request, shown: [] },
+    blocked: false,
+    premiersPas: true,
+    chip: null,
+    requestKind: 'start',
+    ...over,
+  })
+  it('tutorialRequest() reads the counter, its kind and whether the tutorial may run; null without ?design, a record or the reader', () => {
+    const r = make()
+    expect(r.bridge.tutorialRequest?.()).toBeNull()
+    r.win.__creation!.onboarding = () => ob(2, { requestKind: 'restart' })
+    expect(r.bridge.tutorialRequest?.()).toEqual({ n: 2, kind: 'restart', allowed: true })
+    r.win.__creation!.onboarding = () => ob(2, { premiersPas: false })
+    expect(r.bridge.tutorialRequest?.()).toEqual({ n: 2, kind: 'start', allowed: false })
+    r.win.__creation!.onboarding = () => ob(2, { design: false })
+    expect(r.bridge.tutorialRequest?.()).toBeNull()
+    r.win.__creation!.onboarding = () => ob(0, { record: null })
+    expect(r.bridge.tutorialRequest?.()).toBeNull()
+    r.win.__creation!.onboarding = () => {
+      throw new Error('x')
+    }
+    expect(r.bridge.tutorialRequest?.()).toBeNull()
+  })
+  it('a request that goes up is a change: one `tutorialRequest` event, not at the first look', () => {
+    const r = make()
+    const o = { now: ob(1) }
+    r.win.__creation!.onboarding = () => o.now
+    const { calls } = subscribe(r)
+    r.timers.tick()
+    expect(calls()).toEqual([])
+    o.now = ob(2)
+    r.timers.tick()
+    expect(calls().map(([, e]) => e)).toEqual([[{ type: 'tutorialRequest', at: expect.any(Number), data: { n: 2 } }]])
+    r.timers.tick()
+    expect(calls()).toHaveLength(1)
+  })
+  it('playing() is the source Écoute plays now, or null', () => {
+    const r = make()
+    expect(r.bridge.playing?.()).toBeNull()
+    r.win.__creation!.audioState = () => ({ state: 'playing', source: 'test', sourceName: '', voices: [], lease: false, loop: false, retiring: 0 })
+    expect(r.bridge.playing?.()).toBe('test')
+  })
+})

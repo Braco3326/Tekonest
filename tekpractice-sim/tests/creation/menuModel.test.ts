@@ -537,3 +537,24 @@ describe('Aide › Premiers pas (onboarding T2.4b)', () => {
     expect(ran).toBe(1)
   })
 })
+
+describe('Aide while the tutorial runs (T3.2): « Reprendre à l’étape {k} », « Recommencer le tutoriel », « Passer le tutoriel »', () => {
+  const aide = (menus: ReturnType<typeof buildMenus>): MenuItem[] => menus.find((m) => m.id === 'aide')!.items
+  const actions = { 'first-steps': () => undefined, 'first-steps-restart': () => undefined, 'first-steps-skip': () => undefined }
+  it('with a running tutorial: three items in place of « Premiers pas », the step number in the first', () => {
+    const items = aide(buildMenus(ctx({ actions, tutorialProgress: () => ({ k: 6, n: 10 }) })))
+    expect(items.map((i) => i.id)).toEqual(['first-steps', 'first-steps-restart', 'first-steps-skip', 'shortcuts', 'site'])
+    expect(items.slice(0, 3).map((i) => i.label)).toEqual(['Reprendre à l’étape 6', 'Recommencer le tutoriel', 'Passer le tutoriel'])
+    expect(items.slice(0, 3).every((i) => i.enabled())).toBe(true)
+  })
+  it('none running: « Premiers pas » alone; the extra actions alone add nothing', () => {
+    const items = aide(buildMenus(ctx({ actions, tutorialProgress: () => null })))
+    expect(items.map((i) => i.id)).toEqual(['first-steps', 'shortcuts', 'site'])
+    expect(items[0].label).toBe('Premiers pas')
+  })
+  it('the three wait with the start screen like « Premiers pas »', () => {
+    const items = aide(buildMenus(ctx({ actions, tutorialProgress: () => ({ k: 2, n: 10 }), firstStepsHold: () => 'attendre' })))
+    expect(items.slice(0, 3).map((i) => i.enabled())).toEqual([false, false, false])
+    expect(items[1].description!()).toBe('attendre')
+  })
+})

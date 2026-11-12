@@ -29,7 +29,9 @@ import { tabFor } from '../creation/inventory'
 import type { StepId } from '../design/packages'
 import { MENU_MATERIEL, inventoryItemSelector, inventoryTabSelector, propsKeySelector, refKey } from './bridge/shared'
 import type { TpBridge, TpPortRef, TpState } from './bridge/types'
-import type { DoneWhen, HostEvent, Rect, StepAction } from './vendor/core/types'
+import { DEFAULT_STORAGE_KEY } from './vendor/core/controller'
+import type { ControllerInput, DoneWhen, Flow, HostEvent, Rect, StepAction } from './vendor/core/types'
+import { EMPTY_TUTORIAL_RECORD, TUTORIAL_RECORD_KEY, parseTutorialRecord, type TutorialRecord } from '../design/tutorialRecord'
 
 export type DeviceRole = 'source-console' | 'mic' | 'speaker' | 'mains-strip' | 'other'
 export type PairKind = 'console-speaker' | 'mic-console' | 'mains-console' | 'mains-speaker' | 'other'
@@ -43,6 +45,8 @@ export const NAV_ECOUTE = 'nav:ecoute'
 export const NAV_CHECKLIST_POWER = 'nav:checklist-power'
 /** The host event of a sound starting in Écoute (the bridge derives it from `audioState()`). */
 export const PLAY_STARTED = 'playStarted'
+/** The bridge's event when the onboarding request goes up (the mount's, never sent to the controller). */
+export const TUTORIAL_REQUEST = 'tutorialRequest'
 
 const MAINS = 'mains-power'
 /** The mic the step names (spec 6.3: a dynamic mic, so no hidden phantom prerequisite); the catalog's first mic if it ever goes. */
@@ -499,4 +503,185 @@ export function closingLines(mic: { micOk: boolean; micReasons: readonly { code:
   const noMic = mic.micReasons.find((r) => r.code === 'NO_MIC')
   const line = mic.micOk || noMic === undefined ? (COPY.checklist?.micCabled ?? '') : noMic.text_fr
   return [simple, line].filter((s) => s !== '')
+}
+
+// ── at run time: start, persist, resume, skip, « déjà en place » (plan T3.2, G8 review C2) ────────────────────────────
+
+export type RequestKind = 'start' | 'restart' | 'skip'
+/** The onboarding request as the bridge reads it (`window.__creation.onboarding()`): its counter, what the last one asked for, and whether the tutorial may run. */
+export interface TutorialRequest {
+  n: number
+  kind: RequestKind
+  allowed: boolean
+}
+type StorageLike = { getItem(key: string): string | null; setItem(key: string, value: string): void }
+/** What the controller is given as its storage: every key goes through, the flow state it writes is also read here. */
+export interface ObservedStorage {
+  getItem(key: string): string | null
+  setItem(key: string, value: string): void
+  removeItem(key: string): void
+}
+export interface TutorialRuntime {
+  /** Hand this to the controller (`createController({ storage })`): the tutorial follows the controller's own persisted flow state through it. */
+  readonly storage: ObservedStorage
+  /** After every change of the bench (and at the first look): the state, the source Écoute plays (or null), the onboarding request (or null). */
+  update(input: { state: TpState | null; audio: string | null; request: TutorialRequest | null }): void
+  /** The guide's record (tests; what storage holds unless it is blocked). */
+  record(): TutorialRecord
+}
+
+/**
+ * The tutorial while the page lives. The vendored controller runs the flow and persists it (`oscar-guide.state.v1`, restored after a reload: the same step is
+ * current and ringed); this module, host side, with no vendored change:
+ * - reads the controller's flow state through the storage it hands the controller, and keeps the guide record `oscar-guide.onboarding.v1` (step, k, n,
+ *   status, handledRequest, early) on each completion and skip; every storage access in try/catch, a blocked storage keeps it in memory, a corrupt record is replaced;
+ * - acts once per onboarding request above `handledRequest`: start (or, while it runs, show the current step again: « Reprendre »), restart, skip
+ *   (« Passer le tutoriel »: the run stops, the record says skipped, nothing asks again by itself). Never on its own: no request, no start;
+ * - completes the current step once, with that step's own event, when its result is already on the bench (`stepSatisfied`), and says so before the next
+ *   step's sentence (« Déjà en place : étape k. »); a step the learner completes clears that note.
+ */
+export function createTutorialRuntime(d: { flow: Flow; registry: Registry; storage: StorageLike | null; now(): number; send(input: ControllerInput): void; stateKey?: string }): TutorialRuntime {
+  const stateKey = d.stateKey ?? DEFAULT_STORAGE_KEY
+  const memory = new Map<string, string>()
+  let blocked = d.storage === null
+  const read = (k: string): string | null => {
+    if (!blocked && d.storage !== null) {
+      try {
+        return d.storage.getItem(k)
+      } catch {
+        blocked = true
+      }
+    }
+    return memory.has(k) ? memory.get(k)! : null
+  }
+  const write = (k: string, v: string): void => {
+    memory.set(k, v)
+    if (!blocked && d.storage !== null) {
+      try {
+        d.storage.setItem(k, v)
+      } catch {
+        blocked = true
+      }
+    }
+  }
+
+  const data = d.flow.steps.map((s) => TUTORIAL_STEPS.find((t) => t.id === s.id) ?? null)
+  const base = d.flow.steps.map((s) => s.say)
+  let rec: TutorialRecord = parseTutorialRecord(read(TUTORIAL_RECORD_KEY)) ?? { ...EMPTY_TUTORIAL_RECORD, early: [] }
+  let flowIndex = -1
+  let running = false
+  /** The step index whose early event was sent and not seen through yet. */
+  let earlyAt: number | null = null
+  /** The numbers (1-based) of the steps found already done since the learner's last own completion. */
+  let pending: number[] = []
+  let last: { state: TpState | null; audio: string | null } = { state: null, audio: null }
+
+  const save = (): void => write(TUTORIAL_RECORD_KEY, JSON.stringify(rec))
+  const clearNotes = (): void => {
+    pending = []
+    d.flow.steps.forEach((s, i) => (s.say = base[i]))
+  }
+  const noteFor = (ks: readonly number[]): string =>
+    (COPY.tutorial?.alreadyInPlace ?? '').replace('{steps}', ks.map((k) => (COPY.tutorial?.alreadyStep ?? '').replace('{k}', String(k))).join(', '))
+
+  /** The controller's persisted state, as it writes it (`{ v, flow: { flowId, index, status }, hint }`). */
+  function observe(blob: string | null): void {
+    type Persisted = { flowId?: unknown; index?: unknown; status?: unknown }
+    let flow: Persisted | null = null
+    try {
+      const o = blob === null ? null : (JSON.parse(blob) as { flow?: unknown })
+      flow = o !== null && typeof o === 'object' && o.flow !== null && typeof o.flow === 'object' ? (o.flow as Persisted) : null
+    } catch {
+      flow = null
+    }
+    if (flow === null || flow.flowId !== d.flow.id || typeof flow.index !== 'number') {
+      running = false
+      flowIndex = -1
+      return
+    }
+    const idx = flow.index
+    if (flow.status === 'running') {
+      if (!(earlyAt !== null && idx === earlyAt + 1) && idx !== flowIndex) clearNotes() // the learner moved on (a completion, « Passer cette étape », back): no old note
+      running = true
+      rec = { ...rec, status: 'running', step: data[idx]?.id ?? null, k: idx + 1, n: data.length }
+    } else {
+      running = false
+      clearNotes()
+      if (flow.status === 'done' || flow.status === 'skipped') rec = { ...rec, status: flow.status === 'done' ? 'done' : 'skipped', step: null, k: 0, n: data.length }
+    }
+    earlyAt = null
+    flowIndex = idx
+    save()
+  }
+
+  let queued = false
+  const schedule = (): void => {
+    if (queued) return
+    queued = true
+    void Promise.resolve().then(() => {
+      queued = false
+      check()
+    })
+  }
+  /** The current step done already: complete it once, with its own event, the next step's sentence led by the note. */
+  function check(): void {
+    if (!running || earlyAt !== null) return
+    const i = flowIndex
+    const s = data[i]
+    if (s === null || s === undefined || !stepSatisfied(s, last.state, last.audio, d.registry)) return
+    earlyAt = i
+    pending = [...pending, i + 1]
+    d.flow.steps[i].say = base[i]
+    if (i + 1 < d.flow.steps.length) d.flow.steps[i + 1].say = `${noteFor(pending)} ${base[i + 1]}`
+    if (!rec.early.includes(s.id)) rec = { ...rec, early: [...rec.early, s.id] }
+    save()
+    d.send({ type: 'hostEvent', event: earlyEvent(s, d.now()) })
+  }
+
+  observe(read(stateKey)) // a reload: the controller restores the same state from the same key
+
+  const storage: ObservedStorage = {
+    getItem: (k) => read(k),
+    setItem: (k, v) => {
+      write(k, v)
+      if (k === stateKey) {
+        observe(v)
+        schedule()
+      }
+    },
+    removeItem: (k) => {
+      memory.delete(k)
+      try {
+        if (!blocked && d.storage !== null && 'removeItem' in d.storage) (d.storage as Storage).removeItem(k)
+      } catch {
+        blocked = true
+      }
+    },
+  }
+
+  return {
+    storage,
+    update({ state, audio, request }) {
+      last = { state, audio }
+      if (request !== null && request.allowed && Number.isSafeInteger(request.n) && request.n > rec.handledRequest) {
+        rec = { ...rec, handledRequest: request.n }
+        if (request.kind === 'skip') {
+          clearNotes()
+          rec = { ...rec, status: 'skipped', step: null, k: 0 }
+          save()
+          if (running) d.send({ type: 'flow', control: { action: 'stop' } })
+        } else if (request.kind === 'restart' || !running) {
+          clearNotes()
+          rec = { ...rec, early: [] }
+          save()
+          d.send({ type: 'flow', control: { action: 'start', flowId: d.flow.id } })
+        } else {
+          save()
+          d.send({ type: 'chip', id: 'next' }) // « Reprendre »: the current step's bubble again
+        }
+      }
+      schedule()
+    },
+    record: () => ({ ...rec, early: [...rec.early] }),
+  }
 }

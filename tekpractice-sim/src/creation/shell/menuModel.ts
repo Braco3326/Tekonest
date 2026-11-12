@@ -93,6 +93,8 @@ export interface MenuContext {
   playbackReason?(): string | undefined
   /** Aide › Premiers pas (onboarding): why it must wait (the start screen is showing; it would open a room with no profile), or undefined. */
   firstStepsHold?(): string | undefined
+  /** Aide (T3.2): the tutorial running now (`k` = the step to resume at), or null. While it runs, « Premiers pas » becomes « Reprendre à l’étape {k} », with « Recommencer le tutoriel » and « Passer le tutoriel » (actions `first-steps-restart`, `first-steps-skip`). */
+  tutorialProgress?(): { k: number; n: number } | null
   /** Écoute › Morceau (Task 39): the demo songs; the submenu is left out when there are none. */
   songs?(): { id: string; title: string }[]
 }
@@ -231,10 +233,19 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     ? [{ id: 'songs', label: M.song!, enabled: () => songItems.some((i) => i.enabled()), run: () => {}, children: songItems, description: () => (songItems.some((i) => i.enabled()) ? undefined : why()), hint: () => (songItems.some((i) => i.enabled()) ? undefined : chainHint()) }]
     : []
   /** Off while the start screen shows, and it says why (an item is never off with no word why). */
-  const firstSteps = (): MenuItem => {
-    const base = act('first-steps', M.firstSteps!)
+  const held = (base: MenuItem): MenuItem => {
     const on = (): boolean => base.enabled() && !ctx.firstStepsHold?.()
     return { ...base, enabled: on, run: () => void (on() && base.run()), description: () => (on() ? undefined : ctx.firstStepsHold?.()) }
+  }
+  const TU = COPY.tutorialUi!
+  const firstSteps = (): MenuItem[] => {
+    const run = ctx.tutorialProgress?.() ?? null
+    if (run === null) return [held(act('first-steps', M.firstSteps!))]
+    return [
+      held(act('first-steps', TU.resume!.replace('{k}', String(run.k)))),
+      ...(registered('first-steps-restart') ? [held(act('first-steps-restart', TU.restart!))] : []),
+      ...(registered('first-steps-skip') ? [held(act('first-steps-skip', TU.skip!))] : []),
+    ]
   }
   return [
     {
@@ -271,6 +282,6 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
       ],
     },
     // « Premiers pas » (onboarding T2.4b) exists only where the page registered its action (`?design`, tutorial allowed); it is never gated on the view: with no place open it opens the neutral room itself.
-    { id: 'aide', label: M.aide!, items: [...(registered('first-steps') ? [firstSteps()] : []), act('shortcuts', M.shortcuts!), act('site', M.siteBack!)] },
+    { id: 'aide', label: M.aide!, items: [...(registered('first-steps') ? firstSteps() : []), act('shortcuts', M.shortcuts!), act('site', M.siteBack!)] },
   ]
 }

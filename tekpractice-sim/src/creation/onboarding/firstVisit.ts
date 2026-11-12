@@ -8,6 +8,7 @@ import type { InventoryTab } from '../inventory'
 import type { PlacePicker } from '../shell/placePicker'
 import { mountProfileChip } from './profileChip'
 import { panelsFor, profileById } from './profiles'
+import { tutorialInProgress } from '../../design/tutorialRecord'
 import { chipProfile, createOnboardingStore, entryStage, type OnboardingRecord, type OnboardingStore, type ProfileId, type StorageLike } from './state'
 
 export interface OnboardingWiring {
@@ -52,7 +53,12 @@ export interface OnboardingDebug {
   premiersPas: boolean
   /** The text of the profile chip (« Choisir un profil » while none is stored), or null without the onboarding. */
   chip: string | null
+  /** What the last request asked for (plan T3.2: the guide acts on it once): start (or resume a run), restart, skip. Not stored: absent = start. */
+  requestKind?: TutorialAsk
 }
+
+/** What an Aide request asks the guide: « Premiers pas » / « Reprendre » (start; a running tutorial is resumed), « Recommencer », « Passer le tutoriel ». */
+export type TutorialAsk = 'start' | 'restart' | 'skip'
 
 export interface Onboarding {
   /** The record's store, or null without `?design`. */
@@ -68,7 +74,12 @@ export interface Onboarding {
    * Aide « Premiers pas »: with no place open the neutral room opens first, then the request goes up (the guide starts the tutorial when `request` passes its
    * own `handledRequest`, T3.2). Idempotent while it runs. A room that did not open raises nothing. No-op where `premiersPas` is false.
    */
-  requestTutorial(): Promise<void>
+  requestTutorial(kind?: TutorialAsk): Promise<void>
+  /**
+   * The guide's running tutorial (its record `oscar-guide.onboarding.v1`, read from storage, src/design/tutorialRecord.ts): the step to resume at, or null (none
+   * running, storage blocked, or the tutorial not allowed here). Aide then offers « Reprendre à l’étape {k} », « Recommencer le tutoriel », « Passer le tutoriel ».
+   */
+  progress(): { k: number; n: number } | null
   /** Why Aide « Premiers pas » must wait (the start stage is showing: it would open a room with no profile), or undefined. */
   waiting(): string | undefined
   snapshot(): OnboardingDebug
@@ -154,6 +165,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
   }
 
   let asking: Promise<void> | null = null
+  let lastKind: TutorialAsk = 'start'
   const premiersPas = store !== null && w.tutorialAllowed
   const waiting = (): string | undefined => (premiersPas && w.picker.startShowing ? COPY.menu!.firstStepsWait : undefined)
   return {
@@ -168,9 +180,15 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
       else return false
       return true
     },
-    requestTutorial() {
+    requestTutorial(kind = 'start') {
       if (!store || !premiersPas || waiting()) return Promise.resolve()
       if (asking) return asking
+      if (kind !== 'start') {
+        // restart and skip act on the running tutorial: its room is open, nothing to open
+        lastKind = kind
+        store.dispatch({ type: 'request' })
+        return Promise.resolve()
+      }
       // Cleared by `finally` on the promise itself: an async body with no await would run its own cleanup before `asking` is assigned.
       asking = (async () => {
         if (!w.placeOpen()) {
@@ -178,6 +196,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
           if (!w.placeOpen()) return
           w.frameNeutralRoom()
         }
+        lastKind = 'start'
         store.dispatch({ type: 'request' })
       })().finally(() => {
         asking = null
@@ -185,6 +204,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
       return asking
     },
     waiting,
+    progress: () => (premiersPas ? tutorialInProgress(w.storage) : null),
     snapshot() {
       const record = store ? store.read() : null
       return {
@@ -194,6 +214,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
         blocked: store?.blocked ?? false,
         premiersPas,
         chip: store ? chipText(chipProfile({ design: true, record })) : null,
+        requestKind: lastKind,
       }
     },
   }

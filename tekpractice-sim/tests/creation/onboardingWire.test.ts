@@ -356,3 +356,32 @@ describe('the profile chip « Profil : X · changer » / « Choisir un profil »
     expect(h.record().request).toBe(2)
   })
 })
+
+describe('Aide while a tutorial runs: « Reprendre », « Recommencer », « Passer le tutoriel » (T3.2)', () => {
+  const guide = (o: Record<string, unknown>) => JSON.stringify({ v: 1, handledRequest: 1, step: 'lecture-console', k: 6, n: 10, status: 'running', early: [], ...o })
+  it('progress() is the guide record’s running step (oscar-guide.onboarding.v1), null when none runs or the record is missing / corrupt', () => {
+    const storage = memoryStorage(rec('decouvre', 'taken', 1))
+    const h = harness({}, { storage })
+    expect(h.ob.progress()).toBeNull()
+    storage.data.set('oscar-guide.onboarding.v1', guide({}))
+    expect(h.ob.progress()).toEqual({ k: 6, n: 10 })
+    storage.data.set('oscar-guide.onboarding.v1', guide({ status: 'skipped' }))
+    expect(h.ob.progress()).toBeNull()
+    storage.data.set('oscar-guide.onboarding.v1', '{x')
+    expect(h.ob.progress()).toBeNull()
+    expect(harness({ tutorialAllowed: false }, { storage }).ob.progress()).toBeNull()
+  })
+  it('each ask raises the request and says its kind (the guide acts on the kind once); restart and skip never open a room', async () => {
+    const h = harness()
+    await h.ob.requestTutorial('skip')
+    expect(h.log).toEqual([])
+    expect(h.record()).toMatchObject({ request: 1 })
+    expect(h.ob.snapshot().requestKind).toBe('skip')
+    await h.ob.requestTutorial('restart')
+    expect(h.ob.snapshot().requestKind).toBe('restart')
+    await h.ob.requestTutorial()
+    expect(h.ob.snapshot().requestKind).toBe('start')
+    expect(h.record()).toMatchObject({ request: 3 })
+    expect(h.log).toEqual(['room', 'frame']) // only « Premiers pas » with no place opens the room
+  })
+})
