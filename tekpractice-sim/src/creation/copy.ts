@@ -86,6 +86,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     siteBack: 'Retour au site Tekonest',
     /** Aide › Premiers pas (onboarding T2.4b): present only under `?design` where the tutorial is allowed. À valider (tekuxwriter, 2026-11-12). */
     firstSteps: 'Premiers pas',
+    /** Why « Premiers pas » is off while the start screen shows (its description). À valider (tekuxwriter, 2026-11-12). */
+    firstStepsWait: 'Répondez d’abord à l’écran de départ.',
   },
   /** « Raccourcis clavier » (night 2 wave 5, P2-1): the dialog of the Aide menu and the H key. Validé (tekuxwriter, night 2). */
   shortcuts: {
@@ -1006,15 +1008,17 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     offerTitle: 'Un tutoriel pour votre premier son ?',
     /** The profile just chosen, above the offer; {profile} = its label. */
     offerProfile: 'Votre profil : {profile}',
-    /** Under the offer heading: what the tutorial is, and that it is advised to everyone. */
-    offerLead: 'Il vous guide pour poser le matériel et le brancher vous-même, dans une salle vide. Il est conseillé à tout le monde.',
+    /** Under the offer heading: what the tutorial is, and that it is advised to everyone. Package-neutral (the five packages do not start in the same room, review item 5). */
+    offerLead: 'Des étapes courtes, à faire vous-même, pour arriver à votre premier son. Il est conseillé à tout le monde.',
     /** The two EQUAL answers. {n} = number of steps of the active tutorial (a count of steps, never a duration). */
     offerTutorial: 'Faire le tutoriel (conseillé · {n} étapes, à votre rythme)',
     offerSkip: 'Passer, je connais',
     /** The profile chip in the status bar (reopens the start stage). {profile} = the profile's label. */
     chip: 'Profil : {profile} · changer',
-    /** Its `title`. */
-    chipHint: 'Changer de profil : l’écran de départ se rouvre.',
+    /** The same chip while no profile is stored (the learner left the start screen, or has not been asked yet): it opens the profile stage. */
+    chipChoose: 'Choisir un profil',
+    /** Its `title`, for both texts. */
+    chipHint: 'Rouvre l’écran de départ.',
   },
   /**
    * The tutorial « Premiers pas » (onboarding packs, T3.1, spec 6.3 and 7.2): Oscar's one sentence per step, what to do and where, never an outcome that is

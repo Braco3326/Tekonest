@@ -1,7 +1,8 @@
 /**
- * Onboarding state machine (onboarding packs, plan T2.1, spec 4.1 and 4.4). Pure: no DOM, no Babylon, no guide import.
+ * Onboarding state machine (onboarding packs, plan T2.1, spec 4.1 and 4.4, T2 review ruling R-B). Pure: no DOM, no Babylon, no guide import.
  *
- * Where the first visit lands (`entryStage`), how each answer changes the stored record (`reduce`), and a store that keeps the record under
+ * Where the first visit lands (`entryStage`), how an answer changes the stored record (`reduce`: the profile is written WITH the answer, so leaving mid-way
+ * writes nothing), and a store that keeps the record under
  * `audio-sim/creation-onboarding.v1` with every storage access in try/catch: a blocked storage (or a write that throws) keeps the record in
  * memory for the page's life (the start screen may then show again next visit: stated, accepted); a corrupt record reads as « none » and the
  * next answer replaces it (there is no learner work in it).
@@ -35,28 +36,26 @@ export interface StorageLike {
   setItem(key: string, value: string): void
 }
 
-/** What the boot shows once `restore()` has run. */
-export type EntryStage = 'workspace' | 'picker' | 'start'
+/** What the boot shows once `restore()` has run: the workspace, the start screen (profile stage), the offer for the stored profile, or today's picker. */
+export type EntryStage = 'workspace' | 'start' | 'offer' | 'picker'
 
 /**
- * `design`: a valid `?design=1..5` is on the address. `restored`: `restore()` reopened an autosave. `record`: the stored record, or null.
- * The start screen exists only under `?design`, only with no autosave, and only when no record exists: any record (a profile chosen, the offer
- * answered, or the profile stage left) means the learner has been asked once, so the plain picker shows and nothing nags.
+ * `design`: the onboarding is on (a valid `?design=1..5`, and not an exam address). `tutorialAllowed`: the guide may run here (not `?oscar=0`). `restored`: `restore()`
+ * reopened an autosave. `record`: the stored record, or null.
+ * The start screen exists only with the onboarding on, no autosave and no record. A record means the learner was asked, so the picker shows and nothing nags,
+ * with one exception (ruling R-B): a profile whose offer was never answered (the first visit was on `?oscar=0`, where the profile choice is final) gets the OFFER the
+ * first time the tutorial is allowed. A record with no profile (only an Aide « Premiers pas » request) is the picker.
  */
-export function entryStage(i: { design: boolean; restored: boolean; record: OnboardingRecord | null }): EntryStage {
+export function entryStage(i: { design: boolean; tutorialAllowed: boolean; restored: boolean; record: OnboardingRecord | null }): EntryStage {
   if (i.restored) return 'workspace'
   if (!i.design) return 'picker'
-  return i.record === null ? 'start' : 'picker'
+  if (i.record === null) return 'start'
+  return i.tutorialAllowed && i.record.profile !== null && i.record.offer === null ? 'offer' : 'picker'
 }
 
 export type OnboardingEvent =
-  | { type: 'profile'; id: ProfileId }
-  /** « Tous les lieux » or Échap on the profile stage. */
-  | { type: 'all-places' }
-  /** « Faire le tutoriel ». */
-  | { type: 'tutorial' }
-  /** « Passer, je connais » or Échap on the offer stage. */
-  | { type: 'skip' }
+  /** The learner answered: the profile and the answer to the offer together (`offer` null = no offer was made, `?oscar=0`: an earlier answer is kept). */
+  | { type: 'answer'; profile: ProfileId; offer: OfferAnswer | null }
   /** Aide « Premiers pas »: the tutorial is asked for again; the earlier answer stays. */
   | { type: 'request' }
 
@@ -65,14 +64,8 @@ const BASE: OnboardingRecord = { v: 1, profile: null, offer: null, request: 0, s
 export function reduce(rec: OnboardingRecord | null, ev: OnboardingEvent): OnboardingRecord {
   const cur: OnboardingRecord = rec ? { ...rec, shown: [...rec.shown] } : { ...BASE, shown: [] }
   switch (ev.type) {
-    case 'profile':
-      return { ...cur, profile: ev.id }
-    case 'all-places':
-      return cur
-    case 'tutorial':
-      return { ...cur, offer: 'taken', request: cur.request + 1 }
-    case 'skip':
-      return { ...cur, offer: 'skipped' }
+    case 'answer':
+      return { ...cur, profile: ev.profile, offer: ev.offer ?? cur.offer, request: cur.request + (ev.offer === 'taken' ? 1 : 0) }
     case 'request':
       return { ...cur, request: cur.request + 1 }
   }

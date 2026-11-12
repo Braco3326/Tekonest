@@ -522,4 +522,18 @@ describe('Aide › Premiers pas (onboarding T2.4b)', () => {
     const items = aide(buildMenus(ctx({ actions: { 'first-steps': () => undefined }, viewLocked: () => true, historyLocked: () => true })))
     expect(items[0].enabled()).toBe(true)
   })
+  it('waits while the start stage shows: disabled, with the reason as its description (an item is never off with no word why), and it runs nothing', () => {
+    let ran = 0
+    let hold: string | undefined = 'Répondez d’abord à l’écran de départ.'
+    const items = aide(buildMenus(ctx({ actions: { 'first-steps': () => void ran++ }, firstStepsHold: () => hold })))
+    expect(items[0].enabled()).toBe(false)
+    expect(items[0].description!()).toBe('Répondez d’abord à l’écran de départ.')
+    items[0].run()
+    expect(ran).toBe(0)
+    hold = undefined
+    expect(items[0].enabled()).toBe(true)
+    expect(items[0].description!()).toBeUndefined()
+    items[0].run()
+    expect(ran).toBe(1)
+  })
 })

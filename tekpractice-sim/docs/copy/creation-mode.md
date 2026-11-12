@@ -89,6 +89,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.panelProps` | Panneau Propriétés | validé | Vue ; idem |
 | `menu.shortcuts` | Raccourcis clavier | validé | Aide ; affiche « H » depuis Task 8, inactif jusqu'au panneau d'aide |
 | `menu.siteBack` | Retour au site Tekonest | validé | Aide ; même libellé que `shell.siteBack` |
+| `menu.firstStepsWait` | Répondez d’abord à l’écran de départ. | à valider (tekuxwriter) | Description de « Premiers pas » (grisé) tant que l’écran de départ est ouvert : il ouvrirait une salle sans profil |
 | `menu.firstSteps` | Premiers pas | à valider (tekuxwriter) | Aide ; première entrée, seulement sous `?design` et là où le tutoriel est permis (ni `?oscar=0` ni adresse d’examen). Sans lieu ouvert, ouvre d’abord la salle vide neutre, puis demande le tutoriel |
 
 Since Task 12, Lieu holds only « Choisir un lieu… »; the place names are on the picker cards (`content/rooms/*.json` `name_fr`, `picker.set-*`, `picker.blank`).
@@ -922,11 +923,12 @@ Première visite (packs d’accueil, T2) : l’écran de départ, uniquement sou
 | `onboarding.allPlaces` | Tous les lieux | à valider (tekuxwriter) | Bouton sous les quatre profils (et Échap sur cette étape) : le sélecteur de lieu tel qu’il est sans écran de départ |
 | `onboarding.offerTitle` | Un tutoriel pour votre premier son ? | à valider (tekuxwriter) | Titre de l’étape « offre » (même panneau) |
 | `onboarding.offerProfile` | Votre profil : {profile} | à valider (tekuxwriter) | Au-dessus de l’offre ; `{profile}` = le libellé du profil choisi |
-| `onboarding.offerLead` | Il vous guide pour poser le matériel et le brancher vous-même, dans une salle vide. Il est conseillé à tout le monde. | à valider (tekuxwriter) | Sous le titre de l’offre : la décision du fondateur (passer est permis, le tutoriel est conseillé à tous) |
+| `onboarding.offerLead` | Des étapes courtes, à faire vous-même, pour arriver à votre premier son. Il est conseillé à tout le monde. | à valider (tekuxwriter) | Sous le titre de l’offre : la décision du fondateur (passer est permis, le tutoriel est conseillé à tous). Neutre quant au paquet (revue T2, point 5) : ne promet ni la salle vide ni le branchement, car les cinq paquets ne commencent pas dans la même salle ; ancien texte : « Il vous guide pour poser le matériel et le brancher vous-même, dans une salle vide. » |
 | `onboarding.offerTutorial` | Faire le tutoriel (conseillé · {n} étapes, à votre rythme) | à valider (tekuxwriter) | Premier des deux boutons égaux de l’offre ; `{n}` = nombre d’étapes du tutoriel du paquet actif (jamais une durée : aucune minute dans l’interface) |
 | `onboarding.offerSkip` | Passer, je connais | à valider (tekuxwriter) | Second bouton égal de l’offre (et Échap sur cette étape) ; la question ne revient pas |
 | `onboarding.chip` | Profil : {profile} · changer | à valider (tekuxwriter) | Pastille de la barre d’état une fois un profil choisi (sous `?design`) ; `{profile}` = le libellé du profil ; rouvre l’écran de départ |
-| `onboarding.chipHint` | Changer de profil : l’écran de départ se rouvre. | à valider (tekuxwriter) | Infobulle (`title`) de la pastille de profil |
+| `onboarding.chipChoose` | Choisir un profil | à valider (tekuxwriter) | Pastille de la barre d’état tant qu’aucun profil n’est enregistré (écran quitté par « Tous les lieux » / Échap, ou jamais répondu) : rouvre l’étape « profil ». Rend vraie la phrase « Vous pourrez changer de profil à tout moment » |
+| `onboarding.chipHint` | Rouvre l’écran de départ. | à valider (tekuxwriter) | Infobulle (`title`) de la pastille, pour ses deux textes |
 
 ## tutorial
 

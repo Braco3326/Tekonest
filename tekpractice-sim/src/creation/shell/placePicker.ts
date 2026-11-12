@@ -17,7 +17,7 @@
  * DOM only: choosing calls `onChoose`, the shell owns the place change.
  */
 import { COPY } from '../copy'
-import { mountStartScreen, type StartResult, type StartScreen } from '../onboarding/startScreen'
+import type { StartResult, StartScreen, StartScreenDeps } from '../onboarding/startScreen'
 import type { ProfileId } from '../onboarding/state'
 import { gridMove, type GridKey, type PlaceCard } from './placePickerModel'
 
@@ -33,6 +33,11 @@ export interface PlacePickerDeps {
   covers: HTMLElement[]
   places: PlaceCard[]
   templates: PlaceCard[]
+  /**
+   * Fetches the start screen's code (a lazy chunk): given only where the onboarding is on (`?design`, practice mode). Without it `showStart` does nothing and the picker
+   * is today's, with no start code in the page.
+   */
+  loadStartScreen?: () => Promise<(d: StartScreenDeps) => StartScreen>
   /** URL prefix of the thumbnails (`<BASE_URL>room-thumbs/`). */
   thumbBase: string
   onChoose(card: PlaceCard, mode: 'empty' | 'gear'): void
@@ -51,10 +56,12 @@ export interface PlacePicker {
   /** An error line in the picker head (`role="alert"`); null clears it. */
   showError(message: string | null): void
   /**
-   * The start screen of the first visit: a stage of this picker (not closable, covers inert like `show`). `onProfile` hears the profile choice,
-   * `onResult` the end of the screen; on `all-places` the picker has already switched to its grids.
+   * The start screen of the first visit: a stage of this picker (not closable, covers inert like `show`). `onResult` hears the end of the screen; on `all-places` the picker
+   * has already switched to its grids.
    */
   showStart(opts: PickerStartOpts): void
+  /** The start screen is showing (its profile or offer stage): the profile chip and Aide « Premiers pas » wait for it. */
+  readonly startShowing: boolean
 }
 
 export interface PickerStartOpts {
@@ -62,7 +69,10 @@ export interface PickerStartOpts {
   closable?: boolean
   stepCount: number
   offerAllowed: boolean
-  onProfile(id: ProfileId): void
+  /** Open on the offer stage of this stored profile (its offer was never answered) instead of the profile stage. */
+  offerFor?: ProfileId
+  /** Échap on the offer stage: « Passer, je connais » (a first visit, the default) or leaving with no change (reopened by the chip). */
+  offerEscape?: 'skip' | 'leave'
   onResult(r: StartResult): void
 }
 
@@ -264,8 +274,10 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
   let closable = false
   let busy = false
   let pending: { grid: Grid; card: PlaceCard } | null = null
-  /** The start screen, mounted on the first `showStart` (a page without `?design` never has it in its DOM). */
+  /** The start screen, mounted on the first `showStart` once its chunk is here (a page without `?design` never has it in its DOM). */
   let start: StartScreen | null = null
+  /** The start stage was asked for and not left: it shows (or is about to, while its chunk loads). */
+  let startWanted = false
   let startOpts: PickerStartOpts | null = null
 
   const visible = (g: Grid): number[] => g.cards.map((c, i) => (c.el.hidden ? -1 : i)).filter((i) => i >= 0)
@@ -318,8 +330,10 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
   }
   /** Back to the head and the grids (the start stage ends: « Tous les lieux », a failure, a place opened, `show`). */
   const leaveStart = (): void => {
-    if (!start) return
-    start.close()
+    const was = startWanted
+    startWanted = false // also cancels a start screen whose chunk is still loading
+    start?.close()
+    if (!start && !was) return
     head.hidden = false
     scroll.hidden = false
     root.setAttribute('aria-labelledby', 'cr-picker-title')
@@ -406,6 +420,8 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
       if (focus) current(places)?.el.focus()
     },
     showStart(o) {
+      const load = d.loadStartScreen
+      if (!load && !start) return // no onboarding here: nothing to show, the picker stays as it is
       closable = false // the start stage is never closable itself; `o.closable` only says what the grids are once the learner reaches them
       close.hidden = true
       error.hidden = true
@@ -413,27 +429,43 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
       root.hidden = false
       for (const cov of d.covers) cov.inert = true
       startOpts = o // the callbacks follow the latest call; the screen's step count and offer are those of the first (one start screen per page)
-      if (!start)
-        start = mountStartScreen({
-          doc,
-          parent: root,
-          stepCount: o.stepCount,
-          offerAllowed: o.offerAllowed,
-          onProfile: (id) => startOpts?.onProfile(id),
-          onResult: (r) => {
-            if (r.kind === 'all-places') {
-              leaveStart()
-              closable = startOpts?.closable === true
-              close.hidden = !closable
-              current(places)?.el.focus() // the learner asked for the places: the keyboard lands on the first card
-            }
-            startOpts?.onResult(r)
-          },
-        })
+      startWanted = true
       head.hidden = true
       scroll.hidden = true
-      root.setAttribute('aria-labelledby', start.titleId)
-      start.open()
+      const go = (s: StartScreen): void => {
+        if (!startWanted) return // left while the chunk loaded (a card, `show`, `hide`)
+        root.setAttribute('aria-labelledby', s.titleId)
+        s.open({ offerFor: startOpts?.offerFor, offerEscape: startOpts?.offerEscape })
+      }
+      if (start) return go(start)
+      void load!().then(
+        (mountFn) => {
+          start ??= mountFn({
+            doc,
+            parent: root,
+            stepCount: o.stepCount,
+            offerAllowed: o.offerAllowed,
+            onResult: (r) => {
+              if (r.kind === 'all-places') {
+                leaveStart()
+                closable = startOpts?.closable === true
+                close.hidden = !closable
+                current(places)?.el.focus() // the learner asked for the places: the keyboard lands on the first card
+              }
+              startOpts?.onResult(r)
+            },
+          })
+          go(start)
+        },
+        () => {
+          // the chunk did not load: the grids are the picker (the start screen is a courtesy, never a gate)
+          leaveStart()
+          current(places)?.el.focus()
+        }
+      )
+    },
+    get startShowing() {
+      return startWanted
     },
     hide,
     focus() {

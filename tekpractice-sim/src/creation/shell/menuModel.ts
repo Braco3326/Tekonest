@@ -91,6 +91,8 @@ export interface MenuContext {
   playbackReady?(): boolean
   /** Écoute (Task 39): the first reason the path cannot play (the disabled items' description). */
   playbackReason?(): string | undefined
+  /** Aide › Premiers pas (onboarding): why it must wait (the start screen is showing; it would open a room with no profile), or undefined. */
+  firstStepsHold?(): string | undefined
   /** Écoute › Morceau (Task 39): the demo songs; the submenu is left out when there are none. */
   songs?(): { id: string; title: string }[]
 }
@@ -228,6 +230,12 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
   const songs: MenuItem[] = songList.length
     ? [{ id: 'songs', label: M.song!, enabled: () => songItems.some((i) => i.enabled()), run: () => {}, children: songItems, description: () => (songItems.some((i) => i.enabled()) ? undefined : why()), hint: () => (songItems.some((i) => i.enabled()) ? undefined : chainHint()) }]
     : []
+  /** Off while the start screen shows, and it says why (an item is never off with no word why). */
+  const firstSteps = (): MenuItem => {
+    const base = act('first-steps', M.firstSteps!)
+    const on = (): boolean => base.enabled() && !ctx.firstStepsHold?.()
+    return { ...base, enabled: on, run: () => void (on() && base.run()), description: () => (on() ? undefined : ctx.firstStepsHold?.()) }
+  }
   return [
     {
       id: 'projet',
@@ -263,6 +271,6 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
       ],
     },
     // « Premiers pas » (onboarding T2.4b) exists only where the page registered its action (`?design`, tutorial allowed); it is never gated on the view: with no place open it opens the neutral room itself.
-    { id: 'aide', label: M.aide!, items: [...(registered('first-steps') ? [act('first-steps', M.firstSteps!)] : []), act('shortcuts', M.shortcuts!), act('site', M.siteBack!)] },
+    { id: 'aide', label: M.aide!, items: [...(registered('first-steps') ? [firstSteps()] : []), act('shortcuts', M.shortcuts!), act('site', M.siteBack!)] },
   ]
 }

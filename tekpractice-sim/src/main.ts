@@ -6,6 +6,16 @@ import { showBootFailure } from './creation/bootFailure'
 import { guideMode, guideRouteAllowed } from './guide/mode'
 
 /**
+ * What the creation boot may do of the onboarding (packs T2.4b, ruling R-A): the creation code may not import the guide, so the guide's own gates are read here.
+ * `onboarding`: practice mode (no `?mode=`, so an exam address leaves the start screen, the record, the chip, the framing and the panel and drawer changes entirely off).
+ * `tutorialAllowed`: practice mode and the guide may run (not `?oscar=0`): the start screen offers the tutorial and Aide has « Premiers pas ». `?oscar=0` keeps the profile choice.
+ */
+function onboardingGates(search: string): { onboarding: boolean; tutorialAllowed: boolean } {
+  const onboarding = guideMode(search, 'creation') === 'practice'
+  return { onboarding, tutorialAllowed: onboarding && guideRouteAllowed(search, 'creation') }
+}
+
+/**
  * The inline entry guard of index.html (night 2 wave 5, P1-1; fix round C1) acts ONLY until the route module has loaded: a file that fails later (a lazy chunk: the Bêta sheets, coverage,
  * the drawer, a room, the Essais panel...) is handled by the app itself, and the guard's full-screen alert must never cover it. `booted()` tells it the app has started.
  */
@@ -37,9 +47,7 @@ else {
   void import('./creation/boot')
     .then((m) => {
       booted() // the route chunk is here: from now on a failing lazy chunk is the app's to handle, never the entry guard's
-      // Onboarding T2.4b: the start screen offers the tutorial, and Aide has « Premiers pas », only where the guide may run in practice mode (not `?oscar=0`, not an exam address).
-      const search = location.search
-      return m.bootCreation({ tutorialAllowed: guideRouteAllowed(search, 'creation') && guideMode(search, 'creation') === 'practice' })
+      return m.bootCreation(onboardingGates(location.search))
     })
     .catch((e: unknown) => {
       creationFailed = true

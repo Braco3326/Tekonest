@@ -1,0 +1,200 @@
+/**
+ * The first visit and what follows (onboarding packs, plan T2.3 to T2.5 and the T2 review fixes, spec 4): the start screen under `?design`, the profile applied to the
+ * first room, the profile chip, Aide « Premiers pas », the framing. A LAZY chunk: boot.ts imports it only when the onboarding is on (a valid `?design`, practice mode), so
+ * the plain game never loads it. The checklist's wiring stays in `wire.ts`.
+ */
+import { COPY } from '../copy'
+import type { InventoryTab } from '../inventory'
+import type { PlacePicker } from '../shell/placePicker'
+import { mountProfileChip } from './profileChip'
+import { panelsFor, profileById } from './profiles'
+import { chipProfile, createOnboardingStore, entryStage, type OnboardingRecord, type OnboardingStore, type ProfileId, type StorageLike } from './state'
+
+export interface OnboardingWiring {
+  /**
+   * The onboarding is on: a valid `?design=1..5` (the boot read it with `applyDesignAttribute`) and not an exam address (ruling R-A: a non-practice `?mode=` leaves the
+   * onboarding entirely off). Without it nothing here exists: no store, no chip, no key read or written, no start screen, framing, panel or drawer change.
+   */
+  design: boolean
+  storage: StorageLike | null
+  /** Steps of the active package's tutorial (the offer says how many). */
+  stepCount: number
+  /** The guide may run on this address (main.ts: no `?oscar=0`). False = no offer on the start screen, no Aide « Premiers pas »; a profile choice is final. */
+  tutorialAllowed: boolean
+  /** The active package's `layout.panels`: what a profile that leaves the panels to the package opens the first room with. */
+  panels: { tree: boolean; props: boolean }
+  doc: Document
+  /** The status bar's checklist slot: the profile chip goes before it. */
+  chipSlot: HTMLElement
+  picker: Pick<PlacePicker, 'showStart' | 'hide' | 'show' | 'startShowing'>
+  /** A place is open (the design has a room). */
+  placeOpen(): boolean
+  /** Open the neutral room through the picker's own choice path (the `blank` card, « Salle vide », no dialog). Resolves when that is over, whatever the result. */
+  openNeutralRoom(): Promise<void>
+  /** The camera goes to the active package's `framing` (first-sound framing, T2.5). Called only right after the neutral room was opened by the start screen or by Aide « Premiers pas »; never over a room that was already open. */
+  frameNeutralRoom(): void
+  setPanel(p: 'tree' | 'props', open: boolean): void
+  /** The inventory drawer opens on this tab; the focus stays where it is (the 3D view). */
+  openInventory(tab: InventoryTab): void
+  /** The page takes the focus back (the 3D view): the picker that held it just closed. */
+  returnFocus(): void
+}
+
+/** What `window.__creation.onboarding()` reports (tests): the stored record and the address's switches. */
+export interface OnboardingDebug {
+  design: boolean
+  tutorialAllowed: boolean
+  /** The record in memory (what storage holds, unless it is blocked), or null. */
+  record: OnboardingRecord | null
+  /** Storage could not be read or written: the record lives in memory for this page. */
+  blocked: boolean
+  /** Aide « Premiers pas » is offered. */
+  premiersPas: boolean
+  /** The text of the profile chip (« Choisir un profil » while none is stored), or null without the onboarding. */
+  chip: string | null
+}
+
+export interface Onboarding {
+  /** The record's store, or null without `?design`. */
+  readonly store: OnboardingStore | null
+  /** Aide « Premiers pas » exists on this address (`?design` and `tutorialAllowed`). */
+  readonly premiersPas: boolean
+  /**
+   * Called once, after `restore()` returned false (nothing was reopened). Returns whether the start screen is showing; when it is not, the caller shows the
+   * picker as it always did.
+   */
+  startFirstVisit(): boolean
+  /**
+   * Aide « Premiers pas »: with no place open the neutral room opens first, then the request goes up (the guide starts the tutorial when `request` passes its
+   * own `handledRequest`, T3.2). Idempotent while it runs. A room that did not open raises nothing. No-op where `premiersPas` is false.
+   */
+  requestTutorial(): Promise<void>
+  /** Why Aide « Premiers pas » must wait (the start stage is showing: it would open a room with no profile), or undefined. */
+  waiting(): string | undefined
+  snapshot(): OnboardingDebug
+}
+
+const chipText = (id: ProfileId | null): string =>
+  id === null ? COPY.onboarding!.chipChoose! : COPY.onboarding!.chip!.replace('{profile}', COPY.onboarding![profileById(id).labelKey]!)
+
+/**
+ * The first visit and what follows (plan T2.3 to T2.4b, spec 4, T2 review rulings): the start screen when it is due, the profile applied to the first room (the
+ * neutral room through the picker's own path, the frame, the profile's panels, the drawer on its tab), the profile chip, and Aide « Premiers pas ». boot.ts makes
+ * the calls; this owns the rest. It touches no storage without the onboarding.
+ *
+ * The record is written WITH the answer (profile and offer together) and only once the room is open (R-B): leaving mid-way, or a room that did not open, writes
+ * nothing, so the `tutorial` request never goes up with no room to start it in.
+ */
+export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfileChip = mountProfileChip): Onboarding {
+  const store = w.design ? createOnboardingStore(w.storage) : null
+  const chip = store
+    ? mountChip({
+        doc: w.doc,
+        slot: w.chipSlot,
+        label: () => chipText(chipProfile({ design: true, record: store.read() })),
+        hint: COPY.onboarding!.chipHint!,
+        onClick: () => {
+          if (!w.picker.startShowing) openStart({ mode: 'chip' }) // the start stage already showing is what the chip would open
+        },
+      })
+    : null
+  chip?.render()
+
+  /** A first-room profile: panels, then the drawer tab. */
+  const applyProfile = (id: ProfileId): void => {
+    const preset = profileById(id)
+    const p = panelsFor(preset, w.panels)
+    w.setPanel('tree', p.tree)
+    w.setPanel('props', p.props)
+    w.openInventory(preset.inventoryTab)
+  }
+
+  /** Each opening of the start stage is answered once: a second click on the same button (or Enter then click) while the room opens does nothing. */
+  let answered = false
+  const openStart = (o: { mode: 'first' | 'chip'; offerFor?: ProfileId }): void => {
+    if (!store) return
+    answered = false
+    w.picker.showStart({
+      closable: w.placeOpen(), // reopened over a project (the chip): its grids can be closed back to it
+      stepCount: w.stepCount,
+      offerAllowed: w.tutorialAllowed,
+      offerFor: o.offerFor,
+      offerEscape: o.mode === 'chip' ? 'leave' : 'skip',
+      onResult: (r) => {
+        if (answered) return
+        if (r.kind === 'all-places') return // nothing answered, nothing written: the next normal visit asks again
+        answered = true
+        if (r.kind === 'leave') {
+          // reopened by the chip, left on the offer: no change at all
+          if (w.placeOpen()) {
+            w.picker.hide()
+            w.returnFocus()
+          } else w.picker.show({ closable: false, focus: true })
+          return
+        }
+        void (async () => {
+          if (w.placeOpen()) {
+            // « changer » over a project: the room is the learner's, it is not replaced; only the profile is applied
+            w.picker.hide()
+            w.returnFocus()
+          } else {
+            await w.openNeutralRoom()
+            if (!w.placeOpen()) {
+              answered = false // busy, cancelled or failed: the picker has the error or still shows the screen; nothing was written, the next answer is taken
+              return
+            }
+            w.frameNeutralRoom()
+          }
+          store.dispatch({ type: 'answer', profile: r.profile, offer: r.offer })
+          chip?.render()
+          applyProfile(r.profile)
+        })()
+      },
+    })
+  }
+
+  let asking: Promise<void> | null = null
+  const premiersPas = store !== null && w.tutorialAllowed
+  const waiting = (): string | undefined => (premiersPas && w.picker.startShowing ? COPY.menu!.firstStepsWait : undefined)
+  return {
+    store,
+    premiersPas,
+    startFirstVisit() {
+      if (!store) return false
+      const record = store.read()
+      const stage = entryStage({ design: true, tutorialAllowed: w.tutorialAllowed, restored: false, record })
+      if (stage === 'start') openStart({ mode: 'first' })
+      else if (stage === 'offer' && record?.profile) openStart({ mode: 'first', offerFor: record.profile })
+      else return false
+      return true
+    },
+    requestTutorial() {
+      if (!store || !premiersPas || waiting()) return Promise.resolve()
+      if (asking) return asking
+      // Cleared by `finally` on the promise itself: an async body with no await would run its own cleanup before `asking` is assigned.
+      asking = (async () => {
+        if (!w.placeOpen()) {
+          await w.openNeutralRoom()
+          if (!w.placeOpen()) return
+          w.frameNeutralRoom()
+        }
+        store.dispatch({ type: 'request' })
+      })().finally(() => {
+        asking = null
+      })
+      return asking
+    },
+    waiting,
+    snapshot() {
+      const record = store ? store.read() : null
+      return {
+        design: store !== null,
+        tutorialAllowed: w.tutorialAllowed,
+        record,
+        blocked: store?.blocked ?? false,
+        premiersPas,
+        chip: store ? chipText(chipProfile({ design: true, record })) : null,
+      }
+    },
+  }
+}

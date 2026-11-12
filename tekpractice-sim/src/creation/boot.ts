@@ -114,7 +114,8 @@ import { openShortcutsDialog } from './shell/shortcutsDialog'
 import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
-import { wireChecklist, wireOnboarding } from './onboarding/wire'
+import { wireChecklist } from './onboarding/wire'
+import type { Onboarding } from './onboarding/firstVisit'
 import { createAnnouncer } from './shell/announcer'
 import { armCancelFallback } from './fileDialogGuard'
 import {
@@ -140,12 +141,15 @@ const roomName = (id: string): string =>
     ?.name_fr ?? id
 
 /**
- * `tutorialAllowed` (src/main.ts: the guide may run here, in practice mode) decides whether the start screen offers the tutorial and Aide has « Premiers pas »;
- * creation may not import the guide, so it is passed in. Missing = false (fail closed, like the guide's own mode gate).
+ * `onboarding` (src/main.ts: practice mode, no exam address) turns the whole first-visit layer on under `?design`; `tutorialAllowed` (also the guide may run: not `?oscar=0`)
+ * decides whether the start screen offers the tutorial and Aide has « Premiers pas ». Creation may not import the guide, so both are passed in. Missing = false (fail closed,
+ * like the guide's own mode gate).
  */
-export async function bootCreation(opts: { tutorialAllowed?: boolean } = {}): Promise<void> {
+export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed?: boolean } = {}): Promise<void> {
   injectCreationTokens()
   const designPkg = applyDesignAttribute(document.documentElement, location.search) // marks <html> only for a valid ?design=1..5 (T0.1)
+  /** The first-visit layer (start screen, profile, chip, Aide « Premiers pas », framing): a valid ?design, practice mode only (exam addresses: entirely off). Its code is a lazy chunk. */
+  const onboardingOn = designPkg !== null && opts.onboarding === true
   useSameOriginDraco() // CA-24: the Draco decoder comes from public/draco/, never from cdn.babylonjs.com (before any .glb is loaded)
   const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
   const shell = mountShell(document, canvas)
@@ -849,6 +853,8 @@ export async function bootCreation(opts: { tutorialAllowed?: boolean } = {}): Pr
     ),
     thumbBase: `${import.meta.env.BASE_URL}room-thumbs/`,
     onChoose: (card, mode) => void pick(card, mode),
+    // the start screen's code is fetched on the first showStart, only where the onboarding is on
+    loadStartScreen: onboardingOn ? () => import('./onboarding/startScreen').then((m) => m.mountStartScreen) : undefined,
   })
   /** Boot (C16): reopen the last autosave directly (not undoable, no picker), else the picker; say what happened. */
   const restore = async (): Promise<boolean> => {
@@ -919,28 +925,42 @@ export async function bootCreation(opts: { tutorialAllowed?: boolean } = {}): Pr
   }
   refreshSignal()
   refreshAutosave()
-  // Onboarding (T2.3 to T2.4b), under ?design only: the start screen (a stage of the picker), the profile applied to the first room, the profile chip, Aide « Premiers pas ».
-  const onboarding = wireOnboarding({
-    design: designPkg !== null,
-    storage,
-    stepCount: designPkg?.pacing.steps.length ?? 0,
-    tutorialAllowed: opts.tutorialAllowed === true,
-    panels: designPkg?.layout.panels ?? { tree: true, props: true },
-    doc: document,
-    chipSlot: statusBar.checklistSlot,
-    picker,
-    placeOpen: () => store.design().roomId !== null,
-    openNeutralRoom: () => pick(cards.find((c) => c.key === 'blank')!, 'empty'),
-    frameNeutralRoom: () => {
-      const f = designPkg?.framing
-      if (!f || !host.rig) return
-      host.rig.flyToPreset({ alpha: f.alpha, beta: f.beta, radius: f.radius, target: Vector3.FromArray([...f.target]) }) // a cut under reduced motion; no engine change
-      scheduler.invalidate()
-    },
-    setPanel: (p, open) => shell.setPanel(p, open),
-    openInventory: (tab) => setInventory(true, { tab, focus: false }),
-    returnFocus: () => canvas.focus(),
-  })
+  // Onboarding (T2.3 to T2.5), under ?design only (a lazy chunk, fetched only then): the start screen (a stage of the picker), the profile applied to the first room, the
+  // profile chip, Aide « Premiers pas ».
+  const NO_ONBOARDING: Onboarding = {
+    store: null,
+    premiersPas: false,
+    startFirstVisit: () => false,
+    requestTutorial: () => Promise.resolve(),
+    waiting: () => undefined,
+    snapshot: () => ({ design: false, tutorialAllowed: opts.tutorialAllowed === true, record: null, blocked: false, premiersPas: false, chip: null }),
+  }
+  let onboarding: Onboarding = NO_ONBOARDING
+  if (onboardingOn) {
+    const [{ wireOnboarding }, { framingForCanvas }] = await Promise.all([import('./onboarding/firstVisit'), import('./onboarding/framing')])
+    onboarding = wireOnboarding({
+      design: true,
+      storage,
+      stepCount: designPkg?.pacing.steps.length ?? 0,
+      tutorialAllowed: opts.tutorialAllowed === true,
+      panels: designPkg?.layout.panels ?? { tree: true, props: true },
+      doc: document,
+      chipSlot: statusBar.checklistSlot,
+      picker,
+      placeOpen: () => store.design().roomId !== null,
+      openNeutralRoom: () => pick(cards.find((c) => c.key === 'blank')!, 'empty'),
+      frameNeutralRoom: () => {
+        const f = designPkg?.framing
+        if (!f || !host.rig) return
+        const pose = framingForCanvas(f, canvas.clientHeight) // the radius follows the canvas height: the same pixels on a short window
+        host.rig.flyToPreset({ alpha: pose.alpha, beta: pose.beta, radius: pose.radius, target: Vector3.FromArray([...pose.target]) }) // a cut under reduced motion; no engine change
+        scheduler.invalidate()
+      },
+      setPanel: (p, open) => shell.setPanel(p, open),
+      openInventory: (tab) => setInventory(true, { tab, focus: false }),
+      returnFocus: () => canvas.focus(),
+    })
+  }
   if (!(await restore())) {
     // First visit under ?design: the start screen, a stage of the picker; otherwise (no ?design, or already asked) the picker as it always was.
     if (!onboarding.startFirstVisit()) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
@@ -2167,6 +2187,7 @@ export async function bootCreation(opts: { tutorialAllowed?: boolean } = {}): Pr
       actions,
       bindingLabel: menuShortcut,
       historyLocked: () => picker.isOpen, // Phase 1 review: « Annuler » never edits the rig under the picker
+      firstStepsHold: () => onboarding.waiting(), // « Premiers pas » waits for the start screen
       hasSelection: () => viewState.get().selection !== null && !placement.placing && !dragOpen(),
       viewLocked,
       walking: () => host.walking,

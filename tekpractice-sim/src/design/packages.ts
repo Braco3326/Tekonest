@@ -111,16 +111,27 @@ const todayColours: RoleColours = {
 }
 
 /**
- * First-sound framing of the neutral room (T2.5, spec 5), measured and tuned 2026-11-12, 1366 x 768, Babylon's vertical fov 0.8 (the canvas is about 709 px high):
- * the default overview of the blank room is radius 19.2 m (clamp(max(w, l) x 0.8, 8, 55), sceneHost.ts buildScene), where a placed SM58 body (0.051 x 0.162 m) is
- * 7.1 px on its widest axis, a QL1 23 px, a K12.2 30 px. The spec's 7 m estimate was about twice too far: 7 m gives the SM58 about 19 px. 40 px for the SM58 needs a
- * radius of about 3 m, and the zone of placements it holds for (x within 1.2 m, z within 0.5 m of the target, the SM58 the smallest of the three first devices)
- * about 2.7 m. This pose: radius 2.7 m (above the 2 m orbit limit), from the front like the default (alpha pi/2), beta 1.1, target 0.4 m above the floor at the
- * room's centre, so the floor devices sit near the middle of the view (a target at 1 m would put them in its lower third). It shows about 3.5 x 2.6 m of floor. Measured in
- * the browser: tests/e2e/onboarding-framing.spec.ts (QL1, SM58, K12.2 each >= 40 px; the plain game still opens at 19.2 m). The five packages share it until a package
- * changes its panels or its bars (T4.3): the radius does not depend on the canvas width (the fov is vertical).
+ * First-sound framing of the neutral room (T2.5 and the T2 review, ruling R-D), measured 2026-11-12 in Chromium at 1366 wide, Babylon's vertical fov 0.8.
+ *
+ * What is measured: the SCREEN BOX of the eight corners of a body's bounding box (`bodyBoundsInRoot` + `worldScreen`), not a pixel count of its silhouette; a thin
+ * shape such as the SM58 (a 0.051 x 0.162 m body) is therefore measured by its box, which is never smaller than its silhouette's box. The canvas is the viewport minus the
+ * menu bar and the status bar: 708 px high in a 768 px window, about 590 px in a 650 px window (a real 1366 x 768 laptop screen with the browser's own chrome).
+ *
+ * At the plain game's 19.2 m overview (clamp(max(w, l) x 0.8, 8, 55), sceneHost.ts buildScene) the SM58 box is 7.1 px, a QL1 23 px, a K12.2 30 px; the spec's 7 m
+ * estimate gave the SM58 about 19 px, not 40. A body's size on screen is proportional to the canvas height over the camera distance, so `radius` is the radius AT A
+ * 600 px CANVAS (src/creation/onboarding/framing.ts scales it with the real canvas height, never under the orbit camera's 2 m lower limit). Pose: from the front like the
+ * default (alpha pi/2), beta 1.1, target on the floor at the room's centre (so the floor point under the middle of the view, where the product starts a placement, IS the
+ * target), radius 2.2 m at 600 px (2.16 m at 590 px, 2.6 m at 708 px).
+ *
+ * What it holds (tests/e2e/onboarding-framing.spec.ts, 1366 x 650 and 1366 x 768): an SM58 on any floor point within 0.9 m sideways and 0.5 m in depth of the target is
+ * at least 44 px on its widest axis (4 px of margin over the 40 px asked); measured 46.3 px at its smallest on a 590 px canvas (the QL1 182 px and the K12.2 209 px beside
+ * it). That zone is a stated choice, the neighbourhood of where the product starts a placement; farther floor points are smaller, and the floor several metres away is visible
+ * too. The view is close: from the fov and the canvas, an ESTIMATE (not measured), it spans about 1.8 m of height and 2.8 m of width at the target's distance on a 906 x 590
+ * canvas. The profile opens the inventory drawer on this first room: it covers the lower 36 % of the view, and the SM58 and a QL1 placed at the starting point stay about 80 px
+ * above its top (measured at 650 and 768). The five packages share this pose until a package changes its panels or its bars (T4.3): the radius does not depend on the
+ * canvas width (the fov is vertical).
  */
-const firstSoundFraming: FramingPose = { alpha: Math.PI / 2, beta: 1.1, radius: 2.7, target: [0, 0.4, 0] }
+const firstSoundFraming: FramingPose = { alpha: Math.PI / 2, beta: 1.1, radius: 2.2, target: [0, 0, 0] }
 
 const ALL_STEPS: readonly StepId[] = [
   'console',

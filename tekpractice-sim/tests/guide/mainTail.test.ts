@@ -92,24 +92,27 @@ describe('level page tail', () => {
   })
 })
 
-describe('tutorialAllowed (onboarding T2.4b: main.ts computes it, creation may not import the guide)', () => {
-  const allowedFor = async (search: string): Promise<unknown> => {
+describe('the onboarding gates (T2.4b + ruling R-A: main.ts computes them, creation may not import the guide)', () => {
+  const gatesFor = async (search: string): Promise<unknown> => {
     bootCreation.mockClear()
     await run(search)
     expect(bootCreation).toHaveBeenCalledTimes(1)
     return (bootCreation.mock.calls[0] as unknown[])[0]
   }
-  it('is true on a plain address and under ?design', async () => {
-    expect(await allowedFor('')).toEqual({ tutorialAllowed: true })
-    expect(await allowedFor('?design=1')).toEqual({ tutorialAllowed: true })
+  it('a plain address and ?design: the onboarding and the tutorial are both allowed', async () => {
+    expect(await gatesFor('')).toEqual({ onboarding: true, tutorialAllowed: true })
+    expect(await gatesFor('?design=1')).toEqual({ onboarding: true, tutorialAllowed: true })
   })
-  it('is false on an exam address (any mode parameter, even with ?design) and with ?oscar=0', async () => {
-    expect(await allowedFor('?design=1&mode=exam')).toEqual({ tutorialAllowed: false })
-    expect(await allowedFor('?mode=exam')).toEqual({ tutorialAllowed: false })
-    expect(await allowedFor('?design=1&MODE=practice')).toEqual({ tutorialAllowed: false })
-    expect(await allowedFor('?design=1&oscar=0')).toEqual({ tutorialAllowed: false })
+  it('?oscar=0: the profile choice stays (onboarding), the tutorial does not', async () => {
+    expect(await gatesFor('?design=1&oscar=0')).toEqual({ onboarding: true, tutorialAllowed: false })
   })
-  it('the guide is still started exactly as before on each of them (the gate is the guide\'s own)', async () => {
+  it('an exam address (any mode parameter, any key case, even with ?design): the onboarding is OFF entirely, so the exam stays silent', async () => {
+    expect(await gatesFor('?design=1&mode=exam')).toEqual({ onboarding: false, tutorialAllowed: false })
+    expect(await gatesFor('?mode=exam')).toEqual({ onboarding: false, tutorialAllowed: false })
+    expect(await gatesFor('?design=1&MODE=practice')).toEqual({ onboarding: false, tutorialAllowed: false })
+    expect(await gatesFor('?design=1&mode=exam&oscar=0')).toEqual({ onboarding: false, tutorialAllowed: false })
+  })
+  it("the guide is still started exactly as before on each of them (the gate is the guide's own)", async () => {
     await run('?design=1&oscar=0')
     expect(bootGuide).toHaveBeenCalledWith('creation')
   })

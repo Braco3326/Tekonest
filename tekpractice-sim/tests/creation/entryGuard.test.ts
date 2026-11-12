@@ -32,8 +32,8 @@ describe('entry guard (index.html)', () => {
     // the legacy route passes it as the fulfilment handler, the creation route calls it once the route chunk is here (before bootCreation): deleting either must fail this
     expect(main, 'legacy route: booted is the fulfilment handler').toContain('.then(booted,')
     expect(main, 'creation route: booted() is called when the route chunk has loaded').toMatch(/\.then\(\(m\) => \{\s*booted\(\)/)
-    // (G7: bootCreation now takes `{ tutorialAllowed }`, computed in two comment/const lines between booted() and the call; nothing else may sit between them)
-    expect(main, 'and before bootCreation').toMatch(/booted\(\)[^\n]*\n(?:\s*(?:\/\/[^\n]*|const [^\n]*)\n)*\s*return m\.bootCreation\(/)
+    // (T2 fix: bootCreation takes the onboarding gates, computed by a function of main.ts declared above; only comment lines may sit between booted() and the call, so no statement, await or condition can come between them)
+    expect(main, 'and before bootCreation').toMatch(/booted\(\)[^\n]*\n(?:\s*\/\/[^\n]*\n)*\s*return m\.bootCreation\(/)
     expect(main).toContain('__tekEntryFailed')
   })
   it('it is a classic script placed before the entry module, listens to the entry error and to vite:preloadError, and adds the v query', () => {

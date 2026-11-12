@@ -16,6 +16,8 @@ import type { OfferAnswer, ProfileId } from './state'
 export type StartResult =
   /** « Tous les lieux » or Échap on the profile stage. */
   | { kind: 'all-places' }
+  /** Échap on the offer stage when the screen was reopened by the chip (`offerEscape: 'leave'`): nothing was answered, nothing changes. */
+  | { kind: 'leave' }
   /** A profile was chosen; `offer` is the answer to the offer, or null when no offer was made. */
   | { kind: 'chosen'; profile: ProfileId; offer: OfferAnswer | null }
 
@@ -27,8 +29,6 @@ export interface StartScreenDeps {
   stepCount: number
   /** The guide can run on this address: when false, a profile choice is final. */
   offerAllowed: boolean
-  /** The learner chose a profile (before the offer): the owner records it. */
-  onProfile(id: ProfileId): void
   /** The learner is done with the start screen. */
   onResult(r: StartResult): void
   profiles?: readonly ProfilePreset[]
@@ -39,8 +39,12 @@ export interface StartScreen {
   /** The heading's id: the picker's `section` is named by it while the start stage shows. */
   readonly titleId: string
   readonly stage: 'profile' | 'offer' | null
-  /** Show the profile stage; the focus goes to its first button. */
-  open(): void
+  /**
+   * Show the profile stage (the focus goes to its first button), or, with `offerFor`, the offer stage of that stored profile directly (a profile whose offer
+   * was never answered). `offerEscape`: what Échap does on the offer stage, « Passer, je connais » (`'skip'`, a first visit) or leaving with no change (`'leave'`, reopened
+   * by the chip). A pick in flight (`setBusy`) is not reset by opening again.
+   */
+  open(o?: { offerFor?: ProfileId; offerEscape?: 'skip' | 'leave' }): void
   /** The focus goes to where the current stage starts it (the skip link lands here while the screen covers the page). */
   focus(): void
   close(): void
@@ -61,7 +65,8 @@ function make<K extends keyof HTMLElementTagNameMap>(doc: Document, tag: K, cls?
 /** The pressed digit by POSITION (`Digit1`, `Numpad1`): on AZERTY the unshifted key prints « & », not « 1 ». */
 function digitOf(e: KeyboardEvent): string | null {
   const m = /^(?:Digit|Numpad)([1-9])$/.exec(e.code)
-  if (m) return m[1]
+  // A keypad key with NumLock off is End, the arrows, PageDown...: navigation, not a digit (its code is still Numpad1).
+  if (m) return e.code.startsWith('Numpad') && !/^[0-9]$/.test(e.key) ? null : m[1]
   return /^[1-9]$/.test(e.key) ? e.key : null
 }
 
@@ -103,7 +108,13 @@ export function mountStartScreen(d: StartScreenDeps): StartScreen {
   const offerStage = make(doc, 'div', 'cr-start-stage')
   offerStage.hidden = true
   const offerProfile = make(doc, 'p', 'cr-start-profile-name')
+  offerProfile.id = 'cr-start-offer-profile'
   const offerLead = make(doc, 'p', 'cr-pick-hint cr-start-lead', O().offerLead)
+  offerLead.id = 'cr-start-offer-lead'
+  // The focus lands on a button: a screen reader hears the group's name (the question) and its description (the profile, what the tutorial is) with it, not only the button.
+  offerStage.setAttribute('role', 'group')
+  offerStage.setAttribute('aria-labelledby', 'cr-start-title')
+  offerStage.setAttribute('aria-describedby', 'cr-start-offer-profile cr-start-offer-lead')
   const offerRow = make(doc, 'div', 'cr-start-offer')
   const tutorial = make(doc, 'button', 'cr-start-btn cr-start-answer', O().offerTutorial!.replace('{n}', String(d.stepCount)))
   tutorial.type = 'button'
@@ -124,6 +135,7 @@ export function mountStartScreen(d: StartScreenDeps): StartScreen {
   let stage: 'profile' | 'offer' | null = null
   let busy = false
   let chosen: ProfilePreset | null = null
+  let offerEscape: 'skip' | 'leave' = 'skip'
 
   const show = (s: 'profile' | 'offer'): void => {
     stage = s
@@ -133,14 +145,19 @@ export function mountStartScreen(d: StartScreenDeps): StartScreen {
     lead.hidden = s !== 'profile'
   }
 
-  function choose(p: ProfilePreset): void {
-    if (busy || stage !== 'profile') return
+  function showOffer(p: ProfilePreset): void {
     chosen = p
-    d.onProfile(p.id)
-    if (!d.offerAllowed) return d.onResult({ kind: 'chosen', profile: p.id, offer: null })
     offerProfile.textContent = O().offerProfile!.replace('{profile}', O()[p.labelKey]!)
     show('offer')
     ;(p.offerFocus === 'tutorial' ? tutorial : skip).focus()
+  }
+  function choose(p: ProfilePreset): void {
+    if (busy || stage !== 'profile') return
+    if (!d.offerAllowed) {
+      chosen = p
+      return d.onResult({ kind: 'chosen', profile: p.id, offer: null })
+    }
+    showOffer(p)
   }
   function answer(a: OfferAnswer): void {
     if (busy || stage !== 'offer' || !chosen) return
@@ -157,7 +174,10 @@ export function mountStartScreen(d: StartScreenDeps): StartScreen {
       e.preventDefault()
       e.stopPropagation()
       if (stage === 'profile') leaveToPlaces()
-      else if (stage === 'offer') answer('skipped')
+      else if (stage === 'offer') {
+        if (offerEscape === 'skip') answer('skipped')
+        else if (!busy) d.onResult({ kind: 'leave' })
+      }
       return
     }
     if (stage !== 'profile') return
@@ -180,10 +200,12 @@ export function mountStartScreen(d: StartScreenDeps): StartScreen {
     get stage() {
       return stage
     },
-    open() {
-      chosen = null
-      busy = false
+    open(o) {
+      chosen = null // a pick in flight (`busy`) is not reset by opening again: its answer would be asked twice
+      offerEscape = o?.offerEscape ?? 'skip'
       root.hidden = false
+      const again = o?.offerFor && d.offerAllowed ? profiles.find((p) => p.id === o.offerFor) : undefined
+      if (again) return showOffer(again)
       show('profile')
       focusStage()
     },

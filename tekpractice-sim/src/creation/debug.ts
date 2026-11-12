@@ -13,7 +13,7 @@ import type { PlaceResult } from './placeController'
 import type { QuarantineItem } from './persistence'
 import type { CoverageDebug } from './coverageController'
 import type { ListenDebug } from './listenController'
-import type { OnboardingDebug } from './onboarding/wire'
+import type { OnboardingDebug } from './onboarding/firstVisit'
 
 export interface CreationDebug {
   /** Onboarding (T2.4b): the stored first-visit record, the address's switches (`?design`, tutorial allowed), Aide « Premiers pas » and the profile chip text. A reader, no setter. */

@@ -25,6 +25,8 @@ const tutorialButton = (page: Page) => start(page).getByRole('button', { name: /
 const skipButton = (page: Page) => start(page).getByRole('button', { name: 'Passer, je connais', exact: true })
 const allPlaces = (page: Page) => start(page).getByRole('button', { name: 'Tous les lieux', exact: true })
 const record = (page: Page) => page.evaluate((k) => window.localStorage.getItem(k), KEY)
+/** The record is written WITH the answer and only once the room is open (ruling R-B): a read right after « the room is open » polls. */
+const recordIs = (page: Page, match: Record<string, unknown>) => expect.poll(async () => JSON.parse((await record(page)) ?? 'null')).toMatchObject(match)
 
 /** Open the game with a clean slate (storage emptied, then reloaded), under a design package. */
 async function openFresh(page: Page, query = '?design=1'): Promise<void> {
@@ -104,8 +106,8 @@ for (const p of PROFILES) {
     const text = (await start(page).innerText()).replace(/\s+/g, ' ')
     expect(text).toMatch(/Faire le tutoriel \(conseillé · \d+ étapes, à votre rythme\)/)
     expect(text).not.toMatch(/\d\s*(?:s|sec|mn|min|minutes?)\b|minute/i)
-    // the choice is stored at once (a reload then shows today's picker, the learner was asked)
-    expect(JSON.parse((await record(page))!)).toMatchObject({ v: 1, profile: p.id, offer: null, request: 0 })
+    // a profile chosen and the offer not answered writes NOTHING (ruling R-B): leaving mid-way asks again next time
+    expect(await record(page)).toBeNull()
     // the covered panels stay inert on the offer stage too
     expect(await inertCovers(page)).toEqual([true, true, true])
   })
@@ -115,7 +117,7 @@ test('clicking a profile button does the same as its key', async ({ page }) => {
   await openFresh(page)
   await profileButton(page, 'J’étudie le son').click()
   await expect(skipButton(page)).toBeFocused()
-  expect(JSON.parse((await record(page))!).profile).toBe('etudie')
+  expect(await record(page)).toBeNull()
 })
 
 test('the skip link « Aller à la vue 3D » lands inside the start screen while it covers the page (the grids behind it are hidden)', async ({ page }) => {
@@ -136,7 +138,7 @@ test('« Faire le tutoriel »: the neutral room opens, the offer is stored as ta
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
   await expect(page.getByTestId('place-picker')).toBeHidden()
   await expect(page.locator('#renderCanvas')).toBeFocused()
-  expect(JSON.parse((await record(page))!)).toMatchObject({ profile: 'decouvre', offer: 'taken', request: 1 })
+  await recordIs(page, { profile: 'decouvre', offer: 'taken', request: 1 })
   expect(await inertCovers(page)).toEqual([false, false, false])
 })
 
@@ -146,10 +148,10 @@ test('« Passer, je connais »: the neutral room opens, the offer is stored as s
   await skipButton(page).click()
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
   await expect(page.getByTestId('place-picker')).toBeHidden()
-  expect(JSON.parse((await record(page))!)).toMatchObject({ profile: 'etudie', offer: 'skipped', request: 0 })
+  await recordIs(page, { profile: 'etudie', offer: 'skipped', request: 0 })
 })
 
-test('Échap on the profile stage = « Tous les lieux »: the place grids show, the picker stays open (nothing to go back to), the record says no profile', async ({ page }) => {
+test('Échap on the profile stage = « Tous les lieux »: the place grids show, the picker stays open (nothing to go back to), nothing is written', async ({ page }) => {
   await openFresh(page)
   await page.keyboard.press('Escape')
   await expect(start(page)).toBeHidden()
@@ -158,7 +160,7 @@ test('Échap on the profile stage = « Tous les lieux »: the place grids show, 
   await expect(page.getByTestId('place-grid').getByRole('option')).toHaveCount(36)
   await expect(page.getByTestId('place-picker-close')).toBeHidden() // not closable: no place is on screen
   await expect(page.getByTestId('place-grid').locator('[aria-selected="true"]')).toBeFocused()
-  expect(JSON.parse((await record(page))!)).toMatchObject({ profile: null, offer: null })
+  expect(await record(page)).toBeNull() // nothing answered, nothing written: the next normal visit asks again
   expect(await page.evaluate(() => window.__creation!.place())).toBeNull()
   // and Échap in the grids does nothing more (the picker is still the start screen of the project)
   await page.keyboard.press('Escape')
@@ -172,7 +174,7 @@ test('Échap on the offer stage = « Passer, je connais »', async ({ page }) =>
   await page.keyboard.press('Escape')
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
   await expect(page.getByTestId('place-picker')).toBeHidden()
-  expect(JSON.parse((await record(page))!)).toMatchObject({ profile: 'projet', offer: 'skipped', request: 0 })
+  await recordIs(page, { profile: 'projet', offer: 'skipped', request: 0 })
 })
 
 test('« Tous les lieux » by click, then a card: the grids work as today, the covered panels are inert until the card opens, then free', async ({ page }) => {
@@ -201,16 +203,16 @@ test('the start panel is inert while the « Salle vide / Avec le matériel » di
   await expect(page.getByTestId('place-picker')).toBeVisible()
 })
 
-test('answered once, no autosave: the next visit shows today\'s picker, not the start screen (skip never re-nags)', async ({ page }) => {
+test('leaving mid-way writes nothing and asks again; an answered offer is not asked again (skip never re-nags)', async ({ page }) => {
   // Only the record decides here, so no room is ever opened (a room open at reload time is kept by the autosave's flush).
   await openFresh(page)
-  await page.keyboard.press('2') // a profile chosen, the offer not answered yet: the record is written at once
-  expect(JSON.parse((await record(page))!)).toMatchObject({ profile: 'etudie', offer: null })
+  await page.keyboard.press('2') // a profile chosen, the offer not answered yet: nothing is written
+  expect(await record(page)).toBeNull()
   await page.reload()
   await page.waitForFunction(() => !!window.__creation)
-  await expect(page.getByRole('heading', { name: 'Choisir un lieu' })).toBeVisible()
-  await expect(start(page)).toHaveCount(0)
-  // the answered offers (what the skip and the tutorial write) are records too
+  await expect(start(page)).toBeVisible() // asked again (profile stage)
+  await expect(profileButton(page, PROFILES[0].label)).toBeVisible()
+  // the answered offers (what the skip and the tutorial write) are records: the picker, no start screen
   for (const offer of ['skipped', 'taken']) {
     await page.evaluate(([k, o]) => window.localStorage.setItem(k, JSON.stringify({ v: 1, profile: 'etudie', offer: o, request: o === 'taken' ? 1 : 0, shown: [] })), [KEY, offer])
     await page.reload()
@@ -218,6 +220,32 @@ test('answered once, no autosave: the next visit shows today\'s picker, not the 
     await expect(page.getByRole('heading', { name: 'Choisir un lieu' }), offer).toBeVisible()
     await expect(start(page), offer).toHaveCount(0)
   }
+})
+
+test('a profile chosen on ?oscar=0 (offer never made) gets the OFFER for that profile on the next address where the tutorial is allowed; where it is not, the picker', async ({ page }) => {
+  await openFresh(page, '?design=1&oscar=0')
+  await page.keyboard.press('3') // final on this address: the room opens, the profile is written, no offer
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await recordIs(page, { profile: 'projet', offer: null, request: 0 })
+  // another visit with no project kept (the autosave is cleared, the record stays)
+  await page.evaluate(() => window.localStorage.removeItem('audio-sim/creation.v1'))
+  await page.goto('/?design=1&oscar=0')
+  await page.evaluate(() => window.localStorage.removeItem('audio-sim/creation.v1'))
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  await expect(page.getByRole('heading', { name: 'Choisir un lieu' }), 'still ?oscar=0: no offer, the picker').toBeVisible()
+  await page.goto('/?design=1')
+  await page.evaluate(() => window.localStorage.removeItem('audio-sim/creation.v1'))
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  await expect(start(page)).toBeVisible()
+  await expect(tutorialButton(page)).toBeVisible() // the offer stage, not the profile stage
+  await expect(start(page)).toContainText('Je monte un projet') // for the stored profile
+  await expect(tutorialButton(page)).toBeFocused() // projet: the focus is on the tutorial
+  await expect(profileButton(page, PROFILES[0].label)).toBeHidden()
+  await skipButton(page).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await recordIs(page, { profile: 'projet', offer: 'skipped', request: 0 })
 })
 
 test('an autosave wins over everything: the reload reopens the room, no start screen, no picker', async ({ page }) => {
@@ -241,7 +269,9 @@ test('a corrupt record is replaced: the start screen shows, and the next answer 
   await page.waitForFunction(() => !!window.__creation)
   await expect(start(page)).toBeVisible()
   await page.keyboard.press('4')
-  expect(JSON.parse((await record(page))!)).toMatchObject({ v: 1, profile: 'metier', offer: null, request: 0, shown: [] })
+  await skipButton(page).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await recordIs(page, { v: 1, profile: 'metier', offer: 'skipped', request: 0, shown: [] })
 })
 
 test('blocked storage: the start screen shows and works in memory (0 page errors); nothing is stored', async ({ page }) => {
@@ -389,7 +419,7 @@ test('a profile that leaves the panels to the package takes the package layout: 
 
 test('reload with the project kept: no start screen, the room is back, and the chip « Profil : J’étudie le son · changer » names the profile', async ({ page }) => {
   await openFresh(page)
-  await expect(chip(page)).toBeHidden() // nothing chosen yet
+  await expect(chip(page)).toHaveText('Choisir un profil') // nothing stored yet: the chip opens the profile stage
   await page.keyboard.press('2')
   await skipButton(page).click()
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
@@ -411,6 +441,7 @@ test('the chip over a kept project reopens the start stage; a new profile is app
   await page.keyboard.press('1')
   await skipButton(page).click()
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await expect(chip(page)).toHaveText('Profil : Je découvre · changer')
   await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
   await chip(page).click()
   await expect(start(page)).toBeVisible()
@@ -430,12 +461,29 @@ test('the chip over a kept project reopens the start stage; a new profile is app
   expect(await page.evaluate(() => ({ place: window.__creation!.place(), n: window.__creation!.design().rig.instances.length }))).toEqual({ place: 'blank', n: 1 })
   await expect.poll(() => panels(page)).toEqual({ tree: 'open', props: 'open' })
   await expect(page.locator('#renderCanvas')).toBeFocused()
-  expect(JSON.parse((await record(page))!)).toMatchObject({ profile: 'metier', offer: 'skipped' })
+  await recordIs(page, { profile: 'metier', offer: 'skipped' })
+})
+
+test('Échap on the offer stage reopened by the chip leaves with NO change: the stored profile, the room, the panels and the drawer stay as they were', async ({ page }) => {
+  await openFresh(page)
+  await page.keyboard.press('1')
+  await skipButton(page).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await recordIs(page, { profile: 'decouvre' })
+  const before = { record: await record(page), panels: await panels(page) }
+  await chip(page).click()
+  await page.keyboard.press('4')
+  await expect(skipButton(page)).toBeFocused() // the offer for the engineer
+  await page.keyboard.press('Escape')
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  await expect(page.locator('#renderCanvas')).toBeFocused()
+  expect({ record: await record(page), panels: await panels(page) }).toEqual(before)
+  await expect(chip(page)).toHaveText('Profil : Je découvre · changer')
 })
 
 test('with a record and no autosave the picker shows today\'s grids and the chip reopens the start screen', async ({ page }) => {
   await openFresh(page)
-  await page.keyboard.press('3') // a profile chosen, the offer not answered: the record is written
+  await page.evaluate(([k, r]) => window.localStorage.setItem(k, JSON.stringify(r)), [KEY, { v: 1, profile: 'projet', offer: 'skipped', request: 0, shown: [] }] as const)
   await page.reload()
   await page.waitForFunction(() => !!window.__creation)
   await expect(page.getByRole('heading', { name: 'Choisir un lieu' })).toBeVisible()
@@ -445,43 +493,93 @@ test('with a record and no autosave the picker shows today\'s grids and the chip
   await expect(profileButton(page, PROFILES[0].label)).toBeFocused()
 })
 
-test('no ?design: no chip and the onboarding reader says so; leaving without a profile (« Tous les lieux ») shows no chip either', async ({ page }) => {
+test('no ?design: no chip and the onboarding reader says so; leaving without a profile (« Tous les lieux ») keeps a « Choisir un profil » chip that reopens the profile stage', async ({ page }) => {
   await page.goto('/')
   await page.waitForFunction(() => !!window.__creation)
   await expect(chip(page)).toHaveCount(0)
   expect(await onboarding(page)).toMatchObject({ design: false, record: null, premiersPas: false, chip: null })
   await openFresh(page)
   await allPlaces(page).click()
-  await expect(chip(page)).toBeHidden()
-  expect(await onboarding(page)).toMatchObject({ design: true, tutorialAllowed: true, premiersPas: true, chip: null, record: { profile: null } })
+  await expect(chip(page)).toHaveText('Choisir un profil')
+  expect(await onboarding(page)).toMatchObject({ design: true, tutorialAllowed: true, premiersPas: true, chip: 'Choisir un profil', record: null })
+  await chip(page).click()
+  await expect(start(page)).toBeVisible()
+  await expect(profileButton(page, PROFILES[0].label)).toBeFocused()
 })
 
-for (const query of ['?design=1&oscar=0', '?design=1&mode=exam']) {
-  test(`${query}: the start stage shows the profile choice only, a choice is final (no offer), the room opens with the profile, no « Premiers pas »`, async ({ page }) => {
-    await openFresh(page, query)
-    expect(await onboarding(page)).toMatchObject({ design: true, tutorialAllowed: false, premiersPas: false })
-    await expect(start(page)).toBeVisible()
-    await page.keyboard.press('2')
-    // no offer: the room opens at once
-    await page.waitForFunction(() => window.__creation!.place() === 'blank')
-    await expect(tutorialButton(page)).toHaveCount(0)
-    await expect(page.getByText('Faire le tutoriel')).toHaveCount(0) // not in the page at all, not only hidden
-    await expect(page.getByText('Passer, je connais')).toHaveCount(0)
-    await expect(page.getByTestId('place-picker')).toBeHidden()
-    expect(JSON.parse((await record(page))!)).toEqual({ v: 1, profile: 'etudie', offer: null, request: 0, shown: [] })
-    await expect.poll(() => panels(page)).toEqual({ tree: 'open', props: 'open' })
-    await expect(drawer(page)).toHaveAttribute('data-open', 'true')
-    await expect(chip(page)).toHaveText('Profil : J’étudie le son · changer')
-    // reopened with the chip: still no offer, still final
-    await chip(page).click()
-    await expect(start(page)).toBeVisible()
-    await page.keyboard.press('4')
-    await expect(start(page)).toBeHidden()
-    expect((await onboarding(page)).record).toMatchObject({ profile: 'metier', offer: null, request: 0 })
-    await page.getByRole('menuitem', { name: 'Aide', exact: true }).click()
-    await expect(page.getByRole('menuitem', { name: 'Premiers pas' })).toHaveCount(0)
-  })
-}
+test('?design=1&oscar=0: the start stage shows the profile choice only, a choice is final (no offer in the page), the room opens with the profile, no « Premiers pas »', async ({ page }) => {
+  await openFresh(page, '?design=1&oscar=0')
+  expect(await onboarding(page)).toMatchObject({ design: true, tutorialAllowed: false, premiersPas: false })
+  await expect(start(page)).toBeVisible()
+  await page.keyboard.press('2')
+  // no offer: the room opens at once
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await expect(page.getByText('Faire le tutoriel')).toHaveCount(0) // not in the page at all, not only hidden
+  await expect(page.getByText('Passer, je connais')).toHaveCount(0)
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  await recordIs(page, { v: 1, profile: 'etudie', offer: null, request: 0, shown: [] })
+  await expect.poll(() => panels(page)).toEqual({ tree: 'open', props: 'open' })
+  await expect(drawer(page)).toHaveAttribute('data-open', 'true')
+  await expect(chip(page)).toHaveText('Profil : J’étudie le son · changer')
+  // reopened with the chip: still no offer, still final, and the stored profile is rewritten once, with the new choice
+  await chip(page).click()
+  await expect(start(page)).toBeVisible()
+  await page.keyboard.press('4')
+  await expect(start(page)).toBeHidden()
+  await recordIs(page, { profile: 'metier', offer: null, request: 0 })
+  await page.getByRole('menuitem', { name: 'Aide', exact: true }).click()
+  await expect(page.getByRole('menuitem', { name: 'Premiers pas' })).toHaveCount(0)
+})
+
+test('?design=1&mode=exam (ruling R-A): the onboarding is OFF: today\'s picker, no start screen, no chip, no key written, no framing, no drawer or panel change, no « Premiers pas »', async ({ page }) => {
+  await openFresh(page, '?design=1&mode=exam')
+  await expect(page.getByRole('heading', { name: 'Choisir un lieu' })).toBeVisible()
+  await expect(page.getByTestId('start-screen')).toHaveCount(0)
+  await expect(chip(page)).toHaveCount(0)
+  expect(await onboarding(page)).toMatchObject({ design: false, tutorialAllowed: false, premiersPas: false, record: null, chip: null })
+  const panelsBefore = await panels(page)
+  await page.locator('[data-place="blank"]').click()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  expect(await record(page), 'no onboarding key').toBeNull()
+  expect(await panels(page), 'the panels are not rearranged').toEqual(panelsBefore)
+  await expect(drawer(page)).toHaveCount(0) // the drawer chunk is not even loaded
+  await page.getByRole('menuitem', { name: 'Aide', exact: true }).click()
+  await expect(page.getByRole('menuitem', { name: 'Premiers pas' })).toHaveCount(0)
+})
+
+test('the offer stage is a group named by its question and described by the profile: a screen reader hears them with the focused button', async ({ page }) => {
+  await openFresh(page)
+  await page.keyboard.press('2')
+  const group = start(page).getByRole('group', { name: 'Un tutoriel pour votre premier son ?' })
+  await expect(group).toBeVisible()
+  await expect(group).toHaveAccessibleDescription(/Votre profil : J’étudie le son.*Des étapes courtes/s)
+  await expect(group.getByRole('button')).toHaveCount(2)
+  // package-neutral: the lead promises neither the empty room nor the cabling (review item 5)
+  const text = (await start(page).innerText()).replace(/\s+/g, ' ')
+  expect(text).toContain('Des étapes courtes, à faire vous-même, pour arriver à votre premier son. Il est conseillé à tout le monde.')
+  expect(text).not.toMatch(/salle vide|brancher/i)
+})
+
+test('Aide › Premiers pas waits while the start screen shows (disabled, with its reason) and the chip does nothing then; a keypad key with NumLock off (End) is not the digit 1', async ({ page }) => {
+  await openFresh(page)
+  await page.getByRole('menuitem', { name: 'Aide', exact: true }).click()
+  const item = page.getByRole('menuitem', { name: /Premiers pas/ })
+  await expect(item).toHaveAttribute('aria-disabled', 'true')
+  await expect(item).toContainText('Répondez d’abord à l’écran de départ.')
+  await item.click({ force: true })
+  expect(await page.evaluate(() => window.__creation!.place())).toBeNull()
+  expect(await record(page)).toBeNull()
+  await page.keyboard.press('Escape')
+  await chip(page).click() // the stage it would open is already open: nothing changes
+  await expect(profileButton(page, PROFILES[0].label)).toBeVisible()
+  // NumLock off: the physical Numpad1 key reports key « End »: navigation, not a choice
+  await page.locator('[data-testid="start-screen"]').evaluate((el) => el.dispatchEvent(new KeyboardEvent('keydown', { code: 'Numpad1', key: 'End', bubbles: true, cancelable: true })))
+  await expect(profileButton(page, PROFILES[0].label)).toBeVisible()
+  await expect(skipButton(page)).toBeHidden()
+  await page.locator('[data-testid="start-screen"]').evaluate((el) => el.dispatchEvent(new KeyboardEvent('keydown', { code: 'Numpad1', key: '1', bubbles: true, cancelable: true })))
+  await expect(tutorialButton(page)).toBeVisible() // NumLock on: the digit
+})
 
 test('a double click on « Faire le tutoriel » raises the request once and opens the room once (G6 concern 5); so does Enter twice', async ({ page }) => {
   await openFresh(page)
@@ -489,7 +587,7 @@ test('a double click on « Faire le tutoriel » raises the request once and open
   await tutorialButton(page).dblclick()
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
   await expect(page.getByTestId('place-picker')).toBeHidden()
-  expect((await onboarding(page)).record).toMatchObject({ profile: 'decouvre', offer: 'taken', request: 1 })
+  await recordIs(page, { profile: 'decouvre', offer: 'taken', request: 1 })
   expect(JSON.parse((await record(page))!).request).toBe(1)
   expect(await page.evaluate(() => window.__creation!.scenes())).toBe(1)
   await openFresh(page)
@@ -497,7 +595,7 @@ test('a double click on « Faire le tutoriel » raises the request once and open
   await page.keyboard.press('Enter')
   await page.keyboard.press('Enter')
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
-  expect(JSON.parse((await record(page))!).request).toBe(1)
+  await recordIs(page, { profile: 'projet', offer: 'taken', request: 1 })
 })
 
 for (const size of [
