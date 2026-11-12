@@ -3800,37 +3800,6 @@
    }
   },
   {
-   "id": "db-audiotechnik-y10p",
-   "label": "d&b audiotechnik Y10P",
-   "levels": [],
-   "realWorld": {
-    "brand": "d&b audiotechnik",
-    "model": "Y10P",
-    "category": "speaker",
-    "typicalUse": "small/medium FOH",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Textbook passive box: D80 speaker-level out -> NL4 (1+/1-) -> Y10P, link to second box (2 per channel)."
-   },
-   "ports": [
-    {
-     "portId": "bidir-2-x-nlt4-f-m-option-2-x-nl4-m-or-ep5-pins-1-1-1",
-     "dir": "bidir",
-     "connector": "speakon-nl4",
-     "signal": "speaker-level"
-    },
-    {
-     "portId": "bidir-2-x-nlt4-f-m-option-2-x-nl4-m-or-ep5-pins-1-1-2",
-     "dir": "bidir",
-     "connector": "speakon-nl4",
-     "signal": "speaker-level"
-    }
-   ],
-   "sizeMm": {
-    "w": 257,
-    "d": 341,
-    "h": 580
-   }
-  },
-  {
    "id": "db-audiotechnik-v8",
    "label": "d&b audiotechnik V8",
    "levels": [],
@@ -4193,31 +4162,6 @@
      "signal": "mic-level"
     }
    ]
-  },
-  {
-   "id": "aea-r84",
-   "label": "AEA R84",
-   "levels": [],
-   "realWorld": {
-    "brand": "AEA",
-    "model": "R84",
-    "category": "microphone",
-    "typicalUse": "vocals",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-dynamic-ribbon.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Good R4 contrast: the passive R84 must not get phantom, while the R84A needs P48. AEA also warns about patch bays."
-   },
-   "ports": [
-    {
-     "portId": "out-mic-output-xlr-3m",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "mic-level"
-    }
-   ],
-   "sizeMm": {
-    "w": 99,
-    "d": 64,
-    "h": 295
-   }
   },
   {
    "id": "sennheiser-mkh-418-s",
@@ -6104,91 +6048,6 @@
    }
   },
   {
-   "id": "genelec-7360a",
-   "label": "Genelec 7360A SAM",
-   "levels": [],
-   "realWorld": {
-    "brand": "Genelec",
-    "model": "7360A SAM",
-    "category": "studio-monitor",
-    "typicalUse": "bass management for stereo / 5.1 / 7.1 monitoring",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Insert-in-path bass management (inputs → sub → monitors), separate LFE in/out and AES thru: strong surround wiring lesson."
-   },
-   "ports": [
-    {
-     "portId": "in-analog-main-channel-inputs-7-1-1",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-analog-main-channel-inputs-7-1-2",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-lfe-input",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-main-channel-outputs-high-passed-to-monitors-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-main-channel-outputs-high-passed-to-monitors-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-lfe-output-daisy-chain",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-aes-ebu-input",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "aes3"
-    },
-    {
-     "portId": "out-aes-ebu-output-thru",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "aes3"
-    },
-    {
-     "portId": "bidir-glm-control-network-1",
-     "dir": "bidir",
-     "connector": "rj45",
-     "signal": "gpio-tally"
-    },
-    {
-     "portId": "bidir-glm-control-network-2",
-     "dir": "bidir",
-     "connector": "rj45",
-     "signal": "gpio-tally"
-    },
-    {
-     "portId": "in-mains-in",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 462,
-    "d": 363,
-    "h": 527
-   }
-  },
-  {
    "id": "adam-audio-s3h",
    "label": "ADAM Audio S3H",
    "levels": [],
@@ -6585,79 +6444,6 @@
    "sizeMm": {
     "w": 483,
     "d": 373,
-    "h": 44
-   }
-  },
-  {
-   "id": "shure-axient-digital-ad4d",
-   "label": "Shure Axient Digital AD4D (dual-channel receiver; AD1/AD2 transmitters)",
-   "levels": [],
-   "realWorld": {
-    "brand": "Shure",
-    "model": "Axient Digital AD4D (dual-channel receiver; AD1/AD2 transmitters)",
-    "category": "wireless",
-    "typicalUse": "large touring / festivals",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Full broadcast rear panel: RF in + cascade, analog XLR/TRS, AES3, word clock, dual Dante and IEC power cascade."
-   },
-   "ports": [
-    {
-     "portId": "out-transformer-balanced-audio-out-per-channel-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-transformer-balanced-audio-out-per-channel-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-1-4-transformer-balanced-out-per-channel-1",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-1-4-transformer-balanced-out-per-channel-2",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-aes3-digital-audio-output",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "aes3"
-    },
-    {
-     "portId": "bidir-word-clock-input-and-thru-1",
-     "dir": "bidir",
-     "connector": "bnc",
-     "signal": "wordclock"
-    },
-    {
-     "portId": "bidir-word-clock-input-and-thru-2",
-     "dir": "bidir",
-     "connector": "bnc",
-     "signal": "wordclock"
-    },
-    {
-     "portId": "in-ac-power-input-iec-locking",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    },
-    {
-     "portId": "out-ac-power-cascade-locking",
-     "dir": "out",
-     "connector": "iec-c13",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 483,
-    "d": 333,
     "h": 44
    }
   },
@@ -9076,6 +8862,380 @@
     "w": 343,
     "d": 360,
     "h": 98.8
+   }
+  },
+  {
+   "id": "behringer-europower-ep4000",
+   "label": "Behringer Europower EP4000",
+   "levels": [],
+   "realWorld": {
+    "brand": "Behringer",
+    "model": "Europower EP4000",
+    "category": "amplifier",
+    "typicalUse": "Behringer Europower EP4000 (amplifier)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 483 x 402 x 88 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-xlr-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-xlr-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-trs-1",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-trs-2",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-spk-1",
+     "dir": "out",
+     "connector": "speakon-nl4",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-spk-2",
+     "dir": "out",
+     "connector": "speakon-nl4",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-post-1",
+     "dir": "out",
+     "connector": "binding-post",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-post-2",
+     "dir": "out",
+     "connector": "binding-post",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "power-in",
+     "dir": "in",
+     "connector": "iec-c14",
+     "signal": "mains-power"
+    }
+   ],
+   "sizeMm": {
+    "w": 483,
+    "d": 402,
+    "h": 88
+   }
+  },
+  {
+   "id": "klark-teknik-dn360",
+   "label": "Klark Teknik DN360",
+   "levels": [],
+   "realWorld": {
+    "brand": "Klark Teknik",
+    "model": "DN360",
+    "category": "outboard",
+    "typicalUse": "Klark Teknik DN360 (outboard)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 482 x 205 x 133 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-xlr-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-xlr-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-xlr-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-xlr-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    }
+   ],
+   "sizeMm": {
+    "w": 482,
+    "d": 205,
+    "h": 133
+   }
+  },
+  {
+   "id": "rolls-ha43-pro",
+   "label": "Rolls HA43 Pro",
+   "levels": [],
+   "realWorld": {
+    "brand": "Rolls",
+    "model": "HA43 Pro",
+    "category": "headphone-amp",
+    "typicalUse": "Rolls HA43 Pro (headphone-amp)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 105 x 88 x 29 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-trs",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-rca-l",
+     "dir": "in",
+     "connector": "rca",
+     "signal": "line-level-consumer"
+    },
+    {
+     "portId": "in-rca-r",
+     "dir": "in",
+     "connector": "rca",
+     "signal": "line-level-consumer"
+    },
+    {
+     "portId": "out-phones-1",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "out-phones-2",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "out-phones-3",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "out-phones-4",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 105,
+    "d": 88,
+    "h": 29
+   }
+  },
+  {
+   "id": "allen-heath-dx168",
+   "label": "Allen & Heath DX168",
+   "levels": [],
+   "realWorld": {
+    "brand": "Allen & Heath",
+    "model": "DX168",
+    "category": "stagebox",
+    "typicalUse": "Allen & Heath DX168 (stagebox)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 410 x 190 x 185 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-xlr-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput"
+     ]
+    },
+    {
+     "portId": "in-xlr-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput"
+     ]
+    },
+    {
+     "portId": "out-xlr-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-xlr-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "net",
+     "dir": "bidir",
+     "connector": "ethercon",
+     "signal": "aoip"
+    },
+    {
+     "portId": "power-in",
+     "dir": "in",
+     "connector": "iec-c14",
+     "signal": "mains-power"
+    }
+   ],
+   "sizeMm": {
+    "w": 410,
+    "d": 190,
+    "h": 185
+   }
+  },
+  {
+   "id": "allen-heath-qu-16",
+   "label": "Allen & Heath Qu-16",
+   "levels": [],
+   "realWorld": {
+    "brand": "Allen & Heath",
+    "model": "Qu-16",
+    "category": "console-digital",
+    "typicalUse": "Allen & Heath Qu-16 (console-digital)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 440 x 500 x 186 mm (w x d x h) (sources disagree on a dimension) (estimate, size confidence conflict); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-xlr-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-xlr-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-trs-1",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-trs-2",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-xlr-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-xlr-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-aes",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "aes3"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "net-snake",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "net",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "ethernet-control"
+    }
+   ],
+   "sizeMm": {
+    "w": 440,
+    "d": 500,
+    "h": 186
+   }
+  },
+  {
+   "id": "arrakis-arc-8",
+   "label": "Arrakis ARC-8",
+   "levels": [],
+   "realWorld": {
+    "brand": "Arrakis",
+    "model": "ARC-8",
+    "category": "console-radio",
+    "typicalUse": "Arrakis ARC-8 (console-radio)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 457 x 292 x 51 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "out-prog-l",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-prog-r",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones",
+     "dir": "out",
+     "connector": "trs-35mm",
+     "signal": "headphone-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 457,
+    "d": 292,
+    "h": 51
    }
   }
  ],

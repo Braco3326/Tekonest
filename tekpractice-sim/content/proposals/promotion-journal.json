@@ -2526,6 +2526,827 @@
     }
    },
    "proposalIndex": 50
+  },
+  "neutrik-nppa-tt-pt": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "neutrik-nppa-tt-pt",
+    "label": "Neutrik NPPA-TT-PT \"Easy Patch\"",
+    "levels": [],
+    "realWorld": {
+     "brand": "Neutrik",
+     "model": "NPPA-TT-PT \"Easy Patch\"",
+     "category": "patchbay",
+     "typicalUse": "broadcast",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/patchbays.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Five normalling types including parallel and HN-top, plus the warning about phantom-power grounds and digital parallel paths"
+    },
+    "ports": [
+     {
+      "portId": "bidir-front-patch-jacks-2-rows-of-48-1",
+      "dir": "bidir",
+      "connector": "tt-bantam",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "bidir-front-patch-jacks-2-rows-of-48-2",
+      "dir": "bidir",
+      "connector": "tt-bantam",
+      "signal": "line-level-pro"
+     }
+    ],
+    "sizeMm": {
+     "w": 482,
+     "d": 178,
+     "h": 44
+    }
+   },
+   "proposalIndex": 87
+  },
+  "behringer-europower-ep4000": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "ev-re320": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "klark-teknik-dn360": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "rode-nt5": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "rode-ntg3": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "rode-procaster": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "rolls-ha43-pro": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "sennheiser-e-906": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "db-audiotechnik-y10p": {
+   "outcome": "promoted",
+   "proposalBefore": {
+    "id": "db-audiotechnik-y10p",
+    "label": "d&b audiotechnik Y10P",
+    "levels": [],
+    "realWorld": {
+     "brand": "d&b audiotechnik",
+     "model": "Y10P",
+     "category": "speaker",
+     "typicalUse": "small/medium FOH",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Textbook passive box: D80 speaker-level out -> NL4 (1+/1-) -> Y10P, link to second box (2 per channel)."
+    },
+    "ports": [
+     {
+      "portId": "bidir-2-x-nlt4-f-m-option-2-x-nl4-m-or-ep5-pins-1-1-1",
+      "dir": "bidir",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level"
+     },
+     {
+      "portId": "bidir-2-x-nlt4-f-m-option-2-x-nl4-m-or-ep5-pins-1-1-2",
+      "dir": "bidir",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level"
+     }
+    ],
+    "sizeMm": {
+     "w": 257,
+     "d": 341,
+     "h": 580
+    }
+   },
+   "proposalIndex": 62
+  },
+  "avid-protools-mtrx-studio": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "avid-protools-mtrx-studio",
+    "label": "Avid Pro Tools | MTRX Studio",
+    "levels": [],
+    "realWorld": {
+     "brand": "Avid",
+     "model": "Pro Tools | MTRX Studio",
+     "category": "audio-interface",
+     "typicalUse": "Pro Tools HDX converter and monitor controller",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. One box mixes XLR mic, DB25, ADAT, Dante, DigiLink and word clock: ideal for multi-format routing exercises."
+    },
+    "ports": [
+     {
+      "portId": "in-mic-inputs-1",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "in-mic-inputs-2",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "in-instrument-inputs-front-1",
+      "dir": "in",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz"
+     },
+     {
+      "portId": "in-instrument-inputs-front-2",
+      "dir": "in",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz"
+     },
+     {
+      "portId": "in-line-inputs-16-ch-1",
+      "dir": "in",
+      "connector": "dsub25",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-line-inputs-16-ch-2",
+      "dir": "in",
+      "connector": "dsub25",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-line-outputs-16-ch-1",
+      "dir": "out",
+      "connector": "dsub25",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-line-outputs-16-ch-2",
+      "dir": "out",
+      "connector": "dsub25",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-monitor-outputs-1",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-monitor-outputs-2",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-headphone-outputs-1",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "headphone-level"
+     },
+     {
+      "portId": "out-headphone-outputs-2",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "headphone-level"
+     }
+    ],
+    "sizeMm": {
+     "w": 482.6,
+     "d": 200,
+     "h": 44.45
+    }
+   },
+   "proposalIndex": 45
+  },
+  "dbx-afs2": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "dbx-afs2",
+    "label": "dbx AFS2 Advanced Feedback Suppression Processor",
+    "levels": [],
+    "realWorld": {
+     "brand": "dbx",
+     "model": "AFS2 Advanced Feedback Suppression Processor",
+     "category": "outboard",
+     "typicalUse": "live monitor-wedge feedback control (insert)",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Insert-point lesson: where to patch an anti-larsen (console aux send to wedge amp), with XLR or TRS balanced I/O."
+    },
+    "ports": [
+     {
+      "portId": "in-input-1-2-xlr-1",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-input-1-2-xlr-2",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-input-1-2-1-4-trs-1",
+      "dir": "in",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-input-1-2-1-4-trs-2",
+      "dir": "in",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-output-1-2-xlr-1",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-output-1-2-xlr-2",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-output-1-2-1-4-trs-1",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-output-1-2-1-4-trs-2",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     }
+    ],
+    "sizeMm": {
+     "w": 482.6,
+     "d": 146,
+     "h": 44
+    }
+   },
+   "proposalIndex": 97
+  },
+  "digico-sd-rack": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "digico-sd-rack",
+    "label": "DiGiCo SD-Rack",
+    "levels": [],
+    "realWorld": {
+     "brand": "DiGiCo",
+     "model": "SD-Rack",
+     "category": "stagebox",
+     "typicalUse": "stage rack for DiGiCo SD / Quantum consoles",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. MADI main/aux redundancy, MADI split for broadcast, fibre loop and word clock in one rack: rich touring-scale wiring lesson."
+    },
+    "ports": [
+     {
+      "portId": "bidir-madi-main-and-aux-i-o-1",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "madi"
+     },
+     {
+      "portId": "bidir-madi-main-and-aux-i-o-2",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "madi"
+     },
+     {
+      "portId": "out-madi-split-main-and-aux-outputs-1",
+      "dir": "out",
+      "connector": "bnc",
+      "signal": "madi"
+     },
+     {
+      "portId": "out-madi-split-main-and-aux-outputs-2",
+      "dir": "out",
+      "connector": "bnc",
+      "signal": "madi"
+     },
+     {
+      "portId": "bidir-firmware-digico-control-software",
+      "dir": "bidir",
+      "connector": "usb-b",
+      "signal": "usb-audio"
+     }
+    ],
+    "sizeMm": {
+     "w": 482.7,
+     "d": 371,
+     "h": 443.7
+    }
+   },
+   "proposalIndex": 110
+  },
+  "digico-sd12": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "digico-sd12",
+    "label": "DiGiCo SD12",
+    "levels": [],
+    "realWorld": {
+     "brand": "DiGiCo",
+     "model": "SD12",
+     "category": "console",
+     "typicalUse": "touring FOH / monitors",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Clear MADI-over-BNC lesson (IN to OUT crossing with SD-Rack), plus AES on XLR, word clock and optional fibre loop."
+    },
+    "ports": [
+     {
+      "portId": "in-local-mic-line-inputs-1",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "in-local-mic-line-inputs-2",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "out-local-line-outputs-1",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-local-line-outputs-2",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-aes-ebu-inputs-8-channels-1",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "aes3"
+     },
+     {
+      "portId": "in-aes-ebu-inputs-8-channels-2",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "aes3"
+     },
+     {
+      "portId": "out-aes-ebu-outputs-8-channels-1",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "aes3"
+     },
+     {
+      "portId": "out-aes-ebu-outputs-8-channels-2",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "aes3"
+     },
+     {
+      "portId": "bidir-madi-1-2-in-and-out-75-coax-to-sd-racks-or-madi-recorder-1",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "madi"
+     },
+     {
+      "portId": "bidir-madi-1-2-in-and-out-75-coax-to-sd-racks-or-madi-recorder-2",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "madi"
+     },
+     {
+      "portId": "bidir-word-clock-i-o-1",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "wordclock"
+     },
+     {
+      "portId": "bidir-word-clock-i-o-2",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "wordclock"
+     },
+     {
+      "portId": "bidir-gpi-dsub37-16-inputs-and-gpo-dsub37-16-outputs-1",
+      "dir": "bidir",
+      "connector": "dsub25",
+      "signal": "gpio-tally"
+     },
+     {
+      "portId": "bidir-gpi-dsub37-16-inputs-and-gpo-dsub37-16-outputs-2",
+      "dir": "bidir",
+      "connector": "dsub25",
+      "signal": "gpio-tally"
+     },
+     {
+      "portId": "bidir-ub-madi-usb-audio-up-to-48-ch",
+      "dir": "bidir",
+      "connector": "usb-b",
+      "signal": "usb-audio"
+     },
+     {
+      "portId": "bidir-usb-2-0-slots-1",
+      "dir": "bidir",
+      "connector": "usb-a",
+      "signal": "usb-audio"
+     },
+     {
+      "portId": "bidir-usb-2-0-slots-2",
+      "dir": "bidir",
+      "connector": "usb-a",
+      "signal": "usb-audio"
+     },
+     {
+      "portId": "bidir-ethernet-port",
+      "dir": "bidir",
+      "connector": "rj45",
+      "signal": "aoip"
+     },
+     {
+      "portId": "in-mains-in-dual-redundant-psus-1",
+      "dir": "in",
+      "connector": "iec-c14",
+      "signal": "mains-power"
+     },
+     {
+      "portId": "in-mains-in-dual-redundant-psus-2",
+      "dir": "in",
+      "connector": "iec-c14",
+      "signal": "mains-power"
+     }
+    ],
+    "sizeMm": {
+     "w": 1124,
+     "d": 795,
+     "h": 389
+    }
+   },
+   "proposalIndex": 28
+  },
+  "genelec-7360a": {
+   "outcome": "promoted",
+   "proposalBefore": {
+    "id": "genelec-7360a",
+    "label": "Genelec 7360A SAM",
+    "levels": [],
+    "realWorld": {
+     "brand": "Genelec",
+     "model": "7360A SAM",
+     "category": "studio-monitor",
+     "typicalUse": "bass management for stereo / 5.1 / 7.1 monitoring",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Insert-in-path bass management (inputs → sub → monitors), separate LFE in/out and AES thru: strong surround wiring lesson."
+    },
+    "ports": [
+     {
+      "portId": "in-analog-main-channel-inputs-7-1-1",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-analog-main-channel-inputs-7-1-2",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-lfe-input",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-analog-main-channel-outputs-high-passed-to-monitors-1",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-analog-main-channel-outputs-high-passed-to-monitors-2",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-lfe-output-daisy-chain",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "in-aes-ebu-input",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "aes3"
+     },
+     {
+      "portId": "out-aes-ebu-output-thru",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "aes3"
+     },
+     {
+      "portId": "bidir-glm-control-network-1",
+      "dir": "bidir",
+      "connector": "rj45",
+      "signal": "gpio-tally"
+     },
+     {
+      "portId": "bidir-glm-control-network-2",
+      "dir": "bidir",
+      "connector": "rj45",
+      "signal": "gpio-tally"
+     },
+     {
+      "portId": "in-mains-in",
+      "dir": "in",
+      "connector": "iec-c14",
+      "signal": "mains-power"
+     }
+    ],
+    "sizeMm": {
+     "w": 462,
+     "d": 363,
+     "h": 527
+    }
+   },
+   "proposalIndex": 113
+  },
+  "l-acoustics-x15-hiq": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "l-acoustics-x15-hiq",
+    "label": "L-Acoustics X15 HiQ",
+    "levels": [],
+    "realWorld": {
+     "brand": "L-Acoustics",
+     "model": "X15 HiQ",
+     "category": "speaker",
+     "typicalUse": "stage monitor wedge",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Wedge fed by amp via NL4 with 2-way active pinout; monitor-send lesson."
+    },
+    "ports": [
+     {
+      "portId": "in-in-1-4-point-speakon",
+      "dir": "in",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level"
+     },
+     {
+      "portId": "out-link-1-4-point-speakon-interchangeable-with-in",
+      "dir": "out",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level"
+     }
+    ],
+    "sizeMm": {
+     "w": 430,
+     "d": 375,
+     "h": 580
+    }
+   },
+   "proposalIndex": 57
+  },
+  "nti-audio-minirator-mr-pro": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "nti-audio-minirator-mr-pro",
+    "label": "NTi Audio Minirator MR-PRO",
+    "levels": [],
+    "realWorld": {
+     "brand": "NTi Audio",
+     "model": "Minirator MR-PRO",
+     "category": "measurement",
+     "typicalUse": "line-up tones and pink noise",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/measurement-tools.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Generator + cable tester + phantom-voltage meter on XLR: covers polarity, phantom power and pin 1/2/3 lessons."
+    },
+    "ports": [
+     {
+      "portId": "out-balanced-generator-output",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-unbalanced-generator-output",
+      "dir": "out",
+      "connector": "rca",
+      "signal": "line-level-consumer"
+     },
+     {
+      "portId": "in-xlr-input-for-cable-test-phantom-measurement",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "phantom-48v"
+     }
+    ],
+    "sizeMm": {
+     "w": 81,
+     "d": 152,
+     "h": 43
+    }
+   },
+   "proposalIndex": 66
+  },
+  "nti-audio-xl2": {
+   "outcome": "beta-modelled",
+   "proposalBefore": {
+    "id": "nti-audio-xl2",
+    "label": "NTi Audio XL2 Audio & Acoustic Analyzer (with M2230 microphone for class 1)",
+    "levels": [],
+    "realWorld": {
+     "brand": "NTi Audio",
+     "model": "XL2 Audio & Acoustic Analyzer (with M2230 microphone for class 1)",
+     "category": "measurement",
+     "typicalUse": "SPL monitoring at concerts",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/measurement-tools.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Measurement mic on XLR with switchable 48 V phantom: good lesson on phantom-powered measurement chains and calibrated SPL reading."
+    },
+    "ports": [
+     {
+      "portId": "in-balanced-measurement-audio-input-with-switchable-48-v-phantom-and-asd-sensor-detection",
+      "dir": "in",
+      "connector": "xlr3-f",
+      "signal": "mic-level"
+     },
+     {
+      "portId": "in-unbalanced-audio-input",
+      "dir": "in",
+      "connector": "rca",
+      "signal": "line-level-consumer"
+     },
+     {
+      "portId": "out-headphone-output-3-5-mm-minijack-mono-monitor-on-both-channels",
+      "dir": "out",
+      "connector": "trs-35mm",
+      "signal": "headphone-level"
+     },
+     {
+      "portId": "bidir-usb-mini-connector-data-transfer-to-pc-and-li-po-charging",
+      "dir": "bidir",
+      "connector": "usb-b",
+      "signal": "usb-audio"
+     },
+     {
+      "portId": "out-24-bit-linear-pcm-output-prepared-for-later-firmware-extension",
+      "dir": "out",
+      "connector": "toslink",
+      "signal": "spdif"
+     }
+    ],
+    "sizeMm": {
+     "w": 90,
+     "d": 180,
+     "h": 45
+    }
+   },
+   "proposalIndex": 65
+  },
+  "shure-axient-digital-ad4d": {
+   "outcome": "promoted",
+   "proposalBefore": {
+    "id": "shure-axient-digital-ad4d",
+    "label": "Shure Axient Digital AD4D (dual-channel receiver; AD1/AD2 transmitters)",
+    "levels": [],
+    "realWorld": {
+     "brand": "Shure",
+     "model": "Axient Digital AD4D (dual-channel receiver; AD1/AD2 transmitters)",
+     "category": "wireless",
+     "typicalUse": "large touring / festivals",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Full broadcast rear panel: RF in + cascade, analog XLR/TRS, AES3, word clock, dual Dante and IEC power cascade."
+    },
+    "ports": [
+     {
+      "portId": "out-transformer-balanced-audio-out-per-channel-1",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-transformer-balanced-audio-out-per-channel-2",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-1-4-transformer-balanced-out-per-channel-1",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-1-4-transformer-balanced-out-per-channel-2",
+      "dir": "out",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro"
+     },
+     {
+      "portId": "out-aes3-digital-audio-output",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "aes3"
+     },
+     {
+      "portId": "bidir-word-clock-input-and-thru-1",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "wordclock"
+     },
+     {
+      "portId": "bidir-word-clock-input-and-thru-2",
+      "dir": "bidir",
+      "connector": "bnc",
+      "signal": "wordclock"
+     },
+     {
+      "portId": "in-ac-power-input-iec-locking",
+      "dir": "in",
+      "connector": "iec-c14",
+      "signal": "mains-power"
+     },
+     {
+      "portId": "out-ac-power-cascade-locking",
+      "dir": "out",
+      "connector": "iec-c13",
+      "signal": "mains-power"
+     }
+    ],
+    "sizeMm": {
+     "w": 483,
+     "d": 333,
+     "h": 44
+    }
+   },
+   "proposalIndex": 120
+  },
+  "allen-heath-dx168": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "allen-heath-qu-16": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "arrakis-arc-8": {
+   "outcome": "beta-modelled",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "genelec-8351b": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "sonifex-s0-v2": {
+   "outcome": "promoted",
+   "proposalBefore": null,
+   "proposalIndex": null
+  },
+  "aea-r84": {
+   "outcome": "promoted",
+   "proposalBefore": {
+    "id": "aea-r84",
+    "label": "AEA R84",
+    "levels": [],
+    "realWorld": {
+     "brand": "AEA",
+     "model": "R84",
+     "category": "microphone",
+     "typicalUse": "vocals",
+     "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-dynamic-ribbon.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Good R4 contrast: the passive R84 must not get phantom, while the R84A needs P48. AEA also warns about patch bays."
+    },
+    "ports": [
+     {
+      "portId": "out-mic-output-xlr-3m",
+      "dir": "out",
+      "connector": "xlr3-m",
+      "signal": "mic-level"
+     }
+    ],
+    "sizeMm": {
+     "w": 99,
+     "d": 64,
+     "h": 295
+    }
+   },
+   "proposalIndex": 74
   }
  }
 }
