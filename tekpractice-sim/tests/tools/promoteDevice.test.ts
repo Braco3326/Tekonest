@@ -98,7 +98,12 @@ beforeEach(() => {
   }
   copyFileSync('content/catalog.json', paths.catalog)
   copyFileSync('content/proposals/catalog-proposals.json', paths.proposals)
-  savePlan([...loadPlan(), ...FIXTURES], paths.plan, '2026-11-12')
+  // the real plan carries the run's own state (staged / promoted / betaModelled flags set by the build waves): these tests start from the pristine rows
+  const pristine = loadPlan().map((r) => {
+    const { staged: _s, promoted: _p, betaModelled: _b, ...rest } = r
+    return rest as PlanRow
+  })
+  savePlan([...pristine, ...FIXTURES], paths.plan, '2026-11-12')
 })
 
 describe('stage 1: only the spec skeleton and the staged flag', () => {
