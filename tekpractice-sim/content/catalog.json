@@ -1762,6 +1762,195 @@
       "portAliases": {
         "out-mic-output-xlr-3m": "out-xlr"
       }
+    },
+    {
+      "id": "sennheiser-em-6000",
+      "label": "Sennheiser Digital 6000 EM 6000 / EM 6000 DANTE",
+      "levels": [],
+      "realWorld": {
+        "brand": "Sennheiser", "model": "EM 6000 / EM 6000 DANTE", "category": "wireless",
+        "typicalUse": "touring and theatre multichannel",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 373 x 44 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.sennheiser.com/en-au/catalog/products/wireless-systems/em-6000. Ports: documented in the asset spec (https://docs.cloud.sennheiser.com/en-us/digital-6000/digital-6000/specs-em6000.html)."
+      },
+      "ports": [
+        { "portId": "out-xlr-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-xlr-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-14-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-14-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "in-wclk", "dir": "in", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "out-wclk", "dir": "out", "connector": "bnc", "signal": "wordclock" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "portAliases": {
+        "out-analog-audio-out-per-channel-transformer-balanced-1": "out-xlr-1",
+        "out-analog-audio-out-per-channel-transformer-balanced-2": "out-xlr-2",
+        "out-analog-audio-out-per-channel-6-3-mm-transformer-balanced-1": "out-14-1",
+        "out-analog-audio-out-per-channel-6-3-mm-transformer-balanced-2": "out-14-2",
+        "out-aes3-digital-out-2-ch": "out-aes",
+        "out-headphone-output-6-3-mm": "out-phones",
+        "in-mains-inlet-iec-60320-c14": "power-in"
+      }
+    },
+    {
+      "id": "shure-ua845uwb",
+      "label": "Shure UA845UWB Antenna / Power Distribution System",
+      "levels": [],
+      "realWorld": {
+        "brand": "Shure", "model": "UA845UWB antenna/power distribution", "category": "wireless",
+        "typicalUse": "multichannel wireless racks",
+        "notes": "Built from the equipment plan (2026-11-12); size 482.6 x 295.3 x 44.5 mm (w x d x h) (datasheet, size confidence ok). Size source: https://pubs.shure.com/view/guide/UA844/en-US.pdf. Ports: documented in the asset spec (https://www.shure.com/en-US/products/accessories/ua845uwb), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "portAliases": {
+        "in-ac-power-input": "power-in"
+      }
+    },
+    {
+      "id": "zoom-f8n-pro",
+      "label": "Zoom F8n Pro",
+      "levels": [],
+      "realWorld": {
+        "brand": "Zoom", "model": "F8n Pro", "category": "recorder",
+        "typicalUse": "independent film location sound",
+        "notes": "Built from the equipment plan (2026-11-12); size 178.2 x 140.3 x 54.3 mm (w x d x h) (datasheet, size confidence ok). Size source: https://zoomcorp.com/documents/3173/E_F8nPro_Specifications.pdf. Ports: documented in the asset spec (https://zoomcorp.com/manuals/f8n_pro-en/)."
+      },
+      "ports": [
+        { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" },
+        { "portId": "out-sub", "dir": "out", "connector": "trs-35mm", "signal": "line-level-consumer" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" }
+      ],
+      "portAliases": {
+        "in-inputs-1-8-xlr-trs-combo-locking-neutrik-1": "in-combo-1",
+        "in-inputs-1-8-xlr-trs-combo-locking-neutrik-2": "in-combo-2",
+        "out-sub-out-1-2-stereo-mini-unbalanced": "out-sub",
+        "out-headphone-output": "out-phones"
+      }
+    },
+    {
+      "id": "akai-mpk-mini-mk3",
+      "label": "Akai MPK Mini MK3",
+      "levels": [],
+      "realWorld": {
+        "brand": "Akai", "model": "MPK Mini MK3", "category": "controller",
+        "typicalUse": "Akai MPK Mini MK3 (controller)",
+        "notes": "Built from the equipment plan (2026-11-12); size 318 x 181 x 44 mm (w x d x h) (dealer, size confidence ok). Size source: https://musicradar.com/reviews/akai-mpk-mini-mk3. Ports: documented in the asset spec (https://www.adorama.com/akai-mpk-mini-mk3-25-key-usb-midi-keyboard-controller/p/mpkmini3)."
+      },
+      "ports": [
+        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" }
+      ]
+    },
+    {
+      "id": "apogee-duet-3",
+      "label": "Apogee Duet 3",
+      "levels": [],
+      "realWorld": {
+        "brand": "Apogee", "model": "Duet 3", "category": "audio-interface",
+        "typicalUse": "Apogee Duet 3 (audio-interface)",
+        "notes": "Built from the equipment plan (2026-11-12); size 225 x 180 x 90 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.apogeedigital.com/products/duet. Ports: documented in the asset spec (https://www.apogeedigital.com/products/duet)."
+      },
+      "ports": [
+        { "portId": "in-inst-1", "dir": "in", "connector": "ts-quarter", "signal": "instrument-hiz" },
+        { "portId": "in-inst-2", "dir": "in", "connector": "ts-quarter", "signal": "instrument-hiz" },
+        { "portId": "out-line-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-line-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" }
+      ]
+    },
+    {
+      "id": "audient-id14-mkii",
+      "label": "Audient iD14 MkII",
+      "levels": [],
+      "realWorld": {
+        "brand": "Audient", "model": "iD14 MkII", "category": "audio-interface",
+        "typicalUse": "Audient iD14 MkII (audio-interface)",
+        "notes": "Built from the equipment plan (2026-11-12); size 173 x 120 x 62 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.thomann.de/be/audient_id14_mkii.htm. Ports: documented in the asset spec (https://www.thomann.de/be/audient_id14_mkii.htm)."
+      },
+      "ports": [
+        { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-optical", "dir": "in", "connector": "toslink", "signal": "spdif" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" },
+        { "portId": "out-line-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-line-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-line-3", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-line-4", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-phones-1", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "out-phones-2", "dir": "out", "connector": "trs-35mm", "signal": "headphone-level" },
+        { "portId": "in-inst", "dir": "in", "connector": "ts-quarter", "signal": "instrument-hiz" }
+      ]
+    },
+    {
+      "id": "audio-technica-atw-r3210",
+      "label": "Audio-Technica ATW-R3210 receiver",
+      "levels": [],
+      "realWorld": {
+        "brand": "Audio-Technica", "model": "ATW-R3210 receiver", "category": "wireless",
+        "typicalUse": "Audio-Technica ATW-R3210 receiver (wireless)",
+        "notes": "Built from the equipment plan (2026-11-12); size 210 x 191 x 43.4 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.audio-technica.com/en-sea/atw-r3210. Ports: documented in the asset spec (https://www.fullcompass.com/prod/548523-audio-technica-atw-r3210-3000-series-4th-gen-uhf-diversity-receiver)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-14", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" }
+      ]
+    },
+    {
+      "id": "behringer-flow-8",
+      "label": "Behringer Flow 8",
+      "levels": [],
+      "realWorld": {
+        "brand": "Behringer", "model": "Flow 8", "category": "console-digital",
+        "typicalUse": "Behringer Flow 8 (console-digital)",
+        "notes": "Built from the equipment plan (2026-11-12); size 229 x 172 x 48 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.andertons.co.uk/live-mixers/behringer-flow-8-8-input-digital-mixer-with-bluetooth-audio-app-contro. Ports: documented in the asset spec (https://www.thomann.de/be/behringer_flow_8.htm)."
+      },
+      "ports": [
+        { "portId": "in-mic-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-mic-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-3", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-4", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-main-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-main-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" }
+      ],
+      "routing": [
+        { "from": "in-mic-1", "to": ["out-main-1", "out-main-2"] },
+        { "from": "in-mic-2", "to": ["out-main-1", "out-main-2"] },
+        { "from": "in-combo-3", "to": ["out-main-1", "out-main-2"] },
+        { "from": "in-combo-4", "to": ["out-main-1", "out-main-2"] }
+      ]
+    },
+    {
+      "id": "dbx-160a",
+      "label": "dbx 160A",
+      "levels": [],
+      "realWorld": {
+        "brand": "dbx", "model": "160A", "category": "outboard",
+        "typicalUse": "dbx 160A (outboard)",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 165 x 44 mm (w x d x h) (datasheet, size confidence ok). Size source: https://manualmachine.com/dbxpro/160a/1285223-user-manual. Ports: documented in the asset spec (https://manualmachine.com/dbxpro/160a/1285223-user-manual)."
+      },
+      "ports": [
+        { "portId": "in-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-trs", "dir": "in", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-trs", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" }
+      ],
+      "routing": [
+        { "from": "in-xlr", "to": ["out-xlr"] },
+        { "from": "in-trs", "to": ["out-trs"] }
+      ]
     }
   ],
 

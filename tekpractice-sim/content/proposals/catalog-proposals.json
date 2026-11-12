@@ -5323,49 +5323,6 @@
    }
   },
   {
-   "id": "zoom-f8n-pro",
-   "label": "Zoom F8n Pro",
-   "levels": [],
-   "realWorld": {
-    "brand": "Zoom",
-    "model": "F8n Pro",
-    "category": "recorder",
-    "typicalUse": "independent film location sound",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/recorders-playback.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. BNC timecode, Hirose 4-pin DC, TA3 outputs and combo inputs in one affordable school-type recorder."
-   },
-   "ports": [
-    {
-     "portId": "in-inputs-1-8-xlr-trs-combo-locking-neutrik-1",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "mic-level"
-    },
-    {
-     "portId": "in-inputs-1-8-xlr-trs-combo-locking-neutrik-2",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "mic-level"
-    },
-    {
-     "portId": "out-sub-out-1-2-stereo-mini-unbalanced",
-     "dir": "out",
-     "connector": "trs-35mm",
-     "signal": "line-level-consumer"
-    },
-    {
-     "portId": "out-headphone-output",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "headphone-level"
-    }
-   ],
-   "sizeMm": {
-    "w": 178.2,
-    "d": 140.3,
-    "h": 54.3
-   }
-  },
-  {
    "id": "nagra-vi",
    "label": "Nagra (Kudelski) Nagra VI",
    "levels": [],
@@ -6369,85 +6326,6 @@
    ]
   },
   {
-   "id": "sennheiser-em-6000",
-   "label": "Sennheiser Digital 6000 EM 6000 / EM 6000 DANTE",
-   "levels": [],
-   "realWorld": {
-    "brand": "Sennheiser",
-    "model": "Digital 6000 EM 6000 / EM 6000 DANTE",
-    "category": "wireless",
-    "typicalUse": "touring and theatre multichannel",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Rich rear panel: RF in/loop-through, analog, AES3, word clock BNC and Dante on one 1U receiver."
-   },
-   "ports": [
-    {
-     "portId": "out-analog-audio-out-per-channel-transformer-balanced-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-audio-out-per-channel-transformer-balanced-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-audio-out-per-channel-6-3-mm-transformer-balanced-1",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-audio-out-per-channel-6-3-mm-transformer-balanced-2",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-aes3-digital-out-2-ch",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "aes3"
-    },
-    {
-     "portId": "bidir-word-clock-in-out-75-1",
-     "dir": "bidir",
-     "connector": "bnc",
-     "signal": "wordclock"
-    },
-    {
-     "portId": "bidir-word-clock-in-out-75-2",
-     "dir": "bidir",
-     "connector": "bnc",
-     "signal": "wordclock"
-    },
-    {
-     "portId": "out-headphone-output-6-3-mm",
-     "dir": "out",
-     "connector": "trs-quarter",
-     "signal": "headphone-level"
-    },
-    {
-     "portId": "bidir-network-control",
-     "dir": "bidir",
-     "connector": "rj45",
-     "signal": "aoip"
-    },
-    {
-     "portId": "in-mains-inlet-iec-60320-c14",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 483,
-    "d": 373,
-    "h": 44
-   }
-  },
-  {
    "id": "shure-psm-900",
    "label": "Shure PSM 900 (P9T transmitter, P9RA+ bodypack receiver)",
    "levels": [],
@@ -6528,37 +6406,6 @@
      "signal": "aoip"
     }
    ]
-  },
-  {
-   "id": "shure-ua845uwb",
-   "label": "Shure UA845UWB Antenna / Power Distribution System",
-   "levels": [],
-   "realWorld": {
-    "brand": "Shure",
-    "model": "UA845UWB Antenna / Power Distribution System",
-    "category": "wireless",
-    "typicalUse": "multichannel wireless racks",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Teaches RF splitting (2 in, 8 out + cascade), DC power daisy-chain and 50 Ω coax, which nothing else in the catalog covers."
-   },
-   "ports": [
-    {
-     "portId": "in-ac-power-input",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    },
-    {
-     "portId": "out-ac-power-output-daisy-chain",
-     "dir": "out",
-     "connector": "iec-c13",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 482.6,
-    "d": 295.3,
-    "h": 44.5
-   }
   },
   {
    "id": "wisycom-mcr54",
@@ -9236,6 +9083,177 @@
     "w": 457,
     "d": 292,
     "h": 51
+   }
+  },
+  {
+   "id": "allen-heath-zed-14",
+   "label": "Allen & Heath ZED-14",
+   "levels": [],
+   "realWorld": {
+    "brand": "Allen & Heath",
+    "model": "ZED-14",
+    "category": "console-analog",
+    "typicalUse": "Allen & Heath ZED-14 (console-analog)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 385 x 465 x 98 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-mic-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput",
+      "providesPhantom"
+     ]
+    },
+    {
+     "portId": "in-line-1",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-line-2",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    }
+   ],
+   "sizeMm": {
+    "w": 385,
+    "d": 465,
+    "h": 98
+   }
+  },
+  {
+   "id": "behringer-px3000",
+   "label": "Behringer Ultrapatch Pro PX3000",
+   "levels": [],
+   "realWorld": {
+    "brand": "Behringer",
+    "model": "Ultrapatch Pro PX3000",
+    "category": "patchbay",
+    "typicalUse": "Behringer Ultrapatch Pro PX3000 (patchbay)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 482.6 x 93 x 44.5 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "front-1",
+     "dir": "bidir",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "front-2",
+     "dir": "bidir",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "rear-1",
+     "dir": "bidir",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "rear-2",
+     "dir": "bidir",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    }
+   ],
+   "sizeMm": {
+    "w": 482.6,
+    "d": 93,
+    "h": 44.5
+   }
+  },
+  {
+   "id": "crown-pzm-30d",
+   "label": "Crown (AKG/Harman) PZM-30D",
+   "levels": [],
+   "realWorld": {
+    "brand": "Crown (AKG/Harman)",
+    "model": "PZM-30D",
+    "category": "microphone",
+    "typicalUse": "Crown (AKG/Harman) PZM-30D (microphone)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 152 x 127 x 19 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "out-xlr",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "mic-level",
+     "flags": [
+      "requiresPhantom"
+     ]
+    }
+   ],
+   "sizeMm": {
+    "w": 152,
+    "d": 127,
+    "h": 19
+   }
+  },
+  {
+   "id": "elgato-stream-deck-mk2",
+   "label": "Elgato Stream Deck MK.2",
+   "levels": [],
+   "realWorld": {
+    "brand": "Elgato",
+    "model": "Stream Deck MK.2",
+    "category": "controller",
+    "typicalUse": "Elgato Stream Deck MK.2 (controller)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 118 x 84 x 25 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-c",
+     "signal": "usb-audio"
+    }
+   ],
+   "sizeMm": {
+    "w": 118,
+    "d": 84,
+    "h": 25
    }
   }
  ],
