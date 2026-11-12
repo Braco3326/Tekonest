@@ -207,7 +207,14 @@ test(`batch ${bi + 1} of ${batches.length}: ${batch.length} devices (${batch[0]!
       if (!own || own.instance !== d.inst) problems.push(`${d.id}: every point of its body (within 220 px of its centre) is covered, and not by its own ports (${JSON.stringify(own)})`)
       // Review fix 17: the device is NOT excused. It is selected through its project-tree row (the keyboard / screen-reader way to select a device), and the test
       // fails when that selection is impossible.
-      const row = page.getByRole('tree', { name: 'Projet' }).getByRole('treeitem', { name: new RegExp('\\(' + d.inst + '\\)$') })
+      // the Matériel group of the tree is collapsed by default: expand it (keyboard: focus the group, ArrowRight) so that the device rows exist
+      const tree = page.getByRole('tree', { name: 'Projet' })
+      const gear = tree.getByRole('treeitem', { name: /^Matériel/ })
+      if ((await gear.getAttribute('aria-expanded')) === 'false') {
+        await gear.focus()
+        await page.keyboard.press('ArrowRight')
+      }
+      const row = tree.getByRole('treeitem', { name: new RegExp('\\(' + d.inst + '\\)( non vérifié)?$') })
       if ((await row.count()) !== 1) problems.push(`${d.id}: its body is covered by its own ports and it has no project-tree row to select it by`)
       else {
         await row.click()

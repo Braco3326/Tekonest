@@ -1493,3 +1493,18 @@ An independent reviewer read Waves 2 to 5 and found 20 defects. Each was verifie
 | 20 | Fixed-point test hid flag drift | The generated side is compared as is; each difference must be a non-capability flag, a cited capability flag or an aes50 / usb-control retype; every beta-modelled proposal is the exact fixed point of `promote --regen`. `npm run test:blender` added; the family tests skip without `BLENDER_EXE` (`skipIf`) | `proposalsFixedPoint.test.ts` |
 
 Order of the work: 1 (critical) and 2 were committed first; the template and data findings (3 to 11, 13, 16, 19) share one regeneration of 69 entries (promoted and beta-modelled), then the application and test findings (12, 14, 15, 17, 18, 20).
+
+### Gate numbers (Wave 5b review fixes, 2026-11-12)
+
+- Commits: `e30d985` (1), `b22bb52` (2), `50c15a4` (3 to 11, 13, 16, 19, 20: templates and data, 69 entries regenerated, 12 GLBs rebuilt), `2b626ef` (14, 18), `33b715d` (12, 15, 17, log) and the e2e fix that follows it (the project-tree row of a Bêta device ends with « non vérifié »).
+- `npx tsc --noEmit` clean; `npm run lint` clean; `npm run validate:catalog` valid (113 devices, 16 warnings = the 16 promoted speakers without sourced acoustic data, KH 120 II now among them); `npm run validate:assets` 240 ok, 0 failed.
+- `npx vitest run` (full, `BLENDER_EXE` set): 256 files, 5016 tests, all passed (before: 251 files, 4659 tests).
+- Playwright on a private preview of a scratch build (port 4182): creation-equipment-models, creation-beta, creation-drawer, creation-budgets, creation-controls, creation-front, creation-coverage, creation-glb404: 119 passed, 3 skipped, 2 failed in the first run (batches 8 and 9 of the equipment spec: the new tree-row selection of finding 17 first missed the collapsed Matériel group, then the « non vérifié » suffix); both batches pass after the fix (2 of 2).
+
+### Open items (review fixes)
+
+1. Phantom to-check: TLM 103, KM 184, MKH 416 (flag kept, not re-read), Rodecaster Pro II (count), M32 talkback, 11 beta devices.
+2. No host models a `usb-control` port: the three controllers cannot be cabled to a computer until one does.
+3. CL5, DM7, Avantis, Podtrak P4 and the Monitor Station V2 pass no signal until a sheet documents a main output or a default; this is the data rule, not a defect.
+4. Devices with the default note « alimentation non modélisée (source non lue) »: QLX-D, Monitor Station V2, FaderPort 8, Rodecaster Pro II, the USB interfaces: sheets still to read.
+5. AD4D: which RJ45 is Dante and which is control is a guess (positions are guesses everywhere).
