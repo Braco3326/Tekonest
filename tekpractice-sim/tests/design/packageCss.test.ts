@@ -14,16 +14,52 @@ const SHELL = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'src', '
 /** The fixed dark chrome: it keeps today's Ambre whatever the package (spec 7.3: « menubar and status bar stay Nuit / panel »). */
 export const CHROME_CLASS = /^(?:\.cr-(?:skip|brand|menu|submenu|status|checklist-chip|cancel-pose|cube-tool)[\w-]*|#site-link)/
 /** A surface a design package restyles (packages.css): a chrome class under one of these is a REUSE, and wears the role tokens (T4 fix round, S4). */
-export const SURFACE_CLASS = /\.cr-(?:tree|props|drawer|pick|dialog|errlist|checklist|notes)(?![\w-])/
+export const SURFACE_CLASS = /\.cr-(?:tree|props|drawer|pick|dialog|errlist|checklist(?!-chip)|notes|connect|cov|legend|listen|views)[\w-]*/
 
 /** The last compound of a complex selector (after the last space or combinator). */
 export function lastCompound(selector: string): string {
-  return selector.trim().split(/\s*[>+~]\s*|\s+/).pop() ?? ''
+  // split at a space or a combinator only OUTSIDE (...) and [...] (so :is(.a, .b > .c) and [title='a > b'] stay whole)
+  let depth = 0
+  let start = 0
+  let last = ''
+  const flush = (end: number): void => {
+    const part = selector.slice(start, end).trim()
+    if (part !== '' && !/^[>+~]$/.test(part)) last = part
+  }
+  for (let k = 0; k < selector.length; k++) {
+    const ch = selector[k]
+    if (ch === '(' || ch === '[') depth++
+    else if (ch === ')' || ch === ']') depth--
+    else if (depth === 0 && (/\s/.test(ch) || ch === '>' || ch === '+' || ch === '~')) {
+      flush(k)
+      start = k + 1
+    }
+  }
+  flush(selector.length)
+  return last
+}
+
+/** The selectors of a list, split at commas outside (...) and [...]. */
+export function splitList(list: string): string[] {
+  const out: string[] = []
+  let depth = 0
+  let start = 0
+  for (let k = 0; k < list.length; k++) {
+    const ch = list[k]
+    if (ch === '(' || ch === '[') depth++
+    else if (ch === ')' || ch === ']') depth--
+    else if (ch === ',' && depth === 0) {
+      out.push(list.slice(start, k))
+      start = k + 1
+    }
+  }
+  out.push(list.slice(start))
+  return out
 }
 
 /** Whether every selector of a rule's list is fixed chrome: its last compound starts with a chrome class and no surface class is named anywhere in it. */
 export function isChromeSelector(selectorList: string): boolean {
-  return selectorList.split(',').every((sel) => CHROME_CLASS.test(lastCompound(sel)) && !SURFACE_CLASS.test(sel))
+  return splitList(selectorList).every((sel) => CHROME_CLASS.test(lastCompound(sel)) && !SURFACE_CLASS.test(sel))
 }
 
 /** Legitimate literals of the brand Ambre outside the chrome, each with its reason (S4). Anything else naming #DD9349 or rgba(221, 147, 73, ..) is a hit. */
@@ -44,7 +80,7 @@ export function rulesOf(css: string): Rule[] {
   return out
 }
 
-const AMBRE_LITERAL = /#DD9349|rgba?\(\s*221\s*,\s*147\s*,\s*73/i
+const AMBRE_LITERAL = /#DD9349|rgba?\(\s*221[\s,]+147[\s,]+73(?!\d)/i
 
 /** The rules that name Ambre directly (the token or a literal) and are not fixed chrome or a listed exception. */
 export function directAmbreOutsideChrome(css: string): Rule[] {
@@ -83,6 +119,21 @@ describe('Ambre is a role, not a literal, outside the fixed chrome', () => {
     expect(directAmbreOutsideChrome('.cr-checklist-chip:hover { background: var(--cr-ambre); }')).toHaveLength(0) // the chip lives in the status bar; `.cr-checklist-chip` is not `.cr-checklist`
   })
 
+  it('round 2: child-class surfaces count as surfaces, and the last compound survives :is(...) and attribute values with spaces or combinators', () => {
+    expect(directAmbreOutsideChrome('.cr-props-section .cr-status-action { border-color: var(--cr-ambre); }')).toHaveLength(1)
+    expect(directAmbreOutsideChrome('.cr-connect .cr-status-action { border-color: var(--cr-ambre); }')).toHaveLength(1)
+    expect(directAmbreOutsideChrome('.cr-cov-body > .cr-menu-item { color: var(--cr-ambre); }')).toHaveLength(1)
+    expect(lastCompound(".cr-menu-item[data-x='a b'] .cr-menu-top:is(.a, .b > .c)")).toBe('.cr-menu-top:is(.a, .b > .c)')
+    expect(lastCompound(".cr-x:is(.cr-menu-item, .cr-menu-top) > .cr-card[title='a > b']")).toBe(".cr-card[title='a > b']")
+    expect(directAmbreOutsideChrome(".cr-menu-panel [title='a b'] { color: var(--cr-ambre); }")).toHaveLength(1) // an attribute value with a space is not a combinator: the leaf is `[title='a b']`
+    expect(directAmbreOutsideChrome('.cr-checklist-chip:hover { background: var(--cr-ambre); }')).toHaveLength(0) // still the status bar's chip, not the pop-over
+  })
+
+  it('round 2: the literal forms of Ambre are hits too: rgb(221 147 73), rgba(221 147 73 / .3), rgba(221,147,73,.3), #dd9349', () => {
+    for (const lit of ['rgb(221 147 73)', 'rgba(221 147 73 / .3)', 'rgba(221, 147, 73, 0.3)', 'rgb( 221,147,73 )', '#dd9349']) expect(directAmbreOutsideChrome(`.cr-card-badge { color: ${lit}; }`), lit).toHaveLength(1)
+    expect(directAmbreOutsideChrome('.cr-card-badge { color: rgb(221 147 74); }')).toHaveLength(0)
+  })
+
   it('S4: a literal Ambre is a hit too (#DD9349, rgba(221, 147, 73, ..)), except the listed legend swatch', () => {
     expect(directAmbreOutsideChrome('.cr-card-badge { color: #dd9349; }')).toHaveLength(1)
     expect(directAmbreOutsideChrome('.cr-card-badge { background: rgba(221,147,73,.3); }')).toHaveLength(1)
@@ -118,12 +169,36 @@ describe('Ambre is a role, not a literal, outside the fixed chrome', () => {
   })
 })
 
-describe('T4 fix round, C1: no fill is painted with the hairline colour', () => {
-  it('no shell rule uses --cr-panel-line as a background (it is `line`: 1.97 : 1 under Papier ink in packages 4 and 5); the connect dialog options use --cr-wash', () => {
-    const hits = files.flatMap((f) => rulesOf(readFileSync(join(SHELL, f), 'utf8')).filter((r) => /background(-color)?:[^;]*var\(--cr-panel-line\)/.test(r.body.replace('var(--cr-wash, var(--cr-panel-line))', ''))).map((r) => `${f}: ${r.selector}`))
-    expect(hits).toEqual([])
-    const connect = readFileSync(join(SHELL, 'connectDialog.css'), 'utf8')
-    expect(connect).toMatch(/\.cr-connect-opt\[aria-selected='true'\][^}]*background: var\(--cr-wash/)
-    expect(readFileSync(join(SHELL, '..', '..', 'design', 'packages.css'), 'utf8')).toMatch(/--cr-wash: var\(--cr-role-inset\)/)
+describe('T4 fix rounds 1 and 2, C1: a fill is never painted with a colour that carries no declared ink pair', () => {
+  /** `line` (a hairline: 1.97 : 1 under the ink in packages 4 and 5), `inkMuted` (text, 4.66 : 1 on Prune) and their role sources are not fills: a row wash is `--cr-wash`. */
+  const BANNED_FILL = /background(?:-color)?:[^;]*var\(--cr-(?:panel-line|ink-muted|role-line|role-ink-muted|line)\)/
+  /** The only fills allowed to use them, each with its reason. */
+  const FILL_EXCEPTIONS: Readonly<Record<string, string>> = {
+    '.cr-status-msg::before': 'the 6 px state dot of the status bar (fixed dark chrome, no text on it, a shape cue next to the message)',
+  }
+  const hitsIn = (css: string): string[] =>
+    rulesOf(css)
+      .filter((r) => BANNED_FILL.test(r.body.replace(/var\(--cr-wash,\s*var\(--cr-panel-line\)\)/g, '')) && !(r.selector in FILL_EXCEPTIONS))
+      .map((r) => r.selector)
+
+  it('no shell rule paints a background with the hairline or the muted-ink colour outside the listed exceptions; the connect dialog options use --cr-wash', () => {
+    expect([...files, 'packages.css'].flatMap((f) => hitsIn(cssOf(f)).map((s) => `${f}: ${s}`))).toEqual([])
+    expect(cssOf('connectDialog.css')).toMatch(/\.cr-connect-opt\[aria-selected='true'\][^}]*background: var\(--cr-wash/)
+    expect(cssOf('packages.css')).toMatch(/--cr-wash: var\(--cr-role-wash\)/)
+  })
+
+  it('the ban bites: a row painted with --cr-panel-line, --cr-ink-muted, --cr-line or a role source is flagged; the wash and its fallback are not', () => {
+    expect(hitsIn('.cr-x:hover { background: var(--cr-panel-line); }')).toHaveLength(1)
+    expect(hitsIn('.cr-x { background-color: var(--cr-ink-muted); }')).toHaveLength(1)
+    expect(hitsIn('.cr-x { background: var(--cr-role-line); }')).toHaveLength(1)
+    expect(hitsIn('.cr-x { background: var(--cr-line); }')).toHaveLength(1)
+    expect(hitsIn('.cr-x { background: var(--cr-wash, var(--cr-panel-line)); }')).toHaveLength(0)
+    expect(hitsIn('.cr-x { border-color: var(--cr-ink-muted); color: var(--cr-panel-line); }')).toHaveLength(0)
+    expect(hitsIn('.cr-status-msg::before { background: var(--cr-ink-muted); }')).toHaveLength(0)
+  })
+
+  it('every listed exception exists in the source (a stale entry is dead weight)', () => {
+    const all = files.flatMap((f) => rulesOf(cssOf(f)))
+    for (const sel of Object.keys(FILL_EXCEPTIONS)) expect(all.some((r) => r.selector === sel && BANNED_FILL.test(r.body)), sel).toBe(true)
   })
 })

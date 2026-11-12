@@ -126,7 +126,7 @@ function setup(over: Partial<InventoryDrawerDeps> = {}, look: { drawer?: string 
   const down = (it = item, id = 1, x = 100, y = 100, extra: Record<string, unknown> = {}) =>
     it.fire('pointerdown', { pointerId: id, isPrimary: true, button: 0, clientX: x, clientY: y, buttons: 1, altKey: false, ...extra })
   const ev = (id: number, x: number, y: number, extra: Record<string, unknown> = {}) => ({ pointerId: id, clientX: x, clientY: y, buttons: 1, altKey: false, ...extra })
-  return { win, drawer, calls, items, item, down, ev, parent, created }
+  return { win, drawer, calls, items, item, down, ev, parent, created, doc }
 }
 
 describe('drawer press and drag (pointer events)', () => {
@@ -309,6 +309,22 @@ describe('stay-open (design package layout, plan T4.3): the drawer comes back wh
     poseOn(s)
     poseOff(s)
     expect(s.drawer.isOpen).toBe(false)
+  })
+
+  it('round 2: after a refused choice made with Enter in the filter field, the focus goes back to the field (the drawer opens without taking it from the keyboard user)', () => {
+    const s = open()
+    const field = s.created.find((e) => e.className === 'cr-drawer-filter-input')!
+    const focus = vi.fn()
+    field.focus = focus
+    ;(s.doc as unknown as { activeElement: unknown }).activeElement = field
+    s.item.fire('click', { detail: 0 }) // a refused choice
+    expect(s.drawer.isOpen).toBe(true)
+    expect(focus).toHaveBeenCalledTimes(1)
+    // not from the field (a click on a card): the focus is left where it is
+    focus.mockClear()
+    ;(s.doc as unknown as { activeElement: unknown }).activeElement = null
+    s.item.fire('click', { detail: 1 })
+    expect(focus).not.toHaveBeenCalled()
   })
 
   it('S5 (b): the filter text the learner typed is still there when the drawer comes back after a pose (a normal open clears it)', () => {

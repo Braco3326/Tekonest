@@ -91,6 +91,7 @@ const T = CREATION_TOKENS.color
  *  - sheetInset: Papier 94 % + Nuit 6 %, the second tone of a Papier sheet (hover and selection wash, a field's ground): Nuit 14.32, sheetInkMuted 4.90, Prune 8.13.
  *  - dangerOnSheet / okOnSheet: the error and success text on Papier (the bright ones, 2.09 and 1.62 on Papier, stay on the Nuit chrome): 6.50 and 5.48.
  *  - dangerOnPrune: the error text on a Prune panel (the bright one is 4.39 there): 5.49.
+ *  - washOnPrune: Prune 90 % + Papier 10 %, the hover / selected wash on a Prune panel: ink 7.06, Ambre bar 3.27 (a lighter one drops the bar under 3), 1.30 against the panel.
  */
 const D = {
   sheetInkMuted: '#615E5C' as Hex,
@@ -98,6 +99,7 @@ const D = {
   dangerOnSheet: '#9B2C20' as Hex,
   okOnSheet: '#2F6B3E' as Hex,
   dangerOnPrune: '#F7A59B' as Hex,
+  washOnPrune: '#704055' as Hex,
 }
 
 /** Every colour a package map may use: the brand four, the existing derived tokens, and the declared tints above (upper case). */
@@ -117,35 +119,35 @@ const ok = T.ok as Hex
 
 /** 1 « Pas à pas »: one lit thing (Ambre, the next target) on a dark screen; Prune about 3 % (the step card). Today's map, role by role. */
 const coloursPasAPas: RoleColours = {
-  ground: nuit, surface: panel, inset: nuit, ink: papier, inkMuted,
+  ground: nuit, surface: panel, inset: nuit, wash: panelLine, ink: papier, inkMuted,
   accent: ambre, accentInk: nuit, accentEdge: ambre, accentText: ambre,
   secondary: prune, secondaryInk: papier, band: panel, bandInk: papier,
   focus: ambre, select: ambre, line: panelLine, danger, ok,
 }
 /** 2 « Atelier »: the same dark panels with Prune study-sheet bands (panel heads), about 20 % Prune; Ambre on the panels, Papier on the bands. */
 const coloursAtelier: RoleColours = {
-  ground: nuit, surface: panel, inset: nuit, ink: papier, inkMuted,
+  ground: nuit, surface: panel, inset: nuit, wash: panelLine, ink: papier, inkMuted,
   accent: ambre, accentInk: nuit, accentEdge: ambre, accentText: ambre,
   secondary: prune, secondaryInk: papier, band: prune, bandInk: papier,
   focus: ambre, select: ambre, line: panelLine, danger, ok,
 }
 /** 3 « Salle d'abord »: a daylight Papier sheet. Ink and focus Nuit, links, selection and accent text Prune; the Ambre fill carries Nuit text and a 2 px Nuit edge. */
 const coloursSalle: RoleColours = {
-  ground: papier, surface: papier, inset: D.sheetInset, ink: nuit, inkMuted: D.sheetInkMuted,
+  ground: papier, surface: papier, inset: D.sheetInset, wash: D.sheetInset, ink: nuit, inkMuted: D.sheetInkMuted,
   accent: ambre, accentInk: nuit, accentEdge: nuit, accentText: prune,
   secondary: prune, secondaryInk: papier, band: papier, bandInk: nuit,
   focus: nuit, select: prune, line: D.sheetInkMuted, danger: D.dangerOnSheet, ok: D.okOnSheet,
 }
 /** 4 « Pupitre »: flat, a hairline console, no raised panel, no Prune; the Ambre LED state on Nuit, Papier focus. */
 const coloursPupitre: RoleColours = {
-  ground: nuit, surface: nuit, inset: panel, ink: papier, inkMuted,
+  ground: nuit, surface: nuit, inset: panel, wash: panelLine, ink: papier, inkMuted,
   accent: ambre, accentInk: nuit, accentEdge: ambre, accentText: ambre,
   secondary: nuit, secondaryInk: papier, band: nuit, bandInk: papier,
   focus: papier, select: ambre, line: inkMuted, danger, ok,
 }
 /** 5 « Modèle d'abord »: a Prune stage frame and Prune panels around the 3D view, about 45 % Prune; Papier ink and focus, Ambre fill with Nuit text, Nuit insets. */
 const coloursModele: RoleColours = {
-  ground: nuit, surface: prune, inset: nuit, ink: papier, inkMuted,
+  ground: nuit, surface: prune, inset: nuit, wash: D.washOnPrune, ink: papier, inkMuted,
   accent: ambre, accentInk: nuit, accentEdge: ambre, accentText: papier,
   secondary: nuit, secondaryInk: papier, band: prune, bandInk: papier,
   focus: papier, select: ambre, line: inkMuted, danger: D.dangerOnPrune, ok,

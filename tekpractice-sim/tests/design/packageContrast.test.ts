@@ -88,8 +88,23 @@ describe('T4 fix round, C1: a role is never painted as a fill without a declared
     }
   })
 
-  it('the wash a restyled surface paints (inset) carries the ink at >= 4.5 in all five packages, selected and hovered', () => {
-    for (const id of DESIGN_IDS) expect(pairPasses(craftedPair(packageById(id).colours, 'ink', 'inset', 'text')), `package ${id}`).toBe(true)
+  it('the wash of a hovered or selected row carries the ink (>= 4.5) and the selection bar (>= 3) in all five packages, and is VISIBLY apart from the list on the dark ones', () => {
+    for (const id of DESIGN_IDS) {
+      const c = packageById(id).colours
+      expect(pairPasses(craftedPair(c, 'ink', 'wash', 'text')), `package ${id} ink`).toBe(true)
+      expect(pairPasses(craftedPair(c, 'select', 'wash', 'ui')), `package ${id} bar`).toBe(true)
+      const declared = declaredPairs(c).map((p) => `${p.kind} ${p.role}`)
+      expect(declared, `package ${id}`).toContain('text ink on wash')
+      expect(declared, `package ${id}`).toContain('ui select on wash')
+    }
+    // the review's measure: the inset was 1.08 : 1 against a dark panel; the wash is at least 1.25 : 1 against the surface it sits on (today's #3A3339 on the panel is 1.42)
+    for (const id of [1, 2, 4, 5] as const) {
+      const c = packageById(id).colours
+      expect(contrastRatio(c.wash, c.surface), `package ${id}`).toBeGreaterThanOrEqual(1.25)
+      expect(c.wash, `package ${id}: the wash is neither the inset nor the line`).not.toBe(c.inset)
+      expect(c.wash, `package ${id}`).not.toBe(c.line === c.inkMuted ? c.line : '')
+    }
+    expect(packageById(1).colours.wash, 'package 1 keeps the dialog row of the plain address').toBe(CREATION_TOKENS.color.panelLine)
   })
 
   it('the fill roles the CSS paints text on are declared against their ink, in every package: band (bandInk, inkMuted, select), accent (accentInk), secondary (secondaryInk)', () => {

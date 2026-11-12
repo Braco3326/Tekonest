@@ -21,6 +21,11 @@ export interface RoleColours {
   surface: Hex
   /** The second tone of a surface: a field's ground, a hover or selection wash. */
   inset: Hex
+  /**
+   * The wash of a hovered or selected row of a surface (the connect dialog's options): a tone VISIBLY apart from the list it sits on, carrying the ink (text >= 4.5) and the selection bar (>= 3).
+   * Neither `inset` (a field's ground, 1.08 : 1 against a dark panel) nor `line` (a hairline, 1.97 : 1 under the ink in packages 4 and 5).
+   */
+  wash: Hex
   ink: Hex
   /** Secondary text; contrast computed on the surface, the ground and the inset. */
   inkMuted: Hex
@@ -168,6 +173,7 @@ export const DEFAULT_ROLES: Readonly<RoleColours> = Object.freeze({
   ground: CREATION_TOKENS.color.nuit,
   surface: CREATION_TOKENS.color.panel,
   inset: CREATION_TOKENS.color.nuit,
+  wash: CREATION_TOKENS.color.panelLine,
   ink: CREATION_TOKENS.color.papier,
   inkMuted: CREATION_TOKENS.color.inkMuted,
   accent: CREATION_TOKENS.color.ambre,

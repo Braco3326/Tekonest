@@ -53,6 +53,9 @@ export function declaredPairs(c: RoleColours): DeclaredPair[] {
   // secondary fill secondaryInk (both above). `line` is NOT a fill: it is a hairline (1.97 : 1 under the ink in packages 4 and 5), the washes are `inset`.
   on('inkMuted', c.inkMuted, 'text', 'secondary text on a band', [['band', c.band]])
   on('select', c.select, 'ui', 'selection marks on a band', [['band', c.band]])
+  // the wash of a hovered or selected row (the connect dialog's options): the ink on it, and the active option's selection bar on it
+  on('ink', c.ink, 'text', 'option text on the hover / selected wash', [['wash', c.wash]])
+  on('select', c.select, 'ui', 'selection bar on the hover / selected wash', [['wash', c.wash]])
   return out
 }
 

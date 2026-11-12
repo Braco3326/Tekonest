@@ -26,8 +26,8 @@ html[data-surface] :is(.cr-tree, .cr-props, .cr-drawer, .cr-pick, .cr-dialog, .c
   --cr-accent-text: var(--cr-role-accent-text);
   --cr-band: var(--cr-role-band);
   --cr-band-ink: var(--cr-role-band-ink);
-  /* The wash of a hovered or selected row (the connect dialog's options): the inset tone, never the hairline colour (`line` is 1.97 : 1 under the ink in packages 4 and 5). */
-  --cr-wash: var(--cr-role-inset);
+  /* The wash of a hovered or selected row (the connect dialog's options): the wash role: visibly apart from the list (the inset was 1.08 : 1 against a dark panel, `line` is 1.97 : 1 under the ink in packages 4 and 5), declared against the ink and the selection bar. */
+  --cr-wash: var(--cr-role-wash);
   /* The surface's own ink: text and buttons that name no colour (`.cr button { color: inherit }`) inherit it from here, not the light ink `.cr` sets for the dark shell
      (Papier text on a Papier sheet was found on the screenshots, not by axe). Today's ink on a dark surface, so nothing moves where the ink is Papier. */
   color: var(--cr-papier);

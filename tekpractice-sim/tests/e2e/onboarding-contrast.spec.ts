@@ -246,6 +246,7 @@ for (const id of DESIGN_IDS) {
       window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 0], rotationY: 0 })
       window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [0.8, 0, 0], rotationY: 0 })
       window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12', position: [-1, 0, 0], rotationY: 0 })
+      window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12b', position: [-2, 0, 0], rotationY: 0 }) // a second speaker: two options to compare in the connect dialog
       window.__creation!.frameDevice('ql1')
     })
     await expect(page.locator('.cr-props-content .cr-field, .cr-props-content .cr-toggle').first()).toBeVisible()
@@ -312,11 +313,15 @@ for (const id of DESIGN_IDS) {
     await axeColour(page, 'connect dialog')
     const active = await probe(page, '.cr-connect-opt[aria-selected="true"]')
     row(id, 'connect dialog, active option text on its wash', active.color, active.bg, 4.5)
-    if ((await page.locator('.cr-connect-opt').count()) > 1) {
-      await page.locator('.cr-connect-opt:not([aria-selected="true"])').first().hover()
-      const other = await probe(page, '.cr-connect-opt:not([aria-selected="true"])')
-      row(id, 'connect dialog, hovered option text on its wash', other.color, other.bg, 4.5)
-    }
+    const list = await probe(page, '.cr-connect-list')
+    // the active row is VISIBLY apart from the list it sits on (T4 fix round 2: the inset was 1.08 : 1 on a dark panel); the light sheet's tone is gentler, so the bar and bold do more there
+    expect(contrastRatio(active.bg, list.bg), `package ${id}: the active option's wash against the list`).toBeGreaterThanOrEqual(1.1)
+    expect(active.bg.toUpperCase()).toBe(c.wash.toUpperCase())
+    expect(await page.locator('.cr-connect-opt').count(), 'two compatible inputs, so there is another option to hover').toBeGreaterThan(1)
+    await page.locator('.cr-connect-opt:not([aria-selected="true"])').first().hover()
+    const other = await probe(page, '.cr-connect-opt:not([aria-selected="true"])')
+    expect(other.bg.toUpperCase(), 'the hovered option takes the same wash').toBe(c.wash.toUpperCase())
+    row(id, 'connect dialog, hovered option text on its wash', other.color, other.bg, 4.5)
     await page.keyboard.press('Escape')
     await page.locator('.cr-connect').waitFor({ state: 'detached' })
 

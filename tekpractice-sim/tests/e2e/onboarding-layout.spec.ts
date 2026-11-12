@@ -91,6 +91,26 @@ test.describe('T4 fix round, S2: a first-visit profile never opens a panel the w
     }
   })
 
+  test.describe('1024 x 768, a panel opened by hand', () => {
+    test.use({ viewport: { width: 1024, height: 768 } })
+    test('changing profile through the chip never closes a panel the learner opened (the clamp skips an opening, it does not turn it into a closing)', async ({ page }) => {
+      await openFresh(page, '?design=1')
+      await page.getByTestId('start-screen').waitFor()
+      await page.keyboard.press('1')
+      await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
+      await page.waitForFunction(() => window.__creation!.place() === 'blank')
+      expect((await panels(page)).props).toBe('collapsed')
+      await page.getByTestId('props-collapse').click() // by hand, at 1024 px
+      expect((await panels(page)).props).toBe('open')
+      await page.getByTestId('profile-chip').click()
+      await page.getByTestId('start-screen').waitFor()
+      await page.keyboard.press('2') // « both panels open »: Propriétés does not fit by itself, but it is already open
+      await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
+      await expect(page.getByTestId('place-picker')).toBeHidden()
+      expect((await panels(page)).props).toBe('open')
+    })
+  })
+
   test.describe('1366 x 768', () => {
     test.use({ viewport: { width: 1366, height: 768 } })
     test('where the window allows it, the profile keeps its intent: profile 2 opens both panels on package 1', async ({ page }) => {

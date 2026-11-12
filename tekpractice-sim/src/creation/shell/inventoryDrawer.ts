@@ -47,8 +47,7 @@ export interface InventoryDrawerDeps {
   /** Hands focus back to the 3D view when the drawer closes. */
   returnFocus(): void
   /**
-   * The way back after a pose under a stay-open package (T4 fix round, S5): the host's own open (it dismisses a pinned refusal, syncs the Bêta sheets and refuses while the view
-   * is locked), asked with the focus where it is and the filter text kept. Absent: the drawer opens itself.
+   * The way back after a pose under a stay-open package (T4 fix round, S5): the host's own open (it dismisses a pinned refusal and syncs the Bêta sheets; the check that the place picker is not up is the drawer's own), asked with the focus where it is and the filter text kept. Absent: the drawer opens itself.
    */
   reopen?(): void
   /** The key event is the inventory key (remappable); Space by default. */
@@ -272,9 +271,13 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     else api.open({ focus: false, keepFilter: true })
   }
   /** Call right after a pose was asked for from the drawer (and after it closed): come back now when no pose started (a refused choice), else when the pose is over. */
-  const reopenAfterPose = (wasOpenAndStays: boolean): void => {
+  const reopenAfterPose = (wasOpenAndStays: boolean, fromFilter = false): void => {
     if (!wasOpenAndStays) return
-    if (!posing()) return comeBack()
+    if (!posing()) {
+      comeBack()
+      if (fromFilter && api.isOpen) filter.focus() // the Enter came from the filter field: the keyboard user is not thrown to the 3D view
+      return
+    }
     if (!win || typeof win.MutationObserver !== 'function') return
     disarm()
     armed = true
@@ -530,9 +533,10 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
 
   function choose(deviceId: string): void {
     const stays = staysOpen() && api.isOpen
+    const fromFilter = doc.activeElement === filter
     api.close() // the 3D view is focused again before placement starts
     d.onChoose(deviceId)
-    reopenAfterPose(stays)
+    reopenAfterPose(stays, fromFilter)
   }
 
   const api: InventoryDrawer = {
