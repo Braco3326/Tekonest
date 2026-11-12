@@ -20,7 +20,8 @@
 //                                  « Connecter à… » button in Propriétés (the dialog route); Propriétés folded = the device
 //   nav:unplug.from.<pair>         the console end of a cable of that pair while the console is not selected, then its « Débrancher » button
 //   control:suggest.playback       the console's « Lecture console » toggle in Propriétés when the console is selected, else its pad, else the console
-// nav:ecoute and nav:checklist-power are plain shell pieces (NAV_SELECTORS in bridge/shared.ts).
+// nav:ecoute and nav:checklist-power are plain shell pieces (NAV_SELECTORS in bridge/shared.ts); nav:ecoute goes to the checklist chip while the bench
+// cannot play (T3 close review S4), else to the shell as before.
 import type { DeviceT, Registry } from '../engine/CatalogLoader'
 import { ConnectionGraph } from '../engine/ConnectionGraph'
 import { isUnverified } from '../creation/betaDevices'
@@ -31,7 +32,7 @@ import { MENU_MATERIEL, NAV_SELECTORS, inventoryItemSelector, inventoryTabSelect
 import type { TpBridge, TpPortRef, TpState } from './bridge/types'
 import { DEFAULT_STORAGE_KEY } from './vendor/core/controller'
 import { hintKey } from './vendor/core/hints'
-import { readPowerHelperUse } from '../design/powerHelperUse'
+import type { PowerHelperReading } from '../design/powerHelperUse'
 import type { ControllerInput, DoneWhen, Flow, HostEvent, Rect, StepAction } from './vendor/core/types'
 import { EMPTY_TUTORIAL_RECORD, TUTORIAL_RECORD_KEY, parseTutorialRecord, type TutorialRecord } from '../design/tutorialRecord'
 
@@ -163,6 +164,29 @@ export function pairOf(c: Cable, state: TpState, registry: Registry): PairKind {
   }
 }
 
+/**
+ * The device at the device end of a mains pair is the one the playback needs (T3 close review C1): a speaker that receives a console-to-speaker cable (step 4),
+ * a source console that sends one. With two speakers and the audio on the second, powering the first is not step 9 (signalPath would still say
+ * SPEAKER_UNPOWERED at step 10). While no device of that role carries such a cable (step 4 passed), every one counts: there is nothing better to aim at, and
+ * step 9 never becomes a dead end.
+ */
+function isFed(state: TpState, registry: Registry, instance: string, role: DeviceRole): boolean {
+  const fed = new Set<string>()
+  for (const c of state.connections) {
+    if (pairOf(c, state, registry) !== 'console-speaker') continue
+    for (const end of [c.a, c.b]) if (roleAt(registry, state, end) === role) fed.add(end.instance)
+  }
+  return fed.size === 0 || fed.has(instance)
+}
+
+/** A mains cable (`mains-console` / `mains-speaker`) whose device end is the one the playback needs (`isFed`); false for any other cable. */
+function mainsFed(c: Cable, pair: PairKind, state: TpState, registry: Registry): boolean {
+  if (pair !== 'mains-console' && pair !== 'mains-speaker') return false
+  const role: DeviceRole = pair === 'mains-console' ? 'source-console' : 'speaker'
+  const end = roleAt(registry, state, c.a) === role ? c.a : roleAt(registry, state, c.b) === role ? c.b : null
+  return end !== null && isFed(state, registry, end.instance, role)
+}
+
 // ── annotations ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
 type Anchors = Pick<TpBridge, 'anchorOfDevice' | 'anchorOfPort' | 'anchorOfControl'>
@@ -176,7 +200,10 @@ export function annotateDevice(e: HostEvent, state: TpState, bridge: Pick<Anchor
   return inst === undefined ? e : withData(e, { role: roleOf(registry, inst.deviceId) })
 }
 
-/** `connect` / `disconnect`: the pair of the cable whose two port anchors the event carries (`cables` and `state`: after a connect, before a disconnect). */
+/**
+ * `connect` / `disconnect`: the pair of the cable whose two port anchors the event carries (`cables` and `state`: after a connect, before a disconnect); a mains
+ * pair also carries `fed` (C1: its device is the speaker or console the step-4 cable uses, or no device of that role has one yet).
+ */
 export function annotateConnect(e: HostEvent, cables: readonly Cable[], state: TpState, bridge: Pick<Anchors, 'anchorOfPort'>, registry: Registry): HostEvent {
   const a = e.data?.a
   const b = e.data?.b
@@ -186,7 +213,10 @@ export function annotateConnect(e: HostEvent, cables: readonly Cable[], state: T
     const pb = bridge.anchorOfPort(x.b)
     return (pa === a && pb === b) || (pa === b && pb === a)
   })
-  return c === undefined ? e : withData(e, { pair: pairOf(c, state, registry) })
+  if (c === undefined) return e
+  const pair = pairOf(c, state, registry)
+  // C1: a mains pair also says whether its device is the one the playback needs (steps 8 and 9 match `fed: true`)
+  return withData(e, pair === 'mains-console' || pair === 'mains-speaker' ? { pair, fed: mainsFed(c, pair, state, registry) } : { pair })
 }
 
 /** `toggle`: `playback: true` when the switch is the source console's playback control (any value: the step also matches `value: true`). */
@@ -243,7 +273,8 @@ export function nextConnectionStepFor(pair: PairKind, state: TpState, registry: 
     const ends = PAIR_ENDS[pair]
     const devices = state.instances.filter((i) => registry.deviceById.has(i.deviceId))
     const of = (role: DeviceRole) => devices.filter((i) => roleOf(registry, i.deviceId) === role)
-    const froms = of(ends.from)
+    // C1: for a mains pair the device the playback needs comes first (the speaker that carries the audio), then the others, each in design order
+    const froms = ends.mains ? [...of(ends.from)].sort((x, y) => Number(isFed(state, registry, y.id, ends.from)) - Number(isFed(state, registry, x.id, ends.from))) : of(ends.from)
     const tos = of(ends.to)
     if (froms.length === 0 || tos.length === 0) return null
     const graph = new ConnectionGraph(registry, devices.map((d) => ({ instanceId: d.id, deviceId: d.deviceId })))
@@ -312,8 +343,8 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = Object.freeze<TutorialSte
   { id: 'micro-console', target: { kind: 'connect', pair: 'mic-console' }, action: 'point', sayKeys: ['tutorial.microConsole'], done: { event: 'connect', match: { pair: 'mic-console' } } },
   { id: 'lecture-console', target: { kind: 'playback' }, action: 'toggle', sayKeys: ['assist.sourceOff'], done: { event: 'toggle', match: { playback: true, value: true } } },
   { id: 'multiprise', target: { kind: 'inventory-item', role: 'mains-strip' }, action: 'point', sayKeys: ['tutorial.multiprise', 'tutorial.powerNote'], done: { event: 'deviceAdded', match: { role: 'mains-strip' } } },
-  { id: 'courant-console', target: { kind: 'connect', pair: 'mains-console' }, action: 'point', sayKeys: ['tutorial.courantConsole'], done: { event: 'connect', match: { pair: 'mains-console' } } },
-  { id: 'courant-enceinte', target: { kind: 'connect', pair: 'mains-speaker' }, action: 'point', sayKeys: ['tutorial.courantEnceinte'], done: { event: 'connect', match: { pair: 'mains-speaker' } } },
+  { id: 'courant-console', target: { kind: 'connect', pair: 'mains-console' }, action: 'point', sayKeys: ['tutorial.courantConsole'], done: { event: 'connect', match: { pair: 'mains-console', fed: true } } },
+  { id: 'courant-enceinte', target: { kind: 'connect', pair: 'mains-speaker' }, action: 'point', sayKeys: ['tutorial.courantEnceinte'], done: { event: 'connect', match: { pair: 'mains-speaker', fed: true } } },
   { id: 'ecoute', target: { kind: 'nav', anchor: NAV_ECOUTE }, action: 'point', sayKeys: ['tutorial.ecoute'], done: { event: PLAY_STARTED, match: { source: 'test' } } },
   { id: 'debrancher', target: { kind: 'unplug', pair: 'console-speaker' }, action: 'point', sayKeys: ['tutorial.debrancher'], done: { event: 'disconnect', match: { pair: 'console-speaker' } } },
   { id: 'rebrancher', target: { kind: 'connect', pair: 'console-speaker' }, action: 'point', sayKeys: ['tutorial.rebrancher'], done: { event: 'connect', match: { pair: 'console-speaker' } } },
@@ -381,7 +412,8 @@ export function stepAnchor(step: TutorialStep, registry: Registry): string {
  * The step's result is already on the bench (or, for Écoute, playing now): the learner did it before the step came, or the app led them there (the status bar
  * names « Lecture console » during steps 2 to 5). Then no event of that step will ever come again, so the mount completes it once with `earlyEvent`.
  *   console, micro, enceinte, multiprise  a device of the role is placed
- *   console-enceinte, micro-console, courant-console, courant-enceinte  a cable of the step's pair exists (`pairOf`, strict: playback outputs, mic inputs)
+ *   console-enceinte, micro-console  a cable of the step's pair exists (`pairOf`, strict: playback outputs, mic inputs)
+ *   courant-console, courant-enceinte  a mains cable of the step's pair on the device the playback needs (`fed`, C1)
  *   lecture-console  « Lecture console » is on, on a source console
  *   ecoute  the test signal is playing now (`audio` = the source Écoute plays, or null)
  *   debrancher, rebrancher  never: they are about an action, not a state
@@ -403,9 +435,11 @@ export function stepSatisfied(step: TutorialStep, state: TpState | null, audio: 
       case 'micro-console':
         return pair('mic-console')
       case 'courant-console':
-        return pair('mains-console')
-      case 'courant-enceinte':
-        return pair('mains-speaker')
+      case 'courant-enceinte': {
+        // C1: the cable must be on the device the playback needs (`fed`), not on any speaker or console
+        const p: PairKind = step.id === 'courant-console' ? 'mains-console' : 'mains-speaker'
+        return state.connections.some((c) => pairOf(c, state, registry) === p && mainsFed(c, p, state, registry))
+      }
       case 'lecture-console':
         return state.instances.some((i) => {
           const ctl = playbackControlOf(registry, i.deviceId)
@@ -438,13 +472,15 @@ export interface AnchorEnv extends Anchors {
   rectOfAnchor(anchor: string): Rect | null
   /** The guide unlocked the power helper in this run (Oscar's third tier, plan T3.4): the power steps then point at it. */
   helperUnlocked?: boolean
+  /** Mode Création says the helper is offered now (T3 close review S3): without it the power steps never point at a button that is not there. */
+  helperOffered?: boolean
 }
 
 const rest = (anchor: string, prefix: string): string | null => (anchor.startsWith(`${prefix}.`) ? anchor.slice(prefix.length + 1) : null)
 
 /** True for the reserved anchors this module resolves (a cheap prefix test: the caller builds the page reader only for these). */
 export function isTutorialAnchor(anchor: string): boolean {
-  return typeof anchor === 'string' && (anchor === SUGGEST_PLAYBACK || [INVENTORY_ITEM, INVENTORY_TAB, CONNECT_FROM, UNPLUG_FROM].some((p) => rest(anchor, p) !== null))
+  return typeof anchor === 'string' && (anchor === SUGGEST_PLAYBACK || anchor === NAV_ECOUTE || [INVENTORY_ITEM, INVENTORY_TAB, CONNECT_FROM, UNPLUG_FROM].some((p) => rest(anchor, p) !== null))
 }
 const isPair = (s: string): s is Exclude<PairKind, 'other'> => Object.hasOwn(PAIR_ENDS, s)
 
@@ -460,6 +496,14 @@ function deviceThenRow(env: AnchorEnv, instance: string, rowKey: string): Rect |
  * as before). Never throws.
  */
 export function resolveTutorialAnchor(anchor: string, env: AnchorEnv): Rect | null | undefined {
+  if (anchor === NAV_ECOUTE) {
+    // S4: « Écoute » while the bench cannot play (its items are greyed): the checklist chip that says why; otherwise the shell's own Écoute (undefined)
+    try {
+      return env.state !== null && env.state.playbackReady === false ? (env.firstRect([CHECKLIST_CHIP]) ?? undefined) : undefined
+    } catch {
+      return undefined
+    }
+  }
   const item = rest(anchor, INVENTORY_ITEM)
   const tab = rest(anchor, INVENTORY_TAB)
   const connect = rest(anchor, CONNECT_FROM)
@@ -477,8 +521,8 @@ export function resolveTutorialAnchor(anchor: string, env: AnchorEnv): Rect | nu
     if (state === null) return null
     if (connect !== null) {
       if (!isPair(connect)) return null
-      // unlocked (plan T3.4): the power steps ring the helper (nav:checklist-power) when the list shows it, else the chip that opens the list
-      if (env.helperUnlocked === true && PAIR_ENDS[connect].mains) {
+      // unlocked (plan T3.4) and offered now (S3): the power steps ring the helper (nav:checklist-power) when the list shows it, else the chip that opens the list
+      if (env.helperUnlocked === true && env.helperOffered === true && PAIR_ENDS[connect].mains) {
         const helper = env.firstRect([...(NAV_SELECTORS[NAV_CHECKLIST_POWER] ?? []), CHECKLIST_CHIP])
         if (helper !== null) return helper
       }
@@ -532,6 +576,8 @@ export interface TutorialRequest {
   n: number
   kind: RequestKind
   allowed: boolean
+  /** The counter when the page loaded (T3 close review N4): with no guide record (lost or corrupt), only a request above it is acted on. Absent = 0. */
+  atLoad?: number
 }
 type StorageLike = { getItem(key: string): string | null; setItem(key: string, value: string): void }
 /** What the controller is given as its storage: every key goes through, the flow state it writes is also read here. */
@@ -544,12 +590,19 @@ export interface ObservedStorage {
 export interface TutorialDetail {
   step: StepId | null
   helperUnlocked: boolean
+  /** The run's step list has a power step (T3 close review S5): without one, nothing can unlock the helper, so Mode Création lets it follow the bench. */
+  hasPowerSteps: boolean
+  /** A power step is the current step or still ahead in this run: only then may the locked button promise the offer. */
+  powerAhead: boolean
 }
 export interface TutorialRuntime {
   /** Hand this to the controller (`createController({ storage })`): the tutorial follows the controller's own persisted flow state through it. */
   readonly storage: ObservedStorage
-  /** After every change of the bench (and at the first look): the state, the source Écoute plays (or null), the onboarding request (or null). */
-  update(input: { state: TpState | null; audio: string | null; request: TutorialRequest | null }): void
+  /**
+   * After every change of the bench (and at the first look): the state, the source Écoute plays (or null), the onboarding request (or null), and the power helper as
+   * Mode Création says it (offered now, uses on this page; null without it: then it is never offered and no use is seen).
+   */
+  update(input: { state: TpState | null; audio: string | null; request: TutorialRequest | null; helper?: PowerHelperReading | null }): void
   /** The guide's record (tests; what storage holds unless it is blocked). */
   record(): TutorialRecord
 }
@@ -559,13 +612,17 @@ export interface TutorialRuntime {
  * current and ringed); this module, host side, with no vendored change:
  * - reads the controller's flow state through the storage it hands the controller, and keeps the guide record `oscar-guide.onboarding.v1` (step, k, n,
  *   status, handledRequest, early) on each completion and skip; every storage access in try/catch, a blocked storage keeps it in memory, a corrupt record is replaced;
+ *   when the controller runs another flow (a question typed to Oscar starts one), a running record becomes `idle` (T3 close review C2: Aide then offers
+ *   « Premiers pas » again, and the helper's gate opens); `early`, `shown` and `helper` are cleared only by a genuine (re)start;
  * - acts once per onboarding request above `handledRequest`: start (or, while it runs, show the current step again: « Reprendre »), restart, skip
- *   (« Passer le tutoriel »: the run stops, the record says skipped, nothing asks again by itself). Never on its own: no request, no start;
+ *   (« Passer le tutoriel »: the run stops, the record says skipped, nothing asks again by itself). Never on its own: no request, no start; with no guide record
+ *   at load (lost or corrupt), a request raised before the page loaded is never acted on (N4);
  * - completes the current step once, with that step's own event, when its result is already on the bench (`stepSatisfied`), and says so before the next
  *   step's sentence (« Déjà en place : étape k. »); a step the learner completes clears that note;
- * - (plan T3.4) on a power step, Oscar's third hint tier with a strip on the bench unlocks the power helper: the power steps then end with the offer
- *   (`tutorial.helperOffer`), the step is shown again and Mode Création is told (`emit`); the steps the helper did (Mode Création's use mark,
- *   `tekpractice.power-helper.v1`) are recorded `shown` (« montré »), never early, with no note and no celebration.
+ * - (plan T3.4) on a power step, Oscar's third hint tier, while Mode Création says the helper is offered (S3), unlocks the power helper: the power steps then end
+ *   with the offer (`tutorial.helperOffer`), the step is shown again and Mode Création is told (`emit`); the steps the helper did (Mode Création's use count on
+ *   this page, read through the bridge, never through storage: S2) are recorded `shown` (« montré »), never early, with no note and no celebration;
+ * - (S4) while « Écoute » is the current step and the bench cannot play, its sentence adds `checklist.menuHint` (the checklist chip says why; the mount rings it).
  */
 export function createTutorialRuntime(d: {
   flow: Flow
@@ -574,7 +631,7 @@ export function createTutorialRuntime(d: {
   now(): number
   send(input: ControllerInput): void
   stateKey?: string
-  /** Tells Mode Création where the run is (`tekpractice:tutorial` `{ step, helperUnlocked }`, the power helper's gate, plan T3.3): on every change of either. */
+  /** Tells Mode Création where the run is (`tekpractice:tutorial`, `TutorialDetail`, the power helper's gate, plan T3.3): on every change of it. */
   emit?(detail: TutorialDetail): void
 }): TutorialRuntime {
   const stateKey = d.stateKey ?? DEFAULT_STORAGE_KEY
@@ -604,27 +661,56 @@ export function createTutorialRuntime(d: {
   const data = d.flow.steps.map((s) => TUTORIAL_STEPS.find((t) => t.id === s.id) ?? null)
   const base = d.flow.steps.map((s) => s.say)
   const isPower = (i: number): boolean => data[i] !== null && data[i] !== undefined && POWER_STEPS.includes(data[i]!.id)
+  const hasPowerSteps = data.some((_, i) => isPower(i))
   const offer = (): string => COPY.tutorial?.helperOffer ?? ''
-  /** A step's own sentence; on a power step once the helper is unlocked, followed by Oscar's offer (plan T3.4). */
-  const sayOf = (i: number): string => (rec.helper && isPower(i) && offer() !== '' ? `${base[i]} ${offer()}` : base[i])
-  let rec: TutorialRecord = parseTutorialRecord(read(TUTORIAL_RECORD_KEY)) ?? { ...EMPTY_TUTORIAL_RECORD, early: [] }
+  const listenHint = (): string => COPY.checklist?.menuHint ?? ''
+  /** S4: the bench as last seen cannot play (a step-10 regression: the helper's entry undone, a device deleted, « Alimentation » off). Unknown = no. */
+  const cannotPlay = (): boolean => last.state !== null && last.state.playbackReady === false
+  /**
+   * A step's own sentence; on a power step once the helper is unlocked, followed by Oscar's offer (plan T3.4); on « Écoute » while the bench cannot play,
+   * followed by `checklist.menuHint` (S4).
+   */
+  const sayOf = (i: number): string => {
+    const extra = [rec.helper && isPower(i) ? offer() : '', data[i]?.id === 'ecoute' && cannotPlay() ? listenHint() : ''].filter((s) => s !== '')
+    return [base[i], ...extra].join(' ')
+  }
+  /** The « déjà en place » note before a step's sentence, by step index. */
+  const notes = new Map<number, string>()
+  const render = (i: number): void => {
+    const step = d.flow.steps[i]
+    if (step === undefined) return
+    const note = notes.get(i)
+    step.say = note === undefined ? sayOf(i) : `${note} ${sayOf(i)}`
+  }
+  const renderAll = (): void => d.flow.steps.forEach((_, i) => render(i))
+
+
+  const parsed = parseTutorialRecord(read(TUTORIAL_RECORD_KEY))
+  let rec: TutorialRecord = parsed ?? { ...EMPTY_TUTORIAL_RECORD, early: [] }
+  /** N4: no guide record at load (never written, lost or corrupt): `handledRequest` is unknown, so the first request read is held to the page's own requests. */
+  let unknownHandled = parsed === null
   let flowIndex = -1
   let running = false
   /** The step index whose early event was sent and not seen through yet. */
   let earlyAt: number | null = null
   /** The numbers (1-based) of the steps found already done since the learner's last own completion. */
   let pending: number[] = []
-  let last: { state: TpState | null; audio: string | null } = { state: null, audio: null }
+  let last: { state: TpState | null; audio: string | null; helper: PowerHelperReading | null } = { state: null, audio: null, helper: null }
   /** The controller's hint state as it last persisted it (`{ key, tier }`): tier 3 on a power step unlocks the helper. */
   let lastHint: { key: string; tier: number } | null = null
-  const readUse = () => readPowerHelperUse({ getItem: (k: string) => read(k) })
-  /** The helper's use count when this page started: a use before it is not this run's. */
-  let helperSeen = readUse()?.n ?? 0
+  /** The helper's use count at the first look (S2: a use before the guide looked is not this run's); null until then. */
+  let helperSeen: number | null = null
 
   let told = ''
-  /** The run as Mode Création sees it: the current step while it runs (null otherwise), and the helper's unlock. Sent once per change. */
+  /** The run as Mode Création sees it: the current step while it runs (null otherwise), the helper's unlock, and whether a power step exists / is ahead (S5). */
   const tell = (): void => {
-    const detail: TutorialDetail = { step: rec.status === 'running' ? rec.step : null, helperUnlocked: rec.status === 'running' && rec.helper }
+    const live = rec.status === 'running'
+    const detail: TutorialDetail = {
+      step: live ? rec.step : null,
+      helperUnlocked: live && rec.helper,
+      hasPowerSteps,
+      powerAhead: live && data.some((_, i) => isPower(i) && i >= rec.k - 1),
+    }
     const key = JSON.stringify(detail)
     if (key === told || d.emit === undefined) return
     told = key
@@ -640,7 +726,8 @@ export function createTutorialRuntime(d: {
   }
   const clearNotes = (): void => {
     pending = []
-    d.flow.steps.forEach((s, i) => (s.say = sayOf(i)))
+    notes.clear()
+    renderAll()
   }
   const noteFor = (ks: readonly number[]): string =>
     (COPY.tutorial?.alreadyInPlace ?? '').replace('{steps}', ks.map((k) => (COPY.tutorial?.alreadyStep ?? '').replace('{k}', String(k))).join(', '))
@@ -661,6 +748,13 @@ export function createTutorialRuntime(d: {
     if (flow === null || flow.flowId !== d.flow.id || typeof flow.index !== 'number') {
       running = false
       flowIndex = -1
+      // C2: the controller runs another flow (or none): a record still saying « running » would keep Aide on « Reprendre » and the helper locked. It is
+      // interrupted: idle, with its early / shown / helper kept (only a genuine start clears them).
+      if (rec.status === 'running') {
+        rec = { ...rec, status: 'idle', step: null, k: 0 }
+        clearNotes()
+        save()
+      }
       return
     }
     const idx = flow.index
@@ -680,28 +774,32 @@ export function createTutorialRuntime(d: {
   }
 
   /**
-   * Oscar's third tier on a power step (plan T3.4: say, point, then offer), with a verified strip on the bench: the helper is unlocked for the rest of the run.
-   * The power steps' sentences then end with the offer, the step's bubble is shown again (so the offer is said, and its anchor now rings the helper), and Mode
-   * Création is told (`tekpractice:tutorial`). Tier 3 comes from the vendored escalation (`hintAfterMs`, then its auto-raise) or the learner's « Un indice de
-   * plus » / « Montre-moi ». Never before a strip exists, never on another step, never outside a run.
+   * Oscar's third tier on a power step (plan T3.4: say, point, then offer), while Mode Création says the helper is offered (S3: its button would be there; a full
+   * strip, a speaker already on a Bêta outlet or no strip at all = no offer): the helper is unlocked for the rest of the run. The power steps' sentences then
+   * end with the offer, the step's bubble is shown again (so the offer is said, and its anchor now rings the helper), and Mode Création is told
+   * (`tekpractice:tutorial`). Tier 3 comes from the vendored escalation (`hintAfterMs`, then its auto-raise) or the learner's « Un indice de plus » /
+   * « Montre-moi ». Never while it is not offered, never on another step, never outside a run.
    */
   function unlock(): void {
     if (!running || rec.helper || !isPower(flowIndex) || lastHint === null || lastHint.tier !== 3) return
     const step = d.flow.steps[flowIndex]
     if (lastHint.key !== hintKey(step.anchor, `${d.flow.id}:${step.id}`)) return
-    if (!(last.state?.instances.some((i) => roleOf(d.registry, i.deviceId) === 'mains-strip') ?? false)) return
+    if (last.helper?.offered !== true) return
     rec = { ...rec, helper: true }
-    d.flow.steps.forEach((s, i) => {
-      if (isPower(i) && !s.say.endsWith(offer())) s.say = `${s.say} ${offer()}`
-    })
+    renderAll()
     save()
     void Promise.resolve().then(() => d.send({ type: 'chip', id: 'next' })) // after the controller's own bubble: the step again, with the offer
   }
 
-  /** Mode Création's mark of a helper use (`tekpractice.power-helper.v1`) above the one last seen: the power steps of the devices it cabled are « montré ». */
+  /** Mode Création's helper use count above the one last seen (S2: through the bridge, not storage): the power steps of the devices it cabled are « montré ». */
   function helped(): void {
-    const use = readUse()
-    if (use === null || use.n <= helperSeen) return
+    const use = last.helper
+    if (use === null) return
+    if (helperSeen === null) {
+      helperSeen = use.n
+      return
+    }
+    if (use.n <= helperSeen) return
     helperSeen = use.n
     if (!running) return
     const roles = new Set(use.instances.map((id) => {
@@ -733,8 +831,11 @@ export function createTutorialRuntime(d: {
     // a step the power helper did is « montré » (record `shown`): completed with no « déjà en place » note and not counted early
     const shown = rec.shown.includes(s.id)
     if (!shown) pending = [...pending, i + 1]
-    d.flow.steps[i].say = sayOf(i)
-    if (i + 1 < d.flow.steps.length) d.flow.steps[i + 1].say = pending.length > 0 ? `${noteFor(pending)} ${sayOf(i + 1)}` : sayOf(i + 1)
+    notes.delete(i)
+    if (pending.length > 0) notes.set(i + 1, noteFor(pending))
+    else notes.delete(i + 1)
+    render(i)
+    render(i + 1)
     if (!shown && !rec.early.includes(s.id)) rec = { ...rec, early: [...rec.early, s.id] }
     save()
     d.send({ type: 'hostEvent', event: earlyEvent(s, d.now()) })
@@ -763,8 +864,15 @@ export function createTutorialRuntime(d: {
 
   return {
     storage,
-    update({ state, audio, request }) {
-      last = { state, audio }
+    update({ state, audio, request, helper }) {
+      last = { state, audio, helper: helper ?? null }
+      renderAll() // S4: « Écoute » follows whether the bench can play
+      if (request !== null && unknownHandled) {
+        // N4: with no guide record at load, a request raised before this page loaded may be one the guide already handled: never acted on by itself
+        unknownHandled = false
+        const atLoad = typeof request.atLoad === 'number' && Number.isSafeInteger(request.atLoad) ? request.atLoad : 0
+        if (atLoad > rec.handledRequest) rec = { ...rec, handledRequest: atLoad }
+      }
       if (request !== null && request.allowed && Number.isSafeInteger(request.n) && request.n > rec.handledRequest) {
         rec = { ...rec, handledRequest: request.n }
         if (request.kind === 'skip') {
@@ -783,7 +891,7 @@ export function createTutorialRuntime(d: {
         }
       }
       helped()
-      unlock() // a strip placed after the third tier
+      unlock() // a strip placed (or the helper offered again) after the third tier
       schedule()
     },
     record: () => ({ ...rec, early: [...rec.early], shown: [...rec.shown] }),

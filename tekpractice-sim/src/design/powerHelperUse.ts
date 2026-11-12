@@ -1,50 +1,32 @@
 /**
- * The power helper's last use (onboarding spec 6.5, plan T3.3), under `tekpractice.power-helper.v1`. Neutral: Mode Création writes it after a successful
- * « Je branche pour vous » (src/creation/onboarding/wire.ts), the guide reads it on its next look at the bench (src/guide/tutorial.ts) so that the tutorial
- * steps the helper did are marked « montré », never « déjà en place » nor a success; neither imports the other. `n` only grows; `instances` = the devices the
- * helper cabled that time. Every access in try/catch: a blocked storage loses the mark (the steps then read « déjà en place »), never the cables. Pure: no DOM.
+ * What Mode Création tells the guide about the power helper (onboarding spec 6.5, plan T3.3 and T3.4, T3 close review S2 and S3). Neutral: neither side imports
+ * the other. Mode Création counts the helper's uses for the page's life and says whether the helper is offered now; it exposes both as readers on its debug hook
+ * (`window.__creation.helperOffered()` / `helperUses()`, src/creation/onboarding/wire.ts), which the guide's bridge already polls. NOT through storage: with a
+ * blocked storage the guide must still mark the steps the helper did « montré » (S2: before, a lost storage mark made them look like the learner's own success).
+ *   offered     the checklist's button would be shown now, and enabled once the tutorial gate opens (a verified strip, something to cable, free outlets)
+ *   n           uses since the page loaded (only grows)
+ *   instances   the devices the last use cabled
+ * Pure: no DOM.
  */
-export const POWER_HELPER_KEY = 'tekpractice.power-helper.v1'
-
-export interface PowerHelperUse {
-  v: 1
+export interface PowerHelperUses {
   n: number
   instances: string[]
 }
 
-type Readable = { getItem(key: string): string | null }
-type Writable = Readable & { setItem(key: string, value: string): void }
-
-/** The last use in `raw`, or null when missing or malformed. */
-export function parsePowerHelperUse(raw: string | null): PowerHelperUse | null {
-  if (raw === null || raw === '') return null
-  try {
-    const o = JSON.parse(raw) as Record<string, unknown> | null
-    if (o === null || typeof o !== 'object' || Array.isArray(o) || o.v !== 1) return null
-    if (typeof o.n !== 'number' || !Number.isSafeInteger(o.n) || o.n < 0) return null
-    if (!Array.isArray(o.instances) || !o.instances.every((s) => typeof s === 'string')) return null
-    return { v: 1, n: o.n, instances: [...(o.instances as string[])] }
-  } catch {
-    return null
-  }
+/** The two readers as the guide sees them in one look. */
+export interface PowerHelperReading extends PowerHelperUses {
+  offered: boolean
 }
 
-export function readPowerHelperUse(storage: Readable | null): PowerHelperUse | null {
+/** A plain copy of what the hook returned, or null when it is not a well-formed reading (never a throw). */
+export function readPowerHelper(offered: unknown, uses: unknown): PowerHelperReading | null {
   try {
-    return storage === null ? null : parsePowerHelperUse(storage.getItem(POWER_HELPER_KEY))
+    if (typeof offered !== 'boolean' || uses === null || typeof uses !== 'object') return null
+    const u = uses as { n?: unknown; instances?: unknown }
+    if (typeof u.n !== 'number' || !Number.isSafeInteger(u.n) || u.n < 0) return null
+    if (!Array.isArray(u.instances) || !u.instances.every((s) => typeof s === 'string')) return null
+    return { offered, n: u.n, instances: [...(u.instances as string[])] }
   } catch {
     return null
-  }
-}
-
-/** Records one more use (n + 1) with the devices cabled. False when the storage refuses (blocked, full). */
-export function recordPowerHelperUse(storage: Writable | null, instances: readonly string[]): boolean {
-  try {
-    if (storage === null) return false
-    const n = (readPowerHelperUse(storage)?.n ?? 0) + 1
-    storage.setItem(POWER_HELPER_KEY, JSON.stringify({ v: 1, n, instances: [...instances] }))
-    return true
-  } catch {
-    return false
   }
 }

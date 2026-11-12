@@ -14,6 +14,7 @@ import type { HostEvent, Rect } from '../vendor/core/types'
 import { NAV_SELECTORS, POLL_MS, SEP, cableKey, firstRect, refKey, stateHash, type BridgeDoc, type BridgeElement } from './shared'
 import type { TpBridge, TpPortRef, TpState } from './types'
 import type { TutorialRequest } from '../tutorial'
+import { readPowerHelper } from '../../design/powerHelperUse'
 
 export { NAV_SELECTORS, POLL_MS, stateHash }
 export type { BridgeDoc, BridgeElement }
@@ -23,7 +24,7 @@ export type { BridgeDoc, BridgeElement }
  * optional: a hook without them is still a hook, the bridge then emits no `playStarted` and knows no selection.
  */
 export type CreationReader = Pick<CreationDebug, 'design' | 'events' | 'place' | 'devicePorts' | 'portScreen' | 'deviceScreen' | 'controlScreen'> &
-  Partial<Pick<CreationDebug, 'audioState' | 'selection' | 'onboarding'>>
+  Partial<Pick<CreationDebug, 'audioState' | 'selection' | 'onboarding' | 'helperOffered' | 'helperUses'>>
 
 export interface CreationBridgeDeps {
   win: { __creation?: CreationReader; innerWidth?: number; innerHeight?: number }
@@ -118,7 +119,8 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
       const o = win.__creation?.onboarding?.()
       if (!o || !o.design || !o.record || typeof o.record.request !== 'number') return null
       const kind = o.requestKind === 'restart' || o.requestKind === 'skip' ? o.requestKind : 'start'
-      return { n: o.record.request, kind, allowed: o.tutorialAllowed === true && o.premiersPas === true }
+      const atLoad = typeof o.requestAtLoad === 'number' && Number.isSafeInteger(o.requestAtLoad) && o.requestAtLoad >= 0 ? { atLoad: o.requestAtLoad } : {}
+      return { n: o.record.request, kind, allowed: o.tutorialAllowed === true && o.premiersPas === true, ...atLoad }
     } catch {
       return null
     }
@@ -359,6 +361,15 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
     },
     tutorialRequest: () => requestNow(),
     playing: () => playingNow(),
+    // T3 close review S2 / S3: the power helper as Mode Création says it (offered now, uses on this page); null without the readers or on a malformed answer
+    helper: () => {
+      try {
+        const c = win.__creation
+        return c?.helperOffered && c.helperUses ? readPowerHelper(c.helperOffered(), c.helperUses()) : null
+      } catch {
+        return null
+      }
+    },
     selection: () => {
       try {
         const s = win.__creation?.selection?.()

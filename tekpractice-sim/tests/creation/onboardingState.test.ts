@@ -186,3 +186,20 @@ describe('chipProfile: the chip « Profil : X · changer » (T2.4b)', () => {
     expect(chipProfile({ design: true, record: fresh })).toBeNull()
   })
 })
+
+describe('N3 (T3 close review): the kind of the last request is stored with it', () => {
+  const base = { v: 1 as const, profile: 'decouvre' as const, offer: 'taken' as const, request: 1, shown: [] }
+  it('restart and skip are written; a start (or an offer taken) removes the field; parseRecord takes a missing kind, refuses an unknown one', () => {
+    expect(parseRecord(JSON.stringify({ ...base, kind: 'skip' }))).toEqual({ ...base, kind: 'skip' })
+    expect(parseRecord(JSON.stringify({ ...base, kind: 'restart' }))).toEqual({ ...base, kind: 'restart' })
+    expect(parseRecord(JSON.stringify(base))).toEqual(base)
+    expect(parseRecord(JSON.stringify({ ...base, kind: 'start' }))).toBeNull() // never written: a start leaves no field
+    expect(parseRecord(JSON.stringify({ ...base, kind: 'jump' }))).toBeNull()
+    const store = createOnboardingStore(null)
+    store.dispatch({ type: 'answer', profile: 'decouvre', offer: 'taken' })
+    expect(store.dispatch({ type: 'request', kind: 'skip' })).toMatchObject({ request: 2, kind: 'skip' })
+    expect(store.dispatch({ type: 'request' })).not.toHaveProperty('kind')
+    store.dispatch({ type: 'request', kind: 'restart' })
+    expect(store.dispatch({ type: 'answer', profile: 'etudie', offer: 'taken' })).not.toHaveProperty('kind')
+  })
+})

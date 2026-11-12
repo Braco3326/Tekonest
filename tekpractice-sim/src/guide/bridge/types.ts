@@ -1,6 +1,7 @@
 // The guide's view of the bench: one plain-data state, and the bridge that produces it. No Babylon, no DOM.
 import type { Rect, HostEvent } from '../vendor/core/types'
 import type { TutorialRequest } from '../tutorial'
+import type { PowerHelperReading } from '../../design/powerHelperUse'
 
 /** The code of the first reason in level play: a required connection of the level that is not made yet. */
 export const MISSING_LINK = 'missing-link'
@@ -37,6 +38,8 @@ export type TpBridge = {
   tutorialRequest?(): TutorialRequest | null
   /** The source Écoute plays now ('test', 'song', 'file'), or null; never throws. */
   playing?(): string | null
+  /** The power helper as Mode Création says it: offered now, and its uses on this page (T3 close review S2, S3); null without it; never throws. */
+  helper?(): PowerHelperReading | null
   /** Called on a change only (never on a poll that saw none). Returns the way to stop listening. */
   onChange(cb: (state: TpState, events: HostEvent[]) => void): () => void
   /** Stops the poll, drops every listener and the page listener. Safe to call twice. */

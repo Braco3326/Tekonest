@@ -9,7 +9,7 @@ import type { PlacePicker } from '../shell/placePicker'
 import { mountProfileChip } from './profileChip'
 import { panelsFor, profileById } from './profiles'
 import { tutorialInProgress } from '../../design/tutorialRecord'
-import { chipProfile, createOnboardingStore, entryStage, type OnboardingRecord, type OnboardingStore, type ProfileId, type StorageLike } from './state'
+import { chipProfile, createOnboardingStore, entryStage, type OnboardingRecord, type OnboardingStore, type ProfileId, type RequestKind, type StorageLike } from './state'
 
 export interface OnboardingWiring {
   /**
@@ -53,12 +53,17 @@ export interface OnboardingDebug {
   premiersPas: boolean
   /** The text of the profile chip (« Choisir un profil » while none is stored), or null without the onboarding. */
   chip: string | null
-  /** What the last request asked for (plan T3.2: the guide acts on it once): start (or resume a run), restart, skip. Not stored: absent = start. */
+  /** What the last request asked for (plan T3.2: the guide acts on it once): start (or resume a run), restart, skip. Stored with the request (T3 close review N3). */
   requestKind?: TutorialAsk
+  /**
+   * The request counter when this page loaded (T3 close review N4). A guide whose own record is missing or corrupt cannot tell a handled request from a new one;
+   * it then acts only on a request raised on this page (above this value), never on an old one by itself.
+   */
+  requestAtLoad?: number
 }
 
 /** What an Aide request asks the guide: « Premiers pas » / « Reprendre » (start; a running tutorial is resumed), « Recommencer », « Passer le tutoriel ». */
-export type TutorialAsk = 'start' | 'restart' | 'skip'
+export type TutorialAsk = RequestKind
 
 export interface Onboarding {
   /** The record's store, or null without `?design`. */
@@ -165,7 +170,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
   }
 
   let asking: Promise<void> | null = null
-  let lastKind: TutorialAsk = 'start'
+  const requestAtLoad = store?.read()?.request ?? 0
   const premiersPas = store !== null && w.tutorialAllowed
   const waiting = (): string | undefined => (premiersPas && w.picker.startShowing ? COPY.menu!.firstStepsWait : undefined)
   return {
@@ -185,8 +190,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
       if (asking) return asking
       if (kind !== 'start') {
         // restart and skip act on the running tutorial: its room is open, nothing to open
-        lastKind = kind
-        store.dispatch({ type: 'request' })
+        store.dispatch({ type: 'request', kind })
         return Promise.resolve()
       }
       // Cleared by `finally` on the promise itself: an async body with no await would run its own cleanup before `asking` is assigned.
@@ -196,8 +200,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
           if (!w.placeOpen()) return
           w.frameNeutralRoom()
         }
-        lastKind = 'start'
-        store.dispatch({ type: 'request' })
+        store.dispatch({ type: 'request', kind: 'start' })
       })().finally(() => {
         asking = null
       })
@@ -214,7 +217,8 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
         blocked: store?.blocked ?? false,
         premiersPas,
         chip: store ? chipText(chipProfile({ design: true, record })) : null,
-        requestKind: lastKind,
+        requestKind: record?.kind ?? 'start',
+        requestAtLoad,
       }
     },
   }

@@ -6,6 +6,8 @@
  * on a practice address; never on an exam address, never without `?design`). Its code is a lazy chunk. The tutorial gate comes from the guide's event
  * `tekpractice:tutorial` `{ step, helperUnlocked }` (and, until the first event, the guide's record): during a run the button is disabled with its reason until
  * the guide unlocks it. With `?oscar=0` there is no run (`tutorialAllowed` false): the gate is never read and the button follows the bench alone.
+ * T3 close review S2 / S3: the guide learns whether the helper is offered and how often it was used on this page through two readers of the debug hook
+ * (`helperOffered()`, `helperUses()`, src/design/powerHelperUse.ts), never through storage.
  * The first visit (start screen, profile, chip, Aide « Premiers pas ») lives in `firstVisit.ts`: it loads lazily, under `?design` only (plan: new boot code stays lazy).
  */
 import { checklistView, type GoTo } from '../checklistModel'
@@ -17,7 +19,7 @@ import type { HelperStore, TutorialGate } from '../powerHelper'
 import type { History } from '../history'
 import { TUTORIAL_EVENT } from '../../design/events'
 import { tutorialGateOf } from '../../design/tutorialRecord'
-import { recordPowerHelperUse } from '../../design/powerHelperUse'
+import type { PowerHelperUses } from '../../design/powerHelperUse'
 
 type PowerHelperModule = typeof import('../powerHelper')
 
@@ -29,7 +31,7 @@ export interface HelperWiring {
   announce(message: string): void
   /** The guide's tutorial may run here (not `?oscar=0`): only then is the tutorial gate read. */
   tutorialAllowed: boolean
-  /** The page's storage (the guide's record, the helper's use mark), or null when blocked. */
+  /** The page's storage (the guide's record, read for the gate until the guide's first event), or null when blocked. */
   storage(): Storage | null
   /** The helper's code (default: the lazy chunk). */
   load?(): Promise<PowerHelperModule>
@@ -66,8 +68,14 @@ export interface ChecklistWiring {
 function gateOfDetail(detail: unknown): TutorialGate | null {
   if (detail === null || typeof detail !== 'object') return null
   const d = detail as { step?: unknown; helperUnlocked?: unknown }
+  const e = detail as { hasPowerSteps?: unknown; powerAhead?: unknown }
   if (d.step !== null && typeof d.step !== 'string') return null
-  return { step: d.step, helperUnlocked: d.helperUnlocked === true }
+  return {
+    step: d.step,
+    helperUnlocked: d.helperUnlocked === true,
+    ...(typeof e.hasPowerSteps === 'boolean' ? { hasPowerSteps: e.hasPowerSteps } : {}),
+    ...(typeof e.powerAhead === 'boolean' ? { powerAhead: e.powerAhead } : {}),
+  }
 }
 
 /**
@@ -75,8 +83,13 @@ function gateOfDetail(detail: unknown): TutorialGate | null {
  * Its chunk is fetched by `load()` (idempotent), which the list calls once a place is open: never during the first-visit start screen, whose own lazy chunk
  * must not wait behind it.
  */
-export function wirePowerHelper(h: HelperWiring, deps: { win: Pick<Window, 'addEventListener'> | null; deviceLabel(instance: string): string; render(): void }): { view(): HelperView; run(): void; load(): Promise<void> } {
+export function wirePowerHelper(
+  h: HelperWiring,
+  deps: { win: Pick<Window, 'addEventListener'> | null; deviceLabel(instance: string): string; render(): void },
+): { view(): HelperView; run(): void; load(): Promise<void>; offered(): boolean; uses(): PowerHelperUses } {
   let mod: PowerHelperModule | null = null
+  /** The helper's uses on this page (T3 close review S2): the guide reads them through the debug hook, never through storage. */
+  let used: PowerHelperUses = { n: 0, instances: [] }
   let gate: TutorialGate | null = h.tutorialAllowed ? tutorialGateOf(h.storage()) : null
   if (h.tutorialAllowed)
     deps.win?.addEventListener(TUTORIAL_EVENT, (e: Event) => {
@@ -91,7 +104,9 @@ export function wirePowerHelper(h: HelperWiring, deps: { win: Pick<Window, 'addE
     if (mod === null) return { shown: false }
     const b = mod.helperButton(mod.powerHelperPlan(h.store, h.registry), gate)
     if (!b.shown) return b
-    return b.enabled ? { shown: true, enabled: true, note: A().helperWhat!.replace('{devices}', names(b.instances)) } : { shown: true, enabled: false, note: A().helperLocked! }
+    if (b.enabled) return { shown: true, enabled: true, note: A().helperWhat!.replace('{devices}', names(b.instances)) }
+    // S5: the offer is promised only while a power step is current or ahead
+    return { shown: true, enabled: false, note: b.reason === 'tutorial' ? A().helperLocked! : A().helperLockedRun! }
   }
   const run = (): void => {
     if (mod === null) return
@@ -100,9 +115,17 @@ export function wirePowerHelper(h: HelperWiring, deps: { win: Pick<Window, 'addE
     if (!v.shown || !v.enabled) return
     const r = mod.runPowerHelper(h.store, h.history, h.registry, A().helperEntry!)
     if (r.ok) {
-      recordPowerHelperUse(h.storage(), r.instances)
+      used = { n: used.n + 1, instances: [...r.instances] }
       h.announce(A().helperDone!.replace('{devices}', names(r.instances)))
-    } else if (r.why === 'refused-late') h.announce(A().helperFailed!)
+    } else h.announce(r.why === 'busy' ? A().helperBusy! : A().helperFailed!) // S9: the list closed on the click, so every refusal is said
+  }
+  /** S3: the button would be shown now, and enabled once the tutorial gate opens (the guide offers the helper only then). False before the chunk is loaded. */
+  const offered = (): boolean => {
+    try {
+      return mod !== null && mod.powerHelperPlan(h.store, h.registry).offered
+    } catch {
+      return false
+    }
   }
   let loading: Promise<void> | null = null
   const load = (): Promise<void> =>
@@ -113,10 +136,13 @@ export function wirePowerHelper(h: HelperWiring, deps: { win: Pick<Window, 'addE
       },
       (e: unknown) => console.warn('[creation] power helper unavailable', e),
     ))
-  return { view, run, load }
+  return { view, run, load, offered, uses: () => ({ n: used.n, instances: [...used.instances] }) }
 }
 
-export function wireChecklist(w: ChecklistWiring, mount: typeof mountChecklist = mountChecklist): Checklist {
+/** The checklist, plus the two readers the debug hook exposes to the guide (S2, S3): whether the helper is offered now, and its uses on this page. */
+export type WiredChecklist = Checklist & { helperOffered(): boolean; helperUses(): PowerHelperUses }
+
+export function wireChecklist(w: ChecklistWiring, mount: typeof mountChecklist = mountChecklist): WiredChecklist {
   const goTo = (t: GoTo): void => (t.kind === 'select' ? w.select(t.instance) : w.openInventory(t.tab))
   let list: Checklist | null = null
   const helper = w.helper ? wirePowerHelper(w.helper, { win: w.doc.defaultView, deviceLabel: w.deviceLabel, render: () => list?.render() }) : null
@@ -140,5 +166,15 @@ export function wireChecklist(w: ChecklistWiring, mount: typeof mountChecklist =
   })
   wake()
   list.render()
-  return list
+  const shown = list
+  return {
+    render: () => shown.render(),
+    get isOpen() {
+      return shown.isOpen
+    },
+    open: () => shown.open(),
+    close: (returnFocus?: boolean) => shown.close(returnFocus),
+    helperOffered: () => helper?.offered() ?? false,
+    helperUses: () => helper?.uses() ?? { n: 0, instances: [] },
+  }
 }

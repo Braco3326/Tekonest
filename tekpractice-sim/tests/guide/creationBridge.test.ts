@@ -1045,6 +1045,22 @@ describe('tutorial readers (T3.2): the onboarding request and the sound playing'
       throw new Error('x')
     }
     expect(r.bridge.tutorialRequest?.()).toBeNull()
+    // N4 (T3 close review): the counter at page load goes with it when Mode Création says it
+    r.win.__creation!.onboarding = () => ob(3, { requestAtLoad: 2 })
+    expect(r.bridge.tutorialRequest?.()).toEqual({ n: 3, kind: 'start', allowed: true, atLoad: 2 })
+  })
+  it('helper() (T3 close review S2 / S3): offered now and the uses on this page, from the two readers; null without them, on a throw or a malformed answer', () => {
+    const r = make()
+    expect(r.bridge.helper?.()).toBeNull()
+    r.win.__creation!.helperOffered = () => true
+    r.win.__creation!.helperUses = () => ({ n: 1, instances: ['ql1', 'k12'] })
+    expect(r.bridge.helper?.()).toEqual({ offered: true, n: 1, instances: ['ql1', 'k12'] })
+    r.win.__creation!.helperUses = () => ({ n: -1, instances: [] })
+    expect(r.bridge.helper?.()).toBeNull()
+    r.win.__creation!.helperOffered = () => {
+      throw new Error('x')
+    }
+    expect(r.bridge.helper?.()).toBeNull()
   })
   it('a request that goes up is a change: one `tutorialRequest` event, not at the first look', () => {
     const r = make()

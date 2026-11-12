@@ -21,6 +21,9 @@ export type ProfileId = (typeof PROFILE_IDS)[number]
 /** The learner's answer to the offer: the tutorial was asked for, or declined. `null` = not answered yet. */
 export type OfferAnswer = 'taken' | 'skipped'
 
+/** What the last request asked the guide: start (or resume a run), restart, skip. */
+export type RequestKind = 'start' | 'restart' | 'skip'
+
 export interface OnboardingRecord {
   v: 1
   /** `null` = the learner left the profile stage (« Tous les lieux », Échap) without choosing. */
@@ -28,6 +31,11 @@ export interface OnboardingRecord {
   offer: OfferAnswer | null
   request: number
   shown: StepId[]
+  /**
+   * What the last request asked for, stored WITH the counter (T3 close review N3: kept in memory only, a « Passer le tutoriel » reloaded before the guide's next
+   * poll read as a start). Absent = start (records written before it, and every start: the field is written only for restart and skip).
+   */
+  kind?: Exclude<RequestKind, 'start'>
 }
 
 /** The slice of `Storage` the store needs (tests pass a fake). */
@@ -56,18 +64,24 @@ export function entryStage(i: { design: boolean; tutorialAllowed: boolean; resto
 export type OnboardingEvent =
   /** The learner answered: the profile and the answer to the offer together (`offer` null = no offer was made, `?oscar=0`: an earlier answer is kept). */
   | { type: 'answer'; profile: ProfileId; offer: OfferAnswer | null }
-  /** Aide « Premiers pas »: the tutorial is asked for again; the earlier answer stays. */
-  | { type: 'request' }
+  /** Aide « Premiers pas » (start), « Recommencer » (restart), « Passer le tutoriel » (skip): the tutorial is asked for again; the earlier answer stays. */
+  | { type: 'request'; kind?: RequestKind }
 
 const BASE: OnboardingRecord = { v: 1, profile: null, offer: null, request: 0, shown: [] }
 
 export function reduce(rec: OnboardingRecord | null, ev: OnboardingEvent): OnboardingRecord {
   const cur: OnboardingRecord = rec ? { ...rec, shown: [...rec.shown] } : { ...BASE, shown: [] }
+  /** The record with the kind of a new request: written for restart and skip only (a start leaves no field). */
+  const asking = (r: OnboardingRecord, kind: RequestKind): OnboardingRecord => {
+    const rest: OnboardingRecord = { ...r }
+    delete rest.kind
+    return kind === 'start' ? rest : { ...rest, kind }
+  }
   switch (ev.type) {
     case 'answer':
-      return { ...cur, profile: ev.profile, offer: ev.offer ?? cur.offer, request: cur.request + (ev.offer === 'taken' ? 1 : 0) }
+      return ev.offer === 'taken' ? asking({ ...cur, profile: ev.profile, offer: ev.offer, request: cur.request + 1 }, 'start') : { ...cur, profile: ev.profile, offer: ev.offer ?? cur.offer }
     case 'request':
-      return { ...cur, request: cur.request + 1 }
+      return asking({ ...cur, request: cur.request + 1 }, ev.kind ?? 'start')
   }
 }
 
@@ -87,7 +101,9 @@ export function parseRecord(raw: string | null): OnboardingRecord | null {
   if (r.offer !== null && r.offer !== 'taken' && r.offer !== 'skipped') return null
   if (typeof r.request !== 'number' || !Number.isSafeInteger(r.request) || r.request < 0) return null
   if (!Array.isArray(r.shown) || !r.shown.every((s) => typeof s === 'string')) return null
-  return { v: 1, profile: r.profile as ProfileId | null, offer: r.offer as OfferAnswer | null, request: r.request, shown: r.shown as StepId[] }
+  if (r.kind !== undefined && r.kind !== 'restart' && r.kind !== 'skip') return null
+  const base: OnboardingRecord = { v: 1, profile: r.profile as ProfileId | null, offer: r.offer as OfferAnswer | null, request: r.request, shown: r.shown as StepId[] }
+  return r.kind === undefined ? base : { ...base, kind: r.kind }
 }
 
 export interface OnboardingStore {

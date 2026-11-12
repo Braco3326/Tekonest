@@ -887,8 +887,10 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `checklist.helperButton` | Je branche pour vous (dans le simulateur) | à valider (tekuxwriter) | L’aide au branchement (T3.3, spec 6.5) : bouton de la ligne « Alimentation » de la liste « Pourquoi je n’entends rien ? », sous `?design` seulement ; relie la console et les enceintes posées à la multiprise posée, une seule entrée d’annulation ; ne pose rien, ne règle rien |
 | `checklist.helperWhat` | Relie à la multiprise posée : {devices}. Rien n’est posé ni réglé. | à valider (tekuxwriter) | Sous le bouton actif : exactement ce que fait un clic ; {devices} = « Yamaha QL1 (ql1), QSC K12.2 (k12) » |
 | `checklist.helperLocked` | Essayez d’abord de relier vous-même ; je pourrai brancher pour vous ensuite. | à valider (tekuxwriter) | Sous le bouton désactivé pendant le tutoriel, jusqu’à l’offre d’Oscar (troisième palier : montrer, dire, proposer) ; texte de la spec 6.5 tel quel (« relier » sans complément : à revoir) |
+| `checklist.helperLockedRun` | Pendant le tutoriel, ce bouton reste inactif : reliez vous-même la console et l’enceinte à la multiprise. | à valider (tekuxwriter) | Sous le bouton désactivé pendant le tutoriel quand aucune étape de courant n’est en cours ni à venir (revue de clôture T3, S5) : aucune promesse d’offre |
 | `checklist.helperDone` | Branché au courant : {devices}. Ctrl+Z pour annuler. | à valider (tekuxwriter) | Ligne d’état après l’aide : exactement ce qui a été ajouté |
-| `checklist.helperFailed` | Le branchement n’a pas été fait : rien n’a changé. | à valider (tekuxwriter) | Ligne d’état quand un câble est refusé en route (tout est annulé) |
+| `checklist.helperFailed` | Le branchement n’a pas été fait : rien n’a changé. | à valider (tekuxwriter) | Ligne d’état quand l’aide n’a rien fait (câble refusé en route, tout est annulé ; ou plus rien à brancher au moment du clic) |
+| `checklist.helperBusy` | Le branchement n’a pas été fait : une autre action est en cours. Rien n’a changé. | à valider (tekuxwriter) | Ligne d’état quand un déplacement est encore en cours au moment du clic (revue de clôture T3, S9) |
 | `checklist.helperEntry` | Branchement au courant (aide) | à valider (tekuxwriter) | Libellé de l’entrée d’annulation (Édition › Annuler) |
 
 ## assist

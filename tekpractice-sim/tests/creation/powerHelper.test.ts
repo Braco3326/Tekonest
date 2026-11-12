@@ -11,7 +11,7 @@ import { History } from '../../src/creation/history'
 import { helperButton, powerHelperPlan, runPowerHelper } from '../../src/creation/powerHelper'
 import { parseProposals, registerProposals } from '../../src/creation/betaDevices'
 import { signalPath } from '../../src/flow/signalPath'
-import { POWER_HELPER_KEY, parsePowerHelperUse, readPowerHelperUse, recordPowerHelperUse } from '../../src/design/powerHelperUse'
+import { readPowerHelper } from '../../src/design/powerHelperUse'
 import type { Intent } from '../../src/ui/intents'
 
 const LABEL = 'Branchement au courant (aide)'
@@ -228,9 +228,15 @@ describe('helperButton: the tutorial gate (spec 6.5)', () => {
     expect(helperButton({ offered: false, why: 'strip-full' }, { step: 'courant-console', helperUnlocked: true })).toEqual({ shown: false })
   })
   it('during a tutorial run: disabled with its reason until the guide unlocks it, then enabled', () => {
-    expect(helperButton(offered, { step: 'courant-console', helperUnlocked: false })).toEqual({ shown: true, enabled: false, reason: 'tutorial' })
-    expect(helperButton(offered, { step: 'console', helperUnlocked: false })).toEqual({ shown: true, enabled: false, reason: 'tutorial' })
+    // T3 close review S5: the reason promises the offer only when a power step is current or ahead (`powerAhead`); unknown = no promise
+    expect(helperButton(offered, { step: 'courant-console', helperUnlocked: false, hasPowerSteps: true, powerAhead: true })).toEqual({ shown: true, enabled: false, reason: 'tutorial' })
+    expect(helperButton(offered, { step: 'console', helperUnlocked: false, hasPowerSteps: true, powerAhead: true })).toEqual({ shown: true, enabled: false, reason: 'tutorial' })
+    expect(helperButton(offered, { step: 'courant-console', helperUnlocked: false })).toEqual({ shown: true, enabled: false, reason: 'tutorial-run' })
     expect(helperButton(offered, { step: 'courant-console', helperUnlocked: true })).toEqual({ shown: true, enabled: true, instances: ['ql1', 'k12'] })
+  })
+  it('S5: the whole run stays locked (founder rule), but a run with no power step follows the bench; past the power steps the reason makes no promise', () => {
+    expect(helperButton(offered, { step: 'ecoute', helperUnlocked: false, hasPowerSteps: false, powerAhead: false })).toEqual({ shown: true, enabled: true, instances: ['ql1', 'k12'] })
+    expect(helperButton(offered, { step: 'ecoute', helperUnlocked: false, hasPowerSteps: true, powerAhead: false })).toEqual({ shown: true, enabled: false, reason: 'tutorial-run' })
   })
   it('outside a run (no tutorial, or `?oscar=0`): enabled once a strip is there', () => {
     expect(helperButton(offered, null)).toEqual({ shown: true, enabled: true, instances: ['ql1', 'k12'] })
@@ -238,29 +244,15 @@ describe('helperButton: the tutorial gate (spec 6.5)', () => {
   })
 })
 
-describe('the use record (tekpractice.power-helper.v1): what the guide reads to mark the steps « montré »', () => {
-  class Mem {
-    m = new Map<string, string>()
-    getItem(k: string) {
-      return this.m.get(k) ?? null
-    }
-    setItem(k: string, v: string) {
-      this.m.set(k, v)
-    }
-  }
-  it('counts up with the devices cabled; malformed or blocked = null / false, never a throw', () => {
-    const s = new Mem()
-    expect(readPowerHelperUse(s)).toBeNull()
-    expect(recordPowerHelperUse(s, ['ql1', 'k12'])).toBe(true)
-    expect(readPowerHelperUse(s)).toEqual({ v: 1, n: 1, instances: ['ql1', 'k12'] })
-    expect(recordPowerHelperUse(s, ['k12'])).toBe(true)
-    expect(readPowerHelperUse(s)).toEqual({ v: 1, n: 2, instances: ['k12'] })
-    for (const bad of ['x', '[]', JSON.stringify({ v: 2, n: 1, instances: [] }), JSON.stringify({ v: 1, n: -1, instances: [] }), JSON.stringify({ v: 1, n: 1, instances: [3] })])
-      expect(parsePowerHelperUse(bad), bad).toBeNull()
-    const blocked = { getItem: () => { throw new Error('blocked') }, setItem: () => { throw new Error('blocked') } }
-    expect(readPowerHelperUse(blocked)).toBeNull()
-    expect(recordPowerHelperUse(blocked, ['ql1'])).toBe(false)
-    expect(POWER_HELPER_KEY).toBe('tekpractice.power-helper.v1')
+describe('the helper as the guide reads it (T3 close review S2 / S3: the debug hook, never storage)', () => {
+  it('a well-formed reading is copied; anything else is null, never a throw', () => {
+    const uses = { n: 2, instances: ['ql1', 'k12'] }
+    const r = readPowerHelper(true, uses)
+    expect(r).toEqual({ offered: true, n: 2, instances: ['ql1', 'k12'] })
+    uses.instances.push('x')
+    expect(r!.instances).toEqual(['ql1', 'k12']) // a copy
+    for (const [o, u] of [['yes', { n: 1, instances: [] }], [true, null], [true, { n: -1, instances: [] }], [true, { n: 1.5, instances: [] }], [true, { n: 1, instances: [3] }], [false, 'x']] as const)
+      expect(readPowerHelper(o, u), JSON.stringify([o, u])).toBeNull()
   })
 })
 
@@ -282,8 +274,8 @@ describe('wirePowerHelper', () => {
     }
   }
   const running = (helper: boolean) => JSON.stringify({ v: 1, handledRequest: 1, step: 'courant-console', k: 8, n: 10, status: 'running', early: [], shown: [], helper })
-  async function wired(over: Partial<HelperWiring> = {}, record: string | null = null) {
-    const { store, history, registry } = setup([...PLAYING, STRIP])
+  async function wired(over: Partial<HelperWiring> = {}, record: string | null = null, bench: Intent[] = [...PLAYING, STRIP], beta = false) {
+    const { store, history, registry } = setup(bench, beta)
     const storage = new Mem()
     if (record !== null) storage.setItem(TUTORIAL_RECORD_KEY, record)
     const said: string[] = []
@@ -298,19 +290,25 @@ describe('wirePowerHelper', () => {
   }
   const tell = (win: EventTarget, detail: unknown) => win.dispatchEvent(new CustomEvent(TUTORIAL_EVENT, { detail }))
 
-  it('outside a run: enabled, the note says exactly what a click cables; the click cables, marks the use, and the status line lists what was added', async () => {
-    const w = await wired()
+  it('outside a run: enabled, the note says exactly what a click cables; the click cables, counts the use (S2: no storage), and the status line lists what was added', async () => {
+    const w = await wired({ storage: () => null })
     expect(w.h.view()).toEqual({ shown: true, enabled: true, note: 'Relie à la multiprise posée : «ql1», «k12». Rien n’est posé ni réglé.' })
+    expect(w.h.offered()).toBe(true)
+    expect(w.h.uses()).toEqual({ n: 0, instances: [] })
     w.h.run()
     expect(mains(w.store)).toHaveLength(2)
     expect(w.history.sizes.undo).toBe(1)
     expect(w.said).toEqual(['Branché au courant : «ql1», «k12». Ctrl+Z pour annuler.'])
-    expect(readPowerHelperUse(w.storage)).toEqual({ v: 1, n: 1, instances: ['ql1', 'k12'] })
+    expect(w.h.uses()).toEqual({ n: 1, instances: ['ql1', 'k12'] }) // storage blocked: the count is still there for the guide
     expect(w.h.view()).toEqual({ shown: false }) // nothing left to cable
+    expect(w.h.offered()).toBe(false)
   })
 
   it('a running tutorial (the guide’s record at load): disabled with its reason, a click does nothing; the guide’s event unlocks it', async () => {
     const w = await wired({}, running(false))
+    // S5: the record does not say whether a power step is ahead: no promise until the guide's first event
+    expect(w.h.view()).toEqual({ shown: true, enabled: false, note: COPY.checklist!.helperLockedRun })
+    tell(w.win, { step: 'courant-console', helperUnlocked: false, hasPowerSteps: true, powerAhead: true })
     expect(w.h.view()).toEqual({ shown: true, enabled: false, note: COPY.checklist!.helperLocked })
     w.h.run()
     expect(mains(w.store)).toEqual([])
@@ -352,6 +350,46 @@ describe('wirePowerHelper', () => {
     await h.load()
     h.run()
     expect(said).toEqual([COPY.checklist!.helperFailed])
+  })
+
+  it('S5: a run with no power step (the guide says so): the button follows the bench; past the power steps: locked, with no promise', async () => {
+    const w = await wired({}, running(false))
+    tell(w.win, { step: 'ecoute', helperUnlocked: false, hasPowerSteps: false, powerAhead: false })
+    expect(w.h.view()).toMatchObject({ shown: true, enabled: true })
+    tell(w.win, { step: 'ecoute', helperUnlocked: false, hasPowerSteps: true, powerAhead: false })
+    expect(w.h.view()).toEqual({ shown: true, enabled: false, note: COPY.checklist!.helperLockedRun })
+  })
+
+  it('S9: every refusal is said (the list closed on the click): a drag in progress = the busy line; any other = « rien n’a changé »', async () => {
+    const w = await wired({ tutorialAllowed: false })
+    w.history.begin('Déplacer')
+    w.h.run()
+    expect(w.said).toEqual([COPY.checklist!.helperBusy])
+    expect(mains(w.store)).toEqual([])
+    w.history.commit()
+    for (const why of ['no-strip', 'nothing-to-cable', 'strip-full', 'refused', 'refused-late'] as const) {
+      const said: string[] = []
+      const { store, history, registry } = setup([...PLAYING, STRIP])
+      const h = wirePowerHelper(
+        { store, history, registry, announce: (m) => said.push(m), tutorialAllowed: false, storage: () => null, load: async () => ({ ...powerHelperModule, runPowerHelper: () => ({ ok: false, why }) }) },
+        { win: null, deviceLabel: (id) => id, render: () => undefined },
+      )
+      await h.load()
+      h.run()
+      expect(said, why).toEqual([COPY.checklist!.helperFailed])
+    }
+  })
+
+  it('S3: helperOffered() is false when the button would be absent: a full strip; a speaker already on a Bêta outlet (step 9 can never be met by the helper)', async () => {
+    const k = (n: number) => spawn('qsc-k12-2', `k${n}`)
+    const full = await wired({}, null, [QL1, STRIP, k(1), k(2), k(3), k(4), connect('strip', 'out-1', 'k1', 'power-in')])
+    expect(full.h.view()).toEqual({ shown: false })
+    expect(full.h.offered()).toBe(false)
+    const beta = await wired({}, null, [QL1, K12, STRIP, spawn('shure-axient-digital-ad4d', 'beta'), connect('strip', 'out-1', 'ql1', 'power-in'), connect('beta', 'out-ac-power-cascade-locking', 'k12', 'power-in')], true)
+    expect(beta.h.view()).toEqual({ shown: false })
+    expect(beta.h.offered()).toBe(false)
+    const ok = await wired()
+    expect(ok.h.offered()).toBe(true)
   })
 })
 

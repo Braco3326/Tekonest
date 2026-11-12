@@ -108,17 +108,26 @@ export interface TutorialGate {
   /** A tutorial run is going on (its current step id, or null when none runs). */
   step: string | null
   helperUnlocked: boolean
+  /** The run's step list has a power step (T3 close review S5). Unknown (a record read before the guide spoke) = assumed true: the lock holds. */
+  hasPowerSteps?: boolean
+  /** A power step is the current step or still ahead: only then can Oscar's third tier unlock the helper in this run. Unknown = no promise is made. */
+  powerAhead?: boolean
 }
 
-export type HelperButton = { shown: false } | { shown: true; enabled: true; instances: string[] } | { shown: true; enabled: false; reason: 'tutorial' }
+/** Why the button is disabled: `tutorial` (a power step is current or ahead: the offer will come) or `tutorial-run` (none can unlock it: no promise). */
+export type HelperLock = 'tutorial' | 'tutorial-run'
+export type HelperButton = { shown: false } | { shown: true; enabled: true; instances: string[] } | { shown: true; enabled: false; reason: HelperLock }
 
 /**
  * The checklist's helper button. Shown only when the helper is offered (a verified strip the learner placed, something left to cable, enough free outlets).
  * During a tutorial run it stays disabled, with its visible reason, until the guide unlocks it (Oscar's third tier: point, say, offer): the learner tries first.
+ * The lock covers the whole run (founder rule « never before the learner tried », recorded in the spec erratum), except a run whose step list has no power step
+ * (S5): there nothing could unlock it, so the button follows the bench. The reason promises the offer only while a power step is current or ahead.
  * Outside a run it follows the plan alone (with `?oscar=0` there is no run: the checklist works the same).
  */
 export function helperButton(plan: HelperPlan, gate: TutorialGate | null): HelperButton {
   if (!plan.offered) return { shown: false }
-  if (gate !== null && gate.step !== null && !gate.helperUnlocked) return { shown: true, enabled: false, reason: 'tutorial' }
+  if (gate !== null && gate.step !== null && !gate.helperUnlocked && gate.hasPowerSteps !== false)
+    return { shown: true, enabled: false, reason: gate.powerAhead === true ? 'tutorial' : 'tutorial-run' }
   return { shown: true, enabled: true, instances: [...plan.instances] }
 }

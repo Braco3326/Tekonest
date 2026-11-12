@@ -87,7 +87,7 @@ import { mountMenuBar } from './shell/menuBar'
 import { openViewPicker } from './shell/viewPickerOverlay'
 import { buildMenus } from './shell/menuModel'
 import { CREATION_TOKENS, injectCreationTokens } from '../design/creationTokens'
-import { applyDesignAttribute } from '../design/packages'
+import { applyDesignAttribute, tutorialSteps } from '../design/packages'
 import { nearestZone, ZONES, zoneAngles, zoneId, zoneLabel, type ZoneSigns } from '../camera/cubeZones'
 import { cubeSizePx } from './viewCubeGeometry'
 import {
@@ -942,7 +942,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     onboarding = wireOnboarding({
       design: true,
       storage,
-      stepCount: designPkg?.pacing.steps.length ?? 0,
+      stepCount: designPkg ? tutorialSteps(designPkg).length : 0, // S1: package 5 runs the ten steps until T6.3
       tutorialAllowed: opts.tutorialAllowed === true,
       panels: designPkg?.layout.panels ?? { tree: true, props: true },
       doc: document,
@@ -2207,7 +2207,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   )
 
   // « Pourquoi je n’entends rien ? » (T1.3): a read-only view over the signal path, recomputed from the live design on each read (so no subscriber order matters).
-  wireChecklist({
+  const checklist = wireChecklist({
     doc: document,
     slot: statusBar.checklistSlot,
     root: shell.root,
@@ -2263,6 +2263,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   }
   window.__creation = {
     onboarding: () => onboarding.snapshot(),
+    helperOffered: () => checklist.helperOffered(),
+    helperUses: () => checklist.helperUses(),
     dispatch: (intent) => history.do(intent),
     design: () => store.design(),
     events: () => store.events(),

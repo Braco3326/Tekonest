@@ -14,10 +14,18 @@ import type { QuarantineItem } from './persistence'
 import type { CoverageDebug } from './coverageController'
 import type { ListenDebug } from './listenController'
 import type { OnboardingDebug } from './onboarding/firstVisit'
+import type { PowerHelperUses } from '../design/powerHelperUse'
 
 export interface CreationDebug {
   /** Onboarding (T2.4b): the stored first-visit record, the address's switches (`?design`, tutorial allowed), Aide « Premiers pas » and the profile chip text. A reader, no setter. */
   onboarding(): OnboardingDebug
+  /**
+   * The power helper (T3 close review S3): its checklist button would be shown now, and enabled once the tutorial gate opens. False without `?design` or before its
+   * chunk is loaded. The guide offers the helper only then.
+   */
+  helperOffered(): boolean
+  /** The power helper's uses on this page (T3 close review S2): the guide marks the steps it did « montré » from this, never from storage. */
+  helperUses(): PowerHelperUses
   /** Through `history.do` (undoable, as a UI action). */
   dispatch(intent: Intent): DispatchResult
   design(): DesignState

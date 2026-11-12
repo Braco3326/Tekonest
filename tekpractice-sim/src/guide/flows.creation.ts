@@ -23,7 +23,7 @@ import { DEFAULT_FLOW_KEYWORDS } from './vendor/core/router'
 import type { FlowKeywords } from './vendor/core/router'
 import type { Flow } from './vendor/core/types'
 import { COPY } from '../creation/copy'
-import { activePackage, type StepId } from '../design/packages'
+import { activePackage, tutorialSteps, type StepId } from '../design/packages'
 import { TUTORIAL_STEPS, stepAnchor, stepHintAfterMs, stepSay, stepsFor } from './tutorial'
 
 /** The tutorial's flow id (spec 6.1). */
@@ -171,10 +171,13 @@ export function premiersPasFlow(registry: Registry, ids: readonly StepId[] = TUT
   }
 }
 
-/** The tutorial flow of the address's design package (its pacing), or null without `?design=1..5` (today's game has no tutorial). */
+/**
+ * The tutorial flow of the address's design package (its pacing), or null without `?design=1..5` (today's game has no tutorial). The steps are `tutorialSteps`:
+ * package 5 runs the ten standard steps until T6.3 builds its playable model (T3 close review S1).
+ */
 export function tutorialFlowFor(search: string, registry: Registry): Flow | null {
   const pkg = activePackage(search)
-  return pkg === null ? null : premiersPasFlow(registry, pkg.pacing.steps, pkg.pacing.hintAfterMs)
+  return pkg === null ? null : premiersPasFlow(registry, tutorialSteps(pkg), pkg.pacing.hintAfterMs)
 }
 
 // ── the live suggestions ────────────────────────────────────────────────────────────────────────────────────────────

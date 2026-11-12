@@ -280,6 +280,8 @@ export function createRectResolver(deps: {
   doc?: Pick<BridgeDoc, 'querySelector'>
   /** The tutorial unlocked the power helper (plan T3.4): its power steps then ring the helper button (or the checklist chip). */
   helperUnlocked?: () => boolean
+  /** Mode Création offers the helper now (T3 close review S3): required too, so the ring never points at a button that is not there. */
+  helperOffered?: () => boolean
 }): { getRect(anchor: string): Rect | null; clear(): void } {
   const { bridge, registry, now } = deps
   const legacy = deps.route === 'legacy'
@@ -317,19 +319,20 @@ export function createRectResolver(deps: {
     if (isTutorialAnchor(anchor)) {
       // The tutorial's anchors read the page (a drawer tab, a card, a Propriétés button) and the selection; no page = not on screen.
       const doc = deps.doc
-      return (
-        resolveTutorialAnchor(anchor, {
-          state: bridge.snapshot(),
-          selection: bridge.selection?.() ?? null,
-          registry,
-          firstRect: (selectors) => (doc === undefined ? null : firstRect(doc, selectors)),
-          rectOfAnchor: rectOfAnchor,
-          anchorOfDevice: (id) => bridge.anchorOfDevice(id),
-          anchorOfPort: (ref) => bridge.anchorOfPort(ref),
-          anchorOfControl: (i, c) => bridge.anchorOfControl(i, c),
-          helperUnlocked: deps.helperUnlocked?.() === true,
-        }) ?? null
-      )
+      const r = resolveTutorialAnchor(anchor, {
+        state: bridge.snapshot(),
+        selection: bridge.selection?.() ?? null,
+        registry,
+        firstRect: (selectors) => (doc === undefined ? null : firstRect(doc, selectors)),
+        rectOfAnchor: rectOfAnchor,
+        anchorOfDevice: (id) => bridge.anchorOfDevice(id),
+        anchorOfPort: (ref) => bridge.anchorOfPort(ref),
+        anchorOfControl: (i, c) => bridge.anchorOfControl(i, c),
+        helperUnlocked: deps.helperUnlocked?.() === true,
+        helperOffered: deps.helperOffered?.() === true,
+      })
+      // undefined: not the tutorial's to answer here (nav:ecoute while the bench can play): the bridge's shell anchor, as before
+      if (r !== undefined) return r
     }
     return isAnchor(anchor) ? bridge.rectOf(anchor) : null
   }
@@ -447,7 +450,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       const r = runtime?.record()
       return r !== undefined && r.status === 'running' && r.helper
     }
-    const rects = createRectResolver({ bridge, registry, now, route: deps.route, doc, helperUnlocked })
+    const rects = createRectResolver({ bridge, registry, now, route: deps.route, doc, helperUnlocked, helperOffered: () => bridge.helper?.()?.offered === true })
     cleanups.push(() => rects.clear())
     // The widget holds text (the keyboard hint, the bubble) that must sit inside a landmark; it gets one of its own, a child of <body> so that a modal's
     // `inert` on the body's other children still covers it. The landmark has no box of its own (the widget is fixed-positioned).
@@ -482,7 +485,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     const hostEvent = (e: HostEvent): void => send({ type: 'hostEvent', event: e })
     late = send
     const tutorialLook = (state: TpState | null): void =>
-      guard(() => runtime?.update({ state, audio: bridge.playing?.() ?? null, request: bridge.tutorialRequest?.() ?? null }))
+      guard(() => runtime?.update({ state, audio: bridge.playing?.() ?? null, request: bridge.tutorialRequest?.() ?? null, helper: bridge.helper?.() ?? null }))
 
     let revision = 0
     // The mode is read live. When the address turns to an exam one the controller is told first (it withholds everything), then the whole mount is torn down:

@@ -251,6 +251,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
       checklist: 'chip',
       start: 'playable-model',
     },
+    // UNUSED until T6.3 builds the playable model (`tutorialSteps` falls back to the ten steps): restored by T6.3. Kept here as data.
     pacing: { steps: ['ecoute', 'debrancher', 'rebrancher'], hintAfterMs: 25_000 },
     presenter: 'step-card',
     oscar: { leads: true, proactive: true },
@@ -273,6 +274,15 @@ export function designFromSearch(search: string): DesignId | null {
 
 export function packageById(id: DesignId): DesignPackage {
   return DESIGN_PACKAGES[id]
+}
+
+/**
+ * The steps a package's tutorial actually runs (T3 close review S1). A package that starts on the playable model (package 5) cannot run its own pacing until that
+ * model exists (plan T6.3): it would open the empty neutral room and ask for Écoute first, a step no learner can complete there. Until then it runs the standard
+ * ten steps (spec 6.3); its own `pacing.steps` stay as data, restored by T6.3. The start screen's « N étapes » and the guide's flow both read this.
+ */
+export function tutorialSteps(pkg: DesignPackage): readonly StepId[] {
+  return pkg.layout.start === 'playable-model' ? ALL_STEPS : pkg.pacing.steps
 }
 
 /** The active package for this address, or null (no `?design`: today's behaviour). */

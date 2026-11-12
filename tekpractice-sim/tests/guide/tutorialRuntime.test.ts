@@ -10,7 +10,7 @@ import { CREATION_STRINGS, premiersPasFlow } from '../../src/guide/flows.creatio
 import { createTutorialRuntime, type TutorialDetail, type TutorialRequest } from '../../src/guide/tutorial'
 import { createController } from '../../src/guide/vendor/core/controller'
 import type { GuideBrain } from '../../src/guide/vendor/core/brain'
-import type { ControllerInput, GuideView, HostEvent } from '../../src/guide/vendor/core/types'
+import type { ControllerInput, Flow, GuideView, HostEvent } from '../../src/guide/vendor/core/types'
 
 const registry = makeRegistry()
 const brain: GuideBrain = { ask: async () => ({ kind: 'refusal', text: 'x', lines: [], verdict: null }), judge: async () => ({ verdict: null, needInfo: null }) }
@@ -49,7 +49,7 @@ class MemStorage {
 const flush = (): Promise<void> => new Promise((r) => setTimeout(r, 0))
 
 /** A page: the real controller fed through the runtime's storage, as mount.ts wires it. */
-function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps) {
+function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps, extra: Flow[] = []) {
   const clock = { t: 1 }
   const flow = premiersPasFlow(registry, pacing)
   const sent: ControllerInput[] = []
@@ -68,7 +68,7 @@ function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps) 
     },
     emit: (detail) => told.push(detail),
   })
-  controller = createController({ brain, flows: [flow], clock: () => clock.t++, strings: CREATION_STRINGS, storage: rt.storage })
+  controller = createController({ brain, flows: [flow, ...extra], clock: () => clock.t++, strings: CREATION_STRINGS, storage: rt.storage })
   return {
     rt,
     flow,
@@ -87,6 +87,8 @@ function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps) 
   }
 }
 const ask = (n: number, kind: TutorialRequest['kind'] = 'start', allowed = true): TutorialRequest => ({ n, kind, allowed })
+/** `tekpractice:tutorial` as the runtime sends it (T3 close review S5: with `hasPowerSteps` and `powerAhead`). */
+const D = (step: string | null, helperUnlocked = false, powerAhead = step !== null, hasPowerSteps = true): TutorialDetail => ({ step: step as TutorialDetail['step'], helperUnlocked, hasPowerSteps, powerAhead })
 const step = (k: number, n = 10): string => `Parcours « Premiers pas » : étape ${k} sur ${n}.`
 
 describe('the tutorial record (oscar-guide.onboarding.v1)', () => {
@@ -313,21 +315,25 @@ describe('tekpractice:tutorial (plan T3.3): the run as Mode Création sees it, f
     p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
     await flush()
     // first « no run » (the request is handled), then the run at step 1: a stale record on the creation side is corrected either way
-    expect(p.told).toEqual([{ step: null, helperUnlocked: false }, { step: 'console', helperUnlocked: false }])
+    expect(p.told).toEqual([D(null), D('console')])
     await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
-    expect(p.told.at(-1)).toEqual({ step: 'micro', helperUnlocked: false })
+    expect(p.told.at(-1)).toEqual(D('micro'))
     const n = p.told.length
     p.rt.update({ state: stateOf([]), audio: null, request: ask(1) }) // same request, same step: nothing new
     await flush()
     expect(p.told).toHaveLength(n)
     p.rt.update({ state: stateOf([]), audio: null, request: ask(2, 'skip') })
     await flush()
-    expect(p.told.at(-1)).toEqual({ step: null, helperUnlocked: false })
+    expect(p.told.at(-1)).toEqual(D(null))
   })
 })
 
 // ── T3.4: Oscar's third tier unlocks the helper; the steps the helper did are « montré » ───────────────────────────────────────
-import { POWER_HELPER_KEY, recordPowerHelperUse } from '../../src/design/powerHelperUse'
+// T3 close review S2 / S3: the helper's state comes through the bridge (`helper`: offered now, uses on this page), never through storage.
+import type { PowerHelperReading } from '../../src/design/powerHelperUse'
+
+const OFFERED: PowerHelperReading = { offered: true, n: 0, instances: [] }
+const used = (n: number, instances: string[]): PowerHelperReading => ({ offered: false, n, instances })
 
 describe('T3.4: the escalation to the power helper', () => {
   const Q: [string, string] = ['q', 'yamaha-ql1']
@@ -338,13 +344,13 @@ describe('T3.4: the escalation to the power helper', () => {
   const offer = COPY.tutorial!.helperOffer!
 
   /** Started on an empty bench, « Passer cette étape » to step 8, then the bench is what the caller says (nothing of it completes step 8). */
-  async function atStep8(bench: TpState, s = new MemStorage()) {
+  async function atStep8(bench: TpState, s: MemStorage | null = new MemStorage(), helper: PowerHelperReading | null = OFFERED) {
     const p = page(s)
     await p.init()
-    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1), helper })
     await flush()
     for (let i = 0; i < 7; i++) await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
-    p.rt.update({ state: bench, audio: null, request: ask(1) })
+    p.rt.update({ state: bench, audio: null, request: ask(1), helper })
     await flush()
     expect(p.title()).toBe(step(8))
     return { p, s }
@@ -357,15 +363,15 @@ describe('T3.4: the escalation to the power helper', () => {
     await p.controller.dispatch({ type: 'chip', id: 'hint' })
     await flush()
     expect(unlocked(p)).toBe(false)
-    expect(p.told.at(-1)).toEqual({ step: 'courant-console', helperUnlocked: false })
+    expect(p.told.at(-1)).toEqual(D('courant-console'))
   })
 
-  it('does not trigger without a strip on the bench, even at tier 3 (step 7 passed without placing one); triggers once the strip is placed', async () => {
-    const { p } = await atStep8(stateOf([Q, K]))
+  it('does not trigger while the helper is not offered (no strip: step 7 passed without placing one), even at tier 3; triggers once it is offered', async () => {
+    const { p } = await atStep8(stateOf([Q, K]), new MemStorage(), { ...OFFERED, offered: false })
     await p.controller.dispatch({ type: 'chip', id: 'show' }) // « Montre-moi »: tier 3 at once
     await flush()
     expect(unlocked(p)).toBe(false)
-    p.rt.update({ state: stateOf([Q, K, P]), audio: null, request: ask(1) })
+    p.rt.update({ state: stateOf([Q, K, P]), audio: null, request: ask(1), helper: OFFERED })
     await flush()
     expect(unlocked(p)).toBe(true)
   })
@@ -378,7 +384,7 @@ describe('T3.4: the escalation to the power helper', () => {
     await flush()
     expect(unlocked(p)).toBe(true)
     expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))).toMatchObject({ helper: true, step: 'courant-console' })
-    expect(p.told.at(-1)).toEqual({ step: 'courant-console', helperUnlocked: true })
+    expect(p.told.at(-1)).toEqual(D('courant-console', true))
     expect(p.sent.at(-1)).toEqual({ type: 'chip', id: 'next' })
     expect(p.text()).toBe(`${COPY.tutorial!.courantConsole} ${offer}`)
     expect(p.controller.getView().target?.anchor).toBe('nav:connect.from.mains-console') // the mount resolves it to the helper (tutorial.test.ts)
@@ -387,7 +393,7 @@ describe('T3.4: the escalation to the power helper', () => {
   it('tier 3 on a step that is not a power step does not trigger', async () => {
     const p = page(new MemStorage())
     await p.init()
-    p.rt.update({ state: stateOf([P]), audio: null, request: ask(1) })
+    p.rt.update({ state: stateOf([P]), audio: null, request: ask(1), helper: OFFERED })
     await flush()
     await p.controller.dispatch({ type: 'chip', id: 'show' })
     await flush()
@@ -407,7 +413,7 @@ describe('T3.4: the escalation to the power helper', () => {
     const rt = createTutorialRuntime({ flow, registry, storage: s, now: () => clock.t, send: (i) => void controller.dispatch(i), emit: (d) => told.push(d) })
     controller = createController({ brain, flows: [flow], clock: () => clock.t, strings: CREATION_STRINGS, storage: rt.storage })
     await controller.dispatch({ type: 'setContext', context: { page: 'workbench', mode: 'practice' } })
-    rt.update({ state: stateOf([Q, K, P]), audio: null, request: ask(1) })
+    rt.update({ state: stateOf([Q, K, P]), audio: null, request: ask(1), helper: OFFERED })
     await flush()
     expect(rt.record()).toMatchObject({ status: 'running', step: 'courant-console', helper: false })
     const tick = async (ms: number) => {
@@ -427,7 +433,7 @@ describe('T3.4: the escalation to the power helper', () => {
     await tick(46_000) // tier 3
     await flush()
     expect(rt.record().helper).toBe(true)
-    expect(told.at(-1)).toEqual({ step: 'courant-console', helperUnlocked: true })
+    expect(told.at(-1)).toEqual(D('courant-console', true))
     expect(controller.getView().bubble?.lines.map((l) => l.text).join(' ')).toContain(COPY.tutorial!.helperOffer)
   })
 
@@ -438,11 +444,10 @@ describe('T3.4: the escalation to the power helper', () => {
       await p.controller.dispatch({ type: 'chip', id: 'show' })
       await flush()
       expect(unlocked(p)).toBe(true)
-      // Mode Création: the helper cabled both and marked its use, then the bridge's one poll brings both connect events in design order
-      expect(recordPowerHelperUse(s, ['q', 'k'])).toBe(true)
+      // Mode Création: the helper cabled both (its use count goes up), then the bridge's one poll brings both connect events in design order
       const pairs = order === 'console first' ? ['mains-console', 'mains-speaker'] : ['mains-speaker', 'mains-console']
-      for (const pair of pairs) await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair } })
-      p.rt.update({ state: stateOf([Q, K, P], order === 'console first' ? [pq, pk] : [pk, pq]), audio: null, request: ask(1) })
+      for (const pair of pairs) await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair, fed: true } })
+      p.rt.update({ state: stateOf([Q, K, P], order === 'console first' ? [pq, pk] : [pk, pq]), audio: null, request: ask(1), helper: used(1, ['q', 'k']) })
       await flush()
       await flush()
       expect(p.title()).toBe(step(10))
@@ -457,26 +462,188 @@ describe('T3.4: the escalation to the power helper', () => {
   it('cabled by hand (no use of the helper): a real completion, not « montré » (does not trigger)', async () => {
     const s = new MemStorage()
     const { p } = await atStep8(stateOf([Q, K, P]), s)
-    await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console' } })
-    p.rt.update({ state: stateOf([Q, K, P], [pq]), audio: null, request: ask(1) })
+    await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console', fed: true } })
+    p.rt.update({ state: stateOf([Q, K, P], [pq]), audio: null, request: ask(1), helper: OFFERED })
     await flush()
     expect(p.title()).toBe(step(9))
     expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))!.shown).toEqual([])
   })
 
-  it('a use of the helper before the page started (a stale mark) is not this run’s; restart clears helper and shown', async () => {
+  it('a use of the helper before the guide’s first look is not this run’s; restart clears helper and shown', async () => {
     const s = new MemStorage()
-    recordPowerHelperUse(s, ['q', 'k'])
-    const { p } = await atStep8(stateOf([Q, K, P]), s)
-    await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console' } })
-    p.rt.update({ state: stateOf([Q, K, P], [pq]), audio: null, request: ask(1) })
+    const { p } = await atStep8(stateOf([Q, K, P]), s, used(1, ['q', 'k']))
+    await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console', fed: true } })
+    p.rt.update({ state: stateOf([Q, K, P], [pq]), audio: null, request: ask(1), helper: { ...used(1, ['q', 'k']), offered: true } })
     await flush()
     expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))!.shown).toEqual([])
-    expect(s.getItem(POWER_HELPER_KEY)).not.toBeNull()
     await p.controller.dispatch({ type: 'chip', id: 'show' })
     await flush()
-    p.rt.update({ state: stateOf([Q, K, P], [pq]), audio: null, request: ask(2, 'restart') })
+    p.rt.update({ state: stateOf([Q, K, P], [pq]), audio: null, request: ask(2, 'restart'), helper: OFFERED })
     await flush()
     expect(p.rt.record()).toMatchObject({ helper: false, shown: [] }) // (the bench then completes steps 1, 3 and 7 again: « déjà en place »)
+  })
+})
+
+// ── T3 close review (C1, C2, S2 to S5, N4) ────────────────────────────────────────────────────────────────────────────────
+import { CREATION_FLOWS } from '../../src/guide/flows.creation'
+import { annotateTutorialEvent } from '../../src/guide/tutorial'
+
+describe('T3 close review: the runtime', () => {
+  const Q: [string, string] = ['q', 'yamaha-ql1']
+  const K: [string, string] = ['k', 'qsc-k12-2']
+  const P: [string, string] = ['p', 'multiprise-secteur']
+  const pq = { a: { instance: 'p', port: 'out-1' }, b: { instance: 'q', port: 'power-in' } }
+  const pk = { a: { instance: 'p', port: 'out-2' }, b: { instance: 'k', port: 'power-in' } }
+  const skipTo = async (p: ReturnType<typeof page>, k: number) => {
+    for (let i = 1; i < k; i++) await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+  }
+
+  it('C1: two speakers, the audio on #2: plugging #1 in does not end step 9 (by event nor by bench); plugging #2 in does', async () => {
+    const K1: [string, string] = ['k1', 'qsc-k12-2']
+    const K2: [string, string] = ['k2', 'qsc-k12-2']
+    const audio2 = { a: { instance: 'q', port: 'out-main-l' }, b: { instance: 'k2', port: 'in-line-a' } }
+    const p1 = { a: { instance: 'p', port: 'out-2' }, b: { instance: 'k1', port: 'power-in' } }
+    const p2 = { a: { instance: 'p', port: 'out-3' }, b: { instance: 'k2', port: 'power-in' } }
+    const anchors = { anchorOfDevice: (id: string) => `device:${id}`, anchorOfPort: (r: { instance: string; port: string }) => `port:${r.instance}.${r.port}`, anchorOfControl: (i: string, c: string) => `control:${i}.${c}` }
+    const connectEvent = (c: typeof p1, state: TpState) =>
+      annotateTutorialEvent({ type: 'connect', at: 1, data: { a: anchors.anchorOfPort(c.a), b: anchors.anchorOfPort(c.b) } }, { state, prev: state, bridge: anchors, registry })
+    const p = page(new MemStorage())
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    await skipTo(p, 9)
+    const bench = stateOf([Q, K1, K2, P], [audio2, pq])
+    p.rt.update({ state: bench, audio: null, request: ask(1) })
+    await flush()
+    expect(p.title()).toBe(step(9))
+    const one = stateOf([Q, K1, K2, P], [audio2, pq, p1])
+    await p.ev(connectEvent(p1, one))
+    p.rt.update({ state: one, audio: null, request: ask(1) })
+    await flush()
+    expect(p.title()).toBe(step(9)) // the wrong speaker: still step 9
+    const both = stateOf([Q, K1, K2, P], [audio2, pq, p1, p2])
+    await p.ev(connectEvent(p2, both))
+    expect(p.title()).toBe(step(10))
+  })
+
+  it('C2: another flow started mid-run (a question to Oscar): the record goes idle, Aide reads « Premiers pas », the gate opens; early/shown/helper kept until a genuine start clears them', async () => {
+    const s = new MemStorage()
+    const p = page(s, packageById(1).pacing.steps, [CREATION_FLOWS[0]])
+    await p.init()
+    p.rt.update({ state: stateOf([Q]), audio: null, request: ask(1), helper: OFFERED })
+    await flush()
+    await flush()
+    expect(p.title()).toBe(step(2))
+    expect(p.rt.record()).toMatchObject({ status: 'running', k: 2, early: ['console'] })
+    await p.controller.dispatch({ type: 'flow', control: { action: 'start', flowId: 'premier-montage' } })
+    await flush()
+    expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))).toMatchObject({ status: 'idle', step: null, k: 0, early: ['console'] })
+    expect(tutorialInProgress(s)).toBeNull() // Aide: « Premiers pas », not « Reprendre à l’étape 2 »
+    expect(p.told.at(-1)).toEqual(D(null)) // the helper's gate opens
+    // « Premiers pas »: a genuine start, at step 1, with the old notes cleared
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(2), helper: OFFERED })
+    await flush()
+    expect(p.title()).toBe(step(1))
+    expect(p.rt.record()).toMatchObject({ status: 'running', k: 1, early: [], shown: [], helper: false })
+  })
+
+  it('S2: blocked storage: the helper’s two cables end steps 8 and 9 « montré » (never a success, never « déjà en place ») through the bridge’s use count', async () => {
+    const p = page(null)
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1), helper: OFFERED })
+    await flush()
+    await skipTo(p, 8)
+    p.rt.update({ state: stateOf([Q, K, P]), audio: null, request: ask(1), helper: OFFERED })
+    await flush()
+    await p.controller.dispatch({ type: 'chip', id: 'show' })
+    await flush()
+    expect(p.rt.record().helper).toBe(true)
+    await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console', fed: true } })
+    await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-speaker', fed: true } })
+    p.rt.update({ state: stateOf([Q, K, P], [pq, pk]), audio: null, request: ask(1), helper: used(1, ['q', 'k']) })
+    await flush()
+    await flush()
+    expect(p.title()).toBe(step(10))
+    expect(p.rt.record()).toMatchObject({ shown: ['courant-console', 'courant-enceinte'], early: [] })
+    expect(p.text()).not.toContain('Déjà en place')
+  })
+
+  it('S3: tier 3 with a strip on the bench but the helper not offered (strip full, speaker on a Bêta outlet): no unlock, no offer said; offered again: unlocked', async () => {
+    const p = page(new MemStorage())
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    await skipTo(p, 8)
+    const notOffered = { ...OFFERED, offered: false }
+    p.rt.update({ state: stateOf([Q, K, P]), audio: null, request: ask(1), helper: notOffered })
+    await flush()
+    await p.controller.dispatch({ type: 'chip', id: 'show' })
+    await flush()
+    expect(p.rt.record().helper).toBe(false)
+    expect(p.text()).not.toContain(COPY.tutorial!.helperOffer)
+    expect(p.told.at(-1)).toEqual(D('courant-console'))
+    p.rt.update({ state: stateOf([Q, K, P]), audio: null, request: ask(1) }) // no reader at all: never offered
+    await flush()
+    expect(p.rt.record().helper).toBe(false)
+    p.rt.update({ state: stateOf([Q, K, P]), audio: null, request: ask(1), helper: OFFERED })
+    await flush()
+    expect(p.rt.record().helper).toBe(true)
+  })
+
+  it('S4: « Écoute » current while the bench cannot play: its sentence adds the checklist hint (by key); once the bench can play, the plain sentence', async () => {
+    const p = page(new MemStorage())
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    await skipTo(p, 10)
+    expect(p.title()).toBe(step(10))
+    p.rt.update({ state: { ...stateOf([Q, K]), playbackReady: false }, audio: null, request: ask(1) })
+    expect(p.flow.steps[9].say).toBe(`${COPY.tutorial!.ecoute} ${COPY.checklist!.menuHint}`)
+    p.rt.update({ state: { ...stateOf([Q, K]), playbackReady: true }, audio: null, request: ask(1) })
+    expect(p.flow.steps[9].say).toBe(COPY.tutorial!.ecoute)
+  })
+
+  it('S5: the detail says whether the run has a power step and whether one is still ahead (step 10: none ahead; package 5 data: none at all)', async () => {
+    const p = page(new MemStorage())
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    expect(p.told.at(-1)).toEqual({ step: 'console', helperUnlocked: false, hasPowerSteps: true, powerAhead: true })
+    await skipTo(p, 9)
+    expect(p.told.at(-1)).toEqual({ step: 'courant-enceinte', helperUnlocked: false, hasPowerSteps: true, powerAhead: true })
+    await skipTo(p, 2)
+    expect(p.told.at(-1)).toEqual({ step: 'ecoute', helperUnlocked: false, hasPowerSteps: true, powerAhead: false })
+    const q = page(new MemStorage(), packageById(5).pacing.steps)
+    await q.init()
+    q.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    expect(q.told.at(-1)).toEqual({ step: 'ecoute', helperUnlocked: false, hasPowerSteps: false, powerAhead: false })
+  })
+
+  it('N4: a lost or corrupt guide record never starts the tutorial on an old request by itself; a request raised on this page still does', async () => {
+    const s = new MemStorage()
+    s.setItem(TUTORIAL_RECORD_KEY, '{not json')
+    const p = page(s)
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: { ...ask(3), atLoad: 3 } })
+    await flush()
+    expect(p.sent).toEqual([])
+    p.rt.update({ state: stateOf([]), audio: null, request: { ...ask(4), atLoad: 3 } }) // « Premiers pas » on this page
+    await flush()
+    expect(p.title()).toBe(step(1))
+    // lost (no record at all), the creation counter already at 2 when the page loaded: nothing by itself
+    const q = page(new MemStorage())
+    await q.init()
+    q.rt.update({ state: stateOf([]), audio: null, request: { ...ask(2), atLoad: 2 } })
+    await flush()
+    expect(q.sent).toEqual([])
+    // a known record: a request it has not handled yet is acted on, whatever the page load saw (a reload before the guide's poll)
+    const r = new MemStorage()
+    r.setItem(TUTORIAL_RECORD_KEY, JSON.stringify({ v: 1, handledRequest: 1, step: null, k: 0, n: 10, status: 'idle', early: [] }))
+    const w = page(r)
+    await w.init()
+    w.rt.update({ state: stateOf([]), audio: null, request: { ...ask(2), atLoad: 2 } })
+    await flush()
+    expect(w.title()).toBe(step(1))
   })
 })

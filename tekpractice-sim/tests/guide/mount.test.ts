@@ -1161,10 +1161,10 @@ describe('the tutorial in the mount: ?design only, never started by the mount', 
     expect(flows).toHaveLength(7)
   })
 
-  it('?design=5: premiers-pas is ecoute, debrancher, rebrancher', () => {
+  it('?design=5: premiers-pas is the ten standard steps until T6.3 builds the playable model (T3 close review S1; was ecoute, debrancher, rebrancher)', () => {
     const r = designRig('?design=5')
     mountOscar(r.deps, r.f.impl)
-    expect(flowsOf(r).find((f) => f.id === 'premiers-pas')!.steps.map((s) => s.id)).toEqual(['ecoute', 'debrancher', 'rebrancher'])
+    expect(flowsOf(r).find((f) => f.id === 'premiers-pas')!.steps.map((s) => s.id)).toEqual(['console', 'micro', 'enceinte', 'console-enceinte', 'micro-console', 'lecture-console', 'multiprise', 'courant-console', 'courant-enceinte', 'ecoute'])
   })
 
   it('the mount never starts a flow: no flow control is sent at mount or on a change (T3.2 starts it on a request)', () => {
@@ -1263,11 +1263,27 @@ describe('createRectResolver: the tutorial anchors on a fake bridge and a fake p
     const P = stateOf([['q', 'yamaha-ql1'], ['k', 'qsc-k12-2'], ['p', 'multiprise-secteur']])
     const power = '[data-testid="checklist-power"]'
     let unlocked = false
-    const rr = createRectResolver({ bridge: fakeBridge(P).bridge, registry, now: () => 0, doc: page({ [power]: B(7) }), helperUnlocked: () => unlocked })
+    let offered = true // T3 close review S3: Mode Création offers the helper now
+    const rr = createRectResolver({ bridge: fakeBridge(P).bridge, registry, now: () => 0, doc: page({ [power]: B(7) }), helperUnlocked: () => unlocked, helperOffered: () => offered })
     expect(rr.getRect('nav:connect.from.mains-console')).toEqual(R) // the console (the bridge's device rect)
     unlocked = true
     rr.clear()
     expect(rr.getRect('nav:connect.from.mains-console')).toEqual({ x: 7, y: 7, w: 20, h: 10 })
+    offered = false // S3: unlocked, but the button is not there (a full strip): the console, never the missing button
+    rr.clear()
+    expect(rr.getRect('nav:connect.from.mains-console')).toEqual(R)
+  })
+
+  it('S4 (T3 close review): nav:ecoute rings the checklist chip while the bench cannot play; once it can, the bridge’s Écoute as before', () => {
+    const chip = '[data-testid="checklist-chip"]'
+    const blocked = { ...stateOf([['q', 'yamaha-ql1'], ['k', 'qsc-k12-2']]), playbackReady: false }
+    const b = fakeBridge(blocked)
+    const rr = createRectResolver({ bridge: b.bridge, registry, now: () => 0, doc: page({ [chip]: B(8) }) })
+    expect(rr.getRect('nav:ecoute')).toEqual({ x: 8, y: 8, w: 20, h: 10 })
+    const ready = fakeBridge({ ...blocked, playbackReady: true })
+    const rr2 = createRectResolver({ bridge: ready.bridge, registry, now: () => 0, doc: page({ [chip]: B(8) }) })
+    expect(rr2.getRect('nav:ecoute')).toEqual(R)
+    expect(ready.spies.rectOf).toHaveBeenCalledWith('nav:ecoute')
   })
 })
 

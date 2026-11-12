@@ -631,7 +631,8 @@ describe('T3.4: once the helper is unlocked, a power step rings the helper (nav:
     playbackReady: false,
     firstReason: null,
   }
-  const env = (helperUnlocked: boolean | undefined, shown: string[]): AnchorEnv => ({
+  // T3 close review S3: the redirect also needs Mode Création to say the helper is offered now (`helperOffered`, default true in these cases)
+  const env = (helperUnlocked: boolean | undefined, shown: string[], helperOffered = true): AnchorEnv => ({
     state,
     selection: null,
     registry,
@@ -641,6 +642,7 @@ describe('T3.4: once the helper is unlocked, a power step rings the helper (nav:
     anchorOfPort: (r) => `port:${r.instance}.${r.port}`,
     anchorOfControl: (i, c) => `control:${i}.${c}`,
     ...(helperUnlocked === undefined ? {} : { helperUnlocked }),
+    helperOffered,
   })
   const POWER = '[data-testid="checklist-power"]'
   const CHIP = '[data-testid="checklist-chip"]'
@@ -648,11 +650,115 @@ describe('T3.4: once the helper is unlocked, a power step rings the helper (nav:
     expect(resolveTutorialAnchor('nav:connect.from.mains-console', env(true, [CHIP, POWER]))).toEqual(RECT(101))
     expect(resolveTutorialAnchor('nav:connect.from.mains-speaker', env(true, [CHIP]))).toEqual(RECT(100))
   })
+  it('S3: unlocked but not offered now (strip full, a speaker on a Bêta outlet): the device to cable, never the chip (does not trigger)', () => {
+    expect(resolveTutorialAnchor('nav:connect.from.mains-console', env(true, [CHIP, POWER], false))).toEqual(RECT(1))
+    expect(resolveTutorialAnchor('nav:connect.from.mains-speaker', env(true, [CHIP], false))).toEqual(RECT(1))
+  })
+  it('S4: nav:ecoute while the bench cannot play rings the checklist chip (triggers); ready, or no chip on the page: the shell’s own Écoute (undefined)', () => {
+    expect(resolveTutorialAnchor('nav:ecoute', env(undefined, [CHIP]))).toEqual(RECT(100))
+    expect(resolveTutorialAnchor('nav:ecoute', env(undefined, []))).toBeUndefined()
+    expect(resolveTutorialAnchor('nav:ecoute', { ...env(undefined, [CHIP]), state: { ...state, playbackReady: true } })).toBeUndefined()
+    expect(resolveTutorialAnchor('nav:ecoute', { ...env(undefined, [CHIP]), state: null })).toBeUndefined()
+  })
+  it('C1: the step-9 ring is speaker #2 when the audio goes to #2 (#1 first in the design)', () => {
+    const two: TpState = {
+      ...state,
+      instances: [...state.instances, { id: 'k2', deviceId: 'qsc-k12-2', label: 'k2' }],
+      connections: [{ a: { instance: 'q', port: 'out-main-l' }, b: { instance: 'k2', port: 'in-line-a' } }],
+    }
+    const e: AnchorEnv = { ...env(false, []), state: two, rectOfAnchor: (a: string) => (a === 'device:k2' ? RECT(2) : a.startsWith('device:') ? RECT(1) : null) }
+    expect(resolveTutorialAnchor('nav:connect.from.mains-speaker', e)).toEqual(RECT(2))
+  })
   it('locked or not said: the device to cable, as before (does not trigger); an audio pair never goes to the helper', () => {
     expect(resolveTutorialAnchor('nav:connect.from.mains-console', env(false, [CHIP, POWER]))).toEqual(RECT(1))
     expect(resolveTutorialAnchor('nav:connect.from.mains-console', env(undefined, [CHIP, POWER]))).toEqual(RECT(1))
     expect(resolveTutorialAnchor('nav:connect.from.console-speaker', env(true, [CHIP, POWER]))).toEqual(RECT(1)) // the console to cable, not the helper
     // unlocked, but the shell shows neither: the device, not nothing
     expect(resolveTutorialAnchor('nav:connect.from.mains-console', env(true, []))).toEqual(RECT(1))
+  })
+})
+
+// ── T3 close review C1: two speakers, the step-4 audio cable on the SECOND one ─────────────────────────────────────────────
+describe('C1 (T3 close review): step 9 is the speaker that carries the audio (fed), never another one', () => {
+  const Q = ['q', 'yamaha-ql1'] as [string, string]
+  const K1 = ['k1', 'qsc-k12-2'] as [string, string]
+  const K2 = ['k2', 'qsc-k12-2'] as [string, string]
+  const P = ['p', 'multiprise-secteur'] as [string, string]
+  const audio2 = cable(['q', 'out-main-l'], ['k2', 'in-line-a'])
+  const pq = cable(['p', 'out-1'], ['q', 'power-in'])
+  const pk1 = cable(['p', 'out-2'], ['k1', 'power-in'])
+  const pk2 = cable(['p', 'out-3'], ['k2', 'power-in'])
+
+  it('annotation: a mains cable on the fed speaker carries fed: true, on the other speaker fed: false', () => {
+    const s = stateOf([Q, K1, K2, P], [audio2, pq, pk1, pk2])
+    expect(annotateConnect(connected(pk2), s.connections, s, fakeAnchors, registry).data).toMatchObject({ pair: 'mains-speaker', fed: true })
+    expect(annotateConnect(connected(pk1), s.connections, s, fakeAnchors, registry).data).toMatchObject({ pair: 'mains-speaker', fed: false })
+  })
+
+  it('step 9 ends on the strip to speaker #2 (triggers); the strip to speaker #1 does not', () => {
+    const s = stateOf([Q, K1, K2, P], [audio2, pq, pk1, pk2])
+    expect(ends('courant-enceinte', connected(pk2), s)).toBe(true)
+    expect(ends('courant-enceinte', connected(pk1), s)).toBe(false)
+  })
+
+  it('stepSatisfied: speaker #1 on the strip is not step 9; speaker #2 is', () => {
+    const sat = (s: TpState) => stepSatisfied(byId('courant-enceinte'), s, null, registry)
+    expect(sat(stateOf([Q, K1, K2, P], [audio2, pq, pk1]))).toBe(false)
+    expect(sat(stateOf([Q, K1, K2, P], [audio2, pq, pk2]))).toBe(true)
+  })
+
+  it('the ring for step 9 points at speaker #2 (fed first), even though speaker #1 comes first in the design', () => {
+    const s = stateOf([Q, K1, K2, P], [audio2, pq])
+    expect(nextConnectionStepFor('mains-speaker', s, registry)).toEqual({ from: { instance: 'k2', port: 'power-in' }, to: { instance: 'p', port: 'out-2' } })
+  })
+
+  it('no audio cable yet (step 4 passed): any speaker is the one to power, so step 9 can still end (no dead end)', () => {
+    const s = stateOf([Q, K1, K2, P], [pq, pk1])
+    expect(ends('courant-enceinte', connected(pk1), s)).toBe(true)
+    expect(stepSatisfied(byId('courant-enceinte'), s, null, registry)).toBe(true)
+  })
+
+  it('two QL1s, the audio on the second: step 8 ends on the second console only, and its ring points there', () => {
+    const Q2 = ['q2', 'yamaha-ql1'] as [string, string]
+    const a = cable(['q2', 'out-main-l'], ['k1', 'in-line-a'])
+    const p1 = cable(['p', 'out-1'], ['q', 'power-in'])
+    const p2 = cable(['p', 'out-2'], ['q2', 'power-in'])
+    const s = stateOf([Q, Q2, K1, P], [a, p1, p2])
+    expect(ends('courant-console', connected(p2), s)).toBe(true)
+    expect(ends('courant-console', connected(p1), s)).toBe(false)
+    expect(nextConnectionStepFor('mains-console', stateOf([Q, Q2, K1, P], [a]), registry)?.from).toEqual({ instance: 'q2', port: 'power-in' })
+  })
+})
+
+// ── T3 close review S1: package 5 until T6.3 builds its playable model ─────────────────────────────────────────────────────
+import { tutorialSteps } from '../../src/design/packages'
+
+describe('S1 (T3 close review): package 5 runs the ten standard steps until T6.3', () => {
+  const TEN = TUTORIAL_STEPS.slice(0, 10).map((s) => s.id)
+  it('?design=5: the flow is the ten steps (its own 3-step pacing stays as data, unused); the start screen count follows (10)', () => {
+    expect(tutorialFlowFor('?design=5', registry)!.steps.map((s) => s.id)).toEqual(TEN)
+    expect(tutorialSteps(packageById(5))).toEqual(TEN)
+    expect(packageById(5).pacing.steps).toEqual(['ecoute', 'debrancher', 'rebrancher'])
+    for (const id of [1, 2, 3, 4] as const) expect(tutorialSteps(packageById(id))).toBe(packageById(id).pacing.steps) // the others: their own pacing
+  })
+  it('no package offers a step that cannot complete in the neutral room: the run starts by placing the console, and each step’s bench comes from the steps before it', () => {
+    // What each step needs already on the bench (the empty neutral room has nothing): only earlier steps of the same run may provide it.
+    const needs: Partial<Record<StepId, StepId[]>> = {
+      'console-enceinte': ['console', 'enceinte'],
+      'micro-console': ['console', 'micro'],
+      'lecture-console': ['console'],
+      'courant-console': ['console', 'multiprise'],
+      'courant-enceinte': ['enceinte', 'multiprise'],
+      ecoute: ['console', 'enceinte', 'console-enceinte', 'lecture-console', 'courant-console', 'courant-enceinte'],
+      debrancher: ['ecoute'],
+      rebrancher: ['debrancher'],
+    }
+    for (const id of DESIGN_IDS) {
+      const ids = tutorialFlowFor(`?design=${id}`, registry)!.steps.map((s) => s.id as StepId)
+      expect(ids[0], `design ${id}`).toBe('console')
+      ids.forEach((step, k) => {
+        for (const need of needs[step] ?? []) expect(ids.slice(0, k), `design ${id}: ${step} needs ${need} before it`).toContain(need)
+      })
+    }
   })
 })

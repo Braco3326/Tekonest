@@ -384,4 +384,16 @@ describe('Aide while a tutorial runs: « Reprendre », « Recommencer », « Pas
     expect(h.record()).toMatchObject({ request: 3 })
     expect(h.log).toEqual(['room', 'frame']) // only « Premiers pas » with no place opens the room
   })
+  it('N3 (T3 close review): the kind is stored WITH the request, so a « Passer le tutoriel » reloaded before the guide’s poll is still a skip; a start leaves no field', async () => {
+    const storage = memoryStorage(rec('decouvre', 'taken', 1))
+    const h = harness({}, { storage })
+    await h.ob.requestTutorial('skip')
+    expect(JSON.parse(storage.data.get('audio-sim/creation-onboarding.v1')!)).toMatchObject({ request: 2, kind: 'skip' })
+    // reload: a new page on the same storage reads the kind from the record
+    const again = harness({}, { storage })
+    expect(again.ob.snapshot()).toMatchObject({ requestKind: 'skip', requestAtLoad: 2 })
+    await again.ob.requestTutorial()
+    expect(JSON.parse(storage.data.get('audio-sim/creation-onboarding.v1')!)).toEqual({ v: 1, profile: 'decouvre', offer: 'taken', request: 3, shown: [] })
+    expect(again.ob.snapshot()).toMatchObject({ requestKind: 'start', requestAtLoad: 2 })
+  })
 })
