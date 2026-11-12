@@ -1179,3 +1179,257 @@ Left over from waves 2 and 3 and still blocked, unchanged: shure-ua844-plus, shu
 - `npm run validate:assets`: **240 ok, 0 failed** (the whole tree, 28 of them mine). Per device dry run and ship: 11 of 11 gates for racks, desks and the cabinet, 10 of 10 for the two lathes.
 - `npx vitest run tests/tools tests/scene/modelIds.test.ts`: 64 files; one run had 1 flaky failure (`rackDevice.test.ts`, the byte-identical v2 rack build, the known chance failure of the Wave 2 finding 1, green in the rerun) and the rerun has exactly the 6 expected stage-2 reds: `modelIds.test.ts` (proposals that ship a model while their plan row is staged), `brandsRegister.test.ts` x2 (labels and the generated block), `proposalsFixedPoint.test.ts` x3. None is about the content of my rows.
 - Not run: tsc, lint, the creation e2e, chunk budget, the in-engine look audit, a perspective render (the sheets are four orthographic views).
+
+
+## Waves 2 to 5 commit and gate (data rule, stage 2, shared tests, e2e, gate) (2026-11-12)
+
+Coordinator step after the device-build agents of Waves 2, 3 and 4: the founder's data rule applied to the templates first, then the stage 2 of the 147 staged rows (`npm run promote -- <id> --commit`, one at a time, `--dry-run` read first), the shared tests, the control layouts, the scaled e2e and the gate. Nothing pushed, no Meshy, no history rewrite, no logo SVG staged. Commits (explicit paths): `26713c9` data rule (templates, app, specs, inventory), `abff704` to `6fdd519` the six stage-2 batches (catalogue, proposals, plan, journal), `b9815e4` shared tests, `76a86e4` regenerated files, `0807df1` layouts and the 28 rebuilt GLBs, then the register block, the e2e commit and this log.
+
+### 1. The data rule (founder, 2026-11-12), what changed
+
+Rule: every number or capability a catalogue entry states comes from THAT model's manufacturer sheet; unknown stays unknown, and the app shows no number for it. Audit of `tools/behaviourTemplates.ts` and `tools/promoteDevice.ts`; every invented datum removed:
+
+| Template datum | Before | Now | Test |
+|---|---|---|---|
+| speaker coverage | `acoustic` 90 x 60, source `nominal` « valeur nominale » on every promoted speaker | none: a promoted speaker has NO `acoustic`; the template note says « valeur non vérifiée » | `behaviourTemplates.test.ts`, `promoteDevice.test.ts` |
+| preamp gain | enum `gain` 0 / 20 / 40 / 60 dB, default 20 | not written | `behaviourTemplates.test.ts` |
+| desk master fader and balance | enum `fader-master` (-inf .. +10 dB), `balance-master` (G100 .. D100) | not written (a desk without them passes its signal at unity, which the signal path already does); the master MUTE (a switch, no number) only when the spec lists it | same |
+| DI ground lift, pad | always written for a DI | only when the spec lists them (a switch, no dB value) | same |
+| preamp phantom switch | written whenever a mic input carries `providesPhantom` | only when the spec lists `phantom-48v` AND a mic input carries the spec flag | same |
+| phantom need | `requiresPhantom` derived from the traits `condenser` / `phantom-powered` | never derived: only the spec port flag; a `dynamic` or `ribbon` trait still REMOVES a flag that cannot be true | same |
+| phantom supply | `providesPhantom` added to every mic input of an interface, desk or preamp | never added: only the spec port flag (`isMicInput`, a classification, is still added) | same |
+
+Other numbers the templates never wrote (checked): no pad dB, no impedance, no `loadOhms`, no battery option, no sensitivity or SPL; `portAliases`, routes and the `power` toggle (structure) stay.
+
+**App.** A speaker without `acoustic` was already tolerated by the engine (`coverageSources` excludes it as `no-acoustic`, `listenVoices` plays it as a point source with 0 dB directivity, the catalogue check warns). What is new: (a) the coverage computation **skips** such a speaker (no angle is made up for it; documented in `coverageModel.noDataNote`), (b) the panel says so under the coverage block: « Couverture non calculée pour {names} : valeur non vérifiée (aucune donnée constructeur retenue pour ce modèle). » when a fed speaker was left out for that reason (view field `noDataNote`, shown with the front note), (c) the « Aucune enceinte audible » reason now reads « enceinte sans donnée de couverture : valeur non vérifiée ». Copy keys `coverage.noDataNote` (new) and `coverage.reasonNoAcoustic` (reworded) are in `docs/copy/creation-mode.md` with status **à valider**. Listening is unchanged and still plays the speaker (directivity 0 dB = no directivity applied: an absence of data, not a measurement). The properties panel never showed acoustic numbers. Tests: `coverageSources.test.ts` (no-acoustic; a mixed rig where one speaker has no data, the other still makes the field, no 90 x 60 anywhere), `coverageModel.test.ts` (`noDataNote`), `listenVoices.test.ts` (already: plays at 0 dB), `propertiesModel.test.ts` (a speaker without acoustic: no crash, no coverage number).
+
+**Specs and GLBs.** Controls the templates no longer write cannot stay in a spec (the parity check refuses a spec control that is not in the catalogue): `yamaha-mg10xu` and `midas-m32` lost `fader-master`, `mute-master`, `balance-master` (their datasheets show a main fader but document no range; the Wave 1b open item 1 predicted the mute and balance), `ams-neve-1073dpd`, `ua-la-610-mkii` and `aphex-channel` lost `gain`; the five GLBs were rebuilt (11 of 11 gates). `sanken-cos-11d`: its XLR output no longer carries `requiresPhantom` (its page lists a supply of +3 V to +10 V, not 48 V). The phantom need of the other flagged microphones was **read on the manufacturer sheets** and kept: C414 XLII (48 V phantom to IEC 61938), NT5 (P48), NTG3 (48 V, 44 to 52 V, 5 mA min), NT-SF1 (48 V, 6.2 mA), PZM-30D (12 to 48 V phantom). The already-promoted TLM 103, KM 184, MKH 416, NT1 and U 87 Ai were not re-read (listed in the inventory).
+
+**Inventory for the audit task 4.6:** `docs/superpowers/notes/2026-11-12-catalog-numeric-data-inventory.md`: every numeric or capability datum of the 44 devices that were in the catalogue before this step (device, field, value, current source), written before any stage 2 and not rewritten. Notable: `neumann-kh-120-ii` still carries the nominal 90 x 60 coverage written by the old template (left on purpose: existing devices are task 4.6's), the QL1 and the Wave 1 desks keep their fader / balance option lists, 11 Bêta proposals carry phantom or ribbon flags from the knowledge base.
+
+### 2. Counts
+
+| | n |
+|---|---|
+| staged rows at the start (`staged: true`) | 147 |
+| promoted into `content/catalog.json` | 69 |
+| beta-modelled (proposal kept or added, model shipped) | 78 |
+| failed after three attempts / reverted | 0 |
+| plan rows still without a model (not built by the agents) | 126 of 315: 107 `dataQuality: missing`, 19 with some data that the agents did not build (blocked by shape, ports or size, per their sections above) |
+
+Whole programme by wave (plan `wave` field) after this step:
+
+| wave | rows | promoted | beta-modelled | no model |
+|---|---|---|---|---|
+| 1 | 49 | 19 | 23 | 7 |
+| 2 | 87 | 25 | 34 | 28 |
+| 3 | 92 | 22 | 29 | 41 |
+| 4 | 70 | 15 | 12 | 43 |
+| 5 | 17 | 7 | 3 | 7 |
+| all | 315 | 88 | 101 | 126 |
+
+Of this step's 147 rows: wave 2 59 (25 promoted / 34 beta), wave 3 51 (22 / 29), wave 4 27 (15 / 12), wave 5 10 (7 / 3). The six stage-2 batches: 6 promoted / 19 beta, 14 / 11, 11 / 14, 9 / 16, 17 / 8, 12 / 10.
+
+Catalogue after: **113 devices (was 44), 30 categories, 675 ports, 61 controls, 8 rules, 38 connector types, 17 signal types**; 159 Bêta proposals, 101 of them with a model. `validate:catalog` valid with **15 warnings**: the 15 promoted speakers have no sourced acoustic data (the data rule; a warning, never an error). Why only 69 of 147 are promoted: the promoted outcome needs a datasheet or dealer size with `sizeConfidence: ok` AND `portsDocumented` with a cited page; of the 78 beta-modelled rows, 43 have a promotable size but no documented connector set, 30 have both an assumed axis order and no documented connector set, 3 have conflicting source sizes and no documented connector set, and 2 have only an assumed axis order.
+
+### 3. What the stage 2 showed, and how it was handled
+
+| Finding | Fix | Test |
+|---|---|---|
+| The old template added the phantom supply to 58 mic inputs (24 devices) whose spec did not flag it | no longer added (data rule); those inputs keep `isMicInput` only. The 95 spec-flagged ports (24 promoted devices) are kept: they are the spec authors' reading of the cited pages, NOT re-verified here (open item 1) | `behaviourTemplates.test.ts` |
+| A kept Bêta proposal ignored the flags its spec declares (yamaha-xmv8280-d: `isDantePrimary`) | `mergeSpecFlags` in stage 2 and in `--regen` of a beta-modelled row; one proposal changed | `promoteDevice.test.ts`, `specPortParity.test.ts` |
+| Control Ethernet: a spec `rj45 aoip` agrees with the device's `ethernet-control` (Wave 1b finding 9) | declared in the parity test, not a failure | `specPortParity.test.ts` |
+| Ring rule (60 percent of the smaller face side): MixPre-6 II XLR inputs 65 percent (23.4 mm on 36 mm), Clarett+ 8Pre C14 60.1 percent (26.4 on 43.9) | per-device exceptions at 66 and 61 percent, the smallest that lets the real connectors pass; a stale-exception test per device | `portMarkerSize.test.ts` |
+| 15 speakers promoted without acoustic data | warnings, not errors; the real-catalogue tests derive the warned set | `catalogChecks.test.ts` |
+| 28 devices got a generated power / phantom layout after stage 2 and the builder had not checked their flat zones | all 28 rebuilt (`asset:build -- <id> --scripted --ship`): 28 of 28 PASS | `layoutParity.test.ts`, `validate:assets` |
+
+### 4. Shared tests, adjusted for stated reasons (no assertion dropped without a replacement)
+
+- `modelIds`, `brandsRegister`, `proposalsFixedPoint`: green after `npm run register`, `npx tsx tools/propose-content.ts` (nine date-only level-draft rewrites discarded; five new drafts and the real changes to six drafts and `index.json` kept) and the stage 2. The from-scratch fixed-point test leaves the spec-built ids out (dpa-4060, whose KB entry used to be skipped for want of the mini-XLR connector) and merges the spec flags on both sides; every other difference still fails.
+- `schemas.test.ts`: the routing pin is derived from the plan (the four verified devices plus every promoted row) instead of a literal list; at least 30 promoted devices must route.
+- `catalogChecks.test.ts`: no error in the real catalogue; its only warnings are the speakers without acoustic; the four hand-written speakers and KH 120 II keep their block.
+- `mains.test.ts`, `signalPath.test.ts`: the two Shure daisy-chain outputs are promoted (now flagged `isMainsSource` by the template, like any `mains-power` output); the Bêta examples are the Furman M-8x2 and the Eaton 5P outlets.
+- `placePickerModel.ts`: the five « Avec le matériel » rooms are recomputed from the catalogue (the test derives them): post-atmos-mix-room-medium, radio-talk-studio-medium, concert-hall-medium, foley-dubbing-stage-medium, radio-studio-self-op-small. **[validate]** a visible change of the place picker; `placeSummary.json` regenerated by `tools/room-thumbs.ts`.
+- `creation-drawer.spec.ts`: the tab « Amplis » now exists (seven power amplifiers promoted), the tab row is about 615 px and scrolls at 1700 px: the no-fade test uses 2000 px.
+- `betaBadges.json` regenerated by `npm run register` (derived from the plan rows).
+
+### 5. Gate numbers (2026-11-12, `BLENDER_EXE=D:\Blender\blender.exe`)
+
+- `npx tsc --noEmit` clean; `npm run lint` clean; `npm run validate:catalog` valid (113 devices, 15 warnings = the speakers without acoustic data); `npm run validate:assets`: **240 ok, 0 failed**.
+- `npx vitest run` (full, run after the last commit but the log): **251 files, 4659 tests, all passed** (Wave 1b: 246 files, 4108 passed, 6 failed; no determinism test failed in this run). Run before the last fixes the full suite had 4655 passed and 4 failed (the signalPath Bêta examples and one fixed-point test), all fixed above.
+- Build into a scratch outDir (`npx vite build --outDir <scratch> --emptyOutDir`), `node tools/chunk-budget.mjs <scratch>`: **budget OK**, creation entry 6,182,180 B (js 6,120,717 + css 61,463) of 7,086,420; legacy 6,162,105 B. GLBs load lazily per placed device, so no entry change from the 147 models.
+- GLBs in `public/assets`: **240 files, 10.73 MiB (11.25 MB)** in total (limit 120 MB), largest focusrite-isa-one 0.65 MiB (limit 25 MiB), average 46 KB.
+- Stress scene (scratch spec, not committed): the 15 heaviest catalogue devices by triangles (neumann-u87-ai 10415, ev-re50, shure-sm58, shure-beta-58a, sennheiser-e-835, shure-sm57, ev-re20, yamaha-rio3224-d2, genelec-8341a, genelec-8351b, genelec-8040b, genelec-8030c, avid-protools-hdx, focusrite-isa-one, crown-xti-4002; 61,233 triangles in all) in the concert hall: 292 meshes, 156 materials, **idle renders in 2.5 s: 0**, `renderBench(40)` 7 runs 2.92, 2.98, 3.34, 3.98, 5.96, 6.86, 6.88 ms, median **3.98 ms** (measured with two Playwright workers running other specs in parallel; the Wave 1b stress scene of 12 devices measured 3.74 ms under a comparable load). The 15 heaviest are the old photo-textured and Meshy devices and the Wave 3 speakers; none of the scripted rack devices (1,300 to 3,000 triangles) is among them.
+- Playwright on a private preview (port 4181, a scratch config whose web server is `vite preview --outDir <scratch>`; never 4173; the scratch config and the stress spec are deleted): `creation-equipment-models` **12 of 12** (2 guard tests + 10 batches: 189 devices, asset status glb, body within 1 mm of the spec, every port with its pick sphere, no 404, no console error; about 4.4 min with 2 workers), `creation-controls`, `creation-front`, `creation-drawer`, `creation-beta`, `creation-budgets` and the stress scene: 102 passed, 1 skipped (on-demand screenshot), 3 failed in the first complete run, all three the equipment spec (fixed, see section 6); `creation-coverage`, `creation-places`, `creation-picker`, `creation-place`, `creation-glb404`, `creation-properties`: 86 passed, 2 skipped, 1 failed (`creation-picker`, a stale accessible-name order from Wave 1b; fixed, 13 of 13). In the first complete run `creation-drawer` (the Amplis tab and the tab row) and `creation-budgets` CA-24 (a Draco request under three workers, green alone) also failed; fixed or re-run alone.
+
+### 6. The equipment e2e at 189 devices
+
+The spec places the devices in batches of 20 (a fresh page each, one test per batch) instead of one scene. Four things the scale showed, each fixed in the spec and none hiding a defect in a model: the flight to a device can read « not moving » before it starts, so the test now waits for the body to be ON SCREEN; the pointer rests where the previous click was (the screen centre, where the next device stands), so it is parked in a corner first; the first row of devices stood straight behind each other, so the grid is staggered; and a device whose whole body is under the pick spheres of its own ports (the lavaliers dpa-4060 and sanken-cos-11d, which are 4 to 5 mm wide, and the zoom-podtrak-p4 at the framing distance) cannot be selected by a body click, so the test checks that the point answers with its own port and records the device as an annotation. A device covered by anything else still fails. The guard that fails an empty list, the asset-status `glb` assertion and the 1 mm bounding-box assertion are unchanged; a new test holds that the batches cover every row exactly once.
+
+### Per device (stage 2 of this step: 147 rows; triangles from the manifest)
+
+| id | outcome | category | triangles | label |
+|---|---|---|---|---|
+| allen-heath-sq-6 | beta-modelled | console-digital | 1440 | Allen & Heath SQ-6 |
+| genelec-8341a | promoted | studio-monitor | 3108 | Genelec 8341A (The Ones, SAM) |
+| akg-c414-xlii | promoted | microphone | 1150 | AKG C414 XLII |
+| allen-heath-sq-5 | beta-modelled | console-digital | 1440 | Allen & Heath SQ-5 |
+| api-512c | beta-modelled | mic-preamp | 504 | API 512c (500-series) |
+| behringer-x32-compact | beta-modelled | console-digital | 1440 | Behringer X32 Compact |
+| behringer-xr18 | beta-modelled | console-digital | 1440 | Behringer X AIR XR18 |
+| cisco-sg350-managed-switch | beta-modelled | network-switch | 1696 | Cisco SG350 managed switch |
+| presonus-monitor-station-v2 | promoted | monitor-controller | 712 | PreSonus Monitor Station V2 |
+| yamaha-dm3 | beta-modelled | console-digital | 1443 | Yamaha DM3 Standard |
+| yamaha-mg16xu | beta-modelled | console-analog | 1443 | Yamaha MG16XU |
+| yamaha-tf1 | beta-modelled | console-digital | 1503 | Yamaha TF1 |
+| zoom-h6-essential | promoted | recorder | 1740 | Zoom H6 Essential |
+| clear-com-ms-702 | beta-modelled | broadcast | 1776 | Clear-Com Encore MS-702 |
+| db-audiotechnik-d80 | beta-modelled | amplifier | 2996 | d&b audiotechnik D80 |
+| dbx-166xs | beta-modelled | outboard | 1776 | dbx 166xs |
+| dbx-231s | beta-modelled | outboard | 1920 | dbx 231s |
+| rme-fireface-ufx-iii | beta-modelled | audio-interface | 1920 | RME Fireface UFX III |
+| sonifex-rb-mm1 | beta-modelled | telephone-hybrid | 1328 | Sonifex Redbox RB-MM1 Mix-Minus Generator |
+| ssl-the-bus-plus | beta-modelled | outboard | 1936 | Solid State Logic (SSL) THE BUS+ |
+| tascam-ss-cdr250n | beta-modelled | recorder | 1920 | TASCAM SS-CDR250N |
+| yamaha-mg10xu | promoted | console-analog | 1180 | Yamaha MG10XU |
+| yamaha-xmv8280-d | beta-modelled | amplifier | 2656 | Yamaha XMV8280-D |
+| ams-neve-1073dpd | promoted | mic-preamp | 1776 | AMS Neve 1073DPD |
+| ams-neve-1073lb | beta-modelled | mic-preamp | 504 | AMS Neve 1073LB (500-series) |
+| audinate-dante-avio-install | promoted | stagebox | 1652 | Audinate Dante AVIO Install (2IN / 2OUT / 2IN2OUT) |
+| avid-s1 | promoted | controller | 1356 | Avid S1 |
+| behringer-xenyx-q1202usb | beta-modelled | console-analog | 1170 | Behringer Xenyx Q1202USB |
+| crown-xti-4002 | promoted | amplifier | 2896 | Crown XTi 4002 |
+| eaton-5p-1u-ups | beta-modelled | power | 1696 | Eaton 5P 1U rack UPS (5P1000R / 5P1500R) |
+| empirical-labs-distressor | beta-modelled | outboard | 1920 | Empirical Labs Distressor EL8 |
+| focusrite-clarett-plus-8pre | promoted | audio-interface | 1776 | Focusrite Clarett+ 8Pre |
+| genelec-8040b | promoted | studio-monitor | 3104 | Genelec 8040B |
+| krk-rokit-5-g4 | beta-modelled | studio-monitor | 2036 | KRK Rokit 5 G4 |
+| midas-m32 | promoted | console-digital | 1446 | Midas M32 |
+| netgear-m4250-av-switch | beta-modelled | network-switch | 1696 | Netgear M4250 AV managed switch |
+| neutrik-nys-spp-l1 | beta-modelled | patchbay | 1632 | Neutrik NYS-SPP-L1 |
+| orban-optimod-6300 | promoted | broadcast | 1920 | Orban OPTIMOD 6300 |
+| qsc-k10-2 | beta-modelled | powered-speaker | 2880 | QSC K10.2 |
+| rode-rodecaster-duo | beta-modelled | console-podcast | 1180 | RODE Rodecaster Duo |
+| sennheiser-e-609-silver | promoted | microphone | 1652 | Sennheiser e 609 silver |
+| shure-qlx-d-receiver | promoted | wireless | 1328 | Shure QLX-D QLXD4 receiver |
+| shure-slxd1-bodypack | promoted | wireless | 1844 | Shure SLXD1 bodypack transmitter |
+| sound-devices-mixpre-6-ii | promoted | recorder | 1596 | Sound Devices MixPre-6 II |
+| tascam-model-12 | beta-modelled | console-analog | 1417 | TASCAM Model 12 |
+| ua-la-2a | promoted | outboard | 1632 | Universal Audio LA-2A |
+| yamaha-dxr12-mkii | promoted | powered-speaker | 2172 | Yamaha DXR12 mkII |
+| zoom-podtrak-p4 | promoted | console-podcast | 1724 | Zoom PodTrak P4 |
+| canare-162u-x21 | beta-modelled | patchbay | 1632 | Canare 162U-X21 (pre-loaded XLR connector panel) |
+| motu-828 | beta-modelled | audio-interface | 1920 | MOTU 828 (2024) |
+| neutrik-nppa-tt-pt | beta-modelled | patchbay | 1632 | Neutrik NPPA-TT-PT "Easy Patch" |
+| behringer-europower-ep4000 | beta-modelled | amplifier | 2620 | Behringer Europower EP4000 |
+| ev-re320 | promoted | microphone | 1534 | Electro-Voice RE320 |
+| klark-teknik-dn360 | beta-modelled | outboard | 1632 | Klark Teknik DN360 |
+| rode-nt5 | promoted | microphone | 1534 | RODE NT5 |
+| rode-ntg3 | promoted | microphone | 1406 | RODE NTG3 |
+| rode-procaster | promoted | microphone | 1534 | RODE Procaster |
+| rolls-ha43-pro | beta-modelled | headphone-amp | 712 | Rolls HA43 Pro |
+| sennheiser-e-906 | promoted | microphone | 1652 | Sennheiser e 906 |
+| db-audiotechnik-y10p | promoted | speaker | 364 | d&b audiotechnik Y10P |
+| avid-protools-mtrx-studio | beta-modelled | audio-interface | 1776 | Avid Pro Tools | MTRX Studio |
+| dbx-afs2 | beta-modelled | outboard | 1776 | dbx AFS2 Advanced Feedback Suppression Processor |
+| digico-sd-rack | beta-modelled | stagebox | 1920 | DiGiCo SD-Rack |
+| digico-sd12 | beta-modelled | console-digital | 1516 | DiGiCo SD12 |
+| genelec-7360a | promoted | studio-monitor | 2572 | Genelec 7360A SAM |
+| l-acoustics-x15-hiq | beta-modelled | speaker | 360 | L-Acoustics X15 HiQ |
+| nti-audio-minirator-mr-pro | beta-modelled | measurement | 1724 | NTi Audio Minirator MR-PRO |
+| nti-audio-xl2 | beta-modelled | measurement | 1724 | NTi Audio XL2 Audio & Acoustic Analyzer (with M2230 microphone for class 1) |
+| shure-axient-digital-ad4d | promoted | wireless | 1776 | Shure Axient Digital AD4D (dual-channel receiver; AD1/AD2 transmitters) |
+| allen-heath-dx168 | beta-modelled | stagebox | 712 | Allen & Heath DX168 |
+| allen-heath-qu-16 | beta-modelled | console-digital | 1394 | Allen & Heath Qu-16 |
+| arrakis-arc-8 | beta-modelled | console-radio | 1388 | Arrakis ARC-8 |
+| genelec-8351b | promoted | studio-monitor | 3108 | Genelec 8351B |
+| sonifex-s0-v2 | promoted | console-radio | 1370 | Sonifex S0 v2 |
+| aea-r84 | promoted | microphone | 1022 | AEA R84 |
+| aeta-scoopteam | beta-modelled | codec | 712 | AETA Audio Systems ScoopTeam |
+| allen-heath-zed-22fx | beta-modelled | console-analog | 1417 | Allen & Heath ZED-22FX |
+| antelope-orion-32-plus-gen4 | beta-modelled | audio-interface | 1776 | Antelope Audio Orion 32+ Gen 4 |
+| db-audiotechnik-d40 | beta-modelled | amplifier | 1920 | d&b audiotechnik D40 |
+| galaxy-audio-cricket-cpts | beta-modelled | measurement | 1724 | Galaxy Audio Cricket CPTS Polarity/Continuity Test Set |
+| lexicon-pcm96 | beta-modelled | outboard | 1776 | Lexicon PCM96 |
+| lynx-aurora-n | beta-modelled | audio-interface | 1776 | Lynx Studio Technology Aurora(n) |
+| neumann-m-149-tube | beta-modelled | microphone | 1534 | Neumann M 149 Tube |
+| neumann-u-67 | beta-modelled | microphone | 1406 | Neumann U 67 (reissue, U 67 Set) |
+| nexo-nxamp4x4mk2 | beta-modelled | amplifier | 1920 | NEXO NXAMP4x4MK2 |
+| sennheiser-em-6000 | promoted | wireless | 1776 | Sennheiser Digital 6000 EM 6000 / EM 6000 DANTE |
+| shure-ua845uwb | promoted | wireless | 1776 | Shure UA845UWB Antenna / Power Distribution System |
+| sound-devices-833 | beta-modelled | recorder | 1724 | Sound Devices 833 |
+| yamaha-px10 | beta-modelled | amplifier | 1920 | Yamaha PX10 |
+| zoom-f8n-pro | promoted | recorder | 1724 | Zoom F8n Pro |
+| akai-mpk-mini-mk3 | promoted | controller | 1724 | Akai MPK Mini MK3 |
+| allen-heath-zed-14 | beta-modelled | console-analog | 1417 | Allen & Heath ZED-14 |
+| apogee-duet-3 | promoted | audio-interface | 712 | Apogee Duet 3 |
+| audient-id14-mkii | promoted | audio-interface | 712 | Audient iD14 MkII |
+| audio-technica-atw-r3210 | promoted | wireless | 1328 | Audio-Technica ATW-R3210 receiver |
+| behringer-flow-8 | promoted | console-digital | 1408 | Behringer Flow 8 |
+| behringer-px3000 | beta-modelled | patchbay | 1632 | Behringer Ultrapatch Pro PX3000 |
+| crown-pzm-30d | beta-modelled | microphone | 1652 | Crown (AKG/Harman) PZM-30D |
+| dbx-160a | promoted | outboard | 1776 | dbx 160A |
+| elgato-stream-deck-mk2 | beta-modelled | controller | 1580 | Elgato Stream Deck MK.2 |
+| eventide-h9000 | promoted | outboard | 1920 | Eventide H9000 |
+| meyer-upjunior-upj-1p | promoted | powered-speaker | 428 | Meyer Sound UPJunior (UPJ-1P) |
+| motu-828es | beta-modelled | audio-interface | 1776 | MOTU 828es |
+| presonus-faderport-8 | promoted | controller | 1428 | PreSonus FaderPort 8 |
+| presonus-studio-24c | promoted | audio-interface | 712 | PreSonus Studio 24c |
+| tc-electronic-m3000 | promoted | outboard | 1776 | TC Electronic M3000 |
+| telos-zephyr-xstream | promoted | codec | 1920 | Telos Zephyr Xstream (legacy ISDN codec) |
+| ua-la-610-mkii | promoted | mic-preamp | 1920 | Universal Audio LA-610 MkII |
+| warm-audio-wa73-eq | beta-modelled | mic-preamp | 1776 | Warm Audio WA73-EQ |
+| yamaha-ns-10m | beta-modelled | studio-monitor | 300 | Yamaha NS-10M Studio (passive) |
+| akg-d112-mkii | promoted | microphone | 894 | AKG D112 MKII |
+| dpa-4060 | beta-modelled | microphone | 766 | DPA 4060 lavalier |
+| l-acoustics-ks28 | promoted | speaker | 300 | L-Acoustics KS28 (sub) |
+| adam-audio-s3h | promoted | studio-monitor | 492 | ADAM Audio S3H |
+| db-audiotechnik-ds10 | beta-modelled | stagebox | 1776 | d&b audiotechnik DS10 Audio network bridge |
+| db-audiotechnik-ds20 | beta-modelled | stagebox | 1776 | d&b audiotechnik DS20 Audio network bridge |
+| db-audiotechnik-v-sub | promoted | speaker | 780 | d&b audiotechnik V-SUB |
+| genelec-1234a | beta-modelled | studio-monitor | 2164 | Genelec 1234A SAM |
+| l-acoustics-a15-focus | promoted | speaker | 364 | L-Acoustics A15 Focus |
+| meyer-sound-lina | promoted | speaker | 428 | Meyer Sound LINA |
+| neumann-kh-750-dsp | promoted | studio-monitor | 748 | Neumann KH 750 DSP |
+| nexo-45n12 | promoted | speaker | 568 | NEXO 45N-12 |
+| nexo-p12 | promoted | speaker | 364 | NEXO P12 |
+| omnia-11 | promoted | broadcast | 1920 | Omnia (Telos Alliance) Omnia.11 |
+| rode-nt-sf1 | beta-modelled | microphone | 1022 | RØDE SoundField by RØDE NT-SF1 |
+| sanken-cos-11d | beta-modelled | microphone | 766 | Sanken COS-11D |
+| sonifex-dhy-04s | promoted | telephone-hybrid | 1776 | Sonifex DHY-04S |
+| tieline-gateway | beta-modelled | codec | 1776 | Tieline Gateway |
+| wisycom-mcr54 | beta-modelled | wireless | 1580 | Wisycom MCR54 4-channel multiband camera receiver |
+| allen-heath-avantis | promoted | console-digital | 1474 | Allen & Heath Avantis |
+| aphex-channel | promoted | mic-preamp | 1776 | Aphex Channel |
+| apogee-symphony-desktop | beta-modelled | audio-interface | 712 | Apogee Symphony Desktop |
+| axia-pulsar | beta-modelled | console-radio | 1428 | Telos Alliance (Axia) Pulsar |
+| behringer-x-touch-universal | promoted | controller | 1393 | Behringer X-Touch Universal |
+| dangerous-music-monitor-st | beta-modelled | monitor-controller | 1776 | Dangerous Music Monitor ST |
+| digico-s21 | beta-modelled | console-digital | 1474 | DiGiCo S21 |
+| presonus-studiolive-iii-se-16 | promoted | console-digital | 1443 | PreSonus StudioLive Series III SE 16 |
+| focal-utopia-main-112 | beta-modelled | studio-monitor | 492 | Focal Utopia Main 112 |
+| nagra-vi | promoted | recorder | 1580 | Nagra (Kudelski) Nagra VI |
+| nexo-geo-m10 | beta-modelled | speaker | 364 | NEXO GEO M10 (GEO M1012 / GEO M1025) |
+| yamaha-spx2000 | promoted | outboard | 1776 | Yamaha SPX2000 |
+| audix-d6 | promoted | microphone | 2558 | Audix D6 |
+| audix-i5 | promoted | microphone | 2558 | Audix i5 |
+| ev-evolve-50m-g2 | beta-modelled | powered-speaker | 820 | Electro-Voice Evolve 50M G2 |
+| roland-vr-6hd | promoted | console-digital | 1417 | Roland VR-6HD |
+| yamaha-cl5 | promoted | console-digital | 1500 | Yamaha CL5 |
+| yamaha-dm7 | promoted | console-digital | 1460 | Yamaha DM7 |
+
+### 7. Devices whose data came from search summaries or dealer pages (the spec source notes say so; grade `dealer` or a note naming a search summary)
+
+Through a **search summary** (the page itself was not opened): neutrik-nppa-tt-pt (B), rode-ntg3 (P), nti-audio-xl2 (B), allen-heath-dx168 (B), behringer-px3000 (B), meyer-upjunior-upj-1p (P), yamaha-ns-10m (B). Through a **search summary and a dealer page**: ssl-the-bus-plus (B), krk-rokit-5-g4 (B), qsc-k10-2 (B), ev-re320 (P), nti-audio-minirator-mr-pro (B), shure-axient-digital-ad4d (P), aea-r84 (P), antelope-orion-32-plus-gen4 (B), sennheiser-em-6000 (P), shure-ua845uwb (P), akai-mpk-mini-mk3 (P), allen-heath-zed-14 (B), audio-technica-atw-r3210 (P), behringer-flow-8 (P), crown-pzm-30d (B), dbx-160a (P), presonus-faderport-8 (P), presonus-studio-24c (P), tc-electronic-m3000 (P), ua-la-610-mkii (P), warm-audio-wa73-eq (B), focal-utopia-main-112 (B), ev-evolve-50m-g2 (B). Through a **dealer page** (size or connectors; P = promoted, B = beta-modelled): allen-heath-sq-6 B, allen-heath-sq-5 B, api-512c B, behringer-x32-compact B, behringer-xr18 B, cisco-sg350-managed-switch B, presonus-monitor-station-v2 P, yamaha-dm3 B, yamaha-mg16xu B, yamaha-tf1 B, zoom-h6-essential P, clear-com-ms-702 B, rme-fireface-ufx-iii B, sonifex-rb-mm1 B, tascam-ss-cdr250n B, yamaha-mg10xu P, yamaha-xmv8280-d B, avid-s1 P, behringer-xenyx-q1202usb B, empirical-labs-distressor B, midas-m32 P, neutrik-nys-spp-l1 B, rode-rodecaster-duo B, sound-devices-mixpre-6-ii P, ua-la-2a P, zoom-podtrak-p4 P, motu-828 B, behringer-europower-ep4000 B, klark-teknik-dn360 B, rolls-ha43-pro B, avid-protools-mtrx-studio B, digico-sd-rack B, allen-heath-qu-16 B, genelec-8351b P, sonifex-s0-v2 P, allen-heath-zed-22fx B, galaxy-audio-cricket-cpts B, lexicon-pcm96 B, neumann-m-149-tube B, sound-devices-833 B, yamaha-px10 B, audient-id14-mkii P, eventide-h9000 P, motu-828es B, telos-zephyr-xstream P, wisycom-mcr54 B, allen-heath-avantis P, apogee-symphony-desktop B, behringer-x-touch-universal P, dangerous-music-monitor-st B, digico-s21 B, presonus-studiolive-iii-se-16 P, audix-i5 P, roland-vr-6hd P, yamaha-cl5 P. For the 25 promoted ones among them the size is a dealer-grade size (promotable) and the connector set is cited by the spec; every number the data rule cares about (levels, gain, coverage) is NOT taken from them any more.
+
+### 8. Open items
+
+1. **Phantom supply flags (data rule, unverified).** The 95 `providesPhantom` ports of the 24 promoted devices that have them are the spec authors' flags (the specs were filled under the old template convention that every mic input provides phantom); they were not re-read against the sheets in this step: audit 4.6 (microphones and consoles first). The 58 mic inputs on 24 specs that did not carry the flag (allen-heath-sq-6, api-512c, rme-fireface-ufx-iii, ams-neve-1073lb, shure-slxd1-bodypack, motu-828, avid-protools-mtrx-studio, digico-sd12, nti-audio-xl2, allen-heath-dx168, arrakis-arc-8, sonifex-s0-v2, aeta-scoopteam, allen-heath-zed-22fx, sound-devices-833, motu-828es, warm-audio-wa73-eq, allen-heath-avantis, axia-pulsar, digico-s21, presonus-studiolive-iii-se-16, nagra-vi, ev-evolve-50m-g2, yamaha-cl5) now say nothing about phantom: a condenser patched into them raises the missing-phantom lesson even where the real unit has 48 V; they need a sheet pass.
+2. **15 promoted speakers have no acoustic data** (valeur non vérifiée in the app): genelec-8341a, genelec-8040b, genelec-7360a, genelec-8351b, yamaha-dxr12-mkii, db-audiotechnik-y10p, db-audiotechnik-v-sub, meyer-upjunior-upj-1p, meyer-sound-lina, l-acoustics-ks28, l-acoustics-a15-focus, adam-audio-s3h, neumann-kh-750-dsp, nexo-45n12, nexo-p12. They are silent in the coverage computation until a sheet gives a coverage; the data would go in `acoustic` with a source. The spec schema has no coverage field yet: a one-field addition when someone reads the sheets.
+3. **KH 120 II keeps the nominal 90 x 60** written by the old template, and the QL1 and the Wave 1 desks (ProFX12v3, Rodecaster Pro II) keep their option lists (inventory file): audit 4.6 rewrites them (a `--regen` after the template change would drop them, which is what the rule asks; it was not run because the task said existing entries are not rewritten here).
+4. **16 promoted devices have no mains inlet documented** (their sheet or page names none), so no power toggle: presonus-monitor-station-v2, yamaha-mg10xu, audinate-dante-avio-install, orban-optimod-6300, shure-qlx-d-receiver, ua-la-2a, apogee-duet-3, audient-id14-mkii, audio-technica-atw-r3210, behringer-flow-8, dbx-160a, eventide-h9000, presonus-studio-24c, tc-electronic-m3000, ua-la-610-mkii, roland-vr-6hd. The promotion tool reports each as an issue; a power rule never touches them.
+5. **A desk has no master fader, mute or balance** unless its spec lists the mute; the signal path treats the absence as unity, so every promoted desk passes signal at 0 dB and cannot be muted or attenuated at the master. A hand-measured layout with a sourced fader range (task 6.1) would restore it.
+6. **Equipment e2e findings (not fixed, app behaviour):** (a) port picking does not test occlusion: a port pick sphere (at least 12 px, 40 px on a small recorder at 0.9 m) answers over the body of its own device and over a device in front of it, so a small device can be unclickable at the framing distance (zoom-podtrak-p4, the lavaliers dpa-4060 and sanken-cos-11d, the speaker yamaha-dxr12-mkii under a hovering pointer); the test checks the own-port answer for those and annotates them; (b) under CPU load (three workers) `creation-budgets` CA-24 (legacy) failed once on a Draco file request and passed alone.
+7. **126 plan rows still have no model** (107 `missing` data; the other 19 listed in the agents' blocked lists); none was attempted in this step.
+8. **[validate]** the five « Avec le matériel » rooms; the new « Amplis » tab; the changed coverage copy (two rows « à valider »); the 15 speakers that show « valeur non vérifiée ».
+9. Not run: an independent read-only review of this diff against the Review Focus list (the run's stop rule asks for one after each wave); a look audit of the 147 new models in the engine (the agents looked at their sheets; the e2e proves load, size within 1 mm and ports, not looks); the full Playwright suite (only the creation specs named in the task plus coverage, picker, places, properties and glb404 were run).
