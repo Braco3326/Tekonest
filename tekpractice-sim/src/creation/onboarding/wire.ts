@@ -70,8 +70,12 @@ function gateOfDetail(detail: unknown): TutorialGate | null {
   return { step: d.step, helperUnlocked: d.helperUnlocked === true }
 }
 
-/** The helper's part of the list: the button's view, the click, the tutorial gate. Exported for the unit test (no DOM: the window is an EventTarget). */
-export function wirePowerHelper(h: HelperWiring, deps: { win: Pick<Window, 'addEventListener'> | null; deviceLabel(instance: string): string; render(): void }): { view(): HelperView; run(): void; ready: Promise<void> } {
+/**
+ * The helper's part of the list: the button's view, the click, the tutorial gate. Exported for the unit test (no DOM: the window is an EventTarget).
+ * Its chunk is fetched by `load()` (idempotent), which the list calls once a place is open: never during the first-visit start screen, whose own lazy chunk
+ * must not wait behind it.
+ */
+export function wirePowerHelper(h: HelperWiring, deps: { win: Pick<Window, 'addEventListener'> | null; deviceLabel(instance: string): string; render(): void }): { view(): HelperView; run(): void; load(): Promise<void> } {
   let mod: PowerHelperModule | null = null
   let gate: TutorialGate | null = h.tutorialAllowed ? tutorialGateOf(h.storage()) : null
   if (h.tutorialAllowed)
@@ -100,14 +104,16 @@ export function wirePowerHelper(h: HelperWiring, deps: { win: Pick<Window, 'addE
       h.announce(A().helperDone!.replace('{devices}', names(r.instances)))
     } else if (r.why === 'refused-late') h.announce(A().helperFailed!)
   }
-  const ready = (h.load ?? (() => import('../powerHelper')))().then(
-    (m) => {
-      mod = m
-      deps.render()
-    },
-    (e: unknown) => console.warn('[creation] power helper unavailable', e),
-  )
-  return { view, run, ready }
+  let loading: Promise<void> | null = null
+  const load = (): Promise<void> =>
+    (loading ??= (h.load ?? (() => import('../powerHelper')))().then(
+      (m) => {
+        mod = m
+        deps.render()
+      },
+      (e: unknown) => console.warn('[creation] power helper unavailable', e),
+    ))
+  return { view, run, load }
 }
 
 export function wireChecklist(w: ChecklistWiring, mount: typeof mountChecklist = mountChecklist): Checklist {
@@ -124,7 +130,15 @@ export function wireChecklist(w: ChecklistWiring, mount: typeof mountChecklist =
     returnFocus: w.returnFocus,
     ...(helper ? { helper: { view: helper.view, run: helper.run } } : {}),
   })
-  w.subscribe(() => list?.render())
+  // the helper's chunk once a place is open (a room is the earliest a strip can exist)
+  const wake = (): void => {
+    if (helper !== null && w.placeOpen()) void helper.load()
+  }
+  w.subscribe(() => {
+    wake()
+    list?.render()
+  })
+  wake()
   list.render()
   return list
 }

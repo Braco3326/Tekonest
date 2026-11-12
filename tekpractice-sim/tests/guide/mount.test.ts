@@ -1258,6 +1258,17 @@ describe('createRectResolver: the tutorial anchors on a fake bridge and a fake p
     expect(b.spies.rectOf).toHaveBeenCalledWith('nav:ecoute')
     expect(rr.getRect('nav:inventory.item.yamaha-ql1')).toBeNull() // no page to read
   })
+
+  it('T3.4: a power step rings the helper button once the tutorial unlocked it (triggers); the strip pair before that (does not trigger)', () => {
+    const P = stateOf([['q', 'yamaha-ql1'], ['k', 'qsc-k12-2'], ['p', 'multiprise-secteur']])
+    const power = '[data-testid="checklist-power"]'
+    let unlocked = false
+    const rr = createRectResolver({ bridge: fakeBridge(P).bridge, registry, now: () => 0, doc: page({ [power]: B(7) }), helperUnlocked: () => unlocked })
+    expect(rr.getRect('nav:connect.from.mains-console')).toEqual(R) // the console (the bridge's device rect)
+    unlocked = true
+    rr.clear()
+    expect(rr.getRect('nav:connect.from.mains-console')).toEqual({ x: 7, y: 7, w: 20, h: 10 })
+  })
 })
 
 describe('the tutorial at run time in the mount (T3.2)', () => {

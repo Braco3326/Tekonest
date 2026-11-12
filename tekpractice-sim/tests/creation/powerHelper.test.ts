@@ -293,7 +293,7 @@ describe('wirePowerHelper', () => {
       { store, history, registry, announce: (m) => said.push(m), tutorialAllowed: true, storage: () => storage as unknown as Storage, load: async () => powerHelperModule, ...over },
       { win: win as unknown as Window, deviceLabel: (id) => `«${id}»`, render: () => renders++ },
     )
-    await h.ready
+    await h.load()
     return { h, store, history, storage, said, win, renders: () => renders }
   }
   const tell = (win: EventTarget, detail: unknown) => win.dispatchEvent(new CustomEvent(TUTORIAL_EVENT, { detail }))
@@ -344,11 +344,45 @@ describe('wirePowerHelper', () => {
       { win: null, deviceLabel: (id) => id, render: () => undefined },
     )
     expect(h.view()).toEqual({ shown: false })
+    const loading = h.load()
+    expect(h.load()).toBe(loading) // one fetch
     h.run()
     expect(mains(store)).toEqual([])
     release({ ...powerHelperModule, runPowerHelper: () => ({ ok: false, why: 'refused-late' }) })
-    await h.ready
+    await h.load()
     h.run()
     expect(said).toEqual([COPY.checklist!.helperFailed])
+  })
+})
+
+describe('wireChecklist: the helper chunk waits for an open place (the first-visit start screen loads its own chunk first)', () => {
+  it('no fetch while no place is open (does not trigger); one fetch once a place is open (triggers)', async () => {
+    const { wireChecklist } = await import('../../src/creation/onboarding/wire')
+    const { store, history, registry } = setup([])
+    let open = false
+    let loads = 0
+    const subs: (() => void)[] = []
+    wireChecklist(
+      {
+        doc: { defaultView: null } as unknown as Document,
+        slot: {} as HTMLElement,
+        root: {} as HTMLElement,
+        path: () => ({ playbackReady: false, reasons: [], micReasons: [] }),
+        placeOpen: () => open,
+        subscribe: (fn) => void subs.push(fn),
+        deviceLabel: (i) => i,
+        select: () => undefined,
+        openInventory: () => undefined,
+        returnFocus: () => undefined,
+        helper: { store, history, registry, announce: () => undefined, tutorialAllowed: false, storage: () => null, load: async () => (loads++, powerHelperModule) },
+      },
+      () => ({ render: () => undefined, isOpen: false, open: () => undefined, close: () => undefined }),
+    )
+    subs.forEach((f) => f())
+    expect(loads).toBe(0)
+    open = true
+    subs.forEach((f) => f())
+    subs.forEach((f) => f())
+    expect(loads).toBe(1)
   })
 })

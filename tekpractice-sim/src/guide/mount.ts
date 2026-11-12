@@ -272,7 +272,15 @@ const legacyStep = (state: TpState): Suggestion['step'] => {
 }
 
 /** `getRect` for the widget: the bridge's rects, the reserved suggestion anchors, and the per-anchor cache. */
-export function createRectResolver(deps: { bridge: TpBridge; registry: Registry; now: () => number; route?: GuideRoute; doc?: Pick<BridgeDoc, 'querySelector'> }): { getRect(anchor: string): Rect | null; clear(): void } {
+export function createRectResolver(deps: {
+  bridge: TpBridge
+  registry: Registry
+  now: () => number
+  route?: GuideRoute
+  doc?: Pick<BridgeDoc, 'querySelector'>
+  /** The tutorial unlocked the power helper (plan T3.4): its power steps then ring the helper button (or the checklist chip). */
+  helperUnlocked?: () => boolean
+}): { getRect(anchor: string): Rect | null; clear(): void } {
   const { bridge, registry, now } = deps
   const legacy = deps.route === 'legacy'
   const cache = new Map<string, { at: number; rect: Rect | null }>()
@@ -319,6 +327,7 @@ export function createRectResolver(deps: { bridge: TpBridge; registry: Registry;
           anchorOfDevice: (id) => bridge.anchorOfDevice(id),
           anchorOfPort: (ref) => bridge.anchorOfPort(ref),
           anchorOfControl: (i, c) => bridge.anchorOfControl(i, c),
+          helperUnlocked: deps.helperUnlocked?.() === true,
         }) ?? null
       )
     }
@@ -434,7 +443,11 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       flowKeywords: keywords,
       ...(legacy ? { storageKey: legacyStorageKey(deps.search) } : {}),
     })
-    const rects = createRectResolver({ bridge, registry, now, route: deps.route, doc })
+    const helperUnlocked = (): boolean => {
+      const r = runtime?.record()
+      return r !== undefined && r.status === 'running' && r.helper
+    }
+    const rects = createRectResolver({ bridge, registry, now, route: deps.route, doc, helperUnlocked })
     cleanups.push(() => rects.clear())
     // The widget holds text (the keyboard hint, the bubble) that must sit inside a landmark; it gets one of its own, a child of <body> so that a modal's
     // `inert` on the body's other children still covers it. The landmark has no box of its own (the widget is fixed-positioned).

@@ -24,7 +24,7 @@ import type { FlowKeywords } from './vendor/core/router'
 import type { Flow } from './vendor/core/types'
 import { COPY } from '../creation/copy'
 import { activePackage, type StepId } from '../design/packages'
-import { TUTORIAL_STEPS, stepAnchor, stepSay, stepsFor } from './tutorial'
+import { TUTORIAL_STEPS, stepAnchor, stepHintAfterMs, stepSay, stepsFor } from './tutorial'
 
 /** The tutorial's flow id (spec 6.1). */
 export const PREMIERS_PAS = 'premiers-pas'
@@ -158,19 +158,23 @@ export const CREATION_STRINGS = {
  * pacing: the ten steps of spec 6.3). Each step keeps the data's anchor, action and completing event; its sentence is COPY's, with the catalog labels.
  * It is NOT one of the path flows (`flowsFor` never lists it, so the planner never offers it first): the mount adds it last, only under `?design`, and
  * nothing starts it but a flow control from the host (plan T3.2: the start screen's request).
+ * `hintAfterMs` (the package pacing, plan T3.4) goes on the two power steps only: Oscar escalates there (say, point, then offer the power helper).
  */
-export function premiersPasFlow(registry: Registry, ids: readonly StepId[] = TUTORIAL_STEPS.slice(0, 10).map((s) => s.id)): Flow {
+export function premiersPasFlow(registry: Registry, ids: readonly StepId[] = TUTORIAL_STEPS.slice(0, 10).map((s) => s.id), hintAfterMs = 0): Flow {
   return {
     id: PREMIERS_PAS,
     titleKey: `flows.${PREMIERS_PAS}`,
-    steps: stepsFor(ids).map((s) => ({ id: s.id, anchor: stepAnchor(s, registry), action: s.action, say: stepSay(s, registry), done: { ...s.done, ...(s.done.match ? { match: { ...s.done.match } } : {}) } })),
+    steps: stepsFor(ids).map((s) => {
+      const hint = stepHintAfterMs(s.id, hintAfterMs)
+      return { id: s.id, anchor: stepAnchor(s, registry), action: s.action, say: stepSay(s, registry), done: { ...s.done, ...(s.done.match ? { match: { ...s.done.match } } : {}) }, ...(hint === undefined ? {} : { hintAfterMs: hint }) }
+    }),
   }
 }
 
 /** The tutorial flow of the address's design package (its pacing), or null without `?design=1..5` (today's game has no tutorial). */
 export function tutorialFlowFor(search: string, registry: Registry): Flow | null {
   const pkg = activePackage(search)
-  return pkg === null ? null : premiersPasFlow(registry, pkg.pacing.steps)
+  return pkg === null ? null : premiersPasFlow(registry, pkg.pacing.steps, pkg.pacing.hintAfterMs)
 }
 
 // ── the live suggestions ────────────────────────────────────────────────────────────────────────────────────────────

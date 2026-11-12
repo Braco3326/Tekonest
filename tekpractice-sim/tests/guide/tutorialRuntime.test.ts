@@ -325,3 +325,158 @@ describe('tekpractice:tutorial (plan T3.3): the run as Mode Création sees it, f
     expect(p.told.at(-1)).toEqual({ step: null, helperUnlocked: false })
   })
 })
+
+// ── T3.4: Oscar's third tier unlocks the helper; the steps the helper did are « montré » ───────────────────────────────────────
+import { POWER_HELPER_KEY, recordPowerHelperUse } from '../../src/design/powerHelperUse'
+
+describe('T3.4: the escalation to the power helper', () => {
+  const Q: [string, string] = ['q', 'yamaha-ql1']
+  const K: [string, string] = ['k', 'qsc-k12-2']
+  const P: [string, string] = ['p', 'multiprise-secteur']
+  const pq = { a: { instance: 'p', port: 'out-1' }, b: { instance: 'q', port: 'power-in' } }
+  const pk = { a: { instance: 'p', port: 'out-2' }, b: { instance: 'k', port: 'power-in' } }
+  const offer = COPY.tutorial!.helperOffer!
+
+  /** Started on an empty bench, « Passer cette étape » to step 8, then the bench is what the caller says (nothing of it completes step 8). */
+  async function atStep8(bench: TpState, s = new MemStorage()) {
+    const p = page(s)
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    for (let i = 0; i < 7; i++) await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+    p.rt.update({ state: bench, audio: null, request: ask(1) })
+    await flush()
+    expect(p.title()).toBe(step(8))
+    return { p, s }
+  }
+  const unlocked = (p: ReturnType<typeof page>) => p.rt.record().helper
+
+  it('does not trigger before tier 3: « Un indice de plus » twice (tiers 1 and 2) leaves the helper locked', async () => {
+    const { p } = await atStep8(stateOf([Q, K, P]))
+    await p.controller.dispatch({ type: 'chip', id: 'hint' })
+    await p.controller.dispatch({ type: 'chip', id: 'hint' })
+    await flush()
+    expect(unlocked(p)).toBe(false)
+    expect(p.told.at(-1)).toEqual({ step: 'courant-console', helperUnlocked: false })
+  })
+
+  it('does not trigger without a strip on the bench, even at tier 3 (step 7 passed without placing one); triggers once the strip is placed', async () => {
+    const { p } = await atStep8(stateOf([Q, K]))
+    await p.controller.dispatch({ type: 'chip', id: 'show' }) // « Montre-moi »: tier 3 at once
+    await flush()
+    expect(unlocked(p)).toBe(false)
+    p.rt.update({ state: stateOf([Q, K, P]), audio: null, request: ask(1) })
+    await flush()
+    expect(unlocked(p)).toBe(true)
+  })
+
+  it('triggers at tier 3 (« Un indice de plus » a third time): unlocked, told to Mode Création, the step’s bubble shown again with the offer', async () => {
+    const s = new MemStorage()
+    const { p } = await atStep8(stateOf([Q, K, P]), s)
+    for (let i = 0; i < 3; i++) await p.controller.dispatch({ type: 'chip', id: 'hint' })
+    await flush()
+    await flush()
+    expect(unlocked(p)).toBe(true)
+    expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))).toMatchObject({ helper: true, step: 'courant-console' })
+    expect(p.told.at(-1)).toEqual({ step: 'courant-console', helperUnlocked: true })
+    expect(p.sent.at(-1)).toEqual({ type: 'chip', id: 'next' })
+    expect(p.text()).toBe(`${COPY.tutorial!.courantConsole} ${offer}`)
+    expect(p.controller.getView().target?.anchor).toBe('nav:connect.from.mains-console') // the mount resolves it to the helper (tutorial.test.ts)
+  })
+
+  it('tier 3 on a step that is not a power step does not trigger', async () => {
+    const p = page(new MemStorage())
+    await p.init()
+    p.rt.update({ state: stateOf([P]), audio: null, request: ask(1) })
+    await flush()
+    await p.controller.dispatch({ type: 'chip', id: 'show' })
+    await flush()
+    expect(unlocked(p)).toBe(false)
+  })
+
+  it('by Oscar alone (package 1 pacing, no bubble open: here after a reload at step 8): after hintAfterMs it says, then points, then the third tier unlocks', async () => {
+    // Verified in the vendored controller: a proactive hint never replaces a bubble the learner opened, nor shows after « Fermer » (`proactiveAllowed`);
+    // a reload restores the run with no bubble, the case where Oscar escalates alone.
+    const s = new MemStorage()
+    await atStep8(stateOf([Q, K, P]), s)
+    const clock = { t: 1 }
+    const flow = premiersPasFlow(registry, packageById(1).pacing.steps, packageById(1).pacing.hintAfterMs)
+    const told: TutorialDetail[] = []
+    // eslint-disable-next-line prefer-const
+    let controller: ReturnType<typeof createController>
+    const rt = createTutorialRuntime({ flow, registry, storage: s, now: () => clock.t, send: (i) => void controller.dispatch(i), emit: (d) => told.push(d) })
+    controller = createController({ brain, flows: [flow], clock: () => clock.t, strings: CREATION_STRINGS, storage: rt.storage })
+    await controller.dispatch({ type: 'setContext', context: { page: 'workbench', mode: 'practice' } })
+    rt.update({ state: stateOf([Q, K, P]), audio: null, request: ask(1) })
+    await flush()
+    expect(rt.record()).toMatchObject({ status: 'running', step: 'courant-console', helper: false })
+    const tick = async (ms: number) => {
+      clock.t += ms
+      await controller.dispatch({ type: 'tick' })
+      await flush()
+    }
+    await tick(19_000)
+    expect(controller.getView().bubble).toBeNull() // before hintAfterMs: nothing
+    await tick(2_000)
+    expect(controller.getView().bubble?.lines.map((l) => l.text).join(' ')).toContain(COPY.tutorial!.courantConsole) // tier 1: says
+    expect(controller.getView().target).toBeNull()
+    expect(rt.record().helper).toBe(false)
+    await tick(46_000) // tier 2: points
+    expect(controller.getView().target?.anchor).toBe('nav:connect.from.mains-console')
+    expect(rt.record().helper).toBe(false)
+    await tick(46_000) // tier 3
+    await flush()
+    expect(rt.record().helper).toBe(true)
+    expect(told.at(-1)).toEqual({ step: 'courant-console', helperUnlocked: true })
+    expect(controller.getView().bubble?.lines.map((l) => l.text).join(' ')).toContain(COPY.tutorial!.helperOffer)
+  })
+
+  for (const order of ['console first', 'speaker first'] as const) {
+    it(`helper-done steps (${order}, one poll): « montré » (shown), never « déjà en place », no celebration; step 10 is current`, async () => {
+      const s = new MemStorage()
+      const { p } = await atStep8(stateOf([Q, K, P]), s)
+      await p.controller.dispatch({ type: 'chip', id: 'show' })
+      await flush()
+      expect(unlocked(p)).toBe(true)
+      // Mode Création: the helper cabled both and marked its use, then the bridge's one poll brings both connect events in design order
+      expect(recordPowerHelperUse(s, ['q', 'k'])).toBe(true)
+      const pairs = order === 'console first' ? ['mains-console', 'mains-speaker'] : ['mains-speaker', 'mains-console']
+      for (const pair of pairs) await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair } })
+      p.rt.update({ state: stateOf([Q, K, P], order === 'console first' ? [pq, pk] : [pk, pq]), audio: null, request: ask(1) })
+      await flush()
+      await flush()
+      expect(p.title()).toBe(step(10))
+      const rec = parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))!
+      expect(rec.shown).toEqual(['courant-console', 'courant-enceinte'])
+      expect(rec.early).toEqual([])
+      expect(p.text()).not.toContain('Déjà en place')
+      expect(p.controller.getView().bubble?.kind).not.toBe('celebrate')
+    })
+  }
+
+  it('cabled by hand (no use of the helper): a real completion, not « montré » (does not trigger)', async () => {
+    const s = new MemStorage()
+    const { p } = await atStep8(stateOf([Q, K, P]), s)
+    await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console' } })
+    p.rt.update({ state: stateOf([Q, K, P], [pq]), audio: null, request: ask(1) })
+    await flush()
+    expect(p.title()).toBe(step(9))
+    expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))!.shown).toEqual([])
+  })
+
+  it('a use of the helper before the page started (a stale mark) is not this run’s; restart clears helper and shown', async () => {
+    const s = new MemStorage()
+    recordPowerHelperUse(s, ['q', 'k'])
+    const { p } = await atStep8(stateOf([Q, K, P]), s)
+    await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console' } })
+    p.rt.update({ state: stateOf([Q, K, P], [pq]), audio: null, request: ask(1) })
+    await flush()
+    expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))!.shown).toEqual([])
+    expect(s.getItem(POWER_HELPER_KEY)).not.toBeNull()
+    await p.controller.dispatch({ type: 'chip', id: 'show' })
+    await flush()
+    p.rt.update({ state: stateOf([Q, K, P], [pq]), audio: null, request: ask(2, 'restart') })
+    await flush()
+    expect(p.rt.record()).toMatchObject({ helper: false, shown: [] }) // (the bench then completes steps 1, 3 and 7 again: « déjà en place »)
+  })
+})

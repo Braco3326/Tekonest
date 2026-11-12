@@ -585,3 +585,74 @@ describe('tutorial copy', () => {
     expect(closingLines({ micOk: false, micReasons: [{ code: 'HOST_UNPOWERED', text_fr: 'x' }] })).toEqual([COPY.listen!.simple, COPY.checklist!.micCabled])
   })
 })
+
+// ── T3.4: the escalation to the power helper ──────────────────────────────────────────────────────────────────────────────────
+import { premiersPasFlow, tutorialFlowFor } from '../../src/guide/flows.creation'
+import { POWER_STEPS, stepHintAfterMs } from '../../src/guide/tutorial'
+
+describe('T3.4: hintAfterMs from the package pacing, on the two power steps only', () => {
+  it('steps 8 and 9 carry the pacing delay (triggers); every other step has none (does not trigger)', () => {
+    expect(POWER_STEPS).toEqual(['courant-console', 'courant-enceinte'])
+    const flow = premiersPasFlow(registry, packageById(1).pacing.steps, packageById(1).pacing.hintAfterMs)
+    for (const s of flow.steps) expect(s.hintAfterMs, s.id).toBe(POWER_STEPS.includes(s.id as StepId) ? 20_000 : undefined)
+  })
+  it('each package: its own delay; a pacing of 0 (package 4) means no proactive hint; the address builds the same flow', () => {
+    for (const id of DESIGN_IDS) {
+      const p = packageById(id).pacing
+      const flow = tutorialFlowFor(`?design=${id}`, registry)!
+      for (const s of flow.steps) expect(s.hintAfterMs, `${id} ${s.id}`).toBe(POWER_STEPS.includes(s.id as StepId) && p.hintAfterMs > 0 ? p.hintAfterMs : undefined)
+    }
+    expect(stepHintAfterMs('courant-console', 0)).toBeUndefined()
+    expect(stepHintAfterMs('console', 30_000)).toBeUndefined()
+    expect(stepHintAfterMs('courant-enceinte', 30_000)).toBe(30_000)
+  })
+})
+
+describe('T3.4: once the helper is unlocked, a power step rings the helper (nav:checklist-power), else the checklist chip', () => {
+  const RECT = (n: number): Rect => ({ x: n, y: n, w: 10, h: 10 })
+  const page = (shown: string[]) => (selectors: readonly string[]): Rect | null => {
+    for (const s of selectors) {
+      const i = shown.indexOf(s)
+      if (i >= 0) return RECT(100 + i)
+    }
+    return null
+  }
+  const state: TpState = {
+    route: 'creation',
+    placeKnown: true,
+    instances: [
+      { id: 'q', deviceId: 'yamaha-ql1', label: 'q' },
+      { id: 'k', deviceId: 'qsc-k12-2', label: 'k' },
+      { id: 'p', deviceId: 'multiprise-secteur', label: 'p' },
+    ],
+    connections: [],
+    controls: {},
+    events: [],
+    playbackReady: false,
+    firstReason: null,
+  }
+  const env = (helperUnlocked: boolean | undefined, shown: string[]): AnchorEnv => ({
+    state,
+    selection: null,
+    registry,
+    firstRect: page(shown),
+    rectOfAnchor: (a: string) => (a.startsWith('device:') ? RECT(1) : null),
+    anchorOfDevice: (id) => `device:${id}`,
+    anchorOfPort: (r) => `port:${r.instance}.${r.port}`,
+    anchorOfControl: (i, c) => `control:${i}.${c}`,
+    ...(helperUnlocked === undefined ? {} : { helperUnlocked }),
+  })
+  const POWER = '[data-testid="checklist-power"]'
+  const CHIP = '[data-testid="checklist-chip"]'
+  it('unlocked: the helper button when the list shows it, else the chip (triggers)', () => {
+    expect(resolveTutorialAnchor('nav:connect.from.mains-console', env(true, [CHIP, POWER]))).toEqual(RECT(101))
+    expect(resolveTutorialAnchor('nav:connect.from.mains-speaker', env(true, [CHIP]))).toEqual(RECT(100))
+  })
+  it('locked or not said: the device to cable, as before (does not trigger); an audio pair never goes to the helper', () => {
+    expect(resolveTutorialAnchor('nav:connect.from.mains-console', env(false, [CHIP, POWER]))).toEqual(RECT(1))
+    expect(resolveTutorialAnchor('nav:connect.from.mains-console', env(undefined, [CHIP, POWER]))).toEqual(RECT(1))
+    expect(resolveTutorialAnchor('nav:connect.from.console-speaker', env(true, [CHIP, POWER]))).toEqual(RECT(1)) // the console to cable, not the helper
+    // unlocked, but the shell shows neither: the device, not nothing
+    expect(resolveTutorialAnchor('nav:connect.from.mains-console', env(true, []))).toEqual(RECT(1))
+  })
+})

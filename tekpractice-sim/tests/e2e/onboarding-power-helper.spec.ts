@@ -135,3 +135,80 @@ for (const query of ['?design=1&mode=exam', '/']) {
     await expect(page.getByTestId('checklist')).toContainText('Rien n’est modifié ici')
   })
 }
+
+// ── T3.4: Oscar's third tier unlocks the helper; the steps it did are « montré » ──────────────────────────────────────────────
+const GUIDE_KEY = 'oscar-guide.onboarding.v1'
+const guideRecord = (page: Page) => page.evaluate((k) => JSON.parse(window.localStorage.getItem(k) ?? 'null'), GUIDE_KEY)
+const live = (page: Page) => page.locator('.oscar-live')
+const oscarChip = (page: Page, name: string) => page.locator('.oscar-chips').getByRole('button', { name, exact: true })
+
+async function tutorialAtStep8(page: Page): Promise<void> {
+  await page.goto('/?design=1')
+  await page.evaluate(() => window.localStorage.clear())
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  await start(page).getByRole('button', { name: 'Je découvre', exact: true }).click()
+  await start(page).getByRole('button', { name: /^Faire le tutoriel/ }).click()
+  await page.waitForFunction(() => window.__creation?.place() === 'blank')
+  await expect(live(page)).toContainText('étape 1 sur 10', { timeout: 10_000 })
+  // steps 1 to 7 by the learner, one at a time (none « déjà en place »)
+  const steps: unknown[][] = [[BENCH[0]], [BENCH[1]], [BENCH[2]], [BENCH[3]], [connect('sm58', 'out-xlr', 'ql1', 'in-mic-1')], [BENCH[4]], STRIP]
+  for (const [k, intents] of steps.entries()) {
+    await act(page, intents)
+    await expect(live(page)).toContainText(`étape ${k + 2} sur 10`, { timeout: 10_000 })
+  }
+}
+
+test('T3.4: at step 8 the helper stays locked through « Un indice de plus » twice; « Montre-moi » (tier 3) makes Oscar offer it and unlocks it; its two cables end steps 8 and 9 « montré », no celebration; Ctrl+Z removes both', async ({ page }) => {
+  await tutorialAtStep8(page)
+  // tiers 1 and 2: still locked
+  await oscarChip(page, 'Un indice de plus').click()
+  await oscarChip(page, 'Un indice de plus').click()
+  await page.waitForTimeout(700) // a poll of the bridge
+  await openList(page)
+  await expect(helper(page)).toBeDisabled()
+  await page.keyboard.press('Escape')
+  expect(await guideRecord(page)).toMatchObject({ step: 'courant-console', helper: false })
+  // tier 3: the offer, the unlock
+  await oscarChip(page, 'Montre-moi').click()
+  await expect(live(page)).toContainText('Je peux brancher pour vous, dans le simulateur.', { timeout: 5_000 })
+  await expect.poll(() => guideRecord(page)).toMatchObject({ step: 'courant-console', helper: true })
+  await openList(page)
+  await expect(helper(page)).toBeEnabled()
+  await expect(note(page)).toHaveText('Relie à la multiprise posée : Yamaha QL1 (ql1), QSC K12.2 (k12). Rien n’est posé ni réglé.')
+  await helper(page).click()
+  await expect(statusMsg(page)).toHaveText(/Branché au courant : Yamaha QL1 \(ql1\), QSC K12\.2 \(k12\)\. Ctrl\+Z pour annuler\.$/)
+  await expect(live(page)).toContainText('étape 10 sur 10', { timeout: 10_000 })
+  await expect.poll(() => guideRecord(page)).toMatchObject({ step: 'ecoute', k: 10, shown: ['courant-console', 'courant-enceinte'], early: [] })
+  await expect(live(page)).not.toContainText('Déjà en place')
+  await expect(live(page)).not.toContainText('fin des étapes')
+  expect(await mainsCables(page)).toHaveLength(2)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Control+z')
+  await expect.poll(() => mainsCables(page)).toEqual([])
+})
+
+test('T3.4: once unlocked, Oscar rings the helper: the checklist chip while the list is closed, the button once it is open', async ({ page }) => {
+  await tutorialAtStep8(page)
+  await oscarChip(page, 'Montre-moi').click()
+  await expect.poll(() => guideRecord(page)).toMatchObject({ helper: true })
+  const ring = page.locator('.oscar-ring:not(.oscar-ring-drop)')
+  const centreIn = async (selector: string) =>
+    expect
+      .poll(
+        async () => {
+          const r = await ring.boundingBox()
+          const t = await page.locator(selector).boundingBox()
+          if (!r || !t) return false
+          const cx = r.x + r.width / 2
+          const cy = r.y + r.height / 2
+          return cx >= t.x - 2 && cx <= t.x + t.width + 2 && cy >= t.y - 2 && cy <= t.y + t.height + 2
+        },
+        { timeout: 5_000 },
+      )
+      .toBe(true)
+  await centreIn('[data-testid="checklist-chip"]')
+  // the learner opens the list (a click on the chip, as the ring says): the ring follows to the helper button (the widget re-reads the rect on the page change)
+  await openList(page)
+  await centreIn('[data-testid="checklist-power"]')
+})
