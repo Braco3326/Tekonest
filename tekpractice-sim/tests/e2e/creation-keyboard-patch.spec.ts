@@ -37,7 +37,9 @@ test('CA-02: from a fresh load, the whole reference rig is cabled with the keybo
   await tabTo(page, '[data-testid="template-grid"]', { max: 12 })
   const card = page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ })
   await expect(card).toBeFocused()
-  await page.keyboard.press('ArrowRight') // one template: the arrows stay on it
+  // T1.6: two templates now (the reference first): ArrowRight moves the highlight to « Premier son », ArrowLeft brings it back (moving never commits, CA-13).
+  await page.keyboard.press('ArrowRight')
+  await expect(page.getByTestId('template-grid').getByRole('option', { name: /Premier son/ })).toBeFocused()
   await page.keyboard.press('ArrowLeft')
   await expect(card).toBeFocused()
   await page.keyboard.press('Enter')

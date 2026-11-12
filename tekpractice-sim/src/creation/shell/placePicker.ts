@@ -144,8 +144,10 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
       o.append(thumb, text)
       const badgeText = card.withGear ? P().withGearBadge : card.key.startsWith('template:') ? P().devices!.replace('{n}', String(card.withGearCount)) : ''
       if (badgeText) text.append(' ', part('badge', badgeText))
-      // Read the name first (visually the type sits above it): name, size, type, badge.
-      o.setAttribute('aria-labelledby', ['name', 'size', 'type', ...(badgeText ? ['badge'] : [])].map((p) => `${o.id}-${p}`).join(' '))
+      // T1.6: a template card says what the model already does (or what is left to do); read last, so the visible text stays inside the name (Label in Name).
+      if (card.note) text.append(' ', part('note', card.note))
+      // Read the name first (visually the type sits above it): name, size, type, badge, note.
+      o.setAttribute('aria-labelledby', ['name', 'size', 'type', ...(badgeText ? ['badge'] : []), ...(card.note ? ['note'] : [])].map((p) => `${o.id}-${p}`).join(' '))
       // The highlight follows focus, however it got there (a click, a screen reader, the skip link).
       o.addEventListener('focus', () => {
         if (g.at !== i) highlight(g, i, false)

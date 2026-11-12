@@ -9,13 +9,17 @@ const boot = async (page: Page): Promise<void> => {
 }
 const places = (page: Page) => page.getByTestId('place-grid').getByRole('option')
 
-test('« Choisir un lieu »: 36 place cards and the « Concert simple (référence) » template card', async ({ page }) => {
+test('« Choisir un lieu »: 36 place cards and the two template cards (T1.6: « Concert simple (référence) » then « Premier son (déjà câblé et alimenté) »), each with its note', async ({ page }) => {
   await boot(page)
   await expect(page.getByRole('heading', { name: 'Choisir un lieu' })).toBeVisible()
   await expect(places(page)).toHaveCount(36)
   const templates = page.getByTestId('template-grid').getByRole('option')
-  await expect(templates).toHaveCount(1)
+  // T1.6: the count moves from 1 to 2 (the new playable template); the reference card stays first (file order) and now says what is left to do.
+  await expect(templates).toHaveCount(2)
   await expect(templates.first()).toContainText('Concert simple (référence)')
+  await expect(templates.first()).toContainText('À compléter : sorties de la console vers les enceintes, Lecture console.')
+  await expect(templates.nth(1)).toContainText('Premier son (déjà câblé et alimenté)')
+  await expect(templates.nth(1)).toContainText('Joue dès l’ouverture : déjà câblé et alimenté.')
   // each card: a thumbnail (decorative, lazy), a name, « L × l × h m », a type
   // the accessible name starts with the place name, then size, type (and badge)
   await expect(page.getByRole('option', { name: /^Salle vide neutre 24 × 14 m Salle neutre$/ })).toHaveCount(1)
@@ -112,6 +116,19 @@ test('« Concert simple (référence) » loads 5 devices (4 + the power strip) i
   expect(g.x).toBeLessThan(mid)
   expect(dr.x).toBeGreaterThan(mid)
   await expect(page.getByTestId('status-bar')).toContainText('Appareils installés : 5.')
+})
+
+test('T1.6: « Premier son (déjà câblé et alimenté) » opens in the neutral room and is ready to play at once: 5 devices, 6 cables, « Lecture possible », « Signal OK », no action taken', async ({ page }) => {
+  await boot(page)
+  await page.getByTestId('template-grid').getByRole('option', { name: /Premier son/ }).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank' && window.__creation!.design().rig.instances.length === 5)
+  const d = await page.evaluate(() => window.__creation!.design())
+  expect(d.rig.connections).toHaveLength(6)
+  expect(d.rig.controls.ql1['playback-usb']).toBe(true) // applied from the template's controls (the design also lists every default)
+  await expect(page.getByTestId('status-playback')).toHaveText('Lecture possible')
+  await expect(page.getByTestId('status-playback')).toHaveAttribute('data-ready', 'true')
+  await expect(page.getByTestId('signal-status')).toHaveAttribute('data-kind', 'ok')
+  await expect(page.getByTestId('status-mic')).toHaveText('Micro OK')
 })
 
 test('Lieu → « Choisir un lieu… » reopens the picker over the place; Fermer / Échap go back unchanged', async ({ page }) => {

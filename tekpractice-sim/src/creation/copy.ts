@@ -235,8 +235,11 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     blank: 'Salle vide neutre',
     /** Under the title; also the grids' description. */
     hint: 'Choisissez un lieu pour l’ouvrir : clic, ou flèches puis Entrée.',
-    /** One line under « Modèles » (night wave 2, E): what a template is. */
-    templatesPitch: 'Un lieu avec son matériel déjà posé : le plus simple pour commencer.',
+    /** One line under « Modèles » (night wave 2, E; rewritten T1.6): what a template is, no promise beyond the placed gear. */
+    templatesPitch: 'Un lieu avec du matériel déjà posé.',
+    /** Note line of a template card (T1.6), key `templateNote-<template id>`: what the model already does, or what is left to do. */
+    'templateNote-premier-son-pret': 'Joue dès l’ouverture : déjà câblé et alimenté.',
+    'templateNote-concert-simple-reference': 'À compléter : sorties de la console vers les enceintes, Lecture console.',
     /** Plan legend under the hint (the thumbnails: seen from the audience, stage at the top). */
     legendIntro: 'Plans vus depuis le public, scène en haut :',
     legendStage: 'scène',

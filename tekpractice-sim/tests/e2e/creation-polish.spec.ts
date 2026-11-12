@@ -88,7 +88,7 @@ test.describe('picker (E)', () => {
     await boot(page)
     await expect(page.locator('.cr-pick-hint')).toHaveText('Choisissez un lieu pour l’ouvrir : clic, ou flèches puis Entrée.')
     const pitch = page.getByTestId('template-pitch')
-    await expect(pitch).toHaveText('Un lieu avec son matériel déjà posé : le plus simple pour commencer.')
+    await expect(pitch).toHaveText('Un lieu avec du matériel déjà posé.') // T1.6: rewritten, « le plus simple pour commencer » was a claim the reference model (silent) did not back
     // wave 2c: the pitch describes the template grid (with the hint), the place grid keeps the hint alone
     await expect(page.getByTestId('template-grid')).toHaveAttribute('aria-describedby', 'cr-picker-hint cr-pick-templates-pitch')
     await expect(page.getByTestId('place-grid')).toHaveAttribute('aria-describedby', 'cr-picker-hint')

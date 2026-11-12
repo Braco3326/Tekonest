@@ -1,0 +1,28 @@
+{
+  "id": "premier-son-pret",
+  "name_fr": "Premier son (déjà câblé et alimenté)",
+  "roomId": "blank",
+  "instances": [
+    { "instanceId": "ql1", "deviceId": "yamaha-ql1" },
+    { "instanceId": "sm58", "deviceId": "shure-sm58" },
+    { "instanceId": "k12-g", "deviceId": "qsc-k12-2" },
+    { "instanceId": "k12-d", "deviceId": "qsc-k12-2" },
+    { "instanceId": "mains", "deviceId": "multiprise-secteur" }
+  ],
+  "placements": [
+    { "instanceId": "ql1", "deviceId": "yamaha-ql1", "position_m": [0, 0, 4], "yawDeg": 0, "mount": "floor" },
+    { "instanceId": "sm58", "deviceId": "shure-sm58", "position_m": [0, 1.5, -4.5], "yawDeg": 0, "mount": "stand" },
+    { "instanceId": "k12-g", "deviceId": "qsc-k12-2", "position_m": [3, 1.4, -5.5], "yawDeg": 0, "tiltDeg": 0, "mount": "stand" },
+    { "instanceId": "k12-d", "deviceId": "qsc-k12-2", "position_m": [-3, 1.4, -5.5], "yawDeg": 0, "tiltDeg": 0, "mount": "stand" },
+    { "instanceId": "mains", "deviceId": "multiprise-secteur", "position_m": [0, 0, -6.5], "yawDeg": 0, "mount": "floor" }
+  ],
+  "connections": [
+    { "a": { "instance": "sm58", "port": "out-xlr" }, "b": { "instance": "ql1", "port": "in-mic-1" } },
+    { "a": { "instance": "ql1", "port": "out-main-l" }, "b": { "instance": "k12-g", "port": "in-line-a" } },
+    { "a": { "instance": "ql1", "port": "out-main-r" }, "b": { "instance": "k12-d", "port": "in-line-a" } },
+    { "a": { "instance": "mains", "port": "out-1" }, "b": { "instance": "ql1", "port": "power-in" } },
+    { "a": { "instance": "mains", "port": "out-2" }, "b": { "instance": "k12-g", "port": "power-in" } },
+    { "a": { "instance": "mains", "port": "out-3" }, "b": { "instance": "k12-d", "port": "power-in" } }
+  ],
+  "controls": { "ql1": { "playback-usb": true } }
+}

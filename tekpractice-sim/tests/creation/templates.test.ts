@@ -4,7 +4,10 @@ import { makeRegistry } from '../helpers'
 import { ConnectionGraph } from '../../src/engine/ConnectionGraph'
 import { Template } from '../../src/creation/templateSchema'
 import { loadTemplates, parseTemplate, templateToDesign } from '../../src/creation/templates'
-import { placeCards } from '../../src/creation/shell/placePickerModel'
+import { placeCards, templateCards } from '../../src/creation/shell/placePickerModel'
+import { CreationStore, creationEvaluator } from '../../src/creation/store'
+import { signalPath } from '../../src/flow/signalPath'
+import { COPY } from '../../src/creation/copy'
 import { placeSummary } from '../../src/creation/placeSummary'
 import { SET_ENV_IDS } from '../../src/creation/places'
 import { RoomFile } from '../../src/explore/roomSchema'
@@ -106,5 +109,92 @@ describe('content/templates', () => {
     expect((await loadTemplates(new Set(['blank']))).map((t) => t.id)).not.toContain('concert-simple-reference')
     expect((await loadTemplates(placeKeys)).map((t) => t.id)).toContain('concert-simple-reference')
     warn.mockRestore()
+  })
+})
+
+// ── T1.6 (onboarding packs): a playable template, honest cards. Every template is run through the real store + signalPath.
+describe('T1.6: templates and first sound', () => {
+  const registry = makeRegistry()
+  const read = (f: string) => Template.parse(JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8')))
+  /** The path of a template as the app computes it: APPLY_DESIGN in a CreationStore, then signalPath over the resulting design and rule events. */
+  const pathOf = (f: string) => {
+    const store = new CreationStore(registry, creationEvaluator(registry))
+    const r = store.dispatch({ type: 'APPLY_DESIGN', design: templateToDesign(read(f)) })
+    expect(r.ok, f).toBe(true)
+    const dropped = r.ok ? r.dropped : undefined
+    return { path: signalPath(store.design(), registry, store.events()), design: store.design(), dropped }
+  }
+  const noteOf = (id: string): string | undefined => COPY.picker![`templateNote-${id}`]
+
+  it('« Premier son » is in the list', () => {
+    expect(files).toContain('premier-son-pret.json')
+  })
+
+  it('« Premier son »: APPLY_DESIGN + signalPath is playbackReady, nothing dropped (the template controls are applied: « Lecture console » is on)', () => {
+    const { path, design, dropped } = pathOf('premier-son-pret.json')
+    expect(dropped).toEqual({ devices: [], cables: [], controls: [], placements: [] })
+    expect(design.rig.controls.ql1?.['playback-usb']).toBe(true)
+    expect(path.reasons).toEqual([])
+    expect(path.playbackReady).toBe(true)
+    expect(path.speakers.length).toBe(2)
+  })
+
+  it('mutation (control): the same template without its `controls` is NOT playbackReady (SOURCE_OFF): the console setting is what makes it play', () => {
+    const t = read('premier-son-pret.json')
+    const store = new CreationStore(registry, creationEvaluator(registry))
+    store.dispatch({ type: 'APPLY_DESIGN', design: templateToDesign({ ...t, controls: {} }) })
+    const path = signalPath(store.design(), registry, store.events())
+    expect(path.playbackReady).toBe(false)
+    expect(path.reasons[0]?.code).toBe('SOURCE_OFF')
+  })
+
+  it('the reference template stays silent today (no cable out of the console, « Lecture console » off): characterization, NO_PATH or SOURCE_OFF', () => {
+    const { path } = pathOf('concert-simple-reference.json')
+    expect(path.playbackReady).toBe(false)
+  })
+
+  it('« Premier son »: in the neutral room, every placement inside the 24 x 14 m floor', () => {
+    const t = read('premier-son-pret.json')
+    expect(t.roomId).toBe('blank')
+    for (const p of t.placements) {
+      expect(Math.abs(p.position_m[0]), `${p.instanceId} x`).toBeLessThanOrEqual(12)
+      expect(Math.abs(p.position_m[2]), `${p.instanceId} z`).toBeLessThanOrEqual(7)
+    }
+    expect(t.placements.map((p) => p.instanceId).sort()).toEqual(t.instances.map((i) => i.instanceId).sort())
+  })
+
+  it('« Premier son »: its name says it is pre-wired and is not « Concert simple »; the reference name is unchanged', () => {
+    const t = read('premier-son-pret.json')
+    expect(t.name_fr).toBe('Premier son (déjà câblé et alimenté)')
+    expect(t.name_fr).not.toMatch(/Concert simple/)
+    expect(read('concert-simple-reference.json').name_fr).toBe('Concert simple (référence)')
+  })
+
+  it('every template that is not playbackReady carries the « À compléter » note; every playable one says it plays', () => {
+    for (const f of files) {
+      const t = read(f)
+      const note = noteOf(t.id)
+      expect(note, `${t.id} has a note`).toBeTypeOf('string')
+      if (pathOf(f).path.playbackReady) expect(note, t.id).toMatch(/^Joue dès l’ouverture/)
+      else expect(note, t.id).toMatch(/^À compléter/)
+    }
+  })
+
+  it('the note is on the card: templateCards carries `note` for a known template, none for an unknown id', () => {
+    const places = placeCards({ rooms: placeSummary().rooms, sets: SET_ENV_IDS.map((envId) => ({ envId, name: envId })) })
+    const cards = templateCards(
+      [
+        { id: 'premier-son-pret', name_fr: 'x', roomId: 'blank', devices: 6 },
+        { id: 'concert-simple-reference', name_fr: 'y', roomId: 'room:concert-hall-medium', devices: 5 },
+        { id: 'inconnu', name_fr: 'z', roomId: 'blank', devices: 1 },
+      ],
+      places,
+    )
+    expect(cards[0].note).toMatch(/^Joue dès l’ouverture/)
+    expect(cards.map((c) => c.note)).toEqual([noteOf('premier-son-pret'), noteOf('concert-simple-reference'), undefined])
+  })
+
+  it('the pitch is the honest one-line description (no « le plus simple »)', () => {
+    expect(COPY.picker!.templatesPitch).toBe('Un lieu avec du matériel déjà posé.')
   })
 })

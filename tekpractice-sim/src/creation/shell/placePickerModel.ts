@@ -17,6 +17,8 @@ export interface PlaceCard {
   withGear: boolean
   /** Catalog devices the model would install (a template: its device count). */
   withGearCount: number
+  /** A template card's note line (COPY `picker.templateNote-<id>`, T1.6): what the model already does or what is left to do. Absent on places. */
+  note?: string
 }
 
 export interface PlaceCardInput {
@@ -84,6 +86,7 @@ export function templateCards(templates: { id: string; name_fr: string; roomId: 
   for (const t of templates) {
     const room = places.find((p) => p.key === t.roomId)
     if (!room) continue
+    const note = COPY.picker![`templateNote-${t.id}`]
     out.push({
       key: `template:${t.id}`,
       title: t.name_fr,
@@ -92,6 +95,7 @@ export function templateCards(templates: { id: string; name_fr: string; roomId: 
       thumb: room.thumb,
       withGear: false,
       withGearCount: t.devices,
+      ...(note ? { note } : {}),
     })
   }
   return out
