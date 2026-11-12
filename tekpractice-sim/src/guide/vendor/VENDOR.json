@@ -33,7 +33,7 @@
     },
     {
       "path": "core/motion.ts",
-      "sha256": "26b0a2daed418b342363c58642cca23f6274a017947fc0e875b36f3988ee188a"
+      "sha256": "ec6837608e9af17e57b43a9312f3981d5fbbd42679a019442f444a0836258d70"
     },
     {
       "path": "core/planner.ts",
@@ -98,6 +98,19 @@
     {
       "path": "ui/widget.ts",
       "sha256": "8fa0fdefba2a2fbb116df8431f1d4cdabbb632c2ecf6bf32ce4ad01c67c7ff57"
+    }
+  ],
+  "patches": [
+    {
+      "id": "placeBeside-avoid",
+      "files": [
+        "core/motion.ts"
+      ],
+      "symbols": [
+        "placeBeside",
+        "avoid"
+      ],
+      "pinTest": "tests/guide/vendorPatches.test.ts"
     }
   ]
 }

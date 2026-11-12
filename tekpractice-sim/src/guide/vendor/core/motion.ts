@@ -12,6 +12,8 @@ export interface MotionInput {
     gesture: MotionGesture;
     reducedMotion: boolean;
     iconSize?: number;
+    // PATCHED: placeBeside-avoid (see src/guide/VENDOR-PATCHES.md)
+    avoid?: readonly Rect[];
 }
 export interface MotionPlanEx extends MotionPlan {
     crowded: boolean;
@@ -71,10 +73,13 @@ interface Place {
     side: Side;
     crowded: boolean;
 }
+// PATCHED: placeBeside-avoid (see src/guide/VENDOR-PATCHES.md)
+// `avoid`: rects the icon should stay clear of (the host's own controls). A candidate that clears the target and the viewport but overlaps one of them is
+// kept as a second choice; the least overlapping one wins when no candidate is clean, and the answer says `crowded`. No list (or an empty one): the original answer.
 export function placeBeside(t: Rect, vp: {
     w: number;
     h: number;
-}, s: number): Place {
+}, s: number, avoid?: readonly Rect[]): Place {
     const maxX = Math.max(0, vp.w - s);
     const maxY = Math.max(0, vp.h - s);
     const cy = t.y + t.h / 2 - s / 2;
@@ -92,7 +97,10 @@ export function placeBeside(t: Rect, vp: {
         }
     };
     const box = (p: Point): Rect => ({ x: p.x, y: p.y, w: s, h: s });
+    const keep: Rect[] = Array.isArray(avoid) ? avoid.filter(usableRect) : [];
     if (vp.w >= s && vp.h >= s) {
+        let least: Place | null = null;
+        let leastArea = Infinity;
         for (const gap of GAPS) {
             for (const side of SIDES) {
                 const p = raw(side, gap);
@@ -101,10 +109,19 @@ export function placeBeside(t: Rect, vp: {
                 if (!primaryOk)
                     continue;
                 const q = { x: clamp(p.x, 0, maxX), y: clamp(p.y, 0, maxY) };
-                if (!rectsIntersect(box(q), t) && insideViewport(box(q), vp))
-                    return { ...q, side, crowded: false };
+                if (!rectsIntersect(box(q), t) && insideViewport(box(q), vp)) {
+                    const hit = keep.reduce((sum, a) => sum + overlapArea(box(q), a), 0);
+                    if (hit === 0)
+                        return { ...q, side, crowded: false };
+                    if (hit < leastArea) {
+                        leastArea = hit;
+                        least = { ...q, side, crowded: true };
+                    }
+                }
             }
         }
+        if (least !== null)
+            return least;
     }
     let best: Place | null = null;
     let bestArea = Infinity;
@@ -200,8 +217,8 @@ export function planMotion(input: MotionInput): MotionPlanEx {
     if (isDrag && !usableRect(drop))
         return unresolved();
     const dropRect: Rect | null = isDrag && usableRect(drop) ? drop : null;
-    const pickup = placeBeside(target, vp, s);
-    const rest = dropRect === null ? pickup : placeBeside(dropRect, vp, s);
+    const pickup = placeBeside(target, vp, s, input.avoid);
+    const rest = dropRect === null ? pickup : placeBeside(dropRect, vp, s, input.avoid);
     const maxX = Math.max(0, vp.w - s);
     const maxY = Math.max(0, vp.h - s);
     const f = input.from;
