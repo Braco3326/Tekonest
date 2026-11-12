@@ -18,8 +18,9 @@ test('« Choisir un lieu »: 36 place cards and the « Concert simple (référen
   await expect(templates.first()).toContainText('Concert simple (référence)')
   // each card: a thumbnail (decorative, lazy), a name, « L × l × h m », a type
   // the accessible name starts with the place name, then size, type (and badge)
-  await expect(page.getByRole('option', { name: /^Salle vide neutre 24 × 14 m Salle neutre$/ })).toHaveCount(1)
-  await expect(page.getByRole('option', { name: /^Studio radio de débat \+ régie \(moyen\) 10 × 6 × 3 m Radio \/ TV Avec le matériel$/ })).toHaveCount(1)
+  // (Wave 1b finding 7 put what a narrow window can clip, the size, after the type)
+  await expect(page.getByRole('option', { name: /^Salle vide neutre Salle neutre 24 × 14 m$/ })).toHaveCount(1)
+  await expect(page.getByRole('option', { name: /^Studio radio de débat \+ régie \(moyen\) Radio \/ TV 10 × 6 × 3 m Avec le matériel$/ })).toHaveCount(1)
   const hall = page.locator('[data-place="room:concert-hall-medium"]')
   await expect(hall).toContainText('32 × 18,1 × 9 m')
   await expect(hall).toContainText('Concert / live')

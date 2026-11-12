@@ -136,7 +136,7 @@ test('the « Secteur » tab exists (the power strip is in the catalogue) and hol
   await open(page)
   const tabs = page.getByRole('tablist').getByRole('tab')
   const labels = await tabs.allInnerTexts()
-  expect(labels).toEqual(['Micros', 'Consoles', 'Enceintes', 'Sources', 'Réseau', 'Câbles et DI', 'Pieds et accroches', 'Secteur', 'Bêta', 'Autres'])
+  expect(labels).toEqual(['Micros', 'Consoles', 'Enceintes', 'Amplis', 'Sources', 'Réseau', 'Câbles et DI', 'Pieds et accroches', 'Secteur', 'Bêta', 'Autres'])
   await page.getByRole('tab', { name: 'Secteur' }).click()
   const items = page.getByRole('tabpanel').getByTestId('inventory-item')
   await expect(items).toHaveCount(1)
@@ -605,8 +605,8 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
     }
   })
 
-  test('with all the tabs on screen (1700 px wide; at 1366 the row of 549 px already scrolls in 489) there is no fade at all', async ({ page }) => {
-    await page.setViewportSize({ width: 1700, height: 900 })
+  test('with all the tabs on screen (2000 px wide: with « Amplis » since the power amplifiers were promoted the row is about 615 px; at 1366 it scrolls in 489) there is no fade at all', async ({ page }) => {
+    await page.setViewportSize({ width: 2000, height: 900 })
     await boot(page)
     await open(page)
     const s = await state(page)
