@@ -522,15 +522,16 @@ export function mountGuide(options: MountOptions): GuideHandle {
         return overlay.ring.hidden && overlay.ringTo.hidden;
     }
     // PATCHED: widget-obstacles. The bubble goes where the layout put it, unless that sits on a control of the host: then the nearest place clear of the host's
-    // controls, of the icon and of what the step points at.
+    // controls, of the icon and of what the step points at; when no place is clear of all of them (a phone) the icon is still kept uncovered: its overlap weighs far more
+    // than any control's (clearOf, `heavy`).
     function bubbleClear(pos: Point, size: {
         w: number;
         h: number;
-    }, keep: readonly Rect[]): Point {
+    }, keep: readonly Rect[], mustClear: readonly Rect[]): Point {
         const list = offTarget(obs(), current === null ? [] : current.to === null ? [current.rect] : [current.rect, current.to]);
         if (list.length === 0)
             return pos;
-        const c = clearOf(pos, size, vp(), [...list, ...keep]);
+        const c = clearOf(pos, size, vp(), [...list, ...keep], mustClear);
         return { x: c.x, y: c.y };
     }
     function layoutBubble(): void {
@@ -551,12 +552,12 @@ export function mountGuide(options: MountOptions): GuideHandle {
             if (near !== null) {
                 if (near.maxHeight !== null)
                     bubble.el.style.maxHeight = near.maxHeight + "px";
-                bubble.el.style.transform = translate(bubbleClear(near.pos, { w: size.w, h: near.maxHeight !== null ? near.maxHeight : size.h }, [...targets, iconBox]));
+                bubble.el.style.transform = translate(bubbleClear(near.pos, { w: size.w, h: near.maxHeight !== null ? near.maxHeight : size.h }, [...targets, iconBox], [iconBox]));
                 return;
             }
             avoid.push(...targets, iconRect);
         }
-        bubble.el.style.transform = translate(bubbleClear(placeBubble(home, size, vp(), avoid, ins()), size, [...avoid, iconBox]));
+        bubble.el.style.transform = translate(bubbleClear(placeBubble(home, size, vp(), avoid, ins()), size, [...avoid, iconBox], [iconBox]));
     }
     function renderBubble(v: GuideView): void {
         const b = v.bubble;

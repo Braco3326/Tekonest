@@ -152,27 +152,36 @@ export function placeBeside(t: Rect, vp: {
 // The nearest place for a box of size `size` that overlaps none of `avoid` (the host's controls), starting from `from`. Candidates come from pushing the box
 // past the edge of each rect it hits, a few rounds deep; when that finds nothing, from a coarse grid over the viewport; when nothing is clear, the least
 // overlapping place seen (`crowded: true`). `from` itself is returned untouched when it is already clear, and when no rect is usable.
+// `heavy` (optional): rects that count as avoided too, but whose overlap weighs HEAVY_WEIGHT times more when no place is clear of everything (the icon: a bubble
+// that cannot be clear of the host's controls on a phone must still not sit on it). With none, nothing changes.
 const CLEAR_GAP = 1;
 const CLEAR_ROUNDS = 4;
 const CLEAR_FRONTIER = 48;
 const CLEAR_GRID = 24;
+const HEAVY_WEIGHT = 1e9;
 export function clearOf(from: Point, size: {
     w: number;
     h: number;
 }, vp: {
     w: number;
     h: number;
-}, avoid: readonly Rect[]): {
+}, avoid: readonly Rect[], heavy?: readonly Rect[]): {
     x: number;
     y: number;
     crowded: boolean;
 } {
-    const keep: Rect[] = Array.isArray(avoid) ? avoid.filter(usableRect) : [];
+    const items: {
+        r: Rect;
+        k: number;
+    }[] = [
+        ...(Array.isArray(avoid) ? avoid.filter(usableRect) : []).map((r) => ({ r, k: 1 })),
+        ...(Array.isArray(heavy) ? heavy.filter(usableRect) : []).map((r) => ({ r, k: HEAVY_WEIGHT })),
+    ];
     const maxX = Math.max(0, vp.w - size.w);
     const maxY = Math.max(0, vp.h - size.h);
     const boxAt = (p: Point): Rect => ({ x: p.x, y: p.y, w: size.w, h: size.h });
-    const hitOf = (p: Point): number => keep.reduce((sum, a) => sum + overlapArea(boxAt(p), a), 0);
-    if (keep.length === 0 || hitOf(from) === 0)
+    const hitOf = (p: Point): number => items.reduce((sum, it) => sum + overlapArea(boxAt(p), it.r) * it.k, 0);
+    if (items.length === 0 || hitOf(from) === 0)
         return { x: from.x, y: from.y, crowded: false };
     const dist = (p: Point): number => Math.hypot(p.x - from.x, p.y - from.y);
     const seen = new Set<string>();
@@ -197,7 +206,7 @@ export function clearOf(from: Point, size: {
                 continue;
             }
             consider(p, hit);
-            for (const a of keep) {
+            for (const { r: a } of items) {
                 if (overlapArea(boxAt(p), a) === 0)
                     continue;
                 const pushes: Point[] = [

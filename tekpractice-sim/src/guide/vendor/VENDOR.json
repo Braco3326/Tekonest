@@ -33,7 +33,7 @@
     },
     {
       "path": "core/motion.ts",
-      "sha256": "2b2b3015b42b41d04e07221f3628a202ae98b9ea42091ecb587cba707a962af1",
+      "sha256": "e63c48afd9b1acd92c9a28ef0e93321e2acce6d2eb538294c6ca5749fc94f786",
       "upstreamSha256": "26b0a2daed418b342363c58642cca23f6274a017947fc0e875b36f3988ee188a"
     },
     {
@@ -99,7 +99,7 @@
     },
     {
       "path": "ui/widget.ts",
-      "sha256": "27238be1d5d9fda0464e2c2284eb90e984043252e88db0603aa3fc09b13b8483",
+      "sha256": "a737eb08bdcaa16ad6f7bfc7ec0c30f01d5e49de455f54c755eaa329ea370002",
       "upstreamSha256": "8fa0fdefba2a2fbb116df8431f1d4cdabbb632c2ecf6bf32ce4ad01c67c7ff57"
     }
   ],
@@ -123,6 +123,7 @@
       ],
       "symbols": [
         "clearOf",
+        "heavy",
         "obstacles"
       ],
       "pinTest": "tests/guide/vendorPatches.test.ts"

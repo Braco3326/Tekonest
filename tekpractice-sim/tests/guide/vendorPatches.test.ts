@@ -4,7 +4,8 @@
 //  1. placeBeside (core/motion.ts) takes a list of rects to stay clear of: it triggers (another side is chosen), it costs nothing without the list (the same
 //     answer as the original code, for a sweep of targets and viewports), and when nothing is clear it takes the least overlap and says `crowded`.
 //  2. the module's own `planMotion` hands the list to placeBeside for the pickup and the drop.
-//  3. clearOf (core/motion.ts) finds the nearest place for a box that is clear of the host's rects, and says `crowded` when none is.
+//  3. clearOf (core/motion.ts) finds the nearest place for a box that is clear of the host's rects, and says `crowded` when none is; its `heavy` rects (the icon)
+//     are never given up when it has to settle for a crowded place: the host's controls take the overlap.
 //  4. every patch written up in src/guide/VENDOR-PATCHES.md is declared in VENDOR.json (`patches`), its files are in the manifest, its symbols exist in the files
 //     and its marker comment is in the file, so a re-vendor that drops a patch fails here and not on a learner's screen.
 import { existsSync, readFileSync } from 'node:fs'
@@ -265,6 +266,52 @@ describe('clearOf: the nearest place clear of the host rects', () => {
     expect(reads - once).toBe(once) // the same work twice
     // the search is bounded: 4 rounds of at most 48 places, one grid of 24 px: a few million reads at the very most for 400 rects
     expect(once).toBeLessThan(4_000_000)
+  })
+})
+
+describe('clearOf with heavy rects: a place clear of what must stay uncovered, the least overlap with the rest', () => {
+  // The phone, read from the page at the moment of the defect (the frames just after a resize to 375 x 812, the side panels still at their 1280 px widths): the two
+  // panels together span the whole width, a 351 x 341 bubble fits clear of neither, and the icon rests at the right edge.
+  const PHONE = { w: 375, h: 812 }
+  const BUBBLE = { w: 351, h: 341 }
+  const panels: Rect[] = [
+    { x: 200, y: 32, w: 175, h: 752 },
+    { x: 0, y: 32, w: 200, h: 752 },
+    // the menu bar's items, then a status bar control (the whole list as the page gave it; with fewer items the plain search happens to land clear of the icon)
+    { x: 12, y: 0, w: 54.6875, h: 31 },
+    { x: 66.6875, y: 0, w: 44.296875, h: 31 },
+    { x: 110.984375, y: 0, w: 67.84375, h: 31 },
+    { x: 178.828125, y: 0, w: 66.96875, h: 31 },
+    { x: 245.796875, y: 0, w: 60.234375, h: 31 },
+    { x: 306.03125, y: 0, w: 42.1875, h: 31 },
+    { x: 348.21875, y: 0, w: 26.78125, h: 31 },
+    { x: 369.609375, y: 786.5, w: 5.390625, h: 24 },
+  ]
+  const icon: Rect = { x: 319, y: 643.5, w: 56, h: 56 }
+  const at = (p: { x: number; y: number }): Rect => ({ x: p.x, y: p.y, w: BUBBLE.w, h: BUBBLE.h })
+
+  it('TRIGGERS: when no place is clear of everything, the answer is still clear of what must stay uncovered (the icon), and inside the viewport', () => {
+    const from = { x: 16, y: 262.5 }
+    // what clearOf alone does with the icon among the rects: the least overlap in total, which covers the icon (the defect this function closes)
+    const plain = clearOf(from, BUBBLE, PHONE, [...panels, icon])
+    expect(plain.crowded).toBe(true)
+    expect(rectsIntersect(at(plain), icon)).toBe(true)
+    const p = clearOf(from, BUBBLE, PHONE, panels, [icon])
+    expect(p.crowded).toBe(true) // the panels cannot be avoided at this width: said, not hidden
+    expect(rectsIntersect(at(p), icon)).toBe(false)
+    expect(p.x).toBeGreaterThanOrEqual(0)
+    expect(p.y).toBeGreaterThanOrEqual(0)
+    expect(p.x + BUBBLE.w).toBeLessThanOrEqual(PHONE.w)
+    expect(p.y + BUBBLE.h).toBeLessThanOrEqual(PHONE.h)
+  })
+
+  it('DOES NOT TRIGGER: when a place is clear of everything it is the one clearOf gives; with nothing to keep it is clearOf', () => {
+    const avoid: Rect[] = [{ x: 90, y: 90, w: 100, h: 100 }]
+    const keep: Rect[] = [{ x: 400, y: 300, w: 56, h: 56 }]
+    const from = { x: 100, y: 100 }
+    expect(clearOf(from, { w: S, h: S }, VP, avoid, keep)).toEqual(clearOf(from, { w: S, h: S }, VP, [...avoid, ...keep]))
+    expect(clearOf(from, { w: S, h: S }, VP, avoid, keep).crowded).toBe(false)
+    expect(clearOf({ x: 16, y: 262.5 }, BUBBLE, PHONE, panels, [])).toEqual(clearOf({ x: 16, y: 262.5 }, BUBBLE, PHONE, panels))
   })
 })
 

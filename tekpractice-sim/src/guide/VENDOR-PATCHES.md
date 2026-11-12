@@ -45,6 +45,7 @@ pickup and the drop of `planMotion`.
 - File: `core/motion.ts`
 - File: `ui/widget.ts`
 - Symbol: `clearOf`
+- Symbol: `heavy`
 - Symbol: `obstacles`
 - Marker: `PATCHED: widget-obstacles`
 
@@ -59,9 +60,13 @@ full of buttons, a drawer, a menu) were invisible to the module, so the icon and
 - `clearOf(from, size, vp, avoid)` (motion): the nearest place for a box that overlaps none of the rects. It pushes the box past the edge of each rect it
   hits (four rounds, a bounded frontier), then tries a coarse grid; when nothing is clear it returns the least overlapping place seen with `crowded`. The
   starting place is returned untouched when it is already clear or when no rect is usable.
+- `clearOf(from, size, vp, avoid, heavy?)`: `heavy` rects (the icon, for the bubble) are avoided too, but when no place is clear of everything their overlap weighs
+  a billion times more than a control's. Without it, `clearOf` settles for the least overlap in total, and a small icon costs less than a big panel, so on a phone
+  (a bubble wider than the gap between the side panels) the place could sit on the icon (seen in the frames just after a resize to 375 x 812). With it the
+  controls take the overlap and the icon never does while any place clear of it exists; `crowded` stays true. No `heavy` list, nothing changes.
 - The widget uses it for the resting position of the icon (`restPos`: the home corner, moved if a control is in the way), passes the list to `planMotion`
   as `avoid` (patch `placeBeside-avoid`) for the icon beside a target, re-plans a step whose icon no longer sits clear (`destClear`), and moves the bubble
-  clear of the controls, the icon and what the step points at (`bubbleClear`).
+  clear of the controls, the icon and what the step points at (`bubbleClear`; the icon is passed as `heavy`). What the step points at stays a plain rect to avoid: it can be the whole screen (the place picker), and weighting it would drive the bubble onto the menu bar.
 - A control whose centre lies inside what the step points at is the target, not an obstacle to that step (`offTarget`): the ring is on it and the icon sits
   beside it. This is what keeps a step that points at a whole screen (the place picker) from being steered by the cards inside it.
 - No `obstacles` option, or a getter that answers with no rect or throws: every position is the one the original code gave (the legacy level page passes

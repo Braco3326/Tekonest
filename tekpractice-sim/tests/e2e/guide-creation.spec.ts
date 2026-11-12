@@ -566,6 +566,42 @@ test('after a resize to 375 x 812 the bubble stays inside the viewport, the icon
   expect(insideViewport((await bubble(page).boundingBox())!, 375, 812)).toBe(true)
 })
 
+// The resize test above looks at one instant; the rule is « never », so this one looks at every frame of the 1.5 s after the resize (the bubble used to be
+// laid out for a moment before the target's new position was known, with no clear place at 375 px, and the least overlapping place covered the icon).
+test('after a resize to 375 x 812 the open bubble never covers the icon, in any frame of the next 1.5 s', async ({ page }) => {
+  await boot(page)
+  await spawnPhantomError(page)
+  await nextStepSays(page, RULE('R4').teach_fr)
+  await expectRingOnPort(page, ring(page), U87_OUT)
+  type Probe = { frames: number; worst: number; done: boolean; at: string }
+  await page.evaluate(() => {
+    const w = window as unknown as { __cover: Probe }
+    w.__cover = { frames: 0, worst: 0, done: false, at: '' }
+    const t0 = performance.now()
+    const area = (a: DOMRect, b: DOMRect): number => Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) * Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top))
+    const frame = (): void => {
+      const bub = document.querySelector('.oscar-bubble') as HTMLElement | null
+      const ico = document.querySelector('.oscar-icon') as HTMLElement | null
+      if (bub !== null && ico !== null && !bub.hidden) {
+        const a = area(bub.getBoundingClientRect(), ico.getBoundingClientRect())
+        w.__cover.frames++
+        if (a > w.__cover.worst) {
+          w.__cover.worst = a
+          w.__cover.at = JSON.stringify([bub.getBoundingClientRect().toJSON(), ico.getBoundingClientRect().toJSON()])
+        }
+      }
+      if (performance.now() - t0 < 1500) requestAnimationFrame(frame)
+      else w.__cover.done = true
+    }
+    requestAnimationFrame(frame)
+  })
+  await page.setViewportSize({ width: 375, height: 812 })
+  await page.waitForFunction(() => (window as unknown as { __cover: Probe }).__cover.done, undefined, { timeout: 10_000 })
+  const p = await page.evaluate(() => (window as unknown as { __cover: Probe }).__cover)
+  expect(p.frames, 'the bubble was open and measured in many frames').toBeGreaterThan(10)
+  expect(p.worst, `the bubble covered the icon by ${p.worst} px2 (bubble, icon: ${p.at})`).toBe(0)
+})
+
 test.describe('phone width from the start', () => {
   test.use({ viewport: { width: 375, height: 812 } })
   test('loaded at 375 x 812: the icon is on screen and reachable, the opened bubble is inside the viewport', async ({ page }) => {
