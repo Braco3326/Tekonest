@@ -1,0 +1,247 @@
+{
+  "id": "roland-vr-6hd",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 370,
+    "h": 100,
+    "d": 242
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 78,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 78,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-3",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 78,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-4",
+      "face": "io",
+      "xMm": 119.2,
+      "yMm": 78,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-5",
+      "face": "io",
+      "xMm": 145.6,
+      "yMm": 78,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-6",
+      "face": "io",
+      "xMm": 172,
+      "yMm": 78,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-line-7",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-8",
+      "face": "io",
+      "xMm": 58,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 116.4,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-rca-l",
+      "face": "io",
+      "xMm": 152,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "out-rca-r",
+      "face": "io",
+      "xMm": 170,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 200,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net-stream",
+      "face": "io",
+      "xMm": 230,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-phones",
+      "face": "opposite",
+      "xMm": 30,
+      "yMm": 50,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        100
+      ],
+      [
+        40,
+        100
+      ],
+      [
+        110,
+        86
+      ],
+      [
+        242,
+        70
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 28,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io",
+      "opposite"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://img.audiomania.ru/data/roland_vr-6hd.pdf",
+  "sources": [
+    {
+      "kind": "reference",
+      "url": "https://www.3dbroadcastsales.com/roland-vr-6hd-ultra-compact-audio-video-mixer-rol-vr-6hd",
+      "note": "equipment plan source (research grade: dealer); size 370 x 242 x 100 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://img.audiomania.ru/data/roland_vr-6hd.pdf",
+      "note": "Roland VR-6HD Reference Manual (reseller copy of the manufacturer manual), opened 2026-11-12: 370 x 242 x 100 mm (W x D x H), 3.4 kg without the adaptor; rear: HDMI video in 1-6 and out 1-3 (not modelled), audio in 1-6 XLR/TRS combos with +48 V on the XLR (modelled as their XLR half), line in 7/L and 8/R on RCA, audio out 1/2 on \"XLR type\" (male by convention) and 3/4 on RCA, USB STREAM (USB-C), DIRECT STREAM RJ45 (streaming and remote control, modelled as ethernet-control), tally/GPIO D-sub, RS-232, control/expression jacks (not modelled), DC IN from the external AC adaptor (no signal type: no mains inlet, so no power control); front: stereo mini-jack phones, USB host, SDXC slot. The side profile is an estimate (the manual gives one height). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.3dbroadcastsales.com/roland-vr-6hd-ultra-compact-audio-video-mixer-rol-vr-6hd",
+      "note": "Dealer size 370 x 242 x 100 mm, 3.4 kg (the plan source)."
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+{
+  "id": "digico-s21",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 763,
+    "h": 295,
+    "d": 586
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 255,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 76.4,
+      "yMm": 255,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "io",
+      "xMm": 102.8,
+      "yMm": 255,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "io",
+      "xMm": 129.2,
+      "yMm": 255,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-5",
+      "face": "io",
+      "xMm": 155.6,
+      "yMm": 255,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-6",
+      "face": "io",
+      "xMm": 182,
+      "yMm": 255,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-7",
+      "face": "io",
+      "xMm": 208.4,
+      "yMm": 255,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-8",
+      "face": "io",
+      "xMm": 234.8,
+      "yMm": 255,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-1",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 220,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-2",
+      "face": "io",
+      "xMm": 76.4,
+      "yMm": 220,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-3",
+      "face": "io",
+      "xMm": 102.8,
+      "yMm": 220,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-4",
+      "face": "io",
+      "xMm": 129.2,
+      "yMm": 220,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 220,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 206.4,
+      "yMm": 220,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "in-wclk",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 185,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "out-wclk",
+      "face": "io",
+      "xMm": 68,
+      "yMm": 185,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 185,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 185,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 700,
+      "yMm": 120,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        295
+      ],
+      [
+        60,
+        295
+      ],
+      [
+        150,
+        240
+      ],
+      [
+        300,
+        160
+      ],
+      [
+        450,
+        110
+      ],
+      [
+        586,
+        90
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 36,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 50,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.sonovente.com/en-gb/digico-digico-s21-p74455.html",
+      "note": "equipment plan source (research grade: dealer); size 763 x 586 x 295 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://soundpro.com/content/product-documents/S21-Brochure-V9.pdf",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "manual",
+      "url": "https://digico.biz/wp-content/uploads/2020/02/S-Series_User_Guide_Issue_J-1.pdf",
+      "note": "DiGiCo S-Series User Guide issue J (S21 and S31), opened 2026-11-12: rear-panel figure labels mic/line inputs (24), line outputs (12), AES I/O, word clock I/O, GPI/O, console Ethernet, DVI, UB MADI USB, console USB, two DMI card slots; the power switch is on the rear panel; 21 motorised 100 mm faders and two multi-touch screens. DiGiCo documents no connector TYPE and no size for this model (the brochure link of the plan is dead); the dealer page names XLR, BNC, RJ-45 and an IEC inlet and its counts disagree with the manual (Ethernet, word clock, AES, USB), so the connector set is not documented: beta-modelled, 8 of 24 mic inputs and 4 of 12 outputs as a stand-in. Size 763 x 586 x 295 mm, 19 kg is dealer-only (Sonovente). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.sonovente.com/en-gb/digico-digico-s21-p74455.html",
+      "note": "Dealer size 763 x 586 x 295 mm (plan source)."
+    }
+  ]
+}

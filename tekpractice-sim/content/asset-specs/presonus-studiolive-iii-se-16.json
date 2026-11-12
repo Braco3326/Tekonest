@@ -1,0 +1,444 @@
+{
+  "id": "presonus-studiolive-iii-se-16",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 447,
+    "h": 165,
+    "d": 584
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-3",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-4",
+      "face": "io",
+      "xMm": 119.2,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 186.4,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "io",
+      "xMm": 212.8,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "io",
+      "xMm": 239.2,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-talkback",
+      "face": "io",
+      "xMm": 290,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 95,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 95,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-c",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 95,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-1",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 95,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-2",
+      "face": "io",
+      "xMm": 166.4,
+      "yMm": 95,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-3",
+      "face": "io",
+      "xMm": 192.8,
+      "yMm": 95,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-4",
+      "face": "io",
+      "xMm": 219.2,
+      "yMm": 95,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 260,
+      "yMm": 95,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mon-l",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mon-r",
+      "face": "io",
+      "xMm": 58,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aux-1",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aux-2",
+      "face": "io",
+      "xMm": 108,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aux-3",
+      "face": "io",
+      "xMm": 126,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aux-4",
+      "face": "io",
+      "xMm": 144,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-tape-l",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "in-tape-r",
+      "face": "io",
+      "xMm": 198,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-tape-l",
+      "face": "io",
+      "xMm": 216,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "out-tape-r",
+      "face": "io",
+      "xMm": 234,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "net-avb",
+      "face": "io",
+      "xMm": 270,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net-ctl",
+      "face": "io",
+      "xMm": 296,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 322,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 410,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    },
+    {
+      "portId": "out-phones",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 48,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 350,
+      "yMm": 60,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        165
+      ],
+      [
+        40,
+        165
+      ],
+      [
+        130,
+        130
+      ],
+      [
+        300,
+        95
+      ],
+      [
+        584,
+        70
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 20,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 40,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io",
+      "opposite"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.co.uk/presonus_studiolive_series_iii_se_16.htm",
+      "note": "equipment plan source (research grade: dealer); size 447 x 584 x 165 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf",
+      "note": "PreSonus StudioLive Series III owner manual (PreSonus assets), opened 2026-11-12: rear panel connections (section 3.2): 8 XLR/TRS combo and 8 XLR mic inputs, 4 TRS aux inputs, stereo tape in and out (RCA), talkback XLR, 6 XLR and 4 TRS FlexMix outputs, main left/right and mono XLR outputs, balanced TRS monitor outputs, AES/EBU XLR output, AVB audio network port (locking XLR Ethernet, modelled as ethercon/aoip), control network RJ45, USB-B, an IEC power inlet (type letter not named: iec-c14 assumed, plan assumedConnectors power-in) with a rear power switch; front headphone output; lamp BNC and SD card slot are not modelled. Modelled: 4 of 8 combos (as their XLR half), 4 of 8 XLR inputs, 4 of 6 XLR FlexMix outputs. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.fmicassets.com/Damroot/Original/10154/TS_StudioLive-SE-16_EN.pdf",
+      "note": "StudioLive SE 16 technical specifications, opened 2026-11-12: 6.51 in H x 17.59 in W x 22.97 in D (165.4 x 446.7 x 583.5 mm), 23.15 lb (10.5 kg). The sheet says \"12 (6 XLRM, 4 TRS)\" FlexMix outputs, which sums to 10: the manual table (6 + 4) is used."
+    }
+  ]
+}

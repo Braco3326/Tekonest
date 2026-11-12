@@ -1,0 +1,116 @@
+{
+  "id": "behringer-x-touch-universal",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 452,
+    "h": 100,
+    "d": 301
+  },
+  "ports": [
+    {
+      "portId": "net-remote",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 50,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb-pc",
+      "face": "io",
+      "xMm": 100,
+      "yMm": 50,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 400,
+      "yMm": 50,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 350,
+      "yMm": 50,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        100
+      ],
+      [
+        40,
+        100
+      ],
+      [
+        150,
+        82
+      ],
+      [
+        301,
+        60
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 28,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.allfordj.ru/upload/iblock/da8/rukovodstvo_polzovatelya_behringer_x_touch.pdf",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.bhphotovideo.com/c/product/1821236-REG/behringer_x_touch_universal_control_surface.html",
+      "note": "equipment plan source (research grade: dealer); size 452 x 301 x 100 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.allfordj.ru/upload/iblock/da8/rukovodstvo_polzovatelya_behringer_x_touch.pdf",
+      "note": "Behringer X-TOUCH Quick Start Guide (reseller copy of the manufacturer guide), opened 2026-11-12 (read as text): 100 H x 452 W x 301 D mm, 4.3 kg, 9 motorised 100 mm faders; rear panel: AC IN on a standard IEC receptacle (type letter not named: iec-c14 assumed, plan assumedConnectors power-in), a power switch (push in = on), REMOTE Ethernet (RTP-MIDI), two USB hub ports, USB to computer (modelled as usb-audio like the other control surfaces, it carries MIDI), MIDI in and out, foot-control jacks. Not modelled: the hub ports, MIDI, foot control (no signal type). The side profile is an estimate (the guide gives one height). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.bhphotovideo.com/c/product/1821236-REG/behringer_x_touch_universal_control_surface.html",
+      "note": "Dealer size 452 x 301 x 100 mm, 4.3 kg (the plan source)."
+    }
+  ]
+}

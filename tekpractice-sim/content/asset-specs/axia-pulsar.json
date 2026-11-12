@@ -1,0 +1,135 @@
+{
+  "id": "axia-pulsar",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 463,
+    "h": 55,
+    "d": 396
+  },
+  "ports": [
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 27,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 74,
+      "yMm": 27,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 98,
+      "yMm": 27,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line",
+      "face": "io",
+      "xMm": 122,
+      "yMm": 27,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line",
+      "face": "io",
+      "xMm": 146,
+      "yMm": 27,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 190,
+      "yMm": 27,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        55
+      ],
+      [
+        40,
+        55
+      ],
+      [
+        150,
+        48
+      ],
+      [
+        396,
+        40
+      ]
+    ],
+    "params": {
+      "filletMm": 2.5,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 16,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://docs.telosalliance.com/docs/axia-iqs-aes67-mixing-console",
+      "note": "equipment plan source (research grade: datasheet); size 463 x 396 x 55 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://telosalliance.com/telos-alliance-debuts-axia-pulsar-aoip-console-2026-nab-show",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "reference",
+      "url": "https://bgs.cc/content/TEL-PULSAR%20SS.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://bgs.cc/content/TEL-PULSAR%20SS.pdf",
+      "note": "Telos Alliance Axia Pulsar specification sheet (Broadcasters General Store copy), opened 2026-11-12: main unit 463 x 396 x 55 mm (W x D x H), 8 motorised 100 mm faders, expandable by an 8-fader unit; the surface has an RJ45 LAN (AoIP and PoE+ power, no mains inlet), a locking USB-C expansion port (proprietary), HDMI and USB-A for a touchscreen; the audio I/O is on the separate StudioCore engine or on an OPTIONAL surface I/O board (2 mic inputs, a stereo line input, a stereo line output on RJ45 with the StudioHub pinout, a stereo headphone output on 1/4 in TRS). The sheet gives no panel per connector and the unit is pre-release (availability Q4 2026), so the connector set is not documented: beta-modelled with the LAN port and the optional-board ports as a stand-in. The side profile is an estimate (the sheet gives one height). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

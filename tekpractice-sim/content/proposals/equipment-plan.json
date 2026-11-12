@@ -2520,7 +2520,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "behringer-umc202hd",
@@ -4412,7 +4413,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "genelec-8351b",
@@ -7636,7 +7638,11 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "aphex-channel",
@@ -7750,7 +7756,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "behringer-x-touch-universal",
@@ -7777,7 +7784,11 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "beyerdynamic-dt-990-pro",
@@ -7915,7 +7926,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "flight-case-generic",
@@ -8041,7 +8053,11 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "rode-psa1-plus",
@@ -8607,7 +8623,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "rtw-touchmonitor-tm7",
@@ -8657,7 +8674,11 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "yamaha-dm7",
@@ -8684,7 +8705,11 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   }
  ]
 }
