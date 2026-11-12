@@ -1,0 +1,175 @@
+{
+  "id": "apogee-symphony-desktop",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 199,
+    "h": 64,
+    "d": 125
+  },
+  "ports": [
+    {
+      "portId": "in-xlr-1",
+      "face": "io",
+      "xMm": 25,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-xlr-2",
+      "face": "io",
+      "xMm": 52,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-jack-1",
+      "face": "io",
+      "xMm": 78,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "in-jack-2",
+      "face": "io",
+      "xMm": 94,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 136,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-optical",
+      "face": "io",
+      "xMm": 152,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "toslink",
+      "signal": "spdif",
+      "dir": "in"
+    },
+    {
+      "portId": "out-optical",
+      "face": "io",
+      "xMm": 166,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "toslink",
+      "signal": "spdif",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-2",
+      "face": "io",
+      "xMm": 187,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 170,
+      "yMm": 52,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-inst",
+      "face": "opposite",
+      "xMm": 30,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 12,
+      "plateFilletMm": 5,
+      "filletMm": 6,
+      "filletSegments": 10,
+      "feetMm": 3,
+      "feetDiaMm": 12,
+      "plateRgb": 2829617,
+      "bodyRgb": 1908257
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 4.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.thomannmusic.com/apogee_symphony_desktop.htm",
+      "note": "equipment plan source (research grade: dealer); size 199 x 125 x 64 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://22712264.fs1.hubspotusercontent-na1.net/hubfs/22712264/Users%20Guides%20and%20Documentation%20PDFs/Symphony%20Desktop/SymphonyDesktopUsersGuide.pdf",
+      "note": "Apogee Symphony Desktop User Guide v1.30a (Apogee-owned CDN copy), opened 2026-11-12 (pdftotext): 8.0 in W x 4.75 in D x 1.25 in to 2.5 in H (203.2 x 120.7 x 31.8 to 63.5 mm), 1.85 lb. This differs from the dealer size of the plan row (199 x 125 x 64 mm): the plan row is marked conflict (estimate), so the device is beta-modelled with the plan size. Connectors per the guide: rear XLR inputs 1-2 and 1/4 in inputs 1-2, instrument input on the front, main outputs 1-2 (panel not stated: drawn on the rear), headphone 1 (1/4 in, front) and 2 (3.5 mm, rear), optical in and out (the number of outputs is not stated), USB-C, USB host (type not named: not modelled), locking DC barrel input from the external supply (no signal type: not modelled, so no mains inlet and no power control). The guide panel tour is a picture, so every position is a guess. The sloped top and the touch screen are only picture. The Thomann page of the plan is delisted (no spec text). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "id": "nagra-vi",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 310,
+    "h": 74,
+    "d": 285
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "left",
+      "xMm": 40,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "left",
+      "xMm": 70,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "left",
+      "xMm": 100,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "left",
+      "xMm": 130,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-5",
+      "face": "left",
+      "xMm": 160,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-6",
+      "face": "left",
+      "xMm": 190,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-1",
+      "face": "right",
+      "xMm": 40,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-2",
+      "face": "right",
+      "xMm": 70,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes",
+      "face": "right",
+      "xMm": 100,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "right",
+      "xMm": 150,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-2",
+      "face": "right",
+      "xMm": 170,
+      "yMm": 37,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 10,
+      "edgeRadiusMm": 4,
+      "edgeSegments": 8
+    },
+    "projection": [
+      "top",
+      "io",
+      "left",
+      "right"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 3
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.nagraaudio.com/de/product/nagra-vi-film/",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.nagraaudio.com/de/product/nagra-vi-film/",
+      "note": "equipment plan source (research grade: datasheet); size 310 x 285 x 74 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.nagraaudio.com/de/product/nagra-vi-film/",
+      "note": "Nagra VI product page and specification table (German page, the English slug returns \"page not found\"), opened 2026-11-12: 310 x 74 x 285 mm (W x H x D) including the battery box, 3.8 kg with the battery pack. Four symmetrical XLR mic/line inputs, two more line inputs on XLR shared with the AES3 inputs (modelled as analog line inputs; the XLR genders are not stated: female for inputs and male for outputs by convention), two XLR line outputs, one XLR AES3 output, two 6.3 mm headphone jacks (only the second is placed on the right side by the page), external DC input on a 4-pin XLR and accessory power outputs (Hirose) (no signal type: not modelled), 5-pin LEMO timecode, 9-pole D-type word clock, 15-pin expansion, USB host and device (type A and type B; audio class not stated: not modelled), CompactFlash. Battery or external DC powered: no mains inlet and no power control. The recorder body is a plain rounded box (no handles, feet or battery box detail); the connector panels (left and right sides) are our layout. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

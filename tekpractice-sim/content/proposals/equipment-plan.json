@@ -6978,7 +6978,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "l-acoustics-a15-focus",
@@ -7551,7 +7552,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "wisycom-mcr54",
@@ -7580,7 +7582,8 @@
     "receiver",
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "akg-k240-studio",
@@ -7680,18 +7683,19 @@
    "weightKg": 0.8,
    "portsSummary": "",
    "family": "rack-box-v2",
-   "dataQuality": "dealer",
+   "dataQuality": "estimate",
    "sourceGrade": "dealer",
    "tier": 3,
    "wave": 4,
    "sources": [
     "https://www.thomannmusic.com/apogee_symphony_desktop.htm"
    ],
-   "notes": "Dealer: 199x125x64 mm, 0.8 kg. Source: https://www.thomannmusic.com/apogee_symphony_desktop.htm",
+   "notes": "Dealer: 199x125x64 mm, 0.8 kg. Source: https://www.thomannmusic.com/apogee_symphony_desktop.htm [Wave 4A: the opened Apogee user guide gives 8.0 x 4.75 x 1.25 to 2.5 in (203.2 x 120.7 x 31.8 to 63.5 mm), which differs from the dealer size 199 x 125 x 64 mm kept in sizeMm: sources disagree, so the row is an estimate.]",
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "conflict",
+   "staged": true
   },
   {
    "id": "argosy-universal-workstation",
@@ -7882,7 +7886,8 @@
     "monitor-controller",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "digico-s21",
@@ -8295,7 +8300,8 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "neutrik-ne8mx",
@@ -8457,7 +8463,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "audix-i5",
@@ -8486,7 +8493,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "ev-evolve-50m-g2",

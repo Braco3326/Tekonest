@@ -1,0 +1,142 @@
+{
+  "id": "genelec-1234a",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 890,
+    "h": 700,
+    "d": 383
+  },
+  "ports": [
+    {
+      "portId": "in-analog-input-ram-xl",
+      "face": "io",
+      "xMm": 210,
+      "yMm": 480,
+      "confidence": "guess",
+      "openingMm": 20,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aes-ebu-input-ram-xl",
+      "face": "io",
+      "xMm": 250,
+      "yMm": 480,
+      "confidence": "guess",
+      "openingMm": 20,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes-ebu-thru-output-ram-xl",
+      "face": "io",
+      "xMm": 290,
+      "yMm": 480,
+      "confidence": "guess",
+      "openingMm": 20,
+      "insetMm": 3,
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "out-ram-xl-to-enclosure-woofer-and-midrange-tweeter-outputs-1",
+      "face": "io",
+      "xMm": 350,
+      "yMm": 480,
+      "confidence": "guess",
+      "openingMm": 28,
+      "insetMm": 3,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-ram-xl-to-enclosure-woofer-and-midrange-tweeter-outputs-2",
+      "face": "io",
+      "xMm": 405,
+      "yMm": 480,
+      "confidence": "guess",
+      "openingMm": 28,
+      "insetMm": 3,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-glm-control-network-1",
+      "face": "io",
+      "xMm": 470,
+      "yMm": 480,
+      "confidence": "guess",
+      "openingMm": 14,
+      "insetMm": 3,
+      "connector": "rj45",
+      "signal": "gpio-tally",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-glm-control-network-2",
+      "face": "io",
+      "xMm": 492,
+      "yMm": 480,
+      "confidence": "guess",
+      "openingMm": 14,
+      "insetMm": 3,
+      "connector": "rj45",
+      "signal": "gpio-tally",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-mains-in-ram-xl",
+      "face": "io",
+      "xMm": 560,
+      "yMm": 480,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 890,
+      "rearWidthMm": 890,
+      "frontRadiusMm": 24,
+      "backRadiusMm": 24,
+      "edgeRadiusMm": 14,
+      "edgeDropMm": 16,
+      "edgeSegments": 8
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 11,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.genelec.com/1234a",
+      "note": "equipment plan source (research grade: datasheet); size 890 x 383 x 700 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.avc-group.com/assets/products/Genelec/1234/genelec-um-1234a.pdf",
+      "note": "Genelec 1234A operating manual D0127R001a (distributor-hosted copy of the manufacturer manual) and the Genelec page, opened 2026-11-12: monitor enclosure 700 x 890 x 383 mm (H x W x D), 73 kg, 160 litre, two 305 mm bass drivers, a 125 mm midrange and a 25 mm treble in a rotatable waveguide plate; the enclosure has two four-pole speakON sockets and an RJ45 LED socket on its rear, no mains and no power switch. ALL signal inputs (XLR analog, XLR AES/EBU in and thru, two GLM RJ45), the two speakON outputs and the mains inlet are on the separate 3U RAM-XL amplifier (132 x 483 x 286 mm), which is not part of the plan size. The Bêta proposal lists the RAM-XL ports and a Bêta row keeps its proposal ports exactly, so they are placed on the rear of the enclosure as a stand-in for the system; the mains inlet type is not named. Beta-modelled, no controls, patch-only. Source summary of the drivers: picture only. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}
