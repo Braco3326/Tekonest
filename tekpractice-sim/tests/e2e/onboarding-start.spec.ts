@@ -35,6 +35,9 @@ async function openFresh(page: Page, query = '?design=1'): Promise<void> {
   await page.reload()
   await page.waitForFunction(() => !!window.__creation)
   await expect(page.getByTestId('place-picker')).toBeVisible()
+  // test setup (G10 + controller): the start screen is a lazy chunk; a key counts only once it holds the keyboard (first profile button focused).
+  // Only on the addresses that show it (a valid ?design, optionally ?oscar=0); not on ?design=0/6/doubled or an exam address.
+  if (/^\?design=[1-5](&oscar=0)?$/.test(query)) await expect(profileButton(page, PROFILES[0].label)).toBeFocused()
 }
 
 type Box = { x: number; y: number; width: number; height: number }
