@@ -26,7 +26,20 @@ const PLACE = 'room:concert-hall-medium'
 const TIP = 'Fiche proposée, pas encore vérifiée : comportement approximatif.'
 // Wave 1: a beta-modelled proposal (a model ships for it) says « Bêta — dimensions estimées » and its own tooltip; the others keep « non vérifié »
 const TIP_ESTIMATED = 'Modèle 3D aux dimensions estimées : fiche non vérifiée, comportement approximatif.'
+const TIP_PORTS = 'Modèle 3D aux dimensions de la fiche constructeur ou revendeur ; les connecteurs ne sont pas vérifiés : comportement approximatif.'
 const MODELLED = new Set((manifest as { assets: { id: string; status: string }[] }).assets.filter((a) => a.status === 'ok').map((a) => a.id))
+// Wave 1b finding 3: which badge a modelled proposal gets is read from the EQUIPMENT PLAN here, with its own predicate (not the inventory's, not betaBadges.json):
+// a datasheet or dealer size on all three axes with sizeConfidence ok reads « connecteurs non vérifiés »; any other size (estimate, partial, axis-assumed, conflict) « dimensions estimées »
+interface PlanRow { id: string; betaModelled?: boolean; dataQuality: string; sizeConfidence: string; sizeMm: { w?: number; d?: number; h?: number } }
+const plan = (JSON.parse(readFileSync('content/proposals/equipment-plan.json', 'utf8')) as { rows: PlanRow[] }).rows
+const sizeIsVerified = (r: PlanRow): boolean =>
+  (r.dataQuality === 'datasheet' || r.dataQuality === 'dealer') && r.sizeConfidence === 'ok' && [r.sizeMm.w, r.sizeMm.d, r.sizeMm.h].every((v) => typeof v === 'number' && v > 0)
+const kindOfProposal = (id: string): 'plain' | 'estimated' | 'ports' => {
+  if (!MODELLED.has(id)) return 'plain'
+  const row = plan.find((r) => r.id === id)
+  // only a BETA-MODELLED row has the verified-size badge: a proposal that ships a model while its row is still staged (a stage 2 not yet run) keeps the safe default
+  return row !== undefined && row.betaModelled === true && sizeIsVerified(row) ? 'ports' : 'estimated'
+}
 
 const boot = async (page: Page): Promise<void> => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
@@ -77,7 +90,7 @@ test('the file the sync wrote has proposals, none already in the catalogue', asy
   expect(new Set(proposals.map((p) => p.id)).size).toBe(proposals.length)
 })
 
-test('« Bêta » is shown (the file has proposals), just before « Autres » ; one item per proposal, each badged (« non vérifié », or « Bêta — dimensions estimées » when a model ships) with its tooltip', async ({ page }) => {
+test('« Bêta » is shown (the file has proposals), just before « Autres » ; one item per proposal, each badged (« non vérifié »; « Bêta — dimensions estimées » or « Bêta — connecteurs non vérifiés » when a model ships, by the size in the plan) with its tooltip', async ({ page }) => {
   await boot(page)
   await open(page)
   const tabs = page.getByRole('tablist').getByRole('tab')
@@ -94,19 +107,23 @@ test('« Bêta » is shown (the file has proposals), just before « Autres » ; 
     (els, k) =>
       els.flatMap((e) => {
         const b = e as HTMLButtonElement
-        const modelled = k.modelled.includes(b.dataset.deviceId ?? '')
-        const tip = modelled ? k.tipEstimated : k.tip
+        const kind = k.kinds[b.dataset.deviceId ?? ''] ?? 'plain'
+        const tip = kind === 'ports' ? k.tipPorts : kind === 'estimated' ? k.tipEstimated : k.tip
         const badge = b.querySelector('[data-testid="inventory-badge"]')
         const desc = b.getAttribute('aria-describedby')
         const why: string[] = []
-        if (badge?.textContent !== (modelled ? 'Bêta — dimensions estimées' : 'non vérifié')) why.push('badge')
+        if (badge?.textContent !== (kind === 'ports' ? 'Bêta — connecteurs non vérifiés' : kind === 'estimated' ? 'Bêta — dimensions estimées' : 'non vérifié')) why.push('badge')
         if (b.title !== tip) why.push('title')
         if (!desc || b.ownerDocument.getElementById(desc)?.textContent !== tip) why.push('description')
         return why.length ? [`${b.dataset.deviceId}: ${why.join(',')}`] : []
       }),
-    { tip: TIP, tipEstimated: TIP_ESTIMATED, modelled: proposals.filter((p) => MODELLED.has(p.id)).map((p) => p.id) },
+    { tip: TIP, tipEstimated: TIP_ESTIMATED, tipPorts: TIP_PORTS, kinds: Object.fromEntries(proposals.map((p) => [p.id, kindOfProposal(p.id)])) },
   )
   expect(bad).toEqual([])
+  // both modelled kinds really occur (a predicate that put everything on one side would pass the loop above)
+  const kinds = proposals.map((p) => kindOfProposal(p.id))
+  expect(kinds.filter((x) => x === 'ports').length).toBeGreaterThan(0)
+  expect(kinds.filter((x) => x === 'estimated').length).toBeGreaterThan(0)
   await expect(page.getByTestId('inventory-badge').first()).toBeVisible()
   await expect(page.getByTestId('inventory-badge')).toHaveCount(proposals.length)
   // a proposal appears in « Bêta » only; a catalogue tab has no badge and no tooltip

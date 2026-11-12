@@ -13,6 +13,7 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { renderBetaBadges } from './betaBadges'
 import { loadPlan } from './equipmentPlan'
 import { isMainModule } from './assets3d/mainModule'
 import type { ManifestEntry } from './assets3d/manifest'
@@ -30,6 +31,9 @@ export const END = '<!-- register:end -->'
 const KNOWN: Readonly<Record<string, { picture?: string; meshy?: string }>> = {
   'qsc-k12-2': { picture: 'official front and side renders; rear = Meshy render', meshy: 'yes: rear picture only' },
 }
+
+/** A deterministic order: plain UTF-16 code-unit comparison, the same on every Node / ICU build (localeCompare is not: RØDE moved between builds). */
+export const codePointCompare = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0)
 
 const cell = (s: string): string => s.replace(/\|/g, '\\|').replace(/\r?\n/g, ' ')
 
@@ -78,7 +82,7 @@ export function renderRegister(
       const dim = dimensionsSource(a, specById.get(a.id), planSources.get(a.id))
       return { label, id: a.id, line: `| ${cell(label)} (\`${a.id}\`) | ${cell(a.tool ?? 'unknown')} | ${cell(a.source ?? '—')} | ${cell(dim)} | ${cell(pictureOf(a))} | ${cell(meshyOf(a))} | ${cell(a.trademark ?? '—')} |`, meshy: meshyOf(a).startsWith('yes') }
     })
-    .sort((x, y) => x.label.localeCompare(y.label, 'en', { sensitivity: 'base' }) || (x.id < y.id ? -1 : x.id > y.id ? 1 : 0))
+    .sort((x, y) => codePointCompare(x.label.toLowerCase(), y.label.toLowerCase()) || codePointCompare(x.label, y.label) || codePointCompare(x.id, y.id))
   const meshy = rows.filter((r) => r.meshy).map((r) => `\`${r.id}\``)
   return [
     `Generated from the manifest and the asset specs: ${rows.length} device rows; Meshy took part in ${meshy.length === 0 ? 'none' : `${meshy.length} (${meshy.join(', ')})`}.`,
@@ -131,16 +135,21 @@ function main(argv: string[]): number {
   const block = renderRegister(manifest, readSpecsLoose(join(ROOT, 'content', 'asset-specs')), deviceLabels(catalog, proposals), planSources)
   const doc = readFileSync(docPath, 'utf8')
   const next = replaceBlock(doc, block)
-  if (next === doc) {
-    console.log('register: docs/legal/BRANDS_AND_CREDITS.md is up to date')
+  // the badge file the inventory reads (derived from the plan, Wave 1b finding 3)
+  const badgesPath = join(ROOT, 'src', 'creation', 'betaBadges.json')
+  const badges = renderBetaBadges(loadPlan())
+  const badgesNow = existsSync(badgesPath) ? readFileSync(badgesPath, 'utf8') : ''
+  if (next === doc && badges === badgesNow) {
+    console.log('register: docs/legal/BRANDS_AND_CREDITS.md and src/creation/betaBadges.json are up to date')
     return 0
   }
   if (check) {
-    console.error('register: docs/legal/BRANDS_AND_CREDITS.md differs from the manifest and specs: run `npm run register`')
+    console.error('register: docs/legal/BRANDS_AND_CREDITS.md or src/creation/betaBadges.json differs from the manifest, specs and plan: run `npm run register`')
     return 1
   }
-  writeFileSync(docPath, next)
-  console.log('register: docs/legal/BRANDS_AND_CREDITS.md updated')
+  if (next !== doc) writeFileSync(docPath, next)
+  if (badges !== badgesNow) writeFileSync(badgesPath, badges)
+  console.log('register: updated')
   return 0
 }
 

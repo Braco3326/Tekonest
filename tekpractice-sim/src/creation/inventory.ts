@@ -21,9 +21,10 @@ export interface InventoryItem {
   hasModel: boolean
   /**
    * A proposal's mark: « non vérifié » (the plain Bêta badge), or « dimensions estimées » once a model ships for it (Wave 0, beta-modelled:
-   * a model at an estimated size, still unverified and patch-only). A catalog device carries none.
+   * a model at an estimated size, still unverified and patch-only), or « connecteurs non vérifiés » when the model's SIZE is a datasheet / dealer size
+   * (Wave 1b finding 3: only the ports are undocumented). A catalog device carries none.
    */
-  badge?: 'non vérifié' | 'dimensions estimées'
+  badge?: 'non vérifié' | 'dimensions estimées' | 'connecteurs non vérifiés'
 }
 
 /** Tab names: the `inventory.tab*` strings of copy.ts (the one place for shell wording). */
@@ -124,6 +125,11 @@ export function inventory(
      * drawer can say so in it; `ready` (the default) lists it only when there are proposals.
      */
     beta?: 'loading' | 'ready' | 'unavailable'
+    /**
+     * The ids of the modelled proposals whose size is verified (datasheet or dealer, three axes, confidence ok), from `betaBadges.json` (derived from the
+     * plan by `npm run register`). A modelled proposal in it reads « connecteurs non vérifiés »; any other modelled one keeps « dimensions estimées ».
+     */
+    sizeVerified?: ReadonlySet<string>
   },
 ): { tabs: InventoryTab[]; items: InventoryItem[] } {
   const items: InventoryItem[] = registry.catalog.devices.map((d) => ({
@@ -142,7 +148,7 @@ export function inventory(
       label: p.label,
       tab: 'beta',
       hasModel: opts.modelIds.has(p.deviceId),
-      badge: opts.modelIds.has(p.deviceId) ? 'dimensions estimées' : 'non vérifié',
+      badge: !opts.modelIds.has(p.deviceId) ? 'non vérifié' : opts.sizeVerified?.has(p.deviceId) ? 'connecteurs non vérifiés' : 'dimensions estimées',
     })
   }
   const used = new Set(items.map((i) => i.tab))

@@ -30,6 +30,15 @@ describe('inventory(): the badge of a proposal depends on whether a model ships 
     expect(it.hasModel).toBe(false)
     expect(it.badge).toBe('non vérifié')
   })
+  it('a modelled proposal whose size is verified (Wave 1b) says its connectors are unverified; an unlisted modelled one keeps the estimated-size badge', () => {
+    const sizeVerified = new Set(['p-modelled'])
+    const r = inventory(registry, { proposals: [...proposals, { deviceId: 'p-modelled-estimate', label: 'Estimé' }], modelIds: new Set([...models, 'p-modelled-estimate']), sizeVerified })
+    expect(r.items.find((i) => i.deviceId === 'p-modelled')!.badge).toBe('connecteurs non vérifiés')
+    expect(r.items.find((i) => i.deviceId === 'p-modelled-estimate')!.badge).toBe('dimensions estimées')
+    expect(r.items.find((i) => i.deviceId === 'p-plain')!.badge).toBe('non vérifié')
+    // a verified size without a model is still the plain badge
+    expect(inventory(registry, { proposals, modelIds: new Set(allModels), sizeVerified: new Set(['p-plain']) }).items.find((i) => i.deviceId === 'p-plain')!.badge).toBe('non vérifié')
+  })
   it('a catalogue device never carries a badge, a modelled proposal never loses its badge (it is still unverified), and the texts are the deck ones', () => {
     const r = inventory(registry, { proposals, modelIds: models })
     for (const i of r.items) expect(Boolean(i.badge), i.deviceId).toBe(i.tab === 'beta')
@@ -37,6 +46,8 @@ describe('inventory(): the badge of a proposal depends on whether a model ships 
     expect(COPY.inventory!.badgeUnverified).toBe('non vérifié')
     expect(COPY.inventory!.tipEstimated).toMatch(/estimées/)
     expect(COPY.inventory!.tipEstimated).toMatch(/non vérifiée/)
+    expect(COPY.inventory!.badgePorts).toBe('Bêta — connecteurs non vérifiés')
+    expect(COPY.inventory!.tipPorts).toMatch(/connecteurs ne sont pas vérifiés/)
   })
 })
 
@@ -115,7 +126,7 @@ describe('the drawer item of a proposal', () => {
       parent: new FakeEl('div') as never,
       registry,
       // `rca` is a connector with a shipped model in the manifest and no catalogue device: the stand-in for a Bêta proposal that has a model
-      proposals: () => [{ deviceId: 'rca', label: 'Proposé avec modèle' }, { deviceId: 'p-no-model', label: 'Proposé sans modèle' }],
+      proposals: () => [{ deviceId: 'rca', label: 'Proposé avec modèle' }, { deviceId: 'p-no-model', label: 'Proposé sans modèle' }, { deviceId: 'presonus-hp4', label: 'Taille vérifiée' }],
       betaStatus: () => 'ready' as const,
       onChoose() {},
       returnFocus() {},
@@ -132,6 +143,9 @@ describe('the drawer item of a proposal', () => {
     expect(texts).toContain(COPY.inventory!.badgeUnverified)
     const modelled = betaItems().find((b) => b.dataset.deviceId === 'rca')!
     expect(modelled.title).toBe(COPY.inventory!.tipEstimated)
+    // Wave 1b: the HP4 has a datasheet size (plan, sizeConfidence ok): its connectors are the unverified part
+    expect(texts).toContain(COPY.inventory!.badgePorts)
+    expect(betaItems().find((b) => b.dataset.deviceId === 'presonus-hp4')!.title).toBe(COPY.inventory!.tipPorts)
     const plain = betaItems().find((b) => b.dataset.deviceId === 'p-no-model')!
     expect(plain.title).toBe(COPY.inventory!.tipUnverified)
   })
