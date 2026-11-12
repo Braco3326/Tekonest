@@ -85,6 +85,7 @@ import { mountMenuBar } from './shell/menuBar'
 import { openViewPicker } from './shell/viewPickerOverlay'
 import { buildMenus } from './shell/menuModel'
 import { CREATION_TOKENS, injectCreationTokens } from '../design/creationTokens'
+import { applyDesignAttribute } from '../design/packages'
 import { nearestZone, ZONES, zoneAngles, zoneId, zoneLabel, type ZoneSigns } from '../camera/cubeZones'
 import { cubeSizePx } from './viewCubeGeometry'
 import {
@@ -138,6 +139,7 @@ const roomName = (id: string): string =>
 
 export async function bootCreation(): Promise<void> {
   injectCreationTokens()
+  applyDesignAttribute(document.documentElement, location.search) // marks <html> only for a valid ?design=1..5 (T0.1)
   useSameOriginDraco() // CA-24: the Draco decoder comes from public/draco/, never from cdn.babylonjs.com (before any .glb is loaded)
   const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
   const shell = mountShell(document, canvas)
