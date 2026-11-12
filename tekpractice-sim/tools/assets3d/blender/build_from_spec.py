@@ -3229,6 +3229,124 @@ def build_tripod_stand(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+# --- round-base-stand (Wave 2, Task 2.4) --------------------------------------------------------------------------
+# A microphone stand on a ROUND cast base (K&M 26125 class): a disc with a conical hub, a telescopic tube with a clutch sleeve, and either a straight top with a mic thread (no boom
+# params) or the tilt head and boom of the tripod-stand (boomMm given). Mirrors ROUND_BASE_PARAMS in shapes.ts. tripod-stand is untouched (its output is pinned); the boom is built
+# the same way. Pose in glTF space with the base on the origin, then centred and stretched to the spec size (refused over 3 %, like the tripod).
+
+ROUND_BASE_NAMES = ("baseDiaMm", "baseHeightMm", "hubDiaMm", "tubeDiaMm", "upperTubeDiaMm", "clutchFromMm", "boomMm", "frontMm", "boomAngleDeg", "boomAzimuthDeg")
+ROUND_BASE_DEFAULTS_MM = {"baseHeightMm": 26.0, "hubDiaMm": 44.0, "tubeDiaMm": 22.0, "upperTubeDiaMm": 19.0, "boomAngleDeg": 20.0, "boomAzimuthDeg": 135.0}   # mirrored in shapes.ts
+ROUND_BASE_SEGMENTS = 48
+ROUND_BASE_HUB_RISE_MM = 40.0
+ROUND_BASE_THREAD_MM = (9.5, 14.0)   # diameter and length of the mic thread stub (3/8 inch, generic)
+
+
+def build_round_base_stand(plan: Plan) -> bpy.types.Object:
+    """See ROUND_BASE_NAMES. Bottom at y = 0, centred on x and z. Without boomMm the unit is a straight stand: the footprint is the disc (w = d = baseDiaMm) and the top of the thread is the height."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    unknown = [k for k in params if k not in ROUND_BASE_NAMES]
+    if unknown:
+        raise BuildError(f"round-base-stand has no param {unknown[0]!r}")
+    if "baseDiaMm" not in params:
+        raise BuildError("round-base-stand needs params.baseDiaMm (the diameter of the base disc)")
+    base_r = positive(params["baseDiaMm"], "params.baseDiaMm") * MM / 2.0
+    p = {k: (positive(params[k], f"params.{k}") if k in params else v) for k, v in ROUND_BASE_DEFAULTS_MM.items()}
+    base_h = p["baseHeightMm"] * MM
+    hub_r = p["hubDiaMm"] * MM / 2.0
+    tube_r, upper_r = p["tubeDiaMm"] * MM / 2.0, p["upperTubeDiaMm"] * MM / 2.0
+    if upper_r > tube_r:
+        raise BuildError("params.upperTubeDiaMm cannot be thicker than params.tubeDiaMm: the upper section slides in the lower one")
+    if hub_r >= base_r or base_h >= h / 4.0:
+        raise BuildError("params.hubDiaMm must be less than the base diameter and params.baseHeightMm less than a quarter of the height")
+    has_boom = "boomMm" in params
+    if not has_boom:
+        for k in ("frontMm", "boomAngleDeg", "boomAzimuthDeg"):
+            if k in params:
+                raise BuildError(f"params.{k} has no effect without params.boomMm")
+        if abs(w - 2.0 * base_r) > 0.05 * MM or abs(d - 2.0 * base_r) > 0.05 * MM:
+            raise BuildError(f"a straight round-base stand is as wide as its base: the spec width and depth ({w / MM:.1f} x {d / MM:.1f} mm) must equal params.baseDiaMm ({2 * base_r / MM:.1f} mm)")
+    boom = positive(params["boomMm"], "params.boomMm") if has_boom else 0.0
+    theta, az = p["boomAngleDeg"], p["boomAzimuthDeg"]
+    front = positive(params["frontMm"], "params.frontMm") if "frontMm" in params else 0.6 * boom
+    if has_boom and (not 5.0 < theta < 45.0 or front <= 250.0 or front >= boom - 120.0):
+        raise BuildError("the boom needs boomAngleDeg between 5 and 45 degrees and frontMm between 250 mm and boomMm - 120 mm")
+    sin_a, cos_t = math.sin(math.radians(theta)), math.cos(math.radians(theta))
+    f = (math.cos(math.radians(az)), math.sin(math.radians(az)))
+    perp = (-f[1], f[0])
+    top_y = h - front * MM * sin_a if has_boom else h - ROUND_BASE_THREAD_MM[1] * MM    # the boom's pivot, or the base of the thread
+    clutch = positive(params["clutchFromMm"], "params.clutchFromMm") if "clutchFromMm" in params else 0.55 * h / MM
+    if clutch * MM + 100.0 * MM >= top_y - 80.0 * MM or clutch * MM <= base_h + ROUND_BASE_HUB_RISE_MM * MM + 130.0 * MM:
+        raise BuildError("params.clutchFromMm leaves no room for the lower tube above the hub or for the upper tube under the top")
+    u = (f[0] * cos_t, sin_a, f[1] * cos_t)
+
+    def at(x: float, y: float, z: float) -> Vector:
+        return g2b(x, y, z)
+
+    def along(s_mm: float, off: tuple[float, float, float] = (0.0, 0.0, 0.0), k: float = 0.0) -> Vector:
+        s = s_mm * MM
+        return at(u[0] * s + off[0] * k * MM, top_y + u[1] * s + off[1] * k * MM, u[2] * s + off[2] * k * MM)
+
+    def tube(a: Vector, b: Vector, r_mm: float, rb_mm: float | None = None, seg: int = 24) -> None:
+        cylinder_between(bm, a, b, r_mm * MM, None if rb_mm is None else rb_mm * MM, segments=seg)
+
+    body = Body("round-base-stand")
+    bm = body.bm
+    tube_c, joint_c, rubber_c, metal_c = lift_hex(ARM_TUBE), lift_hex(ARM_JOINT), lift_hex(TRIPOD_RUBBER), lift_hex(ARM_METAL)
+    r_mm = base_r / MM
+    # the base: a rubber ring under the disc, the disc, its sloping top up to the hub, the conical hub
+    tube(at(0.0, 0.0, 0.0), at(0.0, 3.0 * MM, 0.0), r_mm * 0.97, r_mm * 0.97, ROUND_BASE_SEGMENTS)
+    body.done(rubber_c)
+    tube(at(0.0, 2.0 * MM, 0.0), at(0.0, base_h * 0.55, 0.0), r_mm, r_mm, ROUND_BASE_SEGMENTS)
+    tube(at(0.0, base_h * 0.5, 0.0), at(0.0, base_h, 0.0), r_mm * 0.98, hub_r / MM * 1.6, ROUND_BASE_SEGMENTS)
+    body.done(tube_c)
+    tube(at(0.0, base_h - 1.0 * MM, 0.0), at(0.0, base_h + ROUND_BASE_HUB_RISE_MM * MM, 0.0), hub_r / MM * 1.6, tube_r / MM * 1.25, ROUND_BASE_SEGMENTS)
+    body.done(joint_c)
+    # the tubes and the clutch sleeve
+    tube(at(0.0, base_h + 30.0 * MM, 0.0), at(0.0, (clutch + 4.0) * MM, 0.0), tube_r / MM)
+    tube(at(0.0, (clutch + 86.0) * MM, 0.0), at(0.0, top_y - (36.0 * MM if has_boom else 4.0 * MM), 0.0), upper_r / MM)
+    body.done(tube_c)
+    tube(at(0.0, clutch * MM, 0.0), at(0.0, (clutch + 8.0) * MM, 0.0), tube_r / MM * 1.5)
+    tube(at(0.0, (clutch + 8.0) * MM, 0.0), at(0.0, (clutch + 84.0) * MM, 0.0), tube_r / MM * 1.32)
+    tube(at(0.0, (clutch + 84.0) * MM, 0.0), at(0.0, (clutch + 92.0) * MM, 0.0), tube_r / MM * 1.5)
+    body.done(joint_c)
+    if has_boom:
+        # the tilt head and the boom, as tripod-stand: a post under the pivot, a barrel across the boom, the boom with its counterweight grip, two clamps and the mic thread
+        tube(at(0.0, top_y - 40.0 * MM, 0.0), at(0.0, top_y - 6.0 * MM, 0.0), 14.0)
+        tube(at(-perp[0] * 17.0 * MM, top_y, -perp[1] * 17.0 * MM), at(perp[0] * 17.0 * MM, top_y, perp[1] * 17.0 * MM), 12.5)
+        body.done(joint_c)
+        tube(along(-225.0), along(142.0), 8.2, None, 20)
+        tube(along(132.0), along(front - 18.0), 6.6, None, 20)
+        body.done(tube_c)
+        tube(along(-boom + front), along(-222.0), 12.5, None, 20)
+        body.done(rubber_c)
+        for s0, s1, r in ((84.0, 116.0, 12.8), (226.0, 250.0, 10.5)):
+            tube(along(s0), along(s1), r, None, 20)
+        body.done(joint_c)
+        tube(along(front - 22.0), along(front - 17.0), 9.0, None, 20)
+        tube(along(front - 17.0), along(front), 4.76, None, 14)
+        body.done(metal_c)
+    else:
+        thread_d, thread_l = ROUND_BASE_THREAD_MM
+        tube(at(0.0, top_y - 4.0 * MM, 0.0), at(0.0, top_y + 2.0 * MM, 0.0), upper_r / MM * 1.15)
+        body.done(joint_c)
+        tube(at(0.0, top_y + 1.0 * MM, 0.0), at(0.0, h, 0.0), thread_d / 2.0, None, 16)
+        body.done(metal_c)
+
+    xs = [v.co.x for v in bm.verts]
+    ys = [v.co.y for v in bm.verts]
+    zs = [v.co.z for v in bm.verts]
+    ex, ey, ez = max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs)
+    for name, natural, wanted in (("width", ex, w), ("depth", ey, d), ("height", ez, h)):
+        if abs(natural / wanted - 1.0) > TRIPOD_MAX_SCALE_ERROR:
+            raise BuildError(f"the round-base stand pose is {natural / MM:.1f} mm in {name}, the spec size says {wanted / MM:.1f} mm: change the spec size or the base and boom params")
+    bmesh.ops.translate(bm, vec=Vector((-(max(xs) + min(xs)) / 2.0, -(max(ys) + min(ys)) / 2.0, -min(zs))), verts=bm.verts[:])
+    bmesh.ops.scale(bm, vec=Vector((w / ex, d / ey, h / ez)), space=Matrix.Identity(4), verts=bm.verts[:])
+    log(f"round-base stand: natural {ex / MM:.1f} x {ez / MM:.1f} x {ey / MM:.1f} mm, scaled to the spec; {sum(len(f_.verts) - 2 for f_ in bm.faces)} triangles")
+    canonical_face_order(bm)
+    return body.finish()
+
+
 def perp_vec(perp: tuple[float, float]) -> tuple[float, float, float]:
     """A horizontal direction (x, z) as a 3-vector (x, 0, z), for build_tripod_stand's boom offsets."""
     return (perp[0], 0.0, perp[1])
@@ -3465,6 +3583,7 @@ def build_moulded_box(plan: Plan) -> bpy.types.Object:
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "moulded-box": build_moulded_box,
     "revolve-oval": build_revolve_oval,
+    "round-base-stand": build_round_base_stand,
     "tripod-stand": build_tripod_stand,
     "power-strip": build_power_strip,
     "cylinder-plug": build_cylinder_plug,

@@ -102,8 +102,19 @@ export function mouldedHingePose(p: Readonly<Record<string, number>>): { h: numb
   return { h: yMax, d: zMax - zMin }
 }
 
+/**
+ * round-base-stand (Wave 2, Task 2.4): a microphone stand on a ROUND cast base (K&M 26125 class), a variant of tripod-stand. A disc (baseDiaMm, required) baseHeightMm high (default 26)
+ * under a conical hub (hubDiaMm, default 44), a telescopic tube (tubeDiaMm 22, upperTubeDiaMm 19: the upper slides in the lower), a clutch sleeve at clutchFromMm (default 0.55 of the height).
+ * Without boomMm it is a STRAIGHT stand: the footprint is the disc (the spec width and depth must equal baseDiaMm) and the top of the 3/8 inch thread is the height, exactly.
+ * With boomMm (the boom's whole length) it gets the tilt head and boom of tripod-stand: frontMm of it in front of the pivot (default 0.6 of boomMm), rising boomAngleDeg (default 20, 5 to 45)
+ * over the base at boomAzimuthDeg (default 135); the pose is stretched to the spec size, refused when that needs more than 3 % (the message gives the pose's size).
+ * A stand has no ports and no controls. Defaults mirrored in build_from_spec.py (ROUND_BASE_DEFAULTS_MM).
+ */
+export const ROUND_BASE_PARAMS = ['baseDiaMm', 'baseHeightMm', 'hubDiaMm', 'tubeDiaMm', 'upperTubeDiaMm', 'clutchFromMm', 'boomMm', 'frontMm', 'boomAngleDeg', 'boomAzimuthDeg'] as const
+export const ROUND_BASE_DEFAULTS = { baseHeightMm: 26, hubDiaMm: 44, tubeDiaMm: 22, upperTubeDiaMm: 19, boomAngleDeg: 20, boomAzimuthDeg: 135 } as const
+
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval', 'round-base-stand'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -208,6 +219,8 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   // (a multiple of 4 from 12 to 64, so the box is exact). The wrap picture covers the whole side by ARC LENGTH of each ellipse; its width is the perimeter of the widest section
   // (ellipsePerimeterMm(w, d), what projectionFaceMm('wrap') returns), its height the spec height. With width = depth at every station the geometry is the round revolve's.
   'revolve-oval': { kind: 'device', params: ['segments'], needsMatingOuter: false, usesProfile: true, profileKind: 'lathe-oval' },
+  // A microphone stand on a round base, straight or with a boom (see ROUND_BASE_PARAMS).
+  'round-base-stand': { kind: 'device', params: ROUND_BASE_PARAMS, needsMatingOuter: false },
   // A rounded-plan box with filleted edges for recorders, body-packs, small interfaces, controllers, boundary mics and hinged laptops (see MOULDED_PARAMS).
   'moulded-box': { kind: 'device', params: MOULDED_PARAMS, needsMatingOuter: false, usesPorts: true, usesFlatZones: true },
   // A microphone boom stand (tripod, telescopic tube with clutch, tilt head and boom with counterweight and mic thread). The pose is built from these params,
@@ -309,6 +322,7 @@ export function validateBuild(spec: AssetSpecT): string[] {
   if (build.shape === 'power-strip') errors.push(...validatePowerStrip(spec))
   if (build.shape === 'tripod-stand') errors.push(...validateTripodStand(spec))
   if (build.shape === 'moulded-box') errors.push(...validateMouldedBox(spec))
+  if (build.shape === 'round-base-stand') errors.push(...validateRoundBaseStand(spec))
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {
     errors.push(`${spec.id}: build shape '${build.shape}' needs mating.outerMm (the diameter of the mating end)`)
   }
@@ -581,6 +595,35 @@ function validatePowerStrip(spec: AssetSpecT): string[] {
   if (num('endTaperMm') * 4 >= Math.min(bar, d)) errors.push(`${spec.id}: endTaperMm (${num('endTaperMm')}) is too large for the bar's section`)
   if (num('cableDiaMm') * 2.4 >= bar) errors.push(`${spec.id}: cableDiaMm (${num('cableDiaMm')}) is too thick for the bar's height ${bar} mm`)
   if (num('switchMm') >= bar - 2 * num('filletMm')) errors.push(`${spec.id}: switchMm (${num('switchMm')}) does not fit on the flat front (${bar - 2 * num('filletMm')} mm)`)
+  return errors
+}
+
+/** The checks of a round-base-stand that need no geometry (the builder checks that the boom pose fits the spec size). */
+function validateRoundBaseStand(spec: AssetSpecT): string[] {
+  const errors: string[] = []
+  const { w, h, d } = spec.realSizeMm
+  const p = spec.build?.params ?? {}
+  const id = spec.id
+  const num = (name: keyof typeof ROUND_BASE_DEFAULTS): number => p[name] ?? ROUND_BASE_DEFAULTS[name]
+  if (spec.ports.length > 0) errors.push(`${id}: a round-base-stand has no ports (it is a prop)`)
+  if (spec.controls.length > 0) errors.push(`${id}: a round-base-stand has no controls`)
+  if (p.baseDiaMm === undefined) {
+    errors.push(`${id}: round-base-stand needs baseDiaMm (the diameter of the base disc)`)
+    return errors
+  }
+  if (num('upperTubeDiaMm') > num('tubeDiaMm')) errors.push(`${id}: upperTubeDiaMm (${num('upperTubeDiaMm')}) cannot be thicker than tubeDiaMm (${num('tubeDiaMm')}): the upper section slides in the lower one`)
+  if (num('hubDiaMm') >= p.baseDiaMm) errors.push(`${id}: hubDiaMm (${num('hubDiaMm')}) must be less than baseDiaMm (${p.baseDiaMm})`)
+  if (num('baseHeightMm') >= h / 4) errors.push(`${id}: baseHeightMm (${num('baseHeightMm')}) must be less than a quarter of the height ${h} mm`)
+  if (p.clutchFromMm !== undefined && p.clutchFromMm + 200 >= h) errors.push(`${id}: clutchFromMm (${p.clutchFromMm}) leaves no room for the upper tube under the top (height ${h} mm)`)
+  if (p.boomMm === undefined) {
+    for (const n of ['frontMm', 'boomAngleDeg', 'boomAzimuthDeg'] as const) if (p[n] !== undefined) errors.push(`${id}: ${n} has no effect without boomMm`)
+    if (Math.abs(w - p.baseDiaMm) > 0.05 || Math.abs(d - p.baseDiaMm) > 0.05) errors.push(`${id}: a straight round-base stand is as wide as its base: the spec width and depth (${w} x ${d} mm) must equal baseDiaMm (${p.baseDiaMm} mm)`)
+  } else {
+    const front = p.frontMm ?? 0.6 * p.boomMm
+    if (!(num('boomAngleDeg') > 5 && num('boomAngleDeg') < 45)) errors.push(`${id}: boomAngleDeg (${num('boomAngleDeg')}) must be between 5 and 45 degrees`)
+    if (front <= 250 || front >= p.boomMm - 120) errors.push(`${id}: frontMm (${front}) must be more than 250 mm and at least 120 mm less than boomMm (${p.boomMm})`)
+    if (Math.max(w, d) < p.baseDiaMm - 0.05) errors.push(`${id}: the footprint (${w} x ${d} mm) is smaller than the base disc (${p.baseDiaMm} mm)`)
+  }
   return errors
 }
 
