@@ -26,6 +26,8 @@ html[data-surface] :is(.cr-tree, .cr-props, .cr-drawer, .cr-pick, .cr-dialog, .c
   --cr-accent-text: var(--cr-role-accent-text);
   --cr-band: var(--cr-role-band);
   --cr-band-ink: var(--cr-role-band-ink);
+  /* The wash of a hovered or selected row (the connect dialog's options): the inset tone, never the hairline colour (`line` is 1.97 : 1 under the ink in packages 4 and 5). */
+  --cr-wash: var(--cr-role-inset);
   /* The surface's own ink: text and buttons that name no colour (`.cr button { color: inherit }`) inherit it from here, not the light ink `.cr` sets for the dark shell
      (Papier text on a Papier sheet was found on the screenshots, not by axe). Today's ink on a dark surface, so nothing moves where the ink is Papier. */
   color: var(--cr-papier);
@@ -57,9 +59,8 @@ html[data-surface='flat'] :is(.cr-menu-panel, .cr-note, .cr-errlist, .cr-checkli
 
 /* ── surfaceStyle: sheet (Papier): the Ambre fill carries a 2 px edge in the accent edge colour (Nuit on Papier), and the washes are the sheet's inset tone ── */
 html[data-surface='sheet'] :is(.cr-toggle[aria-pressed='true'] .cr-toggle-state, .cr-listen-btn, .cr-btn-primary, .cr-dialog-btn-primary) { border-width: 2px; }
-html[data-surface='sheet'] .cr-connect-opt[aria-selected='true'] { background: var(--cr-role-inset); }
 @media (hover: hover) {
-  html[data-surface='sheet'] :is(.cr-connect-opt, .cr .cr-errlist-row):hover { background: var(--cr-role-inset); }
+  html[data-surface='sheet'] .cr .cr-errlist-row:hover { background: var(--cr-role-inset); }
 }
 
 /* ── density: dense (rows at the 24 px target floor of WCAG 2.5.8; a coarse pointer keeps its 44 px) ── */

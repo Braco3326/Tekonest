@@ -49,5 +49,14 @@ export function declaredPairs(c: RoleColours): DeclaredPair[] {
   on('accentEdge', c.accentEdge, 'ui', 'edge of an accent fill', [['surface', c.surface], ['ground', c.ground]])
   on('inkMuted', c.inkMuted, 'ui', 'control borders (fields, buttons)', all)
   on('bandInk', c.bandInk, 'ui', 'focus ring and icons on a band', [['band', c.band]])
+  // The fills the CSS paints text or marks on (T4 fix round, C1): a band carries the muted ink (panel titles) and the selection role (bars, icons); an accent fill carries accentInk and a
+  // secondary fill secondaryInk (both above). `line` is NOT a fill: it is a hairline (1.97 : 1 under the ink in packages 4 and 5), the washes are `inset`.
+  on('inkMuted', c.inkMuted, 'text', 'secondary text on a band', [['band', c.band]])
+  on('select', c.select, 'ui', 'selection marks on a band', [['band', c.band]])
   return out
+}
+
+/** A pair of two roles of a map, for a test to craft (a role painted on a role the CSS must not paint it on). */
+export function craftedPair(c: RoleColours, fgRole: keyof RoleColours, bgRole: keyof RoleColours, kind: 'text' | 'ui'): DeclaredPair {
+  return { role: `${fgRole} on ${bgRole}`, fg: c[fgRole], bg: c[bgRole], kind, where: 'crafted' }
 }

@@ -5,7 +5,7 @@
 import { describe, expect, it } from 'vitest'
 import { CREATION_TOKENS, contrastRatio } from '../../src/design/creationTokens'
 import { DESIGN_IDS, packageById, type Hex } from '../../src/design/packages'
-import { TEXT_MIN, UI_MIN, declaredPairs, pairPasses, type DeclaredPair } from '../../src/design/packageContrast'
+import { TEXT_MIN, UI_MIN, craftedPair, declaredPairs, pairPasses, pairRatio, type DeclaredPair } from '../../src/design/packageContrast'
 
 const C = CREATION_TOKENS.color
 
@@ -65,7 +65,7 @@ describe('declared pairs of the five packages', () => {
     expect(c.accentInk).toBe(C.nuit)
   })
 
-  it('Prune share (spec 7.2): package 4 has none as a surface or a band, package 5 has Prune panels and bands, package 3 only as ink and selection', () => {
+  it('Prune share (spec 7.2): package 4 has none as a surface or a band, package 5 has Prune panels and bands, package 3 only as selection, links and emphasis text (the ink is Nuit)', () => {
     expect(packageById(4).colours.band).not.toBe(C.prune)
     expect(packageById(4).colours.surface).not.toBe(C.prune)
     expect(packageById(5).colours.surface).toBe(C.prune)
@@ -73,5 +73,34 @@ describe('declared pairs of the five packages', () => {
     expect(packageById(2).colours.band).toBe(C.prune)
     expect(packageById(3).colours.surface).toBe(C.papier)
     expect(packageById(3).colours.band).not.toBe(C.prune)
+  })
+})
+
+describe('T4 fix round, C1: a role is never painted as a fill without a declared pair', () => {
+  const C2 = CREATION_TOKENS.color
+  it('`line` is a hairline, not a fill: ink on line fails in packages 4 and 5 (line = inkMuted, 1.97 : 1), so no control may be filled with it (the connect dialog\'s options use the inset wash)', () => {
+    for (const id of [4, 5] as const) {
+      const c = packageById(id).colours
+      expect(c.line).toBe(c.inkMuted)
+      const p = craftedPair(c, 'ink', 'line', 'text')
+      expect(pairPasses(p), `package ${id}`).toBe(false)
+      expect(pairRatio(p)).toBeLessThan(2.2)
+    }
+  })
+
+  it('the wash a restyled surface paints (inset) carries the ink at >= 4.5 in all five packages, selected and hovered', () => {
+    for (const id of DESIGN_IDS) expect(pairPasses(craftedPair(packageById(id).colours, 'ink', 'inset', 'text')), `package ${id}`).toBe(true)
+  })
+
+  it('the fill roles the CSS paints text on are declared against their ink, in every package: band (bandInk, inkMuted, select), accent (accentInk), secondary (secondaryInk)', () => {
+    for (const id of DESIGN_IDS) {
+      const roles = declaredPairs(packageById(id).colours).map((p) => `${p.kind} ${p.role}`)
+      for (const want of ['text bandInk on band', 'text inkMuted on band', 'ui select on band', 'text accentInk on accent', 'text secondaryInk on secondary']) expect(roles, `package ${id}`).toContain(want)
+    }
+  })
+
+  it('Ambre never meets Papier through a role: no package maps a text, border or bar role that is not Prune or Nuit onto a Papier ground', () => {
+    const c = packageById(3).colours
+    for (const role of ['focus', 'select', 'accentText', 'accentEdge'] as const) expect(c[role].toUpperCase(), role).not.toBe(C2.ambre)
   })
 })

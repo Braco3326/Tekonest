@@ -758,7 +758,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-start-places { margin-top: 20px; }
 @media (hover: hover) {
   .cr .cr-start-btn:hover { color: var(--cr-accent-ink); background: var(--cr-accent); }
-  .cr .cr-start-btn:hover .cr-start-key { color: var(--cr-nuit); border-color: var(--cr-nuit); }
+  .cr .cr-start-btn:hover .cr-start-key { color: var(--cr-accent-ink); border-color: var(--cr-accent-ink); }
 }
 @media (max-width: 900px) { .cr-start-profiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) {

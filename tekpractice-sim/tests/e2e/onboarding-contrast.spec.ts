@@ -219,6 +219,14 @@ for (const id of DESIGN_IDS) {
     expect(startBtn.outline, 'focus ring on a start-screen button = the focus role').toBe(c.focus.toUpperCase())
     row(id, 'start-screen focus ring on its background', startBtn.outline, startBtn.ringBg, 3)
     row(id, 'start-screen button border (select)', startBtn.border, startBtn.ringBg, 3)
+    // the hovered button is an accent fill with its key inverted onto it (T4 fix round, S1: the key was Papier on Ambre, 2.16, under package 3)
+    await page.locator('.cr-start-btn').first().hover()
+    await noAmbre('start screen, hovered button')
+    const hovBtn = await probe(page, '.cr-start-btn')
+    const hovKey = await probe(page, '.cr-start-btn .cr-start-key')
+    row(id, 'hovered start button text (accentInk on accent)', hovBtn.color, hovBtn.bg, 4.5)
+    row(id, 'hovered start button key (accentInk on accent)', hovKey.color, hovKey.bg, 4.5)
+    await page.mouse.move(5, 700)
 
     // ── 2. the places (Échap on the profile stage)
     await page.keyboard.press('Escape')
@@ -237,10 +245,12 @@ for (const id of DESIGN_IDS) {
     await page.evaluate(() => {
       window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 0], rotationY: 0 })
       window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [0.8, 0, 0], rotationY: 0 })
+      window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12', position: [-1, 0, 0], rotationY: 0 })
       window.__creation!.frameDevice('ql1')
     })
     await expect(page.locator('.cr-props-content .cr-field, .cr-props-content .cr-toggle').first()).toBeVisible()
     await page.waitForFunction(() => !window.__creation!.cameraMoving())
+    await expect(page.locator('.cr-tree-root [aria-selected="true"]').first(), 'the selected tree row is in the audited room').toBeVisible()
     await noAmbre('room')
     await axeColour(page, 'room (drawer, tree, Propriétés)')
 
@@ -293,6 +303,23 @@ for (const id of DESIGN_IDS) {
     await page.keyboard.press('Escape')
     await page.locator('.cr-dialog').waitFor({ state: 'detached' })
 
+    // ── 4b. « Connecter à… »: the active option is visible on open and carries a wash (T4 fix round, C1: Papier on a 1.97 : 1 wash under packages 4 and 5); a hovered other option too
+    const connectBtn = page.locator('[data-testid="properties-content"] [data-key="connect:out-main-l"]')
+    await connectBtn.scrollIntoViewIfNeeded()
+    await connectBtn.click()
+    await page.locator('.cr-connect-opt').first().waitFor()
+    await noAmbre('connect dialog')
+    await axeColour(page, 'connect dialog')
+    const active = await probe(page, '.cr-connect-opt[aria-selected="true"]')
+    row(id, 'connect dialog, active option text on its wash', active.color, active.bg, 4.5)
+    if ((await page.locator('.cr-connect-opt').count()) > 1) {
+      await page.locator('.cr-connect-opt:not([aria-selected="true"])').first().hover()
+      const other = await probe(page, '.cr-connect-opt:not([aria-selected="true"])')
+      row(id, 'connect dialog, hovered option text on its wash', other.color, other.bg, 4.5)
+    }
+    await page.keyboard.press('Escape')
+    await page.locator('.cr-connect').waitFor({ state: 'detached' })
+
     // ── 5. the two pop-overs: the error list (Signal) and « Pourquoi je n’entends rien ? » (the chip)
     await page.getByTestId('checklist-chip').click()
     await page.locator('.cr-checklist:not([hidden])').waitFor()
@@ -303,6 +330,20 @@ for (const id of DESIGN_IDS) {
     await page.locator('.cr-errlist:not([hidden])').waitFor()
     await noAmbre('error list')
     await axeColour(page, 'error list pop-over')
+    await page.keyboard.press('Escape')
+
+    // ── 6. the coverage block of Propriétés, open, with its explanation chip pressed
+    await page.evaluate(() => {
+      const c = window.__creation!
+      c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12', port: 'in-line-a' } })
+    })
+    await page.getByRole('menuitem', { name: 'Écoute', exact: true }).click()
+    await page.getByRole('menuitemcheckbox', { name: 'Couverture' }).click()
+    await page.getByTestId('coverage-panel').waitFor({ state: 'visible' })
+    await page.getByTestId('coverage-chip').scrollIntoViewIfNeeded()
+    await page.getByTestId('coverage-chip').click()
+    await noAmbre('coverage block')
+    await axeColour(page, 'coverage block')
 
     console.log(table.join('\n'))
   })
