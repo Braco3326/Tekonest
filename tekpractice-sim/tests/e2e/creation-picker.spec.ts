@@ -288,3 +288,38 @@ test('1920×1080 screenshot', async ({ page }) => {
   await page.evaluate(() => document.fonts.ready)
   await page.screenshot({ path: 'test-results/screens/task-12-picker-1920x1080.png' })
 })
+
+test('template card note (T1.6 follow-up): a quiet secondary line in the muted ink on the panel, never Ambre text, contrast of at least 4.5, axe clean on the template grid', async ({ page }) => {
+  await page.setViewportSize({ width: 1366, height: 768 })
+  await boot(page)
+  const cards = page.getByTestId('template-grid').getByRole('option')
+  for (const i of [0, 1]) {
+    const card = cards.nth(i)
+    const note = card.locator('.cr-card-note')
+    await expect(note).toHaveCount(1)
+    const s = await card.evaluate((c) => {
+      const px = (e: Element): { color: string; fontSize: number; marginTop: number; weight: string } => {
+        const cs = getComputedStyle(e)
+        return { color: cs.color, fontSize: parseFloat(cs.fontSize), marginTop: parseFloat(cs.marginTop), weight: cs.fontWeight }
+      }
+      const rgb = (css: string): number[] => (css.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number)
+      const lum = (c: number[]): number => {
+        const [r, g, b] = c.map((v) => ((v / 255) <= 0.03928 ? v / 255 / 12.92 : (((v / 255) + 0.055) / 1.055) ** 2.4))
+        return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!
+      }
+      const note = px(c.querySelector('.cr-card-note')!)
+      const size = px(c.querySelector('.cr-card-size')!)
+      const bg = rgb(getComputedStyle(c).backgroundColor)
+      const fg = rgb(note.color)
+      const [hi, lo] = [Math.max(lum(fg), lum(bg)), Math.min(lum(fg), lum(bg))]
+      return { note, size, contrast: (hi + 0.05) / (lo + 0.05), bg: getComputedStyle(c).backgroundColor }
+    })
+    expect(s.note.color, `card ${i}: the same muted ink as the size line`).toBe(s.size.color)
+    expect(s.note.fontSize, `card ${i}: a secondary size, not the card's 14 px body`).toBe(12)
+    expect(s.note.marginTop, `card ${i}: set off from the badge or size above`).toBeGreaterThanOrEqual(4)
+    expect(s.note.weight).toBe('400')
+    expect(s.contrast, `card ${i}: contrast ${s.contrast.toFixed(2)} on ${s.bg}`).toBeGreaterThanOrEqual(4.5)
+  }
+  const axe = await new AxeBuilder({ page }).include('[data-testid="template-grid"]').withRules(['color-contrast']).analyze()
+  expect(axe.violations).toEqual([])
+})

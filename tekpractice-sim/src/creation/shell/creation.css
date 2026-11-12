@@ -779,6 +779,9 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   border: 1px solid var(--cr-ambre);
 }
 
+/* T1.6: a template card's note (what the model already does, or what is left to do): a quiet secondary line, the muted ink on the panel (never Ambre text, the badge above is the one Ambre element). */
+.cr-card-note { margin-top: 4px; font-size: 12px; font-weight: 400; line-height: 1.35; color: var(--cr-ink-muted); }
+
 /* « Salle vide » / « Avec le matériel du modèle » */
 .cr-pick-confirm { position: absolute; inset: 0; z-index: 3; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(19, 17, 20, 0.72); }
 .cr-pick-confirm[hidden] { display: none; }
