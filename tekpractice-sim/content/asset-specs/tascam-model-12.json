@@ -1,0 +1,211 @@
+{
+  "id": "tascam-model-12",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 343,
+    "h": 98.8,
+    "d": 360
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 70,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 56.4,
+      "yMm": 70,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-3",
+      "face": "io",
+      "xMm": 82.8,
+      "yMm": 70,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-4",
+      "face": "io",
+      "xMm": 109.2,
+      "yMm": 70,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-line-1",
+      "face": "io",
+      "xMm": 143.6,
+      "yMm": 70,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-2",
+      "face": "io",
+      "xMm": 161,
+      "yMm": 70,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-3",
+      "face": "io",
+      "xMm": 178.4,
+      "yMm": 70,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-4",
+      "face": "io",
+      "xMm": 195.8,
+      "yMm": 70,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 25,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 56.4,
+      "yMm": 25,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "io",
+      "xMm": 82.8,
+      "yMm": 25,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-2",
+      "face": "io",
+      "xMm": 100.2,
+      "yMm": 25,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 117.6,
+      "yMm": 25,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        98.8
+      ],
+      [
+        30,
+        98.8
+      ],
+      [
+        150,
+        80
+      ],
+      [
+        360,
+        58
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 28,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 20,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.tascam.com/us/product/model_12/spec",
+      "note": "equipment plan source (research grade: datasheet); size 343 x 360 x 98.8 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.tascam.com/us/product/model_12/spec",
+      "note": "TASCAM Model 12 spec page (opened): 8 XLR mic inputs with phantom, 8 Hi-Z instrument inputs, 10 line inputs in total, 3.5 mm TRRS smartphone input, USB-C (12 in / 10 out), 5-pin MIDI in / out, dedicated click output, Bluetooth 5, SD recording; power from an AC adaptor (external). The page does not list the main, monitor and headphone outputs: XLR main L / R and 2 headphone outputs follow the plan summary from the knowledge base (an assumption), so beta-modelled. Modelled subset: 4 of 8 combos (XLR part), 4 line jacks, main L / R, 2 phones, USB-C. Size 343 x 360 x 98.8 mm including side panels and knobs (page), 4.3 kg. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses."
+    }
+  ]
+}
