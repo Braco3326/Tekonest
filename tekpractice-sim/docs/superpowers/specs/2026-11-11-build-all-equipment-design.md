@@ -39,15 +39,16 @@ Success: every row of the plan that reaches its wave's gates is promoted or mode
 
 ### 4.1 Two outcomes per device
 
-- **Promoted** (goes into `content/catalog.json`): requires size from a datasheet or dealer source (never estimate-only) and a documented connector set. Gets short stable port ids, `controls` (power toggle where there is a mains port, plus category controls), `routing`, flags, `acoustic` for speakers, `modelFront`, an asset spec, a GLB with gates green, a French label and `realWorld` text.
-- **Beta-modelled** (stays in the proposals file): size is estimated or ports are partial. Gets an asset spec marked `confidence: guess` on size, a GLB through the same gates, and a manifest row. The proposals loader keeps it badged Bêta with the extra label « dimensions estimées ». No behaviour.
+- **Promoted** (goes into `content/catalog.json`): requires a size from a datasheet or dealer source (never estimate-only) with all three axes and `sizeConfidence: ok` (not an assumed axis order, not a conflict between sources, not a partial size), AND a connector set the datasheet documents (the asset spec says `portsDocumented: true` and names its `portsSource`). Gets short stable port ids, `controls` (power toggle where there is a mains port, plus category controls), `routing`, flags, `acoustic` for speakers, `modelFront`, an asset spec, a GLB with gates green, a French label and `realWorld` text.
+- **Beta-modelled** (stays in the proposals file): size is estimated, uncertain or partial, or the ports are not documented. Gets an asset spec marked `confidence: guess` on size, a GLB through the same gates, and a manifest row. The proposals loader keeps it badged Bêta with the extra label « dimensions estimées ». No behaviour.
 - A device with no data at all gets neither and is listed in the report as blocked on a datasheet pass.
+- Ports are never invented: a category template adds behaviour (power toggle for every mains inlet, phantom, routes, acoustic, controls) on top of the ports the datasheet documents, chosen by category and by the plan row's traits (condenser, ribbon, phantom-powered, battery, handheld, bodypack, receiver, processor, desk and so on). A hand-held or body-pack device has no mains inlet and no power toggle.
 
-### 4.2 Source of truth and promotion tool
+### 4.2 Source of truth and the two-stage promotion tool
 
-- New `content/proposals/equipment-plan.json` (committed): the plan table in machine form (id, status, category, manufacturer, product, mm size, kg, ports summary, shape family, dataQuality, tier, wave, per-field source URL and grade). Generated once from the CSV; edited by hand afterwards. Contains numbers and URLs only, no photos.
-- New `tools/promote-device.ts` (`npm run promote -- <id>`): reads the plan row (and the proposal if one exists), writes the catalogue entry or proposal update, short port ids (<= 19 chars, the catalogue maximum), power toggle for every mains port, category behaviour template (4.3), and the asset-spec skeleton (reusing `asset:spec`). Idempotent, `--dry-run`, refuses an id whose data quality is `missing`. Unit-tested on three devices of different categories.
-- `tools/propose-content.ts` / `npm run sync:kb` regenerates the proposals file wholesale: Wave 0 makes it skip ids that are already promoted or listed in the plan so a sync cannot resurrect or overwrite them (test).
+- New `content/proposals/equipment-plan.json` (committed): the plan table in machine form (id, status, category, manufacturer, product, mm size, kg, ports summary, shape family, dataQuality, sizeConfidence, traits, tier, wave, per-field source URL and grade). Generated once from the CSV; edited by hand afterwards. Contains numbers and URLs only, no photos. `import-equipment-plan --refresh-sources` recomputes only the sources (a note line gives a link only when its subject IS the product).
+- New `tools/promote-device.ts` (`npm run promote -- <id>`) in two stages. **Stage 1** writes only the asset-spec skeleton (size, typed sources, a to-do note about the ports, no ports) and marks the plan row `staged`; it never touches the catalogue or the proposals file. **Stage 2** (`--commit`, run after the GLB shipped and the gates are green) refuses unless the manifest has the device's row and `public/assets/<id>.glb` exists, then writes the catalogue entry (promoted outcome, from the documented ports of the spec) or leaves the proposal in place with its size and model (beta-modelled outcome), and sets `promoted` or `betaModelled`. `--revert` undoes the latest stage completely. Both stages are atomic (temporary files, renames, rollback) and idempotent; `--dry-run` writes nothing. A staged device is seen by the asset pipeline as the catalogue entry stage 2 will write, so the spec's parity check passes between the stages.
+- `tools/propose-content.ts` / `npm run sync:kb` regenerates the proposals file from a pure generator (`tools/proposalGenerate.ts`) through the same guard: it skips ids that are already promoted or listed in the plan so a sync cannot resurrect or overwrite them, and a test holds that the committed file is a fixed point of the generator on the real knowledge base.
 
 ### 4.3 Behaviour templates per category (derived from the 25 verified devices)
 
@@ -105,11 +106,11 @@ Generated basic layouts (power key/rocker) for every promoted device with a powe
 ## 5. Device build loop (per device)
 
 1. Read the plan row; if data quality is `missing` stop and list it.
-2. `promote-device` (or the proposal update for beta-modelled) writes catalogue/proposal and the spec skeleton.
-3. Fill the spec: size, ports with positions and confidence, `build` params and `budget`, sources, notes marking every estimate.
+2. `promote-device` stage 1 (`npm run promote -- <id>`) writes ONLY the asset-spec skeleton (size, typed sources, a to-do note about the ports) and marks the plan row staged; the catalogue and the proposals file are not touched.
+3. Fill the spec: size, the ports the datasheet documents (connector, signal, direction, flags, positions, confidence) with `portsDocumented: true` and `portsSource` only when the datasheet documents the connector set, `build` params and `budget`, sources, notes marking every estimate.
 4. `asset:panel` for the generic pictures; `asset:build -- <id> --scripted` (dry run first).
 5. Look at the contact sheet (front, rear, 3/4, side); compare proportions to the datasheet numbers; fix or record. Contact sheets go to the ignored `docs/superpowers/notes/img/` folder, never committed.
-6. Ship through the gates (size, transform, parts, portPositions, portSurface, budget, proportionDrift, textures, validator, detail, fillet); tests for the device (spawner, modelIds, manifest drift); commit with explicit paths.
+6. Ship through the gates (size, transform, parts, portPositions, portSurface, budget, proportionDrift, textures, validator, detail, fillet); then stage 2 (`npm run promote -- <id> --commit`: promoted or beta-modelled; `--revert` undoes a stage); tests for the device (spawner, modelIds, manifest drift); commit with explicit paths.
 Batch up to 10 devices of one family per commit series; the catalogue edit is batched per wave.
 
 ## 6. Waves, order and stop rules
