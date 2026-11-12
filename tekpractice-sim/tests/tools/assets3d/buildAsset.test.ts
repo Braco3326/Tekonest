@@ -1679,6 +1679,64 @@ describe('scripted build (--scripted)', () => {
     })
   })
 
+  describe('a device with a generic panel keeps its picture on every scripted build (Waves 2 to 5 review, finding 1)', () => {
+    const box = (): AssetSpecT => deviceSpec({ build: { shape: 'rack-box', projection: ['io', 'opposite'] } })
+    const rig = async (spec: AssetSpecT, panel: BuildDeps['genericPanelPhotos']) => {
+      const seen: { faces?: string[] } = {}
+      const deps = makeDeps({ spec, fixed: [await goodGlb(spec)] })
+      deps.genericPanelPhotos = panel
+      deps.photoProjection = async () => ({ png: new Uint8Array([2]), faceMm: { w: 1, h: 1 } })
+      deps.runBuilder = async (_s, outGlb, projections) => {
+        seen.faces = projections?.map((p) => p.face)
+        await writeFile(outGlb, RAW_BYTES)
+      }
+      return { deps, seen }
+    }
+    const photosFor = async (_id: string, faces: string[]) => faces.map((f) => ({ face: f as 'io' | 'opposite', file: `/x/_generic_${f}.png` }))
+
+    it('a plain `--scripted --ship` of a spec that has a panel builds a hybrid: the panel faces are projected, the manifest says hybrid with the generic pictures, no flag needed', async () => {
+      const spec = box()
+      const { deps, seen } = await rig(spec, photosFor)
+      const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true }, deps)
+      expect(report.ok).toBe(true)
+      expect(report.hybrid).toBe(true)
+      expect(seen.faces).toEqual(['io', 'opposite'])
+      const entry = (await readManifest()).assets.find((a) => a.id === spec.id)
+      expect(entry).toMatchObject({ tool: 'hybrid', photos: ['_generic_io.png', '_generic_opposite.png'], trademark: 'branded-internal', logosRemoved: true })
+      expect(String(entry?.source)).toMatch(/generic artwork/)
+    })
+    it('a spec without a panel stays a plain scripted build', async () => {
+      const spec = box()
+      const { deps, seen } = await rig(spec, async () => [])
+      const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true }, deps)
+      expect(report.ok).toBe(true)
+      expect(report.hybrid).toBeUndefined()
+      expect(seen.faces).toBeUndefined()
+      expect(await readManifest()).toMatchObject({ assets: expect.arrayContaining([expect.objectContaining({ id: spec.id, tool: 'scripted', photos: [] })]) })
+    })
+    it('an explicit --project-photo wins: the panel is not asked for', async () => {
+      const spec = box()
+      let asked = 0
+      const { deps } = await rig(spec, async () => {
+        asked++
+        return []
+      })
+      const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true, dryRun: true, projectPhotos: [{ face: 'io', file: 'a.png' }, { face: 'opposite', file: 'b.png' }] }, deps)
+      expect(report.ok).toBe(true)
+      expect(asked).toBe(0)
+    })
+    it('the panel is asked for the spec projection faces only', async () => {
+      const spec = deviceSpec({ build: { shape: 'rack-box', projection: 'io' } })
+      let wanted: string[] = []
+      const { deps } = await rig(spec, async (id, faces) => {
+        wanted = faces
+        return photosFor(id, faces)
+      })
+      await buildAsset(spec.id, { maxAttempts: 1, scripted: true, dryRun: true }, deps)
+      expect(wanted).toEqual(['io'])
+    })
+  })
+
   it('ship records tool scripted, the builder version, no task, no photos, logosRemoved true without being asked', async () => {
     const spec = jack()
     const report = await buildAsset(spec.id, { maxAttempts: 1, scripted: true }, makeDeps({ spec, fixed: [await goodGlb(spec)], fixupReport: FIXUP_JACK }))

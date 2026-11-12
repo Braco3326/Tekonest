@@ -60,6 +60,8 @@ import { dracoCompress, optimizeTextures } from './compress'
 import { renderContactSheet } from './contactSheet'
 import type { CompressOpts, TextureOpts } from './compress'
 import { findBlender, redact, requireMeshyKey } from './env'
+import { renderPanel } from './genericPanel'
+import type { PanelSpec } from './genericPanel'
 import { blankBands } from './blank'
 import { normaliseLook } from './look'
 import { parsePhotoArg, photoProjection } from './photoProjection'
@@ -151,6 +153,12 @@ export interface BuildDeps {
   loadCatalog: () => CatalogT
   /** The reference photos of `id`, in order, at most 4 ([] when there are none). */
   readPhotos: (id: string) => Promise<PhotoFile[]>
+  /**
+   * The generic-panel pictures of `id` for the given faces (content/generic-panels/<id>.json drawn into assets-source/<id>/photos/_generic_<face>.png), [] when
+   * the device has no panel. A scripted build with no --project / --project-photo of its own takes them, so no rebuild path (layout rebuild, params fix, a plain
+   * `--scripted --ship`) can silently drop a device's picture (Waves 2 to 5 review, finding 1).
+   */
+  genericPanelPhotos: (id: string, faces: ProjectionFace[]) => Promise<PhotoArg[]>
   paths: BuildPaths
   now: () => Date
   /** Progress lines (task id and work dir right after each paid create, poll status). Default console.log. */
@@ -293,11 +301,32 @@ function resolveDeps(deps: Partial<BuildDeps>): BuildDeps {
         return catalogWithStaged(withProposals, stagedDevices().devices, new Set(catalog.devices.map((d) => d.id)))
       }),
     readPhotos: deps.readPhotos ?? ((id) => readPhotosFrom(join(paths.sourceDir, id, 'photos'))),
+    genericPanelPhotos: deps.genericPanelPhotos ?? ((id, faces) => drawGenericPanelPhotos(id, faces, join(paths.sourceDir, id, 'photos'))),
     paths,
     now: deps.now ?? (() => new Date()),
     log: deps.log ?? ((line) => console.log(line)),
     renderSheet: deps.renderSheet !== undefined ? deps.renderSheet : findBlender() ? (glb, photo, out, spec) => renderContactSheet(glb, photo, out, spec) : null,
   }
+}
+
+/**
+ * Draws the faces of content/generic-panels/<id>.json that the build projects into `photoDir` as _generic_<face>.png and returns them as project photos
+ * ([] when the device has no panel file). Only faces in `faces` are drawn: a panel face the spec does not project is ignored here.
+ */
+export async function drawGenericPanelPhotos(id: string, faces: ProjectionFace[], photoDir: string, panelsDir: string = join(REPO_ROOT, 'content', 'generic-panels')): Promise<PhotoArg[]> {
+  const file = join(panelsDir, `${id}.json`)
+  if (!existsSync(file)) return []
+  const data = JSON.parse(readFileSync(file, 'utf8')) as { faces: Record<string, PanelSpec> }
+  await mkdir(photoDir, { recursive: true })
+  const out: PhotoArg[] = []
+  for (const face of faces) {
+    const panel = data.faces[face]
+    if (!panel) continue
+    const png = join(photoDir, `_generic_${face}.png`)
+    await writeFile(png, await renderPanel(panel))
+    out.push({ face, file: png })
+  }
+  return out
 }
 
 /** Writes `bytes` to `path` through a temp file and a rename, so a reader never sees half a file. */
@@ -425,6 +454,16 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   } else if (opts.projectFrom || (opts.projectPhotos ?? []).length > 0) {
     throw new Error('projectFrom and projectPhotos go with scripted: the picture is mapped onto a scripted shape')
   }
+  let generic = false
+  if (scripted && opts.projectFrom === undefined && (opts.projectPhotos ?? []).length === 0) {
+    // No picture was asked for: a device that has a generic panel gets it (the picture belongs to the device, not to one command line).
+    const wanted = spec.build?.projection ?? 'io'
+    const panel = await d.genericPanelPhotos(id, Array.isArray(wanted) ? wanted : [wanted])
+    if (panel.length > 0) {
+      opts = { ...opts, projectPhotos: panel }
+      generic = true
+    }
+  }
   const hybrid = scripted && (opts.projectFrom !== undefined || (opts.projectPhotos ?? []).length > 0)
   // A yaw of 90 or 270 degrees swaps the model's width and depth after the fix-up has matched them to the spec, so on a
   // footprint that is not square the proportion gate fails the same way on every attempt: refuse before anything is spent.
@@ -433,7 +472,8 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
     throw new Error(`yaw ${yaw} on ${id}: the footprint is non-square (${spec.realSizeMm.w} x ${spec.realSizeMm.d} mm) and this yaw swaps width and depth, so the model could never match the spec (use 0 or 180); nothing was spent`)
   }
   // A plain scripted model has no photo texture, so there is no logo to remove; a hybrid carries a Meshy picture made from photos.
-  const logosRemoved = (scripted && !hybrid) || opts.logosRemoved === true
+  // (the pipeline's own generic artwork has no logo by construction)
+  const logosRemoved = (scripted && !hybrid) || generic || opts.logosRemoved === true
   if (!dryRun && !logosRemoved) {
     throw new Error(`refusing to ship ${id}: shipping writes public/assets and the manifest, and needs the assertion that the textures carry no logos (logosRemoved, the CLI flag --logos-removed)`)
   }
