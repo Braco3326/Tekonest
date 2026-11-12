@@ -344,3 +344,36 @@ export function applyDesignAttribute(root: AttributeRoot, search: string): Desig
   else root.removeAttribute('data-design')
   return pkg
 }
+
+/**
+ * The class `src/main.ts` puts on <html> on a PRACTICE address (the guide's own mode gate: no `?mode=`, `?level=` or `?legacy=`; ruling R-A). On an exam address a valid `?design`
+ * still marks `data-design` (T0.1) but the layout and the look do not apply: « exam addresses: unchanged ».
+ */
+export const PRACTICE_CLASS = 'cr-practice'
+
+/** The slice of `<html>` that says which package's look applies (tests pass a fake). */
+export interface LookRoot {
+  getAttribute(name: string): string | null
+  classList: { contains(token: string): boolean }
+}
+
+/** The package whose layout preset and colours apply to this page: a valid `data-design` AND the practice class; null otherwise (plain, exam, legacy). */
+export function lookOfRoot(root: LookRoot): DesignPackage | null {
+  if (!root.classList.contains(PRACTICE_CLASS)) return null
+  const v = root.getAttribute('data-design')
+  return v === '1' || v === '2' || v === '3' || v === '4' || v === '5' ? packageById(Number(v) as DesignId) : null
+}
+
+/**
+ * Writes the layout attributes the stylesheets (src/design/packages.css) and the drawer read, from the package's preset: `data-surface`, `data-density` and `data-drawer`
+ * (`close-after-place` | `stay-open`). No package removes them. Selecting on these (never on the package number) is what keeps the no-branching lint true.
+ */
+export function applyLookAttributes(root: AttributeRoot, pkg: DesignPackage | null): void {
+  if (pkg === null) {
+    for (const a of ['data-surface', 'data-density', 'data-drawer']) root.removeAttribute(a)
+    return
+  }
+  root.setAttribute('data-surface', pkg.layout.surfaceStyle)
+  root.setAttribute('data-density', pkg.layout.density)
+  root.setAttribute('data-drawer', pkg.layout.drawer)
+}

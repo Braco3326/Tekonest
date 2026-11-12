@@ -246,6 +246,34 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   /** A drag ended: the pointer click that may follow it is not a « choose » (a keyboard click, detail 0, always is). */
   let swallowClick = false
   const win = doc.defaultView
+  /**
+   * « stay-open » (design package layout, plan T4.3): the shell writes `data-drawer` on <html> from the package's preset (src/design/packages.ts `applyLookAttributes`); this
+   * module reads that attribute, never a package. A choice or a drag closes the drawer first as always (the view is clear and focused for the pose); when the pose ENDS (a drop,
+   * Échap, a refusal: the view's `data-placing` goes away, the contract the notes and the cancel button already use) a drawer that was open comes back, with the focus left where it is.
+   * It does not come back over the place picker, and a pose that never started arms nothing.
+   */
+  const staysOpen = (): boolean => doc.documentElement.getAttribute('data-drawer') === 'stay-open'
+  const posing = (): boolean => d.parent.dataset.placing === 'true'
+  let armed = false
+  let watcher: MutationObserver | null = null
+  const disarm = (): void => {
+    armed = false
+    watcher?.disconnect()
+    watcher = null
+  }
+  /** Call right after a pose started from the drawer (and after it closed): reopen it when the pose is over. */
+  const reopenAfterPose = (wasOpenAndStays: boolean): void => {
+    if (!wasOpenAndStays || !posing() || !win || typeof win.MutationObserver !== 'function') return
+    disarm()
+    armed = true
+    watcher = new win.MutationObserver(() => {
+      if (!armed || posing()) return
+      disarm()
+      if (doc.querySelector('.cr-pick:not([hidden])')) return // the picker covers the workspace: nothing to come back to
+      api.open({ focus: false })
+    })
+    watcher.observe(d.parent, { attributes: true, attributeFilter: ['data-placing'] })
+  }
   const stopPress = (): void => {
     press = null
     win?.removeEventListener('pointermove', onPressMove)
@@ -270,7 +298,9 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     }
     // The shell starts the pose first: a refusal leaves the drawer open (nothing took its place), a start clears the view and gives it the focus (Échap works as for any pose).
     if (!d.onDragStart(p.deviceId, at, e.altKey)) return stopPress()
+    const stays = staysOpen() && api.isOpen
     api.close()
+    reopenAfterPose(stays)
   }
   function onPressUp(e: PointerEvent): void {
     const p = press
@@ -487,8 +517,10 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   close.addEventListener('click', () => api.close())
 
   function choose(deviceId: string): void {
+    const stays = staysOpen() && api.isOpen
     api.close() // the 3D view is focused again before placement starts
     d.onChoose(deviceId)
+    reopenAfterPose(stays)
   }
 
   const api: InventoryDrawer = {
@@ -497,6 +529,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       return root.dataset.open === 'true'
     },
     open(opts) {
+      disarm() // a drawer opened by hand (or back from a pose) owns itself: nothing is waiting for a pose to end
       if (opts?.tab) api.preselect(opts.tab)
       if (api.isOpen) return
       filter.value = ''
@@ -562,7 +595,10 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       root.inert = true
       if (opts?.returnFocus !== false) d.returnFocus()
     },
-    dispose: stopPress,
+    dispose() {
+      disarm()
+      stopPress()
+    },
   }
   return api
 }

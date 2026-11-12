@@ -8,6 +8,9 @@ import { COPY } from '../../src/creation/copy'
 import { TUTORIAL_STEPS } from '../../src/guide/tutorial'
 import {
   ALLOWED_COLOURS,
+  PRACTICE_CLASS,
+  applyLookAttributes,
+  lookOfRoot,
   DESIGN_IDS,
   activePackage,
   applyDesignAttribute,
@@ -199,5 +202,44 @@ describe('first-sound framing (T2.5, spec 5)', () => {
       expect(f.beta, `package ${id}: above the floor, short of straight down`).toBeGreaterThan(0.1)
       expect(f.beta, `package ${id}`).toBeLessThan(Math.PI / 2)
     }
+  })
+})
+
+describe('lookOfRoot / applyLookAttributes (T4.3: the layout and the look apply on a practice address only)', () => {
+  const root = (attrs: Record<string, string>, classes: string[]) => ({
+    getAttribute: (k: string) => attrs[k] ?? null,
+    classList: { contains: (c: string) => classes.includes(c) },
+  })
+
+  it('a valid data-design on a practice address (the class main.ts sets) is the package; either alone is not', () => {
+    for (const id of DESIGN_IDS) expect(lookOfRoot(root({ 'data-design': String(id) }, [PRACTICE_CLASS]))?.id).toBe(id)
+    expect(lookOfRoot(root({ 'data-design': '2' }, []))).toBeNull() // an exam address (R-A): the attribute is there, the class is not
+    expect(lookOfRoot(root({}, [PRACTICE_CLASS]))).toBeNull() // a plain address
+    expect(lookOfRoot(root({ 'data-design': '7' }, [PRACTICE_CLASS]))).toBeNull()
+    expect(lookOfRoot(root({ 'data-design': '' }, [PRACTICE_CLASS]))).toBeNull()
+  })
+
+  const fake = () => {
+    const attrs = new Map<string, string>()
+    return { attrs, setAttribute: (k: string, v: string) => void attrs.set(k, v), removeAttribute: (k: string) => void attrs.delete(k) }
+  }
+
+  it('writes the surface style, the density and the drawer behaviour of the package, and nothing else', () => {
+    for (const id of DESIGN_IDS) {
+      const r = fake()
+      const p = packageById(id)
+      applyLookAttributes(r, p)
+      expect([...r.attrs.keys()].sort()).toEqual(['data-density', 'data-drawer', 'data-surface'])
+      expect(r.attrs.get('data-surface')).toBe(p.layout.surfaceStyle)
+      expect(r.attrs.get('data-density')).toBe(p.layout.density)
+      expect(r.attrs.get('data-drawer')).toBe(p.layout.drawer)
+    }
+  })
+
+  it('no package: the three attributes are removed (a stale one never survives)', () => {
+    const r = fake()
+    applyLookAttributes(r, packageById(3))
+    applyLookAttributes(r, null)
+    expect(r.attrs.size).toBe(0)
   })
 })

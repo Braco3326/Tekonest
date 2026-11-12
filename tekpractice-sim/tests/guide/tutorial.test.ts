@@ -18,6 +18,7 @@ import {
   closingLines,
   nextConnectionStepFor,
   pairOf,
+  PROPS_UNFOLD,
   resolveTutorialAnchor,
   roleOf,
   sourceConsoles,
@@ -482,6 +483,23 @@ describe('anchor resolvers (pure, on a fake page)', () => {
     expect(resolveTutorialAnchor(a, env({ state: s }))).toEqual(RECT(2))
     expect(resolveTutorialAnchor(a, env({ state: s, rectOfAnchor: (x) => (x === 'device:q' ? RECT(1) : null) }))).toEqual(RECT(1))
     expect(resolveTutorialAnchor(a, env({ state: stateOf([]) }))).toBeNull()
+  })
+
+  it('G8 S7: the device is selected and Propriétés is folded (package 1): the ring goes to the Propriétés unfold toggle, for connect, playback and unplug alike', () => {
+    const UNFOLD = '.cr[data-props="collapsed"] [data-testid="props-collapse"]'
+    expect(PROPS_UNFOLD).toBe(UNFOLD)
+    const s = stateOf([['q', 'yamaha-ql1'], ['k', 'qsc-k12-2']], [cable(['q', 'out-main-r'], ['k', 'in-line-a'])])
+    // connect: selected + folded = the toggle; unfolded (the row has a box) = the row, before the toggle; not selected = the device
+    expect(resolveTutorialAnchor('nav:connect.from.console-speaker', env({ state: stateOf([['q', 'yamaha-ql1'], ['k', 'qsc-k12-2']]), selection: 'q', shown: [UNFOLD] }))).toEqual(RECT(100))
+    const row = '[data-testid="properties-content"] [data-key="connect:out-main-l"]'
+    expect(resolveTutorialAnchor('nav:connect.from.console-speaker', env({ state: stateOf([['q', 'yamaha-ql1'], ['k', 'qsc-k12-2']]), selection: 'q', shown: [UNFOLD, row] }))).toEqual(RECT(101))
+    expect(resolveTutorialAnchor('nav:connect.from.console-speaker', env({ state: stateOf([['q', 'yamaha-ql1'], ['k', 'qsc-k12-2']]), shown: [UNFOLD] }))).toEqual(RECT(1))
+    expect(resolveTutorialAnchor('nav:connect.from.console-speaker', env({ state: stateOf([['q', 'yamaha-ql1'], ['k', 'qsc-k12-2']]), selection: 'k', shown: [UNFOLD] }))).toEqual(RECT(1))
+    // playback: the console selected and Propriétés folded
+    expect(resolveTutorialAnchor('control:suggest.playback', env({ state: stateOf([['q', 'yamaha-ql1']]), selection: 'q', shown: [UNFOLD] }))).toEqual(RECT(100))
+    // unplug
+    expect(resolveTutorialAnchor('nav:unplug.from.console-speaker', env({ state: s, selection: 'q', shown: [UNFOLD] }))).toEqual(RECT(100))
+    expect(resolveTutorialAnchor('nav:unplug.from.console-speaker', env({ state: s, shown: [UNFOLD] }))).toEqual(RECT(1))
   })
 
   it('unplug: the console while not selected, then the « Débrancher » button of its cable to a speaker', () => {

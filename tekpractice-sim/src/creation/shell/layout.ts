@@ -6,6 +6,9 @@
  * DOM only: the shell never touches the rig (intents only, C6).
  */
 import './creation.css'
+import '../../design/packages.css'
+import { injectCreationTokens } from '../../design/creationTokens'
+import { applyLookAttributes, lookOfRoot } from '../../design/packages'
 import { COPY } from '../copy'
 import { createLiveText } from './liveText'
 
@@ -63,6 +66,13 @@ function el<K extends keyof HTMLElementTagNameMap>(doc: Document, tag: K, cls?: 
 
 export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   doc.documentElement.classList.add('cr-mode')
+  // The design package of this address (a valid ?design on a practice address, src/design/packages.ts `lookOfRoot`): its colours as roles, its surface style, density and
+  // drawer behaviour as attributes on <html> (src/design/packages.css and the drawer read them), and its first panels below. None: today's shell, nothing written.
+  const look = lookOfRoot(doc.documentElement)
+  if (look !== null) {
+    injectCreationTokens(doc.documentElement, look.colours)
+    applyLookAttributes(doc.documentElement, look)
+  }
 
   const skip = el(doc, 'a', 'cr-skip', S().skip)
   skip.href = '#cr-viewport'
@@ -199,9 +209,11 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
 
   // A narrow window starts with Propriétés folded so the 3D view keeps ≥ 60 %; a phone-sized one (< 760 px) folds Projet too (night wave 2, item A:
   // at 400 px the 200 px tree left the view 168 px wide). Only the first state: a click, a menu item or a script wins afterwards.
+  // A design package's preset (T4.3) says which panels it wants; the width rules above stay the upper bound, so the phone accordion (< 760 px) and the 60 % rule still win over any preset.
   const win = doc.defaultView
-  setPanel('tree', !phone())
-  setPanel('props', !(win && win.innerWidth < 1200))
+  const want = look?.layout.panels ?? { tree: true, props: true }
+  setPanel('tree', want.tree && !phone())
+  setPanel('props', want.props && !(win && win.innerWidth < 1200))
 
   // The window crosses 760 px. Narrower with both panels open: the one opened longer ago folds (the same accordion, focus handed to its button). Wider again: a panel that only the
   // accordion folded comes back (fix round S6); one the learner folded or opened stays as they left it.

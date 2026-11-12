@@ -4,14 +4,18 @@ import { decideRoute } from './routing'
 import { showBootFailure } from './creation/bootFailure'
 // The guide's two small gate modules (pure, query only; the guide chunk itself stays lazy): the creation boot may not import the guide, so the answer is passed in.
 import { guideMode, guideRouteAllowed } from './guide/mode'
+import { PRACTICE_CLASS } from './design/packages'
 
 /**
  * What the creation boot may do of the onboarding (packs T2.4b, ruling R-A): the creation code may not import the guide, so the guide's own gates are read here.
  * `onboarding`: practice mode (no `?mode=`, so an exam address leaves the start screen, the record, the chip, the framing and the panel and drawer changes entirely off).
  * `tutorialAllowed`: practice mode and the guide may run (not `?oscar=0`): the start screen offers the tutorial and Aide has « Premiers pas ». `?oscar=0` keeps the profile choice.
+ * One more thing on a practice address (plan T4.3): <html> gets the class `cr-practice` (`PRACTICE_CLASS`), the one gate the shell reads (`lookOfRoot`) before a valid `?design`
+ * restyles and lays it out; an exam address never gets it, so it never changes, with or without `?design`.
  */
 function onboardingGates(search: string): { onboarding: boolean; tutorialAllowed: boolean } {
   const onboarding = guideMode(search, 'creation') === 'practice'
+  if (onboarding) document.documentElement.classList.add(PRACTICE_CLASS)
   return { onboarding, tutorialAllowed: onboarding && guideRouteAllowed(search, 'creation') }
 }
 

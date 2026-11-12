@@ -55,7 +55,23 @@ class FakeEl {
 
 function fakeWindow() {
   const l = new Map<string, Set<Handler>>()
+  /** The drawer's stay-open watcher (T4.3): a MutationObserver on the view's `data-placing`; the test fires its callbacks by hand. */
+  const observers = new Set<{ cb: () => void }>()
+  class FakeMutationObserver {
+    constructor(readonly cb: () => void) {}
+    observe(): void {
+      observers.add(this)
+    }
+    disconnect(): void {
+      observers.delete(this)
+    }
+  }
   const win = {
+    MutationObserver: FakeMutationObserver,
+    observers,
+    mutate: (): void => {
+      for (const o of [...observers]) o.cb()
+    },
     addEventListener: (t: string, fn: Handler) => void (l.get(t) ?? l.set(t, new Set()).get(t)!).add(fn),
     removeEventListener: (t: string, fn: Handler) => void l.get(t)?.delete(fn),
     fire: (t: string, e: Record<string, unknown>) => {
@@ -66,12 +82,16 @@ function fakeWindow() {
   return win
 }
 
-function setup(over: Partial<InventoryDrawerDeps> = {}) {
+function setup(over: Partial<InventoryDrawerDeps> = {}, look: { drawer?: string | null; pickerOpen?: boolean } = {}) {
   const win = fakeWindow()
   const created: FakeEl[] = []
+  const parent = new FakeEl('div')
   const doc = {
     defaultView: win,
     activeElement: null,
+    // the shell writes `data-drawer` on <html> from the active package (T4.3); none = no package
+    documentElement: { getAttribute: (name: string): string | null => (name === 'data-drawer' ? (look.drawer ?? null) : null) },
+    querySelector: (sel: string): object | null => (look.pickerOpen && sel === '.cr-pick:not([hidden])' ? {} : null),
     createElement: (tag: string) => {
       const e = new FakeEl(tag)
       created.push(e)
@@ -87,7 +107,7 @@ function setup(over: Partial<InventoryDrawerDeps> = {}) {
   }
   const drawer = mountInventoryDrawer({
     doc: doc as never,
-    parent: new FakeEl('div') as never,
+    parent: parent as never,
     registry,
     proposals: () => [],
     betaStatus: () => 'ready' as const,
@@ -106,7 +126,7 @@ function setup(over: Partial<InventoryDrawerDeps> = {}) {
   const down = (it = item, id = 1, x = 100, y = 100, extra: Record<string, unknown> = {}) =>
     it.fire('pointerdown', { pointerId: id, isPrimary: true, button: 0, clientX: x, clientY: y, buttons: 1, altKey: false, ...extra })
   const ev = (id: number, x: number, y: number, extra: Record<string, unknown> = {}) => ({ pointerId: id, clientX: x, clientY: y, buttons: 1, altKey: false, ...extra })
-  return { win, drawer, calls, items, item, down, ev }
+  return { win, drawer, calls, items, item, down, ev, parent }
 }
 
 describe('drawer press and drag (pointer events)', () => {
@@ -243,5 +263,86 @@ describe('drawer press and drag (pointer events)', () => {
     const s = setup({ onDragStart: undefined, onDragMove: undefined, onDragEnd: undefined })
     s.down()
     expect(s.win.count()).toBe(0)
+  })
+})
+
+describe('stay-open (design package layout, plan T4.3): the drawer comes back when the pose it started is over', () => {
+  /** What the host does: a pose started by a choice or a drag marks the view `data-placing`; the end removes it. */
+  const poseOn = (s: ReturnType<typeof setup>): void => void (s.parent.dataset.placing = 'true')
+  const poseOff = (s: ReturnType<typeof setup>): void => {
+    delete s.parent.dataset.placing
+    s.win.mutate()
+  }
+  const open = (over: Partial<InventoryDrawerDeps> = {}, look: { drawer?: string | null; pickerOpen?: boolean } = { drawer: 'stay-open' }) => setup(over, look)
+
+  it('a choice closes the drawer for the pose and the end of the pose opens it again, once, with nothing left watching', () => {
+    let s!: ReturnType<typeof setup>
+    s = open({ onChoose: () => poseOn(s) })
+    s.item.fire('click', { detail: 1 })
+    expect(s.drawer.isOpen).toBe(false)
+    expect(s.win.observers.size).toBe(1)
+    poseOff(s)
+    expect(s.drawer.isOpen).toBe(true)
+    expect(s.win.observers.size).toBe(0)
+    poseOn(s) // a pose that did not come from the drawer: nothing is waiting for it
+    poseOff(s)
+    expect(s.drawer.isOpen).toBe(true)
+  })
+
+  it('close-after-place (or no package): the drawer stays closed, and nothing watches', () => {
+    for (const look of [{ drawer: 'close-after-place' }, { drawer: null }]) {
+      let s!: ReturnType<typeof setup>
+      s = open({ onChoose: () => poseOn(s) }, look)
+      s.item.fire('click', { detail: 1 })
+      expect(s.win.observers.size).toBe(0)
+      poseOff(s)
+      expect(s.drawer.isOpen).toBe(false)
+    }
+  })
+
+  it('a choice the host refused (no pose started) arms nothing: a later pose does not open the drawer', () => {
+    const s = open()
+    s.item.fire('click', { detail: 1 })
+    expect(s.drawer.isOpen).toBe(false)
+    expect(s.win.observers.size).toBe(0)
+    poseOn(s)
+    poseOff(s)
+    expect(s.drawer.isOpen).toBe(false)
+  })
+
+  it('a pose that ends while the place picker covers the workspace does not bring the drawer back over it', () => {
+    let s!: ReturnType<typeof setup>
+    s = open({ onChoose: () => poseOn(s) }, { drawer: 'stay-open', pickerOpen: true })
+    s.item.fire('click', { detail: 1 })
+    poseOff(s)
+    expect(s.drawer.isOpen).toBe(false)
+    expect(s.win.observers.size).toBe(0)
+  })
+
+  it('a drag out of the drawer is a pose too: it comes back when the drag ends', () => {
+    let s!: ReturnType<typeof setup>
+    s = open({ onDragStart: () => (poseOn(s), true) })
+    s.down(s.item, 1, 100, 100)
+    s.win.fire('pointermove', s.ev(1, 160, 100))
+    expect(s.drawer.isOpen).toBe(false)
+    s.win.fire('pointerup', s.ev(1, 200, 100))
+    poseOff(s)
+    expect(s.drawer.isOpen).toBe(true)
+  })
+
+  it('opened by hand while a pose is in progress, or disposed: nothing is left watching', () => {
+    let s!: ReturnType<typeof setup>
+    s = open({ onChoose: () => poseOn(s) })
+    s.item.fire('click', { detail: 1 })
+    expect(s.win.observers.size).toBe(1)
+    s.drawer.open()
+    expect(s.win.observers.size).toBe(0)
+    s.drawer.close()
+    s.item.fire('click', { detail: 1 }) // choose again from the reopened (now closed) drawer: armed once more
+    s.drawer.open()
+    s.item.fire('click', { detail: 1 })
+    expect(s.win.observers.size).toBe(1)
+    s.drawer.dispose()
+    expect(s.win.observers.size).toBe(0)
   })
 })

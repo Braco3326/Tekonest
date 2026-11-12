@@ -50,6 +50,11 @@ export const NAV_CHECKLIST_POWER = 'nav:checklist-power'
 export const POWER_STEPS: readonly StepId[] = Object.freeze<StepId[]>(['courant-console', 'courant-enceinte'])
 /** The checklist chip (Mode Création's status bar): where the helper is reached while the list is closed. */
 const CHECKLIST_CHIP = '[data-testid="checklist-chip"]'
+/**
+ * The Propriétés unfold toggle, only while Propriétés is folded (the shell marks `data-props="collapsed"` on `.cr`; the button is the panel's rail). G8 review S7: steps 4 and 6 say
+ * « dans Propriétés »; with Propriétés folded (package 1) and the device selected, the ring goes to this toggle (the row has no box), not back to the device.
+ */
+export const PROPS_UNFOLD = '.cr[data-props="collapsed"] [data-testid="props-collapse"]'
 
 /** A step's proactive hint delay (plan T3.4): the package pacing on the two power steps, none elsewhere; 0 (package 4) = none. */
 export function stepHintAfterMs(id: StepId, pacingMs: number): number | undefined {
@@ -484,11 +489,11 @@ export function isTutorialAnchor(anchor: string): boolean {
 }
 const isPair = (s: string): s is Exclude<PairKind, 'other'> => Object.hasOwn(PAIR_ENDS, s)
 
-/** The device itself, or (selected) a button of its Propriétés row; the device when that button has no box (Propriétés folded). */
+/** The device itself, or (selected) a button of its Propriétés row; with Propriétés folded (that button has no box) the unfold toggle, else the device. */
 function deviceThenRow(env: AnchorEnv, instance: string, rowKey: string): Rect | null {
   const device = (): Rect | null => env.rectOfAnchor(env.anchorOfDevice(instance))
   if (env.selection !== instance) return device()
-  return env.firstRect([propsKeySelector(rowKey)]) ?? device()
+  return env.firstRect([propsKeySelector(rowKey), PROPS_UNFOLD]) ?? device()
 }
 
 /**
@@ -547,7 +552,7 @@ export function resolveTutorialAnchor(anchor: string, env: AnchorEnv): Rect | nu
     const target = consoles.find((c) => !c.on) ?? consoles[0]
     if (target === undefined) return null
     const pad = (): Rect | null => env.rectOfAnchor(env.anchorOfControl(target.id, target.ctl)) ?? env.rectOfAnchor(env.anchorOfDevice(target.id))
-    if (env.selection === target.id) return env.firstRect([propsKeySelector(`ctl:${target.ctl}`)]) ?? pad()
+    if (env.selection === target.id) return env.firstRect([propsKeySelector(`ctl:${target.ctl}`), PROPS_UNFOLD]) ?? pad()
     return pad()
   } catch {
     return null

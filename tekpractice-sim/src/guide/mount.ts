@@ -21,6 +21,7 @@ import type { TpBridge, TpState } from './bridge/types'
 import { NAV_SELECTORS, firstRect, type BridgeDoc } from './bridge/shared'
 import { PLAY_STARTED, TUTORIAL_REQUEST, annotateTutorialEvent, createTutorialRuntime, isTutorialAnchor, resolveTutorialAnchor, type TutorialDetail } from './tutorial'
 import { TUTORIAL_EVENT } from '../design/events'
+import { activePackage } from '../design/packages'
 import { isAnchor } from './anchors'
 import {
   ACKNOWLEDGE,
@@ -41,7 +42,7 @@ import { guideMode, guideRouteAllowed, type GuideRoute } from './mode'
 import { createController } from './vendor/core/controller'
 import type { ControllerInput, HostEvent, Rect } from './vendor/core/types'
 import type { Setup } from './vendor/hostTypes'
-import { mountGuide } from './vendor/ui/widget'
+import { UI_STORAGE_KEY, mountGuide } from './vendor/ui/widget'
 
 /** How long a resolved rect (or "not on screen") is reused. */
 export const RECT_CACHE_MS = 250
@@ -229,6 +230,40 @@ export interface MountImpl {
   createController: typeof createController
   mountGuide: typeof mountGuide
 }
+/**
+ * The storage the widget reads its home corner from, with the active design package's corner as the DEFAULT (plan T4.3): while the widget has saved nothing under its UI key,
+ * a read says `{ corner }`; whatever the learner moves Oscar to is written through (and read back) as before. Every other key, and a blocked or missing storage, behave as the plain
+ * storage (a write the storage refuses is kept for the session). The vendored widget is untouched: it already loads and saves its corner through the storage it is handed.
+ */
+export function cornerDefaultStorage(storage: Storage | null, key: string, corner: 'br' | 'bl' | 'tr'): { getItem(k: string): string | null; setItem(k: string, v: string): void } {
+  const session = new Map<string, string>()
+  return {
+    getItem(k) {
+      let v: string | null = session.get(k) ?? null
+      if (v === null && storage !== null) {
+        try {
+          v = storage.getItem(k)
+        } catch {
+          v = null
+        }
+      }
+      return v === null && k === key ? JSON.stringify({ corner }) : v
+    },
+    setItem(k, v) {
+      if (storage !== null) {
+        try {
+          storage.setItem(k, v)
+          session.delete(k)
+          return
+        } catch {
+          // blocked: kept for this session below
+        }
+      }
+      session.set(k, v)
+    },
+  }
+}
+
 export interface OscarHandle {
   destroy(): void
 }
@@ -450,6 +485,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       const r = runtime?.record()
       return r !== undefined && r.status === 'running' && r.helper
     }
+    const designCorner = legacy ? null : (activePackage(deps.search)?.layout.oscarCorner ?? null)
     const rects = createRectResolver({ bridge, registry, now, route: deps.route, doc, helperUnlocked, helperOffered: () => bridge.helper?.()?.offered === true })
     cleanups.push(() => rects.clear())
     // The widget holds text (the keyboard hint, the bubble) that must sit inside a landmark; it gets one of its own, a child of <body> so that a modal's
@@ -466,7 +502,8 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       obstacles: createObstacleSource({ doc, now }),
       zIndex: GUIDE_Z_INDEX,
       context: { page: 'workbench', mode: mode() },
-      storage: deps.storage,
+      // A design package starts Oscar in its own corner (never top left: the view cube sits there); a corner the learner chose wins (plan T4.3).
+      storage: designCorner === null ? deps.storage : cornerDefaultStorage(deps.storage, UI_STORAGE_KEY, designCorner),
     })
     cleanups.push(() => handle.destroy())
 

@@ -15,10 +15,12 @@ const flush = async (): Promise<void> => {
   await new Promise((r) => setTimeout(r, 0))
   for (let i = 0; i < 20; i++) await Promise.resolve()
 }
-const run = async (search: string): Promise<{ booted: boolean }> => {
+const run = async (search: string): Promise<{ booted: boolean; htmlClasses: string[] }> => {
   const win: Record<string, unknown> = {}
+  const htmlClasses = new Set<string>()
   vi.stubGlobal('window', win)
-  vi.stubGlobal('document', {})
+  // T4.3: main.ts marks <html> on a practice address (the design packages' look applies there only), so the fake page has a documentElement that records its classes.
+  vi.stubGlobal('document', { documentElement: { classList: { add: (c: string) => void htmlClasses.add(c) } } })
   vi.stubGlobal('location', { search })
   vi.resetModules()
   const load = (mod: unknown) => () => {
@@ -29,7 +31,7 @@ const run = async (search: string): Promise<{ booted: boolean }> => {
   vi.doMock('../../src/legacyMain', load({}))
   await import('../../src/main')
   await flush()
-  return { booted: win.__tekBooted === true }
+  return { booted: win.__tekBooted === true, htmlClasses: [...htmlClasses] }
 }
 
 beforeEach(() => {
@@ -111,6 +113,10 @@ describe('the onboarding gates (T2.4b + ruling R-A: main.ts computes them, creat
     expect(await gatesFor('?mode=exam')).toEqual({ onboarding: false, tutorialAllowed: false })
     expect(await gatesFor('?design=1&MODE=practice')).toEqual({ onboarding: false, tutorialAllowed: false })
     expect(await gatesFor('?design=1&mode=exam&oscar=0')).toEqual({ onboarding: false, tutorialAllowed: false })
+  })
+  it('T4.3: <html> carries cr-practice on a practice address (plain, ?design, ?oscar=0), never on an exam address, even with ?design', async () => {
+    for (const search of ['', '?design=3', '?design=1&oscar=0']) expect((await run(search)).htmlClasses, search).toEqual(['cr-practice'])
+    for (const search of ['?design=3&mode=exam', '?mode=exam', '?design=1&MODE=practice']) expect((await run(search)).htmlClasses, search).toEqual([])
   })
   it("the guide is still started exactly as before on each of them (the gate is the guide's own)", async () => {
     await run('?design=1&oscar=0')

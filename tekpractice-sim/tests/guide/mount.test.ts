@@ -4,7 +4,8 @@ import { makeRegistry } from '../helpers'
 import type { RuleRow } from '../../src/creation/shell/statusModel'
 import type { TpBridge, TpPortRef, TpState } from '../../src/guide/bridge/types'
 import { ACKNOWLEDGE, SUGGEST_FROM, SUGGEST_PHANTOM, SUGGEST_TO } from '../../src/guide/flows.creation'
-import { RECT_CACHE_MS, annotateToggle, collapseRestore, createObstacleSource, createRectResolver, hostInsets, hostObstacles, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
+import { packageById } from '../../src/design/packages'
+import { RECT_CACHE_MS, annotateToggle, collapseRestore, cornerDefaultStorage, createObstacleSource, createRectResolver, hostInsets, hostObstacles, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
 import { COPY } from '../../src/creation/copy'
 import { ruleText as modeCreationRuleText } from '../../src/creation/ruleTexts'
 import { TP_STRINGS, tpString } from '../../src/guide/strings'
@@ -1332,5 +1333,63 @@ describe('the tutorial at run time in the mount (T3.2)', () => {
     r.b.emit(stateOf([]), [ev('tutorialRequest', { n: 5 })])
     await flush()
     expect(sent(r.f).filter((i) => i.type === 'flow')).toEqual([])
+  })
+})
+
+// ── T4.3: the corner an unconfigured Oscar starts in comes from the package's layout preset ─────────────────────────────────────────────
+
+describe('Oscar corner default per package (storage wrapper)', () => {
+  const KEY = 'oscar-guide.ui.v1'
+  const memory = (init: Record<string, string> = {}): Storage => {
+    const m = new Map(Object.entries(init))
+    return { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v), removeItem: (k: string) => void m.delete(k), clear: () => m.clear(), key: () => null, length: 0 } as Storage
+  }
+  const storageOf = (r: Rig): { getItem(k: string): string | null; setItem(k: string, v: string): void } | null =>
+    (r.f.impl.mountGuide.mock.calls[0][0] as { storage: { getItem(k: string): string | null; setItem(k: string, v: string): void } | null }).storage
+
+  it('the wrapper returns the package corner while nothing is saved, the saved corner after, and passes every other key through', () => {
+    const base = memory({ other: 'x' })
+    const w = cornerDefaultStorage(base, KEY, 'bl')
+    expect(w.getItem(KEY)).toBe(JSON.stringify({ corner: 'bl' }))
+    expect(w.getItem('other')).toBe('x')
+    expect(w.getItem('missing')).toBeNull()
+    w.setItem(KEY, JSON.stringify({ corner: 'tr' })) // the learner moved Oscar
+    expect(base.getItem(KEY)).toBe(JSON.stringify({ corner: 'tr' }))
+    expect(w.getItem(KEY)).toBe(JSON.stringify({ corner: 'tr' }))
+  })
+
+  it('a null or throwing storage still gives the package corner, and a write is kept for the session', () => {
+    const w = cornerDefaultStorage(null, KEY, 'tr')
+    expect(w.getItem(KEY)).toBe(JSON.stringify({ corner: 'tr' }))
+    w.setItem(KEY, JSON.stringify({ corner: 'br' }))
+    expect(w.getItem(KEY)).toBe(JSON.stringify({ corner: 'br' }))
+    const bad = { getItem: () => { throw new Error('blocked') }, setItem: () => { throw new Error('blocked') } } as unknown as Storage
+    const w2 = cornerDefaultStorage(bad, KEY, 'bl')
+    expect(w2.getItem(KEY)).toBe(JSON.stringify({ corner: 'bl' }))
+    expect(() => w2.setItem(KEY, JSON.stringify({ corner: 'br' }))).not.toThrow()
+  })
+
+  it.each([[1, 'br'], [2, 'bl'], [3, 'tr'], [4, 'br'], [5, 'bl']] as const)('?design=%i: the widget storage says corner %s while nothing is saved', (id, corner) => {
+    const r = make({ search: `?design=${id}`, storage: memory() })
+    expect(mountOscar(r.deps, r.f.impl)).not.toBeNull()
+    expect(storageOf(r)!.getItem(KEY)).toBe(JSON.stringify({ corner }))
+  })
+
+  it('a corner the learner saved wins over the package', () => {
+    const r = make({ search: '?design=3', storage: memory({ [KEY]: JSON.stringify({ corner: 'bl' }) }) })
+    mountOscar(r.deps, r.f.impl)
+    expect(storageOf(r)!.getItem(KEY)).toBe(JSON.stringify({ corner: 'bl' }))
+  })
+
+  it('no ?design: the storage is handed to the widget exactly as before (same object, no wrapper)', () => {
+    const st = memory()
+    const r = make({ storage: st })
+    mountOscar(r.deps, r.f.impl)
+    expect(storageOf(r)).toBe(st)
+    expect(st.getItem(KEY)).toBeNull()
+  })
+
+  it('no package corner is the view cube\'s corner (top left)', () => {
+    for (const id of [1, 2, 3, 4, 5] as const) expect(['br', 'bl', 'tr']).toContain(packageById(id).layout.oscarCorner)
   })
 })
