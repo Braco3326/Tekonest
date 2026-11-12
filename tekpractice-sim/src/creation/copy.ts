@@ -984,4 +984,15 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** R5 « Voyant ON-AIR (tally) » (a WARNING event of the evaluator, src/logic/gpio.ts: an open mic fader and no console tally output cabled to an ON-AIR light). */
     R5: 'Dans le simulateur, quand un micro est ouvert, la sortie tally de la console doit être reliée à un voyant ON-AIR ; sinon un avertissement s’affiche.',
   },
+  /**
+   * The first visit (onboarding packs, T2): the start screen, only under `?design=1..5`. Profile labels say the learner's situation. French « vous », no
+   * figure, no success or school word, no duration. Every string here: à valider (tekuxwriter, 2026-11-12).
+   */
+  onboarding: {
+    /** Situation labels of the four profile buttons (keys 1 to 4; src/creation/onboarding/profiles.ts). */
+    profileDecouvre: 'Je découvre',
+    profileEtudie: 'J’étudie le son',
+    profileProjet: 'Je monte un projet',
+    profileMetier: 'Je travaille dans le son',
+  },
 }
