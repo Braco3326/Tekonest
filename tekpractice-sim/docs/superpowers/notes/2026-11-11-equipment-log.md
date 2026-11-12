@@ -852,3 +852,122 @@ The family WORKS on a real device: a scratch run through `buildAsset` (a synthet
 - Commits: `44e868d` (the AKG C414 and seven moulded-box devices: its message says "six moulded-box devices", it is seven; not amended, no history rewriting) and `f4e23f6` (five racks). Plan rows and manifest rows were committed through a temporary index; the shared plan and manifest files in the working tree still hold other agents' uncommitted rows.
 - `npx vitest run tests/tools tests/scene/modelIds.test.ts` (`BLENDER_EXE` set): 62 files, 1662 tests, 1656 passed, 6 failed, none about the content of my rows and all of the known stage-2 kind: `modelIds.test.ts` "every proposal that has a shipped glb has a plan row with betaModelled true" (the staged Wave 2 rows ship a model before stage 2; my beta-modelled ones, d80, ssl, ep4000 and xmv, are in that group), `proposalsFixedPoint.test.ts` (3) and `brandsRegister.test.ts` (2: the committed register block and "every manifest device id has a label"): they turn green when the Wave 2 stage 2 runs and `npm run register` is run.
 - Not run: tsc, lint, e2e, chunk budget, the in-engine look audit, the stage 2 itself. Not verified: every connector and control position (guesses, said in each spec), the lathe profile of the C414 and the shapes of all 13 bodies (estimates from the published outer sizes), the 4 beta devices' connector sets beyond the pages named in their specs. Contact sheets were looked at for 7 of the 13 (C414, e 609, H6, P4, Crown, D80, XMV); the other six only through the gate numbers.
+
+
+## Wave 3 families (shape agent, 2026-11-12)
+
+Status (device agents: a family is usable from a spec, `build.shape` + `build.params`, as soon as its line says AVAILABLE; the full parameter reference is written at the end of this section when all three items are decided).
+
+| Task | Family | Status |
+|---|---|---|
+| 3.1 | `speaker-cabinet-v2` (plan family `speaker-cabinet-v2`; elevation profile, tapered plan, handle recesses, pole socket, rigging points, grille recess, rear pockets, column on a pole) | AVAILABLE (commits 8bc7342 area, see git log) |
+| 3.2 | `cable-assembly-v2` (end-kind codes) | in progress |
+| 3.3 | `rack-box-v3-slope` | decision pending (see below) |
+
+
+## Wave 3A: rows of existing families and of the four wave-2 families (2026-11-12)
+
+Agent 3A of the Wave 3 build. Stage 1 only (`npm run promote -- <id>`): `content/catalog.json` and `catalog-proposals.json` untouched, `--commit` never run (only `--commit --dry-run` to print the outcome). Nothing pushed, no Meshy, no photo, no logo, no brand mark (generic panels only). Commits `4f2fe2a`, `a30806b`, `8a4f472`, `7d4ab0f`, `95721b5` (46 devices, a temporary index per commit: only my specs, panels, GLBs, my manifest rows and my plan rows). Contact sheets stay local (git-ignored `docs/superpowers/notes/img/wave3a-*.png`).
+
+### Rows got (`planRows({wave: 3})`, my families: 78 of the 92 wave-3 rows)
+
+rack-box-v2 37, console-wedge-v2 10, curved-cabinet 3, moulded-box 10, revolve 7, revolve-v2-oval 5, rack-box-v3b 6. No wave-3 row of tripod-stand, power-strip, generic-panel or round-base-stand exists. Not mine (listed as waiting or for other agents): speaker-cabinet-v2 7 rows (db-audiotechnik-y10p, l-acoustics-kara-ii, l-acoustics-x15-hiq, l-acoustics-x8, meyer-upjunior-upj-1p, qsc-ks118, yamaha-ns-10m), cable-assembly-v2 6 rows, rack-box-v3-slope 1 (rme-babyface-pro-fs). 78 + 14 = 92.
+
+Eligible by `effectiveQuality` (not `missing`): 52. Built and shipped: **46** (GLB, manifest row, 11 of 11 gates, 10 of 10 for the lathes; `validate:assets` 193 ok, 0 failed). By what `promote --commit --dry-run` prints: **20 promotion candidates, 26 beta-modelled**. Failed after three attempts: 0 (every device was green after at most two fixes, all of them mine: three-digit colours refused by the panel renderer, a nested art array, a 3-station profile, a corner radius of the FaderPort lip, `earHoleEdgeMm` of a 480 mm plate).
+
+### Blocked and not built
+
+- **26 rows `missing` (no stage 1, never guessed)**: rack-box-v2: allen-heath-ab168, avid-protools-sync-x, drawmer-mc2-1, ebtech-hum-eliminator-he-2, focusrite-rednet-a16r-mkii, focusrite-rednet-x2p, power-sequencer-distribution, powercon-distro, rme-digiface-dante, rme-m-32-ad, sennheiser-ew-d-em, shure-scm820, spl-phonitor-x, whirlwind-sp1x3 (size conflict, partial, unlabelled axes or nothing printed); console-wedge-v2: soundcraft-signature-12mtk, wheatstone-l-12; curved-cabinet: jbl-eon715; moulded-box: laptop-generic, shure-beta-91a; rack-box-v3b: l-acoustics-la4x, rupert-neve-designs-shelford-channel; revolve: schoeps-cmc-6-mk-41; revolve-v2-oval: beyerdynamic-m-160, coles-4038, neumann-usm-69-i, rode-nt4.
+- **6 eligible rows not built**: focusrite-rednet-mp8r (estimate, partial: width and height only, no depth); rode-ntg5 (partial: height only); shure-qlxd2-handheld, shure-ulxd2-handheld, sennheiser-ew-d-skm-s (handheld transmitters whose only connectors are USB power, IR and RF: no patchable port and no `dc-power`, `usb-power` or `rf-antenna` signal, the Wave 1A SLXD2 case); arrakis-arc-8 (the datasheet is an image PDF, the dealer summary names RJ45 balanced inputs and RCA jacks with no counts: no connector set can be documented, nothing staged).
+
+### Outcomes (46 built; `outcome` is the stage-2 dry-run result; triangles from the manifest; size error 0.00 to 0.03 mm on every axis, worst digico-sd12 0.03 mm)
+
+| id | shape | outcome | triangles | ports | plan size grade | reason when beta-modelled |
+|---|---|---|---|---|---|---|
+| aea-r84 | revolve-oval | promoted | 1022 | 1 | datasheet/ok | documented set, see spec sources |
+| aeta-scoopteam | rack-box | beta-modelled | 712 | 8 | datasheet/ok | panels and input list ambiguous |
+| akai-mpk-mini-mk3 | moulded-box | promoted | 1724 | 1 | dealer/ok | documented set, see spec sources |
+| allen-heath-dx168 | rack-box | beta-modelled | 712 | 6 | estimate/axis-assumed | axis order assumed, counts conflict |
+| allen-heath-qu-16 | console-wedge | beta-modelled | 1394 | 10 | estimate/conflict | size conflict (estimate) |
+| allen-heath-zed-14 | console-wedge | beta-modelled | 1417 | 8 | dealer/ok | mic and insert counts disagree, no mains stated |
+| allen-heath-zed-22fx | console-wedge | beta-modelled | 1417 | 7 | dealer/ok | counts of outputs, inserts and headphone jacks not stated |
+| antelope-orion-32-plus-gen4 | rack-box | beta-modelled | 1776 | 14 | estimate/axis-assumed | axis order assumed |
+| apogee-duet-3 | rack-box | promoted | 712 | 6 | datasheet/ok | documented set, see spec sources |
+| audient-id14-mkii | rack-box | promoted | 712 | 11 | dealer/ok | documented set, see spec sources |
+| audio-technica-atw-r3210 | rack-box | promoted | 1328 | 2 | datasheet/ok | documented set, see spec sources |
+| avid-protools-mtrx-studio | rack-box | beta-modelled | 1776 | 12 | estimate/axis-assumed | axis order assumed |
+| behringer-flow-8 | console-wedge | promoted | 1408 | 8 | dealer/ok | documented set, see spec sources |
+| behringer-px3000 | rack-box | beta-modelled | 1632 | 4 | datasheet/ok | jack counts per panel unclear |
+| crown-pzm-30d | moulded-box | beta-modelled | 1652 | 1 | dealer/ok | XLR ring taller than the 19 mm plate (ring rule), cable end stands in |
+| db-audiotechnik-d40 | rack-box (plan: v3b) | beta-modelled | 1920 | 12 | estimate/axis-assumed | axis order assumed |
+| dbx-160a | rack-box | promoted | 1776 | 4 | datasheet/ok | documented set, see spec sources |
+| dbx-afs2 | rack-box | beta-modelled | 1776 | 8 | estimate/axis-assumed | axis order assumed |
+| digico-sd-rack | rack-box | beta-modelled | 1920 | 5 | estimate/axis-assumed | axis order assumed |
+| digico-sd12 | console-wedge | beta-modelled | 1516 | 20 | datasheet/ok | I/O counts ambiguous between page and datasheet mirror |
+| elgato-stream-deck-mk2 | moulded-box | beta-modelled | 1580 | 1 | datasheet/ok | USB-C connector named only by third parties |
+| eventide-h9000 | rack-box | promoted | 1920 | 4 | datasheet/ok | documented set, see spec sources |
+| galaxy-audio-cricket-cpts | moulded-box | beta-modelled | 1724 | 5 | datasheet/ok | two-unit set modelled as one box |
+| genelec-7360a | curved-cabinet | promoted | 2572 | 11 + 1 ctrl | datasheet/ok | documented set, see spec sources |
+| genelec-8351b | curved-cabinet | promoted | 3108 | 6 + 1 ctrl | datasheet/ok | documented set, see spec sources |
+| lexicon-pcm96 | rack-box | beta-modelled | 1776 | 8 | estimate/axis-assumed | axis order assumed |
+| lynx-aurora-n | rack-box | beta-modelled | 1776 | 9 | datasheet/ok | connector set depends on the ordered modules |
+| motu-828es | rack-box | beta-modelled | 1776 | 13 | estimate/axis-assumed | axis order assumed |
+| neumann-m-149-tube | revolve | beta-modelled | 1534 | 1 | datasheet/ok | XLR is on the power supply, stand-in on the mic base |
+| neumann-u-67 | revolve | beta-modelled | 1406 | 1 | datasheet/ok | XLR is on the power supply, stand-in on the mic base |
+| nexo-nxamp4x4mk2 | rack-box (plan: v3b) | beta-modelled | 1920 | 7 | estimate/axis-assumed | axis order assumed |
+| nti-audio-minirator-mr-pro | moulded-box | beta-modelled | 1724 | 3 | datasheet/ok | connectors read through summaries only |
+| nti-audio-xl2 | moulded-box | beta-modelled | 1724 | 5 | datasheet/ok | TOSLINK output disputed |
+| presonus-faderport-8 | console-wedge | promoted | 1428 | 1 | dealer/ok | documented set, see spec sources |
+| presonus-studio-24c | rack-box | promoted | 712 | 6 | dealer/ok | documented set, see spec sources |
+| sennheiser-em-6000 | rack-box | promoted | 1776 | 9 + 1 ctrl | datasheet/ok | documented set, see spec sources |
+| shure-axient-digital-ad4d | rack-box | promoted | 1776 | 13 + 1 ctrl | datasheet/ok | documented set, see spec sources |
+| shure-ua845uwb | rack-box | promoted | 1776 | 1 + 1 ctrl | datasheet/ok | documented set, see spec sources |
+| sonifex-s0-v2 | console-wedge | promoted | 1370 | 14 + 1 ctrl | datasheet/ok | documented set, see spec sources |
+| sound-devices-833 | moulded-box | beta-modelled | 1724 | 9 | datasheet/ok | headphone jack types differ between guide versions |
+| tc-electronic-m3000 | rack-box | promoted | 1776 | 11 | dealer/ok | documented set, see spec sources |
+| telos-zephyr-xstream | rack-box | promoted | 1920 | 8 + 1 ctrl | datasheet/ok | documented set, see spec sources |
+| ua-la-610-mkii | rack-box (plan: v3b) | promoted | 1920 | 4 + 2 ctrl | dealer/ok | documented set, see spec sources |
+| warm-audio-wa73-eq | rack-box | beta-modelled | 1776 | 5 | dealer/ok | listings disagree on the front or rear XLR; no mains stated |
+| yamaha-px10 | rack-box (plan: v3b) | beta-modelled | 1920 | 11 | estimate/axis-assumed | axis order assumed |
+| zoom-f8n-pro | moulded-box | promoted | 1724 | 5 | datasheet/ok | documented set, see spec sources |
+
+### Documentation rule applied
+
+`portsDocumented: true` plus `portsSource` only where a manufacturer, manual or dealer text (opened, or read through a search summary) states the connector TYPE with its count: the 20 promotion candidates. Every spec source note says how each fact was read and lists the connectors that were not modelled (RF, DC, MIDI, footswitch, contact closures, ISDN: no catalogue signal). The plan `assumedConnectors: ['power-in']` was added to six rows whose page names the mains inlet only as "IEC" or "locking AC" (shure-axient-digital-ad4d, telos-zephyr-xstream, shure-ua845uwb, sonifex-s0-v2, genelec-8351b, genelec-7360a): an assumed connector stays only on a port that carries no audio. Devices whose page names no mains connection (24c, Duet 3, ID14, H9000, M3000, 160A, LA-610, ATW-R3210, FLOW 8, FaderPort 8) carry no mains inlet and therefore no power control. Beta rows with a proposal keep the proposal ports exactly (ids included); new beta rows (dx168, 828es, px3000, wa73-eq, zed-14, qu-16, stream-deck, pzm-30d) have ports from the page or summary.
+
+Two read-only research sub-agents read the connector sets of 32 devices from manufacturer and dealer pages or search summaries; their reports are the "read through" statements in the spec notes.
+
+### Recipes (params that worked, for later waves)
+
+- **Rack 1U** (every full-width 1U): the Wave 1C processor recipe (`earThicknessMm 4, plateFilletMm 1.6, filletMm 2.5, filletSegments 12, bodyWidthMm 438, earHoleMm 6, rearInsetMm 6, seamMm 18`, nine top vents), 1776 triangles; shallow patchbay: the S-Patch recipe, 1632; 2U: `earThicknessMm 5, plateFilletMm 1, seamMm 40, rearInsetMm 8`, two vent columns, 1920; 3U and 10U: `seamMm 60, rearInsetMm 10`. A 480 mm plate (Yamaha PX10) needs `bodyWidthMm 440, earHoleEdgeMm 10` (the default slot falls outside the ear).
+- **Half-rack and desktop boxes**: ATW-R3210 (210 x 191 x 43.4): the SLX-D `half` recipe (1328). Desktop interfaces: `earThicknessMm 10 to 12, plateFilletMm 4.4 to 5, filletMm 5 to 6` (712 triangles, `minFilletMm 4 to 4.5`; the 44 mm tall Studio 24c worked with 5 mm).
+- **Rear ports on a 1U face**: one row of at most 8 to 12 jacks (XLR flow width 24 mm); more go to the front plate (`opposite`) with explicit x (MTRX Studio, Orion, Aurora(n)). A front port is fine without handles.
+- **Console-wedge**: profiles need at least 4 stations (a 3-station profile is refused by the schema); a 40 mm front lip with `baseMm 28` fails ("plan corner radii too large"): `baseMm 16, filletMm 2.5` for the FaderPort 8 and `cheekMm 4, baseMm 16` for the 48 mm FLOW 8. Desks 1370 to 1516 triangles; the 1124 mm SD12 with the TF5 recipe (`armRestMm 14, baseMm 36, feetMm 10`) 1516.
+- **Top pictures of a wedge or a moulded box**: on a `top` face the picture's high y is the FRONT (the XL2 XLR at y 165 is at the top of the sheet view): faders and keys go to high y, knobs and displays toward the io edge (the desk and MPK art is mirrored accordingly).
+- **curved-cabinet**: the Genelec 8341A recipe scaled by the width ratio worked first time for the 8351B (`planFrontMm = width - 2 x sideBulgeMm`, `rearWidthMm`, radii 34 and 41, `edgeRadiusMm 24`, `minFilletMm 22`); a subwoofer without drivers is a plain rounded box (`planFrontMm 462, rearWidthMm 440, radii 44, edge 24`), 2572 triangles.
+- **moulded-box**: `cornerRadiusMm 8, edgeRadiusMm 3, edgeSegments 8` gives 1580 to 1724 triangles (small gear 500 to 2000); ports on the `io`, `left`, `right` and `top` faces without pockets pass `portSurface`; the 19 mm PZM took `cornerRadiusMm 10, edgeRadiusMm 2.5`.
+- **Lathes**: `revolve` with 13 stations and `budget.min 1000` (1406 to 1534 triangles); `revolve-oval` with 9 three-number stations (1022 triangles); wrap picture width `pi x w` for the round ones, the ellipse perimeter for the oval (99 x 64: about 267 mm). The profiles of M 149, U 67 and R84 are estimates drawn from the outer size, said in the specs.
+- **Generator**: a session scratch generator (ports laid out by connector flow width, rings checked pairwise and against 60 percent of the face, panel pictures drawn under each port) wrote the specs and panels; it is not committed, the committed files are its output.
+
+### Wave 3A findings (family limits and data limits, with the param needed)
+
+1. **rack-box-v3b was not exercised**: the plan files ua-la-610-mkii, db-audiotechnik-d40, nexo-nxamp4x4mk2, yamaha-px10 (and two blocked rows) under v3b, but no page read states handles, a front vent block or a meter window, so the v2 params were used and each spec says so. The family stays available for a device whose datasheet shows those features.
+2. **moulded-box has no profile**: the MPK Mini and any sloped controller is a flat rounded slab. Param needed: a `topSlopeDeg` or a `profile` as the console-wedge has.
+3. **Microphone with a power-supply connector**: the M 149 and U 67 are modelled with the XLR on the base as a stand-in (the real XLR is on the N 149 A / NU 67 V supply, the microphone has a DIN-8 / 7-pin the catalogue lacks). A `din8` connector and a mic-to-supply cable would model it properly.
+4. **Signal gaps repeated**: RF antenna (BNC antennas of every receiver and the UA845UWB), DC supply, MIDI, footswitch and pedal jacks, contact closures, ISDN: none has a catalogue signal, so the receivers carry only audio, AES3 and network ports. The three handheld transmitters stay blocked for this reason.
+5. **Ring rule**: the PZM-30D (19 mm plate) cannot carry an XLR ring under 60 percent of its face, so it is beta-modelled by design; the Lynx Aurora(n) (43.2 mm tall) would put its C14 ring at 61 percent: it is beta-modelled for its configuration-dependent connector set, but a promotion would need a per-device exception like the MC-3+. No promotion candidate breaks the ring rules (checked: ad4d and ua845uwb at 44 and 44.5 mm have rings of exactly 26.4 mm against limits of 26.4 and 26.7).
+6. **Preamp template wants its controls in the spec**: the LA-610 lists `gain` (knob) and `phantom-48v` (button) on its front, as the template adds them; the pipeline refused the spec until they were listed. Desks list no master control (the datasheets read here show none), so the template adds none.
+7. **Assumed details**: XLR genders follow in = female and out = male for the 160A, M3000, H9000, Xstream and LA-610 (the pages say only "XLR"); the 8351B and 7360A inlets are assumed IEC C14.
+8. **Smooth-shading fan** on the pocketed rear of the two Genelec cabinets (seen on the shipped 8030C too, not new).
+
+### Stage 2 notes (for the serial step)
+
+- Promotion candidates (20): shure-axient-digital-ad4d, sennheiser-em-6000, telos-zephyr-xstream, presonus-studio-24c, audient-id14-mkii, apogee-duet-3, audio-technica-atw-r3210, shure-ua845uwb, tc-electronic-m3000, eventide-h9000, dbx-160a, ua-la-610-mkii, sonifex-s0-v2, behringer-flow-8, presonus-faderport-8, genelec-8351b, genelec-7360a, akai-mpk-mini-mk3, zoom-f8n-pro, aea-r84. After stage 2: `npm run register`, `node tools/controls/gen-from-specs.mjs` (power controls of ad4d, em-6000, xstream, ua845uwb, s0-v2, 8351b, 7360a; gain and phantom of the LA-610), then rebuild the devices that get a layout to confirm the flat zones (the builder had no layout, so no flat zone was checked).
+- Tests red today that change at stage 2: `modelIds.test.ts` (39 proposals ship a model while their plan row is not yet betaModelled), `brandsRegister.test.ts` (two tests: labels and the generated block), `proposalsFixedPoint.test.ts` (three tests, as before). `cableAssemblyV2.test.ts` (two tests) fails on the families agent's uncommitted work, not on mine.
+- The beta-modelled new rows get a proposal built from the spec at stage 2; the Bêta rows keep their proposal with `sizeMm`.
+
+### Gate numbers (Wave 3A, 2026-11-12, `BLENDER_EXE=D:\Blender\blender.exe`)
+
+- `npm run validate:assets`: **193 ok, 0 failed** (the whole tree, 46 of them mine). Per device dry run and ship: 11 of 11 gates for boxes, desks and cabinets, 10 of 10 for the lathes.
+- `npx vitest run tests/tools tests/scene/modelIds.test.ts`: 64 files, 1788 tests, 1780 passed, 8 failed: the cableAssemblyV2 pair, `brandsRegister` 2, `proposalsFixedPoint` 3, `modelIds` 1 (all listed above, none about the content of my specs; `specPortParity`, `promotedTruth`, `betaBadges` and `promoteDevice` pass).
+- Not run: tsc, lint, the creation e2e, chunk budget, the in-engine look audit, a perspective render (the sheets are four orthographic views). Not verified: every connector and control position, the side profiles of the desks, the lathe profiles of the three microphones and the plan outlines of the cabinets (estimates from the outer sizes; no photo or drawing opened).
