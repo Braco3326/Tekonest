@@ -19,7 +19,8 @@ import { createTekPracticeBrain } from './brain'
 import { tpString } from './strings'
 import type { TpBridge, TpState } from './bridge/types'
 import { NAV_SELECTORS, firstRect, type BridgeDoc } from './bridge/shared'
-import { PLAY_STARTED, TUTORIAL_REQUEST, annotateTutorialEvent, createTutorialRuntime, isTutorialAnchor, resolveTutorialAnchor } from './tutorial'
+import { PLAY_STARTED, TUTORIAL_REQUEST, annotateTutorialEvent, createTutorialRuntime, isTutorialAnchor, resolveTutorialAnchor, type TutorialDetail } from './tutorial'
+import { TUTORIAL_EVENT } from '../design/events'
 import { isAnchor } from './anchors'
 import {
   ACKNOWLEDGE,
@@ -407,7 +408,12 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     const own = tutorial === null ? [] : [tutorial]
     // Start / resume / skip on the onboarding request, the guide record, « déjà en place » (plan T3.2): it hands the controller the storage it observes.
     let late: (input: ControllerInput) => void = () => {}
-    const runtime = tutorial === null ? null : createTutorialRuntime({ flow: tutorial, registry, storage: deps.storage, now, send: (i) => late(i) })
+    // `emit`: the power helper's gate in Mode Création (`tekpractice:tutorial`, plan T3.3); creation listens with and without the guide.
+    const emit = (detail: TutorialDetail): void =>
+      guard(() => {
+        if (typeof win.dispatchEvent === 'function' && typeof CustomEvent === 'function') win.dispatchEvent(new CustomEvent(TUTORIAL_EVENT, { detail }))
+      })
+    const runtime = tutorial === null ? null : createTutorialRuntime({ flow: tutorial, registry, storage: deps.storage, now, send: (i) => late(i), emit })
     const flows = legacy ? legacyFlowsFor(null).slice() : [...flowsFor('no-place'), ...own]
     const keywords = legacy ? legacyKeywords() : keywordsFor('no-place')
     const follow = (state: TpState | null): void => {

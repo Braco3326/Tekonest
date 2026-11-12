@@ -521,6 +521,11 @@ export interface ObservedStorage {
   setItem(key: string, value: string): void
   removeItem(key: string): void
 }
+/** The detail of `tekpractice:tutorial` (src/design/events.ts): the current step of a running tutorial (null when none runs) and whether the power helper is unlocked. */
+export interface TutorialDetail {
+  step: StepId | null
+  helperUnlocked: boolean
+}
 export interface TutorialRuntime {
   /** Hand this to the controller (`createController({ storage })`): the tutorial follows the controller's own persisted flow state through it. */
   readonly storage: ObservedStorage
@@ -540,7 +545,16 @@ export interface TutorialRuntime {
  * - completes the current step once, with that step's own event, when its result is already on the bench (`stepSatisfied`), and says so before the next
  *   step's sentence (« Déjà en place : étape k. »); a step the learner completes clears that note.
  */
-export function createTutorialRuntime(d: { flow: Flow; registry: Registry; storage: StorageLike | null; now(): number; send(input: ControllerInput): void; stateKey?: string }): TutorialRuntime {
+export function createTutorialRuntime(d: {
+  flow: Flow
+  registry: Registry
+  storage: StorageLike | null
+  now(): number
+  send(input: ControllerInput): void
+  stateKey?: string
+  /** Tells Mode Création where the run is (`tekpractice:tutorial` `{ step, helperUnlocked }`, the power helper's gate, plan T3.3): on every change of either. */
+  emit?(detail: TutorialDetail): void
+}): TutorialRuntime {
   const stateKey = d.stateKey ?? DEFAULT_STORAGE_KEY
   const memory = new Map<string, string>()
   let blocked = d.storage === null
@@ -576,7 +590,23 @@ export function createTutorialRuntime(d: { flow: Flow; registry: Registry; stora
   let pending: number[] = []
   let last: { state: TpState | null; audio: string | null } = { state: null, audio: null }
 
-  const save = (): void => write(TUTORIAL_RECORD_KEY, JSON.stringify(rec))
+  let told = ''
+  /** The run as Mode Création sees it: the current step while it runs (null otherwise), and the helper's unlock. Sent once per change. */
+  const tell = (): void => {
+    const detail: TutorialDetail = { step: rec.status === 'running' ? rec.step : null, helperUnlocked: rec.status === 'running' && rec.helper }
+    const key = JSON.stringify(detail)
+    if (key === told || d.emit === undefined) return
+    told = key
+    try {
+      d.emit(detail)
+    } catch {
+      // the page's listener failed: the tutorial goes on
+    }
+  }
+  const save = (): void => {
+    write(TUTORIAL_RECORD_KEY, JSON.stringify(rec))
+    tell()
+  }
   const clearNotes = (): void => {
     pending = []
     d.flow.steps.forEach((s, i) => (s.say = base[i]))

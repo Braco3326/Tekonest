@@ -62,6 +62,14 @@ export class History {
     }
   }
 
+  /**
+   * Runs the before-command hooks with no command (onboarding packs T3.3): a caller about to `begin` a transaction of its own (the power helper) lets a UI
+   * close what it keeps open first (a Propriétés stepper burst), so the new transaction never nests inside it. A transaction no hook closes (a drag) stays open.
+   */
+  settle(): void {
+    this.before('do')
+  }
+
   private before(kind: 'do' | 'undo' | 'redo'): void {
     for (const fn of [...this.beforeCommand]) {
       try {
@@ -84,6 +92,36 @@ export class History {
     if (this.tx) this.merge(this.tx, step)
     else this.push(step)
     return r
+  }
+
+  /**
+   * Several intents as ONE entry and ONE store change (onboarding packs T3.3, the power helper): through `store.dispatchAll` when the store has it, so the
+   * subscribers (the status line's playback announcement, the guide's poll) see only the end state, never an in-between one (« an enclosure gets the signal but
+   * is not powered » after the first of two mains cables). All or nothing: a refused step leaves the store as it was, records nothing and is reported like a
+   * refused `do`. Inside an open transaction the steps join it, as `do` would. Without `dispatchAll`: `begin`, one `do` per intent, `commit` or `rollback`.
+   */
+  doAll(intents: readonly Intent[], label: string): { ok: true } | { ok: false; index: number } {
+    if (!this.store.dispatchAll) {
+      this.begin(label)
+      for (let k = 0; k < intents.length; k++)
+        if (!this.do(intents[k], label).ok) {
+          this.rollback()
+          return { ok: false, index: k }
+        }
+      this.commit()
+      return { ok: true }
+    }
+    this.before('do')
+    if (intents.length === 0) return { ok: true }
+    const r = this.store.dispatchAll(intents)
+    if (!r.ok) {
+      this.emitRefused(intents[r.index], { ok: false, error: r.error, subjects: r.subjects })
+      return { ok: false, index: r.index }
+    }
+    const step: HistoryEntry = { label, forward: r.results.map((x) => x.normalized), inverse: [...r.inverse] }
+    if (this.tx) this.merge(this.tx, step)
+    else this.push(step)
+    return { ok: true }
   }
 
   /** Open a transaction; a nested begin only counts depth (the outer label wins). */

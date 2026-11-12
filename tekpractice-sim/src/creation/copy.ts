@@ -930,6 +930,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     chipHint: 'Afficher ce qui empêche la lecture',
     /** Under the title: what the list is, and that it changes nothing. */
     intro: 'Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne un appareil ou ouvre l’inventaire.',
+    /** The intro where the power helper exists (`?design`, T3.3): its button is the one thing in the list that adds something. */
+    introHelper: '« Aller à » sélectionne un appareil ou ouvre l’inventaire. Seul « Je branche pour vous » ajoute des câbles secteur ; Ctrl+Z les retire.',
     close: 'Fermer la liste',
     /** Row names. */
     rowSource: 'Une source de lecture',
@@ -953,6 +955,22 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     targetInventory: 'l’inventaire, onglet Consoles',
     /** Under a greyed Écoute item (after the engine's reason). */
     menuHint: 'Voir « Pourquoi je n’entends rien ? » dans la barre d’état.',
+    /**
+     * The power helper (T3.3, spec 6.5), a button on this list's « Alimentation » row, under `?design` only: it cables the console and the speakers the
+     * learner placed to the strip the learner placed, as one undo entry; it never places, never switches anything. Says « dans le simulateur »: nothing about
+     * real mains.
+     */
+    helperButton: 'Je branche pour vous (dans le simulateur)',
+    /** Under the enabled button: exactly what a click does; {devices} = « Yamaha QL1 (ql1), QSC K12.2 (k12) ». */
+    helperWhat: 'Relie à la multiprise posée : {devices}. Rien n’est posé ni réglé.',
+    /** Under the disabled button during a tutorial run, until Oscar offers it (spec 6.5, verbatim). */
+    helperLocked: 'Essayez d’abord de relier vous-même ; je pourrai brancher pour vous ensuite.',
+    /** The status line after the helper: exactly what was added. */
+    helperDone: 'Branché au courant : {devices}. Ctrl+Z pour annuler.',
+    /** The status line when a cable was refused on the way (everything was undone). */
+    helperFailed: 'Le branchement n’a pas été fait : rien n’a changé.',
+    /** The History entry (Édition › Annuler). */
+    helperEntry: 'Branchement au courant (aide)',
   },
   /**
    * Oscar's verdict (T1.4): after the engine's reason (`playback.*`, quoted verbatim by src/guide/verdict.ts) one sentence on what to do. One per

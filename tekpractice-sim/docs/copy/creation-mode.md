@@ -869,6 +869,7 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `checklist.title` | Pourquoi je n’entends rien ? | à valider (tekuxwriter) | Pastille de la barre d’état et titre de la liste (visible lieu ouvert, tant que la lecture n’est pas possible) |
 | `checklist.chipHint` | Afficher ce qui empêche la lecture | à valider (tekuxwriter) | Infobulle de la pastille |
 | `checklist.intro` | Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne un appareil ou ouvre l’inventaire. | à valider (tekuxwriter) | Sous le titre de la liste |
+| `checklist.introHelper` | « Aller à » sélectionne un appareil ou ouvre l’inventaire. Seul « Je branche pour vous » ajoute des câbles secteur ; Ctrl+Z les retire. | à valider (tekuxwriter) | Remplace `checklist.intro` là où l’aide au branchement existe (`?design`, T3.3) : « Rien n’est modifié ici » y serait faux |
 | `checklist.close` | Fermer la liste | à valider (tekuxwriter) | Nom accessible du bouton ×, Échap fait de même et rend le focus à la pastille |
 | `checklist.rowSource` | Une source de lecture | à valider (tekuxwriter) | Ligne 1 (raison NO_SOURCE) |
 | `checklist.rowConsole` | Lecture console | à valider (tekuxwriter) | Ligne 2 (raison SOURCE_OFF) ; même nom que la commande de la console dans Propriétés |
@@ -883,6 +884,12 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `checklist.goToLabel` | Aller à : {target} | à valider (tekuxwriter) | Nom accessible du bouton ; `{target}` = l’appareil ou `checklist.targetInventory` |
 | `checklist.targetInventory` | l’inventaire, onglet Consoles | à valider (tekuxwriter) | Cible de « Aller à » pour la ligne « Une source de lecture » |
 | `checklist.menuHint` | Voir « Pourquoi je n’entends rien ? » dans la barre d’état. | à valider (tekuxwriter) | Sous la raison, sur chaque élément grisé du menu Écoute dont la raison vient de la chaîne de lecture |
+| `checklist.helperButton` | Je branche pour vous (dans le simulateur) | à valider (tekuxwriter) | L’aide au branchement (T3.3, spec 6.5) : bouton de la ligne « Alimentation » de la liste « Pourquoi je n’entends rien ? », sous `?design` seulement ; relie la console et les enceintes posées à la multiprise posée, une seule entrée d’annulation ; ne pose rien, ne règle rien |
+| `checklist.helperWhat` | Relie à la multiprise posée : {devices}. Rien n’est posé ni réglé. | à valider (tekuxwriter) | Sous le bouton actif : exactement ce que fait un clic ; {devices} = « Yamaha QL1 (ql1), QSC K12.2 (k12) » |
+| `checklist.helperLocked` | Essayez d’abord de relier vous-même ; je pourrai brancher pour vous ensuite. | à valider (tekuxwriter) | Sous le bouton désactivé pendant le tutoriel, jusqu’à l’offre d’Oscar (troisième palier : montrer, dire, proposer) ; texte de la spec 6.5 tel quel (« relier » sans complément : à revoir) |
+| `checklist.helperDone` | Branché au courant : {devices}. Ctrl+Z pour annuler. | à valider (tekuxwriter) | Ligne d’état après l’aide : exactement ce qui a été ajouté |
+| `checklist.helperFailed` | Le branchement n’a pas été fait : rien n’a changé. | à valider (tekuxwriter) | Ligne d’état quand un câble est refusé en route (tout est annulé) |
+| `checklist.helperEntry` | Branchement au courant (aide) | à valider (tekuxwriter) | Libellé de l’entrée d’annulation (Édition › Annuler) |
 
 ## assist
 

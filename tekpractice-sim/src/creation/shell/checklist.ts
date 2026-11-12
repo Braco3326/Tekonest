@@ -2,7 +2,8 @@
  * The checklist « Pourquoi je n’entends rien ? » (T1.3b): a chip in the status bar that opens a non-modal list (a `role="dialog"` pop-over, like the
  * error list: Échap closes it and the focus goes back to the chip, Tab is never trapped, a click or focus outside closes it). Read-only: it renders
  * a ChecklistView (checklistModel.ts, the engine's own playback reasons) and « Aller à » only asks the owner to select a device or open the
- * inventory; nothing here touches the design. DOM only; it needs no guide, so it works with `?oscar=0` and in every package.
+ * inventory; nothing here touches the design. The one exception is the power helper's button (T3.3, under `?design` only): a click hands over to the owner,
+ * which cables the console and speakers to the strip the learner placed, as one undo entry (src/creation/powerHelper.ts). DOM only; it needs no guide, so it works with `?oscar=0` and in every package.
  */
 import { COPY } from '../copy'
 import type { ChecklistRow, ChecklistView, GoTo, RowState } from '../checklistModel'
@@ -21,7 +22,14 @@ export interface ChecklistDeps {
   goTo(target: GoTo): void
   /** Hands the focus back to the page when the chip or the list disappears while holding it. */
   returnFocus(): void
+  /**
+   * The power helper's button on the « Alimentation » row (T3.3, spec 6.5; only under `?design`): what to show, read on every render, and what a click does
+   * (the list is already closed). Absent = no button. `note` is the visible line under it: what a click does, or why it is disabled.
+   */
+  helper?: { view(): HelperView; run(): void }
 }
+
+export type HelperView = { shown: false } | { shown: true; enabled: boolean; note: string }
 
 export interface Checklist {
   render(): void
@@ -69,7 +77,8 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
   x.setAttribute('aria-label', C().close!)
   x.title = C().close!
   head.append(h, x)
-  const intro = el(doc, 'p', 'cr-errlist-hint', C().intro)
+  // With the helper the list can add cables (one button), so its intro says so instead of « Rien n’est modifié ici ».
+  const intro = el(doc, 'p', 'cr-errlist-hint', d.helper ? C().introHelper : C().intro)
   intro.id = 'cr-checklist-intro'
   const list = el(doc, 'ol', 'cr-checklist-rows')
   list.dataset.testid = 'checklist-rows'
@@ -97,6 +106,7 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
     top.append(g, el(doc, 'span', 'cr-checklist-label', r.label), el(doc, 'span', 'cr-checklist-tag', `· ${C()[TAG_KEY[r.state]]}`))
     li.append(top)
     if (r.detail !== '') li.append(el(doc, 'span', 'cr-checklist-detail', r.detail))
+    if (r.id === 'power') helperIn(li)
     if (r.goTo) {
       const go = r.goTo
       const b = el(doc, 'button', 'cr-status-action cr-checklist-go', C().goTo)
@@ -114,8 +124,37 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
     return li
   }
 
+  /** The helper's button and its visible note, on the « Alimentation » row; a disabled button keeps its box (Oscar can point at it) and says why. */
+  const helperIn = (li: HTMLElement): void => {
+    const h = helperView()
+    if (!h.shown) return
+    const wrap = el(doc, 'div', 'cr-checklist-helper')
+    const b = el(doc, 'button', 'cr-status-action cr-checklist-power', C().helperButton)
+    b.type = 'button'
+    b.dataset.testid = 'checklist-power'
+    b.disabled = !h.enabled
+    const note = el(doc, 'span', 'cr-checklist-detail cr-checklist-power-note', h.note)
+    note.id = 'cr-checklist-power-note'
+    note.dataset.testid = 'checklist-power-note'
+    b.setAttribute('aria-describedby', note.id)
+    b.addEventListener('click', () => {
+      if (b.disabled) return
+      close(true)
+      d.helper?.run()
+    })
+    wrap.append(b, note)
+    li.append(wrap)
+  }
+  const helperView = (): HelperView => {
+    try {
+      return d.helper?.view() ?? { shown: false }
+    } catch {
+      return { shown: false }
+    }
+  }
+
   const renderRows = (v: ChecklistView): void => {
-    const key = JSON.stringify([v.rows.map((r) => [r.id, r.state, r.detail, r.goTo]), v.mic])
+    const key = JSON.stringify([v.rows.map((r) => [r.id, r.state, r.detail, r.goTo]), v.mic, helperView()])
     if (key === built) return
     built = key
     const focusedRow = (doc.activeElement as HTMLElement | null)?.closest?.('[data-row]')?.getAttribute('data-row') ?? null

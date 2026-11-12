@@ -7,7 +7,7 @@ import { packageById } from '../../src/design/packages'
 import { TUTORIAL_RECORD_KEY, parseTutorialRecord, tutorialInProgress } from '../../src/design/tutorialRecord'
 import type { TpState } from '../../src/guide/bridge/types'
 import { CREATION_STRINGS, premiersPasFlow } from '../../src/guide/flows.creation'
-import { createTutorialRuntime, type TutorialRequest } from '../../src/guide/tutorial'
+import { createTutorialRuntime, type TutorialDetail, type TutorialRequest } from '../../src/guide/tutorial'
 import { createController } from '../../src/guide/vendor/core/controller'
 import type { GuideBrain } from '../../src/guide/vendor/core/brain'
 import type { ControllerInput, GuideView, HostEvent } from '../../src/guide/vendor/core/types'
@@ -53,6 +53,7 @@ function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps) 
   const clock = { t: 1 }
   const flow = premiersPasFlow(registry, pacing)
   const sent: ControllerInput[] = []
+  const told: TutorialDetail[] = []
   let view: GuideView | null = null
   // eslint-disable-next-line prefer-const
   let controller: ReturnType<typeof createController>
@@ -65,12 +66,14 @@ function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps) 
       sent.push(i)
       void controller.dispatch(i).then((v) => (view = v))
     },
+    emit: (detail) => told.push(detail),
   })
   controller = createController({ brain, flows: [flow], clock: () => clock.t++, strings: CREATION_STRINGS, storage: rt.storage })
   return {
     rt,
     flow,
     sent,
+    told,
     controller,
     view: () => view,
     title: () => controller.getView().bubble?.title,
@@ -90,8 +93,11 @@ describe('the tutorial record (oscar-guide.onboarding.v1)', () => {
   it('parses only a well-formed record; tutorialInProgress reads a running one and is null otherwise or on a throwing storage', () => {
     expect(TUTORIAL_RECORD_KEY).toBe('oscar-guide.onboarding.v1')
     const ok = { v: 1, handledRequest: 2, step: 'micro', k: 2, n: 10, status: 'running', early: ['console'] }
-    expect(parseTutorialRecord(JSON.stringify(ok))).toEqual(ok)
-    for (const bad of ['', 'x', '[]', JSON.stringify({ ...ok, v: 2 }), JSON.stringify({ ...ok, status: 'won' }), JSON.stringify({ ...ok, handledRequest: -1 }), JSON.stringify({ ...ok, early: [1] })])
+    // T3.3 / T3.4 added `shown` and `helper`: a record written before them reads as empty / false
+    expect(parseTutorialRecord(JSON.stringify(ok))).toEqual({ ...ok, shown: [], helper: false })
+    const full = { ...ok, shown: ['courant-console'], helper: true }
+    expect(parseTutorialRecord(JSON.stringify(full))).toEqual(full)
+    for (const bad of ['', 'x', '[]', JSON.stringify({ ...ok, v: 2 }), JSON.stringify({ ...ok, status: 'won' }), JSON.stringify({ ...ok, handledRequest: -1 }), JSON.stringify({ ...ok, early: [1] }), JSON.stringify({ ...ok, shown: [1] }), JSON.stringify({ ...ok, helper: 'yes' })])
       expect(parseTutorialRecord(bad), bad).toBeNull()
     const s = new MemStorage()
     s.setItem(TUTORIAL_RECORD_KEY, JSON.stringify(ok))
@@ -115,7 +121,7 @@ describe('start, persist, resume, skip', () => {
     await flush()
     expect(p.sent).toEqual([{ type: 'flow', control: { action: 'start', flowId: 'premiers-pas' } }])
     expect(p.title()).toBe(step(1))
-    expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))).toEqual({ v: 1, handledRequest: 1, step: 'console', k: 1, n: 10, status: 'running', early: [] })
+    expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))).toEqual({ v: 1, handledRequest: 1, step: 'console', k: 1, n: 10, status: 'running', early: [], shown: [], helper: false })
     p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
     await flush()
     expect(p.sent).toHaveLength(1)
@@ -295,5 +301,27 @@ describe('déjà en place (G8 review C2)', () => {
     p.rt.update({ state: stateOf([Q, K]), audio: 'test', request: ask(1) })
     await flush()
     expect(p.title()).toBe(step(2, 3))
+  })
+})
+
+describe('tekpractice:tutorial (plan T3.3): the run as Mode Création sees it, for the power helper’s gate', () => {
+  it('start: the current step, helper locked; each step change once; skip or the end: no run (step null)', async () => {
+    const s = new MemStorage()
+    const p = page(s)
+    await p.init()
+    expect(p.told).toEqual([])
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    // first « no run » (the request is handled), then the run at step 1: a stale record on the creation side is corrected either way
+    expect(p.told).toEqual([{ step: null, helperUnlocked: false }, { step: 'console', helperUnlocked: false }])
+    await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+    expect(p.told.at(-1)).toEqual({ step: 'micro', helperUnlocked: false })
+    const n = p.told.length
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) }) // same request, same step: nothing new
+    await flush()
+    expect(p.told).toHaveLength(n)
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(2, 'skip') })
+    await flush()
+    expect(p.told.at(-1)).toEqual({ step: null, helperUnlocked: false })
   })
 })
