@@ -103,7 +103,7 @@ export function mouldedHingePose(p: Readonly<Record<string, number>>): { h: numb
 }
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -115,8 +115,8 @@ export interface ShapeSpec {
   needsMatingOuter: boolean
   /** True when the shape is driven by a lathe `profile` (and takes optional `colours`); every other shape takes neither. */
   usesProfile?: boolean
-  /** How the profile reads: 'lathe' = [axial position, diameter] (revolve), 'side' = [depth from the io face, height] (console-wedge). */
-  profileKind?: 'lathe' | 'side'
+  /** How the profile reads: 'lathe' = [axial position, diameter] (revolve), 'lathe-oval' = [axial position, width, depth] (revolve-oval), 'side' = [depth from the io face, height] (console-wedge). */
+  profileKind?: 'lathe' | 'lathe-oval' | 'side'
   /** True when the builder also needs the spec's ports (it cuts a pocket behind each inset port): runBuilder then puts them in plan.json. */
   usesPorts?: boolean
   /** True when the builder must keep the control rectangles of content/control-layouts/<id>.json flat (runBuilder puts them in plan.json as flatZones). */
@@ -202,6 +202,12 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
     needsMatingOuter: false,
     usesPorts: true,
   },
+  // revolve-oval (Wave 2, Task 2.3, plan family revolve-v2-oval): a lathe whose section is an ELLIPSE, for side-address condensers (AKG C414), ribbons and stereo mics.
+  // The profile stations are [axial mm from the base, width mm (along x), depth mm (along z)]: first at 0, last at the height, strictly increasing, the widest width is the spec
+  // width w and the deepest depth is the spec depth d (w and d may differ); a station with width 0 and depth 0 is a pole, one of them 0 alone is refused. params.segments as revolve
+  // (a multiple of 4 from 12 to 64, so the box is exact). The wrap picture covers the whole side by ARC LENGTH of each ellipse; its width is the perimeter of the widest section
+  // (ellipsePerimeterMm(w, d), what projectionFaceMm('wrap') returns), its height the spec height. With width = depth at every station the geometry is the round revolve's.
+  'revolve-oval': { kind: 'device', params: ['segments'], needsMatingOuter: false, usesProfile: true, profileKind: 'lathe-oval' },
   // A rounded-plan box with filleted edges for recorders, body-packs, small interfaces, controllers, boundary mics and hinged laptops (see MOULDED_PARAMS).
   'moulded-box': { kind: 'device', params: MOULDED_PARAMS, needsMatingOuter: false, usesPorts: true, usesFlatZones: true },
   // A microphone boom stand (tripod, telescopic tube with clutch, tilt head and boom with counterweight and mic thread). The pose is built from these params,
@@ -214,6 +220,13 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
     params: ['legAngleDeg', 'footDiaMm', 'boomMm', 'frontMm', 'boomAngleDeg', 'boomAzimuthDeg', 'tubeDiaMm', 'upperTubeDiaMm', 'clutchFromMm'],
     needsMatingOuter: false,
   },
+}
+
+/** Perimeter of an ellipse of full width `w` and full depth `d` (Ramanujan's approximation, exact for a circle: pi x w), in the unit of the arguments. */
+export function ellipsePerimeterMm(w: number, d: number): number {
+  const a = w / 2
+  const b = d / 2
+  return Math.PI * (3 * (a + b) - Math.sqrt((3 * a + b) * (a + 3 * b)))
 }
 
 /** Default diameter of a socket pocket when the port gives no openingMm, in millimetres (the builder uses the same). */
@@ -265,8 +278,13 @@ export function validateBuild(spec: AssetSpecT): string[] {
     profile.forEach((st, i) => {
       if (!(st[1] > 0)) errors.push(`${spec.id}: station ${i} has a height of ${st[1]} mm: every height must be positive`)
     })
+  } else if (shape.profileKind === 'lathe-oval') {
+    const profile = build.profile
+    if (build.shape === 'revolve-oval') errors.push(...validateOvalProfile(spec, profile))
   } else {
     const profile = build.profile
+    const bad = profile.findIndex((st) => st.length !== 2)
+    if (bad >= 0) errors.push(`${spec.id}: revolve takes [position, diameter] stations, but station ${bad} has ${profile[bad].length} numbers: use the shape revolve-oval for an oval section`)
     if (Math.abs(size.w - size.d) > PROFILE_TOL_MM) {
       errors.push(`${spec.id}: a revolved shape needs a round footprint: w (${size.w} mm) must equal d (${size.d} mm)`)
     }
@@ -293,6 +311,34 @@ export function validateBuild(spec: AssetSpecT): string[] {
   if (build.shape === 'moulded-box') errors.push(...validateMouldedBox(spec))
   if (shape.needsMatingOuter && spec.mating?.outerMm === undefined) {
     errors.push(`${spec.id}: build shape '${build.shape}' needs mating.outerMm (the diameter of the mating end)`)
+  }
+  return errors
+}
+
+/** The checks of a revolve-oval profile: [position, width, depth] stations from 0 to the height, widest = w, deepest = d, poles round. */
+function validateOvalProfile(spec: AssetSpecT, profile: NonNullable<AssetSpecT['build']>['profile'] & object): string[] {
+  const errors: string[] = []
+  const size = spec.realSizeMm
+  const id = spec.id
+  const badIdx = profile.findIndex((st) => st.length !== 3)
+  if (badIdx >= 0) return [`${id}: station ${badIdx} must be [position, width, depth] for revolve-oval, got ${profile[badIdx].length} numbers`]
+  const st3 = profile as unknown as [number, number, number][]
+  if (Math.abs(st3[0][0]) > PROFILE_TOL_MM) errors.push(`${id}: the first station must be at 0 (the base), got ${st3[0][0]} mm`)
+  const last = st3[st3.length - 1][0]
+  if (Math.abs(last - size.h) > PROFILE_TOL_MM) errors.push(`${id}: the last station must be at the height ${size.h} mm, got ${last} mm`)
+  const widest = Math.max(...st3.map((st) => st[1]))
+  const deepest = Math.max(...st3.map((st) => st[2]))
+  if (Math.abs(widest - size.w) > PROFILE_TOL_MM) errors.push(`${id}: the widest station (${widest} mm) must equal the width ${size.w} mm`)
+  if (Math.abs(deepest - size.d) > PROFILE_TOL_MM) errors.push(`${id}: the deepest station (${deepest} mm) must equal the depth ${size.d} mm`)
+  st3.forEach((st, i) => {
+    if ((st[1] === 0) !== (st[2] === 0)) errors.push(`${id}: station ${i} is a pole in one direction only: width and depth must both be 0 or both above 0 (got ${st[1]} x ${st[2]})`)
+  })
+  for (const c of spec.build?.colours ?? []) {
+    if (c.fromMm > size.h) errors.push(`${id}: a colour zone at ${c.fromMm} mm is beyond the height ${size.h} mm`)
+  }
+  const segments = spec.build?.params?.segments
+  if (segments !== undefined && !(Number.isInteger(segments) && segments >= 12 && segments <= 64 && segments % 4 === 0)) {
+    errors.push(`${id}: param 'segments' must be a whole number from 12 to 64 and a multiple of 4 (so the box is exact), got ${segments}`)
   }
   return errors
 }

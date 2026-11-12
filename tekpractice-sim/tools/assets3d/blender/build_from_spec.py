@@ -2289,6 +2289,121 @@ def build_revolve(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+# --- revolve-oval (Wave 2, Task 2.3) ------------------------------------------------------------------------------
+# A lathe with an ELLIPTIC section: profile stations [y_mm from the base, width_mm (x), depth_mm (z)]. Same rings, bands, poles, caps and colour zones as build_revolve
+# (which is untouched: its output is pinned); with width = depth at every station the vertices are the round lathe's. Mirrors the shape table in shapes.ts.
+
+def oval_stations(plan: Plan) -> list[tuple[float, float, float]]:
+    """The validated stations of a revolve-oval plan as (y, semi-axis x, semi-axis z) in metres."""
+    profile = plan.get("profile")
+    if not isinstance(profile, list) or len(profile) < 4:
+        raise BuildError("revolve-oval needs plan.profile: at least four [y_mm, width_mm, depth_mm] stations")
+    out: list[tuple[float, float, float]] = []
+    for i, st in enumerate(profile):
+        if not (isinstance(st, list) and len(st) == 3):
+            raise BuildError(f"profile station {i} must be [y_mm, width_mm, depth_mm], got {st!r}")
+        for name, value in zip(("position", "width", "depth"), st):
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+                raise BuildError(f"profile station {i} {name} must be a finite number, got {value!r}")
+        y_mm, w_mm, d_mm = st
+        if w_mm < 0 or d_mm < 0:
+            raise BuildError(f"profile station {i} width and depth must not be negative, got {w_mm} x {d_mm}")
+        if (w_mm == 0) != (d_mm == 0):
+            raise BuildError(f"profile station {i} is a pole in one direction only: width and depth must both be 0 or both above 0 (got {w_mm} x {d_mm})")
+        if out and not (y_mm * MM > out[-1][0]):
+            raise BuildError(f"profile station {i} position {y_mm} must be above the previous station")
+        out.append((float(y_mm) * MM, float(w_mm) * MM / 2.0, float(d_mm) * MM / 2.0))
+    if abs(out[0][0]) > 1e-9:
+        raise BuildError("the first profile station must be at 0 (the base)")
+    return out
+
+
+def build_revolve_oval(plan: Plan) -> bpy.types.Object:
+    """A surface of revolution with an elliptic section about the vertical axis. Pivot bottom-centre. plan.profile [[y_mm, width_mm, depth_mm], ...] (at least four stations, strictly
+    increasing y, first at 0, the widest width = the spec width, the deepest depth = the spec depth), plan.colours as revolve, params.segments (default 32, a multiple of 4 from 12 to 64:
+    the vertices at 0, 90, 180 and 270 degrees give the exact width and depth). A station with width and depth 0 is a pole; a first or last station with a section is closed by a flat cap."""
+    w, h, d = size_m(plan)
+    stations = oval_stations(plan)
+    segments = int((plan.get("params") or {}).get("segments", REVOLVE_SEGMENTS))
+    if segments < 12 or segments > 64 or segments % 4 != 0:
+        raise BuildError(f"params.segments must be a multiple of 4 from 12 to 64, got {segments}")
+    zones = plan.get("colours") or [{"fromMm": 0, "colour": REVOLVE_DEFAULT_COLOUR}]
+    zones = sorted(zones, key=lambda z: z["fromMm"])
+    lifted = [(float(z["fromMm"]) * MM, lift_hex(z["colour"])) for z in zones]
+
+    def colour_at(y: float) -> str:
+        chosen = lifted[0][1]
+        for from_y, colour in lifted:
+            if y >= from_y - 1e-12:
+                chosen = colour
+        return chosen
+
+    body = Body("revolve")
+    bm = body.bm
+
+    def level(a: float, b: float, y: float) -> list[bmesh.types.BMVert]:
+        if a <= 1e-9 and b <= 1e-9:
+            return [bm.verts.new(g2b(0.0, y, 0.0))]
+        return [bm.verts.new(g2b(a * math.cos(2 * math.pi * k / segments), y, b * math.sin(2 * math.pi * k / segments))) for k in range(segments)]
+
+    levels = [level(a, b, y) for y, a, b in stations]
+    for i in range(len(levels) - 1):
+        lo, hi = levels[i], levels[i + 1]
+        if len(lo) == 1 and len(hi) == 1:
+            raise BuildError(f"profile stations {i} and {i + 1} both have a section of 0")
+        if len(lo) == 1:
+            for k in range(segments):
+                bm.faces.new((lo[0], hi[(k + 1) % segments], hi[k]))
+        elif len(hi) == 1:
+            for k in range(segments):
+                bm.faces.new((lo[k], lo[(k + 1) % segments], hi[0]))
+        else:
+            band(bm, lo, hi)
+        body.done(colour_at((stations[i][0] + stations[i + 1][0]) / 2.0))
+    if len(levels[0]) > 1:
+        bm.faces.new(levels[0][::-1])
+        body.done(colour_at(stations[0][0]))
+    if len(levels[-1]) > 1:
+        bm.faces.new(levels[-1])
+        body.done(colour_at(stations[-1][0]))
+    canonical_face_order(bm)
+    return body.finish()
+
+
+def oval_axes_at(plan: Plan, y: float) -> tuple[float, float]:
+    """The semi-axes (x, z) in metres of the section of a revolve-oval at height y (linear between the stations)."""
+    st = oval_stations(plan)
+    if y <= st[0][0]:
+        return st[0][1], st[0][2]
+    for i in range(1, len(st)):
+        if y <= st[i][0]:
+            t = (y - st[i - 1][0]) / (st[i][0] - st[i - 1][0])
+            return st[i - 1][1] + t * (st[i][1] - st[i - 1][1]), st[i - 1][2] + t * (st[i][2] - st[i - 1][2])
+    return st[-1][1], st[-1][2]
+
+
+def ellipse_fraction(a: float, b: float, t: float, steps: int = 240) -> float:
+    """The share (0 to 1) of the perimeter of the ellipse x = a cos t, y = b sin t that lies between t = -pi and t (midpoint rule on `steps` pieces of the whole turn)."""
+    def total_of(n: int) -> float:
+        return sum(math.hypot(a * math.sin(-math.pi + (k + 0.5) * 2 * math.pi / n), b * math.cos(-math.pi + (k + 0.5) * 2 * math.pi / n)) for k in range(n)) * 2 * math.pi / n
+    total = total_of(steps)
+    n = max(1, int(math.ceil((t + math.pi) / (2 * math.pi) * steps)))
+    h = (t + math.pi) / n
+    part = sum(math.hypot(a * math.sin(-math.pi + (k + 0.5) * h), b * math.cos(-math.pi + (k + 0.5) * h)) for k in range(n)) * h
+    return part / total
+
+
+def wrap_u(plan: Plan, x: float, y: float, z: float) -> float:
+    """The horizontal coordinate of the wrap picture (0 to 1 round the axis, from -x going the way atan2 does) of a point (Blender coordinates, z up). A round lathe: the polar angle
+    (the old formula, unchanged). A revolve-oval: the share of the perimeter of its own ellipse, so a picture keeps its proportions round an oval."""
+    if plan.get("shape") != "revolve-oval":
+        return math.atan2(y, x) / (2 * math.pi) + 0.5
+    a, b = oval_axes_at(plan, z)
+    if a <= 1e-9 or b <= 1e-9:
+        return 0.5
+    return ellipse_fraction(a, b, math.atan2(y / b, x / a))
+
+
 # Colours of the boom arm (real-part sRGB, lifted by lift_hex): matt black tubes, slightly lighter joints, bare metal rod and mic thread.
 ARM_TUBE = "#3a3b41"
 ARM_JOINT = "#4c4d54"
@@ -3349,6 +3464,7 @@ def build_moulded_box(plan: Plan) -> bpy.types.Object:
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
     "moulded-box": build_moulded_box,
+    "revolve-oval": build_revolve_oval,
     "tripod-stand": build_tripod_stand,
     "power-strip": build_power_strip,
     "cylinder-plug": build_cylinder_plug,
@@ -3524,7 +3640,7 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
         centre_u = 0.0
         if poly.index in looks_at and pictures[looks_at[poly.index]][0] == "wrap":
             cc = poly.center
-            centre_u = math.atan2(cc.y, cc.x) / (2 * math.pi) + 0.5
+            centre_u = wrap_u(plan, cc.x, cc.y, cc.z)
         for li in poly.loop_indices:
             co = me.vertices[me.loops[li].vertex_index].co
             if poly.index in swatch_of:
@@ -3534,7 +3650,7 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
                 face, _img, iw, ih, _px = pictures[k]
                 _normal, local, (fw, fh) = faces[face]
                 if face == "wrap":
-                    u = math.atan2(co.y, co.x) / (2 * math.pi) + 0.5
+                    u = wrap_u(plan, co.x, co.y, co.z)
                     if u - centre_u > 0.5:
                         u -= 1.0
                     elif u - centre_u < -0.5:

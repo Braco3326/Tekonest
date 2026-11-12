@@ -62,8 +62,8 @@ export const SpecSource = z.object({
   note: z.string(),
 }).strict()
 
-/** One lathe station: [position along the axis from the base in mm, diameter in mm]. */
-const Station = z.tuple([z.number().finite(), z.number().finite().min(0)])
+/** One profile station: [position along the axis from the base in mm, diameter in mm] (a round lathe, or [depth, height] of a console), or [position, width, depth] of an oval lathe (shape revolve-oval). */
+const Station = z.union([z.tuple([z.number().finite(), z.number().finite().min(0)]), z.tuple([z.number().finite(), z.number().finite().min(0), z.number().finite().min(0)])])
 /** A colour zone of a revolved shape: from `fromMm` along the axis up to the next zone. sRGB hex, as on the real part. */
 const ZoneColour = z.object({
   fromMm: z.number().finite().min(0),
@@ -81,7 +81,7 @@ const TriangleBudget = z.object({
 export const BuildSpec = z.object({
   shape: z.enum(BUILD_SHAPES).describe('Shape the scripted builder makes for this asset (tools/assets3d/shapes.ts).'),
   params: z.record(z.string(), z.number().finite()).optional().describe('Extra shape dimensions in millimetres (names per shape in SHAPE_SPECS). Sizes come from realSizeMm, never from here.'),
-  profile: z.array(Station).min(4).optional().describe('Shape revolve only: the lathe profile, at least four [axial mm from the base, diameter mm] stations with strictly increasing positions; first at 0, last at the height, widest = the width.'),
+  profile: z.array(Station).min(4).optional().describe('Shapes revolve and console-wedge (and revolve-oval): the profile, at least four stations with strictly increasing positions; revolve: [axial mm from the base, diameter mm], first at 0, last at the height, widest = the width; revolve-oval: [axial mm, width mm, depth mm], widest = the width, deepest = the depth.'),
   colours: z.array(ZoneColour).min(1).optional().describe('Shape revolve only: colour zones along the axis (first at 0, strictly increasing), sRGB hex of the real part.'),
   projection: z.union([ProjectionFaceEnum, z.array(ProjectionFaceEnum).min(1).max(4)]).optional().describe('The face(s) that take their picture from a Meshy model (asset:build --scripted --project <fixed.glb>); default io. Each picture is mapped planar onto the scripted faces that look that way; a face given twice or two faces looking the same way is refused.'),
   budget: TriangleBudget.optional().describe("Triangles the finished GLB must have, from the class floor to the ceiling (gate 'detail'), e.g. speaker 1500 to 4000. Absent = no check."),

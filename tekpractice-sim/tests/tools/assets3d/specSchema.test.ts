@@ -119,7 +119,8 @@ describe('AssetSpec build profile (revolve)', () => {
     expect(parse({ shape: 'revolve', profile: [[0, 20], [40, Number.NaN], [100, 30], [162, 10]] })).toBe(false)
     expect(parse({ shape: 'revolve', profile: [[0, 20], [Number.POSITIVE_INFINITY, 30], [100, 30], [162, 10]] })).toBe(false)
     expect(parse({ shape: 'revolve', profile: [[0, 20], [40, -1], [100, 30], [162, 10]] })).toBe(false)
-    expect(parse({ shape: 'revolve', profile: [[0, 20, 5], [40, 30], [100, 30], [162, 10]] })).toBe(false)
+    expect(parse({ shape: 'revolve', profile: [[0, 20, 5, 1], [40, 30], [100, 30], [162, 10]] })).toBe(false) // four numbers: never a station
+    expect(parse({ shape: 'revolve-oval', profile: [[0, 20, 5], [40, 30, 20], [100, 30, 20], [162, 10, 5]] })).toBe(true) // [position, width, depth]: the schema allows it, validateBuild says which shape takes which
   })
 
   it('rejects colours that do not start at 0, are not increasing, or are not #rrggbb', () => {

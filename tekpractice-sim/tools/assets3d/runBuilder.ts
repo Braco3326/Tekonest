@@ -6,7 +6,7 @@
  *
  *   blender --background --factory-startup --python-exit-code 1 --python build_from_spec.py -- --plan <plan.json> --out <glb>
  *
- * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours?, ports? (io-face ports, for shapes that cut socket pockets), flatZones? (control rectangles the shape must keep flat), projections? } (profile and colours only for revolve and console-wedge; projections = [{ face, png }] map a picture of each face onto the shape). Sizes always come from the spec's realSizeMm.
+ * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours?, ports? (io-face ports, for shapes that cut socket pockets), flatZones? (control rectangles the shape must keep flat), projections? } (profile and colours only for revolve, revolve-oval and console-wedge; projections = [{ face, png }] map a picture of each face onto the shape). Sizes always come from the spec's realSizeMm.
  * The GLB is the raw input of attempt 1 of buildAsset: the fix-up and every gate run on it unchanged.
  * `exec` and `blender` are injectable so the contract is unit-tested without Blender.
  */

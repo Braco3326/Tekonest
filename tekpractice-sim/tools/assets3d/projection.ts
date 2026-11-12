@@ -23,6 +23,7 @@ import { inspectGlb } from './inspect'
 import { liftChannel } from './look'
 import { defaultExec } from './runFixup'
 import type { ExecResult } from './runFixup'
+import { ellipsePerimeterMm } from './shapes'
 
 /** Side of the square frame Blender renders, in pixels. */
 export const PROJECTION_PX = 2048
@@ -58,7 +59,7 @@ export function projectionFaceMm(face: ProjectionFace, s: { w: number; h: number
     case 'top': return { w: s.w, h: s.d }
     case 'left':
     case 'right': return { w: s.d, h: s.h }
-    case 'wrap': return { w: round2(Math.PI * s.w), h: s.h }
+    case 'wrap': return { w: round2(ellipsePerimeterMm(s.w, s.d)), h: s.h }   // pi x w for a round lathe, the perimeter of the widest ellipse for revolve-oval
     default: throw new Error(`cannot project the ${String(face)} face: only io, opposite, top and left have a render view`)
   }
 }
