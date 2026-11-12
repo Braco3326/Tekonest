@@ -208,6 +208,11 @@ for (const vp of [{ width: 400, height: 800 }, { width: 1366, height: 768 }]) {
       await page.locator('#renderCanvas').focus()
       await page.keyboard.press('Space')
       await expect(page.getByTestId('inventory-drawer')).toBeVisible()
+      await expect(page.getByTestId('inventory-drawer')).toHaveAttribute('data-open', 'true')
+      // The page runs under reduced motion (this file's boot): index.html puts `transition-duration: 0.01ms` on everything, so the notes' z-index change (5 -> 1,
+      // `:has(.cr-drawer[data-open='true'])`) is a 0.01 ms TRANSITION and getComputedStyle still returns its start value (5) until the next frame. Wait for the style to settle;
+      // the assertion below is unchanged (measured: with the read straight after `toBeVisible` it failed 11 times in 80 under 12 workers).
+      await expect.poll(() => z('.cr-notes'), 'the z-index of the notes has settled under the open drawer').toBeLessThan(await z('.cr-drawer'))
       expect(await z('.cr-drawer'), 'drawer above the notes while open').toBeGreaterThan(await z('.cr-notes'))
       const tab = await box(page.getByRole('tab').first())
       expect(await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.getAttribute('role'), { x: tab.x + tab.width / 2, y: tab.y + tab.height / 2 }), 'a tap on the first tab reaches the tab').toBe('tab')
