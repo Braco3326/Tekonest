@@ -243,3 +243,12 @@ Data-driven multi-part: `parts: [{ kind: 'box'|'cylinder'|'torus'|'lathe', size,
 
 ### Task 6.1 (stretch, only if everything above is green)
 - [ ] Hand-measured control layouts for the desks and strips with real controls (Rodecaster Pro II, Mackie 1604VLZ4, X32, A&H SQ-5), one layout per commit with a layout-parity test.
+
+## Data rule from the founder (received 2026-11-12, via the Tek Brain session)
+
+Every number or capability the catalogue states for a device (levels, gain range, pad value, fader range, phantom need or supply, battery option, impedance, connectors) must come from THAT exact model's manufacturer sheet or manual, recorded with its source (sheet title and revision, page, date read, who read it, status `sheet-read` / `to-check` / `unknown`). No generic, course-derived or remembered numbers; no defaults (there is no default pad of 20 dB). When no sheet is found the datum is `unknown` and the app shows no number. The private brief is read-only reference: cite sheets by reference, never copy private or course text into this public repo.
+
+Consequences for this plan (applies from the next stage-2 commit step on):
+- Behaviour templates add structure only (power toggle, routing, flags that a sheet states). They must not write numeric defaults: the nominal speaker coverage default (90 x 60 degrees, source "valeur nominale") is removed from the templates; a promoted speaker without a sourced coverage keeps no `acoustic` numbers and the coverage panel shows « valeur non vérifiée » (test that the app tolerates a speaker without acoustic data).
+- Phantom need, battery option, pad, gain and fader ranges are written only where the spec cites the sheet; otherwise absent/unknown.
+- Task 4.6 (new, after Wave 4): data-rule audit. List every numeric or capability datum in `content/catalog.json` (the 19 + Wave 2/3 promoted devices AND the 25 verified devices), classify each `sheet-read` / `to-check` / `unknown` with its source record (stored as data next to the asset specs, citing sheets by reference only), verify microphones and consoles first with the manufacturer sheets, and make the app show « valeur non vérifiée » for unknown data. This is the founder's priority after the build; it may need its own spec.
