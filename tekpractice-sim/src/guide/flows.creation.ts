@@ -22,7 +22,12 @@ import { strings as defaultStrings } from './vendor/content/strings.fr'
 import { DEFAULT_FLOW_KEYWORDS } from './vendor/core/router'
 import type { FlowKeywords } from './vendor/core/router'
 import type { Flow } from './vendor/core/types'
+import { COPY } from '../creation/copy'
+import { activePackage, type StepId } from '../design/packages'
+import { TUTORIAL_STEPS, stepAnchor, stepSay, stepsFor } from './tutorial'
 
+/** The tutorial's flow id (spec 6.1). */
+export const PREMIERS_PAS = 'premiers-pas'
 export const SUGGEST_FROM = 'port:suggest.from'
 export const SUGGEST_TO = 'port:suggest.to'
 export const SUGGEST_PHANTOM = 'control:suggest.phantom'
@@ -138,7 +143,33 @@ export const CREATION_STRINGS = {
   ...defaultStrings,
   planner: { ...defaultStrings.planner, needInfo: TP_STRINGS.planner.needInfo },
   where: { ...defaultStrings.where, workbench: TP_STRINGS.where.creation },
-  flows: Object.fromEntries(FLOW_PATH.map((id) => [id, F[id].title])) as Record<(typeof FLOW_PATH)[number], string>,
+  flows: {
+    ...(Object.fromEntries(FLOW_PATH.map((id) => [id, F[id].title])) as Record<(typeof FLOW_PATH)[number], string>),
+    /** The tutorial's title is the Aide item's own words (COPY « vous » side, not TP_STRINGS). */
+    [PREMIERS_PAS]: COPY.menu?.firstSteps ?? 'Premiers pas',
+  } as Record<(typeof FLOW_PATH)[number] | typeof PREMIERS_PAS, string>,
+}
+
+// ── the tutorial « Premiers pas » ─────────────────────────────────────────────────────────────────────────────────
+
+/**
+ * The tutorial flow (onboarding spec 6), built from the ONE step list of src/guide/tutorial.ts: the steps a package's pacing selects, in its order (no
+ * pacing: the ten steps of spec 6.3). Each step keeps the data's anchor, action and completing event; its sentence is COPY's, with the catalog labels.
+ * It is NOT one of the path flows (`flowsFor` never lists it, so the planner never offers it first): the mount adds it last, only under `?design`, and
+ * nothing starts it but a flow control from the host (plan T3.2: the start screen's request).
+ */
+export function premiersPasFlow(registry: Registry, ids: readonly StepId[] = TUTORIAL_STEPS.slice(0, 10).map((s) => s.id)): Flow {
+  return {
+    id: PREMIERS_PAS,
+    titleKey: `flows.${PREMIERS_PAS}`,
+    steps: stepsFor(ids).map((s) => ({ id: s.id, anchor: stepAnchor(s, registry), action: s.action, say: stepSay(s, registry), done: { ...s.done, ...(s.done.match ? { match: { ...s.done.match } } : {}) } })),
+  }
+}
+
+/** The tutorial flow of the address's design package (its pacing), or null without `?design=1..5` (today's game has no tutorial). */
+export function tutorialFlowFor(search: string, registry: Registry): Flow | null {
+  const pkg = activePackage(search)
+  return pkg === null ? null : premiersPasFlow(registry, pkg.pacing.steps)
 }
 
 // ── the live suggestions ────────────────────────────────────────────────────────────────────────────────────────────

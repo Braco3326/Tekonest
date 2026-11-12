@@ -941,3 +941,79 @@ describe('real browser types', () => {
     expect(typeof typecheck).toBe('function')
   })
 })
+
+// ── the tutorial's readers (T3.1c) ─────────────────────────────────────────────────────────────────────────────────
+
+describe('tutorial readers: audioState (playStarted) and selection', () => {
+  type Audio = ReturnType<NonNullable<CreationReader['audioState']>>
+  const audio = (state: Audio['state'], source: Audio['source']): Audio => ({ state, source, sourceName: '', voices: [], lease: false, loop: false, retiring: 0 })
+  const withAudio = (r: Rig, a: { now: Audio }): void => {
+    r.win.__creation!.audioState = () => a.now
+  }
+
+  it('playStarted { source } once when Écoute starts playing; not at the first look, not while it keeps playing, again after a stop and a new start', () => {
+    const r = make()
+    const a = { now: audio('playing', 'song') }
+    withAudio(r, a)
+    const { calls } = subscribe(r) // the baseline: already playing is not a start
+    r.timers.tick()
+    expect(calls()).toEqual([])
+    a.now = audio('stopped', null)
+    r.timers.tick()
+    a.now = audio('starting', 'test')
+    r.timers.tick()
+    expect(calls()).toEqual([]) // starting is not playing yet
+    a.now = audio('playing', 'test')
+    r.timers.tick()
+    expect(calls().map(([, e]) => e)).toEqual([[{ type: 'playStarted', at: expect.any(Number), data: { source: 'test' } }]])
+    r.timers.tick()
+    expect(calls()).toHaveLength(1)
+    a.now = audio('playing', 'file') // another source while playing is a new start
+    r.timers.tick()
+    expect(calls().map(([, e]) => types(e))).toEqual([['playStarted'], ['playStarted']])
+  })
+
+  it('a playStarted rides with the bench events of the same poll', () => {
+    const r = make()
+    const a = { now: audio('stopped', null) }
+    withAudio(r, a)
+    const { calls } = subscribe(r)
+    r.world.design.rig.connections = [cable('ql1 out-main-l', 'k12 in-line-a')]
+    a.now = audio('playing', 'test')
+    r.timers.tick()
+    expect(types(calls()[0][1])).toEqual(['connect', 'playStarted'])
+  })
+
+  it('a hook without audioState, or one that throws, emits nothing and never throws', () => {
+    const r = make()
+    const { calls } = subscribe(r)
+    r.timers.tick()
+    r.win.__creation!.audioState = () => {
+      throw new Error('audio')
+    }
+    expect(() => r.timers.tick()).not.toThrow()
+    expect(calls()).toEqual([])
+  })
+
+  it('selection() reads the hook; null without it, for a non-string, or on a throw', () => {
+    const r = make()
+    expect(r.bridge.selection?.()).toBeNull()
+    r.win.__creation!.selection = () => 'ql1'
+    expect(r.bridge.selection?.()).toBe('ql1')
+    r.win.__creation!.selection = () => 3 as unknown as string
+    expect(r.bridge.selection?.()).toBeNull()
+    r.win.__creation!.selection = () => {
+      throw new Error('sel')
+    }
+    expect(r.bridge.selection?.()).toBeNull()
+  })
+
+  it('declares nav:ecoute (the Écoute menu button) and nav:checklist-power (the checklist helper button)', () => {
+    expect(NAV_SELECTORS['nav:ecoute']).toEqual(['#cr-menu-ecoute'])
+    expect(NAV_SELECTORS['nav:checklist-power']).toEqual(['[data-testid="checklist-power"]'])
+    for (const k of ['nav:ecoute', 'nav:checklist-power']) expect(isAnchor(k)).toBe(true)
+    const r = make()
+    r.d.put('#cr-menu-ecoute', { x: 5, y: 6, width: 70, height: 28 })
+    expect(r.bridge.rectOf('nav:ecoute')).toEqual({ x: 5, y: 6, w: 70, h: 28 })
+  })
+})

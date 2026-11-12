@@ -11,14 +11,18 @@ import type { PortRef } from '../../engine/types'
 import { signalPath } from '../../flow/signalPath'
 import { anchorOf, isAnchor, rectFromPoint } from '../anchors'
 import type { HostEvent, Rect } from '../vendor/core/types'
-import { NAV_SELECTORS, POLL_MS, SEP, cableKey, refKey, stateHash, type BridgeDoc, type BridgeElement } from './shared'
+import { NAV_SELECTORS, POLL_MS, SEP, cableKey, firstRect, refKey, stateHash, type BridgeDoc, type BridgeElement } from './shared'
 import type { TpBridge, TpPortRef, TpState } from './types'
 
 export { NAV_SELECTORS, POLL_MS, stateHash }
 export type { BridgeDoc, BridgeElement }
 
-/** What the bridge may call on `window.__creation`: readers only. */
-export type CreationReader = Pick<CreationDebug, 'design' | 'events' | 'place' | 'devicePorts' | 'portScreen' | 'deviceScreen' | 'controlScreen'>
+/**
+ * What the bridge may call on `window.__creation`: readers only. `audioState` (the `playStarted` event) and `selection` (the tutorial's anchors) are
+ * optional: a hook without them is still a hook, the bridge then emits no `playStarted` and knows no selection.
+ */
+export type CreationReader = Pick<CreationDebug, 'design' | 'events' | 'place' | 'devicePorts' | 'portScreen' | 'deviceScreen' | 'controlScreen'> &
+  Partial<Pick<CreationDebug, 'audioState' | 'selection'>>
 
 export interface CreationBridgeDeps {
   win: { __creation?: CreationReader; innerWidth?: number; innerHeight?: number }
@@ -104,6 +108,18 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
   let timer: { handle: unknown } | null = null
   let watching = false
   let destroyed = false
+  /** The source Écoute was playing at the last look (null = not playing): a `playStarted` is a change to a playing source. */
+  let playing: string | null = null
+
+  /** The source playing now (`state` 'playing' only: 'starting' is not a sound yet), or null; null when the hook has no reader or it throws. */
+  function playingNow(): string | null {
+    try {
+      const a = win.__creation?.audioState?.()
+      return a && a.state === 'playing' && typeof a.source === 'string' ? a.source : null
+    } catch {
+      return null
+    }
+  }
 
   /** A new table from the hook as it is now, or null while it is absent, half built or throwing. Replaces `current` on success. */
   function build(): Table | null {
@@ -220,9 +236,14 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
       const hash = stateHash(next.state)
       const prev = last
       last = { table: next, hash }
+      // Écoute is not part of the bench (no hash change): a sound that starts is its own event, with the bench events of the same poll if any.
+      const sound = playingNow()
+      const started = prev !== null && sound !== null && sound !== playing
+      playing = sound
       if (!prev) return notify(next.state, [])
-      if (prev.hash === hash) return
-      notify(next.state, derive(prev.table, next))
+      const extra: HostEvent[] = started ? [{ type: 'playStarted', at: now(), data: { source: sound } }] : []
+      if (prev.hash === hash && extra.length === 0) return
+      notify(next.state, [...(prev.hash === hash ? [] : derive(prev.table, next)), ...extra])
     } catch {
       // never into the page
     }
@@ -257,18 +278,7 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
 
   function navRect(anchor: string): Rect | null {
     const selectors = Object.prototype.hasOwnProperty.call(NAV_SELECTORS, anchor) ? NAV_SELECTORS[anchor] : undefined
-    if (!selectors) return null
-    for (const sel of selectors) {
-      try {
-        const box = doc.querySelector(sel)?.getBoundingClientRect()
-        if (!box) continue
-        const { x, y, width, height } = box
-        if ([x, y, width, height].every(Number.isFinite) && width > 0 && height > 0) return { x, y, w: width, h: height }
-      } catch {
-        // a selector the page cannot answer is the same as an element that is not there
-      }
-    }
-    return null
+    return selectors ? firstRect(doc, selectors) : null
   }
 
   /** A rect whose centre is inside the page window (when the window size is known); a scene point outside it is "not on screen". */
@@ -326,6 +336,14 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
         return ''
       }
     },
+    selection: () => {
+      try {
+        const s = win.__creation?.selection?.()
+        return typeof s === 'string' ? s : null
+      } catch {
+        return null
+      }
+    },
     anchorOfControl: (instance, control) => {
       try {
         return typeof instance === 'string' && typeof control === 'string' ? controlAnchor(current, instance, control) : ''
@@ -339,6 +357,7 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
       if (listeners.size === 1) {
         const base = build()
         last = base ? { table: base, hash: stateHash(base.state) } : null
+        playing = playingNow() // a sound already playing when the guide arrives is not a start
         if (!watching) {
           watching = true
           doc.addEventListener('visibilitychange', onVisibility)

@@ -22,6 +22,10 @@ import {
   type BenchStage,
 } from '../../src/guide/flows.creation'
 import { TP_STRINGS } from '../../src/guide/strings'
+import { PREMIERS_PAS, premiersPasFlow } from '../../src/guide/flows.creation'
+import { TUTORIAL_STEPS, annotateTutorialEvent, stepAnchor, stepsFor } from '../../src/guide/tutorial'
+import { COPY } from '../../src/creation/copy'
+import { packageById } from '../../src/design/packages'
 import { ANCHOR_PATTERN, isValidAnchor } from '../../src/guide/vendor/core/planner'
 import { createController } from '../../src/guide/vendor/core/controller'
 import type { GuideBrain } from '../../src/guide/vendor/core/brain'
@@ -371,5 +375,114 @@ describe('firstPhantom', () => {
     const s = stateOf([['x', 'yamaha-ql1']])
     expect(firstPhantom(s)).toBeNull()
     expect(firstPhantom({ ...s, controls: { x: Object.create({ 'phantom-48v': true }) } })).toBeNull()
+  })
+})
+
+// ── the tutorial « Premiers pas » (T3.1c): one flow built from the step data of src/guide/tutorial.ts ──
+
+describe('premiers-pas, built from the tutorial data', () => {
+  const fakeAnchors = {
+    anchorOfDevice: (id: string): string => `device:${id}`,
+    anchorOfPort: (r: { instance: string; port: string }): string => `port:${r.instance}.${r.port}`,
+    anchorOfControl: (i: string, c: string): string => `control:${i}.${c}`,
+  }
+  const sayOf = (keys: readonly string[]): string =>
+    keys
+      .map((k) => COPY.tutorial![k.slice('tutorial.'.length)]!)
+      .join(' ')
+      .replace('{console}', registry.deviceById.get('yamaha-ql1')!.label)
+      .replace('{micro}', registry.deviceById.get('shure-sm58')!.label)
+
+  it('the ten steps of packages 1 to 4, in order, with the data’s anchor, action, done and COPY text (catalog labels filled in)', () => {
+    const flow = premiersPasFlow(registry, packageById(1).pacing.steps)
+    expect(flow.id).toBe(PREMIERS_PAS)
+    expect(flow.id).toBe('premiers-pas')
+    expect(flow.titleKey).toBe('flows.premiers-pas')
+    expect(flow.when).toBeUndefined()
+    const data = stepsFor(packageById(1).pacing.steps)
+    expect(flow.steps.map((s) => s.id)).toEqual(data.map((s) => s.id))
+    expect(flow.steps).toHaveLength(10)
+    flow.steps.forEach((s, i) => {
+      expect(s.anchor).toBe(stepAnchor(data[i], registry))
+      expect(isValidAnchor(s.anchor)).toBe(true)
+      expect(s.action).toBe(data[i].action)
+      expect(s.done).toEqual(data[i].done)
+      expect(s.say).toBe(sayOf(data[i].sayKeys))
+      expect(s.say).not.toMatch(/[{}]/)
+    })
+    expect(flow.steps[0].say).toBe('Ouvrez l’inventaire (Espace), onglet Consoles, et posez la Yamaha QL1 sur le sol.')
+    expect(flow.steps[1].say).toBe('Posez le micro Shure SM58, onglet Micros.')
+    expect(flow.steps[6].say).toBe(`${COPY.tutorial!.multiprise} ${COPY.tutorial!.powerNote}`)
+  })
+
+  it('package 5 takes ecoute, debrancher, rebrancher; no pacing gives the ten steps', () => {
+    expect(premiersPasFlow(registry, packageById(5).pacing.steps).steps.map((s) => s.id)).toEqual(['ecoute', 'debrancher', 'rebrancher'])
+    expect(premiersPasFlow(registry).steps.map((s) => s.id)).toEqual(TUTORIAL_STEPS.slice(0, 10).map((s) => s.id))
+  })
+
+  it('its title is « Premiers pas » by key (menu.firstSteps); the path flows and premier-montage are unchanged', () => {
+    expect(CREATION_STRINGS.flows['premiers-pas']).toBe(COPY.menu!.firstSteps)
+    expect(CREATION_FLOWS.map((f) => f.id)).toEqual([...FLOW_PATH])
+    for (const stage of STAGES) expect(flowsFor(stage).map((f) => f.id)).not.toContain('premiers-pas')
+    expect(CREATION_FLOWS[0].steps.map((s) => [s.id, s.anchor, s.done.event])).toEqual([
+      ['place', 'nav:place', 'placeChosen'],
+      ['add-first', 'nav:inventory', 'deviceAdded'],
+      ['add-second', 'nav:inventory', 'deviceAdded'],
+      ['connect', SUGGEST_FROM, 'connect'],
+      ['status', 'nav:status', ACKNOWLEDGE],
+    ])
+  })
+
+  it('on the real controller: never started by itself, starts on a flow control, and runs to its end on annotated bench events', async () => {
+    const brain: GuideBrain = { ask: async () => ({ kind: 'refusal', text: 'x', lines: [], verdict: null }), judge: async () => ({ verdict: null, needInfo: null }) }
+    const clock = { t: 1 }
+    const flows = [...flowsFor('empty'), premiersPasFlow(registry, packageById(1).pacing.steps)]
+    const c = createController({ brain, flows, clock: () => clock.t++, strings: CREATION_STRINGS, flowKeywords: keywordsFor('empty') })
+    await c.dispatch({ type: 'setContext', context: { page: 'workbench', mode: 'practice' } })
+    let v = await c.dispatch({ type: 'chip', id: 'next' })
+    expect(v.bubble?.title).toBeUndefined() // nothing runs by itself; the offer is the path's own flow
+    v = await c.dispatch({ type: 'chip', id: 'start' })
+    expect(v.bubble?.title).toBe('Parcours « Ajouter des appareils » : étape 1 sur 2.')
+    await c.dispatch({ type: 'flow', control: { action: 'stop' } })
+    v = await c.dispatch({ type: 'flow', control: { action: 'start', flowId: 'premiers-pas' } })
+    expect(v.bubble?.title).toBe('Parcours « Premiers pas » : étape 1 sur 10.')
+    expect(v.target?.anchor).toBe('nav:inventory.item.yamaha-ql1')
+
+    let state = stateOf([])
+    let prev = state
+    const step = async (next: TpState, raw: HostEvent) => {
+      prev = state
+      state = next
+      return c.dispatch({ type: 'hostEvent', event: annotateTutorialEvent(raw, { state, prev, bridge: fakeAnchors, registry }) })
+    }
+    const devs: [string, string][] = [['q', 'yamaha-ql1']]
+    const at = (): number => clock.t++
+    v = await step(stateOf([['isa', 'focusrite-isa-one']]), { type: 'deviceAdded', at: at(), data: { device: 'device:isa' } })
+    expect(v.bubble?.title).toBe('Parcours « Premiers pas » : étape 1 sur 10.') // the ISA One is not the source console
+    v = await step(stateOf(devs), { type: 'deviceAdded', at: at(), data: { device: 'device:q' } })
+    expect(v.bubble?.title).toBe('Parcours « Premiers pas » : étape 2 sur 10.')
+    devs.push(['m', 'shure-sm58'])
+    await step(stateOf(devs), { type: 'deviceAdded', at: at(), data: { device: 'device:m' } })
+    devs.push(['k', 'qsc-k12-2'])
+    v = await step(stateOf(devs), { type: 'deviceAdded', at: at(), data: { device: 'device:k' } })
+    expect(v.target?.anchor).toBe('nav:connect.from.console-speaker')
+    const cables: TpState['connections'] = [{ a: { instance: 'q', port: 'out-main-l' }, b: { instance: 'k', port: 'in-line-a' } }]
+    await step(stateOf(devs, [...cables]), { type: 'connect', at: at(), data: { a: 'port:q.out-main-l', b: 'port:k.in-line-a' } })
+    cables.push({ a: { instance: 'm', port: 'out-xlr' }, b: { instance: 'q', port: 'in-mic-1' } })
+    v = await step(stateOf(devs, [...cables]), { type: 'connect', at: at(), data: { a: 'port:m.out-xlr', b: 'port:q.in-mic-1' } })
+    expect(v.target?.anchor).toBe('control:suggest.playback')
+    v = await step(stateOf(devs, [...cables]), { type: 'toggle', at: at(), data: { control: 'control:q.playback-usb', anchor: 'control:q.playback-usb', value: true } })
+    expect(v.bubble?.title).toBe('Parcours « Premiers pas » : étape 7 sur 10.')
+    devs.push(['p', 'multiprise-secteur'])
+    await step(stateOf(devs, [...cables]), { type: 'deviceAdded', at: at(), data: { device: 'device:p' } })
+    cables.push({ a: { instance: 'p', port: 'out-1' }, b: { instance: 'q', port: 'power-in' } })
+    await step(stateOf(devs, [...cables]), { type: 'connect', at: at(), data: { a: 'port:p.out-1', b: 'port:q.power-in' } })
+    cables.push({ a: { instance: 'p', port: 'out-2' }, b: { instance: 'k', port: 'power-in' } })
+    v = await step(stateOf(devs, [...cables]), { type: 'connect', at: at(), data: { a: 'port:p.out-2', b: 'port:k.power-in' } })
+    expect(v.target?.anchor).toBe('nav:ecoute')
+    v = await step(stateOf(devs, [...cables]), { type: 'playStarted', at: at(), data: { source: 'song' } })
+    expect(v.bubble?.title).toBe('Parcours « Premiers pas » : étape 10 sur 10.')
+    v = await step(stateOf(devs, [...cables]), { type: 'playStarted', at: at(), data: { source: 'test' } })
+    expect(v.bubble?.kind).toBe('celebrate')
   })
 })

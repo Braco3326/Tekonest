@@ -295,6 +295,26 @@ export function stepDevice(target: StepTarget, registry: Registry): string | nul
 }
 
 /** The anchor a step points at. A step whose device the catalog does not have points at the « Matériel » menu (`nav:inventory`). */
+/**
+ * The bubble of a step: its COPY texts in order, one space apart, with `{console}` = the catalog label of the step's console (the first source console) and
+ * `{micro}` = the label of the mic the step names. A key that COPY lacks says nothing (the tests fail on it).
+ */
+export function stepSay(step: TutorialStep, registry: Registry): string {
+  const label = (id: string | null): string => (id === null ? '' : (registry.deviceById.get(id)?.label ?? ''))
+  const vars: Record<string, string> = {
+    console: label(firstOfRole(registry, 'source-console')),
+    micro: label(stepDevice({ kind: 'inventory-item', role: 'mic', deviceId: NAMED_MIC }, registry)),
+  }
+  return step.sayKeys
+    .map((key) => {
+      const [section, name] = key.split('.')
+      return COPY[section]?.[name] ?? ''
+    })
+    .filter((s) => s !== '')
+    .join(' ')
+    .replace(/\{(console|micro)\}/g, (_m, v: string) => vars[v])
+}
+
 export function stepAnchor(step: TutorialStep, registry: Registry): string {
   const t = step.target
   switch (t.kind) {
@@ -331,6 +351,11 @@ export interface AnchorEnv extends Anchors {
 }
 
 const rest = (anchor: string, prefix: string): string | null => (anchor.startsWith(`${prefix}.`) ? anchor.slice(prefix.length + 1) : null)
+
+/** True for the reserved anchors this module resolves (a cheap prefix test: the caller builds the page reader only for these). */
+export function isTutorialAnchor(anchor: string): boolean {
+  return typeof anchor === 'string' && (anchor === SUGGEST_PLAYBACK || [INVENTORY_ITEM, INVENTORY_TAB, CONNECT_FROM, UNPLUG_FROM].some((p) => rest(anchor, p) !== null))
+}
 const isPair = (s: string): s is Exclude<PairKind, 'other'> => Object.hasOwn(PAIR_ENDS, s)
 
 /** The device itself, or (selected) a button of its Propriétés row; the device when that button has no box (Propriétés folded). */

@@ -22,11 +22,30 @@ export const POLL_MS = 500
  *   nav:place      the place picker while open (placePicker.ts:71 data-testid; hidden = display none, so it has no size), else the « Lieu » menu button
  *                  (menuBar.ts:44, menu id `lieu` in menuModel.ts:227)
  *   nav:status     the status bar (layout.ts:141 data-testid `status-bar`, role contentinfo)
+ *   nav:ecoute     the « Écoute » menu button (menuBar.ts:44, menu id `ecoute` in menuModel.ts:245); the tutorial's last step
+ *   nav:checklist-power  the checklist's power helper button (data-testid `checklist-power`, built by plan T3.3: null until it exists)
  */
 export const NAV_SELECTORS: Readonly<Record<string, readonly string[]>> = {
   'nav:inventory': ['[data-testid="inventory-drawer"][data-open="true"]', '#cr-menu-materiel'],
   'nav:place': ['[data-testid="place-picker"]', '#cr-menu-lieu'],
   'nav:status': ['[data-testid="status-bar"]'],
+  'nav:ecoute': ['#cr-menu-ecoute'],
+  'nav:checklist-power': ['[data-testid="checklist-power"]'],
+}
+
+/** The box of the first selector whose element has a real, finite size (page px), or null. A selector the page cannot answer counts as absent. */
+export function firstRect(doc: Pick<BridgeDoc, 'querySelector'>, selectors: readonly string[]): { x: number; y: number; w: number; h: number } | null {
+  for (const sel of selectors) {
+    try {
+      const box = doc.querySelector(sel)?.getBoundingClientRect()
+      if (!box) continue
+      const { x, y, width, height } = box
+      if ([x, y, width, height].every(Number.isFinite) && width > 0 && height > 0) return { x, y, w: width, h: height }
+    } catch {
+      // a selector the page cannot answer is the same as an element that is not there
+    }
+  }
+  return null
 }
 
 // ── the tutorial's shell pieces (src/guide/tutorial.ts resolves its reserved anchors with these; read only, set by the shell itself) ──

@@ -8,6 +8,9 @@
 //   `deviceScreen` is a heavy test seam (a grid pick) and the bridge rebuilds its table on a miss.
 // - The flows name RESERVED anchors for what depends on the live bench (the cable to draw, the phantom switch): they are resolved here, from the
 //   current state, never by the bridge's reverse table (see flows.creation.ts).
+// - The tutorial « Premiers pas » exists only under `?design=1..5` (src/guide/tutorial.ts): its flow is added LAST to the controller's list (never offered
+//   first, never started here: plan T3.2 starts it on the start screen's request), its events get their role / pair / playback data, its anchors are
+//   resolved from the page. Without `?design` nothing of it is there and the events reach the controller exactly as before.
 import type { Registry } from '../engine/CatalogLoader'
 import { FEATURES, type Features } from '../features'
 import { ruleRowsFor } from '../creation/ruleTexts'
@@ -15,7 +18,8 @@ import type { RuleRow } from '../creation/shell/statusModel'
 import { createTekPracticeBrain } from './brain'
 import { tpString } from './strings'
 import type { TpBridge, TpState } from './bridge/types'
-import { NAV_SELECTORS } from './bridge/shared'
+import { NAV_SELECTORS, firstRect, type BridgeDoc } from './bridge/shared'
+import { PLAY_STARTED, annotateTutorialEvent, isTutorialAnchor, resolveTutorialAnchor } from './tutorial'
 import { isAnchor } from './anchors'
 import {
   ACKNOWLEDGE,
@@ -29,6 +33,7 @@ import {
   flowsFor,
   keywordsFor,
   nextConnectionStep,
+  tutorialFlowFor,
 } from './flows.creation'
 import { LEGACY_ACK_SELECTOR, LEGACY_NAV_OBJECTIVES, LEGACY_STRINGS, legacyFlowsFor, legacyKeywords, legacyStorageKey, nextLegacyLink } from './flows.legacy'
 import { guideMode, guideRouteAllowed, type GuideRoute } from './mode'
@@ -266,7 +271,7 @@ const legacyStep = (state: TpState): Suggestion['step'] => {
 }
 
 /** `getRect` for the widget: the bridge's rects, the reserved suggestion anchors, and the per-anchor cache. */
-export function createRectResolver(deps: { bridge: TpBridge; registry: Registry; now: () => number; route?: GuideRoute }): { getRect(anchor: string): Rect | null; clear(): void } {
+export function createRectResolver(deps: { bridge: TpBridge; registry: Registry; now: () => number; route?: GuideRoute; doc?: Pick<BridgeDoc, 'querySelector'> }): { getRect(anchor: string): Rect | null; clear(): void } {
   const { bridge, registry, now } = deps
   const legacy = deps.route === 'legacy'
   const cache = new Map<string, { at: number; rect: Rect | null }>()
@@ -299,6 +304,22 @@ export function createRectResolver(deps: { bridge: TpBridge; registry: Registry;
       if (p === null) return null
       // The switch itself when the scene has a pad for it, else the device that holds it (its Propriétés list the switch).
       return rectOfAnchor(bridge.anchorOfControl(p.instance, p.control)) ?? rectOfAnchor(bridge.anchorOfDevice(p.instance))
+    }
+    if (isTutorialAnchor(anchor)) {
+      // The tutorial's anchors read the page (a drawer tab, a card, a Propriétés button) and the selection; no page = not on screen.
+      const doc = deps.doc
+      return (
+        resolveTutorialAnchor(anchor, {
+          state: bridge.snapshot(),
+          selection: bridge.selection?.() ?? null,
+          registry,
+          firstRect: (selectors) => (doc === undefined ? null : firstRect(doc, selectors)),
+          rectOfAnchor: rectOfAnchor,
+          anchorOfDevice: (id) => bridge.anchorOfDevice(id),
+          anchorOfPort: (ref) => bridge.anchorOfPort(ref),
+          anchorOfControl: (i, c) => bridge.anchorOfControl(i, c),
+        }) ?? null
+      )
     }
     return isAnchor(anchor) ? bridge.rectOf(anchor) : null
   }
@@ -381,7 +402,10 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     const brain = createTekPracticeBrain({ bridge, rules: ruleRowsFor(legacy ? 'legacy' : 'creation', registry.catalog.rules as unknown as readonly RuleRow[]), mode, route: legacy ? 'legacy' : 'creation' })
     // The controller reads these two lists by reference at every call: the mount keeps them in the order of the bench's stage (see flows.creation.ts).
     // Level play has its own two flows (the order follows the required connections made).
-    const flows = legacy ? legacyFlowsFor(null).slice() : flowsFor('no-place')
+    // The tutorial (under `?design` only) is always the last flow: a running or restored tutorial is always found, the path keeps its order before it.
+    const tutorial = legacy ? null : tutorialFlowFor(deps.search, registry)
+    const own = tutorial === null ? [] : [tutorial]
+    const flows = legacy ? legacyFlowsFor(null).slice() : [...flowsFor('no-place'), ...own]
     const keywords = legacy ? legacyKeywords() : keywordsFor('no-place')
     const follow = (state: TpState | null): void => {
       if (legacy) {
@@ -389,7 +413,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
         return
       }
       const stage = benchStage(state, registry)
-      flows.splice(0, flows.length, ...flowsFor(stage))
+      flows.splice(0, flows.length, ...flowsFor(stage), ...own)
       keywords.splice(0, keywords.length, ...keywordsFor(stage))
     }
     const controller = impl.createController({
@@ -401,7 +425,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       flowKeywords: keywords,
       ...(legacy ? { storageKey: legacyStorageKey(deps.search) } : {}),
     })
-    const rects = createRectResolver({ bridge, registry, now, route: deps.route })
+    const rects = createRectResolver({ bridge, registry, now, route: deps.route, doc })
     cleanups.push(() => rects.clear())
     // The widget holds text (the keyboard hint, the bubble) that must sit inside a landmark; it gets one of its own, a child of <body> so that a modal's
     // `inert` on the body's other children still covers it. The landmark has no box of its own (the widget is fixed-positioned).
@@ -444,14 +468,23 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       if (live !== 'practice') destroy()
     }
 
-    // A cable, a device, a place or a switch changed: the context first, then the events of the change.
+    // A cable, a device, a place or a switch changed: the context first, then the events of the change. A sound starting in Écoute is not a change of
+    // the bench: without the tutorial it is dropped (and a poll that brought only that tells the controller nothing, as before).
+    let before: TpState | null = null
     const unsubscribe = bridge.onChange((state, events) =>
       guard(() => {
+        const list = tutorial === null ? events.filter((e) => e.type !== PLAY_STARTED) : events
+        if (list.length === 0 && events.length > 0) return
+        const prev = before
+        before = state
         revision++
         rects.clear()
         follow(state)
         tell(state)
-        for (const e of collapseRestore(events)) hostEvent(annotateToggle(e, state, bridge))
+        for (const e of collapseRestore(list)) {
+          const marked = annotateToggle(e, state, bridge)
+          hostEvent(tutorial === null ? marked : annotateTutorialEvent(marked, { state, prev, bridge, registry }))
+        }
       }),
     )
     cleanups.push(unsubscribe)
@@ -459,6 +492,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     // The bench as it is now (a restored project is already there when the guide arrives).
     guard(() => {
       const state = bridge.snapshot()
+      before = state
       follow(state)
       tell(state)
     })

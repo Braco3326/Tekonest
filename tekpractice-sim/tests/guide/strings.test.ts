@@ -1,6 +1,10 @@
 // The guide's own words: one frozen table, impersonal French, nothing private, no digit.
 import { describe, expect, it } from 'vitest'
-import { CREATION_STRINGS } from '../../src/guide/flows.creation'
+import { CREATION_STRINGS, premiersPasFlow } from '../../src/guide/flows.creation'
+import { COPY } from '../../src/creation/copy'
+import { DESIGN_IDS, packageById } from '../../src/design/packages'
+import { makeRegistry } from '../helpers'
+import { offends } from '../creation/honestyLists'
 import { LEGACY_STRINGS } from '../../src/guide/flows.legacy'
 import { TP_STRINGS, tpString } from '../../src/guide/strings'
 import { shapeReply } from '../../src/guide/vendor/core/shape'
@@ -136,5 +140,20 @@ describe('the strings the controller reads', () => {
 
   it('the phantom step claims nothing the data does not back (no « micro » channel: the app picks the first device that has the switch)', () => {
     expect(TP_STRINGS.flows['alimentation-fantome'].steps.toggle).not.toMatch(/micro|voie/i)
+  })
+
+  it('the tutorial speaks COPY « vous », not the impersonal table: its title is menu.firstSteps, TP_STRINGS has no tutorial entry', () => {
+    expect(CREATION_STRINGS.flows['premiers-pas']).toBe(COPY.menu!.firstSteps)
+    expect(Object.keys(TP_STRINGS.flows)).not.toContain('premiers-pas')
+  })
+
+  it('every bubble the tutorial can show (each package, catalog labels filled in) passes the shared banned list and has no placeholder left', () => {
+    const registry = makeRegistry()
+    for (const d of DESIGN_IDS)
+      for (const s of premiersPasFlow(registry, packageById(d).pacing.steps).steps) {
+        expect(offends(s.say, 'learner'), `${d} ${s.id}`).toEqual([])
+        expect(s.say, `${d} ${s.id}`).not.toMatch(/[{}]/)
+        expect(privateHits(s.say), s.id).toEqual([])
+      }
   })
 })

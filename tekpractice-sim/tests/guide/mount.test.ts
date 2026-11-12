@@ -1136,3 +1136,126 @@ describe('mountOscar on the real controller: what each bench state says, and wha
     expect(v.target?.anchor).toMatch(/^port:/)
   })
 })
+
+// ── the tutorial « Premiers pas » (T3.1c) ─────────────────────────────────────────────────────────────────────────────
+
+describe('the tutorial in the mount: ?design only, never started by the mount', () => {
+  const designRig = (search: string, state: TpState | null = EMPTY): Rig => {
+    const r = make({ search }, state)
+    r.win.location.search = search
+    return r
+  }
+  const flowsOf = (r: Rig) => (r.f.impl.createController.mock.calls[0][0] as { flows: { id: string; steps: { id: string }[] }[] }).flows
+  const PATH = ['premier-montage', 'ajouter-des-appareils', 'deuxieme-appareil', 'premier-cable', 'lire-le-statut', 'alimentation-fantome']
+  const DEVS: [string, string][] = [['q', 'yamaha-ql1'], ['k', 'qsc-k12-2']]
+  const CABLE = { a: { instance: 'q', port: 'out-main-l' }, b: { instance: 'k', port: 'in-line-a' } }
+
+  it('?design=1: the six path flows, then premiers-pas with its ten steps; it stays last when the stage changes', () => {
+    const r = designRig('?design=1')
+    expect(mountOscar(r.deps, r.f.impl)).not.toBeNull()
+    const flows = flowsOf(r)
+    expect(flows.map((f) => f.id)).toEqual([...PATH, 'premiers-pas'])
+    expect(flows[6].steps).toHaveLength(10)
+    r.b.emit(stateOf(DEVS))
+    expect(flows.map((f) => f.id).slice(-1)).toEqual(['premiers-pas'])
+    expect(flows).toHaveLength(7)
+  })
+
+  it('?design=5: premiers-pas is ecoute, debrancher, rebrancher', () => {
+    const r = designRig('?design=5')
+    mountOscar(r.deps, r.f.impl)
+    expect(flowsOf(r).find((f) => f.id === 'premiers-pas')!.steps.map((s) => s.id)).toEqual(['ecoute', 'debrancher', 'rebrancher'])
+  })
+
+  it('the mount never starts a flow: no flow control is sent at mount or on a change (T3.2 starts it on a request)', () => {
+    const r = designRig('?design=1')
+    mountOscar(r.deps, r.f.impl)
+    r.b.emit(stateOf(DEVS), [ev('deviceAdded', { device: 'device:q' })])
+    expect(sent(r.f).filter((i) => i.type === 'flow')).toEqual([])
+  })
+
+  it('?design=1: deviceAdded carries its role, connect its pair, a disconnect the pair of the state before, the playback toggle playback: true', () => {
+    const r = designRig('?design=1', stateOf([]))
+    mountOscar(r.deps, r.f.impl)
+    r.b.emit(stateOf(DEVS), [ev('deviceAdded', { device: 'device:q' })])
+    r.b.emit(stateOf(DEVS, { connections: [CABLE] }), [ev('connect', { a: 'port:q.out-main-l', b: 'port:k.in-line-a' })])
+    r.b.emit(stateOf([['q', 'yamaha-ql1']]), [ev('disconnect', { a: 'port:q.out-main-l', b: 'port:k.in-line-a' })])
+    r.b.emit(stateOf([['q', 'yamaha-ql1']]), [ev('toggle', { control: 'control:q.playback-usb', anchor: 'control:q.playback-usb', value: true })])
+    expect(hostEvents(r.f).map((e) => e.data)).toEqual([
+      { device: 'device:q', role: 'source-console' },
+      { a: 'port:q.out-main-l', b: 'port:k.in-line-a', pair: 'console-speaker' },
+      { a: 'port:q.out-main-l', b: 'port:k.in-line-a', pair: 'console-speaker' },
+      { control: 'control:q.playback-usb', anchor: 'control:q.playback-usb', value: true, playback: true },
+    ])
+  })
+
+  it('without ?design the events go through untouched, and a change that only starts a sound tells the controller nothing', () => {
+    const r = make({}, stateOf(DEVS))
+    mountOscar(r.deps, r.f.impl)
+    const before = sent(r.f).length
+    r.b.emit(stateOf(DEVS), [ev('playStarted', { source: 'test' })])
+    expect(sent(r.f).length).toBe(before)
+    r.b.emit(stateOf(DEVS, { connections: [CABLE] }), [ev('connect', { a: 'port:q.out-main-l', b: 'port:k.in-line-a' })])
+    expect(hostEvents(r.f).map((e) => e.data)).toEqual([{ a: 'port:q.out-main-l', b: 'port:k.in-line-a' }])
+  })
+
+  it('?design=1: a sound start reaches the controller as playStarted', () => {
+    const r = designRig('?design=1', stateOf(DEVS))
+    mountOscar(r.deps, r.f.impl)
+    r.b.emit(stateOf(DEVS), [ev('playStarted', { source: 'test' })])
+    expect(hostEvents(r.f)).toEqual([ev('playStarted', { source: 'test' })])
+  })
+
+  it('?design with ?oscar=0 or an exam address mounts nothing (the tutorial cannot exist there)', () => {
+    for (const search of ['?design=1&oscar=0', '?design=1&mode=exam']) {
+      const r = designRig(search)
+      expect(mountOscar(r.deps, r.f.impl)).toBeNull()
+      expect(r.f.impl.createController).not.toHaveBeenCalled()
+    }
+  })
+})
+
+describe('createRectResolver: the tutorial anchors on a fake bridge and a fake page', () => {
+  const B = (n: number) => ({ x: n, y: n, width: 20, height: 10 })
+  type Box = ReturnType<typeof B>
+  function page(boxes: Record<string, Box>) {
+    return { querySelector: (sel: string) => (Object.hasOwn(boxes, sel) ? { getBoundingClientRect: () => boxes[sel] } : null) }
+  }
+  function resolver(state: TpState, boxes: Record<string, Box>, selection: string | null = null) {
+    const b = fakeBridge(state)
+    Object.assign(b.bridge, { selection: () => selection })
+    return createRectResolver({ bridge: b.bridge, registry, now: () => 0, doc: page(boxes) })
+  }
+  const S = stateOf([['q', 'yamaha-ql1'], ['k', 'qsc-k12-2']])
+  const DRAWER = '[data-testid="inventory-drawer"][data-open="true"]'
+
+  it('inventory item: the card, else its tab, else the « Matériel » menu; the speaker tab; null with nothing on the page', () => {
+    expect(resolver(S, {}).getRect('nav:inventory.item.yamaha-ql1')).toBeNull()
+    expect(resolver(S, { '#cr-menu-materiel': B(1) }).getRect('nav:inventory.item.yamaha-ql1')).toEqual({ x: 1, y: 1, w: 20, h: 10 })
+    const tab = `${DRAWER} [role="tab"][data-tab="consoles"]`
+    const item = `${DRAWER} [data-testid="inventory-item"][data-device-id="yamaha-ql1"]`
+    expect(resolver(S, { '#cr-menu-materiel': B(1), [tab]: B(2) }).getRect('nav:inventory.item.yamaha-ql1')).toEqual({ x: 2, y: 2, w: 20, h: 10 })
+    expect(resolver(S, { '#cr-menu-materiel': B(1), [tab]: B(2), [item]: B(3) }).getRect('nav:inventory.item.yamaha-ql1')).toEqual({ x: 3, y: 3, w: 20, h: 10 })
+    expect(resolver(S, { [`${DRAWER} [role="tab"][data-tab="enceintes"]`]: B(4) }).getRect('nav:inventory.tab.enceintes')).toEqual({ x: 4, y: 4, w: 20, h: 10 })
+  })
+
+  it('connect from: the console (the bridge’s device rect) until it is selected, then its « Connecter à… » button', () => {
+    const button = '[data-testid="properties-content"] [data-key="connect:out-main-l"]'
+    expect(resolver(S, { [button]: B(5) }).getRect('nav:connect.from.console-speaker')).toEqual(R)
+    expect(resolver(S, { [button]: B(5) }, 'q').getRect('nav:connect.from.console-speaker')).toEqual({ x: 5, y: 5, w: 20, h: 10 })
+  })
+
+  it('playback: the « Lecture console » row once the console is selected, else the bridge’s control rect', () => {
+    const row = '[data-testid="properties-content"] [data-key="ctl:playback-usb"]'
+    expect(resolver(S, { [row]: B(6) }).getRect('control:suggest.playback')).toEqual(R)
+    expect(resolver(S, { [row]: B(6) }, 'q').getRect('control:suggest.playback')).toEqual({ x: 6, y: 6, w: 20, h: 10 })
+  })
+
+  it('nav:ecoute and nav:checklist-power are shell anchors the bridge resolves; a resolver without a page still answers the bridge anchors', () => {
+    const b = fakeBridge(S)
+    const rr = createRectResolver({ bridge: b.bridge, registry, now: () => 0 })
+    expect(rr.getRect('nav:ecoute')).toEqual(R)
+    expect(b.spies.rectOf).toHaveBeenCalledWith('nav:ecoute')
+    expect(rr.getRect('nav:inventory.item.yamaha-ql1')).toBeNull() // no page to read
+  })
+})

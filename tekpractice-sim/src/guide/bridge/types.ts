@@ -30,6 +30,8 @@ export type TpBridge = {
   anchorOfDevice(id: string): string
   /** The anchor of a hands-on control (the one `toggle` events carry); '' for a malformed id. */
   anchorOfControl(instance: string, control: string): string
+  /** The selected device instance (Propriétés lists it), or null; never throws. Mode Création only (the tutorial's anchors read it). */
+  selection?(): string | null
   /** Called on a change only (never on a poll that saw none). Returns the way to stop listening. */
   onChange(cb: (state: TpState, events: HostEvent[]) => void): () => void
   /** Stops the poll, drops every listener and the page listener. Safe to call twice. */
