@@ -554,6 +554,7 @@ Catalogue after: **44 devices (was 25), 23 categories (was 16), 181 ports, 35 co
 6. **[validate]** the five « Avec le matériel » rooms changed. The DriveRack PA2, the JK host and the MC-3+ land in the Consoles and Réseau tabs and the Samson patchbay in « Autres », by the Wave 0 category-to-tab mapping.
 7. No French sentence per device exists in the repo (labels are brand + model, `typicalUse` English): a copy pass would write one for the 19 promoted devices.
 
+
 ## Wave 2B: revolve, curved-cabinet and tripod-stand rows, then the new-family rows (2026-11-12)
 
 Agent 2B of the Wave 2 build. Stage 1 only (`npm run promote -- <id>`): nothing in `content/catalog.json` or `catalog-proposals.json` was touched, `promote --commit` was not run. Nothing pushed, no Meshy, no manufacturer photo, no logo (generic panels only). Commit `082518b` (nine devices; its message miscounts the promotion candidates: they are 7, not 6). The manifest rows and the plan rows were committed through a temporary index so the other agents' uncommitted edits were not swept in. Contact sheets stay local (git-ignored `assets-source/<id>/work/...`).
@@ -639,3 +640,51 @@ The "Wave 2 families" log section had not appeared when this agent ran out of ot
 2. rode-podmic needs a plan decision (body-only size) or the assembly family.
 3. shure-ua874 and shure-slxd1-bodypack depend on an `rf-antenna` / `dc-power` signal (the Wave 0 open item).
 4. After stage 2 of the nine: `npm run register`, `node tools/controls/gen-from-specs.mjs` for the three speakers with a power switch (8341A, 8040B, DXR12), and the modelIds rule for genelec-8341a follows from stage 2.
+
+
+## Wave 2A: rack-box-v2 and console-wedge-v2 rows of wave 2 (2026-11-12)
+
+Agent 2A of the Wave 2 build. Stage 1 only (`npm run promote -- <id>`): `content/catalog.json` and `catalog-proposals.json` untouched, `--commit` not run (only `--commit --dry-run` to print the outcome). Nothing pushed, no Meshy, no manufacturer photo, no logo (generic panels only). Contact sheets stay local (`docs/superpowers/notes/img/wave2a-rack-a.png`, `-b`, `-c`, `wave2a-desks.png`, git-ignored). Commits through a temporary index holding only my files, my manifest rows and my plan rows.
+
+### Rows (`planRows({wave: 2})`, families rack-box-v2 (40) and console-wedge-v2 (14): 54)
+
+- **Blocked on size (`missing`, 16, no stage 1)**: crown-xls-2502 (10.7 in vs 21.2 cm conflict), telos-hx2 (no size), radial-jcr, radial-jpc, radial-js2, radial-js3 (axes unlabelled, none stored), sennheiser-ew-dx-em-2, shure-psm-900, shure-ulx-d-receiver, mackie-big-knob-studio, klark-teknik-dn100, behringer-x32, mackie-1604vlz4 (dimension conflicts), behringer-umc202hd, sennheiser-ew-iem-g4, bss-ar-133 (no size). Never guessed.
+- **Eligible by size (38)**: 26 rack-box (api-512c, behringer-xr18, cisco-sg350-managed-switch, presonus-monitor-station-v2, clear-com-ms-702, dbx-166xs, dbx-231s, rme-fireface-ufx-iii, sonifex-rb-mm1, tascam-ss-cdr250n, ams-neve-1073dpd, ams-neve-1073lb, eaton-5p-1u-ups, empirical-labs-distressor, focusrite-clarett-plus-8pre, netgear-m4250-av-switch, neutrik-nys-spp-l1, orban-optimod-6300, shure-qlx-d-receiver, ua-la-2a, canare-162u-x21, motu-828, neutrik-nppa-tt-pt, klark-teknik-dn360, rolls-ha43-pro, shure-ua844-plus) and 12 console-wedge (allen-heath-sq-6, allen-heath-sq-5, behringer-x32-compact, yamaha-dm3, yamaha-mg16xu, yamaha-tf1, yamaha-mg10xu, avid-s1, behringer-xenyx-q1202usb, midas-m32, rode-rodecaster-duo, tascam-model-12).
+- **Blocked on connectors (6, stage 1 reverted with `--revert --discard-spec`)**: ua-la-2a, klark-teknik-dn360, focusrite-clarett-plus-8pre, ams-neve-1073dpd, avid-s1: the plan row has no port summary and none of the pages I could read (several answered 403 / 404; the 1073DPD page names no connector type or panel) lists a connector; a port is never added from memory. shure-ua844-plus: the antenna distribution has only BNC RF connectors and a DC jack, and the catalogue has no RF or DC signal (same reason as the SLXD2 of Wave 1A).
+
+### Outcomes (32 built and shipped: GLB, manifest row, 11 of 11 gates; 0 failed; every device green after at most one params fix)
+
+By what `promote --commit --dry-run` printed: **5 promotion candidates, 27 beta-modelled**. Triangles: rack 1328 to 1920 (500-series modules 504, small boxes 712 to 1328: small-gear class), desks 1170 to 1503. Size error 0.00 to 0.02 mm on every axis (the `size` gate). Every connector position is a `guess` and says so.
+
+| id | stage-2 outcome | triangles | ports | why / open items |
+|---|---|---|---|---|
+| presonus-monitor-station-v2 | promoted | 712 | 22 (no control) | dealer text lists every connector with counts; external 18 VDC supply (no inlet, no power control); front / rear split guessed |
+| orban-optimod-6300 | promoted | 1920 | 8 | Orban page (2 XLR in, 2 XLR out) and brochure (AES in, 2 AES out, sync); sync taken as BNC; Ethernet (control) and inlet not modelled |
+| shure-qlx-d-receiver | promoted | 1328 | 3 | Shure guide (XLR out, 1/4 in out, Ethernet, BNC, DC jack); same layout as SLX-D |
+| yamaha-mg10xu | promoted | 1180 | 12 + 3 controls | Yamaha data sheet; DC adaptor (no power control); 3 console controls |
+| midas-m32 | promoted | 1446 | 25 + 4 controls | Midas data sheet (read with pdftotext); inlet type (IEC C14) and AES50 connector (etherCON) are assumptions said in the spec; power switch on io |
+| dbx-166xs, dbx-231s | beta-modelled | 1776, 1920 | 9 (proposal) | size axis order assumed |
+| clear-com-ms-702, rme-fireface-ufx-iii, sonifex-rb-mm1, tascam-ss-cdr250n, motu-828, canare-162u-x21, neutrik-nppa-tt-pt, allen-heath-sq-6 | beta-modelled | 1328 to 1920 (SQ-6 1440) | proposal ports | connector types or counts not documented well enough (sizes of ms-702, ufx-iii, rb-mm1, cdr250n, 828, SQ-6 are datasheet / dealer ok: promotable once a source documents the ports); canare and nppa also axis-assumed |
+| api-512c, ams-neve-1073lb | beta-modelled | 504 | 2, 1 | 500-series modules: front inputs documented, the edge connector (output) has no representation |
+| behringer-xr18, cisco-sg350-managed-switch, netgear-m4250-av-switch, eaton-5p-1u-ups, neutrik-nys-spp-l1, rolls-ha43-pro, empirical-labs-distressor | beta-modelled | 712 to 1920 | 4 to 12 | size estimate or conflict (distressor: dealer size ok, counts not stated) |
+| allen-heath-sq-5, yamaha-dm3, yamaha-tf1 | beta-modelled | 1440, 1443, 1503 | 15 to 17 | axis order assumed (TF1 and DM3 pages document the I/O) |
+| behringer-x32-compact, yamaha-mg16xu, behringer-xenyx-q1202usb, rode-rodecaster-duo, tascam-model-12 | beta-modelled | 1170 to 1443 | 9 to 15 | sizes ok, but the pages read do not give a reliable output / connector set (X32 manual table scrambled; Duo headphone jack size not stated; Model 12 outputs not listed) |
+
+### Recipes (params that worked, for later waves)
+
+- A scratch generator (session folder, not committed) turns a compact port list, a layout and an art function into the spec and the generic panel; the committed specs and panels are its output. It draws every connector under its port (so ring and picture coincide) and checks that each ring stays inside its face and that no two rings overlap.
+- **1U / 2U rack**: the Wave 1C recipe unchanged (`bodyWidthMm 438, earThicknessMm 4, plateFilletMm 1.6, filletMm 2.5, filletSegments 12, earHoleMm 6, rearInsetMm 6, seamMm 18`, 9 top vents), 1776 to 1920 triangles, `minFilletMm 1.5`; 2U: `earThicknessMm 5, plateFilletMm 1, seamMm 40, rearInsetMm 8`, `minFilletMm 1`. **Rear ports must lie inside the body width**: with `bodyWidthMm 438` on a 483 plate the ear zone (22 mm each side) has no rear shell: a jack at x 22 failed `portSurface` ("206 mm behind"); keep rear ports at x 40 or more.
+- **No-ears 440 mm switches and UPS**: the MC-3+ recipe (no `bodyWidthMm`, `earThicknessMm 4, plateFilletMm 1.2, filletMm 2.5`) with 2 columns of vents: 1696 triangles, budget floor 800.
+- **500-series module** (38 x 145..178 x 132..133): `earThicknessMm 6, plateFilletMm 2.6, filletMm 3, filletSegments 10`, no `rearInsetMm` (0 is refused: omit it), 504 triangles, budget 400 to 2000, front picture only.
+- **Desktop controller** (Monitor Station V2): the Apollo recipe (`earThicknessMm 10, plateFilletMm 4.4, filletMm 5`), 712 triangles. **Half-rack receiver**: the SLX-D recipe.
+- **console-wedge**: `plateRgb` and `bodyRgb` are refused by this shape (rack-box only). Small desks the Rodecaster recipe (1170 to 1180), medium the ProFX recipe (1417 to 1443), large (M32, SQ, X32, TF1) the TF5 recipe (1440 to 1503); profiles are estimates from the outer sizes.
+- A box with `filletMm 4` and a 6 mm plate (XR18) measured 2.7 mm: declare `minFilletMm 2.5`. The panel renderer takes six-digit hex colours only.
+
+### Findings and open items
+
+1. **Tests that stage 2 will have to adjust** (not run by me, as in Wave 1): `modelIds` and `brandsRegister` (register rows and labels for the 27 beta rows). The ring rules of `portMarkerSize` for the five candidates were checked by the generator (ring at most 60 % of the smaller face side, rings of one face apart by their mean diameter): no violation.
+2. `npm run validate:assets` reports 2 failures that are not mine: `mackie-profx12v3` and `rode-rodecaster-pro-ii` ("extra port_/ctrl_ nodes: ctrl_balance-master, ctrl_mute-master"), Wave 1 builds against a builder that has changed since (another agent edits `shapes.ts` and `build_from_spec.py`). My 32 are ok.
+3. **Console-wedge flat zones**: the control layouts of the two promotable desks do not exist yet (stage 2 runs `tools/controls/gen-from-specs.mjs`), so the builder's flat-zone check had nothing to check; the master controls sit at the right edge of the estimated profile. Rebuild after stage 2 to confirm.
+4. **Assumptions inside documented sets**: M32 inlet C14 and AES50 etherCON; Orban sync as BNC; antenna, DC, MIDI and control-network connectors of the five candidates are pictures only (no signal type). The beta rows whose size is already datasheet / dealer ok (ms-702, ufx-iii, rb-mm1, cdr250n, 828, SQ-6, x32-compact, mg16xu, q1202usb, duo, model-12, distressor) become promotable with a data pass on their connectors, not a build.
+5. The 6 blocked-on-connectors rows and the 16 missing-size rows need a datasheet pass (lists above).
+6. Not run: tsc, lint, e2e, chunk budget, the in-engine look audit, a perspective render (the sheets are four orthographic views). Not verified: every connector and control position and the side profiles of the 11 desks (guesses, said in each spec).
