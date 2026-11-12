@@ -47,16 +47,28 @@ export interface HostInsets {
   bottom: number
   left: number
 }
-/** Where the bars are now, from the DOM (read at each placement, so a bar that changes height is followed). Any failure, or a bar that is not on screen, is no bar. */
+/** The two side panels: Projet on the left, Propriétés on the right (open at their width, folded to their rail). */
+const PROPS_PANEL = '[data-testid="properties"]'
+const TREE_PANEL = '[data-testid="project-tree"]'
+/**
+ * Where the page's own chrome is now, from the DOM (read at each placement, so a bar or a panel that folds is followed): the menu bar on top, the
+ * status bar at the bottom, the Projet panel on the left, Propriétés on the right (its width when open, its rail when folded). Any failure, or a part that is not on
+ * screen, is no inset (a throw is zero for everything).
+ */
 export function hostInsets(doc: Document): HostInsets {
   const none: HostInsets = { top: 0, right: 0, bottom: 0, left: 0 }
   try {
+    const width = doc.documentElement.clientWidth
     const height = doc.documentElement.clientHeight
     const menu = doc.querySelector(MENU_BAR)?.getBoundingClientRect()
     const status = doc.querySelector(STATUS_BAR)?.getBoundingClientRect()
+    const tree = doc.querySelector(TREE_PANEL)?.getBoundingClientRect()
+    const props = doc.querySelector(PROPS_PANEL)?.getBoundingClientRect()
     const top = menu !== undefined && menu.height > 0 && Number.isFinite(menu.bottom) ? Math.max(0, menu.bottom) : 0
     const bottom = status !== undefined && status.height > 0 && Number.isFinite(status.top) && height > 0 ? Math.max(0, height - status.top) : 0
-    return { ...none, top, bottom }
+    const left = tree !== undefined && tree.width > 0 && Number.isFinite(tree.right) && width > 0 ? Math.max(0, tree.right) : 0
+    const right = props !== undefined && props.width > 0 && Number.isFinite(props.left) && width > 0 ? Math.max(0, width - props.left) : 0
+    return { top, right, bottom, left }
   } catch {
     return none
   }

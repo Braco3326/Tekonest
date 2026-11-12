@@ -376,6 +376,57 @@ describe('hostInsets', () => {
   })
 })
 
+describe('hostInsets: the open side panels', () => {
+  // A box as getBoundingClientRect answers it.
+  type Box = { top: number; bottom: number; left: number; right: number; width: number; height: number }
+  const box = (left: number, top: number, width: number, height: number): Box => ({ left, top, width, height, right: left + width, bottom: top + height })
+  const MENU = '[data-testid="menubar"]'
+  const STATUS = '[data-testid="status-bar"]'
+  const PROPS = '[data-testid="properties"]'
+  const TREE = '[data-testid="project-tree"]'
+  const docOf = (boxes: Record<string, Box | 'throw'>, width = 1366, height = 768): Document =>
+    ({
+      documentElement: { clientWidth: width, clientHeight: height },
+      querySelector: (sel: string) => {
+        const b = boxes[sel]
+        if (b === 'throw') throw new Error('bad selector')
+        return b ? { getBoundingClientRect: () => b } : null
+      },
+    }) as unknown as Document
+  const bars = { [MENU]: box(0, 0, 1366, 32), [STATUS]: box(0, 740, 1366, 28) }
+
+  it('Propriétés open: the right inset is its width (260), so the icon rests clear of it', () => {
+    expect(hostInsets(docOf({ ...bars, [PROPS]: box(1106, 32, 260, 708) }))).toEqual({ top: 32, bottom: 28, left: 0, right: 260 })
+  })
+
+  it('Propriétés folded to its rail: the right inset is the rail (32)', () => {
+    expect(hostInsets(docOf({ ...bars, [PROPS]: box(1334, 32, 32, 708) })).right).toBe(32)
+  })
+
+  it('the Projet tree on the left works the same way (open 200, rail 32), for an icon the learner moved to a left corner', () => {
+    expect(hostInsets(docOf({ ...bars, [TREE]: box(0, 32, 200, 708) })).left).toBe(200)
+    expect(hostInsets(docOf({ ...bars, [TREE]: box(0, 32, 32, 708) })).left).toBe(32)
+  })
+
+  it('a panel that is empty, off screen or not a number counts as no panel', () => {
+    expect(hostInsets(docOf({ ...bars, [PROPS]: box(1366, 32, 0, 708) })).right).toBe(0)
+    expect(hostInsets(docOf({ ...bars, [PROPS]: box(1500, 32, 260, 708) })).right).toBe(0)
+    expect(hostInsets(docOf({ ...bars, [PROPS]: { ...box(1106, 32, 260, 708), left: Number.NaN } })).right).toBe(0)
+  })
+
+  it('no panel is the bars only', () => {
+    expect(hostInsets(docOf({ ...bars }))).toEqual({ top: 32, bottom: 28, left: 0, right: 0 })
+  })
+
+  it('an answer that throws for a panel is zero for everything, never a throw', () => {
+    expect(hostInsets(docOf({ ...bars, [PROPS]: 'throw' }))).toEqual({ top: 0, bottom: 0, left: 0, right: 0 })
+  })
+
+  it('a document without a width gives no side inset (the bars still count)', () => {
+    expect(hostInsets(docOf({ ...bars, [PROPS]: box(1106, 32, 260, 708) }, 0))).toEqual({ top: 32, bottom: 28, left: 0, right: 0 })
+  })
+})
+
 // ── destroy ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 describe('mountOscar destroy', () => {
