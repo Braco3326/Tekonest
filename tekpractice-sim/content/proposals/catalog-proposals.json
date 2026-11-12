@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-22",
+ "generated": "2026-11-12",
  "status": "proposal — needs Oscar's review; shown in the TekPractice Bêta tab badged « non vérifié » (approximate behaviour), never as verified gear; catalog.json is the source of truth and is NOT modified",
  "devices": [
   {
@@ -11,7 +11,7 @@
     "model": "XLS 2502 (XLS DriveCore 2 Series)",
     "category": "amplifier",
     "typicalUse": "portable PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Typical school PA amp: XLR/jack/RCA inputs, speakON vs binding posts, bridge wiring on one NL4 (pins 1+/2+)."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Typical school PA amp: XLR/jack/RCA inputs, speakON vs binding posts, bridge wiring on one NL4 (pins 1+/2+)."
    },
    "ports": [
     {
@@ -63,6 +63,18 @@
      "signal": "speaker-level"
     },
     {
+     "portId": "out-binding-post-output-pair-per-channel-1",
+     "dir": "out",
+     "connector": "binding-post",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-binding-post-output-pair-per-channel-2",
+     "dir": "out",
+     "connector": "binding-post",
+     "signal": "speaker-level"
+    },
+    {
      "portId": "in-aux-connector-sleep-mode-by-contact-closure-between-pins-1-2",
      "dir": "in",
      "connector": "gpio-terminal",
@@ -79,7 +91,7 @@
     "model": "LA12X",
     "category": "amplifier",
     "typicalUse": "touring line array",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Shows AES/analog shared XLR inputs, Milan redundancy, NL4 vs 8-point outputs and 32 A powerCON mains."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Shows AES/analog shared XLR inputs, Milan redundancy, NL4 vs 8-point outputs and 32 A powerCON mains."
    },
    "ports": [
     {
@@ -128,6 +140,12 @@
      "portId": "out-loudspeaker-outputs-4-point-speakon-2",
      "dir": "out",
      "connector": "speakon-nl4",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-8-point-ca-com-loudspeaker-output-closest-id-see-notes",
+     "dir": "out",
+     "connector": "speakon-nl8",
      "signal": "speaker-level"
     },
     {
@@ -215,7 +233,7 @@
     "model": "D80",
     "category": "amplifier",
     "typicalUse": "touring line arrays (J, V, SL-Series)",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. NL4 vs NL8 outputs, analog + AES3 inputs on XLR, CAN vs Ethernet remote: rich wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. NL4 vs NL8 outputs, analog + AES3 inputs on XLR, CAN vs Ethernet remote: rich wiring lesson."
    },
    "ports": [
     {
@@ -291,6 +309,12 @@
      "signal": "speaker-level"
     },
     {
+     "portId": "out-4-channel-output-nl8-all-pins-driven",
+     "dir": "out",
+     "connector": "speakon-nl8",
+     "signal": "speaker-level"
+    },
+    {
      "portId": "in-mains-in-powercon-hc-closest-id",
      "dir": "in",
      "connector": "powercon-blue",
@@ -307,7 +331,7 @@
     "model": "D40",
     "category": "amplifier",
     "typicalUse": "touring",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Milan + AES3 + analog inputs, NL4 and NL8 outputs, powerCON TRUE1 mains: the full modern amp-rack set."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Milan + AES3 + analog inputs, NL4 and NL8 outputs, powerCON TRUE1 mains: the full modern amp-rack set."
    },
    "ports": [
     {
@@ -368,6 +392,12 @@
      "portId": "out-speaker-outputs-a-b-c-d-and-mix-top-sub-2-way-outputs-2",
      "dir": "out",
      "connector": "speakon-nl4",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-4-channel-output",
+     "dir": "out",
+     "connector": "speakon-nl8",
      "signal": "speaker-level"
     },
     {
@@ -443,7 +473,7 @@
     "model": "PX10",
     "category": "amplifier",
     "typicalUse": "portable PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Three speaker-output types (NL4, binding post, TS jack) on one amp: teaches why a TS speaker jack is not an instrument cable."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Three speaker-output types (NL4, binding post, TS jack) on one amp: teaches why a TS speaker jack is not an instrument cable."
    },
    "ports": [
     {
@@ -480,6 +510,18 @@
      "portId": "out-speaker-output-2",
      "dir": "out",
      "connector": "speakon-nl4",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-speaker-output-binding-post-pairs-1",
+     "dir": "out",
+     "connector": "binding-post",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-speaker-output-binding-post-pairs-2",
+     "dir": "out",
+     "connector": "binding-post",
      "signal": "speaker-level"
     },
     {
@@ -746,7 +788,7 @@
     "model": "RMX 850 (RMX Series)",
     "category": "amplifier",
     "typicalUse": "small and medium PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Three input types (XLR, TRS, terminal block) and two output types (speakON, binding posts) plus bridge mode: a complete amp wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Three input types (XLR, TRS, terminal block) and two output types (speakON, binding posts) plus bridge mode: a complete amp wiring lesson."
    },
    "ports": [
     {
@@ -783,6 +825,18 @@
      "portId": "out-speakon-output-ch1-carries-ch1-ch2-ch2-own-2",
      "dir": "out",
      "connector": "speakon-nl4",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-touch-proof-binding-post-output-pair-per-channel-1",
+     "dir": "out",
+     "connector": "binding-post",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-touch-proof-binding-post-output-pair-per-channel-2",
+     "dir": "out",
+     "connector": "binding-post",
      "signal": "speaker-level"
     },
     {
@@ -802,7 +856,7 @@
     "model": "RMX 1450 (RMX Series)",
     "category": "amplifier",
     "typicalUse": "small and medium PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Three input types (XLR, TRS, terminal block) and two output types (speakON, binding posts) plus bridge mode: a complete amp wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Three input types (XLR, TRS, terminal block) and two output types (speakON, binding posts) plus bridge mode: a complete amp wiring lesson."
    },
    "ports": [
     {
@@ -839,6 +893,18 @@
      "portId": "out-speakon-output-ch1-carries-ch1-ch2-ch2-own-2",
      "dir": "out",
      "connector": "speakon-nl4",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-touch-proof-binding-post-output-pair-per-channel-1",
+     "dir": "out",
+     "connector": "binding-post",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "out-touch-proof-binding-post-output-pair-per-channel-2",
+     "dir": "out",
+     "connector": "binding-post",
      "signal": "speaker-level"
     },
     {
@@ -1068,9 +1134,15 @@
     "model": "Encore MS-702",
     "category": "broadcast",
     "typicalUse": "theatre stage management party-line",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Party-line powering over XLR3 (pin 2 DC, pin 3 audio) and XLR4 headset: classic 'don't plug intercom into a mic input' lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Party-line powering over XLR3 (pin 2 DC, pin 3 audio) and XLR4 headset: classic 'don't plug intercom into a mic input' lesson."
    },
    "ports": [
+    {
+     "portId": "bidir-headset-xlr-4m-front",
+     "dir": "bidir",
+     "connector": "xlr4",
+     "signal": "headphone-level"
+    },
     {
      "portId": "out-announce-out-balanced-line",
      "dir": "out",
@@ -1086,6 +1158,26 @@
    ]
   },
   {
+   "id": "clear-com-rs-701",
+   "label": "Clear-Com Encore RS-701",
+   "levels": [],
+   "realWorld": {
+    "brand": "Clear-Com",
+    "model": "Encore RS-701",
+    "category": "broadcast",
+    "typicalUse": "stage crew talkback",
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR3 loop-through party-line plus XLR4 headset: teaches daisy-chaining and the XLR4 headset pinout."
+   },
+   "ports": [
+    {
+     "portId": "bidir-headset-4-pin-xlr-m",
+     "dir": "bidir",
+     "connector": "xlr4",
+     "signal": "headphone-level"
+    }
+   ]
+  },
+  {
    "id": "clear-com-freespeak-ii",
    "label": "Clear-Com FreeSpeak II (FSII-BASE-II + FSII-BP19 beltpack)",
    "levels": [],
@@ -1094,7 +1186,7 @@
     "model": "FreeSpeak II (FSII-BASE-II + FSII-BP19 beltpack)",
     "category": "broadcast",
     "typicalUse": "wireless crew talkback in theatres",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Base station joins wireless, 2-wire XLR3 party-line and 4-wire RJ45: good intercom topology lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Base station joins wireless, 2-wire XLR3 party-line and 4-wire RJ45: good intercom topology lesson."
    },
    "ports": [
     {
@@ -1108,6 +1200,12 @@
      "dir": "bidir",
      "connector": "gpio-terminal",
      "signal": "gpio-tally"
+    },
+    {
+     "portId": "bidir-beltpack-headset-4-pin-male",
+     "dir": "bidir",
+     "connector": "xlr4",
+     "signal": "headphone-level"
     }
    ]
   },
@@ -1272,7 +1370,7 @@
     "model": "MG10XU",
     "category": "console",
     "typicalUse": "small PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Combo XLR/jack inputs, single global phantom switch, RCA consumer inputs and USB make it a good first-mixer wiring and gain-staging lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Combo XLR/jack inputs, single global phantom switch, RCA consumer inputs and USB make it a good first-mixer wiring and gain-staging lesson."
    },
    "ports": [
     {
@@ -1340,6 +1438,12 @@
      "dir": "bidir",
      "connector": "usb-b",
      "signal": "usb-audio"
+    },
+    {
+     "portId": "in-ac-adaptor-in-locking-connector-for-pa-10-adaptor",
+     "dir": "in",
+     "connector": "dc-barrel",
+     "signal": "mains-power"
     }
    ]
   },
@@ -2727,7 +2831,7 @@
     "model": "Phonitor x",
     "category": "headphones",
     "typicalUse": "mixing / mastering on headphones",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Balanced XLR4 headphone output with documented pinout, XLR/RCA inputs and optional digital inputs: rich connector lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Balanced XLR4 headphone output with documented pinout, XLR/RCA inputs and optional digital inputs: rich connector lesson."
    },
    "ports": [
     {
@@ -2777,6 +2881,12 @@
      "dir": "out",
      "connector": "rca",
      "signal": "line-level-consumer"
+    },
+    {
+     "portId": "out-balanced-headphone-output-4-pin-xlr",
+     "dir": "out",
+     "connector": "xlr4",
+     "signal": "headphone-level"
     },
     {
      "portId": "out-standard-headphone-output",
@@ -2905,7 +3015,7 @@
     "model": "Orion 32+ Gen 4",
     "category": "audio-interface",
     "typicalUse": "32-channel AD/DA for summing mixers or consoles",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. DB25 TASCAM looms, MADI on SC fibre, ADAT, word clock and atomic reference in one converter."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. DB25 TASCAM looms, MADI on SC fibre, ADAT, word clock and atomic reference in one converter."
    },
    "ports": [
     {
@@ -2943,6 +3053,18 @@
      "dir": "out",
      "connector": "trs-quarter",
      "signal": "line-level-pro"
+    },
+    {
+     "portId": "bidir-madi-optical-in-out-2-madi-ports-1",
+     "dir": "bidir",
+     "connector": "sc-fibre",
+     "signal": "madi"
+    },
+    {
+     "portId": "bidir-madi-optical-in-out-2-madi-ports-2",
+     "dir": "bidir",
+     "connector": "sc-fibre",
+     "signal": "madi"
     },
     {
      "portId": "bidir-s-pdif-in-out-1",
@@ -2991,7 +3113,7 @@
     "model": "Fireface UFX III",
     "category": "audio-interface",
     "typicalUse": "studio and mobile multitrack recording",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Combo XLR/TRS with phantom only on XLR, MADI optical vs coaxial on BNC, ADAT, AES and word clock: many signal lessons."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Combo XLR/TRS with phantom only on XLR, MADI optical vs coaxial on BNC, ADAT, AES and word clock: many signal lessons."
    },
    "ports": [
     {
@@ -3053,6 +3175,18 @@
      "dir": "out",
      "connector": "trs-quarter",
      "signal": "headphone-level"
+    },
+    {
+     "portId": "bidir-madi-optical-in-out-1",
+     "dir": "bidir",
+     "connector": "sc-fibre",
+     "signal": "madi"
+    },
+    {
+     "portId": "bidir-madi-optical-in-out-2",
+     "dir": "bidir",
+     "connector": "sc-fibre",
+     "signal": "madi"
     },
     {
      "portId": "in-aes-ebu-in",
@@ -3611,6 +3745,32 @@
      "dir": "in",
      "connector": "iec-c14",
      "signal": "mains-power"
+    }
+   ]
+  },
+  {
+   "id": "l-acoustics-k2",
+   "label": "L-Acoustics K2",
+   "levels": [],
+   "realWorld": {
+    "brand": "L-Acoustics",
+    "model": "K2",
+    "category": "speaker",
+    "typicalUse": "arena and stadium main PA",
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Multi-way 8-point amp feed vs 4-point speakON is a distinctive wiring lesson."
+   },
+   "ports": [
+    {
+     "portId": "in-8-point-pa-com-input-link-multi-way-amplifier-feed-1",
+     "dir": "in",
+     "connector": "speakon-nl8",
+     "signal": "speaker-level"
+    },
+    {
+     "portId": "in-8-point-pa-com-input-link-multi-way-amplifier-feed-2",
+     "dir": "in",
+     "connector": "speakon-nl8",
+     "signal": "speaker-level"
     }
    ]
   },
@@ -4368,6 +4528,26 @@
      "flags": [
       "requiresPhantom"
      ]
+    }
+   ]
+  },
+  {
+   "id": "dpa-4088",
+   "label": "DPA Microphones 4088 Directional Headset Microphone",
+   "levels": [],
+   "realWorld": {
+    "brand": "DPA Microphones",
+    "model": "4088 Directional Headset Microphone",
+    "category": "microphone",
+    "typicalUse": "musical theatre",
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Headset on a wireless bodypack: bias power and mini-XLR/MicroDot terminations."
+   },
+   "ports": [
+    {
+     "portId": "out-mic-termination-to-bodypack-ta4f-version-also-microdot-3-pin-lemo-mini-jack-versions",
+     "dir": "out",
+     "connector": "mini-xlr-ta4",
+     "signal": "mic-level"
     }
    ]
   },
@@ -5654,9 +5834,15 @@
     "model": "M-32 AD",
     "category": "stagebox",
     "typicalUse": "analog to MADI conversion for recording / broadcast",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. MADI coax (BNC 75 Ω) and SC fibre side by side, plus ADAT and word clock: an ideal clocking and channel-count lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. MADI coax (BNC 75 Ω) and SC fibre side by side, plus ADAT and word clock: an ideal clocking and channel-count lesson."
    },
    "ports": [
+    {
+     "portId": "bidir-madi-optical-in-out",
+     "dir": "bidir",
+     "connector": "sc-fibre",
+     "signal": "madi"
+    },
     {
      "portId": "bidir-madi-coaxial-in-out-1",
      "dir": "bidir",
@@ -6296,7 +6482,7 @@
     "model": "Utopia Main 112",
     "category": "studio-monitor",
     "typicalUse": "main monitors in large control rooms",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Remote amplifier to speaker via Speakon NL8 + NL4 with documented pin assignment: multi-way speaker-level wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Remote amplifier to speaker via Speakon NL8 + NL4 with documented pin assignment: multi-way speaker-level wiring lesson."
    },
    "ports": [
     {
@@ -6304,6 +6490,12 @@
      "dir": "in",
      "connector": "xlr3-f",
      "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-amplifier-output-to-speaker-woofer-midrange",
+     "dir": "out",
+     "connector": "speakon-nl8",
+     "signal": "speaker-level"
     },
     {
      "portId": "out-amplifier-output-to-speaker-tweeter-front-led",
@@ -6576,7 +6768,7 @@
     "model": "SLX-D (SLXD4 / SLXD4D receivers, SLXD1 / SLXD2 / SLXD3 transmitters, SLXD5 portable receiver)",
     "category": "wireless",
     "typicalUse": "live vocals",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR mic/line switch on receiver, TA4 bodypack input and a phantom-powering plug-on transmitter cover many wiring lessons."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR mic/line switch on receiver, TA4 bodypack input and a phantom-powering plug-on transmitter cover many wiring lessons."
    },
    "ports": [
     {
@@ -6596,6 +6788,12 @@
      "dir": "bidir",
      "connector": "rj45",
      "signal": "aoip"
+    },
+    {
+     "portId": "in-slxd1-bodypack-mic-input-ta4m",
+     "dir": "in",
+     "connector": "mini-xlr-ta4",
+     "signal": "mic-level"
     },
     {
      "portId": "out-slxd5-portable-receiver-outputs-camera-headphone-1",
@@ -6850,9 +7048,15 @@
     "model": "MCR54 4-channel multiband camera receiver",
     "category": "wireless",
     "typicalUse": "film location sound (bag or camera)",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Location-sound wiring: SMA antennas, TA5 analog/AES3 output and Hirose DC teach film-bag interconnects."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Location-sound wiring: SMA antennas, TA5 analog/AES3 output and Hirose DC teach film-bag interconnects."
    },
    "ports": [
+    {
+     "portId": "out-audio-output-5-pin-mini-xlr-female-ta5-closest-id-used",
+     "dir": "out",
+     "connector": "mini-xlr-ta4",
+     "signal": "line-level-pro"
+    },
     {
      "portId": "out-monitor-headphone-jack-3-5-mm",
      "dir": "out",
@@ -6863,10 +7067,6 @@
   }
  ],
  "skipped": [
-  {
-   "id": "clear-com-rs-701",
-   "reason": "no KB connector maps to existing catalog connector/signal ids"
-  },
   {
    "id": "neutrik-nc3mxx",
    "reason": "no KB connector maps to existing catalog connector/signal ids"
@@ -6916,10 +7116,6 @@
    "reason": "no KB connector maps to existing catalog connector/signal ids"
   },
   {
-   "id": "l-acoustics-k2",
-   "reason": "no KB connector maps to existing catalog connector/signal ids"
-  },
-  {
    "id": "behringer-ct200",
    "reason": "no KB connector maps to existing catalog connector/signal ids"
   },
@@ -6933,14 +7129,6 @@
   },
   {
    "id": "telefunken-c12",
-   "reason": "no KB connector maps to existing catalog connector/signal ids"
-  },
-  {
-   "id": "dpa-4060",
-   "reason": "no KB connector maps to existing catalog connector/signal ids"
-  },
-  {
-   "id": "dpa-4088",
    "reason": "no KB connector maps to existing catalog connector/signal ids"
   },
   {

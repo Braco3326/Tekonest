@@ -13,9 +13,8 @@
  */
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
-import { Device } from './schemas'
 import { loadPlan } from './equipmentPlan'
-import { mergeProposals, type Proposal } from './proposalMerge'
+import { buildProposalsFile, type KbDev, type KbFile, type ProposalsFile } from './proposalGenerate'
 import { loadCatalog, loadLevel } from '../src/engine/CatalogLoader'
 import { ConnectionGraph } from '../src/engine/ConnectionGraph'
 
@@ -30,96 +29,33 @@ const connectorIds = new Set<string>((catalogRaw.connectorTypes as { id: string 
 const signalIds = new Set<string>((catalogRaw.signalTypes as { id: string }[]).map((s) => s.id))
 
 // ── 1. catalog proposals ──────────────────────────────────────────────────────
-const CATEGORY: Record<string, string> = {
-  microphones: 'microphone', 'wireless-systems': 'wireless', consoles: 'console', 'stageboxes-networking': 'stagebox',
-  'interfaces-converters-clocks': 'audio-interface', 'processors-outboard': 'outboard', 'di-splitters': 'di-box',
-  loudspeakers: 'speaker', 'studio-monitors': 'studio-monitor', 'amplifiers-processors': 'amplifier',
-  'headphones-iem': 'headphones', 'recorders-playback': 'recorder', 'broadcast-radio': 'broadcast',
-  'cables-connectors': 'cable', patchbays: 'patchbay', 'measurement-tools': 'measurement',
-  'accessories-mounting': 'accessory', software: 'computer', 'power-distribution': 'power',
-  'show-control-interfaces': 'interface',
-}
-const SUBTYPE_CATEGORY: Record<string, string> = {
-  'mic-preamp': 'mic-preamp', 'active-powered': 'powered-speaker', 'master-clock': 'master-clock',
-  'monitor-controller': 'monitor-controller', 'ip-codec': 'codec',
-}
-
-interface KbConn { connector?: string; role?: string; dir?: string; signal?: string; count?: number }
-interface KbDev {
-  id: string; brand: string; model: string; category: string; sub_type: string; typical_uses?: string[]
-  why_it_is_a_classic?: string; key_specs?: Record<string, unknown>; connectors?: (KbConn | string)[]
-  tekpractice?: { in_catalog?: boolean; sim_value?: string; sim_value_reason?: string }
-}
-
-const proposals: unknown[] = []
-const skipped: { id: string; reason: string }[] = []
-for (const file of readdirSync(join(KB, 'equipment')).filter((f) => f.endsWith('.json'))) {
-  for (const d of (JSON.parse(readFileSync(join(KB, 'equipment', file), 'utf8')) as { devices: KbDev[] }).devices) {
-    if (registry.deviceById.has(d.id) || d.tekpractice?.in_catalog) continue
-    if (d.tekpractice?.sim_value !== 'high') continue
-    const phantom = String(d.key_specs?.phantom_power ?? '')
-    const needsPhantom = /48/.test(phantom) && !/not|non|no /i.test(phantom)
-    const ports: unknown[] = []
-    const used = new Set<string>()
-    for (const raw of d.connectors ?? []) {
-      if (typeof raw === 'string') continue
-      const { connector, signal } = raw
-      const dir = raw.dir === 'in' || raw.dir === 'out' || raw.dir === 'bidir' ? raw.dir : null
-      if (!connector || !signal || !dir || !connectorIds.has(connector) || !signalIds.has(signal)) continue
-      const n = Math.min(raw.count ?? 1, 2) // catalog convention: model 2 of N identical ports
-      for (let i = 1; i <= n; i++) {
-        let portId = slug(`${dir}-${raw.role ?? signal}${n > 1 ? `-${i}` : ''}`) || `${dir}-${i}`
-        while (used.has(portId)) portId += '-b'
-        used.add(portId)
-        const flags = dir === 'out' && signal === 'mic-level' && needsPhantom ? ['requiresPhantom'] : undefined
-        ports.push({ portId, dir, connector, signal, ...(flags ? { flags } : {}) })
-      }
-    }
-    if (!ports.length) {
-      skipped.push({ id: d.id, reason: 'no KB connector maps to existing catalog connector/signal ids' })
-      continue
-    }
-    const entry = {
-      id: d.id,
-      label: `${d.brand} ${d.model}`,
-      levels: [],
-      realWorld: {
-        brand: d.brand,
-        model: d.model,
-        category: SUBTYPE_CATEGORY[d.sub_type] ?? CATEGORY[d.category] ?? d.category,
-        typicalUse: d.typical_uses?.[0] ?? d.why_it_is_a_classic ?? d.model,
-        notes: `PROPOSITION (${today}) générée depuis knowledge-base/equipment/${file} — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. ${d.tekpractice?.sim_value_reason ?? ''}`.trim(),
-      },
-      ports,
-    }
-    const ok = Device.safeParse(entry)
-    if (ok.success) proposals.push(ok.data)
-    else skipped.push({ id: d.id, reason: `Device schema: ${ok.error.issues[0]?.path.join('.')} ${ok.error.issues[0]?.message}` })
-  }
-}
-mkdirSync(join(ROOT, 'content', 'proposals'), { recursive: true })
+// The generation itself is pure (tools/proposalGenerate.ts): a test holds that the committed file is a fixed point of it.
 const PROPOSALS_PATH = join(ROOT, 'content', 'proposals', 'catalog-proposals.json')
-let existingProposals: Proposal[] = []
+const kbFiles: KbFile[] = readdirSync(join(KB, 'equipment'))
+  .filter((f) => f.endsWith('.json'))
+  .map((file) => ({ file, devices: (JSON.parse(readFileSync(join(KB, 'equipment', file), 'utf8')) as { devices: KbDev[] }).devices }))
+mkdirSync(join(ROOT, 'content', 'proposals'), { recursive: true })
+let committedProposals: Partial<ProposalsFile> | undefined
 try {
-  existingProposals = (JSON.parse(readFileSync(PROPOSALS_PATH, 'utf8')) as { devices?: Proposal[] }).devices ?? []
+  committedProposals = JSON.parse(readFileSync(PROPOSALS_PATH, 'utf8')) as Partial<ProposalsFile>
 } catch {
   /* first run: nothing to keep */
 }
-const merged = mergeProposals(
-  proposals as Proposal[],
-  existingProposals,
+const built = buildProposalsFile(
+  {
+    kb: kbFiles,
+    catalogDeviceIds: new Set((catalogRaw.devices as { id: string }[]).map((d) => d.id)),
+    connectorIds,
+    signalIds,
+    today,
+  },
+  committedProposals,
   loadPlan(),
-  new Set((catalogRaw.devices as { id: string }[]).map((d) => d.id)),
 )
-for (const d of merged.dropped) console.log(`  guard: ${d.id} not proposed (${d.reason})`)
-writeFileSync(
-  PROPOSALS_PATH,
-  JSON.stringify(
-    { generated: today, status: "proposal — needs Oscar's review; shown in the TekPractice Bêta tab badged « non vérifié » (approximate behaviour), never as verified gear; catalog.json is the source of truth and is NOT modified", devices: merged.devices, skipped },
-    null,
-    1,
-  ) + '\n',
-)
+for (const d of built.dropped) console.log(`  guard: ${d.id} not proposed (${d.reason})`)
+writeFileSync(PROPOSALS_PATH, built.text)
+const merged = built.file
+const skipped = merged.skipped
 
 // ── 2. level drafts from TEK Brain scenarios ──────────────────────────────────
 interface Scenario {
