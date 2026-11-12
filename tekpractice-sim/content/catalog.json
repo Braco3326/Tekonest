@@ -1951,6 +1951,444 @@
         { "from": "in-xlr", "to": ["out-xlr"] },
         { "from": "in-trs", "to": ["out-trs"] }
       ]
+    },
+    {
+      "id": "eventide-h9000",
+      "label": "Eventide H9000",
+      "levels": [],
+      "realWorld": {
+        "brand": "Eventide", "model": "H9000", "category": "outboard",
+        "typicalUse": "Eventide H9000 (outboard)",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 318 x 89 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.eventideaudio.com/rackmount/h9000/. Ports: documented in the asset spec (https://www.eventideaudio.com/rackmount/h9000/)."
+      },
+      "ports": [
+        { "portId": "in-xlr-1", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-xlr-2", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-xlr-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-xlr-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" }
+      ],
+      "routing": [
+        { "from": "in-xlr-1", "to": ["out-xlr-1"] },
+        { "from": "in-xlr-2", "to": ["out-xlr-2"] }
+      ]
+    },
+    {
+      "id": "meyer-upjunior-upj-1p",
+      "label": "Meyer Sound UPJunior (UPJ-1P)",
+      "levels": [],
+      "realWorld": {
+        "brand": "Meyer Sound", "model": "UPJunior (UPJ-1P)", "category": "powered-speaker",
+        "typicalUse": "Meyer Sound UPJunior (UPJ-1P) (powered-speaker)",
+        "notes": "Built from the equipment plan (2026-11-12); size 229 x 259 x 484 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.pssl.com/products/meyer-sound-upjunior-powered-loudspeaker. Ports: documented in the asset spec (https://www.manualsdir.com/manuals/118204/meyer-sound-upjunior.html?page=10), except the connector type of power-in (powercon-blue), assumed: no cited page states it. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "in-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-xlr-loop", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "power-in", "dir": "in", "connector": "powercon-blue", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted speaker-cabinet-v2 model (public/assets/meyer-upjunior-upj-1p.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "in-xlr", "to": ["transducer"] }
+      ]
+    },
+    {
+      "id": "presonus-faderport-8",
+      "label": "PreSonus FaderPort 8",
+      "levels": [],
+      "realWorld": {
+        "brand": "PreSonus", "model": "FaderPort 8", "category": "controller",
+        "typicalUse": "PreSonus FaderPort 8 (controller)",
+        "notes": "Built from the equipment plan (2026-11-12); size 334 x 301 x 57 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.thomann.de/be/presonus_faderport_8.htm. Ports: documented in the asset spec (https://goknight.com/presonus-faderport-8-mix-production-controller/)."
+      },
+      "ports": [
+        { "portId": "usb", "dir": "bidir", "connector": "usb-b", "signal": "usb-audio" }
+      ]
+    },
+    {
+      "id": "presonus-studio-24c",
+      "label": "PreSonus Studio 24c",
+      "levels": [],
+      "realWorld": {
+        "brand": "PreSonus", "model": "Studio 24c", "category": "audio-interface",
+        "typicalUse": "PreSonus Studio 24c (audio-interface)",
+        "notes": "Built from the equipment plan (2026-11-12); size 180 x 144 x 44 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.proacousticsusa.com/presonus-studio-24c-2x2-usb-c-compatible-audio-interface.html. Ports: documented in the asset spec (https://manualmachine.com/presonus/studio24c/8126865-user-manual)."
+      },
+      "ports": [
+        { "portId": "in-combo-1", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-combo-2", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "out-main-1", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-main-2", "dir": "out", "connector": "trs-quarter", "signal": "line-level-pro" },
+        { "portId": "out-phones", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
+        { "portId": "usb", "dir": "bidir", "connector": "usb-c", "signal": "usb-audio" }
+      ]
+    },
+    {
+      "id": "tc-electronic-m3000",
+      "label": "TC Electronic M3000",
+      "levels": [],
+      "realWorld": {
+        "brand": "TC Electronic", "model": "M3000", "category": "outboard",
+        "typicalUse": "TC Electronic M3000 (outboard)",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 208 x 44 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.zzounds.com/item--TCE9505000. Ports: documented in the asset spec (https://www.soundonsound.com/reviews/tc-electronic-m3000)."
+      },
+      "ports": [
+        { "portId": "in-xlr-1", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-xlr-2", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-xlr-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-xlr-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "in-aes", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "in-spdif", "dir": "in", "connector": "rca", "signal": "spdif" },
+        { "portId": "out-spdif", "dir": "out", "connector": "rca", "signal": "spdif" },
+        { "portId": "in-optical", "dir": "in", "connector": "toslink", "signal": "spdif" },
+        { "portId": "out-optical", "dir": "out", "connector": "toslink", "signal": "spdif" },
+        { "portId": "in-wclk", "dir": "in", "connector": "rca", "signal": "wordclock" }
+      ],
+      "routing": [
+        { "from": "in-xlr-1", "to": ["out-xlr-1"] },
+        { "from": "in-xlr-2", "to": ["out-xlr-2"] },
+        { "from": "in-aes", "to": ["out-aes"] },
+        { "from": "in-spdif", "to": ["out-spdif"] },
+        { "from": "in-optical", "to": ["out-optical"] }
+      ]
+    },
+    {
+      "id": "telos-zephyr-xstream",
+      "label": "Telos Zephyr Xstream (legacy ISDN codec)",
+      "levels": [],
+      "realWorld": {
+        "brand": "Telos", "model": "Zephyr Xstream (legacy ISDN codec)", "category": "codec",
+        "typicalUse": "Telos Zephyr Xstream (legacy ISDN codec) (codec)",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 318 x 89 mm (w x d x h) (datasheet, size confidence ok). Size source: https://telosalliance.com/Telos/XSTREAM. Ports: documented in the asset spec (https://telosalliance.com/Telos/XSTREAM), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-send-1", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-send-2", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-recv-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-recv-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "in-aes", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "aoip" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-send-1", "to": ["out-recv-1"] },
+        { "from": "in-send-2", "to": ["out-recv-2"] },
+        { "from": "in-aes", "to": ["out-aes"] }
+      ]
+    },
+    {
+      "id": "ua-la-610-mkii",
+      "label": "Universal Audio LA-610 MkII",
+      "levels": [],
+      "realWorld": {
+        "brand": "Universal Audio", "model": "LA-610 MkII", "category": "mic-preamp",
+        "typicalUse": "Universal Audio LA-610 MkII (mic-preamp)",
+        "notes": "Built from the equipment plan (2026-11-12); size 483 x 311 x 89 mm (w x d x h) (dealer, size confidence ok). Size source: https://www.adorama.com/uala610m2d.html. Ports: documented in the asset spec (https://www.zzounds.com/item--UADLA610MK2)."
+      },
+      "ports": [
+        { "portId": "in-mic-xlr", "dir": "in", "connector": "xlr3-f", "signal": "mic-level", "flags": ["isMicInput", "providesPhantom"] },
+        { "portId": "in-line-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "in-hiz", "dir": "in", "connector": "ts-quarter", "signal": "instrument-hiz" }
+      ],
+      "controls": [
+        { "id": "phantom-48v", "type": "toggle", "label": "+48V phantom", "default": false, "enables": { "flag": "providesPhantom", "ports": ["in-mic-xlr"] } }
+      ],
+      "routing": [
+        { "from": "in-mic-xlr", "to": ["out-xlr"] },
+        { "from": "in-line-xlr", "to": ["out-xlr"] },
+        { "from": "in-hiz", "to": ["out-xlr"] }
+      ]
+    },
+    {
+      "id": "akg-d112-mkii",
+      "label": "AKG D112 MKII",
+      "levels": [],
+      "realWorld": {
+        "brand": "AKG", "model": "D112 MKII", "category": "microphone",
+        "typicalUse": "AKG D112 MKII (microphone)",
+        "notes": "Built from the equipment plan (2026-11-12); size 70 x 115 x 126 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwef0475a5/pdfs/AKG_d112_mkII_cutsheet.pdf. Ports: documented in the asset spec (https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwef0475a5/pdfs/AKG_d112_mkII_cutsheet.pdf)."
+      },
+      "ports": [
+        { "portId": "out-xlr", "dir": "out", "connector": "xlr3-m", "signal": "mic-level" }
+      ]
+    },
+    {
+      "id": "l-acoustics-ks28",
+      "label": "L-Acoustics KS28 (sub)",
+      "levels": [],
+      "realWorld": {
+        "brand": "L-Acoustics", "model": "KS28 (sub)", "category": "speaker",
+        "typicalUse": "L-Acoustics KS28 (sub) (speaker)",
+        "notes": "Built from the equipment plan (2026-11-12); size 1340 x 719 x 550 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.l-acoustics.com/products/KS28. Ports: documented in the asset spec (https://www.l-acoustics.com/products/KS28). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "in-nl4", "dir": "in", "connector": "speakon-nl4", "signal": "speaker-level" }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted speaker-cabinet-v2 model (public/assets/l-acoustics-ks28.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "in-nl4", "to": ["transducer"] }
+      ]
+    },
+    {
+      "id": "adam-audio-s3h",
+      "label": "ADAM Audio S3H",
+      "levels": [],
+      "realWorld": {
+        "brand": "ADAM Audio", "model": "S3H", "category": "studio-monitor",
+        "typicalUse": "midfield monitoring",
+        "notes": "Built from the equipment plan (2026-11-12); size 585 x 380 x 280 mm (w x d x h) (datasheet, size confidence ok). Size source: https://adam-audio.com/s-serie/s3h. Ports: documented in the asset spec (https://www.adam-audio.com/content/uploads/2018/03/adam-audio-s-series-quick-start-guide-english.pdf), except the connector type of power-in (iec-c14), assumed: no cited page states it. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "in-analog", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-aes", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "out-aes", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted speaker-cabinet-v2 model (public/assets/adam-audio-s3h.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "in-analog", "to": ["transducer"] },
+        { "from": "in-aes", "to": ["transducer"] }
+      ],
+      "portAliases": {
+        "in-analog-input": "in-analog",
+        "in-aes3-digital-input": "in-aes",
+        "out-aes3-thru-output-daisy-chain": "out-aes",
+        "in-mains-in": "power-in"
+      }
+    },
+    {
+      "id": "db-audiotechnik-v-sub",
+      "label": "d&b audiotechnik V-SUB",
+      "levels": [],
+      "realWorld": {
+        "brand": "d&b audiotechnik", "model": "V-SUB", "category": "speaker",
+        "typicalUse": "flown sub with V-Series",
+        "notes": "Built from the equipment plan (2026-11-12); size 700 x 728 x 606 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.dbaudio.com/global/en/products/series/v-series/v-sub/. Ports: documented in the asset spec (https://www.dbaudio.com/global/en/products/series/v-series/v-sub/). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "bidir-nl4-1", "dir": "bidir", "connector": "speakon-nl4", "signal": "speaker-level" },
+        { "portId": "bidir-nl4-2", "dir": "bidir", "connector": "speakon-nl4", "signal": "speaker-level" }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted speaker-cabinet-v2 model (public/assets/db-audiotechnik-v-sub.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "bidir-nl4-1", "to": ["transducer"] },
+        { "from": "bidir-nl4-2", "to": ["transducer"] }
+      ],
+      "portAliases": {
+        "bidir-2-x-nlt4-f-m-option-2-x-nl4-m-or-ep5-pins-2-2-1": "bidir-nl4-1",
+        "bidir-2-x-nlt4-f-m-option-2-x-nl4-m-or-ep5-pins-2-2-2": "bidir-nl4-2"
+      }
+    },
+    {
+      "id": "l-acoustics-a15-focus",
+      "label": "L-Acoustics A15 Focus",
+      "levels": [],
+      "realWorld": {
+        "brand": "L-Acoustics", "model": "A15 Focus", "category": "speaker",
+        "typicalUse": "small/medium venue main PA",
+        "notes": "Built from the equipment plan (2026-11-12); size 764 x 522 x 427 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.l-acoustics.com/products/A15-focus. Ports: documented in the asset spec (https://www.l-acoustics.com/products/A15-focus). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "in-nl4", "dir": "in", "connector": "speakon-nl4", "signal": "speaker-level" },
+        { "portId": "out-nl4-link", "dir": "out", "connector": "speakon-nl4", "signal": "speaker-level" }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted speaker-cabinet-v2 model (public/assets/l-acoustics-a15-focus.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "in-nl4", "to": ["transducer"] }
+      ],
+      "portAliases": {
+        "in-in-1-4-point-speakon": "in-nl4",
+        "out-link-1-4-point-speakon": "out-nl4-link"
+      }
+    },
+    {
+      "id": "meyer-sound-lina",
+      "label": "Meyer Sound LINA",
+      "levels": [],
+      "realWorld": {
+        "brand": "Meyer Sound", "model": "LINA", "category": "speaker",
+        "typicalUse": "theatre and concert hall main PA",
+        "notes": "Built from the equipment plan (2026-11-12); size 515 x 389 x 213 mm (w x d x h) (datasheet, size confidence ok). Size source: https://docs.meyersound.com/products/en/datasheet---lina.html. Ports: documented in the asset spec (https://docs.meyersound.com/products/en/datasheet---lina.html). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "in-xlr", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-xlr-loop", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "power-in", "dir": "in", "connector": "powercon-blue", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted speaker-cabinet-v2 model (public/assets/meyer-sound-lina.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "in-xlr", "to": ["transducer"] }
+      ],
+      "portAliases": {
+        "in-audio-input-optional-xlr-5-pin-for-audio-rms": "in-xlr",
+        "out-audio-loop-output": "out-xlr-loop",
+        "in-powercon-20-ac-input": "power-in"
+      }
+    },
+    {
+      "id": "neumann-kh-750-dsp",
+      "label": "Neumann KH 750 DSP",
+      "levels": [],
+      "realWorld": {
+        "brand": "Neumann", "model": "KH 750 DSP (sub)", "category": "studio-monitor",
+        "typicalUse": "stereo 2.1 bass extension",
+        "notes": "Built from the equipment plan (2026-11-12); size 330 x 383 x 383 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.neumann.com/en-en/products/monitors/kh-750-dsp/. Ports: documented in the asset spec (https://www.neumann.com/en-en/products/monitors/kh-750-dsp/), except the connector type of net (rj45), power-in (iec-c14), assumed: no cited page states it. No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "in-analog-1", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-analog-2", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-analog-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-analog-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "in-aes", "dir": "in", "connector": "bnc", "signal": "aes3" },
+        { "portId": "out-aes", "dir": "out", "connector": "bnc", "signal": "aes3" },
+        { "portId": "net", "dir": "bidir", "connector": "rj45", "signal": "ethernet-control" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted speaker-cabinet-v2 model (public/assets/neumann-kh-750-dsp.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "in-analog-1", "to": ["transducer"] },
+        { "from": "in-analog-2", "to": ["transducer"] },
+        { "from": "in-aes", "to": ["transducer"] }
+      ],
+      "portAliases": {
+        "in-analog-inputs-l-r-1": "in-analog-1",
+        "in-analog-inputs-l-r-2": "in-analog-2",
+        "out-analog-outputs-l-r-high-passed-to-monitors-1": "out-analog-1",
+        "out-analog-outputs-l-r-high-passed-to-monitors-2": "out-analog-2",
+        "bidir-network-ma-1-control": "net",
+        "in-mains-in": "power-in"
+      }
+    },
+    {
+      "id": "nexo-45n12",
+      "label": "NEXO 45N-12",
+      "levels": [],
+      "realWorld": {
+        "brand": "NEXO", "model": "45N-12", "category": "speaker",
+        "typicalUse": "stage monitor wedge",
+        "notes": "Built from the equipment plan (2026-11-12); size 492 x 576 x 392 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.nexo-sa.com/products/45n12/. Ports: documented in the asset spec (https://www.nexo-sa.com/products/45n12/). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "bidir-nl4-1", "dir": "bidir", "connector": "speakon-nl4", "signal": "speaker-level" },
+        { "portId": "bidir-nl4-2", "dir": "bidir", "connector": "speakon-nl4", "signal": "speaker-level" }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted speaker-cabinet-v2 model (public/assets/nexo-45n12.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "bidir-nl4-1", "to": ["transducer"] },
+        { "from": "bidir-nl4-2", "to": ["transducer"] }
+      ],
+      "portAliases": {
+        "bidir-2-x-nl4mp-speakon-4-pole-active-1-1-lf-2-2-hf-passive-2-2-lf-hf-1": "bidir-nl4-1",
+        "bidir-2-x-nl4mp-speakon-4-pole-active-1-1-lf-2-2-hf-passive-2-2-lf-hf-2": "bidir-nl4-2"
+      }
+    },
+    {
+      "id": "nexo-p12",
+      "label": "NEXO P12",
+      "levels": [],
+      "realWorld": {
+        "brand": "NEXO", "model": "P12", "category": "speaker",
+        "typicalUse": "small/medium FOH",
+        "notes": "Built from the equipment plan (2026-11-12); size 432 x 314 x 534 mm (w x d x h) (datasheet, size confidence ok). Size source: https://www.nexo-sa.com/products/p12/. Ports: documented in the asset spec (https://www.nexo-sa.com/products/p12/). No coverage angle recorded: no acoustic data (valeur non vérifiée) until a manufacturer sheet gives it."
+      },
+      "ports": [
+        { "portId": "bidir-nl4-1", "dir": "bidir", "connector": "speakon-nl4", "signal": "speaker-level" },
+        { "portId": "bidir-nl4-2", "dir": "bidir", "connector": "speakon-nl4", "signal": "speaker-level" }
+      ],
+      "modelFront": {
+        "axis": "-z",
+        "evidence": "Scripted speaker-cabinet-v2 model (public/assets/nexo-p12.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts."
+      },
+      "routing": [
+        { "from": "bidir-nl4-1", "to": ["transducer"] },
+        { "from": "bidir-nl4-2", "to": ["transducer"] }
+      ],
+      "portAliases": {
+        "bidir-4-x-nl4-1-per-handle-2-at-the-back-touring-version-1": "bidir-nl4-1",
+        "bidir-4-x-nl4-1-per-handle-2-at-the-back-touring-version-2": "bidir-nl4-2"
+      }
+    },
+    {
+      "id": "omnia-11",
+      "label": "Omnia (Telos Alliance) Omnia.11",
+      "levels": [],
+      "realWorld": {
+        "brand": "Omnia (Telos Alliance)", "model": "Omnia.11", "category": "broadcast",
+        "typicalUse": "FM on-air processing",
+        "notes": "Built from the equipment plan (2026-11-12); size 482.6 x 508 x 177.8 mm (w x d x h) (datasheet, size confidence ok). Size source: https://docs.telosalliance.com/docs/appendix-a-performance-specifications. Ports: documented in the asset spec (https://docs.telosalliance.com/docs/chapter-1-installation), except the connector type of power-in (iec-c14), assumed: no cited page states it."
+      },
+      "ports": [
+        { "portId": "in-analog-l", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "in-analog-r", "dir": "in", "connector": "xlr3-f", "signal": "line-level-pro" },
+        { "portId": "out-analog-l", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "out-analog-r", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
+        { "portId": "in-aes", "dir": "in", "connector": "xlr3-f", "signal": "aes3" },
+        { "portId": "out-aes-1", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "out-aes-2", "dir": "out", "connector": "xlr3-m", "signal": "aes3" },
+        { "portId": "net-livewire", "dir": "bidir", "connector": "rj45", "signal": "aoip" },
+        { "portId": "power-in", "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
+      ],
+      "routing": [
+        { "from": "in-analog-l", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2", "net-livewire"] },
+        { "from": "in-analog-r", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2", "net-livewire"] },
+        { "from": "in-aes", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2", "net-livewire"] },
+        { "from": "net-livewire", "to": ["out-analog-l", "out-analog-r", "out-aes-1", "out-aes-2"] }
+      ],
+      "portAliases": {
+        "in-analog-inputs-l-r-1": "in-analog-l",
+        "in-analog-inputs-l-r-2": "in-analog-r",
+        "out-analog-outputs-l-r-1": "out-analog-l",
+        "out-analog-outputs-l-r-2": "out-analog-r",
+        "in-aes-ebu-input": "in-aes",
+        "out-aes-ebu-outputs-1-and-2-1": "out-aes-1",
+        "out-aes-ebu-outputs-1-and-2-2": "out-aes-2",
+        "bidir-ethernet-remote-control-livewire": "net-livewire",
+        "in-mains-inlet-iec-male": "power-in"
+      }
     }
   ],
 

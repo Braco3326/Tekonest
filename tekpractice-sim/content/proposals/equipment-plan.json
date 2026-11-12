@@ -5762,7 +5762,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "focusrite-rednet-a16r-mkii",
@@ -5890,7 +5890,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "motu-828es",
@@ -5918,7 +5918,7 @@
     "rack"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "presonus-faderport-8",
@@ -5946,7 +5946,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "presonus-studio-24c",
@@ -5974,7 +5974,7 @@
     "desk"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "qsc-ks118",
@@ -6217,7 +6217,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "telos-zephyr-xstream",
@@ -6250,7 +6250,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "ua-la-610-mkii",
@@ -6278,7 +6278,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "warm-audio-wa73-eq",
@@ -6306,7 +6306,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "whirlwind-sp1x3",
@@ -6358,7 +6358,7 @@
     "passive"
    ],
    "sizeConfidence": "axis-assumed",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "audio-technica-ath-m50x",
@@ -6583,7 +6583,7 @@
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "digital-audio-cable-family",
@@ -6638,7 +6638,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "l-acoustics-ks28",
@@ -6666,7 +6666,7 @@
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "middle-atlantic-srk",
@@ -6799,7 +6799,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "allen-heath-zed-436",
@@ -6897,7 +6897,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "db-audiotechnik-ds20",
@@ -6925,7 +6925,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "db-audiotechnik-v-sub",
@@ -6953,7 +6953,7 @@
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "genelec-1234a",
@@ -6981,7 +6981,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "l-acoustics-a15-focus",
@@ -7009,7 +7009,7 @@
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "l-acoustics-p1",
@@ -7114,7 +7114,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "neumann-kh-750-dsp",
@@ -7146,7 +7146,7 @@
     "active"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "neumann-ku-100",
@@ -7202,7 +7202,7 @@
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "nexo-p12",
@@ -7230,7 +7230,7 @@
     "passive"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "omnia-11",
@@ -7263,7 +7263,7 @@
     "rack"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "promoted": true
   },
   {
    "id": "rcf-hdl-30-a",
@@ -7342,7 +7342,7 @@
     "phantom-powered"
    ],
    "sizeConfidence": "ok",
-   "staged": true
+   "betaModelled": true
   },
   {
    "id": "sanken-cos-11d",

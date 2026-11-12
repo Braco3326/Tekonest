@@ -1020,91 +1020,6 @@
    }
   },
   {
-   "id": "omnia-11",
-   "label": "Omnia (Telos Alliance) Omnia.11",
-   "levels": [],
-   "realWorld": {
-    "brand": "Omnia (Telos Alliance)",
-    "model": "Omnia.11",
-    "category": "broadcast",
-    "typicalUse": "FM on-air processing",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR analog + AES3 in/out + AES sync + BNC MPX outputs: clear air-chain wiring lesson."
-   },
-   "ports": [
-    {
-     "portId": "in-analog-inputs-l-r-1",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-analog-inputs-l-r-2",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-outputs-l-r-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-outputs-l-r-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-aes-ebu-input",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "aes3"
-    },
-    {
-     "portId": "out-aes-ebu-outputs-1-and-2-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "aes3"
-    },
-    {
-     "portId": "out-aes-ebu-outputs-1-and-2-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "aes3"
-    },
-    {
-     "portId": "in-aes-external-sync-input",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "aes3"
-    },
-    {
-     "portId": "in-gpi-db-15-female",
-     "dir": "in",
-     "connector": "gpio-terminal",
-     "signal": "gpio-tally"
-    },
-    {
-     "portId": "bidir-ethernet-remote-control-livewire",
-     "dir": "bidir",
-     "connector": "rj45",
-     "signal": "aoip"
-    },
-    {
-     "portId": "in-mains-inlet-iec-male",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 482.6,
-    "d": 508,
-    "h": 177.8
-   }
-  },
-  {
    "id": "clear-com-ms-702",
    "label": "Clear-Com Encore MS-702",
    "levels": [],
@@ -3608,37 +3523,6 @@
    ]
   },
   {
-   "id": "l-acoustics-a15-focus",
-   "label": "L-Acoustics A15 Focus",
-   "levels": [],
-   "realWorld": {
-    "brand": "L-Acoustics",
-    "model": "A15 Focus",
-    "category": "speaker",
-    "typicalUse": "small/medium venue main PA",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Classic passive cabinet: amp speaker-level out -> speakON NL4 IN, LINK to next cabinet."
-   },
-   "ports": [
-    {
-     "portId": "in-in-1-4-point-speakon",
-     "dir": "in",
-     "connector": "speakon-nl4",
-     "signal": "speaker-level"
-    },
-    {
-     "portId": "out-link-1-4-point-speakon",
-     "dir": "out",
-     "connector": "speakon-nl4",
-     "signal": "speaker-level"
-    }
-   ],
-   "sizeMm": {
-    "w": 764,
-    "d": 522,
-    "h": 427
-   }
-  },
-  {
    "id": "l-acoustics-x15-hiq",
    "label": "L-Acoustics X15 HiQ",
    "levels": [],
@@ -3701,105 +3585,6 @@
    }
   },
   {
-   "id": "nexo-p12",
-   "label": "NEXO P12",
-   "levels": [],
-   "realWorld": {
-    "brand": "NEXO",
-    "model": "P12",
-    "category": "speaker",
-    "typicalUse": "small/medium FOH",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Passive/active switch changes which NL4 pins are used: strong speakON pinout lesson."
-   },
-   "ports": [
-    {
-     "portId": "bidir-4-x-nl4-1-per-handle-2-at-the-back-touring-version-1",
-     "dir": "bidir",
-     "connector": "speakon-nl4",
-     "signal": "speaker-level"
-    },
-    {
-     "portId": "bidir-4-x-nl4-1-per-handle-2-at-the-back-touring-version-2",
-     "dir": "bidir",
-     "connector": "speakon-nl4",
-     "signal": "speaker-level"
-    }
-   ],
-   "sizeMm": {
-    "w": 432,
-    "d": 314,
-    "h": 534
-   }
-  },
-  {
-   "id": "nexo-45n12",
-   "label": "NEXO 45N-12",
-   "levels": [],
-   "realWorld": {
-    "brand": "NEXO",
-    "model": "45N-12",
-    "category": "speaker",
-    "typicalUse": "stage monitor wedge",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Same wedge wired active (1+/1- LF, 2+/2- HF) or passive (2+/2-): pinout lesson."
-   },
-   "ports": [
-    {
-     "portId": "bidir-2-x-nl4mp-speakon-4-pole-active-1-1-lf-2-2-hf-passive-2-2-lf-hf-1",
-     "dir": "bidir",
-     "connector": "speakon-nl4",
-     "signal": "speaker-level"
-    },
-    {
-     "portId": "bidir-2-x-nl4mp-speakon-4-pole-active-1-1-lf-2-2-hf-passive-2-2-lf-hf-2",
-     "dir": "bidir",
-     "connector": "speakon-nl4",
-     "signal": "speaker-level"
-    }
-   ],
-   "sizeMm": {
-    "w": 492,
-    "d": 576,
-    "h": 392
-   }
-  },
-  {
-   "id": "meyer-sound-lina",
-   "label": "Meyer Sound LINA",
-   "levels": [],
-   "realWorld": {
-    "brand": "Meyer Sound",
-    "model": "LINA",
-    "category": "speaker",
-    "typicalUse": "theatre and concert hall main PA",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Self-powered line array: XLR in/loop + powerCON in/loop, contrast with amp-driven arrays."
-   },
-   "ports": [
-    {
-     "portId": "in-audio-input-optional-xlr-5-pin-for-audio-rms",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-audio-loop-output",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-powercon-20-ac-input",
-     "dir": "in",
-     "connector": "powercon-blue",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 515,
-    "d": 389,
-    "h": 213
-   }
-  },
-  {
    "id": "db-audiotechnik-v8",
    "label": "d&b audiotechnik V8",
    "levels": [],
@@ -3824,37 +3609,6 @@
      "signal": "speaker-level"
     }
    ]
-  },
-  {
-   "id": "db-audiotechnik-v-sub",
-   "label": "d&b audiotechnik V-SUB",
-   "levels": [],
-   "realWorld": {
-    "brand": "d&b audiotechnik",
-    "model": "V-SUB",
-    "category": "speaker",
-    "typicalUse": "flown sub with V-Series",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Sub on NL4 pins 2+/2- vs tops on 1+/1-: classic 'no sound from sub' troubleshooting lesson."
-   },
-   "ports": [
-    {
-     "portId": "bidir-2-x-nlt4-f-m-option-2-x-nl4-m-or-ep5-pins-2-2-1",
-     "dir": "bidir",
-     "connector": "speakon-nl4",
-     "signal": "speaker-level"
-    },
-    {
-     "portId": "bidir-2-x-nlt4-f-m-option-2-x-nl4-m-or-ep5-pins-2-2-2",
-     "dir": "bidir",
-     "connector": "speakon-nl4",
-     "signal": "speaker-level"
-    }
-   ],
-   "sizeMm": {
-    "w": 700,
-    "d": 728,
-    "h": 606
-   }
   },
   {
    "id": "rcf-hdl-30-a",
@@ -6002,110 +5756,6 @@
     "w": 890,
     "d": 383,
     "h": 700
-   }
-  },
-  {
-   "id": "adam-audio-s3h",
-   "label": "ADAM Audio S3H",
-   "levels": [],
-   "realWorld": {
-    "brand": "ADAM Audio",
-    "model": "S3H",
-    "category": "studio-monitor",
-    "typicalUse": "midfield monitoring",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. AES3 in/thru daisy-chain with AES L / AES R channel selection per speaker: digital monitor wiring lesson."
-   },
-   "ports": [
-    {
-     "portId": "in-analog-input",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-aes3-digital-input",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "aes3"
-    },
-    {
-     "portId": "out-aes3-thru-output-daisy-chain",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "aes3"
-    },
-    {
-     "portId": "bidir-usb-for-firmware-remote-dsp-control",
-     "dir": "bidir",
-     "connector": "usb-b",
-     "signal": "usb-audio"
-    },
-    {
-     "portId": "in-mains-in",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 585,
-    "d": 380,
-    "h": 280
-   }
-  },
-  {
-   "id": "neumann-kh-750-dsp",
-   "label": "Neumann KH 750 DSP",
-   "levels": [],
-   "realWorld": {
-    "brand": "Neumann",
-    "model": "KH 750 DSP",
-    "category": "studio-monitor",
-    "typicalUse": "stereo 2.1 bass extension",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Sub inserted between source and monitors (XLR in → sub → XLR out) plus AES3 on BNC: bass-management routing lesson."
-   },
-   "ports": [
-    {
-     "portId": "in-analog-inputs-l-r-1",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "in-analog-inputs-l-r-2",
-     "dir": "in",
-     "connector": "xlr3-f",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-outputs-l-r-high-passed-to-monitors-1",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "out-analog-outputs-l-r-high-passed-to-monitors-2",
-     "dir": "out",
-     "connector": "xlr3-m",
-     "signal": "line-level-pro"
-    },
-    {
-     "portId": "bidir-network-ma-1-control",
-     "dir": "bidir",
-     "connector": "rj45",
-     "signal": "aoip"
-    },
-    {
-     "portId": "in-mains-in",
-     "dir": "in",
-     "connector": "iec-c14",
-     "signal": "mains-power"
-    }
-   ],
-   "sizeMm": {
-    "w": 330,
-    "d": 383,
-    "h": 383
    }
   },
   {
@@ -9254,6 +8904,211 @@
     "w": 118,
     "d": 84,
     "h": 25
+   }
+  },
+  {
+   "id": "motu-828es",
+   "label": "MOTU 828es",
+   "levels": [],
+   "realWorld": {
+    "brand": "MOTU",
+    "model": "828es",
+    "category": "audio-interface",
+    "typicalUse": "MOTU 828es (audio-interface)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 483 x 177.5 x 44.5 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-line-1",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-line-2",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-line-1",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-line-2",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-spdif",
+     "dir": "in",
+     "connector": "rca",
+     "signal": "spdif"
+    },
+    {
+     "portId": "out-spdif",
+     "dir": "out",
+     "connector": "rca",
+     "signal": "spdif"
+    },
+    {
+     "portId": "net",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "usb",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "power-in",
+     "dir": "in",
+     "connector": "iec-c14",
+     "signal": "mains-power"
+    },
+    {
+     "portId": "in-combo-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput"
+     ]
+    },
+    {
+     "portId": "in-combo-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput"
+     ]
+    }
+   ],
+   "sizeMm": {
+    "w": 483,
+    "d": 177.5,
+    "h": 44.5
+   }
+  },
+  {
+   "id": "warm-audio-wa73-eq",
+   "label": "Warm Audio WA73-EQ",
+   "levels": [],
+   "realWorld": {
+    "brand": "Warm Audio",
+    "model": "WA73-EQ",
+    "category": "mic-preamp",
+    "typicalUse": "Warm Audio WA73-EQ (mic-preamp)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 483 x 254 x 44 mm (w x d x h) (dealer, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-xlr",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level",
+     "flags": [
+      "isMicInput"
+     ]
+    },
+    {
+     "portId": "in-line-trs",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-xlr",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-trs",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-di-ts",
+     "dir": "in",
+     "connector": "ts-quarter",
+     "signal": "instrument-hiz"
+    }
+   ],
+   "sizeMm": {
+    "w": 483,
+    "d": 254,
+    "h": 44
+   }
+  },
+  {
+   "id": "yamaha-ns-10m",
+   "label": "Yamaha NS-10M Studio (passive)",
+   "levels": [],
+   "realWorld": {
+    "brand": "Yamaha",
+    "model": "NS-10M Studio (passive)",
+    "category": "studio-monitor",
+    "typicalUse": "Yamaha NS-10M Studio (passive) (studio-monitor)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 215 x 197.5 x 381.5 mm (w x d x h) (axis order assumed) (estimate, size confidence axis-assumed); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "in-spk",
+     "dir": "in",
+     "connector": "binding-post",
+     "signal": "speaker-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 215,
+    "d": 197.5,
+    "h": 381.5
+   }
+  },
+  {
+   "id": "dpa-4060",
+   "label": "DPA 4060 lavalier",
+   "levels": [],
+   "realWorld": {
+    "brand": "DPA",
+    "model": "4060 lavalier",
+    "category": "microphone",
+    "typicalUse": "DPA 4060 lavalier (microphone)",
+    "notes": "PROPOSITION (2026-11-12) built from the equipment plan: size 5.4 x 5.4 x 12.7 mm (w x d x h) (datasheet, size confidence ok); ports from the asset spec (not documented)."
+   },
+   "ports": [
+    {
+     "portId": "out-ta4",
+     "dir": "out",
+     "connector": "mini-xlr-ta4",
+     "signal": "mic-level"
+    }
+   ],
+   "sizeMm": {
+    "w": 5.4,
+    "d": 5.4,
+    "h": 12.7
    }
   }
  ],
