@@ -38,6 +38,14 @@ export interface BuilderMeasure {
   /** rack-box v2: slotted ear holes and vent slots the builder cut. */
   earHoles?: number
   ventSlots?: number
+  /** rack-box v3b: front vent slots, meter windows and ear handles the builder cut or built. */
+  frontVents?: number
+  windows?: number
+  earHandles?: number
+  /** moulded-box: the depth of the top recess and of the lid seam as built, and the angle the hinged lid was opened to, as measured. */
+  recessDepthMm?: number
+  seamDepthMm?: number
+  lidAngleDeg?: number
 }
 
 /** Where the builder writes its measurements: next to the GLB, <name>.measure.json. */
@@ -143,7 +151,7 @@ async function readMeasure(path: string, id: string): Promise<BuilderMeasure> {
   }
   if (parsed === null || typeof parsed !== 'object') return {}
   const out: BuilderMeasure = {}
-  for (const key of ['filletMm', 'ioFaceOffsetMm', 'earHoles', 'ventSlots'] as const) {
+  for (const key of ['filletMm', 'ioFaceOffsetMm', 'earHoles', 'ventSlots', 'frontVents', 'windows', 'earHandles', 'recessDepthMm', 'seamDepthMm', 'lidAngleDeg'] as const) {
     const v = (parsed as Record<string, unknown>)[key]
     if (v === undefined) continue
     if (typeof v !== 'number' || !Number.isFinite(v)) throw new Error(`Blender build of ${id} wrote a ${key} that is not a finite number: ${String(v)}`)

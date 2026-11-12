@@ -13,7 +13,7 @@ import { findBlender } from '../../../tools/assets3d/env'
 import { inspectGlb } from '../../../tools/assets3d/inspect'
 import { loadSpecs } from '../../../tools/assets3d/loadSpecs'
 import { runBuilder } from '../../../tools/assets3d/runBuilder'
-import { RACK_V2_PARAMS, SHAPE_SPECS, validateBuild } from '../../../tools/assets3d/shapes'
+import { RACK_V2_PARAMS, RACK_V3B_PARAMS, SHAPE_SPECS, validateBuild } from '../../../tools/assets3d/shapes'
 import type { AssetSpecT } from '../../../tools/assets3d/specSchema'
 
 const BLENDER = findBlender()
@@ -42,7 +42,7 @@ const ONE_U = { w: 482.6, h: 44.45, d: 300 }
 
 describe('rack-box params (no Blender)', () => {
   it('lists the detailed params next to chamferMm', () => {
-    expect(SHAPE_SPECS['rack-box'].params).toEqual(['chamferMm', ...RACK_V2_PARAMS])
+    expect(SHAPE_SPECS['rack-box'].params).toEqual(['chamferMm', ...RACK_V2_PARAMS, ...RACK_V3B_PARAMS])
     for (const n of ['earWidthMm', 'earThicknessMm', 'earHoleMm', 'handleCount', 'handleProjectionMm', 'plateInsetMm', 'filletMm', 'ventSlots', 'ventDepthMm', 'feetMm', 'bodyWidthMm', 'rearInsetMm']) {
       expect(RACK_V2_PARAMS).toContain(n)
     }
