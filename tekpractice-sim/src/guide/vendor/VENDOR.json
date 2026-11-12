@@ -33,7 +33,7 @@
     },
     {
       "path": "core/motion.ts",
-      "sha256": "ec6837608e9af17e57b43a9312f3981d5fbbd42679a019442f444a0836258d70"
+      "sha256": "2b2b3015b42b41d04e07221f3628a202ae98b9ea42091ecb587cba707a962af1"
     },
     {
       "path": "core/planner.ts",
@@ -97,7 +97,7 @@
     },
     {
       "path": "ui/widget.ts",
-      "sha256": "8fa0fdefba2a2fbb116df8431f1d4cdabbb632c2ecf6bf32ce4ad01c67c7ff57"
+      "sha256": "866b9ed47adb1ea2d21266bf1a37ec1160310be06ab591e923abbd2ddc6c7393"
     }
   ],
   "patches": [
@@ -109,6 +109,18 @@
       "symbols": [
         "placeBeside",
         "avoid"
+      ],
+      "pinTest": "tests/guide/vendorPatches.test.ts"
+    },
+    {
+      "id": "widget-obstacles",
+      "files": [
+        "core/motion.ts",
+        "ui/widget.ts"
+      ],
+      "symbols": [
+        "clearOf",
+        "obstacles"
       ],
       "pinTest": "tests/guide/vendorPatches.test.ts"
     }

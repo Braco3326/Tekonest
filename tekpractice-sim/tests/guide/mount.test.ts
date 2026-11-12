@@ -4,7 +4,7 @@ import { makeRegistry } from '../helpers'
 import type { RuleRow } from '../../src/creation/shell/statusModel'
 import type { TpBridge, TpPortRef, TpState } from '../../src/guide/bridge/types'
 import { ACKNOWLEDGE, SUGGEST_FROM, SUGGEST_PHANTOM, SUGGEST_TO } from '../../src/guide/flows.creation'
-import { RECT_CACHE_MS, annotateToggle, collapseRestore, createRectResolver, hostInsets, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
+import { RECT_CACHE_MS, annotateToggle, collapseRestore, createObstacleSource, createRectResolver, hostInsets, hostObstacles, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
 import { TP_STRINGS, tpString } from '../../src/guide/strings'
 import { createController } from '../../src/guide/vendor/core/controller'
 import type { ControllerInput, GuideView, HostEvent, Rect } from '../../src/guide/vendor/core/types'
@@ -424,6 +424,151 @@ describe('hostInsets: the open side panels', () => {
 
   it('a document without a width gives no side inset (the bars still count)', () => {
     expect(hostInsets(docOf({ ...bars, [PROPS]: box(1106, 32, 260, 708) }, 0))).toEqual({ top: 32, bottom: 28, left: 0, right: 0 })
+  })
+})
+
+describe('hostObstacles: the page controls the icon and the bubble keep clear of', () => {
+  interface Style {
+    visibility?: string
+    display?: string
+    overflowX?: string
+    overflowY?: string
+  }
+  interface FakeEl {
+    tagName: string
+    style: Style
+    inert: boolean
+    parentElement: FakeEl | null
+    getBoundingClientRect(): { left: number; top: number; right: number; bottom: number; width: number; height: number; x: number; y: number }
+    closest(sel: string): FakeEl | null
+  }
+  const el = (tag: string, x: number, y: number, w: number, h: number, over: { style?: Style; inert?: boolean; parent?: FakeEl | null } = {}): FakeEl => {
+    const e: FakeEl = {
+      tagName: tag.toUpperCase(),
+      style: { visibility: 'visible', display: 'block', overflowX: 'visible', overflowY: 'visible', ...over.style },
+      inert: over.inert === true,
+      parentElement: over.parent ?? null,
+      getBoundingClientRect: () => ({ left: x, top: y, right: x + w, bottom: y + h, width: w, height: h, x, y }),
+      closest: (sel: string) => {
+        if (sel !== '[inert]') return null
+        for (let p: FakeEl | null = e; p !== null; p = p.parentElement) if (p.inert) return p
+        return null
+      },
+    }
+    return e
+  }
+  const ROOT = '[data-testid="creation-root"]'
+  /** A document whose shell root answers `all()` to a querySelectorAll (by default the list). */
+  const world = (list: FakeEl[], size = { w: 1366, h: 768 }, all: () => FakeEl[] = () => list, panels: Record<string, FakeEl> = {}): Document => {
+    const root = { querySelectorAll: all, querySelector: (sel: string) => panels[sel] ?? null }
+    return {
+      documentElement: { clientWidth: size.w, clientHeight: size.h },
+      defaultView: { getComputedStyle: (e: FakeEl) => e.style },
+      querySelector: (sel: string) => (sel === ROOT ? root : null),
+    } as unknown as Document
+  }
+
+  it('a visible control gives its box; the list is in the viewport pixels the widget uses', () => {
+    expect(hostObstacles(world([el('button', 100, 50, 80, 24)]))).toEqual([{ x: 100, y: 50, w: 80, h: 24 }])
+  })
+
+  it('what the learner cannot see or use is not an obstacle: hidden, display none, inert (itself or an ancestor), the 3D canvas, a speck, a whole-screen box', () => {
+    const inertParent = el('div', 0, 0, 10, 10, { inert: true })
+    const list = [
+      el('button', 10, 10, 50, 20, { style: { visibility: 'hidden' } }),
+      el('button', 10, 40, 50, 20, { style: { display: 'none' } }),
+      el('button', 10, 70, 50, 20, { inert: true }),
+      el('button', 10, 100, 50, 20, { parent: inertParent }),
+      el('canvas', 200, 32, 900, 700),
+      el('button', 10, 130, 3, 3),
+      el('div', 0, 0, 1366, 768),
+      el('button', 300, 300, 40, 20),
+    ]
+    expect(hostObstacles(world(list))).toEqual([{ x: 300, y: 300, w: 40, h: 20 }])
+  })
+
+  it('a scroll area clips what it holds: the part that shows is the obstacle, a control scrolled out of sight is none', () => {
+    const scroller = el('aside', 1106, 32, 260, 700, { style: { overflowY: 'auto', overflowX: 'hidden' } })
+    const half = el('button', 1119, 700, 235, 40, { parent: scroller })
+    const gone = el('button', 1119, 900, 235, 40, { parent: scroller })
+    const whole = el('button', 1119, 300, 235, 40, { parent: scroller })
+    expect(hostObstacles(world([half, gone, whole]))).toEqual([
+      { x: 1119, y: 700, w: 235, h: 32 },
+      { x: 1119, y: 300, w: 235, h: 40 },
+    ])
+  })
+
+  it('a control partly off screen is cut to the viewport; one wholly off screen is none', () => {
+    const list = [el('button', 1340, 740, 100, 60), el('a', 1500, 10, 50, 20), el('a', -80, 10, 50, 20)]
+    expect(hostObstacles(world(list))).toEqual([{ x: 1340, y: 740, w: 26, h: 28 }])
+  })
+
+  const PROPS = '[data-testid="properties"]'
+  const TREE = '[data-testid="project-tree"]'
+  const DRAWER = '[data-testid="inventory-drawer"][data-open="true"]'
+
+  it('the side panels are obstacles whole, open or folded to their rail, even though they hold no control where the icon would rest', () => {
+    const panels = { [PROPS]: el('aside', 560, 32, 260, 1120), [TREE]: el('nav', 0, 32, 200, 1120) }
+    expect(hostObstacles(world([], { w: 820, h: 1180 }, undefined, panels))).toEqual([
+      { x: 560, y: 32, w: 260, h: 1120 },
+      { x: 0, y: 32, w: 200, h: 1120 },
+    ])
+    expect(hostObstacles(world([], undefined, undefined, { [PROPS]: el('aside', 1334, 32, 32, 708) }))).toEqual([{ x: 1334, y: 32, w: 32, h: 708 }])
+  })
+
+  it('a panel that is hidden or inert is not an obstacle; no panel is no obstacle', () => {
+    expect(hostObstacles(world([], undefined, undefined, { [PROPS]: el('aside', 1106, 32, 260, 708, { style: { display: 'none' } }) }))).toEqual([])
+    expect(hostObstacles(world([], undefined, undefined, { [TREE]: el('nav', 0, 32, 200, 708, { inert: true }) }))).toEqual([])
+    expect(hostObstacles(world([]))).toEqual([])
+  })
+
+  it('the inventory drawer, while open, is an obstacle at its RESTING place (the bottom of its view, its layout height), not where its slide has it', () => {
+    const view = el('section', 200, 32, 906, 708)
+    const sliding = el('section', 200, 600, 906, 255, { parent: view }) // its box is mid-slide: 60 px below its resting place
+    ;(sliding as unknown as { offsetHeight: number }).offsetHeight = 255
+    expect(hostObstacles(world([], undefined, undefined, { [DRAWER]: sliding }))).toEqual([{ x: 200, y: 740 - 255, w: 906, h: 255 }])
+  })
+
+  it('a panel is cut to the viewport like any control', () => {
+    expect(hostObstacles(world([], { w: 400, h: 600 }, undefined, { [PROPS]: el('aside', 300, 32, 260, 1120) }))).toEqual([{ x: 300, y: 32, w: 100, h: 568 }])
+  })
+
+  it('no shell on the page (the level page, an exam), no size, or a DOM that throws: no obstacle, never a throw', () => {
+    expect(hostObstacles({ querySelector: () => null, documentElement: { clientWidth: 1366, clientHeight: 768 } } as unknown as Document)).toEqual([])
+    expect(hostObstacles(world([el('button', 1, 1, 50, 20)], { w: 0, h: 0 }))).toEqual([])
+    const boom = world([], undefined, () => {
+      throw new Error('x')
+    })
+    expect(hostObstacles(boom)).toEqual([])
+  })
+
+  it('the source reads the page at most once per 250 ms, unless the page just changed (fresh)', () => {
+    let reads = 0
+    const list = [el('button', 10, 10, 50, 20)]
+    const doc = world(list, undefined, () => {
+      reads++
+      return list
+    })
+    const clock = { t: 0 }
+    const get = createObstacleSource({ doc, now: () => clock.t })
+    get()
+    clock.t = 249
+    get()
+    get(false)
+    expect(reads).toBe(1)
+    clock.t = 250
+    get()
+    expect(reads).toBe(2)
+    get(true)
+    expect(reads).toBe(3)
+  })
+
+  it('mountOscar gives the widget the source: a function that answers with rects (none on a page without the shell)', () => {
+    const r = make()
+    mountOscar(r.deps, r.f.impl)
+    const opts = r.f.impl.mountGuide.mock.calls[0][0] as { obstacles?: (fresh?: boolean) => unknown }
+    expect(typeof opts.obstacles).toBe('function')
+    expect(opts.obstacles!(true)).toEqual([]) // the fake document has no shell
   })
 })
 

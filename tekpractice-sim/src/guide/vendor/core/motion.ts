@@ -75,7 +75,8 @@ interface Place {
 }
 // PATCHED: placeBeside-avoid (see src/guide/VENDOR-PATCHES.md)
 // `avoid`: rects the icon should stay clear of (the host's own controls). A candidate that clears the target and the viewport but overlaps one of them is
-// kept as a second choice; the least overlapping one wins when no candidate is clean, and the answer says `crowded`. No list (or an empty one): the original answer.
+// kept as a second choice; when no candidate is clean, the nearest clear place within three icon sizes of the least overlapping one wins (`clearOf`), else the
+// least overlapping one itself, and the answer says `crowded`. No list (or an empty one): the original answer.
 export function placeBeside(t: Rect, vp: {
     w: number;
     h: number;
@@ -120,8 +121,13 @@ export function placeBeside(t: Rect, vp: {
                 }
             }
         }
-        if (least !== null)
+        if (least !== null) {
+            // Every side has something on it: slide to the nearest place that is clear of the rects and of the target, when it is not far (three icon sizes).
+            const slid = clearOf({ x: least.x, y: least.y }, { w: s, h: s }, vp, [...keep, t]);
+            if (!slid.crowded && Math.hypot(slid.x - least.x, slid.y - least.y) <= 3 * s)
+                return { x: slid.x, y: slid.y, side: least.side, crowded: false };
             return least;
+        }
     }
     let best: Place | null = null;
     let bestArea = Infinity;
@@ -134,7 +140,107 @@ export function placeBeside(t: Rect, vp: {
             best = { ...q, side, crowded: true };
         }
     }
+    // The target leaves no room (it fills the view): the icon is on it anyway, but it can still keep off the rects.
+    if (keep.length > 0 && best !== null) {
+        const slid = clearOf({ x: best.x, y: best.y }, { w: s, h: s }, vp, keep);
+        if (!slid.crowded && Math.hypot(slid.x - best.x, slid.y - best.y) <= 3 * s)
+            return { x: slid.x, y: slid.y, side: best.side, crowded: true };
+    }
     return best as Place;
+}
+// PATCHED: widget-obstacles (see src/guide/VENDOR-PATCHES.md)
+// The nearest place for a box of size `size` that overlaps none of `avoid` (the host's controls), starting from `from`. Candidates come from pushing the box
+// past the edge of each rect it hits, a few rounds deep; when that finds nothing, from a coarse grid over the viewport; when nothing is clear, the least
+// overlapping place seen (`crowded: true`). `from` itself is returned untouched when it is already clear, and when no rect is usable.
+const CLEAR_GAP = 1;
+const CLEAR_ROUNDS = 4;
+const CLEAR_FRONTIER = 48;
+const CLEAR_GRID = 24;
+export function clearOf(from: Point, size: {
+    w: number;
+    h: number;
+}, vp: {
+    w: number;
+    h: number;
+}, avoid: readonly Rect[]): {
+    x: number;
+    y: number;
+    crowded: boolean;
+} {
+    const keep: Rect[] = Array.isArray(avoid) ? avoid.filter(usableRect) : [];
+    const maxX = Math.max(0, vp.w - size.w);
+    const maxY = Math.max(0, vp.h - size.h);
+    const boxAt = (p: Point): Rect => ({ x: p.x, y: p.y, w: size.w, h: size.h });
+    const hitOf = (p: Point): number => keep.reduce((sum, a) => sum + overlapArea(boxAt(p), a), 0);
+    if (keep.length === 0 || hitOf(from) === 0)
+        return { x: from.x, y: from.y, crowded: false };
+    const dist = (p: Point): number => Math.hypot(p.x - from.x, p.y - from.y);
+    const seen = new Set<string>();
+    const key = (p: Point): string => Math.round(p.x * 2) + "," + Math.round(p.y * 2);
+    let least: {
+        p: Point;
+        hit: number;
+    } = { p: { x: from.x, y: from.y }, hit: hitOf(from) };
+    const consider = (p: Point, hit: number): void => {
+        if (hit < least.hit || (hit === least.hit && dist(p) < dist(least.p)))
+            least = { p, hit };
+    };
+    let frontier: Point[] = [{ x: from.x, y: from.y }];
+    seen.add(key(frontier[0]));
+    for (let round = 0; round < CLEAR_ROUNDS && frontier.length > 0; round++) {
+        const found: Point[] = [];
+        const next: Point[] = [];
+        for (const p of frontier) {
+            const hit = hitOf(p);
+            if (hit === 0) {
+                found.push(p);
+                continue;
+            }
+            consider(p, hit);
+            for (const a of keep) {
+                if (overlapArea(boxAt(p), a) === 0)
+                    continue;
+                const pushes: Point[] = [
+                    { x: a.x - size.w - CLEAR_GAP, y: p.y },
+                    { x: a.x + a.w + CLEAR_GAP, y: p.y },
+                    { x: p.x, y: a.y - size.h - CLEAR_GAP },
+                    { x: p.x, y: a.y + a.h + CLEAR_GAP },
+                ];
+                for (const q of pushes) {
+                    const c = { x: clamp(q.x, 0, maxX), y: clamp(q.y, 0, maxY) };
+                    const k = key(c);
+                    if (seen.has(k))
+                        continue;
+                    seen.add(k);
+                    next.push(c);
+                }
+            }
+        }
+        if (found.length > 0) {
+            found.sort((a, b) => dist(a) - dist(b));
+            return { x: found[0].x, y: found[0].y, crowded: false };
+        }
+        next.sort((a, b) => dist(a) - dist(b));
+        frontier = next.slice(0, CLEAR_FRONTIER);
+        for (const p of frontier)
+            consider(p, hitOf(p));
+    }
+    let nearest: Point | null = null;
+    for (let y = 0; y <= maxY + CLEAR_GRID - 1; y += CLEAR_GRID) {
+        for (let x = 0; x <= maxX + CLEAR_GRID - 1; x += CLEAR_GRID) {
+            const p = { x: Math.min(x, maxX), y: Math.min(y, maxY) };
+            const hit = hitOf(p);
+            if (hit === 0) {
+                if (nearest === null || dist(p) < dist(nearest))
+                    nearest = p;
+            }
+            else
+                consider(p, hit);
+        }
+    }
+    if (nearest !== null)
+        return { x: nearest.x, y: nearest.y, crowded: false };
+    return { x: least.p.x, y: least.p.y, crowded: true };
 }
 function visibleEnough(r: Rect, vp: {
     w: number;

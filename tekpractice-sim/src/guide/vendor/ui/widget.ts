@@ -1,5 +1,5 @@
 import type { Controller } from "../core/controller.ts";
-import { planMotion } from "../core/motion.ts";
+import { clearOf, planMotion, rectsIntersect } from "../core/motion.ts";
 import type { Chip, ControllerInput, GuideView, MascotState, Point, Rect } from "../core/types.ts";
 import { glide } from "./anim.ts";
 import type { Running } from "./anim.ts";
@@ -23,6 +23,9 @@ export interface MountOptions {
     reducedMotion?: boolean;
     zIndex?: number;
     insets?: () => Partial<Insets> | null;
+    // PATCHED: widget-obstacles (see src/guide/VENDOR-PATCHES.md)
+    // The host's own controls, as rects in viewport pixels: the icon and the bubble rest clear of them. `fresh` is true when the page just changed (re-read now).
+    obstacles?: (fresh?: boolean) => readonly Rect[] | null;
     context?: {
         page?: unknown;
         mode?: unknown;
@@ -123,6 +126,34 @@ export function mountGuide(options: MountOptions): GuideHandle {
             return NO_INSETS;
         }
     };
+    // PATCHED: widget-obstacles
+    let obstaclesDirty = true;
+    const obs = (): readonly Rect[] => {
+        if (options.obstacles === undefined)
+            return [];
+        const fresh = obstaclesDirty;
+        obstaclesDirty = false;
+        try {
+            const list = options.obstacles(fresh);
+            return Array.isArray(list) ? list : [];
+        }
+        catch {
+            return [];
+        }
+    };
+    // The home corner, moved to the nearest place that is clear of the host's controls (the corner itself when none is in the way).
+    function restPos(): Point {
+        const hp = homePosition(home, vp(), ins());
+        const list = obs();
+        if (list.length === 0)
+            return hp;
+        const c = clearOf(hp, { w: ICON_SIZE, h: ICON_SIZE }, vp(), list);
+        return { x: c.x, y: c.y };
+    }
+    // What a step points at is not an obstacle to that step: a control whose centre lies inside a target is the target (the ring is on it, the icon is beside it).
+    const offTarget = (list: readonly Rect[], targets: readonly Rect[]): readonly Rect[] => targets.length === 0
+        ? list
+        : list.filter((a) => !targets.some((t) => a.x + a.w / 2 >= t.x && a.x + a.w / 2 <= t.x + t.w && a.y + a.h / 2 >= t.y && a.y + a.h / 2 <= t.y + t.h));
     const root = h(doc, "div", "oscar-guide", undefined, { "data-oscar-root": "", lang: "fr", dir: "ltr" });
     root.hidden = true;
     if (typeof options.zIndex === "number" && Number.isInteger(options.zIndex) && options.zIndex >= 0 && options.zIndex <= 2147483647) {
@@ -152,7 +183,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
     (options.root ?? doc.body ?? doc.documentElement).appendChild(root);
     let view: GuideView = controller.getView();
     let home: Corner = loadCorner(storage, storageKey);
-    let iconPos: Point = homePosition(home, vp(), ins());
+    let iconPos: Point = restPos();
     let running: Running | null = null;
     let current: Current | null = null;
     let replay = false;
@@ -215,13 +246,13 @@ export function mountGuide(options: MountOptions): GuideHandle {
         setIconPos(p);
     }
     function atHome(): boolean {
-        const hp = homePosition(home, vp(), ins());
+        const hp = restPos();
         const p = currentIconPos();
         return Math.abs(hp.x - p.x) < 1 && Math.abs(hp.y - p.y) < 1;
     }
     function goHome(instant: boolean): void {
         stopMotion();
-        const hp = homePosition(home, vp(), ins());
+        const hp = restPos();
         if (instant || isReduced() || root.hidden) {
             setIconPos(hp);
             refreshMascot();
@@ -322,6 +353,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
         return true;
     }
     function scheduleResync(): void {
+        obstaclesDirty = true;
         if (destroyed || resyncCancel !== null)
             return;
         resyncCancel = afterFrame(win, () => {
@@ -385,7 +417,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
         }
         const size = vp();
         const key = t.anchor + "|" + t.gesture + "|" + (to === null ? "" : "to");
-        const same = current !== null && current.key === key && sameRect(current.rect, rect) && sameRect(current.to, to) && current.w === size.w && current.h === size.h;
+        const same = current !== null && current.key === key && sameRect(current.rect, rect) && sameRect(current.to, to) && current.w === size.w && current.h === size.h && destClear();
         if (same && !replay)
             return;
         const fresh = current === null || current.key !== key || replay;
@@ -396,13 +428,13 @@ export function mountGuide(options: MountOptions): GuideHandle {
             return;
         if (!fresh && learnerMoved) {
             if (running === null)
-                setIconPos(homePosition(home, size, ins()));
+                setIconPos(restPos());
             return;
         }
         const reduced = isReduced();
         const instant = reduced || (!fresh && running === null);
         const from = currentIconPos();
-        const plan = planMotion({ from, target: rect, to, viewport: size, gesture: t.gesture, reducedMotion: instant, iconSize: ICON_SIZE });
+        const plan = planMotion({ from, target: rect, to, viewport: size, gesture: t.gesture, reducedMotion: instant, iconSize: ICON_SIZE, avoid: offTarget(obs(), to === null ? [rect] : [rect, to]) });
         if (!plan.ok) {
             hideVisuals();
             current = null;
@@ -466,8 +498,28 @@ export function mountGuide(options: MountOptions): GuideHandle {
         }
         layoutBubble();
     }
+    // PATCHED: widget-obstacles. True while the icon, where it is going, sits on none of the host's controls (or the page has none to give).
+    function destClear(): boolean {
+        const list = offTarget(obs(), current === null ? [] : current.to === null ? [current.rect] : [current.rect, current.to]);
+        if (list.length === 0)
+            return true;
+        const box: Rect = { x: dest.x, y: dest.y, w: ICON_SIZE, h: ICON_SIZE };
+        return !list.some((a) => rectsIntersect(box, a));
+    }
     function overlayIdle(): boolean {
         return overlay.ring.hidden && overlay.ringTo.hidden;
+    }
+    // PATCHED: widget-obstacles. The bubble goes where the layout put it, unless that sits on a control of the host: then the nearest place clear of the host's
+    // controls, of the icon and of what the step points at.
+    function bubbleClear(pos: Point, size: {
+        w: number;
+        h: number;
+    }, keep: readonly Rect[]): Point {
+        const list = offTarget(obs(), current === null ? [] : current.to === null ? [current.rect] : [current.rect, current.to]);
+        if (list.length === 0)
+            return pos;
+        const c = clearOf(pos, size, vp(), [...list, ...keep]);
+        return { x: c.x, y: c.y };
     }
     function layoutBubble(): void {
         if (bubble.el.hidden)
@@ -476,6 +528,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
         const size = { w: bubble.el.offsetWidth, h: bubble.el.offsetHeight };
         if (size.w <= 0 || size.h <= 0)
             return;
+        const iconBox: Rect = { x: dest.x, y: dest.y, w: ICON_SIZE, h: ICON_SIZE };
         const avoid: Rect[] = [];
         if (current !== null) {
             const targets: Rect[] = [current.rect];
@@ -486,12 +539,12 @@ export function mountGuide(options: MountOptions): GuideHandle {
             if (near !== null) {
                 if (near.maxHeight !== null)
                     bubble.el.style.maxHeight = near.maxHeight + "px";
-                bubble.el.style.transform = translate(near.pos);
+                bubble.el.style.transform = translate(bubbleClear(near.pos, { w: size.w, h: near.maxHeight !== null ? near.maxHeight : size.h }, [...targets, iconBox]));
                 return;
             }
             avoid.push(...targets, iconRect);
         }
-        bubble.el.style.transform = translate(placeBubble(home, size, vp(), avoid, ins()));
+        bubble.el.style.transform = translate(bubbleClear(placeBubble(home, size, vp(), avoid, ins()), size, [...avoid, iconBox]));
     }
     function renderBubble(v: GuideView): void {
         const b = v.bubble;
@@ -563,6 +616,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
         if (destroyed)
             return;
         view = v;
+        obstaclesDirty = true;
         root.hidden = !v.visible;
         if (!v.visible) {
             wasVisible = false;
@@ -577,7 +631,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
         if (!wasVisible) {
             wasVisible = true;
             stopMotion();
-            setIconPos(homePosition(home, vp(), ins()));
+            setIconPos(restPos());
         }
         renderBubble(v);
         refreshMascot();
@@ -647,7 +701,7 @@ export function mountGuide(options: MountOptions): GuideHandle {
         },
         cancel() {
             dragging = false;
-            setIconPos(homePosition(home, vp(), ins()));
+            setIconPos(restPos());
             scheduleResync();
         },
         move: setIconPos,
@@ -674,8 +728,9 @@ export function mountGuide(options: MountOptions): GuideHandle {
     }, on);
     const stopObserver = watchPage(win, doc, root, {
         resize() {
+            obstaclesDirty = true;
             if (!dragging && running === null && (current === null || learnerMoved))
-                setIconPos(homePosition(home, vp(), ins()));
+                setIconPos(restPos());
             scheduleResync();
         },
         scroll(source) {

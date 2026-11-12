@@ -47,9 +47,10 @@ export interface HostInsets {
   bottom: number
   left: number
 }
-/** The two side panels: Projet on the left, Propriétés on the right (open at their width, folded to their rail). */
+/** The two side panels (Projet on the left, Propriétés on the right: open at their width, folded to their rail) and the inventory drawer (only while it is open). */
 const PROPS_PANEL = '[data-testid="properties"]'
 const TREE_PANEL = '[data-testid="project-tree"]'
+const INVENTORY_DRAWER = '[data-testid="inventory-drawer"][data-open="true"]'
 /**
  * Where the page's own chrome is now, from the DOM (read at each placement, so a bar or a panel that folds is followed): the menu bar on top, the
  * status bar at the bottom, the Projet panel on the left, Propriétés on the right (its width when open, its rail when folded). Any failure, or a part that is not on
@@ -71,6 +72,103 @@ export function hostInsets(doc: Document): HostInsets {
     return { top, right, bottom, left }
   } catch {
     return none
+  }
+}
+
+// ── the page's controls ─────────────────────────────────────────────────────────────────────────────────────────────────
+// The icon and the bubble also rest clear of the controls of the shell (buttons, menu items, fields, tabs): what the widget cannot know, the page tells it.
+
+/** The root of the Mode Création shell: the controls looked for are inside it (the level page has none, so it has no obstacle). */
+const SHELL_ROOT = '[data-testid="creation-root"]'
+const OBSTACLE_CONTROLS =
+  'button, a[href], input, select, textarea, summary, [role="button"], [role="menuitem"], [role="tab"], [role="option"], [role="combobox"], [tabindex]:not([tabindex="-1"])'
+/** A control smaller than this (a speck, a hidden handle) is not worth steering around. */
+const MIN_OBSTACLE_PX = 4
+/** A box larger than this share of the viewport is a container, not a control (the guide could never rest anywhere). */
+const MAX_OBSTACLE_SHARE = 0.4
+/** The most controls kept (a page with thousands of rows is not steered around row by row). */
+const MAX_OBSTACLES = 400
+
+/** The part of `el` that shows: its box cut to the viewport and to every scroll area (up to `root`) that holds it; null when nothing shows. */
+function shownBox(el: Element, view: Window, root: Element, vw: number, vh: number, own?: Rect): Rect | null {
+  const b = el.getBoundingClientRect()
+  let x0 = Math.max(0, own?.x ?? b.left)
+  let y0 = Math.max(0, own?.y ?? b.top)
+  let x1 = Math.min(vw, (own?.x ?? b.left) + (own?.w ?? b.width))
+  let y1 = Math.min(vh, (own?.y ?? b.top) + (own?.h ?? b.height))
+  for (let p = el.parentElement; p !== null && p !== root; p = p.parentElement) {
+    const s = view.getComputedStyle(p)
+    if (s.overflowX === 'visible' && s.overflowY === 'visible') continue
+    const pb = p.getBoundingClientRect()
+    x0 = Math.max(x0, pb.left)
+    y0 = Math.max(y0, pb.top)
+    x1 = Math.min(x1, pb.right)
+    y1 = Math.min(y1, pb.bottom)
+  }
+  return x1 > x0 && y1 > y0 ? { x: x0, y: y0, w: x1 - x0, h: y1 - y0 } : null
+}
+const usable = (el: Element, view: Window): boolean => {
+  if (el.tagName === 'CANVAS' || el.closest('[inert]') !== null) return false
+  const style = view.getComputedStyle(el)
+  return style.visibility === 'visible' && style.display !== 'none'
+}
+
+/**
+ * What the icon and the bubble rest clear of, as rects in viewport pixels: the two side panels whole (open or folded to their rail: the widget's inset for them
+ * is capped at a quarter of the viewport, so on a narrow window the panel itself is the obstacle), the inventory drawer while it is open (at its resting place:
+ * its box is mid-slide for 180 ms), then every control of the shell. Not an obstacle: anything hidden, `display: none` or inert (itself or an ancestor), the 3D
+ * canvas, a control that is a speck or fills the screen, and what a scroll area has scrolled out of sight (a control it clips is cut to the part that shows).
+ * Any failure, a page without the shell, or a document without a size: no obstacle.
+ */
+export function hostObstacles(doc: Document): Rect[] {
+  try {
+    const root = doc.querySelector(SHELL_ROOT)
+    const view = doc.defaultView
+    const vw = doc.documentElement.clientWidth
+    const vh = doc.documentElement.clientHeight
+    if (root === null || view === null || !(vw > 0) || !(vh > 0)) return []
+    const out: Rect[] = []
+    for (const sel of [PROPS_PANEL, TREE_PANEL]) {
+      const panel = root.querySelector(sel)
+      const box = panel !== null && usable(panel, view) ? shownBox(panel, view, root, vw, vh) : null
+      if (box !== null) out.push(box)
+    }
+    const drawer = root.querySelector(INVENTORY_DRAWER)
+    if (drawer !== null && usable(drawer, view)) {
+      // Resting place: the bottom of the view that holds it, as high as its layout height (the box itself is translated while it slides).
+      const b = drawer.getBoundingClientRect()
+      const holder = drawer.parentElement?.getBoundingClientRect()
+      const h = (drawer as HTMLElement).offsetHeight || b.height
+      const box = shownBox(drawer, view, root, vw, vh, holder !== undefined ? { x: b.left, y: holder.bottom - h, w: b.width, h } : undefined)
+      if (box !== null) out.push(box)
+    }
+    for (const el of Array.from(root.querySelectorAll(OBSTACLE_CONTROLS))) {
+      if (out.length >= MAX_OBSTACLES) break
+      if (!usable(el, view)) continue
+      const box = shownBox(el, view, root, vw, vh)
+      if (box === null || box.w < MIN_OBSTACLE_PX || box.h < MIN_OBSTACLE_PX || box.w * box.h > MAX_OBSTACLE_SHARE * vw * vh) continue
+      out.push(box)
+    }
+    return out
+  } catch {
+    return []
+  }
+}
+
+/**
+ * The widget's `obstacles`: the controls of the page, read again at most every RECT_CACHE_MS, or at once when the widget says the page just changed (a panel
+ * folded, a drawer opened, a scroll).
+ */
+export function createObstacleSource(deps: { doc: Document; now: () => number }): (fresh?: boolean) => Rect[] {
+  let at = Number.NEGATIVE_INFINITY
+  let cached: Rect[] = []
+  return (fresh) => {
+    const t = deps.now()
+    if (fresh === true || t - at >= RECT_CACHE_MS) {
+      cached = hostObstacles(deps.doc)
+      at = t
+    }
+    return cached
   }
 }
 
@@ -288,6 +386,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       getRect: rects.getRect,
       root: landmark,
       insets: () => hostInsets(doc),
+      obstacles: createObstacleSource({ doc, now }),
       zIndex: GUIDE_Z_INDEX,
       context: { page: 'workbench', mode: mode() },
       storage: deps.storage,
