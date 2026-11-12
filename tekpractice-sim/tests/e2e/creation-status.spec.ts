@@ -323,3 +323,27 @@ test('checklist: the legacy page and a level page have no chip (Mode Création o
     expect(await page.evaluate(() => !!window.__creation), url).toBe(false)
   }
 })
+
+test('checklist: the list follows each change of the rig in the same turn, never one change behind (pins the live path read in boot.ts)', async ({ page }) => {
+  await bootBlank(page)
+  await spawnConsole(page)
+  await chip(page).click()
+  await expect(crow(page, 'console')).toHaveAttribute('data-state', 'blocked')
+  // Read the DOM synchronously right after each dispatch, in the SAME task: a list that reads a cached path, or a path one store change old, would still show the
+  // previous state here (a web-first `expect` would hide that lag by retrying).
+  const states = await page.evaluate(() => {
+    const c = window.__creation!
+    const row = (id: string): string => document.querySelector<HTMLElement>(`[data-testid="checklist-row-${id}"]`)?.dataset.state ?? 'missing'
+    const read = (): string => `${row('console')}/${row('power')}`
+    const out: string[] = [read()]
+    c.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: true })
+    out.push(read()) // Lecture console on: the console row passes, the console's power is the next blocker
+    c.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: false })
+    out.push(read()) // off again: the console row blocks, the rest is not looked at
+    c.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: true })
+    out.push(read())
+    return out
+  })
+  expect(states).toEqual(['blocked/unchecked', 'ok/blocked', 'blocked/unchecked', 'ok/blocked'])
+  await expect(crow(page, 'power')).toContainText('La console n’est pas alimentée.')
+})

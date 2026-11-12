@@ -10,6 +10,7 @@ import type { BrainReply } from '../../src/guide/vendor/core/brain'
 import type { Setup } from '../../src/guide/vendor/hostTypes'
 import { ruleTextFor, type RuleRow } from '../../src/creation/shell/statusModel'
 import { COPY } from '../../src/creation/copy'
+import { creationRuleRows } from '../../src/creation/ruleTexts'
 
 const rules = (JSON.parse(readFileSync(resolve(process.cwd(), 'content/catalog.json'), 'utf8')) as { rules: RuleRow[] }).rules
 const ruleText = ruleTextFor(rules)
@@ -361,5 +362,48 @@ describe('judge: what to do (T1.4)', () => {
   it('exam mode: still withheld, no verdict at all', async () => {
     const { brain } = brainWith({ mode: () => 'exam', bridge: fakeBridge(() => reasonState('SOURCE_OFF', 'x')) })
     expect(await brain.judge(SETUP, 'practice')).toEqual({ verdict: null, needInfo: null, withheld: true })
+  })
+})
+
+// ── T1.5 follow-up: Oscar's question matching reads the words of `teach_fr`, and Mode Création hands the brain the OVERRIDDEN rows ───────────────────
+describe('over the Mode Création rows (creationRuleRows): the same questions still find the same rule', () => {
+  const creationRows = creationRuleRows(rules)
+  const titleOf = (r: BrainReply): string => r.lines[0]?.text.split(' : ')[0] ?? ''
+
+  it('every rule asked by its own title is answered with that title and the text Mode Création shows', async () => {
+    const { brain } = brainWith({ rules: creationRows })
+    for (const row of creationRows) {
+      const r = await ask(brain, row.title_fr!)
+      expect(r.kind, row.id).toBe('answer')
+      expect(r.lines[0]!.text, row.id).toBe(`${row.title_fr} : ${row.teach_fr}`)
+    }
+  })
+
+  it('the questions the catalog rows answer (and the ones they refuse) get the same rule and the same refusal over the overridden rows', async () => {
+    const catalog = brainWith().brain
+    const creation = brainWith({ rules: creationRows }).brain
+    const questions = [
+      'alimentation fantôme',
+      'larsen',
+      'horloge word clock',
+      'connecteurs incompatibles xlr',
+      'sens de connexion sortie',
+      'écho retour invité mix-minus',
+      'voyant on-air tally',
+      'Pourquoi mon micro à condensateur reste muet sans alimentation fantôme ?',
+      'types de signal incompatibles',
+      'rien du tout',
+    ]
+    for (const q of questions) {
+      const a = await ask(catalog, q)
+      const b = await ask(creation, q)
+      expect(b.kind, q).toBe(a.kind)
+      if (a.kind === 'answer') expect(titleOf(b), q).toBe(titleOf(a))
+    }
+  })
+
+  it('a word only the catalog text had (« ruban », « sécurité ») no longer finds a rule: a refusal, not a wrong rule', async () => {
+    const { brain } = brainWith({ rules: creationRows })
+    for (const q of ['ruban', 'sécurité']) expect((await ask(brain, q)).kind, q).toBe('refusal')
   })
 })

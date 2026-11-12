@@ -1066,7 +1066,7 @@ describe('mountOscar on the real controller: what each bench state says, and wha
 
   it('4. a rule error: the app’s own title and explanation, pointing at the first subject, no pointer sentence', async () => {
     const rules = registry.catalog.rules as unknown as RuleRow[]
-    const rule = rules.find((x) => x.title_fr && x.teach_fr)!
+    const rule = rules.find((x) => x.id === 'R4')! // an error rule the evaluator can emit (R1 to R3 are refusals: no event)
     const w = wired(EMPTY)
     await w.go(stateOf([['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']], { events: [{ ruleId: rule.id, severity: 'error', subjects: [{ instance: 'mic', port: 'out-xlr' }] }] }))
     const v = await w.next()
@@ -1120,7 +1120,7 @@ describe('mountOscar on the real controller: what each bench state says, and wha
 
   it('a rule error on the bench: the bubble is the app’s own cause and fix, nothing about « relancer la vérification »', async () => {
     const rules = registry.catalog.rules as unknown as RuleRow[]
-    const rule = rules.find((x) => x.title_fr && x.teach_fr)!
+    const rule = rules.find((x) => x.id === 'R4')! // an error rule the evaluator can emit (R1 to R3 are refusals: no event)
     const broken = stateOf([['ql1', 'yamaha-ql1'], ['mic', 'shure-sm58']], { events: [{ ruleId: rule.id, severity: 'error', subjects: [{ instance: 'mic', port: 'out-xlr' }] }] })
     const r = make({}, broken)
     const impl: MountImpl = { createController, mountGuide: vi.fn(() => ({ destroy: vi.fn(), send: vi.fn(async () => ({}) as GuideView) })) as never }
