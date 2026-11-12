@@ -1,0 +1,102 @@
+{
+  "id": "nti-audio-xl2",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 90,
+    "h": 45,
+    "d": 180
+  },
+  "ports": [
+    {
+      "portId": "in-balanced-measurement-audio-input-with-switchable-48-v-phantom-and-asd-sensor-detection",
+      "face": "top",
+      "xMm": 45,
+      "yMm": 165,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-unbalanced-audio-input",
+      "face": "io",
+      "xMm": 17.2,
+      "yMm": 22.5,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-headphone-output-3-5-mm-minijack-mono-monitor-on-both-channels",
+      "face": "io",
+      "xMm": 31.6,
+      "yMm": 22.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-usb-mini-connector-data-transfer-to-pc-and-li-po-charging",
+      "face": "io",
+      "xMm": 46,
+      "yMm": 22.5,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-24-bit-linear-pcm-output-prepared-for-later-firmware-extension",
+      "face": "io",
+      "xMm": 61,
+      "yMm": 22.5,
+      "confidence": "guess",
+      "connector": "toslink",
+      "signal": "spdif",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 8,
+      "edgeRadiusMm": 3,
+      "edgeSegments": 8
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.nti-audio.com/Portals/0/data/en/Vibration-Meter-Specifications.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 90 x 180 x 45 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "reference",
+      "url": "https://elimex.hu/eimages/files/NTi-XL2-Specifications.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.nti-audio.com/Portals/0/data/en/Vibration-Meter-Specifications.pdf",
+      "note": "NTi XL2 specifications (research pass, search summaries 2026-11-12): a balanced XLR measurement input (on top, 48 V phantom), an RCA input, a mini-B USB port, a 3.5 mm headphone output and a DC socket; a first summary also listed a TOSLINK output, which a second summary did not repeat. The Bêta proposal keeps all five ports, so the TOSLINK stays on the model but is not documented; beta-modelled. 90 x 180 x 45 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.nti-audio.com/Portals/0/data/en/Vibration-Meter-Specifications.pdf",
+      "note": "NTi XL2 specifications (research pass, search summaries 2026-11-12): a balanced XLR measurement input (on top, 48 V phantom), an RCA input, a mini-B USB port, a 3.5 mm headphone output and a DC socket; a first summary also listed a TOSLINK output, which a second summary did not repeat. The Bêta proposal keeps all five ports, so the TOSLINK stays on the model but is not documented; beta-modelled. 90 x 180 x 45 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

@@ -4260,7 +4260,8 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "shure-axient-digital-ad4d",
@@ -4637,7 +4638,8 @@
     "ribbon",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "aeta-scoopteam",
@@ -5043,7 +5045,8 @@
     "condenser",
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "neumann-u-67",
@@ -5072,7 +5075,8 @@
     "condenser",
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "neumann-usm-69-i",
@@ -5317,7 +5321,8 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "spl-phonitor-x",
@@ -5401,7 +5406,8 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "akai-mpk-mini-mk3",

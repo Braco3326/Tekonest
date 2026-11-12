@@ -1,0 +1,115 @@
+{
+  "id": "aea-r84",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 99,
+    "h": 295,
+    "d": 64
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 49.5,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "flags": [
+        "isRibbon"
+      ],
+      "openingMm": 19
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve-oval",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        44,
+        44
+      ],
+      [
+        2,
+        50,
+        50
+      ],
+      [
+        4,
+        50,
+        50
+      ],
+      [
+        120,
+        50,
+        50
+      ],
+      [
+        135,
+        62,
+        52
+      ],
+      [
+        150,
+        99,
+        64
+      ],
+      [
+        270,
+        99,
+        64
+      ],
+      [
+        284,
+        72,
+        50
+      ],
+      [
+        295,
+        0,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#2a2b2f"
+      }
+    ]
+  },
+  "portsDocumented": true,
+  "portsSource": "https://recording.org/products/aea-r84",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://cdn.shopify.com/s/files/1/0024/2352/1341/files/AEA-R84-Technical-Onesheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 99 x 64 x 295 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomannmusic.com/aea_r84.htm",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://recording.org/products/aea-r84",
+      "note": "AEA R84 dealer pages and the AEA one-sheet, read through a search summary 2026-11-12 (the PDF was too large to fetch): a passive ribbon microphone with a captive cable of about 3 m ending in an XLR-3 male; no phantom power. The captive-cable end is modelled as an XLR on the base of the body. The oval lathe profile (a 50 mm round body under a 99 x 64 mm ribbon head) is an estimate drawn from the outer size, no photo or drawing opened. 99 x 64 x 295 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://recording.org/products/aea-r84",
+      "note": "AEA R84 dealer pages and the AEA one-sheet, read through a search summary 2026-11-12 (the PDF was too large to fetch): a passive ribbon microphone with a captive cable of about 3 m ending in an XLR-3 male; no phantom power. The captive-cable end is modelled as an XLR on the base of the body. The oval lathe profile (a 50 mm round body under a 99 x 64 mm ribbon head) is an estimate drawn from the outer size, no photo or drawing opened. 99 x 64 x 295 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

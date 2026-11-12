@@ -1,0 +1,113 @@
+{
+  "id": "neumann-u-67",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 56,
+    "h": 200,
+    "d": 56
+  },
+  "ports": [
+    {
+      "portId": "out-audio-output-on-nu-67-v-power-supply-matching-connector-xlr-3-f",
+      "face": "bottom",
+      "xMm": 28,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "openingMm": 19
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        34
+      ],
+      [
+        2,
+        38
+      ],
+      [
+        4,
+        38
+      ],
+      [
+        90,
+        38
+      ],
+      [
+        96,
+        32
+      ],
+      [
+        108,
+        32
+      ],
+      [
+        114,
+        48
+      ],
+      [
+        118,
+        56
+      ],
+      [
+        168,
+        56
+      ],
+      [
+        182,
+        50
+      ],
+      [
+        192,
+        36
+      ],
+      [
+        200,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#c2c5ca"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-us/products/microphones/u-67-set",
+      "note": "equipment plan source (research grade: datasheet); size 56 x 56 x 200 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-IN/products/microphones/u-67-set",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-gb/products/microphone-accessories/nu-67-v",
+      "note": "Neumann U 67 set page and NU 67 V power supply page (read by a research pass 2026-11-12): the microphone has a 7-pin connector (UC 5 cable) to the NU 67 V supply, which has a transformer-balanced XLR-3 male output and an IEC C14 mains inlet. The Bêta proposal port (xlr3-m mic output) is kept and modelled on the base of the microphone as a stand-in (the real XLR is on the power supply). The lathe profile is an estimate from the outer size (56 x 56 x 200 mm, datasheet, size ok): body, neck and a 56 mm head basket, no photo or drawing opened. Beta-modelled. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-gb/products/microphone-accessories/nu-67-v",
+      "note": "Neumann U 67 set page and NU 67 V power supply page (read by a research pass 2026-11-12): the microphone has a 7-pin connector (UC 5 cable) to the NU 67 V supply, which has a transformer-balanced XLR-3 male output and an IEC C14 mains inlet. The Bêta proposal port (xlr3-m mic output) is kept and modelled on the base of the microphone as a stand-in (the real XLR is on the power supply). The lathe profile is an estimate from the outer size (56 x 56 x 200 mm, datasheet, size ok): body, neck and a 56 mm head basket, no photo or drawing opened. Beta-modelled. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

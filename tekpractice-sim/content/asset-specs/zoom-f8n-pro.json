@@ -1,0 +1,112 @@
+{
+  "id": "zoom-f8n-pro",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 178.2,
+    "h": 54.3,
+    "d": 140.3
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "left",
+      "xMm": 22,
+      "yMm": 27.15,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "left",
+      "xMm": 49,
+      "yMm": 27.15,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "usb",
+      "face": "left",
+      "xMm": 71.2,
+      "yMm": 27.15,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-sub",
+      "face": "right",
+      "xMm": 14.2,
+      "yMm": 27.15,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "right",
+      "xMm": 28.6,
+      "yMm": 27.15,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 8,
+      "edgeRadiusMm": 3,
+      "edgeSegments": 8
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://zoomcorp.com/manuals/f8n_pro-en/",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://zoomcorp.com/documents/3173/E_F8nPro_Specifications.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 178.2 x 140.3 x 54.3 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://zoomcorp.com/manuals/f8n_pro-en/",
+      "note": "Zoom F8n Pro operation manual and product page (opened by a research pass 2026-11-12): eight locking XLR / TRS combo inputs (1-4 on the left panel, 5-8 on the right), a 10-pin capsule input, two TA3 main outputs, a stereo 3.5 mm sub output and a headphone jack (right panel), BNC timecode in and out, a mini-B USB port (left), two SD slots, 12 V DC in (AD-19), a Hirose 4-pin external DC input and eight AA batteries. Modelled subset: two combo inputs, USB, the sub output and the headphone jack; the TA3 outputs (no catalogue connector), BNC timecode, DC inputs and SD slots are not ports. No mains inlet (battery or DC), so no power control. 178.2 x 140.3 x 54.3 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://zoomcorp.com/manuals/f8n_pro-en/",
+      "note": "Zoom F8n Pro operation manual and product page (opened by a research pass 2026-11-12): eight locking XLR / TRS combo inputs (1-4 on the left panel, 5-8 on the right), a 10-pin capsule input, two TA3 main outputs, a stereo 3.5 mm sub output and a headphone jack (right panel), BNC timecode in and out, a mini-B USB port (left), two SD slots, 12 V DC in (AD-19), a Hirose 4-pin external DC input and eight AA batteries. Modelled subset: two combo inputs, USB, the sub output and the headphone jack; the TA3 outputs (no catalogue connector), BNC timecode, DC inputs and SD slots are not ports. No mains inlet (battery or DC), so no power control. 178.2 x 140.3 x 54.3 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://zoomcorp.com/manuals/f8n_pro-en/",
+      "note": "Zoom F8n Pro operation manual and product page (opened by a research pass 2026-11-12): eight locking XLR / TRS combo inputs (1-4 on the left panel, 5-8 on the right), a 10-pin capsule input, two TA3 main outputs, a stereo 3.5 mm sub output and a headphone jack (right panel), BNC timecode in and out, a mini-B USB port (left), two SD slots, 12 V DC in (AD-19), a Hirose 4-pin external DC input and eight AA batteries. Modelled subset: two combo inputs, USB, the sub output and the headphone jack; the TA3 outputs (no catalogue connector), BNC timecode, DC inputs and SD slots are not ports. No mains inlet (battery or DC), so no power control. 178.2 x 140.3 x 54.3 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

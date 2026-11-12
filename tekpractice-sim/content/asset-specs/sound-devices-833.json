@@ -1,0 +1,142 @@
+{
+  "id": "sound-devices-833",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 220,
+    "h": 51,
+    "d": 170
+  },
+  "ports": [
+    {
+      "portId": "in-mic-line-inputs-1-3-input-1-also-aes3-aes42-1",
+      "face": "io",
+      "xMm": 22,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-line-inputs-1-3-input-1-also-aes3-aes42-2",
+      "face": "io",
+      "xMm": 49,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-outputs-l-r-analog-or-aes3-pairs-1",
+      "face": "io",
+      "xMm": 76,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-outputs-l-r-analog-or-aes3-pairs-2",
+      "face": "io",
+      "xMm": 103,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-headphone-output",
+      "face": "io",
+      "xMm": 125.2,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-outputs-x3-x4-stereo-unbalanced",
+      "face": "left",
+      "xMm": 14.2,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aux-input-unbalanced-2-channel",
+      "face": "left",
+      "xMm": 25.6,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-headphone-output-b",
+      "face": "left",
+      "xMm": 37,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-file-transfer-2-in-2-out-usb-audio",
+      "face": "left",
+      "xMm": 49.6,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 8,
+      "edgeRadiusMm": 3,
+      "edgeSegments": 8
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://cdn.abicart.com/shop/ws42/76342/art99/170372499-de2c82-sound_devices_833_brochure.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 220 x 170 x 51 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.fullcompass.com/common/files/39306-833SpecificationsSheet.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://support.sounddevices.com/hc/en-us/articles/45114359161243-833-User-Guide",
+      "note": "Sound Devices 833 user guide and product page read by a research pass 2026-11-12 (the store page answered 403): three XLR plus three TA3 mic/line inputs, two XLR main outputs (analog or AES3), two TA3 outputs, a 3.5 mm stereo output and aux input, 3.5 mm and 1/4 in headphone jacks (the guide versions differ), USB-C, USB-A host, TA4 DC input and L-series batteries. Headphone jack types differ between versions and one dealer lists a different input count, so beta-modelled: the ports are the Bêta proposal ports (9 of 22 listed). 220 x 170 x 51 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://support.sounddevices.com/hc/en-us/articles/45114359161243-833-User-Guide",
+      "note": "Sound Devices 833 user guide and product page read by a research pass 2026-11-12 (the store page answered 403): three XLR plus three TA3 mic/line inputs, two XLR main outputs (analog or AES3), two TA3 outputs, a 3.5 mm stereo output and aux input, 3.5 mm and 1/4 in headphone jacks (the guide versions differ), USB-C, USB-A host, TA4 DC input and L-series batteries. Headphone jack types differ between versions and one dealer lists a different input count, so beta-modelled: the ports are the Bêta proposal ports (9 of 22 listed). 220 x 170 x 51 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}
