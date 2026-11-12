@@ -3328,7 +3328,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "neutrik-nppa-tt-pt",
