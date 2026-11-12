@@ -391,6 +391,8 @@ const onboarding = (page: Page) => page.evaluate(() => window.__creation!.onboar
 
 test('profile 2 + « Passer, je connais »: the neutral room, both side panels open, the drawer open on Consoles, the focus left on the 3D view', async ({ page }) => {
   await openFresh(page)
+  // test setup (G10): the start screen is a lazy chunk; key « 2 » counts only once it holds the keyboard (its first profile button focused)
+  await expect(profileButton(page, PROFILES[0].label)).toBeFocused()
   await page.keyboard.press('2')
   await skipButton(page).click()
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
