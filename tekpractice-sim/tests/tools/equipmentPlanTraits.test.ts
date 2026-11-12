@@ -17,10 +17,11 @@ const row = (id: string): PlanRow => {
 const has = (id: string, ...traits: string[]): boolean => traits.every((t) => (row(id).traits as string[]).includes(t))
 
 describe('sizeConfidence (finding 7): an unsure size can never be promoted', () => {
-  it('every row has one, and it is consistent with the size: partial exactly when one or two axes are known', () => {
+  it('every row has one, and it is consistent with the size: one or two stored axes are partial, a complete size never is (Wave 0c: partial may also have none stored, its numbers are in the notes)', () => {
     for (const r of rows) {
       const n = axisCount(r.sizeMm)
-      expect(r.sizeConfidence === 'partial', `${r.id}: ${n} axes, ${r.sizeConfidence}`).toBe(n >= 1 && n <= 2)
+      if (n >= 1 && n <= 2) expect(r.sizeConfidence, `${r.id}: ${n} axes`).toBe('partial')
+      if (r.sizeConfidence === 'partial') expect(n, `${r.id}: partial`).toBeLessThanOrEqual(2)
     }
   })
 

@@ -1,0 +1,406 @@
+[
+  {
+    "id": "telos-hx2",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://docs.telosalliance.com/docs/telos-specifications",
+      "https://telosalliance.com/Telos/Hx",
+      "https://bswusa.com/telos-hx2-dual-digital-hybrid-analog-and-aes-in-out/"
+    ],
+    "portsText": "Per hybrid (2 on Hx2): 1 XLR female send input (pin 2 high, active balanced, mic/line switchable) and 1 XLR male receive output (pin 2 high, active balanced); telco line and phone-set RJ jacks (exact RJ type not stated); 1 DB9 remote per hybrid with ON/OFF control inputs and Ringing/ON-AIR status outputs (GPIO closures); optional plug-in AES3 module converting the XLRs to AES3 with sample-rate conversion; auto-ranging 90-265 VAC mains.",
+    "colour": null,
+    "notes": "NOT FOUND: dimensions, weight, rack units. Telos' Hx product page links a separate 'HX1 / HX2 Physical Dimensions' PDF that I could not locate or open; the Telos spec page (docs.telosalliance.com/docs/telos-specifications) and the Hx user manual PDF (404 on direct fetch) did not yield a physical section; dealer pages (BSW, PRG, Rentex, ManualsLib index) carry no size data. Tried: Telos product page, Telos docs spec page and .md copy, brochure PDF (404), QSG PDF (404), BSW, PRG, Rentex, ManualsLib. Search budget ran out before a dealer-spec search could be retried. Mix-minus ('clean feed' per hybrid) is a function of the device per Telos documentation but flags not extracted here. Rack height NOT confirmed (do not assume 1U)."
+  },
+  {
+    "id": "clear-com-ms-702",
+    "sizeMm": { "w": 483, "d": 165, "h": 44 },
+    "weightKg": 2.8,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://clearcom.com/Product/ms-702",
+      "https://www.fullcompass.com/common/files/7096-MS702Datasheet.pdf"
+    ],
+    "portsText": "2-channel 1RU main station (up to 55 beltpacks or 10 speaker stations). Interfaces listed by Clear-Com: panel microphone input (electret), headset microphone input (dynamic), program line input, headset output, speaker output, partyline input and output, Stage Announce / balanced line out (balanced), IFB / hot-mic out (unbalanced). Connector types and pin counts (headset XLR 4 or 5 pin, etc.) NOT retrieved: the datasheet PDF returned 403.",
+    "colour": null,
+    "notes": "Axis order from source: H x W x D = 1.75 x 19 x 6.5 in = 44 x 483 x 165 mm; weight 6.1 lb (2.8 kg); 1RU. Search excerpt of the 2007 datasheet gives 6.06 lb (2.75 kg), consistent. Operating range 0-50 C. The RS-701 remote station (needed by the KB) was not researched."
+  },
+  {
+    "id": "sonifex-rb-mm1",
+    "sizeMm": { "w": 280, "d": 108, "h": 43 },
+    "weightKg": 1.1,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.sonifex.co.uk/product/rb-mm1/",
+      "https://www.adorama.com/sorbmm1.html"
+    ],
+    "portsText": "Inputs: XLR 3-pin female, balanced, stereo L/R from the mixer output, plus an XLR 3-pin female balanced input for the telephone-fader feed (as reported by the Sonifex product page; counts of 2 plus 1 not cross-checked against the handbook). Output: 1 XLR 3-pin male, balanced L/R, to the TBU (hybrid or codec). Controls: output level, LF and full-band cancellation nulls, switchable 200 Hz-4 kHz band-pass. No headphone or mic feature listed. Powered from an external supply (not confirmed on the fetched page).",
+    "colour": null,
+    "notes": "Axis order from source: raw W x D x H = 28 x 10.8 x 4.3 cm. Net weight 1.1 kg (gross 1.5 kg boxed 36 x 20.5 x 6 cm). Adorama dealer lists 1.08 kg / 2.4 lb: rounding-level difference, manufacturer value used. Desktop box, not rack."
+  },
+  {
+    "id": "tascam-ss-cdr250n",
+    "sizeMm": { "w": 482.6, "d": 300.5, "h": 45 },
+    "weightKg": 3.2,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.fullcompass.com/common/files/29301-TASCAMSSR250NSpecSheet.pdf",
+      "https://www.hhb.co.uk/prod/tascam/ss-cdr250n/"
+    ],
+    "portsText": "Analog in: 1 XLR-3-31 balanced (line or mic, phantom supported) + 1 RCA pair unbalanced; analog out: XLR-3-32 balanced + RCA pair; digital in: AES/EBU XLR-3-31 (110 ohm) + S/PDIF RCA; digital out: AES/EBU XLR-3-32 + S/PDIF RCA; phones 6.3 mm stereo jack; remote 2.5 mm TRS (RC-3F/RC-20); USB A-type (USB 2.0 HS); RS-232C DB9 female; parallel DB25 female (GPIO); Ethernet RJ45 100BASE-TX. Media: 2 SD slots (per KB) and CD-R/RW drive.",
+    "colour": null,
+    "notes": "Axis order from source: W x H x D = 482.6 x 45 x 300.5 mm; 1U rack; weight 3.2 kg. The sheet is the TEAC/TASCAM 'Product Spec Sheet SS-CDR250N' (Apr 2017). One reseller shows 2.9 kg and another ~3.2 kg; manufacturer value used. Power draw 22 W (search excerpt). Pinouts of the 14 ports not extracted beyond the XLR 1 GND / 2 HOT / 3 COLD."
+  },
+  {
+    "id": "eaton-5p-1u-ups",
+    "sizeMm": { "w": 442, "d": 508, "h": 43 },
+    "weightKg": 14.7,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.eaton.com/us/en-us/skuPage.5P1000R.html",
+      "https://www.avendor.com/products/eaton-5p-1000va-770w-120v-line-interactive-ups-5-15p-8x-5-15r-outlets-true-si"
+    ],
+    "portsText": "5P1000R (120 V US): 5 x NEMA 5-15R outlets (true sine, 1000 VA / 770 W), 5-15P input with 6 ft cord; RS-232 (RJ45) and USB (HID) as standard, 6 ft cables included; optional network card slot.",
+    "colour": null,
+    "notes": "Axis order from source: width 17.4 in x depth 20 in x height 1.7 in = 442 x 508 x 43 mm (1U); weight 32.5 lb = 14.7 kg (dealers 32.4 lb). One listing gives width 17.2 in (438 mm); one Elliott listing weight 45.63 appears to be shipping weight and is ignored. Values apply to the 5P1000R ONLY: the 5P1500R sibling and the 230 V (France) variants were NOT verified, so do not reuse these numbers for them. Colour not stated on the Eaton page."
+  },
+  {
+    "id": "cat6-ethercon-cable-family",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neutrik.com/en/product/ne8mx.pdf",
+      "https://www.neutrik.com/en/products/data/ethercon",
+      "https://en.wikipedia.org/wiki/Category_6_cable"
+    ],
+    "portsText": "Definition (cable family, not a box): connector A = Neutrik etherCON cable connector (NE8MX carrier fitted over a standard RJ45 plug; lockable, rugged shell); connector B = RJ45 plug or a second etherCON; straight-through Cat6/Cat6A, 8 conductors. Neutrik NE8MX accepts cable outer diameter 4.5-8 mm; the NE8MX6 Cat6 variant 7-9.5 mm (search excerpt of the NE8MX6 datasheet) and does not intermate with the Cat6 chassis connectors NE8FDY-C6.",
+    "colour": null,
+    "notes": "Typical lengths NOT found in a manufacturer source (no standard-length table obtained). Standards-level limit from a secondary source (Wikipedia, not graded): a Cat6 channel up to 100 m = 90 m permanent link plus 10 m of patch cords; Cat6 250 MHz, Cat6A 500 MHz; 10GBASE-T over Cat6 only to about 55 m. Cat6/Cat6A cable outer diameter not found. Argosy's sheet for the related NE8MX-1 variant gives 3.5-8 mm; check which variant is meant. Neutrik pages blocked other fetches (NE8MC variants returned 404)."
+  },
+  {
+    "id": "powercon-iec-cable-family",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neutrik.com/en/product/nac3fx-w.pdf",
+      "https://www.neutrik.com/en/product/nac3fca.pdf"
+    ],
+    "portsText": "Definition: connector A = Neutrik powerCON TRUE1 locking cable connector (NAC3FX-W, now succeeded by the TRUE1 TOP series, fully intermateable), 2 poles + PE, 16 A rms (USA 20 A), 250 V, IP65 when mated, screw terminals, cable outer diameter 6-12 mm, wire 1.0-2.5 mm2 (12 AWG), has breaking capacity (may be connected or disconnected under load). Connector B = IEC 60320 C13/C14 or CEE 7/7 type E plug at the far end: NOT sourced. Classic powerCON (NAC3FCA blue input / grey output, discontinued, successors NAC3FXXA-W-S 6-12 mm and -W-L 10-16 mm): 20 A 250 V, cable OD 6-15 mm, NO breaking capacity (must not be connected or disconnected under load).",
+    "colour": null,
+    "notes": "Important correction for the model: only TRUE1 can be mated under load; the older blue/grey powerCON cannot, per Neutrik's own sheets. Typical lengths for mains cords and IEC/Schuko/CEE 7/7 definitions were not obtained from a manufacturer or standard source: marked gap. Cable OD of the cord itself (H05VV-F 3G1.5 etc.) not sourced."
+  },
+  {
+    "id": "speakon-cable-family",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neutrik.com/en/product/nl4fxx-w-s.pdf",
+      "https://www.neutrik.com/en/product/nl4fxx-w-l.pdf",
+      "https://www.neutrik.com/en/product/nl2fx.pdf"
+    ],
+    "portsText": "Definition: connector A and B = Neutrik speakON cable connectors, twist-lock. NL4FXX-W-S: 4 poles, cable OD 6-12 mm, wire 1.5-4 mm2 (17-11 AWG), up to 37 A rms (IEC 61984; UL 1977 35 A; CSA 24 A). NL4FXX-W-L: 4 poles, cable OD 10-16 mm, same ratings. NL2FX (discontinued, successor NL2FXX-W-S): 2 poles, 32 A rms, cable OD 6-10 mm, mates with 4-pole chassis connectors using +1/-1. NL8 (8-pole) not retrieved. Not for AC mains or for interrupting current.",
+    "colour": null,
+    "notes": "Typical cable lengths and loudspeaker-cable conductor gauge (2 x 2.5 mm2, 4 x 2.5 mm2) for a finished lead were not sourced. Contact numbering: NL4 pins 1+/1- and 2+/2-; NL2 uses 1+/1- (pole wiring not extracted from the sheets beyond the +1/-1 remark)."
+  },
+  {
+    "id": "trs-ts-jack-cable-family",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neutrik.com/en/product/np3x.pdf",
+      "https://www.neutrik.com/en/product/np2x.pdf",
+      "https://en.wikipedia.org/wiki/Phone_connector_(audio)"
+    ],
+    "portsText": "Definition: connector A and B = 1/4 in (6.35 mm) phone plugs. TRS = 3 contacts (tip, ring, sleeve; balanced mono or stereo); TS = 2 contacts (tip, sleeve; unbalanced mono). Neutrik NP3X (3-pole) and NP2X (2-pole): cable OD 4-7 mm, wire up to 1 mm2 (18 AWG), solder contacts, nickel shell, slim 14.5 mm shell width, more than 1000 mating cycles. 3.5 mm and 2.5 mm sizes per the secondary source (sleeve diameters 3.5 / 2.5 mm; 3.5 mm plug about 15 mm long). Adapter pairs for the KB (XLR-TRS, RCA-TS) not separately sourced.",
+    "colour": null,
+    "notes": "Mogami W2524 guitar cable (instrument cable family): overall diameter shown as 6.0 mm (0.236 in) in the Mogami catalogue (https://www.mogamicable.com/pdf/MogamiCatalog.pdf, table layout garbled in extraction, moderate confidence). Typical lengths (1, 3, 6 m) NOT found in a manufacturer source: gap. 3.5 mm Neutrik plug datasheet not fetched."
+  },
+  {
+    "id": "xlr3-cable-family",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neutrik.com/en/product/nc3fxx.pdf",
+      "https://www.neutrik.com/en/product/nc3mxx.pdf",
+      "https://www.mogamicable.com/pdf/MogamiCatalog.pdf",
+      "https://en.wikipedia.org/wiki/XLR_connector"
+    ],
+    "portsText": "Definition: connector A = Neutrik NC3FXX (3-pole XLR female, nickel zinc-diecast shell, silver contacts); connector B = NC3MXX (3-pole XLR male); latch lock; rated 16 A per contact, cable OD 3.5-8.0 mm, wire max 2.5 mm2 (14 AWG), solder contacts, more than 1000 mating cycles. Balanced pinout (secondary source citing RS-297-A / AES14): pin 1 shield/ground, pin 2 hot (+), pin 3 cold (-). Mogami W2534 star-quad microphone cable: 4 conductors 24 AWG (OFC), overall diameter 6.0 mm, flexible PVC jacket, 10 colours.",
+    "colour": null,
+    "notes": "Typical lengths (1.5, 3, 6, 10 m) not found in a manufacturer table: gap. Dimensional standard IEC 61076-2-103 named by the secondary source (not fetched). Decision on cables as devices remains open (see plan)."
+  },
+  {
+    "id": "nti-audio-minirator-mr-pro",
+    "sizeMm": { "w": 81, "d": 152, "h": 43 },
+    "weightKg": 0.31,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.markertek.com/Attachments/Manuals/NTIAmerica/600000313-Manual.pdf",
+      "https://www.nti-audio.com/en/products/signal-sources/minirator-mr-pro-mr2"
+    ],
+    "portsText": "Outputs: 1 balanced XLR output and 1 unbalanced RCA output; 1 XLR input for the built-in XLR cable test; Mini-B USB (5 pin) for wave-file mass storage and firmware; DC power-supply socket; powered by 3 x AA (LR6). Output impedance 200 ohm (MR2 column of the data table).",
+    "colour": null,
+    "notes": "Axis order from source: L x W x H = 152 x 81 x 43 mm including the protective shock jacket; mapped here as lying flat, w = 81, d = 152 (length), h = 43. Weight 310 g (11 oz) including batteries. The basic MR2 is 147 x 74 x 41 mm, 250 g (not this row). An older MR2 sheet found via RS lists 140 x 74 x 25 mm, 170 g for a previous-generation unit: ignore. Handbook is the NTi 'Minirator MR2/MR-PRO' manual hosted by Markertek; NTi spec PDFs returned 404."
+  },
+  {
+    "id": "nti-audio-xl2",
+    "sizeMm": { "w": 90, "d": 180, "h": 45 },
+    "weightKg": 0.48,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://elimex.hu/eimages/files/NTi-XL2-Specifications.pdf",
+      "https://www.nti-audio.com/Portals/0/data/en/Vibration-Meter-Specifications.pdf"
+    ],
+    "portsText": "Audio inputs: 1 XLR balanced (200 kohm, +48 V phantom switchable, auto-detects NTi ASD mics and MA220 preamp) and 1 RCA unbalanced (>30 kohm); built-in condenser mic for polarity/delay tests; outputs: built-in speaker, 3.5 mm mono headphone minijack; USB mini (data and charging); digital I/O interface for accessories (keypad, limit light, stack light); power: built-in 3.7 V Li-Po or 4 x AA or 9 VDC external; 1/4 in tripod mount plus wire stand on the rear.",
+    "colour": null,
+    "notes": "Axis order from source: L x W x H = 180 x 90 x 45 mm (7.1 x 3.5 x 1.8 in), weight 480 g (1 lb) including Li-Po. Mapped lying flat: w = 90, d = 180, h = 45. Values are for the XL2 analyzer body without the M2230/M4261 measurement microphone. The elimex copy is the NTi XL2 spec sheet; an NTi vibration-meter sheet repeats the same figures. The mic and preamp (M2230 etc.) are separate objects not researched."
+  },
+  {
+    "id": "power-sequencer-distribution",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://www.perfectcircuit.com/furman-pl-plus-c.html"
+    ],
+    "portsText": "Generic category row; no single product chosen. NOT FOUND.",
+    "colour": null,
+    "notes": "Not found. This is a generic row, and no sequencer product was settled on. A search for Furman PS-8RE / Middle Atlantic PD-915R-SP specs could not be run because the shared web-search budget was exhausted; direct manufacturer pages (Furman 429, Middle Atlantic redirects to Legrand AV) did not yield data. The only nearby item seen is the Furman PL-PLUS C power conditioner (search excerpt of dealer pages: 19 x 10.5 x 1.75 in, about 12 lb, 1U), which is a conditioner with metering and lights, not a sequencer, so it is NOT recorded as the answer. Pick a representative sequencer (e.g. Furman PS-8RE or Middle Atlantic PD-915R-SP) and re-run."
+  },
+  {
+    "id": "powercon-distro",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://www.neutrik.com/en/product/nac3fx-w.pdf"
+    ],
+    "portsText": "Generic category row; no product chosen. Only connector facts available: powerCON TRUE1 is 16 A (USA 20 A), 250 V, IP65 when mated, with breaking capacity; classic powerCON blue (in) and grey (out) is 20 A 250 V without breaking capacity.",
+    "colour": null,
+    "notes": "Not found: no distribution-box product was identified or researched, so there are no dimensions or weights. Tried only Neutrik connector sheets. Needs a representative product choice (powerCON TRUE1 distro from a rental-grade maker) before research."
+  },
+  {
+    "id": "whirlwind-medusa-standard-snake",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.adorama.com/wwms164xl050.html",
+      "https://www.fullcompass.com/common/files/17258-Specifications.pdf",
+      "https://www.fullcompass.com/common/files/36206-MedusaPowerSupplyDataSheet.pdf"
+    ],
+    "portsText": "Medusa Standard 16-channel snake MS-16-4-XL (dealer listings): stage box with 16 XLR sends (Whirlwind WC3F female XLR inputs) and 4 XLR returns, fan-out end; the MS-16-8-XL variant has 8 returns, so confirm the model. Stage box is steel (14 GA base, 16 GA top, handle), powder coated (Full Compass spec sheet, as reported by a search excerpt). Multipair: 24 AWG twisted pairs, 100 percent foil shield.",
+    "colour": null,
+    "notes": "Stage box dimensions, weight and cable outer diameter NOT found: the Whirlwind and Full Compass data-sheet PDFs returned 403 and whirlwindusa.com 404. Dealers list standard lengths 50, 100, 150, 200 and 250 ft (Adorama MS-16-4-XL-050/-100/-150/-200/-250), 250 ft fan-out about 3 ft (0.91 m). The grade 'dealer' applies to the configuration facts only. Name 'Medusa Standard Splitter' remains unconfirmed, as the earlier note said."
+  },
+  {
+    "id": "aeta-scoopteam",
+    "sizeMm": { "w": 212, "d": 236, "h": 102 },
+    "weightKg": 2.1,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.aeta-audio.com/downloads/doc/manuals/manual_ScoopTeam.pdf",
+      "https://www.aeta-audio.com/en/products/scoopteam/",
+      "https://www.aeta-audio.com/downloads/doc/product_data/ScoopTeam_ENG.pdf"
+    ],
+    "portsText": "Front: 2 mic inputs (3-pin XLR female, 48 V, Mic 1 and Mic 2), 1 mic/line input 3 (XLR female, 48 V), 4 stereo headphone jacks 6.35 mm. Rear: mic/line input 4 (XLR female), Aux 1 line input (XLR female, Premium+), AES/Aux 2 (XLR female, Premium+), 2 line outputs (XLR male; Line Out 2 Premium+), 2 x RJ45 Ethernet 1000BaseT (AES67/RAVENNA, Premium+; also network), RJ45 ISDN S0 (option), Mini-B USB audio device, 4-pin male XLR for 12 V DC power, GPIO (2 inputs and 2 outputs), antenna connectors for the mobile options. Runs on 12 V DC or 6 x AA rechargeable batteries.",
+    "colour": null,
+    "notes": "Axis order from source: overall W x D x H = 212 x 236 x 102 mm. Weight: standard version less than 2.0 kg; Premium version with all options 2.1 kg, batteries NOT included (the feature table says less than 2.1 kg). The value 2.1 is the heaviest configuration. Numbers come from the user manual (datasheet grade); the separate datasheet PDF is a marketing brochure without physical specs."
+  },
+  {
+    "id": "galaxy-audio-cricket-cpts",
+    "sizeMm": { "w": 87.88, "d": 162, "h": 48.26 },
+    "weightKg": 0.408,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.galaxyaudio.com/products/cpts",
+      "https://goknight.com/content/documentation/CRICKET.pdf"
+    ],
+    "portsText": "Two-unit set. Send (pulse generator): 1/4 in output jack, XLR output, internal speaker. Receive (detector): 1 balanced 1/4 in input, 1 balanced XLR input. Tests female XLR pins 1/2/3 and tip/ring/sleeve of 1/4 in jacks (polarity and continuity). 9 V alkaline battery in each.",
+    "colour": null,
+    "notes": "Axis order from source: H x W x D. Receive unit 1.9 x 3.46 x 6.38 in = 48.26 x 87.88 x 162 mm; send unit 1.9 x 3.46 x 5.83 in = 48.26 x 87.88 x 148 mm (sizeMm above uses the larger receive unit). Weight 14.4 oz (408.2 g) per unit with battery; complete set shipped 33.6 oz (952.5 g). Some dealer listings show 3.375 x 1.812 x 6.25 in and 1.10 lb for an older/other package; manufacturer figures used. Colour not stated."
+  },
+  {
+    "id": "sound-devices-833",
+    "sizeMm": { "w": 220, "d": 170, "h": 51 },
+    "weightKg": 1.25,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://cdn.abicart.com/shop/ws42/76342/art99/170372499-de2c82-sound_devices_833_brochure.pdf",
+      "https://www.fullcompass.com/common/files/39306-833SpecificationsSheet.pdf"
+    ],
+    "portsText": "Inputs: 6 mic/line total, 3 on full-size XLR and 3 on TA3 (AES3 or AES42 available on XLR input 1); Aux 3.5 mm / 10-pin unbalanced 2-channel; Com Return TA3 and 3.5 mm; external slate mic TA5. Analog outputs: XLR L/R, TA3 X1/X2, 3.5 mm X3/X4 (6 total); AES3 digital outputs on XLR pairs (1-2 XLR-L, 3-4 XLR-R). Headphones 1/4 in and 3.5 mm, plus TA5 headset+mic. USB-C (file transfer) and USB-A host (keyboard, controller), 2 SD slots plus 256 GB internal SSD; power 10-18 V on locking TA4 (search excerpt of the spec sheet). Timecode connector type not confirmed.",
+    "colour": null,
+    "notes": "Axis order: the brochure gives 5.1 x 22 x 17 cm (H x W x D); dealers list 220 x 51 x 170 mm (W x H x D): the same box. Weight 2.75 lb / 1.25 kg unpackaged, without batteries (some dealers 1.3 kg). The brochure text was read via PDF text extraction; the spec-sheet PDF itself returned 403. Colour not stated."
+  },
+  {
+    "id": "zoom-f8n-pro",
+    "sizeMm": { "w": 178.2, "d": 140.3, "h": 54.3 },
+    "weightKg": 1.2,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://zoomcorp.com/documents/3173/E_F8nPro_Specifications.pdf"
+    ],
+    "portsText": "8 x XLR/TRS combo mic/line inputs (phantom +24/+48 V, +10 to +75 dB gain), dedicated MIC IN (Zoom capsule) and SLATE MIC, MAIN OUT 1/2 on TA3 (balanced), SUB OUT 1/2 on a 3.5 mm stereo mini (unbalanced), headphone out on a 1/4 in stereo jack, 2 x BNC timecode (in/out), Mini-B USB, DC in on a HIROSE HR10A-7R-4S 4-pin (9-18 V; AC adapter AD-19 12 V), 8 x AA battery compartment, 2 SD card slots (to 1 TB), 2.4 in LCD.",
+    "colour": null,
+    "notes": "Axis order from source: W x D x H = 7.0 x 5.5 x 2.1 in = 178.2 x 140.3 x 54.3 mm; weight 1200 g including batteries. Colour not stated. Retailer descriptions of the outputs vary slightly; the Zoom sheet was used."
+  },
+  {
+    "id": "rack-generic-6u-16u",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://en.wikipedia.org/wiki/19-inch_rack",
+      "https://www.redco.com/Middle-Atlantic-SRK.html"
+    ],
+    "portsText": "Not applicable (passive furniture).",
+    "colour": "black laminate (Middle Atlantic SRK only)",
+    "notes": "No single box size for 'generic 6U-16U'. Standards-level facts (secondary source, not graded): panel width 482.6 mm (19 in) including ears; rail openings 450.85 mm apart (17.75 in), posts 15.88 mm wide; 1U = 44.45 mm (1.75 in); equipment panel height about 44.45 x n - 0.79 mm (about 43.66 mm for 1U); standards EIA-310-D/E, CEA-310-E, IEC 60297-3-100; no standard equipment depth (4-post cabinets are commonly 600, 800 or 1010 mm deep). Reference product (dealer, Redco): Middle Atlantic SRK, 16 in (406 mm) deep, 54-1/4 in overall height, 16 spaces vertical plus 12 spaces on a 25 degree slope, 58 lb (26.3 kg), black laminate; other dealer text gives 54.6 in height and about 20.4 in overall width, a conflict, so no sizeMm is set. Plain 6U-16U rack dimensions: derive height as n x 44.45 mm for the opening only."
+  },
+  {
+    "id": "digital-audio-cable-family",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.mogamicable.com/pdf/MogamiCatalog.pdf"
+    ],
+    "portsText": "Findings from the Mogami catalogue only. AES/EBU digital cable: 110 ohm (AES requirement), stated good to about 470 ft; bare-copper conductors; Mogami AES/EBU cable 3173 jacket appears as 7.8 mm (table layout garbled, moderate confidence). Gold AES patch cables in 3, 6, 12, 20 and 50 ft. 8-channel DB25 digital snakes in two formats: Tascam format (also used by Digidesign, Panasonic, RME and SSL) DB25-XLR in 5, 10, 15, 20, 25, 50 ft and DB25-DB25 in 5-25 ft; Yamaha format (also Apogee, Lynx, Mackie, Sony) DB25-XLR and DB25-DB25 in 5-25 ft; a Yamaha-to-Tascam crossover DB25-DB25 in 5-25 ft. BNC word clock / AES3id (75 ohm), TOSLINK ADAT and MADI cabling: NOT found.",
+    "colour": null,
+    "notes": "The DB25 pinouts remain unsourced: the catalogue states which brands use which format but not the pin assignments, so the earlier 'domain knowledge' pinouts still need AES/Tascam documentation. 75 ohm coax part 2964 is in the catalogue but its use (video vs digital) and OD were not confirmed from the garbled layout, so it is not quoted. TOSLINK/ADAT and MADI (BNC/SC optical) definitions not obtained from a manufacturer or standard."
+  },
+  {
+    "id": "clear-com-freespeak-ii",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://clearcom.com/DownloadCenter/datasheets/FreeSpeakII/FSII-BASE-II-5_FreeSpeakII_BaseStation_5up_Datasheet.pdf",
+      "https://clearcom.com/DownloadCenter/manuals/FreeSpeakII_Online_Manual/UserGuide/Content/Base/Topics/Specifications_base_station.htm"
+    ],
+    "portsText": "FSII-BASE-II base station, 1RU: 4 x partyline A-D (XLR-3F), 4 x 4-wire (RJ45), program input (XLR-3F per datasheet text), stage announce output (XLR-3M), DB15 relay/GPIO, 2 x LAN (etherCON RJ45), 2 transceiver ports RJ45 plus fibre SFP, DECT sync RJ45, front headset jack (4-pin male or 5-pin female option), 12 V DC input (online manual also lists IEC C14), RF sync in/out. Beltpack FSII-BP19: NOT found.",
+    "colour": null,
+    "notes": "CONFLICT between two Clear-Com sources, so sizes left null. Datasheet FSII-BASE-II-5: 1.75 x 19.0 x 10.2 in (H x W x D) = 44 x 483 x 259 mm, 5.57 lb (2.5 kg). Online manual 'Specifications: Base Station' (FS-BASE-II-5 / FS-BASE-II): 44 x 442 x 250 mm (1.75 x 17.4 x 9.8 in), about 2.3 kg. Width may differ because of rack ears, but depth and weight differ too. Dealer sheets repeat the datasheet values. The older FSII-BASE (not II) is 1.75 x 19.0 x 12.5 in, 10.8 lb (dealer search excerpt) and must not be mixed in. The datasheet text lists program input as XLR-3F but its callout legend says XLR3M: a minor inconsistency. FSII-BP19 beltpack dimensions, weight and headset connector NOT found (search budget ran out)."
+  },
+  {
+    "id": "omnia-11",
+    "sizeMm": { "w": 482.6, "d": 508, "h": 177.8 },
+    "weightKg": 16.3,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://docs.telosalliance.com/docs/appendix-a-performance-specifications",
+      "https://www.manualsdir.com/manuals/782579/omnia-audio-omnia11.html?page=87"
+    ],
+    "portsText": "Omnia.11 FM: 2 x BNC composite outputs, 2 x XLR female analog audio inputs, 2 x XLR male analog audio outputs, 1 x XLR female AES3 input, 2 x XLR male AES3 outputs, 1 x XLR female external sync input (AES3, 110 ohm), RJ45 Ethernet (remote control), DB15 female GPI (support not yet available), IEC mains inlet.",
+    "colour": null,
+    "notes": "Axis order from source: 19 in W x 7 in H x 20 in D (48 x 18 x 51 cm) including connectors, four EIA rack spaces. The weight 36 lb / 16.3 kg is described as SHIPPING weight; net weight not stated. One dealer calls it 1RU with 16.5 kg: contradicts the manual (4 rack spaces), not used. A Telos docs page 'Performance Specifications' (2U, 482 x 428 x 86 mm, 6.57 kg) belongs to a different product."
+  },
+  {
+    "id": "sonifex-dhy-04s",
+    "sizeMm": { "w": 483, "d": 175, "h": 45 },
+    "weightKg": 1.45,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.sonifex.co.uk/de/tbu/dhy04.shtml",
+      "https://sonifex.co.uk/product/dhy-04/",
+      "https://radioactive.org.uk/?p=11402"
+    ],
+    "portsText": "From the Sonifex DHY-04 page (base model; the DHY-04S is the 19 in rack-mount version, Single Automatic Digital TBU, AES/EBU and analogue I/O with Ethernet): mic/line/AES-EBU input XLR 3-pin female; line/AES-EBU output XLR 3-pin male; telephone line and handset RJ11 6/4; conferencing or record audio RJ45; remotes 9-way D-type; Ethernet RJ45; RS232 9-way D-type; IEC mains. Connector set for the DHY-04S not separately confirmed.",
+    "colour": null,
+    "notes": "Not read directly: the Sonifex German page returned 404 on fetch, so the DHY-04S values (48.3 cm W x 17.5 cm D x 4.5 cm H, 1U; net 1.45 kg, gross 2.3 kg) come from a search-result excerpt of Sonifex's table and match the Radioactive dealer listing. The fetched base DHY-04 page gives 21.8 x 17.5 x 4.5 cm and 1.4 kg (desktop). A third listing (notice-facile, 'USB audio interface 483 x 200 x 44 mm, 2.5 kg') is a different product and ignored. Depth is measured to the end of the rear connectors. Verify the S figures against the DHY-04 handbook if a hard source is needed."
+  },
+  {
+    "id": "tascam-da-6400",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://tascam.com/us/product/da-6400",
+      "https://www.fullcompass.com/common/files/31946-TASCAMDA6400DA6400dpDatasheet.pdf",
+      "https://www.farnell.com/datasheets/2200670.pdf"
+    ],
+    "portsText": "Both DA-6400 and DA-6400dp: SMPTE LTC in/out (BNC), Word/Video in (BNC) and Thru/Out (BNC), Ethernet RJ45 (100BASE-TX / 1000BASE-T), RS-422 D-sub 9 female, parallel D-sub 15 female, USB 2.0 A-type, 1/4 in stereo phones jack, AC inlet (DA-6400dp has two power inlets for redundant power), and two slots for optional I/O cards (the audio connectors depend on the cards, e.g. DB25 or AES). 1U.",
+    "colour": null,
+    "notes": "CONFLICT (both TASCAM documents), so sizes and weight left null. TASCAM US product page: 482.6 x 44.7 x 304.8 mm (19.0 x 1.766 x 12.0 in), W x H x D; its own weight lines disagree: 3.4 kg (key features), 3.9 kg / 8.6 lb (spec table) and 3.5 kg elsewhere on the page; DA-6400dp 4.0 kg / 8.8 lb. Full Compass-hosted TASCAM datasheet (search excerpt): 482.6 x 44.9 x 300.5 mm (19 x 1.76 x 11.8 in), 3.9 kg. The Farnell spec-sheet copy (search excerpt) gives the 44.7 x 304.8 version. Height 44.7 vs 44.9 and depth 304.8 vs 300.5 cannot be resolved without a dimension drawing."
+  },
+  {
+    "id": "tieline-gateway",
+    "sizeMm": { "w": 482, "d": 300, "h": 44.45 },
+    "weightKg": 4.0,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.tieline.com/manuals/TLR6200/en/v3_06/gateway-specifications.html",
+      "https://tieline.com/Gateway/"
+    ],
+    "portsText": "Rear: 4 shared RJ45 ports for analog line in/out 1-4 or AES3 in/out 1-4; 2 RJ45 for AES3 inputs 5-8 and 2 for AES3 outputs 5-8; 2 Gigabit LAN (WAN streaming); 2 Gigabit AoIP ports (AES67, ST 2110-30, Livewire+, RAVENNA; WheatNet-IP optional); USB 3.0 host; 2 configurable BNC sync; 2 DB25 control ports (16 CMOS inputs and 16 opto-isolated relay outputs each); DB9 RS232; dual IEC AC inlets (90-240 V). Front: USB 2.0 host, 6.35 mm headphone jack, SD slot, LCD and keypad. Analog is carried on RJ45 breakout, not XLR.",
+    "colour": null,
+    "notes": "Axis order from source: W x H x D = 482 x 44.45 x 300 mm (19 x 1 3/4 x 11 13/16 in) excluding rear connectors; 1U; weight 4 kg (8 lb 13.1 oz). The page covers 'Gateway and Gateway 4' (v3.06 manual); dealers say the Gateway 4/8/16 share the chassis, not verified in a manufacturer table. Markertek lists 8 lb for the 16-channel bundle."
+  },
+  {
+    "id": "argosy-universal-workstation",
+    "sizeMm": { "w": 2273, "d": 1200, "h": 749 },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://argosyconsole.com/shop/90-v-series-1945",
+      "https://argosyconsole.com/about"
+    ],
+    "portsText": "Not applicable (furniture). Modular: desk inserts plus VR-series rack modules; the manufacturer page lists options of a 46 in desk insert or a 75 in desk insert, each with two VR1003 rack units.",
+    "colour": "black or mahogany trim",
+    "notes": "CONFIGURATION-SPECIFIC, not a standard size. Values are for the 90V desk with a 46 in insert and two VR1003 racks: 89.5 in length x 47.25 in depth x 29.5 in height to the desktop = 2273 x 1200 x 749 mm (height is to the desk surface, excluding rack tops and the rack-module rise). Rack space count of VR1003 not stated on that page (dealers describe 10 RU front plus 3 RU rear per bay). Dealers list other builds: 119 in length with 75 in inserts (Dale), 148.5 in for a four-bay E chassis (Full Compass), 179 in for the V4RGE with four 10U/5U modules (B&H), and a B&H 90V2RG-1005 overall 89.5 x 47.25 x 46.25 in. Weight not stated. The Eclipse desk was not researched."
+  },
+  {
+    "id": "flight-case-generic",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [],
+    "portsText": "Not applicable.",
+    "colour": null,
+    "notes": "Not found. Tried Gator GR-6L (gatorcases.com redirects to gatorco.com, which returned 404) and the SKB 1SKB19-R6U page (404); no dealer spec could be searched because the web-search budget was exhausted. Generic row: choose a representative case (for example Gator GR-6L or SKB 3RS-6U) and re-run."
+  },
+  {
+    "id": "nagra-vi",
+    "sizeMm": { "w": 310, "d": 285, "h": 74 },
+    "weightKg": 3.8,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.nagraaudio.com/de/product/nagra-vi-film/"
+    ],
+    "portsText": "4 balanced XLR mic/line inputs (dynamic and +48 V phantom; inputs 5 and 6 line level), 2 AES3 XLR inputs shared with analog inputs 5/6, 2 balanced XLR line outputs, 1 AES3 XLR output (more AES outs on the 15-pin expansion connector), 2 stereo 6.3 mm headphone jacks, 1 x 5-pin LEMO timecode in/out, 1 x 9-pin D-type word clock in/out, 4-pin XLR external DC in (9-16 V), 2 Hirose 12 V accessory outputs (1 A each), USB 2.0 type A host and type B device, contact-closure start/stop connector, CompactFlash type I/II slot.",
+    "colour": null,
+    "notes": "Axis order from source: W x H x D = 310 x 74 x 285 mm including the battery box; weight 3.8 kg (8.3 lb) with the battery pack (the Li-ion pack is about 0.8 kg). The page describes the current 8-track VI. An older 2007 user review gives 294 x 320 x 75 mm and 3 kg without battery (not graded, not used). Product is discontinued/legacy in the repo notes."
+  },
+  {
+    "id": "neutrik-ne8mx",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neutrik.com/en/product/ne8mx.pdf"
+    ],
+    "portsText": "Connector, not a device: etherCON cable connector carrier for pre-assembled RJ45 plugs (the carrier does not include the RJ45 plug). Nickel-plated zinc diecast shell (ZnAl4Cu1), polyamide PA 6 boot, POM strain relief, chuck-type strain relief for cable OD 4.5-8 mm (two cable protection elements for cable up to 8 mm), 20 N insertion and withdrawal force, more than 1000 mating cycles, operating range -30 to +80 C, 9 colour-coded boot options, flat on the housing for orientation. Does not intermate with the Cat6 chassis connectors NE8FDY-C6 and NE8FDY-C6-B.",
+    "colour": null,
+    "notes": "Body length, width and height NOT found in the datasheet text (the PDF has a dimension drawing but the numbers are not in the extracted text). Shell is nickel (silver-grey) per the sheet. Argosy's NE8MX-1 variant is 3.5-8 mm and is for non pre-assembled cables only. Remains a connector for the scene (no GLB rendered), as the repo design says."
+  },
+  {
+    "id": "rtw-touchmonitor-tm7",
+    "sizeMm": { "w": null, "d": null, "h": null },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://bpm-media.imgbolt.de/media/pdf/c1/07/ca/EN_RTW_TM7_Datasheet.pdf",
+      "https://canford.de/ProductResources/resources/R/RTW/RTW%20TM7%20Datasheet.pdf"
+    ],
+    "portsText": "NOT FOUND (no connector list retrieved).",
+    "colour": null,
+    "notes": "Not found. RTW publishes a TM7 datasheet (12/2011 and a 05/2024 revision) with dimension drawings in mm for the 7 in table-top 20700 version, the 20700-3U version, the 20700VID version and an OEM version (10 mm clearance on all sides, 100 mm rear); the numbers are in the drawings and were not extractable. Tried the bpm-media copy (fetch returned an unrelated homepage), the Canford copy (403), rtw.com pages (404), Teltec. The B&H listings found are for the TMR7 (a different product: about 198 x 139.5-163 x 46-95 mm with stand, about 2.7 kg without mains adapter): do not use for the TM7."
+  }
+]

@@ -57,7 +57,8 @@ const hasFullSize = (s: SizeMmT): boolean => (s.w ?? 0) > 0 && (s.d ?? 0) > 0 &&
  *  - ok            labelled axes, one source (or sources that agree);
  *  - axis-assumed  the axis order was assumed, inferred, re-ordered by us or read from a search summary instead of the document;
  *  - conflict      two sources disagree on a dimension of the size (not only on the weight);
- *  - partial       one or two axes only (the missing ones would be guessed).
+ *  - partial       one or two axes only (the missing ones would be guessed). Stored axes are 1 or 2 (then `partial` is required) or 0: the Wave 0c
+ *                  size merge keeps the partial numbers in `notes` only, so `sizeMm` stays empty and the row stays missing.
  */
 export const SizeConfidence = z.enum(['ok', 'axis-assumed', 'conflict', 'partial'])
 export type SizeConfidenceT = z.infer<typeof SizeConfidence>
@@ -150,9 +151,13 @@ export const PlanRow = z
     path: ['sizeConfidence'],
     message: 'a datasheet or dealer row needs sizeConfidence ok; an assumed axis order, a conflict between sources or a partial size makes the row an estimate',
   })
-  .refine((r) => (axisCount(r.sizeMm) >= 1 && axisCount(r.sizeMm) <= 2) === (r.sizeConfidence === 'partial'), {
+  .refine((r) => !(axisCount(r.sizeMm) >= 1 && axisCount(r.sizeMm) <= 2) || r.sizeConfidence === 'partial', {
     path: ['sizeConfidence'],
-    message: "sizeConfidence is 'partial' exactly when one or two of the three axes are known",
+    message: "sizeConfidence is 'partial' when one or two of the three axes are stored",
+  })
+  .refine((r) => r.sizeConfidence !== 'partial' || axisCount(r.sizeMm) <= 2, {
+    path: ['sizeConfidence'],
+    message: "sizeConfidence 'partial' cannot go with a complete size (all three axes stored)",
   })
 export type PlanRow = z.infer<typeof PlanRow>
 

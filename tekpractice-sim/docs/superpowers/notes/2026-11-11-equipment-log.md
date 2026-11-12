@@ -184,3 +184,76 @@ Before: 119 promotable, 6 estimate, 190 missing. A promotable row is promoted on
 - Build into a scratch outDir (`npx vite build --outDir <scratch>`), `node tools/chunk-budget.mjs <scratch>`: budget OK; `tools/room-thumbs.ts` left no diff.
 - Playwright on a private preview (`E2E_PORT=4181`, scratch outDir, scratch config): `creation-drawer` and `creation-beta`, 60 passed, 1 skipped.
 - Not run: an independent re-review of this diff; a real stage 1 and stage 2 on a real device with a shipped GLB (the tool is tested on temporary copies of the real files; the first real promotion will be the Wave 1 DBL); the full Playwright suite.
+
+## Wave 0c size research merge (2026-11-12)
+
+The four size-research result files (`data-completion-A..D.json`, 190 rows: exactly the rows that were `missing` in the plan) are merged into `content/proposals/equipment-plan.json` by `tools/merge-size-research.ts` (one-off, idempotent: a merged row carries the marker « Wave 0c size research » in its notes and is not changed again; `--dry-run` writes nothing). Tests: `tests/tools/mergeSizeResearch.test.ts` (24 tests, on fixtures and on the real plan). No number was invented, rounded or converted by the merge: every stored axis is a value the result file gives for that id; the 125 rows that were not researched are untouched (their sizes are pinned by `tests/tools/fixtures/plan-sizes-before-0c.json`).
+
+The four result files are committed as `content/proposals/size-research/data-completion-{A,B,C,D}.json` (the tool and the test need them; the originals stay in the research notes folder). They hold numbers, URLs and our own research notes, no photo.
+
+### Rules as applied
+
+1. Only `missing` / `estimate` rows are touched. A datasheet or dealer row keeps its size and a disagreeing result is logged as a conflict (no such case in the real data: none of the 125 sized rows was researched; the fixture test covers it).
+2. `sizeMm` is stored only for a complete triple with a source grade and no conflict. A partial result stores nothing in `sizeMm`: the axes that exist are copied into the notes (« Partial axes (not stored in sizeMm) ... »), `sizeConfidence` is `partial`.
+3. `sizeConfidence`: `conflict` (a sentence of the notes says sources disagree about a dimension; `sizeMm` stays empty and the held-back value stays in the notes, even where the result file filled one source's value), then `partial`, then `axis-assumed` (axis order unstated, assumed, inferred, derived from rack units, mapped by us, read from a search summary, or a size that belongs to a variant the row only assumes), else `ok`. A conflict about the weight, the ports, a packaging figure or another variant is not a size conflict. The label comes from a text classifier plus `CURATED`, the rows where my full reading of the notes differs from the classifier, each with its reason in the code and in the row's notes (« [Wave 0c size research, grade ..., sizeConfidence ...: reason] »).
+4. `dataQuality` is recomputed with `effectiveQuality`; a test holds it for all 315 rows.
+5. Result URLs are added after the existing sources (manufacturer pages first, then manuals, dealers, others). An annotation such as « (search summary) » is cut and spaces are percent-encoded (9 URLs). 11 URLs were not taken, by the Wave 0b `isNonSource` rule plus Wikipedia and one reviewer site: Wikipedia (the three cable families, the 19-inch rack, Coles 4038), Sound On Sound (lexicon-pcm96), erinsaudiocorner (yamaha-ns-10m), Ken Rockwell (sony-mdr-7506), Radio World (wheatstone-lx-24), a Long & McQuade bundle page with an adapter in its slug (coles-4038), and the Canford page of the WL93 (its slug says « cable », the accessory rule; the Thomann and Adorama pages stay).
+6. Round bodies: the result files already use w = d = diameter (widest), h = length, as `shure-beta-58a`; the merge copies them and a test holds it. The stepped bodies (beyerdynamic M 160, Rode NT4, Neumann USM 69 i, the Schoeps CMC 6 sets) were not mapped by the research and are not mapped here.
+7. The 8 cable and connector rows (family `cable-assembly-v2`) store no size and stay `missing`; the connector pair goes in the notes (« Connector definition: ... »), lengths where the research found any (it found none from a manufacturer).
+8. Telos « Xenon »: the plan has no such row (the research found no such product), so there is nothing to block. The merge blocks any row whose id or product says Xenon with « no such product found » (tested on a fixture).
+9. Weights: a result weight is set where the plan had none (107 rows); two disagreements keep the plan value and are logged (k-m-26772 3.1 vs 3.41 kg, yamaha-ns-10m 6 vs 6.3 kg).
+
+### Counts after the merge (315 rows)
+
+| dataQuality / sizeConfidence | before | after |
+|---|---|---|
+| datasheet / ok | 63 | 112 |
+| dealer / ok | 35 | 41 |
+| estimate / axis-assumed | 14 | 42 |
+| estimate / conflict | 9 | 9 |
+| estimate / partial | 4 | 4 |
+| missing / ok | 190 | 42 |
+| missing / axis-assumed | 0 | 19 |
+| missing / conflict | 0 | 40 |
+| missing / partial | 0 | 6 |
+| total | 315 | 315 |
+
+Of the 190 researched rows: 55 are now promotable (datasheet or dealer, three axes, confidence ok), 28 are estimates with a size (beta-modelled eligible), 107 stay missing (blocked): 40 conflict, 19 axis order unknown (a figure exists, unlabelled, in the notes), 6 partial, 42 nothing usable (not found, generic rows, cable families, configuration-dependent consoles).
+
+By wave (promotable / beta-modelled / blocked), before in brackets:
+
+| Wave | promotable | beta-modelled | blocked | total |
+|---|---|---|---|---|
+| 1 | 32 (30) | 11 (11) | 6 (8) | 49 |
+| 2 | 45 (35) | 18 (9) | 24 (43) | 87 |
+| 3 | 41 (23) | 16 (6) | 35 (63) | 92 |
+| 4 | 29 (9) | 5 (1) | 36 (60) | 70 |
+| 5 | 6 (1) | 5 (0) | 6 (16) | 17 |
+| all | 153 (98) | 55 (27) | 107 (190) | 315 |
+
+By dataQuality and wave (waves 1 to 5): datasheet 25 / 30 / 30 / 22 / 5, dealer 7 / 15 / 11 / 7 / 1, estimate 11 / 18 / 16 / 5 / 5, missing 6 / 24 / 35 / 36 / 6.
+
+Wave 1: **32 promotable, 11 beta-modelled, 6 blocked** (a promotable row is promoted only when its spec also documents the ports). The 6 blocked: radial-j48, k-m-25400, k-m-210-6, k-m-259, sennheiser-ew-100-g4 (a size exists in the notes but its axes are unlabelled) and behringer-ha400 (conflict on width and depth). Blocked share per wave: 12%, 28%, 38%, 51%, 35% (the more-than-half rule now touches only wave 4, 36 of 70; it was 60 of 70).
+
+### Conflict list (40 rows, sizes null, both values in the notes)
+
+- Wave 1: behringer-ha400 (Behringer manuals map width and depth differently).
+- Wave 2: behringer-x32 (900 x 528 x 200 vs 900 x 550 x 230 on one dealer page), crown-xls-2502 (10.7 in is 272 mm, 21.2 cm is 212 mm, same page), mackie-1604vlz4 (two Thomann tables), sennheiser-ew-dx-em-2 (189 vs 206 mm in one document), shure-psm-900 (depth 177 labelled vs 166), mackie-big-knob-studio (three dealers vs one outlier), shure-sm81 (« 2 in. » vs 23.5 mm in the sheet), shure-ulx-d-receiver (Shure's mapping puts 42 mm as depth), schoeps-cmc-6-mk-4 (116 vs 138 mm combined), sennheiser-mkh-418-s (Canford 250 mm vs 280 mm), klark-teknik-dn100 (two generations).
+- Wave 3: l-acoustics-kara-ii (EN page 733 x 500 x 252 vs FR 701 x 252 x 403 vs ProSoundWeb 734 x 483), avid-protools-sync-x (depth 343 vs 419), drawmer-mc2-1, ebtech-hum-eliminator-he-2, l-acoustics-la4x (depth 420 vs 406), neumann-usm-69-i, rme-m-32-ad (depth 200 vs 242), rode-nt4, rupert-neve-designs-shelford-channel (267 vs 260), spl-phonitor-x (depth 300 vs Thomann 335), allen-heath-ab168, focusrite-rednet-a16r-mkii, jbl-eon715 (702 x 438 x 351 vs 716 x 438 x 358 on one page), l-acoustics-x8 (depth 164 mm vs 10.4 in), schoeps-cmc-6-mk-41, soundcraft-signature-12mtk.
+- Wave 4: rack-generic-6u-16u, db-audiotechnik-v8 (depth 460 vs 406 inside d&b's own documents), allen-heath-zed-436, clear-com-freespeak-ii (two Clear-Com sources), lexicon-pcm92, meyer-sound-galileo-galaxy-816, rode-lavalier-ii, tascam-da-6400 (two TASCAM documents), clear-com-fsii-bp24, shure-mx418d, shure-wl93.
+- Wave 5: avid-venue-s6l (the sheet prints 36.9 in for 989 mm).
+
+### Notes and deviations
+
+- **Schema relaxed (one rule).** The Wave 0b schema said `partial` exactly when one or two axes are stored. The brief asks for partial results to be kept out of `sizeMm` with `sizeConfidence: partial`, which that rule refuses. It now says: one or two stored axes require `partial`, and `partial` never goes with a complete size (zero stored axes is allowed). `tools/equipmentPlan.ts` and one assertion of `equipmentPlanTraits.test.ts` (the consistency loop) changed; the schema-refusal tests pass unchanged.
+- **Conflict rows lose their size.** The 9 rows Wave 0b marked `conflict` keep a size (beta-modelled eligible); the 40 conflicts of this merge store none, as the brief says (Kara II), so they are blocked until a datasheet pass settles them. The held-back values are in the notes, so restoring a size (estimate, beta-modelled) is a one-line decision per row. Where the manufacturer figure is probably right and a dealer is the outlier: spl-phonitor-x, sennheiser-mkh-418-s, shure-sm81, allen-heath-ab168.
+- **Keyword hits judged not about the size** (labelled `ok` or `axis-assumed` by `CURATED`): « inferred » about connector counts (shure-axient-digital-ad4d, shure-ua845uwb), weight-only conflicts (allen-heath-sq-6, k-m-26772, lynx-aurora-n, audix-d6), packaging, older revisions or other variants (dpa-4060, neumann-u-67, l-acoustics-ks28, wisycom-mcr54). Rows whose size belongs to a variant the row only assumes are `axis-assumed` (cisco-sg350, netgear-m4250, eaton-5p-1u-ups, ssl-origin, nexo-geo-m10, argosy-universal-workstation). Heights and widths derived from rack units (db-audiotechnik-d80 and d40, nexo-nxamp4x4mk2, canare-162u-x21, avid-protools-mtrx-studio) are `axis-assumed`: derived, not printed.
+- **Proposals regenerated.** The plan sizes feed the Bêta proposals (placeholder boxes), so `catalog-proposals.json` was regenerated with `npx tsx tools/propose-content.ts` only (not the whole `sync:kb`); the 15 level drafts it also rewrites (a date) were not kept. The proposal notes of the entries that gained a size carry the new date.
+- **Do not run `import-equipment-plan.ts --refresh-sources` on this plan without re-running the merge** (`npx tsx tools/merge-size-research.ts` tops the sources up again; the notes marker keeps the rest idempotent).
+- **Unverified.** I did not open any of the 378 URLs: the sizes are the research files' own, and many of those say a page returned 403 or 404 or was read from a search summary; those rows are `axis-assumed` or `conflict`, not `ok`. The merge never reads the `.md` companions of the research files; their prose is in the `notes` field of the JSON.
+
+### Gate numbers (Wave 0c, 2026-11-12)
+
+- `npx tsc --noEmit` clean; `npm run lint` clean; `npm run validate:catalog` valid.
+- `npx vitest run tests/tools` with `BLENDER_EXE=D:\Blender\blender.exe`: 53 files, 1269 tests, all passed (the new file has 24). `tests/creation` and `tests/scene/modelIds.test.ts`: 77 files, 1138 tests, all passed (the proposals file changed).
+- Not run: `validate:assets`, the full vitest suite, a build and the chunk budget, Playwright. No asset and no `src` file changed, but `src/creation` imports `catalog-proposals.json`, which grew by 83 `sizeMm` objects (a few KB, no new entry): the chunk budget should be re-checked with the next wave build.
