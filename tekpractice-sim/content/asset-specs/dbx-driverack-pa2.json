@@ -1,0 +1,183 @@
+{
+  "id": "dbx-driverack-pa2",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44,
+    "d": 146
+  },
+  "ports": [
+    {
+      "portId": "out-1",
+      "face": "io",
+      "xMm": 52,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-2",
+      "face": "io",
+      "xMm": 86,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-3",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-4",
+      "face": "io",
+      "xMm": 154,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-5",
+      "face": "io",
+      "xMm": 188,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-6",
+      "face": "io",
+      "xMm": 222,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-rta-mic",
+      "face": "io",
+      "xMm": 286,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-1",
+      "face": "io",
+      "xMm": 330,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-2",
+      "face": "io",
+      "xMm": 364,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 400,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 436,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 50,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 20,
+      "plateRgb": 1908257,
+      "bodyRgb": 2763566,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 60,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.dbxpro.com/en/products/driverack-pa2",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbxpro.com/en/products/driverack-pa2",
+      "note": "dbx product page (opened 2026-11-12): (2) female XLR line inputs, (1) female XLR RTA mic input, (6) male XLR line outputs; 1.75 x 5.75 x 19 in (H x D x W) = 44.4 x 146 x 482.6 mm, 2.4 kg. The page names neither the Ethernet port nor the mains inlet (both come from the knowledge base extraction of the manual: key_specs network and mains_connector). Equipment plan size 483 x 146 x 44 mm (grade datasheet, confidence ok). Port and control positions are GUESSES: no rear drawing or photo was read; the front power button is a stand-in position."
+    },
+    {
+      "kind": "manual",
+      "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-a_fr-pdf",
+      "note": "dbx DriveRack PA2 manual as listed by the knowledge base (not opened in this run)."
+    }
+  ]
+}

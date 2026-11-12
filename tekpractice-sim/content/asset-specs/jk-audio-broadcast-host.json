@@ -1,0 +1,108 @@
+{
+  "id": "jk-audio-broadcast-host",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 178,
+    "h": 41,
+    "d": 152
+  },
+  "ports": [
+    {
+      "portId": "in-send-xlr",
+      "face": "io",
+      "xMm": 28,
+      "yMm": 20.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-send-2",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 20.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-caller-xlr",
+      "face": "io",
+      "xMm": 94,
+      "yMm": 20.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-stereo",
+      "face": "io",
+      "xMm": 124,
+      "yMm": 20.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "opposite",
+      "xMm": 160,
+      "yMm": 14,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 6,
+      "plateFilletMm": 2.6,
+      "filletMm": 3,
+      "filletSegments": 10,
+      "rearInsetMm": 5,
+      "seamMm": 12,
+      "feetMm": 2,
+      "feetDiaMm": 12,
+      "plateRgb": 1908257,
+      "bodyRgb": 2763566,
+      "ventSlots": 6,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 2.4,
+      "ventSlotLenMm": 30,
+      "ventPitchMm": 6,
+      "ventDepthMm": 1.2,
+      "ventFromRearMm": 20
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "portsDocumented": true,
+  "portsSource": "https://decibel.ch/upfiles/documents/jk-audio-broadcast-host-datasheet-27723.pdf",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://decibel.ch/upfiles/documents/jk-audio-broadcast-host-datasheet-27723.pdf",
+      "note": "JK Audio Broadcast Host datasheet (copy hosted by a dealer, read as text on 2026-11-12): analog desktop digital hybrid, 7 x 6 x 1.6 in (18 x 15 x 4.2 cm) = 178 x 152 x 41 mm per the plan, 2.2 lb (1 kg), 120-240 VAC power supply included (external, no mains inlet); balanced female XLR send input with a mic / line switch, 3.5 mm mono line input (send 2), balanced male XLR caller output, 3.5 mm stereo output (left = send, right = caller), 3.5 mm headphone jack, RJ11C phone-line and auxiliary-phone jacks, guest-module remote jack. The RJ11 jacks, the remote jack and the DC input have no catalogue connector: drawn on the picture only. Positions are GUESSES (no panel drawing read); the headphone jack is placed on the front."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://avlgear.com/products/jk-audio-host-broadcast-host-desktop-digital-telephone-hybrid",
+      "note": "AVL dealer page (equipment plan source; its fetch answered HTTP 429 in this run)."
+    }
+  ]
+}

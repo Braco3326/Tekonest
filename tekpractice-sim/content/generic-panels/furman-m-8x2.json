@@ -1,0 +1,523 @@
+{
+ "note": "Generic panel artwork (no brand marks), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+ "faces": {
+  "opposite": {
+   "wMm": 482,
+   "hMm": 44,
+   "base": "#17181b",
+   "items": [
+    {
+     "kind": "rect",
+     "x": 60,
+     "y": 8,
+     "w": 110,
+     "h": 28,
+     "fill": "#101114",
+     "stroke": "#4a4d52",
+     "radius": 2
+    },
+    {
+     "kind": "circle",
+     "x": 75,
+     "y": 22,
+     "r": 1.6,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 86,
+     "y": 22,
+     "r": 1.6,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 97,
+     "y": 22,
+     "r": 1.6,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 108,
+     "y": 22,
+     "r": 1.6,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 119,
+     "y": 22,
+     "r": 1.6,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 130,
+     "y": 22,
+     "r": 1.6,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 141,
+     "y": 22,
+     "r": 1.6,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 152,
+     "y": 22,
+     "r": 1.6,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 163,
+     "y": 22,
+     "r": 1.6,
+     "fill": "#d8b23a"
+    },
+    {
+     "kind": "rect",
+     "x": 249,
+     "y": 16,
+     "w": 22,
+     "h": 12,
+     "fill": "#2a2c30",
+     "stroke": "#8a8e94",
+     "radius": 0.8
+    },
+    {
+     "kind": "text",
+     "x": 260,
+     "y": 36,
+     "size": 3.6,
+     "text": "POWER",
+     "fill": "#cfd3d8",
+     "anchor": "middle"
+    },
+    {
+     "kind": "circle",
+     "x": 310,
+     "y": 22,
+     "r": 7,
+     "fill": "#1c1d20",
+     "stroke": "#6b6e73"
+    },
+    {
+     "kind": "circle",
+     "x": 310,
+     "y": 25.85,
+     "r": 0.9800000000000001,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "text",
+     "x": 310,
+     "y": 36,
+     "size": 3.6,
+     "text": "LIGHTS",
+     "fill": "#cfd3d8",
+     "anchor": "middle"
+    },
+    {
+     "kind": "rect",
+     "x": 427.3,
+     "y": 13.3,
+     "w": 25.4,
+     "h": 17.4,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 2
+    },
+    {
+     "kind": "rect",
+     "x": 433,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 444,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 438.5,
+     "y": 16,
+     "w": 3,
+     "h": 3,
+     "fill": "#3a3d42"
+    }
+   ]
+  },
+  "io": {
+   "wMm": 482,
+   "hMm": 44,
+   "base": "#26272b",
+   "items": [
+    {
+     "kind": "rect",
+     "x": 22,
+     "y": 3,
+     "w": 438,
+     "h": 38,
+     "fill": "#26272b",
+     "stroke": "#3a3d42",
+     "radius": 1
+    },
+    {
+     "kind": "rect",
+     "x": 53.3,
+     "y": 13.3,
+     "w": 25.4,
+     "h": 17.4,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 2
+    },
+    {
+     "kind": "rect",
+     "x": 59,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 70,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 64.5,
+     "y": 16,
+     "w": 3,
+     "h": 3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "text",
+     "x": 66,
+     "y": 40,
+     "size": 3.6,
+     "text": "1",
+     "fill": "#9aa0a6",
+     "anchor": "middle"
+    },
+    {
+     "kind": "rect",
+     "x": 104.3,
+     "y": 13.3,
+     "w": 25.4,
+     "h": 17.4,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 2
+    },
+    {
+     "kind": "rect",
+     "x": 110,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 121,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 115.5,
+     "y": 16,
+     "w": 3,
+     "h": 3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "text",
+     "x": 117,
+     "y": 40,
+     "size": 3.6,
+     "text": "2",
+     "fill": "#9aa0a6",
+     "anchor": "middle"
+    },
+    {
+     "kind": "rect",
+     "x": 155.3,
+     "y": 13.3,
+     "w": 25.4,
+     "h": 17.4,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 2
+    },
+    {
+     "kind": "rect",
+     "x": 161,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 172,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 166.5,
+     "y": 16,
+     "w": 3,
+     "h": 3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "text",
+     "x": 168,
+     "y": 40,
+     "size": 3.6,
+     "text": "3",
+     "fill": "#9aa0a6",
+     "anchor": "middle"
+    },
+    {
+     "kind": "rect",
+     "x": 206.3,
+     "y": 13.3,
+     "w": 25.4,
+     "h": 17.4,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 2
+    },
+    {
+     "kind": "rect",
+     "x": 212,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 223,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 217.5,
+     "y": 16,
+     "w": 3,
+     "h": 3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "text",
+     "x": 219,
+     "y": 40,
+     "size": 3.6,
+     "text": "4",
+     "fill": "#9aa0a6",
+     "anchor": "middle"
+    },
+    {
+     "kind": "rect",
+     "x": 257.3,
+     "y": 13.3,
+     "w": 25.4,
+     "h": 17.4,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 2
+    },
+    {
+     "kind": "rect",
+     "x": 263,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 274,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 268.5,
+     "y": 16,
+     "w": 3,
+     "h": 3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "text",
+     "x": 270,
+     "y": 40,
+     "size": 3.6,
+     "text": "5",
+     "fill": "#9aa0a6",
+     "anchor": "middle"
+    },
+    {
+     "kind": "rect",
+     "x": 308.3,
+     "y": 13.3,
+     "w": 25.4,
+     "h": 17.4,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 2
+    },
+    {
+     "kind": "rect",
+     "x": 314,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 325,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 319.5,
+     "y": 16,
+     "w": 3,
+     "h": 3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "text",
+     "x": 321,
+     "y": 40,
+     "size": 3.6,
+     "text": "6",
+     "fill": "#9aa0a6",
+     "anchor": "middle"
+    },
+    {
+     "kind": "rect",
+     "x": 359.3,
+     "y": 13.3,
+     "w": 25.4,
+     "h": 17.4,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 2
+    },
+    {
+     "kind": "rect",
+     "x": 365,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 376,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 370.5,
+     "y": 16,
+     "w": 3,
+     "h": 3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "text",
+     "x": 372,
+     "y": 40,
+     "size": 3.6,
+     "text": "7",
+     "fill": "#9aa0a6",
+     "anchor": "middle"
+    },
+    {
+     "kind": "rect",
+     "x": 410.3,
+     "y": 13.3,
+     "w": 25.4,
+     "h": 17.4,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 2
+    },
+    {
+     "kind": "rect",
+     "x": 416,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 427,
+     "y": 20.5,
+     "w": 3,
+     "h": 5,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 421.5,
+     "y": 16,
+     "w": 3,
+     "h": 3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "text",
+     "x": 423,
+     "y": 40,
+     "size": 3.6,
+     "text": "8",
+     "fill": "#9aa0a6",
+     "anchor": "middle"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,142 @@
+{
+  "id": "apple-mac-studio",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 197,
+    "h": 95,
+    "d": 197
+  },
+  "ports": [
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb-a-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "usb-a",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb-a-2",
+      "face": "io",
+      "xMm": 74,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "usb-a",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "tb-1",
+      "face": "io",
+      "xMm": 94,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "tb-2",
+      "face": "io",
+      "xMm": 108,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "tb-3",
+      "face": "io",
+      "xMm": 122,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "tb-4",
+      "face": "io",
+      "xMm": 136,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 156,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb-c-front-1",
+      "face": "opposite",
+      "xMm": 138,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb-c-front-2",
+      "face": "opposite",
+      "xMm": 154,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 20,
+      "plateFilletMm": 9,
+      "filletMm": 9,
+      "filletSegments": 12,
+      "plateRgb": 13225169,
+      "bodyRgb": 13225169
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 8
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.apple.com/mac-studio/specs/",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.apple.com/mac-studio/specs/",
+      "note": "Apple Mac Studio tech specs (opened 2026-11-12): 3.7 x 7.7 x 7.7 in (H x W x D) = 95 x 197 x 197 mm, 2.7 kg (M5 Max) / 3.6 kg (Ultra), silver. Front (M5 Max): two USB-C (up to 10 Gb/s) and an SDXC slot. Back: four Thunderbolt 5 (USB-C), two USB-A (USB 3), one HDMI 2.1, one 10 Gb Ethernet (RJ-45), a 3.5 mm headphone jack and a power socket (inlet type not named, three-prong cord). The SDXC slot, HDMI and the power socket have no catalogue connector or signal and are not ports (drawn on the picture only); Thunderbolt uses the usb-c connector with the usb-audio signal. Positions are GUESSES (no drawing read). A plain filleted box."
+    }
+  ]
+}

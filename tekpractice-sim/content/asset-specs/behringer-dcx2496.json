@@ -1,0 +1,147 @@
+{
+  "id": "behringer-dcx2496",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 44.5,
+    "d": 217
+  },
+  "ports": [
+    {
+      "portId": "out-1",
+      "face": "io",
+      "xMm": 52,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-2",
+      "face": "io",
+      "xMm": 86,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-3",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-4",
+      "face": "io",
+      "xMm": 154,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-5",
+      "face": "io",
+      "xMm": 188,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-6",
+      "face": "io",
+      "xMm": 222,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-a",
+      "face": "io",
+      "xMm": 300,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-b",
+      "face": "io",
+      "xMm": 336,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-c",
+      "face": "io",
+      "xMm": 372,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 20,
+      "plateRgb": 2105894,
+      "bodyRgb": 2895153,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 50,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 70,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://m.thomann.de/gb/3DView_AR_162451.html",
+      "note": "Thomann 3D-view page (equipment plan source, grade dealer): 44.5 x 482.6 x 217 mm (H x W x D, 1U), about 3 kg; 3 analog inputs (one switchable AES/EBU), 6 outputs. Not the DCX2496LE. PORTS ARE NOT DOCUMENTED here: the page states counts only (3 in, 6 out), not connectors or genders, so portsDocumented is not set (beta-modelled). The XLR genders, the order of the connectors and every position are GUESSES; the mains inlet and the RS-232 port are not modelled. The page was not re-opened in this run."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://manualmachine.com/behringer/dcx2496/1942632-specification-sheet",
+      "note": "Behringer specification sheet as hosted by a third-party manual site (equipment plan source, not re-opened in this run)."
+    }
+  ]
+}

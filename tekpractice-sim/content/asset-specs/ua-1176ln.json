@@ -1,0 +1,77 @@
+{
+  "id": "ua-1176ln",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 89,
+    "d": 311
+  },
+  "ports": [
+    {
+      "portId": "in-xlr",
+      "face": "io",
+      "xMm": 380,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr",
+      "face": "io",
+      "xMm": 340,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 3,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 40,
+      "plateRgb": 1513499,
+      "bodyRgb": 2500395,
+      "ventSlots": 12,
+      "ventColumns": 3,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 60,
+      "ventPitchMm": 10,
+      "ventColPitchMm": 90,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 40
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.uaudio.com/hardware/compressors/1176ln.html",
+      "note": "Universal Audio product page (equipment plan source, grade datasheet, with the AVL dealer page): 483 x 89 x 311 mm (2U), about 5.0 kg; XLR and barrier terminal strip connections, stereo link, 600 ohm. The page was not re-opened in this run (the retry answered HTTP 429). PORTS NOT DOCUMENTED here: the XLR genders and positions are guesses, the terminal strip, stereo-link jack and the mains inlet are not modelled, so portsDocumented is not set (beta-modelled). The front picture (meter, four knobs, ratio keys) is generic."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://avlgear.com/collections/preamplifiers/products/universal-audio-1176ln-classic-limiting-amplifier",
+      "note": "AVL dealer page (equipment plan source; its fetch answered HTTP 429 in this run)."
+    }
+  ]
+}

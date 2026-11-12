@@ -1,0 +1,98 @@
+{
+  "id": "shure-psm-300",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 198,
+    "h": 43,
+    "d": 172
+  },
+  "ports": [
+    {
+      "portId": "in-1",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 21.5,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-2",
+      "face": "io",
+      "xMm": 58,
+      "yMm": 21.5,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-loop-1",
+      "face": "io",
+      "xMm": 100,
+      "yMm": 21.5,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-loop-2",
+      "face": "io",
+      "xMm": 128,
+      "yMm": 21.5,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 6,
+      "plateFilletMm": 2.6,
+      "filletMm": 3,
+      "filletSegments": 10,
+      "rearInsetMm": 5,
+      "seamMm": 14,
+      "feetMm": 2,
+      "feetDiaMm": 12,
+      "plateRgb": 1908257,
+      "bodyRgb": 2500395,
+      "ventSlots": 7,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 2.4,
+      "ventSlotLenMm": 30,
+      "ventPitchMm": 6,
+      "ventDepthMm": 1.2,
+      "ventFromRearMm": 30
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "portsDocumented": true,
+  "portsSource": "https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf",
+      "note": "Shure PSM 300 spec sheet (read as text on 2026-11-12): P3T half-rack transmitter 43 x 198 x 172 mm (H x W x D), 783 g, 12-15 V DC external supply; rear-panel balanced inputs and loop outputs on 6.35 mm (1/4 in) TRS, a detachable antenna, front-panel controls with an input level knob and a one-touch sync. The sheet gives the connector types and the rear panel, not the count: two inputs and two loop outputs (the stereo L and R pair) follow the knowledge base (P3T audio inputs and loop outputs, 2 each), so portsDocumented is set. The antenna (BNC) and DC input have no catalogue signal type and are drawn on the picture only (no port). The P3R body-pack in the same record is a separate device. Port and control positions are GUESSES (no panel drawing read)."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.shure.com/fr-FR/docs/guide/PSM300",
+      "note": "Shure PSM 300 user guide as listed by the knowledge base (the page returned navigation only when opened in this run)."
+    }
+  ]
+}
