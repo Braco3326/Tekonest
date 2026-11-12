@@ -271,6 +271,51 @@ describe('active speaker template (Genelec 8030C / K12.2)', () => {
   })
 })
 
+describe('patchbay (Wave 1 stage 2): no route ever returns to its own port', () => {
+  const jack = (id: string): PlanPort => ({ id, role: 'jack', dir: 'bidir', connector: 'trs-quarter', signal: 'line-level-pro' })
+  it('a front jack is normalled to the rear jack of the same number, both ways, and no port routes to itself', () => {
+    const { t, issues } = asDevice('patchbay', { traits: ['rack'] }, [jack('front-1'), jack('front-2'), jack('rear-1'), jack('rear-2')])
+    expect(t.routing).toEqual([
+      { from: 'front-1', to: ['rear-1'] },
+      { from: 'front-2', to: ['rear-2'] },
+      { from: 'rear-1', to: ['front-1'] },
+      { from: 'rear-2', to: ['front-2'] },
+    ])
+    for (const r of t.routing ?? []) expect(r.to).not.toContain(r.from)
+    expect(issues).toEqual([])
+  })
+  it('a patchbay whose jacks are not named front / rear gets no routes rather than a self route (the shipped StudioPatch has none)', () => {
+    const { t } = asDevice('patchbay', {}, [jack('tt-1'), jack('tt-2')])
+    expect(t.routing).toBeUndefined()
+  })
+  it('an outboard device with only bidirectional jacks gets no route to its own port either', () => {
+    const { t } = asDevice('outboard', { traits: ['processor'] }, [jack('io-1'), jack('io-2')])
+    for (const r of t.routing ?? []) expect(r.to).not.toContain(r.from)
+  })
+})
+
+describe('an Ethernet control port takes no audio route (Wave 1 stage 2)', () => {
+  const net: PlanPort = { id: 'net', role: 'net', dir: 'bidir', connector: 'rj45', signal: 'aoip' }
+  it('DriveRack PA2 (processor): the RJ45 is control / firmware, so no input routes to it and it routes nowhere', () => {
+    const r = planRow('dbx-driverack-pa2')
+    const given: PlanPort[] = [LINE_IN, { ...LINE_OUT, id: 'out-1' }, { ...LINE_OUT, id: 'out-2' }, net, MAINS]
+    const { t, parsed, issues } = asDevice(r.category, { traits: r.traits }, given)
+    expect(t.ports.map((p) => p.portId)).toContain('net') // the port stays (cables, connector rules)
+    expect(t.routing).toEqual([{ from: 'in-line', to: ['out-1', 'out-2'] }])
+    expect(JSON.stringify(parsed.routing)).not.toContain('"net"')
+    expect(issues).toEqual([])
+  })
+  it('an active monitor (KH 120 II): the RJ45 does not reach the transducer', () => {
+    const r = planRow('neumann-kh-120-ii')
+    const { t } = asDevice(r.category, { traits: r.traits }, [{ ...LINE_IN, id: 'in-analog' }, net, MAINS])
+    expect(t.routing).toEqual([{ from: 'in-analog', to: ['transducer'] }])
+  })
+  it('a codec (network audio by nature) keeps the RJ45 as audio', () => {
+    const codec = asDevice('codec', { traits: ['processor'] }, [LINE_IN, { ...LINE_OUT, id: 'out-1' }, { ...LINE_OUT, id: 'out-2' }, net, MAINS])
+    expect(codec.t.routing?.[0]?.to).toContain('net')
+  })
+})
+
 describe('the other kinds', () => {
   it('passive speaker: speaker-level in routed to the transducer, nominal acoustic, no power', () => {
     const { t, issues } = asDevice('speaker', { traits: ['passive'] }, [{ id: 'in-speaker', role: 'speaker', dir: 'in', connector: 'speakon-nl4', signal: 'speaker-level' }])

@@ -247,6 +247,38 @@ function deskRouting(ins: readonly CatalogPort[], outs: readonly CatalogPort[]):
   return ins.filter((q) => q.signal === 'mic-level' || q.signal === 'line-level-pro' || q.signal === 'line-level-consumer' || q.signal === 'instrument-hiz').map((p) => ({ from: p.portId, to }))
 }
 
+/** Categories of outboard kind whose Ethernet port really carries audio (network audio is their job), as opposed to a control / firmware port. */
+const NETWORK_AUDIO_CATEGORIES: ReadonlySet<string> = new Set(['codec', 'broadcast', 'network-switch', 'intercom'])
+
+/**
+ * An RJ45 port of signal `aoip` on a speaker, a power amplifier, a speaker processor or a wireless receiver is the CONTROL / firmware port (Neumann
+ * control app, HiQnet, Wireless Workbench), not an audio input or output: the catalogue has no control-network signal, so `aoip` stands in for it. It
+ * is kept as a port (cables, the connector rules) but takes no audio route. Interfaces, desks, preamps, computers, codecs, broadcast processors,
+ * switches and intercoms keep it as network audio, and an EtherCON port (Dante primary or secondary) is always audio.
+ */
+function isControlNetwork(p: CatalogPort, kind: Kind, category: string): boolean {
+  if (p.signal !== 'aoip' || p.connector !== 'rj45' || p.dir !== 'bidir') return false
+  if (kind === 'speaker-active' || kind === 'speaker-passive' || kind === 'amp' || kind === 'wireless') return true
+  return kind === 'outboard' && !NETWORK_AUDIO_CATEGORIES.has(category)
+}
+
+/**
+ * The routes of a PATCHBAY: a normalled jack pair. A jack named `front-N` is joined to the jack named `rear-N` and the other way round (the half-normalled
+ * default of a studio patchbay, taught as "the rear is what is wired in, the front is where you re-patch"). Jacks not named front / rear get no route, like
+ * the shipped StudioPatch: never a route from a port to itself.
+ */
+function patchbayRouting(ports: readonly CatalogPort[]): CatalogRoute[] {
+  const audio = ports.filter((p) => p.dir === 'bidir' && AUDIO_IN.includes(p.signal))
+  const side = (kind: 'front' | 'rear') => audio.filter((p) => new RegExp(`^${kind}-\\d+$`).test(p.portId))
+  const num = (p: CatalogPort): string => p.portId.replace(/^\D+-/, '')
+  const rear = new Map(side('rear').map((p) => [num(p), p.portId]))
+  const front = new Map(side('front').map((p) => [num(p), p.portId]))
+  const out: CatalogRoute[] = []
+  for (const [n, f] of front) if (rear.has(n)) out.push({ from: f, to: [rear.get(n)!] })
+  for (const [n, r] of rear) if (front.has(n)) out.push({ from: r, to: [front.get(n)!] })
+  return out
+}
+
 /**
  * The behaviour template for a device of `category`. `given` are the ports the DATASHEET documents (the asset spec's ports, each with connector,
  * signal, direction, flags): Wave 0b finding 1: a template never invents ports. It only adds behaviour on top of them:
@@ -308,8 +340,9 @@ export function applyTemplate(category: string, row: Pick<PlanRow, 'traits'>, gi
 
   // routes, from the final ports (a route that has no end is not written)
   let routing: CatalogRoute[] = []
-  const ins = audioIns(ports)
-  const outs = audioOuts(ports)
+  const audioPorts = ports.filter((p) => !isControlNetwork(p, kind, category))
+  const ins = audioIns(audioPorts)
+  const outs = audioOuts(audioPorts)
   if (kind === 'speaker-active') {
     for (const p of ins.filter((q) => q.signal !== 'mic-level' && q.signal !== 'speaker-level')) routing.push({ from: p.portId, to: ['transducer'] })
   } else if (kind === 'speaker-passive') {
@@ -324,13 +357,15 @@ export function applyTemplate(category: string, row: Pick<PlanRow, 'traits'>, gi
   } else if (kind === 'console') {
     routing = deskRouting(ins, outs)
     if (!routing.length) issues.push('a desk with no audio input routed to an audio output: list its output ports (main outputs named out-main-l, out-main-r) so that it passes signal')
+  } else if (category === 'patchbay') {
+    routing = patchbayRouting(ports)
   } else if (kind === 'outboard' || kind === 'preamp' || kind === 'di') {
     const o = outs.filter((q) => q.signal !== 'speaker-level' && q.signal !== 'headphone-level')
     if (o.length)
       ins.forEach((p, i) => {
         // a processor with more outputs than inputs (a speaker processor: 2 in, 6 out) feeds every output from each input
-        const to = o.length > ins.length ? o : [o[i % o.length]!]
-        routing.push({ from: p.portId, to: to.map((q) => q.portId), ...(kind === 'di' && !traits.includes('active') ? { passive: true } : {}) })
+        const to = (o.length > ins.length ? o : [o[i % o.length]!]).filter((q) => q.portId !== p.portId) // never a route back to its own port
+        if (to.length) routing.push({ from: p.portId, to: to.map((q) => q.portId), ...(kind === 'di' && !traits.includes('active') ? { passive: true } : {}) })
       })
   }
 

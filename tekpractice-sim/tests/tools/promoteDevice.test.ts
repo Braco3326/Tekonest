@@ -3,9 +3,10 @@
  *   stage 1  `promote <id>`            asset-spec skeleton + plan row `staged`; the catalogue and the proposals file are NOT touched
  *   stage 2  `promote <id> --commit`   after the GLB shipped: catalogue entry (promoted, documented ports only) or proposal update (beta-modelled)
  *   revert   `promote <id> --revert`   undoes the latest stage completely
- * Everything runs on a TEMPORARY copy of the real content (the real catalogue, the real proposals and the real 315-row plan, plus a few fixture
- * rows): the repo's files are never touched. Real rows are used wherever the outcome is the point (neumann-tlm-103, midas-m32, mackie-profx12v3,
- * yamaha-tf5).
+ * Everything runs on a TEMPORARY copy of the real content (the real catalogue, the real proposals and the real 315-row plan, plus fixture rows):
+ * the repo's files are never touched. The rows whose outcome is the point (fx-tlm-103, fx-m32, fx-profx12, fx-tf5) are LITERAL fixtures
+ * (tests/tools/fixtures/promote-fixtures.json: copies of four real plan rows and their Bêta proposals as they were committed before the Wave 1
+ * stage 2, ids renamed), so promoting the real rows in the real catalogue cannot break these tests (Wave 1 stage 2).
  */
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -39,7 +40,10 @@ const fixture = (over: Partial<PlanRow>): PlanRow => ({
   ...over,
 })
 
+const FX = JSON.parse(readFileSync('tests/tools/fixtures/promote-fixtures.json', 'utf8')) as { rows: PlanRow[]; proposals: Record<string, unknown>[] }
+
 const FIXTURES: PlanRow[] = [
+  ...FX.rows,
   fixture({ id: 'fx-condenser', traits: ['condenser', 'phantom-powered'], sizeMm: { w: 52, d: 52, h: 160 } }),
   fixture({ id: 'fx-monitor', category: 'studio-monitor', family: 'curved-cabinet', traits: ['active'], sizeMm: { w: 182, d: 227, h: 287 }, sources: ['https://www.thomann.de/fx_monitor.htm'], dataQuality: 'dealer', sourceGrade: 'dealer' }),
   fixture({ id: 'fx-missing', category: 'amplifier', family: 'rack-box-v2', traits: ['power-amp'], sizeMm: {}, dataQuality: 'missing', sourceGrade: 'missing', sources: [] }),
@@ -97,7 +101,9 @@ beforeEach(() => {
     journal: join(dir, 'journal.json'),
   }
   copyFileSync('content/catalog.json', paths.catalog)
-  copyFileSync('content/proposals/catalog-proposals.json', paths.proposals)
+  // the real proposals plus the fixture Bêta proposals (fx-profx12, fx-tf5)
+  const realProposals = JSON.parse(read('content/proposals/catalog-proposals.json')) as { devices: Record<string, unknown>[] }
+  writeFileSync(paths.proposals, JSON.stringify({ ...realProposals, devices: [...realProposals.devices, ...FX.proposals] }, null, 2) + '\n')
   // the real plan carries the run's own state (staged / promoted / betaModelled flags set by the build waves): these tests start from the pristine rows
   const pristine = loadPlan().map((r) => {
     const { staged: _s, promoted: _p, betaModelled: _b, ...rest } = r
@@ -109,20 +115,20 @@ beforeEach(() => {
 describe('stage 1: only the spec skeleton and the staged flag', () => {
   it('writes the skeleton and marks the row staged; the catalogue, the proposals file and the journal are byte-identical (finding 6: nothing half-promoted)', () => {
     const before = snapshot()
-    const r = stage1('midas-m32')
+    const r = stage1('fx-m32')
     expect(r.outcome).toBe('staged')
     const after = snapshot()
     expect(after.catalog).toBe(before.catalog)
     expect(after.proposals).toBe(before.proposals)
     expect(after.journal).toBeNull()
-    expect(rowOf('midas-m32').staged).toBe(true)
-    expect(rowOf('midas-m32').promoted).toBeUndefined()
-    expect(existsSync(specPath('midas-m32'))).toBe(true)
+    expect(rowOf('fx-m32').staged).toBe(true)
+    expect(rowOf('fx-m32').promoted).toBeUndefined()
+    expect(existsSync(specPath('fx-m32'))).toBe(true)
   })
 
   it('the skeleton carries the plan size, no ports and no controls (nothing is invented), a to-do note, and honest source kinds', () => {
-    stage1('neumann-tlm-103')
-    const spec = readSpec('neumann-tlm-103')
+    stage1('fx-tlm-103')
+    const spec = readSpec('fx-tlm-103')
     expect(spec.realSizeMm).toEqual({ w: 60, h: 132, d: 60 })
     expect(spec.ports).toEqual([])
     expect(spec.controls).toEqual([])
@@ -134,10 +140,10 @@ describe('stage 1: only the spec skeleton and the staged flag', () => {
   })
 
   it('a Bêta row lists its proposal ports in the to-do note as text, not as ports', () => {
-    stage1('mackie-profx12v3')
-    const spec = readSpec('mackie-profx12v3')
+    stage1('fx-profx12')
+    const spec = readSpec('fx-profx12')
     const proposals = JSON.parse(read(paths.proposals)) as { devices: { id: string; ports: { portId: string }[] }[] }
-    const first = proposals.devices.find((d) => d.id === 'mackie-profx12v3')!.ports[0]!.portId
+    const first = proposals.devices.find((d) => d.id === 'fx-profx12')!.ports[0]!.portId
     expect(spec.ports).toEqual([])
     expect(spec.portsTodo).toContain(first)
     expect(spec.portsTodo).toMatch(/NOT copied as ports/)
@@ -145,20 +151,20 @@ describe('stage 1: only the spec skeleton and the staged flag', () => {
 
   it('a Bêta row keeps its proposal, and the proposal keeps its size, until stage 2 (finding 9: no device without a size)', () => {
     const proposals = JSON.parse(read(paths.proposals)) as { devices: { id: string; sizeMm?: unknown }[] }
-    const before = proposals.devices.find((d) => d.id === 'mackie-profx12v3')!
+    const before = proposals.devices.find((d) => d.id === 'fx-profx12')!
     expect(before.sizeMm).toEqual({ w: 330, d: 376, h: 102 })
-    stage1('mackie-profx12v3')
-    const after = (JSON.parse(read(paths.proposals)) as typeof proposals).devices.find((d) => d.id === 'mackie-profx12v3')!
+    stage1('fx-profx12')
+    const after = (JSON.parse(read(paths.proposals)) as typeof proposals).devices.find((d) => d.id === 'fx-profx12')!
     expect(after).toEqual(before)
   })
 
   it('is idempotent: a second run is a no-op and touches no file; a dry run changes nothing and reports what it would do', () => {
-    const dry = stage1('midas-m32', { dryRun: true })
+    const dry = stage1('fx-m32', { dryRun: true })
     expect(dry.changes.length).toBeGreaterThan(0)
-    expect(existsSync(specPath('midas-m32'))).toBe(false)
-    stage1('midas-m32')
+    expect(existsSync(specPath('fx-m32'))).toBe(false)
+    stage1('fx-m32')
     const snap = snapshot()
-    expect(stage1('midas-m32')).toMatchObject({ outcome: 'staged', changes: [] })
+    expect(stage1('fx-m32')).toMatchObject({ outcome: 'staged', changes: [] })
     expect(snapshot()).toEqual(snap)
   })
 
@@ -195,47 +201,76 @@ describe('stage 1: only the spec skeleton and the staged flag', () => {
 
 describe('stage 2 refuses until the model shipped', () => {
   it('an unstaged row, a row with no manifest row, and a row with a manifest row but no GLB are blocked and write nothing', () => {
-    expect(stage2('midas-m32')).toMatchObject({ outcome: 'blocked', reason: expect.stringMatching(/not staged/) })
-    stage1('midas-m32')
-    fillSpec('midas-m32', [port('out-main-l', 'out', 'xlr3-m', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], [])
+    expect(stage2('fx-m32')).toMatchObject({ outcome: 'blocked', reason: expect.stringMatching(/not staged/) })
+    stage1('fx-m32')
+    fillSpec('fx-m32', [port('out-main-l', 'out', 'xlr3-m', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], [])
     const snap = snapshot()
-    expect(stage2('midas-m32')).toMatchObject({ outcome: 'blocked', reason: expect.stringMatching(/manifest/) })
-    writeFileSync(paths.manifest, JSON.stringify({ assets: [{ id: 'midas-m32', kind: 'device' }] }))
-    expect(stage2('midas-m32')).toMatchObject({ outcome: 'blocked', reason: expect.stringMatching(/glb/i) })
+    expect(stage2('fx-m32')).toMatchObject({ outcome: 'blocked', reason: expect.stringMatching(/manifest/) })
+    writeFileSync(paths.manifest, JSON.stringify({ assets: [{ id: 'fx-m32', kind: 'device' }] }))
+    expect(stage2('fx-m32')).toMatchObject({ outcome: 'blocked', reason: expect.stringMatching(/glb/i) })
     expect(snapshot()).toEqual(snap)
   })
 })
 
 describe('stage 2, promoted outcome: documented ports only', () => {
-  it('a real promotable microphone (neumann-tlm-103): the catalogue port is the documented one, phantom required by its traits, no power control; the spec matches', () => {
-    stage1('neumann-tlm-103')
-    fillSpec('neumann-tlm-103', [MIC_OUT], [])
-    ship('neumann-tlm-103')
-    const r = stage2('neumann-tlm-103')
+  it('a real promotable microphone (fx-tlm-103): the catalogue port is the documented one, phantom required by its traits, no power control; the spec matches', () => {
+    stage1('fx-tlm-103')
+    fillSpec('fx-tlm-103', [MIC_OUT], [])
+    ship('fx-tlm-103')
+    const r = stage2('fx-tlm-103')
     expect(r.outcome).toBe('promoted')
     const cat = Catalog.parse(JSON.parse(read(paths.catalog)))
-    const d = cat.devices.find((x) => x.id === 'neumann-tlm-103')!
+    const d = cat.devices.find((x) => x.id === 'fx-tlm-103')!
     expect(d.ports).toEqual([{ portId: 'out-xlr', dir: 'out', connector: 'xlr3-m', signal: 'mic-level', flags: ['requiresPhantom'] }])
     expect(d.controls).toBeUndefined()
     expect(d.realWorld).toMatchObject({ brand: 'Neumann', model: 'TLM 103', category: 'microphone' })
     expect(d.realWorld.notes).toContain('documented in the asset spec')
     expect(checkCatalog(cat, { modelIds: new Set(cat.devices.map((x) => x.id)) }).filter((i) => i.level === 'error')).toEqual([])
-    expect(checkSpecParity(readSpec('neumann-tlm-103'), cat)).toEqual([])
-    expect(readSpec('neumann-tlm-103').realSizeMm).toEqual({ w: 60, h: 132, d: 60 }) // finding 9: the spec carries the size
-    expect(rowOf('neumann-tlm-103')).toMatchObject({ promoted: true })
-    expect(rowOf('neumann-tlm-103').staged).toBeUndefined()
+    expect(checkSpecParity(readSpec('fx-tlm-103'), cat)).toEqual([])
+    expect(readSpec('fx-tlm-103').realSizeMm).toEqual({ w: 60, h: 132, d: 60 }) // finding 9: the spec carries the size
+    expect(rowOf('fx-tlm-103')).toMatchObject({ promoted: true })
+    expect(rowOf('fx-tlm-103').staged).toBeUndefined()
   })
 
-  it('a real promotable desk (midas-m32): routing is generated from the documented out-main outputs, the QL1 controls come with it (finding 8)', () => {
-    stage1('midas-m32')
+  it('the plan row typicalUse reaches the catalogue entry; without it the entry keeps the manufacturer / product / category line (Wave 1 stage 2)', () => {
+    const plain = (): string => {
+      stage1('fx-tlm-103')
+      fillSpec('fx-tlm-103', [MIC_OUT], [])
+      ship('fx-tlm-103')
+      stage2('fx-tlm-103')
+      return Catalog.parse(JSON.parse(read(paths.catalog))).devices.find((x) => x.id === 'fx-tlm-103')!.realWorld.typicalUse
+    }
+    expect(plain()).toBe('Neumann TLM 103 (microphone)')
+    revert('fx-tlm-103')
+    revert('fx-tlm-103')
+    savePlan(loadPlan(paths.plan).map((r) => (r.id === 'fx-tlm-103' ? { ...r, typicalUse: 'Large-diaphragm cardioid condenser for studio voice' } : r)), paths.plan, '2026-11-12')
+    expect(plain()).toBe('Large-diaphragm cardioid condenser for studio voice')
+  })
+  it('the plan row label replaces a long proposal label and is bounded to 60 characters', () => {
+    stage1('fx-profx12')
+    fillSpec('fx-profx12', [port('in-1', 'in', 'xlr3-f', 'mic-level'), port('out-main-l', 'out', 'xlr3-m', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], DESK_CONTROLS)
+    ship('fx-profx12')
+    savePlan(loadPlan(paths.plan).map((r) => (r.id === 'fx-profx12' ? { ...r, label: 'Mackie ProFX12v3 (court)' } : r)), paths.plan, '2026-11-12')
+    stage2('fx-profx12')
+    expect(Catalog.parse(JSON.parse(read(paths.catalog))).devices.find((x) => x.id === 'fx-profx12')!.label).toBe('Mackie ProFX12v3 (court)')
+    const r = loadPlan(paths.plan).find((x) => x.id === 'fx-tlm-103')!
+    expect(() => savePlan([{ ...r, label: 'L'.repeat(61) }], paths.plan)).toThrow()
+  })
+  it('the plan refuses an empty or absurdly long typicalUse', () => {
+    const r = loadPlan(paths.plan).find((x) => x.id === 'fx-tlm-103')!
+    expect(() => savePlan([{ ...r, typicalUse: 'x' }], paths.plan)).toThrow()
+    expect(() => savePlan([{ ...r, typicalUse: 'y'.repeat(200) }], paths.plan)).toThrow()
+  })
+  it('a real promotable desk (fx-m32): routing is generated from the documented out-main outputs, the QL1 controls come with it (finding 8)', () => {
+    stage1('fx-m32')
     fillSpec(
-      'midas-m32',
+      'fx-m32',
       [port('in-mic-1', 'in', 'xlr3-f', 'mic-level'), port('in-mic-2', 'in', 'xlr3-f', 'mic-level'), port('out-main-l', 'out', 'xlr3-m', 'line-level-pro'), port('out-main-r', 'out', 'xlr3-m', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')],
       [POWER_CTRL, ...['mute-master', 'fader-master', 'balance-master'].map((id) => ({ controlId: id, kind: 'knob', face: 'top', axis: 'y', xMm: 100, yMm: 100, sizeMm: { w: 15, h: 15, d: 10 } }))],
     )
-    ship('midas-m32')
-    expect(stage2('midas-m32').outcome).toBe('promoted')
-    const d = Catalog.parse(JSON.parse(read(paths.catalog))).devices.find((x) => x.id === 'midas-m32')!
+    ship('fx-m32')
+    expect(stage2('fx-m32').outcome).toBe('promoted')
+    const d = Catalog.parse(JSON.parse(read(paths.catalog))).devices.find((x) => x.id === 'fx-m32')!
     expect(d.routing).toEqual([
       { from: 'in-mic-1', to: ['out-main-l', 'out-main-r'] },
       { from: 'in-mic-2', to: ['out-main-l', 'out-main-r'] },
@@ -254,35 +289,55 @@ describe('stage 2, promoted outcome: documented ports only', () => {
     expect(d.acoustic!.coverage_h_deg.source.retrieved).toBe('2026-11-12')
   })
 
-  it('a Bêta row (mackie-profx12v3): the proposal leaves the file with the catalogue entry, the old long port ids become portAliases, the journal remembers the proposal', () => {
+  it('a speaker built on our curved-cabinet shape gets its model front (-z, with evidence); one on another shape or a non-speaker does not (Wave 1 stage 2)', () => {
+    const run = (id: string, shape: string | null): ReturnType<typeof Catalog.parse>['devices'][number] => {
+      stage1(id)
+      fillSpec(id, [port('in-analog', 'in', 'xlr3-f', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], [POWER_CTRL])
+      if (shape) {
+        const spec = JSON.parse(read(specPath(id))) as Record<string, unknown>
+        writeFileSync(specPath(id), JSON.stringify({ ...spec, build: { shape, params: {}, budget: { min: 1000, max: 4000 } } }, null, 2) + '\n')
+      }
+      ship(id)
+      stage2(id)
+      return Catalog.parse(JSON.parse(read(paths.catalog))).devices.find((x) => x.id === id)!
+    }
+    const cab = run('fx-monitor', 'curved-cabinet')
+    expect(cab.modelFront).toMatchObject({ axis: '-z' })
+    expect(cab.modelFront!.evidence.length).toBeGreaterThan(40)
+    expect(cab.modelFront!.evidence).toContain('fx-monitor.glb')
+    expect(cab.acoustic).toBeDefined()
+    expect(run('fx-condenser', 'revolve').modelFront).toBeUndefined()
+  })
+
+  it('a Bêta row (fx-profx12): the proposal leaves the file with the catalogue entry, the old long port ids become portAliases, the journal remembers the proposal', () => {
     const proposals = JSON.parse(read(paths.proposals)) as { devices: { id: string; ports: { portId: string; dir: string; connector: string; signal: string }[] }[] }
-    const proposal = proposals.devices.find((d) => d.id === 'mackie-profx12v3')!
+    const proposal = proposals.devices.find((d) => d.id === 'fx-profx12')!
     const old = proposal.ports.find((p) => p.dir === 'in' && p.signal === 'mic-level')!
-    stage1('mackie-profx12v3')
-    fillSpec('mackie-profx12v3', [port('in-mic-1', 'in', old.connector, 'mic-level'), port('out-main-l', 'out', 'xlr3-m', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], [POWER_CTRL, ...['mute-master', 'fader-master', 'balance-master'].map((id) => ({ controlId: id, kind: 'knob', face: 'top', axis: 'y', xMm: 100, yMm: 100, sizeMm: { w: 15, h: 15, d: 10 } }))])
-    ship('mackie-profx12v3')
-    const r = stage2('mackie-profx12v3')
+    stage1('fx-profx12')
+    fillSpec('fx-profx12', [port('in-mic-1', 'in', old.connector, 'mic-level'), port('out-main-l', 'out', 'xlr3-m', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')], [POWER_CTRL, ...['mute-master', 'fader-master', 'balance-master'].map((id) => ({ controlId: id, kind: 'knob', face: 'top', axis: 'y', xMm: 100, yMm: 100, sizeMm: { w: 15, h: 15, d: 10 } }))])
+    ship('fx-profx12')
+    const r = stage2('fx-profx12')
     expect(r.outcome).toBe('promoted')
     const after = JSON.parse(read(paths.proposals)) as { devices: { id: string }[] }
-    expect(after.devices.map((d) => d.id)).not.toContain('mackie-profx12v3')
+    expect(after.devices.map((d) => d.id)).not.toContain('fx-profx12')
     expect(after.devices.length).toBe(proposals.devices.length - 1)
-    const d = Catalog.parse(JSON.parse(read(paths.catalog))).devices.find((x) => x.id === 'mackie-profx12v3')!
+    const d = Catalog.parse(JSON.parse(read(paths.catalog))).devices.find((x) => x.id === 'fx-profx12')!
     expect(d.portAliases?.[old.portId]).toBe('in-mic-1')
     const journal = JSON.parse(read(paths.journal)) as { entries: Record<string, { proposalBefore: { id: string } | null }> }
-    expect(journal.entries['mackie-profx12v3']!.proposalBefore!.id).toBe('mackie-profx12v3')
+    expect(journal.entries['fx-profx12']!.proposalBefore!.id).toBe('fx-profx12')
   })
 
   it('without portsDocumented a promotable row is beta-modelled, never promoted (finding 1: no category-template ports in the verified catalogue)', () => {
-    stage1('neumann-tlm-103')
-    fillSpec('neumann-tlm-103', [MIC_OUT], [], false)
-    ship('neumann-tlm-103')
+    stage1('fx-tlm-103')
+    fillSpec('fx-tlm-103', [MIC_OUT], [], false)
+    ship('fx-tlm-103')
     const catalogBefore = read(paths.catalog)
-    const r = stage2('neumann-tlm-103')
+    const r = stage2('fx-tlm-103')
     expect(r.outcome).toBe('beta-modelled')
     expect(r.reason).toMatch(/portsDocumented/)
     expect(read(paths.catalog)).toBe(catalogBefore)
     const props = JSON.parse(read(paths.proposals)) as { devices: { id: string; ports: { portId: string }[]; sizeMm?: unknown }[] }
-    const entry = props.devices.find((d) => d.id === 'neumann-tlm-103')!
+    const entry = props.devices.find((d) => d.id === 'fx-tlm-103')!
     expect(entry.ports.map((p) => p.portId)).toEqual(['out-xlr'])
     expect(entry.sizeMm).toEqual({ w: 60, d: 60, h: 132 })
   })
@@ -305,7 +360,7 @@ describe('stage 2, promoted outcome: documented ports only', () => {
 
   it('the 25 existing devices are untouched: the catalogue text before the insertion is byte-identical and the old devices parse deep-equal', () => {
     const before = read(paths.catalog)
-    for (const id of ['neumann-tlm-103', 'fx-monitor']) {
+    for (const id of ['fx-tlm-103', 'fx-monitor']) {
       stage1(id)
       fillSpec(id, id === 'fx-monitor' ? [port('in-analog', 'in', 'xlr3-f', 'line-level-pro'), port('power-in', 'in', 'iec-c14', 'mains-power')] : [MIC_OUT], id === 'fx-monitor' ? [POWER_CTRL] : [])
       ship(id)
@@ -322,42 +377,42 @@ describe('stage 2, promoted outcome: documented ports only', () => {
   })
 
   it('is idempotent: a second --commit is a no-op that touches no file', () => {
-    stage1('neumann-tlm-103')
-    fillSpec('neumann-tlm-103', [MIC_OUT], [])
-    ship('neumann-tlm-103')
-    stage2('neumann-tlm-103')
+    stage1('fx-tlm-103')
+    fillSpec('fx-tlm-103', [MIC_OUT], [])
+    ship('fx-tlm-103')
+    stage2('fx-tlm-103')
     const snap = snapshot()
-    expect(stage2('neumann-tlm-103')).toMatchObject({ outcome: 'promoted', changes: [] })
+    expect(stage2('fx-tlm-103')).toMatchObject({ outcome: 'promoted', changes: [] })
     expect(snapshot()).toEqual(snap)
   })
 
   it('dry-run of stage 2 changes no file', () => {
-    stage1('neumann-tlm-103')
-    fillSpec('neumann-tlm-103', [MIC_OUT], [])
-    ship('neumann-tlm-103')
+    stage1('fx-tlm-103')
+    fillSpec('fx-tlm-103', [MIC_OUT], [])
+    ship('fx-tlm-103')
     const snap = snapshot()
-    expect(stage2('neumann-tlm-103', { dryRun: true }).changes.length).toBeGreaterThan(0)
+    expect(stage2('fx-tlm-103', { dryRun: true }).changes.length).toBeGreaterThan(0)
     expect(snapshot()).toEqual(snap)
   })
 })
 
 describe('stage 2, beta-modelled outcome (finding 7: an unsure size is never promoted)', () => {
-  it('real row yamaha-tf5 (axis order assumed): with fully documented ports it is still beta-modelled, its proposal stays with the size and the model', () => {
-    expect(rowOf('yamaha-tf5').dataQuality).toBe('estimate')
-    stage1('yamaha-tf5')
+  it('real row fx-tf5 (axis order assumed): with fully documented ports it is still beta-modelled, its proposal stays with the size and the model', () => {
+    expect(rowOf('fx-tf5').dataQuality).toBe('estimate')
+    stage1('fx-tf5')
     const proposals = JSON.parse(read(paths.proposals)) as { devices: { id: string; ports: { portId: string; dir: string; connector: string; signal: string }[] }[] }
-    const keep = proposals.devices.find((d) => d.id === 'yamaha-tf5')!.ports
-    fillSpec('yamaha-tf5', keep.map((p) => port(p.portId, p.dir as 'in', p.connector, p.signal)), [])
-    ship('yamaha-tf5')
+    const keep = proposals.devices.find((d) => d.id === 'fx-tf5')!.ports
+    fillSpec('fx-tf5', keep.map((p) => port(p.portId, p.dir as 'in', p.connector, p.signal)), [])
+    ship('fx-tf5')
     const catalogBefore = read(paths.catalog)
-    const r = stage2('yamaha-tf5')
+    const r = stage2('fx-tf5')
     expect(r.outcome).toBe('beta-modelled')
     expect(r.reason).toMatch(/estimate/)
     expect(read(paths.catalog)).toBe(catalogBefore)
-    const after = (JSON.parse(read(paths.proposals)) as { devices: { id: string; sizeMm?: unknown; ports: unknown[] }[] }).devices.find((d) => d.id === 'yamaha-tf5')!
+    const after = (JSON.parse(read(paths.proposals)) as { devices: { id: string; sizeMm?: unknown; ports: unknown[] }[] }).devices.find((d) => d.id === 'fx-tf5')!
     expect(after.sizeMm).toEqual({ w: 866, d: 599, h: 225 })
     expect(after.ports).toHaveLength(keep.length)
-    expect(rowOf('yamaha-tf5')).toMatchObject({ betaModelled: true })
+    expect(rowOf('fx-tf5')).toMatchObject({ betaModelled: true })
   })
 
   it('a conflicting size (fixture) is beta-modelled too, and the spec size note says the sources disagree', () => {
@@ -369,11 +424,11 @@ describe('stage 2, beta-modelled outcome (finding 7: an unsure size is never pro
   })
 
   it('a Bêta row must keep its proposal ports exactly (saved projects keep their cables): a spec with other ports is blocked', () => {
-    stage1('yamaha-tf5')
-    fillSpec('yamaha-tf5', [port('in-1', 'in', 'xlr3-f', 'mic-level')], [])
-    ship('yamaha-tf5')
+    stage1('fx-tf5')
+    fillSpec('fx-tf5', [port('in-1', 'in', 'xlr3-f', 'mic-level')], [])
+    ship('fx-tf5')
     const snap = snapshot()
-    expect(stage2('yamaha-tf5')).toMatchObject({ outcome: 'blocked', reason: expect.stringMatching(/proposal ports/) })
+    expect(stage2('fx-tf5')).toMatchObject({ outcome: 'blocked', reason: expect.stringMatching(/proposal ports/) })
     expect(snapshot()).toEqual(snap)
   })
 
@@ -402,12 +457,12 @@ describe('stage 2, beta-modelled outcome (finding 7: an unsure size is never pro
 
 describe('atomic writes (finding 6)', () => {
   it('a failure while the last file of stage 2 is replaced restores every file already replaced, and leaves no temporary file behind', () => {
-    stage1('neumann-tlm-103')
-    fillSpec('neumann-tlm-103', [MIC_OUT], [])
-    ship('neumann-tlm-103')
+    stage1('fx-tlm-103')
+    fillSpec('fx-tlm-103', [MIC_OUT], [])
+    ship('fx-tlm-103')
     const snap = snapshot()
     expect(() =>
-      stage2('neumann-tlm-103', {
+      stage2('fx-tlm-103', {
         beforeRename: (p) => {
           if (p === paths.plan) throw new Error('disk full')
         },
@@ -417,12 +472,12 @@ describe('atomic writes (finding 6)', () => {
     expect(readdirSync(dir).filter((f) => f.includes('.tmp-'))).toEqual([])
     expect(readdirSync(paths.specDir).filter((f) => f.includes('.tmp-'))).toEqual([])
     // and the retry works
-    expect(stage2('neumann-tlm-103').outcome).toBe('promoted')
+    expect(stage2('fx-tlm-103').outcome).toBe('promoted')
   })
   it('a failure during stage 1 leaves neither a spec nor a staged flag', () => {
     const snap = snapshot()
     expect(() =>
-      promoteDevice('midas-m32', {
+      promoteDevice('fx-m32', {
         paths,
         beforeRename: (p) => {
           if (p === paths.plan) throw new Error('disk full')
@@ -430,45 +485,45 @@ describe('atomic writes (finding 6)', () => {
       }),
     ).toThrow(/disk full/)
     expect(snapshot()).toEqual(snap)
-    expect(rowOf('midas-m32').staged).toBeUndefined()
+    expect(rowOf('fx-m32').staged).toBeUndefined()
   })
 })
 
 describe('--revert undoes the latest stage completely', () => {
   it('stage 1: the untouched skeleton goes and the row is no longer staged (every file as before)', () => {
     const snap = snapshot()
-    stage1('midas-m32')
-    expect(revert('midas-m32').outcome).toBe('reverted')
+    stage1('fx-m32')
+    expect(revert('fx-m32').outcome).toBe('reverted')
     expect(snapshot()).toEqual(snap)
   })
   it('stage 1 with a hand-filled spec: the spec is kept (unless --discard-spec) and the row is no longer staged', () => {
-    stage1('midas-m32')
-    fillSpec('midas-m32', [port('out-main-l', 'out', 'xlr3-m', 'line-level-pro')], [])
-    const r = revert('midas-m32')
+    stage1('fx-m32')
+    fillSpec('fx-m32', [port('out-main-l', 'out', 'xlr3-m', 'line-level-pro')], [])
+    const r = revert('fx-m32')
     expect(r.changes.join(' ')).toMatch(/hand edits and is kept/)
-    expect(existsSync(specPath('midas-m32'))).toBe(true)
-    expect(rowOf('midas-m32').staged).toBeUndefined()
-    stage1('midas-m32')
-    revert('midas-m32', { discardSpec: true })
-    expect(existsSync(specPath('midas-m32'))).toBe(false)
+    expect(existsSync(specPath('fx-m32'))).toBe(true)
+    expect(rowOf('fx-m32').staged).toBeUndefined()
+    stage1('fx-m32')
+    revert('fx-m32', { discardSpec: true })
+    expect(existsSync(specPath('fx-m32'))).toBe(false)
   })
   it('stage 2, promoted from a Bêta row: the catalogue is byte-identical to before the commit, the proposal is back at its place, the row is staged again', () => {
-    stage1('mackie-profx12v3')
+    stage1('fx-profx12')
     const proposals = JSON.parse(read(paths.proposals)) as { devices: { id: string; ports: { portId: string; connector: string }[] }[] }
-    const old = proposals.devices.find((d) => d.id === 'mackie-profx12v3')!.ports[0]!
-    fillSpec('mackie-profx12v3', [port('in-1', 'in', old.connector, 'mic-level'), port('power-in', 'in', 'iec-c14', 'mains-power')], DESK_CONTROLS)
-    ship('mackie-profx12v3')
+    const old = proposals.devices.find((d) => d.id === 'fx-profx12')!.ports[0]!
+    fillSpec('fx-profx12', [port('in-1', 'in', old.connector, 'mic-level'), port('power-in', 'in', 'iec-c14', 'mains-power')], DESK_CONTROLS)
+    ship('fx-profx12')
     const beforeCommit = snapshot()
-    expect(stage2('mackie-profx12v3').outcome).toBe('promoted')
-    expect(revert('mackie-profx12v3').outcome).toBe('reverted')
+    expect(stage2('fx-profx12').outcome).toBe('promoted')
+    expect(revert('fx-profx12').outcome).toBe('reverted')
     const after = snapshot()
     expect(after.catalog).toBe(beforeCommit.catalog)
     expect(JSON.parse(after.proposals!)).toEqual(JSON.parse(beforeCommit.proposals!))
     expect((JSON.parse(after.proposals!) as { devices: { id: string }[] }).devices.map((d) => d.id)).toEqual((JSON.parse(beforeCommit.proposals!) as { devices: { id: string }[] }).devices.map((d) => d.id))
-    expect(rowOf('mackie-profx12v3')).toMatchObject({ staged: true })
-    expect(rowOf('mackie-profx12v3').promoted).toBeUndefined()
+    expect(rowOf('fx-profx12')).toMatchObject({ staged: true })
+    expect(rowOf('fx-profx12').promoted).toBeUndefined()
     // and the whole cycle can be run again
-    expect(stage2('mackie-profx12v3').outcome).toBe('promoted')
+    expect(stage2('fx-profx12').outcome).toBe('promoted')
   })
   it('stage 2, beta-modelled: a new row\'s proposal goes, a Bêta row\'s proposal comes back as it was', () => {
     stage1('fx-estimate-new')
@@ -479,43 +534,43 @@ describe('--revert undoes the latest stage completely', () => {
     revert('fx-estimate-new')
     expect(JSON.parse(snapshot().proposals!)).toEqual(JSON.parse(beforeNew.proposals!))
 
-    stage1('yamaha-tf5')
-    const keep = (JSON.parse(read(paths.proposals)) as { devices: { id: string; ports: { portId: string; dir: string; connector: string; signal: string }[] }[] }).devices.find((d) => d.id === 'yamaha-tf5')!.ports
-    fillSpec('yamaha-tf5', keep.map((p) => port(p.portId, p.dir as 'in', p.connector, p.signal)), [])
-    ship('yamaha-tf5')
+    stage1('fx-tf5')
+    const keep = (JSON.parse(read(paths.proposals)) as { devices: { id: string; ports: { portId: string; dir: string; connector: string; signal: string }[] }[] }).devices.find((d) => d.id === 'fx-tf5')!.ports
+    fillSpec('fx-tf5', keep.map((p) => port(p.portId, p.dir as 'in', p.connector, p.signal)), [])
+    ship('fx-tf5')
     const beforeBeta = snapshot()
-    stage2('yamaha-tf5')
-    revert('yamaha-tf5')
+    stage2('fx-tf5')
+    revert('fx-tf5')
     expect(JSON.parse(snapshot().proposals!)).toEqual(JSON.parse(beforeBeta.proposals!))
-    expect(rowOf('yamaha-tf5')).toMatchObject({ staged: true })
+    expect(rowOf('fx-tf5')).toMatchObject({ staged: true })
   })
   it('nothing to revert is a no-op; --dry-run changes nothing', () => {
-    expect(revert('midas-m32')).toMatchObject({ outcome: 'reverted', changes: [] })
-    stage1('midas-m32')
+    expect(revert('fx-m32')).toMatchObject({ outcome: 'reverted', changes: [] })
+    stage1('fx-m32')
     const snap = snapshot()
-    expect(revert('midas-m32', { dryRun: true }).changes.length).toBeGreaterThan(0)
+    expect(revert('fx-m32', { dryRun: true }).changes.length).toBeGreaterThan(0)
     expect(snapshot()).toEqual(snap)
   })
 })
 
 describe('the pipeline sees a staged device as the catalogue it will become', () => {
   it('between the stages, a promoted-to-be device has a catalogue view the spec matches (parity), and it replaces the Bêta proposal of the same id', () => {
-    stage1('mackie-profx12v3')
+    stage1('fx-profx12')
     const props = JSON.parse(read(paths.proposals)) as { devices: { id: string; ports: { portId: string; connector: string }[] }[] }
-    const old = props.devices.find((d) => d.id === 'mackie-profx12v3')!.ports[0]!
-    fillSpec('mackie-profx12v3', [port('in-1', 'in', old.connector, 'mic-level'), port('power-in', 'in', 'iec-c14', 'mains-power')], DESK_CONTROLS)
+    const old = props.devices.find((d) => d.id === 'fx-profx12')!.ports[0]!
+    fillSpec('fx-profx12', [port('in-1', 'in', old.connector, 'mic-level'), port('power-in', 'in', 'iec-c14', 'mains-power')], DESK_CONTROLS)
     const base = Catalog.parse(JSON.parse(read(paths.catalog)))
     const withProposals = catalogWithProposals(base, props)
-    expect(withProposals.devices.find((d) => d.id === 'mackie-profx12v3')!.ports.map((p) => p.portId)).not.toContain('in-1')
+    expect(withProposals.devices.find((d) => d.id === 'fx-profx12')!.ports.map((p) => p.portId)).not.toContain('in-1')
     const staged = stagedDevices(paths, '2026-11-12').devices
-    expect(staged.map((d) => d.id)).toEqual(['mackie-profx12v3'])
+    expect(staged.map((d) => d.id)).toEqual(['fx-profx12'])
     const view = catalogWithStaged(withProposals, staged, new Set(base.devices.map((d) => d.id)))
-    expect(view.devices.filter((d) => d.id === 'mackie-profx12v3')).toHaveLength(1)
-    expect(checkSpecParity(readSpec('mackie-profx12v3'), view)).toEqual([])
+    expect(view.devices.filter((d) => d.id === 'fx-profx12')).toHaveLength(1)
+    expect(checkSpecParity(readSpec('fx-profx12'), view)).toEqual([])
   })
   it('a Bêta row that would stay a proposal adds nothing (its proposal is what the pipeline checks); an unfinished spec adds nothing; the real catalogue is never replaced', () => {
-    stage1('yamaha-tf5')
-    stage1('midas-m32')
+    stage1('fx-tf5')
+    stage1('fx-m32')
     expect(stagedDevices(paths).devices).toEqual([])
     const base = Catalog.parse(JSON.parse(read(paths.catalog)))
     const fake = { ...base.devices[0]! }

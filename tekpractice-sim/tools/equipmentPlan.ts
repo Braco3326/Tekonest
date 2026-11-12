@@ -133,6 +133,10 @@ export const PlanRow = z
     wave: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
     sources: z.array(z.string().regex(/^https?:\/\/\S+$/, 'a source is an http(s) URL')),
     notes: z.string(),
+    /** What the device is used for, one English sentence like the catalogue's own `realWorld.typicalUse` (shown as the tooltip of the device); read by the promotion tool. */
+    typicalUse: z.string().min(8).max(160).optional(),
+    /** The name shown in the inventory when the Bêta proposal's label is a long list of variants (a catalogue label is a short brand and model, 60 characters at most). */
+    label: z.string().min(3).max(60).optional(),
     /** Behaviour traits (see TRAITS): required on every row, possibly empty. */
     traits: z.array(Trait),
     /** Whether the size can be trusted beyond being present (see SizeConfidence). */

@@ -298,6 +298,16 @@ function aliasesFor(proposalPorts: readonly ProposalPort[], specPorts: readonly 
   return out
 }
 
+/**
+ * The model front of a loudspeaker built by our curved-cabinet shape: the I/O face with the connector empties is at glTF +z and the baffle (woofer, tweeter) is
+ * the opposite face, glTF -z, the same construction as the rebuilt Genelec 8030C. The coverage panel counts a speaker without `modelFront` as « face avant
+ * non vérifiée », which would be wrong for a model whose front is fixed by construction; tests/assets/modelFront.test.ts measures it on the file.
+ */
+const scriptedCabinetFront = (id: string): { axis: '-z'; evidence: string } => ({
+  axis: '-z',
+  evidence: `Scripted curved-cabinet model (public/assets/${id}.glb, our Blender builder): the I/O face with the connector and control empties is at glTF +z and the baffle with the woofer and tweeter is the opposite face, glTF -z, as on the rebuilt Genelec 8030C; measured on the file by tests/assets/modelFront.test.ts.`,
+})
+
 function buildNotes(row: PlanRow, today: string, t: Template, size: string, spec: AssetSpecT): string {
   const src = row.sources[0] ? ` Size source: ${row.sources[0]}.` : ''
   const extra = t.notes.length ? ` ${t.notes.map((n) => n.charAt(0).toUpperCase() + n.slice(1)).join('. ')}.` : ''
@@ -323,18 +333,19 @@ export function deviceFromSpec(row: PlanRow, spec: AssetSpecT, proposal: Json | 
   const rw = proposal?.realWorld as { typicalUse?: string } | undefined
   const device = Device.parse({
     id: row.id,
-    label: (proposal?.label as string | undefined) ?? `${row.manufacturer} ${row.product}`,
+    label: row.label ?? (proposal?.label as string | undefined) ?? `${row.manufacturer} ${row.product}`,
     levels: [],
     realWorld: {
       brand: row.manufacturer,
       model: row.product,
       category: row.category,
-      typicalUse: rw?.typicalUse ?? `${row.manufacturer} ${row.product} (${row.category})`,
+      typicalUse: row.typicalUse ?? rw?.typicalUse ?? `${row.manufacturer} ${row.product} (${row.category})`,
       notes: buildNotes(row, today, template, sizeNote, spec),
     },
     ports: template.ports,
     ...(template.controls.length ? { controls: template.controls } : {}),
     ...(template.acoustic ? { acoustic: template.acoustic } : {}),
+    ...(template.acoustic && spec.build?.shape === 'curved-cabinet' ? { modelFront: scriptedCabinetFront(row.id) } : {}),
     ...(template.routing ? { routing: template.routing } : {}),
     ...(Object.keys(aliases).length ? { portAliases: aliases } : {}),
   })
@@ -355,7 +366,7 @@ function proposalFromSpec(row: PlanRow, spec: AssetSpecT, today: string, sizeNot
       brand: row.manufacturer,
       model: row.product,
       category: row.category,
-      typicalUse: `${row.manufacturer} ${row.product} (${row.category})`,
+      typicalUse: row.typicalUse ?? `${row.manufacturer} ${row.product} (${row.category})`,
       notes: `PROPOSITION (${today}) built from the equipment plan: size ${sizeNote} (${row.dataQuality}, size confidence ${row.sizeConfidence}); ports from the asset spec${spec.portsDocumented === true ? ` (documented: ${spec.portsSource})` : ' (not documented)'}.`,
     },
     ports,
