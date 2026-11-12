@@ -1,0 +1,251 @@
+{
+  "id": "yamaha-dm3",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 320,
+    "h": 140,
+    "d": 455
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 56.4,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "io",
+      "xMm": 82.8,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "io",
+      "xMm": 109.2,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-5",
+      "face": "io",
+      "xMm": 135.6,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-6",
+      "face": "io",
+      "xMm": 162,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-7",
+      "face": "io",
+      "xMm": 188.4,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-8",
+      "face": "io",
+      "xMm": 214.8,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 55,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 56.4,
+      "yMm": 55,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-1",
+      "face": "io",
+      "xMm": 82.8,
+      "yMm": 55,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-2",
+      "face": "io",
+      "xMm": 109.2,
+      "yMm": 55,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 135.6,
+      "yMm": 55,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb-b",
+      "face": "io",
+      "xMm": 153,
+      "yMm": 55,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "dante",
+      "face": "io",
+      "xMm": 170.4,
+      "yMm": 55,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        140
+      ],
+      [
+        40,
+        140
+      ],
+      [
+        120,
+        115
+      ],
+      [
+        250,
+        85
+      ],
+      [
+        455,
+        60
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 28,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 800,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://europe.yamaha.com/en/audio/portable-pa/products/mixers/dm3/",
+      "note": "equipment plan source (research grade: datasheet); size 320 x 455 x 140 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://europe.yamaha.com/en/audio/portable-pa/products/mixers/dm3/",
+      "note": "Yamaha DM3 page (opened): 16 mic / line inputs (12 XLR + 4 XLR / TRS phones combo), 8 XLR outputs, Dante 16 in / 16 out (DM3 model), USB 18 / 18; the I/O counts are stated, the panel positions and the Dante connector are not. Modelled subset: 8 of 16 inputs, 4 of 8 XLR outputs, phones, USB-B, the Dante network port as rj45 (aoip). Size 320 x 455 x 140 mm: Yamaha Europe prints 320 x 140 x 455 (W x H x D) via search, re-ordered by us: an estimate, beta-modelled. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses."
+    }
+  ]
+}

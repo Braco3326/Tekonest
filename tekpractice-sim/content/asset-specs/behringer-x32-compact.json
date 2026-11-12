@@ -1,0 +1,257 @@
+{
+  "id": "behringer-x32-compact",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 625,
+    "h": 215,
+    "d": 510
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 165,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 165,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 165,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "io",
+      "xMm": 119.2,
+      "yMm": 165,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-5",
+      "face": "io",
+      "xMm": 145.6,
+      "yMm": 165,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-6",
+      "face": "io",
+      "xMm": 172,
+      "yMm": 165,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-7",
+      "face": "io",
+      "xMm": 198.4,
+      "yMm": 165,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-8",
+      "face": "io",
+      "xMm": 224.8,
+      "yMm": 165,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-1",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-2",
+      "face": "io",
+      "xMm": 119.2,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "aes50-a",
+      "face": "io",
+      "xMm": 155.6,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "aes50-b",
+      "face": "io",
+      "xMm": 188.6,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb-a",
+      "face": "io",
+      "xMm": 221.6,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "usb-a",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        215
+      ],
+      [
+        40,
+        215
+      ],
+      [
+        130,
+        170
+      ],
+      [
+        300,
+        120
+      ],
+      [
+        510,
+        88
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 36,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 50,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://www.manualslib.com/manual/722557/Behringer-X32.html?page=25",
+      "note": "equipment plan source (research grade: datasheet); size 625 x 510 x 215 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.de/ie/behringer_x_32_compact.htm",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.manualslib.com/manual/722557/Behringer-X32.html?page=25",
+      "note": "Behringer X32 manual (manualslib, research read; table scrambled by the extraction): 625 x 510 x 215 mm, 15.4 kg (dealer 631 x 512 x 213); 16 XLR mic inputs, 8 XLR outputs, 17 motorised faders; summary: 2 AES50, card slot, USB-A top, USB-B and Ethernet rear. The connector table could not be read cleanly, so beta-modelled: 8 of 16 mics, 4 XLR outputs, 2 AES50 as etherCON (aoip), USB-A (recording). USB-B / Ethernet (remote control), card slot and mains not modelled. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses."
+    }
+  ]
+}

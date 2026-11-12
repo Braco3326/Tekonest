@@ -1,0 +1,250 @@
+{
+  "id": "allen-heath-sq-6",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 638,
+    "h": 198,
+    "d": 514.9
+  },
+  "ports": [
+    {
+      "portId": "in-mic-line-inputs-recallable-preamps-48v-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-line-inputs-recallable-preamps-48v-2",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-talkback-mic-input",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-stereo-line-inputs-st1-st2-balanced-1",
+      "face": "io",
+      "xMm": 129.2,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-stereo-line-inputs-st1-st2-balanced-2",
+      "face": "io",
+      "xMm": 146.6,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-st3-stereo-input-unbalanced",
+      "face": "io",
+      "xMm": 164,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-outputs-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-outputs-2",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-outputs-a-and-b-balanced-1",
+      "face": "io",
+      "xMm": 102.8,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-outputs-a-and-b-balanced-2",
+      "face": "io",
+      "xMm": 120.2,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes-digital-output-2-ch",
+      "face": "io",
+      "xMm": 143.6,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-slink-dsnake-dx-gigaace-remote-audio-me-personal-mixing",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-network-fast-ethernet-midi-over-tcp-ip-apps",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 50,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-usb-b-audio-streaming-32x32-and-midi",
+      "face": "io",
+      "xMm": 58.6,
+      "yMm": 50,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-sq-drive-record-playback-to-usb-drive",
+      "face": "io",
+      "xMm": 76,
+      "yMm": 50,
+      "confidence": "guess",
+      "connector": "usb-a",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-headphone-out",
+      "face": "io",
+      "xMm": 92.2,
+      "yMm": 50,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "in-mains-in-earthed-3-pin-iec-male",
+      "face": "io",
+      "xMm": 580,
+      "yMm": 50,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        198
+      ],
+      [
+        40,
+        198
+      ],
+      [
+        130,
+        150
+      ],
+      [
+        300,
+        100
+      ],
+      [
+        514.9,
+        66
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 36,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 60,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.allen-heath.com/content/uploads/2023/06/Weights-and-Measures-SQ-6.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 638 x 514.9 x 198 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.rentex.com/wp-content/uploads/2022/08/SQ-6-dimensions.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.co.uk/allen_heath_sq6.htm",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.co.uk/allen_heath_sq6.htm",
+      "note": "Dealer spec table (Thomann, opened by the Wave 0c research): 24 mic inputs, 2 stereo line inputs, 14 physical outputs, S-Link, 1 expansion slot (Dante optional), AES3 out, Ethernet, USB-B soundcard; connector types per output and panel positions not stated, so beta-modelled with the 17 Beta proposal ports (17 of 53 listed). Size 638 x 514.9 x 198 mm (A&H weights and measures drawing, labelled, without box), 14.5 kg. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses."
+    }
+  ]
+}

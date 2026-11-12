@@ -1,0 +1,247 @@
+{
+  "id": "yamaha-mg10xu",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 244,
+    "h": 71,
+    "d": 294
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 28,
+      "yMm": 48,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 54.4,
+      "yMm": 48,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-3",
+      "face": "io",
+      "xMm": 80.8,
+      "yMm": 48,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-4",
+      "face": "io",
+      "xMm": 107.2,
+      "yMm": 48,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-line-l",
+      "face": "io",
+      "xMm": 141.6,
+      "yMm": 48,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-r",
+      "face": "io",
+      "xMm": 159,
+      "yMm": 48,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-rca-l",
+      "face": "io",
+      "xMm": 176.4,
+      "yMm": 48,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "in-rca-r",
+      "face": "io",
+      "xMm": 193.8,
+      "yMm": 48,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 28,
+      "yMm": 16,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 54.4,
+      "yMm": 16,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 80.8,
+      "yMm": 16,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 98.2,
+      "yMm": 16,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "balance-master",
+      "kind": "knob",
+      "face": "top",
+      "xMm": 222,
+      "yMm": 60,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 12
+      }
+    },
+    {
+      "controlId": "fader-master",
+      "kind": "fader",
+      "face": "top",
+      "xMm": 222,
+      "yMm": 150,
+      "axis": "y",
+      "travelMm": 60,
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 11
+      }
+    },
+    {
+      "controlId": "mute-master",
+      "kind": "button",
+      "face": "top",
+      "xMm": 222,
+      "yMm": 235,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        71
+      ],
+      [
+        30,
+        71
+      ],
+      [
+        110,
+        60
+      ],
+      [
+        294,
+        45
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "feetMm": 3,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 20,
+      "feetFromEndMm": 24
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 244 x 294 x 71 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.la-bs.com/Objets/MG10XU_dt.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf",
+      "note": "Yamaha MG10XU technical data sheet (opened, copy hosted by la-bs.com): 4 mic inputs (combo jack, XLR / TRS, 48 V phantom) on mono channels 1-4, 10 line inputs (4 mono + 3 stereo pairs, phone jacks and RCA pins), stereo outputs on XLR-3-32 and phone jacks, monitor out, aux / FX send, stereo phone jack for headphones, USB standard-B (2 in / 2 out); the mixer is supplied from an external PA-10 adaptor, so no mains inlet is modelled. Modelled subset: 4 combos (XLR part), one stereo line pair, one RCA pair, XLR main L / R, phones, USB; the monitor out, aux send and foot switch are not modelled. Size 244 x 294 x 71 mm (W x D x H, labelled). Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions of connectors on the rear face are guesses; the top picture is a generic strip layout."
+    }
+  ]
+}

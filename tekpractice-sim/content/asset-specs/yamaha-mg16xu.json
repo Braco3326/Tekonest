@@ -1,0 +1,210 @@
+{
+  "id": "yamaha-mg16xu",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 444,
+    "h": 130,
+    "d": 500
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 56.4,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-3",
+      "face": "io",
+      "xMm": 82.8,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-4",
+      "face": "io",
+      "xMm": 109.2,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-line-1",
+      "face": "io",
+      "xMm": 143.6,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-2",
+      "face": "io",
+      "xMm": 161,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-3",
+      "face": "io",
+      "xMm": 178.4,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-4",
+      "face": "io",
+      "xMm": 195.8,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 56.4,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 82.8,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 100.2,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        130
+      ],
+      [
+        30,
+        130
+      ],
+      [
+        120,
+        105
+      ],
+      [
+        300,
+        75
+      ],
+      [
+        500,
+        55
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 28,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 800,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://norge.thomann.de/yamaha_mg16xu.htm",
+      "note": "equipment plan source (research grade: dealer); size 444 x 500 x 130 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://fr.yamaha.com/files/download/other_assets/4/1522684/mg16x_en_ts_a0.pdf",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://norge.thomann.de/yamaha_mg16xu.htm",
+      "note": "Thomann (opened): 444 x 500 x 130 mm, 6.8 kg; the summary lists 10 mic + 16 line inputs, USB and built-in SPX effects (the Yamaha PDF returned 403). Output connectors were not read: the XLR main L / R follow the sibling MG10XU data sheet (an assumption, said here), so beta-modelled. Modelled subset: 4 combos (XLR part), 4 line jacks, main L / R, phones, USB-B. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses."
+    }
+  ]
+}

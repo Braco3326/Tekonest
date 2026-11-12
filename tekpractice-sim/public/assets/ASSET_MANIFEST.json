@@ -7779,6 +7779,668 @@
           "ok": true
         }
       ]
+    },
+    {
+      "status": "ok",
+      "id": "yamaha-mg10xu",
+      "kind": "device",
+      "tris": 1180,
+      "ports": 12,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T02:27:08.887Z",
+      "specSource": "https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "midas-m32",
+      "kind": "device",
+      "tris": 1446,
+      "ports": 25,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png",
+        "_generic_opposite.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T02:27:28.425Z",
+      "specSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "allen-heath-sq-6",
+      "kind": "device",
+      "tris": 1440,
+      "ports": 17,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T02:27:36.313Z",
+      "specSource": "https://www.allen-heath.com/content/uploads/2023/06/Weights-and-Measures-SQ-6.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "allen-heath-sq-5",
+      "kind": "device",
+      "tris": 1440,
+      "ports": 17,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T02:27:42.225Z",
+      "specSource": "https://www.allen-heath.com/content/uploads/2023/05/Weights-and-Measures-SQ-5.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "behringer-x32-compact",
+      "kind": "device",
+      "tris": 1440,
+      "ports": 15,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T02:27:47.202Z",
+      "specSource": "https://www.manualslib.com/manual/722557/Behringer-X32.html?page=25",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "yamaha-dm3",
+      "kind": "device",
+      "tris": 1443,
+      "ports": 15,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T02:27:52.078Z",
+      "specSource": "https://europe.yamaha.com/en/audio/portable-pa/products/mixers/dm3/",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "yamaha-mg16xu",
+      "kind": "device",
+      "tris": 1443,
+      "ports": 12,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T02:27:57.424Z",
+      "specSource": "https://norge.thomann.de/yamaha_mg16xu.htm",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "yamaha-tf1",
+      "kind": "device",
+      "tris": 1503,
+      "ports": 17,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T02:28:05.066Z",
+      "specSource": "https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "behringer-xenyx-q1202usb",
+      "kind": "device",
+      "tris": 1170,
+      "ports": 10,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T02:28:12.537Z",
+      "specSource": "https://www.bhphotovideo.com/c/product/939338-REG/behringer_xenyx_q1202usb_12_input_2_bus.html/overview",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "status": "ok",
+      "id": "rode-rodecaster-duo",
+      "kind": "device",
+      "tris": 1180,
+      "ports": 9,
+      "tool": "hybrid",
+      "toolVersion": "blender-builder-1",
+      "photos": [
+        "_generic_top.png",
+        "_generic_io.png",
+        "_generic_opposite.png"
+      ],
+      "taskId": null,
+      "source": "hybrid: own scripted geometry + generic artwork drawn by the pipeline as picture (no manufacturer image)",
+      "license": "internal (own work): shape and picture are our own; the picture is generic artwork drawn from the connector layout, no manufacturer image, logo or brand mark",
+      "trademark": "branded-internal",
+      "date": "2026-11-12T02:28:19.778Z",
+      "specSource": "https://edge.rode.com/pdf/products/1187/RODECaster_Duo_ds_V03.pdf",
+      "logosRemoved": true,
+      "gates": [
+        {
+          "gate": "size",
+          "ok": true
+        },
+        {
+          "gate": "transform",
+          "ok": true
+        },
+        {
+          "gate": "parts",
+          "ok": true
+        },
+        {
+          "gate": "portPositions",
+          "ok": true
+        },
+        {
+          "gate": "budget",
+          "ok": true
+        },
+        {
+          "gate": "detail",
+          "ok": true
+        },
+        {
+          "gate": "fillet",
+          "ok": true
+        },
+        {
+          "gate": "proportionDrift",
+          "ok": true
+        },
+        {
+          "gate": "portSurface",
+          "ok": true
+        },
+        {
+          "gate": "textures",
+          "ok": true
+        },
+        {
+          "gate": "validator",
+          "ok": true
+        }
+      ]
     }
   ],
   "environments": [

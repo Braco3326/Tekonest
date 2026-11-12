@@ -1427,7 +1427,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "behringer-x32",
@@ -1610,7 +1611,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "api-512c",
@@ -1667,7 +1669,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "behringer-xr18",
@@ -1784,7 +1787,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "yamaha-mg16xu",
@@ -1812,7 +1816,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "yamaha-tf1",
@@ -1840,7 +1845,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "zoom-h6-essential",
@@ -2351,7 +2357,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "yamaha-xmv8280-d",
@@ -2542,7 +2549,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "crown-xti-4002",
@@ -2767,7 +2775,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "netgear-m4250-av-switch",
@@ -2966,7 +2975,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "sennheiser-e-609-silver",

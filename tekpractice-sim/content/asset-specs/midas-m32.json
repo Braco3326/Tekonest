@@ -1,0 +1,422 @@
+{
+  "id": "midas-m32",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 891,
+    "h": 256,
+    "d": 612
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 205,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 205,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 205,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "io",
+      "xMm": 119.2,
+      "yMm": 205,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-5",
+      "face": "io",
+      "xMm": 145.6,
+      "yMm": 205,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-6",
+      "face": "io",
+      "xMm": 172,
+      "yMm": 205,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-7",
+      "face": "io",
+      "xMm": 198.4,
+      "yMm": 205,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-8",
+      "face": "io",
+      "xMm": 224.8,
+      "yMm": 205,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-talkback",
+      "face": "io",
+      "xMm": 259.2,
+      "yMm": 205,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mono",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-1",
+      "face": "io",
+      "xMm": 119.2,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-2",
+      "face": "io",
+      "xMm": 145.6,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix-3",
+      "face": "io",
+      "xMm": 172,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aux-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aux-1",
+      "face": "io",
+      "xMm": 57.4,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mon-l",
+      "face": "io",
+      "xMm": 74.8,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mon-r",
+      "face": "io",
+      "xMm": 92.2,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 109.6,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 206.4,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "aes50-a",
+      "face": "io",
+      "xMm": 560,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "aes50-b",
+      "face": "io",
+      "xMm": 593,
+      "yMm": 150,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb-a",
+      "face": "io",
+      "xMm": 137,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "usb-a",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 800,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 845,
+      "yMm": 60,
+      "axis": "x",
+      "sizeMm": {
+        "w": 20,
+        "h": 14.4,
+        "d": 8
+      }
+    },
+    {
+      "controlId": "balance-master",
+      "kind": "knob",
+      "face": "top",
+      "xMm": 860,
+      "yMm": 100,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 12
+      }
+    },
+    {
+      "controlId": "fader-master",
+      "kind": "fader",
+      "face": "top",
+      "xMm": 860,
+      "yMm": 300,
+      "axis": "y",
+      "travelMm": 150,
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 11
+      }
+    },
+    {
+      "controlId": "mute-master",
+      "kind": "button",
+      "face": "top",
+      "xMm": 860,
+      "yMm": 520,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        256
+      ],
+      [
+        40,
+        256
+      ],
+      [
+        140,
+        205
+      ],
+      [
+        300,
+        150
+      ],
+      [
+        460,
+        110
+      ],
+      [
+        612,
+        85
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 36,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 60,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io",
+      "opposite"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "portsDocumented": true,
+  "portsSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
+  "sources": [
+    {
+      "kind": "reference",
+      "url": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 891 x 612 x 256 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.markertek.com/product/m32live/midas-m32-live-digital-console-for-live-studio-40-input-channels-32-midas-pro-mic-preamps-25-mix-buses",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
+      "note": "Midas M32 product information document (downloaded, read with pdftotext 2026-11-12): connectors 32 Midas PRO microphone preamps (XLR), 1 talkback microphone input (XLR), 2 RCA in / out, 16 XLR outputs, 2 monitoring outputs (XLR / 1/4 in TRS balanced), 6 aux in / out (1/4 in TRS balanced), phones output 2 (stereo, 1/4 in TRS), AES/EBU out (XLR), 2 AES50 ports (Klark Teknik SuperMAC), expansion card interface, Ultranet P-16, 1 MIDI in / out, USB type A (audio and data import / export), USB type B and RJ45 for remote control (rear panel); power: auto-ranging 100-240 VAC switch-mode supply (the sheet does not name the inlet: IEC C14 is taken as the usual connector, said here). Modelled subset: 8 of 32 mic inputs, talkback, 6 of 16 XLR outputs (main L / R, mono, 3 mixes), 1 aux in and out, 2 monitor outputs as TRS, 1 of the 2 headphone outputs, AES out, AES50 A / B (the sheet does not name the connector: etherCON assumed), USB-A, the mains inlet. Not modelled: RCA, card slot, Ultranet, MIDI, USB-B and RJ45 (remote control). Size 891 x 612 x 256 mm, 25 kg (sheet). Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. All connector positions are guesses (the sheet has no drawing); the top picture is a generic 16-strip layout."
+    }
+  ]
+}

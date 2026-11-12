@@ -1,0 +1,289 @@
+{
+  "id": "yamaha-tf1",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 510,
+    "h": 225,
+    "d": 599
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 170,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 170,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-3",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 170,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-4",
+      "face": "io",
+      "xMm": 119.2,
+      "yMm": 170,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-5",
+      "face": "io",
+      "xMm": 145.6,
+      "yMm": 170,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-6",
+      "face": "io",
+      "xMm": 172,
+      "yMm": 170,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-7",
+      "face": "io",
+      "xMm": 198.4,
+      "yMm": 170,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-combo-8",
+      "face": "io",
+      "xMm": 224.8,
+      "yMm": 170,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-rca-l",
+      "face": "io",
+      "xMm": 261.2,
+      "yMm": 170,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "in-rca-r",
+      "face": "io",
+      "xMm": 278.6,
+      "yMm": 170,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-3",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-4",
+      "face": "io",
+      "xMm": 119.2,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 145.6,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 163,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 180.4,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        225
+      ],
+      [
+        40,
+        225
+      ],
+      [
+        100,
+        200
+      ],
+      [
+        200,
+        160
+      ],
+      [
+        300,
+        135
+      ],
+      [
+        400,
+        115
+      ],
+      [
+        500,
+        100
+      ],
+      [
+        599,
+        92
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 36,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 60,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24",
+      "note": "equipment plan source (research grade: datasheet); size 510 x 599 x 225 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.la-bs.com/Objets/TF1_dt.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.la-bs.com/Objets/TF1_dt.pdf",
+      "note": "Yamaha TF series data sheet (opened): local connectors analog input 16 mic / line + 2 stereo line (combo jack XLR-3-31 or TRS, RCA pin), analog output 16 (OMNI OUT XLR-3-32), phones (TRS), USB (B type to host, A type for iPad), Ethernet, 1 NY slot; power 100-240 V. Modelled subset: 8 of 16 combos (XLR part), RCA pair, 4 of 16 outputs, phones, USB-B, Ethernet (aoip, control). The sheet gives no size per model: 510 x 599 x 225 mm is the manual's value with the axis order assumed (the TF3 is 716 wide), so an estimate and beta-modelled. Slab profile is an estimate: the sources give only the outer sizes (rear height at the io edge, a lower front lip); the real desk is not a straight wedge. Positions guesses."
+    }
+  ]
+}
