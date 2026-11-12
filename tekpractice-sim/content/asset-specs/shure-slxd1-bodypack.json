@@ -1,0 +1,73 @@
+{
+  "id": "shure-slxd1-bodypack",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 98,
+    "h": 25.5,
+    "d": 68
+  },
+  "ports": [
+    {
+      "portId": "in-ta4",
+      "face": "io",
+      "xMm": 49,
+      "yMm": 12.75,
+      "confidence": "guess",
+      "connector": "mini-xlr-ta4",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isUnbalanced"
+      ]
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 7,
+      "edgeRadiusMm": 3.5,
+      "edgeDropMm": 3.5,
+      "bottomEdgeRadiusMm": 3,
+      "edgeSegments": 8,
+      "seamHeightMm": 11,
+      "seamWidthMm": 0.8,
+      "seamDepthMm": 0.5,
+      "bodyGrey": 60
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 98 x 68 x 25.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
+      "note": "Shure SLX-D spec sheet, SLXD1 digital wireless bodypack transmitter (downloaded, read as text on 2026-11-12): audio input 4-pin male mini connector (TA4M), unbalanced, 1 megohm; dimensions 98 x 68 x 25.5 mm (H x W x D as printed, \"3.86 x 2.68 x 1.0 in\"), 89 g; 2 AA batteries or a rechargeable Li-Ion pack. The sheet prints H x W x D, so the plan size (98 long, 68 wide, 25.5 thick) is a body-pack lying flat; the antenna, IR sync port, charge contacts and the power switch are not modelled (no catalogue signal for RF or DC)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
+      "note": "build: a moulded box with a lid seam at 11 mm, exact bounding box; the real housing shape (rounded, battery door) was not drawn from a photo or drawing, so the rounding is an ESTIMATE (confidence guess). The TA4M port is on the short end face (guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
+      "note": "build.projection top and io: our own generic artwork: a display, a rotary and a button on the top face, the mini connector on the end face; no photo, no logo, no lettering."
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "id": "zoom-h6-essential",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 78.1,
+    "h": 42.8,
+    "d": 160.1
+  },
+  "ports": [
+    {
+      "portId": "in-xlr-1",
+      "face": "left",
+      "xMm": 50,
+      "yMm": 21.4,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-xlr-2",
+      "face": "left",
+      "xMm": 100,
+      "yMm": 21.4,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-xlr-3",
+      "face": "right",
+      "xMm": 50,
+      "yMm": 21.4,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-xlr-4",
+      "face": "right",
+      "xMm": 100,
+      "yMm": 21.4,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-line",
+      "face": "io",
+      "xMm": 20,
+      "yMm": 21.4,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 39,
+      "yMm": 21.4,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 58,
+      "yMm": 21.4,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://zoomcorp.com/en/us/handheld-recorders/handheld-recorders/h6essential/",
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 8,
+      "edgeRadiusMm": 4,
+      "edgeDropMm": 4,
+      "bottomEdgeRadiusMm": 3,
+      "edgeSegments": 8,
+      "recessWMm": 50,
+      "recessHMm": 38,
+      "recessXMm": 14,
+      "recessYMm": 78,
+      "recessDepthMm": 1,
+      "bodyGrey": 55
+    },
+    "projection": [
+      "top",
+      "io",
+      "left",
+      "right"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.co.uk/zoom_h6essential.htm",
+      "note": "equipment plan source (research grade: dealer); size 78.1 x 160.1 x 42.8 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://zoomcorp.com/en/us/handheld-recorders/handheld-recorders/h6essential/",
+      "note": "Zoom H6essential page and specification table (opened 2026-11-12): 4 XLR/TRS combo jacks (XLR 2 hot, TRS tip hot, 48 V phantom), LINE OUT on a stereo mini jack, headphones on a stereo mini jack, USB Type-C (audio interface and file transfer), microSD, 4 AA batteries or USB-C bus power (no mains inlet). Recorder body 78.1 x 160.1 x 42.8 mm, 381 g with batteries (the XYH-6e capsule is a separate 69.1 x 50.8 x 43 mm part, not modelled). Modelled: the XLR half of each combo as a female XLR microphone input; the TRS half, the built-in speaker, the microSD slot and the capsule connector are not modelled. XLR gender: not stated, female by convention for an input."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.co.uk/zoom_h6essential.htm",
+      "note": "Thomann page (plan size source): 78.1 x 160.1 x 42.8 mm, 381 g."
+    },
+    {
+      "kind": "reference",
+      "url": "https://zoomcorp.com/en/us/handheld-recorders/handheld-recorders/h6essential/",
+      "note": "Port positions are GUESSES (confidence guess): no panel drawing was opened, so the four XLR on the two long sides and the three small connectors on the short end are our layout. build: a moulded box with a screen recess in the top face, exact bounding box; the rounding is an ESTIMATE. build.projection: our own generic artwork (screen, keys, vents, connectors); no photo, no logo, no lettering."
+    }
+  ]
+}

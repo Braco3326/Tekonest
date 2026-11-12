@@ -1,0 +1,69 @@
+{
+  "id": "sennheiser-e-906",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 55,
+    "h": 134,
+    "d": 34
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 27.5,
+      "yMm": 17,
+      "confidence": "guess",
+      "openingMm": 19,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.sennheiser.com/globalassets/digizuite/41690-en-e_906_product_specification_v1.1_en.pdf",
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 12,
+      "edgeRadiusMm": 8,
+      "edgeDropMm": 8,
+      "bottomEdgeRadiusMm": 3,
+      "edgeSegments": 8,
+      "bodyGrey": 150
+    },
+    "projection": [
+      "opposite",
+      "io",
+      "top"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.sennheiser.com/globalassets/digizuite/41690-en-e_906_product_specification_v1.1_en.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 55 x 34 x 134 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.sennheiser.com/globalassets/digizuite/41690-en-e_906_product_specification_v1.1_en.pdf",
+      "note": "Sennheiser e 906 manufacturer document (downloaded, read as text on 2026-11-12): connector XLR-3, dimensions 55 x 34 x 134 mm, 140 g. The document does not say male or female: male is the convention of a microphone output. Axis order: the sheet prints 55 x 34 x 134 as width x depth x height (the same body as the other of the two models)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.sennheiser.com/en-at/catalog/products/microphones/e-906/e-906-500202",
+      "note": "build: a moulded box (rounded plan, rounded top), NOT the real silhouette: the e 906 is a flat-faced body with an angled grille head and no photo or drawing was opened, so this is the exact bounding box with plausible rounding (the size is exact, the shape is an ESTIMATE, confidence guess). The XLR port is on the base at the centre (guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.sennheiser.com/en-at/catalog/products/microphones/e-906/e-906-500202",
+      "note": "build.projection opposite and top: our own generic artwork (content/generic-panels): a grille window on the front face; no photo, no logo, no lettering."
+    }
+  ]
+}

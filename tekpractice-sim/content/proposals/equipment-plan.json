@@ -1598,7 +1598,8 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "allen-heath-sq-5",
@@ -1888,7 +1889,8 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "audinate-dante-avio-analog-input-2ch",
@@ -2483,7 +2485,8 @@
    ],
    "notes": "Audinate sales guide [M]: 150.7x53.8x38.1 mm, 145 g (Markertek 180 g). PoE or external power. Source: https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
    "traits": [],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "avid-s1",
@@ -3020,7 +3023,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "shure-qlx-d-receiver",
@@ -3078,7 +3082,8 @@
     "bodypack",
     "battery"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "shure-sm81",
@@ -3185,7 +3190,8 @@
    "traits": [
     "battery"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "tascam-model-12",
@@ -3299,7 +3305,8 @@
     "battery",
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "canare-162u-x21",
@@ -3794,7 +3801,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "shure-ua844-plus",

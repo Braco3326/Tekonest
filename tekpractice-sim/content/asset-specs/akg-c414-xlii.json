@@ -1,0 +1,114 @@
+{
+  "id": "akg-c414-xlii",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 50,
+    "h": 160,
+    "d": 38
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 25,
+      "yMm": 19,
+      "confidence": "guess",
+      "openingMm": 19,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "flags": [
+        "requiresPhantom"
+      ]
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw4bf1cc65/pdfs/AKG_CutSheet_C414&C414XLII_072516.pdf",
+  "build": {
+    "shape": "revolve-oval",
+    "params": {
+      "segments": 64
+    },
+    "profile": [
+      [
+        0,
+        40,
+        30
+      ],
+      [
+        2,
+        45,
+        35
+      ],
+      [
+        8,
+        47,
+        37
+      ],
+      [
+        100,
+        48,
+        37.5
+      ],
+      [
+        118,
+        49,
+        38
+      ],
+      [
+        128,
+        50,
+        38
+      ],
+      [
+        150,
+        50,
+        38
+      ],
+      [
+        156,
+        44,
+        34
+      ],
+      [
+        158,
+        34,
+        26
+      ],
+      [
+        160,
+        0,
+        0
+      ]
+    ],
+    "projection": "wrap",
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    }
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.akg.com/microphones/condenser-microphones/C414+XLII.html",
+      "note": "equipment plan source (research grade: datasheet); size 50 x 38 x 160 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw4bf1cc65/pdfs/AKG_CutSheet_C414&C414XLII_072516.pdf",
+      "note": "AKG cut sheet for the C414 XLS and XLII (downloaded, read as text on 2026-11-12): connector 3-pin XLR (pin 2 hot), 48 V phantom power to IEC 61938 (about 4.5 mA), dimensions 50 x 38 x 160 mm, 300 g. The sheet does not say male or female: male is the convention of a microphone output (as for the other microphones of the catalogue)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.akg.com/microphones/condenser-microphones/C414+XLII.html",
+      "note": "build.profile (revolve-oval): station list [axial mm, width mm, depth mm] drawn from the published 50 x 38 x 160 mm only, a slab body with a wider head basket and a rounded top. No photo or drawing was opened (the AKG page answered 403): the size is exact, the shape between the stations is an ESTIMATE (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.akg.com/microphones/condenser-microphones/C414+XLII.html",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/akg-c414-xlii.json): a mesh basket band, plain body, three small slide switches; no photo, no logo, no lettering. The XLR port is on the base at the centre (guess)."
+    }
+  ]
+}
