@@ -452,14 +452,37 @@ describe('mountOscar forwarding', () => {
     expect(collapseRestore([ev('connect')])).toEqual([ev('connect')])
   })
 
-  it('tells the controller the mode: an exam address appearing later is sent as mode exam', () => {
+  it('an exam address appearing later: the controller is told the mode exam, then the whole mount is torn down (node, bridge, listeners), once', () => {
     const r = make()
-    mountOscar(r.deps, r.f.impl)
+    const h = mountOscar(r.deps, r.f.impl)!
     r.b.emit(PAIR)
     expect(contexts(r.f).at(-1)?.mode).toBe('practice')
+    expect(r.f.handle.destroy).not.toHaveBeenCalled()
     r.win.location.search = '?mode=exam'
     r.b.emit(EMPTY)
     expect(contexts(r.f).at(-1)?.mode).toBe('exam')
+    expect(r.f.handle.destroy, 'the widget is destroyed').toHaveBeenCalledTimes(1)
+    expect(r.b.spies.destroy, 'the bridge is stopped').toHaveBeenCalledTimes(1)
+    expect(r.d.count(), 'no page listener is left').toBe(0)
+    expect(r.d.removed(), 'the landmark is removed').toHaveLength(1)
+    // nothing more is sent, and a later destroy of the handle is a no-op
+    const sentBefore = r.f.handle.send.mock.calls.length
+    r.b.emit(PAIR, [ev('deviceAdded', { device: 'device:ql1' })])
+    expect(r.f.handle.send.mock.calls.length).toBe(sentBefore)
+    h.destroy()
+    expect(r.f.handle.destroy).toHaveBeenCalledTimes(1)
+  })
+
+  it('the widget starts with the live mode, not a hard-coded one: an exam address at mount gives mode exam and an immediate teardown', () => {
+    const r = make()
+    r.win.location.search = '?mode=exam' // the page moved to an exam address between the gate (deps.search) and the widget
+    mountOscar(r.deps, r.f.impl)
+    expect((r.f.impl.mountGuide.mock.calls[0][0] as { context: { mode: string } }).context.mode).toBe('exam')
+    expect(r.f.handle.destroy).toHaveBeenCalledTimes(1)
+    const p = make()
+    mountOscar(p.deps, p.f.impl)
+    expect((p.f.impl.mountGuide.mock.calls[0][0] as { context: { mode: string } }).context.mode).toBe('practice')
+    expect(p.f.handle.destroy).not.toHaveBeenCalled()
   })
 
   it('sends the bench as it is at mount (a restored project is already there)', () => {

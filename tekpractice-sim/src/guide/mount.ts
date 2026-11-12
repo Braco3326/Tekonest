@@ -277,20 +277,33 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       root: landmark,
       insets: () => hostInsets(doc),
       zIndex: GUIDE_Z_INDEX,
-      context: { page: 'workbench', mode: 'practice' },
+      context: { page: 'workbench', mode: mode() },
       storage: deps.storage,
     })
     cleanups.push(() => handle.destroy())
 
+    let destroyed = false
+    const destroy = (): void => {
+      if (destroyed) return
+      destroyed = true
+      teardown()
+    }
     const send = (input: Parameters<typeof handle.send>[0]): void =>
       guard(() => {
+        if (destroyed) return
         const p = handle.send(input)
         if (p !== undefined && typeof p.catch === 'function') p.catch(warn)
       })
     const hostEvent = (e: HostEvent): void => send({ type: 'hostEvent', event: e })
 
     let revision = 0
-    const tell = (state: TpState | null): void => send({ type: 'setContext', context: { mode: mode(), setup: setupFor(state, revision) } })
+    // The mode is read live. When the address turns to an exam one the controller is told first (it withholds everything), then the whole mount is torn down:
+    // the icon, the landmark, the bridge and the page listeners go, nothing of the guide is left on an exam page.
+    const tell = (state: TpState | null): void => {
+      const live = mode()
+      send({ type: 'setContext', context: { mode: live, setup: setupFor(state, revision) } })
+      if (live !== 'practice') destroy()
+    }
 
     // A cable, a device, a place or a switch changed: the context first, then the events of the change.
     const unsubscribe = bridge.onChange((state, events) =>
@@ -323,14 +336,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     doc.addEventListener('click', onClick, true)
     cleanups.push(() => doc.removeEventListener('click', onClick, true))
 
-    let destroyed = false
-    return {
-      destroy(): void {
-        if (destroyed) return
-        destroyed = true
-        teardown()
-      },
-    }
+    return { destroy }
   } catch (e) {
     warn(e)
     teardown()

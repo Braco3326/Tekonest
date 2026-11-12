@@ -29,18 +29,21 @@ if (decideRoute(location.search) === 'legacy')
     // guide's own gates keep it silent on an exam address, the sandbox, the dashboard and `?oscar=0`. Nothing in this tail can reject.
     .then(() => (guard().__tekBooted === true ? import('./guide').then((m) => m.bootGuide(decideRoute(location.search))) : undefined))
     .catch(() => undefined)
-else
+else {
+  // Set by the failure handler below: the route's own boot failed (its chunk, or bootCreation), so there is no debug hook to wait for and the guide is not started.
+  let creationFailed = false
   void import('./creation/boot')
     .then((m) => {
       booted() // the route chunk is here: from now on a failing lazy chunk is the app's to handle, never the entry guard's
       return m.bootCreation()
     })
     .catch((e: unknown) => {
+      creationFailed = true
       console.error('[creation] boot failed', e)
       showBootFailure(document, 'load')
     })
     // Oscar, the guide: its own lazy chunk, fetched only after the route has booted, so its wait for the app's debug hook never overlaps the download of the
     // route chunk. A failure here never reaches the page, and nothing in this tail can reject.
-    .then(() => import('./guide'))
-    .then((m) => m.bootGuide(decideRoute(location.search)))
+    .then(() => (creationFailed ? undefined : import('./guide').then((m) => m.bootGuide(decideRoute(location.search)))))
     .catch(() => undefined)
+}
