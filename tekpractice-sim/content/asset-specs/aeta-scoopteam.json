@@ -1,0 +1,137 @@
+{
+  "id": "aeta-scoopteam",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 212,
+    "h": 102,
+    "d": 236
+  },
+  "ports": [
+    {
+      "portId": "in-mic-inputs-4-commentator-positions-1",
+      "face": "io",
+      "xMm": 24,
+      "yMm": 60.3,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-inputs-4-commentator-positions-2",
+      "face": "io",
+      "xMm": 51,
+      "yMm": 60.3,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-2-auxiliary-line-inputs-xlr3-one-switchable-to-aes3-1",
+      "face": "io",
+      "xMm": 78,
+      "yMm": 60.3,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-2-auxiliary-line-inputs-xlr3-one-switchable-to-aes3-2",
+      "face": "io",
+      "xMm": 105,
+      "yMm": 60.3,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-2-line-outputs-xlr3-1",
+      "face": "io",
+      "xMm": 132,
+      "yMm": 60.3,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-2-line-outputs-xlr3-2",
+      "face": "io",
+      "xMm": 159,
+      "yMm": 60.3,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-ethernet-audio-and-control-1",
+      "face": "io",
+      "xMm": 181.5,
+      "yMm": 60.3,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-ethernet-audio-and-control-2",
+      "face": "io",
+      "xMm": 19.5,
+      "yMm": 37.8,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 12,
+      "plateFilletMm": 5,
+      "filletMm": 6,
+      "filletSegments": 10,
+      "feetMm": 3,
+      "feetDiaMm": 12,
+      "plateRgb": 2763824,
+      "bodyRgb": 1776671
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 4.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_ScoopTeam.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 212 x 236 x 102 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.aeta-audio.com/en/products/scoopteam/",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.aeta-audio.com/downloads/doc/product_data/ScoopTeam_ENG.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.aeta-audio.com/en/products/scoopteam/",
+      "note": "AETA ScoopTeam page and a dealer page (read by a research pass 2026-11-12): two XLR3 analog inputs, mic inputs switchable to line, two XLR3 or AES3 inputs, two XLR3 line outputs, four headphone jacks, USB audio, AES67 in and out, two Ethernet ports, SIM slots; the page does not say which panel carries what and the input list is ambiguous. Battery powered (no mains). Beta-modelled with the Bêta proposal ports (8 of 11 listed); 212 x 236 x 102 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

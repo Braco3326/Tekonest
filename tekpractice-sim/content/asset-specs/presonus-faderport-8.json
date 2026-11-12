@@ -1,0 +1,92 @@
+{
+  "id": "presonus-faderport-8",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 334,
+    "h": 57,
+    "d": 301
+  },
+  "ports": [
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 21.2,
+      "yMm": 28.5,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        57
+      ],
+      [
+        40,
+        57
+      ],
+      [
+        150,
+        48
+      ],
+      [
+        301,
+        40
+      ]
+    ],
+    "params": {
+      "filletMm": 2.5,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 16,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://goknight.com/presonus-faderport-8-mix-production-controller/",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.de/be/presonus_faderport_8.htm",
+      "note": "equipment plan source (research grade: dealer); size 334 x 301 x 57 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/presonus-faderport-8-mix-production-controller/",
+      "note": "Dealer listings (Go Knight, Adorama, Thomann) read through a search summary 2026-11-12: one USB 2.0 port, one footswitch jack, an external power supply (not bus powered); eight touch-sensitive motorised 100 mm faders. The footswitch jack and the DC input have no catalogue signal (not ports); the USB port is modelled as usb-audio like the Rodecaster. The sloped profile is an estimate (the dealers give only the outer size). 334 x 301 x 57 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/presonus-faderport-8-mix-production-controller/",
+      "note": "Dealer listings (Go Knight, Adorama, Thomann) read through a search summary 2026-11-12: one USB 2.0 port, one footswitch jack, an external power supply (not bus powered); eight touch-sensitive motorised 100 mm faders. The footswitch jack and the DC input have no catalogue signal (not ports); the USB port is modelled as usb-audio like the Rodecaster. The sloped profile is an estimate (the dealers give only the outer size). 334 x 301 x 57 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/presonus-faderport-8-mix-production-controller/",
+      "note": "Dealer listings (Go Knight, Adorama, Thomann) read through a search summary 2026-11-12: one USB 2.0 port, one footswitch jack, an external power supply (not bus powered); eight touch-sensitive motorised 100 mm faders. The footswitch jack and the DC input have no catalogue signal (not ports); the USB port is modelled as usb-audio like the Rodecaster. The sloped profile is an estimate (the dealers give only the outer size). 334 x 301 x 57 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/presonus-faderport-8-mix-production-controller/",
+      "note": "Dealer listings (Go Knight, Adorama, Thomann) read through a search summary 2026-11-12: one USB 2.0 port, one footswitch jack, an external power supply (not bus powered); eight touch-sensitive motorised 100 mm faders. The footswitch jack and the DC input have no catalogue signal (not ports); the USB port is modelled as usb-audio like the Rodecaster. The sloped profile is an estimate (the dealers give only the outer size). 334 x 301 x 57 mm (dealer, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

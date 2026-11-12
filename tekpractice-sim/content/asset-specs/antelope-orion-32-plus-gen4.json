@@ -1,0 +1,201 @@
+{
+  "id": "antelope-orion-32-plus-gen4",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44,
+    "d": 280
+  },
+  "ports": [
+    {
+      "portId": "in-line-inputs-32-ch-tascam-pinout-1",
+      "face": "io",
+      "xMm": 72,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-inputs-32-ch-tascam-pinout-2",
+      "face": "io",
+      "xMm": 131,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-outputs-32-ch-tascam-pinout-1",
+      "face": "io",
+      "xMm": 190,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-outputs-32-ch-tascam-pinout-2",
+      "face": "io",
+      "xMm": 249,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-madi-optical-in-out-2-madi-ports-1",
+      "face": "io",
+      "xMm": 285.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "sc-fibre",
+      "signal": "madi",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-madi-optical-in-out-2-madi-ports-2",
+      "face": "io",
+      "xMm": 299.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "sc-fibre",
+      "signal": "madi",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-s-pdif-in-out-1",
+      "face": "io",
+      "xMm": 314.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-s-pdif-in-out-2",
+      "face": "io",
+      "xMm": 332.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-monitor-outputs-l-r-1",
+      "face": "opposite",
+      "xMm": 51.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-monitor-outputs-l-r-2",
+      "face": "opposite",
+      "xMm": 68.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-word-clock-input",
+      "face": "opposite",
+      "xMm": 86,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "in-10m-atomic-reference-input",
+      "face": "opposite",
+      "xMm": 103.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "out-word-clock-outputs-1",
+      "face": "opposite",
+      "xMm": 120.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    },
+    {
+      "portId": "out-word-clock-outputs-2",
+      "face": "opposite",
+      "xMm": 138.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 2763824,
+      "bodyRgb": 1776671
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.andertons.co.uk/antelope-orion-32-gen-4/",
+      "note": "equipment plan source (research grade: dealer); size 483 x 280 x 44 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://fullcompass.com/prod/622150-antelope-audio-orion-32-gen-4-32-channel-ad-da-thunderbolt-usb-audio-interface",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.milkaudiostore.com/shop/antelope-audio-orion-32-gen-4",
+      "note": "Milk Audio Store page and a search summary, read 2026-11-12 (the Antelope page was not readable): four DB25 analog inputs and four DB25 analog outputs (32 channels each), a 1/4 in TRS stereo monitor output, USB-C (Thunderbolt 3 or USB 2.0), optical MADI, ADAT and S/PDIF (counts and connector types not stated), word clock in and out and a 10 M reference input; the power inlet is not named. The size has an assumed axis order, so beta-modelled; the ports are the Bêta proposal ports (14 of 24 listed); the monitor jacks and the clock BNCs are placed on the front. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

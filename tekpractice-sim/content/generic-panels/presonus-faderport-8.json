@@ -1,0 +1,437 @@
+{
+  "note": "Generic panel artwork (no brand marks, no logos, no lettering), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+  "faces": {
+    "io": {
+      "wMm": 334,
+      "hMm": 57,
+      "base": "#1d1e21",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 15.2,
+          "y": 23.5,
+          "w": 12,
+          "h": 10,
+          "fill": "#101113",
+          "stroke": "#9aa0a6",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 17.7,
+          "y": 26.5,
+          "w": 7,
+          "h": 4,
+          "fill": "#6b6f75"
+        }
+      ]
+    },
+    "top": {
+      "wMm": 334,
+      "hMm": 301,
+      "base": "#26292d",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 39.2,
+          "y": 171,
+          "w": 1.6,
+          "h": 100,
+          "fill": "#0e0f11"
+        },
+        {
+          "kind": "rect",
+          "x": 36,
+          "y": 201,
+          "w": 8,
+          "h": 5,
+          "fill": "#c9cdd2",
+          "stroke": "#6b6f75",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 73.2,
+          "y": 171,
+          "w": 1.6,
+          "h": 100,
+          "fill": "#0e0f11"
+        },
+        {
+          "kind": "rect",
+          "x": 70,
+          "y": 218.5,
+          "w": 8,
+          "h": 5,
+          "fill": "#c9cdd2",
+          "stroke": "#6b6f75",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 107.2,
+          "y": 171,
+          "w": 1.6,
+          "h": 100,
+          "fill": "#0e0f11"
+        },
+        {
+          "kind": "rect",
+          "x": 104,
+          "y": 236,
+          "w": 8,
+          "h": 5,
+          "fill": "#c9cdd2",
+          "stroke": "#6b6f75",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 141.2,
+          "y": 171,
+          "w": 1.6,
+          "h": 100,
+          "fill": "#0e0f11"
+        },
+        {
+          "kind": "rect",
+          "x": 138,
+          "y": 201,
+          "w": 8,
+          "h": 5,
+          "fill": "#c9cdd2",
+          "stroke": "#6b6f75",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 175.2,
+          "y": 171,
+          "w": 1.6,
+          "h": 100,
+          "fill": "#0e0f11"
+        },
+        {
+          "kind": "rect",
+          "x": 172,
+          "y": 218.5,
+          "w": 8,
+          "h": 5,
+          "fill": "#c9cdd2",
+          "stroke": "#6b6f75",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 209.2,
+          "y": 171,
+          "w": 1.6,
+          "h": 100,
+          "fill": "#0e0f11"
+        },
+        {
+          "kind": "rect",
+          "x": 206,
+          "y": 236,
+          "w": 8,
+          "h": 5,
+          "fill": "#c9cdd2",
+          "stroke": "#6b6f75",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 243.2,
+          "y": 171,
+          "w": 1.6,
+          "h": 100,
+          "fill": "#0e0f11"
+        },
+        {
+          "kind": "rect",
+          "x": 240,
+          "y": 201,
+          "w": 8,
+          "h": 5,
+          "fill": "#c9cdd2",
+          "stroke": "#6b6f75",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 277.2,
+          "y": 171,
+          "w": 1.6,
+          "h": 100,
+          "fill": "#0e0f11"
+        },
+        {
+          "kind": "rect",
+          "x": 274,
+          "y": 218.5,
+          "w": 8,
+          "h": 5,
+          "fill": "#c9cdd2",
+          "stroke": "#6b6f75",
+          "radius": 0.8
+        },
+        {
+          "kind": "rect",
+          "x": 36,
+          "y": 151,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 70,
+          "y": 151,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 104,
+          "y": 151,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 138,
+          "y": 151,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 172,
+          "y": 151,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 206,
+          "y": 151,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 240,
+          "y": 151,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 274,
+          "y": 151,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 36,
+          "y": 136,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 70,
+          "y": 136,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 104,
+          "y": 136,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 138,
+          "y": 136,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 172,
+          "y": 136,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 206,
+          "y": 136,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 240,
+          "y": 136,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 274,
+          "y": 136,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 36,
+          "y": 121,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 70,
+          "y": 121,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 104,
+          "y": 121,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 138,
+          "y": 121,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 172,
+          "y": 121,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 206,
+          "y": 121,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 240,
+          "y": 121,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 274,
+          "y": 121,
+          "w": 8,
+          "h": 6,
+          "fill": "#3a3d42",
+          "stroke": "#9aa0a6",
+          "radius": 1
+        },
+        {
+          "kind": "circle",
+          "x": 315,
+          "y": 71,
+          "r": 9,
+          "fill": "#565a62",
+          "stroke": "#9aa0a6"
+        },
+        {
+          "kind": "rect",
+          "x": 314.4,
+          "y": 71,
+          "w": 1.2,
+          "h": 7.2,
+          "fill": "#e8e8e8"
+        }
+      ]
+    }
+  }
+}

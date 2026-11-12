@@ -4546,7 +4546,11 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "wheatstone-l-12",
@@ -4651,7 +4655,8 @@
    "traits": [
     "rack"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "allen-heath-zed-22fx",
@@ -4706,7 +4711,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "avid-protools-sync-x",
@@ -4808,7 +4814,8 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "drawmer-mc2-1",
@@ -4992,7 +4999,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "neumann-m-149-tube",
@@ -5104,7 +5112,8 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "rme-digiface-dante",
@@ -5351,7 +5360,8 @@
     "power-amp",
     "rack"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "zoom-f8n-pro",
@@ -5458,7 +5468,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "apogee-duet-3",
@@ -5569,7 +5580,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "behringer-px3000",
@@ -5893,7 +5905,8 @@
    "traits": [
     "desk"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "presonus-studio-24c",

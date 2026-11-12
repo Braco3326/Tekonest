@@ -1,0 +1,253 @@
+{
+  "id": "sonifex-s0-v2",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 125,
+    "d": 356
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 26,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 53,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "io",
+      "xMm": 80,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "io",
+      "xMm": 107,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    },
+    {
+      "portId": "in-line-1l",
+      "face": "io",
+      "xMm": 129.2,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-1r",
+      "face": "io",
+      "xMm": 146.6,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-1",
+      "face": "io",
+      "xMm": 168.8,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-2",
+      "face": "io",
+      "xMm": 195.8,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-rec-l",
+      "face": "io",
+      "xMm": 218,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "out-rec-r",
+      "face": "io",
+      "xMm": 235.4,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "io",
+      "xMm": 252.8,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-2",
+      "face": "io",
+      "xMm": 270.2,
+      "yMm": 77.2,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 21.2,
+      "yMm": 49.3,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 454,
+      "yMm": 49.3,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "axis": "x",
+      "sizeMm": {
+        "w": 20,
+        "h": 14.4,
+        "d": 8
+      },
+      "xMm": 416,
+      "yMm": 49.3
+    }
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        125
+      ],
+      [
+        40,
+        125
+      ],
+      [
+        150,
+        95
+      ],
+      [
+        356,
+        55
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 28,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.sonifex.co.uk/s0/",
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://www.manualslib.com/manual/1646175/Sonifex-S0-V2.html",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 356 x 125 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://deathcloud.com/products/sonifex-s0v2",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.sonifex.co.uk/s0/",
+      "note": "Sonifex S0 v2 product page (opened 2026-11-12): four XLR-3 microphone inputs, twelve RCA stereo line-input pairs and an RCA / 3.5 mm aux, two XLR-3 programme (PGM) outputs, an RCA record output pair, five 6.35 mm monitor and headphone outputs, USB-B audio, remote and light-control jacks, RJ11 phone-line and handset jacks, an IEC inlet 85-264 V (type not named: C14 is listed in the plan as assumedConnectors). Modelled subset: 4 mic inputs, one line pair, the PGM pair as out-main-1 and out-main-2, the record pair, 2 headphone jacks, USB and the inlet; the remote jacks, RJ11 jacks and the other line pairs have no catalogue signal or are repeats. The page gives the outline 48.3 x 35.6 x 12.5 cm and the 19 in front panel; the sloped profile is an estimate (only the rear height is stated). 483 x 356 x 125 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.sonifex.co.uk/s0/",
+      "note": "Sonifex S0 v2 product page (opened 2026-11-12): four XLR-3 microphone inputs, twelve RCA stereo line-input pairs and an RCA / 3.5 mm aux, two XLR-3 programme (PGM) outputs, an RCA record output pair, five 6.35 mm monitor and headphone outputs, USB-B audio, remote and light-control jacks, RJ11 phone-line and handset jacks, an IEC inlet 85-264 V (type not named: C14 is listed in the plan as assumedConnectors). Modelled subset: 4 mic inputs, one line pair, the PGM pair as out-main-1 and out-main-2, the record pair, 2 headphone jacks, USB and the inlet; the remote jacks, RJ11 jacks and the other line pairs have no catalogue signal or are repeats. The page gives the outline 48.3 x 35.6 x 12.5 cm and the 19 in front panel; the sloped profile is an estimate (only the rear height is stated). 483 x 356 x 125 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.sonifex.co.uk/s0/",
+      "note": "Sonifex S0 v2 product page (opened 2026-11-12): four XLR-3 microphone inputs, twelve RCA stereo line-input pairs and an RCA / 3.5 mm aux, two XLR-3 programme (PGM) outputs, an RCA record output pair, five 6.35 mm monitor and headphone outputs, USB-B audio, remote and light-control jacks, RJ11 phone-line and handset jacks, an IEC inlet 85-264 V (type not named: C14 is listed in the plan as assumedConnectors). Modelled subset: 4 mic inputs, one line pair, the PGM pair as out-main-1 and out-main-2, the record pair, 2 headphone jacks, USB and the inlet; the remote jacks, RJ11 jacks and the other line pairs have no catalogue signal or are repeats. The page gives the outline 48.3 x 35.6 x 12.5 cm and the 19 in front panel; the sloped profile is an estimate (only the rear height is stated). 483 x 356 x 125 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.sonifex.co.uk/s0/",
+      "note": "Sonifex S0 v2 product page (opened 2026-11-12): four XLR-3 microphone inputs, twelve RCA stereo line-input pairs and an RCA / 3.5 mm aux, two XLR-3 programme (PGM) outputs, an RCA record output pair, five 6.35 mm monitor and headphone outputs, USB-B audio, remote and light-control jacks, RJ11 phone-line and handset jacks, an IEC inlet 85-264 V (type not named: C14 is listed in the plan as assumedConnectors). Modelled subset: 4 mic inputs, one line pair, the PGM pair as out-main-1 and out-main-2, the record pair, 2 headphone jacks, USB and the inlet; the remote jacks, RJ11 jacks and the other line pairs have no catalogue signal or are repeats. The page gives the outline 48.3 x 35.6 x 12.5 cm and the 19 in front panel; the sloped profile is an estimate (only the rear height is stated). 483 x 356 x 125 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}
