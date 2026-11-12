@@ -8,7 +8,7 @@
 La première visite doit demander une situation (quatre profils) puis proposer le tutoriel, sans jamais gêner le jeu tel qu’il est aujourd’hui. Deux faits du code décident de la forme :
 
 1. `mountPlacePicker` rend `inert` les trois zones qu’il couvre (`shell.tree`, `shell.viewport`, `shell.props`) dans `show()` et les rend toutes non `inert` dans `hide()`. Un second recouvrement serait effacé par ce `hide()`.
-2. 45 specs e2e de Mode Création ouvrent `/` et attendent le sélecteur de lieu sur une page neuve : elles sont la garde de non-régression.
+2. Environ 45 specs e2e de Mode Création (44 fichiers `creation-*`, une cinquantaine de fichiers avec un `goto('/')`) ouvrent `/` et attendent le sélecteur de lieu sur une page neuve : elles sont la garde de non-régression.
 
 ## Décision
 
@@ -25,9 +25,15 @@ L’écran de départ (`src/creation/onboarding/startScreen.ts`) est un panneau 
 
 L’écran, les profils, la pastille et Aide › « Premiers pas » n’existent que sous `?design=1..5` (adresse seule, jamais stocké). Sans `?design` : le sélecteur d’aujourd’hui, aucun nœud, aucune clé lue ou écrite (`audio-sim/creation-onboarding.v1`). Promouvoir un paquet en défaut est une décision ultérieure du fondateur. Les 45 specs `/` restent la garde.
 
-### Où le guide ne peut pas tourner
+### Quand l’écran existe, et ce qu’il écrit (revue T2, décisions R-A et R-B)
 
-`main.ts` calcule `tutorialAllowed` (`guideRouteAllowed` + `guideMode === 'practice'` : ni `?oscar=0`, ni adresse d’examen, `?mode=` quelconque compris) et le passe à `bootCreation({ tutorialAllowed })` : la création n’importe pas le guide. Quand il est faux, l’étape « profil » reste (spec §4.2), **l’offre n’est pas dans la page** (pas seulement cachée), un choix de profil est **final** (profil stocké, `offer` reste `null`, `request` reste 0), et Aide n’a pas « Premiers pas ». Manquant = faux (fermé par défaut, comme la porte de mode du guide).
+`main.ts` calcule deux portes et les passe à `bootCreation({ onboarding, tutorialAllowed })` (la création n’importe pas le guide) : `onboarding` = mode pratique (aucun paramètre `mode`) ; `tutorialAllowed` = mode pratique et le guide peut tourner (pas `?oscar=0`). Manquant = faux (fermé par défaut, comme la porte de mode du guide).
+
+- **Adresse d’examen** (tout `?mode=` ; un paramètre `level` ou `legacy` va vers la route historique) : l’onboarding est **entièrement éteint** — ni écran, ni enregistrement, ni pastille, ni cadrage, ni changement de panneaux ou de tiroir ; le sélecteur d’aujourd’hui. Les examens restent silencieux.
+- **`?oscar=0`** : l’étape « profil » reste (spec §4.2), **l’offre n’est pas dans la page** (pas seulement cachée), un choix de profil est **final** (profil écrit, `offer` reste `null`), et Aide n’a pas « Premiers pas ».
+- **Le profil s’écrit AVEC la réponse** (profil + offre ensemble) et seulement une fois la salle ouverte : quitter l’écran (« Tous les lieux », Échap, une salle qui ne s’ouvre pas) n’écrit rien, donc la prochaine visite normale redemande, et la requête `tutorial` ne part jamais sans salle pour la démarrer. Un profil dont l’offre n’a jamais été répondue (première visite sur `?oscar=0`) reçoit l’**offre** pour ce profil à la première adresse où le tutoriel est permis. Rouverte par la pastille, la touche Échap sur l’offre quitte sans rien changer.
+- **La pastille** : « Profil : X · changer » une fois un profil enregistré, « Choisir un profil » sinon (la phrase « Vous pourrez changer de profil à tout moment » reste vraie). Aide › « Premiers pas » attend (grisé, avec sa raison) tant que l’écran de départ est ouvert.
+- **Code paresseux** : l’écran, la mise en place (`firstVisit`) et le cadrage sont des chunks chargés seulement sous `?design` en mode pratique ; le budget du bundle de création baisse de quelques octets par rapport à avant (voir le rapport T2-fix).
 
 ### Appliquer le profil à la première salle
 
@@ -35,7 +41,7 @@ Après l’ouverture de la salle vide neutre (`blank`, « Salle vide neutre », 
 
 ### Cadrage de la première salle
 
-`framing` du paquet actif via `host.rig.flyToPreset` (aucun changement de moteur), appliqué **seulement** après un choix de l’écran de départ ou Aide › « Premiers pas » sans lieu ouvert ; jamais sur `/`, jamais sur une salle déjà ouverte, jamais par « Tous les lieux ». La mesure a corrigé l’estimation du spec : 7 m donnent environ 19 px au SM58, pas 40 ; il faut environ 3 m ; la pose retenue est à 2,7 m (au-dessus de la limite basse de 2 m de l’orbite). Valeurs et mesures : `src/design/packages.ts` (`firstSoundFraming`), `tests/e2e/onboarding-framing.spec.ts`.
+`framing` du paquet actif via `host.rig.flyToPreset` (aucun changement de moteur), appliqué **seulement** après un choix de l’écran de départ ou Aide › « Premiers pas » sans lieu ouvert ; jamais sur `/`, jamais sur une salle déjà ouverte, jamais par « Tous les lieux ». La mesure a corrigé l’estimation du spec : à 7 m le SM58 fait environ 19 px (boîte de son volume), pas 40 ; il en faut environ 3 m. Comme la taille à l’écran suit la hauteur du canevas, le rayon du paquet est celui d’un canevas de 600 px, mis à l’échelle par la hauteur réelle (`framing.ts`, jamais sous la limite basse de 2 m de l’orbite) : pose retenue rayon 2,2 m, bêta 1,1, cible au sol au centre. Tenu à 1366 × 768 et à 1366 × 650 (canevas d’environ 590 px) : un SM58 à moins de 0,9 m en largeur et 0,5 m en profondeur du point au sol sous le milieu de la vue (là où le produit démarre une pose) fait au moins 44 px sur son plus grand axe (mesure : boîte à l’écran des huit coins du volume englobant, pas un comptage de pixels de la silhouette). Valeurs et mesures : `src/design/packages.ts` (`firstSoundFraming`), `tests/e2e/onboarding-framing.spec.ts`.
 
 ## Conséquences
 
@@ -48,4 +54,4 @@ Après l’ouverture de la salle vide neutre (`blank`, « Salle vide neutre », 
 
 - **Un second recouvrement** : son `inert` serait levé par le `hide()` du sélecteur.
 - **Un écran avant le jeu, sans lien avec le sélecteur** : double propriétaire de `inert`, double gestion du focus.
-- **Montrer l’écran partout** : casserait les 45 specs `/` et le comportement d’aujourd’hui sans accord du fondateur.
+- **Montrer l’écran partout** : casserait la quarantaine de specs `/` et le comportement d’aujourd’hui sans accord du fondateur.
