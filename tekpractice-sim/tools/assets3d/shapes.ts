@@ -134,6 +134,9 @@ export const ROUND_BASE_DEFAULTS = { baseHeightMm: 26, hubDiaMm: 44, tubeDiaMm: 
  *     The bottom must be flat on the floor (no bottom rise).
  *   Rigging points: rigPoints (2 = the two top corners, 4 = all four corners of the side face) on each side, round shallow recesses rigDiaMm (default 14) x rigDepthMm (default 0.8) whose centres are
  *     rigInsetMm (default 1.5 x the diameter) in from the corner in both directions.
+ *   Column on a pole (a portable column PA: a subwoofer with a column array on a pole): bodyHeightMm is the height of the CABINET (the elevation, the handles and the rounding all work on it) and the spec
+ *     height is the whole stack; columnWidthMm x columnDepthMm x columnHeightMm is a rounded prism standing on a pole poleDiaMm thick (default 35) on the middle of the top face, its top at the spec height;
+ *     the pole between them is at least 50 mm long and the column no wider or deeper than the cabinet. All four come together (poleDiaMm is optional).
  *   Rear pockets: every io port with insetMm gets a round pocket in the rear face (diameter openingMm or 24 mm, floor insetMm behind the face), exactly as speaker-cabinet and curved-cabinet.
  * The builder measures the smallest edge fillet as built (the radius, not the parameter) for the 'fillet' gate, the recess depths and the counts of handles and rigging points.
  */
@@ -145,10 +148,13 @@ export const SPEAKER_V2_PARAMS = [
   'handleCount', 'handleLenMm', 'handleWidthMm', 'handleDepthMm', 'handleFromRearMm', 'handleYMm', 'handlePitchMm',
   'poleSocketDiaMm', 'poleSocketDepthMm', 'poleSocketFromRearMm',
   'rigPoints', 'rigDiaMm', 'rigDepthMm', 'rigInsetMm',
+  'bodyHeightMm', 'columnWidthMm', 'columnDepthMm', 'columnHeightMm', 'poleDiaMm',
 ] as const
 
 /** Defaults of the speaker-cabinet-v2 params, in millimetres (the Python builder uses the same numbers: SPK2_DEFAULTS_MM). */
-export const SPEAKER_V2_DEFAULTS = { edgeRadiusMm: 5, edgeSegments: 3, grilleDepthMm: 1.5, handleDepthMm: 12, poleSocketDepthMm: 30, rigDiaMm: 14, rigDepthMm: 0.8 } as const
+export const SPEAKER_V2_DEFAULTS = { edgeRadiusMm: 5, edgeSegments: 3, grilleDepthMm: 1.5, handleDepthMm: 12, poleSocketDepthMm: 30, rigDiaMm: 14, rigDepthMm: 0.8, poleDiaMm: 35 } as const
+/** The shortest pole between a cabinet and a column on it, in millimetres. */
+export const SPEAKER_V2_POLE_MIN_MM = 50
 /** The shortest rear face and front face of a speaker-cabinet-v2 elevation, in millimetres (a rear face is where the ports and pockets go). */
 export const SPEAKER_V2_MIN_FACE_MM = 20
 
@@ -164,7 +170,8 @@ export interface SpeakerElevation {
 }
 
 export function speakerV2Elevation(size: { w: number; h: number; d: number }, p: Readonly<Record<string, number>>): SpeakerElevation {
-  const { h, d } = size
+  const { d } = size
+  const h = p.bodyHeightMm ?? size.h
   const fb: [number, number] = [-d / 2 + (p.frontBottomSetMm ?? 0), p.frontBottomRiseMm ?? 0]
   const rb: [number, number] = [d / 2, p.rearBottomRiseMm ?? 0]
   const rt: [number, number] = [d / 2, h - (p.rearTopDropMm ?? 0)]
@@ -777,6 +784,7 @@ function validateSpeakerV2(spec: AssetSpecT): string[] {
   }
 
   // elevation: it must touch the whole bounding box (the size is exact), stay convex and leave a rear face that can hold the ports
+  const hb = p.bodyHeightMm ?? h
   const elev = speakerV2Elevation(spec.realSizeMm, p)
   for (const [names, what] of [[['rearTopDropMm', 'frontTopDropMm'], 'top (a top drop on the rear AND the front face leaves nothing at the height h)'], [['rearBottomRiseMm', 'frontBottomRiseMm'], 'base (a bottom rise at the rear AND the front leaves nothing on the floor)'], [['frontTopSetMm', 'frontBottomSetMm'], 'baffle plane (both ends of the front face are set back, so nothing reaches the depth d)']] as const) {
     if (names.every((n) => p[n] !== undefined)) errors.push(`${id}: the elevation must touch the ${what}: give at most one of ${names.join(' and ')}`)
@@ -808,7 +816,7 @@ function validateSpeakerV2(spec: AssetSpecT): string[] {
   if (edge * 2 >= smallest) errors.push(`${id}: edgeRadiusMm (${edge}) must be less than half the smallest side (${smallest / 2} mm)`)
   whole('edgeSegments', 1, 8)
   if (p.bodyGrey !== undefined && !(p.bodyGrey >= 20 && p.bodyGrey <= 200)) errors.push(`${id}: bodyGrey (${p.bodyGrey}) must be a grey level from 20 to 200`)
-  const depthLimit = Math.min(w, h, d) / 4
+  const depthLimit = Math.min(w, hb, d) / 4
 
   // grille panel on the baffle
   if (p.grilleMarginMm === undefined) {
@@ -828,7 +836,7 @@ function validateSpeakerV2(spec: AssetSpecT): string[] {
     if (p.handleFromRearMm - p.handleLenMm / 2 < 0) errors.push(`${id}: the handle (centre ${p.handleFromRearMm} mm from the rear, ${p.handleLenMm} mm long) runs out of the io face`)
     const lastFromRear = p.handleFromRearMm + (p.handleCount === 2 ? (p.handlePitchMm ?? 0) : 0) + p.handleLenMm / 2
     if (lastFromRear > d) errors.push(`${id}: the handles reach ${lastFromRear} mm from the io face, beyond the depth ${d} mm`)
-    if (p.handleYMm - p.handleWidthMm / 2 < 0 || p.handleYMm + p.handleWidthMm / 2 > h) errors.push(`${id}: the handle (centre ${p.handleYMm} mm high, ${p.handleWidthMm} mm) is outside the height ${h} mm`)
+    if (p.handleYMm - p.handleWidthMm / 2 < 0 || p.handleYMm + p.handleWidthMm / 2 > hb) errors.push(`${id}: the handle (centre ${p.handleYMm} mm high, ${p.handleWidthMm} mm) is outside the height ${hb} mm`)
   }
 
   // pole socket
@@ -848,6 +856,15 @@ function validateSpeakerV2(spec: AssetSpecT): string[] {
     if (!(p.rigPoints === 2 || p.rigPoints === 4)) errors.push(`${id}: rigPoints must be 2 (the two top corners) or 4 (all four), got ${p.rigPoints}`)
     if (num('rigDepthMm') >= num('rigDiaMm') / 2) errors.push(`${id}: rigDepthMm (${num('rigDepthMm')}) must be less than the radius of the marker (${num('rigDiaMm') / 2} mm): a rigging point is a shallow recess`)
     if (num('rigDepthMm') >= depthLimit) errors.push(`${id}: rigDepthMm (${num('rigDepthMm')}) must be less than a quarter of the smallest side (${depthLimit} mm)`)
+  }
+
+  // a column on a pole
+  const columnNames = ['bodyHeightMm', 'columnWidthMm', 'columnDepthMm', 'columnHeightMm']
+  if (group('a column on a pole', columnNames, [...columnNames, 'poleDiaMm'])) {
+    if (hb >= h) errors.push(`${id}: bodyHeightMm (${hb}) must be less than the spec height ${h} mm (the column and its pole stand above the cabinet)`)
+    else if (h - hb - p.columnHeightMm < SPEAKER_V2_POLE_MIN_MM) errors.push(`${id}: the pole between the cabinet (${hb} mm) and the column (${p.columnHeightMm} mm) is shorter than ${SPEAKER_V2_POLE_MIN_MM} mm in the spec height ${h} mm`)
+    if (p.columnWidthMm > w || p.columnDepthMm > d) errors.push(`${id}: the column (${p.columnWidthMm} x ${p.columnDepthMm} mm) cannot be wider or deeper than the cabinet (${w} x ${d} mm)`)
+    if ((p.poleDiaMm ?? SPEAKER_V2_DEFAULTS.poleDiaMm) >= Math.min(p.columnWidthMm, p.columnDepthMm)) errors.push(`${id}: poleDiaMm must be less than the smallest side of the column (${Math.min(p.columnWidthMm, p.columnDepthMm)} mm)`)
   }
 
   // rear pockets (the Python builder checks that each fits the flat rear face)

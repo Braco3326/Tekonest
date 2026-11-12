@@ -29,6 +29,9 @@ const WEDGE = { w: 600, h: 330, d: 380 }
 const HANDLES = { handleCount: 2, handleLenMm: 160, handleWidthMm: 40, handleDepthMm: 14, handleFromRearMm: 150, handlePitchMm: 400, handleYMm: 300 }
 const EVERYTHING = { ...HANDLES, poleSocketDiaMm: 36, poleSocketDepthMm: 30, rigPoints: 4, rigDiaMm: 14, rigDepthMm: 0.8, grilleMarginMm: 20, grilleDepthMm: 1.5 }
 const TRAPEZOID = { rearTopDropMm: 40, rearBottomRiseMm: 40 }
+/** A portable column PA (the Evolve 50M class): a 344 x 470 mm subwoofer 520 mm high with a column array on a pole, 2093 mm in all. */
+const COLUMN_PA = { w: 344, h: 2093, d: 470 }
+const COLUMN = { bodyHeightMm: 520, columnWidthMm: 102, columnDepthMm: 163, columnHeightMm: 825, poleDiaMm: 35 }
 
 function spec(id: string, size: { w: number; h: number; d: number }, params: Record<string, number>, over: Partial<AssetSpecT> = {}): AssetSpecT {
   const base = loadSpecs().find((s) => s.id === 'apple-mac-mini') as AssetSpecT
@@ -65,6 +68,18 @@ describe('speaker-cabinet-v2 params (no Blender)', () => {
     expect(w.ft).toEqual([-190 + 180, 330])
     expect(w.rearHeightMm).toBe(330)
     expect(w.frontHeightMm).toBeCloseTo(Math.hypot(180, 330), 9)
+  })
+
+  it('accepts a column on a pole in a spec of the whole stack, and refuses it incomplete, too short a pole, or wider than the cabinet', () => {
+    const s = spec('x', COLUMN_PA, COLUMN)
+    expect(AssetSpec.safeParse(s).success).toBe(true)
+    expect(validateBuild(s)).toEqual([])
+    expect(speakerV2Elevation(COLUMN_PA, COLUMN).rearHeightMm).toBe(520)
+    expect(validateBuild(spec('x', COLUMN_PA, { bodyHeightMm: 520, columnWidthMm: 102 }))[0]).toMatch(/a column on a pole needs .*columnDepthMm, columnHeightMm/)
+    expect(validateBuild(spec('x', COLUMN_PA, { ...COLUMN, columnHeightMm: 1560 }))[0]).toMatch(/pole between the cabinet \(520 mm\) and the column \(1560 mm\) is shorter than 50 mm/)
+    expect(validateBuild(spec('x', COLUMN_PA, { ...COLUMN, columnWidthMm: 400 }))[0]).toMatch(/cannot be wider or deeper than the cabinet/)
+    expect(validateBuild(spec('x', COLUMN_PA, { ...COLUMN, poleDiaMm: 120 }))[0]).toMatch(/poleDiaMm must be less than the smallest side of the column/)
+    expect(validateBuild(spec('x', SUB, { ...COLUMN, bodyHeightMm: 700 }))[0]).toMatch(/bodyHeightMm \(700\) must be less than the spec height 550/)
   })
 
   it('rejects an unknown param by name and a non positive one', () => {
@@ -259,6 +274,24 @@ describe(`speaker-cabinet-v2 with real Blender (${BLENDER ? `using ${BLENDER}` :
     expect(Math.max(...xs)).toBeGreaterThan(300 - 4.2 - 20.1)
     expect(Math.max(...xs)).toBeLessThan(300 - 3.5 - 19.9)
     expect(Math.max(...ys)).toBeLessThan(550 - 3.5 - 19.9)
+  }, 240_000)
+
+  it.skipIf(!BLENDER)('a column on a pole: the stack is the exact spec height, the pole is 35 mm thick and the column 102 x 163 mm at the top, the cabinet below keeps its own height', async () => {
+    const { verts, tris } = await build(COLUMN_PA, COLUMN)
+    expect(extent(verts, 1)[1]).toBeCloseTo(2093, 2)
+    expect(extent(verts, 0)[1] - extent(verts, 0)[0]).toBeCloseTo(344, 2)
+    expect(extent(verts, 2)[1] - extent(verts, 2)[0]).toBeCloseTo(470, 2)
+    const pole = verts.filter((v) => v[1] / MM > 518 && v[1] / MM < 1270 && Math.hypot(v[0], v[2]) / MM < 20)
+    expect(pole.length).toBeGreaterThan(40)
+    expect(Math.max(...pole.map((v) => Math.hypot(v[0], v[2]) / MM))).toBeCloseTo(17.5, 2)
+    const col = verts.filter((v) => v[1] / MM > 1300)
+    expect(extent(col, 0)[1] - extent(col, 0)[0]).toBeCloseTo(102, 2)
+    expect(extent(col, 2)[1] - extent(col, 2)[0]).toBeCloseTo(163, 2)
+    const cab = verts.filter((v) => v[1] / MM < 521 && Math.abs(v[0]) / MM > 100)
+    expect(Math.max(...cab.map((v) => v[1] / MM))).toBeCloseTo(520, 2)
+    expect(tris).toBeLessThanOrEqual(4000)
+    const again = await build(COLUMN_PA, COLUMN)
+    expect(again.sha256).toBe((await build(COLUMN_PA, COLUMN)).sha256)
   }, 240_000)
 
   it.skipIf(!BLENDER)('rear pockets stay behind the inset ports: a round pocket per port, its floor insetMm behind the rear face, on the elevation of a trapezoid element too', async () => {

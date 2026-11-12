@@ -3822,7 +3822,11 @@ SPK2_NAMES = (
     "handleCount", "handleLenMm", "handleWidthMm", "handleDepthMm", "handleFromRearMm", "handleYMm", "handlePitchMm",
     "poleSocketDiaMm", "poleSocketDepthMm", "poleSocketFromRearMm",
     "rigPoints", "rigDiaMm", "rigDepthMm", "rigInsetMm",
+    "bodyHeightMm", "columnWidthMm", "columnDepthMm", "columnHeightMm", "poleDiaMm",
 )
+SPK2_POLE_DEFAULT_MM = 35.0     # mirrored in shapes.ts SPEAKER_V2_DEFAULTS.poleDiaMm
+SPK2_POLE_MIN_MM = 50.0         # the pole between the cabinet and a column on it is at least this long (mirrored in shapes.ts)
+SPK2_POLE_SEG_ROUND = 24
 SPK2_DEFAULTS_MM = {"edgeRadiusMm": 5.0, "grilleDepthMm": 1.5, "handleDepthMm": 12.0, "poleSocketDepthMm": 30.0, "rigDiaMm": 14.0, "rigDepthMm": 0.8}   # mirrored in shapes.ts SPEAKER_V2_DEFAULTS
 SPK2_DEFAULT_SEGMENTS = 3
 SPK2_MIN_FACE_MM = 20.0        # mirrored in shapes.ts SPEAKER_V2_MIN_FACE_MM
@@ -4110,6 +4114,19 @@ def build_speaker_cabinet_v2(plan: Plan) -> bpy.types.Object:
             raise BuildError(f"params.{name} must be a whole number from {lo} to {hi}, got {v!r}")
         return int(v)
 
+    # a column array on a pole (bodyHeightMm is the cabinet, the spec height is the whole stack): from here h is the height of the cabinet
+    h_total = h
+    col_names = ("columnWidthMm", "columnDepthMm", "columnHeightMm")
+    has_column = any(k in params for k in col_names + ("poleDiaMm", "bodyHeightMm"))
+    if has_column:
+        missing_col = [k for k in ("bodyHeightMm",) + col_names if k not in params]
+        if missing_col:
+            raise BuildError(f"a column on a pole needs params.bodyHeightMm, params.columnWidthMm, params.columnDepthMm and params.columnHeightMm (missing {', '.join(missing_col)})")
+        h = opt("bodyHeightMm") or h
+        if h_total - h - (opt("columnHeightMm") or 0.0) < SPK2_POLE_MIN_MM * MM:
+            raise BuildError(f"the pole between the cabinet ({h / MM:.0f} mm) and the column ({(opt('columnHeightMm') or 0.0) / MM:.0f} mm) is shorter than {SPK2_POLE_MIN_MM:.0f} mm in the spec height {h_total / MM:.0f} mm")
+        if (opt("columnWidthMm") or 0.0) > w or (opt("columnDepthMm") or 0.0) > d:
+            raise BuildError("the column is wider or deeper than the cabinet it stands on")
     edge = dflt("edgeRadiusMm")
     segments = whole("edgeSegments", 1, 8, SPK2_DEFAULT_SEGMENTS) or SPK2_DEFAULT_SEGMENTS
     grey = params.get("bodyGrey")
@@ -4378,6 +4395,48 @@ def build_speaker_cabinet_v2(plan: Plan) -> bpy.types.Object:
                 pass   # the same face twice: keep one
     body.done(colour)
 
+    if has_column:
+        # the pole (a plain cylinder, a millimetre into the cabinet and into the column) and the column (a rounded prism made by the same clipping), on the middle of the top face
+        col_w, col_d, col_h = opt("columnWidthMm") or 0.0, opt("columnDepthMm") or 0.0, opt("columnHeightMm") or 0.0
+        pole_r = (opt("poleDiaMm") or SPK2_POLE_DEFAULT_MM * MM) / 2.0
+        y_col = h_total - col_h
+        n_pole = SPK2_POLE_SEG_ROUND
+        lo_ring = [bm.verts.new(g2b(pole_r * math.cos(2.0 * math.pi * i / n_pole), h - MM, pole_r * math.sin(2.0 * math.pi * i / n_pole))) for i in range(n_pole)]
+        hi_ring = [bm.verts.new(g2b(pole_r * math.cos(2.0 * math.pi * i / n_pole), y_col + MM, pole_r * math.sin(2.0 * math.pi * i / n_pole))) for i in range(n_pole)]
+        band(bm, lo_ring, hi_ring)
+        bm.faces.new(lo_ring[::-1])
+        bm.faces.new(hi_ring)
+        body.done(ARM_METAL)
+        col_r = min(edge, col_w / 4.0, col_d / 4.0, col_h / 4.0)
+        col_planes: list[tuple[str, Vec3, float]] = [("cx+", (1.0, 0.0, 0.0), col_w / 2.0), ("cx-", (-1.0, 0.0, 0.0), col_w / 2.0), ("cz+", (0.0, 0.0, 1.0), col_d / 2.0), ("cz-", (0.0, 0.0, -1.0), col_d / 2.0), ("cy+", (0.0, 1.0, 0.0), col_h / 2.0), ("cy-", (0.0, -1.0, 0.0), col_h / 2.0)]
+        col_big = 3.0 * max(col_w, col_d, col_h)
+        col_sharp = spk_box(col_big)
+        col_inner = spk_box(col_big)
+        for nm, n3, c in col_planes:
+            col_sharp = spk_clip(col_sharp, n3, c, nm)
+            col_inner = spk_clip(col_inner, n3, c - col_r, nm)
+        col_sharp = [f for f in col_sharp if not f[0].startswith("box")]
+        col_inner = [f for f in col_inner if not f[0].startswith("box")]
+        if len(col_inner) != 6:
+            raise BuildError("the column is too small for the edge radius")
+        col_verts, _cid = spk_vertex_ids(col_inner)
+        col_final = col_sharp
+        for n3 in spk_round_normals(col_inner, segments):
+            col_final = spk_clip(col_final, n3, max(v3_dot(n3, p) for p in col_verts) + col_r, "round")
+        for f in col_final:
+            col_row: list[bmesh.types.BMVert] = []
+            for pt in f[3]:
+                bv = vertex((pt[0], pt[1] + y_col + col_h / 2.0, pt[2]))
+                if not col_row or bv is not col_row[-1]:
+                    col_row.append(bv)
+            while len(col_row) > 1 and col_row[0] is col_row[-1]:
+                col_row.pop()
+            if len(col_row) >= 3:
+                try:
+                    bm.faces.new(col_row)
+                except ValueError:
+                    pass
+        body.done(colour)
     for key, value in (("grilleDepthMm", grille_depth), ("handleDepthMm", handle_depth), ("poleSocketDiaMm", pole or 0.0), ("poleSocketDepthMm", pole_depth), ("rigDepthMm", rig_depth)):
         if value > 0.0:
             MEASURE[key] = round(value / MM, 4)
