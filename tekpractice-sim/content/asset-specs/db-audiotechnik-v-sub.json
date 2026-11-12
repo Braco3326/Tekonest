@@ -1,0 +1,74 @@
+{
+  "id": "db-audiotechnik-v-sub",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 700,
+    "h": 606,
+    "d": 728
+  },
+  "ports": [
+    {
+      "portId": "bidir-nl4-1",
+      "face": "io",
+      "xMm": 250,
+      "yMm": 130,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-nl4-2",
+      "face": "io",
+      "xMm": 450,
+      "yMm": 130,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.dbaudio.com/global/en/products/series/v-series/v-sub/",
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 10,
+      "edgeSegments": 4,
+      "handleCount": 2,
+      "handleLenMm": 160,
+      "handleWidthMm": 40,
+      "handleDepthMm": 14,
+      "handleFromRearMm": 150,
+      "handleYMm": 330,
+      "handlePitchMm": 420
+    },
+    "budget": {
+      "min": 300,
+      "max": 4000
+    },
+    "minFilletMm": 7,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbaudio.com/global/en/products/series/v-series/v-sub/",
+      "note": "equipment plan source (research grade: datasheet); size 700 x 728 x 606 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbaudio.com/global/en/products/series/v-series/v-sub/",
+      "note": "d&b V-SUB page read 2026-11-12: \"606 x 700 x 728 / 830 mm\" (h x w x d; the 830 mm depth is read as the depth with wheels, the dimensions exclude wheels), 64 kg, \"2 x NLT4 F/M, plus optional 2 x NL4\", \"Each side panel incorporates two handles, whilst the top panel has an M20 high stand flange inserted\", one 18 in bass-reflex driver facing front and one 12 in two-chamber bandpass driver radiating rear. Modelled: two parallel NLT4 connectors (bidir) on the rear, two handle recesses on each side (the count and the sides are the page; their position and size are our estimate). Not modelled: the optional NL4 pair, the wheels, the M20 flange in the top panel (the pole socket of this shape is in the base), the rear driver. The corner radius is our estimate. Positions are guesses."
+    }
+  ]
+}

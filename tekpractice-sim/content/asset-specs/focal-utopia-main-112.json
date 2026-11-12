@@ -1,0 +1,89 @@
+{
+  "id": "focal-utopia-main-112",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 530,
+    "h": 940,
+    "d": 460
+  },
+  "ports": [
+    {
+      "portId": "in-audio-signal-input-amplifier",
+      "face": "io",
+      "xMm": 100,
+      "yMm": 150,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-amplifier-output-to-speaker-woofer-midrange",
+      "face": "io",
+      "xMm": 200,
+      "yMm": 150,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl8",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-amplifier-output-to-speaker-tweeter-front-led",
+      "face": "io",
+      "xMm": 300,
+      "yMm": 150,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "in-mains-in-fuse-holder-mains-socket-on-amplifier",
+      "face": "io",
+      "xMm": 430,
+      "yMm": 150,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 24,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 14,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 100,
+      "max": 4000
+    },
+    "minFilletMm": 9.8,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.guitarcenter.com/Focal/Utopia-Main-112-Active-Monitoring-Speaker-System-Black-1500000455899.gc",
+      "note": "equipment plan source (research grade: dealer); size 530 x 460 x 940 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://zenproaudio.com/focal-utopia-main-112-active-monitoring-speaker-system",
+      "note": "Size 94 x 53 x 46 cm (height x width x depth, 77.6 kg) from the Guitar Center and Zen Pro Audio listings through a search summary (Focal's own datasheet, hosted by a Cyprus dealer, answers 403): the plan marks it axis-assumed (estimate), so beta-modelled only; the 188 x 483 x 444 mm figure of another dealer is the 4U amplifier, not used. Sources disagree on the connector set: Sound On Sound (search summary) says each monitor is driven by an external active crossover and power amplifier unit with mains, balanced XLR input and two multi-pole speakON outputs; bundle listings call the monitor passive. The four ports below are the Bêta proposal's (those of the amplifier: audio input, a woofer/midrange output, a tweeter output, mains) kept with their ids and placed on the cabinet as stand-ins; nothing here is verified. The baffle shows a generic 3-way arrangement (driver sizes not read). Positions are guesses."
+    }
+  ]
+}

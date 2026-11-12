@@ -1,0 +1,108 @@
+{
+  "id": "rode-nt-sf1",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 45.7,
+    "h": 192.3,
+    "d": 45.7
+  },
+  "ports": [
+    {
+      "portId": "out-one-balanced-output-per-capsule-lf-1-rf-2-lb-3-rb-4-on-the-supplied-4-x-xlr-breakout-cable-1",
+      "face": "bottom",
+      "xMm": 18,
+      "yMm": 22.85,
+      "confidence": "guess",
+      "openingMm": 10,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "flags": [
+        "requiresPhantom"
+      ]
+    },
+    {
+      "portId": "out-one-balanced-output-per-capsule-lf-1-rf-2-lb-3-rb-4-on-the-supplied-4-x-xlr-breakout-cable-2",
+      "face": "bottom",
+      "xMm": 27.7,
+      "yMm": 22.85,
+      "confidence": "guess",
+      "openingMm": 10,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "flags": [
+        "requiresPhantom"
+      ]
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "profile": [
+      [
+        0,
+        20
+      ],
+      [
+        1.5,
+        25.1
+      ],
+      [
+        125,
+        25.1
+      ],
+      [
+        128,
+        34
+      ],
+      [
+        132,
+        45.7
+      ],
+      [
+        172,
+        45.7
+      ],
+      [
+        183,
+        40
+      ],
+      [
+        189,
+        28
+      ],
+      [
+        192.3,
+        0
+      ]
+    ],
+    "projection": "wrap",
+    "budget": {
+      "min": 700,
+      "max": 6000
+    },
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#2e3036"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://edge.rode.com/pdf/page/1859/modules/4438/ntsf1_datasheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 45.7 x 45.7 x 192.3 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://edge.rode.com/pdf/page/1859/modules/4438/ntsf1_datasheet.pdf",
+      "note": "RODE NT-SF1 datasheet downloaded and read as text 2026-11-12: four TF-45C capsules in a tetrahedral array, externally biased condenser, power \"6.2mA @ 48V (per channel) phantom power\", \"Dimensions (W x H x D) 45.7mm x 192.3mm x 45.7mm\", \"Body Diameter 25.1mm\", 286 g, in the box: the microphone, a \"10-pin XLR to 4 x 3-pin XLR cable\", a donut shockmount, a pop shield and a furry. Reassigned from the family `assembly` (deferred) to `revolve`: round body, 45.7 mm head. The microphone's own connector is a 10-pin XLR (not in the catalogue) and the four XLR outputs are on the breakout cable: the two ports below are the Bêta proposal's (two of the four capsule outputs, with their long ids, requiresPhantom) as stand-ins on the base, so the ports are NOT documented and the device is beta-modelled only. The 25.1 mm base cannot hold two XLR rings apart (they overlap on the base). The datasheet drawings (front, side, top) were not rendered: the head length (45.7 mm wide head over about 50 mm) and the profile are our estimate from the stated widths and total height. Generic wrap artwork only."
+    }
+  ]
+}

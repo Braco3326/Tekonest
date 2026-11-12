@@ -1,0 +1,72 @@
+{
+  "id": "db-audiotechnik-y10p",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 257,
+    "h": 580,
+    "d": 341
+  },
+  "ports": [
+    {
+      "portId": "bidir-nl4-1",
+      "face": "io",
+      "xMm": 86,
+      "yMm": 110,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-nl4-2",
+      "face": "io",
+      "xMm": 171,
+      "yMm": 110,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.dbaudio.com/assets/products/downloads/architectural-specifications/dbaudio-arch-specs-y10p-en.txt",
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 8,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 100,
+      "max": 4000
+    },
+    "minFilletMm": 5.6,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbaudio.com/global/en/products/series/y-series/y10p/",
+      "note": "equipment plan source (research grade: datasheet); size 257 x 341 x 580 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbaudio.com/assets/products/downloads/architectural-specifications/dbaudio-arch-specs-y10p-en.txt",
+      "note": "d&b architectural specification of the Y10P read 2026-11-12 (text file): \"The dimensions (WxHxD) shall not exceed 257 x 580 x 341 mm\", 18 kg, \"connection panel on the back shall be recessed and fitted with speakon NLT4 F/M sockets (NL4 M or EP5 connectors as an option)\", marine plywood with a PCP coating, two 8 in LF drivers and one 1.4 in compression driver on a rotatable CD horn, one handle on the top and one on the bottom panel, two M10 inserts top and bottom. The size is the plan size: the page and this spec label the axes the same way (H 580, W 257, D 341), so width 257 and height 580 are NOT swapped: the plan row needs no change. Not modelled: the top and bottom handles (the shape cuts side handles only), the M10 rigging inserts. The page lists \"Two NLT4 F/M connectors\" as standard: both are parallel inputs (bidir), the NL4 option pair is not modelled. Positions on the rear panel are guesses."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.dbaudio.com/global/en/products/series/y-series/y10p/",
+      "note": "d&b product page read 2026-11-12: 580 x 257 x 341 mm under the label \"Dimensions (h x w x d)\", 18 kg. The corner radius (8 mm) and the driver layout of the baffle picture are our own estimate (no photo or drawing opened). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): drivers, a horn and sockets, no photo, no logo, no lettering."
+    }
+  ]
+}

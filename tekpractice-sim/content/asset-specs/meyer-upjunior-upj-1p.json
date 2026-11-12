@@ -1,0 +1,93 @@
+{
+  "id": "meyer-upjunior-upj-1p",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 229,
+    "h": 484,
+    "d": 259
+  },
+  "ports": [
+    {
+      "portId": "in-xlr",
+      "face": "io",
+      "xMm": 70,
+      "yMm": 150,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr-loop",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 150,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 105,
+      "yMm": 85,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "powercon-blue",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 85,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "portsDocumented": true,
+  "portsSource": "https://www.manualsdir.com/manuals/118204/meyer-sound-upjunior.html?page=10",
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 6,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 100,
+      "max": 4000
+    },
+    "minFilletMm": 4.2,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.pssl.com/products/meyer-sound-upjunior-powered-loudspeaker",
+      "note": "equipment plan source (research grade: datasheet); size 229 x 259 x 484 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.manualsdir.com/manuals/118204/meyer-sound-upjunior.html?page=10",
+      "note": "UPJunior user manual, specifications page (a manualsdir copy) read 2026-11-12: \"Female XLR input with male XLR loop output\", differential electronically balanced; one 8 in LF cone driver and one 2 in compression driver on an 80 x 50 degree horn. The next page of the same manual (read through a search summary) lists the AC connector as \"a PowerCon with looping output\": the colour (blue, the 20 A input type) is not stated, so the plan row carries assumedConnectors power-in. The size 484 H x 229 W x 259 D comes from the plan (manual and PSSL page); the PSSL page and Meyer's own datasheet could not be read today (HTTP 429, 404). The page gives no plan taper and no handles: a plain rounded box, radius 6 mm is our estimate. The `power` switch is the simulator power control, not a documented switch. Positions are guesses."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "id": "nexo-geo-m10",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 531,
+    "h": 288,
+    "d": 355
+  },
+  "ports": [
+    {
+      "portId": "bidir-2-x-nl4-1-1-through-2-2-geo-m10-touring-version-1",
+      "face": "io",
+      "xMm": 170,
+      "yMm": 144,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-2-x-nl4-1-1-through-2-2-geo-m10-touring-version-2",
+      "face": "io",
+      "xMm": 360,
+      "yMm": 144,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 6,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 100,
+      "max": 4000
+    },
+    "minFilletMm": 4.2,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.nexo-sa.com/products/geo-m1012/",
+      "note": "equipment plan source (research grade: datasheet); size 531 x 355 x 288 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.nexo-sa.com/products/geo-m1012/",
+      "note": "NEXO GEO M1012 page read 2026-11-12: \"531mm wide x 288mm high x 355mm deep\", 21 kg net, \"2 x NL4, 4 poles connectors\" (1+/1- through, 2+/2- to the GEO M10), four side handles (two vertical, two horizontal) plus a back grip, integrated rigging with AutoRig, a 10 in LF driver and a 1.4 in HF driver on a waveguide (horizontal dispersion 80 or 120 degrees by magnetic flanges, 12 degrees vertical). The page describes the M1012 as the 12 degree touring version of the M10 line and does not say the module is the same cabinet: the size belongs to the M1012 (estimate, axis assumed, beta-modelled only). The page gives no plan taper, so the shape is a plain rounded box (radius 6 mm is our estimate); the handles and rigging are not modelled. The two proposal ports keep their ids. Positions are guesses."
+    }
+  ]
+}

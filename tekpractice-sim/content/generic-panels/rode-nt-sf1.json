@@ -1,0 +1,40 @@
+{
+  "note": "Generic panel artwork (no brand marks, no logos, no lettering), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions. wrap: Unrolled side surface: a plain body and a wire-cage head (generic).",
+  "faces": {
+    "wrap": {
+      "wMm": 143.57078426905355,
+      "hMm": 192.3,
+      "base": "#2e3036",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 128,
+          "w": 143.57078426905355,
+          "h": 1.5,
+          "fill": "#1b1c1f"
+        },
+        {
+          "kind": "grid",
+          "x": 0,
+          "y": 134,
+          "w": 143.57078426905355,
+          "h": 48,
+          "pitch": 3.5,
+          "line": 0.6,
+          "fill": "#101113",
+          "stroke": "#6b6f75"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 183,
+          "w": 143.57078426905355,
+          "h": 1.2,
+          "fill": "#1b1c1f"
+        }
+      ],
+      "pxPerMm": 10
+    }
+  }
+}

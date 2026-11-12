@@ -1,0 +1,67 @@
+{
+  "id": "nexo-p12",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 432,
+    "h": 534,
+    "d": 314
+  },
+  "ports": [
+    {
+      "portId": "bidir-nl4-1",
+      "face": "io",
+      "xMm": 130,
+      "yMm": 100,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-nl4-2",
+      "face": "io",
+      "xMm": 300,
+      "yMm": 100,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.nexo-sa.com/products/p12/",
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 8,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 100,
+      "max": 4000
+    },
+    "minFilletMm": 5.6,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.nexo-sa.com/products/p12/",
+      "note": "equipment plan source (research grade: datasheet); size 432 x 314 x 534 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.nexo-sa.com/products/p12/",
+      "note": "NEXO P12 page read 2026-11-12: \"534 mm x 432 mm x 314 mm\" labelled Height x Width x Depth, 20 kg net, touring and TIS versions \"4 x NL4 (4-pole speakON), one per handle plus two at the back\" (the install version has one cable gland), a 12 in LF neodymium driver and a 3 in HF diaphragm driver in a coaxial arrangement, \"a curvilinear enclosure\" of birch and poplar plywood, usable vertically or as a wedge monitor, accessory fittings on both sides and the bottom. Modelled: the two NL4 at the back (of four; the two on the handles are not modelled). The handles have no stated place and are not cut; the shape is a plain rounded box (the page states no angle; radius 8 mm is our estimate). Positions are guesses."
+    }
+  ]
+}

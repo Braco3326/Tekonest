@@ -1,0 +1,55 @@
+{
+  "id": "l-acoustics-ks28",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 1340,
+    "h": 550,
+    "d": 719
+  },
+  "ports": [
+    {
+      "portId": "in-nl4",
+      "face": "io",
+      "xMm": 670,
+      "yMm": 110,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.l-acoustics.com/products/KS28",
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 12,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 150,
+      "max": 4000
+    },
+    "minFilletMm": 8.4,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.l-acoustics.com/products/KS28",
+      "note": "equipment plan source (research grade: datasheet); size 1340 x 719 x 550 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.l-acoustics.com/products/KS28",
+      "note": "L-Acoustics page read 2026-11-12 (two fetches): \"Dimensions (W x H x D) 1340 mm / 550 mm / 719 mm\", 79 kg net, connectors \"1 x 4-point speakON\" (no link connector listed; NL4 or NL8 not named: a 4-point speakON is the catalogue speakon-nl4), six ergonomic handles, a flush 2-point rigging system with 8 side runners and 2 ground runners, two 18 in neodymium cone drivers, Baltic beech and birch plywood. Not modelled: the six handles (positions not stated), the rigging hardware. The baffle picture has the two 18 in drivers side by side (an estimate of their place). Rear panel position is a guess; the corner radius is our estimate."
+    }
+  ]
+}

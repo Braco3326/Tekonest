@@ -1,0 +1,153 @@
+{
+  "id": "neumann-kh-750-dsp",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 330,
+    "h": 383,
+    "d": 383
+  },
+  "ports": [
+    {
+      "portId": "in-analog-1",
+      "face": "io",
+      "xMm": 70,
+      "yMm": 310,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-analog-2",
+      "face": "io",
+      "xMm": 125,
+      "yMm": 310,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-analog-1",
+      "face": "io",
+      "xMm": 205,
+      "yMm": 310,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-analog-2",
+      "face": "io",
+      "xMm": 260,
+      "yMm": 310,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 70,
+      "yMm": 240,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 14,
+      "connector": "bnc",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 125,
+      "yMm": 240,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 14,
+      "connector": "bnc",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 230,
+      "yMm": 240,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 14,
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 165,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 24,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 260,
+      "yMm": 165,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "portsDocumented": true,
+  "portsSource": "https://www.neumann.com/en-en/products/monitors/kh-750-dsp/",
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 8,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 100,
+      "max": 4000
+    },
+    "minFilletMm": 5.6,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-en/products/monitors/kh-750-dsp/",
+      "note": "equipment plan source (research grade: datasheet); size 330 x 383 x 383 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neumann.com/en-en/products/monitors/kh-750-dsp/",
+      "note": "Neumann KH 750 DSP page read 2026-11-12: \"383 x 330 x 383 mm\" (H x W x D), 19.5 kg, backplate: two electronically balanced XLR inputs, two electronically balanced XLR outputs (high-passed, a daisy chain for subwoofer arrays), one BNC input (75 ohm, AES3 or S/PDIF) and one BNC output (75 ohm, AES3), \"a standard IP network connector\" for MA 1 control, a universal switched-mode supply 100-240 V (the mains connector is not described), a 10 in long-throw woofer behind a black metal grille, sealed wood cabinet with an aluminium electronics panel; also a toggle switch for operation and calibration, input gain, output level, phase, low cut. Modelled: all eight connectors. Not stated: the XLR genders (convention: inputs female, outputs male), the network connector (RJ45 assumed) and the mains inlet (iec-c14 assumed): the plan row carries assumedConnectors net and power-in, both non-audio ports. The BNC pair is AES3 on 75 ohm BNC (aes3 signal). The page does not say the cabinet is rounded (radius 8 mm is our estimate). The `power` switch is the simulator power control, not the page's toggle. Positions are guesses."
+    }
+  ]
+}

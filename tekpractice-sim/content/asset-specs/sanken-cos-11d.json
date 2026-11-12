@@ -1,0 +1,86 @@
+{
+  "id": "sanken-cos-11d",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 4,
+    "h": 16.1,
+    "d": 4
+  },
+  "ports": [
+    {
+      "portId": "out-mic-output-on-the-48-v-interface-cos-11d",
+      "face": "bottom",
+      "xMm": 2,
+      "yMm": 2,
+      "confidence": "guess",
+      "openingMm": 3,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "flags": [
+        "requiresPhantom"
+      ]
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "profile": [
+      [
+        0,
+        3.2
+      ],
+      [
+        0.5,
+        3.8
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        14.4,
+        4
+      ],
+      [
+        15.2,
+        3.4
+      ],
+      [
+        15.8,
+        2
+      ],
+      [
+        16.1,
+        0
+      ]
+    ],
+    "projection": "wrap",
+    "budget": {
+      "min": 300,
+      "max": 6000
+    },
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#1f1f22"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://sanken-mic.com/en/product/spec.cfm/5.1107400",
+      "note": "equipment plan source (research grade: datasheet); size 4 x 4 x 16.1 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://sanken-mic.com/en/product/spec.cfm/5.1107400",
+      "note": "Sanken COS-11D specification page read 2026-11-12: \"16.1mm X 4.0mm (diameter), 1.8m(cable length)\", 24 g, output connectors per variant (Hirose KMC4p, locking 3.5 mm mini plug, Lemo 3-pin, TA5F, TA4F), powering \"+3 V to +10 V\", current less than 0.5 mA, colours BE, BK, GY, WH. The page lists no pigtail, XLR or 48 V interface and does not call the supply phantom. Reassigned from the family `assembly` (deferred) to `revolve`: a lavalier capsule is a plain lathe. The single port is the Bêta proposal's (an XLR output on a 48 V interface, flagged requiresPhantom, with its long id): NOT supported by this page, which lists a +3 to +10 V bias and capsule-end connectors, so the ports are not documented and the device is beta-modelled only; the proposal flag and its connector are to be checked in the data-rule audit. The port stands on the capsule base. The profile is our estimate; black chosen from the four colours. Generic wrap artwork only."
+    }
+  ]
+}

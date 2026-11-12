@@ -1,0 +1,110 @@
+{
+  "id": "adam-audio-s3h",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 585,
+    "h": 280,
+    "d": 380
+  },
+  "ports": [
+    {
+      "portId": "in-analog",
+      "face": "io",
+      "xMm": 100,
+      "yMm": 190,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 190,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 220,
+      "yMm": 190,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 420,
+      "yMm": 190,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 24,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 500,
+      "yMm": 190,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "portsDocumented": true,
+  "portsSource": "https://www.adam-audio.com/content/uploads/2018/03/adam-audio-s-series-quick-start-guide-english.pdf",
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 8,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 100,
+      "max": 4000
+    },
+    "minFilletMm": 5.6,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://adam-audio.com/s-serie/s3h",
+      "note": "equipment plan source (research grade: datasheet); size 585 x 380 x 280 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.adam-audio.com/content/uploads/2018/03/adam-audio-s-series-quick-start-guide-english.pdf",
+      "note": "ADAM Audio S Series quick start guide (it names the S3H in its title; downloaded and read as text 2026-11-12): \"In addition to a standard IEC mains connector, the simple S Series rear panel features traditional AES XLR analog inputs and AES3 digital Input and Thru connectors [for multi-channel arrays] ... a USB jack for software upgrades\", the diagram labels XLR analog input, AES 3 In, AES 3 Out, USB jack, IEC mains connector. Modelled: the four audio and mains connectors (the USB jack is a control and upgrade port whose connector type is not printed: not modelled). The IEC inlet type is not named beyond \"standard IEC\": the plan row carries assumedConnectors power-in. XLR genders follow the convention (inputs female, thru male). The S3H page lists 280 x 585 x 380 mm (H x W x D), 26.6 kg, two 7 in woofers, a 4 in midrange and an S-ART ribbon tweeter \"optimally configured for use horizontally\", rounded edges (radius 8 mm is our estimate). The `power` switch is the simulator power control. Positions are guesses."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://adam-audio.com/s-serie/s3h",
+      "note": "ADAM Audio S3H page read 2026-11-12: 280 x 585 x 380 mm (H x W x D), 26.6 kg, drivers as above, 550 W maximum power consumption."
+    }
+  ]
+}

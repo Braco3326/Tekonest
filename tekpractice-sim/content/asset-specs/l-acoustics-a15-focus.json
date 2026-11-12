@@ -1,0 +1,67 @@
+{
+  "id": "l-acoustics-a15-focus",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 764,
+    "h": 427,
+    "d": 522
+  },
+  "ports": [
+    {
+      "portId": "in-nl4",
+      "face": "io",
+      "xMm": 300,
+      "yMm": 100,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-nl4-link",
+      "face": "io",
+      "xMm": 464,
+      "yMm": 100,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.l-acoustics.com/products/A15-focus",
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 10,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 120,
+      "max": 4000
+    },
+    "minFilletMm": 7,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.l-acoustics.com/products/A15-focus",
+      "note": "equipment plan source (research grade: datasheet); size 764 x 522 x 427 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.l-acoustics.com/products/A15-focus",
+      "note": "L-Acoustics page read 2026-11-12: \"(W x H x D) 764 mm / 427 mm / 522 mm\", 35 kg net, \"IN: 1 x 4-point speakON\" and \"LINK: 1 x 4-point speakON\" (NL4 or NL8 not named: a 4-point speakON is speakon-nl4), \"1 handle, 8 corner stops and 2 ground runners\", a flush two-point rigging system, 1 x 15 in LF and 1 x 3 in HF compression driver. The page gives no plan taper or splay, so the shape is a plain rounded box; the one handle and the corner stops have no stated place and are not modelled. Rear positions are guesses; the corner radius and the baffle layout are our estimate."
+    }
+  ]
+}

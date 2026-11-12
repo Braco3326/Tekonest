@@ -1,0 +1,66 @@
+{
+  "id": "l-acoustics-x15-hiq",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 430,
+    "h": 580,
+    "d": 375
+  },
+  "ports": [
+    {
+      "portId": "in-in-1-4-point-speakon",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 110,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-link-1-4-point-speakon-interchangeable-with-in",
+      "face": "io",
+      "xMm": 280,
+      "yMm": 110,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 8,
+      "edgeSegments": 4,
+      "frontTopSetMm": 300
+    },
+    "budget": {
+      "min": 100,
+      "max": 4000
+    },
+    "minFilletMm": 5.6,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.l-acoustics.com/products/X15-HiQ",
+      "note": "equipment plan source (research grade: datasheet); size 430 x 375 x 580 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.l-acoustics.com/products/X15-HiQ",
+      "note": "L-Acoustics page read 2026-11-12: \"Dimensions (W x H x D) 430 mm / 580 mm / 375 mm\", 21 kg net, two 4-point speakON connectors (\"IN: 1 x 4-point speakON\", \"LINK: 1 x 4-point speakON\"; NL4 or NL8 not named), 2 handles, 2 x 35 mm pole sockets, 1 x 15 in LF driver, \"monitor angle 35 degrees without risers, 55 degrees with risers\" (a coaxial 2-way wedge). The plan marks the axis order as assumed (the physical-specs row repeats the numbers unlabelled), so this is an estimate: beta-modelled only. The wedge slope (the front face set back 300 mm over its 580 mm height) is OUR estimate: the page gives no baffle angle in degrees that fits the 375 mm depth. The two handles and the two pole sockets have no stated position and are not modelled. The two proposal ports keep their proposal ids (a beta-modelled Bêta row keeps its ports); positions are guesses."
+    }
+  ]
+}

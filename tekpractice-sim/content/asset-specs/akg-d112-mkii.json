@@ -1,0 +1,97 @@
+{
+  "id": "akg-d112-mkii",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 70,
+    "h": 126,
+    "d": 115
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 35,
+      "yMm": 57.5,
+      "confidence": "guess",
+      "openingMm": 19,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwef0475a5/pdfs/AKG_d112_mkII_cutsheet.pdf",
+  "build": {
+    "shape": "revolve-oval",
+    "params": {
+      "segments": 64
+    },
+    "profile": [
+      [
+        0,
+        34,
+        40
+      ],
+      [
+        6,
+        44,
+        60
+      ],
+      [
+        30,
+        62,
+        95
+      ],
+      [
+        60,
+        70,
+        112
+      ],
+      [
+        85,
+        70,
+        115
+      ],
+      [
+        105,
+        60,
+        104
+      ],
+      [
+        118,
+        36,
+        66
+      ],
+      [
+        126,
+        0,
+        0
+      ]
+    ],
+    "projection": "wrap",
+    "budget": {
+      "min": 800,
+      "max": 6000
+    },
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#2d2e33"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwef0475a5/pdfs/AKG_d112_mkII_cutsheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 70 x 115 x 126 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.akg.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwef0475a5/pdfs/AKG_d112_mkII_cutsheet.pdf",
+      "note": "AKG D112 MKII cut sheet downloaded and read as text 2026-11-12: connector \"3-pin XLR (pin 2 hot)\", length 115 mm, diameter 70 mm, height 126 mm, 300 g net, dynamic cardioid. Reassigned from the family `assembly` (deferred) to `revolve-oval`: a plain lathe with an oval section carries the three numbers (70 wide x 115 deep x 126 high) exactly; `revolve` would need width = depth. The real body is bent (the XLR leaves at an angle under the head): the lathe is an egg-shaped stand-in with the XLR on the base, the profile is our estimate (no photo or drawing opened). XLR gender: not printed, male by convention (a microphone). The position is a guess. Generic wrap artwork only, no logo."
+    }
+  ]
+}

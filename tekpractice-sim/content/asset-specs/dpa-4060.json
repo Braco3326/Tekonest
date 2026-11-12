@@ -1,0 +1,83 @@
+{
+  "id": "dpa-4060",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 5.4,
+    "h": 12.7,
+    "d": 5.4
+  },
+  "ports": [
+    {
+      "portId": "out-ta4",
+      "face": "bottom",
+      "xMm": 2.7,
+      "yMm": 2.7,
+      "confidence": "guess",
+      "openingMm": 3,
+      "connector": "mini-xlr-ta4",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "profile": [
+      [
+        0,
+        4.2
+      ],
+      [
+        0.6,
+        5
+      ],
+      [
+        1.2,
+        5.4
+      ],
+      [
+        11,
+        5.4
+      ],
+      [
+        11.8,
+        4.8
+      ],
+      [
+        12.4,
+        3
+      ],
+      [
+        12.7,
+        0
+      ]
+    ],
+    "projection": "wrap",
+    "budget": {
+      "min": 300,
+      "max": 6000
+    },
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#1c1c1e"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.dpamicrophones.com/microphones/lavalier/4060?variant=32",
+      "note": "equipment plan source (research grade: datasheet); size 5.4 x 5.4 x 12.7 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://im.static-thomann.de/pics/atg/atgdata/document/specs/4060_bm.pdf",
+      "note": "DPA 4060-BM specification sheet (a Thomann-hosted copy) downloaded and read as text 2026-11-12: omnidirectional condenser, \"Microphone diameter 5.4 mm, Microphone length 12.7 mm\", 7.5 g including cable and MicroDot connector, connector MicroDot; \"for a wireless microphone, choose between our adapter system or a hardwired connector\", adapters for most wireless systems, four colours (black, brown, beige, white). The plan notes (DPA product page) list MicroLock, TA4F mini-XLR, 3-pin LEMO and mini-jack terminations. Reassigned from the family `assembly` (deferred) to `revolve`: a lavalier capsule is a plain lathe. One port `out-ta4` (mini-xlr-ta4, the TA4F option) stands in for the chosen termination: the connector set depends on the order option, so the ports are NOT documented and the device is beta-modelled only (the capsule itself ends in a MicroDot, which the catalogue lacks). The port sits on the capsule base although the connector is at the end of a 1.8 m cable. The profile is our estimate (a rounded grid end); the body is the stated 5.4 x 12.7 mm. Black chosen from the four colours. Generic wrap artwork only."
+    }
+  ]
+}

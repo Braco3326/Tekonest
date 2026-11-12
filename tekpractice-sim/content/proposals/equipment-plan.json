@@ -3866,7 +3866,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "l-acoustics-kara-ii",
@@ -4203,7 +4204,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "nti-audio-minirator-mr-pro",
@@ -5872,7 +5874,11 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "motu-828es",
@@ -6339,7 +6345,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "audio-technica-ath-m50x",
@@ -6563,7 +6570,8 @@
     "dynamic",
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "digital-audio-cable-family",
@@ -6617,7 +6625,8 @@
     "condenser",
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "l-acoustics-ks28",
@@ -6644,7 +6653,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "middle-atlantic-srk",
@@ -6773,7 +6783,11 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "power-in"
+   ]
   },
   {
    "id": "allen-heath-zed-436",
@@ -6924,7 +6938,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "genelec-1234a",
@@ -6978,7 +6993,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "l-acoustics-p1",
@@ -7082,7 +7098,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "neumann-kh-750-dsp",
@@ -7109,7 +7126,12 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true,
+   "assumedConnectors": [
+    "net",
+    "power-in"
+   ]
   },
   {
    "id": "neumann-ku-100",
@@ -7164,7 +7186,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "nexo-p12",
@@ -7191,7 +7214,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "omnia-11",
@@ -7298,7 +7322,8 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "sanken-cos-11d",
@@ -7326,7 +7351,8 @@
     "condenser",
     "phantom-powered"
    ],
-   "sizeConfidence": "ok"
+   "sizeConfidence": "ok",
+   "staged": true
   },
   {
    "id": "sennheiser-hmd-26",
@@ -8217,7 +8243,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "nagra-vi",
@@ -8293,7 +8320,8 @@
    "traits": [
     "passive"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "qsc-rmx-1450",
@@ -8459,7 +8487,8 @@
    "traits": [
     "active"
    ],
-   "sizeConfidence": "axis-assumed"
+   "sizeConfidence": "axis-assumed",
+   "staged": true
   },
   {
    "id": "heil-pr-40",

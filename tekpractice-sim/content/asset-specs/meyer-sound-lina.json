@@ -1,0 +1,93 @@
+{
+  "id": "meyer-sound-lina",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 515,
+    "h": 213,
+    "d": 389
+  },
+  "ports": [
+    {
+      "portId": "in-xlr",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 120,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr-loop",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 120,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 250,
+      "yMm": 120,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "powercon-blue",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 380,
+      "yMm": 120,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "portsDocumented": true,
+  "portsSource": "https://docs.meyersound.com/products/en/datasheet---lina.html",
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 6,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 100,
+      "max": 4000
+    },
+    "minFilletMm": 4.2,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://docs.meyersound.com/products/en/datasheet---lina.html",
+      "note": "equipment plan source (research grade: datasheet); size 515 x 389 x 213 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://docs.meyersound.com/products/en/datasheet---lina.html",
+      "note": "Meyer Sound LINA datasheet page read 2026-11-12: \"W: 20.27 in (515 mm) x H: 8.38 in (213 mm) x D: 15.32 in (389 mm)\", 43 lb (19.5 kg), \"powerCON 20 input with loop output\", XLR 3-pin female balanced input, XLR 3-pin male loop output, an optional XLR 5-pin for audio and RMS, AC 90-265 V, two 6.5 in LF and one 3 in compression driver, end frames with GuideALinks for 0 to 11 degrees splay, a vented multi-ply birch enclosure. Modelled: the XLR input, the XLR loop output and the powerCON input (the mains loop output and the optional 5-pin are not modelled). The page does not say where the connectors sit (rear assumed); the page names no handles and no plan taper, so the shape is a plain rounded box (radius 6 mm is our estimate). The `power` switch is the simulator power control the catalogue adds to every mains inlet, not a switch the page documents. Positions are guesses."
+    }
+  ]
+}

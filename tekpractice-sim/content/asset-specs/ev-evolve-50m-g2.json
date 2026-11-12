@@ -1,0 +1,101 @@
+{
+  "id": "ev-evolve-50m-g2",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 344,
+    "h": 2093,
+    "d": 470
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 80,
+      "yMm": 430,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 430,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput"
+      ]
+    },
+    {
+      "portId": "out-mix",
+      "face": "io",
+      "xMm": 220,
+      "yMm": 430,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aux",
+      "face": "io",
+      "xMm": 280,
+      "yMm": 430,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 10,
+      "edgeSegments": 4,
+      "bodyHeightMm": 510,
+      "columnWidthMm": 102,
+      "columnDepthMm": 163,
+      "columnHeightMm": 825,
+      "poleDiaMm": 48
+    },
+    "budget": {
+      "min": 200,
+      "max": 4000
+    },
+    "minFilletMm": 7
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://products.electrovoice.com/download/979064",
+      "note": "equipment plan source (research grade: dealer); size 344 x 470 x 2093 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.guitarcenter.com/Electro-Voice/EVOLVE-50M-G2-Portable-Column-PA-System-Black-1500000492917.gc",
+      "note": "Dealer data through a search summary (the plan row): assembled system 82.40 x 13.54 x 18.50 in (H x W x D) = 2093 x 344 x 470 mm; subwoofer 20.08 in high (510 mm, 13.54 x 18.50 in footprint), column 32.48 x 4.02 x 6.43 in (825 x 102 x 163 mm), pole 36.57 x 1.91 x 2.16 in (the stack is a 510 mm cabinet, a 48 mm pole and an 825 mm column). The plan marks the size axis-assumed (estimate): beta-modelled only. The EV pages for the G2 answer 404 and its spec PDF was not found."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://products.electrovoice.com/download/979064",
+      "note": "Electro-Voice EVOLVE 50M datasheet (the FIRST generation, not the G2: the G2 sheet was not found) downloaded and read as text 2026-11-12: connectors 4x XLR/TRS combo line/mic input, 2x XLR/TRS combo stereo line input, 1/4 in TRS Hi-Z, RCA, 3.5 mm, foot switch, XLR MIX OUT, XLR AUX OUT, RJ45 QuickSmart Link, 100-240 V AC, 12 in subwoofer in 15 mm plywood; assembled 2045 x 345 x 471 mm (the G2 dealer figure above differs, so the G2 sheet could differ too). Ports below are modelled FROM THIS FIRST-GENERATION SHEET and are NOT verified for the G2: two of the combo inputs (as XLR mic inputs), MIX OUT and AUX OUT. The RJ45 (digital audio and control, no catalogue signal), the line inputs and the mains inlet (no connector named) are not modelled. The cabinet radius is our estimate; the column array drivers and pole are shape only. Positions are guesses. No picture is projected (the stack face is far taller than the cabinet)."
+    }
+  ]
+}

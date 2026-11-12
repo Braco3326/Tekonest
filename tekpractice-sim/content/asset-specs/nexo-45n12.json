@@ -1,0 +1,74 @@
+{
+  "id": "nexo-45n12",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 492,
+    "h": 392,
+    "d": 576
+  },
+  "ports": [
+    {
+      "portId": "bidir-nl4-1",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 100,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-nl4-2",
+      "face": "io",
+      "xMm": 330,
+      "yMm": 100,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 26,
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.nexo-sa.com/products/45n12/",
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 8,
+      "edgeSegments": 4,
+      "frontTopSetMm": 392,
+      "handleCount": 1,
+      "handleLenMm": 120,
+      "handleWidthMm": 30,
+      "handleDepthMm": 14,
+      "handleFromRearMm": 100,
+      "handleYMm": 300
+    },
+    "budget": {
+      "min": 200,
+      "max": 4000
+    },
+    "minFilletMm": 5.6,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.nexo-sa.com/products/45n12/",
+      "note": "equipment plan source (research grade: datasheet); size 492 x 576 x 392 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.nexo-sa.com/products/45n12/",
+      "note": "NEXO 45N-12 page read 2026-11-12: \"392 x 492 x 576 mm\" labelled Height x Width x Depth, 24 kg net, \"2 x NL4MP Speakon 4 pole\" (active: 1+/1- LF and 2+/2- HF; passive: 2+/2-), \"4 handles (2 side metal recessed, 2 front and rear moulded)\", one 12 in LF and one 3 in voice-coil 1.4 in compression driver, HF dispersion 60 degrees vertical asymmetrical (-45/+15), Baltic birch. Modelled: two NL4 on the rear (parallel, bidir), one recessed handle on each side (count and side are the page, the place is our estimate). Not modelled: the moulded front and rear handles. The page gives NO wedge angle: the 45 degree floor-wedge slope (the front face set back 392 mm over its 392 mm height) is our estimate from the model name. Positions are guesses."
+    }
+  ]
+}
