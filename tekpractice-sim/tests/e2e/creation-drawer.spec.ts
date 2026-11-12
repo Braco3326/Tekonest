@@ -560,7 +560,7 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
   })
 
   test('S7: a tab reached with the arrows is scrolled in clear of the fade: fully inside the unmasked part of the row, so its focus ring is whole', async ({ page }) => {
-    // Tolerance 1 px: a browser snaps scrollLeft to whole pixels, so a tab at a fractional offset (longer tab names since Wave 0) can end up to a pixel inside the fade.
+    // Tolerance 0.5 px (as before Wave 0): the drawer rounds its scroll away from the edge it must clear, so a browser that keeps scrollLeft on whole pixels cannot leave a tab inside the fade.
     await boot(page)
     await open(page)
     const FADE = 28
@@ -581,14 +581,15 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
         )
         .toBe(true)
       const r = await read()
-      // A tab too wide to be clear of both fades (the row is 152 px at 400 px wide) must at least be whole inside the row.
+      // ONLY a tab too wide to be clear of both fades (« Pieds et accroches », 135 px in the 152 px row of a 400 px phone: there is no position that clears both) is held to a weaker
+      // rule: whole inside the row. -1 px there is the pixel snap of the centring; every other tab is held to FADE - 0.5 as before.
       if (r.wide) {
         expect(r.left, label + ': a wide tab is whole (start)').toBeGreaterThanOrEqual(-1)
         expect(r.right, label + ': a wide tab is whole (end)').toBeGreaterThanOrEqual(-1)
         return
       }
-      if (r.start === 'true') expect(r.left, label + ': clear of the start fade').toBeGreaterThanOrEqual(FADE - 1)
-      if (r.end === 'true') expect(r.right, label + ': clear of the end fade').toBeGreaterThanOrEqual(FADE - 1)
+      if (r.start === 'true') expect(r.left, label + ': clear of the start fade').toBeGreaterThanOrEqual(FADE - 0.5)
+      if (r.end === 'true') expect(r.right, label + ': clear of the end fade').toBeGreaterThanOrEqual(FADE - 0.5)
     }
     await row(page).getByRole('tab').first().focus()
     const n = await row(page).getByRole('tab').count()

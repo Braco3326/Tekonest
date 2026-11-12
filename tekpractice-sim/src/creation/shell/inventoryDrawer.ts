@@ -195,8 +195,10 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     const right = box.right - r.right
     // A tab too wide to be clear of BOTH fades (« Pieds et accroches » in the 152 px row of a 400 px phone) is centred instead: whole, never half out of the row.
     if (r.width > box.width - 2 * fade) tablist.scrollLeft += left + r.width / 2 - box.width / 2
-    else if (left < fade) tablist.scrollLeft -= fade - left
-    else if (right < fade) tablist.scrollLeft += fade - right
+    // A browser keeps scrollLeft on whole pixels, so a tab at a fractional offset (a longer tab name) could stop up to a pixel inside the fade: round the move AWAY from the
+    // edge it must clear (the scroll is clamped at the ends of the row, where there is no fade).
+    else if (left < fade) tablist.scrollLeft = Math.floor(tablist.scrollLeft - (fade - left))
+    else if (right < fade) tablist.scrollLeft = Math.ceil(tablist.scrollLeft + (fade - right))
   })
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncFade).observe(tablist)
 
