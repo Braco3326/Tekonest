@@ -8,7 +8,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { DESIGN_IDS, designFromSearch } from '../../src/design/packages'
-import { LOCAL_PORT, designAddresses, resetTip } from '../../tools/onboarding-local.mjs'
+import { LOCAL_PORT, designAddresses, killTreeCommand, resetTip } from '../../tools/onboarding-local.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')) as { scripts: Record<string, string> }
@@ -36,14 +36,32 @@ describe('onboarding-local addresses', () => {
     }
   })
 
-  it('the reset tip says how to see the first visit again', () => {
-    expect(resetTip()).toContain('localStorage.clear()')
+  it('the reset tip offers the narrow reset (profile and tutorial keys only) BEFORE the full clear', () => {
+    const tip = resetTip()
+    for (const key of ['audio-sim/creation-onboarding.v1', 'oscar-guide.onboarding.v1', 'oscar-guide.state.v1']) {
+      expect(tip).toContain(`localStorage.removeItem('${key}')`)
+    }
+    expect(tip.indexOf('removeItem')).toBeGreaterThanOrEqual(0)
+    expect(tip.indexOf('removeItem')).toBeLessThan(tip.indexOf('localStorage.clear()'))
+  })
+
+  it('the reset tip never touches the saved projects with the narrow reset, and warns that the full clear erases them', () => {
+    const tip = resetTip()
+    expect(tip).not.toContain("removeItem('audio-sim/creation-projects.v1')")
+    expect(tip).not.toContain("removeItem('audio-sim/creation.v1')")
+    expect(tip).toMatch(/clear\(\)[^.]*(also )?eras[^.]*saved projects/i)
+  })
+
+  it('the Windows exit path kills the whole server process tree (taskkill /T /F)', () => {
+    expect(killTreeCommand(1234, 'win32')).toEqual(['taskkill', ['/pid', '1234', '/T', '/F']])
+    expect(killTreeCommand(1234, 'linux')).toBeNull()
   })
 })
 
 describe('package.json scripts (T0.2)', () => {
-  it('e2e:fresh builds first, then runs playwright', () => {
-    expect(pkg.scripts['e2e:fresh']).toBe('npm run build && playwright test')
+  // The guard in front of the build is pinned in tests/tools/e2eFreshGuard.test.ts (G1 fix 2); here only the tail.
+  it('e2e:fresh builds, then runs playwright', () => {
+    expect(pkg.scripts['e2e:fresh']).toMatch(/npm run build && playwright test$/)
   })
 
   it('onboarding:local runs the local runner', () => {

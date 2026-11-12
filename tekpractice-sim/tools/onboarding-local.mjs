@@ -14,9 +14,22 @@ export function designAddresses(port = LOCAL_PORT) {
   return [1, 2, 3, 4, 5].map((n) => `http://localhost:${port}/?design=${n}`)
 }
 
-/** How to see the first visit again (the browser keeps its state per address, so this port has its own). */
+/**
+ * How to see the first visit again. The narrow reset comes first: it removes only the profile and tutorial keys (spec 4.4),
+ * so saved projects stay. `localStorage.clear()` wipes everything on this address, saved projects and autosave included.
+ */
 export function resetTip() {
-  return 'To see the first visit again: open a private window, or run localStorage.clear() in the browser console on this address, then reload.'
+  return [
+    'To see the first visit again, in the browser console on this address (own storage: port 4392 only), run these three lines and reload:',
+    "  localStorage.removeItem('audio-sim/creation-onboarding.v1'); localStorage.removeItem('oscar-guide.onboarding.v1'); localStorage.removeItem('oscar-guide.state.v1')",
+    'This keeps your saved projects. A private window also starts fresh.',
+    'Only if that is not enough: localStorage.clear() on this address also erases your saved projects there.',
+  ].join('\n')
+}
+
+/** The command that stops a process AND its children: on Windows the server is started through a shell, so a plain kill leaves node running. Null elsewhere. */
+export function killTreeCommand(pid, platform = process.platform) {
+  return platform === 'win32' ? ['taskkill', ['/pid', String(pid), '/T', '/F']] : null
 }
 
 function main() {
@@ -40,9 +53,23 @@ function main() {
     stdio: 'inherit',
     shell: process.platform === 'win32',
   })
-  const stop = () => server.kill()
-  process.on('SIGINT', stop)
-  process.on('SIGTERM', stop)
+  let stopped = false
+  const stop = () => {
+    if (stopped) return
+    stopped = true
+    const cmd = killTreeCommand(server.pid)
+    if (cmd) spawnSync(cmd[0], cmd[1], { stdio: 'ignore' })
+    else server.kill()
+  }
+  process.on('SIGINT', () => {
+    stop()
+    process.exit(0)
+  })
+  process.on('SIGTERM', () => {
+    stop()
+    process.exit(0)
+  })
+  process.on('exit', stop)
   server.on('exit', (code) => process.exit(code ?? 0))
 }
 
