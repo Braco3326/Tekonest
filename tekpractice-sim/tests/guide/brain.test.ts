@@ -9,6 +9,7 @@ import { shapeBrainVerdict, shapeReply, BADGE_UNSIGNED } from '../../src/guide/v
 import type { BrainReply } from '../../src/guide/vendor/core/brain'
 import type { Setup } from '../../src/guide/vendor/hostTypes'
 import { ruleTextFor, type RuleRow } from '../../src/creation/shell/statusModel'
+import { COPY } from '../../src/creation/copy'
 
 const rules = (JSON.parse(readFileSync(resolve(process.cwd(), 'content/catalog.json'), 'utf8')) as { rules: RuleRow[] }).rules
 const ruleText = ruleTextFor(rules)
@@ -335,5 +336,30 @@ describe('judge', () => {
     const bv = await missing.brain.judge(SETUP, 'practice')
     expect(bv.verdict!.primary!.causeFr).toBe(ruleText('R99').title)
     expect(bv.verdict!.primary!.fixFr).toBe(ruleText('R99').title)
+  })
+})
+
+describe('judge: what to do (T1.4)', () => {
+  const reasonState = (code: string, text_fr: string, over: Partial<TpState> = {}): TpState => benchState({ firstReason: { code, text_fr, subjects: [] }, ...over })
+
+  it('a creation bench that cannot play: the verdict the guide shows is the engine reason plus the action, and it survives the shape check whole', async () => {
+    const reason = 'La lecture console est coupée.'
+    const { brain } = brainWith({ bridge: fakeBridge(() => reasonState('SOURCE_OFF', reason)) })
+    const bv = await brain.judge(SETUP, 'practice')
+    expect(bv.verdict!.result).toBe('indetermine')
+    expect(bv.verdict!.labelFr).toBe(`${reason} ${COPY.assist!.sourceOff}`)
+    expect(shapeBrainVerdict(bv).verdict!.labelFr).toBe(bv.verdict!.labelFr)
+  })
+
+  it('the same state on the level page, and a rule error reason, get no action (does not trigger)', async () => {
+    const legacy = brainWith({ bridge: fakeBridge(() => reasonState('SOURCE_OFF', 'x', { route: 'legacy' })) })
+    expect((await legacy.brain.judge(SETUP, 'practice')).verdict!.labelFr).toBe(`${TP_STRINGS.verdict.nextLink} x`)
+    const err = brainWith({ bridge: fakeBridge(() => reasonState('RULE_ERROR', COPY.playback!.ruleError!)) })
+    expect((await err.brain.judge(SETUP, 'practice')).verdict!.labelFr).toBe(COPY.playback!.ruleError)
+  })
+
+  it('exam mode: still withheld, no verdict at all', async () => {
+    const { brain } = brainWith({ mode: () => 'exam', bridge: fakeBridge(() => reasonState('SOURCE_OFF', 'x')) })
+    expect(await brain.judge(SETUP, 'practice')).toEqual({ verdict: null, needInfo: null, withheld: true })
   })
 })

@@ -1,6 +1,8 @@
 // The guide's verdict, built only from the app's own data: its rule events, the catalog's rule texts (through ruleTextFor) and the
 // signal path's first reason. Nothing here is invented: a fix is the catalog's explanation verbatim (or, when a rule has none, the app's own title text).
+import { COPY } from '../creation/copy'
 import type { RuleText } from '../creation/shell/statusModel'
+import type { ReasonCode } from '../flow/signalPath'
 import { stateHash } from './bridge/shared'
 import type { TpPortRef, TpState } from './bridge/types'
 import { TP_STRINGS } from './strings'
@@ -21,6 +23,27 @@ export function digestOf(text: string): string {
     b = (b ^ (b >>> 13)) >>> 0
   }
   return `h:${a.toString(16).padStart(8, '0')}${b.toString(16).padStart(8, '0')}`
+}
+
+/**
+ * What to do for each reason of the signal path (COPY.assist, one « vous » sentence): the key of its sentence. `null` = nothing is added: a rule error
+ * already comes with the rule's own explanation, and the verdict's first branch (an error event) says it. A new ReasonCode fails to compile until placed.
+ */
+const ACTION_KEY: Readonly<Record<ReasonCode, string | null>> = {
+  NO_SOURCE: 'noSource',
+  SOURCE_OFF: 'sourceOff',
+  HOST_UNPOWERED: 'hostUnpowered',
+  NO_PATH: 'noPath',
+  SPEAKER_UNPOWERED: 'speakerUnpowered',
+  RULE_ERROR: null,
+  NO_MIC: 'noMic',
+}
+
+/** The sentence that follows a reason, or '' (a code of the level page, a code this app does not know, a rule error). Own keys only. */
+function actionFor(code: string): string {
+  if (!Object.prototype.hasOwnProperty.call(ACTION_KEY, code)) return ''
+  const key = ACTION_KEY[code as ReasonCode]
+  return key === null ? '' : (COPY.assist?.[key] ?? '')
 }
 
 const copyRefs = (refs: readonly TpPortRef[]): TpPortRef[] => refs.map((r) => ({ instance: r.instance, port: r.port }))
@@ -74,6 +97,11 @@ export function buildVerdict(state: TpState, ruleText: RuleText): Verdict {
   if (state.playbackReady) return { ...base, result: 'bon', labelFr: legacy ? TP_STRINGS.verdict.legacyWon : TP_STRINGS.verdict.allGood, reason: null, primary: null, alsoFound: [] }
   if (!state.placeKnown) return indetermine(TP_STRINGS.verdict.placeFirst, 'missing-input')
   if (state.instances.length === 0) return indetermine(TP_STRINGS.verdict.benchEmpty, 'missing-input')
-  if (state.firstReason !== null && state.firstReason.text_fr !== '') return indetermine(legacy ? `${TP_STRINGS.verdict.nextLink} ${state.firstReason.text_fr}` : state.firstReason.text_fr, 'missing-input')
+  if (state.firstReason !== null && state.firstReason.text_fr !== '') {
+    const { code, text_fr } = state.firstReason
+    // Mode Création: the engine's reason verbatim, then what to do about it (label = reason + action). The level page keeps its own sentence.
+    const action = legacy ? '' : actionFor(code)
+    return indetermine(legacy ? `${TP_STRINGS.verdict.nextLink} ${text_fr}` : action === '' ? text_fr : `${text_fr} ${action}`, 'missing-input')
+  }
   return indetermine(TP_STRINGS.verdict.notYet, 'no-coverage')
 }

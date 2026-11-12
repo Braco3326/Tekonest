@@ -15,6 +15,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Browser, type Locator, type Page } from '@playwright/test'
 import catalog from '../../content/catalog.json'
+import { COPY } from '../../src/creation/copy'
 import { TP_STRINGS } from '../../src/guide/strings'
 import { quietWindow, settleRenders } from './waits'
 
@@ -507,6 +508,28 @@ test('devices and no cable: the start chip opens « Premier câble », the ring 
 })
 
 // ── phone width and resize ───────────────────────────────────────────────────────────────────────────────────────────
+
+test('T1.4: a silent rig, « Prochaine étape » says the engine\'s reason and then what to do, for each step to the first sound; a rule error adds nothing', async ({ page }) => {
+  await boot(page)
+  await spawnMicAndConsole(page) // Lecture console is off by default
+  await guideSees(page)
+  await nextStepSays(page, `${COPY.playback!.sourceOff} ${COPY.assist!.sourceOff}`)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: true }))
+  await guideSees(page) // a bubble about the bench is closed by the next change the guide reads: give it its polls before asking again
+  await nextStepSays(page, `${COPY.playback!.hostUnpowered} ${COPY.assist!.hostUnpowered}`) // no strip: the console has no mains
+  // A rule error is the first thing the verdict says, with the rule's own words: no action sentence is added to it.
+  await page.evaluate(() => {
+    const c = window.__creation!
+    c.dispatch({ type: 'SPAWN', deviceId: 'neumann-u87-ai', instanceId: 'u87', position: [5, 0, 8] })
+    c.dispatch({ type: 'SPAWN', deviceId: 'focusrite-isa-one', instanceId: 'isa', position: [6, 0, 8] })
+    c.dispatch({ type: 'CONNECT', a: { instance: 'u87', port: 'out-xlr' }, b: { instance: 'isa', port: 'in-mic' } })
+  })
+  await page.waitForFunction(() => window.__creation!.events().some((e) => e.severity === 'error'))
+  await guideSees(page)
+  await nextStepSays(page, RULE('R4').teach_fr)
+  const said = await live(page)
+  for (const a of Object.values(COPY.assist!)) expect(said).not.toContain(a)
+})
 
 test('after a resize to 375 x 812 the bubble stays inside the viewport, the icon is on screen and reachable, the ring follows the port', async ({ page }) => {
   await boot(page)

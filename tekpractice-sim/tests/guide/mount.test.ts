@@ -5,6 +5,7 @@ import type { RuleRow } from '../../src/creation/shell/statusModel'
 import type { TpBridge, TpPortRef, TpState } from '../../src/guide/bridge/types'
 import { ACKNOWLEDGE, SUGGEST_FROM, SUGGEST_PHANTOM, SUGGEST_TO } from '../../src/guide/flows.creation'
 import { RECT_CACHE_MS, annotateToggle, collapseRestore, createObstacleSource, createRectResolver, hostInsets, hostObstacles, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
+import { COPY } from '../../src/creation/copy'
 import { TP_STRINGS, tpString } from '../../src/guide/strings'
 import { createController } from '../../src/guide/vendor/core/controller'
 import type { ControllerInput, GuideView, HostEvent, Rect } from '../../src/guide/vendor/core/types'
@@ -1029,7 +1030,7 @@ describe('mountOscar on the real controller: what each bench state says, and wha
     const w = wired(EMPTY)
     await w.go(stateOf([['ql1', 'yamaha-ql1']], { firstReason: { code: 'NO_SOURCE', text_fr: 'Aucune source n’est branchée.', subjects: [] } }))
     const v = await w.next()
-    expect(texts(v)).toEqual(['Aucune source n’est branchée.', NEEDS])
+    expect(texts(v)).toEqual([`Aucune source n’est branchée. ${COPY.assist!.noSource}`, NEEDS]) // T1.4: the reason, then what to do (NO_SOURCE is a signal-path code)
     expect(v.bubble?.chips.map((c) => c.id)).toEqual(CHIPS_WITH_START)
     expect((await w.chip('start')).bubble?.title).toBe('Parcours « Ajouter un deuxième appareil » : étape 1 sur 1.')
     const a = await w.ask('comment faire un premier montage ?')

@@ -943,4 +943,22 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Under a greyed Écoute item (after the engine's reason). */
     menuHint: 'Voir « Pourquoi je n’entends rien ? » dans la barre d’état.',
   },
+  /**
+   * Oscar's verdict (T1.4): after the engine's reason (`playback.*`, quoted verbatim by src/guide/verdict.ts) one sentence on what to do. One per
+   * signal-path reason; none for RULE_ERROR (the rule's own explanation is the fix). No figure, no promise. Every string here: à valider (tekuxwriter, 2026-11-12).
+   */
+  assist: {
+    /** After `playback.noSource` (NO_SOURCE). */
+    noSource: 'Ajoutez la console depuis l’inventaire (onglet « Consoles »).',
+    /** After `playback.sourceOff` (SOURCE_OFF). */
+    sourceOff: 'Sélectionnez la console, puis activez « Lecture console » dans Propriétés.',
+    /** After `playback.hostUnpowered` (HOST_UNPOWERED). */
+    hostUnpowered: 'Reliez la prise secteur de la console à une multiprise (onglet « Secteur » de l’inventaire) et vérifiez que « Alimentation » est activée.',
+    /** After `playback.noPath` (NO_PATH). */
+    noPath: 'Reliez une sortie principale de la console à l’entrée d’une enceinte.',
+    /** After `playback.speakerUnpowered` (SPEAKER_UNPOWERED). */
+    speakerUnpowered: 'Reliez la prise secteur de l’enceinte à une multiprise et vérifiez que « Alimentation » est activée.',
+    /** After `playback.noMic` (NO_MIC). */
+    noMic: 'Reliez un micro à une entrée micro de la console.',
+  },
 }

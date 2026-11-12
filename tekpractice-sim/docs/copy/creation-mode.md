@@ -880,6 +880,19 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `checklist.targetInventory` | l’inventaire, onglet Consoles | à valider (tekuxwriter) | Cible de « Aller à » pour la ligne « Une source de lecture » |
 | `checklist.menuHint` | Voir « Pourquoi je n’entends rien ? » dans la barre d’état. | à valider (tekuxwriter) | Sous la raison, sur chaque élément grisé du menu Écoute dont la raison vient de la chaîne de lecture |
 
+## assist
+
+Oscar dit quoi faire (packs d’accueil, T1.4) : dans le verdict d’Oscar, la raison du moteur (`playback.*`, mot pour mot) est suivie d’une phrase sur ce qu’il y a à faire, une par raison de lecture. Aucune pour RULE_ERROR : l’explication de la règle fait office de correction. Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `assist.noSource` | Ajoutez la console depuis l’inventaire (onglet « Consoles »). | à valider (tekuxwriter) | Après `playback.noSource` (NO_SOURCE) |
+| `assist.sourceOff` | Sélectionnez la console, puis activez « Lecture console » dans Propriétés. | à valider (tekuxwriter) | Après `playback.sourceOff` (SOURCE_OFF) ; « Lecture console » = le nom de la commande du catalogue |
+| `assist.hostUnpowered` | Reliez la prise secteur de la console à une multiprise (onglet « Secteur » de l’inventaire) et vérifiez que « Alimentation » est activée. | à valider (tekuxwriter) | Après `playback.hostUnpowered` (HOST_UNPOWERED) |
+| `assist.noPath` | Reliez une sortie principale de la console à l’entrée d’une enceinte. | à valider (tekuxwriter) | Après `playback.noPath` (NO_PATH) |
+| `assist.speakerUnpowered` | Reliez la prise secteur de l’enceinte à une multiprise et vérifiez que « Alimentation » est activée. | à valider (tekuxwriter) | Après `playback.speakerUnpowered` (SPEAKER_UNPOWERED) |
+| `assist.noMic` | Reliez un micro à une entrée micro de la console. | à valider (tekuxwriter) | Après `playback.noMic` (NO_MIC) ; le moteur ne le met pas dans la première raison de lecture : prévu pour le jour où il y serait |
+
 ## Textes hors COPY (index.html)
 
 Les seuls textes qui vivent dans `index.html` et non dans `copy.ts` : la garde d'entrée (vague de nuit 2, vague 5, P1-1 ; ronde de correction C1, C2). Quand le script d'entrée lui-même ne se charge pas (fichier absent, ou page HTML servie à sa place : la production répond 200 `text/html` pour un fichier manquant), `main.ts` ne tourne jamais et l'alerte de la section `boot` ne peut pas s'afficher : un petit script en ligne, sans module ni dépendance, **dit à l'utilisateur ce qui s'est passé** (`role="alert"`) et propose « Recharger la page ». **Ce que le lien fait, et ne fait pas :** il recharge `index.html` avec `?v=<heure>` sur l'adresse de la PAGE (le routeur ignore ce paramètre) ; il ne change pas l'adresse du script d'entrée (`/assets/main-<hash>.js`), donc si le serveur ou le cache garde du HTML sous cette adresse, l'échec revient : le vrai remède est côté site (un `404.html`, des en-têtes de cache, une purge après un déploiement). **Quand elle agit :** seulement avant que l'application ait démarré (`main.ts` pose `window.__tekBooted` quand le module de la route est chargé) ; un morceau paresseux qui échoue ensuite (fiches Bêta, couverture, tiroir, une salle, le panneau Essais…) est géré par l'application, jamais par cette garde. **Placement :** avant le module d'entrée dans le source, après lui dans le build ; elle fonctionne parce que l'événement `error` d'un script module part quand son téléchargement a échoué, une fois ce script en ligne exécuté. Une politique de sécurité de contenu (`script-src`) demanderait un empreinte (hash) ou un nonce pour ce script en ligne. `tests/creation/entryGuard.test.ts` tient `index.html` et cette section égaux.

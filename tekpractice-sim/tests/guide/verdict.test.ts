@@ -8,6 +8,8 @@ import { TP_STRINGS } from '../../src/guide/strings'
 import { buildVerdict, digestOf } from '../../src/guide/verdict'
 import { shapeBrainVerdict } from '../../src/guide/vendor/core/shape'
 import { ruleTextFor, type RuleRow } from '../../src/creation/shell/statusModel'
+import { COPY } from '../../src/creation/copy'
+import type { ReasonCode } from '../../src/flow/signalPath'
 
 const catalog = JSON.parse(readFileSync(resolve(process.cwd(), 'content/catalog.json'), 'utf8')) as { rules: RuleRow[] }
 const ruleText = ruleTextFor(catalog.rules)
@@ -171,11 +173,12 @@ describe('buildVerdict: no error', () => {
     expect(v.primary).toBeNull()
   })
 
-  it('not playable, no error, a firstReason gives indetermine quoting text_fr verbatim', () => {
+  it('not playable, no error, a firstReason gives indetermine quoting text_fr verbatim (T1.4: a known code adds its action after it; an unknown code adds nothing)', () => {
     const text = 'Aucune source n’est active : rien ne part de la console.'
     const v = buildVerdict(state({ firstReason: { code: 'NO_SOURCE', text_fr: text, subjects: [] } }), ruleText)
     expect(v.result).toBe('indetermine')
-    expect(v.labelFr).toBe(text)
+    expect(v.labelFr).toBe(`${text} ${COPY.assist!.noSource}`)
+    expect(buildVerdict(state({ firstReason: { code: 'OTHER', text_fr: text, subjects: [] } }), ruleText).labelFr).toBe(text)
     expect(v.reason).toBe('missing-input')
   })
 
@@ -223,5 +226,100 @@ describe('buildVerdict: what the browser-side shape check keeps', () => {
         expect(shaped.verdict!.primary!.subjects).toEqual(v.primary.subjects)
       }
     }
+  })
+})
+
+// ── T1.4: « Oscar says what to do »: label = the engine's reason (verbatim) + one action sentence per ReasonCode (COPY.assist) ─────────────────
+// The banned families of spec 9 (T1.7 consolidates them into tests/creation/honesty.test.ts; this list is the same text for the sentences added here).
+const BANNED: { name: string; re: RegExp }[] = [
+  { name: 'success and school', re: /réussi|prépare au|\bBTS\b|\bE4\b|\bTMO\b|\bjury\b|\bexamen\b/i },
+  { name: 'fidelity', re: /réaliste|vrai matériel|garanti|certifié|\bexact|fidèle|identique|comme en vrai|comme sur scène|sonnera/i },
+  { name: 'safety and norms', re: /endommag|abîm|griller|danger|sécurité|\bnorme|conforme|\bSTI\b|\bSPL\b|RT60/i },
+  { name: 'judgement', re: /bravo|parfait|correct|bien réglé/i },
+  { name: 'false certainty', re: /la seule|le seul|passé par votre câblage|vous entendez le micro/i },
+  { name: 'durations', re: /\d+\s*(s|sec|mn|min)\b|trois minutes/i },
+  { name: 'figures', re: /\d|\bdBu?V?\b|\+48/i },
+  { name: 'Oscar’s voice', re: /intelligent|expert|tuteur|ingénieur/i },
+]
+
+describe('buildVerdict: what to do (T1.4)', () => {
+  const P = COPY.playback!
+  const A = COPY.assist!
+  /** The reason codes of the signal path with the COPY keys of their reason text and of their action; null = no action by design. */
+  const CODES: Record<ReasonCode, { reason: string; action: string | null }> = {
+    NO_SOURCE: { reason: P.noSource!, action: A.noSource! },
+    SOURCE_OFF: { reason: P.sourceOff!, action: A.sourceOff! },
+    HOST_UNPOWERED: { reason: P.hostUnpowered!, action: A.hostUnpowered! },
+    NO_PATH: { reason: P.noPath!, action: A.noPath! },
+    SPEAKER_UNPOWERED: { reason: P.speakerUnpowered!, action: A.speakerUnpowered! },
+    NO_MIC: { reason: P.noMic!, action: A.noMic! },
+    RULE_ERROR: { reason: P.ruleError!, action: null },
+  }
+  const withReason = (code: string, text_fr: string, over: Partial<TpState> = {}): TpState => state({ firstReason: { code, text_fr, subjects: [] }, ...over })
+
+  for (const [code, { reason, action }] of Object.entries(CODES)) {
+    if (action === null) continue
+    it(`${code} (does trigger): the label is the engine's reason verbatim, then the action; the verdict stays « indetermine » / missing-input`, () => {
+      const v = buildVerdict(withReason(code, reason), ruleText)
+      expect(v.labelFr).toBe(`${reason} ${action}`)
+      expect(v.labelFr.startsWith(reason)).toBe(true)
+      expect(v.result).toBe('indetermine')
+      expect(v.reason).toBe('missing-input')
+      expect(v.primary).toBeNull()
+    })
+  }
+
+  it('RULE_ERROR (does not trigger): the reason alone, nothing added (the rule’s own fix is the one to read)', () => {
+    const v = buildVerdict(withReason('RULE_ERROR', P.ruleError!), ruleText)
+    expect(v.labelFr).toBe(P.ruleError)
+    expect(CODES.RULE_ERROR.action).toBeNull()
+  })
+
+  it('a rule error event (does not trigger): the verdict is the rule’s own text, byte for byte as before; no action sentence anywhere', () => {
+    const v = buildVerdict(withReason('NO_PATH', P.noPath!, { events: [{ ruleId: 'R4', severity: 'error', subjects: [P1, P2] }] }), ruleText)
+    const t = ruleText('R4')
+    expect(v.result).toBe('a-corriger')
+    expect(v.labelFr).toBe(t.title)
+    expect(v.primary!.causeFr).toBe(t.title)
+    expect(v.primary!.fixFr).toBe(t.detail)
+    for (const a of Object.values(A)) expect(JSON.stringify(v)).not.toContain(a)
+  })
+
+  it('a code the app does not know, and the level page’s own code (does not trigger): the reason verbatim, as before', () => {
+    expect(buildVerdict(withReason('NO_CABLE', 'Le micro n’est relié à aucune entrée de la console.'), ruleText).labelFr).toBe('Le micro n’est relié à aucune entrée de la console.')
+    const legacy = buildVerdict(withReason('missing-link', 'Premier lien à faire', { route: 'legacy' }), ruleText)
+    expect(legacy.labelFr).toBe(`${TP_STRINGS.verdict.nextLink} Premier lien à faire`)
+  })
+
+  it('on the level page (does not trigger): a Mode Création code adds no action', () => {
+    const v = buildVerdict(withReason('NO_SOURCE', P.noSource!, { route: 'legacy' }), ruleText)
+    expect(v.labelFr).toBe(`${TP_STRINGS.verdict.nextLink} ${P.noSource}`)
+  })
+
+  it('a playable rig and the other states (does not trigger): unchanged', () => {
+    expect(buildVerdict(state({ playbackReady: true, firstReason: { code: 'NO_SOURCE', text_fr: P.noSource!, subjects: [] } }), ruleText).labelFr).toBe(TP_STRINGS.verdict.allGood)
+    expect(buildVerdict(state(), ruleText).labelFr).toBe(TP_STRINGS.verdict.notYet)
+    expect(buildVerdict(state({ instances: [] }), ruleText).labelFr).toBe(TP_STRINGS.verdict.benchEmpty)
+  })
+
+  it('every action sentence says what to do (one sentence, « vous » form, no digit) and trips no banned phrase', () => {
+    const sentences = Object.entries(A)
+    expect(sentences.length).toBe(Object.values(CODES).filter((c) => c.action !== null).length) // one per code with an action, no stray key
+    for (const [key, s] of sentences) {
+      expect(s, key).toMatch(/^[A-ZÉ][^.!?]*\.$/) // one sentence
+      expect(s, key).toMatch(/^(Ajoutez|Activez|Sélectionnez|Reliez|Branchez)\b/) // the imperative « vous » form
+      for (const b of BANNED) expect(s, `${key} / ${b.name}`).not.toMatch(b.re)
+    }
+  })
+
+  it('the banned list does trip on a crafted sentence of each family (the scan is not vacuous)', () => {
+    for (const s of ['Vous allez réussir.', 'Un son réaliste.', 'Risque de danger.', 'Bravo !', 'Vous entendez le micro.', 'Patientez 3 min.', 'Réglez à 12 dB.', 'Votre tuteur vous guide.']) expect(BANNED.some((b) => b.re.test(s)), s).toBe(true)
+    expect(BANNED.some((b) => b.re.test('Reliez la sortie principale de la console à l’entrée d’une enceinte.'))).toBe(false)
+  })
+
+  it('the longer label survives the browser-side shape check whole', () => {
+    const v = buildVerdict(withReason('HOST_UNPOWERED', P.hostUnpowered!), ruleText)
+    expect(shapeBrainVerdict({ verdict: v, needInfo: null }).verdict!.labelFr).toBe(v.labelFr)
+    expect(v.labelFr.length).toBeLessThan(400)
   })
 })
