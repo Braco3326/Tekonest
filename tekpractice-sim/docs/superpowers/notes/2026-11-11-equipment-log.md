@@ -553,3 +553,89 @@ Catalogue after: **44 devices (was 25), 23 categories (was 16), 181 ports, 35 co
 5. **7 rows blocked**: they need a datasheet pass (radial-j48 axes, the three K&M stand working sizes, HA400 width and depth, ew 100 G4 axes) or a `dc-power` signal (SLXD2).
 6. **[validate]** the five « Avec le matériel » rooms changed. The DriveRack PA2, the JK host and the MC-3+ land in the Consoles and Réseau tabs and the Samson patchbay in « Autres », by the Wave 0 category-to-tab mapping.
 7. No French sentence per device exists in the repo (labels are brand + model, `typicalUse` English): a copy pass would write one for the 19 promoted devices.
+
+## Wave 2B: revolve, curved-cabinet and tripod-stand rows, then the new-family rows (2026-11-12)
+
+Agent 2B of the Wave 2 build. Stage 1 only (`npm run promote -- <id>`): nothing in `content/catalog.json` or `catalog-proposals.json` was touched, `promote --commit` was not run. Nothing pushed, no Meshy, no manufacturer photo, no logo (generic panels only). Commit `082518b` (nine devices; its message miscounts the promotion candidates: they are 7, not 6). The manifest rows and the plan rows were committed through a temporary index so the other agents' uncommitted edits were not swept in. Contact sheets stay local (git-ignored `assets-source/<id>/work/...`).
+
+### Rows (`planRows({wave: 2})`)
+
+The wave-2 rows of my families are 33: existing families 15 (revolve 10, curved-cabinet 5; there is no wave-2 row of power-strip or generic-panel), new families 18 (rack-box-v3b 7, moulded-box 9, revolve-v2-oval 1, and k-m-26125, which the plan files under tripod-stand but the brief gives to the round-base family). Eligible by `effectiveQuality`:
+
+| Family | ids | eligible | blocked on data |
+|---|---|---|---|
+| revolve | rode-procaster, rode-nt5, rode-ntg3, ev-re320, rode-podmic | 5 (podmic: see its row) | shure-mv7-plus (partial), shure-sm81, schoeps-cmc-6-mk-4, sennheiser-mkh-418-s (conflict), schoeps-mstc-74 (nothing printed) |
+| curved-cabinet | genelec-8341a, genelec-8040b, krk-rokit-5-g4, qsc-k10-2, yamaha-dxr12-mkii | 5 | none |
+
+### Outcomes (existing families)
+
+Counts: 9 built and shipped (GLB, manifest row, all gates green), 5 blocked on data, 1 blocked on the shape (rode-podmic), 0 failed. By the outcome `promote --commit --dry-run` printed: **7 promotion candidates, 2 beta-modelled**.
+
+| id | outcome | triangles | size error | gates | notes |
+|---|---|---|---|---|---|
+| rode-procaster | shipped-promotable | 1534 | 0.01 mm | 10 of 10 | RODE datasheet read as text: 3-pin XLR, 214 x 53 mm. Body 46 mm and head 53 mm are an estimate of the lathe profile |
+| rode-nt5 | shipped-promotable | 1534 | 0.00 | 10 of 10 | datasheet read as text: XLR, P48. Pencil body, budget floor 1000 |
+| rode-ntg3 | shipped-promotable | 1406 | 0.00 | 10 of 10 | datasheet connector and P48 read through a search summary (the PDF itself not opened). Floor 1000 |
+| ev-re320 | shipped-promotable | 1534 | 0.00 | 10 of 10 | the XLR comes from a dealer spec (via a search summary); the EV page lists no connector. Plan 54.4 mm widest, a dealer says 49.2: the body tube uses 49.2 |
+| genelec-8341a | shipped-promotable | 3108 | 0.00 | 11 of 11 | six ports (analog XLR, AES in, AES thru, two GLM RJ45, mains), power switch. The two racetrack woofers are picture only |
+| genelec-8040b | shipped-promotable | 3104 | 0.01 | 11 of 11 | XLR and mains; plan 365 mm includes the 15 mm Iso-Pod, built as a 15 mm foot |
+| yamaha-dxr12-mkii | shipped-promotable | 2172 | 0.00 | 11 of 11 | seven ports from the owner manual (it contradicts the plan note about a combo and two TRS), power switch; the mains inlet type is not named (iec-c14) |
+| krk-rokit-5-g4 | shipped-beta-modelled | 2036 | 0.01 | 11 of 11 | dealer size; ports not documented (one combo, inlet not named); no RCA on the G4 |
+| qsc-k10-2 | shipped-beta-modelled | 2880 | 0.00 | 11 of 11 | size axis-assumed; connector set documented by the QSC spec (6 of 7 modelled) |
+
+### Blocked (existing families)
+
+| id | reason |
+|---|---|
+| rode-podmic | NOT BUILT, blocked on the shape: the plan size 109 x 62 x 172 mm is the datasheet figure "swing mount included", so the body (a 62 mm tube) and the mount (109 mm wide) are not one revolve (a revolve needs w = d). Unblock: a plan decision to store the body-only size (62 x 62 x 172), or the `assembly` family of Wave 4. Nothing invented |
+| shure-mv7-plus | plan `missing` (partial): only the height with the yoke (164 mm) is labelled |
+| shure-sm81 | plan `missing` (conflict): "2 in." against 23.5 mm in the Shure sheet |
+| schoeps-cmc-6-mk-4 | plan `missing` (conflict): 116 against 138 mm (combined with the amplifier) |
+| sennheiser-mkh-418-s | plan `missing` (conflict): Canford 250 mm against 280 mm |
+| schoeps-mstc-74 | plan `missing`: the Schoeps and Thomann pages print no length or diameter, only 232 g |
+
+### Rows of the new families: waiting-for-family
+
+The "Wave 2 families" log section had not appeared when this agent ran out of other work, and the shape code (`shapes.ts`, `build_from_spec.py`) was still uncommitted in the tree. Nothing was built or staged for these rows (no stage 1 either, so their plan rows are untouched). What was gathered while waiting, to save the next step a research pass (search summaries or dealer pages unless said):
+
+| family | id | eligibility | what the sources say about the connector set |
+|---|---|---|---|
+| rack-box-v3b | crown-xti-4002 | datasheet / ok | the Crown page (read) states only "IEC Power Connector" 15 A and a locking cord clip; the XLR inputs, XLR link outputs, 2 speakON NL4, 2 pairs of binding posts and a HiQnet USB-B port come from dealer and review summaries (the manual was not opened): beta-modelled unless the manual is read |
+| rack-box-v3b | yamaha-xmv8280-d | dealer / ok | Markertek (read): analog input Euroblock x 2 (6P, balanced), RJ45 x 2 (Dante primary and secondary), speaker output barrier strip x 8 pairs, remote and fault Euroblock (3P) x 1, AC inlet x 1; 18.9 x 3.5 x 16.6 in. A promotion candidate |
+| rack-box-v3b | behringer-europower-ep4000 | dealer / ok | inputs balanced XLR and 1/4 in TRS, two professional speaker connectors (not named NL4 by any page read) and two pairs of binding posts: beta-modelled |
+| rack-box-v3b | db-audiotechnik-d80 | estimate (axis-assumed: 2 RU x 19 in x 530 mm) | the d&b page (read): 4 XLR-F analog in, 4 XLR-M link, 2 XLR-F AES3 in, 1 digital link out, 4 speakON NL4 outputs, one NL8, 2 RJ45 CAN, 2 etherCON, powerCON HC: beta-modelled by its size |
+| rack-box-v3b | ssl-the-bus-plus | estimate (axis-assumed) | two XLR inputs plus two XLR sidechain inputs (a dealer), 2U, 303 mm chassis depth (328 with the controls): beta-modelled |
+| rack-box-v3b | l-acoustics-la12x, universal-audio-6176 | blocked (partial / missing size) | |
+| moulded-box | zoom-h6-essential | dealer / ok | four XLR/TRS combo inputs, 3.5 mm line out, 3.5 mm headphone out, USB-C, microSD, 4 AA or USB power; battery trait, no mains inlet |
+| moulded-box | zoom-podtrak-p4 | dealer / ok | four XLR mic inputs (48 V), four 3.5 mm stereo headphone outputs, a TRRS call-in input, USB-C, SD |
+| moulded-box | sound-devices-mixpre-6-ii | datasheet / ok | the store page answered 403: connectors not read |
+| moulded-box | audinate-dante-avio-install | datasheet / ok | the Audinate sales guide (downloaded, read as text): Euroblock analog connectors, Dante over RJ45, PoE; 150.7 x 53.8 x 38.1 mm (the packaged 190 x 92.5 x 45 mm is another line of the same table). The sister row audinate-dante-avio-analog-input-2ch is `missing` |
+| moulded-box | sennheiser-e-609-silver, sennheiser-e-906 | datasheet / ok | one 3-pin XLR each, same 55 x 34 x 134 mm body: one scripted shape serves both |
+| moulded-box | shure-slxd1-bodypack | datasheet / ok | TA4M mini XLR input; battery. Antenna and DC ports cannot be modelled (no signal type), as for the SLXD2 |
+| moulded-box | shure-ua874 | datasheet / ok | BNC antenna ports with DC bias only: no catalogue signal fits, so it has no patchable port and is blocked like the SLXD2 handheld unless an `rf-antenna` signal is added |
+| revolve-v2-oval | akg-c414-xlii | datasheet / ok | the AKG cut sheet and page were not opened; 50 x 38 x 160 mm; the plan notes say XLR and P48 |
+| round-base-stand | k-m-26125 | estimate (partial): only the 275 mm base diameter is stored | the notes carry the labelled working height 1000 to 1700 mm; the plan row needs a height (a data decision) before it can be built |
+
+### Recipes (reuse)
+
+- **Pencil and end-address mics on `revolve`** (Procaster, NT5, NTG3, RE320): the Wave 1A recipe unchanged (tier hero, 64 segments, 13 to 14 stations gave 1406 to 1534 triangles). A pencil tube needs `budget.min` 1000 (the 1500 floor of the mic class would force invented stations). Wrap panels: `rect` rings, `weave` grilles, slot columns, a slide switch drawn as two rects. Port `out-xlr` on the base at (w/2, w/2), `requiresPhantom` for the two condensers.
+- **Tapered PA cabinets on `curved-cabinet`** (QSC K10.2, Yamaha DXR12 mkII): the shipped K12.2 and DBR12 params scaled by the width ratio (`planFrontMm` = width, `midWidthMm`, `midDepthMm`, `rearWidthMm`, radii 24 to 38, `edgeRadiusMm` 16 to 20, `edgeDropMm` 22 to 28), no woofer ring (a grille face), tier hero, `minFilletMm` 14 to 16 (measured 16 and 20); 2880 and 2172 triangles. The flat rear is only `rearWidthMm - 2 x backRadiusMm` wide and every port pocket must fit inside it (the DXR12 first refused a pocket 12 mm past the flat face); ports with `insetMm 3` then passed `portSurface` at the first try. Seven ports fit in two rows of three at 40 to 46 mm pitch.
+- **Genelec-style monitors on `curved-cabinet`** (8341A, 8040B): the 8030C params scaled to the width (`planFrontMm` 232 + `sideBulgeMm` 2.5, `rearWidthMm` 224, radii 28 and 34, `edgeRadiusMm` 20, `edgeDropMm` 26, `barrelMm` 18 to 20); an Iso-Pod counted in the plan size is a `footMm`; non-round drivers (racetrack woofers) are picture only. 3104 to 3108 triangles, fillet measured 20 mm.
+- **Spec and panel writers** are session scratch scripts (a mic generator and a speaker generator, one object per device), not in the repo; the committed specs and panels are their output. A build is `npm run asset:panel -- <id>`, `npm run asset:build -- <id> --scripted --project-photo <face>=assets-source/<id>/photos/_generic_<face>.png` per projected face, then `npm run asset:build -- <id> --ship-run <work dir> --logos-removed` (without `--scripted`).
+- **Committing without sweeping other agents' rows**: a temporary index with my files plus the manifest and plan files rebuilt from HEAD with only my rows replaced. After the commit, reset my files in the main index too (`git reset -q -- <my files>`), or `git status` shows them as staged deletions.
+
+### Findings
+
+1. **Sources**: the RODE Procaster and NT5 datasheets, the Yamaha DXRmkII owner manual (a dealer-hosted copy) and the Audinate guide were downloaded and read as text; the Genelec 8341A and 8040B pages and the Markertek and d&b pages were read through the fetch tool; the RODE NTG3 datasheet, the EV RE320 connector (a dealer listing) and the QSC K10.2 spec sheet only through search summaries. Each spec's source note says which.
+2. **Plan note corrections**: the DXR12 mkII row says "XLR/TRS combo, 2 TRS, 2 RCA in"; the owner manual says one XLR, one phones jack and two RCA inputs (INPUT 1 to 3) plus the XLR THRU and LINK OUT. The KRK Rokit 5 G4 has one combo input and no RCA (a review and the user manual, through a summary).
+3. **Mains inlet types are named by no page** for the Genelec 8341A, 8040B and the Yamaha: `iec-c14` is the convention of the shipped Genelec 8030C and Yamaha DBR12, and the specs say so. The KRK stays beta-modelled because of it (ports not documented), the same rule as the Wave 1 Yamaha HS5.
+4. **Red tests, none about the content of my rows** (`npx vitest run tests/tools tests/scene/modelIds.test.ts` with `BLENDER_EXE`: 55 files, 1393 tests, 4 failed): `modelIds.test.ts` "proposals own a model only when betaModelled" lists genelec-8341a (a Bêta proposal that now has a GLB; stage 2 removes the proposal); `brandsRegister.test.ts` twice (the committed register block, and the labels of the shipped devices: `npm run register` after stage 2); `builderPins.test.ts` "every pinned plan builds byte-identical" failed while the families agent had `build_from_spec.py` and `shapes.ts` uncommitted in the tree (the pins are a fixed fixture of the 93 older plans, so it is not the nine new specs; not re-run on a clean tree).
+5. **Stage-2 dry run** (`npm run promote -- <id> --commit --dry-run`, all nine): procaster, nt5, ntg3, re320, 8341a (4 port aliases, its proposal removed), 8040b and dxr12-mkii come out `promoted` (a `power` control for the three speakers); krk-rokit-5-g4 and qsc-k10-2 come out `beta-modelled` (proposals built from the spec, 2 and 6 ports).
+6. **Not verified**: every port and control position (guesses, `confidence guess`); the lathe profiles of the mics and the plan outlines of the cabinets (drawn from the published length and widest size, no photo or drawing opened); the contact sheets were looked at for 4 of the 9 devices (EV RE320, RODE NTG3, Genelec 8341A, Yamaha DXR12 mkII), the other 5 only through the gate numbers; no in-engine look audit, no tsc, no lint, no e2e (the wave gate does them).
+
+### Open items for the next step
+
+1. Build the new-family rows once the families land: the table above is the head start; read the Crown, EP4000, SSL and Zoom manuals if promotion is wanted.
+2. rode-podmic needs a plan decision (body-only size) or the assembly family.
+3. shure-ua874 and shure-slxd1-bodypack depend on an `rf-antenna` / `dc-power` signal (the Wave 0 open item).
+4. After stage 2 of the nine: `npm run register`, `node tools/controls/gen-from-specs.mjs` for the three speakers with a power switch (8341A, 8040B, DXR12), and the modelIds rule for genelec-8341a follows from stage 2.
