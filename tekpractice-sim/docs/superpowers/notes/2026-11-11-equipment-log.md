@@ -444,3 +444,112 @@ All sizes are the plan's (w, d, h) as `realSizeMm` (w, h, d). Build: `asset:buil
 - Every device: dry-run build with the gates, then a 4-view Blender render of the built GLB (a scratch perspective render: 3/4 from the rear, 3/4 from the front, side, top) looked at, then `--ship --logos-removed`; `npm run promote -- <id> --commit --dry-run` printed the outcome in the table (promoted or beta-modelled) for all 14 with no spec parity error; `npm run validate:assets`: 93 ok, 0 failed.
 - `npx vitest run tests/tools tests/scene/modelIds.test.ts` (`BLENDER_EXE=D:\Blender\blender.exe`): 52 of 54 files passed, 3 tests failed (finding 1). Commits made through a temporary index holding only my files and my manifest rows.
 - `npx vitest run tests/controls`: 15 files, 150 tests passed (no layout of mine is in the tree). Not run: tsc, lint, e2e, chunk budget, the in-engine look audit (rings on the connectors were not looked at in the app). Not verified: every connector position and every control position (guesses, said so in each spec's sources); the side profiles of the desks (estimates); the datasheet drawings of the Mackie, Rode and Shure PDFs were not rendered (text only).
+
+
+## Wave 1 commit and gate (stage 2, tests, e2e, gate) (2026-11-12)
+
+Coordinator step after the three build agents: the stage 2 of the 42 staged rows (`npm run promote -- <id> --commit`, one at a time, dry run first), the shared tests, the controls, the data-driven e2e and the Wave 1 gate. Nothing pushed, no Meshy, no history rewrite, no logo SVG staged. Commits (explicit paths): `7e30fc3` tool and template fixes, `c3b1353` the content (catalogue, proposals, plan, journal, manifest, layouts, register), `7322fb8` shared tests, `e49aa18` e2e.
+
+### Counts
+
+| | n |
+|---|---|
+| plan rows of wave 1 | 49 |
+| promoted into `content/catalog.json` | 19 |
+| beta-modelled (proposal kept or added, model shipped, badge « Bêta — dimensions estimées ») | 23 |
+| blocked (no stage 1: plan `missing`, or no patchable port) | 7: radial-j48, k-m-25400, k-m-210-6, k-m-259, behringer-ha400, sennheiser-ew-100-g4 (all `missing`), shure-slxd2-handheld (a datasheet size, but its only connector is USB power: no signal type for it) |
+| failed after three attempts, or reverted for good | 0 |
+
+Catalogue after: **44 devices (was 25), 23 categories (was 16), 181 ports, 35 controls, 8 rules, 38 connector types, 16 signal types**; 142 Bêta proposals (23 of them with a model). Plan rows still `staged`: 0.
+
+### What the stage 2 showed, and how it was fixed (template or data, never by hand in `catalog.json`)
+
+| Finding | Fix | Test |
+|---|---|---|
+| The Samson S-Patch Plus came out with routes `front-1 -> front-1` (every bidirectional jack routed to itself) | patchbay template: `front-N` and `rear-N` are normalled both ways; never a route back to its own port (`behaviourTemplates.ts`) | `behaviourTemplates.test.ts` (patchbay, no self route) |
+| DriveRack PA2 and KH 120 II routed audio into and out of their RJ45 (`aoip` stands in for a control / firmware port) | an RJ45 `aoip` port on a speaker, amplifier, speaker processor or wireless receiver keeps its place but takes no audio route; codecs, desks, interfaces, switches and intercoms keep network audio | `behaviourTemplates.test.ts` (PA2, KH 120 II, a codec) |
+| DriveRack PA2 was filed under `amplifier` and made the « Amplis » tab (power amplifiers) appear with a processor in it | plan rows with trait `processor` are `outboard` (4 rows: dbx-driverack-pa2, behringer-dcx2496, l-acoustics-p1, meyer-sound-galileo-galaxy-816) | `equipmentPlanTraits.test.ts`; the drawer e2e tab list is back to the old order |
+| KH 120 II (curved-cabinet speaker) had acoustic but no `modelFront`, so the coverage panel would say « face avant non vérifiée » | a speaker built on `curved-cabinet` gets `modelFront -z` with evidence (same construction as the rebuilt Genelec); measured on its file | `promoteDevice.test.ts`, `tests/assets/modelFront.test.ts` (size and port empties on the +z face) |
+| Boilerplate `typicalUse` ("Neumann TLM 103 (microphone)") and long variant labels ("Shure PSM 300 (P3T transmitter, ...)") | plan rows may carry an English `typicalUse` and a `label` (60 characters at most); written for the 11 boilerplate rows and for PSM 300 and SLX-D | `promoteDevice.test.ts` |
+| RODE NT1: the USB-C ring (10.8 mm) touched the XLR ring (23.4 mm), 15.5 mm apart | spec port y 41.5 -> 44 (18 mm apart), GLB rebuilt, all gates green | `portMarkerSize.test.ts` (no ring overlap) |
+
+### Shared tests, adjusted for stated reasons (no assertion dropped without a replacement)
+
+- `modelIds.test.ts`: "no proposal id is a shipped glb" became "a proposal may own a model only when its plan row is betaModelled"; plus: every beta-modelled row is a proposal with its model, a promoted row is in the catalogue and not in the proposals, and the rule itself (a non-beta proposal that owns a glb still fails; a beta one does not).
+- `promoteDevice.test.ts`: the real rows it copied (neumann-tlm-103, midas-m32, mackie-profx12v3, yamaha-tf5) are now literal fixtures with new ids (`tests/tools/fixtures/promote-fixtures.json`), so promoting a real row cannot break it again.
+- `portMarkerSize.test.ts`: a per-device exception rather than keeping the device beta-modelled: MUTEC MC-3+ `power-in`, an IEC C14 ring of 26.4 mm on a 42 mm half-rack face (62.9 %, limit 60 %); capped at 70 % and a second test fails when the exception stops being needed. A rack-height face cannot be made taller and the ring is the real connector size x 1.2.
+- `schemas.test.ts`, `catalogChecks.test.ts`: the pins list the Wave 1 devices that route (7 new) or carry acoustic (KH 120 II, nominal); "25 devices" became "the first 25 are all still there and every device parses unchanged". `mains.test.ts` (Furman outlets are unflagged proposal ports), `inventory.test.ts` (« beta » also finds the Shure Beta 58A), `proposalsFixedPoint.test.ts` (proposals built from a spec are not rebuilt from the KB).
+- `placePickerModel.ts`: the pinned five « Avec le matériel » rooms are recomputed (the test derives them from the catalogue): podcast-room-small and foley-dubbing-stage-medium replace museum-installed-sound-medium and post-atmos-mix-room-medium. **[validate]** a visible change of the place picker. `src/creation/placeSummary.json` regenerated by `tools/room-thumbs.ts`.
+- `creation-budgets.spec.ts` (axe, place picker): the foley card now carries the badge, its row grows 25 px and the next row's wrapped titles straddle the bottom of a 768 px viewport; axe reads the clipped half as a label-in-name mismatch (4 cards; the names are the `aria-labelledby` text). The rule is not disabled: it runs on a 2600 px window so every card is whole, then the window goes back.
+
+### Copy and inventory
+
+`docs/copy/creation-mode.md` tracks interface keys, not per-device copy, so no row was added. A device label is brand + model (language neutral, like the first 25 devices) and `typicalUse` is English like theirs. Every promoted category has a tab (derived test); beta-modelled devices are in the Bêta tab with the « Bêta — dimensions estimées » badge and tooltip (`creation-beta.spec.ts` checks every proposal that has a model). Controls: `node tools/controls/gen-from-specs.mjs` wrote 5 layouts (DriveRack PA2, MC-3+, KH 120 II, ProFX12v3, Rodecaster Pro II); the layout parity tests are green.
+
+### Gate numbers
+
+- `npx tsc --noEmit` clean; `npm run lint` clean; `npm run validate:catalog` valid (44 devices); `npm run validate:assets`: **93 ok, 0 failed**.
+- `npx vitest run` with `BLENDER_EXE=D:\Blender\blender.exe`: **241 files, 3904 tests, all passed** (Wave 0b: 240 files, 3765).
+- Build into a scratch outDir (`npx vite build --outDir <scratch> --emptyOutDir`), `node tools/chunk-budget.mjs <scratch>`: budget OK, creation entry 5,959,529 B (css included) of 6,830,462.
+- GLBs in `public/assets`: 93 files, **6.18 MiB** in total (limit 120 MB), largest focusrite-isa-one 0.65 MiB (limit 25 MiB), average 68 KB.
+- Scene stats of the reference rig (Concert simple, 5 devices) on the scratch build: meshes 625, materials 168 (the 2026-11-10 notes give 625 and 168), idle renders in 2.5 s: 0, `renderBench(40)` median of 7: 1.61 ms. No tool exists for the exact numbers of 44f5dd7; a scratch spec read `sceneStats` and `renderBench` (not committed).
+- Playwright on a private preview (port 4181, a scratch config whose web server is `vite preview --outDir <scratch>`, never 4173): `creation-equipment-models`, `creation-controls`, `creation-front`, `creation-drawer`, `creation-beta`, `creation-glb404`, `creation-picker`, `creation-budgets`, `creation-coverage`, `creation-place`, `creation-places`: **142 passed, 1 skipped, 1 failed under load** (`creation-glb404` legacy A1 with three workers, a 500 ms window); it passes 12 of 12 alone with one worker. In the first run the drawer tab list (Amplis), the axe picker check and that same legacy test failed; the first two are the findings above.
+- `creation-equipment-models.spec.ts` (new, data-driven from the plan, catalogue and proposals files): 42 devices in one scene, about 45 s: each glb requested and answered 200 (content type not text/html, `glTF` magic), a body in the scene, selectable by a real click, every port has its pick sphere (>= 12 px), no 404, no console error. A row left `staged` without a catalogue entry or a proposal fails a separate test by name.
+- Not run: the full Playwright suite, a look audit of the 42 devices in the engine, an independent read-only review of this diff (Review Focus). Not looked at again here: the contact sheets of the 42 models (the build agents did).
+
+### Per device (stage 2)
+
+| id | outcome | category | triangles | label |
+|---|---|---|---|---|
+| allen-heath-ar2412 | beta-modelled | stagebox | 1632 | Allen & Heath AR2412 AudioRack |
+| ams-neve-1073spx | beta-modelled | mic-preamp | 1632 | AMS Neve 1073SPX |
+| focusrite-scarlett-2i2-4th-gen | beta-modelled | audio-interface | 754 | Focusrite Scarlett 2i2 (4th Gen) |
+| mackie-profx12v3 | promoted | console-analog | 1416 | Mackie ProFX12v3 |
+| midas-dl16 | beta-modelled | stagebox | 1632 | Midas DL16 |
+| neumann-kh-120-ii | promoted | studio-monitor | 2372 | Neumann KH 120 II |
+| radial-jdi | beta-modelled | di-box | 712 | Radial Engineering JDI |
+| radial-prodi | beta-modelled | di-box | 712 | Radial Engineering ProDI |
+| rode-nt1-5th-gen | promoted | microphone | 1662 | RØDE NT1 5th Generation |
+| royer-r-121 | beta-modelled | microphone | 1534 | Royer Labs R-121 |
+| shure-psm-300 | promoted | iem | 1328 | Shure PSM 300 |
+| shure-slx-d | promoted | wireless | 1328 | Shure SLX-D |
+| yamaha-tf5 | beta-modelled | console-digital | 1503 | Yamaha TF5 |
+| apple-mac-mini | promoted | computer | 600 | Apple Mac mini |
+| behringer-s16 | beta-modelled | stagebox | 1632 | Behringer S16 |
+| focusrite-scarlett-18i20-3rd-gen | beta-modelled | audio-interface | 1632 | Focusrite Scarlett 18i20 (3rd Gen) |
+| furman-m-8x2 | beta-modelled | power | 1776 | Furman M-8x2 power conditioner |
+| jk-audio-broadcast-host | promoted | telephone-hybrid | 1312 | JK Audio Broadcast Host |
+| mackie-1202vlz4 | beta-modelled | console-analog | 1184 | Mackie 1202VLZ4 |
+| rode-rodecaster-pro-ii | promoted | console-podcast | 1170 | RODE Rodecaster Pro II |
+| sennheiser-md-421-ii | beta-modelled | microphone | 2302 | Sennheiser MD 421-II |
+| shure-beta-58a | promoted | microphone | 4350 | Shure Beta 58A |
+| shure-sm7b | promoted | microphone | 2046 | Shure SM7B |
+| ua-1176ln | beta-modelled | outboard | 2208 | Universal Audio 1176LN |
+| yamaha-hs5 | beta-modelled | studio-monitor | 2244 | Yamaha HS5 |
+| countryman-type-85 | beta-modelled | di-box | 712 | Countryman Associates Type 85 |
+| dbx-driverack-pa2 | promoted | amplifier | 1920 | dbx DriveRack PA2 |
+| mutec-mc-3-plus | promoted | master-clock | 1408 | MUTEC MC-3+ Smart Clock |
+| presonus-hp4 | beta-modelled | headphone-amp | 712 | PreSonus HP4 |
+| samson-s-patch-plus | promoted | patchbay | 1632 | Samson S-Patch Plus |
+| apple-mac-studio | promoted | computer | 600 | Apple Mac Studio |
+| behringer-ada8200 | beta-modelled | mic-preamp | 1632 | Behringer ADA8200 |
+| behringer-dcx2496 | beta-modelled | amplifier | 1920 | Behringer DCX2496 Ultradrive Pro |
+| dbx-286s | beta-modelled | mic-preamp | 1632 | dbx 286s |
+| jbl-305p-mkii | beta-modelled | studio-monitor | 2244 | JBL 305P MkII |
+| k-m-232 | promoted | stand-arm | 1534 | K&M 232 table stand |
+| neumann-km-184 | promoted | microphone | 1918 | Neumann KM 184 |
+| neumann-tlm-103 | promoted | microphone | 1790 | Neumann TLM 103 |
+| sennheiser-e-835 | promoted | microphone | 4350 | Sennheiser e 835 |
+| sennheiser-mkh-416 | promoted | microphone | 1662 | Sennheiser MKH 416-P48U3 |
+| soundcraft-ui24r | beta-modelled | console-digital | 1920 | Soundcraft Ui24R |
+| ua-apollo-twin-x | beta-modelled | audio-interface | 712 | Universal Audio Apollo Twin X |
+
+### Open items
+
+1. **Mac mini and Mac Studio have no `power-in`** (Apple's page names no inlet connector): promoted without a power toggle, so a power rule never touches them; list the inlet when a datasheet names it.
+2. **Wireless receivers (SLX-D, PSM 300) have no routing** (the wireless template routes nothing) and no antenna, DC or MIDI signal exists: a wireless mic cannot pass signal through them yet. SLXD2 handheld stays blocked for the same reason (no `dc-power` or `usb-power` signal).
+3. **Control ports modelled as `aoip`** (DriveRack PA2, KH 120 II, SLX-D, Rodecaster): the catalogue has no control-network signal; they keep a port and take no audio route.
+4. **The 13 proposals made from a spec** (s16, ada8200, 286s, 18i20, apollo, furman, 1202vlz4, md-421-ii, 1176ln, hs5, 305p, dcx2496, ui24r) come from the plan summary or a search summary; every position is a guess.
+5. **7 rows blocked**: they need a datasheet pass (radial-j48 axes, the three K&M stand working sizes, HA400 width and depth, ew 100 G4 axes) or a `dc-power` signal (SLXD2).
+6. **[validate]** the five « Avec le matériel » rooms changed. The DriveRack PA2, the JK host and the MC-3+ land in the Consoles and Réseau tabs and the Samson patchbay in « Autres », by the Wave 0 category-to-tab mapping.
+7. No French sentence per device exists in the repo (labels are brand + model, `typicalUse` English): a copy pass would write one for the 19 promoted devices.
