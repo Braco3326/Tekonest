@@ -11,6 +11,7 @@
     "build:site": "node tools/build-site.mjs",
     "smoke:site": "node tools/site-smoke.mjs",
     "test": "vitest run",
+    "test:blender": "vitest run tests/tools/assets3d tests/assets",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "validate:catalog": "tsx tools/validate-catalog.ts",

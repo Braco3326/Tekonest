@@ -5,7 +5,7 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { BEGIN, END, OURS, deviceLabels, dimensionsSource, readSpecsLoose, renderRegister, replaceBlock, type RegisterAsset } from '../../tools/brandsRegister'
+import { BEGIN, END, OURS, deviceLabels, dimensionsSource, readSpecsLoose, renderRegister, replaceBlock, type LooseSpec, type RegisterAsset } from '../../tools/brandsRegister'
 import { loadPlan } from '../../tools/equipmentPlan'
 
 const manifest = JSON.parse(readFileSync('public/assets/ASSET_MANIFEST.json', 'utf8').replace(/^\uFEFF/, '')) as { assets: RegisterAsset[] }
@@ -94,6 +94,9 @@ describe('renderRegister', () => {
     expect(dimensionsSource(asset({ specSource: 'content/generic-panels/shure-sm58.json' }), undefined, undefined)).toBe(OURS)
     expect(dimensionsSource(asset({ specSource: 'content/catalog.json (devices[multiprise-secteur])' }), { id: 'x', sources: [{ url: 'C:/Users/x/a.pdf' }] }, 'not a url')).toBe(OURS)
     expect(dimensionsSource(asset({}), undefined, undefined)).toBe(OURS)
+    // review fix 15: the spec's own dimensions page beats the plan's first source (which can be another product's page)
+    const own: LooseSpec = { id: 'x', sources: [{ url: 'https://example.com/other-product', note: 'equipment plan source (research grade: datasheet); size 1 x 2 x 3 mm' }, { url: 'https://example.com/this-product', note: 'product page: 237 x 243 x 351 mm' }] }
+    expect(dimensionsSource(asset({}), own, 'https://example.com/other-product')).toBe('https://example.com/this-product')
   })
 
   it('on the real manifest: the devices measured by hand say « catalogue (ours) », no cell is a repo path or a dash, and a plan source is shown for its device', () => {
@@ -127,5 +130,16 @@ describe('the inputs', () => {
   })
   it('readSpecsLoose reads every spec file (it never throws on an unfinished one)', () => {
     expect(specs.length).toBe(readdirSync(join('content', 'asset-specs')).filter((f) => f.endsWith('.json')).length)
+  })
+})
+
+describe('review fix 15: real rows cite their own product page', () => {
+  const md = readFileSync('docs/legal/BRANDS_AND_CREDITS.md', 'utf8')
+  it('the 8341A row cites the 8341A page and the 1073DPD row the 1073DPD page', () => {
+    const row = (id: string): string => md.split(String.fromCharCode(10)).find((l) => l.includes('(' + String.fromCharCode(96) + id + String.fromCharCode(96) + ')')) ?? ''
+    expect(row('genelec-8341a')).toContain('https://www.genelec.com/8341a')
+    expect(row('genelec-8341a')).not.toContain('genelec.com/8351')
+    expect(row('ams-neve-1073dpd')).toContain('https://www.ams-neve.com/1073dpd/')
+    expect(row('ams-neve-1073dpd')).not.toContain('?p=1408')
   })
 })

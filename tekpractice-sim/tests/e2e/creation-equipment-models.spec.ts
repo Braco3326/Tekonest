@@ -205,7 +205,15 @@ test(`batch ${bi + 1} of ${batches.length}: ${batch.length} devices (${batch[0]!
     if ('covered' in at) {
       const own = await page.evaluate((x) => window.__creation!.portAtPoint(x.x - document.getElementById('renderCanvas')!.getBoundingClientRect().left, x.y - document.getElementById('renderCanvas')!.getBoundingClientRect().top), at)
       if (!own || own.instance !== d.inst) problems.push(`${d.id}: every point of its body (within 220 px of its centre) is covered, and not by its own ports (${JSON.stringify(own)})`)
-      else test.info().annotations.push({ type: 'covered-by-own-ports', description: d.id })
+      // Review fix 17: the device is NOT excused. It is selected through its project-tree row (the keyboard / screen-reader way to select a device), and the test
+      // fails when that selection is impossible.
+      const row = page.getByRole('tree', { name: 'Projet' }).getByRole('treeitem', { name: new RegExp('\\(' + d.inst + '\\)$') })
+      if ((await row.count()) !== 1) problems.push(`${d.id}: its body is covered by its own ports and it has no project-tree row to select it by`)
+      else {
+        await row.click()
+        const viaTree = await page.evaluate(() => window.__creation!.selection())
+        if (viaTree !== d.inst) problems.push(`${d.id}: its body is covered by its own ports and the project-tree row selected ${String(viaTree)}`)
+      }
     } else {
       await page.mouse.click(at.x, at.y)
       const selected = await page.evaluate(() => window.__creation!.selection())

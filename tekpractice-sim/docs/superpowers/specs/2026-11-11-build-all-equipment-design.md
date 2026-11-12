@@ -133,7 +133,7 @@ Stop rules for autonomous work:
 
 ## 7. Verification
 
-Unit suite with `BLENDER_EXE=D:\Blender\blender.exe` (builder tests, shape determinism), `validate:assets`, `validate:catalog`, `tsc`, `eslint src tools`, chunk budget, creation e2e on a private preview (`E2E_PORT=4181`, new scratch outDir), a look audit of every device (engine contact sheet), a scene-stats comparison for frame cost and idle renders, and a per-wave count table in the models log: promoted, beta-modelled, blocked.
+Unit suite with `BLENDER_EXE=<path to blender.exe>` (builder tests, shape determinism), `validate:assets`, `validate:catalog`, `tsc`, `eslint src tools`, chunk budget, creation e2e on a private preview (`E2E_PORT=4181`, new scratch outDir), a look audit of every device (engine contact sheet), a scene-stats comparison for frame cost and idle renders, and a per-wave count table in the models log: promoted, beta-modelled, blocked.
 
 ## 8. Risks
 

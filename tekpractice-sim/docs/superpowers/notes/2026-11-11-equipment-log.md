@@ -5,7 +5,7 @@ Plan: `docs/superpowers/plans/2026-11-11-build-all-equipment.md`. Each agent add
 
 ## Wave 0 spikes (Task 0.7)
 
-Throwaway dry runs, nothing shipped. Method: scratch specs in a temporary folder outside the repo (not committed), driven through the real `buildAsset(id, { scripted: true, dryRun: true })` with injected `loadSpec`, a synthetic one-device `loadCatalog`, and scratch `paths`. So every run went through `validateBuild` (TS), the Blender builder, the fix-up, the contact sheet and all the gates (size, transform, parts, portPositions, budget, detail, fillet, proportionDrift, portSurface, textures, validator = 11 gates). Nothing was written to `content/`, `public/assets` or the manifest. `BLENDER_EXE=D:\Blender\blender.exe`. All specs: tier `standard`; sizes in the order (w, d, h) as given in the task; port and control positions are guesses (the spike tests the shape, not the layout). The driver is a throwaway script (about 25 lines, not committed).
+Throwaway dry runs, nothing shipped. Method: scratch specs in a temporary folder outside the repo (not committed), driven through the real `buildAsset(id, { scripted: true, dryRun: true })` with injected `loadSpec`, a synthetic one-device `loadCatalog`, and scratch `paths`. So every run went through `validateBuild` (TS), the Blender builder, the fix-up, the contact sheet and all the gates (size, transform, parts, portPositions, budget, detail, fillet, proportionDrift, portSurface, textures, validator = 11 gates). Nothing was written to `content/`, `public/assets` or the manifest. `BLENDER_EXE=<path to blender.exe>`. All specs: tier `standard`; sizes in the order (w, d, h) as given in the task; port and control positions are guesses (the spike tests the shape, not the layout). The driver is a throwaway script (about 25 lines, not committed).
 
 Sanity check of the method: the shipped `genelec-8030c` spec run through the same driver gives 3088 triangles and 11 of 11 gates, the same as its manifest row.
 
@@ -121,7 +121,7 @@ By `dataQuality` (what the size supports) and wave:
 ### Gate numbers (2026-11-12)
 
 - `npx tsc --noEmit`: clean. `npm run lint`: clean. `npm run validate:catalog`: valid (25 devices, 79 ports, 38 connector types, 16 signal types, 8 rules). `npm run validate:assets`: 51 ok, 0 failed.
-- `npx vitest run` with `BLENDER_EXE=D:\Blender\blender.exe`: 235 files, 3669 tests, all passed (baseline before Wave 0: 228 files, 3541 tests).
+- `npx vitest run` with `BLENDER_EXE=<path to blender.exe>`: 235 files, 3669 tests, all passed (baseline before Wave 0: 228 files, 3541 tests).
 - Build: `npx tsx tools/room-thumbs.ts`, `npx tsc`, `npx vite build --outDir <scratch>` (not blocked; `npm run build` itself cannot take an outDir), `node tools/chunk-budget.mjs <scratch>`: budget OK (creation start 5,899,986 B of the 6,761,988 limit). `room-thumbs` left no diff.
 - Playwright on a private preview of the scratch build (`E2E_PORT=4181`, scratch config): `creation-drawer` and `creation-beta`, 60 passed, 1 skipped. One test needed a change: at 400 px wide the tab row is 152 px and « Pieds et accroches » (135 px) cannot clear both edge fades, so the focus handler of the drawer now centres a tab that wide (whole, not half out) and the S7 spec asserts that case separately.
 - Independent read-only review (plan Review Focus): not run by this agent.
@@ -180,7 +180,7 @@ Before: 119 promotable, 6 estimate, 190 missing. A promotable row is promoted on
 ### Gate numbers (Wave 0b, 2026-11-12)
 
 - `npx tsc --noEmit` clean; `npm run lint` clean; `npm run validate:catalog` valid; `npm run validate:assets` 51 ok, 0 failed.
-- `npx vitest run` with `BLENDER_EXE=D:\Blender\blender.exe`: 240 files, 3765 tests, all passed (Wave 0 gate: 235 files, 3669).
+- `npx vitest run` with `BLENDER_EXE=<path to blender.exe>`: 240 files, 3765 tests, all passed (Wave 0 gate: 235 files, 3669).
 - Build into a scratch outDir (`npx vite build --outDir <scratch>`), `node tools/chunk-budget.mjs <scratch>`: budget OK; `tools/room-thumbs.ts` left no diff.
 - Playwright on a private preview (`E2E_PORT=4181`, scratch outDir, scratch config): `creation-drawer` and `creation-beta`, 60 passed, 1 skipped.
 - Not run: an independent re-review of this diff; a real stage 1 and stage 2 on a real device with a shipped GLB (the tool is tested on temporary copies of the real files; the first real promotion will be the Wave 1 DBL); the full Playwright suite.
@@ -255,7 +255,7 @@ Wave 1: **32 promotable, 11 beta-modelled, 6 blocked** (a promotable row is prom
 ### Gate numbers (Wave 0c, 2026-11-12)
 
 - `npx tsc --noEmit` clean; `npm run lint` clean; `npm run validate:catalog` valid.
-- `npx vitest run tests/tools` with `BLENDER_EXE=D:\Blender\blender.exe`: 53 files, 1269 tests, all passed (the new file has 24). `tests/creation` and `tests/scene/modelIds.test.ts`: 77 files, 1138 tests, all passed (the proposals file changed).
+- `npx vitest run tests/tools` with `BLENDER_EXE=<path to blender.exe>`: 53 files, 1269 tests, all passed (the new file has 24). `tests/creation` and `tests/scene/modelIds.test.ts`: 77 files, 1138 tests, all passed (the proposals file changed).
 - Not run: `validate:assets`, the full vitest suite, a build and the chunk budget, Playwright. No asset and no `src` file changed, but `src/creation` imports `catalog-proposals.json`, which grew by 83 `sizeMm` objects (a few KB, no new entry): the chunk budget should be re-checked with the next wave build.
 
 
@@ -319,7 +319,7 @@ Gates: the ten of a lathe are size, transform, parts, portPositions, budget, det
 ### Gate numbers (Wave 1A, 2026-11-12)
 
 - `npm run validate:assets`: my 13 devices ok (8 or 9 gates as the validator runs them); whole run 83 ok, 10 failed: the 10 are other agents' staged rows whose GLBs are not shipped yet.
-- `npx vitest run tests/tools tests/scene/modelIds.test.ts` with `BLENDER_EXE=D:\Blender\blender.exe`: before the test fix 3 files failed (promoteDevice 14, brandsRegister 2, modelIds 1); `promoteDevice.test.ts` is green after the fix (36 tests). The remaining reds are the ones in finding 1.
+- `npx vitest run tests/tools tests/scene/modelIds.test.ts` with `BLENDER_EXE=<path to blender.exe>`: before the test fix 3 files failed (promoteDevice 14, brandsRegister 2, modelIds 1); `promoteDevice.test.ts` is green after the fix (36 tests). The remaining reds are the ones in finding 1.
 - Not run: tsc, lint, the creation e2e, chunk budget, the in-engine look audit (the wave gate does them).
 
 ## Wave 1B: rack-box small gear (DI boxes, stage boxes, preamps, interfaces, headphone amps, patchbay, master clock)
@@ -382,7 +382,7 @@ All on `rack-box` (v2 params) unless said; pictures are generic (`npm run asset:
 ### Verification
 
 - Per device: dry-run build, 11 gates green (size, transform, parts, portPositions, budget, detail, fillet, proportionDrift, portSurface, textures, validator), contact sheets (io / back / left / top ortho renders) looked at in two montages of five; shipped with `--ship-run ... --logos-removed`; `npm run validate:assets`: my 15 ok (the failures it listed were other agents' staged rows with no GLB yet).
-- `npx vitest run tests/tools tests/scene/modelIds.test.ts` (`BLENDER_EXE=D:\Blender\blender.exe`): 3 files and 17 tests failed, none about my rows' content: modelIds (finding 2), brandsRegister (finding 3), and `promoteDevice.test.ts`, which copies real plan rows (neumann-tlm-103, yamaha-tf5, mackie-profx12v3) that agents A and C had staged by then (their spec files exist, the test fixtures expect them absent).
+- `npx vitest run tests/tools tests/scene/modelIds.test.ts` (`BLENDER_EXE=<path to blender.exe>`): 3 files and 17 tests failed, none about my rows' content: modelIds (finding 2), brandsRegister (finding 3), and `promoteDevice.test.ts`, which copies real plan rows (neumann-tlm-103, yamaha-tf5, mackie-profx12v3) that agents A and C had staged by then (their spec files exist, the test fixtures expect them absent).
 - Not run: tsc, lint, e2e, chunk budget, the in-engine look audit, 3/4 views (the contact sheet renders four orthographic views; I did not make a perspective render). Not verified: the real connector layouts and panel assignments of the 13 beta-modelled devices (guesses, said so in each spec's sources and `portsTodo`).
 
 
@@ -442,7 +442,7 @@ All sizes are the plan's (w, d, h) as `realSizeMm` (w, h, d). Build: `asset:buil
 ### Verification
 
 - Every device: dry-run build with the gates, then a 4-view Blender render of the built GLB (a scratch perspective render: 3/4 from the rear, 3/4 from the front, side, top) looked at, then `--ship --logos-removed`; `npm run promote -- <id> --commit --dry-run` printed the outcome in the table (promoted or beta-modelled) for all 14 with no spec parity error; `npm run validate:assets`: 93 ok, 0 failed.
-- `npx vitest run tests/tools tests/scene/modelIds.test.ts` (`BLENDER_EXE=D:\Blender\blender.exe`): 52 of 54 files passed, 3 tests failed (finding 1). Commits made through a temporary index holding only my files and my manifest rows.
+- `npx vitest run tests/tools tests/scene/modelIds.test.ts` (`BLENDER_EXE=<path to blender.exe>`): 52 of 54 files passed, 3 tests failed (finding 1). Commits made through a temporary index holding only my files and my manifest rows.
 - `npx vitest run tests/controls`: 15 files, 150 tests passed (no layout of mine is in the tree). Not run: tsc, lint, e2e, chunk budget, the in-engine look audit (rings on the connectors were not looked at in the app). Not verified: every connector position and every control position (guesses, said so in each spec's sources); the side profiles of the desks (estimates); the datasheet drawings of the Mackie, Rode and Shure PDFs were not rendered (text only).
 
 
@@ -489,7 +489,7 @@ Catalogue after: **44 devices (was 25), 23 categories (was 16), 181 ports, 35 co
 ### Gate numbers
 
 - `npx tsc --noEmit` clean; `npm run lint` clean; `npm run validate:catalog` valid (44 devices); `npm run validate:assets`: **93 ok, 0 failed**.
-- `npx vitest run` with `BLENDER_EXE=D:\Blender\blender.exe`: **241 files, 3904 tests, all passed** (Wave 0b: 240 files, 3765).
+- `npx vitest run` with `BLENDER_EXE=<path to blender.exe>`: **241 files, 3904 tests, all passed** (Wave 0b: 240 files, 3765).
 - Build into a scratch outDir (`npx vite build --outDir <scratch> --emptyOutDir`), `node tools/chunk-budget.mjs <scratch>`: budget OK, creation entry 5,959,529 B (css included) of 6,830,462.
 - GLBs in `public/assets`: 93 files, **6.18 MiB** in total (limit 120 MB), largest focusrite-isa-one 0.65 MiB (limit 25 MiB), average 68 KB.
 - Scene stats of the reference rig (Concert simple, 5 devices) on the scratch build: meshes 625, materials 168 (the 2026-11-10 notes give 625 and 168), idle renders in 2.5 s: 0, `renderBench(40)` median of 7: 1.61 ms. No tool exists for the exact numbers of 44f5dd7; a scratch spec read `sceneStats` and `renderBench` (not committed).
@@ -727,7 +727,7 @@ Every family validates in `validateBuild` (TS, no Blender: names, whole numbers,
 
 ### Tests and verification of the shape agent (2026-11-12)
 
-- New test files (all through the real builder with `BLENDER_EXE=D:\Blender\blender.exe`): `rackBoxV3b.test.ts` (25), `mouldedBox.test.ts` (23), `revolveOval.test.ts` (13), `roundBaseStand.test.ts` (13), `builderPins.test.ts` (2). Each family: parameter checks, exact size, the feature tests of the plan (vent through the plate, window depth, handles clear of the ears, recess depth, seam, hinge angle, base disc diameter, boom length, wrap on an oval), flat zones, BuildError messages, spec route (`AssetSpec.parse` and `runBuilder`), determinism (12 builds run in parallel are byte-identical, per family).
+- New test files (all through the real builder with `BLENDER_EXE=<path to blender.exe>`): `rackBoxV3b.test.ts` (25), `mouldedBox.test.ts` (23), `revolveOval.test.ts` (13), `roundBaseStand.test.ts` (13), `builderPins.test.ts` (2). Each family: parameter checks, exact size, the feature tests of the plan (vent through the plate, window depth, handles clear of the ears, recess depth, seam, hinge angle, base disc diameter, boom length, wrap on an oval), flat zones, BuildError messages, spec route (`AssetSpec.parse` and `runBuilder`), determinism (12 builds run in parallel are byte-identical, per family).
 - Old output: all 93 committed scripted plans are pinned (`tests/tools/assets3d/fixtures/builder-pins-wave2.json`, plans taken at the end of Wave 1). See the finding below for what "unchanged" can mean.
 - Sample builds looked at (3/4 renders of the amp, recorder, laptop, body-pack, U 87 candidate and both stands): the vents, window and handles, the recess, the open laptop and the stands read as intended. Renders are local scratch, not committed.
 
@@ -744,7 +744,7 @@ Every family validates in `validateBuild` (TS, no Blender: names, whole numbers,
 The rejected scripted candidate of Wave 4a (round head basket) was rebuilt with `revolve-oval`: the committed 31-station profile of the spec, the body and collar round (depth = width, at most 53.9), the head basket from 138.3 mm up oval with an ESTIMATED depth of 0.72 x its width (no side photo exists; the 3/4 photo shows the basket as a flat-faced rounded box), 4220 triangles, 64 segments, plain nickel colours, no picture. Sheet (local, ignored folder): `docs/superpowers/notes/img/wave2-u87-oval-ab.png`, top row the shipped Meshy model, bottom row the scripted oval, columns front, side, 3/4.
 Verdict: **the Meshy model stays.** The oval fixes what the round drum got wrong (from the side the head is now thinner than it is wide, the slab reads), but (a) the front silhouette is the same profile as in Wave 4a (0.86 mm against Meshy 1.43 mm, an advantage that does not come from the oval), (b) the side view of the Meshy basket is a tapering wedge with a flat face and the visible mesh, where the oval is a straight pill with no grille, no flat face and an invented depth, (c) there is no photograph to measure the depth or the taper from, so the oval cannot be shown to be closer. It does not "clearly win on the front silhouette" (the rule for shipping), so it is not shipped. What would settle it: a side photo or the datasheet drawing of the basket depth, and a flat-faced rounded-box head (a moulded-box-like section) for the basket.
 
-### Gate numbers (shape agent, 2026-11-12, `BLENDER_EXE=D:\Blender\blender.exe`)
+### Gate numbers (shape agent, 2026-11-12, `BLENDER_EXE=<path to blender.exe>`)
 
 - `npx tsc --noEmit` clean; `npm run lint` clean.
 - `npx vitest run tests/tools`: 61 files, 1622 tests, 1618 passed, 4 failed, none about the shape families: `proposalsFixedPoint.test.ts` (3) and `brandsRegister.test.ts` (1, "every manifest device id has a label") fail on the Wave 2 device agents' uncommitted proposals and manifest rows. Before the determinism fixes one of my own tests (rack-box v3b, two builds of the all-features sample) failed by chance under load; after them it passed in every run.
@@ -846,7 +846,7 @@ The family WORKS on a real device: a scratch run through `buildAsset` (a synthet
 7. **Pipeline limit (not a family one)**: a beta-modelled row with NO port cannot be built (see K&M 26125); a Bêta row (one that already has a proposal) must keep exactly its proposal ports, ids included, and no controls (D80, SSL, XMV): the richer connector sets the pages document stay picture-only for them.
 8. **Amplifier template**: when a device has more audio inputs than speaker outputs, each input is routed to every speaker output; so a promoted amplifier lists only a 1:1 set (Crown: 2 XLR in, 2 speakON out) and the extra inputs are drawn only. Open: a recorder (H6, MixPre) with phantom has no `phantom-48v` control (the recorder template adds none); the XLR ports carry `isMicInput`, `providesPhantom` from the spec like the Rodecaster.
 
-### Gate numbers (Wave 2C, 2026-11-12, `BLENDER_EXE=D:\Blender\blender.exe`)
+### Gate numbers (Wave 2C, 2026-11-12, `BLENDER_EXE=<path to blender.exe>`)
 
 - `npm run validate:assets`: 148 ok, 0 failed (my 13 included).
 - Commits: `44e868d` (the AKG C414 and seven moulded-box devices: its message says "six moulded-box devices", it is seven; not amended, no history rewriting) and `f4e23f6` (five racks). Plan rows and manifest rows were committed through a temporary index; the shared plan and manifest files in the working tree still hold other agents' uncommitted rows.
@@ -897,7 +897,7 @@ The catalogue has NO concept of a cable as an item today: a cable is a `Connecti
 
 ### Tests and verification of the shape agent (2026-11-12)
 
-- New test files, all through the real builder with `BLENDER_EXE=D:\Blender\blender.exe`: `speakerCabinetV2.test.ts` (24: params, size exact for a sub, a trapezoid with tapered plan and a wedge, elevation height at the back, wedge baffle, handle recess depth and place, pole socket diameter and depth, rigging points, grille recess, rear pockets behind inset ports on a box and on a trapezoid, measured fillet, refusals with their messages, 12 parallel builds byte-identical for three samples, triangle class, the pinned old output, the real gates (size, portSurface, detail, fillet) through `buildAsset`, the column on a pole) and `cableAssemblyV2.test.ts` (13: registry, every end kind a catalogue connector that mates both ways, natural size, schema, refusals, all 14 kinds as end A and end B at their natural size, male and female XLR, the snake, determinism, the real gates, the Mogami loom bytes).
+- New test files, all through the real builder with `BLENDER_EXE=<path to blender.exe>`: `speakerCabinetV2.test.ts` (24: params, size exact for a sub, a trapezoid with tapered plan and a wedge, elevation height at the back, wedge baffle, handle recess depth and place, pole socket diameter and depth, rigging points, grille recess, rear pockets behind inset ports on a box and on a trapezoid, measured fillet, refusals with their messages, 12 parallel builds byte-identical for three samples, triangle class, the pinned old output, the real gates (size, portSurface, detail, fillet) through `buildAsset`, the column on a pole) and `cableAssemblyV2.test.ts` (13: registry, every end kind a catalogue connector that mates both ways, natural size, schema, refusals, all 14 kinds as end A and end B at their natural size, male and female XLR, the snake, determinism, the real gates, the Mogami loom bytes).
 - Old output pinned: `builderPins.test.ts` (93 committed plans) stays green; `tests/tools/assets3d/fixtures/builder-pins-wave3.json` adds 8 plans taken BEFORE any edit of the script: `speaker-cabinet` (plain, trapezoid, hexagon with pockets), a rack-box v3b amp, a moulded-box recorder, the C414 revolve-oval, the straight and the boom round-base stand. All 8 were byte-stable twice before; after the edits 7 keep their bytes and the speaker-cabinet hexagon with pockets keeps its geometry (fingerprint) but not its bytes, because it fills its rear face with bmesh beauty fill (the Wave 2 finding 1: not byte-stable once the script text changes); its pin is the fingerprint only. No shipped device uses `speaker-cabinet`.
 - Both new builders are byte-stable by construction (pure arithmetic geometry, our own triangulation, canonical face order): 12 parallel builds identical for every sample.
 - `npx tsc --noEmit` clean; `npm run lint` clean; `tests/tools` (shape, pin, promote tests) green on the files above.
@@ -1019,7 +1019,7 @@ Two read-only research sub-agents read the connector sets of 32 devices from man
 - Tests red today that change at stage 2: `modelIds.test.ts` (39 proposals ship a model while their plan row is not yet betaModelled), `brandsRegister.test.ts` (two tests: labels and the generated block), `proposalsFixedPoint.test.ts` (three tests, as before). `cableAssemblyV2.test.ts` (two tests) fails on the families agent's uncommitted work, not on mine.
 - The beta-modelled new rows get a proposal built from the spec at stage 2; the Bêta rows keep their proposal with `sizeMm`.
 
-### Gate numbers (Wave 3A, 2026-11-12, `BLENDER_EXE=D:\Blender\blender.exe`)
+### Gate numbers (Wave 3A, 2026-11-12, `BLENDER_EXE=<path to blender.exe>`)
 
 - `npm run validate:assets`: **193 ok, 0 failed** (the whole tree, 46 of them mine). Per device dry run and ship: 11 of 11 gates for boxes, desks and cabinets, 10 of 10 for the lathes.
 - `npx vitest run tests/tools tests/scene/modelIds.test.ts`: 64 files, 1788 tests, 1780 passed, 8 failed: the cableAssemblyV2 pair, `brandsRegister` 2, `proposalsFixedPoint` 3, `modelIds` 1 (all listed above, none about the content of my specs; `specPortParity`, `promotedTruth`, `betaBadges` and `promoteDevice` pass).
@@ -1085,7 +1085,7 @@ By what `promote --commit --dry-run` printed: **11 promotion candidates, 8 beta-
 7. **Plan notes worth correcting**: the EV Evolve 50M G2 plan size is a dealer figure while the first-generation EVOLVE 50M datasheet (readable) differs (2045 x 345 x 471 assembled). The plan lists the X15 HiQ as `passive`: the L-Acoustics page calls it a "2-way active coaxial enclosure" (bi-amplified, with 4-point speakON inputs), so passive is right for the simulator. The 45N-12 page lists the same wedge as active or passive by wiring.
 8. **No PDF page renderer** on this machine (no pdftoppm): PDFs were read as text only, so no drawing was looked at (NT-SF1 head length, D112 body shape).
 
-### Gate numbers (Wave 3B, 2026-11-12, `BLENDER_EXE=D:\Blender\blender.exe`)
+### Gate numbers (Wave 3B, 2026-11-12, `BLENDER_EXE=<path to blender.exe>`)
 
 - `npm run validate:assets`: **212 ok, 0 failed** (the whole tree, 19 of them mine).
 - Focused tests (`npx vitest run tests/tools tests/scene/modelIds.test.ts`): see the result line appended below. Not run: tsc, lint, e2e, chunk budget, in-engine look audit (the wave gate). Not verified: every port and control position (guesses, said in each spec), the driver layout of every baffle picture (our estimate), the corner radii, the wedge slopes, the NT-SF1 head and D112 body profiles (estimates from the published outer sizes).
@@ -1174,7 +1174,7 @@ Left over from waves 2 and 3 and still blocked, unchanged: shure-ua844-plus, shu
 8. **Tests**: see the gate numbers. Expected stage-2 reds only (`modelIds` for staged rows with models, `brandsRegister` labels and block, `proposalsFixedPoint`).
 9. Not verified: every connector and control position (guesses), the side profiles of the desks (estimates; only the Avid S1 heights are documented), the lathe profiles of D6 and i5, the in-engine look, rings on the connectors in the app. Contact sheets looked at for aphex-channel, omnia-11, audix-d6, genelec-1234a, digico-s21, yamaha-cl5; the others only through the gate numbers.
 
-### Gate numbers (Wave 4A, 2026-11-12, `BLENDER_EXE=D:\Blender\blender.exe`)
+### Gate numbers (Wave 4A, 2026-11-12, `BLENDER_EXE=<path to blender.exe>`)
 
 - `npm run validate:assets`: **240 ok, 0 failed** (the whole tree, 28 of them mine). Per device dry run and ship: 11 of 11 gates for racks, desks and the cabinet, 10 of 10 for the two lathes.
 - `npx vitest run tests/tools tests/scene/modelIds.test.ts`: 64 files; one run had 1 flaky failure (`rackDevice.test.ts`, the byte-identical v2 rack build, the known chance failure of the Wave 2 finding 1, green in the rerun) and the rerun has exactly the 6 expected stage-2 reds: `modelIds.test.ts` (proposals that ship a model while their plan row is staged), `brandsRegister.test.ts` x2 (labels and the generated block), `proposalsFixedPoint.test.ts` x3. None is about the content of my rows.
@@ -1253,7 +1253,7 @@ Catalogue after: **113 devices (was 44), 30 categories, 675 ports, 61 controls, 
 - `creation-drawer.spec.ts`: the tab « Amplis » now exists (seven power amplifiers promoted), the tab row is about 615 px and scrolls at 1700 px: the no-fade test uses 2000 px.
 - `betaBadges.json` regenerated by `npm run register` (derived from the plan rows).
 
-### 5. Gate numbers (2026-11-12, `BLENDER_EXE=D:\Blender\blender.exe`)
+### 5. Gate numbers (2026-11-12, `BLENDER_EXE=<path to blender.exe>`)
 
 - `npx tsc --noEmit` clean; `npm run lint` clean; `npm run validate:catalog` valid (113 devices, 15 warnings = the speakers without acoustic data); `npm run validate:assets`: **240 ok, 0 failed**.
 - `npx vitest run` (full, run after the last commit but the log): **251 files, 4659 tests, all passed** (Wave 1b: 246 files, 4108 passed, 6 failed; no determinism test failed in this run). Run before the last fixes the full suite had 4655 passed and 4 failed (the signalPath Bêta examples and one fixed-point test), all fixed above.
@@ -1437,7 +1437,7 @@ Through a **search summary** (the page itself was not opened): neutrik-nppa-tt-p
 
 ## Verification of waves 2 to 5 (2026-11-12, verification agent, tree at 2f41337)
 
-Read-only verification of the commit-and-gate state `2f41337` (branch `assets/3d-rebuild`), `BLENDER_EXE=D:\Blender\blender.exe`. Nothing in the app, the data or a GLB was changed by this section. While it ran, ANOTHER agent edited the tree (uncommitted: `tools/assets3d/build-asset.ts`, `tests/tools/assets3d/buildAsset.test.ts`, `tests/tools/genericPanelArtwork.test.ts`, later 16 re-shipped GLBs and the manifest); every number below is for the tree as it stood at the start (tsc, lint, validate, vitest, build, Playwright, look audit), so none of them covers those later edits. Scratch only: a build in a scratch outDir, a private preview on port 4181 (never 4173), a scratch Playwright config and a scratch look spec (both deleted afterwards), dry-run builds that leave their output under the git-ignored `assets-source/<id>/work/`. Look sheets: `docs/superpowers/notes/img/verify-waves2-5/` (git-ignored, not committed).
+Read-only verification of the commit-and-gate state `2f41337` (branch `assets/3d-rebuild`), `BLENDER_EXE=<path to blender.exe>`. Nothing in the app, the data or a GLB was changed by this section. While it ran, ANOTHER agent edited the tree (uncommitted: `tools/assets3d/build-asset.ts`, `tests/tools/assets3d/buildAsset.test.ts`, `tests/tools/genericPanelArtwork.test.ts`, later 16 re-shipped GLBs and the manifest); every number below is for the tree as it stood at the start (tsc, lint, validate, vitest, build, Playwright, look audit), so none of them covers those later edits. Scratch only: a build in a scratch outDir, a private preview on port 4181 (never 4173), a scratch Playwright config and a scratch look spec (both deleted afterwards), dry-run builds that leave their output under the git-ignored `assets-source/<id>/work/`. Look sheets: `docs/superpowers/notes/img/verify-waves2-5/` (git-ignored, not committed).
 
 | check | command | result |
 |---|---|---|
@@ -1464,3 +1464,32 @@ Read-only verification of the commit-and-gate state `2f41337` (branch `assets/3d
 ### Not run
 
 The 7 beta-modelled devices were placed through the drawer's Bêta tab, not the catalogue path. No audio listening check, no mobile viewport look, and the look audit covers a sample of 35 of the 189 spawnable devices, not all.
+
+## Waves 2 to 5 review fixes (2026-11-12, Wave 5b)
+
+An independent reviewer read Waves 2 to 5 and found 20 defects. Each was verified in the code and fixed test-first on the real catalogue rows; `content/catalog.json` device entries were never hand-edited (spec, plan and template data, then `promote --regen`). Web checks of manufacturer pages were done by delegated research passes (some pages came through search or summarising fetch tools: the spec source notes say so). Nothing pushed, no Meshy, no history rewrite. A usage cap stopped one planned research pass (phantom on the TLM 103, KM 184, MKH 416): those three keep their flag with a to-check note.
+
+| # | Finding | Action | Test |
+|---|---|---|---|
+| 1 | 29 devices lost their generic-panel picture | Cause confirmed: the rebuild command (`--scripted --ship` without the `--project-photo` faces), not the layout step. `buildAsset` now takes the faces of `content/generic-panels/<id>.json` that the spec projects whenever a scripted build gets no picture of its own (dep `genericPanelPhotos`); the 29 GLBs rebuilt through the build loop (11 of 11 gates), manifest rows hybrid / branded-internal again, register regenerated. Commit `e30d985` | `genericPanelArtwork.test.ts` (196 devices: hybrid row, `_generic_` pictures, GLB with an image and a texture); 4 build-path tests in `buildAsset.test.ts` |
+| 2 | Meyer UPJunior and LINA could never be powered | `powercon-blue` and `iec-c13` mate both ways (powerCON to IEC cable), said in the labels. LINA's sheet says powerCON 20 (blue); UPJunior's colour is not stated (assumed, noted). Commit `b22bb52` | `mainsReachable.test.ts`: all 44 mains inlets reach a source (only these two failed); both speakers power from a strip in a rig |
+| 3 | 62 phantom flags merged onto 13 beta proposals | `mergeSpecFlags` / `proposalFromSpec` carry a phantom flag only from a documented spec or a port with `flagsSource`; flags removed from 11 specs and proposals; kept (page cited) for crown-pzm-30d, rode-nt-sf1, tascam-model-12; `regenBeta` re-derives from the journal base so a refused flag is removed | `templatesReviewFixes`, `proposalsFixedPoint` |
+| 4 | Phantom without citation on promoted devices | Confirmed and cited (`flagsSource` + spec source note): LA-610 MKII, Clarett+ 8Pre, M32 (8 mic inputs; talkback flag removed), F8n Pro, iD14, Studio 24c, SE 16; Flow 8 corrected to 2 inputs (page: inputs 1 / 2 only). **Phantom to-check**: rode-rodecaster-pro-ii (count not confirmed: flags removed), M32 talkback, neumann-tlm-103, neumann-km-184, sennheiser-mkh-416 (flag kept from the Wave 1 template, not re-read), the 11 beta devices of item 3 | specs, data inventory update |
+| 5 | Mains rack units without power-in | IEC inlet confirmed and modelled (power-in, iec-c14 assumed, spec + panel + layout + GLB rebuilt): ua-la-610-mkii (front switch), eventide-h9000 (front button), tc-electronic-m3000 (switch documented, inlet type assumed), dbx-160a (manual: no switch), orban-optimod-6300 (switch not documented). Not confirmable: ua-la-2a. External supplies read on a page (SLX-D, PSM 300, ATW-R3210, MG10XU, VR-6HD, Avid S1, JK Broadcast Host, Flow 8): `powerNote` « alimentation non modélisée : l'appareil utilise ... ». Others (QLX-D, Monitor Station V2, FaderPort 8, Rodecaster, interfaces): default note « alimentation non modélisée (source non lue) » | a test derives the devices the template flags and requires power-in or the note |
+| 6 | Index-paired routes (codec, 1073DPD) | Codec: no route. Preamp: channel by channel to analogue outputs only (a digital output only where a sheet documents the path: none does). Other outboard: same signal only, matched by name, channel number, then order | synthetic and real rows (zephyr, 1073DPD, spx2000, omnia-11, aphex-channel) |
+| 7 | Dead thru / link / loop outputs | Spec field `thruOf` (+ `thruProcessed`); passive routes (P7 note in `realWorld.notes`) for DXR12 thru and link, UPJunior / LINA loops, A15 link, Genelec 8341A / 8351B / 7360A and ADAM S3H AES thru, the NL4 pairs of y10p / v-sub / 45n12 / p12 (both ways); KH 750 outputs routed but not passive (high-passed) | `schemas.test.ts` pins re-derived from the specs, `templatesReviewFixes` |
+| 8 | AD4D net ports retyped; EM 6000 label | AD4D: `net-dante-1/2` aoip, `net-ctl-1/2` ethernet-control (guide read; which jack is which is a guess), aliases net-1..4; an RJ45 aoip port named dante / aes67 keeps its type. EM 6000 label « Sennheiser EM 6000 (Digital 6000 receiver) » (Dante is the DANTE model only). AD4D label no longer cites AD1 / AD2 | real rows |
+| 9 | AES50 patchable to Dante | New signal `aes50` (digital, cable colour, French label); M32 and the beta S16 / X32 Compact AES50 ports typed from their specs; R2 refuses it against aoip; R5-R8 untouched | `signalTypesReview.test.ts` |
+| 10 | Desk / controller routing | Targets only analogue `out-main*` (else `out-mix*` / `out-mon*`); talkback never routed; no omni / AES / Dante / USB targets. CL5, DM7, Avantis and Podtrak P4 are now unrouted (no documented main output); monitor controllers have no default route (Monitor Station V2: the sheet gives no default). Consequence: those desks pass no signal in the simulator until a sheet documents a main output | real rows and a generic test over every promoted desk |
+| 11 | USB MIDI surfaces typed usb-audio | New signal `usb-control`; MPK mini, FaderPort 8, X-Touch Universal use it; refused against usb-audio. Open consequence: no host models a usb-control port, so these controllers cannot be cabled to a computer yet | `signalTypesReview.test.ts` |
+| 12 | modelFront claim measured for 4 speakers only | The test now measures every device that declares modelFront (the 15 promoted speakers + KH 120 II): axis -z, ports in the +z half | `modelFront.test.ts` |
+| 13 | Data-rule leftovers | KH 120 II lost the nominal coverage; ProFX12 and Rodecaster lost the fader-master list (Rodecaster: no control, no layout); the 25 originals untouched and listed again in the inventory doc | `schemas`, `catalogChecks`, `promotedTruth` pins updated |
+| 14 | Coverage skip wording | no-acoustic is checked after muted / silent / balance (real reasons win); a rig whose only reason is no-acoustic says « Couverture non calculée : aucune valeur vérifiée pour ce modèle (statut à valider). L'écoute n'est pas concernée. » (copy deck updated, à valider) | `coverageSources.test.ts` |
+| 15 | Register source | The spec's own dimensions page (first non-plan source whose note gives millimetres) wins for plan rows; 8341A cites genelec.com/8341a, 1073DPD cites ams-neve.com/1073dpd; the 25 originals unchanged | `brandsRegister.test.ts` |
+| 16 | Label overclaims, assumed inlet notes | Dante AVIO label « (2IN) »; Omnia.11, DHY-04S, dbx 160A, Orban disclose in `realWorld.notes` that the Alimentation control is the simulator's; `assumedConnectors power-in` added to genelec-8341a, 8040b, midas-m32, yamaha-dxr12-mkii (+ the five new inlets) | a test over every plan row and over specs that say the inlet type is not named |
+| 17 | e2e annotated devices instead of failing | A covered body is selected through its project-tree row; the test fails when that is impossible | `creation-equipment-models.spec.ts` (see the e2e line below) |
+| 18 | Saved cables on removed Bêta port ids dropped silently | `portAliases` for 12 old ids (MUTEC S/PDIF and word clock, EM 6000 / AD4D word clock, MG10XU stereo line); a visible French note « Câbles non rechargés » (à valider) lists the cables that could not be restored. Ports with no equivalent stay removed (GLM, USB firmware, GPI, AC cascade, Nagra AES, EM 6000 network) | `droppedCables.test.ts` (saved-project fixture) |
+| 19 | `--regen` clock date, `out-14` ids, local path | regen uses the entry's own date, else the plan's `generated`; the id rule turns « 1/4 in » into `quarter`; 7 ports of 5 devices renamed with aliases, GLBs rebuilt; the local Blender path is gone from this log, the plan and the spec | `behaviourTemplates` |
+| 20 | Fixed-point test hid flag drift | The generated side is compared as is; each difference must be a non-capability flag, a cited capability flag or an aes50 / usb-control retype; every beta-modelled proposal is the exact fixed point of `promote --regen`. `npm run test:blender` added; the family tests skip without `BLENDER_EXE` (`skipIf`) | `proposalsFixedPoint.test.ts` |
+
+Order of the work: 1 (critical) and 2 were committed first; the template and data findings (3 to 11, 13, 16, 19) share one regeneration of 69 entries (promoted and beta-modelled), then the application and test findings (12, 14, 15, 17, 18, 20).

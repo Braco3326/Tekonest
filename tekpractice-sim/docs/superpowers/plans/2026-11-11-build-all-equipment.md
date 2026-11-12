@@ -6,7 +6,7 @@
 
 **Architecture:** One machine-readable plan table (`content/proposals/equipment-plan.json`) drives a promotion tool that writes catalogue entries (promoted outcome) or proposal updates (beta-modelled outcome) plus asset-spec skeletons; devices are then built through the existing per-device build loop on existing or new Blender shape families, in five waves, with batched pinned-test changes and an independent review per wave.
 
-**Tech Stack:** TypeScript (tsx, vitest, zod), Babylon.js 7 / Vite, Blender 5 builder (`tools/assets3d/blender/build_from_spec.py`, `D:\Blender\blender.exe` via `BLENDER_EXE`), Playwright (`E2E_PORT=4181`, private preview on a scratch outDir, run from PowerShell).
+**Tech Stack:** TypeScript (tsx, vitest, zod), Babylon.js 7 / Vite, Blender 5 builder (`tools/assets3d/blender/build_from_spec.py`, `<path to blender.exe>` via `BLENDER_EXE`), Playwright (`E2E_PORT=4181`, private preview on a scratch outDir, run from PowerShell).
 
 **Spec:** `docs/superpowers/specs/2026-11-11-build-all-equipment-design.md` (read it and `docs/superpowers/plans/2026-11-10-finish-all-models.md`; the Device Build Loop here reuses that plan's gates). Research inputs: `E:\CLAUDE BU\reports\TekPractice Beta equipment gap analysis.md`, its `... - priority table.csv`, notes in `E:\CLAUDE BU\research_notes\TekPractice Beta equipment gap analysis\`.
 
@@ -19,7 +19,7 @@
 - Two outcomes: **promoted** (datasheet or dealer size with `sizeConfidence: ok` on all three axes AND a connector set the datasheet documents, recorded in the asset spec as `portsDocumented: true` with its `portsSource`; goes into `content/catalog.json`) or **beta-modelled** (stays in the proposals file with a model; badge « Bêta — dimensions estimées »; patch-only). A size whose axis order was assumed, whose sources conflict, or that has only some axes (`sizeConfidence` not `ok`) is an estimate: beta-modelled at best. A device with `dataQuality: missing` gets neither. The ports of a promoted device are the documented ones; a category template never invents ports (Wave 0b).
 - Port ids at most 19 characters (the catalogue maximum). Every mains inlet gets a `power` toggle control; a hand-held, body-pack or battery device has no mains inlet and no power toggle. Existing 25 devices and the old shapes stay byte-identical (sha256 pins).
 - Triangle classes: rack gear 1500-3500, desks up to 6000, speakers up to 4000, mics up to 6000, small gear up to 2000, headphones up to 4000. Per-device GLB average at most 250 KB, total `public/assets` GLBs at most 120 MB, any file under 25 MiB; generic-panel textures at most 1024 px.
-- Env for builds and tests: `BLENDER_EXE=D:\Blender\blender.exe`. Playwright only with `E2E_PORT=4181` on a private preview built into a NEW scratch outDir (never port 4173; dist-* folders can be ACL-locked). Builds from PowerShell.
+- Env for builds and tests: `BLENDER_EXE=<path to blender.exe>`. Playwright only with `E2E_PORT=4181` on a private preview built into a NEW scratch outDir (never port 4173; dist-* folders can be ACL-locked). Builds from PowerShell.
 - Audio engine, rule semantics and the saved-project format change only through the additive schema fields of Task 0.3 (with migration and tests). Asset copy is French, answers and logs English.
 - Builds are deterministic (byte-identical twice); new shapes ship with a determinism test.
 - Stop rules: three failed attempts on a device (gates or contact-sheet review) keep its previous state and put it in the report; a wave with more than half its rows blocked on data is reported and the run moves on with the ready rows; each wave ends with the full suites and an independent read-only review.
@@ -142,7 +142,7 @@ Batch up to 10 devices of one family per commit series; the catalogue edit and t
 
 ### Wave 0 gate and review
 
-- [ ] Run `npx tsc --noEmit`, `npm run lint`, `npm run validate:catalog`, `npm run validate:assets`, `BLENDER_EXE=D:\Blender\blender.exe npx vitest run`, `npm run build` into a scratch outDir then `npm run budget`.
+- [ ] Run `npx tsc --noEmit`, `npm run lint`, `npm run validate:catalog`, `npm run validate:assets`, `BLENDER_EXE=<path to blender.exe> npx vitest run`, `npm run build` into a scratch outDir then `npm run budget`.
 - [ ] Spawn one independent read-only reviewer over `git diff <wave-start>..HEAD` against Review Focus; fix findings test-first; log the numbers.
 
 ## Wave 1: Existing recipes (49 rows)
@@ -237,7 +237,7 @@ Data-driven multi-part: `parts: [{ kind: 'box'|'cylinder'|'torus'|'lathe', size,
 - [ ] For each Wave 5 row: build if data exists, else list as blocked with the missing datasheet; no invented numbers.
 
 ### Task 5.2: Whole-run verification and report
-- [ ] Run: `npx tsc --noEmit`, `npm run lint`, `npm run validate:catalog`, `npm run validate:assets`, `BLENDER_EXE=D:\Blender\blender.exe npx vitest run`, `npm run build` (scratch outDir) + `npm run budget`, the full Playwright suite on a private preview (`E2E_PORT=4181`), scene-stats comparison with 44f5dd7; total GLB size check (at most 120 MB, none over 25 MiB).
+- [ ] Run: `npx tsc --noEmit`, `npm run lint`, `npm run validate:catalog`, `npm run validate:assets`, `BLENDER_EXE=<path to blender.exe> npx vitest run`, `npm run build` (scratch outDir) + `npm run budget`, the full Playwright suite on a private preview (`E2E_PORT=4181`), scene-stats comparison with 44f5dd7; total GLB size check (at most 120 MB, none over 25 MiB).
 - [ ] Independent read-only review of `git diff a38c685..HEAD` against Review Focus; fix findings test-first.
 - [ ] Write `E:\CLAUDE BU\reports\TekPractice night 5 - all equipment built.md` (per wave: promoted / beta-modelled / blocked counts, per-device table, gates, test numbers, open items, the `git log origin/assets/3d-rebuild..HEAD` list, the validation checklist for the founder) and a test checklist like the night 4 one; update memory (`project_tekpractice_3d_rebuild.md` and the MEMORY.md line).
 
