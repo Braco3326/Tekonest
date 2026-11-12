@@ -22,14 +22,15 @@ export const POLL_MS = 500
  *   nav:place      the place picker while open (placePicker.ts:71 data-testid; hidden = display none, so it has no size), else the « Lieu » menu button
  *                  (menuBar.ts:44, menu id `lieu` in menuModel.ts:227)
  *   nav:status     the status bar (layout.ts:141 data-testid `status-bar`, role contentinfo)
- *   nav:ecoute     the « Écoute » menu button (menuBar.ts:44, menu id `ecoute` in menuModel.ts:245); the tutorial's last step
+ *   nav:ecoute     « Signal de test » in the open Écoute menu (menuBar.ts: a leaf item carries `data-item`, its panel is `cr-menu-ecoute-panel`), else
+ *                  the « Écoute » menu button (menuBar.ts:44, menu id `ecoute` in menuModel.ts:245); the tutorial's last step
  *   nav:checklist-power  the checklist's power helper button (data-testid `checklist-power`, built by plan T3.3: null until it exists)
  */
 export const NAV_SELECTORS: Readonly<Record<string, readonly string[]>> = {
   'nav:inventory': ['[data-testid="inventory-drawer"][data-open="true"]', '#cr-menu-materiel'],
   'nav:place': ['[data-testid="place-picker"]', '#cr-menu-lieu'],
   'nav:status': ['[data-testid="status-bar"]'],
-  'nav:ecoute': ['#cr-menu-ecoute'],
+  'nav:ecoute': ['#cr-menu-ecoute-panel [data-item="test-signal"]', '#cr-menu-ecoute'],
   'nav:checklist-power': ['[data-testid="checklist-power"]'],
 }
 

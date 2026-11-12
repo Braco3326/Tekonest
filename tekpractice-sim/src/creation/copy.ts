@@ -1023,16 +1023,15 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   /**
    * The tutorial « Premiers pas » (onboarding packs, T3.1, spec 6.3 and 7.2): Oscar's one sentence per step, what to do and where, never an outcome that is
    * not true yet (no sound before Écoute). Keys follow the step ids of src/guide/tutorial.ts. `{console}` and `{micro}` = the catalog labels of the source
-   * console and of the SM58. The flow title is `menu.firstSteps` (by key). After the last step the bubble says `listen.simple` and the checklist's own mic line
-   * (`checklist.micCabled`) by key: no new wording. Every string here: à valider (tekuxwriter, 2026-11-12).
+   * console and of the SM58. The flow title is `menu.firstSteps` (by key); step 6 says `assist.sourceOff` (by key). `closingLines()` (src/guide/tutorial.ts) is `listen.simple` then
+   * the checklist's own mic line (`checklist.micCabled`) by key: NOT DISPLAYED YET (plan T6.1: the step card shows it). Every string here: à valider (tekuxwriter, 2026-11-12).
    */
   tutorial: {
-    console: 'Ouvrez l’inventaire (Espace), onglet Consoles, et posez la {console} sur le sol.',
+    console: 'Ouvrez Matériel, puis Inventaire, onglet Consoles, et posez la {console} sur le sol.',
     micro: 'Posez le micro {micro}, onglet Micros.',
     enceinte: 'Posez une enceinte, onglet Enceintes : c’est elle qui diffuse le son.',
-    consoleEnceinte: 'Sélectionnez la console, puis « Connecter à… » : la prise proposée vers l’enceinte est compatible.',
+    consoleEnceinte: 'Sélectionnez la console, puis « Connecter à… » sur une sortie principale : la prise proposée vers l’enceinte est compatible.',
     microConsole: 'Faites de même du micro vers la console : la prise proposée est compatible.',
-    lectureConsole: 'Sélectionnez la console, puis activez « Lecture console » dans Propriétés : c’est la source de test du simulateur.',
     multiprise: 'Dans ce simulateur, la console et l’enceinte ont besoin de courant : posez une multiprise, onglet Secteur.',
     /** Said with `multiprise`, in the same bubble. */
     powerNote: 'Ici, la multiprise est la source de courant : le simulateur ne vérifie ni la prise murale ni la puissance.',
@@ -1040,11 +1039,15 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     courantEnceinte: 'Reliez aussi l’enceinte à la multiprise.',
     ecoute: 'Ouvrez Écoute, puis Signal de test.',
     /** Package 5 only, after `ecoute` (a sound is playing): one of two speakers is unplugged. */
-    debrancher: 'Débranchez le câble de la console vers l’une des enceintes : cette enceinte se tait, l’autre continue.',
+    debrancher: 'Pendant l’écoute, débranchez le câble de la console vers l’une des enceintes : cette enceinte se tait, l’autre continue.',
     rebrancher: 'Rebranchez-le : la prise proposée est compatible.',
     /** An accepted connection (with a nod, T5): the only acknowledgement; never « bien réglé », « bravo », « correct ». */
     accepted: 'Connexion acceptée.',
     /** Oscar's offer of the power helper (T3.3 and T3.4 wire it): cabling only, in the simulator. */
     helperOffer: 'Je peux brancher pour vous, dans le simulateur.',
+    /** Before the bubble of the step that comes after steps the learner had already done (G8 review C2); {steps} = the `alreadyStep` items, comma separated. */
+    alreadyInPlace: 'Déjà en place : {steps}.',
+    /** One item of `alreadyInPlace`; {k} = the step's number in the tutorial. */
+    alreadyStep: 'étape {k}',
   },
 }

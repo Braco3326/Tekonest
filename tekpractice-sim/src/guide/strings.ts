@@ -49,6 +49,10 @@ export const TP_STRINGS = deepFreeze({
     creation: 'Mode Création ouvert.',
     legacy: 'Niveau ouvert.',
   },
+  /** The end of a Mode Création flow. Not « toutes les étapes sont faites » (the vendored line): a step may have been passed (G8 review S1). */
+  celebrate: {
+    done: 'Parcours « {flow} » : fin des étapes.',
+  },
   /** Level play (the legacy page): the planner line and the two flows. The objectives card is the page's own (title, brief, checklist of required connections). */
   legacy: {
     planner: {

@@ -388,7 +388,7 @@ describe('premiers-pas, built from the tutorial data', () => {
   }
   const sayOf = (keys: readonly string[]): string =>
     keys
-      .map((k) => COPY.tutorial![k.slice('tutorial.'.length)]!)
+      .map((k) => COPY[k.split('.')[0]]![k.split('.')[1]]!)
       .join(' ')
       .replace('{console}', registry.deviceById.get('yamaha-ql1')!.label)
       .replace('{micro}', registry.deviceById.get('shure-sm58')!.label)
@@ -410,9 +410,25 @@ describe('premiers-pas, built from the tutorial data', () => {
       expect(s.say).toBe(sayOf(data[i].sayKeys))
       expect(s.say).not.toMatch(/[{}]/)
     })
-    expect(flow.steps[0].say).toBe('Ouvrez l’inventaire (Espace), onglet Consoles, et posez la Yamaha QL1 sur le sol.')
+    expect(flow.steps[0].say).toBe('Ouvrez Matériel, puis Inventaire, onglet Consoles, et posez la Yamaha QL1 sur le sol.')
+    expect(flow.steps[5].say).toBe(COPY.assist!.sourceOff)
     expect(flow.steps[1].say).toBe('Posez le micro Shure SM58, onglet Micros.')
     expect(flow.steps[6].say).toBe(`${COPY.tutorial!.multiprise} ${COPY.tutorial!.powerNote}`)
+  })
+
+  it('S1 (G8 review): the end of a creation flow says the steps are over, never that all of them were done (a step may have been skipped)', async () => {
+    expect(CREATION_STRINGS.celebrate.done).toBe('Parcours « {flow} » : fin des étapes.')
+    const brain: GuideBrain = { ask: async () => ({ kind: 'refusal', text: 'x', lines: [], verdict: null }), judge: async () => ({ verdict: null, needInfo: null }) }
+    const clock = { t: 1 }
+    const c = createController({ brain, flows: [premiersPasFlow(registry, packageById(5).pacing.steps)], clock: () => clock.t++, strings: CREATION_STRINGS })
+    await c.dispatch({ type: 'setContext', context: { page: 'workbench', mode: 'practice' } })
+    await c.dispatch({ type: 'flow', control: { action: 'start', flowId: 'premiers-pas' } })
+    await c.dispatch({ type: 'flow', control: { action: 'skip' } })
+    await c.dispatch({ type: 'flow', control: { action: 'skip' } })
+    const v = await c.dispatch({ type: 'hostEvent', event: { type: 'connect', at: clock.t++, data: { a: 'port:q.out-main-l', b: 'port:k.in-line-a', pair: 'console-speaker' } } })
+    expect(v.bubble?.kind).toBe('celebrate')
+    expect(v.bubble?.lines[0].text).toBe('Parcours « Premiers pas » : fin des étapes.')
+    expect(JSON.stringify(v.bubble)).not.toMatch(/toutes les étapes/)
   })
 
   it('package 5 takes ecoute, debrancher, rebrancher; no pacing gives the ten steps', () => {

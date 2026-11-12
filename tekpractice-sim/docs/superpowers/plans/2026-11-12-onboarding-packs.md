@@ -290,6 +290,9 @@ Create: `src/design/packages.ts`, `src/design/packages.css`, `src/design/events.
   strip, when powered, when the strip is full; refusal → rollback, nothing recorded; never `SET_CONTROL` or `SPAWN`; a Propriétés burst open
   (`onBeforeCommand`). e2e: in a tutorial run at step 8 the button is disabled with its reason until `helperUnlocked`; outside a run it is enabled
   once a strip exists; Ctrl+Z removes both cables.
+- **Ordering (G8 review S6):** the helper's two CONNECTs reach the guide in ONE poll, in design order. Connect the CONSOLE first; the guide also
+  completes a step whose result is already on the bench (`stepSatisfied`, G8 fix), so step 9 still ends when the speaker cable came first. Test:
+  helper in a tutorial run at step 8, both orders, the run ends past step 9; helper-done steps go to `shown` (« montré »), not « déjà en place ».
 - **Depends:** T1.3b, T3.2. **Tier:** most capable. **Hot:** copy.ts.
 
 ### T3.4 Escalation to the helper
@@ -322,6 +325,8 @@ Create: `src/design/packages.ts`, `src/design/packages.css`, `src/design/events.
 - **Files:** `layout.ts` (initial panels, surface style class; the phone accordion still wins under 760 px), `inventoryDrawer.ts` (`stay-open`),
   `mount.ts` (corner default via the storage wrapper), `creation.css`.
 - **Tests first:** e2e package 2 opens both panels; package 1 keeps the drawer open after a placement; under 760 px the accordion rule holds.
+- **G8 review S7:** steps 4 and 6 say « dans Propriétés »; while Propriétés is folded (package 1), the tutorial anchors `nav:connect.from.*` and
+  `control:suggest.playback` must ring the Propriétés unfold toggle once the device is selected (today they fall back to the device). e2e on `?design=1`.
 - **Depends:** T4.2. **Tier:** standard. **Hot:** layout.ts, mount.ts, creation.css.
 
 ### T4.4 Contrast in use
@@ -379,6 +384,9 @@ Create: `src/design/packages.ts`, `src/design/packages.css`, `src/design/events.
   `src/guide/stepCard.ts`, `tests/guide/stepCard.test.ts`.
 - **Tests first:** progress only (« Étape k sur n », ticks, « passée », « montré », « Passer le tutoriel »); never the bubble's sentence; never
   « réussi »; n follows the package pacing; e2e: not a dialog, no trap, Aide « Aller à l’étape » focuses it.
+- **G8 review S2 / C2:** after the last step the card shows `closingLines()` (src/guide/tutorial.ts: `listen.simple`, then `checklist.micCabled` or the
+  engine's NO_MIC text), with a unit test and an e2e; a step completed because its result was already on the bench reads « déjà en place » (the guide record's
+  `early` list, `oscar-guide.onboarding.v1`). Until T6.1 these lines are not displayed anywhere (the bubble cannot carry them).
 - **Depends:** T3.2, T4.3. **Tier:** standard. **Hot:** layout.ts, creation.css.
 
 ### T6.2 Checklist panel form, package configs

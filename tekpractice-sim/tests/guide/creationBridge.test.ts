@@ -1009,7 +1009,7 @@ describe('tutorial readers: audioState (playStarted) and selection', () => {
   })
 
   it('declares nav:ecoute (the Écoute menu button) and nav:checklist-power (the checklist helper button)', () => {
-    expect(NAV_SELECTORS['nav:ecoute']).toEqual(['#cr-menu-ecoute'])
+    expect(NAV_SELECTORS['nav:ecoute']).toEqual(['#cr-menu-ecoute-panel [data-item="test-signal"]', '#cr-menu-ecoute']) // N1: the item once the menu is open
     expect(NAV_SELECTORS['nav:checklist-power']).toEqual(['[data-testid="checklist-power"]'])
     for (const k of ['nav:ecoute', 'nav:checklist-power']) expect(isAnchor(k)).toBe(true)
     const r = make()

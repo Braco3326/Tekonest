@@ -105,10 +105,23 @@ const roleAt = (registry: Registry, state: TpState, ref: TpPortRef): DeviceRole 
   return id === undefined ? 'other' : roleOf(registry, id)
 }
 
-/** What a cable joins, from the roles of its two ends and its signal (a mains cable is a pair only when one end is a strip outlet). */
+/** The console outputs that carry playback: the `to` of the catalog route from a control (the QL1: out-main-l, out-main-r). */
+function playbackOutputs(registry: Registry, deviceId: string | undefined): ReadonlySet<string> {
+  const d = deviceId === undefined ? null : verified(registry, deviceId)
+  return new Set((d?.routing ?? []).filter((r) => typeof r.from === 'string' && r.from.startsWith('control:')).flatMap((r) => r.to))
+}
+
+/**
+ * What a cable joins, from the roles of its two ends, their ports and its signal:
+ *   console-speaker  a PLAYBACK output of the source console (its control route's `to`) into a speaker input: a cable that can carry the sound (G8 review C1:
+ *                    the QL1's out-mix-1 passes R1-R3 but never plays, so it is `other`)
+ *   mic-console      a mic output into a console mic input (`isMicInput`)
+ *   mains-console / mains-speaker  a strip outlet to the device's mains inlet
+ * Anything else is `other`.
+ */
 export function pairOf(c: Cable, state: TpState, registry: Registry): PairKind {
   try {
-    const ends = [c.a, c.b].map((ref) => ({ role: roleAt(registry, state, ref), port: portOf(registry, state, ref) }))
+    const ends = [c.a, c.b].map((ref) => ({ ref, role: roleAt(registry, state, ref), port: portOf(registry, state, ref) }))
     const mains = ends.every((e) => e.port?.signal === MAINS)
     const has = (role: DeviceRole): boolean => ends.some((e) => e.role === role)
     if (mains) {
@@ -118,8 +131,16 @@ export function pairOf(c: Cable, state: TpState, registry: Registry): PairKind {
       return other === 'source-console' ? 'mains-console' : other === 'speaker' ? 'mains-speaker' : 'other'
     }
     if (ends.some((e) => e.port?.signal === MAINS)) return 'other'
-    if (has('source-console') && has('speaker')) return 'console-speaker'
-    if (has('source-console') && has('mic')) return 'mic-console'
+    const consoleEnd = ends.find((e) => e.role === 'source-console')
+    if (consoleEnd !== undefined && has('speaker')) {
+      const speaker = ends.find((e) => e.role === 'speaker')!
+      const outs = playbackOutputs(registry, deviceIdOf(state, consoleEnd.ref.instance))
+      return outs.has(consoleEnd.ref.port) && speaker.port?.dir === 'in' ? 'console-speaker' : 'other'
+    }
+    if (consoleEnd !== undefined && has('mic')) {
+      const mic = ends.find((e) => e.role === 'mic')!
+      return mic.port?.dir === 'out' && (consoleEnd.port?.flags ?? []).includes('isMicInput') ? 'mic-console' : 'other'
+    }
     return 'other'
   } catch {
     return 'other'
@@ -233,7 +254,7 @@ export function nextConnectionStepFor(pair: PairKind, state: TpState, registry: 
           if (b.id === a.id) continue
           for (const pb of toPorts(b.deviceId)) {
             const to = { instance: b.id, port: pb.portId }
-            if (!taken.has(refKey(to)) && graph.canConnect(from, to).ok) return { from, to }
+            if (!taken.has(refKey(to)) && pairOf({ a: from, b: to }, state, registry) === pair && graph.canConnect(from, to).ok) return { from, to }
           }
         }
       }
@@ -270,10 +291,10 @@ export interface TutorialStep {
 export const TUTORIAL_STEPS: readonly TutorialStep[] = Object.freeze<TutorialStep[]>([
   { id: 'console', target: { kind: 'inventory-item', role: 'source-console' }, action: 'point', sayKeys: ['tutorial.console'], done: { event: 'deviceAdded', match: { role: 'source-console' } } },
   { id: 'micro', target: { kind: 'inventory-item', role: 'mic', deviceId: NAMED_MIC }, action: 'point', sayKeys: ['tutorial.micro'], done: { event: 'deviceAdded', match: { role: 'mic' } } },
-  { id: 'enceinte', target: { kind: 'inventory-tab', role: 'speaker' }, action: 'point', sayKeys: ['tutorial.enceinte'], done: { event: 'deviceAdded', match: { role: 'speaker' } } },
+  { id: 'enceinte', target: { kind: 'inventory-item', role: 'speaker' }, action: 'point', sayKeys: ['tutorial.enceinte'], done: { event: 'deviceAdded', match: { role: 'speaker' } } },
   { id: 'console-enceinte', target: { kind: 'connect', pair: 'console-speaker' }, action: 'point', sayKeys: ['tutorial.consoleEnceinte'], done: { event: 'connect', match: { pair: 'console-speaker' } } },
   { id: 'micro-console', target: { kind: 'connect', pair: 'mic-console' }, action: 'point', sayKeys: ['tutorial.microConsole'], done: { event: 'connect', match: { pair: 'mic-console' } } },
-  { id: 'lecture-console', target: { kind: 'playback' }, action: 'toggle', sayKeys: ['tutorial.lectureConsole'], done: { event: 'toggle', match: { playback: true, value: true } } },
+  { id: 'lecture-console', target: { kind: 'playback' }, action: 'toggle', sayKeys: ['assist.sourceOff'], done: { event: 'toggle', match: { playback: true, value: true } } },
   { id: 'multiprise', target: { kind: 'inventory-item', role: 'mains-strip' }, action: 'point', sayKeys: ['tutorial.multiprise', 'tutorial.powerNote'], done: { event: 'deviceAdded', match: { role: 'mains-strip' } } },
   { id: 'courant-console', target: { kind: 'connect', pair: 'mains-console' }, action: 'point', sayKeys: ['tutorial.courantConsole'], done: { event: 'connect', match: { pair: 'mains-console' } } },
   { id: 'courant-enceinte', target: { kind: 'connect', pair: 'mains-speaker' }, action: 'point', sayKeys: ['tutorial.courantEnceinte'], done: { event: 'connect', match: { pair: 'mains-speaker' } } },
@@ -294,7 +315,6 @@ export function stepDevice(target: StepTarget, registry: Registry): string | nul
   return firstOfRole(registry, target.role)
 }
 
-/** The anchor a step points at. A step whose device the catalog does not have points at the « Matériel » menu (`nav:inventory`). */
 /**
  * The bubble of a step: its COPY texts in order, one space apart, with `{console}` = the catalog label of the step's console (the first source console) and
  * `{micro}` = the label of the mic the step names. A key that COPY lacks says nothing (the tests fail on it).
@@ -315,6 +335,7 @@ export function stepSay(step: TutorialStep, registry: Registry): string {
     .replace(/\{(console|micro)\}/g, (_m, v: string) => vars[v])
 }
 
+/** The anchor a step points at. A step whose device the catalog does not have points at the « Matériel » menu (`nav:inventory`). */
 export function stepAnchor(step: TutorialStep, registry: Registry): string {
   const t = step.target
   switch (t.kind) {
@@ -336,6 +357,57 @@ export function stepAnchor(step: TutorialStep, registry: Registry): string {
     case 'nav':
       return t.anchor
   }
+}
+
+// ── a step already done (G8 review C2) ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * The step's result is already on the bench (or, for Écoute, playing now): the learner did it before the step came, or the app led them there (the status bar
+ * names « Lecture console » during steps 2 to 5). Then no event of that step will ever come again, so the mount completes it once with `earlyEvent`.
+ *   console, micro, enceinte, multiprise  a device of the role is placed
+ *   console-enceinte, micro-console, courant-console, courant-enceinte  a cable of the step's pair exists (`pairOf`, strict: playback outputs, mic inputs)
+ *   lecture-console  « Lecture console » is on, on a source console
+ *   ecoute  the test signal is playing now (`audio` = the source Écoute plays, or null)
+ *   debrancher, rebrancher  never: they are about an action, not a state
+ */
+export function stepSatisfied(step: TutorialStep, state: TpState | null, audio: string | null, registry: Registry): boolean {
+  try {
+    if (state === null) return false
+    const t = step.target
+    const role = (r: DeviceRole): boolean => state.instances.some((i) => roleOf(registry, i.deviceId) === r)
+    const pair = (p: PairKind): boolean => state.connections.some((c) => pairOf(c, state, registry) === p)
+    switch (step.id) {
+      case 'console':
+      case 'micro':
+      case 'enceinte':
+      case 'multiprise':
+        return t.kind === 'inventory-item' || t.kind === 'inventory-tab' ? role(t.role) : false
+      case 'console-enceinte':
+        return pair('console-speaker')
+      case 'micro-console':
+        return pair('mic-console')
+      case 'courant-console':
+        return pair('mains-console')
+      case 'courant-enceinte':
+        return pair('mains-speaker')
+      case 'lecture-console':
+        return state.instances.some((i) => {
+          const ctl = playbackControlOf(registry, i.deviceId)
+          return ctl !== null && state.controls[i.id]?.[ctl] === true
+        })
+      case 'ecoute':
+        return audio === 'test'
+      default:
+        return false
+    }
+  } catch {
+    return false
+  }
+}
+
+/** The host event that completes a satisfied step: its own `done` (event and match), marked `early` so the record can say « déjà en place ». */
+export function earlyEvent(step: TutorialStep, at: number): HostEvent {
+  return { type: step.done.event, at, data: { ...(step.done.match ?? {}), early: true } }
 }
 
 // ── anchor resolvers ────────────────────────────────────────────────────────────────────────────────────────────────

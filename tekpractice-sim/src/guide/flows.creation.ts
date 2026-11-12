@@ -143,6 +143,7 @@ export const CREATION_STRINGS = {
   ...defaultStrings,
   planner: { ...defaultStrings.planner, needInfo: TP_STRINGS.planner.needInfo },
   where: { ...defaultStrings.where, workbench: TP_STRINGS.where.creation },
+  celebrate: { ...defaultStrings.celebrate, done: TP_STRINGS.celebrate.done },
   flows: {
     ...(Object.fromEntries(FLOW_PATH.map((id) => [id, F[id].title])) as Record<(typeof FLOW_PATH)[number], string>),
     /** The tutorial's title is the Aide item's own words (COPY « vous » side, not TP_STRINGS). */

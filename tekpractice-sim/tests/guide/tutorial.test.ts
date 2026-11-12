@@ -24,6 +24,8 @@ import {
   playbackControlOf,
   stepAnchor,
   stepsFor,
+  stepSatisfied,
+  earlyEvent,
   type AnchorEnv,
   type DeviceRole,
 } from '../../src/guide/tutorial'
@@ -154,6 +156,12 @@ describe('annotations', () => {
     expect(pairOf(cable(['ax', 'out-n1'], ['g', 'in-analog']), s, registry)).toBe('other')
     expect(pairOf(cable(['m', 'out-xlr'], ['ax', 'in-mic-1']), s, registry)).toBe('other')
     expect(pairOf(cable(['p', 'out-1'], ['ax', 'power-in']), s, registry)).toBe('other')
+    // C1 (G8 review): only a playback-route output of the console into a speaker INPUT is console-speaker; the mix output never plays
+    expect(pairOf(cable(['q', 'out-main-r'], ['k', 'in-line-a']), s, registry)).toBe('console-speaker')
+    expect(pairOf(cable(['q', 'out-mix-1'], ['k', 'in-line-a']), s, registry)).toBe('other')
+    expect(pairOf(cable(['k', 'thru-out-a'], ['q', 'in-mic-1']), s, registry)).toBe('other')
+    // a mic is mic-console only into a console mic input
+    expect(pairOf(cable(['q', 'in-mic-2'], ['m', 'out-xlr']), s, registry)).toBe('mic-console')
   })
 
   it('annotatePlayback marks the source console’s playback control, and only it', () => {
@@ -196,9 +204,11 @@ describe('the step list', () => {
   it('every step says one COPY key of the tutorial section (multiprise adds the power note), and every package pacing id exists here', () => {
     for (const s of TUTORIAL_STEPS) {
       expect(s.sayKeys.length).toBeGreaterThan(0)
-      for (const k of s.sayKeys) expect(k).toMatch(/^tutorial\.[a-zA-Z]+$/)
+      for (const k of s.sayKeys) expect(k).toMatch(/^(tutorial\.[a-zA-Z]+|assist\.sourceOff)$/)
     }
     expect(byId('multiprise').sayKeys).toEqual(['tutorial.multiprise', 'tutorial.powerNote'])
+    // S4 (G8 review): « Lecture console » is said with the assist sentence, by key (no « source de test »)
+    expect(byId('lecture-console').sayKeys).toEqual(['assist.sourceOff'])
     for (const d of DESIGN_IDS) for (const id of packageById(d).pacing.steps) expect(TUTORIAL_STEPS.some((s) => s.id === id), `${d} ${id}`).toBe(true)
   })
 
@@ -249,6 +259,9 @@ describe('the step list', () => {
     expect(ends('console-enceinte', connected(good, 'disconnect'), without, s)).toBe(false)
     const mic = cable(['m', 'out-xlr'], ['q', 'in-mic-1'])
     expect(ends('console-enceinte', connected(mic), stateOf([Q, M], [mic]))).toBe(false)
+    // C1: the mix output passes R1-R3 but carries no playback: it must not end the step
+    const mix = cable(['q', 'out-mix-1'], ['k', 'in-line-a'])
+    expect(ends('console-enceinte', connected(mix), stateOf([Q, K], [mix]))).toBe(false)
   })
 
   it('5 micro-console: the mic into the QL1 ends it; the mic into the ISA One does not', () => {
@@ -312,6 +325,52 @@ describe('the step list', () => {
     const s = stateOf([Q, K], [c])
     expect(ends('rebrancher', connected(c), s)).toBe(true)
     expect(ends('rebrancher', connected(c, 'disconnect'), stateOf([Q, K]), s)).toBe(false)
+    const mix = cable(['q', 'out-mix-1'], ['k', 'in-line-a'])
+    expect(ends('rebrancher', connected(mix), stateOf([Q, K], [mix]))).toBe(false)
+  })
+
+  // C2 (G8 review): a step whose result is already on the bench is « satisfied »: the mount then completes it once (déjà en place).
+  it('stepSatisfied: each step is true on the bench that has its result, false on the closest bench that does not', () => {
+    const sat = (id: StepId, s: TpState, audio: string | null = null) => stepSatisfied(byId(id), s, audio, registry)
+    const out = cable(['q', 'out-main-l'], ['k', 'in-line-a'])
+    const mix = cable(['q', 'out-mix-1'], ['k', 'in-line-a'])
+    const mic = cable(['m', 'out-xlr'], ['q', 'in-mic-1'])
+    const isa = cable(['m', 'out-xlr'], ['isa', 'in-mic'])
+    const pq = cable(['p', 'out-1'], ['q', 'power-in'])
+    const pk = cable(['p', 'out-2'], ['k', 'power-in'])
+    expect(sat('console', stateOf([Q]))).toBe(true)
+    expect(sat('console', stateOf([['ax', 'axia-iq']]))).toBe(false)
+    expect(sat('micro', stateOf([M]))).toBe(true)
+    expect(sat('micro', stateOf([['st', 'km-210-9']]))).toBe(false)
+    expect(sat('enceinte', stateOf([K]))).toBe(true)
+    expect(sat('enceinte', stateOf([['gr', 'grace-m905']]))).toBe(false)
+    expect(sat('console-enceinte', stateOf([Q, K], [out]))).toBe(true)
+    expect(sat('console-enceinte', stateOf([Q, K], [mix]))).toBe(false)
+    expect(sat('micro-console', stateOf([Q, M], [mic]))).toBe(true)
+    expect(sat('micro-console', stateOf([M, ['isa', 'focusrite-isa-one']], [isa]))).toBe(false)
+    expect(sat('lecture-console', stateOf([Q], [], { q: { 'playback-usb': true } }))).toBe(true)
+    expect(sat('lecture-console', stateOf([Q]))).toBe(false)
+    expect(sat('multiprise', stateOf([P]))).toBe(true)
+    expect(sat('multiprise', stateOf([Q]))).toBe(false)
+    expect(sat('courant-console', stateOf([Q, K, P], [pq]))).toBe(true)
+    expect(sat('courant-console', stateOf([Q, K, P], [pk]))).toBe(false)
+    expect(sat('courant-enceinte', stateOf([Q, K, P], [pk]))).toBe(true)
+    expect(sat('courant-enceinte', stateOf([Q, K, P], [pq]))).toBe(false)
+    expect(sat('ecoute', stateOf([Q]), 'test')).toBe(true)
+    expect(sat('ecoute', stateOf([Q]), 'song')).toBe(false)
+    expect(sat('ecoute', stateOf([Q]), null)).toBe(false)
+    // event-only steps: never satisfied by a bench
+    expect(sat('debrancher', stateOf([Q, K]))).toBe(false)
+    expect(sat('rebrancher', stateOf([Q, K], [out]))).toBe(false)
+  })
+
+  it('the event a satisfied step is completed with matches that step’s own done', () => {
+    for (const s of TUTORIAL_STEPS) {
+      const e = earlyEvent(s, 7)
+      expect(matchesDone(asStep(s.id), e), s.id).toBe(true)
+      expect(e.data?.early).toBe(true)
+      expect(e.at).toBe(7)
+    }
   })
 })
 
@@ -393,8 +452,8 @@ describe('anchor resolvers (pure, on a fake page)', () => {
     expect(resolveTutorialAnchor(a, env({ shown: ['#cr-menu-materiel', tab, item] }))).toEqual(RECT(102))
   })
 
-  it('the speaker step points at the « Enceintes » tab (it names no model), the strip step at the strip card', () => {
-    expect(step('enceinte')).toBe('nav:inventory.tab.enceintes')
+  it('the speaker step points at the first speaker card (then its tab, « Enceintes »), the strip step at the strip card', () => {
+    expect(step('enceinte')).toBe('nav:inventory.item.qsc-k12-2')
     expect(step('micro')).toBe('nav:inventory.item.shure-sm58')
     expect(step('multiprise')).toBe('nav:inventory.item.multiprise-secteur')
   })
@@ -454,7 +513,7 @@ describe('tutorial copy', () => {
     return COPY[section]?.[name] ?? ''
   }
   /** Keys that no step says: the accepted-connection line and the helper offer (wired by T5 and T3.3). */
-  const EXTRA = ['accepted', 'helperOffer']
+  const EXTRA = ['accepted', 'helperOffer', 'alreadyInPlace', 'alreadyStep']
 
   it('every step key exists, and every tutorial key is said by a step or is one of the two extras', () => {
     for (const s of TUTORIAL_STEPS) for (const k of s.sayKeys) expect(text(k), k).not.toBe('')
@@ -463,11 +522,27 @@ describe('tutorial copy', () => {
     for (const k of EXTRA) expect(T()[k], k).toBeTruthy()
   })
 
-  it('the spec 6.3 lines, the power note and the helper offer, as written', () => {
-    expect(T().powerNote).toBe('Ici, la multiprise est la source de courant : le simulateur ne vérifie ni la prise murale ni la puissance.')
-    expect(T().helperOffer).toBe('Je peux brancher pour vous, dans le simulateur.')
-    expect(T().accepted).toBe('Connexion acceptée.')
-    expect(T().ecoute).toBe('Ouvrez Écoute, puis Signal de test.')
+  it('every tutorial line as written (spec 6.3 and 7.2, with the G8 review fixes S3 to S5)', () => {
+    expect({ ...T() }).toEqual({
+      console: 'Ouvrez Matériel, puis Inventaire, onglet Consoles, et posez la {console} sur le sol.',
+      micro: 'Posez le micro {micro}, onglet Micros.',
+      enceinte: 'Posez une enceinte, onglet Enceintes : c’est elle qui diffuse le son.',
+      consoleEnceinte: 'Sélectionnez la console, puis « Connecter à… » sur une sortie principale : la prise proposée vers l’enceinte est compatible.',
+      microConsole: 'Faites de même du micro vers la console : la prise proposée est compatible.',
+      multiprise: 'Dans ce simulateur, la console et l’enceinte ont besoin de courant : posez une multiprise, onglet Secteur.',
+      powerNote: 'Ici, la multiprise est la source de courant : le simulateur ne vérifie ni la prise murale ni la puissance.',
+      courantConsole: 'Reliez la console à la multiprise.',
+      courantEnceinte: 'Reliez aussi l’enceinte à la multiprise.',
+      ecoute: 'Ouvrez Écoute, puis Signal de test.',
+      debrancher: 'Pendant l’écoute, débranchez le câble de la console vers l’une des enceintes : cette enceinte se tait, l’autre continue.',
+      rebrancher: 'Rebranchez-le : la prise proposée est compatible.',
+      accepted: 'Connexion acceptée.',
+      helperOffer: 'Je peux brancher pour vous, dans le simulateur.',
+      alreadyInPlace: 'Déjà en place : {steps}.',
+      alreadyStep: 'étape {k}',
+    })
+    expect(COPY.assist!.sourceOff).toBe('Sélectionnez la console, puis activez « Lecture console » dans Propriétés.')
+    expect(JSON.stringify(T())).not.toMatch(/Espace|source de test/)
     // the learner places the strip: the line asks them to, it never says it is placed for them
     expect(T().multiprise).toContain('posez une multiprise')
   })
