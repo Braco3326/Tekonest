@@ -33,8 +33,8 @@ export const WITH_GEAR_ROOMS: readonly string[] = [
   'radio-talk-studio-medium',
   'radio-studio-self-op-small',
   'wedding-event-hall-medium',
-  'museum-installed-sound-medium',
-  'post-atmos-mix-room-medium',
+  'podcast-room-small',
+  'foley-dubbing-stage-medium',
 ]
 
 /** « Salle vide neutre »: the BLANK_SIZE of placeData.ts. */

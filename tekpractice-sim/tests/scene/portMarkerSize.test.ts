@@ -115,6 +115,17 @@ describe('markerDiameterM (outer ring diameter of a port marker, metres)', () =>
     expect(tight, tight.join(' | ')).toEqual([])
   })
 
+  /**
+   * Documented per-device exceptions to the 60 % rule (smallest honest change, Wave 1 stage 2). The MUTEC MC-3+ is a half-rack 1U unit 42 mm tall; its
+   * documented mains inlet is an IEC C14 whose marker ring is 26.4 mm (22 mm face x 1.2), 62.9 % of that height against a limit of 25.2 mm. The ring
+   * still clears the real C14 face (the shipped table size is the real connector, not an oversize), and a rack-height face cannot be made taller, so the
+   * device is promoted with this one port exempt instead of being kept beta-modelled over a 1.2 mm margin. The exemption holds only for the listed port
+   * and only up to 70 %: a worse ring, or the same ring on any other port, still fails.
+   */
+  const RING_HEIGHT_EXCEPTIONS: Readonly<Record<string, { portId: string; maxFraction: number }>> = {
+    'mutec-mc-3-plus': { portId: 'power-in', maxFraction: 0.7 },
+  }
+
   it('no ring is taller than 60 % of the smaller side of the face it sits on, and the C13 outlets of the strip (25.4 x 17.4 mm) carry a ring of about 24 mm on a 52 mm bar, not 37.5 mm', () => {
     const tall: string[] = []
     for (const [id, spec] of specs) {
@@ -125,7 +136,9 @@ describe('markerDiameterM (outer ring diameter of a port marker, metres)', () =>
         if (!c || p.face === 'bottom') continue // the base of a round mic is not a panel
         const faceMinor = p.face === 'io' || p.face === 'opposite' ? Math.min(spec.realSizeMm.w, spec.realSizeMm.h) : Math.min(spec.realSizeMm.d, spec.realSizeMm.h)
         const ring = markerDiameterM(c) * 1000
-        if (ring > faceMinor * 0.6) tall.push(id + ' ' + p.portId + ' (' + c + '): ring ' + ring.toFixed(1) + ' mm on a ' + faceMinor.toFixed(1) + ' mm face')
+        const exempt = RING_HEIGHT_EXCEPTIONS[id]
+        const limit = exempt && exempt.portId === p.portId ? exempt.maxFraction : 0.6
+        if (ring > faceMinor * limit) tall.push(id + ' ' + p.portId + ' (' + c + '): ring ' + ring.toFixed(1) + ' mm on a ' + faceMinor.toFixed(1) + ' mm face')
       }
     }
     expect(tall, tall.join(' | ')).toEqual([])
@@ -133,6 +146,18 @@ describe('markerDiameterM (outer ring diameter of a port marker, metres)', () =>
     expect(markerDiameterM('iec-c13') * 1000).toBeCloseTo(24, 6)
     expect((markerDiameterM('iec-c13') * 1000) / bar.realSizeMm.h).toBeLessThan(0.5)
     expect(markerDiameterM('iec-c13') * 1000).toBeLessThan(25.4 * 1.0) // narrower than the outlet is wide
+  })
+})
+
+describe('the documented ring-height exceptions are still needed (a stale exemption must be removed)', () => {
+  it('the MC-3+ inlet ring is over the plain 60 % limit and under its own 70 % one', () => {
+    const spec = JSON.parse(readFileSync(join(__dirname, '..', '..', 'content', 'asset-specs', 'mutec-mc-3-plus.json'), 'utf8')) as { realSizeMm: { w: number; h: number; d: number }; ports: { portId: string; face: string }[] }
+    const port = spec.ports.find((q) => q.portId === 'power-in')!
+    const inCatalogue = catalogJson.devices.find((d) => d.id === 'mutec-mc-3-plus')!.ports.find((q) => q.portId === 'power-in')!
+    const faceMinor = port.face === 'io' || port.face === 'opposite' ? Math.min(spec.realSizeMm.w, spec.realSizeMm.h) : Math.min(spec.realSizeMm.d, spec.realSizeMm.h)
+    const ring = markerDiameterM(inCatalogue.connector) * 1000
+    expect(ring / faceMinor).toBeGreaterThan(0.6)
+    expect(ring / faceMinor).toBeLessThanOrEqual(0.7)
   })
 })
 

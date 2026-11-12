@@ -130,8 +130,10 @@ describe('traits (findings 2, 3, 8): known, complete and consistent', () => {
     expect(has('shure-psm-300', 'transmitter', 'rack')).toBe(true) // the rack IEM transmitter has a mains inlet
   })
 
-  it('amplifier rows are power amplifiers or processors, never both; the DriveRack PA2, the DCX2496 and the compressors are processors', () => {
-    for (const r of rows.filter((x) => x.category === 'amplifier')) expect(r.traits.filter((t) => t === 'power-amp' || t === 'processor'), r.id).toHaveLength(1)
+  it('amplifier rows are power amplifiers, processors are outboard gear (Wave 1 stage 2: the « Amplis » tab is for power amplifiers, a DriveRack in it misled); the DriveRack PA2, the DCX2496 and the compressors are processors', () => {
+    for (const r of rows.filter((x) => x.category === 'amplifier')) expect(r.traits.filter((t) => t === 'power-amp' || t === 'processor'), r.id).toEqual(['power-amp'])
+    for (const r of rows.filter((x) => x.traits.includes('processor'))) expect(r.category, `${r.id}: a processor is not filed under amplifier`).not.toBe('amplifier')
+    expect(rows.find((x) => x.id === 'dbx-driverack-pa2')!.category).toBe('outboard')
     expect(has('dbx-driverack-pa2', 'processor')).toBe(true)
     expect(has('behringer-dcx2496', 'processor')).toBe(true)
     expect(has('crown-xls-2502', 'power-amp')).toBe(true)

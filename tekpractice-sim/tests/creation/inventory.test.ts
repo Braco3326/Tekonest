@@ -212,7 +212,10 @@ describe('filterItems (the drawer search, final review 4)', () => {
     // the Bêta tab keeps working: a proposal is found by its label and by « bêta »
     const withBeta = inventory(registry, { proposals: [{ deviceId: 'prop-x', label: 'Zoom Proposé 9' }], modelIds: allModels })
     expect(filterItems(withBeta.items, 'propose').map((i) => i.deviceId)).toEqual(['prop-x'])
-    expect(filterItems(withBeta.items, 'beta').map((i) => i.deviceId)).toEqual(['prop-x'])
+    // « beta » also reaches a verified device whose own label says Beta (the Shure Beta 58A, Wave 1): the proposal is found, and every other hit is a label match
+    const betaHits = filterItems(withBeta.items, 'beta')
+    expect(betaHits.map((i) => i.deviceId)).toContain('prop-x')
+    expect(betaHits.filter((i) => i.deviceId !== 'prop-x').every((i) => /beta/i.test(i.label))).toBe(true)
     // a word of the label and a word of the family together
     expect(filterItems(r.items, 'yamaha console').every((i) => i.tab === 'consoles' || /console/i.test(i.label))).toBe(true)
   })

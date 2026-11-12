@@ -148,9 +148,10 @@ describe('wireless by traits (finding 2): battery transmitters have no mains, re
 })
 
 describe('processors and desks by traits (findings 3 and 8)', () => {
-  it('real row dbx-driverack-pa2 (category amplifier, trait processor): routed like outboard gear, inputs to the outputs, no speaker-level, power toggle', () => {
+  it('real row dbx-driverack-pa2 (trait processor; filed under outboard since Wave 1, a processor filed under amplifier is still routed as outboard): routed like outboard gear, inputs to the outputs, no speaker-level, power toggle', () => {
     const r = planRow('dbx-driverack-pa2')
-    expect(r.category).toBe('amplifier')
+    expect(r.category).toBe('outboard')
+    expect(kindOf('amplifier', r.traits)).toBe('outboard') // a processor still filed under amplifier is routed the same
     expect(kindOf(r.category, r.traits)).toBe('outboard')
     const given: PlanPort[] = [
       { id: 'in-line-1', role: 'line', dir: 'in', connector: 'xlr3-f', signal: 'line-level-pro' },

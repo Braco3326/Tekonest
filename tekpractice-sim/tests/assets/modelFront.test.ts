@@ -31,7 +31,8 @@ const catalog = JSON.parse(readFileSync(resolve(root, 'content/catalog.json'), '
   devices: { id: string; acoustic?: unknown; modelFront?: { axis: FrontAxis; evidence: string } }[]
 }
 
-const MEASURED: Record<string, FrontAxis | null> = { 'qsc-k12-2': '-z', 'genelec-8030c': '-z', 'yamaha-dbr12': null }
+// 'neumann-kh-120-ii' (Wave 1): a scripted curved-cabinet model like the rebuilt Genelec; its front is measured below on the file (ports on the +z I/O face)
+const MEASURED: Record<string, FrontAxis | null> = { 'qsc-k12-2': '-z', 'genelec-8030c': '-z', 'neumann-kh-120-ii': '-z', 'yamaha-dbr12': null }
 
 async function read(id: string) {
   const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'draco3d.decoder': await draco3d.createDecoderModule() })
@@ -99,6 +100,7 @@ describe('the loudspeaker models: measured front vs catalog data (Task 43c, L34)
   it.each([
     ['qsc-k12-2', 0.04, { w: 0.356, h: 0.602, d: 0.35 }],
     ['genelec-8030c', 0.02, { w: 0.189, h: 0.299, d: 0.178 }],
+    ['neumann-kh-120-ii', 0.02, { w: 0.182, h: 0.287, d: 0.227 }],
   ] as const)('%s is a pipeline model: its spec size in metres, and its port empties on the I/O face (glTF +z) within the jack depth', async (id, maxInset, size) => {
     const { ports, lo, hi, pipeline } = await read(id)
     expect(pipeline, `${id}: the tekpractice extras (the spawner trusts the file's own empties)`).toBe(true)

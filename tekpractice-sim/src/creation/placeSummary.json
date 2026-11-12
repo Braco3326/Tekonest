@@ -10,7 +10,7 @@
     53,
     15.6
    ],
-   "catalogGear": 1
+   "catalogGear": 2
   },
   {
    "id": "auditorium-amphitheatre-medium",
@@ -58,7 +58,7 @@
     7,
     3
    ],
-   "catalogGear": 1
+   "catalogGear": 2
   },
   {
    "id": "concert-hall-medium",
@@ -94,7 +94,7 @@
     9.8,
     4.7
    ],
-   "catalogGear": 2
+   "catalogGear": 3
   },
   {
    "id": "eng-outdoor-reportage",
@@ -106,7 +106,7 @@
     15,
     12
    ],
-   "catalogGear": 1
+   "catalogGear": 2
   },
   {
    "id": "festival-open-air-large",
@@ -130,7 +130,7 @@
     10,
     5
    ],
-   "catalogGear": 3
+   "catalogGear": 4
   },
   {
    "id": "hybrid-meeting-room-small",
@@ -202,7 +202,7 @@
     24,
     21
    ],
-   "catalogGear": 0
+   "catalogGear": 2
   },
   {
    "id": "podcast-room-small",
@@ -214,7 +214,7 @@
     4,
     2.6
    ],
-   "catalogGear": 0
+   "catalogGear": 5
   },
   {
    "id": "post-atmos-mix-room-medium",
@@ -262,7 +262,7 @@
     20,
     11
    ],
-   "catalogGear": 1
+   "catalogGear": 2
   },
   {
    "id": "sports-venue-pa-large",
@@ -286,7 +286,7 @@
     5.8,
     3.5
    ],
-   "catalogGear": 0
+   "catalogGear": 1
   },
   {
    "id": "studio-control-room-small",
@@ -298,7 +298,7 @@
     4,
     2.7
    ],
-   "catalogGear": 3
+   "catalogGear": 4
   },
   {
    "id": "studio-live-room-medium",
@@ -346,7 +346,7 @@
     16,
     10.5
    ],
-   "catalogGear": 2
+   "catalogGear": 3
   },
   {
    "id": "tv-gallery-regie-medium",
@@ -358,7 +358,7 @@
     13.5,
     3
    ],
-   "catalogGear": 2
+   "catalogGear": 4
   },
   {
    "id": "tv-studio-plateau-large",
@@ -370,7 +370,7 @@
     30.5,
     13.4
    ],
-   "catalogGear": 3
+   "catalogGear": 4
   },
   {
    "id": "wedding-event-hall-medium",
@@ -470,12 +470,9 @@
   "meyer-sound-galileo-galaxy-816": "Meyer Sound Galileo GALAXY 816",
   "minidsp-umik-1": "miniDSP UMIK-1",
   "netgear-m4250-10g2xf-poe-plus": "NETGEAR M4250-10G2XF-PoE+ (GSM4212PX), AV Line",
-  "neumann-kh-120-ii": "Neumann KH 120 II",
   "neumann-kh-420": "Neumann KH 420",
   "neumann-kh-750-dsp": "Neumann KH 750 DSP",
-  "neumann-km-184": "Neumann KM 184 (Series 180)",
   "neumann-m-149-tube": "Neumann M 149 Tube",
-  "neumann-tlm-103": "Neumann TLM 103",
   "neumann-u-47-fet-i": "Neumann U 47 fet i (reissue of the U 47 fet)",
   "nexo-nxamp4x4mk2": "NEXO NXAMP4x4MK2",
   "nexo-p12": "NEXO P12",
@@ -488,7 +485,6 @@
   "riedel-bolero": "Riedel Bolero",
   "rme-m-32-ad": "RME M-32 AD",
   "rode-boompole-pro": "RØDE Boompole Pro",
-  "rode-nt1-5th-gen": "RØDE NT1 5th Generation",
   "rode-psa1-plus": "RØDE PSA1+",
   "royer-r-121": "Royer Labs R-121",
   "rtw-touchmonitor-tm7": "RTW TouchMonitor TM7",
@@ -506,19 +502,15 @@
   "sennheiser-hmd-26": "Sennheiser HMD 26",
   "sennheiser-md-421-ii": "Sennheiser MD 421-II",
   "sennheiser-mke-2": "Sennheiser MKE 2",
-  "sennheiser-mkh-416": "Sennheiser MKH 416 (MKH 416-P48U3)",
   "sennheiser-mkh-50": "Sennheiser MKH 50-P48",
   "sennheiser-mkh-8040": "Sennheiser MKH 8040",
   "shure-axient-digital-ad4d": "Shure Axient Digital AD4D (dual-channel receiver; AD1/AD2 transmitters)",
   "shure-beta-52a": "Shure Beta 52A",
-  "shure-beta-58a": "Shure Beta 58A",
   "shure-beta-91a": "Shure Beta 91A",
   "shure-psm-1000": "Shure PSM 1000 (P10T dual transmitter, P10R+ diversity bodypack)",
   "shure-psm-900": "Shure PSM 900 (P9T transmitter, P9RA+ bodypack receiver)",
   "shure-qlx-d": "Shure QLX-D (QLXD4 receiver, QLXD1 bodypack, QLXD2 handheld)",
   "shure-scm820": "Shure SCM820 IntelliMix Digital Automatic Mixer",
-  "shure-slx-d": "Shure SLX-D (SLXD4 / SLXD4D receivers, SLXD1 / SLXD2 / SLXD3 transmitters, SLXD5 portable receiver)",
-  "shure-sm7b": "Shure SM7B",
   "shure-ulx-d": "Shure ULX-D (ULXD4 / ULXD4D / ULXD4Q receivers, ULXD1 / ULXD2 transmitters)",
   "sound-devices-888": "Sound Devices 888",
   "sound-devices-mixpre-6-ii": "Sound Devices MixPre-6 II",

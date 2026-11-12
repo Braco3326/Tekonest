@@ -76,22 +76,45 @@ describe('DeviceSpawner: no request for a model that does not ship', () => {
   })
 })
 
-describe('DeviceSpawner: Bêta proposals (registered at runtime, no model ever ships for them)', () => {
+describe('DeviceSpawner: Bêta proposals (registered at runtime; only the beta-modelled ones own a model)', () => {
   const proposalsRaw = JSON.parse(readFileSync(join(__dirname, '..', '..', 'content', 'proposals', 'catalog-proposals.json'), 'utf8')) as unknown
-
-  it('every proposal of the real file spawns as a placeholder without a single loader call; modelReady false; pendingModels 0', async () => {
+  const planRows = (JSON.parse(readFileSync(join(__dirname, '..', '..', 'content', 'proposals', 'equipment-plan.json'), 'utf8')) as { rows: { id: string; betaModelled?: boolean }[] }).rows
+  const betaModelled = new Set(planRows.filter((r) => r.betaModelled === true).map((r) => r.id))
+  const proposalDevices = () => {
     const reg = loadCatalog(catalogJson)
     const { devices } = parseProposals(proposalsRaw, reg)
-    expect(devices.length).toBeGreaterThan(0)
     registerProposals(reg, devices)
+    return { reg, devices }
+  }
+
+  it('every proposal WITHOUT a model spawns as a placeholder without a single loader call; modelReady false; pendingModels 0', async () => {
+    const { reg, devices } = proposalDevices()
+    const bare = devices.filter((d) => !betaModelled.has(d.id))
+    expect(bare.length).toBeGreaterThan(0)
     const spy = vi.spyOn(SceneLoader, 'ImportMeshAsync')
     const spawner = new DeviceSpawner(new Scene(new NullEngine()), reg)
-    const insts = devices.map((d, i) => spawner.spawn(d.id, new Vector3(i, 0, 0), `beta-${i}`))
-    expect(spawner.pendingModels).toBe(devices.length)
-    expect(await Promise.all(insts.map((i) => i.modelReady))).toEqual(devices.map(() => false))
+    const insts = bare.map((d, i) => spawner.spawn(d.id, new Vector3(i, 0, 0), `beta-${i}`))
+    expect(spawner.pendingModels).toBe(bare.length)
+    expect(await Promise.all(insts.map((i) => i.modelReady))).toEqual(bare.map(() => false))
     expect(spawner.pendingModels).toBe(0)
     expect(spy).not.toHaveBeenCalled()
     expect(insts.every((i) => i.assetStatus === 'placeholder')).toBe(true)
+  })
+
+  it('a beta-modelled proposal asks for its own file and shows the model (badge « dimensions estimées » promises one)', async () => {
+    const { reg, devices } = proposalDevices()
+    const beta = devices.filter((d) => betaModelled.has(d.id))
+    expect(beta.length).toBeGreaterThan(0)
+    const one = beta[0]!
+    const glb = await makeBoxGlb({ sizeM: { w: 0.05, h: 0.2, d: 0.05 } })
+    const spy = vi.spyOn(SceneLoader, 'ImportMeshAsync').mockImplementation(((...args: unknown[]) =>
+      realImport(null, '', glb, args[3] as Scene, undefined, '.glb')) as unknown as typeof SceneLoader.ImportMeshAsync)
+    const spawner = new DeviceSpawner(new Scene(new NullEngine()), reg)
+    const inst = spawner.spawn(one.id, new Vector3(0, 0, 0), 'bm')
+    await expect(inst.modelReady).resolves.toBe(true)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy.mock.calls[0]![2]).toBe(`${one.id}.glb`)
+    expect(inst.assetStatus).toBe('glb')
   })
 
   it('a proposal-shaped device whose id is NOT in the manifest is not requested, whatever its fields', async () => {

@@ -253,8 +253,13 @@ describe('Routing and console sound controls in the catalog (Task 33)', () => {
     ])
     expect(dev('genelec-8030c').routing).toEqual([{ from: 'in-analog', to: ['transducer'] }])
   })
-  it('no other device carries routing, and only the two KB parallel links are passive', () => {
-    expect(devices.filter((d) => d.routing !== undefined).map((d) => d.id).sort()).toEqual(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12', 'yamaha-ql1'])
+  it('no other device carries routing (the four verified ones and the Wave 1 promoted devices that route), and only the two KB parallel links are passive', () => {
+    expect(devices.filter((d) => d.routing !== undefined).map((d) => d.id).sort()).toEqual(
+      [
+        'genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12', 'yamaha-ql1', // the verified devices of the first catalogue
+        'dbx-driverack-pa2', 'jk-audio-broadcast-host', 'mackie-profx12v3', 'mutec-mc-3-plus', 'neumann-kh-120-ii', 'rode-rodecaster-pro-ii', 'samson-s-patch-plus', // Wave 1 (template routes)
+      ].sort(),
+    )
     const passive = devices.flatMap((d) => (d.routing ?? []).filter((r) => r.passive === true).map((r) => `${d.id}:${String(r.from)}`)).sort()
     expect(passive).toEqual(['qsc-k12-2:in-line-a', 'yamaha-dbr12:in-line'])
   })
@@ -451,8 +456,10 @@ describe('Acoustic data of the speakers (Task 35, C12)', () => {
     for (const [id, f] of [['qsc-k12-2', 'max_spl_db'], ['yamaha-dbr12', 'coverage_v_deg'], ['yamaha-dbr12', 'coverage_h_deg'], ['yamaha-dbr12', 'max_spl_db']] as const)
       expect((ac(id)[f] as Sv).source.ref, `${id}.${f}: only the K12.2 vertical angle is deduced`).not.toContain('déduit')
   })
-  it('only the three speakers carry acoustic', () => {
-    expect(devices.filter((d) => d.acoustic !== undefined).map((d) => d.id).sort()).toEqual(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12'])
+  it('only the three speakers carry sourced acoustic, plus the Wave 1 Neumann KH 120 II whose coverage is the template nominal (kind nominal, no kb value)', () => {
+    expect(devices.filter((d) => d.acoustic !== undefined).map((d) => d.id).sort()).toEqual(['genelec-8030c', 'neumann-kh-120-ii', 'qsc-k12-2', 'yamaha-dbr12'])
+    const kh = devices.find((d) => d.id === 'neumann-kh-120-ii')!.acoustic as Record<string, { source: { kind: string } }>
+    for (const v of Object.values(kh)) expect(v.source.kind).toBe('nominal')
   })
   it('every kb value cites the KB entry and field it comes from, quotes the KB text verbatim, and carries the KB note date', () => {
     const kbValues = devices.flatMap((d) => Object.entries(d.acoustic ?? {}).map(([field, s]) => ({ id: d.id, field, s: s as Sv }))).filter((x) => x.s.source.kind === 'kb')
@@ -594,8 +601,11 @@ describe('Wave 0 schema additions: new port flags and device fields', () => {
     const d = Device.parse(device())
     for (const k of ['loadOhms', 'minLoadOhms', 'impedanceOhms', 'sizeMm', 'portAliases']) expect(k in d, k).toBe(false)
   })
-  it('the existing 25 devices still validate unchanged: parsing returns every one of them deep-equal to its catalog.json entry', () => {
-    expect(catalogJson.devices).toHaveLength(25)
+  it('the 25 first verified devices are all still in the catalogue, and every device (they and the promoted ones) validates unchanged: parsing returns each deep-equal to its catalog.json entry', () => {
+    const FIRST_25 = ['yamaha-ql1', 'yamaha-rio3224-d2', 'shure-sm58', 'shure-sm57', 'qsc-k12-2', 'yamaha-dbr12', 'km-210-9', 'axia-iq', 'ev-re20', 'yellowtec-mika', 'yellowtec-litt', 'genelec-8030c', 'playout-pc', 'aeta-scoop5-s', 'aeta-scoopy-plus-s', 'ev-re50', 'avid-protools-hdx', 'avid-hd-io', 'focusrite-isa-one', 'grace-m905', 'neumann-u87-ai', 'switchcraft-studiopatch-9625', 'antelope-ocx-hd', 'mogami-gold-db25-xlrm', 'multiprise-secteur']
+    expect(catalogJson.devices.length).toBeGreaterThanOrEqual(25)
+    const ids = catalogJson.devices.map((d) => d.id)
+    expect(FIRST_25.filter((id) => !ids.includes(id))).toEqual([])
     for (const d of catalogJson.devices) expect(Device.parse(d), d.id).toEqual(d)
   })
 })

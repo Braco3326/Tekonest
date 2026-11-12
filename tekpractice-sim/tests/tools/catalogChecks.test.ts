@@ -199,7 +199,7 @@ describe('checkCatalog, acoustic (Task 35, C12)', () => {
 
   it('the real catalog has an acoustic block on every speaker, with no issue at all (no warning either)', () => {
     const speakers = fresh().devices.filter((d) => (d as LooseDevice).routing?.some((r: { to: string[] }) => r.to.includes('transducer')))
-    expect(speakers.map((d) => d.id).sort()).toEqual(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12'])
+    expect(speakers.map((d) => d.id).sort()).toEqual(['genelec-8030c', 'neumann-kh-120-ii', 'qsc-k12-2', 'yamaha-dbr12'])
     for (const d of speakers) expect((d as LooseDevice).acoustic, d.id).toBeDefined()
     expect(checkCatalog(fresh(), { modelIds: allModels })).toEqual([])
   })

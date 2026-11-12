@@ -38,8 +38,13 @@ describe('isMainsSource is only on the generic power strip', () => {
   it('Bêta proposals: not one declares isMainsSource (unverified data does not power anything)', () => {
     const r = withBeta()
     const mainsOutBeta = [...r.deviceById.values()].filter((d) => !r.catalog.devices.some((c) => c.id === d.id)).flatMap((d) => d.ports.filter((p) => p.signal === 'mains-power' && p.dir === 'out').map((p) => `${d.id} ${p.portId}`))
-    // the premise of this test: the two proposals that have a mains OUT port are really in the registry
-    expect(mainsOutBeta).toEqual(['shure-axient-digital-ad4d out-ac-power-cascade-locking', 'shure-ua845uwb out-ac-power-output-daisy-chain'])
+    // the premise of this test: the proposals that have a mains OUT port are really in the registry: the two Shure daisy-chain outputs, and (Wave 1,
+    // beta-modelled) the nine outlets of the Furman M-8x2 power conditioner, which stay unflagged until the device is promoted with documented outlets
+    expect(mainsOutBeta).toEqual([
+      'shure-axient-digital-ad4d out-ac-power-cascade-locking',
+      'shure-ua845uwb out-ac-power-output-daisy-chain',
+      ...['out-1', 'out-2', 'out-3', 'out-4', 'out-5', 'out-6', 'out-7', 'out-8', 'out-front'].map((p) => `furman-m-8x2 ${p}`),
+    ])
     for (const d of r.deviceById.values())
       if (!r.catalog.devices.some((c) => c.id === d.id)) for (const p of d.ports) expect(p.flags ?? [], `${d.id} ${p.portId}`).not.toContain('isMainsSource')
   })

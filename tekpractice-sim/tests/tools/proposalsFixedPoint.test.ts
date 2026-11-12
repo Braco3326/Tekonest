@@ -44,7 +44,11 @@ describe('sync:kb on the real inputs', () => {
   it('without the committed file the generator rebuilds the same devices up to the date of their note (nothing in the file is hand-made today), so the file is reproducible from the KB', () => {
     const fresh = buildProposalsFile(input(committed.generated), undefined, plan)
     const undated = (v: unknown): unknown => JSON.parse(JSON.stringify(v).replace(/PROPOSITION \(\d{4}-\d{2}-\d{2}\)/g, 'PROPOSITION (date)'))
-    expect(undated(fresh.file.devices)).toEqual(undated(committed.devices))
+    // Wave 1 stage 2: a beta-modelled plan row of status « new » has no KB entry; its proposal is built from its asset spec (promoteDevice), so the generator
+    // cannot rebuild it. Everything else (every Bêta row and every other KB device) is rebuilt identically.
+    const fromSpec = new Set(plan.filter((r) => r.status === 'new' && r.betaModelled).map((r) => r.id))
+    expect(committed.devices.filter((d) => fromSpec.has(d.id as string)).length, 'the specs-built proposals are in the file').toBe(fromSpec.size)
+    expect(undated(fresh.file.devices)).toEqual(undated(committed.devices.filter((d) => !fromSpec.has(d.id as string))))
     expect(fresh.file.skipped).toEqual(committed.skipped)
   })
 
