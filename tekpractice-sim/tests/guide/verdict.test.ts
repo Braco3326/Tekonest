@@ -12,6 +12,7 @@ import { COPY } from '../../src/creation/copy'
 import { signalPath, type ReasonCode } from '../../src/flow/signalPath'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { makeRegistry } from '../helpers'
+import { FAMILIES } from '../creation/honestyLists'
 
 const catalog = JSON.parse(readFileSync(resolve(process.cwd(), 'content/catalog.json'), 'utf8')) as { rules: RuleRow[] }
 const ruleText = ruleTextFor(catalog.rules)
@@ -232,17 +233,8 @@ describe('buildVerdict: what the browser-side shape check keeps', () => {
 })
 
 // ── T1.4: « Oscar says what to do »: label = the engine's reason (verbatim) + one action sentence per ReasonCode (COPY.assist) ─────────────────
-// The banned families of spec 9 (T1.7 consolidates them into tests/creation/honesty.test.ts; this list is the same text for the sentences added here).
-const BANNED: { name: string; re: RegExp }[] = [
-  { name: 'success and school', re: /réussi|prépare au|\bBTS\b|\bE4\b|\bTMO\b|\bjury\b|\bexamen\b/i },
-  { name: 'fidelity', re: /réaliste|vrai matériel|garanti|certifié|\bexact|fidèle|identique|comme en vrai|comme sur scène|sonnera/i },
-  { name: 'safety and norms', re: /endommag|abîm|griller|danger|sécurité|\bnorme|conforme|\bSTI\b|\bSPL\b|RT60/i },
-  { name: 'judgement', re: /bravo|parfait|correct|bien réglé/i },
-  { name: 'false certainty', re: /la seule|le seul|passé par votre câblage|vous entendez le micro/i },
-  { name: 'durations', re: /\d+\s*(s|sec|mn|min)\b|trois minutes/i },
-  { name: 'figures', re: /\d|\bdBu?V?\b|\+48/i },
-  { name: 'Oscar’s voice', re: /intelligent|expert|tuteur|ingénieur/i },
-]
+// The banned families of spec 9: the one shared list (T1.7), tests/creation/honestyLists.ts.
+const BANNED = FAMILIES
 
 describe('buildVerdict: what to do (T1.4)', () => {
   const P = COPY.playback!

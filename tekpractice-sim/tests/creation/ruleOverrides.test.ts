@@ -6,6 +6,7 @@ import { COPY } from '../../src/creation/copy'
 import { creationRuleRows, ruleText, RULE_OVERRIDE_IDS } from '../../src/creation/ruleTexts'
 import { ruleTextFor, type RuleRow } from '../../src/creation/shell/statusModel'
 import { rulesRevOf } from '../../src/trials/fingerprint'
+import { FAMILIES, offends as offendsShared } from './honestyLists'
 
 /**
  * T1.5a (onboarding packs, spec section 6.5 and Appendix A). Mode Creation shows reworded simulator-rule texts through ONE host-side accessor; the
@@ -20,25 +21,10 @@ const PRE_FLIGHT_RULES_REV = 'r1:31976636175ae95deac28925c5e7e1b8f7dd309fc65bf09
 /** git blob of tekpractice-sim/content/catalog.json at the same moment (git hash-object): the file is byte-identical. */
 const PRE_FLIGHT_CATALOG_BLOB = 'fc78a13020d8b3a4b85cb747a36f3ce85e2a902f'
 
-// The banned families of spec 9 (the same text as tests/guide/verdict.test.ts; T1.7 consolidates them), plus the one family of this task: an
-// instruction about the real world (the catalog's R1 says « il ne faut jamais forcer »).
-const BANNED: { name: string; re: RegExp }[] = [
-  { name: 'success and school', re: /réussi|prépare au|\bBTS\b|\bE4\b|\bTMO\b|\bjury\b|\bexamen\b/i },
-  { name: 'fidelity', re: /réaliste|vrai matériel|garanti|certifié|\bexact|fidèle|identique|comme en vrai|comme sur scène|sonnera/i },
-  { name: 'safety and norms', re: /endommag|abîm|griller|danger|sécurité|\bnorme|conforme|\bSTI\b|\bSPL\b|RT60/i },
-  { name: 'judgement', re: /bravo|parfait|correct|bien réglé/i },
-  { name: 'false certainty', re: /la seule|le seul|passé par votre câblage|vous entendez le micro/i },
-  { name: 'durations', re: /\d+\s*(s|sec|mn|min)\b|trois minutes/i },
-  { name: 'figures', re: /\d|\bdBu?V?\b|\+48/i },
-  { name: 'Oscar’s voice', re: /intelligent|expert|tuteur|ingénieur/i },
-  { name: 'real-world instruction', re: /jamais forcer|ne forcez/i },
-]
-/** Device, signal and bus NAMES carry digits (U 87, SM58, RE20, AES3, N-1, the +48 V of R4's own title): they are facts of the catalog, not figures. */
-const NAMES = /U 87|SM58|RE20|\+48 V|AES3|N-1/g
-const offends = (s: string): string[] => {
-  const bare = s.replace(NAMES, '')
-  return BANNED.filter((b) => b.re.test(bare)).map((b) => b.name)
-}
+// The banned families (spec 9) and the stripping of device and signal names that carry digits (U 87, SM58, RE20, AES3, N-1, +48 V): ONE list, shared (T1.7), in ./honestyLists.
+// `real-world instruction` (the catalog's R1 says « il ne faut jamais forcer ») is one of its families.
+const BANNED = FAMILIES
+const offends = (s: string): string[] => offendsShared(s, 'learner')
 
 /** The Appendix A texts, written out once here (the spec is the source; COPY and the deck must match them byte for byte). */
 const APPENDIX_A: Record<string, string> = {
