@@ -13,6 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "e2e:fresh": "npm run build && playwright test",
+    "onboarding:local": "node tools/onboarding-local.mjs",
     "validate:catalog": "tsx tools/validate-catalog.ts",
     "validate:songs": "tsx tools/validate-songs.ts",
     "validate:assets": "tsx tools/validate-assets.ts",
