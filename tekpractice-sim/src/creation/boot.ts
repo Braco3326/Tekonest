@@ -2328,6 +2328,7 @@ export async function bootCreation(): Promise<void> {
     audioState: () => listen?.debug() ?? LISTEN_OFF(),
     audioPeaks: () => listen?.readPeaks() ?? { voices: {}, output: 0 },
     audioStats: () => JSON.parse(JSON.stringify(audioStats)) as typeof audioStats,
+    assetStatus: (id) => host.instance(id)?.assetStatus ?? null,
     modelFront: (id) => host.instance(id)?.frontWorld() ?? null,
     bodyBoundsInRoot: (id) => {
       const inst = host.instance(id)

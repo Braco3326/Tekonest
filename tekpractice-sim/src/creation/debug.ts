@@ -163,6 +163,11 @@ export interface CreationDebug {
   modelFront(instanceId: string): [number, number, number] | null
   /** Task 43c fix round: the box of the body's vertices in the frame of the instance root (centred on (0, 0) in x / z and min y 0 when it sits on its placement and the floor, at any yaw). */
   bodyBoundsInRoot(instanceId: string): { lo: [number, number, number]; hi: [number, number, number] } | null
+  /**
+   * Wave 1b finding 2: how the instance is drawn, `'glb'` when its model really loaded and `'placeholder'` when it fell back to the box (a decode failure
+   * falls back silently); null for an unknown instance. The equipment e2e asserts every device is `'glb'`.
+   */
+  assetStatus(instanceId: string): 'glb' | 'placeholder' | null
   /** Task 43c (L34): independent oracle for a loudspeaker's front, the x-extent of the body vertices at the +z and the -z end of its z range (world axes, yaw 0). */
   bodyEnds(instanceId: string): { plusZ: number; minusZ: number; depth: number; rearX: [number, number]; rearZ: number } | null
   /** Task 37: the world position of a port marker (after the .glb is applied it sits on the model), or null when unknown. */

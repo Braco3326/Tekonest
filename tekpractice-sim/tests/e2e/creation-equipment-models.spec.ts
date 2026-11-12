@@ -5,7 +5,9 @@ import { expect, test, type Response } from '@playwright/test'
  * Build-all-equipment (Wave 1 gate): every device the equipment plan marks `staged`, `promoted` or `betaModelled` is placed in Mode Création, in ONE scene
  * and ONE batch, and checked from what the page really did, not from the app's own counters:
  *   - its glb was requested and answered 200, not as text/html (a SPA fallback), and the body is a glTF binary ("glTF" magic): no 404, no console error;
- *   - the model is there (the device has a body) and the device can be selected by a real click on it;
+ *   - the model is REALLY there (Wave 1b finding 2): the instance's asset status is 'glb' (the spawner falls back to a placeholder box silently when the
+ *     glb cannot be decoded: a 200 and a glTF magic do not prove the model loaded), and its body box matches the size in its asset spec within 1 mm;
+ *     the device can be selected by a real click on it;
  *   - every port of the device (catalogue ports for a promoted device, the Bêta proposal's ports for a beta-modelled one) has its pick proxy
  *     (the pick sphere: >= 12 px at any distance) and a screen position.
  * The expected devices are read from the plan, the catalogue and the proposals files, never listed here. A staged row that is neither in the
@@ -32,6 +34,16 @@ const proposals = new Map((JSON.parse(readFileSync('content/proposals/catalog-pr
 const rows = plan.filter((r) => r.staged === true || r.promoted === true || r.betaModelled === true)
 const spawnable = rows.filter((r) => catalogue.has(r.id) || proposals.has(r.id))
 
+/** The size of the model's body, w x h x d in mm, from the asset spec (the size the glb is built and gated to). */
+const specSizeMm = (id: string): { w: number; h: number; d: number } | null => {
+  try {
+    return (JSON.parse(readFileSync(`content/asset-specs/${id}.json`, 'utf8')) as { realSizeMm: { w: number; h: number; d: number } }).realSizeMm
+  } catch {
+    return null
+  }
+}
+const SIZE_TOLERANCE_MM = 1
+
 const glbId = (url: string): string | null => /\/assets\/([^/?#]+)\.glb(?:[?#]|$)/.exec(url)?.[1] ?? null
 const PLACE = 'room:concert-hall-medium'
 
@@ -44,6 +56,9 @@ test('the plan has devices to check, each is in the catalogue (promoted) or the 
 })
 
 test(`every staged, promoted or beta-modelled device loads its model and has its ports, in one scene (${spawnable.length} devices)`, async ({ page }) => {
+  // never a green run over an empty list: a plan, catalogue or proposals read that found nothing would otherwise check nothing
+  expect(spawnable.length, 'devices to check').toBeGreaterThan(0)
+  expect(spawnable.length, 'every staged / promoted / beta-modelled row is spawnable').toBe(rows.length)
   const consoleErrors: string[] = []
   const responses = new Map<string, Response>()
   const notFound: string[] = []
@@ -102,10 +117,22 @@ test(`every staged, promoted or beta-modelled device loads its model and has its
     if (body.subarray(0, 4).toString('latin1') !== 'glTF') problems.push(`${d.id}: the response is not a glTF binary`)
   }
 
-  // 2. the model is in the scene: a body to pick and to frame
+  // 2. the model is in the scene: really loaded (not the placeholder fallback), a body to pick and to frame, at the size of its spec within 1 mm
   for (const d of placed) {
+    const status = await page.evaluate((i) => window.__creation!.assetStatus(i), d.inst)
+    if (status !== 'glb') problems.push(`${d.id}: asset status is ${String(status)}, not glb (the model fell back to a placeholder box)`)
     const bounds = await page.evaluate((i) => window.__creation!.bodyBoundsInRoot(i), d.inst)
-    if (bounds === null) problems.push(`${d.id}: no body in the scene`)
+    if (bounds === null) {
+      problems.push(`${d.id}: no body in the scene`)
+      continue
+    }
+    const want = specSizeMm(d.id)
+    if (!want) {
+      problems.push(`${d.id}: no asset spec to compare the body size with`)
+      continue
+    }
+    const got = { w: (bounds.hi[0] - bounds.lo[0]) * 1000, h: (bounds.hi[1] - bounds.lo[1]) * 1000, d: (bounds.hi[2] - bounds.lo[2]) * 1000 }
+    for (const k of ['w', 'h', 'd'] as const) if (!(Math.abs(got[k] - want[k]) <= SIZE_TOLERANCE_MM)) problems.push(`${d.id}: body ${k} is ${got[k].toFixed(2)} mm, its spec says ${want[k]} mm (tolerance ${SIZE_TOLERANCE_MM} mm)`)
   }
 
   // 3. selectable by a real click, and every port has its pick proxy and a screen position

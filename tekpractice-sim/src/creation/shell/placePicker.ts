@@ -137,15 +137,18 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
         s.id = `${o.id}-${cls}`
         return s
       }
-      // DOM order = the accessible name's order = name, size, type, badge: the visible text is then contained in the name (WCAG 2.5.3 Label in Name,
-      // axe `label-content-name-mismatch`, found by the Task 43a sweep). The type is drawn ABOVE the name by CSS (`.cr-card-type { order: -1 }`).
-      // A space between the parts (ignored by flex layout) so the visible text reads "name size type", as the name does.
-      text.append(part('name', card.title), ' ', part('size', card.sizeLabel), ' ', part('type', card.typeLabel))
+      // DOM order = the accessible name's order = name, type, size, badge: the visible text is then contained in the name (WCAG 2.5.3 Label in Name,
+      // axe `label-content-name-mismatch`, found by the Task 43a sweep). The type is drawn ABOVE the name by CSS (`.cr-card-type { order: -1 }`); size and
+      // badge are drawn last. Wave 1b finding 7: the parts that can be CLIPPED when a card straddles the bottom edge of the scroll area are the last ones drawn,
+      // so they are also the LAST in the DOM and in the name: what stays visible is always a prefix of the name (before, the size sat between the name and the
+      // type, so a clipped size left "name type", which is not contained in "name size type": the mismatch axe flagged on 4 cards at 1366 x 768).
+      // A space between the parts (ignored by flex layout) so the visible text reads "name type size", as the name does.
+      text.append(part('name', card.title), ' ', part('type', card.typeLabel), ' ', part('size', card.sizeLabel))
       o.append(thumb, text)
       const badgeText = card.withGear ? P().withGearBadge : card.key.startsWith('template:') ? P().devices!.replace('{n}', String(card.withGearCount)) : ''
       if (badgeText) text.append(' ', part('badge', badgeText))
-      // Read the name first (visually the type sits above it): name, size, type, badge.
-      o.setAttribute('aria-labelledby', ['name', 'size', 'type', ...(badgeText ? ['badge'] : [])].map((p) => `${o.id}-${p}`).join(' '))
+      // Read the name first (visually the type sits above it): name, type, size, badge.
+      o.setAttribute('aria-labelledby', ['name', 'type', 'size', ...(badgeText ? ['badge'] : [])].map((p) => `${o.id}-${p}`).join(' '))
       // The highlight follows focus, however it got there (a click, a screen reader, the skip link).
       o.addEventListener('focus', () => {
         if (g.at !== i) highlight(g, i, false)

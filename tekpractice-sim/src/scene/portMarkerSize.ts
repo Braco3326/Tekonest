@@ -97,3 +97,22 @@ export function markerDiameterM(connector: string, openingMm?: number): number {
         : FALLBACK_MM
   return (size * RING_OVERSIZE) / 1000
 }
+
+/**
+ * A ring on the BOTTOM or TOP (end) face of a body is capped at this share of the body's smaller horizontal extent (Wave 1b finding 10): the XLR ring is
+ * 23.4 mm, wider than the base of a KM 184 (22 mm) or an MKH 416 (19 mm), so it overhung the microphone. Only an end-face port is capped (a ring on a
+ * rear / front / side face is bounded by its own panel and the neighbour test), so every other ring is unchanged.
+ */
+export const END_FACE_RING_SHARE = 0.85
+
+/**
+ * The ring diameter (m) for a port whose face normal is `faceNormalY` (the y component of the outward unit normal of the face the port sits on; null
+ * for a rear / front port) on a body whose horizontal extents are `sizeM` (metres, width and depth). A vertical normal (|y| >= 0.5: base or top)
+ * caps the ring at END_FACE_RING_SHARE x min(w, d); anything else, or an unusable size, returns the ring unchanged.
+ */
+export function ringDiameterOnFaceM(ringM: number, faceNormalY: number | null, sizeM: { w: number; d: number }): number {
+  if (faceNormalY === null || !Number.isFinite(faceNormalY) || Math.abs(faceNormalY) < 0.5) return ringM
+  const smaller = Math.min(sizeM.w, sizeM.d)
+  if (!Number.isFinite(smaller) || smaller <= 0) return ringM
+  return Math.min(ringM, END_FACE_RING_SHARE * smaller)
+}

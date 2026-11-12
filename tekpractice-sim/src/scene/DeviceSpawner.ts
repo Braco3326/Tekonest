@@ -30,7 +30,7 @@ import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
 import { createMarkerRing, liftMarkerRing, markerFaceNormal, orientMarkerRing, surfaceLiftM } from './portMarkerMesh'
-import { markerDiameterM } from './portMarkerSize'
+import { markerDiameterM, ringDiameterOnFaceM } from './portMarkerSize'
 import type { AttachedControls, attachControls } from '../controls/attach'
 import type { ControlTicker } from '../controls/ticker'
 
@@ -588,7 +588,19 @@ export class DeviceSpawner {
         // scale 1. The metadata stays as the "size it rests at" contract that PortProxies reads.
         marker.scaling.setAll(1)
         marker.metadata = { ...(marker.metadata ?? {}), restScale: 1 }
-        if (liftRings && bodyLo && bodyHi) orientMarkerRing(marker, markerFaceNormal(local, bodyLo, bodyHi, 0.002 / Math.max(1e-6, rootScale)))
+        if (liftRings && bodyLo && bodyHi) {
+          const face = markerFaceNormal(local, bodyLo, bodyHi, 0.002 / Math.max(1e-6, rootScale))
+          orientMarkerRing(marker, face)
+          // Wave 1b finding 10: a ring on the base or the top of a small body (a mic's XLR) is capped at 0.85 x the body's smaller horizontal extent, so it
+          // never overhangs the microphone. Sizes are in the root's frame, like the ring itself; every other ring is left at scale 1.
+          const ring = marker.getBoundingInfo().boundingBox.extendSize.x * 2 // the ring built from its connector (scale 1 here)
+          const capped = ringDiameterOnFaceM(ring, face ? face.y : null, { w: bodyHi.x - bodyLo.x, d: bodyHi.z - bodyLo.z })
+          if (capped < ring) {
+            const k = capped / ring
+            marker.scaling.setAll(k)
+            marker.metadata = { ...(marker.metadata ?? {}), restScale: k }
+          }
+        }
         const markerMatrix = marker.computeWorldMatrix(true)
         if (liftRings && body.length) {
           // A port in a pocket (speaker amplifier plate): the ring comes out onto the face around it, or it would sit hidden behind the panel.

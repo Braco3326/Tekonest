@@ -195,3 +195,54 @@ describe('Wave 0: every connector TYPE of the catalog has a marker size (not onl
     expect(CONNECTOR_MM['xlr4']).toBe(CONNECTOR_MM['xlr3-f'])
   })
 })
+
+// ---- Wave 1b finding 10: a ring on the base / top of a small body is capped at 0.85 x its smaller horizontal extent ----
+import { END_FACE_RING_SHARE, ringDiameterOnFaceM } from '../../src/scene/portMarkerSize'
+
+describe('ringDiameterOnFaceM (end-face ring cap)', () => {
+  const xlr = markerDiameterM('xlr3-m')
+  const specOf = (id: string) => JSON.parse(readFileSync(join(__dirname, '..', '..', 'content', 'asset-specs', `${id}.json`), 'utf8')) as { realSizeMm: { w: number; d: number }; ports: { portId: string; face: string; connector: string }[] }
+
+  it('pure: a vertical face (base or top) caps at 0.85 x the smaller of width and depth; any other face, a null normal or a bad size leaves the ring alone', () => {
+    expect(END_FACE_RING_SHARE).toBe(0.85)
+    expect(ringDiameterOnFaceM(0.0234, -1, { w: 0.022, d: 0.022 })).toBeCloseTo(0.0187, 9)
+    expect(ringDiameterOnFaceM(0.0234, 1, { w: 0.05, d: 0.019 })).toBeCloseTo(0.01615, 9)
+    expect(ringDiameterOnFaceM(0.0234, -1, { w: 0.2, d: 0.2 })).toBe(0.0234) // a big body: never enlarged, never shrunk
+    expect(ringDiameterOnFaceM(0.0234, 0, { w: 0.01, d: 0.01 })).toBe(0.0234) // a side face
+    expect(ringDiameterOnFaceM(0.0234, null, { w: 0.01, d: 0.01 })).toBe(0.0234) // a rear / front face
+    for (const bad of [0, -1, Number.NaN]) expect(ringDiameterOnFaceM(0.0234, -1, { w: bad, d: 0.03 })).toBe(0.0234)
+  })
+
+  it('real Wave 1 microphones: the XLR ring (23.4 mm) of the KM 184 (22 mm) and the MKH 416 (19 mm) no longer overhangs the base', () => {
+    for (const id of ['neumann-km-184', 'sennheiser-mkh-416']) {
+      const s = specOf(id)
+      const p = s.ports.find((x) => x.connector === 'xlr3-m')!
+      expect(p.face, id).toBe('bottom')
+      const smaller = Math.min(s.realSizeMm.w, s.realSizeMm.d) / 1000
+      expect(xlr, `${id} before the cap`).toBeGreaterThan(smaller)
+      const capped = ringDiameterOnFaceM(xlr, -1, { w: s.realSizeMm.w / 1000, d: s.realSizeMm.d / 1000 })
+      expect(capped, id).toBeLessThan(smaller)
+      expect(capped, id).toBeCloseTo(0.85 * smaller, 9)
+    }
+  })
+
+  it('the 25 original devices: no ring on a base or top face changes (their bodies are wider than the ring)', () => {
+    let seen = 0
+    for (const d of catalogJson.devices.slice(0, 25)) {
+      const path = join(__dirname, '..', '..', 'content', 'asset-specs', `${d.id}.json`)
+      let s: ReturnType<typeof specOf>
+      try {
+        s = specOf(d.id)
+      } catch {
+        continue // no spec for this device (a power strip, a cable): nothing is modelled on an end face
+      }
+      void path
+      for (const p of s.ports.filter((x) => x.face === 'bottom' || x.face === 'top')) {
+        seen++
+        const ring = markerDiameterM(p.connector)
+        expect(ringDiameterOnFaceM(ring, p.face === 'bottom' ? -1 : 1, { w: s.realSizeMm.w / 1000, d: s.realSizeMm.d / 1000 }), `${d.id} ${p.portId}`).toBe(ring)
+      }
+    }
+    expect(seen).toBeGreaterThan(0) // the loop really met end-face ports (the mics)
+  })
+})
