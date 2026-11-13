@@ -1,0 +1,1 @@
+const o=1,e="neumann-kh-750-dsp",t=!0,n=[{id:"power",face:"io",xMm:260,yMm:165,sizeMm:{w:12,h:18,d:6},label:"Alimentation",catalogControl:"power",kind:"switch",axis:"x",positions:2,colour:"#d8dbe0",default:1}],s={schema:1,deviceId:e,generated:!0,controls:n};export{n as controls,s as default,e as deviceId,t as generated,o as schema};

@@ -1,0 +1,1 @@
+const o=1,e="eventide-h9000",a=!0,t=[{id:"power",face:"opposite",xMm:40,yMm:66,sizeMm:{w:14,h:14,d:4},label:"Alimentation",catalogControl:"power",kind:"button",axis:"z",latch:!0,round:!0,colour:"#1b3a1f",lit:"#46ff5a",travelMm:1,default:1}],n={schema:1,deviceId:e,generated:!0,controls:t};export{t as controls,n as default,e as deviceId,a as generated,o as schema};

@@ -1,0 +1,1 @@
+const o=1,e="yamaha-dxr12-mkii",t=!0,a=[{id:"power",face:"io",xMm:205,yMm:260,sizeMm:{w:14,h:20,d:8},label:"Alimentation",catalogControl:"power",kind:"switch",axis:"x",positions:2,colour:"#d8dbe0",default:1}],c={schema:1,deviceId:e,generated:!0,controls:a};export{a as controls,c as default,e as deviceId,t as generated,o as schema};

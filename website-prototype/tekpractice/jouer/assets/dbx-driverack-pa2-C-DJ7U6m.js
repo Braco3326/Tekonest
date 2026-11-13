@@ -1,0 +1,1 @@
+const a=1,e="dbx-driverack-pa2",o=!0,t=[{id:"power",face:"opposite",xMm:50,yMm:22,sizeMm:{w:12,h:12,d:4},label:"Alimentation",catalogControl:"power",kind:"button",axis:"z",latch:!0,round:!0,colour:"#1b3a1f",lit:"#46ff5a",travelMm:1,default:1}],r={schema:1,deviceId:e,generated:!0,controls:t};export{t as controls,r as default,e as deviceId,o as generated,a as schema};

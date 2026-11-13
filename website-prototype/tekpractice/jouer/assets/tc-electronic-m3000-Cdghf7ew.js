@@ -1,0 +1,1 @@
+const o=1,e="tc-electronic-m3000",c=!0,t=[{id:"power",face:"io",xMm:395,yMm:22,sizeMm:{w:12,h:18,d:6},label:"Alimentation",catalogControl:"power",kind:"switch",axis:"x",positions:2,colour:"#d8dbe0",default:1}],n={schema:1,deviceId:e,generated:!0,controls:t};export{t as controls,n as default,e as deviceId,c as generated,o as schema};

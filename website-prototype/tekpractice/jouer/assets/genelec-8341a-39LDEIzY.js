@@ -1,0 +1,1 @@
+const t=1,e="genelec-8341a",c=!0,o=[{id:"power",face:"io",xMm:168,yMm:110,sizeMm:{w:12,h:18,d:6},label:"Alimentation",catalogControl:"power",kind:"switch",axis:"x",positions:2,colour:"#d8dbe0",default:1}],a={schema:1,deviceId:e,generated:!0,controls:o};export{o as controls,a as default,e as deviceId,c as generated,t as schema};

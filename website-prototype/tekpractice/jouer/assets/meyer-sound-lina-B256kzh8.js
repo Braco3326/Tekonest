@@ -1,0 +1,1 @@
+const t=1,e="meyer-sound-lina",n=!0,o=[{id:"power",face:"io",xMm:380,yMm:120,sizeMm:{w:12,h:18,d:6},label:"Alimentation",catalogControl:"power",kind:"switch",axis:"x",positions:2,colour:"#d8dbe0",default:1}],a={schema:1,deviceId:e,generated:!0,controls:o};export{o as controls,a as default,e as deviceId,n as generated,t as schema};

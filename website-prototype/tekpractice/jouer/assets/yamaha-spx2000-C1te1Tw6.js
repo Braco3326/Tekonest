@@ -1,0 +1,1 @@
+const a=1,e="yamaha-spx2000",t=!0,o=[{id:"power",face:"opposite",xMm:455,yMm:22,sizeMm:{w:12,h:18,d:6},label:"Alimentation",catalogControl:"power",kind:"switch",axis:"x",positions:2,colour:"#d8dbe0",default:1}],s={schema:1,deviceId:e,generated:!0,controls:o};export{o as controls,s as default,e as deviceId,t as generated,a as schema};

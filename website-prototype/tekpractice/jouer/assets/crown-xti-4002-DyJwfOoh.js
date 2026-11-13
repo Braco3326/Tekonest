@@ -1,0 +1,1 @@
+const t=1,e="crown-xti-4002",c=!0,o=[{id:"power",face:"io",xMm:410,yMm:75,sizeMm:{w:20,h:14.4,d:8},label:"Alimentation",catalogControl:"power",kind:"switch",axis:"x",positions:2,colour:"#d8dbe0",default:1}],n={schema:1,deviceId:e,generated:!0,controls:o};export{o as controls,n as default,e as deviceId,c as generated,t as schema};

@@ -1,0 +1,1 @@
+const o=1,e="mutec-mc-3-plus",c=!0,t=[{id:"power",face:"opposite",xMm:180,yMm:21,sizeMm:{w:9,h:9,d:3},label:"Alimentation",catalogControl:"power",kind:"button",axis:"z",latch:!0,round:!0,colour:"#1b3a1f",lit:"#46ff5a",travelMm:1,default:1}],a={schema:1,deviceId:e,generated:!0,controls:t};export{t as controls,a as default,e as deviceId,c as generated,o as schema};
