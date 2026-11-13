@@ -133,6 +133,13 @@ html .oscar-guide.tp-oscar-host svg.oscar-mascot {
 html .oscar-guide.tp-oscar-host .oscar-icon .tpo {
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.55));
 }
+/* Forced colours (T5 round 1, N5): the vendored sheet gives the icon a CanvasText border there, and the border is 0 here; an outline keeps an edge (the focus ring keeps its own). */
+@media (forced-colors: active) {
+  html .oscar-guide.tp-oscar-host .oscar-icon:not(:focus-visible) {
+    outline: 2px solid CanvasText;
+    outline-offset: -2px;
+  }
+}
 /* The « Oscar · Assistant » badge (T5.4): Papier on the panel line tone (10.5 : 1), 12 px at least, square like the rest of the card. */
 html .oscar-guide.tp-oscar-host .tp-oscar-badge {
   flex: 0 0 auto;

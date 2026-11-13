@@ -90,7 +90,7 @@ export async function bootGuide(route: GuideRoute, target?: Window): Promise<Gui
       // Imported here, not in index.html: Vite puts the sheets in the guide's own chunk, so a page that never mounts it never loads them.
       import('./theme.css'),
       import('./vendor/guide.css'),
-      // The new Oscar's motion sheet (plan T5.2): after the vendored sheet. It only reaches the page where the skin is on (`?design`: .tp-oscar-host, .tpo).
+      // The new Oscar's motion sheet (plan T5.2), after the vendored sheet. It loads wherever the guide mounts; its rules only act where the skin is on (`?design`: .tp-oscar-host, .tpo).
       import('./character.css'),
     ])
     const registry = loadCatalog(catalog.default)

@@ -1148,3 +1148,29 @@ describe('skin readers (T5.3, T5.5): refused connections and the profile', () =>
     expect(calls()).toHaveLength(2)
   })
 })
+
+describe('round 1, N2: changes the app made (appChange)', () => {
+  it('the app-change counter or the power helper’s uses going up is one `appChange` event in that poll; the same count, no reader or the first look is none', () => {
+    const r = make()
+    const n = { v: 0, h: 0 }
+    r.win.__creation!.appChanges = () => n.v
+    r.win.__creation!.helperOffered = () => true
+    r.win.__creation!.helperUses = () => ({ n: n.h, instances: [] })
+    const { calls } = subscribe(r)
+    r.timers.tick()
+    expect(calls()).toEqual([])
+    n.v = 1
+    r.timers.tick()
+    expect(calls().map(([, e]) => types(e))).toEqual([['appChange']])
+    r.timers.tick()
+    expect(calls()).toHaveLength(1)
+    n.h = 1
+    r.timers.tick()
+    expect(calls().map(([, e]) => types(e))).toEqual([['appChange'], ['appChange']])
+    r.win.__creation!.appChanges = () => {
+      throw new Error('x')
+    }
+    r.timers.tick()
+    expect(calls()).toHaveLength(2)
+  })
+})

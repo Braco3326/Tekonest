@@ -16,6 +16,8 @@ import {
   type Celebrations,
 } from '../../src/guide/skin'
 import { HOST_CLASS } from '../../src/guide/character'
+import { RESTORE_BURST } from '../../src/guide/restore'
+import { RESTORE_BURST as MOUNT_RESTORE_BURST } from '../../src/guide/mount'
 import { DEFAULT_STORAGE_KEY, createController } from '../../src/guide/vendor/core/controller'
 
 describe('skinAllowed (controller ruling 4): the new Oscar only under ?design=1..5 in Mode Création', () => {
@@ -42,6 +44,14 @@ describe('dirFor: the ring bearing seen from the icon, on four axes', () => {
     expect(dirFor(icon, at(400, 300))).toBe('west')
     expect(dirFor(icon, at(500, 400))).toBeNull()
   })
+  it('round 1, N8: a ring on the exact diagonal is horizontal (the tie rule), one pixel off it is the larger axis: a fixed answer, never a flip', () => {
+    expect(dirFor(icon, at(600, 300))).toBe('east') // dx 100, dy -100
+    expect(dirFor(icon, at(400, 500))).toBe('west') // dx -100, dy 100
+    expect(dirFor(icon, at(600, 299))).toBe('north') // dy -101
+    expect(dirFor(icon, at(601, 300))).toBe('east')
+    expect(dirFor(icon, at(499, 501))).toBe('south') // dx -1, dy 101
+    for (let i = 0; i < 3; i++) expect(dirFor(icon, at(600, 300))).toBe('east')
+  })
   it('a rect that is not finite gives null', () => {
     expect(dirFor(icon, { x: Number.NaN, y: 0, w: 1, h: 1 })).toBeNull()
   })
@@ -64,6 +74,17 @@ describe('hostEventFor (spec 10.2 « celebrate sparingly »)', () => {
     expect(hostEventFor([ev('connectRefused')], none).event).toBe('shrug')
     expect(hostEventFor([ev('connect'), ev('connectRefused')], { connected: true, sounded: false }).event).toBe('shrug')
     expect(hostEventFor([ev('connect'), ev('connectRefused')], none).event).toBe('celebrate')
+  })
+  it('round 1, N2: a change the app made (appChange in the same poll: undo, redo, a load, the power helper) is not the learner’s: no state, nothing spent', () => {
+    expect(hostEventFor([ev('connect'), ev('appChange')], none)).toEqual({ event: null, seen: none })
+    expect(hostEventFor([ev('connect'), ev('appChange')], { connected: true, sounded: false }).event).toBeNull()
+    // a sound is still a sound, and a refusal still a refusal
+    expect(hostEventFor([ev('playStarted'), ev('appChange')], none).event).toBe('celebrate')
+    expect(hostEventFor([ev('connectRefused'), ev('appChange')], none).event).toBe('shrug')
+  })
+  it('round 1, N3: the restore burst is the one shared constant', () => {
+    expect(RESTORE_BURST).toBe(3)
+    expect(MOUNT_RESTORE_BURST).toBe(RESTORE_BURST)
   })
   it('does not trigger: no event, other events, or a restore burst (more than three devices in one poll)', () => {
     expect(hostEventFor([], none)).toEqual({ event: null, seen: none })
@@ -306,6 +327,35 @@ describe('attachSkin (T5.3, T5.4): the character on the vendored icon, mirrored 
       expect(d.observers, sel).toHaveLength(0)
       expect(d.header.children.some((c) => c.cls.has(BADGE_CLASS)), sel).toBe(false)
     }
+  })
+
+  it('round 1, N4: the badge is aria-hidden (the vendored title carries the meaning for a screen reader)', () => {
+    const d = fakeDom()
+    attach(d)
+    expect(d.header.children.find((c) => c.cls.has(BADGE_CLASS))!.attrs.get('aria-hidden')).toBe('true')
+  })
+
+  it('round 1, S4: the vendored celebrate is drawn as a nod once the session’s two celebrations are spent; before, it celebrates', () => {
+    const d = fakeDom()
+    const s = attach(d)!
+    d.mascot.attrs.set('data-state', 'celebrate')
+    d.observers[0].fire(d.mascot, 'data-state')
+    expect(s.character.state()).toBe('celebrate')
+    d.mascot.attrs.set('data-state', 'idle')
+    d.observers[0].fire(d.mascot, 'data-state')
+    s.setCelebrationsSpent(true)
+    d.mascot.attrs.set('data-state', 'celebrate')
+    d.observers[0].fire(d.mascot, 'data-state')
+    expect(s.character.state()).toBe('nod')
+    vi.advanceTimersByTime(600)
+    expect(s.character.state()).toBe('idle')
+    // a host celebration still running is not cut by the mapped nod (ranks)
+    s.play('celebrate')
+    d.mascot.attrs.set('data-state', 'point')
+    d.observers[0].fire(d.mascot, 'data-state')
+    d.mascot.attrs.set('data-state', 'celebrate')
+    d.observers[0].fire(d.mascot, 'data-state')
+    expect(s.character.state()).toBe('celebrate')
   })
 
   it('one observer, attributes only: data-state on svg.oscar-mascot, style and hidden on the ring, style on the icon wrap, aria-expanded on the icon', () => {

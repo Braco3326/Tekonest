@@ -24,7 +24,8 @@ import { TUTORIAL_EVENT } from '../design/events'
 import { activePackage } from '../design/packages'
 import { COPY } from '../creation/copy'
 import { isAnchor } from './anchors'
-import { CONNECT_REFUSED, GUIDE_MUTE_KEY, PROFILE_CHOSEN, attachSkin, hostEventFor, muteDefaultStorage, quietByDefault, skinAllowed, stepAdvanced, type Celebrations, type Skin } from './skin'
+import { RESTORE_BURST } from './restore'
+import { APP_CHANGE, CONNECT_REFUSED, GUIDE_MUTE_KEY, PROFILE_CHOSEN, attachSkin, hostEventFor, muteDefaultStorage, quietByDefault, skinAllowed, stepAdvanced, type Celebrations, type Skin } from './skin'
 import {
   ACKNOWLEDGE,
   CREATION_STRINGS,
@@ -209,8 +210,7 @@ export function createObstacleSource(deps: { doc: Document; now: () => number })
   }
 }
 
-/** More `deviceAdded` than this in one poll is a project being restored, not a learner adding devices. */
-export const RESTORE_BURST = 3
+export { RESTORE_BURST }
 /** The widget's layer: above the shell, below its dialogs. */
 export const GUIDE_Z_INDEX = 35
 
@@ -474,7 +474,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       const done = stepAdvanced(run, now)
       run = { status: now.status, k: now.k }
       if (done && !skipping) skin?.play('nod')
-      if (done) skipping = false
+      skipping = false // the flag covers the one tutorial change that follows the click, whatever it was (round 1, N1)
     }
     // `emit`: the power helper's gate in Mode Création (`tekpractice:tutorial`, plan T3.3); creation listens with and without the guide.
     const emit = (detail: TutorialDetail): void =>
@@ -593,6 +593,10 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       if (v === undefined || v === null || v.muted !== false || v.bubble !== null) return
       send({ type: 'chip', id: 'mute' })
       send({ type: 'chip', id: 'close' })
+      // Round 1, S1: the vendored mute stored « 1 » under the one key every address reads (no package scope). It is taken back at once: this page stays muted
+      // (the controller keeps it in memory, and a later unmute still stores « 0 »), and the next mount derives the default from the profile again, so the
+      // plain address and a profile changed through the chip are not left muted.
+      runtime.storage.removeItem(GUIDE_MUTE_KEY)
     }
     const unsubscribe = bridge.onChange((state, events) =>
       guard(() => {
@@ -600,9 +604,10 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
           const h = hostEventFor(events, seen)
           seen = h.seen
           if (h.event !== null) skin.play(h.event)
+          if (seen.connected && seen.sounded) skin.setCelebrationsSpent(true)
         }
         if (events.some((e) => e.type === PROFILE_CHOSEN)) lateQuiet()
-        const list = events.filter((e) => e.type !== TUTORIAL_REQUEST && e.type !== CONNECT_REFUSED && e.type !== PROFILE_CHOSEN && (tutorial !== null || e.type !== PLAY_STARTED))
+        const list = events.filter((e) => e.type !== TUTORIAL_REQUEST && e.type !== CONNECT_REFUSED && e.type !== PROFILE_CHOSEN && e.type !== APP_CHANGE && (tutorial !== null || e.type !== PLAY_STARTED))
         if (list.length === 0 && events.length > 0) {
           tutorialLook(state) // only the request went up: no change of the bench to tell the controller
           return
@@ -640,7 +645,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
         const target = e.target as { closest?: (selector: string) => unknown } | null
         if (target && typeof target.closest === 'function' && target.closest(statusSelector)) hostEvent({ type: ACKNOWLEDGE, at: now(), data: { anchor: ackAnchor } })
         // the same capture listener (no new one): a step passed with the bubble's chip is not nodded (the chip's own click runs after this one)
-        if (skin !== null && target && typeof target.closest === 'function' && target.closest(SKIP_CHIP)) skipping = true
+        if (skin !== null && target && typeof target.closest === 'function' && target.closest(SKIP_CHIP) && runtime?.record().status === 'running') skipping = true
       })
     doc.addEventListener('click', onClick, true)
     cleanups.push(() => doc.removeEventListener('click', onClick, true))

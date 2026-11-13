@@ -44,7 +44,7 @@ export type TpBridge = {
   profile?(): string | null
   /**
    * Called on a change only (never on a poll that saw none). Returns the way to stop listening. Besides the bench's events, Mode Création adds `playStarted`,
-   * `tutorialRequest`, `connectRefused` (a cable the app refused, plan T5.3) and `profileChosen` (the onboarding profile changed, plan T5.5): none of them is a change of the bench.
+   * `tutorialRequest`, `connectRefused` (a cable the app refused, plan T5.3), `appChange` (the poll's change came from an undo, a redo, a load or the power helper, T5 round 1) and `profileChosen` (the onboarding profile changed, plan T5.5): none of them is a change of the bench.
    */
   onChange(cb: (state: TpState, events: HostEvent[]) => void): () => void
   /** Stops the poll, drops every listener and the page listener. Safe to call twice. */

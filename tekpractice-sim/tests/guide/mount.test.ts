@@ -1433,7 +1433,7 @@ describe('mountOscar: the skin (T5.3, T5.4; controller ruling 4: only under ?des
   const skinImpl = () => {
     const f = fakeImpl()
     const plays: Play[] = []
-    const skin = { play: vi.fn((e: Play) => void plays.push(e)), destroy: vi.fn(), character: {} }
+    const skin = { play: vi.fn((e: Play) => void plays.push(e)), destroy: vi.fn(), character: {}, setCelebrationsSpent: vi.fn((_v: boolean) => undefined) }
     const attachSkin = vi.fn((_root: unknown, _d: unknown) => skin)
     return { ...f, impl: { ...f.impl, attachSkin } as unknown as MountImpl & typeof f.impl & { attachSkin: typeof attachSkin }, skin, plays, attachSkin }
   }
@@ -1536,6 +1536,54 @@ describe('mountOscar: the skin (T5.3, T5.4; controller ruling 4: only under ?des
     expect(r.d.count()).toBe(count)
   })
 
+  it('round 1, N1: a skip-chip click while no tutorial runs does not swallow the nod of a later step done', async () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const s = skinImpl()
+    mountOscar(r.deps, s.impl)
+    const deps = s.impl.createController.mock.calls[0][0] as { storage: Storage; flows: { id: string }[] }
+    const id = deps.flows[deps.flows.length - 1].id
+    const save = (index: number): void => deps.storage.setItem('oscar-guide.state.v1', JSON.stringify({ v: 1, flow: { flowId: id, index, status: 'running' }, hint: null }))
+    r.d.click({ closest: (sel: string) => (sel === '[data-chip="skip"]' ? {} : null) }) // another flow's skip chip: no tutorial runs
+    save(0)
+    save(1)
+    expect(s.plays).toEqual(['nod'])
+  })
+
+  it('round 1, N1: the skip flag lasts one tutorial change, whatever it was', async () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const s = skinImpl()
+    mountOscar(r.deps, s.impl)
+    const deps = s.impl.createController.mock.calls[0][0] as { storage: Storage; flows: { id: string }[] }
+    const id = deps.flows[deps.flows.length - 1].id
+    const save = (index: number): void => deps.storage.setItem('oscar-guide.state.v1', JSON.stringify({ v: 1, flow: { flowId: id, index, status: 'running' }, hint: null }))
+    save(3)
+    r.d.click({ closest: (sel: string) => (sel === '[data-chip="skip"]' ? {} : null) })
+    save(1) // the skip did not advance: a jump back (« Recommencer ») came first
+    save(2)
+    expect(s.plays).toEqual(['nod'])
+  })
+
+  it('round 1, S4: once the first accepted connection and the first sound have celebrated, the skin is told (the vendored flow-end celebrate is drawn as a nod)', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const s = skinImpl()
+    mountOscar(r.deps, s.impl)
+    r.b.emit(PAIR, [ev('connect', { a: 'port:a.x', b: 'port:b.y' })])
+    expect(s.skin.setCelebrationsSpent).not.toHaveBeenCalledWith(true)
+    r.b.emit(PAIR, [ev('playStarted', { source: 'test' })])
+    expect(s.skin.setCelebrationsSpent).toHaveBeenLastCalledWith(true)
+  })
+
+  it('round 1, N2: a change the app made (undo, redo, a load, the power helper: the bridge adds appChange) is neither celebrated nor nodded, and appChange never reaches the controller', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const s = skinImpl()
+    mountOscar(r.deps, s.impl)
+    r.b.emit(PAIR, [ev('connect', { a: 'port:a.x', b: 'port:b.y' }), ev('appChange')])
+    expect(s.plays).toEqual([])
+    expect(hostEvents(s).map((e) => e.type)).toEqual(['connect'])
+    r.b.emit(PAIR, [ev('connect', { a: 'port:c.x', b: 'port:d.y' })])
+    expect(s.plays).toEqual(['celebrate'])
+  })
+
   it('destroy: the skin goes before the widget', () => {
     const r = make({ search: '?design=1', storage: memory() })
     const s = skinImpl()
@@ -1599,6 +1647,28 @@ describe('mountOscar: Oscar muted by default (T5.5)', () => {
     expect(sent(r.f).filter((i) => i.type === 'chip')).toEqual([{ type: 'chip', id: 'mute' }, { type: 'chip', id: 'close' }])
     r.b.emit(PAIR, [ev('profileChosen')])
     expect(sent(r.f).filter((i) => i.type === 'chip')).toHaveLength(2)
+  })
+
+  it('round 1, S1: the late mute is not stored: the « 1 » the vendored mute chip writes is removed at once (this page stays muted in memory; the next mount derives it from the profile)', () => {
+    const st = memory()
+    const r = make({ search: '?design=1', storage: st })
+    const p = { v: null as string | null }
+    withProfile(r, p)
+    r.f.controller.getView.mockImplementation(() => ({ muted: false, bubble: null }))
+    mountOscar(r.deps, r.f.impl)
+    const ctrl = controllerStorage(r)!
+    // the vendored controller persists the mute synchronously inside the chip's dispatch (controller.ts setMute -> persist)
+    r.f.handle.send.mockImplementation((i: ControllerInput) => {
+      if (i.type === 'chip' && i.id === 'mute') ctrl.setItem(MUTE, '1')
+      return Promise.resolve({} as GuideView)
+    })
+    p.v = 'metier'
+    r.b.emit(PAIR, [ev('profileChosen')])
+    expect(sent(r.f).filter((i) => i.type === 'chip')).toHaveLength(2)
+    expect(st.getItem(MUTE)).toBeNull()
+    // and a later unmute by the learner is stored as before
+    ctrl.setItem(MUTE, '0')
+    expect(st.getItem(MUTE)).toBe('0')
   })
 
   it('late engineer profile, does not trigger: a bubble open (the tutorial speaks: the next mount applies it), a stored choice, already muted, or another profile', () => {

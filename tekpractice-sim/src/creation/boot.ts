@@ -305,6 +305,17 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   let lastRejection: Rejection | null = null
   /** Connections refused on this page (a counter for the guide's reader `connectRefusals`, onboarding packs T5.3): never reset, never stored. */
   let connectRefusals = 0
+  /** Changes the app made, not the learner (T5 round 1, N2): undo, redo, and every APPLY_DESIGN entry (a place, a project, a template). Never reset, never stored. */
+  let appChanges = 0
+  let appChangeTop: unknown = null
+  history.onBeforeCommand((kind) => {
+    if (kind !== 'do') appChanges++
+  })
+  history.onChange(() => {
+    const top = history.peekUndo()
+    if (top !== null && top !== appChangeTop && top.forward.some((i) => i.type === 'APPLY_DESIGN')) appChanges++
+    appChangeTop = top
+  })
   const statusBar = mountStatusBar({
     doc: document,
     bar: shell.status,
@@ -2276,6 +2287,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     helperOffered: () => checklist.helperOffered(),
     helperUses: () => checklist.helperUses(),
     connectRefusals: () => connectRefusals,
+    appChanges: () => appChanges,
     dispatch: (intent) => history.do(intent),
     design: () => store.design(),
     events: () => store.events(),

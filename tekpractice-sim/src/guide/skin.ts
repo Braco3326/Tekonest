@@ -23,6 +23,7 @@ import { PROFILE_IDS } from '../creation/onboarding/state'
 import { profileById } from '../creation/onboarding/profiles'
 import { HOST_CLASS, createCharacter, type Character, type CharacterTimers, type Dir, type HostEvent } from './character'
 import type { GuideRoute } from './mode'
+import { RESTORE_BURST } from './restore'
 import { DEFAULT_STORAGE_KEY } from './vendor/core/controller'
 import type { Rect } from './vendor/core/types'
 
@@ -43,6 +44,8 @@ export const BADGE_CLASS = 'tp-oscar-badge'
 /** Host events of the bridge that are the skin's only: never forwarded to the vendored controller. */
 export const CONNECT_REFUSED = 'connectRefused'
 export const PROFILE_CHOSEN = 'profileChosen'
+/** The poll's change was made by the app, not the learner (an undo, a redo, a project or template load, the power helper; round 1, N2). */
+export const APP_CHANGE = 'appChange'
 
 /** Controller ruling 4: Mode Création under a valid `?design` (the exam, `?oscar=0` and flag gates are mountOscar's, before this). */
 export function skinAllowed(search: string, route: GuideRoute): boolean {
@@ -63,16 +66,15 @@ export interface Celebrations {
   connected: boolean
   sounded: boolean
 }
-/** More `deviceAdded` than this in one change is a restore (mount.ts RESTORE_BURST): its cables are not the learner's. */
-const RESTORE_BURST = 3
 
 /**
  * The host state one change of the bench plays (spec 10.2, celebrate sparingly): the first accepted connection and the first sound of the session
- * celebrate, a refused connection shrugs, a later accepted connection nods. One state per change, in that order of precedence.
+ * celebrate, a refused connection shrugs, a later accepted connection nods. One state per change, in that order of precedence. A cable the app made (the
+ * bridge's `appChange` in the same poll: an undo, a redo, a load, the power helper) is not the learner's: it is neither celebrated nor nodded, nor spent.
  */
 export function hostEventFor(events: readonly { type: string }[], seen: Celebrations): { event: HostEvent | null; seen: Celebrations } {
   if (events.filter((e) => e.type === 'deviceAdded').length > RESTORE_BURST) return { event: null, seen }
-  const connected = events.some((e) => e.type === 'connect')
+  const connected = events.some((e) => e.type === 'connect') && !events.some((e) => e.type === APP_CHANGE)
   const sounded = events.some((e) => e.type === 'playStarted')
   const refused = events.some((e) => e.type === CONNECT_REFUSED)
   const next: Celebrations = { connected: seen.connected || connected, sounded: seen.sounded || sounded }
@@ -121,6 +123,8 @@ export interface Skin {
   readonly character: Character
   /** A host state (nod, wave, celebrate, shrug), drawn for its duration over the controller's state. */
   play(event: HostEvent): void
+  /** The session's two celebrations (first accepted connection, first sound) are spent: from now on the vendored celebrate (a flow's end) is drawn as a nod. */
+  setCelebrationsSpent(spent: boolean): void
   destroy(): void
 }
 export interface SkinDeps {
@@ -153,12 +157,25 @@ export function attachSkin(landmark: ParentNode, deps: SkinDeps): Skin | null {
   const character = createCharacter(deps.doc, deps.timers ? { timers: deps.timers } : {})
   const badge = deps.doc.createElement('span')
   badge.classList.add(BADGE_CLASS)
+  // The vendored title (« Oscar, assistant IA ») carries the meaning for a screen reader; the badge would only repeat it (round 1, N4).
+  badge.setAttribute('aria-hidden', 'true')
   badge.textContent = deps.badge
   root.classList.add(HOST_CLASS)
   icon.appendChild(character.svg)
   header.insertBefore(badge, title.nextSibling)
 
   let waved = false
+  let spent = false
+  /** The vendored state, with its flow-end celebrate drawn as a nod once the session's celebrations are spent (spec 10.2, round 1 S4). */
+  const mirror = (): void => {
+    const v = mascot.getAttribute(VENDOR_STATE_ATTR)
+    if (v === 'celebrate' && spent) {
+      character.setState('idle')
+      character.play('nod')
+      return
+    }
+    character.setState(v)
+  }
   const point = (): void => {
     if ((ring as HTMLElement).hidden) return
     const a = rectOf(icon)
@@ -179,7 +196,7 @@ export function attachSkin(landmark: ParentNode, deps: SkinDeps): Skin | null {
         if (r.attributeName === VENDOR_STATE_ATTR) state = true
         else if (r.attributeName === 'aria-expanded') open = true
       }
-      if (state) character.setState(mascot.getAttribute(VENDOR_STATE_ATTR))
+      if (state) mirror()
       point()
       if (open) opened()
     } catch {
@@ -190,7 +207,7 @@ export function attachSkin(landmark: ParentNode, deps: SkinDeps): Skin | null {
   observer.observe(ring, { attributes: true, attributeFilter: ['style', 'hidden'] })
   observer.observe(iconWrap, { attributes: true, attributeFilter: ['style'] })
   observer.observe(icon, { attributes: true, attributeFilter: ['aria-expanded'] })
-  character.setState(mascot.getAttribute(VENDOR_STATE_ATTR))
+  mirror()
   point()
   opened()
 
@@ -199,6 +216,9 @@ export function attachSkin(landmark: ParentNode, deps: SkinDeps): Skin | null {
     character,
     play: (event) => {
       if (!destroyed) character.play(event)
+    },
+    setCelebrationsSpent: (v) => {
+      spent = v
     },
     destroy: () => {
       if (destroyed) return

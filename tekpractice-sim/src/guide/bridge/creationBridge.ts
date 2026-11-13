@@ -24,7 +24,7 @@ export type { BridgeDoc, BridgeElement }
  * optional: a hook without them is still a hook, the bridge then emits no `playStarted` and knows no selection.
  */
 export type CreationReader = Pick<CreationDebug, 'design' | 'events' | 'place' | 'devicePorts' | 'portScreen' | 'deviceScreen' | 'controlScreen'> &
-  Partial<Pick<CreationDebug, 'audioState' | 'selection' | 'onboarding' | 'helperOffered' | 'helperUses' | 'connectRefusals'>>
+  Partial<Pick<CreationDebug, 'audioState' | 'selection' | 'onboarding' | 'helperOffered' | 'helperUses' | 'connectRefusals' | 'appChanges'>>
 
 export interface CreationBridgeDeps {
   win: { __creation?: CreationReader; innerWidth?: number; innerHeight?: number }
@@ -151,6 +151,24 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
   }
   /** The refusal count at the last look (a count that goes up is a `connectRefused` event). */
   let refused: number | null = null
+  /**
+   * Changes the app made, not the learner (round 1, N2): Mode Création's counter of undos, redos and loads, plus the power helper's uses. A sum that goes up adds
+   * an `appChange` event to that poll (the guide then celebrates and nods none of its cables). Null without the readers.
+   */
+  function appMadeNow(): number | null {
+    try {
+      const c = win.__creation
+      const a = c?.appChanges?.()
+      const ok = (n: unknown): n is number => typeof n === 'number' && Number.isSafeInteger(n) && n >= 0
+      const h = c?.helperUses?.()
+      const hn = h && ok(h.n) ? h.n : 0
+      if (!ok(a) && !(h && ok(h.n))) return null
+      return (ok(a) ? a : 0) + hn
+    } catch {
+      return null
+    }
+  }
+  let appMade: number | null = null
 
   /** The source playing now (`state` 'playing' only: 'starting' is not a sound yet), or null; null when the hook has no reader or it throws. */
   function playingNow(): string | null {
@@ -290,12 +308,16 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
       const nRefused = refusalsNow()
       const refusedNow = prev !== null && nRefused !== null && refused !== null && nRefused > refused
       refused = nRefused
+      const nApp = appMadeNow()
+      const appNow = prev !== null && nApp !== null && appMade !== null && nApp > appMade
+      appMade = nApp
       if (!prev) return notify(next.state, [])
       const extra: HostEvent[] = [
         ...(started ? [{ type: 'playStarted', at: now(), data: { source: sound } }] : []),
         ...(asked ? [{ type: 'tutorialRequest', at: now(), data: { n: req } }] : []),
         ...(refusedNow ? [{ type: 'connectRefused', at: now() }] : []),
         ...(chose ? [{ type: 'profileChosen', at: now() }] : []),
+        ...(appNow ? [{ type: 'appChange', at: now() }] : []),
       ]
       if (prev.hash === hash && extra.length === 0) return
       notify(next.state, [...(prev.hash === hash ? [] : derive(prev.table, next)), ...extra])
@@ -428,6 +450,7 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
         requested = requestNow()?.n ?? null // the mount reads the request itself at its first look
         profiled = profileNow() // the mount reads the profile itself at its first look
         refused = refusalsNow() // a refusal before the guide arrived is not news
+        appMade = appMadeNow()
         if (!watching) {
           watching = true
           doc.addEventListener('visibilitychange', onVisibility)

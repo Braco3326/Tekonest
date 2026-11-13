@@ -323,8 +323,11 @@ test.describe('in the app: the skin on the vendored widget (T5.3 to T5.5)', () =
     test.info().annotations.push({ type: 'states', description: log.join(' ') })
     expect(log, 'the first open of the bubble waved').toContain('wave')
     expect(log, 'later connections and steps done nod').toContain('nod')
-    // celebrate sparingly: the first connection and the first sound (the end of the tutorial is the vendored celebrate of the same moment, drawn once or twice)
-    expect(log.filter((s) => s === 'celebrate').length, log.join(' ')).toBeLessThanOrEqual(3)
+    // celebrate sparingly (spec 10.2, round 1 S4): exactly the first accepted connection and the first sound. The tutorial's end (the vendored flow-end
+    // celebrate, the same moment as the sound) is drawn as a nod once both are spent, and that nod does not cut the running celebration.
+    expect(log.filter((s) => s === 'celebrate').length, log.join(' ')).toBe(2)
+    await page.waitForTimeout(1_500) // past the celebration and the vendored hold: nothing celebrates later
+    expect((await states(page)).filter((s) => s === 'celebrate').length).toBe(2)
   })
 
   test('a refused connection shrugs (the app refused the cable; the vendored controller has no state for it)', async ({ page }) => {
@@ -341,19 +344,34 @@ test.describe('in the app: the skin on the vendored widget (T5.3 to T5.5)', () =
   })
 
   test('6 s after the last change, no animation runs on the icon or the ring (the motion sheet is loaded in the app, after the vendored one)', async ({ page }) => {
+    test.setTimeout(60_000)
     await openFresh(page, '?design=1')
     await profile(page, 'Je découvre', /^Faire le tutoriel/)
     await expect(live(page)).toContainText(stepLine(1), { timeout: 10_000 })
     await expect(ring(page)).toBeVisible()
     await expect.poll(async () => (await pointing(page)).state, { timeout: 6_000 }).toBe('point')
+    // The moment of the last change of the character, the ring or the icon's place (round 1: the test waits on it, not on a fixed instant).
+    await page.evaluate(() => {
+      const w = window as unknown as { __lastChange: number }
+      w.__lastChange = performance.now()
+      const mark = new MutationObserver(() => void (w.__lastChange = performance.now()))
+      mark.observe(document.querySelector('.oscar-icon svg.tpo')!, { attributes: true, attributeFilter: ['data-state', 'data-dir'] })
+      for (const sel of ['.oscar-ring', '.oscar-icon-wrap']) for (const el of document.querySelectorAll(sel)) mark.observe(el, { attributes: true, attributeFilter: ['style', 'hidden'] })
+    })
     const running = () =>
       page.evaluate(() =>
         ['.oscar-icon-wrap', '.oscar-ring'].flatMap((sel) =>
           [...document.querySelectorAll(sel)].flatMap((el) => el.getAnimations({ subtree: true }).filter((a) => a.playState === 'running').map((a) => `${sel} ${(a as CSSAnimation).animationName ?? 'waapi'}`)),
         ),
       )
-    expect((await running()).length, 'something moves right after the change').toBeGreaterThan(0)
-    await page.waitForTimeout(6_000)
+    // A state with a known finite animation: the first accepted connection celebrates (tpo-cheer, 1 000 ms once). Polled every 50 ms: the bridge reads the
+    // bench every 500 ms, so the start is not at a known instant, but a 1 000 ms window cannot be missed.
+    await act(page, [spawn('yamaha-ql1', 'ql1', 0), spawn('qsc-k12-2', 'k12', -1), connect('ql1', 'out-main-l', 'k12', 'in-line-a')])
+    await expect.poll(running, { message: 'the celebration runs', timeout: 5_000, intervals: [50] }).toContain('.oscar-icon-wrap tpo-cheer')
+    // Then nothing changes for 6 s (longer than every finite animation of the sheet; think, 4 x 1 200 ms, is the longest), and nothing runs.
+    await expect
+      .poll(() => page.evaluate(() => performance.now() - (window as unknown as { __lastChange: number }).__lastChange), { message: '6 s without a change', timeout: 40_000, intervals: [250] })
+      .toBeGreaterThanOrEqual(6_000)
     expect(await running()).toEqual([])
   })
 
@@ -405,19 +423,76 @@ test.describe('in the app: the skin on the vendored widget (T5.3 to T5.5)', () =
     await expect(page.locator('.oscar-bubble .oscar-mute')).toHaveAttribute('aria-pressed', 'false')
   })
 
-  test('T5.5: the sound engineer (« Je travaille dans le son ») on package 1 is muted once the profile is chosen, with no bubble left open; a reload keeps it', async ({ page }) => {
+  test('T5.5: the sound engineer on package 1 is muted once the profile is chosen, no bubble left open, NOTHING stored; a reload stays muted by the default; the plain address is not muted; « Je découvre » through the chip then a reload is not muted', async ({ page }) => {
+    test.setTimeout(90_000)
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await openFresh(page, '?design=1')
     await profile(page, 'Je travaille dans le son', /^Passer/)
     const icon = page.getByRole('button', { name: ICON_NAME, exact: true })
+    const vendorState = () => page.evaluate(() => document.querySelector('svg.oscar-mascot')!.getAttribute('data-state'))
+    const stored = () => page.evaluate((k) => window.localStorage.getItem(k), MUTE_KEY)
+    const pressed = async (): Promise<string | null> => {
+      await icon.click()
+      const mute = page.locator('.oscar-bubble .oscar-mute')
+      await expect(mute).toBeVisible()
+      const v = await mute.getAttribute('aria-pressed')
+      await page.keyboard.press('Escape')
+      return v
+    }
+    const reload = async (url?: string): Promise<void> => {
+      if (url === undefined) await page.reload()
+      else await page.goto(url)
+      await page.waitForFunction(() => !!window.__creation)
+    }
     await expect(icon).toBeVisible()
-    await expect.poll(() => page.evaluate(() => document.querySelector('svg.oscar-mascot')!.getAttribute('data-state')), { timeout: 5_000 }).toBe('sleep')
+    await expect.poll(vendorState, { timeout: 5_000 }).toBe('sleep')
     await expect(page.locator('.oscar-bubble')).toBeHidden()
     await expect(icon).toHaveAttribute('aria-expanded', 'false')
-    await page.reload()
-    await page.waitForFunction(() => !!window.__creation)
+    expect(await stored(), 'the late mute is not stored (round 1, S1)').toBeNull()
+    await reload()
     await expect(icon).toBeVisible({ timeout: 15_000 })
-    await icon.click()
-    await expect(page.locator('.oscar-bubble .oscar-mute')).toHaveAttribute('aria-pressed', 'true')
+    await expect.poll(vendorState, { message: 'muted again by the default (profile metier)', timeout: 5_000 }).toBe('sleep')
+    expect(await pressed()).toBe('true')
+    expect(await stored()).toBeNull()
+    // the plain address: today's Oscar, not muted
+    await reload('/')
+    await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
+    await expect(icon).toBeVisible({ timeout: 15_000 })
+    expect(await pressed(), 'plain address').toBe('false')
+    // back on ?design=1, the profile changed through the status-bar chip to « Je découvre »: the next mount is not muted
+    await reload('/?design=1')
+    await page.getByTestId('profile-chip').click()
+    await page.getByTestId('start-screen').getByRole('button', { name: 'Je découvre', exact: true }).click()
+    await page.getByTestId('start-screen').getByRole('button', { name: /^Passer/ }).click()
+    await expect(page.getByTestId('profile-chip')).toHaveText('Profil : Je découvre · changer')
+    await reload()
+    await expect(icon).toBeVisible({ timeout: 15_000 })
+    expect(await pressed(), 'after « Je découvre »').toBe('false')
+    expect(await stored()).toBeNull()
+  })
+
+  for (const c of [
+    { q: '?design=4', who: 'Je découvre', why: 'package 4' },
+    { q: '?design=1', who: 'Je travaille dans le son', why: 'the sound engineer' },
+  ]) {
+    test(`round 1, S3: muted (${c.why}), « Faire le tutoriel » still shows step 1, and step 2 once step 1 is done`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' })
+      await openFresh(page, c.q)
+      await profile(page, c.who, /^Faire le tutoriel/)
+      await expect(live(page)).toContainText(stepLine(1), { timeout: 10_000 })
+      await act(page, [spawn('yamaha-ql1', 'ql1', 0)])
+      await expect(live(page)).toContainText(stepLine(2), { timeout: 10_000 })
+      await expect(page.locator('.oscar-bubble .oscar-mute')).toHaveAttribute('aria-pressed', 'true')
+      expect(await page.evaluate((k) => window.localStorage.getItem(k), MUTE_KEY)).toBeNull()
+    })
+  }
+
+  test('round 1, N5: forced colours: the borderless icon keeps an edge (an outline)', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce', forcedColors: 'active' })
+    await openFresh(page, '?design=1')
+    await profile(page, 'Je découvre', /^Passer/)
+    await expect(page.getByRole('button', { name: ICON_NAME, exact: true })).toBeVisible()
+    const o = await page.locator('.oscar-icon').evaluate((el) => ({ style: getComputedStyle(el).outlineStyle, width: getComputedStyle(el).outlineWidth }))
+    expect(o).toEqual({ style: 'solid', width: '2px' })
   })
 })
