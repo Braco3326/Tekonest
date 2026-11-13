@@ -408,6 +408,13 @@ for (const { size, closing } of SCREENS) {
           await testSignal(page)
         }
         await expect(page.getByTestId('tutorial-closing')).toBeVisible({ timeout: 20_000 })
+        // Oscar's bubble comes to rest in one of TWO places on this screen (package 2 at 1366 x 768: both seen across the baseline runs, each stable once reached, 13 474 pixels apart; the
+        // bubble's top-left corner at (216, 222) or at (273, 265)). The closing card and the icon are what this capture is of, so the bubble is closed (its own close button).
+        const bubble = page.locator('.oscar-bubble')
+        if (await bubble.isVisible()) {
+          await bubble.locator('.oscar-close').click()
+          await expect(bubble).toBeHidden()
+        }
         await snap(page, `${tag}-closing.png`, true)
       })
     }
