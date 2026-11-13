@@ -48,6 +48,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import type { Browser, Page } from '@playwright/test'
 import { DESIGN_IDS, packageById, type DesignId, type StepId } from '../../src/design/packages'
+import { COPY } from '../../src/creation/copy'
 import { expect, openFresh, PROFILES, start, test, waitStartScreen, waitStep } from './onboardingKit'
 
 const VIEWPORT = { width: 1366, height: 768 }
@@ -58,47 +59,46 @@ type RouteKind = 'dialog' | 'port' | 'model'
 /** Spec 1: the arithmetic of the dialog route with this tutorial is 28 to 34 actions (plan T7.2: packages 1 to 3). */
 const DIALOG_BUDGET_ARITHMETIC = 34
 /**
- * The first green run's action counts (plan T7.2: recorded once, then held at measured + 10 %, only ever lowered). Key = `${route} ${package}`.
- * Recorded on a fresh build of HEAD 584bdb5 (2026-11-13, report G14c), unled actions included (they are actions the learner makes).
+ * The measured action counts (plan T7.2: recorded once, then held at measured + 10 %, only ever lowered). Key = `${route} ${package}`. First recorded on
+ * HEAD 584bdb5 (report G14c: dialog 4 = 38, port 30 / 29 / 29 / 31, model 4); lowered after the G14c fix round where the fixes removed actions (dialog 4:
+ * 38 -> 35, no more « Inventaire » found by hand). Unled actions are included (they are actions the learner makes).
  */
-const MEASURED: Record<string, number> = { 'dialog 4': 38, 'port 1': 30, 'port 2': 29, 'port 3': 29, 'port 4': 31, 'model 5': 4 }
+const MEASURED: Record<string, number> = { 'dialog 4': 35, 'port 1': 30, 'port 2': 29, 'port 3': 29, 'port 4': 31, 'model 5': 4 }
 const WORD_BUDGET = 200
+/**
+ * The checklist's own words per route (controller ruling, G14c fix f: the route's 200 counts bubble, card and dialog; the checklist docked in Projet, package
+ * 2's main presenter, is measured apart and held at measured + 10 %). The chip packages never open it on these routes: 0.
+ */
+const MEASURED_CHECKLIST: Record<string, number> = { 'dialog 1': 0, 'dialog 2': 129, 'dialog 3': 0, 'dialog 4': 0, 'port 1': 0, 'port 2': 129, 'port 3': 0, 'port 4': 0, 'model 5': 0 }
 const actionBudget = (route: RouteKind, id: DesignId): number | undefined => (route === 'dialog' && id <= 3 ? DIALOG_BUDGET_ARITHMETIC : MEASURED[`${route} ${id}`] === undefined ? undefined : Math.floor(MEASURED[`${route} ${id}`] * 1.1))
 
 /**
- * The places where the ring did not show the next action (findings of report G14c, measured on HEAD 584bdb5), per route, pinned exactly. Key =
- * `${route} ${package}`. P1 the Propriétés fold (steps 4 and 8: « Connecter à… » is below the panel's fold, the ring hides, nothing scrolls it into view);
- * P2 the camera stays on the mic after step 5 (step 6: the console is out of the 3D view, or its point is under a side panel); P3 package 4's drawer closes
- * after a placement (the ring stays on « Matériel » once its menu is open, « Inventaire » is never ringed, and Oscar's icon covers its centre); P4 the
- * port-click route: a port under the open inventory drawer; P5 package 5 after the first sound: « Débrancher » below the fold.
+ * The places where the ring did not show the next action, per route, pinned exactly (an entry fails the day its gap is fixed or a new gap appears). Key =
+ * `${route} ${package}`. The G14c fix round removed every gap of the dialog routes and of package 5 (the Propriétés fold, the camera on the mic at step 6, the
+ * « Inventaire » item of package 4). What stands is on the port-click route, which the tutorial does not lead for cables (spec 6.3), PARKED (report
+ * G14c-fix, item e): with the drawer open a console port lies under it (package 1), or, once the camera has gone to the step's mic, off the view (2, 3).
  */
-const FOLD = (k: number, step: string, what: string): string => `step ${k} (${step}): « Connecter à… » of the ${what} is below the fold of Propriétés: no ring`
-const MENU = (k: number, step: string): string => `step ${k} (${step}): the ring stays on « Matériel » with its menu open: « Inventaire » is not ringed (its centre is under Oscar)`
 const DRAWER = (k: number, step: string, port: string): string => `step ${k} (${step}, port-click): the port ${port} is under the open inventory drawer`
-const OUT_OF_VIEW = 'step 6 (lecture-console): the device the step names is out of the 3D view: no ring; « Vue d’ensemble »'
-const UNDER_PANEL = "step 6 (lecture-console): the ring's centre is on a panel over the device: no reachable ring; « Vue d’ensemble »"
+/**
+ * Whole routes PARKED (report G14c-fix, item e): the walk itself does not reach the first sound, so every test of the route is `test.fail` with the reason (the
+ * group fails « expected to fail » the day the route goes through, when the entry goes). Port-click route, packages 2 and 3, step 8: the camera is on the
+ * console (the step's device, flown into view), the strip lies behind it and the click aimed at the strip's out-1 lands on a console connector: « Branchement
+ * refusé : Connecteurs incompatibles ». Not a tutorial step (the tutorial leads the dialog route); a design call on the port-click route.
+ */
+const PARKED_ROUTES: Record<string, string> = {
+  'port 2': 'G14c-fix e: port-click route, step 8, the strip out-1 under the console from the camera the step brings: the click lands on a console connector (refused)',
+  'port 3': 'G14c-fix e: port-click route, step 8, the strip out-1 under the console from the camera the step brings: the click lands on a console connector (refused)',
+}
 const KNOWN_UNLED: Record<string, string[]> = {
-  'dialog 1': [FOLD(4, 'console-enceinte', 'main output'), OUT_OF_VIEW, FOLD(8, 'courant-console', 'mains inlet')],
-  'dialog 2': [FOLD(4, 'console-enceinte', 'main output'), UNDER_PANEL, FOLD(8, 'courant-console', 'mains inlet')],
-  'dialog 3': [FOLD(4, 'console-enceinte', 'main output'), OUT_OF_VIEW, FOLD(8, 'courant-console', 'mains inlet')],
-  'dialog 4': [MENU(2, 'micro'), MENU(3, 'enceinte'), FOLD(4, 'console-enceinte', 'main output'), UNDER_PANEL, MENU(7, 'multiprise'), FOLD(8, 'courant-console', 'mains inlet')],
-  'port 1': [DRAWER(5, 'micro-console', 'shure-sm58 out-xlr'), MENU(7, 'multiprise'), DRAWER(8, 'courant-console', 'yamaha-ql1 power-in')],
-  'port 2': [DRAWER(5, 'micro-console', 'shure-sm58 out-xlr'), MENU(7, 'multiprise'), DRAWER(8, 'courant-console', 'yamaha-ql1 power-in')],
-  'port 3': [DRAWER(5, 'micro-console', 'shure-sm58 out-xlr'), MENU(7, 'multiprise'), DRAWER(8, 'courant-console', 'yamaha-ql1 power-in')],
-  'port 4': [MENU(2, 'micro'), MENU(3, 'enceinte'), MENU(7, 'multiprise')],
-  'model 5 after': ['step 2 (debrancher): « Débrancher » of a main output is below the fold of Propriétés: no ring'],
+  'port 1': [DRAWER(5, 'micro-console', 'yamaha-ql1 in-mic-1'), DRAWER(8, 'courant-console', 'yamaha-ql1 power-in')],
 }
 /**
- * Word counts over 200 that known findings explain (report G14c). The WORDS assertion is unchanged; its test is `test.fail` with the finding, so it passes
- * while the count stands over 200 and fails (« expected to fail ») the day the route is back under it, when the entry goes.
+ * Word counts over 200 that a known finding explains (report G14c-fix). The WORDS assertion is unchanged; its test is `test.fail` with the finding, so it
+ * passes while the count stands over 200 and fails (« expected to fail ») the day the route is back under it, when the entry goes.
  */
-const STALE_10 = 'W1: step 10 keeps « Voir « Pourquoi je n’entends rien ? » dans la barre d’état. » (10 words) while the bench can play (mount.ts sends the events before the runtime sees the new bench)'
-const KNOWN_WORDS: Record<string, string> = {
-  'dialog 1': `220 words: the guide's « Cet élément n'est pas visible à l'écran pour le moment… » (22 words, finding P2) and ${STALE_10}`,
-  'dialog 3': `220 words: the guide's « Cet élément n'est pas visible à l'écran pour le moment… » (22 words, finding P2) and ${STALE_10}`,
-  'dialog 2': `327 words: the checklist docked in Projet adds 129 words of its own (package 2's main presenter, spec 7.2), and ${STALE_10}`,
-  'port 2': `327 words: the checklist docked in Projet adds 129 words of its own (package 2's main presenter, spec 7.2), and ${STALE_10}`,
-}
+const DIALOG_TEXT =
+  '280 words: the four « Connecter à… » dialogs add 91 (their body read whole once, 17 words of keyboard instructions, then the port it starts from each time, plus the device group and the option chosen); without them the route is 189. COPY connect.* is not this task’s (tekuxwriter call)'
+const KNOWN_WORDS: Record<string, string> = { 'dialog 1': DIALOG_TEXT, 'dialog 2': DIALOG_TEXT, 'dialog 3': DIALOG_TEXT, 'dialog 4': DIALOG_TEXT }
 
 const stepsOf = (id: DesignId): readonly StepId[] => packageById(id).pacing.steps
 const onModel = (id: DesignId): boolean => packageById(id).layout.start === 'playable-model'
@@ -110,12 +110,24 @@ const wordsIn = (s: string): number => s.split(/\s+/).filter((t) => /[\p{L}\p{N}
 const COUNTER = /^(Parcours « [^»]+ » : étape \d+ sur \d+\.|Étape \d+ sur \d+)$/
 const counterKind = (line: string): string => line.split(' ')[0]
 
+/** Where a line was read. The route's 200 counts bubble, card and dialog (the connect dialog's own text); the docked checklist has its own budget. */
+type Presenter = 'bubble' | 'card' | 'dialog' | 'checklist'
+/** « Connecter à… »'s body, a template around the port it starts from: read whole once, then only its port (the instructions are the same). */
+const DIALOG_BODY = new RegExp(
+  '^' +
+    (COPY.connect?.body ?? '')
+      .split('{port}')
+      .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('(.+?)') +
+    '$',
+)
+
 interface Route {
   kind: RouteKind
   id: DesignId
   actions: string[]
   /** Every distinct line read, with the presenter it came from. */
-  lines: Map<string, 'bubble' | 'card' | 'checklist'>
+  lines: Map<string, Presenter>
   /** Modelled reading time so far (s), without the actions and the card changes. */
   readingS: number
   cardChanges: number
@@ -152,20 +164,42 @@ async function read(page: Page, r: Route): Promise<void> {
     }
   if (bubbleNew > 0) r.readingS += Math.max(2, 0.3 * bubbleNew)
 }
-/** Words of the route (each counter once) and the raw count of every distinct line. */
-function words(r: Route): { counted: number; raw: number } {
+/**
+ * Words of the route: `counted` = bubble, card and dialog (each counter once; the dialog's body whole once, then only its port), `checklist` = the docked or
+ * opened checklist's distinct lines (its own budget, controller ruling G14c fix f), `raw` = every distinct line of every presenter.
+ */
+function words(r: Route): { counted: number; checklist: number; raw: number } {
   let counted = 0
+  let checklist = 0
   let raw = 0
   const seen = new Set<string>()
-  for (const line of r.lines.keys()) {
+  let bodyRead = false
+  for (const [line, at] of r.lines) {
     raw += wordsIn(line)
+    if (at === 'checklist') {
+      checklist += wordsIn(line)
+      continue
+    }
     if (COUNTER.test(line)) {
       if (seen.has(counterKind(line))) continue
       seen.add(counterKind(line))
     }
+    const body = at === 'dialog' ? DIALOG_BODY.exec(line) : null
+    if (body !== null && bodyRead) {
+      counted += wordsIn(body[1])
+      continue
+    }
+    if (body !== null) bodyRead = true
     counted += wordsIn(line)
   }
-  return { counted, raw }
+  return { counted, checklist, raw }
+}
+/** A line read in a dialog (no bubble minimum: 0.3 s per new word). */
+function readLine(r: Route, line: string, at: Presenter): void {
+  const t = line.replace(/\s+/g, ' ').trim()
+  if (t === '' || r.lines.has(t)) return
+  r.lines.set(t, at)
+  r.readingS += 0.3 * wordsIn(t)
 }
 
 // ── what the screen offers ──────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -467,6 +501,10 @@ async function chooseIn(page: Page, r: Route, label: string, device: RegExp): Pr
   const group = dialog.getByRole('group').filter({ has: page.locator('.cr-connect-group-title', { hasText: device }) }).first()
   const option = group.getByRole('option').first()
   await expect(option, `${label}: the dialog offers a port of ${device}`).toBeVisible()
+  // what the learner reads to choose: the title, the body (the port it starts from), the group of the device the bubble names, the option
+  for (const sel of ['.cr-dialog-title', '.cr-dialog-body']) for (const t of await dialog.locator(sel).allInnerTexts()) readLine(r, t, 'dialog')
+  readLine(r, await group.locator('.cr-connect-group-title').innerText(), 'dialog')
+  readLine(r, await option.innerText(), 'dialog')
   const name = (await option.getAttribute('aria-label')) ?? ''
   await option.click()
   r.actions.push(`${label}: dialog option « ${name} »`)
@@ -580,6 +618,14 @@ const portCable =
         at = await where()
         hit = await hitAt(page, at!.x, at!.y)
       }
+      if (hit.kind === 'none' || hit.kind === 'other') {
+        // the port is off the 3D view, or under a side panel (the camera went to the step's other device): the whole room first (UNLED)
+        if (await overview(page, r, label, `the port ${deviceId} ${port} is off the 3D view`)) {
+          await expect.poll(async () => (await hitAt(page, (await where())!.x, (await where())!.y)).kind, { timeout: RING_BACK_MS }).toBe('view').catch(() => undefined)
+          at = await where()
+          hit = await hitAt(page, at!.x, at!.y)
+        }
+      }
       expect(hit.kind, `${label}: the port ${deviceId} ${port} at (${Math.round(at!.x)}, ${Math.round(at!.y)}) is covered by ${hit.kind} « ${hit.name} »`).toBe('view')
       await page.mouse.click(at!.x, at!.y)
       r.actions.push(`${label}: port ${deviceId} ${port}`)
@@ -600,7 +646,7 @@ interface Walk {
   voices: string[]
   closing: boolean
   line: Record<string, unknown>
-  words: { counted: number; raw: number }
+  words: { counted: number; checklist: number; raw: number }
   /** Package 5 after the first sound: the voice counts after « débrancher » and « rebrancher », the closing card, the unled actions. */
   after?: { unplugged: number; replugged: number; closing: boolean; unled: string[]; actions: string[] }
 }
@@ -618,7 +664,8 @@ async function summary(page: Page, r: Route): Promise<Pick<Walk, 'line' | 'words
     unled: r.unled.length,
     words: w.counted,
     wordsRaw: w.raw,
-    byPresenter: Object.fromEntries((['bubble', 'card', 'checklist'] as const).map((p) => [p, [...r.lines].filter(([, at]) => at === p).reduce((s, [l]) => s + wordsIn(l), 0)])),
+    checklistWords: w.checklist,
+    byPresenter: Object.fromEntries((['bubble', 'card', 'dialog', 'checklist'] as const).map((p) => [p, [...r.lines].filter(([, at]) => at === p).reduce((s, [l]) => s + wordsIn(l), 0)])),
     cardChanges: r.cardChanges,
     machineS: Math.round(machineS * 10) / 10,
     modelledS: Math.round(modelledS * 10) / 10,
@@ -683,6 +730,7 @@ for (const { kind, id } of ROUTES) {
   const key = `${kind} ${id}`
   test.describe(`package ${id}, ${kind} route`, () => {
     test.describe.configure({ mode: 'default' })
+    if (PARKED_ROUTES[key] !== undefined) test.fail(() => true, PARKED_ROUTES[key])
     let w: Walk | null = null
     test.beforeAll(async ({ browser }, testInfo) => {
       testInfo.setTimeout(480_000)
@@ -702,10 +750,23 @@ for (const { kind, id } of ROUTES) {
       expect(n, `${key}: ${w!.route.actions.join(' | ')}`).toBeLessThanOrEqual(budget!)
     })
 
-    test(`WORDS: at most ${WORD_BUDGET} on bubble, card and checklist${KNOWN_WORDS[key] ? ' [known finding]' : ''}`, () => {
+    test(`WORDS: at most ${WORD_BUDGET} on bubble, card and dialog${KNOWN_WORDS[key] ? ' [known finding]' : ''}`, () => {
       if (KNOWN_WORDS[key]) test.fail(true, KNOWN_WORDS[key])
       expect(w!.words.counted, `${key}: words (raw ${w!.words.raw}); lines: ${[...w!.route.lines.keys()].join(' / ')}`).toBeLessThanOrEqual(WORD_BUDGET)
     })
+
+    const checklistBudget = MEASURED_CHECKLIST[key] === undefined ? undefined : Math.floor(MEASURED_CHECKLIST[key] * 1.1)
+    test(`CHECKLIST: the docked or opened checklist's own words, at most ${checklistBudget ?? '(not recorded yet)'} (measured + 10 %, counted apart from the 200)`, () => {
+      expect(checklistBudget, `no recorded checklist count for ${key}: measured ${w!.words.checklist}`).toBeDefined()
+      expect(w!.words.checklist).toBeLessThanOrEqual(checklistBudget!)
+    })
+
+    if (kind !== 'model')
+      test('STEP 10: once the bench can play, Écoute’s sentence names no checklist (W1: the runtime sees the new bench before the event that ends step 9)', () => {
+        const ecoute = [...w!.route.lines.keys()].filter((l) => l.startsWith(COPY.tutorial!.ecoute!))
+        expect(ecoute, 'the step 10 sentence was read').not.toEqual([])
+        for (const l of ecoute) expect(l).toBe(COPY.tutorial!.ecoute)
+      })
 
     test(`LED: every action but the drop, the dialog's choice and the port clicks was where the ring showed${KNOWN_UNLED[key] ? ' [known gaps pinned]' : ''}`, () => {
       expect(w!.route.unled, `${key}: actions the ring did not show`).toEqual(KNOWN_UNLED[key] ?? [])
@@ -762,5 +823,12 @@ test('MODEL: the word count and the reading model on a crafted route (counters o
   ] as const)
     r.lines.set(l, at)
   expect(wordsIn('« Connecter à… » : la prise')).toBe(4)
-  expect(words(r)).toEqual({ counted: 7 + 3 + 4, raw: 7 + 3 + 4 + 7 + 4 })
+  expect(words(r)).toEqual({ counted: 7 + 3 + 4, checklist: 0, raw: 7 + 3 + 4 + 7 + 4 })
+  // the dialog's body: whole once, then only the port it starts from; the checklist apart
+  const body = (port: string): string => (COPY.connect?.body ?? '').replace('{port}', port)
+  const d = newRoute('dialog', 1)
+  d.lines.set(body('QL1 (q) · out-main-l'), 'dialog')
+  d.lines.set(body('SM58 (s) · out-xlr'), 'dialog')
+  d.lines.set('Une source de lecture', 'checklist')
+  expect(words(d)).toEqual({ counted: wordsIn(body('QL1 (q) · out-main-l')) + wordsIn('SM58 (s) · out-xlr'), checklist: 4, raw: wordsIn(body('QL1 (q) · out-main-l')) + wordsIn(body('SM58 (s) · out-xlr')) + 4 })
 })

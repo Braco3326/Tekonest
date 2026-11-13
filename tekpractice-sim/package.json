@@ -13,7 +13,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "test:onboarding": "playwright test onboarding- character.spec guide-overlap guide-creation --workers=3",
+    "test:onboarding": "playwright test onboarding- character.spec guide-overlap guide-creation tests/e2e/first-timer-proxy.spec.ts tests/e2e/engine-neutrality.spec.ts --workers=3",
     "e2e:fresh": "node tools/e2e-fresh-guard.mjs && npm run build && playwright test",
     "onboarding:local": "node tools/onboarding-local.mjs",
     "validate:catalog": "tsx tools/validate-catalog.ts",
