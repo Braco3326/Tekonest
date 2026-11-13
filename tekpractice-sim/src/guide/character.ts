@@ -102,16 +102,22 @@ export function armTransformFor(dir: Dir): string | null {
 // Construction. Every number is in the 64 x 64 viewBox; the geometry is pinned by tests/guide/character.test.ts against the brief.
 
 const C = CREATION_TOKENS.color
-/** The coin and the head share a centre; the band and the cups break out of the coin by 4. */
-const COIN = { cx: 32, cy: 36, r: 20 }
+/**
+ * The coin sits 2 units lower than the head, so it shows as a Prune plinth under the chin; the band and the cups break out of it by 4.
+ * Coin r 22: the cups (14 wide, outer edges 4 past the coin) cover only 3 units of each side of the head, the face keeps 24 of its 30 units.
+ */
+const COIN = { cx: 32, cy: 38, r: 22 }
 const HEAD = { cx: 32, cy: 36, r: 15 }
 /** The band's centre line: an elliptic arch from the top of one cup to the other, apex 14.5 (outer edge 12 = coin top 16 - 4 = head top 21 - 9). */
 const BAND_APEX_Y = 14.5
-const BAND_D = 'M15 29 V26.5 A17 12 0 0 1 49 26.5 V29'
-const CUP = { w: 14, h: 22, rx: 3, y: 26, left: 8, right: 42 }
-/** Shoulder at the right cup's lower outer corner; the pose group turns about it (character.css). */
-const SHOULDER = { x: 53, y: 47 }
-const HAND = 6
+const BAND_D = 'M13 29 V26.5 A19 12 0 0 1 51 26.5 V29'
+const CUP = { w: 14, h: 22, rx: 3, y: 26, left: 6, right: 44 }
+/** Shoulder on the plinth just under the right cup (the arm comes out from under it); the pose group turns about it (character.css). Hand centre ARM_LEN east of it. */
+const SHOULDER = { x: 50, y: 50 }
+const ARM_LEN = 11
+const HAND = 8
+/** On the coin's plinth under the chin, clear of the head disc and its outline. */
+const LED = { cx: 32, cy: 55.6, r: 2 }
 
 export interface CharacterTimers {
   setTimeout(fn: () => void, ms: number): unknown
@@ -148,7 +154,7 @@ function el(doc: Pick<Document, 'createElementNS'>, parent: Element | null, tag:
   return node
 }
 
-/** The svg, built by DOM calls only. Drawing order: coin, arm (behind nothing but the coin), head, headphones (band then cups over the head's sides), led, thought dots. */
+/** The svg, built by DOM calls only. Drawing order: coin, head, headphones (band then cups over the head's sides), arm (in front of its cup), led, thought dots. */
 export function buildCharacterSvg(doc: Pick<Document, 'createElementNS'>): { svg: SVGSVGElement; arm: Element } {
   const line = { stroke: C.nuit, 'stroke-width': 3 }
   const svg = el(doc, null, 'svg', {
@@ -160,11 +166,11 @@ export function buildCharacterSvg(doc: Pick<Document, 'createElementNS'>): { svg
     'data-state': 'idle',
     'data-dir': 'east',
   })
-  el(doc, svg, 'circle', { 'data-part': 'coin', class: 'tpo-coin', cx: COIN.cx, cy: COIN.cy, r: COIN.r, fill: C.prune })
+  // The figure (coin + body) dims as ONE layer in sleep, so the coin never shows through the head; the LED stays outside it, at full strength.
+  const figure = el(doc, svg, 'g', { class: 'tpo-figure' })
+  el(doc, figure, 'circle', { 'data-part': 'coin', class: 'tpo-coin', cx: COIN.cx, cy: COIN.cy, r: COIN.r, fill: C.prune })
 
-  const body = el(doc, svg, 'g', { class: 'tpo-body' })
-
-  // The arm sits in FRONT of the cups (it starts at the cup's corner); outer group = the west mirror (attribute), inner = the pose (CSS rotation).
+  const body = el(doc, figure, 'g', { class: 'tpo-body' })
   const tilt = el(doc, body, 'g', { class: 'tpo-tilt' })
 
   const head = el(doc, tilt, 'g', { 'data-part': 'head', class: 'tpo-head' })
@@ -196,13 +202,17 @@ export function buildCharacterSvg(doc: Pick<Document, 'createElementNS'>): { svg
   for (const x of [CUP.left, CUP.right])
     el(doc, cups, 'rect', { class: 'tpo-cup', x, y: CUP.y, width: CUP.w, height: CUP.h, rx: CUP.rx, fill: C.ambre, ...line })
 
+  // The arm sits in FRONT of the cup it comes out of: a Papier sleeve in a Nuit casing (it reads on Ambre, Prune, Nuit and Papier alike), a
+  // square hand. Outer group = the west mirror (attribute, character.ts); inner group = the pose (a CSS rotation about the shoulder).
   const arm = el(doc, body, 'g', { 'data-part': 'arm', class: 'tpo-arm' })
   const pose = el(doc, arm, 'g', { class: 'tpo-arm-pose' })
-  el(doc, pose, 'path', { class: 'tpo-arm-line', d: `M${SHOULDER.x} ${SHOULDER.y} h${HAND + 3}`, fill: 'none', stroke: C.nuit, 'stroke-width': 3.5, 'stroke-linecap': 'square' })
+  const reach = `M${SHOULDER.x} ${SHOULDER.y} h${ARM_LEN}`
+  el(doc, pose, 'path', { class: 'tpo-arm-line', d: reach, fill: 'none', stroke: C.nuit, 'stroke-width': 6, 'stroke-linecap': 'square' })
+  el(doc, pose, 'path', { class: 'tpo-arm-sleeve', d: reach, fill: 'none', stroke: C.papier, 'stroke-width': 3, 'stroke-linecap': 'square' })
   el(doc, pose, 'rect', {
     'data-part': 'hand',
     class: 'tpo-hand',
-    x: SHOULDER.x + HAND,
+    x: SHOULDER.x + ARM_LEN - HAND / 2,
     y: SHOULDER.y - HAND / 2,
     width: HAND,
     height: HAND,
@@ -211,9 +221,9 @@ export function buildCharacterSvg(doc: Pick<Document, 'createElementNS'>): { svg
     'stroke-width': 2,
   })
 
-  // Standby LED: on the coin under the chin, clear of the head; full brightness while the rest dims to 70 % in sleep.
+  // Standby LED: on the coin under the chin, clear of the head; full brightness while the figure dims to 70 % in sleep.
   const led = el(doc, svg, 'g', { 'data-part': 'led', class: 'tpo-led' })
-  el(doc, led, 'circle', { cx: 32, cy: 54.3, r: 1.6, fill: C.ambre })
+  el(doc, led, 'circle', { cx: LED.cx, cy: LED.cy, r: LED.r, fill: C.ambre })
 
   const think = el(doc, svg, 'g', { 'data-part': 'think', class: 'tpo-think' })
   const dot = { fill: C.papier, stroke: C.nuit, 'stroke-width': 1.2 }

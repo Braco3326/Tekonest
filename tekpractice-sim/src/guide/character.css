@@ -1,0 +1,379 @@
+/*
+ * The new Oscar's motion sheet (onboarding spec 10.2 timing table, plan T5.2). The svg is built by src/guide/character.ts (class .tpo,
+ * attributes data-state and data-dir); this sheet says how each state looks and moves.
+ *
+ * Rules:
+ *  - EVERY animation is finite (an iteration count, never infinite); transitions are 120 to 220 ms. Six seconds after any state change
+ *    nothing runs (tests/e2e/character.spec.ts asserts document.getAnimations() is empty).
+ *  - Each state has a STATIC POSE (the last column of the table). It is written outside any animation, so it holds under reduced motion,
+ *    and every animation ends on it (except nod, which ends lowered and rises back through the transition when the host state ends).
+ *  - The vendored sheet (src/guide/vendor/guide.css, read-only) loops breathe, bob, dots, hop, pop, float and the ring pulse forever. Under
+ *    the host class .tp-oscar-host, put on the vendored .oscar-guide root by the host (plan T5.3), those loops are stopped here: the ring
+ *    pulses 3 x 600 ms then stays steady, the vendored mascot (hidden by the host anyway) does not animate. Specificity: three classes
+ *    beat the vendored two; no !important needed, so the vendored reduced-motion rules (with !important) still win.
+ *  - Reduced motion (the media query, or the vendored .oscar-reduced root class): no animation, no transition, only the static poses.
+ *  - Directions: --tpo-side is +1 facing east / north / south and -1 facing west (the arm is mirrored for west by character.ts).
+ *  - Transform origins are in viewBox units (transform-box: view-box): the 64 x 64 grid of character.ts.
+ */
+
+.tpo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  --tpo-side: 1;
+}
+.tpo[data-dir='west'] {
+  --tpo-side: -1;
+}
+
+.tpo * {
+  transform-box: view-box;
+}
+
+/* Pivots: the body leans on the chin, the head and headphones tilt on the neck, the cups lift about the band, the arm turns at the shoulder. */
+.tpo-body {
+  transform-origin: 32px 52px;
+  transition: transform 200ms ease-out;
+}
+.tpo-tilt {
+  transform-origin: 32px 50px;
+  transition: transform 200ms ease-out;
+}
+.tpo-head {
+  transform-origin: 32px 36px;
+}
+.tpo-cups {
+  transform-origin: 32px 30px;
+  transition: transform 200ms ease-out;
+}
+.tpo-eyes {
+  transform-origin: 32.5px 38px;
+  transition: transform 160ms ease-out, opacity 120ms ease-out;
+}
+.tpo-arm-pose {
+  transform-origin: 50px 50px;
+  transform: rotate(50deg);
+  opacity: 0;
+  transition: transform 220ms ease-out, opacity 120ms ease-out;
+}
+.tpo-figure,
+.tpo-led,
+.tpo-lids,
+.tpo-mouth-flat,
+.tpo-mouth-smile,
+.tpo-think {
+  transition: opacity 150ms ease-out;
+}
+.tpo-led,
+.tpo-lids,
+.tpo-mouth-flat,
+.tpo-mouth-smile,
+.tpo-think {
+  opacity: 0;
+}
+
+/* ---- Static poses (the table's last column) --------------------------------------------------------------------------------------------- */
+
+/* idle: eyes open, still (the default above). */
+
+/* walk: leaning 6 deg toward the move. */
+.tpo[data-state='walk'] .tpo-body {
+  transform: rotate(calc(var(--tpo-side) * 6deg));
+}
+
+/* point: arm extended toward the ring, the gaze with it, the head leaning 4 deg toward it (east / west; upright for north / south). */
+.tpo[data-state='point'] .tpo-tilt {
+  transform: rotate(calc(var(--tpo-side) * 4deg));
+}
+.tpo[data-state='point'][data-dir='north'] .tpo-tilt,
+.tpo[data-state='point'][data-dir='south'] .tpo-tilt {
+  transform: none;
+}
+.tpo[data-state='point'] .tpo-arm-pose {
+  opacity: 1;
+  transform: rotate(-15deg);
+}
+.tpo[data-state='point'][data-dir='north'] .tpo-arm-pose {
+  transform: rotate(-72deg);
+}
+.tpo[data-state='point'][data-dir='south'] .tpo-arm-pose {
+  transform: rotate(55deg);
+}
+.tpo[data-state='point'] .tpo-eyes {
+  transform: translate(calc(var(--tpo-side) * 1.5px), -0.5px);
+}
+.tpo[data-state='point'][data-dir='north'] .tpo-eyes {
+  transform: translate(0.5px, -2px);
+}
+.tpo[data-state='point'][data-dir='south'] .tpo-eyes {
+  transform: translate(0.5px, 1.5px);
+}
+
+/* think: three dots shown, head cocked away from them, eyes up toward them. */
+.tpo[data-state='think'] .tpo-think {
+  opacity: 1;
+}
+.tpo[data-state='think'] .tpo-tilt {
+  transform: rotate(-6deg);
+}
+.tpo[data-state='think'] .tpo-eyes {
+  transform: translate(1.5px, -2px);
+}
+
+/* celebrate: the headphones lifted 2 units, a short open smile. */
+.tpo[data-state='celebrate'] .tpo-cups {
+  transform: translateY(-2px);
+}
+.tpo[data-state='celebrate'] .tpo-mouth-smile {
+  opacity: 1;
+}
+
+/* shrug (the vendored no): head tilted 8 deg away from the raised hand, flat mouth. */
+.tpo[data-state='shrug'] .tpo-tilt {
+  transform: rotate(calc(var(--tpo-side) * -8deg));
+}
+.tpo[data-state='shrug'] .tpo-arm-pose {
+  opacity: 1;
+  transform: rotate(-48deg);
+}
+.tpo[data-state='shrug'] .tpo-mouth-flat {
+  opacity: 1;
+}
+
+/* nod: head lowered 3 units. */
+.tpo[data-state='nod'] .tpo-tilt {
+  transform: translateY(3px);
+}
+
+/* wave: hand raised. */
+.tpo[data-state='wave'] .tpo-arm-pose {
+  opacity: 1;
+  transform: rotate(-72deg);
+}
+
+/* sleep: lids closed, standby LED on (outside the figure, so at full strength), the figure at 70 % as one layer. */
+.tpo[data-state='sleep'] .tpo-eyes {
+  opacity: 0;
+}
+.tpo[data-state='sleep'] .tpo-lids,
+.tpo[data-state='sleep'] .tpo-led {
+  opacity: 1;
+}
+.tpo[data-state='sleep'] .tpo-figure {
+  opacity: 0.7;
+}
+
+/* ---- Motion (finite; durations, counts and easings of the table) ------------------------------------------------------------------------- */
+
+/* idle: one breath (head 1 -> 1.02 -> 1) and one blink, 4 000 ms once, ease-in-out. */
+.tpo[data-state='idle'] .tpo-head {
+  animation: tpo-breathe 4000ms ease-in-out 1;
+}
+.tpo[data-state='idle'] .tpo-eyes {
+  animation: tpo-blink 4000ms ease-in-out 1;
+}
+
+/* walk: a bob of 550 ms, ease-in-out; 2 at most (the vendored glide is <= 1 000 ms, and the state leaves walk when it ends). */
+.tpo[data-state='walk'] .tpo-body {
+  animation: tpo-bob 550ms ease-in-out 2;
+}
+
+/* point: the character is still (the arm reaches through its 220 ms transition); the ring pulses 3 x 600 ms, ease-out, then holds. */
+.oscar-guide.tp-oscar-host .oscar-ring {
+  animation: tpo-ring 600ms ease-out 3;
+}
+
+/* think: the three dots fade in sequence, 1 200 ms a cycle, 4 cycles at most, linear. */
+.tpo[data-state='think'] .tpo-dot {
+  animation: tpo-dot 1200ms linear 4 backwards;
+}
+.tpo[data-state='think'] .tpo-dot-b {
+  animation-delay: 200ms;
+}
+.tpo[data-state='think'] .tpo-dot-c {
+  animation-delay: 400ms;
+}
+
+/* celebrate: the cups lift 2 units and pulse twice, 1 000 ms once, cubic-bezier(.3, 1.4, .5, 1). */
+.tpo[data-state='celebrate'] .tpo-cups {
+  animation: tpo-cheer 1000ms cubic-bezier(0.3, 1.4, 0.5, 1) 1;
+}
+
+/* shrug: the head tilts 8 deg and the hand rises, 700 ms once, ease-out (not a headshake). */
+.tpo[data-state='shrug'] .tpo-tilt {
+  animation: tpo-shrug-tilt 700ms ease-out 1;
+}
+.tpo[data-state='shrug'] .tpo-arm-pose {
+  animation: tpo-shrug-arm 700ms ease-out 1;
+}
+
+/* nod: the head dips twice, 600 ms once, ease-in-out. */
+.tpo[data-state='nod'] .tpo-tilt {
+  animation: tpo-nod 600ms ease-in-out 1;
+}
+
+/* wave: 120 ms of anticipation (10 % of 1 200), then two swings of the hand, 1 200 ms once, ease-in-out. */
+.tpo[data-state='wave'] .tpo-arm-pose {
+  animation: tpo-wave 1200ms ease-in-out 1;
+}
+
+/* sleep: static (no loop). */
+
+@keyframes tpo-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes tpo-blink {
+  0%,
+  60%,
+  70%,
+  100% {
+    transform: scaleY(1);
+  }
+  65% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes tpo-bob {
+  0%,
+  100% {
+    transform: rotate(calc(var(--tpo-side) * 6deg)) translateY(0);
+  }
+  50% {
+    transform: rotate(calc(var(--tpo-side) * 6deg)) translateY(-2.5px);
+  }
+}
+
+@keyframes tpo-ring {
+  0% {
+    opacity: 0.55;
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes tpo-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes tpo-cheer {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  25% {
+    transform: translateY(-2px) scale(1.07);
+  }
+  50% {
+    transform: translateY(-2px) scale(1);
+  }
+  75% {
+    transform: translateY(-2px) scale(1.07);
+  }
+  100% {
+    transform: translateY(-2px) scale(1);
+  }
+}
+
+@keyframes tpo-shrug-tilt {
+  0% {
+    transform: rotate(0deg);
+  }
+  65% {
+    transform: rotate(calc(var(--tpo-side) * -10deg));
+  }
+  100% {
+    transform: rotate(calc(var(--tpo-side) * -8deg));
+  }
+}
+
+@keyframes tpo-shrug-arm {
+  0% {
+    opacity: 0;
+    transform: rotate(40deg);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-48deg);
+  }
+}
+
+@keyframes tpo-nod {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(3px);
+  }
+  50% {
+    transform: translateY(0.5px);
+  }
+  75%,
+  100% {
+    transform: translateY(3px);
+  }
+}
+
+@keyframes tpo-wave {
+  0% {
+    transform: rotate(-72deg);
+  }
+  10% {
+    transform: rotate(-58deg);
+  }
+  32% {
+    transform: rotate(-96deg);
+  }
+  55% {
+    transform: rotate(-62deg);
+  }
+  78% {
+    transform: rotate(-96deg);
+  }
+  100% {
+    transform: rotate(-72deg);
+  }
+}
+
+/* ---- The vendored loops, stopped under the host class -------------------------------------------------------------------------------------- */
+
+.oscar-guide.tp-oscar-host .oscar-mascot,
+.oscar-guide.tp-oscar-host .oscar-mascot * {
+  animation: none;
+}
+
+/* ---- Reduced motion: static poses only ----------------------------------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .tpo,
+  .tpo *,
+  .oscar-guide.tp-oscar-host .oscar-ring {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+.oscar-reduced .tpo,
+.oscar-reduced .tpo * {
+  animation: none !important;
+  transition: none !important;
+}
