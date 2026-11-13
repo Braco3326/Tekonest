@@ -484,12 +484,19 @@ for (const id of DESIGN_IDS) {
     const n = packageById(id).pacing.steps.length
     await expect(live(page)).toContainText(`étape 1 sur ${n}`, { timeout: 10_000 })
     const atStart = await readColours(page) // step 1: a current mark and the marks to come (the last step of a three-step run has none)
-    // step 1 done by its own event (the console placed, or on the playable model the first sound), then step 2 passed: a done, a « passée » and a current mark, every state in its colours
-    if (packageById(id).layout.start === 'playable-model') await testSignal(page)
-    else await act(page, SETUP.console)
-    await expect(live(page)).toContainText(`étape 2 sur ${n}`, { timeout: 10_000 })
-    await oscarChip(page, 'Passer cette étape').click()
-    await expect(count(page)).toHaveText(`Étape 3 sur ${n}`)
+    if (packageById(id).layout.start === 'playable-model') {
+      // three steps (T6 review S2: with nothing unplugged step 3 is already satisfied, so passing step 2 would end the run): step 1 passed, then the unplug ends step 2 and step 3 (the replug) is current
+      await oscarChip(page, 'Passer cette étape').click()
+      await expect(count(page)).toHaveText(`Étape 2 sur ${n}`)
+      await act(page, [{ type: 'UNPLUG', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12-g', port: 'in-line-a' } }])
+      await expect(count(page)).toHaveText(`Étape 3 sur ${n}`, { timeout: 10_000 })
+    } else {
+      // step 1 done by its own event (the console placed), then step 2 passed: a done, a « passée » and a current mark, every state in its colours
+      await act(page, SETUP.console)
+      await expect(live(page)).toContainText(`étape 2 sur ${n}`, { timeout: 10_000 })
+      await oscarChip(page, 'Passer cette étape').click()
+      await expect(count(page)).toHaveText(`Étape 3 sur ${n}`)
+    }
     const atLater = await readColours(page)
     const c: Computed = { ...atLater, todoBorder: atLater.todoBorder || atStart.todoBorder }
     for (const [k, v] of Object.entries(c)) if (k !== 'line') expect(v, `package ${id}: ${k} was read`).not.toBe('')
