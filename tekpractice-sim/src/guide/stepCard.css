@@ -64,9 +64,13 @@
 .tp-sc-dot--key { width: 20px; height: 20px; }
 .tp-sc-dot--key .tp-sc-mark svg { width: 12px; height: 12px; }
 
-.tp-sc-closing { order: 4; flex: 1 1 100%; max-width: 78ch; font-size: 13px; }
+/* The closing lines (T6a S2): at desktop width the two sentences sit side by side on one row (about two lines of 12 px each), so the closing card costs about one more row, not four lines. */
+.tp-sc-closing { order: 4; flex: 1 1 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; font-size: 12px; line-height: 1.35; }
 .tp-sc-closing[hidden] { display: none; }
-.tp-sc-closing p { margin: 2px 0; }
+.tp-sc-closing p { margin: 0; }
+@media (max-width: 900px) {
+  .tp-sc-closing { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
 
 .cr .tp-sc-action {
   order: 3;

@@ -11,7 +11,8 @@ export const TUTORIAL_SLOT_TESTID = 'tutorial-slot'
 /**
  * The height (CSS px) the slot takes from the 3D view at desktop width, as an upper bound (the step card measures 49 px, its compact companion look 35 px): the first-sound framing
  * (src/creation/onboarding/framing.ts) reserves it when a tutorial is about to open the slot, so the SM58 keeps its pixels once the row is there. tests/e2e/onboarding-stepcard.spec.ts
- * asserts the slot never exceeds it at 1366 px.
+ * asserts the slot never exceeds it at 1366 px. These are DESKTOP values (a coarse pointer's 44 px button, a window under 900 px or the closing lines make the row taller): the framing
+ * does not reserve those, and does not reserve the CLOSING card at all (the first-sound framing happens at the start of the tutorial, the closing card at its end).
  */
 export const TUTORIAL_ROW_PX = 49
 const SHELL_ROOT = '[data-testid="creation-root"]'

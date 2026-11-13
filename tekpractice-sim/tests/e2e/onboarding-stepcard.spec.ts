@@ -236,6 +236,13 @@ test('after the last step: listen.simple, then the checklist’s mic line (a mic
   await expect(closing).toBeVisible({ timeout: 10_000 })
   await expect(count(page)).toHaveText(COPY.tutorialCard!.closingTitle)
   await expect(closing.locator('p')).toHaveText([COPY.listen!.simple, COPY.checklist!.micCabled])
+  // S2 (T6a review): at desktop width the two lines sit side by side on one row and the closing card stays cheap (the key row shares the first row)
+  const tops = await closing.locator('p').evaluateAll((ps) => ps.map((e) => Math.round(e.getBoundingClientRect().top)))
+  expect(Math.abs(tops[0] - tops[1]), 'the two closing lines share a row').toBeLessThanOrEqual(2)
+  const closingH = (await box(slot(page))).height
+  console.log('CLOSING slot height at 1366 x 768:', closingH)
+  expect(closingH, 'the closing card is cheaper than before (136 px)').toBeLessThanOrEqual(100)
+  expect(await closing.getAttribute('aria-live')).toBe('polite')
   expect(await states(page)).toEqual(Array(10).fill('done'))
   await expect(page.getByTestId('tutorial-skip')).toHaveText('Fermer')
   const text = await card(page).innerText()

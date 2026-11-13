@@ -197,6 +197,7 @@ export function mountStepCard(d: StepCardDeps): StepCard | null {
     legend.dataset.testid = 'tutorial-legend'
     const closing = el(doc, 'div', 'tp-sc-closing')
     closing.dataset.testid = 'tutorial-closing'
+    closing.setAttribute('aria-live', 'polite') // the closing lines are said once when they appear (the rest of the card is silent: Oscar's bubble says the steps)
     const action = el(doc, 'button', 'tp-sc-action')
     action.type = 'button'
     action.dataset.testid = 'tutorial-skip'
