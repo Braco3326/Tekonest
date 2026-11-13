@@ -235,6 +235,13 @@ async function noProactiveBubble(page: Page, label: string): Promise<void> {
       const b = document.querySelector('.oscar-bubble') as HTMLElement | null
       return { hidden: b === null ? true : b.hidden, live: document.querySelector('.oscar-live')?.textContent ?? '' }
     })
+  // positive control (T6a S5): the sampler can see a bubble. A click on Oscar's icon (a learner's action) opens it: read() must change; then it is closed again and the baseline is taken
+  const before = await read()
+  await page.locator('.oscar-icon').click()
+  await expect.poll(async () => JSON.stringify(await read()), { message: `${label}: the sampler must see the bubble open` }).not.toBe(JSON.stringify(before))
+  expect((await read()).hidden, `${label}: opened by the learner`).toBe(false)
+  await page.locator('.oscar-bubble .oscar-close').click()
+  await expect.poll(async () => (await read()).hidden).toBe(true)
   const first = await read()
   for (let i = 0; i < 20; i++) {
     await page.waitForTimeout(3000)

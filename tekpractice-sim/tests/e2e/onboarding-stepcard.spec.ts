@@ -388,6 +388,35 @@ for (const vp of [
     }
   })
 }
+// N1 (T6a review): the 49 / 35 px rows are DESKTOP values; at 900 and 768 px wide the row wraps (the key makes it taller: it is not reserved by the framing). What must hold at any width:
+// the card covers neither Oscar's icon nor the middle of the 3D view (the canvas centre box), and it stays inside the window.
+for (const vp of [
+  { width: 900, height: 700 },
+  { width: 768, height: 1024 },
+]) {
+  test(`at ${vp.width} x ${vp.height} (key shown, the row at its tallest) the card covers neither Oscar's icon nor the canvas centre box`, async ({ page }) => {
+    await page.setViewportSize(vp)
+    await takeTutorial(page, 1)
+    await expect(live(page)).toContainText('étape 1 sur 10', { timeout: 10_000 })
+    await act(page, SETUP.console)
+    await expect(live(page)).toContainText('étape 2 sur 10', { timeout: 10_000 })
+    await oscarChip(page, 'Passer cette étape').click() // a « passée » mark: the key joins the card
+    await expect(page.getByTestId('tutorial-legend')).toBeVisible()
+    await page.waitForTimeout(800)
+    const c = await box(card(page))
+    const view = await box(page.locator('.cr-viewport'))
+    console.log(`CARD at ${vp.width} x ${vp.height} with the key: ${Math.round(c.height)} px`)
+    expect(c.x).toBeGreaterThanOrEqual(0)
+    expect(c.x + c.width).toBeLessThanOrEqual(vp.width)
+    expect(c.y + c.height, 'the card ends where the view begins').toBeLessThanOrEqual(view.y + 1)
+    const centre = { x: view.x + view.width * 0.25, y: view.y + view.height * 0.25, width: view.width * 0.5, height: view.height * 0.5 }
+    expect(intersects(c, centre), 'the canvas centre box is free').toBe(false)
+    const icon = await page.locator('.oscar-icon').boundingBox()
+    expect(icon).not.toBeNull()
+    expect(intersects(icon!, c), "Oscar's icon is clear of the card").toBe(false)
+  })
+}
+
 interface Computed {
   cardFg: string
   cardBg: string

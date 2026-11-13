@@ -327,7 +327,7 @@ for (const id of DESIGN_IDS) {
 
     // ── 5. the two pop-overs: the error list (Signal) and « Pourquoi je n’entends rien ? » (the chip)
     // T6.2 (test setup update, no assertion changed): where the checklist is a docked panel (the package's `checklist: 'panel'`) there is no chip and nothing to open: the list is already on the page and is audited as it is
-    if (await page.getByTestId('checklist-chip').isVisible()) await page.getByTestId('checklist-chip').click()
+    if (pkg.layout.checklist !== 'panel') await page.getByTestId('checklist-chip').click() // the package's form, from data (a visibility probe raced the list's first render)
     await page.locator('.cr-checklist:not([hidden])').waitFor()
     await noAmbre('checklist')
     await axeColour(page, 'checklist pop-over')

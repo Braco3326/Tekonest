@@ -142,7 +142,8 @@ function markEl(doc: Document, state: DotState, k: number): HTMLElement {
 function relayout(doc: Document): void {
   try {
     const win = doc.defaultView
-    if (win !== null && typeof win.dispatchEvent === 'function' && typeof Event === 'function') win.dispatchEvent(new Event('resize'))
+    // after the current call stack: `relayout` runs inside `update`, itself inside the controller's persist; the widget's resize handler must not run re-entrantly in there (N5)
+    if (win !== null && typeof win.dispatchEvent === 'function' && typeof Event === 'function') queueMicrotask(() => win.dispatchEvent(new Event('resize')))
   } catch {
     // nothing to tell
   }

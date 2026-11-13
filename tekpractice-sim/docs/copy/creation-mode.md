@@ -986,7 +986,7 @@ La fiche d’étape du tutoriel (packs d’accueil, T6.1 ; spec 6.6 et 9) : **la
 | `tutorialCard.stateCurrent` | en cours | à valider (tekuxwriter) | Marque : l’étape courante |
 | `tutorialCard.stateTodo` | à venir | à valider (tekuxwriter) | Marque : une étape pas encore atteinte |
 | `tutorialCard.statePassed` | passée | à valider (tekuxwriter) | Marque : l’étape a été passée avec « Passer cette étape » (jamais une coche) |
-| `tutorialCard.stateShown` | montré | à valider (tekuxwriter) | Marque : l’aide « Je branche pour vous » a fait cette étape (jamais une coche, aucune célébration) |
+| `tutorialCard.stateShown` | montré | à valider (tekuxwriter) | Marque : l’aide « Je branche pour vous » a fait cette étape (jamais une coche, aucune célébration). À trancher par tekuxwriter : « montré » ou « montrée » (le texte caché de la marque dit « Étape 8 : montré », le sujet étant l’étape, féminin ; « passée » est déjà au féminin) |
 | `tutorialCard.stateEarly` | déjà en place | à valider (tekuxwriter) | Marque : le résultat de l’étape était déjà sur le montage quand elle est venue |
 | `tutorialCard.closingTitle` | Fin des étapes | à valider (tekuxwriter) | Titre de la fiche après la dernière étape : la même formule neutre que la fin de parcours d’Oscar (une étape a pu être passée) |
 | `tutorialCard.close` | Fermer | à valider (tekuxwriter) | Bouton de la fiche après la dernière étape : elle quitte la page, la ligne est libérée |

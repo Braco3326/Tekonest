@@ -31,9 +31,8 @@
 .tp-stepcard:focus-visible { outline: 2px solid var(--cr-focus); outline-offset: -3px; box-shadow: inset 0 0 0 5px var(--cr-nuit); }
 
 /* The count: Plex (the title font draws the É of « Étape » as a macron at small sizes). */
-.tp-sc-count { flex: 0 0 auto; margin: 0; font: 600 16px/1.2 var(--cr-font-ui); white-space: nowrap; }
+.tp-sc-count { order: 0; flex: 0 0 auto; margin: 0; font: 600 16px/1.2 var(--cr-font-ui); white-space: nowrap; }
 /* Visual order (the DOM order, which is the tab order, never changes): count, marks, key, button, closing lines. On a desktop everything but the closing lines is ONE row (49 px: what the first-sound framing reserves). */
-.tp-sc-count { order: 0; }
 .tp-sc-steps { order: 1; flex: 0 1 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; margin: 0; padding: 0; list-style: none; }
 
 /* A mark: a 28 px square. A plain step is an outline with its number; the current one is the accent fill; a step done is the ink filled with a tick. */
