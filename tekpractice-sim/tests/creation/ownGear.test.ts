@@ -7,7 +7,7 @@
  */
 import { describe, expect, it } from 'vitest'
 import { COPY } from '../../src/creation/copy'
-import { VENUE_KEYS, ownGearDue, type OwnGearInput } from '../../src/creation/onboarding/ownGear'
+import { VENUE_KEYS, ownGearDue, ownGearView, type OwnGearInput } from '../../src/creation/onboarding/ownGear'
 import { PROFILES } from '../../src/creation/onboarding/profiles'
 import { PROFILE_IDS, parseRecord, reduce, type OnboardingRecord } from '../../src/creation/onboarding/state'
 
@@ -71,5 +71,18 @@ describe('the card’s words (COPY.ownGear): one line, three generic venue types
   })
   it('no digit anywhere in the section (no capacity, size, price, date or count)', () => {
     for (const [k, t] of Object.entries(G)) expect(t, `ownGear.${k}`).not.toMatch(/\d/)
+  })
+})
+
+describe('ownGearView (what the DOM shows): three venue types, EACH with the label; nothing else', () => {
+  const v = ownGearView()
+  it('three venues in order, every one carrying « salle d’exemple, non vérifiée »', () => {
+    expect(v.venues.map((x) => x.title)).toEqual(['Salle des fêtes', 'Bar-concert', 'Petite salle'])
+    for (const x of v.venues) expect(x.label).toBe('salle d’exemple, non vérifiée')
+  })
+  it('the line, the region name and the dismiss word are the COPY ones, and no text of the view has a digit', () => {
+    expect(v.line).toBe(COPY.ownGear!.line)
+    expect(v.dismiss).toBe('Fermer')
+    for (const t of [v.region, v.line, v.dismiss, ...v.venues.flatMap((x) => [x.title, x.label])]) expect(t).not.toMatch(/\d/)
   })
 })

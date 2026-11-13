@@ -125,7 +125,7 @@ test('an unplug and a replug before the sound never move the run: the cable even
 
 // The first room is framed for the MODEL (packages.ts `modelFraming`): all five devices are in view, above the inventory drawer the profile opens, on a 768 and a 650 px window.
 for (const height of [768, 650]) {
-  test(`1366 x ${height}: the model's five devices are inside the 3D view and above the open drawer; the QL1 (the stage reads as a stage)`, async ({ page }) => {
+  test(`1366 x ${height}: the model's five devices are inside the 3D view and above the open drawer, and the stage reads as a stage`, async ({ page }) => {
     await page.setViewportSize({ width: 1366, height })
     await takeTutorial(page)
     await expect(count(page)).toHaveText('Étape 1 sur 3', { timeout: 10_000 })
