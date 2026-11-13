@@ -1095,7 +1095,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     courantEnceinte: 'Reliez aussi l’enceinte à la multiprise.',
     ecoute: 'Ouvrez Écoute, puis Signal de test.',
     /** Package 5 only, after `ecoute` (a sound is playing): one of two speakers is unplugged. */
-    debrancher: 'Pendant l’écoute, débranchez le câble de la console vers l’une des enceintes : cette enceinte se tait, l’autre continue.',
+    debrancher: 'Pendant l’écoute, débranchez le câble de la console vers l’une des enceintes, puis écoutez ce qui change.',
     rebrancher: 'Rebranchez-le : la prise proposée est compatible.',
     /** An accepted connection (with a nod, T5): the only acknowledgement; never « bien réglé », « bravo », « correct ». */
     accepted: 'Connexion acceptée.',

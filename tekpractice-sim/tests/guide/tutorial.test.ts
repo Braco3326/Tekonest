@@ -552,7 +552,7 @@ describe('tutorial copy', () => {
       courantConsole: 'Reliez la console à la multiprise.',
       courantEnceinte: 'Reliez aussi l’enceinte à la multiprise.',
       ecoute: 'Ouvrez Écoute, puis Signal de test.',
-      debrancher: 'Pendant l’écoute, débranchez le câble de la console vers l’une des enceintes : cette enceinte se tait, l’autre continue.',
+      debrancher: 'Pendant l’écoute, débranchez le câble de la console vers l’une des enceintes, puis écoutez ce qui change.',
       rebrancher: 'Rebranchez-le : la prise proposée est compatible.',
       accepted: 'Connexion acceptée.',
       helperOffer: 'Je peux brancher pour vous, dans le simulateur.',
@@ -589,6 +589,11 @@ describe('tutorial copy', () => {
       const ids = packageById(d).pacing.steps
       if (ids.includes('debrancher')) expect(ids.indexOf('ecoute'), `package ${d}`).toBeLessThan(ids.indexOf('debrancher'))
     }
+  })
+
+  it('T6 review C2: the unplug step says the action and invites to observe; it claims no audible result (what is heard on an unplug is not verified)', () => {
+    expect(text('tutorial.debrancher')).not.toMatch(/se tait|continue|silence|plus de son|coupe|entend/i)
+    expect(text('tutorial.debrancher')).toMatch(/débranchez le câble de la console vers l’une des enceintes, puis écoutez ce qui change./)
   })
 
   it('the only acknowledgement is « Connexion acceptée. »: no other tutorial line says accepté, réussi, bravo or bien', () => {

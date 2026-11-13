@@ -4,9 +4,10 @@
  * tutorial runs (src/guide/stepCard.ts), so on the plain address, an exam address and `?oscar=0` nothing here applies.
  *
  * The look follows the package's ROLE tokens (src/design/creationTokens.ts writes `--cr-role-*` on <html>, none of them named by a package number): `secondary` / `secondaryInk` carry
- * the card (declared pair, text >= 4.5 in every package: tests/design/packageContrast.test.ts), `accent` / `accentInk` / `accentEdge` the current step (Ambre fill with Nuit text:
- * 7.46; its edge on the card >= 3). Every text is the secondary ink on the secondary fill; no Ambre text, never on Papier. The focus ring is the shell's own (Ambre over a Nuit halo:
- * 4.24 on Prune, 7.46 on Nuit): this card is not re-pointed to a package's focus role, whose Nuit ring would vanish on a Prune card. No animation, no transition.
+ * the card on the dark surfaces (declared pair, text >= 4.5 in every package: tests/design/packageContrast.test.ts); on a Papier sheet (`html[data-surface='sheet']`, below) the card is Papier with Nuit text and
+ * Prune marks instead (T6a S3, ADR 0019 amended). `accent` / `accentInk` / `accentEdge` carry the current step (Ambre fill with Nuit text: 7.46; its edge on the card >= 3). On the dark
+ * surfaces every text is the secondary ink on the secondary fill; no Ambre text, never on Papier. The focus ring there is the shell's own (Ambre over a Nuit halo: 4.24 on Prune, 7.46 on Nuit),
+ * not re-pointed to the package's focus role, whose Nuit ring would vanish on a Prune card; on the Papier sheet it IS the package's focus role (Nuit). No animation, no transition.
  *
  * Desktop first (a 48 px row at 1366 x 768); tablet comfortable (the marks wrap under the count below 900 px); a coarse pointer gets a 44 px button.
  */
