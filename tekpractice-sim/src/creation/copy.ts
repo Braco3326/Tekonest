@@ -1050,6 +1050,24 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     chipHint: 'Rouvre l’écran de départ.',
   },
   /**
+   * The entrepreneur's card after the first sound (onboarding packs, T6.4, spec 3; src/creation/onboarding/ownGear.ts). One line and three GENERIC venue types, each labelled as an
+   * unverified example: no capacity, size, price or any figure, no real venue's name (the honesty scan reads this section as learner text). Every string here: à valider (tekuxwriter, 2026-11-13).
+   */
+  ownGear: {
+    /** Accessible name of the card (a labelled region, not a dialog). */
+    region: 'Votre matériel et des exemples de salles',
+    /** The one line: what the inventory is. */
+    line: 'Votre matériel n’est peut-être pas dans l’inventaire : seuls les appareils listés sont dans le simulateur.',
+    /** The three venue TYPES, in this order (ownGear.ts `VENUE_KEYS`). */
+    venueFetes: 'Salle des fêtes',
+    venueBar: 'Bar-concert',
+    venueSmall: 'Petite salle',
+    /** On each venue card. */
+    venueLabel: 'salle d’exemple, non vérifiée',
+    /** The button that dismisses the card (remembered). */
+    dismiss: 'Fermer',
+  },
+  /**
    * The tutorial « Premiers pas » (onboarding packs, T3.1, spec 6.3 and 7.2): Oscar's one sentence per step, what to do and where, never an outcome that is
    * not true yet (no sound before Écoute). Keys follow the step ids of src/guide/tutorial.ts. `{console}` and `{micro}` = the catalog labels of the source
    * console and of the SM58. The flow title is `menu.firstSteps` (by key); step 6 says `assist.sourceOff` (by key). `closingLines()` (src/guide/tutorial.ts) is `listen.simple` then

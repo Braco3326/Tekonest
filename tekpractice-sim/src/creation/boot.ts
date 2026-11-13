@@ -947,6 +947,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   // profile chip, Aide « Premiers pas ».
   const NO_ONBOARDING: Onboarding = {
     store: null,
+    soundStarted: () => undefined,
     premiersPas: false,
     startFirstVisit: () => false,
     requestTutorial: () => Promise.resolve(),
@@ -964,6 +965,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       tutorialAllowed: opts.tutorialAllowed === true,
       panels: designPkg?.layout.panels ?? { tree: true, props: true },
       doc: document,
+      shellRoot: shell.root,
       chipSlot: statusBar.checklistSlot,
       picker,
       placeOpen: () => store.design().roomId !== null,
@@ -1977,6 +1979,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
             host.setMetersLive(listen.active) // the consoles' meters and live screens move while audio plays, and rest otherwise
             listenIntent = listen.active // an end, a failure or a rig change that stopped it: the menu follows
             if (!listen.active) forgetFile()
+            if (listen.playing) onboarding.soundStarted() // the first sound of the session: the entrepreneur's card is due (T6.4; the onboarding decides who it is for)
           },
           bag: shellBag,
           container: shell.props,

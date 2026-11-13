@@ -36,6 +36,11 @@ export interface OnboardingRecord {
    * poll read as a start). Absent = start (records written before it, and every start: the field is written only for restart and skip).
    */
   kind?: Exclude<RequestKind, 'start'>
+  /**
+   * The learner dismissed the entrepreneur's card (the own-gear line and the three generic venue types shown after the first sound, T6.4: ownGear.ts). Absent = not dismissed (every
+   * record written before it, and every record of a learner who never dismissed it). A value this code does not know is ignored on read, never a reason to drop the record.
+   */
+  ownGear?: 'dismissed'
 }
 
 /** The slice of `Storage` the store needs (tests pass a fake). */
@@ -66,6 +71,8 @@ export type OnboardingEvent =
   | { type: 'answer'; profile: ProfileId; offer: OfferAnswer | null }
   /** Aide « Premiers pas » (start), « Recommencer » (restart), « Passer le tutoriel » (skip): the tutorial is asked for again; the earlier answer stays. */
   | { type: 'request'; kind?: RequestKind }
+  /** The learner dismissed the entrepreneur's card (T6.4). */
+  | { type: 'ownGear'; value: 'dismissed' }
 
 const BASE: OnboardingRecord = { v: 1, profile: null, offer: null, request: 0, shown: [] }
 
@@ -82,6 +89,8 @@ export function reduce(rec: OnboardingRecord | null, ev: OnboardingEvent): Onboa
       return ev.offer === 'taken' ? asking({ ...cur, profile: ev.profile, offer: ev.offer, request: cur.request + 1 }, 'start') : { ...cur, profile: ev.profile, offer: ev.offer ?? cur.offer }
     case 'request':
       return asking({ ...cur, request: cur.request + 1 }, ev.kind ?? 'start')
+    case 'ownGear':
+      return { ...cur, ownGear: ev.value }
   }
 }
 
@@ -103,7 +112,8 @@ export function parseRecord(raw: string | null): OnboardingRecord | null {
   if (!Array.isArray(r.shown) || !r.shown.every((s) => typeof s === 'string')) return null
   if (r.kind !== undefined && r.kind !== 'restart' && r.kind !== 'skip') return null
   const base: OnboardingRecord = { v: 1, profile: r.profile as ProfileId | null, offer: r.offer as OfferAnswer | null, request: r.request, shown: r.shown as StepId[] }
-  return r.kind === undefined ? base : { ...base, kind: r.kind }
+  const withKind: OnboardingRecord = r.kind === undefined ? base : { ...base, kind: r.kind }
+  return r.ownGear === 'dismissed' ? { ...withKind, ownGear: 'dismissed' } : withKind
 }
 
 export interface OnboardingStore {

@@ -7,6 +7,8 @@ import { COPY } from '../copy'
 import type { InventoryTab } from '../inventory'
 import type { PlacePicker } from '../shell/placePicker'
 import { mountProfileChip } from './profileChip'
+import { mountOwnGearCard } from './ownGearCard'
+import { ownGearDue } from './ownGear'
 import { panelsFor, profileById } from './profiles'
 import { tutorialInProgress } from '../../design/tutorialRecord'
 import { chipProfile, createOnboardingStore, entryStage, type OnboardingRecord, type OnboardingStore, type ProfileId, type RequestKind, type StorageLike } from './state'
@@ -25,6 +27,8 @@ export interface OnboardingWiring {
   /** The active package's `layout.panels`: what a profile that leaves the panels to the package opens the first room with. */
   panels: { tree: boolean; props: boolean }
   doc: Document
+  /** The shell root: the entrepreneur's card (T6.4) takes a reserved row of its grid. Absent = no card (a unit test with no DOM). */
+  shellRoot?: HTMLElement
   /** The status bar's checklist slot: the profile chip goes before it. */
   chipSlot: HTMLElement
   picker: Pick<PlacePicker, 'showStart' | 'hide' | 'show' | 'startShowing'>
@@ -71,6 +75,11 @@ export type TutorialAsk = RequestKind
 export interface Onboarding {
   /** The record's store, or null without `?design`. */
   readonly store: OnboardingStore | null
+  /**
+   * A sound started in this session (Écoute began to play: the first `playStarted`, T6.4): the entrepreneur's card is due from then on, for a profile whose `afterFirstSound` says so
+   * and until the learner dismissed it (ownGear.ts). Idempotent; a no-op without the onboarding.
+   */
+  soundStarted(): void
   /** Aide « Premiers pas » exists on this address (`?design` and `tutorialAllowed`). */
   readonly premiersPas: boolean
   /**
@@ -104,7 +113,7 @@ const chipText = (id: ProfileId | null): string =>
  * The record is written WITH the answer (profile and offer together) and only once the room is open (R-B): leaving mid-way, or a room that did not open, writes
  * nothing, so the `tutorial` request never goes up with no room to start it in.
  */
-export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfileChip = mountProfileChip): Onboarding {
+export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfileChip = mountProfileChip, mountGear: typeof mountOwnGearCard = mountOwnGearCard): Onboarding {
   const store = w.design ? createOnboardingStore(w.storage) : null
   const chip = store
     ? mountChip({
@@ -118,6 +127,27 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
       })
     : null
   chip?.render()
+
+  // The entrepreneur's card (T6.4): due once a sound started, for the profile whose data says so, until dismissed. Evaluated again whenever one of its inputs changes.
+  let sounded = false
+  const gear =
+    store && w.shellRoot
+      ? mountGear({
+          doc: w.doc,
+          root: w.shellRoot,
+          onDismiss: () => {
+            store.dispatch({ type: 'ownGear', value: 'dismissed' })
+            refreshGear()
+            w.returnFocus() // the focused button just left the page
+          },
+        })
+      : null
+  function refreshGear(): void {
+    if (!gear || !store) return
+    const record = store.read()
+    if (ownGearDue({ onboarding: true, profile: record?.profile ?? null, soundStarted: sounded, dismissed: record?.ownGear === 'dismissed' })) gear.show()
+    else gear.hide()
+  }
 
   /** A first-room profile: panels, then the drawer tab. */
   const applyProfile = (id: ProfileId): void => {
@@ -166,6 +196,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
           }
           store.dispatch({ type: 'answer', profile: r.profile, offer: r.offer })
           chip?.render()
+          refreshGear() // a profile chosen after a sound (the chip) may be the entrepreneur's; one chosen instead of it takes the card away
           applyProfile(r.profile)
         })()
       },
@@ -178,6 +209,10 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
   const waiting = (): string | undefined => (premiersPas && w.picker.startShowing ? COPY.menu!.firstStepsWait : undefined)
   return {
     store,
+    soundStarted() {
+      sounded = true
+      refreshGear()
+    },
     premiersPas,
     startFirstVisit() {
       if (!store) return false

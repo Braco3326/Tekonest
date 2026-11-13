@@ -109,3 +109,40 @@ for (const id of [2, 3] as const) {
     await page.screenshot({ path: `${OUT}/pkg-${id}-menu.png`, clip: { x: 0, y: 0, width: 760, height: 330 } })
   })
 }
+
+// T6.4: the entrepreneur's card after the first sound (profile 3), at 1366 x 768, in a dark package (1), the Papier sheet (3) and the model package (5): pkg-<n>-gear.png.
+// The sound plays (the test signal through the real menu). Nothing is asserted but that the card drew.
+for (const id of [1, 3, 5] as const) {
+  test(`package ${id}: the entrepreneur's card after the first sound at 1366 x 768`, async ({ page }) => {
+    mkdirSync(OUT, { recursive: true })
+    await page.goto(`/?design=${id}`)
+    await page.evaluate(() => window.localStorage.clear())
+    await page.reload()
+    await page.waitForFunction(() => !!window.__creation)
+    await page.getByTestId('start-screen').waitFor()
+    await page.keyboard.press('3')
+    await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
+    await page.waitForFunction(() => window.__creation!.place() === 'blank')
+    if ((await page.evaluate(() => window.__creation!.design().rig.instances.length)) === 0)
+      await page.evaluate(() => {
+        const c = window.__creation!
+        for (const i of [
+          { type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 0] },
+          { type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12', position: [-1, 0, 0] },
+          { type: 'SPAWN', deviceId: 'multiprise-secteur', instanceId: 'strip', position: [0.4, 0, 0] },
+          { type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12', port: 'in-line-a' } },
+          { type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: true },
+          { type: 'CONNECT', a: { instance: 'strip', port: 'out-1' }, b: { instance: 'ql1', port: 'power-in' } },
+          { type: 'CONNECT', a: { instance: 'strip', port: 'out-2' }, b: { instance: 'k12', port: 'power-in' } },
+        ])
+          c.dispatch(i as never)
+      })
+    await page.waitForFunction(() => !window.__creation!.cameraMoving() && window.__creation!.modelsPending() === 0)
+    await page.getByRole('menuitem', { name: 'Écoute', exact: true }).click()
+    await page.getByRole('menuitem', { name: 'Signal de test', exact: true }).click()
+    await page.waitForFunction(() => window.__creation!.audioState().state === 'playing', null, { timeout: 15_000 })
+    await expect(page.getByTestId('own-gear')).toBeVisible()
+    await page.waitForTimeout(900)
+    await page.screenshot({ path: `${OUT}/pkg-${id}-gear.png` })
+  })
+}

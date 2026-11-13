@@ -939,6 +939,20 @@ Première visite (packs d’accueil, T2) : l’écran de départ, uniquement sou
 | `onboarding.chipChoose` | Choisir un profil | à valider (tekuxwriter) | Pastille de la barre d’état tant qu’aucun profil n’est enregistré (écran quitté par « Tous les lieux » / Échap, ou jamais répondu) : rouvre l’étape « profil ». Rend vraie la phrase « Vous pourrez changer de profil à tout moment » |
 | `onboarding.chipHint` | Rouvre l’écran de départ. | à valider (tekuxwriter) | Infobulle (`title`) de la pastille, pour ses deux textes |
 
+## ownGear
+
+La carte de l’entrepreneur après le premier son (packs d’accueil, T6.4 ; spec 3). Profil 3 (« Je monte un projet ») seulement, une fois qu’un son a démarré dans la session (adresse avec `?design`, jamais un examen ni l’adresse simple). Une ligne et trois types de salle **génériques** : ni capacité, ni surface, ni prix, ni aucun chiffre, ni nom de lieu réel ; chaque type porte « salle d’exemple, non vérifiée ». Les types sont informatifs (aucun bouton) : aucune donnée ne relie un type de salle à une salle de l’application, un appui devrait inventer ce lien. La carte se ferme et ne revient plus (mémorisé dans l’enregistrement d’accueil). Tout ce qui suit : à valider (tekuxwriter, 2026-11-13).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `ownGear.region` | Votre matériel et des exemples de salles | à valider (tekuxwriter) | Nom accessible de la carte (région nommée, pas une boîte de dialogue) |
+| `ownGear.line` | Votre matériel n’est peut-être pas dans l’inventaire : seuls les appareils listés sont dans le simulateur. | à valider (tekuxwriter) | L’unique ligne de la carte (la phrase de la spec 3) ; ne promet ni ajout de matériel ni délai |
+| `ownGear.venueFetes` | Salle des fêtes | à valider (tekuxwriter) | Premier type de salle : un type, pas un lieu |
+| `ownGear.venueBar` | Bar-concert | à valider (tekuxwriter) | Deuxième type de salle |
+| `ownGear.venueSmall` | Petite salle | à valider (tekuxwriter) | Troisième type de salle : « petite » ne désigne aucune taille chiffrée |
+| `ownGear.venueLabel` | salle d’exemple, non vérifiée | à valider (tekuxwriter) | Sous chaque type de salle : ce sont des exemples, jamais un lieu réel ni vérifié |
+| `ownGear.dismiss` | Fermer | à valider (tekuxwriter) | Bouton qui ferme la carte pour de bon (mémorisé) ; seul élément qui prend le focus |
+
 ## tutorialUi
 
 Aide pendant que le tutoriel tourne (plan T3.2) : trois éléments à la place de « Premiers pas ». Rien ne relance le tutoriel tout seul ; après « Passer le tutoriel », Aide propose de nouveau « Premiers pas ». Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).

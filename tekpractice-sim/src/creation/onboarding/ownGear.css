@@ -1,0 +1,74 @@
+/*
+ * The entrepreneur's card (onboarding packs T6.4, src/creation/onboarding/ownGearCard.ts): one reserved row of the shell grid at the foot of the view, only while it is shown
+ * (`data-gear="on"` on the root, set and cleared by the card). Loaded with the onboarding chunk, so the plain address and an exam address never fetch it.
+ *
+ * Colours are ROLE tokens only (`--cr-role-*`, written by src/design/creationTokens.ts), each a pair the packages already declare (src/design/packageContrast.ts): the ink on the
+ * surface (text >= 4.5), the muted ink on the surface (secondary text >= 4.5, and the 1 px control borders >= 3), the focus ring of the shell on the surface. No Ambre, no new
+ * colour. No animation, no transition.
+ */
+.cr[data-gear='on'] {
+  grid-template-rows: var(--cr-menubar-h) minmax(0, 1fr) auto var(--cr-status-h);
+  grid-template-areas:
+    'menu menu menu'
+    'tree view props'
+    'gear gear gear'
+    'status status status';
+}
+/* with a tutorial row too (the step card above, this card below): the view keeps what is left */
+.cr[data-gear='on'][data-tutorial='on'] {
+  grid-template-rows: var(--cr-menubar-h) auto minmax(0, 1fr) auto var(--cr-status-h);
+  grid-template-areas:
+    'menu menu menu'
+    'tutorial tutorial tutorial'
+    'tree view props'
+    'gear gear gear'
+    'status status status';
+}
+.cr-gear-slot { grid-area: gear; min-width: 0; }
+
+.tp-gear {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  padding: 8px 16px;
+  background: var(--cr-role-surface, var(--cr-panel));
+  color: var(--cr-role-ink, var(--cr-papier));
+  border-top: 1px solid var(--cr-role-line, var(--cr-panel-line));
+  font: 400 13px/1.4 var(--cr-font-ui);
+}
+.tp-gear-line { flex: 1 1 100%; margin: 0; }
+.tp-gear-venues { flex: 1 1 auto; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; min-width: 0; }
+/* a venue type: a bordered card (the muted ink, the declared control border, >= 3), its title in the ink, its label in the muted ink (>= 4.5) */
+.tp-gear-venue {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 4px 10px;
+  border: 1px solid var(--cr-role-ink-muted, var(--cr-ink-muted));
+}
+.tp-gear-venue-title { font-weight: 600; }
+.tp-gear-venue-label { color: var(--cr-role-ink-muted, var(--cr-ink-muted)); font-size: 12px; }
+.cr .tp-gear-dismiss {
+  flex: 0 0 auto;
+  margin-left: auto;
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--cr-role-ink-muted, var(--cr-ink-muted));
+  color: var(--cr-role-ink, var(--cr-papier));
+  font: 600 13px/1 var(--cr-font-ui);
+}
+@media (hover: hover) {
+  .cr .tp-gear-dismiss:hover { border-color: var(--cr-role-select, var(--cr-ambre)); }
+}
+@media (pointer: coarse) {
+  .cr .tp-gear-dismiss { min-height: 44px; }
+}
+/* The keyboard ring is the package's focus role (declared on the surface: Nuit on a Papier sheet, Papier on Prune and on Nuit, Ambre on the dark panels): the chrome's Ambre over a Nuit
+   halo would be 2.16 on a Papier sheet. The halo is dropped; the ring itself carries the >= 3. */
+.cr .tp-gear :focus-visible {
+  outline: 2px solid var(--cr-role-focus, var(--cr-focus));
+  outline-offset: 1px;
+  box-shadow: none;
+}

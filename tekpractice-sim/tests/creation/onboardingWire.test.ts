@@ -8,6 +8,7 @@ import { describe, expect, it } from 'vitest'
 import { wireOnboarding, type OnboardingWiring } from '../../src/creation/onboarding/firstVisit'
 import type { PickerStartOpts } from '../../src/creation/shell/placePicker'
 import type { ProfileChip, ProfileChipDeps } from '../../src/creation/onboarding/profileChip'
+import type { OwnGearCard, OwnGearCardDeps } from '../../src/creation/onboarding/ownGearCard'
 import { ONBOARDING_KEY, type StorageLike } from '../../src/creation/onboarding/state'
 
 function memoryStorage(initial?: unknown): StorageLike & { data: Map<string, string> } {
@@ -27,6 +28,26 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
   let chipDeps!: ProfileChipDeps
   let chipRenders = 0
   let roomFails = opts.roomFails === true
+  /** The entrepreneur's card (T6.4): a fake that records what it was asked, and the dismiss handler the page's button would call. */
+  let gearShown = false
+  let gearDeps!: OwnGearCardDeps
+  const gearLog: string[] = []
+  const mountGear = (d: OwnGearCardDeps): OwnGearCard => {
+    gearDeps = d
+    return {
+      show: () => {
+        if (!gearShown) gearLog.push('show')
+        gearShown = true
+      },
+      hide: () => {
+        if (gearShown) gearLog.push('hide')
+        gearShown = false
+      },
+      get shown() {
+        return gearShown
+      },
+    }
+  }
   /** What the stored record looked like when the room opened: the record must be written AFTER the room is there. */
   const recordWhenRoomOpened: unknown[] = []
   const mountChip = (d: ProfileChipDeps): ProfileChip => {
@@ -40,6 +61,7 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
     tutorialAllowed: true,
     panels: { tree: false, props: false },
     doc: {} as Document,
+    shellRoot: {} as HTMLElement,
     chipSlot: {} as HTMLElement,
     picker: {
       showStart: (o) => {
@@ -77,9 +99,12 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
     returnFocus: () => void log.push('focus'),
     ...over,
   }
-  const ob = wireOnboarding(w, mountChip)
+  const ob = wireOnboarding(w, mountChip, mountGear)
   return {
     ob,
+    gearShown: () => gearShown,
+    gearLog,
+    dismissGear: () => gearDeps.onDismiss(),
     log,
     storage,
     startOpts: () => startOpts,
@@ -412,5 +437,73 @@ describe('Aide while a tutorial runs: « Reprendre », « Recommencer », « Pas
     await again.ob.requestTutorial()
     expect(JSON.parse(storage.data.get('audio-sim/creation-onboarding.v1')!)).toEqual({ v: 1, profile: 'decouvre', offer: 'taken', request: 3, shown: [] })
     expect(again.ob.snapshot()).toMatchObject({ requestKind: 'start', requestAtLoad: 2 })
+  })
+})
+
+describe('the entrepreneur’s card (T6.4): due after the first sound, for the profile whose data says so, until dismissed', () => {
+  const answer = async (h: ReturnType<typeof harness>, profile: string): Promise<void> => {
+    h.ob.startFirstVisit()
+    h.startOpts().onResult({ kind: 'chosen', profile: profile as never, offer: 'skipped' })
+    await settle()
+  }
+  it('triggers: profile 3, then the first sound shows the card; not before the sound', async () => {
+    const h = harness()
+    await answer(h, 'projet')
+    expect(h.gearShown(), 'a profile alone shows nothing').toBe(false)
+    h.ob.soundStarted()
+    expect(h.gearShown()).toBe(true)
+    h.ob.soundStarted() // idempotent
+    expect(h.gearLog).toEqual(['show'])
+  })
+  it('does not trigger for the other three profiles', async () => {
+    for (const profile of ['decouvre', 'etudie', 'metier']) {
+      const h = harness()
+      await answer(h, profile)
+      h.ob.soundStarted()
+      expect(h.gearShown(), profile).toBe(false)
+      expect(h.gearLog, profile).toEqual([])
+    }
+  })
+  it('does not trigger without the onboarding (no store: the plain address, an exam address)', () => {
+    const h = harness({ design: false })
+    h.ob.soundStarted()
+    expect(h.gearShown()).toBe(false)
+    expect(h.gearLog).toEqual([])
+    expect(h.storage.data.size).toBe(0)
+  })
+  it('dismissing hides it, remembers it in the onboarding record (every other field kept), gives the focus back, and a later sound does not bring it back', async () => {
+    const h = harness()
+    await answer(h, 'projet')
+    h.ob.soundStarted()
+    h.log.length = 0
+    h.dismissGear()
+    expect(h.gearShown()).toBe(false)
+    expect(h.log).toEqual(['focus'])
+    expect(h.record()).toEqual({ v: 1, profile: 'projet', offer: 'skipped', request: 0, shown: [], ownGear: 'dismissed' })
+    h.ob.soundStarted()
+    expect(h.gearShown()).toBe(false)
+  })
+  it('a new page on a record that says dismissed never shows it; one without the field shows it after the first sound', () => {
+    const dismissed = harness({}, { storage: memoryStorage({ ...rec('projet', 'skipped'), ownGear: 'dismissed' }) })
+    dismissed.ob.soundStarted()
+    expect(dismissed.gearShown()).toBe(false)
+    const fresh = harness({}, { storage: memoryStorage(rec('projet', 'skipped')) })
+    fresh.ob.soundStarted()
+    expect(fresh.gearShown()).toBe(true)
+  })
+  it('a profile changed after the sound: to 3 shows it, away from 3 takes it away', async () => {
+    const h = harness()
+    await answer(h, 'etudie')
+    h.ob.soundStarted()
+    expect(h.gearShown()).toBe(false)
+    h.setPlace(true)
+    h.chip().onClick() // « Profil : … · changer » reopens the start stage over the project
+    h.startOpts().onResult({ kind: 'chosen', profile: 'projet', offer: 'skipped' })
+    await settle()
+    expect(h.gearShown()).toBe(true)
+    h.chip().onClick()
+    h.startOpts().onResult({ kind: 'chosen', profile: 'metier', offer: 'skipped' })
+    await settle()
+    expect(h.gearShown()).toBe(false)
   })
 })

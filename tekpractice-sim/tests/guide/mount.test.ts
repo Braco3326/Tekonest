@@ -372,6 +372,13 @@ describe('hostInsets', () => {
     expect(hostInsets(docWith({ [MENU]: rect(0, 32), [STATUS]: rect(784, 28) }, 812))).toEqual({ top: 32, bottom: 28, left: 0, right: 0 })
   })
 
+  it('T6.4: the entrepreneur’s row just above the status bar raises the bottom inset to its own top edge (Oscar rests above it); a missing or empty row changes nothing', () => {
+    const GEAR = '[data-testid="gear-slot"]'
+    expect(hostInsets(docWith({ [MENU]: rect(0, 32), [STATUS]: rect(772, 28), [GEAR]: rect(690, 82) }))).toEqual({ top: 32, bottom: 110, left: 0, right: 0 })
+    expect(hostInsets(docWith({ [MENU]: rect(0, 32), [STATUS]: rect(772, 28), [GEAR]: rect(690, 0) }))).toEqual({ top: 32, bottom: 28, left: 0, right: 0 })
+    expect(hostInsets(docWith({ [MENU]: rect(0, 32), [STATUS]: rect(772, 28) }))).toEqual({ top: 32, bottom: 28, left: 0, right: 0 })
+  })
+
   it('a bar that is missing, empty, off screen or an answer that throws counts as no bar; never negative, never NaN', () => {
     expect(hostInsets(docWith({}))).toEqual({ top: 0, bottom: 0, left: 0, right: 0 })
     expect(hostInsets(docWith({ [MENU]: rect(0, 0), [STATUS]: rect(800, 0) }))).toEqual({ top: 0, bottom: 0, left: 0, right: 0 })

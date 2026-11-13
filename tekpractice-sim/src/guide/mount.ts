@@ -58,6 +58,8 @@ const MENU_BAR = '[data-testid="menubar"]'
 const STATUS_BAR = '[data-testid="status-bar"]'
 /** The tutorial's reserved row (src/design/tutorialSlot.ts), under the menu bar, only while a tutorial runs. */
 const TUTORIAL_SLOT = '[data-testid="tutorial-slot"]'
+/** The entrepreneur's card's reserved row (src/creation/onboarding/ownGearCard.ts), just above the status bar, only while that card is shown (T6.4). */
+const GEAR_SLOT = '[data-testid="gear-slot"]'
 export interface HostInsets {
   top: number
   right: number
@@ -81,12 +83,17 @@ export function hostInsets(doc: Document): HostInsets {
     const menu = doc.querySelector(MENU_BAR)?.getBoundingClientRect()
     const slot = doc.querySelector(TUTORIAL_SLOT)?.getBoundingClientRect()
     const status = doc.querySelector(STATUS_BAR)?.getBoundingClientRect()
+    const gear = doc.querySelector(GEAR_SLOT)?.getBoundingClientRect()
     const tree = doc.querySelector(TREE_PANEL)?.getBoundingClientRect()
     const props = doc.querySelector(PROPS_PANEL)?.getBoundingClientRect()
     const menuBottom = menu !== undefined && menu.height > 0 && Number.isFinite(menu.bottom) ? Math.max(0, menu.bottom) : 0
     // the step card's row sits right under the menu bar: Oscar rests below it (T6.1)
     const top = slot !== undefined && slot.height > 0 && Number.isFinite(slot.bottom) ? Math.max(menuBottom, slot.bottom) : menuBottom
-    const bottom = status !== undefined && status.height > 0 && Number.isFinite(status.top) && height > 0 ? Math.max(0, height - status.top) : 0
+    // the entrepreneur's row sits right above the status bar: Oscar rests above it (T6.4)
+    const barTop = status !== undefined && status.height > 0 && Number.isFinite(status.top) ? status.top : null
+    const gearTop = gear !== undefined && gear.height > 0 && Number.isFinite(gear.top) ? gear.top : null
+    const lowest = barTop === null ? gearTop : gearTop === null ? barTop : Math.min(barTop, gearTop)
+    const bottom = lowest !== null && height > 0 ? Math.max(0, height - lowest) : 0
     const left = tree !== undefined && tree.width > 0 && Number.isFinite(tree.right) && width > 0 ? Math.max(0, tree.right) : 0
     const right = props !== undefined && props.width > 0 && Number.isFinite(props.left) && width > 0 ? Math.max(0, width - props.left) : 0
     return { top, right, bottom, left }
@@ -190,6 +197,12 @@ export function hostObstacles(doc: Document): Rect[] {
     const slotEl = root.querySelector(TUTORIAL_SLOT)
     if (slotEl !== null && usable(slotEl, view)) {
       const box = shownBox(slotEl, view, root, vw, vh, memo)
+      if (box !== null && box.w * box.h <= MAX_OBSTACLE_SHARE * vw * vh) out.push(box)
+    }
+    // the entrepreneur's row (T6.4): the icon and the bubble never rest on the card either
+    const gearEl = root.querySelector(GEAR_SLOT)
+    if (gearEl !== null && usable(gearEl, view)) {
+      const box = shownBox(gearEl, view, root, vw, vh, memo)
       if (box !== null && box.w * box.h <= MAX_OBSTACLE_SHARE * vw * vh) out.push(box)
     }
     const wholes = out.length
