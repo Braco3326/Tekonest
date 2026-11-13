@@ -175,6 +175,8 @@ export function mountStepCard(d: StepCardDeps): StepCard | null {
   const { doc } = d
   if (typeof doc.querySelector !== 'function' || typeof doc.createElement !== 'function') return null
   const gate = createCardGate()
+  /** After `destroy` the card is gone for good: `update` does nothing (the page's record may still say a run goes on). */
+  let destroyed = false
   let card: HTMLElement | null = null
   let built: { count: HTMLElement; steps: HTMLElement; action: HTMLButtonElement; legend: HTMLElement; closing: HTMLElement } | null = null
   let key = ''
@@ -227,6 +229,7 @@ export function mountStepCard(d: StepCardDeps): StepCard | null {
   }
 
   function update(): void {
+    if (destroyed) return
     try {
       const rec = d.record()
       const m = gate.next(rec.status)
@@ -292,6 +295,8 @@ export function mountStepCard(d: StepCardDeps): StepCard | null {
   return {
     update,
     destroy() {
+      if (destroyed) return
+      destroyed = true
       if (card !== null || doc.querySelector('[data-testid="tutorial-slot"]') !== null) leave()
     },
   }

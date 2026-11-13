@@ -339,6 +339,21 @@ for (const [name, query] of [
     await expect(page.locator('.cr')).not.toHaveAttribute('data-tutorial', /.*/)
   })
 
+test('C1 (T6a review): the address turns to an exam one while a tutorial runs (pushState), then the bench changes: no slot, no card, no data-tutorial; the positive control shows the card on ?design=1', async ({ page }) => {
+  await takeTutorial(page)
+  await expect(slot(page)).toHaveCount(1) // positive control: ?design=1 shows the card
+  await expect(card(page)).toBeVisible()
+  await page.evaluate(() => window.history.pushState(null, '', '/?design=1&mode=exam'))
+  await act(page, SETUP.console)
+  await expect(slot(page)).toHaveCount(0)
+  await expect(card(page)).toHaveCount(0)
+  await expect(page.locator('.cr')).not.toHaveAttribute('data-tutorial', /.*/)
+  await act(page, SETUP.micro)
+  await page.waitForTimeout(1500) // later polls: still nothing
+  await expect(slot(page)).toHaveCount(0)
+  await expect(page.locator('.oscar-icon')).toHaveCount(0)
+})
+
 // ── tablet and the colours in use ─────────────────────────────────────────────────────────────────────────────────────────────
 
 for (const vp of [

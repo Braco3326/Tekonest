@@ -7,6 +7,7 @@ import type { RuleRow } from '../../src/creation/shell/statusModel'
 import type { TpBridge, TpPortRef, TpState } from '../../src/guide/bridge/types'
 import { ACKNOWLEDGE, SUGGEST_FROM, SUGGEST_PHANTOM, SUGGEST_TO } from '../../src/guide/flows.creation'
 import { packageById } from '../../src/design/packages'
+import { fakeShellDom, type FakeEl } from './fakeShellDom'
 import { RECT_CACHE_MS, annotateToggle, collapseRestore, cornerDefaultStorage, createObstacleSource, createRectResolver, hostInsets, hostObstacles, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
 import { COPY } from '../../src/creation/copy'
 import { ruleText as modeCreationRuleText } from '../../src/creation/ruleTexts'
@@ -1799,5 +1800,56 @@ describe('hostInsets: the tutorial’s reserved row (T6.1)', () => {
   it('does not trigger: no slot (or an empty one) leaves the top inset at the menu bar', () => {
     expect(hostInsets(docOf({ [MENU]: box(0, 0, 1366, 40), [STATUS]: box(0, 740, 1366, 28) })).top).toBe(40)
     expect(hostInsets(docOf({ [MENU]: box(0, 0, 1366, 40), [SLOT]: box(0, 40, 1366, 0), [STATUS]: box(0, 740, 1366, 28) })).top).toBe(40)
+  })
+})
+
+describe('mountOscar: C1 (T6a review), the step card never outlives the mount', () => {
+  const memory = (init: Record<string, string>): Storage => {
+    const m = new Map(Object.entries(init))
+    return { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v), removeItem: (k: string) => void m.delete(k), clear: () => m.clear(), key: () => null, length: 0 } as Storage
+  }
+  const running = {
+    'oscar-guide.onboarding.v1': JSON.stringify({ v: 1, handledRequest: 1, step: 'enceinte', k: 3, n: 10, status: 'running', early: [], shown: [], passed: [], helper: false }),
+    'oscar-guide.state.v1': JSON.stringify({ v: 1, flow: { flowId: 'premiers-pas', index: 2, status: 'running', startedAt: 0, completed: [] }, hint: null }),
+  }
+  const slots = (root: FakeEl): number => root.children.filter((c) => c.dataset.testid === 'tutorial-slot').length
+
+  it('positive control: ?design=1 with a running tutorial in storage shows the card (the REAL mountStepCard on a fake shell)', () => {
+    const dom = fakeShellDom()
+    const r = make({ search: '?design=1', storage: memory(running), doc: dom.doc })
+    expect(mountOscar(r.deps, fakeImpl().impl)).not.toBeNull()
+    expect(slots(dom.root)).toBe(1)
+    expect(dom.root.dataset.tutorial).toBe('on')
+    expect(dom.root.querySelector('[data-testid="tutorial-step-count"]')?.textContent).toBe('Étape 3 sur 10')
+  })
+
+  it('the address turns to an exam one (live switch) and the bench changes: no slot, no card, the root is freed, although the stored run still says running', () => {
+    const dom = fakeShellDom()
+    const r = make({ search: '?design=1', storage: memory(running), doc: dom.doc })
+    mountOscar(r.deps, fakeImpl().impl)
+    expect(slots(dom.root)).toBe(1)
+    r.win.location.search = '?design=1&mode=exam'
+    r.b.emit(PAIR, [ev('deviceAdded', { device: 'device:ql1' })])
+    expect(slots(dom.root)).toBe(0)
+    expect(dom.root.dataset.tutorial).toBeUndefined()
+    r.b.emit(PAIR, [ev('deviceAdded', { device: 'device:mic' })]) // later changes: the destroyed mount is silent
+    expect(slots(dom.root)).toBe(0)
+  })
+
+  it('does not trigger: an address that stays practice keeps its card through a bench change', () => {
+    const dom = fakeShellDom()
+    const r = make({ search: '?design=1', storage: memory(running), doc: dom.doc })
+    mountOscar(r.deps, fakeImpl().impl)
+    r.b.emit(PAIR, [ev('deviceAdded', { device: 'device:ql1' })])
+    expect(slots(dom.root)).toBe(1)
+  })
+
+  it('destroy is idempotent and a record write after it opens nothing', () => {
+    const dom = fakeShellDom()
+    const r = make({ search: '?design=1', storage: memory(running), doc: dom.doc })
+    const h = mountOscar(r.deps, fakeImpl().impl)!
+    h.destroy()
+    h.destroy()
+    expect(slots(dom.root)).toBe(0)
   })
 })

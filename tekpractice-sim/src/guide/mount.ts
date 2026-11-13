@@ -500,8 +500,12 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
         nodOnStep()
       })
     // The step card follows the record: the runtime tells it after every write (never throws into the tutorial).
+    // set by `destroy`: after it nothing of the mount acts (an exam address turning live tears everything down; a later poll or record write must not rebuild the card, C1)
+    let destroyed = false
     let card: StepCard | null = null
-    const runtime = tutorial === null ? null : createTutorialRuntime({ flow: tutorial, registry, storage: deps.storage, now, send: (i) => late(i), emit, onRecord: () => guard(() => card?.update()) })
+    const runtime = tutorial === null ? null : createTutorialRuntime({ flow: tutorial, registry, storage: deps.storage, now, send: (i) => late(i), emit, onRecord: () => guard(() => {
+        if (!destroyed) card?.update()
+      }) })
     runtimeRef = runtime
     if (runtime !== null && tutorial !== null && pkg !== null) {
       // The closing lines say what the bench is NOW: with the mic verdict unknown only the pinned simulation sentence is shown, never a claim about the mic.
@@ -587,7 +591,6 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       cleanups.push(() => skin?.destroy())
     }
 
-    let destroyed = false
     const destroy = (): void => {
       if (destroyed) return
       destroyed = true
@@ -603,6 +606,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     late = send
     const tutorialLook = (state: TpState | null): void =>
       guard(() => {
+        if (destroyed) return
         runtime?.update({ state, audio: bridge.playing?.() ?? null, request: bridge.tutorialRequest?.() ?? null, helper: bridge.helper?.() ?? null })
         card?.update() // the closing lines follow the bench; a record that did not change is a no-op
       })
