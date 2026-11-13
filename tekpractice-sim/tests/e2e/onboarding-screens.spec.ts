@@ -35,6 +35,12 @@ for (const id of DESIGN_IDS) {
       c.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12b', position: [-2, 0, 0], rotationY: 0 })
       c.frameDevice('ql1')
     })
+    // T6.3: the first room of a package that starts on the playable model already holds these devices (the SPAWNs above are refused) and its two line cables: unplug them, so the QL1's
+    // « Connecter à… » row below exists (setup only)
+    if (packageById(id).layout.start === 'playable-model')
+      await page.evaluate(() => {
+        for (const [k, port] of [['k12-g', 'out-main-l'], ['k12-d', 'out-main-r']] as const) window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'ql1', port }, b: { instance: k, port: 'in-line-a' } })
+      })
     await page.waitForFunction(() => !window.__creation!.cameraMoving() && window.__creation!.modelsPending() === 0)
     await page.waitForTimeout(400)
     await page.screenshot({ path: `${OUT}/pkg-${id}-room.png` })
