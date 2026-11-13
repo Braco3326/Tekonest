@@ -1204,7 +1204,7 @@ describe('the tutorial in the mount: ?design only, never started by the mount', 
     r.b.emit(stateOf([['q', 'yamaha-ql1']]), [ev('toggle', { control: 'control:q.playback-usb', anchor: 'control:q.playback-usb', value: true })])
     expect(hostEvents(r.f).map((e) => e.data)).toEqual([
       { device: 'device:q', role: 'source-console' },
-      { a: 'port:q.out-main-l', b: 'port:k.in-line-a', pair: 'console-speaker' },
+      { a: 'port:q.out-main-l', b: 'port:k.in-line-a', pair: 'console-speaker', restored: true }, // the only speaker of that bench is fed (T6 review S2)
       { a: 'port:q.out-main-l', b: 'port:k.in-line-a', pair: 'console-speaker' },
       { control: 'control:q.playback-usb', anchor: 'control:q.playback-usb', value: true, playback: true },
     ])
@@ -1600,6 +1600,18 @@ describe('mountOscar: the skin (T5.3, T5.4; controller ruling 4: only under ?des
     expect(hostEvents(s).map((e) => e.type)).toEqual(['connect'])
     r.b.emit(PAIR, [ev('connect', { a: 'port:c.x', b: 'port:d.y' })])
     expect(s.plays).toEqual(['celebrate'])
+  })
+
+  it('T6 review S3: an app change that swaps devices (a model load, an undo of one: appChange with deviceAdded) sends NO bench event to the controller (no false tick: the removal of a whole model is not the learner’s unplug); an app change of one cable (an undo of an unplug) still does', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const s = skinImpl()
+    mountOscar(r.deps, s.impl)
+    r.b.emit(PAIR, [ev('deviceAdded', { device: 'device:a' }), ev('disconnect', { a: 'port:a.x', b: 'port:b.y' }), ev('connect', { a: 'port:c.x', b: 'port:d.y' }), ev('appChange')])
+    expect(hostEvents(s)).toEqual([])
+    r.b.emit(PAIR, [ev('deviceAdded', { device: 'device:e' }), ev('connect', { a: 'port:e.x', b: 'port:f.y' })]) // the learner placed a device and drew a cable in one poll: no appChange, delivered
+    expect(hostEvents(s).map((e) => e.type)).toEqual(['deviceAdded', 'connect'])
+    r.b.emit(PAIR, [ev('connect', { a: 'port:g.x', b: 'port:h.y' }), ev('appChange')])
+    expect(hostEvents(s).map((e) => e.type)).toEqual(['deviceAdded', 'connect', 'connect'])
   })
 
   it('destroy: the skin goes before the widget', () => {

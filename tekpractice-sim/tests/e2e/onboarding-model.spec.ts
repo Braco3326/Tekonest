@@ -85,16 +85,19 @@ test('the route: Écoute plays two voices; unplugging one line cable leaves ONE 
   await expect(page.getByTestId('tutorial-closing')).toBeVisible()
 })
 
-test('Ctrl+Z after the unplug puts the cable back (the app’s own undo, unchanged): two voices again, and the replug step is done by it', async ({ page }) => {
+test('Ctrl+Z after the unplug puts the cable back (the app’s own undo, unchanged): two voices again, and the run ends on it (record done)', async ({ page }) => {
   await takeTutorial(page)
   await testSignal(page)
   await expect(live(page)).toContainText(step(2), { timeout: 10_000 })
   await unplug(page)
   await page.waitForFunction(() => window.__creation!.audioState().voices.length === 1)
+  await expect(count(page), 'the guide saw the unplug (it polls the bench: an undo before that is no change at all)').toHaveText('Étape 3 sur 3', { timeout: 10_000 })
   await page.locator('#renderCanvas').focus()
   await page.keyboard.press('Control+z')
   await page.waitForFunction(() => window.__creation!.audioState().voices.length === 2)
   expect(await cables(page)).toBe(6)
+  // the replug step is done by the undo (its event is a connect that leaves every speaker fed): the run is over
+  await expect.poll(() => guideRecord(page)).toMatchObject({ status: 'done', step: null })
 })
 
 test('the power helper (« Je branche pour vous ») is never offered on the route, and never unplugs or plugs an audio cable for the learner', async ({ page }) => {
@@ -209,4 +212,65 @@ test('S1 (T6 review): « Premiers pas » over the learner’s own bench asks to 
   await expect(count(page)).toHaveText('Étape 1 sur 3', { timeout: 10_000 })
   expect((await benchIds(page)).sort()).toEqual(['k12-d', 'k12-g', 'mains', 'ql1', 'sm58'])
   await expect(live(page)).toContainText(step(1), { timeout: 10_000 })
+})
+
+// ── rebrancher and Ctrl+Z on the three-step route (T6 review S2, S3) ────────────────────────────────────────────────────────────
+
+const RIGHT = { a: { instance: 'ql1', port: 'out-main-r' }, b: { instance: 'k12-d', port: 'in-line-a' } }
+const unplugOf = (page: Page, c: typeof LEFT) => page.evaluate((x) => window.__creation!.dispatch({ type: 'UNPLUG', a: x.a, b: x.b }), c)
+const replugOf = (page: Page, c: typeof LEFT) => page.evaluate((x) => window.__creation!.dispatch({ type: 'CONNECT', a: x.a, b: x.b }), c)
+
+test('S2 (T6 review): both cables pulled, one put back: step 3 goes on (the other speaker is still unfed); the second one ends the run', async ({ page }) => {
+  await takeTutorial(page)
+  await testSignal(page)
+  await expect(count(page)).toHaveText('Étape 2 sur 3', { timeout: 10_000 })
+  await unplugOf(page, LEFT)
+  await expect(count(page)).toHaveText('Étape 3 sur 3', { timeout: 10_000 })
+  await unplugOf(page, RIGHT)
+  await replugOf(page, LEFT)
+  await page.waitForTimeout(1200)
+  expect(await guideRecord(page), 'one speaker is still unfed: not done').toMatchObject({ status: 'running', step: 'rebrancher', k: 3 })
+  await replugOf(page, RIGHT)
+  await expect.poll(() => guideRecord(page)).toMatchObject({ status: 'done', step: null })
+})
+
+test('S2 (T6 review): the unplug step skipped, nothing was unplugged: step 3 does not ask to replug a cable that is there; it completes as « déjà en place » (the choice: the run ends at once)', async ({ page }) => {
+  await takeTutorial(page)
+  await testSignal(page)
+  await expect(count(page)).toHaveText('Étape 2 sur 3', { timeout: 10_000 })
+  await page.locator('.oscar-chips').getByRole('button', { name: 'Passer cette étape', exact: true }).click()
+  await expect.poll(() => guideRecord(page)).toMatchObject({ status: 'done', step: null })
+  expect((await guideRecord(page)).early).toContain('rebrancher')
+  expect((await guideRecord(page)).passed).toContain('debrancher')
+  expect(await cables(page)).toBe(6)
+  expect(await page.getByTestId('own-gear').count()).toBe(0)
+})
+
+test('S3 (T6 review): Ctrl+Z at step 2 before any unplug does nothing to the model (opening it from the start screen is not undoable past the model): the bench, the sound and the run are as they were', async ({ page }) => {
+  await takeTutorial(page)
+  await testSignal(page)
+  await expect(count(page)).toHaveText('Étape 2 sur 3', { timeout: 10_000 })
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Control+z')
+  await page.waitForTimeout(1200)
+  expect((await benchIds(page)).sort()).toEqual(['k12-d', 'k12-g', 'mains', 'ql1', 'sm58'])
+  expect(await cables(page)).toBe(6)
+  expect(await guideRecord(page)).toMatchObject({ status: 'running', step: 'debrancher', k: 2 })
+  expect((await voices(page)).sort()).toEqual(['k12-d', 'k12-g'])
+})
+
+test('S3 (T6 review): the model opened over the learner’s bench by « Premiers pas » IS undoable (the dialog promised it): Ctrl+Z at step 2 brings the old bench back and the run does not tick by it', async ({ page }) => {
+  await ownBenchOnPackage5(page)
+  await premiersPas(page)
+  await page.getByRole('dialog', { name: 'Remplacer le matériel ?' }).getByRole('button', { name: 'Remplacer le matériel' }).click()
+  await expect(count(page)).toHaveText('Étape 1 sur 3', { timeout: 10_000 })
+  await testSignal(page)
+  await expect(count(page)).toHaveText('Étape 2 sur 3', { timeout: 10_000 })
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Control+z')
+  await page.waitForFunction(() => window.__creation!.design().rig.instances.length === 1)
+  await page.waitForTimeout(1500)
+  const rec = await guideRecord(page)
+  expect(rec.step, 'no false tick: the unplug step is not done by the removal of the whole model').not.toBe('rebrancher')
+  expect(rec.status).not.toBe('done')
 })

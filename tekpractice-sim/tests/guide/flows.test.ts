@@ -425,7 +425,7 @@ describe('premiers-pas, built from the tutorial data', () => {
     await c.dispatch({ type: 'flow', control: { action: 'start', flowId: 'premiers-pas' } })
     await c.dispatch({ type: 'flow', control: { action: 'skip' } })
     await c.dispatch({ type: 'flow', control: { action: 'skip' } })
-    const v = await c.dispatch({ type: 'hostEvent', event: { type: 'connect', at: clock.t++, data: { a: 'port:q.out-main-l', b: 'port:k.in-line-a', pair: 'console-speaker' } } })
+    const v = await c.dispatch({ type: 'hostEvent', event: { type: 'connect', at: clock.t++, data: { a: 'port:q.out-main-l', b: 'port:k.in-line-a', pair: 'console-speaker', restored: true } } })
     expect(v.bubble?.kind).toBe('celebrate')
     expect(v.bubble?.lines[0].text).toBe('Parcours « Premiers pas » : fin des étapes.')
     expect(JSON.stringify(v.bubble)).not.toMatch(/toutes les étapes/)

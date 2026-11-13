@@ -6,6 +6,7 @@
 // carry anchors only (`deviceAdded { device }`, `connect { a, b }`, `toggle { anchor, value }`); `annotateTutorialEvent` adds what the steps match on:
 //   deviceAdded       role: 'source-console' | 'mic' | 'speaker' | 'mains-strip' | 'other'
 //   connect/disconnect pair: 'console-speaker' | 'mic-console' | 'mains-console' | 'mains-speaker' | 'other'
+//   connect            restored: true, on a console-speaker connect that leaves every speaker fed again (`allSpeakersFed`: what `rebrancher` ends on, T6 review S2)
 //   toggle            playback: true, for the source console's playback control (the catalog route `from: 'control:...'`)
 // Roles are the CATALOG's (verified devices only: a Bêta proposal is 'other', it never powers anything and is never a mic, as in signalPath.ts):
 //   source-console  a device with a route from a control (today only the Yamaha QL1, `playback-usb` « Lecture console »)
@@ -193,6 +194,26 @@ function mainsFed(c: Cable, pair: PairKind, state: TpState, registry: Registry):
   return end !== null && isFed(state, registry, end.instance, role)
 }
 
+/**
+ * Every speaker of the bench has a console-to-speaker cable (a PLAYBACK output into its input, `pairOf`), and there is at least one speaker (T6 review S2). The bench of the playable model
+ * is in this state; pulling one cable leaves a speaker unfed; the replug of the freed pair (or any cable that feeds that speaker from the console) puts it back. Stateless on purpose:
+ * a reload in the middle of the run keeps the meaning (nothing to remember about what was unplugged), and a cable that is not a playback cable (`out-mix-1`) never counts.
+ */
+export function allSpeakersFed(state: TpState, registry: Registry): boolean {
+  try {
+    const speakers = state.instances.filter((i) => roleOf(registry, i.deviceId) === 'speaker')
+    if (speakers.length === 0) return false
+    const fed = new Set<string>()
+    for (const c of state.connections) {
+      if (pairOf(c, state, registry) !== 'console-speaker') continue
+      for (const end of [c.a, c.b]) if (roleAt(registry, state, end) === 'speaker') fed.add(end.instance)
+    }
+    return speakers.every((s) => fed.has(s.id))
+  } catch {
+    return false
+  }
+}
+
 // ── annotations ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
 type Anchors = Pick<TpBridge, 'anchorOfDevice' | 'anchorOfPort' | 'anchorOfControl'>
@@ -222,7 +243,10 @@ export function annotateConnect(e: HostEvent, cables: readonly Cable[], state: T
   if (c === undefined) return e
   const pair = pairOf(c, state, registry)
   // C1: a mains pair also says whether its device is the one the playback needs (steps 8 and 9 match `fed: true`)
-  return withData(e, pair === 'mains-console' || pair === 'mains-speaker' ? { pair, fed: mainsFed(c, pair, state, registry) } : { pair })
+  if (pair === 'mains-console' || pair === 'mains-speaker') return withData(e, { pair, fed: mainsFed(c, pair, state, registry) })
+  // S2: a console-speaker connect also says whether it leaves every speaker fed (`rebrancher` matches `restored: true`); `state` is the bench AFTER a connect
+  if (pair === 'console-speaker' && e.type === 'connect') return withData(e, { pair, restored: allSpeakersFed(state, registry) })
+  return withData(e, { pair })
 }
 
 /** `toggle`: `playback: true` when the switch is the source console's playback control (any value: the step also matches `value: true`). */
@@ -353,7 +377,7 @@ export const TUTORIAL_STEPS: readonly TutorialStep[] = Object.freeze<TutorialSte
   { id: 'courant-enceinte', target: { kind: 'connect', pair: 'mains-speaker' }, action: 'point', sayKeys: ['tutorial.courantEnceinte'], done: { event: 'connect', match: { pair: 'mains-speaker', fed: true } } },
   { id: 'ecoute', target: { kind: 'nav', anchor: NAV_ECOUTE }, action: 'point', sayKeys: ['tutorial.ecoute'], done: { event: PLAY_STARTED, match: { source: 'test' } } },
   { id: 'debrancher', target: { kind: 'unplug', pair: 'console-speaker' }, action: 'point', sayKeys: ['tutorial.debrancher'], done: { event: 'disconnect', match: { pair: 'console-speaker' } } },
-  { id: 'rebrancher', target: { kind: 'connect', pair: 'console-speaker' }, action: 'point', sayKeys: ['tutorial.rebrancher'], done: { event: 'connect', match: { pair: 'console-speaker' } } },
+  { id: 'rebrancher', target: { kind: 'connect', pair: 'console-speaker' }, action: 'point', sayKeys: ['tutorial.rebrancher'], done: { event: 'connect', match: { pair: 'console-speaker', restored: true } } },
 ])
 
 /** The steps of a pacing, in the pacing's order (an id that is not in the list is dropped). */
@@ -422,7 +446,9 @@ export function stepAnchor(step: TutorialStep, registry: Registry): string {
  *   courant-console, courant-enceinte  a mains cable of the step's pair on the device the playback needs (`fed`, C1)
  *   lecture-console  « Lecture console » is on, on a source console
  *   ecoute  the test signal is playing now (`audio` = the source Écoute plays, or null)
- *   debrancher, rebrancher  never: they are about an action, not a state
+ *   debrancher  never: it is about an action, not a state
+ *   rebrancher  every speaker is fed by a console-to-speaker cable (`allSpeakersFed`): the bench is complete. After `debrancher` was passed with nothing unplugged this is already true, so
+ *               step 3 completes at once and reads « déjà en place » (T6 review S2: no text asks to replug a cable that was never unplugged)
  */
 export function stepSatisfied(step: TutorialStep, state: TpState | null, audio: string | null, registry: Registry): boolean {
   try {
@@ -453,6 +479,8 @@ export function stepSatisfied(step: TutorialStep, state: TpState | null, audio: 
         })
       case 'ecoute':
         return audio === 'test'
+      case 'rebrancher':
+        return allSpeakersFed(state, registry)
       default:
         return false
     }

@@ -60,6 +60,8 @@ const STATUS_BAR = '[data-testid="status-bar"]'
 const TUTORIAL_SLOT = '[data-testid="tutorial-slot"]'
 /** The entrepreneur's card's reserved row (src/creation/onboarding/ownGearCard.ts), just above the status bar, only while that card is shown (T6.4). */
 const GEAR_SLOT = '[data-testid="gear-slot"]'
+/** The bench events the bridge derives from a change of the design (not Écoute's `playStarted`, not the page's own events). */
+const BENCH_EVENTS: ReadonlySet<string> = new Set(['placeChosen', 'place', 'deviceAdded', 'connect', 'disconnect', 'toggle'])
 export interface HostInsets {
   top: number
   right: number
@@ -665,6 +667,11 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
         }
         if (events.some((e) => e.type === PROFILE_CHOSEN)) lateQuiet()
         const list = events.filter((e) => e.type !== TUTORIAL_REQUEST && e.type !== CONNECT_REFUSED && e.type !== PROFILE_CHOSEN && e.type !== APP_CHANGE && (tutorial !== null || e.type !== PLAY_STARTED))
+        // T6 review S3: an app change that swaps devices (a template or model load, the undo of one, a project reopened: `appChange` with `deviceAdded`) is not the learner doing the steps. The
+        // controller hears none of its bench events (the removal of a whole model would otherwise tick « debrancher »); the runtime still sees the new bench, and a step whose result is
+        // on it completes as « déjà en place ». An app change of one cable (the undo of an unplug) is delivered as before.
+        const swap = events.some((e) => e.type === APP_CHANGE) && events.some((e) => e.type === 'deviceAdded')
+        const toSend = swap ? list.filter((e) => !BENCH_EVENTS.has(e.type)) : list
         if (list.length === 0 && events.length > 0) {
           tutorialLook(state) // only the request went up: no change of the bench to tell the controller
           return
@@ -675,7 +682,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
         rects.clear()
         follow(state)
         tell(state)
-        for (const e of collapseRestore(list)) {
+        for (const e of collapseRestore(toSend)) {
           const marked = annotateToggle(e, state, bridge)
           const out = tutorial === null ? marked : annotateTutorialEvent(marked, { state, prev, bridge, registry })
           runtime?.sawEvent(out) // T6.1: what tells a step done by its event from a step passed

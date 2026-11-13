@@ -360,9 +360,10 @@ describe('the step list', () => {
     expect(sat('ecoute', stateOf([Q]), 'test')).toBe(true)
     expect(sat('ecoute', stateOf([Q]), 'song')).toBe(false)
     expect(sat('ecoute', stateOf([Q]), null)).toBe(false)
-    // event-only steps: never satisfied by a bench
+    // debrancher is an action: never satisfied by a bench. rebrancher (T6 review S2) is satisfied by a bench where every speaker is fed by a console cable again, and by no other
     expect(sat('debrancher', stateOf([Q, K]))).toBe(false)
-    expect(sat('rebrancher', stateOf([Q, K], [out]))).toBe(false)
+    expect(sat('rebrancher', stateOf([Q, K], [out]))).toBe(true)
+    expect(sat('rebrancher', stateOf([Q, K]))).toBe(false)
   })
 
   it('the event a satisfied step is completed with matches that step’s own done', () => {
@@ -808,9 +809,10 @@ describe('T6.3: the playable model premier-son-pret carries the three-step route
     expect(new Set(speakers).size).toBe(2)
   })
 
-  it('every step of the ten before the sound is already satisfied on it; the sound and the two unplug steps are not (they are about an action)', () => {
+  it('every step of the ten before the sound is already satisfied on it; the sound and the unplug are not (they are about an action); the replug is, because the bench is complete (S2)', () => {
     for (const s of TUTORIAL_STEPS.slice(0, 9)) expect(stepSatisfied(s, model(), null, registry), s.id).toBe(true)
-    for (const id of ['ecoute', 'debrancher', 'rebrancher'] as const) expect(stepSatisfied(byId(id), model(), null, registry), id).toBe(false)
+    for (const id of ['ecoute', 'debrancher'] as const) expect(stepSatisfied(byId(id), model(), null, registry), id).toBe(false)
+    expect(stepSatisfied(byId('rebrancher'), model(), null, registry), 'rebrancher').toBe(true)
     expect(stepSatisfied(byId('ecoute'), model(), 'test', registry), 'a test signal already playing').toBe(true)
   })
 
@@ -828,6 +830,26 @@ describe('T6.3: the playable model premier-son-pret carries the three-step route
       expect(ends('rebrancher', connected(c), model()), `replug ${k}`).toBe(true)
       expect(ends('rebrancher', connected(c, 'disconnect'), model([k]), model()), `unplug ${k} is not a replug`).toBe(false)
     }
+  })
+
+  it('S2 (T6 review): rebrancher is done by a connect that leaves EVERY speaker fed again: the replug of the freed pair ends it; a connect that leaves a speaker unfed, a cable that is not a playback cable (out-mix-1), and an unplug do not', () => {
+    const [a, b] = LINE
+    // one cable pulled, then put back: done
+    expect(ends('rebrancher', connected(tpl.connections[a]), model()), 'replug of the freed pair').toBe(true)
+    // both pulled, only one put back: the other speaker is still unfed, the step goes on; the second one ends it
+    expect(ends('rebrancher', connected(tpl.connections[a]), model([b])), 'one of two').toBe(false)
+    expect(ends('rebrancher', connected(tpl.connections[b]), model()), 'the second one').toBe(true)
+    // the freed speaker gets the console's out-mix-1 instead: not a playback output, so not a console-to-speaker cable, so no tick
+    const mix = cable(['ql1', 'out-mix-1'], [tpl.connections[a].b.instance.startsWith('k12') ? tpl.connections[a].b.instance : tpl.connections[a].a.instance, 'in-line-a'])
+    expect(ends('rebrancher', connected(mix), { ...model([a]), connections: [...model([a]).connections, mix] }), 'out-mix-1 into the freed speaker').toBe(false)
+    // an unplug never ends it
+    expect(ends('rebrancher', connected(tpl.connections[a], 'disconnect'), model([a]), model())).toBe(false)
+  })
+
+  it('S2 (T6 review): debrancher skipped, nothing freed: the bench is already complete, so step 3 is satisfied from the start (it reads « déjà en place », never a text asking to replug); with a cable freed it is not', () => {
+    expect(stepSatisfied(byId('rebrancher'), model(), null, registry)).toBe(true)
+    expect(stepSatisfied(byId('rebrancher'), model([LINE[0]]), null, registry)).toBe(false)
+    expect(stepSatisfied(byId('rebrancher'), model([LINE[0], LINE[1]]), null, registry)).toBe(false)
   })
 
   it('after one unplug, the step points at the console end of the cable that is still there (to unplug) and rebrancher asks for the console output of the freed pair', () => {

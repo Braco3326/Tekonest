@@ -175,7 +175,7 @@ describe('start, persist, resume, skip', () => {
     await flush()
     await p.ev({ type: 'playStarted', data: { source: 'test' } })
     await p.ev({ type: 'disconnect', data: { a: 'x', b: 'y', pair: 'console-speaker' } })
-    await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair: 'console-speaker' } })
+    await p.ev({ type: 'connect', data: { a: 'x', b: 'y', pair: 'console-speaker', restored: true } }) // as annotated: it leaves every speaker fed (T6 review S2)
     expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))).toMatchObject({ status: 'done', step: null })
     const q = page(s, packageById(5).pacing.steps)
     await q.init()
