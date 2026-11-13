@@ -9,7 +9,7 @@
 
 export const TUTORIAL_SLOT_TESTID = 'tutorial-slot'
 /**
- * The height (CSS px) the slot takes from the 3D view at desktop width, as an upper bound (the step card measures 49 px, its compact companion look 36 px): the first-sound framing
+ * The height (CSS px) the slot takes from the 3D view at desktop width, as an upper bound (the step card measures 49 px, its compact companion look 35 px): the first-sound framing
  * (src/creation/onboarding/framing.ts) reserves it when a tutorial is about to open the slot, so the SM58 keeps its pixels once the row is there. tests/e2e/onboarding-stepcard.spec.ts
  * asserts the slot never exceeds it at 1366 px.
  */
