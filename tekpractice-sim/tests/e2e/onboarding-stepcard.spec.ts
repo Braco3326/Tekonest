@@ -4,7 +4,7 @@
  *
  * Pinned, in all five packages: the slot is a full-width row under the menu bar and above the view, the panels and the status bar (nothing overlaps it: not the 3D view, the
  * drawer, the panels, Oscar's icon or bubble); the card is a labelled region, not a dialog (no `aria-modal`, nothing inert, no focus trap, no animation), its button comes after the status
- * bar in the tab order; it says « Étape k sur n » (n = 10 for every package today), one mark per step (current, to come, then done / « passée » / « montré » / « déjà en place » with a key
+ * bar in the tab order; it says « Étape k sur n » (n = the package’s own pacing: 10, or 3 for package 5 on its playable model), one mark per step (current, to come, then done / « passée » / « montré » / « déjà en place » with a key
  * under the row), and never the bubble's sentence nor « réussi »; after the last step it shows `closingLines()` (`listen.simple`, then the mic line or the engine's NO_MIC text) with a
  * « Fermer » button; « Passer le tutoriel » frees the row at once; Aide « Reprendre à l’étape k » focuses the card; a reload keeps the step; nothing on the plain address, `?oscar=0` or
  * an exam address; the colours in use pass ADR 0017 (text >= 4.5, UI >= 3, axe) in every package.
@@ -77,7 +77,7 @@ for (const id of DESIGN_IDS) {
   const pkg = packageById(id)
   test(`package ${id}: the card sits in the reserved row, overlaps nothing, is no dialog, traps no focus, runs no animation`, async ({ page }) => {
     await takeTutorial(page, id)
-    await expect(count(page)).toHaveText('Étape 1 sur 10')
+    await expect(count(page)).toHaveText(`Étape 1 sur ${pkg.pacing.steps.length}`) // T6.3: package 5 runs its own three steps
     await expect(page.locator('.cr')).toHaveAttribute('data-tutorial', 'on')
     await expect(card(page)).toHaveAttribute('data-presenter', pkg.presenter)
 
@@ -100,7 +100,7 @@ for (const id of DESIGN_IDS) {
     expect(c.y).toBeGreaterThanOrEqual(s.y - 1)
     expect(c.y + c.height).toBeLessThanOrEqual(s.y + s.height + 1)
     // Oscar's icon and bubble never cover it (spec 11.3: rectangle intersection, not centres)
-    await expect(live(page)).toContainText('étape 1 sur 10', { timeout: 10_000 })
+    await expect(live(page)).toContainText(`étape 1 sur ${pkg.pacing.steps.length}`, { timeout: 10_000 })
     const icon = await page.locator('.oscar-icon').boundingBox()
     expect(icon).not.toBeNull()
     expect(intersects(icon!, c), 'the icon is clear of the card').toBe(false)
@@ -132,7 +132,7 @@ for (const id of DESIGN_IDS) {
   })
 }
 
-test('DOM parity (spec 11.1): the same slot and card landmarks and test ids in all five packages', async ({ page }) => {
+test('DOM parity (spec 11.1): the same slot and card landmarks and test ids in all five packages (one mark per step of the package’s own pacing)', async ({ page }) => {
   test.setTimeout(150_000)
   const seen: string[] = []
   for (const id of DESIGN_IDS) {
@@ -143,13 +143,14 @@ test('DOM parity (spec 11.1): the same slot and card landmarks and test ids in a
           slot: document.querySelectorAll('[data-testid="tutorial-slot"]').length,
           ids: [...document.querySelectorAll('[data-testid="tutorial-slot"] [data-testid]')].map((e) => e.getAttribute('data-testid')),
           region: document.querySelector('[data-testid="tutorial-card"]')!.tagName,
-          dots: document.querySelectorAll('[data-testid="tutorial-steps"] li').length,
         })),
       ),
     )
+    // the marks follow the package's pacing (T6.3: 10, or 3 on the playable model); the landmarks and test ids above are the same in all five
+    expect(await dots(page).count(), `package ${id}: one mark per step of its pacing`).toBe(packageById(id).pacing.steps.length)
   }
-  expect(new Set(seen).size, seen.join('\n')).toBe(1)
-  expect(JSON.parse(seen[0])).toMatchObject({ slot: 1, region: 'SECTION', dots: 10, ids: ['tutorial-card', 'tutorial-step-count', 'tutorial-steps', 'tutorial-skip', 'tutorial-legend', 'tutorial-closing'] })
+  expect(new Set(seen).size, seen.join(', ')).toBe(1)
+  expect(JSON.parse(seen[0])).toMatchObject({ slot: 1, region: 'SECTION', ids: ['tutorial-card', 'tutorial-step-count', 'tutorial-steps', 'tutorial-skip', 'tutorial-legend', 'tutorial-closing'] })
 })
 
 // ── what it shows ────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -445,14 +446,19 @@ const readColour = (page: Page, css: string): Promise<string> =>
 /** `rgb(...)` / `color(srgb ...)` to `#RRGGBB` in the page. */
 const readColours = (page: Page): Promise<Computed> =>
   page.evaluate(() => {
-    const hex = (c: string): string => {
+    const hex = (c: string | undefined): string => {
+      if (!c) return ''
       const m = c.match(/\(([^)]+)\)/)
       if (!m) return c
       const p = m[1].split(/[,/ ]+/).filter(Boolean).map(Number)
       const v = c.startsWith('color(') ? p.slice(0, 3).map((x) => Math.round(x * 255)) : p.slice(0, 3)
       return '#' + v.map((x) => x.toString(16).padStart(2, '0')).join('').toUpperCase()
     }
-    const cs = (sel: string) => getComputedStyle(document.querySelector(sel)!)
+    // an element that is not there (a state no mark is in yet: the three-step run has no mark to come at its last step) reads as empty strings, which the caller merges and then refuses
+    const cs = (sel: string): CSSStyleDeclaration => {
+      const e = document.querySelector(sel)
+      return e ? getComputedStyle(e) : ({} as CSSStyleDeclaration)
+    }
     const dot = (state: string) => `[data-testid="tutorial-steps"] li[data-state="${state}"]`
     return {
       cardFg: hex(cs('[data-testid="tutorial-card"]').color),
@@ -475,12 +481,18 @@ for (const id of DESIGN_IDS) {
   test(`package ${id}: the card’s colours in use pass ADR 0017 (text >= 4.5, UI >= 3) and axe finds nothing on it`, async ({ page }) => {
     test.setTimeout(90_000)
     await takeTutorial(page, id)
-    await expect(live(page)).toContainText('étape 1 sur 10', { timeout: 10_000 })
-    await act(page, SETUP.console)
-    await expect(live(page)).toContainText('étape 2 sur 10', { timeout: 10_000 })
-    await oscarChip(page, 'Passer cette étape').click() // a « passée » mark, so every state wears its colours
-    await expect(count(page)).toHaveText('Étape 3 sur 10')
-    const c = await readColours(page)
+    const n = packageById(id).pacing.steps.length
+    await expect(live(page)).toContainText(`étape 1 sur ${n}`, { timeout: 10_000 })
+    const atStart = await readColours(page) // step 1: a current mark and the marks to come (the last step of a three-step run has none)
+    // step 1 done by its own event (the console placed, or on the playable model the first sound), then step 2 passed: a done, a « passée » and a current mark, every state in its colours
+    if (packageById(id).layout.start === 'playable-model') await testSignal(page)
+    else await act(page, SETUP.console)
+    await expect(live(page)).toContainText(`étape 2 sur ${n}`, { timeout: 10_000 })
+    await oscarChip(page, 'Passer cette étape').click()
+    await expect(count(page)).toHaveText(`Étape 3 sur ${n}`)
+    const atLater = await readColours(page)
+    const c: Computed = { ...atLater, todoBorder: atLater.todoBorder || atStart.todoBorder }
+    for (const [k, v] of Object.entries(c)) if (k !== 'line') expect(v, `package ${id}: ${k} was read`).not.toBe('')
     const row = (what: string, fg: string, bg: string, need: number): void => {
       const r = contrastRatio(fg, bg)
       console.log(`CONTRAST package ${id} | step card ${what} | ${fg} on ${bg} = ${r.toFixed(2)} (needs ${need})`)

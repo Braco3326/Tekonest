@@ -62,7 +62,7 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
       },
     },
     placeOpen: () => place,
-    openNeutralRoom: async () => {
+    openFirstRoom: async () => {
       log.push('room')
       await Promise.resolve()
       recordWhenRoomOpened.push(storage.data.get(ONBOARDING_KEY) ?? null)
@@ -71,7 +71,7 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
         startShowing = false
       }
     },
-    frameNeutralRoom: () => void log.push('frame'),
+    frameFirstRoom: () => void log.push('frame'),
     setPanel: (p, open) => void log.push(`panel:${p}:${open}`),
     openInventory: (tab) => void log.push(`drawer:${tab}`),
     returnFocus: () => void log.push('focus'),
@@ -148,7 +148,7 @@ describe('the start screen answer (T2.4a, R-B: the record is written WITH the an
   it('T6.1: the first-sound framing reserves the tutorial’s row when the tutorial is taken (the SM58 keeps its pixels once the step card’s row is there), and not when it is skipped', async () => {
     for (const [offer, row] of [['taken', true], ['skipped', false]] as const) {
       const frames: unknown[] = []
-      const h = harness({ frameNeutralRoom: (o?: { tutorialRow?: boolean }) => void frames.push(o?.tutorialRow) })
+      const h = harness({ frameFirstRoom: (o?: { tutorialRow?: boolean }) => void frames.push(o?.tutorialRow) })
       h.ob.startFirstVisit()
       h.startOpts().onResult({ kind: 'chosen', profile: 'decouvre', offer })
       await settle()
@@ -157,7 +157,7 @@ describe('the start screen answer (T2.4a, R-B: the record is written WITH the an
   })
   it('T6.1: Aide › Premiers pas with no place open frames for the canvas minus the tutorial’s row (the tutorial follows)', async () => {
     const frames: unknown[] = []
-    const h = harness({ frameNeutralRoom: (o?: { tutorialRow?: boolean }) => void frames.push(o?.tutorialRow) })
+    const h = harness({ frameFirstRoom: (o?: { tutorialRow?: boolean }) => void frames.push(o?.tutorialRow) })
     h.setPlace(false)
     await h.ob.requestTutorial()
     expect(frames).toEqual([true])

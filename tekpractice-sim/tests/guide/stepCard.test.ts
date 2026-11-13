@@ -54,8 +54,10 @@ describe('cardView: « Étape k sur n » and one mark per step', () => {
     expect(states(v)).toEqual(['done', 'current', 'todo'])
   })
 
-  it('package 5 runs the ten standard steps until its playable model exists (T6.3): the card says 10 for every package today', () => {
-    for (const id of [1, 2, 3, 4, 5] as const) expect(view(running(1), tutorialSteps(packageById(id)))!.count).toBe('Étape 1 sur 10')
+  it('n follows each package’s own pacing (T6.3): « Étape 1 sur 10 » for packages 1 to 4, « Étape 1 sur 3 » for package 5 on its playable model', () => {
+    for (const id of [1, 2, 3, 4] as const) expect(view(running(1), tutorialSteps(packageById(id)))!.count, `package ${id}`).toBe('Étape 1 sur 10')
+    expect(view(running(1), tutorialSteps(packageById(5)))!.count).toBe('Étape 1 sur 3')
+    expect(view(running(3), tutorialSteps(packageById(5)))!.count).toBe('Étape 3 sur 3')
   })
 
   it('a current step id that the list does not hold, or a k beyond n, never throws and never invents a step', () => {

@@ -16,6 +16,7 @@ import {
   applyDesignAttribute,
   designFromSearch,
   packageById,
+  tutorialSteps,
   type DesignId,
 } from '../../src/design/packages'
 import { TUTORIAL_EVENT } from '../../src/design/events'
@@ -107,6 +108,10 @@ describe('the table skeleton', () => {
   it('every pacing step id exists in the tutorial step list (the twelve of the one list)', () => {
     const known = new Set<string>(TUTORIAL_STEPS.map((s) => s.id))
     for (const p of all) for (const id of p.pacing.steps) expect(known.has(id), `package ${p.id} step ${id}`).toBe(true)
+  })
+
+  it('the steps a package runs are its pacing data, for every package (T6.3: no fallback to the ten steps)', () => {
+    for (const p of all) expect(tutorialSteps(p), `package ${p.id}`).toBe(p.pacing.steps)
   })
 
   it('package 5 starts on the playable model and paces three steps; package 4 has no hint', () => {

@@ -30,6 +30,16 @@ async function openRoom(page: Page, id: DesignId): Promise<void> {
   await start(page).getByRole('button', { name: 'Passer, je connais', exact: true }).click()
   await page.waitForFunction(() => window.__creation?.place() === 'blank')
 }
+/**
+ * The checklist chip shows only while the bench cannot play. A package whose first room is the playable model (T6.3) opens a bench that plays, so the chip is hidden: unplug its two
+ * line cables (what the learner could do) to give the checklist something to say; the neutral-room packages start with an empty bench and need nothing.
+ */
+async function blockTheBench(page: Page, id: DesignId): Promise<void> {
+  if (packageById(id).layout.start !== 'playable-model') return
+  await page.evaluate(() => {
+    for (const [k, p] of [['k12-g', 'out-main-l'], ['k12-d', 'out-main-r']] as const) window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'ql1', port: p }, b: { instance: k, port: 'in-line-a' } })
+  })
+}
 const act = (page: Page, intents: unknown[]) =>
   page.evaluate((l) => {
     for (const i of l) {
@@ -58,6 +68,7 @@ for (const id of DESIGN_IDS) {
   if (pkg.layout.checklist === 'chip')
     test(`package ${id} (${pkg.layout.checklist}): the checklist is the status bar’s chip, and its list a dialog pop-over opened from it`, async ({ page }) => {
       await openRoom(page, id)
+      await blockTheBench(page, id)
       await expect(chip(page)).toBeVisible()
       await expect(list(page), 'closed: not in the page').toHaveCount(0)
       await chip(page).click()
@@ -180,6 +191,7 @@ for (const id of DESIGN_IDS) {
       await expect(page.getByTestId('project-tree').getByTestId('checklist')).toBeVisible()
       await expect(chip(page)).toBeHidden()
     } else {
+      await blockTheBench(page, id)
       await expect(chip(page)).toBeVisible()
       await expect(page.getByTestId('project-tree').getByTestId('checklist')).toHaveCount(0)
     }

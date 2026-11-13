@@ -852,20 +852,23 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
         items: missing,
       })
   }
+  const pickerTemplates = templateCards(
+    templates.map((t) => ({
+      id: t.id,
+      name_fr: t.name_fr,
+      roomId: t.roomId,
+      devices: t.instances.length,
+    })),
+    cards
+  )
+  /** Every card `pick` accepts: the places and the templates (the start room is one of them, `startRoomKey`). */
+  const roomCards = [...cards, ...pickerTemplates]
   const picker = mountPlacePicker({
     doc: document,
     parent: shell.root,
     covers: [shell.tree, shell.viewport, shell.props],
     places: cards,
-    templates: templateCards(
-      templates.map((t) => ({
-        id: t.id,
-        name_fr: t.name_fr,
-        roomId: t.roomId,
-        devices: t.instances.length,
-      })),
-      cards
-    ),
+    templates: pickerTemplates,
     thumbBase: `${import.meta.env.BASE_URL}room-thumbs/`,
     onChoose: (card, mode) => void pick(card, mode),
     // the start screen's code is fetched on the first showStart, only where the onboarding is on
@@ -953,19 +956,23 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   }
   let onboarding: Onboarding = NO_ONBOARDING
   if (onboardingOn) {
-    const [{ wireOnboarding }, { framingForCanvas }] = await Promise.all([import('./onboarding/firstVisit'), import('./onboarding/framing')])
+    const [{ wireOnboarding }, { framingForCanvas }, { startRoomKey }] = await Promise.all([import('./onboarding/firstVisit'), import('./onboarding/framing'), import('./onboarding/startRoom')])
     onboarding = wireOnboarding({
       design: true,
       storage,
-      stepCount: designPkg ? tutorialSteps(designPkg).length : 0, // S1: package 5 runs the ten steps until T6.3
+      stepCount: designPkg ? tutorialSteps(designPkg).length : 0,
       tutorialAllowed: opts.tutorialAllowed === true,
       panels: designPkg?.layout.panels ?? { tree: true, props: true },
       doc: document,
       chipSlot: statusBar.checklistSlot,
       picker,
       placeOpen: () => store.design().roomId !== null,
-      openNeutralRoom: () => pick(cards.find((c) => c.key === 'blank')!, 'empty'),
-      frameNeutralRoom: (o) => {
+      // the package's `layout.start`: the neutral room or the playable model (a template, through the picker's own template path); never a package number
+      openFirstRoom: () => {
+        const key = startRoomKey(designPkg?.layout.start ?? 'neutral-room', (k) => roomCards.some((c) => c.key === k))
+        return pick(roomCards.find((c) => c.key === key)!, 'empty')
+      },
+      frameFirstRoom: (o) => {
         const f = designPkg?.framing
         if (!f || !host.rig) return
         // the radius follows the canvas height: the same pixels on a short window; a tutorial about to open its row (T6.1) takes that row from the canvas, so the framing is for what is left

@@ -249,6 +249,12 @@ for (const id of DESIGN_IDS) {
       window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12b', position: [-2, 0, 0], rotationY: 0 }) // a second speaker: two options to compare in the connect dialog
       window.__creation!.frameDevice('ql1')
     })
+    // T6.3: the first room of a package that starts on the playable model already holds these devices (the SPAWNs above are refused, same ids) and its two line cables: unplug them, so the QL1's
+    // « Connecter à… » row below exists and two speakers are there to compare (setup only: no assertion changed)
+    if (pkg.layout.start === 'playable-model')
+      await page.evaluate(() => {
+        for (const [k, port] of [['k12-g', 'out-main-l'], ['k12-d', 'out-main-r']] as const) window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'ql1', port }, b: { instance: k, port: 'in-line-a' } })
+      })
     await expect(page.locator('.cr-props-content .cr-field, .cr-props-content .cr-toggle').first()).toBeVisible()
     await page.waitForFunction(() => !window.__creation!.cameraMoving())
     await expect(page.locator('.cr-tree-root [aria-selected="true"]').first(), 'the selected tree row is in the audited room').toBeVisible()

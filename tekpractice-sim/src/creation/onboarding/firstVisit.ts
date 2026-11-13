@@ -30,10 +30,13 @@ export interface OnboardingWiring {
   picker: Pick<PlacePicker, 'showStart' | 'hide' | 'show' | 'startShowing'>
   /** A place is open (the design has a room). */
   placeOpen(): boolean
-  /** Open the neutral room through the picker's own choice path (the `blank` card, « Salle vide », no dialog). Resolves when that is over, whatever the result. */
-  openNeutralRoom(): Promise<void>
-  /** The camera goes to the active package's `framing` (first-sound framing, T2.5); `tutorialRow`: a tutorial is about to open its row (the step card's slot, `TUTORIAL_ROW_PX`), so the framing is for the canvas MINUS that row (T6.1: the same pixels once the row is there). Called only right after the neutral room was opened by the start screen or by Aide « Premiers pas »; never over a room that was already open. */
-  frameNeutralRoom(opts?: { tutorialRow?: boolean }): void
+  /**
+   * Open the package's first room through the picker's own choice path, no dialog: the neutral room (the `blank` card, « Salle vide ») or, for a package whose `layout.start` is
+   * `playable-model`, the template `premier-son-pret` (T6.3, `startRoomKey`). Resolves when that is over, whatever the result.
+   */
+  openFirstRoom(): Promise<void>
+  /** The camera goes to the active package's `framing` (first-sound framing, T2.5); `tutorialRow`: a tutorial is about to open its row (the step card's slot, `TUTORIAL_ROW_PX`), so the framing is for the canvas MINUS that row (T6.1: the same pixels once the row is there). Called only right after the first room (the neutral room or the playable model) was opened by the start screen or by Aide « Premiers pas »; never over a room that was already open. */
+  frameFirstRoom(opts?: { tutorialRow?: boolean }): void
   setPanel(p: 'tree' | 'props', open: boolean): void
   /** The inventory drawer opens on this tab; the focus stays where it is (the 3D view). */
   openInventory(tab: InventoryTab): void
@@ -154,12 +157,12 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
             w.picker.hide()
             w.returnFocus()
           } else {
-            await w.openNeutralRoom()
+            await w.openFirstRoom()
             if (!w.placeOpen()) {
               answered = false // busy, cancelled or failed: the picker has the error or still shows the screen; nothing was written, the next answer is taken
               return
             }
-            w.frameNeutralRoom({ tutorialRow: r.offer === 'taken' && w.tutorialAllowed })
+            w.frameFirstRoom({ tutorialRow: r.offer === 'taken' && w.tutorialAllowed })
           }
           store.dispatch({ type: 'answer', profile: r.profile, offer: r.offer })
           chip?.render()
@@ -199,9 +202,9 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
       // Cleared by `finally` on the promise itself: an async body with no await would run its own cleanup before `asking` is assigned.
       asking = (async () => {
         if (!w.placeOpen()) {
-          await w.openNeutralRoom()
+          await w.openFirstRoom()
           if (!w.placeOpen()) return
-          w.frameNeutralRoom({ tutorialRow: true }) // « Premiers pas »: the tutorial follows
+          w.frameFirstRoom({ tutorialRow: true }) // « Premiers pas »: the tutorial follows
         }
         store.dispatch({ type: 'request', kind: 'start' })
         if (resuming) w.doc.querySelector<HTMLElement>('[data-testid="tutorial-card"]')?.focus()

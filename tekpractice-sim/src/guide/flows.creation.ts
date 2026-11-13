@@ -173,7 +173,7 @@ export function premiersPasFlow(registry: Registry, ids: readonly StepId[] = TUT
 
 /**
  * The tutorial flow of the address's design package (its pacing), or null without `?design=1..5` (today's game has no tutorial). The steps are `tutorialSteps`:
- * package 5 runs the ten standard steps until T6.3 builds its playable model (T3 close review S1).
+ * the package's own pacing (package 5: the three steps of the playable model, T6.3).
  */
 export function tutorialFlowFor(search: string, registry: Registry): Flow | null {
   const pkg = activePackage(search)

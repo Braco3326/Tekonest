@@ -7,7 +7,7 @@
  */
 import { mkdirSync } from 'node:fs'
 import { expect, test } from '@playwright/test'
-import { DESIGN_IDS } from '../../src/design/packages'
+import { DESIGN_IDS, packageById } from '../../src/design/packages'
 
 test.use({ viewport: { width: 1366, height: 768 } })
 test.skip(process.env.ONBOARDING_SCREENS !== '1', 'screens for the founder: set ONBOARDING_SCREENS=1')
@@ -63,6 +63,14 @@ for (const id of DESIGN_IDS) {
     await page.getByTestId('start-screen').getByRole('button', { name: /^Faire le tutoriel/ }).click()
     await page.waitForFunction(() => window.__creation!.place() === 'blank')
     await expect(page.getByTestId('tutorial-card')).toBeVisible({ timeout: 10_000 })
+    if (packageById(id).layout.start === 'playable-model') {
+      // T6.3: the first room is the playable model, step 1 of 3 (Écoute): pkg-<n>-model.png
+      await expect(page.getByTestId('tutorial-step-count')).toHaveText('Étape 1 sur 3', { timeout: 10_000 })
+      await page.waitForFunction(() => !window.__creation!.cameraMoving() && window.__creation!.modelsPending() === 0)
+      await page.waitForTimeout(900)
+      await page.screenshot({ path: `${OUT}/pkg-${id}-model.png` })
+      return
+    }
     const place = (device: string, instance: string, x: number) =>
       page.evaluate(([d, i, px]) => void window.__creation!.dispatch({ type: 'SPAWN', deviceId: d, instanceId: i, position: [px, 0, 0], rotationY: 0 } as never), [device, instance, x] as const)
     await place('yamaha-ql1', 'ql1', 0)

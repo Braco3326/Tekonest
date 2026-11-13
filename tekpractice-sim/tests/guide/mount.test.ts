@@ -1175,10 +1175,10 @@ describe('the tutorial in the mount: ?design only, never started by the mount', 
     expect(flows).toHaveLength(7)
   })
 
-  it('?design=5: premiers-pas is the ten standard steps until T6.3 builds the playable model (T3 close review S1; was ecoute, debrancher, rebrancher)', () => {
+  it('?design=5: premiers-pas is the package’s own three steps on the playable model (T6.3: ecoute, debrancher, rebrancher)', () => {
     const r = designRig('?design=5')
     mountOscar(r.deps, r.f.impl)
-    expect(flowsOf(r).find((f) => f.id === 'premiers-pas')!.steps.map((s) => s.id)).toEqual(['console', 'micro', 'enceinte', 'console-enceinte', 'micro-console', 'lecture-console', 'multiprise', 'courant-console', 'courant-enceinte', 'ecoute'])
+    expect(flowsOf(r).find((f) => f.id === 'premiers-pas')!.steps.map((s) => s.id)).toEqual(['ecoute', 'debrancher', 'rebrancher'])
   })
 
   it('the mount never starts a flow: no flow control is sent at mount or on a change (T3.2 starts it on a request)', () => {

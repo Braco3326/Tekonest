@@ -176,6 +176,20 @@ const coloursModele: RoleColours = {
  */
 const firstSoundFraming: FramingPose = { alpha: Math.PI / 2, beta: 1.1, radius: 2.2, target: [0, 0, 0] }
 
+/**
+ * The first-room framing of package 5 (T6.3): the playable model, not the empty neutral room. The five devices of content/templates/premier-son-pret.json stand 10.5 m apart in
+ * depth (the QL1 at z = 4, the two K12.2 on stands at z = -5.5 and x = +-3, the SM58 and the strip behind), so the neutral room's close pose (target at the room's centre, radius
+ * 2.2 m) shows only floor. This pose looks from the front of house toward the stage, low and far enough to hold all five at once. `radius` is at a 600 px canvas, as
+ * `firstSoundFraming` (framing.ts scales it with the canvas height).
+ *
+ * Computed, then measured (tests/e2e/onboarding-model.spec.ts): the scene's own projection (vertical fov 0.8, calibrated against `worldScreen` on the real page to 0.2 px) of the
+ * eight corners of an estimated box around each body, searched over beta, radius and target for the pose that holds all five inside the canvas AND above the inventory drawer's top
+ * (the profile opens the drawer on the first room: it covers the lower 36 % of the view) at both canvas heights of the framing spec (659 and 541 px), with the QL1 and the two speakers
+ * as large as possible. At 1366 x 768 the QL1 is about 150 px wide, each K12.2 about 40 px, the SM58 about 11 px (a mic is a small thing at this distance: the model is read as a whole,
+ * the unplug step rings the console's end of the cable). The speakers are on the side the learner expects: stage left and right as seen from the console.
+ */
+const modelFraming: FramingPose = { alpha: Math.PI / 2, beta: 1.3, radius: 6.5, target: [0, 0, 3] }
+
 const ALL_STEPS: readonly StepId[] = [
   'console',
   'micro',
@@ -294,11 +308,11 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
       checklist: 'chip',
       start: 'playable-model',
     },
-    // UNUSED until T6.3 builds the playable model (`tutorialSteps` falls back to the ten steps): restored by T6.3. Kept here as data.
+    // Runs on the playable model the start opens (T6.3): the sound, one unplug, the replug.
     pacing: { steps: ['ecoute', 'debrancher', 'rebrancher'], hintAfterMs: 25_000 },
     presenter: 'step-card',
     oscar: { leads: true, proactive: true },
-    framing: firstSoundFraming,
+    framing: modelFraming,
   },
 })
 
@@ -320,12 +334,13 @@ export function packageById(id: DesignId): DesignPackage {
 }
 
 /**
- * The steps a package's tutorial actually runs (T3 close review S1). A package that starts on the playable model (package 5) cannot run its own pacing until that
- * model exists (plan T6.3): it would open the empty neutral room and ask for Écoute first, a step no learner can complete there. Until then it runs the standard
- * ten steps (spec 6.3); its own `pacing.steps` stay as data, restored by T6.3. The start screen's « N étapes » and the guide's flow both read this.
+ * The steps a package's tutorial runs: its pacing data, for every package. Package 5 starts on the playable model (`layout.start`, T6.3), a bench that is already wired and
+ * powered, so its run is the three steps `ecoute`, `debrancher`, `rebrancher` (spec 7.2); the others start in the empty neutral room and run the ten of spec 6.3. (Between T3
+ * and T6.3 package 5 fell back to the ten steps, because its first room was the empty neutral room where a sound cannot start: the fallback is gone.) The start screen's
+ * « N étapes », the step card's n and the guide's flow all read this.
  */
 export function tutorialSteps(pkg: DesignPackage): readonly StepId[] {
-  return pkg.layout.start === 'playable-model' ? ALL_STEPS : pkg.pacing.steps
+  return pkg.pacing.steps
 }
 
 /** The active package for this address, or null (no `?design`: today's behaviour). */

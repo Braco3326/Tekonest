@@ -748,18 +748,17 @@ describe('C1 (T3 close review): step 9 is the speaker that carries the audio (fe
   })
 })
 
-// ── T3 close review S1: package 5 until T6.3 builds its playable model ─────────────────────────────────────────────────────
+// ── T6.3: package 5 runs its own three-step pacing on the playable model (the T3 close review S1 fallback to the ten steps is gone) ─────────────────────
 import { tutorialSteps } from '../../src/design/packages'
 
-describe('S1 (T3 close review): package 5 runs the ten standard steps until T6.3', () => {
-  const TEN = TUTORIAL_STEPS.slice(0, 10).map((s) => s.id)
-  it('?design=5: the flow is the ten steps (its own 3-step pacing stays as data, unused); the start screen count follows (10)', () => {
-    expect(tutorialFlowFor('?design=5', registry)!.steps.map((s) => s.id)).toEqual(TEN)
-    expect(tutorialSteps(packageById(5))).toEqual(TEN)
-    expect(packageById(5).pacing.steps).toEqual(['ecoute', 'debrancher', 'rebrancher'])
-    for (const id of [1, 2, 3, 4] as const) expect(tutorialSteps(packageById(id))).toBe(packageById(id).pacing.steps) // the others: their own pacing
+describe('T6.3: every package runs its own pacing; package 5 runs ecoute, debrancher, rebrancher', () => {
+  it('?design=5: the flow is the three steps and the start screen count (tutorialSteps) follows (3); the other packages keep their ten', () => {
+    expect(tutorialFlowFor('?design=5', registry)!.steps.map((s) => s.id)).toEqual(['ecoute', 'debrancher', 'rebrancher'])
+    expect(tutorialSteps(packageById(5))).toEqual(['ecoute', 'debrancher', 'rebrancher'])
+    for (const id of DESIGN_IDS) expect(tutorialSteps(packageById(id)), `package ${id}`).toBe(packageById(id).pacing.steps) // one source: the pacing data
+    for (const id of [1, 2, 3, 4] as const) expect(tutorialSteps(packageById(id)), `package ${id}`).toHaveLength(10)
   })
-  it('no package offers a step that cannot complete in the neutral room: the run starts by placing the console, and each step’s bench comes from the steps before it', () => {
+  it('no package offers a step that cannot complete on its first room: a neutral-room run starts by placing the console, and each step’s bench comes from the steps before it or from the playable model', () => {
     // What each step needs already on the bench (the empty neutral room has nothing): only earlier steps of the same run may provide it.
     const needs: Partial<Record<StepId, StepId[]>> = {
       'console-enceinte': ['console', 'enceinte'],
@@ -771,12 +770,68 @@ describe('S1 (T3 close review): package 5 runs the ten standard steps until T6.3
       debrancher: ['ecoute'],
       rebrancher: ['debrancher'],
     }
+    // The playable model (T6.3, content/templates/premier-son-pret.json) is built, wired and powered before the run: it provides every step of the ten but the sound itself.
+    const MODEL: StepId[] = TUTORIAL_STEPS.slice(0, 9).map((s) => s.id)
     for (const id of DESIGN_IDS) {
       const ids = tutorialFlowFor(`?design=${id}`, registry)!.steps.map((s) => s.id as StepId)
-      expect(ids[0], `design ${id}`).toBe('console')
+      const model = packageById(id).layout.start === 'playable-model'
+      expect(ids[0], `design ${id}`).toBe(model ? 'ecoute' : 'console')
       ids.forEach((step, k) => {
-        for (const need of needs[step] ?? []) expect(ids.slice(0, k), `design ${id}: ${step} needs ${need} before it`).toContain(need)
+        for (const need of needs[step] ?? []) expect([...(model ? MODEL : []), ...ids.slice(0, k)], `design ${id}: ${step} needs ${need} before it`).toContain(need)
       })
     }
+  })
+})
+
+// ── T6.3: the playable model as the tutorial's bench ────────────────────────────────────────────────────────────────────────────
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+
+describe('T6.3: the playable model premier-son-pret carries the three-step route', () => {
+  const tpl = JSON.parse(readFileSync(join(__dirname, '..', '..', 'content', 'templates', 'premier-son-pret.json'), 'utf8')) as {
+    instances: { instanceId: string; deviceId: string }[]
+    connections: { a: TpPortRef; b: TpPortRef }[]
+    controls: Record<string, Record<string, boolean | string>>
+  }
+  const model = (without: number[] = []): TpState =>
+    stateOf(tpl.instances.map((i) => [i.instanceId, i.deviceId] as [string, string]), tpl.connections.filter((_, k) => !without.includes(k)), tpl.controls)
+  const LINE = tpl.connections.flatMap((c, k) => (pairOf(c, model(), registry) === 'console-speaker' ? [k] : []))
+
+  it('has exactly two console-to-speaker cables (one per speaker), so one unplug leaves the other speaker playing', () => {
+    expect(LINE).toHaveLength(2)
+    const speakers = LINE.map((k) => [tpl.connections[k].a, tpl.connections[k].b].find((r) => r.instance.startsWith('k12'))!.instance)
+    expect(new Set(speakers).size).toBe(2)
+  })
+
+  it('every step of the ten before the sound is already satisfied on it; the sound and the two unplug steps are not (they are about an action)', () => {
+    for (const s of TUTORIAL_STEPS.slice(0, 9)) expect(stepSatisfied(s, model(), null, registry), s.id).toBe(true)
+    for (const id of ['ecoute', 'debrancher', 'rebrancher'] as const) expect(stepSatisfied(byId(id), model(), null, registry), id).toBe(false)
+    expect(stepSatisfied(byId('ecoute'), model(), 'test', registry), 'a test signal already playing').toBe(true)
+  })
+
+  it('does not trigger: a mains cable or the mic cable of the model is not a console-to-speaker cable (its unplug does not end debrancher)', () => {
+    tpl.connections.forEach((c, k) => {
+      if (LINE.includes(k)) return
+      expect(ends('debrancher', connected(c, 'disconnect'), model([k]), model()), `cable ${k}`).toBe(false)
+    })
+  })
+
+  it('debrancher ends on the unplug of either line cable; rebrancher ends on the reconnect of that cable, and not on its unplug', () => {
+    for (const k of LINE) {
+      const c = tpl.connections[k]
+      expect(ends('debrancher', connected(c, 'disconnect'), model([k]), model()), `unplug ${k}`).toBe(true)
+      expect(ends('rebrancher', connected(c), model()), `replug ${k}`).toBe(true)
+      expect(ends('rebrancher', connected(c, 'disconnect'), model([k]), model()), `unplug ${k} is not a replug`).toBe(false)
+    }
+  })
+
+  it('after one unplug, the step points at the console end of the cable that is still there (to unplug) and rebrancher asks for the console output of the freed pair', () => {
+    const k = LINE[0]
+    const free = nextConnectionStepFor('console-speaker', model([k]), registry)
+    expect(free).not.toBeNull()
+    expect(free!.from).toEqual({ instance: 'ql1', port: tpl.connections[k].a.instance === 'ql1' ? tpl.connections[k].a.port : tpl.connections[k].b.port })
+    expect(free!.to.port).toBe('in-line-a')
+    // with both cables there, no free pair of that kind exists (the helper-free route offers nothing to plug twice)
+    expect(nextConnectionStepFor('console-speaker', model(), registry)).toBeNull()
   })
 })
