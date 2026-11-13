@@ -507,3 +507,39 @@ describe('the entrepreneur’s card (T6.4): due after the first sound, for the p
     expect(h.gearShown()).toBe(false)
   })
 })
+
+describe('the entrepreneur’s card follows the address live (T6 review C1): an address that turns to an exam one takes it away and never shows it', () => {
+  it('shown on a practice address, then the reader flips: the next refresh hides it (a bench change calls it)', async () => {
+    let practice = true
+    const h = harness({ practiceNow: () => practice })
+    h.ob.startFirstVisit()
+    h.startOpts().onResult({ kind: 'chosen', profile: 'projet', offer: 'skipped' })
+    await settle()
+    h.ob.soundStarted()
+    expect(h.gearShown(), 'positive control: the practice address shows it').toBe(true)
+    practice = false
+    h.ob.refresh()
+    expect(h.gearShown()).toBe(false)
+    expect(h.record(), 'hiding it is not a dismissal').not.toHaveProperty('ownGear')
+  })
+  it('the switch happens BEFORE the first sound: the sound on the exam address shows nothing', async () => {
+    let practice = true
+    const h = harness({ practiceNow: () => practice })
+    h.ob.startFirstVisit()
+    h.startOpts().onResult({ kind: 'chosen', profile: 'projet', offer: 'skipped' })
+    await settle()
+    practice = false
+    h.ob.soundStarted()
+    expect(h.gearShown()).toBe(false)
+    expect(h.gearLog).toEqual([])
+  })
+  it('does not trigger: no reader given (a unit with no address) follows the onboarding alone', async () => {
+    const h = harness()
+    h.ob.startFirstVisit()
+    h.startOpts().onResult({ kind: 'chosen', profile: 'projet', offer: 'skipped' })
+    await settle()
+    h.ob.soundStarted()
+    h.ob.refresh()
+    expect(h.gearShown()).toBe(true)
+  })
+})

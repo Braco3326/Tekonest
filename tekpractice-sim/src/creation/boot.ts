@@ -146,7 +146,7 @@ const roomName = (id: string): string =>
  * decides whether the start screen offers the tutorial and Aide has « Premiers pas ». Creation may not import the guide, so both are passed in. Missing = false (fail closed,
  * like the guide's own mode gate).
  */
-export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed?: boolean } = {}): Promise<void> {
+export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed?: boolean; practiceNow?: () => boolean } = {}): Promise<void> {
   injectCreationTokens()
   const designPkg = applyDesignAttribute(document.documentElement, location.search) // marks <html> only for a valid ?design=1..5 (T0.1)
   /** The first-visit layer (start screen, profile, chip, Aide « Premiers pas », framing): a valid ?design, practice mode only (exam addresses: entirely off). Its code is a lazy chunk. */
@@ -863,10 +863,12 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   )
   /** Every card `pick` accepts: the places and the templates (the start room is one of them, `startRoomKey`). */
   const roomCards = [...cards, ...pickerTemplates]
+  /** What the picker makes inert while it is open; the entrepreneur's row joins it while it shows (T6 review N5). */
+  const pickerCovers: HTMLElement[] = [shell.tree, shell.viewport, shell.props]
   const picker = mountPlacePicker({
     doc: document,
     parent: shell.root,
-    covers: [shell.tree, shell.viewport, shell.props],
+    covers: pickerCovers,
     places: cards,
     templates: pickerTemplates,
     thumbBase: `${import.meta.env.BASE_URL}room-thumbs/`,
@@ -948,6 +950,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   const NO_ONBOARDING: Onboarding = {
     store: null,
     soundStarted: () => undefined,
+    refresh: () => undefined,
     premiersPas: false,
     startFirstVisit: () => false,
     requestTutorial: () => Promise.resolve(),
@@ -966,6 +969,9 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       panels: designPkg?.layout.panels ?? { tree: true, props: true },
       doc: document,
       shellRoot: shell.root,
+      practiceNow: opts.practiceNow,
+      pickerCovers,
+      pickerOpen: () => picker.isOpen,
       chipSlot: statusBar.checklistSlot,
       picker,
       placeOpen: () => store.design().roomId !== null,
@@ -992,6 +998,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       returnFocus: () => canvas.focus(),
     })
   }
+  // each change of the bench: the entrepreneur's card looks at the address again (a page pushed to an exam address while it runs loses the card, T6 review C1)
+  if (onboardingOn) store.subscribe(() => onboarding.refresh()) // lives with the page, like the autosave's subscription above
   if (!(await restore())) {
     // First visit under ?design: the start screen, a stage of the picker; otherwise (no ?design, or already asked) the picker as it always was.
     if (!onboarding.startFirstVisit()) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen

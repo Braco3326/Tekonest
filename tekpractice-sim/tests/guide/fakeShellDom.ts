@@ -21,6 +21,8 @@ export interface FakeEl {
   setAttribute(k: string, v: string): void
   getAttribute(k: string): string | null
   addEventListener(t: string, fn: () => void): void
+  /** The listeners added, by event type (a test fires them by hand). */
+  listeners: Record<string, (() => void)[]>
   focus(): void
   querySelector(sel: string): FakeEl | null
 }
@@ -68,7 +70,10 @@ export function fakeShellDom(opts: { shell?: boolean } = {}) {
         e.attrs[k] = v
       },
       getAttribute: (k) => e.attrs[k] ?? null,
-      addEventListener() {},
+      listeners: {},
+      addEventListener(t, fn) {
+        ;(e.listeners[t] ??= []).push(fn)
+      },
       focus() {},
       querySelector(sel) {
         const want = /\[data-testid="([^"]+)"\]/.exec(sel)?.[1]

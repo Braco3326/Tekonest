@@ -13,10 +13,11 @@ import { PRACTICE_CLASS } from './design/practice'
  * One more thing on a practice address (plan T4.3): <html> gets the class `cr-practice` (`PRACTICE_CLASS`), the one gate the shell reads (`lookOfRoot`) before a valid `?design`
  * restyles and lays it out; an exam address never gets it, so it never changes, with or without `?design`.
  */
-function onboardingGates(search: string): { onboarding: boolean; tutorialAllowed: boolean } {
+function onboardingGates(search: string): { onboarding: boolean; tutorialAllowed: boolean; practiceNow: () => boolean } {
   const onboarding = guideMode(search, 'creation') === 'practice'
   if (onboarding) document.documentElement.classList.add(PRACTICE_CLASS)
-  return { onboarding, tutorialAllowed: onboarding && guideRouteAllowed(search, 'creation') }
+  // `practiceNow`: the same mode gate read again at each call, on the address the page has NOW (a pushState to an exam address turns the entrepreneur's card off, T6 review C1)
+  return { onboarding, tutorialAllowed: onboarding && guideRouteAllowed(search, 'creation'), practiceNow: () => guideMode(location.search, 'creation') === 'practice' }
 }
 
 /**

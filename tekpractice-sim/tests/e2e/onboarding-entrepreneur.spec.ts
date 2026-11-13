@@ -131,6 +131,41 @@ for (const query of ['?design=1&mode=exam', '?design=1&MODE=practice', '']) {
   })
 }
 
+// ── the address can change under a running page (T6 review C1) ────────────────────────────────────────────────────────────────
+
+test('C1 (T6 review): the page is pushed to an exam address while the card shows, then the bench changes: no slot, no data-gear; the positive control shows it on ?design=1', async ({ page }) => {
+  await startAs(page, '?design=1', '3')
+  await testSignal(page)
+  await expect(gear(page), 'positive control: ?design=1 shows the card').toBeVisible()
+  await page.evaluate(() => window.history.pushState(null, '', '/?design=1&mode=exam'))
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [0.8, 0, 0], rotationY: 0 } as never))
+  await expect(slot(page)).toHaveCount(0)
+  expect(await page.locator('.cr').getAttribute('data-gear')).toBeNull()
+  expect(await record(page), 'leaving is not a dismissal').toEqual({ v: 1, profile: 'projet', offer: 'skipped', request: 0, shown: [] })
+})
+
+test('C1 (T6 review): the switch to an exam address happens BEFORE the first sound, then Écoute: the exam address never shows the card', async ({ page }) => {
+  await startAs(page, '?design=1', '3')
+  await page.evaluate(() => window.history.pushState(null, '', '/?design=1&mode=exam'))
+  await testSignal(page)
+  await page.waitForTimeout(1200)
+  await expect(slot(page)).toHaveCount(0)
+  expect(await page.locator('.cr').getAttribute('data-gear')).toBeNull()
+})
+
+test('N5 (T6 review): with the card shown, the place picker over the shell makes it inert (« Fermer » is not tabbable under the picker); it is live again when the picker closes', async ({ page }) => {
+  await startAs(page, '?design=1', '3')
+  await testSignal(page)
+  await expect(gear(page)).toBeVisible()
+  await page.getByRole('menuitem', { name: 'Lieu' }).click()
+  await page.getByRole('menuitem', { name: 'Choisir un lieu…' }).click()
+  await expect(page.getByTestId('place-picker')).toBeVisible()
+  expect(await slot(page).evaluate((e) => (e as HTMLElement).inert), 'inert under the picker').toBe(true)
+  await page.keyboard.press('Escape')
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  expect(await slot(page).evaluate((e) => (e as HTMLElement).inert), 'live again').toBe(false)
+})
+
 // ── independent of the guide ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 test('?oscar=0: profile 3 still gets the card (it does not come from the guide), and there is no Oscar', async ({ page }) => {

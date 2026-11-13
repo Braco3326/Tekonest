@@ -99,7 +99,8 @@ describe('the onboarding gates (T2.4b + ruling R-A: main.ts computes them, creat
     bootCreation.mockClear()
     await run(search)
     expect(bootCreation).toHaveBeenCalledTimes(1)
-    return (bootCreation.mock.calls[0] as unknown[])[0]
+    const { onboarding, tutorialAllowed } = (bootCreation.mock.calls[0] as unknown[])[0] as { onboarding: boolean; tutorialAllowed: boolean }
+    return { onboarding, tutorialAllowed } // `practiceNow` (a function) has its own test below
   }
   it('a plain address and ?design: the onboarding and the tutorial are both allowed', async () => {
     expect(await gatesFor('')).toEqual({ onboarding: true, tutorialAllowed: true })
@@ -113,6 +114,18 @@ describe('the onboarding gates (T2.4b + ruling R-A: main.ts computes them, creat
     expect(await gatesFor('?mode=exam')).toEqual({ onboarding: false, tutorialAllowed: false })
     expect(await gatesFor('?design=1&MODE=practice')).toEqual({ onboarding: false, tutorialAllowed: false })
     expect(await gatesFor('?design=1&mode=exam&oscar=0')).toEqual({ onboarding: false, tutorialAllowed: false })
+  })
+  it('T6 review C1: practiceNow reads the address the page has NOW: true on ?design=1, false once the page is pushed to an exam address, true again back', async () => {
+    bootCreation.mockClear()
+    await run('?design=1')
+    const gates = (bootCreation.mock.calls[0] as unknown[])[0] as { practiceNow: () => boolean }
+    expect(gates.practiceNow()).toBe(true)
+    vi.stubGlobal('location', { search: '?design=1&mode=exam' })
+    expect(gates.practiceNow()).toBe(false)
+    vi.stubGlobal('location', { search: '?design=1&MODE=practice' })
+    expect(gates.practiceNow()).toBe(false)
+    vi.stubGlobal('location', { search: '?design=1' })
+    expect(gates.practiceNow()).toBe(true)
   })
   it('T4.3: <html> carries cr-practice on a practice address (plain, ?design, ?oscar=0), never on an exam address, even with ?design', async () => {
     for (const search of ['', '?design=3', '?design=1&oscar=0']) expect((await run(search)).htmlClasses, search).toEqual(['cr-practice'])

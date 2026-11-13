@@ -27,6 +27,14 @@ export interface OnboardingWiring {
   /** The active package's `layout.panels`: what a profile that leaves the panels to the package opens the first room with. */
   panels: { tree: boolean; props: boolean }
   doc: Document
+  /**
+   * The address is a practice one NOW (T6 review C1): read live, not once at boot, because the page can be pushed to an exam address while it runs (history.pushState). Built in main.ts from
+   * the guide's own mode gate (creation must not import the guide). Absent = true (a unit with no address). The entrepreneur's card is due only while it says true.
+   */
+  practiceNow?(): boolean
+  /** The place picker's `covers` array and whether it is open (T6 review N5): the card's slot is inert under the picker. */
+  pickerCovers?: HTMLElement[]
+  pickerOpen?(): boolean
   /** The shell root: the entrepreneur's card (T6.4) takes a reserved row of its grid. Absent = no card (a unit test with no DOM). */
   shellRoot?: HTMLElement
   /** The status bar's checklist slot: the profile chip goes before it. */
@@ -80,6 +88,8 @@ export interface Onboarding {
    * and until the learner dismissed it (ownGear.ts). Idempotent; a no-op without the onboarding.
    */
   soundStarted(): void
+  /** The inputs of the entrepreneur's card may have changed (the bench changed: a live switch of the address shows here): evaluate it again. A no-op without the onboarding. */
+  refresh(): void
   /** Aide « Premiers pas » exists on this address (`?design` and `tutorialAllowed`). */
   readonly premiersPas: boolean
   /**
@@ -135,6 +145,8 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
       ? mountGear({
           doc: w.doc,
           root: w.shellRoot,
+          ...(w.pickerCovers ? { covers: w.pickerCovers } : {}),
+          ...(w.pickerOpen ? { covered: w.pickerOpen } : {}),
           onDismiss: () => {
             store.dispatch({ type: 'ownGear', value: 'dismissed' })
             refreshGear()
@@ -145,7 +157,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
   function refreshGear(): void {
     if (!gear || !store) return
     const record = store.read()
-    if (ownGearDue({ onboarding: true, profile: record?.profile ?? null, soundStarted: sounded, dismissed: record?.ownGear === 'dismissed' })) gear.show()
+    if (ownGearDue({ onboarding: w.practiceNow?.() ?? true, profile: record?.profile ?? null, soundStarted: sounded, dismissed: record?.ownGear === 'dismissed' })) gear.show()
     else gear.hide()
   }
 
@@ -213,6 +225,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
       sounded = true
       refreshGear()
     },
+    refresh: refreshGear,
     premiersPas,
     startFirstVisit() {
       if (!store) return false
