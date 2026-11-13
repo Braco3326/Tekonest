@@ -115,13 +115,15 @@ const rectText = (r: Rect): string => `${Math.round(r.x)},${Math.round(r.y)} ${M
 
 /**
  * The guide re-reads the page on a 5 s tick (and 250 ms behind a change: G2-fix), so a position taken a moment after the drawer opened or the window changed can be the one BEFORE the re-read: package 5 at
- * 820 x 1180 was once measured with the icon on a drawer card and never again in 6 runs. A REST position is where the icon is after one whole tick, so a rest sample waits a quiet window of 5.5 s first.
+ * 820 x 1180 was once measured with the icon on a drawer card and never again in 6 runs. A REST position is where the icon is after one whole tick, so a sample (at rest or at a step, G14b) waits a quiet window of 5.5 s first.
  */
 const TICK_QUIET_MS = 5500
 
 /** Everything 11.3 asks of one moment, sorted into its classes. `margin`: the gap the bubble must keep from the target (asked at step 4). */
 async function sample(page: Page, where: string, step: number | null, size: Size, margin?: number): Promise<Sample> {
-  if (step === null) await quietWindow(page, TICK_QUIET_MS)
+  // G14b: a step sample too. The guide's soft obstacles (src/guide/clearance.ts) can re-place it once the bench's models and the bubble have settled; a place held
+  // for about 1.5 s before that passed the 350 ms stability read, and the class verdict then depended on timing (measured: package 2 and 4 margin, 11 px or 30).
+  await quietWindow(page, TICK_QUIET_MS)
   const g = await settledGeo(page)
   const breaches: Sample['breaches'] = []
   const add = (cls: Cls, text: string): void => void breaches.push({ cls, text })
@@ -215,15 +217,18 @@ const MARGIN_PX = 30
 // ── known findings ────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 /**
- * Class breaches measured on the build at HEAD 2cf0078 (T7.1b, 2026-11-13), per package. The assertion of a class listed here is unchanged: its test is `test.fail`, so it passes
+ * Class breaches measured on the build at HEAD 2cf0078 (T7.1b, 2026-11-13), per package, then re-measured after G14b (ADR 0021; entries removed for what it fixed). The assertion of a class listed here is unchanged: its test is `test.fail`, so it passes
  * while the breach stands and fails (« expected to fail ») the day the breach is gone, which is when the entry is removed. The numbers are in the report.
  */
 const KNOWN: Record<Cls, { finding: string; packages: readonly DesignId[] }> = {
   controls: { finding: 'F4 (packages 2 and 4, 1024 x 768, step 4: the bubble covers the view cube’s « Vue d’ensemble » button)', packages: [2, 4] },
   frame: { finding: '', packages: [] },
-  target: { finding: 'F1 (the icon covers the target device at the connect, playback and power steps; the bubble touches the ring by about 3 px)', packages: [1, 2, 3, 4, 5] },
-  centre: { finding: 'F2 (the bubble, 352 px wide and up to 379 px tall, covers the centre 20 % x 20 % box of the view at most steps)', packages: [1, 2, 3, 4, 5] },
-  margin: { finding: 'F3 (the bubble keeps 0 px (1366: package 1; 1024: packages 2 and 4) or 5 px (820: packages 1 to 4) from the target at step 4, not 30 px)', packages: [1, 2, 3, 4] },
+  // G14b (2026-11-13): package 5 is clear at every step and size; packages 1 and 3 still breach at 1024 x 768, step 4, drawer open (no room: the guide falls back
+  // to its old place, on the console); packages 2 and 4 also at 1366 (two panels open)
+  target: { finding: 'F1 (no room at 1024 x 768, step 4 with the drawer open, and with two panels open at 1366: the icon or the bubble on the console)', packages: [1, 2, 3, 4] },
+  centre: { finding: 'F2 (the centre is the first thing given up where no place clear of the controls holds the 352 px bubble: the drawer open, two panels open, 1024 x 768)', packages: [1, 2, 3, 4, 5] },
+  // G14b: packages 1 and 3 keep 30 px at the three sizes; 2 and 4 still not at 1024 x 768 (two panels and the drawer open: no room)
+  margin: { finding: 'F3 (packages 2 and 4, 1024 x 768, step 4: no room, the bubble keeps 11 px from the target, not 30 px)', packages: [2, 4] },
 }
 
 test.describe.configure({ mode: 'parallel' })
@@ -334,6 +339,9 @@ test.describe('reserved rows', () => {
     const card = await box(page.getByTestId('tutorial-slot'))
     const view = await box(page.locator('.cr-viewport'))
     const status = await box(page.getByTestId('status-bar'))
+    // G14b: the guide re-places itself once the bench's models and the gear row have settled (its obstacles change with them); a place held for 1.5 s before that
+    // passed the 350 ms stability read. The rows are measured as they rest: one whole tick, as for the rest samples.
+    await quietWindow(page, TICK_QUIET_MS)
     const g = await settledGeo(page)
     console.log('GEOM', JSON.stringify({ at: 'P5 card + gear row @1024x768', card: rectText(card), gear: rectText(gear), view: rectText(view), icon: g.icon ? rectText(g.icon) : null, bubble: g.bubble ? rectText(g.bubble) : null }))
     return { gear, card, view, status, g }
