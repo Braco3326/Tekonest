@@ -1,0 +1,694 @@
+.oscar-guide {
+  --oscar-z: 2000;
+  --oscar-bg: #ffffff;
+  --oscar-fg: #1c2430;
+  --oscar-muted: #4c5766;
+  --oscar-border: #c3ccd8;
+  --oscar-soft: #eef2f7;
+  --oscar-accent: #0b6f81;
+  --oscar-accent-fg: #ffffff;
+  --oscar-focus: #1d4ed8;
+  --oscar-ring: #d9480f;
+  --oscar-ring-halo: rgba(255, 255, 255, 0.75);
+  --oscar-cable: #d9480f;
+  --oscar-fix-bg: #fff4e6;
+  --oscar-good-bg: #ebfbee;
+  --oscar-badge-bg: #e7f5ff;
+  --oscar-badge-fg: #0b4a73;
+  --oscar-error: #a61e1e;
+  --oscar-shadow: 0 8px 28px rgba(15, 23, 42, 0.24);
+  --oscar-radius: 14px;
+  --oscar-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --oscar-icon-bg: #e3f6f8;
+  --oscar-m-head: #6fd0dc;
+  --oscar-m-line: #0b4f5c;
+  --oscar-m-cup: #ffb454;
+  font-family: var(--oscar-font);
+  font-size: max(14px, 0.875rem);
+  line-height: 1.45;
+  color: var(--oscar-fg);
+
+  direction: ltr;
+  text-align: start;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  .oscar-guide {
+    --oscar-bg: #1b2230;
+    --oscar-fg: #e8edf3;
+    --oscar-muted: #aab5c4;
+    --oscar-border: #3b4659;
+    --oscar-soft: #263042;
+    --oscar-accent: #4cc9dc;
+    --oscar-accent-fg: #062a31;
+    --oscar-focus: #8cb4ff;
+    --oscar-ring: #ffa94d;
+    --oscar-ring-halo: rgba(0, 0, 0, 0.55);
+    --oscar-cable: #ffa94d;
+    --oscar-fix-bg: #3a2a1a;
+    --oscar-good-bg: #1d3524;
+    --oscar-badge-bg: #1f3a52;
+    --oscar-badge-fg: #bfe3ff;
+    --oscar-error: #ff8787;
+    --oscar-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+    --oscar-icon-bg: #20384a;
+    --oscar-m-head: #5cc4d2;
+    --oscar-m-line: #d9f5f9;
+    --oscar-m-cup: #ffb454;
+  }
+}
+
+.oscar-guide,
+.oscar-guide * {
+  box-sizing: border-box;
+}
+
+.oscar-guide[hidden],
+.oscar-guide [hidden] {
+  display: none !important;
+}
+
+.oscar-guide button:focus-visible,
+.oscar-guide input:focus-visible {
+  outline: 3px solid var(--oscar-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 8px var(--oscar-bg);
+}
+
+.oscar-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.oscar-icon-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 56px;
+  height: 56px;
+  z-index: calc(var(--oscar-z) + 1);
+  will-change: transform;
+}
+
+.oscar-icon {
+  display: block;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  margin: 0;
+  border: 2px solid var(--oscar-border);
+  border-radius: 50%;
+  background: var(--oscar-icon-bg);
+  box-shadow: var(--oscar-shadow);
+  cursor: grab;
+  touch-action: none;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.oscar-dragging .oscar-icon {
+  cursor: grabbing;
+}
+
+.oscar-mascot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.oscar-shadow {
+  fill: rgba(15, 23, 42, 0.18);
+}
+
+.oscar-body {
+  transform-box: view-box;
+  transform-origin: 50% 90%;
+}
+
+.oscar-head {
+  fill: var(--oscar-m-head);
+  stroke: var(--oscar-m-line);
+  stroke-width: 2.4;
+}
+
+.oscar-band {
+  fill: none;
+  stroke: var(--oscar-m-line);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+}
+
+.oscar-cup {
+  fill: var(--oscar-m-cup);
+  stroke: var(--oscar-m-line);
+  stroke-width: 2;
+}
+
+.oscar-eye {
+  fill: var(--oscar-m-line);
+}
+
+.oscar-eyes,
+.oscar-eyes-shut,
+.oscar-arm,
+.oscar-sparks,
+.oscar-think,
+.oscar-zzz,
+.oscar-mouth-flat {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.oscar-lid,
+.oscar-mouth,
+.oscar-arm-line,
+.oscar-z {
+  fill: none;
+  stroke: var(--oscar-m-line);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.oscar-arm-line {
+  stroke-width: 4;
+}
+
+.oscar-hand {
+  fill: var(--oscar-m-cup);
+  stroke: var(--oscar-m-line);
+  stroke-width: 2;
+}
+
+.oscar-spark {
+  fill: var(--oscar-m-cup);
+  stroke: var(--oscar-m-line);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.oscar-dot {
+  fill: var(--oscar-m-line);
+}
+
+.oscar-eyes-shut,
+.oscar-arm,
+.oscar-sparks,
+.oscar-think,
+.oscar-zzz,
+.oscar-mouth-flat {
+  opacity: 0;
+}
+
+.oscar-state-idle .oscar-body {
+  animation: oscar-breathe 4s ease-in-out infinite;
+}
+
+.oscar-state-idle .oscar-eyes {
+  animation: oscar-blink 5s ease-in-out infinite;
+}
+
+.oscar-state-walk .oscar-body {
+  animation: oscar-bob 0.55s ease-in-out infinite;
+}
+
+.oscar-state-point .oscar-arm {
+  opacity: 1;
+}
+
+.oscar-state-point .oscar-body {
+  animation: oscar-breathe 3s ease-in-out infinite;
+}
+
+.oscar-state-think .oscar-think {
+  opacity: 1;
+}
+
+.oscar-state-think .oscar-dot {
+  animation: oscar-dots 1.2s ease-in-out infinite;
+}
+
+.oscar-state-think .oscar-dot-b {
+  animation-delay: 0.2s;
+}
+
+.oscar-state-think .oscar-dot-c {
+  animation-delay: 0.4s;
+}
+
+.oscar-state-celebrate .oscar-body {
+  animation: oscar-hop 0.7s ease-in-out infinite;
+}
+
+.oscar-state-celebrate .oscar-sparks {
+  opacity: 1;
+}
+
+.oscar-state-celebrate .oscar-spark {
+  animation: oscar-pop 0.9s ease-in-out infinite;
+}
+
+.oscar-state-celebrate .oscar-spark-b {
+  animation-delay: 0.3s;
+}
+
+.oscar-state-no .oscar-body {
+  animation: oscar-shake 0.5s linear 2;
+}
+
+.oscar-state-no .oscar-mouth-smile {
+  opacity: 0;
+}
+
+.oscar-state-no .oscar-mouth-flat {
+  opacity: 1;
+}
+
+.oscar-state-sleep .oscar-eyes {
+  opacity: 0;
+}
+
+.oscar-state-sleep .oscar-eyes-shut {
+  opacity: 1;
+}
+
+.oscar-state-sleep .oscar-zzz {
+  opacity: 1;
+}
+
+.oscar-state-sleep .oscar-z {
+  animation: oscar-float 3s ease-in-out infinite;
+}
+
+.oscar-state-sleep .oscar-z-b {
+  animation-delay: 1.2s;
+}
+
+.oscar-state-sleep .oscar-body {
+  animation: oscar-breathe 6s ease-in-out infinite;
+}
+
+@keyframes oscar-breathe {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.025, 0.975);
+  }
+}
+
+@keyframes oscar-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(3deg);
+  }
+}
+
+@keyframes oscar-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  45%,
+  55% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes oscar-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes oscar-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes oscar-dots {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes oscar-pop {
+  0%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes oscar-float {
+  0% {
+    transform: translateY(2px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-4px);
+    opacity: 0;
+  }
+}
+
+@keyframes oscar-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes oscar-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.025);
+  }
+}
+
+.oscar-ring {
+  position: fixed;
+  pointer-events: none;
+  z-index: calc(var(--oscar-z) - 1);
+  border-radius: 8px;
+  outline: 3px solid var(--oscar-ring);
+  outline-offset: 0;
+  box-shadow: 0 0 0 5px var(--oscar-ring-halo);
+  animation: oscar-pulse 2s ease-in-out infinite;
+}
+
+.oscar-ring-drop {
+  outline-style: dashed;
+}
+
+.oscar-cable {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: calc(var(--oscar-z) - 1);
+}
+
+.oscar-cable-path {
+  fill: none;
+  stroke: var(--oscar-cable);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 10 6;
+}
+
+.oscar-cable-plug {
+  fill: var(--oscar-cable);
+  stroke: var(--oscar-bg);
+  stroke-width: 2;
+}
+
+.oscar-bubble {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: calc(var(--oscar-z) + 1);
+  display: flex;
+  flex-direction: column;
+  width: min(22rem, calc(100vw - 1.5rem));
+  max-width: calc(100vw - 1.5rem);
+  max-height: min(70vh, 30rem);
+  background: var(--oscar-bg);
+  color: var(--oscar-fg);
+  border: 1px solid var(--oscar-border);
+  border-radius: var(--oscar-radius);
+  box-shadow: var(--oscar-shadow);
+  animation: oscar-fade-in 0.15s ease-out;
+}
+
+.oscar-bubble[data-kind="fix"] {
+  border-left: 5px solid var(--oscar-ring);
+}
+
+.oscar-bubble[data-kind="good"],
+.oscar-bubble[data-kind="celebrate"] {
+  border-left: 5px solid var(--oscar-accent);
+}
+
+.oscar-bubble[data-kind="fix"] .oscar-scroll {
+  background: var(--oscar-fix-bg);
+}
+
+.oscar-bubble[data-kind="good"] .oscar-scroll,
+.oscar-bubble[data-kind="celebrate"] .oscar-scroll {
+  background: var(--oscar-good-bg);
+}
+
+.oscar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.5rem 0.4rem 0.9rem;
+  border-bottom: 1px solid var(--oscar-border);
+}
+
+.oscar-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.oscar-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--oscar-muted);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.oscar-iconbtn:hover {
+  background: var(--oscar-soft);
+  color: var(--oscar-fg);
+}
+
+.oscar-glyph {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.oscar-slash {
+  opacity: 0;
+}
+
+.oscar-mute[aria-pressed="true"] .oscar-slash {
+  opacity: 1;
+}
+
+.oscar-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.5rem 0.9rem;
+}
+
+.oscar-live {
+  min-height: 1.2em;
+}
+
+.oscar-sub,
+.oscar-line,
+.oscar-error {
+  unicode-bidi: isolate;
+  margin: 0 0 0.45rem;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.oscar-sub {
+  font-weight: 650;
+  color: var(--oscar-muted);
+}
+
+.oscar-error {
+  color: var(--oscar-error);
+}
+
+.oscar-badge {
+  display: inline-block;
+  margin-right: 0.1rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  background: var(--oscar-badge-bg);
+  color: var(--oscar-badge-fg);
+  font-size: 0.82em;
+  font-weight: 600;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.oscar-busy .oscar-live {
+  opacity: 0.65;
+}
+
+.oscar-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.25rem 0.9rem 0.5rem;
+}
+
+.oscar-chip {
+  unicode-bidi: isolate;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  min-height: 32px;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--oscar-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--oscar-fg);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.oscar-chip:hover {
+  background: var(--oscar-soft);
+}
+
+.oscar-form {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.5rem 0.75rem 0.75rem;
+  border-top: 1px solid var(--oscar-border);
+}
+
+.oscar-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 36px;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--oscar-border);
+  border-radius: 8px;
+  background: var(--oscar-bg);
+  color: var(--oscar-fg);
+  font: inherit;
+  font-size: 16px;
+}
+
+.oscar-send {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0.3rem 0.9rem;
+  border: 0;
+  border-radius: 8px;
+  background: var(--oscar-accent);
+  color: var(--oscar-accent-fg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (pointer: coarse) {
+  .oscar-iconbtn {
+    width: 44px;
+    height: 44px;
+  }
+  .oscar-chip,
+  .oscar-input,
+  .oscar-send {
+    min-height: 44px;
+  }
+}
+
+@media print {
+  .oscar-guide {
+    display: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .oscar-ring {
+    outline-color: Highlight;
+  }
+  .oscar-icon,
+  .oscar-bubble {
+    border-color: CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oscar-guide,
+  .oscar-guide *,
+  .oscar-guide *::before,
+  .oscar-guide *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.oscar-reduced,
+.oscar-reduced *,
+.oscar-reduced *::before,
+.oscar-reduced *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}

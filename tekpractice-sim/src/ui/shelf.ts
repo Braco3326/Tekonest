@@ -65,7 +65,7 @@ export class Shelf {
           .join('')}</nav>`
       : ''
     const roomPicker = roomList.length
-      ? `<label class="shelf-roompick">Salle générée (TEK Brain)
+      ? `<label class="shelf-roompick">Salle générée
           <select id="room-pick"><option value="">— choisir —</option>${roomList
             .map((r) => `<option value="${esc(r.id)}"${r.id === currentRoom ? ' selected' : ''}>${esc(r.name_fr)}</option>`)
             .join('')}</select></label>`

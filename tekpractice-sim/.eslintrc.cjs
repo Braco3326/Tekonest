@@ -6,7 +6,8 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
-  ignorePatterns: ['dist/', 'node_modules/'],
+  // src/guide/vendor is generated (hash-pinned by VENDOR.json): never linted or reformatted by hand.
+  ignorePatterns: ['dist/', 'node_modules/', 'src/guide/vendor/'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   rules: {
