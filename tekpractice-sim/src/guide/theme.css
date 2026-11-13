@@ -115,6 +115,37 @@ html .oscar-guide .oscar-icon {
   border-color: var(--og-icon-edge);
 }
 
+/*
+ * The new Oscar (plan T5.3 and T5.4, spec 10.2 and 10.3; only under ?design, where src/guide/skin.ts puts .tp-oscar-host on the .oscar-guide root).
+ * The headphones character (svg.tpo, src/guide/character.ts and character.css) is the icon: the vendored mascot is hidden, and the vendored round
+ * Prune background, its edge and its shadow go, so the character's own Prune coin is the only coin (controller ruling 3). The border is 0, so the
+ * svg fills the icon's whole 56 px box, the box the widget lays out (ICON_SIZE). The button keeps its size, its name and its focus ring.
+ * Three classes beat the vendored and the rules above (two); no !important.
+ */
+html .oscar-guide.tp-oscar-host .oscar-icon {
+  background: transparent;
+  border-width: 0;
+  box-shadow: none;
+}
+html .oscar-guide.tp-oscar-host svg.oscar-mascot {
+  display: none;
+}
+html .oscar-guide.tp-oscar-host .oscar-icon .tpo {
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.55));
+}
+/* The « Oscar · Assistant » badge (T5.4): Papier on the panel line tone (10.5 : 1), 12 px at least, square like the rest of the card. */
+html .oscar-guide.tp-oscar-host .tp-oscar-badge {
+  flex: 0 0 auto;
+  padding: 2px 6px;
+  border: 1px solid var(--og-border);
+  background: var(--og-badge-bg);
+  color: var(--og-fg);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
 /* Own focus ring, for every focusable part of the widget (not only buttons and inputs). */
 html .oscar-guide :focus-visible {
   outline: 3px solid var(--og-focus);

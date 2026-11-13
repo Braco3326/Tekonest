@@ -8,6 +8,13 @@
  *    vendored sheet; the host class stops them). A control shows the same page WITHOUT the host class keeps vendored loops running.
  *  - Reduced motion: no animation or transition at all, and each of the nine static poses is distinct.
  *  - Direction: the arm points east, west (mirrored), north and south.
+ * In the app (plan T5.3 to T5.5, the production build on the config's web server; these tests DO open the app):
+ *  - scope (controller ruling 4): the new Oscar only on ?design=1..5; the plain address and the level page keep the vendored mascot; exam and ?oscar=0: no Oscar;
+ *  - the seam: host class on .oscar-guide, svg.tpo in .oscar-icon at the icon's 56 px box, the vendored mascot hidden, no second coin, the name kept;
+ *  - the 10 steps of « Premiers pas » on ?design=1: at each, the arm points at the ring (dot product > 0) and the « Oscar · Assistant » badge shows (>= 12 px);
+ *    wave on the first open, celebrate on the first accepted connection and the first sound, nod after; a refused connection shrugs;
+ *  - 6 s after the last change no animation runs on the icon or the ring (the in-app sheet order);
+ *  - T5.5: package 4 and the sound engineer start muted with nothing stored; an unmute is stored and wins after a reload.
  * Run: `npm.cmd run build` first (the config's web server serves dist/), then `$env:E2E_PORT='4391'; npx.cmd playwright test character.spec`.
  */
 import { expect, test, type Page } from '@playwright/test'
@@ -153,4 +160,264 @@ test.describe('direction (spec 10.2 pointer)', () => {
       expect(along, `${dir}: along ${along.toFixed(1)}, across ${across.toFixed(1)}`).toBeGreaterThan(across)
     })
   }
+})
+
+// ── In the app (plan T5.3 to T5.5) ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+test.describe('in the app: the skin on the vendored widget (T5.3 to T5.5)', () => {
+  test.use({ viewport: { width: 1366, height: 768 } })
+
+  const ICON_NAME = 'Oscar, assistant IA'
+  const BADGE = 'Oscar · Assistant'
+  const MUTE_KEY = 'oscar-guide.state.v1.muted'
+  const live = (page: Page) => page.locator('.oscar-live')
+  const ring = (page: Page) => page.locator('.oscar-ring:not(.oscar-ring-drop)')
+  const stepLine = (k: number, n = 10): string => `Parcours « Premiers pas » : étape ${k} sur ${n}.`
+  const start = (page: Page) => page.getByTestId('start-screen')
+
+  /** Records every drawn state of the character (data-state of svg.tpo), from the moment it is in the page. */
+  const recordStates = (page: Page) =>
+    page.addInitScript(() => {
+      const w = window as unknown as { __tpoLog: string[] }
+      w.__tpoLog = []
+      let svg: Element | null = null
+      const watch = new MutationObserver(() => {
+        const s = document.querySelector('.oscar-icon svg.tpo')
+        if (s === null || s === svg) return
+        svg = s
+        w.__tpoLog.push(s.getAttribute('data-state') ?? '')
+        new MutationObserver(() => w.__tpoLog.push(s.getAttribute('data-state') ?? '')).observe(s, { attributes: true, attributeFilter: ['data-state'] })
+      })
+      const go = (): void => watch.observe(document.documentElement, { childList: true, subtree: true })
+      if (document.documentElement) go()
+      else document.addEventListener('DOMContentLoaded', go, { once: true }) // an init script can run before the root element exists
+    })
+  const states = (page: Page): Promise<string[]> => page.evaluate(() => (window as unknown as { __tpoLog: string[] }).__tpoLog.slice())
+
+  async function openFresh(page: Page, query: string): Promise<void> {
+    await page.goto('/' + query)
+    await page.evaluate(() => window.localStorage.clear())
+    await page.reload()
+    await page.waitForFunction(() => !!window.__creation)
+  }
+  async function profile(page: Page, name: string, offer: RegExp | null): Promise<void> {
+    await start(page).getByRole('button', { name, exact: true }).click()
+    if (offer !== null) await start(page).getByRole('button', { name: offer }).click()
+    await page.waitForFunction(() => window.__creation?.place() === 'blank')
+  }
+  const act = (page: Page, intents: unknown[]) =>
+    page.evaluate((list) => {
+      for (const i of list) {
+        const r = window.__creation!.dispatch(i as never)
+        if (!r.ok) throw new Error('refused: ' + JSON.stringify(i))
+      }
+    }, intents)
+  const spawn = (deviceId: string, instanceId: string, x: number) => ({ type: 'SPAWN', deviceId, instanceId, position: [x, 0, 0] })
+  const connect = (a: string, ap: string, b: string, bp: string) => ({ type: 'CONNECT', a: { instance: a, port: ap }, b: { instance: b, port: bp } })
+
+  /** The arm (hand centre minus the start of the arm line, in screen px) and the vector from that shoulder to the ring's centre. */
+  const pointing = (page: Page) =>
+    page.evaluate(() => {
+      const svg = document.querySelector('.oscar-icon svg.tpo') as SVGSVGElement
+      const r = document.querySelector('.oscar-ring:not(.oscar-ring-drop)') as HTMLElement
+      const hand = svg.querySelector('[data-part="hand"]')!.getBoundingClientRect()
+      const line = svg.querySelector('.tpo-arm-line') as SVGPathElement
+      const p = line.getPointAtLength(0)
+      const m = line.getScreenCTM()!
+      const sx = m.a * p.x + m.c * p.y + m.e
+      const sy = m.b * p.x + m.d * p.y + m.f
+      const rb = r.getBoundingClientRect()
+      const arm = { x: hand.x + hand.width / 2 - sx, y: hand.y + hand.height / 2 - sy }
+      const to = { x: rb.x + rb.width / 2 - sx, y: rb.y + rb.height / 2 - sy }
+      return { arm, to, dot: arm.x * to.x + arm.y * to.y, dir: svg.getAttribute('data-dir'), state: svg.getAttribute('data-state'), vendor: document.querySelector('svg.oscar-mascot')!.getAttribute('data-state') }
+    })
+
+  const badgeOk = async (page: Page, where: string): Promise<void> => {
+    const b = page.locator('.oscar-bubble .oscar-header .tp-oscar-badge')
+    await expect(b, `${where}: the badge is visible with the open bubble`).toBeVisible()
+    await expect(b).toHaveText(BADGE)
+    const px = await b.evaluate((el) => Number.parseFloat(getComputedStyle(el).fontSize))
+    expect(px, `${where}: badge font size`).toBeGreaterThanOrEqual(12)
+  }
+
+  test('?design=1: the character is the icon (host class on the root, the 56 px box, the vendored mascot hidden, no second coin, the name kept)', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await openFresh(page, '?design=1')
+    await profile(page, 'Je découvre', /^Faire le tutoriel/)
+    const icon = page.getByRole('button', { name: ICON_NAME, exact: true })
+    await expect(icon).toBeVisible()
+    const g = await page.evaluate(() => {
+      const root = document.querySelector('.oscar-guide')!
+      const icon = root.querySelector('.oscar-icon') as HTMLElement
+      const svg = icon.querySelector('svg.tpo')!
+      const m = icon.querySelector('svg.oscar-mascot')!
+      const ib = icon.getBoundingClientRect()
+      const sb = svg.getBoundingClientRect()
+      const cs = getComputedStyle(icon)
+      return {
+        rootHost: root.classList.contains('tp-oscar-host'),
+        iconHost: icon.classList.contains('tp-oscar-host'),
+        icon: [ib.width, ib.height],
+        svg: [sb.x - ib.x, sb.y - ib.y, sb.width, sb.height],
+        mascotDisplay: getComputedStyle(m).display,
+        mascotState: m.hasAttribute('data-state'),
+        bg: cs.backgroundColor,
+        border: cs.borderTopWidth,
+        shadow: cs.boxShadow,
+        hidden: svg.getAttribute('aria-hidden'),
+        svgs: icon.querySelectorAll('svg').length,
+      }
+    })
+    expect(g).toEqual({
+      rootHost: true,
+      iconHost: false,
+      icon: [56, 56],
+      svg: [0, 0, 56, 56],
+      mascotDisplay: 'none',
+      mascotState: true,
+      bg: 'rgba(0, 0, 0, 0)',
+      border: '0px',
+      shadow: 'none',
+      hidden: 'true',
+      svgs: 2,
+    })
+  })
+
+  test('?design=1, the 10 steps of « Premiers pas »: the arm points at the ring and the badge shows at each; wave, celebrate, nod as in spec 10.2', async ({ page }) => {
+    test.setTimeout(120_000)
+    await page.emulateMedia({ reducedMotion: 'reduce' }) // the static poses: no transition between a state change and the measure
+    await recordStates(page)
+    await openFresh(page, '?design=1')
+    await profile(page, 'Je découvre', /^Faire le tutoriel/)
+    const SETUP: unknown[][] = [
+      [spawn('yamaha-ql1', 'ql1', 0)],
+      [spawn('shure-sm58', 'sm58', 0.8)],
+      [spawn('qsc-k12-2', 'k12', -1)],
+      [connect('ql1', 'out-main-l', 'k12', 'in-line-a')],
+      [connect('sm58', 'out-xlr', 'ql1', 'in-mic-1')],
+      [{ type: 'SET_CONTROL', instance: 'ql1', control: 'playback-usb', value: true }],
+      [spawn('multiprise-secteur', 'strip', 0.4)],
+      [connect('strip', 'out-1', 'ql1', 'power-in')],
+      [connect('strip', 'out-2', 'k12', 'power-in')],
+    ]
+    const report: string[] = []
+    for (let k = 1; k <= 10; k++) {
+      await expect(live(page)).toContainText(stepLine(k), { timeout: 10_000 })
+      await expect(ring(page)).toBeVisible()
+      await badgeOk(page, `step ${k}`)
+      // the controller points, and any host state (nod 600 ms, celebrate 1 000 ms) is over
+      await expect.poll(async () => (await pointing(page)).state, { message: `step ${k}: the character points`, timeout: 6_000 }).toBe('point')
+      const p = await pointing(page)
+      report.push(`${k}: ${p.dir} dot ${p.dot.toFixed(0)}`)
+      expect(p.dot, `step ${k}: arm ${JSON.stringify(p.arm)} vs ring ${JSON.stringify(p.to)} (${p.dir})`).toBeGreaterThan(0)
+      if (k < 10) await act(page, SETUP[k - 1])
+      if (k === 4) await expect.poll(() => states(page), { message: 'the first accepted connection celebrates', timeout: 4_000 }).toContain('celebrate')
+    }
+    test.info().annotations.push({ type: 'pointing', description: report.join('; ') })
+    const before = (await states(page)).filter((s) => s === 'celebrate').length
+    await page.getByRole('menuitem', { name: 'Écoute', exact: true }).click()
+    await page.getByRole('menuitem', { name: 'Signal de test', exact: true }).click()
+    await page.waitForFunction(() => window.__creation!.audioState().state === 'playing', null, { timeout: 15_000 })
+    await expect.poll(async () => (await states(page)).filter((s) => s === 'celebrate').length, { message: 'the first sound celebrates', timeout: 4_000 }).toBeGreaterThan(before)
+    const log = await states(page)
+    test.info().annotations.push({ type: 'states', description: log.join(' ') })
+    expect(log, 'the first open of the bubble waved').toContain('wave')
+    expect(log, 'later connections and steps done nod').toContain('nod')
+    // celebrate sparingly: the first connection and the first sound (the end of the tutorial is the vendored celebrate of the same moment, drawn once or twice)
+    expect(log.filter((s) => s === 'celebrate').length, log.join(' ')).toBeLessThanOrEqual(3)
+  })
+
+  test('a refused connection shrugs (the app refused the cable; the vendored controller has no state for it)', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await recordStates(page)
+    await openFresh(page, '?design=1')
+    await profile(page, 'Je découvre', /^Faire le tutoriel/)
+    await expect(live(page)).toContainText(stepLine(1), { timeout: 10_000 })
+    await act(page, [spawn('yamaha-ql1', 'ql1', 0), spawn('shure-sm58', 'sm58', 0.8)])
+    const refused = await page.evaluate(() => window.__creation!.dispatch({ type: 'CONNECT', a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'out-main-l' } } as never).ok)
+    expect(refused, 'an output into an output is refused by the app').toBe(false)
+    expect(await page.evaluate(() => window.__creation!.connectRefusals())).toBe(1)
+    await expect.poll(() => states(page), { message: 'shrug', timeout: 4_000 }).toContain('shrug')
+  })
+
+  test('6 s after the last change, no animation runs on the icon or the ring (the motion sheet is loaded in the app, after the vendored one)', async ({ page }) => {
+    await openFresh(page, '?design=1')
+    await profile(page, 'Je découvre', /^Faire le tutoriel/)
+    await expect(live(page)).toContainText(stepLine(1), { timeout: 10_000 })
+    await expect(ring(page)).toBeVisible()
+    await expect.poll(async () => (await pointing(page)).state, { timeout: 6_000 }).toBe('point')
+    const running = () =>
+      page.evaluate(() =>
+        ['.oscar-icon-wrap', '.oscar-ring'].flatMap((sel) =>
+          [...document.querySelectorAll(sel)].flatMap((el) => el.getAnimations({ subtree: true }).filter((a) => a.playState === 'running').map((a) => `${sel} ${(a as CSSAnimation).animationName ?? 'waapi'}`)),
+        ),
+      )
+    expect((await running()).length, 'something moves right after the change').toBeGreaterThan(0)
+    await page.waitForTimeout(6_000)
+    expect(await running()).toEqual([])
+  })
+
+  test('scope (ruling 4): the plain address and the level page keep the vendored mascot; exam and ?oscar=0 with ?design have no Oscar', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    const vendored = async (where: string): Promise<void> => {
+      await expect(page.getByRole('button', { name: ICON_NAME, exact: true }), where).toBeVisible({ timeout: 15_000 })
+      const v = await page.evaluate(() => ({
+        tpo: document.querySelectorAll('svg.tpo').length,
+        host: document.querySelectorAll('.tp-oscar-host').length,
+        badge: document.querySelectorAll('.tp-oscar-badge').length,
+        mascot: getComputedStyle(document.querySelector('.oscar-icon svg.oscar-mascot')!).display,
+      }))
+      expect(v, where).toEqual({ tpo: 0, host: 0, badge: 0, mascot: 'block' })
+    }
+    await page.goto('/')
+    await page.waitForFunction(() => !!window.__creation)
+    await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
+    await vendored('plain address')
+    await page.goto('/?level=a1&oscar=legacy&design=1')
+    await page.waitForFunction(() => !!(window as unknown as { __audioSim?: unknown }).__audioSim)
+    await vendored('level page')
+    for (const q of ['?design=1&mode=exam', '?design=1&oscar=0']) {
+      await page.goto('/' + q)
+      await page.waitForFunction(() => !!window.__creation)
+      await page.waitForTimeout(1_500)
+      expect(await page.locator('.oscar-guide, svg.tpo').count(), q).toBe(0)
+    }
+  })
+
+  test('T5.5: package 4 starts muted (asleep) with nothing stored; an unmute is stored (« 0 ») and still wins after a reload', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await openFresh(page, '?design=4')
+    await profile(page, 'Je découvre', /^Passer/)
+    const icon = page.getByRole('button', { name: ICON_NAME, exact: true })
+    await expect(icon).toBeVisible()
+    await expect.poll(() => page.evaluate(() => document.querySelector('svg.oscar-mascot')!.getAttribute('data-state')), { timeout: 5_000 }).toBe('sleep')
+    expect(await page.evaluate((k) => window.localStorage.getItem(k), MUTE_KEY)).toBeNull()
+    await icon.click()
+    const mute = page.locator('.oscar-bubble .oscar-mute')
+    await expect(mute).toHaveAttribute('aria-pressed', 'true')
+    await mute.click()
+    await expect(mute).toHaveAttribute('aria-pressed', 'false')
+    expect(await page.evaluate((k) => window.localStorage.getItem(k), MUTE_KEY)).toBe('0')
+    await page.reload()
+    await page.waitForFunction(() => !!window.__creation)
+    await expect(icon).toBeVisible({ timeout: 15_000 })
+    await icon.click()
+    await expect(page.locator('.oscar-bubble .oscar-mute')).toHaveAttribute('aria-pressed', 'false')
+  })
+
+  test('T5.5: the sound engineer (« Je travaille dans le son ») on package 1 is muted once the profile is chosen, with no bubble left open; a reload keeps it', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await openFresh(page, '?design=1')
+    await profile(page, 'Je travaille dans le son', /^Passer/)
+    const icon = page.getByRole('button', { name: ICON_NAME, exact: true })
+    await expect(icon).toBeVisible()
+    await expect.poll(() => page.evaluate(() => document.querySelector('svg.oscar-mascot')!.getAttribute('data-state')), { timeout: 5_000 }).toBe('sleep')
+    await expect(page.locator('.oscar-bubble')).toBeHidden()
+    await expect(icon).toHaveAttribute('aria-expanded', 'false')
+    await page.reload()
+    await page.waitForFunction(() => !!window.__creation)
+    await expect(icon).toBeVisible({ timeout: 15_000 })
+    await icon.click()
+    await expect(page.locator('.oscar-bubble .oscar-mute')).toHaveAttribute('aria-pressed', 'true')
+  })
 })

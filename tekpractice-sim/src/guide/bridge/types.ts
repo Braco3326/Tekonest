@@ -40,7 +40,12 @@ export type TpBridge = {
   playing?(): string | null
   /** The power helper as Mode Création says it: offered now, and its uses on this page (T3 close review S2, S3); null without it; never throws. */
   helper?(): PowerHelperReading | null
-  /** Called on a change only (never on a poll that saw none). Returns the way to stop listening. */
+  /** The profile of the creation onboarding record ('decouvre', 'etudie', 'projet', 'metier'), or null; Mode Création under `?design` only; never throws (plan T5.5). */
+  profile?(): string | null
+  /**
+   * Called on a change only (never on a poll that saw none). Returns the way to stop listening. Besides the bench's events, Mode Création adds `playStarted`,
+   * `tutorialRequest`, `connectRefused` (a cable the app refused, plan T5.3) and `profileChosen` (the onboarding profile changed, plan T5.5): none of them is a change of the bench.
+   */
   onChange(cb: (state: TpState, events: HostEvent[]) => void): () => void
   /** Stops the poll, drops every listener and the page listener. Safe to call twice. */
   destroy(): void

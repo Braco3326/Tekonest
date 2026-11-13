@@ -274,7 +274,36 @@ describe('mapping (spec 10.2): stateFor(vendorState, hostEvent)', () => {
 
   it('the nine drawn states are the table of spec 10.2', () => {
     expect([...CHARACTER_STATES].sort()).toEqual(['celebrate', 'idle', 'nod', 'point', 'shrug', 'sleep', 'think', 'walk', 'wave'])
-    expect(HOST_EVENT_MS).toEqual({ nod: 600, wave: 1200 })
+    // T5.3: the host also plays celebrate (first accepted connection, first sound) and shrug (a refused connection), at their sheet durations
+    expect(HOST_EVENT_MS).toEqual({ nod: 600, wave: 1200, celebrate: 1000, shrug: 700 })
+  })
+
+  it('T5.3: the host celebrate and shrug are drawn as themselves over idle, walk, point and think; the outranking vendored states still win', () => {
+    for (const v of ['idle', 'walk', 'point', 'think'] as const) {
+      expect(stateFor(v, 'celebrate')).toBe('celebrate')
+      expect(stateFor(v, 'shrug')).toBe('shrug')
+    }
+    expect(stateFor('sleep', 'celebrate')).toBe('sleep') // a muted guide does not celebrate
+    expect(stateFor('sleep', 'shrug')).toBe('sleep')
+  })
+})
+
+describe('T5.3 host ranks: celebrate > shrug > nod > wave', () => {
+  it('a lower host event while a higher one runs is ignored, no timer (does not trigger)', () => {
+    const m = step(initialModel(), { type: 'host', event: 'celebrate' }).model
+    for (const e of ['shrug', 'nod', 'wave'] as const) {
+      const r = step(m, { type: 'host', event: e })
+      expect(r.model.host).toBe('celebrate')
+      expect(r.timer).toBeNull()
+    }
+  })
+  it('a higher or equal host event replaces the running one with its own timer (triggers)', () => {
+    const m = step(initialModel(), { type: 'host', event: 'nod' }).model
+    const r = step(m, { type: 'host', event: 'celebrate' })
+    expect(r.model.host).toBe('celebrate')
+    expect(r.timer).toEqual({ kind: 'start', ms: 1000 })
+    const again = step(m, { type: 'host', event: 'nod' })
+    expect(again.timer).toEqual({ kind: 'start', ms: 600 })
   })
 })
 

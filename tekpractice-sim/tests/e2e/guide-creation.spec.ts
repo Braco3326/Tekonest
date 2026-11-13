@@ -395,6 +395,43 @@ test(`idle for ${IDLE_MS} ms adds 0 renders (bubble closed, then open) and no he
   expect(extra.sort(), 'the window / document listeners the guide adds, and only these').toEqual(PAGE_LISTENERS)
 })
 
+test('?design=1 (the new Oscar, plan T5.3): the skin adds no window / document listener: the same pinned set against ?design=1&oscar=0', async ({ page, browser }) => {
+  const listenersOf = async (p: Page, search: string): Promise<string[]> => {
+    await trackPageListeners(p)
+    await boot(p, { search })
+    await quietWindow(p, 1500)
+    return pageListeners(p)
+  }
+  const withGuide = await listenersOf(page, '?design=1')
+  await expect(icon(page)).toBeVisible()
+  expect(await page.locator('.oscar-guide.tp-oscar-host .oscar-icon svg.tpo').count(), 'the skin is on').toBe(1)
+  await icon(page).click() // the first open waves (an observed attribute, no listener)
+  await expect(bubble(page)).toBeVisible()
+  const afterOpen = await pageListeners(page)
+  const off = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' })
+  const p2 = await off.newPage()
+  track(p2)
+  const without = await listenersOf(p2, '?design=1&oscar=0')
+  await off.close()
+  const tally = (keys: string[]): Map<string, number> => {
+    const m = new Map<string, number>()
+    for (const k of keys) {
+      const [t, type, , cap] = k.split('|')
+      const name = `${t} ${type}${cap === 'true' ? ' (capture)' : ''}`
+      m.set(name, (m.get(name) ?? 0) + 1)
+    }
+    return m
+  }
+  const diff = (a: Map<string, number>, b: Map<string, number>): string[] => [...a].flatMap(([k, n]) => Array.from({ length: Math.max(0, n - (b.get(k) ?? 0)) }, () => k))
+  const a = tally(afterOpen)
+  const b = tally(without)
+  test.info().annotations.push({ type: 'listeners', description: `?design=1 ${withGuide.length} (after the open ${afterOpen.length}) vs ?design=1&oscar=0 ${without.length}; extra: ${diff(a, b).join(', ')}` })
+  expect(diff(b, a), 'the guide removes no listener of the app').toEqual([])
+  // Plus one of Mode Création's own, not the guide's: the power helper's tutorial gate (src/creation/onboarding/wire.ts, `tekpractice:tutorial`) is listened to only
+  // where the tutorial may run, so `?oscar=0` does not have it. Measured; the guide's own set is the pinned PAGE_LISTENERS, unchanged.
+  expect(diff(a, b).sort(), 'the window / document listeners the guide adds on ?design=1, and only these').toEqual([...PAGE_LISTENERS, 'window tekpractice:tutorial'].sort())
+})
+
 // ── the guide quotes the app ─────────────────────────────────────────────────────────────────────────────────────────
 
 test('an error on the bench: « Prochaine étape » says the status bar\'s own explanation, no start chip, the ring on the faulty port', async ({ page }) => {

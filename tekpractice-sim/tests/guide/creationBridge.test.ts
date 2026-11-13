@@ -1082,3 +1082,69 @@ describe('tutorial readers (T3.2): the onboarding request and the sound playing'
     expect(r.bridge.playing?.()).toBe('test')
   })
 })
+
+describe('skin readers (T5.3, T5.5): refused connections and the profile', () => {
+  type Ob = ReturnType<NonNullable<CreationReader['onboarding']>>
+  const ob = (profile: NonNullable<Ob['record']>['profile'], over: Partial<Ob> = {}): Ob => ({
+    design: true,
+    tutorialAllowed: true,
+    record: { v: 1, profile, offer: 'skipped', request: 0, shown: [] },
+    blocked: false,
+    premiersPas: true,
+    chip: null,
+    requestKind: 'start',
+    ...over,
+  })
+  it('profile() is the stored profile under ?design, else null (no reader, no record, no ?design, a throw)', () => {
+    const r = make()
+    expect(r.bridge.profile?.()).toBeNull()
+    r.win.__creation!.onboarding = () => ob('metier')
+    expect(r.bridge.profile?.()).toBe('metier')
+    r.win.__creation!.onboarding = () => ob(null)
+    expect(r.bridge.profile?.()).toBeNull()
+    r.win.__creation!.onboarding = () => ob('metier', { design: false })
+    expect(r.bridge.profile?.()).toBeNull()
+    r.win.__creation!.onboarding = () => ob('metier', { record: null })
+    expect(r.bridge.profile?.()).toBeNull()
+    r.win.__creation!.onboarding = () => {
+      throw new Error('x')
+    }
+    expect(r.bridge.profile?.()).toBeNull()
+  })
+  it('a profile that changes is one `profileChosen` event (not at the first look); the same profile is none', () => {
+    const r = make()
+    const o = { now: ob(null) }
+    r.win.__creation!.onboarding = () => o.now
+    const { calls } = subscribe(r)
+    r.timers.tick()
+    expect(calls()).toEqual([])
+    o.now = ob('metier')
+    r.timers.tick()
+    expect(calls().map(([, e]) => types(e))).toEqual([['profileChosen']])
+    r.timers.tick()
+    expect(calls()).toHaveLength(1)
+  })
+  it('a refused connection (the counter goes up) is one `connectRefused` event; the same count, a missing reader or the first look is none', () => {
+    const r = make()
+    const n = { v: 0 }
+    const { calls } = subscribe(r)
+    r.timers.tick()
+    expect(calls()).toEqual([])
+    r.win.__creation!.connectRefusals = () => n.v
+    r.timers.tick()
+    expect(calls()).toEqual([])
+    n.v = 1
+    r.timers.tick()
+    expect(calls().map(([, e]) => types(e))).toEqual([['connectRefused']])
+    r.timers.tick()
+    expect(calls()).toHaveLength(1)
+    n.v = 3
+    r.timers.tick()
+    expect(calls().map(([, e]) => types(e))).toEqual([['connectRefused'], ['connectRefused']])
+    r.win.__creation!.connectRefusals = () => {
+      throw new Error('x')
+    }
+    r.timers.tick()
+    expect(calls()).toHaveLength(2)
+  })
+})

@@ -26,6 +26,8 @@ export interface CreationDebug {
   helperOffered(): boolean
   /** The power helper's uses on this page (T3 close review S2): the guide marks the steps it did « montré » from this, never from storage. */
   helperUses(): PowerHelperUses
+  /** The connections refused on this page (`history.onRefused`, CONNECT only; onboarding packs T5.3): the guide's character shrugs when it goes up. A reader. */
+  connectRefusals(): number
   /** Through `history.do` (undoable, as a UI action). */
   dispatch(intent: Intent): DispatchResult
   design(): DesignState

@@ -1089,6 +1089,14 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     alreadyStep: 'étape {k}',
   },
   /**
+   * The new Oscar (onboarding packs T5.4, spec 9 and 10.2), under `?design` only. Oscar's voice: no « intelligent », « expert », « tuteur », « ingénieur »
+   * (tests/creation/honesty.test.ts scans this section as a learner one). À valider (tekuxwriter, 2026-11-13).
+   */
+  oscar: {
+    /** The badge in the header of Oscar's bubble, with every open bubble: it says what Oscar is; the icon keeps its name « Oscar, assistant IA » (founder decision). */
+    badge: 'Oscar · Assistant',
+  },
+  /**
    * The names of the five design packages (onboarding packs, T4.1, spec 7.2), read through `DesignPackage.nameKey` (`design.name1` .. `design.name5`). Not displayed
    * anywhere yet (the packages are chosen by the address, `?design=1..5`); the founder's local run and the tester guide name them. Every string here: à valider
    * (tekuxwriter, 2026-11-12).

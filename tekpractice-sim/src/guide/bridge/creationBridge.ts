@@ -24,7 +24,7 @@ export type { BridgeDoc, BridgeElement }
  * optional: a hook without them is still a hook, the bridge then emits no `playStarted` and knows no selection.
  */
 export type CreationReader = Pick<CreationDebug, 'design' | 'events' | 'place' | 'devicePorts' | 'portScreen' | 'deviceScreen' | 'controlScreen'> &
-  Partial<Pick<CreationDebug, 'audioState' | 'selection' | 'onboarding' | 'helperOffered' | 'helperUses'>>
+  Partial<Pick<CreationDebug, 'audioState' | 'selection' | 'onboarding' | 'helperOffered' | 'helperUses' | 'connectRefusals'>>
 
 export interface CreationBridgeDeps {
   win: { __creation?: CreationReader; innerWidth?: number; innerHeight?: number }
@@ -127,6 +127,30 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
   }
   /** The request counter at the last look (a change is a `tutorialRequest` event: the guide acts on it, the bench did not change). */
   let requested: number | null = null
+
+  /** The onboarding profile (plan T5.5): null without ?design, a record or the reader. */
+  function profileNow(): string | null {
+    try {
+      const o = win.__creation?.onboarding?.()
+      const p = o && o.design && o.record ? o.record.profile : null
+      return typeof p === 'string' ? p : null
+    } catch {
+      return null
+    }
+  }
+  /** The profile at the last look (a change is a `profileChosen` event: the guide may mute Oscar for the engineer; the bench did not change). */
+  let profiled: string | null = null
+  /** The connections Mode Création refused on this page (plan T5.3: Oscar shrugs), or null without the reader. */
+  function refusalsNow(): number | null {
+    try {
+      const n = win.__creation?.connectRefusals?.()
+      return typeof n === 'number' && Number.isSafeInteger(n) && n >= 0 ? n : null
+    } catch {
+      return null
+    }
+  }
+  /** The refusal count at the last look (a count that goes up is a `connectRefused` event). */
+  let refused: number | null = null
 
   /** The source playing now (`state` 'playing' only: 'starting' is not a sound yet), or null; null when the hook has no reader or it throws. */
   function playingNow(): string | null {
@@ -260,10 +284,18 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
       const req = requestNow()?.n ?? null
       const asked = prev !== null && req !== null && req !== requested
       requested = req
+      const prof = profileNow()
+      const chose = prev !== null && prof !== profiled
+      profiled = prof
+      const nRefused = refusalsNow()
+      const refusedNow = prev !== null && nRefused !== null && refused !== null && nRefused > refused
+      refused = nRefused
       if (!prev) return notify(next.state, [])
       const extra: HostEvent[] = [
         ...(started ? [{ type: 'playStarted', at: now(), data: { source: sound } }] : []),
         ...(asked ? [{ type: 'tutorialRequest', at: now(), data: { n: req } }] : []),
+        ...(refusedNow ? [{ type: 'connectRefused', at: now() }] : []),
+        ...(chose ? [{ type: 'profileChosen', at: now() }] : []),
       ]
       if (prev.hash === hash && extra.length === 0) return
       notify(next.state, [...(prev.hash === hash ? [] : derive(prev.table, next)), ...extra])
@@ -360,6 +392,7 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
       }
     },
     tutorialRequest: () => requestNow(),
+    profile: () => profileNow(),
     playing: () => playingNow(),
     // T3 close review S2 / S3: the power helper as Mode Création says it (offered now, uses on this page); null without the readers or on a malformed answer
     helper: () => {
@@ -393,6 +426,8 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
         last = base ? { table: base, hash: stateHash(base.state) } : null
         playing = playingNow() // a sound already playing when the guide arrives is not a start
         requested = requestNow()?.n ?? null // the mount reads the request itself at its first look
+        profiled = profileNow() // the mount reads the profile itself at its first look
+        refused = refusalsNow() // a refusal before the guide arrived is not news
         if (!watching) {
           watching = true
           doc.addEventListener('visibilitychange', onVisibility)

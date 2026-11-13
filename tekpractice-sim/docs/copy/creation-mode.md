@@ -972,6 +972,14 @@ Le tutoriel « Premiers pas » (packs d’accueil, T3.1 ; spec 6.3 et 7.2) : une
 | `tutorial.alreadyInPlace` | Déjà en place : {steps}. | à valider (tekuxwriter) | Avant la phrase de l’étape suivante quand des étapes étaient déjà faites sur le montage (revue G8 C2) ; `{steps}` = les éléments `tutorial.alreadyStep` séparés par une virgule ; aucun « bravo » |
 | `tutorial.alreadyStep` | étape {k} | à valider (tekuxwriter) | Un élément de `alreadyInPlace` ; `{k}` = le numéro de l’étape dans le tutoriel |
 
+## oscar
+
+Le nouvel Oscar (packs d’accueil, T5.4 ; spec 9 et 10.2), seulement avec `?design` : l’adresse sans `?design` et le niveau gardent l’Oscar fourni. La voix d’Oscar : ni « intelligent », ni « expert », ni « tuteur », ni « ingénieur » (section lue comme une section d’apprenant par le test d’honnêteté). Tout ce qui suit : à valider (tekuxwriter, 2026-11-13).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `oscar.badge` | Oscar · Assistant | à valider (tekuxwriter) | Badge dans l’en-tête de la bulle d’Oscar, à chaque bulle ouverte, juste après le titre fourni « Oscar, assistant IA » (les deux se lisent ensemble : à trancher avec le fondateur, voir la décision « IA ») ; il dit ce qu’est Oscar ; le nom accessible de l’icône reste « Oscar, assistant IA » |
+
 ## design
 
 Les noms des cinq paquets de design (packs d’accueil, T4.1 ; spec 7.2), lus par `DesignPackage.nameKey` (`design.name1` à `design.name5`). Pas encore affichés : le paquet se choisit par l’adresse (`?design=1` à `?design=5`) ; la commande locale du fondateur et le guide de test les nomment. Un nom dit le parti pris du paquet, jamais une promesse (ni durée, ni examen, ni sécurité). Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).

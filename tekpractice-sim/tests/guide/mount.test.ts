@@ -1,4 +1,6 @@
 // mountOscar: gates, failure isolation, destroy, restore bursts, the rect cache and the reserved anchors. No DOM: the vendored entry points are faked.
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it, vi, type Mock, type MockInstance } from 'vitest'
 import { makeRegistry } from '../helpers'
 import type { RuleRow } from '../../src/creation/shell/statusModel'
@@ -1391,5 +1393,231 @@ describe('Oscar corner default per package (storage wrapper)', () => {
 
   it('no package corner is the view cube\'s corner (top left)', () => {
     for (const id of [1, 2, 3, 4, 5] as const) expect(['br', 'bl', 'tr']).toContain(packageById(id).layout.oscarCorner)
+  })
+})
+
+// ── T5.3 to T5.5: the new Oscar's skin, its host events and the mute default ─────────────────────────────────────────────────────────────
+
+describe('pin (T5.3): the vendored names the skin reads are still there', () => {
+  const src = (p: string): string => readFileSync(fileURLToPath(new URL(`../../src/guide/vendor/${p}`, import.meta.url)), 'utf8')
+  it('.oscar-guide, .oscar-icon-wrap, .oscar-icon (widget), svg.oscar-mascot with data-state (mascot), .oscar-ring and its drop (overlay), .oscar-header / .oscar-title (bubble)', () => {
+    const widget = src('ui/widget.ts')
+    expect(widget).toContain('h(doc, "div", "oscar-guide"')
+    expect(widget).toContain('h(doc, "div", "oscar-icon-wrap")')
+    expect(widget).toContain('h(doc, "button", "oscar-icon"')
+    expect(widget).toContain('"aria-expanded"')
+    const mascot = src('ui/mascot.ts')
+    expect(mascot).toContain('s(doc, "svg", { viewBox: "0 0 64 64", focusable: "false", "aria-hidden": "true" }, "oscar-mascot")')
+    expect(mascot).toContain('root.setAttribute("data-state", next)')
+    const overlay = src('ui/overlay.ts')
+    expect(overlay).toContain('h(doc, "div", "oscar-ring", undefined')
+    expect(overlay).toContain('"oscar-ring oscar-ring-drop"')
+    expect(overlay).toContain('el.style.left = ')
+    const bubble = src('ui/bubble.ts')
+    expect(bubble).toContain('h(doc, "div", "oscar-header")')
+    expect(bubble).toContain('h(doc, "div", "oscar-title", L.title)')
+    // the box the host svg takes: the vendored mascot rule fills the icon
+    expect(src('guide.css')).toMatch(/\.oscar-mascot \{\s*display: block;\s*width: 100%;\s*height: 100%;/)
+  })
+  it('the mute key (T5.5): the controller reads `storageKey + ".muted"` once, as "1"', () => {
+    const c = src('core/controller.ts')
+    expect(c).toContain('const MUTE_SUFFIX = ".muted";')
+    expect(c).toContain('lastMuted = parseMuted(readItem(storageKey + MUTE_SUFFIX));')
+    expect(c).toContain('return raw === "1";')
+    expect(c.match(/MUTE_SUFFIX/g)).toHaveLength(3) // the constant, the one read, the one write
+  })
+})
+
+describe('mountOscar: the skin (T5.3, T5.4; controller ruling 4: only under ?design in Mode Création)', () => {
+  type Play = 'nod' | 'wave' | 'celebrate' | 'shrug'
+  const skinImpl = () => {
+    const f = fakeImpl()
+    const plays: Play[] = []
+    const skin = { play: vi.fn((e: Play) => void plays.push(e)), destroy: vi.fn(), character: {} }
+    const attachSkin = vi.fn((_root: unknown, _d: unknown) => skin)
+    return { ...f, impl: { ...f.impl, attachSkin } as unknown as MountImpl & typeof f.impl & { attachSkin: typeof attachSkin }, skin, plays, attachSkin }
+  }
+  const memory = (init: Record<string, string> = {}): Storage => {
+    const m = new Map(Object.entries(init))
+    return { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v), removeItem: (k: string) => void m.delete(k), clear: () => m.clear(), key: () => null, length: 0 } as Storage
+  }
+
+  it('triggers on ?design=1: attached once, on the landmark, after the widget; the badge is COPY oscar.badge', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const s = skinImpl()
+    expect(mountOscar(r.deps, s.impl)).not.toBeNull()
+    expect(s.attachSkin).toHaveBeenCalledTimes(1)
+    const [root, d] = s.attachSkin.mock.calls[0] as [unknown, { badge: string }]
+    expect(root).toBe((s.impl.mountGuide.mock.calls[0][0] as { root: unknown }).root)
+    expect(d.badge).toBe(COPY.oscar!.badge)
+    expect(COPY.oscar!.badge).toBe('Oscar · Assistant')
+  })
+
+  it('does not trigger: the plain address, an unknown ?design, the legacy route (the vendored mascot stays)', () => {
+    for (const over of [{ search: '' }, { search: '?design=9' }, { search: '?level=a1&oscar=legacy&design=1', route: 'legacy' as const }]) {
+      const r = make(over)
+      const s = skinImpl()
+      expect(mountOscar(r.deps, s.impl), JSON.stringify(over)).not.toBeNull()
+      expect(s.attachSkin, JSON.stringify(over)).not.toHaveBeenCalled()
+    }
+  })
+
+  it('a skin that throws or attaches nothing leaves the guide mounted', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const s = skinImpl()
+    s.attachSkin.mockImplementation(() => null as never)
+    expect(mountOscar(r.deps, s.impl)).not.toBeNull()
+    const r2 = make({ search: '?design=1', storage: memory() })
+    const s2 = skinImpl()
+    s2.attachSkin.mockImplementation(() => {
+      throw new Error('x')
+    })
+    expect(mountOscar(r2.deps, s2.impl)).not.toBeNull()
+    expect(s2.impl.mountGuide).toHaveBeenCalledTimes(1)
+  })
+
+  it('first accepted connection celebrates, the next nods; the first sound celebrates; a refused connection shrugs', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const s = skinImpl()
+    mountOscar(r.deps, s.impl)
+    r.b.emit(PAIR, [ev('connect', { a: 'port:mic.out-xlr', b: 'port:ql1.in-mic-1' })])
+    r.b.emit(PAIR, [ev('connect', { a: 'port:x.a', b: 'port:y.b' })])
+    r.b.emit(PAIR, [ev('playStarted', { source: 'test' })])
+    r.b.emit(PAIR, [ev('playStarted', { source: 'test' })])
+    r.b.emit(PAIR, [ev('connectRefused')])
+    expect(s.plays).toEqual(['celebrate', 'nod', 'celebrate', 'shrug'])
+  })
+
+  it('the skin-only events (connectRefused, profileChosen) never reach the controller, with or without ?design', () => {
+    for (const search of ['', '?design=1']) {
+      const r = make({ search, storage: memory() })
+      const s = skinImpl()
+      mountOscar(r.deps, s.impl)
+      r.b.emit(PAIR, [ev('connectRefused'), ev('profileChosen')])
+      expect(hostEvents(s).map((e) => e.type), search).toEqual([])
+    }
+  })
+
+  it('a step done nods (the controller persisted the next step of the tutorial); its start does not', async () => {
+    const st = memory()
+    const r = make({ search: '?design=1', storage: st })
+    const s = skinImpl()
+    mountOscar(r.deps, s.impl)
+    const deps = s.impl.createController.mock.calls[0][0] as { storage: Storage; flows: { id: string }[] }
+    const id = deps.flows[deps.flows.length - 1].id
+    const save = (index: number, status = 'running'): void => deps.storage.setItem('oscar-guide.state.v1', JSON.stringify({ v: 1, flow: { flowId: id, index, status }, hint: null }))
+    save(0)
+    await Promise.resolve()
+    expect(s.plays).toEqual([])
+    save(1)
+    await Promise.resolve()
+    expect(s.plays).toEqual(['nod'])
+    save(1)
+    save(0) // back to step 1 (a restart): no nod
+    await Promise.resolve()
+    expect(s.plays).toEqual(['nod'])
+  })
+
+  it('a click on the « Passer cette étape » chip: the next advance is not a nod (the same capture listener, no new one)', async () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const s = skinImpl()
+    mountOscar(r.deps, s.impl)
+    const count = r.d.count()
+    const deps = s.impl.createController.mock.calls[0][0] as { storage: Storage; flows: { id: string }[] }
+    const id = deps.flows[deps.flows.length - 1].id
+    const save = (index: number): void => deps.storage.setItem('oscar-guide.state.v1', JSON.stringify({ v: 1, flow: { flowId: id, index, status: 'running' }, hint: null }))
+    save(2)
+    r.d.click({ closest: (sel: string) => (sel === '[data-chip="skip"]' ? {} : null) })
+    save(3)
+    await Promise.resolve()
+    expect(s.plays).toEqual([])
+    save(4)
+    expect(s.plays).toEqual(['nod'])
+    expect(r.d.count()).toBe(count)
+  })
+
+  it('destroy: the skin goes before the widget', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const s = skinImpl()
+    const order: string[] = []
+    s.skin.destroy.mockImplementation(() => void order.push('skin'))
+    s.handle.destroy.mockImplementation(() => void order.push('widget'))
+    mountOscar(r.deps, s.impl)!.destroy()
+    expect(order).toEqual(['skin', 'widget'])
+  })
+})
+
+describe('mountOscar: Oscar muted by default (T5.5)', () => {
+  const MUTE = 'oscar-guide.state.v1.muted'
+  const memory = (init: Record<string, string> = {}): Storage => {
+    const m = new Map(Object.entries(init))
+    return { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v), removeItem: (k: string) => void m.delete(k), clear: () => m.clear(), key: () => null, length: 0 } as Storage
+  }
+  const controllerStorage = (r: Rig): Storage | undefined => (r.f.impl.createController.mock.calls[0][0] as { storage?: Storage }).storage
+  const withProfile = (r: Rig, p: { v: string | null }): void => {
+    ;(r.b.bridge as unknown as { profile: () => string | null }).profile = () => p.v
+  }
+
+  it('triggers on first mount: package 4, or the engineer profile on another package; nothing is written', () => {
+    const st4 = memory()
+    const r4 = make({ search: '?design=4', storage: st4 })
+    mountOscar(r4.deps, r4.f.impl)
+    expect(controllerStorage(r4)!.getItem(MUTE)).toBe('1')
+    expect(st4.getItem(MUTE)).toBeNull()
+    const r1 = make({ search: '?design=1', storage: memory() })
+    withProfile(r1, { v: 'metier' })
+    mountOscar(r1.deps, r1.f.impl)
+    expect(controllerStorage(r1)!.getItem(MUTE)).toBe('1')
+  })
+
+  it('does not trigger: another profile on package 1; a stored choice (the learner unmuted); the plain address with the engineer profile', () => {
+    const r1 = make({ search: '?design=1', storage: memory() })
+    withProfile(r1, { v: 'decouvre' })
+    mountOscar(r1.deps, r1.f.impl)
+    expect(controllerStorage(r1)!.getItem(MUTE)).toBeNull()
+    const r4 = make({ search: '?design=4', storage: memory({ [MUTE]: '0' }) })
+    mountOscar(r4.deps, r4.f.impl)
+    expect(controllerStorage(r4)!.getItem(MUTE)).toBe('0')
+    const st = memory()
+    const plain = make({ storage: st })
+    withProfile(plain, { v: 'metier' })
+    mountOscar(plain.deps, plain.f.impl)
+    expect(controllerStorage(plain)).toBe(st) // the same storage object as before: no wrapper on the plain address
+    expect(controllerStorage(plain)!.getItem(MUTE)).toBeNull()
+  })
+
+  it('the engineer profile chosen after the mount (the start screen): mute then close, once, when the bubble is closed and nothing is stored', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const p = { v: null as string | null }
+    withProfile(r, p)
+    r.f.controller.getView.mockImplementation(() => ({ muted: false, bubble: null }))
+    mountOscar(r.deps, r.f.impl)
+    r.b.emit(PAIR, [ev('profileChosen')])
+    expect(sent(r.f).filter((i) => i.type === 'chip')).toEqual([])
+    p.v = 'metier'
+    r.b.emit(PAIR, [ev('profileChosen')])
+    expect(sent(r.f).filter((i) => i.type === 'chip')).toEqual([{ type: 'chip', id: 'mute' }, { type: 'chip', id: 'close' }])
+    r.b.emit(PAIR, [ev('profileChosen')])
+    expect(sent(r.f).filter((i) => i.type === 'chip')).toHaveLength(2)
+  })
+
+  it('late engineer profile, does not trigger: a bubble open (the tutorial speaks: the next mount applies it), a stored choice, already muted, or another profile', () => {
+    const cases: { view: { muted: boolean; bubble: unknown }; stored?: string; profile: string }[] = [
+      { view: { muted: false, bubble: { kind: 'step' } }, profile: 'metier' },
+      { view: { muted: false, bubble: null }, stored: '0', profile: 'metier' },
+      { view: { muted: true, bubble: null }, profile: 'metier' },
+      { view: { muted: false, bubble: null }, profile: 'etudie' },
+    ]
+    for (const c of cases) {
+      const r = make({ search: '?design=1', storage: memory(c.stored === undefined ? {} : { [MUTE]: c.stored }) })
+      const p = { v: null as string | null }
+      withProfile(r, p)
+      r.f.controller.getView.mockImplementation(() => c.view)
+      mountOscar(r.deps, r.f.impl)
+      p.v = c.profile
+      r.b.emit(PAIR, [ev('profileChosen')])
+      r.b.emit(PAIR, [ev('profileChosen')])
+      expect(sent(r.f).filter((i) => i.type === 'chip'), JSON.stringify(c)).toEqual([])
+    }
   })
 })

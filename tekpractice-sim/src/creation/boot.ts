@@ -303,6 +303,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   let unverified = 0
   /** The last refused connection: listed first until a valid connection, a new design, or its device leaves. */
   let lastRejection: Rejection | null = null
+  /** Connections refused on this page (a counter for the guide's reader `connectRefusals`, onboarding packs T5.3): never reset, never stored. */
+  let connectRefusals = 0
   const statusBar = mountStatusBar({
     doc: document,
     bar: shell.status,
@@ -336,6 +338,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   }
   history.onRefused((intent, r) => {
     if (intent.type !== 'CONNECT') return
+    connectRefusals++
     lastRejection = rejectionOf(r.error, r.subjects, ruleText)
     refreshSignal()
     announcer.say(COPY.status!.statusRefused!.replace('{title}', lastRejection.title))
@@ -2272,6 +2275,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     onboarding: () => onboarding.snapshot(),
     helperOffered: () => checklist.helperOffered(),
     helperUses: () => checklist.helperUses(),
+    connectRefusals: () => connectRefusals,
     dispatch: (intent) => history.do(intent),
     design: () => store.design(),
     events: () => store.events(),

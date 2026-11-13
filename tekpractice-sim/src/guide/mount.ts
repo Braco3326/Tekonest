@@ -22,7 +22,9 @@ import { NAV_SELECTORS, firstRect, type BridgeDoc } from './bridge/shared'
 import { PLAY_STARTED, TUTORIAL_REQUEST, annotateTutorialEvent, createTutorialRuntime, isTutorialAnchor, resolveTutorialAnchor, type TutorialDetail } from './tutorial'
 import { TUTORIAL_EVENT } from '../design/events'
 import { activePackage } from '../design/packages'
+import { COPY } from '../creation/copy'
 import { isAnchor } from './anchors'
+import { CONNECT_REFUSED, GUIDE_MUTE_KEY, PROFILE_CHOSEN, attachSkin, hostEventFor, muteDefaultStorage, quietByDefault, skinAllowed, stepAdvanced, type Celebrations, type Skin } from './skin'
 import {
   ACKNOWLEDGE,
   CREATION_STRINGS,
@@ -229,7 +231,11 @@ export interface MountDeps {
 export interface MountImpl {
   createController: typeof createController
   mountGuide: typeof mountGuide
+  /** The new Oscar's skin (src/guide/skin.ts; default: the real one), injectable for the same reason. */
+  attachSkin?: typeof attachSkin
 }
+/** The « Passer cette étape » chip of the bubble (vendored `data-chip`): the step it passes is not a step done, so it is not nodded. */
+const SKIP_CHIP = '[data-chip="skip"]'
 /**
  * The storage the widget reads its home corner from, with the active design package's corner as the DEFAULT (plan T4.3): while the widget has saved nothing under its UI key,
  * a read says `{ corner }`; whatever the learner moves Oscar to is written through (and read back) as before. Every other key, and a blocked or missing storage, behave as the plain
@@ -455,12 +461,40 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     const own = tutorial === null ? [] : [tutorial]
     // Start / resume / skip on the onboarding request, the guide record, « déjà en place » (plan T3.2): it hands the controller the storage it observes.
     let late: (input: ControllerInput) => void = () => {}
+    // The new Oscar (plan T5.3 to T5.5, controller ruling 4): only under `?design` in Mode Création. Its skin is attached once the widget is built.
+    const pkg = legacy ? null : activePackage(deps.search)
+    let skin: Skin | null = null
+    // A step done nods: the tutorial's record goes to the next step of the same run (or ends). A step passed with the bubble's skip chip does not.
+    let run: { status: string; k: number } | null = null
+    let skipping = false
+    let runtimeRef: { record(): { status: string; k: number } } | null = null
+    const nodOnStep = (): void => {
+      const now = runtimeRef?.record()
+      if (now === undefined) return
+      const done = stepAdvanced(run, now)
+      run = { status: now.status, k: now.k }
+      if (done && !skipping) skin?.play('nod')
+      if (done) skipping = false
+    }
     // `emit`: the power helper's gate in Mode Création (`tekpractice:tutorial`, plan T3.3); creation listens with and without the guide.
     const emit = (detail: TutorialDetail): void =>
       guard(() => {
         if (typeof win.dispatchEvent === 'function' && typeof CustomEvent === 'function') win.dispatchEvent(new CustomEvent(TUTORIAL_EVENT, { detail }))
+        nodOnStep()
       })
     const runtime = tutorial === null ? null : createTutorialRuntime({ flow: tutorial, registry, storage: deps.storage, now, send: (i) => late(i), emit })
+    runtimeRef = runtime
+    if (runtime !== null) run = { status: runtime.record().status, k: runtime.record().k }
+    // T5.5: Oscar starts muted for package 4 (`proactive: false`) and for the sound engineer, only while nothing is stored under the mute key: the
+    // controller reads that key once, at its creation, through this storage; a stored choice (an unmute is « 0 ») always wins. No `?design`: untouched.
+    const profileNow = (): string | null => {
+      try {
+        return bridge.profile?.() ?? null
+      } catch {
+        return null
+      }
+    }
+    const controllerStorage = runtime === null ? null : pkg === null ? runtime.storage : muteDefaultStorage(runtime.storage, () => quietByDefault(pkg, profileNow()))
     const flows = legacy ? legacyFlowsFor(null).slice() : [...flowsFor('no-place'), ...own]
     const keywords = legacy ? legacyKeywords() : keywordsFor('no-place')
     const follow = (state: TpState | null): void => {
@@ -476,7 +510,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       brain,
       flows,
       clock: now,
-      ...(runtime ? { storage: runtime.storage } : deps.storage ? { storage: deps.storage } : {}),
+      ...(controllerStorage ? { storage: controllerStorage } : deps.storage ? { storage: deps.storage } : {}),
       strings: legacy ? LEGACY_STRINGS : CREATION_STRINGS,
       flowKeywords: keywords,
       ...(legacy ? { storageKey: legacyStorageKey(deps.search) } : {}),
@@ -506,6 +540,15 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       storage: designCorner === null ? deps.storage : cornerDefaultStorage(deps.storage, UI_STORAGE_KEY, designCorner),
     })
     cleanups.push(() => handle.destroy())
+    if (skinAllowed(deps.search, deps.route)) {
+      // The character on the vendored icon (T5.3), the badge in the bubble header (T5.4). A failure here leaves the vendored mascot (one warning).
+      guard(() => {
+        const Observer = (win as { MutationObserver?: typeof MutationObserver }).MutationObserver ?? (typeof MutationObserver === 'function' ? MutationObserver : undefined)
+        skin = (impl.attachSkin ?? attachSkin)(landmark, { doc, Observer, badge: COPY.oscar?.badge ?? '' })
+      })
+      // pushed after the widget's: torn down before it, while the vendored nodes it observes are still there
+      cleanups.push(() => skin?.destroy())
+    }
 
     let destroyed = false
     const destroy = (): void => {
@@ -536,9 +579,30 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     // A cable, a device, a place or a switch changed: the context first, then the events of the change. A sound starting in Écoute is not a change of
     // the bench: without the tutorial it is dropped (and a poll that brought only that tells the controller nothing, as before).
     let before: TpState | null = null
+    // The new Oscar's host states (spec 10.2): the first accepted connection and the first sound of this page celebrate, a refused one shrugs, a later one nods.
+    let seen: Celebrations = { connected: false, sounded: false }
+    // T5.5, the profile chosen after the mount (the start screen is up when the guide arrives): the engineer's Oscar is muted then, once, if nothing is stored
+    // and the bubble is closed (mute, then close: the vendored mute confirms in a bubble, closed again before it is painted). An open bubble (a tutorial taken
+    // at the same moment) is left alone: the next mount applies the default.
+    let lateQuietDone = false
+    const lateQuiet = (): void => {
+      if (lateQuietDone || runtime === null || pkg === null || !quietByDefault(pkg, profileNow())) return
+      lateQuietDone = true
+      if (runtime.storage.getItem(GUIDE_MUTE_KEY) !== null) return
+      const v = controller.getView?.() as { muted?: unknown; bubble?: unknown } | undefined
+      if (v === undefined || v === null || v.muted !== false || v.bubble !== null) return
+      send({ type: 'chip', id: 'mute' })
+      send({ type: 'chip', id: 'close' })
+    }
     const unsubscribe = bridge.onChange((state, events) =>
       guard(() => {
-        const list = events.filter((e) => e.type !== TUTORIAL_REQUEST && (tutorial !== null || e.type !== PLAY_STARTED))
+        if (skin !== null) {
+          const h = hostEventFor(events, seen)
+          seen = h.seen
+          if (h.event !== null) skin.play(h.event)
+        }
+        if (events.some((e) => e.type === PROFILE_CHOSEN)) lateQuiet()
+        const list = events.filter((e) => e.type !== TUTORIAL_REQUEST && e.type !== CONNECT_REFUSED && e.type !== PROFILE_CHOSEN && (tutorial !== null || e.type !== PLAY_STARTED))
         if (list.length === 0 && events.length > 0) {
           tutorialLook(state) // only the request went up: no change of the bench to tell the controller
           return
@@ -575,6 +639,8 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
       guard(() => {
         const target = e.target as { closest?: (selector: string) => unknown } | null
         if (target && typeof target.closest === 'function' && target.closest(statusSelector)) hostEvent({ type: ACKNOWLEDGE, at: now(), data: { anchor: ackAnchor } })
+        // the same capture listener (no new one): a step passed with the bubble's chip is not nodded (the chip's own click runs after this one)
+        if (skin !== null && target && typeof target.closest === 'function' && target.closest(SKIP_CHIP)) skipping = true
       })
     doc.addEventListener('click', onClick, true)
     cleanups.push(() => doc.removeEventListener('click', onClick, true))

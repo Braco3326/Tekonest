@@ -12,7 +12,7 @@
  *  - the pure mapping `stateFor(vendorState, hostEvent)` and the pure timer plan `step(model, action)` (tested in node).
  *  - the live object `createCharacter(doc, opts)`: `{ svg, state, setState, play, setDir, destroy }`. The host (plan T5.3) appends `svg` to
  *    `.oscar-icon`, mirrors the vendored `data-state` of `svg.oscar-mascot` into `setState`, sets `data-dir` from the ring bearing with `setDir`,
- *    calls `play('nod' | 'wave')` on a step done / the first open, puts HOST_CLASS on the `.oscar-guide` root (character.css stops the vendored
+ *    calls `play(...)` for the host states (src/guide/skin.ts and mount.ts do all this), puts HOST_CLASS on the `.oscar-guide` root (character.css stops the vendored
  *    loops under it) and calls `destroy()` on unmount.
  *
  * The motion is in character.css (every animation finite); this file only says which pose is drawn.
@@ -31,10 +31,16 @@ export const HOST_CLASS = 'tp-oscar-host'
 export const VENDOR_STATES = ['idle', 'walk', 'point', 'think', 'celebrate', 'no', 'sleep'] as const satisfies readonly MascotState[]
 export type VendorState = (typeof VENDOR_STATES)[number]
 
-/** Host states: a step done (nod), the first open in a session (wave). They last at most HOST_EVENT_MS, then the controller's state comes back. */
-export const HOST_EVENTS = ['nod', 'wave'] as const
+/**
+ * Host states: a step done or a later accepted connection (nod), the first open in a session (wave), the first accepted connection and the first
+ * sound of a session (celebrate, spec 10.2 « celebrate sparingly »), a refused connection (shrug: the vendored controller has no state for it, plan
+ * T5.3). They last at most HOST_EVENT_MS (the timing sheet's durations), then the controller's state comes back.
+ */
+export const HOST_EVENTS = ['nod', 'wave', 'celebrate', 'shrug'] as const
 export type HostEvent = (typeof HOST_EVENTS)[number]
-export const HOST_EVENT_MS: Readonly<Record<HostEvent, number>> = Object.freeze({ nod: 600, wave: 1200 })
+export const HOST_EVENT_MS: Readonly<Record<HostEvent, number>> = Object.freeze({ nod: 600, wave: 1200, celebrate: 1000, shrug: 700 })
+/** A running host state is replaced only by one of the same or a higher rank: a nod that lands a moment after a celebration does not cut it. */
+const HOST_RANK: Readonly<Record<HostEvent, number>> = Object.freeze({ wave: 0, nod: 1, shrug: 2, celebrate: 3 })
 
 /** The nine drawn states of the timing sheet (spec 10.2). The vendored `no` is drawn as `shrug`. */
 export const CHARACTER_STATES = ['idle', 'walk', 'point', 'think', 'celebrate', 'shrug', 'nod', 'wave', 'sleep'] as const
@@ -86,6 +92,7 @@ export function step(model: CharacterModel, action: CharacterAction): { model: C
     }
     case 'host': {
       if (!isHostEvent(action.event) || OUTRANKS.includes(model.vendor)) return { model, timer: null }
+      if (model.host !== null && HOST_RANK[action.event] < HOST_RANK[model.host]) return { model, timer: null }
       return { model: { vendor: model.vendor, host: action.event }, timer: { kind: 'start', ms: HOST_EVENT_MS[action.event] } }
     }
     case 'hostEnd':
@@ -133,7 +140,7 @@ export interface Character {
   state(): CharacterState
   /** The controller's state (the vendored `data-state` value): `no` is drawn as shrug. */
   setState(vendorState: unknown): void
-  /** A host state for at most its duration (nod 600 ms, wave 1 200 ms). */
+  /** A host state for at most its duration (nod 600 ms, wave 1 200 ms, celebrate 1 000 ms, shrug 700 ms). */
   play(event: HostEvent): void
   setDir(dir: unknown): void
   /** Clears the timer and takes the svg out of its parent; later calls do nothing. */
