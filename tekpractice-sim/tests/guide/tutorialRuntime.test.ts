@@ -98,6 +98,9 @@ const ask = (n: number, kind: TutorialRequest['kind'] = 'start', allowed = true)
 const D = (step: string | null, helperUnlocked = false, powerAhead = step !== null, hasPowerSteps = true): TutorialDetail => ({ step: step as TutorialDetail['step'], helperUnlocked, hasPowerSteps, powerAhead })
 const step = (k: number, n = 10): string => `Parcours « Premiers pas » : étape ${k} sur ${n}.`
 
+/** `sawEvent` reads an event's type and data, never its `at` (the order is the call order; T6 review N3): the stamp is a constant, not a made-up time. */
+const unstamped = (e: object): HostEvent => ({ ...e, at: 0 }) as HostEvent
+
 describe('the tutorial record (oscar-guide.onboarding.v1)', () => {
   it('parses only a well-formed record; tutorialInProgress reads a running one and is null otherwise or on a throwing storage', () => {
     expect(TUTORIAL_RECORD_KEY).toBe('oscar-guide.onboarding.v1')
@@ -720,8 +723,8 @@ describe('T6.1: a step PASSED is told from a step done (the marks the card reads
     expect(p.rt.record().passed).toHaveLength(7)
     const spk = { type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-speaker', fed: true } }
     const con = { type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console', fed: true } }
-    p.rt.sawEvent({ ...spk, at: 1 } as HostEvent)
-    p.rt.sawEvent({ ...con, at: 2 } as HostEvent)
+    p.rt.sawEvent(unstamped(spk))
+    p.rt.sawEvent(unstamped(con))
     await p.ev(spk)
     await p.ev(con)
     const pk = { a: { instance: 'p', port: 'out-2' }, b: { instance: 'k', port: 'power-in' } }
@@ -842,8 +845,8 @@ describe('S1 (T6a review): a step is DONE only by an event seen while it, or a c
     const spk = { type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-speaker', fed: true } }
     const con = { type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console', fed: true } }
     // the controller takes the console cable first this time: step 8 ends, then the speaker's cable (already sent) ends step 9
-    p.rt.sawEvent({ ...con, at: 1 } as HostEvent)
-    p.rt.sawEvent({ ...spk, at: 2 } as HostEvent)
+    p.rt.sawEvent(unstamped(con))
+    p.rt.sawEvent(unstamped(spk))
     await p.ev(con)
     await p.ev(spk)
     expect(p.rt.record()).toMatchObject({ step: 'ecoute', k: 10 })

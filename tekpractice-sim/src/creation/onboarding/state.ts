@@ -138,7 +138,17 @@ export function createOnboardingStore(storage: StorageLike | null): OnboardingSt
   return {
     read: () => memory,
     dispatch(ev) {
-      memory = reduce(memory, ev)
+      // T6 review S4: reduce from what is STORED now (another tab may have written since this one read: its request counter, its dismissal), not from this tab's memory alone; the memory is the
+      // fallback when nothing readable is stored (blocked, cleared, corrupt). The write is still the whole record, so it never rolls the other tab back.
+      let base = memory
+      if (storage && !blocked) {
+        try {
+          base = parseRecord(storage.getItem(ONBOARDING_KEY)) ?? memory
+        } catch {
+          blocked = true
+        }
+      }
+      memory = reduce(base, ev)
       if (storage && !blocked) {
         try {
           storage.setItem(ONBOARDING_KEY, JSON.stringify(memory))

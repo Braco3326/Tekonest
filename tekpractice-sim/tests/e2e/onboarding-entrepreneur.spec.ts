@@ -221,7 +221,7 @@ test('Oscar’s tutorial is unaffected: package 5, profile 3, the tutorial taken
 
 // ── the card itself: place, behaviour, memory ─────────────────────────────────────────────────────────────────────────────────
 
-for (const [w, h] of [[1366, 768], [1024, 768], [820, 1180]] as const) {
+for (const [w, h] of [[1366, 768], [1024, 768], [820, 1180], [390, 844]] as const) {
   test(`${w} x ${h}: the card is a reserved row above the status bar, inside the window, off the canvas centre, off Oscar; not a dialog, no trap, no animation`, async ({ page }) => {
     await page.setViewportSize({ width: w, height: h })
     await startAs(page, '?design=1', '3')
@@ -236,7 +236,9 @@ for (const [w, h] of [[1366, 768], [1024, 768], [820, 1180]] as const) {
     expect(s.y + s.height, 'just above the status bar').toBeLessThanOrEqual(status.y + 1)
     expect(Math.abs(s.y + s.height - status.y), 'touching it: a row, not a float').toBeLessThanOrEqual(1)
     expect(view.y + view.height, 'under the view: the view gives up the row').toBeLessThanOrEqual(s.y + 1)
-    expect(s.height, 'a strip, not a panel').toBeLessThanOrEqual(w >= 1000 ? 120 : 190)
+    // measured 2026-11-13: 87.2 px at 820 to 1366 wide (the line and the three cards on one row), 197.3 px at 390 (the cards wrap); the bounds are the measures plus about 12 %
+    expect(s.height, 'a strip, not a panel').toBeLessThanOrEqual(w >= 800 ? 100 : 220)
+    expect(view.height, 'the 3D view keeps more than half of the window').toBeGreaterThan(h / 2)
     const centre = { x: canvas.x + canvas.width / 4, y: canvas.y + canvas.height / 4, width: canvas.width / 2, height: canvas.height / 2 }
     expect(intersects(s, centre), 'the middle half of the 3D view is clear of the card').toBe(false)
     const icon = await page.locator('.oscar-icon').boundingBox()
@@ -390,3 +392,36 @@ for (const id of DESIGN_IDS) {
     expect(lines, `axe on the card, package ${id}`).toEqual([])
   })
 }
+
+test('N8 (T6 review): package 5 with the tutorial AND the card at 1024 x 768: two reserved rows, the view keeps a usable height, nothing overlaps, Oscar is clear of both', async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 768 })
+  await openFresh(page, '?design=5')
+  await page.getByTestId('start-screen').waitFor()
+  await page.keyboard.press('3')
+  await page.getByRole('button', { name: /^Faire le tutoriel/ }).click()
+  await page.waitForFunction(() => window.__creation?.place() === 'blank')
+  await expect(page.getByTestId('tutorial-step-count')).toHaveText('Étape 1 sur 3', { timeout: 10_000 })
+  await testSignal(page)
+  await expect(gear(page)).toBeVisible()
+  const g = await box(slot(page))
+  const step = await box(page.getByTestId('tutorial-slot'))
+  const view = await box(page.locator('.cr-viewport'))
+  const status = await box(page.getByTestId('status-bar'))
+  // measured 2026-11-13: step card 49.0 px, gear row 87.2 px, view 571.8 px
+  expect(intersects(g, step)).toBe(false)
+  expect(g.y + g.height).toBeLessThanOrEqual(status.y + 1)
+  expect(step.y + step.height).toBeLessThanOrEqual(view.y + 1)
+  expect(view.y + view.height).toBeLessThanOrEqual(g.y + 1)
+  expect(view.height, 'the 3D view keeps at least a third of the window').toBeGreaterThanOrEqual(768 / 3)
+  const icon = await page.locator('.oscar-icon').boundingBox()
+  expect(icon).not.toBeNull()
+  expect(intersects(icon!, g), 'Oscar’s icon is clear of the card row').toBe(false)
+  expect(intersects(icon!, step), 'and of the step card').toBe(false)
+  const bubble = page.locator('.oscar-bubble').first()
+  if (await bubble.isVisible()) {
+    expect(intersects((await bubble.boundingBox())!, g), 'the bubble is clear of the card row').toBe(false)
+    expect(intersects((await bubble.boundingBox())!, step), 'and of the step card').toBe(false)
+  }
+  const b = await box(page.getByTestId('own-gear-dismiss'))
+  expect(b.x + b.width).toBeLessThanOrEqual(1024)
+})

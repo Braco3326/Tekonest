@@ -203,3 +203,44 @@ describe('N3 (T3 close review): the kind of the last request is stored with it',
     expect(store.dispatch({ type: 'answer', profile: 'etudie', offer: 'taken' })).not.toHaveProperty('kind')
   })
 })
+
+describe('two tabs on one storage (T6 review S4): a write reduces from what is STORED, so it never rolls the other tab back', () => {
+  const rec = (o: Partial<OnboardingRecord>): string => JSON.stringify({ ...fresh, profile: 'projet', offer: 'skipped', ...o })
+  it('tab B (opened at request 1) dismisses the card after tab A asked twice: the request counter is A’s (3), the dismissal is kept', () => {
+    const st = fakeStorage()
+    st.data.set(ONBOARDING_KEY, rec({ request: 1 }))
+    const a = createOnboardingStore(st)
+    const b = createOnboardingStore(st) // both read request 1
+    a.dispatch({ type: 'request' })
+    a.dispatch({ type: 'request' }) // storage now holds request 3
+    b.dispatch({ type: 'ownGear', value: 'dismissed' })
+    expect(JSON.parse(st.data.get(ONBOARDING_KEY)!)).toMatchObject({ request: 3, ownGear: 'dismissed', profile: 'projet' })
+    expect(b.read()!.request, 'its memory follows what it wrote').toBe(3)
+  })
+  it('reverse: A asks after B dismissed: the dismissal is not lost and the counter goes on from the stored value', () => {
+    const st = fakeStorage()
+    st.data.set(ONBOARDING_KEY, rec({ request: 1 }))
+    const a = createOnboardingStore(st)
+    const b = createOnboardingStore(st)
+    b.dispatch({ type: 'ownGear', value: 'dismissed' })
+    a.dispatch({ type: 'request' })
+    expect(JSON.parse(st.data.get(ONBOARDING_KEY)!)).toMatchObject({ request: 2, ownGear: 'dismissed' })
+  })
+  it('does not trigger: with nothing stored (cleared, or corrupt) it reduces from its own memory, as before', () => {
+    const st = fakeStorage()
+    const a = createOnboardingStore(st)
+    a.dispatch({ type: 'answer', profile: 'etudie', offer: 'skipped' })
+    st.data.delete(ONBOARDING_KEY)
+    a.dispatch({ type: 'request' })
+    expect(JSON.parse(st.data.get(ONBOARDING_KEY)!)).toMatchObject({ profile: 'etudie', request: 1 })
+    st.data.set(ONBOARDING_KEY, '{not json')
+    a.dispatch({ type: 'request' })
+    expect(JSON.parse(st.data.get(ONBOARDING_KEY)!)).toMatchObject({ profile: 'etudie', request: 2 })
+  })
+  it('a storage that throws on read keeps the memory path (blocked), no crash', () => {
+    const st = fakeStorage({ failGet: true })
+    const a = createOnboardingStore(st)
+    expect(a.blocked).toBe(true)
+    expect(a.dispatch({ type: 'request' }).request).toBe(1)
+  })
+})

@@ -1871,4 +1871,18 @@ describe('mountOscar: C1 (T6a review), the step card never outlives the mount', 
     h.destroy()
     expect(slots(dom.root)).toBe(0)
   })
+
+  it('N2 (T6 review): a record WRITE after destroy (the controller persists a step through the observed storage) opens nothing', () => {
+    const dom = fakeShellDom()
+    const f = fakeImpl()
+    const r = make({ search: '?design=1', storage: memory(running), doc: dom.doc })
+    r.f = f
+    const h = mountOscar(r.deps, f.impl)!
+    const observed = (f.impl.createController.mock.calls[0][0] as { storage: Storage }).storage
+    h.destroy()
+    expect(slots(dom.root)).toBe(0)
+    observed.setItem('oscar-guide.state.v1', JSON.stringify({ v: 1, flow: { flowId: 'premiers-pas', index: 3, status: 'running', startedAt: 0, completed: [] }, hint: null }))
+    expect(slots(dom.root), 'the destroyed mount is silent: the write updated the record, not the page').toBe(0)
+    expect(dom.root.dataset.tutorial).toBeUndefined()
+  })
 })
