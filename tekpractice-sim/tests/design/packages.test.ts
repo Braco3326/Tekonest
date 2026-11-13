@@ -224,22 +224,66 @@ describe('lookOfRoot / applyLookAttributes (T4.3: the layout and the look apply 
     return { attrs, setAttribute: (k: string, v: string) => void attrs.set(k, v), removeAttribute: (k: string) => void attrs.delete(k) }
   }
 
-  it('writes the surface style, the density and the drawer behaviour of the package, and nothing else', () => {
+  it('writes the surface style, the density, the drawer behaviour and the shortcut placement of the package, and nothing else', () => {
     for (const id of DESIGN_IDS) {
       const r = fake()
       const p = packageById(id)
       applyLookAttributes(r, p)
-      expect([...r.attrs.keys()].sort()).toEqual(['data-density', 'data-drawer', 'data-surface'])
+      expect([...r.attrs.keys()].sort()).toEqual(['data-density', 'data-drawer', 'data-shortcuts', 'data-surface'])
       expect(r.attrs.get('data-surface')).toBe(p.layout.surfaceStyle)
       expect(r.attrs.get('data-density')).toBe(p.layout.density)
       expect(r.attrs.get('data-drawer')).toBe(p.layout.drawer)
+      // T6.2: where the menu shows each item's shortcut: beside the label where the package asks, at the end of the row otherwise (today's look)
+      expect(r.attrs.get('data-shortcuts')).toBe(p.layout.shortcutsBesideControls ? 'beside' : 'end')
     }
   })
 
-  it('no package: the three attributes are removed (a stale one never survives)', () => {
+  it('no package: the four attributes are removed (a stale one never survives)', () => {
     const r = fake()
     applyLookAttributes(r, packageById(3))
     applyLookAttributes(r, null)
     expect(r.attrs.size).toBe(0)
+  })
+})
+
+describe('T6.2: the final rows of the table (spec 7.2), one assertion per row', () => {
+  // A characterization test: it passes on the rows as T0.1 to T4.3 left them and pins them as the spec's table. Mutation: change any one cell below in packages.ts (for example package 4's
+  // checklist to 'panel', or package 2's presenter to 'step-card') and exactly this test fails.
+  const ROWS = {
+    1: { presenter: 'step-card', checklist: 'chip', shortcuts: false, corner: 'br', leads: true, proactive: true, hint: 20_000, drawer: 'stay-open', density: 'comfortable', surface: 'raised', start: 'neutral-room', panels: { tree: false, props: false } },
+    2: { presenter: 'checklist', checklist: 'panel', shortcuts: true, corner: 'bl', leads: false, proactive: true, hint: 30_000, drawer: 'stay-open', density: 'dense', surface: 'banded', start: 'neutral-room', panels: { tree: true, props: true } },
+    3: { presenter: 'step-card', checklist: 'chip', shortcuts: false, corner: 'tr', leads: true, proactive: true, hint: 20_000, drawer: 'stay-open', density: 'comfortable', surface: 'sheet', start: 'neutral-room', panels: { tree: false, props: true } },
+    4: { presenter: 'checklist', checklist: 'chip', shortcuts: true, corner: 'br', leads: false, proactive: false, hint: 0, drawer: 'close-after-place', density: 'dense', surface: 'flat', start: 'neutral-room', panels: { tree: true, props: true } },
+    5: { presenter: 'step-card', checklist: 'chip', shortcuts: false, corner: 'bl', leads: true, proactive: true, hint: 25_000, drawer: 'close-after-place', density: 'comfortable', surface: 'framed', start: 'playable-model', panels: { tree: true, props: false } },
+  } as const
+  for (const id of DESIGN_IDS)
+    it(`package ${id}`, () => {
+      const p = packageById(id)
+      const r = ROWS[id]
+      expect({
+        presenter: p.presenter,
+        checklist: p.layout.checklist,
+        shortcuts: p.layout.shortcutsBesideControls,
+        corner: p.layout.oscarCorner,
+        leads: p.oscar.leads,
+        proactive: p.oscar.proactive,
+        hint: p.pacing.hintAfterMs,
+        drawer: p.layout.drawer,
+        density: p.layout.density,
+        surface: p.layout.surfaceStyle,
+        start: p.layout.start,
+        panels: p.layout.panels,
+      }).toEqual(r)
+    })
+  it('the checklist is a permanent panel in package 2 only; the step card is the presenter of packages 1, 3 and 5', () => {
+    expect(DESIGN_IDS.filter((id) => packageById(id).layout.checklist === 'panel')).toEqual([2])
+    expect(DESIGN_IDS.filter((id) => packageById(id).presenter === 'step-card')).toEqual([1, 3, 5])
+  })
+  it('the shortcuts sit beside the controls in packages 2 and 4 only', () => {
+    expect(DESIGN_IDS.filter((id) => packageById(id).layout.shortcutsBesideControls)).toEqual([2, 4])
+  })
+  it('a package that is not proactive is the one with no hint (package 4)', () => {
+    expect(DESIGN_IDS.filter((id) => !packageById(id).oscar.proactive)).toEqual([4])
+    expect(DESIGN_IDS.filter((id) => packageById(id).pacing.hintAfterMs === 0)).toEqual([4])
   })
 })

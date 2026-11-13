@@ -18,6 +18,7 @@ import type { Registry } from '../../engine/CatalogLoader'
 import type { HelperStore, TutorialGate } from '../powerHelper'
 import type { History } from '../history'
 import { TUTORIAL_EVENT } from '../../design/events'
+import { lookOfRoot } from '../../design/packages'
 import { tutorialGateOf } from '../../design/tutorialRecord'
 import type { PowerHelperUses } from '../../design/powerHelperUse'
 
@@ -64,6 +65,11 @@ export interface ChecklistWiring {
   returnFocus(): void
   /** The power helper (T3.3), only under `?design` on a practice address. */
   helper?: HelperWiring
+  /**
+   * Where the PANEL form docks the list (T6.2): given, the list is docked there; null, the chip form. Absent = read from the page: a package whose `layout.checklist` is `panel` (a valid
+   * `?design` on a practice address) docks it at the foot of the Projet panel; anything else (no `?design`, an exam address, the other packages) keeps the chip.
+   */
+  dock?: HTMLElement | null
 }
 
 /** The gate as the guide's event says it, or null for a detail that is not one. */
@@ -144,9 +150,20 @@ export function wirePowerHelper(
 /** The checklist, plus the two readers the debug hook exposes to the guide (S2, S3): whether the helper is offered now, and its uses on this page. */
 export type WiredChecklist = Checklist & { helperOffered(): boolean; helperUses(): PowerHelperUses }
 
+/** The Projet panel when this page's package asks for the panel form; null otherwise (never throws: a fake or partial document has no look). */
+export function dockOf(doc: Document, root: HTMLElement): HTMLElement | null {
+  try {
+    const look = doc.documentElement ? lookOfRoot(doc.documentElement) : null
+    return look?.layout.checklist === 'panel' ? root.querySelector<HTMLElement>('[data-testid="project-tree"]') : null
+  } catch {
+    return null
+  }
+}
+
 export function wireChecklist(w: ChecklistWiring, mount: typeof mountChecklist = mountChecklist): WiredChecklist {
   const goTo = (t: GoTo): void => (t.kind === 'select' ? w.select(t.instance) : w.openInventory(t.tab))
   let list: Checklist | null = null
+  const dock = w.dock === undefined ? dockOf(w.doc, w.root) : w.dock
   const helper = w.helper ? wirePowerHelper(w.helper, { win: w.doc.defaultView, deviceLabel: w.deviceLabel, render: () => list?.render() }) : null
   list = mount({
     doc: w.doc,
@@ -157,6 +174,7 @@ export function wireChecklist(w: ChecklistWiring, mount: typeof mountChecklist =
     goTo,
     returnFocus: w.returnFocus,
     ...(helper ? { helper: { view: helper.view, run: helper.run } } : {}),
+    ...(dock ? { dock } : {}),
   })
   // the helper's chunk once a place is open (a room is the earliest a strip can exist)
   const wake = (): void => {

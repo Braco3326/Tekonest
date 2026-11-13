@@ -73,3 +73,16 @@ html[data-surface='sheet'] :is(.cr-toggle[aria-pressed='true'] .cr-toggle-state,
   html[data-density='dense'] .cr-panel-body { padding: 4px 0; }
   html[data-density='dense'] .cr-props-section fieldset { padding: 6px 0 8px; }
 }
+
+/* ── shortcuts beside the controls (T6.2: `data-shortcuts`, written by applyLookAttributes from the preset): a menu item shows its shortcut right after its label, as a keycap, instead of at
+   the far end of the row. The menus are the fixed dark chrome: Papier on the panel (14.95) with a muted-ink edge (>= 3). Without the attribute the shortcut stays at the end of the row. ── */
+html[data-shortcuts='beside'] .cr-menu-item { justify-content: flex-start; gap: 12px; }
+html[data-shortcuts='beside'] .cr-menu-item .cr-shortcut {
+  padding: 0 5px;
+  border: 1px solid var(--cr-ink-muted);
+  color: var(--cr-papier);
+  line-height: 16px;
+  white-space: nowrap;
+}
+html[data-shortcuts='beside'] .cr-menu-item:is(:hover, :focus) .cr-shortcut { color: inherit; }
+html[data-shortcuts='beside'] .cr-menu-item .cr-submenu-chevron { margin-left: auto; }

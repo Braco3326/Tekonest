@@ -364,15 +364,16 @@ export function lookOfRoot(root: LookRoot): DesignPackage | null {
 }
 
 /**
- * Writes the layout attributes the stylesheets (src/design/packages.css) and the drawer read, from the package's preset: `data-surface`, `data-density` and `data-drawer`
- * (`close-after-place` | `stay-open`). No package removes them. Selecting on these (never on the package number) is what keeps the no-branching lint true.
+ * Writes the layout attributes the stylesheets (src/design/packages.css) and the drawer read, from the package's preset: `data-surface`, `data-density`, `data-drawer`
+ * (`close-after-place` | `stay-open`) and `data-shortcuts` (`beside`: the menu shows an item's shortcut right beside its label, T6.2; `end`: at the end of the row, today's look). No package removes them. Selecting on these (never on the package number) is what keeps the no-branching lint true.
  */
 export function applyLookAttributes(root: AttributeRoot, pkg: DesignPackage | null): void {
   if (pkg === null) {
-    for (const a of ['data-surface', 'data-density', 'data-drawer']) root.removeAttribute(a)
+    for (const a of ['data-surface', 'data-density', 'data-drawer', 'data-shortcuts']) root.removeAttribute(a)
     return
   }
   root.setAttribute('data-surface', pkg.layout.surfaceStyle)
   root.setAttribute('data-density', pkg.layout.density)
   root.setAttribute('data-drawer', pkg.layout.drawer)
+  root.setAttribute('data-shortcuts', pkg.layout.shortcutsBesideControls ? 'beside' : 'end')
 }

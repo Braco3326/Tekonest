@@ -4,6 +4,10 @@
  * a ChecklistView (checklistModel.ts, the engine's own playback reasons) and « Aller à » only asks the owner to select a device or open the
  * inventory; nothing here touches the design. The one exception is the power helper's button (T3.3, under `?design` only): a click hands over to the owner,
  * which cables the console and speakers to the strip the learner placed, as one undo entry (src/creation/powerHelper.ts). DOM only; it needs no guide, so it works with `?oscar=0` and in every package.
+ *
+ * Two forms (onboarding plan T6.2, the package's `layout.checklist`): the CHIP (above: a pop-over opened from the status bar) and the PANEL (`dock` given): the same list, docked at the foot of the
+ * Projet panel, on the page for as long as playback is blocked and a place is open: no chip, no dialog role, no focus stolen, no Échap (nothing to close). Where the dock cannot be seen (the Projet
+ * panel folded, a phone-width window) the list is the chip's pop-over as before, so it is never out of reach. One list element, never two: its test ids are unique in both forms.
  */
 import { COPY } from '../copy'
 import type { ChecklistRow, ChecklistView, GoTo, RowState } from '../checklistModel'
@@ -27,6 +31,11 @@ export interface ChecklistDeps {
    * (the list is already closed). Absent = no button. `note` is the visible line under it: what a click does, or why it is disabled.
    */
   helper?: { view(): HelperView; run(): void }
+  /**
+   * The PANEL form (T6.2): where the list is docked while that place can be seen. Absent = the chip form. It is shown only while `root.dataset.tree` is not `collapsed` (the shell marks it on `.cr`):
+   * folded, the list becomes the chip's pop-over again.
+   */
+  dock?: HTMLElement
 }
 
 export type HelperView = { shown: false } | { shown: true; enabled: boolean; note: string }
@@ -92,6 +101,8 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
   // In the DOM only while open (a closed list is not a dialog anywhere in the page).
 
   let isOpen = false
+  /** The panel form is on screen: the list sits in the dock and `isOpen` is true for as long as it shows. */
+  let docked = false
   /** What the rows were built from: a rebuild only on a change, so the focus on a button is never lost to a refresh with the same content. */
   let built = ''
 
@@ -104,7 +115,12 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
     const top = el(doc, 'span', 'cr-checklist-top')
     const g = el(doc, 'span', 'cr-errlist-glyph', GLYPH[r.state])
     g.setAttribute('aria-hidden', 'true')
-    top.append(g, el(doc, 'span', 'cr-checklist-label', r.label), el(doc, 'span', 'cr-checklist-tag', `· ${C()[TAG_KEY[r.state]]}`))
+    // the separator is its own node so the docked form (a narrow column) can drop it when the tag goes under the label; the text of the tag is unchanged
+    const dot = el(doc, 'span', 'cr-checklist-dot', '· ')
+    dot.setAttribute('aria-hidden', 'true')
+    const tag = el(doc, 'span', 'cr-checklist-tag')
+    tag.append(dot, C()[TAG_KEY[r.state]]!)
+    top.append(g, el(doc, 'span', 'cr-checklist-label', r.label), tag)
     li.append(top)
     if (r.detail !== '') li.append(el(doc, 'span', 'cr-checklist-detail', r.detail))
     if (r.id === 'power') helperIn(li)
@@ -176,15 +192,53 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
     return a !== null && (pop.contains(a) || a === chip)
   }
 
+  /** The dock can be seen: the panel form is asked for and the Projet panel is not folded. */
+  const dockSeen = (): boolean => d.dock !== undefined && d.root.dataset.tree !== 'collapsed'
+  function dockIn(): void {
+    if (docked || d.dock === undefined) return
+    if (isOpen) close(false) // the pop-over leaves first
+    docked = true
+    isOpen = true
+    built = ''
+    pop.removeAttribute('role') // a labelled region on the page, not a dialog
+    pop.dataset.form = 'docked'
+    pop.hidden = false
+    d.dock.appendChild(pop)
+    chip.hidden = true
+    chip.removeAttribute('aria-controls')
+    chip.setAttribute('aria-expanded', 'false')
+  }
+  function undock(): void {
+    if (!docked) return
+    docked = false
+    isOpen = false
+    pop.remove()
+    pop.hidden = true
+    delete pop.dataset.form
+    pop.setAttribute('role', 'dialog')
+  }
+
   const render = (): void => {
     const v = d.view()
     if (!v.visible) {
       // It goes with the problem: the chip and the list leave together, and the focus is not left on something that vanished.
       const had = holdsFocus()
+      if (docked) undock()
       if (isOpen) close(false)
       chip.hidden = true
       if (had) d.returnFocus()
       return
+    }
+    if (dockSeen()) {
+      dockIn()
+      renderRows(v)
+      return
+    }
+    // the panel form while the dock cannot be seen (folded Projet): the chip and its pop-over, as in the chip form
+    if (docked) {
+      const had = pop.contains(doc.activeElement)
+      undock()
+      if (had) d.returnFocus()
     }
     chip.hidden = false
     if (isOpen) renderRows(v)
@@ -195,7 +249,7 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
     if (t && !pop.contains(t) && !chip.contains(t)) close(false)
   }
   pop.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return
+    if (e.key !== 'Escape' || docked) return
     e.preventDefault()
     e.stopPropagation()
     close(true)
@@ -203,12 +257,12 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
   // Non-modal: Tab is never trapped. Focus leaving the list (not to its chip) closes it, so it never lingers over the view.
   pop.addEventListener('focusout', (e) => {
     const to = e.relatedTarget as Node | null
-    if (isOpen && to && !pop.contains(to) && !chip.contains(to)) close(false)
+    if (isOpen && !docked && to && !pop.contains(to) && !chip.contains(to)) close(false)
   })
   x.addEventListener('click', () => close(true))
 
   function open(): void {
-    if (isOpen) return
+    if (isOpen || docked) return
     const v = d.view()
     if (!v.visible) return
     isOpen = true
@@ -222,7 +276,7 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
     doc.addEventListener('pointerdown', onDocDown, true)
   }
   function close(returnFocus = true): void {
-    if (!isOpen) return
+    if (!isOpen || docked) return
     isOpen = false
     pop.hidden = true
     pop.remove()
@@ -230,6 +284,11 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
     chip.setAttribute('aria-expanded', 'false')
     doc.removeEventListener('pointerdown', onDocDown, true)
     if (returnFocus) chip.focus()
+  }
+  // The Projet panel folds or unfolds (the shell marks `data-tree` on the root): the list moves between the dock and the chip's pop-over with it.
+  if (d.dock !== undefined) {
+    const Observer = doc.defaultView?.MutationObserver
+    if (typeof Observer === 'function') new Observer(() => render()).observe(d.root, { attributes: true, attributeFilter: ['data-tree'] })
   }
   chip.addEventListener('click', () => (isOpen ? close(true) : open()))
   chip.addEventListener('keydown', (e) => {

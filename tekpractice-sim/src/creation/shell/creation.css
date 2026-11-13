@@ -1083,6 +1083,29 @@ body:has(.cr-viewport[data-placing='true']) :is(.cr-errlist, .cr-checklist) { bo
 .cr .cr-checklist-go { margin-top: 4px; }
 .cr-checklist-mic { margin: 8px 0 0; font-size: 12px; color: var(--cr-ink-muted); }
 .cr-checklist-mic-label { font-weight: 500; color: var(--cr-papier); }
+/* T6.2, the PANEL form (src/creation/shell/checklist.ts `dock`): the same list docked at the foot of the Projet panel, in the flow of the column (no pop-over, no shadow, nothing over the
+   3D view). It scrolls inside itself when the column is short; the close button has nothing to close. Folded Projet: the dock is not seen and the list is the chip's pop-over (the module
+   moves it), so this rule never has to hide it. */
+.cr-checklist[data-form='docked'] {
+  position: static;
+  flex: 0 0 auto;
+  width: auto;
+  max-height: min(60%, 420px);
+  padding: 8px 12px 10px;
+  border: 0;
+  border-top: 1px solid var(--cr-panel-line);
+  box-shadow: none;
+  background: var(--cr-panel);
+}
+.cr-checklist[data-form='docked'] .cr-errlist-close { display: none; }
+.cr-checklist[data-form='docked'] .cr-errlist-title { font-size: 13px; }
+.cr-checklist[data-form='docked'] .cr-checklist-row { background: var(--cr-nuit); padding: 6px 8px; }
+/* a 200 px column: the label (it may wrap) and its state tag on two lines, no separator dot; the long intro is the panel's description for assistive tech but is not drawn, the rows say it */
+.cr-checklist[data-form='docked'] .cr-checklist-top { flex-wrap: wrap; row-gap: 0; }
+.cr-checklist[data-form='docked'] .cr-checklist-tag { box-sizing: border-box; flex: 0 0 100%; padding-left: 20px; font-size: 12px; }
+.cr-checklist[data-form='docked'] .cr-checklist-dot { display: none; }
+.cr-checklist[data-form='docked'] .cr-checklist-label { flex: 1 1 0; min-width: 0; }
+.cr-checklist[data-form='docked'] .cr-errlist-hint { display: none; } /* still the panel's description (aria-describedby reads a hidden node) */
 /* ── Touch (night wave 2, item I): every control a finger can meet is at least 44 x 44 px ─────────────────────────────────────────────────
    Only for a coarse primary pointer: with a mouse nothing here applies and the desktop pixels are the ones above, unchanged. The two bars are 48 px: a 44 px
    control inside a bar loses 1 px to its border. The rails and the panel heads are 45 px (44 + the panel's 1 px border) so their buttons are 44. The settings go one column (label above the control) so a 44 px
