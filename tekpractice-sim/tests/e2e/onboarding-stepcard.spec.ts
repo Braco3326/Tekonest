@@ -396,6 +396,16 @@ interface Computed {
   passedBorder: string
   todoBorder: string
 }
+const readColour = (page: Page, css: string): Promise<string> =>
+  page.evaluate((c) => {
+    const m = c.match(/\(([^)]+)\)/)
+    if (!m) return c
+    const parts = m[1].split(/[,/ ]+/).filter(Boolean)
+    if (c.startsWith('color(')) parts.shift() // the colour space
+    const p = parts.map(Number)
+    const v = c.startsWith('color(') ? p.slice(0, 3).map((x) => Math.round(x * 255)) : p.slice(0, 3)
+    return '#' + v.map((x) => x.toString(16).padStart(2, '0')).join('').toUpperCase()
+  }, css)
 /** `rgb(...)` / `color(srgb ...)` to `#RRGGBB` in the page. */
 const readColours = (page: Page): Promise<Computed> =>
   page.evaluate(() => {
@@ -440,9 +450,18 @@ for (const id of DESIGN_IDS) {
       console.log(`CONTRAST package ${id} | step card ${what} | ${fg} on ${bg} = ${r.toFixed(2)} (needs ${need})`)
       expect(r, `package ${id} ${what}: ${fg} on ${bg}`).toBeGreaterThanOrEqual(need)
     }
+    // S3 (T6a review): a Papier sheet (surfaceStyle 'sheet', package 3) gets a Papier card with Nuit text and Prune marks, not a second dark header; the others keep the secondary fill
+    const sheet = packageById(id).layout.surfaceStyle === 'sheet'
+    expect(c.cardBg.toUpperCase(), `package ${id}: the card's ground`).toBe((sheet ? packageById(id).colours.ground : packageById(id).colours.secondary).toUpperCase())
+    if (sheet) {
+      expect(c.cardFg.toUpperCase(), 'Nuit text on the Papier card').toBe(packageById(id).colours.ink.toUpperCase())
+      expect(c.doneBg.toUpperCase(), 'a done mark is a Prune fill').toBe(packageById(id).colours.select.toUpperCase())
+      expect(c.curBorder.toUpperCase(), 'the current step is edged in Nuit, never Ambre on Papier').toBe(packageById(id).colours.accentEdge.toUpperCase())
+    }
     row('text', c.cardFg, c.cardBg, 4.5)
     row('current step, text on the accent fill', c.curFg, c.curBg, 4.5)
-    row('current step, fill against the card', c.curBg, c.cardBg, 3)
+    // the current step's boundary: its Ambre fill where Ambre is legible on the card; on a Papier sheet (Ambre 2.16 there) the 2 px edge in the accent edge role
+    row(sheet ? 'current step, 2 px edge against the card' : 'current step, fill against the card', sheet ? c.curBorder : c.curBg, c.cardBg, 3)
     row('done step, mark against its fill', c.doneBg, c.doneFg, 3) // the tick (the card's own fill) on the ink fill
     row('done step, fill against the card', c.doneBg, c.cardBg, 3)
     row('« Passer le tutoriel », text', c.skipFg, c.cardBg, 4.5)
@@ -458,6 +477,8 @@ for (const id of DESIGN_IDS) {
     })
     expect(ring.style).not.toBe('none')
     expect(Number.parseFloat(ring.w)).toBeGreaterThanOrEqual(2)
+    const ringHex = (await readColour(page, ring.c)) // the keyboard ring against the card it sits on (UI >= 3): never Ambre on Papier
+    row('keyboard focus ring (UI)', ringHex, c.cardBg, 3)
     const r = await new AxeBuilder({ page }).include('[data-testid="tutorial-slot"]').analyze()
     const lines = r.violations.flatMap((v) => v.nodes.map((n) => `${v.id}: ${n.target.join(' ')} :: ${(n.any[0]?.message ?? n.failureSummary ?? '').slice(0, 140)}`))
     expect(lines, `axe on the card, package ${id}`).toEqual([])

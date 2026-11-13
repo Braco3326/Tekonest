@@ -86,6 +86,26 @@
 }
 .cr .tp-sc-action:focus-visible { outline-offset: 2px; }
 
+/*
+ * A Papier sheet (the surface style a package asks for, `html[data-surface='sheet']`, never a package number): spec 7.2 gives it a daylight sheet where Prune is ink, selection and focus,
+ * so the card is a Papier card (the ground role) with Nuit text (the ink role) and Prune marks (the select role), not a second dark header. Done = a Prune fill with a Papier tick (9.16);
+ * the current step keeps the Ambre fill with its Nuit numeral (7.46) and a 2 px Nuit edge (the accent edge role: Ambre never bounds anything on Papier, 2.16); the other marks and the
+ * button are drawn in Nuit or Prune. The keyboard ring is the package's focus role (Nuit), the shell's Ambre would be 2.16 here. Declared pairs: tests/design/packageContrast.test.ts.
+ */
+html[data-surface='sheet'] .tp-stepcard {
+  --cr-focus: var(--cr-role-focus);
+  background: var(--cr-role-ground);
+  color: var(--cr-role-ink);
+  border-bottom-color: var(--cr-role-line);
+}
+html[data-surface='sheet'] .tp-stepcard .tp-sc-dot { border-color: var(--cr-role-select); }
+html[data-surface='sheet'] .tp-stepcard .tp-sc-dot[data-state='current'] { border-color: var(--cr-role-accent-edge); }
+html[data-surface='sheet'] .tp-stepcard .tp-sc-dot[data-state='done'] { background: var(--cr-role-select); color: var(--cr-role-ground); }
+html[data-surface='sheet'] .cr .tp-stepcard .tp-sc-action { border-color: var(--cr-role-ink); }
+@media (hover: hover) {
+  html[data-surface='sheet'] .cr .tp-stepcard .tp-sc-action:hover { border-color: var(--cr-role-accent-edge); }
+}
+
 /* The checklist is the main presenter (packages 2 and 4): the card is its quiet companion, tighter. */
 .tp-stepcard[data-presenter='checklist'] { padding: 4px 16px; gap: 4px 20px; }
 .tp-stepcard[data-presenter='checklist'] .tp-sc-count { font-size: 14px; }

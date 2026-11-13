@@ -119,3 +119,15 @@ describe('T4 fix round, C1: a role is never painted as a fill without a declared
     for (const role of ['focus', 'select', 'accentText', 'accentEdge'] as const) expect(c[role].toUpperCase(), role).not.toBe(C2.ambre)
   })
 })
+
+describe('T6a S3: the step card’s marks have declared pairs in every map', () => {
+  it('the ground (a tick, a numeral) on the selection colour (a done mark on a Prune fill) is declared as UI, and passes in the five maps', () => {
+    for (const id of DESIGN_IDS) {
+      const c = packageById(id).colours
+      const p = declaredPairs(c).find((x) => x.role === 'ground on select')
+      expect(p, `package ${id}`).toBeDefined()
+      expect(p!.kind).toBe('ui')
+      expect(pairPasses(p!), `package ${id}: ${pairRatio(p!).toFixed(2)}`).toBe(true)
+    }
+  })
+})
