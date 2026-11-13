@@ -15,7 +15,7 @@
  * 11.13 SNAPSHOTS (`toHaveScreenshot`). Per package, the key screens: the start screen, the first room with the step card at step 1, the connect view (step 4 of the ten; package 5
  * has three steps: its « rebrancher » step is the connect view) and the closing card. Sizes: 1366 x 768 and 1024 x 768 for all four screens, 820 x 1180 for the start screen and the
  * room (the spec's three viewports are for the start screen and the workspace). Own file, retries off, a state wait before each capture (fonts loaded, models pending 0, no camera
- * move, no render over a sample window, the guide's icon / bubble / ring at rest), the WebGL canvas masked (hidden: the overlays stay), animations disabled, caret hidden, the pointer parked.
+ * move, no render over a sample window, the guide's icon / bubble / ring and the character's pose at rest), the WebGL canvas masked (hidden: the overlays stay), animations disabled, caret hidden, the pointer parked.
  * The baseline is created once, in this task (`--update-snapshots`), and committed; it is NEVER updated outside a task that says so.
  */
 import type { Page } from '@playwright/test'
@@ -62,7 +62,11 @@ interface Geo {
   bubble: string | null
   ring: string | null
   card: string | null
+  /** The character's own pose (`data-state` of `svg.tpo`, src/guide/character.ts): a nod, a wave, a celebration or a walk is a moment, not a rest. */
+  pose: string | null
 }
+/** The poses the character holds while nothing is happening; the others (walk, nod, wave, celebrate, shrug: 0.7 to 1 s each) end by themselves. */
+const RESTING_POSES: readonly (string | null)[] = [null, 'idle', 'point', 'sleep']
 const readGeo = (page: Page): Promise<Geo> =>
   page.evaluate(() => {
     const rect = (sel: string): string | null => {
@@ -72,12 +76,18 @@ const readGeo = (page: Page): Promise<Geo> =>
       const b = e.getBoundingClientRect()
       return cs.display === 'none' || cs.visibility === 'hidden' || b.width === 0 || b.height === 0 ? null : [b.x, b.y, b.width, b.height].map(Math.round).join(',')
     }
-    return { icon: rect('.oscar-icon'), bubble: rect('.oscar-bubble'), ring: rect('.oscar-ring:not(.oscar-ring-drop)'), card: rect('[data-testid="tutorial-card"]') }
+    return {
+      icon: rect('.oscar-icon'),
+      bubble: rect('.oscar-bubble'),
+      ring: rect('.oscar-ring:not(.oscar-ring-drop)'),
+      card: rect('[data-testid="tutorial-card"]'),
+      pose: document.querySelector('svg.tpo')?.getAttribute('data-state') ?? null,
+    }
   })
 
 /**
  * The page at rest: fonts loaded; no model pending and the camera still (when the hook is up); no frame drawn over a sample window; the guide's icon, bubble, ring and the card at the
- * same place over two reads 350 ms apart (the guide glides and re-reads the page; this is the geometry spec's own settle). Then the pointer is parked where no control is.
+ * same place over two reads 350 ms apart (the guide glides and re-reads the page; this is the geometry spec's own settle), and the character in a resting pose (the first sound's celebration lasts a second, and the closing card is captured about 0.7 s after it appears: the likely cause of the one closing capture in 45 that differed by 398 px; the diff itself was not kept). Then the pointer is parked where no control is.
  */
 async function atRest(page: Page, soundPlaying = false): Promise<void> {
   await fontsLoaded(page)
@@ -90,13 +100,14 @@ async function atRest(page: Page, soundPlaying = false): Promise<void> {
   await expect
     .poll(
       async () => {
-        const now = JSON.stringify(await readGeo(page))
-        const same = now === last
+        const g = await readGeo(page)
+        const now = JSON.stringify(g)
+        const same = now === last && RESTING_POSES.includes(g.pose)
         last = now
         await page.waitForTimeout(350)
         return same
       },
-      { timeout: 20_000, message: 'the icon, the bubble, the ring and the card never came to rest' },
+      { timeout: 20_000, message: 'the icon, the bubble, the ring, the card and the character never came to rest' },
     )
     .toBe(true)
   await page.mouse.move(0, 0) // no control sits at the page corner: no hover state in the capture
@@ -324,22 +335,40 @@ test.describe('11.7 squint test: the five packages are told apart at a glance', 
 
 // ── 11.13 the snapshots ────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-/** `toHaveScreenshot` takes a stylesheet by path, not by text: the rule goes in as a style tag (once per document). */
-const hideCanvas = (page: Page): Promise<unknown> =>
-  page.evaluate((css) => {
+/**
+ * What the page is made to do before a capture (a test-side normalisation, no product file touched):
+ *  - the WebGL canvas is hidden (a style tag: `toHaveScreenshot` takes a stylesheet by path, not by text);
+ *  - the inventory drawer's height is pinned to a whole number of pixels. It is `height: 36%` of the view (253.797 px at 1366 x 768), so its top edge and its text sit on a fraction of a
+ *    pixel, and Chromium rasterised the tab labels one pixel apart on about 4 page loads in 10 (the same page, the same state, two stable pictures; measured over 12 loads each: the fractional
+ *    drawer gave two hashes of the tab row, the drawer at a whole 254 px gave one, `will-change`, `translateZ(0)`, a resize, `--font-render-hinting=none` and `--disable-lcd-text` did not
+ *    settle it). The pin moves the drawer by at most half a pixel (it stays anchored at the bottom).
+ */
+async function prepare(page: Page): Promise<void> {
+  await page.evaluate((css) => {
     if (document.getElementById('visual-hide-canvas') === null) {
       const el = document.createElement('style')
       el.id = 'visual-hide-canvas'
       el.textContent = css
       document.head.append(el)
     }
+    const drawer = document.querySelector<HTMLElement>('[data-testid="inventory-drawer"]')
+    if (drawer !== null) {
+      drawer.style.removeProperty('height')
+      const h = drawer.getBoundingClientRect().height
+      if (h > 0) drawer.style.setProperty('height', `${Math.round(h)}px`, 'important')
+    }
   }, HIDE_CANVAS)
+}
 
-/** One capture: the viewport, the WebGL canvas masked (HIDE_CANVAS), animations finished and cancelled, caret hidden. `soft` so one run lists every screen that moved. */
+/**
+ * One capture: the viewport, the WebGL canvas hidden, animations finished and cancelled, caret hidden, and the console's live level readout (`.cr-listen-meters`: a level in dBFS and a bar
+ * that follow the playing sound, a different number every time) masked. `soft` so one run lists every screen that moved. No pixel tolerance.
+ */
 async function snap(page: Page, name: string, soundPlaying = false): Promise<void> {
-  await hideCanvas(page)
   await atRest(page, soundPlaying)
-  await expect.soft(page).toHaveScreenshot(name, { animations: 'disabled', caret: 'hide', maxDiffPixels: 0 })
+  await prepare(page)
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))) // the pinned height is laid out and painted
+  await expect.soft(page).toHaveScreenshot(name, { mask: [page.locator('.cr-listen-meters')], animations: 'disabled', caret: 'hide', maxDiffPixels: 0 })
 }
 
 const SCREENS: readonly { size: Size; closing: boolean }[] = [
