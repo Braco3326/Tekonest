@@ -145,6 +145,23 @@ describe('the start screen answer (T2.4a, R-B: the record is written WITH the an
     expect(h.recordWhenRoomOpened).toEqual([null]) // the room opened with nothing stored yet
     expect(h.record()).toMatchObject({ profile: 'etudie', offer: 'skipped', request: 0 })
   })
+  it('T6.1: the first-sound framing reserves the tutorial’s row when the tutorial is taken (the SM58 keeps its pixels once the step card’s row is there), and not when it is skipped', async () => {
+    for (const [offer, row] of [['taken', true], ['skipped', false]] as const) {
+      const frames: unknown[] = []
+      const h = harness({ frameNeutralRoom: (o?: { tutorialRow?: boolean }) => void frames.push(o?.tutorialRow) })
+      h.ob.startFirstVisit()
+      h.startOpts().onResult({ kind: 'chosen', profile: 'decouvre', offer })
+      await settle()
+      expect(frames, offer).toEqual([row])
+    }
+  })
+  it('T6.1: Aide › Premiers pas with no place open frames for the canvas minus the tutorial’s row (the tutorial follows)', async () => {
+    const frames: unknown[] = []
+    const h = harness({ frameNeutralRoom: (o?: { tutorialRow?: boolean }) => void frames.push(o?.tutorialRow) })
+    h.setPlace(false)
+    await h.ob.requestTutorial()
+    expect(frames).toEqual([true])
+  })
   it('a profile that leaves the panels to the package takes the package\'s layout', async () => {
     const h = harness({ panels: { tree: false, props: true } })
     h.ob.startFirstVisit()

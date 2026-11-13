@@ -416,6 +416,19 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
     tutorialRequest: () => requestNow(),
     profile: () => profileNow(),
     playing: () => playingNow(),
+    // T6.1 (the step card's closing lines): the signal path's mic verdict now, from the hook's own design and events; null while the hook has no design, or on a throw
+    mic: () => {
+      try {
+        const c = win.__creation
+        if (!c) return null
+        const design = c.design()
+        if (!design || !design.rig) return null
+        const path = signalPath(design, registry, c.events())
+        return { micOk: path.micOk === true, micReasons: path.micReasons.map((r) => ({ code: String(r.code), text_fr: String(r.text_fr) })) }
+      } catch {
+        return null
+      }
+    },
     // T3 close review S2 / S3: the power helper as Mode Création says it (offered now, uses on this page); null without the readers or on a malformed answer
     helper: () => {
       try {

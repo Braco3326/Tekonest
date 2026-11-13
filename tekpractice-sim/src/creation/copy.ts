@@ -1053,7 +1053,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
    * The tutorial « Premiers pas » (onboarding packs, T3.1, spec 6.3 and 7.2): Oscar's one sentence per step, what to do and where, never an outcome that is
    * not true yet (no sound before Écoute). Keys follow the step ids of src/guide/tutorial.ts. `{console}` and `{micro}` = the catalog labels of the source
    * console and of the SM58. The flow title is `menu.firstSteps` (by key); step 6 says `assist.sourceOff` (by key). `closingLines()` (src/guide/tutorial.ts) is `listen.simple` then
-   * the checklist's own mic line (`checklist.micCabled`) by key: NOT DISPLAYED YET (plan T6.1: the step card shows it). Every string here: à valider (tekuxwriter, 2026-11-12).
+   * the checklist's own mic line (`checklist.micCabled`) by key: shown by the step card after the last step (`tutorialCard`, T6.1). Every string here: à valider (tekuxwriter, 2026-11-12).
    */
   /**
    * Aide while the tutorial runs (plan T3.2): the three items that replace « Premiers pas ». {k} = the step to resume at. Every string here: à valider
@@ -1087,6 +1087,33 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     alreadyInPlace: 'Déjà en place : {steps}.',
     /** One item of `alreadyInPlace`; {k} = the step's number in the tutorial. */
     alreadyStep: 'étape {k}',
+  },
+  /**
+   * The tutorial's step card (onboarding packs, plan T6.1, spec 6.6 and 9): progress ONLY, in a reserved row under the menu bar. It never repeats Oscar's sentence (the bubble keeps the
+   * instruction), never says « réussi », shows no figure but the step number and the count (placeholders {k} and {n}). Its one control, « Passer le tutoriel », is `tutorialUi.skip` (one
+   * source with Aide). The marks: done, current, to come, « passée » (passed with « Passer cette étape »), « montré » (the power helper did it), « déjà en place » (its result was on the
+   * bench before the step came). After the last step it shows the closing lines (`listen.simple`, then the mic line: `closingLines()`, src/guide/tutorial.ts). Every string here: à valider
+   * (tekuxwriter, 2026-11-13).
+   */
+  tutorialCard: {
+    /** Accessible name of the card (a labelled region). */
+    label: 'Progression du tutoriel',
+    /** The count; {k} = the current step, {n} = the steps of this run (the package's pacing). */
+    step: 'Étape {k} sur {n}',
+    /** Accessible name of the row of marks. */
+    stepsLabel: 'Étapes du tutoriel',
+    /** Hidden text of one mark; {k} = its step, {state} = one of the six words below. */
+    stepState: 'Étape {k} : {state}',
+    stateDone: 'faite',
+    stateCurrent: 'en cours',
+    stateTodo: 'à venir',
+    statePassed: 'passée',
+    stateShown: 'montré',
+    stateEarly: 'déjà en place',
+    /** Heading of the card after the last step (the neutral end line of the guide, never a verdict). */
+    closingTitle: 'Fin des étapes',
+    /** The card's control after the last step. */
+    close: 'Fermer',
   },
   /**
    * The new Oscar (onboarding packs T5.4, spec 9 and 10.2), under `?design` only. Oscar's voice: no « intelligent », « expert », « tuteur », « ingénieur »

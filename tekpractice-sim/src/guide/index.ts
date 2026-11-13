@@ -92,6 +92,8 @@ export async function bootGuide(route: GuideRoute, target?: Window): Promise<Gui
       import('./vendor/guide.css'),
       // The new Oscar's motion sheet (plan T5.2), after the vendored sheet. It loads wherever the guide mounts; its rules only act where the skin is on (`?design`: .tp-oscar-host, .tpo).
       import('./character.css'),
+      // The tutorial's step card (plan T6.1): it only exists while a tutorial runs (src/guide/stepCard.ts), in the shell's reserved row.
+      import('./stepCard.css'),
     ])
     const registry = loadCatalog(catalog.default)
     const doc = win.document

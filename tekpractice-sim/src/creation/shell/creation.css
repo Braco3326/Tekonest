@@ -33,6 +33,19 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   .cr { --cr-tree-w: min(200px, calc(100vw - var(--cr-rail-w) - 140px)); --cr-props-w: min(260px, calc(100vw - var(--cr-rail-w) - 140px)); }
 }
 
+/* The tutorial's reserved row (onboarding packs T6.1, spec 6.6): src/design/tutorialSlot.ts puts `data-tutorial="on"` on the root and one slot at its end WHILE a tutorial runs, nowhere
+   else, so the step card (src/guide/stepCard.css) gets its own row under the menu bar and never overlays the 3D view, the drawer, the panels or Oscar. The place picker spans the
+   panels and view rows: it moves down one row with them. Without the attribute (the plain address, an exam address, `?oscar=0`) none of this applies. */
+.cr[data-tutorial='on'] {
+  grid-template-rows: var(--cr-menubar-h) auto minmax(0, 1fr) var(--cr-status-h);
+  grid-template-areas:
+    'menu menu menu'
+    'tutorial tutorial tutorial'
+    'tree view props'
+    'status status status';
+}
+.cr[data-tutorial='on'] .cr-pick { grid-area: 3 / 1 / 4 / 4; }
+
 /* Square corners, focused or not (beats the legacy `a:focus-visible { border-radius }`). */
 .cr *, .cr *:focus-visible, .cr-skip, .cr-skip:focus-visible, .cr-dialog, .cr-dialog * { border-radius: 0 !important; }
 

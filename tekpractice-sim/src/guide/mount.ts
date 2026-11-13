@@ -11,6 +11,8 @@
 // - The tutorial « Premiers pas » exists only under `?design=1..5` (src/guide/tutorial.ts): its flow is added LAST to the controller's list (never offered
 //   first, never started here: plan T3.2 starts it on the start screen's request), its events get their role / pair / playback data, its anchors are
 //   resolved from the page. Without `?design` nothing of it is there and the events reach the controller exactly as before.
+// - The step card (plan T6.1) is that tutorial's progress presenter, in the shell's reserved slot (src/design/tutorialSlot.ts): it follows the runtime's record, exists only while a
+//   tutorial runs and leaves with it. The page's top inset counts the slot, so Oscar rests clear of it.
 import type { Registry } from '../engine/CatalogLoader'
 import { FEATURES, type Features } from '../features'
 import { ruleRowsFor } from '../creation/ruleTexts'
@@ -19,7 +21,9 @@ import { createTekPracticeBrain } from './brain'
 import { tpString } from './strings'
 import type { TpBridge, TpState } from './bridge/types'
 import { NAV_SELECTORS, firstRect, type BridgeDoc } from './bridge/shared'
-import { PLAY_STARTED, TUTORIAL_REQUEST, annotateTutorialEvent, createTutorialRuntime, isTutorialAnchor, resolveTutorialAnchor, type TutorialDetail } from './tutorial'
+import { PLAY_STARTED, TUTORIAL_REQUEST, annotateTutorialEvent, closingLines, createTutorialRuntime, isTutorialAnchor, resolveTutorialAnchor, type TutorialDetail } from './tutorial'
+import { mountStepCard, type StepCard } from './stepCard'
+import type { StepId } from '../design/packages'
 import { TUTORIAL_EVENT } from '../design/events'
 import { activePackage } from '../design/packages'
 import { COPY } from '../creation/copy'
@@ -52,6 +56,8 @@ export const RECT_CACHE_MS = 250
 /** The page's own bars: the menu bar across the top, the status bar across the bottom. The guide's icon and bubble rest clear of them. */
 const MENU_BAR = '[data-testid="menubar"]'
 const STATUS_BAR = '[data-testid="status-bar"]'
+/** The tutorial's reserved row (src/design/tutorialSlot.ts), under the menu bar, only while a tutorial runs. */
+const TUTORIAL_SLOT = '[data-testid="tutorial-slot"]'
 export interface HostInsets {
   top: number
   right: number
@@ -73,10 +79,13 @@ export function hostInsets(doc: Document): HostInsets {
     const width = doc.documentElement.clientWidth
     const height = doc.documentElement.clientHeight
     const menu = doc.querySelector(MENU_BAR)?.getBoundingClientRect()
+    const slot = doc.querySelector(TUTORIAL_SLOT)?.getBoundingClientRect()
     const status = doc.querySelector(STATUS_BAR)?.getBoundingClientRect()
     const tree = doc.querySelector(TREE_PANEL)?.getBoundingClientRect()
     const props = doc.querySelector(PROPS_PANEL)?.getBoundingClientRect()
-    const top = menu !== undefined && menu.height > 0 && Number.isFinite(menu.bottom) ? Math.max(0, menu.bottom) : 0
+    const menuBottom = menu !== undefined && menu.height > 0 && Number.isFinite(menu.bottom) ? Math.max(0, menu.bottom) : 0
+    // the step card's row sits right under the menu bar: Oscar rests below it (T6.1)
+    const top = slot !== undefined && slot.height > 0 && Number.isFinite(slot.bottom) ? Math.max(menuBottom, slot.bottom) : menuBottom
     const bottom = status !== undefined && status.height > 0 && Number.isFinite(status.top) && height > 0 ? Math.max(0, height - status.top) : 0
     const left = tree !== undefined && tree.width > 0 && Number.isFinite(tree.right) && width > 0 ? Math.max(0, tree.right) : 0
     const right = props !== undefined && props.width > 0 && Number.isFinite(props.left) && width > 0 ? Math.max(0, width - props.left) : 0
@@ -150,7 +159,7 @@ const usable = (el: Element, view: Window): boolean => {
 /**
  * What the icon and the bubble rest clear of, as rects in viewport pixels: the two side panels whole (open or folded to their rail: the widget's inset for them
  * is capped at a quarter of the viewport, so on a narrow window the panel itself is the obstacle), the inventory drawer while it is open (at its resting place:
- * its box is mid-slide for 180 ms), then every control of the shell. Not an obstacle: anything hidden, `display: none` or inert (itself or an ancestor), the 3D
+ * its box is mid-slide for 180 ms), the tutorial's step-card row while it exists (plan T6.1), then every control of the shell. Not an obstacle: anything hidden, `display: none` or inert (itself or an ancestor), the 3D
  * canvas, a control that is a speck or fills the screen, and what a scroll area has scrolled out of sight (a control it clips is cut to the part that shows).
  * Any failure, a page without the shell, or a document without a size: no obstacle.
  */
@@ -176,6 +185,12 @@ export function hostObstacles(doc: Document): Rect[] {
       const h = (drawer as HTMLElement).offsetHeight || b.height
       const box = shownBox(drawer, view, root, vw, vh, memo, holder !== undefined ? { x: b.left, y: holder.bottom - h, w: b.width, h } : undefined)
       if (box !== null) out.push(box)
+    }
+    // the tutorial's row (the step card): the icon and the bubble never rest on the card, whatever it holds
+    const slotEl = root.querySelector(TUTORIAL_SLOT)
+    if (slotEl !== null && usable(slotEl, view)) {
+      const box = shownBox(slotEl, view, root, vw, vh, memo)
+      if (box !== null && box.w * box.h <= MAX_OBSTACLE_SHARE * vw * vh) out.push(box)
     }
     const wholes = out.length
     for (const el of Array.from(root.querySelectorAll(OBSTACLE_CONTROLS))) {
@@ -233,6 +248,8 @@ export interface MountImpl {
   mountGuide: typeof mountGuide
   /** The new Oscar's skin (src/guide/skin.ts; default: the real one), injectable for the same reason. */
   attachSkin?: typeof attachSkin
+  /** The step card (src/guide/stepCard.ts; default: the real one), injectable for the same reason. */
+  mountStepCard?: typeof mountStepCard
 }
 /** The « Passer cette étape » chip of the bubble (vendored `data-chip`): the step it passes is not a step done, so it is not nodded. */
 const SKIP_CHIP = '[data-chip="skip"]'
@@ -482,8 +499,28 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
         if (typeof win.dispatchEvent === 'function' && typeof CustomEvent === 'function') win.dispatchEvent(new CustomEvent(TUTORIAL_EVENT, { detail }))
         nodOnStep()
       })
-    const runtime = tutorial === null ? null : createTutorialRuntime({ flow: tutorial, registry, storage: deps.storage, now, send: (i) => late(i), emit })
+    // The step card follows the record: the runtime tells it after every write (never throws into the tutorial).
+    let card: StepCard | null = null
+    const runtime = tutorial === null ? null : createTutorialRuntime({ flow: tutorial, registry, storage: deps.storage, now, send: (i) => late(i), emit, onRecord: () => guard(() => card?.update()) })
     runtimeRef = runtime
+    if (runtime !== null && tutorial !== null && pkg !== null) {
+      // The closing lines say what the bench is NOW: with the mic verdict unknown only the pinned simulation sentence is shown, never a claim about the mic.
+      const closing = (): string[] => {
+        const mic = bridge.mic?.() ?? null
+        return mic === null ? [COPY.listen?.simple ?? ''].filter((x) => x !== '') : closingLines(mic)
+      }
+      guard(() => {
+        card = (impl.mountStepCard ?? mountStepCard)({
+          doc,
+          steps: tutorial.steps.map((st) => st.id as StepId),
+          presenter: pkg.presenter,
+          record: () => runtime.record(),
+          closing,
+          skip: () => runtime.skip(),
+        })
+      })
+      cleanups.push(() => card?.destroy())
+    }
     if (runtime !== null) run = { status: runtime.record().status, k: runtime.record().k }
     // T5.5: Oscar starts muted for package 4 (`proactive: false`) and for the sound engineer, only while nothing is stored under the mute key: the
     // controller reads that key once, at its creation, through this storage; a stored choice (an unmute is « 0 ») always wins. No `?design`: untouched.
@@ -565,7 +602,10 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     const hostEvent = (e: HostEvent): void => send({ type: 'hostEvent', event: e })
     late = send
     const tutorialLook = (state: TpState | null): void =>
-      guard(() => runtime?.update({ state, audio: bridge.playing?.() ?? null, request: bridge.tutorialRequest?.() ?? null, helper: bridge.helper?.() ?? null }))
+      guard(() => {
+        runtime?.update({ state, audio: bridge.playing?.() ?? null, request: bridge.tutorialRequest?.() ?? null, helper: bridge.helper?.() ?? null })
+        card?.update() // the closing lines follow the bench; a record that did not change is a no-op
+      })
 
     let revision = 0
     // The mode is read live. When the address turns to an exam one the controller is told first (it withholds everything), then the whole mount is torn down:
@@ -620,7 +660,9 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
         tell(state)
         for (const e of collapseRestore(list)) {
           const marked = annotateToggle(e, state, bridge)
-          hostEvent(tutorial === null ? marked : annotateTutorialEvent(marked, { state, prev, bridge, registry }))
+          const out = tutorial === null ? marked : annotateTutorialEvent(marked, { state, prev, bridge, registry })
+          runtime?.sawEvent(out) // T6.1: what tells a step done by its event from a step passed
+          hostEvent(out)
         }
         tutorialLook(state)
       }),

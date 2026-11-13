@@ -115,6 +115,7 @@ import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
 import { wireChecklist } from './onboarding/wire'
+import { TUTORIAL_ROW_PX } from '../design/tutorialSlot'
 import type { Onboarding } from './onboarding/firstVisit'
 import { createAnnouncer } from './shell/announcer'
 import { armCancelFallback } from './fileDialogGuard'
@@ -964,10 +965,11 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       picker,
       placeOpen: () => store.design().roomId !== null,
       openNeutralRoom: () => pick(cards.find((c) => c.key === 'blank')!, 'empty'),
-      frameNeutralRoom: () => {
+      frameNeutralRoom: (o) => {
         const f = designPkg?.framing
         if (!f || !host.rig) return
-        const pose = framingForCanvas(f, canvas.clientHeight) // the radius follows the canvas height: the same pixels on a short window
+        // the radius follows the canvas height: the same pixels on a short window; a tutorial about to open its row (T6.1) takes that row from the canvas, so the framing is for what is left
+        const pose = framingForCanvas(f, canvas.clientHeight - (o?.tutorialRow === true ? TUTORIAL_ROW_PX : 0))
         host.rig.flyToPreset({ alpha: pose.alpha, beta: pose.beta, radius: pose.radius, target: Vector3.FromArray([...pose.target]) }) // a cut under reduced motion; no engine change
         scheduler.invalidate()
       },

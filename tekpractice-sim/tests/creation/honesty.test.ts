@@ -31,7 +31,7 @@ function leaves(node: unknown, path: string[] = []): Leaf[] {
   return []
 }
 
-const LEARNER_SECTIONS = ['checklist', 'assist', 'ruleOverride', 'onboarding', 'tutorial', 'oscar'] as const
+const LEARNER_SECTIONS = ['checklist', 'assist', 'ruleOverride', 'onboarding', 'tutorial', 'tutorialCard', 'oscar'] as const
 const copySections = COPY as Record<string, Record<string, string>>
 /** The pinned `coverage.splPending` is the one string allowed to say « SPL » (spec 9: « SPL (outside the pinned splPending) »): it is removed before the scan, not exempted by key. */
 const SPL_PENDING = COPY.coverage.splPending

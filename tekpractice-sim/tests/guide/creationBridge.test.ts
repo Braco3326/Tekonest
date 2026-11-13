@@ -1081,6 +1081,24 @@ describe('tutorial readers (T3.2): the onboarding request and the sound playing'
     r.win.__creation!.audioState = () => ({ state: 'playing', source: 'test', sourceName: '', voices: [], lease: false, loop: false, retiring: 0 })
     expect(r.bridge.playing?.()).toBe('test')
   })
+  it('mic() (T6.1, the step card’s closing lines): the signal path’s mic verdict now, verbatim; null while the hook has no design, or throws', () => {
+    const r = make()
+    // the bench has a console and a speaker and no mic cable: the engine's own NO_MIC reason
+    expect(r.bridge.mic?.()).toEqual({ micOk: false, micReasons: [{ code: 'NO_MIC', text_fr: signalPath(benchWorld().design, registry, []).micReasons[0].text_fr }] })
+    // a mic cabled to a console input (the console is not powered here: a reason of its own, still « cabled »)
+    const w = benchWorld()
+    w.design.rig.instances.push({ instanceId: 'sm58', deviceId: 'shure-sm58' })
+    w.design.rig.connections.push({ a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } })
+    const r2 = make(w)
+    const mic = r2.bridge.mic?.()
+    expect(mic?.micReasons.some((x) => x.code === 'NO_MIC')).toBe(false)
+    r2.win.__creation!.design = () => null as never
+    expect(r2.bridge.mic?.()).toBeNull()
+    r2.win.__creation!.design = () => {
+      throw new Error('x')
+    }
+    expect(r2.bridge.mic?.()).toBeNull()
+  })
 })
 
 describe('skin readers (T5.3, T5.5): refused connections and the profile', () => {

@@ -32,8 +32,8 @@ export interface OnboardingWiring {
   placeOpen(): boolean
   /** Open the neutral room through the picker's own choice path (the `blank` card, « Salle vide », no dialog). Resolves when that is over, whatever the result. */
   openNeutralRoom(): Promise<void>
-  /** The camera goes to the active package's `framing` (first-sound framing, T2.5). Called only right after the neutral room was opened by the start screen or by Aide « Premiers pas »; never over a room that was already open. */
-  frameNeutralRoom(): void
+  /** The camera goes to the active package's `framing` (first-sound framing, T2.5); `tutorialRow`: a tutorial is about to open its row (the step card's slot, `TUTORIAL_ROW_PX`), so the framing is for the canvas MINUS that row (T6.1: the same pixels once the row is there). Called only right after the neutral room was opened by the start screen or by Aide « Premiers pas »; never over a room that was already open. */
+  frameNeutralRoom(opts?: { tutorialRow?: boolean }): void
   setPanel(p: 'tree' | 'props', open: boolean): void
   /** The inventory drawer opens on this tab; the focus stays where it is (the 3D view). */
   openInventory(tab: InventoryTab): void
@@ -159,7 +159,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
               answered = false // busy, cancelled or failed: the picker has the error or still shows the screen; nothing was written, the next answer is taken
               return
             }
-            w.frameNeutralRoom()
+            w.frameNeutralRoom({ tutorialRow: r.offer === 'taken' && w.tutorialAllowed })
           }
           store.dispatch({ type: 'answer', profile: r.profile, offer: r.offer })
           chip?.render()
@@ -193,14 +193,18 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
         store.dispatch({ type: 'request', kind })
         return Promise.resolve()
       }
+      // « Reprendre à l’étape {k} » (T6.1): the run's own step card takes the focus, so the learner lands on the progress and its « Passer le tutoriel », not on the page.
+      // The card is the guide's; this only asks the page for it by test id (creation never imports the guide), and does nothing where there is none.
+      const resuming = tutorialInProgress(w.storage) !== null
       // Cleared by `finally` on the promise itself: an async body with no await would run its own cleanup before `asking` is assigned.
       asking = (async () => {
         if (!w.placeOpen()) {
           await w.openNeutralRoom()
           if (!w.placeOpen()) return
-          w.frameNeutralRoom()
+          w.frameNeutralRoom({ tutorialRow: true }) // « Premiers pas »: the tutorial follows
         }
         store.dispatch({ type: 'request', kind: 'start' })
+        if (resuming) w.doc.querySelector<HTMLElement>('[data-testid="tutorial-card"]')?.focus()
       })().finally(() => {
         asking = null
       })

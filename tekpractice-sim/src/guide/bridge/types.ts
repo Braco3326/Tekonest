@@ -38,6 +38,8 @@ export type TpBridge = {
   tutorialRequest?(): TutorialRequest | null
   /** The source Écoute plays now ('test', 'song', 'file'), or null; never throws. */
   playing?(): string | null
+  /** The signal path's mic verdict now (`micOk`, and the reasons there is no « Micro OK », verbatim): the step card's closing lines read it (plan T6.1). Mode Création only; null while unknown; never throws. */
+  mic?(): { micOk: boolean; micReasons: { code: string; text_fr: string }[] } | null
   /** The power helper as Mode Création says it: offered now, and its uses on this page (T3 close review S2, S3); null without it; never throws. */
   helper?(): PowerHelperReading | null
   /** The profile of the creation onboarding record ('decouvre', 'etudie', 'projet', 'metier'), or null; Mode Création under `?design` only; never throws (plan T5.5). */

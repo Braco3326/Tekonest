@@ -951,7 +951,7 @@ Aide pendant que le tutoriel tourne (plan T3.2) : trois éléments à la place d
 
 ## tutorial
 
-Le tutoriel « Premiers pas » (packs d’accueil, T3.1 ; spec 6.3 et 7.2) : une phrase d’Oscar par étape, ce qu’il faut faire et où, jamais un résultat qui n’est pas encore vrai (aucun son avant Écoute). Les clés suivent les identifiants d’étape de `src/guide/tutorial.ts`. `{console}` et `{micro}` = les libellés du catalogue de la console source (aujourd’hui la Yamaha QL1) et du SM58. Le titre du parcours est `menu.firstSteps` (par clé) ; l’étape 6 dit `assist.sourceOff` (par clé). `closingLines()` (`listen.simple` puis la ligne micro de la liste, `checklist.micCabled`, par clé) : pas encore affiché (T6.1, la fiche d’étape). La fin d’un parcours dit « Parcours « {flow} » : fin des étapes. » (texte du guide, pas COPY : une étape a pu être passée). Au plus 200 mots avec `listen.simple` (testé). Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
+Le tutoriel « Premiers pas » (packs d’accueil, T3.1 ; spec 6.3 et 7.2) : une phrase d’Oscar par étape, ce qu’il faut faire et où, jamais un résultat qui n’est pas encore vrai (aucun son avant Écoute). Les clés suivent les identifiants d’étape de `src/guide/tutorial.ts`. `{console}` et `{micro}` = les libellés du catalogue de la console source (aujourd’hui la Yamaha QL1) et du SM58. Le titre du parcours est `menu.firstSteps` (par clé) ; l’étape 6 dit `assist.sourceOff` (par clé). `closingLines()` (`listen.simple` puis la ligne micro de la liste, `checklist.micCabled`, par clé) : affiché par la fiche d’étape après la dernière étape (T6.1, section `tutorialCard`). La fin d’un parcours dit « Parcours « {flow} » : fin des étapes. » (texte du guide, pas COPY : une étape a pu être passée). Au plus 200 mots avec `listen.simple` (testé). Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
@@ -971,6 +971,25 @@ Le tutoriel « Premiers pas » (packs d’accueil, T3.1 ; spec 6.3 et 7.2) : une
 | `tutorial.helperOffer` | Je peux brancher pour vous, dans le simulateur. | à valider (tekuxwriter) | L’offre d’Oscar pour l’aide au branchement (branchement secteur seulement), câblée par T3.3 et T3.4 |
 | `tutorial.alreadyInPlace` | Déjà en place : {steps}. | à valider (tekuxwriter) | Avant la phrase de l’étape suivante quand des étapes étaient déjà faites sur le montage (revue G8 C2) ; `{steps}` = les éléments `tutorial.alreadyStep` séparés par une virgule ; aucun « bravo » |
 | `tutorial.alreadyStep` | étape {k} | à valider (tekuxwriter) | Un élément de `alreadyInPlace` ; `{k}` = le numéro de l’étape dans le tutoriel |
+
+## tutorialCard
+
+La fiche d’étape du tutoriel (packs d’accueil, T6.1 ; spec 6.6 et 9) : **la progression seulement**, dans une ligne réservée sous la barre de menus (présente uniquement pendant un tutoriel : jamais sur la vue 3D, le tiroir, les panneaux ni Oscar). Elle ne répète jamais la phrase de la bulle (la bulle garde la consigne), ne dit jamais « réussi » et ne montre aucun chiffre hors le numéro de l’étape et le total (marqueurs {k} et {n}). Son seul bouton, « Passer le tutoriel », est `tutorialUi.skip` (une seule source avec Aide). Après la dernière étape elle montre les lignes de fin (`listen.simple`, puis la ligne micro : `closingLines()`). Tout ce qui suit : à valider (tekuxwriter, 2026-11-13).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `tutorialCard.label` | Progression du tutoriel | à valider (tekuxwriter) | Nom accessible de la fiche (région nommée) |
+| `tutorialCard.step` | Étape {k} sur {n} | à valider (tekuxwriter) | Le compte ; `{k}` = l’étape en cours, `{n}` = les étapes de ce parcours (le rythme du paquet : 10 aujourd’hui pour les cinq paquets, le paquet 5 gardant ses 3 étapes en données jusqu’à T6.3) |
+| `tutorialCard.stepsLabel` | Étapes du tutoriel | à valider (tekuxwriter) | Nom accessible de la rangée de marques |
+| `tutorialCard.stepState` | Étape {k} : {state} | à valider (tekuxwriter) | Texte caché de chaque marque (lecteur d’écran) ; `{state}` = l’un des six mots ci-dessous |
+| `tutorialCard.stateDone` | faite | à valider (tekuxwriter) | Marque : l’étape s’est terminée sur son propre événement (le simulateur l’a vue) ; ce n’est pas un jugement |
+| `tutorialCard.stateCurrent` | en cours | à valider (tekuxwriter) | Marque : l’étape courante |
+| `tutorialCard.stateTodo` | à venir | à valider (tekuxwriter) | Marque : une étape pas encore atteinte |
+| `tutorialCard.statePassed` | passée | à valider (tekuxwriter) | Marque : l’étape a été passée avec « Passer cette étape » (jamais une coche) |
+| `tutorialCard.stateShown` | montré | à valider (tekuxwriter) | Marque : l’aide « Je branche pour vous » a fait cette étape (jamais une coche, aucune célébration) |
+| `tutorialCard.stateEarly` | déjà en place | à valider (tekuxwriter) | Marque : le résultat de l’étape était déjà sur le montage quand elle est venue |
+| `tutorialCard.closingTitle` | Fin des étapes | à valider (tekuxwriter) | Titre de la fiche après la dernière étape : la même formule neutre que la fin de parcours d’Oscar (une étape a pu être passée) |
+| `tutorialCard.close` | Fermer | à valider (tekuxwriter) | Bouton de la fiche après la dernière étape : elle quitte la page, la ligne est libérée |
 
 ## oscar
 

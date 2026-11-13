@@ -49,3 +49,55 @@ for (const id of DESIGN_IDS) {
     await page.screenshot({ path: `${OUT}/pkg-${id}-connect.png` })
   })
 }
+
+// T6.1: the step card at 1366 x 768 in every package, for the founder to look at: the tutorial taken, the console placed, the mic step passed (a « passée » mark and its key), the speaker
+// placed, step 4 current. Written to test-results/screens/pkg-<n>-card.png. Nothing is asserted but that the card drew.
+for (const id of DESIGN_IDS) {
+  test(`package ${id}: the tutorial step card at 1366 x 768`, async ({ page }) => {
+    mkdirSync(OUT, { recursive: true })
+    await page.goto(`/?design=${id}`)
+    await page.evaluate(() => window.localStorage.clear())
+    await page.reload()
+    await page.waitForFunction(() => !!window.__creation)
+    await page.getByTestId('start-screen').getByRole('button', { name: 'Je découvre', exact: true }).click()
+    await page.getByTestId('start-screen').getByRole('button', { name: /^Faire le tutoriel/ }).click()
+    await page.waitForFunction(() => window.__creation!.place() === 'blank')
+    await expect(page.getByTestId('tutorial-card')).toBeVisible({ timeout: 10_000 })
+    const place = (device: string, instance: string, x: number) =>
+      page.evaluate(([d, i, px]) => void window.__creation!.dispatch({ type: 'SPAWN', deviceId: d, instanceId: i, position: [px, 0, 0], rotationY: 0 } as never), [device, instance, x] as const)
+    await place('yamaha-ql1', 'ql1', 0)
+    await expect(page.getByTestId('tutorial-step-count')).toHaveText('Étape 2 sur 10', { timeout: 10_000 })
+    await page.locator('.oscar-chips').getByRole('button', { name: 'Passer cette étape', exact: true }).click()
+    await place('qsc-k12-2', 'k12', -1)
+    await expect(page.getByTestId('tutorial-step-count')).toHaveText('Étape 4 sur 10', { timeout: 10_000 })
+    await page.waitForFunction(() => !window.__creation!.cameraMoving() && window.__creation!.modelsPending() === 0)
+    await page.waitForTimeout(900)
+    await page.screenshot({ path: `${OUT}/pkg-${id}-card.png` })
+  })
+}
+
+// T6.2: package 2's docked checklist (a blocked bench, so every state shows) and package 2 / 3 menus (the shortcut beside the label, or at the end of the row): pkg-2-dock.png, pkg-2-menu.png,
+// pkg-3-menu.png. Nothing is asserted but that the page drew.
+for (const id of [2, 3] as const) {
+  test(`package ${id}: ${id === 2 ? 'the docked checklist and the menu' : 'the menu'} at 1366 x 768`, async ({ page }) => {
+    mkdirSync(OUT, { recursive: true })
+    await page.goto(`/?design=${id}`)
+    await page.evaluate(() => window.localStorage.clear())
+    await page.reload()
+    await page.waitForFunction(() => !!window.__creation)
+    await page.keyboard.press('1')
+    await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
+    await page.waitForFunction(() => window.__creation!.place() === 'blank')
+    await page.evaluate(() => {
+      const c = window.__creation!
+      c.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 0], rotationY: 0 } as never)
+      c.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12', position: [-1, 0, 0], rotationY: 0 } as never)
+      c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12', port: 'in-line-a' } } as never)
+    })
+    await page.waitForFunction(() => !window.__creation!.cameraMoving() && window.__creation!.modelsPending() === 0)
+    await page.waitForTimeout(600)
+    if (id === 2) await page.screenshot({ path: `${OUT}/pkg-2-dock.png` })
+    await page.locator('#cr-menu-projet').click()
+    await page.screenshot({ path: `${OUT}/pkg-${id}-menu.png`, clip: { x: 0, y: 0, width: 760, height: 330 } })
+  })
+}

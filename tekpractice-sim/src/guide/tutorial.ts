@@ -31,6 +31,7 @@ import type { StepId } from '../design/packages'
 import { MENU_MATERIEL, NAV_SELECTORS, inventoryItemSelector, inventoryTabSelector, propsKeySelector, refKey } from './bridge/shared'
 import type { TpBridge, TpPortRef, TpState } from './bridge/types'
 import { DEFAULT_STORAGE_KEY } from './vendor/core/controller'
+import { matchesDone } from './vendor/core/flow'
 import { hintKey } from './vendor/core/hints'
 import type { PowerHelperReading } from '../design/powerHelperUse'
 import type { ControllerInput, DoneWhen, Flow, HostEvent, Rect, StepAction } from './vendor/core/types'
@@ -575,6 +576,9 @@ export function closingLines(mic: { micOk: boolean; micReasons: readonly { code:
 
 // ── at run time: start, persist, resume, skip, « déjà en place » (plan T3.2, G8 review C2) ────────────────────────────
 
+/** How long a host event stays « just sent » for `settle` (a burst of one poll is milliseconds; a skip click comes seconds later). */
+const EVENT_MS = 3000
+
 export type RequestKind = 'start' | 'restart' | 'skip'
 /** The onboarding request as the bridge reads it (`window.__creation.onboarding()`): its counter, what the last one asked for, and whether the tutorial may run. */
 export interface TutorialRequest {
@@ -608,6 +612,13 @@ export interface TutorialRuntime {
    * Mode Création says it (offered now, uses on this page; null without it: then it is never offered and no use is seen).
    */
   update(input: { state: TpState | null; audio: string | null; request: TutorialRequest | null; helper?: PowerHelperReading | null }): void
+  /**
+   * A host event as the mount is about to send it to the controller (T6.1): the runtime remembers it for a moment, so that when the controller moves on from a step it can tell a step
+   * ENDED BY ITS EVENT from a step PASSED (« Passer cette étape »): the card shows a tick for the first and « passée » for the second, never a false tick.
+   */
+  sawEvent(event: HostEvent): void
+  /** The card's « Passer le tutoriel » (T6.1): the run stops and the record says skipped, as Aide's item does; nothing when no tutorial runs. */
+  skip(): void
   /** The guide's record (tests; what storage holds unless it is blocked). */
   record(): TutorialRecord
 }
@@ -638,6 +649,8 @@ export function createTutorialRuntime(d: {
   stateKey?: string
   /** Tells Mode Création where the run is (`tekpractice:tutorial`, `TutorialDetail`, the power helper's gate, plan T3.3): on every change of it. */
   emit?(detail: TutorialDetail): void
+  /** Tells the step card (T6.1) the record after every write: a copy, called in try / catch (a failing card never stops the tutorial). */
+  onRecord?(record: TutorialRecord): void
 }): TutorialRuntime {
   const stateKey = d.stateKey ?? DEFAULT_STORAGE_KEY
   const memory = new Map<string, string>()
@@ -707,6 +720,8 @@ export function createTutorialRuntime(d: {
   let helperSeen: number | null = null
 
   let told = ''
+  /** The host events sent a moment ago, newest last: what tells a step ended by its event from a step passed (T6.1). */
+  let seenEvents: { e: HostEvent; t: number }[] = []
   /** The run as Mode Création sees it: the current step while it runs (null otherwise), the helper's unlock, and whether a power step exists / is ahead (S5). */
   const tell = (): void => {
     const live = rec.status === 'running'
@@ -725,9 +740,35 @@ export function createTutorialRuntime(d: {
       // the page's listener failed: the tutorial goes on
     }
   }
+  const snapshot = (): TutorialRecord => ({ ...rec, early: [...rec.early], shown: [...rec.shown], passed: [...rec.passed] })
   const save = (): void => {
     write(TUTORIAL_RECORD_KEY, JSON.stringify(rec))
     tell()
+    try {
+      d.onRecord?.(snapshot())
+    } catch {
+      // the page's card failed: the tutorial goes on
+    }
+  }
+  /**
+   * The controller moved from step `from` to `to` (exclusive): each step it left is DONE when one of the events just sent ends it (the vendored `matchesDone`), when its result was
+   * already on the bench (`early`) or when the power helper did it (`shown`); otherwise the learner passed it. A step done again (back, then its event) is no longer passed.
+   * Events older than `EVENT_MS` are forgotten, so one that came for another step long ago never turns a later skip into a tick.
+   */
+  const settle = (from: number, to: number): void => {
+    const t = d.now()
+    seenEvents = seenEvents.filter((x) => t - x.t <= EVENT_MS)
+    let passed = rec.passed
+    for (let i = from; i < to; i++) {
+      const id = data[i]?.id
+      const step = d.flow.steps[i]
+      if (id === undefined || step === undefined) continue
+      const hit = seenEvents.findIndex((x) => matchesDone(step, x.e))
+      if (hit >= 0) seenEvents.splice(hit, 1)
+      const done = hit >= 0 || earlyAt === i || rec.shown.includes(id)
+      passed = done ? passed.filter((x) => x !== id) : passed.includes(id) ? passed : [...passed, id]
+    }
+    rec = { ...rec, passed }
   }
   const clearNotes = (): void => {
     pending = []
@@ -765,9 +806,11 @@ export function createTutorialRuntime(d: {
     const idx = flow.index
     if (flow.status === 'running') {
       if (!(earlyAt !== null && idx === earlyAt + 1) && idx !== flowIndex) clearNotes() // the learner moved on (a completion, « Passer cette étape », back): no old note
+      if (flowIndex >= 0 && idx > flowIndex) settle(flowIndex, idx) // T6.1: the steps it left are done or passed
       running = true
       rec = { ...rec, status: 'running', step: data[idx]?.id ?? null, k: idx + 1, n: data.length }
     } else {
+      if (flow.status === 'done' && flowIndex >= 0 && running) settle(flowIndex, data.length) // the last step ended on its event
       running = false
       clearNotes()
       if (flow.status === 'done' || flow.status === 'skipped') rec = { ...rec, status: flow.status === 'done' ? 'done' : 'skipped', step: null, k: 0, n: data.length }
@@ -776,6 +819,15 @@ export function createTutorialRuntime(d: {
     flowIndex = idx
     save()
     unlock()
+  }
+
+  /** « Passer le tutoriel » (Aide's item and the card's button): the run stops, the record says skipped, nothing asks again by itself. */
+  function stopRun(): void {
+    if (!running && rec.status !== 'running') return
+    rec = { ...rec, status: 'skipped', step: null, k: 0, helper: false }
+    clearNotes()
+    save()
+    if (running) d.send({ type: 'flow', control: { action: 'stop' } })
   }
 
   /**
@@ -881,12 +933,9 @@ export function createTutorialRuntime(d: {
       if (request !== null && request.allowed && Number.isSafeInteger(request.n) && request.n > rec.handledRequest) {
         rec = { ...rec, handledRequest: request.n }
         if (request.kind === 'skip') {
-          rec = { ...rec, status: 'skipped', step: null, k: 0, helper: false }
-          clearNotes()
-          save()
-          if (running) d.send({ type: 'flow', control: { action: 'stop' } })
+          stopRun()
         } else if (request.kind === 'restart' || !running) {
-          rec = { ...rec, early: [], shown: [], helper: false }
+          rec = { ...rec, early: [], shown: [], passed: [], helper: false }
           clearNotes()
           save()
           d.send({ type: 'flow', control: { action: 'start', flowId: d.flow.id } })
@@ -899,6 +948,10 @@ export function createTutorialRuntime(d: {
       unlock() // a strip placed (or the helper offered again) after the third tier
       schedule()
     },
-    record: () => ({ ...rec, early: [...rec.early], shown: [...rec.shown] }),
+    sawEvent(event) {
+      seenEvents = [...seenEvents, { e: event, t: d.now() }].slice(-32)
+    },
+    skip: stopRun,
+    record: snapshot,
   }
 }

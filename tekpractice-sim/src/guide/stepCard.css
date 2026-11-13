@@ -1,0 +1,111 @@
+/*
+ * The tutorial's step card (onboarding packs, plan T6.1, spec 6.6): progress only, calm, in the reserved row the shell grid gives it (`.cr[data-tutorial='on']`,
+ * src/creation/shell/creation.css), so it never overlays the 3D view, the drawer, the panels or Oscar. Loaded with the guide (src/guide/index.ts); the card exists only while a
+ * tutorial runs (src/guide/stepCard.ts), so on the plain address, an exam address and `?oscar=0` nothing here applies.
+ *
+ * The look follows the package's ROLE tokens (src/design/creationTokens.ts writes `--cr-role-*` on <html>, none of them named by a package number): `secondary` / `secondaryInk` carry
+ * the card (declared pair, text >= 4.5 in every package: tests/design/packageContrast.test.ts), `accent` / `accentInk` / `accentEdge` the current step (Ambre fill with Nuit text:
+ * 7.46; its edge on the card >= 3). Every text is the secondary ink on the secondary fill; no Ambre text, never on Papier. The focus ring is the shell's own (Ambre over a Nuit halo:
+ * 4.24 on Prune, 7.46 on Nuit): this card is not re-pointed to a package's focus role, whose Nuit ring would vanish on a Prune card. No animation, no transition.
+ *
+ * Desktop first (a 48 px row at 1366 x 768); tablet comfortable (the marks wrap under the count below 900 px); a coarse pointer gets a 44 px button.
+ */
+.cr-tutorial-slot {
+  grid-area: tutorial;
+  min-width: 0;
+}
+
+.tp-stepcard {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+  padding: 8px 16px;
+  background: var(--cr-role-secondary, var(--cr-prune));
+  color: var(--cr-role-secondary-ink, var(--cr-papier));
+  border-bottom: 1px solid var(--cr-role-line, var(--cr-panel-line));
+  font: 400 14px/1.4 var(--cr-font-ui);
+}
+.tp-stepcard:focus { outline: none; }
+.tp-stepcard:focus-visible { outline: 2px solid var(--cr-focus); outline-offset: -3px; box-shadow: inset 0 0 0 5px var(--cr-nuit); }
+
+/* The count: Plex (the title font draws the É of « Étape » as a macron at small sizes). */
+.tp-sc-count { flex: 0 0 auto; margin: 0; font: 600 16px/1.2 var(--cr-font-ui); white-space: nowrap; }
+/* Visual order (the DOM order, which is the tab order, never changes): count, marks, key, button, closing lines. On a desktop everything but the closing lines is ONE row (49 px: what the first-sound framing reserves). */
+.tp-sc-count { order: 0; }
+.tp-sc-steps { order: 1; flex: 0 1 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+
+/* A mark: a 28 px square. A plain step is an outline with its number; the current one is the accent fill; a step done is the ink filled with a tick. */
+.tp-sc-dot {
+  position: relative; /* holds its hidden words */
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border: 1px solid currentColor;
+  font: 600 13px/1 var(--cr-font-ui);
+  font-variant-numeric: tabular-nums;
+}
+.tp-sc-mark { display: grid; place-items: center; }
+.tp-sc-mark svg { width: 16px; height: 16px; }
+.tp-sc-dot[data-state='current'] { background: var(--cr-role-accent, var(--cr-ambre)); color: var(--cr-role-accent-ink, var(--cr-nuit)); border: 2px solid var(--cr-role-accent-edge, var(--cr-ambre)); }
+.tp-sc-dot[data-state='done'] { background: var(--cr-role-secondary-ink, var(--cr-papier)); color: var(--cr-role-secondary, var(--cr-prune)); }
+/* passed, shown and early are told apart by the shape of their outline AND their glyph (never colour alone), and named by the key under the row */
+.tp-sc-dot[data-state='passed'] { border-style: dashed; border-width: 2px; }
+.tp-sc-dot[data-state='shown'] { border-width: 2px; }
+.tp-sc-dot[data-state='early'] { border-style: double; border-width: 3px; }
+
+.tp-sc-legend { order: 2; flex: 0 1 auto; display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; padding: 0; list-style: none; font-size: 12px; }
+.tp-sc-legend[hidden] { display: none; }
+.tp-sc-key { display: inline-flex; align-items: center; gap: 6px; }
+.tp-sc-dot--key { width: 20px; height: 20px; }
+.tp-sc-dot--key .tp-sc-mark svg { width: 12px; height: 12px; }
+
+.tp-sc-closing { order: 4; flex: 1 1 100%; max-width: 78ch; font-size: 13px; }
+.tp-sc-closing[hidden] { display: none; }
+.tp-sc-closing p { margin: 2px 0; }
+
+.cr .tp-sc-action {
+  order: 3;
+  flex: 0 0 auto;
+  margin-left: auto;
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: 500 13px/1 var(--cr-font-ui);
+  white-space: nowrap;
+  transition: none;
+}
+@media (hover: hover) {
+  .cr .tp-sc-action:hover { background: var(--cr-role-accent, var(--cr-ambre)); color: var(--cr-role-accent-ink, var(--cr-nuit)); border-color: var(--cr-role-accent-edge, var(--cr-ambre)); }
+}
+.cr .tp-sc-action:focus-visible { outline-offset: 2px; }
+
+/* The checklist is the main presenter (packages 2 and 4): the card is its quiet companion, tighter. */
+.tp-stepcard[data-presenter='checklist'] { padding: 4px 16px; gap: 4px 20px; }
+.tp-stepcard[data-presenter='checklist'] .tp-sc-count { font-size: 14px; }
+.tp-stepcard[data-presenter='checklist'] .tp-sc-dot { width: 22px; height: 22px; font-size: 12px; }
+.tp-stepcard[data-presenter='checklist'] .tp-sc-mark svg { width: 13px; height: 13px; }
+.tp-stepcard[data-presenter='checklist'] .tp-sc-action { min-height: 26px; padding: 0 10px; }
+
+/* Tablet: the count and the button on the first line, the marks under them across the width. */
+@media (max-width: 900px) {
+  .tp-stepcard { gap: 6px 16px; padding: 8px 12px; }
+  .tp-sc-action { order: 1; }
+  .tp-sc-steps { order: 2; flex: 1 1 100%; }
+  .tp-sc-legend { order: 3; flex: 1 1 100%; }
+}
+@media (pointer: coarse) {
+  .cr .tp-sc-action { min-height: 44px; }
+}
+@media (forced-colors: active) {
+  .tp-sc-dot[data-state='done'] { forced-color-adjust: none; }
+}
+
+/* visually hidden, still read */
+.tp-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { makeRegistry } from '../helpers'
 import { COPY } from '../../src/creation/copy'
 import { packageById } from '../../src/design/packages'
-import { TUTORIAL_RECORD_KEY, parseTutorialRecord, tutorialInProgress } from '../../src/design/tutorialRecord'
+import { TUTORIAL_RECORD_KEY, parseTutorialRecord, tutorialInProgress, type TutorialRecord } from '../../src/design/tutorialRecord'
 import type { TpState } from '../../src/guide/bridge/types'
 import { CREATION_STRINGS, premiersPasFlow } from '../../src/guide/flows.creation'
 import { createTutorialRuntime, type TutorialDetail, type TutorialRequest } from '../../src/guide/tutorial'
@@ -49,7 +49,7 @@ class MemStorage {
 const flush = (): Promise<void> => new Promise((r) => setTimeout(r, 0))
 
 /** A page: the real controller fed through the runtime's storage, as mount.ts wires it. */
-function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps, extra: Flow[] = []) {
+function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps, extra: Flow[] = [], records: TutorialRecord[] = []) {
   const clock = { t: 1 }
   const flow = premiersPasFlow(registry, pacing)
   const sent: ControllerInput[] = []
@@ -67,6 +67,7 @@ function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps, 
       void controller.dispatch(i).then((v) => (view = v))
     },
     emit: (detail) => told.push(detail),
+    onRecord: (r) => records.push(r),
   })
   controller = createController({ brain, flows: [flow, ...extra], clock: () => clock.t++, strings: CREATION_STRINGS, storage: rt.storage })
   return {
@@ -80,6 +81,12 @@ function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps, 
     text: () => controller.getView().bubble?.lines.map((l) => l.text).join(' ') ?? '',
     ev: async (e: Omit<HostEvent, 'at'>) => {
       view = await controller.dispatch({ type: 'hostEvent', event: { ...e, at: clock.t++ } as HostEvent })
+    },
+    /** A host event as mount.ts sends it: the runtime is told first (`sawEvent`), then the controller (T6.1: what separates a step done from a step passed). */
+    seen: async (e: Omit<HostEvent, 'at'>) => {
+      const full = { ...e, at: clock.t++ } as HostEvent
+      rt.sawEvent(full)
+      view = await controller.dispatch({ type: 'hostEvent', event: full })
     },
     init: async () => {
       await controller.dispatch({ type: 'setContext', context: { page: 'workbench', mode: 'practice' } })
@@ -96,10 +103,11 @@ describe('the tutorial record (oscar-guide.onboarding.v1)', () => {
     expect(TUTORIAL_RECORD_KEY).toBe('oscar-guide.onboarding.v1')
     const ok = { v: 1, handledRequest: 2, step: 'micro', k: 2, n: 10, status: 'running', early: ['console'] }
     // T3.3 / T3.4 added `shown` and `helper`: a record written before them reads as empty / false
-    expect(parseTutorialRecord(JSON.stringify(ok))).toEqual({ ...ok, shown: [], helper: false })
-    const full = { ...ok, shown: ['courant-console'], helper: true }
+    // T6.1 added `passed` (the steps passed with « Passer cette étape »): a record written before it reads as empty (pinned assertion extended, see the ledger)
+    expect(parseTutorialRecord(JSON.stringify(ok))).toEqual({ ...ok, shown: [], passed: [], helper: false })
+    const full = { ...ok, shown: ['courant-console'], passed: ['micro'], helper: true }
     expect(parseTutorialRecord(JSON.stringify(full))).toEqual(full)
-    for (const bad of ['', 'x', '[]', JSON.stringify({ ...ok, v: 2 }), JSON.stringify({ ...ok, status: 'won' }), JSON.stringify({ ...ok, handledRequest: -1 }), JSON.stringify({ ...ok, early: [1] }), JSON.stringify({ ...ok, shown: [1] }), JSON.stringify({ ...ok, helper: 'yes' })])
+    for (const bad of ['', 'x', '[]', JSON.stringify({ ...ok, v: 2 }), JSON.stringify({ ...ok, status: 'won' }), JSON.stringify({ ...ok, handledRequest: -1 }), JSON.stringify({ ...ok, early: [1] }), JSON.stringify({ ...ok, shown: [1] }), JSON.stringify({ ...ok, passed: [1] }), JSON.stringify({ ...ok, helper: 'yes' })])
       expect(parseTutorialRecord(bad), bad).toBeNull()
     const s = new MemStorage()
     s.setItem(TUTORIAL_RECORD_KEY, JSON.stringify(ok))
@@ -123,7 +131,7 @@ describe('start, persist, resume, skip', () => {
     await flush()
     expect(p.sent).toEqual([{ type: 'flow', control: { action: 'start', flowId: 'premiers-pas' } }])
     expect(p.title()).toBe(step(1))
-    expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))).toEqual({ v: 1, handledRequest: 1, step: 'console', k: 1, n: 10, status: 'running', early: [], shown: [], helper: false })
+    expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))).toEqual({ v: 1, handledRequest: 1, step: 'console', k: 1, n: 10, status: 'running', early: [], shown: [], passed: [], helper: false })
     p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
     await flush()
     expect(p.sent).toHaveLength(1)
@@ -645,5 +653,151 @@ describe('T3 close review: the runtime', () => {
     w.rt.update({ state: stateOf([]), audio: null, request: { ...ask(2), atLoad: 2 } })
     await flush()
     expect(w.title()).toBe(step(1))
+  })
+})
+
+// ── T6.1: what the step card reads: passed steps, the card's own skip, the record changes ───────────────────────────────────────
+describe('T6.1: a step PASSED is not a step done (the card never shows a false tick)', () => {
+  const TEN = packageById(1).pacing.steps
+  const started = async (s = new MemStorage(), records: TutorialRecord[] = []) => {
+    const p = page(s, TEN, [], records)
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    return p
+  }
+  const q = { type: 'deviceAdded', data: { device: 'device:q', role: 'source-console' } }
+  const mic = { type: 'deviceAdded', data: { device: 'device:m', role: 'mic' } }
+
+  it('a step the learner passes (no event of that step) is recorded « passed »; a step ended by its own event is not (triggers / does not trigger)', async () => {
+    const p = await started()
+    await p.seen(q)
+    expect(p.rt.record()).toMatchObject({ k: 2, passed: [] })
+    await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+    expect(p.rt.record()).toMatchObject({ k: 3, passed: ['micro'] })
+    await p.seen({ type: 'deviceAdded', data: { device: 'device:k', role: 'speaker' } })
+    expect(p.rt.record()).toMatchObject({ k: 4, passed: ['micro'] })
+  })
+
+  it('the record on storage says it too (a reload keeps the marks)', async () => {
+    const s = new MemStorage()
+    const p = await started(s)
+    await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+    expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))).toMatchObject({ passed: ['console'] })
+    const again = page(s)
+    expect(again.rt.record().passed).toEqual(['console'])
+  })
+
+  it('a passed step done afterwards (back, then its event) is not « passed » any more', async () => {
+    const p = await started()
+    await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+    expect(p.rt.record().passed).toEqual(['console'])
+    await p.controller.dispatch({ type: 'flow', control: { action: 'back' } })
+    await p.seen(q)
+    expect(p.rt.record()).toMatchObject({ k: 2, passed: [] })
+  })
+
+  it('an event that belongs to another step (the mic placed during step 1) does not make a later skip of that step look done', async () => {
+    const p = await started()
+    await p.seen(mic) // not the current step: no advance
+    expect(p.rt.record()).toMatchObject({ k: 1 })
+    await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } }) // step 1 passed (its own event never came)
+    expect(p.rt.record().passed).toEqual(['console'])
+  })
+
+  it('steps found already done are « déjà en place », never passed', async () => {
+    const p = page(new MemStorage(), TEN)
+    await p.init()
+    p.rt.update({ state: stateOf([['q', 'yamaha-ql1'], ['m', 'shure-sm58']]), audio: null, request: ask(1) })
+    await flush()
+    await flush()
+    expect(p.rt.record()).toMatchObject({ early: ['console', 'micro'], passed: [] })
+  })
+
+  it('S6 burst: two mains cables in one poll (the speaker’s first) end step 8 by its event and step 9 « déjà en place »: neither is passed', async () => {
+    const p = await started()
+    for (let i = 0; i < 7; i++) await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+    expect(p.rt.record().passed).toHaveLength(7)
+    const spk = { type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-speaker', fed: true } }
+    const con = { type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console', fed: true } }
+    p.rt.sawEvent({ ...spk, at: 1 } as HostEvent)
+    p.rt.sawEvent({ ...con, at: 2 } as HostEvent)
+    await p.ev(spk)
+    await p.ev(con)
+    const pk = { a: { instance: 'p', port: 'out-2' }, b: { instance: 'k', port: 'power-in' } }
+    const pq = { a: { instance: 'p', port: 'out-1' }, b: { instance: 'q', port: 'power-in' } }
+    p.rt.update({ state: stateOf([['q', 'yamaha-ql1'], ['k', 'qsc-k12-2'], ['p', 'multiprise-secteur']], [pk, pq]), audio: null, request: ask(1) })
+    await flush()
+    const r = p.rt.record()
+    expect(r.step).toBe('ecoute')
+    expect(r.passed).not.toContain('courant-console')
+    expect(r.passed).not.toContain('courant-enceinte')
+    expect(r.early).toContain('courant-enceinte')
+  })
+
+  it('a restart clears every mark', async () => {
+    const p = await started()
+    await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+    expect(p.rt.record().passed).toEqual(['console'])
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(2, 'restart') })
+    await flush()
+    expect(p.rt.record()).toMatchObject({ k: 1, passed: [], early: [], shown: [] })
+  })
+})
+
+describe('T6.1: skip() is the card’s « Passer le tutoriel »', () => {
+  it('stops the run, records skipped (no step, no helper), keeps handledRequest, and nothing restarts by itself', async () => {
+    const s = new MemStorage()
+    const p = page(s)
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    p.rt.skip()
+    await flush()
+    expect(p.sent.at(-1)).toEqual({ type: 'flow', control: { action: 'stop' } })
+    expect(parseTutorialRecord(s.getItem(TUTORIAL_RECORD_KEY))).toMatchObject({ status: 'skipped', step: null, k: 0, helper: false, handledRequest: 1 })
+    expect(tutorialInProgress(s)).toBeNull()
+    expect(p.told.at(-1)).toEqual(D(null))
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    expect(p.rt.record().status).toBe('skipped')
+  })
+
+  it('does not trigger when no tutorial runs: nothing is sent, nothing is written', async () => {
+    const s = new MemStorage()
+    const p = page(s)
+    await p.init()
+    p.rt.skip()
+    await flush()
+    expect(p.sent).toEqual([])
+    expect(s.getItem(TUTORIAL_RECORD_KEY)).toBeNull()
+  })
+})
+
+describe('T6.1: onRecord tells the card on every change of the record', () => {
+  it('a copy of the record at the start and at each step; changing the copy changes nothing', async () => {
+    const seen: TutorialRecord[] = []
+    const p = page(new MemStorage(), packageById(1).pacing.steps, [], seen)
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    expect(seen.at(-1)).toMatchObject({ status: 'running', k: 1 })
+    seen.at(-1)!.early.push('console')
+    expect(p.rt.record().early).toEqual([])
+    await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+    expect(seen.at(-1)).toMatchObject({ status: 'running', k: 2, passed: ['console'] })
+  })
+
+  it('a callback that throws never stops the tutorial', async () => {
+    const bad = {
+      push: () => {
+        throw new Error('the page’s card failed')
+      },
+    } as unknown as TutorialRecord[]
+    const p = page(new MemStorage(), packageById(1).pacing.steps, [], bad)
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    expect(p.title()).toBe(step(1))
   })
 })

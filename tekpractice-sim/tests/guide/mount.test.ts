@@ -521,6 +521,16 @@ describe('hostObstacles: the page controls the icon and the bubble keep clear of
     expect(hostObstacles(world([], undefined, undefined, { [PROPS]: el('aside', 1334, 32, 32, 708) }))).toEqual([{ x: 1334, y: 32, w: 32, h: 708 }])
   })
 
+  const SLOT = '[data-testid="tutorial-slot"]'
+  it('T6.1: the tutorial’s slot (the step card’s row) is an obstacle whole, and the controls inside it are not listed again; no slot, no obstacle', () => {
+    const slot = el('div', 0, 32, 1366, 49)
+    const skip = el('button', 1219, 40, 131, 32)
+    const elsewhere = el('button', 300, 300, 40, 20)
+    const list = [skip, elsewhere]
+    expect(hostObstacles(world(list, undefined, undefined, { [SLOT]: slot }))).toEqual([{ x: 0, y: 32, w: 1366, h: 49 }, { x: 300, y: 300, w: 40, h: 20 }])
+    expect(hostObstacles(world(list))).toEqual([{ x: 1219, y: 40, w: 131, h: 32 }, { x: 300, y: 300, w: 40, h: 20 }])
+  })
+
   it('a panel that is hidden or inert is not an obstacle; no panel is no obstacle', () => {
     expect(hostObstacles(world([], undefined, undefined, { [PROPS]: el('aside', 1106, 32, 260, 708, { style: { display: 'none' } }) }))).toEqual([])
     expect(hostObstacles(world([], undefined, undefined, { [TREE]: el('nav', 0, 32, 200, 708, { inert: true }) }))).toEqual([])
@@ -1689,5 +1699,105 @@ describe('mountOscar: Oscar muted by default (T5.5)', () => {
       r.b.emit(PAIR, [ev('profileChosen')])
       expect(sent(r.f).filter((i) => i.type === 'chip'), JSON.stringify(c)).toEqual([])
     }
+  })
+})
+
+describe('mountOscar: the step card (T6.1, spec 6.6): the tutorial’s progress presenter, only under ?design', () => {
+  const cardImpl = () => {
+    const f = fakeImpl()
+    const card = { update: vi.fn(), destroy: vi.fn() }
+    const mountStepCard = vi.fn((_d: unknown) => card)
+    return { ...f, impl: { ...f.impl, mountStepCard } as unknown as MountImpl & typeof f.impl & { mountStepCard: typeof mountStepCard }, card, mountStepCard }
+  }
+  const memory = (): Storage => {
+    const m = new Map<string, string>()
+    return { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v), removeItem: (k: string) => void m.delete(k), clear: () => m.clear(), key: () => null, length: 0 } as Storage
+  }
+  type CardDeps = { steps: string[]; presenter: string; record(): { status: string }; closing(): string[]; skip(): void }
+
+  it('triggers on ?design=1: mounted once, with the run’s ten step ids, the package’s presenter, and the first look told to it', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const c = cardImpl()
+    expect(mountOscar(r.deps, c.impl)).not.toBeNull()
+    expect(c.mountStepCard).toHaveBeenCalledTimes(1)
+    const d = c.mountStepCard.mock.calls[0][0] as CardDeps
+    expect(d.steps).toEqual(['console', 'micro', 'enceinte', 'console-enceinte', 'micro-console', 'lecture-console', 'multiprise', 'courant-console', 'courant-enceinte', 'ecoute'])
+    expect(d.presenter).toBe('step-card')
+    expect(d.record().status).toBe('idle')
+    expect(c.card.update).toHaveBeenCalled() // the first look: a tutorial restored from storage shows its card at once
+  })
+
+  it('the presenter is the package’s: package 2 and 4 hand `checklist`, 1, 3, 5 `step-card` (data, no branch on the number)', () => {
+    const seen: string[] = []
+    for (const n of [1, 2, 3, 4, 5]) {
+      const r = make({ search: `?design=${n}`, storage: memory() })
+      const c = cardImpl()
+      mountOscar(r.deps, c.impl)
+      seen.push((c.mountStepCard.mock.calls[0][0] as CardDeps).presenter)
+    }
+    expect(seen).toEqual(['step-card', 'checklist', 'step-card', 'checklist', 'step-card'])
+  })
+
+  it('does not trigger: the plain address, an unknown ?design, the legacy route have no card', () => {
+    for (const over of [{ search: '' }, { search: '?design=9' }, { search: '?level=a1&oscar=legacy&design=1', route: 'legacy' as const }]) {
+      const r = make(over)
+      const c = cardImpl()
+      expect(mountOscar(r.deps, c.impl), JSON.stringify(over)).not.toBeNull()
+      expect(c.mountStepCard, JSON.stringify(over)).not.toHaveBeenCalled()
+    }
+  })
+
+  it('a change of the bench is told to the card (the closing lines follow it); destroy removes the card', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const c = cardImpl()
+    const h = mountOscar(r.deps, c.impl)!
+    const n = c.card.update.mock.calls.length
+    r.b.emit(PAIR, [ev('deviceAdded', { device: 'device:q' })])
+    expect(c.card.update.mock.calls.length).toBeGreaterThan(n)
+    h.destroy()
+    expect(c.card.destroy).toHaveBeenCalledTimes(1)
+  })
+
+  it('the closing lines: the pinned simulation sentence alone while the bench’s mic verdict is unknown (never a claim about the mic)', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const c = cardImpl()
+    mountOscar(r.deps, c.impl)
+    const d = c.mountStepCard.mock.calls[0][0] as CardDeps
+    expect(d.closing()).toEqual([COPY.listen!.simple])
+    r.b.bridge.mic = () => ({ micOk: true, micReasons: [] })
+    expect(d.closing()).toEqual([COPY.listen!.simple, COPY.checklist!.micCabled])
+    r.b.bridge.mic = () => ({ micOk: false, micReasons: [{ code: 'NO_MIC', text_fr: 'texte du moteur' }] })
+    expect(d.closing()).toEqual([COPY.listen!.simple, 'texte du moteur'])
+  })
+
+  it('a card that throws is one warning and the guide stays mounted', () => {
+    const r = make({ search: '?design=1', storage: memory() })
+    const c = cardImpl()
+    c.mountStepCard.mockImplementation(() => {
+      throw new Error('x')
+    })
+    expect(mountOscar(r.deps, c.impl)).not.toBeNull()
+    expect(c.impl.mountGuide).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('hostInsets: the tutorial’s reserved row (T6.1)', () => {
+  type Box = { top: number; bottom: number; left: number; right: number; width: number; height: number }
+  const box = (left: number, top: number, width: number, height: number): Box => ({ left, top, width, height, right: left + width, bottom: top + height })
+  const docOf = (boxes: Record<string, Box>): Document =>
+    ({
+      documentElement: { clientWidth: 1366, clientHeight: 768 },
+      querySelector: (sel: string) => (boxes[sel] ? { getBoundingClientRect: () => boxes[sel] } : null),
+    }) as unknown as Document
+  const MENU = '[data-testid="menubar"]'
+  const STATUS = '[data-testid="status-bar"]'
+  const SLOT = '[data-testid="tutorial-slot"]'
+
+  it('triggers: with the slot present the top inset is the slot’s bottom edge (Oscar rests under the card)', () => {
+    expect(hostInsets(docOf({ [MENU]: box(0, 0, 1366, 40), [SLOT]: box(0, 40, 1366, 48), [STATUS]: box(0, 740, 1366, 28) })).top).toBe(88)
+  })
+  it('does not trigger: no slot (or an empty one) leaves the top inset at the menu bar', () => {
+    expect(hostInsets(docOf({ [MENU]: box(0, 0, 1366, 40), [STATUS]: box(0, 740, 1366, 28) })).top).toBe(40)
+    expect(hostInsets(docOf({ [MENU]: box(0, 0, 1366, 40), [SLOT]: box(0, 40, 1366, 0), [STATUS]: box(0, 740, 1366, 28) })).top).toBe(40)
   })
 })

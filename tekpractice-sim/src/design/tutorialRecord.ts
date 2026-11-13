@@ -6,7 +6,8 @@
  * starts, resumes, restarts or skips the tutorial once. `step` / `k` / `n`: the current step id, its number (1-based) and the step count while it runs.
  * `status`: idle (never started, stopped, or interrupted by another flow of the guide: T3 close review C2), running, done (the last step ended), skipped (« Passer le tutoriel »). `early`: steps completed because their
  * result was already on the bench (« déjà en place », G8 review C2). `shown`: steps the power helper did (« montré », plan T3.3: never « déjà en place », never a
- * success). `helper`: the guide unlocked the power helper in this run (Oscar's third tier, plan T3.4). Both default to empty / false in a record written before them.
+ * success). `passed`: steps the learner passed with « Passer cette étape » (T6.1: the step card reads « passée »; never a tick: a step is `passed` only when it ended with no event of its own, none of its result on the bench and no helper).
+ * `helper`: the guide unlocked the power helper in this run (Oscar's third tier, plan T3.4). `shown`, `passed` and `helper` default to empty / false in a record written before them.
  */
 import type { StepId } from './packages'
 
@@ -22,10 +23,11 @@ export interface TutorialRecord {
   status: TutorialStatus
   early: StepId[]
   shown: StepId[]
+  passed: StepId[]
   helper: boolean
 }
 
-export const EMPTY_TUTORIAL_RECORD: Readonly<TutorialRecord> = Object.freeze({ v: 1, handledRequest: 0, step: null, k: 0, n: 0, status: 'idle', early: [] as StepId[], shown: [] as StepId[], helper: false })
+export const EMPTY_TUTORIAL_RECORD: Readonly<TutorialRecord> = Object.freeze({ v: 1, handledRequest: 0, step: null, k: 0, n: 0, status: 'idle', early: [] as StepId[], shown: [] as StepId[], passed: [] as StepId[], helper: false })
 
 const STATUSES: readonly string[] = ['idle', 'running', 'done', 'skipped']
 const count = (x: unknown): x is number => typeof x === 'number' && Number.isSafeInteger(x) && x >= 0
@@ -47,8 +49,10 @@ export function parseTutorialRecord(raw: string | null): TutorialRecord | null {
   if (!Array.isArray(r.early) || !r.early.every((s) => typeof s === 'string')) return null
   const shown = r.shown === undefined ? [] : r.shown
   if (!Array.isArray(shown) || !shown.every((s) => typeof s === 'string')) return null
+  const passed = r.passed === undefined ? [] : r.passed
+  if (!Array.isArray(passed) || !passed.every((x) => typeof x === 'string')) return null
   if (r.helper !== undefined && typeof r.helper !== 'boolean') return null
-  return { v: 1, handledRequest: r.handledRequest, step: r.step as StepId | null, k: r.k, n: r.n, status: r.status as TutorialStatus, early: r.early as StepId[], shown: shown as StepId[], helper: r.helper === true }
+  return { v: 1, handledRequest: r.handledRequest, step: r.step as StepId | null, k: r.k, n: r.n, status: r.status as TutorialStatus, early: r.early as StepId[], shown: shown as StepId[], passed: passed as StepId[], helper: r.helper === true }
 }
 
 /**
