@@ -15,7 +15,7 @@
  * 11.13 SNAPSHOTS (`toHaveScreenshot`). Per package, the key screens: the start screen, the first room with the step card at step 1, the connect view (step 4 of the ten; package 5
  * has three steps: its « rebrancher » step is the connect view) and the closing card. Sizes: 1366 x 768 and 1024 x 768 for all four screens, 820 x 1180 for the start screen and the
  * room (the spec's three viewports are for the start screen and the workspace). Own file, retries off, a state wait before each capture (fonts loaded, models pending 0, no camera
- * move, no render over a sample window, the guide's icon / bubble / ring and the character's pose at rest), the WebGL canvas masked (hidden: the overlays stay), animations disabled, caret hidden, the pointer parked.
+ * move, no render over a sample window, the guide's icon / bubble / ring and the character's pose at rest), the WebGL canvas masked (hidden: the overlays stay), in the workspace Oscar's bubble and icon hidden (they rest in several places: HIDE_GUIDE), animations disabled, caret hidden, the pointer parked.
  * The baseline is created once, in this task (`--update-snapshots`), and committed; it is NEVER updated outside a task that says so.
  */
 import type { Page } from '@playwright/test'
@@ -336,39 +336,57 @@ test.describe('11.7 squint test: the five packages are told apart at a glance', 
 // ── 11.13 the snapshots ────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 /**
+ * The guide's two floating parts, hidden (`visibility`, so the layout is untouched) in the workspace captures. Oscar's bubble and icon come to rest in one of SEVERAL places where the room
+ * is tight, depending on how the page got there, and each place is stable once reached: measured on this build, package 2 at 1366 x 768 on the closing screen (the bubble's corner at (216, 222)
+ * or at (273, 265), 13 474 pixels apart) and package 5 at 1024 x 768 on the connect view (the bubble over the top centre, or to the left with the icon above the ring: 228 639 pixels apart).
+ * No wait on stillness can tell the two apart, so a capture of them would flake. Where Oscar stands is the geometry spec's business (onboarding-geometry.spec.ts, with its known findings);
+ * these captures are of the packages' own surfaces, the step card and the target ring. The start screens keep the icon (one place, never moved).
+ */
+const HIDE_GUIDE = '.oscar-bubble, .oscar-icon { visibility: hidden !important }'
+
+/**
  * What the page is made to do before a capture (a test-side normalisation, no product file touched):
- *  - the WebGL canvas is hidden (a style tag: `toHaveScreenshot` takes a stylesheet by path, not by text);
+ *  - the WebGL canvas is hidden (a style tag: `toHaveScreenshot` takes a stylesheet by path, not by text), and, in the workspace, the guide's bubble and icon (HIDE_GUIDE);
  *  - the inventory drawer's height is pinned to a whole number of pixels. It is `height: 36%` of the view (253.797 px at 1366 x 768), so its top edge and its text sit on a fraction of a
  *    pixel, and Chromium rasterised the tab labels one pixel apart on about 4 page loads in 10 (the same page, the same state, two stable pictures; measured over 12 loads each: the fractional
  *    drawer gave two hashes of the tab row, the drawer at a whole 254 px gave one, `will-change`, `translateZ(0)`, a resize, `--font-render-hinting=none` and `--disable-lcd-text` did not
  *    settle it). The pin moves the drawer by at most half a pixel (it stays anchored at the bottom).
  */
-async function prepare(page: Page): Promise<void> {
-  await page.evaluate((css) => {
-    if (document.getElementById('visual-hide-canvas') === null) {
-      const el = document.createElement('style')
-      el.id = 'visual-hide-canvas'
-      el.textContent = css
-      document.head.append(el)
-    }
-    const drawer = document.querySelector<HTMLElement>('[data-testid="inventory-drawer"]')
-    if (drawer !== null) {
-      drawer.style.removeProperty('height')
-      const h = drawer.getBoundingClientRect().height
-      if (h > 0) drawer.style.setProperty('height', `${Math.round(h)}px`, 'important')
-    }
-  }, HIDE_CANVAS)
+async function prepare(page: Page, hideGuide: boolean): Promise<void> {
+  await page.evaluate(
+    ([css, guideCss, hide]) => {
+      const tag = (id: string, text: string): void => {
+        if (document.getElementById(id) !== null) return
+        const el = document.createElement('style')
+        el.id = id
+        el.textContent = text
+        document.head.append(el)
+      }
+      tag('visual-hide-canvas', css)
+      if (hide === 'yes') tag('visual-hide-guide', guideCss)
+      const drawer = document.querySelector<HTMLElement>('[data-testid="inventory-drawer"]')
+      if (drawer !== null) {
+        drawer.style.removeProperty('height')
+        const h = drawer.getBoundingClientRect().height
+        if (h > 0) drawer.style.setProperty('height', `${Math.round(h)}px`, 'important')
+      }
+    },
+    [HIDE_CANVAS, HIDE_GUIDE, hideGuide ? 'yes' : 'no'],
+  )
 }
 
 /**
  * One capture: the viewport, the WebGL canvas hidden, animations finished and cancelled, caret hidden, and the console's live level readout (`.cr-listen-meters`: a level in dBFS and a bar
- * that follow the playing sound, a different number every time) masked. `soft` so one run lists every screen that moved. No pixel tolerance.
+ * that follow the playing sound, a different number every time) masked. `soft` so one run lists every screen that moved.
+ * TOLERANCE: `threshold: 0` (Playwright's default per-pixel threshold of 0.2 is a YIQ distance that does NOT flag Nuit turned Prune: #131114 to #612D45 is 1253 of the 1408 it tolerates, and the
+ * first red proof, the Pupitre panels painted Prune, passed with it) and `maxDiffPixels: 20`: the anti-aliasing of the three disclosure chevrons of the project tree, which Chromium draws
+ * a pixel or two apart on about 1 page load in 10 (6 pixels reported, measured on package 5 at 1024 x 768). A palette change moves thousands.
  */
-async function snap(page: Page, name: string, soundPlaying = false): Promise<void> {
-  await atRest(page, soundPlaying)
-  await prepare(page)
+async function snap(page: Page, name: string, o: { sound?: boolean; guide?: boolean } = {}): Promise<void> {
+  await atRest(page, o.sound ?? false)
+  await prepare(page, o.guide === false)
   await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))) // the pinned height is laid out and painted
-  await expect.soft(page).toHaveScreenshot(name, { mask: [page.locator('.cr-listen-meters')], animations: 'disabled', caret: 'hide', maxDiffPixels: 0 })
+  await expect.soft(page).toHaveScreenshot(name, { mask: [page.locator('.cr-listen-meters')], animations: 'disabled', caret: 'hide', threshold: 0, maxDiffPixels: 20 })
 }
 
 const SCREENS: readonly { size: Size; closing: boolean }[] = [
@@ -392,14 +410,14 @@ for (const { size, closing } of SCREENS) {
 
         // 2. the first room, the step card at step 1
         await takeTutorial(page, id)
-        await snap(page, `${tag}-room.png`)
+        await snap(page, `${tag}-room.png`, { guide: false })
         if (!closing) return
 
         // 3. the connect view: step 4 of the ten (package 5: its third and last step, « rebrancher », after the sound and the unplug)
         const connectStep = onModel(id) ? 3 : 4
         for (let k = 2; k <= connectStep; k++) await advance(page, id, k)
         await expect(page.locator('.oscar-live')).toContainText(`étape ${connectStep} sur ${n}`, { timeout: 15_000 })
-        await snap(page, `${tag}-connect.png`, onModel(id)) // package 5's sound has played since its step 1
+        await snap(page, `${tag}-connect.png`, { sound: onModel(id), guide: false }) // package 5's sound has played since its step 1
 
         // 4. the closing card: every step done, a sound playing (package 5: the replug of the cable the connect view unplugged)
         if (onModel(id)) await act(page, [connect(MODEL_LEFT.a.instance, MODEL_LEFT.a.port, MODEL_LEFT.b.instance, MODEL_LEFT.b.port)])
@@ -408,14 +426,7 @@ for (const { size, closing } of SCREENS) {
           await testSignal(page)
         }
         await expect(page.getByTestId('tutorial-closing')).toBeVisible({ timeout: 20_000 })
-        // Oscar's bubble comes to rest in one of TWO places on this screen (package 2 at 1366 x 768: both seen across the baseline runs, each stable once reached, 13 474 pixels apart; the
-        // bubble's top-left corner at (216, 222) or at (273, 265)). The closing card and the icon are what this capture is of, so the bubble is closed (its own close button).
-        const bubble = page.locator('.oscar-bubble')
-        if (await bubble.isVisible()) {
-          await bubble.locator('.oscar-close').click()
-          await expect(bubble).toBeHidden()
-        }
-        await snap(page, `${tag}-closing.png`, true)
+        await snap(page, `${tag}-closing.png`, { sound: true, guide: false })
       })
     }
   })
