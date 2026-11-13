@@ -1,0 +1,22 @@
+# ADR-0021 — Oscar se place à côté de l’appareil montré : son corps, une marge et le centre de la vue sont des obstacles souples de l’hôte
+
+- **Status:** Accepté par défaut — en attente de validation du fondateur (paquets d’accueil, G14b, 2026-11-13).
+- **Sources :** spécification `docs/superpowers/specs/2026-11-12-onboarding-packs-design.md` (§11.3) ; constats F1 à F5 du rapport `.superpowers/reports/G14a-report.md` (spec `tests/e2e/onboarding-geometry.spec.ts`) ; `src/guide/clearance.ts`, `src/guide/mount.ts` (`createGuideObstacles`), `src/guide/bridge/creationBridge.ts` (`bodyRects`), `src/scene/screenBox.ts`, `src/creation/debug.ts` / `boot.ts` (lecteur `deviceScreenBox`).
+
+## Contexte
+
+Le widget d’Oscar (vendu, épinglé par empreinte, non modifiable) pose l’icône à côté du rectangle qu’il entoure (pour un appareil, un carré de 56 px autour d’un point du corps) et la bulle à 8 px de ce rectangle, puis les écarte des obstacles que la page lui passe (`obstacles`). À côté du carré, l’icône tombait sur la console montrée (F1), la bulle touchait l’anneau (F1, F3), et la bulle de 352 px couvrait le centre de la vue, où le cadrage met justement l’appareil (F2).
+
+## Décision
+
+1. **L’anneau ne change pas** (le carré de 56 px) : le widget mesure la place au-dessus et au-dessous de ce qu’il entoure, et un anneau autour de la console entière le forçait à tronquer la bulle (texte à faire défiler, refusé par axe : `scrollable-region-focusable`). Essayé puis écarté pendant G14b.
+2. **Le corps de l’appareil montré est un obstacle (souple, voir 4).** Le crochet a un lecteur `deviceScreenBox(id)` (la boîte du corps dans le repère de l’instance, ses huit coins projetés par la caméra) ; le pont le lit (`bodyRects`, coupé à la fenêtre, écarté au-delà de 40 % de la fenêtre) ; l’hôte prend le plus petit corps qui contient le centre de la cible et le donne au widget moins la cible elle-même (le widget ignore un obstacle dont le centre est dans la cible).
+3. **Deux obstacles souples :** une **marge** de 36 px autour de ce corps (ou de la cible hors appareil) — 30 px de l’anneau, mesure du registre, + les 4 px de l’anneau + 2 px d’arrondi — sauf pour une zone plus grande qu’un quart de la fenêtre ; le **centre** de la vue 3D (20 % x 20 %, moins le corps et la cible), à partir de 768 px de large.
+4. **Ordre de repli :** si la bulle ouverte ne trouve aucune place libre des commandes, de la cible et de l’icône avec tout cela, le centre cède d’abord ; puis le corps et la marge, et il ne reste que des bandes de 6 px qui gardent la bulle hors de l’anneau : c’est le placement du widget d’avant G14b. On ne couvre jamais une commande pour garder une mesure libre. Mesuré et écarté pendant G14b : garder le corps dans ce dernier cas pose la bulle sur le cube de vue (à 1024 x 768, étape 4, tiroir ouvert) ; compter les commandes plusieurs fois la pose sur la fiche d’étape. Le test de place appelle les fonctions de placement du widget lui-même (`placeBeside`, `clearOf`, en lecture seule) et compte l’icône là où elle est ; le choix est gardé tant que les commandes, la cible, les corps, la vue, la fenêtre et la taille de la bulle ne changent pas (pas de va-et-vient entre l’icône et la bulle).
+5. **Seulement pendant le parcours « Premiers pas »** (l’enregistrement du tutoriel est `running`) : la géométrie de §11.3 est celle du parcours. Hors parcours (autres flux d’Oscar, adresse simple, page des niveaux) le guide se place comme avant. Mesuré : appliquées partout, ces bornes déplaçaient Oscar au repos sur l’adresse simple et cassaient le test « 0 rendu au repos » de `guide-creation` (1 fois sur 3 ; 0 sur 2 sans elles).
+6. Rien dans le code vendu, ni le moteur, ni `content/catalog.json`, ni aucun numéro de paquet : même règle pour les cinq paquets ; seule la place disponible diffère.
+
+## Conséquences
+
+- Les constats levés (marqueurs `test.fail` retirés) et ceux qui restent sont chiffrés dans `.superpowers/reports/G14b-report.md`.
+- Là où il n’y a pas de place (deux panneaux et le tiroir ouverts à 1366 ou 1024 px, l’étape 7 avec le tiroir ouvert), la bulle de 352 x 300 à 380 px ne tient nulle part : le centre, la marge ou le corps cèdent, mesuré et non caché (les marqueurs restent). Le vrai levier est une décision de design (bulle plus compacte pendant le parcours, tiroir refermé à l’étape 4, ou place réservée pour Oscar), à trancher par le fondateur ou tekuxdesigner.

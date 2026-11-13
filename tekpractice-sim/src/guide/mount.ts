@@ -28,6 +28,7 @@ import { TUTORIAL_EVENT } from '../design/events'
 import { activePackage } from '../design/packages'
 import { COPY } from '../creation/copy'
 import { isAnchor } from './anchors'
+import { chooseClearance } from './clearance'
 import { RESTORE_BURST } from './restore'
 import { APP_CHANGE, CONNECT_REFUSED, GUIDE_MUTE_KEY, PROFILE_CHOSEN, attachSkin, hostEventFor, muteDefaultStorage, quietByDefault, skinAllowed, stepAdvanced, type Celebrations, type Skin } from './skin'
 import {
@@ -50,6 +51,7 @@ import { createController } from './vendor/core/controller'
 import type { ControllerInput, HostEvent, Rect } from './vendor/core/types'
 import type { Setup } from './vendor/hostTypes'
 import { UI_STORAGE_KEY, mountGuide } from './vendor/ui/widget'
+import { DEFAULT_CORNER, cleanInsets, loadCorner, type Corner } from './vendor/ui/layout'
 
 /** How long a resolved rect (or "not on screen") is reused. */
 export const RECT_CACHE_MS = 250
@@ -237,6 +239,108 @@ export function createObstacleSource(deps: { doc: Document; now: () => number })
       at = t
     }
     return cached
+  }
+}
+
+/** The 3D view of the shell (its centre is kept free: src/guide/clearance.ts). */
+const VIEWPORT = '.cr-viewport'
+/** The widget's bubble and icon (vendored class names, read only: the skin observes the same nodes). */
+const GUIDE_BUBBLE = '.oscar-bubble'
+const GUIDE_ICON = '.oscar-icon'
+const shown = (el: Element | null | undefined): el is HTMLElement => el !== null && el !== undefined && !(el as HTMLElement).hidden
+/**
+ * G14b: what the guide keeps clear of besides the controls, read live (the target moves with every step): the body of the device a step points at, a margin
+ * around it and the centre of the 3D view (src/guide/clearance.ts), given up when the open bubble would find no place clear of the controls with them
+ * (`chooseClearance`). Only in the Mode Création shell (the level page keeps the widget's own placement). Any failure: nothing.
+ */
+export function hostClearance(
+  doc: Document,
+  targets: readonly (Rect | null | undefined)[],
+  controls: readonly Rect[] = [],
+  guide: Pick<Element, 'querySelector'> | null = null,
+  bodies: readonly Rect[] = [],
+  home: Corner = DEFAULT_CORNER,
+): Rect[] {
+  try {
+    const root = doc.querySelector(SHELL_ROOT)
+    if (root === null) return []
+    const v = root.querySelector(VIEWPORT)?.getBoundingClientRect()
+    const view = v !== undefined && v.width > 0 && v.height > 0 ? { x: v.left, y: v.top, w: v.width, h: v.height } : null
+    const window = { w: doc.documentElement.clientWidth, h: doc.documentElement.clientHeight }
+    const bubbleEl = guide?.querySelector(GUIDE_BUBBLE)
+    // the bubble's whole height: the widget may have capped it (an inline max-height) while it placed it beside a target
+    const bubble = shown(bubbleEl) && bubbleEl.offsetWidth > 0 ? { w: bubbleEl.offsetWidth, h: Math.max(bubbleEl.offsetHeight, bubbleEl.scrollHeight) } : null
+    const i = guide?.querySelector(GUIDE_ICON)?.getBoundingClientRect()
+    const restIcon = i !== undefined && i.width > 0 ? { x: i.left, y: i.top, w: i.width, h: i.height } : null
+    const insets = cleanInsets(hostInsets(doc), window)
+    return chooseClearance({ view, targets, window, controls, bubble, restIcon, bodies, home, insets })
+  } catch {
+    return []
+  }
+}
+/**
+ * The widget's `obstacles` (G14b): the page's controls (read at most every RECT_CACHE_MS, `createObstacleSource`), then the soft clearance of the current target.
+ * The clearance is worked out again only when what it depends on changed (the controls, the targets, the device bodies, the view, the window, the bubble's size, and
+ * the icon at rest only): the widget asks for its obstacles several times per placement.
+ */
+export function createGuideObstacles(deps: {
+  doc: Document
+  now: () => number
+  targets: () => Rect[]
+  guide: Pick<Element, 'querySelector'> | null
+  /** The bench devices' bodies on screen (the bridge's `bodyRects`); none by default. */
+  bodies?: () => Rect[]
+  /** The widget's home corner now (it starts the bubble there when no place beside the target holds it). */
+  home?: () => Corner
+  /** Whether the clearance applies now (default: always). The mount asks for it only while the « Premiers pas » tutorial runs: outside it the guide places as before. */
+  active?: () => boolean
+}): (fresh?: boolean) => Rect[] {
+  const controls = createObstacleSource({ doc: deps.doc, now: deps.now })
+  let memo: { key: string; out: Rect[] } | null = null
+  return (fresh) => {
+    const list = controls(fresh)
+    let out: Rect[] = []
+    try {
+      if (deps.active !== undefined && !deps.active()) return list
+      const targets = deps.targets()
+      // a body is only read while a step points at something (the projection of every device is not free)
+      const bodies = targets.length > 0 && deps.bodies !== undefined ? deps.bodies() : []
+      const doc = deps.doc
+      const v = doc.querySelector(SHELL_ROOT)?.querySelector(VIEWPORT)?.getBoundingClientRect()
+      const b = deps.guide?.querySelector(GUIDE_BUBBLE) as HTMLElement | null | undefined
+      const i = deps.guide?.querySelector(GUIDE_ICON)?.getBoundingClientRect()
+      const r = (n: number | undefined): number => Math.round(n ?? 0)
+      const home = deps.home?.() ?? DEFAULT_CORNER
+      const key = JSON.stringify([
+        home,
+        list.map((t) => [r(t.x), r(t.y), r(t.w), r(t.h)]),
+        targets.map((t) => [r(t.x), r(t.y), r(t.w), r(t.h)]),
+        bodies.map((t) => [r(t.x), r(t.y), r(t.w), r(t.h)]),
+        v === undefined ? null : [r(v.left), r(v.top), r(v.width), r(v.height)],
+        [doc.documentElement.clientWidth, doc.documentElement.clientHeight],
+        shown(b) ? [b.offsetWidth, Math.max(b.offsetHeight, b.scrollHeight)] : null,
+        // the icon counts only at rest: while a step points at something it is placed FROM this choice, and reading it back would loop
+        targets.length === 0 && i !== undefined ? [r(i.left), r(i.top)] : null,
+      ])
+      if (memo !== null && memo.key === key) out = memo.out
+      else {
+        out = hostClearance(doc, targets, list, deps.guide, bodies, home)
+        memo = { key, out }
+      }
+    } catch {
+      out = []
+    }
+    return out.length === 0 ? list : [...list, ...out]
+  }
+}
+/** The rects the guide's current step points at (its target and, for a drag, where it goes), from the controller's view; none while it points at nothing. */
+export function viewTargets(view: unknown): Rect[] {
+  try {
+    const v = view as { visible?: unknown; target?: { rect?: Rect | null; to?: Rect | null } | null } | null | undefined
+    if (v === null || v === undefined || v.visible !== true || v.target === null || v.target === undefined) return []
+    return [v.target.rect, v.target.to].filter((r): r is Rect => r !== null && r !== undefined && typeof r === 'object')
+  } catch {
+    return []
   }
 }
 
@@ -584,16 +688,27 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     landmark.setAttribute('aria-label', tpString('landmark'))
     doc.body.appendChild(landmark)
     cleanups.push(() => landmark.remove())
+    // A design package starts Oscar in its own corner (never top left: the view cube sits there); a corner the learner chose wins (plan T4.3).
+    const uiStorage = designCorner === null ? deps.storage : cornerDefaultStorage(deps.storage, UI_STORAGE_KEY, designCorner)
     const handle = impl.mountGuide({
       controller,
       getRect: rects.getRect,
       root: landmark,
       insets: () => hostInsets(doc),
-      obstacles: createObstacleSource({ doc, now }),
+      // the page's controls (cached), then, while the tutorial runs, the body of the device the step points at, a margin around it and the view's centre (G14b, ADR 0021)
+      obstacles: createGuideObstacles({
+        doc,
+        now,
+        targets: () => viewTargets(controller.getView?.()),
+        guide: landmark,
+        bodies: () => bridge.bodyRects?.() ?? [],
+        home: () => loadCorner(uiStorage, UI_STORAGE_KEY),
+        // only while the tutorial runs (spec 11.3 is the tutorial's geometry): the guide's other flows, the plain address and the level page place as before
+        active: () => runtime?.record().status === 'running',
+      }),
       zIndex: GUIDE_Z_INDEX,
       context: { page: 'workbench', mode: mode() },
-      // A design package starts Oscar in its own corner (never top left: the view cube sits there); a corner the learner chose wins (plan T4.3).
-      storage: designCorner === null ? deps.storage : cornerDefaultStorage(deps.storage, UI_STORAGE_KEY, designCorner),
+      storage: uiStorage,
     })
     cleanups.push(() => handle.destroy())
     if (skinAllowed(deps.search, deps.route)) {

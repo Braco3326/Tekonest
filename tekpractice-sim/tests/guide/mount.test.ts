@@ -8,7 +8,8 @@ import type { TpBridge, TpPortRef, TpState } from '../../src/guide/bridge/types'
 import { ACKNOWLEDGE, SUGGEST_FROM, SUGGEST_PHANTOM, SUGGEST_TO } from '../../src/guide/flows.creation'
 import { packageById } from '../../src/design/packages'
 import { fakeShellDom, type FakeEl } from './fakeShellDom'
-import { RECT_CACHE_MS, annotateToggle, collapseRestore, cornerDefaultStorage, createObstacleSource, createRectResolver, hostInsets, hostObstacles, mountOscar, setupFor, type MountDeps, type MountImpl } from '../../src/guide/mount'
+import { RECT_CACHE_MS, annotateToggle, collapseRestore, cornerDefaultStorage, createGuideObstacles, createObstacleSource, createRectResolver, hostClearance, hostInsets, hostObstacles, mountOscar, setupFor, viewTargets, type MountDeps, type MountImpl } from '../../src/guide/mount'
+import { guideClearance } from '../../src/guide/clearance'
 import { COPY } from '../../src/creation/copy'
 import { ruleText as modeCreationRuleText } from '../../src/creation/ruleTexts'
 import { TP_STRINGS, tpString } from '../../src/guide/strings'
@@ -613,6 +614,58 @@ describe('hostObstacles: the page controls the icon and the bubble keep clear of
     expect(reads).toBe(2)
     get(true)
     expect(reads).toBe(3)
+  })
+
+  it('hostClearance (G14b): in the shell, the margin around the targets and the view centre minus them; nothing on a page without the shell or on a throw', () => {
+    const view = el('main', 32, 81, 1302, 659)
+    const doc = world([], undefined, undefined, { '.cr-viewport': view })
+    const t = { x: 594, y: 297, w: 178, h: 159 }
+    const want = guideClearance({ view: { x: 32, y: 81, w: 1302, h: 659 }, targets: [t], window: { w: 1366, h: 768 } })
+    expect(want.length).toBeGreaterThan(4)
+    expect(hostClearance(doc, [t])).toEqual(want)
+    expect(hostClearance(doc, [])).toEqual(guideClearance({ view: { x: 32, y: 81, w: 1302, h: 659 }, targets: [], window: { w: 1366, h: 768 } }))
+    expect(hostClearance({ querySelector: () => null, documentElement: { clientWidth: 1366, clientHeight: 768 } } as unknown as Document, [t])).toEqual([])
+    expect(hostClearance({ querySelector: () => { throw new Error('boom') } } as unknown as Document, [t])).toEqual([])
+  })
+
+  it('createGuideObstacles (G14b): the controls, then the clearance of the current target (its device body read only while a step points at something)', () => {
+    const view = el('main', 32, 81, 1302, 659)
+    const button = el('button', 100, 50, 80, 24)
+    const doc = world([button], undefined, undefined, { '.cr-viewport': view })
+    const marker = { x: 655, y: 349, w: 56, h: 56 }
+    const body = { x: 594, y: 297, w: 178, h: 159 }
+    let targets: { x: number; y: number; w: number; h: number }[] = []
+    let bodyReads = 0
+    const get = createGuideObstacles({ doc, now: () => 0, targets: () => targets, guide: null, bodies: () => (bodyReads++, [body]) })
+    const atRest = get(true)
+    expect(atRest[0]).toEqual({ x: 100, y: 50, w: 80, h: 24 })
+    expect(atRest.slice(1)).toEqual(guideClearance({ view: { x: 32, y: 81, w: 1302, h: 659 }, targets: [], window: { w: 1366, h: 768 } }))
+    expect(bodyReads).toBe(0)
+    targets = [marker]
+    const pointing = get()
+    expect(pointing.slice(1)).toEqual(guideClearance({ view: { x: 32, y: 81, w: 1302, h: 659 }, targets: [marker], window: { w: 1366, h: 768 }, bodies: [body] }))
+    expect(bodyReads).toBe(1)
+    // the same inputs: the same answer (worked out once)
+    expect(get()).toEqual(pointing)
+    // not active (no tutorial running): the controls alone, nothing read
+    let on = false
+    const gated = createGuideObstacles({ doc, now: () => 0, targets: () => [marker], guide: null, bodies: () => (bodyReads++, [body]), active: () => on })
+    const reads = bodyReads
+    expect(gated(true)).toEqual([{ x: 100, y: 50, w: 80, h: 24 }])
+    expect(bodyReads).toBe(reads)
+    on = true
+    expect(gated().slice(1)).toEqual(pointing.slice(1))
+  })
+
+  it('viewTargets: the target and the drop of a visible view, nothing otherwise', () => {
+    const a = { x: 1, y: 2, w: 3, h: 4 }
+    const b = { x: 5, y: 6, w: 7, h: 8 }
+    expect(viewTargets({ visible: true, target: { rect: a, to: b } })).toEqual([a, b])
+    expect(viewTargets({ visible: true, target: { rect: a } })).toEqual([a])
+    expect(viewTargets({ visible: false, target: { rect: a } })).toEqual([])
+    expect(viewTargets({ visible: true, target: null })).toEqual([])
+    expect(viewTargets(undefined)).toEqual([])
+    expect(viewTargets(null)).toEqual([])
   })
 
   it('mountOscar gives the widget the source: a function that answers with rects (none on a page without the shell)', () => {
