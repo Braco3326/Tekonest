@@ -657,7 +657,7 @@ describe('T3 close review: the runtime', () => {
 })
 
 // ── T6.1: what the step card reads: passed steps, the card's own skip, the record changes ───────────────────────────────────────
-describe('T6.1: a step PASSED is not a step done (the card never shows a false tick)', () => {
+describe('T6.1: a step PASSED is told from a step done (the marks the card reads; see S1 below for the events that count)', () => {
   const TEN = packageById(1).pacing.steps
   const started = async (s = new MemStorage(), records: TutorialRecord[] = []) => {
     const p = page(s, TEN, [], records)
@@ -799,5 +799,77 @@ describe('T6.1: onRecord tells the card on every change of the record', () => {
     p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
     await flush()
     expect(p.title()).toBe(step(1))
+  })
+})
+
+// ── T6a review S1 and N3: an event for a LATER step never turns a skip into a tick ──────────────────────────────────────────────
+describe('S1 (T6a review): a step is DONE only by an event seen while it, or a chain of steps leading to it, was current', () => {
+  const TEN = packageById(1).pacing.steps
+  const started = async () => {
+    const p = page(new MemStorage(), TEN)
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    return p
+  }
+  const skip = (p: Awaited<ReturnType<typeof started>>) => p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+  const console_ = { type: 'deviceAdded', data: { device: 'device:q', role: 'source-console' } }
+  const speaker = { type: 'deviceAdded', data: { device: 'device:k', role: 'speaker' } }
+
+  it('the reviewer’s repro: the speaker is spawned while step 2 is current, then removed; steps 2 and 3 are skipped within the window: step 3 reads « passée », not done', async () => {
+    const p = await started()
+    await p.seen(console_) // step 1 done -> step 2 (micro) current
+    await p.seen(speaker) // the event of step 3, seen while step 2 is current: no advance
+    expect(p.rt.record()).toMatchObject({ k: 2 })
+    await skip(p) // step 2 passed
+    await skip(p) // step 3 passed: the speaker is long gone, only its stale event is buffered
+    expect(p.rt.record()).toMatchObject({ k: 4, passed: ['micro', 'enceinte'] })
+  })
+
+  it('same with a cable connected then removed (connect console-speaker is the event of step 4, seen while step 3 is current)', async () => {
+    const p = await started()
+    await p.seen(console_)
+    await skip(p) // 2 passed
+    await p.seen({ type: 'connect', data: { a: 'x', b: 'y', pair: 'console-speaker' } }) // step 4's event while step 3 is current
+    await skip(p) // 3 passed
+    await skip(p) // 4 passed: its cable was removed again
+    expect(p.rt.record().passed).toEqual(['micro', 'enceinte', 'console-enceinte'])
+  })
+
+  it('does not trigger: the burst of one poll still counts (step 8 then 9 sent together, the speaker’s first, both ended by their events)', async () => {
+    const p = await started()
+    for (let i = 0; i < 7; i++) await skip(p)
+    const spk = { type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-speaker', fed: true } }
+    const con = { type: 'connect', data: { a: 'x', b: 'y', pair: 'mains-console', fed: true } }
+    // the controller takes the console cable first this time: step 8 ends, then the speaker's cable (already sent) ends step 9
+    p.rt.sawEvent({ ...con, at: 1 } as HostEvent)
+    p.rt.sawEvent({ ...spk, at: 2 } as HostEvent)
+    await p.ev(con)
+    await p.ev(spk)
+    expect(p.rt.record()).toMatchObject({ step: 'ecoute', k: 10 })
+    expect(p.rt.record().passed).not.toContain('courant-console')
+    expect(p.rt.record().passed).not.toContain('courant-enceinte')
+  })
+
+  it('does not trigger: an ordinary completion (its own event while it is current) is done, and an event from the window before is not needed', async () => {
+    const p = await started()
+    await p.seen(console_)
+    await p.seen({ type: 'deviceAdded', data: { device: 'device:m', role: 'mic' } })
+    await p.seen(speaker)
+    expect(p.rt.record()).toMatchObject({ k: 4, passed: [] })
+  })
+})
+
+describe('N3 (T6a review): a restart the controller does by itself (not through the runtime) clears the marks', () => {
+  it('going back to step 1 from a later step drops early, shown, passed and the helper unlock', async () => {
+    const p = page(new MemStorage(), packageById(1).pacing.steps)
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+    await p.controller.dispatch({ type: 'flow', control: { action: 'skip' } })
+    expect(p.rt.record().passed).toEqual(['console', 'micro'])
+    await p.controller.dispatch({ type: 'flow', control: { action: 'restart' } })
+    expect(p.rt.record()).toMatchObject({ k: 1, early: [], shown: [], passed: [], helper: false })
   })
 })

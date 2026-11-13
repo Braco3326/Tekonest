@@ -576,8 +576,8 @@ export function closingLines(mic: { micOk: boolean; micReasons: readonly { code:
 
 // ── at run time: start, persist, resume, skip, « déjà en place » (plan T3.2, G8 review C2) ────────────────────────────
 
-/** How long a host event stays « just sent » for `settle` (a burst of one poll is milliseconds; a skip click comes seconds later). */
-const EVENT_MS = 3000
+/** How long a host event stays « just sent » for `settle`: the size of a burst (the events of one poll reach the controller within milliseconds), not of a human pause. */
+const EVENT_MS = 400
 
 export type RequestKind = 'start' | 'restart' | 'skip'
 /** The onboarding request as the bridge reads it (`window.__creation.onboarding()`): its counter, what the last one asked for, and whether the tutorial may run. */
@@ -614,7 +614,7 @@ export interface TutorialRuntime {
   update(input: { state: TpState | null; audio: string | null; request: TutorialRequest | null; helper?: PowerHelperReading | null }): void
   /**
    * A host event as the mount is about to send it to the controller (T6.1): the runtime remembers it for a moment, so that when the controller moves on from a step it can tell a step
-   * ENDED BY ITS EVENT from a step PASSED (« Passer cette étape »): the card shows a tick for the first and « passée » for the second, never a false tick.
+   * ENDED BY ITS EVENT from a step PASSED (« Passer cette étape »): the card shows a tick for the first and « passée » for the second. An event counts for a step only if it was sent while that step, or a chain of steps leading to it, was current (`settle`).
    */
   sawEvent(event: HostEvent): void
   /** The card's « Passer le tutoriel » (T6.1): the run stops and the record says skipped, as Aide's item does; nothing when no tutorial runs. */
@@ -721,7 +721,7 @@ export function createTutorialRuntime(d: {
 
   let told = ''
   /** The host events sent a moment ago, newest last: what tells a step ended by its event from a step passed (T6.1). */
-  let seenEvents: { e: HostEvent; t: number }[] = []
+  let seenEvents: { e: HostEvent; t: number; at: number }[] = []
   /** The run as Mode Création sees it: the current step while it runs (null otherwise), the helper's unlock, and whether a power step exists / is ahead (S5). */
   const tell = (): void => {
     const live = rec.status === 'running'
@@ -751,10 +751,27 @@ export function createTutorialRuntime(d: {
     }
   }
   /**
-   * The controller moved from step `from` to `to` (exclusive): each step it left is DONE when one of the events just sent ends it (the vendored `matchesDone`), when its result was
-   * already on the bench (`early`) or when the power helper did it (`shown`); otherwise the learner passed it. A step done again (back, then its event) is no longer passed.
-   * Events older than `EVENT_MS` are forgotten, so one that came for another step long ago never turns a later skip into a tick.
+   * The controller moved from step `from` to `to` (exclusive): each step it left is DONE when an event just sent ends it (the vendored `matchesDone`) AND that event was sent while
+   * the step, or a chain of steps leading to it, was current (`at` = the step index when it was sent, and every step from `at` up to this one also has a matching event buffered: the
+   * burst of one poll, the speaker's mains cable then the console's), when its result was already on the bench (`early`) or when the power helper did it (`shown`); otherwise the
+   * learner passed it. An event for a LATER step sent and undone while an earlier step was current (a device placed then removed) never turns a skip into a tick. Events older than
+   * `EVENT_MS` are forgotten; none is consumed (a burst's later steps still need its earlier events). A step done again (back, then its event) is no longer passed.
    */
+  /** Some buffered event ends step `k` and was sent at step `k` or before. */
+  const matched = (k: number): boolean => {
+    const step = d.flow.steps[k]
+    return step !== undefined && seenEvents.some((x) => x.at <= k && matchesDone(step, x.e))
+  }
+  /** Step `i` ended by an event sent while it, or a chain of steps leading to it, was current. */
+  const byEvent = (i: number): boolean => {
+    const step = d.flow.steps[i]
+    if (step === undefined) return false
+    return seenEvents.some((x) => {
+      if (x.at > i || !matchesDone(step, x.e)) return false
+      for (let k = x.at; k < i; k++) if (!matched(k)) return false
+      return true
+    })
+  }
   const settle = (from: number, to: number): void => {
     const t = d.now()
     seenEvents = seenEvents.filter((x) => t - x.t <= EVENT_MS)
@@ -763,9 +780,7 @@ export function createTutorialRuntime(d: {
       const id = data[i]?.id
       const step = d.flow.steps[i]
       if (id === undefined || step === undefined) continue
-      const hit = seenEvents.findIndex((x) => matchesDone(step, x.e))
-      if (hit >= 0) seenEvents.splice(hit, 1)
-      const done = hit >= 0 || earlyAt === i || rec.shown.includes(id)
+      const done = byEvent(i) || earlyAt === i || rec.shown.includes(id)
       passed = done ? passed.filter((x) => x !== id) : passed.includes(id) ? passed : [...passed, id]
     }
     rec = { ...rec, passed }
@@ -807,6 +822,8 @@ export function createTutorialRuntime(d: {
     if (flow.status === 'running') {
       if (!(earlyAt !== null && idx === earlyAt + 1) && idx !== flowIndex) clearNotes() // the learner moved on (a completion, « Passer cette étape », back): no old note
       if (flowIndex >= 0 && idx > flowIndex) settle(flowIndex, idx) // T6.1: the steps it left are done or passed
+      // N3: the controller went back to step 1 by itself (a restart that did not come through `update`): the marks of the old run go with it, as with a genuine restart
+      if (idx === 0 && flowIndex > 0) rec = { ...rec, early: [], shown: [], passed: [], helper: false }
       running = true
       rec = { ...rec, status: 'running', step: data[idx]?.id ?? null, k: idx + 1, n: data.length }
     } else {
@@ -949,7 +966,7 @@ export function createTutorialRuntime(d: {
       schedule()
     },
     sawEvent(event) {
-      seenEvents = [...seenEvents, { e: event, t: d.now() }].slice(-32)
+      seenEvents = [...seenEvents, { e: event, t: d.now(), at: Math.max(0, flowIndex) }].slice(-32)
     },
     skip: stopRun,
     record: snapshot,

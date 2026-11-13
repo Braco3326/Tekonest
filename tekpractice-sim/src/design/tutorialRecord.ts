@@ -6,7 +6,7 @@
  * starts, resumes, restarts or skips the tutorial once. `step` / `k` / `n`: the current step id, its number (1-based) and the step count while it runs.
  * `status`: idle (never started, stopped, or interrupted by another flow of the guide: T3 close review C2), running, done (the last step ended), skipped (« Passer le tutoriel »). `early`: steps completed because their
  * result was already on the bench (« déjà en place », G8 review C2). `shown`: steps the power helper did (« montré », plan T3.3: never « déjà en place », never a
- * success). `passed`: steps the learner passed with « Passer cette étape » (T6.1: the step card reads « passée »; never a tick: a step is `passed` only when it ended with no event of its own, none of its result on the bench and no helper).
+ * success). `passed`: steps the learner passed with « Passer cette étape » (T6.1: the step card reads « passée »; the guide infers it: a step the controller left with no matching event sent while it (or a chain leading to it) was current, no result already on the bench and no helper; an inference, not a measure of what the learner did).
  * `helper`: the guide unlocked the power helper in this run (Oscar's third tier, plan T3.4). `shown`, `passed` and `helper` default to empty / false in a record written before them.
  */
 import type { StepId } from './packages'

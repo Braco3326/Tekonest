@@ -982,7 +982,7 @@ La fiche d’étape du tutoriel (packs d’accueil, T6.1 ; spec 6.6 et 9) : **la
 | `tutorialCard.step` | Étape {k} sur {n} | à valider (tekuxwriter) | Le compte ; `{k}` = l’étape en cours, `{n}` = les étapes de ce parcours (le rythme du paquet : 10 aujourd’hui pour les cinq paquets, le paquet 5 gardant ses 3 étapes en données jusqu’à T6.3) |
 | `tutorialCard.stepsLabel` | Étapes du tutoriel | à valider (tekuxwriter) | Nom accessible de la rangée de marques |
 | `tutorialCard.stepState` | Étape {k} : {state} | à valider (tekuxwriter) | Texte caché de chaque marque (lecteur d’écran) ; `{state}` = l’un des six mots ci-dessous |
-| `tutorialCard.stateDone` | faite | à valider (tekuxwriter) | Marque : l’étape s’est terminée sur son propre événement (le simulateur l’a vue) ; ce n’est pas un jugement |
+| `tutorialCard.stateDone` | faite | à valider (tekuxwriter) | Marque : le guide a vu l’événement de cette étape pendant qu’elle (ou une étape qui y menait) était la courante ; ce n’est pas un jugement ni une vérification du montage |
 | `tutorialCard.stateCurrent` | en cours | à valider (tekuxwriter) | Marque : l’étape courante |
 | `tutorialCard.stateTodo` | à venir | à valider (tekuxwriter) | Marque : une étape pas encore atteinte |
 | `tutorialCard.statePassed` | passée | à valider (tekuxwriter) | Marque : l’étape a été passée avec « Passer cette étape » (jamais une coche) |
