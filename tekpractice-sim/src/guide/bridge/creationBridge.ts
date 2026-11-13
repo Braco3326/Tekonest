@@ -24,7 +24,7 @@ export type { BridgeDoc, BridgeElement }
  * optional: a hook without them is still a hook, the bridge then emits no `playStarted` and knows no selection.
  */
 export type CreationReader = Pick<CreationDebug, 'design' | 'events' | 'place' | 'devicePorts' | 'portScreen' | 'deviceScreen' | 'controlScreen'> &
-  Partial<Pick<CreationDebug, 'audioState' | 'selection' | 'onboarding' | 'helperOffered' | 'helperUses' | 'connectRefusals' | 'appChanges'>>
+  Partial<Pick<CreationDebug, 'audioState' | 'selection' | 'onboarding' | 'helperOffered' | 'helperUses' | 'connectRefusals' | 'appChanges' | 'deviceScreenBox'>>
 
 export interface CreationBridgeDeps {
   win: { __creation?: CreationReader; innerWidth?: number; innerHeight?: number }
@@ -36,6 +36,31 @@ export interface CreationBridgeDeps {
 }
 
 const SIZE = { device: 56, port: 24, control: 28 } as const
+/** A device body seen larger than this share of the window (the camera on it) is not given as a body (G14b): the guide could stand nowhere off it. */
+const MAX_BODY_SHARE = 0.4
+
+/**
+ * A device's body as the camera shows it (G14b, finding F1): `deviceScreenBox`, cut to the window. The ring keeps its 56 px marker (the widget places beside the
+ * rect it rings); the guide keeps its icon and bubble off this box (src/guide/clearance.ts). Null without a box (no reader, a model not loaded, a corner behind the
+ * camera, a throw, a malformed answer), off the window, or over MAX_BODY_SHARE of it.
+ */
+function bodyRect(c: CreationReader, id: string, win: { innerWidth?: number; innerHeight?: number }): Rect | null {
+  try {
+    const b = c.deviceScreenBox?.(id)
+    if (!b || ![b.x, b.y, b.w, b.h].every(Number.isFinite) || !(b.w > 0) || !(b.h > 0)) return null
+    const { innerWidth: w, innerHeight: h } = win
+    const sized = typeof w === 'number' && typeof h === 'number' && w > 0 && h > 0
+    const x0 = sized ? Math.max(0, b.x) : b.x
+    const y0 = sized ? Math.max(0, b.y) : b.y
+    const x1 = sized ? Math.min(w, b.x + b.w) : b.x + b.w
+    const y1 = sized ? Math.min(h, b.y + b.h) : b.y + b.h
+    if (!(x1 > x0) || !(y1 > y0)) return null
+    if (sized && (x1 - x0) * (y1 - y0) > MAX_BODY_SHARE * w * h) return null
+    return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }
+  } catch {
+    return null
+  }
+}
 
 // ── anchor table ────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -411,6 +436,16 @@ export function createCreationBridge(deps: CreationBridgeDeps): TpBridge {
         return typeof id === 'string' ? deviceAnchor(current, id) : ''
       } catch {
         return ''
+      }
+    },
+    bodyRects: () => {
+      try {
+        const c = win.__creation
+        const rig = c?.design()?.rig
+        if (!c || !c.deviceScreenBox || !rig || !Array.isArray(rig.instances)) return []
+        return rig.instances.map((i) => bodyRect(c, i.instanceId, win)).filter((r): r is Rect => r !== null)
+      } catch {
+        return []
       }
     },
     tutorialRequest: () => requestNow(),

@@ -42,6 +42,11 @@ export type TpBridge = {
   mic?(): { micOk: boolean; micReasons: { code: string; text_fr: string }[] } | null
   /** The power helper as Mode Création says it: offered now, and its uses on this page (T3 close review S2, S3); null without it; never throws. */
   helper?(): PowerHelperReading | null
+  /**
+   * G14b: each bench device's body as the camera shows it (CSS px, cut to the window; a body over 40 % of the window or one that does not project is left out). The
+   * guide keeps its icon and bubble off the body of the device a step points at (src/guide/clearance.ts). Mode Création only; [] when unknown; never throws.
+   */
+  bodyRects?(): Rect[]
   /** The profile of the creation onboarding record ('decouvre', 'etudie', 'projet', 'metier'), or null; Mode Création under `?design` only; never throws (plan T5.5). */
   profile?(): string | null
   /**

@@ -806,6 +806,34 @@ describe('rectOf', () => {
     expect(r.reads.controlScreen).toBe(1)
   })
 
+  it('bodyRects: each device body as the camera shows it (deviceScreenBox), cut to the window; the ring keeps its marker (G14b, F1)', () => {
+    const r = make()
+    const boxes: Record<string, { x: number; y: number; w: number; h: number } | null> = { ql1: { x: 200, y: 330, w: 178, h: 159 }, k12: { x: -100, y: 300, w: 450, h: 150 } }
+    ;(r.win.__creation as CreationReader).deviceScreenBox = (id: string) => boxes[id] ?? null
+    r.bridge.snapshot()
+    // the console whole, the K12 cut to the window
+    expect(r.bridge.bodyRects!()).toEqual([{ x: 200, y: 330, w: 178, h: 159 }, { x: 0, y: 300, w: 350, h: 150 }])
+    // the ring is still the 56 px marker around the device's point
+    expect(r.bridge.rectOf('device:ql1')).toEqual({ x: 272, y: 372, w: 56, h: 56 })
+    // no box (model not loaded, behind the camera), a malformed one, one off the window, one over 40 % of the window: left out
+    boxes.ql1 = null
+    boxes.k12 = { x: NaN, y: 300, w: 10, h: 10 }
+    expect(r.bridge.bodyRects!()).toEqual([])
+    boxes.ql1 = { x: 2000, y: 300, w: 50, h: 50 }
+    boxes.k12 = { x: 0, y: 0, w: 1200, h: 700 }
+    expect(r.bridge.bodyRects!()).toEqual([])
+    // a throwing reader, or none: nothing, never a throw
+    ;(r.win.__creation as CreationReader).deviceScreenBox = () => {
+      throw new Error('boom')
+    }
+    expect(r.bridge.bodyRects!()).toEqual([])
+    delete (r.win.__creation as CreationReader).deviceScreenBox
+    expect(r.bridge.bodyRects!()).toEqual([])
+    delete r.win.__creation
+    expect(r.bridge.bodyRects!()).toEqual([])
+    expect(errorSpy).not.toHaveBeenCalled()
+  })
+
   it('returns null for an unknown anchor, a malformed one, and a null or off-screen projection', () => {
     const r = make()
     r.bridge.snapshot()

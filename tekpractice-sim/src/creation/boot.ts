@@ -55,6 +55,7 @@ import { loadTemplates, templateToDesign } from './templates'
 import { mountNotes } from './shell/notes'
 import { bodyCentreOf } from './debug'
 import { debugBodyCenter, debugBodyBoundsInRoot, debugBodyEnds } from '../scene/debugBody'
+import { deviceScreenBox } from '../scene/screenBox'
 import { cableKey } from './sceneDiff'
 import { attachCanvasHover, attachCanvasPicking, createSelection, pickDevice } from './selection'
 import { floorPointAt } from '../scene/pivotPick'
@@ -2457,6 +2458,10 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     bodyBoundsInRoot: (id) => {
       const inst = host.instance(id)
       return inst ? debugBodyBoundsInRoot(inst) : null
+    },
+    deviceScreenBox: (id) => {
+      const inst = host.instance(id)
+      return inst ? deviceScreenBox(inst.root, screen) : null
     },
     bodyEnds: (id) => {
       const inst = host.instance(id)

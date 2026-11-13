@@ -178,6 +178,11 @@ export interface CreationDebug {
   modelFront(instanceId: string): [number, number, number] | null
   /** Task 43c fix round: the box of the body's vertices in the frame of the instance root (centred on (0, 0) in x / z and min y 0 when it sits on its placement and the floor, at any yaw). */
   bodyBoundsInRoot(instanceId: string): { lo: [number, number, number]; hi: [number, number, number] } | null
+  /**
+   * G14b: the screen box (page CSS px) of the eight corners of `bodyBoundsInRoot` through the instance root and the camera: the device as the learner sees it. Null when the
+   * instance is unknown, its body is not loaded, or a corner does not project (behind the camera). The guide keeps its icon and bubble off it (ADR 0021).
+   */
+  deviceScreenBox(instanceId: string): { x: number; y: number; w: number; h: number } | null
   /** Task 43c (L34): independent oracle for a loudspeaker's front, the x-extent of the body vertices at the +z and the -z end of its z range (world axes, yaw 0). */
   bodyEnds(instanceId: string): { plusZ: number; minusZ: number; depth: number; rearX: [number, number]; rearZ: number } | null
   /** Task 37: the world position of a port marker (after the .glb is applied it sits on the model), or null when unknown. */
