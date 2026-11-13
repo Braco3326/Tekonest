@@ -129,6 +129,15 @@ describe('the strings the controller reads', () => {
       for (const { path, value } of table(t)) expect(/plan de travail/i.test(String(value)), `${name} ${path}`).toBe(false)
   })
 
+  it('G14c fix (b): an element out of view is not « faire défiler la page » in a 3D app: Mode Création says how to see the whole room (COPY oscar.notOnScreen); the level page keeps the vendored line', () => {
+    expect(CREATION_STRINGS.step.notOnScreen).toBe(COPY.oscar!.notOnScreen)
+    expect(COPY.oscar!.notOnScreen).toContain('Vue d’ensemble')
+    expect(COPY.oscar!.notOnScreen).not.toMatch(/défiler la page/)
+    expect(COPY.oscar!.notOnScreen.split(/\s+/).filter((w) => /\p{L}/u.test(w)).length).toBeLessThanOrEqual(14)
+    expect(offends(COPY.oscar!.notOnScreen, 'learner')).toEqual([])
+    expect(LEGACY_STRINGS.step.notOnScreen).toMatch(/défiler la page/)
+  })
+
   it('« Où j’en suis » with no flow running says the app’s own place, per route, with no digit', () => {
     expect(CREATION_STRINGS.where.workbench).toBe(TP_STRINGS.where.creation)
     expect(LEGACY_STRINGS.where.workbench).toBe(TP_STRINGS.where.legacy)

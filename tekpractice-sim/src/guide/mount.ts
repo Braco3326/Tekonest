@@ -21,10 +21,11 @@ import { createTekPracticeBrain } from './brain'
 import { tpString } from './strings'
 import type { TpBridge, TpState } from './bridge/types'
 import { NAV_SELECTORS, firstRect, type BridgeDoc } from './bridge/shared'
+import { createRevealer, type RevealDoc } from './reveal'
 import { PLAY_STARTED, TUTORIAL_REQUEST, annotateTutorialEvent, closingLines, createTutorialRuntime, isTutorialAnchor, resolveTutorialAnchor, type TutorialDetail } from './tutorial'
 import { mountStepCard, type StepCard } from './stepCard'
 import type { StepId } from '../design/packages'
-import { TUTORIAL_EVENT } from '../design/events'
+import { TUTORIAL_EVENT, TUTORIAL_FOCUS_EVENT } from '../design/events'
 import { activePackage } from '../design/packages'
 import { COPY } from '../creation/copy'
 import { isAnchor } from './anchors'
@@ -480,6 +481,8 @@ export function createRectResolver(deps: {
     return value
   }
   const rectOfAnchor = (a: string): Rect | null => (a === '' ? null : bridge.rectOf(a))
+  // G14c fix (a): a ringed Propriétés button below the panel's fold is scrolled into view, once per target (src/guide/reveal.ts)
+  const reveal = createRevealer(deps.doc as RevealDoc | undefined, (e) => (typeof getComputedStyle === 'function' ? getComputedStyle(e as unknown as Element).overflowY : 'visible'))
 
   function resolve(anchor: string, t: number): Rect | null {
     if (anchor === SUGGEST_FROM || anchor === SUGGEST_TO) {
@@ -507,6 +510,7 @@ export function createRectResolver(deps: {
         anchorOfControl: (i, c) => bridge.anchorOfControl(i, c),
         helperUnlocked: deps.helperUnlocked?.() === true,
         helperOffered: deps.helperOffered?.() === true,
+        reveal,
       })
       // undefined: not the tutorial's to answer here (nav:ecoute while the bench can play): the bridge's shell anchor, as before
       if (r !== undefined) return r
@@ -622,7 +626,12 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
     // set by `destroy`: after it nothing of the mount acts (an exam address turning live tears everything down; a later poll or record write must not rebuild the card, C1)
     let destroyed = false
     let card: StepCard | null = null
-    const runtime = tutorial === null ? null : createTutorialRuntime({ flow: tutorial, registry, storage: deps.storage, now, send: (i) => late(i), emit, onRecord: () => guard(() => {
+    // G14c fix (b): the device the step points at, for Mode Création to bring into view (`tekpractice:tutorial-focus`)
+    const focus = (instance: string | null): void =>
+      guard(() => {
+        if (typeof win.dispatchEvent === 'function' && typeof CustomEvent === 'function') win.dispatchEvent(new CustomEvent(TUTORIAL_FOCUS_EVENT, { detail: { instance } }))
+      })
+    const runtime = tutorial === null ? null : createTutorialRuntime({ flow: tutorial, registry, storage: deps.storage, now, send: (i) => late(i), emit, focus, onRecord: () => guard(() => {
         if (!destroyed) card?.update()
       }) })
     runtimeRef = runtime
@@ -797,6 +806,7 @@ export function mountOscar(deps: MountDeps, impl: MountImpl = { createController
         rects.clear()
         follow(state)
         tell(state)
+        guard(() => runtime?.look({ state, audio: bridge.playing?.() ?? null })) // G14c W1: the step sentences read the new bench before its events move the controller
         for (const e of collapseRestore(toSend)) {
           const marked = annotateToggle(e, state, bridge)
           const out = tutorial === null ? marked : annotateTutorialEvent(marked, { state, prev, bridge, registry })

@@ -1142,6 +1142,11 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   oscar: {
     /** The badge in the header of Oscar's bubble, with every open bubble: it says what Oscar is; the icon keeps its name « Oscar, assistant IA » (founder decision). */
     badge: 'Oscar · Assistant',
+    /**
+     * G14c fix (b): Oscar's line when what he points at is off screen (it replaces the vendored « … Faire défiler la page … », which is no advice in a 3D view).
+     * Every Mode Création page (the controller's string table, CREATION_STRINGS), not only `?design`; the level page keeps the vendored line.
+     */
+    notOnScreen: 'Hors de vue pour le moment : le bouton « Vue d’ensemble » (⌂) montre toute la pièce.',
   },
   /**
    * The names of the five design packages (onboarding packs, T4.1, spec 7.2), read through `DesignPackage.nameKey` (`design.name1` .. `design.name5`). Not displayed

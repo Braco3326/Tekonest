@@ -1013,6 +1013,7 @@ Le nouvel Oscar (packs d’accueil, T5.4 ; spec 9 et 10.2), seulement avec `?des
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
 | `oscar.badge` | Oscar · Assistant | à valider (tekuxwriter) | Badge dans l’en-tête de la bulle d’Oscar, à chaque bulle ouverte, juste après le titre fourni « Oscar, assistant IA » (les deux se lisent ensemble : à trancher avec le fondateur, voir la décision « IA ») ; il dit ce qu’est Oscar ; le nom accessible de l’icône reste « Oscar, assistant IA » |
+| `oscar.notOnScreen` | Hors de vue pour le moment : le bouton « Vue d’ensemble » (⌂) montre toute la pièce. | à valider (tekuxwriter) | Bulle d’Oscar quand ce qu’il montre est hors de l’écran (G14c) ; remplace la phrase fournie « … Faire défiler la page ou ouvrir la zone concernée… », sans objet dans une vue 3D. Toutes les pages du Mode Création (avec ou sans `?design`) ; le niveau garde la phrase fournie |
 
 ## design
 

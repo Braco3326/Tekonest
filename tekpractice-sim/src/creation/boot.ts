@@ -116,6 +116,7 @@ import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
 import { wireChecklist } from './onboarding/wire'
+import { pointOnView, wireTutorialFocus } from './onboarding/tutorialFocus'
 import { TUTORIAL_ROW_PX } from '../design/tutorialSlot'
 import type { Onboarding } from './onboarding/firstVisit'
 import { createAnnouncer } from './shell/announcer'
@@ -2311,6 +2312,16 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     }
     return best ?? c
   }
+  // G14c fix (b): the device the tutorial's step points at is flown into view, unselected, when it is off the 3D view or under a panel
+  wireTutorialFocus({
+    win: window,
+    onView: (id) => {
+      const inst = host.instance(id)
+      const view = document.getElementById('cr-viewport')?.getBoundingClientRect() ?? canvas.getBoundingClientRect()
+      return !!inst && pointOnView(document, canvas, view, screen(bodyCentreOf(inst)))
+    },
+    show: (id) => selection.show(id),
+  })
   window.__creation = {
     onboarding: () => onboarding.snapshot(),
     helperOffered: () => checklist.helperOffered(),

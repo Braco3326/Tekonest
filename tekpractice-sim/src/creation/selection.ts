@@ -31,6 +31,8 @@ export interface Selection {
   select(id: string | null, opts?: { fly?: boolean }): boolean
   /** Fly to the selected device (Entrée / F in the 3D view). */
   frameSelection(): boolean
+  /** Fly to a device WITHOUT selecting it (G14c fix b: the tutorial's step points at it and it is off view). False when unknown or walking. */
+  show(id: string): boolean
   /** Frame a zone ('zone:<id>') or a cable ('cable:<key>'); the device selection is cleared. */
   flyToKey(key: string): boolean
 }
@@ -57,6 +59,9 @@ export function createSelection(d: SelectionDeps): Selection {
     frameSelection() {
       const sel = d.viewState.get().selection
       return sel ? frameDevice(sel) : false
+    },
+    show(id) {
+      return frameDevice(id)
     },
     flyToKey(key) {
       const f = d.host.frameOfKey(key)

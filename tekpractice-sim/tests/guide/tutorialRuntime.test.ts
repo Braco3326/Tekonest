@@ -54,6 +54,7 @@ function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps, 
   const flow = premiersPasFlow(registry, pacing)
   const sent: ControllerInput[] = []
   const told: TutorialDetail[] = []
+  const focused: (string | null)[] = []
   let view: GuideView | null = null
   // eslint-disable-next-line prefer-const
   let controller: ReturnType<typeof createController>
@@ -67,6 +68,7 @@ function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps, 
       void controller.dispatch(i).then((v) => (view = v))
     },
     emit: (detail) => told.push(detail),
+    focus: (instance) => focused.push(instance),
     onRecord: (r) => records.push(r),
   })
   controller = createController({ brain, flows: [flow, ...extra], clock: () => clock.t++, strings: CREATION_STRINGS, storage: rt.storage })
@@ -75,6 +77,7 @@ function page(storage: MemStorage | null, pacing = packageById(1).pacing.steps, 
     flow,
     sent,
     told,
+    focused,
     controller,
     view: () => view,
     title: () => controller.getView().bubble?.title,
@@ -612,6 +615,56 @@ describe('T3 close review: the runtime', () => {
     expect(p.flow.steps[9].say).toBe(`${COPY.tutorial!.ecoute} ${COPY.checklist!.menuHint}`)
     p.rt.update({ state: { ...stateOf([Q, K]), playbackReady: true }, audio: null, request: ask(1) })
     expect(p.flow.steps[9].say).toBe(COPY.tutorial!.ecoute)
+  })
+
+  it('W1 (G14c fix): `look` gives the runtime the new bench BEFORE the change\'s events reach the controller, so the next step\'s bubble is rendered from it (no stale checklist hint at step 10)', async () => {
+    const p = page(new MemStorage())
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    await skipTo(p, 9)
+    // step 9 current, the bench cannot play yet (the speaker's mains cable is missing)
+    p.rt.update({ state: { ...stateOf([Q, K]), playbackReady: false }, audio: null, request: ask(1) })
+    expect(p.flow.steps[9].say).toBe(`${COPY.tutorial!.ecoute} ${COPY.checklist!.menuHint}`)
+    // the cable lands: mount.ts tells the runtime the new bench first (look), then sends the event that ends step 9
+    p.rt.look({ state: { ...stateOf([Q, K]), playbackReady: true }, audio: null })
+    expect(p.flow.steps[9].say).toBe(COPY.tutorial!.ecoute)
+    await p.seen({ type: 'connect', data: { pair: 'mains-speaker', fed: true } })
+    expect(p.title()).toBe(step(10))
+    expect(p.text()).toContain(COPY.tutorial!.ecoute)
+    expect(p.text()).not.toContain(COPY.checklist!.menuHint!)
+    // `look` never acts: no request handled, nothing sent
+    const sent = p.sent.length
+    p.rt.look({ state: stateOf([]), audio: null })
+    await flush()
+    expect(p.sent.length).toBe(sent)
+  })
+
+  it('G14c fix (b): the runtime names the device the current step points at (`focus`), on each change only: the console at steps 4, 6 and 8, the mic at step 5, the speaker at step 9, none on a placement or Écoute step', async () => {
+    const S: [string, string] = ['s', 'shure-sm58']
+    const bench = stateOf([Q, K, S, P])
+    const p = page(new MemStorage())
+    await p.init()
+    p.rt.update({ state: stateOf([]), audio: null, request: ask(1) })
+    await flush()
+    expect(p.focused).toEqual([null]) // step 1 (a placement): no device
+    const at = async (k: number): Promise<string | null> => {
+      await skipTo(p, k)
+      p.rt.update({ state: bench, audio: null, request: ask(1) })
+      await flush()
+      return p.focused.at(-1) ?? null
+    }
+    expect(await at(4)).toBe('q') // console-enceinte: from the console
+    expect(await at(2)).toBe('s') // step 5, micro-console: from the mic
+    expect(await at(2)).toBe('q') // step 6, lecture-console: the console (skipTo moves on from the current step)
+    // step 7 (the strip) is already on this bench: it completes at once (« déjà en place ») and step 8 points at the console's mains inlet
+    expect(await at(2)).toBe('q')
+    expect(p.rt.record().k).toBe(8)
+    expect(await at(2)).toBe('k') // step 9, courant-enceinte: from the speaker's mains inlet
+    const n = p.focused.length
+    p.rt.update({ state: bench, audio: null, request: ask(1) }) // the same step, the same bench: nothing new told
+    await flush()
+    expect(p.focused.length).toBe(n)
   })
 
   it('S5: the detail says whether the run has a power step and whether one is still ahead (step 10: none ahead; package 5 data: none at all)', async () => {

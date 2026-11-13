@@ -56,6 +56,12 @@ const CHECKLIST_CHIP = '[data-testid="checklist-chip"]'
  * The Propriétés unfold toggle, only while Propriétés is folded (the shell marks `data-props="collapsed"` on `.cr`; the button is the panel's rail). G8 review S7: steps 4 and 6 say
  * « dans Propriétés »; with Propriétés folded (package 1) and the device selected, the ring goes to this toggle (the row has no box), not back to the device.
  */
+/**
+ * Matériel › « Inventaire » while that menu is open (G14c fix d): with the drawer shut (package 4 shuts it after each placement) the ring goes to « Matériel »,
+ * then, the menu open, to this item; a closed menu's panel has no box, so the ring stays on « Matériel » until it opens. (menuBar.ts: panel
+ * `cr-menu-<menu>-panel`, a leaf item carries `data-item`; menuModel.ts: the item id `inventory`.)
+ */
+export const MENU_INVENTORY_ITEM = '#cr-menu-materiel-panel [data-item="inventory"]'
 export const PROPS_UNFOLD = '.cr[data-props="collapsed"] [data-testid="props-collapse"]'
 
 /** A step's proactive hint delay (plan T3.4): the package pacing on the two power steps, none elsewhere; 0 (package 4) = none. */
@@ -508,6 +514,8 @@ export interface AnchorEnv extends Anchors {
   helperUnlocked?: boolean
   /** Mode Création says the helper is offered now (T3 close review S3): without it the power steps never point at a button that is not there. */
   helperOffered?: boolean
+  /** G14c fix (a): bring a ringed Propriétés button into its panel's view (src/guide/reveal.ts), once per `key`. Absent: nothing scrolls (as before). */
+  reveal?(selector: string, key: string): void
 }
 
 const rest = (anchor: string, prefix: string): string | null => (anchor.startsWith(`${prefix}.`) ? anchor.slice(prefix.length + 1) : null)
@@ -522,6 +530,7 @@ const isPair = (s: string): s is Exclude<PairKind, 'other'> => Object.hasOwn(PAI
 function deviceThenRow(env: AnchorEnv, instance: string, rowKey: string): Rect | null {
   const device = (): Rect | null => env.rectOfAnchor(env.anchorOfDevice(instance))
   if (env.selection !== instance) return device()
+  env.reveal?.(propsKeySelector(rowKey), `${instance}|${rowKey}`)
   return env.firstRect([propsKeySelector(rowKey), PROPS_UNFOLD]) ?? device()
 }
 
@@ -547,10 +556,10 @@ export function resolveTutorialAnchor(anchor: string, env: AnchorEnv): Rect | nu
     const { registry } = env
     if (item !== null) {
       const d = registry.deviceById.get(item)
-      if (d === undefined) return env.firstRect([MENU_MATERIEL])
-      return env.firstRect([inventoryItemSelector(item), inventoryTabSelector(tabFor(d)), MENU_MATERIEL])
+      if (d === undefined) return env.firstRect([MENU_INVENTORY_ITEM, MENU_MATERIEL])
+      return env.firstRect([inventoryItemSelector(item), inventoryTabSelector(tabFor(d)), MENU_INVENTORY_ITEM, MENU_MATERIEL])
     }
-    if (tab !== null) return env.firstRect([inventoryTabSelector(tab), MENU_MATERIEL])
+    if (tab !== null) return env.firstRect([inventoryTabSelector(tab), MENU_INVENTORY_ITEM, MENU_MATERIEL])
     const state = env.state
     if (state === null) return null
     if (connect !== null) {
@@ -581,8 +590,38 @@ export function resolveTutorialAnchor(anchor: string, env: AnchorEnv): Rect | nu
     const target = consoles.find((c) => !c.on) ?? consoles[0]
     if (target === undefined) return null
     const pad = (): Rect | null => env.rectOfAnchor(env.anchorOfControl(target.id, target.ctl)) ?? env.rectOfAnchor(env.anchorOfDevice(target.id))
-    if (env.selection === target.id) return env.firstRect([propsKeySelector(`ctl:${target.ctl}`), PROPS_UNFOLD]) ?? pad()
+    if (env.selection === target.id) {
+      env.reveal?.(propsKeySelector(`ctl:${target.ctl}`), `${target.id}|ctl:${target.ctl}`)
+      return env.firstRect([propsKeySelector(`ctl:${target.ctl}`), PROPS_UNFOLD]) ?? pad()
+    }
     return pad()
+  } catch {
+    return null
+  }
+}
+
+// ── the device a step points at (G14c fix b) ───────────────────────────────────────────────────────────────────────
+
+/**
+ * The bench instance the step's ring starts on when it is a device: the first end of the cable a connect step asks for (`nextConnectionStepFor`), the console
+ * end of the cable an unplug step names, the console whose « Lecture console » is off; null for a placement, Écoute, an unknown bench. Mode Création brings it
+ * into the 3D view when it is not there (the camera stays on the device selected last, src/creation/onboarding/tutorialFocus.ts). Never throws.
+ */
+export function stepFocus(step: TutorialStep | null | undefined, state: TpState | null, registry: Registry): string | null {
+  try {
+    if (step === null || step === undefined || state === null) return null
+    const t = step.target
+    if (t.kind === 'connect') return nextConnectionStepFor(t.pair, state, registry)?.from.instance ?? null
+    if (t.kind === 'unplug') {
+      const from = PAIR_ENDS[t.pair].from
+      for (const c of state.connections) if (pairOf(c, state, registry) === t.pair) return (roleAt(registry, state, c.a) === from ? c.a : c.b).instance
+      return null
+    }
+    if (t.kind === 'playback') {
+      const consoles = state.instances.filter((i) => playbackControlOf(registry, i.deviceId) !== null)
+      return (consoles.find((i) => state.controls[i.id]?.[playbackControlOf(registry, i.deviceId)!] !== true) ?? consoles[0])?.id ?? null
+    }
+    return null
   } catch {
     return null
   }
@@ -641,6 +680,12 @@ export interface TutorialRuntime {
    */
   update(input: { state: TpState | null; audio: string | null; request: TutorialRequest | null; helper?: PowerHelperReading | null }): void
   /**
+   * The bench of a change, BEFORE its host events go to the controller (G14c W1): the step sentences are rendered from it, so the bubble the controller opens
+   * for the next step reads the new bench (step 10 no longer says « Voir « Pourquoi je n’entends rien ? » » once the last power cable made the bench playable).
+   * It only reads: no request is handled, no step is completed, nothing is sent; `update` follows the events as before.
+   */
+  look(input: { state: TpState | null; audio: string | null }): void
+  /**
    * A host event as the mount is about to send it to the controller (T6.1): the runtime remembers it for a moment, so that when the controller moves on from a step it can tell a step
    * ENDED BY ITS EVENT from a step PASSED (« Passer cette étape »): the card shows a tick for the first and « passée » for the second. An event counts for a step only if it was sent while that step, or a chain of steps leading to it, was current (`settle`).
    */
@@ -677,6 +722,8 @@ export function createTutorialRuntime(d: {
   stateKey?: string
   /** Tells Mode Création where the run is (`tekpractice:tutorial`, `TutorialDetail`, the power helper's gate, plan T3.3): on every change of it. */
   emit?(detail: TutorialDetail): void
+  /** G14c fix (b): the device the current step points at (`stepFocus`; null when none, or no run), told on each change only. */
+  focus?(instance: string | null): void
   /** Tells the step card (T6.1) the record after every write: a copy, called in try / catch (a failing card never stops the tutorial). */
   onRecord?(record: TutorialRecord): void
 }): TutorialRuntime {
@@ -768,10 +815,24 @@ export function createTutorialRuntime(d: {
       // the page's listener failed: the tutorial goes on
     }
   }
+  /** The last focus told (undefined: none yet). */
+  let focusTold: string | null | undefined
+  const tellFocus = (): void => {
+    if (d.focus === undefined) return
+    const now = running && rec.status === 'running' ? stepFocus(data[flowIndex], last.state, d.registry) : null
+    if (now === focusTold) return
+    focusTold = now
+    try {
+      d.focus(now)
+    } catch {
+      // the page's listener failed: the tutorial goes on
+    }
+  }
   const snapshot = (): TutorialRecord => ({ ...rec, early: [...rec.early], shown: [...rec.shown], passed: [...rec.passed] })
   const save = (): void => {
     write(TUTORIAL_RECORD_KEY, JSON.stringify(rec))
     tell()
+    tellFocus()
     try {
       d.onRecord?.(snapshot())
     } catch {
@@ -991,7 +1052,12 @@ export function createTutorialRuntime(d: {
       }
       helped()
       unlock() // a strip placed (or the helper offered again) after the third tier
+      tellFocus()
       schedule()
+    },
+    look({ state, audio }) {
+      last = { ...last, state, audio }
+      renderAll()
     },
     sawEvent(event) {
       seenEvents = [...seenEvents, { e: event, t: d.now(), at: Math.max(0, flowIndex) }].slice(-32)

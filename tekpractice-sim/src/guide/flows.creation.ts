@@ -144,6 +144,8 @@ export const CREATION_STRINGS = {
   planner: { ...defaultStrings.planner, needInfo: TP_STRINGS.planner.needInfo },
   where: { ...defaultStrings.where, workbench: TP_STRINGS.where.creation },
   celebrate: { ...defaultStrings.celebrate, done: TP_STRINGS.celebrate.done },
+  /** G14c fix (b): « Faire défiler la page » is no advice in a 3D view: the way to see the whole room (COPY, « vous » side). */
+  step: { ...defaultStrings.step, notOnScreen: COPY.oscar?.notOnScreen ?? defaultStrings.step.notOnScreen },
   flows: {
     ...(Object.fromEntries(FLOW_PATH.map((id) => [id, F[id].title])) as Record<(typeof FLOW_PATH)[number], string>),
     /** The tutorial's title is the Aide item's own words (COPY « vous » side, not TP_STRINGS). */
