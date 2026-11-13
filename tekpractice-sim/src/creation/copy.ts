@@ -1048,6 +1048,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     chipChoose: 'Choisir un profil',
     /** Its `title`, for both texts. */
     chipHint: 'Rouvre l’écran de départ.',
+    /** Said on the status line when « Premiers pas » asked to open the playable model over the learner's bench and the learner declined the replacement. */
+    modelDeclined: 'Le tutoriel de ce parcours se fait sur le modèle déjà câblé : il n’a pas été lancé, votre montage est inchangé.',
   },
   /**
    * The entrepreneur's card after the first sound (onboarding packs, T6.4, spec 3; src/creation/onboarding/ownGear.ts). One line and three GENERIC venue types, each labelled as an

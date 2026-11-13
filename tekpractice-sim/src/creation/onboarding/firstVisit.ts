@@ -27,6 +27,10 @@ export interface OnboardingWiring {
   /** The active package's `layout.panels`: what a profile that leaves the panels to the package opens the first room with. */
   panels: { tree: boolean; props: boolean }
   doc: Document
+  /** The package's first room is the playable model (`layout.start`), not the empty neutral room: Aide « Premiers pas » over an open place then asks to open it first (T6 review S1). */
+  startsOnModel?: boolean
+  /** The status line (the shell's announcer): what was NOT done and why. */
+  announce?(message: string): void
   /**
    * The address is a practice one NOW (T6 review C1): read live, not once at boot, because the page can be pushed to an exam address while it runs (history.pushState). Built in main.ts from
    * the guide's own mode gate (creation must not import the guide). Absent = true (a unit with no address). The entrepreneur's card is due only while it says true.
@@ -44,9 +48,9 @@ export interface OnboardingWiring {
   placeOpen(): boolean
   /**
    * Open the package's first room through the picker's own choice path, no dialog: the neutral room (the `blank` card, « Salle vide ») or, for a package whose `layout.start` is
-   * `playable-model`, the template `premier-son-pret` (T6.3, `startRoomKey`). Resolves when that is over, whatever the result.
+   * `playable-model`, the template `premier-son-pret` (T6.3, `startRoomKey`). Resolves when that is over: true if that room is now open (`done`), false if it was not (declined, busy, failed).
    */
-  openFirstRoom(): Promise<void>
+  openFirstRoom(): Promise<boolean>
   /** The camera goes to the active package's `framing` (first-sound framing, T2.5); `tutorialRow`: a tutorial is about to open its row (the step card's slot, `TUTORIAL_ROW_PX`), so the framing is for the canvas MINUS that row (T6.1: the same pixels once the row is there). Called only right after the first room (the neutral room or the playable model) was opened by the start screen or by Aide « Premiers pas »; never over a room that was already open. */
   frameFirstRoom(opts?: { tutorialRow?: boolean }): void
   setPanel(p: 'tree' | 'props', open: boolean): void
@@ -253,6 +257,15 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
           await w.openFirstRoom()
           if (!w.placeOpen()) return
           w.frameFirstRoom({ tutorialRow: true }) // « Premiers pas »: the tutorial follows
+        } else if (w.startsOnModel === true && !resuming) {
+          // T6 review S1: the three steps (sound, unplug, replug) are about the playable model's bench; on another bench `ecoute` cannot complete and `debrancher` has no cable. The model opens through
+          // the picker's own template path, which asks first (the existing « Remplacer le matériel » dialog) when gear is on the bench: never replaced without the learner's yes. Declined: no run, said.
+          const opened = await w.openFirstRoom()
+          if (!opened) {
+            w.announce?.(COPY.onboarding!.modelDeclined!)
+            return
+          }
+          w.frameFirstRoom({ tutorialRow: true })
         }
         store.dispatch({ type: 'request', kind: 'start' })
         if (resuming) w.doc.querySelector<HTMLElement>('[data-testid="tutorial-card"]')?.focus()

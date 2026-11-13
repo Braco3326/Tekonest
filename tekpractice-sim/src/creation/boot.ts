@@ -794,6 +794,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   }
   host.onFallback = fallbackNote
 
+  /** What the last `pick` ended with (the first-room opening reads it: the replace dialog may have been declined). */
+  let lastPick: PlaceResult = 'failed'
   /** The picker's choice → the place change; the picker stays open on cancel / busy / failure. */
   const pick = async (card: PlaceCard, mode: 'empty' | 'gear'): Promise<void> => {
     shell.setStatus(
@@ -823,6 +825,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     } finally {
       picker.setBusy(false)
     }
+    lastPick = result
     if (result === 'busy') return shell.setStatus(placeNow(), COPY.shell!.statusBusy!, 'busy', true)
     if (result === 'failed') {
       // Said where the learner is: the picker stays open over an inert viewport (review fix 2).
@@ -976,10 +979,15 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       picker,
       placeOpen: () => store.design().roomId !== null,
       // the package's `layout.start`: the neutral room or the playable model (a template, through the picker's own template path); never a package number
-      openFirstRoom: () => {
+      openFirstRoom: async () => {
         const key = startRoomKey(designPkg?.layout.start ?? 'neutral-room', (k) => roomCards.some((c) => c.key === k))
-        return pick(roomCards.find((c) => c.key === key)!, 'empty')
+        lastPick = 'failed'
+        await pick(roomCards.find((c) => c.key === key)!, 'empty')
+        const ended = lastPick as PlaceResult // set by `pick` (TypeScript does not see the write across the await)
+        return ended === 'done' || ended === 'same'
       },
+      startsOnModel: designPkg?.layout.start === 'playable-model',
+      announce: (m: string) => announcer.say(m),
       frameFirstRoom: (o) => {
         const f = designPkg?.framing
         if (!f || !host.rig) return

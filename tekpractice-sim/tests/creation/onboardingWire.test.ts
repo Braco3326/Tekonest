@@ -20,6 +20,8 @@ const rec = (profile: string | null, offer: string | null = null, request = 0) =
 
 function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnType<typeof memoryStorage>; roomFails?: boolean } = {}) {
   const log: string[] = []
+  /** What the wiring said on the status line. */
+  const said: string[] = []
   const storage = opts.storage ?? memoryStorage()
   let place = false
   let startOpts!: PickerStartOpts
@@ -61,6 +63,7 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
     tutorialAllowed: true,
     panels: { tree: false, props: false },
     doc: {} as Document,
+    announce: (m) => void said.push(m),
     shellRoot: {} as HTMLElement,
     chipSlot: {} as HTMLElement,
     picker: {
@@ -92,6 +95,7 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
         place = true
         startShowing = false
       }
+      return !roomFails
     },
     frameFirstRoom: () => void log.push('frame'),
     setPanel: (p, open) => void log.push(`panel:${p}:${open}`),
@@ -102,6 +106,7 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
   const ob = wireOnboarding(w, mountChip, mountGear)
   return {
     ob,
+    said,
     gearShown: () => gearShown,
     gearLog,
     dismissGear: () => gearDeps.onDismiss(),
@@ -541,5 +546,44 @@ describe('the entrepreneur’s card follows the address live (T6 review C1): an 
     h.ob.soundStarted()
     h.ob.refresh()
     expect(h.gearShown()).toBe(true)
+  })
+})
+
+describe('Aide « Premiers pas » on a package that starts on the playable model, with a place already open (T6 review S1)', () => {
+  it('triggers: it opens the model through the first-room path (the replace dialog is the picker’s), frames it, THEN raises the request', async () => {
+    const hold: { h?: ReturnType<typeof harness> } = {}
+    const h = harness({ startsOnModel: true, openFirstRoom: async () => (hold.h!.log.push('room'), true) })
+    hold.h = h
+    h.setPlace(true)
+    await h.ob.requestTutorial()
+    expect(h.log).toEqual(['room', 'frame'])
+    expect(h.record()).toMatchObject({ request: 1 })
+    expect(h.said).toEqual([])
+  })
+  it('the replace was declined: no request (the three steps never run on the learner’s own bench), nothing framed, and it is said', async () => {
+    const hold: { h?: ReturnType<typeof harness> } = {}
+    const h = harness({ startsOnModel: true, openFirstRoom: async () => (hold.h!.log.push('room'), false) })
+    hold.h = h
+    h.setPlace(true)
+    await h.ob.requestTutorial()
+    expect(h.log).toEqual(['room'])
+    expect(h.record()).toBeNull()
+    expect(h.said).toEqual(['Le tutoriel de ce parcours se fait sur le modèle déjà câblé : il n’a pas été lancé, votre montage est inchangé.'])
+  })
+  it('does not trigger: a package that starts in the neutral room still only raises the request over an open place', async () => {
+    const h = harness({ startsOnModel: false })
+    h.setPlace(true)
+    await h.ob.requestTutorial()
+    expect(h.log).toEqual([])
+    expect(h.record()).toMatchObject({ request: 1 })
+  })
+  it('does not trigger: a run already in progress is resumed, never replaced', async () => {
+    const storage = memoryStorage(rec('decouvre', 'taken', 1))
+    storage.data.set('oscar-guide.onboarding.v1', JSON.stringify({ v: 1, status: 'running', step: 'debrancher', k: 2, n: 3, handledRequest: 1, early: [], shown: [], passed: [], helper: false }))
+    const h = harness({ startsOnModel: true, doc: { querySelector: () => null } as unknown as Document }, { storage })
+    h.setPlace(true)
+    await h.ob.requestTutorial()
+    expect(h.log).toEqual([])
+    expect(h.record()).toMatchObject({ request: 2 })
   })
 })

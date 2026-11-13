@@ -938,6 +938,7 @@ Première visite (packs d’accueil, T2) : l’écran de départ, uniquement sou
 | `onboarding.chip` | Profil : {profile} · changer | à valider (tekuxwriter) | Pastille de la barre d’état une fois un profil choisi (sous `?design`) ; `{profile}` = le libellé du profil ; rouvre l’écran de départ |
 | `onboarding.chipChoose` | Choisir un profil | à valider (tekuxwriter) | Pastille de la barre d’état tant qu’aucun profil n’est enregistré (écran quitté par « Tous les lieux » / Échap, ou jamais répondu) : rouvre l’étape « profil ». Rend vraie la phrase « Vous pourrez changer de profil à tout moment » |
 | `onboarding.chipHint` | Rouvre l’écran de départ. | à valider (tekuxwriter) | Infobulle (`title`) de la pastille, pour ses deux textes |
+| `onboarding.modelDeclined` | Le tutoriel de ce parcours se fait sur le modèle déjà câblé : il n’a pas été lancé, votre montage est inchangé. | à valider (tekuxwriter) | Ligne d’état : Aide › « Premiers pas » sur le paquet qui démarre sur le modèle jouable, avec un montage déjà ouvert, a demandé d’ouvrir le modèle par la boîte « Remplacer le matériel » existante et l’apprenant a refusé ; aucun parcours n’est lancé (revue T6, S1) |
 
 ## ownGear
 

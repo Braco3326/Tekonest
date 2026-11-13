@@ -169,3 +169,44 @@ test('the plain address is untouched: no start screen, no model', async ({ page 
   await expect(page.getByTestId('start-screen')).toHaveCount(0)
   expect(await page.evaluate(() => window.__creation?.design().rig.instances.length ?? 0)).toBe(0)
 })
+
+// ── Aide « Premiers pas » over a bench that is not the model (T6 review S1) ───────────────────────────────────────────────────────
+
+async function ownBenchOnPackage5(page: Page): Promise<void> {
+  await page.goto('/?design=5')
+  await page.evaluate((k) => {
+    window.localStorage.clear()
+    window.localStorage.setItem(k, JSON.stringify({ v: 1, profile: 'decouvre', offer: 'skipped', request: 0, shown: [] }))
+  }, 'audio-sim/creation-onboarding.v1')
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  await page.evaluate(() => window.__creation!.choosePlace('blank'))
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'mine', position: [0, 0, 0] }))
+}
+const premiersPas = async (page: Page): Promise<void> => {
+  await page.locator('#cr-menu-aide').click()
+  await page.getByRole('menuitem', { name: 'Premiers pas', exact: true }).click()
+}
+const benchIds = (page: Page): Promise<string[]> => page.evaluate(() => window.__creation!.design().rig.instances.map((i) => i.instanceId))
+
+test('S1 (T6 review): « Premiers pas » over the learner’s own bench asks to replace it with the model; declined: no run, the bench is unchanged and it is said; accepted: the model and « Étape 1 sur 3 »', async ({ page }) => {
+  await ownBenchOnPackage5(page)
+  await premiersPas(page)
+  const dialog = page.getByRole('dialog', { name: 'Remplacer le matériel ?' })
+  await expect(dialog, 'the existing replace dialog, never a silent replacement').toBeVisible()
+  await dialog.getByRole('button', { name: 'Annuler' }).click()
+  await expect(dialog).toHaveCount(0)
+  await expect(page.locator('.cr-status-msg')).toContainText('Le tutoriel de ce parcours se fait sur le modèle déjà câblé : il n’a pas été lancé, votre montage est inchangé.')
+  expect(await benchIds(page), 'the learner’s bench is untouched').toEqual(['mine'])
+  await page.waitForTimeout(1500)
+  await expect(page.getByTestId('tutorial-slot'), 'no run on that bench').toHaveCount(0)
+  expect(await guideRecord(page)).toBeNull()
+  expect((await page.evaluate(() => window.__creation!.onboarding().record))?.request).toBe(0)
+  // accepted
+  await premiersPas(page)
+  await page.getByRole('dialog', { name: 'Remplacer le matériel ?' }).getByRole('button', { name: 'Remplacer le matériel' }).click()
+  await expect(count(page)).toHaveText('Étape 1 sur 3', { timeout: 10_000 })
+  expect((await benchIds(page)).sort()).toEqual(['k12-d', 'k12-g', 'mains', 'ql1', 'sm58'])
+  await expect(live(page)).toContainText(step(1), { timeout: 10_000 })
+})
