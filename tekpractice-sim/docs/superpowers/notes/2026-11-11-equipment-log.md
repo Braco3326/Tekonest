@@ -1541,7 +1541,7 @@ The 29 rebuilt: genelec-8341a, genelec-8040b, yamaha-dxr12-mkii, yamaha-mg10xu, 
 
 - `git log origin/assets/3d-rebuild..HEAD --diff-filter=A --name-only --format= | grep -iE '\.(png|jpe?g|webp|gif)$'`: no hit (no image added in the 92 unpushed commits).
 - Secrets patterns (`sk-`, `api_key`, `token`, `password`, `BEGIN PRIVATE KEY`) over the added lines of the unpushed diff (GLB, PNG and the lock file excluded): no real hit. Two false positives (the `sk-` inside the dealer URL « ...desk-top-mounted... » of shure-mx418d, the word « token » in a code comment about slugging « 1/4 in »).
-- The user's home path in committed text: no hit. Other local paths: four lines of `docs/superpowers/plans/2026-11-11-build-all-equipment.md` name `E:\CLAUDE BU\reports\...` and `E:\CLAUDE BU\research_notes\...` (the research inputs of the plan; no user name, but a local path in a public repo: replace by « the research reports folder » before a push if the founder prefers).
+- The user's home path in committed text: no hit. Other local paths: four lines of `docs/superpowers/plans/2026-11-11-build-all-equipment.md` name a report kept outside the repository and the research notes folder (kept outside the repository) (the research inputs of the plan; no user name, but a local path in a public repo: replace by « the research reports folder » before a push if the founder prefers).
 
 ### Findings
 

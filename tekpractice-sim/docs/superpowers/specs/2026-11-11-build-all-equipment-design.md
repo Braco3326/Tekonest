@@ -3,7 +3,7 @@
 Status 2026-11-11. Branch `assets/3d-rebuild` (pushed 44f5dd7, deployed as site commit b7dbba8). Founder away, autonomous run: no push, no deploy, no Meshy spend, no history rewriting, explicit paths in every commit.
 The interactive approval gates of the brainstorming skill are waived by the founder's explicit instruction ("build in autonomy, I will come back when everything is built to validate"), as in the 2026-11-10 run. Every decision below that the founder may overrule is marked **[validate]**.
 
-Inputs: `E:\CLAUDE BU\reports\TekPractice Beta equipment gap analysis.md`, its CSV `... - priority table.csv` (315 rows: 134 Bêta + 181 new) and the six note files in `E:\CLAUDE BU\research_notes\TekPractice Beta equipment gap analysis\`.
+Inputs: a report kept outside the repository, its CSV `... - priority table.csv` (315 rows: 134 Bêta + 181 new) and the six note files in the research notes folder (kept outside the repository).
 
 ## 1. Understanding
 

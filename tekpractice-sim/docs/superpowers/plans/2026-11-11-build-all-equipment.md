@@ -8,7 +8,7 @@
 
 **Tech Stack:** TypeScript (tsx, vitest, zod), Babylon.js 7 / Vite, Blender 5 builder (`tools/assets3d/blender/build_from_spec.py`, `<path to blender.exe>` via `BLENDER_EXE`), Playwright (`E2E_PORT=4181`, private preview on a scratch outDir, run from PowerShell).
 
-**Spec:** `docs/superpowers/specs/2026-11-11-build-all-equipment-design.md` (read it and `docs/superpowers/plans/2026-11-10-finish-all-models.md`; the Device Build Loop here reuses that plan's gates). Research inputs: `E:\CLAUDE BU\reports\TekPractice Beta equipment gap analysis.md`, its `... - priority table.csv`, notes in `E:\CLAUDE BU\research_notes\TekPractice Beta equipment gap analysis\`.
+**Spec:** `docs/superpowers/specs/2026-11-11-build-all-equipment-design.md` (read it and `docs/superpowers/plans/2026-11-10-finish-all-models.md`; the Device Build Loop here reuses that plan's gates). Research inputs: a report kept outside the repository, its `... - priority table.csv`, notes in the research notes folder (kept outside the repository).
 
 ## Global Constraints
 
@@ -68,7 +68,7 @@ Batch up to 10 devices of one family per commit series; the catalogue edit and t
 
 - [ ] **Step 1: Write failing tests** in `equipmentPlan.test.ts`: `loads 315 rows with unique ids`; `every beta row id exists in catalog-proposals.json`; `no row id exists in catalog.json`; `rows with dataQuality datasheet or dealer have all three sizes positive`; `planRows({wave: 1}).length` equals 49; `rows with family not in the known family list are rejected`.
 - [ ] **Step 2: Run** `npx vitest run tests/tools/equipmentPlan.test.ts`; expected FAIL (module missing).
-- [ ] **Step 3: Implement** the schema and loader in `tools/equipmentPlan.ts`; implement `tools/import-equipment-plan.ts <csv>` converting `E:\CLAUDE BU\reports\TekPractice Beta equipment gap analysis - priority table.csv` (columns id, status, category, manufacturer, product, width_mm, depth_mm, height_mm, weight_kg, ports_summary, shape_family, data_quality, priority_tier, wave, notes; source URLs are taken from the notes column and the research note files, blank when absent) into `content/proposals/equipment-plan.json`; run it once and commit the JSON. Known families: rack-box-v2, console-wedge-v2, revolve, curved-cabinet, tripod-stand, power-strip, cable-assembly, generic-panel, plus the new ones named in Tasks 2.1 to 4.1 (`rack-box-v3b`, `moulded-box`, `revolve-v2-oval`, `round-base-stand`, `speaker-cabinet-v2`, `cable-assembly-v2`, `rack-box-v3-slope`, `assembly`).
+- [ ] **Step 3: Implement** the schema and loader in `tools/equipmentPlan.ts`; implement `tools/import-equipment-plan.ts <csv>` converting a report kept outside the repository (columns id, status, category, manufacturer, product, width_mm, depth_mm, height_mm, weight_kg, ports_summary, shape_family, data_quality, priority_tier, wave, notes; source URLs are taken from the notes column and the research note files, blank when absent) into `content/proposals/equipment-plan.json`; run it once and commit the JSON. Known families: rack-box-v2, console-wedge-v2, revolve, curved-cabinet, tripod-stand, power-strip, cable-assembly, generic-panel, plus the new ones named in Tasks 2.1 to 4.1 (`rack-box-v3b`, `moulded-box`, `revolve-v2-oval`, `round-base-stand`, `speaker-cabinet-v2`, `cable-assembly-v2`, `rack-box-v3-slope`, `assembly`).
 - [ ] **Step 4: Run** the test file; expected PASS.
 - [ ] **Step 5: Commit** the four paths.
 
@@ -239,7 +239,7 @@ Data-driven multi-part: `parts: [{ kind: 'box'|'cylinder'|'torus'|'lathe', size,
 ### Task 5.2: Whole-run verification and report
 - [ ] Run: `npx tsc --noEmit`, `npm run lint`, `npm run validate:catalog`, `npm run validate:assets`, `BLENDER_EXE=<path to blender.exe> npx vitest run`, `npm run build` (scratch outDir) + `npm run budget`, the full Playwright suite on a private preview (`E2E_PORT=4181`), scene-stats comparison with 44f5dd7; total GLB size check (at most 120 MB, none over 25 MiB).
 - [ ] Independent read-only review of `git diff a38c685..HEAD` against Review Focus; fix findings test-first.
-- [ ] Write `E:\CLAUDE BU\reports\TekPractice night 5 - all equipment built.md` (per wave: promoted / beta-modelled / blocked counts, per-device table, gates, test numbers, open items, the `git log origin/assets/3d-rebuild..HEAD` list, the validation checklist for the founder) and a test checklist like the night 4 one; update memory (`project_tekpractice_3d_rebuild.md` and the MEMORY.md line).
+- [ ] Write a report kept outside the repository (per wave: promoted / beta-modelled / blocked counts, per-device table, gates, test numbers, open items, the `git log origin/assets/3d-rebuild..HEAD` list, the validation checklist for the founder) and a test checklist like the night 4 one; update memory (`project_tekpractice_3d_rebuild.md` and the MEMORY.md line).
 
 ### Task 6.1 (stretch, only if everything above is green)
 - [ ] Hand-measured control layouts for the desks and strips with real controls (Rodecaster Pro II, Mackie 1604VLZ4, X32, A&H SQ-5), one layout per commit with a layout-parity test.
