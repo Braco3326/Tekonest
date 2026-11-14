@@ -7,7 +7,7 @@
 > réel le héros. JAMAIS de valeur en dur hors tokens.
 >
 > **Deux systèmes.** Cette page décrit d'abord le système historique (blanc, `--tk-*`). Le Mode Création a le sien (Nuit / Papier / Ambre / Prune,
-> `--cr-*`, angles droits) : voir « Mode Création chrome » plus bas, et « Scène 3D — Mode Création » pour la vue.
+> `--cr-*`, angles droits) : voir « Mode Création chrome » plus bas, et « Scène 3D — Mode Création » pour la vue. Les cinq paquets d'accueil (`?design=1..5`, branche `design/onboarding-packs`) sont des variantes de ce second système : voir « Packages de design ».
 
 ## Principes
 
@@ -133,6 +133,124 @@ l'écran de départ : `.cr:has(.cr-pick:not([hidden]) .cr-pick-close[hidden])` (
 le micro et le bouton Signal (« Rien de branché » y serait lu comme un avertissement).
 
 **Défilement.** Barres fines aux couleurs du chrome (`scrollbar-width: thin`, `scrollbar-color: ink-muted` sur `panel`) pour tout ce qui défile.
+
+## Packages de design
+
+Cinq identités d’accueil du Mode Création, choisies par l’adresse : `?design=1` à `?design=5`. **Sans `?design`, rien de ce qui suit n’existe : le jeu est celui d’aujourd’hui.** Un paquet change l’aspect (couleurs, disposition des panneaux), la première visite et le tutoriel ; il ne change **jamais un résultat de la simulation** (voir « Le mécanisme `?design` et la règle de neutralité »). Tout est local à la branche `design/onboarding-packs` : rien n’est publié. Sources : `src/design/packages.ts` (la table), `src/design/creationTokens.ts` (`RoleColours`, `contrastRatio`), `src/design/packageContrast.ts` (les paires), `src/design/packages.css` (l’application), spécification `docs/superpowers/specs/2026-11-12-onboarding-packs-design.md` §7, ADR-0017.
+
+Chaque figure ci-dessous porte sa source. **Calculé** = la formule WCAG 2.1 (`contrastRatio`) appliquée aux couleurs déclarées ; **mesuré** = lu dans un navigateur (Chromium, Windows) sur la page construite ; **non mesuré** est dit comme tel, en dernière sous-section.
+
+### Les cinq identités
+
+Valeurs de `src/design/packages.ts` (`DESIGN_PACKAGES`) ; noms = clés COPY `design.name1` à `design.name5` (« à valider », non affichés dans l’application) ; « meilleur pour » et « risque » = spécification §7.2.
+
+| | 1 Pas à pas | 2 Atelier | 3 Salle d’abord | 4 Pupitre | 5 Modèle d’abord |
+|---|---|---|---|---|---|
+| Signe distinctif (`tell`) | une seule chose allumée sur un écran sombre | bandeaux Prune de feuille d’étude | une feuille Papier de plein jour | à plat, console à filets, aucun panneau en relief | un cadre Prune autour de la vue 3D |
+| Meilleur pour | le débutant | l’étudiant | l’entrepreneur | l’ingénieur | mixte |
+| Panneaux Projet / Propriétés au départ | repliés / repliés | ouverts / ouverts | repliés / ouvert | ouverts / ouverts | ouvert / replié |
+| Tiroir d’inventaire | reste ouvert | reste ouvert | reste ouvert | se ferme après la pose | se ferme après la pose |
+| Densité | confortable | dense | confortable | dense | confortable |
+| Style de surface (`data-surface`) | `raised` | `banded` | `sheet` | `flat` | `framed` |
+| Coin d’Oscar | bas droit | bas gauche | haut droit | bas droit | bas gauche |
+| Raccourcis à côté des commandes | non | oui | non | oui | non |
+| Liste « Pourquoi je n’entends rien ? » | pastille | panneau | pastille | pastille | pastille |
+| Présentateur principal | fiche d’étape | liste | fiche d’étape | liste | fiche d’étape |
+| Oscar | mène, proactif | ne mène pas, proactif | mène, proactif | ne mène pas, en sourdine par défaut | mène, proactif |
+| Départ | salle vide neutre | salle vide neutre | salle vide neutre | salle vide neutre | modèle jouable `premier-son-pret` |
+| Étapes du tutoriel | dix | dix | dix | dix | trois (`ecoute`, `debrancher`, `rebrancher`) |
+| Indice après (`hintAfterMs`) | 20 s | 30 s | 20 s | aucun | 25 s |
+| Risque | condescendant | dense en 1366 × 768 | salles non relues après le premier son | un débutant s’y perd | dépend du modèle jouable |
+
+Le profil choisi à l’écran de départ peut ouvrir les panneaux (« J’étudie le son » et « Je travaille dans le son » ouvrent les deux, là où la fenêtre le permet) ; la largeur borne toute ouverture automatique (Projet dès 760 px, Propriétés dès 1200 px ; ADR-0017). La fiche d’étape existe dans les cinq (parité du DOM) ; pour 2 et 4 elle est une compagne plus serrée (`data-presenter`). Aucun paquet ne partage ni sa carte de couleurs ni son préréglage de disposition (`tests/design/packages.test.ts`).
+
+### Les cartes de rôles (19 rôles par paquet)
+
+`RoleColours` (`src/design/creationTokens.ts`) dit à quoi sert une couleur ; la table dit laquelle. Une couleur est une des quatre de marque (Nuit `#131114`, Papier `#F3EDE3`, Ambre `#DD9349`, Prune `#612D45`), un dérivé existant (`panel` `#1C191D`, `panelLine` `#3A3339`, `inkMuted` `#B3AAA0`, `danger` `#F08A7E`, `ok` `#8CCB9B`) ou une des **six** teintes dérivées déclarées dans `packages.ts` (`ALLOWED_COLOURS`) : `#615E5C` (encre atténuée sur Papier), `#E6E0D7` (second ton de la feuille Papier), `#9B2C20` et `#2F6B3E` (erreur et succès sur Papier), `#F7A59B` (erreur sur Prune), `#704055` (lavis sur Prune). Rien d’autre n’est permis (`tests/design/packages.test.ts`).
+
+| Rôle | 1 Pas à pas | 2 Atelier | 3 Salle d’abord | 4 Pupitre | 5 Modèle d’abord |
+|---|---|---|---|---|---|
+| `ground` (fond d’écran, dialogues) | Nuit | Nuit | Papier | Nuit | Nuit |
+| `surface` (panneaux, tiroir, cartes) | panel | panel | Papier | Nuit | Prune |
+| `inset` (champ, second ton) | Nuit | Nuit | `#E6E0D7` | panel | Nuit |
+| `wash` (ligne survolée ou choisie) | `#3A3339` | `#3A3339` | `#E6E0D7` | `#3A3339` | `#704055` |
+| `ink` | Papier | Papier | Nuit | Papier | Papier |
+| `inkMuted` | `#B3AAA0` | `#B3AAA0` | `#615E5C` | `#B3AAA0` | `#B3AAA0` |
+| `accent` (aplat) | Ambre | Ambre | Ambre | Ambre | Ambre |
+| `accentInk` (texte sur l’aplat) | Nuit | Nuit | Nuit | Nuit | Nuit |
+| `accentEdge` (bord de l’aplat) | Ambre | Ambre | Nuit | Ambre | Ambre |
+| `accentText` (texte d’emphase) | Ambre | Ambre | Prune | Ambre | Papier |
+| `secondary` | Prune | Prune | Prune | Nuit | Nuit |
+| `secondaryInk` | Papier | Papier | Papier | Papier | Papier |
+| `band` (tête de panneau) | panel | Prune | Papier | Nuit | Prune |
+| `bandInk` | Papier | Papier | Nuit | Papier | Papier |
+| `focus` (anneau) | Ambre | Ambre | Nuit | Papier | Papier |
+| `select` (bordures, barres) | Ambre | Ambre | Prune | Ambre | Ambre |
+| `line` (filet décoratif) | `#3A3339` | `#3A3339` | `#615E5C` | `#B3AAA0` | `#B3AAA0` |
+| `danger` | `#F08A7E` | `#F08A7E` | `#9B2C20` | `#F08A7E` | `#F7A59B` |
+| `ok` | `#8CCB9B` | `#8CCB9B` | `#2F6B3E` | `#8CCB9B` | `#8CCB9B` |
+
+Fixe pour les cinq : la barre de menus, la barre d’état, la scène 3D, les angles droits, Tektur pour les titres, IBM Plex Sans pour l’interface ; le guide (Oscar) reste une carte sombre (ADR-0017). Un `line` est un filet : jamais le seul bord d’un contrôle (les contrôles sont bordés en `inkMuted`).
+
+### Contraste
+
+**Règle :** texte ≥ 4,5 : 1, interface (anneau de focus, bordure, barre, bord d’un aplat) ≥ 3 : 1. Chaque paire qu’une carte déclare est **calculée** par `declaredPairs(c)` (`src/design/packageContrast.ts`) puis vérifiée par `tests/design/packageContrast.test.ts` pour les cinq paquets ; un test fabrique une paire Ambre sur Papier et vérifie qu’elle **échoue** (le vérificateur mord). Ambre sur Papier (2,16 : 1) n’est ni du texte ni une limite : c’est le piège du paquet 3, d’où le focus Nuit, la sélection Prune et le bord Nuit de 2 px sur un aplat Ambre.
+
+**D’où viennent les chiffres.** Le test affirme les *seuils*, pas les rapports exacts (il écrit seulement 2,16 pour Ambre sur Papier). Les rapports ci-dessous sont les chiffres *calculés* inscrits dans la spécification §7.3 (calculés le 2026-11-12), dans les commentaires de `src/design/packages.ts` (teintes dérivées) et dans l’ADR-0017 (lavis) ; la colonne « Source » dit lequel. Aucun n’a été recalculé pour ce document.
+
+| Paire (premier plan sur fond) | Rapport | Besoin | Paquets | Source |
+|---|---|---|---|---|
+| Papier sur Nuit (texte, anneau du paquet 4) | 16,13 | texte 4,5 ; anneau 3 | 1, 2, 4, 5 (fond), 4 (anneau) | spéc. §7.3 |
+| Papier sur panel (texte courant) | 14,95 | 4,5 | 1, 2 | spéc. §7.3 ; `creationTokens.ts` (en-tête) |
+| `inkMuted` sur panel / sur Nuit | 7,61 / 8,21 | 4,5 | 1, 2, 4 | spéc. §7.3 |
+| Ambre sur panel (anneau, sélection, emphase) | 6,92 | texte 4,5 ; interface 3 | 1, 2, 4 (second ton) | spéc. §7.3 |
+| Ambre sur Nuit (sélection, emphase) | 7,46 | 4,5 | 1, 2, 4 | spéc. §7.3 |
+| Nuit sur Ambre (texte d’un aplat Ambre) | 7,46 | 4,5 | 1 à 5 | spéc. §7.3 ; ADR-0017 |
+| Papier sur Prune (texte d’une bande ou de la fiche, anneau sur bande) | 9,16 | 4,5 / 3 | 1, 3 (fiche, liens), 2 (bande), 5 | spéc. §7.3 |
+| `inkMuted` sur Prune | 4,66 | 4,5 | 2 (bande), 5 | spéc. §7.3 ; `onboarding-contrast.spec.ts` en imprime la lecture |
+| Ambre sur Prune (barre, bord d’aplat : **interface seulement**) | 4,24 | 3 (pas du texte : 4,24 < 4,5) | 2 (bande), 5 | spéc. §7.3 ; `packageContrast.test.ts` (paire fabriquée : texte refusé, interface acceptée) |
+| Nuit sur Papier (encre, anneau, bord d’aplat) | 16,13 | 4,5 / 3 | 3 | spéc. §7.3 |
+| Prune sur Papier (sélection, liens, emphase) | 9,16 | 4,5 / 3 | 3 | spéc. §7.3 ; ADR-0017 |
+| `#615E5C` sur Papier / sur `#E6E0D7` | 5,53 / 4,90 | 4,5 | 3 | `packages.ts` (commentaire de `D`) |
+| Nuit sur `#E6E0D7` / Prune sur `#E6E0D7` | 14,32 / 8,13 | 4,5 / 3 | 3 | `packages.ts` (commentaire de `D`) |
+| `#9B2C20` (erreur), `#2F6B3E` (succès) sur Papier | 6,50 ; 5,48 | 4,5 | 3 | `packages.ts` (commentaire de `D`) |
+| `#F7A59B` (erreur) sur Prune | 5,49 | 4,5 | 5 | `packages.ts` (commentaire de `D`) |
+| Lavis `#3A3339` : encre / barre Ambre / contre le panneau | 10,53 / 4,87 / 1,42 | 4,5 / 3 / (visible : ≥ 1,25) | 1, 2, 4 | ADR-0017 ; `packageContrast.test.ts` (≥ 1,25) |
+| Lavis `#704055` : encre / barre Ambre / contre le panneau | 7,06 / 3,27 / 1,30 | 4,5 / 3 / (≥ 1,25) | 5 | `packages.ts` (commentaire de `D`) ; ADR-0017 |
+
+Les paires les plus justes : `inkMuted` sur Prune 4,66 (marge de 0,16 sur 4,5), la barre du lavis du paquet 5 à 3,27 (marge de 0,27 sur 3 ; une teinte plus claire la ferait passer sous 3) et Ambre sur Prune 4,24 (interface seulement). **Jamais du texte** (spéc. §7.3 et `packageContrast.test.ts`) : l’erreur et le succès clairs sur Papier (2,09 et 1,62), Prune sur Nuit (1,76), `panelLine` sur Nuit (1,53) ; l’encre sur `line` aux paquets 4 et 5 fait 1,97 (le test exige moins de 2,2 : c’est pourquoi `line` n’est jamais un remplissage).
+
+**Mesuré dans le navigateur.** `tests/e2e/onboarding-contrast.spec.ts` lit les styles calculés de la page, par paquet, dans six états (écran de départ, lieux, salle avec tiroir, Propriétés et arbre ouverts, une boîte de dialogue, les deux fenêtres flottantes) : anneau de focus = rôle `focus` du paquet à ≥ 3 : 1 contre son fond ; bordure de survol = `select` ≥ 3 ; texte de survol = `accentText` ≥ 4,5 ; **aucun** élément ne résout Ambre en texte, contour, bordure ou barre là où il ne se lit pas (paquet 3 : Papier) ; **tout** texte visible ≥ 4,5 sur son fond calculé ; axe `color-contrast` propre dans les cinq paquets. Ce que ce test ne mesure pas : l’anneau Ambre du guide sur Papier (voir plus bas).
+
+### Équilibre Nuit / Papier / Ambre / Prune
+
+Le « signe » de chaque paquet est celui de la spécification §7.2. Le test du plissement des yeux (`tests/e2e/onboarding-visual.spec.ts`, spéc. §11.7) réduit la capture de la salle de chaque paquet (vue 3D masquée en magenta, Oscar caché dans la seconde passe) et compte, sur une grille de 128 × 72 cellules, la part de chaque famille. Une cellule est rangée dans une famille à moins de ΔE 12 de ses couleurs de référence ; la famille Nuit inclut `panel` et `panelLine`, Papier inclut `#E6E0D7`, Prune inclut `#704055`. Chiffres **mesurés** (1366 × 768, première salle, étape 1), identiques sur six exécutions ; source : rapport G14d (non versionné) et `KNOWN_BALANCE` du fichier de test.
+
+| Paquet | Nuit | Papier | Ambre | Prune | Part de Prune **déclarée** (spéc. §7.2) | Écart |
+|---|---|---|---|---|---|---|
+| 1 Pas à pas | 89,6 % | 0 | 0,4 % | 10,0 % | environ 3 % | **hors de la ligne** (+7 points) |
+| 2 Atelier | 92,0 % | 0 | 0,3 % | 7,7 % | environ 20 % | **hors de la ligne** (−12 points) |
+| 3 Salle d’abord | 25,3 % | 74,3 % | 0,3 % | 0,0 % | seulement en sélection, liens et emphase | conforme (l’encre est Nuit) |
+| 4 Pupitre | 99,7 % | 0 | 0,3 % | 0,0 % | 0 % | conforme |
+| 5 Modèle d’abord | 45,7 % | 0 | 0,2 % | 54,1 % | environ 45 % | **hors de la ligne** (+9 points) |
+
+« Environ N % » se lit N ± 5 points dans le test (`ABOUT_PTS`). Le test fixe les trois écarts par leur nom (`KNOWN_BALANCE`) : il échoue le jour où l’un disparaît ou qu’un autre apparaît. **À regarder à l’écran** (décision du fondateur) : le paquet 1 a plus de Prune que prévu, le paquet 2 beaucoup moins (les bandeaux sont fins). Les paquets se distinguent bien : la paire la plus proche, 2 contre 4, diffère sur **14,2 %** des cellules de la grille de 32 × 18 (seuil 8 %) ; toutes les autres paires font 33 % ou plus (avec Oscar caché : 1-2 33,2 %, 1-3 60,9 %, 1-4 37,5 %, 1-5 50,3 %, 2-3 67,5 %, 2-5 61,5 %, 3-4 67,5 %, 3-5 67,5 %, 4-5 56,1 % ; source : rapport G14e, S5).
+
+### Le mécanisme `?design` et la règle de neutralité
+
+- **Une adresse, un paquet.** `designFromSearch` (`src/design/packages.ts`) accepte exactement une clé `design` valant `1` à `5` ; rien d’autre ne compte (aucune, deux, `0`, `6`, `01`, vide : le jeu d’aujourd’hui). `applyDesignAttribute` écrit `data-design` sur `<html>` ; le paquet n’est **jamais mémorisé** et on change de paquet en changeant l’adresse (rechargement), pas à chaud.
+- **Pratique seulement.** L’aspect et la disposition ne s’appliquent que sur une adresse de pratique : `src/main.ts` pose la classe `cr-practice` sur `<html>` quand il n’y a ni `mode`, ni `level`, ni `legacy` ; `lookOfRoot` exige `data-design` **et** cette classe. Une adresse d’examen avec `?design` porte l’attribut et ne change ni couleur, ni panneau, ni tiroir (`tests/e2e/design-attribute.spec.ts`, `tests/design/packages.test.ts`).
+- **Comment une carte devient du CSS.** `injectCreationTokens(root, roles?)` écrit la carte en `--cr-role-*` ; `packages.css` re-pointe les jetons résolus (`--cr-focus`, `--cr-select`, `--cr-accent`…) **à l’intérieur** des surfaces qu’un paquet restyle (panneaux, tiroir, sélecteur, dialogues, fenêtres flottantes). La feuille sélectionne sur `data-surface`, `data-density`, `data-drawer`, `data-shortcuts` (écrits par `applyLookAttributes` d’après la disposition du paquet), jamais sur un numéro de paquet : aucune règle CSS de `src` ne contient `data-design`.
+- **Neutralité : un seul moteur.** Les cinq paquets sont des *données* (`DESIGN_PACKAGES`, un tableau **gelé en profondeur** : `deepFreeze`, et `tests/design/packages.test.ts` vérifie qu’une écriture dans un objet partagé lève une erreur au lieu de fuir dans les quatre autres) lues par les mêmes composants, qui lisent des **champs** du paquet actif, jamais son numéro. Le garde-fou `tests/design/noDesignBranching.test.ts` refuse, hors `packages.ts`, `design ===`, `switch (design)`, une lecture de `data-design`, `DESIGN_PACKAGES[`, `pkg.id === <nombre>`, `packageById(<littéral>)` et la lecture de la clé `design` de l’adresse (limite dite dans le test : le balayage est ligne par ligne, un numéro copié d’abord dans une variable n’est pas vu). Le moteur, le chemin du signal, les contrôles R4 à R8 et le magasin n’importent jamais les paquets ni le code d’accueil (`tests/engineImports.test.ts`, graphe d’imports suivi jusqu’au bout), n’ont aucune différence avec `ee396da` (`tests/engineDiff.test.ts`), et un même banc donne les mêmes sorties du moteur sur `/` et sur `/?design=1..5` (`tests/e2e/engine-neutrality.spec.ts`, comparateur prouvé capable d’échouer). Ajouter un paquet ou changer une couleur = éditer la table ; si une paire déclarée tombe sous son seuil, le test dit laquelle.
+
+### Ce qui n’est pas mesuré
+
+- **Aucun passage humain** : ni regard sur écran des cinq équilibres, ni lecteur d’écran, ni apprenant réel. Les contrastes sont calculés et lus dans Chromium, pas jugés par une personne.
+- **Couleurs forcées** (mode contraste élevé de Windows) : non mesurées pour les paquets.
+- **Largeur de 375 px** : non mesurée pour les paquets (la géométrie d’Oscar est mesurée à 1366 × 768, 1024 × 768 et 820 × 1180).
+- **L’anneau Ambre du guide sur Papier** (paquet 3) : choix de conception, ni l’anneau ni son halo Nuit ne sont mesurés contre Papier ; décision ouverte du fondateur (ADR-0017).
+- **Les captures de référence** (`onboarding-visual.spec.ts`) ne sont faites que sous Windows (`-win32.png`) et **la scène 3D n’y est pas** : la vue 3D est masquée ; le style de la scène n’est donc pas protégé par ces images.
+- Trois paquets ont une part de Prune hors de la ligne déclarée (tableau ci-dessus).
 
 ## HUD
 

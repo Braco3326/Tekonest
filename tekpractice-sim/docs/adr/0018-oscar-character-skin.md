@@ -1,6 +1,7 @@
 # ADR-0018 — Le nouvel Oscar : un personnage hôte posé sur le widget fourni, sans patch du code fourni
 
 - **Status:** Accepté par défaut — en attente de validation du fondateur (paquets d’accueil, 2026-11-13). Le badge `oscar.badge` est « à valider (tekuxwriter) ».
+- **Amendé le 2026-11-14 (G15b)** après relecture contre le code : la section « Ce qui n’est pas mesuré » est complétée (états hors « point », place par rapport à l’appareil montré, absence d’Oscar au chargement).
 - **Sources :** spécification `docs/superpowers/specs/2026-11-12-onboarding-packs-design.md` (§9, §10.1 à §10.3, §11 items 5 et 6, erratum T5 du 2026-11-13) ; plan `docs/superpowers/plans/2026-11-12-onboarding-packs.md` (T5.1 à T5.5) ; `src/guide/character.ts`, `src/guide/character.css`, `src/guide/skin.ts`, `src/guide/mount.ts`, `src/guide/theme.css`, `src/guide/restore.ts`.
 
 ## Contexte
@@ -48,6 +49,10 @@ Un `<span class="tp-oscar-badge">` « Oscar · Assistant » (COPY `oscar.badge`,
 - L’en-tête de la bulle à 375 px de large avec le badge.
 - La cible de clic : un cercle de 56 px, alors que le personnage visible fait environ 46 px ; les coins montrent la scène 3D (à l’étape 4, l’icône se pose sur le bord de la console).
 - Le pointage pendant la transition de 220 ms du bras (les mesures se font en mouvement réduit, poses statiques).
+- **Les états autres que « point » dans une image** : les images fixes du storyboard sont prises au repos, donc toutes dans la pose « point » ; le hochement, le salut et la célébration ne figurent dans aucune capture (la silhouette à 24 px, elle, est mesurée pour quatre états : `tests/e2e/character.spec.ts`, spéc. §11.6).
+- **La place du personnage par rapport à l’appareil montré** n’est pas une propriété du dessin : relevé à 1366 px, l’icône repose sur l’appareil visé (0 à 4 px de l’anneau) aux paquets 2, 3 et 4 (aux étapes 4, 6 et 8 pour 2 et 4 ; à l’étape 9 pour 2, 3 et 4), et la bulle ou l’icône couvrent le centre de la vue aux paquets 2, 3 et 4 (`tests/e2e/onboarding-geometry.spec.ts`, listes `KNOWN_*`, ADR-0021).
+- **Un Oscar qui ne se charge pas** : le guide démarre après la coque et attend neuf modules paresseux sans délai ni repli ; un morceau qui reste ouvert laisse l’apprenant sans Oscar et sans message (cas non reproduit en 390 chargements ; `tests/e2e/onboarding-mount-rate.spec.ts` mesure 30 visites sans échec sur une machine).
+- **Aucune personne** n’a vu le personnage bouger : les mesures sont des programmes (silhouette, mouvement fini, mouvement réduit), pas un regard.
 
 ## Conséquences
 
