@@ -21,7 +21,7 @@ import { createTekPracticeBrain } from './brain'
 import { tpString } from './strings'
 import type { TpBridge, TpState } from './bridge/types'
 import { NAV_SELECTORS, firstRect, type BridgeDoc } from './bridge/shared'
-import { createRevealer, type RevealDoc } from './reveal'
+import { createRevealer, createRowRevealer, type RevealDoc, type RowDoc } from './reveal'
 import { PLAY_STARTED, TUTORIAL_REQUEST, annotateTutorialEvent, closingLines, createTutorialRuntime, isTutorialAnchor, resolveTutorialAnchor, type TutorialDetail } from './tutorial'
 import { mountStepCard, type StepCard } from './stepCard'
 import type { StepId } from '../design/packages'
@@ -483,6 +483,8 @@ export function createRectResolver(deps: {
   const rectOfAnchor = (a: string): Rect | null => (a === '' ? null : bridge.rectOf(a))
   // G14c fix (a): a ringed Propriétés button below the panel's fold is scrolled into view, once per target (src/guide/reveal.ts)
   const reveal = createRevealer(deps.doc as RevealDoc | undefined, (e) => (typeof getComputedStyle === 'function' ? getComputedStyle(e as unknown as Element).overflowY : 'visible'))
+  // Merge fix 2026-11-14: a ringed drawer tab past the end of the sideways-scrolling tab row is brought into the row, once per tab element (src/guide/reveal.ts)
+  const revealRow = createRowRevealer(deps.doc as RowDoc | undefined, (e) => (typeof getComputedStyle === 'function' ? getComputedStyle(e as unknown as Element).overflowX : 'visible'))
 
   function resolve(anchor: string, t: number): Rect | null {
     if (anchor === SUGGEST_FROM || anchor === SUGGEST_TO) {
@@ -511,6 +513,7 @@ export function createRectResolver(deps: {
         helperUnlocked: deps.helperUnlocked?.() === true,
         helperOffered: deps.helperOffered?.() === true,
         reveal,
+        revealRow,
       })
       // undefined: not the tutorial's to answer here (nav:ecoute while the bench can play): the bridge's shell anchor, as before
       if (r !== undefined) return r

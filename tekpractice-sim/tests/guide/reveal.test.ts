@@ -1,7 +1,7 @@
 // G14c fix (a): the ringed Propriétés button is brought into view inside its scroll box, once per target (src/guide/reveal.ts), and the tutorial's
 // resolver asks for it on the rows it rings (src/guide/tutorial.ts deviceThenRow and the playback row).
 import { describe, expect, it } from 'vitest'
-import { createRevealer, scrollBoxOf, type RevealElement } from '../../src/guide/reveal'
+import { createRevealer, createRowRevealer, rowBoxOf, scrollBoxOf, type RevealElement, type RowElement } from '../../src/guide/reveal'
 import { resolveTutorialAnchor, type AnchorEnv } from '../../src/guide/tutorial'
 import { propsKeySelector } from '../../src/guide/bridge/shared'
 import { makeRegistry } from '../helpers'
@@ -123,10 +123,97 @@ describe('G14c fix (d): with the « Matériel » menu open, the inventory steps 
     }
     resolveTutorialAnchor('nav:inventory.item.shure-sm58', env)
     resolveTutorialAnchor('nav:inventory.tab.micros', env)
-    for (const sels of asked) {
+    // the item anchor asks for its card alone first (merge fix 2026-11-14: the tab is revealed only when the card is not shown), then the fallback list
+    const fallbacks = asked.filter((sels) => sels.includes('#cr-menu-materiel'))
+    expect(fallbacks).toHaveLength(2)
+    for (const sels of fallbacks) {
       const item = sels.indexOf('#cr-menu-materiel-panel [data-item="inventory"]')
       expect(item, sels.join(' , ')).toBeGreaterThanOrEqual(0)
       expect(item).toBe(sels.indexOf('#cr-menu-materiel') - 1)
     }
+  })
+})
+
+// Merge fix 2026-11-14 (equipment build merged into the onboarding packs): eleven drawer tabs, « Secteur » past the right end of the tab row at 1366 px.
+// The tutorial's step 7 rang that hidden tab (its rect under « Fermer »): a click on the ring closed the drawer, a dead end.
+interface RowFake extends RowElement {
+  left: number
+  right: number
+  overflow: string
+}
+const rowEl = (left: number, right: number, parent: RowFake | null, o: Partial<RowFake> = {}): RowFake => {
+  const e: RowFake = { left, right, overflow: 'visible', parentElement: parent, getBoundingClientRect: () => ({ left: e.left, right: e.right }), ...o }
+  return e
+}
+const ovx = (e: RowElement): string => (e as RowFake).overflow
+
+describe('createRowRevealer (the drawer tab row)', () => {
+  it('triggers: a tab past the right end of a sideways-scrolling row is centred in it, once per tab element', () => {
+    const row = rowEl(200, 900, null, { overflow: 'auto', scrollWidth: 1300, clientWidth: 700, scrollLeft: 0 })
+    const secteur = rowEl(1000, 1080, row)
+    const reveal = createRowRevealer({ querySelector: () => secteur }, ovx)
+    expect(reveal('#secteur')).toBe(true)
+    expect(row.scrollLeft).toBe(1040 - 550) // tab centre to row centre
+    // the learner scrolled the row away again (same drawer, same tab element): left alone
+    row.scrollLeft = 0
+    expect(reveal('#secteur')).toBe(false)
+    expect(row.scrollLeft).toBe(0)
+    // the drawer reopened: its tabs were rebuilt, a new element is a new target
+    const again = rowEl(1000, 1080, row)
+    const reveal2 = createRowRevealer({ querySelector: (s) => (s === '#new' ? again : secteur) }, ovx)
+    expect(reveal2('#new')).toBe(true)
+  })
+
+  it('triggers: a tab under the edge fade (within 28 px of a side) is centred', () => {
+    const row = rowEl(200, 900, null, { overflow: 'auto', scrollWidth: 1300, clientWidth: 700, scrollLeft: 100 })
+    const faded = rowEl(820, 890, row)
+    expect(createRowRevealer({ querySelector: () => faded }, ovx)('#f')).toBe(true)
+    expect(row.scrollLeft).toBe(100 + 855 - 550)
+  })
+
+  it('does not trigger: a tab clear of both edges, a row that does not scroll, a missing tab, a throwing page', () => {
+    const row = rowEl(200, 900, null, { overflow: 'auto', scrollWidth: 1300, clientWidth: 700, scrollLeft: 0 })
+    const shown = rowEl(400, 480, row)
+    expect(createRowRevealer({ querySelector: () => shown }, ovx)('#s')).toBe(false)
+    expect(row.scrollLeft).toBe(0)
+    const fits = rowEl(200, 900, null, { overflow: 'auto', scrollWidth: 700, clientWidth: 700, scrollLeft: 0 })
+    const off = rowEl(1000, 1080, fits)
+    expect(createRowRevealer({ querySelector: () => off }, ovx)('#o')).toBe(false)
+    expect(fits.scrollLeft).toBe(0)
+    expect(createRowRevealer({ querySelector: () => null }, ovx)('#m')).toBe(false)
+    expect(createRowRevealer({ querySelector: () => { throw new Error('x') } }, ovx)('#t')).toBe(false)
+    expect(createRowRevealer(undefined, ovx)('#u')).toBe(false)
+    expect(rowBoxOf(off, ovx)).toBeNull()
+  })
+})
+
+describe('merge fix 2026-11-14: the inventory anchors reveal the tab, never the card', () => {
+  const registry = makeRegistry()
+  const base = (cardShown: boolean, revealed: string[]): AnchorEnv => ({
+    state: null,
+    selection: null,
+    registry,
+    firstRect: (sels) => (sels[0]?.includes('inventory-item') ? (cardShown ? { x: 10, y: 600, w: 120, h: 80 } : null) : { x: 1000, y: 100, w: 80, h: 30 }),
+    rectOfAnchor: () => null,
+    anchorOfDevice: (id) => id,
+    anchorOfPort: (r) => r.port,
+    anchorOfControl: (i) => i,
+    revealRow: (sel) => void revealed.push(sel),
+  })
+
+  it('triggers: the card is not shown (another tab is open): its tab is revealed in the row, and the tab is ringed', () => {
+    const revealed: string[] = []
+    const r = resolveTutorialAnchor('nav:inventory.item.multiprise-secteur', base(false, revealed))
+    expect(revealed).toEqual(['[data-testid="inventory-drawer"][data-open="true"] [role="tab"][data-tab="secteur"]'])
+    expect(r).toEqual({ x: 1000, y: 100, w: 80, h: 30 })
+    resolveTutorialAnchor('nav:inventory.tab.secteur', base(false, revealed))
+    expect(revealed).toHaveLength(2)
+  })
+
+  it('does not trigger: the card is shown, so it is ringed and the row is left as it is', () => {
+    const revealed: string[] = []
+    const r = resolveTutorialAnchor('nav:inventory.item.multiprise-secteur', base(true, revealed))
+    expect(revealed).toEqual([])
+    expect(r).toEqual({ x: 10, y: 600, w: 120, h: 80 })
   })
 })

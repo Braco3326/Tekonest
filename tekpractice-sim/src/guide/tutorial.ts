@@ -516,6 +516,8 @@ export interface AnchorEnv extends Anchors {
   helperOffered?: boolean
   /** G14c fix (a): bring a ringed Propriétés button into its panel's view (src/guide/reveal.ts), once per `key`. Absent: nothing scrolls (as before). */
   reveal?(selector: string, key: string): void
+  /** Merge fix 2026-11-14: bring a ringed drawer tab into the tab row's view when the row scrolls sideways (src/guide/reveal.ts `createRowRevealer`). Absent: nothing scrolls. */
+  revealRow?(selector: string): void
 }
 
 const rest = (anchor: string, prefix: string): string | null => (anchor.startsWith(`${prefix}.`) ? anchor.slice(prefix.length + 1) : null)
@@ -557,9 +559,16 @@ export function resolveTutorialAnchor(anchor: string, env: AnchorEnv): Rect | nu
     if (item !== null) {
       const d = registry.deviceById.get(item)
       if (d === undefined) return env.firstRect([MENU_INVENTORY_ITEM, MENU_MATERIEL])
-      return env.firstRect([inventoryItemSelector(item), inventoryTabSelector(tabFor(d)), MENU_INVENTORY_ITEM, MENU_MATERIEL])
+      const card = env.firstRect([inventoryItemSelector(item)])
+      if (card !== null) return card
+      // the card's tab may lie past the end of the sideways-scrolling tab row (« Secteur » at 1366 px since the equipment build): bring it into the row first
+      env.revealRow?.(inventoryTabSelector(tabFor(d)))
+      return env.firstRect([inventoryTabSelector(tabFor(d)), MENU_INVENTORY_ITEM, MENU_MATERIEL])
     }
-    if (tab !== null) return env.firstRect([inventoryTabSelector(tab), MENU_INVENTORY_ITEM, MENU_MATERIEL])
+    if (tab !== null) {
+      env.revealRow?.(inventoryTabSelector(tab))
+      return env.firstRect([inventoryTabSelector(tab), MENU_INVENTORY_ITEM, MENU_MATERIEL])
+    }
     const state = env.state
     if (state === null) return null
     if (connect !== null) {
