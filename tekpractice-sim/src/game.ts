@@ -22,7 +22,7 @@ import { loadCatalog, loadLevel, type Registry } from './engine/CatalogLoader'
 import { ConnectionGraph } from './engine/ConnectionGraph'
 import { RuleEvaluator } from './engine/RuleEvaluator'
 import { LevelRunner } from './engine/LevelRunner'
-import type { LevelState, PortRef, TypedError } from './engine/types'
+import type { LevelState, PortRef, RigSnapshot, TypedError } from './engine/types'
 
 import { phantomCheck } from './logic/phantom'
 import { gpioCheck } from './logic/gpio'
@@ -97,6 +97,8 @@ declare global {
       glowCount: () => number
       /** Teaching hints gate — read/write (sandbox toggle flips it). */
       hints: () => boolean
+      /** The rig as the graph holds it, plain data (every device and every cable, not only the level's required links). Read only: the guide reads it. */
+      rig?: () => RigSnapshot
       /** Asset load status per instance (e2e: count glb vs placeholder). */
       assets: () => { instanceId: string; deviceId: string; status: 'glb' | 'placeholder' }[]
       /** Explore view state (ADR-0010): base view, eye position, look angles, FOV, pointer lock, panels. */
@@ -1174,6 +1176,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     view: () => focusPatch.view,
     glowCount: () => focusPatch.glowCount,
     hints,
+    rig: () => graph.snapshot(),
     assets: () =>
       instances.map((i) => ({ instanceId: i.instanceId, deviceId: i.deviceId, status: i.assetStatus })),
     explore: () => ({ ...explore.snapshot(), panels: exploreUi.panelCount(), placing: exploreUi.placing() }),

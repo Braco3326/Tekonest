@@ -25,6 +25,8 @@ interface World {
   assets: { instanceId: string; deviceId: string; status: 'glb' | 'placeholder' }[]
   devicePoint: Record<string, { x: number; y: number } | null>
   portPoint: Record<string, { x: number; y: number } | null>
+  /** The rig reader's answer: absent (the hook has none), a rig, or a function that throws or returns junk. */
+  rig?: { connections: { a: PortRef; b: PortRef }[] } | (() => unknown)
 }
 const key = (a: string, b: string): string => `${a} ${b}`
 
@@ -70,6 +72,16 @@ function fakeSim(w: World): { reader: LegacyReader; spies: Record<string, Return
       return w.devicePoint[id] ?? null
     },
   }
+  const rigReader =
+    w.rig === undefined
+      ? {}
+      : {
+          rig: () => {
+            count('rig')
+            return typeof w.rig === 'function' ? w.rig() : { instances: [], connections: w.rig!.connections }
+          },
+        }
+  Object.assign(readers, rigReader)
   const spies: Record<string, ReturnType<typeof vi.fn>> = {}
   for (const m of NON_READERS) spies[m] = m === 'hints' ? (vi.fn(() => false) as unknown as ReturnType<typeof vi.fn>) : vi.fn()
   return { reader: { ...readers, ...spies } as unknown as LegacyReader, spies, reads }
@@ -164,6 +176,64 @@ afterEach(() => {
   expect(errorSpy).not.toHaveBeenCalled()
   expect(warnSpy).not.toHaveBeenCalled()
   vi.restoreAllMocks()
+})
+
+// ── the rig reader: every cable of the rig, not only the required links already made ──────────────────────────────────
+
+describe('the rig reader of the hook', () => {
+  const FIRST = { a: level.requiredChain[0].from, b: level.requiredChain[0].to }
+  const STRAY = { a: { instance: 'sm58-1', port: 'out-xlr' }, b: { instance: 'rio-1', port: 'in-mic-2' } }
+
+  it('without the reader the cables are the made required links (the behaviour of a hook without the reader)', () => {
+    const r = make(world([0]))
+    expect(r.bridge.snapshot()!.connections).toEqual([FIRST])
+    expect(r.reads.rig).toBeUndefined()
+  })
+
+  it('with the reader the cables are those of the rig, a cable outside the required chain included, in the order of the rig', () => {
+    const w = world([0])
+    w.rig = { connections: [STRAY, FIRST] }
+    const r = make(w)
+    expect(r.bridge.snapshot()!.connections).toEqual([STRAY, FIRST])
+    expect(r.reads.rig).toBeGreaterThan(0)
+  })
+
+  it('a cable outside the chain is a connect event, and its removal a disconnect event', () => {
+    const w = world([0])
+    w.rig = { connections: [FIRST] }
+    const r = make(w)
+    const sub = subscribe(r)
+    r.bridge.snapshot()
+    w.rig = { connections: [FIRST, STRAY] }
+    r.timers.tick()
+    expect(sub.calls().some(([, ev]) => types(ev).includes('connect'))).toBe(true)
+    w.rig = { connections: [FIRST] }
+    r.timers.tick()
+    expect(sub.calls().some(([, ev]) => types(ev).includes('disconnect'))).toBe(true)
+  })
+
+  it('a reader that throws, or answers something that is not a rig, leaves the made required links (no error, no console output)', () => {
+    for (const bad of [
+      () => {
+        throw new Error('no rig yet')
+      },
+      () => null,
+      () => ({ instances: [], connections: 'x' }),
+      () => ({ instances: [], connections: [{ a: 1, b: 2 }] }),
+    ]) {
+      const w = world([0])
+      w.rig = bad
+      expect(make(w).bridge.snapshot()!.connections).toEqual([FIRST])
+    }
+  })
+
+  it('the rig is read, never changed: the reader is called with no argument and the bridge calls nothing else new', () => {
+    const w = world([0])
+    w.rig = { connections: [FIRST] }
+    const r = make(w)
+    r.bridge.snapshot()
+    for (const spy of Object.values(r.spies)) expect(spy).not.toHaveBeenCalled()
+  })
 })
 
 // ── the four named tests of the brief ───────────────────────────────────────────────────────────────────────────────

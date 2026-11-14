@@ -33,7 +33,7 @@ const GUIDE_POLL_MS = 500
 /** The window / document listeners the guide holds that the same page with `?oscar=0` does not (measured: these seven, two of them keydown: the guide's own keys and the Alt+Shift+O shortcut; an eighth, or another kind, fails the test). */
 const PAGE_LISTENERS = ['document click (capture)', 'document keydown', 'document keydown', 'document visibilitychange', 'window oscar-guide:event', 'window resize', 'window scroll (capture)']
 /** The only members of `window.__audioSim` the guide may call: the readers. */
-const READERS = ['assets', 'deviceScreen', 'portScreen', 'state']
+const READERS = ['assets', 'deviceScreen', 'portScreen', 'rig', 'state']
 
 // ── no console error, page error or `guide:` warning in any test ─────────────────────────────────────────────────────
 
@@ -322,6 +322,19 @@ test('Alt+Shift+O puts the focus on the icon from the canvas of a level page, th
   await expect(icon(page)).toBeFocused()
 })
 
+test('the hook has a read-only rig reader: every device and every cable the graph holds, and reading it changes nothing', async ({ page }) => {
+  await boot(page)
+  const before = await state(page)
+  const rig0 = await page.evaluate(() => window.__audioSim!.rig!())
+  expect(rig0.connections).toEqual([])
+  expect(rig0.instances.map((i) => i.instanceId).sort()).toEqual(a1.devices.map((d) => d.instanceId).sort())
+  await connect(page, 0)
+  const rig1 = await page.evaluate(() => window.__audioSim!.rig!())
+  expect(rig1.connections.map((c) => [c.a, c.b])).toEqual([[CHAIN[0].from, CHAIN[0].to]])
+  expect(await page.evaluate(() => JSON.stringify(window.__audioSim!.rig!()) === JSON.stringify(window.__audioSim!.rig!())), 'reading twice gives the same answer').toBe(true)
+  expect((await state(page)).missing.length, 'reading the rig changed nothing in the level').toBe(before.missing.length - 1)
+})
+
 // ── cost at rest ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
 test(`idle for ${IDLE_MS} ms adds 0 renders against ?oscar=0; the listeners differ by exactly the pinned ones; the guide never calls a method that is not a reader`, async ({ page, browser }) => {
@@ -368,7 +381,7 @@ test(`idle for ${IDLE_MS} ms adds 0 renders against ?oscar=0; the listeners diff
   // what the guide called on the hook, over the whole run: the readers, and only them
   const calls = await guideCalls(page)
   test.info().annotations.push({ type: 'guide-calls', description: JSON.stringify(calls) })
-  expect(Object.keys(calls).sort(), 'the members of window.__audioSim the guide called').toEqual(expect.arrayContaining(['assets', 'state']))
+  expect(Object.keys(calls).sort(), 'the members of window.__audioSim the guide called').toEqual(expect.arrayContaining(['assets', 'rig', 'state']))
   for (const name of Object.keys(calls)) expect(READERS, `${name} is not a reader`).toContain(name)
   expect(calls.hints, 'the guide never asks hints()').toBeUndefined()
   expect(calls.dispatch, 'the guide never dispatches').toBeUndefined()
