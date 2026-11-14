@@ -141,7 +141,7 @@ export function keywordsFor(stage: BenchStage): FlowKeywords[] {
  */
 export const CREATION_STRINGS = {
   ...defaultStrings,
-  planner: { ...defaultStrings.planner, needInfo: TP_STRINGS.planner.needInfo },
+  planner: { ...defaultStrings.planner, needInfo: TP_STRINGS.planner.needInfo, fix: '{cause}' }, // the head of a fix is the rule's title (the controller fills {cause})
   where: { ...defaultStrings.where, workbench: TP_STRINGS.where.creation },
   celebrate: { ...defaultStrings.celebrate, done: TP_STRINGS.celebrate.done },
   /** G14c fix (b): « Faire défiler la page » is no advice in a 3D view: the way to see the whole room (COPY, « vous » side). */

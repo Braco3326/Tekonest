@@ -26,8 +26,8 @@ const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
 const PLACE = 'room:concert-hall-medium'
 const ICON_NAME = 'Oscar, assistant IA'
 
-/** The window / document listeners the guide holds that the same page with `?oscar=0` does not (measured: these six; a seventh, or another kind, fails the test). */
-const PAGE_LISTENERS = ['document click (capture)', 'document keydown', 'document visibilitychange', 'window oscar-guide:event', 'window resize', 'window scroll (capture)']
+/** The window / document listeners the guide holds that the same page with `?oscar=0` does not (measured: these seven, two of them keydown: the guide's own keys and the Alt+Shift+O shortcut; an eighth, or another kind, fails the test). */
+const PAGE_LISTENERS = ['document click (capture)', 'document keydown', 'document keydown', 'document visibilitychange', 'window oscar-guide:event', 'window resize', 'window scroll (capture)']
 /** The most extra DisposableBag listeners (the app's own count; the guide registers none there: measured 0). */
 const BAG_LISTENERS_BUDGET = 0
 const IDLE_MS = 3000
@@ -311,6 +311,34 @@ test('Tab reaches the icon, Entrée opens the bubble, Échap closes it and puts 
   await expect(icon(page)).toBeFocused()
 })
 
+test('Alt+Shift+O puts the focus on the icon from the canvas of Mode Création, the screen reader hint says so, and a plain letter or one modifier does nothing, Escape still closes the bubble', async ({ page }) => {
+  await boot(page)
+  await waitGuide(page)
+  // the focus is on the page, not on the guide: the canvas (or the body when the page does not take focus)
+  await page.evaluate(() => {
+    const c = document.getElementById('renderCanvas') as HTMLElement | null
+    if (c) c.focus()
+    else (document.activeElement as HTMLElement | null)?.blur()
+  })
+  await expect(icon(page)).not.toBeFocused()
+  const hint = await icon(page).evaluate((el) => document.getElementById(el.getAttribute('aria-describedby') ?? '')?.textContent ?? '')
+  expect(hint, 'the icon hint announces the shortcut').toContain(TP_STRINGS.focusKey.hint)
+  expect(hint, 'and keeps its own sentence').toContain('flèches')
+  // other keys with the same letter do nothing: a plain letter, one modifier
+  await page.keyboard.press('o')
+  await page.keyboard.press('Alt+o')
+  await page.keyboard.press('Shift+O')
+  await expect(icon(page)).not.toBeFocused()
+  // the chord
+  await page.keyboard.press('Alt+Shift+O')
+  await expect(icon(page)).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(bubble(page)).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(bubble(page), 'Escape still closes the bubble').toBeHidden()
+  await expect(icon(page)).toBeFocused()
+})
+
 // ── cost at rest ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
 test(`idle for ${IDLE_MS} ms adds 0 renders (bubble closed, then open) and no heavy projection; the listeners differ from the same page with ?oscar=0 by at most a pinned number`, async ({ page, browser }) => {
@@ -450,12 +478,12 @@ test('an error on the bench: « Prochaine étape » says the status bar\'s own e
   await expect(page.getByRole('dialog', { name: 'Erreurs et avertissements' })).toBeHidden()
 
   await nextStepSays(page, barDetail)
-  // What the bubble says is pinned exactly: the generic head line, then the rule's explanation word for word. The rule's title stays on the status bar row
-  // (asserted above), beside it; the bubble does not repeat it.
+  // What the bubble says is pinned exactly: the rule's title as its head (the very text of the status bar row), then the rule's explanation word for word.
   const lines = await liveLines(page)
-  expect(lines, 'the bubble: the generic head, then the explanation').toEqual(['Correction à apporter', shownRuleDetail('R4')])
+  expect(lines, 'the bubble: the rule title, then the explanation Mode Création shows').toEqual([RULE('R4').title_fr, shownRuleDetail('R4')])
+  expect(lines[0], 'the bubble head is the status bar row title').toBe(barTitle)
   expect(lines[1]).toBe(barDetail)
-  expect(lines.join(' '), 'the rule title is not in the bubble').not.toContain(barTitle)
+  expect(lines.join(' '), 'the generic head is gone').not.toContain('Correction à apporter')
   await expect(page.locator('.oscar-bubble')).toHaveAttribute('data-kind', 'fix')
   await expect(chip(page, 'Lancer le parcours proposé'), 'a fix bubble has no start chip').toHaveCount(0)
   // the ring is on the first subject of the app's own error event

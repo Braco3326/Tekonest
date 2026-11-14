@@ -32,6 +32,13 @@ export interface Controller {
     subscribe(listener: (view: GuideView) => void): () => void;
 }
 export const AUTO_RAISE_MS = 45000;
+const CAUSE_PLACEHOLDER = "{cause}";
+const CAUSE_MAX = 120;
+function cleanCause(raw: string): string {
+    const t = raw.replace(/[\p{Cc}\p{Cf}]/gu, " ").replace(/\s+/gu, " ").trim();
+    const chars = Array.from(t);
+    return chars.length <= CAUSE_MAX ? t : `${chars.slice(0, CAUSE_MAX - 1).join("").trimEnd()}…`;
+}
 export const FIX_IDLE_MS = 30000;
 export const DEFAULT_STORAGE_KEY = "oscar-guide.state.v1";
 export const REQUEST_TIMEOUT_MS = 10000;
@@ -415,6 +422,20 @@ export function createController(deps: ControllerDeps): Controller {
             return undefined;
         return fillT("where.flow", { flow: tr(flow.titleKey) ?? flow.id, i: flowState.index + 1, n: flow.steps.length });
     }
+    function fixHead(head: string | null | undefined): string | undefined {
+        if (head === null || head === undefined)
+            return undefined;
+        if (!head.includes(CAUSE_PLACEHOLDER))
+            return head;
+        const v = usableVerdict();
+        const raw = v !== null && v.verdict !== null && v.verdict.result === "a-corriger" && v.verdict.primary !== null ? (v.verdict.primary as {
+            causeFr?: unknown;
+        }).causeFr : undefined;
+        const cause = typeof raw === "string" ? cleanCause(raw) : "";
+        if (cause === "")
+            return lookupString("planner.fix") ?? undefined;
+        return head.split(CAUSE_PLACEHOLDER).join(cause);
+    }
     function stepBubble(origin: Origin): void {
         const step = currentStep(flowState, flows);
         const title = flowTitle();
@@ -437,7 +458,7 @@ export function createController(deps: ControllerDeps): Controller {
         }
         else if (ns.kind === "fix") {
             if (keyed !== null)
-                title = keyed;
+                title = fixHead(keyed);
             if (ns.text !== undefined)
                 lines.push(plain(ns.text));
         }
@@ -475,7 +496,7 @@ export function createController(deps: ControllerDeps): Controller {
         let leadKey = out.textKey;
         const kind: BubbleKind = out.text === undefined ? "info" : bubbleKindOf(ns.kind);
         const b: Omit<BubbleState, "origin"> = { kind, lines };
-        const title = ns.kind === "flow-step" ? flowTitle() : ns.kind === "fix" ? (tr("planner.fix") ?? lookupString("planner.fix") ?? undefined) : undefined;
+        const title = ns.kind === "flow-step" ? flowTitle() : ns.kind === "fix" ? fixHead(tr("planner.fix") ?? lookupString("planner.fix")) : undefined;
         if (title !== undefined)
             b.title = title;
         let f: Focus | null = null;

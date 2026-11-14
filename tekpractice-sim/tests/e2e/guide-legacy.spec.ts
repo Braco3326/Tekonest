@@ -30,10 +30,10 @@ const ICON_NAME = 'Oscar, assistant IA'
 const IDLE_MS = 3000
 const GUIDE_POLL_MS = 500
 
-/** The window / document listeners the guide holds that the same page with `?oscar=0` does not (measured: these six; a seventh, or another kind, fails the test). */
-const PAGE_LISTENERS = ['document click (capture)', 'document keydown', 'document visibilitychange', 'window oscar-guide:event', 'window resize', 'window scroll (capture)']
+/** The window / document listeners the guide holds that the same page with `?oscar=0` does not (measured: these seven, two of them keydown: the guide's own keys and the Alt+Shift+O shortcut; an eighth, or another kind, fails the test). */
+const PAGE_LISTENERS = ['document click (capture)', 'document keydown', 'document keydown', 'document visibilitychange', 'window oscar-guide:event', 'window resize', 'window scroll (capture)']
 /** The only members of `window.__audioSim` the guide may call: the readers. */
-const READERS = ['assets', 'deviceScreen', 'portScreen', 'state']
+const READERS = ['assets', 'deviceScreen', 'portScreen', 'rig', 'state']
 
 // ── no console error, page error or `guide:` warning in any test ─────────────────────────────────────────────────────
 
@@ -294,6 +294,47 @@ test('keyboard: Tab reaches the icon from the controls of the page, Entrée open
   await expect(bubble(page)).toBeHidden()
 })
 
+test('Alt+Shift+O puts the focus on the icon from the canvas of a level page, the screen reader hint says so, and a plain letter or one modifier does nothing, Escape still closes the bubble', async ({ page }) => {
+  await boot(page)
+  await waitGuide(page)
+  // the focus is on the page, not on the guide: the canvas (or the body when the page does not take focus)
+  await page.evaluate(() => {
+    const c = document.getElementById('renderCanvas') as HTMLElement | null
+    if (c) c.focus()
+    else (document.activeElement as HTMLElement | null)?.blur()
+  })
+  await expect(icon(page)).not.toBeFocused()
+  const hint = await icon(page).evaluate((el) => document.getElementById(el.getAttribute('aria-describedby') ?? '')?.textContent ?? '')
+  expect(hint, 'the icon hint announces the shortcut').toContain(TP_STRINGS.focusKey.hint)
+  expect(hint, 'and keeps its own sentence').toContain('flèches')
+  // other keys with the same letter do nothing: a plain letter, one modifier
+  await page.keyboard.press('o')
+  await page.keyboard.press('Alt+o')
+  await page.keyboard.press('Shift+O')
+  await expect(icon(page)).not.toBeFocused()
+  // the chord
+  await page.keyboard.press('Alt+Shift+O')
+  await expect(icon(page)).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(bubble(page)).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(bubble(page), 'Escape still closes the bubble').toBeHidden()
+  await expect(icon(page)).toBeFocused()
+})
+
+test('the hook has a read-only rig reader: every device and every cable the graph holds, and reading it changes nothing', async ({ page }) => {
+  await boot(page)
+  const before = await state(page)
+  const rig0 = await page.evaluate(() => window.__audioSim!.rig!())
+  expect(rig0.connections).toEqual([])
+  expect(rig0.instances.map((i) => i.instanceId).sort()).toEqual(a1.devices.map((d) => d.instanceId).sort())
+  await connect(page, 0)
+  const rig1 = await page.evaluate(() => window.__audioSim!.rig!())
+  expect(rig1.connections.map((c) => [c.a, c.b])).toEqual([[CHAIN[0].from, CHAIN[0].to]])
+  expect(await page.evaluate(() => JSON.stringify(window.__audioSim!.rig!()) === JSON.stringify(window.__audioSim!.rig!())), 'reading twice gives the same answer').toBe(true)
+  expect((await state(page)).missing.length, 'reading the rig changed nothing in the level').toBe(before.missing.length - 1)
+})
+
 // ── cost at rest ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
 test(`idle for ${IDLE_MS} ms adds 0 renders against ?oscar=0; the listeners differ by exactly the pinned ones; the guide never calls a method that is not a reader`, async ({ page, browser }) => {
@@ -340,7 +381,7 @@ test(`idle for ${IDLE_MS} ms adds 0 renders against ?oscar=0; the listeners diff
   // what the guide called on the hook, over the whole run: the readers, and only them
   const calls = await guideCalls(page)
   test.info().annotations.push({ type: 'guide-calls', description: JSON.stringify(calls) })
-  expect(Object.keys(calls).sort(), 'the members of window.__audioSim the guide called').toEqual(expect.arrayContaining(['assets', 'state']))
+  expect(Object.keys(calls).sort(), 'the members of window.__audioSim the guide called').toEqual(expect.arrayContaining(['assets', 'rig', 'state']))
   for (const name of Object.keys(calls)) expect(READERS, `${name} is not a reader`).toContain(name)
   expect(calls.hints, 'the guide never asks hints()').toBeUndefined()
   expect(calls.dispatch, 'the guide never dispatches').toBeUndefined()
@@ -442,9 +483,18 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
     const s = await session(browser, search, { init: spyOnHook })
     await s.page.evaluate(() => window.localStorage.clear())
     await expect(s.page.locator('#exam-timer')).toBeVisible()
-    const first = clockSeconds(await s.page.locator('#exam-timer').innerText())
-    await quietWindow(s.page, 1300) // the clock must tick: two reads of the same page
-    const second = clockSeconds(await s.page.locator('#exam-timer').innerText())
+    // Two reads of the clock taken inside the page, with the wall time between them measured by the same page: a round trip from the test (slow on a loaded
+    // machine) never sits between the reads, and the expected drop comes from this run's own elapsed time, not from a constant.
+    const reads = await s.page.evaluate(async () => {
+      const el = document.getElementById('exam-timer')!
+      const t0 = performance.now()
+      const a = el.textContent ?? ''
+      await new Promise((r) => setTimeout(r, 1300))
+      return { a, b: el.textContent ?? '', elapsed: (performance.now() - t0) / 1000 }
+    })
+    const first = clockSeconds(reads.a)
+    const second = clockSeconds(reads.b)
+    const elapsed = reads.elapsed
     await s.page.evaluate(() => {
       const sim = window.__audioSim!
       sim.dispatch({ type: 'CONNECT', a: { instance: 'sm57-1', port: 'out-xlr' }, b: { instance: 'k12-1', port: 'in-line-a' } })
@@ -456,7 +506,7 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
       score: ((await s.page.locator('.exam-card h2').textContent()) ?? '').trim(),
       detail: ((await s.page.locator('.exam-card').innerText()) ?? '').replace(/\d+:\d\d/g, 'T'),
       exams: await s.page.evaluate(() => (JSON.parse(window.localStorage.getItem('audio-sim/progress')!).exams as { levelId: string; score20: number; mistakes: number }[]).map((e) => [e.levelId, e.score20, e.mistakes])),
-      clock: { first, drop: first - second },
+      clock: { first, drop: first - second, elapsed },
       toast: ((await s.page.locator('.toast-error strong').first().textContent()) ?? '').trim(),
       nodes: await guideNodes(s.page),
       chunks: s.req.paths().filter((p) => GUIDE_ASSET.test(p)),
@@ -478,10 +528,11 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
   for (const r of [withGates, withoutGuide]) {
     expect(r.clock.first, 'the clock starts within seconds of the level budget').toBeGreaterThanOrEqual(EXAM_SECONDS - 15)
     expect(r.clock.first).toBeLessThanOrEqual(EXAM_SECONDS)
+    // The display is redrawn every 500 ms, so each read is up to 0.5 s old: the drop is the measured elapsed time within one second (both ends) of that.
     expect(r.clock.drop, 'the clock ticked between two reads').toBeGreaterThanOrEqual(1)
-    expect(r.clock.drop).toBeLessThanOrEqual(4)
+    expect(r.clock.drop, 'the clock does not run fast: its drop is at most the measured elapsed time plus the display granularity').toBeLessThanOrEqual(Math.ceil(r.clock.elapsed) + 1)
+    expect(r.clock.drop, 'the clock does not run slow: its drop is at least the measured elapsed time minus the display granularity').toBeGreaterThanOrEqual(Math.floor(r.clock.elapsed) - 1)
   }
-  expect(Math.abs(withGates.clock.drop - withoutGuide.clock.drop), 'the clock runs at the same pace with and without the guide').toBeLessThanOrEqual(1)
   expect(Math.abs(withGates.clock.first - withoutGuide.clock.first), 'and starts at the same value').toBeLessThanOrEqual(3)
   for (const r of [withGates, withoutGuide]) {
     expect(r.nodes).toBe(0)
@@ -489,10 +540,18 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
     expect(r.guideCalls, 'the guide called nothing on the hook').toEqual({})
   }
   // and the two requests of the whole page are the same set: the guide added none
+  // The page loads its models and then its Draco decoder in stages (the decoder script is requested about 1.5 s after the hook appears), so a snapshot at a fixed
+  // time catches one load a stage earlier than the other. The set is read once the page has finished its own loading (every device of the level has its model,
+  // a state, polled below: this is the real wait). The 2 s window that follows is a plain wait (it does not assert anything by itself: a request that arrives in it
+  // only shows in the comparison), and the two sets are compared without regard to arrival order.
   const paths = async (search: string): Promise<string[]> => {
     const s = await session(browser, search)
+    await expect
+      .poll(() => s.page.evaluate(() => window.__audioSim!.assets().every((a) => a.status === 'glb')), { message: `${search}: every device of the level has its model`, timeout: 30_000 })
+      .toBe(true)
+    await s.page.waitForLoadState('networkidle')
     await quietWindow(s.page, 2000)
-    const p = s.req.paths()
+    const p = s.req.paths().sort()
     await s.close()
     return p
   }
@@ -625,7 +684,7 @@ test('asked, the guide answers in French from the catalog: an error is the rule\
   const toast = page.locator('.toast-warning, .toast-error').first()
   await expect(toast).toContainText(r4.teach) // the page's own toast, English
   await nextStepSays(page, r4.teach_fr)
-  expect(await liveLines(page), 'the bubble says the rule\'s own French explanation under the generic head line').toEqual(['Correction à apporter', r4.teach_fr])
+  expect(await liveLines(page), 'the bubble says the rule\'s own French title as its head, then its explanation').toEqual([r4.title_fr, r4.teach_fr])
   expect(await live(page)).not.toContain(r4.teach)
   expect(await live(page)).not.toContain(r4.title)
   expect(await chip(page, 'Lancer le parcours proposé').count(), 'no start chip on a fix').toBe(0)

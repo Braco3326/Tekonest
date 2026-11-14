@@ -6,6 +6,7 @@
 // failure is null and the app is untouched.
 import type { Registry } from '../engine/CatalogLoader'
 import type { TpBridge } from './bridge/types'
+import { FEATURES } from '../features'
 import { guideMode, guideRouteAllowed, type GuideRoute } from './mode'
 
 /** How long the guide waits for the route's debug hook (`window.__creation`, or `window.__audioSim` on the level page), and how often it looks. */
@@ -105,7 +106,12 @@ export async function bootGuide(route: GuideRoute, target?: Window): Promise<Gui
     }
     const now = (): number => performance.now()
     const bridge = makeBridge({ win, registry, doc, now })
-    return mountOscar({ win, doc, route, search, bridge, registry, storage, now })
+    const handle = mountOscar({ win, doc, route, search, bridge, registry, storage, now })
+    // The keyboard way to the icon (Alt+Shift+O), a tiny lazy chunk of its own, installed only for a guide that did mount.
+    if (handle !== null) await import('./focusKey').then((m) => m.installFocusKey(win, route)).catch(() => undefined)
+    // The inbox of unanswered questions: dark (flag off, its chunk never fetched); on, only for a guide that did mount in practice mode.
+    if (handle !== null && FEATURES.guideInbox) await import('./inbox').then((m) => m.installInbox(win, route, storage)).catch(() => undefined)
+    return handle
   } catch (e) {
     warn('guide: could not start, the page is untouched', e)
     return null

@@ -118,6 +118,10 @@ export const TP_STRINGS = deepFreeze({
       },
     },
   },
+  /** The keyboard shortcut that puts the focus on the icon (focusKey.ts): the sentence added to the icon's screen reader hint. */
+  focusKey: {
+    hint: 'Le raccourci Alt+Maj+O met le focus sur cette icône depuis n’importe où dans la page.',
+  },
 } as const)
 
 /** A string by its dotted path (`verdict.benchEmpty`). An unknown key, a branch or an inherited name gives ''. */

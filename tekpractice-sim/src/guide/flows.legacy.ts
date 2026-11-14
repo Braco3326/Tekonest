@@ -91,7 +91,7 @@ export function nextLegacyLink(state: TpState): { from: TpPortRef; to: TpPortRef
  */
 export const LEGACY_STRINGS = {
   ...defaultStrings,
-  planner: { ...defaultStrings.planner, needInfo: L.planner.needInfo },
+  planner: { ...defaultStrings.planner, needInfo: L.planner.needInfo, fix: '{cause}' }, // the head of a fix is the rule's title (the controller fills {cause})
   where: { ...defaultStrings.where, workbench: TP_STRINGS.where.legacy },
   flows: Object.fromEntries(LEGACY_FLOW_IDS.map((id) => [id, L.flows[id].title])) as Record<LegacyFlowId, string>,
 }

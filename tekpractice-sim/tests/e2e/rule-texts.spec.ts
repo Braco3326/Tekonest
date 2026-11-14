@@ -164,7 +164,7 @@ for (const c of CASES) {
   })
 }
 
-test('R4: the status list, the verdict bubble (« Correction à apporter ») and Oscar\'s answer all show the Mode Création text; R6 shows the catalog text', async ({ page }) => {
+test('R4: the status list, the verdict bubble (rule title as head) and Oscar\'s answer all show the Mode Création text; R6 shows the catalog text', async ({ page }) => {
   const rule = RULE('R4')
   const shown = OVERRIDE('R4')
   expect(shown).not.toBe(rule.teach_fr)
@@ -182,7 +182,7 @@ test('R4: the status list, the verdict bubble (« Correction à apporter ») and
   await closeErrorList(page)
 
   await nextStepSays(page, shown)
-  expect(await liveLines(page), 'the verdict bubble: the generic head, then the Mode Création text').toEqual(['Correction à apporter', shown])
+  expect(await liveLines(page), 'the verdict bubble: the rule title, then the Mode Création text').toEqual([rule.title_fr, shown])
   expect(await live(page)).not.toContain(rule.teach_fr)
 
   await ask(page, rule.title_fr)
@@ -206,7 +206,7 @@ test('legacy (?level=...): the level page keeps the catalog text in Oscar\'s ans
   })
   const r4 = RULE('R4')
   await nextStepSays(page, r4.teach_fr)
-  expect(await liveLines(page)).toEqual(['Correction à apporter', r4.teach_fr])
+  expect(await liveLines(page)).toEqual([r4.title_fr, r4.teach_fr])
   expect(await live(page)).not.toContain(OVERRIDE('R4'))
   // Oscar's answer to a rule's title: the catalog row, for R1 (overridden in Mode Création) as well
   const r1 = RULE('R1')

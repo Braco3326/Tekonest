@@ -8,6 +8,7 @@ import { existsSync, readdirSync, rmSync, statSync } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { findSecretVars, formatRefusal } from './deploy-guard.mjs'
+import { formatFlagRefusal, scanOutputForTestFlags } from './deploy-flag-guard.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const out = join(root, 'dist-site')
@@ -27,9 +28,16 @@ const viteBin = join(root, 'node_modules', 'vite', 'bin', 'vite.js')
 const r = spawnSync(process.execPath, [viteBin, 'build', '--outDir', 'dist-site', '--emptyOutDir'], {
   cwd: root,
   stdio: 'inherit',
-  env: { ...process.env, TEKPRACTICE_BASE: '/tekpractice/jouer/' },
+  env: { ...process.env, TEKPRACTICE_BASE: '/tekpractice/jouer/', TP_TEST_FEATURES: '' }, // TP_TEST_FEATURES: a test-only build switch (vite.config.ts), never in a deploy build
 })
 if (r.status !== 0) process.exit(r.status ?? 1)
+// The proof that no test switch reached the output (the variable is blanked above; this checks the result), before anything else is done with it.
+const flagged = scanOutputForTestFlags(out)
+if (flagged.length) {
+  console.error(formatFlagRefusal(flagged))
+  rmSync(out, { recursive: true, force: true })
+  process.exit(1)
+}
 // Task 43a: `build.manifest` + the chunkModules plugin write .vite/ for tools/chunk-budget.mjs (run on dist/). It is a build artefact, not a site file.
 rmSync(join(out, '.vite'), { recursive: true, force: true })
 

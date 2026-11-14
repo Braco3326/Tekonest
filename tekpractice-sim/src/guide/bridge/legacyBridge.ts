@@ -3,10 +3,10 @@
 // Rules this file keeps:
 // - It READS the debug hook and nothing else. The deps are typed with `LegacyReader`, a Pick of the reader members of the hook (`state`, `assets`,
 //   `portScreen`, `deviceScreen` and the level data `level`), so a call to dispatch, canConnect, view, hints and the like is a compile error here, and a
-//   removed reader breaks tsc. `hints()` is never asked: the mode of the guide comes from the address alone (mode.ts).
-// - What the hook does not expose is not invented. The rig itself is not readable (there is no snapshot accessor), so the cables the guide knows of are the
-//   REQUIRED links of the level that are made (the level's required chain minus `state().missing`); a cable outside the chain is not seen, only the rule
-//   events it causes are. The controls are not readable either: `controls` is empty and the bridge names no control anchor.
+//   removed reader breaks tsc. `rig()` (the graph's plain snapshot) is read when the hook has it and answers well. `hints()` is never asked: the mode of the guide comes from the address alone (mode.ts).
+// - What the hook does not expose is not invented. When the hook has the rig reader the cables the guide knows of are the rig's own, every one of them; a hook
+//   without it (or one that throws, or answers something else) leaves the older reading: the REQUIRED links of the level that are made (the level's required
+//   chain minus `state().missing`), and a cable outside the chain is then not seen, only the rule events it causes are. The controls are not readable either: `controls` is empty and the bridge names no control anchor.
 // - It never throws into the page and never writes to the console for a missing or half-built hook: the snapshot is null and the next poll retries.
 // - It does not touch the renderer: the hook's own readers are used, the poll is paused while the document is hidden. The 2D board answers null for
 //   every projection: that is "not on screen", never a rect at 0,0.
@@ -19,7 +19,7 @@ import { POLL_MS, cableKey, refKey, stateHash, type BridgeDoc } from './shared'
 import { MISSING_LINK, type TpBridge, type TpPortRef, type TpState } from './types'
 
 /** What the bridge may call on `window.__audioSim`: readers only (plus the level's own data). */
-export type LegacyReader = Pick<NonNullable<Window['__audioSim']>, 'state' | 'assets' | 'portScreen' | 'deviceScreen' | 'level'>
+export type LegacyReader = Pick<NonNullable<Window['__audioSim']>, 'state' | 'assets' | 'portScreen' | 'deviceScreen' | 'level' | 'rig'>
 
 export interface LegacyBridgeDeps {
   win: { __audioSim?: LegacyReader; innerWidth?: number; innerHeight?: number }
@@ -85,6 +85,18 @@ const copyRef = (r: PortRef): TpPortRef => {
   return { instance: r.instance, port: r.port }
 }
 
+/** Every cable of the rig reader, as plain refs; null when the hook has no reader, it throws, or its answer is not a rig (the caller then uses the older reading). */
+function rigCables(sim: LegacyReader): { a: TpPortRef; b: TpPortRef }[] | null {
+  try {
+    if (typeof sim.rig !== 'function') return null
+    const rig = sim.rig()
+    if (!rig || !Array.isArray(rig.connections)) return null
+    return rig.connections.map((c) => ({ a: copyRef(c.a), b: copyRef(c.b) }))
+  } catch {
+    return null
+  }
+}
+
 export function createLegacyBridge(deps: LegacyBridgeDeps): TpBridge {
   const { win, registry, doc, now } = deps
   const setTimer = deps.setInterval ?? ((fn: () => void, ms: number): unknown => globalThis.setInterval(fn, ms))
@@ -122,7 +134,7 @@ export function createLegacyBridge(deps: LegacyBridgeDeps): TpBridge {
 
       // The made required links: the chain minus what the level still misses (the cable has no direction).
       const missing = new Set(ls.missing.map((m) => cableKey(copyRef(m.from), copyRef(m.to))))
-      const connections = level.requiredChain
+      const connections = rigCables(sim) ?? level.requiredChain
         .filter((rc) => !missing.has(cableKey(copyRef(rc.from), copyRef(rc.to))))
         .map((rc) => ({ a: copyRef(rc.from), b: copyRef(rc.to) }))
       // The first unmet link, as the app's own checklist words it (the level keeps the chain in the order the checklist shows).

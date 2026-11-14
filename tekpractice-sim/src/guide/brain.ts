@@ -1,6 +1,7 @@
 // The TekPractice brain. It knows only what the app itself knows: the live bench (through the bridge) and the catalog's rule texts.
 // No remote call, no fact of its own. Silent in exam, and it never throws out of `ask`.
 import { ruleTextFor, type RuleRow } from '../creation/shell/statusModel'
+import { FEATURES } from '../features'
 import type { TpBridge, TpState } from './bridge/types'
 import { TP_STRINGS } from './strings'
 import { buildVerdict } from './verdict'
@@ -86,6 +87,17 @@ function findRule(question: string, rules: readonly RuleRow[]): RuleRow | null {
 
 const reply = (kind: BrainReply['kind'], text: string, lines: BrainReply['lines'] = []): BrainReply => ({ kind, text, lines, verdict: null })
 
+/** The fixed refusal. With the inbox flag off it is returned as it is and the inbox module is never fetched; with it on (testing by hand) the inbox may add its one line. */
+async function noAnswer(question: string): Promise<BrainReply> {
+  const fixed = reply('refusal', TP_STRINGS.ask.noInformation)
+  if (!FEATURES.guideInbox) return fixed
+  try {
+    return (await import('./inbox')).recordUnanswered(question, fixed)
+  } catch {
+    return fixed
+  }
+}
+
 export function createTekPracticeBrain(deps: { bridge: TpBridge; rules: readonly RuleRow[]; mode: () => 'practice' | 'exam'; route?: TpState['route'] }): GuideBrain {
   // Fail closed: anything but "practice", or a getter that throws, is exam.
   const practice = (): boolean => {
@@ -112,7 +124,7 @@ export function createTekPracticeBrain(deps: { bridge: TpBridge; rules: readonly
         if (req.mode !== 'practice') return withheld()
         const question = typeof req.question === 'string' ? req.question.slice(0, MAX_QUESTION_CHARS) : ''
         const row = findRule(question, deps.rules)
-        if (row === null) return reply('refusal', TP_STRINGS.ask.noInformation)
+        if (row === null) return await noAnswer(question)
         const t = ruleTextFor([row])(row.id)
         const text = t.detail === '' ? t.title : `${t.title} : ${t.detail}`
         return reply('answer', text, [{ text, badge: BADGE, citation: null }])
