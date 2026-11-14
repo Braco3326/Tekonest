@@ -3,7 +3,8 @@
  * results (the engine, the signal path, the logic checks R4 to R8, the store) must be empty against the base this branch started from. The import half of
  * neutrality is tests/engineImports.test.ts; the browser half is tests/e2e/engine-neutrality.spec.ts.
  *
- * The base is ee396da (controller ruling G14e: the commit the onboarding branch left from; spec 11.9 names c51dc87, an earlier point on the same line). Skipped,
+ * The base is 2de5ef4 (the live equipment + Oscar build the onboarding branch was merged with on 2026-11-14; before that merge the base was ee396da, the commit the
+ * onboarding branch left from, and the diff against it was empty too; spec 11.9 names c51dc87, an earlier point on the same line). Skipped,
  * with the reason, when git is not there or the base commit is not in this clone (a shallow or exported tree): the check cannot be made, it is not passed.
  */
 import { spawnSync } from 'node:child_process'
@@ -12,7 +13,7 @@ import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
 const SIM = join(dirname(fileURLToPath(import.meta.url)), '..')
-const BASE = 'ee396da'
+const BASE = '2de5ef4'
 const PATHS = ['src/engine', 'src/flow', 'src/logic', 'src/creation/store.ts']
 
 const git = (...args: string[]) => spawnSync('git', ['-c', `safe.directory=*`, ...args], { cwd: SIM, encoding: 'utf8' })

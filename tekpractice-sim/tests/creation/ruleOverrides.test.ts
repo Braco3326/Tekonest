@@ -21,8 +21,11 @@ const O = () => COPY.ruleOverride as Record<string, string>
 
 /** `rulesRevOf(catalog.rules)` recorded BEFORE this task (pre-flight of 2026-11-12). It must never change: a new value invalidates every frozen Essai. */
 const PRE_FLIGHT_RULES_REV = 'r1:31976636175ae95deac28925c5e7e1b8f7dd309fc65bf093f596ca335480c619'
-/** git blob of tekpractice-sim/content/catalog.json at the same moment (git hash-object): the file is byte-identical. */
-const PRE_FLIGHT_CATALOG_BLOB = 'fc78a13020d8b3a4b85cb747a36f3ce85e2a902f'
+/**
+ * git blob of tekpractice-sim/content/catalog.json (git hash-object): the file is byte-identical to the live equipment build 2de5ef4 (113 devices). The blob was
+ * fc78a13 before the merge with that build (2026-11-14); `rulesRevOf(catalog.rules)` above did NOT change (the equipment build added devices, not rules).
+ */
+const PRE_FLIGHT_CATALOG_BLOB = 'c42de64d3c666f47936c896eba13ec67ffaa6f6a'
 
 // The banned families (spec 9) and the stripping of device and signal names that carry digits (U 87, SM58, RE20, AES3, N-1, +48 V): ONE list, shared (T1.7), in ./honestyLists.
 // `real-world instruction` (the catalog's R1 says « il ne faut jamais forcer ») is one of its families.

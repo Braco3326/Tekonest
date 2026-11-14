@@ -15,7 +15,18 @@ import { readPowerHelper } from '../../src/design/powerHelperUse'
 import type { Intent } from '../../src/ui/intents'
 
 const LABEL = 'Branchement au courant (aide)'
-const proposals = JSON.parse(readFileSync('content/proposals/catalog-proposals.json', 'utf8')) as unknown
+const proposalsFile = JSON.parse(readFileSync('content/proposals/catalog-proposals.json', 'utf8')) as { devices: { id: string }[] }
+/**
+ * A Bêta device with an AC output. The device this test first used (shure-axient-digital-ad4d) became a VERIFIED catalog device in the equipment build
+ * (2026-11-13) and no proposal left carries an AC output, so the fixture is a proposal row built here: a copy of a real proposal row (the first one) under an
+ * id the catalog does not have, plus one mains output with the connector and signal of the verified strip's outlets (iec-c13, mains-power).
+ */
+const BETA = 'beta-mains-fixture'
+const BETA_PORT = 'out-ac-power-cascade-locking'
+const source = proposalsFile.devices[0] as { id: string; ports: unknown[] } | undefined
+if (!source) throw new Error('the proposals file is empty: the Bêta mains fixture has no row to be copied from')
+const betaRow = { ...source, id: BETA, ports: [...source.ports, { portId: BETA_PORT, dir: 'out', connector: 'iec-c13', signal: 'mains-power' }] }
+const proposals = { ...proposalsFile, devices: [...proposalsFile.devices, betaRow] } as unknown
 
 function setup(intents: Intent[] = [], beta = false) {
   const registry = makeRegistry()
@@ -60,9 +71,9 @@ describe('powerHelperPlan: when it is offered', () => {
   })
 
   it('does not trigger with a Bêta mains outlet only (unverified data supplies nothing), even with the flag tampered in', () => {
-    const { store, registry } = setup([...PLAYING, spawn('shure-axient-digital-ad4d', 'beta')], true)
+    const { store, registry } = setup([...PLAYING, spawn(BETA, 'beta')], true)
     expect(powerHelperPlan(store, registry)).toEqual({ offered: false, why: 'no-strip' })
-    const port = registry.deviceById.get('shure-axient-digital-ad4d')!.ports.find((p) => p.portId === 'out-ac-power-cascade-locking')!
+    const port = registry.deviceById.get(BETA)!.ports.find((p) => p.portId === 'out-ac-power-cascade-locking')!
     port.flags = [...(port.flags ?? []), 'isMainsSource']
     expect(powerHelperPlan(store, registry)).toEqual({ offered: false, why: 'no-strip' })
   })
@@ -79,7 +90,7 @@ describe('powerHelperPlan: when it is offered', () => {
   })
 
   it('a power-in cabled to a Bêta outlet is the learner’s: not unplugged, not offered for it', () => {
-    const { store, registry } = setup([QL1, STRIP, spawn('shure-axient-digital-ad4d', 'beta'), connect('beta', 'out-ac-power-cascade-locking', 'ql1', 'power-in')], true)
+    const { store, registry } = setup([QL1, STRIP, spawn(BETA, 'beta'), connect('beta', 'out-ac-power-cascade-locking', 'ql1', 'power-in')], true)
     expect(powerHelperPlan(store, registry)).toEqual({ offered: false, why: 'nothing-to-cable' })
   })
 
@@ -385,7 +396,7 @@ describe('wirePowerHelper', () => {
     const full = await wired({}, null, [QL1, STRIP, k(1), k(2), k(3), k(4), connect('strip', 'out-1', 'k1', 'power-in')])
     expect(full.h.view()).toEqual({ shown: false })
     expect(full.h.offered()).toBe(false)
-    const beta = await wired({}, null, [QL1, K12, STRIP, spawn('shure-axient-digital-ad4d', 'beta'), connect('strip', 'out-1', 'ql1', 'power-in'), connect('beta', 'out-ac-power-cascade-locking', 'k12', 'power-in')], true)
+    const beta = await wired({}, null, [QL1, K12, STRIP, spawn(BETA, 'beta'), connect('strip', 'out-1', 'ql1', 'power-in'), connect('beta', 'out-ac-power-cascade-locking', 'k12', 'power-in')], true)
     expect(beta.h.view()).toEqual({ shown: false })
     expect(beta.h.offered()).toBe(false)
     const ok = await wired()
