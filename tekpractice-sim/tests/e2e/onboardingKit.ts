@@ -72,11 +72,57 @@ export const start = (page: Page) => page.getByTestId('start-screen')
 /**
  * Oscar mounts lazily (his chunks are fetched after the creation boot). With six browsers on one machine all fetching from ONE `vite preview` process, a request now and then hangs for 30 s and
  * more (the PAGE-DIAG lines of the T7.1 runs list fonts, lazy chunks and the Draco wasm still open after 20 to 38 s, no failed request, no console message), and a load of the page ends with no Oscar
- * (seen about once in 80 loads: `guideNodes: 0`, the hook up) and then no card either. The cause was not proven for that case (the in-flight list was not recorded yet); the guide also gives up silently
- * after waiting 10 s for the hook (`WAIT_LIMIT_MS`, src/guide/index.ts). A page on an address where the guide is allowed is therefore loaded again, up to twice, when no icon is there after 20 s;
- * the retry is printed (`RETRY`), never silent.
+ * (seen about once in 80 loads: `guideNodes: 0`, the hook up) and then no card either. The guide also gives up silently after waiting 10 s for the hook (`WAIT_LIMIT_MS`, src/guide/index.ts).
+ * A page on an address where the guide is allowed is therefore loaded again, up to twice, when no icon is there after 20 s.
+ * G14e (review C3): every retry is VISIBLE: a `RETRY` console line with the requests still open, and a `RETRY` annotation on the running test (in the report). The rate at which Oscar mounts
+ * with NO retry is measured on its own (onboarding-mount-rate.spec.ts), so this retry cannot hide a guide that fails to mount for a learner.
  */
 const guideExpected = (query: string): boolean => /^\?design=[1-5]$/.test(query)
+
+/** A retry, made visible: the console line and an annotation of the running test (G14e, review C3). */
+export function noteRetry(what: string): void {
+  console.log(`RETRY ${what}`)
+  try {
+    baseTest.info().annotations.push({ type: 'RETRY', description: what.slice(0, 300) })
+  } catch {
+    // outside a test (a global setup): the console line stands alone
+  }
+}
+
+/** The requests of a page that are still open, with their age: the evidence a stall leaves. */
+export function openRequests(page: Page): { olderThan: (ms: number) => string[]; stop: () => void } {
+  const open = new Map<unknown, { url: string; t: number }>()
+  const onReq = (r: { url(): string }): void => void open.set(r, { url: r.url().slice(-60), t: Date.now() })
+  const onDone = (r: unknown): void => void open.delete(r)
+  page.on('request', onReq)
+  page.on('requestfinished', onDone)
+  page.on('requestfailed', onDone)
+  return {
+    olderThan: (ms) => {
+      const now = Date.now()
+      return [...open.values()].filter((o) => now - o.t >= ms).map((o) => `${o.url} open ${Math.round((now - o.t) / 1000)} s`)
+    },
+    stop: () => {
+      page.off('request', onReq)
+      page.off('requestfinished', onDone)
+      page.off('requestfailed', onDone)
+    },
+  }
+}
+
+/** How long a request must have been open for a failure to count as a stall of the preview server (the PAGE-DIAG lines: 20 to 38 s). */
+export const STALL_MS = 10_000
+/**
+ * The STALL SIGNATURE (G14e, review C3): the failure is a timeout (a wait that never came), AND at least one request of the page has been open for STALL_MS or more. An assertion that fails on a
+ * value, or a timeout with nothing pending (the page is idle and simply not in the state asked for), is a FAULT: it is never retried, it fails at once.
+ */
+export function stallOf(e: unknown, open: { olderThan: (ms: number) => string[] }): string[] | null {
+  const msg = String((e as Error)?.message ?? e)
+  const timeout = (e as Error)?.name === 'TimeoutError' || /Timeout \d+ms exceeded|Timed out \d+ms waiting|timed out/i.test(msg)
+  if (!timeout) return null
+  const stalled = open.olderThan(STALL_MS)
+  return stalled.length > 0 ? stalled : null
+}
 const guideMounted = (page: Page): Promise<boolean> =>
   page
     .locator('.oscar-icon')
@@ -98,11 +144,17 @@ export async function loadFresh(page: Page, query: string, storage: Record<strin
     for (const [k, v] of Object.entries(entries)) window.localStorage.setItem(k, v)
   }, storage)
   for (let attempt = 1; ; attempt++) {
-    await page.reload()
-    await page.waitForFunction(() => !!window.__creation)
-    if (!guideExpected(query) || (await guideMounted(page))) return
-    console.log(`RETRY the guide did not mount within 20 s on ${query} (load ${attempt})`)
-    if (attempt >= 3) throw new Error(`the guide never mounted in three loads of ${query}`)
+    const open = openRequests(page)
+    try {
+      await page.reload()
+      await page.waitForFunction(() => !!window.__creation)
+      if (!guideExpected(query) || (await guideMounted(page))) return
+      const held = await page.evaluate(() => ({ hook: !!window.__creation, guideNodes: document.querySelectorAll('.oscar-guide, [data-oscar-root]').length }))
+      noteRetry(`the guide did not mount within 20 s on ${query} (load ${attempt}): ${JSON.stringify(held)}; requests open: ${JSON.stringify(open.olderThan(0).slice(0, 8))}`)
+      if (attempt >= 3) throw new Error(`the guide never mounted in three loads of ${query}`)
+    } finally {
+      open.stop()
+    }
   }
 }
 /** An empty storage, then the address: a first visit. */
@@ -114,6 +166,7 @@ export async function waitStartScreen(page: Page): Promise<void> {
 /** Real clicks: a profile button, then « Faire le tutoriel » (or « Passer, je connais »). Resolves once the first room is open. */
 export async function enter(page: Page, id: DesignId, o: { profile?: ProfileKey; tutorial: boolean }): Promise<void> {
   for (let attempt = 1; ; attempt++) {
+    const open = openRequests(page)
     try {
       await openFresh(page, `?design=${id}`)
       await waitStartScreen(page)
@@ -126,9 +179,12 @@ export async function enter(page: Page, id: DesignId, o: { profile?: ProfileKey;
       if (o.tutorial) await expect(page.getByTestId('tutorial-card')).toBeVisible({ timeout: 20_000 })
       return
     } catch (e) {
-      // the entry is a first visit from an empty storage: doing it again is the same test. A fault that is not a stall fails every attempt.
-      if (attempt >= 3) throw e
-      console.log(`RETRY the entry on package ${id} (attempt ${attempt}): ${(e as Error).message.slice(0, 90).split('\n')[0]}`)
+      // the entry is a first visit from an empty storage: doing it again is the same test, but ONLY when the failure is a stall (G14e, C3: `stallOf`). A fault fails at once.
+      const stall = stallOf(e, open)
+      if (stall === null || attempt >= 3) throw e
+      noteRetry(`the entry on package ${id} (attempt ${attempt}): ${(e as Error).message.slice(0, 90).split('\n')[0]}; stalled: ${JSON.stringify(stall.slice(0, 6))}`)
+    } finally {
+      open.stop()
     }
   }
 }
