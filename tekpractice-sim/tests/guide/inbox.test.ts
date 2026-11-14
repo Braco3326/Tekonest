@@ -72,7 +72,7 @@ describe('text', () => {
     expect(cleanQuestion('😀'.repeat(250))).toBe('😀'.repeat(200))
   })
 
-  it('normalises as the private import does: NFKC, lower case, accents folded including oe ae and the sharp s, punctuation and spaces collapsed', () => {
+  it('normalises with the rules of the export file: NFKC, lower case, accents folded including oe ae and the sharp s, punctuation and spaces collapsed', () => {
     expect(normalizeQuestion('  Pourquoi, le LARSEN ?? ')).toBe('pourquoi le larsen')
     expect(normalizeQuestion('Cœur de l’Æther Straße')).toBe('coeur de l aether strasse')
     expect(normalizeQuestion('ＡＢＣ ﬁn')).toBe('abc fin')

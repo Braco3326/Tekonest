@@ -158,12 +158,12 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
     "fs.writeFileSync(path.join(root, 'dist-site', 'index.html'), '<html></html>')",
     '',
   ].join('\n')
-  /** A temp project root: tools/build-site.mjs + tools/deploy-guard.mjs copied, node_modules/vite/bin/vite.js the stub. */
+  /** A temp project root: tools/build-site.mjs + its two guards copied, node_modules/vite/bin/vite.js the stub. */
   const fakeRoot = (): string => {
     const dir = join(tmp, `site${++n}`)
     mkdirSync(join(dir, 'tools'), { recursive: true })
     mkdirSync(join(dir, 'node_modules', 'vite', 'bin'), { recursive: true })
-    for (const f of ['build-site.mjs', 'deploy-guard.mjs']) copyFileSync(join(tools, f), join(dir, 'tools', f))
+    for (const f of ['build-site.mjs', 'deploy-guard.mjs', 'deploy-flag-guard.mjs']) copyFileSync(join(tools, f), join(dir, 'tools', f))
     writeFileSync(join(dir, 'node_modules', 'vite', 'bin', 'vite.js'), STUB_VITE)
     return dir
   }
@@ -195,6 +195,32 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
     expect(r.code).toBe(0)
     expect(existsSync(join(dir, 'vite-ran.marker'))).toBe(true)
     expect(existsSync(join(dir, 'dist-site', 'index.html'))).toBe(true)
+  })
+  it('a build whose output carries the guide inbox flag ON fails (exit 1, names the file, the output is removed); the same build with the flag off passes', () => {
+    const withFlag = (on: boolean): string => {
+      const dir = fakeRoot()
+      writeFileSync(
+        join(dir, 'node_modules', 'vite', 'bin', 'vite.js'),
+        [
+          "const fs = require('node:fs'); const path = require('node:path')",
+          "const out = path.resolve(__dirname, '..', '..', '..', 'dist-site', 'assets')",
+          'fs.mkdirSync(out, { recursive: true })',
+          "fs.writeFileSync(path.join(out, '..', 'index.html'), '<html></html>')",
+          `fs.writeFileSync(path.join(out, 'main-x.js'), 'var F={levels:!1,guide:!0,guideLegacy:!1,guideInbox:${on ? '!0' : '!1'}};')`,
+          '',
+        ].join('\n'),
+      )
+      return dir
+    }
+    const bad = withFlag(true)
+    const r = build(bad, {})
+    expect(r.code).toBe(1)
+    expect(r.out).toContain('assets/main-x.js')
+    expect(r.out).toContain('REFUSED')
+    expect(existsSync(join(bad, 'dist-site')), 'the tainted output is removed').toBe(false)
+    const ok = build(withFlag(false), {})
+    expect(ok.code).toBe(0)
+    expect(ok.out).not.toContain('REFUSED')
   })
   it('an existing dist-site of the project is left alone when the build is refused (not even cleaned)', () => {
     const dir = fakeRoot()

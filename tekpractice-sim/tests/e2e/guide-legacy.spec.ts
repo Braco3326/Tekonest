@@ -542,7 +542,8 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
   // and the two requests of the whole page are the same set: the guide added none
   // The page loads its models and then its Draco decoder in stages (the decoder script is requested about 1.5 s after the hook appears), so a snapshot at a fixed
   // time catches one load a stage earlier than the other. The set is read once the page has finished its own loading (every device of the level has its model,
-  // a state), then a quiet window shows that nothing more arrives, and the two sets are compared without regard to arrival order.
+  // a state, polled below: this is the real wait). The 2 s window that follows is a plain wait (it does not assert anything by itself: a request that arrives in it
+  // only shows in the comparison), and the two sets are compared without regard to arrival order.
   const paths = async (search: string): Promise<string[]> => {
     const s = await session(browser, search)
     await expect

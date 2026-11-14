@@ -4,8 +4,8 @@
  *  - On the normal build the flag is off: asking a question the guide cannot answer shows the fixed sentence alone, nothing is stored, no global exists, and the
  *    inbox chunk is never requested.
  *  - On a test-only build with the flag on (npm run build with TP_TEST_FEATURES=guideInbox into dist/guide-inbox-test, served on its own port, whose address is
- *    given in E2E_INBOX_URL; the specs below skip without it): the question is kept in this browser, one calm line follows the fixed sentence, the export is the
- *    contract of the private import, and in an exam, the sandbox, the teacher page and with ?oscar=0 there is no global, no storage key and no inbox chunk.
+ *    given in E2E_INBOX_URL; the specs below skip without it): the question is kept in this browser, one calm line follows the fixed sentence, the export has the
+ *    documented shape, and in an exam, the sandbox, the teacher page and with ?oscar=0 there is no global, no storage key and no inbox chunk.
  *    There is no address that turns the flag on: the switch is the build.
  */
 import { expect, test, type Page } from '@playwright/test'

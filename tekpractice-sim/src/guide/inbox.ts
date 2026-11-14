@@ -1,13 +1,13 @@
 // The unanswered-questions inbox, app side. It ships dark: with `FEATURES.guideInbox` off this module is never fetched, nothing is recorded, no storage key
 // is created and no global is defined. With the flag on (testing by hand, no public switch), a question the brain has no answer for is kept in this
 // browser's storage (never sent anywhere: this file makes no network call), the learner is told so in one calm line, and `window.__oscarQuestions` hands
-// the list over as a file the private import command reads.
+// the list over as an export file.
 //
 // What is kept, and nothing else: the question text (200 characters at most, control characters turned into spaces), the first and last time it was asked
 // (ISO 8601 from toISOString), how many times, and the route it was asked on. Never in an exam, a sandbox, a teacher page or with `?oscar=0`: the guide is not
 // mounted there, and this module checks the same gates again before it defines or records anything.
 //
-// The export is the contract of the private import command: { version: 1, exportedAt, questions: [{ text, firstSeen, lastSeen, count, route }] }, the route
+// The export file has this shape: { version: 1, exportedAt, questions: [{ text, firstSeen, lastSeen, count, route }] }, the route
 // `creation` or `legacy` only, and the same normalisation (NFKC, lower case, accents folded including oe, ae and the sharp s, punctuation and spaces
 // collapsed) to tell one question from another.
 import { FEATURES } from '../features'
