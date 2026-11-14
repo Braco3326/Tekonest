@@ -145,6 +145,20 @@ test('the comparer can fail: the plain address (no ?design) and ?design=1 do not
   const d = diff(compared(plain), compared(design1))
   expect(d, 'the comparison sees what ?design adds').toContain('testid profile-chip: only in the second')
   expect(d.length).toBeGreaterThan(0)
+  // N4 (G14e): the comparer on ONE page, before and after a single stray test id and a single stray landmark: it reports exactly those, nothing else
+  const settled = await stableSnap(page)
+  expect(diff(compared(settled), compared(await snap(page))), 'the same page twice').toEqual([])
+  await page.evaluate(() => {
+    const probe = document.createElement('div')
+    probe.dataset.testid = 'stray-probe'
+    document.body.appendChild(probe)
+    const nav = document.createElement('nav')
+    nav.setAttribute('aria-label', 'Sonde parasite')
+    document.body.appendChild(nav)
+  })
+  const stray = diff(compared(settled), compared(await snap(page)))
+  expect(stray.filter((l) => l.startsWith('testid')), 'one stray test id').toEqual(['testid stray-probe: only in the second'])
+  expect(stray.filter((l) => l.startsWith('landmark')), 'one stray landmark').toEqual(['landmark nav[] "Sonde parasite": only in the second'])
 })
 
 // ── 2. The four profiles, package 1 ───────────────────────────────────────────────────────────────────────────────────────────

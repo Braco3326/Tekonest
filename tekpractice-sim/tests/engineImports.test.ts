@@ -84,8 +84,10 @@ describe('engine neutrality: the import scan (spec 11.9)', () => {
   it('the scan bites: a module that imports the packages through a neighbour is caught, with its chain', () => {
     // src/guide/tutorial.ts imports src/design/packages.ts (a real module): taken as a root it must be an offender, and so must anything that imports it
     expect(offenders([join(ROOT, 'src/guide/tutorial.ts')]).some((c) => c.includes('src/design/packages.ts'))).toBe(true)
-    // the onboarding's own wiring reaches the packages
-    expect(offenders([join(ROOT, 'src/creation/onboarding/wire.ts')]).length).toBeGreaterThan(0)
+    // N3 (G14e): a root that is NOT itself forbidden is caught only through what it imports: src/creation/boot.ts reaches the packages, and every chain starts at it
+    const viaBoot = offenders([join(ROOT, 'src/creation/boot.ts')])
+    expect(viaBoot.some((c) => c.endsWith(' -> src/design/packages.ts')), viaBoot.join('\n')).toBe(true)
+    expect(viaBoot.every((c) => c.startsWith('src/creation/boot.ts -> ')), 'the root itself is not an offender').toBe(true)
   })
 
   it('the parser sees every import form and ignores comments', () => {

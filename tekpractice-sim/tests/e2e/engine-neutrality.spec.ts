@@ -178,6 +178,8 @@ const ADDRESSES: Address[] = [
   { query: '?design=4', storage: { [ONBOARDING_KEY]: record({ profile: 'metier', offer: 'skipped' }) }, what: 'profile « Je travaille dans le son » (Oscar muted by default)' },
   { query: '?design=5', storage: { [ONBOARDING_KEY]: record({ profile: 'projet', offer: 'skipped', ownGear: 'dismissed' }) }, what: 'profile « Je monte un projet », the own-gear card dismissed' },
   { query: '?design=2&oscar=0', storage: { [ONBOARDING_KEY]: record({ profile: 'decouvre', offer: 'skipped' }) }, what: 'Oscar off' },
+  // N1 (G14e): an exam address with a package (ruling R-A: the onboarding is off there); the engine must not care either
+  { query: '?design=3&mode=exam', storage: {}, what: 'an exam address with a package (the onboarding off)' },
 ]
 
 /** One run: the address with its package side, the neutral room, every bench of the corpus, then the script; the outputs in order. */
@@ -259,7 +261,9 @@ test.describe('engine neutrality across the packages (spec 11.9)', () => {
       expect(differences(runs.get('')!, runs.get(a.query)!)).toEqual([])
     })
 
-  test('the rules revision is the pre-flight one (the catalog the bundle carries is unchanged)', async () => {
+  // N2 (G14e): what is read is the SOURCE file content/catalog.json, the file the bundle imports (src/creation/boot.ts and src/legacyMain.ts `import catalogJson
+  // from '…/content/catalog.json'`); the built chunks themselves are not read here
+  test('the rules revision of content/catalog.json (the file the bundle imports) is the pre-flight one', async () => {
     const catalog = JSON.parse(readFileSync('content/catalog.json', 'utf8')) as { rules: unknown }
     expect(await rulesRevOf(catalog.rules)).toBe(PRE_FLIGHT_RULES_REV)
   })
