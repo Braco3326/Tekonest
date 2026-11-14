@@ -23,7 +23,7 @@ import sharp from 'sharp'
 import { DESIGN_IDS, packageById, type DesignId } from '../../src/design/packages'
 import { CREATION_TOKENS } from '../../src/design/creationTokens'
 import { waitRendersIdle } from './waits'
-import { act, connect, expect, loadFresh, MODEL_LEFT, PROFILES, STEP_INTENTS, start, test, testSignal, waitStartScreen, waitStep } from './onboardingKit'
+import { act, connect, expect, loadFresh, MODEL_LEFT, noteRetry, openRequests, PROFILES, stallOf, STEP_INTENTS, start, test, testSignal, waitStartScreen, waitStep } from './onboardingKit'
 
 // No retry: a snapshot that flakes is a defect of the capture, not a thing to run again.
 test.describe.configure({ retries: 0 })
@@ -118,13 +118,18 @@ async function atRest(page: Page, soundPlaying = false): Promise<void> {
 /** A first visit to `?design=id`: the start screen, up and focused (the entry stalls now and then under load: the load is repeated, as the kit does; a capture is never repeated). */
 async function toStartScreen(page: Page, id: DesignId): Promise<void> {
   for (let attempt = 1; ; attempt++) {
+    const open = openRequests(page)
     try {
       await loadFresh(page, `?design=${id}`)
       await waitStartScreen(page)
       return
     } catch (e) {
-      if (attempt >= 3) throw e
-      console.log(`RETRY the start screen of package ${id} (attempt ${attempt}): ${(e as Error).message.slice(0, 90).split('\n')[0]}`)
+      // G14e (C3): only on a stall (the kit's `stallOf`), and visibly
+      const stall = stallOf(e, open)
+      if (stall === null || attempt >= 3) throw e
+      noteRetry(`the start screen of package ${id} (attempt ${attempt}): ${(e as Error).message.slice(0, 90).split('\n')[0]}; stalled: ${JSON.stringify(stall.slice(0, 6))}`)
+    } finally {
+      open.stop()
     }
   }
 }
@@ -258,9 +263,10 @@ const pct = (x: number): string => (x * 100).toFixed(1) + ' %'
 /**
  * Spec 7.2, the declared balance of each package, each with the words of the table it comes from. Two claims per package, kept apart:
  *  - `kind`: what the identity IS (a dark screen, a daylight Papier sheet, no Prune, a Prune frame), read as a plain threshold on the share of the classed cells;
- *  - `number`: the « Prune share » row (about 3, 20, 0, 45 %). « about N % » is read as N points either way, 15 for the 20 and 45 % rows; « 0 % » as at most 2 %; « ink and focus only »
- *    as at most 10 %; the 3 % row, read the same way, as at most 18 %. The spec does not say what the share is OF; it is read here over the classed cells of the screen outside the 3D view.
- * Both fail the test; nothing is listed as known. (A first read of this over a canvas MASK painted over the drawer showed package 1 at 35 % Prune: the mask had hidden the drawer. The
+ *  - `number`: the « Prune share » row (about 3, 20, 0, 45 %). G14e (review S6, controller ruling): « about N % » is read as N +- 5 points (it was 15, and the 3 % row 18 %: loosened to pass);
+ *    « 0 % » as at most 2 %; « ink and focus only » as at most 10 %. The spec does not say what the share is OF; it is read here over the classed cells of the screen outside the 3D view.
+ * A breach of the `kind` fails the test. A breach of the `number` is compared with KNOWN_BALANCE: the packages whose Prune share is off today are listed EXACTLY there, with the numbers of
+ * report G14e, for the founder (spec 7.2 against the build); a new one, or one that comes right, turns the test red. (A first read of this over a canvas MASK painted over the drawer showed package 1 at 35 % Prune: the mask had hidden the drawer. The
  * numbers below are read with the canvas hidden and the overlays on.)
  */
 interface Declared {
@@ -269,19 +275,28 @@ interface Declared {
   number: (b: Balance) => string | null
 }
 const about = (b: Balance, n: number, pts: number): string | null => (Math.abs(b.prune * 100 - n) > pts ? `Prune ${pct(b.prune)} is not about ${n} % (+- ${pts} points)` : null)
+/** « about N % », read as N +- 5 points (S6). */
+const ABOUT_PTS = 5
 const BALANCE: Record<DesignId, Declared> = {
-  1: { says: '« one lit thing on a dark screen », Prune about 3 %', kind: (b) => (b.nuit < 0.6 ? `Nuit ${pct(b.nuit)} < 60 % (not a dark screen)` : null), number: (b) => (b.prune > 0.18 ? `Prune ${pct(b.prune)} > 18 % (about 3 %)` : null) },
-  2: { says: '« Prune study-sheet bands », Prune about 20 %', kind: (b) => (b.nuit < 0.6 ? `Nuit ${pct(b.nuit)} < 60 % (dark panels)` : b.prune < 0.05 ? `Prune ${pct(b.prune)} < 5 % (no bands)` : null), number: (b) => about(b, 20, 15) },
+  1: { says: '« one lit thing on a dark screen », Prune about 3 %', kind: (b) => (b.nuit < 0.6 ? `Nuit ${pct(b.nuit)} < 60 % (not a dark screen)` : null), number: (b) => about(b, 3, ABOUT_PTS) },
+  2: { says: '« Prune study-sheet bands », Prune about 20 %', kind: (b) => (b.nuit < 0.6 ? `Nuit ${pct(b.nuit)} < 60 % (dark panels)` : b.prune < 0.05 ? `Prune ${pct(b.prune)} < 5 % (no bands)` : null), number: (b) => about(b, 20, ABOUT_PTS) },
   3: { says: '« a daylight Papier sheet », Prune ink and focus only', kind: (b) => (b.papier < 0.6 ? `Papier ${pct(b.papier)} < 60 % (not a daylight sheet)` : null), number: (b) => (b.prune > 0.1 ? `Prune ${pct(b.prune)} > 10 % (ink and focus only)` : null) },
   4: { says: '« flat, hairline console, no raised panel », Prune 0 %', kind: (b) => (b.nuit < 0.9 ? `Nuit ${pct(b.nuit)} < 90 % (a dark console)` : null), number: (b) => (b.prune > 0.02 ? `Prune ${pct(b.prune)} > 2 % (0 %)` : null) },
-  5: { says: '« a Prune stage frame around the 3D view », Prune about 45 %', kind: (b) => (b.prune < 0.25 ? `Prune ${pct(b.prune)} < 25 % (no stage frame)` : null), number: (b) => about(b, 45, 15) },
+  5: { says: '« a Prune stage frame around the 3D view », Prune about 45 %', kind: (b) => (b.prune < 0.25 ? `Prune ${pct(b.prune)} < 25 % (no stage frame)` : null), number: (b) => about(b, 45, ABOUT_PTS) },
 }
-/** The workspace as the squint test sees it: the first room, the step card at step 1, the canvas painted MASK_COLOUR. */
-async function workspaceShot(page: Page, id: DesignId): Promise<Buffer> {
+/**
+ * The packages whose Prune share is off the declared row today (S6), by package, with the numbers measured on the build of HEAD 9e81af1 (report G14d, re-read G14e): the share differs run to run by
+ * a fraction of a point, so the entry is the package, the numbers are in the failure message and the `SQUINT` lines. For the founder: spec 7.2 against what the build shows.
+ */
+const KNOWN_BALANCE: readonly string[] = ['package 1 Prune share', 'package 2 Prune share', 'package 5 Prune share']
+/** The workspace as the squint test sees it: the first room, the step card at step 1, the canvas painted MASK_COLOUR; and the same moment with Oscar's bubble and icon hidden (S5). */
+async function workspaceShot(page: Page, id: DesignId): Promise<{ withGuide: Buffer; withoutGuide: Buffer }> {
   await toStartScreen(page, id)
   await takeTutorial(page, id)
   await atRest(page)
-  return page.screenshot({ style: SQUINT_STYLE, animations: 'disabled', caret: 'hide' })
+  const withGuide = await page.screenshot({ style: SQUINT_STYLE, animations: 'disabled', caret: 'hide' })
+  const withoutGuide = await page.screenshot({ style: `${SQUINT_STYLE} ${HIDE_GUIDE}`, animations: 'disabled', caret: 'hide' })
+  return { withGuide, withoutGuide }
 }
 
 test.describe('11.7 squint test: the five packages are told apart at a glance', () => {
@@ -304,32 +319,43 @@ test.describe('11.7 squint test: the five packages are told apart at a glance', 
 
   test('every pair of the five packages differs in at least 8 % of the 32 x 18 cells, and each follows the balance spec 7.2 declares', async ({ page }) => {
     const grids = new Map<DesignId, Grid>()
+    const bare = new Map<DesignId, Grid>()
     const fine = new Map<DesignId, Grid>()
     for (const id of DESIGN_IDS) {
       const shot = await workspaceShot(page, id)
-      grids.set(id, await downsample(shot, COLS, ROWS))
-      fine.set(id, await downsample(shot, FINE_COLS, FINE_ROWS))
+      grids.set(id, await downsample(shot.withGuide, COLS, ROWS))
+      bare.set(id, await downsample(shot.withoutGuide, COLS, ROWS))
+      fine.set(id, await downsample(shot.withGuide, FINE_COLS, FINE_ROWS))
+      // the two shots differ (Oscar is on the first one): the second is not the same picture under another name
+      expect(differing(grids.get(id)!, bare.get(id)!), `package ${id}: Oscar's bubble and icon cover part of the screen`).toBeGreaterThan(0)
     }
 
     const lines: string[] = []
     const failures: string[] = []
+    const offBalance: { key: string; text: string }[] = []
     for (const id of DESIGN_IDS) {
       const b = balanceOf(fine.get(id)!)
       const kind = BALANCE[id].kind(b)
       const number = BALANCE[id].number(b)
       lines.push(`package ${id}: Nuit ${pct(b.nuit)}, Papier ${pct(b.papier)}, Ambre ${pct(b.ambre)}, Prune ${pct(b.prune)} of the classed cells; mixed ${pct(b.mixed)}, canvas ${pct(b.mask)} of the screen | declared ${BALANCE[id].says} | kind: ${kind ?? 'ok'} | number: ${number ?? 'ok'}`)
       if (kind) failures.push(`package ${id} balance: ${kind}`)
-      if (number) failures.push(`package ${id} Prune share: ${number}`)
+      if (number) offBalance.push({ key: `package ${id} Prune share`, text: `package ${id} Prune share: ${number} (declared ${BALANCE[id].says})` })
     }
     for (const a of DESIGN_IDS)
       for (const b of DESIGN_IDS) {
         if (b <= a) continue
         const share = differing(grids.get(a)!, grids.get(b)!)
-        lines.push(`pair ${a}-${b}: ${pct(share)} of ${CELLS} cells differ`)
+        // S5: the pair must also differ with Oscar hidden: a pass on his corner alone is not two packages told apart
+        const shareBare = differing(bare.get(a)!, bare.get(b)!)
+        lines.push(`pair ${a}-${b}: ${pct(share)} of ${CELLS} cells differ; ${pct(shareBare)} with Oscar hidden`)
         if (share < MIN_DIFFERING) failures.push(`packages ${a} and ${b} differ in ${pct(share)} of the cells, need >= ${pct(MIN_DIFFERING)}`)
+        if (shareBare < MIN_DIFFERING) failures.push(`packages ${a} and ${b} differ in ${pct(shareBare)} of the cells with Oscar hidden, need >= ${pct(MIN_DIFFERING)}`)
       }
     console.log('SQUINT metric: 32 x 18 box average, a cell differs above dE ' + CELL_DELTA_E + '; balance on ' + FINE_COLS + ' x ' + FINE_ROWS + ', a cell is classed within dE ' + CLASS_DELTA_E + '\n' + lines.map((l) => 'SQUINT ' + l).join('\n'))
     expect(failures, failures.join('\n')).toEqual([])
+    const offText = offBalance.map((o) => o.text).join('\n')
+    test.info().annotations.push({ type: 'Prune share off the declared row (spec 7.2, for the founder)', description: offText })
+    expect(offBalance.map((o) => o.key), `the packages whose Prune share is off the declared row (KNOWN_BALANCE)\n${offText}`).toEqual(KNOWN_BALANCE)
   })
 })
 
