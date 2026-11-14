@@ -1,7 +1,7 @@
 # ADR-0021 — Oscar se place à côté de l’appareil montré : son corps, une marge et le centre de la vue sont des obstacles souples de l’hôte
 
 - **Status:** Accepté par défaut — en attente de validation du fondateur (paquets d’accueil, G14b, 2026-11-13).
-- **Sources :** spécification `docs/superpowers/specs/2026-11-12-onboarding-packs-design.md` (§11.3) ; constats F1 à F5 du rapport `.superpowers/reports/G14a-report.md` (spec `tests/e2e/onboarding-geometry.spec.ts`) ; `src/guide/clearance.ts`, `src/guide/mount.ts` (`createGuideObstacles`), `src/guide/bridge/creationBridge.ts` (`bodyRects`), `src/scene/screenBox.ts`, `src/creation/debug.ts` / `boot.ts` (lecteur `deviceScreenBox`).
+- **Sources :** spécification `docs/superpowers/specs/2026-11-12-onboarding-packs-design.md` (§11.3) ; constats F1 à F5 du rapport de séance G14a (local, non versionné : `.superpowers/` est exclu du dépôt ; les valeurs vivantes sont figées dans la spec) (spec `tests/e2e/onboarding-geometry.spec.ts`) ; `src/guide/clearance.ts`, `src/guide/mount.ts` (`createGuideObstacles`), `src/guide/bridge/creationBridge.ts` (`bodyRects`), `src/scene/screenBox.ts`, `src/creation/debug.ts` / `boot.ts` (lecteur `deviceScreenBox`).
 
 ## Contexte
 
@@ -18,6 +18,6 @@ Le widget d’Oscar (vendu, épinglé par empreinte, non modifiable) pose l’ic
 
 ## Conséquences
 
-- Les constats levés (marqueurs `test.fail` retirés) et ceux qui restent sont chiffrés dans `.superpowers/reports/G14b-report.md`.
+- Les constats levés (marqueurs `test.fail` retirés) et ceux qui restent sont chiffrés par les listes figées de `tests/e2e/onboarding-geometry.spec.ts` (le rapport de séance G14b est local et non versionné).
 - **Erratum du 2026-11-14 (G15b, après le tour G14e).** Une fois la boîte de l’appareil lue dans le bon repère (le placement de l’instance, et non son repère racine), la mesure change : à 1366 px l’icône repose **sur** l’appareil visé, à 0 px de l’anneau, aux étapes 4, 6 et 8 des paquets 2 et 4, et à 4 px à l’étape 9 des paquets 2, 3 et 4 ; la bulle ou l’icône couvrent le centre de la vue (20 % × 20 %) aux paquets 2, 3 et 4 (6 mesures sur 12 aux paquets 2 et 4, 1 au paquet 3), pas aux paquets 1 et 5. Le test épingle ces listes exactes (`KNOWN_GEOM`, `KNOWN_CENTRE_1366` dans `tests/e2e/onboarding-geometry.spec.ts`) : elles sont connues et **non corrigées**. Cause relevée (G14e, constat 5) : le corps de l’appareil est l’obstacle qui contient le centre de la cible ; le widget écarte un tel obstacle (décision 2 ci-dessus), ce qui autorise l’icône sur l’appareil.
 - Là où il n’y a pas de place (deux panneaux et le tiroir ouverts à 1366 ou 1024 px, l’étape 7 avec le tiroir ouvert), la bulle de 352 x 300 à 380 px ne tient nulle part : le centre, la marge ou le corps cèdent, mesuré et non caché (les marqueurs restent). Le vrai levier est une décision de design (bulle plus compacte pendant le parcours, tiroir refermé à l’étape 4, ou place réservée pour Oscar), à trancher par le fondateur ou tekuxdesigner.

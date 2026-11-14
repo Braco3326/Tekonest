@@ -4,6 +4,10 @@ Ce guide Vous mène, pas à pas, à voir et à juger les cinq paquets de design 
 
 Un paquet n’est pas un autre jeu : c’est la même simulation avec un autre habillage et un autre accueil. Sans `?design` dans l’adresse, Vous avez le jeu d’aujourd’hui, inchangé.
 
+**Le verdict le plus important d’abord : l’épreuve des 3 minutes n’est pas tenue par les paquets 1 à 4.** Mesuré sur un parcours que le script connaît par cœur (plancher modélisé, **pas** un temps d’apprenant), un premier son demande 220 à 266 s par la boîte « Connecter à… » et 178 à 194 s par clic de port aux paquets 1 et 4 ; seul le paquet 5 (modèle déjà câblé) est loin sous 180 s (24 s). Le temps passe surtout à lire (environ 280 à 294 mots, 85 s), puis dans le temps machine du script (environ 66 s), puis dans les 30 gestes. Deux simplifications sont possibles et attendent Votre décision (elles changent la spécification, voir §8) : mettre les deux étapes du micro après le premier son, et proposer « Je branche pour vous » dès l’étape 8. Ces chiffres varient avec la charge de la machine (244,9 s au paquet 1 pendant un gros lot de tests).
+
+**Un test propre, paquet après paquet.** La mémoire de la première visite et la sauvegarde automatique sont gardées **par adresse de navigateur** (`localhost:4392`), pas par paquet. Dès qu’un paquet a reçu une réponse, les suivants rouvrent le sélecteur ou Votre dernier banc au lieu de l’écran de départ, et un tutoriel resté en cours peut reprendre à une autre étape. **Pour chaque paquet, ouvrez donc une fenêtre de navigation privée neuve** (fermez *toutes* les fenêtres privées entre deux paquets : elles partagent la même mémoire tant qu’une reste ouverte), ou faites la remise à zéro complète du §5, quatrième ligne comprise.
+
 ## 1. Lancer
 
 Dans un terminal (PowerShell), placez-Vous dans le dossier `tekpractice-sim` de la branche `design/onboarding-packs` (sur ce PC : `E:\dev\Tekonest-wt\onboarding\tekpractice-sim`), puis :
@@ -12,7 +16,7 @@ Dans un terminal (PowerShell), placez-Vous dans le dossier `tekpractice-sim` de 
 npm run onboarding:local
 ```
 
-Cette commande existe (script `onboarding:local` de `package.json`, fichier `tools/onboarding-local.mjs`). Elle fait trois choses, dans cet ordre :
+Cette commande existe (script `onboarding:local` de `package.json`, fichier `tools/onboarding-local.mjs`). Si une variable d’environnement `TEKPRACTICE_BASE` est définie dans Votre terminal, les adresses ci-dessous ne répondront pas (page introuvable) : retirez-la avant de lancer. Elle fait trois choses, dans cet ordre :
 
 1. elle **construit** cette copie du jeu (`npm run build`) : comptez un moment, et rien n’est servi si la construction échoue ;
 2. elle **sert** le résultat sur le port **4392**, et seulement celui-là : si le port est déjà pris, elle s’arrête au lieu d’en prendre un autre ;
@@ -33,7 +37,7 @@ Laissez le terminal ouvert pendant que Vous testez. **Ctrl+C** arrête le serveu
 | 5 | Modèle d’abord | `http://localhost:4392/?design=5` |
 | (aucun) | le jeu d’aujourd’hui | `http://localhost:4392/` |
 
-Le paquet n’est **jamais mémorisé** : il vient de l’adresse. Pour passer d’un paquet à un autre, changez l’adresse (et rechargez). Une adresse invalide (`?design=0`, `?design=6`, deux `design`) équivaut à l’absence de `?design`.
+Le paquet n’est **jamais mémorisé** : il vient de l’adresse. Pour passer d’un paquet à un autre, changez l’adresse (et rechargez) **dans une fenêtre privée neuve** (voir plus haut). Une adresse invalide (`?design=0`, `?design=6`, deux `design`) équivaut à l’absence de `?design`.
 
 Les noms des paquets ne s’affichent nulle part dans le jeu (ils sont à valider par la relecture des textes) : Vous les reconnaissez à l’adresse et à l’aspect.
 
@@ -62,6 +66,8 @@ Chaque paquet doit se reconnaître d’un coup d’œil, même en plissant les y
 **Paquet 4 — Pupitre.** À plat, des filets fins, aucun panneau en relief, aucun Prune ; anneau de focus Papier. Oscar **en sourdine** par défaut (le tutoriel est proposé, rien n’est suggéré de lui-même) ; le tiroir se referme après chaque pose ; le clavier d’abord. *Regardez :* un ingénieur s’y retrouve-t-il ? Un débutant, lui, s’y perd-il ?
 
 **Paquet 5 — Modèle d’abord.** Un cadre et des panneaux Prune autour de la vue 3D. La première salle est un **modèle déjà câblé et alimenté** (une console, deux enceintes, un micro, une multiprise) ; le tutoriel n’a que **trois étapes** : le son, un débranchement, un rebranchement. *Regardez :* le modèle se lit-il dans la vue ? Les enceintes sombres sur fond sombre et le micro, très petit à cette distance, sont des limites connues.
+
+À savoir pour juger : les paquets 1 et 3 ont **le même parcours** (mêmes dix étapes, mêmes indices, même fiche d’étape, Oscar qui mène) et se distinguent par la disposition et les couleurs ; les paquets 1 et 2 ne diffèrent dans leurs couleurs que par le bandeau. Les parcours distincts sont donc au nombre de deux (dix étapes, ou trois au paquet 5) plus les réglages d’Oscar. Au paquet 4, le bouton « Je branche pour vous » reste inactif pendant tout le tutoriel (le délai d’indice y vaut 0 : il ne se débloque jamais).
 
 À juger sur les cinq : l’équilibre Nuit / Papier / Ambre / Prune, le nom de chaque paquet, la place d’Oscar, et surtout la question du fondateur : **un débutant complet arrive-t-il à un premier son sans aide ?**
 
@@ -102,7 +108,7 @@ Sur la page du Mode Création, tout paramètre `mode`, `level` ou `legacy` sort 
 
 ## 7. Sans Oscar : `?oscar=0`
 
-Ajoutez `oscar=0` à l’adresse (`http://localhost:4392/?design=2&oscar=0`) pour essayer le paquet **sans Oscar**. L’écran de départ ne montre alors que le choix du profil (le choix est définitif, pas d’offre de tutoriel), Oscar n’apparaît pas, et Aide n’a pas « Premiers pas ». L’aspect du paquet, la liste « Pourquoi je n’entends rien ? » et, pour le profil « Je monte un projet », la carte après le premier son restent.
+Ajoutez `oscar=0` à l’adresse (`http://localhost:4392/?design=2&oscar=0`) pour essayer le paquet **sans Oscar**. L’écran de départ ne montre alors que le choix du profil (pas d’offre de tutoriel ; le profil reste modifiable par la pastille de la barre d’état), Oscar n’apparaît pas, et Aide n’a pas « Premiers pas ». L’aspect du paquet, la liste « Pourquoi je n’entends rien ? » et, pour le profil « Je monte un projet », la carte après le premier son restent.
 
 ## 8. Ce qui n’est pas mesuré
 
@@ -111,7 +117,7 @@ Ajoutez `oscar=0` à l’adresse (`http://localhost:4392/?design=2&oscar=0`) pou
 **Personne n’a encore regardé ni écouté :**
 
 - Aucun passage **humain** visuel, ni avec un lecteur d’écran : tout ce qui est « mesuré » l’est par des programmes (contrastes calculés, géométrie, axe).
-- Aucun **apprenant réel** n’a été chronométré. Le « test des 3 minutes » (un débutant complet arrive à un premier son en 3 minutes sans aide) est **un plancher modélisé pour un parcours déjà connu**, pas un temps d’apprenant : un script qui connaît tous les gestes, auquel on ajoute un temps de lecture modélisé. Chiffres du dernier relevé (machine du script + lecture modélisée, en secondes ; source : rapport G14e et lignes `PROXY` de `tests/e2e/first-timer-proxy.spec.ts`) : parcours par boîte « Connecter à… », paquets 1 à 4 : 220 à 266 s ; par clic de port, paquets 1 et 4 : 178 à 194 s ; paquet 5 : 24 s. Plusieurs de ces planchers dépassent déjà 180 s ; ils ne démontrent donc pas les 3 minutes. La vraie épreuve (cinq débutants par paquet, sans aide, chronométrés) reste à faire.
+- Aucun **apprenant réel** n’a été chronométré. Le « test des 3 minutes » (un débutant complet arrive à un premier son en 3 minutes sans aide) est **un plancher modélisé pour un parcours déjà connu**, pas un temps d’apprenant : un script qui connaît tous les gestes, auquel on ajoute un temps de lecture modélisé. Chiffres du dernier relevé (machine du script + lecture modélisée, en secondes ; source : lignes `PROXY` et valeurs figées de `tests/e2e/first-timer-proxy.spec.ts` ; les rapports de séance détaillés sont locaux et non versionnés) : parcours par boîte « Connecter à… », paquets 1 à 4 : 220 à 266 s ; par clic de port, paquets 1 et 4 : 178 à 194 s ; paquet 5 : 24 s. Plusieurs de ces planchers dépassent déjà 180 s ; ils ne démontrent donc pas les 3 minutes. La vraie épreuve (cinq débutants par paquet, sans aide, chronométrés) reste à faire.
 - Le **budget de mots** du parcours (200) est dépassé : 294 mots sur les parcours par dialogue (le texte de la boîte « Connecter à… » compte pour 91), 203 par clic de port aux paquets 1 et 4 (paquet 5 : 34).
 
 **Des cas techniques non mesurés :**
@@ -133,4 +139,4 @@ Ajoutez `oscar=0` à l’adresse (`http://localhost:4392/?design=2&oscar=0`) pou
 - Au paquet 5, la barre d’état peut dire « Prêt » alors que le son joue (à vérifier).
 - En 1024 et 820 px, la barre d’état tronque ses messages et l’onglet du tiroir est coupé.
 
-**Pour la suite (décisions qui Vous appartiennent) :** quel paquet devient celui par défaut ; l’« IA » dans « Oscar, assistant IA » ; la fiche d’étape dans les paquets 2 et 4 ; le texte qui remplace celui des règles R1 à R5 ; le choix de montrer ou non les modèles dans les images du storyboard.
+**Pour la suite (décisions qui Vous appartiennent) :** mettre les deux étapes du micro après le premier son et proposer « Je branche pour vous » dès l’étape 8 (la spécification définit aujourd’hui le premier son avec un micro) ; quel paquet devient celui par défaut ; l’« IA » dans « Oscar, assistant IA » ; la fiche d’étape dans les paquets 2 et 4 ; le texte qui remplace celui des règles R1 à R5 ; le choix de montrer ou non les modèles dans les images du storyboard.

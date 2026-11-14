@@ -1140,7 +1140,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
    * (tests/creation/honesty.test.ts scans this section as a learner one). À valider (tekuxwriter, 2026-11-13).
    */
   oscar: {
-    /** The badge in the header of Oscar's bubble, with every open bubble: it says what Oscar is; the icon keeps its name « Oscar, assistant IA » (founder decision). */
+    /** The badge in the header of Oscar's bubble, with every open bubble: it says what Oscar is; the icon keeps its name « Oscar, assistant IA » (a controller ruling, NOT a founder decision: whether « IA » stays is an open founder question, see ADR 0018; the founder's own label was « Assistant »). */
     badge: 'Oscar · Assistant',
     /**
      * G14c fix (b): Oscar's line when what he points at is off screen (it replaces the vendored « … Faire défiler la page … », which is no advice in a 3D view).

@@ -22,7 +22,8 @@ export function resetTip() {
   return [
     'To see the first visit again, in the browser console on this address (own storage: port 4392 only), run these three lines and reload:',
     "  localStorage.removeItem('audio-sim/creation-onboarding.v1'); localStorage.removeItem('oscar-guide.onboarding.v1'); localStorage.removeItem('oscar-guide.state.v1')",
-    'This keeps your saved projects. A private window also starts fresh.',
+    'This keeps your saved projects. A private window also starts fresh (close ALL private windows between two packages: they share one memory while any stays open).',
+    'If a saved bench reopens instead of the start screen, an autosave exists on this address: use a private window.',
     'Only if that is not enough: localStorage.clear() on this address also erases your saved projects there.',
   ].join('\n')
 }
