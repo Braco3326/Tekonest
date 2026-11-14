@@ -1,15 +1,17 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
+import { cheats } from './keyboardCheats'
 
 /**
- * Onboarding packs T7.1c (spec 11.6): the keyboard-only e2e proves a learner reaches a first sound in each package with keys alone. It only proves that if it cannot cheat: no pointer call,
- * and no shortcut around the keyboard (programmatic focus, a field filled directly, an intent dispatched from the page, a place chosen from the page). The spec holds the route between two
- * markers (the rest of the file is the runtime honesty scan, which may click); this reads the text between them. Same idea as keyboardPatchSpec.test.ts (CA-02).
+ * Onboarding packs T7.1c (spec 4.3; the plan's « 11.6 »): the keyboard-only e2e proves a learner reaches a first sound in each package with keys alone. It only proves that if it cannot cheat: no pointer call,
+ * and no shortcut around the keyboard (programmatic focus, a field filled directly, text inserted, a value written or an event dispatched from the page, an intent dispatched, a place chosen).
+ * The spec holds the route between two markers (the rest of the file is the runtime honesty scan, which may click); this reads the text between them. Same idea as keyboardPatchSpec.test.ts
+ * (CA-02). G14e (review S7): the real route and the crafted cheats go through the SAME checker, `cheats()` (keyboardCheats.ts).
  */
 const text = readFileSync(fileURLToPath(new URL('../e2e/onboarding-keyboard.spec.ts', import.meta.url)), 'utf8')
-const begin = text.indexOf('11.6 KEYBOARD ONLY: BEGIN')
-const end = text.indexOf('11.6 KEYBOARD ONLY: END')
+const begin = text.indexOf('T7.1c KEYBOARD ONLY: BEGIN')
+const end = text.indexOf('T7.1c KEYBOARD ONLY: END')
 const route = begin >= 0 && end > begin ? text.slice(begin, end) : ''
 // the markers' own comment line names what the checker forbids: the route proper starts after it
 const body = route.slice(route.indexOf('\n'))
@@ -30,17 +32,8 @@ describe('onboarding-keyboard.spec.ts: the route is keyboard only', () => {
     expect(body).toContain('page.keyboard.type(')
   })
 
-  it('has no pointer call: no `mouse` and no click of any kind (the pointer COUNTER in the page is the other half of the proof)', () => {
-    expect(body).not.toMatch(/\.mouse\b/)
-    expect(body).not.toMatch(/\.(click|dblclick|tap|hover|dragTo)\(/)
-    expect(body).not.toMatch(/\bclick\(/i)
-  })
-
-  it('has no shortcut around the keys: no programmatic focus, no direct fill / check, no dispatch, no place chosen from the page', () => {
-    expect(body).not.toMatch(/\.(focus|fill|check|selectOption|press\w*Sequentially)\(/)
-    expect(body).not.toMatch(/\.dispatch\(/)
-    expect(body).not.toMatch(/choosePlace|requestPlace|dispatchEvent|\.setValue\(|setControlValue|frameDevice/)
-    expect(body).not.toMatch(/\bact\(|\bconnect\(|\bspawn\(/) // the kit's dispatching helpers are not imported by the route
+  it('has no cheat: no pointer call, no programmatic focus, fill, inserted text, written value, dispatched event or intent, no kit helper that clicks or dispatches', () => {
+    expect(cheats(body)).toEqual([])
   })
 
   it('asserts the real outcome: the engine plays the test signal on a speaker, and no pointer event reached the page', () => {
@@ -51,17 +44,37 @@ describe('onboarding-keyboard.spec.ts: the route is keyboard only', () => {
   })
 })
 
-describe('the checker can fail: crafted routes', () => {
-  const cheats = [
+describe('the checker can fail: crafted routes through the same cheats()', () => {
+  const crafted = [
     'await page.getByRole("button").click()',
     'await page.mouse.click(10, 10)',
     'await page.locator("#renderCanvas").focus()',
     'await page.getByRole("textbox").fill("QL1")',
+    'await page.keyboard.insertText("QL1")',
+    'await page.evaluate(() => { (document.querySelector("#cr-inv-filter") as HTMLInputElement).value = "QL1" })',
+    'await page.evaluate(() => document.querySelector("#x")!.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" })))',
     'await page.evaluate(() => window.__creation!.dispatch({}))',
     "await page.evaluate(() => window.__creation!.choosePlace('blank'))",
+    'await act(page, [spawn("yamaha-ql1", "ql1", 0)])',
+    'await testSignal(page)',
+    'await page.locator("input").pressSequentially("QL1")',
   ]
-  it.each(cheats)('trips on %s', (line) => {
-    const hit = /\.mouse\b|\.(click|dblclick|tap|hover|dragTo|focus|fill|check|selectOption)\(|\.dispatch\(|choosePlace/.test(line)
-    expect(hit).toBe(true)
+  it.each(crafted)('trips on %s', (line) => {
+    expect(cheats(`\n${line}\n`).length).toBeGreaterThan(0)
+  })
+  const nearMisses = [
+    "await page.keyboard.press('Enter')",
+    "await page.keyboard.type('QL1')",
+    'await testSignalByKeys(page)',
+    'await connectByKeys(page, "yamaha-ql1", "out-main-l", "in-line-a")',
+    "await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')",
+    'const v = el.value === "x"',
+    '// a comment that says click( is not a call',
+  ]
+  it.each(nearMisses)('passes %s', (line) => {
+    expect(cheats(`\n${line}\n`)).toEqual([])
+  })
+  it('the real route with one cheat added trips', () => {
+    expect(cheats(`${body}\nawait page.keyboard.insertText('K12')`)).toEqual(["text inserted without key events: await page.keyboard.insertText('K12')"])
   })
 })
