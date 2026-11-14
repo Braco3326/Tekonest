@@ -1,0 +1,188 @@
+{
+ "note": "Generic panel artwork (no brand marks, no logos), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+ "faces": {
+  "opposite": {
+   "wMm": 105,
+   "hMm": 29,
+   "base": "#1d1e21",
+   "items": [
+    {
+     "kind": "circle",
+     "x": 16,
+     "y": 23,
+     "r": 3.5,
+     "fill": "#2b2d31",
+     "stroke": "#9aa0a6"
+    },
+    {
+     "kind": "rect",
+     "x": 15.4,
+     "y": 23,
+     "w": 1.2,
+     "h": 2.8000000000000003,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 40,
+     "y": 23,
+     "r": 3.5,
+     "fill": "#2b2d31",
+     "stroke": "#9aa0a6"
+    },
+    {
+     "kind": "rect",
+     "x": 39.4,
+     "y": 23,
+     "w": 1.2,
+     "h": 2.8000000000000003,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 64,
+     "y": 23,
+     "r": 3.5,
+     "fill": "#2b2d31",
+     "stroke": "#9aa0a6"
+    },
+    {
+     "kind": "rect",
+     "x": 63.4,
+     "y": 23,
+     "w": 1.2,
+     "h": 2.8000000000000003,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 88,
+     "y": 23,
+     "r": 3.5,
+     "fill": "#2b2d31",
+     "stroke": "#9aa0a6"
+    },
+    {
+     "kind": "rect",
+     "x": 87.4,
+     "y": 23,
+     "w": 1.2,
+     "h": 2.8000000000000003,
+     "fill": "#e8e8e8"
+    },
+    {
+     "kind": "circle",
+     "x": 16,
+     "y": 14,
+     "r": 6,
+     "fill": "#0c0d0f",
+     "stroke": "#8a8e94"
+    },
+    {
+     "kind": "circle",
+     "x": 16,
+     "y": 14,
+     "r": 2.3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "circle",
+     "x": 33.4,
+     "y": 14,
+     "r": 6,
+     "fill": "#0c0d0f",
+     "stroke": "#8a8e94"
+    },
+    {
+     "kind": "circle",
+     "x": 33.4,
+     "y": 14,
+     "r": 2.3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "circle",
+     "x": 50.8,
+     "y": 14,
+     "r": 6,
+     "fill": "#0c0d0f",
+     "stroke": "#8a8e94"
+    },
+    {
+     "kind": "circle",
+     "x": 50.8,
+     "y": 14,
+     "r": 2.3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "circle",
+     "x": 68.2,
+     "y": 14,
+     "r": 6,
+     "fill": "#0c0d0f",
+     "stroke": "#8a8e94"
+    },
+    {
+     "kind": "circle",
+     "x": 68.2,
+     "y": 14,
+     "r": 2.3,
+     "fill": "#3a3d42"
+    }
+   ]
+  },
+  "io": {
+   "wMm": 105,
+   "hMm": 29,
+   "base": "#1d1e21",
+   "items": [
+    {
+     "kind": "circle",
+     "x": 14,
+     "y": 14,
+     "r": 6,
+     "fill": "#0c0d0f",
+     "stroke": "#8a8e94"
+    },
+    {
+     "kind": "circle",
+     "x": 14,
+     "y": 14,
+     "r": 2.3,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "circle",
+     "x": 31.4,
+     "y": 14,
+     "r": 6,
+     "fill": "#b8bcc2",
+     "stroke": "#6b6f75"
+    },
+    {
+     "kind": "circle",
+     "x": 31.4,
+     "y": 14,
+     "r": 2.4,
+     "fill": "#0c0d0f"
+    },
+    {
+     "kind": "circle",
+     "x": 48.8,
+     "y": 14,
+     "r": 6,
+     "fill": "#b8bcc2",
+     "stroke": "#6b6f75"
+    },
+    {
+     "kind": "circle",
+     "x": 48.8,
+     "y": 14,
+     "r": 2.4,
+     "fill": "#0c0d0f"
+    }
+   ]
+  }
+ }
+}

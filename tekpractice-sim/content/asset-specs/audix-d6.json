@@ -1,0 +1,146 @@
+{
+  "id": "audix-d6",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 51,
+    "h": 117,
+    "d": 51
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 25.5,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "openingMm": 15,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        21.5
+      ],
+      [
+        7.8,
+        21.5
+      ],
+      [
+        12,
+        21.5
+      ],
+      [
+        15.6,
+        23.52
+      ],
+      [
+        23.4,
+        27.89
+      ],
+      [
+        31.2,
+        32.26
+      ],
+      [
+        39,
+        36.64
+      ],
+      [
+        45,
+        40
+      ],
+      [
+        46.8,
+        41.16
+      ],
+      [
+        54.6,
+        46.21
+      ],
+      [
+        62,
+        51
+      ],
+      [
+        62.4,
+        51
+      ],
+      [
+        70.2,
+        51
+      ],
+      [
+        78,
+        51
+      ],
+      [
+        85.8,
+        51
+      ],
+      [
+        93.6,
+        51
+      ],
+      [
+        101.4,
+        51
+      ],
+      [
+        108,
+        51
+      ],
+      [
+        109.2,
+        50.6
+      ],
+      [
+        114,
+        49
+      ],
+      [
+        117,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#26272a"
+      }
+    ]
+  },
+  "portsDocumented": true,
+  "portsSource": "https://audixusa.com/cdn/shop/files/D6_V3_1221.pdf",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://audixusa.com/products/d6",
+      "note": "equipment plan source (research grade: datasheet); size 51 x 51 x 117 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://audixusa.com/cdn/shop/files/D6_V3_1221.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://audixusa.com/cdn/shop/files/D6_V3_1221.pdf",
+      "note": "Audix D6 spec sheet (version 3), opened 2026-11-12 (pdftotext): dynamic cardioid, 117 mm long, 21.5 mm diameter at the base, 51 mm at the widest point (its position is not stated), 254 g, gold plated 3-pin XLR male, balanced 280 ohm output, no power requirement and unaffected by phantom power, machined aluminium body, steel wire-mesh grille. The profile between those three numbers is a drawn estimate (no drawing opened); the grille position along the body is an estimate. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

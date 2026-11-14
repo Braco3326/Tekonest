@@ -1,0 +1,65 @@
+{
+  "note": "Unrolled side surface of the Beta 58A lathe (build.projection wrap): 157.08 mm around (pi x 50) by 160 mm tall. Generic artwork drawn by us: plain handle with seam rings, neck ring, diamond-weave grille. No brand mark, no lettering.",
+  "faces": {
+    "wrap": {
+      "wMm": 157.08,
+      "hMm": 160,
+      "pxPerMm": 12.4,
+      "base": "#3b3b3e",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 88.3,
+          "w": 157.08,
+          "h": 1.2,
+          "fill": "#242427"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 105.09,
+          "w": 157.08,
+          "h": 0.9,
+          "fill": "#242427"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 112.4,
+          "w": 157.08,
+          "h": 0.9,
+          "fill": "#242427"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 114.47,
+          "w": 157.08,
+          "h": 4.6,
+          "fill": "#6d6e73"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 116.44,
+          "w": 157.08,
+          "h": 0.5,
+          "fill": "#2d2d30"
+        },
+        {
+          "kind": "weave",
+          "x": 0,
+          "y": 119.31,
+          "w": 157.08,
+          "h": 40.69,
+          "pitch": 1.6,
+          "line": 0.34,
+          "fill": "#adafb4",
+          "stroke": "#5f6166",
+          "hole": "#3a3b3f"
+        }
+      ]
+    }
+  }
+}

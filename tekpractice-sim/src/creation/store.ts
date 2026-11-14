@@ -451,8 +451,16 @@ export class CreationStore {
         if (graph.addInstance(instanceId, deviceId).ok) ids.push(instanceId)
         else dropped.devices.push(instanceId)
       }
+      // A device promoted from a Bêta proposal has shorter port ids (Device.portAliases: old -> current): a saved cable that still names an
+      // old id is loaded onto the new one. A port id the device currently has is never aliased.
+      const deviceOf = new Map(d.rig.instances.map((i) => [i.instanceId, i.deviceId]))
+      const current = (r: PortRef): PortRef => {
+        const dev = this.registry.deviceById.get(deviceOf.get(r.instance) ?? '')
+        const to = dev?.portAliases?.[r.port]
+        return to !== undefined && !dev!.ports.some((p) => p.portId === r.port) && dev!.ports.some((p) => p.portId === to) ? { instance: r.instance, port: to } : r
+      }
       for (const c of d.rig.connections) {
-        const r = graph.connect(c.a, c.b)
+        const r = graph.connect(current(c.a), current(c.b))
         if (!r.ok) dropped.cables.push({ a: ref(c.a), b: ref(c.b), code: r.code, message: r.message })
       }
       for (const [instance, ctrls] of Object.entries(d.rig.controls))

@@ -1,0 +1,45 @@
+{
+ "id": "draft-opera-with-pit-recording",
+ "version": 1,
+ "domain": "post",
+ "title": "[BROUILLON] Captation d'un opéra avec orchestre en fosse",
+ "brief": "Captation pour la radio d'une représentation d'opéra : orchestre en fosse, chanteurs sur le plateau. Placer un couple principal au-dessus de la fosse, des appoints directionnels en fosse et des micros de plateau pour les voix, en gérant la repisse entre instruments dans une fosse exiguë.",
+ "devices": [
+  {
+   "instanceId": "rio",
+   "deviceId": "yamaha-rio3224-d2"
+  },
+  {
+   "instanceId": "desk",
+   "deviceId": "yamaha-cl5"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "rio",
+    "port": "dante-primary"
+   },
+   "to": {
+    "instance": "desk",
+    "port": "net-dante-1"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-11-12",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/orchestra-classical.json#opera-with-pit-recording",
+  "room_id": "opera-house-pit-large",
+  "difficulty": 5,
+  "unmapped_nodes": [
+   "Principal gauche",
+   "Principal droite",
+   "Appoint violoncelles (fosse)",
+   "Micro de plateau centre"
+  ],
+  "unresolved_edges": []
+ }
+}

@@ -419,8 +419,9 @@ describe('Bêta (unverified) devices are never part of the signal path', () => {
     expect(res.playbackReady).toBe(false)
   })
   it.each([
-    ['shure-axient-digital-ad4d', 'out-ac-power-cascade-locking'],
-    ['shure-ua845uwb', 'out-ac-power-output-daisy-chain'],
+    // the two Shure daisy-chain outputs were the Bêta examples until their Wave 3 promotion; the Furman M-8x2 outlets stay Bêta (beta-modelled)
+    ['furman-m-8x2', 'out-1'],
+    ['furman-m-8x2', 'out-front'],
   ])('a Bêta mains output (%s) wired to a K12 power-in does not power it', (deviceId, portId) => {
     const r = withBeta()
     const s = storeOf(r, template())
@@ -438,11 +439,11 @@ describe('Bêta (unverified) devices are never part of the signal path', () => {
   })
   it('and still not if the isMainsSource flag is set directly on the registered Bêta port (isMainsSourceRef guards it)', () => {
     const r = withBeta()
-    const beta = r.deviceById.get('shure-ua845uwb')!
-    const port = beta.ports.find((p) => p.portId === 'out-ac-power-output-daisy-chain')!
+    const beta = r.deviceById.get('furman-m-8x2')!
+    const port = beta.ports.find((p) => p.portId === 'out-1')!
     port.flags = [...(port.flags ?? []), 'isMainsSource']
     const s = storeOf(r, template())
-    ok(s.dispatch({ type: 'SPAWN', deviceId: 'shure-ua845uwb', instanceId: 'beta' }), 'spawn')
+    ok(s.dispatch({ type: 'SPAWN', deviceId: 'furman-m-8x2', instanceId: 'beta' }), 'spawn')
     ok(s.dispatch({ type: 'DISCONNECT', connectionId: s.connectionAt(ref('k12-g power-in'))! }), 'free')
     ok(s.dispatch({ type: 'CONNECT', a: ref('beta ' + port.portId), b: ref('k12-g power-in') }), 'cable')
     expect(isPowered(s.design(), r, 'k12-g')).toBe(false)

@@ -1,0 +1,213 @@
+{
+  "id": "yamaha-spx2000",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 480,
+    "h": 45,
+    "d": 372.5
+  },
+  "ports": [
+    {
+      "portId": "in-xlr-l",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-r",
+      "face": "io",
+      "xMm": 76,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-trs-l",
+      "face": "io",
+      "xMm": 108,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-trs-r",
+      "face": "io",
+      "xMm": 126,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr-l",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-xlr-r",
+      "face": "io",
+      "xMm": 176,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-trs-l",
+      "face": "io",
+      "xMm": 208,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-trs-r",
+      "face": "io",
+      "xMm": 226,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 252,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 278,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "in-wclk",
+      "face": "io",
+      "xMm": 308,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "usb-host",
+      "face": "io",
+      "xMm": 330,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 420,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "opposite",
+      "xMm": 455,
+      "yMm": 22,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 440,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 30,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3356219,
+      "bodyRgb": 1842464,
+      "earHoleEdgeMm": 10
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://usa.yamaha.com/files/download/other_assets/1/323961/spx2000_en_om_f0.pdf",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://my.yamaha.com/files/download/other_assets/3/322303/SPX2000_datasheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 480 x 372.5 x 45 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://usa.yamaha.com/products/proaudio/processors/spx2000/specs.html",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "manual",
+      "url": "https://usa.yamaha.com/files/download/other_assets/1/323961/spx2000_en_om_f0.pdf",
+      "note": "Yamaha SPX2000 owner manual, opened 2026-11-12 (read as text): 480 x 45 x 372.5 mm (W x H x D) from the dimension drawing and spec table, 4 kg, 1U. Rear panel: input L and R on XLR (XLR-3-31) and balanced TRS phone jacks, output L and R on XLR (XLR-3-32) and TRS, AES/EBU in and out (XLR), word clock in (BNC), MIDI in and out/thru (no signal type, not modelled), TO HOST USB (B type, editor and MIDI: modelled as usb-audio like the FaderPort, it carries no audio), grounding screw, AC IN (connector type not named: iec-c14 assumed, plan assumedConnectors power-in). The POWER ON/OFF button is on the front panel. Front foot-switch jack: not modelled (no signal type). The plan source summary was upgraded to this opened document. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://my.yamaha.com/en/business/audio/products/processors/spx2000/specs.html",
+      "note": "Yamaha Malaysia SPX2000 specifications page, opened 2026-11-12: same size and connector table as the manual. The two datasheet PDF links of the plan answered 404."
+    }
+  ]
+}

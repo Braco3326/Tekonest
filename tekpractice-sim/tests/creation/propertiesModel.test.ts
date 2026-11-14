@@ -4,7 +4,8 @@
  * Pure: no DOM, no Babylon.
  */
 import { describe, expect, it } from 'vitest'
-import { makeRegistry } from '../helpers'
+import { loadCatalog } from '../../src/engine/CatalogLoader'
+import { makeRegistry, rawCatalog } from '../helpers'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { fieldIntent, poseChanged, propsView, stepIntent, type PropsView } from '../../src/creation/shell/propertiesModel'
 import type { DesignState } from '../../src/trials/trial'
@@ -210,5 +211,20 @@ describe('stepIntent (± steppers) and poseChanged', () => {
     expect(poseChanged(d, fieldIntent(view(d, 'ql1'), d, 'x', '1')!)).toBe(false)
     expect(poseChanged(d, fieldIntent(view(d, 'ql1'), d, 'x', '1,001')!)).toBe(true)
     expect(poseChanged(d, fieldIntent(view(d, 'k12-g'), d, 'mount', 'stand')!)).toBe(false)
+  })
+})
+
+describe('propsView of a speaker WITHOUT acoustic data (data rule, 2026-11-12)', () => {
+  it('does not crash and shows no coverage or level number: only the pose, the catalogue controls and the ports', () => {
+    const raw = structuredClone(rawCatalog()) as { devices: { id: string; acoustic?: unknown }[] }
+    delete raw.devices.find((x) => x.id === 'qsc-k12-2')!.acoustic
+    const bare = loadCatalog(raw)
+    const s = new CreationStore(bare, creationEvaluator(bare))
+    expect(s.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12-bare', position: [3, 1.2, -3], rotationY: 0, mount: 'stand' }).ok).toBe(true)
+    const v = propsView(s.design(), bare, 'k12-bare')!
+    expect(v.title).toBe('QSC K12.2')
+    expect(v.fields.map((f) => f.id)).toEqual(['name', 'x', 'y', 'z', 'yaw', 'tilt', 'mount'])
+    expect(JSON.stringify(v)).not.toMatch(/coverage|couverture|dB SPL|90 x 60/i)
+    expect(v.ports.length).toBeGreaterThan(0)
   })
 })

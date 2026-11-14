@@ -1,0 +1,103 @@
+{
+  "id": "ua-apollo-twin-x",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 160,
+    "h": 66,
+    "d": 157
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 38,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 68,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-mon-l",
+      "face": "io",
+      "xMm": 100,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mon-r",
+      "face": "io",
+      "xMm": 122,
+      "yMm": 32,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "opposite",
+      "xMm": 130,
+      "yMm": 16,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 12,
+      "plateFilletMm": 5,
+      "filletMm": 6,
+      "filletSegments": 10,
+      "feetMm": 3,
+      "feetDiaMm": 12,
+      "plateRgb": 1842464,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 4.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.bhphotovideo.com/c/product/1780895-REG/universal_audio_apltwxdu_he_apollo_twin_x_duo.html",
+      "note": "equipment plan source (research grade: dealer); size 160 x 157 x 66 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.bhphotovideo.com/c/product/1780895-REG/universal_audio_apltwxdu_he_apollo_twin_x_duo.html",
+      "note": "Plan size 160 x 157 x 66 mm, 1.0 to 1.1 kg (dealer, B&H; the page returned HTTP 403 when re-opened today). No connector table was retrieved. A web search found only that the interface has two mic preamps and, per a Thomann description, four analogue line outs, an ADAT input and a headphone preamp: 5 ports are modelled as a stand-in with guessed positions (2 mic inputs, 2 monitor outs, 1 headphone out). Real unit has a sloped / rounded top and a large monitor knob; here a plain rounded box (rack-box) and the knob is picture only. portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.bhphotovideo.com/c/product/1780895-REG/universal_audio_apltwxdu_he_apollo_twin_x_duo.html",
+      "note": "Plan size 160 x 157 x 66 mm, 1.0 to 1.1 kg (dealer, B&H; the page returned HTTP 403 when re-opened today). No connector table was retrieved. A web search found only that the interface has two mic preamps and, per a Thomann description, four analogue line outs, an ADAT input and a headphone preamp: 5 ports are modelled as a stand-in with guessed positions (2 mic inputs, 2 monitor outs, 1 headphone out). Real unit has a sloped / rounded top and a large monitor knob; here a plain rounded box (rack-box) and the knob is picture only. portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Connector table not retrieved: read the Apollo Twin X hardware manual before promotion."
+}

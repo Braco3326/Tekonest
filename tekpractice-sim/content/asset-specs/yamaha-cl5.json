@@ -1,0 +1,380 @@
+{
+  "id": "yamaha-cl5",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 1053,
+    "h": 299,
+    "d": 667
+  },
+  "ports": [
+    {
+      "portId": "in-omni-1",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 260,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-omni-2",
+      "face": "io",
+      "xMm": 86.4,
+      "yMm": 260,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-omni-3",
+      "face": "io",
+      "xMm": 112.8,
+      "yMm": 260,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-omni-4",
+      "face": "io",
+      "xMm": 139.2,
+      "yMm": 260,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-omni-5",
+      "face": "io",
+      "xMm": 165.6,
+      "yMm": 260,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-omni-6",
+      "face": "io",
+      "xMm": 192,
+      "yMm": 260,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-omni-7",
+      "face": "io",
+      "xMm": 218.4,
+      "yMm": 260,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-omni-8",
+      "face": "io",
+      "xMm": 244.8,
+      "yMm": 260,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-omni-1",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 225,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-2",
+      "face": "io",
+      "xMm": 86.4,
+      "yMm": 225,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-3",
+      "face": "io",
+      "xMm": 112.8,
+      "yMm": 225,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-4",
+      "face": "io",
+      "xMm": 139.2,
+      "yMm": 225,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-5",
+      "face": "io",
+      "xMm": 165.6,
+      "yMm": 225,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-6",
+      "face": "io",
+      "xMm": 192,
+      "yMm": 225,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-7",
+      "face": "io",
+      "xMm": 218.4,
+      "yMm": 225,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-8",
+      "face": "io",
+      "xMm": 244.8,
+      "yMm": 225,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 190,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "net-dante-1",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 190,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir",
+      "flags": [
+        "isDantePrimary"
+      ]
+    },
+    {
+      "portId": "net-dante-2",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 190,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net-ctl",
+      "face": "io",
+      "xMm": 195,
+      "yMm": 190,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-wclk",
+      "face": "io",
+      "xMm": 235,
+      "yMm": 190,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "out-wclk",
+      "face": "io",
+      "xMm": 255,
+      "yMm": 190,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 960,
+      "yMm": 120,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    },
+    {
+      "portId": "in-talkback",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 63,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-phones",
+      "face": "opposite",
+      "xMm": 100,
+      "yMm": 63,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 900,
+      "yMm": 120,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        299
+      ],
+      [
+        60,
+        299
+      ],
+      [
+        130,
+        250
+      ],
+      [
+        260,
+        190
+      ],
+      [
+        420,
+        140
+      ],
+      [
+        560,
+        110
+      ],
+      [
+        667,
+        95
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 36,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 60,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io",
+      "opposite"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.rentex.com/wp-content/uploads/2020/01/CL5-Data-Sheet.pdf",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.rentex.com/wp-content/uploads/2020/01/CL5-Data-Sheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 1053 x 667 x 299 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.rentex.com/wp-content/uploads/2020/01/CL5-Data-Sheet.pdf",
+      "note": "Yamaha CL5 technical data sheet (dealer-hosted copy of the manufacturer sheet), opened 2026-11-12: 1053 (W) x 299 (H) x 667 (D) mm, 36 kg, 34 motorised 100 mm faders, AC inlet V-lock type (the IEC letter is not named: iec-c14 assumed, plan assumedConnectors power-in). The CL owner manual (data.yamaha.com), opened the same day, documents the panels: rear OMNI IN 1-8 (XLR-3-31 female, +48 V per input), OMNI OUT 1-8 (XLR-3-32 male), DIGITAL OUT AES/EBU (XLR male), Dante PRIMARY and SECONDARY on etherCON, NETWORK (RJ45, CL Editor and StageMix), word clock in and out (BNC), MIDI, GPI (D-sub), lamp XLR4 x3, three mini-YGDAI slots, a power switch beside AC IN; front talkback (XLR female) and stereo phones; USB on the top panel. Not modelled: MIDI, GPI, lamp, slots, USB, the redundant DC input. 8 of 8 omni inputs and outputs are modelled (the unit has more only through slots and Dante). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

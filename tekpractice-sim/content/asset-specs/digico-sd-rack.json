@@ -1,0 +1,122 @@
+{
+  "id": "digico-sd-rack",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.7,
+    "h": 443.7,
+    "d": 371
+  },
+  "ports": [
+    {
+      "portId": "bidir-madi-main-and-aux-i-o-1",
+      "face": "io",
+      "xMm": 51.2,
+      "yMm": 221.85,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "madi",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-madi-main-and-aux-i-o-2",
+      "face": "io",
+      "xMm": 68.6,
+      "yMm": 221.85,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "madi",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-madi-split-main-and-aux-outputs-1",
+      "face": "io",
+      "xMm": 86,
+      "yMm": 221.85,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "madi",
+      "dir": "out"
+    },
+    {
+      "portId": "out-madi-split-main-and-aux-outputs-2",
+      "face": "io",
+      "xMm": 103.4,
+      "yMm": 221.85,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "madi",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-firmware-digico-control-software",
+      "face": "io",
+      "xMm": 120.8,
+      "yMm": 221.85,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 10,
+      "seamMm": 60,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 60,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "plateRgb": 2500909,
+      "bodyRgb": 1579292
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://digico.biz/racks/sd-rack",
+      "note": "equipment plan source (research grade: dealer); size 482.7 x 371 x 443.7 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://shop.solotech.com/products/digico-uk-limited-sd-rack-digital-i-o-rack",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://daleproaudio.com/products/digico-x-sd-rack-st-sd-rack-digital-stage-box-multi-mode-st",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.megasound.com.cy/?p=12130",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://digico.biz/racks/sd-rack/",
+      "note": "DiGiCo SD-Rack page and a dealer page (read by a research pass 2026-11-12): 14 card slots (56 in / 56 out), MADI main and aux in / out on BNC, two MADI split outputs, a USB Type B port, dual hot-swap redundant power supplies (the inlets are not named on the DiGiCo page). The size has an assumed axis order (482.7 x 371 x 443.7 mm), so beta-modelled; the ports are the Bêta proposal ports (5 of 9 listed). The real rack carries its I/O on top; the model keeps the rear face. The front is a plain generic panel with card slots drawn. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+ "schema": 1,
+ "deviceId": "behringer-x-touch-universal",
+ "generated": true,
+ "topProfile": [
+  [
+   0,
+   100
+  ],
+  [
+   40,
+   100
+  ],
+  [
+   150,
+   82
+  ],
+  [
+   301,
+   60
+  ]
+ ],
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 350,
+   "yMm": 50,
+   "sizeMm": {
+    "w": 12,
+    "h": 18,
+    "d": 6
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

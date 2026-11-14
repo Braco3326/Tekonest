@@ -1,0 +1,47 @@
+{
+ "schema": 1,
+ "deviceId": "presonus-studiolive-iii-se-16",
+ "generated": true,
+ "topProfile": [
+  [
+   0,
+   165
+  ],
+  [
+   40,
+   165
+  ],
+  [
+   130,
+   130
+  ],
+  [
+   300,
+   95
+  ],
+  [
+   584,
+   70
+  ]
+ ],
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 350,
+   "yMm": 60,
+   "sizeMm": {
+    "w": 12,
+    "h": 18,
+    "d": 6
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

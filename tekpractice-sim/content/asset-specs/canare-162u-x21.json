@@ -1,0 +1,129 @@
+{
+  "id": "canare-162u-x21",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 88.1,
+    "d": 217
+  },
+  "ports": [
+    {
+      "portId": "bidir-front-upper-row-xj3m-p3fa-1",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-front-upper-row-xj3m-p3fa-2",
+      "face": "opposite",
+      "xMm": 68,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-rear-upper-row-xj3m-p3fa-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-rear-upper-row-xj3m-p3fa-2",
+      "face": "io",
+      "xMm": 68,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-front-lower-row-xj3f-p3ma-1",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-front-lower-row-xj3f-p3ma-2",
+      "face": "opposite",
+      "xMm": 68,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-rear-lower-row-xj3f-p3ma-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-rear-lower-row-xj3f-p3ma-2",
+      "face": "io",
+      "xMm": 68,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "plateRgb": 1908257,
+      "bodyRgb": 2105894
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://canare.co.jp/en/products/panels_and_patchbays/index.php?tid=5_010",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 217 x 88.1 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://canare.co.jp/en/products/panels_and_patchbays/index.php?tid=5_010",
+      "note": "Canare 2U XLR panel (page opened): 16 XJ3M-P3FA (upper row) and 16 XJ3F-P3MA (lower row) XLR 3-pin connectors, 32 points, front-to-rear. Beta-modelled with the 8 Beta proposal ports (2 of each row on each side; the picture shows all 32 on the front). Size 482.6 x 217 x 88.1 mm: the page prints \"88.1 x 482.6 x 217\" unlabelled, mapped as H x W x D (2U, 19 in), so axis order assumed. Positions guesses."
+    }
+  ]
+}

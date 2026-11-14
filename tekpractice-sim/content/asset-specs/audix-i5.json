@@ -1,0 +1,146 @@
+{
+  "id": "audix-i5",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 37.5,
+    "h": 141.5,
+    "d": 37.5
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 18.75,
+      "yMm": 18.75,
+      "confidence": "guess",
+      "openingMm": 15,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        23
+      ],
+      [
+        9.43,
+        23
+      ],
+      [
+        18,
+        23
+      ],
+      [
+        18.87,
+        23.06
+      ],
+      [
+        28.3,
+        23.74
+      ],
+      [
+        37.73,
+        24.41
+      ],
+      [
+        47.17,
+        25.08
+      ],
+      [
+        56.6,
+        25.76
+      ],
+      [
+        60,
+        26
+      ],
+      [
+        66.03,
+        26.9
+      ],
+      [
+        75.47,
+        28.32
+      ],
+      [
+        84.9,
+        29.73
+      ],
+      [
+        94.33,
+        31.15
+      ],
+      [
+        100,
+        32
+      ],
+      [
+        103.77,
+        32.94
+      ],
+      [
+        113.2,
+        35.3
+      ],
+      [
+        122,
+        37.5
+      ],
+      [
+        122.63,
+        37.5
+      ],
+      [
+        132.07,
+        37.5
+      ],
+      [
+        136,
+        37.5
+      ],
+      [
+        141.5,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#26272a"
+      }
+    ]
+  },
+  "portsDocumented": true,
+  "portsSource": "https://im.static-thomann.de/pics/atg/atgdata/document/manual/178792.pdf",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://audixusa.com/products/i5",
+      "note": "equipment plan source (research grade: datasheet); size 37.5 x 37.5 x 141.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://im.static-thomann.de/pics/atg/atgdata/document/manual/178792.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://im.static-thomann.de/pics/atg/atgdata/document/manual/178792.pdf",
+      "note": "Audix i5 spec sheet (Thomann-hosted copy of the manufacturer sheet), opened 2026-11-12 (pdftotext): dynamic cardioid, 141.5 mm long, 23 mm diameter at the base, 37.5 mm at the top, 183 g, Switchcraft male XLR, balanced 150 ohm output, no power requirement and no effect from phantom power, cast zinc alloy body and grille. The dimensions drawing of the sheet was not rendered: the profile between the stated diameters is a drawn estimate, the grille extent is an estimate. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

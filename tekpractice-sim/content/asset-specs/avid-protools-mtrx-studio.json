@@ -1,0 +1,181 @@
+{
+  "id": "avid-protools-mtrx-studio",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 44.45,
+    "d": 200
+  },
+  "ports": [
+    {
+      "portId": "in-mic-inputs-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-inputs-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-inputs-16-ch-1",
+      "face": "io",
+      "xMm": 126,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-inputs-16-ch-2",
+      "face": "io",
+      "xMm": 185,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-outputs-16-ch-1",
+      "face": "io",
+      "xMm": 244,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-outputs-16-ch-2",
+      "face": "io",
+      "xMm": 303,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-instrument-inputs-front-1",
+      "face": "opposite",
+      "xMm": 51.2,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "in-instrument-inputs-front-2",
+      "face": "opposite",
+      "xMm": 68.6,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "out-monitor-outputs-1",
+      "face": "opposite",
+      "xMm": 86,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-monitor-outputs-2",
+      "face": "opposite",
+      "xMm": 103.4,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-headphone-outputs-1",
+      "face": "opposite",
+      "xMm": 120.8,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-headphone-outputs-2",
+      "face": "opposite",
+      "xMm": 138.2,
+      "yMm": 22.23,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 2763824,
+      "bodyRgb": 1776671
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.avid.com/products/pro-tools-mtrx-studio/specifications",
+      "note": "equipment plan source (research grade: dealer); size 482.6 x 200 x 44.45 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://store.jigsaw24.com/products/avid-pro-tools-mtrx-studio-x953bad",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.milkaudiostore.com/shop/avid-pro-tools-mtrx-studio",
+      "note": "Milk Audio Store page and the Avid comparison, read by a research pass 2026-11-12 (the Avid specification table was empty): two 1/4 in mic / instrument inputs, 16 analog inputs and outputs on DB25, ADAT 16 x 16, Dante 64 x 64, two Mini DigiLink, two 1/4 in monitor outputs, two 1/4 in headphone outputs, a BNC Loop Sync, a single power supply (inlet not named); the sources disagree on the analog output count. The size has an assumed axis order, so beta-modelled; the ports are the Bêta proposal ports (12 of 17 listed), the inlet is not among them. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

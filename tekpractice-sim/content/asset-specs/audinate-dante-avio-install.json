@@ -1,0 +1,75 @@
+{
+  "id": "audinate-dante-avio-install",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 150.7,
+    "h": 38.1,
+    "d": 53.8
+  },
+  "ports": [
+    {
+      "portId": "in-analog",
+      "face": "io",
+      "xMm": 45,
+      "yMm": 19,
+      "confidence": "guess",
+      "connector": "euroblock",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "dante",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 19,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir",
+      "flags": [
+        "isDantePrimary"
+      ]
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 5,
+      "edgeRadiusMm": 2.5,
+      "edgeDropMm": 2.5,
+      "bottomEdgeRadiusMm": 2,
+      "edgeSegments": 8,
+      "bodyGrey": 45
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 150.7 x 53.8 x 38.1 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
+      "note": "Audinate Dante AVIO Install sales guide (downloaded, read as text on 2026-11-12): 2-channel analog input adapter and 2-channel analog output adapter (AVIO-A-2IN-EB, AVIO-A-2OUT-EB), both 150.7 x 53.8 x 38.1 mm and 145 g, each a 6-pin Euroblock terminal (3.5 mm pitch) and a Dante network connector, powered by Class 1 802.3af PoE (no mains inlet). The plan row covers the family; this model is the 2-CHANNEL ANALOG INPUT adapter (one balanced 2-channel Euroblock input to Dante): the Euroblock is modelled as one port (two channels on one 6-pin block), the network port as RJ45 Dante primary. The output adapter is a separate SKU of the same size and is not modelled."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
+      "note": "Port positions are GUESSES (no panel drawing). build: a moulded box, exact bounding box; the rounding is an ESTIMATE. build.projection: our own generic artwork; no photo, no logo, no lettering."
+    }
+  ]
+}

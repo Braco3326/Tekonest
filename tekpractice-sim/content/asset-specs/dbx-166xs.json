@@ -1,0 +1,146 @@
+{
+  "id": "dbx-166xs",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482,
+    "h": 44.5,
+    "d": 171.5
+  },
+  "ports": [
+    {
+      "portId": "in-audio-input-ch1-ch2-1",
+      "face": "io",
+      "xMm": 34,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-audio-input-ch1-ch2-2",
+      "face": "io",
+      "xMm": 60.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-audio-input-ch1-ch2-1-b",
+      "face": "io",
+      "xMm": 92.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-audio-input-ch1-ch2-2-b",
+      "face": "io",
+      "xMm": 110.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-audio-output-ch1-ch2-1",
+      "face": "io",
+      "xMm": 149.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-audio-output-ch1-ch2-2",
+      "face": "io",
+      "xMm": 176,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-audio-output-ch1-ch2-1-b",
+      "face": "io",
+      "xMm": 208.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-audio-output-ch1-ch2-2-b",
+      "face": "io",
+      "xMm": 225.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-mains-in-iec",
+      "face": "io",
+      "xMm": 440,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 2829617,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbxpro.com/en/products/166xs",
+      "note": "equipment plan source (research grade: datasheet); size 482 x 171.5 x 44.5 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbxpro.com/en/products/166xs",
+      "note": "dbx 166xs page (opened 2026-11-12): balanced inputs and outputs on 1/4 in TRS and XLR (female in, male out, pin 2 hot), sidechain 1/4 in TRS; counts and panel not stated. Size 482 x 171.5 x 44.5 mm read as W x D x H from \"1.75 x 19 x 6.75 in\" with unlabelled axes (1.75 in is 1U): axis order assumed, so beta-modelled. Ports are the Beta proposal ports (knowledge base), positions guesses on the rear; the front is a generic picture of two compressor channels (knobs and LED ladders)."
+    }
+  ]
+}

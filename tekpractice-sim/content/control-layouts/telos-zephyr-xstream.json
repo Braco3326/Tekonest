@@ -1,0 +1,28 @@
+{
+ "schema": 1,
+ "deviceId": "telos-zephyr-xstream",
+ "generated": true,
+ "controls": [
+  {
+   "id": "power",
+   "face": "opposite",
+   "xMm": 40,
+   "yMm": 44.5,
+   "sizeMm": {
+    "w": 12,
+    "h": 12,
+    "d": 4
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "button",
+   "axis": "z",
+   "latch": true,
+   "round": true,
+   "colour": "#1b3a1f",
+   "lit": "#46ff5a",
+   "travelMm": 1,
+   "default": 1
+  }
+ ]
+}

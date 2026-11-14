@@ -1,0 +1,237 @@
+{
+  "id": "motu-828",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44.5,
+    "d": 311
+  },
+  "ports": [
+    {
+      "portId": "in-mic-line-instrument-combo-inputs-xlr-trs-combo-1",
+      "face": "opposite",
+      "xMm": 130,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-line-instrument-combo-inputs-xlr-trs-combo-2",
+      "face": "opposite",
+      "xMm": 156.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "bidir-mic-insert-send-return-1",
+      "face": "io",
+      "xMm": 42,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-mic-insert-send-return-2",
+      "face": "io",
+      "xMm": 59.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-line-inputs-1",
+      "face": "io",
+      "xMm": 76.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-inputs-2",
+      "face": "io",
+      "xMm": 94.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main-outputs-1",
+      "face": "io",
+      "xMm": 115.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-outputs-2",
+      "face": "io",
+      "xMm": 142,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-outputs-dc-coupled-1",
+      "face": "io",
+      "xMm": 168.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-outputs-dc-coupled-2",
+      "face": "io",
+      "xMm": 185.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-headphone-outputs-1",
+      "face": "opposite",
+      "xMm": 186.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-headphone-outputs-2",
+      "face": "opposite",
+      "xMm": 204.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-s-pdif-coax-in-out-1",
+      "face": "io",
+      "xMm": 207.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-s-pdif-coax-in-out-2",
+      "face": "io",
+      "xMm": 224.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "spdif",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-word-clock-in-out-thru-1",
+      "face": "io",
+      "xMm": 242,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-word-clock-in-out-thru-2",
+      "face": "io",
+      "xMm": 259.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-usb-host",
+      "face": "io",
+      "xMm": 276.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-ac-mains-in",
+      "face": "io",
+      "xMm": 456,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 70,
+      "plateRgb": 1908257,
+      "bodyRgb": 2763566
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://fullcompass.com/prod/630010-motu-828-28x32-usb3-audio-interface-with-mixing-and-effects",
+      "note": "equipment plan source (research grade: dealer); size 483 x 311 x 44.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://fullcompass.com/prod/630010-motu-828-28x32-usb3-audio-interface-with-mixing-and-effects",
+      "note": "Full Compass listing (research): 28 x 32 USB 3 interface, 1U; connector types and panel split not read, so beta-modelled with the 18 Beta proposal ports (18 of 38 listed). Size 483 x 311 x 44.5 mm (dealer; weight 5 kg looks heavy for the size, unverified; the 828es is another product). Positions guesses: mic combos and headphones on the front."
+    }
+  ]
+}

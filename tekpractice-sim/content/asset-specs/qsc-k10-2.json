@@ -1,0 +1,134 @@
+{
+  "id": "qsc-k10-2",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 320,
+    "h": 519,
+    "d": 300
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 330,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 330,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aux",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 290,
+      "confidence": "guess",
+      "openingMm": 10,
+      "insetMm": 3,
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "thru-out-1",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 250,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-mix",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 250,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 190,
+      "confidence": "guess",
+      "openingMm": 26,
+      "insetMm": 3,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.qscaudio.com/index.php?id=12708",
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 320,
+      "midWidthMm": 311,
+      "midDepthMm": 207,
+      "rearWidthMm": 151,
+      "frontRadiusMm": 27,
+      "backRadiusMm": 32,
+      "edgeRadiusMm": 16,
+      "edgeDropMm": 22,
+      "edgeSegments": 8,
+      "barrelMm": 4,
+      "barrelCentreMm": 260
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 14,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://chucklevins.com/products/qsc-k10-2-10-inch-2000w-2-way-powered-loudspeaker",
+      "note": "equipment plan source (research grade: datasheet); size 320 x 300 x 519 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.qscaudio.com/index.php?id=12708",
+      "note": "QSC K10.2 spec sheet (read through a search summary; the page itself was not opened): \"Connectors 2 x locking XLR/F 1/4 inch combo (Mic/Line Input and Hi-Z/Line Input), 1 x 3.5 mm TRS (stereo input), 2 x XLR/M (loop-thru output), 1 x XLR/M (mix output), 1 x locking IEC power connector\", \"519 x 320 x 300 mm\" (H x W x D), 14.5 kg, universal supply 100-240 VAC. Documents the connector set (portsDocumented). Modelled: the two combo inputs (as xlr3-f), the 3.5 mm input, ONE of the two loop-thru outputs, the mix output and the inlet (6 of 7). The plan size is an estimate (axis order assumed, via a search summary), so the device is beta-modelled whatever its ports."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.qscaudio.com/index.php?id=12708",
+      "note": "build params: the shipped QSC K12.2 recipe (a curved-cabinet that tapers from the front: midWidth, midDepth, rearWidth) scaled by 0.9 to 320 x 300 x 519. The perforated-steel grille is picture only; the 10 inch woofer and the horn are not modelled. Port positions on the rear and the plan are estimates from the datasheet figures, not measured. Port and control positions on the rear: no drawing or photo was opened, so every position is a plausible guess (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.qscaudio.com/index.php?id=12708",
+      "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with drivers drawn at the datasheet sizes; no photo copy, no brand mark, no lettering. Colour: black polymer cabinet, steel grille (a PA default)."
+    }
+  ]
+}

@@ -73,3 +73,29 @@ describe('R8 — sample-rate mismatch (ADR-0007, enum controls)', () => {
     expect(rules(g)).toEqual([])
   })
 })
+
+describe('R8 — a master clock does not need a reference (Wave 1b finding 1, real MUTEC MC-3+ row)', () => {
+  const mutecRig = () =>
+    new ConnectionGraph(registry, [
+      { instanceId: 'kh', deviceId: 'neumann-kh-120-ii' },
+      { instanceId: 'mc3', deviceId: 'mutec-mc-3-plus' },
+    ])
+
+  it("doesn't trigger: S/PDIF patched into the MC-3+ with no word-clock cable (it is the master, its reference input is optional)", () => {
+    const g = mutecRig()
+    expect(g.connect({ instance: 'kh', port: 'out-spdif' }, { instance: 'mc3', port: 'in-spdif-rca' }).ok).toBe(true)
+    expect(rules(g)).toEqual([])
+  })
+
+  it('the MC-3+ carries no isClockSlave port, its clock outputs stay masters', () => {
+    const dev = registry.deviceById.get('mutec-mc-3-plus')!
+    expect(dev.ports.filter((p) => p.flags?.includes('isClockSlave'))).toEqual([])
+    expect(dev.ports.filter((p) => p.flags?.includes('isClockMaster')).length).toBeGreaterThan(0)
+  })
+
+  it('still triggers: a real slave (Avid HD I/O) with digital audio and no word clock', () => {
+    const g = new ConnectionGraph(registry, d1.devices)
+    wireChain(g, d1, [7]) // the word clock line is the one left out
+    expect(rules(g)).toContain('R8')
+  })
+})

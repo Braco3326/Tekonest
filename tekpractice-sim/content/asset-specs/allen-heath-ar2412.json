@@ -1,0 +1,130 @@
+{
+  "id": "allen-heath-ar2412",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 137,
+    "d": 220
+  },
+  "ports": [
+    {
+      "portId": "in-mic-line-inputs-1-24-1",
+      "face": "opposite",
+      "xMm": 36,
+      "yMm": 112,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-line-inputs-1-24-2",
+      "face": "opposite",
+      "xMm": 65,
+      "yMm": 112,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-outputs-1-12-1",
+      "face": "opposite",
+      "xMm": 36,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-outputs-1-12-2",
+      "face": "opposite",
+      "xMm": 65,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-dsnake-to-mixer",
+      "face": "io",
+      "xMm": 100,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-expander-ar84-ab168",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-monitor-me-aviom-pro16",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "out"
+    },
+    {
+      "portId": "in-mains-in",
+      "face": "io",
+      "xMm": 420,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "bodyWidthMm": 440,
+      "earThicknessMm": 5,
+      "earHoleMm": 6.35,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "plateFilletMm": 1,
+      "rearInsetMm": 10,
+      "seamMm": 60,
+      "plateRgb": 2303531,
+      "bodyRgb": 1711136
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.proacousticsusa.com/allen-heath-ar2412-audiorack.html",
+      "note": "equipment plan source (research grade: dealer); size 483 x 220 x 137 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.proacousticsusa.com/allen-heath-ar2412-audiorack.html",
+      "note": "Dealer page (opened 2026-11-12): 24 mic/line XLR inputs, 12 XLR line outputs (relay protected), dSNAKE (Cat5), monitor port (Aviom compatible), AR84 expander port, AES3 XLR and S/PDIF digital outputs, expansion card slot, 100-240 V mains; 137 x 483 x 220 mm (H x W x D, the plan size), 5 kg. The page gives no panel assignments, so which panel carries what, the positions and the 440 mm chassis width are guesses; 8 of the ports are modelled (2 of 24 inputs, 2 of 12 outputs, 3 network ports, the mains inlet). portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Dealer lists connector types and counts but not the panel of each: read the A&H data sheet or manual before promotion."
+}

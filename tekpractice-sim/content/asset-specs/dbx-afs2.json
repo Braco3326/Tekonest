@@ -1,0 +1,136 @@
+{
+  "id": "dbx-afs2",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 44,
+    "d": 146
+  },
+  "ports": [
+    {
+      "portId": "in-input-1-2-xlr-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-input-1-2-xlr-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-input-1-2-1-4-trs-1",
+      "face": "io",
+      "xMm": 105.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-input-1-2-1-4-trs-2",
+      "face": "io",
+      "xMm": 122.6,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-output-1-2-xlr-1",
+      "face": "io",
+      "xMm": 144.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-output-1-2-xlr-2",
+      "face": "io",
+      "xMm": 171.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-output-1-2-1-4-trs-1",
+      "face": "io",
+      "xMm": 194,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-output-1-2-1-4-trs-2",
+      "face": "io",
+      "xMm": 211.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3093046,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbxpro.com/en/products/afs2",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 146 x 44 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.manualslib.com/manual/968693/Dbx-Afs2.html?page=15",
+      "note": "dbx AFS2 manual page 15 (read by a research pass 2026-11-12): per channel one female locking XLR input, one 1/4 in TRS input, one male XLR output and one 1/4 in TRS output on the rear, a USB port for firmware and an IEC inlet (from a summary). The size has an assumed axis order, so beta-modelled; the ports are the Bêta proposal ports (the 8 audio jacks; no mains port). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

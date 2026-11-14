@@ -1,0 +1,146 @@
+{
+  "id": "lynx-aurora-n",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 43.2,
+    "d": 254
+  },
+  "ports": [
+    {
+      "portId": "bidir-aes-ebu-16x16-lm-dig-option-yamaha-pinout-1",
+      "face": "io",
+      "xMm": 72,
+      "yMm": 21.6,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "aes3",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-aes-ebu-16x16-lm-dig-option-yamaha-pinout-2",
+      "face": "io",
+      "xMm": 131,
+      "yMm": 21.6,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "aes3",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-word-clock-in",
+      "face": "io",
+      "xMm": 169.2,
+      "yMm": 21.6,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "out-word-clock-out-1",
+      "face": "io",
+      "xMm": 186.6,
+      "yMm": 21.6,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    },
+    {
+      "portId": "out-word-clock-out-2",
+      "face": "io",
+      "xMm": 204,
+      "yMm": 21.6,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-lslot-host-card-usb-thunderbolt-3-pro-tools-hd-dante-depending-on-card",
+      "face": "io",
+      "xMm": 221.4,
+      "yMm": 21.6,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-ac-mains-in",
+      "face": "io",
+      "xMm": 246.6,
+      "yMm": 21.6,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    },
+    {
+      "portId": "out-headphone-outputs-1",
+      "face": "opposite",
+      "xMm": 51.2,
+      "yMm": 21.6,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-headphone-outputs-2",
+      "face": "opposite",
+      "xMm": 68.6,
+      "yMm": 21.6,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 2895667,
+      "bodyRgb": 1710878
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://lynxstudio.com/products/aurora-n/",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 254 x 43.2 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://lynxstudio.com/products/aurora-n/",
+      "note": "Lynx Aurora(n) page (opened by a research pass 2026-11-12): analog I/O on DB25 in 8 to 32 channel versions, an optional LM-DIG AES/EBU card (two DB25), BNC word clock (one input, three outputs), two headphone outputs, an SD slot and an LSlot host card (USB, Thunderbolt 3, Pro Tools HD or Dante); the IEC inlet and the front panel come from a summary. The connector set depends on the ordered configuration (modules are optional), so beta-modelled; the ports are the Bêta proposal ports (9 of 12 listed) and the headphone jacks are on the front. 482.6 x 254 x 43.2 mm (datasheet, size ok; the 43.2 mm height puts a C14 marker ring over 60 percent of the face, a ring rule that applies only when the device is promoted). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

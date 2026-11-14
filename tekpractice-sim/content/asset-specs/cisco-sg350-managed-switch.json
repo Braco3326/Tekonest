@@ -1,0 +1,147 @@
+{
+  "id": "cisco-sg350-managed-switch",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 440,
+    "h": 44,
+    "d": 202
+  },
+  "ports": [
+    {
+      "portId": "port-1",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-2",
+      "face": "opposite",
+      "xMm": 57,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-3",
+      "face": "opposite",
+      "xMm": 74,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-4",
+      "face": "opposite",
+      "xMm": 91,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-5",
+      "face": "opposite",
+      "xMm": 108,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-6",
+      "face": "opposite",
+      "xMm": 125,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-7",
+      "face": "opposite",
+      "xMm": 142,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-8",
+      "face": "opposite",
+      "xMm": 159,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.2,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "rearInsetMm": 6,
+      "seamMm": 20,
+      "feetMm": 2.5,
+      "feetDiaMm": 10,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 80,
+      "plateRgb": 12106946,
+      "bodyRgb": 2105894
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 800,
+      "max": 3500
+    },
+    "minFilletMm": 1.2
+  },
+  "sources": [
+    {
+      "kind": "reference",
+      "url": "https://service.shure.com/articles/en_US/Knowledge/configuring-sg350-switch-for-shure-devices-and-dante",
+      "note": "equipment plan source (research grade: dealer); size 440 x 202 x 44 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zenitel.com/product/sg350-28",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.rentex.com/wp-content/uploads/2019/04/Cisco-SG350-28-Ethernet-Switch-Spec-Sheet-from-Rentex.pdf",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zenitel.com/product/sg350-28",
+      "note": "Cisco SG350-28 (non-PoE) as listed by the research: 24 x 10/100/1000 RJ45, 2 gigabit combo RJ45 / SFP ports, 2 SFP slots, 1U rack; port positions not stated. Modelled: 8 of 28 RJ45 ports as aoip (network audio), the SFP slots and the mains inlet (not named in the text read) are not modelled. Size 440 x 202 x 44 mm (Zenitel, labelled W x D x H), SG350-28 only; the row names no port count, so the 28-port variant is assumed and the size is an estimate. Ports on the front are a guess. No ears modelled (440 mm is the box without ears)."
+    }
+  ]
+}

@@ -1,0 +1,406 @@
+{
+  "id": "yamaha-dm7",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 793,
+    "h": 324,
+    "d": 564
+  },
+  "ports": [
+    {
+      "portId": "in-1",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 285,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-2",
+      "face": "io",
+      "xMm": 76.4,
+      "yMm": 285,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-3",
+      "face": "io",
+      "xMm": 102.8,
+      "yMm": 285,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-4",
+      "face": "io",
+      "xMm": 129.2,
+      "yMm": 285,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-5",
+      "face": "io",
+      "xMm": 155.6,
+      "yMm": 285,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-6",
+      "face": "io",
+      "xMm": 182,
+      "yMm": 285,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-7",
+      "face": "io",
+      "xMm": 208.4,
+      "yMm": 285,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-8",
+      "face": "io",
+      "xMm": 234.8,
+      "yMm": 285,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-omni-1",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 250,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-2",
+      "face": "io",
+      "xMm": 76.4,
+      "yMm": 250,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-3",
+      "face": "io",
+      "xMm": 102.8,
+      "yMm": 250,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-4",
+      "face": "io",
+      "xMm": 129.2,
+      "yMm": 250,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-5",
+      "face": "io",
+      "xMm": 155.6,
+      "yMm": 250,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-6",
+      "face": "io",
+      "xMm": 182,
+      "yMm": 250,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-7",
+      "face": "io",
+      "xMm": 208.4,
+      "yMm": 250,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-8",
+      "face": "io",
+      "xMm": 234.8,
+      "yMm": 250,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes-1",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 215,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aes-2",
+      "face": "io",
+      "xMm": 76.4,
+      "yMm": 215,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes-1",
+      "face": "io",
+      "xMm": 102.8,
+      "yMm": 215,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes-2",
+      "face": "io",
+      "xMm": 129.2,
+      "yMm": 215,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "net-dante-1",
+      "face": "io",
+      "xMm": 175,
+      "yMm": 215,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir",
+      "flags": [
+        "isDantePrimary"
+      ]
+    },
+    {
+      "portId": "net-dante-2",
+      "face": "io",
+      "xMm": 205,
+      "yMm": 215,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net-ctl",
+      "face": "io",
+      "xMm": 245,
+      "yMm": 215,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 275,
+      "yMm": 215,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-wclk",
+      "face": "io",
+      "xMm": 305,
+      "yMm": 215,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "in"
+    },
+    {
+      "portId": "out-wclk",
+      "face": "io",
+      "xMm": 325,
+      "yMm": 215,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 700,
+      "yMm": 130,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    },
+    {
+      "portId": "out-phones",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 65,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 640,
+      "yMm": 130,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        324
+      ],
+      [
+        60,
+        324
+      ],
+      [
+        140,
+        270
+      ],
+      [
+        280,
+        200
+      ],
+      [
+        420,
+        140
+      ],
+      [
+        564,
+        100
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 36,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 50,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io",
+      "opposite"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "portsDocumented": true,
+  "portsSource": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html",
+      "note": "equipment plan source (research grade: datasheet); size 793 x 564 x 324 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html",
+      "note": "Yamaha DM7 Series Reference Manual, general specifications, opened 2026-11-12: 793 x 324 x 564 mm (W x H x D) including rubber feet, 23.5 kg (the DM7 Compact is a different size). Rear panel (from the manual and the Yamaha download): INPUT 1-32 on XLR (female, +48 V per input), OMNI OUT 1-16 (XLR male), AES/EBU IN 1/2 and 3/4 and OUT 1/2 and 3/4 (XLR), word clock in and out (BNC), GPI (D-sub 15, not modelled), PY card slot, Dante PRIMARY and SECONDARY (etherCON, 144 channels), USB TO HOST (USB-C, 18 in and out), network RJ45, two AC IN inlets (V-lock, type letter not named: iec-c14 assumed for the one modelled, plan assumedConnectors power-in), one power switch on the rear; front/top: stereo phones, USB storage ports (number not stated). Modelled: 8 of 32 inputs, 8 of 16 outputs, 2 of 2 AES in and 2 of 2 AES out. TC IN (timecode) is not modelled. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

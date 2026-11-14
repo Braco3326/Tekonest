@@ -1,17 +1,17 @@
 {
- "generated": "2026-10-22",
+ "generated": "2026-11-12",
  "drafts": [
   {
    "id": "shared-dante-stagebox-foh-monitors",
    "title": "Stagebox Dante partagée entre console façade et console retours",
    "connections": 1,
-   "unmapped": 3
+   "unmapped": 2
   },
   {
    "id": "radio-morning-show-phone-guest",
    "title": "Matinale radio avec invité au téléphone",
-   "connections": 5,
-   "unmapped": 3
+   "connections": 6,
+   "unmapped": 2
   },
   {
    "id": "club-gig-foh-with-monitors-from-foh",
@@ -44,16 +44,28 @@
    "unmapped": 1
   },
   {
+   "id": "bass-and-keys-di-small-stage",
+   "title": "Basse et clavier en DI sur une petite scène",
+   "connections": 2,
+   "unmapped": 4
+  },
+  {
    "id": "festival-stage-changeover",
    "title": "Changement de plateau sur une grande scène de festival",
    "connections": 1,
-   "unmapped": 7
+   "unmapped": 5
+  },
+  {
+   "id": "concert-hall-line-array-and-cardioid-subs",
+   "title": "Salle de concert : line array passif et subs cardioïdes",
+   "connections": 1,
+   "unmapped": 3
   },
   {
    "id": "stereo-recording-acoustic-duo",
    "title": "Enregistrement stéréo d'un duo acoustique",
-   "connections": 1,
-   "unmapped": 3
+   "connections": 4,
+   "unmapped": 0
   },
   {
    "id": "band-soundcheck-four-wedge-mixes",
@@ -68,6 +80,18 @@
    "unmapped": 1
   },
   {
+   "id": "orchestra-recording-concert-hall",
+   "title": "Enregistrement d'un orchestre en salle de concert",
+   "connections": 2,
+   "unmapped": 7
+  },
+  {
+   "id": "opera-with-pit-recording",
+   "title": "Captation d'un opéra avec orchestre en fosse",
+   "connections": 1,
+   "unmapped": 4
+  },
+  {
    "id": "film-scoring-session",
    "title": "Séance de musique de film sur scoring stage",
    "connections": 1,
@@ -77,13 +101,19 @@
    "id": "post-dub-session-adr-foley",
    "title": "Séance de postsynchro et bruitage en auditorium",
    "connections": 1,
-   "unmapped": 5
+   "unmapped": 3
   },
   {
    "id": "tv-documentary-final-mix",
    "title": "Mixage final d'un documentaire TV",
    "connections": 1,
-   "unmapped": 4
+   "unmapped": 1
+  },
+  {
+   "id": "podcast-host-three-guests",
+   "title": "Podcast avec un animateur et 3 invités",
+   "connections": 4,
+   "unmapped": 2
   },
   {
    "id": "voice-over-booth-session",

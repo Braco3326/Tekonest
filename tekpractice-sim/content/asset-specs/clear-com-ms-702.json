@@ -1,0 +1,91 @@
+{
+  "id": "clear-com-ms-702",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44,
+    "d": 165
+  },
+  "ports": [
+    {
+      "portId": "bidir-headset-xlr-4m-front",
+      "face": "opposite",
+      "xMm": 400,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr4",
+      "signal": "headphone-level",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-announce-out-balanced-line",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-announce-relay-out",
+      "face": "io",
+      "xMm": 77.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "gpio-tally",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3093304,
+      "bodyRgb": 1710878
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://clearcom.com/Product/ms-702",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 165 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.fullcompass.com/common/files/7096-MS702Datasheet.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://clearcom.com/Product/ms-702",
+      "note": "Clear-Com MS-702 page and datasheet (research read 2026-11-12): 2-channel 1RU main station; interfaces: panel and headset mic inputs, program input, headset output, speaker output, partyline in and out, stage announce balanced out, IFB / hot-mic out; connector types and pin counts NOT retrieved (datasheet 403). Size 483 x 165 x 44 mm (H x W x D = 1.75 x 19 x 6.5 in, labelled). Ports are the 3 Beta proposal ports (2 of 5 listed in the knowledge base are modelled), positions guesses: connector types unverified, so beta-modelled."
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "id": "furman-m-8x2",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482,
+    "h": 44,
+    "d": 95
+  },
+  "ports": [
+    {
+      "portId": "out-1",
+      "face": "io",
+      "xMm": 66,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-2",
+      "face": "io",
+      "xMm": 117,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-3",
+      "face": "io",
+      "xMm": 168,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-4",
+      "face": "io",
+      "xMm": 219,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-5",
+      "face": "io",
+      "xMm": 270,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-6",
+      "face": "io",
+      "xMm": 321,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-7",
+      "face": "io",
+      "xMm": 372,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-8",
+      "face": "io",
+      "xMm": 423,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-front",
+      "face": "opposite",
+      "xMm": 440,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "plateRgb": 1513499,
+      "bodyRgb": 2500395,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://cdn.shopify.com/s/files/1/0884/1006/3168/files/m-8x_datasheet.pdf",
+      "note": "Furman M-8x datasheet copy (equipment plan source): 44 H x 482 W x 95 D mm (1U), 2.2 kg; 9 outlets (8 rear, 1 front), 6 ft cord. SIZE CONFLICT: the depth is 4.137 in (Crutchfield) or 3.8 in = 95 mm in the datasheet, and the M-8Lx / M-8Dx siblings are 7.5 in deep, so the plan marks the size as a conflict (sizeConfidence conflict): beta-modelled only, 95 mm used. The outlets are NEMA 5-15R, which the catalogue has no connector for: they are modelled as iec-c13 mains outlets, the stand-in the multiprise-secteur uses; the captive power cord is not modelled. All positions are guesses; portsDocumented is not set."
+    }
+  ]
+}

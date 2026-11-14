@@ -1,0 +1,108 @@
+{
+  "id": "genelec-8040b",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 237,
+    "h": 365,
+    "d": 223
+  },
+  "ports": [
+    {
+      "portId": "in-analog",
+      "face": "io",
+      "xMm": 118,
+      "yMm": 215,
+      "confidence": "guess",
+      "openingMm": 20,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 118,
+      "yMm": 130,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 170,
+      "yMm": 130,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "portsDocumented": true,
+  "portsSource": "https://www.genelec.com/8040b",
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 232,
+      "sideBulgeMm": 2.5,
+      "rearWidthMm": 224,
+      "frontRadiusMm": 28,
+      "backRadiusMm": 34,
+      "edgeRadiusMm": 20,
+      "edgeDropMm": 26,
+      "edgeSegments": 8,
+      "barrelMm": 18,
+      "barrelCentreMm": 210,
+      "footMm": 15,
+      "footWidthMm": 160,
+      "footDepthMm": 150,
+      "wooferRingMm": 168,
+      "wooferYMm": 135,
+      "tweeterRingMm": 40,
+      "tweeterYMm": 290,
+      "waveguideMm": 92,
+      "waveguideDepthMm": 10
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 16,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.genelec.com/8040b",
+      "note": "equipment plan source (research grade: datasheet); size 237 x 223 x 365 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.genelec.com/8040b",
+      "note": "Genelec 8040B product page (downloaded and read): \"1 x XLR Analog Input\", \"Analog signal input connector XLR female, balanced 10 kOhm\", mains \"100, 120, 220 or 230VAC 50/60Hz according to region\" (the inlet type is not named: iec-c14 follows the Genelec 8030C precedent), \"Height 350 mm\" without Iso-Pod and \"365 mm\" with it, \"Width 237 mm\", \"Depth 223 mm\", bass cone 165 mm, 19 mm metal dome tweeter. Documents the connector set (portsDocumented): one XLR analog input and the mains inlet. The plan size 237 x 223 x 365 mm includes the 15 mm Iso-Pod, modelled as a 15 mm foot pad under the body."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.genelec.com/8040b",
+      "note": "build params: the shipped Genelec 8030C recipe scaled to 237 x 223 x 365 (rounded polygon plan, elliptic fillets, a shallow barrel arc), a 15 mm foot pad for the Iso-Pod, a 168 mm woofer recess at 135 mm and a 40 mm tweeter recess at 290 mm in a 92 mm waveguide dish. Recess positions and the barrel are estimates from the datasheet outline, not measured. Port and control positions on the rear: no drawing or photo was opened, so every position is a plausible guess (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.genelec.com/8040b",
+      "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with drivers drawn at the datasheet sizes; no photo copy, no brand mark, no lettering. Colour: a studio-monitor default, lifted for the creation lighting."
+    }
+  ]
+}

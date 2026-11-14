@@ -1,0 +1,177 @@
+{
+  "id": "db-audiotechnik-d40",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 88.9,
+    "d": 512
+  },
+  "ports": [
+    {
+      "portId": "in-input-analog-a1-a4-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-input-analog-a1-a4-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-analog-link-a1-a4-1",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-analog-link-a1-a4-2",
+      "face": "io",
+      "xMm": 137,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-input-digital-aes3-d1-2-d3-4-1",
+      "face": "io",
+      "xMm": 164,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "in-input-digital-aes3-d1-2-d3-4-2",
+      "face": "io",
+      "xMm": 191,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "bidir-network-audio-milan-ethernet-eth1-pri-eth2-sec-1",
+      "face": "io",
+      "xMm": 219,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-network-audio-milan-ethernet-eth1-pri-eth2-sec-2",
+      "face": "io",
+      "xMm": 248,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-speaker-outputs-a-b-c-d-and-mix-top-sub-2-way-outputs-1",
+      "face": "io",
+      "xMm": 277.5,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-speaker-outputs-a-b-c-d-and-mix-top-sub-2-way-outputs-2",
+      "face": "io",
+      "xMm": 307.5,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-4-channel-output",
+      "face": "io",
+      "xMm": 337.5,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "speakon-nl8",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "in-mains-in-powercon-true1-top",
+      "face": "io",
+      "xMm": 367.5,
+      "yMm": 44.45,
+      "confidence": "guess",
+      "connector": "powercon-true1",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 60,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "plateRgb": 2500909,
+      "bodyRgb": 1579292
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbaudio.com/global/en/products/amplifiers/d40/",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 512 x 88.9 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbaudio.com/global/en/products/amplifiers/d40/",
+      "note": "d&b audiotechnik D40 page (read by a research pass 2026-11-12): four XLR3 female analog inputs (A1-A4) with XLR3 male links, two XLR3 female AES3 inputs with a digital link out, Milan AVB on etherCON, four NL4 speaker outputs (and an NL8, count not stated), two RJ45 control ports and one powerCON TRUE1 TOP mains inlet 100-127 / 208-240 V. The size has an assumed axis order (2 RU x 19 in x 512 mm), so beta-modelled; the ports are the Bêta proposal ports (12 of 21 listed). The plan lists the family rack-box-v3b; no handle, vent block or window is modelled because nothing read states them (rack-box v2 params). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

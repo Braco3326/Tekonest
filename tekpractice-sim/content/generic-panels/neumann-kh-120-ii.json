@@ -1,0 +1,193 @@
+{
+  "note": "Generic artwork for neumann-kh-120-ii: rear panel (io face, 182 x 287 mm) with sockets at the port positions and a plain plate; baffle (opposite face) with a woofer grille and a tweeter dish at the modelled recesses. No brand mark, no lettering.",
+  "faces": {
+    "opposite": {
+      "wMm": 182,
+      "hMm": 287,
+      "pxPerMm": 6,
+      "base": "#3b3e41",
+      "items": [
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 105,
+          "r": 69,
+          "fill": "#4b4e52"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 105,
+          "r": 65,
+          "fill": "#17181a"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 105,
+          "r": 49,
+          "fill": "#4b4e52"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 105,
+          "r": 21.67,
+          "fill": "#17181a"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 232,
+          "r": 38,
+          "fill": "#4b4e52"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 232,
+          "r": 36,
+          "fill": "#55585c"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 232,
+          "r": 11.67,
+          "fill": "#17181a"
+        }
+      ]
+    },
+    "io": {
+      "wMm": 182,
+      "hMm": 287,
+      "pxPerMm": 6,
+      "base": "#1f2022",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": 20,
+          "w": 166,
+          "h": 247,
+          "fill": "#2a2c2f",
+          "radius": 4
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 190,
+          "r": 12.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 190,
+          "r": 10,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 190,
+          "r": 3.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 58,
+          "y": 150,
+          "r": 8.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 58,
+          "y": 150,
+          "r": 6,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 58,
+          "y": 150,
+          "r": 2,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 124,
+          "y": 150,
+          "r": 8.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 124,
+          "y": 150,
+          "r": 6,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 124,
+          "y": 150,
+          "r": 2,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 118,
+          "r": 9.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 118,
+          "r": 7,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 91,
+          "y": 118,
+          "r": 2.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 55,
+          "y": 60,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 55,
+          "y": 60,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 55,
+          "y": 60,
+          "r": 4,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "rect",
+          "x": 124,
+          "y": 51,
+          "w": 12,
+          "h": 18,
+          "fill": "#8d8f94",
+          "radius": 1.5
+        }
+      ]
+    }
+  }
+}

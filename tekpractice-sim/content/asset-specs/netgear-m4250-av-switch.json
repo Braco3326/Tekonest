@@ -1,0 +1,147 @@
+{
+  "id": "netgear-m4250-av-switch",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 440,
+    "h": 43.2,
+    "d": 257
+  },
+  "ports": [
+    {
+      "portId": "port-1",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-2",
+      "face": "opposite",
+      "xMm": 57,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-3",
+      "face": "opposite",
+      "xMm": 74,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-4",
+      "face": "opposite",
+      "xMm": 91,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-5",
+      "face": "opposite",
+      "xMm": 108,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-6",
+      "face": "opposite",
+      "xMm": 125,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-7",
+      "face": "opposite",
+      "xMm": 142,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "port-8",
+      "face": "opposite",
+      "xMm": 159,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.2,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "rearInsetMm": 6,
+      "seamMm": 20,
+      "feetMm": 2.5,
+      "feetDiaMm": 10,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 80,
+      "plateRgb": 2763566,
+      "bodyRgb": 1908257
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 800,
+      "max": 3500
+    },
+    "minFilletMm": 1.2
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.netgear.com/se/business/wired/switches/fully-managed/m4250/",
+      "note": "equipment plan source (research grade: datasheet); size 440 x 257 x 43.2 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "reference",
+      "url": "https://files.hdtvsupply.com/kramer-m4250-26g4f-poe-x-ds.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.clearcom.com/Product/m4250-26g4f-poe",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://files.hdtvsupply.com/kramer-m4250-26g4f-poe-x-ds.pdf",
+      "note": "Netgear M4250-26G4F-PoE+ (Kramer-branded datasheet, research read): 24 x 1G PoE+ RJ45, 2 x 1G RJ45, 4 x SFP, 1U; port positions not stated. Modelled: 8 of 26 RJ45 ports as aoip; SFP and the mains inlet are not modelled. Size 440 x 257 x 43.2 mm (44.0 x 25.7 x 4.32 cm W, D, H), measured for this model only; the axis order is assumed in the plan, so an estimate. Ports on the front are a guess; no ears modelled."
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "id": "radial-prodi",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 108,
+    "h": 44,
+    "d": 70
+  },
+  "ports": [
+    {
+      "portId": "in-instrument-input",
+      "face": "opposite",
+      "xMm": 30,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "out-thru-put-to-amplifier",
+      "face": "opposite",
+      "xMm": 78,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "out"
+    },
+    {
+      "portId": "out-balanced-low-z-mic-level-output",
+      "face": "io",
+      "xMm": 54,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 8,
+      "plateFilletMm": 3.5,
+      "filletMm": 4,
+      "filletSegments": 10,
+      "feetMm": 2,
+      "feetDiaMm": 8,
+      "plateRgb": 1842464,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io",
+      "top"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 3
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.radialeng.com/product/prodi/specifications",
+      "note": "equipment plan source (research grade: datasheet); size 108 x 70 x 44 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.radialeng.com/product/prodi/specifications",
+      "note": "Radial spec page (opened 2026-11-12): L x W x D 4.25 x 2.75 x 1.75 in = 108 x 70 x 44 mm (plan size; axis order assumed, estimate), 14-gauge steel chassis; features: input pad, ground lift; \"1/4 in in and thru\", XLR male output. Which end carries which connector is a guess; colour not stated. Build parameters from the Wave 0 spike. portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Radial page gives the connector types (1/4 in in and thru, XLR-M out) but no panel layout."
+}

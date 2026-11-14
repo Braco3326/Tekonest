@@ -1,0 +1,134 @@
+{
+  "note": "Generic panel artwork (no brand marks, no logos), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+  "faces": {
+    "wrap": {
+      "wMm": 138.87,
+      "hMm": 160,
+      "base": "#c9ccd1",
+      "pxPerMm": 12,
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 0,
+          "w": 138.87,
+          "h": 160,
+          "fill": "#c9ccd1"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 128,
+          "w": 138.87,
+          "h": 32,
+          "fill": "#7d8187"
+        },
+        {
+          "kind": "weave",
+          "x": 0,
+          "y": 128,
+          "w": 138.87,
+          "h": 30,
+          "pitch": 2.4,
+          "line": 0.35,
+          "fill": "#2a2c30",
+          "stroke": "#9a9ea4",
+          "hole": "#050607"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 126,
+          "w": 138.87,
+          "h": 2.2,
+          "fill": "#6b6f75"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 118,
+          "w": 138.87,
+          "h": 1.2,
+          "fill": "#8a8e94"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 100,
+          "w": 138.87,
+          "h": 1.2,
+          "fill": "#8a8e94"
+        },
+        {
+          "kind": "rect",
+          "x": 20.72,
+          "y": 60,
+          "w": 6,
+          "h": 22,
+          "fill": "#9a9ea4",
+          "stroke": "#6b6f75",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 22.72,
+          "y": 64,
+          "w": 2,
+          "h": 8,
+          "fill": "#202226"
+        },
+        {
+          "kind": "rect",
+          "x": 34.72,
+          "y": 60,
+          "w": 6,
+          "h": 22,
+          "fill": "#9a9ea4",
+          "stroke": "#6b6f75",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 36.72,
+          "y": 72,
+          "w": 2,
+          "h": 8,
+          "fill": "#202226"
+        },
+        {
+          "kind": "rect",
+          "x": 48.72,
+          "y": 60,
+          "w": 6,
+          "h": 22,
+          "fill": "#9a9ea4",
+          "stroke": "#6b6f75",
+          "radius": 1
+        },
+        {
+          "kind": "rect",
+          "x": 50.72,
+          "y": 64,
+          "w": 2,
+          "h": 8,
+          "fill": "#202226"
+        },
+        {
+          "kind": "circle",
+          "x": 70.72,
+          "y": 74,
+          "r": 2.2,
+          "fill": "#d63a3a"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 0,
+          "w": 138.87,
+          "h": 8,
+          "fill": "#9a9ea4"
+        }
+      ]
+    }
+  }
+}

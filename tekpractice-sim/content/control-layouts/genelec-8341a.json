@@ -1,0 +1,25 @@
+{
+ "schema": 1,
+ "deviceId": "genelec-8341a",
+ "generated": true,
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 168,
+   "yMm": 110,
+   "sizeMm": {
+    "w": 12,
+    "h": 18,
+    "d": 6
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

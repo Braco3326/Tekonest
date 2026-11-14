@@ -136,7 +136,7 @@ test('the « Secteur » tab exists (the power strip is in the catalogue) and hol
   await open(page)
   const tabs = page.getByRole('tablist').getByRole('tab')
   const labels = await tabs.allInnerTexts()
-  expect(labels).toEqual(['Micros', 'Consoles', 'Enceintes', 'Sources', 'Réseau', 'Secteur', 'Bêta', 'Autres'])
+  expect(labels).toEqual(['Micros', 'Consoles', 'Enceintes', 'Amplis', 'Sources', 'Réseau', 'Câbles et DI', 'Pieds et accroches', 'Secteur', 'Bêta', 'Autres'])
   await page.getByRole('tab', { name: 'Secteur' }).click()
   const items = page.getByRole('tabpanel').getByTestId('inventory-item')
   await expect(items).toHaveCount(1)
@@ -560,6 +560,7 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
   })
 
   test('S7: a tab reached with the arrows is scrolled in clear of the fade: fully inside the unmasked part of the row, so its focus ring is whole', async ({ page }) => {
+    // Tolerance 0.5 px (as before Wave 0): the drawer rounds its scroll away from the edge it must clear, so a browser that keeps scrollLeft on whole pixels cannot leave a tab inside the fade.
     await boot(page)
     await open(page)
     const FADE = 28
@@ -567,7 +568,7 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
       row(page).evaluate((e) => {
         const f = document.activeElement!.getBoundingClientRect()
         const b = e.getBoundingClientRect()
-        return { left: f.left - b.left, right: b.right - f.right, start: (e as HTMLElement).dataset.fadeStart, end: (e as HTMLElement).dataset.fadeEnd }
+        return { wide: f.width > b.width - 2 * 28, left: f.left - b.left, right: b.right - f.right, start: (e as HTMLElement).dataset.fadeStart, end: (e as HTMLElement).dataset.fadeEnd }
       })
     const clear = async (label: string): Promise<void> => {
       // the flags follow the scroll (a scroll event): wait until they say the same as the geometry before reading the margins
@@ -580,6 +581,13 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
         )
         .toBe(true)
       const r = await read()
+      // ONLY a tab too wide to be clear of both fades (« Pieds et accroches », 135 px in the 152 px row of a 400 px phone: there is no position that clears both) is held to a weaker
+      // rule: whole inside the row. -1 px there is the pixel snap of the centring; every other tab is held to FADE - 0.5 as before.
+      if (r.wide) {
+        expect(r.left, label + ': a wide tab is whole (start)').toBeGreaterThanOrEqual(-1)
+        expect(r.right, label + ': a wide tab is whole (end)').toBeGreaterThanOrEqual(-1)
+        return
+      }
       if (r.start === 'true') expect(r.left, label + ': clear of the start fade').toBeGreaterThanOrEqual(FADE - 0.5)
       if (r.end === 'true') expect(r.right, label + ': clear of the end fade').toBeGreaterThanOrEqual(FADE - 0.5)
     }
@@ -597,8 +605,8 @@ test.describe('drawer tab row at 400 x 800 (wave 4, item 2)', () => {
     }
   })
 
-  test('with all the tabs on screen (1700 px wide; at 1366 the row of 549 px already scrolls in 489) there is no fade at all', async ({ page }) => {
-    await page.setViewportSize({ width: 1700, height: 900 })
+  test('with all the tabs on screen (2000 px wide: with « Amplis » since the power amplifiers were promoted the row is about 615 px; at 1366 it scrolls in 489) there is no fade at all', async ({ page }) => {
+    await page.setViewportSize({ width: 2000, height: 900 })
     await boot(page)
     await open(page)
     const s = await state(page)

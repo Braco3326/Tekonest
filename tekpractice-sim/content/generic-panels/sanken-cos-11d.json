@@ -1,0 +1,24 @@
+{
+  "note": "Generic panel artwork (no brand marks, no logos, no lettering), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions. wrap: Unrolled side surface: a dark tube with a fine grid at the grille end (generic).",
+  "faces": {
+    "wrap": {
+      "wMm": 12.566370614359172,
+      "hMm": 16.1,
+      "base": "#1f1f22",
+      "items": [
+        {
+          "kind": "grid",
+          "x": 0,
+          "y": 12.6,
+          "w": 12.566370614359172,
+          "h": 3.2,
+          "pitch": 0.6,
+          "line": 0.12,
+          "fill": "#0e0e10",
+          "stroke": "#4a4d54"
+        }
+      ],
+      "pxPerMm": 40
+    }
+  }
+}

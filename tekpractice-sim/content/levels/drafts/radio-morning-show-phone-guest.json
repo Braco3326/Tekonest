@@ -28,6 +28,10 @@
   {
    "instanceId": "play",
    "deviceId": "playout-pc"
+  },
+  {
+   "instanceId": "proc",
+   "deviceId": "omnia-11"
   }
  ],
  "requiredChain": [
@@ -80,6 +84,16 @@
     "instance": "monr",
     "port": "in-analog"
    }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-program-aes"
+   },
+   "to": {
+    "instance": "proc",
+    "port": "in-aes"
+   }
   }
  ],
  "logicChecks": [
@@ -89,13 +103,12 @@
  "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
  "draft": {
   "status": "draft — needs Oscar's review",
-  "generated": "2026-10-22",
+  "generated": "2026-11-12",
   "from_scenario": "knowledge-base/tek-brain/scenarios/broadcast-radio.json#radio-morning-show-phone-guest",
   "room_id": "radio-studio-self-op-small",
   "difficulty": 3,
   "unmapped_nodes": [
    "Hybride (SEND IN / RCV OUT)",
-   "Processeur FM",
    "Sonomètre"
   ],
   "unresolved_edges": []

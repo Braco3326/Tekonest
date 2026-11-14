@@ -1,0 +1,147 @@
+{
+  "id": "mackie-1202vlz4",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 303,
+    "h": 75,
+    "d": 272
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 36,
+      "yMm": 38,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 72,
+      "yMm": 38,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "io",
+      "xMm": 108,
+      "yMm": 38,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "io",
+      "xMm": 144,
+      "yMm": 38,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aux-1",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 38,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aux-2",
+      "face": "io",
+      "xMm": 202,
+      "yMm": 38,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-l",
+      "face": "io",
+      "xMm": 232,
+      "yMm": 38,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-main-r",
+      "face": "io",
+      "xMm": 264,
+      "yMm": 38,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        75
+      ],
+      [
+        30,
+        75
+      ],
+      [
+        110,
+        62
+      ],
+      [
+        200,
+        50
+      ],
+      [
+        272,
+        40
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "feetMm": 3,
+      "feetWidthMm": 14,
+      "feetFromSideMm": 18,
+      "feetFromEndMm": 22
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.manualowl.com/m/Mackie/1202-VLZ4/Manual/401959?page=24",
+      "note": "Manual summary on a manual-hosting site (equipment plan source, grade dealer; its fetch answered HTTP 403 in this run): printed 10.7 x 11.9 x 3.0 in, 11.9 in taken as the width = 303 x 272 x 75 mm, 3.0 kg. The plan notes that the axis order of the printed size is read by us (the sizeConfidence is ok in the plan)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://mackie.com/en/products/mixers/vlz4-series/1202VLZ4.html",
+      "note": "Mackie 1202VLZ4 product page (opened 2026-11-12): 4 Onyx mic preamps (connector not named), 12 high-headroom line inputs, 2 stereo returns, 4 balanced inserts, 2 aux sends. The page lists NO main outputs, alt 3/4 outputs, headphone jack, mains inlet, dimensions or weight, so portsDocumented is not set: the 4 mic XLR inputs and the 2 aux sends follow the counts the page states, the XLR main L / R outputs are our assumption for a mixer of this class (no source read), every position is a GUESS, and the line inputs, returns, inserts, headphones and mains are not modelled. The wedge profile is an estimate. Beta-modelled."
+    }
+  ]
+}

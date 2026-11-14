@@ -1,0 +1,102 @@
+{
+  "id": "yamaha-xmv8280-d",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 480,
+    "h": 88,
+    "d": 422
+  },
+  "ports": [
+    {
+      "portId": "bidir-dante-primary-secondary-1",
+      "face": "io",
+      "xMm": 150,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir",
+      "flags": [
+        "isDantePrimary"
+      ]
+    },
+    {
+      "portId": "bidir-dante-primary-secondary-2",
+      "face": "io",
+      "xMm": 172,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6.35,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "earHoleEdgeMm": 10,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 70,
+      "frontVentSlots": 6,
+      "frontVentRows": 6,
+      "frontVentSlotLenMm": 30,
+      "frontVentSlotWidthMm": 3,
+      "frontVentColPitchMm": 36,
+      "frontVentRowPitchMm": 9,
+      "frontVentXMm": 150,
+      "frontVentYMm": 44,
+      "windowWMm": 60,
+      "windowHMm": 22,
+      "windowXMm": 330,
+      "windowYMm": 33,
+      "windowDepthMm": 2
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.markertek.com/product/ymh-xmv8280-d/yamaha-xmv8280-d-8-channel-280w-dante-power-amplifier",
+      "note": "equipment plan source (research grade: dealer); size 480 x 422 x 88 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.markertek.com/product/ymh-xmv8280-d/yamaha-xmv8280-d-8-channel-280w-dante-power-amplifier",
+      "note": "Markertek page (opened 2026-11-12): 18.9 x 3.5 x 16.6 in (W x H x D), net 22.3 lb; the plan size 480 x 422 x 88 mm is that in mm (dealer grade)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.dicomp.com.br/downloads/materiais_apoio/datasheet/33969-1.pdf",
+      "note": "Yamaha XMV Series datasheet (a dealer-hosted copy, downloaded and read as text on 2026-11-12) and the Markertek spec text: analog input Euroblock x 2 (6P, balanced), Dante RJ45 x 2 (primary and secondary), speaker output \"barrier strip x 8 pairs\", remote and fault output Euroblock (3P) x 1, AC inlet x 1. Modelled: ONLY the two Dante RJ45 of the Beta proposal (a Beta row keeps its proposal ports, ids included, so saved cables survive); the Euroblock inputs, the 8 speaker output pairs, the remote and fault blocks and the inlet are drawn on the picture only. The \"barrier strip\" screw terminal has no catalogue connector and the inlet type is not named, so the full set could not be documented in the catalogue: the device stays beta-modelled."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.markertek.com/product/ymh-xmv8280-d/yamaha-xmv8280-d-8-channel-280w-dante-power-amplifier",
+      "note": "Port and control positions are GUESSES. build: rack-box v3b front vent block and status window (ESTIMATES, no photo or drawing opened; no ear handles are modelled because no source says the unit has any). build.projection: our own generic artwork; no photo, no logo, no lettering."
+    }
+  ]
+}

@@ -410,3 +410,51 @@ describe('CreationStore.dispatchAll: several intents as ONE transaction', () => 
     expect(s.revision).toBe(0)
   })
 })
+
+describe('Device.portAliases (Wave 0): a saved cable to a port id that was shortened on promotion still loads', () => {
+  /** A registry whose Yamaha QL1 carries an alias: the saved id `in-microphone-input-per-channel-1` is today's `in-mic-1`. */
+  const aliased = () => {
+    const r = makeRegistry()
+    const ql1 = r.deviceById.get('yamaha-ql1')!
+    r.deviceById.set('yamaha-ql1', { ...ql1, portAliases: { 'in-microphone-input-per-channel-1': 'in-mic-1', 'in-main-left': 'does-not-exist' } })
+    return r
+  }
+  const design = (port: string) => ({
+    roomId: null,
+    rig: {
+      instances: [{ instanceId: 'm', deviceId: 'shure-sm58' }, { instanceId: 'q', deviceId: 'yamaha-ql1' }],
+      connections: [{ a: { instance: 'm', port: 'out-xlr' }, b: { instance: 'q', port } }],
+      controls: {},
+    },
+    placements: [],
+  })
+
+  it('an old port id is loaded onto the current one, nothing is dropped, and the design reads back with the NEW id', () => {
+    const r = aliased()
+    const s = new CreationStore(r, creationEvaluator(r), design('in-microphone-input-per-channel-1'))
+    expect(s.design().rig.connections).toHaveLength(1)
+    expect(s.design().rig.connections[0]!.b).toEqual({ instance: 'q', port: 'in-mic-1' })
+  })
+  it('the same through APPLY_DESIGN (opening a saved project), reported as dropped-free', () => {
+    const r = aliased()
+    const s = new CreationStore(r, creationEvaluator(r))
+    const res = s.dispatch({ type: 'APPLY_DESIGN', design: design('in-microphone-input-per-channel-1') })
+    expect(res.ok).toBe(true)
+    if (res.ok) expect(res.dropped?.cables ?? []).toEqual([])
+    expect(s.design().rig.connections[0]!.b.port).toBe('in-mic-1')
+  })
+  it('a current id is never aliased, an alias to a port that does not exist is ignored, and an unknown id is still dropped with a report', () => {
+    const r = aliased()
+    const s = new CreationStore(r, creationEvaluator(r), design('in-mic-1'))
+    expect(s.design().rig.connections[0]!.b.port).toBe('in-mic-1')
+    const s2 = new CreationStore(r, creationEvaluator(r), design('in-main-left'))
+    expect(s2.design().rig.connections).toHaveLength(0)
+    const res = new CreationStore(r, creationEvaluator(r)).dispatch({ type: 'APPLY_DESIGN', design: design('totally-unknown') })
+    expect(res.ok).toBe(true)
+    if (res.ok) expect(res.dropped?.cables).toHaveLength(1)
+  })
+  it('a device without portAliases behaves exactly as before', () => {
+    const s = new CreationStore(makeRegistry(), creationEvaluator(makeRegistry()), design('in-mic-1'))
+    expect(s.design().rig.connections).toHaveLength(1)
+  })
+})

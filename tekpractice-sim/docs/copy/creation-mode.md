@@ -7,6 +7,7 @@ Rules: French first, English technical terms kept as students meet them (XLR, Da
 Status column:
 - **brief** — wording given verbatim by the plan (Task 7 brief / council), validated with it.
 - **validé** — reviewed and accepted (or rewritten) by tekuxwriter; the Phase 1 pass (L9) signed off every string authored by tekfrontenddesigner.
+- **à valider** — wording written by an agent in the Wave 0 build-all-equipment run (2026-11-11: the new tabs, the « Bêta — dimensions estimées » badge and its tooltip, the twelve new connector names, the reworded « Autres » tab); not yet read by tekuxwriter or the founder. It ships, but it is not « validé » until someone signs it off.
 - **à trancher (Oscar)** — tekuxwriter could not decide alone; the question is in the notes column.
 - **à valider (tekuxwriter)** — written by the developer for the onboarding packs (2026-11-12), not yet read by tekuxwriter: French « vous », no figure, no success, safety or fidelity claim; to be reviewed before anything ships. Every key added by the branch `design/onboarding-packs` carries this status and a note saying where it shows (which address, which package) and any honesty point; the one key it changed, `picker.templatesPitch`, too. The full list, with what is still open for tekuxwriter, is the last subsection of « Propositions en attente (fondateur) » (« Clés de la branche design/onboarding-packs »).
 
@@ -238,10 +239,13 @@ Types de signal du catalogue (`signalTypes[].id`), tels que Propriétés les nom
 | `signal.spdif` | S/PDIF numérique | validé | Idem |
 | `signal.madi` | MADI multicanal | validé | Idem |
 | `signal.aoip` | Audio sur IP (Dante) | validé | Idem |
+| `signal.aes50` | AES50 numérique (consoles Behringer / Midas, pas du Dante) | à valider | Revue des vagues 2 à 5, point 9 : AES50 n’est pas du Dante ; la règle R2 refuse un câble vers une prise Dante |
 | `signal.wordclock` | Word clock | validé | Idem |
 | `signal.usb-audio` | Audio USB | validé | Idem |
 | `signal.gpio-tally` | GPIO / tally | validé | Idem |
 | `signal.dmx512` | DMX512 | validé | Idem |
+| `signal.ethernet-control` | Réseau de contrôle (Ethernet, sans audio) | à valider | Wave 1b : la prise RJ45 d'un appareil qui n'est pas un appareil audio réseau (mise à jour, logiciel de réglage) ; ne se branche pas sur une prise Dante |
+| `signal.usb-control` | Liaison USB de contrôle (MIDI, sans audio) | à valider | Revue des vagues 2 à 5, point 11 : la prise USB d’un contrôleur MIDI ne porte pas d’audio ; refusée contre une prise USB audio |
 | `signal.phantom-48v` | Alimentation fantôme +48 V | validé | Idem |
 | `signal.mains-power` | Secteur 230 V | validé | Idem |
 
@@ -708,8 +712,14 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.empty` | Aucun appareil disponible pour le moment. | validé | État vide d’un onglet sans appareil |
 | `inventory.badgeUnverified` | non vérifié | validé | Pastille sur un appareil proposé : onglet Bêta, arbre Projet et Propriétés une fois posé (Task 30) |
 | `inventory.tipUnverified` | Fiche proposée, pas encore vérifiée : comportement approximatif. | validé | Info-bulle d’un appareil Bêta (tiroir) et description de l’appareil posé (Propriétés) |
+| `inventory.badgeEstimated` | Bêta — dimensions estimées | à valider | Pastille d’un appareil proposé qui a un modèle 3D aux dimensions estimées (onglet Bêta) ; remplace « non vérifié » sur cet appareil |
+| `inventory.tipEstimated` | Modèle 3D aux dimensions estimées : fiche non vérifiée, comportement approximatif. | à valider | Info-bulle de cet appareil (tiroir) |
+| `inventory.badgePorts` | Bêta — connecteurs non vérifiés | à valider | Pastille d’un appareil proposé dont le modèle 3D a la taille d’une fiche constructeur ou revendeur (confiance ok) : seuls ses connecteurs ne sont pas vérifiés (Wave 1b) |
+| `inventory.tipPorts` | Modèle 3D aux dimensions de la fiche constructeur ou revendeur ; les connecteurs ne sont pas vérifiés : comportement approximatif. | à valider | Info-bulle de cet appareil (tiroir) |
 | `inventory.missingTitle` | Appareils non rechargés | validé | Titre de la note quand un projet rouvert contient des appareils dont la fiche n’existe plus |
 | `inventory.missingBody` | La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés. | validé | Corps de la note ; les identifiants des appareils suivent en liste |
+| `inventory.droppedCablesTitle` | Câbles non rechargés | à valider | Titre de la note quand un projet rouvert a des câbles sur des prises qui n’existent plus |
+| `inventory.droppedCablesBody` | Ces câbles menaient à des prises qui n’existent plus sur la fiche mise à jour de l’appareil (à valider) : ils n’ont pas été rechargés, le reste du projet l’est. | à valider | Corps de la note ; les câbles suivent en liste |
 | `inventory.unavailableTitle` | Projet non rouvert | validé | Titre de la note quand les fiches Bêta dont un projet enregistré a besoin n’ont pas pu être chargées (réseau, délai de 5 s) : le projet n’est ni ouvert ni modifié |
 | `inventory.unavailable` | Fiches Bêta indisponibles (réseau). Rechargez la page pour retrouver votre projet. | validé | Corps de la note, ligne d’état et ligne du sélecteur de lieu pour le même cas |
 | `inventory.unavailableOpen` | Fiches Bêta indisponibles (réseau). Le projet n’a pas été ouvert. Rechargez la page, puis rouvrez-le. | validé | Corps de la note et ligne d’état quand « Ouvrir… » n’a pas pu charger les fiches Bêta du projet choisi : rien n’est ouvert ni modifié |
@@ -722,12 +732,15 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.tabMicros` | Micros | validé | Onglet ; Micros, d’après la catégorie « microphone » du catalogue ; les onglets vides sont masqués |
 | `inventory.tabConsoles` | Consoles | validé | Onglet ; Consoles, stageboxes, préamplis et contrôleurs d’écoute ; les onglets vides sont masqués |
 | `inventory.tabEnceintes` | Enceintes | validé | Onglet ; Enceintes amplifiées et moniteurs de studio ; les onglets vides sont masqués |
+| `inventory.tabAmplis` | Amplis | à valider | Onglet ; Amplificateurs de puissance (catégorie « amplifier ») ; masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
 | `inventory.tabSources` | Sources | validé | Onglet ; Ordinateurs et interfaces audio ; les onglets vides sont masqués |
 | `inventory.tabReseau` | Réseau | validé | Onglet ; Codecs et horloges maîtresses ; les onglets vides sont masqués |
+| `inventory.tabCables` | Câbles et DI | à valider | Onglet ; Câbles, boîtiers de direct (DI) et splitters ; les onglets vides sont masqués |
+| `inventory.tabPieds` | Pieds et accroches | à valider | Onglet ; Pieds de micro, bras, suspensions et filtres anti-pop ; les onglets vides sont masqués |
 | `inventory.tabSecteur` | Secteur | validé | Onglet ; Alimentation secteur ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
 | `inventory.tabEclairage` | Éclairage | validé | Onglet ; Éclairage ; onglet masqué tant que le catalogue n’en contient pas ; les onglets vides sont masqués |
 | `inventory.tabBeta` | Bêta | validé | Onglet ; Propositions seulement (jamais un appareil du catalogue), badge « non vérifié » (Task 30) ; masqué sans proposition ; les onglets vides sont masqués |
-| `inventory.tabAutres` | Autres | validé | Onglet ; Accessoires, câbles, signalisation, patchbays et catégories inconnues ; toujours en dernier ; les onglets vides sont masqués |
+| `inventory.tabAutres` | Autres | à valider | Onglet ; Signalisation, patchbays, mobilier et catégories inconnues ; toujours en dernier ; les onglets vides sont masqués |
 
 ## Glossaire
 
@@ -854,7 +867,7 @@ Noms français des connecteurs du catalogue (`connectorTypes[].id`), repris dans
 | `connector.rj45` | RJ45 (Cat5e/6) | validé | Étiquette de prise |
 | `connector.ethercon` | Neutrik etherCON (RJ45 renforcé) | validé | Étiquette de prise |
 | `connector.speakon-nl4` | Neutrik Speakon NL4 | validé | Étiquette de prise |
-| `connector.powercon-blue` | Neutrik powerCON (bleu, entrée secteur) | validé | Étiquette de prise |
+| `connector.powercon-blue` | Neutrik powerCON (bleu, entrée secteur ; un cordon powerCON vers IEC C13 le relie à une prise C13) | validé | Étiquette de prise |
 | `connector.powercon-true1` | Neutrik powerCON TRUE1 | validé | Étiquette de prise |
 | `connector.iec-c13` | IEC C13 (fiche secteur) | validé | Étiquette de prise |
 | `connector.iec-c14` | IEC C14 (embase secteur) | validé | Étiquette de prise |
@@ -869,6 +882,18 @@ Noms français des connecteurs du catalogue (`connectorTypes[].id`), repris dans
 | `connector.usb-c` | USB Type-C / Thunderbolt 3 | validé | Étiquette de prise |
 | `connector.digilink` | Avid DigiLink | validé | Étiquette de prise |
 | `connector.gpio-terminal` | Bornier GPIO / port logique D-sub | validé | Étiquette de prise |
+| `connector.dc-barrel` | Jack d’alimentation DC (cylindrique) | à valider | Étiquette de prise |
+| `connector.midi-din5` | MIDI DIN 5 broches | à valider | Étiquette de prise |
+| `connector.xlr4` | XLR4 (intercom / casque / 12 V DC) | à valider | Étiquette de prise |
+| `connector.bnc-antenna-50ohm` | BNC 50 Ω (antenne HF) | à valider | Étiquette de prise |
+| `connector.mini-xlr-ta4` | Mini-XLR TA4 (cravate / émetteur ceinture) | à valider | Étiquette de prise |
+| `connector.euroblock` | Bornier à vis Euroblock | à valider | Étiquette de prise |
+| `connector.speakon-nl8` | Neutrik Speakon NL8 | à valider | Étiquette de prise |
+| `connector.binding-post` | Borne à vis (fil nu / banane) | à valider | Étiquette de prise |
+| `connector.opticalcon` | Neutrik opticalCON (fibre renforcée) | à valider | Étiquette de prise |
+| `connector.sc-fibre` | Fibre optique SC | à valider | Étiquette de prise |
+| `connector.lemo` | LEMO push-pull (multibroche) | à valider | Étiquette de prise |
+| `connector.hirose` | Hirose multibroche (caméra / DC) | à valider | Étiquette de prise |
 
 ## coverage
 
@@ -929,7 +954,9 @@ Couverture (Task 37, C13, S2) : Écoute › Couverture, l’échelle, les statis
 | `coverage.reasonSilent` | le fader master est à −inf | validé | Toutes les enceintes alimentées sont à −inf |
 | `coverage.reasonBalance` | la balance de la console coupe ces enceintes | validé | Raison dite quand la balance (G100 / D100) coupe tous les côtés qui alimentent les enceintes branchées |
 | `coverage.reasonUnverified` | appareil non vérifié (Bêta) | validé | Enceinte Bêta : aucune donnée acoustique vérifiée |
-| `coverage.reasonNoAcoustic` | enceinte sans données acoustiques | validé | Enceinte du catalogue sans angles de couverture |
+| `coverage.reasonNoAcoustic` | couverture non calculée faute de valeur vérifiée | à valider | Raison d’exclusion d’une enceinte du catalogue sans angles de couverture sourcés (règle des données) ; elle ne dit plus que l’enceinte est inaudible : l’écoute la joue ; textes précédents : « enceinte sans donnée de couverture : valeur non vérifiée » |
+| `coverage.noSourceNoData` | Couverture non calculée : aucune valeur vérifiée pour ce modèle (statut à valider). L’écoute n’est pas concernée. | à valider | Message sans « Aucune enceinte audible » quand toutes les enceintes alimentées sont écartées pour la seule raison no-acoustic |
+| `coverage.noDataNote` | Couverture non calculée pour {names} : valeur non vérifiée (aucune donnée constructeur retenue pour ce modèle). | à valider | Sous le bloc Couverture quand une enceinte alimentée n’a pas de couverture sourcée : elle n’entre pas dans le calcul, aucun nombre n’est affiché pour elle ; {names} = identifiants d’instance |
 | `coverage.reasonUnpowered` | enceinte hors tension | validé | Enceinte alimentée en signal mais sans secteur |
 | `coverage.reasonOther` | enceinte non utilisable | validé | Raison de repli (position ou couverture invalide) |
 | `coverage.reasonsJoin` |  ;  | validé | Séparateur de plusieurs raisons |

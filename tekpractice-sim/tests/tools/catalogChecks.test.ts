@@ -11,16 +11,23 @@ const fresh = (): CatalogT => structuredClone(base)
 type LooseDevice = Omit<CatalogT['devices'][number], 'acoustic' | 'routing'> & Record<string, any>
 const dev = (c: CatalogT, id: string) => c.devices.find((d) => d.id === id) as LooseDevice
 const errors = (c: CatalogT) => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'error')
+/** The speakers of a catalogue (a route feeds a transducer), and the ones among them that carry no acoustic block. */
+const speakersOf = (c: CatalogT) => c.devices.filter((d) => (d as LooseDevice).routing?.some((r: { to: string[] }) => r.to.includes('transducer')))
+const bareSpeakers = (c: CatalogT): string[] => speakersOf(c).filter((d) => (d as LooseDevice).acoustic === undefined).map((d) => d.id)
+const acousticWarnings = (c: CatalogT): string[] => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'warning' && i.path.endsWith('.acoustic')).map((i) => i.path)
 
 describe('checkCatalog, models', () => {
-  it('the real catalog has no issue when every device has a model', () => {
-    expect(checkCatalog(fresh(), { modelIds: allModels })).toEqual([])
+  it('the real catalog has no error when every device has a model; its only warnings are the speakers WITHOUT sourced acoustic data (founder data rule: no coverage default)', () => {
+    const issues = checkCatalog(fresh(), { modelIds: allModels })
+    expect(issues.filter((i) => i.level === 'error')).toEqual([])
+    expect(issues.filter((i) => !(i.level === 'warning' && i.path.endsWith('.acoustic')))).toEqual([])
+    expect(issues.map((i) => i.path).sort()).toEqual(bareSpeakers(fresh()).map((id) => `devices["${id}"].acoustic`).sort())
   })
 
   it('warns (never errors) for a device without a .glb: the placeholder ships', () => {
     const models = new Set(allModels)
     models.delete('shure-sm58')
-    const issues = checkCatalog(fresh(), { modelIds: models })
+    const issues = checkCatalog(fresh(), { modelIds: models }).filter((i) => !i.path.endsWith('.acoustic')) // the acoustic warnings are another test's
     expect(issues).toHaveLength(1)
     expect(issues[0].level).toBe('warning')
     expect(issues[0].path).toBe('devices["shure-sm58"]')
@@ -197,11 +204,22 @@ describe('checkCatalog, acoustic (Task 35, C12)', () => {
     return c
   }
 
-  it('the real catalog has an acoustic block on every speaker, with no issue at all (no warning either)', () => {
-    const speakers = fresh().devices.filter((d) => (d as LooseDevice).routing?.some((r: { to: string[] }) => r.to.includes('transducer')))
-    expect(speakers.map((d) => d.id).sort()).toEqual(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12'])
-    for (const d of speakers) expect((d as LooseDevice).acoustic, d.id).toBeDefined()
-    expect(checkCatalog(fresh(), { modelIds: allModels })).toEqual([])
+  it('the four hand-written speakers and the Wave 1 KH 120 II keep their acoustic block; every other real speaker has NONE (promoted since the data rule) and is warned about, nothing else is', () => {
+    const speakers = speakersOf(fresh())
+    for (const id of ['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12']) {
+      expect(speakers.map((d) => d.id), id).toContain(id)
+      expect((dev(fresh(), id)).acoustic, id).toBeDefined()
+    }
+    // review fix 13: the KH 120 II lost its template nominal coverage (no sheet states it) and is warned about like the other promoted speakers
+    expect((dev(fresh(), 'neumann-kh-120-ii')).acoustic).toBeUndefined()
+    for (const d of speakers) {
+      const a = (d as LooseDevice).acoustic
+      // a speaker promoted without a sourced coverage carries nothing: no nominal block, no number (the template no longer writes any)
+      if (a === undefined) continue
+      expect(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12'], `${d.id} carries an acoustic block`).toContain(d.id)
+    }
+    expect(acousticWarnings(fresh()).sort()).toEqual(bareSpeakers(fresh()).map((id) => `devices["${id}"].acoustic`).sort())
+    expect(bareSpeakers(fresh()).length).toBeGreaterThan(10)
   })
 
   it('accepts a sourced block, with the optional fields', () => {
@@ -270,36 +288,38 @@ describe('checkCatalog, acoustic (Task 35, C12)', () => {
   })
 
   describe('a speaker (a device with a `transducer` route) without acoustic is a WARNING', () => {
-    const warnings = (c: CatalogT) => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'warning')
+    /** The acoustic warnings of ONE device (the real catalogue also warns about its bare speakers). */
+    const warnings = (c: CatalogT, id: string) => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'warning' && i.path === `devices["${id}"].acoustic`)
 
     it('warns for each of the real speakers once its acoustic is removed, and never errors', () => {
       for (const id of ['qsc-k12-2', 'yamaha-dbr12', 'genelec-8030c']) {
         const c = fresh()
         delete dev(c, id).acoustic
-        expect(warnings(c).map((i) => i.path), id).toEqual([`devices["${id}"].acoustic`])
-        expect(warnings(c)[0].message, id).toMatch(/speaker.*acoustic|acoustic/)
+        expect(warnings(c, id).map((i) => i.path), id).toEqual([`devices["${id}"].acoustic`])
+        expect(warnings(c, id)[0].message, id).toMatch(/speaker.*acoustic|acoustic/)
         expect(errors(c), id).toEqual([])
       }
     })
     it('is derived from the routing, not from an id list: any device that feeds `transducer` is a speaker', () => {
       const c = fresh()
       ;(dev(c, 'yamaha-ql1').routing as unknown[]).push({ from: 'in-mic-1', to: ['transducer'] })
-      expect(warnings(c).map((i) => i.path)).toEqual(['devices["yamaha-ql1"].acoustic'])
+      expect(warnings(c, 'yamaha-ql1').map((i) => i.path)).toEqual(['devices["yamaha-ql1"].acoustic'])
     })
     it('a device that does not feed a transducer is not asked for acoustic (the console, a microphone)', () => {
       expect(dev(fresh(), 'yamaha-ql1').acoustic).toBeUndefined()
       expect(dev(fresh(), 'shure-sm58').acoustic).toBeUndefined()
-      expect(warnings(fresh())).toEqual([])
+      expect(warnings(fresh(), 'yamaha-ql1')).toEqual([])
+      expect(warnings(fresh(), 'shure-sm58')).toEqual([])
     })
     it('does not fall over on a malformed routing (the routing check reports it, the speaker test just says no)', () => {
       const c = fresh()
       dev(c, 'shure-sm58').routing = 'x'
-      expect(warnings(c)).toEqual([])
+      expect(warnings(c, 'shure-sm58')).toEqual([])
       dev(c, 'shure-sm58').routing = ['x', { to: 'transducer' }, null]
-      expect(warnings(c)).toEqual([])
+      expect(warnings(c, 'shure-sm58')).toEqual([])
     })
     it('a speaker that has acoustic is not warned about', () => {
-      expect(warnings(fresh())).toEqual([])
+      for (const id of ['qsc-k12-2', 'yamaha-dbr12', 'genelec-8030c']) expect(warnings(fresh(), id), id).toEqual([])
     })
   })
 })
@@ -356,5 +376,64 @@ describe('checkCatalog, mains (Task 32, C7)', () => {
     delete strip.ports[1].flags
     const e = errors(c)
     expect(e.map((i) => i.path)).toEqual(['devices["multiprise-secteur"].ports["out-2"]'])
+  })
+})
+
+describe('checkCatalog, Wave 0 data rules (Task 0.3)', () => {
+  it('errors on a port id longer than 19 characters (the catalog maximum; Bêta proposals may exceed it, the catalog may not)', () => {
+    const c = fresh()
+    const d = dev(c, 'shure-sm58')
+    d.ports[0] = { ...d.ports[0], portId: 'x'.repeat(20) }
+    const e = errors(c)
+    expect(e.some((i) => /19/.test(i.message) && i.path.includes('ports'))).toBe(true)
+    d.ports[0] = { ...d.ports[0], portId: 'x'.repeat(19) }
+    expect(errors(c)).toEqual([])
+  })
+  it('the longest port id of the real catalog is within the limit (no existing device breaks the new rule)', () => {
+    for (const d of base.devices) for (const p of d.ports) expect(p.portId.length, `${d.id}.${p.portId}`).toBeLessThanOrEqual(19)
+  })
+  it('isRibbon belongs to a mic-level output and never to a port that requires phantom (a ribbon is not phantom-powered)', () => {
+    const c = fresh()
+    const d = dev(c, 'shure-sm58')
+    d.ports[0] = { ...d.ports[0], flags: ['isRibbon'] }
+    expect(errors(c)).toEqual([])
+    d.ports[0] = { ...d.ports[0], flags: ['isRibbon', 'requiresPhantom'] }
+    expect(errors(c).some((i) => /ribbon/i.test(i.message))).toBe(true)
+    d.ports[0] = { ...d.ports[0], flags: ['isRibbon'], signal: 'line-level-pro' }
+    expect(errors(c).some((i) => /ribbon/i.test(i.message))).toBe(true)
+    d.ports[0] = { ...d.ports[0], flags: ['isRibbon'], signal: 'mic-level', dir: 'in' }
+    expect(errors(c).some((i) => /ribbon/i.test(i.message))).toBe(true)
+  })
+  it('isTally belongs to a gpio-tally port', () => {
+    const c = fresh()
+    const d = dev(c, 'shure-sm58')
+    d.ports[0] = { ...d.ports[0], flags: ['isTally'] }
+    expect(errors(c).some((i) => /tally/i.test(i.message))).toBe(true)
+    const t = dev(c, 'yellowtec-litt')
+    t.ports[0] = { ...t.ports[0], flags: [...(t.ports[0].flags ?? []), 'isTally'] }
+    expect(errors(c).filter((i) => /tally/i.test(i.message) && i.path.includes('yellowtec-litt'))).toEqual([])
+  })
+  it('minLoadOhms may not exceed loadOhms (the zod schema keeps both positive; the checker holds the order)', () => {
+    const c = fresh()
+    const d = dev(c, 'shure-sm58')
+    d.minLoadOhms = 8
+    d.loadOhms = 4
+    expect(errors(c).some((i) => /minLoadOhms/.test(i.message))).toBe(true)
+    d.minLoadOhms = 4
+    d.loadOhms = 8
+    expect(errors(c)).toEqual([])
+  })
+})
+
+describe('checkCatalog, portAliases (Wave 0)', () => {
+  it('an alias must point at a port the device has, and an old id must not be one of its current ports', () => {
+    const c = fresh()
+    const d = dev(c, 'shure-sm58')
+    d.portAliases = { 'in-old-long-port-id-1': 'out-xlr' }
+    expect(errors(c)).toEqual([])
+    d.portAliases = { 'in-old': 'no-such-port' }
+    expect(errors(c).some((i) => /portAliases/.test(i.path) && /no-such-port/.test(i.message))).toBe(true)
+    d.portAliases = { 'out-xlr': 'out-xlr' }
+    expect(errors(c).some((i) => /portAliases/.test(i.path) && /current port/.test(i.message))).toBe(true)
   })
 })

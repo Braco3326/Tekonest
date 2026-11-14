@@ -11,7 +11,7 @@ import type { DeviceT, Registry } from '../engine/CatalogLoader'
 import { COPY } from './copy'
 
 export type InventoryTab =
-  | 'micros' | 'consoles' | 'enceintes' | 'sources' | 'reseau' | 'secteur' | 'eclairage' | 'beta' | 'autres'
+  | 'micros' | 'consoles' | 'enceintes' | 'amplis' | 'sources' | 'reseau' | 'cables' | 'pieds' | 'secteur' | 'eclairage' | 'beta' | 'autres'
 
 export interface InventoryItem {
   deviceId: string
@@ -19,7 +19,12 @@ export interface InventoryItem {
   tab: InventoryTab
   /** A public/assets/<deviceId>.glb exists; otherwise the placeholder box ships. */
   hasModel: boolean
-  badge?: 'non vérifié'
+  /**
+   * A proposal's mark: « non vérifié » (the plain Bêta badge), or « dimensions estimées » once a model ships for it (Wave 0, beta-modelled:
+   * a model at an estimated size, still unverified and patch-only), or « connecteurs non vérifiés » when the model's SIZE is a datasheet / dealer size
+   * (Wave 1b finding 3: only the ports are undocumented). A catalog device carries none.
+   */
+  badge?: 'non vérifié' | 'dimensions estimées' | 'connecteurs non vérifiés'
 }
 
 /** Tab names: the `inventory.tab*` strings of copy.ts (the one place for shell wording). */
@@ -28,8 +33,11 @@ export const TAB_LABELS: Record<InventoryTab, string> = {
   micros: T.tabMicros!,
   consoles: T.tabConsoles!,
   enceintes: T.tabEnceintes!,
+  amplis: T.tabAmplis!,
   sources: T.tabSources!,
   reseau: T.tabReseau!,
+  cables: T.tabCables!,
+  pieds: T.tabPieds!,
   secteur: T.tabSecteur!,
   eclairage: T.tabEclairage!,
   beta: T.tabBeta!,
@@ -38,29 +46,68 @@ export const TAB_LABELS: Record<InventoryTab, string> = {
 
 /** Display order. « Autres » stays last; empty tabs are dropped by `inventory`. */
 const TAB_ORDER: readonly InventoryTab[] = [
-  'micros', 'consoles', 'enceintes', 'sources', 'reseau', 'secteur', 'eclairage', 'beta', 'autres',
+  'micros', 'consoles', 'enceintes', 'amplis', 'sources', 'reseau', 'cables', 'pieds', 'secteur', 'eclairage', 'beta', 'autres',
 ]
 
 /**
- * `realWorld.category` → tab, one line per value in content/catalog.json.
- * Mains is the generic power strip (Task 32); nothing in the catalog is lighting yet, so that tab stays hidden.
+ * `realWorld.category` → tab, one line per category value of content/catalog.json, of the Bêta proposals and of the equipment plan
+ * (Wave 0, build all equipment: tests/creation/inventory.test.ts holds that none falls into « Autres » by accident, so a promotion never
+ * lands a device in the wrong tab). Mains is the generic power strip (Task 32); nothing in the catalog is lighting yet, so that tab stays hidden.
+ * The three tabs of the original brief are « Amplis », « Câbles et DI » and « Pieds et accroches » (the K&M stand and the Yellowtec arm, both
+ * category « accessory », and the Mogami loom, category « cable », moved there from « Autres » in Wave 0).
  */
 export const CATEGORY_TAB: Record<string, InventoryTab> = {
+  // Micros: microphones and wireless systems (a wireless system is a microphone with a radio)
   microphone: 'micros',
+  wireless: 'micros',
+  iem: 'micros',
+  // Consoles: desks and everything in a rack that processes or distributes a signal on the way to them
   console: 'consoles',
+  'console-analog': 'consoles',
+  'console-digital': 'consoles',
+  'console-radio': 'consoles',
+  'console-podcast': 'consoles',
   stagebox: 'consoles',
   'mic-preamp': 'consoles',
   'monitor-controller': 'consoles',
+  outboard: 'consoles',
+  broadcast: 'consoles',
+  'telephone-hybrid': 'consoles',
+  // Enceintes: loudspeakers and what one listens on
   'powered-speaker': 'enceintes',
   'studio-monitor': 'enceintes',
+  speaker: 'enceintes',
+  headphones: 'enceintes',
+  'headphone-amp': 'enceintes',
+  amplifier: 'amplis',
+  // Sources: what feeds or records the signal
   computer: 'sources',
+  controller: 'sources',
   'audio-interface': 'sources',
+  recorder: 'sources',
+  measurement: 'sources',
+  // Réseau: links, clocks, intercom
   codec: 'reseau',
   'master-clock': 'reseau',
-  accessory: 'autres',
+  'network-switch': 'reseau',
+  intercom: 'reseau',
+  interface: 'reseau',
+  // Câbles et DI
+  cable: 'cables',
+  'di-box': 'cables',
+  splitter: 'cables',
+  // Pieds et accroches
+  accessory: 'pieds',
+  'stand-arm': 'pieds',
+  'mic-arm': 'pieds',
+  'shock-mount': 'pieds',
+  'pop-filter': 'pieds',
+  // Autres
   signaling: 'autres',
-  cable: 'autres',
   patchbay: 'autres',
+  furniture: 'autres',
+  // Secteur
+  power: 'secteur',
   'power-strip': 'secteur',
 }
 
@@ -78,6 +125,11 @@ export function inventory(
      * drawer can say so in it; `ready` (the default) lists it only when there are proposals.
      */
     beta?: 'loading' | 'ready' | 'unavailable'
+    /**
+     * The ids of the modelled proposals whose size is verified (datasheet or dealer, three axes, confidence ok), from `betaBadges.json` (derived from the
+     * plan by `npm run register`). A modelled proposal in it reads « connecteurs non vérifiés »; any other modelled one keeps « dimensions estimées ».
+     */
+    sizeVerified?: ReadonlySet<string>
   },
 ): { tabs: InventoryTab[]; items: InventoryItem[] } {
   const items: InventoryItem[] = registry.catalog.devices.map((d) => ({
@@ -96,7 +148,7 @@ export function inventory(
       label: p.label,
       tab: 'beta',
       hasModel: opts.modelIds.has(p.deviceId),
-      badge: 'non vérifié',
+      badge: !opts.modelIds.has(p.deviceId) ? 'non vérifié' : opts.sizeVerified?.has(p.deviceId) ? 'connecteurs non vérifiés' : 'dimensions estimées',
     })
   }
   const used = new Set(items.map((i) => i.tab))

@@ -1,0 +1,142 @@
+{
+  "note": "Generic artwork for yamaha-hs5: rear panel (io face, 170 x 285 mm) with sockets at the port positions and a plain plate; baffle (opposite face) with a woofer grille and a tweeter dish at the modelled recesses. No brand mark, no lettering.",
+  "faces": {
+    "opposite": {
+      "wMm": 170,
+      "hMm": 285,
+      "pxPerMm": 6,
+      "base": "#2c2d30",
+      "items": [
+        {
+          "kind": "circle",
+          "x": 85,
+          "y": 100,
+          "r": 64,
+          "fill": "#45474b"
+        },
+        {
+          "kind": "circle",
+          "x": 85,
+          "y": 100,
+          "r": 60,
+          "fill": "#17181a"
+        },
+        {
+          "kind": "circle",
+          "x": 85,
+          "y": 100,
+          "r": 44,
+          "fill": "#45474b"
+        },
+        {
+          "kind": "circle",
+          "x": 85,
+          "y": 100,
+          "r": 20,
+          "fill": "#17181a"
+        },
+        {
+          "kind": "circle",
+          "x": 85,
+          "y": 232,
+          "r": 17,
+          "fill": "#45474b"
+        },
+        {
+          "kind": "circle",
+          "x": 85,
+          "y": 232,
+          "r": 15,
+          "fill": "#3d3f43"
+        },
+        {
+          "kind": "circle",
+          "x": 85,
+          "y": 232,
+          "r": 12.5,
+          "fill": "#17181a"
+        }
+      ]
+    },
+    "io": {
+      "wMm": 170,
+      "hMm": 285,
+      "pxPerMm": 6,
+      "base": "#1d1e20",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": 20,
+          "w": 154,
+          "h": 245,
+          "fill": "#2a2c2f",
+          "radius": 4
+        },
+        {
+          "kind": "circle",
+          "x": 60,
+          "y": 180,
+          "r": 12.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 60,
+          "y": 180,
+          "r": 10,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 60,
+          "y": 180,
+          "r": 3.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 112,
+          "y": 180,
+          "r": 8.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 112,
+          "y": 180,
+          "r": 6,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 112,
+          "y": 180,
+          "r": 2,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 85,
+          "y": 70,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 85,
+          "y": 70,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 85,
+          "y": 70,
+          "r": 4,
+          "fill": "#6b6d72"
+        }
+      ]
+    }
+  }
+}

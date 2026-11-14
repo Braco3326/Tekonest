@@ -9,6 +9,7 @@
  * Z mirror); 'opposite' is the face at -Z in file space. On the 'top' and 'bottom' faces, y=0 is the I/O edge (the io-side edge).
  */
 import { z } from 'zod'
+import { PortFlag } from '../schemas'
 import { BUILD_SHAPES } from './shapes'
 
 const PositiveMm = z.number().finite().positive()
@@ -32,6 +33,13 @@ export const PortSpec = z.object({
   confidence: z.enum(['manual', 'photo', 'guess']).describe('manual = read from a manual or datasheet drawing; photo = read from a photo (a skeleton starts as photo, zeroed, for a human to fill); guess = invented by us for a stand-in device that has no manual drawing and no photo of its real panel (the position is plausible, not measured).'),
   openingMm: PositiveMm.optional().describe('Diameter of the circular opening of the port, in millimetres (R3).'),
   insetMm: z.number().finite().min(0).max(200).optional().describe('How far behind the bounding-box face the real jack sits, in millimetres: a connector panel recessed into a speaker cabinet. The port node is placed that far inside the face plane (default 0 = on it).'),
+  connector: z.string().min(1).optional().describe('Catalogue connector type of this port, as the datasheet documents it (Wave 0b): with signal and dir it is what `npm run promote -- <id> --commit` builds the catalogue port from. Required on every port when the spec says portsDocumented.'),
+  signal: z.string().min(1).optional().describe('Catalogue signal type of this port (see connector).'),
+  dir: z.enum(['in', 'out', 'bidir']).optional().describe('Direction of this port (see connector).'),
+  flags: z.array(PortFlag).optional().describe('Behaviour flags the datasheet supports (isMicInput, providesPhantom, ...). The behaviour template adds the ones its category and traits imply.'),
+  flagsSource: z.string().regex(/^https?:\/\/\S+$/, 'flagsSource is an http(s) URL').optional().describe('The manufacturer page or manual that states the capability flags of this port (a phantom supply or need): the data rule says no phantom claim without its page (Waves 2 to 5 review, finding 4).'),
+  thruOf: z.string().min(1).optional().describe('Id of the input port whose signal this OUTPUT repeats (a thru, link, loop or daisy-chain connector, as the sheet calls it): the behaviour template writes a route from that input to this port (finding 7). It is `passive` (works with the device off) unless thruProcessed is true.'),
+  thruProcessed: z.boolean().optional().describe('With thruOf: the repeated signal is processed (a high-pass filter on a subwoofer daisy chain): the route needs power, so it is not passive.'),
 }).strict()
 
 export const ControlSpec = z.object({
@@ -52,13 +60,13 @@ export const Mating = z.object({
 }).strict()
 
 export const SpecSource = z.object({
-  kind: z.enum(['manual', 'datasheet', 'photo']),
+  kind: z.enum(['manual', 'datasheet', 'photo', 'dealer', 'reference']).describe('manual = a user manual or guide; datasheet = a manufacturer product or specification page; photo; dealer = a retailer page; reference = anything else (never claimed as a datasheet).'),
   url: z.string().min(1),
   note: z.string(),
 }).strict()
 
-/** One lathe station: [position along the axis from the base in mm, diameter in mm]. */
-const Station = z.tuple([z.number().finite(), z.number().finite().min(0)])
+/** One profile station: [position along the axis from the base in mm, diameter in mm] (a round lathe, or [depth, height] of a console), or [position, width, depth] of an oval lathe (shape revolve-oval). */
+const Station = z.union([z.tuple([z.number().finite(), z.number().finite().min(0)]), z.tuple([z.number().finite(), z.number().finite().min(0), z.number().finite().min(0)])])
 /** A colour zone of a revolved shape: from `fromMm` along the axis up to the next zone. sRGB hex, as on the real part. */
 const ZoneColour = z.object({
   fromMm: z.number().finite().min(0),
@@ -76,7 +84,7 @@ const TriangleBudget = z.object({
 export const BuildSpec = z.object({
   shape: z.enum(BUILD_SHAPES).describe('Shape the scripted builder makes for this asset (tools/assets3d/shapes.ts).'),
   params: z.record(z.string(), z.number().finite()).optional().describe('Extra shape dimensions in millimetres (names per shape in SHAPE_SPECS). Sizes come from realSizeMm, never from here.'),
-  profile: z.array(Station).min(4).optional().describe('Shape revolve only: the lathe profile, at least four [axial mm from the base, diameter mm] stations with strictly increasing positions; first at 0, last at the height, widest = the width.'),
+  profile: z.array(Station).min(4).optional().describe('Shapes revolve and console-wedge (and revolve-oval): the profile, at least four stations with strictly increasing positions; revolve: [axial mm from the base, diameter mm], first at 0, last at the height, widest = the width; revolve-oval: [axial mm, width mm, depth mm], widest = the width, deepest = the depth.'),
   colours: z.array(ZoneColour).min(1).optional().describe('Shape revolve only: colour zones along the axis (first at 0, strictly increasing), sRGB hex of the real part.'),
   projection: z.union([ProjectionFaceEnum, z.array(ProjectionFaceEnum).min(1).max(4)]).optional().describe('The face(s) that take their picture from a Meshy model (asset:build --scripted --project <fixed.glb>); default io. Each picture is mapped planar onto the scripted faces that look that way; a face given twice or two faces looking the same way is refused.'),
   budget: TriangleBudget.optional().describe("Triangles the finished GLB must have, from the class floor to the ceiling (gate 'detail'), e.g. speaker 1500 to 4000. Absent = no check."),
@@ -128,9 +136,21 @@ export const AssetSpec = z.object({
   mating: Mating.optional(),
   build: BuildSpec.optional(),
   texture: TextureSpec.optional(),
+  portsDocumented: z.boolean().optional().describe('true when the ports of this spec are the connector set the datasheet documents (set by the person who fills the spec in, with portsSource). Only a device with portsDocumented true can be promoted into the verified catalogue; without it the device stays a Bêta proposal (beta-modelled).'),
+  portsSource: z.string().regex(/^https?:\/\/\S+$/, 'portsSource is an http(s) URL').optional().describe('The page that documents the connector set (a manufacturer page or manual).'),
+  powerNote: z.string().min(3).optional().describe('One French sentence about the mains of this device that the catalogue entry\'s realWorld.notes carries (findings 5 and 16): what the sheet says when no inlet or no switch is modelled (« alimentation non modélisée (source non lue) », « pas d\'interrupteur secteur selon le manuel »).'),
+  portAliases: z.record(z.string().min(1), z.string().min(1)).optional().describe('Old port id -> the id this spec gives the port now (a rename): merged into the device portAliases so saved cables follow (findings 8, 18 and 19).'),
+  portsTodo: z.string().optional().describe('A to-do note for the person filling the spec: the ports of the Bêta proposal or the plan ports summary, as TEXT (never as ports: nothing is invented).'),
   driftLimit: z.number().finite().gt(0).max(0.35).optional().describe('Proportion drift the fix-up may absorb, as a fraction (default 0.05). A Meshy model whose depth was guessed from front photos (a speaker cabinet) may need more; the founder accepts it per device.'),
   sources: z.array(SpecSource),
-}).strict()
+}).strict().superRefine((spec, ctx) => {
+  if (spec.portsDocumented !== true) return
+  if (spec.portsSource === undefined) ctx.addIssue({ code: 'custom', path: ['portsSource'], message: 'portsDocumented needs portsSource (the page that documents the connector set)' })
+  spec.ports.forEach((p, i) => {
+    for (const k of ['connector', 'signal', 'dir'] as const)
+      if (p[k] === undefined) ctx.addIssue({ code: 'custom', path: ['ports', i, k], message: `portsDocumented: port "${p.portId}" needs its ${k}` })
+  })
+})
 
 export type FaceT = z.infer<typeof Face>
 export type PortSpecT = z.infer<typeof PortSpec>

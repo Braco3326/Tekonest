@@ -1,0 +1,149 @@
+{
+  "id": "sound-devices-mixpre-6-ii",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 166,
+    "h": 36,
+    "d": 118
+  },
+  "ports": [
+    {
+      "portId": "in-xlr-1",
+      "face": "opposite",
+      "xMm": 25,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-xlr-2",
+      "face": "opposite",
+      "xMm": 62,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-xlr-3",
+      "face": "opposite",
+      "xMm": 99,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-xlr-4",
+      "face": "opposite",
+      "xMm": 136,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-main",
+      "face": "io",
+      "xMm": 30,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 55,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 85,
+      "yMm": 18,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.toneart-shop.de/media/specs/sound-devices-mixpre-6-ii.pdf",
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 6,
+      "edgeRadiusMm": 3,
+      "edgeDropMm": 3,
+      "bottomEdgeRadiusMm": 2.5,
+      "edgeSegments": 8,
+      "recessWMm": 70,
+      "recessHMm": 46,
+      "recessXMm": 10,
+      "recessYMm": 62,
+      "recessDepthMm": 1,
+      "bodyGrey": 45
+    },
+    "projection": [
+      "top",
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://store.sounddevices.com/product/mixpre-6-ii/",
+      "note": "equipment plan source (research grade: datasheet); size 166 x 118 x 36 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://store.sounddevices.com/product/mixpre-6-ii/",
+      "note": "Sound Devices MixPre-6 II product page (plan size source, store page answered 403 to the fetch tool): 36 H x 166 W x 118 D mm, 560 g without batteries."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.toneart-shop.de/media/specs/sound-devices-mixpre-6-ii.pdf",
+      "note": "Specification sheet of the MixPre-6 II as hosted by a dealer (downloaded, read as text on 2026-11-12): mic and line inputs on XLR (active balanced, 4 kilohm, 48 V phantom), Aux / mic input 3.5 mm TRS, main output 3.5 mm TRS stereo, headphone output 3.5 mm, USB-C audio interface and mass storage, two USB-A (keyboard and thumbdrive), micro HDMI (timecode read and record trigger), SD card, 4 AA or USB-C bus power. Modelled: the four XLR as female microphone inputs, the main output, the headphone output and one USB-C; the Aux input, the USB-A ports, the micro HDMI and the card slot are drawn only or not at all. The four XLR on the front edge and the outputs on the rear edge are our layout (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.toneart-shop.de/media/specs/sound-devices-mixpre-6-ii.pdf",
+      "note": "build: a moulded box with a screen recess; the rounding is an ESTIMATE. build.projection: our own generic artwork; no photo, no logo, no lettering. Ring rule: an XLR ring (23.4 mm) is wider than 60 percent of the 36 mm face, so promoting this device needs the same per-device exception as the MUTEC MC-3+ in portMarkerSize.test.ts."
+    }
+  ]
+}

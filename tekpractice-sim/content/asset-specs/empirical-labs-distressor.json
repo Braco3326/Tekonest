@@ -1,0 +1,97 @@
+{
+  "id": "empirical-labs-distressor",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44,
+    "d": 254
+  },
+  "ports": [
+    {
+      "portId": "in-xlr",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-trs",
+      "face": "io",
+      "xMm": 66.4,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-xlr",
+      "face": "io",
+      "xMm": 103.8,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-trs",
+      "face": "io",
+      "xMm": 130.2,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 60,
+      "plateRgb": 1908257,
+      "bodyRgb": 2763566
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--EMPEL8DIST",
+      "note": "equipment plan source (research grade: dealer); size 483 x 254 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.zzounds.com/item--EMPEL8DIST",
+      "note": "zZounds Distressor page (opened): \"XLR and 1/4 in phone ins and outs\", XLR fully balanced; counts not stated (a mono unit: one of each is assumed), so beta-modelled. Size 483 x 254 x 44 mm (1U, retailer). Positions guesses; the power inlet and the BNC link are not modelled."
+    }
+  ]
+}

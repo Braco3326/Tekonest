@@ -1,0 +1,69 @@
+{
+  "id": "api-512c",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 38,
+    "h": 133,
+    "d": 178
+  },
+  "ports": [
+    {
+      "portId": "in-mic-front",
+      "face": "opposite",
+      "xMm": 19,
+      "yMm": 118,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-inst-front",
+      "face": "opposite",
+      "xMm": 19,
+      "yMm": 98,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 6,
+      "plateFilletMm": 2.6,
+      "filletMm": 3,
+      "filletSegments": 10,
+      "plateRgb": 1908257,
+      "bodyRgb": 2105894
+    },
+    "projection": [
+      "opposite"
+    ],
+    "budget": {
+      "min": 400,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.economik.com/products/512c",
+      "note": "equipment plan source (research grade: dealer); size 38 x 178 x 133 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://apiaudio.com/product/512c-mic-pre/",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://apiaudio.com/product/512c-mic-pre/",
+      "note": "API 512c page (opened): front connectors XLR mic input and 1/4 in unbalanced Hi-Z input; output and the rear mic input are on the 500-series edge connector (not representable), so the module is beta-modelled with the two front inputs. Size 38 x 178 x 133 mm (dealer, w x d x h). Positions guesses."
+    }
+  ]
+}

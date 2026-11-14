@@ -6,7 +6,7 @@
  *
  *   blender --background --factory-startup --python-exit-code 1 --python build_from_spec.py -- --plan <plan.json> --out <glb>
  *
- * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours?, ports? (io-face ports, for shapes that cut socket pockets), flatZones? (control rectangles the shape must keep flat), projections? } (profile and colours only for revolve and console-wedge; projections = [{ face, png }] map a picture of each face onto the shape). Sizes always come from the spec's realSizeMm.
+ * plan.json: { id, kind, shape, sizeMm: {w,h,d}, matingOuterMm?, params, profile?, colours?, ports? (io-face ports, for shapes that cut socket pockets), flatZones? (control rectangles the shape must keep flat), projections? } (profile and colours only for revolve, revolve-oval and console-wedge; projections = [{ face, png }] map a picture of each face onto the shape). Sizes always come from the spec's realSizeMm.
  * The GLB is the raw input of attempt 1 of buildAsset: the fix-up and every gate run on it unchanged.
  * `exec` and `blender` are injectable so the contract is unit-tested without Blender.
  */
@@ -38,6 +38,22 @@ export interface BuilderMeasure {
   /** rack-box v2: slotted ear holes and vent slots the builder cut. */
   earHoles?: number
   ventSlots?: number
+  /** rack-box v3b: front vent slots, meter windows and ear handles the builder cut or built. */
+  frontVents?: number
+  windows?: number
+  earHandles?: number
+  /** moulded-box: the depth of the top recess and of the lid seam as built, and the angle the hinged lid was opened to, as measured. */
+  recessDepthMm?: number
+  seamDepthMm?: number
+  lidAngleDeg?: number
+  /** speaker-cabinet-v2: the recesses the builder cut (counts, depths and the pole socket diameter, all as built, in millimetres). */
+  handleRecesses?: number
+  handleDepthMm?: number
+  poleSocketDiaMm?: number
+  poleSocketDepthMm?: number
+  rigPoints?: number
+  rigDepthMm?: number
+  grilleDepthMm?: number
 }
 
 /** Where the builder writes its measurements: next to the GLB, <name>.measure.json. */
@@ -143,7 +159,7 @@ async function readMeasure(path: string, id: string): Promise<BuilderMeasure> {
   }
   if (parsed === null || typeof parsed !== 'object') return {}
   const out: BuilderMeasure = {}
-  for (const key of ['filletMm', 'ioFaceOffsetMm', 'earHoles', 'ventSlots'] as const) {
+  for (const key of ['filletMm', 'ioFaceOffsetMm', 'earHoles', 'ventSlots', 'frontVents', 'windows', 'earHandles', 'recessDepthMm', 'seamDepthMm', 'lidAngleDeg', 'handleRecesses', 'handleDepthMm', 'poleSocketDiaMm', 'poleSocketDepthMm', 'rigPoints', 'rigDepthMm', 'grilleDepthMm'] as const) {
     const v = (parsed as Record<string, unknown>)[key]
     if (v === undefined) continue
     if (typeof v !== 'number' || !Number.isFinite(v)) throw new Error(`Blender build of ${id} wrote a ${key} that is not a finite number: ${String(v)}`)

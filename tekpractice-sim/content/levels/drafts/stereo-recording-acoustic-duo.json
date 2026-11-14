@@ -6,6 +6,18 @@
  "brief": "Un duo guitare acoustique et voix vient enregistrer en prise live dans une salle de prise moyenne. Installer un couple ORTF de cardioïdes devant le duo pour l'image et l'ambiance, plus deux micros d'appoint (voix et guitare) pour le contrôle de l'équilibre. Alimenter tous les condensateurs en +48 V, régler les gains, contrôler la compatibilité mono et la polarité, respecter la règle des 3 pour 1 entre les appoints.",
  "devices": [
   {
+   "instanceId": "ortf-l",
+   "deviceId": "neumann-km-184"
+  },
+  {
+   "instanceId": "ortf-r",
+   "deviceId": "neumann-km-184"
+  },
+  {
+   "instanceId": "spot-gtr",
+   "deviceId": "neumann-km-184"
+  },
+  {
    "instanceId": "spot-vox",
    "deviceId": "neumann-u87-ai"
   },
@@ -33,6 +45,36 @@
  "requiredChain": [
   {
    "from": {
+    "instance": "ortf-l",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "pre1",
+    "port": "in-mic"
+   }
+  },
+  {
+   "from": {
+    "instance": "ortf-r",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "pre2",
+    "port": "in-mic"
+   }
+  },
+  {
+   "from": {
+    "instance": "spot-gtr",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "pre3",
+    "port": "in-mic"
+   }
+  },
+  {
+   "from": {
     "instance": "spot-vox",
     "port": "out-xlr"
    },
@@ -48,15 +90,11 @@
  "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
  "draft": {
   "status": "draft — needs Oscar's review",
-  "generated": "2026-10-22",
+  "generated": "2026-11-12",
   "from_scenario": "knowledge-base/tek-brain/scenarios/microphones-miking.json#stereo-recording-acoustic-duo",
   "room_id": "studio-live-room-medium",
   "difficulty": 3,
-  "unmapped_nodes": [
-   "ORTF gauche",
-   "ORTF droite",
-   "Appoint guitare"
-  ],
+  "unmapped_nodes": [],
   "unresolved_edges": [
    "pre1 → adc (line-level-pro)",
    "pre2 → adc (line-level-pro)",

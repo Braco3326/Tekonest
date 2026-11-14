@@ -1,0 +1,106 @@
+{
+  "id": "db-audiotechnik-ds20",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 44.5,
+    "d": 232
+  },
+  "ports": [
+    {
+      "portId": "in-aes3-inputs-2-x-aes3-4-ch-1",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aes3-inputs-2-x-aes3-4-ch-2",
+      "face": "io",
+      "xMm": 76,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes3-outputs-8-x-aes3-16-ch-1",
+      "face": "io",
+      "xMm": 112,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes3-outputs-8-x-aes3-16-ch-2",
+      "face": "io",
+      "xMm": 138,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "in-mains-in",
+      "face": "io",
+      "xMm": 420,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "powercon-blue",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 30,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3356219,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "reference",
+      "url": "https://storage.googleapis.com/web-dbaudio-sfl/2018/03/dbaudio-datasheet-ds20-en.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 232 x 44.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://storage.googleapis.com/web-dbaudio-sfl/2018/03/dbaudio-datasheet-ds20-en.pdf",
+      "note": "d&b DS20 datasheet, opened 2026-11-12 (read as text): 1 RU x 19 in x 232 mm, drawing 483 x 44.5 x 232 mm, 2 AES3 inputs (4 channels), 8 AES3 outputs (16 channels), built-in 5-port Ethernet switch on etherCON (the number of physical jacks is NOT stated), powerCON mains connector (colour not stated). The datasheet gives no panel per connector. Beta-modelled: the Bêta proposal ports are kept exactly (2 of the 8 AES3 outputs listed; no network port in the proposal although the sheet describes an AVB switch), because the connector set is not fully documented (etherCON count) and a Bêta row must keep its proposal ports. No controls. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

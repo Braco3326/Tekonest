@@ -1,0 +1,80 @@
+{
+  "id": "dbx-286s",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 485,
+    "h": 44.5,
+    "d": 146
+  },
+  "ports": [
+    {
+      "portId": "in-mic",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line",
+      "face": "io",
+      "xMm": 100,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line",
+      "face": "io",
+      "xMm": 135,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "bodyWidthMm": 440,
+      "earThicknessMm": 4,
+      "earHoleMm": 6.35,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "plateFilletMm": 0.8,
+      "rearInsetMm": 8,
+      "seamMm": 24,
+      "plateRgb": 2303531,
+      "bodyRgb": 1711136
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 0.8
+  },
+  "sources": [
+    {
+      "kind": "reference",
+      "url": "https://files.hdtvsupply.com/dbx-dbx286sv-datasheet.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 485 x 146 x 44.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://files.hdtvsupply.com/dbx-dbx286sv-datasheet.pdf",
+      "note": "Datasheet hosted by a dealer: 485 x 146 x 44.5 mm, 2.04 kg (plan size; the PDF text could not be extracted, the manufacturer page https://dbxpro.com/en/products/286s gives 1.75 x 5.75 x 19 in = 4.5 x 14.6 x 48.5 cm). Connector types from the manufacturer page: mic XLR (floating balanced), line TRS, insert TRS (normalled), TRS outputs; counts and panel side not stated. Modelled: mic in, line in, line out on the rear. portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Connector types from the dbx page; counts and the panel side of each are not stated: read the owner manual before promotion."
+}

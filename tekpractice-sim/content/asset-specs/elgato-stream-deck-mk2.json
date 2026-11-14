@@ -1,0 +1,57 @@
+{
+  "id": "elgato-stream-deck-mk2",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 118,
+    "h": 25,
+    "d": 84
+  },
+  "ports": [
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 59,
+      "yMm": 12.5,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 6,
+      "edgeRadiusMm": 2.5,
+      "edgeSegments": 8
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://help.elgato.com/hc/en-us/articles/18208816152333-Elgato-Stream-Deck-MK-2-Technical-Specifications",
+      "note": "equipment plan source (research grade: datasheet); size 118 x 84 x 25 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://help.elgato.com/hc/en-us/articles/18208816152333-Elgato-Stream-Deck-MK-2-Technical-Specifications",
+      "note": "Elgato MK.2 specification article (opened by a search 2026-11-12): USB 2.0 interface, 15 LCD keys, 118 x 84 x 25 mm without stand; the USB-C connector with a detachable cable comes from an iFixit teardown summary and dealer pages, not from the Elgato article, so the connector set is not documented by the manufacturer page and the device is beta-modelled. 118 x 84 x 25 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://help.elgato.com/hc/en-us/articles/18208816152333-Elgato-Stream-Deck-MK-2-Technical-Specifications",
+      "note": "Elgato MK.2 specification article (opened by a search 2026-11-12): USB 2.0 interface, 15 LCD keys, 118 x 84 x 25 mm without stand; the USB-C connector with a detachable cable comes from an iFixit teardown summary and dealer pages, not from the Elgato article, so the connector set is not documented by the manufacturer page and the device is beta-modelled. 118 x 84 x 25 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

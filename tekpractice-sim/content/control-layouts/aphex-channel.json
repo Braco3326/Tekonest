@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "deviceId": "aphex-channel",
+ "generated": true,
+ "controls": [
+  {
+   "id": "power",
+   "face": "opposite",
+   "xMm": 455,
+   "yMm": 22,
+   "sizeMm": {
+    "w": 12,
+    "h": 18,
+    "d": 6
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  },
+  {
+   "id": "phantom-48v",
+   "face": "opposite",
+   "xMm": 130,
+   "yMm": 22,
+   "sizeMm": {
+    "w": 12,
+    "h": 10,
+    "d": 4
+   },
+   "label": "+48V phantom",
+   "catalogControl": "phantom-48v",
+   "kind": "button",
+   "axis": "z",
+   "latch": true,
+   "round": true,
+   "colour": "#1b3a1f",
+   "lit": "#46ff5a",
+   "travelMm": 1,
+   "default": 0
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "schema": 1,
+ "deviceId": "yamaha-dxr12-mkii",
+ "generated": true,
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 205,
+   "yMm": 260,
+   "sizeMm": {
+    "w": 14,
+    "h": 20,
+    "d": 8
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

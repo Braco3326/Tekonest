@@ -1,0 +1,297 @@
+{
+  "id": "soundcraft-ui24r",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 177.8,
+    "d": 165.1
+  },
+  "ports": [
+    {
+      "portId": "in-combo-1",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-1",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-2",
+      "face": "opposite",
+      "xMm": 100,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-2",
+      "face": "opposite",
+      "xMm": 100,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-3",
+      "face": "opposite",
+      "xMm": 140,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-3",
+      "face": "opposite",
+      "xMm": 140,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-4",
+      "face": "opposite",
+      "xMm": 180,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-4",
+      "face": "opposite",
+      "xMm": 180,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-5",
+      "face": "opposite",
+      "xMm": 220,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-5",
+      "face": "opposite",
+      "xMm": 220,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-6",
+      "face": "opposite",
+      "xMm": 260,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-6",
+      "face": "opposite",
+      "xMm": 260,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-7",
+      "face": "opposite",
+      "xMm": 300,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-7",
+      "face": "opposite",
+      "xMm": 300,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-8",
+      "face": "opposite",
+      "xMm": 340,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-8",
+      "face": "opposite",
+      "xMm": 340,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-9",
+      "face": "opposite",
+      "xMm": 380,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-9",
+      "face": "opposite",
+      "xMm": 380,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-combo-10",
+      "face": "opposite",
+      "xMm": 420,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-10",
+      "face": "opposite",
+      "xMm": 420,
+      "yMm": 100,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-1",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 58,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-2",
+      "face": "opposite",
+      "xMm": 90,
+      "yMm": 58,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 90,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 3,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 60,
+      "plateRgb": 1908257,
+      "bodyRgb": 2763566,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 55,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://thomannmusic.com/soundcraft_ui24.htm",
+      "note": "Dealer page (equipment plan source, grade dealer): 482.6 x 165.1 x 177.8 mm (19 in x 6.5 in x 7 in, 4U), about 5.1 kg. A mixer with no faders, controlled over Wi-Fi or Ethernet. It was not re-opened in this run (a retry of the dealer URL answered a redirect to another domain and then HTTP 404)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.soundcraft.com/en/products/ui24r",
+      "note": "Soundcraft Ui24R product page (opened 2026-11-12): 24 inputs = 10 combo 1/4 in TRS / XLR, 10 XLR, 2 line level, 2 channels of USB playback; a multichannel USB audio interface; control by up to 10 devices over Ethernet or dual-band Wi-Fi; 4U rackmount. The page lists NO outputs, no headphone output, no mains inlet, no dimensions and no panel layout, so portsDocumented is not set: the modelled ports (10 combo + 10 XLR as mic-level inputs, 2 line inputs, USB, Ethernet) are the counts the page states, their positions (inputs on the front, USB and Ethernet on the rear) and the connector genders are GUESSES, and the outputs are not modelled. Beta-modelled."
+    }
+  ]
+}

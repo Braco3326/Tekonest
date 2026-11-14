@@ -1,0 +1,40 @@
+{
+  "note": "Generic panel artwork (no brand marks, no logos, no lettering), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+  "faces": {
+    "wrap": {
+      "wMm": 117.81,
+      "hMm": 141.5,
+      "base": "#26272a",
+      "items": [
+        {
+          "kind": "grid",
+          "x": 0,
+          "y": 112,
+          "w": 117.81,
+          "h": 24,
+          "pitch": 2,
+          "line": 0.45,
+          "fill": "#0a0a0b",
+          "stroke": "#8a8d91"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 108,
+          "w": 117.81,
+          "h": 4,
+          "fill": "#4a4c50"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 136,
+          "w": 117.81,
+          "h": 2.5,
+          "fill": "#4a4c50"
+        }
+      ],
+      "pxPerMm": 12
+    }
+  }
+}

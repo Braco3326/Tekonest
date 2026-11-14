@@ -31,6 +31,7 @@ const catalog = JSON.parse(readFileSync(resolve(root, 'content/catalog.json'), '
   devices: { id: string; acoustic?: unknown; modelFront?: { axis: FrontAxis; evidence: string } }[]
 }
 
+// 'neumann-kh-120-ii' (Wave 1): a scripted curved-cabinet model like the rebuilt Genelec; its front is measured below on the file (ports on the +z I/O face)
 const MEASURED: Record<string, FrontAxis | null> = { 'qsc-k12-2': '-z', 'genelec-8030c': '-z', 'yamaha-dbr12': null }
 
 async function read(id: string) {
@@ -99,6 +100,7 @@ describe('the loudspeaker models: measured front vs catalog data (Task 43c, L34)
   it.each([
     ['qsc-k12-2', 0.04, { w: 0.356, h: 0.602, d: 0.35 }],
     ['genelec-8030c', 0.02, { w: 0.189, h: 0.299, d: 0.178 }],
+    ['neumann-kh-120-ii', 0.02, { w: 0.182, h: 0.287, d: 0.227 }],
   ] as const)('%s is a pipeline model: its spec size in metres, and its port empties on the I/O face (glTF +z) within the jack depth', async (id, maxInset, size) => {
     const { ports, lo, hi, pipeline } = await read(id)
     expect(pipeline, `${id}: the tekpractice extras (the spawner trusts the file's own empties)`).toBe(true)
@@ -110,5 +112,28 @@ describe('the loudspeaker models: measured front vs catalog data (Task 43c, L34)
       expect(p[2], `${id} ${pid}: on or behind the +z face`).toBeLessThanOrEqual(hi[2] + 1e-4)
       expect(p[2], `${id} ${pid}: no deeper than the jack recess`).toBeGreaterThanOrEqual(hi[2] - maxInset)
     }
+  })
+})
+
+// Review fix 12: the promoted speakers' evidence says "measured on the file by tests/assets/modelFront.test.ts", but the suite above only walks the devices that
+// have `acoustic` (the data rule removed it from the promoted speakers), so the claim was untested. Every device that DECLARES modelFront is measured here.
+describe('every device that declares modelFront: the claim is measured on its file', () => {
+  const declared = catalog.devices.filter((d) => d.modelFront !== undefined)
+  it('there are many (the promoted speakers carry no acoustic data, they still declare their front)', () => {
+    expect(declared.length).toBeGreaterThanOrEqual(15)
+  })
+  it.each(declared.map((d) => [d.id, d] as const))('%s: axis -z, the connector empties sit on the glTF +z I/O face, the baffle is the opposite face', async (id, d) => {
+    expect(d.modelFront?.axis, `${id}: scripted cabinets are built I/O at +z, baffle at -z`).toBe('-z')
+    const { ports, lo, hi, pipeline } = await read(id)
+    expect(pipeline, `${id}: pipeline model`).toBe(true)
+    const depth = hi[2] - lo[2]
+    const names = Object.keys(ports)
+    expect(names.length, `${id}: has its ports`).toBeGreaterThan(0)
+    for (const [pid, p] of Object.entries(ports)) {
+      expect(p[2], `${id} ${pid}: in the +z half of the cabinet`).toBeGreaterThan(lo[2] + depth / 2)
+      expect(p[2], `${id} ${pid}: not past the +z face`).toBeLessThanOrEqual(hi[2] + 1e-4)
+    }
+    // the claim is only as true as this test: the evidence names it
+    expect(d.modelFront?.evidence, id).toContain('tests/assets/modelFront.test.ts')
   })
 })

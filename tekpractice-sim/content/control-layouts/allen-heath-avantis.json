@@ -1,0 +1,51 @@
+{
+ "schema": 1,
+ "deviceId": "allen-heath-avantis",
+ "generated": true,
+ "topProfile": [
+  [
+   0,
+   269
+  ],
+  [
+   60,
+   269
+  ],
+  [
+   150,
+   215
+  ],
+  [
+   300,
+   150
+  ],
+  [
+   480,
+   105
+  ],
+  [
+   627,
+   85
+  ]
+ ],
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 790,
+   "yMm": 110,
+   "sizeMm": {
+    "w": 12,
+    "h": 18,
+    "d": 6
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

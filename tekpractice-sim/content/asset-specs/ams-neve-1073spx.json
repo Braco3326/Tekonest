@@ -1,0 +1,126 @@
+{
+  "id": "ams-neve-1073spx",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 480,
+    "h": 44,
+    "d": 310
+  },
+  "ports": [
+    {
+      "portId": "in-front-combi-input-xlr-part-mic",
+      "face": "opposite",
+      "xMm": 48,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-front-combi-input-jack-part-line-or-di-trs-ts",
+      "face": "opposite",
+      "xMm": 48,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "in-rear-mic-input",
+      "face": "io",
+      "xMm": 70,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-rear-line-input",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-insert-send-rear-balanced-4dbu",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-insert-return-rear-balanced-4dbu",
+      "face": "io",
+      "xMm": 188,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-o-p-main-analogue-output-transformer-balanced",
+      "face": "io",
+      "xMm": 260,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "bodyWidthMm": 440,
+      "earThicknessMm": 4,
+      "earHoleMm": 6.35,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "plateFilletMm": 0.8,
+      "rearInsetMm": 8,
+      "seamMm": 26,
+      "plateRgb": 2303531,
+      "bodyRgb": 1711136,
+      "earHoleEdgeMm": 10
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 0.8
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.ams-neve.com/1073spx-21-p.asp",
+      "note": "equipment plan source (research grade: datasheet); size 480 x 310 x 44 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.ams-neve.com/1073spx-21-p.asp",
+      "note": "Manufacturer page (opened 2026-11-12): 480 mm wide x 44 mm high (1U) x 310 mm deep, about 5 kg; front panel: mic / line / DI inputs with a switchable front combi connector, gain, impedance, pad, phase, EQ, output fader, 7-stage LED meter; rear panel: switchable mic / line inputs, balanced insert send / return, output stage; external 48 Vdc supply. The page does not count the connectors or place each one, so the 7 ports are the knowledge-base proposal set with guessed positions. portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.ams-neve.com/1073spx-21-p.asp",
+      "note": "Manufacturer page (opened 2026-11-12): 480 mm wide x 44 mm high (1U) x 310 mm deep, about 5 kg; front panel: mic / line / DI inputs with a switchable front combi connector, gain, impedance, pad, phase, EQ, output fader, 7-stage LED meter; rear panel: switchable mic / line inputs, balanced insert send / return, output stage; external 48 Vdc supply. The page does not count the connectors or place each one, so the 7 ports are the knowledge-base proposal set with guessed positions. portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Ports of the Bêta proposal (knowledge base, to check against the datasheet, NOT copied as ports): in-rear-mic-input [xlr3-f mic-level in]; in-rear-line-input [xlr3-f line-level-pro in]; in-front-combi-input-xlr-part-mic [xlr3-f mic-level in]; in-front-combi-input-jack-part-line-or-di-trs-ts [trs-quarter instrument-hiz in]; out-insert-send-rear-balanced-4dbu [trs-quarter line-level-pro out]; in-insert-return-rear-balanced-4dbu [trs-quarter line-level-pro in]; out-line-o-p-main-analogue-output-transformer-balanced [xlr3-m line-level-pro out]. Fill `ports` with the connector set the datasheet documents (portId at most 19 characters, connector, signal, dir, face, xMm, yMm, confidence), the mains inlet as power-in, and the matching controls; then set portsDocumented true and portsSource to the page that documents it. Without portsDocumented the device cannot be promoted (it stays a Bêta proposal)."
+}

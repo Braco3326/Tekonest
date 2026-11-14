@@ -1,0 +1,91 @@
+{
+  "note": "Generic panel artwork (no brand marks, no logos, no lettering), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions. io: Rear face: connectors drawn under each port centre (generic sockets, no lettering). opposite: Baffle: an 18 cm woofer and a 3.5 cm dome (manual); the layout is our estimate.",
+  "faces": {
+    "io": {
+      "wMm": 215,
+      "hMm": 381.5,
+      "base": "#1b1c1f",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 60,
+          "y": 80,
+          "w": 95,
+          "h": 80,
+          "fill": "#2a2c31",
+          "stroke": "#55585f",
+          "radius": 3
+        },
+        {
+          "kind": "circle",
+          "x": 107.5,
+          "y": 120,
+          "r": 7,
+          "fill": "#b3261e",
+          "stroke": "#9aa0a6"
+        },
+        {
+          "kind": "circle",
+          "x": 107.5,
+          "y": 120,
+          "r": 3,
+          "fill": "#7a1812"
+        }
+      ]
+    },
+    "opposite": {
+      "wMm": 215,
+      "hMm": 381.5,
+      "base": "#202226",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": 8,
+          "w": 199,
+          "h": 365.5,
+          "fill": "#2c2f34",
+          "radius": 6
+        },
+        {
+          "kind": "circle",
+          "x": 107.5,
+          "y": 120,
+          "r": 80,
+          "fill": "#17181b",
+          "stroke": "#4a4d54"
+        },
+        {
+          "kind": "circle",
+          "x": 107.5,
+          "y": 120,
+          "r": 49.6,
+          "fill": "#26282d",
+          "stroke": "#383b41"
+        },
+        {
+          "kind": "circle",
+          "x": 107.5,
+          "y": 120,
+          "r": 16,
+          "fill": "#3d4046"
+        },
+        {
+          "kind": "circle",
+          "x": 107.5,
+          "y": 275,
+          "r": 17.5,
+          "fill": "#101113",
+          "stroke": "#4a4d54"
+        },
+        {
+          "kind": "circle",
+          "x": 107.5,
+          "y": 275,
+          "r": 8,
+          "fill": "#2f3238"
+        }
+      ]
+    }
+  }
+}

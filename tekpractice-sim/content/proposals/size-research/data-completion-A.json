@@ -1,0 +1,984 @@
+[
+  {
+    "id": "k-m-25400",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 1.84,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.k-m.de/us/products/mic-stands/floor-stands/25400-microphone-stand-black",
+      "https://www.kirstein.de/en/Live-Studio/Accessories-Live-Studio/Microphone-Stands/K-M-25400-Microphone-Stand.html"
+    ],
+    "portsText": "Mic thread 3/8 in (EU variant 25400-300-55; US variant 25400-500-55 is 5/8 in per search summary of K&M US datasheet); boom arm clamped on swivel joint",
+    "colour": "black",
+    "notes": "k-m.de product page (25400-300-55): size when folded 95 x 80 x 865 mm, but the page does NOT label axes, so sizeMm left null per rules. Base diameter 660 mm is labelled 'Base diameter' (so 660 is the leg-span circle, not a W/D). Height range 890-1600 mm, boom arm length 805 mm, weight 1.84 kg. Datasheet PDF URLs (k-m.de/en/kmPdf/datasheet/ordernumber/25400-300-55) returned 404 to WebFetch and curl, so labelled datasheet axes could not be checked. A Kirstein listing gives boom 680 mm, which conflicts with k-m.de 805 mm (k-m.de preferred)."
+  },
+  {
+    "id": "behringer-ha400",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": 47
+    },
+    "weightKg": 0.37,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.bax-shop.fr/downloads/products/B-HA400/8850056937502.pdf",
+      "https://manuals.plus/m/3668209bc356648263b7a9b53f0eec8c6a088eb7559a2a63e502d3e345f668bb",
+      "https://www.ldlc.com/en/product/PB00747881.html",
+      "https://guitarcenter.com/Behringer/MICROAMP-HA400-Headphone-Amp.gc"
+    ],
+    "portsText": "1/4 in TS stereo line INPUT x1 (stereo jack) ; 1/4 in TRS stereo headphone outputs x4, each with its own LEVEL knob ; 12 V DC external power-supply jack x1 (12 V / 150 mA). Panel positions (front/rear) not stated in text; the manual's controls diagram shows all of them on one panel.",
+    "colour": "",
+    "notes": "Behringer FR quick-start PDF (read directly) gives Dimensions (H x W x D) approx. 47 x 57 x 104 mm and weight approx. 0.37 kg. A search summary of an English manual labels the same three figures (H x D x W) 46.5 x 57.2 x 103.6 mm, so the width/depth mapping conflicts between Behringer manuals (the product photo is wider than deep, which would suggest 104 is the width, but that is not a source statement); w and d left null, h = 47 (46.5-47 in both). Dealer weights: Guitar Center/Bax list about 190 g, which conflicts with the manual; manual figure kept (datasheet outranks dealer). Thomann page returned 429, manuals.plus 403."
+  },
+  {
+    "id": "sennheiser-ew-100-g4",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.98,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://docs.cloud.sennheiser.com/en-us/ew-g4/specifications-em100g4.html"
+    ],
+    "portsText": "BNC antenna input x2 (stated, position not stated) ; AF out 6.3 mm jack unbalanced (stated) ; second AF out balanced (page summary said BNC, probably a rendering of XLR-3: connector type NOT confirmed) ; 12 V DC power input (connector not named); strain relief for PSU cable on rear panel per manual index (not verified)",
+    "colour": "",
+    "notes": "EM 100 G4 receiver only. Sennheiser docs page gives approx. 190 x 212 x 43 mm and approx. 980 g, with no axis labels, so sizeMm left null (raw figure 190 x 212 x 43 mm). Weight 0.98 kg is datasheet grade. Finish colour not stated. The EM 100 G4 spec PDF and the manual PDFs were not read in full (a PDF I fetched for it turned out to be an unrelated German doc), so connector list is partial. SKM/SK 100 G4 transmitters not reported."
+  },
+  {
+    "id": "k-m-210-6",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 3.04,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.k-m.de/en/products/microphone-stands/floor-stands/microphone-stands-with-boom/210-6-microphone-stand-black"
+    ],
+    "portsText": "Mic thread 3/8 in; boom arm clamp with wing nut",
+    "colour": "black (21060-300-55); soft-touch grey variant 21060 exists at 3.06 kg per dealer search summary",
+    "notes": "k-m.de page (21060-300-55): size when folded 105 x 85 x 960 mm, axes not labelled on the page, so sizeMm null. Weight 3.04 kg, height range 925-1630 mm, boom 805 mm one-piece, zinc die-cast base with foldable legs. Datasheet PDF URL returned 404; dealer pages repeat the same unlabelled 105 x 85 x 960."
+  },
+  {
+    "id": "k-m-259",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 2.08,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.k-m.de/en/products/microphone-stands/floor-stands/special-stands-with-boom/259-microphone-stand-black",
+      "https://www.kirstein.de/en/Live-Studio/Accessories-Live-Studio/Microphone-Stands/K-M-259-Microphone-Stand.html",
+      "https://www.thomann.co.uk/km_259_mic_stand.htm"
+    ],
+    "portsText": "Mic thread 3/8 in (EU 25900-300-55; US-25900-500-55 variant is 5/8 in); 2-piece telescopic boom locked with T-bar screw",
+    "colour": "black",
+    "notes": "k-m.de page (25900-300-55): size when folded 115 x 85 x 580 mm, axes not labelled, so sizeMm null. Weight 2.08 kg on k-m.de; Kirstein and Thomann list 2.06 kg (dealer, minor conflict; k-m.de used). Height 425-645 mm, boom 435-745 mm per k-m.de (Kirstein says 470-775 mm boom, Thomann 435-745 mm). Zinc die-cast base with foldable legs, steel."
+  },
+  {
+    "id": "sennheiser-ew-dx-em-2",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 1,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+      "https://www.sennheiser.com/globalassets/digizuite/44691-en-ew-dx_em2_dante_product_specification_v1.1_en.pdf"
+    ],
+    "portsText": "BNC antenna input x2 (stated) ; XLR-3M balanced audio out per channel x2 (stated) ; 6.3 mm jack unbalanced audio out per channel x2 (stated) ; RJ45 Ethernet x1 with PoE IEEE 802.3af Class 0 (stated) ; DC power jack 12 V (stated; external PSU) ; positions not stated in text (drawing shows all on the rear). Dante variant adds a Dante interface with three RJ-45 ports (stated).",
+    "colour": "",
+    "notes": "Spec PDF v1.4 gives unlabelled dimensions and they disagree inside the same document: 212 x 44 x 189 mm in the spec table versus 212 x 44 x 206 mm (8.35 x 1.73 x 8.11 in) in the architect text. The Dante version sheet gives 212 x 44 x 169 mm. No axis labels anywhere, so sizeMm left null. Weight approx. 1000 g without antennas and PSU (both sheets). One Sennheiser listing showing 2768 g is probably packaged weight (unconfirmed). Finish colour not stated (all-metal housing per datasheet)."
+  },
+  {
+    "id": "shure-mv7-plus",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": 164
+    },
+    "weightKg": 0.5735,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.thomannmusic.com/shure_mv7_plus.htm",
+      "https://www.fullcompass.com/common/files/89157-MV7Specsheet.pdf (403 on direct fetch; figures read from search-result summaries of it)",
+      "https://www.shure.com/products/microphones/mv7?sfid=htst"
+    ],
+    "portsText": "XLR output (analogue; gender, count and position not stated) ; USB-C (digital; position not stated) ; 3.5 mm headphone output (position not stated)",
+    "colour": "Black (Shure also lists a white SKU, MV7+-W)",
+    "notes": "Thomann (dealer) gives 'with bracket, H x L x D' 164 x 207 x 90 mm and 573 g; search summaries of Shure's spec sheet (hosted on Full Compass; direct fetch got 403) give 164 H x 207 L x 90 D with mic and yoke at 90 degrees, mic length 169.5 mm, diameter 90 mm (in yoke incl. knurled knobs), net weight 573.5 g. Only H (164, mic plus yoke, labelled) is mapped; labels are H/L/D with no 'width', so w and d left null. shure.com product page returned no dimensions or weights. Housing is die-cast aluminium; LED touch panel on body (mute by tap); 5/8-27 thread."
+  },
+  {
+    "id": "shure-psm-900",
+    "sizeMm": {
+      "w": 197,
+      "d": null,
+      "h": 42
+    },
+    "weightKg": 0.85,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.manualslib.com/manual/1522524/Shure-Psm900.html?page=24",
+      "https://www.la-bs.com/objetsmultimedia/26391/FR/P9TE_SHURE_dt.pdf",
+      "https://www.rentex.com/wp-content/uploads/2016/08/Shure-PSM-900-Brochure.pdf"
+    ],
+    "portsText": "Combo XLR / 6.35 mm TRS balanced audio input (stated, 1 per the spec sheet; count not stated) ; 6.35 mm TRS audio output / loop-through, connected directly to inputs (stated) ; headphone out (stated) ; antenna connectors BNC, front or back mountable antennas (stated) ; mains/PSU supplied (stated). Rack ears supplied.",
+    "colour": "",
+    "notes": "CONFLICT on depth. Shure PSM900 user guide (manualslib mirror) labels it 42 x 197 x 177 mm H x W x D. Shure 2018 spec sheet and the 2014 guide both give 197 x 166 x 42 mm (7.75 x 6.55 x 1.65 in) with NO axis labels. Depth therefore 177 (labelled) vs 166 (unlabelled, if read in the same order), so d left null; w 197 and h 42 are consistent in both. Dealers (B&H, Guitar Center) repeat 166 mostly; one Guitar Center listing gives 177 as depth. Weight 850 g everywhere. P9RA+ bodypack: 99 x 66 x 23 mm H x W x D, 154 g without batteries (2018 sheet), 196 g with 2 AA (2014 guide). Colour not stated."
+  },
+  {
+    "id": "shure-sm81",
+    "sizeMm": {
+      "w": 23.5,
+      "d": 23.5,
+      "h": 212
+    },
+    "weightKg": 0.23,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://media.sweetwater.com/store/media/us_pro_sm81_specsheet.pdf",
+      "https://www.shure.com/en-US/products/microphones/sm81"
+    ],
+    "portsText": "Three-pin professional audio connector, male XLR type, 1 (position not stated) ; controls: 0/10 dB lockable attenuator switch and selectable LF rolloff (flat, 6 or 18 dB/oct) (body position not stated)",
+    "colour": "Steel body with vinyl metallic paint finish, stainless steel screens (colour name not stated)",
+    "notes": "Round body, h = length. Shure spec sheet (PDF copy hosted by Sweetwater, text extracted locally): 'Dimensions 212 mm (7-9/16 in.) L x 23.5 mm (2 in.) W at the widest point' and net weight 230 g (8 oz). The '2 in.' in the sheet is inconsistent with 23.5 mm (0.93 in; Sweetwater's own listing says 8.35 x 0.93 in), so 23.5 mm is used and the inch figure treated as a typo. w = d = 23.5 mm assumes a cylindrical pencil body (the source gives only one 'W'). A 2010 Shure brochure shows 195 g for an older version (not used)."
+  },
+  {
+    "id": "shure-ulx-d-receiver",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.913,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://content-files.shure.com/Pubs/sbc450/ulx-d-specsheet.pdf",
+      "https://www.manualslib.com/manual/626569/Shure-Ulx-D.html?page=3",
+      "https://www.fullcompass.com/prod/253823-shure-ulxd4-h50-digital-wireless-receiver"
+    ],
+    "portsText": "BNC RF input x2 antenna A and B, 50 ohm, bias 12-13 V DC (stated) ; XLR balanced audio out x1 (stated) ; 6.35 mm (1/4 in) balanced audio out x1 (stated) ; Ethernet single-port 10/100 (stated) ; DC power input 15 V (back-panel label, power supply external) ; rear-panel placement from the back-panel drawing, front has LCD/controls.",
+    "colour": "",
+    "notes": "Shure spec sheet (2019) and the user guide print 197 x 171 x 42 mm (7.75 x 6.75 x 1.65 in) labelled H x W x D, which is physically impossible for a half-rack 1U-height unit (42 mm cannot be depth). Dealers list it instead as H 1.65 in, W 6.73 in, D 7.75 in (171 wide, 197 deep), contradicting Shure's own mapping, so sizeMm left null. Physically plausible reading is h 42, w 171 or 197, d the other. Weight 913 g without antennas (datasheet). Housing galvanized steel; no finish colour stated. Note the ULXD4D/4Q dual/quad are labelled correctly at 44 x 482 x 274 mm H x W x D, 3.36 / 3.45 kg."
+  },
+  {
+    "id": "schoeps-cmc-6-mk-4",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://schoeps.de/en/products/colette/microphone-amplifiers/cmc-6.html",
+      "https://schoeps.de/en/products/colette/capsules/cardioids/mk-4.html",
+      "https://www.manualsdir.com/manuals/593718/schoeps-mk-xx.html?page=7"
+    ],
+    "portsText": "XLR-3M output on CMC 6 amplifier (analog, 1 channel; position at amplifier end, not otherwise stated) ; no user controls listed (fixed 20 Hz 12 dB/oct low cut mentioned)",
+    "colour": "matte gray (custom Chromagreen, Smoked Silver available)",
+    "notes": "Schoeps datasheet components: CMC 6 U amplifier length 116 mm, diameter 20 mm, 60 g; MK 4 capsule length 22 mm, diameter 20 mm, 17 g (sum 77 g, 138 mm if lengths just add). Schoeps does not publish a combined figure; the MK xx manual says 116 mm includes a 3 mm capsule thread and 65-68 g depending on type. Dealer figures for the assembled set conflict: sonovente 138 mm / 77 g vs tanotis and B&H 116 mm / 68 g (search summaries; B&H and sonovente pages returned 403). Combined size and weight left null because of the conflict; round body diameter 20 mm."
+  },
+  {
+    "id": "schoeps-mstc-74",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.232,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html",
+      "https://thomannmusic.com/schoeps_mstc_74.htm"
+    ],
+    "portsText": "XLR-5M output (analog, 2 channels; position not stated) ; no user controls listed (fixed 20 Hz 12 dB/oct low cut mentioned)",
+    "colour": "matte gray (custom colour option)",
+    "notes": "Schoeps page: weight 232 g including the two MK 4 capsules, capsule spacing 17 cm, recording angle 95 degrees in the spec table (description text says 110 degrees). No length/width/height/diameter given on the Schoeps page or Thomann; B&H returned 403. Sizes left null."
+  },
+  {
+    "id": "sennheiser-ew-iem-g4",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.98,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.sennheiser.com/globalassets/digizuite/41537-en-sp_1130_v2.0_sr_iem_g4_product_specification_en.pdf"
+    ],
+    "portsText": "SR IEM G4 transmitter: audio in = 2x combo XLR-3/6.3 mm jack, balanced (stated) ; audio out 6.3 mm stereo jack, balanced, stereo (stated) ; loop out 2x 6.3 mm jack balanced (stated) ; headphone out 6.3 mm stereo jack with volume control (stated) ; Ethernet RJ-45 (stated) ; BNC antenna output x1, 50 ohm (stated) ; DC power jack 12 V, max 350 mA (stated) ; rear/front split not stated in text.",
+    "colour": "",
+    "notes": "SR IEM G4 transmitter reported (not EK IEM G4 bodypack). Spec sheet gives approx. 202 x 212 x 43 mm (7.95 x 8.35 x 1.69 in) with no axis labels, so sizeMm left null. Weight approx. 980 g, datasheet. EK IEM G4 bodypack dimensions/weight not retrieved. Colour not stated (rugged metal housing)."
+  },
+  {
+    "id": "sennheiser-mkh-418-s",
+    "sizeMm": {
+      "w": 19,
+      "d": 19,
+      "h": 280
+    },
+    "weightKg": 0.22,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.sennheiser.com/en-us/catalog/products/microphones/mkh-418/mkh-418-s-005284",
+      "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/specs-mkh-418-s.html"
+    ],
+    "portsText": "XLR-5M (5-pin male, wired) ; no controls described ; needs 5-pin to 2 x XLR-3 Y cable (AC 418 Y, separate)",
+    "colour": "matt black finish on brass casing",
+    "notes": "Round body, h = length: diameter 19 mm, length 280 mm, weight 220 g per Sennheiser product page and spec docs. Canford (dealer) lists 250 x 19 mm and 165 g, which conflicts; the manufacturer figures are used because datasheet outranks dealer. The 350/135/66 figures on the Sennheiser page are packaging, not the mic."
+  },
+  {
+    "id": "shure-axient-digital-ad4d",
+    "sizeMm": {
+      "w": 483,
+      "d": 333,
+      "h": 44
+    },
+    "weightKg": 4.6,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://goknight.com/content/documentation/Axient-Digital_Specification-Sheet_AD600_Letter_EN (1) (2).pdf"
+    ],
+    "portsText": "BNC RF input x4 antenna A/B/C/D, 50 ohm, switchable bias (back-panel labels; count inferred from the drawing) ; BNC cascade output (stated) ; XLR balanced audio out and 6.35 mm TRS out per channel x2 (stated) ; Dante / ctrl Ethernet RJ45 x2 each (back-panel labels) ; AES3 output 1&2 (stated) ; word clock in/thru BNC (back-panel labels) ; 12 V DC out for antenna power (label) ; front-panel headphone jack for Dante Cue/Browse (stated front) ; locking AC power connector (stated), PoE label.",
+    "colour": "",
+    "notes": "Shure Axient Digital spec sheet (2022) prints 1.7 x 19.0 x 13.1 in (44 x 483 x 333 mm) labelled H x W x D, 1RU. Weight 10.1 lb (4.6 kg) without antennas. Housing steel with extruded aluminium; no finish colour stated. The AD4Q quad is 4.8 kg with the same size. Rear connector counts are read from the printed back-panel diagram and partly inferred, rear vs front not stated in text except the headphone jack."
+  },
+  {
+    "id": "shure-beta-91a",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.47,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.ccslightsound.com.au/assets/brochures/SHR-BETA91A.pdf",
+      "https://www.proacousticsusa.com/shure-beta-91a-half-cardioid-condenser-microphone.html"
+    ],
+    "portsText": "Three-pin professional audio (XLR), male, balanced, 1 (position not stated; integrated preamp and XLR) ; controls: two-position contour switch (flat / low-mid scoop) on the bottom of the microphone (stated)",
+    "colour": "",
+    "notes": "Shure spec sheet (PDF copy hosted by ccslightsound) gives net weight 470 g (16.6 oz) but the dimensions appear only as three unlabelled drawing callouts: 95.1 mm (3.74 in), 139.1 mm (5.48 in), 20.3 mm (0.8 in); axes not stated, so sizeMm left null. Dealer snippets that assign axes are inconsistent and were not used. B&H, Sweetwater, Full Compass, American Musical returned 403; Thomann 404; shure.com page lists no dimensions or colour. Half-cardioid boundary mic, electret condenser, needs phantom power."
+  },
+  {
+    "id": "aea-r84",
+    "sizeMm": {
+      "w": 99,
+      "d": 64,
+      "h": 295
+    },
+    "weightKg": 1.36,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://cdn.shopify.com/s/files/1/0024/2352/1341/files/AEA-R84-Technical-Onesheet.pdf",
+      "https://www.thomannmusic.com/aea_r84.htm"
+    ],
+    "portsText": "XLR-3M on captive 3 m (10 ft) output cable, 1 (fixed to the mic body; passive ribbon, no phantom power)",
+    "colour": "",
+    "notes": "AEA R84 technical one-sheet (manufacturer, text extracted locally): Height 11.6 in (29.5 cm), Width 3.9 in (9.9 cm), Depth 2.5 in (6.4 cm); weight with cable 3 lb (1.36 kg), shipping weight 4 lb (1.8 kg). Metric cm figures used directly as 295/99/64 mm; Thomann's R84/R84A page lists the same 295 x 99 x 64 mm (H x W x D) and 1.3 kg. Weight includes the cable. Colour not stated in either source (a Sound On Sound review snippet of 300 x 70 mm / 0.9 kg is a different basis and was not used)."
+  },
+  {
+    "id": "beyerdynamic-m-160",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.156,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://img.static-thomann.de/pics/atg/atgdata/document/specs/184042.pdf"
+    ],
+    "portsText": "3-pin XLR (Anschlussstecker 3-pol. XLR), 1 (position not stated)",
+    "colour": "Black chrome surface (schwarzverchromt per the datasheet text); housing brass",
+    "notes": "beyerdynamic German datasheet (order no. 100.668, hosted by Thomann): length 156 mm, shaft diameter 23 mm, head diameter 38 mm; weight without cable 156 g. Stepped body (two diameters), so no single round-body mapping was made and sizeMm is left null. A Russian-hosted sheet for another order number (730.165) reportedly shows 192 g; not read directly and not used. Soundhouse spec PDF timed out."
+  },
+  {
+    "id": "coles-4038",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 1.08,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://andertons.co.uk/coles-4038-studio-ribbon-microphone",
+      "https://www.long-mcquade.com/215535/Pro-Audio-Recording/Microphones/Coles/4038-Studio-Ribbon-Microphone-Bundle-with-4072-Stand-Adapter.htm",
+      "https://en.wikipedia.org/wiki/Coles_4038"
+    ],
+    "portsText": "4069 3-pin jack plug (Western Electric type; needs adapter to XLR) (Long & McQuade, Wikipedia) ; position not stated",
+    "colour": "Black, textured stove enamel paint (Long & McQuade)",
+    "notes": "Andertons and Long & McQuade both list 197 x 83 x 61 mm (7.25 x 3.25 x 2.375 in) and 1.08 kg, but without axis labels (Andertons page explicitly unlabelled), so sizeMm left null. Canford 403; coutant.org page has specs only as images; no Coles manufacturer spec found. Technical spec reportedly unchanged since the 1950s (Wikipedia)."
+  },
+  {
+    "id": "neumann-m-149-tube",
+    "sizeMm": {
+      "w": 70,
+      "d": 70,
+      "h": 201
+    },
+    "weightKg": 0.73,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neumann.com/en-us/products/microphones/m-149-v-set",
+      "https://www.neumann.com/en-au/products/microphone-accessories/n-149-a",
+      "https://www.thomannmusic.com/neumann_m149_tube_mic.htm"
+    ],
+    "portsText": "Microphone: DIN 8 F (8-core cable KT 8 to power supply), 1 ; Power supply N 149 A: DIN-8 mic connector, XLR-3 male balanced audio output (Neumann lists the XLR as 'XLR 3 F' on the set page, gender conflict), IEC 320 mains inlet ; positions not stated",
+    "colour": "Nickel (microphone); N 149 A power supply black",
+    "notes": "Round body, h = length. Neumann set page: diameter 70 mm, length 201 mm, approx. 730 g (microphone only, Thomann same). Separate N 149 A power supply (Neumann): 90 x 100 x 145 mm (H x W x D), approx. 1.5 kg, so set total is about 2.2 kg plus cable. An older manual excerpt lists 220 x 100 x 100 mm / 1.45 kg, which appears to be the N 149 V vintage unit. Neumann's XLR gender wording differs between the set page (F) and the N 149 A page (male)."
+  },
+  {
+    "id": "neumann-u-67",
+    "sizeMm": {
+      "w": 56,
+      "d": 56,
+      "h": 200
+    },
+    "weightKg": 0.56,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neumann.com/en-us/products/microphones/u-67-set",
+      "https://www.neumann.com/en-IN/products/microphones/u-67-set"
+    ],
+    "portsText": "Microphone: special 7-pin connector, 1 ; power supply NU 67 V: XLR 3 F (as listed by Neumann) ; positions not stated",
+    "colour": "Nickel",
+    "notes": "Round body, h = length. Neumann U 67 Set page: diameter 56 mm, length 200 mm, weight 560 g (microphone), finish nickel. NU 67 V power supply dimensions and weight are not listed on the page; set includes NU 67 V, connection cable, Z 48 shock mount and vintage case. Retailer outliers (540 g / 201 mm, 550 g) not used."
+  },
+  {
+    "id": "neumann-usm-69-i",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.51,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neumann.com/en-en/products/microphones/usm-69-i",
+      "https://www.thomannmusic.com/neumann_usm_69i_501783.htm (search summary)"
+    ],
+    "portsText": "XLR-5 output (stereo, each head amplifier on separate pins; position not stated) ; matching connector listed as XLR 3 F ; two rotary pattern switches on body (one per capsule), upper capsule rotates up to 270 degrees vs lower",
+    "colour": "nickel (USM 69 i, cat. 006974); the mt variant is black",
+    "notes": "Neumann page: round body, length 293 mm, diameter given as '30 + 48 mm' (not stated which part is which), weight 510 g. Dealer summaries agree on 293 x 48 mm (wrdtunes, thomann) but cyberfarm.dk gives 56 x 200 mm and 530 g, Musicstore 200 x 60 mm and ~550 g (different or unreliable listings; datasheet outranks). sizeMm left null because the max diameter is ambiguous in the datasheet; if the 48 mm head diameter is accepted: round body, h = length 293, d = 48."
+  },
+  {
+    "id": "rode-nt4",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.48,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://edge.rode.com//pdf/products/75/NT4 Datasheet.pdf"
+    ],
+    "portsText": "5-pin stereo XLR on mic (position not stated) ; included cables to 3.5 mm minijack and to dual 3-pin XLR ; powered by P48 or 9V battery (battery housed in body, location not stated)",
+    "colour": "",
+    "notes": "Datasheet mechanical table: Length 231 mm, Diameter 41 mm, net weight 480 g. The dimension drawing shows 231 mm and 61 mm with no axis labels (61 mm is probably the X/Y head width, not confirmed). Dealer listing (camera-warehouse) gives 231 x 61 x 33 mm, conflicting on 33 vs 41; body is not a plain round cylinder, so sizeMm left null. Finish colour not stated in datasheet."
+  },
+  {
+    "id": "sennheiser-em-6000",
+    "sizeMm": {
+      "w": 483,
+      "d": 373,
+      "h": 44
+    },
+    "weightKg": 5.2,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.la-bs.com/Objets/EM6000DANTE_dt.pdf",
+      "https://www.sennheiser.com/en-au/catalog/products/wireless-systems/em-6000"
+    ],
+    "portsText": "BNC antenna input x2, 50 ohm (stated) ; BNC antenna daisy-chain output x2 (stated) ; XLR-3 balanced analog out per channel x2 plus 6.3 mm TRS jack per channel x2 (stated) ; AES3 digital out XLR-3 (stated) ; word clock BNC in and out, 75 ohm (stated) ; network RJ-45 shielded, 10/100 (stated) ; 6.3 mm headphone out on the front (stated as headphone output, position inferred) ; mains IEC 3-pin, 100-240 V AC (stated) ; EM 6000 Dante adds 2x shielded RJ-45 Dante ports (stated). Positions front/rear not stated except in drawings I did not read.",
+    "colour": "",
+    "notes": "Spec sheet (Digital 6000 EM 6000/EM 6000 Dante) labels the figure as H x W x D with mounting elements: 44 x 483 x 373 mm, so w = 483, d = 373, h = 44 (1U rack, W is across the front panel). Weight approx. 5.2 kg (same figure for standard and Dante). Sennheiser product page lists other numbers (175 / 550 / 435 mm) apparently packaging, not used. Colour not stated."
+  },
+  {
+    "id": "shure-ua845uwb",
+    "sizeMm": {
+      "w": 482.6,
+      "d": 295.3,
+      "h": 44.5
+    },
+    "weightKg": 3.32,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://media.musson.com/mti/docs/u/a/ua845uwb_guide_en-us.pdf",
+      "https://www.shure.com/en-US/products/accessories/ua845uwb"
+    ],
+    "portsText": "BNC antenna input x2 (channels A and B) on rear (stated) ; BNC RF output x8 (up to four receivers per channel, A and B) on rear (stated) ; BNC RF cascade ports x2 (channels A and B) (stated) ; 15 V DC power output connectors x4, combined max 2.5 A (stated) ; AC power input and AC power output (daisy-chain) connector on rear (stated) ; front-mount antenna bulkhead mounts; front panel: band selector, power switch, 2 RF overload LEDs.",
+    "colour": "",
+    "notes": "Shure UA845UWB guide (copy hosted by a dealer) labels 44.5 x 482.6 x 295.3 mm (1.75 x 19 x 11.6 in) as H x W x D; net weight 3.32 kg (7.3 lb). 1RU. Output count of 8 is inferred from 'up to four receivers' per channel. Finish colour not stated."
+  },
+  {
+    "id": "spl-phonitor-x",
+    "sizeMm": {
+      "w": 278,
+      "d": 300,
+      "h": 100
+    },
+    "weightKg": 4.4,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://spl.audio/en/spl-produkt/phonitor-x/",
+      "https://www.thomann.co.uk/spl_phonitor_x_dac768xs.htm",
+      "https://www.fullcompass.com/prod/531333-spl-sound-performance-lab-phonitor-x-headphone-amplifier-and-preamplifier",
+      "https://en.homecinesolutions.fr/p/28666-spl-phonitor-x-black"
+    ],
+    "portsText": "Analog in: XLR balanced x1 + RCA unbalanced x1 (20 kOhm each; one B&H listing says 2x XLR, unconfirmed) ; line out: XLR balanced + RCA unbalanced (source always present) ; headphone out: 6.35 mm TRS jack + 4-pole XLR balanced (front panel per dealer homecinesolutions, SPL page does not state position) ; optional DAC768xs module: USB-B, coax S/PDIF RCA, optical TOSLINK ; AMP CTL 12 V trigger ; mains 230/115 V selectable. Front/rear positions not stated on the SPL page.",
+    "colour": "front panel black, silver or red (anodised aluminium)",
+    "notes": "spl.audio page: Size (W x H x D) 278 x 100 x 300 mm, height including feet; unit weight 4.4 kg (5.65 kg packed). Thomann lists 278 x 100 x 335 mm (W x H x D, incl. foot and knobs) and 4.3 kg; manufacturer figure kept as datasheet outranks dealer, Thomann values noted as conflict (the 335 mm depth is possibly with knobs, not stated). Comparison PDF on spl.audio could not be text-extracted. B&H and Full Compass returned 403."
+  },
+  {
+    "id": "schoeps-cmc-6-mk-41",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://schoeps.de/en/products/colette/capsules/supercardioids/mk-41",
+      "https://schoeps.de/en/products/colette/microphone-amplifiers/cmc-6.html"
+    ],
+    "portsText": "XLR-3M output on CMC 6 amplifier (analog, 1 channel; position not stated) ; no user controls",
+    "colour": "matte gray (custom Chromagreen, Smoked Silver available)",
+    "notes": "Schoeps datasheet components: MK 41 capsule length 22 mm, diameter 20 mm, 17 g; CMC 6 U amplifier length 116 mm, diameter 20 mm, 60 g (sum 77 g / 138 mm if lengths add; B&H CMC641 set listing reportedly says 138 mm, 20 mm, 77 g but the page returned 403 so unconfirmed, and the MK xx manual says 116 mm includes a 3 mm capsule thread). No combined figure published by Schoeps, so combined size and weight left null; round body diameter 20 mm."
+  },
+  {
+    "id": "sennheiser-ew-d-em",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 1,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://docs.cloud.sennheiser.com/en-us/ew-d/ew-d/specifications-ew-d-em.html",
+      "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf"
+    ],
+    "portsText": "BNC antenna input x2, 50 ohm (search-result summary of the Sennheiser spec; count not directly read) ; XLR-3 balanced audio out x1 (same, unverified count) ; 6.3 mm jack unbalanced audio out x1 (same) ; DC power jack, 11-13 V (same). No Ethernet port confirmed.",
+    "colour": "",
+    "notes": "Sennheiser docs page: 212 x 44 x 189 mm (1 3/4 x 3 7/8 x 7 3/16 in per page text, i.e. 44 mm is the rack-height figure by inference only) with no axis labels, so sizeMm left null. Weight approx. 1000 g without antennas and PSU (datasheet). The EW-D EM spec PDF v1.2 URL returned a redirect stub, so connectors come from a search summary and the EW-DX EM 2 sheet, not a direct read. Colour not stated."
+  },
+  {
+    "id": "audio-technica-ath-m50x",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.285,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://audio-technica.com/en-eu/headphones/series/ath-m50x",
+      "https://www.thomann.de/be/audio_technica_ath_m50_x.htm"
+    ],
+    "portsText": "3.5 mm mini-jack plug with 6.3 mm screw-on adapter ; detachable cables supplied: 1.2 m coiled, 1.2 m straight, 3 m straight (Thomann) ; impedance 38 ohm (Audio-Technica EU page via search summary and Thomann)",
+    "colour": "black (standard model; other colourways exist as separate models)",
+    "notes": "285 g without cable/connector per Audio-Technica EU spec page (seen via search-result summary; direct fetch 403). Thomann: 287 g without cable, 341 g with cable. No folded or overall dimensions published on either page, so sizeMm null. Weight is without cable."
+  },
+  {
+    "id": "beyerdynamic-dt-770-pro",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://europe.beyerdynamic.com/p/dt-770-pro",
+      "https://global.beyerdynamic.com/p/dt-770-pro",
+      "https://www.thomann.de/be/beyerdynamic_dt770_pro80_ohm.htm",
+      "https://www.kirstein.de/en/Live-Studio/Headphones/Studio-Headphones/Beyerdynamic-DT-770-Pro-80-Ohm.html"
+    ],
+    "portsText": "3.5 mm mini-jack plug with screw-on 6.35 mm adapter, straight single-sided cable, about 3 m (Thomann, 80 ohm); cable fixed per Thomann spec table (description says replaceable with skill). Impedance variants 32, 80, 250 ohm (beyerdynamic).",
+    "colour": "black (Thomann)",
+    "notes": "Weight conflict, so weightKg left null (the manufacturer gives only a with-cable weight; the without-cable weights are dealer values that disagree): beyerdynamic 375 g including cable (all variants on the product page); Thomann 80 ohm: 346 g with cable / 284 g without; Kirstein and Audiosense (via search summary) 270 g without cable (Kirstein page now 404). No dimensions on any page. Most common variant is 80 ohm; 32 and 250 ohm also sold."
+  },
+  {
+    "id": "pop-filter-generic",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://stedmanusa.squarespace.com/product-details/proscreen-xl",
+      "https://www.guitarcenter.com/Stedman/Proscreen-XL-V2-Pop-Filter-1500000488617.gc"
+    ],
+    "portsText": "Gooseneck with clamp (clamp range 0.39-0.925 in = 9.9-23.5 mm); no electrical connectors",
+    "colour": "",
+    "notes": "Reference product (not a single generic spec): Stedman Proscreen XL, manufacturer page: screen diameter 6.125 in (155.6 mm), gooseneck 13 in (330.2 mm), overall length 26.5 in (673.1 mm), weight 10 oz (283.5 g), clamp 0.39-0.925 in; colour not stated (powder-coated). Proscreen XL V2 per Guitar Center (dealer): gooseneck 16.5 in, length 24 in, screen 6.125 in. Original is discontinued per Bax Shop. sizeMm and weightKg left null because this is not a datasheet for a generic product; use the reference values above if a placeholder is needed."
+  },
+  {
+    "id": "sennheiser-hd-25",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.14,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.sennheiser.com/globalassets/digizuite/47558-en-hd-25-product-specification-en.pdf"
+    ],
+    "portsText": "Detachable single-sided cable approx. 1.5 m, 3.5 mm jack with screw-on 6.3 mm adapter supplied ; nominal impedance 70 ohm ; rotatable capsule",
+    "colour": "",
+    "notes": "Sennheiser product specification PDF (read directly): weight approx. 140 g without cable, cable approx. 1.5 m, 70 ohm. A third-party database lists 190 g, disregarded. No dimensions published; colour not stated in the text (photo is black)."
+  },
+  {
+    "id": "sony-mdr-7506",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://www.sony.com.au/electronics/headband-headphones/mdr-7506/specifications",
+      "https://www.sony.com.sg/electronics/headband-headphones/mdr-7506",
+      "https://www.thomann.de/be/sony_mdr7506_kopfhoerer.htm?type=manufacturer",
+      "https://kenrockwell.com/audio/sony/mdr-7506.htm",
+      "https://www.visuals.co.uk/mdr-7506/1.html"
+    ],
+    "portsText": "",
+    "colour": "",
+    "notes": "Weight conflict between Sony regional pages (260 g without cord) and other sources (230 g: Thomann, Ken Rockwell, Visuals UK; 221 g Studio Depot); Sony pages could not be opened directly, so weightKg left null. Weight conflict, reported both ways: Sony regional spec pages (AU, SG, TW, TH, PH, seen only through search-result summaries, direct fetch 403) say 260 g without cord; Thomann (230 g without cable, 298 g with), Ken Rockwell and Visuals UK say 230 g; Studio Depot 221 g. weightKg set to the manufacturer figure 0.26 (without cord) since datasheet outranks dealer, but treat as low confidence because I could not open the Sony pages or pro.sony PDF (403) and a US Sony spec might read 230 g. No dimensions and no connector detail verified."
+  },
+  {
+    "id": "beyerdynamic-dt-297-pv-mkii",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.24,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://global.beyerdynamic.com/p/dt-297-pv",
+      "https://www.bhphotovideo.com/c/product/803501021-USE/beyerdynamic_721042_dt_297_pv_mk.html"
+    ],
+    "portsText": "No fixed cable: detachable connecting cable sold separately, e.g. K 190.40 (1.5 m, 3-pin XLR male + 6.35 mm jack) or K 190.00 (open ends, 1.5 m) ; mic: condenser, cardioid ; impedance 80 ohm or 250 ohm variants",
+    "colour": "",
+    "notes": "beyerdynamic page: weight 240 g without cable (B&H repeats 240 g for the 250 ohm variant). Bax listing 600 g is shipping weight, ignored. Colour and dimensions not given; sizeMm null. Direct Full Compass datasheet returned 403."
+  },
+  {
+    "id": "dpa-4060",
+    "sizeMm": {
+      "w": 5.4,
+      "d": 5.4,
+      "h": 12.7
+    },
+    "weightKg": 0.0075,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://im.static-thomann.de/pics/atg/atgdata/document/specs/4060_bm.pdf",
+      "https://www.dpamicrophones.com/microphones/lavalier/4060",
+      "https://www.manualslib.com/manual/744164/Dpa-4060.html?page=13"
+    ],
+    "portsText": "MicroDot connector on the 1.8 m cable (other versions: MicroLock, 3-pin LEMO, TA4F mini-XLR, mini-jack on the 4060 series); cable 1.8 m",
+    "colour": "black, beige, brown or white (4060 series options)",
+    "notes": "Round body, h = length: microphone diameter 5.4 mm, length 12.7 mm (DPA 4060-BM spec sheet, hosted on Thomann). Weight 7.5 g includes cable and MicroDot connector. A search summary mentioned a DPA-hosted page with 17 mm length, but it appeared to relate to the heavy-duty/other variant (Adorama lists the heavy-duty 4060 at 17.6 mm and 13 g); not used. DPA product page itself only confirmed the 5.4 mm element, connector options and colours; its dimension/weight fields were not shown."
+  },
+  {
+    "id": "rode-psa1",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://edge.rode.com/pdf/page/202/modules/8/psa1_product_manual.pdf",
+      "https://rode.com/en-us/products/psa1",
+      "https://www.memoryexpress.com/Products/MX55817"
+    ],
+    "portsText": "3/8 in mic thread with 3/8-to-5/8 adaptor included; desk clamp + threaded desk insert (manual: insert hole 22 mm or 25 mm drill sizes shown)",
+    "colour": "Black and White variants (Rode data sheet is titled 'PSA1 Black White')",
+    "notes": "Rode manual: approx reach 820 mm horizontal, 840 mm vertical; weight printed as '1.74 kg - 2.15 kg boxed', i.e. boxed/packaged range, not clearly the arm alone, so weightKg left null (dealers Memory Express/Zedem/Microcenter repeat 1.74 kg). Rode product page spec table is empty; no labelled W/D/H for the original PSA1 found (the Rode 'PSA1 Black White' data sheet content describes PSA1+). Mic+shockmount load 700 g-1.1 kg. Desk insert 70 mm (from existing knowledge) not re-confirmed for PSA1 original; 70 mm clamp / 55 mm insert is the PSA1+ datasheet figure."
+  },
+  {
+    "id": "sennheiser-hd-280-pro",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.285,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://sennheiser.com/en-nl/catalog/products/headphones/hd-280-pro",
+      "https://sennheiser.com/en-us/catalog/products/headphones/hd-280-pro/hd-280--13-004975"
+    ],
+    "portsText": "Coiled single-sided cable 1.3 m to 3 m, 3.5 mm plug with 3.5 to 6.3 mm adapter ; nominal impedance 64 ohm",
+    "colour": "",
+    "notes": "Sennheiser page: 285 g, described in the features section as without cable (a German retailer lists 377 g with cable; another lists 220 g, disregarded). The Sennheiser page also shows 'Height 84, length 245, width 187' with no unit; this is probably packaging, so sizeMm left null. Colour not stated."
+  },
+  {
+    "id": "shock-mount-generic",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://www.neumann.com/en-us/products/microphone-accessories/ea-1-",
+      "https://www.markertek.com/product/akg-h85/akg-h85-universal-shock-mount-for-microphones-with-shaft-diameters-from-19mm-to-26mm-3-4-inch-to-1-inch"
+    ],
+    "portsText": "Neumann EA 1: swivel mount with 5/8 in-27 female thread, adapter for 1/2 in and 3/8 in included ; AKG H85: clamps 19-26 mm shafts (Markertek), thread not listed",
+    "colour": "Neumann EA 1 nickel (cat. 008449) or black EA 1 mt (008450); AKG H85 black",
+    "notes": "Neumann product page lists no dimensions or weight (Data & Diagrams section empty). Unattributed dealer snippets said approx 120 x 110 x 110 mm (H x W x D) and about 230 g for EA 1, not verified on a page I could open (Bax Music packaging 18 x 15 x 14 cm, about 500 g incl. packaging). AKG H85: Markertek lists no size or weight; Frontend Audio snippet gives outer ring 100-120 mm and clamp 19-26 mm; Target snippet 3.05 x 5.95 x 9.05 in looks like packaging, weight 160-200 g across dealers (unconfirmed). AKG H100 shares elastic parts with H85; no H100 weight found. All sizeMm null."
+  },
+  {
+    "id": "neumann-ku-100",
+    "sizeMm": {
+      "w": 180,
+      "d": 220,
+      "h": 280
+    },
+    "weightKg": 3.5,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neumann.com/en-ae/products/microphones/ku-100"
+    ],
+    "portsText": "Balanced XLR-5 stereo output ; unbalanced BNC outputs ; matching connector XLR 3 F / XLR 5 F ; 5/8\"-27 female mount thread (adapters 1/2\" and 3/8\") ; positions not stated ; -10 dB pre-attenuation switch and 3-position low cut (150 Hz / 40 Hz / linear), both affect both channels ; powered P48, 6 x AA internal, or included external PSU",
+    "colour": "black",
+    "notes": "Neumann page gives Height 280 / Width 180 / Depth 220 mm for the head (case: 360 / 390 / 260 mm). Weight approx 3500 g without batteries, approx 9500 g with carrying case. Labels are Height/Width/Depth in a table, no drawing, so mapping follows the stated labels. Dealer summaries (sonovente etc.) agree."
+  },
+  {
+    "id": "rode-lavalier-ii",
+    "sizeMm": {
+      "w": 10,
+      "d": 30.5,
+      "h": 5
+    },
+    "weightKg": 0.009,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.diamondscamera.com.au/rode-lavalier-ii-lapel-microphone",
+      "https://rode.com/en/microphones/lavalier/lavalier-ii"
+    ],
+    "portsText": "3.5 mm TRS male, locking, on 1.2 m Kevlar-reinforced cable (Rode page: 1.2 m; one dealer says 117 cm)",
+    "colour": "black",
+    "notes": "Not a round body. Dealer (Diamonds Camera) labels microphone as H 5 x W 10 x L 30.5 mm; mapped w = W 10, d = L 30.5, h = H 5. Weight 9 g microphone only (12 g with mount and windscreen). Capsule 6 mm per several dealers (conflicts with the 5 mm body height, so the capsule figure is probably nominal; not used for sizeMm). Rode's own page gave cable 1.2 m and connector but no dimensions or weight."
+  },
+  {
+    "id": "rode-nt-sf1",
+    "sizeMm": {
+      "w": 45.7,
+      "d": 45.7,
+      "h": 192.3
+    },
+    "weightKg": 0.286,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://edge.rode.com/pdf/page/1859/modules/4438/ntsf1_datasheet.pdf"
+    ],
+    "portsText": "10-pin XLR to 4 x 3-pin XLR cable included (mic output is a 10-pin XLR implied by that cable; position not stated) ; 48V phantom, 6.2 mA per channel",
+    "colour": "",
+    "notes": "Datasheet labels dimensions as (W x H x D) 45.7 x 192.3 x 45.7 mm, body diameter 25.1 mm, weight 286 g. A dealer re-labels the same figures as L x W x H; datasheet outranks. Datasheet says 'hard-wearing thin-film ceramic finish' but no colour; one dealer summary (aio.lv) says black, not verified. No controls mentioned."
+  },
+  {
+    "id": "sanken-cos-11d",
+    "sizeMm": {
+      "w": 4,
+      "d": 4,
+      "h": 16.1
+    },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://sanken-mic.com/en/product/spec.cfm/5.1107400",
+      "https://sanken-mic.com/en/product/spec.cfm/5.1107000"
+    ],
+    "portsText": "Variant-dependent: 1.8 m cable (PT-*/1.8 version connector-less pigtail, 3.0 m pigtail and XLR-3 phantom versions also exist); R-series terminations: Sony Hirose KMC 4-pin, Sony or Sennheiser locking 3.5 mm mini plug, LEMO 3-pin, TA5F (Lectrosonics), TA4F (Shure), Ramsa Hirose KMC 4-pin",
+    "colour": "beige, black, gray, white (baked paint)",
+    "notes": "Round body, h = length: Sanken lists '16.1 mm x 4.0 mm (diameter)' on the COS-11D spec pages. Weight left null because Sanken's own pages disagree by variant: 24 g for the R-series connector versions with 1.8 m cable, 10 g for the PT-*/1.8 pigtail, 19 g for the 3.0 m pigtail (and about 82 g for the XLR version per dealer summaries); one id cannot be mapped to one weight. If a single value is needed, 0.010 (pigtail 1.8 m) or 0.024 (connectorised 1.8 m) are the two datasheet values."
+  },
+  {
+    "id": "sennheiser-hmd-26",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.2,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.sennheiser.com/en-us/catalog/uncategorized/hmd-26/hmd-26-502464"
+    ],
+    "portsText": "Cable terminates in XLR-3 and 1/4 in jack (as listed) ; mic: dynamic, hyper-cardioid ; impedance 300 ohm nominal (page also says 600 ohm per system) ; steel-reinforced single-sided cable",
+    "colour": "black",
+    "notes": "Sennheiser US page for HMD 26 (502464) lists 200 g but does not say whether cable is included; the same search turned up a single-sided HMD 26 S at about 130 g and older HMD 26-II models at roughly 485-533 g, so check the exact variant. No dimensions published."
+  },
+  {
+    "id": "sennheiser-mke-2",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.017,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.sennheiser.com/en-us/catalog/products/microphones/mke-2/mke-2-black-ew-009831",
+      "https://www.sennheiser.com/globalassets/digizuite/41613-en-mke-2-product-specification-v2.0_en.pdf"
+    ],
+    "portsText": "Variants: 3-pin SE, open end, 3.5 mm (EW), XLR-3 (with phantom adapter); cable approx. 1.60 m",
+    "colour": "black and beige (Sennheiser spec); gold-series versions are beige per dealer pages",
+    "notes": "Weight 17 g is on Sennheiser's product page for MKE 2 Black EW (presumably mic with cable; the gold series was not individually confirmed). Capsule diameter 4.8 mm per the same page (round body), but capsule length not found in any source, so sizeMm is null. The page's 'Length 100 / Width 160 / Height 5' look like packaging figures. Dealer Knight lists 1 g, 3 m and 4 mm, which conflicts with Sennheiser and was ignored. Spec PDF V2.0 gives cable length and connector variants but no body dimensions or weight."
+  },
+  {
+    "id": "wisycom-mcr54",
+    "sizeMm": {
+      "w": 85,
+      "d": 25,
+      "h": 104
+    },
+    "weightKg": 0.23,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://cdn.abicart.com/shop/ws42/76342/art27/187570927-36b238-MCR54-en-b10.pdf",
+      "https://www.trewaudio.com/product/wisycom-mcr54/?wmc-currency=USD"
+    ],
+    "portsText": "Rear antenna connectors for 4 antennas (type not stated in the receiver spec; the matching accessory whips are SMA) ; 5-pin mini XLR female audio output, balanced analogue or AES3 digital (stated, 1 per spec text) ; headphone 3.5 mm jack (stated) ; USB-C for programming, monitoring and power (stated) ; external power 6-18 V DC (3 W max) via Hirose connector on optional rear adapter (BPA54) ; Bluetooth 5 (wireless).",
+    "colour": "",
+    "notes": "Wisycom MCR54 datasheet (MCR54-en-b10): 104 x 85 x 25 mm labelled H x W x D, 230 g (without BCA54 battery module). Trew Audio listing gives 87.6 mm wide, dealers Studio Depot/Economik give 85 mm, so datasheet value (85) used. Slot-style 4-channel receiver (camera-slot), not a rack unit. No finish colour stated."
+  },
+  {
+    "id": "akg-k240-studio",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.24,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://support.harmanaudio.com/gb/en/headphones/headphones-professional/headphones-professional-headphones/K240-Studio.html",
+      "https://www.fullcompass.com/common/files/44558-K240STUDIOSpecificationsSheet.pdf",
+      "https://media.sweetwater.com/store/media/k240s_K240S_specsheet.pdf"
+    ],
+    "portsText": "Detachable single-sided 3 m cable, mini-XLR at the headphone end, 3.5 mm stereo plug with 6.3 mm screw-on adapter ; rated impedance 55 ohm",
+    "colour": "black",
+    "notes": "Net weight 240 g without cable per AKG/Harman spec (via search summary of the Harman page and spec sheet; the Sweetwater PDF could not be text-extracted and Full Compass PDF returned 403). Another listing's 556 g is packaged weight, ignored. No dimensions published. Colour from dealer listing title (Black)."
+  },
+  {
+    "id": "beyerdynamic-dt-990-pro",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.25,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://global.beyerdynamic.com/p/dt-990-pro",
+      "https://europe.beyerdynamic.com/p/dt-990-pro-250-ohms",
+      "https://thomannmusic.com/beyerdynamic_dt990pro.htm",
+      "https://www.bestbuy.com/product/beyerdynamic-dt-990-pro-250-ohm-open-back-over-ear-wired-headphones-3m-coiled-cable-black-with-grey-velour-ear-pad/JXHFWS8H9L/sku/12739035"
+    ],
+    "portsText": "Straight/coiled cable with 3.5 mm mini-jack plug and 6.35 mm adapter (beyerdynamic; Thomann/Best Buy describe the 250 ohm as a 3 m coiled cable) ; cable not detachable (classic DT design) ; impedance variants 80 and 250 ohm",
+    "colour": "black housing with grey velour pads (Best Buy listing)",
+    "notes": "Weight conflict resolved by definition: beyerdynamic says 250 g without cable and about 375 g including the cable (so these are not truly conflicting); Thomann lists the 250 ohm at 271 g without / 364 g with cable. weightKg = manufacturer 250 g without cable; with-cable and Thomann values are in notes. No dimensions published."
+  },
+  {
+    "id": "countryman-e6",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.002,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.markertek.com/Attachments/Specifications/Countryman/E6DW5T2TS-Specifications.pdf",
+      "https://www.fullcompass.com/prod/632122-countryman-e6ow6-2sr-e6-omni-earset-mic-medium-gain-for-sennheiser-wireless-transmitters"
+    ],
+    "portsText": "Detachable snap-on cable, 1 mm or 2 mm diameter, about 5 ft (1.5 m, dealer); termination depends on the transmitter (TA4F Shure, LEMO 3-pin Sennheiser, 3.5 mm, XLR with phantom adapter)",
+    "colour": "black, tan, light beige, cocoa (tan, light beige, black confirmed in Countryman datasheet FAQ; cocoa on Full Compass listings)",
+    "notes": "Countryman datasheet: weight 0.07 oz (2 g). The datasheet does not give capsule or boom dimensions; the 2.5 mm capsule diameter from the assignment was not re-confirmed by any source I read, so sizeMm is null. Cable length (about 5 ft) is from dealer summaries only."
+  },
+  {
+    "id": "k-m-26772",
+    "sizeMm": {
+      "w": 214,
+      "d": 214,
+      "h": 254
+    },
+    "weightKg": 3.41,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.k-m.de/en/products/speaker-lighting-monitor-stands-and-holders/monitor-stands/26772-table-monitor-stand-structured-black",
+      "https://kirstein.de/en/Live-Studio/Studio/Studio-Monitoring/Studio-Monitoring-Accessories/K-M-26772-Monitor-Tischstativ.html"
+    ],
+    "portsText": "",
+    "colour": "structured black (26772-000-56)",
+    "notes": "k-m.de page: 'Base dimensions' 214 x 214 mm (square, so w=d safe), bearing plate 150 x 170 mm (no axis labels), height adjustable continuously 167-254 mm; h=254 is the stated maximum height (minimum 167). Weight 3.41 kg on k-m.de conflicts with 3.1 kg on Kirstein and several dealers; manufacturer page outranks dealers so 3.41 used. Load max 15 kg, 4 rubber pads each on base and tray. Datasheet PDF not reachable (404)."
+  },
+  {
+    "id": "oc-white-proboom-elite-14199-b",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://www.ocwhite.com/product/proboom-elite-mic-arm-45-extended-reach-with-clamp/",
+      "https://www.markertek.com/product/ocw-14199-b/o-c-white-14199-b-proboom-elite-45-inch-microphone-arm-only"
+    ],
+    "portsText": "5/8-27 threaded mounting stud (standard); arm only, no clamp (14199-B); hidden cable channel",
+    "colour": "Carbon Black (Black); Shadow White also exists for the 14199-C line",
+    "notes": "ocwhite.com page found is for 14199-C-B (arm WITH cast-iron clamp): weight 8 lbs, reach 45 in, holds up to 2.5 lbs, no dimensions. The arm-only 14199-B weight and any W/D/H are not published on pages I could read (Markertek says weight not listed; B&H returned 403; ocwhite.com has no 14199-B page in search). The 8 lb figure includes the clamp (separate clamp listings are about 3 lb), so not applied to 14199-B. Reach 45 in = 1143 mm (exact)."
+  },
+  {
+    "id": "rode-psa1-plus",
+    "sizeMm": {
+      "w": 65,
+      "d": 180,
+      "h": null
+    },
+    "weightKg": 1.52,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://edge.rode.com//pdf/products/1212/PSA1 Black White_Data Sheet_FA.pdf",
+      "https://edge.rode.com//pdf/products/1212/PSA1 _White_ds V04_FA.pdf"
+    ],
+    "portsText": "Universal mic thread adaptor (dealer: 3/8 or 5/8 in) ; desk clamp for tables up to 70 mm thick ; threaded desk insert for tables up to 55 mm ; integrated cable channel for USB and XLR cables",
+    "colour": "Black, White (datasheet colour swatches)",
+    "notes": "Rode datasheet (labelled Width/Length/Depth): collapsed W 65, L 500, D 180 mm; fully extended W 65, L 940, D 100 mm. 'Length' is not a height label, so h is null; w and d use the collapsed figures (65 / 180). Weight 1.52 kg. Horizontal reach 940 mm, vertical reach 860 mm, mic load 94 g-1.2 kg. Compatible with PodMic, Procaster, Broadcaster, NT1, NT1-A, NT-USB, NT-USB Mini, VideoMic NTG, Podcaster."
+  },
+  {
+    "id": "sennheiser-me-2-ii",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://link.sennheiser.com/dam-migration/41600",
+      "https://sennheiser.com/en-us/catalog/products/microphones/me-2/me-2-ii-005213"
+    ],
+    "portsText": "3.5 mm jack (locking, ew/evolution bodypack), cable approx. 1.60 m (stated)",
+    "colour": "matte black (spec sheet describes a matte black surface)",
+    "notes": "Unverified: weight 30 g appears only in a search summary of a Sennheiser launch sheet and may belong to the original ME 2, so weightKg is left null. Cable and connector read in the Sennheiser ME 2 product specification PDF. Weight 30 g comes from a web-search summary of Sennheiser's launch sheet / product page (not read directly; the product page I fetched did not show weight), so treat as moderately confirmed. No capsule or body dimensions found, so sizeMm is null (6.5 mm capsule diameter from the assignment not re-confirmed). Product is listed as discontinued by Sennheiser."
+  },
+  {
+    "id": "shure-mx418d",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.82,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://pubs.shure.com/view/guide/MX400D/en-US.pdf",
+      "https://www.adorama.com/used-shure-mx418d-c-18-desk-top-mounted-cardioid-gooseneck-microphone-sku1927760/p/us1927760",
+      "https://www.crutchfield.com/ISEO-rccbcspd/p_183MX418DC/Shure-MX418D-C.html"
+    ],
+    "portsText": "3 m (10 ft) attached cable terminated in 3-pin male XLR, plus 3 unterminated logic wires (mute/LED control); output XLR is on the cable, not a base socket (position of cable exit not stated)",
+    "colour": "",
+    "notes": "Shure MX400D user guide: net weight 0.82 kg (1.82 lb), packaged 1.64 kg; overall MX418D length 501.7 mm (19 3/4 in) with gooseneck 457 mm (18 in). Spec drawing shows base figures 161.9 mm, 102.1 mm and 50.8 mm without readable axis labels, so sizeMm null. Dealers disagree: Adorama base 161.9 x 115 mm (L x W); Crutchfield W 4.507 in, H 2.198 in, D 6.277 in. Shure product page and B&H returned 404/403; finish colour not stated in sources read."
+  },
+  {
+    "id": "shure-wl93",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": 9.4
+    },
+    "weightKg": 0.016,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.thomannmusic.com/shure_wl93_lavalier.htm",
+      "https://www.adorama.com/shure-wl93-omnidirectional-subminiature-lavalier-condenser-microphone-ta4f/p/shwl93t",
+      "https://www.canford.co.uk/Products/74-6446_SHURE-WL93T-MICROPHONE-Miniature-lavalier-omnidirectional-TA4F-connector-1.2m-cable-tan"
+    ],
+    "portsText": "TA4F (4-pin mini XLR, Shure) on 1.2 m (4 ft) cable; WL93-6 version has 1.9 m (6 ft) cable",
+    "colour": "black (WL93); tan (WL93T)",
+    "notes": "Round body: length 9.4 mm agrees between Thomann (labelled length) and Adorama (0.23 x 0.37 in = 5.84 x 9.40 mm). Diameter conflicts: Thomann 6.1 mm vs Adorama 5.84 mm, so w/d left null; h = length 9.4. Weight 16 g (Thomann and Adorama; Shure spec per summaries). Thomann also lists cable as '120 cm' and '120 mm' on the same page; Canford says 1.2 m. Shure's own guide URLs (pubs.shure.com, shure.com docs) returned 404/403 or redirects; Full Compass guide PDF 403."
+  },
+  {
+    "id": "audix-d6",
+    "sizeMm": {
+      "w": 51,
+      "d": 51,
+      "h": 117
+    },
+    "weightKg": 0.254,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://audixusa.com/cdn/shop/files/D6_V3_1221.pdf"
+    ],
+    "portsText": "3-pin XLR male, 1, base (stated as the connector; position at base implied by body shape, not worded)",
+    "colour": "black anodized (D6S is silver anodized)",
+    "notes": "Round body, h = length: Audix D6 spec sheet (V3, Dec 2021) states 117 mm length, 21.5 mm diameter at the base, 51 mm at the widest point (mapped w = d = 51), weight 254 g / 8.9 oz (spec table). Search summaries cited an older zzounds-hosted sheet with 217 g, and dealers list 128 g; those could not be read (zzounds PDF 403) and conflict with the current Audix sheet, so 254 g from the current manufacturer sheet is used. The implausible 46 in length was not seen on the sheet I read."
+  },
+  {
+    "id": "audix-i5",
+    "sizeMm": {
+      "w": 37.5,
+      "d": 37.5,
+      "h": 141.5
+    },
+    "weightKg": 0.183,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://im.static-thomann.de/pics/atg/atgdata/document/manual/178792.pdf"
+    ],
+    "portsText": "Switchcraft 3-pin XLR male, 1, base (connector stated; position implied)",
+    "colour": "black e-coat (die-cast zinc alloy body)",
+    "notes": "Round body, h = length: Audix i5 spec sheet (hosted on Thomann) says 23 mm diameter at the base, 37.5 mm at the top (widest, mapped w = d), 141.5 mm length, weight 183 g / 6.5 oz. A French Audix datasheet cited in search results lists 248 g; that PDF returned 404 so I could not verify it. Dealer weights around 417 g are shipping weights."
+  },
+  {
+    "id": "heil-pr-40",
+    "sizeMm": {
+      "w": 52.4,
+      "d": 52.4,
+      "h": 169.9
+    },
+    "weightKg": 0.383,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.greentoe.com/product/Heil_Sound_PR_40_Dynamic_Cardioid_Studio_Microphone__Champagne__PR_40",
+      "https://www.zenproaudio.com/heil-sound-pr-40",
+      "https://www.markertek.com/product/heil-pr40/heil-sound-pr40-dynamic-studio-recording-live-microphone",
+      "https://www.fullcompass.com/common/files/7625-PR40SpecSheet.pdf"
+    ],
+    "portsText": "3-pin XLR male, 1 (stated by Greentoe and Heil spec sheet via search summary)",
+    "colour": "anodized champagne matte (also black, chrome and black/gold versions exist)",
+    "notes": "Round body, h = length. Dimensions from Heil engineering spec sheet as summarised in a search result (Full Compass PDF itself returned 403): length 6 11/16 in = 169.9 mm, max diameter 2 1/16 in = 52.4 mm. Greentoe dealer lists 6.75 in (171 mm) x 2.1 in (53 mm), close but not identical, and the spec sheet figure was preferred. Weight 13.5 oz = 383 g (Greentoe, Zen Pro Audio, AVL Gear, Chuck Levin's); but Markertek lists 1 lb and BSW 15 oz, so weight is dealer-conflicted; 383 g kept as the majority value. Manufacturer site heilsound.com not reached."
+  }
+]

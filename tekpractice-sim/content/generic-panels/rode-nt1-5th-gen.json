@@ -1,0 +1,49 @@
+{
+  "note": "Unrolled side surface of the NT1 5th Gen lathe (build.projection wrap): 163.36 mm around (pi x 52) by 189 mm tall. Generic artwork: plain black body, neck rings, a fine metal-mesh basket on the head. No brand mark.",
+  "faces": {
+    "wrap": {
+      "wMm": 163.36,
+      "hMm": 189,
+      "pxPerMm": 9,
+      "base": "#2b2c2f",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 100,
+          "w": 163.36,
+          "h": 0.8,
+          "fill": "#1a1b1d"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 106,
+          "w": 163.36,
+          "h": 5,
+          "fill": "#4b4d52"
+        },
+        {
+          "kind": "weave",
+          "x": 0,
+          "y": 112,
+          "w": 163.36,
+          "h": 76,
+          "pitch": 1.51,
+          "line": 0.3,
+          "fill": "#8b8e94",
+          "stroke": "#4a4c51",
+          "hole": "#222326"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 111,
+          "w": 163.36,
+          "h": 1.2,
+          "fill": "#1a1b1d"
+        }
+      ]
+    }
+  }
+}

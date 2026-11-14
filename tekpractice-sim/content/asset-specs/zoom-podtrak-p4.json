@@ -1,0 +1,170 @@
+{
+  "id": "zoom-podtrak-p4",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 112,
+    "h": 47,
+    "d": 155
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 17,
+      "yMm": 23.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 43,
+      "yMm": 23.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "io",
+      "xMm": 69,
+      "yMm": 23.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "io",
+      "xMm": 95,
+      "yMm": 23.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in",
+      "flags": [
+        "isMicInput",
+        "providesPhantom"
+      ]
+    },
+    {
+      "portId": "out-phones-1",
+      "face": "opposite",
+      "xMm": 20,
+      "yMm": 23.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-2",
+      "face": "opposite",
+      "xMm": 42,
+      "yMm": 23.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-3",
+      "face": "opposite",
+      "xMm": 64,
+      "yMm": 23.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-4",
+      "face": "opposite",
+      "xMm": 86,
+      "yMm": 23.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "in-phone",
+      "face": "left",
+      "xMm": 95,
+      "yMm": 23.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "usb",
+      "face": "left",
+      "xMm": 60,
+      "yMm": 23.5,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.thomannmusic.com/zoom_podtrak_p4.htm",
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 7,
+      "edgeRadiusMm": 3.5,
+      "edgeDropMm": 3.5,
+      "bottomEdgeRadiusMm": 3,
+      "edgeSegments": 8,
+      "bodyGrey": 55
+    },
+    "projection": [
+      "top",
+      "io",
+      "opposite",
+      "left"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.thomann.de/be/zoom_podtrak_p4.htm",
+      "note": "equipment plan source (research grade: dealer); size 112 x 155 x 47 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomannmusic.com/zoom_podtrak_p4.htm",
+      "note": "Thomann page (downloaded, read as text on 2026-11-12): four microphone inputs on XLR with switchable 48 V phantom, four headphone outputs on 3.5 mm stereo jacks, a TRRS socket for a telephone (call-in), USB audio interface (USB-C), SD card, 2 AA batteries or USB-C power or the AD-117 supply (no mains inlet on the unit), 112 x 155 x 47 mm, 290 g. Modelled: the four XLR (female, by convention), the four headphone jacks, the TRRS call-in input (as a 3.5 mm line input) and the USB-C audio port; the second USB-C (power only), the SD slot and the pads are not modelled. Positions are GUESSES (no panel drawing)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.thomannmusic.com/zoom_podtrak_p4.htm",
+      "note": "build: a moulded box, exact bounding box; the rounding is an ESTIMATE. build.projection: our own generic artwork (faders, pads, connectors); no photo, no logo, no lettering."
+    }
+  ]
+}

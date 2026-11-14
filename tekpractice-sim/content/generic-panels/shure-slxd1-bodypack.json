@@ -1,0 +1,130 @@
+{
+  "note": "Generic panel artwork (no brand marks, no logos), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+  "faces": {
+    "top": {
+      "wMm": 98,
+      "hMm": 68,
+      "base": "#2c2d31",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 0,
+          "w": 98,
+          "h": 68,
+          "fill": "#2c2d31"
+        },
+        {
+          "kind": "rect",
+          "x": 10,
+          "y": 24,
+          "w": 40,
+          "h": 28,
+          "fill": "#0d1a24",
+          "stroke": "#4a4d52",
+          "radius": 2
+        },
+        {
+          "kind": "rect",
+          "x": 13,
+          "y": 27,
+          "w": 34,
+          "h": 22,
+          "fill": "#2a6a8f"
+        },
+        {
+          "kind": "circle",
+          "x": 72,
+          "y": 40,
+          "r": 5.5,
+          "fill": "#1a1b1e",
+          "stroke": "#6b6f75"
+        },
+        {
+          "kind": "circle",
+          "x": 86,
+          "y": 30,
+          "r": 3,
+          "fill": "#3a3c40",
+          "stroke": "#6b6f75"
+        },
+        {
+          "kind": "circle",
+          "x": 86,
+          "y": 52,
+          "r": 2,
+          "fill": "#35d27a"
+        },
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": 8,
+          "w": 18,
+          "h": 3,
+          "fill": "#1a1b1e"
+        }
+      ]
+    },
+    "io": {
+      "wMm": 98,
+      "hMm": 25.5,
+      "base": "#2c2d31",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 0,
+          "w": 98,
+          "h": 25.5,
+          "fill": "#2c2d31"
+        },
+        {
+          "kind": "rect",
+          "x": 5,
+          "y": 4,
+          "w": 88,
+          "h": 17.5,
+          "fill": "#343539",
+          "stroke": "#4a4b4f",
+          "radius": 1
+        },
+        {
+          "kind": "circle",
+          "x": 49,
+          "y": 12.75,
+          "r": 5,
+          "fill": "#0d0e10",
+          "stroke": "#5c6066"
+        },
+        {
+          "kind": "circle",
+          "x": 47.2,
+          "y": 14.55,
+          "r": 0.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 50.8,
+          "y": 14.55,
+          "r": 0.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 47.2,
+          "y": 10.95,
+          "r": 0.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 50.8,
+          "y": 10.95,
+          "r": 0.7,
+          "fill": "#b8bcc2"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "id": "yamaha-tf5",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 866,
+    "h": 225,
+    "d": 599
+  },
+  "ports": [
+    {
+      "portId": "in-input-1-32-combo-jack-xlr-3-31-or-trs-phone-balanced-48v-on-xlr-1",
+      "face": "io",
+      "xMm": 80,
+      "yMm": 190,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-input-1-32-combo-jack-xlr-3-31-or-trs-phone-balanced-48v-on-xlr-2",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 190,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-st-in-1-2-rca-pin-jack-unbalanced-l-r-1",
+      "face": "io",
+      "xMm": 180,
+      "yMm": 190,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "in-st-in-1-2-rca-pin-jack-unbalanced-l-r-2",
+      "face": "io",
+      "xMm": 200,
+      "yMm": 190,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "in"
+    },
+    {
+      "portId": "out-omni-out-1-16-xlr-3-32-balanced-1",
+      "face": "io",
+      "xMm": 80,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-omni-out-1-16-xlr-3-32-balanced-2",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-usb-to-host-34ch-in-34ch-out",
+      "face": "io",
+      "xMm": 190,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-usb-storage-2-track-rec-play",
+      "face": "io",
+      "xMm": 226,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "usb-a",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-network-10base-t-100base-tx",
+      "face": "io",
+      "xMm": 262,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-foot-sw-jack-type-not-stated",
+      "face": "io",
+      "xMm": 296,
+      "yMm": 140,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "gpio-tally",
+      "dir": "in"
+    },
+    {
+      "portId": "out-phones-stereo-phone-jack",
+      "face": "opposite",
+      "xMm": 760,
+      "yMm": 46,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        225
+      ],
+      [
+        40,
+        225
+      ],
+      [
+        100,
+        200
+      ],
+      [
+        200,
+        160
+      ],
+      [
+        300,
+        135
+      ],
+      [
+        400,
+        115
+      ],
+      [
+        500,
+        100
+      ],
+      [
+        599,
+        92
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 36,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 60,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io",
+      "opposite"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "sources": [
+    {
+      "kind": "manual",
+      "url": "https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24",
+      "note": "Yamaha TF5 manual on a manual-hosting site (equipment plan source; the plan marks the size as axis-assumed: sizeConfidence axis-assumed, so this device is beta-modelled only). Size used: W 866 x H 225 x D 599 mm, 20 kg, as printed in the knowledge base extraction of the Yamaha specification (https://usa.yamaha.com/products/proaudio/mixers/tf/specs.html), where the TF series sizes are given together; the plan flags that TF1 / TF3 are size variants in the same notes, so the width may belong to another TF model: TO VERIFY against the Yamaha TF5 specification. Connectors (knowledge base, from that specification page): 32 mic / line combo inputs, 2 RCA stereo inputs, 16 XLR OMNI outputs, a stereo phones jack, USB to host (34 x 34), a USB storage port, a network port, a foot-switch jack, one expansion slot. The 11 ports modelled are the Bêta proposal ports (a representative pair of the 32 combo inputs and of the 16 OMNI outputs): beta-modelled devices keep their proposal ports, so portsDocumented is not set. Positions are GUESSES (no drawing read): all connectors on the rear face, the phones jack on the front lip. The side profile is an estimate (the sources give the three outer sizes only)."
+    }
+  ]
+}

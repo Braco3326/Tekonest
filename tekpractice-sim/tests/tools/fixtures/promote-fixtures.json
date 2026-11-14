@@ -1,0 +1,270 @@
+{
+ "note": "Literal copies (ids renamed fx-*) of four plan rows and their Bêta proposals as committed before the Wave 1 stage 2; tests/tools/promoteDevice.test.ts uses them so it cannot break when the real rows are promoted.",
+ "rows": [
+  {
+   "id": "fx-tlm-103",
+   "status": "new",
+   "category": "microphone",
+   "manufacturer": "Neumann",
+   "product": "TLM 103",
+   "sizeMm": {
+    "w": 60,
+    "d": 60,
+    "h": 132
+   },
+   "weightKg": 0.45,
+   "portsSummary": "1 XLR-3 female; phantom P48",
+   "family": "revolve",
+   "dataQuality": "datasheet",
+   "sourceGrade": "datasheet",
+   "tier": 2,
+   "wave": 1,
+   "sources": [
+    "https://www.neumann.com/en-en/products/microphones/tlm-103/"
+   ],
+   "notes": "Rank 13. Manufacturer page [M]: 60 dia x 132 mm, ~450 g, XLR-3 female, P48 3 mA, no pad/filter. Source: https://www.neumann.com/en-en/products/microphones/tlm-103/",
+   "traits": [
+    "condenser",
+    "phantom-powered"
+   ],
+   "sizeConfidence": "ok"
+  },
+  {
+   "id": "fx-m32",
+   "status": "new",
+   "category": "console-digital",
+   "manufacturer": "Midas",
+   "product": "M32",
+   "sizeMm": {
+    "w": 891,
+    "d": 612,
+    "h": 256
+   },
+   "weightKg": 25,
+   "portsSummary": "32 XLR mic, 16 XLR out, 2 AES50, expansion card, MIDI, USB-A/B, Ethernet",
+   "family": "console-wedge-v2",
+   "dataQuality": "datasheet",
+   "sourceGrade": "datasheet",
+   "tier": 2,
+   "wave": 2,
+   "sources": [
+    "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
+    "https://www.markertek.com/product/m32live/midas-m32-live-digital-console-for-live-studio-40-input-channels-32-midas-pro-mic-preamps-25-mix-buses"
+   ],
+   "notes": "Manufacturer data sheet [M], read via pdftotext: 891x612x256 mm, 25 kg; 32 XLR mic pre, 16 XLR out, 2 AES50, card slot, ULTRANET, USB-A top, USB-B and RJ45 rear (positions from the M32 table). X32 sibling. Source: https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
+  },
+  {
+   "id": "fx-profx12",
+   "status": "beta",
+   "category": "console-analog",
+   "manufacturer": "Mackie",
+   "product": "ProFX12v3",
+   "sizeMm": {
+    "w": 330,
+    "d": 376,
+    "h": 102
+   },
+   "weightKg": 3.6,
+   "portsSummary": "8 modelled (18 listed in KB); mains-power port declared | real unit: 12 ch; USB 2.0; XLR main, 1/4in main/sub/aux sends; IEC mains; 48 V on mic channels",
+   "family": "console-wedge-v2",
+   "dataQuality": "datasheet",
+   "sourceGrade": "datasheet",
+   "tier": 1,
+   "wave": 1,
+   "sources": [
+    "https://mackie.com/img/file_resources/PROFXV3+_SERIES_SS.pdf",
+    "https://thomannmusic.com/mackie_profx12v3.htm"
+   ],
+   "notes": "Manufacturer sheet is for v3+ (read via pdftotext, hosted by Mackie); dealers give same footprint for v3. Notes: 12 ch, USB 2.0, XLR main + 1/4in main/sub/aux (counts n/s), IEC, 48 V. Source: https://mackie.com/img/file_resources/PROFXV3+_SERIES_SS.pdf",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "ok"
+  },
+  {
+   "id": "fx-tf5",
+   "status": "beta",
+   "category": "console-digital",
+   "manufacturer": "Yamaha",
+   "product": "TF5",
+   "sizeMm": {
+    "w": 866,
+    "d": 599,
+    "h": 225
+   },
+   "weightKg": 20,
+   "portsSummary": "11 modelled (57 listed in KB); no mains-power port declared in the proposal | real unit: 40 ch; TF series I/O (16 combo in, 2 RCA in, 16 XLR omni out, 1 expansion slot, USB); TF5 per-unit I/O counts not separated in notes",
+   "family": "console-wedge-v2",
+   "dataQuality": "estimate",
+   "sourceGrade": "datasheet",
+   "tier": 1,
+   "wave": 1,
+   "sources": [
+    "https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24"
+   ],
+   "notes": "Manual hosted on manualslib (M-host, via search summary). KB W/H/D also parsable (repo). 2 rooms, 2 scenarios. TF1 and TF3 are size variants in the notes. Demand: 2/2 room placements/rooms, 2 TEK Brain scenarios. Source: https://www.manualslib.com/manual/1071068/Yamaha-Tf5.html?page=24",
+   "traits": [
+    "desk"
+   ],
+   "sizeConfidence": "axis-assumed"
+  }
+ ],
+ "proposals": [
+  {
+   "id": "fx-profx12",
+   "label": "Mackie ProFX12v3",
+   "levels": [],
+   "realWorld": {
+    "brand": "Mackie",
+    "model": "ProFX12v3",
+    "category": "console",
+    "typicalUse": "small PA",
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. TRS insert points, sub outs and a 3.5 mm consumer input on one small desk give clear insert-cable and level-matching exercises."
+   },
+   "ports": [
+    {
+     "portId": "in-mic-inputs-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-mic-inputs-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-1-8-in-stereo-line-input-ch-11-12",
+     "dir": "in",
+     "connector": "trs-35mm",
+     "signal": "line-level-consumer"
+    },
+    {
+     "portId": "out-main-mix-outputs-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-main-mix-outputs-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "in-fx-footswitch",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "gpio-tally"
+    },
+    {
+     "portId": "bidir-usb-audio-interface",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "in-mains-in-3-pin-iec",
+     "dir": "in",
+     "connector": "iec-c14",
+     "signal": "mains-power"
+    }
+   ],
+   "sizeMm": {
+    "w": 330,
+    "d": 376,
+    "h": 102
+   }
+  },
+  {
+   "id": "fx-tf5",
+   "label": "Yamaha TF5",
+   "levels": [],
+   "realWorld": {
+    "brand": "Yamaha",
+    "model": "TF5",
+    "category": "console",
+    "typicalUse": "small and medium live sound",
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR/TRS combo inputs, RCA unbalanced inputs and USB-B multitrack make it a strong beginner wiring device."
+   },
+   "ports": [
+    {
+     "portId": "in-input-1-32-combo-jack-xlr-3-31-or-trs-phone-balanced-48v-on-xlr-1",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-input-1-32-combo-jack-xlr-3-31-or-trs-phone-balanced-48v-on-xlr-2",
+     "dir": "in",
+     "connector": "xlr3-f",
+     "signal": "mic-level"
+    },
+    {
+     "portId": "in-st-in-1-2-rca-pin-jack-unbalanced-l-r-1",
+     "dir": "in",
+     "connector": "rca",
+     "signal": "line-level-consumer"
+    },
+    {
+     "portId": "in-st-in-1-2-rca-pin-jack-unbalanced-l-r-2",
+     "dir": "in",
+     "connector": "rca",
+     "signal": "line-level-consumer"
+    },
+    {
+     "portId": "out-omni-out-1-16-xlr-3-32-balanced-1",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-omni-out-1-16-xlr-3-32-balanced-2",
+     "dir": "out",
+     "connector": "xlr3-m",
+     "signal": "line-level-pro"
+    },
+    {
+     "portId": "out-phones-stereo-phone-jack",
+     "dir": "out",
+     "connector": "trs-quarter",
+     "signal": "headphone-level"
+    },
+    {
+     "portId": "bidir-usb-to-host-34ch-in-34ch-out",
+     "dir": "bidir",
+     "connector": "usb-b",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "bidir-usb-storage-2-track-rec-play",
+     "dir": "bidir",
+     "connector": "usb-a",
+     "signal": "usb-audio"
+    },
+    {
+     "portId": "bidir-network-10base-t-100base-tx",
+     "dir": "bidir",
+     "connector": "rj45",
+     "signal": "aoip"
+    },
+    {
+     "portId": "in-foot-sw-jack-type-not-stated",
+     "dir": "in",
+     "connector": "trs-quarter",
+     "signal": "gpio-tally"
+    }
+   ],
+   "sizeMm": {
+    "w": 866,
+    "d": 599,
+    "h": 225
+   }
+  }
+ ]
+}

@@ -114,6 +114,16 @@ export function frontNote(used: readonly UsedSpeaker[]): string | null {
   return names.length ? fill(C().frontCaveat!, { names: names.join(', ') }) : null
 }
 
+/**
+ * « Couverture non calculée pour k12-g : valeur non vérifiée (…) »: the fed speakers that were left out of the computation because the catalog has no sourced
+ * coverage for their model (data rule: no coverage number without the model's own sheet). By instance id, like the speaker list. Null when none: the note is
+ * then not shown. The coverage computation skips such a speaker (no angle is made up for it); the listening plays it as a point source (see listenVoices).
+ */
+export function noDataNote(excluded: readonly { instanceId: string; reason: ExclusionReason }[]): string | null {
+  const names = excluded.filter((e) => e.reason === 'no-acoustic').map((e) => e.instanceId)
+  return names.length ? fill(C().noDataNote!, { names: names.join(', ') }) : null
+}
+
 export const speakerLines = (used: readonly UsedSpeaker[]): string[] =>
   used.map((u) => fill(C().speakerRow!, { name: u.instanceId, h: formatNumber(u.hDeg, 0), v: formatNumber(u.vDeg, 0) }))
 
@@ -139,6 +149,9 @@ export function noSourceMessage(path: PathResult, excluded: readonly { instanceI
   if (excluded.length === 0) {
     const why = path.reasons[0]?.text_fr.replace(/\.$/, '')
     reason = why ? fill(L.reasonNotFed!, { why: why.charAt(0).toLowerCase() + why.slice(1) }) : L.reasonNotFedBare!
+  } else if (excluded.every((e) => e.reason === 'no-acoustic')) {
+    // the speakers are fed and may well be heard (listening plays them): only their coverage is not computed (review fix 14)
+    return L.noSourceNoData!
   } else {
     const texts: string[] = []
     for (const e of excluded) {
@@ -181,6 +194,8 @@ export interface CoverageView {
   sourceLine: string | null
   /** The model-front note (frontNote), or null when every contributing speaker's front is established. */
   frontNote: string | null
+  /** The « valeur non vérifiée » note (noDataNote), or null when every fed speaker has a sourced coverage. */
+  noDataNote: string | null
   points: PointRow[]
   pinned: { text: string } | null
   /** A named point or the pinned dot is above 0 dB (louder than every grid point): the panel says the scale is the grid's. */
@@ -199,6 +214,7 @@ export const EMPTY_VIEW: CoverageView = {
   speakers: [],
   sourceLine: null,
   frontNote: null,
+  noDataNote: null,
   points: [],
   pinned: null,
   probeAbove: false,

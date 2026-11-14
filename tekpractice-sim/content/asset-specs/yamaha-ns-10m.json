@@ -1,0 +1,53 @@
+{
+  "id": "yamaha-ns-10m",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 215,
+    "h": 381.5,
+    "d": 197.5
+  },
+  "ports": [
+    {
+      "portId": "in-spk",
+      "face": "io",
+      "xMm": 107.5,
+      "yMm": 120,
+      "confidence": "guess",
+      "insetMm": 3,
+      "openingMm": 20,
+      "connector": "binding-post",
+      "signal": "speaker-level",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "speaker-cabinet-v2",
+    "params": {
+      "edgeRadiusMm": 4,
+      "edgeSegments": 4
+    },
+    "budget": {
+      "min": 100,
+      "max": 4000
+    },
+    "minFilletMm": 2.8,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.altomusic.com/products/yamaha-ns-10m-studio-passive-monitors-pair",
+      "note": "equipment plan source (research grade: datasheet); size 215 x 197.5 x 381.5 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.manualsdir.com/manuals/653504/yamaha-ns-10m-studio.html?page=4",
+      "note": "NS-10M STUDIO owner manual specifications page (a manualsdir copy) read 2026-11-12: \"381.5 mm x 215 mm x 197.5 mm\", 6.3 kg (one speaker), 10.4 litre sealed enclosure, LF 18 cm cone and HF 3.5 cm soft dome. The page labels the order W x H x D, which would make the box wider than tall, so the plan assigned h 381.5, w 215 (axis order inferred: estimate, hence beta-modelled only). A manual page (search summary) says the speaker has \"large screw-type terminals\": modelled as one pair of binding posts (`binding-post`, the closest catalogue connector; the count of terminal pairs is one per speaker); the connector type is therefore not documented. The corner radius is our estimate. The position is a guess. Generic artwork only: a white-cone woofer and a dome drawn as plain circles, no photo, no logo."
+    }
+  ]
+}

@@ -227,10 +227,13 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     spdif: 'S/PDIF numérique',
     madi: 'MADI multicanal',
     aoip: 'Audio sur IP (Dante)',
+    aes50: 'AES50 numérique (consoles Behringer / Midas, pas du Dante)',
     wordclock: 'Word clock',
     'usb-audio': 'Audio USB',
     'gpio-tally': 'GPIO / tally',
     dmx512: 'DMX512',
+    'ethernet-control': 'Réseau de contrôle (Ethernet, sans audio)',
+    'usb-control': 'Liaison USB de contrôle (MIDI, sans audio)',
     'phantom-48v': 'Alimentation fantôme +48 V',
     'mains-power': 'Secteur 230 V',
   },
@@ -541,7 +544,9 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     reasonSilent: 'le fader master est à −inf',
     reasonBalance: 'la balance de la console coupe ces enceintes',
     reasonUnverified: 'appareil non vérifié (Bêta)',
-    reasonNoAcoustic: 'enceinte sans données acoustiques',
+    reasonNoAcoustic: 'couverture non calculée faute de valeur vérifiée',
+    noSourceNoData: 'Couverture non calculée : aucune valeur vérifiée pour ce modèle (statut à valider). L’écoute n’est pas concernée.',
+    noDataNote: 'Couverture non calculée pour {names} : valeur non vérifiée (aucune donnée constructeur retenue pour ce modèle).',
     reasonUnpowered: 'enceinte hors tension',
     reasonOther: 'enceinte non utilisable',
     reasonsJoin: ' ; ',
@@ -716,10 +721,22 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     badgeUnverified: 'non vérifié',
     /** Tooltip of a Bêta item, and the description of a placed one (Properties). */
     tipUnverified: 'Fiche proposée, pas encore vérifiée : comportement approximatif.',
+    /** Badge of a Bêta item that has a 3D model at an ESTIMATED size (Wave 0, beta-modelled): never reads as verified. */
+    badgeEstimated: 'Bêta — dimensions estimées',
+    /** Tooltip of that item. */
+    tipEstimated: 'Modèle 3D aux dimensions estimées : fiche non vérifiée, comportement approximatif.',
+    /** Badge of a Bêta item whose 3D model has the SIZE of a datasheet or a dealer page (Wave 1b): only its connectors are not verified. */
+    badgePorts: 'Bêta — connecteurs non vérifiés',
+    /** Tooltip of that item. */
+    tipPorts: 'Modèle 3D aux dimensions de la fiche constructeur ou revendeur ; les connecteurs ne sont pas vérifiés : comportement approximatif.',
     /** Note title when a reopened project has devices whose sheet is gone (a proposal no longer offered, an unknown device). */
     missingTitle: 'Appareils non rechargés',
     /** Note body; the device ids follow as a list. */
     missingBody: 'La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés.',
+    /** Note title when a reopened project has cables on ports that no longer exist (a Bêta device that was promoted and lost a port). */
+    droppedCablesTitle: 'Câbles non rechargés',
+    /** Note body (statut à valider); the cables follow as a list. */
+    droppedCablesBody: 'Ces câbles menaient à des prises qui n’existent plus sur la fiche mise à jour de l’appareil (à valider) : ils n’ont pas été rechargés, le reste du projet l’est.',
     /** Note title when the Bêta sheets a saved project needs could not be fetched (network or timeout): the project is NOT opened and NOT touched. */
     unavailableTitle: 'Projet non rouvert',
     /** Note body, status line and place-picker line for the same case. */
@@ -744,10 +761,16 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     tabConsoles: 'Consoles',
     /** Tab « Enceintes » (inventory category). */
     tabEnceintes: 'Enceintes',
+    /** Tab « Amplis » (inventory category, Wave 0). */
+    tabAmplis: 'Amplis',
     /** Tab « Sources » (inventory category). */
     tabSources: 'Sources',
     /** Tab « Réseau » (inventory category). */
     tabReseau: 'Réseau',
+    /** Tab « Câbles et DI » (inventory category, Wave 0). */
+    tabCables: 'Câbles et DI',
+    /** Tab « Pieds et accroches » (inventory category, Wave 0). */
+    tabPieds: 'Pieds et accroches',
     /** Tab « Secteur » (inventory category). */
     tabSecteur: 'Secteur',
     /** Tab « Éclairage » (inventory category). */
@@ -903,7 +926,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     'rj45': 'RJ45 (Cat5e/6)',
     ethercon: 'Neutrik etherCON (RJ45 renforcé)',
     'speakon-nl4': 'Neutrik Speakon NL4',
-    'powercon-blue': 'Neutrik powerCON (bleu, entrée secteur)',
+    'powercon-blue': 'Neutrik powerCON (bleu, entrée secteur ; un cordon powerCON vers IEC C13 le relie à une prise C13)',
     'powercon-true1': 'Neutrik powerCON TRUE1',
     'iec-c13': 'IEC C13 (fiche secteur)',
     'iec-c14': 'IEC C14 (embase secteur)',
@@ -918,6 +941,18 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     'usb-c': 'USB Type-C / Thunderbolt 3',
     digilink: 'Avid DigiLink',
     'gpio-terminal': 'Bornier GPIO / port logique D-sub',
+    'dc-barrel': 'Jack d’alimentation DC (cylindrique)',
+    'midi-din5': 'MIDI DIN 5 broches',
+    xlr4: 'XLR4 (intercom / casque / 12 V DC)',
+    'bnc-antenna-50ohm': 'BNC 50 Ω (antenne HF)',
+    'mini-xlr-ta4': 'Mini-XLR TA4 (cravate / émetteur ceinture)',
+    euroblock: 'Bornier à vis Euroblock',
+    'speakon-nl8': 'Neutrik Speakon NL8',
+    'binding-post': 'Borne à vis (fil nu / banane)',
+    opticalcon: 'Neutrik opticalCON (fibre renforcée)',
+    'sc-fibre': 'Fibre optique SC',
+    lemo: 'LEMO push-pull (multibroche)',
+    hirose: 'Hirose multibroche (caméra / DC)',
   },
   /**
    * « Pourquoi je n’entends rien ? » (onboarding packs, T1.3): a read-only list over the engine's own playback reasons (`playback.*`, quoted

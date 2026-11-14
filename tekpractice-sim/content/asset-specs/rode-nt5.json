@@ -1,0 +1,122 @@
+{
+  "id": "rode-nt5",
+  "kind": "device",
+  "tier": "hero",
+  "realSizeMm": {
+    "w": 20,
+    "h": 118,
+    "d": 20
+  },
+  "ports": [
+    {
+      "portId": "out-xlr",
+      "face": "bottom",
+      "xMm": 10,
+      "yMm": 10,
+      "confidence": "guess",
+      "openingMm": 15,
+      "connector": "xlr3-m",
+      "signal": "mic-level",
+      "dir": "out",
+      "flags": [
+        "requiresPhantom"
+      ]
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://edge.rode.com/pdf/products/79/NT5_Datasheet_05_FA.pdf",
+  "build": {
+    "shape": "revolve",
+    "params": {
+      "segments": 64
+    },
+    "projection": "wrap",
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "profile": [
+      [
+        0,
+        15
+      ],
+      [
+        1.5,
+        18.5
+      ],
+      [
+        3,
+        20
+      ],
+      [
+        20,
+        20
+      ],
+      [
+        22,
+        19.2
+      ],
+      [
+        85,
+        19.2
+      ],
+      [
+        88,
+        19.8
+      ],
+      [
+        93,
+        19.8
+      ],
+      [
+        95,
+        19.2
+      ],
+      [
+        112,
+        19.2
+      ],
+      [
+        115,
+        16
+      ],
+      [
+        117,
+        9
+      ],
+      [
+        118,
+        0
+      ]
+    ],
+    "colours": [
+      {
+        "fromMm": 0,
+        "colour": "#b4b7bc"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://edge.rode.com/pdf/products/79/NT5_Datasheet_05_FA.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 20 x 20 x 118 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://edge.rode.com/pdf/products/79/NT5_Datasheet_05_FA.pdf",
+      "note": "RODE NT5 datasheet (downloaded, read as text): \"3 pin XLR, balanced output between Pin 2 (+), Pin 3 (-) and Pin 1 (ground)\", \"Power Requirement: P48 phantom power\", diameter 20 mm, length 118 mm. Documents one XLR output and P48 (condenser: requiresPhantom)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://edge.rode.com/pdf/products/79/NT5_Datasheet_05_FA.pdf",
+      "note": "build.profile: a 20 mm pencil body with a seam ring and a capsule collar near the top, rounded cap, 118 mm long. No product photo or drawing was opened for this device, so the silhouette is a plausible lathe profile drawn from the published length and widest diameter, NOT measured: the size is exact, the shape between the stations is an estimate (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://edge.rode.com/pdf/products/79/NT5_Datasheet_05_FA.pdf",
+      "note": "build.projection wrap: our own generic artwork (content/generic-panels/rode-nt5.json, drawn by npm run asset:panel): plain satin metal tube, two seam rings and a fine grille band at the capsule. No photo copy, no brand mark, no lettering. Colours: a typical finish for this kind of microphone, lifted for the creation lighting, not sampled from a photo. out-xlr: on the base (bottom) face at its centre; no drawing gives it, so the confidence is guess. Budget floor 1000: a slim pencil tube cannot reach the 1500 floor of the mic class without invented stations."
+    }
+  ]
+}

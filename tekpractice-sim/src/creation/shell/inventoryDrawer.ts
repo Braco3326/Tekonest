@@ -26,6 +26,7 @@
  */
 import './inventoryDrawer.css'
 import { MODEL_IDS } from '../../scene/modelIds'
+import badges from '../betaBadges.json'
 import type { Registry } from '../../engine/CatalogLoader'
 import { COPY } from '../copy'
 import { assetUrl } from '../../assetUrl'
@@ -92,6 +93,9 @@ function el<K extends keyof HTMLElementTagNameMap>(doc: Document, tag: K, cls?: 
   if (text !== undefined) e.textContent = text
   return e
 }
+
+/** The modelled proposals whose size is verified (generated from the plan by `npm run register`, Wave 1b finding 3). */
+const BETA_SIZE_VERIFIED: ReadonlySet<string> = new Set((badges as { sizeVerified: string[] }).sizeVerified)
 
 /**
  * A small device silhouette (front panel with its ports): outlined and dashed for the
@@ -203,8 +207,12 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     const r = t.getBoundingClientRect()
     const left = r.left - box.left
     const right = box.right - r.right
-    if (left < fade) tablist.scrollLeft -= fade - left
-    else if (right < fade) tablist.scrollLeft += fade - right
+    // A tab too wide to be clear of BOTH fades (« Pieds et accroches » in the 152 px row of a 400 px phone) is centred instead: whole, never half out of the row.
+    if (r.width > box.width - 2 * fade) tablist.scrollLeft += left + r.width / 2 - box.width / 2
+    // A browser keeps scrollLeft on whole pixels, so a tab at a fractional offset (a longer tab name) could stop up to a pixel inside the fade: round the move AWAY from the
+    // edge it must clear (the scroll is clamped at the ends of the row, where there is no fade).
+    else if (left < fade) tablist.scrollLeft = Math.floor(tablist.scrollLeft - (fade - left))
+    else if (right < fade) tablist.scrollLeft = Math.ceil(tablist.scrollLeft + (fade - right))
   })
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncFade).observe(tablist)
 
@@ -421,13 +429,18 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
       const text = el(doc, 'span', 'cr-inv-text')
       text.appendChild(el(doc, 'span', 'cr-inv-name', it.label))
       if (it.badge) {
-        const badge = el(doc, 'span', 'cr-inv-badge', I().badgeUnverified)
+        // Wave 0: a proposal that has a model at an estimated size says so (« Bêta — dimensions estimées »), still never verified.
+        // Wave 1b: a modelled proposal whose size is a datasheet / dealer size says its CONNECTORS are unverified instead.
+        const estimated = it.badge === 'dimensions estimées'
+        const ports = it.badge === 'connecteurs non vérifiés'
+        const badge = el(doc, 'span', 'cr-inv-badge', ports ? I().badgePorts : estimated ? I().badgeEstimated : I().badgeUnverified)
         badge.dataset.testid = 'inventory-badge'
         text.appendChild(badge)
         // A proposal never looks verified (S5): the tooltip says it is approximate, and screen readers get it as the description.
-        b.title = I().tipUnverified!
+        const tipText = ports ? I().tipPorts! : estimated ? I().tipEstimated! : I().tipUnverified!
+        b.title = tipText
         b.dataset.beta = 'true'
-        const tip = el(doc, 'span', 'cr-sr-only', I().tipUnverified)
+        const tip = el(doc, 'span', 'cr-sr-only', tipText)
         tip.id = `cr-inv-tip-${at}`
         b.setAttribute('aria-describedby', tip.id)
         li.appendChild(tip)
@@ -451,7 +464,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   }
 
   const build = (): void => {
-    const inv = inventory(d.registry, { proposals: d.proposals(), modelIds: MODEL_IDS, beta: d.betaStatus() })
+    const inv = inventory(d.registry, { proposals: d.proposals(), modelIds: MODEL_IDS, beta: d.betaStatus(), sizeVerified: BETA_SIZE_VERIFIED })
     items = inv.items
     tablist.replaceChildren()
     tabs = inv.tabs.map((tab, i) => {
@@ -567,7 +580,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     },
     refresh() {
       if (!api.isOpen) return
-      const inv = inventory(d.registry, { proposals: d.proposals(), modelIds: MODEL_IDS, beta: d.betaStatus() })
+      const inv = inventory(d.registry, { proposals: d.proposals(), modelIds: MODEL_IDS, beta: d.betaStatus(), sizeVerified: BETA_SIZE_VERIFIED })
       const sameTabs = inv.tabs.length === tabs.length && inv.tabs.every((t, i) => tabs[i].tab === t)
       // Where the keyboard focus is, to give it back after a redraw (review findings 7 and 8): the same result item if it is still listed, else its tab,
       // else the selected tab. A learner is never thrown to the page.

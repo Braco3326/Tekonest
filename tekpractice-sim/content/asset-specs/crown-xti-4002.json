@@ -1,0 +1,146 @@
+{
+  "id": "crown-xti-4002",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 88.9,
+    "d": 311.2
+  },
+  "ports": [
+    {
+      "portId": "in-xlr-1",
+      "face": "io",
+      "xMm": 45,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-xlr-2",
+      "face": "io",
+      "xMm": 75,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-spk-1",
+      "face": "io",
+      "xMm": 250,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-spk-2",
+      "face": "io",
+      "xMm": 300,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 410,
+      "yMm": 40,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 410,
+      "yMm": 75,
+      "axis": "x",
+      "sizeMm": {
+        "w": 20,
+        "h": 14.4,
+        "d": 8
+      }
+    }
+  ],
+  "portsDocumented": true,
+  "portsSource": "https://www.crownaudio.com/en/product_documents/5021481_spec_mnl_xti2_operation_06-12-pdf-79fc4575-cd03-479c-bfd7-cefc370cd3b9",
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6.35,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 70,
+      "frontVentSlots": 5,
+      "frontVentRows": 6,
+      "frontVentSlotLenMm": 40,
+      "frontVentSlotWidthMm": 3,
+      "frontVentColPitchMm": 46,
+      "frontVentRowPitchMm": 9,
+      "frontVentXMm": 170,
+      "frontVentYMm": 44.45,
+      "windowWMm": 70,
+      "windowHMm": 26,
+      "windowXMm": 300,
+      "windowYMm": 30,
+      "windowDepthMm": 2,
+      "earHandleProjectionMm": 20,
+      "earHandleDiaMm": 10
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.crownaudio.com/en/products/xti-4002",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 311.2 x 88.9 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.crownaudio.com/en/products/xti-4002",
+      "note": "Crown XTi 4002 product page (opened 2026-11-12): 3.5 in x 19 in x 12.25 in (2U), 18.5 lb (8.4 kg), IEC power connector 15 A. The plan size 482.6 x 311.2 x 88.9 mm is that page in mm."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.crownaudio.com/en/product_documents/5021481_spec_mnl_xti2_operation_06-12-pdf-79fc4575-cd03-479c-bfd7-cefc370cd3b9",
+      "note": "Crown XTi2 Series operation manual (downloaded, read as text on 2026-11-12), back panel of the XTi 1002 / 2002 / 4002: two 3-pin XLR inputs (one per channel), two 3-pin XLR link outputs, two 4-pole speakON output connectors (channel 1 connector wired for both channels), one pair of binding post outputs per channel, a Type B USB connector (HiQnet), the AC power connector with a cord clip. The IEC inlet type is not named (15 A: a C20 in practice): it is modelled as iec-c14 and listed as assumed in the plan row (assumedConnectors), like the Neumann KH 120 II. Modelled: 2 XLR inputs, 2 speakON outputs, the inlet; the XLR link outputs, binding posts and USB-B are drawn only (the amplifier template routes each input to every speaker output when ports outnumber them, so only the 1:1 set is modelled)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.crownaudio.com/en/products/xti-4002",
+      "note": "Port and control positions are GUESSES. build: rack-box v3b (front vent block, LCD window, ear handles); the vents, window and handles are ESTIMATES drawn from the usual layout of this amplifier class (no photo or drawing opened). The size d includes the 20 mm handles. build.projection: our own generic artwork; no photo, no logo, no lettering."
+    }
+  ]
+}

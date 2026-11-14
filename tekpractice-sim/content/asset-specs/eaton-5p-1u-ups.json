@@ -1,0 +1,137 @@
+{
+  "id": "eaton-5p-1u-ups",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 442,
+    "h": 43,
+    "d": 508
+  },
+  "ports": [
+    {
+      "portId": "out-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-2",
+      "face": "io",
+      "xMm": 76,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-3",
+      "face": "io",
+      "xMm": 112,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-4",
+      "face": "io",
+      "xMm": 148,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "out-5",
+      "face": "io",
+      "xMm": 184,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "iec-c13",
+      "signal": "mains-power",
+      "dir": "out",
+      "flags": [
+        "isMainsSource"
+      ]
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 260,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.2,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "rearInsetMm": 8,
+      "seamMm": 24,
+      "feetMm": 2.5,
+      "feetDiaMm": 10,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 60,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 40,
+      "ventColPitchMm": 90,
+      "plateRgb": 1908257,
+      "bodyRgb": 2500395
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 800,
+      "max": 3500
+    },
+    "minFilletMm": 1.2
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.eaton.com/us/en-us/skuPage.5P1000R.html",
+      "note": "equipment plan source (research grade: datasheet); size 442 x 508 x 43 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.avendor.com/products/eaton-5p-1000va-770w-120v-line-interactive-ups-5-15p-8x-5-15r-outlets-true-si",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.eaton.com/us/en-us/skuPage.5P1000R.html",
+      "note": "Eaton 5P1000R (research read): 5 x NEMA 5-15R outlets, 5-15P input on a 6 ft captive cord, RS-232 (RJ45) and USB (HID). Outlets are modelled as iec-c13 stand-ins (like the Furman M-8x2), the captive input cord has no port, and the USB is a control port (no audio, modelled as usb-b only to keep a patchable connector). Size 442 x 508 x 43 mm (17.4 x 20 x 1.7 in, labelled; the 5P1000R only, an estimate: the 5P1500R and 230 V variants not verified). 14.7 kg. Positions guesses."
+    }
+  ]
+}

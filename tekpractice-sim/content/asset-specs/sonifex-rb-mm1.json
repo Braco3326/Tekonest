@@ -1,0 +1,111 @@
+{
+  "id": "sonifex-rb-mm1",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 280,
+    "h": 43,
+    "d": 108
+  },
+  "ports": [
+    {
+      "portId": "in-mixer-program-input-l-r-1",
+      "face": "io",
+      "xMm": 28,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mixer-program-input-l-r-2",
+      "face": "io",
+      "xMm": 54.4,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-telephone-fader-input-l-r",
+      "face": "io",
+      "xMm": 80.8,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-mix-minus-output-to-tbu-l-r",
+      "face": "io",
+      "xMm": 113.2,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-filtered-iec-mains-inlet",
+      "face": "io",
+      "xMm": 252,
+      "yMm": 21,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 6,
+      "plateFilletMm": 2.6,
+      "filletMm": 3,
+      "filletSegments": 10,
+      "rearInsetMm": 5,
+      "seamMm": 14,
+      "feetMm": 2,
+      "feetDiaMm": 12,
+      "ventSlots": 7,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 2.4,
+      "ventSlotLenMm": 30,
+      "ventPitchMm": 6,
+      "ventDepthMm": 1.2,
+      "ventFromRearMm": 22,
+      "plateRgb": 2767703,
+      "bodyRgb": 2042429
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.sonifex.co.uk/product/rb-mm1/",
+      "note": "equipment plan source (research grade: datasheet); size 280 x 108 x 43 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.adorama.com/sorbmm1.html",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.sonifex.co.uk/product/rb-mm1/",
+      "note": "Sonifex RB-MM1 product page (research read): XLR 3-pin female balanced stereo inputs from the mixer plus an XLR input for the telephone fader feed, one XLR 3-pin male balanced output to the TBU; counts \"2 plus 1\" not cross-checked against the handbook, so beta-modelled with the 5 Beta proposal ports. Size 280 x 108 x 43 mm (W x D x H, from 28 x 10.8 x 4.3 cm). The RB-MM1 is a desktop unit: a small box without ears. Positions guesses; the power inlet is the proposal's mains inlet (the page does not confirm an external supply)."
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "id": "yamaha-px10",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 480,
+    "h": 88,
+    "d": 388
+  },
+  "ports": [
+    {
+      "portId": "in-line-input-xlr-3-31-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-input-xlr-3-31-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-input-1-4-trs-1",
+      "face": "io",
+      "xMm": 105.2,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-line-input-1-4-trs-2",
+      "face": "io",
+      "xMm": 122.6,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-speaker-output-1",
+      "face": "io",
+      "xMm": 146.3,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-speaker-output-2",
+      "face": "io",
+      "xMm": 176.3,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-speaker-output-binding-post-pairs-1",
+      "face": "io",
+      "xMm": 202.4,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "binding-post",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-speaker-output-binding-post-pairs-2",
+      "face": "io",
+      "xMm": 224.6,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "binding-post",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-speaker-output-1-4-ts-1",
+      "face": "io",
+      "xMm": 244.4,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-speaker-output-1-4-ts-2",
+      "face": "io",
+      "xMm": 261.8,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-usb-memory-for-save-load-presets-firmware",
+      "face": "io",
+      "xMm": 278.6,
+      "yMm": 44,
+      "confidence": "guess",
+      "connector": "usb-a",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 440,
+      "earHoleMm": 6,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 60,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "earHoleEdgeMm": 10,
+      "plateRgb": 2829617,
+      "bodyRgb": 1776671
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://ca.yamaha.com/en/products/proaudio/amplifiers/px10/specs.html",
+      "note": "equipment plan source (research grade: datasheet); size 480 x 388 x 88 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://dk.yamaha.com/files/download/other_assets/6/792726/px10_en_ts_c0.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.thomannmusic.com/yamaha_px10.htm",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.manualslib.com/manual/1117164/Yamaha-Px10.html?page=9",
+      "note": "Yamaha PX10 manual page 9 and the specification page (read by a research pass 2026-11-12): per channel an XLR-3-31 and a balanced 1/4 in TRS input in parallel, Neutrik NL4MD speakON, binding post and phone-jack outputs, an AC IN with a plug clamp (inlet not named), no network or control ports. The size has an assumed axis order, so beta-modelled; the ports are the Bêta proposal ports (11 of 11 listed, no mains port). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.manualslib.com/manual/1117164/Yamaha-Px10.html?page=9",
+      "note": "Yamaha PX10 manual page 9 and the specification page (read by a research pass 2026-11-12): per channel an XLR-3-31 and a balanced 1/4 in TRS input in parallel, Neutrik NL4MD speakON, binding post and phone-jack outputs, an AC IN with a plug clamp (inlet not named), no network or control ports. The size has an assumed axis order, so beta-modelled; the ports are the Bêta proposal ports (11 of 11 listed, no mains port). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.manualslib.com/manual/1117164/Yamaha-Px10.html?page=9",
+      "note": "Yamaha PX10 manual page 9 and the specification page (read by a research pass 2026-11-12): per channel an XLR-3-31 and a balanced 1/4 in TRS input in parallel, Neutrik NL4MD speakON, binding post and phone-jack outputs, an AC IN with a plug clamp (inlet not named), no network or control ports. The size has an assumed axis order, so beta-modelled; the ports are the Bêta proposal ports (11 of 11 listed, no mains port). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

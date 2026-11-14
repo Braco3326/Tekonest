@@ -1,0 +1,126 @@
+{
+  "id": "dangerous-music-monitor-st",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 44.45,
+    "d": 241.3
+  },
+  "ports": [
+    {
+      "portId": "in-main",
+      "face": "io",
+      "xMm": 70,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-main",
+      "face": "io",
+      "xMm": 140,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aux-1",
+      "face": "io",
+      "xMm": 215,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aux-2",
+      "face": "io",
+      "xMm": 241,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-slate",
+      "face": "io",
+      "xMm": 275,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-cue-amp",
+      "face": "io",
+      "xMm": 301,
+      "yMm": 22,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 25,
+      "ventSlots": 9,
+      "ventColumns": 1,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 20,
+      "plateRgb": 3356219,
+      "bodyRgb": 1842464
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.sweetwater.com/store/detail/MonitorSTdm",
+      "note": "equipment plan source (research grade: dealer); size 482.6 x 241.3 x 44.45 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://proaudiola.com/Dangerous-Music-MONITOR-ST-p/dangerous-monitor_st-blk.htm",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.perfectcircuit.com/dangerous-music-monitor-st.html",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.dangerousmusic.com/s/MONITOR-ST-SR-Manual-0322.pdf",
+      "note": "Dangerous Music Monitor ST / SR manual, opened 2026-11-12 (read as text): a 1U rack unit with 4 stereo main inputs and 3 speaker pairs plus sub on D connectors (Tascam pinout, DB-25 assumed), aux inputs 1 and 2, slate output, cue amp output, talkback remote, a REMOTE jack to the desktop remote (shielded Cat5e, not Ethernet) and a DC IN for an external supply. The manual names no XLR, DIN or RJ45 types: those come from a 2001 Sound On Sound review hosted by the manufacturer. The rack unit size is NOT published: the 312 x 106 mm figures on the product page belong to the desktop remote. The plan size (1U x 19 in x 9.5 in) is a PerfectCircuit dealer listing converted from inches, so the row is an estimate and the device is beta-modelled. No mains inlet (external supply into DC IN, no signal type) and no power switch is stated. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

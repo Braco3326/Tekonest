@@ -1,0 +1,74 @@
+{
+  "id": "neutrik-nppa-tt-pt",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482,
+    "h": 44,
+    "d": 178
+  },
+  "ports": [
+    {
+      "portId": "bidir-front-patch-jacks-2-rows-of-48-1",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 28,
+      "confidence": "guess",
+      "connector": "tt-bantam",
+      "signal": "line-level-pro",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-front-patch-jacks-2-rows-of-48-2",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 14,
+      "confidence": "guess",
+      "connector": "tt-bantam",
+      "signal": "line-level-pro",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 4,
+      "plateFilletMm": 1.6,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 6,
+      "seamMm": 18,
+      "plateRgb": 1908257,
+      "bodyRgb": 2105894
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 3500
+    },
+    "minFilletMm": 1.2
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nppa-tt-pt.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 482 x 178 x 44 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.scribd.com/document/494380838/patch-panel-nppa-tt-pt-5",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.neutrik.com/en/product/nppa-tt-pt.pdf",
+      "note": "Neutrik NPPA-TT-PT (product PDF opened): 2 x 48 TT (Bantam) jacks, half-normalled bottom row, 288 rear push terminals, 1U. Beta-modelled with the 2 Beta proposal ports (one jack per row; 2 of 96 modelled). Size 482 x 178 x 44 mm: dimensions from the Neutrik manual as quoted in a search summary of a Scribd copy (not opened), depth unlabelled, so an estimate. Positions guesses."
+    }
+  ]
+}

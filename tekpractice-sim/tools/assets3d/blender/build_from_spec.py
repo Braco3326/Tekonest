@@ -323,14 +323,181 @@ def take_face(bm: bmesh.types.BMesh, z: float) -> list[bmesh.types.BMEdge]:
     return edges
 
 
-def fill_with_holes(bm: bmesh.types.BMesh, outline: list[bmesh.types.BMEdge], holes: list[list[bmesh.types.BMEdge]], normal_g: tuple[float, float, float]) -> None:
-    """Fills the planar region bounded by `outline` (edges) minus the loops `holes` with triangles."""
+def ring_of(edges: list[bmesh.types.BMEdge]) -> list[bmesh.types.BMVert]:
+    """The vertices of the closed loop made by `edges` (in the order of the first edge's direction), walking the edges by their vertices."""
+    nxt: dict[int, list[bmesh.types.BMVert]] = {}
+    for e in edges:
+        a, b = e.verts
+        nxt.setdefault(a.index, []).append(b)
+        nxt.setdefault(b.index, []).append(a)
+    start = edges[0].verts[0]
+    out = [start]
+    prev, cur = None, start
+    while True:
+        cands = [v for v in nxt[cur.index] if prev is None or v.index != prev.index]
+        if not cands:
+            raise BuildError("fill: an edge loop is not closed")
+        step = cands[0] if prev is not None else edges[0].verts[1]
+        if step.index == start.index:
+            break
+        out.append(step)
+        prev, cur = cur, step
+        if len(out) > len(edges) + 1:
+            raise BuildError("fill: an edge loop does not close")
+    return out
+
+
+def _area2(a: tuple[float, float, float], b: tuple[float, float, float], c: tuple[float, float, float]) -> float:
+    return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+
+
+def _segments_cross(p1: tuple[float, float], p2: tuple[float, float], p3: tuple[float, float], p4: tuple[float, float], eps: float) -> bool:
+    """True when the segments p1p2 and p3p4 cross at a point that is interior to both (touching at an end or running along each other does not count)."""
+    d1 = (p4[0] - p3[0]) * (p1[1] - p3[1]) - (p4[1] - p3[1]) * (p1[0] - p3[0])
+    d2 = (p4[0] - p3[0]) * (p2[1] - p3[1]) - (p4[1] - p3[1]) * (p2[0] - p3[0])
+    d3 = (p2[0] - p1[0]) * (p3[1] - p1[1]) - (p2[1] - p1[1]) * (p3[0] - p1[0])
+    d4 = (p2[0] - p1[0]) * (p4[1] - p1[1]) - (p2[1] - p1[1]) * (p4[0] - p1[0])
+    return ((d1 > eps and d2 < -eps) or (d1 < -eps and d2 > eps)) and ((d3 > eps and d4 < -eps) or (d3 < -eps and d4 > eps))
+
+
+def triangulate_with_holes(outer: list[tuple[float, float, int]], holes: list[list[tuple[float, float, int]]]) -> list[tuple[int, int, int]]:
+    """Triangulates a polygon with holes, deterministically (pure arithmetic, no heap or pointer order): each hole is joined to the outline by a bridge to the nearest vertex it can
+    see, then the one ring is cut into triangles by ear clipping, always the first ear in ring order. Points are (x, y, id); returns triples of ids, counter-clockwise in the (x, y)
+    chart. Every vertex given is used (a collinear one makes a degenerate triangle rather than a hole). Raises BuildError when it cannot finish."""
+    eps = 1e-14
+    def signed_area(ring: list[tuple[float, float, int]]) -> float:
+        return sum(ring[i][0] * ring[(i + 1) % len(ring)][1] - ring[(i + 1) % len(ring)][0] * ring[i][1] for i in range(len(ring))) / 2.0
+    ring = list(outer) if signed_area(outer) > 0 else list(reversed(outer))
+    hs = [list(h) if signed_area(h) < 0 else list(reversed(h)) for h in holes]
+    hs.sort(key=lambda h: (-max(p[0] for p in h), -max(p[1] for p in h), min(p[2] for p in h)))
+    pending = list(hs)
+    for hole in hs:
+        pending.remove(hole)
+        m_i = max(range(len(hole)), key=lambda i: (hole[i][0], hole[i][1], -hole[i][2]))
+        m = hole[m_i]
+        edges: list[tuple[tuple[float, float], tuple[float, float]]] = [((ring[i][0], ring[i][1]), (ring[(i + 1) % len(ring)][0], ring[(i + 1) % len(ring)][1])) for i in range(len(ring))]
+        for other in pending + [hole]:
+            edges += [((other[i][0], other[i][1]), (other[(i + 1) % len(other)][0], other[(i + 1) % len(other)][1])) for i in range(len(other))]
+        pts_all = [(p[0], p[1]) for p in ring] + [(p[0], p[1]) for other in pending + [hole] for p in other]
+        order = sorted(range(len(ring)), key=lambda i: ((ring[i][0] - m[0]) ** 2 + (ring[i][1] - m[1]) ** 2, ring[i][2], i))
+        chosen = -1
+        for i in order:
+            p = ring[i]
+            if (p[0], p[1]) == (m[0], m[1]):
+                continue
+            a, b = (m[0], m[1]), (p[0], p[1])
+            if any(_segments_cross(a, b, e0, e1, eps) for e0, e1 in edges):
+                continue
+            # no other vertex may lie on the open segment
+            dx, dy = b[0] - a[0], b[1] - a[1]
+            length2 = dx * dx + dy * dy
+            if any(q != a and q != b and abs(dx * (q[1] - a[1]) - dy * (q[0] - a[0])) <= 1e-9 * length2 ** 0.5 and 0 < ((q[0] - a[0]) * dx + (q[1] - a[1]) * dy) < length2 for q in pts_all):
+                continue
+            # the bridge must run inside the region: its midpoint is inside the ring (even-odd), outside every pending hole and this hole
+            mid = ((a[0] + b[0]) / 2.0, (a[1] + b[1]) / 2.0)
+            def inside(poly: list[tuple[float, float, int]], pt: tuple[float, float]) -> bool:
+                c = False
+                for k in range(len(poly)):
+                    p0, p1 = poly[k], poly[(k + 1) % len(poly)]
+                    if (p0[1] > pt[1]) != (p1[1] > pt[1]) and pt[0] < p0[0] + (p1[0] - p0[0]) * (pt[1] - p0[1]) / (p1[1] - p0[1]):
+                        c = not c
+                return c
+            if not inside(ring, mid) or any(inside(o, mid) for o in pending + [hole]):
+                continue
+            chosen = i
+            break
+        if chosen < 0:
+            raise BuildError("fill: a hole could not be joined to the outline (no vertex of it sees one of the outline)")
+        walk = [hole[(m_i + k) % len(hole)] for k in range(len(hole))]
+        ring = ring[:chosen + 1] + walk + [m, ring[chosen]] + ring[chosen + 1:]
+
+    tris: list[tuple[int, int, int]] = []
+    n_left = len(ring)
+    idx = 0
+    guard = 0
+    while len(ring) > 3:
+        guard += 1
+        if guard > 4 * n_left * n_left + 100:
+            raise BuildError("fill: ear clipping did not finish")
+        n = len(ring)
+        best = -1
+        weak = -1
+        for step in range(n):
+            i = (idx + step) % n
+            a, b, c = ring[i - 1], ring[i], ring[(i + 1) % n]
+            ar = _area2(a, b, c)
+            if ar <= eps:
+                if weak < 0 and ar >= -eps:
+                    weak = i
+                continue
+            ok = True
+            for q in ring:
+                if q is a or q is b or q is c:
+                    continue
+                if (q[0], q[1]) in ((a[0], a[1]), (b[0], b[1]), (c[0], c[1])):
+                    continue
+                if _area2(a, b, q) >= -eps and _area2(b, c, q) >= -eps and _area2(c, a, q) >= -eps:
+                    ok = False
+                    break
+            if ok:
+                best = i
+                break
+        if best < 0:
+            best = weak
+        if best < 0:
+            raise BuildError("fill: no ear found (the polygon is not simple)")
+        a, b, c = ring[best - 1], ring[best], ring[(best + 1) % n]
+        tris.append((a[2], b[2], c[2]))
+        del ring[best]
+        idx = max(0, best - 1) % max(1, len(ring))
+    if len(ring) == 3:
+        tris.append((ring[0][2], ring[1][2], ring[2][2]))
+    return tris
+
+
+def fill_with_holes_det(bm: bmesh.types.BMesh, outline: list[bmesh.types.BMEdge], holes: list[list[bmesh.types.BMEdge]], normal_g: tuple[float, float, float]) -> None:
+    """fill_with_holes without bmesh's scan fill (whose triangles depend on the heap layout): the same planar region, triangulated by triangulate_with_holes."""
+    if any(e is None for e in outline) or any(e is None for h in holes for e in h):
+        raise BuildError("fill_with_holes: an outline edge does not exist")
+    bm.verts.index_update()
+    axis = max(range(3), key=lambda k: abs(normal_g[k]))
+    flip = normal_g[axis] < 0
+    def chart(v: bmesh.types.BMVert) -> tuple[float, float, int]:
+        g = (v.co.x, v.co.z, -v.co.y)   # glTF coordinates
+        u, w = [g[k] for k in range(3) if k != axis]
+        return (-u if flip else u, w, v.index)
+    def canonical(ring: list[tuple[float, float, int]]) -> list[tuple[float, float, int]]:
+        first = min(range(len(ring)), key=lambda i: ring[i][2])   # the edge list may start anywhere from one run to the next
+        return ring[first:] + ring[:first]
+    outer = canonical([chart(v) for v in ring_of(outline)])
+    inner = [canonical([chart(v) for v in ring_of(h)]) for h in holes]
+    by_index = {v.index: v for e in outline + [e for h in holes for e in h] for v in e.verts}
+    made = 0
+    for a, b, c in triangulate_with_holes(outer, inner):
+        if len({a, b, c}) < 3:
+            continue
+        try:
+            bm.faces.new((by_index[a], by_index[b], by_index[c]))
+            made += 1
+        except ValueError:
+            pass   # a face that already exists (a degenerate duplicate): skip
+    if made == 0:
+        raise BuildError("could not fill a face around its holes")
+
+
+def fill_with_holes(bm: bmesh.types.BMesh, outline: list[bmesh.types.BMEdge], holes: list[list[bmesh.types.BMEdge]], normal_g: tuple[float, float, float], beauty: bool = True) -> None:
+    """Fills the planar region bounded by `outline` (edges) minus the loops `holes` with triangles. `beauty` True (the default, and what every v1 and v2 build uses) is bmesh's scan
+    fill with beauty rotation; its triangles depend on the heap layout (measured: the same plan, other diagonals, from one session to the next, also with use_beauty False).
+    `beauty` False is fill_with_holes_det: our own bridge and ear-clip triangulation, pure arithmetic, so two builds are byte-identical. The Wave 2 builders use it."""
+    if not beauty:
+        fill_with_holes_det(bm, outline, holes, normal_g)
+        return
     edges = list(outline)
     for hole in holes:
         edges += hole
     if any(e is None for e in edges):
         raise BuildError("fill_with_holes: an outline edge does not exist")
-    result = bmesh.ops.triangle_fill(bm, use_beauty=True, use_dissolve=False, edges=edges, normal=g2b(*normal_g))
+    result = bmesh.ops.triangle_fill(bm, use_beauty=beauty, use_dissolve=False, edges=edges, normal=g2b(*normal_g))
     if not result["geom"]:
         raise BuildError("could not fill a face around its holes")
 
@@ -600,7 +767,7 @@ def build_rj45_plug(plan: Plan) -> bpy.types.Object:
 def build_rack_box(plan: Plan) -> bpy.types.Object:
     """Plain box w x h x d, centred on x and z with its bottom at y = 0, every edge chamfered by chamferMm (one segment).
     No panel inset and no ear flanges in wave 1: ports sit on the bounding-box face (2026-10-29 spec 4.5)."""
-    if any(k in (plan.get("params") or {}) for k in RACK_V2_NAMES):
+    if any(k in (plan.get("params") or {}) for k in RACK_V2_NAMES + RACK_V3B_NAMES):
         return build_rack_device(plan)
     w, h, d = size_m(plan)
     chamfer = param_m(plan, "chamferMm", DEFAULT_CHAMFER_MM)
@@ -630,6 +797,19 @@ RACK_V2_NAMES = (
     "ventSlots", "ventColumns", "ventDepthMm", "ventSlotLenMm", "ventSlotWidthMm", "ventPitchMm", "ventColPitchMm", "ventFromRearMm", "ventSides",
     "feetMm", "feetDiaMm", "bodyWidthMm", "rearInsetMm", "frontOnIo", "plateFilletMm", "seamMm", "plateRgb", "bodyRgb",
 )
+# rack-box v3b (mirrors RACK_V3B_PARAMS in shapes.ts, which documents each one): front vent slots through the plate, a meter window recess, ear handles clear of the rack-ear slots.
+# Any of them switches the detailed build on, and (so that two builds are byte-identical) makes every flat face filled round holes use fill_with_holes_det and ends with
+# canonical_face_order (own triangulation, canonical order): bmesh's scan fill and the exporter's triangulation break ties by memory address, which gives different triangles from one
+# Blender session to the next in the v2 builds (not changed there: their output is pinned).
+RACK_V3B_NAMES = (
+    "frontVentSlots", "frontVentRows", "frontVentSlotLenMm", "frontVentSlotWidthMm", "frontVentColPitchMm", "frontVentRowPitchMm", "frontVentXMm", "frontVentYMm", "frontVentDepthMm",
+    "windowWMm", "windowHMm", "windowXMm", "windowYMm", "windowDepthMm",
+    "earHandleProjectionMm", "earHandleDiaMm", "earHandleLenMm", "earHandleFromEndMm",
+)
+RACK_WINDOW_DEPTH_MM = 1.5    # default depth of the meter window recess
+RACK_EAR_HANDLE_DIA_MM = 10.0
+RACK_EAR_HANDLE_GAP_MM = 2.0  # default clearance between the rack-ear slot and the handle bar
+RACK_EAR_HANDLE_LEN_FRACTION = 0.6
 RACK_PLATE = "#5a5c66"        # the front plate (lifted: a black panel vanishes against the night backdrop)
 RACK_SLOT = "#17171b"         # inside a slot, vent or other recess
 RACK_HANDLE = "#8c8e93"
@@ -782,14 +962,208 @@ def rack_zone_check(plan: Plan, flipped: bool, w: float, d: float, face: str, wh
             raise BuildError(f"{what} (x {u0:.1f} to {u1:.1f}, y {v0:.1f} to {v1:.1f} mm on the {face} face) overlaps a flat zone of a control (x {z['x0']:.1f} to {z['x1']:.1f}, y {z['y0']:.1f} to {z['y1']:.1f} mm): the controls rig draws that area")
 
 
+def triangulate_det(bm: bmesh.types.BMesh) -> None:
+    """Cuts every quad and n-gon of `bm` into triangles with pure arithmetic (bmesh.ops.triangulate breaks ties between equal diagonals by memory address, measured): a quad along its
+    shorter diagonal (a tie: the diagonal through the vertex of the lowest index), a larger face by ear clipping in its own plane (triangulate_with_holes). The part colour tag is kept."""
+    bm.verts.index_update()
+    bm.faces.index_update()
+    tag = bm.faces.layers.int.get("part")
+    big = sorted((f for f in bm.faces if len(f.verts) > 3), key=lambda f: sorted(v.index for v in f.verts))
+    for f in big:
+        vs = list(f.verts)
+        first = min(range(len(vs)), key=lambda i: vs[i].index)
+        vs = vs[first:] + vs[:first]   # the loop may start at any vertex of the face from one run to the next: start at the lowest index
+        if len(vs) == 4:
+            a, b, c, d = vs
+            d1, d2 = (a.co - c.co).length, (b.co - d.co).length
+            if abs(d1 - d2) <= 1e-12:
+                low = min(vs, key=lambda v: v.index)
+                use_ac = low in (a, c)
+            else:
+                use_ac = d1 < d2
+            tris = [(a, b, c), (a, c, d)] if use_ac else [(a, b, d), (b, c, d)]
+        else:
+            nx = ny = nz = 0.0
+            for i in range(len(vs)):
+                p, q = vs[i].co, vs[(i + 1) % len(vs)].co
+                nx += (p.y - q.y) * (p.z + q.z)
+                ny += (p.z - q.z) * (p.x + q.x)
+                nz += (p.x - q.x) * (p.y + q.y)
+            n = (nx, ny, nz)
+            axis = max(range(3), key=lambda k: abs(n[k]))
+            keep = [(axis + 1) % 3, (axis + 2) % 3]
+            flip = n[axis] < 0
+            chart = [((-vs[i].co[keep[0]] if flip else vs[i].co[keep[0]]), vs[i].co[keep[1]], i) for i in range(len(vs))]
+            tris = [(vs[i], vs[j], vs[k]) for i, j, k in triangulate_with_holes(chart, [])]
+        value = f[tag] if tag is not None else 0
+        for tri in tris:
+            if len({v.index for v in tri}) < 3:
+                continue
+            try:
+                nf = bm.faces.new(tri)
+            except ValueError:
+                continue
+            if tag is not None:
+                nf[tag] = value
+    if big:
+        bmesh.ops.delete(bm, geom=big, context="FACES_ONLY")
+
+
+def canonical_face_order(bm: bmesh.types.BMesh) -> None:
+    """Sorts the faces of `bm` by their (sorted) vertex indices. bmesh's triangle fill and bevel create the same faces in an order that varies with the heap layout
+    (measured: the same plan gave two different files in 24 builds run in parallel, same vertices, same face set, other face order); the vertex order does not vary, so
+    this makes the file byte-stable. It also cuts every quad and n-gon into triangles itself (ear clip, short edge): the glTF exporter would otherwise do it, and its beauty
+    triangulation of a regular n-gon (the cap of a handle, a foot or a lathe: every diagonal ties) breaks ties by memory address, another source of two different files from one plan.
+    Used by the Wave 2 builders only: the older builders' output is pinned as it was."""
+    triangulate_det(bm)
+    bm.verts.index_update()
+    bm.faces.index_update()
+    keyed = {f.index: tuple(sorted(v.index for v in f.verts)) for f in bm.faces}
+    rank = {fi: r for r, fi in enumerate(sorted(keyed, key=lambda fi: keyed[fi]))}   # the sort key of BMElemSeq.sort must be a number
+    bm.faces.sort(key=lambda f: rank[f.index])
+    bm.faces.index_update()
+
+
+def rects_overlap(a: tuple[float, float, float, float], b: tuple[float, float, float, float]) -> bool:
+    """True when two (x0, x1, y0, y1) rectangles share area (touching edges do not count)."""
+    return a[0] < b[1] and a[1] > b[0] and a[2] < b[3] and a[3] > b[2]
+
+
+def rack_v3b_features(plan: Plan, flipped: bool, front_face: str, w: float, h: float, d: float, plate_t: float, plate_cham: float, y_plate0: float, body_w: float, cham: float,
+                      y_c0: float, y_c1: float, z_front: float, ear_r: float, slot_rects: list[tuple[float, float, float, float]], slot_inner_from_end: float, ear_w: float,
+                      counts: dict[str, int]) -> tuple[list[tuple[list[tuple[float, float]], float, bool]], list[tuple[float, float, float]]]:
+    """The v3b features of a rack-box (see RACK_V3B_NAMES), checked and laid out in the built frame (front plate at -z; a face-local x u seen from the front is gx = w / 2 - u).
+
+    Returns (cuts, ear handles): `cuts` are (outline in x/y, depth, through) of the front vent slots and the meter window, to be cut into the front plate;
+    each ear handle is (x of its axis, y0, y1). Raises BuildError when a feature does not fit in the flat part of the plate, lies over an ear slot, another feature or a flat zone
+    of a control. `counts` gets the number of vent slots, windows and handles."""
+    params = plan.get("params") or {}
+    fit = RACK_FIT_MM * MM
+    plate_box = (-w / 2.0 + plate_cham + fit, w / 2.0 - plate_cham - fit, y_plate0 + plate_cham + fit, h - plate_cham - fit)
+    chassis_box = (-body_w / 2.0 + cham + fit, body_w / 2.0 - cham - fit, y_c0 + cham + fit, y_c1 - cham - fit)
+    cuts: list[tuple[list[tuple[float, float]], float, bool]] = []
+    taken: list[tuple[str, tuple[float, float, float, float]]] = [("an ear slot", r) for r in slot_rects]
+
+    def place(what: str, rect: tuple[float, float, float, float], through: bool) -> None:
+        """The rect must lie in the flat plate (and in front of the chassis for a through cut) and clear every feature already placed."""
+        if rect[0] < plate_box[0] or rect[1] > plate_box[1] or rect[2] < plate_box[2] or rect[3] > plate_box[3]:
+            raise BuildError(f"{what} (x {(w / 2.0 - rect[1]) / MM:.1f} to {(w / 2.0 - rect[0]) / MM:.1f}, y {rect[2] / MM:.1f} to {rect[3] / MM:.1f} mm on the front face) does not fit in the flat part of the front plate (x {(w / 2.0 - plate_box[1]) / MM:.1f} to {(w / 2.0 - plate_box[0]) / MM:.1f}, y {plate_box[2] / MM:.1f} to {plate_box[3] / MM:.1f} mm)")
+        if through and (rect[0] < chassis_box[0] or rect[1] > chassis_box[1] or rect[2] < chassis_box[2] or rect[3] > chassis_box[3]):
+            raise BuildError(f"{what} (x {(w / 2.0 - rect[1]) / MM:.1f} to {(w / 2.0 - rect[0]) / MM:.1f}, y {rect[2] / MM:.1f} to {rect[3] / MM:.1f} mm on the front face) is not in front of the chassis (its front face spans x {(w / 2.0 - chassis_box[1]) / MM:.1f} to {(w / 2.0 - chassis_box[0]) / MM:.1f}, y {chassis_box[2] / MM:.1f} to {chassis_box[3] / MM:.1f} mm): a slot cut right through the plate there would open into the ear or past the chassis edge; give frontVentDepthMm / windowDepthMm less than the plate thickness")
+        for other, orect in taken:
+            if rects_overlap(rect, orect):
+                raise BuildError(f"{what} overlaps {other}")
+        taken.append((what, rect))
+
+    def outline_of(rect: tuple[float, float, float, float]) -> list[tuple[float, float]]:
+        return [(rect[0], rect[2]), (rect[1], rect[2]), (rect[1], rect[3]), (rect[0], rect[3])]
+
+    # --- front vent slots: a block of columns x rows, centred at (frontVentXMm from the left seen from the front, frontVentYMm) ---------------------------------
+    vent_names = ("frontVentSlots", "frontVentRows", "frontVentSlotLenMm", "frontVentSlotWidthMm", "frontVentColPitchMm", "frontVentRowPitchMm", "frontVentXMm", "frontVentYMm", "frontVentDepthMm")
+    if any(k in params for k in vent_names):
+        need = ("frontVentSlots", "frontVentSlotLenMm", "frontVentSlotWidthMm", "frontVentXMm", "frontVentYMm")
+        missing = [k for k in need if k not in params]
+        if missing:
+            raise BuildError(f"front vents need {', '.join(need)} (missing {', '.join(missing)})")
+        n_cols = rack_whole(plan, "frontVentSlots", 1, 40) or 1
+        n_rows = rack_whole(plan, "frontVentRows", 1, 12) or 1
+        length = rack_opt(plan, "frontVentSlotLenMm") or 0.0
+        height = rack_opt(plan, "frontVentSlotWidthMm") or 0.0
+        c_pitch = rack_opt(plan, "frontVentColPitchMm")
+        r_pitch = rack_opt(plan, "frontVentRowPitchMm")
+        if n_cols > 1 and c_pitch is None:
+            raise BuildError(f"{n_cols} front vent slots per row need params.frontVentColPitchMm (the distance between slot centres)")
+        if n_rows > 1 and r_pitch is None:
+            raise BuildError(f"{n_rows} front vent rows need params.frontVentRowPitchMm (the distance between row centres)")
+        if c_pitch is not None and c_pitch <= length + 1e-9:
+            raise BuildError(f"params.frontVentColPitchMm ({c_pitch / MM:.1f}) must be more than the slot length ({length / MM:.1f} mm)")
+        if r_pitch is not None and r_pitch <= height + 1e-9:
+            raise BuildError(f"params.frontVentRowPitchMm ({r_pitch / MM:.1f}) must be more than the slot height ({height / MM:.1f} mm)")
+        depth = rack_opt(plan, "frontVentDepthMm")
+        if depth is not None and depth > plate_t + 1e-9:
+            raise BuildError(f"params.frontVentDepthMm ({depth / MM:.1f}) is deeper than the plate thickness ({plate_t / MM:.1f} mm)")
+        through = depth is None or depth >= plate_t - 1e-9
+        depth = plate_t if through else (depth or plate_t)
+        block_w = (n_cols - 1) * (c_pitch or 0.0) + length
+        block_h = (n_rows - 1) * (r_pitch or 0.0) + height
+        cx = w / 2.0 - (rack_opt(plan, "frontVentXMm") or 0.0)
+        cy = rack_opt(plan, "frontVentYMm") or 0.0
+        block = (cx - block_w / 2.0, cx + block_w / 2.0, cy - block_h / 2.0, cy + block_h / 2.0)
+        place("the front vent block", block, through)
+        for r in range(n_rows):
+            for c in range(n_cols):
+                sx0 = block[0] + c * (c_pitch or 0.0)
+                sy0 = block[2] + r * (r_pitch or 0.0)
+                slot = (sx0, sx0 + length, sy0, sy0 + height)
+                rack_zone_check(plan, flipped, w, d, front_face, "a front vent slot", [(slot[0], slot[2], z_front), (slot[1], slot[3], z_front)])
+                cuts.append((outline_of(slot), depth, through))
+                counts["frontVents"] += 1
+
+    # --- meter window: a recess with its lower-left corner at (windowXMm, windowYMm) seen from the front ----------------------------------------------------
+    window_names = ("windowWMm", "windowHMm", "windowXMm", "windowYMm", "windowDepthMm")
+    if any(k in params for k in window_names):
+        need = ("windowWMm", "windowHMm", "windowXMm", "windowYMm")
+        missing = [k for k in need if k not in params]
+        if missing:
+            raise BuildError(f"the window needs {', '.join(need)} (missing {', '.join(missing)})")
+        win_w, win_h = rack_opt(plan, "windowWMm") or 0.0, rack_opt(plan, "windowHMm") or 0.0
+        win_x, win_y = rack_opt(plan, "windowXMm") or 0.0, rack_opt(plan, "windowYMm") or 0.0
+        depth = rack_opt(plan, "windowDepthMm")
+        if depth is not None and depth > plate_t + 1e-9:
+            raise BuildError(f"params.windowDepthMm ({depth / MM:.1f}) is deeper than the plate thickness ({plate_t / MM:.1f} mm)")
+        depth = min(RACK_WINDOW_DEPTH_MM * MM, plate_t) if depth is None else depth
+        through = depth >= plate_t - 1e-9
+        rect = (w / 2.0 - (win_x + win_w), w / 2.0 - win_x, win_y, win_y + win_h)
+        place("the meter window", rect, through)
+        rack_zone_check(plan, flipped, w, d, front_face, "the meter window", [(rect[0], rect[2], z_front), (rect[1], rect[3], z_front)])
+        cuts.append((outline_of(rect), depth, through))
+        counts["windows"] += 1
+
+    # --- ear handles: two bars, one at each end of the plate, inboard of the rack-ear slots ----------------------------------------------------------------------
+    handles: list[tuple[float, float, float]] = []
+    if rack_opt(plan, "earHandleProjectionMm") is not None:
+        plate_h = h - y_plate0
+        length = rack_opt(plan, "earHandleLenMm")
+        if length is None:
+            length = RACK_EAR_HANDLE_LEN_FRACTION * plate_h
+        elif length >= plate_h - 1e-9:
+            raise BuildError(f"params.earHandleLenMm ({length / MM:.1f}) must be less than the plate height ({plate_h / MM:.1f} mm)")
+        if length < 4.0 * ear_r:
+            raise BuildError(f"params.earHandleLenMm ({length / MM:.1f}) is too short for a handle {2 * ear_r / MM:.1f} mm thick (at least four diameters, {4 * ear_r / MM:.1f} mm): the plate is too short for a handle of this size")
+        from_end = rack_opt(plan, "earHandleFromEndMm")
+        if from_end is None:
+            from_end = (slot_inner_from_end if slot_inner_from_end > 0.0 else max(ear_w, 0.0)) + RACK_EAR_HANDLE_GAP_MM * MM + ear_r
+        if from_end - ear_r < fit or from_end + ear_r > w / 4.0:
+            raise BuildError(f"params.earHandleFromEndMm ({from_end / MM:.1f}) puts the handle bar off the plate end or past a quarter of the width")
+        y_mid = (y_plate0 + h) / 2.0
+        ya, yb = y_mid - length / 2.0, y_mid + length / 2.0
+        if ya < plate_box[2] or yb > plate_box[3]:
+            raise BuildError(f"params.earHandleLenMm ({length / MM:.1f}) does not fit in the flat part of the plate height")
+        for sx in (-1.0, 1.0):
+            hx = sx * (w / 2.0 - from_end)
+            rect = (hx - ear_r, hx + ear_r, ya, yb)
+            what = f"an ear handle (x {abs(w / 2.0 - abs(hx) - ear_r) / MM:.1f} to {abs(w / 2.0 - abs(hx) + ear_r) / MM:.1f} mm from the plate end, y {ya / MM:.1f} to {yb / MM:.1f} mm)"
+            for other, orect in taken:
+                if rects_overlap(rect, orect):
+                    if other == "an ear slot":
+                        raise BuildError(f"{what} covers an ear slot: raise earHandleFromEndMm (default {(slot_inner_from_end + RACK_EAR_HANDLE_GAP_MM * MM + ear_r) / MM:.1f} mm) or shorten earHandleLenMm")
+                    raise BuildError(f"{what} overlaps {other}")
+            rack_zone_check(plan, flipped, w, d, front_face, "an ear handle", [(rect[0], rect[2], -d / 2.0), (rect[1], rect[3], -d / 2.0)])
+            handles.append((hx, ya, yb))
+            counts["earHandles"] += 1
+    return cuts, handles
+
+
 def build_rack_device(plan: Plan) -> bpy.types.Object:
     """The detailed rack unit (see RACK_V2_NAMES): plate with ears and slots, chassis, handles, vents, feet, fillets. Pivot bottom-centre, front panel
     face on the bounding box (z = -d/2, or +d/2 with frontOnIo = 1), rear panel face on the opposite side."""
     w, h, d = size_m(plan)
     params = plan.get("params") or {}
-    unknown = [k for k in params if k != "chamferMm" and k not in RACK_V2_NAMES]
+    unknown = [k for k in params if k != "chamferMm" and k not in RACK_V2_NAMES and k not in RACK_V3B_NAMES]
     if unknown:
         raise BuildError(f"rack-box has no param {unknown[0]!r}")
+    v3b = any(k in params for k in RACK_V3B_NAMES)
+    beauty = not v3b     # see RACK_V3B_NAMES: the v2 output is pinned, so only a v3b build gets the byte-stable fill
     plate_col = rack_rgb(plan, "plateRgb", RACK_PLATE)
     body_col = rack_rgb(plan, "bodyRgb", CHASSIS)
     flipped = rack_whole(plan, "frontOnIo", 1, 1) == 1
@@ -807,6 +1181,18 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
         raise BuildError(f"params.handleProjectionMm ({handle_proj / MM:.1f}) must be at least the handle diameter plus 2 mm ({(2 * handle_r + 2 * MM) / MM:.1f})")
     if handle_proj and not handle_count:
         raise BuildError("params.handleProjectionMm has no effect without params.handleCount")
+    ear_proj = rack_opt(plan, "earHandleProjectionMm")
+    ear_r = (rack_opt(plan, "earHandleDiaMm") or RACK_EAR_HANDLE_DIA_MM * MM) / 2.0
+    if ear_proj is None:
+        stray = [k for k in ("earHandleDiaMm", "earHandleLenMm", "earHandleFromEndMm") if k in params]
+        if stray:
+            raise BuildError(f"params.{stray[0]} has no effect without params.earHandleProjectionMm")
+    else:
+        if handle_count or handle_proj:
+            raise BuildError("ear handles (params.earHandleProjectionMm) and params.handleCount are two handle styles: give one of them")
+        if ear_proj < 2.0 * ear_r + 2.0 * MM:
+            raise BuildError(f"params.earHandleProjectionMm ({ear_proj / MM:.1f}) must be at least the handle diameter plus 2 mm ({(2 * ear_r + 2 * MM) / MM:.1f})")
+        handle_proj = ear_proj    # the plate moves back by the handle depth, as with handleCount
 
     # widths: the ears are the plate beyond the chassis
     body_w = rack_opt(plan, "bodyWidthMm")
@@ -852,6 +1238,11 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
     hole_h = rack_opt(plan, "earHoleMm")
     diagonal = rack_whole(plan, "earDiagonal", 1, 1) == 1
     holes = 0
+    slots: list[tuple[float, float]] = []
+    slot_rects: list[tuple[float, float, float, float]] = []   # (x0, x1, y0, y1) of every ear slot, built frame
+    slot_inner_from_end = 0.0                                   # how far the slots reach in from the plate end (the inner edge of the innermost one)
+    slot_t = plate_t
+    through = False
     if hole_h is not None:
         edge = rack_opt(plan, "earHoleEdgeMm")
         if edge is None:
@@ -876,20 +1267,49 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
             elif max(abs(x0), abs(x1)) > w / 2.0 - RACK_FIT_MM * MM:
                 raise BuildError("an ear slot does not fit in the plate")
             rack_zone_check(plan, flipped, w, d, front_face, "an ear slot", [(x0, y0, z_front), (x1, y1, z_front)])
+            slot_rects.append((x0, x1, y0, y1))
+            slot_inner_from_end = max(slot_inner_from_end, w / 2.0 - min(abs(x0), abs(x1)))
             holes += 1
+        if v3b and slots:
+            # the plate's flat face ends at its edge bevel, and the v3b fill needs every hole inside it: an EIA slot that reaches into the bevel loses its outer end (the inner end stays)
+            reach = w / 2.0 - plate_cham - RACK_FIT_MM * MM
+            over = max(max(abs(r[0]), abs(r[1])) for r in slot_rects) - reach
+            if over > 0.0:
+                if slot_len - over < hole_h:
+                    raise BuildError("an ear slot does not fit in the flat part of the plate edge: lower plateFilletMm / filletMm or raise earHoleEdgeMm")
+                slot_len -= over
+                slots = [(gx - math.copysign(over / 2.0, gx), gy) for gx, gy in slots]
+                slot_rects = [(gx - slot_len / 2.0, gx + slot_len / 2.0, gy - hole_h / 2.0, gy + hole_h / 2.0) for gx, gy in slots]
+                slot_inner_from_end = max(w / 2.0 - min(abs(r[0]), abs(r[1])) for r in slot_rects)
+
+    # rack-box v3b: front vent slots and the meter window (cut in the same pass as the ear slots, the plate face is filled once), and the ear handles' places
+    cuts: list[tuple[list[tuple[float, float]], float, bool]] = []   # (outline, depth, through)
+    v3b_counts = {"frontVents": 0, "windows": 0, "earHandles": 0}
+    ear_handles: list[tuple[float, float, float]] = []               # (x of the axis, y0, y1) of each handle bar, built frame
+    if v3b:
+        cuts, ear_handles = rack_v3b_features(plan, flipped, front_face, w, h, d, plate_t, plate_cham, y_plate0, body_w, cham, y_c0, y_c1, z_front, ear_r, slot_rects, slot_inner_from_end, ear_w, v3b_counts)
+    if hole_h is not None or cuts:
         front_edges = take_plane_face(bm, 2, z_front, (z_front, z_front + plate_t))
-        back_edges = take_plane_face(bm, 2, z_front + plate_t, (z_front, z_front + plate_t)) if through else []
+        back_needed = (hole_h is not None and through) or any(c[2] for c in cuts)
+        back_edges = take_plane_face(bm, 2, z_front + plate_t, (z_front, z_front + plate_t)) if back_needed else []
         loops_front: list[list[bmesh.types.BMEdge]] = []
         loops_back: list[list[bmesh.types.BMEdge]] = []
-        for gx, gy in slots:
-            outline = stadium_outline(gx, gy, slot_len, hole_h, RACK_SLOT_SEGMENTS)
-            m_edges, f_edges = cut_recess(bm, outline, lambda a, b: (a, b, z_front), (0.0, 0.0, 1.0), slot_t, through)
+        if hole_h is not None:
+            for gx, gy in slots:
+                outline = stadium_outline(gx, gy, slot_len, hole_h, RACK_SLOT_SEGMENTS)
+                m_edges, f_edges = cut_recess(bm, outline, lambda a, b: (a, b, z_front), (0.0, 0.0, 1.0), slot_t, through)
+                loops_front.append(m_edges)
+                if through:
+                    loops_back.append(f_edges)    # a shallow recess (no ear) has a floor of its own: nothing to cut in the back face
+        for outline, depth, cut_through in cuts:
+            m_edges, f_edges = cut_recess(bm, outline, lambda a, b: (a, b, z_front), (0.0, 0.0, 1.0), depth, cut_through)
             loops_front.append(m_edges)
-            loops_back.append(f_edges)
+            if cut_through:
+                loops_back.append(f_edges)
         body.done(RACK_SLOT)
-        fill_with_holes(bm, front_edges, loops_front, (0.0, 0.0, -1.0))
-        if through:
-            fill_with_holes(bm, back_edges, loops_back, (0.0, 0.0, 1.0))
+        fill_with_holes(bm, front_edges, loops_front, (0.0, 0.0, -1.0), beauty)
+        if back_needed:
+            fill_with_holes(bm, back_edges, loops_back, (0.0, 0.0, 1.0), beauty)
         body.done(plate_col)
 
     # --- the chassis (and, with rearInsetMm, the rear panel as a shell of its own: a seam) ----------------------------------
@@ -966,7 +1386,7 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
                 loops.append(m_edges)
             body.done(RACK_SLOT)
             nrm = (0.0, 1.0, 0.0) if kind == "y" else (sign, 0.0, 0.0)
-            fill_with_holes(bm, edges, loops, nrm)
+            fill_with_holes(bm, edges, loops, nrm, beauty)
             body.done(body_col)
             vents += len(slot_list)
 
@@ -994,6 +1414,15 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
                 cylinder_between(bm, g2b(hx, yy, zc), g2b(hx, yy, z_front + 0.2 * MM), handle_r * 0.8, handle_r * 0.8, RACK_HANDLE_SEGMENTS)
         body.done(RACK_HANDLE)
 
+    # --- ear handles (v3b): a bar standing earHandleProjectionMm in front of the plate on posts, clear of the rack-ear slots ----------------
+    if ear_handles:
+        zc = -d / 2.0 + ear_r
+        for hx, ya, yb in ear_handles:
+            cylinder_between(bm, g2b(hx, ya, zc), g2b(hx, yb, zc), ear_r, ear_r, RACK_HANDLE_SEGMENTS)
+            for yy in (ya + ear_r, yb - ear_r):
+                cylinder_between(bm, g2b(hx, yy, zc), g2b(hx, yy, z_front + 0.2 * MM), ear_r * 0.8, ear_r * 0.8, RACK_HANDLE_SEGMENTS)
+        body.done(RACK_HANDLE)
+
     if flipped:
         for v in bm.verts:
             v.co.x = -v.co.x
@@ -1003,6 +1432,10 @@ def build_rack_device(plan: Plan) -> bpy.types.Object:
     MEASURE["ioFaceOffsetMm"] = round(plate_t / MM, 4)
     MEASURE["earHoles"] = float(holes)
     MEASURE["ventSlots"] = float(vents)
+    if v3b:
+        for key, count in v3b_counts.items():
+            MEASURE[key] = float(count)
+        canonical_face_order(bm)
     return body.finish()
 
 
@@ -2084,6 +2517,121 @@ def build_revolve(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+# --- revolve-oval (Wave 2, Task 2.3) ------------------------------------------------------------------------------
+# A lathe with an ELLIPTIC section: profile stations [y_mm from the base, width_mm (x), depth_mm (z)]. Same rings, bands, poles, caps and colour zones as build_revolve
+# (which is untouched: its output is pinned); with width = depth at every station the vertices are the round lathe's. Mirrors the shape table in shapes.ts.
+
+def oval_stations(plan: Plan) -> list[tuple[float, float, float]]:
+    """The validated stations of a revolve-oval plan as (y, semi-axis x, semi-axis z) in metres."""
+    profile = plan.get("profile")
+    if not isinstance(profile, list) or len(profile) < 4:
+        raise BuildError("revolve-oval needs plan.profile: at least four [y_mm, width_mm, depth_mm] stations")
+    out: list[tuple[float, float, float]] = []
+    for i, st in enumerate(profile):
+        if not (isinstance(st, list) and len(st) == 3):
+            raise BuildError(f"profile station {i} must be [y_mm, width_mm, depth_mm], got {st!r}")
+        for name, value in zip(("position", "width", "depth"), st):
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+                raise BuildError(f"profile station {i} {name} must be a finite number, got {value!r}")
+        y_mm, w_mm, d_mm = st
+        if w_mm < 0 or d_mm < 0:
+            raise BuildError(f"profile station {i} width and depth must not be negative, got {w_mm} x {d_mm}")
+        if (w_mm == 0) != (d_mm == 0):
+            raise BuildError(f"profile station {i} is a pole in one direction only: width and depth must both be 0 or both above 0 (got {w_mm} x {d_mm})")
+        if out and not (y_mm * MM > out[-1][0]):
+            raise BuildError(f"profile station {i} position {y_mm} must be above the previous station")
+        out.append((float(y_mm) * MM, float(w_mm) * MM / 2.0, float(d_mm) * MM / 2.0))
+    if abs(out[0][0]) > 1e-9:
+        raise BuildError("the first profile station must be at 0 (the base)")
+    return out
+
+
+def build_revolve_oval(plan: Plan) -> bpy.types.Object:
+    """A surface of revolution with an elliptic section about the vertical axis. Pivot bottom-centre. plan.profile [[y_mm, width_mm, depth_mm], ...] (at least four stations, strictly
+    increasing y, first at 0, the widest width = the spec width, the deepest depth = the spec depth), plan.colours as revolve, params.segments (default 32, a multiple of 4 from 12 to 64:
+    the vertices at 0, 90, 180 and 270 degrees give the exact width and depth). A station with width and depth 0 is a pole; a first or last station with a section is closed by a flat cap."""
+    w, h, d = size_m(plan)
+    stations = oval_stations(plan)
+    segments = int((plan.get("params") or {}).get("segments", REVOLVE_SEGMENTS))
+    if segments < 12 or segments > 64 or segments % 4 != 0:
+        raise BuildError(f"params.segments must be a multiple of 4 from 12 to 64, got {segments}")
+    zones = plan.get("colours") or [{"fromMm": 0, "colour": REVOLVE_DEFAULT_COLOUR}]
+    zones = sorted(zones, key=lambda z: z["fromMm"])
+    lifted = [(float(z["fromMm"]) * MM, lift_hex(z["colour"])) for z in zones]
+
+    def colour_at(y: float) -> str:
+        chosen = lifted[0][1]
+        for from_y, colour in lifted:
+            if y >= from_y - 1e-12:
+                chosen = colour
+        return chosen
+
+    body = Body("revolve")
+    bm = body.bm
+
+    def level(a: float, b: float, y: float) -> list[bmesh.types.BMVert]:
+        if a <= 1e-9 and b <= 1e-9:
+            return [bm.verts.new(g2b(0.0, y, 0.0))]
+        return [bm.verts.new(g2b(a * math.cos(2 * math.pi * k / segments), y, b * math.sin(2 * math.pi * k / segments))) for k in range(segments)]
+
+    levels = [level(a, b, y) for y, a, b in stations]
+    for i in range(len(levels) - 1):
+        lo, hi = levels[i], levels[i + 1]
+        if len(lo) == 1 and len(hi) == 1:
+            raise BuildError(f"profile stations {i} and {i + 1} both have a section of 0")
+        if len(lo) == 1:
+            for k in range(segments):
+                bm.faces.new((lo[0], hi[(k + 1) % segments], hi[k]))
+        elif len(hi) == 1:
+            for k in range(segments):
+                bm.faces.new((lo[k], lo[(k + 1) % segments], hi[0]))
+        else:
+            band(bm, lo, hi)
+        body.done(colour_at((stations[i][0] + stations[i + 1][0]) / 2.0))
+    if len(levels[0]) > 1:
+        bm.faces.new(levels[0][::-1])
+        body.done(colour_at(stations[0][0]))
+    if len(levels[-1]) > 1:
+        bm.faces.new(levels[-1])
+        body.done(colour_at(stations[-1][0]))
+    canonical_face_order(bm)
+    return body.finish()
+
+
+def oval_axes_at(plan: Plan, y: float) -> tuple[float, float]:
+    """The semi-axes (x, z) in metres of the section of a revolve-oval at height y (linear between the stations)."""
+    st = oval_stations(plan)
+    if y <= st[0][0]:
+        return st[0][1], st[0][2]
+    for i in range(1, len(st)):
+        if y <= st[i][0]:
+            t = (y - st[i - 1][0]) / (st[i][0] - st[i - 1][0])
+            return st[i - 1][1] + t * (st[i][1] - st[i - 1][1]), st[i - 1][2] + t * (st[i][2] - st[i - 1][2])
+    return st[-1][1], st[-1][2]
+
+
+def ellipse_fraction(a: float, b: float, t: float, steps: int = 240) -> float:
+    """The share (0 to 1) of the perimeter of the ellipse x = a cos t, y = b sin t that lies between t = -pi and t (midpoint rule on `steps` pieces of the whole turn)."""
+    def total_of(n: int) -> float:
+        return sum(math.hypot(a * math.sin(-math.pi + (k + 0.5) * 2 * math.pi / n), b * math.cos(-math.pi + (k + 0.5) * 2 * math.pi / n)) for k in range(n)) * 2 * math.pi / n
+    total = total_of(steps)
+    n = max(1, int(math.ceil((t + math.pi) / (2 * math.pi) * steps)))
+    h = (t + math.pi) / n
+    part = sum(math.hypot(a * math.sin(-math.pi + (k + 0.5) * h), b * math.cos(-math.pi + (k + 0.5) * h)) for k in range(n)) * h
+    return part / total
+
+
+def wrap_u(plan: Plan, x: float, y: float, z: float) -> float:
+    """The horizontal coordinate of the wrap picture (0 to 1 round the axis, from -x going the way atan2 does) of a point (Blender coordinates, z up). A round lathe: the polar angle
+    (the old formula, unchanged). A revolve-oval: the share of the perimeter of its own ellipse, so a picture keeps its proportions round an oval."""
+    if plan.get("shape") != "revolve-oval":
+        return math.atan2(y, x) / (2 * math.pi) + 0.5
+    a, b = oval_axes_at(plan, z)
+    if a <= 1e-9 or b <= 1e-9:
+        return 0.5
+    return ellipse_fraction(a, b, math.atan2(y / b, x / a))
+
+
 # Colours of the boom arm (real-part sRGB, lifted by lift_hex): matt black tubes, slightly lighter joints, bare metal rod and mic thread.
 ARM_TUBE = "#3a3b41"
 ARM_JOINT = "#4c4d54"
@@ -2909,13 +3457,1227 @@ def build_tripod_stand(plan: Plan) -> bpy.types.Object:
     return body.finish()
 
 
+# --- round-base-stand (Wave 2, Task 2.4) --------------------------------------------------------------------------
+# A microphone stand on a ROUND cast base (K&M 26125 class): a disc with a conical hub, a telescopic tube with a clutch sleeve, and either a straight top with a mic thread (no boom
+# params) or the tilt head and boom of the tripod-stand (boomMm given). Mirrors ROUND_BASE_PARAMS in shapes.ts. tripod-stand is untouched (its output is pinned); the boom is built
+# the same way. Pose in glTF space with the base on the origin, then centred and stretched to the spec size (refused over 3 %, like the tripod).
+
+ROUND_BASE_NAMES = ("baseDiaMm", "baseHeightMm", "hubDiaMm", "tubeDiaMm", "upperTubeDiaMm", "clutchFromMm", "boomMm", "frontMm", "boomAngleDeg", "boomAzimuthDeg")
+ROUND_BASE_DEFAULTS_MM = {"baseHeightMm": 26.0, "hubDiaMm": 44.0, "tubeDiaMm": 22.0, "upperTubeDiaMm": 19.0, "boomAngleDeg": 20.0, "boomAzimuthDeg": 135.0}   # mirrored in shapes.ts
+ROUND_BASE_SEGMENTS = 48
+ROUND_BASE_HUB_RISE_MM = 40.0
+ROUND_BASE_THREAD_MM = (9.5, 14.0)   # diameter and length of the mic thread stub (3/8 inch, generic)
+
+
+def build_round_base_stand(plan: Plan) -> bpy.types.Object:
+    """See ROUND_BASE_NAMES. Bottom at y = 0, centred on x and z. Without boomMm the unit is a straight stand: the footprint is the disc (w = d = baseDiaMm) and the top of the thread is the height."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    unknown = [k for k in params if k not in ROUND_BASE_NAMES]
+    if unknown:
+        raise BuildError(f"round-base-stand has no param {unknown[0]!r}")
+    if "baseDiaMm" not in params:
+        raise BuildError("round-base-stand needs params.baseDiaMm (the diameter of the base disc)")
+    base_r = positive(params["baseDiaMm"], "params.baseDiaMm") * MM / 2.0
+    p = {k: (positive(params[k], f"params.{k}") if k in params else v) for k, v in ROUND_BASE_DEFAULTS_MM.items()}
+    base_h = p["baseHeightMm"] * MM
+    hub_r = p["hubDiaMm"] * MM / 2.0
+    tube_r, upper_r = p["tubeDiaMm"] * MM / 2.0, p["upperTubeDiaMm"] * MM / 2.0
+    if upper_r > tube_r:
+        raise BuildError("params.upperTubeDiaMm cannot be thicker than params.tubeDiaMm: the upper section slides in the lower one")
+    if hub_r >= base_r or base_h >= h / 4.0:
+        raise BuildError("params.hubDiaMm must be less than the base diameter and params.baseHeightMm less than a quarter of the height")
+    has_boom = "boomMm" in params
+    if not has_boom:
+        for k in ("frontMm", "boomAngleDeg", "boomAzimuthDeg"):
+            if k in params:
+                raise BuildError(f"params.{k} has no effect without params.boomMm")
+        if abs(w - 2.0 * base_r) > 0.05 * MM or abs(d - 2.0 * base_r) > 0.05 * MM:
+            raise BuildError(f"a straight round-base stand is as wide as its base: the spec width and depth ({w / MM:.1f} x {d / MM:.1f} mm) must equal params.baseDiaMm ({2 * base_r / MM:.1f} mm)")
+    boom = positive(params["boomMm"], "params.boomMm") if has_boom else 0.0
+    theta, az = p["boomAngleDeg"], p["boomAzimuthDeg"]
+    front = positive(params["frontMm"], "params.frontMm") if "frontMm" in params else 0.6 * boom
+    if has_boom and (not 5.0 < theta < 45.0 or front <= 250.0 or front >= boom - 120.0):
+        raise BuildError("the boom needs boomAngleDeg between 5 and 45 degrees and frontMm between 250 mm and boomMm - 120 mm")
+    sin_a, cos_t = math.sin(math.radians(theta)), math.cos(math.radians(theta))
+    f = (math.cos(math.radians(az)), math.sin(math.radians(az)))
+    perp = (-f[1], f[0])
+    top_y = h - front * MM * sin_a if has_boom else h - ROUND_BASE_THREAD_MM[1] * MM    # the boom's pivot, or the base of the thread
+    clutch = positive(params["clutchFromMm"], "params.clutchFromMm") if "clutchFromMm" in params else 0.55 * h / MM
+    if clutch * MM + 100.0 * MM >= top_y - 80.0 * MM or clutch * MM <= base_h + ROUND_BASE_HUB_RISE_MM * MM + 130.0 * MM:
+        raise BuildError("params.clutchFromMm leaves no room for the lower tube above the hub or for the upper tube under the top")
+    u = (f[0] * cos_t, sin_a, f[1] * cos_t)
+
+    def at(x: float, y: float, z: float) -> Vector:
+        return g2b(x, y, z)
+
+    def along(s_mm: float, off: tuple[float, float, float] = (0.0, 0.0, 0.0), k: float = 0.0) -> Vector:
+        s = s_mm * MM
+        return at(u[0] * s + off[0] * k * MM, top_y + u[1] * s + off[1] * k * MM, u[2] * s + off[2] * k * MM)
+
+    def tube(a: Vector, b: Vector, r_mm: float, rb_mm: float | None = None, seg: int = 24) -> None:
+        cylinder_between(bm, a, b, r_mm * MM, None if rb_mm is None else rb_mm * MM, segments=seg)
+
+    body = Body("round-base-stand")
+    bm = body.bm
+    tube_c, joint_c, rubber_c, metal_c = lift_hex(ARM_TUBE), lift_hex(ARM_JOINT), lift_hex(TRIPOD_RUBBER), lift_hex(ARM_METAL)
+    r_mm = base_r / MM
+    # the base: a rubber ring under the disc, the disc, its sloping top up to the hub, the conical hub
+    tube(at(0.0, 0.0, 0.0), at(0.0, 3.0 * MM, 0.0), r_mm * 0.97, r_mm * 0.97, ROUND_BASE_SEGMENTS)
+    body.done(rubber_c)
+    tube(at(0.0, 2.0 * MM, 0.0), at(0.0, base_h * 0.55, 0.0), r_mm, r_mm, ROUND_BASE_SEGMENTS)
+    tube(at(0.0, base_h * 0.5, 0.0), at(0.0, base_h, 0.0), r_mm * 0.98, hub_r / MM * 1.6, ROUND_BASE_SEGMENTS)
+    body.done(tube_c)
+    tube(at(0.0, base_h - 1.0 * MM, 0.0), at(0.0, base_h + ROUND_BASE_HUB_RISE_MM * MM, 0.0), hub_r / MM * 1.6, tube_r / MM * 1.25, ROUND_BASE_SEGMENTS)
+    body.done(joint_c)
+    # the tubes and the clutch sleeve
+    tube(at(0.0, base_h + 30.0 * MM, 0.0), at(0.0, (clutch + 4.0) * MM, 0.0), tube_r / MM)
+    tube(at(0.0, (clutch + 86.0) * MM, 0.0), at(0.0, top_y - (36.0 * MM if has_boom else 4.0 * MM), 0.0), upper_r / MM)
+    body.done(tube_c)
+    tube(at(0.0, clutch * MM, 0.0), at(0.0, (clutch + 8.0) * MM, 0.0), tube_r / MM * 1.5)
+    tube(at(0.0, (clutch + 8.0) * MM, 0.0), at(0.0, (clutch + 84.0) * MM, 0.0), tube_r / MM * 1.32)
+    tube(at(0.0, (clutch + 84.0) * MM, 0.0), at(0.0, (clutch + 92.0) * MM, 0.0), tube_r / MM * 1.5)
+    body.done(joint_c)
+    if has_boom:
+        # the tilt head and the boom, as tripod-stand: a post under the pivot, a barrel across the boom, the boom with its counterweight grip, two clamps and the mic thread
+        tube(at(0.0, top_y - 40.0 * MM, 0.0), at(0.0, top_y - 6.0 * MM, 0.0), 14.0)
+        tube(at(-perp[0] * 17.0 * MM, top_y, -perp[1] * 17.0 * MM), at(perp[0] * 17.0 * MM, top_y, perp[1] * 17.0 * MM), 12.5)
+        body.done(joint_c)
+        tube(along(-225.0), along(142.0), 8.2, None, 20)
+        tube(along(132.0), along(front - 18.0), 6.6, None, 20)
+        body.done(tube_c)
+        tube(along(-boom + front), along(-222.0), 12.5, None, 20)
+        body.done(rubber_c)
+        for s0, s1, r in ((84.0, 116.0, 12.8), (226.0, 250.0, 10.5)):
+            tube(along(s0), along(s1), r, None, 20)
+        body.done(joint_c)
+        tube(along(front - 22.0), along(front - 17.0), 9.0, None, 20)
+        tube(along(front - 17.0), along(front), 4.76, None, 14)
+        body.done(metal_c)
+    else:
+        thread_d, thread_l = ROUND_BASE_THREAD_MM
+        tube(at(0.0, top_y - 4.0 * MM, 0.0), at(0.0, top_y + 2.0 * MM, 0.0), upper_r / MM * 1.15)
+        body.done(joint_c)
+        tube(at(0.0, top_y + 1.0 * MM, 0.0), at(0.0, h, 0.0), thread_d / 2.0, None, 16)
+        body.done(metal_c)
+
+    xs = [v.co.x for v in bm.verts]
+    ys = [v.co.y for v in bm.verts]
+    zs = [v.co.z for v in bm.verts]
+    ex, ey, ez = max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs)
+    for name, natural, wanted in (("width", ex, w), ("depth", ey, d), ("height", ez, h)):
+        if abs(natural / wanted - 1.0) > TRIPOD_MAX_SCALE_ERROR:
+            raise BuildError(f"the round-base stand pose is {natural / MM:.1f} mm in {name}, the spec size says {wanted / MM:.1f} mm: change the spec size or the base and boom params")
+    bmesh.ops.translate(bm, vec=Vector((-(max(xs) + min(xs)) / 2.0, -(max(ys) + min(ys)) / 2.0, -min(zs))), verts=bm.verts[:])
+    bmesh.ops.scale(bm, vec=Vector((w / ex, d / ey, h / ez)), space=Matrix.Identity(4), verts=bm.verts[:])
+    log(f"round-base stand: natural {ex / MM:.1f} x {ez / MM:.1f} x {ey / MM:.1f} mm, scaled to the spec; {sum(len(f_.verts) - 2 for f_ in bm.faces)} triangles")
+    canonical_face_order(bm)
+    return body.finish()
+
+
 def perp_vec(perp: tuple[float, float]) -> tuple[float, float, float]:
     """A horizontal direction (x, z) as a 3-vector (x, 0, z), for build_tripod_stand's boom offsets."""
     return (perp[0], 0.0, perp[1])
 
 
+# --- moulded-box (Wave 2, Task 2.2) -------------------------------------------------------------------------------
+# A rounded-plan box with filleted edges for recorders, body-packs, small interfaces, controllers, boundary mics and hinged laptops. Mirrors MOULDED_PARAMS in
+# tools/assets3d/shapes.ts, which documents every param. Built from the same pieces as curved-cabinet (rounded_polygon, offset_outline, ring stacks) but as its own
+# builder, so the curved-cabinet output stays as it was. Every fill uses the plain triangle fill and the faces are put in a canonical order: two builds are byte-identical.
+
+MOULDED_NAMES = (
+    "cornerRadiusMm", "edgeRadiusMm", "edgeDropMm", "bottomEdgeRadiusMm", "edgeSegments", "bodyGrey",
+    "seamHeightMm", "seamWidthMm", "seamDepthMm",
+    "recessWMm", "recessHMm", "recessXMm", "recessYMm", "recessDepthMm",
+    "lidAngleDeg", "lidThicknessMm", "baseHeightMm", "baseDepthMm", "lidLenMm",
+)
+MOULDED_DEFAULTS_MM = {"cornerRadiusMm": 6.0, "edgeRadiusMm": 2.0, "seamWidthMm": 0.8, "seamDepthMm": 0.5, "recessDepthMm": 1.0}   # mirrored in shapes.ts MOULDED_DEFAULTS
+MOULDED_DEFAULT_SEGMENTS = 6
+MOULDED_ARC_SEG90 = 10         # plan corner samples per quarter turn
+MOULDED_HINGE_ARC_SEG90 = 6    # the two slabs of a laptop: fewer, to stay in the triangle class
+MOULDED_RECESS = "#1b1c20"
+MOULDED_POSE_SLACK = 0.03      # mirrored in shapes.ts
+MOULDED_FIT_MM = 0.5
+
+
+def moulded_opt(plan: Plan, name: str) -> float | None:
+    """A positive millimetre param of the plan in metres, None when absent."""
+    params = plan.get("params") or {}
+    return positive(params[name], f"params.{name}") * MM if name in params else None
+
+
+def moulded_shell(bm: bmesh.types.BMesh, outline: list[tuple[float, float]], height: float, edge: float, drop: float, bottom: float, segments: int, seam: tuple[float, float, float] | None,
+                  open_top: bool) -> tuple[list[bmesh.types.BMVert], list[bmesh.types.BMVert]]:
+    """The rings of a box with the plan `outline` (counter-clockwise (x, z), centred) from y = 0 to `height`: the bottom edge rounded by `bottom` (inward and up), the top edge by `edge` (inward)
+    and `drop` (down), `seam` = (centre height, width, depth) a V groove round the wall. The bottom is closed; the top is closed too unless `open_top` (the caller fills it round a recess).
+    Returns (the top ring, all new vertices)."""
+    before = set(bm.verts)
+    bottom_levels = [(bottom * (1.0 - math.sin(math.pi / 2.0 * k / segments)), bottom * (1.0 - math.cos(math.pi / 2.0 * k / segments))) for k in range(segments + 1)]
+    top_levels = [(edge * (1.0 - math.sin(math.pi / 2.0 * k / segments)), height - drop * (1.0 - math.cos(math.pi / 2.0 * k / segments))) for k in reversed(range(segments + 1))]
+    wall: list[tuple[float, float]] = []
+    if seam is not None:
+        s_y, s_w, s_d = seam
+        wall = [(0.0, s_y - s_w / 2.0), (s_d, s_y), (0.0, s_y + s_w / 2.0)]
+    stations = bottom_levels + wall + top_levels
+    cache: dict[float, list[tuple[float, float]]] = {}
+    rings: list[list[bmesh.types.BMVert]] = []
+    for ins, y in stations:
+        key = round(ins, 12)
+        if key not in cache:
+            cache[key] = offset_outline(outline, ins)
+        rings.append([bm.verts.new(g2b(x, y, z)) for x, z in cache[key]])
+    bm.faces.new(rings[0][::-1])
+    for i in range(len(rings) - 1):
+        band(bm, rings[i], rings[i + 1])
+    if not open_top:
+        bm.faces.new(rings[-1])
+    return rings[-1], [v for v in bm.verts if v not in before]
+
+
+def rect_in_polygon(poly: list[tuple[float, float]], x0: float, x1: float, z0: float, z1: float, margin: float) -> bool:
+    """True when the rectangle lies inside the convex polygon `poly` (x, z points) with `margin` to spare (a convex polygon holds a rectangle when it holds the four corners)."""
+    for cx, cz in ((x0, z0), (x1, z0), (x1, z1), (x0, z1)):
+        inside = False
+        for i in range(len(poly)):
+            a, b = poly[i], poly[(i + 1) % len(poly)]
+            if (a[1] > cz) != (b[1] > cz) and cx < a[0] + (b[0] - a[0]) * (cz - a[1]) / (b[1] - a[1]):
+                inside = not inside
+        if not inside or point_to_polygon_distance((cx, cz), poly) < margin:
+            return False
+    return True
+
+
+def build_moulded_box(plan: Plan) -> bpy.types.Object:
+    """See MOULDED_NAMES. Frame: bottom at y = 0, centred on x and z, the io (rear) face at +z. Plain box: the spec size exactly. Hinged lid (lidAngleDeg and the base and lid sizes):
+    the open pose of a laptop, stretched to the spec size when it is within 3 % of it."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    unknown = [k for k in params if k not in MOULDED_NAMES]
+    if unknown:
+        raise BuildError(f"moulded-box has no param {unknown[0]!r}")
+    hinge = any(k in params for k in ("lidAngleDeg", "lidThicknessMm", "baseHeightMm", "baseDepthMm", "lidLenMm"))
+    corner = moulded_opt(plan, "cornerRadiusMm") or MOULDED_DEFAULTS_MM["cornerRadiusMm"] * MM
+    edge = moulded_opt(plan, "edgeRadiusMm") or MOULDED_DEFAULTS_MM["edgeRadiusMm"] * MM
+    drop = moulded_opt(plan, "edgeDropMm") or edge
+    bottom = moulded_opt(plan, "bottomEdgeRadiusMm") or edge
+    segments = params.get("edgeSegments", MOULDED_DEFAULT_SEGMENTS)
+    if isinstance(segments, bool) or not isinstance(segments, int) or not 4 <= segments <= 12:
+        raise BuildError(f"params.edgeSegments must be a whole number from 4 to 12, got {segments!r}")
+    if corner < max(edge, bottom) - 1e-9:
+        raise BuildError(f"params.cornerRadiusMm ({corner / MM:.1f}) must be at least the edge radius ({max(edge, bottom) / MM:.1f}): the fillet would fold over")
+    grey = params.get("bodyGrey")
+    if grey is not None and (isinstance(grey, bool) or not isinstance(grey, (int, float)) or not 20 <= grey <= 200):
+        raise BuildError(f"params.bodyGrey must be a number from 20 to 200, got {grey!r}")
+    colour = CABINET if grey is None else "#%02x%02x%02x" % (round(grey), round(grey) + 2, round(grey) + 9)
+
+    if hinge:
+        need = ("lidAngleDeg", "lidThicknessMm", "baseHeightMm", "baseDepthMm")
+        missing = [k for k in need if k not in params]
+        if missing:
+            raise BuildError(f"a hinged lid needs {', '.join('params.' + k for k in need)} (missing {', '.join(missing)})")
+        if "seamHeightMm" in params:
+            raise BuildError("a hinged lid has its own gap: give no params.seamHeightMm with params.lidAngleDeg")
+        if any(p.get("insetMm") for p in (plan.get("ports") or [])):
+            raise BuildError("a hinged lid model takes no port pockets (no port with insetMm)")
+        body_h = positive(params["baseHeightMm"], "params.baseHeightMm") * MM
+        body_d = positive(params["baseDepthMm"], "params.baseDepthMm") * MM
+        angle = positive(params["lidAngleDeg"], "params.lidAngleDeg")
+        if not 1.0 <= angle <= 179.0:
+            raise BuildError(f"params.lidAngleDeg ({angle}) must be from 1 to 179 degrees")
+        lid_t = positive(params["lidThicknessMm"], "params.lidThicknessMm") * MM
+        lid_len = moulded_opt(plan, "lidLenMm") or body_d
+        if lid_t <= 2.0 * max(edge, bottom) or body_h <= 2.0 * max(drop, bottom):
+            raise BuildError("the lid and the base must be thicker than twice the edge radius")
+        seg90 = MOULDED_HINGE_ARC_SEG90
+    else:
+        body_h, body_d = h, d
+        seg90 = MOULDED_ARC_SEG90
+    half = min(w, body_h, body_d) / 2.0
+    if max(edge, bottom) >= half:
+        raise BuildError(f"params.edgeRadiusMm ({max(edge, bottom) / MM:.1f}) must be less than half the smallest side ({half / MM:.1f} mm)")
+    if max(drop, bottom) * 2.0 >= body_h:
+        raise BuildError(f"params.edgeDropMm ({max(drop, bottom) / MM:.1f}) must be less than half the height ({body_h / 2.0 / MM:.1f} mm)")
+
+    seam_h = moulded_opt(plan, "seamHeightMm")
+    seam_w = moulded_opt(plan, "seamWidthMm")
+    seam_d = moulded_opt(plan, "seamDepthMm")
+    if seam_h is None and (seam_w is not None or seam_d is not None):
+        raise BuildError("params.seamWidthMm and params.seamDepthMm have no effect without params.seamHeightMm")
+    seam = None
+    if seam_h is not None:
+        seam_w = seam_w or MOULDED_DEFAULTS_MM["seamWidthMm"] * MM
+        seam_d = seam_d or MOULDED_DEFAULTS_MM["seamDepthMm"] * MM
+        if seam_h - seam_w / 2.0 <= bottom or seam_h + seam_w / 2.0 >= body_h - drop:
+            raise BuildError(f"params.seamHeightMm ({seam_h / MM:.1f}) leaves no wall for the groove: it must lie between the bottom fillet ({bottom / MM:.1f} mm) and the top fillet ({(body_h - drop) / MM:.1f} mm) by half its width")
+        if seam_d >= corner:
+            raise BuildError(f"params.seamDepthMm ({seam_d / MM:.2f}) must be less than params.cornerRadiusMm ({corner / MM:.1f}): the groove would fold over at the plan corners")
+        for what_face, corners in (("io", [(-w / 2.0, seam_h - seam_w / 2.0, d / 2.0), (w / 2.0, seam_h + seam_w / 2.0, d / 2.0)]),
+                                   ("opposite", [(-w / 2.0, seam_h - seam_w / 2.0, -d / 2.0), (w / 2.0, seam_h + seam_w / 2.0, -d / 2.0)]),
+                                   ("left", [(-w / 2.0, seam_h - seam_w / 2.0, -d / 2.0), (-w / 2.0, seam_h + seam_w / 2.0, d / 2.0)]),
+                                   ("right", [(w / 2.0, seam_h - seam_w / 2.0, -d / 2.0), (w / 2.0, seam_h + seam_w / 2.0, d / 2.0)])):
+            rack_zone_check(plan, False, w, d, what_face, "the lid seam", corners)
+        seam = (seam_h, seam_w, seam_d)
+
+    # the recess in the top face: x from the left seen from above, y from the io edge toward the front
+    recess = None
+    recess_names = ("recessWMm", "recessHMm", "recessXMm", "recessYMm")
+    if any(k in params for k in recess_names + ("recessDepthMm",)):
+        missing = [k for k in recess_names if k not in params]
+        if missing:
+            raise BuildError(f"the recess needs {', '.join('params.' + k for k in recess_names)} (missing {', '.join(missing)})")
+        rw, rh = moulded_opt(plan, "recessWMm") or 0.0, moulded_opt(plan, "recessHMm") or 0.0
+        rx, ry = moulded_opt(plan, "recessXMm") or 0.0, moulded_opt(plan, "recessYMm") or 0.0
+        depth = moulded_opt(plan, "recessDepthMm") or MOULDED_DEFAULTS_MM["recessDepthMm"] * MM
+        if depth * 2.0 >= body_h:
+            raise BuildError(f"params.recessDepthMm ({depth / MM:.1f}) must be less than half the height ({body_h / 2.0 / MM:.1f} mm)")
+        recess = (rx - w / 2.0, rx - w / 2.0 + rw, body_d / 2.0 - (ry + rh), body_d / 2.0 - ry, depth)   # x0, x1, z0, z1 (centred frame), depth
+
+    body = Body("moulded-box")
+    bm = body.bm
+    pts = [(-w / 2.0, -body_d / 2.0), (w / 2.0, -body_d / 2.0), (w / 2.0, body_d / 2.0), (-w / 2.0, body_d / 2.0)]
+    outline = rounded_polygon(pts, [corner] * 4, seg90)
+    open_top = recess is not None
+    top_ring, _base_verts = moulded_shell(bm, outline, body_h, edge, drop, bottom, segments, seam, open_top)
+    measured_fillet = min(edge, drop, bottom)   # the rings are built at exactly these insets and drops
+    body.done(colour)
+
+    depth_built = 0.0
+    if recess is not None:
+        x0, x1, z0, z1, depth = recess
+        top_poly = [(v.co.x, -v.co.y) for v in top_ring]
+        if not rect_in_polygon(top_poly, x0, x1, z0, z1, MOULDED_FIT_MM * MM):
+            raise BuildError(f"the recess (x {(x0 + w / 2.0) / MM:.1f} to {(x1 + w / 2.0) / MM:.1f}, y {(body_d / 2.0 - z1) / MM:.1f} to {(body_d / 2.0 - z0) / MM:.1f} mm on the top face) does not fit in the flat top (x {(min(p[0] for p in top_poly) + w / 2.0) / MM:.1f} to {(max(p[0] for p in top_poly) + w / 2.0) / MM:.1f}, y {(body_d / 2.0 - max(p[1] for p in top_poly)) / MM:.1f} to {(body_d / 2.0 - min(p[1] for p in top_poly)) / MM:.1f} mm): move it in or make it smaller")
+        rack_zone_check(plan, False, w, body_d, "top", "the recess", [(x0, body_h, z0), (x1, body_h, z1)])
+        outline_edges = [bm.edges.get((top_ring[i], top_ring[(i + 1) % len(top_ring)])) for i in range(len(top_ring))]
+        rect = [(x0, z0), (x1, z0), (x1, z1), (x0, z1)]
+        mouth, _floor = cut_recess(bm, rect, lambda a, b: (a, body_h, b), (0.0, -1.0, 0.0), depth, False)
+        body.done(MOULDED_RECESS)
+        fill_with_holes(bm, outline_edges, [mouth], (0.0, 1.0, 0.0), False)
+        body.done(colour)
+        depth_built = depth
+
+    pockets = [p for p in (plan.get("ports") or []) if isinstance(p.get("insetMm"), (int, float)) and p["insetMm"] > 0]
+    if pockets and not hinge:
+        if seam is not None:
+            raise BuildError("a seam splits the rear face in two: a moulded-box takes either a seam or port pockets (ports with insetMm), not both")
+        flat = flat_face_polygon(bm, d / 2.0)
+        outline_edges = take_flat_face(bm, d / 2.0)
+        holes = []
+        for p in pockets:
+            radius = float(p.get("openingMm") or POCKET_DEFAULT_MM) * MM / 2.0
+            cx = float(p["xMm"]) * MM - w / 2.0
+            cy = float(p["yMm"]) * MM
+            if not circle_fits(flat, cx, cy, radius, CURVED_FIT_MARGIN_MM * MM):
+                raise BuildError(f"the pocket of port {p.get('portId')!r} (x {cx / MM:.1f}, y {cy / MM:.1f}, radius {radius / MM:.1f} mm) does not fit in the flat rear face (x {min(q[0] for q in flat) / MM:.1f} to {max(q[0] for q in flat) / MM:.1f}, y {min(q[1] for q in flat) / MM:.1f} to {max(q[1] for q in flat) / MM:.1f} mm)")
+            holes.append(blind_hole(bm, cx, cy, d / 2.0, radius, POCKET_SEGMENTS, float(p["insetMm"]) * MM, -1.0))
+        body.done(CABINET_POCKET)
+        fill_with_holes(bm, outline_edges, holes, (0.0, 0.0, 1.0), False)
+        body.done(colour)
+
+    if hinge:
+        # the lid: a second moulded shell (w x lid_t x lid_len), turned about the hinge on the rear top edge of the base, opened to `angle`
+        lid_outline = rounded_polygon([(-w / 2.0, -lid_len / 2.0), (w / 2.0, -lid_len / 2.0), (w / 2.0, lid_len / 2.0), (-w / 2.0, lid_len / 2.0)], [corner] * 4, seg90)
+        _top, lid_verts = moulded_shell(bm, lid_outline, lid_t, edge, drop, bottom, segments, None, False)
+        body.done(colour)
+        th = math.radians(angle)
+        sin_t, cos_t = math.sin(th), math.cos(th)
+        hinge_y, hinge_z = body_h, body_d / 2.0
+        for v in lid_verts:
+            lx, ly, lz = v.co.x, v.co.z, -v.co.y          # glTF coordinates of the lid in its own frame (bottom at 0, centred)
+            s = lid_len / 2.0 - lz                          # distance from the hinge along the lid, 0 at the rear edge
+            v.co = g2b(lx, hinge_y + s * sin_t + ly * cos_t, hinge_z - s * cos_t + ly * sin_t)
+        # fit the open pose to the spec size: bottom at 0, centred on z, stretched within the slack
+        ys = [v.co.z for v in bm.verts]
+        zs = [-v.co.y for v in bm.verts]
+        pose_h, pose_d = max(ys) - min(ys), max(zs) - min(zs)
+        if abs(pose_h - h) > h * MOULDED_POSE_SLACK or abs(pose_d - d) > d * MOULDED_POSE_SLACK:
+            raise BuildError(f"the open pose is {w / MM:.1f} x {pose_h / MM:.1f} x {pose_d / MM:.1f} mm (w x h x d) but the spec size is {w / MM:.1f} x {h / MM:.1f} x {d / MM:.1f} mm: the stretch to the spec would show (more than {MOULDED_POSE_SLACK * 100:.0f} %); change the spec size, the angle or the base and lid sizes")
+        sy, sz = h / pose_h, d / pose_d
+        y_min, z_mid = min(ys), (max(zs) + min(zs)) / 2.0
+        for v in bm.verts:
+            v.co = g2b(v.co.x, (v.co.z - y_min) * sy, (-v.co.y - z_mid) * sz)
+        MEASURE["lidAngleDeg"] = round(math.degrees(math.atan2(sin_t * sy, cos_t * sz)), 4)
+
+    MEASURE["filletMm"] = round(measured_fillet / MM, 3)
+    if depth_built > 0.0:
+        MEASURE["recessDepthMm"] = round(depth_built / MM, 4)
+    if seam is not None:
+        MEASURE["seamDepthMm"] = round(seam[2] / MM, 4)
+    canonical_face_order(bm)
+    return body.finish()
+
+
+# --- speaker-cabinet-v2 (Wave 3, Task 3.1) -----------------------------------------------------------------------
+# A loudspeaker enclosure with an elevation profile, handles, pole socket, rigging points, a grille recess and rear pockets. Mirrors SPEAKER_V2_PARAMS in
+# tools/assets3d/shapes.ts, which documents every param. The solid is a convex polytope made by clipping a big box with half-spaces (the planes of the plan outline and of the
+# elevation quadrilateral); its edges are rounded by more planes (the support function of the polytope shrunk by the radius, plus the radius: a rounded polytope by flat facets) and
+# every face is then built from its own polygon, so a recess can be cut into any flat face (a tilted baffle, a sloped side) with our own triangulation (fill_with_holes_det), and the
+# faces are put in a canonical order: two builds are byte-identical. Pure arithmetic only (no bmesh bevel, no boolean).
+
+SPK2_NAMES = (
+    "frontTopSetMm", "frontBottomSetMm", "frontTopDropMm", "frontBottomRiseMm", "rearTopDropMm", "rearBottomRiseMm",
+    "midWidthMm", "rearWidthMm", "taperDepthMm",
+    "edgeRadiusMm", "edgeSegments", "bodyGrey",
+    "grilleMarginMm", "grilleDepthMm",
+    "handleCount", "handleLenMm", "handleWidthMm", "handleDepthMm", "handleFromRearMm", "handleYMm", "handlePitchMm",
+    "poleSocketDiaMm", "poleSocketDepthMm", "poleSocketFromRearMm",
+    "rigPoints", "rigDiaMm", "rigDepthMm", "rigInsetMm",
+    "bodyHeightMm", "columnWidthMm", "columnDepthMm", "columnHeightMm", "poleDiaMm",
+)
+SPK2_POLE_DEFAULT_MM = 35.0     # mirrored in shapes.ts SPEAKER_V2_DEFAULTS.poleDiaMm
+SPK2_POLE_MIN_MM = 50.0         # the pole between the cabinet and a column on it is at least this long (mirrored in shapes.ts)
+SPK2_POLE_SEG_ROUND = 24
+SPK2_DEFAULTS_MM = {"edgeRadiusMm": 5.0, "grilleDepthMm": 1.5, "handleDepthMm": 12.0, "poleSocketDepthMm": 30.0, "rigDiaMm": 14.0, "rigDepthMm": 0.8}   # mirrored in shapes.ts SPEAKER_V2_DEFAULTS
+SPK2_DEFAULT_SEGMENTS = 3
+SPK2_MIN_FACE_MM = 20.0        # mirrored in shapes.ts SPEAKER_V2_MIN_FACE_MM
+SPK2_EPS = 1e-9                # metres: a point this close to a plane lies on it
+SPK2_MERGE = 1e-8              # metres: two points this close are one vertex
+SPK2_MIN_ARC_DEG = 3.0         # an edge between two faces turning less than this is not rounded
+SPK2_FIT_MM = 0.5              # a recess may come this close to the edge of its flat face
+SPK2_STRETCH_MAX = 0.03        # the rounding takes a little off the extreme corners; the body is stretched back to the exact size, by at most this fraction
+SPK2_POCKET_SEG = 16
+SPK2_HANDLE_SEG = 24
+SPK2_POLE_SEG = 24
+SPK2_RIG_SEG = 16
+Vec3 = tuple[float, float, float]
+
+
+def v3_dot(a: Vec3, b: Vec3) -> float:
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+
+
+def v3_sub(a: Vec3, b: Vec3) -> Vec3:
+    return (a[0] - b[0], a[1] - b[1], a[2] - b[2])
+
+
+def v3_add(a: Vec3, b: Vec3) -> Vec3:
+    return (a[0] + b[0], a[1] + b[1], a[2] + b[2])
+
+
+def v3_mul(a: Vec3, s: float) -> Vec3:
+    return (a[0] * s, a[1] * s, a[2] * s)
+
+
+def v3_cross(a: Vec3, b: Vec3) -> Vec3:
+    return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
+
+
+def v3_len(a: Vec3) -> float:
+    return math.sqrt(v3_dot(a, a))
+
+
+def v3_unit(a: Vec3) -> Vec3:
+    n = v3_len(a)
+    if n < 1e-15:
+        raise BuildError("a face has no area")
+    return (a[0] / n, a[1] / n, a[2] / n)
+
+
+def spk_dedupe(pts: list[Vec3]) -> list[Vec3]:
+    """The polygon without consecutive points closer than SPK2_MERGE (also across the end)."""
+    out: list[Vec3] = []
+    for p in pts:
+        if not out or v3_len(v3_sub(p, out[-1])) > SPK2_MERGE:
+            out.append(p)
+    while len(out) > 1 and v3_len(v3_sub(out[0], out[-1])) <= SPK2_MERGE:
+        out.pop()
+    return out
+
+
+def spk_area_vec(pts: list[Vec3]) -> Vec3:
+    """Twice the area vector of the polygon (Newell): its length is twice the area, its direction the normal (counter-clockwise seen from the tip)."""
+    ax = ay = az = 0.0
+    for i in range(len(pts)):
+        c = v3_cross(pts[i], pts[(i + 1) % len(pts)])
+        ax += c[0]
+        ay += c[1]
+        az += c[2]
+    return (ax, ay, az)
+
+
+def spk_box(half: float) -> list[list[Any]]:
+    """The six faces of the cube of side 2 x half, as [name, normal, offset, points], points counter-clockwise seen from outside."""
+    faces: list[list[Any]] = []
+    for axis in range(3):
+        for sign in (1.0, -1.0):
+            n = [0.0, 0.0, 0.0]
+            n[axis] = sign
+            i, j = (axis + 1) % 3, (axis + 2) % 3
+            pts: list[Vec3] = []
+            for a, b in ((-1.0, -1.0), (1.0, -1.0), (1.0, 1.0), (-1.0, 1.0)):
+                p = [0.0, 0.0, 0.0]
+                p[axis] = sign * half
+                p[i] = a * half
+                p[j] = b * half
+                pts.append((p[0], p[1], p[2]))
+            if sign < 0:
+                pts.reverse()
+            faces.append([f"box{axis}{'p' if sign > 0 else 'n'}", (n[0], n[1], n[2]), half, pts])
+    return faces
+
+
+def spk_cap(cut: list[Vec3], n: Vec3, c: float, name: str) -> list[Any] | None:
+    """The face of the plane n.p = c made by the points a clip cut on it (counter-clockwise seen from outside), None when they do not span an area."""
+    uniq: list[Vec3] = []
+    for p in cut:
+        if all(v3_len(v3_sub(p, q)) > SPK2_MERGE for q in uniq):
+            uniq.append(p)
+    if len(uniq) < 3:
+        return None
+    cen = (sum(p[0] for p in uniq) / len(uniq), sum(p[1] for p in uniq) / len(uniq), sum(p[2] for p in uniq) / len(uniq))
+    axis = min(range(3), key=lambda k: abs(n[k]))
+    e = (1.0 if axis == 0 else 0.0, 1.0 if axis == 1 else 0.0, 1.0 if axis == 2 else 0.0)
+    u = v3_unit(v3_cross(n, e))
+    v = v3_cross(n, u)
+    uniq.sort(key=lambda p: (math.atan2(v3_dot(v3_sub(p, cen), v), v3_dot(v3_sub(p, cen), u)), p))
+    if v3_len(spk_area_vec(uniq)) <= 2e-12:
+        return None
+    return [name, n, c, uniq]
+
+
+def spk_clip(faces: list[list[Any]], n: Vec3, c: float, name: str) -> list[list[Any]]:
+    """The convex polytope `faces` cut by the half-space n.p <= c: every face clipped (Sutherland-Hodgman), plus the new face on the plane. A plane that is already a face is skipped."""
+    for f in faces:
+        if v3_dot(f[1], n) > 1.0 - 1e-12 and abs(f[2] - c) < SPK2_EPS:
+            return faces
+    out: list[list[Any]] = []
+    cut: list[Vec3] = []
+    for f in faces:
+        pts: list[Vec3] = f[3]
+        d = [v3_dot(n, p) - c for p in pts]
+        res: list[Vec3] = []
+        for i in range(len(pts)):
+            j = (i + 1) % len(pts)
+            a, b, da, db = pts[i], pts[j], d[i], d[j]
+            if da <= SPK2_EPS:
+                res.append(a)
+                if da >= -SPK2_EPS:
+                    cut.append(a)
+            if (da < -SPK2_EPS and db > SPK2_EPS) or (da > SPK2_EPS and db < -SPK2_EPS):
+                t = da / (da - db)
+                q = (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t)
+                res.append(q)
+                cut.append(q)
+        res = spk_dedupe(res)
+        if len(res) >= 3 and v3_len(spk_area_vec(res)) > 2e-12:
+            out.append([f[0], f[1], f[2], res])
+    cap = spk_cap(cut, n, c, name)
+    if cap is not None:
+        out.append(cap)
+    return out
+
+
+def spk_vertex_ids(faces: list[list[Any]]) -> tuple[list[Vec3], list[list[int]]]:
+    """The distinct vertices of the polytope (points closer than SPK2_MERGE are one) and each face as a list of vertex ids."""
+    verts: list[Vec3] = []
+    ids: list[list[int]] = []
+    for f in faces:
+        row: list[int] = []
+        for p in f[3]:
+            found = -1
+            for k, q in enumerate(verts):
+                if abs(p[0] - q[0]) <= SPK2_MERGE and abs(p[1] - q[1]) <= SPK2_MERGE and abs(p[2] - q[2]) <= SPK2_MERGE:
+                    found = k
+                    break
+            if found < 0:
+                verts.append(p)
+                found = len(verts) - 1
+            row.append(found)
+        ids.append(row)
+    return verts, ids
+
+
+def spk_round_normals(inner: list[list[Any]], segments: int) -> list[Vec3]:
+    """The normals of the facets that round the edges (`segments` per edge, equally spaced between the normals of the two faces) and the corners (the sum of the normals of the faces that meet) of `inner`."""
+    _verts, ids = spk_vertex_ids(inner)
+    edges: dict[tuple[int, int], list[int]] = {}
+    at_vertex: dict[int, list[int]] = {}
+    for fi, row in enumerate(ids):
+        for k in range(len(row)):
+            a, b = row[k], row[(k + 1) % len(row)]
+            edges.setdefault((min(a, b), max(a, b)), []).append(fi)
+            at_vertex.setdefault(a, []).append(fi)
+    found: dict[tuple[float, float, float], Vec3] = {}
+
+    def add(n: Vec3) -> None:
+        n = v3_unit(n)
+        found.setdefault((round(n[0], 9), round(n[1], 9), round(n[2], 9)), n)
+
+    for key in sorted(edges):
+        fs = edges[key]
+        if len(fs) != 2:
+            continue
+        n1, n2 = inner[fs[0]][1], inner[fs[1]][1]
+        theta = math.acos(max(-1.0, min(1.0, v3_dot(n1, n2))))
+        if theta < math.radians(SPK2_MIN_ARC_DEG):
+            continue
+        for s in range(1, segments + 1):
+            t = s / (segments + 1)
+            k1, k2 = math.sin((1.0 - t) * theta) / math.sin(theta), math.sin(t * theta) / math.sin(theta)
+            add(v3_add(v3_mul(n1, k1), v3_mul(n2, k2)))
+    for vi in sorted(at_vertex):
+        fs = sorted(set(at_vertex[vi]))
+        if len(fs) >= 3:
+            total: Vec3 = (0.0, 0.0, 0.0)
+            for fi in fs:
+                total = v3_add(total, inner[fi][1])
+            if v3_len(total) > 1e-6:
+                add(total)
+    return list(found.values())
+
+
+def spk_basis(n: Vec3) -> tuple[Vec3, Vec3]:
+    """An in-plane frame (u, v) of the plane with normal n, right-handed with n (u x v = n): v is the world up projected on the plane (the world z for a horizontal plane), so on a vertical face u is the x of
+    the picture seen from outside, the convention of the face-local coordinates of the ports."""
+    ref: Vec3 = (0.0, 1.0, 0.0) if abs(n[1]) < 0.9 else (0.0, 0.0, 1.0)
+    v = v3_unit(v3_sub(ref, v3_mul(n, v3_dot(ref, n))))
+    return v3_cross(v, n), v
+
+
+def spk_lift(n: Vec3, c: float, a: float, b: float) -> Vec3:
+    """The point of the plane n.p = c whose two coordinates other than the dominant axis of n are (a, b): side faces (x dominant) take (z, y), top and bottom (y dominant) take (x, z), front and rear (z dominant) (x, y)."""
+    k = max(range(3), key=lambda i: abs(n[i]))
+    if k == 0:
+        return ((c - n[1] * b - n[2] * a) / n[0], b, a)
+    if k == 1:
+        return (a, (c - n[0] * a - n[2] * b) / n[1], b)
+    return (a, b, (c - n[0] * a - n[1] * b) / n[2])
+
+
+def spk_inside(poly: list[tuple[float, float]], pt: tuple[float, float], margin: float) -> bool:
+    """True when pt lies inside the convex counter-clockwise polygon, at least `margin` from every edge."""
+    for i in range(len(poly)):
+        a, b = poly[i], poly[(i + 1) % len(poly)]
+        ex, ey = b[0] - a[0], b[1] - a[1]
+        ln = math.hypot(ex, ey)
+        if ln < 1e-12:
+            continue
+        if (ex * (pt[1] - a[1]) - ey * (pt[0] - a[0])) / ln < margin:
+            return False
+    return True
+
+
+def spk_circle(cx: float, cy: float, r: float, n: int) -> list[tuple[float, float]]:
+    return [(cx + r * math.cos(2.0 * math.pi * i / n), cy + r * math.sin(2.0 * math.pi * i / n)) for i in range(n)]
+
+
+def spk_bbox(pts: list[tuple[float, float]]) -> tuple[float, float, float, float]:
+    return (min(p[0] for p in pts), max(p[0] for p in pts), min(p[1] for p in pts), max(p[1] for p in pts))
+
+
+def spk_to_uv(face: list[Any], p: Vec3) -> tuple[float, float]:
+    u, v = spk_basis(face[1])
+    d = v3_sub(p, face[3][0])
+    return (v3_dot(d, u), v3_dot(d, v))
+
+
+def spk_face_uv(face: list[Any]) -> list[tuple[float, float]]:
+    return [spk_to_uv(face, p) for p in face[3]]
+
+
+def spk_from_uv(face: list[Any], a: float, b: float) -> Vec3:
+    u, v = spk_basis(face[1])
+    return v3_add(face[3][0], v3_add(v3_mul(u, a), v3_mul(v, b)))
+
+
+def spk_recess(bm: bmesh.types.BMesh, face: list[Any], outline_uv: list[tuple[float, float]], depth: float) -> list[bmesh.types.BMVert]:
+    """The walls and the floor of a recess `depth` deep into the flat face (outline in the face's (u, v) frame); returns the mouth vertices, to be filled round."""
+    off = v3_mul(face[1], -depth)
+    mouth_pts = [spk_from_uv(face, a, b) for a, b in outline_uv]
+    mouth = [bm.verts.new(g2b(*p)) for p in mouth_pts]
+    floor = [bm.verts.new(g2b(*v3_add(p, off))) for p in mouth_pts]
+    band(bm, mouth, floor)
+    bm.faces.new(floor[::-1])
+    return mouth
+
+
+def build_speaker_cabinet_v2(plan: Plan) -> bpy.types.Object:
+    """See SPK2_NAMES. Frame: bottom at y = 0, centred on x and z, the io (rear) face at +z, the baffle at the front (-z). The spec size is the exact size."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    unknown = [k for k in params if k not in SPK2_NAMES]
+    if unknown:
+        raise BuildError(f"speaker-cabinet-v2 has no param {unknown[0]!r}")
+
+    def opt(name: str) -> float | None:
+        return positive(params[name], f"params.{name}") * MM if name in params else None
+
+    def dflt(name: str) -> float:
+        v = opt(name)
+        return v if v is not None else SPK2_DEFAULTS_MM[name] * MM
+
+    def whole(name: str, lo: int, hi: int, default: int | None = None) -> int | None:
+        v = params.get(name, default)
+        if v is None:
+            return None
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or v != int(v) or not lo <= int(v) <= hi:
+            raise BuildError(f"params.{name} must be a whole number from {lo} to {hi}, got {v!r}")
+        return int(v)
+
+    # a column array on a pole (bodyHeightMm is the cabinet, the spec height is the whole stack): from here h is the height of the cabinet
+    h_total = h
+    col_names = ("columnWidthMm", "columnDepthMm", "columnHeightMm")
+    has_column = any(k in params for k in col_names + ("poleDiaMm", "bodyHeightMm"))
+    if has_column:
+        missing_col = [k for k in ("bodyHeightMm",) + col_names if k not in params]
+        if missing_col:
+            raise BuildError(f"a column on a pole needs params.bodyHeightMm, params.columnWidthMm, params.columnDepthMm and params.columnHeightMm (missing {', '.join(missing_col)})")
+        h = opt("bodyHeightMm") or h
+        if h_total - h - (opt("columnHeightMm") or 0.0) < SPK2_POLE_MIN_MM * MM:
+            raise BuildError(f"the pole between the cabinet ({h / MM:.0f} mm) and the column ({(opt('columnHeightMm') or 0.0) / MM:.0f} mm) is shorter than {SPK2_POLE_MIN_MM:.0f} mm in the spec height {h_total / MM:.0f} mm")
+        if (opt("columnWidthMm") or 0.0) > w or (opt("columnDepthMm") or 0.0) > d:
+            raise BuildError("the column is wider or deeper than the cabinet it stands on")
+    edge = dflt("edgeRadiusMm")
+    segments = whole("edgeSegments", 1, 8, SPK2_DEFAULT_SEGMENTS) or SPK2_DEFAULT_SEGMENTS
+    grey = params.get("bodyGrey")
+    if grey is not None and (isinstance(grey, bool) or not isinstance(grey, (int, float)) or not 20 <= grey <= 200):
+        raise BuildError(f"params.bodyGrey must be a number from 20 to 200, got {grey!r}")
+    colour = CABINET if grey is None else "#%02x%02x%02x" % (round(grey), round(grey) + 2, round(grey) + 9)
+
+    # the elevation quadrilateral (z, y), counter-clockwise: front-bottom, rear-bottom, rear-top, front-top
+    fb = (-d / 2.0 + (opt("frontBottomSetMm") or 0.0), opt("frontBottomRiseMm") or 0.0)
+    rb = (d / 2.0, opt("rearBottomRiseMm") or 0.0)
+    rt = (d / 2.0, h - (opt("rearTopDropMm") or 0.0))
+    ft = (-d / 2.0 + (opt("frontTopSetMm") or 0.0), h - (opt("frontTopDropMm") or 0.0))
+    corners = [fb, rb, rt, ft]
+    for i in range(4):
+        a, b, c3 = corners[i], corners[(i + 1) % 4], corners[(i + 2) % 4]
+        if (b[0] - a[0]) * (c3[1] - b[1]) - (b[1] - a[1]) * (c3[0] - b[0]) < -1e-12:
+            raise BuildError("the elevation is not convex: the top and the bottom must not cross")
+    if rt[1] - rb[1] < SPK2_MIN_FACE_MM * MM:
+        raise BuildError(f"the rear face is only {(rt[1] - rb[1]) / MM:.1f} mm high: the io face needs at least {SPK2_MIN_FACE_MM:.0f} mm")
+    planes: list[tuple[str, Vec3, float]] = []
+    for k, nm in enumerate(("bottom", "rear", "top", "front")):
+        a, b = corners[k], corners[(k + 1) % 4]
+        dz, dy = b[0] - a[0], b[1] - a[1]
+        ln = math.hypot(dz, dy)
+        if ln < 1e-9:
+            raise BuildError(f"the {nm} edge of the elevation has no length")
+        n3: Vec3 = (0.0, -dz / ln, dy / ln)
+        planes.append((nm, n3, n3[1] * a[1] + n3[2] * a[0]))
+    # the plan (hexagon as speaker-cabinet): full width at the baffle, midWidth where the rear taper starts, rearWidth at the io face
+    mid = opt("midWidthMm") or w
+    rear = opt("rearWidthMm") or mid
+    taper = opt("taperDepthMm")
+    if mid > w + 1e-9:
+        raise BuildError(f"params.midWidthMm ({mid / MM:.1f}) cannot be wider than the width ({w / MM:.1f})")
+    if rear > mid + 1e-9:
+        raise BuildError(f"params.rearWidthMm ({rear / MM:.1f}) cannot be wider than midWidthMm ({mid / MM:.1f})")
+    right: list[tuple[float, float]] = [(w / 2.0, -d / 2.0)]
+    if rear < mid - 1e-9:
+        if taper is None or not 0.0 < taper < d:
+            raise BuildError("a rear narrower than the middle needs params.taperDepthMm, less than the depth")
+        right.append((mid / 2.0, d / 2.0 - taper))
+    right.append((rear / 2.0, d / 2.0))
+    for side, sign in (("R", 1.0), ("L", -1.0)):
+        for k in range(len(right) - 1):
+            (x0, z0), (x1, z1) = right[k], right[k + 1]
+            dx, dz = x1 - x0, z1 - z0
+            ln = math.hypot(dx, dz)
+            if ln < 1e-9:
+                continue
+            nx, nz = dz / ln, -dx / ln
+            planes.append((f"side{side}{k}", (sign * nx, 0.0, nz), nx * x0 + nz * z0))
+
+    # the sharp polytope, then its rounding
+    big = 3.0 * max(w, h, d)
+    sharp = spk_box(big)
+    for nm, n3, c in planes:
+        sharp = spk_clip(sharp, n3, c, nm)
+    sharp = [f for f in sharp if not f[0].startswith("box")]
+    names = [nm for nm, _n, _c in planes]
+    if sorted(f[0] for f in sharp) != sorted(names):
+        raise BuildError(f"the elevation and the plan leave no solid with all their faces (found {sorted(f[0] for f in sharp)}, wanted {sorted(names)})")
+    inner = spk_box(big)
+    for nm, n3, c in planes:
+        inner = spk_clip(inner, n3, c - edge, nm)
+    inner = [f for f in inner if not f[0].startswith("box")]
+    if sorted(f[0] for f in inner) != sorted(names):
+        raise BuildError(f"params.edgeRadiusMm ({edge / MM:.1f}) is too large for this cabinet: the rounding would swallow a face")
+    inner_verts, _ids = spk_vertex_ids(inner)
+    final = sharp
+    for n3 in spk_round_normals(inner, segments):
+        final = spk_clip(final, n3, max(v3_dot(n3, p) for p in inner_verts) + edge, "round")
+    if sorted(f[0] for f in final if f[0] in names) != sorted(names):
+        raise BuildError(f"params.edgeRadiusMm ({edge / MM:.1f}) is too large for this cabinet: the rounding swallows a flat face")
+
+    # the rounding takes a little off the extreme corners: stretch to the exact size, so that every flat face and feature below is built in its final place
+    pts_all = [p for f in final for p in f[3]]
+    lo = (min(p[0] for p in pts_all), min(p[1] for p in pts_all), min(p[2] for p in pts_all))
+    hi = (max(p[0] for p in pts_all), max(p[1] for p in pts_all), max(p[2] for p in pts_all))
+    sx, sy, sz = w / (2.0 * max(hi[0], -lo[0])), h / (hi[1] - lo[1]), d / (hi[2] - lo[2])
+    for what, s in (("width", sx), ("height", sy), ("depth", sz)):
+        if abs(s - 1.0) > SPK2_STRETCH_MAX:
+            raise BuildError(f"the rounded cabinet is {abs(s - 1.0) * 100:.1f} % off the spec {what}: the rounding takes too much off the extreme corners (lower params.edgeRadiusMm, or check the elevation and the plan)")
+
+    def fit(p: Vec3) -> Vec3:
+        return (p[0] * sx, (p[1] - lo[1]) * sy, (p[2] - lo[2]) * sz - d / 2.0)
+
+    def remap(fs: list[list[Any]]) -> list[list[Any]]:
+        out: list[list[Any]] = []
+        for f in fs:
+            q = [fit(p) for p in f[3]]
+            nv = v3_unit(spk_area_vec(q))
+            out.append([f[0], nv, v3_dot(nv, q[0]), q])
+        return out
+
+    sharp, final = remap(sharp), remap(final)
+    flat = {f[0]: f for f in final if f[0] in names}
+    sharp_by_name = {f[0]: f for f in sharp}
+
+    # the smallest edge fillet as built: from every flat face, how far its outline stands in from each sharp edge, turned into a radius by the angle the edge turns
+    best = math.inf
+    for nm, f in sharp_by_name.items():
+        spts = f[3]
+        for i in range(len(spts)):
+            a, b = spts[i], spts[(i + 1) % len(spts)]
+            nb = next((o for on, o in sharp_by_name.items() if on != nm and any(v3_len(v3_sub(a, q)) < 1e-6 for q in o[3]) and any(v3_len(v3_sub(b, q)) < 1e-6 for q in o[3])), None)
+            if nb is None:
+                continue
+            theta = math.acos(max(-1.0, min(1.0, v3_dot(f[1], nb[1]))))
+            if theta < math.radians(SPK2_MIN_ARC_DEG):
+                continue
+            e_dir = v3_unit(v3_sub(b, a))
+            inset_here = min(v3_len(v3_cross(e_dir, v3_sub(q, a))) for q in flat[nm][3])
+            best = min(best, inset_here / math.tan(theta / 2.0))
+    MEASURE["filletMm"] = round(0.0 if best is math.inf else best / MM, 3)
+
+    # features: each is an outline in the (u, v) frame of the flat face it is cut into, checked to fit
+    fit_margin = SPK2_FIT_MM * MM
+    features: list[dict[str, Any]] = []
+
+    def zone_corners(face: list[Any], outline: list[tuple[float, float]]) -> list[Vec3]:
+        pts3 = [spk_from_uv(face, a, b) for a, b in outline]
+        return [(min(p[0] for p in pts3), min(p[1] for p in pts3), min(p[2] for p in pts3)), (max(p[0] for p in pts3), max(p[1] for p in pts3), max(p[2] for p in pts3))]
+
+    def place(face_names: list[str], centre_chart: tuple[float, float], shape: Callable[[float, float], list[tuple[float, float]]], depth: float, what: str, zone_face: str) -> None:
+        """Cuts `shape(cu, cv)` (an outline round a centre, in the face's (u, v) frame) into the first of `face_names` that holds it whole."""
+        for nm in face_names:
+            f = flat.get(nm)
+            if f is None:
+                continue
+            cu, cv = spk_to_uv(f, spk_lift(f[1], f[2], centre_chart[0], centre_chart[1]))
+            outline = shape(cu, cv)
+            if not all(spk_inside(spk_face_uv(f), p, fit_margin) for p in outline):
+                continue
+            nbb = spk_bbox(outline)
+            for other in features:
+                if other["face"] == nm:
+                    ob = spk_bbox(other["outline"])
+                    if ob[0] < nbb[1] + fit_margin and ob[1] > nbb[0] - fit_margin and ob[2] < nbb[3] + fit_margin and ob[3] > nbb[2] - fit_margin:
+                        raise BuildError(f"{what} overlaps {other['what']} on the {nm} face")
+            rack_zone_check(plan, False, w, d, zone_face, what, zone_corners(f, outline))
+            features.append({"face": nm, "outline": outline, "depth": depth, "what": what})
+            return
+        extent = ""
+        f0 = flat.get(face_names[0])
+        if f0 is not None:
+            bb = spk_bbox(spk_face_uv(f0))
+            extent = f" (the flat {face_names[0]} face is {(bb[1] - bb[0]) / MM:.1f} x {(bb[3] - bb[2]) / MM:.1f} mm)"
+        raise BuildError(f"{what} does not fit in the flat {'/'.join(face_names)} face{extent}: move it in or make it smaller")
+
+    # rear pockets behind the inset io ports
+    for p in (plan.get("ports") or []):
+        if not (isinstance(p.get("insetMm"), (int, float)) and p["insetMm"] > 0):
+            continue
+        r = float(p.get("openingMm") or POCKET_DEFAULT_MM) * MM / 2.0
+        cx, cy = float(p["xMm"]) * MM - w / 2.0, float(p["yMm"]) * MM
+        place(["rear"], (cx, cy), lambda a, b, r=r: spk_circle(a, b, r, SPK2_POCKET_SEG), float(p["insetMm"]) * MM,
+              f"the pocket of port {p.get('portId')!r} (x {float(p['xMm']):.1f}, y {float(p['yMm']):.1f}, radius {r / MM:.1f} mm)", "io")
+
+    # grille panel recess in the baffle
+    grille = opt("grilleMarginMm")
+    grille_depth = 0.0
+    if grille is not None:
+        grille_depth = dflt("grilleDepthMm")
+        f = flat["front"]
+        try:
+            panel = offset_outline(spk_face_uv(f), grille)
+        except BuildError as exc:
+            raise BuildError(f"params.grilleMarginMm ({grille / MM:.1f}): {exc}") from exc
+        if sum(panel[i][0] * panel[(i + 1) % len(panel)][1] - panel[(i + 1) % len(panel)][0] * panel[i][1] for i in range(len(panel))) <= 0.0:
+            raise BuildError(f"params.grilleMarginMm ({grille / MM:.1f}) leaves no grille panel on the baffle")
+        rack_zone_check(plan, False, w, d, "opposite", "the grille recess", zone_corners(f, panel))
+        features.append({"face": "front", "outline": panel, "depth": grille_depth, "what": "the grille recess"})
+
+    # handles, both sides
+    handle_count = whole("handleCount", 1, 2)
+    handle_depth = 0.0
+    if handle_count is not None:
+        need = ("handleLenMm", "handleWidthMm", "handleFromRearMm", "handleYMm")
+        missing = [k for k in need if k not in params]
+        if missing:
+            raise BuildError(f"the handles need {', '.join('params.' + k for k in need)} (missing {', '.join(missing)})")
+        hl, hw = opt("handleLenMm") or 0.0, opt("handleWidthMm") or 0.0
+        handle_depth = dflt("handleDepthMm")
+        pitch = opt("handlePitchMm")
+        if handle_count == 2 and pitch is None:
+            raise BuildError("two handles need params.handlePitchMm")
+        for side in ("L", "R"):
+            sides = sorted(n for n in flat if n.startswith(f"side{side}"))
+            for k in range(handle_count):
+                zc = d / 2.0 - (opt("handleFromRearMm") or 0.0) - k * (pitch or 0.0)
+                place(sides, (zc, opt("handleYMm") or 0.0), lambda a, b: stadium_outline(a, b, hl, hw, SPK2_HANDLE_SEG), handle_depth,
+                      f"handle {k + 1} of the {'left' if side == 'L' else 'right'} side (centre {(d / 2.0 - zc) / MM:.1f} mm from the io face, {(opt('handleYMm') or 0.0) / MM:.1f} mm high, {hl / MM:.1f} x {hw / MM:.1f} mm)",
+                      "left" if side == "L" else "right")
+
+    # pole socket in the bottom face
+    pole = opt("poleSocketDiaMm")
+    pole_depth = 0.0
+    if pole is not None:
+        pole_depth = dflt("poleSocketDepthMm")
+        if abs(flat["bottom"][1][1] + 1.0) > 1e-9:
+            raise BuildError("a pole socket needs a bottom that stands flat on the floor (no params.frontBottomRiseMm / rearBottomRiseMm)")
+        from_rear = opt("poleSocketFromRearMm")
+        zc = d / 2.0 - (d / 2.0 if from_rear is None else from_rear)
+        place(["bottom"], (0.0, zc), lambda a, b: spk_circle(a, b, pole / 2.0, SPK2_POLE_SEG), pole_depth,
+              f"the pole socket ({pole / MM:.1f} mm, {(d / 2.0 - zc) / MM:.1f} mm from the io face)", "bottom")
+
+    # rigging points, both sides: round shallow recesses in from the corners of the side face
+    rig_points = whole("rigPoints", 2, 4)
+    rig_count = 0
+    rig_depth = 0.0
+    if rig_points is not None:
+        if rig_points == 3:
+            raise BuildError("params.rigPoints must be 2 (the two top corners) or 4 (all four)")
+        rig_dia = dflt("rigDiaMm")
+        rig_depth = dflt("rigDepthMm")
+        rig_inset = opt("rigInsetMm") or 1.5 * rig_dia
+        cz = sum(c3[0] for c3 in corners) / 4.0
+        cy = sum(c3[1] for c3 in corners) / 4.0
+        order = [("front-top", ft), ("rear-top", rt), ("front-bottom", fb), ("rear-bottom", rb)][:rig_points]
+        for side in ("L", "R"):
+            sides = sorted(n for n in flat if n.startswith(f"side{side}"))
+            for label, (czn, cyn) in order:
+                zc = czn + (rig_inset if cz > czn else -rig_inset)
+                yc = cyn + (rig_inset if cy > cyn else -rig_inset)
+                place(sides, (zc, yc), lambda a, b: spk_circle(a, b, rig_dia / 2.0, SPK2_RIG_SEG), rig_depth,
+                      f"the {label} rigging point of the {'left' if side == 'L' else 'right'} side", "left" if side == "L" else "right")
+                rig_count += 1
+
+    # build the mesh: the recess walls and floors first (dark), then every face of the cabinet, the faces with recesses filled round them
+    body = Body("speaker-cabinet-v2")
+    bm = body.bm
+    mouths: dict[str, list[list[bmesh.types.BMVert]]] = {}
+    for feat in features:
+        mouths.setdefault(feat["face"], []).append(spk_recess(bm, flat[feat["face"]], feat["outline"], feat["depth"]))
+    body.done(CABINET_POCKET)
+    pool_pts: list[Vec3] = []
+    pool_verts: list[bmesh.types.BMVert] = []
+
+    def vertex(p: Vec3) -> bmesh.types.BMVert:
+        for q, bv in zip(pool_pts, pool_verts):
+            if abs(p[0] - q[0]) <= SPK2_MERGE and abs(p[1] - q[1]) <= SPK2_MERGE and abs(p[2] - q[2]) <= SPK2_MERGE:
+                return bv
+        bv = bm.verts.new(g2b(*p))
+        pool_pts.append(p)
+        pool_verts.append(bv)
+        return bv
+
+    for f in final:
+        row: list[bmesh.types.BMVert] = []
+        for bv in [vertex(p) for p in f[3]]:
+            if not row or bv is not row[-1]:
+                row.append(bv)
+        while len(row) > 1 and row[0] is row[-1]:
+            row.pop()
+        if len(row) < 3:
+            continue
+        holes_here = mouths.get(f[0])
+        if holes_here:
+            outline_edges = [bm.edges.get((row[i], row[(i + 1) % len(row)])) or bm.edges.new((row[i], row[(i + 1) % len(row)])) for i in range(len(row))]
+            hole_edges = [[bm.edges.get((m[i], m[(i + 1) % len(m)])) for i in range(len(m))] for m in holes_here]
+            fill_with_holes(bm, outline_edges, hole_edges, f[1], False)
+        else:
+            try:
+                bm.faces.new(row)
+            except ValueError:
+                pass   # the same face twice: keep one
+    body.done(colour)
+
+    if has_column:
+        # the pole (a plain cylinder, a millimetre into the cabinet and into the column) and the column (a rounded prism made by the same clipping), on the middle of the top face
+        col_w, col_d, col_h = opt("columnWidthMm") or 0.0, opt("columnDepthMm") or 0.0, opt("columnHeightMm") or 0.0
+        pole_r = (opt("poleDiaMm") or SPK2_POLE_DEFAULT_MM * MM) / 2.0
+        y_col = h_total - col_h
+        n_pole = SPK2_POLE_SEG_ROUND
+        lo_ring = [bm.verts.new(g2b(pole_r * math.cos(2.0 * math.pi * i / n_pole), h - MM, pole_r * math.sin(2.0 * math.pi * i / n_pole))) for i in range(n_pole)]
+        hi_ring = [bm.verts.new(g2b(pole_r * math.cos(2.0 * math.pi * i / n_pole), y_col + MM, pole_r * math.sin(2.0 * math.pi * i / n_pole))) for i in range(n_pole)]
+        band(bm, lo_ring, hi_ring)
+        bm.faces.new(lo_ring[::-1])
+        bm.faces.new(hi_ring)
+        body.done(ARM_METAL)
+        col_r = min(edge, col_w / 4.0, col_d / 4.0, col_h / 4.0)
+        col_planes: list[tuple[str, Vec3, float]] = [("cx+", (1.0, 0.0, 0.0), col_w / 2.0), ("cx-", (-1.0, 0.0, 0.0), col_w / 2.0), ("cz+", (0.0, 0.0, 1.0), col_d / 2.0), ("cz-", (0.0, 0.0, -1.0), col_d / 2.0), ("cy+", (0.0, 1.0, 0.0), col_h / 2.0), ("cy-", (0.0, -1.0, 0.0), col_h / 2.0)]
+        col_big = 3.0 * max(col_w, col_d, col_h)
+        col_sharp = spk_box(col_big)
+        col_inner = spk_box(col_big)
+        for nm, n3, c in col_planes:
+            col_sharp = spk_clip(col_sharp, n3, c, nm)
+            col_inner = spk_clip(col_inner, n3, c - col_r, nm)
+        col_sharp = [f for f in col_sharp if not f[0].startswith("box")]
+        col_inner = [f for f in col_inner if not f[0].startswith("box")]
+        if len(col_inner) != 6:
+            raise BuildError("the column is too small for the edge radius")
+        col_verts, _cid = spk_vertex_ids(col_inner)
+        col_final = col_sharp
+        for n3 in spk_round_normals(col_inner, segments):
+            col_final = spk_clip(col_final, n3, max(v3_dot(n3, p) for p in col_verts) + col_r, "round")
+        for f in col_final:
+            col_row: list[bmesh.types.BMVert] = []
+            for pt in f[3]:
+                bv = vertex((pt[0], pt[1] + y_col + col_h / 2.0, pt[2]))
+                if not col_row or bv is not col_row[-1]:
+                    col_row.append(bv)
+            while len(col_row) > 1 and col_row[0] is col_row[-1]:
+                col_row.pop()
+            if len(col_row) >= 3:
+                try:
+                    bm.faces.new(col_row)
+                except ValueError:
+                    pass
+        body.done(colour)
+    for key, value in (("grilleDepthMm", grille_depth), ("handleDepthMm", handle_depth), ("poleSocketDiaMm", pole or 0.0), ("poleSocketDepthMm", pole_depth), ("rigDepthMm", rig_depth)):
+        if value > 0.0:
+            MEASURE[key] = round(value / MM, 4)
+    if handle_count is not None:
+        MEASURE["handleRecesses"] = float(2 * handle_count)
+    if rig_count:
+        MEASURE["rigPoints"] = float(rig_count)
+    canonical_face_order(bm)
+    log(f"speaker-cabinet-v2: {len(final)} faces, {len(features)} recesses, fillet {MEASURE['filletMm']} mm")
+    ob = body.finish()
+    # smooth shading would blend the normal of a big flat face into the rounding facets next to it (a gradient across the face): keep the outline of every flat face sharp
+    def key(p: Vec3) -> tuple[int, int, int]:
+        return (round(p[0] * 1e7), round(p[1] * 1e7), round(p[2] * 1e7))
+    outline_keys: set[tuple[tuple[int, int, int], tuple[int, int, int]]] = set()
+    for nm in names:
+        pts_f = flat[nm][3]
+        for i in range(len(pts_f)):
+            ka, kb = key(pts_f[i]), key(pts_f[(i + 1) % len(pts_f)])
+            outline_keys.add((min(ka, kb), max(ka, kb)))
+    me = ob.data
+    for e in me.edges:
+        a, b = me.vertices[e.vertices[0]].co, me.vertices[e.vertices[1]].co
+        ka, kb = key((a.x, a.z, -a.y)), key((b.x, b.z, -b.y))
+        if (min(ka, kb), max(ka, kb)) in outline_keys:
+            e.use_edge_sharp = True
+    return ob
+
+
+# --- cable-assembly-v2 (Wave 3, Task 3.2) ------------------------------------------------------------------------
+# A typed cable model: a plug of one end kind at each end of a trunk, optionally a fan-out of plugs at the B end. Mirrors CABLE_V2_PARAMS and CABLE_END_KINDS in tools/assets3d/shapes.ts
+# (the end-kind table: code, catalogue connector, cross-section and length of the plug). The cable is a SHORT model of a cable (the real length is data, not geometry): end A at +z (the io
+# face), end B at -z (the opposite face), the trunk fills the depth. Every plug is built from lathe stacks and boxes, deterministic (canonical face order).
+
+CABLE2_NAMES = ("endA", "endB", "fanColumns", "fanRows", "fanPitchMm", "tailLenMm", "trunkDiaMm")
+CABLE2_KINDS: dict[int, tuple[str, str, float, float, float]] = {
+    1: ("xlr3-m", "xlr3-m", 22.0, 22.0, 62.0),
+    2: ("xlr3-f", "xlr3-f", 22.0, 22.0, 62.0),
+    3: ("trs-quarter", "trs-quarter", 12.0, 12.0, 62.0),
+    4: ("ts-quarter", "ts-quarter", 12.0, 12.0, 62.0),
+    5: ("speakon-nl4", "speakon-nl4", 24.0, 24.0, 68.0),
+    6: ("powercon-blue", "powercon-blue", 24.0, 24.0, 62.0),
+    7: ("ethercon", "ethercon", 26.0, 26.0, 66.0),
+    8: ("rj45", "rj45", 14.0, 15.0, 52.0),
+    9: ("bnc", "bnc", 15.0, 15.0, 52.0),
+    10: ("dsub25", "dsub25", 62.0, 17.0, 45.0),
+    11: ("toslink", "toslink", 10.0, 9.0, 36.0),
+    12: ("iec-c13", "iec-c13", 28.0, 24.0, 52.0),
+    13: ("rca", "rca", 14.0, 14.0, 40.0),
+    14: ("trs-35mm", "trs-35mm", 8.0, 8.0, 40.0),
+}   # mirrored in shapes.ts CABLE_END_KINDS: (name, catalogue connector id, width, height, plug length) in mm
+CABLE2_SEG = 20
+CABLE2_TRUNK_MIN_MM = 30.0
+CABLE2_DEFAULT_TRUNK_MM = 6.0
+CABLE2_DEFAULT_TAIL_MM = 120.0
+CABLE2_FIT = 0.02             # the natural cross-section may differ this much from the spec size before the spec numbers must be corrected
+C2_SHELL = "#c9ccd0"
+C2_BLACK = "#33343a"
+C2_GOLD = "#d4af37"
+C2_DARK = "#17181b"
+C2_BLUE = "#4a78c0"
+C2_GREY = "#a9adb3"
+C2_RED = "#a83232"
+
+
+def cable2_lathe(body: Body, cx: float, cy: float, tip_z: float, sgn: float, stack: list[tuple[float, float]], colours: list[str], n: int = CABLE2_SEG) -> None:
+    """A closed lathe about the z axis through (cx, cy): `stack` is (distance from the tip toward the cable in mm, radius in mm), one colour per band; flat caps at both ends."""
+    bm = body.bm
+    rings = [ring(bm, r * MM, tip_z + sgn * t * MM, n, cx, cy) for t, r in stack]
+    bm.faces.new(rings[0][::-1] if sgn > 0 else rings[0])
+    body.done(colours[0])
+    for i in range(len(rings) - 1):
+        band(bm, rings[i], rings[i + 1])
+        body.done(colours[i])
+    bm.faces.new(rings[-1] if sgn > 0 else rings[-1][::-1])
+    body.done(colours[-1])
+
+
+def cable2_box(body: Body, cx: float, cy: float, tip_z: float, sgn: float, w: float, h: float, t0: float, t1: float, colour: str, dx: float = 0.0, dy: float = 0.0) -> None:
+    """A box w x h mm centred on (cx + dx, cy + dy), from t0 to t1 mm from the tip toward the cable."""
+    za, zb = tip_z + sgn * t0 * MM, tip_z + sgn * t1 * MM
+    box(body.bm, cx + (dx - w / 2.0) * MM, cx + (dx + w / 2.0) * MM, cy + (dy - h / 2.0) * MM, cy + (dy + h / 2.0) * MM, min(za, zb), max(za, zb))
+    body.done(colour)
+
+
+def cable2_plug(body: Body, kind: int, cx: float, cy: float, tip_z: float, sgn: float) -> None:
+    """The plug of end kind `kind` with its mating face at tip_z, the cable leaving toward sgn (+1 toward +z)."""
+    name = CABLE2_KINDS[kind][0]
+    if name in ("xlr3-m", "xlr3-f"):
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 9.6), (24, 9.6)], [C2_SHELL])
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(24, 9.6), (26, 11.0), (50, 9.5), (62, 5.5)], [C2_BLACK, C2_BLACK, C2_BLACK])
+        for px, py in xlr_pins_mm(3):
+            if name == "xlr3-m":
+                cable2_lathe(body, cx + px * MM, cy + py * MM, tip_z, sgn, [(-0.3, 1.1), (0.5, 1.1)], [C2_GOLD], 8)
+            else:
+                cable2_lathe(body, cx + px * MM, cy + py * MM, tip_z, sgn, [(-0.3, 1.4), (0.5, 1.4)], [C2_DARK], 8)
+        cable2_box(body, cx, cy, tip_z, sgn, 6.0, 1.4, 6.0, 22.0, C2_SHELL, 0.0, 9.6 + 0.5)
+    elif name in ("trs-quarter", "ts-quarter"):
+        trs = name == "trs-quarter"
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 1.2), (2.5, 3.175), (6.0, 3.175)], [C2_SHELL, C2_SHELL], 16)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(6.0, 2.8), (7.5, 2.8)], [C2_DARK], 16)
+        sleeve_from = 7.5
+        if trs:
+            cable2_lathe(body, cx, cy, tip_z, sgn, [(7.5, 3.175), (11.0, 3.175)], [C2_SHELL], 16)
+            cable2_lathe(body, cx, cy, tip_z, sgn, [(11.0, 2.8), (12.5, 2.8)], [C2_DARK], 16)
+            sleeve_from = 12.5
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(sleeve_from, 3.175), (22.0, 3.175)], [C2_SHELL], 16)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(22.0, 6.0), (44.0, 6.0), (62.0, 3.5)], [C2_BLACK, C2_BLACK], 16)
+    elif name in ("speakon-nl4", "powercon-blue"):
+        accent = C2_BLACK if name == "speakon-nl4" else C2_BLUE
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 11.0), (30, 11.0)], [accent])
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(30, 11.0), (32, 12.0), (46, 12.0), (68 if name == "speakon-nl4" else 62, 6.0)], [C2_BLACK, C2_BLACK, C2_BLACK])
+        for k in range(4 if name == "speakon-nl4" else 3):
+            ang = math.pi / 4.0 + k * math.pi / 2.0 if name == "speakon-nl4" else math.pi / 2.0 + k * 2.0 * math.pi / 3.0
+            cable2_lathe(body, cx + 5.0 * MM * math.cos(ang), cy + 5.0 * MM * math.sin(ang), tip_z, sgn, [(-0.3, 1.6), (0.5, 1.6)], [C2_GOLD], 8)
+        cable2_box(body, cx, cy, tip_z, sgn, 5.0, 1.0, 8.0, 30.0, C2_GREY, 0.0, 11.0 + 0.5)
+    elif name in ("ethercon", "rj45"):
+        if name == "ethercon":
+            cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 12.0), (30, 12.0)], [C2_SHELL])
+            cable2_box(body, cx, cy, tip_z, sgn, 11.7, 8.5, -0.3, 20.0, C2_DARK, 0.0, 0.0)
+            cable2_lathe(body, cx, cy, tip_z, sgn, [(30, 12.0), (33, 13.0), (50, 13.0), (66, 6.0)], [C2_BLACK, C2_BLACK, C2_BLACK])
+        else:
+            cable2_box(body, cx, cy, tip_z, sgn, 11.7, 8.5, 0.0, 24.0, C2_PALE, 0.0, -2.0)
+            cable2_box(body, cx, cy, tip_z, sgn, 6.0, 2.5, 4.0, 22.0, C2_GREY, 0.0, 4.0)
+            cable2_box(body, cx, cy, tip_z, sgn, 14.0, 15.0, 24.0, 52.0, C2_BLACK, 0.0, 0.0)
+    elif name == "bnc":
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 6.5), (24, 6.5)], [C2_SHELL])
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(-4.0, 1.6), (0.5, 1.6)], [C2_GOLD], 8)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(24, 6.5), (26, 7.5), (40, 7.5), (52, 4.5)], [C2_BLACK, C2_BLACK, C2_BLACK])
+    elif name == "dsub25":
+        cable2_box(body, cx, cy, tip_z, sgn, 53.0, 12.5, 0.0, 10.0, C2_SHELL)
+        cable2_box(body, cx, cy, tip_z, sgn, 62.0, 17.0, 10.0, 38.0, C2_SHELL)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(38, 8.0), (45, 5.0)], [C2_RED], 16)
+    elif name == "toslink":
+        cable2_box(body, cx, cy, tip_z, sgn, 8.0, 7.0, 0.0, 14.0, C2_BLACK)
+        cable2_box(body, cx, cy, tip_z, sgn, 10.0, 9.0, 14.0, 24.0, C2_GREY)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(24, 4.0), (36, 2.5)], [C2_BLACK], 12)
+    elif name == "iec-c13":
+        cable2_box(body, cx, cy, tip_z, sgn, 25.4, 17.4, 0.0, 18.0, C2_DARK)
+        cable2_box(body, cx, cy, tip_z, sgn, 28.0, 24.0, 18.0, 42.0, C2_BLACK)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(42, 8.0), (52, 5.0)], [C2_BLACK], 16)
+    elif name == "rca":
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 4.5), (14, 4.5)], [C2_SHELL], 16)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(-4.0, 1.5), (0.5, 1.5)], [C2_GOLD], 8)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(14, 7.0), (30, 7.0), (40, 3.5)], [C2_RED, C2_BLACK], 16)
+    elif name == "trs-35mm":
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(0, 1.0), (2.0, 1.75), (14.0, 1.75)], [C2_SHELL, C2_SHELL], 12)
+        cable2_lathe(body, cx, cy, tip_z, sgn, [(14, 4.0), (30, 4.0), (40, 2.5)], [C2_BLACK, C2_BLACK], 12)
+    else:
+        raise BuildError(f"cable-assembly-v2 has no plug for end kind {kind}")
+
+
+C2_PALE = "#b4cfe0"
+
+
+def build_cable_assembly_v2(plan: Plan) -> bpy.types.Object:
+    """See CABLE2_NAMES. Frame: bottom at y = 0, centred on x and z, end A (params.endA) at +z, end B (params.endB) at -z. The spec size is the exact size: its depth is the whole model
+    (the trunk fills it), its width and height must be within 2 % of the natural cross-section of the plugs (or of the fan-out grid), which the message gives."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    unknown = [k for k in params if k not in CABLE2_NAMES]
+    if unknown:
+        raise BuildError(f"cable-assembly-v2 has no param {unknown[0]!r}")
+
+    def whole(name: str, lo: int, hi: int, default: int | None = None) -> int:
+        v = params.get(name, default)
+        if v is None:
+            raise BuildError(f"cable-assembly-v2 needs params.{name} (the end kind code, {', '.join(f'{k} {CABLE2_KINDS[k][0]}' for k in CABLE2_KINDS)})")
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or v != int(v) or not lo <= int(v) <= hi:
+            raise BuildError(f"params.{name} must be a whole number from {lo} to {hi}, got {v!r}")
+        return int(v)
+
+    kind_a = whole("endA", 1, max(CABLE2_KINDS))
+    kind_b = whole("endB", 1, max(CABLE2_KINDS))
+    cols, rows = whole("fanColumns", 1, 16, 1), whole("fanRows", 1, 16, 1)
+    if cols * rows > 16:
+        raise BuildError(f"the fan-out has {cols * rows} plugs: at most 16")
+    fan = cols * rows > 1
+    wa, ha, la = CABLE2_KINDS[kind_a][2:]
+    wb, hb, lb = CABLE2_KINDS[kind_b][2:]
+    pitch = param_m(plan, "fanPitchMm", max(wb, hb) + 2.0) if "fanPitchMm" in params else (max(wb, hb) + 2.0) * MM
+    tail = param_m(plan, "tailLenMm", CABLE2_DEFAULT_TAIL_MM) if fan or "tailLenMm" in params else 0.0
+    if "tailLenMm" in params and not fan:
+        raise BuildError("params.tailLenMm has no effect without a fan-out (fanColumns or fanRows above 1)")
+    if "fanPitchMm" in params and not fan:
+        raise BuildError("params.fanPitchMm has no effect without a fan-out (fanColumns or fanRows above 1)")
+    trunk_r = (param_m(plan, "trunkDiaMm", CABLE2_DEFAULT_TRUNK_MM) if "trunkDiaMm" in params else CABLE2_DEFAULT_TRUNK_MM * MM) / 2.0
+    grid_w = (cols - 1) * pitch + wb * MM
+    grid_h = (rows - 1) * pitch + hb * MM
+    nat_w = max(wa * MM, grid_w if fan else wb * MM)
+    nat_h = max(ha * MM, grid_h if fan else hb * MM)
+    for what, nat, want in (("width", nat_w, w), ("height", nat_h, h)):
+        if abs(nat / want - 1.0) > CABLE2_FIT:
+            raise BuildError(f"the cable's {what} is {nat / MM:.1f} mm (the widest plug or the fan-out grid) but the spec size says {want / MM:.1f} mm: change the spec size or the params")
+    min_d = (la + lb) * MM + (tail if fan else 0.0) + CABLE2_TRUNK_MIN_MM * MM
+    if d < min_d:
+        raise BuildError(f"the depth {d / MM:.1f} mm is too short for these ends: at least {min_d / MM:.1f} mm (both plugs, the tails and a {CABLE2_TRUNK_MIN_MM:.0f} mm trunk)")
+    cy = nat_h / 2.0
+    body = Body("cable-assembly-v2")
+    bm = body.bm
+    # end A at +z, one plug on the axis
+    cable2_plug(body, kind_a, 0.0, cy, d / 2.0, -1.0)
+    z_a_end = d / 2.0 - la * MM
+    # end B at -z: one plug, or the grid with its tails
+    if fan:
+        z_b_end = -d / 2.0 + lb * MM
+        z_break = z_b_end + tail
+        plugs = [((c - (cols - 1) / 2.0) * pitch, cy + (r - (rows - 1) / 2.0) * pitch) for r in range(rows) for c in range(cols)]
+        for x, y in plugs:
+            cable2_plug(body, kind_b, x, y, -d / 2.0, 1.0)
+        for i, (x, y) in enumerate(plugs):
+            cylinder_between(bm, g2b(x, y, z_b_end), g2b(0.0, cy, z_break + 6.0 * MM * i), 3.0 * MM)
+        body.done(C2_BLACK)
+        cylinder_between(bm, g2b(0.0, cy, z_break), g2b(0.0, cy, z_a_end), trunk_r)
+        body.done(C2_BLACK)
+    else:
+        cable2_plug(body, kind_b, 0.0, cy, -d / 2.0, 1.0)
+        z_b_end = -d / 2.0 + lb * MM
+        cylinder_between(bm, g2b(0.0, cy, z_b_end), g2b(0.0, cy, z_a_end), trunk_r)
+        body.done(C2_BLACK)
+    xs = [v.co.x for v in bm.verts]
+    ys = [v.co.z for v in bm.verts]
+    zs = [-v.co.y for v in bm.verts]
+    ex, ey, ez = max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs)
+    for what, nat, want in (("width", ex, w), ("height", ey, h), ("length", ez, d)):
+        if abs(nat / want - 1.0) > CABLE2_FIT:
+            raise BuildError(f"the cable is {nat / MM:.1f} mm in {what}, the spec size says {want / MM:.1f} mm: change the spec size or the params")
+    cx_mid, y_min, z_mid = (max(xs) + min(xs)) / 2.0, min(ys), (max(zs) + min(zs)) / 2.0
+    for v in bm.verts:
+        v.co = g2b((v.co.x - cx_mid) * (w / ex), (v.co.z - y_min) * (h / ey), (-v.co.y - z_mid) * (d / ez))
+    canonical_face_order(bm)
+    log(f"cable-assembly-v2: ends {CABLE2_KINDS[kind_a][0]} / {CABLE2_KINDS[kind_b][0]}{' fan ' + str(cols) + 'x' + str(rows) if fan else ''}, natural {ex / MM:.1f} x {ey / MM:.1f} x {ez / MM:.1f} mm")
+    return body.finish()
+
+
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
+    "cable-assembly-v2": build_cable_assembly_v2,
+    "speaker-cabinet-v2": build_speaker_cabinet_v2,
+    "moulded-box": build_moulded_box,
+    "revolve-oval": build_revolve_oval,
+    "round-base-stand": build_round_base_stand,
     "tripod-stand": build_tripod_stand,
     "power-strip": build_power_strip,
     "cylinder-plug": build_cylinder_plug,
@@ -3091,7 +4853,7 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
         centre_u = 0.0
         if poly.index in looks_at and pictures[looks_at[poly.index]][0] == "wrap":
             cc = poly.center
-            centre_u = math.atan2(cc.y, cc.x) / (2 * math.pi) + 0.5
+            centre_u = wrap_u(plan, cc.x, cc.y, cc.z)
         for li in poly.loop_indices:
             co = me.vertices[me.loops[li].vertex_index].co
             if poly.index in swatch_of:
@@ -3101,7 +4863,7 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
                 face, _img, iw, ih, _px = pictures[k]
                 _normal, local, (fw, fh) = faces[face]
                 if face == "wrap":
-                    u = math.atan2(co.y, co.x) / (2 * math.pi) + 0.5
+                    u = wrap_u(plan, co.x, co.y, co.z)
                     if u - centre_u > 0.5:
                         u -= 1.0
                     elif u - centre_u < -0.5:

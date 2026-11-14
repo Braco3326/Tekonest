@@ -1,0 +1,115 @@
+{
+  "id": "arrakis-arc-8",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 457,
+    "h": 51,
+    "d": 292
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 50,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 76.4,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-prog-l",
+      "face": "io",
+      "xMm": 120,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-prog-r",
+      "face": "io",
+      "xMm": 146.4,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 190,
+      "yMm": 25.5,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        51
+      ],
+      [
+        40,
+        51
+      ],
+      [
+        150,
+        49
+      ],
+      [
+        292,
+        46
+      ]
+    ],
+    "params": {
+      "filletMm": 2.5,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 16,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "reference",
+      "url": "https://broadcaststoreeurope.com/upload_dir/docs/ARC-8-lowres.pdf",
+      "note": "equipment plan source (research grade: estimate); size 457 x 292 x 51 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://broadcaststoreeurope.com/upload_dir/docs/ARC-8-lowres.pdf",
+      "note": "Arrakis ARC-8 brochure, opened 2026-11-12 (a text PDF): width 18 in, depth 11 1/2 in, height 2 in (the order is labelled; the plan keeps its axis-assumed grade); 8 input channels (2 mic, 5 stereo line, 1 selectable PC USB or line), the rear-panel diagram labels XLR mic inputs, balanced program outputs (XLR), unbalanced RCA outputs and inputs, a 1/8 in headphone jack, a USB sound-card port, a 12 VDC input from an external power module (no mains inlet) and an optional 48 V phantom module. The counts behind most callouts are in the picture only and are NOT stated in text, so the connector set is not documented: beta-modelled, with 2 mic inputs, the stereo program output (one XLR per side, assumed) and the headphone jack as a stand-in. The profile is an estimate (flat, \"only 2 in high\"). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "id": "midas-dl16",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482,
+    "h": 89,
+    "d": 225
+  },
+  "ports": [
+    {
+      "portId": "in-mic-line-inputs-1-16-1",
+      "face": "opposite",
+      "xMm": 38,
+      "yMm": 66,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-line-inputs-1-16-2",
+      "face": "opposite",
+      "xMm": 68,
+      "yMm": 66,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-analog-outputs-1-8-1",
+      "face": "opposite",
+      "xMm": 272,
+      "yMm": 51,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-analog-outputs-1-8-2",
+      "face": "opposite",
+      "xMm": 298,
+      "yMm": 51,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-ultranet-p-16-output-no-power",
+      "face": "io",
+      "xMm": 90,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-output-mono",
+      "face": "opposite",
+      "xMm": 440,
+      "yMm": 20,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "in-system-updates",
+      "face": "io",
+      "xMm": 160,
+      "yMm": 60,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "bodyWidthMm": 440,
+      "earThicknessMm": 5,
+      "earHoleMm": 6.35,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "plateFilletMm": 1,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "plateRgb": 2303531,
+      "bodyRgb": 1711136
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://markertek.com/product/midas-dl16/midas-dl16-16-input-8-output-stage-box",
+      "note": "equipment plan source (research grade: dealer); size 482 x 225 x 89 mm (w x d x h) (sources disagree on a dimension); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://markertek.com/product/midas-dl16/midas-dl16-16-input-8-output-stage-box",
+      "note": "Markertek (opened 2026-11-12): 16 XLR mic/line inputs, 8 XLR outputs, 1/4 in TRS phones output (mono), 2 AES50 ports, 1 P-16 (ULTRANET) connector, MIDI 1 in / 1 out, 2 ADAT TOSLINK outputs, USB type B on the rear; 2U rack chassis, \"19 x 8.9 x 3.5 in\" with no axis labels (the plan size 482 x 225 x 89 mm conflicts with other dealers on the depth, estimate). The page places only the USB port; all other panel assignments and positions are guesses. portsDocumented stays false: the page gives connector types and counts but not which panel carries them; positions are guesses (the shape, not the layout, is what the build checks)."
+    }
+  ],
+  "portsTodo": "Connector counts are on the Markertek page; the panel side of each connector is not stated. Plan size is an estimate (depth conflict)."
+}

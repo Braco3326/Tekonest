@@ -11,6 +11,7 @@
     "build:site": "node tools/build-site.mjs",
     "smoke:site": "node tools/site-smoke.mjs",
     "test": "vitest run",
+    "test:blender": "vitest run tests/tools/assets3d tests/assets",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:onboarding": "node tools/onboarding-gate.mjs",
@@ -29,7 +30,9 @@
     "lint": "eslint src tools --ext .ts && eslint tools/live-audit --ext .mjs",
     "format": "prettier --write \"src/**/*.ts\" \"tools/**/*.ts\"",
     "asset:rectify": "tsx tools/assets3d/rectify.ts",
-    "asset:panel": "tsx tools/assets3d/genericPanel.ts"
+    "asset:panel": "tsx tools/assets3d/genericPanel.ts",
+    "promote": "tsx tools/promote-device.ts",
+    "register": "tsx tools/brandsRegister.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.112.1",

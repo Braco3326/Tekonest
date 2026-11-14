@@ -1,0 +1,97 @@
+{
+  "id": "yamaha-hs5",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 170,
+    "h": 285,
+    "d": 222
+  },
+  "ports": [
+    {
+      "portId": "in-xlr",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 180,
+      "confidence": "guess",
+      "openingMm": 20,
+      "insetMm": 3,
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-trs",
+      "face": "io",
+      "xMm": 112,
+      "yMm": 180,
+      "confidence": "guess",
+      "openingMm": 12,
+      "insetMm": 3,
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 85,
+      "yMm": 70,
+      "confidence": "guess",
+      "openingMm": 24,
+      "insetMm": 3,
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "portsTodo": "Plan ports summary: XLR + 1/4in TRS balanced in; level, HF trim, room control. Fill `ports` with the connector set the datasheet documents (portId at most 19 characters, connector, signal, dir, face, xMm, yMm, confidence), the mains inlet as power-in, and the matching controls; then set portsDocumented true and portsSource to the page that documents it. Without portsDocumented the device cannot be promoted (it stays a Bêta proposal).",
+  "build": {
+    "shape": "curved-cabinet",
+    "params": {
+      "planFrontMm": 170,
+      "rearWidthMm": 170,
+      "frontRadiusMm": 8,
+      "backRadiusMm": 8,
+      "edgeRadiusMm": 6,
+      "edgeDropMm": 6,
+      "edgeSegments": 8,
+      "wooferRingMm": 120,
+      "wooferYMm": 100,
+      "tweeterRingMm": 30,
+      "tweeterYMm": 232
+    },
+    "budget": {
+      "min": 1500,
+      "max": 4000
+    },
+    "minFilletMm": 5,
+    "projection": [
+      "io",
+      "opposite"
+    ]
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://jp.yamaha.com/files/download/other_assets/4/322334/HS_Series.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 170 x 222 x 285 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://jp.yamaha.com/files/download/other_assets/4/322334/HS_Series.pdf",
+      "note": "Yamaha HS Series brochure (the plan source; it did not download here, its table was read through web search summaries): HS5 \"XLR3-31 (balanced)\" and \"PHONE (balanced)\" inputs, no outputs, 5 inch woofer, 1 inch tweeter, 285 H x 170 W x 222 D mm (the Markertek sheet prints 170 (W) x 285 (H) x 222 (D)), 5.3 kg. The plan size is an estimate (axis order assumed, read from a summary): beta-modelled. PORTS NOT DOCUMENTED (portsDocumented false): the two inputs are, but the mains inlet type is not named by any page opened (the manual was not readable); the inlet is a guess (iec-c14, like the other monitors)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://jp.yamaha.com/files/download/other_assets/4/322334/HS_Series.pdf",
+      "note": "build params: the Wave 0 spike (curved-cabinet carrying the HS5: plan radius 8, edge radius 6, 120 mm woofer ring at 100 mm, 30 mm tweeter ring at 232 mm, no waveguide; 11 gates passed). Recess positions are estimates. Port and control positions on the rear: no drawing or photo was opened, so every position is a plausible guess (confidence guess)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://jp.yamaha.com/files/download/other_assets/4/322334/HS_Series.pdf",
+      "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with a woofer grille and a tweeter dish; no photo copy, no brand mark, no lettering. Colours: the datasheet finish where it states one, else a studio-monitor default. Black enclosure (category default; the brochure colour was not read)."
+    }
+  ]
+}

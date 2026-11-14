@@ -115,6 +115,23 @@ describe('markerDiameterM (outer ring diameter of a port marker, metres)', () =>
     expect(tight, tight.join(' | ')).toEqual([])
   })
 
+  /**
+   * Documented per-device exceptions to the 60 % rule (smallest honest change, Wave 1 stage 2). The MUTEC MC-3+ is a half-rack 1U unit 42 mm tall; its
+   * documented mains inlet is an IEC C14 whose marker ring is 26.4 mm (22 mm face x 1.2), 62.9 % of that height against a limit of 25.2 mm. The ring
+   * still clears the real C14 face (the shipped table size is the real connector, not an oversize), and a rack-height face cannot be made taller, so the
+   * device is promoted with this one port exempt instead of being kept beta-modelled over a 1.2 mm margin. The exemption holds only for the listed port
+   * and only up to 70 %: a worse ring, or the same ring on any other port, still fails.
+   * Waves 2 to 5 stage 2 added two more, each the smallest that lets the device pass with its real connectors (nothing is oversized: the ring is the
+   * table size x 1.2, and these faces cannot be made taller):
+   *  - sound-devices-mixpre-6-ii: its four XLR inputs, ring 23.4 mm on a 36 mm tall face (65 %), limit 66 %;
+   *  - focusrite-clarett-plus-8pre: its IEC C14 inlet, ring 26.4 mm on a 43.9 mm face (60.1 %), limit 61 %.
+   */
+  const RING_HEIGHT_EXCEPTIONS: Readonly<Record<string, { portIds: readonly string[]; maxFraction: number }>> = {
+    'mutec-mc-3-plus': { portIds: ['power-in'], maxFraction: 0.7 },
+    'sound-devices-mixpre-6-ii': { portIds: ['in-xlr-1', 'in-xlr-2', 'in-xlr-3', 'in-xlr-4'], maxFraction: 0.66 },
+    'focusrite-clarett-plus-8pre': { portIds: ['power-in'], maxFraction: 0.61 },
+  }
+
   it('no ring is taller than 60 % of the smaller side of the face it sits on, and the C13 outlets of the strip (25.4 x 17.4 mm) carry a ring of about 24 mm on a 52 mm bar, not 37.5 mm', () => {
     const tall: string[] = []
     for (const [id, spec] of specs) {
@@ -125,7 +142,9 @@ describe('markerDiameterM (outer ring diameter of a port marker, metres)', () =>
         if (!c || p.face === 'bottom') continue // the base of a round mic is not a panel
         const faceMinor = p.face === 'io' || p.face === 'opposite' ? Math.min(spec.realSizeMm.w, spec.realSizeMm.h) : Math.min(spec.realSizeMm.d, spec.realSizeMm.h)
         const ring = markerDiameterM(c) * 1000
-        if (ring > faceMinor * 0.6) tall.push(id + ' ' + p.portId + ' (' + c + '): ring ' + ring.toFixed(1) + ' mm on a ' + faceMinor.toFixed(1) + ' mm face')
+        const exempt = RING_HEIGHT_EXCEPTIONS[id]
+        const limit = exempt && exempt.portIds.includes(p.portId) ? exempt.maxFraction : 0.6
+        if (ring > faceMinor * limit) tall.push(id + ' ' + p.portId + ' (' + c + '): ring ' + ring.toFixed(1) + ' mm on a ' + faceMinor.toFixed(1) + ' mm face')
       }
     }
     expect(tall, tall.join(' | ')).toEqual([])
@@ -134,6 +153,26 @@ describe('markerDiameterM (outer ring diameter of a port marker, metres)', () =>
     expect((markerDiameterM('iec-c13') * 1000) / bar.realSizeMm.h).toBeLessThan(0.5)
     expect(markerDiameterM('iec-c13') * 1000).toBeLessThan(25.4 * 1.0) // narrower than the outlet is wide
   })
+})
+
+describe('the documented ring-height exceptions are still needed (a stale exemption must be removed)', () => {
+  const EXEMPT: Record<string, { portIds: string[]; maxFraction: number }> = {
+    'mutec-mc-3-plus': { portIds: ['power-in'], maxFraction: 0.7 },
+    'sound-devices-mixpre-6-ii': { portIds: ['in-xlr-1', 'in-xlr-2', 'in-xlr-3', 'in-xlr-4'], maxFraction: 0.66 },
+    'focusrite-clarett-plus-8pre': { portIds: ['power-in'], maxFraction: 0.61 },
+  }
+  for (const [id, ex] of Object.entries(EXEMPT))
+    it(`${id}: each exempt ring is over the plain 60 % limit and under its own ${ex.maxFraction * 100} % one`, () => {
+      const spec = JSON.parse(readFileSync(join(__dirname, '..', '..', 'content', 'asset-specs', `${id}.json`), 'utf8')) as { realSizeMm: { w: number; h: number; d: number }; ports: { portId: string; face: string }[] }
+      for (const portId of ex.portIds) {
+        const port = spec.ports.find((q) => q.portId === portId)!
+        const inCatalogue = catalogJson.devices.find((d) => d.id === id)!.ports.find((q) => q.portId === portId)!
+        const faceMinor = port.face === 'io' || port.face === 'opposite' ? Math.min(spec.realSizeMm.w, spec.realSizeMm.h) : Math.min(spec.realSizeMm.d, spec.realSizeMm.h)
+        const ring = markerDiameterM(inCatalogue.connector) * 1000
+        expect(ring / faceMinor, `${id} ${portId}`).toBeGreaterThan(0.6)
+        expect(ring / faceMinor, `${id} ${portId}`).toBeLessThanOrEqual(ex.maxFraction)
+      }
+    })
 })
 
 describe('the opening branch is dormant (Wave 5c finding H)', () => {
@@ -147,5 +186,77 @@ describe('the opening branch is dormant (Wave 5c finding H)', () => {
   it('the table size and the opening size differ, so an opening passed later would change the rings (the branch is live code, just unused)', () => {
     expect(markerDiameterM('xlr3-f', 30)).not.toBe(markerDiameterM('xlr3-f'))
     expect(markerDiameterM('xlr3-f', undefined)).toBe(markerDiameterM('xlr3-f'))
+  })
+})
+
+describe('Wave 0: every connector TYPE of the catalog has a marker size (not only the ones a device uses today)', () => {
+  it('CONNECTOR_MM has an entry for every catalog connectorTypes id, so no new connector falls back to the 20 mm default by accident', () => {
+    const missing = catalogJson.connectorTypes.map((c) => c.id).filter((id) => !(id in CONNECTOR_MM))
+    expect(missing, `connector types with no CONNECTOR_MM entry: ${missing.join(', ')}`).toEqual([])
+  })
+  it('and the table has no entry for a connector the catalog does not know (a typo would silently never apply)', () => {
+    const ids = new Set(catalogJson.connectorTypes.map((c) => c.id))
+    const stray = Object.keys(CONNECTOR_MM).filter((id) => !ids.has(id))
+    expect(stray).toEqual([])
+  })
+  it('the new connectors get a documented size, ring = 1.2 x face, finite and positive', () => {
+    for (const id of ['dc-barrel', 'midi-din5', 'xlr4', 'bnc-antenna-50ohm', 'mini-xlr-ta4', 'euroblock', 'speakon-nl8', 'binding-post', 'opticalcon', 'sc-fibre', 'lemo', 'hirose']) {
+      expect(CONNECTOR_MM[id], id).toBeGreaterThan(0)
+      expect(markerDiameterM(id), id).toBeCloseTo((CONNECTOR_MM[id] * 1.2) / 1000, 9)
+    }
+    // the D-size housings share the XLR / speakON face: the same 25 mm as etherCON and NL4
+    expect(CONNECTOR_MM['speakon-nl8']).toBe(CONNECTOR_MM['speakon-nl4'])
+    expect(CONNECTOR_MM['xlr4']).toBe(CONNECTOR_MM['xlr3-f'])
+  })
+})
+
+// ---- Wave 1b finding 10: a ring on the base / top of a small body is capped at 0.85 x its smaller horizontal extent ----
+import { END_FACE_RING_SHARE, ringDiameterOnFaceM } from '../../src/scene/portMarkerSize'
+
+describe('ringDiameterOnFaceM (end-face ring cap)', () => {
+  const xlr = markerDiameterM('xlr3-m')
+  const specOf = (id: string) => JSON.parse(readFileSync(join(__dirname, '..', '..', 'content', 'asset-specs', `${id}.json`), 'utf8')) as { realSizeMm: { w: number; d: number }; ports: { portId: string; face: string; connector: string }[] }
+
+  it('pure: a vertical face (base or top) caps at 0.85 x the smaller of width and depth; any other face, a null normal or a bad size leaves the ring alone', () => {
+    expect(END_FACE_RING_SHARE).toBe(0.85)
+    expect(ringDiameterOnFaceM(0.0234, -1, { w: 0.022, d: 0.022 })).toBeCloseTo(0.0187, 9)
+    expect(ringDiameterOnFaceM(0.0234, 1, { w: 0.05, d: 0.019 })).toBeCloseTo(0.01615, 9)
+    expect(ringDiameterOnFaceM(0.0234, -1, { w: 0.2, d: 0.2 })).toBe(0.0234) // a big body: never enlarged, never shrunk
+    expect(ringDiameterOnFaceM(0.0234, 0, { w: 0.01, d: 0.01 })).toBe(0.0234) // a side face
+    expect(ringDiameterOnFaceM(0.0234, null, { w: 0.01, d: 0.01 })).toBe(0.0234) // a rear / front face
+    for (const bad of [0, -1, Number.NaN]) expect(ringDiameterOnFaceM(0.0234, -1, { w: bad, d: 0.03 })).toBe(0.0234)
+  })
+
+  it('real Wave 1 microphones: the XLR ring (23.4 mm) of the KM 184 (22 mm) and the MKH 416 (19 mm) no longer overhangs the base', () => {
+    for (const id of ['neumann-km-184', 'sennheiser-mkh-416']) {
+      const s = specOf(id)
+      const p = s.ports.find((x) => x.connector === 'xlr3-m')!
+      expect(p.face, id).toBe('bottom')
+      const smaller = Math.min(s.realSizeMm.w, s.realSizeMm.d) / 1000
+      expect(xlr, `${id} before the cap`).toBeGreaterThan(smaller)
+      const capped = ringDiameterOnFaceM(xlr, -1, { w: s.realSizeMm.w / 1000, d: s.realSizeMm.d / 1000 })
+      expect(capped, id).toBeLessThan(smaller)
+      expect(capped, id).toBeCloseTo(0.85 * smaller, 9)
+    }
+  })
+
+  it('the 25 original devices: no ring on a base or top face changes (their bodies are wider than the ring)', () => {
+    let seen = 0
+    for (const d of catalogJson.devices.slice(0, 25)) {
+      const path = join(__dirname, '..', '..', 'content', 'asset-specs', `${d.id}.json`)
+      let s: ReturnType<typeof specOf>
+      try {
+        s = specOf(d.id)
+      } catch {
+        continue // no spec for this device (a power strip, a cable): nothing is modelled on an end face
+      }
+      void path
+      for (const p of s.ports.filter((x) => x.face === 'bottom' || x.face === 'top')) {
+        seen++
+        const ring = markerDiameterM(p.connector)
+        expect(ringDiameterOnFaceM(ring, p.face === 'bottom' ? -1 : 1, { w: s.realSizeMm.w / 1000, d: s.realSizeMm.d / 1000 }), `${d.id} ${p.portId}`).toBe(ring)
+      }
+    }
+    expect(seen).toBeGreaterThan(0) // the loop really met end-face ports (the mics)
   })
 })

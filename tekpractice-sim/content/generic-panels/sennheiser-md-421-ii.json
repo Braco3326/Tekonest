@@ -1,0 +1,165 @@
+{
+  "note": "Unrolled side surface of the MD 421-II lathe (build.projection wrap): 153.94 mm around (pi x 49) by 215 mm tall. Generic artwork: plain dark handle, a ring with five notch marks (the bass switch), a slotted head grille. No brand mark, no lettering.",
+  "faces": {
+    "wrap": {
+      "wMm": 153.94,
+      "hMm": 215,
+      "pxPerMm": 9,
+      "base": "#3a3c40",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 70,
+          "w": 153.94,
+          "h": 0.8,
+          "fill": "#222326"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 88,
+          "w": 153.94,
+          "h": 0.8,
+          "fill": "#222326"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 72,
+          "w": 153.94,
+          "h": 15,
+          "fill": "#55575c"
+        },
+        {
+          "kind": "rect",
+          "x": 14,
+          "y": 77,
+          "w": 1.4,
+          "h": 5,
+          "fill": "#1a1b1d"
+        },
+        {
+          "kind": "rect",
+          "x": 20,
+          "y": 77,
+          "w": 1.4,
+          "h": 5,
+          "fill": "#1a1b1d"
+        },
+        {
+          "kind": "rect",
+          "x": 26,
+          "y": 77,
+          "w": 1.4,
+          "h": 5,
+          "fill": "#1a1b1d"
+        },
+        {
+          "kind": "rect",
+          "x": 32,
+          "y": 77,
+          "w": 1.4,
+          "h": 5,
+          "fill": "#1a1b1d"
+        },
+        {
+          "kind": "rect",
+          "x": 38,
+          "y": 77,
+          "w": 1.4,
+          "h": 5,
+          "fill": "#1a1b1d"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 146,
+          "w": 153.94,
+          "h": 1.2,
+          "fill": "#202124"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 148,
+          "w": 153.94,
+          "h": 2,
+          "fill": "#5d5f64"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 150,
+          "w": 153.94,
+          "h": 56,
+          "fill": "#26272a"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 153,
+          "w": 153.94,
+          "h": 3.6,
+          "fill": "#8d8f94"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 160.5,
+          "w": 153.94,
+          "h": 3.6,
+          "fill": "#8d8f94"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 168,
+          "w": 153.94,
+          "h": 3.6,
+          "fill": "#8d8f94"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 175.5,
+          "w": 153.94,
+          "h": 3.6,
+          "fill": "#8d8f94"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 183,
+          "w": 153.94,
+          "h": 3.6,
+          "fill": "#8d8f94"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 190.5,
+          "w": 153.94,
+          "h": 3.6,
+          "fill": "#8d8f94"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 198,
+          "w": 153.94,
+          "h": 3.6,
+          "fill": "#8d8f94"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 206.5,
+          "w": 153.94,
+          "h": 8.5,
+          "fill": "#8d8f94"
+        }
+      ]
+    }
+  }
+}

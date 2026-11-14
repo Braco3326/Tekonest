@@ -1,0 +1,127 @@
+{
+  "id": "nexo-nxamp4x4mk2",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 133.4,
+    "d": 502
+  },
+  "ports": [
+    {
+      "portId": "in-balanced-analogue-inputs-gender-not-stated-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 66.7,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-balanced-analogue-inputs-gender-not-stated-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 66.7,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-power-outputs-1",
+      "face": "io",
+      "xMm": 111.5,
+      "yMm": 66.7,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-power-outputs-2",
+      "face": "io",
+      "xMm": 141.5,
+      "yMm": 66.7,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-gpio-port-db-25-5-in-8-out",
+      "face": "io",
+      "xMm": 186,
+      "yMm": 66.7,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "gpio-tally",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-mains-sockets-powercon-nac3-20-a-1",
+      "face": "io",
+      "xMm": 230.5,
+      "yMm": 66.7,
+      "confidence": "guess",
+      "connector": "powercon-blue",
+      "signal": "mains-power",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mains-sockets-powercon-nac3-20-a-2",
+      "face": "io",
+      "xMm": 260.5,
+      "yMm": 66.7,
+      "confidence": "guess",
+      "connector": "powercon-blue",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 10,
+      "seamMm": 60,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 60,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "plateRgb": 2500909,
+      "bodyRgb": 1579292
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.nexo-sa.com/products/nxamp4x4mk2/",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 502 x 133.4 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.nexo-sa.com/products/nxamp4x4mk2/",
+      "note": "NEXO NXAMP4x4 MK2 page (read by a research pass 2026-11-12): four balanced XLR3 analog inputs, four NL4 outputs, a DB-9 RS-232, a DB-25 GPIO (5 in, 8 out), one expansion slot, dual Ethernet, two powerCON NAC3 mains inlets 100-240 V. The size has an assumed axis order (3 RU x 19 in x 502 mm), so beta-modelled; the ports are the Bêta proposal ports (7 of 11 listed). The plan lists the family rack-box-v3b; nothing read states handles or vents, so the rack-box v2 params are used. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

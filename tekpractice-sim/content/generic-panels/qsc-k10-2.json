@@ -1,0 +1,181 @@
+{
+  "note": "Generic artwork for qsc-k10-2: rear panel (io face, 320 x 519 mm) with sockets at the port positions and a plain plate; baffle (opposite face) drawn from the datasheet driver sizes. No brand mark, no lettering.",
+  "faces": {
+    "opposite": {
+      "wMm": 320,
+      "hMm": 519,
+      "pxPerMm": 6,
+      "base": "#1a1b1d",
+      "items": [
+        {
+          "kind": "grid",
+          "x": 14,
+          "y": 14,
+          "w": 292,
+          "h": 491,
+          "pitch": 4,
+          "line": 1.2,
+          "fill": "#101112",
+          "stroke": "#2d2f33"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 260,
+          "r": 106,
+          "fill": "#26282b"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 260,
+          "r": 102,
+          "fill": "#101112"
+        }
+      ]
+    },
+    "io": {
+      "wMm": 320,
+      "hMm": 519,
+      "pxPerMm": 6,
+      "base": "#202124",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": 20,
+          "w": 304,
+          "h": 479,
+          "fill": "#2a2c2f",
+          "radius": 4
+        },
+        {
+          "kind": "circle",
+          "x": 140,
+          "y": 330,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 140,
+          "y": 330,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 140,
+          "y": 330,
+          "r": 4,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 180,
+          "y": 330,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 180,
+          "y": 330,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 180,
+          "y": 330,
+          "r": 4,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 290,
+          "r": 7.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 290,
+          "r": 5,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 290,
+          "r": 1.67,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 140,
+          "y": 250,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 140,
+          "y": 250,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 140,
+          "y": 250,
+          "r": 4,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 180,
+          "y": 250,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 180,
+          "y": 250,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 180,
+          "y": 250,
+          "r": 4,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 190,
+          "r": 15.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 190,
+          "r": 13,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 190,
+          "r": 4.33,
+          "fill": "#6b6d72"
+        }
+      ]
+    }
+  }
+}

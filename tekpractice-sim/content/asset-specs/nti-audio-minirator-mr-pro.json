@@ -1,0 +1,82 @@
+{
+  "id": "nti-audio-minirator-mr-pro",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 81,
+    "h": 43,
+    "d": 152
+  },
+  "ports": [
+    {
+      "portId": "out-balanced-generator-output",
+      "face": "io",
+      "xMm": 22,
+      "yMm": 21.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-unbalanced-generator-output",
+      "face": "io",
+      "xMm": 44.2,
+      "yMm": 21.5,
+      "confidence": "guess",
+      "connector": "rca",
+      "signal": "line-level-consumer",
+      "dir": "out"
+    },
+    {
+      "portId": "in-xlr-input-for-cable-test-phantom-measurement",
+      "face": "left",
+      "xMm": 22,
+      "yMm": 21.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "phantom-48v",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 8,
+      "edgeRadiusMm": 3,
+      "edgeSegments": 8
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.nti-audio.com/en/products/signal-sources/minirator-mr-pro-mr2",
+      "note": "equipment plan source (research grade: datasheet); size 81 x 152 x 43 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.markertek.com/Attachments/Manuals/NTIAmerica/600000313-Manual.pdf",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.nti-audio.com/en/products/minirator-mr-pro-mr2",
+      "note": "NTi Minirator MR-PRO page and manual (a research pass read the page for the USB port only; XLR and RCA outputs and the XLR cable-test input from search summaries 2026-11-12): balanced XLR output, unbalanced RCA output, an XLR input for cable testing, USB, a DC socket, batteries. The summaries agree on the three audio connectors but the page itself did not state them, so beta-modelled; the ports are the Bêta proposal ports. 81 x 152 x 43 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.nti-audio.com/en/products/minirator-mr-pro-mr2",
+      "note": "NTi Minirator MR-PRO page and manual (a research pass read the page for the USB port only; XLR and RCA outputs and the XLR cable-test input from search summaries 2026-11-12): balanced XLR output, unbalanced RCA output, an XLR input for cable testing, USB, a DC socket, batteries. The summaries agree on the three audio connectors but the page itself did not state them, so beta-modelled; the ports are the Bêta proposal ports. 81 x 152 x 43 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

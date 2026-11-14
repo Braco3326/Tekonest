@@ -311,6 +311,9 @@ test.describe('axe: 0 serious or critical violations, whole page, no rule disabl
     await page.waitForFunction(() => !!window.__creation)
     await expect(page.getByTestId('place-picker')).toBeVisible()
     await page.evaluate(() => document.fonts.ready)
+    // Wave 1b finding 7: at 1366 x 768 (no taller window, no excluded card) axe's label-content-name-mismatch flagged 4 cards that straddle the bottom edge
+    // of the picker's scroll area: the clipped size left "name type", not contained in the name "name size type". Fixed in placePicker.ts (the name order is
+    // now name, type, size, badge: what can be clipped is last, so what stays visible is a prefix of the name). The rule runs on the real viewport.
     expect(await bad(page, 50)).toEqual([])
     // The Label-in-Name fix put the type after the name in the DOM; it is still DRAWN above the name, the size below it (the look did not change).
     // Checked on the first, a middle and the last place card, and on the first and last (wide, row layout) template card.

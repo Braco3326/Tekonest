@@ -1,0 +1,211 @@
+{
+  "note": "Generic artwork for yamaha-dxr12-mkii: rear panel (io face, 362 x 601 mm) with sockets at the port positions and a plain plate; baffle (opposite face) drawn from the datasheet driver sizes. No brand mark, no lettering.",
+  "faces": {
+    "opposite": {
+      "wMm": 362,
+      "hMm": 601,
+      "pxPerMm": 6,
+      "base": "#1a1b1d",
+      "items": [
+        {
+          "kind": "grid",
+          "x": 14,
+          "y": 14,
+          "w": 334,
+          "h": 573,
+          "pitch": 4,
+          "line": 1.2,
+          "fill": "#101112",
+          "stroke": "#2d2f33"
+        },
+        {
+          "kind": "circle",
+          "x": 181,
+          "y": 270,
+          "r": 118,
+          "fill": "#26282b"
+        },
+        {
+          "kind": "circle",
+          "x": 181,
+          "y": 270,
+          "r": 114,
+          "fill": "#101112"
+        }
+      ]
+    },
+    "io": {
+      "wMm": 362,
+      "hMm": 601,
+      "pxPerMm": 6,
+      "base": "#202124",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": 20,
+          "w": 346,
+          "h": 561,
+          "fill": "#2a2c2f",
+          "radius": 4
+        },
+        {
+          "kind": "circle",
+          "x": 135,
+          "y": 400,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 135,
+          "y": 400,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 135,
+          "y": 400,
+          "r": 4,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 181,
+          "y": 400,
+          "r": 9.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 181,
+          "y": 400,
+          "r": 7,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 181,
+          "y": 400,
+          "r": 2.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 227,
+          "y": 400,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 227,
+          "y": 400,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 227,
+          "y": 400,
+          "r": 4,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 150,
+          "y": 350,
+          "r": 8.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 150,
+          "y": 350,
+          "r": 6,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 150,
+          "y": 350,
+          "r": 2,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 190,
+          "y": 350,
+          "r": 8.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 190,
+          "y": 350,
+          "r": 6,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 190,
+          "y": 350,
+          "r": 2,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 227,
+          "y": 350,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 227,
+          "y": 350,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 227,
+          "y": 350,
+          "r": 4,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 260,
+          "r": 15.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 260,
+          "r": 13,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 160,
+          "y": 260,
+          "r": 4.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "rect",
+          "x": 198,
+          "y": 250,
+          "w": 14,
+          "h": 20,
+          "fill": "#8d8f94",
+          "radius": 1.5
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "note": "Generic artwork for krk-rokit-5-g4: rear panel (io face, 190 x 285 mm) with sockets at the port positions and a plain plate; baffle (opposite face) drawn from the datasheet driver sizes. No brand mark, no lettering.",
+  "faces": {
+    "opposite": {
+      "wMm": 190,
+      "hMm": 285,
+      "pxPerMm": 6,
+      "base": "#1d1e20",
+      "items": [
+        {
+          "kind": "circle",
+          "x": 95,
+          "y": 140,
+          "r": 68,
+          "fill": "#3a3c40"
+        },
+        {
+          "kind": "circle",
+          "x": 95,
+          "y": 140,
+          "r": 64,
+          "fill": "#cfa326"
+        },
+        {
+          "kind": "circle",
+          "x": 95,
+          "y": 140,
+          "r": 40,
+          "fill": "#8a6d12"
+        },
+        {
+          "kind": "circle",
+          "x": 95,
+          "y": 140,
+          "r": 14,
+          "fill": "#1a1a1a"
+        },
+        {
+          "kind": "circle",
+          "x": 95,
+          "y": 242,
+          "r": 33,
+          "fill": "#3a3c40"
+        },
+        {
+          "kind": "circle",
+          "x": 95,
+          "y": 242,
+          "r": 31,
+          "fill": "#2a2c2f"
+        },
+        {
+          "kind": "circle",
+          "x": 95,
+          "y": 242,
+          "r": 12,
+          "fill": "#8b8e94"
+        },
+        {
+          "kind": "rect",
+          "x": 55,
+          "y": 38,
+          "w": 80,
+          "h": 12,
+          "fill": "#101112",
+          "radius": 5
+        }
+      ]
+    },
+    "io": {
+      "wMm": 190,
+      "hMm": 285,
+      "pxPerMm": 6,
+      "base": "#1b1c1e",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": 20,
+          "w": 174,
+          "h": 245,
+          "fill": "#2a2c2f",
+          "radius": 4
+        },
+        {
+          "kind": "circle",
+          "x": 70,
+          "y": 200,
+          "r": 13.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 70,
+          "y": 200,
+          "r": 11,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 70,
+          "y": 200,
+          "r": 3.67,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 90,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 90,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 118,
+          "y": 90,
+          "r": 4,
+          "fill": "#6b6d72"
+        }
+      ]
+    }
+  }
+}

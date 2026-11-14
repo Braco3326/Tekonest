@@ -1,0 +1,51 @@
+{
+ "schema": 1,
+ "deviceId": "yamaha-dm7",
+ "generated": true,
+ "topProfile": [
+  [
+   0,
+   324
+  ],
+  [
+   60,
+   324
+  ],
+  [
+   140,
+   270
+  ],
+  [
+   280,
+   200
+  ],
+  [
+   420,
+   140
+  ],
+  [
+   564,
+   100
+  ]
+ ],
+ "controls": [
+  {
+   "id": "power",
+   "face": "io",
+   "xMm": 640,
+   "yMm": 130,
+   "sizeMm": {
+    "w": 12,
+    "h": 18,
+    "d": 6
+   },
+   "label": "Alimentation",
+   "catalogControl": "power",
+   "kind": "switch",
+   "axis": "x",
+   "positions": 2,
+   "colour": "#d8dbe0",
+   "default": 1
+  }
+ ]
+}

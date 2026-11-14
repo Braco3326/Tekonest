@@ -1,0 +1,168 @@
+{
+  "id": "telos-zephyr-xstream",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 483,
+    "h": 89,
+    "d": 318
+  },
+  "ports": [
+    {
+      "portId": "in-send-1",
+      "face": "io",
+      "xMm": 56,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-send-2",
+      "face": "io",
+      "xMm": 83,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-recv-1",
+      "face": "io",
+      "xMm": 110,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-recv-2",
+      "face": "io",
+      "xMm": 137,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 164,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes",
+      "face": "io",
+      "xMm": 191,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "net",
+      "face": "io",
+      "xMm": 213.5,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 424,
+      "yMm": 44.5,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "button",
+      "face": "opposite",
+      "xMm": 40,
+      "yMm": 44.5,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 12,
+        "d": 4
+      }
+    }
+  ],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventColPitchMm": 60,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "plateRgb": 2500909,
+      "bodyRgb": 1579292
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "portsDocumented": true,
+  "portsSource": "https://telosalliance.com/Telos/XSTREAM",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://telosalliance.com/Telos/XSTREAM",
+      "note": "equipment plan source (research grade: datasheet); size 483 x 318 x 89 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "manual",
+      "url": "https://www.manualsdir.com/manuals/216157/telos-zephyr-xstream.html?page=305",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://docs.telosalliance.com/docs/specifications-and-warranty",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://bswusa.com/telos-xstream-isdn-codec/",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://telosalliance.com/Telos/XSTREAM",
+      "note": "Telos Zephyr Xstream product page and manual pages 16, 18, 57 and 58 (read by a research pass 2026-11-12): rear panel two XLR/TRS combo send inputs, two XLR receive outputs, AES/EBU I/O (the count is not stated: one input and one output modelled), an Ethernet / Livewire RJ-45, an IEC AC inlet 100-240 V (the page says IEC without a type: C14 is listed in the plan as assumedConnectors), a headphone jack on the front; also an RS-232 DB9, 8 in / 8 out contact closures, ISDN U and S/T jacks with no catalogue signal (not ports). 483 x 318 x 89 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

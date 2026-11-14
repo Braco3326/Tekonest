@@ -1,0 +1,67 @@
+{
+  "id": "wisycom-mcr54",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 85,
+    "h": 104,
+    "d": 25
+  },
+  "ports": [
+    {
+      "portId": "out-audio-output-5-pin-mini-xlr-female-ta5-closest-id-used",
+      "face": "io",
+      "xMm": 28,
+      "yMm": 30,
+      "confidence": "guess",
+      "connector": "mini-xlr-ta4",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-monitor-headphone-jack-3-5-mm",
+      "face": "io",
+      "xMm": 58,
+      "yMm": 30,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "moulded-box",
+    "params": {
+      "cornerRadiusMm": 5,
+      "edgeRadiusMm": 2.5,
+      "edgeSegments": 8
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 2
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://cdn.abicart.com/shop/ws42/76342/art27/187570927-36b238-MCR54-en-b10.pdf",
+      "note": "equipment plan source (research grade: datasheet); size 85 x 25 x 104 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.trewaudio.com/product/wisycom-mcr54/?wmc-currency=USD",
+      "note": "equipment plan source (research grade: datasheet)"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://cdn.abicart.com/shop/ws42/76342/art27/187570927-36b238-MCR54-en-b10.pdf",
+      "note": "Wisycom MCR54 datasheet rev b10 (dealer-hosted copy of the manufacturer document), opened 2026-11-12: 104 x 85 x 25 mm (H x W x D) as printed, 230 g, slot-style four-channel true-diversity receiver (not a 19 in unit: the plan family label rack-box-v2 is replaced by a moulded box), two SMA antenna inputs (no catalogue signal), audio output on a 5-pin mini-XLR (the Bêta proposal files it under mini-xlr-ta4, the closest id, which is the 4-pin TA4: kept as is), 3.5 mm headphone jack, USB-C control, DC powered (no mains inlet). The datasheet gives no panel per connector. Beta-modelled with the proposal ports kept exactly; no controls. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
+    }
+  ]
+}

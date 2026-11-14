@@ -1,0 +1,59 @@
+{
+ "id": "draft-bass-and-keys-di-small-stage",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Basse et clavier en DI sur une petite scène",
+ "brief": "Petit groupe dans un bar : basse passive et clavier stéréo à reprendre sur une console analogique compacte. Choisir les DI (active pour la basse passive, passive stéréo pour le clavier), câbler, régler les gains et vérifier l'absence de ronflette.",
+ "devices": [
+  {
+   "instanceId": "desk",
+   "deviceId": "yamaha-mg10xu"
+  },
+  {
+   "instanceId": "spkl",
+   "deviceId": "qsc-k12-2"
+  },
+  {
+   "instanceId": "spkr",
+   "deviceId": "qsc-k12-2"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-main-l"
+   },
+   "to": {
+    "instance": "spkl",
+    "port": "in-line-a"
+   }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-main-r"
+   },
+   "to": {
+    "instance": "spkr",
+    "port": "in-line-a"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-11-12",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/electricity-levels.json#bass-and-keys-di-small-stage",
+  "room_id": "bar-club-stage-small",
+  "difficulty": 2,
+  "unmapped_nodes": [
+   "Basse électrique passive",
+   "Clavier stéréo",
+   "DI active J48",
+   "DI stéréo ProD2"
+  ],
+  "unresolved_edges": []
+ }
+}

@@ -1,0 +1,142 @@
+{
+  "note": "Generic artwork for jbl-305p-mkii: rear panel (io face, 185 x 298 mm) with sockets at the port positions and a plain plate; baffle (opposite face) with a woofer grille and a tweeter dish at the modelled recesses. No brand mark, no lettering.",
+  "faces": {
+    "opposite": {
+      "wMm": 185,
+      "hMm": 298,
+      "pxPerMm": 6,
+      "base": "#222326",
+      "items": [
+        {
+          "kind": "circle",
+          "x": 92.5,
+          "y": 105,
+          "r": 63,
+          "fill": "#3e4044"
+        },
+        {
+          "kind": "circle",
+          "x": 92.5,
+          "y": 105,
+          "r": 59,
+          "fill": "#151618"
+        },
+        {
+          "kind": "circle",
+          "x": 92.5,
+          "y": 105,
+          "r": 43,
+          "fill": "#3e4044"
+        },
+        {
+          "kind": "circle",
+          "x": 92.5,
+          "y": 105,
+          "r": 19.67,
+          "fill": "#151618"
+        },
+        {
+          "kind": "circle",
+          "x": 92.5,
+          "y": 258,
+          "r": 33,
+          "fill": "#3e4044"
+        },
+        {
+          "kind": "circle",
+          "x": 92.5,
+          "y": 258,
+          "r": 31,
+          "fill": "#46484c"
+        },
+        {
+          "kind": "circle",
+          "x": 92.5,
+          "y": 258,
+          "r": 11.67,
+          "fill": "#151618"
+        }
+      ]
+    },
+    "io": {
+      "wMm": 185,
+      "hMm": 298,
+      "pxPerMm": 6,
+      "base": "#1b1c1e",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 8,
+          "y": 20,
+          "w": 169,
+          "h": 258,
+          "fill": "#2a2c2f",
+          "radius": 4
+        },
+        {
+          "kind": "circle",
+          "x": 62,
+          "y": 205,
+          "r": 12.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 62,
+          "y": 205,
+          "r": 10,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 62,
+          "y": 205,
+          "r": 3.33,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 124,
+          "y": 205,
+          "r": 8.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 124,
+          "y": 205,
+          "r": 6,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 124,
+          "y": 205,
+          "r": 2,
+          "fill": "#6b6d72"
+        },
+        {
+          "kind": "circle",
+          "x": 92,
+          "y": 75,
+          "r": 14.5,
+          "fill": "#3c3e42"
+        },
+        {
+          "kind": "circle",
+          "x": 92,
+          "y": 75,
+          "r": 12,
+          "fill": "#101112"
+        },
+        {
+          "kind": "circle",
+          "x": 92,
+          "y": 75,
+          "r": 4,
+          "fill": "#6b6d72"
+        }
+      ]
+    }
+  }
+}

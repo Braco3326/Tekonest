@@ -1,0 +1,213 @@
+{
+ "note": "Generic panel artwork (no brand marks), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+ "faces": {
+  "opposite": {
+   "wMm": 127,
+   "hMm": 50,
+   "base": "#c9ccd1",
+   "items": [
+    {
+     "kind": "rect",
+     "x": 8,
+     "y": 5,
+     "w": 111,
+     "h": 40,
+     "fill": "#c9ccd1",
+     "stroke": "#b4b8bd",
+     "radius": 6
+    },
+    {
+     "kind": "circle",
+     "x": 63.5,
+     "y": 36,
+     "r": 1.4,
+     "fill": "#9aa0a6"
+    },
+    {
+     "kind": "rect",
+     "x": 39.4,
+     "y": 12.2,
+     "w": 9.2,
+     "h": 3.6,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 1.7
+    },
+    {
+     "kind": "rect",
+     "x": 41,
+     "y": 13.5,
+     "w": 6,
+     "h": 1,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 55.4,
+     "y": 12.2,
+     "w": 9.2,
+     "h": 3.6,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 1.7
+    },
+    {
+     "kind": "rect",
+     "x": 57,
+     "y": 13.5,
+     "w": 6,
+     "h": 1,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "circle",
+     "x": 84,
+     "y": 14,
+     "r": 3.8,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94"
+    },
+    {
+     "kind": "circle",
+     "x": 84,
+     "y": 14,
+     "r": 1.5,
+     "fill": "#2a2c30"
+    }
+   ]
+  },
+  "io": {
+   "wMm": 127,
+   "hMm": 50,
+   "base": "#c9ccd1",
+   "items": [
+    {
+     "kind": "rect",
+     "x": 8,
+     "y": 5,
+     "w": 111,
+     "h": 40,
+     "fill": "#c9ccd1",
+     "stroke": "#b4b8bd",
+     "radius": 6
+    },
+    {
+     "kind": "rect",
+     "x": 42,
+     "y": 22.4,
+     "w": 14,
+     "h": 5.2,
+     "fill": "#2a2c30",
+     "stroke": "#8a8e94",
+     "radius": 1
+    },
+    {
+     "kind": "text",
+     "x": 49,
+     "y": 33,
+     "size": 3,
+     "text": "HDMI",
+     "fill": "#55595f",
+     "anchor": "middle"
+    },
+    {
+     "kind": "text",
+     "x": 90,
+     "y": 33,
+     "size": 3,
+     "text": "THUNDERBOLT",
+     "fill": "#55595f",
+     "anchor": "middle"
+    },
+    {
+     "kind": "circle",
+     "x": 18,
+     "y": 25,
+     "r": 1.2,
+     "fill": "#8a8e94"
+    },
+    {
+     "kind": "rect",
+     "x": 18.5,
+     "y": 18.8,
+     "w": 15,
+     "h": 12.4,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 1
+    },
+    {
+     "kind": "rect",
+     "x": 20.4,
+     "y": 26.6,
+     "w": 11.2,
+     "h": 2.4,
+     "fill": "#caa24a"
+    },
+    {
+     "kind": "text",
+     "x": 26,
+     "y": 35,
+     "size": 3.6,
+     "text": "ETHERNET",
+     "fill": "#9aa0a6",
+     "anchor": "middle"
+    },
+    {
+     "kind": "rect",
+     "x": 67.4,
+     "y": 23.2,
+     "w": 9.2,
+     "h": 3.6,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 1.7
+    },
+    {
+     "kind": "rect",
+     "x": 69,
+     "y": 24.5,
+     "w": 6,
+     "h": 1,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 85.4,
+     "y": 23.2,
+     "w": 9.2,
+     "h": 3.6,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 1.7
+    },
+    {
+     "kind": "rect",
+     "x": 87,
+     "y": 24.5,
+     "w": 6,
+     "h": 1,
+     "fill": "#3a3d42"
+    },
+    {
+     "kind": "rect",
+     "x": 103.4,
+     "y": 23.2,
+     "w": 9.2,
+     "h": 3.6,
+     "fill": "#0b0b0c",
+     "stroke": "#8a8e94",
+     "radius": 1.7
+    },
+    {
+     "kind": "rect",
+     "x": 105,
+     "y": 24.5,
+     "w": 6,
+     "h": 1,
+     "fill": "#3a3d42"
+    }
+   ]
+  }
+ }
+}

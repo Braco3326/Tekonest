@@ -1,0 +1,217 @@
+{
+  "id": "db-audiotechnik-d80",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 482.6,
+    "h": 88.9,
+    "d": 530
+  },
+  "ports": [
+    {
+      "portId": "in-input-analog-a1-a4-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-input-analog-a1-a4-2",
+      "face": "io",
+      "xMm": 70,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-analog-link-a1-a4-1",
+      "face": "io",
+      "xMm": 40,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-analog-link-a1-a4-2",
+      "face": "io",
+      "xMm": 70,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-input-digital-aes3-d1-2-d3-4-1",
+      "face": "io",
+      "xMm": 175,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "in-input-digital-aes3-d1-2-d3-4-2",
+      "face": "io",
+      "xMm": 205,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "bidir-can-bus-remote-2-x-rj-45-parallel-1",
+      "face": "io",
+      "xMm": 215,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "gpio-tally",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-can-bus-remote-2-x-rj-45-parallel-2",
+      "face": "io",
+      "xMm": 235,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "gpio-tally",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-ethernet-oca-aes70-remote-10-100-mbit-1",
+      "face": "io",
+      "xMm": 275,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-ethernet-oca-aes70-remote-10-100-mbit-2",
+      "face": "io",
+      "xMm": 310,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "ethercon",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "out-speaker-outputs-a-b-c-d-1",
+      "face": "io",
+      "xMm": 255,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-speaker-outputs-a-b-c-d-2",
+      "face": "io",
+      "xMm": 295,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "speakon-nl4",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-4-channel-output-nl8-all-pins-driven",
+      "face": "io",
+      "xMm": 420,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "speakon-nl8",
+      "signal": "speaker-level",
+      "dir": "out"
+    },
+    {
+      "portId": "in-mains-in-powercon-hc-closest-id",
+      "face": "io",
+      "xMm": 425,
+      "yMm": 26,
+      "confidence": "guess",
+      "connector": "powercon-blue",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "portsDocumented": true,
+  "portsSource": "https://www.dbaudio.com/global/en/products/amplifiers/d80/",
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 5,
+      "plateFilletMm": 1,
+      "filletMm": 2.5,
+      "filletSegments": 12,
+      "bodyWidthMm": 438,
+      "earHoleMm": 6.35,
+      "rearInsetMm": 8,
+      "seamMm": 40,
+      "ventSlots": 9,
+      "ventColumns": 2,
+      "ventSlotWidthMm": 3,
+      "ventSlotLenMm": 40,
+      "ventPitchMm": 8,
+      "ventDepthMm": 1.5,
+      "ventFromRearMm": 30,
+      "ventColPitchMm": 70,
+      "frontVentSlots": 5,
+      "frontVentRows": 7,
+      "frontVentSlotLenMm": 40,
+      "frontVentSlotWidthMm": 3,
+      "frontVentColPitchMm": 46,
+      "frontVentRowPitchMm": 9,
+      "frontVentXMm": 170,
+      "frontVentYMm": 44.45,
+      "windowWMm": 70,
+      "windowHMm": 36,
+      "windowXMm": 310,
+      "windowYMm": 26,
+      "windowDepthMm": 2.5,
+      "earHandleProjectionMm": 20,
+      "earHandleDiaMm": 10
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 1500,
+      "max": 3500
+    },
+    "minFilletMm": 1
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbaudio.com/global/en/products/amplifiers/d80/",
+      "note": "equipment plan source (research grade: datasheet); size 482.6 x 530 x 88.9 mm (w x d x h) (axis order assumed); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.dbaudio.com/global/en/products/amplifiers/d80/",
+      "note": "d&b audiotechnik D80 page (opened 2026-11-12): dimensions \"2 RU x 19 in x 530 mm\", 19 kg; connectors: analog inputs A1 to A4 3-pin XLR female, analog links 3-pin XLR male, digital inputs D1/2 and D3/4 3-pin XLR female (AES3), digital link 3-pin XLR male, one 4-channel output on NL8, speaker outputs A to D on NL4, CAN 2 x RJ45 in parallel, Ethernet 2 x etherCON, mains powerCON HC. Only the depth is printed in mm: 2 RU and 19 in are mapped to 88.9 and 482.6 mm by us (axis order assumed, so the size is an estimate and the device is beta-modelled). The mains connector (powerCON HC) has no catalogue connector: modelled as powercon-blue (the closest connector of the Beta proposal), the only assumed connector (a mains inlet)."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.dbaudio.com/global/en/products/amplifiers/d80/",
+      "note": "Port and control positions are GUESSES; CAN is modelled as an RJ45 with the control-network signal. build: rack-box v3b front vent block, display window and ear handles (ESTIMATES: no photo or drawing opened); d includes the 20 mm handles. build.projection: our own generic artwork; no photo, no logo, no lettering."
+    }
+  ]
+}

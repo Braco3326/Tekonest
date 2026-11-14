@@ -1,0 +1,150 @@
+{
+  "id": "allen-heath-zed-22fx",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 645,
+    "h": 98,
+    "d": 465
+  },
+  "ports": [
+    {
+      "portId": "in-mono-channel-mic-inputs-1",
+      "face": "io",
+      "xMm": 26,
+      "yMm": 49,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mono-channel-mic-inputs-2",
+      "face": "io",
+      "xMm": 53,
+      "yMm": 49,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mono-channel-line-inputs-1",
+      "face": "io",
+      "xMm": 75.2,
+      "yMm": 49,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mono-channel-line-inputs-2",
+      "face": "io",
+      "xMm": 92.6,
+      "yMm": 49,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "in"
+    },
+    {
+      "portId": "out-l-r-main-outputs-1",
+      "face": "io",
+      "xMm": 114.8,
+      "yMm": 49,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-l-r-main-outputs-2",
+      "face": "io",
+      "xMm": 141.8,
+      "yMm": 49,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-usb-audio-type-a-b-lead-supplied",
+      "face": "io",
+      "xMm": 164,
+      "yMm": 49,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        98
+      ],
+      [
+        30,
+        98
+      ],
+      [
+        150,
+        80
+      ],
+      [
+        465,
+        58
+      ]
+    ],
+    "params": {
+      "filletMm": 3,
+      "filletSegments": 5,
+      "cheekMm": 6,
+      "baseMm": 28,
+      "feetMm": 4,
+      "feetWidthMm": 18,
+      "feetFromSideMm": 22,
+      "feetFromEndMm": 26
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 600,
+      "max": 6000
+    },
+    "minFilletMm": 2.5
+  },
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/allen-heath-ah-zed22fx-22-channel-mixer-with-usb-and-built-in-effects/",
+      "note": "equipment plan source (research grade: dealer); size 645 x 465 x 98 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://reverb.com/item/94390431-allen-heath-zed-22fx-22-channel-analog-live-mixer",
+      "note": "equipment plan source (research grade: dealer)"
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/allen-heath-ah-zed22fx-22-channel-mixer-with-usb-and-built-in-effects/",
+      "note": "Dealer pages (Thomann, Go Knight, Reverb) read by a research pass 2026-11-12: 16 XLR mic inputs, 16 mono line inputs, 4 stereo inputs, XLR master outputs, 4 aux sends, per-channel inserts, a footswitch jack, 1/4 in headphone, record and alt outputs, one USB-B (2 in, 2 out); counts of the master outputs, inserts and headphone jacks are not stated and the mains connection is not stated. Ports are the Bêta proposal ports (a subset of 7 of 39 listed); beta-modelled. The sloped profile is an estimate (same as the ZED-14). 645 x 465 x 98 mm (dealer, size ok; weight 10.5 or 11.5 kg and height 95 or 98 mm differ between pages). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/allen-heath-ah-zed22fx-22-channel-mixer-with-usb-and-built-in-effects/",
+      "note": "Dealer pages (Thomann, Go Knight, Reverb) read by a research pass 2026-11-12: 16 XLR mic inputs, 16 mono line inputs, 4 stereo inputs, XLR master outputs, 4 aux sends, per-channel inserts, a footswitch jack, 1/4 in headphone, record and alt outputs, one USB-B (2 in, 2 out); counts of the master outputs, inserts and headphone jacks are not stated and the mains connection is not stated. Ports are the Bêta proposal ports (a subset of 7 of 39 listed); beta-modelled. The sloped profile is an estimate (same as the ZED-14). 645 x 465 x 98 mm (dealer, size ok; weight 10.5 or 11.5 kg and height 95 or 98 mm differ between pages). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://goknight.com/allen-heath-ah-zed22fx-22-channel-mixer-with-usb-and-built-in-effects/",
+      "note": "Dealer pages (Thomann, Go Knight, Reverb) read by a research pass 2026-11-12: 16 XLR mic inputs, 16 mono line inputs, 4 stereo inputs, XLR master outputs, 4 aux sends, per-channel inserts, a footswitch jack, 1/4 in headphone, record and alt outputs, one USB-B (2 in, 2 out); counts of the master outputs, inserts and headphone jacks are not stated and the mains connection is not stated. Ports are the Bêta proposal ports (a subset of 7 of 39 listed); beta-modelled. The sloped profile is an estimate (same as the ZED-14). 645 x 465 x 98 mm (dealer, size ok; weight 10.5 or 11.5 kg and height 95 or 98 mm differ between pages). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

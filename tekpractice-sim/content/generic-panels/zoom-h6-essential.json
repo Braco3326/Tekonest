@@ -1,0 +1,305 @@
+{
+  "note": "Generic panel artwork (no brand marks, no logos), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions.",
+  "faces": {
+    "top": {
+      "wMm": 78.1,
+      "hMm": 160.1,
+      "base": "#2e3034",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 0,
+          "w": 78.1,
+          "h": 160.1,
+          "fill": "#2e3034"
+        },
+        {
+          "kind": "rect",
+          "x": 14,
+          "y": 78,
+          "w": 50,
+          "h": 38,
+          "fill": "#0a1a22",
+          "stroke": "#4a4d52",
+          "radius": 2
+        },
+        {
+          "kind": "rect",
+          "x": 17,
+          "y": 81,
+          "w": 44,
+          "h": 32,
+          "fill": "#2a6a8f"
+        },
+        {
+          "kind": "rect",
+          "x": 14,
+          "y": 24,
+          "w": 16,
+          "h": 12,
+          "fill": "#1a1b1e",
+          "stroke": "#6b6f75",
+          "radius": 2
+        },
+        {
+          "kind": "rect",
+          "x": 34,
+          "y": 24,
+          "w": 16,
+          "h": 12,
+          "fill": "#1a1b1e",
+          "stroke": "#6b6f75",
+          "radius": 2
+        },
+        {
+          "kind": "rect",
+          "x": 54,
+          "y": 24,
+          "w": 10,
+          "h": 12,
+          "fill": "#a02020",
+          "stroke": "#6b6f75",
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "x": 39,
+          "y": 52,
+          "r": 7,
+          "fill": "#1a1b1e",
+          "stroke": "#6b6f75"
+        },
+        {
+          "kind": "vents",
+          "x": 18,
+          "y": 124,
+          "w": 42,
+          "h": 26,
+          "pitch": 4,
+          "r": 0.9,
+          "fill": "#101114"
+        }
+      ]
+    },
+    "io": {
+      "wMm": 78.1,
+      "hMm": 42.8,
+      "base": "#2e3034",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 0,
+          "w": 78.1,
+          "h": 42.8,
+          "fill": "#2e3034"
+        },
+        {
+          "kind": "rect",
+          "x": 5,
+          "y": 4,
+          "w": 68.1,
+          "h": 34.8,
+          "fill": "#36383c",
+          "stroke": "#4c4e52",
+          "radius": 1
+        },
+        {
+          "kind": "circle",
+          "x": 20,
+          "y": 21.4,
+          "r": 3.6,
+          "fill": "#0d0e10",
+          "stroke": "#5c6066"
+        },
+        {
+          "kind": "circle",
+          "x": 20,
+          "y": 21.4,
+          "r": 1.2,
+          "fill": "#8a8e94"
+        },
+        {
+          "kind": "circle",
+          "x": 39,
+          "y": 21.4,
+          "r": 3.6,
+          "fill": "#0d0e10",
+          "stroke": "#5c6066"
+        },
+        {
+          "kind": "circle",
+          "x": 39,
+          "y": 21.4,
+          "r": 1.2,
+          "fill": "#8a8e94"
+        },
+        {
+          "kind": "rect",
+          "x": 53.5,
+          "y": 19.7,
+          "w": 9,
+          "h": 3.4,
+          "fill": "#0d0e10",
+          "stroke": "#5c6066",
+          "radius": 1.6
+        },
+        {
+          "kind": "rect",
+          "x": 55,
+          "y": 20.9,
+          "w": 6,
+          "h": 1,
+          "fill": "#8a8e94"
+        }
+      ]
+    },
+    "left": {
+      "wMm": 160.1,
+      "hMm": 42.8,
+      "base": "#2e3034",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 0,
+          "w": 160.1,
+          "h": 42.8,
+          "fill": "#2e3034"
+        },
+        {
+          "kind": "circle",
+          "x": 50,
+          "y": 21.4,
+          "r": 11.5,
+          "fill": "#0d0e10",
+          "stroke": "#5c6066"
+        },
+        {
+          "kind": "circle",
+          "x": 46,
+          "y": 24.4,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 54,
+          "y": 24.4,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 50,
+          "y": 16.9,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 100,
+          "y": 21.4,
+          "r": 11.5,
+          "fill": "#0d0e10",
+          "stroke": "#5c6066"
+        },
+        {
+          "kind": "circle",
+          "x": 96,
+          "y": 24.4,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 104,
+          "y": 24.4,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 100,
+          "y": 16.9,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        }
+      ]
+    },
+    "right": {
+      "wMm": 160.1,
+      "hMm": 42.8,
+      "base": "#2e3034",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 0,
+          "w": 160.1,
+          "h": 42.8,
+          "fill": "#2e3034"
+        },
+        {
+          "kind": "circle",
+          "x": 50,
+          "y": 21.4,
+          "r": 11.5,
+          "fill": "#0d0e10",
+          "stroke": "#5c6066"
+        },
+        {
+          "kind": "circle",
+          "x": 46,
+          "y": 24.4,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 54,
+          "y": 24.4,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 50,
+          "y": 16.9,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 100,
+          "y": 21.4,
+          "r": 11.5,
+          "fill": "#0d0e10",
+          "stroke": "#5c6066"
+        },
+        {
+          "kind": "circle",
+          "x": 96,
+          "y": 24.4,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 104,
+          "y": 24.4,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        },
+        {
+          "kind": "circle",
+          "x": 100,
+          "y": 16.9,
+          "r": 1.7,
+          "fill": "#b8bcc2"
+        }
+      ]
+    }
+  }
+}

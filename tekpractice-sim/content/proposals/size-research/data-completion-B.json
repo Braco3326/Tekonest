@@ -1,0 +1,806 @@
+[
+  {
+    "id": "mutec-mc-3-plus",
+    "sizeMm": {
+      "w": 196,
+      "d": 156,
+      "h": 42
+    },
+    "weightKg": 1.26,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.markertek.com/Attachments/Manuals/MUTEC/8015-102-Manual.pdf"
+    ],
+    "portsText": "Rear: 3 pairs of BNC word-clock outputs (WCLK OUT 1-3, 6 BNC, 75 ohm), S/P-DIF out on RCA and Toslink, AES3/11 out on XLR male, AES3/11 in on XLR female, S/P-DIF in on RCA and Toslink, 1 BNC WCLK/10 MHz input; USB port (USB cable in box). Front position of display/controls n/s.",
+    "colour": "Cover matte-black powder-coated steel; front panel aluminium-colour (item 8015-100) or black (8015-101)",
+    "notes": "Manual technical data (opened): cover 196 x 42 x 156 mm W x H x D without connectors; front panel 198 x 44 x 4 mm (WxHxD); weight approx 1260 g; 9.5 inch half-rack housing. sizeMm is the cover (w196,d156,h42); front panel is 2 mm wider and taller. Thomann lists the USB variant at 1350 g and black variant at 1260 g (dealer, snippet only); manual figure used."
+  },
+  {
+    "id": "samson-s-patch-plus",
+    "sizeMm": {
+      "w": 482.6,
+      "d": 68.5,
+      "h": 44.45
+    },
+    "weightKg": 1.72,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://goknight.com/content/documentation/s-patchplus Spec Sheet.pdf"
+    ],
+    "portsText": "48 points on 24 channels: 48 front 1/4 inch balanced jacks and 48 rear 1/4 inch jacks; front-panel mini toggle per channel selects normal / half-normal / thru.",
+    "colour": null,
+    "notes": "Samson spec sheet (opened; hosted by goknight): Dimensions (H x W x D) 1 3/4 x 19 x 3 in = 44.45 x 482.6 x 68.5 mm; weight 3.8 lb (1.72 kg). Juno (dealer, snippet) lists 44 x 67 x 482 mm and 1724 g, consistent. Colour not stated. Supersedes the 'about 1.3-1.7 kg' guess seen in search summaries."
+  },
+  {
+    "id": "allen-heath-sq-6",
+    "sizeMm": {
+      "w": 638,
+      "d": 514.9,
+      "h": 198
+    },
+    "weightKg": 14.5,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.rentex.com/wp-content/uploads/2022/08/SQ-6-dimensions.pdf",
+      "https://www.allen-heath.com/content/uploads/2023/06/Weights-and-Measures-SQ-6.pdf",
+      "https://www.thomann.co.uk/allen_heath_sq6.htm"
+    ],
+    "portsText": "Dealer spec table (Thomann): 24 mic inputs, 2 stereo line inputs, 14 physical outputs, 1 S-Link, 1 expansion slot (Dante optional), AES3 out, Ethernet, USB-B soundcard; 25 faders over 6 layers (24 + 1 master per dealer). Positions n/s.",
+    "colour": null,
+    "notes": "A&H weights-and-measures drawing (copy hosted by Rentex, opened; allen-heath.com URL returns 403): without box W 638 x D 514.9 x H 198 mm, 14.5 kg; with box 820 x 680 x 360 mm, 17.3 kg. Thomann (opened) agrees on 638 x 514.9 x 198 but lists 13.3 kg: datasheet value kept; dealer weight 13.3 kg recorded as minor conflict. Thomann's 15.15 kg belongs to SQ6+. The A&H drawing also shows a 550 mm and 501.9 mm internal dimension and a rear height of 198.5 mm (rear/foot detail)."
+  },
+  {
+    "id": "behringer-x32",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://www.thomann.co.uk/behringer_x_32.htm"
+    ],
+    "portsText": "Thomann spec table: 32 mic inputs, 16 analog line outputs, 22 physical outputs, 1 expansion card slot, 6 matrix, AES50 stagebox connection, 1 AES digital out, USB-B, Ethernet, MIDI DIN; 25 faders including a motorised fader with 100 mm travel.",
+    "colour": null,
+    "notes": "CONFLICT inside the same dealer page (opened): spec table says 900 x 528 x 200 mm, 20.6 kg; feature list says 900 x 550 x 230 mm, 20.0 kg (Thomann labels W x D x H in the table). No Behringer manual page for the full-size X32 could be reached (manualslib hits were the Producer 490x506x163 mm 11.4 kg, the Rack 132x483x287 mm 6.5 kg and the Compact 215x625x510 mm 15.4 kg). A search summary says Behringer's own spec reads 900 x 528 x 200 / 20.6 kg, but I could not open that page. Sizes left null per rule; best candidate (not confirmed) 900 x 528 x 200 mm, 20.6 kg. Previous notes also record Midas M32 sibling 891 x 612 x 256 mm, 25 kg."
+  },
+  {
+    "id": "mackie-1604vlz4",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 9.1,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.thomann.ae/mackie_1604_vlz4.htm",
+      "https://mcgrp.ru/files/viewer/989819/30",
+      "https://www.manualowl.com/m/Mackie/1604-VLZ4/Manual/401954?page=8"
+    ],
+    "portsText": "Thomann: 16 mono mic/line inputs (XLR + jack), 4 stereo aux returns, 16 channel inserts, 8 direct outputs, 4 subgroups, master insert, balanced 6.3 mm master out, 48 V phantom, BNC lamp connector; aux sends 4 (spec table) vs 6 (description: conflict). Fader count not stated by dealer (16 channel faders implied, review says 60 mm travel).",
+    "colour": null,
+    "notes": "Weight 9.1 kg (20 lb) agrees across Thomann and other dealers (snippets). Dimensions: Thomann description 445 x 129 x 440 mm (W x H x D) vs Thomann spec table W 440 / H 129 / D 433 mm; other dealers (snippet) 17.0 x 17.3 x 5.1 in = 433 x 440 x 129 mm but labelled H x W x D, which is physically implausible; the Mackie owner's manual text was only reachable as images or via 403. Axis order unresolved, so sizes null. Best candidate (not confirmed): W 440, D 433, H 129 mm. Do not use CR1604-VLZ (442 x 455 x 140 mm)."
+  },
+  {
+    "id": "cisco-sg350-managed-switch",
+    "sizeMm": {
+      "w": 440,
+      "d": 202,
+      "h": 44
+    },
+    "weightKg": 2.75,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.zenitel.com/product/sg350-28",
+      "https://www.rentex.com/wp-content/uploads/2019/04/Cisco-SG350-28-Ethernet-Switch-Spec-Sheet-from-Rentex.pdf"
+    ],
+    "portsText": "SG350-28 (non-PoE): 24 x 10/100/1000 RJ45, 2 gigabit combo (RJ45/SFP) ports, 2 SFP slots; 1U rack. Port positions n/s.",
+    "colour": null,
+    "notes": "Zenitel (Cisco distributor page, opened; labelled W x D x H) 440 x 202 x 44 mm, 2.75 kg. A Rentex spec sheet reached via search lists 440.00 x 44.45 x 202.00 mm and 2.75 kg (snippet; the PDF URL itself returned a homepage). Applies to SG350-28 only; the -28P (3.83 kg) and -28MP (3.37 kg) are deeper (257 mm per a Quickserv snippet). Cisco's own datasheet was not opened. Row names 'SG350 managed switch' without port count: 28-port non-PoE assumed as the reference variant."
+  },
+  {
+    "id": "presonus-monitor-station-v2",
+    "sizeMm": {
+      "w": 228.6,
+      "d": 216,
+      "h": 63.5
+    },
+    "weightKg": null,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://goknight.com/presonus-monitor-station-2-desktop-studio-control-center-with-spdif-input/",
+      "https://www.westenddj.co.uk/products/presonus-monitor-station-2"
+    ],
+    "portsText": "Inputs: 4 x 1/4 in TRS balanced (2 stereo pairs), 2 x RCA (aux), 1 x RCA coaxial S/PDIF, 1 x 1/8 in TRS (summed with aux). Outputs: 6 x 1/4 in TRS (3 stereo speaker pairs), 2 x 1/4 in TRS main, 2 x 1/4 in TRS cue, 4 x 1/4 in TRS headphone; 18 VDC barrel power (5.5/2.1 mm). Front/rear positions n/s.",
+    "colour": null,
+    "notes": "Goknight spec table (opened): H 2.5 in (63.5 mm), D 8.5 in (216 mm), W 9 in (228.6 mm); westenddj repeats the same (snippet). Inch values converted to mm. WEIGHT CONFLICT: dealers print '6 lbs (4.54 kg)', but 6 lb is 2.72 kg, and other listings give 2.25 kg, 2.404 kg and 4.97 lb, so weight left null. Talkback/mic input not listed by this dealer."
+  },
+  {
+    "id": "audinate-dante-avio-analog-input-2ch",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.165,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://doc.av-connection.com/Products/Monacor/adp-dai-2x0_DATA_EN.pdf",
+      "https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf"
+    ],
+    "portsText": "1 x RJ45 (Dante, PoE powered), 2 x 3-pole XLR in-line jack (analogue input); line level adjustable +24/+4/0 dBu, 0/-10 dBV.",
+    "colour": "Black",
+    "notes": "Monacor datasheet for the Audinate-made ADP-DAI-2X0 (opened): net weight 165 g (gross 195 g), black, PoE, packaging 0.035 x 0.085 x 0.2 m. No unit dimensions published in that sheet. The 150.7 x 53.8 x 38.1 mm / 145 g figure in earlier notes belongs to the newer AVIO Install AVIO-A-2IN-EB, a different SKU, so it is NOT applied here. Audinate's own ADP-DAI-AU-2x0 datasheet was not reachable."
+  },
+  {
+    "id": "rme-fireface-ufx-iii",
+    "sizeMm": {
+      "w": 483,
+      "d": 210,
+      "h": 44
+    },
+    "weightKg": null,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.thomann.co.uk/rme_fireface_ufx_iii.htm",
+      "https://www.rme-audio.de/fireface-ufx-iii.html"
+    ],
+    "portsText": "Thomann spec table (opened): 4 mic inputs, 8 line inputs, 4 instrument inputs, 8 line outputs, 2 headphone outputs, 2 S/PDIF, 2 ADAT, 1 AES/EBU, 1 MADI, word clock 1 in + 1 out, USB 3 (Type B), 2 MIDI in + 2 MIDI out. Front/rear split n/s on the dealer page.",
+    "colour": null,
+    "notes": "Thomann (labelled W / D / H): 483 x 210 x 44 mm with rack ears; a search summary adds 440 mm without ears and about 240 mm depth including connectors (not confirmed on the page). WEIGHT CONFLICT: Thomann 2.8 kg vs Soundpure 3 kg (snippet) vs Galaxus 3000 g, so weight null. RME's own product page returned 404 and the manual was not located."
+  },
+  {
+    "id": "yamaha-mg10xu",
+    "sizeMm": {
+      "w": 244,
+      "d": 294,
+      "h": 71
+    },
+    "weightKg": 2.1,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.la-bs.com/Objets/MG10XU_dt.pdf",
+      "https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf"
+    ],
+    "portsText": "4 mic inputs (combo jack, XLR/TRS, with 48 V phantom and HPH) on mono channels 1-4, 10 line inputs (4 mono + 3 stereo pairs), USB 2 in / 2 out, outputs: 2 stereo out, 1 monitor out, 1 aux/FX send, 1 phones; stereo RCA pins and phone jacks. 1 gain knob per mic channel plus 1-knob compressor on channels 1-2.",
+    "colour": null,
+    "notes": "Yamaha technical data sheet (opened, copy hosted by la-bs.com; Yamaha's own nl.yamaha.com URL appears in search but returned 403/404 to me): 'W x D x H' 244 x 294 x 71 mm, net weight 2.1 kg. Thomann and zZounds agree (snippet). Chassis described as robust impact-resistant powder-coated metal; colour not stated."
+  },
+  {
+    "id": "behringer-umc202hd",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.5,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.bhphotovideo.com/c/product/1113600-REG/behringer_umc202hd_audiophile_2x2_24_bit_192_khz.html",
+      "https://www.crutchfield.com/S-NgTKKWGI3wW/p_937UMC202/Behringer-U-Phoria-UMC202HD.html"
+    ],
+    "portsText": "2 x XLR/TRS combo mic/line in with Midas preamps, 2 x TRS out, headphone out, USB bus power; as in the existing row. Position n/s.",
+    "colour": null,
+    "notes": "Search summaries (B&H and Crutchfield pages not opened: 403 / not fetched): about 0.5 kg (1.2 lb); dimensions 6.7 x 4.9 x 1.8 in (17 x 12.4 x 4.6 cm) at B&H with no axis labels, Crutchfield 6.63 x 1.88 x 6.5 in with depth including USB cord. Axis order not stated, so sizes null. Desertcart 25.2 x 15.8 x 8.8 cm looks like packaging. Behringer's own page (behringer.com/en/products/0805-AAR is a different part) was not reached. Weight is snippet-level only."
+  },
+  {
+    "id": "behringer-xenyx-q1202usb",
+    "sizeMm": {
+      "w": 250,
+      "d": 248,
+      "h": 50
+    },
+    "weightKg": null,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.rentaround.nl/analoge-mengtafels/behringer-q1202usb",
+      "https://samash.manualsonline.com/user-manual/behringer_spezielle_studiotechnik/mixer/qx1202usb/page/13"
+    ],
+    "portsText": "XLR mic (balanced), 1/4 in TRS line (balanced), dual 1/4 in TRS stereo inputs, dual RCA tape, USB-B (2 in / 2 out), 1/4 in TRS aux send, main outs, control-room outs, 1/4 in TRS stereo headphone out. Counts not given by this dealer. Positions n/s.",
+    "colour": null,
+    "notes": "Rentaround (opened) lists W x D x H 250 x 248 x 50 mm; a Samash/Behringer manual snippet gives 50 x 250 x 248 mm as H x W x D (consistent, not opened). WEIGHT CONFLICT: 1.5 kg (Rentaround, B&H snippet) vs 1.23 kg (Adorama snippet), weight null."
+  },
+  {
+    "id": "mackie-big-knob-studio",
+    "sizeMm": {
+      "w": 251,
+      "d": 163,
+      "h": 81
+    },
+    "weightKg": 1.6,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.kirstein.de/en/Live-Studio/Studio/Studio-Monitoring/Monitoring-Controller/Mackie-Big-Knob-Studio-mhk.html",
+      "https://www.fullcompass.com/prod/525800-mackie-big-knob-studio-3x2-studio-monitor-controller-96khz-usb-i-o"
+    ],
+    "portsText": "Kirstein (opened): 2 combo mic/line inputs, 2 balanced line inputs, 4 balanced monitor outputs (3 x 2 monitor set + sub), 1 stereo mini-jack input on the front panel, 2 headphone outputs with independent level, 2 x 2 USB recording interface. Other positions n/s.",
+    "colour": "Black",
+    "notes": "Resolved by majority, not by an official sheet: Kirstein (opened) 81 x 251 x 163 mm, 1.6 kg, no axis labels; Full Compass and MemoryExpress (snippets) 3.2 x 9.9 x 6.4 in = H x W x D (Full Compass labels it that way) and 3.5 lb; mapped as H 81, W 251, D 163. OUTLIER not used: Chuck Levin's lists 79 x 137 x 142 mm and 1.0 kg; Rubber Monkey's 343 x 89 x 150 mm is the older Big Knob Command System. Earlier notes called this a conflict; I treat three agreeing dealers vs one outlier as resolved but flag it. Mackie's manufacturer spec was not reachable (403)."
+  },
+  {
+    "id": "netgear-m4250-av-switch",
+    "sizeMm": {
+      "w": 440,
+      "d": 257,
+      "h": 43.2
+    },
+    "weightKg": 4.3,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://files.hdtvsupply.com/kramer-m4250-26g4f-poe-x-ds.pdf",
+      "https://www.clearcom.com/Product/m4250-26g4f-poe"
+    ],
+    "portsText": "M4250-26G4F-PoE+: 24 x 1G PoE+ (30 W per port, 300 W budget), 2 x 1G RJ45, 4 x SFP; 1U. Port positions n/s.",
+    "colour": null,
+    "notes": "Kramer-branded Netgear datasheet (opened): product 44.0 x 25.7 x 4.32 cm W,D,H, 4.3 kg; Clear-Com's page (opened) shows the same 440 x 43.2 x 257 mm (unlabelled), 4.3 kg. Only the M4250-26G4F-PoE+ was measured. The M4250 AV family has other members (e.g. 40G8F-PoE+ and 10G2F-PoE+ are deeper/larger; Netgear's GSM4230UP page lists 440 x 400 x 43.2 mm, 6.75 kg) so a different model would need its own row."
+  },
+  {
+    "id": "canare-162u-x21",
+    "sizeMm": {
+      "w": 482.6,
+      "d": 217,
+      "h": 88.1
+    },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://canare.co.jp/en/products/panels_and_patchbays/index.php?tid=5_010"
+    ],
+    "portsText": "2 RU panel (panel P/N 2U-AS7) pre-loaded with 16 x XJ3M-P3FA (upper row) and 16 x XJ3F-P3MA (lower row) XLR 3-pin connectors; 32 XLR points total, clear plastic cover.",
+    "colour": null,
+    "notes": "Canare product page (opened) prints 'Dimensions (mm)' 88.1 x 482.6 x 217 without axis labels; mapped as H x W x D because 88.1 = 2 RU and 482.6 = 19 in. Weight not listed. Colour/finish not listed (described as 'Strong Alloy Steel Panel')."
+  },
+  {
+    "id": "neutrik-nppa-tt-pt",
+    "sizeMm": {
+      "w": 482,
+      "d": 178,
+      "h": 44
+    },
+    "weightKg": 2.9,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.neutrik.com/en/product/nppa-tt-pt.pdf",
+      "https://www.scribd.com/document/494380838/patch-panel-nppa-tt-pt-5"
+    ],
+    "portsText": "2 x 48 TT (Bantam) jacks (96 points), half-normalled bottom row, 288 push terminals at the rear, individual grounding; built-in cable bar and two label strips.",
+    "colour": "Black coated steel shell",
+    "notes": "Neutrik product PDF (opened) confirms 2x48 TT jacks, 288 push terminals, black coated steel shell, 1U, but its extracted text carries no dimensions. Dimensions and weight (482 mm W x 44 mm H, depth 178 mm, 2.9 kg) come from the Neutrik instruction manual as quoted in a search summary of the Scribd copy (the Scribd page itself would not open), so treat as unverified by me. The NPPA-TT-IDC dealer listing shows 2.6 kg (different variant)."
+  },
+  {
+    "id": "laptop-generic",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [],
+    "portsText": null,
+    "colour": null,
+    "notes": "Generic placeholder (hinged laptop for DAW / Dante Controller). There is no single manufacturer datasheet to cite; pick a specific model (e.g. a MacBook Pro 14/16 from Apple tech specs) before sizing. Nothing searched."
+  },
+  {
+    "id": "avid-protools-mtrx-studio",
+    "sizeMm": {
+      "w": 482.6,
+      "d": 200,
+      "h": 44.45
+    },
+    "weightKg": null,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://store.jigsaw24.com/products/avid-pro-tools-mtrx-studio-x953bad",
+      "https://www.avid.com/products/pro-tools-mtrx-studio/specifications"
+    ],
+    "portsText": "Jigsaw24 (opened): inputs 2 x mic/line, 16 analogue on DB25, 16 ch ADAT, 64 ch Dante; outputs 16 analogue on DB25, 16 ch ADAT, 64 ch Dante, 2 x TRS monitor, 2 x TRS headphone. Connector types for ADAT/Dante and front/rear positions n/s.",
+    "colour": null,
+    "notes": "Jigsaw24 states 'H 1U, W 19 inch rack, D 200 mm'; converted to 44.45 x 482.6 mm using the standard 1U/19 in definitions. Weight not listed (B&H shows only package weight 8.5 lb). Avid's own specifications page returned an empty table. Single dealer source."
+  },
+  {
+    "id": "digico-sd-rack",
+    "sizeMm": {
+      "w": 482.7,
+      "d": 371,
+      "h": 443.7
+    },
+    "weightKg": null,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://shop.solotech.com/products/digico-uk-limited-sd-rack-digital-i-o-rack",
+      "https://daleproaudio.com/products/digico-x-sd-rack-st-sd-rack-digital-stage-box-multi-mode-st",
+      "https://digico.biz/racks/sd-rack",
+      "https://www.megasound.com.cy/?p=12130"
+    ],
+    "portsText": "DiGiCo page (opened): 14 hot-swappable card slots (up to 56 in / 56 out), 2 MADI in + 2 MADI out, optional Optocore fibre, top-mounted hot-swap redundant PSU. Connector counts for card types and front/rear positions n/s.",
+    "colour": null,
+    "notes": "Dimensions 482.7 (w) x 371 (d) x 443.7 (h) mm from Solotech and Dale Pro Audio (both snippet-level; Solotech page returned 429 when opened) and Megasound 483 w x 444 h x 371 d (consistent). WEIGHT CONFLICT: 26 kg unloaded (Solotech, Dale) vs 24 kg (Megasound), weight null. digico.biz page (opened) gives no dimensions. The Megasound PDF I opened was the SD-MINI Rack datasheet (482.6 x 408.5 x 177 mm, 12 kg per snippet), a different product."
+  },
+  {
+    "id": "digico-sd12",
+    "sizeMm": {
+      "w": 1124,
+      "d": 795,
+      "h": 389
+    },
+    "weightKg": 42,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://digico.biz/consoles/sd12/"
+    ],
+    "portsText": "Local I/O (DiGiCo page, opened): 8 mic/line inputs and 8 line outputs, 8 AES/EBU mono channels, 2 MADI interfaces on BNC. Type/position of mic and line connectors n/s on the page. 2 x 15 inch touchscreens.",
+    "colour": null,
+    "notes": "DiGiCo product page (opened): 1124 mm (W) x 795 mm (D) x 389 mm (H), 42 kg (130 kg with flightcase); 26 motorised touch-sensitive 100 mm faders (plus 2 assignable master faders per a search summary of the same data), 72 input channels. Colour not stated. Solotech lists the SD12 96 with the same hardware footprint."
+  },
+  {
+    "id": "wheatstone-l-12",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://bswusa.com/wheatstone-l-12/",
+      "https://www.wheatstone.com/joomlatools-files/docman-files/downloadables//L-8:L-12:L-16wBLADE3 MANUALw_062320.pdf"
+    ],
+    "portsText": "12 hot-swappable fader modules; connects to WheatNet-IP via IP88CBL (BSW listing). Connector types n/s.",
+    "colour": null,
+    "notes": "Tried: BSW (opened, no dims), BGS, Radio World LX-24 article, wheatstone.com L-8/L-12 page (403), the L-8/L-12/L-16 manual PDF (HTML shell only; a search summary says its addendum prints unlabelled '25-1/8 in' and '24-1/8 in' figures for the L-12, not usable without axis labels) and the brochure (HTML shell only). The IP-12 sheet (22.625 in W, 16.5 in D, 18.1 lb) is a different product. Dimensions are still unpublished in what I could reach."
+  },
+  {
+    "id": "allen-heath-zed-22fx",
+    "sizeMm": {
+      "w": 645,
+      "d": 465,
+      "h": 98
+    },
+    "weightKg": 10.5,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://goknight.com/allen-heath-ah-zed22fx-22-channel-mixer-with-usb-and-built-in-effects/",
+      "https://reverb.com/item/94390431-allen-heath-zed-22fx-22-channel-analog-live-mixer"
+    ],
+    "portsText": "Goknight spec table (opened): 32 mic/line inputs (16 XLR female mic + 16 1/4 in TRS line), 6 stereo line inputs (3 pairs, 1/4 in TRS), 3 aux sends (1/4 in TRS), 4 aux returns (2 TRS + 2 RCA), 18 inserts (16 mono + 2 stereo bus), main outs (2 XLR male + 1 TRS mono), monitor outs (2 RCA, 1/4 in TRS headphone, 1/8 in headphone), 2-track RCA in/out, USB-B, footswitch TS. ALPS 100 mm faders; 16 mono + 4 stereo channels. Positions n/s.",
+    "colour": null,
+    "notes": "Goknight (opened, dealer): W x H x D 25.4 x 3.9 x 18.3 in (64.5 x 9.8 x 46.5 cm), 23.1 lb (10.5 kg); Reverb and several dealers repeat 645 x 98 x 465 mm / 10.5 kg (snippet). Outliers: Rubber Monkey 110.69 mm height and 6.5 kg (looks like an error), Musician's Friend depth 17.7 in, AVLGear height 3.6 in. Manufacturer sheet not reachable (A&H blocks)."
+  },
+  {
+    "id": "antelope-orion-32-plus-gen4",
+    "sizeMm": {
+      "w": 483,
+      "d": 280,
+      "h": 44
+    },
+    "weightKg": null,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.andertons.co.uk/antelope-orion-32-gen-4/",
+      "https://fullcompass.com/prod/622150-antelope-audio-orion-32-gen-4-32-channel-ad-da-thunderbolt-usb-audio-interface"
+    ],
+    "portsText": "Andertons (opened): 4 x DB25 analogue in (32 ch), 4 x DB25 analogue out (32 ch), 2 x 1/4 in TRS monitor out, 2 fibre MADI in + 2 fibre MADI out (up to 128 ch each), ADAT in/out, S/PDIF in/out, Thunderbolt 3, USB 2.0 Type-C, BNC word clock 1 in + 2 out, BNC 10M atomic-clock in. Front/rear positions n/s.",
+    "colour": null,
+    "notes": "Andertons: 483 x 44 x 280 mm (unlabelled; mapped W x H x D because it is 1U rack gear); Full Compass snippet 48.3 x 27.9 x 4.39 cm agrees. WEIGHT CONFLICT: Andertons 4 kg vs Full Compass / Economik / others 3.4 kg (7.4 lb) vs Sonovente about 3 kg with 220 mm depth; weight null. A dealer says discontinued."
+  },
+  {
+    "id": "avid-protools-sync-x",
+    "sizeMm": {
+      "w": 482,
+      "d": null,
+      "h": 45
+    },
+    "weightKg": 4.45,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.thomann.co.uk/avid_sync_x.htm",
+      "https://www.target.com/p/avid-pro-tools-sync-x-word-clock-and-sync/-/A-82803533"
+    ],
+    "portsText": "Thomann (opened): Loop Sync in/out (BNC), word clock 1 in + 6 out (BNC), 10 MHz in (BNC), AES3id out (BNC), AES3 in/out (25-pin D-sub), GPIO, bi-phase/tach in, pilot in (25-pin D-sub), LTC in/out (XLR), MTC out (9-pin D-sub), machine control (9-pin D-sub), video reference (4 generator outputs BNC, 1 in BNC, 2 out BNC), host serial (8-pin mini-DIN). Positions n/s.",
+    "colour": null,
+    "notes": "Thomann (opened): 482 x 343 x 45 mm unlabelled (mapped W x D x H by 1U geometry), 4.45 kg; Target (snippet) 9.8 lb = 4.45 kg consistent, but prints 1.8 in H x 16.5 in W x 19.0 in D (= 419 mm depth), which conflicts with Thomann's 343 mm depth, so depth left null. Avid spec sheet (Full Compass copy) returned 403."
+  },
+  {
+    "id": "drawmer-mc2-1",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 2.5,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://fullcompass.com/prod/249104-drawmer-mc2-1-monitor-controller",
+      "https://www.proaudiodesign.com/products/drawmer-mc2-1",
+      "https://www.transaudiogroup.com/?p=404"
+    ],
+    "portsText": "n/s (not retrieved).",
+    "colour": null,
+    "notes": "Pages blocked or rate-limited when opened (Full Compass 403, Pro Audio Design 429), so everything is snippet-level. Majority of dealers (snippet): L 272 x W 215 x H 81 mm (10.7 x 8.5 x 3.2 in), 2.5 kg (5.5 lb). Transaudio Group (UK distributor) conflicts: L 250 x W 210 x H 82 mm. Sizes left null because the distributor disagrees; best candidate not confirmed: D 272, W 215, H 81 mm. Rack kit 2U available."
+  },
+  {
+    "id": "focusrite-rednet-x2p",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": 47.5
+    },
+    "weightKg": 1.04,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.mediacastsys.com/focusrite/rednet-x2p.html",
+      "https://www.adorama.com/focusrite-rednet-x2p-dante-audio-interface-red-evolution-preamps/p/frrednetx2p"
+    ],
+    "portsText": "2 mic/line preamps (Red Evolution), 2x2 analogue I/O, headphone + line output, Dante over PoE; connector types not retrieved.",
+    "colour": null,
+    "notes": "Snippet-level only (Full Compass 403): Mediacast, Adorama and Rubber Monkey agree on 1.87 x 5.51 x 4.09 in (47.5 x 140 x 104 mm), 1.04 kg (2.3 lb); Mediacast labels 47.5 mm as chassis height. The 140 / 104 split between width and depth is not labelled, so w and d are null. Thomann B-stock page lists approx 204 x 61 x 146 mm, 1.29 kg (outlier, probably packaging)."
+  },
+  {
+    "id": "lynx-aurora-n",
+    "sizeMm": {
+      "w": 482.6,
+      "d": 254,
+      "h": 43.2
+    },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://lynxstudio.com/products/aurora-n/"
+    ],
+    "portsText": "Per model analogue I/O on DB25: Aurora(n) 8 = 1 in + 1 out, 16 = 2 + 2, 24 = 3 + 3, 32 = 4 + 4; 2 headphone outs, word clock 1 in + 3 out (BNC), optional LM-DIG module with 2 x 25-pin female D-sub; front-panel mic (female XLR), line (female XLR) and Hi-Z (TRS) jacks listed (Neutrik). Positions n/s.",
+    "colour": null,
+    "notes": "Lynx product page (opened): depth 10 in, width 19 in, height 1.7 in = 254 x 482.6 x 43.2 mm (converted). Weight depends on model: 7 lb (8), 7.1 lb (16), 7.2 lb (24), 7.3 lb (32) = about 3.2-3.3 kg, so weight left null for the generic row. A Guitar Center snippet says 8 lb for the 16 TB, which conflicts with Lynx's 7.1 lb; manufacturer value preferred."
+  },
+  {
+    "id": "rme-digiface-dante",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 0.5,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.rme-audio.de/digiface-dante.html",
+      "https://www.bhphotovideo.com/c/product/1438515-REG/rme_digiface_dante_256_channel192_khz.html",
+      "https://www.adorama.com/rmdgifacedan.html"
+    ],
+    "portsText": "RME page (opened): 4 x RJ45 gigabit Ethernet (Dante, two banks with redundancy), 1 BNC MADI pair (coax in + out, 64 ch at 48 kHz), BNC word clock in (switchable 75 ohm) and out (the two BNCs can be switched to MADI I/O), 1 DC-coupled phones/line output, USB 3.0 to host, USB bus power plus external PSU input. RME page is inconsistent on channel count (headline 256 vs 128 over USB).",
+    "colour": null,
+    "notes": "RME's page (opened) lists no dimensions or weight. Dealers (snippet): B&H and Adorama 6.69 x 3.31 x 1.02 in (169.93 x 84.07 x 25.91 mm), 0.5 kg; axis order not labelled, so sizes null (candidates: 170 x 84 x 26 mm). Galaxus 128 x 22 x 55 mm and 1220 g is the older Digiface USB. Manual v2.1 not opened."
+  },
+  {
+    "id": "rme-m-32-ad",
+    "sizeMm": {
+      "w": 483,
+      "d": null,
+      "h": 88
+    },
+    "weightKg": 3,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.rme-audio.de/m-32-m-16-ad.html",
+      "https://mcgrp.ru/files/viewer/1007999/32"
+    ],
+    "portsText": "RME page (opened): 32 line inputs on 1/4 in TRS and 25-pin D-sub (split not stated), 1 MADI I/O (optical, coax also supported), 4 ADAT optical outputs, 1 word clock I/O, 1 MIDI I/O. Positions n/s.",
+    "colour": null,
+    "notes": "DEPTH CONFLICT between two RME documents: product page (opened) '(WxHxD) 483 x 88 x 200 mm'; manual section 15.6 on page 32 (opened via a manual viewer copy) 'with rack ears 483 x 88 x 242 mm, without ears or handles 436 x 88 x 235 mm (W x H x D)', weight 3 kg. Depth left null (candidates 200 or 242). Width 483 and height 88 (2U) agree. The docs.rme-audio.com page I reached described the M-32 AD Pro (440 x 44 x 243 mm, 2.8 kg), a different product."
+  },
+  {
+    "id": "allen-heath-ab168",
+    "sizeMm": {
+      "w": 389.6,
+      "d": 189,
+      "h": 165
+    },
+    "weightKg": 4.8,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://manuals.plus/m/b7c6338bf4a97f16896814168d818f38da51b3d1ff9b218015cbe08e67ba3d78",
+      "https://woodbrass.com/en/products/allen-heath-ab168-stage-rack-16-8-217492"
+    ],
+    "portsText": "16 mic/line XLR inputs, 8 XLR outputs, dSnake (Cat) link; positions n/s.",
+    "colour": null,
+    "notes": "Datasheet values (A&H datasheet copy hosted at manuals.plus) are taken from the earlier gap-analysis note: W 389.6 x D 189 x H 165 mm, weight 4.8 kg; I could not re-open the manuals.plus page (403), so this is unverified in this session. Dealers disagree with the datasheet (Woodbrass 412 x 189 x 182, others 411 x 189 x 154, which likely include handles and feet); datasheet preferred over dealer. Mark for re-check."
+  },
+  {
+    "id": "allen-heath-zed-14",
+    "sizeMm": {
+      "w": 385,
+      "d": 465,
+      "h": 98
+    },
+    "weightKg": null,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.thomann.co.uk/allenheath_zed14.htm",
+      "https://reverb.com/item/94390426-allen-heath-zed-14-14-channel-analog-live-mixer",
+      "https://www.proacousticsusa.com/allen-heath-zed-14-multipurpose-mixer-for-live-sound-and-recording.html"
+    ],
+    "portsText": "Thomann (opened): 6 mic in, 6 mono line in, 4 stereo in (dual stereo), 4 aux sends (per table), USB-B 2 in / 2 out, XLR master out, 6.3 mm headphone, 48 V phantom, inserts per channel. Fader count not stated.",
+    "colour": null,
+    "notes": "Dimensions: Thomann spec table W 385 / H 98 / D 465 mm; Reverb and ProAcoustics (snippets) 385 x 98 x 465 mm. Thomann's feature list says 384 x 95 x 465 mm and imuso 384 x 95 x 465 (minor 1-3 mm differences, majority used and flagged). WEIGHT CONFLICT: Thomann table 6.5 kg vs feature list 7.5 kg; ProAcoustics 14.3 lb (6.49 kg); Prolight 6.2 kg / 468 x 420 x 95 mm (outlier), weight null. Rack kit ZED1402-RK19 optional."
+  },
+  {
+    "id": "focusrite-rednet-a16r-mkii",
+    "sizeMm": {
+      "w": 482,
+      "d": null,
+      "h": 44
+    },
+    "weightKg": null,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.thomann.ae/focusrite_rednet_a16r_mkii.htm"
+    ],
+    "portsText": "Thomann (opened): 4 x DB25 (16 line in + 16 line out), word clock 1 in + 1 out, AES/EBU 1 in + 1 out, 2 Dante, 2 power connections (redundant PSU). Positions n/s.",
+    "colour": null,
+    "notes": "Thomann: 482 x 44 x 327 mm unlabelled (mapped W x H x D by 1U geometry), 4.53 kg. Earlier notes record depth 327-352 mm and weight 4.5-5.0 kg across other dealers, so depth and weight conflict and are left null. Focusrite's own manual was not reached."
+  },
+  {
+    "id": "soundcraft-signature-12mtk",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 5.86,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.markertek.com/product/signature12mtkus/soundcraft-signature-12mtk-us-12-channel-multi-track-usb-interface-and-analog-mixing-console"
+    ],
+    "portsText": "12 input channels, XLR mic/line with switchable Hi-Z, USB multitrack (14 in / 12 out per Adorama snippet), headphone out 300 mW into 150 ohm; counts n/s.",
+    "colour": null,
+    "notes": "Weight 5.86 kg (12.9 lb net; Markertek opened, other dealers agree by snippet; 5.66/5.68 kg outliers). DIMENSION CONFLICT: Markertek and Adorama print 490 x 455 x 210 mm labelled W x H x D (looks like packaging/rack-ears), while other listings print 113 x 380 x 388 mm (4.4 x 15.0 x 15.3 in) without labels. Axis order unresolved; sizes null. Soundcraft datasheet not reached. Markertek says the item is no longer available."
+  },
+  {
+    "id": "allen-heath-zed-436",
+    "sizeMm": {
+      "w": 1135,
+      "d": null,
+      "h": null
+    },
+    "weightKg": 22,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.frontendaudio.com/allen-heath-zed-436-mixer/",
+      "https://www.woodbrass.com/analogiques-sorties-num-allen-heath-zed436-p188460.html",
+      "https://www.bax-shop.co.uk/analogue-mixing-desk/allen-heath-zed-436-usb-live-pa-mixer"
+    ],
+    "portsText": "Front End Audio (opened): 32 mono channels with 32 Neutrik XLR mic in and 32 1/4 in line in, 32 inserts, 32 direct outs, 2 dual stereo inputs (jack and phono), ALPS 100 mm faders, 4 buses, USB. Fader count not stated.",
+    "colour": null,
+    "notes": "Width 1135 mm is consistent everywhere; 22 kg unpacked (48.5 lb) agrees at Front End Audio (opened), Woodbrass and Bax (snippets). Depth/height conflict: Front End Audio prints 560 as 'height', Woodbrass/Bax 1135 x 560 x 130 (129) mm (unlabelled), Sonovente 1135 x 445 x 50/110 mm, Music Store 1300 x 700 x 260 mm (packaging). Depth and height left null. Candidate only: D 560, H 130 mm."
+  },
+  {
+    "id": "audient-asp8024-he",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://support.audient.com/hc/en-us/sections/200464373-Specifications"
+    ],
+    "portsText": null,
+    "colour": null,
+    "notes": "Audient publishes 'Console Weights' and 'Technical Drawing and Dimensions' articles on support.audient.com (403 to my fetch) and the console is built to order by module count (Console Builder tool), so no single size exists. Thomann's 1090 x 995 x 335 mm, 60 kg belongs to the ASP4816-HE, not this desk. Needs a configuration choice plus the Audient drawing."
+  },
+  {
+    "id": "db-audiotechnik-ds10",
+    "sizeMm": {
+      "w": 483,
+      "d": 232,
+      "h": 44.5
+    },
+    "weightKg": 3.75,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds10-en.pdf"
+    ],
+    "portsText": "Digital in: 4 channels (2 x AES3) on 3-pin XLR female; digital out: 16 channels (8 x AES3) on 3-pin XLR male; network: etherCON 100/1000 with built-in 5-port switch; mains: powerCON; BYPASS/NETWORK toggle, LED indicators. Front/rear split n/s.",
+    "colour": null,
+    "notes": "d&b datasheet (opened): 1 RU x 19 in x 232 mm (H x W x D), 3.75 kg (8.26 lb); the datasheet drawing prints 483 [19] x 44.5 [1.75] x 232 [9.1] mm. Colour not stated."
+  },
+  {
+    "id": "db-audiotechnik-ds20",
+    "sizeMm": {
+      "w": 483,
+      "d": 232,
+      "h": 44.5
+    },
+    "weightKg": 3.8,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://storage.googleapis.com/web-dbaudio-sfl/2018/03/dbaudio-datasheet-ds20-en.pdf"
+    ],
+    "portsText": "Digital in: 4 channels (2 x AES3) on 3-pin XLR female; digital out: 16 channels (8 x AES3) on 3-pin XLR male; etherCON 100/1000 with built-in 5-port AVB-enabled switch (Milan); powerCON mains. Front/rear split n/s.",
+    "colour": null,
+    "notes": "d&b datasheet (opened): 1 RU x 19 in x 232 mm, drawing 483 [19] x 44.5 [1.75] x 232 [9.1] mm. Weight printed as 3.8 kg (8.37 lb) in the spec list, but the architectural clause in the same sheet says 'no more than 3.75 kg (8.26 lb)' (copy of the DS10 text); the explicit spec value 3.8 kg is used."
+  },
+  {
+    "id": "sommer-cable-the-boxx-mp-08-04",
+    "sizeMm": {
+      "w": 195,
+      "d": null,
+      "h": 261
+    },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.sommercable.com/en-gb/THE-BOXX-Square-MP-connector/XXPP-M08-04"
+    ],
+    "portsText": "8 x Neutrik XLR 3-pole female (input side, D-type), 4 x Neutrik XLR 3-pole male (output side), 1 x ILME rectangular MP 10 42-pole multipin (surface-mounted housing, 2 clamps, built-on), casing has 12 D-type holes; slanted design with lateral cable outlet. Exact face positions n/s.",
+    "colour": "Grey (casing, ILME insert and housing)",
+    "notes": "Sommer product page (opened): width 195 mm, height 261 mm, depth not listed, no weight. Related casing TBH08-MK3 (snippet) weighs about 1.79 kg and is 195 x 211 x 80 mm, but another family page swaps axis labels, so that is not applied to this assembled unit."
+  },
+  {
+    "id": "ssl-origin",
+    "sizeMm": {
+      "w": 1870,
+      "d": 1080,
+      "h": 1000
+    },
+    "weightKg": 150,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://eu1.download.solidstatelogic.com/ORIGIN brochure (8pp landscape) MASTER 31.5.24.pdf"
+    ],
+    "portsText": "Brochure (opened): talkback mic XLR on top of centre section with level trim and +48 V; rear-panel talkback; 400 Hz oscillator with 3.5 mm external jack; front-panel 3.5 mm stereo jack input; 3 external stereo sources; 100 mm mix-bus fader. Full channel I/O is on rear/DB25 per SSL (not read).",
+    "colour": null,
+    "notes": "SSL ORIGIN brochure (opened): ORIGIN 32 = W 1870 mm (incl. optional end trim) x H 1000 mm x D 1080 mm, 150 kg incl. optional legs; ORIGIN 16 = W 1220 x H 1000 x D 1080 mm, 90 kg (198 lb). sizeMm holds the 32-channel values; 16-channel values only in this note. Height 1000 mm is the brochure's overall height with legs."
+  },
+  {
+    "id": "axia-pulsar",
+    "sizeMm": {
+      "w": 463,
+      "d": 396,
+      "h": 55
+    },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://bgs.cc/content/TEL-PULSAR%20SS.pdf",
+      "https://telosalliance.com/telos-alliance-debuts-axia-pulsar-aoip-console-2026-nab-show"
+    ],
+    "portsText": "Surface: 8 x 100 mm motorised touch-sensitive faders (16 max with 8-fader expansion via locking USB-C), 1 gigabit RJ-45 LAN (PoE+); optional onboard analogue: 2 mic inputs and 1 stereo line in and out on RJ-45 (StudioHub), 1 stereo headphone out on 1/4 in TRS; HDMI out and USB-A for external touchscreen; StudioCore engine 100-240 V.",
+    "colour": null,
+    "notes": "Telos spec sheet (opened; PDF hosted by Broadcasters General Store): main unit 463 x 396 x 55 mm (W x D x H), 8-fader expansion unit 292 x 396 x 55 mm; no weight. Telos says availability is Q4 2026 (pre-release). StudioCore engine dimensions not retrieved."
+  },
+  {
+    "id": "clear-com-fsii-bp24",
+    "sizeMm": {
+      "w": 130,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.clearcom.com/Product/fsii-bp24",
+      "https://soundpro.com/content/product-documents/FSII-BP24_Datasheet.pdf"
+    ],
+    "portsText": "Headset connector XLR-4M (4-pin male, Clear-Com standard; 5-pin female and 7-pin male PTT options).",
+    "colour": null,
+    "notes": "Clear-Com product page (opened): 3.75 x 5 x 1.5 in (H x W x D) = 97 x 130 x 45 mm, 9.0 oz (0.25 kg) incl. batteries, tapered body. A search summary of other Clear-Com material gives 38 x 130 x 100 mm (D x W x H) and about 400 g, i.e. depth 45 vs 38, height 97 vs 100, weight 0.25 vs 0.4 kg (not opened; the datasheet PDF URL returned 404). Width 130 agrees; depth, height and weight left null. Colour not stated."
+  },
+  {
+    "id": "dangerous-music-monitor-st",
+    "sizeMm": {
+      "w": 482.6,
+      "d": 241.3,
+      "h": 44.45
+    },
+    "weightKg": null,
+    "sourceGrade": "dealer",
+    "sources": [
+      "https://www.perfectcircuit.com/dangerous-music-monitor-st.html",
+      "https://www.sweetwater.com/store/detail/MonitorSTdm"
+    ],
+    "portsText": "Existing row: 1U, 4 in / 3 speaker out, cue/talkback; connector detail not retrieved. Remote controller is a separate unit.",
+    "colour": null,
+    "notes": "Snippet-level (Sweetwater 403, Vintage King 429): PerfectCircuit lists rack unit 1.75 x 19 x 9.5 in (converted 44.45 x 482.6 x 241.3 mm; Sweetwater gives 19 in W and 9.5 in D). Remote 12.29 x 4.17 in with rear height 1.54 in and front 0.94 in (about 312 x 106 x 39/24 mm). Weight: Sweetwater 16 lb is unconfirmed (same figure is the boxed weight of the SR expansion at Musician's Friend), so weight null."
+  },
+  {
+    "id": "studer-onair-1500",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://www.tekobroadcast.com/fr/node/1579",
+      "https://www.audinate.com/products/dante-enabled/studer/studer-onair-1500"
+    ],
+    "portsText": "Teko listing (opened): 6 faders standard (12-channel console), expandable to 12 with a 6-fader module, 100 mm faders; 16 mic/line inputs, 4 stereo AES inputs with SRC, D21m card slot, USB; 16 line outs, 4 stereo AES outs, D21m slot, USB; 8 GPI, 8 GPO, Ethernet (NANO SCORE engine, Cat5 to surface).",
+    "colour": null,
+    "notes": "No dimensions or weight in the Teko listing (opened), Audinate page (403), Radio World or the manuals.online copy (not opened). Teko says super-slim table-top or flush/19 in rack mounting. Some listings mark the product discontinued."
+  },
+  {
+    "id": "wheatstone-lx-24",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": null,
+    "sources": [
+      "https://www.radioworld.com/uncategorized/wheatstone-lx24",
+      "https://bgs.cc/wheatstone-lxe-2924t"
+    ],
+    "portsText": null,
+    "colour": null,
+    "notes": "Radio World article (opened) has no dimensions, weight, fader count or connectors; it describes a low-profile table-top console with 4 stereo buses. Search summaries found no official sheet; the Wheatstone LXE manual copy returned 403. Tried: Radio World, BSW/BGS listings, manuals.online (403), Wheatstone pages (403)."
+  },
+  {
+    "id": "avid-venue-s6l",
+    "sizeMm": {
+      "w": 989,
+      "d": 787,
+      "h": 388
+    },
+    "weightKg": 54,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://cdn.avid.com/myavid/avid/files/resource-center/venue_s6l_architectural_specifications.pdf"
+    ],
+    "portsText": "S6L-24D surface (architectural spec, opened): 24 bankable touch-sensitive fader strips plus 2 user-assignable 60 mm faders, 48 user layouts; control surface (or accompanying Local 16 I/O at the mix position) provides 8 XLR mic/line inputs, 8 XLR outputs, 2 x 1/4 in TRS line outputs, 8 channels AES/EBU, USB, MIDI, GPI and footswitch connectors. Positions n/s.",
+    "colour": null,
+    "notes": "Row is generic ('VENUE / S6L'); values are for the S6L-24D surface from Avid's architectural spec (opened): H 91 mm front / 388 mm rear, W 989 mm, D 787 mm, 54 kg (the sheet prints 36.9 in for width, which conflicts with 989 mm = 38.9 in; the mm value is used, matching Solotech and Full Compass). Other surfaces: S6L-48D W 1934 mm 108 kg; S6L-32D-class W 1304 mm 70 kg; S6L-24C W 989 mm, H rear 205 mm 38 kg; S6L-16C W 671 mm 32 kg (the sheet's section titles were not all read, so model-to-width mapping beyond 24D/48D/16C should be re-checked). h in sizeMm is the rear (maximum) height. E6L engines (e.g. E6L-192 483 x 537 x 218.7 mm 33.5 kg) are separate."
+  },
+  {
+    "id": "lawo-crystal",
+    "sizeMm": {
+      "w": null,
+      "d": null,
+      "h": null
+    },
+    "weightKg": null,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://docs.lawo.com/radio-audio-and-broadcast-applications/new-crystal/crystal-user-manual/crystal-data-and-specifications/crystal-technical-specification"
+    ],
+    "portsText": "Page (opened): PSU inlet IEC 100-240 V; PSU output Kycon KPJX-4S-S 12 V DC 3.3 A; other connectors and fader count not on the page (datasheet is behind a login). Fader module has 8 motorised touch-sensitive 100 mm faders per a search summary.",
+    "colour": null,
+    "notes": "Lawo technical specification (opened): modules (main and fader) 336 mm W x 286 mm D; tabletop frame without VX 352 W x 383 D x 53 H mm; with VX 352 x 493 x 216 mm; countersunk frame 352/345 x 307/293 x 14/43 mm (above/below desk), with VX 352/345 x 434/399 x 172/43 mm; weight 3.3-4.6 kg depending on frame and module. Overall console size depends on frame/module configuration, so sizeMm left null. 2023 crystal is available in several fader counts (6, 8, 14 per one source); the 2008 crystal in 4-16 faders."
+  },
+  {
+    "id": "yamaha-cl5",
+    "sizeMm": {
+      "w": 1053,
+      "d": 667,
+      "h": 299
+    },
+    "weightKg": 36,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://www.rentex.com/wp-content/uploads/2020/01/CL5-Data-Sheet.pdf"
+    ],
+    "portsText": "Yamaha CL data sheet (opened; hosted by Rentex): local I/O 8 mic/line inputs, 8 outputs, AES/EBU output, 3 mini-YGDAI slots, GPI 5 in / 5 out, word clock I/O, MIDI I/O, network port, USB; Dante 64x64 on EtherCON (CL5 Dante model); 16 user-defined keys and 4 user-defined knobs. Fader count per Yamaha (search summary): 16 + 8 + 8 + 2 = 34 (rental sources say 32 + 2).",
+    "colour": null,
+    "notes": "Yamaha datasheet (opened): 1053 x 299 x 667 mm printed as W x H x D (architectural text '1053 (W) x 299 (H) x 667 (D) mm'), net weight 36 kg (79.4 lb). Yamaha US page marks the CL series discontinued."
+  },
+  {
+    "id": "yamaha-dm7",
+    "sizeMm": {
+      "w": 793,
+      "d": 564,
+      "h": 324
+    },
+    "weightKg": 23.5,
+    "sourceGrade": "datasheet",
+    "sources": [
+      "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html"
+    ],
+    "portsText": "Yamaha reference manual page (opened) lists no connectors; 28 motorised touch-sensitive 100 mm faders. I/O set not retrieved.",
+    "colour": null,
+    "notes": "Yamaha reference manual 'General specifications' (opened): Dimensions (W x H x D) 793 x 324 x 564 mm including rubber feet; weight 23.5 kg. This settles the axis-order question left open in the existing row. DM7 Compact is 468 x 324 x 564 mm, 16.5 kg (search snippet); DM7 Control 191 x 323 x 562 mm, 7 kg (snippet)."
+  }
+]

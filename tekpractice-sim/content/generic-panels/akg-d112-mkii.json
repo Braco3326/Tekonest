@@ -1,0 +1,40 @@
+{
+  "note": "Generic panel artwork (no brand marks, no logos, no lettering), drawn by tools/assets3d/genericPanel.ts; connector centres equal the spec port positions. wrap: Unrolled side surface of the oval lathe: a dark body with a mesh band (generic).",
+  "faces": {
+    "wrap": {
+      "wMm": 294.91179755962537,
+      "hMm": 126,
+      "base": "#2d2e33",
+      "items": [
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 20,
+          "w": 294.91179755962537,
+          "h": 1.2,
+          "fill": "#1b1c1f"
+        },
+        {
+          "kind": "rect",
+          "x": 0,
+          "y": 84,
+          "w": 294.91179755962537,
+          "h": 1.2,
+          "fill": "#1b1c1f"
+        },
+        {
+          "kind": "grid",
+          "x": 0,
+          "y": 30,
+          "w": 294.91179755962537,
+          "h": 50,
+          "pitch": 3,
+          "line": 0.5,
+          "fill": "#121315",
+          "stroke": "#4a4d54"
+        }
+      ],
+      "pxPerMm": 8
+    }
+  }
+}

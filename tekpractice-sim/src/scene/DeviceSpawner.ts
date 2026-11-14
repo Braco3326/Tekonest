@@ -25,11 +25,12 @@ import type { PortRef } from '../engine/types'
 import { TOKENS } from '../design/tokens'
 import { assetUrl } from '../assetUrl'
 import { hasModel } from './modelIds'
+import { deviceFootprint } from './placeholderSize'
 import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
 import { createMarkerRing, liftMarkerRing, markerFaceNormal, orientMarkerRing, surfaceLiftM } from './portMarkerMesh'
-import { markerDiameterM } from './portMarkerSize'
+import { markerDiameterM, ringDiameterOnFaceM } from './portMarkerSize'
 import type { AttachedControls, attachControls } from '../controls/attach'
 import type { ControlTicker } from '../controls/ticker'
 
@@ -56,26 +57,6 @@ export interface DeviceInstance {
   controlsReady: Promise<AttachedControls | null>
   dispose(): void
 }
-
-/** Rough placeholder footprints per realWorld.category (meters: w, h, d). */
-const SIZE_BY_CATEGORY: Record<string, [number, number, number]> = {
-  console: [1.0, 0.25, 0.55],
-  stagebox: [0.48, 0.18, 0.4],
-  microphone: [0.07, 0.22, 0.07],
-  'powered-speaker': [0.4, 0.62, 0.36],
-  'studio-monitor': [0.2, 0.3, 0.25],
-  accessory: [0.06, 1.6, 0.06],
-  signaling: [0.12, 0.28, 0.12],
-  computer: [0.45, 0.45, 0.2],
-  codec: [0.48, 0.09, 0.32],
-  'monitor-controller': [0.26, 0.1, 0.3],
-  'mic-preamp': [0.24, 0.09, 0.26],
-  'master-clock': [0.48, 0.09, 0.26],
-  patchbay: [0.48, 0.14, 0.22],
-  cable: [0.3, 0.06, 0.12],
-  'audio-interface': [0.48, 0.13, 0.3],
-}
-const DEFAULT_SIZE: [number, number, number] = [0.4, 0.3, 0.3]
 
 /**
  * Real-world outer dimensions per device id (meters: w=width, h=height, d=depth).
@@ -607,7 +588,19 @@ export class DeviceSpawner {
         // scale 1. The metadata stays as the "size it rests at" contract that PortProxies reads.
         marker.scaling.setAll(1)
         marker.metadata = { ...(marker.metadata ?? {}), restScale: 1 }
-        if (liftRings && bodyLo && bodyHi) orientMarkerRing(marker, markerFaceNormal(local, bodyLo, bodyHi, 0.002 / Math.max(1e-6, rootScale)))
+        if (liftRings && bodyLo && bodyHi) {
+          const face = markerFaceNormal(local, bodyLo, bodyHi, 0.002 / Math.max(1e-6, rootScale))
+          orientMarkerRing(marker, face)
+          // Wave 1b finding 10: a ring on the base or the top of a small body (a mic's XLR) is capped at 0.85 x the body's smaller horizontal extent, so it
+          // never overhangs the microphone. Sizes are in the root's frame, like the ring itself; every other ring is left at scale 1.
+          const ring = marker.getBoundingInfo().boundingBox.extendSize.x * 2 // the ring built from its connector (scale 1 here)
+          const capped = ringDiameterOnFaceM(ring, face ? face.y : null, { w: bodyHi.x - bodyLo.x, d: bodyHi.z - bodyLo.z })
+          if (capped < ring) {
+            const k = capped / ring
+            marker.scaling.setAll(k)
+            marker.metadata = { ...(marker.metadata ?? {}), restScale: k }
+          }
+        }
         const markerMatrix = marker.computeWorldMatrix(true)
         if (liftRings && body.length) {
           // A port in a pocket (speaker amplifier plate): the ring comes out onto the face around it, or it would sit hidden behind the panel.
@@ -695,7 +688,8 @@ export class DeviceSpawner {
     instanceId: string,
     root: TransformNode
   ): Map<string, Mesh> {
-    const [w, h, d] = SIZE_BY_CATEGORY[device.realWorld.category] ?? DEFAULT_SIZE
+    // Wave 0: a Bêta proposal carries the equipment plan's size (sizeMm); else the category footprint, else 0.4 x 0.3 x 0.3 m.
+    const { w, h, d } = deviceFootprint(device)
 
     const theme = this.theme
     let box: Mesh

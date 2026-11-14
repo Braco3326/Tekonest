@@ -1,0 +1,292 @@
+{
+  "id": "digico-sd12",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 1124,
+    "h": 389,
+    "d": 795
+  },
+  "ports": [
+    {
+      "portId": "in-local-mic-line-inputs-1",
+      "face": "io",
+      "xMm": 26,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-local-mic-line-inputs-2",
+      "face": "io",
+      "xMm": 53,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-local-line-outputs-1",
+      "face": "io",
+      "xMm": 80,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-local-line-outputs-2",
+      "face": "io",
+      "xMm": 107,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes-ebu-inputs-8-channels-1",
+      "face": "io",
+      "xMm": 134,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "in-aes-ebu-inputs-8-channels-2",
+      "face": "io",
+      "xMm": 161,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes-ebu-outputs-8-channels-1",
+      "face": "io",
+      "xMm": 188,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes-ebu-outputs-8-channels-2",
+      "face": "io",
+      "xMm": 215,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "bidir-madi-1-2-in-and-out-75-coax-to-sd-racks-or-madi-recorder-1",
+      "face": "io",
+      "xMm": 237.2,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "madi",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-madi-1-2-in-and-out-75-coax-to-sd-racks-or-madi-recorder-2",
+      "face": "io",
+      "xMm": 254.6,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "madi",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-word-clock-i-o-1",
+      "face": "io",
+      "xMm": 272,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-word-clock-i-o-2",
+      "face": "io",
+      "xMm": 289.4,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-gpi-dsub37-16-inputs-and-gpo-dsub37-16-outputs-1",
+      "face": "io",
+      "xMm": 327.6,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "gpio-tally",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-gpi-dsub37-16-inputs-and-gpo-dsub37-16-outputs-2",
+      "face": "io",
+      "xMm": 386.6,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "dsub25",
+      "signal": "gpio-tally",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-ub-madi-usb-audio-up-to-48-ch",
+      "face": "io",
+      "xMm": 424.8,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "usb-b",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-usb-2-0-slots-1",
+      "face": "io",
+      "xMm": 441.6,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "usb-a",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-usb-2-0-slots-2",
+      "face": "io",
+      "xMm": 457.8,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "usb-a",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    },
+    {
+      "portId": "bidir-ethernet-port",
+      "face": "io",
+      "xMm": 474.9,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "aoip",
+      "dir": "bidir"
+    },
+    {
+      "portId": "in-mains-in-dual-redundant-psus-1",
+      "face": "io",
+      "xMm": 500.4,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mains-in-dual-redundant-psus-2",
+      "face": "io",
+      "xMm": 533.4,
+      "yMm": 194.5,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        389
+      ],
+      [
+        60,
+        389
+      ],
+      [
+        130,
+        330
+      ],
+      [
+        280,
+        230
+      ],
+      [
+        450,
+        150
+      ],
+      [
+        620,
+        100
+      ],
+      [
+        720,
+        90
+      ],
+      [
+        795,
+        85
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 36,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 60,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://digico.biz/consoles/sd12/",
+      "note": "equipment plan source (research grade: datasheet); size 1124 x 795 x 389 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://digico.biz/consoles/sd12/",
+      "note": "DiGiCo SD12 page (opened by a research pass 2026-11-12): 8 mic/line inputs, 8 line outputs, 8 AES/EBU channels, two MADI BNC ports, two DMI card slots, two DSub37 GPIO, word clock, a DVI out, mains 90-260 V (inlet type not stated); the page and a datasheet mirror disagree on the GPIO count and the AES split. Ports are the Bêta proposal ports (20 of 44 listed); beta-modelled because the connector set is ambiguous. The sloped profile is an estimate from the outer size (1124 x 795 x 389 mm, datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://digico.biz/consoles/sd12/",
+      "note": "DiGiCo SD12 page (opened by a research pass 2026-11-12): 8 mic/line inputs, 8 line outputs, 8 AES/EBU channels, two MADI BNC ports, two DMI card slots, two DSub37 GPIO, word clock, a DVI out, mains 90-260 V (inlet type not stated); the page and a datasheet mirror disagree on the GPIO count and the AES split. Ports are the Bêta proposal ports (20 of 44 listed); beta-modelled because the connector set is ambiguous. The sloped profile is an estimate from the outer size (1124 x 795 x 389 mm, datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://digico.biz/consoles/sd12/",
+      "note": "DiGiCo SD12 page (opened by a research pass 2026-11-12): 8 mic/line inputs, 8 line outputs, 8 AES/EBU channels, two MADI BNC ports, two DMI card slots, two DSub37 GPIO, word clock, a DVI out, mains 90-260 V (inlet type not stated); the page and a datasheet mirror disagree on the GPIO count and the AES split. Ports are the Bêta proposal ports (20 of 44 listed); beta-modelled because the connector set is ambiguous. The sloped profile is an estimate from the outer size (1124 x 795 x 389 mm, datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}

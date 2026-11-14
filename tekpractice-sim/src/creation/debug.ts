@@ -183,6 +183,11 @@ export interface CreationDebug {
    * instance is unknown, its body is not loaded, or a corner does not project (behind the camera). The guide keeps its icon and bubble off it (ADR 0021).
    */
   deviceScreenBox(instanceId: string): { x: number; y: number; w: number; h: number } | null
+  /**
+   * Wave 1b finding 2: how the instance is drawn, `'glb'` when its model really loaded and `'placeholder'` when it fell back to the box (a decode failure
+   * falls back silently); null for an unknown instance. The equipment e2e asserts every device is `'glb'`.
+   */
+  assetStatus(instanceId: string): 'glb' | 'placeholder' | null
   /** Task 43c (L34): independent oracle for a loudspeaker's front, the x-extent of the body vertices at the +z and the -z end of its z range (world axes, yaw 0). */
   bodyEnds(instanceId: string): { plusZ: number; minusZ: number; depth: number; rearX: [number, number]; rearZ: number } | null
   /** Task 37: the world position of a port marker (after the .glb is applied it sits on the model), or null when unknown. */

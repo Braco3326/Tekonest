@@ -1,0 +1,345 @@
+{
+  "id": "allen-heath-avantis",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 917,
+    "h": 269,
+    "d": 627
+  },
+  "ports": [
+    {
+      "portId": "in-mic-1",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 235,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-2",
+      "face": "io",
+      "xMm": 86.4,
+      "yMm": 235,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-3",
+      "face": "io",
+      "xMm": 112.8,
+      "yMm": 235,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-4",
+      "face": "io",
+      "xMm": 139.2,
+      "yMm": 235,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-5",
+      "face": "io",
+      "xMm": 165.6,
+      "yMm": 235,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-6",
+      "face": "io",
+      "xMm": 192,
+      "yMm": 235,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-7",
+      "face": "io",
+      "xMm": 218.4,
+      "yMm": 235,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "in-mic-8",
+      "face": "io",
+      "xMm": 244.8,
+      "yMm": 235,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "mic-level",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-1",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 195,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-2",
+      "face": "io",
+      "xMm": 86.4,
+      "yMm": 195,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-3",
+      "face": "io",
+      "xMm": 112.8,
+      "yMm": 195,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-4",
+      "face": "io",
+      "xMm": 139.2,
+      "yMm": 195,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-5",
+      "face": "io",
+      "xMm": 165.6,
+      "yMm": 195,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-6",
+      "face": "io",
+      "xMm": 192,
+      "yMm": 195,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-7",
+      "face": "io",
+      "xMm": 218.4,
+      "yMm": 195,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-8",
+      "face": "io",
+      "xMm": 244.8,
+      "yMm": 195,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "in-aes",
+      "face": "io",
+      "xMm": 60,
+      "yMm": 155,
+      "confidence": "guess",
+      "connector": "xlr3-f",
+      "signal": "aes3",
+      "dir": "in"
+    },
+    {
+      "portId": "out-aes-1",
+      "face": "io",
+      "xMm": 88,
+      "yMm": 155,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "out-aes-2",
+      "face": "io",
+      "xMm": 116,
+      "yMm": 155,
+      "confidence": "guess",
+      "connector": "xlr3-m",
+      "signal": "aes3",
+      "dir": "out"
+    },
+    {
+      "portId": "wclk",
+      "face": "io",
+      "xMm": 170,
+      "yMm": 155,
+      "confidence": "guess",
+      "connector": "bnc",
+      "signal": "wordclock",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net-1",
+      "face": "io",
+      "xMm": 210,
+      "yMm": 155,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    },
+    {
+      "portId": "net-2",
+      "face": "io",
+      "xMm": 230,
+      "yMm": 155,
+      "confidence": "guess",
+      "connector": "rj45",
+      "signal": "ethernet-control",
+      "dir": "bidir"
+    },
+    {
+      "portId": "power-in",
+      "face": "io",
+      "xMm": 850,
+      "yMm": 110,
+      "confidence": "guess",
+      "connector": "iec-c14",
+      "signal": "mains-power",
+      "dir": "in"
+    },
+    {
+      "portId": "out-phones-6mm",
+      "face": "opposite",
+      "xMm": 60,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones-3mm",
+      "face": "opposite",
+      "xMm": 84,
+      "yMm": 62,
+      "confidence": "guess",
+      "connector": "trs-35mm",
+      "signal": "headphone-level",
+      "dir": "out"
+    }
+  ],
+  "controls": [
+    {
+      "controlId": "power",
+      "kind": "switch",
+      "face": "io",
+      "xMm": 790,
+      "yMm": 110,
+      "axis": "z",
+      "sizeMm": {
+        "w": 12,
+        "h": 18,
+        "d": 6
+      }
+    }
+  ],
+  "build": {
+    "shape": "console-wedge",
+    "profile": [
+      [
+        0,
+        269
+      ],
+      [
+        60,
+        269
+      ],
+      [
+        150,
+        215
+      ],
+      [
+        300,
+        150
+      ],
+      [
+        480,
+        105
+      ],
+      [
+        627,
+        85
+      ]
+    ],
+    "params": {
+      "filletMm": 5,
+      "filletSegments": 5,
+      "armRestMm": 14,
+      "cheekMm": 6,
+      "baseMm": 36,
+      "feetMm": 10,
+      "feetWidthMm": 22,
+      "feetFromSideMm": 60,
+      "feetFromEndMm": 40
+    },
+    "projection": [
+      "top",
+      "io"
+    ],
+    "budget": {
+      "min": 1000,
+      "max": 6000
+    },
+    "minFilletMm": 4
+  },
+  "portsDocumented": true,
+  "portsSource": "https://goknight.com/content/documentation/AVANTIS%20Spec%20Sheet.pdf",
+  "sources": [
+    {
+      "kind": "dealer",
+      "url": "https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series",
+      "note": "equipment plan source (research grade: dealer); size 917 x 627 x 269 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://goknight.com/content/documentation/AVANTIS%20Spec%20Sheet.pdf",
+      "note": "Allen & Heath Avantis technical datasheet (dealer-hosted copy), opened 2026-11-12: 917 x 627 x 269 mm (W x D x H), 26 kg, 24 motorised faders, two 15.6 in screens; rear: 12 mic/line XLR inputs, 12 XLR line outputs, AES3 input (1) and outputs (2) on XLR, word clock BNC in/out, SLink (proprietary, not modelled), two I/O option card slots (not modelled), two RJ45 network ports, USB (type not named, not modelled); front: 1/4 in and 1/8 in headphone sockets (under the armrest); internal mains supply on an IEC inlet (type letter not named: iec-c14 assumed, plan assumedConnectors power-in); a mains switch near the inlet (datasheet \"Two Pole Push-Button\", guide \"rocker\"). Modelled: 8 of 12 mic inputs and 8 of 12 line outputs. No master fader or other control is documented, so the only control is power. The Getting Started Guide (CCI-hosted) adds a USB 3.0 on the front panel. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "dealer",
+      "url": "https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series",
+      "note": "Dealer size 917 x 627 x 269 mm, 26 kg (the plan source)."
+    }
+  ]
+}

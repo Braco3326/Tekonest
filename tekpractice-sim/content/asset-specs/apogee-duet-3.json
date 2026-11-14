@@ -1,0 +1,109 @@
+{
+  "id": "apogee-duet-3",
+  "kind": "device",
+  "tier": "standard",
+  "realSizeMm": {
+    "w": 225,
+    "h": 90,
+    "d": 180
+  },
+  "ports": [
+    {
+      "portId": "in-inst-1",
+      "face": "io",
+      "xMm": 19.2,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "in-inst-2",
+      "face": "io",
+      "xMm": 36.6,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "ts-quarter",
+      "signal": "instrument-hiz",
+      "dir": "in"
+    },
+    {
+      "portId": "out-line-1",
+      "face": "io",
+      "xMm": 54,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-line-2",
+      "face": "io",
+      "xMm": 71.4,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "line-level-pro",
+      "dir": "out"
+    },
+    {
+      "portId": "out-phones",
+      "face": "io",
+      "xMm": 88.8,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "trs-quarter",
+      "signal": "headphone-level",
+      "dir": "out"
+    },
+    {
+      "portId": "usb",
+      "face": "io",
+      "xMm": 104.4,
+      "yMm": 45,
+      "confidence": "guess",
+      "connector": "usb-c",
+      "signal": "usb-audio",
+      "dir": "bidir"
+    }
+  ],
+  "controls": [],
+  "build": {
+    "shape": "rack-box",
+    "params": {
+      "earThicknessMm": 12,
+      "plateFilletMm": 5,
+      "filletMm": 6,
+      "filletSegments": 10,
+      "feetMm": 3,
+      "feetDiaMm": 12,
+      "plateRgb": 2829617,
+      "bodyRgb": 1908257
+    },
+    "projection": [
+      "opposite",
+      "io"
+    ],
+    "budget": {
+      "min": 500,
+      "max": 2000
+    },
+    "minFilletMm": 4.5
+  },
+  "portsDocumented": true,
+  "portsSource": "https://www.apogeedigital.com/products/duet",
+  "sources": [
+    {
+      "kind": "datasheet",
+      "url": "https://www.apogeedigital.com/products/duet",
+      "note": "equipment plan source (research grade: datasheet); size 225 x 180 x 90 mm (w x d x h); port and control positions are placeholders until measured"
+    },
+    {
+      "kind": "datasheet",
+      "url": "https://www.apogeedigital.com/products/duet",
+      "note": "Apogee Duet 3 page (opened 2026-11-12): two 1/4 in instrument inputs, two 1/4 in balanced outputs, one 1/4 in headphone output, two USB-C ports (the first carries audio and data, the second only an external power supply), bus powered. The page describes the mic preamps without naming a mic connector, so no mic input is modelled (documented subset); the second USB-C port is power only (no signal). 225 x 180 x 90 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    }
+  ]
+}
