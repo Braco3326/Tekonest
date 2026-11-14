@@ -442,9 +442,18 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
     const s = await session(browser, search, { init: spyOnHook })
     await s.page.evaluate(() => window.localStorage.clear())
     await expect(s.page.locator('#exam-timer')).toBeVisible()
-    const first = clockSeconds(await s.page.locator('#exam-timer').innerText())
-    await quietWindow(s.page, 1300) // the clock must tick: two reads of the same page
-    const second = clockSeconds(await s.page.locator('#exam-timer').innerText())
+    // Two reads of the clock taken inside the page, with the wall time between them measured by the same page: a round trip from the test (slow on a loaded
+    // machine) never sits between the reads, and the expected drop comes from this run's own elapsed time, not from a constant.
+    const reads = await s.page.evaluate(async () => {
+      const el = document.getElementById('exam-timer')!
+      const t0 = performance.now()
+      const a = el.textContent ?? ''
+      await new Promise((r) => setTimeout(r, 1300))
+      return { a, b: el.textContent ?? '', elapsed: (performance.now() - t0) / 1000 }
+    })
+    const first = clockSeconds(reads.a)
+    const second = clockSeconds(reads.b)
+    const elapsed = reads.elapsed
     await s.page.evaluate(() => {
       const sim = window.__audioSim!
       sim.dispatch({ type: 'CONNECT', a: { instance: 'sm57-1', port: 'out-xlr' }, b: { instance: 'k12-1', port: 'in-line-a' } })
@@ -456,7 +465,7 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
       score: ((await s.page.locator('.exam-card h2').textContent()) ?? '').trim(),
       detail: ((await s.page.locator('.exam-card').innerText()) ?? '').replace(/\d+:\d\d/g, 'T'),
       exams: await s.page.evaluate(() => (JSON.parse(window.localStorage.getItem('audio-sim/progress')!).exams as { levelId: string; score20: number; mistakes: number }[]).map((e) => [e.levelId, e.score20, e.mistakes])),
-      clock: { first, drop: first - second },
+      clock: { first, drop: first - second, elapsed },
       toast: ((await s.page.locator('.toast-error strong').first().textContent()) ?? '').trim(),
       nodes: await guideNodes(s.page),
       chunks: s.req.paths().filter((p) => GUIDE_ASSET.test(p)),
@@ -478,10 +487,11 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
   for (const r of [withGates, withoutGuide]) {
     expect(r.clock.first, 'the clock starts within seconds of the level budget').toBeGreaterThanOrEqual(EXAM_SECONDS - 15)
     expect(r.clock.first).toBeLessThanOrEqual(EXAM_SECONDS)
+    // The display is redrawn every 500 ms, so each read is up to 0.5 s old: the drop is the measured elapsed time within one second (both ends) of that.
     expect(r.clock.drop, 'the clock ticked between two reads').toBeGreaterThanOrEqual(1)
-    expect(r.clock.drop).toBeLessThanOrEqual(4)
+    expect(r.clock.drop, 'the clock does not run fast: its drop is at most the measured elapsed time plus the display granularity').toBeLessThanOrEqual(Math.ceil(r.clock.elapsed) + 1)
+    expect(r.clock.drop, 'the clock does not run slow: its drop is at least the measured elapsed time minus the display granularity').toBeGreaterThanOrEqual(Math.floor(r.clock.elapsed) - 1)
   }
-  expect(Math.abs(withGates.clock.drop - withoutGuide.clock.drop), 'the clock runs at the same pace with and without the guide').toBeLessThanOrEqual(1)
   expect(Math.abs(withGates.clock.first - withoutGuide.clock.first), 'and starts at the same value').toBeLessThanOrEqual(3)
   for (const r of [withGates, withoutGuide]) {
     expect(r.nodes).toBe(0)
@@ -489,10 +499,17 @@ test('?level=a1&mode=exam: no guide node, stylesheet, chunk (beyond the tiny ent
     expect(r.guideCalls, 'the guide called nothing on the hook').toEqual({})
   }
   // and the two requests of the whole page are the same set: the guide added none
+  // The page loads its models and then its Draco decoder in stages (the decoder script is requested about 1.5 s after the hook appears), so a snapshot at a fixed
+  // time catches one load a stage earlier than the other. The set is read once the page has finished its own loading (every device of the level has its model,
+  // a state), then a quiet window shows that nothing more arrives, and the two sets are compared without regard to arrival order.
   const paths = async (search: string): Promise<string[]> => {
     const s = await session(browser, search)
+    await expect
+      .poll(() => s.page.evaluate(() => window.__audioSim!.assets().every((a) => a.status === 'glb')), { message: `${search}: every device of the level has its model`, timeout: 30_000 })
+      .toBe(true)
+    await s.page.waitForLoadState('networkidle')
     await quietWindow(s.page, 2000)
-    const p = s.req.paths()
+    const p = s.req.paths().sort()
     await s.close()
     return p
   }
