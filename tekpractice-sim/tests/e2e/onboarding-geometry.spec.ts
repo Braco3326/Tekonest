@@ -14,8 +14,9 @@
  * 11.4: axe on both start stages, the workspace, EVERY tutorial step of each package, the checklist and the connect dialog.
  *
  * The 500 ms bridge poll is waited for with web-first assertions and `expect.poll` (the card says « Étape k sur n », the geometry has stopped moving), never with a sleep standing in for it.
- * KNOWN FINDINGS (see `KNOWN`): where a class is breached today the assertion is NOT loosened. The test is marked `test.fail` with the finding's number, so the suite is green and turns red the day
- * the product is fixed (and the marker comes off). Measured numbers are printed as `GEOM` lines for the report.
+ * KNOWN FINDINGS (see `KNOWN_GEOM`, G14e review C1): where a class is breached today the assertion is NOT loosened. The exact samples that breach it (package, viewport, moment, class) are pinned, and
+ * the test asserts the measured list EQUALS the pinned one: green while the known breaches stand, red the day one is fixed or a new one appears. Measured numbers are printed as `GEOM` lines.
+ * The one single-sample finding of the reserved rows (F5) keeps its `test.fail`.
  */
 import type { Page } from '@playwright/test'
 import { DESIGN_IDS, packageById, type DesignId } from '../../src/design/packages'
@@ -74,23 +75,40 @@ async function settledGeo(page: Page): Promise<Geo> {
   return g
 }
 
-/** The screen box of each device of the bench (the eight corners of its body box through the scene's own camera): « the target device's rect ». */
-const deviceBoxes = (page: Page): Promise<Record<string, Rect>> =>
-  page.evaluate(() => {
+/**
+ * The screen box of each device of the bench: « the target device's rect ». `bodyBoundsInRoot` is in the frame of the INSTANCE ROOT (centred on (0, 0) in x / z, src/scene/debugBody.ts), so each of
+ * its eight corners is first put where the design places the device (G14e, review C2): the root's pose as src/creation/sceneHost.ts `pose()` sets it, rotation (-tiltDeg, yawDeg, 0) in Babylon's
+ * order (pitch about x, then yaw about y; left-handed, row vectors) and translation `position_m`, read from the design's own placement, then through the scene's camera (`worldScreen`).
+ * `frame: 'root'` is the old reading (the root-frame corners fed to `worldScreen` as world points, every device drawn at the origin), kept only for the proof that the two differ.
+ */
+const deviceBoxes = (page: Page, frame: 'placed' | 'root' = 'placed'): Promise<Record<string, Rect>> =>
+  page.evaluate((frame) => {
     const c = window.__creation!
+    const design = c.design()
     const out: Record<string, { x: number; y: number; width: number; height: number }> = {}
-    for (const i of c.design().rig.instances) {
+    for (const i of design.rig.instances) {
       const b = c.bodyBoundsInRoot(i.instanceId)
-      if (!b) continue
+      const p = design.placements.find((q) => q.instanceId === i.instanceId)
+      if (!b || !p) continue
+      const yaw = (p.yawDeg * Math.PI) / 180
+      const pitch = (-(p.tiltDeg ?? 0) * Math.PI) / 180
+      const place = (x: number, y: number, z: number): [number, number, number] => {
+        if (frame === 'root') return [x, y, z]
+        const y1 = y * Math.cos(pitch) - z * Math.sin(pitch)
+        const z1 = y * Math.sin(pitch) + z * Math.cos(pitch)
+        const x2 = x * Math.cos(yaw) + z1 * Math.sin(yaw)
+        const z2 = -x * Math.sin(yaw) + z1 * Math.cos(yaw)
+        return [x2 + p.position_m[0], y1 + p.position_m[1], z2 + p.position_m[2]]
+      }
       const xs: number[] = []
       const ys: number[] = []
       for (const x of [b.lo[0], b.hi[0]])
         for (const y of [b.lo[1], b.hi[1]])
           for (const z of [b.lo[2], b.hi[2]]) {
-            const p = c.worldScreen([x, y, z])
-            if (p) {
-              xs.push(p.x)
-              ys.push(p.y)
+            const s = c.worldScreen(place(x, y, z))
+            if (s) {
+              xs.push(s.x)
+              ys.push(s.y)
             }
           }
       if (xs.length === 0) continue
@@ -98,7 +116,7 @@ const deviceBoxes = (page: Page): Promise<Record<string, Rect>> =>
       out[i.instanceId] = { x: x0, y: y0, width: x1 - x0, height: y1 - y0 }
     }
     return out
-  })
+  }, frame)
 
 const CLASSES = ['controls', 'frame', 'target', 'centre', 'margin'] as const
 type Cls = (typeof CLASSES)[number]
@@ -120,7 +138,7 @@ const rectText = (r: Rect): string => `${Math.round(r.x)},${Math.round(r.y)} ${M
 const TICK_QUIET_MS = 5500
 
 /** Everything 11.3 asks of one moment, sorted into its classes. `margin`: the gap the bubble must keep from the target (asked at step 4). */
-async function sample(page: Page, where: string, step: number | null, size: Size, margin?: number): Promise<Sample> {
+async function sample(page: Page, id: DesignId, where: string, step: number | null, size: Size, margin?: number): Promise<Sample> {
   // G14b: a step sample too. The guide's soft obstacles (src/guide/clearance.ts) can re-place it once the bench's models and the bubble have settled; a place held
   // for about 1.5 s before that passed the 350 ms stability read, and the class verdict then depended on timing (measured: package 2 and 4 margin, 11 px or 30).
   await quietWindow(page, TICK_QUIET_MS)
@@ -181,7 +199,7 @@ async function sample(page: Page, where: string, step: number | null, size: Size
     }
   }
   const s: Sample = { where: `${where} @${size.width}x${size.height}`, step, breaches, numbers, bubble: g.bubble !== null }
-  console.log('GEOM', JSON.stringify({ at: s.where, ...numbers, breaches: breaches.map((b) => `${b.cls}: ${b.text}`) }))
+  console.log('GEOM', JSON.stringify({ package: id, at: s.where, ...numbers, breaches: breaches.map((b) => `${b.cls}: ${b.text}`) }))
   return s
 }
 
@@ -217,19 +235,46 @@ const MARGIN_PX = 30
 // ── known findings ────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 /**
- * Class breaches measured on the build at HEAD 2cf0078 (T7.1b, 2026-11-13), per package, then re-measured after G14b (ADR 0021; entries removed for what it fixed). The assertion of a class listed here is unchanged: its test is `test.fail`, so it passes
- * while the breach stands and fails (« expected to fail ») the day the breach is gone, which is when the entry is removed. The numbers are in the report.
+ * G14e (review C1): the known breaches are pinned EXACTLY, per package, per class, per sample (`<moment> @<viewport>`: `rest`, `rest + bubble` or `step k`), the way the proxy pins KNOWN_UNLED. Each class
+ * test asserts that the list of samples that breach it EQUALS its list here: a breach that goes away (fixed) or a new one (a regression, or a 1366 breach that used to hide behind a 1024 one) turns the
+ * test red, and the entry is updated with the report's numbers. No `test.fail`: a class with no entry is a plain « nothing breaches ». The numbers of each sample are the `GEOM` lines and report G14e.
+ * Measured on the build of HEAD 9e81af1 with the device boxes projected through each placement (C2), 2026-11-14.
  */
-const KNOWN: Record<Cls, { finding: string; packages: readonly DesignId[] }> = {
-  controls: { finding: 'F4 (packages 2 and 4, 1024 x 768, step 4: the bubble covers the view cube’s « Vue d’ensemble » button)', packages: [2, 4] },
-  frame: { finding: '', packages: [] },
-  // G14b (2026-11-13): package 5 is clear at every step and size; packages 1 and 3 still breach at 1024 x 768, step 4, drawer open (no room: the guide falls back
-  // to its old place, on the console); packages 2 and 4 also at 1366 (two panels open)
-  target: { finding: 'F1 (no room at 1024 x 768, step 4 with the drawer open, and with two panels open at 1366: the icon or the bubble on the console)', packages: [1, 2, 3, 4] },
-  centre: { finding: 'F2 (the centre is the first thing given up where no place clear of the controls holds the 352 px bubble: the drawer open, two panels open, 1024 x 768)', packages: [1, 2, 3, 4, 5] },
-  // G14b: packages 1 and 3 keep 30 px at the three sizes; 2 and 4 still not at 1024 x 768 (two panels and the drawer open: no room)
-  margin: { finding: 'F3 (packages 2 and 4, 1024 x 768, step 4: no room, the bubble keeps 11 px from the target, not 30 px)', packages: [2, 4] },
+const FINDING: Record<Cls, string> = {
+  controls: 'F4 / F5 (no room: the bubble on a control of the view cube or a panel)',
+  frame: 'none',
+  target: 'F1 (no room: the icon or the bubble on the ring or on the target device)',
+  centre: 'F2 (the centre is the first thing given up where no place clear of the controls holds the 352 px bubble)',
+  margin: 'F3 (no room: the bubble closer than 30 px to the target at step 4)',
 }
+/** Packages 2 and 4 (two panels open at 1366, the drawer too at 1024): the same samples breach, in the same classes. */
+const TWO_PANELS = {
+  controls: ['step 4 @1024x768'],
+  target: ['step 4 @1024x768', 'step 4 @1366x768', 'step 6 @1366x768', 'step 8 @1366x768', 'step 9 @1366x768'],
+  centre: ['rest + bubble @1024x768', 'rest + bubble @1366x768', 'rest + bubble @820x1180', 'step 1 @1024x768', 'step 4 @1024x768', 'step 4 @1366x768', 'step 6 @1366x768', 'step 7 @1366x768', 'step 8 @1366x768', 'step 9 @1366x768'],
+  margin: ['step 4 @1024x768'],
+} as const
+const KNOWN_GEOM: Record<DesignId, Partial<Record<Cls, readonly string[]>>> = {
+  // step 4 @1024: the icon on the console (ql1 423,297 178x159; iconToRing 0) and in the centre box; the opened bubble at rest @820 in the centre box
+  1: { target: ['step 4 @1024x768'], centre: ['rest + bubble @820x1180', 'step 4 @1024x768'] },
+  2: TWO_PANELS,
+  // step 4 @1024 as package 1; step 9 @1366 the icon on the speaker (k12 818,202 213x236; iconToRing 4); step 7 @1366 the bubble in the centre box
+  3: { target: ['step 4 @1024x768', 'step 9 @1366x768'], centre: ['step 4 @1024x768', 'step 7 @1366x768'] },
+  4: TWO_PANELS,
+  // the opened bubble at rest @1024 and @820, the bubble at step 1 and the icon and bubble at step 3 @1024 in the centre box; nothing at 1366
+  5: { centre: ['rest + bubble @1024x768', 'rest + bubble @820x1180', 'step 1 @1024x768', 'step 3 @1024x768'] },
+}
+/** Spec 11.3 (line 497): « bubble plus icon leave the canvas centre free at 1366 x 768 », the 1366 samples where the ICON or the BUBBLE meets the centre box (the card is the CENTRE class's business). */
+const KNOWN_CENTRE_1366: Record<DesignId, readonly string[]> = {
+  1: [],
+  2: ['rest + bubble @1366x768', 'step 4 @1366x768', 'step 6 @1366x768', 'step 7 @1366x768', 'step 8 @1366x768', 'step 9 @1366x768'],
+  3: ['step 7 @1366x768'],
+  4: ['rest + bubble @1366x768', 'step 4 @1366x768', 'step 6 @1366x768', 'step 7 @1366x768', 'step 8 @1366x768', 'step 9 @1366x768'],
+  5: [],
+}
+/** Review S10: the tutorial steps where no bubble was there to measure (the bubble is the thing 11.3 is mostly about): pinned exactly, so a step that loses its bubble is seen. */
+const KNOWN_NO_BUBBLE: Record<DesignId, readonly string[]> = { 1: [], 2: [], 3: [], 4: [], 5: [] }
+const sorted = (xs: readonly string[]): string[] => [...xs].sort()
 
 test.describe.configure({ mode: 'parallel' })
 
@@ -253,13 +298,13 @@ for (const id of DESIGN_IDS) {
         try {
           // at rest: the room open, no tutorial, the icon alone, then the bubble the learner opens with a click
           await enter(page, id, { tutorial: false })
-          samples.push(await sample(page, 'rest', null, vp))
+          samples.push(await sample(page, id, 'rest', null, vp))
           await page.locator('.oscar-icon').click()
           await expect(page.locator('.oscar-bubble')).toBeVisible()
-          samples.push(await sample(page, 'rest + bubble', null, vp))
+          samples.push(await sample(page, id, 'rest + bubble', null, vp))
           // on a tutorial run: every step at 1366 x 768, two steps on the other viewports
           await walk(page, id, vp.width === 1366 ? all : probes, async (k) => {
-            samples.push(await sample(page, `step ${k}`, k, vp, !onModel(id) && k === MARGIN_STEP ? MARGIN_PX : undefined))
+            samples.push(await sample(page, id, `step ${k}`, k, vp, !onModel(id) && k === MARGIN_STEP ? MARGIN_PX : undefined))
           })
         } finally {
           await ctx.close()
@@ -273,13 +318,22 @@ for (const id of DESIGN_IDS) {
         expect(here, `${vp.width}: what was measured`).toEqual(['rest', 'rest + bubble', ...(vp.width === 1366 ? all : probes).map((k) => `step ${k}`)])
       }
       const steps = samples.filter((s) => s.step !== null)
-      expect(steps.filter((s) => s.bubble).length, 'bubbles measured on the tutorial').toBeGreaterThanOrEqual(steps.length / 2)
+      // S10: a bubble at every tutorial step, except the steps pinned in KNOWN_NO_BUBBLE
+      expect(sorted(steps.filter((s) => !s.bubble).map((s) => s.where)), 'tutorial steps measured without a bubble').toEqual(sorted(KNOWN_NO_BUBBLE[id]))
       expect(steps.filter((s) => s.numbers.card !== null).length, 'the card was there at every step').toBe(steps.length)
+      // S11: the icon was there in every sample (a missing icon is a FRAME breach too, but the scan must not be vacuous)
+      expect(samples.filter((s) => s.numbers.icon === null).map((s) => s.where), 'samples without the icon').toEqual([])
     })
+
+    /** The samples that breach `cls`, with the breaches' own text and numbers for the failure message. */
+    const breaching = (cls: Cls, only: (s: Sample, text: string) => boolean = () => true): { keys: string[]; detail: string } => {
+      const hits = samples.map((s) => ({ s, texts: s.breaches.filter((b) => b.cls === cls && only(s, b.text)).map((b) => b.text) })).filter((h) => h.texts.length > 0)
+      return { keys: sorted(hits.map((h) => h.s.where)), detail: hits.map((h) => `${h.s.where}: ${h.texts.join('; ')} ${JSON.stringify(h.s.numbers)}`).join('\n') }
+    }
 
     for (const cls of CLASSES) {
       if (cls === 'margin' && onModel(id)) continue
-      const known = KNOWN[cls].packages.includes(id)
+      const known = KNOWN_GEOM[id][cls] ?? []
       const claim: Record<Cls, string> = {
         controls: 'icon, bubble and card cover no visible control, at rest and at every step',
         frame: 'icon, bubble and card stay inside the window; the card never meets Oscar; the bubble never sits on the icon',
@@ -287,12 +341,18 @@ for (const id of DESIGN_IDS) {
         centre: 'the centre 20 % x 20 % of the view is free of the icon, the bubble and the card',
         margin: `the bubble keeps ${MARGIN_PX} px from the target at step ${MARGIN_STEP}`,
       }
-      test(`${cls.toUpperCase()}: ${claim[cls]}${known ? ` [known finding ${KNOWN[cls].finding.split(' ')[0]}]` : ''}`, () => {
-        if (known) test.fail(true, KNOWN[cls].finding)
-        const bad = samples.flatMap((s) => s.breaches.filter((b) => b.cls === cls).map((b) => `${s.where} ${b.text}`))
-        expect(bad).toEqual([])
+      test(`${cls.toUpperCase()}: ${claim[cls]}${known.length ? ` [known ${FINDING[cls].split(' ')[0]}: exactly ${known.length} sample(s) pinned]` : ''}`, () => {
+        const { keys, detail } = breaching(cls)
+        expect(keys, `${cls}: the samples that breach it (pinned list in KNOWN_GEOM)\n${detail}`).toEqual(sorted(known))
       })
     }
+
+    const centre1366 = KNOWN_CENTRE_1366[id]
+    test(`CENTRE AT 1366 x 768 (spec 11.3: bubble plus icon leave the canvas centre free)${centre1366.length ? ` [known F2: exactly ${centre1366.length} sample(s) pinned]` : ''}`, () => {
+      const { keys, detail } = breaching('centre', (s, text) => s.where.endsWith('@1366x768') && /^(icon|bubble) in the centre box$/.test(text))
+      expect(samples.filter((s) => s.where.endsWith('@1366x768')).length, 'the 1366 samples were taken').toBe(2 + n)
+      expect(keys, `the 1366 samples where the icon or the bubble meets the centre box\n${detail}`).toEqual(sorted(centre1366))
+    })
   })
 }
 
@@ -318,7 +378,9 @@ test.describe('reserved rows', () => {
     expect(view.height, 'the 3D view keeps more than half of the window').toBeGreaterThan(844 / 2)
     expect(r.x + r.width).toBeLessThanOrEqual(390 + 1)
     const g = await settledGeo(page)
-    if (g.icon) expect(intersects(g.icon, r), 'Oscar’s icon is off the gear row').toBe(false)
+    // S11: the icon must be there, or « Oscar is off the gear row » holds of nothing; the bubble is closed at rest (asserted only when open)
+    expect(g.icon, 'Oscar’s icon is on the page').not.toBeNull()
+    expect(intersects(g.icon!, r), 'Oscar’s icon is off the gear row').toBe(false)
     if (g.bubble) expect(intersects(g.bubble, r), 'Oscar’s bubble is off the gear row').toBe(false)
   })
 
@@ -354,8 +416,9 @@ test.describe('reserved rows', () => {
     expect(card.y + card.height).toBeLessThanOrEqual(view.y + 1)
     expect(view.y + view.height).toBeLessThanOrEqual(gear.y + 1)
     expect(gear.y + gear.height).toBeLessThanOrEqual(status.y + 1)
+    expect(g.icon, 'S11: Oscar’s icon is on the page').not.toBeNull()
     for (const [what, r] of [['icon', g.icon], ['bubble', g.bubble]] as const) {
-      if (r === null) continue
+      if (r === null) continue // the bubble only (the icon is asserted above)
       expect(intersects(r, gear), `${what} is clear of the gear row`).toBe(false)
       expect(intersects(r, card), `${what} is clear of the step card`).toBe(false)
     }
@@ -364,8 +427,9 @@ test.describe('reserved rows', () => {
   test('package 5, tutorial card AND gear row at 1024 x 768: the icon and the bubble cover no control [known finding F5: the bubble covers the view cube’s three buttons]', async ({ page }) => {
     test.fail(true, 'F5 (package 5, 1024 x 768, tutorial step 2 and the gear row: the bubble covers the view cube’s « Tourner de 90° à gauche », « Tourner de 90° à droite » and « Vue d’ensemble » buttons)')
     const { g } = await packageFiveWithBothRows(page)
+    expect(g.icon, 'S11: Oscar’s icon is on the page').not.toBeNull()
     for (const [what, r] of [['icon', g.icon], ['bubble', g.bubble]] as const) {
-      if (r === null) continue
+      if (r === null) continue // the bubble, when closed (the icon is asserted above)
       expect((await controlsUnder(page, r)).map((h) => h.name), `${what} covers no control`).toEqual([])
     }
   })
@@ -404,6 +468,36 @@ test.describe('reserved rows', () => {
       expect(intersects(card, centreBox(view, 0.2)), 'the centre of the view is clear of the card').toBe(false)
       expect(widest, 'the SM58 at the start point keeps 40 px on its widest axis').toBeGreaterThanOrEqual(40)
     })
+})
+
+// ── the device box reader, proven (review C2) ─────────────────────────────────────────────────────────────────────────────────────
+
+test('the target-device box is projected where the device stands: a K12 placed away from the origin and turned 90° holds its own placement point, the old root-frame reading does not', async ({ page }) => {
+  await enter(page, 1, { tutorial: false })
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'far', position: [-1.2, 0, 0.3], rotationY: 90 } as never))
+  await page.waitForFunction(() => window.__creation!.modelsPending() === 0 && !window.__creation!.cameraMoving())
+  const placed = (await deviceBoxes(page)).far
+  const root = (await deviceBoxes(page, 'root')).far
+  // independent of the box: the placement's own floor point and the point above it at the body's top, each through the camera
+  const marks = await page.evaluate(() => {
+    const c = window.__creation!
+    const p = c.design().placements.find((q) => q.instanceId === 'far')!
+    const top = c.bodyBoundsInRoot('far')!.hi[1]
+    return { foot: c.worldScreen(p.position_m), head: c.worldScreen([p.position_m[0], p.position_m[1] + top, p.position_m[2]]), product: c.deviceScreenBox('far') }
+  })
+  const holds = (r: Rect, q: { x: number; y: number } | null): boolean => q !== null && q.x >= r.x - 1 && q.x <= r.x + r.width + 1 && q.y >= r.y - 1 && q.y <= r.y + r.height + 1
+  console.log('GEOM', JSON.stringify({ at: 'C2 proof, K12 at (-1.2, 0, 0.3) yaw 90', placed: rectText(placed), root: rectText(root), foot: marks.foot, head: marks.head, product: marks.product }))
+  expect(holds(placed, marks.foot), 'the placed box holds the device’s floor point').toBe(true)
+  expect(holds(placed, marks.head), 'the placed box holds the point above it at the body’s top').toBe(true)
+  expect(holds(root, marks.foot), 'the root-frame box (the old reading) does not: it is drawn at the origin').toBe(false)
+  expect(intersects(placed, root), 'the two readings are apart: the device is away from the origin').toBe(false)
+  expect(placed.x >= 0 && placed.x + placed.width <= 1280, 'the device is on screen (the proof is not off the view)').toBe(true)
+  // the product's own reader (src/scene/screenBox.ts, a box of the body meshes' boxes: never smaller) agrees within a few px
+  const pb = marks.product!
+  expect(pb.x, 'left edge').toBeLessThanOrEqual(placed.x + 3)
+  expect(pb.y, 'top edge').toBeLessThanOrEqual(placed.y + 3)
+  expect(pb.x + pb.w, 'right edge').toBeGreaterThanOrEqual(placed.x + placed.width - 3)
+  expect(pb.y + pb.h, 'bottom edge').toBeGreaterThanOrEqual(placed.y + placed.height - 3)
 })
 
 // ── 11.4: axe ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
