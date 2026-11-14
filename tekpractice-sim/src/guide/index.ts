@@ -101,7 +101,10 @@ export async function bootGuide(route: GuideRoute, target?: Window): Promise<Gui
     }
     const now = (): number => performance.now()
     const bridge = makeBridge({ win, registry, doc, now })
-    return mountOscar({ win, doc, route, search, bridge, registry, storage, now })
+    const handle = mountOscar({ win, doc, route, search, bridge, registry, storage, now })
+    // The keyboard way to the icon (Alt+Shift+O), a tiny lazy chunk of its own, installed only for a guide that did mount.
+    if (handle !== null) await import('./focusKey').then((m) => m.installFocusKey(win, route)).catch(() => undefined)
+    return handle
   } catch (e) {
     warn('guide: could not start, the page is untouched', e)
     return null

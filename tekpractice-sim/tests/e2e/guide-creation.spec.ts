@@ -24,8 +24,8 @@ const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
 const PLACE = 'room:concert-hall-medium'
 const ICON_NAME = 'Oscar, assistant IA'
 
-/** The window / document listeners the guide holds that the same page with `?oscar=0` does not (measured: these six; a seventh, or another kind, fails the test). */
-const PAGE_LISTENERS = ['document click (capture)', 'document keydown', 'document visibilitychange', 'window oscar-guide:event', 'window resize', 'window scroll (capture)']
+/** The window / document listeners the guide holds that the same page with `?oscar=0` does not (measured: these seven, two of them keydown: the guide's own keys and the Alt+Shift+O shortcut; an eighth, or another kind, fails the test). */
+const PAGE_LISTENERS = ['document click (capture)', 'document keydown', 'document keydown', 'document visibilitychange', 'window oscar-guide:event', 'window resize', 'window scroll (capture)']
 /** The most extra DisposableBag listeners (the app's own count; the guide registers none there: measured 0). */
 const BAG_LISTENERS_BUDGET = 0
 const IDLE_MS = 3000
@@ -306,6 +306,34 @@ test('Tab reaches the icon, Entrée opens the bubble, Échap closes it and puts 
   await expect(bubble(page)).toBeVisible()
   await page.keyboard.press('Escape')
   await expect(bubble(page)).toBeHidden()
+  await expect(icon(page)).toBeFocused()
+})
+
+test('Alt+Shift+O puts the focus on the icon from the canvas of Mode Création, the screen reader hint says so, and a plain letter or one modifier does nothing, Escape still closes the bubble', async ({ page }) => {
+  await boot(page)
+  await waitGuide(page)
+  // the focus is on the page, not on the guide: the canvas (or the body when the page does not take focus)
+  await page.evaluate(() => {
+    const c = document.getElementById('renderCanvas') as HTMLElement | null
+    if (c) c.focus()
+    else (document.activeElement as HTMLElement | null)?.blur()
+  })
+  await expect(icon(page)).not.toBeFocused()
+  const hint = await icon(page).evaluate((el) => document.getElementById(el.getAttribute('aria-describedby') ?? '')?.textContent ?? '')
+  expect(hint, 'the icon hint announces the shortcut').toContain(TP_STRINGS.focusKey.hint)
+  expect(hint, 'and keeps its own sentence').toContain('flèches')
+  // other keys with the same letter do nothing: a plain letter, one modifier
+  await page.keyboard.press('o')
+  await page.keyboard.press('Alt+o')
+  await page.keyboard.press('Shift+O')
+  await expect(icon(page)).not.toBeFocused()
+  // the chord
+  await page.keyboard.press('Alt+Shift+O')
+  await expect(icon(page)).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(bubble(page)).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(bubble(page), 'Escape still closes the bubble').toBeHidden()
   await expect(icon(page)).toBeFocused()
 })
 
