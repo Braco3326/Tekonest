@@ -8,7 +8,7 @@ Status column:
 - **brief** — wording given verbatim by the plan (Task 7 brief / council), validated with it.
 - **validé** — reviewed and accepted (or rewritten) by tekuxwriter; the Phase 1 pass (L9) signed off every string authored by tekfrontenddesigner.
 - **à trancher (Oscar)** — tekuxwriter could not decide alone; the question is in the notes column.
-- **à valider (tekuxwriter)** — written by the developer for the onboarding packs (2026-11-12), not yet read by tekuxwriter: French « vous », no figure, no success, safety or fidelity claim; to be reviewed before anything ships.
+- **à valider (tekuxwriter)** — written by the developer for the onboarding packs (2026-11-12), not yet read by tekuxwriter: French « vous », no figure, no success, safety or fidelity claim; to be reviewed before anything ships. Every key added by the branch `design/onboarding-packs` carries this status and a note saying where it shows (which address, which package) and any honesty point; the one key it changed, `picker.templatesPitch`, too. The full list, with what is still open for tekuxwriter, is the last subsection of « Propositions en attente (fondateur) » (« Clés de la branche design/onboarding-packs »).
 
 Typography: plain spaces before « : ; ! ? » and inside « » (no U+00A0 / U+202F), as every shipped string does.
 
@@ -90,7 +90,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.shortcuts` | Raccourcis clavier | validé | Aide ; affiche « H » depuis Task 8, inactif jusqu'au panneau d'aide |
 | `menu.siteBack` | Retour au site Tekonest | validé | Aide ; même libellé que `shell.siteBack` |
 | `menu.firstStepsWait` | Répondez d’abord à l’écran de départ. | à valider (tekuxwriter) | Description de « Premiers pas » (grisé) tant que l’écran de départ est ouvert : il ouvrirait une salle sans profil |
-| `menu.firstSteps` | Premiers pas | à valider (tekuxwriter) | Aide ; première entrée, seulement sous `?design` et là où le tutoriel est permis (ni `?oscar=0` ni adresse d’examen). Sans lieu ouvert, ouvre d’abord la salle vide neutre, puis demande le tutoriel |
+| `menu.firstSteps` | Premiers pas | à valider (tekuxwriter) | Aide ; première entrée, seulement sous `?design` et là où le tutoriel est permis (ni `?oscar=0` ni adresse d’examen). Sans lieu ouvert, ouvre d’abord la salle de départ du paquet (la salle vide neutre ; pour le paquet 5, le modèle jouable `premier-son-pret`, T6.3), puis demande le tutoriel ; avec un montage déjà ouvert sur le paquet 5, passe par la boîte « Remplacer le matériel » (`onboarding.modelDeclined` si l’apprenant refuse) |
 
 Since Task 12, Lieu holds only « Choisir un lieu… »; the place names are on the picker cards (`content/rooms/*.json` `name_fr`, `picker.set-*`, `picker.blank`).
 
@@ -488,6 +488,128 @@ Fidèles aux champs anglais `title` / `teach`, sans nouvelle affirmation techniq
 3. **« le balance » devient « la balance »** : appliqué en vague 3b dans `coverage.chipPopover`, `coverage.reasonBalance` et `listen.limitsMore`.
 4. **Pastille `coverage.chip` « estimation »** : à confirmer par le fondateur (décision du contrôleur de la vague 2) ; reste « à trancher (Oscar) ».
 5. **Un seul verbe pour « relier deux prises »** : aujourd'hui « Brancher » (câblage, historique), « Connecter à… » (dialogue, menu) et « Connecté : » (état du dialogue). Proposition pour une vague ultérieure : garder « Connecter à… » comme nom du dialogue, employer « Branché : » dans les deux lignes d'état et « Connexion refusée : » pour `patch.errorLabel`. Coût : environ sept lignes de test.
+
+### Clés de la branche design/onboarding-packs (à relire par tekuxwriter)
+
+Liste faite le 2026-11-14 en comparant `src/creation/copy.ts` à deux points. **Contre `ee396da`** (le code en ligne, point de départ de la branche) : c’est la comparaison qui compte. À `ee396da` le fichier avait 586 clés ; il en a 687 : **101 ajoutées, 1 changée, 0 retirée**. **Contre `c51dc87`** (la base du moteur, 2026-10-24) : le fichier n’existait pas encore (il est né entre `c51dc87` et `ee396da`), donc la différence est le fichier entier (687 clés) et n’apprend rien de plus ; le moteur, lui, est comparé à `ee396da` par `tests/engineDiff.test.ts` (vide). Par section : `menu` 2, `picker` 2, `checklist` 26, `assist` 5, `ruleOverride` 5, `onboarding` 16, `ownGear` 7, `tutorialUi` 3, `tutorial` 16, `tutorialCard` 12, `oscar` 2, `design` 5. Toutes portent le statut « à valider (tekuxwriter) » dans leur ligne du deck (contrôle du 2026-11-14 : aucune ligne sans statut ni sans note). Rien n’est réécrit ici : la dernière colonne dit seulement ce qui reste ouvert.
+
+Une chaîne de la branche **n’est pas** dans `copy.ts` : `CREATION_STRINGS.celebrate.done` (`src/guide/strings.ts`), « Parcours « {flow} » : fin des étapes. », la fin de tout parcours d’Oscar en Mode Création, adresse simple comprise (elle remplace la phrase fournie « terminé : toutes les étapes sont faites », fausse quand une étape a été passée). Elle est dans le test d’honnêteté, mais dans aucune ligne du deck : à valider aussi.
+
+| # | Clé | Statut dans le deck | Où elle s’affiche | À signaler à tekuxwriter |
+|---|---|---|---|---|
+| 1 | `menu.firstSteps` (ajoutée) | à valider (tekuxwriter) | Aide › première entrée ; `?design=1..5` en mode pratique, tutoriel permis (ni `?oscar=0` ni examen) | — |
+| 2 | `menu.firstStepsWait` (ajoutée) | à valider (tekuxwriter) | Description grisée de « Premiers pas » tant que l’écran de départ est ouvert ; `?design=1..5` en mode pratique | — |
+| 3 | `picker.templateNote-premier-son-pret` (ajoutée) | à valider (tekuxwriter) | Carte « Premier son », sélecteur de lieux ; toutes les adresses du Mode Création, avec ou sans `?design` | — |
+| 4 | `picker.templateNote-concert-simple-reference` (ajoutée) | à valider (tekuxwriter) | Carte « Concert simple (référence) », sélecteur de lieux ; toutes les adresses du Mode Création, avec ou sans `?design` | — |
+| 5 | `checklist.title` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 6 | `checklist.chipHint` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 7 | `checklist.intro` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 8 | `checklist.introHelper` (ajoutée) | à valider (tekuxwriter) | Sous le titre de la liste quand l’aide y figure ; `?design=1..5` en mode pratique | — |
+| 9 | `checklist.close` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 10 | `checklist.rowSource` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 11 | `checklist.rowConsole` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 12 | `checklist.rowPower` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 13 | `checklist.rowCable` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 14 | `checklist.rowMic` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 15 | `checklist.tagBlocked` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 16 | `checklist.tagUnchecked` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 17 | `checklist.tagOk` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | « En place » et non « Vérifié » (déjà le mot des fiches) |
+| 18 | `checklist.micCabled` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 19 | `checklist.goTo` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 20 | `checklist.goToLabel` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 21 | `checklist.targetInventory` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 22 | `checklist.menuHint` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? » (pastille de la barre d’état, ou panneau du paquet 2) ; Mode Création, avec ou sans `?design`, aussi avec `?oscar=0` | — |
+| 23 | `checklist.helperButton` (ajoutée) | à valider (tekuxwriter) | Liste « Pourquoi je n’entends rien ? », ligne « Alimentation » ; `?design=1..5` en mode pratique (aide au branchement) | — |
+| 24 | `checklist.helperWhat` (ajoutée) | à valider (tekuxwriter) | Sous le bouton d’aide ; `?design=1..5` en mode pratique | — |
+| 25 | `checklist.helperLocked` (ajoutée) | à valider (tekuxwriter) | Sous le bouton d’aide désactivé pendant le tutoriel ; `?design=1..5` en mode pratique | — |
+| 26 | `checklist.helperLockedRun` (ajoutée) | à valider (tekuxwriter) | Sous le bouton d’aide désactivé pendant le tutoriel ; `?design=1..5` en mode pratique | — |
+| 27 | `checklist.helperDone` (ajoutée) | à valider (tekuxwriter) | Ligne d’état après l’aide ; `?design=1..5` en mode pratique | — |
+| 28 | `checklist.helperFailed` (ajoutée) | à valider (tekuxwriter) | Ligne d’état après l’aide ; `?design=1..5` en mode pratique | — |
+| 29 | `checklist.helperBusy` (ajoutée) | à valider (tekuxwriter) | Ligne d’état après l’aide ; `?design=1..5` en mode pratique | — |
+| 30 | `checklist.helperEntry` (ajoutée) | à valider (tekuxwriter) | Libellé de l’entrée Édition › Annuler ; `?design=1..5` en mode pratique | — |
+| 31 | `assist.noSource` (ajoutée) | à valider (tekuxwriter) | Phrase d’action dans la bulle de verdict d’Oscar ; Mode Création, avec ou sans `?design`, là où Oscar tourne (ni `?oscar=0` ni examen) | — |
+| 32 | `assist.sourceOff` (ajoutée) | à valider (tekuxwriter) | Phrase d’action dans la bulle de verdict d’Oscar ; Mode Création, avec ou sans `?design`, là où Oscar tourne (ni `?oscar=0` ni examen) | — |
+| 33 | `assist.hostUnpowered` (ajoutée) | à valider (tekuxwriter) | Phrase d’action dans la bulle de verdict d’Oscar ; Mode Création, avec ou sans `?design`, là où Oscar tourne (ni `?oscar=0` ni examen) | — |
+| 34 | `assist.noPath` (ajoutée) | à valider (tekuxwriter) | Phrase d’action dans la bulle de verdict d’Oscar ; Mode Création, avec ou sans `?design`, là où Oscar tourne (ni `?oscar=0` ni examen) | — |
+| 35 | `assist.speakerUnpowered` (ajoutée) | à valider (tekuxwriter) | Phrase d’action dans la bulle de verdict d’Oscar ; Mode Création, avec ou sans `?design`, là où Oscar tourne (ni `?oscar=0` ni examen) | — |
+| 36 | `ruleOverride.R1` (ajoutée) | à valider (tekuxwriter) | Texte de la règle : liste d’erreurs, « Connecter à… », réponse et verdict d’Oscar ; toutes les adresses du Mode Création, avec ou sans `?design` (pas le mode historique) | décision du fondateur : le mode historique garde l’ancien texte (spécification 13, point 5) |
+| 37 | `ruleOverride.R2` (ajoutée) | à valider (tekuxwriter) | Texte de la règle : liste d’erreurs, « Connecter à… », réponse et verdict d’Oscar ; toutes les adresses du Mode Création, avec ou sans `?design` (pas le mode historique) | idem ; les chiffres 40 dB et 12 dB du catalogue sont retirés (aucune fiche source) |
+| 38 | `ruleOverride.R3` (ajoutée) | à valider (tekuxwriter) | Texte de la règle : liste d’erreurs, « Connecter à… », réponse et verdict d’Oscar ; toutes les adresses du Mode Création, avec ou sans `?design` (pas le mode historique) | idem |
+| 39 | `ruleOverride.R4` (ajoutée) | à valider (tekuxwriter) | Texte de la règle : liste d’erreurs, « Connecter à… », réponse et verdict d’Oscar ; toutes les adresses du Mode Création, avec ou sans `?design` (pas le mode historique) | idem ; dit ce que fait le simulateur ; la phrase sur les micros à ruban est retirée |
+| 40 | `ruleOverride.R5` (ajoutée) | à valider (tekuxwriter) | Texte de la règle : liste d’erreurs, « Connecter à… », réponse et verdict d’Oscar ; toutes les adresses du Mode Création, avec ou sans `?design` (pas le mode historique) | idem ; l’avertissement n’est vrai que de la liste d’état (pas du verdict d’Oscar) |
+| 41 | `onboarding.profileDecouvre` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 42 | `onboarding.profileEtudie` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 43 | `onboarding.profileProjet` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 44 | `onboarding.profileMetier` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 45 | `onboarding.startTitle` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 46 | `onboarding.startLead` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 47 | `onboarding.allPlaces` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 48 | `onboarding.offerTitle` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 49 | `onboarding.offerProfile` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 50 | `onboarding.offerLead` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 51 | `onboarding.offerTutorial` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 52 | `onboarding.offerSkip` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 53 | `onboarding.chip` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 54 | `onboarding.chipChoose` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 55 | `onboarding.chipHint` (ajoutée) | à valider (tekuxwriter) | Écran de départ ou pastille de profil ; `?design=1..5` en mode pratique | — |
+| 56 | `onboarding.modelDeclined` (ajoutée) | à valider (tekuxwriter) | Ligne d’état, Aide › « Premiers pas » sur un montage ouvert ; paquet 5 seulement | — |
+| 57 | `ownGear.region` (ajoutée) | à valider (tekuxwriter) | Nom accessible de la carte de l’entrepreneur ; profil « Je monte un projet », après le premier son | — |
+| 58 | `ownGear.line` (ajoutée) | à valider (tekuxwriter) | Carte de l’entrepreneur ; profil « Je monte un projet », après le premier son, `?design` | — |
+| 59 | `ownGear.venueFetes` (ajoutée) | à valider (tekuxwriter) | Carte de l’entrepreneur ; profil « Je monte un projet », après le premier son, `?design` | type de salle générique, informatif (aucun bouton) ; un lien type → salle de l’application serait une décision du fondateur |
+| 60 | `ownGear.venueBar` (ajoutée) | à valider (tekuxwriter) | Carte de l’entrepreneur ; profil « Je monte un projet », après le premier son, `?design` | idem |
+| 61 | `ownGear.venueSmall` (ajoutée) | à valider (tekuxwriter) | Carte de l’entrepreneur ; profil « Je monte un projet », après le premier son, `?design` | idem |
+| 62 | `ownGear.venueLabel` (ajoutée) | à valider (tekuxwriter) | Carte de l’entrepreneur ; profil « Je monte un projet », après le premier son, `?design` | dit que ce sont des exemples ; à confirmer |
+| 63 | `ownGear.dismiss` (ajoutée) | à valider (tekuxwriter) | Carte de l’entrepreneur ; profil « Je monte un projet », après le premier son, `?design` | — |
+| 64 | `tutorialUi.resume` (ajoutée) | à valider (tekuxwriter) | Aide, pendant qu’un tutoriel tourne ; `?design` | — |
+| 65 | `tutorialUi.restart` (ajoutée) | à valider (tekuxwriter) | Aide, pendant qu’un tutoriel tourne ; `?design` | — |
+| 66 | `tutorialUi.skip` (ajoutée) | à valider (tekuxwriter) | Aide, pendant qu’un tutoriel tourne ; `?design` | — |
+| 67 | `tutorial.console` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, tutoriel « Premiers pas » ; `?design`, paquets 1 à 4 (10 étapes) | — |
+| 68 | `tutorial.micro` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, tutoriel « Premiers pas » ; `?design`, paquets 1 à 4 (10 étapes) | — |
+| 69 | `tutorial.enceinte` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, tutoriel « Premiers pas » ; `?design`, paquets 1 à 4 (10 étapes) | — |
+| 70 | `tutorial.consoleEnceinte` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, tutoriel « Premiers pas » ; `?design`, paquets 1 à 4 (10 étapes) | « la prise proposée est compatible » : compatible = acceptée par R1 à R3 |
+| 71 | `tutorial.microConsole` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, tutoriel « Premiers pas » ; `?design`, paquets 1 à 4 (10 étapes) | — |
+| 72 | `tutorial.multiprise` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, tutoriel « Premiers pas » ; `?design`, paquets 1 à 4 (10 étapes) | se lit avec `tutorial.powerNote` dans la même bulle |
+| 73 | `tutorial.powerNote` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, tutoriel « Premiers pas » ; `?design`, paquets 1 à 4 (10 étapes) | le deux-points ouvre la ligne suivante dans la bulle de l’étape 7 : il faudrait une espace insécable avant « : » (le deck impose aujourd’hui des espaces simples) |
+| 74 | `tutorial.courantConsole` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, tutoriel « Premiers pas » ; `?design`, paquets 1 à 4 (10 étapes) | — |
+| 75 | `tutorial.courantEnceinte` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, tutoriel « Premiers pas » ; `?design`, paquets 1 à 4 (10 étapes) | — |
+| 76 | `tutorial.ecoute` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, étape 10 des paquets 1 à 4 ; étape 1 du paquet 5 | — |
+| 77 | `tutorial.debrancher` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, étape 2 sur 3 ; paquet 5 seulement | formulation à trancher : une action et une invitation à observer, sans dire ce qu’on entend (réaction audible non vérifiée) ; garde « Pendant l’écoute, » que le texte de la spécification n’a pas |
+| 78 | `tutorial.rebrancher` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, étape 3 sur 3 ; paquet 5 seulement | — |
+| 79 | `tutorial.accepted` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar après un câble accepté ; tutoriel | — |
+| 80 | `tutorial.helperOffer` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar, étapes de courant ; tutoriel des paquets 1 à 4 | — |
+| 81 | `tutorial.alreadyInPlace` (ajoutée) | à valider (tekuxwriter) | Début de la bulle d’une étape suivante, quand des étapes étaient déjà faites ; tutoriel | — |
+| 82 | `tutorial.alreadyStep` (ajoutée) | à valider (tekuxwriter) | Élément de « Déjà en place : … » ; tutoriel | — |
+| 83 | `tutorialCard.label` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape sous la barre de menus, pendant un tutoriel ; `?design` | — |
+| 84 | `tutorialCard.step` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape ; 10 pour les paquets 1 à 4, 3 pour le paquet 5 | — |
+| 85 | `tutorialCard.stepsLabel` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape sous la barre de menus, pendant un tutoriel ; `?design` | — |
+| 86 | `tutorialCard.stepState` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape sous la barre de menus, pendant un tutoriel ; `?design` | — |
+| 87 | `tutorialCard.stateDone` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape sous la barre de menus, pendant un tutoriel ; `?design` | — |
+| 88 | `tutorialCard.stateCurrent` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape sous la barre de menus, pendant un tutoriel ; `?design` | — |
+| 89 | `tutorialCard.stateTodo` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape sous la barre de menus, pendant un tutoriel ; `?design` | — |
+| 90 | `tutorialCard.statePassed` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape sous la barre de menus, pendant un tutoriel ; `?design` | — |
+| 91 | `tutorialCard.stateShown` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape sous la barre de menus, pendant un tutoriel ; `?design` | « montré » ou « montrée » : le texte caché de la marque dit « Étape 8 : montré », le sujet est l’étape (féminin), « passée » est déjà au féminin |
+| 92 | `tutorialCard.stateEarly` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape sous la barre de menus, pendant un tutoriel ; `?design` | — |
+| 93 | `tutorialCard.closingTitle` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape après la dernière étape ; tutoriel | — |
+| 94 | `tutorialCard.close` (ajoutée) | à valider (tekuxwriter) | Fiche d’étape après la dernière étape ; tutoriel | — |
+| 95 | `oscar.badge` (ajoutée) | à valider (tekuxwriter) | En-tête de la bulle d’Oscar ; `?design=1..5` en mode pratique | répété à côté du titre fourni « Oscar, assistant IA » ; décision « IA » du fondateur (garder « IA », ou « Oscar » + « Assistant ») |
+| 96 | `oscar.notOnScreen` (ajoutée) | à valider (tekuxwriter) | Bulle d’Oscar quand sa cible est hors de vue ; toutes les adresses du Mode Création, avec ou sans `?design` (le niveau garde la phrase fournie) | (1) s’affiche aussi sur l’adresse simple (sans `?design`) ; (2) la bulle de 14 mots clignote à chaque vol de caméra du tutoriel (état qui dure un instant) ; (3) elle compte dans le budget de mots (spécification 11.8) ; (4) elle suppose une cible 3D (« Vue d’ensemble ») |
+| 97 | `design.name1` (ajoutée) | à valider (tekuxwriter) | Nom du paquet, **non affiché** dans l’application | — |
+| 98 | `design.name2` (ajoutée) | à valider (tekuxwriter) | Nom du paquet, **non affiché** dans l’application | — |
+| 99 | `design.name3` (ajoutée) | à valider (tekuxwriter) | Nom du paquet, **non affiché** dans l’application | — |
+| 100 | `design.name4` (ajoutée) | à valider (tekuxwriter) | Nom du paquet, **non affiché** dans l’application | — |
+| 101 | `design.name5` (ajoutée) | à valider (tekuxwriter) | Nom du paquet, **non affiché** dans l’application | — |
+| 102 | `picker.templatesPitch` (changée) | à valider (tekuxwriter) | Sélecteur de lieux, sous le titre « Modèles » ; toutes les adresses du Mode Création, avec ou sans `?design` | ancien texte : « Un lieu avec son matériel déjà posé : le plus simple pour commencer. » (retiré : le modèle de référence est muet) |
+
+**Points ouverts pour tekuxwriter** (rien n’est corrigé dans `copy.ts` ; chacun est repris dans la colonne de droite quand il touche une clé de la branche) :
+
+1. `tutorialCard.stateShown` : « montré » ou « montrée » dans le texte caché de la marque (« Étape 8 : montré »).
+2. `oscar.notOnScreen` : s’affiche aussi sur l’adresse simple ; la bulle clignote pendant les vols de caméra du tutoriel ; elle compte dans le budget de mots ; elle suppose une cible 3D.
+3. `tutorial.powerNote` (bulle de l’étape 7) : le deux-points tombe en début de ligne ; une espace insécable avant « : » demande de changer la règle de typographie du deck (aujourd’hui, espaces simples partout, y compris dans les chaînes déjà livrées) : décision de tekuxwriter, pas un correctif de code.
+4. `tutorial.debrancher` : formulation (action et invitation à observer, sans dire ce qu’on entend).
+5. Les textes `connect.*` de la boîte « Connecter à… » (déjà validés, aucune clé de la branche) comptent dans le budget de mots : 91 mots de texte de boîte sur les parcours par dialogue (189 sans, 294 avec). Les raccourcir ou non est un choix de tekuxwriter.
+6. `oscar.badge` contre le titre fourni « Oscar, assistant IA » : la répétition visuelle suit la décision « IA » du fondateur.
+7. `ruleOverride.R1` à `R5` : cinq textes qui remplacent le catalogue en Mode Création seulement ; le mode historique garde l’ancien texte (décision du fondateur, spécification 13, point 5).
+8. `celebrate.done` (hors `copy.ts`, voir plus haut).
 
 
 ## boot
@@ -966,7 +1088,7 @@ Aide pendant que le tutoriel tourne (plan T3.2) : trois éléments à la place d
 
 ## tutorial
 
-Le tutoriel « Premiers pas » (packs d’accueil, T3.1 ; spec 6.3 et 7.2) : une phrase d’Oscar par étape, ce qu’il faut faire et où, jamais un résultat qui n’est pas encore vrai (aucun son avant Écoute). Les clés suivent les identifiants d’étape de `src/guide/tutorial.ts`. `{console}` et `{micro}` = les libellés du catalogue de la console source (aujourd’hui la Yamaha QL1) et du SM58. Le titre du parcours est `menu.firstSteps` (par clé) ; l’étape 6 dit `assist.sourceOff` (par clé). `closingLines()` (`listen.simple` puis la ligne micro de la liste, `checklist.micCabled`, par clé) : affiché par la fiche d’étape après la dernière étape (T6.1, section `tutorialCard`). La fin d’un parcours dit « Parcours « {flow} » : fin des étapes. » (texte du guide, pas COPY : une étape a pu être passée). Au plus 200 mots avec `listen.simple` (testé). Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
+Le tutoriel « Premiers pas » (packs d’accueil, T3.1 ; spec 6.3 et 7.2) : une phrase d’Oscar par étape, ce qu’il faut faire et où, jamais un résultat qui n’est pas encore vrai (aucun son avant Écoute). Les clés suivent les identifiants d’étape de `src/guide/tutorial.ts`. `{console}` et `{micro}` = les libellés du catalogue de la console source (aujourd’hui la Yamaha QL1) et du SM58. Le titre du parcours est `menu.firstSteps` (par clé) ; l’étape 6 dit `assist.sourceOff` (par clé). `closingLines()` (`listen.simple` puis la ligne micro de la liste, `checklist.micCabled`, par clé) : affiché par la fiche d’étape après la dernière étape (T6.1, section `tutorialCard`). La fin d’un parcours dit « Parcours « {flow} » : fin des étapes. » (texte du guide, pas COPY : une étape a pu être passée). Le texte des étapes tient en 200 mots avec `listen.simple` (test unitaire `tests/guide/tutorial.test.ts`, sur les chaînes seules). **Ce n’est pas le budget de mots de la spécification 11.8** : celui-là compte ce que le parcours fait réellement lire (bulle, fiche, boîtes « Connecter à… »), et il est **dépassé** aujourd’hui sur les parcours par boîte de dialogue des paquets 1 à 4 (189 mots sans les boîtes, 294 avec : 189 + 91 de texte des boîtes + 14 de `oscar.notOnScreen`) et sur le parcours par clic de port des paquets 1 et 4 (203) ; le paquet 5 en compte 34 ; chaque compteur de progression est compté une fois (règle du test, absente de la spécification). Le texte des boîtes (`connect.*`) est du texte de clavier déjà validé, pas une clé de la branche : le raccourcir ou non est un choix de tekuxwriter. Sources : `tests/e2e/first-timer-proxy.spec.ts` (`KNOWN_WORDS`), rapports G14c et G14e. Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
@@ -1017,12 +1139,12 @@ Le nouvel Oscar (packs d’accueil, T5.4 ; spec 9 et 10.2), seulement avec `?des
 
 ## design
 
-Les noms des cinq paquets de design (packs d’accueil, T4.1 ; spec 7.2), lus par `DesignPackage.nameKey` (`design.name1` à `design.name5`). Pas encore affichés : le paquet se choisit par l’adresse (`?design=1` à `?design=5`) ; la commande locale du fondateur et le guide de test les nomment. Un nom dit le parti pris du paquet, jamais une promesse (ni durée, ni examen, ni sécurité). Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
+Les noms des cinq paquets de design (packs d’accueil, T4.1 ; spec 7.2), lus par `DesignPackage.nameKey` (`design.name1` à `design.name5`). Aucun n’est affiché dans l’application (aucun code ne lit `nameKey` hors `src/design/packages.ts`) : le paquet se choisit par l’adresse (`?design=1` à `?design=5`) ; le guide de test (`docs/guides/tester-les-5-designs.md`) les nomme ; la commande locale `npm run onboarding:local` n’affiche que les cinq adresses. Un nom dit le parti pris du paquet, jamais une promesse (ni durée, ni examen, ni sécurité). Tout ce qui suit : à valider (tekuxwriter, 2026-11-12).
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
 | `design.name1` | Pas à pas | à valider (tekuxwriter) | Paquet 1 : un seul élément allumé sur un écran sombre ; Oscar mène, la fiche d’étape |
-| `design.name2` | Atelier | à valider (tekuxwriter) | Paquet 2 : des bandes Prune de feuille d’étude, la liste « Pourquoi je n’entends rien ? » en panneau, Oscar à la demande |
+| `design.name2` | Atelier | à valider (tekuxwriter) | Paquet 2 : des bandes Prune de feuille d’étude, la liste « Pourquoi je n’entends rien ? » en panneau, Oscar qui ne mène pas le parcours (`oscar.leads` faux, `proactive` vrai, indice après 30 s : `src/design/packages.ts`) |
 | `design.name3` | Salle d’abord | à valider (tekuxwriter) | Paquet 3 : une feuille Papier de plein jour, des mots simples pour les rôles |
 | `design.name4` | Pupitre | à valider (tekuxwriter) | Paquet 4 : à plat, des filets fins, pas de panneau en relief ; le clavier d’abord |
 | `design.name5` | Modèle d’abord | à valider (tekuxwriter) | Paquet 5 : un cadre Prune autour de la vue 3D ; un modèle déjà câblé (T6.3) |
