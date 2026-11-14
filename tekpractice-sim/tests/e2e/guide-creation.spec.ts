@@ -411,12 +411,12 @@ test('an error on the bench: « Prochaine étape » says the status bar\'s own e
   await expect(page.getByRole('dialog', { name: 'Erreurs et avertissements' })).toBeHidden()
 
   await nextStepSays(page, barDetail)
-  // What the bubble says is pinned exactly: the generic head line, then the rule's explanation word for word. The rule's title stays on the status bar row
-  // (asserted above), beside it; the bubble does not repeat it.
+  // What the bubble says is pinned exactly: the rule's title as its head (the very text of the status bar row), then the rule's explanation word for word.
   const lines = await liveLines(page)
-  expect(lines, 'the bubble: the generic head, then the explanation').toEqual(['Correction à apporter', RULE('R4').teach_fr])
+  expect(lines, 'the bubble: the rule title, then the explanation').toEqual([RULE('R4').title_fr, RULE('R4').teach_fr])
+  expect(lines[0], 'the bubble head is the status bar row title').toBe(barTitle)
   expect(lines[1]).toBe(barDetail)
-  expect(lines.join(' '), 'the rule title is not in the bubble').not.toContain(barTitle)
+  expect(lines.join(' '), 'the generic head is gone').not.toContain('Correction à apporter')
   await expect(page.locator('.oscar-bubble')).toHaveAttribute('data-kind', 'fix')
   await expect(chip(page, 'Lancer le parcours proposé'), 'a fix bubble has no start chip').toHaveCount(0)
   // the ring is on the first subject of the app's own error event

@@ -134,6 +134,13 @@ describe('the strings the controller reads', () => {
     expect(CREATION_STRINGS.where.flow).toContain('{flow}')
   })
 
+  it('both routes put the rule title in the head of a fix (the placeholder the controller fills), and keep the other planner sentences', () => {
+    expect(CREATION_STRINGS.planner.fix).toBe('{cause}')
+    expect(LEGACY_STRINGS.planner.fix).toBe('{cause}')
+    expect(CREATION_STRINGS.planner.needInfo).toBe(TP_STRINGS.planner.needInfo)
+    expect(LEGACY_STRINGS.planner.needInfo).toBe(TP_STRINGS.legacy.planner.needInfo)
+  })
+
   it('the phantom step claims nothing the data does not back (no « micro » channel: the app picks the first device that has the switch)', () => {
     expect(TP_STRINGS.flows['alimentation-fantome'].steps.toggle).not.toMatch(/micro|voie/i)
   })

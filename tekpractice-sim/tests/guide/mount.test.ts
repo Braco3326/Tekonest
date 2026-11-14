@@ -845,7 +845,7 @@ describe('mountOscar on the real controller: what each bench state says, and wha
     const v = await w.next()
     expect(v.bubble?.kind).toBe('fix')
     expect(texts(v)).toEqual([rule.teach_fr])
-    expect(v.bubble?.title).toBe('Correction à apporter')
+    expect(v.bubble?.title, 'the head of a fix is the rule title').toBe(rule.title_fr)
     expect(v.target?.anchor).toMatch(/^port:/)
     expect(JSON.stringify(v.bubble)).not.toContain(NEEDS)
     expect(v.bubble?.chips.map((c) => c.id)).toEqual(CHIPS_NO_START)

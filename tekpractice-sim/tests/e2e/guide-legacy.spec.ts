@@ -642,7 +642,7 @@ test('asked, the guide answers in French from the catalog: an error is the rule\
   const toast = page.locator('.toast-warning, .toast-error').first()
   await expect(toast).toContainText(r4.teach) // the page's own toast, English
   await nextStepSays(page, r4.teach_fr)
-  expect(await liveLines(page), 'the bubble says the rule\'s own French explanation under the generic head line').toEqual(['Correction à apporter', r4.teach_fr])
+  expect(await liveLines(page), 'the bubble says the rule\'s own French title as its head, then its explanation').toEqual([r4.title_fr, r4.teach_fr])
   expect(await live(page)).not.toContain(r4.teach)
   expect(await live(page)).not.toContain(r4.title)
   expect(await chip(page, 'Lancer le parcours proposé').count(), 'no start chip on a fix').toBe(0)

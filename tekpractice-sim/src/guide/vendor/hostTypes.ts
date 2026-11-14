@@ -21,6 +21,11 @@ export interface Instance {
     instanceId: string;
     deviceClass: string;
     ports: Port[];
+    power?: {
+        needsPhantom?: boolean | 'unknown';
+        runsOnBattery?: boolean | 'unknown';
+        hasOwnPhantomSwitch?: boolean | 'unknown';
+    };
     controls: Record<string, boolean | string>;
     levels: Record<string, number | '-inf'>;
     portState: Record<string, Record<string, number | boolean | string>>;

@@ -136,7 +136,7 @@ export function keywordsFor(stage: BenchStage): FlowKeywords[] {
  */
 export const CREATION_STRINGS = {
   ...defaultStrings,
-  planner: { ...defaultStrings.planner, needInfo: TP_STRINGS.planner.needInfo },
+  planner: { ...defaultStrings.planner, needInfo: TP_STRINGS.planner.needInfo, fix: '{cause}' }, // the head of a fix is the rule's title (the controller fills {cause})
   where: { ...defaultStrings.where, workbench: TP_STRINGS.where.creation },
   flows: Object.fromEntries(FLOW_PATH.map((id) => [id, F[id].title])) as Record<(typeof FLOW_PATH)[number], string>,
 }
