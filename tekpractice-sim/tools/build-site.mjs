@@ -27,7 +27,7 @@ const viteBin = join(root, 'node_modules', 'vite', 'bin', 'vite.js')
 const r = spawnSync(process.execPath, [viteBin, 'build', '--outDir', 'dist-site', '--emptyOutDir'], {
   cwd: root,
   stdio: 'inherit',
-  env: { ...process.env, TEKPRACTICE_BASE: '/tekpractice/jouer/' },
+  env: { ...process.env, TEKPRACTICE_BASE: '/tekpractice/jouer/', TP_TEST_FEATURES: '' }, // TP_TEST_FEATURES: a test-only build switch (vite.config.ts), never in a deploy build
 })
 if (r.status !== 0) process.exit(r.status ?? 1)
 // Task 43a: `build.manifest` + the chunkModules plugin write .vite/ for tools/chunk-budget.mjs (run on dist/). It is a build artefact, not a site file.

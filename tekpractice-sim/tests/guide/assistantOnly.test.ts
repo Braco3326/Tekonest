@@ -72,7 +72,7 @@ function literals(file: string): string[] {
   for (const m of src.matchAll(/'((?:[^'\\\n]|\\.)*)'|"((?:[^"\\\n]|\\.)*)"|`((?:[^`\\]|\\.)*)`/g)) out.push(m[1] ?? m[2] ?? m[3] ?? '')
   return out.filter((s) => /\p{L}{3}/u.test(s))
 }
-const HOST_FILES = ['strings.ts', 'flows.creation.ts', 'flows.legacy.ts', 'verdict.ts', 'brain.ts', 'mount.ts', 'index.ts', 'mode.ts']
+const HOST_FILES = ['strings.ts', 'flows.creation.ts', 'flows.legacy.ts', 'verdict.ts', 'brain.ts', 'mount.ts', 'index.ts', 'mode.ts', 'inbox.ts', 'focusKey.ts']
 
 describe('the guide presents the assistant, never a person', () => {
   it('scans a real set of strings', () => {

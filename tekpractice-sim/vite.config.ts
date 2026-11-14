@@ -29,10 +29,31 @@ function chunkModules(): Plugin {
   }
 }
 
+/**
+ * A TEST-ONLY build: with TP_TEST_FEATURES=guideInbox in the environment, every import of src/features.ts is answered by
+ * tests/e2e/fixtures/features.guide-inbox.ts (the same table with the guide's inbox on), so an end-to-end spec can exercise the flag-on path of a build
+ * that never ships. It is a build-time switch of a local test build only: no address and no runtime setting turns the inbox on, and tools/build-site.mjs
+ * clears the variable so the deploy build can never carry it.
+ */
+function testFeatures(): Plugin | false {
+  if (process.env.TP_TEST_FEATURES !== 'guideInbox') return false
+  const target = fileURLToPath(new URL('./tests/e2e/fixtures/features.guide-inbox.ts', import.meta.url))
+  const original = fileURLToPath(new URL('./src/features.ts', import.meta.url)).replaceAll('\\', '/')
+  return {
+    name: 'tekpractice-test-features',
+    enforce: 'pre',
+    async resolveId(source, importer, options) {
+      if (!importer || !/(^|\/)features$/.test(source)) return null
+      const r = await this.resolve(source, importer, { ...options, skipSelf: true })
+      return r && r.id.replaceAll('\\', '/') === original ? target : null
+    },
+  }
+}
+
 export default defineConfig({
   // Deploy build only: tools/build-site.mjs sets TEKPRACTICE_BASE=/tekpractice/jouer/.
   base: process.env.TEKPRACTICE_BASE ?? '/',
-  plugins: [chunkModules()],
+  plugins: [chunkModules(), testFeatures()],
   server: {
     port: 3000,
   },
