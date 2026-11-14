@@ -99,7 +99,7 @@ export interface DeviceSpawnerOptions {
   /**
    * Mode Création (Task 43c, L34): turn a model whose catalog device declares `modelFront` about y until its front faces +z at yaw 0 (where the
    * acoustics aim), and anchor its ports on the rear face of the turned model instead of on the file's port_* empties (which sit on the wrong face of
-   * these files). Also (fix round): ground and centre the model from its bounds in the PARENT's frame, so a device spawned turned or tilted lands on its
+   * these files). Also: ground and centre the model from its bounds in the PARENT's frame, so a device spawned turned or tilted lands on its
    * placement (the legacy world-aligned bounds put it up to 47 cm off at yaw 180 / 200).
    * The legacy game never sets it: its models look exactly as before, byte for byte.
    */

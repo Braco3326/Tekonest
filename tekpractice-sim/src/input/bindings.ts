@@ -101,7 +101,7 @@ export function serializeBindings(b: Bindings): Record<string, string[]> {
  * reload never resurrects a duplicate binding. CANCEL is always Escape.
  * A default filled in for a missing action (a file saved before that action
  * existed) never takes a key the learner already gave to another action: one
- * key, one action (final review).
+ * key, one action.
  */
 export function parseBindings(raw: unknown): Bindings {
   const out = {} as Bindings

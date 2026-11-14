@@ -1,5 +1,5 @@
 /**
- * The first visit and what follows (onboarding packs, plan T2.3 to T2.5 and the T2 review fixes, spec 4): the start screen under `?design`, the profile applied to the
+ * The first visit and what follows (onboarding packs, plan T2.3 to T2.5, spec 4): the start screen under `?design`, the profile applied to the
  * first room, the profile chip, Aide « Premiers pas », the framing. A LAZY chunk: boot.ts imports it only when the onboarding is on (a valid `?design`, practice mode), so
  * the plain game never loads it. The checklist's wiring stays in `wire.ts`.
  */
@@ -15,7 +15,7 @@ import { chipProfile, createOnboardingStore, entryStage, type OnboardingRecord, 
 
 export interface OnboardingWiring {
   /**
-   * The onboarding is on: a valid `?design=1..5` (the boot read it with `applyDesignAttribute`) and not an exam address (ruling R-A: a non-practice `?mode=` leaves the
+   * The onboarding is on: a valid `?design=1..5` (the boot read it with `applyDesignAttribute`) and not an exam address (a non-practice `?mode=` leaves the
    * onboarding entirely off). Without it nothing here exists: no store, no chip, no key read or written, no start screen, framing, panel or drawer change.
    */
   design: boolean
@@ -27,16 +27,16 @@ export interface OnboardingWiring {
   /** The active package's `layout.panels`: what a profile that leaves the panels to the package opens the first room with. */
   panels: { tree: boolean; props: boolean }
   doc: Document
-  /** The package's first room is the playable model (`layout.start`), not the empty neutral room: Aide « Premiers pas » over an open place then asks to open it first (T6 review S1). */
+  /** The package's first room is the playable model (`layout.start`), not the empty neutral room: Aide « Premiers pas » over an open place then asks to open it first. */
   startsOnModel?: boolean
   /** The status line (the shell's announcer): what was NOT done and why. */
   announce?(message: string): void
   /**
-   * The address is a practice one NOW (T6 review C1): read live, not once at boot, because the page can be pushed to an exam address while it runs (history.pushState). Built in main.ts from
+   * The address is a practice one NOW: read live, not once at boot, because the page can be pushed to an exam address while it runs (history.pushState). Built in main.ts from
    * the guide's own mode gate (creation must not import the guide). Absent = true (a unit with no address). The entrepreneur's card is due only while it says true.
    */
   practiceNow?(): boolean
-  /** The place picker's `covers` array and whether it is open (T6 review N5): the card's slot is inert under the picker. */
+  /** The place picker's `covers` array and whether it is open: the card's slot is inert under the picker. */
   pickerCovers?: HTMLElement[]
   pickerOpen?(): boolean
   /** The shell root: the entrepreneur's card (T6.4) takes a reserved row of its grid. Absent = no card (a unit test with no DOM). */
@@ -72,10 +72,10 @@ export interface OnboardingDebug {
   premiersPas: boolean
   /** The text of the profile chip (« Choisir un profil » while none is stored), or null without the onboarding. */
   chip: string | null
-  /** What the last request asked for (plan T3.2: the guide acts on it once): start (or resume a run), restart, skip. Stored with the request (T3 close review N3). */
+  /** What the last request asked for (plan T3.2: the guide acts on it once): start (or resume a run), restart, skip. Stored with the request. */
   requestKind?: TutorialAsk
   /**
-   * The request counter when this page loaded (T3 close review N4). A guide whose own record is missing or corrupt cannot tell a handled request from a new one;
+   * The request counter when this page loaded. A guide whose own record is missing or corrupt cannot tell a handled request from a new one;
    * it then acts only on a request raised on this page (above this value), never on an old one by itself.
    */
   requestAtLoad?: number
@@ -120,11 +120,11 @@ const chipText = (id: ProfileId | null): string =>
   id === null ? COPY.onboarding!.chipChoose! : COPY.onboarding!.chip!.replace('{profile}', COPY.onboarding![profileById(id).labelKey]!)
 
 /**
- * The first visit and what follows (plan T2.3 to T2.4b, spec 4, T2 review rulings): the start screen when it is due, the profile applied to the first room (the
+ * The first visit and what follows (plan T2.3 to T2.4b, spec 4): the start screen when it is due, the profile applied to the first room (the
  * neutral room through the picker's own path, the frame, the profile's panels, the drawer on its tab), the profile chip, and Aide « Premiers pas ». boot.ts makes
  * the calls; this owns the rest. It touches no storage without the onboarding.
  *
- * The record is written WITH the answer (profile and offer together) and only once the room is open (R-B): leaving mid-way, or a room that did not open, writes
+ * The record is written WITH the answer (profile and offer together) and only once the room is open: leaving mid-way, or a room that did not open, writes
  * nothing, so the `tutorial` request never goes up with no room to start it in.
  */
 export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfileChip = mountProfileChip, mountGear: typeof mountOwnGearCard = mountOwnGearCard): Onboarding {
@@ -258,7 +258,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
           if (!w.placeOpen()) return
           w.frameFirstRoom({ tutorialRow: true }) // « Premiers pas »: the tutorial follows
         } else if (w.startsOnModel === true && !resuming) {
-          // T6 review S1: the three steps (sound, unplug, replug) are about the playable model's bench; on another bench `ecoute` cannot complete and `debrancher` has no cable. The model opens through
+          // The three steps (sound, unplug, replug) are about the playable model's bench; on another bench `ecoute` cannot complete and `debrancher` has no cable. The model opens through
           // the picker's own template path, which asks first (the existing « Remplacer le matériel » dialog) when gear is on the bench: never replaced without the learner's yes. Declined: no run, said.
           const opened = await w.openFirstRoom()
           if (!opened) {

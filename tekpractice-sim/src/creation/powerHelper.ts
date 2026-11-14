@@ -8,7 +8,7 @@
  *     today only `multiprise-secteur`, out-1 to out-4, iec-c13);
  *   - the devices: verified instances with a free `power-in` (iec-c14, mains-power) that play a part in the playback: the source console (a catalog route from
  *     a control, the QL1's « Lecture console ») first, then the speakers (a catalog route to the transducer), each in the design's order. Console first so the
- *     two connect events reach the guide in the tutorial's order (G8 review S6).
+ *     two connect events reach the guide in the tutorial's order.
  * A `power-in` that already has a cable (to a strip, to a Bêta outlet, anything) is the learner's: not touched. Each pair is checked first with the store's own
  * dry run (`canConnect`, R1 to R3 and busy ports), because a refused `do` still reports a refusal to the status bar.
  *
@@ -108,7 +108,7 @@ export interface TutorialGate {
   /** A tutorial run is going on (its current step id, or null when none runs). */
   step: string | null
   helperUnlocked: boolean
-  /** The run's step list has a power step (T3 close review S5). Unknown (a record read before the guide spoke) = assumed true: the lock holds. */
+  /** The run's step list has a power step. Unknown (a record read before the guide spoke) = assumed true: the lock holds. */
   hasPowerSteps?: boolean
   /** A power step is the current step or still ahead: only then can Oscar's third tier unlock the helper in this run. Unknown = no promise is made. */
   powerAhead?: boolean
@@ -122,7 +122,7 @@ export type HelperButton = { shown: false } | { shown: true; enabled: true; inst
  * The checklist's helper button. Shown only when the helper is offered (a verified strip the learner placed, something left to cable, enough free outlets).
  * During a tutorial run it stays disabled, with its visible reason, until the guide unlocks it (Oscar's third tier: point, say, offer): the learner tries first.
  * The lock covers the whole run (founder rule « never before the learner tried », recorded in the spec erratum), except a run whose step list has no power step
- * (S5): there nothing could unlock it, so the button follows the bench. The reason promises the offer only while a power step is current or ahead.
+ * there nothing could unlock it, so the button follows the bench. The reason promises the offer only while a power step is current or ahead.
  * Outside a run it follows the plan alone (with `?oscar=0` there is no run: the checklist works the same).
  */
 export function helperButton(plan: HelperPlan, gate: TutorialGate | null): HelperButton {

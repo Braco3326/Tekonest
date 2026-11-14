@@ -874,7 +874,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   )
   /** Every card `pick` accepts: the places and the templates (the start room is one of them, `startRoomKey`). */
   const roomCards = [...cards, ...pickerTemplates]
-  /** What the picker makes inert while it is open; the entrepreneur's row joins it while it shows (T6 review N5). */
+  /** What the picker makes inert while it is open; the entrepreneur's row joins it while it shows. */
   const pickerCovers: HTMLElement[] = [shell.tree, shell.viewport, shell.props]
   const picker = mountPlacePicker({
     doc: document,
@@ -1015,7 +1015,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       returnFocus: () => canvas.focus(),
     })
   }
-  // each change of the bench: the entrepreneur's card looks at the address again (a page pushed to an exam address while it runs loses the card, T6 review C1)
+  // each change of the bench: the entrepreneur's card looks at the address again (a page pushed to an exam address while it runs loses the card)
   if (onboardingOn) store.subscribe(() => onboarding.refresh()) // lives with the page, like the autosave's subscription above
   if (!(await restore())) {
     // First visit under ?design: the start screen, a stage of the picker; otherwise (no ?design, or already asked) the picker as it always was.
@@ -1234,7 +1234,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     announcer.say(PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()))
     noteNoMains()
   }
-  /** « Exporter les données mises de côté… »: one JSON file; nothing is removed (clearing is Oscar's call, N19). */
+  /** « Exporter les données mises de côté… »: one JSON file; nothing is removed (clearing is left to a later decision, N19). */
   const exportKept = (): void => {
     const kept = readQuarantine(storage)
     if (!kept.length && !pending.length)
@@ -1419,7 +1419,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   // distance kept, the target moves (a cut under reduced motion). Never on a device or a port (their
   // click is theirs), never on the cube (its own layer gets those events), never while walking, never while a device
   // follows the pointer. The first click of the pair was a miss (it cleared the selection and may have toasted):
-  // the double-click is not one, so the message goes and the selection comes back (final review 2).
+  // the double-click is not one, so the message goes and the selection comes back.
   shellBag.listen(canvas, 'dblclick', (e: MouseEvent) => {
     const scene = host.scene
     if (e.button !== 0 || !scene || viewLocked() || host.walking || placement.placing || placement.dragging) return
@@ -1571,7 +1571,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     return true
   })
   // « Raccourcis clavier » (night 2 wave 5, P2-1): H and Aide › Raccourcis clavier. The list is built from the live key map; the modal keeps the focus in, Échap closes it and gives the focus back.
-  // No status announcement (fix round S2): the shell is inert behind the dialog, and its name is announced when the focus lands in it.
+  // No status announcement: the shell is inert behind the dialog, and its name is announced when the focus lands in it.
   const openShortcuts = async (): Promise<void> => {
     await openShortcutsDialog(keys.bindings)
   }
@@ -1625,7 +1625,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
         proposals: () => proposalEntries(betaDevices), // « Bêta » shows only if there are any, or while they load / failed
         betaStatus: () => betaStatus,
         onChoose: (deviceId) => void chooseDevice(deviceId),
-        // stay-open (T4 fix round, S5): the way back after a pose is the normal open, so a pinned refusal is dismissed and the Bêta sheets are synced (the picker check is the drawer's own)
+        // stay-open: the way back after a pose is the normal open, so a pinned refusal is dismissed and the Bêta sheets are synced (the picker check is the drawer's own)
         reopen: () => setInventory(true, { focus: false, keepFilter: true }),
         // Drag-and-drop out of the drawer (Task 43b): the same placement, steered by the window-level pointer events of the press.
         onDragStart: (deviceId, at, alt) => {
@@ -2319,7 +2319,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     }
     return best ?? c
   }
-  // G14c fix (b): the device the tutorial's step points at is flown into view, unselected, when it is off the 3D view or under a panel
+  // The device the tutorial's step points at is flown into view, unselected, when it is off the 3D view or under a panel
   wireTutorialFocus({
     win: window,
     onView: (id) => {

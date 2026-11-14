@@ -14,7 +14,7 @@ import { Device } from './schemas'
 import type { PlanRow } from './equipmentPlan'
 import { mergeProposals, type Proposal } from './proposalMerge'
 
-export const PROPOSALS_STATUS = "proposal — needs Oscar's review; shown in the TekPractice Bêta tab badged « non vérifié » (approximate behaviour), never as verified gear; catalog.json is the source of truth and is NOT modified"
+export const PROPOSALS_STATUS = "proposal — needs review; shown in the TekPractice Bêta tab badged « non vérifié » (approximate behaviour), never as verified gear; catalog.json is the source of truth and is NOT modified"
 
 export const CATEGORY: Record<string, string> = {
   microphones: 'microphone', 'wireless-systems': 'wireless', consoles: 'console', 'stageboxes-networking': 'stagebox',
@@ -98,7 +98,7 @@ export function generateProposals(input: GenerateInput): { proposals: Proposal[]
           model: d.model,
           category: SUBTYPE_CATEGORY[d.sub_type] ?? CATEGORY[d.category] ?? d.category,
           typicalUse: d.typical_uses?.[0] ?? d.why_it_is_a_classic ?? d.model,
-          notes: `PROPOSITION (${today}) générée depuis knowledge-base/equipment/${file} — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. ${d.tekpractice?.sim_value_reason ?? ''}`.trim(),
+          notes: `PROPOSITION (${today}) générée depuis knowledge-base/equipment/${file} — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. ${d.tekpractice?.sim_value_reason ?? ''}`.trim(),
         },
         ports,
       }

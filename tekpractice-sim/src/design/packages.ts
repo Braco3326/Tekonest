@@ -154,7 +154,7 @@ const coloursModele: RoleColours = {
 }
 
 /**
- * First-sound framing of the neutral room (T2.5 and the T2 review, ruling R-D), measured 2026-11-12 in Chromium at 1366 wide, Babylon's vertical fov 0.8.
+ * First-sound framing of the neutral room (T2.5), measured 2026-11-12 in Chromium at 1366 wide, Babylon's vertical fov 0.8.
  *
  * What is measured: the SCREEN BOX of the eight corners of a body's bounding box (`bodyBoundsInRoot` + `worldScreen`), not a pixel count of its silhouette; a thin
  * shape such as the SM58 (a 0.051 x 0.162 m body) is therefore measured by its box, which is never smaller than its silhouette's box. The canvas is the viewport minus the

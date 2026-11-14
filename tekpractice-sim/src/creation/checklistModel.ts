@@ -89,7 +89,7 @@ export function checklistView(path: Pick<PathResult, 'playbackReady' | 'reasons'
     return { id, state, label: labelOf(id), detail: '', goTo: null }
   })
   const noMic = path.micReasons.find((r) => r.code === 'NO_MIC')
-  // A cabled mic that has its own reason (an error on its port, a console that is off): the engine's words, verbatim, after the fixed line (T1 close review 11).
+  // A cabled mic that has its own reason (an error on its port, a console that is off): the engine's words, verbatim, after the fixed line.
   const ownReasons = noMic ? [] : [...new Set(path.micReasons.map((r) => r.text_fr))]
   return {
     visible: input.placeOpen && !ready,

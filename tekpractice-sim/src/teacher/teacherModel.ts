@@ -23,7 +23,7 @@ export const TEACHER_COPY = {
   note: 'Note et compléments', // teacher.trial.note
   map: 'Plan 2D', // teacher.trial.map
   rubricTitle: 'Grille de lecture', // teacher.rubric.title
-  rubricDraft: "Brouillon : formulation à valider par Oscar.", // a valider (tekuxwriter), N8
+  rubricDraft: "Brouillon : formulation à valider avant publication.", // a valider (tekuxwriter), N8
   rubric: [
     'La prédiction a-t-elle été écrite avant de figer ?', // teacher.rubric.1
     'Un seul changement entre deux essais ?', // teacher.rubric.2

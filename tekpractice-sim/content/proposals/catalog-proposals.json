@@ -1,6 +1,6 @@
 {
  "generated": "2026-11-12",
- "status": "proposal — needs Oscar's review; shown in the TekPractice Bêta tab badged « non vérifié » (approximate behaviour), never as verified gear; catalog.json is the source of truth and is NOT modified",
+ "status": "proposal — needs review; shown in the TekPractice Bêta tab badged « non vérifié » (approximate behaviour), never as verified gear; catalog.json is the source of truth and is NOT modified",
  "devices": [
   {
    "id": "crown-xls-2502",
@@ -11,7 +11,7 @@
     "model": "XLS 2502 (XLS DriveCore 2 Series)",
     "category": "amplifier",
     "typicalUse": "portable PA",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Typical school PA amp: XLR/jack/RCA inputs, speakON vs binding posts, bridge wiring on one NL4 (pins 1+/2+)."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Typical school PA amp: XLR/jack/RCA inputs, speakON vs binding posts, bridge wiring on one NL4 (pins 1+/2+)."
    },
    "ports": [
     {
@@ -91,7 +91,7 @@
     "model": "LA12X",
     "category": "amplifier",
     "typicalUse": "touring line array",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Shows AES/analog shared XLR inputs, Milan redundancy, NL4 vs 8-point outputs and 32 A powerCON mains."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Shows AES/analog shared XLR inputs, Milan redundancy, NL4 vs 8-point outputs and 32 A powerCON mains."
    },
    "ports": [
     {
@@ -165,7 +165,7 @@
     "model": "LA4X",
     "category": "amplifier",
     "typicalUse": "medium-format PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Four NL4 outputs, shared AES/analog XLR inputs and powerCON 20 A: a clear amp-rack wiring lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Four NL4 outputs, shared AES/analog XLR inputs and powerCON 20 A: a clear amp-rack wiring lesson."
    },
    "ports": [
     {
@@ -233,7 +233,7 @@
     "model": "D80",
     "category": "amplifier",
     "typicalUse": "touring line arrays (J, V, SL-Series)",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. NL4 vs NL8 outputs, analog + AES3 inputs on XLR, CAN vs Ethernet remote: rich wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. NL4 vs NL8 outputs, analog + AES3 inputs on XLR, CAN vs Ethernet remote: rich wiring lesson."
    },
    "ports": [
     {
@@ -336,7 +336,7 @@
     "model": "D40",
     "category": "amplifier",
     "typicalUse": "touring",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Milan + AES3 + analog inputs, NL4 and NL8 outputs, powerCON TRUE1 mains: the full modern amp-rack set."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Milan + AES3 + analog inputs, NL4 and NL8 outputs, powerCON TRUE1 mains: the full modern amp-rack set."
    },
    "ports": [
     {
@@ -427,7 +427,7 @@
     "model": "NXAMP4x4MK2",
     "category": "amplifier",
     "typicalUse": "NEXO line arrays and subs",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. French-made amplified controller; XLR in, NL4 out, dual powerCON, optional Dante/AES card: good school lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. French-made amplified controller; XLR in, NL4 out, dual powerCON, optional Dante/AES card: good school lesson."
    },
    "ports": [
     {
@@ -488,7 +488,7 @@
     "model": "PX10",
     "category": "amplifier",
     "typicalUse": "portable PA",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Three speaker-output types (NL4, binding post, TS jack) on one amp: teaches why a TS speaker jack is not an instrument cable."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Three speaker-output types (NL4, binding post, TS jack) on one amp: teaches why a TS speaker jack is not an instrument cable."
    },
    "ports": [
     {
@@ -573,7 +573,7 @@
     "model": "XMV8280-D",
     "category": "amplifier",
     "typicalUse": "installed sound",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Installed-sound lesson: Euroblock wiring, Dante redundancy, barrier strips and 100V line vs low-impedance outputs."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Installed-sound lesson: Euroblock wiring, Dante redundancy, barrier strips and 100V line vs low-impedance outputs."
    },
    "ports": [
     {
@@ -607,7 +607,7 @@
     "model": "Galileo GALAXY 816",
     "category": "amplifier",
     "typicalUse": "touring system drive",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Drive-system hub: 8 XLR in (analog or AES3), 16 XLR out to self-powered speakers, Milan redundancy."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Drive-system hub: 8 XLR in (analog or AES3), 16 XLR out to self-powered speakers, Milan redundancy."
    },
    "ports": [
     {
@@ -663,7 +663,7 @@
     "model": "P1",
     "category": "amplifier",
     "typicalUse": "system drive / FOH processing",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Format bridge analog/AES/AVB with phantom-powered measurement mic inputs: very rich signal-type lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Format bridge analog/AES/AVB with phantom-powered measurement mic inputs: very rich signal-type lesson."
    },
    "ports": [
     {
@@ -755,7 +755,7 @@
     "model": "RMX 850 (RMX Series)",
     "category": "amplifier",
     "typicalUse": "small and medium PA",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Three input types (XLR, TRS, terminal block) and two output types (speakON, binding posts) plus bridge mode: a complete amp wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Three input types (XLR, TRS, terminal block) and two output types (speakON, binding posts) plus bridge mode: a complete amp wiring lesson."
    },
    "ports": [
     {
@@ -823,7 +823,7 @@
     "model": "RMX 1450 (RMX Series)",
     "category": "amplifier",
     "typicalUse": "small and medium PA",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Three input types (XLR, TRS, terminal block) and two output types (speakON, binding posts) plus bridge mode: a complete amp wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/amplifiers-processors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Three input types (XLR, TRS, terminal block) and two output types (speakON, binding posts) plus bridge mode: a complete amp wiring lesson."
    },
    "ports": [
     {
@@ -891,7 +891,7 @@
     "model": "ScoopTeam",
     "category": "codec",
     "typicalUse": "sports commentary",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. 4 commentator mics + headphones + AES67/Dante + dual codec: rich routing and IFB lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. 4 commentator mics + headphones + AES67/Dante + dual codec: rich routing and IFB lesson."
    },
    "ports": [
     {
@@ -958,7 +958,7 @@
     "model": "Gateway",
     "category": "codec",
     "typicalUse": "studio codec hub for many remotes",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Analog/AES3 on RJ45 plus AES67/ST 2110 ports, BNC sync and DB-25 GPIO: many distinct studio-side signals."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Analog/AES3 on RJ45 plus AES67/ST 2110 ports, BNC sync and DB-25 GPIO: many distinct studio-side signals."
    },
    "ports": [
     {
@@ -1031,7 +1031,7 @@
     "model": "Encore MS-702",
     "category": "broadcast",
     "typicalUse": "theatre stage management party-line",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Party-line powering over XLR3 (pin 2 DC, pin 3 audio) and XLR4 headset: classic 'don't plug intercom into a mic input' lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Party-line powering over XLR3 (pin 2 DC, pin 3 audio) and XLR4 headset: classic 'don't plug intercom into a mic input' lesson."
    },
    "ports": [
     {
@@ -1068,7 +1068,7 @@
     "model": "Encore RS-701",
     "category": "broadcast",
     "typicalUse": "stage crew talkback",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR3 loop-through party-line plus XLR4 headset: teaches daisy-chaining and the XLR4 headset pinout."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. XLR3 loop-through party-line plus XLR4 headset: teaches daisy-chaining and the XLR4 headset pinout."
    },
    "ports": [
     {
@@ -1088,7 +1088,7 @@
     "model": "FreeSpeak II (FSII-BASE-II + FSII-BP19 beltpack)",
     "category": "broadcast",
     "typicalUse": "wireless crew talkback in theatres",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Base station joins wireless, 2-wire XLR3 party-line and 4-wire RJ45: good intercom topology lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Base station joins wireless, 2-wire XLR3 party-line and 4-wire RJ45: good intercom topology lesson."
    },
    "ports": [
     {
@@ -1120,7 +1120,7 @@
     "model": "Hx2",
     "category": "broadcast",
     "typicalUse": "on-air phone callers",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Teaches mix-minus send vs caller receive: the classic N-1 / feedback lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Teaches mix-minus send vs caller receive: the classic N-1 / feedback lesson."
    },
    "ports": [
     {
@@ -1170,7 +1170,7 @@
     "model": "Redbox RB-MM1 Mix-Minus Generator",
     "category": "broadcast",
     "typicalUse": "creating N-1 for a telephone hybrid",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Makes the N-1 concept physical: program in, caller fader in, mix-minus out to the hybrid."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/broadcast-radio.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Makes the N-1 concept physical: program in, caller fader in, mix-minus out to the hybrid."
    },
    "ports": [
     {
@@ -1219,7 +1219,7 @@
     "model": "NE8MX (etherCON RJ45 cable connector carrier)",
     "category": "cable",
     "typicalUse": "stagebox to console network links",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/cables-connectors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. etherCON vs plain RJ45 and the Cat6 chassis non-intermating trap."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/cables-connectors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. etherCON vs plain RJ45 and the Cat6 chassis non-intermating trap."
    },
    "ports": [
     {
@@ -1239,7 +1239,7 @@
     "model": "ZED-22FX",
     "category": "console",
     "typicalUse": "band live sound",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. 16 XLR + 16 TRS inserts + XLR mains with insert points: classic insert-cable (tip send / ring return) and stage-patch lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. 16 XLR + 16 TRS inserts + XLR mains with insert points: classic insert-cable (tip send / ring return) and stage-patch lesson."
    },
    "ports": [
     {
@@ -1300,7 +1300,7 @@
     "model": "ZED-436",
     "category": "console",
     "typicalUse": "FOH for bands and venues",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Groups, matrix, direct outs and inserts on group and master: full FOH bus lesson with many distinct jack outputs."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Groups, matrix, direct outs and inserts on group and master: full FOH bus lesson with many distinct jack outputs."
    },
    "ports": [
     {
@@ -1356,7 +1356,7 @@
     "model": "1604VLZ4",
     "category": "console",
     "typicalUse": "band live sound",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Direct outs, sub outs, 6 aux outputs, inserts and RCA tape loop: excellent multitrack and monitor-send patching lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Direct outs, sub outs, 6 aux outputs, inserts and RCA tape loop: excellent multitrack and monitor-send patching lesson."
    },
    "ports": [
     {
@@ -1454,7 +1454,7 @@
     "model": "ORIGIN (16 / 32)",
     "category": "console",
     "typicalUse": "recording / tracking",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. The reference in-line console: channel vs monitor path, DB25 looms to the DAW interface and per-path inserts are core studio wiring lessons."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. The reference in-line console: channel vs monitor path, DB25 looms to the DAW interface and per-path inserts are core studio wiring lessons."
    },
    "ports": [
     {
@@ -1491,7 +1491,7 @@
     "model": "ASP8024-HE (Heritage Edition)",
     "category": "console",
     "typicalUse": "recording studios",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Two inserts per channel, Tascam DB25 bus outputs and long/short fader in-line routing; matches what students meet in school studios."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-analog.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Two inserts per channel, Tascam DB25 bus outputs and long/short fader in-line routing; matches what students meet in school studios."
    },
    "ports": [
     {
@@ -1529,7 +1529,7 @@
     "model": "SQ-6",
     "category": "console",
     "typicalUse": "small and medium live sound",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Common school/venue desk; SLink etherCON vs option-card Dante vs USB-B shows three different digital transports on one mixer."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Common school/venue desk; SLink etherCON vs option-card Dante vs USB-B shows three different digital transports on one mixer."
    },
    "ports": [
     {
@@ -1650,7 +1650,7 @@
     "model": "SD12",
     "category": "console",
     "typicalUse": "touring FOH / monitors",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Clear MADI-over-BNC lesson (IN to OUT crossing with SD-Rack), plus AES on XLR, word clock and optional fibre loop."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Clear MADI-over-BNC lesson (IN to OUT crossing with SD-Rack), plus AES on XLR, word clock and optional fibre loop."
    },
    "ports": [
     {
@@ -1789,7 +1789,7 @@
     "model": "VENUE | S6L",
     "category": "console",
     "typicalUse": "large touring FOH / monitors",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Only AVB-native system in this file; etherCON vs SFP fibre per port and redundant star topology are distinctive lessons."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Only AVB-native system in this file; etherCON vs SFP fibre per port and redundant star topology are distinctive lessons."
    },
    "ports": [
     {
@@ -1893,7 +1893,7 @@
     "model": "TF5",
     "category": "console",
     "typicalUse": "small and medium live sound",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR/TRS combo inputs, RCA unbalanced inputs and USB-B multitrack make it a strong beginner wiring device."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. XLR/TRS combo inputs, RCA unbalanced inputs and USB-B multitrack make it a strong beginner wiring device."
    },
    "ports": [
     {
@@ -1978,7 +1978,7 @@
     "model": "X32",
     "category": "console",
     "typicalUse": "small and medium live sound",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Very common school desk; AES50 on etherCON vs Ultranet on RJ45-type vs Ethernet control is a classic 'which network cable goes where' lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/consoles-digital.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Very common school desk; AES50 on etherCON vs Ultranet on RJ45-type vs Ethernet control is a classic 'which network cable goes where' lesson."
    },
    "ports": [
     {
@@ -2112,7 +2112,7 @@
     "model": "JDI",
     "category": "di-box",
     "typicalUse": "keyboards and synths",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Reference passive DI: hi-Z instrument to balanced mic level, THRU to amp, pad, ground lift and polarity, all core wiring lessons."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Reference passive DI: hi-Z instrument to balanced mic level, THRU to amp, pad, ground lift and polarity, all core wiring lessons."
    },
    "ports": [
     {
@@ -2149,7 +2149,7 @@
     "model": "ProDI",
     "category": "di-box",
     "typicalUse": "bass guitar",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Simplest passive DI (pad + ground lift only): ideal first lesson on hi-Z to mic-level conversion and phantom blocking."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Simplest passive DI (pad + ground lift only): ideal first lesson on hi-Z to mic-level conversion and phantom blocking."
    },
    "ports": [
     {
@@ -2186,7 +2186,7 @@
     "model": "J48 (MK2)",
     "category": "di-box",
     "typicalUse": "passive bass and guitar pickups",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Active DI that only works when the console sends 48V phantom: perfect phantom-power fault-finding lesson next to the passive JDI."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Active DI that only works when the console sends 48V phantom: perfect phantom-power fault-finding lesson next to the passive JDI."
    },
    "ports": [
     {
@@ -2218,7 +2218,7 @@
     "model": "Type 85",
     "category": "di-box",
     "typicalUse": "piezo / passive pickups",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Battery-or-phantom auto switching and pickup/speaker mode: teaches powering options and speaker-level to mic-level conversion."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Battery-or-phantom auto switching and pickup/speaker mode: teaches powering options and speaker-level to mic-level conversion."
    },
    "ports": [
     {
@@ -2255,7 +2255,7 @@
     "model": "JPC",
     "category": "di-box",
     "typicalUse": "laptop / PC playback to PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Teaches consumer -10 dBV (3.5 mm / RCA) to balanced mic level, stereo patching and per-channel phantom; very common laptop-playback task."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Teaches consumer -10 dBV (3.5 mm / RCA) to balanced mic level, stereo patching and per-channel phantom; very common laptop-playback task."
    },
    "ports": [
     {
@@ -2329,7 +2329,7 @@
     "model": "JS2",
     "category": "di-box",
     "typicalUse": "FOH / monitor split",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Mic split with a single phantom source, direct vs isolated outputs and ground lift: key FOH/monitor/recording wiring lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Mic split with a single phantom source, direct vs isolated outputs and ground lift: key FOH/monitor/recording wiring lesson."
    },
    "ports": [
     {
@@ -2367,7 +2367,7 @@
     "model": "JCR Reamp",
     "category": "di-box",
     "typicalUse": "re-amping a recorded dry DI track through a guitar amp",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Reverse DI: line-level to instrument hi-Z conversion, a distinct signal-flow lesson (DAW out -> amp in) that no DI teaches."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Reverse DI: line-level to instrument hi-Z conversion, a distinct signal-flow lesson (DAW out -> amp in) that no DI teaches."
    },
    "ports": [
     {
@@ -2399,7 +2399,7 @@
     "model": "Hum Eliminator HE-2 (2-channel)",
     "category": "di-box",
     "typicalUse": "breaking ground loops between line-level devices",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Line-level ground-loop isolator and unbalanced-to-balanced converter: lets students fix laptop/console hum without a DI."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/di-splitters.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Line-level ground-loop isolator and unbalanced-to-balanced converter: lets students fix laptop/console hum without a DI."
    },
    "ports": [
     {
@@ -2437,7 +2437,7 @@
     "model": "DT 297 PV MK II",
     "category": "headphones",
     "typicalUse": "radio and TV commentary",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Teaches headset split cable (XLR3 mic out + 6.35 mm phones in), phantom-powered electret mic, and XLR4/XLR5 headset termination variants."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Teaches headset split cable (XLR3 mic out + 6.35 mm phones in), phantom-powered electret mic, and XLR4/XLR5 headset termination variants."
    },
    "ports": [
     {
@@ -2466,7 +2466,7 @@
     "model": "HMD 26",
     "category": "headphones",
     "typicalUse": "sports and outdoor commentary",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Documented pinouts for XLR3 + 6.3 mm split, XLR4F and XLR5 headset cables; dynamic vs condenser (P48) mic variants."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Documented pinouts for XLR3 + 6.3 mm split, XLR4F and XLR5 headset cables; dynamic vs condenser (P48) mic variants."
    },
    "ports": [
     {
@@ -2492,7 +2492,7 @@
     "model": "MicroAMP HA400",
     "category": "headphones",
     "typicalUse": "headphone distribution for recording sessions",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Simple 1-in/4-out headphone distribution: teaches line out → headphone amp → several headphones and DC adapter power."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Simple 1-in/4-out headphone distribution: teaches line out → headphone amp → several headphones and DC adapter power."
    },
    "ports": [
     {
@@ -2524,7 +2524,7 @@
     "model": "HP4",
     "category": "headphones",
     "typicalUse": "headphone distribution for tracking",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Balanced TRS in/thru-out plus four headphone outs: good routing lesson (interface → HP4 → speakers + headphones)."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Balanced TRS in/thru-out plus four headphone outs: good routing lesson (interface → HP4 → speakers + headphones)."
    },
    "ports": [
     {
@@ -2579,7 +2579,7 @@
     "model": "Phonitor x",
     "category": "headphones",
     "typicalUse": "mixing / mastering on headphones",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Balanced XLR4 headphone output with documented pinout, XLR/RCA inputs and optional digital inputs: rich connector lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/headphones-iem.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Balanced XLR4 headphone output with documented pinout, XLR/RCA inputs and optional digital inputs: rich connector lesson."
    },
    "ports": [
     {
@@ -2677,7 +2677,7 @@
     "model": "Pro Tools | MTRX Studio",
     "category": "audio-interface",
     "typicalUse": "Pro Tools HDX converter and monitor controller",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. One box mixes XLR mic, DB25, ADAT, Dante, DigiLink and word clock: ideal for multi-format routing exercises."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. One box mixes XLR mic, DB25, ADAT, Dante, DigiLink and word clock: ideal for multi-format routing exercises."
    },
    "ports": [
     {
@@ -2768,7 +2768,7 @@
     "model": "Orion 32+ Gen 4",
     "category": "audio-interface",
     "typicalUse": "32-channel AD/DA for summing mixers or consoles",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. DB25 TASCAM looms, MADI on SC fibre, ADAT, word clock and atomic reference in one converter."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. DB25 TASCAM looms, MADI on SC fibre, ADAT, word clock and atomic reference in one converter."
    },
    "ports": [
     {
@@ -2871,7 +2871,7 @@
     "model": "Fireface UFX III",
     "category": "audio-interface",
     "typicalUse": "studio and mobile multitrack recording",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Combo XLR/TRS with phantom only on XLR, MADI optical vs coaxial on BNC, ADAT, AES and word clock: many signal lessons."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Combo XLR/TRS with phantom only on XLR, MADI optical vs coaxial on BNC, ADAT, AES and word clock: many signal lessons."
    },
    "ports": [
     {
@@ -2998,7 +2998,7 @@
     "model": "Digiface Dante",
     "category": "audio-interface",
     "typicalUse": "Dante multitrack recording / virtual soundcheck from a laptop",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Teaches Dante redundancy (primary/secondary), AoIP-to-MADI bridging and BNC dual use (word clock vs coaxial MADI)."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Teaches Dante redundancy (primary/secondary), AoIP-to-MADI bridging and BNC dual use (word clock vs coaxial MADI)."
    },
    "ports": [
     {
@@ -3036,7 +3036,7 @@
     "model": "Scarlett 2i2 (4th Gen)",
     "category": "audio-interface",
     "typicalUse": "home recording of voice and guitar",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. The interface students own: XLR vs jack input priority, single 48V switch, balanced TRS monitor outs."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. The interface students own: XLR vs jack input priority, single 48V switch, balanced TRS monitor outs."
    },
    "ports": [
     {
@@ -3103,7 +3103,7 @@
     "model": "828 (2024)",
     "category": "audio-interface",
     "typicalUse": "project studio hub with ADAT expansion",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Mic inserts, ADAT banks, S/PDIF coax, word clock thru and XLR mains: a complete studio-hub wiring exercise."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Mic inserts, ADAT banks, S/PDIF coax, word clock thru and XLR mains: a complete studio-hub wiring exercise."
    },
    "ports": [
     {
@@ -3230,7 +3230,7 @@
     "model": "RedNet X2P",
     "category": "audio-interface",
     "typicalUse": "Dante mic input in a voice booth or radio studio",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. PoE vs DC power, daisy-chain port vs redundant port and phantom on a network stage box: strong AoIP lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. PoE vs DC power, daisy-chain port vs redundant port and phantom on a network stage box: strong AoIP lesson."
    },
    "ports": [
     {
@@ -3274,7 +3274,7 @@
     "model": "Aurora(n)",
     "category": "audio-interface",
     "typicalUse": "multichannel AD/DA for consoles and summing",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. DB25 analog and AES looms, word clock 1-in/3-out distribution and swappable host card illustrate converter-centric studios."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. DB25 analog and AES looms, word clock 1-in/3-out distribution and swappable host card illustrate converter-centric studios."
    },
    "ports": [
     {
@@ -3347,7 +3347,7 @@
     "model": "Pro Tools | Sync X",
     "category": "master-clock",
     "typicalUse": "locking Pro Tools to house video reference (black burst / tri-level)",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Teaches house sync: video ref in vs generated, word clock, Loop Sync and LTC on XLR in one rack unit."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/interfaces-converters-clocks.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Teaches house sync: video ref in vs generated, word clock, Loop Sync and LTC on XLR in one rack unit."
    },
    "ports": [
     {
@@ -3451,7 +3451,7 @@
     "model": "K2",
     "category": "speaker",
     "typicalUse": "arena and stadium main PA",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Multi-way 8-point amp feed vs 4-point speakON is a distinctive wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Multi-way 8-point amp feed vs 4-point speakON is a distinctive wiring lesson."
    },
    "ports": [
     {
@@ -3477,7 +3477,7 @@
     "model": "Kara II",
     "category": "speaker",
     "typicalUse": "theatre and concert hall main PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. 2-way active over one NL4 (1+/- LF, 2+/- HF) is a key speakON pinout lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. 2-way active over one NL4 (1+/- LF, 2+/- HF) is a key speakON pinout lesson."
    },
    "ports": [
     {
@@ -3503,7 +3503,7 @@
     "model": "X15 HiQ",
     "category": "speaker",
     "typicalUse": "stage monitor wedge",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Wedge fed by amp via NL4 with 2-way active pinout; monitor-send lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Wedge fed by amp via NL4 with 2-way active pinout; monitor-send lesson."
    },
    "ports": [
     {
@@ -3534,7 +3534,7 @@
     "model": "GEO M10 (GEO M1012 / GEO M1025)",
     "category": "speaker",
     "typicalUse": "theatre / mid-size venue main PA",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. NL4 pin 2+/2- vs 1+/1- pass-through is a distinctive speakON lesson; needs NXAMP."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. NL4 pin 2+/2- vs 1+/1- pass-through is a distinctive speakON lesson; needs NXAMP."
    },
    "ports": [
     {
@@ -3565,7 +3565,7 @@
     "model": "V8",
     "category": "speaker",
     "typicalUse": "concert hall / venue main PA",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Passive line array on NL4 1+/1-; pairs with V-SUB on 2+/2- in the same cable."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Passive line array on NL4 1+/1-; pairs with V-SUB on 2+/2- in the same cable."
    },
    "ports": [
     {
@@ -3591,7 +3591,7 @@
     "model": "HDL 30-A",
     "category": "powered-speaker",
     "typicalUse": "active line array for mid-size events",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Active line array: XLR + powerCON daisy-chain + etherCON control, all distinct connectors."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/loudspeakers.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Active line array: XLR + powerCON daisy-chain + etherCON control, all distinct connectors."
    },
    "ports": [
     {
@@ -3623,7 +3623,7 @@
     "model": "XL2 Audio & Acoustic Analyzer (with M2230 microphone for class 1)",
     "category": "measurement",
     "typicalUse": "SPL monitoring at concerts",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/measurement-tools.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Measurement mic on XLR with switchable 48 V phantom: good lesson on phantom-powered measurement chains and calibrated SPL reading."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/measurement-tools.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Measurement mic on XLR with switchable 48 V phantom: good lesson on phantom-powered measurement chains and calibrated SPL reading."
    },
    "ports": [
     {
@@ -3672,7 +3672,7 @@
     "model": "Minirator MR-PRO",
     "category": "measurement",
     "typicalUse": "line-up tones and pink noise",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/measurement-tools.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Generator + cable tester + phantom-voltage meter on XLR: covers polarity, phantom power and pin 1/2/3 lessons."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/measurement-tools.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Generator + cable tester + phantom-voltage meter on XLR: covers polarity, phantom power and pin 1/2/3 lessons."
    },
    "ports": [
     {
@@ -3709,7 +3709,7 @@
     "model": "Cricket CPTS Polarity/Continuity Test Set",
     "category": "measurement",
     "typicalUse": "speaker polarity check",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/measurement-tools.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Direct polarity lesson: pin 2 hot convention, inverted cable detection, speaker-level vs line-level output."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/measurement-tools.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Direct polarity lesson: pin 2 hot convention, inverted cable detection, speaker-level vs line-level output."
    },
    "ports": [
     {
@@ -3758,7 +3758,7 @@
     "model": "CMC 6 + MK 4 (Colette modular system)",
     "category": "microphone",
     "typicalUse": "classical / orchestral recording",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-condenser.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Modular capsule + amplifier and dual P48/P12 phantom support: good lesson on phantom standards and capsule swapping."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-condenser.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Modular capsule + amplifier and dual P48/P12 phantom support: good lesson on phantom standards and capsule swapping."
    },
    "ports": [
     {
@@ -3781,7 +3781,7 @@
     "model": "M 149 Tube",
     "category": "microphone",
     "typicalUse": "vocals",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-condenser.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Tube mic system lesson: mic -> multipin cable -> PSU -> XLR to preamp, with phantom power OFF."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-condenser.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Tube mic system lesson: mic -> multipin cable -> PSU -> XLR to preamp, with phantom power OFF."
    },
    "ports": [
     {
@@ -3806,7 +3806,7 @@
     "model": "U 67 (reissue, U 67 Set)",
     "category": "microphone",
     "typicalUse": "vocals",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-condenser.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Tube mic with 7-pin cable and dedicated PSU; pairs with U 87 Ai to show tube vs FET powering."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-condenser.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Tube mic with 7-pin cable and dedicated PSU; pairs with U 87 Ai to show tube vs FET powering."
    },
    "ports": [
     {
@@ -3831,7 +3831,7 @@
     "model": "M 160",
     "category": "microphone",
     "typicalUse": "drum overheads and toms",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-dynamic-ribbon.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. A ribbon on a standard XLR, so R4 (no phantom on ribbons) needs to be checked; it also shows that not all ribbons are figure-8."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-dynamic-ribbon.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. A ribbon on a standard XLR, so R4 (no phantom on ribbons) needs to be checked; it also shows that not all ribbons are figure-8."
    },
    "ports": [
     {
@@ -3851,7 +3851,7 @@
     "model": "R-121",
     "category": "microphone",
     "typicalUse": "electric guitar cabinet",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-dynamic-ribbon.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Core R4 device: a passive ribbon on XLR with the maker's explicit patch-bay phantom warning."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-dynamic-ribbon.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Core R4 device: a passive ribbon on XLR with the maker's explicit patch-bay phantom warning."
    },
    "ports": [
     {
@@ -3878,7 +3878,7 @@
     "model": "4038",
     "category": "microphone",
     "typicalUse": "drum overheads",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-dynamic-ribbon.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. R4 phantom lesson plus a proprietary 4069 connector, an adaptor requirement and a non-standard pin-1-positive polarity."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-dynamic-ribbon.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. R4 phantom lesson plus a proprietary 4069 connector, an adaptor requirement and a non-standard pin-1-positive polarity."
    },
    "ports": [
     {
@@ -3898,7 +3898,7 @@
     "model": "MKH 418-S",
     "category": "microphone",
     "typicalUse": "M/S stereo for film/TV location",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR5 stereo output + M/S decoding is a distinctive wiring and signal-flow lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. XLR5 stereo output + M/S decoding is a distinctive wiring and signal-flow lesson."
    },
    "ports": [
     {
@@ -3921,7 +3921,7 @@
     "model": "MSTC 74 (ORTF stereo microphone)",
     "category": "microphone",
     "typicalUse": "ORTF stereo of orchestras and ensembles",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR5 stereo out needing a 5-pin to 2x XLR3 split, plus P12/P48 phantom: strong wiring lesson, and ORTF is a French reference technique."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. XLR5 stereo out needing a 5-pin to 2x XLR3 split, plus P12/P48 phantom: strong wiring lesson, and ORTF is a French reference technique."
    },
    "ports": [
     {
@@ -3944,7 +3944,7 @@
     "model": "COS-11D",
     "category": "microphone",
     "typicalUse": "film and TV dialogue on wireless bodypacks",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Same capsule on XLR/P48, AA battery, or bodypack bias via TA4/LEMO: an ideal lesson on lavalier powering and connectors."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Same capsule on XLR/P48, AA battery, or bodypack bias via TA4/LEMO: an ideal lesson on lavalier powering and connectors."
    },
    "ports": [
     {
@@ -3972,7 +3972,7 @@
     "model": "Lavalier II",
     "category": "microphone",
     "typicalUse": "vlogging and video with wireless kits",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Plug-in power vs phantom on a 3.5 mm TRS is a common beginner trap and a clear signal lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Plug-in power vs phantom on a 3.5 mm TRS is a common beginner trap and a clear signal lesson."
    },
    "ports": [
     {
@@ -3992,7 +3992,7 @@
     "model": "NT4",
     "category": "microphone",
     "typicalUse": "X/Y stereo ambience and atmos",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR5 stereo output split to dual XLR3 or 3.5 mm, plus 9 V battery vs P48: a rich wiring exercise."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. XLR5 stereo output split to dual XLR3 or 3.5 mm, plus 9 V battery vs P48: a rich wiring exercise."
    },
    "ports": [
     {
@@ -4015,7 +4015,7 @@
     "model": "KU 100 (dummy head)",
     "category": "microphone",
     "typicalUse": "binaural radio drama and podcasts",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR5 balanced plus BNC unbalanced outputs and three powering modes (P48, AA, 9 V PSU) make it a unique wiring case."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. XLR5 balanced plus BNC unbalanced outputs and three powering modes (P48, AA, 9 V PSU) make it a unique wiring case."
    },
    "ports": [
     {
@@ -4043,7 +4043,7 @@
     "model": "USM 69 i",
     "category": "microphone",
     "typicalUse": "M/S and X/Y stereo of ensembles",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. XLR5 split to two phantom-powered inputs, plus M/S vs X/Y set-up choices."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. XLR5 split to two phantom-powered inputs, plus M/S vs X/Y set-up choices."
    },
    "ports": [
     {
@@ -4091,7 +4091,7 @@
     "model": "4088 Directional Headset Microphone",
     "category": "microphone",
     "typicalUse": "musical theatre",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Headset on a wireless bodypack: bias power and mini-XLR/MicroDot terminations."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Headset on a wireless bodypack: bias power and mini-XLR/MicroDot terminations."
    },
    "ports": [
     {
@@ -4111,7 +4111,7 @@
     "model": "MKE 2",
     "category": "microphone",
     "typicalUse": "theatre",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Same capsule with different terminations (bodypack jack vs XLR) plus bodypack bias power: good connector lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Same capsule with different terminations (bodypack jack vs XLR) plus bodypack bias power: good connector lesson."
    },
    "ports": [
     {
@@ -4131,7 +4131,7 @@
     "model": "SoundField by RØDE NT-SF1",
     "category": "microphone",
     "typicalUse": "360 / VR audio",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Four phantom-powered channels from one mic: channel order (LF/RF/LB/RB) and 4-input routing make a clear multichannel wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Four phantom-powered channels from one mic: channel order (LF/RF/LB/RB) and 4-input routing make a clear multichannel wiring lesson."
    },
    "ports": [
     {
@@ -4168,7 +4168,7 @@
     "model": "MV7+",
     "category": "microphone",
     "typicalUse": "podcasting",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. USB-C vs XLR on one mic plus a headphone jack: a clear digital vs analogue signal lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/microphones-specialty.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. USB-C vs XLR on one mic plus a headphone jack: a clear digital vs analogue signal lesson."
    },
    "ports": [
     {
@@ -4200,7 +4200,7 @@
     "model": "NPPA-TT-PT \"Easy Patch\"",
     "category": "patchbay",
     "typicalUse": "broadcast",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/patchbays.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Five normalling types including parallel and HN-top, plus the warning about phantom-power grounds and digital parallel paths"
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/patchbays.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Five normalling types including parallel and HN-top, plus the warning about phantom-power grounds and digital parallel paths"
    },
    "ports": [
     {
@@ -4231,7 +4231,7 @@
     "model": "162U-X21 (pre-loaded XLR connector panel)",
     "category": "patchbay",
     "typicalUse": "tie lines between rooms",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/patchbays.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Teaches tie lines and XLR gender flipping (male front/female rear and the reverse) with existing xlr3 ids"
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/patchbays.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Teaches tie lines and XLR gender flipping (male front/female rear and the reverse) with existing xlr3 ids"
    },
    "ports": [
     {
@@ -4298,7 +4298,7 @@
     "model": "1073SPX",
     "category": "mic-preamp",
     "typicalUse": "vocal and instrument tracking",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Separate rear mic/line XLRs, front combi, balanced TRS pre/post-EQ insert and transformer XLR out show signal flow and insert routing well."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Separate rear mic/line XLRs, front combi, balanced TRS pre/post-EQ insert and transformer XLR out show signal flow and insert routing well."
    },
    "ports": [
     {
@@ -4359,7 +4359,7 @@
     "model": "6176 Vintage Channel Strip",
     "category": "outboard",
     "typicalUse": "vocal tracking",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Split/Join routing (internal link vs separate rear I/O), phantom switch, pad and three input types make a good gain-staging and routing lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Split/Join routing (internal link vs separate rear I/O), phantom switch, pad and three input types make a good gain-staging and routing lesson."
    },
    "ports": [
     {
@@ -4415,7 +4415,7 @@
     "model": "Shelford Channel (5035)",
     "category": "outboard",
     "typicalUse": "vocal tracking",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Rear side-chain send/return, -6dB output, DI THRU and stereo link jacks give rich wiring scenarios beyond plain XLR."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Rear side-chain send/return, -6dB output, DI THRU and stereo link jacks give rich wiring scenarios beyond plain XLR."
    },
    "ports": [
     {
@@ -4471,7 +4471,7 @@
     "model": "166xs",
     "category": "outboard",
     "typicalUse": "vocal and bass compression in live sound",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Sidechain insert on one TRS (tip return / ring send), -10dBV/+4dBu switch and XLR+TRS I/O give strong wiring and level-matching lessons."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Sidechain insert on one TRS (tip return / ring send), -10dBV/+4dBu switch and XLR+TRS I/O give strong wiring and level-matching lessons."
    },
    "ports": [
     {
@@ -4544,7 +4544,7 @@
     "model": "THE BUS+",
     "category": "outboard",
     "typicalUse": "mix bus / stereo bus compression",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Stereo insert across a mix bus plus separate external side-chain in/send XLRs: a good lesson on insert wiring and side-chain keying."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Stereo insert across a mix bus plus separate external side-chain in/send XLRs: a good lesson on insert wiring and side-chain keying."
    },
    "ports": [
     {
@@ -4617,7 +4617,7 @@
     "model": "231s",
     "category": "outboard",
     "typicalUse": "FOH system tuning",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Classic insert between console matrix/aux and amps for FOH or wedges; XLR/TRS balanced line I/O wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-dynamics-eq.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Classic insert between console matrix/aux and amps for FOH or wedges; XLR/TRS balanced line I/O wiring lesson."
    },
    "ports": [
     {
@@ -4690,7 +4690,7 @@
     "model": "PCM96",
     "category": "outboard",
     "typicalUse": "studio reverb and effects (send/return)",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Has XLR analog, AES3 on XLR, BNC word clock, MIDI, FireWire and Ethernet on one rear panel: good clock-master/slave and digital insert lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Has XLR analog, AES3 on XLR, BNC word clock, MIDI, FireWire and Ethernet on one rear panel: good clock-master/slave and digital insert lesson."
    },
    "ports": [
     {
@@ -4757,7 +4757,7 @@
     "model": "PCM92",
     "category": "outboard",
     "typicalUse": "live FOH reverb/delay",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Combo XLR/jack inputs plus XLR and jack outputs, AES3, word clock: teaches choosing balanced jack vs XLR and digital insert on a live console; French manual available."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Combo XLR/jack inputs plus XLR and jack outputs, AES3, word clock: teaches choosing balanced jack vs XLR and digital insert on a live console; French manual available."
    },
    "ports": [
     {
@@ -4831,7 +4831,7 @@
     "model": "AFS2 Advanced Feedback Suppression Processor",
     "category": "outboard",
     "typicalUse": "live monitor-wedge feedback control (insert)",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Insert-point lesson: where to patch an anti-larsen (console aux send to wedge amp), with XLR or TRS balanced I/O."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Insert-point lesson: where to patch an anti-larsen (console aux send to wedge amp), with XLR or TRS balanced I/O."
    },
    "ports": [
     {
@@ -4898,7 +4898,7 @@
     "model": "SCM820 IntelliMix Digital Automatic Mixer",
     "category": "outboard",
     "typicalUse": "conference / council chamber speech reinforcement",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Mic-level inputs with per-channel phantom on Euroblock or DB25, direct outs, and Dante: rich wiring lesson for conference/broadcast installs."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/processors-effects.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Mic-level inputs with per-channel phantom on Euroblock or DB25, direct outs, and Dante: rich wiring lesson for conference/broadcast installs."
    },
    "ports": [
     {
@@ -4918,7 +4918,7 @@
     "model": "833",
     "category": "recorder",
     "typicalUse": "film location sound (bag)",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/recorders-playback.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Mix of XLR, TA3, TA4 power, TA5 headset and LEMO 5-pin timecode makes it a strong location-sound wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/recorders-playback.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Mix of XLR, TA3, TA4 power, TA5 headset and LEMO 5-pin timecode makes it a strong location-sound wiring lesson."
    },
    "ports": [
     {
@@ -4991,7 +4991,7 @@
     "model": "DA-6400 / DA-6400dp",
     "category": "recorder",
     "typicalUse": "live concert multitrack capture",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/recorders-playback.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. BNC timecode, word/video sync and MADI/Dante card options make it a good digital-transport and sync lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/recorders-playback.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. BNC timecode, word/video sync and MADI/Dante card options make it a good digital-transport and sync lesson."
    },
    "ports": [
     {
@@ -5041,7 +5041,7 @@
     "model": "SS-CDR250N",
     "category": "recorder",
     "typicalUse": "theatre / event playback",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/recorders-playback.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Balanced XLR vs unbalanced RCA, AES vs S/PDIF and parallel GPIO remote on one rack unit: strong level/format lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/recorders-playback.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Balanced XLR vs unbalanced RCA, AES vs S/PDIF and parallel GPIO remote on one rack unit: strong level/format lesson."
    },
    "ports": [
     {
@@ -5144,7 +5144,7 @@
     "model": "DL16",
     "category": "stagebox",
     "typicalUse": "stage box for Midas M32 / Behringer X32 consoles",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Distinctive AES50 A/B ports plus ADAT and ULTRANET on one box: a strong lesson on mixing proprietary and open digital formats over Cat5."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Distinctive AES50 A/B ports plus ADAT and ULTRANET on one box: a strong lesson on mixing proprietary and open digital formats over Cat5."
    },
    "ports": [
     {
@@ -5205,7 +5205,7 @@
     "model": "M-32 AD",
     "category": "stagebox",
     "typicalUse": "analog to MADI conversion for recording / broadcast",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. MADI coax (BNC 75 Ω) and SC fibre side by side, plus ADAT and word clock: an ideal clocking and channel-count lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. MADI coax (BNC 75 Ω) and SC fibre side by side, plus ADAT and word clock: an ideal clocking and channel-count lesson."
    },
    "ports": [
     {
@@ -5237,7 +5237,7 @@
     "model": "DS10 Audio network bridge",
     "category": "stagebox",
     "typicalUse": "Dante to AES3 feed for d&b amplifier racks",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Classic network-to-AES3 conversion in front of amplifiers, with input SRC and bypass mode: a clear clocking and format-bridge lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Classic network-to-AES3 conversion in front of amplifiers, with input SRC and bypass mode: a clear clocking and format-bridge lesson."
    },
    "ports": [
     {
@@ -5298,7 +5298,7 @@
     "model": "DS20 Audio network bridge",
     "category": "stagebox",
     "typicalUse": "Milan network to AES3 for d&b amplifiers",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Only Milan endpoint in this file with a built-in AVB switch; pairs naturally with the DS10 to contrast Dante and Milan."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Only Milan endpoint in this file with a built-in AVB switch; pairs naturally with the DS10 to contrast Dante and Milan."
    },
    "ports": [
     {
@@ -5347,7 +5347,7 @@
     "model": "THE BOXX -> Square-MP-connector XXPP-M08/04",
     "category": "stagebox",
     "typicalUse": "analog stage snake head for live events",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. The basic analog snake: XLR in/out numbering, multipin trunk and ground separation are core BTS live-sound wiring lessons."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. The basic analog snake: XLR in/out numbering, multipin trunk and ground separation are core BTS live-sound wiring lessons."
    },
    "ports": [
     {
@@ -5385,7 +5385,7 @@
     "model": "AR2412 AudioRack",
     "category": "stagebox",
     "typicalUse": "stage box for Qu / SQ / Avantis / AHM",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Three etherCON ports with different roles (snake, expander, monitor) make a good 'which cable goes where' exercise for school Qu/SQ setups."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Three etherCON ports with different roles (snake, expander, monitor) make a good 'which cable goes where' exercise for school Qu/SQ setups."
    },
    "ports": [
     {
@@ -5452,7 +5452,7 @@
     "model": "SD-Rack",
     "category": "stagebox",
     "typicalUse": "stage rack for DiGiCo SD / Quantum consoles",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. MADI main/aux redundancy, MADI split for broadcast, fibre loop and word clock in one rack: rich touring-scale wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. MADI main/aux redundancy, MADI split for broadcast, fibre loop and word clock in one rack: rich touring-scale wiring lesson."
    },
    "ports": [
     {
@@ -5501,7 +5501,7 @@
     "model": "Dante AVIO Analog Input Adapter 2-Ch (ADP-DAI-AU-2x0)",
     "category": "stagebox",
     "typicalUse": "wireless receiver or small mixer onto Dante",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Simplest possible analog-to-Dante path with PoE: ideal first AoIP wiring exercise."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/stageboxes-networking.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Simplest possible analog-to-Dante path with PoE: ideal first AoIP wiring exercise."
    },
    "ports": [
     {
@@ -5533,7 +5533,7 @@
     "model": "1234A SAM",
     "category": "studio-monitor",
     "typicalUse": "main monitors in large control rooms",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Separate amplifier rack feeding the enclosure via Speakon NL4: line-level vs speaker-level lesson inside a studio monitor system."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Separate amplifier rack feeding the enclosure via Speakon NL4: line-level vs speaker-level lesson inside a studio monitor system."
    },
    "ports": [
     {
@@ -5600,7 +5600,7 @@
     "model": "Utopia Main 112",
     "category": "studio-monitor",
     "typicalUse": "main monitors in large control rooms",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Remote amplifier to speaker via Speakon NL8 + NL4 with documented pin assignment: multi-way speaker-level wiring lesson."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Remote amplifier to speaker via Speakon NL8 + NL4 with documented pin assignment: multi-way speaker-level wiring lesson."
    },
    "ports": [
     {
@@ -5643,7 +5643,7 @@
     "model": "MC2.1",
     "category": "monitor-controller",
     "typicalUse": "project and professional studio monitor switching",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Pure analog monitor path with XLR, combo, RCA and 3.5 mm inputs, three speaker sets plus sub and talkback out: clear source → controller → monitors lesson."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/studio-monitors.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Pure analog monitor path with XLR, combo, RCA and 3.5 mm inputs, three speaker sets plus sub and talkback out: clear source → controller → monitors lesson."
    },
    "ports": [
     {
@@ -5741,7 +5741,7 @@
     "model": "ew 100 G4 (EM 100 G4 receiver + SKM 100 G4 / SK 100 G4 transmitters)",
     "category": "wireless",
     "typicalUse": "theatre and conference lavalier/headset",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Classic school receiver: two BNC diversity antennas, XLR vs jack outputs at different levels, squelch/pilot tone lessons."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Classic school receiver: two BNC diversity antennas, XLR vs jack outputs at different levels, squelch/pilot tone lessons."
    },
    "ports": [
     {
@@ -5767,7 +5767,7 @@
     "model": "EW-DX EM 2 (Evolution Wireless Digital two-channel receiver)",
     "category": "wireless",
     "typicalUse": "live vocals and presenters",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Two-channel receiver with per-channel XLR/jack outs plus PoE Ethernet; good for analog vs digital wireless and network-control lessons."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Two-channel receiver with per-channel XLR/jack outs plus PoE Ethernet; good for analog vs digital wireless and network-control lessons."
    },
    "ports": [
     {
@@ -5817,7 +5817,7 @@
     "model": "PSM 900 (P9T transmitter, P9RA+ bodypack receiver)",
     "category": "wireless",
     "typicalUse": "touring in-ear monitoring",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Combo XLR/TRS inputs with loop out and a BNC antenna: a good monitor-wiring exercise."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Combo XLR/TRS inputs with loop out and a BNC antenna: a good monitor-wiring exercise."
    },
    "ports": [
     {
@@ -5855,7 +5855,7 @@
     "model": "ew IEM G4 (SR IEM G4 transmitter + EK IEM G4 receiver)",
     "category": "wireless",
     "typicalUse": "band in-ear monitoring",
-    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Stereo vs mono input on combo sockets, loop-through and a BNC transmit antenna: core IEM wiring."
+    "notes": "PROPOSITION (2026-10-22) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Stereo vs mono input on combo sockets, loop-through and a BNC transmit antenna: core IEM wiring."
    },
    "ports": [
     {
@@ -5899,7 +5899,7 @@
     "model": "MCR54 4-channel multiband camera receiver",
     "category": "wireless",
     "typicalUse": "film location sound (bag or camera)",
-    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier par Oscar. Location-sound wiring: SMA antennas, TA5 analog/AES3 output and Hirose DC teach film-bag interconnects."
+    "notes": "PROPOSITION (2026-11-12) générée depuis knowledge-base/equipment/wireless-systems.json — ports issus des connecteurs sourcés ; flags (phantom, horloge, monitor, Dante) à vérifier. Location-sound wiring: SMA antennas, TA5 analog/AES3 output and Hirose DC teach film-bag interconnects."
    },
    "ports": [
     {

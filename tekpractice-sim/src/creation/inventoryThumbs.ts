@@ -1,5 +1,5 @@
 /**
- * Device thumbnails for the inventory drawer (final review 4). The files are the legacy shelf's
+ * Device thumbnails for the inventory drawer. The files are the legacy shelf's
  * (`src/ui/shelf.ts`: `public/assets/thumbs/<deviceId>.png`, 384 px square). This set lists the catalog devices that have
  * one; `tests/creation/inventoryThumbs.test.ts` compares it with the folder in both directions, so a new thumbnail or a
  * new device cannot drift silently. A device not listed (a Bêta proposal, a device with no picture yet) keeps the

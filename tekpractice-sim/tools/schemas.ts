@@ -281,7 +281,7 @@ export const Readiness = z.object({
   ),
 }).passthrough()
 
-/** Coach tips (content/coach/tips.json) — the mentor voice, contextual triggers. */
+/** Coach tips (content/coach/tips.json) — short tips, contextual triggers. */
 export const Coach = z.object({
   version: z.number(),
   tips: z.array(

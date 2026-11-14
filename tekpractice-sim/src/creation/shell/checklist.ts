@@ -87,7 +87,7 @@ export function mountChecklist(d: ChecklistDeps): Checklist {
   x.title = C().close!
   head.append(h, x)
   // While the helper's button is in the list, the list can add cables (one button): its intro says so instead of « Rien n’est modifié ici ». Set at each
-  // render of the rows (T3 close review N2: not whenever a helper is wired, the button is often absent).
+  // render of the rows (not whenever a helper is wired, the button is often absent).
   const intro = el(doc, 'p', 'cr-errlist-hint', C().intro)
   intro.id = 'cr-checklist-intro'
   const list = el(doc, 'ol', 'cr-checklist-rows')

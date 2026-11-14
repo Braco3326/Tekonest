@@ -7,7 +7,7 @@
  * `setTargetAtTime(…, 0.02)` so a mix change never clicks. A voice whose gain is 0 (muted, fader at −inf) is snapped to EXACTLY 0 once the ramp has
  * settled. A speaker fed by both channels takes (L + R) / 2, so a mono file keeps its level and a stereo one never clips by the sum.
  *
- * HEARING SAFETY (controller ruling, L31): audio never starts loud.
+ * HEARING SAFETY (L31): audio never starts loud.
  *   - master gain `MASTER_GAIN_DB` = −12 dBFS (× 0.251), ahead of the voices, so every meter reads the level AFTER it;
  *   - a DynamicsCompressorNode set as a limiter (threshold −3 dBFS, knee 0, ratio 20, attack 3 ms, release 100 ms) sits between the voices and the destination (NOMINAL: a browser's compressor may add automatic make-up gain);
  *   - an 80 ms linear fade-in from the moment the source really produces sound (a file: when `play()` has resolved, not before) and an 80 ms fade-out when it stops

@@ -7,7 +7,7 @@ import { guideMode, guideRouteAllowed } from './guide/mode'
 import { PRACTICE_CLASS } from './design/practice'
 
 /**
- * What the creation boot may do of the onboarding (packs T2.4b, ruling R-A): the creation code may not import the guide, so the guide's own gates are read here.
+ * What the creation boot may do of the onboarding (packs T2.4b): the creation code may not import the guide, so the guide's own gates are read here.
  * `onboarding`: practice mode (no `?mode=`, so an exam address leaves the start screen, the record, the chip, the framing and the panel and drawer changes entirely off).
  * `tutorialAllowed`: practice mode and the guide may run (not `?oscar=0`): the start screen offers the tutorial and Aide has « Premiers pas ». `?oscar=0` keeps the profile choice.
  * One more thing on a practice address (plan T4.3): <html> gets the class `cr-practice` (`PRACTICE_CLASS`), the one gate the shell reads (`lookOfRoot`) before a valid `?design`
@@ -16,12 +16,12 @@ import { PRACTICE_CLASS } from './design/practice'
 function onboardingGates(search: string): { onboarding: boolean; tutorialAllowed: boolean; practiceNow: () => boolean } {
   const onboarding = guideMode(search, 'creation') === 'practice'
   if (onboarding) document.documentElement.classList.add(PRACTICE_CLASS)
-  // `practiceNow`: the same mode gate read again at each call, on the address the page has NOW (a pushState to an exam address turns the entrepreneur's card off, T6 review C1)
+  // `practiceNow`: the same mode gate read again at each call, on the address the page has NOW (a pushState to an exam address turns the entrepreneur's card off)
   return { onboarding, tutorialAllowed: onboarding && guideRouteAllowed(search, 'creation'), practiceNow: () => guideMode(location.search, 'creation') === 'practice' }
 }
 
 /**
- * The inline entry guard of index.html (night 2 wave 5, P1-1; fix round C1) acts ONLY until the route module has loaded: a file that fails later (a lazy chunk: the Bêta sheets, coverage,
+ * The inline entry guard of index.html (night 2 wave 5, P1-1) acts ONLY until the route module has loaded: a file that fails later (a lazy chunk: the Bêta sheets, coverage,
  * the drawer, a room, the Essais panel...) is handled by the app itself, and the guard's full-screen alert must never cover it. `booted()` tells it the app has started.
  */
 interface EntryGuardWindow {

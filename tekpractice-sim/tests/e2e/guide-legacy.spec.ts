@@ -544,7 +544,7 @@ test('an unknown level, a mode key in any case, and a second level key show no g
 
 // ── the page's own coach and the guide ───────────────────────────────────────────────────────────────────────────────
 
-/** The page's own coach: a wrong cable in a1 makes its rule toast (English) and its « Conseil d'Oscar » tip. */
+/** The page's own coach: a wrong cable in a1 makes its rule toast (English) and its « Astuce » tip. */
 const wrongCable = (page: Page) =>
   page.evaluate(() => window.__audioSim!.dispatch({ type: 'CONNECT', a: { instance: 'sm57-1', port: 'out-xlr' }, b: { instance: 'k12-1', port: 'in-line-a' } }))
 
@@ -560,7 +560,7 @@ test('in a1 the page\'s own coach toast and rule toast still appear untouched an
   await expect(toast).toContainText(r2.teach)
   const tip = page.locator('.toast-coach')
   await expect(tip, 'the page\'s own coach toast appears').toBeVisible()
-  await expect(tip.locator('strong')).toHaveText('Conseil d’Oscar')
+  await expect(tip.locator('strong')).toHaveText('Astuce')
   const tipText = ((await tip.innerText()) ?? '').trim()
   // unasked, the guide says nothing; the page's text holds the toast's sentence once: the guide is not a second copy
   await quietWindow(page, 1500)
@@ -576,7 +576,7 @@ test('in a1 the page\'s own coach toast and rule toast still appear untouched an
   await expect(page.locator('.oscar-live')).not.toHaveText('')
   const inGuide = await page.getByRole('complementary', { name: TP_STRINGS.landmark }).innerText()
   expect(inGuide.length, 'the landmark holds the open bubble').toBeGreaterThan(50)
-  for (const t of [r2.title, r2.teach, tipText, 'Conseil d’Oscar']) expect(inGuide.includes(t), `the guide does not say: ${t.slice(0, 40)}`).toBe(false)
+  for (const t of [r2.title, r2.teach, tipText, 'Astuce']) expect(inGuide.includes(t), `the guide does not say: ${t.slice(0, 40)}`).toBe(false)
   // and the guide renders no toast of its own
   expect(await page.locator('.oscar-guide [class*="toast"], aside[aria-label="Assistant"] [class*="toast"]').count()).toBe(0)
 })

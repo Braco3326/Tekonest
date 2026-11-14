@@ -1,5 +1,5 @@
 /**
- * What Mode Création tells the guide about the power helper (onboarding spec 6.5, plan T3.3 and T3.4, T3 close review S2 and S3). Neutral: neither side imports
+ * What Mode Création tells the guide about the power helper (onboarding spec 6.5, plan T3.3 and T3.4). Neutral: neither side imports
  * the other. Mode Création counts the helper's uses for the page's life and says whether the helper is offered now; it exposes both as readers on its debug hook
  * (`window.__creation.helperOffered()` / `helperUses()`, src/creation/onboarding/wire.ts), which the guide's bridge already polls. NOT through storage: with a
  * blocked storage the guide must still mark the steps the helper did « montré » (S2: before, a lost storage mark made them look like the learner's own success).

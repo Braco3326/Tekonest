@@ -1,5 +1,5 @@
 /**
- * Onboarding state machine (onboarding packs, plan T2.1, spec 4.1 and 4.4, T2 review ruling R-B). Pure: no DOM, no Babylon, no guide import.
+ * Onboarding state machine (onboarding packs, plan T2.1, spec 4.1 and 4.4). Pure: no DOM, no Babylon, no guide import.
  *
  * Where the first visit lands (`entryStage`), how an answer changes the stored record (`reduce`: the profile is written WITH the answer, so leaving mid-way
  * writes nothing), and a store that keeps the record under
@@ -32,7 +32,7 @@ export interface OnboardingRecord {
   request: number
   shown: StepId[]
   /**
-   * What the last request asked for, stored WITH the counter (T3 close review N3: kept in memory only, a « Passer le tutoriel » reloaded before the guide's next
+   * What the last request asked for, stored WITH the counter (kept in memory only, a « Passer le tutoriel » reloaded before the guide's next
    * poll read as a start). Absent = start (records written before it, and every start: the field is written only for restart and skip).
    */
   kind?: Exclude<RequestKind, 'start'>
@@ -56,7 +56,7 @@ export type EntryStage = 'workspace' | 'start' | 'offer' | 'picker'
  * `design`: the onboarding is on (a valid `?design=1..5`, and not an exam address). `tutorialAllowed`: the guide may run here (not `?oscar=0`). `restored`: `restore()`
  * reopened an autosave. `record`: the stored record, or null.
  * The start screen exists only with the onboarding on, no autosave and no record. A record means the learner was asked, so the picker shows and nothing nags,
- * with one exception (ruling R-B): a profile whose offer was never answered (the first visit was on `?oscar=0`, where the profile choice is final) gets the OFFER the
+ * with one exception: a profile whose offer was never answered (the first visit was on `?oscar=0`, where the profile choice is final) gets the OFFER the
  * first time the tutorial is allowed. A record with no profile (only an Aide « Premiers pas » request) is the picker.
  */
 export function entryStage(i: { design: boolean; tutorialAllowed: boolean; restored: boolean; record: OnboardingRecord | null }): EntryStage {
@@ -138,7 +138,7 @@ export function createOnboardingStore(storage: StorageLike | null): OnboardingSt
   return {
     read: () => memory,
     dispatch(ev) {
-      // T6 review S4: reduce from what is STORED now (another tab may have written since this one read: its request counter, its dismissal), not from this tab's memory alone; the memory is the
+      // Reduce from what is STORED now (another tab may have written since this one read: its request counter, its dismissal), not from this tab's memory alone; the memory is the
       // fallback when nothing readable is stored (blocked, cleared, corrupt). The write is still the whole record, so it never rolls the other tab back.
       let base = memory
       if (storage && !blocked) {

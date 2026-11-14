@@ -40,7 +40,7 @@ describe('tipFor — contextual delivery + session dedupe', () => {
   it('maps a rule violation to ITS tip', () => {
     const tip = tipFor(coach, { kind: 'rule', ruleId: 'R4' }, new Set())
     expect(tip?.id).toBe('coach-r4')
-    expect(tip?.text).toContain('À REMPLACER PAR OSCAR') // placeholder debt is explicit
+    expect(tip?.text).toContain('alimentation fantôme') // the tip repeats the rule's own teaching, in the assistant's voice (tests/creation/assistantWording.test.ts)
   })
   it('every rule R1–R8 has a coach tip (validator also enforces this)', () => {
     for (let i = 1; i <= 8; i++)

@@ -4,7 +4,7 @@
  * them big enough to hit: at least 24 CSS px across (a 12 px radius) at ANY camera distance, so a
  * 2 px connector is as easy to click on a far view as on a close one.
  *
- * The FIRST-CLICK radius depends on the state (final review, controller ruling): for a port of an UNSELECTED device,
+ * The FIRST-CLICK radius depends on the state: for a port of an UNSELECTED device,
  * over an unselected device body, with no cable in hand it is TIGHT (`TIGHT_PX` = 6 px, or the connector's own size when
  * closer): the body is the click's, the connector itself still patches. For a port of the SELECTED device, while a cable is
  * in hand, or off any body (a connector that sticks out) it is the full 12 px. The 24 px-everywhere reading made the reference QL1

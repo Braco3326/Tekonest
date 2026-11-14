@@ -70,7 +70,7 @@ export function panningSensibilityFor(
 }
 
 /**
- * Reduced motion (in-app setting or system, final review): no glide after the
+ * Reduced motion (in-app setting or system): no glide after the
  * hand lets go, inertia and panningInertia 0. Babylon's total travel per
  * gesture is input / (1 − inertia), so the wheel step and the orbit speed are
  * scaled to travel the SAME distance, only without the glide.

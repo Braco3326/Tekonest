@@ -556,7 +556,7 @@ describe('tutorial copy', () => {
       debrancher: 'Pendant l’écoute, débranchez le câble de la console vers l’une des enceintes, puis écoutez ce qui change.',
       rebrancher: 'Rebranchez-le : la prise proposée est compatible.',
       accepted: 'Connexion acceptée.',
-      helperOffer: 'Je peux brancher pour vous, dans le simulateur.',
+      helperOffer: 'Le simulateur peut brancher pour vous.',
       alreadyInPlace: 'Déjà en place : {steps}.',
       alreadyStep: 'étape {k}',
     })

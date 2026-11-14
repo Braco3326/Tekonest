@@ -3,7 +3,7 @@ import { Matrix, Vector3, type AbstractMesh } from '@babylonjs/core'
 type Root = { getChildMeshes(direct: boolean): AbstractMesh[]; computeWorldMatrix(force?: boolean): Matrix }
 
 /**
- * G14b: a device's body as the camera shows it, in page CSS px. The box of the body meshes' own bounding boxes in the frame of the instance root (so a yaw does not
+ * A device's body as the camera shows it, in page CSS px. The box of the body meshes' own bounding boxes in the frame of the instance root (so a yaw does not
  * blur it), its eight corners through the root and `project`, and the box of those points. Cheap: eight corners per body mesh, never the vertices. It holds the
  * vertex box of the same frame (a box of boxes is never smaller). Null when there is no enabled body mesh or a corner does not project (behind the camera).
  */

@@ -1,5 +1,5 @@
 /**
- * Proposals for Oscar (master prompt B3) — NEVER writes catalog.json or a live level.
+ * Proposals for review (master prompt B3) — NEVER writes catalog.json or a live level.
  *  1. content/proposals/catalog-proposals.json: catalog-ready device entries built
  *     from sourced KB equipment records (validated with the catalog's Device schema).
  *     The result goes through mergeProposals (tools/proposalMerge.ts, Wave 0 Task 0.2): an id that was promoted
@@ -112,9 +112,9 @@ for (const f of readdirSync(join(KB, 'tek-brain', 'scenarios'))) {
       devices,
       requiredChain,
       logicChecks,
-      successMessage: 'Chaîne câblée — à relire par Oscar avant publication.',
+      successMessage: 'Chaîne câblée — à relire avant publication.',
       draft: {
-        status: "draft — needs Oscar's review",
+        status: "draft — needs review",
         generated: today,
         from_scenario: `knowledge-base/tek-brain/scenarios/${f}#${s.id}`,
         room_id: s.room_id,

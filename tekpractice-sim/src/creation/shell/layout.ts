@@ -184,7 +184,7 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
    * Fix round S6: a wide-window choice is never lost for good by a narrow moment.
    */
   const autoFolded: Record<PanelId, boolean> = { tree: false, props: false }
-  /** The accordion folds `o`; a focus left in its body (display: none once folded) goes to its own button, never to the page (fix round S4, S5). */
+  /** The accordion folds `o`; a focus left in its body (display: none once folded) goes to its own button, never to the page. */
   const foldByAccordion = (o: PanelId): void => {
     const body = o === 'tree' ? tree.body : props.body
     const hadFocus = body.contains(doc.activeElement)
@@ -224,7 +224,7 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   setPanel('props', want.props && panelFits('props'))
 
   // The window crosses 760 px. Narrower with both panels open: the one opened longer ago folds (the same accordion, focus handed to its button). Wider again: a panel that only the
-  // accordion folded comes back (fix round S6); one the learner folded or opened stays as they left it.
+  // accordion folded comes back; one the learner folded or opened stays as they left it.
   const narrowQuery = win?.matchMedia ? win.matchMedia(`(max-width: ${PHONE_PX - 0.02}px)`) : null
   narrowQuery?.addEventListener('change', (e) => {
     if (e.matches) {

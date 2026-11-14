@@ -17,7 +17,7 @@ describe('catalog proposals', () => {
     devices: unknown[]
   }
   it('is labelled as a proposal for review', () => {
-    expect(file.status).toMatch(/needs Oscar's review/)
+    expect(file.status).toMatch(/needs review/)
   })
   it('every proposal is a valid catalog Device and never collides with an existing id', () => {
     for (const d of file.devices) {
@@ -35,7 +35,7 @@ describe('level drafts', () => {
     for (const f of drafts) {
       const lvl = loadLevel(JSON.parse(readFileSync(join(dir, f), 'utf8'))) as { id: string; draft?: { status: string } }
       expect(lvl.id.startsWith('draft-')).toBe(true)
-      expect(lvl.draft?.status).toMatch(/needs Oscar's review/)
+      expect(lvl.draft?.status).toMatch(/needs review/)
     }
   })
   it('are not registered as live levels', () => {

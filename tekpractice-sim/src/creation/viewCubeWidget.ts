@@ -536,7 +536,7 @@ export class ViewCubeWidget {
     const ts = this.tools.style
     ts.left = `${(c?.offsetLeft ?? 0) + K.marginPx + size + 4}px`
     ts.top = s.top
-    this.updateShape() // the square may have changed size (120 / 130 px with the window): the hit shape is in px of the square (fix round S1)
+    this.updateShape() // the square may have changed size (120 / 130 px with the window): the hit shape is in px of the square
     this.scheduler.invalidate()
   }
 

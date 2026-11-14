@@ -17,7 +17,7 @@
  *   quarantine is capped (ADR-0012: 5 items × 200 000 chars): when full it
  *   REFUSES the new item (never evicts an old one) and the result says so
  *   (`kept: 'full'`, with the raw data so the caller can offer it for export).
- *   Clearing the quarantine is not implemented (Oscar's decision N19).
+ *   Clearing the quarantine is not implemented (open decision N19).
  * - Two tabs (ADR-0012 §6): a named project overwritten since this tab read it
  *   (its `stamp` changed) is set aside first (`conflict-kept`); the shell
  *   pauses its autosave when another tab writes (`isForeignWrite`).

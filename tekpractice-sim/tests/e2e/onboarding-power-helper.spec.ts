@@ -173,7 +173,7 @@ test('T3.4: at step 8 the helper stays locked through « Un indice de plus » tw
   expect(await guideRecord(page)).toMatchObject({ step: 'courant-console', helper: false })
   // tier 3: the offer, the unlock
   await oscarChip(page, 'Montre-moi').click()
-  await expect(live(page)).toContainText('Je peux brancher pour vous, dans le simulateur.', { timeout: 5_000 })
+  await expect(live(page)).toContainText('Le simulateur peut brancher pour vous.', { timeout: 5_000 })
   await expect.poll(() => guideRecord(page)).toMatchObject({ step: 'courant-console', helper: true })
   await openList(page)
   await expect(helper(page)).toBeEnabled()

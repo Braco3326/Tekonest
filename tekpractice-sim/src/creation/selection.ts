@@ -31,7 +31,7 @@ export interface Selection {
   select(id: string | null, opts?: { fly?: boolean }): boolean
   /** Fly to the selected device (Entrée / F in the 3D view). */
   frameSelection(): boolean
-  /** Fly to a device WITHOUT selecting it (G14c fix b: the tutorial's step points at it and it is off view). False when unknown or walking. */
+  /** Fly to a device WITHOUT selecting it (the tutorial's step points at it and it is off view). False when unknown or walking. */
   show(id: string): boolean
   /** Frame a zone ('zone:<id>') or a cable ('cable:<key>'); the device selection is cleared. */
   flyToKey(key: string): boolean

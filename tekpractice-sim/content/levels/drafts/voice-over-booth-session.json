@@ -77,9 +77,9 @@
   }
  ],
  "logicChecks": [],
- "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "successMessage": "Chaîne câblée — à relire avant publication.",
  "draft": {
-  "status": "draft — needs Oscar's review",
+  "status": "draft — needs review",
   "generated": "2026-10-22",
   "from_scenario": "knowledge-base/tek-brain/scenarios/studio-recording.json#voice-over-booth-session",
   "room_id": "studio-vocal-booth-small",

@@ -9,7 +9,7 @@
  * - Tabs: `role="tablist"`, roving tabindex, ← → wrap, Home / End; selection follows focus.
  * - Items: plain buttons (Entrée or click → `onChoose(deviceId)`, the one seam Task 24 swaps for
  *   `startPlacement`); the drawer closes first so the 3D view has focus when placement starts.
- * - Search (final review 4): a labelled « Filtrer » field above the tabs filters the devices by label across ALL tabs
+ * - Search: a labelled « Filtrer » field above the tabs filters the devices by label across ALL tabs
  *   (`filterItems`); Entrée in it chooses the first match; no match is said politely (`role="status"`) and shown. A
  *   printable key typed on a tab or an item moves into the field (keyboard-only: Espace, type, Entrée). In the field no
  *   key is a shell key and Espace is a space; Échap still closes. A tab click clears the filter.
@@ -48,7 +48,7 @@ export interface InventoryDrawerDeps {
   /** Hands focus back to the 3D view when the drawer closes. */
   returnFocus(): void
   /**
-   * The way back after a pose under a stay-open package (T4 fix round, S5): the host's own open (it dismisses a pinned refusal and syncs the Bêta sheets; the check that the place picker is not up is the drawer's own), asked with the focus where it is and the filter text kept. Absent: the drawer opens itself.
+   * The way back after a pose under a stay-open package: the host's own open (it dismisses a pinned refusal and syncs the Bêta sheets; the check that the place picker is not up is the drawer's own), asked with the focus where it is and the filter text kept. Absent: the drawer opens itself.
    */
   reopen?(): void
   /** The key event is the inventory key (remappable); Space by default. */
@@ -166,7 +166,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   close.type = 'button'
   close.dataset.testid = 'inventory-close'
   close.setAttribute('aria-label', I().closeLabel!)
-  // The search field (final review 4): a real label, a text field, a polite status for « no match ».
+  // The search field: a real label, a text field, a polite status for « no match ».
   const filterBox = el(doc, 'div', 'cr-drawer-filter')
   const filterLabel = el(doc, 'label', 'cr-drawer-filter-label', I().filter)
   filterLabel.htmlFor = 'cr-inv-filter'
@@ -194,12 +194,12 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
     if (tablist.dataset.fadeEnd !== String(end)) tablist.dataset.fadeEnd = String(end)
   }
   tablist.addEventListener('scroll', syncFade, { passive: true })
-  // A tab the keyboard focuses is brought in CLEAR of the edge fade (fix round S7): the browser only scrolls a focused tab until it is visible, which can leave it under the fade and
+  // A tab the keyboard focuses is brought in CLEAR of the edge fade: the browser only scrolls a focused tab until it is visible, which can leave it under the fade and
   // its focus ring half faded (measured: 10 px from the edge, the fade is 28). At an end of the row the scroll simply stops where it can, and there is no fade there.
   tablist.addEventListener('focusin', (e) => {
     const t = e.target as HTMLElement | null
     if (!t || t.parentElement !== tablist) return
-    // Keyboard focus only (fix round 2): a mouse press focuses the tab too, and shifting the row between the press and the release would put the release off the tab,
+    // Keyboard focus only: a mouse press focuses the tab too, and shifting the row between the press and the release would put the release off the tab,
     // so the click (and its selection) would be lost. A pointer focus is not :focus-visible; a click cannot need the ring.
     if (!t.matches(':focus-visible')) return
     const fade = parseFloat(getComputedStyle(tablist).getPropertyValue('--cr-fade')) || 28

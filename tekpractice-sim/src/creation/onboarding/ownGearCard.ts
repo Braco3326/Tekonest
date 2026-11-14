@@ -20,7 +20,7 @@ export interface OwnGearCardDeps {
   /** The dismiss button was pressed: the owner remembers it and gives the focus back. */
   onDismiss(): void
   /**
-   * The place picker's `covers` array (T6 review N5): while the card shows its slot is in it, so the picker makes it `inert` (« Fermer » is not tabbable under the picker or the start
+   * The place picker's `covers` array: while the card shows its slot is in it, so the picker makes it `inert` (« Fermer » is not tabbable under the picker or the start
    * stage) and frees it again when the picker closes. Absent = no such cover (a unit test).
    */
   covers?: HTMLElement[]
@@ -29,8 +29,8 @@ export interface OwnGearCardDeps {
 }
 
 /**
- * The slot opened or closed: the shell's rows moved, so the page is told what a window resize tells it (Oscar re-rests clear of the row, or back where he was; the render loop and the view
- * cube re-measure), after the current call stack, as the step card does (T6 review N4). Never throws.
+ * The slot opened or closed: the shell's rows moved, so the page is told what a window resize tells it (Oscar re-rests clear of the row, or back where it was; the render loop and the view
+ * cube re-measure), after the current call stack, as the step card does. Never throws.
  */
 function relayout(doc: Document): void {
   try {

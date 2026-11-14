@@ -47,9 +47,9 @@
  "logicChecks": [
   "R8"
  ],
- "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "successMessage": "Chaîne câblée — à relire avant publication.",
  "draft": {
-  "status": "draft — needs Oscar's review",
+  "status": "draft — needs review",
   "generated": "2026-10-22",
   "from_scenario": "knowledge-base/tek-brain/scenarios/digital-audio-clocking.json#post-room-hdx-house-clock",
   "room_id": "post-atmos-mix-room-medium",

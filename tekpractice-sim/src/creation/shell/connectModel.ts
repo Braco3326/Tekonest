@@ -233,7 +233,7 @@ export type CloseReason = 'connected' | 'cancelled' | 'stale' | 'place'
 export type FocusTarget = 'opener' | 'row' | 'title' | 'canvas'
 
 /**
- * The ordered focus targets after the dialog closed (controller ruling, Task 28 fix round 1):
+ * The ordered focus targets after the dialog closed (Task 28):
  * - place changed: the 3D canvas (the shell's one tab stop; the rig the dialog referred to is gone);
  * - the cable was made: the row it cabled (same device), then the panel title, then the canvas;
  * - cancelled / rig changed under it: the opener if it is still connected and still denotes the same device and port,

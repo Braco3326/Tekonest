@@ -12,7 +12,7 @@
  * `dirDb` is `directivityDb(...)` toward the listener (src/acoustics/field.ts), computed by the caller from the speaker's pose: it is not
  * re-implemented here. The 0.5 m floor is the one of `levelDb` (tests/audio/layering.test.ts checks they agree).
  *
- * LOUDNESS NORMALISATION (controller ruling, Task 39 review): the loudest speaker's geometry gain, taken BEFORE the fader and the mute, is unity. The ratios
+ * LOUDNESS NORMALISATION (Task 39): the loudest speaker's geometry gain, taken BEFORE the fader and the mute, is unity. The ratios
  * between speakers (1/r, directivity), the delays and the pans are untouched, the faders still scale the level, a mute / −inf is exactly 0, and nothing
  * audible (every geometry gain 0 or not finite) is all 0. So the ABSOLUTE level is a constant of the engine (its master gain), not a function of the
  * distance: a listener 40 m from the only speaker hears it as loud as one at 2 m. This keeps the sound audible at any seat; it is not a realism claim.

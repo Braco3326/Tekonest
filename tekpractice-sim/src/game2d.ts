@@ -96,7 +96,7 @@ export function bootGame2D(registry: Registry, rawLevel: unknown): void {
     const tip = tipFor(coachTips, { kind: 'rule', ruleId }, seenTips.set)
     if (!tip) return
     seenTips.mark(tip.id)
-    hud.toast('coach', 'Conseil d’Oscar', tip.text)
+    hud.toast('coach', 'Astuce', tip.text)
   }
 
   const aiCoach = createAiCoach(import.meta.env)
@@ -142,7 +142,7 @@ export function bootGame2D(registry: Registry, rawLevel: unknown): void {
           const tip = tipFor(coachTips, { kind: 'first-win' }, seenTips.set)
           if (tip) {
             seenTips.mark(tip.id)
-            hud.toast('coach', 'Conseil d’Oscar', tip.text)
+            hud.toast('coach', 'Astuce', tip.text)
           }
         }
       }

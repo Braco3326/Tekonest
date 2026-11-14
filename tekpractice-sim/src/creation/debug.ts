@@ -20,11 +20,11 @@ export interface CreationDebug {
   /** Onboarding (T2.4b): the stored first-visit record, the address's switches (`?design`, tutorial allowed), Aide « Premiers pas » and the profile chip text. A reader, no setter. */
   onboarding(): OnboardingDebug
   /**
-   * The power helper (T3 close review S3): its checklist button would be shown now, and enabled once the tutorial gate opens. False without `?design` or before its
+   * The power helper: its checklist button would be shown now, and enabled once the tutorial gate opens. False without `?design` or before its
    * chunk is loaded. The guide offers the helper only then.
    */
   helperOffered(): boolean
-  /** The power helper's uses on this page (T3 close review S2): the guide marks the steps it did « montré » from this, never from storage. */
+  /** The power helper's uses on this page: the guide marks the steps it did « montré » from this, never from storage. */
   helperUses(): PowerHelperUses
   /** The connections refused on this page (`history.onRefused`, CONNECT only; onboarding packs T5.3): the guide's character shrugs when it goes up. A reader. */
   connectRefusals(): number
@@ -179,7 +179,7 @@ export interface CreationDebug {
   /** Task 43c fix round: the box of the body's vertices in the frame of the instance root (centred on (0, 0) in x / z and min y 0 when it sits on its placement and the floor, at any yaw). */
   bodyBoundsInRoot(instanceId: string): { lo: [number, number, number]; hi: [number, number, number] } | null
   /**
-   * G14b: the screen box (page CSS px) of the eight corners of `bodyBoundsInRoot` through the instance root and the camera: the device as the learner sees it. Null when the
+   * The screen box (page CSS px) of the eight corners of `bodyBoundsInRoot` through the instance root and the camera: the device as the learner sees it. Null when the
    * instance is unknown, its body is not loaded, or a corner does not project (behind the camera). The guide keeps its icon and bubble off it (ADR 0021).
    */
   deviceScreenBox(instanceId: string): { x: number; y: number; w: number; h: number } | null

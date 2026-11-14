@@ -1,4 +1,4 @@
-# Propositions pour Oscar
+# Propositions à relire
 
 Générées par `npx tsx tools/propose-content.ts` à partir de la base de connaissances (`knowledge-base/`). Rien ici ne modifie `content/catalog.json` (le seul catalogue vérifié) ni la liste des niveaux jouables : c'est à toi de relire puis de copier ce que tu veux garder.
 

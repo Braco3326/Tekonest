@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "note": "Questions d'onboarding (Beat 1) - 2 questions + date, 90 secondes max avant le premier geste. Les 'rules' des options seedent le recommandeur (tie-break sur scores nuls). Textes a relire par Oscar (docs/REVIEW-ME.md).",
+  "note": "Questions d'onboarding (Beat 1) - 2 questions + date, 90 secondes max avant le premier geste. Les 'rules' des options seedent le recommandeur (tie-break sur scores nuls). Textes a relire (docs/REVIEW-ME.md).",
   "intro": "Deux questions, et on te met une console entre les mains.",
   "examDateLabel": "Ton épreuve BTS, c'est quand ?",
   "questions": [

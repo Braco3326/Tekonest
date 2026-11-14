@@ -6,7 +6,7 @@
  * on a practice address; never on an exam address, never without `?design`). Its code is a lazy chunk. The tutorial gate comes from the guide's event
  * `tekpractice:tutorial` `{ step, helperUnlocked }` (and, until the first event, the guide's record): during a run the button is disabled with its reason until
  * the guide unlocks it. With `?oscar=0` there is no run (`tutorialAllowed` false): the gate is never read and the button follows the bench alone.
- * T3 close review S2 / S3: the guide learns whether the helper is offered and how often it was used on this page through two readers of the debug hook
+ * The guide learns whether the helper is offered and how often it was used on this page through two readers of the debug hook
  * (`helperOffered()`, `helperUses()`, src/design/powerHelperUse.ts), never through storage.
  * The first visit (start screen, profile, chip, Aide « Premiers pas ») lives in `firstVisit.ts`: it loads lazily, under `?design` only (plan: new boot code stays lazy).
  */
@@ -34,7 +34,7 @@ export interface HelperWiring {
   tutorialAllowed: boolean
   /** The page's storage (the guide's record, read for the gate until the guide's first event), or null when blocked. */
   storage(): Storage | null
-  /** The app's undo key label (boot.ts `undoLabel`, « Ctrl+Z » by default) for the status line after the helper (T3 close review S10). */
+  /** The app's undo key label (boot.ts `undoLabel`, « Ctrl+Z » by default) for the status line after the helper. */
   undoLabel?(): string
   /** The helper's code (default: the lazy chunk). */
   load?(): Promise<PowerHelperModule>
@@ -96,7 +96,7 @@ export function wirePowerHelper(
   deps: { win: Pick<Window, 'addEventListener'> | null; deviceLabel(instance: string): string; render(): void },
 ): { view(): HelperView; run(): void; load(): Promise<void>; offered(): boolean; uses(): PowerHelperUses } {
   let mod: PowerHelperModule | null = null
-  /** The helper's uses on this page (T3 close review S2): the guide reads them through the debug hook, never through storage. */
+  /** The helper's uses on this page: the guide reads them through the debug hook, never through storage. */
   let used: PowerHelperUses = { n: 0, instances: [] }
   let gate: TutorialGate | null = h.tutorialAllowed ? tutorialGateOf(h.storage()) : null
   if (h.tutorialAllowed)

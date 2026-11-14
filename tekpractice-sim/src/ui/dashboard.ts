@@ -1,7 +1,7 @@
 /**
  * Dashboard — the home screen (Beat 2/4/5): readiness radar per bloc de
  * compétences, épreuve bars, ONE recommended action, forgiving streak and a
- * contextual mentor tip. Pure view over src/ui/readiness.ts outputs; the only
+ * contextual tip. Pure view over src/ui/readiness.ts outputs; the only
  * interaction is navigation (links) — it never touches the graph.
  */
 import type { LevelT } from '../engine/CatalogLoader'
@@ -50,7 +50,7 @@ export function renderDashboard(
           ? tipFor(coach, { kind: 'low-moment' }, noSeen)
           : null
     if (tip)
-      coachBlock = `<aside class="db-coach"><strong>Conseil d’Oscar</strong>${esc(tip.text)}</aside>`
+      coachBlock = `<aside class="db-coach"><strong>Astuce</strong>${esc(tip.text)}</aside>`
   }
 
   const epBars = Object.entries(map.epreuves)

@@ -250,7 +250,7 @@ Cabling only, one undo entry, after the learner placed a strip.
 - **Same gate everywhere:** during a tutorial run on steps 8 or 9, the checklist's helper button is **disabled with a visible reason**
   (« Essayez d’abord de relier vous-même ; je pourrai brancher pour vous ensuite. ») until the guide sends `helperUnlocked` (Oscar's third
   escalation tier: point, then say, then offer). Outside a tutorial run it follows the conditions above.
-- Oscar's offer sentence: « Je peux brancher pour vous, dans le simulateur. »
+- The assistant's offer sentence: « Le simulateur peut brancher pour vous. » (no first person: the assistant is a product assistant, never a person)
 - **Never:** at project open; before the learner tried inside a tutorial run; in exams; for a Bêta strip (`isMainsSourceRef` false for unverified
   devices, src/creation/mains.ts); never places a strip; never `SET_CONTROL`.
 - **Intents (verified):** per device `{ type: 'CONNECT', a: { instance: <strip>, port: 'out-k' }, b: { instance: <device>, port: 'power-in' } }`

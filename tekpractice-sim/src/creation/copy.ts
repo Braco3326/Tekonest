@@ -487,7 +487,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
   },
   /**
    * Coverage (Task 37, C13, S2): Écoute › Couverture, the dots in the 3D view and the legend / statistics block at the bottom of Propriétés.
-   * Honesty (brief §5): relative dB only, no intelligibility score, no regulatory level. Every string here: validé (tekuxwriter, 2026-11-04), except `chip` (à trancher, Oscar).
+   * Honesty (brief §5): relative dB only, no intelligibility score, no regulatory level. Every string here: validé (tekuxwriter, 2026-11-04), except `chip` (à trancher).
    */
   coverage: {
     panelTitle: 'Couverture',
@@ -966,7 +966,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Under the title: what the list is, and that it changes nothing. */
     intro: 'Chaque ligne dit où en est la lecture. Rien n’est modifié ici : « Aller à » sélectionne un appareil ou ouvre l’inventaire.',
     /**
-     * The intro while the power helper's button is in the list (`?design`, T3.3; T3 close review N2: only while the button is shown): its button is the one thing
+     * The intro while the power helper's button is in the list (`?design`, T3.3; only while the button is shown): its button is the one thing
      * in the list that adds something. No undo key here (S10: « Ctrl+Z les retire » was true only while the helper's entry was the last one; the status line
      * after the click names the app's own undo key).
      */
@@ -1000,20 +1000,20 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
      * real mains.
      */
     helperButton: 'Je branche pour vous (dans le simulateur)',
-    /** Under the enabled button: exactly what a click does (a statement, not a « tu » imperative: T3 close review S6); {devices} = « Yamaha QL1 (ql1), QSC K12.2 (k12) ». */
+    /** Under the enabled button: exactly what a click does (a statement, not a « tu » imperative); {devices} = « Yamaha QL1 (ql1), QSC K12.2 (k12) ». */
     helperWhat: 'Ce bouton relie à la multiprise posée : {devices}. Rien n’est posé ni réglé.',
     /**
-     * Under the disabled button during a tutorial run while a power step is current or ahead, until Oscar offers it (spec 6.5; T3 close review S7: the list works
+     * Under the disabled button during a tutorial run while a power step is current or ahead, until the assistant offers it (spec 6.5; the list works
      * without Oscar, so no first person, and « relier » names what to cable).
      */
     helperLocked: 'Essayez d’abord de relier la console et l’enceinte à la multiprise ; l’aide sera proposée ensuite.',
-    /** Under the disabled button during a tutorial run where no power step is current or ahead (T3 close review S5): it makes no promise. */
+    /** Under the disabled button during a tutorial run where no power step is current or ahead: it makes no promise. */
     helperLockedRun: 'Pendant le tutoriel, ce bouton reste inactif : reliez vous-même la console et l’enceinte à la multiprise.',
-    /** The status line after the helper: exactly what was added. {undo} = the app's undo key label (T3 close review S10), as the other status lines. */
+    /** The status line after the helper: exactly what was added. {undo} = the app's undo key label, as the other status lines. */
     helperDone: 'Branché au courant : {devices}. {undo} pour annuler.',
     /** The status line when a cable was refused on the way (everything was undone). */
     helperFailed: 'Le branchement n’a pas été fait : rien n’a changé.',
-    /** The status line when another action is still in progress (a drag: T3 close review S9); nothing was done. */
+    /** The status line when another action is still in progress (a drag); nothing was done. */
     helperBusy: 'Le branchement n’a pas été fait : une autre action est en cours. Rien n’a changé.',
     /** The History entry (Édition › Annuler). */
     helperEntry: 'Branchement au courant (aide)',
@@ -1137,8 +1137,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** An accepted connection (with a nod, T5): the only acknowledgement; never « bien réglé », « bravo », « correct ». */
     accepted: 'Connexion acceptée.',
     /** Oscar's offer of the power helper (T3.3 and T3.4 wire it): cabling only, in the simulator. */
-    helperOffer: 'Je peux brancher pour vous, dans le simulateur.',
-    /** Before the bubble of the step that comes after steps the learner had already done (G8 review C2); {steps} = the `alreadyStep` items, comma separated. */
+    helperOffer: 'Le simulateur peut brancher pour vous.',
+    /** Before the bubble of the step that comes after steps the learner had already done; {steps} = the `alreadyStep` items, comma separated. */
     alreadyInPlace: 'Déjà en place : {steps}.',
     /** One item of `alreadyInPlace`; {k} = the step's number in the tutorial. */
     alreadyStep: 'étape {k}',
@@ -1175,10 +1175,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
    * (tests/creation/honesty.test.ts scans this section as a learner one). À valider (tekuxwriter, 2026-11-13).
    */
   oscar: {
-    /** The badge in the header of Oscar's bubble, with every open bubble: it says what Oscar is; the icon keeps its name « Oscar, assistant IA » (a controller ruling, NOT a founder decision: whether « IA » stays is an open founder question, see ADR 0018; the founder's own label was « Assistant »). */
+    /** The badge in the header of Oscar's bubble, with every open bubble: it says what Oscar is; the icon keeps its name « Oscar, assistant IA » (not a founder decision: whether « IA » stays is an open founder question, see ADR 0018; the founder's own label was « Assistant »). */
     badge: 'Oscar · Assistant',
     /**
-     * G14c fix (b): Oscar's line when what he points at is off screen (it replaces the vendored « … Faire défiler la page … », which is no advice in a 3D view).
+     * The line when what the step points at is off screen (it replaces the vendored « … Faire défiler la page … », which is no advice in a 3D view).
      * Every Mode Création page (the controller's string table, CREATION_STRINGS), not only `?design`; the level page keeps the vendored line.
      */
     notOnScreen: 'Hors de vue pour le moment : le bouton « Vue d’ensemble » (⌂) montre toute la pièce.',

@@ -111,9 +111,9 @@
   }
  ],
  "logicChecks": [],
- "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "successMessage": "Chaîne câblée — à relire avant publication.",
  "draft": {
-  "status": "draft — needs Oscar's review",
+  "status": "draft — needs review",
   "generated": "2026-10-22",
   "from_scenario": "knowledge-base/tek-brain/scenarios/consoles-signal-flow.json#club-gig-foh-with-monitors-from-foh",
   "room_id": "bar-club-stage-small",

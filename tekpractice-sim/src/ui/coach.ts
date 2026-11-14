@@ -1,9 +1,8 @@
 /**
- * Coach — "Conseils d'Oscar" (Beats 2 & 4): CONTEXTUAL delivery of the mentor
- * voice. Pure logic: trigger detection (rule met / low moment / comeback /
+ * Coach — contextual tips (Beats 2 & 4): CONTEXTUAL delivery of short
+ * tips. Pure logic: trigger detection (rule met / low moment / comeback /
  * forgiveness / first win) + a tone contract. All texts live in
- * content/coach/tips.json (placeholders until Oscar writes them —
- * docs/REVIEW-ME.md tracks that debt).
+ * content/coach/tips.json (taken from the rule texts of the catalog).
  *
  * Tone engine (anti-burnout, VISION §5 "psychologically safe"):
  *  - at most ONE coach message per screen/moment — never a wall of text;
@@ -34,8 +33,8 @@ const dayDiff = (aIso: string, bIso: string): number =>
 
 /**
  * Low-moment detection (Beat 4): she HAD momentum (≥3 active days) and the
- * last activity is 2+ days old — the motivation dip, exactly when the mentor
- * voice matters. (Rising in-session error rate is handled by rule tips.)
+ * last activity is 2+ days old — the motivation dip, exactly when a short word
+ * matters. (Rising in-session error rate is handled by rule tips.)
  */
 export function detectLowMoment(data: ProgressData, todayIso: string): boolean {
   if (data.activity.length < 3) return false

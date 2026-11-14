@@ -362,7 +362,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   const activeViolations = new Set<string>()
 
   // Coach IA (ADR-0006): on-demand "Pourquoi ?" layer, distinct from the
-  // authored Oscar tips. No key in .env → unconfigured → no button, no crash.
+  // authored tips. No key in .env → unconfigured → no button, no crash.
   const aiCoach = createAiCoach(import.meta.env)
   const whyAction = (
     ruleId: string | undefined,
@@ -389,7 +389,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     }
   }
 
-  // Coach (Beat 2): the mentor voice fires on the exact topic, once per
+  // Coach (Beat 2): a short tip fires on the exact topic, once per
   // session, never during an exam (no hints there — including human ones).
   const coachTips = coachJson as CoachFile
   const seenTips = new SeenTips()
@@ -398,7 +398,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     const tip = tipFor(coachTips, { kind: 'rule', ruleId }, seenTips.set)
     if (!tip) return
     seenTips.mark(tip.id)
-    hud.toast('coach', 'Conseil d’Oscar', tip.text)
+    hud.toast('coach', 'Astuce', tip.text)
   }
 
   /**
@@ -455,7 +455,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
           const tip = tipFor(coachTips, { kind: 'first-win' }, seenTips.set)
           if (tip) {
             seenTips.mark(tip.id)
-            hud.toast('coach', 'Conseil d’Oscar', tip.text)
+            hud.toast('coach', 'Astuce', tip.text)
           }
         }
       }

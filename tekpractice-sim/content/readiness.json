@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "note": "Mapping pedagogique rules R1-R8 -> referentiel BTS (docs/db_blocs_competences.csv, db_epreuves_coefficients.csv). JUGEMENT PEDAGOGIQUE DE LA NUIT - a relire par Oscar (ADR-0003). Les tips sont des placeholders a reecrire dans sa voix.",
+  "note": "Mapping pedagogique rules R1-R8 -> referentiel BTS (docs/db_blocs_competences.csv, db_epreuves_coefficients.csv). JUGEMENT PEDAGOGIQUE DE LA NUIT - a relire (ADR-0003). Les tips reprennent les textes des regles du catalogue.",
   "competencies": {
     "BC01": { "label": "Mise en place d'un projet", "inGame": false },
     "BC02": { "label": "Savoir-faire des métiers du son", "inGame": true },

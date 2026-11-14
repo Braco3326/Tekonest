@@ -1,6 +1,6 @@
 /**
  * AiCoach — interface swappable du coach IA temps-réel (ADR-0006).
- * Distinct des « Conseils d'Oscar » authorés (content/coach/tips.json) : le
+ * Distinct des conseils authorés (content/coach/tips.json) : le
  * coach IA répond À LA DEMANDE (« Pourquoi ? »), ancré sur le catalog + le
  * graphe courant, et se dégrade proprement quand aucune clé n'est configurée.
  */
