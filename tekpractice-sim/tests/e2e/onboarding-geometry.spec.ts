@@ -256,7 +256,10 @@ const TWO_PANELS = {
 } as const
 const KNOWN_GEOM: Record<DesignId, Partial<Record<Cls, readonly string[]>>> = {
   // step 4 @1024: the icon on the console (ql1 423,297 178x159; iconToRing 0) and in the centre box; the opened bubble at rest @820 in the centre box
-  1: { target: ['step 4 @1024x768'], centre: ['rest + bubble @820x1180', 'step 4 @1024x768'] },
+  // Equipment merge (2026-11-14, deploy/onboarding-equipment-20261114): step 7 @1366 joins, as package 3's step 7. The 113-device catalogue adds « Amplis », « Réseau », « Câbles et DI » and
+  // « Pieds et accroches » before « Secteur » in the drawer's tab row, so the ringed Secteur tab moves to 1034,500 78x44; Oscar's icon sits 33 px above it (1045,411) and the bubble goes to the
+  // left (201,117 352x379): its right edge (553) is 0.2 px inside the centre box (552.8 = 32 + 0.4 x 1302). Measured the same with and without the merge fix of src/guide/reveal.ts.
+  1: { target: ['step 4 @1024x768'], centre: ['rest + bubble @820x1180', 'step 4 @1024x768', 'step 7 @1366x768'] },
   2: TWO_PANELS,
   // step 4 @1024 as package 1; step 9 @1366 the icon on the speaker (k12 818,202 213x236; iconToRing 4); step 7 @1366 the bubble in the centre box
   3: { target: ['step 4 @1024x768', 'step 9 @1366x768'], centre: ['step 4 @1024x768', 'step 7 @1366x768'] },
@@ -266,7 +269,7 @@ const KNOWN_GEOM: Record<DesignId, Partial<Record<Cls, readonly string[]>>> = {
 }
 /** Spec 11.3 (line 497): « bubble plus icon leave the canvas centre free at 1366 x 768 », the 1366 samples where the ICON or the BUBBLE meets the centre box (the card is the CENTRE class's business). */
 const KNOWN_CENTRE_1366: Record<DesignId, readonly string[]> = {
-  1: [],
+  1: ['step 7 @1366x768'], // equipment merge 2026-11-14: see KNOWN_GEOM[1] (bubble 0.2 px into the centre box, the Secteur tab moved right)
   2: ['rest + bubble @1366x768', 'step 4 @1366x768', 'step 6 @1366x768', 'step 7 @1366x768', 'step 8 @1366x768', 'step 9 @1366x768'],
   3: ['step 7 @1366x768'],
   4: ['rest + bubble @1366x768', 'step 4 @1366x768', 'step 6 @1366x768', 'step 7 @1366x768', 'step 8 @1366x768', 'step 9 @1366x768'],
