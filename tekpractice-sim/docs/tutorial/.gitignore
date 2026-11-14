@@ -1,0 +1,3 @@
+# The stills are NOT committed until the founder has looked (spec 12: the 3D models wear pictures derived from product photos).
+# Regenerate with CAPTURE=1 (see tests/e2e/tutorial-captures.spec.ts and docs/tutorial/storyboard.md).
+captures/
