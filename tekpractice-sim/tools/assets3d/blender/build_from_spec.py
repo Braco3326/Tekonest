@@ -2725,6 +2725,11 @@ def build_boom_arm(plan: Plan) -> bpy.types.Object:
     at y = 0 and scaled to the exact spec size (refused when that needs more than ARM_MAX_SCALE_ERROR: the spec numbers then do not match the pose)."""
     w, h, d = size_m(plan)
     p = {k: param_m(plan, k, v) for k, v in ARM_DEFAULTS_MM.items()}
+    grey = (plan.get("params") or {}).get("tubeGrey")
+    if grey is not None and not (isinstance(grey, (int, float)) and 10 <= grey <= 200):
+        raise BuildError(f"params.tubeGrey must be a grey level from 10 to 200, got {grey!r}")
+    tube_col = ARM_TUBE if grey is None else "#%02x%02x%02x" % (round(grey), round(grey) + 1, round(grey) + 5)
+    joint_col = ARM_JOINT if grey is None else "#%02x%02x%02x" % (round(grey) + 12, round(grey) + 13, round(grey) + 18)
     col_r = d / 2.0                      # the column's diameter is the depth of the model
     tube_r = p["tubeDiaMm"] / 2.0
     joint_r = p["jointDiaMm"] / 2.0
@@ -2744,18 +2749,18 @@ def build_boom_arm(plan: Plan) -> bpy.types.Object:
     body = Body("boom-arm")
     bm = body.bm
     cylinder_between(bm, at(0.0, col_bottom), at(0.0, col_top), col_r)                       # column housing
-    body.done(lift_hex(ARM_JOINT))
+    body.done(lift_hex(joint_col))
     cylinder_between(bm, at(0.0, rod_bottom), at(0.0, col_bottom), 8.0 * MM)                 # threaded rod under it
     body.done(lift_hex(ARM_METAL))
     for (jx, jy), r, ln in ((shoulder, joint_r, joint_len), (elbow, joint_r, joint_len), (head, head_r, 30.0 * MM)):
         cylinder_between(bm, at(jx, jy, -ln / 2), at(jx, jy, ln / 2), r)                      # a hinge: axis along z
-    body.done(lift_hex(ARM_JOINT))
+    body.done(lift_hex(joint_col))
     cylinder_between(bm, at(*shoulder), at(*elbow), tube_r)                                   # lower arm
     cylinder_between(bm, at(*elbow), at(*head), tube_r * 0.92)                                # upper arm (a touch slimmer)
-    body.done(lift_hex(ARM_TUBE))
+    body.done(lift_hex(tube_col))
     post_r = head_r * 0.75
     cylinder_between(bm, at(head[0], head[1]), at(head[0], head[1] - drop * 0.62), post_r)    # head block under the hinge
-    body.done(lift_hex(ARM_TUBE))
+    body.done(lift_hex(tube_col))
     cylinder_between(bm, at(head[0], head[1] - drop * 0.62), at(head[0], head[1] - drop), 7.0 * MM)  # the 5/8 inch mic thread
     body.done(lift_hex(ARM_METAL))
 

@@ -863,6 +863,38 @@
         },
         "colour": "#0b0b0d",
         "note": "pole socket 35 mm"
+      },
+      {
+        "kind": "pocket",
+        "face": "left",
+        "xMm": 272,
+        "yMm": 306,
+        "params": {
+          "widthMm": 100,
+          "heightMm": 88,
+          "cornerMm": 14,
+          "depthMm": 28
+        },
+        "colour": "#0e0e10",
+        "note": "side handle recess"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 272,
+        "yMm": 306,
+        "params": {
+          "x1Mm": -34,
+          "y1Mm": 0,
+          "z1Mm": -18,
+          "x2Mm": 34,
+          "y2Mm": 0,
+          "z2Mm": -18,
+          "diaMm": 18,
+          "segments": 14
+        },
+        "colour": "#141416",
+        "note": "handle grab bar"
       }
     ]
   }

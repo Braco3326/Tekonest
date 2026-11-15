@@ -285,7 +285,7 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   // An articulated microphone arm in a POSED side view (x along the width, y up, tubes in the plane z = 0): a column on a threaded rod, a shoulder joint
   // at its top, a tube up to a raised elbow (elbowDxMm to the right and elbowDyMm above the shoulder), a second tube down to the head (headDxMm to the
   // right and headDyMm BELOW the elbow), and a head with a mic post hanging headDropMm below it. The width is the column diameter (d). All params in mm.
-  'boom-arm': { kind: 'device', params: ['elbowDxMm', 'elbowDyMm', 'headDxMm', 'headDyMm', 'tubeDiaMm', 'jointDiaMm', 'columnHeightMm', 'rodLenMm', 'headDropMm'], needsMatingOuter: false },
+  'boom-arm': { kind: 'device', params: ['elbowDxMm', 'elbowDyMm', 'headDxMm', 'headDyMm', 'tubeDiaMm', 'jointDiaMm', 'columnHeightMm', 'rodLenMm', 'headDropMm', 'tubeGrey'], needsMatingOuter: false },
   // A cable assembly along z: a D-sub hood with a strain relief at the io end (+z), a trunk, and a fan-out of columns x rows XLR male plugs on a
   // pitchMm grid whose tips form the opposite face (-z). The width and height come from the plug grid, the depth is the whole length.
   'cable-assembly': { kind: 'device', params: ['hoodWidthMm', 'hoodHeightMm', 'hoodLenMm', 'plugDiaMm', 'plugLenMm', 'tailLenMm', 'trunkDiaMm', 'pitchMm', 'columns', 'rows'], needsMatingOuter: false },

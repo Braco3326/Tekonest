@@ -15,11 +15,12 @@
       "elbowDyMm": 370,
       "headDxMm": 326,
       "headDyMm": 232,
-      "tubeDiaMm": 26,
-      "jointDiaMm": 46,
+      "tubeDiaMm": 32,
+      "jointDiaMm": 52,
       "columnHeightMm": 95,
       "rodLenMm": 50,
-      "headDropMm": 80
+      "headDropMm": 80,
+      "tubeGrey": 22
     }
   },
   "controls": [],

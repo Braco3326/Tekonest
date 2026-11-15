@@ -26,7 +26,7 @@
     "projection": "wrap",
     "budget": {
       "min": 1500,
-      "max": 6000
+      "max": 9000
     },
     "profile": [
       [
@@ -277,8 +277,8 @@
         "kind": "pocket",
         "face": "opposite",
         "xMm": 27.2,
-        "yMm": 91,
-        "count": 8,
+        "yMm": 82,
+        "count": 9,
         "cols": 1,
         "pitchYMm": 9.1,
         "params": {
@@ -294,8 +294,8 @@
         "kind": "pocket",
         "face": "io",
         "xMm": 27.2,
-        "yMm": 91,
-        "count": 8,
+        "yMm": 82,
+        "count": 9,
         "cols": 1,
         "pitchYMm": 9.1,
         "params": {
@@ -311,8 +311,8 @@
         "kind": "pocket",
         "face": "left",
         "xMm": 27.2,
-        "yMm": 91,
-        "count": 8,
+        "yMm": 82,
+        "count": 9,
         "cols": 1,
         "pitchYMm": 9.1,
         "params": {
@@ -328,8 +328,8 @@
         "kind": "pocket",
         "face": "right",
         "xMm": 27.2,
-        "yMm": 91,
-        "count": 8,
+        "yMm": 82,
+        "count": 9,
         "cols": 1,
         "pitchYMm": 9.1,
         "params": {
