@@ -8,7 +8,7 @@ import {
 } from '../../src/accounts/profileModel'
 
 const CONSENT = '2026-11-15T10:00:00.000Z'
-const base = { ageRange: '22-25', goal: 'goal-a', speciality: 'spec-a1', firstName: '  Sam  ', region: ' Occitanie ', consentAt: CONSENT }
+const base = { ageRange: '22-25', goal: 'etudie.bts-mav-son', firstName: '  Sam  ', region: ' Occitanie ', consentAt: CONSENT }
 
 function ok(raw: unknown, ctx?: { isStudent?: boolean }): Profile {
   const r = normaliseProfile(raw, ctx)
@@ -19,12 +19,12 @@ function ok(raw: unknown, ctx?: { isStudent?: boolean }): Profile {
 describe('Profile type', () => {
   it('has exactly the allowed keys, nothing else', () => {
     expect([...PROFILE_KEYS].sort()).toEqual(
-      ['ageRange', 'consentAt', 'firstName', 'goal', 'parentalConfirmation', 'region', 'school', 'speciality'].sort()
+      ['ageRange', 'consentAt', 'firstName', 'goal', 'parentalConfirmation', 'region', 'school'].sort()
     )
   })
 
   it('a normalised profile carries exactly those keys (extra input keys are dropped)', () => {
-    const p = ok({ ...base, phone: '0600000000', birthdate: '2001-01-01', employer: 'ACME', address: '1 rue X' }, { isStudent: true })
+    const p = ok({ ...base, speciality: 'x', phone: '0600000000', birthdate: '2001-01-01', employer: 'ACME', address: '1 rue X' }, { isStudent: true })
     expect(Object.keys(p).sort()).toEqual([...PROFILE_KEYS].sort())
     for (const bad of ['phone', 'birthdate', 'employer', 'address', 'email']) expect(bad in p).toBe(false)
   })
@@ -38,11 +38,10 @@ describe('normaliseProfile', () => {
   })
 
   it('empty optional fields become null', () => {
-    const p = ok({ ...base, firstName: '   ', region: '', goal: null, speciality: undefined })
+    const p = ok({ ...base, firstName: '   ', region: '', goal: null })
     expect(p.firstName).toBeNull()
     expect(p.region).toBeNull()
     expect(p.goal).toBeNull()
-    expect(p.speciality).toBeNull()
   })
 
   it('requires a valid age range, with a French message', () => {
@@ -77,7 +76,7 @@ describe('normaliseProfile', () => {
     if (!r.ok) expect(r.errors[0]).toMatchObject({ field: 'region', code: 'too-long' })
     const n = normaliseProfile({ ...base, firstName: 'y'.repeat(LIMITS.firstName + 1) })
     expect(n.ok).toBe(false)
-    const s = normaliseProfile({ ...base, school: 'z'.repeat(LIMITS.school + 1) }, { isStudent: true })
+    const s = normaliseProfile({ ...base, school: 'autre:' + 'z'.repeat(LIMITS.school + 1) }, { isStudent: true })
     expect(s.ok).toBe(false)
   })
 
@@ -88,14 +87,29 @@ describe('normaliseProfile', () => {
   })
 
   it('keeps the school only for students', () => {
-    expect(ok({ ...base, school: 'Lycée X' }, { isStudent: false }).school).toBeNull()
-    expect(ok({ ...base, school: ' Lycée X ' }, { isStudent: true }).school).toBe('Lycée X')
+    expect(ok({ ...base, school: 'ecole.lycee-x' }, { isStudent: false }).school).toBeNull()
+    expect(ok({ ...base, school: ' ecole.lycee-x ' }, { isStudent: true }).school).toBe('ecole.lycee-x')
+  })
+
+  it('a school is a list id or « autre: » plus free text of 80 characters at most', () => {
+    expect(ok({ ...base, school: 'autre:  Lycée  Pasteur ' }, { isStudent: true }).school).toBe('autre:Lycée Pasteur')
+    expect(ok({ ...base, school: 'autre:' + 'x'.repeat(80) }, { isStudent: true }).school).toHaveLength(86)
+    expect(ok({ ...base, school: 'autre:   ' }, { isStudent: true }).school).toBeNull()
+    for (const bad of ['Lycée Pasteur', '<b>', 12]) {
+      const r = normaliseProfile({ ...base, school: bad }, { isStudent: true })
+      expect(r.ok, String(bad)).toBe(false)
+      if (!r.ok) expect(r.errors[0]).toMatchObject({ field: 'school', code: 'invalid' })
+    }
+  })
+
+  it('the goal is one dotted node id', () => {
+    expect(ok({ ...base, goal: 'etudie.bts-mav-son' }).goal).toBe('etudie.bts-mav-son')
   })
 
   it('under 15 without a parent confirmation keeps only the age range and the goal', () => {
-    const p = ok({ ...base, ageRange: '-15', school: 'Collège', parentalConfirmation: false }, { isStudent: true })
+    const p = ok({ ...base, ageRange: '-15', school: 'ecole.college-x', parentalConfirmation: false }, { isStudent: true })
     expect(p.ageRange).toBe('-15')
-    expect(p.goal).toBe('goal-a')
+    expect(p.goal).toBe('etudie.bts-mav-son')
     expect(p.firstName).toBeNull()
     expect(p.region).toBeNull()
     expect(p.school).toBeNull()
@@ -103,10 +117,10 @@ describe('normaliseProfile', () => {
   })
 
   it('under 15 with a parent confirmation keeps the other fields', () => {
-    const p = ok({ ...base, ageRange: '-15', school: 'Collège', parentalConfirmation: true }, { isStudent: true })
+    const p = ok({ ...base, ageRange: '-15', school: 'ecole.college-x', parentalConfirmation: true }, { isStudent: true })
     expect(p.firstName).toBe('Sam')
     expect(p.region).toBe('Occitanie')
-    expect(p.school).toBe('Collège')
+    expect(p.school).toBe('ecole.college-x')
     expect(p.parentalConfirmation).toBe(true)
   })
 

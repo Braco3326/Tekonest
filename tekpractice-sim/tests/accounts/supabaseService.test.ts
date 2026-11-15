@@ -7,7 +7,7 @@ import { type Profile, normaliseProfile } from '../../src/accounts/profileModel'
 const CFG = { url: 'https://placeholder.invalid', anonKey: 'placeholder-anon-value' }
 
 function profile(over: Record<string, unknown> = {}): Profile {
-  const r = normaliseProfile({ ageRange: '22-25', goal: 'g1', speciality: 's1', firstName: 'Sam', region: 'Paris', school: 'Lycée', consentAt: '2026-11-15T10:00:00Z', ...over }, { isStudent: true })
+  const r = normaliseProfile({ ageRange: '22-25', goal: 'etudie.x', firstName: 'Sam', region: 'Paris', school: 'ecole.lycee-x', consentAt: '2026-11-15T10:00:00Z', ...over }, { isStudent: true })
   if (!r.ok) throw new Error('bad fixture')
   return r.profile
 }
@@ -131,7 +131,7 @@ describe('adapter calls (stub client)', () => {
     expect(st.calls.find((c) => c.name === 'from')?.args[0]).toBe('profiles')
     const row = st.calls.find((c) => c.name === 'upsert')?.args[0] as Record<string, unknown>
     expect(row.id).toBe('u1')
-    expect(Object.keys(row).sort()).toEqual(['age_range', 'consent_at', 'first_name', 'goal', 'id', 'parental_confirmation', 'region', 'school', 'speciality'])
+    expect(Object.keys(row).sort()).toEqual(['age_range', 'consent_at', 'first_name', 'goal', 'id', 'parental_confirmation', 'region', 'school'])
   })
 
   it('does not call the database without a session', async () => {
@@ -148,7 +148,7 @@ describe('adapter calls (stub client)', () => {
     const row = toRow('u1', profile())
     const st = stub({ maybeSingle: { data: row, error: null } })
     const r = await make(st).loadProfile()
-    expect(r).toMatchObject({ ok: true, profile: { firstName: 'Sam', school: 'Lycée', ageRange: '22-25' } })
+    expect(r).toMatchObject({ ok: true, profile: { firstName: 'Sam', school: 'ecole.lycee-x', ageRange: '22-25' } })
     expect(st.calls.find((c) => c.name === 'eq')?.args).toEqual(['id', 'u1'])
   })
 

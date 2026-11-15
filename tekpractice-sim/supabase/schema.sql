@@ -8,10 +8,11 @@ create table if not exists public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
   first_name text check (first_name is null or char_length(first_name) between 1 and 40),
   age_range text not null check (age_range in ('-15', '15-17', '18-21', '22-25', '26-30', '31-35', '36-40', '41+')),
-  goal text check (goal is null or char_length(goal) between 1 and 64),
-  speciality text check (speciality is null or char_length(speciality) between 1 and 64),
+  -- One node id of the goal tree, a dotted string such as etudie.bts-mav-son.
+  goal text check (goal is null or char_length(goal) between 1 and 80),
   region text check (region is null or char_length(region) between 1 and 80),
-  school text check (school is null or char_length(school) between 1 and 80),
+  -- Students only: a school id from the schools list, or 'autre:' followed by free text (80 characters at most).
+  school text check (school is null or char_length(school) between 1 and 100),
   consent_at timestamptz not null,
   parental_confirmation boolean not null default false,
   created_at timestamptz not null default now(),

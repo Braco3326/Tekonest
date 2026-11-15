@@ -4,7 +4,7 @@ import {
   type AccountService,
   type AccountUser,
   type Failure,
-  NOT_CONFIGURED,
+  failingService,
 } from './accountService'
 import { isAgeRange } from './ageRange'
 import { type Profile, normaliseProfile } from './profileModel'
@@ -35,7 +35,6 @@ export interface ProfileRow {
   first_name: string | null
   age_range: string
   goal: string | null
-  speciality: string | null
   region: string | null
   school: string | null
   consent_at: string
@@ -48,7 +47,6 @@ export function toRow(userId: string, p: Profile): ProfileRow {
     first_name: p.firstName,
     age_range: p.ageRange,
     goal: p.goal,
-    speciality: p.speciality,
     region: p.region,
     school: p.school,
     consent_at: p.consentAt,
@@ -63,7 +61,6 @@ export function fromRow(row: Record<string, unknown>): Profile | null {
     {
       ageRange: row.age_range,
       goal: row.goal,
-      speciality: row.speciality,
       firstName: row.first_name,
       region: row.region,
       school: row.school,
@@ -99,21 +96,6 @@ function toUser(u: { id: string; email?: string | null } | null | undefined): Ac
   return u ? { id: u.id, email: u.email ?? null } : null
 }
 
-/** The service that answers `not-configured` to everything. */
-function notConfiguredService(): AccountService {
-  return {
-    signUpEmail: async () => NOT_CONFIGURED,
-    signInEmail: async () => NOT_CONFIGURED,
-    signInGoogle: async () => NOT_CONFIGURED,
-    signOut: async () => NOT_CONFIGURED,
-    currentUser: async () => null,
-    saveProfile: async () => NOT_CONFIGURED,
-    loadProfile: async () => NOT_CONFIGURED,
-    deleteAccount: async () => NOT_CONFIGURED,
-    onAuthChange: () => () => undefined,
-  }
-}
-
 function redirectUrl(): string | undefined {
   return typeof location === 'undefined' ? undefined : location.origin + location.pathname
 }
@@ -122,7 +104,7 @@ function redirectUrl(): string | undefined {
 export function createSupabaseService(cfg?: SupabaseConfig): AccountService {
   const url = cfg ? cfg.url : (import.meta.env.VITE_SUPABASE_URL as string | undefined)
   const anonKey = cfg ? cfg.anonKey : (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)
-  if (typeof url !== 'string' || url.trim() === '' || typeof anonKey !== 'string' || anonKey.trim() === '') return notConfiguredService()
+  if (typeof url !== 'string' || url.trim() === '' || typeof anonKey !== 'string' || anonKey.trim() === '') return failingService('not-configured')
 
   const client = (cfg?.makeClient ?? createClient)(url.trim(), anonKey.trim(), CLIENT_OPTIONS)
 

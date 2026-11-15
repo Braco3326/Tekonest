@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { AGE_RANGES } from '../../src/accounts/ageRange'
-import { canCreateAccount, fieldsFor, needsParentConfirmation } from '../../src/accounts/fieldsFor'
+import { canCreateAccount, fieldsFor, isStudentGoal, needsParentConfirmation } from '../../src/accounts/fieldsFor'
 
 describe('fieldsFor', () => {
   it('always asks the age range and the goal', () => {
@@ -48,5 +48,11 @@ describe('fieldsFor', () => {
       expect(canCreateAccount(r, false)).toBe(true)
       expect(canCreateAccount(r, true)).toBe(true)
     }
+  })
+
+  it('a study goal is a goal id that starts with etudie', () => {
+    expect(isStudentGoal('etudie.bts-mav-son')).toBe(true)
+    expect(isStudentGoal('etudie')).toBe(true)
+    for (const g of ['decouvre.x', 'metier.etudie', '', null, undefined]) expect(isStudentGoal(g)).toBe(false)
   })
 })

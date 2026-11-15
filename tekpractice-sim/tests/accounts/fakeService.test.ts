@@ -3,7 +3,7 @@ import { createFakeService } from '../../src/accounts/fakeService'
 import { type Profile, normaliseProfile } from '../../src/accounts/profileModel'
 
 function profile(over: Record<string, unknown> = {}): Profile {
-  const r = normaliseProfile({ ageRange: '22-25', goal: 'g1', speciality: 's1', firstName: 'Sam', region: 'Paris', consentAt: '2026-11-15T10:00:00Z', ...over })
+  const r = normaliseProfile({ ageRange: '22-25', goal: 'decouvre.x', firstName: 'Sam', region: 'Paris', consentAt: '2026-11-15T10:00:00Z', ...over })
   if (!r.ok) throw new Error('bad fixture')
   return r.profile
 }

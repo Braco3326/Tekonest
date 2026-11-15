@@ -3,21 +3,19 @@ import type { ProfileField } from './fieldsFor'
 
 /**
  * The profile the account stores. THESE KEYS ARE THE WHOLE LIST: no birthdate, no phone, no employer, no address.
- * supabase/schema.sql mirrors them (first_name, age_range, goal, speciality, region, school, parental_confirmation, consent_at).
+ * supabase/schema.sql mirrors them (first_name, age_range, goal, region, school, parental_confirmation, consent_at).
  */
-export const PROFILE_KEYS = ['ageRange', 'goal', 'speciality', 'firstName', 'region', 'school', 'parentalConfirmation', 'consentAt'] as const
+export const PROFILE_KEYS = ['ageRange', 'goal', 'firstName', 'region', 'school', 'parentalConfirmation', 'consentAt'] as const
 export type ProfileKey = (typeof PROFILE_KEYS)[number]
 
 export interface Profile {
   ageRange: AgeRange
-  /** The learner's stored goal id (goal tree), or null when the goal screens were skipped. */
+  /** The learner's goal: ONE node id of the goal tree (a dotted string such as `etudie.bts-mav-son`), or null when the goal screens were skipped. */
   goal: string | null
-  /** The learner's stored speciality id, or null. */
-  speciality: string | null
   firstName: string | null
   /** City or region, free text. */
   region: string | null
-  /** Students only. There is no employer field anywhere. */
+  /** Students only (goal id starting with `etudie`): a school id from the schools list, or `autre:` followed by free text (80 characters at most). There is no employer field anywhere. */
   school: string | null
   /** True only for a learner under 15 whose parent or guardian confirmation was ticked. */
   parentalConfirmation: boolean
@@ -25,10 +23,10 @@ export interface Profile {
   consentAt: string
 }
 
-export const LIMITS = { firstName: 40, region: 80, school: 80, id: 64, password: 72, passwordMin: 8, email: 254 } as const
+export const LIMITS = { firstName: 40, region: 80, school: 80, schoolId: 100, id: 80, password: 72, passwordMin: 8, email: 254 } as const
 
 export type ProfileErrorCode = 'required' | 'invalid' | 'too-long' | 'too-short'
-export type ErrorField = ProfileField | 'speciality' | 'consent' | 'email' | 'password'
+export type ErrorField = ProfileField | 'consent' | 'email' | 'password'
 
 export interface ProfileError {
   field: ErrorField
@@ -40,7 +38,7 @@ export interface ProfileError {
 export type ProfileResult = { ok: true; profile: Profile } | { ok: false; errors: ProfileError[] }
 
 export interface NormaliseContext {
-  /** True when the learner says they are a pupil or student: the only case where the school is kept. */
+  /** True when the goal is a study goal (id starting with `etudie`): the only case where the school is kept. */
   isStudent?: boolean
 }
 
@@ -50,13 +48,12 @@ const MESSAGES: Record<string, string> = {
   'consent.required': 'Le consentement est nécessaire pour créer un compte.',
   'consent.invalid': 'Le consentement doit porter une date valide.',
   'goal.invalid': 'Le but enregistré n’est pas valide.',
-  'speciality.invalid': 'La spécialité enregistrée n’est pas valide.',
   'firstName.too-long': `Le prénom ne peut pas dépasser ${LIMITS.firstName} caractères.`,
   'firstName.invalid': 'Le prénom doit être du texte.',
   'region.too-long': `La ville ou la région ne peut pas dépasser ${LIMITS.region} caractères.`,
   'region.invalid': 'La ville ou la région doit être du texte.',
   'school.too-long': `L’établissement ne peut pas dépasser ${LIMITS.school} caractères.`,
-  'school.invalid': 'L’établissement doit être du texte.',
+  'school.invalid': 'L’établissement choisi n’est pas valide.',
   'email.required': 'Saisissez votre adresse e-mail.',
   'email.invalid': 'Cette adresse e-mail ne semble pas valide.',
   'email.too-long': 'Cette adresse e-mail est trop longue.',
@@ -71,7 +68,11 @@ function err(field: ErrorField, code: ProfileErrorCode): ProfileError {
 
 // eslint-disable-next-line no-control-regex
 const CONTROL = /[\u0000-\u001f\u007f-\u009f]/g
-const ID = /^[A-Za-z0-9_.:-]{1,64}$/
+const ID = /^[A-Za-z0-9_.:-]{1,80}$/
+const SCHOOL_ID = /^[A-Za-z0-9_.:-]{1,100}$/
+
+/** Prefix of a school typed by hand (not in the list). */
+export const OTHER_SCHOOL_PREFIX = 'autre:'
 
 /** Trim, drop control characters, collapse inner whitespace. */
 function clean(s: string): string {
@@ -80,7 +81,7 @@ function clean(s: string): string {
 
 type Text = { value: string | null; error: ProfileError | null }
 
-function text(field: 'firstName' | 'region' | 'school', raw: unknown): Text {
+function text(field: 'firstName' | 'region', raw: unknown): Text {
   if (raw === undefined || raw === null) return { value: null, error: null }
   if (typeof raw !== 'string') return { value: null, error: err(field, 'invalid') }
   const v = clean(raw)
@@ -89,7 +90,23 @@ function text(field: 'firstName' | 'region' | 'school', raw: unknown): Text {
   return { value: v, error: null }
 }
 
-function id(field: 'goal' | 'speciality', raw: unknown): Text {
+/** A school: an id from the list, or `autre:` + free text (1 to 80 characters). Anything else is refused. */
+function school(raw: unknown): Text {
+  if (raw === undefined || raw === null) return { value: null, error: null }
+  if (typeof raw !== 'string') return { value: null, error: err('school', 'invalid') }
+  const v = clean(raw)
+  if (v === '') return { value: null, error: null }
+  if (v.startsWith(OTHER_SCHOOL_PREFIX)) {
+    const rest = v.slice(OTHER_SCHOOL_PREFIX.length).trim()
+    if (rest === '') return { value: null, error: null }
+    if (rest.length > LIMITS.school) return { value: null, error: err('school', 'too-long') }
+    return { value: OTHER_SCHOOL_PREFIX + rest, error: null }
+  }
+  if (!SCHOOL_ID.test(v)) return { value: null, error: err('school', 'invalid') }
+  return { value: v, error: null }
+}
+
+function id(field: 'goal', raw: unknown): Text {
   if (raw === undefined || raw === null || raw === '') return { value: null, error: null }
   if (typeof raw !== 'string' || !ID.test(raw)) return { value: null, error: err(field, 'invalid') }
   return { value: raw, error: null }
@@ -116,11 +133,10 @@ export function normaliseProfile(raw: unknown, ctx: NormaliseContext = {}): Prof
   else consentAt = new Date(r.consentAt).toISOString()
 
   const goal = id('goal', r.goal)
-  const speciality = id('speciality', r.speciality)
   const firstName = text('firstName', r.firstName)
   const region = text('region', r.region)
-  const school = text('school', r.school)
-  for (const t of [goal, speciality, firstName, region, school]) if (t.error) errors.push(t.error)
+  const schoolValue = school(r.school)
+  for (const t of [goal, firstName, region, schoolValue]) if (t.error) errors.push(t.error)
 
   if (errors.length > 0 || ageRange === null) return { ok: false, errors }
 
@@ -131,10 +147,9 @@ export function normaliseProfile(raw: unknown, ctx: NormaliseContext = {}): Prof
     profile: {
       ageRange,
       goal: goal.value,
-      speciality: speciality.value,
       firstName: unlocked ? firstName.value : null,
       region: unlocked ? region.value : null,
-      school: unlocked && ctx.isStudent === true ? school.value : null,
+      school: unlocked && ctx.isStudent === true ? schoolValue.value : null,
       parentalConfirmation: under15 && r.parentalConfirmation === true,
       consentAt,
     },

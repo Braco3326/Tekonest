@@ -7,10 +7,15 @@ import { type AgeRange, isUnder15 } from './ageRange'
 export type ProfileField = 'ageRange' | 'goal' | 'parentConfirmation' | 'firstName' | 'region' | 'school'
 
 export interface FieldContext {
-  /** True when the learner says they are a pupil or student: only then is the school field offered. */
+  /** True when the goal is a study goal (see isStudentGoal): only then is the school field offered. */
   isStudent: boolean
   /** True when a parent or guardian confirmation has been ticked (only meaningful under 15). */
   parentConfirmed: boolean
+}
+
+/** A study goal: the goal id (a goal-tree node id such as `etudie.bts-mav-son`) starts with `etudie`. Only then is the school asked. */
+export function isStudentGoal(goal: string | null | undefined): boolean {
+  return typeof goal === 'string' && goal.startsWith('etudie')
 }
 
 export function needsParentConfirmation(range: AgeRange): boolean {

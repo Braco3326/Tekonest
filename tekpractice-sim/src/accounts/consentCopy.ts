@@ -39,11 +39,10 @@ export const DATA_ITEMS: DataItem[] = [
   { key: 'email', label: 'votre adresse e-mail' },
   { key: 'password', label: 'votre mot de passe (conservé sous forme chiffrée par le service de connexion ; il n’est pas lisible)' },
   { key: 'ageRange', label: 'votre tranche d’âge' },
-  { key: 'goal', label: 'votre but choisi dans le jeu' },
-  { key: 'speciality', label: 'votre spécialité choisie dans le jeu' },
+  { key: 'goal', label: 'votre but choisi dans le jeu (par exemple une formation)' },
   { key: 'firstName', label: 'votre prénom (facultatif)' },
   { key: 'region', label: 'votre ville ou votre région (facultatif)' },
-  { key: 'school', label: 'votre établissement, si vous êtes élève ou étudiant(e) (facultatif)' },
+  { key: 'school', label: 'votre établissement, si votre but est une formation (facultatif)' },
   { key: 'parentalConfirmation', label: 'la confirmation d’un parent ou tuteur, si vous avez moins de 15 ans' },
   { key: 'consentAt', label: 'la date de votre consentement' },
 ]
