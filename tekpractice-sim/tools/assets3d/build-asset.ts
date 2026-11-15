@@ -456,12 +456,20 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   }
   let generic = false
   if (scripted && opts.projectFrom === undefined && (opts.projectPhotos ?? []).length === 0) {
-    // No picture was asked for: a device that has a generic panel gets it (the picture belongs to the device, not to one command line).
+    // No picture was asked for: the spec's own photos (build.photos) and, for the other faces, the device's generic panel (the picture belongs to the device, not to one command line).
     const wanted = spec.build?.projection ?? 'io'
-    const panel = await d.genericPanelPhotos(id, Array.isArray(wanted) ? wanted : [wanted])
-    if (panel.length > 0) {
-      opts = { ...opts, projectPhotos: panel }
-      generic = true
+    const wantedFaces = Array.isArray(wanted) ? wanted : [wanted]
+    const fromSpec: PhotoArg[] = (spec.build?.photos ?? []).map((p) => ({
+      face: p.face,
+      file: join(d.paths.sourceDir, id, 'photos', p.file),
+      ...(p.crop ? { crop: p.crop } : {}),
+      ...(p.fill ? { fillBackground: true } : {}),
+    }))
+    const panel = await d.genericPanelPhotos(id, wantedFaces.filter((f) => !fromSpec.some((p) => p.face === f)))
+    const all = [...fromSpec, ...panel]
+    if (all.length > 0) {
+      opts = { ...opts, projectPhotos: all }
+      generic = fromSpec.length === 0
     }
   }
   const hybrid = scripted && (opts.projectFrom !== undefined || (opts.projectPhotos ?? []).length > 0)

@@ -2,7 +2,7 @@
  * review-model: the model review sheet, a working file (never shipped). For each id it renders the shipped GLB from the
  * front and rear three-quarter in Blender and puts the two renders beside the best reference photos.
  *
- *   node tools/assets3d/review-model.mjs <out-dir> <id> [<id> ...]      (BLENDER_EXE, default D:\Blender\blender.exe)
+ *   node tools/assets3d/review-model.mjs <out-dir> <id>[@model.glb] [...]      (BLENDER_EXE, default D:\Blender\blender.exe)
  *
  * Output: <out-dir>/<id>.png. It is a human check (the founder's bar: "as if it was a real equipment from the collected photos").
  */
@@ -28,8 +28,9 @@ function photosOf(id) {
 }
 
 const H = 480
-for (const id of ids) {
-  const glb = join(root, 'public', 'assets', `${id}.glb`)
+for (const arg of ids) {
+  const [id, glbArg] = arg.split('@')   // id or id@path/to/model.glb (a work-dir build not shipped yet)
+  const glb = glbArg || join(root, 'public', 'assets', `${id}.glb`)
   if (!existsSync(glb)) { console.log(`skip ${id}: no GLB`); continue }
   const tmp = join(outDir, `_${id}`)
   execFileSync(blender, ['--background', '--python', join(root, 'tools/assets3d/blender/review_render.py'), '--', glb, tmp, '720'], { stdio: 'pipe' })

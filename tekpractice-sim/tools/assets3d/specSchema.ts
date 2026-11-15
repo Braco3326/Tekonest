@@ -89,6 +89,12 @@ export const BuildSpec = z.object({
   projection: z.union([ProjectionFaceEnum, z.array(ProjectionFaceEnum).min(1).max(4)]).optional().describe('The face(s) that take their picture from a Meshy model (asset:build --scripted --project <fixed.glb>); default io. Each picture is mapped planar onto the scripted faces that look that way; a face given twice or two faces looking the same way is refused.'),
   budget: TriangleBudget.optional().describe("Triangles the finished GLB must have, from the class floor to the ceiling (gate 'detail'), e.g. speaker 1500 to 4000. Absent = no check."),
   minFilletMm: z.number().finite().positive().optional().describe("The smallest edge fillet, in millimetres, the builder must have built (gate 'fillet'; the builder measures it and writes it into the GLB extras). Absent = no check."),
+  photos: z.array(z.object({
+    face: ProjectionFaceEnum,
+    file: z.string().min(1).describe('File name in assets-source/<id>/photos (a straight-on manufacturer photo).'),
+    crop: z.tuple([z.number().int().min(0), z.number().int().min(0), z.number().int().positive(), z.number().int().positive()]).optional().describe('[left, top, width, height] in pixels of the ORIGINAL photo: the straight-on face inside it (see photoProjection).'),
+    fill: z.boolean().optional().describe('Repaint the white corners of a rounded casing (photoProjection fillBackground).'),
+  }).strict()).max(4).optional().describe('Faces whose picture is a straight-on reference photo instead of the generic drawn panel. A rebuild with no --project-photo uses these, and the generic panel for the other faces.'),
   projectionShiftMm: z.object({ io: z.number().finite(), opposite: z.number().finite(), top: z.number().finite(), left: z.number().finite(), right: z.number().finite() }).partial().strict().optional().describe("Millimetres to move the picture of a projected face sideways (face-local x, positive = right) before it is mapped: for a cabinet whose real panel sits where the Meshy model has it off-centre, so the picture moves with the ports."),
 }).strict().superRefine((b, ctx) => {
   const { profile, colours } = b
