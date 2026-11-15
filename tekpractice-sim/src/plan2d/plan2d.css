@@ -1,19 +1,28 @@
-/* The 2D schema page (mission 2): a full-window layer over the 3D view, in the chrome's tokens (Nuit ground, Papier ink, Ambre selection), square corners.
-   The cable colours are the colour and symbol sheet's (>= 3:1 on Nuit); they are set inline by the view, never here. */
+/* The 2D schema page (mission 2): a full-window layer over the 3D view, in the chrome's tokens, square corners.
+   Inside `.cr-dialog` a design package re-points the palette tokens (src/design/packages.css: Nuit ground on design 2, Papier sheet on design 3): the page
+   follows them, and its focus and selection marks use the role tokens (--cr-focus, --cr-select), never a fixed Ambre (Ambre is 2.2:1 on Papier).
+   The cable colours are the colour and symbol sheet's (>= 3:1 on Nuit and on Papier); they are set inline by the view, never here.
+   Review 2026-11-15: the modal's two focus sentinels are out of the grid (they took a row and pushed the intro under the toolbar); touch targets are 44 px
+   on a coarse pointer; under 760 px the page scrolls as one column and the plan keeps a real height. */
 
 .cr-dialog.p2d-page {
   width: 100vw;
   height: 100vh;
-  max-height: 100vh;
+  height: 100dvh;
+  max-height: none;
   max-width: none;
-  padding: 12px 16px;
+  padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
   border: 0;
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   overflow: hidden;
+  position: relative;
 }
-.cr-dialog.p2d-page > .cr-dialog-title { margin: 0; font-family: var(--cr-font-title); font-size: 18px; }
-.cr-dialog.p2d-page > .cr-dialog-body { margin: 2px 0 8px; color: var(--cr-ink-muted); font-size: 13px; }
+/* the sentinels are focus stops, not layout: out of the grid flow */
+.cr-dialog.p2d-page > [data-sentinel] { position: absolute; width: 1px; height: 1px; overflow: hidden; }
+.cr-dialog.p2d-page > .cr-dialog-title { grid-row: 1; margin: 0; font-family: var(--cr-font-title); font-size: 18px; }
+.cr-dialog.p2d-page > .cr-dialog-body { grid-row: 2; margin: 2px 0 8px; color: var(--cr-ink-muted); font-size: 13px; }
+.cr-dialog.p2d-page > .p2d { grid-row: 3; }
 
 .p2d { display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; min-height: 0; gap: 8px; }
 .p2d-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
@@ -28,11 +37,13 @@
   min-height: 32px;
 }
 .p2d-btn { cursor: pointer; }
-.p2d-btn:hover { border-color: var(--cr-ambre); }
-.p2d-btn[disabled] { opacity: 0.5; cursor: default; }
-.p2d-btn[aria-expanded='true'] { border-color: var(--cr-ambre); color: var(--cr-ambre); }
+@media (hover: hover) { .p2d-btn:not([disabled]):hover { border-color: var(--cr-select); } }
+/* disabled: still legible (the reason is said beside it), the dashed edge says « off » without fading the text */
+.p2d-btn[disabled] { color: var(--cr-ink-muted); border-style: dashed; cursor: default; }
+.p2d-btn[aria-expanded='true'] { border-color: var(--cr-select); box-shadow: inset 0 -3px 0 var(--cr-select); }
 .p2d-snap-label { font-size: 13px; color: var(--cr-ink-muted); margin-left: 6px; }
-.p2d :focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: 2px; }
+.p2d :focus-visible { outline: 2px solid var(--cr-focus); outline-offset: 2px; }
+.p2d-spawn-why { font-size: 12px; color: var(--cr-ink-muted); }
 
 .p2d-main { display: grid; grid-template-columns: 220px minmax(0, 1fr) 230px; gap: 10px; min-height: 0; }
 .p2d-side-title { margin: 0 0 6px; font-family: var(--cr-font-title); font-size: 14px; }
@@ -40,7 +51,7 @@
 .p2d-palette { display: flex; flex-direction: column; min-height: 0; background: var(--cr-panel); padding: 8px; }
 .p2d-search-label { font-size: 12px; color: var(--cr-ink-muted); }
 .p2d-search { width: 100%; box-sizing: border-box; margin: 2px 0 8px; }
-.p2d-palette-list { overflow: auto; min-height: 0; flex: 1; }
+.p2d-palette-list { overflow: auto; min-height: 0; flex: 1; overscroll-behavior: contain; }
 .p2d-palette-tab { margin: 8px 0 2px; font-size: 12px; color: var(--cr-ink-muted); font-weight: 600; }
 .p2d-palette-item {
   display: block;
@@ -55,21 +66,28 @@
   padding: 4px 6px;
   min-height: 28px;
   cursor: pointer;
-  touch-action: none;
+  /* a vertical swipe scrolls the list (touch); a sideways press-and-move is a drag to the plan */
+  touch-action: pan-y;
 }
-.p2d-palette-item:hover, .p2d-palette-item:focus-visible { border-color: var(--cr-ambre); }
+@media (hover: hover) { .p2d-palette-item:hover { border-color: var(--cr-select); } }
+.p2d-palette-item:focus-visible { border-color: var(--cr-select); }
 .p2d-palette-item.p2d-dragging { opacity: 0.6; }
 .p2d-empty { font-size: 13px; color: var(--cr-ink-muted); }
 
 .p2d-stage { position: relative; min-height: 0; background: var(--cr-nuit); border: 1px solid var(--cr-panel-line); overflow: hidden; }
-.p2d-svg { display: block; width: 100%; height: 100%; touch-action: none; user-select: none; font-family: var(--cr-font-ui); }
-.p2d-svg:focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: -2px; }
-.p2d-empty-plan { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0; color: var(--cr-ink-muted); font-size: 14px; pointer-events: none; }
+.p2d-svg { display: block; width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-user-select: none; font-family: var(--cr-font-ui); }
+.p2d-svg:focus-visible { outline: 2px solid var(--cr-focus); outline-offset: -2px; }
+.p2d-empty-plan { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0; max-width: 80%; text-align: center; color: var(--cr-papier); background: var(--cr-nuit); padding: 4px 8px; font-size: 14px; pointer-events: none; }
+/* the room outline is the place picker's drawing, inked in Papier for a Nuit card: here its Papier strokes and fills follow the page's ink, so the walls
+   stay drawn on the design 3 Papier sheet (they vanished there: review 2026-11-15) */
+.p2d-room [stroke='#F3EDE3'] { stroke: var(--cr-papier); }
+.p2d-room [fill='#F3EDE3'] { fill: var(--cr-papier); }
 .p2d-grid line { stroke: var(--cr-papier); stroke-opacity: 0.12; stroke-width: 1; }
-.p2d-orient text { fill: var(--cr-ink-muted); font-size: 12px; }
-.p2d-orient .p2d-room-name { fill: var(--cr-papier); font-size: 13px; font-weight: 600; }
-.p2d-scalebar path { fill: none; stroke: var(--cr-papier); stroke-width: 1.5; }
-.p2d-scalebar text { fill: var(--cr-papier); font-size: 11px; }
+.p2d-orient text { fill: var(--cr-papier); font-size: 12px; }
+.p2d-orient .p2d-room-name { font-size: 13px; font-weight: 600; }
+.p2d-scalebar rect { fill: var(--cr-nuit); fill-opacity: 0.85; }
+.p2d-scalebar path { fill: none; stroke: var(--cr-papier); stroke-width: 2; }
+.p2d-scalebar text { fill: var(--cr-papier); font-size: 12px; font-weight: 600; }
 
 .p2d-dev { cursor: grab; outline: none; }
 .p2d-dev .p2d-hit { fill: transparent; }
@@ -78,22 +96,33 @@
 .p2d-dev .p2d-sym { fill: none; stroke: var(--cr-papier); stroke-width: 1.3; }
 .p2d-dev .p2d-anchor { fill: var(--cr-ink-muted); }
 .p2d-dev .p2d-anchor-used { fill: var(--cr-papier); }
-.p2d-dev-label { fill: var(--cr-papier); font-size: 11px; pointer-events: none; }
-.p2d-dev-note { fill: var(--cr-ink-muted); font-size: 10px; pointer-events: none; }
-.p2d-dev.p2d-sel .p2d-fp, .p2d-dev:focus-visible .p2d-fp { stroke: var(--cr-ambre); stroke-width: 2.5; }
-.p2d-dev:focus-visible .p2d-hit { stroke: var(--cr-ambre); stroke-width: 1.5; stroke-dasharray: 3 2; }
-.p2d-dev.p2d-lit .p2d-fp { stroke: var(--cr-ambre); stroke-width: 3; }
-.p2d-dev.p2d-dim { opacity: 0.4; }
+/* the label keeps a halo of the ground so it stays legible over a grid line or a cable */
+.p2d-dev-label { fill: var(--cr-papier); font-size: 11px; pointer-events: none; paint-order: stroke; stroke: var(--cr-nuit); stroke-width: 3px; stroke-linejoin: round; }
+.p2d-dev-note { fill: var(--cr-ink-muted); font-size: 10px; pointer-events: none; paint-order: stroke; stroke: var(--cr-nuit); stroke-width: 3px; }
+.p2d-dev.p2d-sel .p2d-fp, .p2d-dev:focus-visible .p2d-fp { stroke: var(--cr-select); stroke-width: 2.5; }
+.p2d-dev.p2d-sel .p2d-dev-label { font-weight: 700; }
+.p2d-dev:focus-visible .p2d-hit { stroke: var(--cr-focus); stroke-width: 1.5; stroke-dasharray: 3 2; }
+.p2d-dev.p2d-lit .p2d-fp { stroke: var(--cr-select); stroke-width: 3; }
+.p2d-dev.p2d-lit .p2d-hit { stroke: var(--cr-select); stroke-width: 1.5; }
+.p2d-dev.p2d-dim { opacity: 0.45; }
 
 .p2d-cable { cursor: pointer; outline: none; }
 .p2d-cable-hit { stroke: transparent; stroke-width: 14; fill: none; }
 .p2d-cable-line { fill: none; }
-.p2d-cable-halo { fill: none; stroke: var(--cr-ambre); stroke-opacity: 0.5; }
-.p2d-cable:focus-visible .p2d-cable-hit { stroke: var(--cr-ambre); stroke-opacity: 0.35; }
+/* selected: a wide halo in the ink (distinct from every cable colour, the speaker vermilion included) */
+.p2d-cable-halo { fill: none; stroke: var(--cr-papier); stroke-opacity: 0.45; }
+.p2d-cable.p2d-sel .p2d-tag-bg { stroke-width: 2.5; }
+.p2d-cable.p2d-sel .p2d-tag { font-weight: 700; }
+.p2d-cable:focus-visible .p2d-cable-hit { stroke: var(--cr-focus); stroke-opacity: 0.35; }
 .p2d-tag-bg { fill: var(--cr-nuit); stroke-width: 1; }
 .p2d-tag { fill: var(--cr-papier); font-size: 10px; pointer-events: none; }
 .p2d-line-glyph { fill: none; stroke-width: 1.5; }
 path.p2d-line-glyph[fill] { stroke: none; }
+
+/* what the selection can do, on screen (touch has no Suppr, no R): beside the plan, bottom right */
+.p2d-actions { position: absolute; right: 8px; bottom: 8px; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; max-width: calc(100% - 16px); }
+.p2d-actions[hidden] { display: none; }
+.p2d-actions .p2d-btn { background: var(--cr-panel); }
 
 .p2d-rear { position: absolute; inset: 0; background: color-mix(in srgb, var(--cr-nuit) 92%, transparent); overflow: auto; perspective: 1200px; }
 .p2d-rear-panel { box-sizing: border-box; min-height: 100%; padding: 16px; background: var(--cr-nuit); }
@@ -105,13 +134,14 @@ path.p2d-line-glyph[fill] { stroke: none; }
 @media (prefers-reduced-motion: reduce) {
   .p2d-flip-in { animation: none; }
 }
-.p2d-rear-title { margin: 0 0 4px; font-family: var(--cr-font-title); font-size: 16px; }
+.p2d-rear-title { margin: 0 0 4px; font-family: var(--cr-font-title); font-size: 16px; overflow-wrap: anywhere; }
 .p2d-rear-note { margin: 0 0 4px; font-size: 12px; color: var(--cr-ink-muted); }
 .p2d-rear-line { margin: 0 0 10px; font-size: 13px; }
-.p2d-rear-grid { display: grid; grid-template-columns: repeat(var(--p2d-cols, 4), minmax(110px, 1fr)); gap: 8px; }
+/* as many columns as fit (a port card never narrower than 150 px), never wider than the panel */
+.p2d-rear-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
 .p2d-port {
   display: grid;
-  grid-template-columns: 30px 1fr;
+  grid-template-columns: 30px minmax(0, 1fr);
   grid-template-areas: 'icon name' 'icon meta' 'why why';
   align-items: center;
   column-gap: 6px;
@@ -127,16 +157,19 @@ path.p2d-line-glyph[fill] { stroke: none; }
   cursor: pointer;
 }
 .p2d-port-icon { grid-area: icon; color: var(--cr-papier); }
-.p2d-port-name { grid-area: name; font-weight: 600; word-break: break-all; }
+.p2d-port-name { grid-area: name; font-weight: 600; overflow-wrap: anywhere; }
 .p2d-port-meta { grid-area: meta; color: var(--cr-ink-muted); font-size: 11px; }
-.p2d-port-why { grid-area: why; color: var(--cr-ink-muted); font-size: 11px; margin-top: 4px; }
-.p2d-port-lit { border: 2px solid var(--cr-ambre); }
-.p2d-port-lit .p2d-port-icon { color: var(--cr-ambre); }
-.p2d-port-dim, .p2d-port-taken { opacity: 0.55; cursor: not-allowed; }
+.p2d-port-why { grid-area: why; color: var(--cr-papier); font-size: 11px; margin-top: 4px; }
+.p2d-port-lit { border: 2px solid var(--cr-select); box-shadow: inset 4px 0 0 var(--cr-select); }
+.p2d-port-lit .p2d-port-icon { color: var(--cr-select); }
+/* a refused port: dashed, its icon faded, its words at full contrast (the reason must stay readable) */
+.p2d-port-dim, .p2d-port-taken { border-style: dashed; background: transparent; cursor: not-allowed; }
+.p2d-port-dim .p2d-port-icon, .p2d-port-taken .p2d-port-icon { opacity: 0.45; }
+.p2d-port-dim .p2d-port-name, .p2d-port-taken .p2d-port-name { color: var(--cr-ink-muted); }
 .p2d-glyph { fill: none; stroke: currentColor; stroke-width: 1.4; }
 .p2d-glyph .p2d-pin-m { fill: currentColor; stroke: none; }
 .p2d-glyph .p2d-pin-f { fill: none; stroke: currentColor; stroke-width: 1; }
-.p2d-rear-actions { display: flex; gap: 8px; margin-top: 12px; }
+.p2d-rear-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 
 .p2d-side { display: flex; flex-direction: column; gap: 10px; overflow: auto; min-height: 0; }
 .p2d-legend, .p2d-sources { background: var(--cr-panel); padding: 8px; }
@@ -148,7 +181,7 @@ path.p2d-line-glyph[fill] { stroke: none; }
 .p2d-source-tag { display: inline-block; margin-right: 6px; padding: 0 4px; border: 1px solid var(--cr-ink-muted); color: var(--cr-ink-muted); font-size: 11px; }
 
 /* stage 2: the send's report (side column) and its confirmations (the .cr-dialog pattern, drawn inside the page) */
-.p2d-report { background: var(--cr-panel); padding: 8px; border-left: 2px solid var(--cr-ambre); font-size: 12px; }
+.p2d-report { background: var(--cr-panel); padding: 8px; border-left: 3px solid var(--cr-select); font-size: 12px; }
 .p2d-report-head { margin: 0 0 6px; }
 .p2d-report-refused { margin: 6px 0 2px; font-weight: 600; }
 .p2d-report-list { margin: 0 0 8px; padding-left: 16px; }
@@ -158,7 +191,41 @@ path.p2d-line-glyph[fill] { stroke: none; }
 .p2d-keys { margin: 0; font-size: 12px; color: var(--cr-ink-muted); }
 .p2d-live { margin: 0; min-height: 1.3em; font-size: 13px; }
 
-@media (max-width: 760px) {
-  .p2d-main { grid-template-columns: 1fr; grid-template-rows: auto minmax(320px, 1fr) auto; overflow: auto; }
-  .p2d-palette { max-height: 30vh; }
+/* touch: every control at least 44 px (WCAG 2.5.5 / the platforms' own minimum); the plan's hit areas grow the same way */
+@media (pointer: coarse) {
+  .p2d-btn, .p2d-snap, .p2d-search, .p2d-palette-item, .p2d-port, .p2d-confirm .cr-dialog-btn { min-height: 44px; }
+  .p2d-confirm .cr-dialog-btn { min-width: 44px; }
+  .p2d-btn { min-width: 44px; }
+  .p2d-dev .p2d-hit { r: 23px; }
+  .p2d-cable-hit { stroke-width: 44; }
+  .p2d-keys { display: none; }
+}
+
+/* 760 to 1100 px (a tablet, a narrow window): two columns, the plan as wide as it can be; the legend, sources and report under it (three columns left the
+   plan 315 px wide on an 820 px tablet: review 2026-11-15) */
+@media (min-width: 760px) and (max-width: 1100px) {
+  .p2d-main { grid-template-columns: 200px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; }
+  .p2d-palette { grid-row: 1 / 3; }
+  .p2d-side { grid-column: 2; max-height: 32vh; }
+}
+
+/* under 760 px: one column that scrolls as a page; the plan keeps a real height; a drag on the plan never scrolls the page (touch-action: none above) */
+@media (max-width: 759.98px) {
+  /* the parts keep their content height (min-height: auto): with the desktop's min-height: 0 the fixed-height page squeezed them and the live line
+     was drawn over the palette (review 2026-11-15) */
+  .p2d, .p2d-main, .p2d-side { min-height: auto; }
+  .cr-dialog.p2d-page { overflow-y: auto; grid-template-rows: auto auto auto; align-content: start; padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); }
+  .cr-dialog.p2d-page > .cr-dialog-title { font-size: 17px; }
+  .cr-dialog.p2d-page > .cr-dialog-body { font-size: 12px; }
+  .p2d { grid-template-rows: auto auto auto auto; }
+  .p2d-toolbar { gap: 4px; }
+  .p2d-toolbar .p2d-btn { padding: 4px 8px; font-size: 12px; }
+  .p2d-spawn-why { flex-basis: 100%; }
+  .p2d-main { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; }
+  /* the plan first (a palette tap places on the plan in view), the palette under it with an explicit height: an `auto` row with a min-height: 0 flex
+     column collapsed to its title (review 2026-11-15, the phone screenshot) */
+  .p2d-stage { order: 1; height: max(320px, 52vh); }
+  .p2d-palette { order: 2; height: max(220px, 36vh); }
+  .p2d-side { order: 3; }
+  .p2d-side { overflow: visible; }
 }

@@ -1396,5 +1396,13 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     whyCableDevice: 'Câble {a} vers {b} : {device} n’a pas été créé.',
     whyCableRule: 'Câble {a} vers {b} : {title} {detail}',
     show3d: 'Voir la scène 3D',
+    // Review 2026-11-15: the selection's actions on screen (touch has no keys). À valider (tekuxwriter, 2026-11-15).
+    actions: 'Actions sur la sélection',
+    side: 'Légende, sources et compte rendu',
+    actRear: 'Panneau arrière',
+    actRotate: 'Pivoter de 90°',
+    actDuplicate: 'Dupliquer',
+    actRemove: 'Supprimer',
+    actDisconnect: 'Retirer le câble',
   },
 }

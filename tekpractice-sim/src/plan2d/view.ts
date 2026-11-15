@@ -207,9 +207,20 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
   rearHost.hidden = true
   const keysHelp = el('p', 'p2d-keys', P().keys)
   keysHelp.id = 'p2d-keys'
-  stage.append(svg, emptyMsg, rearHost)
+  // the selection's actions on screen (review 2026-11-15: rotate, delete, the rear panel and dropping a held cable had only a key, nothing for touch)
+  const actions = el('div', 'p2d-actions')
+  actions.setAttribute('role', 'group')
+  actions.setAttribute('aria-label', P().actions!)
+  actions.dataset.testid = 'plan2d-actions'
+  actions.hidden = true
+  let actionsKey = ''
+  stage.append(svg, emptyMsg, actions, rearHost)
 
   const side = el('div', 'p2d-side')
+  // the side column scrolls (the sources panel is long): a keyboard user must be able to reach and scroll it (axe scrollable-region-focusable, review 2026-11-15)
+  side.setAttribute('role', 'region')
+  side.setAttribute('aria-label', P().side!)
+  side.tabIndex = 0
   const legend = el('section', 'p2d-legend')
   legend.setAttribute('aria-labelledby', 'p2d-legend-title')
   legend.dataset.testid = 'plan2d-legend'
@@ -279,10 +290,29 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
   }
 
   // ── plan edits (each is one undoable step)
+  /**
+   * Where a new device goes: the point asked for, or (when a device already stands there) the nearest free slot on rings around it. A slot is one
+   * device plus a label apart (its footprint + 0.4 m, and at least ~64 px on screen sideways, ~40 px up or down), so two symbols placed at the same
+   * point never pile up with their labels on top of each other (review 2026-11-15: four palette clicks drew « QL1K12K12SM58 » on one spot).
+   */
+  const freeSpot = (deviceId: string, x: number, z: number): { x: number; z: number } => {
+    const fp = footprintOf(deviceId)
+    const sx = Math.max(snapStep, snap(Math.max(fp.w + 0.4, 64 / view.scale), snapStep))
+    const sz = Math.max(snapStep, snap(Math.max(fp.d + 0.4, 40 / view.scale), snapStep))
+    const x0 = snap(x, snapStep)
+    const z0 = snap(z, snapStep)
+    const free = (px: number, pz: number): boolean => !history.plan.devices.some((q) => Math.abs(q.x - px) < sx * 0.9 && Math.abs(q.z - pz) < sz * 0.9)
+    if (free(x0, z0)) return { x: x0, z: z0 }
+    for (let r = 1; r <= 12; r++)
+      for (const [i, j] of [[-1, 0], [1, 0], [0, 1], [0, -1], [-1, 1], [1, 1], [-1, -1], [1, -1]] as const) {
+        const px = x0 + i * r * sx
+        const pz = z0 + j * r * sz
+        if (Math.abs(px) <= room.width / 2 && Math.abs(pz) <= room.length / 2 && free(px, pz)) return { x: px, z: pz }
+      }
+    return { x: x0, z: z0 }
+  }
   const place = (deviceId: string, x: number, z: number): void => {
-    let px = snap(x, snapStep)
-    const pz = snap(z, snapStep)
-    for (let k = 0; k < 40 && history.plan.devices.some((q) => Math.abs(q.x - px) < 0.05 && Math.abs(q.z - pz) < 0.05); k++) px = snap(px - 2 * snapStep, snapStep)
+    const { x: px, z: pz } = freeSpot(deviceId, x, z)
     const label = registry.deviceById.get(deviceId)?.label ?? deviceId
     const r = history.do({ type: 'place', deviceId, x: px, z: pz }, fill(P().entryPlace!, { device: label }))
     if (!r.ok) return
@@ -303,6 +333,7 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     if (held && ids.includes(held.dev)) held = null
     if (history.do({ type: 'remove', ids }, P().entryRemove!).ok) {
       selection = []
+      render()
       say(fill(P().removed!, { n: String(ids.length) }))
     }
   }
@@ -348,6 +379,7 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     const m = rearModel(registry, history.plan, dev, held, rules, portName)
     if (!m) return
     rearDev = dev
+    renderActions()
     const dv = deviceOf(dev)!
     const at = toScreen(view, dv.x, dv.z)
     const first = mountRear(doc, rearHost, m, { onPort, onBack: () => closeRear(), onDrop: () => dropCable() }, { from: { x: at.sx, y: at.sy }, reduced: reduced() })
@@ -573,13 +605,37 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     // orientation (seen from the audience) and the place's name
     const mx = (tl.sx + br.sx) / 2
     const my = (tl.sy + br.sy) / 2
+    // the labels sit OUTSIDE the walls: the outline's wall stroke is 1.6 % of the room's longer side, centred on the wall line (roomPlanSvg.ts)
+    const wallOut = 0.8 * (Math.max(room.width, room.length) / 100) * S + 5
     out.push('<g class="p2d-orient" aria-hidden="true">')
-    out.push(`<text x="${n2(tl.sx)}" y="${n2(tl.sy - 22)}" class="p2d-room-name">${esc(room.name)}</text>`)
-    out.push(`<text x="${n2(mx)}" y="${n2(tl.sy - 6)}" text-anchor="middle">${esc(P().stage!)}</text>`)
-    out.push(`<text x="${n2(mx)}" y="${n2(br.sy + 16)}" text-anchor="middle">${esc(P().audience!)}</text>`)
-    out.push(`<text x="${n2(tl.sx - 8)}" y="${n2(my)}" text-anchor="middle" transform="rotate(-90 ${n2(tl.sx - 8)} ${n2(my)})">${esc(P().jardin!)}</text>`)
-    out.push(`<text x="${n2(br.sx + 8)}" y="${n2(my)}" text-anchor="middle" transform="rotate(90 ${n2(br.sx + 8)} ${n2(my)})">${esc(P().cour!)}</text>`)
+    out.push(`<text x="${n2(tl.sx - wallOut)}" y="${n2(tl.sy - wallOut - 18)}" class="p2d-room-name">${esc(room.name)}</text>`)
+    out.push(`<text x="${n2(mx)}" y="${n2(tl.sy - wallOut - 3)}" text-anchor="middle">${esc(P().stage!)}</text>`)
+    out.push(`<text x="${n2(mx)}" y="${n2(br.sy + wallOut + 12)}" text-anchor="middle">${esc(P().audience!)}</text>`)
+    out.push(`<text x="${n2(tl.sx - wallOut - 4)}" y="${n2(my)}" text-anchor="middle" transform="rotate(-90 ${n2(tl.sx - wallOut - 4)} ${n2(my)})">${esc(P().jardin!)}</text>`)
+    out.push(`<text x="${n2(br.sx + wallOut + 4)}" y="${n2(my)}" text-anchor="middle" transform="rotate(90 ${n2(br.sx + wallOut + 4)} ${n2(my)})">${esc(P().cour!)}</text>`)
     out.push('</g>')
+    // labels never print over each other (review 2026-11-15: zoomed out, « QL1K12K12SM58 », « ProFX12v3ut PC »): device names first (the selected
+    // ones first of all), then the cable tags; a label with no room is left out of the drawing at this zoom (the device and the cable keep their full
+    // accessible names, a cable keeps its colour, its line pattern and the legend; zooming in brings the label back)
+    type Box = { x0: number; y0: number; x1: number; y1: number }
+    const taken: Box[] = []
+    const claim = (b: Box): boolean => {
+      if (taken.some((t) => b.x0 < t.x1 && t.x0 < b.x1 && b.y0 < t.y1 && t.y0 < b.y1)) return false
+      taken.push(b)
+      return true
+    }
+    const labelAt = (dv: PlanDevice): { x: number; y: number; text: string } => {
+      const fp = footprintOf(dv.deviceId)
+      const b = footprintBounds(dv, fp)
+      const c = toScreen(view, dv.x, dv.z)
+      return { x: c.sx, y: c.sy + Math.max(((b.maxZ - b.minZ) / 2) * S, 8) + 12, text: shortName(registry, dv.deviceId) }
+    }
+    const showLabel = new Set<string>()
+    for (const raw of [...plan.devices].sort((p, q) => Number(selection.includes(q.id)) - Number(selection.includes(p.id)))) {
+      const l = labelAt(posOf(raw))
+      const hw = (l.text.length * 6.2) / 2 + 2
+      if (claim({ x0: l.x - hw, y0: l.y - 10, x1: l.x + hw, y1: l.y + 3 })) showLabel.add(raw.id)
+    }
     // cables, under the devices
     out.push('<g class="p2d-cables">')
     for (const c of plan.cables) {
@@ -606,14 +662,15 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
       const midY = (sa.sy + sb.sy) / 2
       const tw = tag.length * 6.4 + 10
       const sel = cableSel === c.id
+      const tagShown = claim({ x0: midX - tw / 2, y0: midY - 9, x1: midX + tw / 2, y1: midY + 7 })
       out.push(
         `<g class="p2d-cable${sel ? ' p2d-sel' : ''}" data-cable="${esc(c.id)}" data-type="${t.type}" role="button" tabindex="0" aria-pressed="${sel}" aria-label="${esc(fill(P().cableLabel!, { type: typeName(t.type), a: t.a, b: t.b }))}">`,
         `<path class="p2d-cable-hit" d="${d}"/>`,
-        sel ? `<path class="p2d-cable-halo" d="${d}" stroke-width="${st.width + 6}"/>` : '',
+        sel ? `<path class="p2d-cable-halo" d="${d}" stroke-width="${st.width + 10}"/>` : '',
         `<path class="p2d-cable-line" d="${d}" stroke="${st.colour}" stroke-width="${st.width}"${st.dash ? ` stroke-dasharray="${st.dash}"` : ''} stroke-linecap="${st.dash.startsWith('0 ') ? 'round' : 'butt'}"${arrow !== 'to-a' ? ` marker-end="${marker}"` : ''}${arrow !== 'to-b' ? ` marker-start="${marker}"` : ''}/>`,
-        `<rect class="p2d-tag-bg" x="${n2(midX - tw / 2)}" y="${n2(midY - 9)}" width="${n2(tw)}" height="16" stroke="${st.colour}"/>`,
-        `<text class="p2d-tag" x="${n2(midX)}" y="${n2(midY + 3)}" text-anchor="middle">${esc(tag)}</text>`,
-        st.glyph === 'lightning' ? `<path class="p2d-line-glyph" d="M${n2(midX + tw / 2 + 4)} ${n2(midY - 8)}l-4 8h4l-3 8 8-10h-4l3-6Z" fill="${st.colour}"/>` : '',
+        tagShown ? `<rect class="p2d-tag-bg" x="${n2(midX - tw / 2)}" y="${n2(midY - 9)}" width="${n2(tw)}" height="16" stroke="${st.colour}"/>` : '',
+        tagShown ? `<text class="p2d-tag" x="${n2(midX)}" y="${n2(midY + 3)}" text-anchor="middle">${esc(tag)}</text>` : '',
+        tagShown && st.glyph === 'lightning' ? `<path class="p2d-line-glyph" d="M${n2(midX + tw / 2 + 4)} ${n2(midY - 8)}l-4 8h4l-3 8 8-10h-4l3-6Z" fill="${st.colour}"/>` : '',
         st.glyph === 'clock' ? `<circle class="p2d-line-glyph" cx="${n2(sa.sx)}" cy="${n2(sa.sy)}" r="6" stroke="${st.colour}"/><path class="p2d-line-glyph" d="M${n2(sa.sx)} ${n2(sa.sy - 4)}V${n2(sa.sy)}H${n2(sa.sx + 3)}" stroke="${st.colour}"/>` : '',
         '</g>',
       )
@@ -650,14 +707,14 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
         const used = plan.cables.some((k) => (k.a.dev === dv.id && k.a.port === q.portId) || (k.b.dev === dv.id && k.b.port === q.portId))
         out.push(`<circle class="p2d-anchor${used ? ' p2d-anchor-used' : ''}" cx="${n2(s.sx)}" cy="${n2(s.sy)}" r="${used ? 2.4 : 1.6}"/>`)
       })
-      out.push(`<text class="p2d-dev-label" x="${n2(c.sx)}" y="${n2(c.sy + half + 12)}" text-anchor="middle">${esc(label)}</text>`)
-      if (!fp.known) out.push(`<text class="p2d-dev-note" x="${n2(c.sx)}" y="${n2(c.sy + half + 24)}" text-anchor="middle">${esc(P().sizeUnknown!)}</text>`)
+      if (showLabel.has(dv.id)) out.push(`<text class="p2d-dev-label" x="${n2(c.sx)}" y="${n2(c.sy + half + 12)}" text-anchor="middle">${esc(label)}</text>`)
+      if (!fp.known && showLabel.has(dv.id)) out.push(`<text class="p2d-dev-note" x="${n2(c.sx)}" y="${n2(c.sy + half + 24)}" text-anchor="middle">${esc(P().sizeUnknown!)}</text>`)
       out.push('</g>')
     }
     out.push('</g>')
     // the scale bar, bottom left
     const bar = scaleBar(S)
-    out.push(`<g class="p2d-scalebar" aria-hidden="true" transform="translate(16 ${n2(h - 18)})"><path d="M0 -6V0H${n2(bar.px)}V-6"/><text x="${n2(bar.px / 2)}" y="-9" text-anchor="middle">${esc(bar.label)}</text></g>`)
+    out.push(`<g class="p2d-scalebar" aria-hidden="true" transform="translate(16 ${n2(h - 18)})"><rect x="-6" y="-26" width="${n2(bar.px + 12)}" height="32"/><path d="M0 -6V0H${n2(bar.px)}V-6"/><text x="${n2(bar.px / 2)}" y="-10" text-anchor="middle">${esc(bar.label)}</text></g>`)
     const focusedKey = (doc.activeElement as Element | null)?.closest?.('[data-dev],[data-cable]')
     const refocus = focusedKey && svg.contains(focusedKey) ? (focusedKey.getAttribute('data-dev') ? `[data-dev="${cssEsc(focusedKey.getAttribute('data-dev')!)}"]` : `[data-cable="${cssEsc(focusedKey.getAttribute('data-cable')!)}"]`) : null
     svg.innerHTML = out.join('')
@@ -665,10 +722,12 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     emptyMsg.hidden = plan.devices.length > 0
     undoBtn.disabled = !history.canUndo
     redoBtn.disabled = !history.canRedo
+    renderActions()
     if (spawnBtn) {
-      // an empty plan has nothing to send: the button is off and says why (its tooltip and its accessible description)
+      // an empty plan has nothing to send: the button is off and says why, in words beside it (no hover needed) and as its accessible description
       const empty = plan.devices.length === 0
       spawnBtn.disabled = empty || sending
+      spawnWhy.hidden = !empty
       if (empty) {
         spawnBtn.title = P().spawnEmpty!
         spawnBtn.setAttribute('aria-describedby', spawnWhy.id)
@@ -678,6 +737,48 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
       }
     }
     root.dataset.holding = String(held !== null)
+  }
+
+  /** The on-screen actions of what is selected or held; rebuilt only when that changes (a focused action keeps its focus across renders). */
+  function renderActions(): void {
+    const sel = selection.join(',')
+    const key = rearDev ? '' : held ? `held:${held.dev}:${held.port}` : cableSel ? `cable:${cableSel}` : sel ? `dev:${sel}` : ''
+    if (key === actionsKey) return
+    const hadFocus = actions.contains(doc.activeElement)
+    actionsKey = key
+    const list: HTMLButtonElement[] = []
+    const back = (): void => (svg.querySelector<SVGElement>(cableSel ? `[data-cable="${cssEsc(cableSel)}"]` : selection[0] ? `[data-dev="${cssEsc(selection[0])}"]` : '') ?? svg).focus()
+    if (held) list.push(btn(P().drop!, 'plan2d-act-drop', () => {
+      dropCable()
+      svg.focus()
+    }))
+    else if (cableSel) {
+      const id = cableSel
+      list.push(btn(P().actDisconnect!, 'plan2d-act-disconnect', () => {
+        disconnect(id)
+        svg.focus()
+      }))
+    } else if (selection.length) {
+      const ids = [...selection]
+      if (ids.length === 1) list.push(btn(P().actRear!, 'plan2d-act-rear', () => flip(ids[0]!)))
+      list.push(
+        btn(P().actRotate!, 'plan2d-act-rotate', () => {
+          rotate(ids, 90)
+          back()
+        }),
+        btn(P().actDuplicate!, 'plan2d-act-duplicate', () => {
+          duplicate(ids)
+          back()
+        }),
+        btn(P().actRemove!, 'plan2d-act-remove', () => {
+          remove(ids)
+          svg.focus()
+        }),
+      )
+    }
+    actions.replaceChildren(...list)
+    actions.hidden = list.length === 0
+    if (hadFocus) (list[0] ?? svg).focus()
   }
 
   history.subscribe((plan) => {
@@ -695,6 +796,8 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
   let drag: Drag | null = null
   const pointers = new Map<number, { x: number; y: number }>()
   let pinch: { dist: number } | null = null
+  /** The selection before the first finger came down (a pinch restores it). */
+  let beforeDown: { selection: string[]; cable: string | null } | null = null
   const local = (e: { clientX: number; clientY: number }): { x: number; y: number } => {
     const r = svg.getBoundingClientRect()
     return { x: e.clientX - r.left, y: e.clientY - r.top }
@@ -708,8 +811,16 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
       pinch = { dist: Math.hypot(p!.x - q!.x, p!.y - q!.y) || 1 }
       drag = null
       dragOffset = null
+      // a pinch whose first finger landed on a device or a cable is a zoom, not a pick: the selection goes back to what it was (review 2026-11-15)
+      if (beforeDown) {
+        selection = beforeDown.selection
+        cableSel = beforeDown.cable
+        beforeDown = null
+        render()
+      }
       return
     }
+    beforeDown = { selection: [...selection], cable: cableSel }
     try {
       svg.setPointerCapture(id)
     } catch {
@@ -949,8 +1060,11 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
       finish = () => done(undefined)
       const focusables = (): HTMLElement[] =>
         [...b.querySelectorAll<HTMLElement>(FOCUSABLE)].filter((x) => x.dataset.sentinel === undefined && !x.closest('[hidden]') && !x.closest('[inert]'))
+      // a touch screen opens on the plan, not in the search field (a focused field pops the on-screen keyboard over half the page)
+      const coarse = doc.defaultView?.matchMedia?.('(pointer: coarse)').matches ?? false
       return {
-        first: palette.search,
+        // the modal only calls .focus() on it, which an SVG element has
+        first: coarse ? (svg as unknown as HTMLElement) : palette.search,
         edges: () => {
           const all = focusables()
           return [all[0] ?? closeBtn, all[all.length - 1] ?? closeBtn]

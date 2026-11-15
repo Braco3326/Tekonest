@@ -1359,6 +1359,13 @@ La page du schéma 2D (mission 2, spec `docs/superpowers/specs/2026-11-15-plan2d
 | `plan2d.whyCableDevice` | Câble {a} vers {b} : {device} n’a pas été créé. | à valider (tekuxwriter) | Refus d’un câble dont un appareil manque |
 | `plan2d.whyCableRule` | Câble {a} vers {b} : {title} {detail} | à valider (tekuxwriter) | Refus d’un câble par les règles de connexion ; {title} et {detail} = le texte de la règle, celui de la barre d’état 3D |
 | `plan2d.show3d` | Voir la scène 3D | à valider (tekuxwriter) | Bouton du compte rendu : ferme la page sur la vue 3D, le nouveau matériel sélectionné et cadré |
+| `plan2d.actions` | Actions sur la sélection | à valider (tekuxwriter) | Nom du groupe de boutons posé sur le plan (revue 2026-11-15 : le tactile n’a pas de touches) |
+| `plan2d.side` | Légende, sources et compte rendu | à valider (tekuxwriter) | Nom de la colonne de droite (zone qui défile, atteignable au clavier) |
+| `plan2d.actRear` | Panneau arrière | à valider (tekuxwriter) | Bouton : ouvre le panneau arrière de l’appareil sélectionné |
+| `plan2d.actRotate` | Pivoter de 90° | à valider (tekuxwriter) | Bouton : pivote la sélection de 90° (comme R) |
+| `plan2d.actDuplicate` | Dupliquer | à valider (tekuxwriter) | Bouton : duplique la sélection (comme Ctrl+D) |
+| `plan2d.actRemove` | Supprimer | à valider (tekuxwriter) | Bouton : retire la sélection du plan (comme Suppr) |
+| `plan2d.actDisconnect` | Retirer le câble | à valider (tekuxwriter) | Bouton : retire le câble sélectionné (comme Suppr) |
 
 ## Textes hors COPY (index.html)
 

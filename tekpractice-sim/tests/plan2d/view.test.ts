@@ -11,6 +11,7 @@ import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { floorPlanSvg } from '../../src/creation/roomPlanSvg'
 import { openPlan2dPage, type Plan2dPage } from '../../src/plan2d/view'
 import { planKey } from '../../src/plan2d/persist'
+import { fitView } from '../../src/plan2d/geometry'
 
 const registry = loadCatalog(catalogJson)
 
@@ -103,7 +104,16 @@ describe('placing and editing (one undo step each)', () => {
     expect(dev('qsc-k12-2-1').getAttribute('data-family')).toBe('speaker')
     expect(live()).toBe('QSC K12.2 posé à x 0 m, z 0 m.')
     pick('qsc-k12-2')
-    expect(page!.history.plan.devices.map((d) => [d.x, d.z])).toEqual([[0, 0], [-0.5, 0]])
+    // the second one beside it, one symbol plus its label apart (>= 64 px on screen at the fitted scale), never on the same spot
+    const [a, b] = page!.history.plan.devices
+    expect([a!.x, a!.z]).toEqual([0, 0])
+    expect(b!.z).toBe(0)
+    expect(b!.x).toBeLessThan(0)
+    expect(Math.abs(b!.x) * 4 % 1).toBe(0) // on the 25 cm grid
+    const scale = fitView({ width: 24, length: 14 }, 800, 520).scale
+    expect(Math.abs(b!.x) * scale).toBeGreaterThanOrEqual(60)
+    pick('qsc-k12-2')
+    expect(page!.history.plan.devices[2]!.x).toBeGreaterThan(0) // the next free slot, on the other side
   })
 
   it('keyboard: arrows move by the grid step (left = world +x, seen from the audience), R turns 90, Maj+R 15, Ctrl+D duplicates, Suppr removes, Ctrl+Z / Ctrl+Y', () => {
@@ -239,5 +249,54 @@ describe('the plan is kept under its own key, never in the 3D design', () => {
     open()
     expect(live()).toBe('Le schéma enregistré était illisible : il a été retiré.')
     expect(storage.data.has(planKey(null, 'blank'))).toBe(false)
+  })
+})
+
+describe('review 2026-11-15: touch has every action on screen; a pinch is never a pick', () => {
+  const ptr = (target: Element, type: string, id: number, x = 10, y = 10): void => {
+    const ev = new MouseEvent(type, { bubbles: true, cancelable: true, clientX: x, clientY: y, button: 0 })
+    Object.defineProperty(ev, 'pointerId', { value: id })
+    target.dispatchEvent(ev)
+  }
+  const act = (name: string): HTMLButtonElement | undefined =>
+    [...document.querySelectorAll<HTMLButtonElement>('[data-testid="plan2d-actions"] button')].find((b) => b.textContent === name)
+
+  it('a selected device offers its rear panel, a 90° turn, a duplicate and a removal as buttons; a selected cable offers its removal; a held cable offers to drop it', () => {
+    open()
+    pick('qsc-k12-2')
+    const bar = q('[data-testid="plan2d-actions"]')!
+    expect(bar.hidden).toBe(false)
+    expect([...bar.querySelectorAll('button')].map((b) => b.textContent)).toEqual(['Panneau arrière', 'Pivoter de 90°', 'Dupliquer', 'Supprimer'])
+    act('Pivoter de 90°')!.click()
+    expect(page!.history.plan.devices[0]!.rot).toBe(90)
+    act('Dupliquer')!.click()
+    expect(page!.history.plan.devices).toHaveLength(2)
+    act('Supprimer')!.click()
+    expect(page!.history.plan.devices).toHaveLength(1)
+    // the removed copy was the selection: nothing selected, no bar
+    expect(bar.hidden).toBe(true)
+    // the rear panel by its button; a free port holds a cable; the plan then offers « Lâcher le câble »
+    dev('qsc-k12-2-1').dispatchEvent(new MouseEvent('dblclick', { bubbles: true }))
+    ;(q<HTMLButtonElement>('[data-port="thru-out-a"]')!).click()
+    expect([...bar.querySelectorAll('button')].map((b) => b.textContent)).toEqual(['Lâcher le câble'])
+    act('Lâcher le câble')!.click()
+    expect(live()).toBe('Câble lâché.')
+    expect(bar.hidden).toBe(true)
+  })
+
+  it('a two-finger pinch that starts on a device keeps the selection it found', () => {
+    open()
+    pick('qsc-k12-2')
+    pick('shure-sm58')
+    expect(dev('shure-sm58-1').getAttribute('aria-pressed')).toBe('true')
+    const svg = q('[data-testid="plan2d-plan"]')!
+    // the first finger on the OTHER device, the second finger anywhere: a pinch
+    ptr(dev('qsc-k12-2-1').querySelector('.p2d-hit')!, 'pointerdown', 7, 100, 100)
+    ptr(svg, 'pointerdown', 8, 200, 100)
+    ptr(svg, 'pointermove', 8, 260, 100)
+    ptr(svg, 'pointerup', 7)
+    ptr(svg, 'pointerup', 8)
+    expect(dev('shure-sm58-1').getAttribute('aria-pressed')).toBe('true')
+    expect(dev('qsc-k12-2-1').getAttribute('aria-pressed')).toBe('false')
   })
 })
