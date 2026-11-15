@@ -2010,6 +2010,69 @@ def offset_outline(pts: list[tuple[float, float]], s: float) -> list[tuple[float
     return out
 
 
+def build_extruded_body(plan: Plan) -> bpy.types.Object:
+    """A body made of ONE convex outline seen from the front, extruded through the depth, with its own edge radius at the front and at the rear.
+
+    plan.outline = [[x, y], ...] in millimetres, counter-clockwise seen from the front, origin on the floor at the middle (x from -w/2 to w/2, y from 0 to h; default the
+    whole rectangle): an octagon with cut corners, a rounded trapezoid. Each corner of the outline is rounded by cornerRadiusMm (default 6). The front edge (z = -d/2) is
+    rounded by frontRadiusMm in frontSegments steps (a quarter circle that insets the outline and moves back in depth), the rear edge (z = +d/2) by rearRadiusMm in rearSegments
+    steps. Both radii must be at most cornerRadiusMm and at most a quarter of the depth. One colour (bodyGrey 20 to 200). A picture is projected on the flat faces like on every other
+    shape; ports are cut with structure pockets. The measured fillet (the smaller radius) goes to MEASURE for the 'fillet' gate."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    outline_mm = plan.get("outline")
+    if outline_mm:
+        pts = [(float(p[0]) * MM, float(p[1]) * MM) for p in outline_mm]
+    else:
+        pts = [(-w / 2, 0.0), (w / 2, 0.0), (w / 2, h), (-w / 2, h)]
+    if len(pts) < 3:
+        raise BuildError("outline needs at least 3 points")
+    xs = [p[0] for p in pts]
+    ys = [p[1] for p in pts]
+    if min(xs) < -w / 2 - 1e-6 or max(xs) > w / 2 + 1e-6 or min(ys) < -1e-6 or max(ys) > h + 1e-6:
+        raise BuildError("outline must lie inside the box: x from -w/2 to w/2, y from 0 to h")
+    # counter-clockwise (positive area)
+    area = sum(pts[i][0] * pts[(i + 1) % len(pts)][1] - pts[(i + 1) % len(pts)][0] * pts[i][1] for i in range(len(pts)))
+    if area < 0:
+        pts = list(reversed(pts))
+    corner = param_m(plan, "cornerRadiusMm", 6.0) if "cornerRadiusMm" in params else 6.0 * MM
+    front_r = param_m(plan, "frontRadiusMm", 8.0) if "frontRadiusMm" in params else 8.0 * MM
+    rear_r = param_m(plan, "rearRadiusMm", 4.0) if "rearRadiusMm" in params else 4.0 * MM
+    f_seg = int(params.get("frontSegments", 8))
+    r_seg = int(params.get("rearSegments", 4))
+    if front_r > corner + 1e-9 or rear_r > corner + 1e-9:
+        raise BuildError(f"frontRadiusMm ({front_r / MM:.1f}) and rearRadiusMm ({rear_r / MM:.1f}) must be at most cornerRadiusMm ({corner / MM:.1f}): the edge fillet would fold over at the outline corners")
+    if front_r + rear_r > d * 0.9:
+        raise BuildError("the front and rear radii together are larger than the depth")
+    grey = params.get("bodyGrey")
+    colour = CABINET if grey is None else "#%02x%02x%02x" % (round(grey), round(grey) + 2, round(grey) + 9)
+    rounded = rounded_polygon(pts, [corner] * len(pts), CURVED_SEG90)
+    rings: list[tuple[float, list[tuple[float, float]]]] = []
+    for k in range(f_seg + 1):
+        th = (math.pi / 2.0) * k / f_seg
+        s = front_r * (1.0 - math.sin(th))
+        z = -d / 2 + front_r * (1.0 - math.cos(th))
+        rings.append((z, offset_outline(rounded, s)))
+    for k in range(r_seg + 1):
+        th = (math.pi / 2.0) * k / r_seg
+        s = rear_r * (1.0 - math.cos(th))
+        z = d / 2 - rear_r * (1.0 - math.sin(th))
+        rings.append((z, offset_outline(rounded, s)))
+    body = Body("tekpractice-extruded-body")
+    bm = body.bm
+    vr = [[bm.verts.new(g2b(x, y, z)) for (x, y) in ring_pts] for (z, ring_pts) in rings]
+    n = len(vr[0])
+    for a, b in zip(vr[:-1], vr[1:]):
+        for i in range(n):
+            j = (i + 1) % n
+            bm.faces.new([a[i], a[j], b[j], b[i]])
+    bm.faces.new(list(reversed(vr[0])))
+    bm.faces.new(list(vr[-1]))
+    body.done(colour)
+    MEASURE["filletMm"] = round(min(front_r, rear_r) / MM, 4)
+    return body.finish()
+
+
 def flat_face_polygon(bm: bmesh.types.BMesh, z: float) -> list[tuple[float, float]]:
     """Joins the wall faces lying in the plane z (a barrelled cabinet has one quad per wall step) into the one flat face, and returns its outline as (x, y) points
     in glTF metres. Raises when there is no such face."""
@@ -4673,6 +4736,7 @@ def build_cable_assembly_v2(plan: Plan) -> bpy.types.Object:
 
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
+    "extruded-body": build_extruded_body,
     "cable-assembly-v2": build_cable_assembly_v2,
     "speaker-cabinet-v2": build_speaker_cabinet_v2,
     "moulded-box": build_moulded_box,

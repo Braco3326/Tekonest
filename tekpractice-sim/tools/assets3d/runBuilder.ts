@@ -99,6 +99,7 @@ export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDe
     ...(spec.structure ? { parts: expandStructure(spec) } : {}),
     ...(spec.build.profile ? { profile: spec.build.profile } : {}),
     ...(spec.build.colours ? { colours: spec.build.colours } : {}),
+    ...(spec.build.outline ? { outline: spec.build.outline } : {}),
     // a shape that keeps the controls rig's areas flat needs where they are (the device's control layout; none = no zones)
     ...(SHAPE_SPECS[spec.build.shape].usesFlatZones ? { flatZones: flatZonesFor(spec.id) } : {}),
     // a shape that cuts a pocket behind each inset port needs where they are (io face only: that is the face it cuts)

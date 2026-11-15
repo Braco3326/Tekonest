@@ -231,7 +231,7 @@ export function cableV2Natural(p: Readonly<Record<string, number>>): { w: number
 }
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval', 'round-base-stand', 'speaker-cabinet-v2', 'cable-assembly-v2'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval', 'round-base-stand', 'speaker-cabinet-v2', 'cable-assembly-v2', 'extruded-body'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -319,6 +319,14 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
     params: ['planFrontMm', 'sideBulgeMm', 'midWidthMm', 'rearWidthMm', 'midDepthMm', 'frontRadiusMm', 'sideRadiusMm', 'backRadiusMm', 'edgeRadiusMm', 'edgeDropMm', 'edgeSegments', 'crownMm', 'barrelMm', 'barrelCentreMm', 'footMm', 'footWidthMm', 'footDepthMm', 'bodyGrey', 'wooferRingMm', 'wooferYMm', 'tweeterRingMm', 'tweeterYMm', 'ringDepthMm', 'waveguideMm', 'waveguideDepthMm'],
     needsMatingOuter: false,
     usesPorts: true,
+  },
+  // A body made of ONE convex outline seen from the front (build.outline, mm, counter-clockwise, origin on the floor in the middle: an octagon with cut corners, a rounded
+  // trapezoid) extruded through the depth, each outline corner rounded by cornerRadiusMm, with its own edge radius at the front (frontRadiusMm, frontSegments) and at the rear
+  // (rearRadiusMm, rearSegments); bodyGrey 20 to 200. Ports and recesses are structure pockets. The builder measures the smaller edge radius for the 'fillet' gate.
+  'extruded-body': {
+    kind: 'device',
+    params: ['cornerRadiusMm', 'frontRadiusMm', 'rearRadiusMm', 'frontSegments', 'rearSegments', 'bodyGrey'],
+    needsMatingOuter: false,
   },
   // A power strip lying with its outlets facing the io face: a bar along x with a rounded section (filletMm) and tapered ends (endTaperMm), one IEC C13 outlet
   // recess socketDepthMm deep per io port (the port sits on its floor, so each io port needs insetMm = socketDepthMm; the port x / y are the socket centres),
