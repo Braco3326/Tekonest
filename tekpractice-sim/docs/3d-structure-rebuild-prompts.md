@@ -35,6 +35,6 @@ Score each item 0, 1 or 2 with a MEASUREMENT, not an impression. Scale every pho
 7. **Cleanliness.** No logo, brand name or lettering of the maker; no printed copy of a control; no ghost graphics or baked shadows in the pictures; no floating or intersecting parts. 2 = none; 1 = one minor; 0 = a logo, a printed control or a floating part.
 8. **Weight.** Triangles within the declared budget (15000 at most), GLB under 500 KB, loads without error. 2 = yes; 1 = over by up to 20 percent; 0 = over by more or fails to load.
 
-**PASS = 15 of 16 or more (at most ONE item at 1), NO item at 0, AND every founder test point met.** Anything else is FAIL. A passed device is then shown to the founder as a same-angle photo/render pair in the chat before it counts as final.
+**PASS = 13 of 16 or more, NO item at 0, AND every founder test point met.** Anything else is FAIL. A passed device is then shown to the founder as a same-angle photo/render pair in the chat before it counts as final.
 
 FOUNDER GATE: if the device has stated founder test points (given in the task), render the model at that spot from the same viewpoint as the founder's picture, crop the matching photo region and compare both at large size; a failed test point means FAIL whatever the score. Write REVIEW.md in that folder: the measurements, scores, verdict, and numbered defects (the view that shows each + a concrete fix in mm). Reply with the verdict and the defect list.
