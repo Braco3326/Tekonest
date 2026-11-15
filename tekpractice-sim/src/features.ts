@@ -1,7 +1,7 @@
 /**
  * Feature flags (ADR-0013). The shipped product (2026-11-15, founder): Mode Création only. The assistant (`guide`) and the learning game (levels, exam, sandbox,
  * dashboard: `legacyPages`) are OFF until he says otherwise; the code stays and one switch each brings it back. The key order below is read by
- * tools/deploy-flag-guard.mjs (levels, legacyPages, guide, guideLegacy, guideInbox, goals, plainTutorial, accounts, defaultDesign): keep it.
+ * tools/deploy-flag-guard.mjs (levels, legacyPages, guide, guideLegacy, guideInbox, goals, plainTutorial, accounts, plan2d, defaultDesign): keep it.
  * `levels: false` keeps the default URL on Mode Création (true sends it to the learning pages, only if `legacyPages` is on).
  * `legacyPages: false` makes every address that used to open the learning game (`?level=`, `?legacy=1`, an exam, the sandbox, the dashboard) open Mode Création
  * instead; true or absent keeps them (a table written before it still type-checks and behaves as it did).
@@ -17,6 +17,8 @@
  * `plainTutorial: true` turns on the plain tutorial « Premiers pas » (no assistant, no guide code); false or absent keeps it off.
  * `accounts: false` keeps everything about accounts out of the page; the deploy guard REFUSES an output whose table has it true (until the founder approves the privacy
  * text and supplies the keys).
+ * Mission 2 (2026-11-15, spec docs/superpowers/specs/2026-11-15-plan2d-schema-design.md §2), optional: `plan2d: true` adds « Schéma 2D » (menu Vue) on a practice address: the
+ * 2D floor plan page, a lazy chunk loaded on first open; false or absent keeps every trace of it out of the page (no entry, no chunk fetched, no storage key).
  * `defaultDesign` (1..5): the package a practice address opens with when it carries no valid `?design` (an exam address keeps no package); absent = no package (the
  * plain address as it was).
  * The unit tests and the end-to-end build run against the all-on table tests/e2e/fixtures/features.full.ts (vite.config.ts): see tests/features.test.ts.
@@ -30,6 +32,7 @@ export interface Features {
   goals?: boolean
   plainTutorial?: boolean
   accounts?: boolean
+  plan2d?: boolean
   defaultDesign?: 1 | 2 | 3 | 4 | 5
 }
-export const FEATURES: Features = { levels: false, legacyPages: false, guide: false, guideLegacy: false, guideInbox: false, goals: true, plainTutorial: true, accounts: false, defaultDesign: 2 }
+export const FEATURES: Features = { levels: false, legacyPages: false, guide: false, guideLegacy: false, guideInbox: false, goals: true, plainTutorial: true, accounts: false, plan2d: true, defaultDesign: 2 }
