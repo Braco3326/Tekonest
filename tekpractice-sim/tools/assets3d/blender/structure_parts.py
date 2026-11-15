@@ -46,8 +46,9 @@ def lifted_linear(hexcolour: str) -> tuple[float, float, float, float]:
     lin = [_srgb_to_linear(int(text[2 * i:2 * i + 2], 16) / 255.0) for i in range(3)]
     out = []
     for c in lin:
-        v = min(LIFT_CAP, c * LIFT_GAIN)
-        v = max(v, c)
+        # a smooth lift (not the hard clamp of the revolve palette): mid and light tones keep their differences, black stays dark, white stays white
+        v = c * LIFT_GAIN / (1.0 + (LIFT_GAIN - 1.0) * c)
+        v = max(c, min(0.95, v))
         s = _linear_to_srgb(v)
         out.append(_srgb_to_linear(max(0.0, min(1.0, s))))
     return (out[0], out[1], out[2], 1.0)
@@ -92,6 +93,7 @@ class Kit:
         self.tag = tag_layer
         self.frame: tuple[Vector, Vector, Vector, Vector] | None = None
         self.new_faces: list[bmesh.types.BMFace] = []
+        self.textured = False   # True: the faces of this part take the face picture like the body (a raised deck plate)
 
     def set_frame(self, o: Vector, x: Vector, y: Vector, n: Vector) -> None:
         self.frame = (o, x, y, n)
@@ -105,7 +107,7 @@ class Kit:
             f = self.bm.faces.new(verts)
         except ValueError:
             return None   # a duplicate face (never happens in a well-formed stack)
-        f[self.tag] = 1
+        f[self.tag] = 0 if self.textured else 1
         for loop in f.loops:
             loop[self.col] = colour
         self.new_faces.append(f)
@@ -558,6 +560,9 @@ def apply_structure(ob: bpy.types.Object, plan: dict[str, Any], colour_attribute
             xa = Vector((1.0, 0.0, 0.0)) - nrm * nrm.x
         xa.normalize()
         ya = nrm.cross(xa)
+        lift = (inst.get("params") or {}).get("zMm")   # a part stacked on another (a cap on a stem): lifted along the surface normal
+        if lift:
+            loc = loc + nrm * (lift * MM)
         sh = inst.get("shiftMm")
         if sh:   # the ray was cast at the middle of a wide part: the frame origin goes back to its anchor
             loc = loc - xa * (sh[0] * MM) - ya * (sh[1] * MM)
@@ -567,6 +572,7 @@ def apply_structure(ob: bpy.types.Object, plan: dict[str, Any], colour_attribute
         c1 = inst.get("colour") or d1
         c2 = inst.get("colour2") or d2
         params = inst.get("params") or {}
+        kit.textured = params.get("textured", 0) > 0   # the faces of this part take the face picture (printed legends on a button top, a brushed knob top)
         if kind == "socket":
             make_socket(kit, params, c1, c2, inst.get("type") or "generic")
         elif kind == "prism":

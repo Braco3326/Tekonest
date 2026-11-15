@@ -11,7 +11,7 @@
     {
       "portId": "usb",
       "face": "io",
-      "xMm": 254,
+      "xMm": 66,
       "yMm": 9,
       "confidence": "photo",
       "connector": "usb-b",
@@ -42,8 +42,7 @@
     "photos": [
       {
         "face": "top",
-        "file": "top_dark.png",
-        "fill": true
+        "file": "top_face.png"
       }
     ]
   },
@@ -87,16 +86,47 @@
   "structure": {
     "parts": [
       {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 159,
+        "yMm": 46,
+        "points": [
+          [
+            -150,
+            -46
+          ],
+          [
+            150,
+            -46
+          ],
+          [
+            150,
+            46
+          ],
+          [
+            -150,
+            46
+          ]
+        ],
+        "params": {
+          "riseMm": 12,
+          "bevelMm": 1.5,
+          "textured": 1
+        },
+        "colour": "#1d1e21",
+        "note": "raised rear deck carrying pads, knobs and buttons; takes the printed legends"
+      },
+      {
         "kind": "keys",
         "face": "top",
-        "xMm": 12.6,
+        "xMm": 10.8,
         "yMm": 96.1,
         "params": {
           "whiteCount": 15,
-          "whitePitchMm": 19.53,
+          "whitePitchMm": 19.76,
           "whiteLenMm": 83,
           "blackLenMm": 49.5,
-          "blackWidthMm": 10,
+          "blackWidthMm": 9.6,
           "riseMm": 8,
           "startNote": 0
         },
@@ -109,20 +139,136 @@
         "face": "top",
         "xMm": 68.3,
         "yMm": 25.8,
-        "count": 8,
-        "cols": 4,
-        "pitchXMm": 34.7,
-        "pitchYMm": 35.4,
         "params": {
           "widthMm": 28,
           "heightMm": 28,
           "cornerMm": 2.5,
           "riseMm": 1,
-          "frameMm": 0.5
+          "frameMm": 0.8,
+          "zMm": 12
         },
         "colour": "#1c1c1e",
         "colour2": "#3a3a3e",
-        "note": "8 velocity pads, 2 rows of 4"
+        "note": "velocity pad 1"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 103,
+        "yMm": 25.8,
+        "params": {
+          "widthMm": 28,
+          "heightMm": 28,
+          "cornerMm": 2.5,
+          "riseMm": 1,
+          "frameMm": 0.8,
+          "zMm": 12
+        },
+        "colour": "#1c1c1e",
+        "colour2": "#e11e23",
+        "note": "velocity pad 2 (red outline)"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 137.7,
+        "yMm": 25.8,
+        "params": {
+          "widthMm": 28,
+          "heightMm": 28,
+          "cornerMm": 2.5,
+          "riseMm": 1,
+          "frameMm": 0.8,
+          "zMm": 12
+        },
+        "colour": "#1c1c1e",
+        "colour2": "#3a3a3e",
+        "note": "velocity pad 3"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 172.4,
+        "yMm": 25.8,
+        "params": {
+          "widthMm": 28,
+          "heightMm": 28,
+          "cornerMm": 2.5,
+          "riseMm": 1,
+          "frameMm": 0.8,
+          "zMm": 12
+        },
+        "colour": "#1c1c1e",
+        "colour2": "#e11e23",
+        "note": "velocity pad 4 (red outline)"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 68.3,
+        "yMm": 61.2,
+        "params": {
+          "widthMm": 28,
+          "heightMm": 28,
+          "cornerMm": 2.5,
+          "riseMm": 1,
+          "frameMm": 0.8,
+          "zMm": 12
+        },
+        "colour": "#1c1c1e",
+        "colour2": "#e11e23",
+        "note": "velocity pad 5 (red outline)"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 103,
+        "yMm": 61.2,
+        "params": {
+          "widthMm": 28,
+          "heightMm": 28,
+          "cornerMm": 2.5,
+          "riseMm": 1,
+          "frameMm": 0.8,
+          "zMm": 12
+        },
+        "colour": "#1c1c1e",
+        "colour2": "#3a3a3e",
+        "note": "velocity pad 6"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 137.7,
+        "yMm": 61.2,
+        "params": {
+          "widthMm": 28,
+          "heightMm": 28,
+          "cornerMm": 2.5,
+          "riseMm": 1,
+          "frameMm": 0.8,
+          "zMm": 12
+        },
+        "colour": "#1c1c1e",
+        "colour2": "#e11e23",
+        "note": "velocity pad 7 (red outline)"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 172.4,
+        "yMm": 61.2,
+        "params": {
+          "widthMm": 28,
+          "heightMm": 28,
+          "cornerMm": 2.5,
+          "riseMm": 1,
+          "frameMm": 0.8,
+          "zMm": 12
+        },
+        "colour": "#1c1c1e",
+        "colour2": "#3a3a3e",
+        "note": "velocity pad 8"
       },
       {
         "kind": "knob",
@@ -139,7 +285,8 @@
           "bevelMm": 1.6,
           "taper": 0.22,
           "pointer": 0,
-          "knurl": 36
+          "knurl": 36,
+          "zMm": 12
         },
         "colour": "#26262a",
         "note": "K1 to K8 rotary encoders"
@@ -150,10 +297,11 @@
         "xMm": 25.4,
         "yMm": 21.5,
         "params": {
-          "diaMm": 33,
-          "innerDiaMm": 24,
-          "riseMm": 3,
-          "floorMm": 1.5
+          "diaMm": 30,
+          "innerDiaMm": 21,
+          "riseMm": 2.5,
+          "floorMm": 1,
+          "zMm": 12
         },
         "colour": "#1a1a1c",
         "colour2": "#0c0c0d",
@@ -165,14 +313,31 @@
         "xMm": 25.4,
         "yMm": 21.5,
         "params": {
-          "diaMm": 24,
-          "heightMm": 24,
-          "bevelMm": 4.8,
-          "taper": 0.22,
-          "pointer": 0
+          "diaMm": 9,
+          "heightMm": 10,
+          "bevelMm": 1,
+          "taper": 0.05,
+          "pointer": 0,
+          "zMm": 13
+        },
+        "colour": "#161618",
+        "note": "thumbstick stem"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 25.4,
+        "yMm": 21.5,
+        "params": {
+          "diaMm": 22,
+          "heightMm": 6,
+          "bevelMm": 2.4,
+          "taper": 0.18,
+          "pointer": 0,
+          "zMm": 21
         },
         "colour": "#e11e23",
-        "note": "thumbstick red mushroom cap"
+        "note": "thumbstick cap, flat mushroom"
       },
       {
         "kind": "button",
@@ -188,7 +353,8 @@
           "heightMm": 8.8,
           "cornerMm": 1.4,
           "riseMm": 1.8,
-          "frameMm": 0.6
+          "frameMm": 0.6,
+          "zMm": 12
         },
         "colour": "#2a2a2c",
         "colour2": "#0c0c0d",
@@ -206,7 +372,8 @@
           "heightMm": 8.8,
           "cornerMm": 1.4,
           "riseMm": 1.8,
-          "frameMm": 0.6
+          "frameMm": 0.6,
+          "zMm": 12
         },
         "colour": "#2a2a2c",
         "colour2": "#0c0c0d",
@@ -240,11 +407,11 @@
           ]
         ],
         "params": {
-          "riseMm": 12.5,
-          "bevelMm": 1.2
+          "riseMm": 9,
+          "bevelMm": 2.8
         },
         "colour": "#e11e23",
-        "note": "end cheek, wedge: flat at the rear 55 percent, sloping to the key end"
+        "note": "player right end cheek: 32 mm at the rear, flat for the rear 55 percent, sloping to 23 mm at the key end"
       },
       {
         "kind": "prism",
@@ -262,41 +429,28 @@
           ],
           [
             171,
-            27
+            18
           ],
           [
-            71,
+            81,
             27
           ],
           [
             -10,
-            18
+            27
           ]
         ],
         "params": {
-          "riseMm": 12.5,
-          "bevelMm": 1.2
+          "riseMm": 9,
+          "bevelMm": 2.8
         },
         "colour": "#e11e23",
-        "note": "end cheek, other end, same profile"
+        "note": "player left end cheek, same wedge mirrored: tall at the rear, lower at the key end"
       },
       {
         "kind": "socket",
         "face": "io",
-        "xMm": 254,
-        "yMm": 9,
-        "type": "usbb",
-        "params": {
-          "collarMm": 1
-        },
-        "colour": "#9ea3aa",
-        "colour2": "#0b0b0d",
-        "note": "USB-B, about 20 percent of the length from the knob end"
-      },
-      {
-        "kind": "socket",
-        "face": "io",
-        "xMm": 283,
+        "xMm": 38,
         "yMm": 9,
         "type": "jack",
         "params": {
@@ -305,11 +459,24 @@
         },
         "colour": "#9ea3aa",
         "colour2": "#0b0b0d",
-        "note": "sustain pedal jack, about 11 percent from the knob end"
+        "note": "sustain pedal jack, about 12 percent of the length from the knob end"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 66,
+        "yMm": 9,
+        "type": "usbb",
+        "params": {
+          "collarMm": 1
+        },
+        "colour": "#9ea3aa",
+        "colour2": "#0b0b0d",
+        "note": "USB-B, about 21 percent from the knob end"
       }
     ],
     "bodyHeightMm": 18,
     "topSeenFromFront": true,
-    "bodyWidthMm": 293
+    "bodyWidthMm": 300
   }
 }

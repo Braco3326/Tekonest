@@ -18,20 +18,20 @@ const Hex = z.string().regex(/^#[0-9a-fA-F]{6}$/, 'colour must be #rrggbb')
 
 /** The size parameters (millimetres unless stated) each kind understands. Unknown names are refused so a typo cannot silently do nothing. */
 export const PART_PARAMS: Record<PartKind, readonly string[]> = {
-  knob: ['diaMm', 'heightMm', 'collarDiaMm', 'collarHeightMm', 'knurl', 'pointer', 'angleDeg', 'bevelMm', 'taper'],
-  button: ['widthMm', 'heightMm', 'diaMm', 'riseMm', 'cornerMm', 'bevelMm', 'frameMm', 'wellMm'],
-  fader: ['slotLenMm', 'slotWidthMm', 'capWidthMm', 'capLenMm', 'capHeightMm', 'posFrac', 'bevelMm', 'horizontal'],
-  socket: ['diaMm', 'widthMm', 'heightMm', 'collarMm', 'riseMm', 'wellMm', 'pins'],
-  screw: ['diaMm', 'riseMm'],
-  led: ['diaMm', 'riseMm', 'widthMm', 'heightMm'],
-  keys: ['whiteCount', 'whitePitchMm', 'whiteLenMm', 'blackLenMm', 'blackWidthMm', 'riseMm', 'gapMm', 'startNote', 'dir'],
-  slot: ['lengthMm', 'widthMm', 'riseMm', 'horizontal'],
-  foot: ['diaMm', 'heightMm'],
-  rod: ['x1Mm', 'y1Mm', 'z1Mm', 'x2Mm', 'y2Mm', 'z2Mm', 'diaMm', 'segments'],
-  ball: ['diaMm', 'zMm'],
-  ring: ['diaMm', 'innerDiaMm', 'riseMm', 'floorMm'],
-  driver: ['diaMm', 'riseMm', 'capDiaMm'],
-  prism: ['riseMm', 'bevelMm'],
+  knob: ['diaMm', 'heightMm', 'collarDiaMm', 'collarHeightMm', 'knurl', 'pointer', 'angleDeg', 'bevelMm', 'taper', 'zMm', 'textured'],
+  button: ['widthMm', 'heightMm', 'diaMm', 'riseMm', 'cornerMm', 'bevelMm', 'frameMm', 'wellMm', 'zMm', 'textured'],
+  fader: ['slotLenMm', 'slotWidthMm', 'capWidthMm', 'capLenMm', 'capHeightMm', 'posFrac', 'bevelMm', 'horizontal', 'zMm', 'textured'],
+  socket: ['diaMm', 'widthMm', 'heightMm', 'collarMm', 'riseMm', 'wellMm', 'pins', 'zMm', 'textured'],
+  screw: ['diaMm', 'riseMm', 'zMm', 'textured'],
+  led: ['diaMm', 'riseMm', 'widthMm', 'heightMm', 'zMm', 'textured'],
+  keys: ['whiteCount', 'whitePitchMm', 'whiteLenMm', 'blackLenMm', 'blackWidthMm', 'riseMm', 'gapMm', 'startNote', 'dir', 'zMm', 'textured'],
+  slot: ['lengthMm', 'widthMm', 'riseMm', 'horizontal', 'zMm', 'textured'],
+  foot: ['diaMm', 'heightMm', 'zMm', 'textured'],
+  rod: ['x1Mm', 'y1Mm', 'z1Mm', 'x2Mm', 'y2Mm', 'z2Mm', 'diaMm', 'segments', 'zMm', 'textured'],
+  ball: ['diaMm', 'zMm', 'zMm', 'textured'],
+  ring: ['diaMm', 'innerDiaMm', 'riseMm', 'floorMm', 'zMm', 'textured'],
+  driver: ['diaMm', 'riseMm', 'capDiaMm', 'zMm', 'textured'],
+  prism: ['riseMm', 'bevelMm', 'textured', 'zMm'],
 }
 
 export const StructurePart = z.object({
@@ -163,6 +163,7 @@ export function partFootprints(spec: AssetSpecT, face: FaceT): Footprint[] {
     const mirror = spec.structure?.topSeenFromFront === true && face === 'top'
     const prm = p.params ?? {}
     const g = (name: string, d: number): number => prm[name] ?? d
+    if ((prm.textured ?? 0) > 0) return   // a textured part shows the printed picture itself: nothing to paint out
     for (let i = 0; i < count; i++) {
       let x = p.xMm + (i % cols) * (p.pitchXMm ?? 0)
       const y = p.yMm + Math.floor(i / cols) * (p.pitchYMm ?? 0)
