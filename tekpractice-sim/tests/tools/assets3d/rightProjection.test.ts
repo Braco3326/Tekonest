@@ -41,7 +41,8 @@ describe("the 'right' picture on a scripted box (Blender)", () => {
 
   it.skipIf(!BLENDER)('lands on the +x side with its left edge at the io (rear) end and its right edge at the front', async () => {
     const base = loadSpecs().find((s) => s.id === 'avid-hd-io') as AssetSpecT
-    const spec: AssetSpecT = { ...base, id: 'right-test', realSizeMm: { w: 150, h: 60, d: 200 }, ports: [], controls: [], texture: undefined, build: { shape: 'rack-box', params: { chamferMm: 1 } } }
+    // structure rebuild 2026-11-15: avid-hd-io now carries a structure block; this synthetic plain box must not inherit its parts (they do not fit a 150 x 60 x 200 mm box)
+    const spec: AssetSpecT = { ...base, id: 'right-test', realSizeMm: { w: 150, h: 60, d: 200 }, ports: [], controls: [], texture: undefined, structure: undefined, build: { shape: 'rack-box', params: { chamferMm: 1 } } }
     // left half red (the io end), right half blue (the front)
     const px = Buffer.alloc(200 * 60 * 3)
     for (let y = 0; y < 60; y++) for (let x = 0; x < 200; x++) px.set(x < 100 ? [220, 30, 30] : [30, 30, 220], (y * 200 + x) * 3)

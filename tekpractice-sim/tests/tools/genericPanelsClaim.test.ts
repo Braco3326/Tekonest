@@ -14,6 +14,13 @@ const panels = readdirSync(DIR)
   .filter((f) => f.endsWith('.json'))
   .map((f) => ({ file: f, text: readFileSync(join(DIR, f), 'utf8'), json: JSON.parse(readFileSync(join(DIR, f), 'utf8')) as { faces: Record<string, { items: Item[] }> } }))
 
+/**
+ * Structure rebuild 2026-11-15: AKAI MPK mini is a HYBRID in the register (own scripted geometry + official photo as texture on the top, row "hybrid" of BRANDS_AND_CREDITS.md); only its rear face is
+ * generic panel artwork. Its free-text `note` may therefore name the source photo of the top (top_clean.png); the data (the faces) must still be pictureless like every other panel, and every
+ * other panel's whole text, note included, is still scanned.
+ */
+const NOTE_MAY_NAME_PHOTO = new Set(['akai-mpk-mini-mk3.json'])
+
 /** The item kinds tools/assets3d/genericPanel.ts draws: shapes and text, never an image. */
 const DRAWN = new Set(['rect', 'circle', 'vents', 'weave', 'grid', 'text'])
 const fold = (s: string): string => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
@@ -28,8 +35,9 @@ describe('generic panels carry no photo and no logo', () => {
   it.each(panels.map((p) => [p.file, p] as const))('%s: only drawn item kinds, no picture reference', (_f, p) => {
     for (const [name, face] of Object.entries(p.json.faces))
       for (const it of face.items) expect(DRAWN.has(it.kind), `${p.file} ${name}: item kind "${it.kind}" is not a drawn shape`).toBe(true)
-    expect(p.text, p.file).not.toMatch(/data:image|\.(png|jpe?g|webp|gif|svg)\b|https?:\/\//i)
-    for (const key of ['image', 'photo', 'src', 'href', 'url']) expect(p.text, `${p.file}: key ${key}`).not.toContain(`"${key}"`)
+    const scanned = NOTE_MAY_NAME_PHOTO.has(p.file) ? JSON.stringify({ ...p.json, note: undefined }, null, 2) : p.text
+    expect(scanned, p.file).not.toMatch(/data:image|\.(png|jpe?g|webp|gif|svg)\b|https?:\/\//i)
+    for (const key of ['image', 'photo', 'src', 'href', 'url']) expect(scanned, `${p.file}: key ${key}`).not.toContain(`"${key}"`)
   })
   it.each(panels.map((p) => [p.file, p] as const))('%s: no text item prints a manufacturer or brand name', (_f, p) => {
     for (const face of Object.values(p.json.faces))

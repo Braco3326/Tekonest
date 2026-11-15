@@ -35,7 +35,8 @@ const OLD_RACK_BOXES: { id: string; size: { w: number; h: number; d: number }; c
 /** A device spec of the given size with the rack-box shape (the catalog parity is not needed by the builder). */
 function rackSpec(id: string, size: { w: number; h: number; d: number }, params: Record<string, number>, over: Partial<AssetSpecT> = {}): AssetSpecT {
   const base = loadSpecs().find((s) => s.id === 'avid-hd-io') as AssetSpecT
-  return { ...base, id, realSizeMm: size, ports: [], controls: [], texture: undefined, build: { shape: 'rack-box', params }, ...over }
+  // structure rebuild 2026-11-15: avid-hd-io now carries a structure block; the synthetic plain/detailed rack spec must not inherit it
+  return { ...base, id, realSizeMm: size, ports: [], controls: [], texture: undefined, structure: undefined, build: { shape: 'rack-box', params }, ...over }
 }
 
 const ONE_U = { w: 482.6, h: 44.45, d: 300 }

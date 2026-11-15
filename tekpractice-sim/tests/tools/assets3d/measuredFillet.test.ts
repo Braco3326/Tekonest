@@ -68,7 +68,15 @@ async function measure(s: AssetSpecT, disable: 'none' | 'rack-bevel' | 'strip-ro
 }
 
 describe(`the fillet gate reads the mesh (${BLENDER ? 'Blender' : 'SKIPPED, Blender not found'})`, () => {
-  const rackIds = ['aeta-scoop5-s', 'aeta-scoopy-plus-s', 'antelope-ocx-hd', 'avid-hd-io', 'avid-protools-hdx', 'focusrite-isa-one', 'grace-m905', 'playout-pc', 'switchcraft-studiopatch-9625']
+  // Structure rebuild 2026-11-15: aeta-scoopy-plus-s was rebuilt as a console-wedge (it is no longer a rack-box: its fillet is read by the console-wedge tests and the fillet gate); the list below
+  // keeps only the devices that are still rack-box, whatever their spec says today.
+  const allRackIds = ['aeta-scoop5-s', 'aeta-scoopy-plus-s', 'antelope-ocx-hd', 'avid-hd-io', 'avid-protools-hdx', 'focusrite-isa-one', 'grace-m905', 'playout-pc', 'switchcraft-studiopatch-9625']
+  const rackIds = allRackIds.filter((id) => spec(id).build?.shape === 'rack-box')
+
+  it('most of the nine plain rack devices are still rack-box (so this list still measures a family, not a single device)', () => {
+    expect(rackIds.length).toBeGreaterThanOrEqual(8)
+    expect(allRackIds.filter((id) => !rackIds.includes(id))).toEqual(['aeta-scoopy-plus-s'])
+  })
 
   it.skipIf(!BLENDER).each(rackIds)('rack-box %s: the measured fillet is at least build.minFilletMm and equals the bevel actually cut', async (id) => {
     const s = spec(id)

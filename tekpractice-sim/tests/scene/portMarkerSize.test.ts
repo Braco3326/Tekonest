@@ -98,6 +98,35 @@ describe('markerDiameterM (outer ring diameter of a port marker, metres)', () =>
     expect(capRingsToNeighbours([], [])).toEqual([])
   })
 
+  /**
+   * Documented per-device exceptions to the 60 % cap rule (structure rebuild 2026-11-15). The RODE NT1 5th Gen has its USB-C socket photo-measured 5.7 mm from the XLR centre on the base: the nearest-neighbour cap is therefore 5.7 mm for both rings (XLR ring 23.4 mm: 24 %; USB-C ring 10.8 mm: 53 %). That is
+   * the real pitch of a mic base, not a placement mistake; the exemption holds only for these two ports and only down to the listed share, so a worse cap, or the same cap on any other port,
+   * still fails. (Same pattern as RING_HEIGHT_EXCEPTIONS below.)
+   */
+  const RING_CAP_EXCEPTIONS: Readonly<Record<string, Readonly<Record<string, number>>>> = {
+    'rode-nt1-5th-gen': { 'out-xlr': 0.24, 'bidir-usb': 0.5 },
+  }
+
+  /** The rings of a catalog device (mm) and the caps they get from their nearest neighbour (mm), port by port. */
+  function ringCaps(id: string): { portId: string; ring: number; cap: number }[] {
+    const spec = specs.get(id)!
+    const conn = catalogPorts.get(id)!
+    const faces = [...new Set(spec.ports!.map((p) => p.face))]
+    const ports = spec.ports!.filter((p) => conn.has(p.portId))
+    const rings = ports.map((p) => markerDiameterM(conn.get(p.portId)!) * 1000)
+    const caps = capRingsToNeighbours(rings, ports.map((p) => ({ x: p.xMm, y: p.yMm, z: faces.indexOf(p.face) * 1e5 })))
+    return ports.map((p, i) => ({ portId: p.portId, ring: rings[i], cap: caps[i] }))
+  }
+
+  it('the documented ring-cap exceptions are still needed (a stale exemption must be removed)', () => {
+    for (const [id, ports] of Object.entries(RING_CAP_EXCEPTIONS))
+      for (const [portId, minFraction] of Object.entries(ports)) {
+        const r = ringCaps(id).find((x) => x.portId === portId)!
+        expect(r.cap / r.ring, `${id} ${portId} is capped below the plain 60 %`).toBeLessThan(0.6)
+        expect(r.cap / r.ring, `${id} ${portId} stays above its own limit`).toBeGreaterThanOrEqual(minFraction)
+      }
+  })
+
   it('no two rings of a catalog device overlap once capped to the nearest neighbour, and no ring is capped below 60 % of its connector ring (it stays clickable)', () => {
     let pairs = 0
     let capped = 0
@@ -113,7 +142,8 @@ describe('markerDiameterM (outer ring diameter of a port marker, metres)', () =>
       const caps = capRingsToNeighbours(rings, points)
       for (let i = 0; i < ports.length; i++) {
         if (caps[i] < rings[i] - 1e-9) capped++
-        if (caps[i] < 0.6 * rings[i]) tooSmall.push(id + ' ' + ports[i].portId + ': ring ' + rings[i].toFixed(1) + ' mm capped to ' + caps[i].toFixed(1) + ' mm')
+        const minShare = RING_CAP_EXCEPTIONS[id]?.[ports[i].portId] ?? 0.6
+        if (caps[i] < minShare * rings[i]) tooSmall.push(id + ' ' + ports[i].portId + ': ring ' + rings[i].toFixed(1) + ' mm capped to ' + caps[i].toFixed(1) + ' mm')
         for (let j = i + 1; j < ports.length; j++) {
           if (ports[i].face !== ports[j].face) continue
           pairs++
