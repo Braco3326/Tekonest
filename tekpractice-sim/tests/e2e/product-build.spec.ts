@@ -142,11 +142,13 @@ test('the hand-drawn cables are on in the shipped build: select a cable, trace i
   await expect(page.getByTestId('cable-panel')).toBeVisible()
   await page.getByTestId('cable-trace').click()
   await expect(page.getByTestId('trace-bar')).toBeVisible()
-  const s = (await page.evaluate(() => window.__creation!.worldScreen([0, 0, 1])))!
+  // a floor point away from the drawer design 1 opens along the bottom of the view: the canvas must be what is under it
+  const s = (await page.evaluate(() => window.__creation!.worldScreen([0, 0, -1])))!
+  expect(await page.evaluate(([x, y]) => document.elementFromPoint(x!, y!)?.id, [s.x, s.y] as const)).toBe('renderCanvas')
   await page.mouse.click(s.x, s.y)
   await expect.poll(() => page.evaluate(() => window.__creation!.cableTrace()!.tracing?.points.length)).toBe(1)
   await page.getByTestId('trace-finish').click()
   await expect(page.getByTestId('trace-bar')).toHaveCount(0)
-  expect(await page.evaluate((key2) => window.__creation!.cableRoute(key2), real!)).toEqual([[0, 1]])
+  expect(await page.evaluate((key2) => window.__creation!.cableRoute(key2), real!)).toEqual([[0, -1]])
   expect(errors(), 'console errors').toEqual([])
 })

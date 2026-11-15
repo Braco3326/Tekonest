@@ -347,6 +347,26 @@ test('axe: the cable panel and the drawing bar have no serious or critical viola
   expect(await scan('[data-testid="cable-panel"]')).toEqual([])
 })
 
+test('where the 3D view is covered (the place picker) the tracing ends: no bar, no selection, nothing dispatched', async ({ page }) => {
+  await boot(page)
+  await selectByClick(page)
+  const before = await historySize(page)
+  await page.getByTestId('cable-trace').click()
+  const s = await floorScreen(page, 1, 7.5)
+  await page.mouse.click(s.x, s.y)
+  await page.getByRole('menuitem', { name: 'Lieu', exact: true }).click()
+  await page.getByRole('menuitem', { name: /Choisir un lieu/ }).click()
+  await expect(page.getByTestId('place-picker')).toBeVisible()
+  await expect(page.getByTestId('trace-bar')).toHaveCount(0)
+  const st = await state(page)
+  expect(st.tracing).toBeNull()
+  expect(st.selected).toBeNull()
+  expect(await route(page)).toBeNull()
+  expect(await historySize(page)).toBe(before)
+  // a click on a cable under the picker selects nothing
+  expect(await page.evaluate((k) => window.__creation!.cableSelect(k), KEY)).toBe(false)
+})
+
 test('« Raccourcis clavier » lists the tracing keys in their own group', async ({ page }) => {
   await boot(page)
   await page.locator('#renderCanvas').focus()

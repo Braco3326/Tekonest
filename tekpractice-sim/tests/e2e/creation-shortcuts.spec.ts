@@ -85,7 +85,8 @@ test('the list names every key of the 3D view label (arrows, [ ], Entrée, 1 2 3
   expect(await row('snap')).toEqual(['G'])
   expect(await row('cancel')).toEqual(['Échap'])
   expect(await row('undo')).toEqual(['Ctrl+Z'])
-  await expect(list.getByRole('heading', { level: 3 })).toHaveText(['Vue 3D', 'Appareils', 'Projet'])
+  // mission 3 B stage 2: with the `cableTrace` switch on (this build and the product) the tracing keys have their own group after the devices
+  await expect(list.getByRole('heading', { level: 3 })).toHaveText(['Vue 3D', 'Appareils', 'Tracé d’un câble', 'Projet'])
   // the names are real words next to the keys
   await expect(list.locator('dt', { hasText: 'Cadrer la sélection' })).toBeVisible()
 })

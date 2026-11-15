@@ -21,6 +21,9 @@
     'tree view props'
     'status status status';
 }
+/* The place picker spans the panels and view rows: it moves down with them (boot.ts also ends a tracing when the picker opens). */
+.cr[data-trace='on'] .cr-pick { grid-area: 3 / 1 / 4 / 4; }
+.cr[data-trace='on'][data-tutorial='on'] .cr-pick { grid-area: 4 / 1 / 5 / 4; }
 
 .cr-trace-bar {
   grid-area: trace;

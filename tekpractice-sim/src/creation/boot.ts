@@ -1315,6 +1315,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     autosave.schedule()
     setInventory(false, { returnFocus: false })
     notes.dismiss('missing-sheets')
+    routes?.select(null, { silent: true }) // mission 3 B: a tracing or a selected cable does not stay under the picker
     picker.show({ closable: canvasShown, focus: true })
   }
   /** « Ouvrir… »: the saved list; the chosen project replaces the rig as one undoable snapshot entry (C5), its name with it. */
@@ -2345,11 +2346,13 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     // mission 1 (spec 5): « Mon compte » and « Se connecter », only with the accounts switch on (never in the product)
     ...(accounts ? { account: () => void accounts?.open(), 'sign-in': () => void accounts?.logIn() } : {}),
     // mission 2: Vue › « Schéma 2D », the 2D page over the 3D view (it never changes the scene); none in an exam
-    ...(plan2d ? { plan2d: () => void plan2d.open() } : {}),
+    // mission 3 B: a tracing ends first (its keys must not follow the learner into the 2D page)
+    ...(plan2d ? { plan2d: () => void (routes?.cancel(), plan2d.open()) } : {}),
     site: () => location.assign(siteHref),
     // Lieu → « Choisir un lieu… »: the picker over the current place (Fermer / Échap go back).
     'choose-place': () => {
       setInventory(false, { returnFocus: false }) // the picker covers the drawer and takes focus
+      routes?.select(null, { silent: true }) // mission 3 B: a tracing or a selected cable does not stay under the picker
       picker.show({ closable: canvasShown, focus: true })
     },
     inventory: () => setInventory(!drawerOpen()),
