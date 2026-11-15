@@ -29,8 +29,9 @@ describe('module boundaries of the accounts code', () => {
     }
   })
 
+  // `import type` is erased at build time (no code, no chunk edge): the integration (src/creation/onboarding/accountWiring.ts) types its lazy import() with it
   it('nothing outside src/accounts imports the accounts code statically (the integrator must use import())', () => {
-    const outside = files.filter((f) => !f.rel.startsWith('accounts/') && /^\s*import\b[^\n]*['"][^'"]*\/accounts\//m.test(f.text))
+    const outside = files.filter((f) => !f.rel.startsWith('accounts/') && /^\s*import\b(?!\s+type\b)[^\n]*['"][^'"]*\/accounts\//m.test(f.text))
     expect(outside.map((f) => f.rel)).toEqual([])
   })
 

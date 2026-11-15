@@ -7,7 +7,7 @@
  * - The card « Enregistrez votre travail »: quiet, shown ONCE (any of its buttons dismisses it for good: `accountPrompt: 'dismissed'` in the onboarding record) after the plain
  *   tutorial ends or the first sound, whichever comes first; never in an exam (practice address only, read live); it opens sign-up. It takes the tutorial's reserved row
  *   (src/design/tutorialSlot.ts) only while that row is free: during a tutorial it waits until the tutorial's card has left.
- * The build-time variables (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) are read by the adapter from `import.meta.env` only; nothing is committed.
+ * The two build-time Supabase variables (docs/accounts.md) are read by the adapter alone, from `import.meta.env`; nothing is committed and nothing here reads them.
  */
 import type { AccountUiHandle, mountAccountUi, SchoolOption } from '../../accounts/accountUi'
 import { COPY } from '../copy'
