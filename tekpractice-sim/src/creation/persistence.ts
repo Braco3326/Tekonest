@@ -31,6 +31,8 @@ import type { DesignState } from '../trials/trial'
 import { canonicalize } from '../trials/fingerprint'
 import { sanitizePlacements } from '../scene/designApplier'
 import { PlacementSchema, PortRef } from './templateSchema'
+import { cableKey } from './sceneDiff'
+import { readRoute } from '../scene/cableRoute'
 
 export const AUTOSAVE_KEY = 'audio-sim/creation.v1'
 export const PROJECTS_KEY = 'audio-sim/creation-projects.v1'
@@ -101,6 +103,8 @@ const DesignSchema = z.object({
   }),
   // Checked one by one below: a bad entry is dropped, never the whole design.
   placements: z.array(z.unknown()),
+  // Mission 3 B: optional, checked one by one below (a corrupt value or route is dropped, never the design).
+  routes: z.unknown().optional(),
 })
 const AutosaveSchema = z.object({
   version: z.literal(1),
@@ -125,11 +129,31 @@ export function parseDesign(v: unknown): DesignState | null {
   if (!r.success) return null
   const shaped = r.data.placements.filter((p) => PlacementSchema.safeParse(p).success) as DesignState['placements']
   const d = r.data as unknown as DesignState
+  const routes = parseRoutes(r.data.routes, d.rig.connections)
   return {
     roomId: d.roomId,
     rig: { instances: d.rig.instances, connections: d.rig.connections, controls: d.rig.controls },
     placements: sanitizePlacements({ ...d, placements: shaped }),
+    // A design saved before routes (or with none left) has no `routes` field: it opens exactly as it did.
+    ...(routes ? { routes } : {}),
   }
+}
+
+/**
+ * Mission 3 B (spec §3): the saved routes that still belong to a cable of the design, each a usable list of finite [x, z] points. A route whose cable is
+ * not in the design goes with it; a corrupt value or route is dropped on its own (the design still opens; no quarantine note: it is design detail).
+ */
+function parseRoutes(v: unknown, connections: readonly { a: { instance: string; port: string }; b: { instance: string; port: string } }[]): DesignState['routes'] {
+  if (typeof v !== 'object' || v === null || Array.isArray(v)) return undefined
+  const raw = v as Record<string, unknown>
+  const out: Record<string, [number, number][]> = {}
+  for (const c of connections) {
+    const key = cableKey(c.a, c.b)
+    if (!Object.prototype.hasOwnProperty.call(raw, key)) continue
+    const pts = readRoute(raw[key])
+    if (pts?.length) out[key] = pts
+  }
+  return Object.keys(out).length ? out : undefined
 }
 
 // ── storage helpers ────────────────────────────────────────────────────────

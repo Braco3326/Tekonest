@@ -16,6 +16,7 @@ export interface SceneOps {
   remove: string[]
   /** Pose changed. */
   move: Placement[]
+  /** Cables to draw: new ones, and (mission 3 B) ones whose route changed, so a route edit redraws that cable only (the renderer replaces by key). */
   cablesAdd: { key: string; a: PortRef; b: PortRef }[]
   /** Cable keys. */
   cablesRemove: string[]
@@ -74,6 +75,12 @@ export function planSceneOps(prev: DesignState | null, next: DesignState): Scene
   const cWas = prev ? cables(prev) : new Map<string, { key: string; a: PortRef; b: PortRef }>()
   const cNow = cables(next)
   for (const key of cWas.keys()) if (!cNow.has(key)) ops.cablesRemove.push(key)
-  for (const [key, c] of cNow) if (!cWas.has(key)) ops.cablesAdd.push(c)
+  for (const [key, c] of cNow) if (!cWas.has(key) || routeSig(prev, key) !== routeSig(next, key)) ops.cablesAdd.push(c)
   return ops
+}
+
+/** A cable's stored route as a comparable string ('' = automatic: absent and empty are the same). */
+function routeSig(d: DesignState | null, key: string): string {
+  const r = d?.routes?.[key]
+  return r && r.length ? JSON.stringify(r) : ''
 }
