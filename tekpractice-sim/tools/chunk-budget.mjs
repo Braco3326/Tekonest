@@ -63,6 +63,20 @@ export const FORBIDDEN_STATIC = [
   },
   { id: 'coverage controller', why: 'the coverage controller loads on the first Couverture click', ...exact(['src/creation/coverageController.ts']) },
   { id: 'listen controller', why: 'the listen controller loads on the first Lecture click', ...exact(['src/creation/listenController.ts']) },
+  // Accounts (mission 1, part B): the dialogs and the Supabase adapter load only when the learner opens the account UI. `optional`: while nothing imports
+  // src/accounts/ the modules are in no chunk at all, which is not a stale rule.
+  { id: 'accounts', why: 'the account dialogs and the provider SDK load only when the account UI opens (and only when the accounts switch is on)', match: (m) => m.startsWith('src/accounts/'), optional: true },
+]
+
+/**
+ * A size cap on a LAZY chunk (raw bytes of the JS file), looked up by a module that must be inside it. Lazy chunks are never counted in the start sums, so without
+ * a cap they could grow unseen. `optional`: no chunk holds the module yet (nothing imports it) = nothing to check.
+ * Measured 2026-11-15 on a scratch build: the dialogs chunk 26 720 bytes (with the modal helper, which the real build shares with the creation chunk), the adapter chunk
+ * 230 940 bytes (the Supabase SDK, 60 kB gzip). The caps leave about 2x and 30 % of room.
+ */
+export const LAZY_CAPS = [
+  { id: 'accounts dialogs', module: 'src/accounts/accountUi.ts', maxBytes: 60_000 },
+  { id: 'accounts adapter (provider SDK)', module: 'src/accounts/supabaseService.ts', maxBytes: 300_000 },
 ]
 
 /** The manifest key of the chunk that holds `moduleId`: the key equal to its `src`, else the chunk whose module list has it. */
@@ -161,6 +175,14 @@ export function evaluateBudget({ manifest, chunkModules, sizes, chunkTexts = {},
       }
     } else if (!rule.optional && ![...everyModule].some((m) => rule.match(m))) {
       failures.push(`stale rule "${rule.id}": matches no module in the build (file moved or renamed? update tools/chunk-budget.mjs)`)
+    }
+  }
+  // Lazy size caps: only for chunks that exist in this build.
+  for (const cap of LAZY_CAPS) {
+    for (const [file, mods] of Object.entries(chunkModules)) {
+      if (!mods.includes(cap.module)) continue
+      const size = sizes[file]
+      if (typeof size === 'number' && size > cap.maxBytes) failures.push(`lazy chunk ${file} (${cap.id}) is ${size} bytes, above its cap ${cap.maxBytes}`)
     }
   }
   // Every chunk of either start closure needs its module list: a missing one would skip the laziness check for it without a word.

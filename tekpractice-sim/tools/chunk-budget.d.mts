@@ -54,5 +54,12 @@ export const LEGACY_ENTRY_MODULE: string
 export const PAGE_ENTRY_SRC: string
 export const ALLOWED_STATIC: string[]
 export const FORBIDDEN_STATIC: ForbiddenRule[]
+export interface LazyCap {
+  id: string
+  /** A module that must be inside the chunk the cap applies to. */
+  module: string
+  maxBytes: number
+}
+export const LAZY_CAPS: LazyCap[]
 export function evaluateBudget(input: BudgetInput): BudgetVerdict
 export function formatTable(verdict: BudgetVerdict): string
