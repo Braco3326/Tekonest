@@ -244,8 +244,11 @@ const readPage = (page: Page): Promise<Seen[]> =>
     return out
   }, LEARNER_SURFACES)
 
-/** « vous » only: the tu-forms of French. Pronouns and possessives, and the tutoiement imperatives of the verbs the tutorial uses (a sentence-initial imperative without the « -ez »). */
-const TUTOIEMENT = /(?<![\p{L}-])(tu|toi|ton|ta|tes|t['’]|vas-y|fais)(?![\p{L}])|(?:^|[.!?:«]\s*)(pose|branche|relie|sélectionne|active|ouvre|clique|choisis|débranche|rebranche|essaie|regarde|vérifie|appuie|tape|connecte|règle|lance|reviens)(?![\p{L}])/iu
+/**
+ * « vous » only: the tu-forms of French. Pronouns and possessives, and the tutoiement imperatives of the verbs the tutorial uses (a sentence-initial imperative without the « -ez »).
+ * « fais » after « je » is the first person (a goal label of the goal tree, mission 1: « Je fais du son par passion »), not a tutoiement.
+ */
+const TUTOIEMENT = /(?<![\p{L}-])(tu|toi|ton|ta|tes|t['’]|vas-y)(?![\p{L}])|(?<![\p{L}-])(?<!\bje\s)fais(?![\p{L}])|(?:^|[.!?:«]\s*)(pose|branche|relie|sélectionne|active|ouvre|clique|choisis|débranche|rebranche|essaie|regarde|vérifie|appuie|tape|connecte|règle|lance|reviens)(?![\p{L}])/iu
 /** What the spec calls unverified: nothing is claimed about what is heard (the live audio reaction to an unplug, a mic, a speaker). Lexical, so the runtime scan can state it beyond honestyLists. */
 const AUDIO_CLAIM = /vous (entendrez|entendez)|on (entend|n’entend)|se tait|devient muet|plus (aucun )?son\b|le son (s’arrête|disparaît|change)|ça (sonne|sonnera)|coupe le son/i
 
@@ -293,6 +296,8 @@ test('the scan can fail: each rule trips on a crafted string, near misses pass, 
   expect(trips('Pose le micro sur la scène.'), 'tutoiement, imperative').toContain('tutoiement')
   expect(trips('Tu poses le micro.'), 'tutoiement, pronoun').toContain('tutoiement')
   expect(trips('Branche ton câble.'), 'tutoiement, possessive').toContain('tutoiement')
+  expect(trips('Fais un essai.'), 'tutoiement, fais').toContain('tutoiement')
+  expect(trips('Je fais du son par passion'), 'the first person « je fais » is no tutoiement').not.toContain('tutoiement')
   expect(trips('Posez le micro sur la scène.')).toEqual([])
   expect(trips('Écoute'), 'a menu name is not an imperative').toEqual([])
   expect(trips('Dans ce simulateur, la multiprise est la source de courant.')).toEqual([])
@@ -330,7 +335,7 @@ for (const id of DESIGN_IDS) {
     await waitStartScreen(page)
     await expect(page.locator('.oscar-icon')).toBeVisible({ timeout: 15_000 })
     await scan(`package ${id} start screen, profile stage`)
-    await page.keyboard.press(PROFILE_3.key)
+    await answerFirstQuestion(page, PROFILE_3.key) // package 2 asks the goal screens (mission 1): the goal of that profile there
     await expect(start(page).getByRole('button', { name: /^Faire le tutoriel/ })).toBeVisible()
     await scan(`package ${id} start screen, offer stage`)
     const open = openRequests(page)

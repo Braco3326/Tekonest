@@ -124,7 +124,15 @@ test('DOM parity (11.1): the same landmarks and test ids in all five packages at
     // the comparer's own input is not empty: the slot, the chip, the shell
     expect(snaps[0].ids.length, `${kind}: the snapshot holds test ids`).toBeGreaterThan(20)
     expect(snaps[0].landmarks.length, `${kind}: the snapshot holds landmarks`).toBeGreaterThan(8)
-    for (let i = 1; i < snaps.length; i++) expect(diff(compared(snaps[0]), compared(snaps[i])), `${kind}: package 1 against package ${DESIGN_IDS[i]}`).toEqual([])
+    for (let i = 1; i < snaps.length; i++) {
+      // mission 1: package 2 asks the goal screens instead of the four profiles (its own first question by design), so it differs in exactly that panel (the goal
+      // screen's test ids and, on the first stage, its heading), at every stage since the start screen stays in the page hidden; everything else must still match
+      const goalStage = DESIGN_IDS[i] === 2 // the goal panel stays in the page (hidden) behind the offer and once the room is open
+      const goalPanel = (d: string): boolean =>
+        /^testid goal-(screen|back|skip): only in the second$/.test(d) || /^landmark (div\[group\]|section\[\]) "Bienvenue : (quelle est votre situation|que voulez-vous faire) \?": only in the (first|second)$/.test(d)
+      const found = diff(compared(snaps[0]), compared(snaps[i])).filter((d) => !(goalStage && goalPanel(d)))
+      expect(found, `${kind}: package 1 against package ${DESIGN_IDS[i]}`).toEqual([])
+    }
   }
   // the tutorial slot and its card are in all five (the spec's own parenthesis)
   for (const [i, s] of byKind['tutorial running'].entries()) for (const want of ['tutorial-slot', 'tutorial-card', 'tutorial-step-count', 'tutorial-skip']) expect(s.ids, `package ${DESIGN_IDS[i]} has ${want}`).toContain(want)

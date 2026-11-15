@@ -54,6 +54,13 @@ export type ProfileKey = (typeof PROFILES)[number]['key']
  * so the offer, the first room, the panels and the drawer tab are the profile's, as before. The labels come from the tree file.
  */
 const GOAL_FOR_PROFILE: Record<(typeof PROFILES)[number]['id'], string> = { decouvre: 'decouvre', etudie: 'etudie', projet: 'passion', metier: 'travaille' }
+/** The digit key of a goal-screen button: its position (1 to 9, 0 = tenth), as src/creation/onboarding/goalSteps.ts numbers them. */
+const goalKey = (id: string): string => {
+  const g = (goalTreeJson as unknown as { goals: { id: string; children: { id: string }[] }[] }).goals
+  const top = g.findIndex((x) => x.id === id.split('.')[0])
+  const at = id.includes('.') ? g[top]!.children.findIndex((c) => c.id === id) : top
+  return String((at + 1) % 10)
+}
 const goalLabel = (id: string): string => {
   const g = (goalTreeJson as unknown as { goals: { id: string; label: string; children: { id: string; label: string }[] }[] }).goals
   const top = g.find((x) => x.id === id.split('.')[0])!
@@ -87,6 +94,13 @@ export async function answerFirstQuestion(page: Page, key: ProfileKey, how: 'key
     return
   }
   const goal = GOAL_FOR_PROFILE[p.id]
+  if (how === 'key') {
+    // keyboard only (a spec that counts pointer events): the digit of each choice, the focus moving to the next screen's first button in between
+    await page.keyboard.press(goalKey(goal))
+    await expect(page.getByTestId('goal-screen').getByRole('button', { name: goalLabel(`${goal}.autre`), exact: true })).toBeVisible()
+    await page.keyboard.press(goalKey(`${goal}.autre`))
+    return
+  }
   await page.getByTestId('goal-screen').getByRole('button', { name: goalLabel(goal), exact: true }).click()
   await page.getByTestId('goal-screen').getByRole('button', { name: goalLabel(`${goal}.autre`), exact: true }).click()
 }
