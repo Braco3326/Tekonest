@@ -97,7 +97,8 @@
       "ventSlotLenMm": 28,
       "ventColumns": 5,
       "ventColPitchMm": 44,
-      "ventDepthMm": 2
+      "ventDepthMm": 2,
+      "bodyRgb": 1579037
     },
     "projection": [
       "opposite",
@@ -107,7 +108,23 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1
+    "minFilletMm": 1,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_rectified.png"
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          78,
+          188,
+          877,
+          162
+        ]
+      }
+    ]
   },
   "sources": [
     {

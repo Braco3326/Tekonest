@@ -235,17 +235,23 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 4
+    "minFilletMm": 4,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rectified.png"
+      }
+    ]
   },
   "texture": {
     "blankRects": [
       {
         "face": "top",
-        "xMm": 82,
-        "yMm": 62,
-        "wMm": 30,
-        "hMm": 14,
-        "marginMm": 5
+        "xMm": 79,
+        "yMm": 58,
+        "wMm": 40,
+        "hMm": 25,
+        "marginMm": 4
       }
     ]
   }

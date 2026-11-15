@@ -101,17 +101,12 @@
   "build": {
     "shape": "moulded-box",
     "params": {
-      "cornerRadiusMm": 6,
+      "cornerRadiusMm": 9,
       "edgeRadiusMm": 3,
       "edgeDropMm": 3,
       "bottomEdgeRadiusMm": 2.5,
       "edgeSegments": 8,
-      "recessWMm": 70,
-      "recessHMm": 46,
-      "recessXMm": 10,
-      "recessYMm": 62,
-      "recessDepthMm": 1,
-      "bodyGrey": 45
+      "bodyGrey": 26
     },
     "projection": [
       "top",
@@ -122,7 +117,20 @@
       "min": 600,
       "max": 2000
     },
-    "minFilletMm": 2
+    "minFilletMm": 2,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top.jpg",
+        "crop": [
+          30,
+          58,
+          720,
+          487
+        ],
+        "fill": true
+      }
+    ]
   },
   "sources": [
     {

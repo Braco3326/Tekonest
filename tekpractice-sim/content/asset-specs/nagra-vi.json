@@ -123,9 +123,11 @@
   "build": {
     "shape": "moulded-box",
     "params": {
-      "cornerRadiusMm": 10,
-      "edgeRadiusMm": 4,
-      "edgeSegments": 8
+      "cornerRadiusMm": 5,
+      "edgeRadiusMm": 3.2,
+      "edgeSegments": 8,
+      "bodyGrey": 175,
+      "edgeDropMm": 3.2
     },
     "projection": [
       "top",

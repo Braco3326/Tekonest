@@ -81,6 +81,24 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "io",
+        "file": "front.jpg",
+        "fill": true
+      },
+      {
+        "face": "opposite",
+        "file": "rear.jpg",
+        "crop": [
+          95,
+          45,
+          1810,
+          895
+        ],
+        "fill": true
+      }
     ]
   },
   "texture": {
@@ -140,6 +158,70 @@
         "wMm": 42,
         "hMm": 18,
         "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 207,
+        "yMm": 191,
+        "wMm": 46,
+        "hMm": 12,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 163,
+        "yMm": 177,
+        "wMm": 55,
+        "hMm": 7,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 163,
+        "yMm": 30.5,
+        "wMm": 74,
+        "hMm": 5,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 163,
+        "yMm": 22.5,
+        "wMm": 76,
+        "hMm": 5,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 308,
+        "yMm": 159.5,
+        "wMm": 56,
+        "hMm": 5.5,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 214,
+        "yMm": 162,
+        "wMm": 68,
+        "hMm": 4.6,
+        "marginMm": 2
+      },
+      {
+        "face": "opposite",
+        "xMm": 214,
+        "yMm": 152.5,
+        "wMm": 68,
+        "hMm": 4.6,
+        "marginMm": 2
+      },
+      {
+        "face": "opposite",
+        "xMm": 214,
+        "yMm": 134.4,
+        "wMm": 68,
+        "hMm": 4.6,
+        "marginMm": 2
       }
     ]
   },

@@ -11,9 +11,9 @@
     {
       "portId": "net",
       "face": "io",
-      "xMm": 30,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 74.3,
+      "yMm": 24,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "ethernet-control",
       "dir": "bidir"
@@ -21,9 +21,9 @@
     {
       "portId": "usb-a-1",
       "face": "io",
-      "xMm": 56,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 119.3,
+      "yMm": 24,
+      "confidence": "photo",
       "connector": "usb-a",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -31,9 +31,9 @@
     {
       "portId": "usb-a-2",
       "face": "io",
-      "xMm": 74,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 132.1,
+      "yMm": 24,
+      "confidence": "photo",
       "connector": "usb-a",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -41,9 +41,9 @@
     {
       "portId": "tb-1",
       "face": "io",
-      "xMm": 94,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 30.5,
+      "yMm": 24,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -51,9 +51,9 @@
     {
       "portId": "tb-2",
       "face": "io",
-      "xMm": 108,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 40.3,
+      "yMm": 24,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -61,9 +61,9 @@
     {
       "portId": "tb-3",
       "face": "io",
-      "xMm": 122,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 50,
+      "yMm": 24,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -71,9 +71,9 @@
     {
       "portId": "tb-4",
       "face": "io",
-      "xMm": 136,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 59.8,
+      "yMm": 24,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -81,9 +81,9 @@
     {
       "portId": "out-phones",
       "face": "io",
-      "xMm": 156,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 165.8,
+      "yMm": 24,
+      "confidence": "photo",
       "connector": "trs-35mm",
       "signal": "headphone-level",
       "dir": "out"
@@ -91,9 +91,9 @@
     {
       "portId": "usb-c-front-1",
       "face": "opposite",
-      "xMm": 138,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 32.2,
+      "yMm": 24.1,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -101,9 +101,9 @@
     {
       "portId": "usb-c-front-2",
       "face": "opposite",
-      "xMm": 154,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 47.1,
+      "yMm": 24.1,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -128,7 +128,19 @@
       "min": 600,
       "max": 2000
     },
-    "minFilletMm": 8
+    "minFilletMm": 8,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.apple.com/mac-studio/specs/",

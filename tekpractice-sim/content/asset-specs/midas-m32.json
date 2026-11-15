@@ -365,7 +365,13 @@
       "min": 1000,
       "max": 6000
     },
-    "minFilletMm": 4
+    "minFilletMm": 4,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_composite.png"
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
@@ -390,5 +396,17 @@
       "url": "https://global-uploads.webflow.com/5f4013c686a8c427bc62226e/5f4013c686a8c4841f62246e_Midas-M32-Data-Sheet.pdf",
       "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the Midas M32 data sheet lists 32 XLR mic preamps with +48 V phantom, switchable per input (the eight modelled mic inputs). It says nothing of phantom on the TALKBACK input, so that port no longer claims it (phantom to-check)."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 278,
+        "yMm": 19,
+        "wMm": 66,
+        "hMm": 16,
+        "marginMm": 3
+      }
+    ]
+  }
 }

@@ -116,7 +116,8 @@
       "edgeDropMm": 24,
       "edgeSegments": 8,
       "barrelMm": 4,
-      "barrelCentreMm": 195
+      "barrelCentreMm": 195,
+      "bodyGrey": 26
     },
     "budget": {
       "min": 1500,
@@ -128,8 +129,10 @@
       "opposite",
       "left"
     ],
-    "projectionShiftMm": {
-      "io": 68
-    }
+    "photos": [
+      { "face": "opposite", "file": "front.png", "crop": [43, 54, 1100, 1850] },
+      { "face": "io", "file": "rear_rect.png", "crop": [0, 0, 1068, 1806] },
+      { "face": "left", "file": "side.png", "crop": [157, 140, 1135, 1955] }
+    ]
   }
 }

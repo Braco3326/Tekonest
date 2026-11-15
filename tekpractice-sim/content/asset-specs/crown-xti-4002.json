@@ -11,9 +11,9 @@
     {
       "portId": "in-xlr-1",
       "face": "io",
-      "xMm": 45,
-      "yMm": 62,
-      "confidence": "guess",
+      "xMm": 415.2,
+      "yMm": 23.5,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -21,9 +21,9 @@
     {
       "portId": "in-xlr-2",
       "face": "io",
-      "xMm": 75,
-      "yMm": 62,
-      "confidence": "guess",
+      "xMm": 379.9,
+      "yMm": 23.5,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -31,9 +31,9 @@
     {
       "portId": "out-spk-1",
       "face": "io",
-      "xMm": 250,
-      "yMm": 44,
-      "confidence": "guess",
+      "xMm": 208.3,
+      "yMm": 24.7,
+      "confidence": "photo",
       "connector": "speakon-nl4",
       "signal": "speaker-level",
       "dir": "out"
@@ -41,9 +41,9 @@
     {
       "portId": "out-spk-2",
       "face": "io",
-      "xMm": 300,
-      "yMm": 44,
-      "confidence": "guess",
+      "xMm": 175.6,
+      "yMm": 24.7,
+      "confidence": "photo",
       "connector": "speakon-nl4",
       "signal": "speaker-level",
       "dir": "out"
@@ -51,9 +51,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 410,
-      "yMm": 40,
-      "confidence": "guess",
+      "xMm": 36.8,
+      "yMm": 23.5,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -95,21 +95,8 @@
       "ventDepthMm": 1.5,
       "ventFromRearMm": 30,
       "ventColPitchMm": 70,
-      "frontVentSlots": 5,
-      "frontVentRows": 6,
-      "frontVentSlotLenMm": 40,
-      "frontVentSlotWidthMm": 3,
-      "frontVentColPitchMm": 46,
-      "frontVentRowPitchMm": 9,
-      "frontVentXMm": 170,
-      "frontVentYMm": 44.45,
-      "windowWMm": 70,
-      "windowHMm": 26,
-      "windowXMm": 300,
-      "windowYMm": 30,
-      "windowDepthMm": 2,
-      "earHandleProjectionMm": 20,
-      "earHandleDiaMm": 10
+      "plateRgb": 7237225,
+      "bodyRgb": 2303014
     },
     "projection": [
       "opposite",
@@ -119,7 +106,30 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1
+    "minFilletMm": 1,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.webp",
+        "crop": [
+          144,
+          113,
+          3822,
+          704
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.webp",
+        "crop": [
+          173,
+          135,
+          3778,
+          750
+        ]
+      }
+    ]
   },
   "sources": [
     {
@@ -142,5 +152,45 @@
       "url": "https://www.crownaudio.com/en/products/xti-4002",
       "note": "Port and control positions are GUESSES. build: rack-box v3b (front vent block, LCD window, ear handles); the vents, window and handles are ESTIMATES drawn from the usual layout of this amplifier class (no photo or drawing opened). The size d includes the 20 mm handles. build.projection: our own generic artwork; no photo, no logo, no lettering."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 57,
+        "yMm": 13.5,
+        "wMm": 79,
+        "hMm": 18,
+        "marginMm": 3,
+        "fill": "#cbc6c2"
+      },
+      {
+        "face": "opposite",
+        "xMm": 350,
+        "yMm": 12.9,
+        "wMm": 46,
+        "hMm": 17.5,
+        "marginMm": 3,
+        "fill": "#cbc6c2"
+      },
+      {
+        "face": "io",
+        "xMm": 80.5,
+        "yMm": 61.9,
+        "wMm": 135.5,
+        "hMm": 13,
+        "marginMm": 3,
+        "fill": "#74758a"
+      },
+      {
+        "face": "io",
+        "xMm": 457.5,
+        "yMm": 29.5,
+        "wMm": 13.5,
+        "hMm": 14,
+        "marginMm": 2,
+        "fill": "#d3d7de"
+      }
+    ]
+  }
 }

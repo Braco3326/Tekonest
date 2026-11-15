@@ -11,9 +11,9 @@
     {
       "portId": "in-send-xlr",
       "face": "io",
-      "xMm": 28,
-      "yMm": 20.5,
-      "confidence": "guess",
+      "xMm": 82.2,
+      "yMm": 21.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in"
@@ -21,9 +21,9 @@
     {
       "portId": "in-send-2",
       "face": "io",
-      "xMm": 60,
-      "yMm": 20.5,
-      "confidence": "guess",
+      "xMm": 117.3,
+      "yMm": 12.7,
+      "confidence": "photo",
       "connector": "trs-35mm",
       "signal": "line-level-consumer",
       "dir": "in"
@@ -31,9 +31,9 @@
     {
       "portId": "out-caller-xlr",
       "face": "io",
-      "xMm": 94,
-      "yMm": 20.5,
-      "confidence": "guess",
+      "xMm": 58.5,
+      "yMm": 21.9,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -41,9 +41,9 @@
     {
       "portId": "out-stereo",
       "face": "io",
-      "xMm": 124,
-      "yMm": 20.5,
-      "confidence": "guess",
+      "xMm": 128.8,
+      "yMm": 12.5,
+      "confidence": "photo",
       "connector": "trs-35mm",
       "signal": "line-level-consumer",
       "dir": "out"
@@ -51,9 +51,9 @@
     {
       "portId": "out-phones",
       "face": "opposite",
-      "xMm": 160,
-      "yMm": 14,
-      "confidence": "guess",
+      "xMm": 164,
+      "yMm": 12,
+      "confidence": "photo",
       "connector": "trs-35mm",
       "signal": "headphone-level",
       "dir": "out"
@@ -71,8 +71,8 @@
       "seamMm": 12,
       "feetMm": 2,
       "feetDiaMm": 12,
-      "plateRgb": 1908257,
-      "bodyRgb": 2763566,
+      "plateRgb": 14998740,
+      "bodyRgb": 13222072,
       "ventSlots": 6,
       "ventColumns": 1,
       "ventSlotWidthMm": 2.4,
@@ -89,7 +89,31 @@
       "min": 600,
       "max": 2000
     },
-    "minFilletMm": 2
+    "minFilletMm": 2,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          8,
+          32,
+          1264,
+          281
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          27,
+          32,
+          1241,
+          275
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://decibel.ch/upfiles/documents/jk-audio-broadcast-host-datasheet-27723.pdf",
@@ -110,5 +134,45 @@
       "note": "Mains (review fix, read 2026-11-12 by a research pass): the Broadcast Host user guide says the power jack is only for the supplied regulated 9 VDC supply. No mains inlet is modelled for this device and the entry says so."
     }
   ],
-  "powerNote": "alimentation non modélisée : l'appareil utilise une alimentation externe 9 V continu"
+  "powerNote": "alimentation non modélisée : l'appareil utilise une alimentation externe 9 V continu",
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 7.4,
+        "yMm": 27.6,
+        "wMm": 56,
+        "hMm": 5.2,
+        "marginMm": 2,
+        "fill": "#f5efea"
+      },
+      {
+        "face": "opposite",
+        "xMm": 144.5,
+        "yMm": 27.6,
+        "wMm": 26.5,
+        "hMm": 5.2,
+        "marginMm": 2,
+        "fill": "#f5efea"
+      },
+      {
+        "face": "io",
+        "xMm": 6,
+        "yMm": 29.2,
+        "wMm": 33.5,
+        "hMm": 4.6,
+        "marginMm": 2,
+        "fill": "#f5efea"
+      },
+      {
+        "face": "io",
+        "xMm": 145.5,
+        "yMm": 28.6,
+        "wMm": 26,
+        "hMm": 5.4,
+        "marginMm": 2,
+        "fill": "#f5efea"
+      }
+    ]
+  }
 }

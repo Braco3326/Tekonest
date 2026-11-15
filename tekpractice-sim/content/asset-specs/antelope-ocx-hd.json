@@ -72,7 +72,8 @@
       "feetMm": 3,
       "rearInsetMm": 7,
       "seamMm": 20,
-      "plateRgb": 10791086
+      "plateRgb": 10791086,
+      "bodyRgb": 1579037
     },
     "projection": [
       "opposite",
@@ -82,7 +83,29 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 0.8
+    "minFilletMm": 0.8,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          172,
+          158,
+          1252,
+          120
+        ]
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          174,
+          152,
+          1251,
+          120
+        ]
+      }
+    ]
   },
   "texture": {
     "blankRects": [

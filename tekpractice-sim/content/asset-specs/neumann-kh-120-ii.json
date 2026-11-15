@@ -96,12 +96,13 @@
       "edgeRadiusMm": 6,
       "edgeDropMm": 6,
       "edgeSegments": 8,
-      "wooferRingMm": 130,
-      "wooferYMm": 105,
-      "tweeterRingMm": 28,
-      "tweeterYMm": 232,
-      "waveguideMm": 72,
-      "waveguideDepthMm": 8
+      "wooferRingMm": 128,
+      "wooferYMm": 101,
+      "tweeterRingMm": 33,
+      "tweeterYMm": 229,
+      "waveguideMm": 96,
+      "waveguideDepthMm": 10,
+      "bodyGrey": 62
     },
     "budget": {
       "min": 1500,
@@ -111,6 +112,18 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_dark.png",
+        "crop": [
+          0,
+          0,
+          997,
+          1583
+        ]
+      }
     ]
   },
   "sources": [
@@ -134,5 +147,17 @@
       "url": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
       "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with a woofer grille and a tweeter dish; no photo copy, no brand mark, no lettering. Colours: the datasheet finish where it states one, else a studio-monitor default. Anthracite front, black rear (RAL 7021 / RAL 9005 lifted for the creation lighting)."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 12,
+        "yMm": 157,
+        "wMm": 29,
+        "hMm": 29,
+        "marginMm": 4
+      }
+    ]
+  }
 }

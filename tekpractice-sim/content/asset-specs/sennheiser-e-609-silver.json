@@ -31,7 +31,7 @@
       "edgeDropMm": 8,
       "bottomEdgeRadiusMm": 3,
       "edgeSegments": 8,
-      "bodyGrey": 150
+      "bodyGrey": 95
     },
     "projection": [
       "opposite",
@@ -42,7 +42,31 @@
       "min": 500,
       "max": 2000
     },
-    "minFilletMm": 2.5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          1395,
+          986,
+          1055,
+          2592
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.png",
+        "crop": [
+          1395,
+          986,
+          1055,
+          2592
+        ],
+        "fill": true
+      }
+    ]
   },
   "sources": [
     {
@@ -65,5 +89,17 @@
       "url": "https://www.sennheiser.com/en-at/catalog/products/microphones/e-609/e-609-silver-500074",
       "note": "build.projection opposite and top: our own generic artwork (content/generic-panels): a grille window on the front face; no photo, no logo, no lettering."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "io",
+        "xMm": 11.5,
+        "yMm": 58.5,
+        "wMm": 31.5,
+        "hMm": 9,
+        "marginMm": 3
+      }
+    ]
+  }
 }

@@ -78,8 +78,9 @@
   "build": {
     "shape": "speaker-cabinet-v2",
     "params": {
-      "edgeRadiusMm": 8,
-      "edgeSegments": 4
+      "edgeRadiusMm": 12,
+      "edgeSegments": 4,
+      "bodyGrey": 30
     },
     "budget": {
       "min": 100,
@@ -89,6 +90,19 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          238,
+          298,
+          1154,
+          524
+        ],
+        "fill": true
+      }
     ]
   },
   "sources": [
@@ -107,5 +121,18 @@
       "url": "https://adam-audio.com/s-serie/s3h",
       "note": "ADAM Audio S3H page read 2026-11-12: 280 x 585 x 380 mm (H x W x D), 26.6 kg, drivers as above, 550 W maximum power consumption."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 268,
+        "yMm": 159,
+        "wMm": 40,
+        "hMm": 17,
+        "marginMm": 3,
+        "fill": "#161618"
+      }
+    ]
+  }
 }

@@ -11,9 +11,9 @@
     {
       "portId": "out-xlr",
       "face": "io",
-      "xMm": 88,
-      "yMm": 21,
-      "confidence": "guess",
+      "xMm": 115.7,
+      "yMm": 24.2,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -21,9 +21,9 @@
     {
       "portId": "out-quarter",
       "face": "io",
-      "xMm": 120,
-      "yMm": 21,
-      "confidence": "guess",
+      "xMm": 140.1,
+      "yMm": 15.7,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -31,9 +31,9 @@
     {
       "portId": "net",
       "face": "io",
-      "xMm": 150,
-      "yMm": 21,
-      "confidence": "guess",
+      "xMm": 63.5,
+      "yMm": 16.3,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "ethernet-control",
       "dir": "bidir"
@@ -69,7 +69,31 @@
       "min": 600,
       "max": 2000
     },
-    "minFilletMm": 2
+    "minFilletMm": 2,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          40,
+          1388,
+          3419,
+          736
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.png",
+        "crop": [
+          7,
+          436,
+          1073,
+          222
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://content-files.shure.com/publications/specSheet/en/slx-d-spec-sheet.pdf",
@@ -88,5 +112,36 @@
   "powerNote": "alimentation non modélisée : l'appareil utilise une alimentation externe 15 V continu",
   "portAliases": {
     "out-14": "out-quarter"
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 2.5,
+        "yMm": 34.4,
+        "wMm": 42,
+        "hMm": 5.5,
+        "marginMm": 2,
+        "fill": "#47484a"
+      },
+      {
+        "face": "opposite",
+        "xMm": 167.5,
+        "yMm": 35.2,
+        "wMm": 27,
+        "hMm": 4.6,
+        "marginMm": 2,
+        "fill": "#37393a"
+      },
+      {
+        "face": "io",
+        "xMm": 54.5,
+        "yMm": 29.7,
+        "wMm": 43,
+        "hMm": 6.6,
+        "marginMm": 2,
+        "fill": "#c4c6ca"
+      }
+    ]
   }
 }

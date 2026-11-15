@@ -108,17 +108,17 @@
       "planFrontMm": 180,
       "sideBulgeMm": 4.5,
       "rearWidthMm": 172,
-      "frontRadiusMm": 20,
+      "frontRadiusMm": 22,
       "backRadiusMm": 26,
-      "edgeRadiusMm": 18,
-      "edgeDropMm": 22,
+      "edgeRadiusMm": 16,
+      "edgeDropMm": 20,
       "edgeSegments": 8,
       "barrelMm": 17.7,
       "barrelCentreMm": 159,
       "footMm": 14,
       "footWidthMm": 118,
       "footDepthMm": 100,
-      "bodyGrey": 112,
+      "bodyGrey": 58,
       "wooferRingMm": 136,
       "wooferYMm": 115,
       "tweeterRingMm": 41,
@@ -134,6 +134,29 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_dark.png",
+        "crop": [
+          0,
+          0,
+          985,
+          1475
+        ]
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          492,
+          180,
+          1068,
+          1600
+        ],
+        "fill": true
+      }
     ]
   }
 }

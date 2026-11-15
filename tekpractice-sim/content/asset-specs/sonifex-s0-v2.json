@@ -184,23 +184,23 @@
         125
       ],
       [
-        40,
+        120,
         125
       ],
       [
-        150,
-        95
+        240,
+        125
       ],
       [
         356,
-        55
+        125
       ]
     ],
     "params": {
       "filletMm": 3,
       "filletSegments": 5,
-      "cheekMm": 6,
-      "baseMm": 28,
+      "cheekMm": 17,
+      "baseMm": 108,
       "feetMm": 4,
       "feetWidthMm": 18,
       "feetFromSideMm": 22,
@@ -214,7 +214,14 @@
       "min": 600,
       "max": 6000
     },
-    "minFilletMm": 2.5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.png",
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.sonifex.co.uk/s0/",
@@ -249,5 +256,17 @@
       "url": "https://www.sonifex.co.uk/s0/",
       "note": "Sonifex S0 v2 product page (opened 2026-11-12): four XLR-3 microphone inputs, twelve RCA stereo line-input pairs and an RCA / 3.5 mm aux, two XLR-3 programme (PGM) outputs, an RCA record output pair, five 6.35 mm monitor and headphone outputs, USB-B audio, remote and light-control jacks, RJ11 phone-line and handset jacks, an IEC inlet 85-264 V (type not named: C14 is listed in the plan as assumedConnectors). Modelled subset: 4 mic inputs, one line pair, the PGM pair as out-main-1 and out-main-2, the record pair, 2 headphone jacks, USB and the inlet; the remote jacks, RJ11 jacks and the other line pairs have no catalogue signal or are repeats. The page gives the outline 48.3 x 35.6 x 12.5 cm and the 19 in front panel; the sloped profile is an estimate (only the rear height is stated). 483 x 356 x 125 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 325,
+        "yMm": 4,
+        "wMm": 126,
+        "hMm": 23,
+        "marginMm": 3
+      }
+    ]
+  }
 }

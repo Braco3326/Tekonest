@@ -131,9 +131,9 @@
     {
       "portId": "out-phones",
       "face": "opposite",
-      "xMm": 120,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 73.5,
+      "yMm": 14.7,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "headphone-level",
       "dir": "out"
@@ -144,8 +144,8 @@
       "controlId": "power",
       "kind": "button",
       "face": "opposite",
-      "xMm": 40,
-      "yMm": 22,
+      "xMm": 431.4,
+      "yMm": 17.8,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -183,7 +183,48 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.webp",
+        "crop": [
+          250,
+          1523,
+          2800,
+          255
+        ],
+        "fill": true
+      }
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 40.5,
+        "yMm": 38.5,
+        "wMm": 23.5,
+        "hMm": 5.5,
+        "marginMm": 4
+      },
+      {
+        "face": "opposite",
+        "xMm": 40.8,
+        "yMm": 30.8,
+        "wMm": 15,
+        "hMm": 6,
+        "marginMm": 4
+      },
+      {
+        "face": "opposite",
+        "xMm": 40.8,
+        "yMm": 7.2,
+        "wMm": 26.5,
+        "hMm": 8.2,
+        "marginMm": 4
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.shure.com/en-US/products/wireless-systems/axient_digital/ad4d",
@@ -207,6 +248,11 @@
       "kind": "manual",
       "url": "https://pubs.shure.com/view/guide/AD4D/en-US.pdf",
       "note": "Network ports (review fix, read 2026-11-12 by a research pass): the AD4D guide says four Ethernet ports, two control (ctrl 1, ctrl 2) and the Dante primary and secondary ports (switch modes: split-redundant 2 + 2, switched 4 + 4), and mentions AES67 output. The two Dante ports are typed aoip, the two control ports ethernet-control; which physical jack is which is a guess."
+    },
+    {
+      "kind": "photo",
+      "url": "https://products.shureweb.eu/shure_product_db/product_main_images/files/e06/d5d/f2-/original/abaede228e5ae5aa9bb22cd44fda51bf.webp",
+      "note": "Front photo (front.webp, straight-on, cropped to the face): the headphone jack and the power switch positions are read from it (confidence photo, 2026-11-15); the pass changes the look only."
     }
   ],
   "portAliases": {

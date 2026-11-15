@@ -41,8 +41,8 @@
       "earHoleMm": 6,
       "rearInsetMm": 10,
       "seamMm": 60,
-      "plateRgb": 3356219,
-      "bodyRgb": 1842464
+      "plateRgb": 13487565,
+      "bodyRgb": 13487565
     },
     "projection": [
       "opposite",
@@ -52,7 +52,48 @@
       "min": 1000,
       "max": 3500
     },
-    "minFilletMm": 1
+    "minFilletMm": 1,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          101,
+          346,
+          1045,
+          290
+        ],
+        "fill": true
+      }
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 48.5,
+        "yMm": 87,
+        "wMm": 122,
+        "hMm": 26,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 220.5,
+        "yMm": 108,
+        "wMm": 43,
+        "hMm": 16,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 225,
+        "yMm": 60,
+        "wMm": 31,
+        "hMm": 11,
+        "marginMm": 2
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",

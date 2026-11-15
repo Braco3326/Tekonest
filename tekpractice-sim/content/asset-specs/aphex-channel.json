@@ -11,9 +11,9 @@
     {
       "portId": "in-mic",
       "face": "io",
-      "xMm": 60,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 27.8,
+      "yMm": 19.2,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -25,9 +25,9 @@
     {
       "portId": "out-xlr",
       "face": "io",
-      "xMm": 90,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 132.7,
+      "yMm": 22.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -35,9 +35,9 @@
     {
       "portId": "out-trs",
       "face": "io",
-      "xMm": 124,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 182.1,
+      "yMm": 15.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -45,9 +45,9 @@
     {
       "portId": "out-aes",
       "face": "io",
-      "xMm": 160,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 255.6,
+      "yMm": 22.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -55,9 +55,9 @@
     {
       "portId": "out-spdif",
       "face": "io",
-      "xMm": 196,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 284.2,
+      "yMm": 15.3,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "spdif",
       "dir": "out"
@@ -65,9 +65,9 @@
     {
       "portId": "out-optical",
       "face": "io",
-      "xMm": 214,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 310,
+      "yMm": 15.7,
+      "confidence": "photo",
       "connector": "toslink",
       "signal": "spdif",
       "dir": "out"
@@ -75,9 +75,9 @@
     {
       "portId": "in-wclk",
       "face": "io",
-      "xMm": 240,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 342.1,
+      "yMm": 15.1,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "in"
@@ -85,9 +85,9 @@
     {
       "portId": "out-wclk",
       "face": "io",
-      "xMm": 258,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 362.3,
+      "yMm": 15.1,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "out"
@@ -95,9 +95,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 420,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 446.2,
+      "yMm": 25.7,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -105,9 +105,9 @@
     {
       "portId": "in-inst",
       "face": "opposite",
-      "xMm": 40,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 43.1,
+      "yMm": 12.8,
+      "confidence": "photo",
       "connector": "ts-quarter",
       "signal": "instrument-hiz",
       "dir": "in"
@@ -117,9 +117,9 @@
     {
       "controlId": "power",
       "kind": "switch",
-      "face": "opposite",
-      "xMm": 455,
-      "yMm": 22,
+      "face": "io",
+      "xMm": 395.2,
+      "yMm": 27.8,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -131,8 +131,8 @@
       "controlId": "phantom-48v",
       "kind": "button",
       "face": "opposite",
-      "xMm": 130,
-      "yMm": 22,
+      "xMm": 95,
+      "yMm": 29.1,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -159,7 +159,7 @@
       "ventPitchMm": 8,
       "ventDepthMm": 1.5,
       "ventFromRearMm": 20,
-      "plateRgb": 3356219,
+      "plateRgb": 13158600,
       "bodyRgb": 1842464
     },
     "projection": [
@@ -170,7 +170,31 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          275,
+          677,
+          4957,
+          448
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          257,
+          698,
+          4448,
+          385
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://aphex.com/products/channel",
@@ -190,5 +214,33 @@
       "url": "https://cdn.aphex.com/assets/pdf/Aphex_Channel_OM.pdf",
       "note": "Aphex Channel owner manual, opened 2026-11-12 (read as text): rear panel mic XLR, line output XLR and TRS, insert send and return (not modelled), cough-switch jack (no signal), AES/EBU XLR, S/PDIF coax, optical, word clock in and out BNC, IEC receptacle (type letter not named: iec-c14 assumed, plan assumedConnectors power-in); instrument input on the front panel. The mains switch exists (\"power switch\" under the logo) but its panel is not stated: drawn on the front. Front controls modelled: gain, 48 V; the manual lists many more (compressor, gate, EQ, exciter): picture only. Not modelled: insert jacks, cough jack (contact closure, no signal type). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 30.5,
+        "yMm": 31,
+        "wMm": 36,
+        "hMm": 7.2,
+        "marginMm": 1.5
+      },
+      {
+        "face": "opposite",
+        "xMm": 5.5,
+        "yMm": 20.5,
+        "wMm": 33.5,
+        "hMm": 4.2,
+        "marginMm": 1
+      },
+      {
+        "face": "io",
+        "xMm": 426,
+        "yMm": 39,
+        "wMm": 37,
+        "hMm": 5,
+        "marginMm": 1
+      }
+    ]
+  }
 }

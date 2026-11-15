@@ -11,9 +11,9 @@
     {
       "portId": "in-mic-1",
       "face": "io",
-      "xMm": 60,
-      "yMm": 235,
-      "confidence": "guess",
+      "xMm": 307,
+      "yMm": 134.2,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in"
@@ -21,9 +21,9 @@
     {
       "portId": "in-mic-2",
       "face": "io",
-      "xMm": 86.4,
-      "yMm": 235,
-      "confidence": "guess",
+      "xMm": 331.8,
+      "yMm": 134.2,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in"
@@ -31,9 +31,9 @@
     {
       "portId": "in-mic-3",
       "face": "io",
-      "xMm": 112.8,
-      "yMm": 235,
-      "confidence": "guess",
+      "xMm": 356.8,
+      "yMm": 134.2,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in"
@@ -41,9 +41,9 @@
     {
       "portId": "in-mic-4",
       "face": "io",
-      "xMm": 139.2,
-      "yMm": 235,
-      "confidence": "guess",
+      "xMm": 381.9,
+      "yMm": 134.2,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in"
@@ -51,9 +51,9 @@
     {
       "portId": "in-mic-5",
       "face": "io",
-      "xMm": 165.6,
-      "yMm": 235,
-      "confidence": "guess",
+      "xMm": 406.9,
+      "yMm": 134.2,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in"
@@ -61,9 +61,9 @@
     {
       "portId": "in-mic-6",
       "face": "io",
-      "xMm": 192,
-      "yMm": 235,
-      "confidence": "guess",
+      "xMm": 431.7,
+      "yMm": 134.2,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in"
@@ -71,9 +71,9 @@
     {
       "portId": "in-mic-7",
       "face": "io",
-      "xMm": 218.4,
-      "yMm": 235,
-      "confidence": "guess",
+      "xMm": 457,
+      "yMm": 134.2,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in"
@@ -81,9 +81,9 @@
     {
       "portId": "in-mic-8",
       "face": "io",
-      "xMm": 244.8,
-      "yMm": 235,
-      "confidence": "guess",
+      "xMm": 482.1,
+      "yMm": 134.2,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in"
@@ -91,9 +91,9 @@
     {
       "portId": "out-line-1",
       "face": "io",
-      "xMm": 60,
-      "yMm": 195,
-      "confidence": "guess",
+      "xMm": 307,
+      "yMm": 94.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -101,9 +101,9 @@
     {
       "portId": "out-line-2",
       "face": "io",
-      "xMm": 86.4,
-      "yMm": 195,
-      "confidence": "guess",
+      "xMm": 331.8,
+      "yMm": 94.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -111,9 +111,9 @@
     {
       "portId": "out-line-3",
       "face": "io",
-      "xMm": 112.8,
-      "yMm": 195,
-      "confidence": "guess",
+      "xMm": 356.8,
+      "yMm": 94.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -121,9 +121,9 @@
     {
       "portId": "out-line-4",
       "face": "io",
-      "xMm": 139.2,
-      "yMm": 195,
-      "confidence": "guess",
+      "xMm": 381.9,
+      "yMm": 94.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -131,9 +131,9 @@
     {
       "portId": "out-line-5",
       "face": "io",
-      "xMm": 165.6,
-      "yMm": 195,
-      "confidence": "guess",
+      "xMm": 406.9,
+      "yMm": 94.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -141,9 +141,9 @@
     {
       "portId": "out-line-6",
       "face": "io",
-      "xMm": 192,
-      "yMm": 195,
-      "confidence": "guess",
+      "xMm": 431.7,
+      "yMm": 94.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -151,9 +151,9 @@
     {
       "portId": "out-line-7",
       "face": "io",
-      "xMm": 218.4,
-      "yMm": 195,
-      "confidence": "guess",
+      "xMm": 457,
+      "yMm": 94.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -161,9 +161,9 @@
     {
       "portId": "out-line-8",
       "face": "io",
-      "xMm": 244.8,
-      "yMm": 195,
-      "confidence": "guess",
+      "xMm": 482.1,
+      "yMm": 94.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -171,9 +171,9 @@
     {
       "portId": "in-aes",
       "face": "io",
-      "xMm": 60,
-      "yMm": 155,
-      "confidence": "guess",
+      "xMm": 606.8,
+      "yMm": 134.2,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "aes3",
       "dir": "in"
@@ -181,9 +181,9 @@
     {
       "portId": "out-aes-1",
       "face": "io",
-      "xMm": 88,
-      "yMm": 155,
-      "confidence": "guess",
+      "xMm": 606.8,
+      "yMm": 94.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -191,9 +191,9 @@
     {
       "portId": "out-aes-2",
       "face": "io",
-      "xMm": 116,
-      "yMm": 155,
-      "confidence": "guess",
+      "xMm": 631.2,
+      "yMm": 94.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -201,9 +201,9 @@
     {
       "portId": "wclk",
       "face": "io",
-      "xMm": 170,
-      "yMm": 155,
-      "confidence": "guess",
+      "xMm": 479.5,
+      "yMm": 50.9,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "bidir"
@@ -211,9 +211,9 @@
     {
       "portId": "net-1",
       "face": "io",
-      "xMm": 210,
-      "yMm": 155,
-      "confidence": "guess",
+      "xMm": 320.4,
+      "yMm": 50.9,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "ethernet-control",
       "dir": "bidir"
@@ -221,9 +221,9 @@
     {
       "portId": "net-2",
       "face": "io",
-      "xMm": 230,
-      "yMm": 155,
-      "confidence": "guess",
+      "xMm": 320.4,
+      "yMm": 38.8,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "ethernet-control",
       "dir": "bidir"
@@ -231,9 +231,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 850,
-      "yMm": 110,
-      "confidence": "guess",
+      "xMm": 813.9,
+      "yMm": 79.7,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -264,8 +264,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 790,
-      "yMm": 110,
+      "xMm": 813.9,
+      "yMm": 102.4,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -287,15 +287,19 @@
       ],
       [
         150,
-        215
+        222
       ],
       [
-        300,
-        150
+        280,
+        140
       ],
       [
-        480,
-        105
+        400,
+        108
+      ],
+      [
+        520,
+        92
       ],
       [
         627,
@@ -321,7 +325,25 @@
       "min": 1000,
       "max": 6000
     },
-    "minFilletMm": 4
+    "minFilletMm": 4,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rectified.png",
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          6,
+          15,
+          787,
+          222
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://goknight.com/content/documentation/AVANTIS%20Spec%20Sheet.pdf",
@@ -340,6 +362,47 @@
       "kind": "dealer",
       "url": "https://www.canford.co.uk/ALLEN-&-HEATH-MIXERS-AVANTIS-Series",
       "note": "Dealer size 917 x 627 x 269 mm, 26 kg (the plan source)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://fast-images.static-thomann.de/pics/bdb/_47/476907/19445051_800.jpg",
+      "note": "Rear, straight-on (assets-source/allen-heath-avantis/photos/rear.jpg, 800x246), 3D quality pass 2026-11-15: the io face picture is the crop 6,15,787,222 of this photo (product bounds), 787 px = 917 mm (1.1652 mm/px) and 222 px = 269 mm (1.2117 mm/px), y from the bottom of the feet (px 237). Connector centres read on a 4x zoom (+/- 1.5 px): INPUTS 1 to 8 in the top XLR row (pitch 21.5 px = 25 mm, input 1 leftmost seen from behind), OUTPUTS 1 to 8 in the second row at the same x, AES in and AES out 1 and 2 to the right of the 12th analogue column, word clock BNC, the two RJ45 of the Network block (upper = net-1), the IEC inlet and the rocker above it at the right edge. The photo shows 12 analogue inputs and outputs; the catalogue models only the first 8 of each, the positions of those 8 are the photo ones. These ports and the power rocker are now confidence photo; the sizes and the catalogue are unchanged."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 138,
+        "yMm": 34,
+        "wMm": 86,
+        "hMm": 34,
+        "marginMm": 5
+      },
+      {
+        "face": "top",
+        "xMm": 757,
+        "yMm": 33,
+        "wMm": 98,
+        "hMm": 33,
+        "marginMm": 5
+      },
+      {
+        "face": "io",
+        "xMm": 344,
+        "yMm": 221,
+        "wMm": 235,
+        "hMm": 36,
+        "marginMm": 5
+      },
+      {
+        "face": "io",
+        "xMm": 676,
+        "yMm": 94,
+        "wMm": 114,
+        "hMm": 36,
+        "marginMm": 4
+      }
+    ]
+  }
 }

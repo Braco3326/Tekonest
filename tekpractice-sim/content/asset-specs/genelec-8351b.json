@@ -110,10 +110,14 @@
       "edgeSegments": 8,
       "barrelMm": 24,
       "barrelCentreMm": 243,
-      "tweeterRingMm": 73,
-      "tweeterYMm": 317,
-      "waveguideMm": 126,
-      "waveguideDepthMm": 14
+      "tweeterRingMm": 70,
+      "tweeterYMm": 233,
+      "waveguideMm": 124,
+      "waveguideDepthMm": 14,
+      "footMm": 30,
+      "footWidthMm": 170,
+      "footDepthMm": 150,
+      "bodyGrey": 58
     },
     "budget": {
       "min": 1500,
@@ -123,6 +127,18 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_rect.png",
+        "crop": [
+          0,
+          0,
+          1148,
+          1732
+        ]
+      }
     ]
   },
   "portsDocumented": true,
@@ -148,5 +164,17 @@
       "url": "https://www.genelec.com/8351",
       "note": "Genelec 8351 page and manual pages read by a research pass 2026-11-12: one XLR female analog input, one XLR female AES/EBU input, one XLR male AES/EBU output (thru), two RJ45 GLM network ports (control data, not Ethernet audio: modelled as aoip like the 8341A and the template takes no audio route), a rear MAINS INPUT 100-240 V (the inlet type is not named: iec-c14 follows the 8341A precedent and is listed in the plan as assumedConnectors). The panel layout is not stated (positions guessed). Build params: the shipped 8341A recipe scaled by the width ratio 287 / 237 (a 126 mm coaxial dish at 317 mm); the woofer drivers are not read, so the baffle picture shows the coaxial dish only. 287 x 278 x 433 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 110,
+        "yMm": 62,
+        "wMm": 57,
+        "hMm": 18,
+        "marginMm": 5
+      }
+    ]
+  }
 }

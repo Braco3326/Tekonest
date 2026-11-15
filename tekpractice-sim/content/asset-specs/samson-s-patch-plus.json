@@ -11,9 +11,9 @@
     {
       "portId": "front-1",
       "face": "opposite",
-      "xMm": 30.6,
-      "yMm": 30,
-      "confidence": "guess",
+      "xMm": 33.5,
+      "yMm": 35,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "bidir"
@@ -21,9 +21,9 @@
     {
       "portId": "front-2",
       "face": "opposite",
-      "xMm": 30.6,
-      "yMm": 14,
-      "confidence": "guess",
+      "xMm": 33.5,
+      "yMm": 8.5,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "bidir"
@@ -61,7 +61,7 @@
       "plateFilletMm": 0.8,
       "rearInsetMm": 6,
       "seamMm": 18,
-      "plateRgb": 2303531,
+      "plateRgb": 1452378,
       "bodyRgb": 1711136
     },
     "projection": [
@@ -72,7 +72,19 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 0.8
+    "minFilletMm": 0.8,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          46,
+          551,
+          1109,
+          96
+        ]
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://goknight.com/content/documentation/s-patchplus%20Spec%20Sheet.pdf",
@@ -87,5 +99,27 @@
       "url": "https://goknight.com/content/documentation/s-patchplus%20Spec%20Sheet.pdf",
       "note": "Samson spec sheet (opened by the Wave 0c research, hosted by goknight): Dimensions (H x W x D) 1 3/4 x 19 x 3 in = 44.45 x 482.6 x 68.5 mm, 1.72 kg; 48 points on 24 channels: 48 front 1/4 in balanced jacks and 48 rear 1/4 in jacks, a mini toggle per channel selects normal / half-normal / thru. Documented ports: bidirectional TRS jacks on the front and on the rear. 4 of the 96 jacks are modelled (the first of each row, front and rear); the jack pitch (18 mm) and the row heights are guesses (the sheet has no drawing). Colour not stated: category default dark."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 455,
+        "yMm": 17,
+        "wMm": 27,
+        "hMm": 12,
+        "marginMm": 3,
+        "fill": "#0b2058"
+      },
+      {
+        "face": "opposite",
+        "xMm": 1,
+        "yMm": 12,
+        "wMm": 21,
+        "hMm": 22,
+        "marginMm": 3,
+        "fill": "#1a2f5c"
+      }
+    ]
+  }
 }

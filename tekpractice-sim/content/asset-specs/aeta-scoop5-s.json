@@ -44,8 +44,8 @@
       "controlId": "power",
       "kind": "button",
       "face": "opposite",
-      "xMm": 32,
-      "yMm": 30.6,
+      "xMm": 11,
+      "yMm": 32.7,
       "axis": "z",
       "sizeMm": {
         "w": 10,
@@ -78,7 +78,17 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 0.8
+    "minFilletMm": 0.8,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_rectified.png"
+      },
+      {
+        "face": "io",
+        "file": "rear_padded.png"
+      }
+    ]
   },
   "sources": [
     {
@@ -111,11 +121,11 @@
     "blankRects": [
       {
         "face": "opposite",
-        "xMm": 210,
-        "yMm": 6,
-        "wMm": 94,
-        "hMm": 36,
-        "marginMm": 3
+        "xMm": 209,
+        "yMm": 4,
+        "wMm": 44,
+        "hMm": 38,
+        "marginMm": 2
       },
       {
         "face": "io",

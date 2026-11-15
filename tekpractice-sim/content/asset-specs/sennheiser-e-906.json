@@ -31,7 +31,7 @@
       "edgeDropMm": 8,
       "bottomEdgeRadiusMm": 3,
       "edgeSegments": 8,
-      "bodyGrey": 150
+      "bodyGrey": 55
     },
     "projection": [
       "opposite",
@@ -42,7 +42,31 @@
       "min": 500,
       "max": 2000
     },
-    "minFilletMm": 2.5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          974,
+          949,
+          1059,
+          2591
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.png",
+        "crop": [
+          974,
+          949,
+          1059,
+          2591
+        ],
+        "fill": true
+      }
+    ]
   },
   "sources": [
     {
@@ -65,5 +89,26 @@
       "url": "https://www.sennheiser.com/en-at/catalog/products/microphones/e-906/e-906-500202",
       "note": "build.projection opposite and top: our own generic artwork (content/generic-panels): a grille window on the front face; no photo, no logo, no lettering."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "io",
+        "xMm": 12.5,
+        "yMm": 60,
+        "wMm": 30.5,
+        "hMm": 9.5,
+        "marginMm": 3
+      },
+      {
+        "face": "io",
+        "xMm": 13,
+        "yMm": 87.5,
+        "wMm": 33,
+        "hMm": 27,
+        "marginMm": 3,
+        "fill": "#8c939b"
+      }
+    ]
+  }
 }

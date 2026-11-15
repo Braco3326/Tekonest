@@ -11,9 +11,9 @@
     {
       "portId": "in-xlr-1",
       "face": "io",
-      "xMm": 56,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 447.3,
+      "yMm": 22.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -21,9 +21,9 @@
     {
       "portId": "in-xlr-2",
       "face": "io",
-      "xMm": 83,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 422.9,
+      "yMm": 22.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -31,9 +31,9 @@
     {
       "portId": "out-xlr-1",
       "face": "io",
-      "xMm": 110,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 398.4,
+      "yMm": 22.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -41,9 +41,9 @@
     {
       "portId": "out-xlr-2",
       "face": "io",
-      "xMm": 137,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 372.5,
+      "yMm": 22.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -51,9 +51,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 430,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 34.8,
+      "yMm": 23.7,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -64,8 +64,8 @@
       "controlId": "power",
       "kind": "button",
       "face": "opposite",
-      "xMm": 40,
-      "yMm": 66,
+      "xMm": 443.5,
+      "yMm": 73,
       "axis": "z",
       "sizeMm": {
         "w": 14,
@@ -93,8 +93,8 @@
       "ventColPitchMm": 60,
       "ventDepthMm": 1.5,
       "ventFromRearMm": 30,
-      "plateRgb": 2500909,
-      "bodyRgb": 1579292
+      "plateRgb": 13487565,
+      "bodyRgb": 12105912
     },
     "projection": [
       "opposite",
@@ -104,7 +104,31 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1
+    "minFilletMm": 1,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          22,
+          456,
+          957,
+          171
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          0,
+          441,
+          1080,
+          199
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.eventideaudio.com/rackmount/h9000/",
@@ -129,5 +153,25 @@
       "url": "https://downloads.eventideaudio.com/manuals/h9000/H9000UsersManual.pdf",
       "note": "Mains (review fix, read 2026-11-12 by a research pass): the H9000 user's manual (rear and front panel sections) says to connect a standard IEC power cable, the supply is international-voltage, and a latching front button powers the unit on and off. The inlet type letter is not named: iec-c14 is assumed (plan assumedConnectors power-in). Positions: guesses."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 380.5,
+        "yMm": 5.5,
+        "wMm": 51,
+        "hMm": 19.5,
+        "marginMm": 3
+      },
+      {
+        "face": "io",
+        "xMm": 365.5,
+        "yMm": 2.5,
+        "wMm": 99.5,
+        "hMm": 7.5,
+        "marginMm": 2
+      }
+    ]
+  }
 }

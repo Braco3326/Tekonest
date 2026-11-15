@@ -41,7 +41,10 @@
     "shape": "speaker-cabinet-v2",
     "params": {
       "edgeRadiusMm": 10,
-      "edgeSegments": 4
+      "edgeSegments": 4,
+      "bodyGrey": 34,
+      "rearTopDropMm": 20,
+      "rearBottomRiseMm": 20
     },
     "budget": {
       "min": 120,
@@ -51,6 +54,13 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_rot.png",
+        "fill": true
+      }
     ]
   },
   "sources": [
@@ -64,5 +74,17 @@
       "url": "https://www.l-acoustics.com/products/A15-focus",
       "note": "L-Acoustics page read 2026-11-12: \"(W x H x D) 764 mm / 427 mm / 522 mm\", 35 kg net, \"IN: 1 x 4-point speakON\" and \"LINK: 1 x 4-point speakON\" (NL4 or NL8 not named: a 4-point speakON is speakon-nl4), \"1 handle, 8 corner stops and 2 ground runners\", a flush two-point rigging system, 1 x 15 in LF and 1 x 3 in HF compression driver. The page gives no plan taper or splay, so the shape is a plain rounded box; the one handle and the corner stops have no stated place and are not modelled. Rear positions are guesses; the corner radius and the baffle layout are our estimate."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 88,
+        "yMm": 192,
+        "wMm": 40,
+        "hMm": 38,
+        "marginMm": 4
+      }
+    ]
+  }
 }

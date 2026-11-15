@@ -41,7 +41,8 @@
     "shape": "speaker-cabinet-v2",
     "params": {
       "edgeRadiusMm": 8,
-      "edgeSegments": 4
+      "edgeSegments": 4,
+      "bodyGrey": 34
     },
     "budget": {
       "min": 100,
@@ -51,6 +52,19 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          16,
+          95,
+          334,
+          416
+        ],
+        "fill": true
+      }
     ]
   },
   "sources": [
@@ -64,5 +78,25 @@
       "url": "https://www.nexo-sa.com/products/p12/",
       "note": "NEXO P12 page read 2026-11-12: \"534 mm x 432 mm x 314 mm\" labelled Height x Width x Depth, 20 kg net, touring and TIS versions \"4 x NL4 (4-pole speakON), one per handle plus two at the back\" (the install version has one cable gland), a 12 in LF neodymium driver and a 3 in HF diaphragm driver in a coaxial arrangement, \"a curvilinear enclosure\" of birch and poplar plywood, usable vertically or as a wedge monitor, accessory fittings on both sides and the bottom. Modelled: the two NL4 at the back (of four; the two on the handles are not modelled). The handles have no stated place and are not cut; the shape is a plain rounded box (the page states no angle; radius 8 mm is our estimate). Positions are guesses."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 190,
+        "yMm": 500,
+        "wMm": 46,
+        "hMm": 18,
+        "marginMm": 4
+      },
+      {
+        "face": "opposite",
+        "xMm": 190,
+        "yMm": 8,
+        "wMm": 46,
+        "hMm": 20,
+        "marginMm": 4
+      }
+    ]
+  }
 }

@@ -11,9 +11,9 @@
     {
       "portId": "in-1",
       "face": "io",
-      "xMm": 50,
-      "yMm": 285,
-      "confidence": "guess",
+      "xMm": 736.4,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -25,9 +25,9 @@
     {
       "portId": "in-2",
       "face": "io",
-      "xMm": 76.4,
-      "yMm": 285,
-      "confidence": "guess",
+      "xMm": 713.1,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -39,9 +39,9 @@
     {
       "portId": "in-3",
       "face": "io",
-      "xMm": 102.8,
-      "yMm": 285,
-      "confidence": "guess",
+      "xMm": 689.4,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -53,9 +53,9 @@
     {
       "portId": "in-4",
       "face": "io",
-      "xMm": 129.2,
-      "yMm": 285,
-      "confidence": "guess",
+      "xMm": 666.1,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -67,9 +67,9 @@
     {
       "portId": "in-5",
       "face": "io",
-      "xMm": 155.6,
-      "yMm": 285,
-      "confidence": "guess",
+      "xMm": 642.3,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -81,9 +81,9 @@
     {
       "portId": "in-6",
       "face": "io",
-      "xMm": 182,
-      "yMm": 285,
-      "confidence": "guess",
+      "xMm": 619,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -95,9 +95,9 @@
     {
       "portId": "in-7",
       "face": "io",
-      "xMm": 208.4,
-      "yMm": 285,
-      "confidence": "guess",
+      "xMm": 595.2,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -109,9 +109,9 @@
     {
       "portId": "in-8",
       "face": "io",
-      "xMm": 234.8,
-      "yMm": 285,
-      "confidence": "guess",
+      "xMm": 571.5,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -123,9 +123,9 @@
     {
       "portId": "out-omni-1",
       "face": "io",
-      "xMm": 50,
-      "yMm": 250,
-      "confidence": "guess",
+      "xMm": 318.1,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -133,9 +133,9 @@
     {
       "portId": "out-omni-2",
       "face": "io",
-      "xMm": 76.4,
-      "yMm": 250,
-      "confidence": "guess",
+      "xMm": 295.2,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -143,9 +143,9 @@
     {
       "portId": "out-omni-3",
       "face": "io",
-      "xMm": 102.8,
-      "yMm": 250,
-      "confidence": "guess",
+      "xMm": 271.5,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -153,9 +153,9 @@
     {
       "portId": "out-omni-4",
       "face": "io",
-      "xMm": 129.2,
-      "yMm": 250,
-      "confidence": "guess",
+      "xMm": 248.2,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -163,9 +163,9 @@
     {
       "portId": "out-omni-5",
       "face": "io",
-      "xMm": 155.6,
-      "yMm": 250,
-      "confidence": "guess",
+      "xMm": 224.9,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -173,9 +173,9 @@
     {
       "portId": "out-omni-6",
       "face": "io",
-      "xMm": 182,
-      "yMm": 250,
-      "confidence": "guess",
+      "xMm": 201.1,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -183,9 +183,9 @@
     {
       "portId": "out-omni-7",
       "face": "io",
-      "xMm": 208.4,
-      "yMm": 250,
-      "confidence": "guess",
+      "xMm": 177.8,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -193,9 +193,9 @@
     {
       "portId": "out-omni-8",
       "face": "io",
-      "xMm": 234.8,
-      "yMm": 250,
-      "confidence": "guess",
+      "xMm": 154.5,
+      "yMm": 149.7,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -203,9 +203,9 @@
     {
       "portId": "in-aes-1",
       "face": "io",
-      "xMm": 50,
-      "yMm": 215,
-      "confidence": "guess",
+      "xMm": 409.8,
+      "yMm": 77.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "aes3",
       "dir": "in"
@@ -213,9 +213,9 @@
     {
       "portId": "in-aes-2",
       "face": "io",
-      "xMm": 76.4,
-      "yMm": 215,
-      "confidence": "guess",
+      "xMm": 362.3,
+      "yMm": 77.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "aes3",
       "dir": "in"
@@ -223,9 +223,9 @@
     {
       "portId": "out-aes-1",
       "face": "io",
-      "xMm": 102.8,
-      "yMm": 215,
-      "confidence": "guess",
+      "xMm": 385.6,
+      "yMm": 77.9,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -233,9 +233,9 @@
     {
       "portId": "out-aes-2",
       "face": "io",
-      "xMm": 129.2,
-      "yMm": 215,
-      "confidence": "guess",
+      "xMm": 335.6,
+      "yMm": 77.9,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -243,9 +243,9 @@
     {
       "portId": "net-dante-1",
       "face": "io",
-      "xMm": 175,
-      "yMm": 215,
-      "confidence": "guess",
+      "xMm": 435,
+      "yMm": 35.4,
+      "confidence": "photo",
       "connector": "ethercon",
       "signal": "aoip",
       "dir": "bidir",
@@ -256,9 +256,9 @@
     {
       "portId": "net-dante-2",
       "face": "io",
-      "xMm": 205,
-      "yMm": 215,
-      "confidence": "guess",
+      "xMm": 462.1,
+      "yMm": 35.4,
+      "confidence": "photo",
       "connector": "ethercon",
       "signal": "aoip",
       "dir": "bidir"
@@ -266,9 +266,9 @@
     {
       "portId": "net-ctl",
       "face": "io",
-      "xMm": 245,
-      "yMm": 215,
-      "confidence": "guess",
+      "xMm": 535.3,
+      "yMm": 30.2,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "ethernet-control",
       "dir": "bidir"
@@ -276,9 +276,9 @@
     {
       "portId": "usb",
       "face": "io",
-      "xMm": 275,
-      "yMm": 215,
-      "confidence": "guess",
+      "xMm": 514.4,
+      "yMm": 30.2,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -286,9 +286,9 @@
     {
       "portId": "in-wclk",
       "face": "io",
-      "xMm": 305,
-      "yMm": 215,
-      "confidence": "guess",
+      "xMm": 492.5,
+      "yMm": 71.8,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "in"
@@ -296,9 +296,9 @@
     {
       "portId": "out-wclk",
       "face": "io",
-      "xMm": 325,
-      "yMm": 215,
-      "confidence": "guess",
+      "xMm": 467.8,
+      "yMm": 71.8,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "out"
@@ -306,9 +306,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 700,
-      "yMm": 130,
-      "confidence": "guess",
+      "xMm": 252.9,
+      "yMm": 75.6,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -329,8 +329,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 640,
-      "yMm": 130,
+      "xMm": 212,
+      "yMm": 74.2,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -347,20 +347,24 @@
         324
       ],
       [
-        60,
+        70,
         324
       ],
       [
-        140,
-        270
+        100,
+        300
       ],
       [
-        280,
-        200
+        170,
+        185
       ],
       [
-        420,
-        140
+        237,
+        128
+      ],
+      [
+        330,
+        114
       ],
       [
         564,
@@ -387,7 +391,23 @@
       "min": 1000,
       "max": 6000
     },
-    "minFilletMm": 4
+    "minFilletMm": 4,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.png"
+      },
+      {
+        "face": "io",
+        "file": "rear_dark.png",
+        "crop": [
+          166,
+          657,
+          1668,
+          686
+        ]
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html",
@@ -401,6 +421,31 @@
       "kind": "manual",
       "url": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html",
       "note": "Yamaha DM7 Series Reference Manual, general specifications, opened 2026-11-12: 793 x 324 x 564 mm (W x H x D) including rubber feet, 23.5 kg (the DM7 Compact is a different size). Rear panel (from the manual and the Yamaha download): INPUT 1-32 on XLR (female, +48 V per input), OMNI OUT 1-16 (XLR male), AES/EBU IN 1/2 and 3/4 and OUT 1/2 and 3/4 (XLR), word clock in and out (BNC), GPI (D-sub 15, not modelled), PY card slot, Dante PRIMARY and SECONDARY (etherCON, 144 channels), USB TO HOST (USB-C, 18 in and out), network RJ45, two AC IN inlets (V-lock, type letter not named: iec-c14 assumed for the one modelled, plan assumedConnectors power-in), one power switch on the rear; front/top: stereo phones, USB storage ports (number not stated). Modelled: 8 of 32 inputs, 8 of 16 outputs, 2 of 2 AES in and 2 of 2 AES out. TC IN (timecode) is not modelled. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "photo",
+      "url": "https://usa.yamaha.com/files/DM7-rear_tcm152-2158567.jpg",
+      "note": "Rear, straight-on (assets-source/yamaha-dm7/photos/rear.jpg, 2000x2000), 3D quality pass 2026-11-15: the io picture is the crop 166,657,1668,686 (product bounds, background painted dark), 1668 px = 793 mm and 686 px = 324 mm, y from the bottom of the feet (px 1342). Connector centres read on 1:1 crops (+/- 3 px = +/- 1.5 mm): INPUT 1 to 8 (top row of the right-hand block, 1 rightmost seen from behind, pitch 49.5 px), OMNI OUT 1 to 8 (top row of the left block), AES/EBU 1/2 and 3/4 IN and OUT, Dante PRIMARY and SECONDARY, NETWORK RJ45, USB TO HOST, WORD CLOCK IN and OUT BNC, IEC inlet A and the switch next to it (the console has two inlets A and B, the catalogue one). Now confidence photo. The top picture is the overhead top.jpg (crop 333,849,3334,2302, background painted dark) turned 180 degrees so the rear is at the bottom of the face. The side profile (rear housing 324 mm, concave screen bridge falling to about 130 mm at 280 mm, deck 112 to 100 mm) is read from the three-quarter photos and the overhead layout, no side photo exists. Sizes and catalogue unchanged."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "io",
+        "xMm": 36,
+        "yMm": 194,
+        "wMm": 128,
+        "hMm": 32,
+        "marginMm": 5
+      },
+      {
+        "face": "io",
+        "xMm": 346,
+        "yMm": 198,
+        "wMm": 100,
+        "hMm": 31,
+        "marginMm": 5
+      }
+    ]
+  }
 }

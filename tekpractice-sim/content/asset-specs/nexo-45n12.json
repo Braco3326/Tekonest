@@ -48,7 +48,10 @@
       "handleWidthMm": 30,
       "handleDepthMm": 14,
       "handleFromRearMm": 100,
-      "handleYMm": 300
+      "handleYMm": 300,
+      "bodyGrey": 34,
+      "rearWidthMm": 300,
+      "taperDepthMm": 400
     },
     "budget": {
       "min": 200,

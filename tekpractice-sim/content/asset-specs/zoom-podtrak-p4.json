@@ -136,7 +136,7 @@
       "edgeDropMm": 3.5,
       "bottomEdgeRadiusMm": 3,
       "edgeSegments": 8,
-      "bodyGrey": 55
+      "bodyGrey": 140
     },
     "projection": [
       "top",
@@ -148,7 +148,31 @@
       "min": 500,
       "max": 2000
     },
-    "minFilletMm": 2.5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rotated.png",
+        "fill": true,
+        "crop": [
+          0,
+          0,
+          1040,
+          1440
+        ]
+      },
+      {
+        "face": "io",
+        "file": "front.jpg",
+        "crop": [
+          216,
+          197,
+          2207,
+          927
+        ],
+        "fill": true
+      }
+    ]
   },
   "sources": [
     {
@@ -166,5 +190,25 @@
       "url": "https://www.thomannmusic.com/zoom_podtrak_p4.htm",
       "note": "build: a moulded box, exact bounding box; the rounding is an ESTIMATE. build.projection: our own generic artwork (faders, pads, connectors); no photo, no logo, no lettering."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 40,
+        "yMm": 7.5,
+        "wMm": 32.5,
+        "hMm": 7,
+        "marginMm": 3
+      },
+      {
+        "face": "top",
+        "xMm": 27,
+        "yMm": 89,
+        "wMm": 30.5,
+        "hMm": 8,
+        "marginMm": 3
+      }
+    ]
+  }
 }

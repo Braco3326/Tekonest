@@ -54,11 +54,11 @@
     "blankRects": [
       {
         "face": "opposite",
-        "xMm": 150,
-        "yMm": 46,
-        "wMm": 64,
-        "hMm": 64,
-        "marginMm": 10
+        "xMm": 161,
+        "yMm": 49,
+        "wMm": 55,
+        "hMm": 54,
+        "marginMm": 6
       },
       {
         "face": "io",
@@ -122,7 +122,8 @@
       "backRadiusMm": 40,
       "edgeRadiusMm": 20,
       "edgeDropMm": 30,
-      "edgeSegments": 8
+      "edgeSegments": 8,
+      "bodyGrey": 30
     },
     "budget": {
       "min": 1500,
@@ -133,6 +134,41 @@
       "io",
       "opposite",
       "left"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          113,
+          180,
+          2273,
+          3618
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          454,
+          105,
+          1092,
+          1789
+        ],
+        "fill": true
+      },
+      {
+        "face": "left",
+        "file": "side.jpg",
+        "crop": [
+          114,
+          198,
+          2271,
+          3963
+        ],
+        "fill": true
+      }
     ]
   }
 }

@@ -166,7 +166,8 @@
       "backRadiusMm": 44,
       "edgeRadiusMm": 24,
       "edgeDropMm": 30,
-      "edgeSegments": 8
+      "edgeSegments": 8,
+      "bodyGrey": 50
     },
     "budget": {
       "min": 1500,
@@ -176,6 +177,18 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_rect.png",
+        "crop": [
+          0,
+          0,
+          924,
+          1054
+        ]
+      }
     ]
   },
   "portsDocumented": true,
@@ -196,5 +209,17 @@
       "url": "https://genelec.com/7360A",
       "note": "Genelec 7360A product page and manual pages 2 and 3 (read by a research pass 2026-11-12): seven XLR female analog inputs (7.1) and seven XLR male analog outputs, an LFE XLR input and an LFE XLR output, an XLR female AES/EBU input and an XLR male AES/EBU output (thru), a Link in and out of an unstated type, two RJ45 GLM ports, a bypass contact, and a rear MAINS INPUT 100-240 V, 300 W (the inlet type is not named: iec-c14 follows the 8341A precedent, listed in the plan as assumedConnectors). Modelled subset: 2 analog in and out, LFE in and out, AES in and out, 2 GLM ports, the inlet. The panel layout and the driver layout are not stated: the cabinet is a plain rounded box with no drivers drawn (nothing in the page read gives the baffle). 462 x 363 x 527 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 143,
+        "yMm": 123,
+        "wMm": 58,
+        "hMm": 19,
+        "marginMm": 3
+      }
+    ]
+  }
 }

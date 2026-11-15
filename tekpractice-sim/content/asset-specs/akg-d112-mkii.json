@@ -78,7 +78,13 @@
     "colours": [
       {
         "fromMm": 0,
-        "colour": "#2d2e33"
+        "colour": "#1c1d20"
+      }
+    ],
+    "photos": [
+      {
+        "face": "wrap",
+        "file": "wrap_built.png"
       }
     ]
   },

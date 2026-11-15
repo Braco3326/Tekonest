@@ -11,8 +11,8 @@
     {
       "portId": "ip",
       "face": "io",
-      "xMm": 36.7,
-      "yMm": 50.4,
+      "xMm": 36.5,
+      "yMm": 52.8,
       "confidence": "photo"
     },
     {
@@ -82,6 +82,51 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 3
+    "minFilletMm": 3,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "top.png",
+        "crop": [
+          20,
+          150,
+          760,
+          392
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.png",
+        "crop": [
+          60,
+          138,
+          680,
+          350
+        ],
+        "fill": true
+      }
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 26,
+        "yMm": 61.5,
+        "wMm": 20.5,
+        "hMm": 11,
+        "marginMm": 2,
+        "fill": "#2b2b2e"
+      },
+      {
+        "face": "io",
+        "xMm": 110,
+        "yMm": 14,
+        "wMm": 18.5,
+        "hMm": 9.5,
+        "marginMm": 2
+      }
+    ]
   }
 }

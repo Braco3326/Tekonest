@@ -67,7 +67,14 @@
     "shape": "speaker-cabinet-v2",
     "params": {
       "edgeRadiusMm": 6,
-      "edgeSegments": 4
+      "edgeSegments": 4,
+      "bodyGrey": 30,
+      "handleCount": 1,
+      "handleLenMm": 200,
+      "handleWidthMm": 140,
+      "handleDepthMm": 30,
+      "handleFromRearMm": 187,
+      "handleYMm": 110
     },
     "budget": {
       "min": 100,
@@ -77,6 +84,12 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_rectified.png"
+      }
     ]
   },
   "sources": [
@@ -90,5 +103,17 @@
       "url": "https://docs.meyersound.com/products/en/datasheet---lina.html",
       "note": "Meyer Sound LINA datasheet page read 2026-11-12: \"W: 20.27 in (515 mm) x H: 8.38 in (213 mm) x D: 15.32 in (389 mm)\", 43 lb (19.5 kg), \"powerCON 20 input with loop output\", XLR 3-pin female balanced input, XLR 3-pin male loop output, an optional XLR 5-pin for audio and RMS, AC 90-265 V, two 6.5 in LF and one 3 in compression driver, end frames with GuideALinks for 0 to 11 degrees splay, a vented multi-ply birch enclosure. Modelled: the XLR input, the XLR loop output and the powerCON input (the mains loop output and the optional 5-pin are not modelled). The page does not say where the connectors sit (rear assumed); the page names no handles and no plan taper, so the shape is a plain rounded box (radius 6 mm is our estimate). The `power` switch is the simulator power control the catalogue adds to every mains inlet, not a switch the page documents. Positions are guesses."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 8,
+        "yMm": 90,
+        "wMm": 62,
+        "hMm": 34,
+        "marginMm": 4
+      }
+    ]
+  }
 }

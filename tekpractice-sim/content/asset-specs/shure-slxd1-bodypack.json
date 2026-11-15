@@ -28,15 +28,15 @@
   "build": {
     "shape": "moulded-box",
     "params": {
-      "cornerRadiusMm": 7,
-      "edgeRadiusMm": 3.5,
-      "edgeDropMm": 3.5,
+      "cornerRadiusMm": 15,
+      "edgeRadiusMm": 4,
+      "edgeDropMm": 4,
       "bottomEdgeRadiusMm": 3,
       "edgeSegments": 8,
       "seamHeightMm": 11,
       "seamWidthMm": 0.8,
       "seamDepthMm": 0.5,
-      "bodyGrey": 60
+      "bodyGrey": 28
     },
     "projection": [
       "top",

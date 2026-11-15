@@ -140,17 +140,50 @@
       "feetMm": 3,
       "feetDiaMm": 12,
       "plateRgb": 2763824,
-      "bodyRgb": 1776671
+      "bodyRgb": 7039598
     },
     "projection": [
-      "opposite",
+      "top",
       "io"
     ],
     "budget": {
       "min": 500,
       "max": 2000
     },
-    "minFilletMm": 4
+    "minFilletMm": 4,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.png",
+        "crop": [
+          50,
+          33,
+          705,
+          482
+        ],
+        "fill": true
+      }
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 113.5,
+        "yMm": 18.5,
+        "wMm": 33,
+        "hMm": 6.5,
+        "marginMm": 3
+      },
+      {
+        "face": "top",
+        "xMm": 30,
+        "yMm": 10,
+        "wMm": 18,
+        "hMm": 8,
+        "marginMm": 3
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.thomann.de/be/audient_id14_mkii.htm",

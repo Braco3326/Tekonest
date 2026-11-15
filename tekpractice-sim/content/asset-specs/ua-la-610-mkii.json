@@ -11,9 +11,9 @@
     {
       "portId": "in-mic-xlr",
       "face": "io",
-      "xMm": 56,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 428.6,
+      "yMm": 26.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -26,9 +26,9 @@
     {
       "portId": "in-line-xlr",
       "face": "io",
-      "xMm": 83,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 386.3,
+      "yMm": 26.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -36,9 +36,9 @@
     {
       "portId": "out-xlr",
       "face": "io",
-      "xMm": 110,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 341.5,
+      "yMm": 26.9,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -46,9 +46,9 @@
     {
       "portId": "in-hiz",
       "face": "opposite",
-      "xMm": 440,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 83,
+      "yMm": 16.5,
+      "confidence": "photo",
       "connector": "ts-quarter",
       "signal": "instrument-hiz",
       "dir": "in"
@@ -56,9 +56,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 430,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 35,
+      "yMm": 59.6,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -69,8 +69,8 @@
       "controlId": "phantom-48v",
       "kind": "button",
       "face": "opposite",
-      "xMm": 130,
-      "yMm": 50,
+      "xMm": 82.6,
+      "yMm": 35,
       "axis": "z",
       "sizeMm": {
         "w": 9,
@@ -82,8 +82,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "opposite",
-      "xMm": 40,
-      "yMm": 66,
+      "xMm": 434.7,
+      "yMm": 18.1,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -122,7 +122,31 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1
+    "minFilletMm": 1,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          97,
+          415,
+          1050,
+          190
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.png",
+        "crop": [
+          74,
+          382,
+          1092,
+          217
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.zzounds.com/item--UADLA610MK2",
@@ -152,5 +176,57 @@
       "url": "https://media.uaudio.com/assetlibrary/l/a/la-610mkii_manual.pdf",
       "note": "Mains (review fix, read 2026-11-12 by a research pass): the LA-610 MKII manual (rear-panel item 4, specifications \"Power Connector\") says a supplied detachable IEC cable goes into the rear connector, 100-240 V auto-sensing, and a front power switch exists. The inlet type letter is not named: iec-c14 is assumed (plan assumedConnectors power-in). Position of the inlet and of the switch: guesses."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 98.5,
+        "yMm": 10.4,
+        "wMm": 44,
+        "hMm": 7.1,
+        "marginMm": 1.5
+      },
+      {
+        "face": "opposite",
+        "xMm": 255.5,
+        "yMm": 10.8,
+        "wMm": 43.5,
+        "hMm": 7.2,
+        "marginMm": 1.5
+      },
+      {
+        "face": "opposite",
+        "xMm": 399.3,
+        "yMm": 8.8,
+        "wMm": 26.9,
+        "hMm": 32.5,
+        "marginMm": 1.5
+      },
+      {
+        "face": "io",
+        "xMm": 59.5,
+        "yMm": 65,
+        "wMm": 40,
+        "hMm": 4,
+        "marginMm": 1
+      },
+      {
+        "face": "io",
+        "xMm": 67.5,
+        "yMm": 5.2,
+        "wMm": 53.2,
+        "hMm": 26.9,
+        "marginMm": 2
+      },
+      {
+        "face": "io",
+        "xMm": 165.5,
+        "yMm": 3.5,
+        "wMm": 133,
+        "hMm": 7,
+        "marginMm": 1.5
+      }
+    ]
+  }
 }

@@ -91,7 +91,8 @@
       "ventPitchMm": 6.5,
       "ventColPitchMm": 6.5,
       "ventDepthMm": 1.5,
-      "ventFromRearMm": 30
+      "ventFromRearMm": 30,
+      "bodyRgb": 1381914
     },
     "projection": [
       "opposite",
@@ -101,7 +102,29 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 0.9
+    "minFilletMm": 0.9,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          177,
+          770,
+          2046,
+          974
+        ]
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          177,
+          729,
+          2046,
+          967
+        ]
+      }
+    ]
   },
   "texture": {
     "blankRects": [
