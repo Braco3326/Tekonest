@@ -6,7 +6,7 @@
  */
 import { readFileSync } from 'node:fs'
 import { existsSync } from 'node:fs'
-import { mkdtemp, readFile, rm } from 'node:fs/promises'
+import { copyFile, mkdir, mkdtemp, readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { NodeIO } from '@gltf-transform/core'
@@ -45,7 +45,7 @@ const WAVE1: [string, AssetSpecT['build']][] = [
   ['xlr3-f', { shape: 'cylinder-plug', params: { frontLenMm: 12 } }],
   ['trs-quarter', { shape: 'trs-plug', params: { barrelMm: 30.5 } }],
   ['rj45', { shape: 'rj45-plug' }],
-  ['yamaha-rio3224-d2', { shape: 'stagebox-rio3224', params: { earMm: 27, flangeDepthMm: 190, frontStepMm: 11.5, rearStepMm: 6 }, projection: ['io', 'opposite'] }],
+  ['yamaha-rio3224-d2', { shape: 'stagebox-rio3224', params: { earMm: 27, flangeDepthMm: 190, frontStepMm: 11.5, rearStepMm: 6 }, projection: ['io', 'opposite'], photos: [{ face: 'io', file: 'front.jpg', fill: true }, { face: 'opposite', file: 'rear.jpg', crop: [95, 45, 1810, 895], fill: true }] }],
 ]
 
 describe('wave-1 specs', () => {
@@ -718,6 +718,13 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
 
   it.skipIf(!BLENDER).each(WAVE1.map(([id]) => id))('%s: asset:build --scripted passes every gate end to end and ships nothing', async (id) => {
     const paths = { assetsDir: join(dir, 'e2e', id, 'public'), sourceDir: join(dir, 'e2e', id, 'assets-source'), manifestPath: join(dir, 'e2e', id, 'public', 'ASSET_MANIFEST.json') }
+    // A spec that names reference photos (build.photos) needs them in the source dir: assets-source is git-ignored, so the check runs where the photos are and is skipped elsewhere.
+    for (const p of realSpec(id).build?.photos ?? []) {
+      const from = join('assets-source', id, 'photos', p.file)
+      if (!existsSync(from)) return
+      await mkdir(join(paths.sourceDir, id, 'photos'), { recursive: true })
+      await copyFile(from, join(paths.sourceDir, id, 'photos', p.file))
+    }
     const report = await buildAsset(id, { maxAttempts: 1, scripted: true, dryRun: true }, { paths, renderSheet: null, log: () => undefined })
     expect(report.error).toBeUndefined()
     expect(report.ok).toBe(true)
@@ -727,7 +734,11 @@ describe(`scripted builder with real Blender (${BLENDER ? `using ${BLENDER}` : '
     expect(existsSync(join(report.workDir, 'final.glb'))).toBe(true)
     // The shipped bytes (fix-up, texture step, Draco, re-measure) keep the vertex colours and the smooth shading.
     const final = new Uint8Array(await readFile(join(report.workDir, 'final.glb')))
-    await expectLooks(final, (await inspectGlb(final)).triangles, 2)
+    if ((realSpec(id).build?.photos ?? []).length > 0) {
+      // A face with a reference photo is textured: the colour comes from the picture, so only the smooth shading is checked here.
+      const tris = (await inspectGlb(final)).triangles
+      expect((await looks(final)).vertices, 'vertices per triangle: flat shading?').toBeLessThan(tris * 1.8)
+    } else await expectLooks(final, (await inspectGlb(final)).triangles, 2)
     expect(existsSync(join(paths.assetsDir, `${id}.glb`))).toBe(false)
     expect(existsSync(paths.manifestPath)).toBe(false)
   }, 180_000)

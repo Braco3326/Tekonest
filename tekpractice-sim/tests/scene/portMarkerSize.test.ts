@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import catalogJson from '../../content/catalog.json'
-import { CONNECTOR_MM, RING_OVERSIZE, markerDiameterM } from '../../src/scene/portMarkerSize'
+import { CONNECTOR_MM, RING_OVERSIZE, capRingsToNeighbours, markerDiameterM } from '../../src/scene/portMarkerSize'
 
 describe('markerDiameterM (outer ring diameter of a port marker, metres)', () => {
   it('is the connector size x 1.2: an XLR (19.5 mm opening) gets 23.4 mm', () => {
@@ -90,29 +90,42 @@ describe('markerDiameterM (outer ring diameter of a port marker, metres)', () =>
     expect(r).toBeLessThanOrEqual(1.25)
   })
 
-  it('no two rings of a catalog device overlap: every port pair on the same face is further apart than the larger ring (XLR 23.4 mm on the 23.8 mm pitch of the Rio and 24.1 mm of the Grace)', () => {
+  it('capRingsToNeighbours: a ring never reaches past its nearest neighbour, a lone port is unchanged', () => {
+    const p = (x: number) => ({ x, y: 0, z: 0 })
+    expect(capRingsToNeighbours([0.0234, 0.0234], [p(0), p(0.0233)])).toEqual([0.0233, 0.0233])
+    expect(capRingsToNeighbours([0.0234, 0.0084], [p(0), p(0.05)])).toEqual([0.0234, 0.0084])
+    expect(capRingsToNeighbours([0.0234], [p(0)])).toEqual([0.0234])
+    expect(capRingsToNeighbours([], [])).toEqual([])
+  })
+
+  it('no two rings of a catalog device overlap once capped to the nearest neighbour, and no ring is capped below 60 % of its connector ring (it stays clickable)', () => {
     let pairs = 0
-    const tight: string[] = []
+    let capped = 0
+    const overlaps: string[] = []
+    const tooSmall: string[] = []
     for (const [id, spec] of specs) {
       const conn = catalogPorts.get(id)
       if (!conn || !spec.ports) continue
-      for (let i = 0; i < spec.ports.length; i++) {
-        for (let j = i + 1; j < spec.ports.length; j++) {
-          const a = spec.ports[i]
-          const b = spec.ports[j]
-          if (a.face !== b.face) continue
-          const ca = conn.get(a.portId)
-          const cb = conn.get(b.portId)
-          if (!ca || !cb) continue
-          const dist = Math.hypot(a.xMm - b.xMm, a.yMm - b.yMm)
-          const rings = (markerDiameterM(ca) * 1000 + markerDiameterM(cb) * 1000) / 2 // two circles touch at the mean of their diameters
+      const faces = [...new Set(spec.ports.map((p) => p.face))]
+      const ports = spec.ports.filter((p) => conn.has(p.portId))
+      const rings = ports.map((p) => markerDiameterM(conn.get(p.portId)!) * 1000)
+      const points = ports.map((p) => ({ x: p.xMm, y: p.yMm, z: faces.indexOf(p.face) * 1e5 }))
+      const caps = capRingsToNeighbours(rings, points)
+      for (let i = 0; i < ports.length; i++) {
+        if (caps[i] < rings[i] - 1e-9) capped++
+        if (caps[i] < 0.6 * rings[i]) tooSmall.push(id + ' ' + ports[i].portId + ': ring ' + rings[i].toFixed(1) + ' mm capped to ' + caps[i].toFixed(1) + ' mm')
+        for (let j = i + 1; j < ports.length; j++) {
+          if (ports[i].face !== ports[j].face) continue
           pairs++
-          if (dist < rings - 1e-6) tight.push(id + ' ' + a.portId + ' / ' + b.portId + ': ' + dist.toFixed(1) + ' mm apart, rings ' + rings.toFixed(1) + ' mm')
+          const dist = Math.hypot(ports[i].xMm - ports[j].xMm, ports[i].yMm - ports[j].yMm)
+          if (dist < (caps[i] + caps[j]) / 2 - 1e-6) overlaps.push(id + ' ' + ports[i].portId + ' / ' + ports[j].portId)
         }
       }
     }
     expect(pairs).toBeGreaterThan(30)
-    expect(tight, tight.join(' | ')).toEqual([])
+    expect(capped, 'the real pitches of the photo-measured devices make some rings shrink').toBeGreaterThan(0)
+    expect(overlaps, overlaps.join(' | ')).toEqual([])
+    expect(tooSmall, tooSmall.join(' | ')).toEqual([])
   })
 
   /**
@@ -180,7 +193,8 @@ describe('the opening branch is dormant (Wave 5c finding H)', () => {
     const { readFileSync } = await import('node:fs')
     const src = readFileSync(new URL('../../src/scene/DeviceSpawner.ts', import.meta.url), 'utf8')
     const calls = src.match(/markerDiameterM\([^)]*\)/g) ?? []
-    expect(calls).toEqual(['markerDiameterM(port.connector)'])
+    // the ring itself, and the table size handed to the neighbour cap: both table-only
+    expect(calls).toEqual(['markerDiameterM(p.connector)', 'markerDiameterM(port.connector)'])
   })
 
   it('the table size and the opening size differ, so an opening passed later would change the rings (the branch is live code, just unused)', () => {
