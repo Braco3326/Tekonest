@@ -668,8 +668,9 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
       if (!isOutside(dv)) continue
       const b = footprintBounds(dv, footprintOf(dv.deviceId))
       const c = toScreen(view, dv.x, dv.z)
-      const at = { x: c.sx, y: c.sy - Math.max(((b.maxZ - b.minZ) / 2) * S, 8) - 7 }
       const hw = (P().outsideTag!.length * 6.6) / 2 + 2
+      // kept inside the drawing: a device past a wall often sits at the plan's edge once the place is fitted (the words were cut there)
+      const at = { x: Math.min(Math.max(c.sx, hw + 2), w - hw - 2), y: Math.max(c.sy - Math.max(((b.maxZ - b.minZ) / 2) * S, 8) - 7, 12) }
       claim({ x0: at.x - hw, y0: at.y - 10, x1: at.x + hw, y1: at.y + 3 })
       outTag.set(raw.id, at)
     }

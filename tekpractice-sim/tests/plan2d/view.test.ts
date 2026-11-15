@@ -373,6 +373,16 @@ describe('a device outside the room (mission 3 fixes, item 1): a cue on the plan
     expect(live()).toBe('Annulé : Déplacer. K12.2 (qsc-k12-2-1) : de nouveau dans la salle.')
   })
 
+  it('the words stay inside the drawing when the device sits past the plan’s edge (they were cut at the edge on the screenshots)', () => {
+    open()
+    pick('qsc-k12-2')
+    setPose('qsc-k12-2-1', 30, -6.9) // far past the +x wall: off the drawing's left edge at the fitted scale
+    const t = dev('qsc-k12-2-1').querySelector('.p2d-out-label')!
+    const half = ('hors de la salle'.length * 6.6) / 2
+    expect(Number(t.getAttribute('x'))).toBeGreaterThanOrEqual(half)
+    expect(Number(t.getAttribute('y'))).toBeGreaterThanOrEqual(12)
+  })
+
   it('a rotation can take a device out: an M32 that fits square-on near the rear wall reaches past it once turned 90°', () => {
     open()
     pick('midas-m32')
