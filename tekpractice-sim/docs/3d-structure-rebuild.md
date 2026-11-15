@@ -59,20 +59,24 @@ Render from the SAME angles as each source photo, side by side at large size (>=
 ```
 BLENDER_EXE='D:\Blender\blender.exe' node tools/assets3d/review-views.mjs <out-dir> <id>@<final.glb> "name:azimuth:elevation:zoom[:fx:fy:fz];..." 1100
 ```
-(azimuth 215 = front, 35 = rear (io face), 125 and 305 = the sides; zoom < 1 is a close-up of the point fx,fy,fz of the bounding box.) Then score with the checklist (each item 0 to 2, pass needs no 0 and a total of at least 80 percent):
+(azimuth 215 = front three-quarter, 180 = straight front, 0 = rear, 90/270 = the sides; zoom < 1 is a close-up of the point fx,fy,fz of the bounding box; `review-compare.mjs` puts photo (cropped to the same spot), the old model and the new one side by side.)
 
-1. silhouette from front, side and top matches the photos (proportions, slopes, overhangs)
-2. every edge radius and chamfer looks like the photo (corner close-up)
-3. every control present, in the right place and 3D: each fader (slot, cap), each knob (collar, knurl, pointer), each button (shape, proud or recessed), each key
-4. every port present with the right connector type, depth and position
-5. colours and finishes (body, plate, caps, keys) match
-6. gaps and flushness (keys against the cheeks, panels against the frame)
-7. no printed controls, no logos or brand names, no floating or intersecting parts
-8. file weight and triangles inside budget
+Score each item 0, 1 or 2 with a MEASUREMENT, not an impression. Scale every photo with the datasheet size (mm per pixel on the same plane) and compare in millimetres.
 
-A FAIL on any item means rebuild. The reviewer must be a SEPARATE agent that never saw the build: it gets only the device id, the final.glb path, the source photos and this checklist, and writes its own scores and a list of defects. The builder fixes and resubmits until the reviewer passes.
+1. **Silhouette.** Render orthographic-like straight views (front, side, top: azimuth 180/0/90/270, elevation 0 or 88) and compare the outline with the photo outline scaled to the same size. 2 = every point of every outline within 2 mm (or 1 percent of the long side, whichever is larger); 1 = within 5 mm; 0 = a visibly wrong proportion, slope or overhang.
+2. **Edge radii and cross-section.** Measure each distinct edge radius or chamfer in the photo (a corner crop with a scale) and in the model (a cut section or a close-up at the same spot). 2 = every one within 2 mm or 25 percent; 1 = one or two off by more; 0 = a chamfer where the real edge is round, or the reverse.
+3. **Controls as geometry.** List every control of the real unit (each fader, knob, button, key, pad, switch, LED) from the photos. 2 = the count and kind match exactly, each is modelled geometry (nothing printed), centre within 1.5 mm and size within 1 mm of the photo-scaled value, proud or recessed as the photo shows; 1 = one or two controls off by more, or one printed; 0 = a control missing, or a group printed instead of modelled.
+4. **Ports as geometry.** Every connector present with the right type, opening size within 1 mm, depth shown, position within 1.5 mm. 2/1/0 as above.
+5. **Colours and finishes.** Sample the body, plate, caps, keys, rings in a straight view of the model and the same areas of the photo (the same exposure): 2 = every area within 12 of 255 per channel; 1 = one or two areas off; 0 = a wrong colour family or a silver part white.
+6. **Gaps, flushness and artefacts.** Every gap and step (key to cheek, panel to frame, seam) within 1 mm of the photo-scaled value; no part clipping another; no visible crease, streak or shading seam along an edge that is smooth in the photo; no hairline cracks. 2 = none wrong; 1 = one or two; 0 = a gap or crease that is plainly wrong.
+7. **Cleanliness.** No logo, brand name or lettering of the maker; no printed copy of a control; no ghost graphics or baked shadows in the pictures; no floating or intersecting parts. 2 = none; 1 = one minor; 0 = a logo, a printed control or a floating part.
+8. **Weight.** Triangles within the declared budget (15000 at most), GLB under 500 KB, loads without error. 2 = yes; 1 = over by up to 20 percent; 0 = over by more or fails to load.
 
-**Founder gate (hard).** Each example from the founder's screenshots carries a stated TEST POINT (ADAM S3H: the cabinet edge reads like his picture 1, a soft rounded transition, and NOT like picture 2, a sharp chamfer; AEA R84: the stand is the chrome yoke and black stand adapter of the photos; AETA Scoopy+: curved silver frame, recessed keypad keys, big black knurled knobs with collars well proud of the face; AKAI MPK mini: keys run flush to the red end cheeks with no dark slab or gap). If the test point FAILS the device FAILS, whatever its score. The reviewer must render the model at that spot from the SAME viewpoint as the founder's picture, CROP the photo to the same region, and judge them side by side at large size (review-compare.mjs takes a photo crop). Match the exposure of the renders to the photo.
+**PASS = 15 of 16 or more (at most ONE item at 1), NO item at 0, AND every founder test point met.** Anything else is FAIL. A passed device is then shown to the founder as a same-angle photo/render pair in the chat before it counts as final.
+
+The reviewer must be a SEPARATE agent that never saw the build: it gets only the device id, the final.glb path, the source photos, the founder test points and this checklist, and writes its own measurements, scores and a list of defects. The builder fixes and resubmits until the reviewer passes.
+
+**Founder gate (hard).** Each example from the founder's screenshots carries a stated TEST POINT (ADAM S3H: the cabinet edge reads like his picture 1, a soft rounded transition, and NOT like picture 2, a sharp chamfer; AEA R84: the stand is the chrome yoke and black stand adapter of the photos; AETA Scoopy+: curved silver frame, recessed keypad keys, big black knurled knobs with collars well proud of the face; AKAI MPK mini: keys run flush to the red end cheeks with no dark slab or gap). If a test point FAILS the device FAILS, whatever its score; the bar is 15 of 16, no 0, every test point met. The reviewer must render the model at that spot from the SAME viewpoint as the founder's picture, CROP the photo to the same region, and judge them side by side at large size (review-compare.mjs takes a photo crop). Match the exposure of the renders to the photo.
 
 ### e) Report
 Per device: the structure sheet (what parts), before and after renders at the photo angles, the reviewer's score, rejected sources, file size, triangles.
