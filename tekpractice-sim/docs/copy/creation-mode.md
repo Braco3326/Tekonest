@@ -92,6 +92,8 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.siteBack` | Retour au site Tekonest | validé | Aide ; même libellé que `shell.siteBack` |
 | `menu.firstStepsWait` | Répondez d’abord à l’écran de départ. | à valider (tekuxwriter) | Description de « Premiers pas » (grisé) tant que l’écran de départ est ouvert : il ouvrirait une salle sans profil |
 | `menu.firstSteps` | Premiers pas | à valider (tekuxwriter) | Aide ; première entrée, seulement sous `?design` et là où le tutoriel est permis (ni `?oscar=0` ni adresse d’examen). Sans lieu ouvert, ouvre d’abord la salle de départ du paquet (la salle vide neutre ; pour le paquet 5, le modèle jouable `premier-son-pret`, T6.3), puis demande le tutoriel ; avec un montage déjà ouvert sur le paquet 5, passe par la boîte « Remplacer le matériel » (`onboarding.modelDeclined` si l’apprenant refuse) |
+| `menu.account` | Mon compte | à valider (tekuxwriter) | Mission 1 (2026-11-15), comptes : Projet ; seulement quand l’interrupteur `accounts` est actif (éteint dans le produit) ; ouvre « Mon compte », ou l’inscription sans compte |
+| `menu.signIn` | Se connecter | à valider (tekuxwriter) | Mission 1 (2026-11-15), comptes : Projet ; seulement déconnecté, interrupteur `accounts` actif ; ouvre la connexion |
 
 Since Task 12, Lieu holds only « Choisir un lieu… »; the place names are on the picker cards (`content/rooms/*.json` `name_fr`, `picker.set-*`, `picker.blank`).
 
@@ -1179,6 +1181,41 @@ Le nouvel Oscar (packs d’accueil, T5.4 ; spec 9 et 10.2), seulement avec `?des
 |---|---|---|---|
 | `oscar.badge` | Oscar · Assistant | à valider (tekuxwriter) | Badge dans l’en-tête de la bulle d’Oscar, à chaque bulle ouverte, juste après le titre fourni « Oscar, assistant IA » (les deux se lisent ensemble : à trancher avec le fondateur, voir la décision « IA ») ; il dit ce qu’est Oscar ; le nom accessible de l’icône reste « Oscar, assistant IA » |
 | `oscar.notOnScreen` | Hors de vue pour le moment : le bouton « Vue d’ensemble » (⌂) montre toute la pièce. | à valider (tekuxwriter) | Bulle d’Oscar quand ce qu’il montre est hors de l’écran (G14c) ; remplace la phrase fournie « … Faire défiler la page ou ouvrir la zone concernée… », sans objet dans une vue 3D. Toutes les pages du Mode Création (avec ou sans `?design`) ; le niveau garde la phrase fournie |
+
+## plainTutorial
+
+Le tutoriel simple « Premiers pas » (mission 1, 2026-11-15 ; spec 4) : une fiche dans la ligne réservée au tutoriel, sans assistant, sans avatar, sans nom, jamais à la première personne. Quatre étapes, chacune se termine sur un fait du montage (jamais sur un clic sur la fiche) ; une astuce par étape après 30 s ; « Étape suivante » et « Passer le tutoriel » (`tutorialUi.skip`) toujours présents. Paquet 2 seulement (celui qui pose les écrans de but), adresse de pratique, jamais en examen ni avec `?oscar=0`, et seulement là où l’assistant est éteint. Tout ce qui suit : à valider (tekuxwriter, 2026-11-15).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `plainTutorial.region` | Tutoriel Premiers pas | à valider (tekuxwriter) | Nom accessible de la fiche (région nommée, pas une boîte de dialogue) |
+| `plainTutorial.console` | Ouvrez Matériel, puis Inventaire, onglet Consoles, et posez la {console} dans la salle. | à valider (tekuxwriter) | Étape 1 ; `{console}` = libellé du catalogue de la console qui lit un son d’essai (aujourd’hui la Yamaha QL1) ; se termine quand la ligne « source » de la liste « Pourquoi je n’entends rien ? » n’est plus bloquée |
+| `plainTutorial.consoleHint` | Dans ce simulateur, seule la {console} lit un son d’essai : c’est elle qu’il faut poser. | à valider (tekuxwriter) | Astuce de l’étape 1, après 30 s |
+| `plainTutorial.enceinte` | Posez une enceinte, onglet Enceintes : c’est elle qui diffuse le son. | à valider (tekuxwriter) | Étape 2 ; se termine quand une enceinte du catalogue (onglet Enceintes, pas un casque) est posée |
+| `plainTutorial.enceinteHint` | Une enceinte amplifiée, comme la {enceinte}, se branche directement sur la console. | à valider (tekuxwriter) | Astuce de l’étape 2, après 30 s ; `{enceinte}` = libellé du catalogue de la QSC K12.2 |
+| `plainTutorial.cable` | Sélectionnez la console, puis, dans Propriétés, « Connecter à… » sur une sortie principale : choisissez l’entrée de l’enceinte. | à valider (tekuxwriter) | Étape 3 ; se termine quand une sortie de la console est reliée à une entrée de l’enceinte |
+| `plainTutorial.cableHint` | « Connecter à… » ne propose que des prises compatibles : prenez celle de l’enceinte. | à valider (tekuxwriter) | Astuce de l’étape 3, après 30 s |
+| `plainTutorial.ecoute` | Ouvrez Écoute, puis Signal de test. | à valider (tekuxwriter) | Étape 4 ; se termine au premier son de la session (Écoute) |
+| `plainTutorial.ecouteHint` | Signal de test grisé ? « Pourquoi je n’entends rien ? » dit ce qui manque, par exemple le courant (une multiprise, onglet Secteur) ou « Lecture console ». | à valider (tekuxwriter) | Astuce de l’étape 4, après 30 s ; renvoie à la liste « Pourquoi je n’entends rien ? » (courant, « Lecture console ») |
+| `plainTutorial.hint` | Astuce : {hint} | à valider (tekuxwriter) | Ligne d’astuce de la fiche ; `{hint}` = l’astuce de l’étape |
+| `plainTutorial.next` | Étape suivante | à valider (tekuxwriter) | Bouton de la fiche, toujours présent pendant le tutoriel : passe l’étape en cours |
+| `plainTutorial.closingLine` | Vous pouvez continuer votre montage. Aide, puis Premiers pas, relance le tutoriel. | à valider (tekuxwriter) | Fiche après la dernière étape, sous « Fin des étapes » (`tutorialCard.closingTitle`), avec « Fermer » (`tutorialCard.close`) |
+| `plainTutorial.announceStep` | Tutoriel, étape {k} sur {n} : {text} | à valider (tekuxwriter) | Dit dans la zone d’état (lecteur d’écran) à chaque étape ; `{text}` = la consigne |
+| `plainTutorial.announceDone` | Tutoriel : fin des étapes. | à valider (tekuxwriter) | Dit quand les quatre étapes sont faites ou passées |
+| `plainTutorial.announceSkipped` | Tutoriel arrêté. Aide, puis Premiers pas, le relance. | à valider (tekuxwriter) | Dit après « Passer le tutoriel » |
+
+## accountPrompt
+
+La carte « Enregistrez votre travail » (mission 1, 2026-11-15 ; spec 5) : seulement quand l’interrupteur `accounts` est actif (éteint dans le produit), une fois, après le tutoriel simple (fini ou passé) ou le premier son, jamais en examen ; elle se ferme pour de bon. Tout ce qui suit : à valider (tekuxwriter, 2026-11-15).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `accountPrompt.region` | Enregistrer votre travail | à valider (tekuxwriter) | Nom accessible de la carte (région nommée) |
+| `accountPrompt.title` | Enregistrez votre travail | à valider (tekuxwriter) | Titre de la carte, montrée une fois après le tutoriel simple ou le premier son ; jamais en examen ; interrupteur `accounts` actif seulement |
+| `accountPrompt.line` | Un compte garde votre profil et votre but. Votre montage reste enregistré sur cet appareil ; vous pouvez continuer sans compte. | à valider (tekuxwriter) | La ligne de la carte : ne promet pas d’enregistrement en ligne du montage (le compte ne garde que le profil) |
+| `accountPrompt.signUp` | Créer un compte | à valider (tekuxwriter) | Bouton principal : ouvre l’inscription (consentement d’abord) |
+| `accountPrompt.logIn` | Se connecter | à valider (tekuxwriter) | Bouton secondaire : ouvre la connexion |
+| `accountPrompt.dismiss` | Fermer | à valider (tekuxwriter) | Ferme la carte pour de bon (mémorisé dans l’enregistrement d’accueil, `accountPrompt`) |
 
 ## design
 

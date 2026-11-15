@@ -88,6 +88,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     firstSteps: 'Premiers pas',
     /** Why « Premiers pas » is off while the start screen shows (its description). À valider (tekuxwriter, 2026-11-12). */
     firstStepsWait: 'Répondez d’abord à l’écran de départ.',
+    /** Mission 1, accounts (spec 5): the entry that opens « Mon compte » (or sign-up while signed out); only when the accounts switch is on. À valider (tekuxwriter, 2026-11-15). */
+    account: 'Mon compte',
+    /** Mission 1, accounts: the log-in entry, while signed out only. À valider (tekuxwriter, 2026-11-15). */
+    signIn: 'Se connecter',
   },
   /** « Raccourcis clavier » (night 2 wave 5, P2-1): the dialog of the Aide menu and the H key. Validé (tekuxwriter, night 2). */
   shortcuts: {
@@ -1214,6 +1218,40 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
      * Every Mode Création page (the controller's string table, CREATION_STRINGS), not only `?design`; the level page keeps the vendored line.
      */
     notOnScreen: 'Hors de vue pour le moment : le bouton « Vue d’ensemble » (⌂) montre toute la pièce.',
+  },
+  /**
+   * The plain tutorial « Premiers pas » (mission 1, spec 4; src/creation/onboarding/plainTutorial.ts and plainTutorialCard.ts): a coach card in the reserved tutorial row, no assistant,
+   * no avatar, no name, never the first person. One instruction per step ({console} and {enceinte} = catalog labels), one hint per step after 30 s. The count, « Passer le tutoriel »,
+   * « Fin des étapes » and « Fermer » are `tutorialCard.step`, `tutorialUi.skip`, `tutorialCard.closingTitle` and `tutorialCard.close` (by key). Every string here: à valider (tekuxwriter, 2026-11-15).
+   */
+  plainTutorial: {
+    region: 'Tutoriel Premiers pas',
+    console: 'Ouvrez Matériel, puis Inventaire, onglet Consoles, et posez la {console} dans la salle.',
+    consoleHint: 'Dans ce simulateur, seule la {console} lit un son d’essai : c’est elle qu’il faut poser.',
+    enceinte: 'Posez une enceinte, onglet Enceintes : c’est elle qui diffuse le son.',
+    enceinteHint: 'Une enceinte amplifiée, comme la {enceinte}, se branche directement sur la console.',
+    cable: 'Sélectionnez la console, puis, dans Propriétés, « Connecter à… » sur une sortie principale : choisissez l’entrée de l’enceinte.',
+    cableHint: '« Connecter à… » ne propose que des prises compatibles : prenez celle de l’enceinte.',
+    ecoute: 'Ouvrez Écoute, puis Signal de test.',
+    ecouteHint: 'Signal de test grisé ? « Pourquoi je n’entends rien ? » dit ce qui manque, par exemple le courant (une multiprise, onglet Secteur) ou « Lecture console ».',
+    hint: 'Astuce : {hint}',
+    next: 'Étape suivante',
+    closingLine: 'Vous pouvez continuer votre montage. Aide, puis Premiers pas, relance le tutoriel.',
+    announceStep: 'Tutoriel, étape {k} sur {n} : {text}',
+    announceDone: 'Tutoriel : fin des étapes.',
+    announceSkipped: 'Tutoriel arrêté. Aide, puis Premiers pas, le relance.',
+  },
+  /**
+   * The quiet card « Enregistrez votre travail » (mission 1, spec 5; src/creation/onboarding/accountPrompt.ts): only when the accounts switch is on, shown once after the plain tutorial
+   * or the first sound, never in an exam; it opens sign-up. It promises nothing the account does not do (the projects stay on the device). Every string here: à valider (tekuxwriter, 2026-11-15).
+   */
+  accountPrompt: {
+    region: 'Enregistrer votre travail',
+    title: 'Enregistrez votre travail',
+    line: 'Un compte garde votre profil et votre but. Votre montage reste enregistré sur cet appareil ; vous pouvez continuer sans compte.',
+    signUp: 'Créer un compte',
+    logIn: 'Se connecter',
+    dismiss: 'Fermer',
   },
   /**
    * The names of the five design packages (onboarding packs, T4.1, spec 7.2), read through `DesignPackage.nameKey` (`design.name1` .. `design.name5`). Not displayed
