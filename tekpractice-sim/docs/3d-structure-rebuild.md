@@ -72,6 +72,8 @@ BLENDER_EXE='D:\Blender\blender.exe' node tools/assets3d/review-views.mjs <out-d
 
 A FAIL on any item means rebuild. The reviewer must be a SEPARATE agent that never saw the build: it gets only the device id, the final.glb path, the source photos and this checklist, and writes its own scores and a list of defects. The builder fixes and resubmits until the reviewer passes.
 
+**Founder gate (hard).** Each example from the founder's screenshots carries a stated TEST POINT (ADAM S3H: the cabinet edge reads like his picture 1, a soft rounded transition, and NOT like picture 2, a sharp chamfer; AEA R84: the stand is the chrome yoke and black stand adapter of the photos; AETA Scoopy+: curved silver frame, recessed keypad keys, big black knurled knobs with collars well proud of the face; AKAI MPK mini: keys run flush to the red end cheeks with no dark slab or gap). If the test point FAILS the device FAILS, whatever its score. The reviewer must render the model at that spot from the SAME viewpoint as the founder's picture, CROP the photo to the same region, and judge them side by side at large size (review-compare.mjs takes a photo crop). Match the exposure of the renders to the photo.
+
 ### e) Report
 Per device: the structure sheet (what parts), before and after renders at the photo angles, the reviewer's score, rejected sources, file size, triangles.
 

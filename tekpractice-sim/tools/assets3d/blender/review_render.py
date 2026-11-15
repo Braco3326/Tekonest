@@ -42,7 +42,7 @@ sc.world = world
 world.use_nodes = True
 bg = world.node_tree.nodes["Background"]
 bg.inputs[0].default_value = (0.62, 0.63, 0.65, 1)
-bg.inputs[1].default_value = 0.35
+bg.inputs[1].default_value = 0.6
 
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
 sc.collection.objects.link(cam)
@@ -61,9 +61,9 @@ def sun(name, loc, energy):
     o.rotation_euler = (ctr - o.location).to_track_quat("-Z", "Y").to_euler()
 
 
-sun("key", (-1, 1.2, 1.4), 2.2)
-sun("fill", (1.4, 0.6, 0.6), 0.7)
-sun("rim", (0.2, -1.4, 1.0), 0.9)
+sun("key", (-1, 1.2, 1.4), 3.4)
+sun("fill", (1.4, 0.6, 0.6), 1.2)
+sun("rim", (0.2, -1.4, 1.0), 1.3)
 engines = [e.identifier for e in bpy.types.RenderSettings.bl_rna.properties["engine"].enum_items]
 sc.render.engine = "BLENDER_EEVEE_NEXT" if "BLENDER_EEVEE_NEXT" in engines else "BLENDER_EEVEE"
 sc.render.resolution_x = px
