@@ -247,10 +247,11 @@ describe('two tabs on one storage (T6 review S4): a write reduces from what is S
 })
 
 describe('the goal (mission 1, spec 3): an optional field, old records read unchanged', () => {
-  const goal = { goal: 'metier', sub: 'metier-studio', speciality: 'metier-mastering' }
+  const goal = { id: 'travaille.studio.mastering' }
 
   it('an answer with a goal writes the goal and the profile the goal maps to (the caller derives it), with the offer', () => {
     expect(reduce(null, { type: 'answer', profile: 'metier', offer: 'skipped', goal })).toEqual({ ...fresh, profile: 'metier', offer: 'skipped', goal })
+    expect(reduce(null, { type: 'answer', profile: 'metier', offer: 'skipped', goal: { ...goal, extra: 1 } as typeof goal }).goal).toEqual(goal)
     expect(reduce(null, { type: 'answer', profile: 'metier', offer: 'taken', goal })).toEqual({ ...fresh, profile: 'metier', offer: 'taken', request: 1, goal })
   })
 
@@ -264,7 +265,7 @@ describe('the goal (mission 1, spec 3): an optional field, old records read unch
   it('an answer without a goal (the four profiles) leaves a stored goal as it is; a new goal replaces it', () => {
     const withGoal = reduce(null, { type: 'answer', profile: 'metier', offer: 'skipped', goal })
     expect(reduce(withGoal, { type: 'answer', profile: 'etudie', offer: 'skipped' }).goal).toEqual(goal)
-    const other = { goal: 'etudier', sub: 'etudier-cours', speciality: 'etudier-tp' }
+    const other = { id: 'etudie.bts-mav-son' }
     expect(reduce(withGoal, { type: 'answer', profile: 'etudie', offer: null, goal: other })).toEqual({ ...withGoal, profile: 'etudie', goal: other })
     expect(reduce(withGoal, { type: 'answer', profile: null, offer: null, goal: null }).goal).toBeNull()
   })
@@ -282,15 +283,17 @@ describe('the goal (mission 1, spec 3): an optional field, old records read unch
   it.each([
     ['a string', 'metier'],
     ['a number', 3],
-    ['an array', ['metier', 'metier-studio', 'metier-mastering']],
-    ['a missing speciality', { goal: 'metier', sub: 'metier-studio' }],
-    ['an empty id', { goal: 'metier', sub: '', speciality: 'metier-mastering' }],
-    ['a non-string id', { goal: 'metier', sub: 'metier-studio', speciality: 4 }],
+    ['an array', ['travaille', 'travaille.studio']],
+    ['no id', { goal: 'travaille' }],
+    ['an empty id', { id: '' }],
+    ['a non-string id', { id: 4 }],
+    ['an id that is not dotted words', { id: 'travaille..studio' }],
+    ['an id with spaces', { id: 'Travaille studio' }],
   ])('parseRecord: a corrupt goal (%s) drops the whole record, as any corrupt field does', (_n, bad) => {
     expect(parseRecord(JSON.stringify({ ...fresh, goal: bad }))).toBeNull()
   })
 
-  it('parseRecord keeps only the three ids of a goal (an extra key is not carried along)', () => {
+  it('parseRecord keeps only the id of a goal (an extra key is not carried along: the record stays tiny)', () => {
     expect(parseRecord(JSON.stringify({ ...fresh, goal: { ...goal, extra: 1 } }))?.goal).toEqual(goal)
   })
 

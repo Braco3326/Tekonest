@@ -10,9 +10,9 @@
  * The record is `{ v: 1, profile, offer, request, shown }`. `request` is the guide's trigger: it goes up on « Faire le tutoriel » and on
  * Aide « Premiers pas », and the guide starts the tutorial only when `request` is above its own `handledRequest` (spec 4.4). `shown` holds the
  * ids of the tutorial steps already shown; the tutorial (plan T3) owns what is in it, the machine only keeps it well-formed.
- * Mission 1 (spec 3): an optional `goal` (the goal screens' answer: goal, sub-choice, speciality ids, or null for « Passer »). A record written before it has no
- * field and reads unchanged; a goal that is not well-formed drops the record like any corrupt field. The `profile` stays: the answer derives it from the goal
- * (the goal tree's `profile`), so the panels and the drawer tab of profiles.ts keep working.
+ * Mission 1 (spec 3): an optional `goal` (the goal screens' answer: `{ id }`, the deepest chosen node of the goal tree, whose dotted id names its ancestors; or
+ * null for « Passer »). A record written before it has no field and reads unchanged; a goal that is not well-formed drops the record like any corrupt field. The
+ * `profile` stays: the answer derives it from the goal's level-1 id (goalTree.ts `profileForGoal`), so the panels and the drawer tab of profiles.ts keep working.
  */
 import type { StepId } from '../../design/packages'
 import type { GoalChoice } from './goalTree'
@@ -48,7 +48,7 @@ export interface OnboardingRecord {
    */
   ownGear?: 'dismissed'
   /**
-   * The goal screens' answer (mission 1): the three ids, or null when the learner pressed « Passer » (no goal: every room shows, nothing asks again). Absent = the
+   * The goal screens' answer (mission 1): the deepest chosen node id, or null when the learner pressed « Passer » (no goal: every room shows, nothing asks again). Absent = the
    * record was written before the goals, or by the four profiles (a package that asks them).
    */
   goal?: GoalChoice | null
@@ -100,7 +100,7 @@ export function reduce(rec: OnboardingRecord | null, ev: OnboardingEvent): Onboa
   }
   switch (ev.type) {
     case 'answer': {
-      const base: OnboardingRecord = ev.goal === undefined ? cur : { ...cur, goal: ev.goal === null ? null : { goal: ev.goal.goal, sub: ev.goal.sub, speciality: ev.goal.speciality } }
+      const base: OnboardingRecord = ev.goal === undefined ? cur : { ...cur, goal: ev.goal === null ? null : { id: ev.goal.id } }
       return ev.offer === 'taken' ? asking({ ...base, profile: ev.profile, offer: ev.offer, request: cur.request + 1 }, 'start') : { ...base, profile: ev.profile, offer: ev.offer ?? cur.offer }
     }
     case 'request':
@@ -110,14 +110,15 @@ export function reduce(rec: OnboardingRecord | null, ev: OnboardingEvent): Onboa
   }
 }
 
-const goalId = (v: unknown): v is string => typeof v === 'string' && v !== ''
+/** A dotted node id: words of lower-case letters, digits and hyphens, joined by dots. */
+const GOAL_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*(?:\.[a-z0-9]+(?:-[a-z0-9]+)*)*$/
 
-/** A stored goal: null, or exactly three non-empty ids (only those are kept); undefined = not well-formed. */
+/** A stored goal: null, or `{ id }` with a dotted node id (only `id` is kept); undefined = not well-formed. */
 function parseGoal(v: unknown): GoalChoice | null | undefined {
   if (v === null) return null
   if (typeof v !== 'object' || Array.isArray(v)) return undefined
-  const g = v as Record<string, unknown>
-  return goalId(g.goal) && goalId(g.sub) && goalId(g.speciality) ? { goal: g.goal, sub: g.sub, speciality: g.speciality } : undefined
+  const id = (v as Record<string, unknown>).id
+  return typeof id === 'string' && GOAL_ID.test(id) ? { id } : undefined
 }
 
 /** The record in `raw`, or null when it is missing or malformed in any field (a corrupt record is replaced, never repaired). */
