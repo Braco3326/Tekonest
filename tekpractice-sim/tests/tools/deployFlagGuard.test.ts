@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterAll, describe, expect, it } from 'vitest'
-import { GUIDE_ON, INBOX_ON, PAGES_ON, PRODUCT_TABLE, findTestFlags, formatFlagRefusal, hasProductTable, scanOutputForTestFlags } from '../../tools/deploy-flag-guard.mjs'
+import { ACCOUNTS_ON, GUIDE_ON, INBOX_ON, PAGES_ON, PRODUCT_TABLE, findTestFlags, formatFlagRefusal, hasProductTable, scanOutputForTestFlags } from '../../tools/deploy-flag-guard.mjs'
 
 /** The deploy build must prove its output holds no test switch: the guide inbox flag set to true in a feature table. Everything runs in the temp dir. */
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
@@ -23,23 +23,51 @@ describe('the assistant and the learning pages (founder 2026-11-15: off in the s
   it.each(['{levels:!1,legacyPages:!0,guide:!1,guideLegacy:!1,guideInbox:!1}', 'legacyPages: true', 'x={legacyPages:!0}'])('PAGES_ON matches %s', (text) => {
     expect(PAGES_ON.test(text)).toBe(true)
   })
-  it.each(['{levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1}', 'legacyPages: false', 'legacyPages:!0x', 'legacyPagesX:!0'])('PAGES_ON does not match %s', (text) => {
+  it.each(['{levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!1,defaultDesign:2}', 'legacyPages: false', 'legacyPages:!0x', 'legacyPagesX:!0'])('PAGES_ON does not match %s', (text) => {
     expect(PAGES_ON.test(text)).toBe(false)
   })
   it.each(['{levels:!1,legacyPages:!1,guide:!0,guideLegacy:!1,guideInbox:!1}', 'guide: true, guideLegacy: false', '{levels:false,guide:true,guideLegacy:false}'])('GUIDE_ON matches %s', (text) => {
     expect(GUIDE_ON.test(text)).toBe(true)
   })
-  it.each(['{levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1}', 'guide: false, guideLegacy: false', 'guide:!0x,guideLegacy:!1', 'x={guide:!0,other:1}', 'FEATURES.guide === true'])('GUIDE_ON does not match %s', (text) => {
+  it.each(['{levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!1,defaultDesign:2}', 'guide: false, guideLegacy: false', 'guide:!0x,guideLegacy:!1', 'x={guide:!0,other:1}', 'FEATURES.guide === true'])('GUIDE_ON does not match %s', (text) => {
     expect(GUIDE_ON.test(text)).toBe(false)
   })
   it('a deploy output is refused when the table is the all-on one, and passes with the product table', () => {
     expect(findTestFlags([{ path: 'assets/a.js', text: 'x={levels:!1,legacyPages:!0,guide:!0,guideLegacy:!1,guideInbox:!1}' }])).toEqual(['assets/a.js'])
-    expect(findTestFlags([{ path: 'assets/a.js', text: 'x={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1}' }])).toEqual([])
+    expect(findTestFlags([{ path: 'assets/a.js', text: 'x={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!1,defaultDesign:2}' }])).toEqual([])
   })
   it('the product table must be there: an output with no feature table at all is not proved clean', () => {
-    expect(PRODUCT_TABLE.test('x={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1};')).toBe(true)
+    expect(PRODUCT_TABLE.test('x={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!1,defaultDesign:2};')).toBe(true)
     expect(PRODUCT_TABLE.test('x={levels:!1,legacyPages:!1,guide:!0,guideLegacy:!1,guideInbox:!1};')).toBe(false)
     expect(PRODUCT_TABLE.test('nothing here')).toBe(false)
+  })
+})
+
+describe('the accounts (mission 1: off in the shipped product until the founder approves the privacy text and supplies the keys)', () => {
+  const P = 'levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1'
+  it.each([`{${P},goals:!0,plainTutorial:!0,accounts:!0,defaultDesign:2}`, 'plainTutorial: true, accounts: true', '{goals:!0,plainTutorial:!1,accounts:!0}'])('ACCOUNTS_ON matches %s', (text) => {
+    expect(ACCOUNTS_ON.test(text)).toBe(true)
+  })
+  it.each([`{${P},goals:!0,plainTutorial:!0,accounts:!1,defaultDesign:2}`, 'plainTutorial: true, accounts: false', 'plainTutorial:!0,accounts:!0x', 'x={accounts:!0}', 'FEATURES.accounts === true'])('ACCOUNTS_ON does not match %s', (text) => {
+    expect(ACCOUNTS_ON.test(text)).toBe(false)
+  })
+  it('a deploy output whose table has the accounts on is refused', () => {
+    expect(findTestFlags([{ path: 'assets/a.js', text: `x={${P},goals:!0,plainTutorial:!0,accounts:!0,defaultDesign:2}` }])).toEqual(['assets/a.js'])
+    expect(findTestFlags([{ path: 'assets/a.js', text: `x={${P},goals:!0,plainTutorial:!0,accounts:!1,defaultDesign:2}` }])).toEqual([])
+  })
+  it('the product table shows the goals and the plain tutorial on, the accounts off and design 2 by default; anything else is not the product', () => {
+    expect(PRODUCT_TABLE.test(`x={${P},goals:!0,plainTutorial:!0,accounts:!1,defaultDesign:2};`)).toBe(true)
+    expect(PRODUCT_TABLE.test(`x={levels:false,legacyPages:false,guide:false,guideLegacy:false,guideInbox:false,goals:true,plainTutorial:true,accounts:false,defaultDesign:2};`)).toBe(true)
+    for (const t of [
+      `x={${P},goals:!1,plainTutorial:!0,accounts:!1,defaultDesign:2};`,
+      `x={${P},goals:!0,plainTutorial:!1,accounts:!1,defaultDesign:2};`,
+      `x={${P},goals:!0,plainTutorial:!0,accounts:!0,defaultDesign:2};`,
+      `x={${P},goals:!0,plainTutorial:!0,accounts:!1,defaultDesign:3};`,
+      `x={${P},goals:!0,plainTutorial:!0,accounts:!1,defaultDesign:22};`,
+      `x={${P},goals:!0,plainTutorial:!0,accounts:!1};`,
+      `x={${P}};`,
+    ])
+      expect(PRODUCT_TABLE.test(t), t).toBe(false)
   })
 })
 
@@ -71,7 +99,7 @@ describe('scanOutputForTestFlags', () => {
   })
 
   it('hasProductTable: the feature table of the product is in the output, with the assistant and the learning pages off', () => {
-    expect(hasProductTable(out({ 'assets/boot-1.js': 'a;x={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1};b' }))).toBe(true)
+    expect(hasProductTable(out({ 'assets/boot-1.js': 'a;x={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!1,defaultDesign:2};b' }))).toBe(true)
     expect(hasProductTable(out({ 'assets/boot-1.js': 'x={levels:!1,legacyPages:!0,guide:!0,guideLegacy:!1,guideInbox:!1}' }))).toBe(false)
     expect(hasProductTable(out({ 'assets/boot-1.js': 'no table', 'a.html': 'levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1' }))).toBe(false)
   })
