@@ -1,0 +1,59 @@
+/*
+ * The plain tutorial's coach card (mission 1, spec 4; src/creation/onboarding/plainTutorialCard.ts), in the tutorial's reserved row (`.cr[data-tutorial='on']`,
+ * src/creation/shell/creation.css; the slot is src/design/tutorialSlot.ts). The guide's stylesheet places the slot in that row too, but it is not loaded where the guide is off,
+ * so the slot's grid area is set here as well (the same rule). Loaded with the onboarding chunk: the plain game and an exam address never fetch it.
+ *
+ * Colours are ROLE tokens only, the pairs the step card already uses (src/guide/stepCard.css, declared in src/design/packageContrast.ts): the secondary ink on the secondary fill,
+ * the shell's focus ring over a Nuit halo; on a Papier sheet the ground and the ink, with the package's focus role. No Ambre text, no new colour, no animation, no transition.
+ * Desktop: one row (count, instruction, buttons), the hint wraps under it; a coarse pointer gets 44 px buttons.
+ */
+.cr-tutorial-slot {
+  grid-area: tutorial;
+  min-width: 0;
+}
+
+.tp-coach {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  padding: 6px 16px;
+  background: var(--cr-role-secondary, var(--cr-prune));
+  color: var(--cr-role-secondary-ink, var(--cr-papier));
+  border-bottom: 1px solid var(--cr-role-line, var(--cr-panel-line));
+  font: 400 13px/1.4 var(--cr-font-ui);
+}
+.tp-coach:focus { outline: none; }
+.tp-coach:focus-visible { outline: 2px solid var(--cr-focus); outline-offset: -3px; box-shadow: inset 0 0 0 5px var(--cr-nuit); }
+.tp-coach-count { flex: 0 0 auto; margin: 0; font: 600 14px/1.2 var(--cr-font-ui); white-space: nowrap; }
+.tp-coach-text { flex: 1 1 320px; margin: 0; min-width: 0; }
+.tp-coach-hint { order: 3; flex: 1 1 100%; margin: 0; font-size: 12px; }
+.tp-coach-hint[hidden] { display: none; }
+.tp-coach-actions { order: 2; flex: 0 0 auto; display: flex; gap: 8px; margin-left: auto; }
+.cr .tp-coach-btn {
+  min-height: 30px;
+  padding: 0 12px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: 500 13px/1 var(--cr-font-ui);
+  white-space: nowrap;
+  transition: none;
+}
+.cr .tp-coach-btn[hidden] { display: none; }
+@media (hover: hover) {
+  .cr .tp-coach-btn:hover { background: var(--cr-role-accent, var(--cr-ambre)); color: var(--cr-role-accent-ink, var(--cr-nuit)); border-color: var(--cr-role-accent-edge, var(--cr-ambre)); }
+}
+.cr .tp-coach-btn:focus-visible { outline-offset: 2px; }
+@media (pointer: coarse) {
+  .cr .tp-coach-btn { min-height: 44px; }
+}
+
+html[data-surface='sheet'] .tp-coach {
+  --cr-focus: var(--cr-role-focus);
+  background: var(--cr-role-ground);
+  color: var(--cr-role-ink);
+  border-bottom-color: var(--cr-role-line);
+}
+html[data-surface='sheet'] .cr .tp-coach .tp-coach-btn { border-color: var(--cr-role-ink); }
