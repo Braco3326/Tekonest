@@ -70,11 +70,13 @@
       "edgeSegments": 4,
       "bodyGrey": 30,
       "handleCount": 1,
-      "handleLenMm": 200,
-      "handleWidthMm": 140,
+      "handleLenMm": 245,
+      "handleWidthMm": 115,
       "handleDepthMm": 30,
-      "handleFromRearMm": 187,
-      "handleYMm": 110
+      "handleFromRearMm": 204,
+      "handleYMm": 108,
+      "rearTopDropMm": 32,
+      "rearBottomRiseMm": 32
     },
     "budget": {
       "min": 100,
@@ -88,7 +90,7 @@
     "photos": [
       {
         "face": "opposite",
-        "file": "front_rectified.png"
+        "file": "front_dark.png"
       }
     ]
   },

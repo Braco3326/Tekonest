@@ -11,9 +11,9 @@
     {
       "portId": "bidir-nl4-1",
       "face": "io",
-      "xMm": 160,
-      "yMm": 100,
-      "confidence": "guess",
+      "xMm": 197,
+      "yMm": 80,
+      "confidence": "photo",
       "insetMm": 3,
       "openingMm": 26,
       "connector": "speakon-nl4",
@@ -23,9 +23,9 @@
     {
       "portId": "bidir-nl4-2",
       "face": "io",
-      "xMm": 330,
-      "yMm": 100,
-      "confidence": "guess",
+      "xMm": 290,
+      "yMm": 80,
+      "confidence": "photo",
       "insetMm": 3,
       "openingMm": 26,
       "connector": "speakon-nl4",
@@ -40,7 +40,7 @@
   "build": {
     "shape": "speaker-cabinet-v2",
     "params": {
-      "edgeRadiusMm": 8,
+      "edgeRadiusMm": 7.2,
       "edgeSegments": 4,
       "frontTopSetMm": 392,
       "handleCount": 1,
@@ -50,8 +50,8 @@
       "handleFromRearMm": 100,
       "handleYMm": 300,
       "bodyGrey": 34,
-      "rearWidthMm": 300,
-      "taperDepthMm": 400
+      "rearWidthMm": 240,
+      "taperDepthMm": 500
     },
     "budget": {
       "min": 200,
@@ -61,6 +61,22 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_wedge.png"
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          0,
+          362,
+          1380,
+          1100
+        ]
+      }
     ]
   },
   "sources": [
@@ -74,5 +90,25 @@
       "url": "https://www.nexo-sa.com/products/45n12/",
       "note": "NEXO 45N-12 page read 2026-11-12: \"392 x 492 x 576 mm\" labelled Height x Width x Depth, 24 kg net, \"2 x NL4MP Speakon 4 pole\" (active: 1+/1- LF and 2+/2- HF; passive: 2+/2-), \"4 handles (2 side metal recessed, 2 front and rear moulded)\", one 12 in LF and one 3 in voice-coil 1.4 in compression driver, HF dispersion 60 degrees vertical asymmetrical (-45/+15), Baltic birch. Modelled: two NL4 on the rear (parallel, bidir), one recessed handle on each side (count and side are the page, the place is our estimate). Not modelled: the moulded front and rear handles. The page gives NO wedge angle: the 45 degree floor-wedge slope (the front face set back 392 mm over its 392 mm height) is our estimate from the model name. Positions are guesses."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "io",
+        "xMm": 269,
+        "yMm": 17,
+        "wMm": 63,
+        "hMm": 25,
+        "marginMm": 3
+      },
+      {
+        "face": "io",
+        "xMm": 210,
+        "yMm": 97,
+        "wMm": 63,
+        "hMm": 38,
+        "marginMm": 3
+      }
+    ]
+  }
 }

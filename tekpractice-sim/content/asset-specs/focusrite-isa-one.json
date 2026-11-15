@@ -100,29 +100,17 @@
     ],
     "budget": {
       "min": 1500,
-      "max": 3500
+      "max": 15000
     },
     "minFilletMm": 0.9,
     "photos": [
       {
         "face": "opposite",
-        "file": "front.jpg",
-        "crop": [
-          177,
-          770,
-          2046,
-          974
-        ]
+        "file": "front_c.jpg"
       },
       {
         "face": "io",
-        "file": "rear.jpg",
-        "crop": [
-          177,
-          729,
-          2046,
-          967
-        ]
+        "file": "rear_c.jpg"
       }
     ]
   },
@@ -151,6 +139,538 @@
         "wMm": 40,
         "hMm": 17,
         "marginMm": 4
+      }
+    ]
+  },
+  "structure": {
+    "bodyDepthMm": 290,
+    "parts": [
+      {
+        "kind": "knob",
+        "face": "opposite",
+        "xMm": 28.2,
+        "yMm": 76.3,
+        "params": {
+          "diaMm": 11.5,
+          "heightMm": 9,
+          "collarDiaMm": 14.5,
+          "collarHeightMm": 4,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.05
+        },
+        "colour": "#e3dba8",
+        "colour2": "#111111",
+        "note": "input gain knob"
+      },
+      {
+        "kind": "knob",
+        "face": "opposite",
+        "xMm": 56.6,
+        "yMm": 75.7,
+        "params": {
+          "diaMm": 11.5,
+          "heightMm": 9,
+          "collarDiaMm": 14.5,
+          "collarHeightMm": 4,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.05
+        },
+        "colour": "#e3dba8",
+        "colour2": "#111111",
+        "note": "trim knob"
+      },
+      {
+        "kind": "knob",
+        "face": "opposite",
+        "xMm": 93.1,
+        "yMm": 29.1,
+        "params": {
+          "diaMm": 11.5,
+          "heightMm": 9,
+          "collarDiaMm": 14.5,
+          "collarHeightMm": 4,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.05
+        },
+        "colour": "#e3dba8",
+        "colour2": "#111111",
+        "note": "DI gain knob"
+      },
+      {
+        "kind": "knob",
+        "face": "opposite",
+        "xMm": 185.6,
+        "yMm": 29.8,
+        "params": {
+          "diaMm": 11.5,
+          "heightMm": 9,
+          "collarDiaMm": 14.5,
+          "collarHeightMm": 4,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.05
+        },
+        "colour": "#e3dba8",
+        "colour2": "#111111",
+        "note": "headphone volume knob"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 13.7,
+        "yMm": 50.7,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#d9c26a",
+        "note": "30-60 key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 26.1,
+        "yMm": 50.7,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#c9667a",
+        "note": "+48V key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 39.6,
+        "yMm": 50.7,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#d9c26a",
+        "note": "phase key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 52.5,
+        "yMm": 50.7,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#c9667a",
+        "note": "HPF key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 65.4,
+        "yMm": 50.7,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#c9667a",
+        "note": "insert key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 80.8,
+        "yMm": 81.4,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#c9667a",
+        "note": "VU cal key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 161.3,
+        "yMm": 81.2,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#c9667a",
+        "note": "post-insert key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 202.8,
+        "yMm": 27.1,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#d9a24a",
+        "note": "cue mix key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 12.8,
+        "yMm": 28,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#17181a",
+        "note": "input select key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 40.8,
+        "yMm": 28,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#17181a",
+        "note": "Z in key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 66.5,
+        "yMm": 28,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#17181a",
+        "note": "Z in key (DI)"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 191.1,
+        "yMm": 81.2,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#17181a",
+        "note": "clock select key"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 192,
+        "yMm": 50.3,
+        "params": {
+          "riseMm": 2.5,
+          "bevelMm": 1,
+          "diaMm": 9
+        },
+        "colour": "#17181a",
+        "note": "ext key"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 121.2,
+        "yMm": 75.1,
+        "points": [
+          [
+            -32,
+            -18.25
+          ],
+          [
+            32,
+            -18.25
+          ],
+          [
+            32,
+            18.25
+          ],
+          [
+            -32,
+            18.25
+          ]
+        ],
+        "params": {
+          "riseMm": 1,
+          "bevelMm": 0.4
+        },
+        "colour": "#0f1013",
+        "note": "VU meter bezel"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 121.2,
+        "yMm": 75.1,
+        "points": [
+          [
+            -30.1,
+            -16.35
+          ],
+          [
+            30.1,
+            -16.35
+          ],
+          [
+            30.1,
+            16.35
+          ],
+          [
+            -30.1,
+            16.35
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.3,
+          "textured": 1
+        },
+        "colour": "#e8dcb0",
+        "note": "VU meter face"
+      },
+      {
+        "kind": "ring",
+        "face": "opposite",
+        "xMm": 116.9,
+        "yMm": 29,
+        "params": {
+          "diaMm": 14.5,
+          "innerDiaMm": 8.6,
+          "riseMm": 2,
+          "floorMm": 0.2
+        },
+        "colour": "#c3c6cb",
+        "colour2": "#050506",
+        "note": "DI instrument jack"
+      },
+      {
+        "kind": "ring",
+        "face": "opposite",
+        "xMm": 138.2,
+        "yMm": 29,
+        "params": {
+          "diaMm": 14.5,
+          "innerDiaMm": 8.6,
+          "riseMm": 2,
+          "floorMm": 0.2
+        },
+        "colour": "#c3c6cb",
+        "colour2": "#050506",
+        "note": "Amp instrument jack"
+      },
+      {
+        "kind": "ring",
+        "face": "opposite",
+        "xMm": 161.5,
+        "yMm": 29,
+        "params": {
+          "diaMm": 14.5,
+          "innerDiaMm": 8.6,
+          "riseMm": 2,
+          "floorMm": 0.2
+        },
+        "colour": "#c3c6cb",
+        "colour2": "#050506",
+        "note": "headphone jack"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 188.1,
+        "yMm": 21.7,
+        "params": {
+          "diaMm": 21,
+          "innerDiaMm": 17,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "note": "MIC I/P female XLR"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 161.6,
+        "yMm": 20.9,
+        "params": {
+          "diaMm": 21,
+          "innerDiaMm": 17,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "note": "line XLR (female)"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 116.7,
+        "yMm": 21.7,
+        "params": {
+          "diaMm": 21,
+          "innerDiaMm": 17,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "note": "MAIN O/P male XLR"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 89.8,
+        "yMm": 20.9,
+        "params": {
+          "diaMm": 21,
+          "innerDiaMm": 17,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "note": "DI O/P male XLR"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 89.8,
+        "yMm": 47.7,
+        "params": {
+          "diaMm": 16,
+          "innerDiaMm": 8.8,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#202124",
+        "colour2": "#050506",
+        "note": "cue mix right jack"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 115.5,
+        "yMm": 47.7,
+        "params": {
+          "diaMm": 16,
+          "innerDiaMm": 8.8,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#202124",
+        "colour2": "#050506",
+        "note": "cue mix left jack"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 139.6,
+        "yMm": 47.7,
+        "params": {
+          "diaMm": 16,
+          "innerDiaMm": 8.8,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#202124",
+        "colour2": "#050506",
+        "note": "EXT I/P jack"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 167.7,
+        "yMm": 47.7,
+        "params": {
+          "diaMm": 16,
+          "innerDiaMm": 8.8,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#202124",
+        "colour2": "#050506",
+        "note": "insert return jack"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 188.4,
+        "yMm": 47.7,
+        "params": {
+          "diaMm": 16,
+          "innerDiaMm": 8.8,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#202124",
+        "colour2": "#050506",
+        "note": "insert send jack"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 139.6,
+        "yMm": 14.7,
+        "params": {
+          "diaMm": 16,
+          "innerDiaMm": 8.8,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#202124",
+        "colour2": "#050506",
+        "note": "LINE I/P jack"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 36.6,
+        "yMm": 35.4,
+        "points": [
+          [
+            -20,
+            -10
+          ],
+          [
+            20,
+            -10
+          ],
+          [
+            20,
+            10
+          ],
+          [
+            -20,
+            10
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#1d1e21",
+        "note": "AC inlet C14"
       }
     ]
   }

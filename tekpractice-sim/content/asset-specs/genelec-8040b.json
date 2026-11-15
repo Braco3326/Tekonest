@@ -54,16 +54,15 @@
     "shape": "curved-cabinet",
     "params": {
       "planFrontMm": 232,
-      "sideBulgeMm": 2.5,
-      "rearWidthMm": 224,
+      "rearWidthMm": 204,
       "frontRadiusMm": 28,
-      "backRadiusMm": 34,
+      "backRadiusMm": 48,
       "edgeRadiusMm": 20,
       "edgeDropMm": 26,
       "edgeSegments": 8,
       "barrelMm": 18,
       "barrelCentreMm": 210,
-      "footMm": 15,
+      "footMm": 22,
       "footWidthMm": 160,
       "footDepthMm": 150,
       "wooferRingMm": 170,
@@ -72,7 +71,9 @@
       "tweeterYMm": 299,
       "waveguideMm": 76,
       "waveguideDepthMm": 10,
-      "bodyGrey": 58
+      "bodyGrey": 58,
+      "midDepthMm": 100,
+      "midWidthMm": 232
     },
     "budget": {
       "min": 1500,

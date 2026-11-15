@@ -106,7 +106,7 @@
     ],
     "budget": {
       "min": 1500,
-      "max": 3500
+      "max": 15000
     },
     "minFilletMm": 1,
     "photos": [
@@ -184,6 +184,466 @@
         "wMm": 38,
         "hMm": 10,
         "marginMm": 3
+      }
+    ]
+  },
+  "structure": {
+    "parts": [
+      {
+        "kind": "ring",
+        "face": "opposite",
+        "xMm": 351.7,
+        "yMm": 43.3,
+        "params": {
+          "diaMm": 13,
+          "innerDiaMm": 7.4,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#c8cbd0",
+        "colour2": "#050506",
+        "note": "headphone jack"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 51.4,
+        "yMm": 78.2,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.3
+        },
+        "colour": "#b9bcc2"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 182.7,
+        "yMm": 78.3,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.3
+        },
+        "colour": "#b9bcc2"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 316.6,
+        "yMm": 76.8,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.3
+        },
+        "colour": "#b9bcc2"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 431.4,
+        "yMm": 76.5,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.3
+        },
+        "colour": "#b9bcc2"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 54.8,
+        "yMm": 9.4,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.3
+        },
+        "colour": "#b9bcc2"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 182.7,
+        "yMm": 10.5,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.3
+        },
+        "colour": "#b9bcc2"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 313.7,
+        "yMm": 12,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.3
+        },
+        "colour": "#b9bcc2"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 426,
+        "yMm": 13.4,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.3
+        },
+        "colour": "#b9bcc2"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 129.2,
+        "yMm": 59.6,
+        "params": {
+          "diaMm": 21,
+          "innerDiaMm": 17,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "count": 2,
+        "pitchXMm": 27.1,
+        "note": "AES1 / AES2 female XLR"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 349,
+        "yMm": 60,
+        "params": {
+          "diaMm": 21,
+          "innerDiaMm": 17,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "count": 5,
+        "pitchXMm": 27.2,
+        "note": "SUB/DAC, CUE and TALKBACK OUT male XLR"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 272,
+        "yMm": 60,
+        "params": {
+          "diaMm": 21,
+          "innerDiaMm": 17,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "note": "DIGITAL OUT AES3 male XLR"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 159,
+        "yMm": 23.3,
+        "params": {
+          "diaMm": 21,
+          "innerDiaMm": 17,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "count": 6,
+        "pitchXMm": 27.4,
+        "note": "SPEAKER 1-3 L/R male XLR"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 324.2,
+        "yMm": 22.9,
+        "params": {
+          "diaMm": 21,
+          "innerDiaMm": 17,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "count": 4,
+        "pitchXMm": 27.2,
+        "note": "CUE IN and BALANCED IN female XLR"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 457.8,
+        "yMm": 23.3,
+        "params": {
+          "diaMm": 21,
+          "innerDiaMm": 17,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "note": "TALKBACK MIC IN female XLR"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 182.7,
+        "yMm": 60,
+        "params": {
+          "diaMm": 11,
+          "innerDiaMm": 7.6,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#b9a15a",
+        "colour2": "#050506",
+        "note": "S/PDIF in RCA"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 293.9,
+        "yMm": 60,
+        "params": {
+          "diaMm": 11,
+          "innerDiaMm": 7.6,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#b9a15a",
+        "colour2": "#050506",
+        "note": "S/PDIF out RCA"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 431.4,
+        "yMm": 34.3,
+        "params": {
+          "diaMm": 11,
+          "innerDiaMm": 7.6,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#d0d0cc",
+        "colour2": "#050506",
+        "note": "UNBAL IN L RCA"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 431.4,
+        "yMm": 14.2,
+        "params": {
+          "diaMm": 11,
+          "innerDiaMm": 7.6,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#b0342c",
+        "colour2": "#050506",
+        "note": "UNBAL IN R RCA"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 101.3,
+        "yMm": 74.2,
+        "params": {
+          "diaMm": 11.5,
+          "innerDiaMm": 8,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#b4b8be",
+        "colour2": "#050506",
+        "note": "WORDCLOCK OUT BNC"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 101.3,
+        "yMm": 54.9,
+        "params": {
+          "diaMm": 11.5,
+          "innerDiaMm": 8,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#b4b8be",
+        "colour2": "#050506",
+        "note": "WORDCLOCK IN BNC"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 131.5,
+        "yMm": 19.5,
+        "params": {
+          "diaMm": 11,
+          "innerDiaMm": 7.5,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#b4b8be",
+        "colour2": "#050506",
+        "note": "talkback switch jack"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 199,
+        "yMm": 60,
+        "points": [
+          [
+            -4,
+            -4
+          ],
+          [
+            4,
+            -4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#17171a",
+        "note": "TOSLINK"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 214.6,
+        "yMm": 60,
+        "points": [
+          [
+            -4,
+            -4
+          ],
+          [
+            4,
+            -4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#17171a",
+        "note": "ADAT"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 238.8,
+        "yMm": 60,
+        "points": [
+          [
+            -6.5,
+            -5.5
+          ],
+          [
+            6.5,
+            -5.5
+          ],
+          [
+            6.5,
+            5.5
+          ],
+          [
+            -6.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#b4b8be",
+        "note": "USB 2 type B"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 89.2,
+        "yMm": 18.4,
+        "points": [
+          [
+            -15,
+            -4.25
+          ],
+          [
+            15,
+            -4.25
+          ],
+          [
+            15,
+            4.25
+          ],
+          [
+            -15,
+            4.25
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#9ea2a8",
+        "note": "REMOTE D-sub 15"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 36.7,
+        "yMm": 67.5,
+        "points": [
+          [
+            -20,
+            -11
+          ],
+          [
+            20,
+            -11
+          ],
+          [
+            20,
+            11
+          ],
+          [
+            -20,
+            11
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#1d1e21",
+        "note": "AC inlet C14"
       }
     ]
   }

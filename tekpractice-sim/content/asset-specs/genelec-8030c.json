@@ -128,7 +128,7 @@
     },
     "budget": {
       "min": 1500,
-      "max": 4000
+      "max": 14000
     },
     "minFilletMm": 16,
     "projection": [
@@ -156,6 +156,682 @@
           1600
         ],
         "fill": true
+      }
+    ]
+  },
+  "structure": {
+    "parts": [
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 94.5,
+        "yMm": 115,
+        "params": {
+          "diaMm": 130,
+          "depthMm": 10
+        },
+        "colour": "#101012",
+        "note": "woofer well"
+      },
+      {
+        "kind": "driver",
+        "face": "opposite",
+        "xMm": 94.5,
+        "yMm": 115,
+        "params": {
+          "diaMm": 128,
+          "riseMm": 6.5,
+          "capDiaMm": 34,
+          "zMm": -9
+        },
+        "colour": "#26262a",
+        "colour2": "#161618",
+        "note": "woofer: cone, surround and dust cap"
+      },
+      {
+        "kind": "ring",
+        "face": "opposite",
+        "xMm": 94.5,
+        "yMm": 233,
+        "params": {
+          "diaMm": 31,
+          "innerDiaMm": 26,
+          "riseMm": 1,
+          "floorMm": 0,
+          "zMm": -8
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#0a0a0c",
+        "note": "tweeter surround"
+      },
+      {
+        "kind": "ball",
+        "face": "opposite",
+        "xMm": 94.5,
+        "yMm": 233,
+        "params": {
+          "diaMm": 27,
+          "zMm": -15
+        },
+        "colour": "#303034",
+        "note": "tweeter dome"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 152,
+        "yMm": 34.5,
+        "params": {
+          "diaMm": 5.5,
+          "depthMm": 1.2
+        },
+        "colour": "#0a0a0c",
+        "note": "LED well"
+      },
+      {
+        "kind": "led",
+        "face": "opposite",
+        "xMm": 152,
+        "yMm": 34.5,
+        "params": {
+          "diaMm": 4,
+          "riseMm": 1,
+          "zMm": -1.2
+        },
+        "colour": "#3fd06f",
+        "note": "power LED"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 95,
+        "yMm": 242,
+        "params": {
+          "widthMm": 100,
+          "heightMm": 70,
+          "cornerMm": 16,
+          "depthMm": 6
+        },
+        "colour": "#101012",
+        "note": "rear port mouth"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 95,
+        "yMm": 242,
+        "params": {
+          "widthMm": 86,
+          "heightMm": 56,
+          "cornerMm": 14,
+          "depthMm": 15
+        },
+        "colour": "#0a0a0c",
+        "note": "rear port step"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 95,
+        "yMm": 242,
+        "params": {
+          "widthMm": 70,
+          "heightMm": 42,
+          "cornerMm": 12,
+          "depthMm": 28
+        },
+        "colour": "#050506",
+        "note": "rear port throat"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 33.4,
+        "yMm": 255.5,
+        "params": {
+          "diaMm": 8.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "rear screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 33.4,
+        "yMm": 255.5,
+        "params": {
+          "diaMm": 7,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#18181a",
+        "colour2": "#08080a",
+        "note": "rear screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 154,
+        "yMm": 255.5,
+        "params": {
+          "diaMm": 8.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "rear screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 154,
+        "yMm": 255.5,
+        "params": {
+          "diaMm": 7,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#18181a",
+        "colour2": "#08080a",
+        "note": "rear screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 52.7,
+        "yMm": 201.7,
+        "params": {
+          "diaMm": 9.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "plate bolt well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 52.7,
+        "yMm": 201.7,
+        "params": {
+          "diaMm": 8,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "plate bolt"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 135,
+        "yMm": 201.7,
+        "params": {
+          "diaMm": 9.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "plate bolt well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 135,
+        "yMm": 201.7,
+        "params": {
+          "diaMm": 8,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "plate bolt"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 52.7,
+        "yMm": 176.7,
+        "params": {
+          "diaMm": 9.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "plate bolt well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 52.7,
+        "yMm": 176.7,
+        "params": {
+          "diaMm": 8,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "plate bolt"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 133.7,
+        "yMm": 176.7,
+        "params": {
+          "diaMm": 9.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "plate bolt well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 133.7,
+        "yMm": 176.7,
+        "params": {
+          "diaMm": 8,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "plate bolt"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 22,
+        "yMm": 147,
+        "params": {
+          "widthMm": 7,
+          "heightMm": 44,
+          "cornerMm": 3,
+          "depthMm": 4
+        },
+        "colour": "#050506",
+        "note": "side slot"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 165,
+        "yMm": 150,
+        "params": {
+          "widthMm": 7,
+          "heightMm": 44,
+          "cornerMm": 3,
+          "depthMm": 4
+        },
+        "colour": "#050506",
+        "note": "side slot"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 67.5,
+        "yMm": 134,
+        "params": {
+          "widthMm": 46,
+          "heightMm": 12,
+          "cornerMm": 1,
+          "depthMm": 1,
+          "zMm": 0
+        },
+        "colour": "#101012",
+        "note": "blank plate over maker mark (no logo) recess"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 67.5,
+        "yMm": 134,
+        "params": {
+          "widthMm": 46,
+          "heightMm": 12,
+          "cornerMm": 1,
+          "riseMm": 0.95,
+          "bevelMm": 0.2,
+          "zMm": -1
+        },
+        "colour": "#101012",
+        "note": "blank plate over maker mark (no logo)"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 94,
+        "yMm": 118.3,
+        "params": {
+          "widthMm": 12.5,
+          "heightMm": 12.5,
+          "cornerMm": 2,
+          "depthMm": 2.8
+        },
+        "colour": "#0a0a0c",
+        "note": "power button well"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 94,
+        "yMm": 118.3,
+        "params": {
+          "widthMm": 10,
+          "heightMm": 10,
+          "cornerMm": 1.4,
+          "riseMm": 2.5,
+          "bevelMm": 0.8333333333333334,
+          "zMm": -2.8
+        },
+        "colour": "#1b1b1d",
+        "note": "power button"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 131,
+        "yMm": 134,
+        "params": {
+          "widthMm": 18.5,
+          "heightMm": 10.5,
+          "cornerMm": 2,
+          "depthMm": 2.3
+        },
+        "colour": "#0a0a0c",
+        "note": "DIP switch block well"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 131,
+        "yMm": 134,
+        "params": {
+          "widthMm": 16,
+          "heightMm": 8,
+          "cornerMm": 1.4,
+          "riseMm": 2,
+          "bevelMm": 0.6666666666666666,
+          "zMm": -2.3
+        },
+        "colour": "#8a2a2a",
+        "note": "DIP switch block"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 113,
+        "yMm": 134,
+        "params": {
+          "widthMm": 10.5,
+          "heightMm": 10.5,
+          "cornerMm": 2,
+          "depthMm": 2.3
+        },
+        "colour": "#0a0a0c",
+        "note": "ISS switch well"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 113,
+        "yMm": 134,
+        "params": {
+          "widthMm": 8,
+          "heightMm": 8,
+          "cornerMm": 1.4,
+          "riseMm": 2,
+          "bevelMm": 0.6666666666666666,
+          "zMm": -2.3
+        },
+        "colour": "#1a1a1c",
+        "note": "ISS switch"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 146,
+        "yMm": 116.4,
+        "params": {
+          "diaMm": 10,
+          "depthMm": 4
+        },
+        "colour": "#0a0a0c",
+        "note": "trim well"
+      },
+      {
+        "kind": "knob",
+        "face": "io",
+        "xMm": 146,
+        "yMm": 116.4,
+        "params": {
+          "diaMm": 8,
+          "heightMm": 3.7,
+          "pointer": 1,
+          "bevelMm": 0.6,
+          "zMm": -4
+        },
+        "colour": "#111113",
+        "colour2": "#d0d0d0",
+        "note": "input sensitivity trim"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 40,
+        "yMm": 135,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 40,
+        "yMm": 135,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 148.5,
+        "yMm": 135,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 148.5,
+        "yMm": 135,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 40,
+        "yMm": 96,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 40,
+        "yMm": 96,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 94,
+        "yMm": 96,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 94,
+        "yMm": 96,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 148.5,
+        "yMm": 96,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 148.5,
+        "yMm": 96,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 26,
+        "yMm": 68,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 26,
+        "yMm": 68,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 161,
+        "yMm": 53,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 161,
+        "yMm": 53,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#1c1c1f",
+        "colour2": "#08080a",
+        "note": "screw"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 135.9,
+        "yMm": 65.2,
+        "type": "xlr",
+        "params": {
+          "collarMm": 1,
+          "riseMm": 13.3,
+          "wellMm": 13.3,
+          "zMm": -13.3,
+          "diaMm": 11
+        },
+        "colour": "#2b2b2e",
+        "colour2": "#050506",
+        "note": "ANALOG IN XLR"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 58.5,
+        "yMm": 80,
+        "type": "iec",
+        "params": {
+          "collarMm": 1.5,
+          "riseMm": 13.3,
+          "wellMm": 13.3,
+          "zMm": -13.3,
+          "widthMm": 17,
+          "heightMm": 11
+        },
+        "colour": "#1e1e21",
+        "colour2": "#050506",
+        "note": "IEC inlet"
       }
     ]
   }

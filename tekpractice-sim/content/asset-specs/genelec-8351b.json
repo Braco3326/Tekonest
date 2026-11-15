@@ -101,10 +101,9 @@
     "shape": "curved-cabinet",
     "params": {
       "planFrontMm": 281,
-      "sideBulgeMm": 3,
-      "rearWidthMm": 271,
+      "rearWidthMm": 243,
       "frontRadiusMm": 34,
-      "backRadiusMm": 41,
+      "backRadiusMm": 54,
       "edgeRadiusMm": 24,
       "edgeDropMm": 31,
       "edgeSegments": 8,
@@ -117,7 +116,9 @@
       "footMm": 30,
       "footWidthMm": 170,
       "footDepthMm": 150,
-      "bodyGrey": 58
+      "bodyGrey": 58,
+      "midDepthMm": 115,
+      "midWidthMm": 281
     },
     "budget": {
       "min": 1500,

@@ -44,5 +44,99 @@
       "min": 1500,
       "max": 4000
     }
+  },
+  "structure": {
+    "parts": [
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 401,
+        "yMm": 871,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -5,
+          "z1Mm": -10.9,
+          "x2Mm": 0,
+          "y2Mm": 5,
+          "z2Mm": -10.9,
+          "diaMm": 25.6,
+          "segments": 20
+        },
+        "colour": "#1b1b1d",
+        "note": "telescopic joint collar"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 401,
+        "yMm": 1028,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -3,
+          "z1Mm": -10.9,
+          "x2Mm": 0,
+          "y2Mm": 3,
+          "z2Mm": -10.9,
+          "diaMm": 26.5,
+          "segments": 20
+        },
+        "colour": "#161618",
+        "note": "clutch sleeve lower ring"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 401,
+        "yMm": 1100,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -3,
+          "z1Mm": -9.5,
+          "x2Mm": 0,
+          "y2Mm": 3,
+          "z2Mm": -9.5,
+          "diaMm": 23,
+          "segments": 20
+        },
+        "colour": "#161618",
+        "note": "clutch sleeve upper ring"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 401,
+        "yMm": 62,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": 0,
+          "z1Mm": -4,
+          "x2Mm": 0,
+          "y2Mm": 0,
+          "z2Mm": 15,
+          "diaMm": 6,
+          "segments": 10
+        },
+        "colour": "#1b1b1d",
+        "note": "hub locking screw shaft"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 401,
+        "yMm": 62,
+        "params": {
+          "x1Mm": -9,
+          "y1Mm": 0,
+          "z1Mm": 15,
+          "x2Mm": 9,
+          "y2Mm": 0,
+          "z2Mm": 15,
+          "diaMm": 5,
+          "segments": 10
+        },
+        "colour": "#1b1b1d",
+        "note": "hub locking screw wing"
+      }
+    ]
   }
 }

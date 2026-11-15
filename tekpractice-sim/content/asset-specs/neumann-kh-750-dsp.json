@@ -131,8 +131,8 @@
   "build": {
     "shape": "speaker-cabinet-v2",
     "params": {
-      "edgeRadiusMm": 8,
-      "edgeSegments": 4,
+      "edgeRadiusMm": 13,
+      "edgeSegments": 6,
       "bodyGrey": 90
     },
     "budget": {
@@ -147,25 +147,11 @@
     "photos": [
       {
         "face": "opposite",
-        "file": "front.webp",
-        "crop": [
-          99,
-          95,
-          1394,
-          1619
-        ],
-        "fill": true
+        "file": "front_dark.png"
       },
       {
         "face": "io",
-        "file": "rear.webp",
-        "crop": [
-          85,
-          145,
-          1423,
-          1648
-        ],
-        "fill": true
+        "file": "rear_dark.png"
       }
     ]
   },

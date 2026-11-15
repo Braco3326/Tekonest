@@ -42,7 +42,16 @@
     "params": {
       "edgeRadiusMm": 8,
       "edgeSegments": 4,
-      "bodyGrey": 34
+      "bodyGrey": 34,
+      "rearWidthMm": 260,
+      "taperDepthMm": 290,
+      "handleCount": 2,
+      "handleLenMm": 80,
+      "handleWidthMm": 45,
+      "handleDepthMm": 25,
+      "handleFromRearMm": 85,
+      "handleYMm": 267,
+      "handlePitchMm": 105
     },
     "budget": {
       "min": 100,

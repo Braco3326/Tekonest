@@ -13,7 +13,8 @@
       "face": "bottom",
       "xMm": 24.5,
       "yMm": 24.5,
-      "confidence": "photo"
+      "confidence": "photo",
+      "insetMm": 10
     }
   ],
   "controls": [],
@@ -27,11 +28,121 @@
       "min": 1500,
       "max": 6000
     },
-    "profile": [[0,8],[1,13.5],[2.5,17.2],[4.5,20.4],[7,22.9],[10,24.8],[13,25.8],[128,26],[128.6,26.4],[129.5,25.5],[137,25.5],[139,26.2],[141,30],[145,35.9],[149.5,40],[154.5,43.6],[158.5,45.2],[162,45.8],[165,45.8],[166.4,47.3],[168.3,48.7],[170,49],[173,49],[175,47.8],[176.5,46],[179,46],[181.5,45.1],[184,43.9],[186.5,42.8],[189,41.8],[191.5,40.2],[193.4,37],[194.8,33],[196,29.5],[196.8,25],[197,20]],
+    "profile": [
+      [
+        0,
+        23
+      ],
+      [
+        1.2,
+        25.2
+      ],
+      [
+        3,
+        25.7
+      ],
+      [
+        12.82,
+        25.84
+      ],
+      [
+        136.89,
+        25.54
+      ],
+      [
+        139.1,
+        25.98
+      ],
+      [
+        142.41,
+        31.78
+      ],
+      [
+        146.13,
+        36.68
+      ],
+      [
+        152.89,
+        42.47
+      ],
+      [
+        158.26,
+        44.99
+      ],
+      [
+        164.88,
+        45.58
+      ],
+      [
+        166.95,
+        47.96
+      ],
+      [
+        169.84,
+        49
+      ],
+      [
+        172.19,
+        49
+      ],
+      [
+        175.22,
+        47.37
+      ],
+      [
+        176.05,
+        46.03
+      ],
+      [
+        188.04,
+        42.62
+      ],
+      [
+        192.04,
+        39.35
+      ],
+      [
+        193.83,
+        36.08
+      ],
+      [
+        195.21,
+        30.74
+      ],
+      [
+        196.86,
+        9.8
+      ],
+      [
+        197,
+        0
+      ]
+    ],
     "colours": [
-      { "fromMm": 0, "colour": "#222224" },
-      { "fromMm": 165, "colour": "#2a2a2d" },
-      { "fromMm": 176, "colour": "#2f3034" }
+      {
+        "fromMm": 0,
+        "colour": "#222224"
+      },
+      {
+        "fromMm": 165,
+        "colour": "#2a2a2d"
+      },
+      {
+        "fromMm": 176,
+        "colour": "#2f3034"
+      }
+    ],
+    "photos": [
+      {
+        "face": "wrap",
+        "file": "_wrap_unrolled.png",
+        "crop": [
+          0,
+          0,
+          1600,
+          2048
+        ]
+      }
     ]
   },
   "sources": [
@@ -60,5 +171,110 @@
       "url": "https://products.electrovoice.com/download/970113",
       "note": "build.projection wrap: the surface picture is our own generic artwork (content/generic-panels/ev-re50.json, asset:panel): an unrolled 153.94 x 197 mm panel with a plain handle, a plain neck band where the real mic carries a badge, a rim ring and a diamond weave on the windscreen above the rim (100 cells around so it repeats at the seam). It copies no photo and carries no brand mark or lettering; the weave pitch is stylised, not measured."
     }
-  ]
+  ],
+  "structure": {
+    "parts": [
+      {
+        "kind": "pocket",
+        "face": "bottom",
+        "xMm": 24.5,
+        "yMm": 24.5,
+        "params": {
+          "diaMm": 19.2,
+          "depthMm": 10
+        },
+        "colour": "#0b0b0d",
+        "note": "XLR end recess"
+      },
+      {
+        "kind": "socket",
+        "face": "bottom",
+        "xMm": 24.5,
+        "yMm": 24.5,
+        "type": "xlr",
+        "params": {
+          "diaMm": 17.2,
+          "collarMm": 0.8,
+          "riseMm": 10.1,
+          "wellMm": 10.1,
+          "zMm": -9.8
+        },
+        "colour": "#8a8a8e",
+        "colour2": "#0b0b0d",
+        "note": "XLR shell"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 24.5,
+        "yMm": 24.5,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": 3.6,
+          "z1Mm": 0,
+          "x2Mm": 0,
+          "y2Mm": 3.6,
+          "z2Mm": 6,
+          "diaMm": 1.9,
+          "segments": 8,
+          "zMm": -9.8
+        },
+        "colour": "#c3c6cc",
+        "note": "XLR male pin"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 24.5,
+        "yMm": 24.5,
+        "params": {
+          "x1Mm": -3.6,
+          "y1Mm": -2.2,
+          "z1Mm": 0,
+          "x2Mm": -3.6,
+          "y2Mm": -2.2,
+          "z2Mm": 6,
+          "diaMm": 1.9,
+          "segments": 8,
+          "zMm": -9.8
+        },
+        "colour": "#c3c6cc",
+        "note": "XLR male pin"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 24.5,
+        "yMm": 24.5,
+        "params": {
+          "x1Mm": 3.6,
+          "y1Mm": -2.2,
+          "z1Mm": 0,
+          "x2Mm": 3.6,
+          "y2Mm": -2.2,
+          "z2Mm": 6,
+          "diaMm": 1.9,
+          "segments": 8,
+          "zMm": -9.8
+        },
+        "colour": "#c3c6cc",
+        "note": "XLR male pin"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 24.5,
+        "yMm": 131.5,
+        "params": {
+          "widthMm": 9,
+          "heightMm": 9,
+          "cornerMm": 1.2,
+          "riseMm": 0.4,
+          "bevelMm": 0.15
+        },
+        "colour": "#232326",
+        "note": "blank badge plate"
+      }
+    ]
+  }
 }

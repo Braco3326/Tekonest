@@ -13,7 +13,8 @@
       "face": "bottom",
       "xMm": 25.5,
       "yMm": 25.5,
-      "confidence": "photo"
+      "confidence": "photo",
+      "insetMm": 6
     }
   ],
   "controls": [],
@@ -33,7 +34,31 @@
         51
       ],
       [
+        54.01,
+        50.2
+      ],
+      [
+        54.8,
+        50.2
+      ],
+      [
+        54.81,
+        51
+      ],
+      [
+        94.2,
+        51
+      ],
+      [
+        94.21,
+        50.2
+      ],
+      [
         95,
+        50.2
+      ],
+      [
+        95.01,
         51
       ],
       [
@@ -58,7 +83,23 @@
         "fromMm": 95,
         "colour": "#2e2f33"
       }
-    ]
+    ],
+    "photos": [
+      {
+        "face": "wrap",
+        "file": "_wrap_composed.png",
+        "crop": [
+          0,
+          0,
+          2048,
+          1278
+        ]
+      }
+    ],
+    "projection": "wrap",
+    "params": {
+      "segments": 64
+    }
   },
   "sources": [
     {
@@ -76,5 +117,41 @@
       "url": "https://www.yellowtec.com/fileadmin/downloads/Product-Brief-litt-web.pdf",
       "note": "build.profile: the published stack as a lathe profile: every part is a 51 mm disc, Base Controller 0-54 mm (aluminium), colour segment 54-95 mm (41 mm, red for ON AIR; the real segment is translucent, drawn opaque), cover cap 95-100 mm (5 mm). The 1.5 mm foot chamfer and the 1.5 and 3.5 mm top chamfers (47 mm cap top) are styling, not measured. Colours are estimates (brushed aluminium, red, dark cap)."
     }
-  ]
+  ],
+  "structure": {
+    "parts": [
+      {
+        "kind": "pocket",
+        "face": "bottom",
+        "xMm": 25.5,
+        "yMm": 25.5,
+        "params": {
+          "widthMm": 20,
+          "heightMm": 10,
+          "cornerMm": 1.5,
+          "depthMm": 6
+        },
+        "colour": "#0b0b0d",
+        "note": "GPIO connector recess"
+      },
+      {
+        "kind": "socket",
+        "face": "bottom",
+        "xMm": 25.5,
+        "yMm": 25.5,
+        "type": "generic",
+        "params": {
+          "widthMm": 17,
+          "heightMm": 7,
+          "collarMm": 1,
+          "riseMm": 5.8,
+          "wellMm": 5.8,
+          "zMm": -5.8
+        },
+        "colour": "#9a9ea4",
+        "colour2": "#0b0b0d",
+        "note": "GPIO connector"
+      }
+    ]
+  }
 }

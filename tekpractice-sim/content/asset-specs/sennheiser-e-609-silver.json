@@ -24,47 +24,102 @@
   "portsDocumented": true,
   "portsSource": "https://sennheiser.com/globalassets/digizuite/50153-en-e609_quick_guide_06_2024.pdf",
   "build": {
-    "shape": "moulded-box",
+    "shape": "revolve-oval",
     "params": {
-      "cornerRadiusMm": 12,
-      "edgeRadiusMm": 8,
-      "edgeDropMm": 8,
-      "bottomEdgeRadiusMm": 3,
-      "edgeSegments": 8,
-      "bodyGrey": 95
+      "segments": 48
     },
-    "projection": [
-      "opposite",
-      "io",
-      "top"
-    ],
+    "projection": "wrap",
     "budget": {
       "min": 500,
       "max": 2000
     },
-    "minFilletMm": 2.5,
     "photos": [
       {
-        "face": "opposite",
-        "file": "front.png",
-        "crop": [
-          1395,
-          986,
-          1055,
-          2592
-        ],
-        "fill": true
-      },
+        "face": "wrap",
+        "file": "wrap_built.png"
+      }
+    ],
+    "profile": [
+      [
+        0,
+        19.3,
+        19.3
+      ],
+      [
+        57,
+        21.6,
+        21.6
+      ],
+      [
+        58.5,
+        26,
+        26
+      ],
+      [
+        59.5,
+        33.4,
+        30.1
+      ],
+      [
+        60.5,
+        36.2,
+        31.4
+      ],
+      [
+        66,
+        37.4,
+        31.8
+      ],
+      [
+        68,
+        45.2,
+        33.8
+      ],
+      [
+        71,
+        50,
+        34
+      ],
+      [
+        79,
+        52.6,
+        34
+      ],
+      [
+        103,
+        55,
+        34
+      ],
+      [
+        120,
+        53.6,
+        34
+      ],
+      [
+        129,
+        51.4,
+        34
+      ],
+      [
+        131,
+        49.5,
+        34
+      ],
+      [
+        132.8,
+        37.6,
+        31.9
+      ],
+      [
+        134,
+        0,
+        0
+      ]
+    ],
+    "colours": [
       {
-        "face": "io",
-        "file": "rear.png",
-        "crop": [
-          1395,
-          986,
-          1055,
-          2592
-        ],
-        "fill": true
+        "fromMm": 0,
+        "colour": "#6d7075"
       }
     ]
   },
@@ -89,17 +144,5 @@
       "url": "https://www.sennheiser.com/en-at/catalog/products/microphones/e-609/e-609-silver-500074",
       "note": "build.projection opposite and top: our own generic artwork (content/generic-panels): a grille window on the front face; no photo, no logo, no lettering."
     }
-  ],
-  "texture": {
-    "blankRects": [
-      {
-        "face": "io",
-        "xMm": 11.5,
-        "yMm": 58.5,
-        "wMm": 31.5,
-        "hMm": 9,
-        "marginMm": 3
-      }
-    ]
-  }
+  ]
 }

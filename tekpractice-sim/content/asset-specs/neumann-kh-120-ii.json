@@ -11,9 +11,9 @@
     {
       "portId": "in-analog",
       "face": "io",
-      "xMm": 91,
-      "yMm": 190,
-      "confidence": "guess",
+      "xMm": 148,
+      "yMm": 40,
+      "confidence": "photo",
       "openingMm": 20,
       "insetMm": 3,
       "connector": "xlr3-f",
@@ -23,9 +23,9 @@
     {
       "portId": "in-spdif",
       "face": "io",
-      "xMm": 58,
-      "yMm": 150,
-      "confidence": "guess",
+      "xMm": 138,
+      "yMm": 148,
+      "confidence": "photo",
       "openingMm": 12,
       "insetMm": 3,
       "connector": "rca",
@@ -35,9 +35,9 @@
     {
       "portId": "out-spdif",
       "face": "io",
-      "xMm": 124,
-      "yMm": 150,
-      "confidence": "guess",
+      "xMm": 138,
+      "yMm": 132,
+      "confidence": "photo",
       "openingMm": 12,
       "insetMm": 3,
       "connector": "rca",
@@ -47,9 +47,9 @@
     {
       "portId": "bidir-network",
       "face": "io",
-      "xMm": 91,
-      "yMm": 118,
-      "confidence": "guess",
+      "xMm": 124,
+      "yMm": 38.5,
+      "confidence": "photo",
       "openingMm": 14,
       "insetMm": 3,
       "connector": "rj45",
@@ -59,9 +59,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 55,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 50,
+      "yMm": 40,
+      "confidence": "photo",
       "openingMm": 24,
       "insetMm": 3,
       "connector": "iec-c14",
@@ -74,8 +74,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 130,
-      "yMm": 60,
+      "xMm": 49,
+      "yMm": 112,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -123,6 +123,17 @@
           997,
           1583
         ]
+      },
+      {
+        "face": "io",
+        "file": "rear.webp",
+        "crop": [
+          166,
+          110,
+          1294,
+          2047
+        ],
+        "fill": true
       }
     ]
   },
@@ -146,6 +157,11 @@
       "kind": "reference",
       "url": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
       "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with a woofer grille and a tweeter dish; no photo copy, no brand mark, no lettering. Colours: the datasheet finish where it states one, else a studio-monitor default. Anthracite front, black rear (RAL 7021 / RAL 9005 lifted for the creation lighting)."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.neumann.com/",
+      "note": "Rear panel read from the straight-on rear photo (assets-source/neumann-kh-120-ii/photos/rear.webp, 182 x 287 mm = the product box): rocker power switch (49, 112), RCA S/PDIF in above out (138, 148 and 132), RJ45 control network (124, 38.5); the IEC inlet and the XLR analog input sit in the two dark bays at the bottom (x 50 and 148 mm, y about 40 mm), where the photo shows the bays but not the connectors inside them."
     }
   ],
   "texture": {
@@ -157,6 +173,30 @@
         "wMm": 29,
         "hMm": 29,
         "marginMm": 4
+      },
+      {
+        "face": "io",
+        "xMm": 73,
+        "yMm": 118,
+        "wMm": 27,
+        "hMm": 31,
+        "marginMm": 3
+      },
+      {
+        "face": "io",
+        "xMm": 72,
+        "yMm": 104,
+        "wMm": 46,
+        "hMm": 13,
+        "marginMm": 3
+      },
+      {
+        "face": "io",
+        "xMm": 103,
+        "yMm": 78,
+        "wMm": 30,
+        "hMm": 17,
+        "marginMm": 3
       }
     ]
   }

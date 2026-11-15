@@ -226,7 +226,7 @@
         "yMm": 163.5,
         "params": {
           "diaMm": 109,
-          "zMm": -41.75
+          "zMm": -83.5
         },
         "colour": "#3b3c42",
         "note": "woofer dust cap dome 60 mm"
@@ -644,7 +644,7 @@
         "yMm": 163.5,
         "params": {
           "diaMm": 109,
-          "zMm": -41.75
+          "zMm": -83.5
         },
         "colour": "#3b3c42",
         "note": "woofer dust cap dome 60 mm"
@@ -1392,7 +1392,7 @@
         "yMm": 95.4,
         "params": {
           "diaMm": 64.78,
-          "zMm": -18.19
+          "zMm": -36.38
         },
         "colour": "#3b3c42",
         "note": "3 inch dome, base 57 mm, 17 mm high on the waveguide floor"

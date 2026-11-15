@@ -14,7 +14,8 @@
       "xMm": 420.1,
       "yMm": 151.3,
       "confidence": "photo",
-      "openingMm": 24
+      "openingMm": 24,
+      "insetMm": 8
     },
     {
       "portId": "in-mic-2",
@@ -22,7 +23,8 @@
       "xMm": 396.6,
       "yMm": 151.3,
       "confidence": "photo",
-      "openingMm": 24
+      "openingMm": 24,
+      "insetMm": 8
     },
     {
       "portId": "out-main-l",
@@ -30,7 +32,8 @@
       "xMm": 219.3,
       "yMm": 152,
       "confidence": "photo",
-      "openingMm": 24
+      "openingMm": 24,
+      "insetMm": 8
     },
     {
       "portId": "out-main-r",
@@ -38,7 +41,8 @@
       "xMm": 193.8,
       "yMm": 152,
       "confidence": "photo",
-      "openingMm": 24
+      "openingMm": 24,
+      "insetMm": 8
     },
     {
       "portId": "out-mix-1",
@@ -46,7 +50,8 @@
       "xMm": 168.2,
       "yMm": 152,
       "confidence": "photo",
-      "openingMm": 24
+      "openingMm": 24,
+      "insetMm": 8
     },
     {
       "portId": "dante-primary",
@@ -205,7 +210,7 @@
     ],
     "params": {
       "filletMm": 3.5,
-      "filletSegments": 5,
+      "filletSegments": 3,
       "armRestMm": 14,
       "cheekMm": 5,
       "baseMm": 30,
@@ -213,18 +218,16 @@
       "feetWidthMm": 21.6,
       "feetFromSideMm": 41.8,
       "feetFromEndMm": 28,
-      "slotPlates": 2,
-      "slotPlateWMm": 121,
-      "slotPlateHMm": 40,
-      "slotPlateXMm": 193.6,
-      "slotPlateYMm": 15.7,
-      "slotPlatePitchMm": 127,
-      "slotPlateDepthMm": 1.2,
       "frontRecessWMm": 100.6,
       "frontRecessHMm": 22,
       "frontRecessXMm": 335.6,
       "frontRecessYMm": 18,
-      "frontRecessDepthMm": 2
+      "frontRecessDepthMm": 2,
+      "rearRecessWMm": 444,
+      "rearRecessHMm": 76,
+      "rearRecessXMm": 12,
+      "rearRecessYMm": 100,
+      "rearRecessDepthMm": 8
     },
     "projection": [
       "top",
@@ -232,9 +235,32 @@
     ],
     "budget": {
       "min": 1000,
-      "max": 6000
+      "max": 15000
     },
-    "minFilletMm": 3
+    "minFilletMm": 3,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.jpg",
+        "crop": [
+          133,
+          143,
+          1420,
+          1727
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          128,
+          132,
+          1731,
+          1006
+        ]
+      }
+    ]
   },
   "texture": {
     "blankRects": [
@@ -319,5 +345,1038 @@
       "url": "https://www.neutrik.com/en/product/nc3fd-l-1",
       "note": "Neutrik NC3FD-L-1 product page (opened): \"Standardized D sized 24 mm panel cutout\". The XLR receptacles in the photos are Neutrik D-series (NEUTRIK legible on the Rio3224-D2 front), so openingMm = 24 for the XLR ports. The NC3MD-L-1 (male) page says the same (https://www.neutrik.com/en/product/nc3md-l-1)."
     }
-  ]
+  ],
+  "structure": {
+    "topSeenFromFront": true,
+    "parts": [
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 43.8,
+        "yMm": 253.4,
+        "count": 8,
+        "pitchXMm": 20.8,
+        "points": [
+          [
+            -7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            4.4
+          ],
+          [
+            -7.25,
+            4.4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#33363b",
+        "note": "SEL key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 43.8,
+        "yMm": 271,
+        "count": 8,
+        "pitchXMm": 20.8,
+        "points": [
+          [
+            -5.25,
+            -3.6
+          ],
+          [
+            5.25,
+            -3.6
+          ],
+          [
+            5.25,
+            3.6
+          ],
+          [
+            -5.25,
+            3.6
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "CUE key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 43.8,
+        "yMm": 318.1,
+        "count": 8,
+        "pitchXMm": 20.8,
+        "points": [
+          [
+            -7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            4.4
+          ],
+          [
+            -7.25,
+            4.4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#3a2d2a",
+        "note": "ON key"
+      },
+      {
+        "kind": "fader",
+        "face": "top",
+        "xMm": 43.8,
+        "yMm": 442,
+        "count": 8,
+        "pitchXMm": 20.8,
+        "params": {
+          "slotLenMm": 108,
+          "slotWidthMm": 2.6,
+          "capWidthMm": 14,
+          "capLenMm": 26,
+          "capHeightMm": 10,
+          "posFrac": 0.19,
+          "bevelMm": 1.6
+        },
+        "colour": "#8e9299",
+        "colour2": "#050506",
+        "note": "100 mm fader"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 222.6,
+        "yMm": 253.4,
+        "count": 8,
+        "pitchXMm": 20.8,
+        "points": [
+          [
+            -7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            4.4
+          ],
+          [
+            -7.25,
+            4.4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#33363b",
+        "note": "SEL key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 222.6,
+        "yMm": 271,
+        "count": 8,
+        "pitchXMm": 20.8,
+        "points": [
+          [
+            -5.25,
+            -3.6
+          ],
+          [
+            5.25,
+            -3.6
+          ],
+          [
+            5.25,
+            3.6
+          ],
+          [
+            -5.25,
+            3.6
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "CUE key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 222.6,
+        "yMm": 318.1,
+        "count": 8,
+        "pitchXMm": 20.8,
+        "points": [
+          [
+            -7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            4.4
+          ],
+          [
+            -7.25,
+            4.4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#3a2d2a",
+        "note": "ON key"
+      },
+      {
+        "kind": "fader",
+        "face": "top",
+        "xMm": 222.6,
+        "yMm": 442,
+        "count": 8,
+        "pitchXMm": 20.8,
+        "params": {
+          "slotLenMm": 108,
+          "slotWidthMm": 2.6,
+          "capWidthMm": 14,
+          "capLenMm": 26,
+          "capHeightMm": 10,
+          "posFrac": 0.19,
+          "bevelMm": 1.6
+        },
+        "colour": "#8e9299",
+        "colour2": "#050506",
+        "note": "100 mm fader"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 402,
+        "yMm": 253.4,
+        "count": 2,
+        "pitchXMm": 20.8,
+        "points": [
+          [
+            -7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            4.4
+          ],
+          [
+            -7.25,
+            4.4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#33363b",
+        "note": "SEL key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 402,
+        "yMm": 271,
+        "count": 2,
+        "pitchXMm": 20.8,
+        "points": [
+          [
+            -5.25,
+            -3.6
+          ],
+          [
+            5.25,
+            -3.6
+          ],
+          [
+            5.25,
+            3.6
+          ],
+          [
+            -5.25,
+            3.6
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "CUE key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 402,
+        "yMm": 318.1,
+        "count": 2,
+        "pitchXMm": 20.8,
+        "points": [
+          [
+            -7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            -4.4
+          ],
+          [
+            7.25,
+            4.4
+          ],
+          [
+            -7.25,
+            4.4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#3a2d2a",
+        "note": "ON key"
+      },
+      {
+        "kind": "fader",
+        "face": "top",
+        "xMm": 402,
+        "yMm": 442,
+        "count": 2,
+        "pitchXMm": 20.8,
+        "params": {
+          "slotLenMm": 108,
+          "slotWidthMm": 2.6,
+          "capWidthMm": 14,
+          "capLenMm": 26,
+          "capHeightMm": 10,
+          "posFrac": 0.19,
+          "bevelMm": 1.6
+        },
+        "colour": "#8e9299",
+        "colour2": "#050506",
+        "note": "100 mm fader"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 194.3,
+        "yMm": 121,
+        "points": [
+          [
+            -113,
+            -73
+          ],
+          [
+            113,
+            -73
+          ],
+          [
+            113,
+            73
+          ],
+          [
+            -113,
+            73
+          ]
+        ],
+        "params": {
+          "riseMm": 1.2,
+          "bevelMm": 0.5
+        },
+        "colour": "#0d0e10",
+        "note": "screen bezel"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 194.3,
+        "yMm": 121,
+        "points": [
+          [
+            -108.5,
+            -68
+          ],
+          [
+            108.5,
+            -68
+          ],
+          [
+            108.5,
+            68
+          ],
+          [
+            -108.5,
+            68
+          ]
+        ],
+        "params": {
+          "riseMm": 1.8,
+          "bevelMm": 0.3,
+          "textured": 1
+        },
+        "colour": "#1a1d2a",
+        "note": "touch screen glass (printed screen content)"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 38.8,
+        "yMm": 68.4,
+        "count": 4,
+        "cols": 2,
+        "pitchXMm": 20.4,
+        "pitchYMm": 15,
+        "points": [
+          [
+            -5.75,
+            -4
+          ],
+          [
+            5.75,
+            -4
+          ],
+          [
+            5.75,
+            4
+          ],
+          [
+            -5.75,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "SENDS ON FADER key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 38.8,
+        "yMm": 103.3,
+        "count": 4,
+        "cols": 2,
+        "pitchXMm": 20.4,
+        "pitchYMm": 16.2,
+        "points": [
+          [
+            -5.75,
+            -4
+          ],
+          [
+            5.75,
+            -4
+          ],
+          [
+            5.75,
+            4
+          ],
+          [
+            -5.75,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "SENDS ON FADER key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 38.8,
+        "yMm": 142.3,
+        "count": 4,
+        "cols": 2,
+        "pitchXMm": 20.4,
+        "pitchYMm": 16,
+        "points": [
+          [
+            -5.75,
+            -4
+          ],
+          [
+            5.75,
+            -4
+          ],
+          [
+            5.75,
+            4
+          ],
+          [
+            -5.75,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "SENDS ON FADER key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 38.8,
+        "yMm": 176.5,
+        "count": 4,
+        "cols": 2,
+        "pitchXMm": 20.4,
+        "pitchYMm": 16.5,
+        "points": [
+          [
+            -5.75,
+            -4
+          ],
+          [
+            5.75,
+            -4
+          ],
+          [
+            5.75,
+            4
+          ],
+          [
+            -5.75,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "SENDS ON FADER key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 408.5,
+        "yMm": 69.3,
+        "count": 4,
+        "cols": 2,
+        "pitchXMm": 22.6,
+        "pitchYMm": 16,
+        "points": [
+          [
+            -5.75,
+            -4
+          ],
+          [
+            5.75,
+            -4
+          ],
+          [
+            5.75,
+            4
+          ],
+          [
+            -5.75,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "USER DEFINED key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 408.5,
+        "yMm": 111.3,
+        "count": 4,
+        "cols": 2,
+        "pitchXMm": 22.6,
+        "pitchYMm": 14.5,
+        "points": [
+          [
+            -5.75,
+            -4
+          ],
+          [
+            5.75,
+            -4
+          ],
+          [
+            5.75,
+            4
+          ],
+          [
+            -5.75,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "USER DEFINED key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 408.5,
+        "yMm": 149.2,
+        "count": 4,
+        "cols": 2,
+        "pitchXMm": 22.6,
+        "pitchYMm": 15.4,
+        "points": [
+          [
+            -5.75,
+            -4
+          ],
+          [
+            5.75,
+            -4
+          ],
+          [
+            5.75,
+            4
+          ],
+          [
+            -5.75,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "USER DEFINED key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 374.7,
+        "yMm": 196.7,
+        "count": 4,
+        "pitchXMm": 18.2,
+        "points": [
+          [
+            -6,
+            -4
+          ],
+          [
+            6,
+            -4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            -6,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "FADER BANK key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 323.8,
+        "yMm": 157.3,
+        "count": 4,
+        "pitchXMm": 17.6,
+        "points": [
+          [
+            -5.5,
+            -3.8
+          ],
+          [
+            5.5,
+            -3.8
+          ],
+          [
+            5.5,
+            3.8
+          ],
+          [
+            -5.5,
+            3.8
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#2d2f33",
+        "note": "EQ band key"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 336.7,
+        "yMm": 68.4,
+        "params": {
+          "diaMm": 14,
+          "heightMm": 10,
+          "pointer": 0,
+          "bevelMm": 0.8,
+          "taper": 0.1
+        },
+        "colour": "#d8d8da",
+        "colour2": "#f0f0f0",
+        "note": "GAIN knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 370.1,
+        "yMm": 68.1,
+        "params": {
+          "diaMm": 14,
+          "heightMm": 10,
+          "pointer": 0,
+          "bevelMm": 0.8,
+          "taper": 0.1
+        },
+        "colour": "#7a7d83",
+        "colour2": "#b8bcc2",
+        "note": "DYNAMICS 1 knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 336,
+        "yMm": 90.6,
+        "params": {
+          "diaMm": 14,
+          "heightMm": 10,
+          "pointer": 0,
+          "bevelMm": 0.8,
+          "taper": 0.1
+        },
+        "colour": "#b02a2a",
+        "colour2": "#ff4a3a",
+        "note": "PAN knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 368.5,
+        "yMm": 89.7,
+        "params": {
+          "diaMm": 14,
+          "heightMm": 10,
+          "pointer": 0,
+          "bevelMm": 0.8,
+          "taper": 0.1
+        },
+        "colour": "#7a7d83",
+        "colour2": "#b8bcc2",
+        "note": "DYNAMICS 2 knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 352,
+        "yMm": 111.3,
+        "params": {
+          "diaMm": 14,
+          "heightMm": 10,
+          "pointer": 0,
+          "bevelMm": 0.8,
+          "taper": 0.1
+        },
+        "colour": "#3fa79a",
+        "colour2": "#59d6c8",
+        "note": "HPF knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 329.2,
+        "yMm": 131.3,
+        "params": {
+          "diaMm": 14,
+          "heightMm": 10,
+          "pointer": 0,
+          "bevelMm": 0.8,
+          "taper": 0.1
+        },
+        "colour": "#3fa79a",
+        "colour2": "#59d6c8",
+        "note": "EQ knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 352,
+        "yMm": 136.5,
+        "params": {
+          "diaMm": 14,
+          "heightMm": 10,
+          "pointer": 0,
+          "bevelMm": 0.8,
+          "taper": 0.1
+        },
+        "colour": "#3fa79a",
+        "colour2": "#59d6c8",
+        "note": "EQ knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 372.9,
+        "yMm": 131.3,
+        "params": {
+          "diaMm": 14,
+          "heightMm": 10,
+          "pointer": 0,
+          "bevelMm": 0.8,
+          "taper": 0.1
+        },
+        "colour": "#3fa79a",
+        "colour2": "#59d6c8",
+        "note": "EQ knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 331.7,
+        "yMm": 186.9,
+        "params": {
+          "diaMm": 19,
+          "heightMm": 12,
+          "pointer": 0,
+          "bevelMm": 1.2,
+          "taper": 0.05
+        },
+        "colour": "#a9adb4",
+        "colour2": "#e8e8e8",
+        "note": "TOUCH AND TURN encoder"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 40.8,
+        "yMm": 152,
+        "params": {
+          "diaMm": 19.4,
+          "innerDiaMm": 16.8,
+          "riseMm": 3,
+          "floorMm": 0.2
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "count": 8,
+        "pitchXMm": 25.5,
+        "note": "OMNI OUT 8..1 male XLR collar and well"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 255.6,
+        "yMm": 151.5,
+        "params": {
+          "diaMm": 19.4,
+          "innerDiaMm": 16.8,
+          "riseMm": 3,
+          "floorMm": 0.2
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "count": 16,
+        "cols": 8,
+        "pitchXMm": 23.5,
+        "pitchYMm": -30.3,
+        "note": "INPUT 8..1, 16..9 female XLR collar and well"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 192.2,
+        "yMm": 121.1,
+        "params": {
+          "diaMm": 19.4,
+          "innerDiaMm": 16.8,
+          "riseMm": 3,
+          "floorMm": 0.2
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "note": "DIGITAL OUT AES/EBU XLR"
+      },
+      {
+        "kind": "socket",
+        "type": "bnc",
+        "face": "io",
+        "xMm": 97.3,
+        "yMm": 115.4,
+        "params": {
+          "diaMm": 10,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#aeb1b7",
+        "colour2": "#08080a",
+        "note": "WORD CLOCK OUT"
+      },
+      {
+        "kind": "socket",
+        "type": "bnc",
+        "face": "io",
+        "xMm": 120.6,
+        "yMm": 115.4,
+        "params": {
+          "diaMm": 10,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#aeb1b7",
+        "colour2": "#08080a",
+        "note": "WORD CLOCK IN"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 153.8,
+        "yMm": 115.2,
+        "points": [
+          [
+            -14.5,
+            -4.25
+          ],
+          [
+            14.5,
+            -4.25
+          ],
+          [
+            14.5,
+            4.25
+          ],
+          [
+            -14.5,
+            4.25
+          ]
+        ],
+        "params": {
+          "riseMm": 1.2,
+          "bevelMm": 0.3
+        },
+        "colour": "#101012",
+        "note": "GPI D-sub 15"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 318.7,
+        "yMm": 72.8,
+        "params": {
+          "diaMm": 22,
+          "innerDiaMm": 18.5,
+          "riseMm": 0.25,
+          "floorMm": 0.2
+        },
+        "colour": "#b6b9bf",
+        "colour2": "#050506",
+        "note": "Dante PRIMARY etherCON"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 345.7,
+        "yMm": 72.8,
+        "params": {
+          "diaMm": 22,
+          "innerDiaMm": 18.5,
+          "riseMm": 0.25,
+          "floorMm": 0.2
+        },
+        "colour": "#b6b9bf",
+        "colour2": "#050506",
+        "note": "Dante SECONDARY etherCON"
+      },
+      {
+        "kind": "socket",
+        "type": "rj45",
+        "face": "io",
+        "xMm": 408.2,
+        "yMm": 67.5,
+        "params": {
+          "widthMm": 14,
+          "heightMm": 13,
+          "collarMm": 1.5,
+          "riseMm": 0.25
+        },
+        "colour": "#b6b9bf",
+        "colour2": "#08080a",
+        "note": "network RJ45"
+      },
+      {
+        "kind": "socket",
+        "type": "generic",
+        "face": "io",
+        "xMm": 147.9,
+        "yMm": 32.3,
+        "params": {
+          "widthMm": 27,
+          "heightMm": 19,
+          "collarMm": 3,
+          "riseMm": 0.25
+        },
+        "colour": "#1d1e21",
+        "colour2": "#060607",
+        "note": "AC IN C14 with flange"
+      }
+    ]
+  }
 }

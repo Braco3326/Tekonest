@@ -10,7 +10,17 @@
   "ports": [],
   "build": {
     "shape": "boom-arm",
-    "params": { "elbowDxMm": 157, "elbowDyMm": 370, "headDxMm": 326, "headDyMm": 232, "tubeDiaMm": 26, "jointDiaMm": 46, "columnHeightMm": 95, "rodLenMm": 50, "headDropMm": 80 }
+    "params": {
+      "elbowDxMm": 157,
+      "elbowDyMm": 370,
+      "headDxMm": 326,
+      "headDyMm": 232,
+      "tubeDiaMm": 26,
+      "jointDiaMm": 46,
+      "columnHeightMm": 95,
+      "rodLenMm": 50,
+      "headDropMm": 80
+    }
   },
   "controls": [],
   "sources": [
@@ -24,5 +34,111 @@
       "url": "https://www.yellowtec.com/mika/",
       "note": "Yellowtec m!ka product page (opened, text read): product family and downloads links only; no dimensions beyond the brochure."
     }
-  ]
+  ],
+  "structure": {
+    "parts": [
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 516.5,
+        "yMm": 226,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -10,
+          "z1Mm": -7,
+          "x2Mm": 0,
+          "y2Mm": 12,
+          "z2Mm": -7,
+          "diaMm": 16,
+          "segments": 20
+        },
+        "colour": "#d83a3a",
+        "note": "red tip ring under the head"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 498.5,
+        "yMm": 178,
+        "params": {
+          "diaMm": 30,
+          "riseMm": 0.7,
+          "bevelMm": 0.3,
+          "zMm": -0.7
+        },
+        "colour": "#2b2b2f",
+        "note": "shoulder joint cap"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 340.5,
+        "yMm": 505,
+        "params": {
+          "diaMm": 30,
+          "riseMm": 0.7,
+          "bevelMm": 0.3,
+          "zMm": -0.7
+        },
+        "colour": "#2b2b2f",
+        "note": "elbow joint cap"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 8.5,
+        "yMm": 285,
+        "params": {
+          "diaMm": 18,
+          "riseMm": 0.7,
+          "bevelMm": 0.3,
+          "zMm": -0.7
+        },
+        "colour": "#2b2b2f",
+        "note": "head joint cap"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 26.5,
+        "yMm": 178,
+        "params": {
+          "diaMm": 30,
+          "riseMm": 0.7,
+          "bevelMm": 0.3,
+          "zMm": -0.7
+        },
+        "colour": "#2b2b2f",
+        "note": "shoulder joint cap"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 184.5,
+        "yMm": 505,
+        "params": {
+          "diaMm": 30,
+          "riseMm": 0.7,
+          "bevelMm": 0.3,
+          "zMm": -0.7
+        },
+        "colour": "#2b2b2f",
+        "note": "elbow joint cap"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 516.5,
+        "yMm": 285,
+        "params": {
+          "diaMm": 18,
+          "riseMm": 0.7,
+          "bevelMm": 0.3,
+          "zMm": -0.7
+        },
+        "colour": "#2b2b2f",
+        "note": "head joint cap"
+      }
+    ]
+  }
 }

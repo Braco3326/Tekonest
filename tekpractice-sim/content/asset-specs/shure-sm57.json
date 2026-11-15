@@ -14,7 +14,8 @@
       "xMm": 16,
       "yMm": 16,
       "confidence": "photo",
-      "openingMm": 19
+      "openingMm": 19,
+      "insetMm": 9
     }
   ],
   "controls": [],
@@ -28,11 +29,121 @@
       "min": 1500,
       "max": 6000
     },
-    "profile": [[0,16],[0.4,19.4],[1,21.6],[2,22.9],[3.4,23.5],[20,24.4],[36,25.3],[52,26.6],[68,28.3],[84,30.1],[93.2,31],[94.2,29.9],[95,30.8],[124.7,31.1],[125.7,30.8],[126,30.3],[126.4,29.1],[126.8,28.6],[127,27.3],[128.3,28.9],[129.7,29],[130,30.6],[130.8,31.35],[137.5,32],[146.8,31.2],[153,30.3],[153.8,29.8],[154.3,28.9],[154.5,27.3],[155,21.6],[156,20],[156.6,16],[156.85,10],[157,5]],
+    "profile": [
+      [
+        0,
+        18.5
+      ],
+      [
+        0.9,
+        22.4
+      ],
+      [
+        2.24,
+        22.43
+      ],
+      [
+        3.27,
+        23.49
+      ],
+      [
+        46.91,
+        26.06
+      ],
+      [
+        93.43,
+        31.27
+      ],
+      [
+        94.33,
+        30.35
+      ],
+      [
+        95.16,
+        31.21
+      ],
+      [
+        125.6,
+        31.14
+      ],
+      [
+        127.14,
+        27.25
+      ],
+      [
+        128.29,
+        28.77
+      ],
+      [
+        129.7,
+        28.83
+      ],
+      [
+        130.02,
+        30.61
+      ],
+      [
+        131.05,
+        31.6
+      ],
+      [
+        139.57,
+        32
+      ],
+      [
+        152.77,
+        30.15
+      ],
+      [
+        154.05,
+        29.29
+      ],
+      [
+        154.56,
+        22.43
+      ],
+      [
+        155.97,
+        20.12
+      ],
+      [
+        156.36,
+        18.21
+      ],
+      [
+        156.94,
+        0.86
+      ],
+      [
+        157,
+        0
+      ]
+    ],
     "colours": [
-      { "fromMm": 0, "colour": "#2f3236" },
-      { "fromMm": 126, "colour": "#1c1e21" },
-      { "fromMm": 154.8, "colour": "#8d9094" }
+      {
+        "fromMm": 0,
+        "colour": "#2f3236"
+      },
+      {
+        "fromMm": 126,
+        "colour": "#1c1e21"
+      },
+      {
+        "fromMm": 154.8,
+        "colour": "#8d9094"
+      }
+    ],
+    "photos": [
+      {
+        "face": "wrap",
+        "file": "_wrap_unrolled.png",
+        "crop": [
+          0,
+          0,
+          1311,
+          2048
+        ]
+      }
     ]
   },
   "sources": [
@@ -61,5 +172,176 @@
       "url": "https://products.shureweb.eu/shure_product_db/product_images/files/2c7/687/b8-/original/107542115b37d132fe22aac10848f90b.png",
       "note": "build.projection wrap: the surface picture is our own generic artwork (content/generic-panels/shure-sm57.json, asset:panel): an unrolled 100.53 x 157 mm panel with a plain dark handle and seam groove, a perforated neck ring, a plain black band where the real mic carries its printed name (left blank), and 28 chunky vertical cage ribs read from the 3/4 head photo (rib about 2 mm, gap about 1.6 mm, the gaps a touch lighter). The silver mesh disc on top is a flat colour (the top of a lathe takes no wrap picture). It copies no photo and has no brand mark or lettering. The scalloped top edge of the real cage is not modelled."
     }
-  ]
+  ],
+  "structure": {
+    "parts": [
+      {
+        "kind": "pocket",
+        "face": "bottom",
+        "xMm": 16,
+        "yMm": 16,
+        "params": {
+          "diaMm": 15.4,
+          "depthMm": 9
+        },
+        "colour": "#0b0b0d",
+        "note": "XLR end recess"
+      },
+      {
+        "kind": "socket",
+        "face": "bottom",
+        "xMm": 16,
+        "yMm": 16,
+        "type": "xlr",
+        "params": {
+          "diaMm": 13.4,
+          "collarMm": 0.8,
+          "riseMm": 9.1,
+          "wellMm": 9.1,
+          "zMm": -8.8
+        },
+        "colour": "#9a9ea4",
+        "colour2": "#0b0b0d",
+        "note": "XLR shell"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 16,
+        "yMm": 16,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": 3.6,
+          "z1Mm": 0,
+          "x2Mm": 0,
+          "y2Mm": 3.6,
+          "z2Mm": 6,
+          "diaMm": 1.9,
+          "segments": 8,
+          "zMm": -8.8
+        },
+        "colour": "#c3c6cc",
+        "note": "XLR male pin"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 16,
+        "yMm": 16,
+        "params": {
+          "x1Mm": -3.6,
+          "y1Mm": -2.2,
+          "z1Mm": 0,
+          "x2Mm": -3.6,
+          "y2Mm": -2.2,
+          "z2Mm": 6,
+          "diaMm": 1.9,
+          "segments": 8,
+          "zMm": -8.8
+        },
+        "colour": "#c3c6cc",
+        "note": "XLR male pin"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 16,
+        "yMm": 16,
+        "params": {
+          "x1Mm": 3.6,
+          "y1Mm": -2.2,
+          "z1Mm": 0,
+          "x2Mm": 3.6,
+          "y2Mm": -2.2,
+          "z2Mm": 6,
+          "diaMm": 1.9,
+          "segments": 8,
+          "zMm": -8.8
+        },
+        "colour": "#c3c6cc",
+        "note": "XLR male pin"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 16,
+        "yMm": 14,
+        "params": {
+          "diaMm": 3,
+          "riseMm": 0.5
+        },
+        "colour": "#6b6e73",
+        "colour2": "#1a1a1c",
+        "note": "pin hole screw near the XLR end"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 8.25,
+        "yMm": 143,
+        "count": 3,
+        "cols": 3,
+        "pitchXMm": 7.75,
+        "params": {
+          "widthMm": 3.8,
+          "heightMm": 19,
+          "cornerMm": 1.4,
+          "depthMm": 3
+        },
+        "colour": "#08080a",
+        "note": "grille cage slot (12 around the head)"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 8.25,
+        "yMm": 143,
+        "count": 3,
+        "cols": 3,
+        "pitchXMm": 7.75,
+        "params": {
+          "widthMm": 3.8,
+          "heightMm": 19,
+          "cornerMm": 1.4,
+          "depthMm": 3
+        },
+        "colour": "#08080a",
+        "note": "grille cage slot (12 around the head)"
+      },
+      {
+        "kind": "pocket",
+        "face": "left",
+        "xMm": 8.25,
+        "yMm": 143,
+        "count": 3,
+        "cols": 3,
+        "pitchXMm": 7.75,
+        "params": {
+          "widthMm": 3.8,
+          "heightMm": 19,
+          "cornerMm": 1.4,
+          "depthMm": 3
+        },
+        "colour": "#08080a",
+        "note": "grille cage slot (12 around the head)"
+      },
+      {
+        "kind": "pocket",
+        "face": "right",
+        "xMm": 8.25,
+        "yMm": 143,
+        "count": 3,
+        "cols": 3,
+        "pitchXMm": 7.75,
+        "params": {
+          "widthMm": 3.8,
+          "heightMm": 19,
+          "cornerMm": 1.4,
+          "depthMm": 3
+        },
+        "colour": "#08080a",
+        "note": "grille cage slot (12 around the head)"
+      }
+    ]
+  }
 }

@@ -10,8 +10,8 @@
   "ports": [
     {
       "portId": "in-xlr-1",
-      "face": "opposite",
-      "xMm": 25,
+      "face": "right",
+      "xMm": 84,
       "yMm": 18,
       "confidence": "guess",
       "connector": "xlr3-f",
@@ -24,8 +24,8 @@
     },
     {
       "portId": "in-xlr-2",
-      "face": "opposite",
-      "xMm": 62,
+      "face": "right",
+      "xMm": 56,
       "yMm": 18,
       "confidence": "guess",
       "connector": "xlr3-f",
@@ -38,8 +38,8 @@
     },
     {
       "portId": "in-xlr-3",
-      "face": "opposite",
-      "xMm": 99,
+      "face": "left",
+      "xMm": 34,
       "yMm": 18,
       "confidence": "guess",
       "connector": "xlr3-f",
@@ -52,8 +52,8 @@
     },
     {
       "portId": "in-xlr-4",
-      "face": "opposite",
-      "xMm": 136,
+      "face": "left",
+      "xMm": 62,
       "yMm": 18,
       "confidence": "guess",
       "connector": "xlr3-f",
@@ -111,7 +111,8 @@
     "projection": [
       "top",
       "opposite",
-      "io"
+      "left",
+      "right"
     ],
     "budget": {
       "min": 600,
@@ -121,7 +122,7 @@
     "photos": [
       {
         "face": "top",
-        "file": "top.jpg",
+        "file": "top_dark.png",
         "crop": [
           30,
           58,
@@ -129,6 +130,31 @@
           487
         ],
         "fill": true
+      },
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "fill": true
+      },
+      {
+        "face": "left",
+        "file": "left_xlr.png",
+        "crop": [
+          0,
+          0,
+          708,
+          216
+        ]
+      },
+      {
+        "face": "right",
+        "file": "right_xlr.png",
+        "crop": [
+          0,
+          0,
+          708,
+          216
+        ]
       }
     ]
   },
@@ -152,6 +178,23 @@
       "kind": "reference",
       "url": "https://www.toneart-shop.de/media/specs/sound-devices-mixpre-6-ii.pdf",
       "note": "build: a moulded box with a screen recess; the rounding is an ESTIMATE. build.projection: our own generic artwork; no photo, no logo, no lettering. Ring rule: an XLR ring (23.4 mm) is wider than 60 percent of the 36 mm face, so promoting this device needs the same per-device exception as the MUTEC MC-3+ in portMarkerSize.test.ts."
+    },
+    {
+      "kind": "reference",
+      "url": "https://www.thomann.de/gb/sound_devices_mixpre_6_ii.htm",
+      "note": "3D quality pass wave 2 (appearance only): the four XLR inputs are moved from the front lip to the two end faces (1 and 2 on the right face, 3 and 4 on the left face) as in the dealer photos (side.jpg, side-b.jpg), so the real front photo (knobs, screen, transport keys) can be projected on the front face. Positions along the end faces are guesses (confidence stays guess)."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 20.5,
+        "yMm": 22,
+        "wMm": 9,
+        "hMm": 9,
+        "marginMm": 2
+      }
+    ]
+  }
 }

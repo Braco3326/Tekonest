@@ -42,7 +42,9 @@
     "params": {
       "edgeRadiusMm": 8,
       "edgeSegments": 4,
-      "bodyGrey": 30
+      "bodyGrey": 30,
+      "rearWidthMm": 185,
+      "taperDepthMm": 330
     },
     "budget": {
       "min": 100,
