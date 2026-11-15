@@ -31,69 +31,294 @@
     },
     "projection": "wrap",
     "budget": {
-      "min": 1000,
-      "max": 6000
+      "min": 3000,
+      "max": 14900
     },
     "profile": [
       [
         0,
-        53,
-        34
+        99,
+        0.04
       ],
       [
-        2,
-        60,
-        38
+        0.02,
+        0.4,
+        0.4
       ],
       [
-        6,
-        72,
-        46
+        7.99,
+        0.4,
+        0.4
+      ],
+      [
+        8,
+        25.4,
+        25.4
+      ],
+      [
+        13.8,
+        25.4,
+        25.4
       ],
       [
         14,
-        88,
-        56
+        24.9,
+        24.9
       ],
       [
-        26,
-        97,
-        62
+        25.4,
+        31.7,
+        31.7
       ],
       [
-        44,
-        99,
-        64
+        44.7,
+        31.7,
+        31.7
       ],
       [
-        243,
-        99,
-        64
+        44.75,
+        30.2,
+        30.2
       ],
       [
-        262,
-        97,
-        62
+        45.3,
+        30.2,
+        30.2
       ],
       [
-        275,
-        88,
-        56
+        45.35,
+        31.7,
+        31.7
       ],
       [
-        284,
-        70,
-        45
-      ],
-      [
-        290,
         48,
-        31
+        31.7,
+        31.7
       ],
       [
-        293.5,
-        28,
-        18
+        48.01,
+        12.6,
+        12.6
+      ],
+      [
+        59.4,
+        12.6,
+        12.6
+      ],
+      [
+        59.5,
+        5,
+        5
+      ],
+      [
+        80.3,
+        5,
+        5
+      ],
+      [
+        81.431,
+        15.788,
+        15.69
+      ],
+      [
+        84.186,
+        28.638,
+        28.46
+      ],
+      [
+        88.067,
+        39.21,
+        38.967
+      ],
+      [
+        93.06,
+        48.069,
+        47.77
+      ],
+      [
+        98.946,
+        54.826,
+        54.486
+      ],
+      [
+        105.468,
+        59.188,
+        58.82
+      ],
+      [
+        110.606,
+        60.768,
+        60.39
+      ],
+      [
+        113.5,
+        61,
+        60.621
+      ],
+      [
+        134,
+        61,
+        60.621
+      ],
+      [
+        134.2,
+        64.4,
+        63.2
+      ],
+      [
+        136.9,
+        64.4,
+        63.2
+      ],
+      [
+        137.5,
+        63.4,
+        62.219
+      ],
+      [
+        138.1,
+        64.4,
+        63.2
+      ],
+      [
+        141.1,
+        64.4,
+        63.2
+      ],
+      [
+        141.7,
+        63.4,
+        62.219
+      ],
+      [
+        142.3,
+        64.4,
+        63.2
+      ],
+      [
+        145.1,
+        64.4,
+        63.2
+      ],
+      [
+        145.7,
+        63.4,
+        62.219
+      ],
+      [
+        146.3,
+        64.4,
+        63.2
+      ],
+      [
+        149.1,
+        64.4,
+        63.2
+      ],
+      [
+        149.7,
+        63.4,
+        62.219
+      ],
+      [
+        150.3,
+        64.4,
+        63.2
+      ],
+      [
+        153.4,
+        64.4,
+        63.2
+      ],
+      [
+        153.6,
+        63.4,
+        63.006
+      ],
+      [
+        248.4,
+        63.4,
+        63.006
+      ],
+      [
+        248.6,
+        64.4,
+        64
+      ],
+      [
+        260.4,
+        64.4,
+        64
+      ],
+      [
+        260.6,
+        62.1,
+        61.714
+      ],
+      [
+        265.6,
+        62.1,
+        61.714
+      ],
+      [
+        269.437,
+        61.687,
+        61.304
+      ],
+      [
+        273.209,
+        60.342,
+        59.967
+      ],
+      [
+        276.851,
+        58.019,
+        57.658
+      ],
+      [
+        280.3,
+        54.722,
+        54.382
+      ],
+      [
+        283.498,
+        50.485,
+        50.171
+      ],
+      [
+        286.389,
+        45.36,
+        45.078
+      ],
+      [
+        288.925,
+        39.417,
+        39.173
+      ],
+      [
+        291.061,
+        32.74,
+        32.536
+      ],
+      [
+        292.762,
+        25.415,
+        25.257
+      ],
+      [
+        293.998,
+        17.53,
+        17.421
+      ],
+      [
+        294.748,
+        9.139,
+        9.082
+      ],
+      [
+        294.972,
+        3.218,
+        3.198
       ],
       [
         295,
@@ -104,29 +329,53 @@
     "colours": [
       {
         "fromMm": 0,
-        "colour": "#1f2726"
+        "colour": "#07070a"
       },
       {
-        "fromMm": 73,
-        "colour": "#c4c8cc"
+        "fromMm": 7.9,
+        "colour": "#07070a"
       },
       {
-        "fromMm": 98,
-        "colour": "#a7acb1"
+        "fromMm": 8,
+        "colour": "#d0d4da"
       },
       {
-        "fromMm": 229,
-        "colour": "#c4c8cc"
+        "fromMm": 13.8,
+        "colour": "#1c1d1f"
       },
       {
-        "fromMm": 243,
-        "colour": "#1f2726"
+        "fromMm": 48.01,
+        "colour": "#1d1e21"
+      },
+      {
+        "fromMm": 59.5,
+        "colour": "#151517"
+      },
+      {
+        "fromMm": 80.3,
+        "colour": "#182121"
+      },
+      {
+        "fromMm": 134,
+        "colour": "#d0d4da"
+      },
+      {
+        "fromMm": 153.6,
+        "colour": "#8a8e94"
+      },
+      {
+        "fromMm": 248.4,
+        "colour": "#d0d4da"
+      },
+      {
+        "fromMm": 260.5,
+        "colour": "#182121"
       }
     ],
     "photos": [
       {
         "face": "wrap",
-        "file": "wrap_built.png"
+        "file": "wrap_struct.png"
       }
     ]
   },
@@ -152,6 +401,2763 @@
       "kind": "dealer",
       "url": "https://recording.org/products/aea-r84",
       "note": "AEA R84 dealer pages and the AEA one-sheet, read through a search summary 2026-11-12 (the PDF was too large to fetch): a passive ribbon microphone with a captive cable of about 3 m ending in an XLR-3 male; no phantom power. The captive-cable end is modelled as an XLR on the base of the body. The oval lathe profile (a 50 mm round body under a 99 x 64 mm ribbon head) is an estimate drawn from the outer size, no photo or drawing opened. 99 x 64 x 295 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "photo",
+      "url": "assets-source/aea-r84/photos/front.jpg (dealer product photo)",
+      "note": "Structure rebuild 2026-11-15 (photos/SOURCES.md): head, yoke and stand mount measured on the straight-on dealer photo front.jpg (1752 px from the head apex to the mount bottom = 295 mm, so 0.1684 mm per px; the 99 mm width is the yoke knob to knob, the head is 63 mm wide). The grille weave, flat finishes, the four engraved band lines and a blank badge disc are printed graphics generated by us (no photo and no lettering on the model)."
+    },
+    {
+      "kind": "photo",
+      "url": "assets-source/aea-r84/photos/front.jpg (dealer product photo)",
+      "note": "Structure rebuild 2026-11-15 (photos/SOURCES.md): head, yoke and stand mount measured on the straight-on dealer photo front.jpg (1752 px from the head apex to the mount bottom = 295 mm, so 0.1684 mm per px; the 99 mm width is the yoke knob to knob, the head is 63 mm wide). The grille weave, flat finishes, the four engraved band lines and a blank badge disc are printed graphics generated by us (no photo and no lettering on the model). The one-sheet size 295 x 99 x 64 mm is the whole assembly: the width is the yoke knob to knob, the height includes the stand mount. A hidden 99 mm wide axle core inside the trunnion hubs lets the oval lathe satisfy its width rule while the head is 63 mm wide. No rear view exists in any source: the rear of the band repeats the front lines without the badge (not seen). The cable boot on the rear wall seen in side.jpg is not modelled."
+    },
+    {
+      "kind": "photo",
+      "url": "assets-source/aea-r84/photos/front.jpg (dealer product photo)",
+      "note": "Second structure rebuild 2026-11-15 (builder S-aea2, review defects 1 to 13): the yoke is one flat band (12 mm deep x 3.4 mm thick) made of four prisms, the stem is black, the adapter has a collar opening, a cup with the 16 mm threaded bore, a cable clip, the ribbed boot and the cable, the grille is 63.4 mm and the bands 64.4 mm, 64 segments, grooves in the lower band, a raised badge rim. Measured again on front.jpg, side.jpg and the Thomann views."
+    },
+    {
+      "kind": "photo",
+      "url": "assets-source/aea-r84/photos/front.jpg (dealer product photo)",
+      "note": "Third structure pass 2026-11-15 (builder S-aea3, review 2 defects): one continuous yoke strap, no needle pin, 36-tooth knobs with slotted screw, collar opening 19 mm x 4 mm, S-curve 16-sided cable, raised badge disc. Earlier: second pass (S-aea2, review defects 1 to 13): the yoke is one flat band (12 mm deep x 3.4 mm thick) made of four prisms, the stem is black, the adapter has a collar opening, a cup with the 16 mm threaded bore, a cable clip, the ribbed boot and the cable, the grille is 63.4 mm and the bands 64.4 mm, 64 segments, grooves in the lower band, a raised badge rim. Measured again on front.jpg, side.jpg and the Thomann views."
+    },
+    {
+      "kind": "photo",
+      "url": "assets-source/aea-r84/photos/front.jpg (dealer product photo)",
+      "note": "Fourth structure pass 2026-11-15 (builder S-aea4, review 3 defects 2 to 11): collar slit closed and opening 22 mm, the whole yoke strap in ONE frame (no apex seam), stem 12.6 mm, nut 10.9 x 6.3 mm, lip 25.2 mm, two hinge screws per side on the lower band, knob 19 x 4.4 mm, photo-driven painted chrome, grille pitch 2.7 mm, 12-station dome, ribbed boot (9 to 7.5 mm) and short closed cable stubs kept inside the 64 mm depth (the long outward cable loop is an accessory outside the datasheet box and is not modelled)."
     }
-  ]
+  ],
+  "structure": {
+    "parts": [
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 30.4,
+          "y1Mm": -0.036,
+          "z1Mm": -161.327,
+          "x2Mm": 34.5,
+          "y2Mm": -0.237,
+          "z2Mm": -161.327,
+          "diaMm": 13.6,
+          "segments": 6
+        },
+        "colour": "#92969c",
+        "note": "trunnion hex nut, left"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 34.5,
+          "y1Mm": -0.237,
+          "z1Mm": -161.327,
+          "x2Mm": 39.2,
+          "y2Mm": -0.468,
+          "z2Mm": -161.327,
+          "diaMm": 12.1,
+          "segments": 24
+        },
+        "colour": "#969aa0",
+        "note": "trunnion sleeve, left"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 41.3,
+          "y1Mm": -0.57,
+          "z1Mm": -161.327,
+          "x2Mm": 45.3,
+          "y2Mm": -0.766,
+          "z2Mm": -161.327,
+          "diaMm": 14,
+          "segments": 24
+        },
+        "colour": "#2a2b2e",
+        "note": "pivot washer, left"
+      },
+      {
+        "kind": "knob",
+        "face": "left",
+        "xMm": 32.1,
+        "yMm": 161.327,
+        "params": {
+          "diaMm": 19.6,
+          "heightMm": 4,
+          "knurl": 36,
+          "pointer": 0,
+          "bevelMm": 0.6,
+          "taper": 0.03,
+          "zMm": 13.4
+        },
+        "colour": "#82868c",
+        "colour2": "#2a2b2e",
+        "note": "pivot knob 19 x 4.4 mm with 36 knurl teeth, left"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 48.9,
+          "y1Mm": -0.943,
+          "z1Mm": -161.327,
+          "x2Mm": 49.5,
+          "y2Mm": -0.972,
+          "z2Mm": -161.327,
+          "diaMm": 6.2,
+          "segments": 24
+        },
+        "colour": "#8c9096",
+        "note": "pivot screw head, left"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 49.3,
+          "y1Mm": 1.838,
+          "z1Mm": -161.327,
+          "x2Mm": 49.3,
+          "y2Mm": -3.762,
+          "z2Mm": -161.327,
+          "diaMm": 0.8,
+          "segments": 4
+        },
+        "colour": "#1a1b1e",
+        "note": "screw slot, left"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": -30.4,
+          "y1Mm": -0.036,
+          "z1Mm": -161.327,
+          "x2Mm": -34.5,
+          "y2Mm": -0.237,
+          "z2Mm": -161.327,
+          "diaMm": 13.6,
+          "segments": 6
+        },
+        "colour": "#92969c",
+        "note": "trunnion hex nut, right"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": -34.5,
+          "y1Mm": -0.237,
+          "z1Mm": -161.327,
+          "x2Mm": -39.2,
+          "y2Mm": -0.468,
+          "z2Mm": -161.327,
+          "diaMm": 12.1,
+          "segments": 24
+        },
+        "colour": "#969aa0",
+        "note": "trunnion sleeve, right"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": -41.3,
+          "y1Mm": -0.57,
+          "z1Mm": -161.327,
+          "x2Mm": -45.3,
+          "y2Mm": -0.766,
+          "z2Mm": -161.327,
+          "diaMm": 14,
+          "segments": 24
+        },
+        "colour": "#2a2b2e",
+        "note": "pivot washer, right"
+      },
+      {
+        "kind": "knob",
+        "face": "right",
+        "xMm": 31.9,
+        "yMm": 161.327,
+        "params": {
+          "diaMm": 19.6,
+          "heightMm": 4,
+          "knurl": 36,
+          "pointer": 0,
+          "bevelMm": 0.6,
+          "taper": 0.03,
+          "zMm": 13.4
+        },
+        "colour": "#82868c",
+        "colour2": "#2a2b2e",
+        "note": "pivot knob 19 x 4.4 mm with 36 knurl teeth, right"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": -48.9,
+          "y1Mm": -0.943,
+          "z1Mm": -161.327,
+          "x2Mm": -49.5,
+          "y2Mm": -0.972,
+          "z2Mm": -161.327,
+          "diaMm": 6.2,
+          "segments": 24
+        },
+        "colour": "#8c9096",
+        "note": "pivot screw head, right"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": -49.3,
+          "y1Mm": 1.838,
+          "z1Mm": -161.327,
+          "x2Mm": -49.3,
+          "y2Mm": -3.762,
+          "z2Mm": -161.327,
+          "diaMm": 0.8,
+          "segments": 4
+        },
+        "colour": "#1a1b1e",
+        "note": "screw slot, right"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 50.5,
+        "yMm": 200,
+        "points": [
+          [
+            42.16,
+            -34
+          ],
+          [
+            42.16,
+            -96
+          ],
+          [
+            42.229,
+            -98.682
+          ],
+          [
+            42.27,
+            -101.362
+          ],
+          [
+            42.222,
+            -104.037
+          ],
+          [
+            42.008,
+            -106.696
+          ],
+          [
+            41.585,
+            -109.33
+          ],
+          [
+            40.955,
+            -111.923
+          ],
+          [
+            40.135,
+            -114.464
+          ],
+          [
+            39.147,
+            -116.948
+          ],
+          [
+            38.01,
+            -119.368
+          ],
+          [
+            36.715,
+            -121.704
+          ],
+          [
+            35.241,
+            -123.929
+          ],
+          [
+            33.598,
+            -126.037
+          ],
+          [
+            31.197,
+            -124.073
+          ],
+          [
+            32.711,
+            -122.133
+          ],
+          [
+            34.066,
+            -120.089
+          ],
+          [
+            35.255,
+            -117.942
+          ],
+          [
+            36.299,
+            -115.715
+          ],
+          [
+            37.209,
+            -113.431
+          ],
+          [
+            37.964,
+            -111.097
+          ],
+          [
+            38.543,
+            -108.715
+          ],
+          [
+            38.932,
+            -106.283
+          ],
+          [
+            39.128,
+            -103.796
+          ],
+          [
+            39.168,
+            -101.247
+          ],
+          [
+            39.125,
+            -98.642
+          ],
+          [
+            39.056,
+            -96.003
+          ],
+          [
+            39.056,
+            -34
+          ]
+        ],
+        "params": {
+          "riseMm": 11.55,
+          "zMm": -36.516,
+          "bevelMm": 0
+        },
+        "colour": "#b8bcc2",
+        "note": "yoke band right half, piece 1: flat polished strap 12 x 3.1 mm"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 50.5,
+        "yMm": 200,
+        "points": [
+          [
+            33.598,
+            -126.037
+          ],
+          [
+            31.819,
+            -128.036
+          ],
+          [
+            29.926,
+            -129.928
+          ],
+          [
+            27.924,
+            -131.705
+          ],
+          [
+            25.817,
+            -133.356
+          ],
+          [
+            23.61,
+            -134.867
+          ],
+          [
+            21.302,
+            -136.214
+          ],
+          [
+            18.894,
+            -137.367
+          ],
+          [
+            16.395,
+            -138.301
+          ],
+          [
+            13.822,
+            -139.018
+          ],
+          [
+            11.198,
+            -139.545
+          ],
+          [
+            8.544,
+            -139.918
+          ],
+          [
+            5.874,
+            -140.163
+          ],
+          [
+            3.194,
+            -140.31
+          ],
+          [
+            0.511,
+            -140.4
+          ],
+          [
+            0.06,
+            -140.38
+          ],
+          [
+            0.06,
+            -136.98
+          ],
+          [
+            0.511,
+            -137.302
+          ],
+          [
+            3.008,
+            -137.215
+          ],
+          [
+            5.589,
+            -137.076
+          ],
+          [
+            8.13,
+            -136.846
+          ],
+          [
+            10.621,
+            -136.499
+          ],
+          [
+            13.05,
+            -136.015
+          ],
+          [
+            15.407,
+            -135.362
+          ],
+          [
+            17.681,
+            -134.513
+          ],
+          [
+            19.87,
+            -133.464
+          ],
+          [
+            21.975,
+            -132.232
+          ],
+          [
+            24.001,
+            -130.843
+          ],
+          [
+            25.944,
+            -129.317
+          ],
+          [
+            27.798,
+            -127.672
+          ],
+          [
+            29.552,
+            -125.92
+          ],
+          [
+            31.197,
+            -124.073
+          ]
+        ],
+        "params": {
+          "riseMm": 11.55,
+          "zMm": -36.516,
+          "bevelMm": 0
+        },
+        "colour": "#b8bcc2",
+        "note": "yoke band right half, piece 2: flat polished strap 12 x 3.1 mm"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 48.5,
+        "yMm": 200,
+        "points": [
+          [
+            -42.16,
+            -34
+          ],
+          [
+            -42.16,
+            -96
+          ],
+          [
+            -42.229,
+            -98.682
+          ],
+          [
+            -42.27,
+            -101.362
+          ],
+          [
+            -42.222,
+            -104.037
+          ],
+          [
+            -42.008,
+            -106.696
+          ],
+          [
+            -41.585,
+            -109.33
+          ],
+          [
+            -40.955,
+            -111.923
+          ],
+          [
+            -40.135,
+            -114.464
+          ],
+          [
+            -39.147,
+            -116.948
+          ],
+          [
+            -38.01,
+            -119.368
+          ],
+          [
+            -36.715,
+            -121.704
+          ],
+          [
+            -35.241,
+            -123.929
+          ],
+          [
+            -33.598,
+            -126.037
+          ],
+          [
+            -31.197,
+            -124.073
+          ],
+          [
+            -32.711,
+            -122.133
+          ],
+          [
+            -34.066,
+            -120.089
+          ],
+          [
+            -35.255,
+            -117.942
+          ],
+          [
+            -36.299,
+            -115.715
+          ],
+          [
+            -37.209,
+            -113.431
+          ],
+          [
+            -37.964,
+            -111.097
+          ],
+          [
+            -38.543,
+            -108.715
+          ],
+          [
+            -38.932,
+            -106.283
+          ],
+          [
+            -39.128,
+            -103.796
+          ],
+          [
+            -39.168,
+            -101.247
+          ],
+          [
+            -39.125,
+            -98.642
+          ],
+          [
+            -39.056,
+            -96.003
+          ],
+          [
+            -39.056,
+            -34
+          ]
+        ],
+        "params": {
+          "riseMm": 11.55,
+          "zMm": -36.516,
+          "bevelMm": 0
+        },
+        "colour": "#b8bcc2",
+        "note": "yoke band left half, piece 1: flat polished strap 12 x 3.1 mm"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 48.5,
+        "yMm": 200,
+        "points": [
+          [
+            -33.598,
+            -126.037
+          ],
+          [
+            -31.819,
+            -128.036
+          ],
+          [
+            -29.926,
+            -129.928
+          ],
+          [
+            -27.924,
+            -131.705
+          ],
+          [
+            -25.817,
+            -133.356
+          ],
+          [
+            -23.61,
+            -134.867
+          ],
+          [
+            -21.302,
+            -136.214
+          ],
+          [
+            -18.894,
+            -137.367
+          ],
+          [
+            -16.395,
+            -138.301
+          ],
+          [
+            -13.822,
+            -139.018
+          ],
+          [
+            -11.198,
+            -139.545
+          ],
+          [
+            -8.544,
+            -139.918
+          ],
+          [
+            -5.874,
+            -140.163
+          ],
+          [
+            -3.194,
+            -140.31
+          ],
+          [
+            -0.511,
+            -140.4
+          ],
+          [
+            -0.06,
+            -140.38
+          ],
+          [
+            -0.06,
+            -136.98
+          ],
+          [
+            -0.511,
+            -137.302
+          ],
+          [
+            -3.008,
+            -137.215
+          ],
+          [
+            -5.589,
+            -137.076
+          ],
+          [
+            -8.13,
+            -136.846
+          ],
+          [
+            -10.621,
+            -136.499
+          ],
+          [
+            -13.05,
+            -136.015
+          ],
+          [
+            -15.407,
+            -135.362
+          ],
+          [
+            -17.681,
+            -134.513
+          ],
+          [
+            -19.87,
+            -133.464
+          ],
+          [
+            -21.975,
+            -132.232
+          ],
+          [
+            -24.001,
+            -130.843
+          ],
+          [
+            -25.944,
+            -129.317
+          ],
+          [
+            -27.798,
+            -127.672
+          ],
+          [
+            -29.552,
+            -125.92
+          ],
+          [
+            -31.197,
+            -124.073
+          ]
+        ],
+        "params": {
+          "riseMm": 11.55,
+          "zMm": -36.516,
+          "bevelMm": 0
+        },
+        "colour": "#b8bcc2",
+        "note": "yoke band left half, piece 2: flat polished strap 12 x 3.1 mm"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": 0,
+          "z1Mm": -63,
+          "x2Mm": 0,
+          "y2Mm": 0,
+          "z2Mm": -63.6,
+          "diaMm": 10.5,
+          "segments": 20
+        },
+        "colour": "#92969c",
+        "note": "washer under the strain-relief nut"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": 0,
+          "z1Mm": -63.6,
+          "x2Mm": 0,
+          "y2Mm": 0,
+          "z2Mm": -69.3,
+          "diaMm": 12.58,
+          "segments": 6
+        },
+        "colour": "#b0b4ba",
+        "note": "cable strain-relief hex nut (10.9 mm across flats in the front view, 6.3 mm with the washer)"
+      },
+      {
+        "kind": "ring",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "diaMm": 31.7,
+          "innerDiaMm": 22,
+          "riseMm": -4.700000000000003,
+          "floorMm": 0,
+          "zMm": -47.5,
+          "textured": 1
+        },
+        "colour": "#1c1d1f",
+        "colour2": "#060607",
+        "note": "collar rim of the adapter: 31.7 mm OD, 22 mm opening (wall 4.85 mm), rim at 52.2 (photo 52.25), floor = the shoulder at 48.0 (4.2 mm deep), black 12.6 mm stem enters it"
+      },
+      {
+        "kind": "ring",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "diaMm": 25.2,
+          "innerDiaMm": 16,
+          "riseMm": 8,
+          "floorMm": 0.1,
+          "zMm": -8
+        },
+        "colour": "#26272b",
+        "colour2": "#0a0a0c",
+        "note": "black end collar 25.2 mm with the 16 mm bore (cup, 8 mm deep, hangs from the lathe ceiling at y = 8)"
+      },
+      {
+        "kind": "ring",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "diaMm": 25.3,
+          "innerDiaMm": 22.4,
+          "riseMm": 4,
+          "floorMm": -0.4,
+          "zMm": -8
+        },
+        "colour": "#d0d4da",
+        "colour2": "#9a9ea4",
+        "note": "chrome ring round the adapter end, 25.4 mm"
+      },
+      {
+        "kind": "prism",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "points": [
+          [
+            -4.557,
+            -6.757
+          ],
+          [
+            -1.62,
+            -7.987
+          ],
+          [
+            1.564,
+            -7.998
+          ],
+          [
+            4.51,
+            -6.788
+          ],
+          [
+            6.767,
+            -4.542
+          ],
+          [
+            7.991,
+            -1.602
+          ],
+          [
+            7.995,
+            1.583
+          ],
+          [
+            6.778,
+            4.526
+          ],
+          [
+            4.526,
+            6.778
+          ],
+          [
+            1.583,
+            7.995
+          ],
+          [
+            -1.602,
+            7.991
+          ],
+          [
+            -4.542,
+            6.767
+          ],
+          [
+            -6.788,
+            4.51
+          ],
+          [
+            -7.998,
+            1.564
+          ],
+          [
+            -7.987,
+            -1.62
+          ],
+          [
+            -6.757,
+            -4.557
+          ],
+          [
+            -6.052,
+            -4.082
+          ],
+          [
+            -7.154,
+            -1.451
+          ],
+          [
+            -7.164,
+            1.401
+          ],
+          [
+            -6.08,
+            4.04
+          ],
+          [
+            -4.068,
+            6.061
+          ],
+          [
+            -1.435,
+            7.158
+          ],
+          [
+            1.418,
+            7.161
+          ],
+          [
+            4.054,
+            6.071
+          ],
+          [
+            6.071,
+            4.054
+          ],
+          [
+            7.161,
+            1.418
+          ],
+          [
+            7.158,
+            -1.435
+          ],
+          [
+            6.061,
+            -4.068
+          ],
+          [
+            4.04,
+            -6.08
+          ],
+          [
+            1.401,
+            -7.164
+          ],
+          [
+            -1.451,
+            -7.154
+          ],
+          [
+            -4.082,
+            -6.052
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "zMm": -1.6,
+          "bevelMm": 0.04
+        },
+        "colour": "#1a1b1e",
+        "note": "thread ridge 1 of the female stand thread"
+      },
+      {
+        "kind": "prism",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "points": [
+          [
+            6.757,
+            -4.557
+          ],
+          [
+            7.987,
+            -1.62
+          ],
+          [
+            7.998,
+            1.564
+          ],
+          [
+            6.788,
+            4.51
+          ],
+          [
+            4.542,
+            6.767
+          ],
+          [
+            1.602,
+            7.991
+          ],
+          [
+            -1.583,
+            7.995
+          ],
+          [
+            -4.526,
+            6.778
+          ],
+          [
+            -6.778,
+            4.526
+          ],
+          [
+            -7.995,
+            1.583
+          ],
+          [
+            -7.991,
+            -1.602
+          ],
+          [
+            -6.767,
+            -4.542
+          ],
+          [
+            -4.51,
+            -6.788
+          ],
+          [
+            -1.564,
+            -7.998
+          ],
+          [
+            1.62,
+            -7.987
+          ],
+          [
+            4.557,
+            -6.757
+          ],
+          [
+            4.082,
+            -6.052
+          ],
+          [
+            1.451,
+            -7.154
+          ],
+          [
+            -1.401,
+            -7.164
+          ],
+          [
+            -4.04,
+            -6.08
+          ],
+          [
+            -6.061,
+            -4.068
+          ],
+          [
+            -7.158,
+            -1.435
+          ],
+          [
+            -7.161,
+            1.418
+          ],
+          [
+            -6.071,
+            4.054
+          ],
+          [
+            -4.054,
+            6.071
+          ],
+          [
+            -1.418,
+            7.161
+          ],
+          [
+            1.435,
+            7.158
+          ],
+          [
+            4.068,
+            6.061
+          ],
+          [
+            6.08,
+            4.04
+          ],
+          [
+            7.164,
+            1.401
+          ],
+          [
+            7.154,
+            -1.451
+          ],
+          [
+            6.052,
+            -4.082
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "zMm": -3.1,
+          "bevelMm": 0.04
+        },
+        "colour": "#1a1b1e",
+        "note": "thread ridge 2 of the female stand thread"
+      },
+      {
+        "kind": "prism",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "points": [
+          [
+            4.557,
+            6.757
+          ],
+          [
+            1.62,
+            7.987
+          ],
+          [
+            -1.564,
+            7.998
+          ],
+          [
+            -4.51,
+            6.788
+          ],
+          [
+            -6.767,
+            4.542
+          ],
+          [
+            -7.991,
+            1.602
+          ],
+          [
+            -7.995,
+            -1.583
+          ],
+          [
+            -6.778,
+            -4.526
+          ],
+          [
+            -4.526,
+            -6.778
+          ],
+          [
+            -1.583,
+            -7.995
+          ],
+          [
+            1.602,
+            -7.991
+          ],
+          [
+            4.542,
+            -6.767
+          ],
+          [
+            6.788,
+            -4.51
+          ],
+          [
+            7.998,
+            -1.564
+          ],
+          [
+            7.987,
+            1.62
+          ],
+          [
+            6.757,
+            4.557
+          ],
+          [
+            6.052,
+            4.082
+          ],
+          [
+            7.154,
+            1.451
+          ],
+          [
+            7.164,
+            -1.401
+          ],
+          [
+            6.08,
+            -4.04
+          ],
+          [
+            4.068,
+            -6.061
+          ],
+          [
+            1.435,
+            -7.158
+          ],
+          [
+            -1.418,
+            -7.161
+          ],
+          [
+            -4.054,
+            -6.071
+          ],
+          [
+            -6.071,
+            -4.054
+          ],
+          [
+            -7.161,
+            -1.418
+          ],
+          [
+            -7.158,
+            1.435
+          ],
+          [
+            -6.061,
+            4.068
+          ],
+          [
+            -4.04,
+            6.08
+          ],
+          [
+            -1.401,
+            7.164
+          ],
+          [
+            1.451,
+            7.154
+          ],
+          [
+            4.082,
+            6.052
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "zMm": -4.6,
+          "bevelMm": 0.04
+        },
+        "colour": "#1a1b1e",
+        "note": "thread ridge 3 of the female stand thread"
+      },
+      {
+        "kind": "prism",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "points": [
+          [
+            -6.757,
+            4.557
+          ],
+          [
+            -7.987,
+            1.62
+          ],
+          [
+            -7.998,
+            -1.564
+          ],
+          [
+            -6.788,
+            -4.51
+          ],
+          [
+            -4.542,
+            -6.767
+          ],
+          [
+            -1.602,
+            -7.991
+          ],
+          [
+            1.583,
+            -7.995
+          ],
+          [
+            4.526,
+            -6.778
+          ],
+          [
+            6.778,
+            -4.526
+          ],
+          [
+            7.995,
+            -1.583
+          ],
+          [
+            7.991,
+            1.602
+          ],
+          [
+            6.767,
+            4.542
+          ],
+          [
+            4.51,
+            6.788
+          ],
+          [
+            1.564,
+            7.998
+          ],
+          [
+            -1.62,
+            7.987
+          ],
+          [
+            -4.557,
+            6.757
+          ],
+          [
+            -4.082,
+            6.052
+          ],
+          [
+            -1.451,
+            7.154
+          ],
+          [
+            1.401,
+            7.164
+          ],
+          [
+            4.04,
+            6.08
+          ],
+          [
+            6.061,
+            4.068
+          ],
+          [
+            7.158,
+            1.435
+          ],
+          [
+            7.161,
+            -1.418
+          ],
+          [
+            6.071,
+            -4.054
+          ],
+          [
+            4.054,
+            -6.071
+          ],
+          [
+            1.418,
+            -7.161
+          ],
+          [
+            -1.435,
+            -7.158
+          ],
+          [
+            -4.068,
+            -6.061
+          ],
+          [
+            -6.08,
+            -4.04
+          ],
+          [
+            -7.164,
+            -1.401
+          ],
+          [
+            -7.154,
+            1.451
+          ],
+          [
+            -6.052,
+            4.082
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "zMm": -6.1,
+          "bevelMm": 0.04
+        },
+        "colour": "#1a1b1e",
+        "note": "thread ridge 4 of the female stand thread"
+      },
+      {
+        "kind": "prism",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "points": [
+          [
+            -13.088,
+            3.507
+          ],
+          [
+            -13.548,
+            0.236
+          ],
+          [
+            -13.203,
+            -3.048
+          ],
+          [
+            -12.073,
+            -6.152
+          ],
+          [
+            -10.226,
+            -8.89
+          ],
+          [
+            -7.772,
+            -11.1
+          ],
+          [
+            -4.856,
+            -12.65
+          ],
+          [
+            -1.651,
+            -13.449
+          ],
+          [
+            1.651,
+            -13.449
+          ],
+          [
+            4.856,
+            -12.65
+          ],
+          [
+            7.772,
+            -11.1
+          ],
+          [
+            10.226,
+            -8.89
+          ],
+          [
+            12.073,
+            -6.152
+          ],
+          [
+            13.203,
+            -3.048
+          ],
+          [
+            13.548,
+            0.236
+          ],
+          [
+            13.088,
+            3.507
+          ],
+          [
+            12.316,
+            3.3
+          ],
+          [
+            12.748,
+            0.223
+          ],
+          [
+            12.423,
+            -2.868
+          ],
+          [
+            11.36,
+            -5.788
+          ],
+          [
+            9.623,
+            -8.365
+          ],
+          [
+            7.313,
+            -10.444
+          ],
+          [
+            4.569,
+            -11.903
+          ],
+          [
+            1.554,
+            -12.655
+          ],
+          [
+            -1.554,
+            -12.655
+          ],
+          [
+            -4.569,
+            -11.903
+          ],
+          [
+            -7.313,
+            -10.444
+          ],
+          [
+            -9.623,
+            -8.365
+          ],
+          [
+            -11.36,
+            -5.788
+          ],
+          [
+            -12.423,
+            -2.868
+          ],
+          [
+            -12.748,
+            0.223
+          ],
+          [
+            -12.316,
+            3.3
+          ]
+        ],
+        "params": {
+          "riseMm": 4.75,
+          "zMm": -9.95,
+          "bevelMm": 0.04
+        },
+        "colour": "#a4a8ae",
+        "note": "cable clip strap round the rear of the chrome ring (5 mm x 0.8 mm, 210 degrees: the front.jpg view shows the ring bare)"
+      },
+      {
+        "kind": "prism",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "points": [
+          [
+            0.45,
+            -12.2
+          ],
+          [
+            -0.45,
+            -12.2
+          ],
+          [
+            -0.45,
+            -20.4
+          ],
+          [
+            0.45,
+            -20.4
+          ]
+        ],
+        "params": {
+          "riseMm": 4.75,
+          "zMm": -9.95,
+          "bevelMm": 0.04
+        },
+        "colour": "#a4a8ae",
+        "note": "cable clip arm"
+      },
+      {
+        "kind": "prism",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "points": [
+          [
+            -1.402,
+            -20.147
+          ],
+          [
+            -2.88,
+            -21.081
+          ],
+          [
+            -3.834,
+            -22.546
+          ],
+          [
+            -4.091,
+            -24.275
+          ],
+          [
+            -3.604,
+            -25.954
+          ],
+          [
+            -2.463,
+            -27.278
+          ],
+          [
+            -0.874,
+            -28.006
+          ],
+          [
+            0.874,
+            -28.006
+          ],
+          [
+            2.463,
+            -27.278
+          ],
+          [
+            3.604,
+            -25.954
+          ],
+          [
+            4.091,
+            -24.275
+          ],
+          [
+            3.834,
+            -22.546
+          ],
+          [
+            2.88,
+            -21.081
+          ],
+          [
+            1.402,
+            -20.147
+          ],
+          [
+            1.094,
+            -20.993
+          ],
+          [
+            2.248,
+            -21.722
+          ],
+          [
+            2.992,
+            -22.865
+          ],
+          [
+            3.193,
+            -24.215
+          ],
+          [
+            2.813,
+            -25.525
+          ],
+          [
+            1.922,
+            -26.558
+          ],
+          [
+            0.682,
+            -27.126
+          ],
+          [
+            -0.682,
+            -27.126
+          ],
+          [
+            -1.922,
+            -26.558
+          ],
+          [
+            -2.813,
+            -25.525
+          ],
+          [
+            -3.193,
+            -24.215
+          ],
+          [
+            -2.992,
+            -22.865
+          ],
+          [
+            -2.248,
+            -21.722
+          ],
+          [
+            -1.094,
+            -20.993
+          ]
+        ],
+        "params": {
+          "riseMm": 4.75,
+          "zMm": -10.95,
+          "bevelMm": 0.04
+        },
+        "colour": "#a4a8ae",
+        "note": "cable clip loop round the cable (8 mm)"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0.4,
+          "y1Mm": -17.5,
+          "z1Mm": -7.8,
+          "x2Mm": 1.1,
+          "y2Mm": -17.5,
+          "z2Mm": -7.8,
+          "diaMm": 2.8,
+          "segments": 12
+        },
+        "colour": "#b8bcc2",
+        "note": "cable clip screw head (2.5 mm, slotted)"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 1.1,
+          "y1Mm": -17.5,
+          "z1Mm": -7.8,
+          "x2Mm": 1.2,
+          "y2Mm": -17.5,
+          "z2Mm": -7.8,
+          "diaMm": 1.9,
+          "segments": 6
+        },
+        "colour": "#1a1b1e",
+        "note": "screw slot"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -24,
+          "z1Mm": -0.05,
+          "x2Mm": 0,
+          "y2Mm": -24,
+          "z2Mm": -6.4,
+          "diaMm": 6.5,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "cable through the clip, piece 1"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -23.987,
+          "z1Mm": -5.6,
+          "x2Mm": 0,
+          "y2Mm": -24.213,
+          "z2Mm": -12.4,
+          "diaMm": 6.5,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "cable through the clip, piece 2"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -24.101,
+          "z1Mm": -11.612,
+          "x2Mm": 0,
+          "y2Mm": -25.699,
+          "z2Mm": -17.888,
+          "diaMm": 6.5,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "cable through the clip, piece 3"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -25.465,
+          "z1Mm": -17.124,
+          "x2Mm": 0,
+          "y2Mm": -27.4,
+          "z2Mm": -22.5,
+          "diaMm": 6.5,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "cable through the clip, piece 4"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -27.5,
+          "z1Mm": -22.9,
+          "x2Mm": 0,
+          "y2Mm": -27.8,
+          "z2Mm": -23.6,
+          "diaMm": 5,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "cable stub end, rounded step"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -27.8,
+          "z1Mm": -23.6,
+          "x2Mm": 0,
+          "y2Mm": -28,
+          "z2Mm": -24.3,
+          "diaMm": 3.2,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "cable stub end, closed cap"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -24.568,
+          "z1Mm": -107.708,
+          "x2Mm": 0,
+          "y2Mm": -27.946,
+          "z2Mm": -93.305,
+          "diaMm": 6.4,
+          "segments": 20
+        },
+        "colour": "#101012",
+        "note": "boot core"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -24.774,
+          "z1Mm": -106.832,
+          "x2Mm": 0,
+          "y2Mm": -25.048,
+          "z2Mm": -105.663,
+          "diaMm": 9,
+          "segments": 20
+        },
+        "colour": "#121214",
+        "note": "boot rib 1"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -25.144,
+          "z1Mm": -105.254,
+          "x2Mm": 0,
+          "y2Mm": -25.418,
+          "z2Mm": -104.086,
+          "diaMm": 8.786,
+          "segments": 20
+        },
+        "colour": "#121214",
+        "note": "boot rib 2"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -25.514,
+          "z1Mm": -103.677,
+          "x2Mm": 0,
+          "y2Mm": -25.788,
+          "z2Mm": -102.509,
+          "diaMm": 8.571,
+          "segments": 20
+        },
+        "colour": "#121214",
+        "note": "boot rib 3"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -25.883,
+          "z1Mm": -102.1,
+          "x2Mm": 0,
+          "y2Mm": -26.157,
+          "z2Mm": -100.932,
+          "diaMm": 8.357,
+          "segments": 20
+        },
+        "colour": "#121214",
+        "note": "boot rib 4"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -26.253,
+          "z1Mm": -100.523,
+          "x2Mm": 0,
+          "y2Mm": -26.527,
+          "z2Mm": -99.354,
+          "diaMm": 8.143,
+          "segments": 20
+        },
+        "colour": "#121214",
+        "note": "boot rib 5"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -26.623,
+          "z1Mm": -98.946,
+          "x2Mm": 0,
+          "y2Mm": -26.897,
+          "z2Mm": -97.777,
+          "diaMm": 7.929,
+          "segments": 20
+        },
+        "colour": "#121214",
+        "note": "boot rib 6"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -26.993,
+          "z1Mm": -97.368,
+          "x2Mm": 0,
+          "y2Mm": -27.267,
+          "z2Mm": -96.2,
+          "diaMm": 7.714,
+          "segments": 20
+        },
+        "colour": "#121214",
+        "note": "boot rib 7"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -27.363,
+          "z1Mm": -95.791,
+          "x2Mm": 0,
+          "y2Mm": -27.637,
+          "z2Mm": -94.623,
+          "diaMm": 7.5,
+          "segments": 20
+        },
+        "colour": "#121214",
+        "note": "boot rib 8"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -27.9,
+          "z1Mm": -93.9,
+          "x2Mm": 0,
+          "y2Mm": -28.232,
+          "z2Mm": -89.801,
+          "diaMm": 6,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "cable stub from the boot, piece 1"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -28.162,
+          "z1Mm": -90.598,
+          "x2Mm": 0,
+          "y2Mm": -28.738,
+          "z2Mm": -84.602,
+          "diaMm": 6,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "cable stub from the boot, piece 2"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -28.708,
+          "z1Mm": -85.4,
+          "x2Mm": 0,
+          "y2Mm": -28.592,
+          "z2Mm": -79.6,
+          "diaMm": 6,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "cable stub from the boot, piece 3"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -28.653,
+          "z1Mm": -80.396,
+          "x2Mm": 0,
+          "y2Mm": -28,
+          "z2Mm": -75.5,
+          "diaMm": 6,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "cable stub from the boot, piece 4"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -27.8,
+          "z1Mm": -75.9,
+          "x2Mm": 0,
+          "y2Mm": -27.8,
+          "z2Mm": -74.4,
+          "diaMm": 4.6,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "boot cable stub end, rounded step"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 49.5,
+        "yMm": 32,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -27.8,
+          "z1Mm": -74.4,
+          "x2Mm": 0,
+          "y2Mm": -27.7,
+          "z2Mm": -73.7,
+          "diaMm": 2.8,
+          "segments": 16
+        },
+        "colour": "#121214",
+        "note": "boot cable stub end, closed cap"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 41.685,
+        "yMm": 143.2,
+        "points": [
+          [
+            0.517,
+            0.544
+          ],
+          [
+            0.668,
+            1.584
+          ],
+          [
+            0.82,
+            2.162
+          ],
+          [
+            0.971,
+            2.607
+          ],
+          [
+            1.123,
+            2.978
+          ],
+          [
+            1.274,
+            3.301
+          ],
+          [
+            1.425,
+            3.589
+          ],
+          [
+            1.577,
+            3.849
+          ],
+          [
+            1.728,
+            4.088
+          ],
+          [
+            1.728,
+            -4.088
+          ],
+          [
+            1.577,
+            -3.849
+          ],
+          [
+            1.425,
+            -3.589
+          ],
+          [
+            1.274,
+            -3.301
+          ],
+          [
+            1.123,
+            -2.978
+          ],
+          [
+            0.971,
+            -2.607
+          ],
+          [
+            0.82,
+            -2.162
+          ],
+          [
+            0.668,
+            -1.584
+          ],
+          [
+            0.517,
+            -0.544
+          ]
+        ],
+        "params": {
+          "riseMm": 0.3,
+          "bevelMm": 0.02
+        },
+        "colour": "#a8423d",
+        "note": "badge disc strip 1 of 6, 0.3 mm raised, blank"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 44.781,
+        "yMm": 143.2,
+        "points": [
+          [
+            -1.729,
+            3.594
+          ],
+          [
+            -1.297,
+            4.281
+          ],
+          [
+            -0.865,
+            4.833
+          ],
+          [
+            -0.432,
+            5.293
+          ],
+          [
+            0,
+            5.683
+          ],
+          [
+            0.432,
+            6.018
+          ],
+          [
+            0.865,
+            6.305
+          ],
+          [
+            1.297,
+            6.551
+          ],
+          [
+            1.729,
+            6.76
+          ],
+          [
+            1.729,
+            -6.76
+          ],
+          [
+            1.297,
+            -6.551
+          ],
+          [
+            0.865,
+            -6.305
+          ],
+          [
+            0.432,
+            -6.018
+          ],
+          [
+            0,
+            -5.683
+          ],
+          [
+            -0.432,
+            -5.293
+          ],
+          [
+            -0.865,
+            -4.833
+          ],
+          [
+            -1.297,
+            -4.281
+          ],
+          [
+            -1.729,
+            -3.594
+          ]
+        ],
+        "params": {
+          "riseMm": 0.3,
+          "bevelMm": 0.02
+        },
+        "colour": "#a8423d",
+        "note": "badge disc strip 2 of 6, 0.3 mm raised, blank"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 47.922,
+        "yMm": 143.2,
+        "points": [
+          [
+            -1.73,
+            6.619
+          ],
+          [
+            -1.297,
+            6.818
+          ],
+          [
+            -0.865,
+            6.984
+          ],
+          [
+            -0.432,
+            7.121
+          ],
+          [
+            0,
+            7.229
+          ],
+          [
+            0.432,
+            7.31
+          ],
+          [
+            0.865,
+            7.365
+          ],
+          [
+            1.297,
+            7.395
+          ],
+          [
+            1.73,
+            7.398
+          ],
+          [
+            1.73,
+            -7.398
+          ],
+          [
+            1.297,
+            -7.395
+          ],
+          [
+            0.865,
+            -7.365
+          ],
+          [
+            0.432,
+            -7.31
+          ],
+          [
+            0,
+            -7.229
+          ],
+          [
+            -0.432,
+            -7.121
+          ],
+          [
+            -0.865,
+            -6.984
+          ],
+          [
+            -1.297,
+            -6.818
+          ],
+          [
+            -1.73,
+            -6.619
+          ]
+        ],
+        "params": {
+          "riseMm": 0.3,
+          "bevelMm": 0.02
+        },
+        "colour": "#a8423d",
+        "note": "badge disc strip 3 of 6, 0.3 mm raised, blank"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 51.078,
+        "yMm": 143.2,
+        "points": [
+          [
+            -1.73,
+            7.398
+          ],
+          [
+            -1.297,
+            7.395
+          ],
+          [
+            -0.865,
+            7.365
+          ],
+          [
+            -0.432,
+            7.31
+          ],
+          [
+            0,
+            7.229
+          ],
+          [
+            0.432,
+            7.121
+          ],
+          [
+            0.865,
+            6.984
+          ],
+          [
+            1.297,
+            6.818
+          ],
+          [
+            1.73,
+            6.619
+          ],
+          [
+            1.73,
+            -6.619
+          ],
+          [
+            1.297,
+            -6.818
+          ],
+          [
+            0.865,
+            -6.984
+          ],
+          [
+            0.432,
+            -7.121
+          ],
+          [
+            0,
+            -7.229
+          ],
+          [
+            -0.432,
+            -7.31
+          ],
+          [
+            -0.865,
+            -7.365
+          ],
+          [
+            -1.297,
+            -7.395
+          ],
+          [
+            -1.73,
+            -7.398
+          ]
+        ],
+        "params": {
+          "riseMm": 0.3,
+          "bevelMm": 0.02
+        },
+        "colour": "#a8423d",
+        "note": "badge disc strip 4 of 6, 0.3 mm raised, blank"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 54.219,
+        "yMm": 143.2,
+        "points": [
+          [
+            -1.729,
+            6.76
+          ],
+          [
+            -1.297,
+            6.551
+          ],
+          [
+            -0.865,
+            6.305
+          ],
+          [
+            -0.432,
+            6.018
+          ],
+          [
+            0,
+            5.683
+          ],
+          [
+            0.432,
+            5.293
+          ],
+          [
+            0.865,
+            4.833
+          ],
+          [
+            1.297,
+            4.281
+          ],
+          [
+            1.729,
+            3.594
+          ],
+          [
+            1.729,
+            -3.594
+          ],
+          [
+            1.297,
+            -4.281
+          ],
+          [
+            0.865,
+            -4.833
+          ],
+          [
+            0.432,
+            -5.293
+          ],
+          [
+            0,
+            -5.683
+          ],
+          [
+            -0.432,
+            -6.018
+          ],
+          [
+            -0.865,
+            -6.305
+          ],
+          [
+            -1.297,
+            -6.551
+          ],
+          [
+            -1.729,
+            -6.76
+          ]
+        ],
+        "params": {
+          "riseMm": 0.3,
+          "bevelMm": 0.02
+        },
+        "colour": "#a8423d",
+        "note": "badge disc strip 5 of 6, 0.3 mm raised, blank"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 57.315,
+        "yMm": 143.2,
+        "points": [
+          [
+            -1.728,
+            4.088
+          ],
+          [
+            -1.577,
+            3.849
+          ],
+          [
+            -1.425,
+            3.589
+          ],
+          [
+            -1.274,
+            3.301
+          ],
+          [
+            -1.123,
+            2.978
+          ],
+          [
+            -0.971,
+            2.607
+          ],
+          [
+            -0.82,
+            2.162
+          ],
+          [
+            -0.668,
+            1.584
+          ],
+          [
+            -0.517,
+            0.544
+          ],
+          [
+            -0.517,
+            -0.544
+          ],
+          [
+            -0.668,
+            -1.584
+          ],
+          [
+            -0.82,
+            -2.162
+          ],
+          [
+            -0.971,
+            -2.607
+          ],
+          [
+            -1.123,
+            -2.978
+          ],
+          [
+            -1.274,
+            -3.301
+          ],
+          [
+            -1.425,
+            -3.589
+          ],
+          [
+            -1.577,
+            -3.849
+          ],
+          [
+            -1.728,
+            -4.088
+          ]
+        ],
+        "params": {
+          "riseMm": 0.3,
+          "bevelMm": 0.02
+        },
+        "colour": "#a8423d",
+        "note": "badge disc strip 6 of 6, 0.3 mm raised, blank"
+      },
+      {
+        "kind": "screw",
+        "face": "left",
+        "xMm": 31.6,
+        "yMm": 264.8,
+        "params": {
+          "diaMm": 3,
+          "riseMm": 0.6
+        },
+        "colour": "#9a9ea4",
+        "colour2": "#3a3c40",
+        "note": "screw on the head above the top band, left"
+      },
+      {
+        "kind": "screw",
+        "face": "left",
+        "xMm": 31.9,
+        "yMm": 253.3,
+        "params": {
+          "diaMm": 3.2,
+          "riseMm": 1
+        },
+        "colour": "#9a9ea4",
+        "colour2": "#3a3c40",
+        "note": "top band rivet, left"
+      },
+      {
+        "kind": "screw",
+        "face": "left",
+        "xMm": 31.9,
+        "yMm": 144.8,
+        "count": 2,
+        "cols": 1,
+        "pitchYMm": -6.3,
+        "params": {
+          "diaMm": 3.4,
+          "riseMm": 1.2
+        },
+        "colour": "#9a9ea4",
+        "colour2": "#3a3c40",
+        "note": "lower band hinge screws (two, 6.3 mm apart, measured on front.jpg), left"
+      },
+      {
+        "kind": "screw",
+        "face": "right",
+        "xMm": 31.6,
+        "yMm": 264.8,
+        "params": {
+          "diaMm": 3,
+          "riseMm": 0.6
+        },
+        "colour": "#9a9ea4",
+        "colour2": "#3a3c40",
+        "note": "screw on the head above the top band, right"
+      },
+      {
+        "kind": "screw",
+        "face": "right",
+        "xMm": 31.9,
+        "yMm": 253.3,
+        "params": {
+          "diaMm": 3.2,
+          "riseMm": 1
+        },
+        "colour": "#9a9ea4",
+        "colour2": "#3a3c40",
+        "note": "top band rivet, right"
+      },
+      {
+        "kind": "screw",
+        "face": "right",
+        "xMm": 31.9,
+        "yMm": 144.8,
+        "count": 2,
+        "cols": 1,
+        "pitchYMm": -6.3,
+        "params": {
+          "diaMm": 3.4,
+          "riseMm": 1.2
+        },
+        "colour": "#9a9ea4",
+        "colour2": "#3a3c40",
+        "note": "lower band hinge screws (two, 6.3 mm apart, measured on front.jpg), right"
+      }
+    ]
+  }
 }
