@@ -33,6 +33,8 @@ export interface FloorRest {
  * Founder, 2026-11-15: « the cables are shown underground ». The sag (15 % of the run, at least 5 cm) pulls the middle of a cable BELOW the line between its ports, so a
  * cable between two low ports went under the floor. With `rest` every inner point is lifted to the floor under it plus the clearance: the cable lies on the surface
  * (on a deck, on the deck), and the two ends stay exactly on the ports. Without `rest` (the legacy callers) the shape is the old one.
+ * Mission 3 A (« gravity first »): a cable renderer given a floor no longer draws with this parabola but with `gravityPath` (cableGravity.ts), which
+ * drops from a raised port and lies on the surface instead of flying; this function stays as it was for the legacy callers.
  */
 export function catenaryPoints(a: P3, b: P3, segments: number, rest?: FloorRest): P3[] {
   const sag = segments <= 1 ? 0 : Math.max(MIN_SAG, Math.hypot(b.x - a.x, b.z - a.z) * SAG_FACTOR)
@@ -108,6 +110,16 @@ export class CableBudget {
     const segments = this.othersTotal(cableId) + wanted <= this.maxPoints ? desired : 1
     this.granted.set(cableId, segments + 1)
     return segments
+  }
+
+  /** Would `points` more for this cable (its own previous grant aside) fit the budget? (Mission 3 A: a gravity path has as many points as it needs.) */
+  fits(cableId: string, points: number): boolean {
+    return this.othersTotal(cableId) + points <= this.maxPoints
+  }
+
+  /** Book `points` for this cable, whatever the budget (its coarse shape, never dropped: a cable is always drawn). */
+  take(cableId: string, points: number): void {
+    this.granted.set(cableId, points)
   }
 
   release(cableId: string): void {
