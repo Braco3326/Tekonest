@@ -293,6 +293,8 @@ export class CableRenderer {
   /**
    * The drawn path of a committed cable, booked against the point budget. Legacy (no surface): the parabola, a straight line once over budget.
    * Gravity: the full path while it fits, else its coarse shape (no bends, a 5 cm simplification, still on the surface): never a flying straight line.
+   * A hand-drawn `route` (mission 3 B) is the plan its run follows: its corners rounded in the full path (every arc point counts against the budget),
+   * sharp in the coarse one; never dropped.
    */
   private layOut(connectionId: string, a: Vector3, b: Vector3, ends?: readonly [PortRef, PortRef], route?: readonly XZ[]): P3[] {
     const support = this.supportNow()
@@ -300,8 +302,8 @@ export class CableRenderer {
     const out = (ref: PortRef | undefined): P3 | null => (ref && this.opts.outwardFor ? this.opts.outwardFor(ref) : null)
     const ea = { at: { x: a.x, y: a.y, z: a.z }, out: out(ends?.[0]) }
     const eb = { at: { x: b.x, y: b.y, z: b.z }, out: out(ends?.[1]) }
-    const opts = { clearance: this.clearance(), ...(route ? { route } : {}) }
-    const fine = gravityPath(ea, eb, support, opts)
+    const opts = { clearance: this.clearance(), ...(route?.length ? { route } : {}) }
+    const fine = gravityPath(ea, eb, support, { ...opts, round: true })
     if (this.budget.fits(connectionId, fine.length)) {
       this.budget.take(connectionId, fine.length)
       return fine

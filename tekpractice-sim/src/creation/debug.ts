@@ -155,8 +155,10 @@ export interface CreationDebug {
   turnCamera(dAlpha: number): void
   /** Final review: the drawn length (m) of a cable (the polyline the hover shows), or null when it is not drawn. */
   cableLengthM(key: string): number | null
-  /** The points (world m) of a drawn cable, or null when it is not drawn: the cables must rest on the floor, never under it. */
+  /** The points (world m) of a drawn cable, or null when it is not drawn: the cables must rest on the floor, never under it. A routed cable's points follow its route (rounded corners). */
   cablePoints(key: string): [number, number, number][] | null
+  /** Mission 3 B (read-only): a cable's hand-drawn route as stored in the design and shown (plan points [x, z] m), or null for the automatic shape. */
+  cableRoute(key: string): [number, number][] | null
   /**
    * Mission 3 A (« gravity first »): how a drawn cable sits on its support surface (the floor, decks, the tops of the devices resting there), read-only:
    * the lowest and highest inner point relative to the surface plus the clearance, and every stretch off the surface with its plan length (a drop has

@@ -33,6 +33,7 @@ import { DeviceSpawner, type DeviceInstance } from '../scene/DeviceSpawner'
 import { CableRenderer } from '../scene/CableRenderer'
 import { FLOOR_CLEARANCE, polylineLength, type P3 } from '../scene/cablePath'
 import { buildSupport, supportReport, type Support, type SupportReport } from '../scene/cableGravity'
+import { toXZ } from '../scene/cableRoute'
 import { deviceSizeM, portFaceLocal, supportBoxes } from './cableSupport'
 import { CameraRig } from '../scene/CameraRig'
 import {
@@ -567,6 +568,15 @@ export class SceneHost {
   cablePoints(key: string): [number, number, number][] | null {
     const path = this.cables?.paths().find(([id]) => id === key)?.[1]
     return path ? path.map((q): [number, number, number] => [q.x, q.y, q.z]) : null
+  }
+
+  /**
+   * Mission 3 B (read-only, tests and stage 2): the hand-drawn route of a cable as the scene shows it (plan points [x, z] m, a copy), or null when the
+   * cable follows its automatic shape or is not in the design. Its drawn path is `cablePoints(key)`.
+   */
+  cableRoute(key: string): [number, number][] | null {
+    const r = this.applied?.routes?.[key]
+    return r?.length && this.applied?.rig.connections.some((c) => cableKey(c.a, c.b) === key) ? r.map(([x, z]): [number, number] => [x, z]) : null
   }
 
   /** The key of the cable drawn with the Papier stroke right now (tests). */
@@ -1313,7 +1323,9 @@ export class SceneHost {
     const pa = this.portWorld(a)
     const pb = this.portWorld(b)
     if (pa && pb) {
-      this.cables?.addCable(key, pa, pb, [a, b]) // addCable replaces by key
+      // Mission 3 B: the stored route (design data) is the plan the cable's run follows; none = the automatic shape.
+      const route = this.applied?.routes?.[key]
+      this.cables?.addCable(key, pa, pb, [a, b], route?.length ? toXZ(route) : undefined) // addCable replaces by key
       if (this.cables?.highlighted === key) this.syncCableStroke() // a redrawn hovered cable is a new mesh
     }
   }

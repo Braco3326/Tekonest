@@ -190,6 +190,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   } catch (e) {
     return fail('no-webgl', e)
   }
+  // Mission 3 B: a hand-drawn route stays on the floor of the place on screen (SET_ROUTE clamps onto it, refuses one longer than its perimeter).
+  store.setRouteBounds(() => (host.scene ? host.roomBounds() : null))
   // « Choisir un lieu » (Task 12): its own lazy chunk (cards, grid keys) and the templates, fetched together.
   let loaded: [typeof import('./shell/placePicker'), Awaited<ReturnType<typeof loadTemplates>>]
   try {
@@ -2488,6 +2490,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     patchClick: (ref) => patch.click(ref),
     cableLengthM: (key) => host.cableLengthM(key),
     cablePoints: (key) => host.cablePoints(key),
+    cableRoute: (key) => host.cableRoute(key),
     cableSupportReport: (key) => host.cableSupportReport(key),
     floorAtM: (x, z) => host.floorHeight(x, z, 0),
     portDistanceM: (a, b) => {
