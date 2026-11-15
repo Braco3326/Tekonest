@@ -1237,7 +1237,7 @@ La page du schéma 2D (mission 2, spec `docs/superpowers/specs/2026-11-15-plan2d
 |---|---|---|---|
 | `plan2d.menu` | Schéma 2D | à valider (tekuxwriter) | Menu Vue (adresse d’entraînement seulement, jamais en examen) : ouvre la page du schéma 2D |
 | `plan2d.title` | Schéma 2D : {room} | à valider (tekuxwriter) | Titre (h2) de la page ; {room} = le nom du lieu ouvert |
-| `plan2d.intro` | Plan à l’échelle, en mètres. Posez le matériel, puis câblez-le par les panneaux arrière. Ce plan ne modifie pas la scène 3D. | à valider (tekuxwriter) | Sous le titre (description de la page) |
+| `plan2d.intro` | Plan à l’échelle, en mètres. Posez le matériel, puis câblez-le par les panneaux arrière. Ce plan ne change la scène 3D que si vous l’y envoyez. | à valider (tekuxwriter) | Sous le titre (description de la page) |
 | `plan2d.toolbar` | Outils du schéma | à valider (tekuxwriter) | `aria-label` de la barre d’outils |
 | `plan2d.undo` | Annuler | à valider (tekuxwriter) | Bouton : annule le dernier geste du plan (Ctrl+Z), jamais la scène 3D |
 | `plan2d.redo` | Rétablir | à valider (tekuxwriter) | Bouton (Ctrl+Y, Ctrl+Maj+Z) |
@@ -1329,6 +1329,36 @@ La page du schéma 2D (mission 2, spec `docs/superpowers/specs/2026-11-15-plan2d
 | `plan2d.entryDuplicate` | Dupliquer | à valider (tekuxwriter) | Libellé de l’étape annulable |
 | `plan2d.entryConnect` | Câbler {a} vers {b} | à valider (tekuxwriter) | Libellé de l’étape annulable |
 | `plan2d.entryDisconnect` | Retirer le câble | à valider (tekuxwriter) | Libellé de l’étape annulable |
+| `plan2d.spawn` | Envoyer dans la scène 3D | à valider (tekuxwriter) | Bouton de la barre d’outils : crée le matériel et les câbles du plan dans la scène 3D, après une confirmation ; jamais automatique |
+| `plan2d.spawnEmpty` | Plan vide : rien à envoyer dans la scène 3D. | à valider (tekuxwriter) | Raison du bouton « Envoyer dans la scène 3D » grisé (infobulle et description accessible) |
+| `plan2d.spawnTitle` | Envoyer dans la scène 3D | à valider (tekuxwriter) | Titre (h2) de la confirmation |
+| `plan2d.spawnBody` | À ajouter dans la scène 3D : {devices} et {cables}, aux mêmes places que sur le plan. Le matériel déjà dans la scène 3D ne bouge pas. | à valider (tekuxwriter) | Corps de la confirmation ; {devices} = « 2 appareils », {cables} = « 1 câble » |
+| `plan2d.spawnBodyRefused` | Ne peuvent pas être créés : {devices} et {cables} (le détail s’affiche après l’envoi). | à valider (tekuxwriter) | Ajouté au corps quand des appareils ou câbles ne tiennent pas |
+| `plan2d.spawnNothing` | Aucun appareil du plan ne peut être ajouté à côté du matériel déjà dans la scène 3D. | à valider (tekuxwriter) | Corps de la confirmation quand seul le remplacement est possible |
+| `plan2d.spawnAdd` | Ajouter | à valider (tekuxwriter) | Bouton principal de la confirmation : ajoute à côté du matériel existant |
+| `plan2d.spawnCancel` | Annuler | à valider (tekuxwriter) | Bouton de la confirmation (Échap) |
+| `plan2d.spawnReplaceBody` | Le matériel déjà dans la scène 3D sera retiré, puis celui du schéma posé aux mêmes places. {undo} dans la scène 3D permet de revenir en arrière. | à valider (tekuxwriter) | Corps de la seconde confirmation « Remplacer le matériel ? » (titre et boutons : `place.replaceTitle`, `place.replace`, `place.cancel`) ; {undo} = la touche d’annulation |
+| `plan2d.spawnCancelled` | Envoi annulé : la scène 3D n’a pas changé. | à valider (tekuxwriter) | Zone de statut de la page |
+| `plan2d.spawnFailed` | La scène 3D a refusé l’envoi : rien n’a changé. | à valider (tekuxwriter) | Zone de statut de la page (cas d’erreur) |
+| `plan2d.deviceOne` | {n} appareil | à valider (tekuxwriter) | Compte (0 ou 1) |
+| `plan2d.deviceMany` | {n} appareils | à valider (tekuxwriter) | Compte (2 et plus) |
+| `plan2d.cableOne` | {n} câble | à valider (tekuxwriter) | Compte (0 ou 1) |
+| `plan2d.cableMany` | {n} câbles | à valider (tekuxwriter) | Compte (2 et plus) |
+| `plan2d.entrySpawn` | Envoyer le schéma 2D | à valider (tekuxwriter) | Libellé de l’étape annulable de la scène 3D (Édition › Annuler) |
+| `plan2d.entryReplace` | Remplacer le matériel (schéma 2D) | à valider (tekuxwriter) | Libellé de l’étape annulable de la scène 3D (remplacement) |
+| `plan2d.reportTitle` | Envoi dans la scène 3D | à valider (tekuxwriter) | Titre (h3) du compte rendu, dans la colonne de droite |
+| `plan2d.reportAdded` | Ajoutés dans la scène 3D : {devices} et {cables}, aux mêmes places. {undo} dans la scène 3D les retire en une fois. | à valider (tekuxwriter) | Compte rendu (aussi dit dans la zone de statut) |
+| `plan2d.reportReplaced` | Matériel remplacé : {devices} et {cables} du schéma posés aux mêmes places. {undo} dans la scène 3D revient en arrière. | à valider (tekuxwriter) | Compte rendu du remplacement |
+| `plan2d.reportNone` | Rien n’a été créé dans la scène 3D. | à valider (tekuxwriter) | Compte rendu quand rien ne tient |
+| `plan2d.reportRefused` | Non créés : | à valider (tekuxwriter) | Titre de la liste des refus |
+| `plan2d.whyOutside` | {device} : en dehors du lieu. | à valider (tekuxwriter) | Refus : le centre de l’appareil est hors du sol (la règle de la pose en 3D) |
+| `plan2d.whyOverlap` | {device} : posé sur {other}, plus haut dans le plan. | à valider (tekuxwriter) | Refus : son encombrement chevauche un appareil du plan créé avant lui |
+| `plan2d.whyOverlapScene` | {device} : posé sur {other}, déjà dans la scène 3D. | à valider (tekuxwriter) | Refus : son encombrement chevauche un appareil au sol de la scène 3D |
+| `plan2d.whyUnknown` | {device} : appareil absent du catalogue. | à valider (tekuxwriter) | Refus : appareil inconnu |
+| `plan2d.whyStore` | {device} : refusé par la scène 3D ({reason}). | à valider (tekuxwriter) | Refus : la scène a refusé l’appareil (cas d’erreur) |
+| `plan2d.whyCableDevice` | Câble {a} vers {b} : {device} n’a pas été créé. | à valider (tekuxwriter) | Refus d’un câble dont un appareil manque |
+| `plan2d.whyCableRule` | Câble {a} vers {b} : {title} {detail} | à valider (tekuxwriter) | Refus d’un câble par les règles de connexion ; {title} et {detail} = le texte de la règle, celui de la barre d’état 3D |
+| `plan2d.show3d` | Voir la scène 3D | à valider (tekuxwriter) | Bouton du compte rendu : ferme la page sur la vue 3D, le nouveau matériel sélectionné et cadré |
 
 ## Textes hors COPY (index.html)
 
