@@ -55,6 +55,10 @@ button.addEventListener('click', () => void ui.open())
 
 `service` is for tests only (the in-memory fake). Without it the Supabase adapter is imported dynamically (its own chunk) and configured from `import.meta.env.VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at build time. With either missing, every call answers `{ ok:false, reason:'not-configured' }` and the dialogs say so in French.
 
+### In Mode Création (mission 1, part D)
+
+`src/creation/onboarding/accountWiring.ts` (`wireAccounts`) is the integration; `boot.ts` imports it only under `FEATURES.accounts` on a practice address. It adds « Mon compte » and, while signed out, « Se connecter » at the end of the Projet menu; the dialogs and `schools.json` are fetched on the first use of either (or at boot when the address carries a sign-in redirect, `code=` / `access_token=`). The quiet card « Enregistrez votre travail » (copy section `accountPrompt`) shows once, after the plain tutorial ends or the first sound, whichever comes first, only where the plain tutorial is the address's tutorial (where the guide runs, its own tutorial owns that moment), never on an exam address; it takes the tutorial's reserved row only while it is free, opens sign-up (or log-in), and any of its buttons stores `accountPrompt: 'dismissed'` in the onboarding record. With the switch off nothing of it runs: the product e2e (`tests/e2e/onboarding-plain-tutorial.spec.ts`) asserts no request to a Supabase host, no accounts chunk fetched, no account words and no account storage key. The FEATURES table is an object, so Rollup does not fold the switch: the lazy chunks are still emitted in a product build, never fetched.
+
 ## No secrets in the repository
 
 No key, URL or project reference is committed; `tests/accounts/noSecrets.test.ts` scans `src`, `supabase`, `tools`, `docs` and `.env*` for JWT-looking strings and provider hosts. Row-level security (`supabase/schema.sql`) protects the data; the anon key is public by design. NOTE: `tools/deploy-guard.mjs` refuses any `VITE_*KEY` variable at deploy time, `VITE_SUPABASE_ANON_KEY` included. Allowing that one name is a founder decision (see `supabase/README.md`).
