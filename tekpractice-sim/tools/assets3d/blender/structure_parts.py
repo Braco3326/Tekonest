@@ -400,7 +400,7 @@ def make_rod(k: Kit, params: dict[str, float], c1: str, c2: str) -> None:
 def make_ball(k: Kit, params: dict[str, float], c1: str, c2: str) -> None:
     """A sphere (a joint, a ball end): diaMm, centre zMm above the surface."""
     r = _p(params, 'diaMm', 10.0) * MM / 2
-    cz = _p(params, 'zMm', 0.0) * MM
+    cz = 0.0   # the zMm lift is applied once for every kind in apply_structure (frame_of)
     rings = []
     stations = [(-1.0, 0.0), (-0.8, 0.6), (-0.4, 0.917), (0.0, 1.0), (0.4, 0.917), (0.8, 0.6), (1.0, 0.0)]
     n = 14
