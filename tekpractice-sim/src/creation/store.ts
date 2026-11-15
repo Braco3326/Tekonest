@@ -19,6 +19,14 @@ import { phantomCheck } from '../logic/phantom'
 import { gpioCheck } from '../logic/gpio'
 import { mixMinusCheck } from '../logic/mixMinus'
 import { clockCheck } from '../logic/clock'
+import { cableKey } from './sceneDiff'
+import { MAX_ROUTE_POINTS, clampToRoom, fromXZ, planLengthM, readRoute, toXZ, type FloorBounds } from '../scene/cableRoute'
+
+/** A cable's hand-drawn route (mission 3 B): plan points [x, z] in metres. */
+type Route = [number, number][]
+/** Without a known room, the longest route accepted (m); with one, twice the room's width plus length (its perimeter). */
+const MAX_ROUTE_LENGTH_M = 500
+const copyRoute = (r: readonly (readonly [number, number])[]): Route => r.map(([x, z]): [number, number] => [x, z])
 
 /** The Mode Création evaluator: every domain rule R4–R8 (legacy sandbox parity). */
 export function creationEvaluator(registry: Registry): RuleEvaluator {
@@ -129,6 +137,9 @@ export class CreationStore {
   private rev = 0
   private seq = new Map<string, number>()
   private subs = new Set<(c: StoreChange) => void>()
+  /** Mission 3 B: the hand-drawn routes, by cable key (design data; the graph never sees them). */
+  private routes = new Map<string, Route>()
+  private routeBounds: ((roomId: string | null) => FloorBounds | null) | null = null
   /** How the initial design loaded. On failure the store starts empty (never throws). */
   readonly initialLoad: LoadReport
 
@@ -155,7 +166,23 @@ export class CreationStore {
 
   /** A fresh deep copy: mutating it never touches the store. */
   design(): DesignState {
-    return clone(captureDesignFrom(this.graph.snapshot(), this.placements, this.roomId))
+    const d = captureDesignFrom(this.graph.snapshot(), this.placements, this.roomId)
+    // No route = no `routes` field: a design without one is byte-identical to before mission 3 B.
+    return clone(this.routes.size ? { ...d, routes: Object.fromEntries(this.routes) } : d)
+  }
+
+  /** Mission 3 B: the stored route of a cable (a copy), or null for the automatic shape. */
+  route(key: string): Route | null {
+    const r = this.routes.get(key)
+    return r ? copyRoute(r) : null
+  }
+
+  /**
+   * Mission 3 B: the floor rectangle of the room a route is drawn in (the shell passes the room on screen). With it, SET_ROUTE clamps a point outside the
+   * floor onto it and refuses a route longer than the room's perimeter; without it only the point count and an absolute length are checked.
+   */
+  setRouteBounds(fn: ((roomId: string | null) => FloorBounds | null) | null): void {
+    this.routeBounds = fn
   }
 
   /** RuleEvaluator output (R4–R8) after the last change. */
@@ -329,10 +356,52 @@ export class CreationStore {
           dropped: built.dropped,
         }
       }
+      case 'SET_ROUTE':
+        return this.setRoute(intent.key, intent.points)
       case 'LOAD_RIG':
       case 'RESTORE_INSTANCE':
         return fail('UNSUPPORTED', `${intent.type} is a legacy-only intent`)
     }
+  }
+
+  /**
+   * Mission 3 B (spec §3): set or clear a cable's route. Refused (nothing changes) for a key that is no cable, points that are not finite [x, z] pairs,
+   * more than MAX_ROUTE_POINTS points, or a route longer than the room allows. A point outside the room's floor is clamped onto it (clampToRoom).
+   */
+  private setRoute(key: unknown, points: unknown): DispatchResult {
+    if (typeof key !== 'string') return fail('INVALID_ROUTE', 'the route key must be a cable key')
+    const conn = this.connectionByKey(key)
+    if (!conn) return fail('UNKNOWN_CONNECTION', `no cable "${key}"`)
+    const k = cableKey(conn.a, conn.b)
+    const before = this.routes.get(k)
+    const undo: Intent[] = [{ type: 'SET_ROUTE', key: k, points: before ? copyRoute(before) : null }]
+    if (points === null || (Array.isArray(points) && points.length === 0)) {
+      this.routes.delete(k)
+      return { ok: true, normalized: { type: 'SET_ROUTE', key: k, points: null }, inverse: undo }
+    }
+    if (Array.isArray(points) && points.length > MAX_ROUTE_POINTS) return fail('ROUTE_TOO_LONG', `a route has at most ${MAX_ROUTE_POINTS} points`)
+    const read = readRoute(points)
+    if (!read) return fail('INVALID_ROUTE', 'route points must be finite [x, z] pairs in metres')
+    let bounds: FloorBounds | null = null
+    try {
+      bounds = this.routeBounds?.(this.roomId) ?? null
+    } catch {
+      bounds = null
+    }
+    const pts = bounds ? fromXZ(clampToRoom(toXZ(read), bounds)) : read
+    const maxLength = bounds ? 2 * (bounds.maxX - bounds.minX + (bounds.maxZ - bounds.minZ)) : MAX_ROUTE_LENGTH_M
+    if (planLengthM(toXZ(pts)) > maxLength) return fail('ROUTE_TOO_LONG', `a route is at most ${maxLength.toFixed(1)} m long here`)
+    this.routes.set(k, pts)
+    return { ok: true, normalized: { type: 'SET_ROUTE', key: k, points: copyRoute(pts) }, inverse: undo }
+  }
+
+  /** The route of a cable that is going away, as the intent that puts it back (none when it had no route); the route is forgotten. */
+  private takeRoute(a: PortRef, b: PortRef): Intent[] {
+    const k = cableKey(a, b)
+    const r = this.routes.get(k)
+    if (!r) return []
+    this.routes.delete(k)
+    return [{ type: 'SET_ROUTE', key: k, points: copyRoute(r) }]
   }
 
   private spawn(intent: Extract<Intent, { type: 'SPAWN' }>): DispatchResult {
@@ -393,10 +462,12 @@ export class CreationStore {
     }
     // SPAWN always places; a device that had no placement gets it cleared again.
     const unplace: Intent[] = p ? [] : [{ type: 'CLEAR_POSE', instanceId }]
+    // Its cables' routes go with them; the undo draws them again once the cables are back (none = the inverse is exactly the old one).
+    const rewind = wires.flatMap((w) => this.takeRoute(w.a, w.b))
     return {
       ok: true,
       normalized: { type: 'REMOVE', instanceId },
-      inverse: [respawn, ...unplace, ...wires.map((w): Intent => ({ type: 'CONNECT', a: ref(w.a), b: ref(w.b) }))],
+      inverse: [respawn, ...unplace, ...wires.map((w): Intent => ({ type: 'CONNECT', a: ref(w.a), b: ref(w.b) })), ...rewind],
     }
   }
 
@@ -417,7 +488,9 @@ export class CreationStore {
       return fail('UNKNOWN_CONNECTION', `${a.instance}.${a.port} and ${b.instance}.${b.port} are not cabled together`, [ref(a), ref(b)])
     const r = this.graph.disconnect(id)
     if (!r.ok) return fail(r.code, r.message, [ref(a), ref(b)])
-    return { ok: true, normalized: { type: 'UNPLUG', a: ref(a), b: ref(b) }, inverse: [{ type: 'CONNECT', a: ref(a), b: ref(b) }] }
+    // Unplugged, the cable takes its route with it (a new CONNECT starts automatic); the undo puts the route back after the cable.
+    const rewind = this.takeRoute(a, b)
+    return { ok: true, normalized: { type: 'UNPLUG', a: ref(a), b: ref(b) }, inverse: [{ type: 'CONNECT', a: ref(a), b: ref(b) }, ...rewind] }
   }
 
   // ── helpers ───────────────────────────────────────────────────────────────
@@ -433,7 +506,7 @@ export class CreationStore {
   private build(
     design: unknown,
   ):
-    | { ok: true; graph: ConnectionGraph; placements: Map<string, Placement>; roomId: string | null; ids: string[]; dropped: DroppedItems }
+    | { ok: true; graph: ConnectionGraph; placements: Map<string, Placement>; roomId: string | null; ids: string[]; dropped: DroppedItems; routes: Map<string, Route> }
     | { ok: false; code: string; message: string } {
     try {
       const shape = designShapeError(design)
@@ -459,9 +532,20 @@ export class CreationStore {
         const to = dev?.portAliases?.[r.port]
         return to !== undefined && !dev!.ports.some((p) => p.portId === r.port) && dev!.ports.some((p) => p.portId === to) ? { instance: r.instance, port: to } : r
       }
+      // Mission 3 B: a route is kept with its cable (under the cable's current key, a saved one may name an aliased port); a route whose cable is not
+      // built, or whose points are unusable, is dropped with no report (design data, spec §3: the quarantine note is not involved).
+      const savedRoutes = isObj((d as { routes?: unknown }).routes) ? ((d as { routes?: unknown }).routes as Record<string, unknown>) : null
+      const savedRoute = (key: string): Route | null =>
+        savedRoutes && Object.prototype.hasOwnProperty.call(savedRoutes, key) ? readRoute(savedRoutes[key]) : null
+      const routes = new Map<string, Route>()
       for (const c of d.rig.connections) {
         const r = graph.connect(current(c.a), current(c.b))
         if (!r.ok) dropped.cables.push({ a: ref(c.a), b: ref(c.b), code: r.code, message: r.message })
+        else if (savedRoutes) {
+          const key = cableKey(current(c.a), current(c.b))
+          const pts = savedRoute(key) ?? savedRoute(cableKey(c.a, c.b))
+          if (pts?.length) routes.set(key, pts)
+        }
       }
       for (const [instance, ctrls] of Object.entries(d.rig.controls))
         for (const [control, value] of Object.entries(ctrls)) {
@@ -481,22 +565,28 @@ export class CreationStore {
           placements.set(p.instanceId, makePlacement(p.instanceId, p.deviceId, p.position_m, p.yawDeg, p.tiltDeg, p.mount))
       if (dropped.devices.length || dropped.cables.length || dropped.controls.length || dropped.placements.length)
         console.warn('[creation] design loaded with dropped items', dropped)
-      return { ok: true, graph, placements, roomId: d.roomId, ids, dropped }
+      return { ok: true, graph, placements, roomId: d.roomId, ids, dropped, routes }
     } catch (e) {
       return { ok: false, code: 'INVALID_DESIGN', message: e instanceof Error ? e.message : String(e) }
     }
   }
 
   /** Swap a built design in (cannot fail). */
-  private commit(built: { graph: ConnectionGraph; placements: Map<string, Placement>; roomId: string | null; ids: string[] }): void {
+  private commit(built: { graph: ConnectionGraph; placements: Map<string, Placement>; roomId: string | null; ids: string[]; routes: Map<string, Route> }): void {
     this.graph = built.graph
     this.placements = built.placements
     this.roomId = built.roomId
+    this.routes = built.routes
     for (const id of built.ids) this.bumpSeq(id)
   }
 
   private connectionById(id: string): { a: PortRef; b: PortRef } | undefined {
     for (const c of this.graph.getConnections()) if (this.graph.connectionAt(c.a) === id) return c
+    return undefined
+  }
+
+  private connectionByKey(key: string): { a: PortRef; b: PortRef } | undefined {
+    for (const c of this.graph.getConnections()) if (cableKey(c.a, c.b) === key) return c
     return undefined
   }
 

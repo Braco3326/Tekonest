@@ -42,6 +42,12 @@ export interface DesignState {
     controls: Record<string, Record<string, ControlValue>>
   }
   placements: Placement[]
+  /**
+   * Mode Création, hand-drawn cables (mission 3 B): a cable's route, keyed by `cableKey(a, b)` (src/creation/sceneDiff.ts), as plan points `[x, z]` in
+   * metres on the floor (the height is the floor's). Absent or empty = the automatic shape. Design data only: the engine, the signal flow and the logic
+   * checks never read it, and a design with no route has no `routes` field at all (old designs stay byte-identical).
+   */
+  routes?: Record<string, [number, number][]>
 }
 
 /**

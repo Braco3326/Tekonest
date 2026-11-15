@@ -48,6 +48,11 @@ export type Intent =
    * replay it after connection ids changed. History records DISCONNECT as UNPLUG.
    */
   | { type: 'UNPLUG'; a: PortRef; b: PortRef }
+  /**
+   * Mode Création, hand-drawn cables (mission 3 B): set the route of the cable `key` (`cableKey(a, b)`), plan points `[x, z]` in metres between its two
+   * ports; null or [] = back to the automatic shape. Design data only (the rig's connections never change); its inverse is the previous route.
+   */
+  | { type: 'SET_ROUTE'; key: string; points: [number, number][] | null }
   /** Sandbox (ADR-0010): pick a placed device back up (its cables are unplugged). */
   | { type: 'REMOVE'; instanceId: string }
   /** Sandbox (ADR-0005): rebuild a saved rig — clear stage, respawn, rewire. */
