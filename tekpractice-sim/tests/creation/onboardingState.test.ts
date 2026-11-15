@@ -4,6 +4,7 @@
  */
 import { describe, expect, it } from 'vitest'
 import {
+  chipGoal,
   chipProfile,
   createOnboardingStore,
   entryStage,
@@ -242,5 +243,68 @@ describe('two tabs on one storage (T6 review S4): a write reduces from what is S
     const a = createOnboardingStore(st)
     expect(a.blocked).toBe(true)
     expect(a.dispatch({ type: 'request' }).request).toBe(1)
+  })
+})
+
+describe('the goal (mission 1, spec 3): an optional field, old records read unchanged', () => {
+  const goal = { goal: 'metier', sub: 'metier-studio', speciality: 'metier-mastering' }
+
+  it('an answer with a goal writes the goal and the profile the goal maps to (the caller derives it), with the offer', () => {
+    expect(reduce(null, { type: 'answer', profile: 'metier', offer: 'skipped', goal })).toEqual({ ...fresh, profile: 'metier', offer: 'skipped', goal })
+    expect(reduce(null, { type: 'answer', profile: 'metier', offer: 'taken', goal })).toEqual({ ...fresh, profile: 'metier', offer: 'taken', request: 1, goal })
+  })
+
+  it('« Passer » on the goal screens stores no goal and no profile: the record exists, so nothing is asked again', () => {
+    const r = reduce(null, { type: 'answer', profile: null, offer: null, goal: null })
+    expect(r).toEqual({ ...fresh, goal: null })
+    expect(entryStage({ design: true, tutorialAllowed: true, restored: false, record: r })).toBe('picker')
+    expect(entryStage({ design: true, tutorialAllowed: false, restored: false, record: r })).toBe('picker')
+  })
+
+  it('an answer without a goal (the four profiles) leaves a stored goal as it is; a new goal replaces it', () => {
+    const withGoal = reduce(null, { type: 'answer', profile: 'metier', offer: 'skipped', goal })
+    expect(reduce(withGoal, { type: 'answer', profile: 'etudie', offer: 'skipped' }).goal).toEqual(goal)
+    const other = { goal: 'etudier', sub: 'etudier-cours', speciality: 'etudier-tp' }
+    expect(reduce(withGoal, { type: 'answer', profile: 'etudie', offer: null, goal: other })).toEqual({ ...withGoal, profile: 'etudie', goal: other })
+    expect(reduce(withGoal, { type: 'answer', profile: null, offer: null, goal: null }).goal).toBeNull()
+  })
+
+  it('parseRecord: a record with no goal field is read unchanged (no field added); null and a full path are kept', () => {
+    const old = { v: 1, profile: 'etudie', offer: 'skipped', request: 2, shown: ['console'] }
+    expect(parseRecord(JSON.stringify(old))).toEqual(old)
+    expect('goal' in parseRecord(JSON.stringify(old))!).toBe(false)
+    expect(parseRecord(JSON.stringify({ ...old, goal: null }))).toEqual({ ...old, goal: null })
+    expect(parseRecord(JSON.stringify({ ...old, goal }))).toEqual({ ...old, goal })
+    // the own-gear field and the kind still come through next to it
+    expect(parseRecord(JSON.stringify({ ...old, goal, ownGear: 'dismissed', kind: 'skip' }))).toEqual({ ...old, goal, ownGear: 'dismissed', kind: 'skip' })
+  })
+
+  it.each([
+    ['a string', 'metier'],
+    ['a number', 3],
+    ['an array', ['metier', 'metier-studio', 'metier-mastering']],
+    ['a missing speciality', { goal: 'metier', sub: 'metier-studio' }],
+    ['an empty id', { goal: 'metier', sub: '', speciality: 'metier-mastering' }],
+    ['a non-string id', { goal: 'metier', sub: 'metier-studio', speciality: 4 }],
+  ])('parseRecord: a corrupt goal (%s) drops the whole record, as any corrupt field does', (_n, bad) => {
+    expect(parseRecord(JSON.stringify({ ...fresh, goal: bad }))).toBeNull()
+  })
+
+  it('parseRecord keeps only the three ids of a goal (an extra key is not carried along)', () => {
+    expect(parseRecord(JSON.stringify({ ...fresh, goal: { ...goal, extra: 1 } }))?.goal).toEqual(goal)
+  })
+
+  it('chipGoal: the stored goal under the onboarding only; null without one, or without a record, or without the onboarding', () => {
+    const r = reduce(null, { type: 'answer', profile: 'metier', offer: 'skipped', goal })
+    expect(chipGoal({ design: true, record: r })).toEqual(goal)
+    expect(chipGoal({ design: false, record: r })).toBeNull()
+    expect(chipGoal({ design: true, record: null })).toBeNull()
+    expect(chipGoal({ design: true, record: { ...fresh, profile: 'etudie' } })).toBeNull()
+  })
+
+  it('the store writes the goal and reads it back over a reload', () => {
+    const st = fakeStorage()
+    createOnboardingStore(st).dispatch({ type: 'answer', profile: 'metier', offer: 'skipped', goal })
+    expect(createOnboardingStore(st).read()?.goal).toEqual(goal)
   })
 })

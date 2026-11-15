@@ -10,8 +10,14 @@
  * The record is `{ v: 1, profile, offer, request, shown }`. `request` is the guide's trigger: it goes up on « Faire le tutoriel » and on
  * Aide « Premiers pas », and the guide starts the tutorial only when `request` is above its own `handledRequest` (spec 4.4). `shown` holds the
  * ids of the tutorial steps already shown; the tutorial (plan T3) owns what is in it, the machine only keeps it well-formed.
+ * Mission 1 (spec 3): an optional `goal` (the goal screens' answer: goal, sub-choice, speciality ids, or null for « Passer »). A record written before it has no
+ * field and reads unchanged; a goal that is not well-formed drops the record like any corrupt field. The `profile` stays: the answer derives it from the goal
+ * (the goal tree's `profile`), so the panels and the drawer tab of profiles.ts keep working.
  */
 import type { StepId } from '../../design/packages'
+import type { GoalChoice } from './goalTree'
+
+export type { GoalChoice } from './goalTree'
 
 export const ONBOARDING_KEY = 'audio-sim/creation-onboarding.v1'
 
@@ -41,6 +47,11 @@ export interface OnboardingRecord {
    * record written before it, and every record of a learner who never dismissed it). A value this code does not know is ignored on read, never a reason to drop the record.
    */
   ownGear?: 'dismissed'
+  /**
+   * The goal screens' answer (mission 1): the three ids, or null when the learner pressed « Passer » (no goal: every room shows, nothing asks again). Absent = the
+   * record was written before the goals, or by the four profiles (a package that asks them).
+   */
+  goal?: GoalChoice | null
 }
 
 /** The slice of `Storage` the store needs (tests pass a fake). */
@@ -67,8 +78,11 @@ export function entryStage(i: { design: boolean; tutorialAllowed: boolean; resto
 }
 
 export type OnboardingEvent =
-  /** The learner answered: the profile and the answer to the offer together (`offer` null = no offer was made, `?oscar=0`: an earlier answer is kept). */
-  | { type: 'answer'; profile: ProfileId; offer: OfferAnswer | null }
+  /**
+   * The learner answered: the profile and the answer to the offer together (`offer` null = no offer was made, `?oscar=0`: an earlier answer is kept). With `goal` (the
+   * goal screens) the goal is written too and `profile` is the one the goal maps to (null with `goal: null`, « Passer »); without it a stored goal is left as it is.
+   */
+  | { type: 'answer'; profile: ProfileId | null; offer: OfferAnswer | null; goal?: GoalChoice | null }
   /** Aide « Premiers pas » (start), « Recommencer » (restart), « Passer le tutoriel » (skip): the tutorial is asked for again; the earlier answer stays. */
   | { type: 'request'; kind?: RequestKind }
   /** The learner dismissed the entrepreneur's card (T6.4). */
@@ -85,13 +99,25 @@ export function reduce(rec: OnboardingRecord | null, ev: OnboardingEvent): Onboa
     return kind === 'start' ? rest : { ...rest, kind }
   }
   switch (ev.type) {
-    case 'answer':
-      return ev.offer === 'taken' ? asking({ ...cur, profile: ev.profile, offer: ev.offer, request: cur.request + 1 }, 'start') : { ...cur, profile: ev.profile, offer: ev.offer ?? cur.offer }
+    case 'answer': {
+      const base: OnboardingRecord = ev.goal === undefined ? cur : { ...cur, goal: ev.goal === null ? null : { goal: ev.goal.goal, sub: ev.goal.sub, speciality: ev.goal.speciality } }
+      return ev.offer === 'taken' ? asking({ ...base, profile: ev.profile, offer: ev.offer, request: cur.request + 1 }, 'start') : { ...base, profile: ev.profile, offer: ev.offer ?? cur.offer }
+    }
     case 'request':
       return asking({ ...cur, request: cur.request + 1 }, ev.kind ?? 'start')
     case 'ownGear':
       return { ...cur, ownGear: ev.value }
   }
+}
+
+const goalId = (v: unknown): v is string => typeof v === 'string' && v !== ''
+
+/** A stored goal: null, or exactly three non-empty ids (only those are kept); undefined = not well-formed. */
+function parseGoal(v: unknown): GoalChoice | null | undefined {
+  if (v === null) return null
+  if (typeof v !== 'object' || Array.isArray(v)) return undefined
+  const g = v as Record<string, unknown>
+  return goalId(g.goal) && goalId(g.sub) && goalId(g.speciality) ? { goal: g.goal, sub: g.sub, speciality: g.speciality } : undefined
 }
 
 /** The record in `raw`, or null when it is missing or malformed in any field (a corrupt record is replaced, never repaired). */
@@ -111,9 +137,12 @@ export function parseRecord(raw: string | null): OnboardingRecord | null {
   if (typeof r.request !== 'number' || !Number.isSafeInteger(r.request) || r.request < 0) return null
   if (!Array.isArray(r.shown) || !r.shown.every((s) => typeof s === 'string')) return null
   if (r.kind !== undefined && r.kind !== 'restart' && r.kind !== 'skip') return null
+  const goal = r.goal === undefined ? undefined : parseGoal(r.goal)
+  if (r.goal !== undefined && goal === undefined) return null
   const base: OnboardingRecord = { v: 1, profile: r.profile as ProfileId | null, offer: r.offer as OfferAnswer | null, request: r.request, shown: r.shown as StepId[] }
   const withKind: OnboardingRecord = r.kind === undefined ? base : { ...base, kind: r.kind }
-  return r.ownGear === 'dismissed' ? { ...withKind, ownGear: 'dismissed' } : withKind
+  const withGear: OnboardingRecord = r.ownGear === 'dismissed' ? { ...withKind, ownGear: 'dismissed' } : withKind
+  return goal === undefined ? withGear : { ...withGear, goal }
 }
 
 export interface OnboardingStore {
@@ -170,4 +199,9 @@ export function createOnboardingStore(storage: StorageLike | null): OnboardingSt
  */
 export function chipProfile(i: { design: boolean; record: OnboardingRecord | null }): ProfileId | null {
   return i.design && i.record !== null ? i.record.profile : null
+}
+
+/** The goal the chip « But : X · changer » names, or null (the chip then says « Choisir un but »). Only with the onboarding on, and only once a goal was chosen. */
+export function chipGoal(i: { design: boolean; record: OnboardingRecord | null }): GoalChoice | null {
+  return i.design && i.record !== null ? (i.record.goal ?? null) : null
 }
