@@ -29,12 +29,12 @@ describe('the shipped product table', () => {
   it('has the assistant off, the learning game off, the inbox dark, the goals and the plain tutorial on, the accounts off, and design 2 by default', () => {
     expect(table('src/features.ts')).toEqual({
       levels: false, legacyPages: false, guide: false, guideLegacy: false, guideInbox: false,
-      goals: true, plainTutorial: true, accounts: false, plan2d: true, defaultDesign: 2,
+      goals: true, plainTutorial: true, accounts: false, plan2d: true, cableTrace: true, defaultDesign: 2,
     })
   })
 
   it('keeps the key order the deploy guard reads (tools/deploy-flag-guard.mjs)', () => {
-    expect(Object.keys(table('src/features.ts'))).toEqual(['levels', 'legacyPages', 'guide', 'guideLegacy', 'guideInbox', 'goals', 'plainTutorial', 'accounts', 'plan2d', 'defaultDesign'])
+    expect(Object.keys(table('src/features.ts'))).toEqual(['levels', 'legacyPages', 'guide', 'guideLegacy', 'guideInbox', 'goals', 'plainTutorial', 'accounts', 'plan2d', 'cableTrace', 'defaultDesign'])
   })
 
   it('the all-on table of the tests differs from it only by the switches that bring the assistant, the learning pages and the accounts back, and has no default design', () => {
@@ -50,5 +50,6 @@ describe('the shipped product table', () => {
     expect(full.goals).toBe(true)
     expect(full.plainTutorial).toBe(true)
     expect(full.plan2d, 'mission 2: the 2D schema page is on in both tables').toBe(true)
+    expect(full.cableTrace, 'mission 3 B: the hand-drawn cables are on in both tables').toBe(true)
   })
 })

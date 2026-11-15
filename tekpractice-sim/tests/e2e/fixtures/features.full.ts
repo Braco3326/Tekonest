@@ -11,6 +11,7 @@ export interface Features {
   plainTutorial?: boolean
   accounts?: boolean
   plan2d?: boolean
+  cableTrace?: boolean
   defaultDesign?: 1 | 2 | 3 | 4 | 5
 }
-export const FEATURES: Features = { levels: false, legacyPages: true, guide: true, guideLegacy: false, guideInbox: false, goals: true, plainTutorial: true, accounts: true, plan2d: true }
+export const FEATURES: Features = { levels: false, legacyPages: true, guide: true, guideLegacy: false, guideInbox: false, goals: true, plainTutorial: true, accounts: true, plan2d: true, cableTrace: true }

@@ -1,9 +1,9 @@
 // The deploy build must never carry a test switch. tools/build-site.mjs blanks TP_TEST_FEATURES for Vite, and this is the proof on the output: after the
 // build, no JavaScript file of the output may hold a feature table with the guide's inbox, the assistant (`guide`), the learning pages (`legacyPages`) or the
 // accounts (`accounts`, mission 1: until the founder approves the privacy text and supplies the keys) switched on, and the product's own table must be in it
-// (those off, the goal screens, the plain tutorial and the 2D schema page on, design 2 by default). In a minified chunk a flag reads `!0` (on) or `!1` (off); an unminified or
+// (those off, the goal screens, the plain tutorial, the 2D schema page and the hand-drawn cables on, design 2 by default). In a minified chunk a flag reads `!0` (on) or `!1` (off); an unminified or
 // hand-written table reads `true` / `false`. The table is written in this key order: levels, legacyPages, guide, guideLegacy, guideInbox, goals, plainTutorial,
-// accounts, plan2d, defaultDesign (src/features.ts). Pure helpers, no side effects except reading files.
+// accounts, plan2d, cableTrace, defaultDesign (src/features.ts). Pure helpers, no side effects except reading files.
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 
@@ -23,10 +23,10 @@ const OFF = '(?:!1|false)'
 const ON = '(?:!0|true)'
 /**
  * The product's table: levels, the learning pages, the assistant and its level-page switch and the inbox off, the goal screens and the plain tutorial on, the accounts
- * off, design 2 by default (mission 1), the 2D schema page on (mission 2).
+ * off, design 2 by default (mission 1), the 2D schema page on (mission 2), the hand-drawn cables on (mission 3 B).
  */
 export const PRODUCT_TABLE = new RegExp(
-  [['levels', OFF], ['legacyPages', OFF], ['guide', OFF], ['guideLegacy', OFF], ['guideInbox', OFF], ['goals', ON], ['plainTutorial', ON], ['accounts', OFF], ['plan2d', ON], ['defaultDesign', '2']]
+  [['levels', OFF], ['legacyPages', OFF], ['guide', OFF], ['guideLegacy', OFF], ['guideInbox', OFF], ['goals', ON], ['plainTutorial', ON], ['accounts', OFF], ['plan2d', ON], ['cableTrace', ON], ['defaultDesign', '2']]
     .map(([k, v]) => `\\b${k}\\s*:\\s*${v}`)
     .join('\\s*,\\s*') + '(?![\\w$])',
 )
@@ -69,7 +69,7 @@ export function formatFlagRefusal(paths) {
 
 export function formatMissingTableRefusal() {
   return [
-    '[build-site] REFUSED: the build output does not carry the product feature table (levels, legacyPages, guide, guideLegacy, guideInbox, accounts off; goals, plainTutorial, plan2d on; defaultDesign 2).',
+    '[build-site] REFUSED: the build output does not carry the product feature table (levels, legacyPages, guide, guideLegacy, guideInbox, accounts off; goals, plainTutorial, plan2d, cableTrace on; defaultDesign 2).',
     'Either src/features.ts changed its key order or names, or the build was not made from it. Nothing is proved, so nothing ships. The output was removed.',
   ].join('\n')
 }
