@@ -19,6 +19,7 @@
  * `supportReport` measures any drawn polyline against the same surface: the e2e oracle that no cable flies.
  */
 import type { P3 } from './cablePath'
+import { roundCorners } from './cableRoute'
 
 export interface XZ {
   x: number
@@ -209,6 +210,8 @@ export interface GravityOptions {
   tolM?: number
   /** False: no connector or drop bends (the budget's coarse shape). */
   arcs?: boolean
+  /** Part B: round the route's corners (cableRoute.roundCorners: a short arc, radius up to 0.15 m, at most a third of a segment). Absent = sharp corners. */
+  round?: boolean
 }
 
 interface Sample {
@@ -380,9 +383,11 @@ export function gravityPath(a: GravityEnd, b: GravityEnd, support: Support, opts
   const bendB = connectorBend(b, support, c, arcs)
   const tipA = bendA.at(-1) ?? cp(a.at)
   const tipB = bendB.at(-1) ?? cp(b.at)
-  const plan: XZ[] = [{ x: tipA.x, z: tipA.z }, ...(opts.route ?? []).map((q) => ({ x: q.x, z: q.z })), { x: tipB.x, z: tipB.z }].filter(
+  const sharp: XZ[] = [{ x: tipA.x, z: tipA.z }, ...(opts.route ?? []).map((q) => ({ x: q.x, z: q.z })), { x: tipB.x, z: tipB.z }].filter(
     (q, i, all) => i === 0 || dist2(all[i - 1]!, q) > 1e-6
   )
+  // Part B: the route's corners rounded on the plan actually drawn (the two bend tips included), the arc points being route corners like any other.
+  const plan: XZ[] = opts.round && opts.route?.length ? roundCorners(sharp) : sharp
   if (plan.length === 1) plan.push({ ...plan[0]! })
   const samples = sampleRun(plan, support)
   const runY = envelope(samples).map((h) => h + c)
