@@ -1087,6 +1087,36 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     chipHint: 'Rouvre l’écran de départ.',
     /** Said on the status line when « Premiers pas » asked to open the playable model over the learner's bench and the learner declined the replacement. */
     modelDeclined: 'Le tutoriel de ce parcours se fait sur le modèle déjà câblé : il n’a pas été lancé, votre montage est inchangé.',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). Heading of goal screen 1 (the five goals, keys 1 to 5). No accented letter (the title font, see startTitle). */
+    goalTitle: 'Bienvenue : que voulez-vous faire ?',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). Under the heading of goal screen 1. */
+    goalLead: 'Vous pourrez changer de but à tout moment.',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). Heading of goal screen 2 (the children of the chosen goal). No accented letter. */
+    goalSubTitle: 'Lequel vous correspond le mieux ?',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). Heading of goal screen 3 (the children of the chosen level-2 choice, when it has any). No accented letter. */
+    goalLeafTitle: 'Et dans ce domaine, lequel ?',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). Above goal screens 2 and 3: what was chosen so far; {path} = the labels joined by « › ». */
+    goalPath: 'Votre choix : {path}',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). Goal screens 2 and 3: one screen up (and Échap). */
+    goalBack: 'Retour',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). Every goal screen: no goal; every place stays in the picker and nothing asks again. */
+    goalSkip: 'Passer',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). Above the tutorial offer when the goal screens asked; {goal} = the label of the chosen node. */
+    offerGoal: 'Votre but : {goal}',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). The chip in the status bar once a goal is stored (reopens goal screen 1); {goal} = the label of the chosen node. */
+    goalChip: 'But : {goal} · changer',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). The same chip while no goal is stored. */
+    goalChipChoose: 'Choisir un but',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). The place picker, while it shows only the rooms of the stored goal; {goal} = the label of the chosen node. */
+    goalFilterNote: 'Lieux pour votre but : {goal}',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). The picker button that goes back to the rooms of the goal after « Tous les lieux ». */
+    goalShowGoal: 'Lieux de votre but',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). The picker's empty state: the goal lists no room (or none of the chosen type). */
+    goalEmpty: 'Aucun lieu pour ce but pour l’instant',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). Empty state: every place. */
+    goalEmptyAll: 'Voir tous les lieux',
+    /** Mission 1 (goal screens and goal filter, spec 1.2 and 1.3). Empty state: reopens goal screen 1. */
+    goalEmptyChange: 'Changer de but',
   },
   /**
    * The entrepreneur's card after the first sound (onboarding packs, T6.4, spec 3; src/creation/onboarding/ownGear.ts). One line and three GENERIC venue types, each labelled as an
