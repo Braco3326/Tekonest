@@ -1,0 +1,184 @@
+{
+  "version": 1,
+  "status": "placeholder",
+  "source": "Arbre provisoire (mission 1, 2026-11-15) fait à partir des familles de lieux de content/rooms/index.json, en attendant le fichier de recherche du marketing. Remplacer ce fichier suffit.",
+  "goals": [
+    {
+      "id": "decouvrir",
+      "label_fr": "Découvrir le son",
+      "hint_fr": "Vous voulez voir comment le son va du micro aux enceintes.",
+      "profile": "decouvre",
+      "subgoals": [
+        {
+          "id": "decouvrir-concert",
+          "label_fr": "Les lieux de concert",
+          "specialities": [
+            { "id": "decouvrir-club", "label_fr": "Petite salle et club", "rooms": ["bar-club-stage-small", "dj-booth-small"] },
+            { "id": "decouvrir-grande-scene", "label_fr": "Grande salle et festival", "rooms": ["concert-hall-medium", "arena-large", "festival-open-air-large"] }
+          ]
+        },
+        {
+          "id": "decouvrir-medias",
+          "label_fr": "La radio et la télévision",
+          "specialities": [
+            { "id": "decouvrir-radio", "label_fr": "Studio radio", "rooms": ["radio-studio-self-op-small", "radio-talk-studio-medium"] },
+            { "id": "decouvrir-tele", "label_fr": "Plateau de télévision", "rooms": ["tv-studio-plateau-large", "tv-gallery-regie-medium"] }
+          ]
+        },
+        {
+          "id": "decouvrir-studio",
+          "label_fr": "Le studio",
+          "specialities": [
+            { "id": "decouvrir-voix", "label_fr": "Enregistrer une voix", "rooms": ["studio-vocal-booth-small", "podcast-room-small"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "etudier",
+      "label_fr": "Étudier le son",
+      "hint_fr": "Vous suivez une formation ou vous la préparez.",
+      "profile": "etudie",
+      "subgoals": [
+        {
+          "id": "etudier-cours",
+          "label_fr": "En cours",
+          "specialities": [
+            { "id": "etudier-tp", "label_fr": "Travaux pratiques", "rooms": ["classroom-lab-small"] },
+            { "id": "etudier-amphi", "label_fr": "Cours en amphithéâtre", "rooms": ["auditorium-amphitheatre-medium"] }
+          ]
+        },
+        {
+          "id": "etudier-studio",
+          "label_fr": "Les techniques de studio",
+          "specialities": [
+            { "id": "etudier-prise", "label_fr": "Prise de son", "rooms": ["studio-live-room-medium", "studio-control-room-small"] },
+            { "id": "etudier-mixage", "label_fr": "Mixage et mastering", "rooms": ["studio-control-room-large", "mastering-room-medium"] }
+          ]
+        },
+        {
+          "id": "etudier-image",
+          "label_fr": "Le son à l’image",
+          "specialities": [
+            { "id": "etudier-bruitage", "label_fr": "Bruitage et postsynchronisation", "rooms": ["foley-dubbing-stage-medium"] },
+            { "id": "etudier-post", "label_fr": "Mixage pour l’image", "rooms": ["post-atmos-mix-room-medium"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "musique",
+      "label_fr": "Faire de la musique (live et studio)",
+      "hint_fr": "Vous jouez, chantez ou mixez, sur scène ou en studio.",
+      "profile": "projet",
+      "subgoals": [
+        {
+          "id": "musique-live",
+          "label_fr": "Jouer en live",
+          "specialities": [
+            { "id": "musique-club", "label_fr": "Concert en club", "rooms": ["bar-club-stage-small"] },
+            { "id": "musique-dj", "label_fr": "Mix DJ", "rooms": ["dj-booth-small"] },
+            { "id": "musique-scene", "label_fr": "Grande scène", "rooms": ["concert-hall-medium", "festival-open-air-large"] }
+          ]
+        },
+        {
+          "id": "musique-studio",
+          "label_fr": "Enregistrer en studio",
+          "specialities": [
+            { "id": "musique-home", "label_fr": "Home studio", "rooms": ["studio-control-room-small", "studio-vocal-booth-small"] },
+            { "id": "musique-pro", "label_fr": "Studio professionnel", "rooms": ["studio-live-room-medium", "studio-control-room-large"] }
+          ]
+        },
+        {
+          "id": "musique-classique",
+          "label_fr": "La musique classique",
+          "specialities": [
+            { "id": "musique-orchestre", "label_fr": "Orchestre et opéra", "rooms": ["opera-house-pit-large", "scoring-stage-large"] },
+            { "id": "musique-eglise", "label_fr": "Concert en église", "rooms": ["church-worship-medium"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "evenement",
+      "label_fr": "Monter un événement ou un projet",
+      "hint_fr": "Vous organisez une soirée, une conférence ou un spectacle.",
+      "profile": "projet",
+      "subgoals": [
+        {
+          "id": "evenement-fete",
+          "label_fr": "Une soirée ou une fête",
+          "specialities": [
+            { "id": "evenement-reception", "label_fr": "Mariage et réception", "rooms": ["wedding-event-hall-medium"] },
+            { "id": "evenement-soiree-dj", "label_fr": "Soirée DJ", "rooms": ["dj-booth-small"] }
+          ]
+        },
+        {
+          "id": "evenement-reunion",
+          "label_fr": "Une conférence ou une réunion",
+          "specialities": [
+            { "id": "evenement-visio", "label_fr": "Réunion et visioconférence", "rooms": ["conference-room-small", "hybrid-meeting-room-small"] },
+            { "id": "evenement-multilingue", "label_fr": "Conférence en plusieurs langues", "rooms": ["interpretation-booth-small", "auditorium-amphitheatre-medium"] }
+          ]
+        },
+        {
+          "id": "evenement-spectacle",
+          "label_fr": "Un spectacle ou une exposition",
+          "specialities": [
+            { "id": "evenement-theatre", "label_fr": "Théâtre", "rooms": ["theatre-black-box-small", "theatre-italian-medium"] },
+            { "id": "evenement-expo", "label_fr": "Exposition sonorisée", "rooms": ["museum-installed-sound-medium"] }
+          ]
+        },
+        {
+          "id": "evenement-podcast",
+          "label_fr": "Un podcast",
+          "specialities": [
+            { "id": "evenement-podcast-studio", "label_fr": "Podcast à plusieurs voix", "rooms": ["podcast-room-small"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "metier",
+      "label_fr": "Travailler dans le son",
+      "hint_fr": "Le son est votre métier, ou vous voulez qu’il le devienne.",
+      "profile": "metier",
+      "subgoals": [
+        {
+          "id": "metier-sono",
+          "label_fr": "Sonorisation",
+          "specialities": [
+            { "id": "metier-facade", "label_fr": "Façade et retours", "rooms": ["concert-hall-medium", "arena-large", "festival-open-air-large"] },
+            { "id": "metier-installe", "label_fr": "Son installé", "rooms": ["sports-venue-pa-large", "museum-installed-sound-medium"] }
+          ]
+        },
+        {
+          "id": "metier-audiovisuel",
+          "label_fr": "Radio et télévision",
+          "specialities": [
+            { "id": "metier-radio", "label_fr": "Radio", "rooms": ["radio-talk-studio-medium", "radio-studio-self-op-small"] },
+            { "id": "metier-tele", "label_fr": "Régie de télévision", "rooms": ["tv-gallery-regie-medium", "tv-studio-plateau-large"] },
+            { "id": "metier-reportage", "label_fr": "Car régie et reportage", "rooms": ["ob-van-small", "eng-outdoor-reportage"] }
+          ]
+        },
+        {
+          "id": "metier-studio",
+          "label_fr": "Studio et post-production",
+          "specialities": [
+            { "id": "metier-enregistrement", "label_fr": "Enregistrement et mixage", "rooms": ["studio-control-room-large", "studio-live-room-medium"] },
+            { "id": "metier-mastering", "label_fr": "Mastering", "rooms": ["mastering-room-medium"] },
+            { "id": "metier-post", "label_fr": "Post-production pour l’image", "rooms": ["post-atmos-mix-room-medium", "foley-dubbing-stage-medium"] },
+            { "id": "metier-jeu-video", "label_fr": "Son pour le jeu vidéo", "rooms": [] }
+          ]
+        },
+        {
+          "id": "metier-spectacle",
+          "label_fr": "Spectacle vivant",
+          "specialities": [
+            { "id": "metier-theatre", "label_fr": "Théâtre et opéra", "rooms": ["theatre-italian-medium", "theatre-black-box-small", "opera-house-pit-large"] }
+          ]
+        }
+      ]
+    }
+  ]
+}
