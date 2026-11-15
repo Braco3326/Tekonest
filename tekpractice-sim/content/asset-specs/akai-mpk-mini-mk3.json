@@ -11,23 +11,21 @@
     {
       "portId": "usb",
       "face": "io",
-      "xMm": 66,
-      "yMm": 9,
+      "xMm": 64,
+      "yMm": 17.9,
       "confidence": "photo",
       "connector": "usb-b",
       "signal": "usb-control",
-      "dir": "bidir",
-      "insetMm": 1,
-      "openingMm": 10
+      "dir": "bidir"
     }
   ],
   "controls": [],
   "build": {
     "shape": "moulded-box",
     "params": {
-      "cornerRadiusMm": 8,
-      "edgeRadiusMm": 3,
-      "edgeSegments": 8,
+      "cornerRadiusMm": 3,
+      "edgeRadiusMm": 1.5,
+      "edgeSegments": 4,
       "bodyGrey": 38
     },
     "projection": [
@@ -36,13 +34,13 @@
     ],
     "budget": {
       "min": 500,
-      "max": 14000
+      "max": 14900
     },
-    "minFilletMm": 2.5,
+    "minFilletMm": 1.5,
     "photos": [
       {
         "face": "top",
-        "file": "top_face.png"
+        "file": "top_clean.png"
       }
     ]
   },
@@ -70,314 +68,83 @@
       "note": "Dealer pages (B&H, Adorama, Music Radar review) and the manual read through a search summary 2026-11-12: one USB Type-B port (bus powered, class compliant, MIDI over USB) and one 1/4 in TS sustain-pedal jack; no DIN MIDI. The pedal jack has no catalogue signal (not a port). 318 x 181 x 44 mm (dealer, size ok); the real unit is a slightly sloped slab, modelled as a flat rounded box (the family has no profile). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
     }
   ],
-  "texture": {
-    "blankRects": [
-      {
-        "face": "top",
-        "xMm": 219,
-        "yMm": 80.5,
-        "wMm": 88,
-        "hMm": 11.5,
-        "marginMm": 3,
-        "depthMm": 30
-      }
-    ]
-  },
   "structure": {
     "parts": [
       {
         "kind": "prism",
-        "face": "top",
-        "xMm": 159,
-        "yMm": 46,
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
         "points": [
           [
-            -150,
-            -46
+            72.6,
+            -4.7
           ],
           [
-            150,
-            -46
+            170.15,
+            -4.7
           ],
           [
-            150,
-            46
+            170.65,
+            -4.566
           ],
           [
-            -150,
-            46
+            171.016,
+            -4.2
+          ],
+          [
+            171.15,
+            -3.7
+          ],
+          [
+            171.15,
+            22.1
+          ],
+          [
+            171.042,
+            22.78
+          ],
+          [
+            170.73,
+            23.393
+          ],
+          [
+            170.243,
+            23.88
+          ],
+          [
+            169.63,
+            24.192
+          ],
+          [
+            168.95,
+            24.3
+          ],
+          [
+            73.8,
+            24.3
+          ],
+          [
+            73.2,
+            24.139
+          ],
+          [
+            72.761,
+            23.7
+          ],
+          [
+            72.6,
+            23.1
           ]
         ],
         "params": {
-          "riseMm": 12,
-          "bevelMm": 1.5,
-          "textured": 1
+          "riseMm": 312,
+          "bevelMm": 0.05,
+          "textured": 1,
+          "zMm": -312
         },
         "colour": "#1d1e21",
-        "note": "raised rear deck carrying pads, knobs and buttons; takes the printed legends"
-      },
-      {
-        "kind": "keys",
-        "face": "top",
-        "xMm": 10.8,
-        "yMm": 96.1,
-        "params": {
-          "whiteCount": 15,
-          "whitePitchMm": 19.76,
-          "whiteLenMm": 83,
-          "blackLenMm": 49.5,
-          "blackWidthMm": 9.6,
-          "riseMm": 8,
-          "startNote": 0
-        },
-        "colour": "#f2f2f2",
-        "colour2": "#161618",
-        "note": "25 mini keys, C to C"
-      },
-      {
-        "kind": "button",
-        "face": "top",
-        "xMm": 68.3,
-        "yMm": 25.8,
-        "params": {
-          "widthMm": 28,
-          "heightMm": 28,
-          "cornerMm": 2.5,
-          "riseMm": 1,
-          "frameMm": 0.8,
-          "zMm": 12
-        },
-        "colour": "#1c1c1e",
-        "colour2": "#3a3a3e",
-        "note": "velocity pad 1"
-      },
-      {
-        "kind": "button",
-        "face": "top",
-        "xMm": 103,
-        "yMm": 25.8,
-        "params": {
-          "widthMm": 28,
-          "heightMm": 28,
-          "cornerMm": 2.5,
-          "riseMm": 1,
-          "frameMm": 0.8,
-          "zMm": 12
-        },
-        "colour": "#1c1c1e",
-        "colour2": "#e11e23",
-        "note": "velocity pad 2 (red outline)"
-      },
-      {
-        "kind": "button",
-        "face": "top",
-        "xMm": 137.7,
-        "yMm": 25.8,
-        "params": {
-          "widthMm": 28,
-          "heightMm": 28,
-          "cornerMm": 2.5,
-          "riseMm": 1,
-          "frameMm": 0.8,
-          "zMm": 12
-        },
-        "colour": "#1c1c1e",
-        "colour2": "#3a3a3e",
-        "note": "velocity pad 3"
-      },
-      {
-        "kind": "button",
-        "face": "top",
-        "xMm": 172.4,
-        "yMm": 25.8,
-        "params": {
-          "widthMm": 28,
-          "heightMm": 28,
-          "cornerMm": 2.5,
-          "riseMm": 1,
-          "frameMm": 0.8,
-          "zMm": 12
-        },
-        "colour": "#1c1c1e",
-        "colour2": "#e11e23",
-        "note": "velocity pad 4 (red outline)"
-      },
-      {
-        "kind": "button",
-        "face": "top",
-        "xMm": 68.3,
-        "yMm": 61.2,
-        "params": {
-          "widthMm": 28,
-          "heightMm": 28,
-          "cornerMm": 2.5,
-          "riseMm": 1,
-          "frameMm": 0.8,
-          "zMm": 12
-        },
-        "colour": "#1c1c1e",
-        "colour2": "#e11e23",
-        "note": "velocity pad 5 (red outline)"
-      },
-      {
-        "kind": "button",
-        "face": "top",
-        "xMm": 103,
-        "yMm": 61.2,
-        "params": {
-          "widthMm": 28,
-          "heightMm": 28,
-          "cornerMm": 2.5,
-          "riseMm": 1,
-          "frameMm": 0.8,
-          "zMm": 12
-        },
-        "colour": "#1c1c1e",
-        "colour2": "#3a3a3e",
-        "note": "velocity pad 6"
-      },
-      {
-        "kind": "button",
-        "face": "top",
-        "xMm": 137.7,
-        "yMm": 61.2,
-        "params": {
-          "widthMm": 28,
-          "heightMm": 28,
-          "cornerMm": 2.5,
-          "riseMm": 1,
-          "frameMm": 0.8,
-          "zMm": 12
-        },
-        "colour": "#1c1c1e",
-        "colour2": "#e11e23",
-        "note": "velocity pad 7 (red outline)"
-      },
-      {
-        "kind": "button",
-        "face": "top",
-        "xMm": 172.4,
-        "yMm": 61.2,
-        "params": {
-          "widthMm": 28,
-          "heightMm": 28,
-          "cornerMm": 2.5,
-          "riseMm": 1,
-          "frameMm": 0.8,
-          "zMm": 12
-        },
-        "colour": "#1c1c1e",
-        "colour2": "#3a3a3e",
-        "note": "velocity pad 8"
-      },
-      {
-        "kind": "knob",
-        "face": "top",
-        "xMm": 206,
-        "yMm": 42.9,
-        "count": 8,
-        "cols": 4,
-        "pitchXMm": 30,
-        "pitchYMm": 28.6,
-        "params": {
-          "diaMm": 19,
-          "heightMm": 14,
-          "bevelMm": 1.6,
-          "taper": 0.22,
-          "pointer": 0,
-          "knurl": 36,
-          "zMm": 12
-        },
-        "colour": "#26262a",
-        "note": "K1 to K8 rotary encoders"
-      },
-      {
-        "kind": "ring",
-        "face": "top",
-        "xMm": 25.4,
-        "yMm": 21.5,
-        "params": {
-          "diaMm": 30,
-          "innerDiaMm": 21,
-          "riseMm": 2.5,
-          "floorMm": 1,
-          "zMm": 12
-        },
-        "colour": "#1a1a1c",
-        "colour2": "#0c0c0d",
-        "note": "thumbstick black collar"
-      },
-      {
-        "kind": "knob",
-        "face": "top",
-        "xMm": 25.4,
-        "yMm": 21.5,
-        "params": {
-          "diaMm": 9,
-          "heightMm": 10,
-          "bevelMm": 1,
-          "taper": 0.05,
-          "pointer": 0,
-          "zMm": 13
-        },
-        "colour": "#161618",
-        "note": "thumbstick stem"
-      },
-      {
-        "kind": "knob",
-        "face": "top",
-        "xMm": 25.4,
-        "yMm": 21.5,
-        "params": {
-          "diaMm": 22,
-          "heightMm": 6,
-          "bevelMm": 2.4,
-          "taper": 0.18,
-          "pointer": 0,
-          "zMm": 21
-        },
-        "colour": "#e11e23",
-        "note": "thumbstick cap, flat mushroom"
-      },
-      {
-        "kind": "button",
-        "face": "top",
-        "xMm": 16.7,
-        "yMm": 45.3,
-        "count": 6,
-        "cols": 2,
-        "pitchXMm": 18.1,
-        "pitchYMm": 12.9,
-        "params": {
-          "widthMm": 13.6,
-          "heightMm": 8.8,
-          "cornerMm": 1.4,
-          "riseMm": 1.8,
-          "frameMm": 0.6,
-          "zMm": 12
-        },
-        "colour": "#2a2a2c",
-        "colour2": "#0c0c0d",
-        "note": "arpeggiator and octave buttons"
-      },
-      {
-        "kind": "button",
-        "face": "top",
-        "xMm": 244.3,
-        "yMm": 19,
-        "count": 4,
-        "pitchXMm": 18.2,
-        "params": {
-          "widthMm": 13.6,
-          "heightMm": 8.8,
-          "cornerMm": 1.4,
-          "riseMm": 1.8,
-          "frameMm": 0.6,
-          "zMm": 12
-        },
-        "colour": "#2a2a2c",
-        "colour2": "#0c0c0d",
-        "note": "pad control buttons"
+        "note": "rear block: deck (takes the printed legends), flat rear face, rounded top edges; spans the whole width between the cheeks"
       },
       {
         "kind": "prism",
@@ -386,32 +153,120 @@
         "yMm": 5,
         "points": [
           [
-            -10,
-            -5
+            -9.8,
+            -4.4
           ],
           [
-            171,
-            -5
+            80,
+            -4.4
           ],
           [
-            171,
-            27
+            80,
+            23.9
           ],
           [
-            71,
-            27
+            72,
+            23.9
           ],
           [
-            -10,
-            18
+            -7,
+            19.4
+          ],
+          [
+            -7,
+            17.4
+          ],
+          [
+            -9.8,
+            17.4
           ]
         ],
         "params": {
-          "riseMm": 9,
-          "bevelMm": 2.8
+          "riseMm": 8.5,
+          "bevelMm": 0.05,
+          "zMm": -8.5
         },
-        "colour": "#e11e23",
-        "note": "player right end cheek: 32 mm at the rear, flat for the rear 55 percent, sloping to 23 mm at the key end"
+        "colour": "#0e0e0e",
+        "note": "black chassis wall between the first key and the cheek (player right end, knob end)"
+      },
+      {
+        "kind": "prism",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "points": [
+          [
+            -9.8,
+            -4.4
+          ],
+          [
+            80,
+            -4.4
+          ],
+          [
+            80,
+            23.1
+          ],
+          [
+            72,
+            23.1
+          ],
+          [
+            -7,
+            18.6
+          ],
+          [
+            -7,
+            17.4
+          ],
+          [
+            -9.8,
+            17.4
+          ]
+        ],
+        "params": {
+          "riseMm": 1.6,
+          "bevelMm": 0.05,
+          "zMm": -9.3
+        },
+        "colour": "#0e0e0e",
+        "note": "black chassis wall between the first key and the cheek (player right end, knob end) (key-side strip)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7,
+          "y1Mm": 18.6,
+          "z1Mm": -8.95,
+          "x2Mm": 72,
+          "y2Mm": 23.1,
+          "z2Mm": -8.95,
+          "diaMm": 1.6,
+          "segments": 10
+        },
+        "colour": "#0e0e0e",
+        "note": "black chassis wall between the first key and the cheek (player right end, knob end) (rounded top edge, key side)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 72,
+          "y1Mm": 23.1,
+          "z1Mm": -8.95,
+          "x2Mm": 78,
+          "y2Mm": 23.1,
+          "z2Mm": -8.95,
+          "diaMm": 1.6,
+          "segments": 10
+        },
+        "colour": "#0e0e0e",
+        "note": "black chassis wall between the first key and the cheek (player right end, knob end) (rounded top edge, key side)"
       },
       {
         "kind": "prism",
@@ -420,63 +275,4020 @@
         "yMm": 5,
         "points": [
           [
-            -10,
-            -5
+            170.8,
+            17.4
           ],
           [
-            171,
-            -5
+            168,
+            17.4
           ],
           [
-            171,
-            18
+            168,
+            19.4
+          ],
+          [
+            89,
+            23.9
           ],
           [
             81,
-            27
+            23.9
           ],
           [
-            -10,
-            27
+            81,
+            -4.4
+          ],
+          [
+            170.8,
+            -4.4
           ]
         ],
         "params": {
-          "riseMm": 9,
-          "bevelMm": 2.8
+          "riseMm": 7.6,
+          "bevelMm": 0.05,
+          "zMm": -7.6
         },
-        "colour": "#e11e23",
-        "note": "player left end cheek, same wedge mirrored: tall at the rear, lower at the key end"
+        "colour": "#0e0e0e",
+        "note": "black chassis wall between the first key and the cheek (player left end, joystick end)"
       },
       {
-        "kind": "socket",
-        "face": "io",
-        "xMm": 38,
-        "yMm": 9,
-        "type": "jack",
+        "kind": "prism",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "points": [
+          [
+            170.8,
+            17.4
+          ],
+          [
+            168,
+            17.4
+          ],
+          [
+            168,
+            18.6
+          ],
+          [
+            89,
+            23.1
+          ],
+          [
+            81,
+            23.1
+          ],
+          [
+            81,
+            -4.4
+          ],
+          [
+            170.8,
+            -4.4
+          ]
+        ],
         "params": {
-          "diaMm": 6.6,
-          "collarMm": 1.2
+          "riseMm": 1.6,
+          "bevelMm": 0.05,
+          "zMm": -8.4
         },
-        "colour": "#9ea3aa",
-        "colour2": "#0b0b0d",
-        "note": "sustain pedal jack, about 12 percent of the length from the knob end"
+        "colour": "#0e0e0e",
+        "note": "black chassis wall between the first key and the cheek (player left end, joystick end) (key-side strip)"
       },
       {
-        "kind": "socket",
-        "face": "io",
-        "xMm": 66,
-        "yMm": 9,
-        "type": "usbb",
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
         "params": {
-          "collarMm": 1
+          "x1Mm": 168,
+          "y1Mm": 18.6,
+          "z1Mm": -8.05,
+          "x2Mm": 89,
+          "y2Mm": 23.1,
+          "z2Mm": -8.05,
+          "diaMm": 1.6,
+          "segments": 10
         },
-        "colour": "#9ea3aa",
-        "colour2": "#0b0b0d",
-        "note": "USB-B, about 21 percent from the knob end"
+        "colour": "#0e0e0e",
+        "note": "black chassis wall between the first key and the cheek (player left end, joystick end) (rounded top edge, key side)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 89,
+          "y1Mm": 23.1,
+          "z1Mm": -8.05,
+          "x2Mm": 83,
+          "y2Mm": 23.1,
+          "z2Mm": -8.05,
+          "diaMm": 1.6,
+          "segments": 10
+        },
+        "colour": "#0e0e0e",
+        "note": "black chassis wall between the first key and the cheek (player left end, joystick end) (rounded top edge, key side)"
+      },
+      {
+        "kind": "prism",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "points": [
+          [
+            -8.5,
+            -2
+          ],
+          [
+            -8.299,
+            -2.75
+          ],
+          [
+            -7.75,
+            -3.299
+          ],
+          [
+            -7,
+            -3.5
+          ],
+          [
+            168,
+            -3.5
+          ],
+          [
+            168.75,
+            -3.299
+          ],
+          [
+            169.299,
+            -2.75
+          ],
+          [
+            169.5,
+            -2
+          ],
+          [
+            169.5,
+            23.3
+          ],
+          [
+            169.299,
+            24.05
+          ],
+          [
+            168.75,
+            24.599
+          ],
+          [
+            168,
+            24.8
+          ],
+          [
+            74.17,
+            24.8
+          ],
+          [
+            69.998,
+            24.582
+          ],
+          [
+            -7.156,
+            16.49
+          ],
+          [
+            -7.839,
+            16.242
+          ],
+          [
+            -8.324,
+            15.702
+          ],
+          [
+            -8.5,
+            14.998
+          ]
+        ],
+        "params": {
+          "riseMm": 3,
+          "bevelMm": 0.05
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (plate)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.503,
+          "y1Mm": -1.951,
+          "z1Mm": 1.5,
+          "x2Mm": -8.481,
+          "y2Mm": -2.294,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.506,
+          "y1Mm": -2.099,
+          "z1Mm": 1.5,
+          "x2Mm": -8.43,
+          "y2Mm": -2.485,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.48,
+          "y1Mm": -2.295,
+          "z1Mm": 1.5,
+          "x2Mm": -8.354,
+          "y2Mm": -2.667,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.429,
+          "y1Mm": -2.486,
+          "z1Mm": 1.5,
+          "x2Mm": -8.256,
+          "y2Mm": -2.838,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.354,
+          "y1Mm": -2.668,
+          "z1Mm": 1.5,
+          "x2Mm": -8.135,
+          "y2Mm": -2.995,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.255,
+          "y1Mm": -2.839,
+          "z1Mm": 1.5,
+          "x2Mm": -7.996,
+          "y2Mm": -3.135,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.135,
+          "y1Mm": -2.996,
+          "z1Mm": 1.5,
+          "x2Mm": -7.839,
+          "y2Mm": -3.255,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.995,
+          "y1Mm": -3.135,
+          "z1Mm": 1.5,
+          "x2Mm": -7.668,
+          "y2Mm": -3.354,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.838,
+          "y1Mm": -3.256,
+          "z1Mm": 1.5,
+          "x2Mm": -7.486,
+          "y2Mm": -3.429,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.667,
+          "y1Mm": -3.354,
+          "z1Mm": 1.5,
+          "x2Mm": -7.295,
+          "y2Mm": -3.48,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.485,
+          "y1Mm": -3.43,
+          "z1Mm": 1.5,
+          "x2Mm": -7.099,
+          "y2Mm": -3.506,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.294,
+          "y1Mm": -3.481,
+          "z1Mm": 1.5,
+          "x2Mm": -6.951,
+          "y2Mm": -3.503,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.049,
+          "y1Mm": -3.5,
+          "z1Mm": 1.5,
+          "x2Mm": 168.197,
+          "y2Mm": -3.5,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 167.809,
+          "y1Mm": -3.551,
+          "z1Mm": 1.5,
+          "x2Mm": 169.138,
+          "y2Mm": -3.195,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.466,
+          "y1Mm": -3.583,
+          "z1Mm": 1.5,
+          "x2Mm": 169.583,
+          "y2Mm": -2.466,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.195,
+          "y1Mm": -3.138,
+          "z1Mm": 1.5,
+          "x2Mm": 169.551,
+          "y2Mm": -1.809,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.5,
+          "y1Mm": -2.197,
+          "z1Mm": 1.5,
+          "x2Mm": 169.5,
+          "y2Mm": 23.497,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.551,
+          "y1Mm": 23.109,
+          "z1Mm": 1.5,
+          "x2Mm": 169.195,
+          "y2Mm": 24.438,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.583,
+          "y1Mm": 23.766,
+          "z1Mm": 1.5,
+          "x2Mm": 168.466,
+          "y2Mm": 24.883,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.138,
+          "y1Mm": 24.495,
+          "z1Mm": 1.5,
+          "x2Mm": 167.809,
+          "y2Mm": 24.851,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.197,
+          "y1Mm": 24.8,
+          "z1Mm": 1.5,
+          "x2Mm": 74.131,
+          "y2Mm": 24.8,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 74.209,
+          "y1Mm": 24.802,
+          "z1Mm": 1.5,
+          "x2Mm": 69.959,
+          "y2Mm": 24.58,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 70.037,
+          "y1Mm": 24.586,
+          "z1Mm": 1.5,
+          "x2Mm": -7.202,
+          "y2Mm": 16.485,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.111,
+          "y1Mm": 16.498,
+          "z1Mm": 1.5,
+          "x2Mm": -7.428,
+          "y2Mm": 16.445,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.249,
+          "y1Mm": 16.486,
+          "z1Mm": 1.5,
+          "x2Mm": -7.601,
+          "y2Mm": 16.382,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.429,
+          "y1Mm": 16.444,
+          "z1Mm": 1.5,
+          "x2Mm": -7.765,
+          "y2Mm": 16.298,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.602,
+          "y1Mm": 16.381,
+          "z1Mm": 1.5,
+          "x2Mm": -7.918,
+          "y2Mm": 16.195,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.766,
+          "y1Mm": 16.298,
+          "z1Mm": 1.5,
+          "x2Mm": -8.057,
+          "y2Mm": 16.075,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.918,
+          "y1Mm": 16.195,
+          "z1Mm": 1.5,
+          "x2Mm": -8.18,
+          "y2Mm": 15.938,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.057,
+          "y1Mm": 16.074,
+          "z1Mm": 1.5,
+          "x2Mm": -8.286,
+          "y2Mm": 15.787,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.181,
+          "y1Mm": 15.937,
+          "z1Mm": 1.5,
+          "x2Mm": -8.372,
+          "y2Mm": 15.624,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.286,
+          "y1Mm": 15.786,
+          "z1Mm": 1.5,
+          "x2Mm": -8.438,
+          "y2Mm": 15.452,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.373,
+          "y1Mm": 15.623,
+          "z1Mm": 1.5,
+          "x2Mm": -8.483,
+          "y2Mm": 15.274,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.439,
+          "y1Mm": 15.451,
+          "z1Mm": 1.5,
+          "x2Mm": -8.506,
+          "y2Mm": 15.091,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.483,
+          "y1Mm": 15.273,
+          "z1Mm": 1.5,
+          "x2Mm": -8.503,
+          "y2Mm": 14.952,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.5,
+          "y1Mm": 15.044,
+          "z1Mm": 1.5,
+          "x2Mm": -8.5,
+          "y2Mm": -2.049,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player right end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -5.641,
+          "y1Mm": 1.241,
+          "z1Mm": 3,
+          "x2Mm": -3.759,
+          "y2Mm": -0.641,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player right end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -4.1,
+          "y1Mm": -0.5,
+          "z1Mm": 3,
+          "x2Mm": 165.1,
+          "y2Mm": -0.5,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player right end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 164.759,
+          "y1Mm": -0.641,
+          "z1Mm": 3,
+          "x2Mm": 166.641,
+          "y2Mm": 1.241,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player right end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 166.5,
+          "y1Mm": 0.9,
+          "z1Mm": 3,
+          "x2Mm": 166.5,
+          "y2Mm": 20.4,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player right end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 166.641,
+          "y1Mm": 20.059,
+          "z1Mm": 3,
+          "x2Mm": 164.759,
+          "y2Mm": 21.941,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player right end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 165.1,
+          "y1Mm": 21.8,
+          "z1Mm": 3,
+          "x2Mm": 74.127,
+          "y2Mm": 21.8,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player right end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 74.527,
+          "y1Mm": 21.81,
+          "z1Mm": 3,
+          "x2Mm": 69.955,
+          "y2Mm": 21.571,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player right end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 70.354,
+          "y1Mm": 21.603,
+          "z1Mm": 3,
+          "x2Mm": -4.266,
+          "y2Mm": 13.777,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player right end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -3.933,
+          "y1Mm": 13.946,
+          "z1Mm": 3,
+          "x2Mm": -5.634,
+          "y2Mm": 12.058,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player right end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -5.5,
+          "y1Mm": 12.406,
+          "z1Mm": 3,
+          "x2Mm": -5.5,
+          "y2Mm": 0.9,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player right end (inset panel line)"
+      },
+      {
+        "kind": "prism",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "points": [
+          [
+            -8.5,
+            -2
+          ],
+          [
+            -8.299,
+            -2.75
+          ],
+          [
+            -7.75,
+            -3.299
+          ],
+          [
+            -7,
+            -3.5
+          ],
+          [
+            168,
+            -3.5
+          ],
+          [
+            168.75,
+            -3.299
+          ],
+          [
+            169.299,
+            -2.75
+          ],
+          [
+            169.5,
+            -2
+          ],
+          [
+            169.5,
+            14.998
+          ],
+          [
+            169.324,
+            15.702
+          ],
+          [
+            168.839,
+            16.242
+          ],
+          [
+            168.156,
+            16.49
+          ],
+          [
+            91.002,
+            24.582
+          ],
+          [
+            86.83,
+            24.8
+          ],
+          [
+            -7,
+            24.8
+          ],
+          [
+            -7.75,
+            24.599
+          ],
+          [
+            -8.299,
+            24.05
+          ],
+          [
+            -8.5,
+            23.3
+          ]
+        ],
+        "params": {
+          "riseMm": 3,
+          "bevelMm": 0.05
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (plate)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.551,
+          "y1Mm": -1.809,
+          "z1Mm": 1.5,
+          "x2Mm": -8.195,
+          "y2Mm": -3.138,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.583,
+          "y1Mm": -2.466,
+          "z1Mm": 1.5,
+          "x2Mm": -7.466,
+          "y2Mm": -3.583,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.138,
+          "y1Mm": -3.195,
+          "z1Mm": 1.5,
+          "x2Mm": -6.809,
+          "y2Mm": -3.551,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.197,
+          "y1Mm": -3.5,
+          "z1Mm": 1.5,
+          "x2Mm": 168.049,
+          "y2Mm": -3.5,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 167.951,
+          "y1Mm": -3.503,
+          "z1Mm": 1.5,
+          "x2Mm": 168.294,
+          "y2Mm": -3.481,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.099,
+          "y1Mm": -3.506,
+          "z1Mm": 1.5,
+          "x2Mm": 168.485,
+          "y2Mm": -3.43,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.295,
+          "y1Mm": -3.48,
+          "z1Mm": 1.5,
+          "x2Mm": 168.667,
+          "y2Mm": -3.354,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.486,
+          "y1Mm": -3.429,
+          "z1Mm": 1.5,
+          "x2Mm": 168.838,
+          "y2Mm": -3.256,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.668,
+          "y1Mm": -3.354,
+          "z1Mm": 1.5,
+          "x2Mm": 168.995,
+          "y2Mm": -3.135,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.839,
+          "y1Mm": -3.255,
+          "z1Mm": 1.5,
+          "x2Mm": 169.135,
+          "y2Mm": -2.996,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.996,
+          "y1Mm": -3.135,
+          "z1Mm": 1.5,
+          "x2Mm": 169.255,
+          "y2Mm": -2.839,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.135,
+          "y1Mm": -2.995,
+          "z1Mm": 1.5,
+          "x2Mm": 169.354,
+          "y2Mm": -2.668,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.256,
+          "y1Mm": -2.838,
+          "z1Mm": 1.5,
+          "x2Mm": 169.429,
+          "y2Mm": -2.486,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.354,
+          "y1Mm": -2.667,
+          "z1Mm": 1.5,
+          "x2Mm": 169.48,
+          "y2Mm": -2.295,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.43,
+          "y1Mm": -2.485,
+          "z1Mm": 1.5,
+          "x2Mm": 169.506,
+          "y2Mm": -2.099,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.481,
+          "y1Mm": -2.294,
+          "z1Mm": 1.5,
+          "x2Mm": 169.503,
+          "y2Mm": -1.951,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.5,
+          "y1Mm": -2.049,
+          "z1Mm": 1.5,
+          "x2Mm": 169.5,
+          "y2Mm": 15.044,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.503,
+          "y1Mm": 14.952,
+          "z1Mm": 1.5,
+          "x2Mm": 169.483,
+          "y2Mm": 15.273,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.506,
+          "y1Mm": 15.091,
+          "z1Mm": 1.5,
+          "x2Mm": 169.439,
+          "y2Mm": 15.451,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.483,
+          "y1Mm": 15.274,
+          "z1Mm": 1.5,
+          "x2Mm": 169.373,
+          "y2Mm": 15.623,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.438,
+          "y1Mm": 15.452,
+          "z1Mm": 1.5,
+          "x2Mm": 169.286,
+          "y2Mm": 15.786,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.372,
+          "y1Mm": 15.624,
+          "z1Mm": 1.5,
+          "x2Mm": 169.181,
+          "y2Mm": 15.937,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.286,
+          "y1Mm": 15.787,
+          "z1Mm": 1.5,
+          "x2Mm": 169.057,
+          "y2Mm": 16.074,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.18,
+          "y1Mm": 15.938,
+          "z1Mm": 1.5,
+          "x2Mm": 168.918,
+          "y2Mm": 16.195,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 169.057,
+          "y1Mm": 16.075,
+          "z1Mm": 1.5,
+          "x2Mm": 168.766,
+          "y2Mm": 16.298,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.918,
+          "y1Mm": 16.195,
+          "z1Mm": 1.5,
+          "x2Mm": 168.602,
+          "y2Mm": 16.381,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.765,
+          "y1Mm": 16.298,
+          "z1Mm": 1.5,
+          "x2Mm": 168.429,
+          "y2Mm": 16.444,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.601,
+          "y1Mm": 16.382,
+          "z1Mm": 1.5,
+          "x2Mm": 168.249,
+          "y2Mm": 16.486,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.428,
+          "y1Mm": 16.445,
+          "z1Mm": 1.5,
+          "x2Mm": 168.111,
+          "y2Mm": 16.498,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 168.202,
+          "y1Mm": 16.485,
+          "z1Mm": 1.5,
+          "x2Mm": 90.963,
+          "y2Mm": 24.586,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 91.041,
+          "y1Mm": 24.58,
+          "z1Mm": 1.5,
+          "x2Mm": 86.791,
+          "y2Mm": 24.802,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 86.869,
+          "y1Mm": 24.8,
+          "z1Mm": 1.5,
+          "x2Mm": -7.197,
+          "y2Mm": 24.8,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -6.809,
+          "y1Mm": 24.851,
+          "z1Mm": 1.5,
+          "x2Mm": -8.138,
+          "y2Mm": 24.495,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -7.466,
+          "y1Mm": 24.883,
+          "z1Mm": 1.5,
+          "x2Mm": -8.583,
+          "y2Mm": 23.766,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.195,
+          "y1Mm": 24.438,
+          "z1Mm": 1.5,
+          "x2Mm": -8.551,
+          "y2Mm": 23.109,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -8.5,
+          "y1Mm": 23.497,
+          "z1Mm": 1.5,
+          "x2Mm": -8.5,
+          "y2Mm": -2.197,
+          "z2Mm": 1.5,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#d90d10",
+        "note": "cheek, player left end (rim)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -5.641,
+          "y1Mm": 1.241,
+          "z1Mm": 3,
+          "x2Mm": -3.759,
+          "y2Mm": -0.641,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player left end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -4.1,
+          "y1Mm": -0.5,
+          "z1Mm": 3,
+          "x2Mm": 165.1,
+          "y2Mm": -0.5,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player left end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 164.759,
+          "y1Mm": -0.641,
+          "z1Mm": 3,
+          "x2Mm": 166.641,
+          "y2Mm": 1.241,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player left end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 166.5,
+          "y1Mm": 0.9,
+          "z1Mm": 3,
+          "x2Mm": 166.5,
+          "y2Mm": 12.406,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player left end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 166.634,
+          "y1Mm": 12.058,
+          "z1Mm": 3,
+          "x2Mm": 164.933,
+          "y2Mm": 13.946,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player left end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 165.266,
+          "y1Mm": 13.777,
+          "z1Mm": 3,
+          "x2Mm": 90.646,
+          "y2Mm": 21.603,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player left end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 91.045,
+          "y1Mm": 21.571,
+          "z1Mm": 3,
+          "x2Mm": 86.473,
+          "y2Mm": 21.81,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player left end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": 86.873,
+          "y1Mm": 21.8,
+          "z1Mm": 3,
+          "x2Mm": -4.1,
+          "y2Mm": 21.8,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player left end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -3.759,
+          "y1Mm": 21.941,
+          "z1Mm": 3,
+          "x2Mm": -5.641,
+          "y2Mm": 20.059,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player left end (inset panel line)"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "params": {
+          "x1Mm": -5.5,
+          "y1Mm": 20.4,
+          "z1Mm": 3,
+          "x2Mm": -5.5,
+          "y2Mm": 0.9,
+          "z2Mm": 3,
+          "diaMm": 0.7,
+          "segments": 4
+        },
+        "colour": "#9a090c",
+        "note": "cheek, player left end (inset panel line)"
+      },
+      {
+        "kind": "pocket",
+        "face": "top",
+        "xMm": 158.5,
+        "yMm": 140.5,
+        "params": {
+          "widthMm": 295,
+          "heightMm": 87,
+          "cornerMm": 0.5,
+          "depthMm": 3.8
+        },
+        "colour": "#040404",
+        "note": "key bed: near-black floor, open at the front (black recess under the key noses)"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 158.5,
+        "yMm": 140.5,
+        "params": {
+          "x1Mm": -154.5,
+          "y1Mm": 39,
+          "z1Mm": -3.8,
+          "x2Mm": 155.5,
+          "y2Mm": 39,
+          "z2Mm": -3.8,
+          "diaMm": 3,
+          "segments": 10
+        },
+        "colour": "#0e1012",
+        "note": "front panel top lip, rounded"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 158.5,
+        "yMm": 140.5,
+        "points": [
+          [
+            -146.5,
+            -43.1
+          ],
+          [
+            146.295,
+            -43.1
+          ],
+          [
+            146.295,
+            34.8
+          ],
+          [
+            -146.5,
+            34.8
+          ]
+        ],
+        "params": {
+          "riseMm": 9.7,
+          "bevelMm": 0.05,
+          "zMm": -3.8
+        },
+        "colour": "#040404",
+        "note": "key block, near-black (the recess under the noses)"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 21.527,
+        "yMm": 136.95,
+        "count": 15,
+        "pitchXMm": 19.553,
+        "params": {
+          "widthMm": 19.053,
+          "heightMm": 79.1,
+          "cornerMm": 1.8,
+          "riseMm": 2,
+          "bevelMm": 0.9,
+          "zMm": 5.8
+        },
+        "colour": "#f2f2f2",
+        "note": "15 white keys: thin rounded noses"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 29.303,
+        "yMm": 122.1,
+        "points": [
+          [
+            -4.3,
+            -24.7
+          ],
+          [
+            4.3,
+            -24.7
+          ],
+          [
+            5.2,
+            -23.8
+          ],
+          [
+            5.2,
+            23.8
+          ],
+          [
+            4.3,
+            24.7
+          ],
+          [
+            -4.3,
+            24.7
+          ],
+          [
+            -5.2,
+            23.8
+          ],
+          [
+            -5.2,
+            -23.8
+          ]
+        ],
+        "params": {
+          "riseMm": 18,
+          "bevelMm": 1.6,
+          "zMm": -3.8
+        },
+        "colour": "#121212",
+        "note": "black key 1: sloped tips, chamfered corners"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 52.106,
+        "yMm": 122.1,
+        "points": [
+          [
+            -4.3,
+            -24.7
+          ],
+          [
+            4.3,
+            -24.7
+          ],
+          [
+            5.2,
+            -23.8
+          ],
+          [
+            5.2,
+            23.8
+          ],
+          [
+            4.3,
+            24.7
+          ],
+          [
+            -4.3,
+            24.7
+          ],
+          [
+            -5.2,
+            23.8
+          ],
+          [
+            -5.2,
+            -23.8
+          ]
+        ],
+        "params": {
+          "riseMm": 18,
+          "bevelMm": 1.6,
+          "zMm": -3.8
+        },
+        "colour": "#121212",
+        "note": "black key 2: sloped tips, chamfered corners"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 87.462,
+        "yMm": 122.1,
+        "points": [
+          [
+            -4.3,
+            -24.7
+          ],
+          [
+            4.3,
+            -24.7
+          ],
+          [
+            5.2,
+            -23.8
+          ],
+          [
+            5.2,
+            23.8
+          ],
+          [
+            4.3,
+            24.7
+          ],
+          [
+            -4.3,
+            24.7
+          ],
+          [
+            -5.2,
+            23.8
+          ],
+          [
+            -5.2,
+            -23.8
+          ]
+        ],
+        "params": {
+          "riseMm": 18,
+          "bevelMm": 1.6,
+          "zMm": -3.8
+        },
+        "colour": "#121212",
+        "note": "black key 4: sloped tips, chamfered corners"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 109.415,
+        "yMm": 122.1,
+        "points": [
+          [
+            -4.3,
+            -24.7
+          ],
+          [
+            4.3,
+            -24.7
+          ],
+          [
+            5.2,
+            -23.8
+          ],
+          [
+            5.2,
+            23.8
+          ],
+          [
+            4.3,
+            24.7
+          ],
+          [
+            -4.3,
+            24.7
+          ],
+          [
+            -5.2,
+            23.8
+          ],
+          [
+            -5.2,
+            -23.8
+          ]
+        ],
+        "params": {
+          "riseMm": 18,
+          "bevelMm": 1.6,
+          "zMm": -3.8
+        },
+        "colour": "#121212",
+        "note": "black key 5: sloped tips, chamfered corners"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 131.468,
+        "yMm": 122.1,
+        "points": [
+          [
+            -4.3,
+            -24.7
+          ],
+          [
+            4.3,
+            -24.7
+          ],
+          [
+            5.2,
+            -23.8
+          ],
+          [
+            5.2,
+            23.8
+          ],
+          [
+            4.3,
+            24.7
+          ],
+          [
+            -4.3,
+            24.7
+          ],
+          [
+            -5.2,
+            23.8
+          ],
+          [
+            -5.2,
+            -23.8
+          ]
+        ],
+        "params": {
+          "riseMm": 18,
+          "bevelMm": 1.6,
+          "zMm": -3.8
+        },
+        "colour": "#121212",
+        "note": "black key 6: sloped tips, chamfered corners"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 166.174,
+        "yMm": 122.1,
+        "points": [
+          [
+            -4.3,
+            -24.7
+          ],
+          [
+            4.3,
+            -24.7
+          ],
+          [
+            5.2,
+            -23.8
+          ],
+          [
+            5.2,
+            23.8
+          ],
+          [
+            4.3,
+            24.7
+          ],
+          [
+            -4.3,
+            24.7
+          ],
+          [
+            -5.2,
+            23.8
+          ],
+          [
+            -5.2,
+            -23.8
+          ]
+        ],
+        "params": {
+          "riseMm": 18,
+          "bevelMm": 1.6,
+          "zMm": -3.8
+        },
+        "colour": "#121212",
+        "note": "black key 8: sloped tips, chamfered corners"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 188.977,
+        "yMm": 122.1,
+        "points": [
+          [
+            -4.3,
+            -24.7
+          ],
+          [
+            4.3,
+            -24.7
+          ],
+          [
+            5.2,
+            -23.8
+          ],
+          [
+            5.2,
+            23.8
+          ],
+          [
+            4.3,
+            24.7
+          ],
+          [
+            -4.3,
+            24.7
+          ],
+          [
+            -5.2,
+            23.8
+          ],
+          [
+            -5.2,
+            -23.8
+          ]
+        ],
+        "params": {
+          "riseMm": 18,
+          "bevelMm": 1.6,
+          "zMm": -3.8
+        },
+        "colour": "#121212",
+        "note": "black key 9: sloped tips, chamfered corners"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 224.333,
+        "yMm": 122.1,
+        "points": [
+          [
+            -4.3,
+            -24.7
+          ],
+          [
+            4.3,
+            -24.7
+          ],
+          [
+            5.2,
+            -23.8
+          ],
+          [
+            5.2,
+            23.8
+          ],
+          [
+            4.3,
+            24.7
+          ],
+          [
+            -4.3,
+            24.7
+          ],
+          [
+            -5.2,
+            23.8
+          ],
+          [
+            -5.2,
+            -23.8
+          ]
+        ],
+        "params": {
+          "riseMm": 18,
+          "bevelMm": 1.6,
+          "zMm": -3.8
+        },
+        "colour": "#121212",
+        "note": "black key 11: sloped tips, chamfered corners"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 246.286,
+        "yMm": 122.1,
+        "points": [
+          [
+            -4.3,
+            -24.7
+          ],
+          [
+            4.3,
+            -24.7
+          ],
+          [
+            5.2,
+            -23.8
+          ],
+          [
+            5.2,
+            23.8
+          ],
+          [
+            4.3,
+            24.7
+          ],
+          [
+            -4.3,
+            24.7
+          ],
+          [
+            -5.2,
+            23.8
+          ],
+          [
+            -5.2,
+            -23.8
+          ]
+        ],
+        "params": {
+          "riseMm": 18,
+          "bevelMm": 1.6,
+          "zMm": -3.8
+        },
+        "colour": "#121212",
+        "note": "black key 12: sloped tips, chamfered corners"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 268.339,
+        "yMm": 122.1,
+        "points": [
+          [
+            -4.3,
+            -24.7
+          ],
+          [
+            4.3,
+            -24.7
+          ],
+          [
+            5.2,
+            -23.8
+          ],
+          [
+            5.2,
+            23.8
+          ],
+          [
+            4.3,
+            24.7
+          ],
+          [
+            -4.3,
+            24.7
+          ],
+          [
+            -5.2,
+            23.8
+          ],
+          [
+            -5.2,
+            -23.8
+          ]
+        ],
+        "params": {
+          "riseMm": 18,
+          "bevelMm": 1.6,
+          "zMm": -3.8
+        },
+        "colour": "#121212",
+        "note": "black key 13: sloped tips, chamfered corners"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 68.3,
+        "yMm": 25.75,
+        "params": {
+          "widthMm": 27.2,
+          "heightMm": 28.4,
+          "cornerMm": 2.6,
+          "riseMm": 3.6,
+          "bevelMm": 1.5,
+          "frameMm": 0.5,
+          "zMm": 11.7
+        },
+        "colour": "#101010",
+        "colour2": "#4a4b50",
+        "note": "velocity pad 5"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 102.95,
+        "yMm": 25.75,
+        "params": {
+          "widthMm": 27.2,
+          "heightMm": 28.4,
+          "cornerMm": 2.6,
+          "riseMm": 3.6,
+          "bevelMm": 1.5,
+          "frameMm": 0.5,
+          "zMm": 11.7
+        },
+        "colour": "#101010",
+        "colour2": "#d90d10",
+        "note": "velocity pad 6 (red rim)"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 137.6,
+        "yMm": 25.75,
+        "params": {
+          "widthMm": 27.2,
+          "heightMm": 28.4,
+          "cornerMm": 2.6,
+          "riseMm": 3.6,
+          "bevelMm": 1.5,
+          "frameMm": 0.5,
+          "zMm": 11.7
+        },
+        "colour": "#101010",
+        "colour2": "#4a4b50",
+        "note": "velocity pad 7"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 172.25,
+        "yMm": 25.75,
+        "params": {
+          "widthMm": 27.2,
+          "heightMm": 28.4,
+          "cornerMm": 2.6,
+          "riseMm": 3.6,
+          "bevelMm": 1.5,
+          "frameMm": 0.5,
+          "zMm": 11.7
+        },
+        "colour": "#101010",
+        "colour2": "#d90d10",
+        "note": "velocity pad 8 (red rim)"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 68.3,
+        "yMm": 61.4,
+        "params": {
+          "widthMm": 27.2,
+          "heightMm": 28.4,
+          "cornerMm": 2.6,
+          "riseMm": 3.6,
+          "bevelMm": 1.5,
+          "frameMm": 0.5,
+          "zMm": 11.7
+        },
+        "colour": "#101010",
+        "colour2": "#d90d10",
+        "note": "velocity pad 1 (red rim)"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 102.95,
+        "yMm": 61.4,
+        "params": {
+          "widthMm": 27.2,
+          "heightMm": 28.4,
+          "cornerMm": 2.6,
+          "riseMm": 3.6,
+          "bevelMm": 1.5,
+          "frameMm": 0.5,
+          "zMm": 11.7
+        },
+        "colour": "#101010",
+        "colour2": "#4a4b50",
+        "note": "velocity pad 2"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 137.6,
+        "yMm": 61.4,
+        "params": {
+          "widthMm": 27.2,
+          "heightMm": 28.4,
+          "cornerMm": 2.6,
+          "riseMm": 3.6,
+          "bevelMm": 1.5,
+          "frameMm": 0.5,
+          "zMm": 11.7
+        },
+        "colour": "#101010",
+        "colour2": "#d90d10",
+        "note": "velocity pad 3 (red rim)"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 172.25,
+        "yMm": 61.4,
+        "params": {
+          "widthMm": 27.2,
+          "heightMm": 28.4,
+          "cornerMm": 2.6,
+          "riseMm": 3.6,
+          "bevelMm": 1.5,
+          "frameMm": 0.5,
+          "zMm": 11.7
+        },
+        "colour": "#101010",
+        "colour2": "#4a4b50",
+        "note": "velocity pad 4"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "diaMm": 19,
+          "heightMm": 11.6,
+          "bevelMm": 0.2,
+          "taper": 0.2,
+          "pointer": 0,
+          "knurl": 0,
+          "zMm": 11.7
+        },
+        "colour": "#080808",
+        "note": "K1 to K8 rotary encoders: tapered skirt"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": 9.4,
+          "y1Mm": 0,
+          "z1Mm": 0.25,
+          "x2Mm": 8.047,
+          "y2Mm": 0,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 1 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": 8.469,
+          "y1Mm": 4.078,
+          "z1Mm": 0.25,
+          "x2Mm": 7.25,
+          "y2Mm": 3.491,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 2 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": 5.861,
+          "y1Mm": 7.349,
+          "z1Mm": 0.25,
+          "x2Mm": 5.017,
+          "y2Mm": 6.291,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 3 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": 2.092,
+          "y1Mm": 9.164,
+          "z1Mm": 0.25,
+          "x2Mm": 1.791,
+          "y2Mm": 7.845,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 4 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": -2.092,
+          "y1Mm": 9.164,
+          "z1Mm": 0.25,
+          "x2Mm": -1.791,
+          "y2Mm": 7.845,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 5 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": -5.861,
+          "y1Mm": 7.349,
+          "z1Mm": 0.25,
+          "x2Mm": -5.017,
+          "y2Mm": 6.291,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 6 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": -8.469,
+          "y1Mm": 4.078,
+          "z1Mm": 0.25,
+          "x2Mm": -7.25,
+          "y2Mm": 3.491,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 7 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": -9.4,
+          "y1Mm": 0,
+          "z1Mm": 0.25,
+          "x2Mm": -8.047,
+          "y2Mm": 0,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 8 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": -8.469,
+          "y1Mm": -4.078,
+          "z1Mm": 0.25,
+          "x2Mm": -7.25,
+          "y2Mm": -3.491,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 9 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": -5.861,
+          "y1Mm": -7.349,
+          "z1Mm": 0.25,
+          "x2Mm": -5.017,
+          "y2Mm": -6.291,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 10 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": -2.092,
+          "y1Mm": -9.164,
+          "z1Mm": 0.25,
+          "x2Mm": -1.791,
+          "y2Mm": -7.845,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 11 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": 2.092,
+          "y1Mm": -9.164,
+          "z1Mm": 0.25,
+          "x2Mm": 1.791,
+          "y2Mm": -7.845,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 12 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": 5.861,
+          "y1Mm": -7.349,
+          "z1Mm": 0.25,
+          "x2Mm": 5.017,
+          "y2Mm": -6.291,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 13 of 14"
+      },
+      {
+        "kind": "rod",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "params": {
+          "x1Mm": 8.469,
+          "y1Mm": -4.078,
+          "z1Mm": 0.25,
+          "x2Mm": 7.25,
+          "y2Mm": -3.491,
+          "z2Mm": 9.799999999999999,
+          "diaMm": 0.9,
+          "segments": 5,
+          "zMm": 11.7
+        },
+        "colour": "#0e0e0e",
+        "note": "knob rib 14 of 14"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 207,
+        "yMm": 42.7,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 29.85,
+        "pitchYMm": 28.3,
+        "points": [
+          [
+            7.7,
+            0
+          ],
+          [
+            7.236,
+            2.634
+          ],
+          [
+            5.899,
+            4.949
+          ],
+          [
+            3.85,
+            6.668
+          ],
+          [
+            1.337,
+            7.583
+          ],
+          [
+            -1.337,
+            7.583
+          ],
+          [
+            -3.85,
+            6.668
+          ],
+          [
+            -5.899,
+            4.949
+          ],
+          [
+            -7.236,
+            2.634
+          ],
+          [
+            -7.7,
+            0
+          ],
+          [
+            -7.236,
+            -2.634
+          ],
+          [
+            -5.899,
+            -4.949
+          ],
+          [
+            -3.85,
+            -6.668
+          ],
+          [
+            -1.337,
+            -7.583
+          ],
+          [
+            1.337,
+            -7.583
+          ],
+          [
+            3.85,
+            -6.668
+          ],
+          [
+            5.899,
+            -4.949
+          ],
+          [
+            7.236,
+            -2.634
+          ]
+        ],
+        "params": {
+          "riseMm": 0.9,
+          "bevelMm": 0.3,
+          "zMm": 23.1,
+          "textured": 1
+        },
+        "colour": "#3a3b3f",
+        "note": "K1 to K8: round top disc (brushed face)"
+      },
+      {
+        "kind": "ring",
+        "face": "top",
+        "xMm": 25.4,
+        "yMm": 19.8,
+        "params": {
+          "diaMm": 25,
+          "innerDiaMm": 17,
+          "riseMm": 2,
+          "floorMm": 0.6,
+          "zMm": 11.7
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#0c0c0d",
+        "note": "thumbstick rubber boot"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 25.4,
+        "yMm": 19.8,
+        "params": {
+          "diaMm": 6,
+          "heightMm": 3.2,
+          "bevelMm": 0.05,
+          "taper": -0.267,
+          "pointer": 0,
+          "zMm": 12.9
+        },
+        "colour": "#d90d10",
+        "note": "thumbstick stem, flare 1"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 25.4,
+        "yMm": 19.8,
+        "params": {
+          "diaMm": 7.6,
+          "heightMm": 2.5,
+          "bevelMm": 0.05,
+          "taper": -0.368,
+          "pointer": 0,
+          "zMm": 16.1
+        },
+        "colour": "#d90d10",
+        "note": "thumbstick stem, flare 2"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 25.4,
+        "yMm": 19.8,
+        "params": {
+          "diaMm": 10.4,
+          "heightMm": 2,
+          "bevelMm": 0.05,
+          "taper": -0.462,
+          "pointer": 0,
+          "zMm": 18.6
+        },
+        "colour": "#d90d10",
+        "note": "thumbstick stem, flare 3"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 25.4,
+        "yMm": 19.8,
+        "points": [
+          [
+            9,
+            0
+          ],
+          [
+            8.774,
+            2.003
+          ],
+          [
+            8.109,
+            3.905
+          ],
+          [
+            7.036,
+            5.611
+          ],
+          [
+            5.611,
+            7.036
+          ],
+          [
+            3.905,
+            8.109
+          ],
+          [
+            2.003,
+            8.774
+          ],
+          [
+            0,
+            9
+          ],
+          [
+            -2.003,
+            8.774
+          ],
+          [
+            -3.905,
+            8.109
+          ],
+          [
+            -5.611,
+            7.036
+          ],
+          [
+            -7.036,
+            5.611
+          ],
+          [
+            -8.109,
+            3.905
+          ],
+          [
+            -8.774,
+            2.003
+          ],
+          [
+            -9,
+            0
+          ],
+          [
+            -8.774,
+            -2.003
+          ],
+          [
+            -8.109,
+            -3.905
+          ],
+          [
+            -7.036,
+            -5.611
+          ],
+          [
+            -5.611,
+            -7.036
+          ],
+          [
+            -3.905,
+            -8.109
+          ],
+          [
+            -2.003,
+            -8.774
+          ],
+          [
+            0,
+            -9
+          ],
+          [
+            2.003,
+            -8.774
+          ],
+          [
+            3.905,
+            -8.109
+          ],
+          [
+            5.611,
+            -7.036
+          ],
+          [
+            7.036,
+            -5.611
+          ],
+          [
+            8.109,
+            -3.905
+          ],
+          [
+            8.774,
+            -2.003
+          ]
+        ],
+        "params": {
+          "riseMm": 3.7,
+          "bevelMm": 1.5,
+          "zMm": 20.3
+        },
+        "colour": "#d90d10",
+        "note": "thumbstick cap: 18 mm, rounded rim"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 25.4,
+        "yMm": 19.8,
+        "points": [
+          [
+            5.8,
+            0
+          ],
+          [
+            5.655,
+            1.291
+          ],
+          [
+            5.226,
+            2.517
+          ],
+          [
+            4.535,
+            3.616
+          ],
+          [
+            3.616,
+            4.535
+          ],
+          [
+            2.517,
+            5.226
+          ],
+          [
+            1.291,
+            5.655
+          ],
+          [
+            0,
+            5.8
+          ],
+          [
+            -1.291,
+            5.655
+          ],
+          [
+            -2.517,
+            5.226
+          ],
+          [
+            -3.616,
+            4.535
+          ],
+          [
+            -4.535,
+            3.616
+          ],
+          [
+            -5.226,
+            2.517
+          ],
+          [
+            -5.655,
+            1.291
+          ],
+          [
+            -5.8,
+            0
+          ],
+          [
+            -5.655,
+            -1.291
+          ],
+          [
+            -5.226,
+            -2.517
+          ],
+          [
+            -4.535,
+            -3.616
+          ],
+          [
+            -3.616,
+            -4.535
+          ],
+          [
+            -2.517,
+            -5.226
+          ],
+          [
+            -1.291,
+            -5.655
+          ],
+          [
+            0,
+            -5.8
+          ],
+          [
+            1.291,
+            -5.655
+          ],
+          [
+            2.517,
+            -5.226
+          ],
+          [
+            3.616,
+            -4.535
+          ],
+          [
+            4.535,
+            -3.616
+          ],
+          [
+            5.226,
+            -2.517
+          ],
+          [
+            5.655,
+            -1.291
+          ]
+        ],
+        "params": {
+          "riseMm": 0.35,
+          "bevelMm": 0.15,
+          "zMm": 23.7
+        },
+        "colour": "#c30b0f",
+        "note": "thumbstick cap: dished centre"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 16.8,
+        "yMm": 45.4,
+        "count": 6,
+        "cols": 2,
+        "pitchXMm": 18.1,
+        "pitchYMm": 12.9,
+        "points": [
+          [
+            7,
+            3.5
+          ],
+          [
+            6.649,
+            4.349
+          ],
+          [
+            5.8,
+            4.7
+          ],
+          [
+            -5.8,
+            4.7
+          ],
+          [
+            -6.649,
+            4.349
+          ],
+          [
+            -7,
+            3.5
+          ],
+          [
+            -7,
+            -3.5
+          ],
+          [
+            -6.649,
+            -4.349
+          ],
+          [
+            -5.8,
+            -4.7
+          ],
+          [
+            5.8,
+            -4.7
+          ],
+          [
+            6.649,
+            -4.349
+          ],
+          [
+            7,
+            -3.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.5,
+          "bevelMm": 0.5,
+          "zMm": 11.7,
+          "textured": 1
+        },
+        "colour": "#2a2a2c",
+        "note": "arpeggiator and octave buttons, legends printed on the caps"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 244.4,
+        "yMm": 19,
+        "count": 4,
+        "pitchXMm": 18.1,
+        "points": [
+          [
+            7,
+            3.5
+          ],
+          [
+            6.649,
+            4.349
+          ],
+          [
+            5.8,
+            4.7
+          ],
+          [
+            -5.8,
+            4.7
+          ],
+          [
+            -6.649,
+            4.349
+          ],
+          [
+            -7,
+            3.5
+          ],
+          [
+            -7,
+            -3.5
+          ],
+          [
+            -6.649,
+            -4.349
+          ],
+          [
+            -5.8,
+            -4.7
+          ],
+          [
+            5.8,
+            -4.7
+          ],
+          [
+            6.649,
+            -4.349
+          ],
+          [
+            7,
+            -3.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.5,
+          "bevelMm": 0.5,
+          "zMm": 11.7,
+          "textured": 1
+        },
+        "colour": "#2a2a2c",
+        "note": "pad control buttons, legends printed on the caps"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 212,
+        "yMm": 18.9,
+        "points": [
+          [
+            18.5,
+            6.75
+          ],
+          [
+            18.149,
+            7.599
+          ],
+          [
+            17.3,
+            7.95
+          ],
+          [
+            -17.3,
+            7.95
+          ],
+          [
+            -18.149,
+            7.599
+          ],
+          [
+            -18.5,
+            6.75
+          ],
+          [
+            -18.5,
+            -6.75
+          ],
+          [
+            -18.149,
+            -7.599
+          ],
+          [
+            -17.3,
+            -7.95
+          ],
+          [
+            17.3,
+            -7.95
+          ],
+          [
+            18.149,
+            -7.599
+          ],
+          [
+            18.5,
+            -6.75
+          ]
+        ],
+        "params": {
+          "riseMm": 0.5,
+          "bevelMm": 0.25,
+          "zMm": 11.7,
+          "textured": 1
+        },
+        "colour": "#0d0f12",
+        "note": "OLED window (screen content printed)"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 37.5,
+        "yMm": 15.5,
+        "points": [
+          [
+            4.95,
+            0
+          ],
+          [
+            4.781,
+            1.281
+          ],
+          [
+            4.287,
+            2.475
+          ],
+          [
+            3.5,
+            3.5
+          ],
+          [
+            2.475,
+            4.287
+          ],
+          [
+            1.281,
+            4.781
+          ],
+          [
+            0,
+            4.95
+          ],
+          [
+            -1.281,
+            4.781
+          ],
+          [
+            -2.475,
+            4.287
+          ],
+          [
+            -3.5,
+            3.5
+          ],
+          [
+            -4.287,
+            2.475
+          ],
+          [
+            -4.781,
+            1.281
+          ],
+          [
+            -4.95,
+            0
+          ],
+          [
+            -4.781,
+            -1.281
+          ],
+          [
+            -4.287,
+            -2.475
+          ],
+          [
+            -3.5,
+            -3.5
+          ],
+          [
+            -2.475,
+            -4.287
+          ],
+          [
+            -1.281,
+            -4.781
+          ],
+          [
+            0,
+            -4.95
+          ],
+          [
+            1.281,
+            -4.781
+          ],
+          [
+            2.475,
+            -4.287
+          ],
+          [
+            3.5,
+            -3.5
+          ],
+          [
+            4.287,
+            -2.475
+          ],
+          [
+            4.781,
+            -1.281
+          ]
+        ],
+        "params": {
+          "riseMm": 0.35,
+          "bevelMm": 0.05
+        },
+        "colour": "#232323",
+        "note": "sustain pedal jack: thin dark ring (about 9.9 mm)"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 37.5,
+        "yMm": 15.5,
+        "points": [
+          [
+            4,
+            0
+          ],
+          [
+            3.864,
+            1.035
+          ],
+          [
+            3.464,
+            2
+          ],
+          [
+            2.828,
+            2.828
+          ],
+          [
+            2,
+            3.464
+          ],
+          [
+            1.035,
+            3.864
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            -1.035,
+            3.864
+          ],
+          [
+            -2,
+            3.464
+          ],
+          [
+            -2.828,
+            2.828
+          ],
+          [
+            -3.464,
+            2
+          ],
+          [
+            -3.864,
+            1.035
+          ],
+          [
+            -4,
+            0
+          ],
+          [
+            -3.864,
+            -1.035
+          ],
+          [
+            -3.464,
+            -2
+          ],
+          [
+            -2.828,
+            -2.828
+          ],
+          [
+            -2,
+            -3.464
+          ],
+          [
+            -1.035,
+            -3.864
+          ],
+          [
+            0,
+            -4
+          ],
+          [
+            1.035,
+            -3.864
+          ],
+          [
+            2,
+            -3.464
+          ],
+          [
+            2.828,
+            -2.828
+          ],
+          [
+            3.464,
+            -2
+          ],
+          [
+            3.864,
+            -1.035
+          ]
+        ],
+        "params": {
+          "riseMm": 0.5,
+          "bevelMm": 0.05
+        },
+        "colour": "#050505",
+        "note": "sustain pedal jack: dark bore 8 mm"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 64,
+        "yMm": 15.5,
+        "points": [
+          [
+            -6.2,
+            -5.5
+          ],
+          [
+            6.2,
+            -5.5
+          ],
+          [
+            6.2,
+            5.5
+          ],
+          [
+            -6.2,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 0.35,
+          "bevelMm": 0.05
+        },
+        "colour": "#050505",
+        "note": "USB-B: dark opening 12.4 x 11 mm"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 64,
+        "yMm": 15.5,
+        "points": [
+          [
+            -6.8,
+            5.5
+          ],
+          [
+            6.8,
+            5.5
+          ],
+          [
+            6.8,
+            6.1
+          ],
+          [
+            -6.8,
+            6.1
+          ]
+        ],
+        "params": {
+          "riseMm": 1.2,
+          "bevelMm": 0.05
+        },
+        "colour": "#6f737a",
+        "note": "USB-B: metal shell, top wall"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 64,
+        "yMm": 15.5,
+        "points": [
+          [
+            -6.8,
+            -6.1
+          ],
+          [
+            6.8,
+            -6.1
+          ],
+          [
+            6.8,
+            -5.5
+          ],
+          [
+            -6.8,
+            -5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.2,
+          "bevelMm": 0.05
+        },
+        "colour": "#6f737a",
+        "note": "USB-B: metal shell, bottom wall"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 64,
+        "yMm": 15.5,
+        "points": [
+          [
+            -6.8,
+            -5.5
+          ],
+          [
+            -6.2,
+            -5.5
+          ],
+          [
+            -6.2,
+            5.5
+          ],
+          [
+            -6.8,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.2,
+          "bevelMm": 0.05
+        },
+        "colour": "#6f737a",
+        "note": "USB-B: metal shell, left wall"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 64,
+        "yMm": 15.5,
+        "points": [
+          [
+            6.2,
+            -5.5
+          ],
+          [
+            6.8,
+            -5.5
+          ],
+          [
+            6.8,
+            5.5
+          ],
+          [
+            6.2,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.2,
+          "bevelMm": 0.05
+        },
+        "colour": "#6f737a",
+        "note": "USB-B: metal shell, right wall"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 64,
+        "yMm": 15.5,
+        "points": [
+          [
+            -5,
+            -1.6
+          ],
+          [
+            5,
+            -1.6
+          ],
+          [
+            4,
+            0.9
+          ],
+          [
+            -4,
+            0.9
+          ]
+        ],
+        "params": {
+          "riseMm": 0.8,
+          "bevelMm": 0.05
+        },
+        "colour": "#8a8e95",
+        "note": "USB-B: trapezoid tongue"
+      },
+      {
+        "kind": "rod",
+        "face": "bottom",
+        "xMm": 18,
+        "yMm": 16,
+        "count": 4,
+        "cols": 2,
+        "pitchXMm": 282,
+        "pitchYMm": 140,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": 0,
+          "z1Mm": -0.3,
+          "x2Mm": 0,
+          "y2Mm": 0,
+          "z2Mm": 2.4,
+          "diaMm": 10,
+          "segments": 10
+        },
+        "colour": "#101012",
+        "note": "rubber feet"
       }
     ],
-    "bodyHeightMm": 18,
+    "bodyHeightMm": 17.6,
     "topSeenFromFront": true,
-    "bodyWidthMm": 300
+    "bodyWidthMm": 312
   }
 }
