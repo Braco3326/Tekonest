@@ -7,7 +7,7 @@
  */
 import { Color3, Mesh, MeshBuilder, Scene, StandardMaterial, Vector3 } from '@babylonjs/core'
 import type { PortRef } from '../engine/types'
-import { CableBudget, catenaryPoints, pointAlong, SEGMENTS_FULL, type P3 } from './cablePath'
+import { CableBudget, catenaryPoints, FLOOR_CLEARANCE, pointAlong, SEGMENTS_FULL, type FloorRest, type P3 } from './cablePath'
 import { motionEnabled, TOKENS } from '../design/tokens'
 import { DisposableBag } from '../util/disposable'
 
@@ -30,6 +30,11 @@ export interface CableOptions {
   colorFor?: (a: PortRef, b: PortRef) => Color3
   /** Draw this connection dashed (a second cue next to the colour). */
   dashFor?: (a: PortRef, b: PortRef) => boolean
+  /**
+   * The height of the floor under a point (a raised deck included): with it every cable, and the cable in hand, rests ON the surface instead of sagging under it
+   * (founder, 2026-11-15). Absent (the legacy callers) = the cable keeps its old sag.
+   */
+  floorAt?: (x: number, z: number) => number
 }
 
 /** One counter for every renderer: a revision is never reused, so two renderers (a place reload) can never share a cache key. */
@@ -89,7 +94,7 @@ export class CableRenderer {
   updateDrag(to: Vector3, tint: DragTint): void {
     if (!this.drag) return
     // Same point count every frame → cheap in-place tube update.
-    const path = catenaryPoints(this.drag.from, to, SEGMENTS_FULL).map(toVec)
+    const path = catenaryPoints(this.drag.from, to, SEGMENTS_FULL, this.rest(TOKENS.focus.heldCableRadius)).map(toVec)
     this.drag.mesh = MeshBuilder.CreateTube('cable:drag', { path, instance: this.drag.mesh })
     this.drag.mesh.material = this.mats[tint]
   }
@@ -132,7 +137,7 @@ export class CableRenderer {
     this._revision = ++revisionSeq
     this.removeCable(connectionId)
     const segments = this.budget.grant(connectionId) // straight line once over budget
-    const path = catenaryPoints(a, b, segments)
+    const path = catenaryPoints(a, b, segments, this.rest())
     const color = ends && this.opts.colorFor ? this.opts.colorFor(ends[0], ends[1]) : null
     const dashed = !!ends && this.opts.dashFor?.(ends[0], ends[1]) === true
     const name = `cable:${connectionId}`
@@ -262,7 +267,13 @@ export class CableRenderer {
   }
 
   private buildTube(name: string, a: Vector3, b: Vector3, segments: number, radius = CABLE_RADIUS): Mesh {
-    return this.buildTubeFromPath(name, catenaryPoints(a, b, segments), radius)
+    return this.buildTubeFromPath(name, catenaryPoints(a, b, segments, this.rest(radius)), radius)
+  }
+
+  /** The surface the cables lie on (the host's floor), for a cable of this radius; undefined without a floor = the legacy sag. */
+  private rest(radius = CABLE_RADIUS): FloorRest | undefined {
+    const floorAt = this.opts.floorAt
+    return floorAt ? { floorAt, clearance: radius + (FLOOR_CLEARANCE - CABLE_RADIUS) } : undefined
   }
 
   /**

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { CableBudget, catenaryPoints, pointAlong, polylineLength, SEGMENTS_FULL } from '../../src/scene/cablePath'
+import { CableBudget, catenaryPoints, FLOOR_CLEARANCE, pointAlong, polylineLength, SEGMENTS_FULL } from '../../src/scene/cablePath'
 
 describe('polylineLength (the metres a cable hover reads)', () => {
   it('sums the segments of a known polyline: 3-4-5 then 12 up', () => {
@@ -35,6 +35,54 @@ describe('catenaryPoints', () => {
     expect(pts).toHaveLength(2)
     expect(pts[0].y).toBe(1)
     expect(pts[1].y).toBe(1) // no sag on straight lines
+  })
+})
+
+/**
+ * Founder, 2026-11-15: « the cables are shown underground, that's a bug, they must be on the surface, not under ».
+ * Root cause: the cable is a parabola that sags by 15 % of its horizontal run (at least 5 cm) BELOW the line between its two ports, with no floor under it. Two ports
+ * at floor level (a connector 5 cm up) 6 m apart: the middle of the cable is 0.05 - 0.9 = 0.85 m under the floor. Any cable between low ports dips under it.
+ */
+describe('catenaryPoints rests on the floor, never under it', () => {
+  const flat = { floorAt: () => 0, clearance: FLOOR_CLEARANCE }
+  const low = (x: number, y = 0.05, z = 0): { x: number; y: number; z: number } => ({ x, y, z })
+
+  it('the root cause: with no floor given, two low ports 6 m apart make a cable that dips far under the floor (legacy behaviour, unchanged)', () => {
+    const pts = catenaryPoints(low(0), low(6), SEGMENTS_FULL)
+    expect(Math.min(...pts.map((q) => q.y))).toBeLessThan(-0.8)
+  })
+
+  it('with the floor, no point of the cable is lower than the floor plus the clearance, and the two ends are the ports exactly', () => {
+    const a = low(0)
+    const b = low(6)
+    const pts = catenaryPoints(a, b, SEGMENTS_FULL, flat)
+    expect(pts).toHaveLength(SEGMENTS_FULL + 1)
+    expect(pts[0]).toEqual(a)
+    expect(pts[SEGMENTS_FULL]).toEqual(b)
+    for (const q of pts.slice(1, -1)) expect(q.y).toBeGreaterThanOrEqual(FLOOR_CLEARANCE - 1e-12)
+  })
+
+  it('a cable that stays above the floor is not changed by it (a high port, a short run)', () => {
+    const a = low(0, 1.5)
+    const b = low(1, 1.5)
+    expect(catenaryPoints(a, b, SEGMENTS_FULL, flat)).toEqual(catenaryPoints(a, b, SEGMENTS_FULL))
+  })
+
+  it('it follows a raised deck: on the deck it rests on the deck, off it on the floor', () => {
+    const deck = (x: number): number => (x >= 2 && x <= 4 ? 0.6 : 0)
+    const pts = catenaryPoints(low(0, 0.05), low(6, 0.05), SEGMENTS_FULL, { floorAt: (x) => deck(x), clearance: FLOOR_CLEARANCE })
+    for (const q of pts.slice(1, -1)) expect(q.y).toBeGreaterThanOrEqual(deck(q.x) + FLOOR_CLEARANCE - 1e-12)
+    expect(pts.some((q) => q.x > 2.5 && q.x < 3.5 && Math.abs(q.y - (0.6 + FLOOR_CLEARANCE)) < 1e-9)).toBe(true)
+  })
+
+  it('a straight 2-point cable (the budget guard) is left alone: it has no inner point to lift', () => {
+    const pts = catenaryPoints(low(0), low(6), 1, flat)
+    expect(pts).toHaveLength(2)
+  })
+
+  it('a cable drawn on the floor is never shorter than the straight line between its ports', () => {
+    const len = polylineLength(catenaryPoints(low(0), low(6), SEGMENTS_FULL, flat))
+    expect(len).toBeGreaterThanOrEqual(6 - 1e-9)
   })
 })
 

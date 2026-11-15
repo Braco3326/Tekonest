@@ -155,6 +155,10 @@ export interface CreationDebug {
   turnCamera(dAlpha: number): void
   /** Final review: the drawn length (m) of a cable (the polyline the hover shows), or null when it is not drawn. */
   cableLengthM(key: string): number | null
+  /** The points (world m) of a drawn cable, or null when it is not drawn: the cables must rest on the floor, never under it. */
+  cablePoints(key: string): [number, number, number][] | null
+  /** The height (m) of the floor under a point of the room (a raised deck included; 0 for a set or the blank room). */
+  floorAtM(x: number, z: number): number
   /** Final review: the straight distance (m) between two ports in the world, or null when either is unknown. */
   portDistanceM(a: PortRef, b: PortRef): number | null
   /** Task 26: the first port clicked while a cable is in hand, or null. */

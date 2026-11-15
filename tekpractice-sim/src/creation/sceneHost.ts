@@ -530,6 +530,12 @@ export class SceneHost {
     return path ? polylineLength(path) : null
   }
 
+  /** The points of a drawn cable in world metres, or null when it is not drawn: the oracle for « the cables rest on the floor ». */
+  cablePoints(key: string): [number, number, number][] | null {
+    const path = this.cables?.paths().find(([id]) => id === key)?.[1]
+    return path ? path.map((q): [number, number, number] => [q.x, q.y, q.z]) : null
+  }
+
   /** The key of the cable drawn with the Papier stroke right now (tests). */
   strokedCable(): string | null {
     const m = this.cableStroke
@@ -1007,6 +1013,8 @@ export class SceneHost {
       // C18: the colour (and the dash) of a cable is its signal's, read from the catalog's port definitions.
       colorFor: (a, b) => Color3.FromHexString(cableColor(this.signalOf(a, b) ?? '')),
       dashFor: (a, b) => cableDash(this.signalOf(a, b) ?? ''),
+      // The cables lie ON the floor (the room's own, raised decks included; a set or the blank room is flat), never under it.
+      floorAt: (x, z) => this._layout?.floorAt(x, z) ?? 0,
     })
     // L7 (Task 18): a recalled view lands exactly, even during an orbit flick.
     this._rig = new CameraRig(camera, { stopInertiaOnFlight: true })

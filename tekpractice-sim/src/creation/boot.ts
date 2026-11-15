@@ -2394,6 +2394,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     patchPending: () => patch.pending,
     patchClick: (ref) => patch.click(ref),
     cableLengthM: (key) => host.cableLengthM(key),
+    cablePoints: (key) => host.cablePoints(key),
+    floorAtM: (x, z) => host.floorHeight(x, z, 0),
     portDistanceM: (a, b) => {
       const [pa, pb] = [host.portWorld(a), host.portWorld(b)]
       return pa && pb ? Vector3.Distance(pa, pb) : null

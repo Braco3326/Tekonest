@@ -45,6 +45,25 @@ const freePoint = async (page: Page, key: string) => {
 }
 const addLineCable = (page: Page) => page.evaluate(([a, b]) => window.__creation!.dispatch({ type: 'CONNECT', a, b }), [QL_OUT, K12_IN] as const)
 
+/**
+ * Founder, 2026-11-15: « the cables are shown underground, they must be on the surface, not under ». Every drawn cable of the reference rig, the line cable added across
+ * the room and the powered rig: no point lower than the floor under it, and the two ends on their ports.
+ */
+test('every cable rests on the floor, never under it, ends on the ports (founder, 2026-11-15)', async ({ page }) => {
+  await boot(page, { keepStrip: true })
+  await addLineCable(page)
+  await page.waitForFunction((k) => window.__creation!.cablePoints(k) !== null, LINE_KEY)
+  for (const key of [MIC_KEY, LINE_KEY]) {
+    const pts = await page.evaluate((k) => window.__creation!.cablePoints(k), key)
+    expect(pts, `cable ${key} is drawn`).not.toBeNull()
+    expect(pts!.length).toBeGreaterThan(2)
+    for (const [x, y, z] of pts!.slice(1, -1)) {
+      const floor = await page.evaluate(([px, pz]) => window.__creation!.floorAtM(px!, pz!), [x, z] as const)
+      expect(y, `a point of ${key} at (${x.toFixed(2)}, ${z.toFixed(2)}) is under the floor (${floor})`).toBeGreaterThanOrEqual(floor + 0.0149)
+    }
+  }
+})
+
 test('the template mic cable is drawn in the mic colour and the legend names it (only that signal)', async ({ page }) => {
   await boot(page)
   expect(await page.evaluate((k) => window.__creation!.cableColor(k), MIC_KEY)).toBe(SIGNAL_STYLE['mic-level']!.color)

@@ -16,17 +16,37 @@ export const SEGMENTS_FULL = 24
 export const SAG_FACTOR = 0.15
 export const MIN_SAG = 0.05
 
-/** segments+1 points from a to b with parabolic sag (t·(1−t) profile). segments=1 → straight. */
-export function catenaryPoints(a: P3, b: P3, segments: number): P3[] {
+/** How far above the surface a resting cable's centre sits (m): a committed cable's radius is 12 mm (CableRenderer), so 15 mm lays it ON the floor, its underside 3 mm above it. */
+export const FLOOR_CLEARANCE = 0.015
+
+/**
+ * The surface a cable lies on: `floorAt(x, z)` is the height of the floor under a point (a raised deck included), `clearance` the height of the cable's centre above
+ * it (the cable's radius, plus a hair so the tube never fights the floor's own drawing).
+ */
+export interface FloorRest {
+  floorAt(x: number, z: number): number
+  clearance: number
+}
+
+/**
+ * segments+1 points from a to b with parabolic sag (t·(1−t) profile). segments=1 → straight.
+ * Founder, 2026-11-15: « the cables are shown underground ». The sag (15 % of the run, at least 5 cm) pulls the middle of a cable BELOW the line between its ports, so a
+ * cable between two low ports went under the floor. With `rest` every inner point is lifted to the floor under it plus the clearance: the cable lies on the surface
+ * (on a deck, on the deck), and the two ends stay exactly on the ports. Without `rest` (the legacy callers) the shape is the old one.
+ */
+export function catenaryPoints(a: P3, b: P3, segments: number, rest?: FloorRest): P3[] {
   const sag = segments <= 1 ? 0 : Math.max(MIN_SAG, Math.hypot(b.x - a.x, b.z - a.z) * SAG_FACTOR)
   const pts: P3[] = []
   for (let i = 0; i <= segments; i++) {
+    if (i === 0 || i === segments) {
+      pts.push(i === 0 ? { x: a.x, y: a.y, z: a.z } : { x: b.x, y: b.y, z: b.z }) // the ends are the ports exactly, not a + (b - a) with its rounding
+      continue
+    }
     const t = i / segments
-    pts.push({
-      x: a.x + (b.x - a.x) * t,
-      y: a.y + (b.y - a.y) * t - sag * 4 * t * (1 - t),
-      z: a.z + (b.z - a.z) * t,
-    })
+    const x = a.x + (b.x - a.x) * t
+    const z = a.z + (b.z - a.z) * t
+    const y = a.y + (b.y - a.y) * t - sag * 4 * t * (1 - t)
+    pts.push({ x, y: rest ? Math.max(y, rest.floorAt(x, z) + rest.clearance) : y, z })
   }
   return pts
 }
