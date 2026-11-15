@@ -15,6 +15,13 @@ from bpy_extras.object_utils import world_to_camera_view
 argv = sys.argv[sys.argv.index("--") + 1:]
 glb, prefix = argv[0], argv[1]
 px = int(argv[2]) if len(argv) > 2 else 800
+# optional 4th argument: views as name:azimuth:elevation:zoom:fx:fy:fz;... (zoom < 1 is a close-up; f* = look-at point as a fraction of the bounding box, default 0.5)
+VIEWS = [("front", 215.0, 28.0, 1.0, (0.5, 0.5, 0.5)), ("rear", 35.0, 28.0, 1.0, (0.5, 0.5, 0.5))]
+if len(argv) > 3 and argv[3]:
+    VIEWS = []
+    for spec in argv[3].split(";"):
+        p = spec.split(":")
+        VIEWS.append((p[0], float(p[1]), float(p[2]), float(p[3]) if len(p) > 3 else 1.0, tuple(float(v) for v in p[4:7]) if len(p) >= 7 else (0.5, 0.5, 0.5)))
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=glb)
@@ -74,15 +81,20 @@ def fits(margin=0.07):
     return True
 
 
-for name, az in (('front', 215.0), ('rear', 35.0)):
-    a, e = math.radians(az), math.radians(28)
+for name, az, el, zoom, focus in VIEWS:
+    a, e = math.radians(az), math.radians(el)
+    look = mathutils.Vector((mn.x + (mx.x - mn.x) * focus[0], mn.y + (mx.y - mn.y) * focus[1], mn.z + (mx.z - mn.z) * focus[2]))
     d = size * 0.6
     while True:
-        cam.location = ctr + mathutils.Vector((d * math.sin(a) * math.cos(e), -d * math.cos(a) * math.cos(e), d * math.sin(e)))
-        cam.rotation_euler = (ctr - cam.location).to_track_quat('-Z', 'Y').to_euler()
-        if fits() or d > size * 12:
+        cam.location = look + mathutils.Vector((d * math.sin(a) * math.cos(e), -d * math.cos(a) * math.cos(e), d * math.sin(e)))
+        cam.rotation_euler = (look - cam.location).to_track_quat('-Z', 'Y').to_euler()
+        if zoom < 1.0 or fits() or d > size * 12:
             break
         d *= 1.06
+    if zoom < 1.0:
+        d = size * 1.0 * zoom
+        cam.location = look + mathutils.Vector((d * math.sin(a) * math.cos(e), -d * math.cos(a) * math.cos(e), d * math.sin(e)))
+        cam.rotation_euler = (look - cam.location).to_track_quat('-Z', 'Y').to_euler()
     sc.render.filepath = f'{prefix}_{name}.png'
     bpy.ops.render.render(write_still=True)
 print("REVIEW_DONE")

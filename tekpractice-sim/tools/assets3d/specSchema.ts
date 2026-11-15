@@ -11,6 +11,7 @@
 import { z } from 'zod'
 import { PortFlag } from '../schemas'
 import { BUILD_SHAPES } from './shapes'
+import { Structure } from './structure'
 
 const PositiveMm = z.number().finite().positive()
 const CoordMm = z.number().finite().min(0)
@@ -142,6 +143,7 @@ export const AssetSpec = z.object({
   mating: Mating.optional(),
   build: BuildSpec.optional(),
   texture: TextureSpec.optional(),
+  structure: Structure.optional().describe('The structure sheet: the real parts (knobs, faders, buttons, ports, keys, screws, feet) that the builder MODELS as geometry on the faces; a photo is only for printed graphics. See docs/3d-structure-rebuild.md.'),
   portsDocumented: z.boolean().optional().describe('true when the ports of this spec are the connector set the datasheet documents (set by the person who fills the spec in, with portsSource). Only a device with portsDocumented true can be promoted into the verified catalogue; without it the device stays a Bêta proposal (beta-modelled).'),
   portsSource: z.string().regex(/^https?:\/\/\S+$/, 'portsSource is an http(s) URL').optional().describe('The page that documents the connector set (a manufacturer page or manual).'),
   powerNote: z.string().min(3).optional().describe('One French sentence about the mains of this device that the catalogue entry\'s realWorld.notes carries (findings 5 and 16): what the sheet says when no inlet or no switch is modelled (« alimentation non modélisée (source non lue) », « pas d\'interrupteur secteur selon le manuel »).'),

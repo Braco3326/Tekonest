@@ -4800,16 +4800,19 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
     looks_at: dict[int, int] = {}
     palette: list[tuple[int, int, int]] = []
     swatch_of: dict[int, int] = {}
+    part_attr = me.attributes.get("tkpart")   # faces of the structure parts keep their own colour: never the picture
     for poly in me.polygons:
-        for k, (face, _img, _iw, _ih, _px) in enumerate(pictures):
-            if face == "wrap":
-                hit = abs(poly.normal.z) <= WRAP_MAX_NORMAL_Z
-            else:
-                hit = poly.normal.dot(Vector(faces[face][0])) >= PROJECTION_COS
-            if hit:
-                looks_at[poly.index] = k
-                break
-        else:
+        is_part = part_attr is not None and part_attr.data[poly.index].value != 0
+        if not is_part:
+            for k, (face, _img, _iw, _ih, _px) in enumerate(pictures):
+                if face == "wrap":
+                    hit = abs(poly.normal.z) <= WRAP_MAX_NORMAL_Z
+                else:
+                    hit = poly.normal.dot(Vector(faces[face][0])) >= PROJECTION_COS
+                if hit:
+                    looks_at[poly.index] = k
+                    break
+        if poly.index not in looks_at:
             c = colours.data[poly.loop_start].color
             key = (srgb_byte(c[0]), srgb_byte(c[1]), srgb_byte(c[2]))
             if key not in palette:
@@ -4926,6 +4929,18 @@ def run() -> None:
         os.remove(measure_path)   # never leave the measurements of an earlier run next to this output
     MEASURE.clear()
     builder(plan)
+    if plan.get("parts"):
+        # the structure sheet: real parts (knobs, faders, buttons, sockets, keys...) modelled on the finished body (structure_parts.py)
+        meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
+        if len(meshes) != 1:
+            raise BuildError(f"a structure sheet needs exactly one mesh object, the build made {len(meshes)}")
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import structure_parts
+        try:
+            done = structure_parts.apply_structure(meshes[0], plan, COLOUR_ATTRIBUTE)
+        except structure_parts.PartError as exc:
+            raise BuildError(str(exc)) from exc
+        log(f"{plan.get('id')}: {done['parts']} structure parts")
     if plan.get("projections"):
         meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
         if len(meshes) != 1:
