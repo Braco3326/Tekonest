@@ -1,1 +1,0 @@
-import{E as t}from"./viewCube-Caz6DTS9.js";import"./babylon-CVEO0Zx_.js";import"./index-xFzr7ftG.js";import"./creationTokens-CzQ_KMAy.js";const E=600;function N(r,i){return!Number.isFinite(i)||i<=0?r:{...r,radius:Math.max(t,r.radius*i/E)}}export{E as FRAMING_REFERENCE_CANVAS_PX,N as framingForCanvas};
