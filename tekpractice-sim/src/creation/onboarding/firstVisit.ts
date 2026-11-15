@@ -4,8 +4,8 @@
  * the plain game never loads it. The checklist's wiring stays in `wire.ts`.
  * Mission 1 (spec 1.2 and 1.3): with `goals` (the feature switch, on a package whose first question is the goals) the start screen asks the goal screens instead of
  * the profiles, the chip says « But : X · changer » (or « Choisir un but »), and the place picker shows only the rooms of the stored goal (`setRoomFilter`). A goal
- * answered without the tutorial is written at once and the picker shows the goal's rooms to choose from; with the tutorial taken, the first room opens first, as
- * with a profile.
+ * answered where no offer was made (the tutorial is not on this address) is written at once and the picker shows the goal's rooms to choose from; once the offer
+ * was answered (« Faire le tutoriel » or « Passer, je connais ») the first room opens first, as with a profile, and the goal's rooms are there the next time the picker opens.
  */
 import { COPY } from '../copy'
 import type { InventoryTab } from '../inventory'
@@ -226,8 +226,8 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
           } else w.picker.show({ closable: false, focus: true })
           return
         }
-        if (tree && r.offer !== 'taken') {
-          // the goal screens, no tutorial asked: the goal is written now and the picker shows its rooms to choose from (closable back to a place that is open)
+        if (tree && r.offer === null) {
+          // the goal screens with no offer made: the goal is written now and the picker shows its rooms to choose from (closable back to a place that is open)
           store.dispatch({ type: 'answer', profile: r.profile, offer: r.offer, goal: r.goal ?? null })
           chip?.render()
           refreshGear()

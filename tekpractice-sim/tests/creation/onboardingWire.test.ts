@@ -616,7 +616,7 @@ describe('the goal screens (mission 1, spec 1.2 and 1.3): with `goals` on, the a
     expect(h.filters).toEqual([])
   })
 
-  it('a goal with the tutorial not taken: the record is written at once (goal and its profile), no room is opened, the picker shows the rooms of the goal', async () => {
+  it('a goal where no offer is made: the record is written at once (goal and its profile), no room is opened, the picker shows the rooms of the goal', async () => {
     const h = harness({ goals: true, tutorialAllowed: false })
     h.ob.startFirstVisit()
     h.startOpts().onResult({ kind: 'chosen', profile: 'metier', offer: null, goal: choice })
@@ -629,15 +629,17 @@ describe('the goal screens (mission 1, spec 1.2 and 1.3): with `goals` on, the a
     expect(h.chip().label()).toBe(`But : ${node.label} · changer`)
   })
 
-  it('a goal with the tutorial taken: the first room opens first, as with a profile, and the record keeps the goal', async () => {
-    const h = harness({ goals: true })
-    h.ob.startFirstVisit()
-    h.startOpts().onResult({ kind: 'chosen', profile: 'metier', offer: 'taken', goal: choice })
-    await settle()
-    expect(h.log.slice(0, 3)).toEqual(['showStart', 'room', 'frame'])
-    expect(h.recordWhenRoomOpened).toEqual([null])
-    expect(h.record()).toMatchObject({ profile: 'metier', offer: 'taken', request: 1, goal: choice })
-    expect(h.filters.at(-1)?.rooms).toEqual(node.rooms)
+  it('a goal with the offer answered (taken or skipped): the first room opens first, as with a profile, and the record keeps the goal', async () => {
+    for (const [offer, request] of [['taken', 1], ['skipped', 0]] as const) {
+      const h = harness({ goals: true })
+      h.ob.startFirstVisit()
+      h.startOpts().onResult({ kind: 'chosen', profile: 'metier', offer, goal: choice })
+      await settle()
+      expect(h.log.slice(0, 3), offer).toEqual(['showStart', 'room', 'frame'])
+      expect(h.recordWhenRoomOpened).toEqual([null])
+      expect(h.record()).toMatchObject({ profile: 'metier', offer, request, goal: choice })
+      expect(h.filters.at(-1)?.rooms).toEqual(node.rooms)
+    }
   })
 
   it('« Passer »: no goal, no profile, the record exists (nothing asks again), every room shows (no filter)', async () => {
@@ -678,11 +680,11 @@ describe('the goal screens (mission 1, spec 1.2 and 1.3): with `goals` on, the a
   })
 
   it('a new goal through the chip over a place: the room stays, the profile applies, and the picker shows the new goal\'s rooms (closable back to the place)', async () => {
-    const h = harness({ goals: true }, { storage: memoryStorage({ ...rec('metier', 'skipped'), goal: choice }) })
+    const h = harness({ goals: true, tutorialAllowed: false }, { storage: memoryStorage({ ...rec('metier', 'skipped'), goal: choice }) })
     h.setPlace(true)
     h.chip().onClick()
     const c2 = { id: 'etudie.bts-mav-son' }
-    h.startOpts().onResult({ kind: 'chosen', profile: 'etudie', offer: 'skipped', goal: c2 })
+    h.startOpts().onResult({ kind: 'chosen', profile: 'etudie', offer: null, goal: c2 })
     await settle()
     expect(h.log).not.toContain('room')
     expect(h.log).toContain('show:true:true')
