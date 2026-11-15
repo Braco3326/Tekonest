@@ -24,6 +24,9 @@ Write the sheet in the spec, block `structure` (schema: `tools/assets3d/structur
 | fader | slot with raised rails and a bevelled cap with an index line | slotLenMm, slotWidthMm, capWidthMm, capLenMm, capHeightMm, posFrac 0..1, horizontal |
 | socket | collar, dark well, pins, by `type` (xlr, jack, trs, rca, bnc, usb, rj45, iec, powercon, speakon, din, ethercon, sfp, generic) | diaMm or widthMm and heightMm, collarMm, riseMm, wellMm |
 | keys | piano keys: white keys with a front chamfer, black keys at the rear end | whiteCount, whitePitchMm, whiteLenMm, blackLenMm, blackWidthMm, riseMm, startNote |
+| pocket | a RECESS cut into the body (exact boolean, deterministic): round or rounded-rectangle, walls and floor in the part colour | diaMm or widthMm and heightMm, cornerMm, depthMm |
+| prism | any outline polygon (points, mm in the part frame) extruded outwards: wedge cheeks, plates, a raised deck (textured: 1 takes the face picture) | points, riseMm, bevelMm, textured |
+| rod / ball / ring / driver | bar between two local points; sphere; annulus; loudspeaker cone with surround and dust cap | see structure.ts |
 | screw | domed head with slot | diaMm, riseMm |
 | led | dome or lens | diaMm or widthMm and heightMm, riseMm |
 | slot | dark groove | lengthMm, widthMm, riseMm |
@@ -40,7 +43,8 @@ Part gaps (build more kinds in `tools/assets3d/blender/structure_parts.py`, and 
 3. **Printed copies of the controls.** A product photo used as the face picture shows the real controls; the builder now paints out the footprint of every modelled part in the picture (with the colour around it), but check that no printed knob, pad or key shows beside a modelled one. Legends and scales outside the footprints stay.
 4. **Wide parts and edges.** A key row or any part is placed by a ray cast onto the body: keep its anchor on the flat deck (a key row casts its ray at its middle). Never anchor a part on a rounded edge.
 5. **Ports and sockets.** The catalogue port node sits on the face plane; a socket part draws its collar and well so that the well floor is flush with the panel plane (default wellMm = riseMm). If the real panel is recessed, give the port an `insetMm` and the matching `openingMm` (the body shapes that cut pockets need the room).
-6. **Wedge-shaped parts** (end cheeks, sloped plates) use kind `prism` with `points` (outline polygon in the part frame, mm) and `riseMm` (thickness outwards).
+6. **Recesses.** Use kind `pocket` to cut a real recess (a recessed keypad key, an XLR cavity, a fader slot, a driver well, a port pocket). Parts are placed on the surface BEFORE the cut, so put a part that sits inside a pocket at zMm = minus its depth (a key cap 1.4 mm proud of a 1.2 mm pocket: zMm -1.2 and riseMm 2.6). A catalogue port inside a pocket needs the matching `insetMm` (the port gate measures the surface under the node). Many pockets are cut with ONE boolean.
+6b. **Wedge-shaped parts** (end cheeks, sloped plates) use kind `prism` with `points` (outline polygon in the part frame, mm) and `riseMm` (thickness outwards).
 7. **Blank rectangles** reach only `depthMm` behind the face plane (default at most 40 percent of the thickness): with a lower body give them a larger `depthMm`.
 8. **Reviewers use straight-on views** as well (azimuth 180, 0, 90, 270 and elevation 88) next to the three-quarter ones: 215/35/125/305 are 35 degrees off the model axes.
 

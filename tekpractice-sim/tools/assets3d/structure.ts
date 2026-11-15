@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { FACE_AXES, onFace } from './placement'
 import type { AssetSpecT, FaceT } from './specSchema'
 
-export const PART_KINDS = ['knob', 'button', 'fader', 'socket', 'screw', 'led', 'keys', 'slot', 'foot', 'rod', 'ball', 'ring', 'driver', 'prism'] as const
+export const PART_KINDS = ['knob', 'button', 'fader', 'socket', 'screw', 'led', 'keys', 'slot', 'foot', 'rod', 'ball', 'ring', 'driver', 'prism', 'pocket'] as const
 export type PartKind = (typeof PART_KINDS)[number]
 export const SOCKET_TYPES = ['xlr', 'jack', 'trs', 'rca', 'bnc', 'usb', 'rj45', 'iec', 'powercon', 'speakon', 'din', 'ethercon', 'sfp', 'usbb', 'generic'] as const
 
@@ -32,6 +32,7 @@ export const PART_PARAMS: Record<PartKind, readonly string[]> = {
   ring: ['diaMm', 'innerDiaMm', 'riseMm', 'floorMm', 'zMm', 'textured'],
   driver: ['diaMm', 'riseMm', 'capDiaMm', 'zMm', 'textured'],
   prism: ['riseMm', 'bevelMm', 'textured', 'zMm'],
+  pocket: ['diaMm', 'widthMm', 'heightMm', 'cornerMm', 'depthMm', 'zMm'],
 }
 
 export const StructurePart = z.object({
@@ -206,6 +207,11 @@ export function partFootprints(spec: AssetSpecT, face: FaceT): Footprint[] {
         }
         case 'screw': case 'led': out.push({ shape: 'circle', cx: x, cy: y, w: (g('diaMm', p.kind === 'screw' ? 3 : 2.5)) + 1, h: 0 }); break
         case 'slot': out.push(g('horizontal', 0) > 0 ? { shape: 'rect', cx: x, cy: y, w: g('lengthMm', 40), h: g('widthMm', 3) } : { shape: 'rect', cx: x, cy: y, w: g('widthMm', 3), h: g('lengthMm', 40) }); break
+        case 'pocket': {
+          const dia = g('diaMm', 0)
+          out.push(dia > 0 ? { shape: 'circle', cx: x, cy: y, w: dia + 1, h: 0 } : { shape: 'rect', cx: x, cy: y, w: g('widthMm', 10) + 1, h: g('heightMm', 6) + 1 })
+          break
+        }
         case 'driver': case 'ring': out.push({ shape: 'circle', cx: x, cy: y, w: g('diaMm', 30), h: 0 }); break
         default: break
       }

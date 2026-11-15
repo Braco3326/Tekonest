@@ -93,6 +93,7 @@ class Kit:
         self.tag = tag_layer
         self.frame: tuple[Vector, Vector, Vector, Vector] | None = None
         self.new_faces: list[bmesh.types.BMFace] = []
+        self.cut_colour = (0.01, 0.01, 0.012, 1.0)   # the colour of a pocket cutter (its walls and floor become body faces of this colour)
         self.textured = False   # True: the faces of this part take the face picture like the body (a raised deck plate)
 
     def set_frame(self, o: Vector, x: Vector, y: Vector, n: Vector) -> None:
@@ -530,44 +531,97 @@ def g2b(v: list[float] | tuple[float, float, float]) -> Vector:
     return Vector((v[0], -v[2], v[1]))
 
 
+def frame_of(inst: dict[str, Any], tree: BVHTree) -> tuple[Vector, Vector, Vector, Vector]:
+    """The surface frame of an instance: (origin, x, y, normal) in Blender space, from a ray cast onto the body."""
+    origin = g2b(inst["origin"])
+    direction = g2b(inst["dir"]).normalized()
+    hit = tree.ray_cast(origin, direction)
+    if hit[0] is None:
+        raise PartError(f"part {inst['part']} ({inst['kind']}) missed the body: its face position is outside the casing (check xMm, yMm and the face)")
+    loc, nrm = hit[0], hit[1].normalized()
+    if nrm.dot(direction) > 0:
+        nrm = -nrm
+    xa = g2b(inst["xAxis"])
+    xa = (xa - nrm * xa.dot(nrm))
+    if xa.length < 1e-6:
+        xa = Vector((1.0, 0.0, 0.0)) - nrm * nrm.x
+    xa.normalize()
+    ya = nrm.cross(xa)
+    lift = (inst.get("params") or {}).get("zMm")   # a part stacked on another (a cap on a stem): lifted along the surface normal
+    if lift:
+        loc = loc + nrm * (lift * MM)
+    sh = inst.get("shiftMm")
+    if sh:   # the ray was cast at the middle of a wide part: the frame origin goes back to its anchor
+        loc = loc - xa * (sh[0] * MM) - ya * (sh[1] * MM)
+    return loc, xa, ya, nrm
+
+
+def make_pocket_cutter(k: Kit, params: dict[str, float]) -> None:
+    """The closed solid cut out of the body: a round or rounded-rectangle prism from 2 mm above the surface down to depthMm below it."""
+    depth = _p(params, "depthMm", 3.0) * MM
+    dia = _p(params, "diaMm", 0.0) * MM
+    if dia > 0:
+        pts = circle(dia / 2, 28 if dia > 12 * MM else 18)
+    else:
+        w = _p(params, "widthMm", 10.0) * MM
+        h = _p(params, "heightMm", 6.0) * MM
+        pts = rrect(w, h, _p(params, "cornerMm", 1.0) * MM, 3)
+    k.stack([(-depth, pts), (2.0 * MM, pts)], k.cut_colour)
+    k.finish_part()
+
+
 def apply_structure(ob: bpy.types.Object, plan: dict[str, Any], colour_attribute: str) -> dict[str, int]:
-    """Adds every part of plan['parts'] to the mesh of `ob`. Returns {'parts': instances built}. Raises PartError when a part misses the body."""
+    """Cuts every pocket of plan['parts'] into the body (one boolean) and adds every other part to its mesh. Returns {'parts': instances built}. Raises PartError when a part misses the body."""
     parts = plan.get("parts") or []
     if not parts:
         return {"parts": 0}
     me = ob.data
     bm = bmesh.new()
     bm.from_mesh(me)
-    tree = BVHTree.FromBMesh(bm)
+    tree = BVHTree.FromBMesh(bm)      # every frame is taken on the body as it was before the pockets were cut
+    bm.free()
+    pockets = [p for p in parts if p["kind"] == "pocket"]
+    if pockets:
+        cbm = bmesh.new()
+        c_col = cbm.loops.layers.float_color.new(colour_attribute)
+        c_tag = cbm.faces.layers.int.new(TAG)
+        ck = Kit(cbm, c_col, c_tag)
+        for inst in pockets:
+            ck.set_frame(*frame_of(inst, tree))
+            c1 = inst.get("colour") or "#0b0b0d"
+            ck.cut_colour = lifted_linear(c1)
+            make_pocket_cutter(ck, inst.get("params") or {})
+        cme = bpy.data.meshes.new("tk-cutter")
+        cbm.to_mesh(cme)
+        cbm.free()
+        cutter = bpy.data.objects.new("tk-cutter", cme)
+        bpy.context.scene.collection.objects.link(cutter)
+        mod = ob.modifiers.new("tkcut", "BOOLEAN")
+        mod.operation = "DIFFERENCE"
+        mod.solver = "EXACT"
+        mod.use_self = True            # a body made of overlapping shells (a rack unit: chassis, plate, ears) needs the self-intersection handling
+        mod.use_hole_tolerant = True
+        mod.object = cutter
+        bpy.context.view_layer.objects.active = ob
+        for o in bpy.context.view_layer.objects:
+            o.select_set(o == ob)
+        bpy.ops.object.modifier_apply(modifier=mod.name)
+        bpy.data.objects.remove(cutter, do_unlink=True)
+        bpy.data.meshes.remove(cme)
+    me = ob.data
+    bm = bmesh.new()
+    bm.from_mesh(me)
     col_layer = bm.loops.layers.float_color.get(colour_attribute)
     if col_layer is None:
         raise PartError(f"the body has no colour attribute {colour_attribute!r}")
     tag_layer = bm.faces.layers.int.get(TAG) or bm.faces.layers.int.new(TAG)
     kit = Kit(bm, col_layer, tag_layer)
-    built = 0
+    built = len(pockets)
     for inst in parts:
-        origin = g2b(inst["origin"])
-        direction = g2b(inst["dir"]).normalized()
-        hit = tree.ray_cast(origin, direction)
-        if hit[0] is None:
-            raise PartError(f"part {inst['part']} ({inst['kind']}) missed the body: its face position is outside the casing (check xMm, yMm and the face)")
-        loc, nrm = hit[0], hit[1].normalized()
-        if nrm.dot(direction) > 0:
-            nrm = -nrm
-        xa = g2b(inst["xAxis"])
-        xa = (xa - nrm * xa.dot(nrm))
-        if xa.length < 1e-6:
-            xa = Vector((1.0, 0.0, 0.0)) - nrm * nrm.x
-        xa.normalize()
-        ya = nrm.cross(xa)
-        lift = (inst.get("params") or {}).get("zMm")   # a part stacked on another (a cap on a stem): lifted along the surface normal
-        if lift:
-            loc = loc + nrm * (lift * MM)
-        sh = inst.get("shiftMm")
-        if sh:   # the ray was cast at the middle of a wide part: the frame origin goes back to its anchor
-            loc = loc - xa * (sh[0] * MM) - ya * (sh[1] * MM)
-        kit.set_frame(loc, xa, ya, nrm)
         kind = inst["kind"]
+        if kind == "pocket":
+            continue
+        kit.set_frame(*frame_of(inst, tree))
         d1, d2 = DEFAULT_COLOURS[kind]
         c1 = inst.get("colour") or d1
         c2 = inst.get("colour2") or d2
