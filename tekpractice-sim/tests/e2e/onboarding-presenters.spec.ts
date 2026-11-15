@@ -10,6 +10,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 import { DESIGN_IDS, packageById, type DesignId } from '../../src/design/packages'
+import { answerFirstQuestion, openNeutralRoomAfterAnswer } from './onboardingKit'
 
 test.use({ viewport: { width: 1366, height: 768 } })
 
@@ -26,7 +27,7 @@ async function openFresh(page: Page, query: string): Promise<void> {
 /** « Je découvre », « Passer, je connais »: the neutral room, no tutorial. */
 async function openRoom(page: Page, id: DesignId): Promise<void> {
   await openFresh(page, `?design=${id}`)
-  await start(page).getByRole('button', { name: 'Je découvre', exact: true }).click()
+  await answerFirstQuestion(page, '1', 'click')
   await start(page).getByRole('button', { name: 'Passer, je connais', exact: true }).click()
   await page.waitForFunction(() => window.__creation?.place() === 'blank')
 }
@@ -169,8 +170,8 @@ test('package 2: axe finds nothing on the docked panel (colour contrast and the 
 
 test('package 2 with ?oscar=0: the panel is docked all the same (the checklist needs no guide), and no card, no Oscar', async ({ page }) => {
   await openFresh(page, '?design=2&oscar=0')
-  await start(page).getByRole('button', { name: 'Je découvre', exact: true }).click()
-  await page.waitForFunction(() => window.__creation?.place() === 'blank')
+  await answerFirstQuestion(page, '1', 'click') // package 2 asks the goal screens (mission 1); with ?oscar=0 the choice is final
+  await openNeutralRoomAfterAnswer(page) // no offer here: the goal's picker shows, the neutral room is opened from it
   await expect(page.getByTestId('project-tree').getByTestId('checklist')).toBeVisible()
   await expect(page.getByTestId('tutorial-slot')).toHaveCount(0)
   await expect(page.locator('.oscar-icon')).toHaveCount(0)
@@ -182,7 +183,7 @@ for (const id of DESIGN_IDS) {
   const pkg = packageById(id)
   test(`package ${id}: with the tutorial on, the presenter is the ${pkg.presenter === 'step-card' ? 'step card' : 'checklist (the card is its quiet companion)'}, the checklist form is the ${pkg.layout.checklist}`, async ({ page }) => {
     await openFresh(page, `?design=${id}`)
-    await start(page).getByRole('button', { name: 'Je découvre', exact: true }).click()
+    await answerFirstQuestion(page, '1', 'click')
     await start(page).getByRole('button', { name: /^Faire le tutoriel/ }).click()
     await page.waitForFunction(() => window.__creation?.place() === 'blank')
     await expect(page.getByTestId('tutorial-card')).toBeVisible({ timeout: 10_000 })
@@ -276,7 +277,7 @@ test('package 4 (muted, no hint): no proactive Oscar bubble within 60 s of a ben
 test('package 4 (hintAfterMs 0): in the tutorial on its power step, with the bubble closed by the learner, nothing is raised in 60 s and the helper stays locked', async ({ page }) => {
   test.setTimeout(150_000)
   await openFresh(page, '?design=4')
-  await start(page).getByRole('button', { name: 'Je découvre', exact: true }).click()
+  await answerFirstQuestion(page, '1', 'click')
   await start(page).getByRole('button', { name: /^Faire le tutoriel/ }).click()
   await page.waitForFunction(() => window.__creation?.place() === 'blank')
   await expect(page.getByTestId('tutorial-card')).toBeVisible({ timeout: 10_000 })

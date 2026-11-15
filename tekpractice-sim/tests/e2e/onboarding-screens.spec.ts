@@ -7,6 +7,7 @@
  */
 import { mkdirSync } from 'node:fs'
 import { expect, test } from '@playwright/test'
+import { answerFirstQuestion } from './onboardingKit'
 import { DESIGN_IDS, packageById } from '../../src/design/packages'
 
 test.use({ viewport: { width: 1366, height: 768 } })
@@ -23,7 +24,7 @@ for (const id of DESIGN_IDS) {
     await page.getByTestId('start-screen').waitFor()
     await page.screenshot({ path: `${OUT}/pkg-${id}-start.png` })
 
-    await page.keyboard.press('1')
+    await answerFirstQuestion(page, '1') // package 2 asks the goal screens (mission 1): the goal of that profile there
     await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
     await page.waitForFunction(() => window.__creation!.place() === 'blank')
     await expect(page.getByTestId('inventory-drawer')).toHaveAttribute('data-open', 'true')
@@ -65,7 +66,7 @@ for (const id of DESIGN_IDS) {
     await page.evaluate(() => window.localStorage.clear())
     await page.reload()
     await page.waitForFunction(() => !!window.__creation)
-    await page.getByTestId('start-screen').getByRole('button', { name: 'Je découvre', exact: true }).click()
+    await answerFirstQuestion(page, '1', 'click')
     await page.getByTestId('start-screen').getByRole('button', { name: /^Faire le tutoriel/ }).click()
     await page.waitForFunction(() => window.__creation!.place() === 'blank')
     await expect(page.getByTestId('tutorial-card')).toBeVisible({ timeout: 10_000 })
@@ -99,7 +100,7 @@ for (const id of [2, 3] as const) {
     await page.evaluate(() => window.localStorage.clear())
     await page.reload()
     await page.waitForFunction(() => !!window.__creation)
-    await page.keyboard.press('1')
+    await answerFirstQuestion(page, '1') // package 2 asks the goal screens (mission 1): the goal of that profile there
     await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
     await page.waitForFunction(() => window.__creation!.place() === 'blank')
     await page.evaluate(() => {

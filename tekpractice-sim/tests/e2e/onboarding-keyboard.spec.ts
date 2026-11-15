@@ -17,7 +17,7 @@ import type { Page } from '@playwright/test'
 import { DESIGN_IDS, packageById, type DesignId } from '../../src/design/packages'
 import { FAMILIES, NAMES, offends } from '../creation/honestyLists'
 import { readFileSync } from 'node:fs'
-import { act, connect, enter, expect, noteRetry, openFresh, openRequests, PROFILES, stallOf, start, STEP_INTENTS, test, testSignal, waitStartScreen, waitStep } from './onboardingKit'
+import { act, connect, enter, expect, noteRetry, openFresh, openRequests, PROFILES, stallOf, start, STEP_INTENTS, test, testSignal, waitStartScreen, waitStep, answerFirstQuestion, firstStartButton } from './onboardingKit'
 
 test.use({ viewport: { width: 1366, height: 768 } })
 /**
@@ -138,8 +138,8 @@ async function startByKeys(page: Page, id: DesignId): Promise<void> {
     const open = openRequests(page)
     try {
       await openFresh(page, `?design=${id}`)
-      await expect(page.getByTestId('start-screen').getByRole('button', { name: PROFILES[0].label, exact: true })).toBeFocused({ timeout: 30_000 })
-      await page.keyboard.press('1')
+      await expect(firstStartButton(page)).toBeFocused({ timeout: 30_000 })
+      await answerFirstQuestion(page, '1') // package 2 asks the goal screens (mission 1): the goal of that profile there
       await expect(page.getByTestId('start-screen').getByRole('button', { name: /^Faire le tutoriel/ })).toBeFocused()
       await page.keyboard.press('Enter')
       await page.waitForFunction(() => window.__creation?.place() === 'blank')

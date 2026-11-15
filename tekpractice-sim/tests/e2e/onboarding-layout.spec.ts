@@ -7,6 +7,7 @@
  * Desktop first, tablet comfortable: the panels are checked at 1366 x 768, 1024 x 768 and 820 x 1180. The width rules are the shell's own upper bound (layout.ts): the tree needs
  * 760 px, Propriétés 1200 px, so a preset never opens more than the window allows.
  */
+import { answerFirstQuestion } from './onboardingKit'
 import { expect, test, type Page } from '@playwright/test'
 import { DESIGN_IDS, packageById } from '../../src/design/packages'
 
@@ -25,7 +26,7 @@ async function openFresh(page: Page, query: string): Promise<void> {
 async function openRoom(page: Page, id: number): Promise<void> {
   await openFresh(page, `?design=${id}`)
   await page.getByTestId('start-screen').waitFor()
-  await page.keyboard.press('1')
+  await answerFirstQuestion(page, '1') // package 2 asks the goal screens (mission 1): the goal of « Je découvre »
   await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
 }
@@ -82,7 +83,7 @@ test.describe('T4 fix round, S2: a first-visit profile never opens a panel the w
       test(`package 2 after profile ${key} « ${name} »: Projet opens, Propriétés stays folded, the view keeps >= 60 %`, async ({ page }) => {
         await openFresh(page, '?design=2')
         await page.getByTestId('start-screen').waitFor()
-        await page.keyboard.press(key)
+        await answerFirstQuestion(page, key) // package 2 asks the goal screens (mission 1): the goal of that profile
         await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
         await page.waitForFunction(() => window.__creation!.place() === 'blank')
         expect(await panels(page)).toEqual({ tree: 'open', props: 'collapsed' })

@@ -8,6 +8,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect as baseExpect, test as baseTest, type Locator, type Page } from '@playwright/test'
 import type { DesignId } from '../../src/design/packages'
+import goalTreeJson from '../../content/onboarding/goal-tree.json'
 
 /**
  * The three T7.1 specs assert on lazy chunks (the start screen, the drawer, Oscar, the models) that arrive late when six workers share one machine: web-first assertions and `expect.poll` wait
@@ -46,6 +47,49 @@ export const PROFILES = [
   { key: '4', id: 'metier', label: 'Je travaille dans le son', focus: 'skip' },
 ] as const
 export type ProfileKey = (typeof PROFILES)[number]['key']
+
+/**
+ * Mission 1: a package whose first question is the goals (package 2, with the feature switch `goals` on, as in the all-on table) asks the goal screens instead of
+ * the four profiles. A spec written for the profiles answers them with the goal that maps to the same profile and its « autre » choice (an end of the way on screen 2),
+ * so the offer, the first room, the panels and the drawer tab are the profile's, as before. The labels come from the tree file.
+ */
+const GOAL_FOR_PROFILE: Record<(typeof PROFILES)[number]['id'], string> = { decouvre: 'decouvre', etudie: 'etudie', projet: 'passion', metier: 'travaille' }
+const goalLabel = (id: string): string => {
+  const g = (goalTreeJson as unknown as { goals: { id: string; label: string; children: { id: string; label: string }[] }[] }).goals
+  const top = g.find((x) => x.id === id.split('.')[0])!
+  return id.includes('.') ? top.children.find((c) => c.id === id)!.label : top.label
+}
+/**
+ * Where no offer is made (`?oscar=0`) a goal answer shows the place picker with the goal's rooms instead of opening the neutral room (mission 1); a profile answer opens
+ * it at once. Either way this ends with the neutral room open: through « Tous les lieux » and its card when the picker shows.
+ */
+export async function openNeutralRoomAfterAnswer(page: Page): Promise<void> {
+  const toggle = page.getByTestId('goal-filter-toggle')
+  await expect.poll(async () => (await page.evaluate(() => window.__creation?.place())) === 'blank' || (await toggle.isVisible()), { timeout: 20_000 }).toBe(true)
+  if ((await page.evaluate(() => window.__creation?.place())) !== 'blank') {
+    await toggle.click()
+    await page.locator('[data-testid="place-grid"] [data-place="blank"]').click()
+  }
+  await page.waitForFunction(() => window.__creation?.place() === 'blank')
+}
+/** The first button of the start screen (a profile or a goal) holds the focus: the lazy chunk is there and the keys count. */
+export const firstStartButton = (page: Page) => page.getByTestId('start-screen').locator('button[data-profile], button[data-goal]').first()
+/**
+ * Answers the first question of the start screen for profile `key`: the key itself on the profile stage, or (goal screens) the goal of that profile, then its « autre »
+ * choice. Leaves the offer stage showing (or the room opening where no offer is made), as a profile key did.
+ */
+export async function answerFirstQuestion(page: Page, key: ProfileKey, how: 'key' | 'click' = 'key'): Promise<void> {
+  await expect(firstStartButton(page)).toBeFocused({ timeout: 30_000 })
+  const p = PROFILES.find((x) => x.key === key)!
+  if ((await page.getByTestId('goal-screen').count()) === 0 || !(await page.getByTestId('goal-screen').isVisible())) {
+    if (how === 'key') await page.keyboard.press(key)
+    else await page.getByTestId('start-screen').getByRole('button', { name: p.label, exact: true }).click()
+    return
+  }
+  const goal = GOAL_FOR_PROFILE[p.id]
+  await page.getByTestId('goal-screen').getByRole('button', { name: goalLabel(goal), exact: true }).click()
+  await page.getByTestId('goal-screen').getByRole('button', { name: goalLabel(`${goal}.autre`), exact: true }).click()
+}
 
 export interface Rect {
   x: number
@@ -161,7 +205,7 @@ export async function loadFresh(page: Page, query: string, storage: Record<strin
 export const openFresh = (page: Page, query: string): Promise<void> => loadFresh(page, query)
 /** The start screen is a lazy chunk: a key counts once the first profile button holds the focus (the same wait as onboarding-start.spec.ts). */
 export async function waitStartScreen(page: Page): Promise<void> {
-  await expect(start(page).getByRole('button', { name: PROFILES[0].label, exact: true })).toBeFocused({ timeout: 30_000 })
+  await expect(firstStartButton(page)).toBeFocused({ timeout: 30_000 })
 }
 /** Real clicks: a profile button, then « Faire le tutoriel » (or « Passer, je connais »). Resolves once the first room is open. */
 export async function enter(page: Page, id: DesignId, o: { profile?: ProfileKey; tutorial: boolean }): Promise<void> {
@@ -170,8 +214,7 @@ export async function enter(page: Page, id: DesignId, o: { profile?: ProfileKey;
     try {
       await openFresh(page, `?design=${id}`)
       await waitStartScreen(page)
-      const p = PROFILES.find((x) => x.key === (o.profile ?? '1'))!
-      await start(page).getByRole('button', { name: p.label, exact: true }).click()
+      await answerFirstQuestion(page, o.profile ?? '1', 'click')
       await start(page).getByRole('button', { name: o.tutorial ? /^Faire le tutoriel/ : 'Passer, je connais' }).click()
       await page.waitForFunction(() => window.__creation?.place() === 'blank')
       // the profile opens the inventory drawer on its first tab (a lazy chunk): a state the callers can rely on, not a race

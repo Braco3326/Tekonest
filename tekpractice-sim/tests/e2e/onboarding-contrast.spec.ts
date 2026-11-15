@@ -13,6 +13,7 @@
  */
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
+import { answerFirstQuestion } from './onboardingKit'
 import { DESIGN_IDS, packageById, type DesignId } from '../../src/design/packages'
 import { contrastRatio } from '../../src/design/creationTokens'
 
@@ -238,7 +239,7 @@ for (const id of DESIGN_IDS) {
     await page.reload()
     await page.waitForFunction(() => !!window.__creation)
     await page.getByTestId('start-screen').waitFor()
-    await page.keyboard.press('2')
+    await answerFirstQuestion(page, '2') // package 2 asks the goal screens (mission 1): the goal of that profile there
     await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
     await page.waitForFunction(() => window.__creation!.place() === 'blank')
     await expect(page.getByTestId('inventory-drawer')).toHaveAttribute('data-open', 'true')

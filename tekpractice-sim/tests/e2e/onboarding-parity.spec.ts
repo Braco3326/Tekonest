@@ -15,7 +15,7 @@ import type { Page } from '@playwright/test'
 import { COPY } from '../../src/creation/copy'
 import { DESIGN_IDS, packageById, type DesignId } from '../../src/design/packages'
 import { quietWindow } from './waits'
-import { act, connect, enter, expect, test, GUIDE_KEY, loadFresh, ONBOARDING_KEY, openFresh, PROFILES, spawn, start, STEP_INTENTS, testSignal, waitStartScreen, waitStep } from './onboardingKit'
+import { act, connect, enter, expect, test, GUIDE_KEY, loadFresh, ONBOARDING_KEY, openFresh, PROFILES, spawn, start, STEP_INTENTS, testSignal, waitStartScreen, waitStep, answerFirstQuestion } from './onboardingKit'
 
 test.use({ viewport: { width: 1366, height: 768 } })
 test.describe.configure({ mode: 'parallel' })
@@ -107,7 +107,7 @@ test('DOM parity (11.1): the same landmarks and test ids in all five packages at
     await waitStartScreen(page)
     await withOscar(page)
     byKind['profile stage'].push(await stableSnap(page))
-    await page.keyboard.press('1')
+    await answerFirstQuestion(page, '1') // package 2 asks the goal screens (mission 1): the goal of that profile there
     await expect(start(page).getByRole('button', { name: /^Faire le tutoriel/ })).toBeVisible()
     byKind['offer stage'].push(await stableSnap(page))
 
@@ -372,7 +372,7 @@ for (const query of ['?design=1&oscar=0', '?design=3&oscar=0', '?design=5&oscar=
     await openFresh(page, query)
     await waitStartScreen(page)
     expect(await start(page).isVisible(), 'the profile choice is there').toBe(true)
-    await page.keyboard.press('3')
+    await answerFirstQuestion(page, '3') // package 2 asks the goal screens (mission 1): the goal of that profile there
     // a choice is final here: the room opens at once, and there never was an offer to answer
     await page.waitForFunction(() => window.__creation?.place() === 'blank')
     await expect(page.getByTestId('profile-chip')).toHaveText('Profil : Je monte un projet · changer')

@@ -10,6 +10,7 @@
  * Exam addresses and the plain address are unchanged: no model, no start screen.
  */
 import { expect, test, type Page } from '@playwright/test'
+import { answerFirstQuestion } from './onboardingKit'
 
 test.use({ viewport: { width: 1366, height: 768 } })
 
@@ -31,7 +32,7 @@ async function openFresh(page: Page, query: string): Promise<void> {
 /** « Je découvre », then « Faire le tutoriel » on `?design=5`: the model opens and the request goes up. */
 async function takeTutorial(page: Page): Promise<void> {
   await openFresh(page, '?design=5')
-  await page.getByTestId('start-screen').getByRole('button', { name: 'Je découvre', exact: true }).click()
+  await answerFirstQuestion(page, '1', 'click')
   await page.getByTestId('start-screen').getByRole('button', { name: /^Faire le tutoriel/ }).click()
   await page.waitForFunction(() => window.__creation?.place() === 'blank')
 }
@@ -46,7 +47,7 @@ const replug = (page: Page) => page.evaluate((c) => window.__creation!.dispatch(
 test('the start screen says « 3 étapes » for package 5 (and « 10 étapes » for package 1)', async ({ page }) => {
   for (const [id, n] of [[5, 3], [1, 10]] as const) {
     await openFresh(page, `?design=${id}`)
-    await page.getByTestId('start-screen').getByRole('button', { name: 'Je découvre', exact: true }).click()
+    await answerFirstQuestion(page, '1', 'click')
     await expect(page.getByTestId('start-screen').getByRole('button', { name: new RegExp(`^Faire le tutoriel \\(conseillé · ${n} étapes, à votre rythme\\)`) })).toBeVisible()
   }
 })

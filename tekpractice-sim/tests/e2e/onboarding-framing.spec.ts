@@ -14,6 +14,7 @@
  */
 import { expect, test, type Page } from '@playwright/test'
 import { packageById } from '../../src/design/packages'
+import { answerFirstQuestion, type ProfileKey } from './onboardingKit'
 
 const MIN_PX = 40
 const MARGIN_PX = 4
@@ -27,7 +28,7 @@ async function openNeutralRoomByStart(page: Page, query = '?design=1', key = '2'
   await page.reload()
   await page.waitForFunction(() => !!window.__creation)
   await page.getByTestId('start-screen').waitFor()
-  await page.keyboard.press(key)
+  await answerFirstQuestion(page, key as ProfileKey) // the goal screens on package 2 (mission 1), the profile key elsewhere
   await page.getByRole('button', { name: 'Passer, je connais', exact: true }).click()
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
   await settled(page)

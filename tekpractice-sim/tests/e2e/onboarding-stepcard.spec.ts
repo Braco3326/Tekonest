@@ -11,6 +11,7 @@
  */
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Locator, type Page } from '@playwright/test'
+import { answerFirstQuestion } from './onboardingKit'
 import { COPY } from '../../src/creation/copy'
 import { contrastRatio } from '../../src/design/creationTokens'
 import { DESIGN_IDS, packageById, type DesignId } from '../../src/design/packages'
@@ -36,7 +37,7 @@ async function openFresh(page: Page, query: string): Promise<void> {
 /** « Je découvre », then « Faire le tutoriel » on `?design=id`: the neutral room opens and the request goes up. */
 async function takeTutorial(page: Page, id: DesignId = 1): Promise<void> {
   await openFresh(page, `?design=${id}`)
-  await page.getByTestId('start-screen').getByRole('button', { name: 'Je découvre', exact: true }).click()
+  await answerFirstQuestion(page, '1', 'click')
   await page.getByTestId('start-screen').getByRole('button', { name: /^Faire le tutoriel/ }).click()
   await page.waitForFunction(() => window.__creation?.place() === 'blank')
   await expect(card(page)).toBeVisible({ timeout: 10_000 })
@@ -338,7 +339,7 @@ for (const [name, query] of [
   test(`${name}: no slot and no card, ever`, async ({ page }) => {
     await openFresh(page, query)
     if (query.includes('oscar=0')) {
-      await page.getByTestId('start-screen').getByRole('button', { name: 'Je découvre', exact: true }).click()
+      await answerFirstQuestion(page, '1', 'click')
       await page.waitForFunction(() => window.__creation?.place() === 'blank')
     }
     await page.waitForTimeout(1500)

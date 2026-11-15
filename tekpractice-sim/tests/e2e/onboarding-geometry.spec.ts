@@ -21,7 +21,7 @@
 import type { Page } from '@playwright/test'
 import { DESIGN_IDS, packageById, type DesignId } from '../../src/design/packages'
 import { quietWindow } from './waits'
-import { act, axeLines, expect, test, box, centreBox, controlsUnder, enter, gapBetween, intersects, MODEL_LEFT, openFresh, PROFILES, spawn, STEP_INTENTS, start, testSignal, waitStartScreen, waitStep, type Rect } from './onboardingKit'
+import { act, axeLines, expect, test, box, centreBox, controlsUnder, enter, gapBetween, intersects, MODEL_LEFT, openFresh, PROFILES, spawn, STEP_INTENTS, start, testSignal, waitStartScreen, waitStep, type Rect, answerFirstQuestion } from './onboardingKit'
 
 const VIEWPORTS = [
   { width: 1366, height: 768 },
@@ -527,7 +527,7 @@ for (const id of DESIGN_IDS) {
       await waitStartScreen(page)
       await expect(page.locator('.oscar-icon')).toBeVisible({ timeout: 15_000 })
       await expectAxeClean(page, `package ${id}, start screen, profile stage`)
-      await page.keyboard.press('1')
+      await answerFirstQuestion(page, '1') // package 2 asks the goal screens (mission 1): the goal of that profile there
       await expect(start(page).getByRole('button', { name: /^Faire le tutoriel/ })).toBeVisible()
       await expectAxeClean(page, `package ${id}, start screen, offer stage`)
       await start(page).getByRole('button', { name: 'Passer, je connais', exact: true }).click()
