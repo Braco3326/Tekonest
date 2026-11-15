@@ -1920,10 +1920,10 @@
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
       "photos": [
-        "top_rectified.png"
+        "top_dark.png"
       ],
       "taskId": null,
-      "date": "2026-11-15T15:09:05.935Z",
+      "date": "2026-11-15T16:02:44.577Z",
       "specSource": "https://www.telosalliance.com/consoles-audio-mixing/broadcast-consoles/axia-iq-family/axia-iq",
       "logosRemoved": true,
       "gates": [
@@ -2310,7 +2310,7 @@
         "rear_padded.png"
       ],
       "taskId": null,
-      "date": "2026-11-15T15:08:05.857Z",
+      "date": "2026-11-15T16:03:04.650Z",
       "specSource": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S-IP_ENG.pdf",
       "logosRemoved": true,
       "gates": [
@@ -2717,11 +2717,11 @@
       "tool": "hybrid",
       "toolVersion": "blender-builder-1",
       "photos": [
-        "front_rectified.png",
+        "front_silver.png",
         "rear.jpg"
       ],
       "taskId": null,
-      "date": "2026-11-15T15:10:37.355Z",
+      "date": "2026-11-15T16:02:53.567Z",
       "specSource": "https://gracedesign.com/wp-content/uploads/2018/06/m905_owners_manual_reve.pdf",
       "logosRemoved": true,
       "gates": [

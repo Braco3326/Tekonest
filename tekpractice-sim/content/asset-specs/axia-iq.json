@@ -213,9 +213,9 @@
       ]
     ],
     "params": {
-      "filletMm": 5,
+      "filletMm": 8,
       "filletSegments": 8,
-      "armRestMm": 26,
+      "armRestMm": 27,
       "tierYMm": 82,
       "tierWMm": 440,
       "feetMm": 6,
@@ -226,7 +226,8 @@
       "rearRecessHMm": 34,
       "rearRecessXMm": 38,
       "rearRecessYMm": 9,
-      "rearRecessDepthMm": 2.5
+      "rearRecessDepthMm": 2.5,
+      "bodyGrey": 40
     },
     "projection": [
       "top"
@@ -239,7 +240,7 @@
     "photos": [
       {
         "face": "top",
-        "file": "top_rectified.png"
+        "file": "top_dark.png"
       }
     ]
   },

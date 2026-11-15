@@ -1447,6 +1447,7 @@ CONSOLE_V2_NAMES = (
     "slotPlates", "slotPlateWMm", "slotPlateHMm", "slotPlateXMm", "slotPlateYMm", "slotPlatePitchMm", "slotPlateDepthMm",
     "frontRecessWMm", "frontRecessHMm", "frontRecessXMm", "frontRecessYMm", "frontRecessDepthMm",
     "rearRecessWMm", "rearRecessHMm", "rearRecessXMm", "rearRecessYMm", "rearRecessDepthMm",
+    "bodyGrey",
 )
 CONSOLE_RECESS = "#1b1c20"        # the walls of a recess (the floor of a slot plate carries the picture)
 CONSOLE_FEET_DEFAULT_MM = {"feetWidthMm": 22.0, "feetFromSideMm": 42.0, "feetFromEndMm": 28.0}
@@ -1583,6 +1584,10 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
     unknown = [k for k in params if k != "chamferMm" and k not in CONSOLE_V2_NAMES]
     if unknown:
         raise BuildError(f"console-wedge has no param {unknown[0]!r}")
+    grey = params.get("bodyGrey")
+    if grey is not None and not (isinstance(grey, (int, float)) and 20 <= grey <= 200):
+        raise BuildError(f"params.bodyGrey must be a number from 20 to 200, got {grey!r}")
+    body_col = CHASSIS if grey is None else "#%02x%02x%02x" % (round(grey), round(grey) + 2, round(grey) + 9)
     fillet = rack_opt(plan, "filletMm")
     segs = rack_whole(plan, "filletSegments", 1, 12) or 4
     arm = rack_opt(plan, "armRestMm")
@@ -1660,13 +1665,13 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
         if fillet is not None:
             for cap in faces[:2]:
                 measured.append(console_cap_bevel(bm, cap, outline, fillet, segs, None))
-        body.done(CHASSIS)
+        body.done(body_col)
     else:
         # the core: base width, stepped back at the front under the shell; the rear stays flush
         core_pts = [(d / 2.0, feet), (-d / 2.0 + cheek, feet), (-d / 2.0 + cheek, y_base_top), (-d / 2.0, y_base_top)]
         pts, radii = deck_outline(core_pts, [0.0, 0.0, 0.0, 0.0])
         add_prism(pts, radii, -w / 2.0 + cheek, w / 2.0 - cheek)
-        body.done(CHASSIS)
+        body.done(body_col)
         # the two side plates (the cheeks), cheek thick, above the base
         plate_pts = [(d / 2.0, y_base_top), (-d / 2.0, y_base_top)]
         pts, radii = deck_outline(plate_pts, [0.0, corner_r])
@@ -1676,7 +1681,7 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
             if fillet is not None:
                 cap = faces[0] if sign < 0 else faces[1]
                 measured.append(console_cap_bevel(bm, cap, outline, fillet, segs, None))
-        body.done(CHASSIS)
+        body.done(body_col)
 
     if tier_poly is not None:
         radii = [0.0] * len(tier_poly)
@@ -1688,7 +1693,7 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
         if fillet is not None:
             for cap in faces[:2]:
                 measured.append(console_cap_bevel(bm, cap, outline, fillet, segs, tier_y))
-        body.done(CHASSIS)
+        body.done(body_col)
 
     # --- feet: four rubber feet, round, a truncated cone (wide at the body, 0.72 of it at the table) with a rounded lower edge --------------
     if feet > 0.0:
@@ -1767,7 +1772,7 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
             loops.append(mouth)
         body.done(CONSOLE_RECESS)
         fill_with_holes(bm, outline, loops, (0.0, 0.0, 1.0))
-        body.done(CHASSIS)
+        body.done(body_col)
 
     fw_ = rack_opt(plan, "frontRecessWMm")
     if fw_ is not None or any(k in params for k in ("frontRecessHMm", "frontRecessXMm", "frontRecessYMm", "frontRecessDepthMm")):
@@ -1782,7 +1787,7 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
         mouth, _floor = cut_recess(bm, pts, lambda a, b: (a, b, z_front), (0.0, 0.0, 1.0), f_depth, False)
         body.done(CONSOLE_RECESS)
         fill_with_holes(bm, outline, [mouth], (0.0, 0.0, -1.0))
-        body.done(CHASSIS)
+        body.done(body_col)
 
     # --- checks ------------------------------------------------------------------------------------------------------------------------
     ys = [v.co.z for v in bm.verts]

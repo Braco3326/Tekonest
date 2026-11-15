@@ -48,6 +48,7 @@ export const CONSOLE_V2_PARAMS = [
   'slotPlates', 'slotPlateWMm', 'slotPlateHMm', 'slotPlateXMm', 'slotPlateYMm', 'slotPlatePitchMm', 'slotPlateDepthMm',
   'frontRecessWMm', 'frontRecessHMm', 'frontRecessXMm', 'frontRecessYMm', 'frontRecessDepthMm',
   'rearRecessWMm', 'rearRecessHMm', 'rearRecessXMm', 'rearRecessYMm', 'rearRecessDepthMm',
+  'bodyGrey',
 ] as const
 
 /** The corners of a console's outline are rounded with this many fillet radii (the rim bevel runs round them: an arc must be rounder than the bevel is wide). The Python builder uses the same number: CONSOLE_ARC_FACTOR. */
@@ -649,6 +650,7 @@ function validateConsoleWedge(spec: AssetSpecT): string[] {
   }
   whole('filletSegments', 1, 12)
   whole('slotPlates', 1, 4)
+  if (p.bodyGrey !== undefined && !(p.bodyGrey >= 20 && p.bodyGrey <= 200)) errors.push(`${id}: bodyGrey (${p.bodyGrey}) must be a grey level from 20 to 200`)
   if (p.filletSegments !== undefined && p.filletMm === undefined) errors.push(`${id}: filletSegments has no effect without filletMm`)
   if (p.filletMm !== undefined && p.filletMm * 2 >= Math.min(w, lowest)) errors.push(`${id}: filletMm (${p.filletMm}) must be smaller than half the smallest side (${Math.min(w, lowest) / 2} mm)`)
   if (p.armRestMm !== undefined) {
