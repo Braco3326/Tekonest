@@ -391,7 +391,7 @@ test('a mains-power entry is drawn dashed with its « pointillés » note, a sol
   await expect(legend(page)).toBeHidden()
 })
 
-test('a click on the hovered cable is no missed click: no « Rien ici » toast, the selection is kept (final review, minor)', async ({ page }) => {
+test('a click on the hovered cable is no missed click: no « Rien ici » toast; it selects the cable (final review, minor; mission 3 B)', async ({ page }) => {
   await boot(page)
   await page.locator('#renderCanvas').focus()
   for (let i = 0; i < 6 && (await page.evaluate(() => window.__creation!.selection())) !== 'sm58'; i++) await page.keyboard.press(']') // the mic: the framed view shows its cable
@@ -407,5 +407,9 @@ test('a click on the hovered cable is no missed click: no « Rien ici » toast, 
   await quietWindow(page, 300) // past the 100 ms before a message would be set
   await expect(page.getByTestId('toast')).toBeHidden()
   await expect(page.getByTestId('toast')).toHaveText('')
-  expect(await page.evaluate(() => window.__creation!.selection())).toBe(sel)
+  // Mission 3 B stage 2 (the `cableTrace` switch, on in this build and in the product): the click is the cable's; the cable becomes the selection in
+  // the device's place. With the switch off the device selection would be kept as it was.
+  expect(sel).toBe('sm58')
+  expect(await page.evaluate(() => window.__creation!.cableTrace()?.selected)).toBe(MIC_KEY)
+  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
 })

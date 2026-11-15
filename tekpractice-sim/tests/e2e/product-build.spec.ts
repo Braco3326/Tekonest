@@ -12,6 +12,7 @@
  *    the rest of it).
  */
 import { expect, test, type Page } from '@playwright/test'
+import { cableKey } from '../../src/creation/sceneDiff'
 
 const PRODUCT = process.env.E2E_PRODUCT_URL
 test.skip(!PRODUCT, 'needs E2E_PRODUCT_URL: a preview of a build made without TP_TEST_FEATURES (npx vite build --outDir dist-product)')
@@ -112,4 +113,40 @@ test('« Pourquoi je n’entends rien ? » stays and the drawer still holds the 
   const verified = Object.entries(counts).filter(([name]) => name !== 'Bêta').reduce((n, [, c]) => n + c, 0)
   expect(Object.keys(counts).length).toBe(11)
   expect(verified).toBe(113)
+})
+
+// Mission 3 B stage 2: the hand-drawn cables ship on (`cableTrace`): in the shipped build a cable is selected, traced with one click on the floor and « Terminer »,
+// and the route is stored (one SET_ROUTE); the panel and the drawing bar are there; no error.
+test('the hand-drawn cables are on in the shipped build: select a cable, trace it, the route is stored (mission 3 B)', async ({ page }) => {
+  const errors = await noErrors(page)
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/?design=1&cb=cables')
+  await page.evaluate(() => window.localStorage.clear())
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  await expect(page.getByTestId('start-screen').getByRole('button', { name: 'Je découvre', exact: true })).toBeFocused()
+  await page.keyboard.press('2')
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  expect(await page.evaluate(() => window.__creation!.cableTrace()), 'the route controller is in the shipped page').not.toBeNull()
+  await page.evaluate(() => {
+    const c = window.__creation!
+    c.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [-1.5, 0, 0], rotationY: 0 })
+    c.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k12-g', position: [1.5, 0, 0], rotationY: 0 })
+    c.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12-g', port: 'in-line-a' } })
+  })
+  await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+  const real = cableKey({ instance: 'ql1', port: 'out-main-l' }, { instance: 'k12-g', port: 'in-line-a' })
+  await page.waitForFunction((key2) => window.__creation!.cablePoints(key2) !== null, real)
+  expect(await page.evaluate((key2) => window.__creation!.cableSelect(key2), real!)).toBe(true)
+  if ((await page.getByTestId('props-collapse').getAttribute('aria-expanded')) !== 'true') await page.getByTestId('props-collapse').click()
+  await expect(page.getByTestId('cable-panel')).toBeVisible()
+  await page.getByTestId('cable-trace').click()
+  await expect(page.getByTestId('trace-bar')).toBeVisible()
+  const s = (await page.evaluate(() => window.__creation!.worldScreen([0, 0, 1])))!
+  await page.mouse.click(s.x, s.y)
+  await expect.poll(() => page.evaluate(() => window.__creation!.cableTrace()!.tracing?.points.length)).toBe(1)
+  await page.getByTestId('trace-finish').click()
+  await expect(page.getByTestId('trace-bar')).toHaveCount(0)
+  expect(await page.evaluate((key2) => window.__creation!.cableRoute(key2), real!)).toEqual([[0, 1]])
+  expect(errors(), 'console errors').toEqual([])
 })
