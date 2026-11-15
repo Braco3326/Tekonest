@@ -17,6 +17,8 @@ import './plan2d.css'
 import type { Registry } from '../engine/CatalogLoader'
 import { COPY } from '../creation/copy'
 import { openModal } from '../creation/shell/modal'
+import type { PlaceData } from '../creation/placeData'
+import { floorPlanSvg, roomPlanSvg } from '../creation/roomPlanSvg'
 import { createLiveText } from '../creation/shell/liveText'
 import { shortName } from '../creation/shell/propertiesModel'
 import { CABLE_STYLES, arrowOf, cableTypeOf, styleOf, tagOf, type CableType } from './cableStyle2d'
@@ -72,6 +74,9 @@ export interface Plan2dPage {
 }
 
 export const PLAN2D_TESTID = 'plan2d'
+
+/** The outline of a place as the place picker draws it (src/creation/roomPlanSvg.ts): a TEK Brain room with its zones and openings, else the bare floor. */
+export const outlineOf = (place: PlaceData): string => (place.kind === 'room' ? roomPlanSvg(place.file) : floorPlanSvg(place.width, place.length))
 
 const TAG_LABEL = (): Record<string, string> => ({ STANDARD: P().tagStandard!, 'TRADE PRACTICE': P().tagTrade!, 'OUR PROPOSAL': P().tagProposal! })
 const typeName = (t: CableType): string => P()[`type${t.split('-').map((w) => w[0]!.toUpperCase() + w.slice(1)).join('')}`] ?? t

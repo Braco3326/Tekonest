@@ -91,6 +91,7 @@ import { buildMenus } from './shell/menuModel'
 import { CREATION_TOKENS, injectCreationTokens } from '../design/creationTokens'
 import { applyDesignAttribute, defaultDesignFor, tutorialSteps } from '../design/packages'
 import { FEATURES } from '../features'
+import { wirePlan2d } from './plan2dWiring'
 import { nearestZone, ZONES, zoneAngles, zoneId, zoneLabel, type ZoneSigns } from '../camera/cubeZones'
 import { cubeSizePx } from './viewCubeGeometry'
 import {
@@ -1048,6 +1049,20 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       returnFocus: () => canvas.focus(),
     })
   }
+  // Mission 2: the 2D schema page (Vue › « Schéma 2D »), only with the switch on, on a practice address; its code is a lazy chunk fetched on the first open.
+  const plan2d =
+    FEATURES.plan2d === true && opts.onboarding === true
+      ? wirePlan2d({
+          doc: document,
+          registry,
+          placeKey: () => (canvasShown ? store.design().roomId : null),
+          placeName: (key) => placeLabel(key),
+          projectName: () => projectName,
+          storage: () => storage,
+          practiceNow: () => opts.practiceNow?.() ?? true,
+          returnFocus: () => canvas.focus(),
+        })
+      : null
   if (FEATURES.accounts === true && opts.onboarding === true) {
     const [{ wireAccounts, hasAuthRedirect }, { loadGoalTree, findGoal }] = await Promise.all([import('./onboarding/accountWiring'), import('./onboarding/goalTree')])
     const goalTree = loadGoalTree()
@@ -2214,6 +2229,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     ...(onboarding.premiersPas ? { 'first-steps': () => void onboarding.requestTutorial(), 'first-steps-restart': () => void onboarding.requestTutorial('restart'), 'first-steps-skip': () => void onboarding.requestTutorial('skip') } : {}),
     // mission 1 (spec 5): « Mon compte » and « Se connecter », only with the accounts switch on (never in the product)
     ...(accounts ? { account: () => void accounts?.open(), 'sign-in': () => void accounts?.logIn() } : {}),
+    // mission 2: Vue › « Schéma 2D », the 2D page over the 3D view (it never changes the scene); none in an exam
+    ...(plan2d ? { plan2d: () => void plan2d.open() } : {}),
     site: () => location.assign(siteHref),
     // Lieu → « Choisir un lieu… »: the picker over the current place (Fermer / Échap go back).
     'choose-place': () => {

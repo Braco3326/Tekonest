@@ -191,6 +191,10 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     return { ...base, enabled: on, run: () => void (on() && base.run()) }
   }
   const walk: MenuItem = { ...cam('walk', W.menu!, true), kind: 'checkbox', checked: () => !!ctx.walking?.() }
+  // Vue › « Schéma 2D » (mission 2): only where the page registered it (the `plan2d` switch on, a practice address); off while no place is on screen. The page takes focus.
+  const plan2dBase = act('plan2d', COPY.plan2d?.menu ?? 'plan2d')
+  const plan2dOn = (): boolean => viewFree() && plan2dBase.enabled()
+  const plan2d: MenuItem[] = typeof ctx.actions.plan2d === 'function' ? [{ ...plan2dBase, enabled: plan2dOn, run: () => void (plan2dOn() && plan2dBase.run()), returnFocus: false }] : []
   const ear = (id: string, label: string, h: 1.2 | 1.7): MenuItem => ({
     ...act(id, label),
     kind: 'radio',
@@ -290,6 +294,7 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
         cam('view-rotate-right', V.rotateRightMenu!, true),
         picker,
         walk,
+        ...plan2d,
         act('panel-tree', M.panelTree!),
         act('panel-props', M.panelProps!),
       ],
