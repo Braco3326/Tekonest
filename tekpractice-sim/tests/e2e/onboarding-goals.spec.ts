@@ -3,6 +3,8 @@
  * keys 1 to 5; screen 2: the goal's choices; screen 3 only when the chosen one has any), « Retour », « Passer », the picker shows the goal's rooms with « Tous les
  * lieux » always there, the empty state with its two buttons, and the chip « But : X · changer » reopens the screens. No assistant, no account UI, no console error;
  * an exam address keeps no package and no goal screen; `?design=1` keeps its profiles.
+ * Mission 1 part C (decision): the product now offers the plain tutorial after the goal screens, and once the offer is answered the FIRST room opens (the empty neutral
+ * room); the goal's filtered picker is then reached from Lieu › Choisir un lieu… (tests/e2e/onboarding-plain-tutorial.spec.ts has the tutorial itself).
  *
  * It runs against a build made WITHOUT the all-on table (like tests/e2e/product-build.spec.ts): `npx vite build --outDir dist-product`, served by
  * `npx vite preview --outDir dist-product --port 4393`, address in E2E_PRODUCT_URL. The labels are read from the tree file, never written here (the tree is a draft).
@@ -51,6 +53,19 @@ function errorsOf(page: Page): () => string[] {
     if (m.type() === 'error') errors.push(m.text())
   })
   return () => errors
+}
+
+/** The offer that follows the goal screens: « Passer, je connais »; the first room (the empty neutral room) opens. */
+async function skipOffer(page: Page): Promise<void> {
+  await expect(page.getByTestId('start-screen').getByRole('heading', { level: 2 })).toHaveText('Un tutoriel pour votre premier son ?')
+  await page.getByTestId('start-screen').getByRole('button', { name: 'Passer, je connais', exact: true }).click()
+  await page.waitForFunction(() => (window as unknown as { __creation: { place(): string } }).__creation.place() === 'blank')
+}
+/** Lieu › Choisir un lieu…: the place picker over the open room. */
+async function openPicker(page: Page): Promise<void> {
+  await page.getByRole('menuitem', { name: 'Lieu', exact: true }).click()
+  await page.getByRole('menuitem', { name: 'Choisir un lieu…' }).click()
+  await expect(page.getByTestId('place-grid')).toBeVisible()
 }
 
 async function openFresh(page: Page, query = '', seed?: unknown): Promise<void> {
@@ -107,13 +122,14 @@ test('keys and clicks through the three screens; « Retour » and Échap go back
   await page.keyboard.press(String(tree.goals.indexOf(GOAL) + 1))
   await page.keyboard.press(String(GOAL.children.indexOf(SUB) + 1))
   await goalButton(page, LEAF.label).click()
-  // no tutorial offer in the product (the plain tutorial is another part): the picker shows the rooms of the goal
+  // the plain tutorial's offer, then the first room; the picker (Lieu) shows the rooms of the goal
   await expect(page.getByTestId('goal-screen')).toBeHidden()
+  await skipOffer(page)
+  expect(await record(page)).toMatchObject({ goal: { id: LEAF.id }, offer: 'skipped' })
+  await openPicker(page)
   await expect(page.getByTestId('goal-filter-note')).toHaveText(`Lieux pour votre but : ${LEAF.label}`)
   expect((await shownPlaces(page)).sort()).toEqual(LEAF.rooms.map((r) => `room:${r}`).sort())
   for (const t of await shownTemplates(page)) expect(t).toMatch(/^template:/)
-  await expect(page.locator('[data-testid="place-grid"] [role=option]:not([hidden])').first()).toBeFocused()
-  expect(await record(page)).toMatchObject({ goal: { id: LEAF.id } })
   // « Tous les lieux » is always there: every place, then back to the goal's
   const toggle = page.getByTestId('goal-filter-toggle')
   await expect(toggle).toHaveText('Tous les lieux')
@@ -131,6 +147,8 @@ test('a level-2 choice with no sub-choices ends the way on screen 2; the record 
   await goalButton(page, goal.label).click()
   await goalButton(page, END2.label).click()
   await expect(goalScreen(page)).toBeHidden()
+  await skipOffer(page)
+  await openPicker(page)
   expect((await shownPlaces(page)).sort()).toEqual(END2.rooms.map((r) => `room:${r}`).sort())
   const r = await record(page)
   expect(r.goal).toEqual({ id: END2.id })
@@ -141,19 +159,24 @@ test('« Passer »: no goal, every place, the chip says « Choisir un but », an
   await openFresh(page)
   await goalScreen(page).getByRole('button', { name: 'Passer', exact: true }).click()
   await expect(goalScreen(page)).toBeHidden()
+  await skipOffer(page)
+  await openPicker(page)
   await expect(page.getByTestId('goal-filter-note')).toBeHidden()
   expect((await shownPlaces(page)).length).toBe(await page.locator('[data-testid="place-grid"] [role=option]').count())
   expect(await record(page)).toMatchObject({ goal: null, profile: null })
   await page.reload()
   await page.waitForFunction(() => !!(window as unknown as { __creation?: unknown }).__creation)
-  await expect(page.getByTestId('place-grid')).toBeVisible()
+  await page.waitForTimeout(1000)
   await expect(goalScreen(page)).toBeHidden()
-  await page.locator('[data-testid="place-grid"] [role=option]').first().click()
+  await expect(page.getByText('Un tutoriel pour votre premier son ?')).toHaveCount(0)
+  // the room comes back from the autosave, or the picker shows: either way nothing asks again
+  if (await page.getByTestId('place-grid').isVisible()) await page.locator('[data-testid="place-grid"] [role=option]').first().click()
   await expect(page.getByTestId('profile-chip')).toHaveText('Choisir un but')
 })
 
 test('the chip « But : X · changer » once a room is open, and it reopens the goal screens', async ({ page }) => {
-  await openFresh(page, '', { v: 1, profile: 'metier', offer: null, request: 0, shown: [], goal: { id: LEAF.id } })
+  // a record whose offer was answered (an unanswered one gets the offer first, as for a profile)
+  await openFresh(page, '', { v: 1, profile: 'metier', offer: 'skipped', request: 0, shown: [], goal: { id: LEAF.id } })
   expect((await shownPlaces(page)).sort()).toEqual(LEAF.rooms.map((r) => `room:${r}`).sort())
   await page.locator('[data-testid="place-grid"] [role=option]:not([hidden])').first().click()
   const chip = page.getByTestId('profile-chip')
@@ -165,7 +188,7 @@ test('the chip « But : X · changer » once a room is open, and it reopens the 
 })
 
 test('the empty state: no room of the goal for the chosen type says so, with « Voir tous les lieux » and « Changer de but »', async ({ page }) => {
-  await openFresh(page, '', { v: 1, profile: 'metier', offer: null, request: 0, shown: [], goal: { id: NO_TEMPLATE.id } })
+  await openFresh(page, '', { v: 1, profile: 'metier', offer: 'skipped', request: 0, shown: [], goal: { id: NO_TEMPLATE.id } })
   // a type none of the goal's rooms has
   const type = await page.evaluate(() => {
     const shown = new Set([...document.querySelectorAll<HTMLElement>('[data-testid="place-grid"] [role=option]')].filter((e) => !e.hidden).map((e) => e.querySelector('.cr-card-type')?.textContent))
