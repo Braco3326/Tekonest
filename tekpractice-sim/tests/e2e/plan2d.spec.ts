@@ -12,6 +12,7 @@
  *    are in the 3D design at the plan's metres and yaw, the bodies stand on those points and the speaker faces the plan's front; one Ctrl+Z removes all.
  */
 import { expect, test, type Locator, type Page } from '@playwright/test'
+import { waitStartScreen } from './onboardingKit'
 
 const PRODUCT = process.env.E2E_PRODUCT_URL
 const BUILDS: { name: string; base?: string; product: boolean }[] = [{ name: 'all-on build', product: false }, ...(PRODUCT ? [{ name: 'product build', base: PRODUCT, product: true }] : [])]
@@ -39,8 +40,11 @@ async function openRoom(page: Page, product: boolean): Promise<void> {
   await page.evaluate(() => window.localStorage.clear())
   await page.reload()
   await page.waitForFunction(() => !!(window as unknown as { __creation?: unknown }).__creation)
-  if (product) await page.keyboard.press('2')
-  else await page.evaluate(() => (window as unknown as { __creation: Hook }).__creation.choosePlace('blank'))
+  if (product) {
+    // the start screen is a lazy chunk: the key counts only once its first button holds the focus (review 2026-11-15: a key pressed earlier was lost)
+    await waitStartScreen(page)
+    await page.keyboard.press('2')
+  } else await page.evaluate(() => (window as unknown as { __creation: Hook }).__creation.choosePlace('blank'))
   await page.waitForFunction(() => (window as unknown as { __creation: Hook }).__creation.place() === 'blank')
 }
 
@@ -182,8 +186,10 @@ for (const build of BUILDS) {
       await page.reload()
       await page.waitForFunction(() => !!(window as unknown as { __creation?: unknown }).__creation)
       if (!(await page.evaluate(() => (window as unknown as { __creation: Hook }).__creation.place() === 'blank'))) {
-        if (build.product && (await page.getByTestId('start-screen').count())) await page.keyboard.press('2')
-        else await page.evaluate(() => (window as unknown as { __creation: Hook }).__creation.choosePlace('blank'))
+        if (build.product && (await page.getByTestId('start-screen').count())) {
+          await waitStartScreen(page)
+          await page.keyboard.press('2')
+        } else await page.evaluate(() => (window as unknown as { __creation: Hook }).__creation.choosePlace('blank'))
         await page.waitForFunction(() => (window as unknown as { __creation: Hook }).__creation.place() === 'blank')
       }
       const kept = await openFromMenu(page)
