@@ -8,6 +8,8 @@ import { PlacementController, type PlacementHost } from '../../src/creation/plac
 import { EditController } from '../../src/creation/editController'
 import { DisposableBag } from '../../src/util/disposable'
 import { COPY } from '../../src/creation/copy'
+import { coarsePointer } from '../../src/creation/input/coarsePointer'
+import { undoLabelFor } from '../../src/creation/undoWording'
 
 const registry = loadCatalog(catalogJson)
 
@@ -30,7 +32,7 @@ class FakeCanvas extends EventTarget {
   releasePointerCapture = (id: number): void => void this.captured.splice(this.captured.indexOf(id), 1)
 }
 
-function setup() {
+function setup(over: { undoLabel?: () => string } = {}) {
   const win = new EventTarget()
   g.window = win
   const store = new CreationStore(registry, creationEvaluator(registry))
@@ -92,6 +94,7 @@ function setup() {
       floorPoint: (x, y) => (floorOff ? null : floor(x, y)),
       onPlacing,
       deviceAt: () => deviceUnder,
+      ...(over.undoLabel ? { undoLabel: over.undoLabel } : {}),
     }
   )
   let t = 1000
@@ -1061,5 +1064,23 @@ describe('a stand-mounted or flown device that is pressed and dragged says why t
     expect(s.announce).toHaveBeenCalledTimes(1)
     drag(s)
     expect(s.announce).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe('mission 3 fixes, item 3: on a coarse pointer the drop says « Annuler », never « Ctrl+Z »', () => {
+  const phone = { matchMedia: (q: string) => ({ matches: q === '(pointer: coarse)' }) } as unknown as Window
+  it('a drop on a phone', () => {
+    const s = setup({ undoLabel: () => undoLabelFor('Ctrl+Z', coarsePointer(phone)) })
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointerdown', 113, 232)
+    s.fire('pointerup', 113, 232)
+    expect(s.announce).toHaveBeenLastCalledWith('Posé : yamaha-ql1. « Annuler » (menu Projet) pour revenir en arrière.')
+  })
+  it('on a fine pointer (no label handed) the words are the old ones', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.fire('pointerdown', 113, 232)
+    s.fire('pointerup', 113, 232)
+    expect(s.announce).toHaveBeenLastCalledWith('Posé : yamaha-ql1. Ctrl+Z pour annuler.')
   })
 })

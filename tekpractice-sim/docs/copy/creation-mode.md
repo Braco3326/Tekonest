@@ -1453,6 +1453,16 @@ Les câbles tracés à la main (mission 3 B, étape 2, spec `docs/superpowers/sp
 | `cableRoute.entryEdit` | Modifier le tracé du câble | à valider (tekuxwriter) | Libellé de l’étape d’annulation (une poignée, un point ajouté ou supprimé) |
 | `cableRoute.entryReset` | Remettre le tracé automatique | à valider (tekuxwriter) | Libellé de l’étape d’annulation |
 
+## undoTouch
+
+L’annulation nommée sur un pointeur grossier (téléphone, tablette sans clavier), où « Ctrl+Z » ne veut rien dire (mission 3, correctifs, point 3 ; constat A de la revue de la mission 2). `label` remplace {undo} dans toutes les lignes d’état, boîtes de dialogue et comptes rendus (y compris celui du schéma 2D) ; avant cela, `cancelFrom` devient `cancelTo`, pour qu’un téléphone ne lise jamais « « Annuler » (menu Projet) pour annuler ». Sur un ordinateur, chaque texte reste identique, octet pour octet. La liste « Raccourcis clavier » et la colonne des raccourcis des menus gardent les noms des touches. Tout ce qui suit : à valider (tekuxwriter, 2026-11-15).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `undoTouch.label` | « Annuler » (menu Projet) | à valider (tekuxwriter) | Remplace {undo} sur un pointeur grossier : « Posé : SM58. « Annuler » (menu Projet) pour revenir en arrière. » |
+| `undoTouch.cancelFrom` | {undo} pour annuler | à valider (tekuxwriter) | Le bout de phrase réécrit sur un pointeur grossier (jamais affiché tel quel) |
+| `undoTouch.cancelTo` | {undo} pour revenir en arrière | à valider (tekuxwriter) | Ce qu’il devient |
+
 ## Textes hors COPY (index.html)
 
 Les seuls textes qui vivent dans `index.html` et non dans `copy.ts` : la garde d'entrée (vague de nuit 2, vague 5, P1-1 ; ronde de correction C1, C2). Quand le script d'entrée lui-même ne se charge pas (fichier absent, ou page HTML servie à sa place : la production répond 200 `text/html` pour un fichier manquant), `main.ts` ne tourne jamais et l'alerte de la section `boot` ne peut pas s'afficher : un petit script en ligne, sans module ni dépendance, **dit à l'utilisateur ce qui s'est passé** (`role="alert"`) et propose « Recharger la page ». **Ce que le lien fait, et ne fait pas :** il recharge `index.html` avec `?v=<heure>` sur l'adresse de la PAGE (le routeur ignore ce paramètre) ; il ne change pas l'adresse du script d'entrée (`/assets/main-<hash>.js`), donc si le serveur ou le cache garde du HTML sous cette adresse, l'échec revient : le vrai remède est côté site (un `404.html`, des en-têtes de cache, une purge après un déploiement). **Quand elle agit :** seulement avant que l'application ait démarré (`main.ts` pose `window.__tekBooted` quand le module de la route est chargé) ; un morceau paresseux qui échoue ensuite (fiches Bêta, couverture, tiroir, une salle, le panneau Essais…) est géré par l'application, jamais par cette garde. **Placement :** avant le module d'entrée dans le source, après lui dans le build ; elle fonctionne parce que l'événement `error` d'un script module part quand son téléchargement a échoué, une fois ce script en ligne exécuté. Une politique de sécurité de contenu (`script-src`) demanderait un empreinte (hash) ou un nonce pour ce script en ligne. `tests/creation/entryGuard.test.ts` tient `index.html` et cette section égaux.

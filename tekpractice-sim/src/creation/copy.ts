@@ -1497,4 +1497,14 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     entryEdit: 'Modifier le tracé du câble',
     entryReset: 'Remettre le tracé automatique',
   },
+  /**
+   * Mission 3 fixes, item 3 (review finding A): the undo named on a coarse pointer (a phone, a tablet without a keyboard), where « Ctrl+Z » means nothing.
+   * `label` fills every {undo} there (src/creation/undoWording.ts); `cancelFrom` -> `cancelTo` first, so a phone never reads « « Annuler » pour annuler ». The
+   * « Raccourcis clavier » list and the menus' shortcut column keep the key names. À valider (tekuxwriter, 2026-11-15).
+   */
+  undoTouch: {
+    label: '« Annuler » (menu Projet)',
+    cancelFrom: '{undo} pour annuler',
+    cancelTo: '{undo} pour revenir en arrière',
+  },
 }

@@ -12,6 +12,7 @@
  */
 import type { Intent } from '../ui/intents'
 import { COPY } from './copy'
+import { fillUndo } from './undoWording'
 import type { History } from './history'
 import { duplicatePose, rotateStep, type RoomBounds } from './placementMath'
 import type { CreationStore } from './store'
@@ -145,6 +146,6 @@ export class EditController {
   }
 
   private say(template: string, t: Target): void {
-    this.d.announce?.(template.replace('{device}', t.name).replace('{undo}', this.d.undoLabel?.() ?? 'Ctrl+Z'))
+    this.d.announce?.(fillUndo(template.replace('{device}', t.name), this.d.undoLabel?.() ?? 'Ctrl+Z'))
   }
 }

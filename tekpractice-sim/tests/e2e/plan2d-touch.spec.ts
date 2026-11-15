@@ -149,6 +149,9 @@ for (const build of BUILDS) {
       }
       await confirm.getByRole('button', { name: 'Ajouter' }).tap()
       await expect(dialog.getByTestId('plan2d-report')).toContainText('Ajoutés dans la scène 3D : 2 appareils et 1 câble')
+      // mission 3 fixes, item 3: a phone has no Ctrl key: the report names the « Annuler » command of the 3D view
+      await expect(dialog.getByTestId('plan2d-report')).toContainText('aux mêmes places. « Annuler » (menu Projet) dans la scène 3D les retire en une fois.')
+      await expect(dialog.getByTestId('plan2d-report')).not.toContainText('Ctrl')
       const sent = await page.evaluate(() => (window as unknown as { __creation: { design(): { rig: { instances: unknown[]; connections: unknown[] } } } }).__creation.design().rig)
       expect(sent.instances).toHaveLength(2)
       expect(sent.connections).toHaveLength(1)
@@ -156,6 +159,12 @@ for (const build of BUILDS) {
       await show.scrollIntoViewIfNeeded()
       await show.tap()
       await expect(dialog).toHaveCount(0)
+      // mission 3 fixes, item 3: in the 3D view (the first new device is selected), Matériel › Pivoter by taps: the status line names « Annuler », not Ctrl+Z
+      await page.getByRole('menuitem', { name: 'Matériel', exact: true }).tap()
+      await page.getByRole('menuitem', { name: /^Pivoter/ }).first().tap()
+      const status = page.locator('.cr-status-msg')
+      await expect(status).toContainText('« Annuler » (menu Projet) pour revenir en arrière.')
+      await expect(status).not.toContainText('Ctrl')
       expect(errors, 'console errors').toEqual([])
     })
 

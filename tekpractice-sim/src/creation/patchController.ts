@@ -19,6 +19,7 @@
 import type { PortRef } from '../engine/types'
 import type { DisposableBag } from '../util/disposable'
 import { COPY } from './copy'
+import { fillUndo } from './undoWording'
 import type { History } from './history'
 import { portKey, type PortMark } from './portProxies'
 import type { RenderScheduler } from './renderScheduler'
@@ -288,7 +289,7 @@ export class PatchController {
       this.dropError()
       this._pending = null
       this.applyMarks()
-      this.opts.announce?.(fill(COPY.patch!.statusConnected!, { ...said, undo: this.opts.undoLabel?.() ?? 'Ctrl+Z' }))
+      this.opts.announce?.(fill(fillUndo(COPY.patch!.statusConnected!, this.opts.undoLabel?.() ?? 'Ctrl+Z'), said))
       return
     }
     // A refusal is a message, not an exception: pinned at B; the cable stays in hand (the status list got it from history.onRefused).
@@ -322,7 +323,7 @@ export class PatchController {
     const names = { a: this.opts.portName(a), b: this.opts.portName(b) }
     const said = { a: this.spoken(a), b: this.spoken(b) }
     const r = this.history.do({ type: 'UNPLUG', a, b }, fill(COPY.patch!.entryUnplug!, names))
-    if (r.ok) this.opts.announce?.(fill(COPY.patch!.statusUnplugged!, { ...said, undo: this.opts.undoLabel?.() ?? 'Ctrl+Z' }))
+    if (r.ok) this.opts.announce?.(fill(fillUndo(COPY.patch!.statusUnplugged!, this.opts.undoLabel?.() ?? 'Ctrl+Z'), said))
     if (refocus) this.host.canvasElement.focus?.()
     this.scheduler.invalidate()
   }

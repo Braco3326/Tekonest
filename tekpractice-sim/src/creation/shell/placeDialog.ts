@@ -4,6 +4,7 @@
  * (inert page, sentinels, Esc = cancel, focus returned) lives in `modal.ts`.
  */
 import { COPY } from '../copy'
+import { fillUndo } from '../undoWording'
 import { modalButton, modalRow, openModal } from './modal'
 
 export type PlaceChoice = 'keep' | 'empty' | 'cancel'
@@ -29,7 +30,7 @@ export function openReplaceDialog(undo: string, parent: HTMLElement = document.b
   const P = COPY.place!
   return openChoiceDialog<'replace' | 'cancel'>({
     title: P.replaceTitle!,
-    body: P.replaceBody!.replace('{undo}', undo),
+    body: fillUndo(P.replaceBody!, undo),
     choices: [
       { id: 'replace', label: P.replace! },
       { id: 'cancel', label: P.cancel! },

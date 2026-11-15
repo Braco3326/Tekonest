@@ -7,6 +7,8 @@ import { History } from '../../src/creation/history'
 import { DisposableBag } from '../../src/util/disposable'
 import { PatchController, type PatchHost, type PatchUi } from '../../src/creation/patchController'
 import { portKey, type PortMark } from '../../src/creation/portProxies'
+import { coarsePointer } from '../../src/creation/input/coarsePointer'
+import { undoLabelFor } from '../../src/creation/undoWording'
 
 const registry = loadCatalog(catalogJson)
 
@@ -20,7 +22,7 @@ const QL_MIC2: PortRef = { instance: 'ql1', port: 'in-mic-2' }
 const K12_POWER: PortRef = { instance: 'k12', port: 'power-in' }
 
 /** Points on the fake canvas: the pointer's px map to a port through `at`. */
-function setup(over: { busy?: () => boolean; spoken?: (r: PortRef) => string } = {}) {
+function setup(over: { busy?: () => boolean; spoken?: (r: PortRef) => string; undoLabel?: () => string } = {}) {
   const asked: (boolean | undefined)[] = [] // the `inHand` flag each portAtPoint was asked with
   const store = new CreationStore(registry, creationEvaluator(registry))
   const history = new History(store)
@@ -76,7 +78,7 @@ function setup(over: { busy?: () => boolean; spoken?: (r: PortRef) => string } =
       store.design().rig.instances.flatMap((i) => registry.deviceById.get(i.deviceId)!.ports.map((p) => ({ instance: i.instanceId, port: p.portId }))),
     rejectionTitle: (e) => `title:${e.ruleId ?? e.code}`,
     announce,
-    undoLabel: () => 'Ctrl+Z',
+    undoLabel: over.undoLabel ?? (() => 'Ctrl+Z'),
   })
   return { asked, store, history, canvas, host, ui, calls, marks, ctrl, announce, aim, scheduler, bag, setWalking: (w: boolean) => (walking = w) }
 }
@@ -531,5 +533,25 @@ describe('spokenName: announcements and the « Débrancher » bubble say « non 
     const s = setup()
     s.ctrl.click(SM58_OUT)
     expect(s.announce).toHaveBeenLastCalledWith(expect.stringContaining('sm58 · out-xlr'))
+  })
+})
+
+describe('mission 3 fixes, item 3: on a coarse pointer the status lines name « Annuler », never « Ctrl+Z »', () => {
+  const phone = { matchMedia: (q: string) => ({ matches: q === '(pointer: coarse)' }) } as unknown as Window
+  it('a cable plugged and unplugged on a phone', () => {
+    const s = setup({ undoLabel: () => undoLabelFor('Ctrl+Z', coarsePointer(phone)) })
+    s.ctrl.click(SM58_OUT)
+    s.ctrl.click(QL_MIC2)
+    expect(s.announce).toHaveBeenLastCalledWith('Branché : sm58 · out-xlr à ql1 · in-mic-2. « Annuler » (menu Projet) pour revenir en arrière.')
+    s.ctrl.click(QL_MIC2)
+    s.calls.offers[0].onUnplug()
+    expect(s.announce.mock.lastCall![0]).toMatch(/^Débranché : .+\. « Annuler » \(menu Projet\) pour revenir en arrière\.$/)
+    for (const [m] of s.announce.mock.calls) expect(m).not.toContain('Ctrl')
+  })
+  it('on a fine pointer the words are the old ones, byte for byte', () => {
+    const s = setup()
+    s.ctrl.click(SM58_OUT)
+    s.ctrl.click(QL_MIC2)
+    expect(s.announce).toHaveBeenLastCalledWith('Branché : sm58 · out-xlr à ql1 · in-mic-2. Ctrl+Z pour annuler.')
   })
 })

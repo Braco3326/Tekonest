@@ -8,6 +8,8 @@ import { describe, expect, it } from 'vitest'
 import { makeRegistry } from '../helpers'
 import { CreationStore, creationEvaluator, type DispatchResult } from '../../src/creation/store'
 import { History } from '../../src/creation/history'
+import { coarsePointer } from '../../src/creation/input/coarsePointer'
+import { undoLabelFor } from '../../src/creation/undoWording'
 import { helperButton, powerHelperPlan, runPowerHelper } from '../../src/creation/powerHelper'
 import { parseProposals, registerProposals } from '../../src/creation/betaDevices'
 import { signalPath } from '../../src/flow/signalPath'
@@ -449,5 +451,17 @@ describe('S10 (T3 close review): the status line after the helper names the app�
       h.run()
       expect(said).toEqual([`Branché au courant : ql1, k12. ${expected} pour annuler.`])
     }
+  })
+  it('mission 3 fixes, item 3: on a coarse pointer the line names « Annuler » (menu Projet), never « Ctrl+Z »', async () => {
+    const phone = { matchMedia: (q: string) => ({ matches: q === '(pointer: coarse)' }) } as unknown as Window
+    const { store, history, registry } = setup([...PLAYING, STRIP])
+    const said: string[] = []
+    const h = wirePowerHelper(
+      { store, history, registry, announce: (m) => said.push(m), tutorialAllowed: false, storage: () => null, load: async () => powerHelperModule, undoLabel: () => undoLabelFor('Ctrl+Z', coarsePointer(phone)) },
+      { win: null, deviceLabel: (id) => id, render: () => undefined },
+    )
+    await h.load()
+    h.run()
+    expect(said).toEqual(['Branché au courant : ql1, k12. « Annuler » (menu Projet) pour revenir en arrière.'])
   })
 })

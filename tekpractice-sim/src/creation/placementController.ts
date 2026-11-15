@@ -17,6 +17,7 @@ import type { DesignState } from '../trials/trial'
 import type { DisposableBag } from '../util/disposable'
 import { floorPointAt } from '../scene/pivotPick'
 import { COPY } from './copy'
+import { fillUndo } from './undoWording'
 import type { History } from './history'
 import { releaseAction } from './dragDrop'
 import { clampToRoom, isFree, rotateStep, snapPosition, type RoomBounds } from './placementMath'
@@ -397,11 +398,7 @@ export class PlacementController {
       this.endDrag(false)
       if (click) this.opts.onClickSelected?.(d.instanceId, e.offsetX, e.offsetY)
       else if (d.moved)
-        this.opts.announce?.(
-          COPY.placement!.statusMoved!
-            .replace('{device}', d.name)
-            .replace('{undo}', this.opts.undoLabel?.() ?? 'Ctrl+Z')
-        )
+        this.opts.announce?.(fillUndo(COPY.placement!.statusMoved!.replace('{device}', d.name), this.opts.undoLabel?.() ?? 'Ctrl+Z'))
       return
     }
     if (e.pointerType === 'touch' && !e.isPrimary) return // a second finger lifting near the first press is no tap
@@ -445,11 +442,7 @@ export class PlacementController {
       return
     }
     this.opts.onPlaced?.(instanceId)
-    this.opts.announce?.(
-      COPY.placement!.statusPlaced!
-        .replace('{device}', name)
-        .replace('{undo}', this.opts.undoLabel?.() ?? 'Ctrl+Z')
-    )
+    this.opts.announce?.(fillUndo(COPY.placement!.statusPlaced!.replace('{device}', name), this.opts.undoLabel?.() ?? 'Ctrl+Z'))
   }
 
   private endPlacement(): void {

@@ -17,6 +17,7 @@
 import type { Registry } from '../../engine/CatalogLoader'
 import type { PortRef } from '../../engine/types'
 import { COPY } from '../copy'
+import { fillUndo } from '../undoWording'
 import type { History } from '../history'
 import type { CreationStore } from '../store'
 import { isUnverified, markUnverified } from '../betaDevices'
@@ -203,7 +204,7 @@ export function createConnectDialog(d: ConnectDialogDeps): ConnectDialog {
           if (r.kind !== 'connected') return
           // Close FIRST: the status bar is inert while the dialog is open, and a live region inside inert content is not read.
           end('connected')
-          d.announce(fill(C().statusConnected!, { a: r.a, b: r.b, undo: d.undoLabel?.() ?? 'Ctrl+Z' }))
+          d.announce(fill(fillUndo(C().statusConnected!, d.undoLabel?.() ?? 'Ctrl+Z'), { a: r.a, b: r.b }))
         }
 
         const renderActive = (): void => {

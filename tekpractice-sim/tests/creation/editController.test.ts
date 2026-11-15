@@ -5,10 +5,12 @@ import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { History } from '../../src/creation/history'
 import { EditController } from '../../src/creation/editController'
 import { designFingerprint, isDirty } from '../../src/creation/persistence'
+import { coarsePointer } from '../../src/creation/input/coarsePointer'
+import { undoLabelFor } from '../../src/creation/undoWording'
 
 const registry = loadCatalog(catalogJson)
 
-function setup(over: { blocked?: () => boolean; bounds?: boolean } = {}) {
+function setup(over: { blocked?: () => boolean; bounds?: boolean; undoLabel?: () => string } = {}) {
   const store = new CreationStore(registry, creationEvaluator(registry))
   const history = new History(store)
   let selected: string | null = null
@@ -22,7 +24,7 @@ function setup(over: { blocked?: () => boolean; bounds?: boolean } = {}) {
     roomBounds: over.bounds ? () => ({ minX: -5, maxX: 5, minZ: -4, maxZ: 4 }) : undefined,
     deviceLabel: (id) => id,
     announce,
-    undoLabel: () => 'Ctrl+Z',
+    undoLabel: over.undoLabel ?? (() => 'Ctrl+Z'),
     onDuplicated,
   })
   const spawn = (instanceId: string, deviceId: string, extra: Record<string, unknown> = {}) =>
@@ -282,5 +284,21 @@ describe('delete with several cables (connection ids are not stable across undo)
     expect(pairs(s)).toEqual(kept)
     expect(s.history.undo()).toBe(true)
     expect(pairs(s)).toEqual(all)
+  })
+})
+
+describe('mission 3 fixes, item 3: on a coarse pointer the status lines name « Annuler », never « Ctrl+Z »', () => {
+  const phone = { matchMedia: (q: string) => ({ matches: q === '(pointer: coarse)' }) } as unknown as Window
+  it('rotate, duplicate and delete on a phone', () => {
+    const s = setup({ undoLabel: () => undoLabelFor('Ctrl+Z', coarsePointer(phone)) })
+    s.spawn('q', 'yamaha-ql1')
+    s.select('q')
+    s.edits.rotate(1, false)
+    expect(s.announce).toHaveBeenLastCalledWith('Pivoté : yamaha-ql1, 15°. « Annuler » (menu Projet) pour revenir en arrière.')
+    s.edits.duplicate()
+    expect(s.announce.mock.lastCall![0]).toMatch(/^Dupliqué : yamaha-ql1\. La copie est sélectionnée\. « Annuler » \(menu Projet\) pour revenir en arrière\.$/)
+    s.edits.remove()
+    expect(s.announce.mock.lastCall![0]).toMatch(/« Annuler » \(menu Projet\) pour revenir en arrière\.$/)
+    for (const [m] of s.announce.mock.calls) expect(m).not.toContain('Ctrl')
   })
 })

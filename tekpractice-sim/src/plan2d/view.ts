@@ -19,7 +19,9 @@ import { COPY } from '../creation/copy'
 import { openModal } from '../creation/shell/modal'
 import type { PlaceData } from '../creation/placeData'
 import { floorPlanSvg, roomPlanSvg } from '../creation/roomPlanSvg'
+import { coarsePointer } from '../creation/input/coarsePointer'
 import { createLiveText } from '../creation/shell/liveText'
+import { fillUndo } from '../creation/undoWording'
 import { shortName } from '../creation/shell/propertiesModel'
 import { CABLE_STYLES, arrowOf, cableTypeOf, styleOf, tagOf, type CableType } from './cableStyle2d'
 import {
@@ -491,7 +493,7 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     title.id = 'p2d-report-title'
     const head = !done || !s
       ? P().reportNone!
-      : fill(s.mode === 'replace' ? P().reportReplaced! : P().reportAdded!, { devices: nDev(s.devices.length), cables: nCab(s.cables.length), undo: undoKey })
+      : fill(fillUndo(s.mode === 'replace' ? P().reportReplaced! : P().reportAdded!, undoKey), { devices: nDev(s.devices.length), cables: nCab(s.cables.length) })
     const parts: HTMLElement[] = [title, el('p', 'p2d-report-head', head)]
     const lines = s ? refusalLines(s) : []
     if (lines.length) {
@@ -552,7 +554,7 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
         const sure = await choiceInPage(doc, pageBox, cover, {
           id: 'plan2d-replace-dialog',
           title: COPY.place!.replaceTitle!,
-          body: [fill(P().spawnReplaceBody!, { undo: target.undoLabel() })],
+          body: [fillUndo(P().spawnReplaceBody!, target.undoLabel())],
           choices: [
             { id: 'replace' as const, label: COPY.place!.replace! },
             { id: 'cancel' as const, label: COPY.place!.cancel! },
@@ -1117,7 +1119,7 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
       const focusables = (): HTMLElement[] =>
         [...b.querySelectorAll<HTMLElement>(FOCUSABLE)].filter((x) => x.dataset.sentinel === undefined && !x.closest('[hidden]') && !x.closest('[inert]'))
       // a touch screen opens on the plan, not in the search field (a focused field pops the on-screen keyboard over half the page)
-      const coarse = doc.defaultView?.matchMedia?.('(pointer: coarse)').matches ?? false
+      const coarse = coarsePointer(doc.defaultView)
       return {
         // the modal only calls .focus() on it, which an SVG element has
         first: coarse ? (svg as unknown as HTMLElement) : palette.search,

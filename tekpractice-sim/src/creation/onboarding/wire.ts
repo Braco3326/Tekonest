@@ -12,6 +12,7 @@
  */
 import { checklistView, type GoTo } from '../checklistModel'
 import { COPY } from '../copy'
+import { fillUndo } from '../undoWording'
 import { mountChecklist, type Checklist, type HelperView } from '../shell/checklist'
 import type { PathResult } from '../../flow/signalPath'
 import type { Registry } from '../../engine/CatalogLoader'
@@ -124,7 +125,7 @@ export function wirePowerHelper(
     const r = mod.runPowerHelper(h.store, h.history, h.registry, A().helperEntry!)
     if (r.ok) {
       used = { n: used.n + 1, instances: [...r.instances] }
-      h.announce(A().helperDone!.replace('{devices}', names(r.instances)).replace('{undo}', h.undoLabel?.() || 'Ctrl+Z'))
+      h.announce(fillUndo(A().helperDone!.replace('{devices}', names(r.instances)), h.undoLabel?.() || 'Ctrl+Z'))
     } else h.announce(r.why === 'busy' ? A().helperBusy! : A().helperFailed!) // S9: the list closed on the click, so every refusal is said
   }
   /** S3: the button would be shown now, and enabled once the tutorial gate opens (the guide offers the helper only then). False before the chunk is loaded. */

@@ -28,6 +28,7 @@ import type { XZ } from '../scene/cableGravity'
 import { DEFAULT_SNAP_M, MAX_ROUTE_POINTS, snapToGrid, toXZ, type FloorBounds, type SnapStepM } from '../scene/cableRoute'
 import { isTextTarget } from '../scene/cameraTween'
 import { COPY } from './copy'
+import { fillUndo } from './undoWording'
 import { CABLE_HIT_PX, type Pt } from './cablePick'
 import {
   candidateOf,
@@ -480,7 +481,7 @@ export class CableRouteController {
     const r = this.d.history.do({ type: 'SET_ROUTE', key, points: out.points }, C().entryTrace!)
     if (!r.ok) return this.d.announce(r.error.code === 'ROUTE_TOO_LONG' ? C().sayRefused! : C().sayRefusedOther!)
     this.endTrace()
-    this.d.announce(fill(C().sayFinished!, { m: formatMetres(length), undo: this.d.undoLabel() }))
+    this.d.announce(fill(fillUndo(C().sayFinished!, this.d.undoLabel()), { m: formatMetres(length) }))
   }
 
   cancel(opts: { silent?: boolean } = {}): void {
@@ -530,7 +531,7 @@ export class CableRouteController {
     if (this.commit(key, [], C().entryReset!)) {
       this.selectedPoint = null
       this.render()
-      this.d.announce(fill(C().sayReset!, { undo: this.d.undoLabel() }))
+      this.d.announce(fillUndo(C().sayReset!, this.d.undoLabel()))
     }
   }
 

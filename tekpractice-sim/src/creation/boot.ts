@@ -14,6 +14,8 @@ import { projectToScreen } from '../scene/project'
 import { useSameOriginDraco } from '../render/draco'
 import { DisposableBag } from '../util/disposable'
 import { COPY } from './copy'
+import { fillUndo, undoLabelFor } from './undoWording'
+import { coarsePointer } from './input/coarsePointer'
 import { creationRuleText } from './ruleTexts'
 import { controlHit } from '../controls/controlHit'
 import { showBootFailure, type BootFailureKind } from './bootFailure'
@@ -826,8 +828,11 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     onCommit: showCanvas,
     label: COPY.place!.dialogTitle!,
   })
-  /** The live label of the undo key (« Ctrl+Z »), for the replace dialog and its status line. */
-  const undoLabel = (): string => bindingLabel(keys.bindings, 'UNDO') || 'Ctrl+Z'
+  /**
+   * The live label of the undo key (« Ctrl+Z »), for the replace dialog, the status lines and the 2D page's send report. On a coarse pointer (a phone: no Ctrl key)
+   * the command a finger reaches, « Annuler » (menu Projet) (mission 3 fixes, item 3); read at each use, so a tablet that gains a mouse changes it.
+   */
+  const undoLabel = (): string => undoLabelFor(bindingLabel(keys.bindings, 'UNDO') || 'Ctrl+Z', coarsePointer())
 
   // Not only the console (Task 12): a place that fell back to the blank room says so on screen.
   const N = COPY.note!
@@ -888,7 +893,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       // The note is announced too (status bar, role="status"), not only shown.
       const more = missing.length ? ` ${N.unavailableTitle} : ${missing.join(', ')}.` : ''
       const head = hadGear
-        ? COPY.shell!.statusReplaced!.replace('{n}', n).replace('{undo}', undoLabel())
+        ? fillUndo(COPY.shell!.statusReplaced!.replace('{n}', n), undoLabel())
         : COPY.shell!.statusGearLoaded!.replace('{n}', n)
       announcer.say(head + more)
     }
@@ -1277,7 +1282,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     if (!dirty()) return true
     const c = await openChoiceDialog<'go' | 'cancel'>({
       title,
-      body: PJ.newBody!.replace('{undo}', undoLabel()),
+      body: fillUndo(PJ.newBody!, undoLabel()),
       choices: [
         { id: 'go', label: confirm },
         { id: 'cancel', label: PJ.nameCancel! },
@@ -1356,7 +1361,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     refreshTitle()
     autosave.schedule()
     showCanvas()
-    announcer.say(PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()))
+    announcer.say(fillUndo(PJ.opened!.replace('{name}', name), undoLabel()))
     noteNoMains()
   }
   /** « Exporter les données mises de côté… »: one JSON file; nothing is removed (clearing is left to a later decision, N19). */
@@ -2035,7 +2040,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
         const { scene, camera } = host
         return scene && camera ? floorPointAt(scene, x, y, camera) : null
       },
-      coarse: () => window.matchMedia?.('(pointer: coarse)').matches ?? false,
+      coarse: () => coarsePointer(),
       invalidate: () => scheduler.invalidate(),
       beforeDispatch: () => props.flush(),
     })
