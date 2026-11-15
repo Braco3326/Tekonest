@@ -8,7 +8,8 @@
  *  - Close and reopen (and a reload) keep the plan.
  *  - An exam address has no entry.
  *  - No console error anywhere.
- * Stage 2 (« Envoyer dans la scène 3D ») is not here.
+ *  - Stage 2: « Envoyer dans la scène 3D » after a confirmation; the page stays with its report; « Voir la scène 3D » closes it; the devices and the cable
+ *    are in the 3D design at the plan's metres and yaw, the bodies stand on those points and the speaker faces the plan's front; one Ctrl+Z removes all.
  */
 import { expect, test, type Locator, type Page } from '@playwright/test'
 
@@ -189,6 +190,100 @@ for (const build of BUILDS) {
       await expect(kept.locator('[data-dev]')).toHaveCount(2)
       await expect(kept.locator('[data-cable="c1"]')).toHaveCount(1)
       expect(await page.evaluate(() => Object.keys(window.localStorage).filter((k) => k.startsWith('audio-sim/plan2d.v1.')))).toEqual(['audio-sim/plan2d.v1.@blank'])
+      expect(errors(), 'console errors').toEqual([])
+    })
+
+    test('stage 2: console + speaker (turned 90°) + cable in 2D, « Envoyer dans la scène 3D », confirm; the page stays with its report; « Voir la scène 3D » closes it; the devices and the cable exist at the same metres and yaw; one Ctrl+Z removes them', async ({ page }) => {
+      const errors = watchErrors(page)
+      await openRoom(page, build.product)
+      const before = await rig(page)
+      const dialog = await openFromMenu(page)
+      const send = dialog.getByRole('button', { name: 'Envoyer dans la scène 3D' })
+      await expect(send).toBeDisabled() // an empty plan has nothing to send
+      await dialog.getByRole('button', { name: 'Poser Midas M32 sur le plan' }).click()
+      const plan = dialog.getByTestId('plan2d-plan')
+      const box = (await plan.boundingBox())!
+      await dialog.getByRole('searchbox', { name: 'Rechercher un appareil' }).fill('k12')
+      await dialog.getByRole('button', { name: 'Poser QSC K12.2 sur le plan' }).dragTo(plan, { targetPosition: { x: box.width * 0.3, y: box.height * 0.75 } })
+      const k12 = dialog.locator('[data-dev="qsc-k12-2-1"]')
+      await expect(k12).toHaveCount(1)
+      // the speaker is selected (just placed; a click on it now would flip it): focused, R turns it 90°
+      await k12.focus()
+      await page.keyboard.press('r')
+      await expect(k12).toHaveAttribute('aria-label', /, 90°$/)
+      // console main left -> speaker input, through the two rear panels
+      const m32 = dialog.locator('[data-dev="midas-m32-1"] .p2d-hit')
+      await m32.click()
+      await m32.click()
+      const rear = dialog.getByTestId('plan2d-rear')
+      await rear.locator('[data-port="out-main-l"]').click()
+      await k12.locator('.p2d-hit').click()
+      await rear.locator('[data-port="in-line-a"]').click()
+      await expect(dialog.locator('[data-cable="c1"]')).toHaveCount(1)
+      const drawn = await page.evaluate(() => JSON.parse(window.localStorage.getItem('audio-sim/plan2d.v1.@blank') ?? 'null') as { devices: { id: string; deviceId: string; x: number; z: number; rot: number }[] })
+      expect(drawn.devices.map((d) => d.id)).toEqual(['midas-m32-1', 'qsc-k12-2-1'])
+      expect(drawn.devices[1]!.rot).toBe(90)
+      expect(await rig(page)).toEqual(before) // nothing reached 3D yet
+      // the send: a confirmation with the counts, « Ajouter »
+      await expect(send).toBeEnabled()
+      await send.click()
+      const confirm = page.getByTestId('plan2d-spawn-dialog')
+      await expect(confirm).toBeVisible()
+      await expect(confirm).toContainText('À ajouter dans la scène 3D : 2 appareils et 1 câble')
+      await expect(confirm.getByRole('button', { name: 'Ajouter' })).toBeFocused()
+      await confirm.getByRole('button', { name: 'Ajouter' }).click()
+      await expect(confirm).toHaveCount(0)
+      // the page stays open with the report
+      await expect(dialog).toBeVisible()
+      await expect(dialog.getByTestId('plan2d-report')).toContainText('Ajoutés dans la scène 3D : 2 appareils et 1 câble, aux mêmes places.')
+      type Hook2 = Hook & {
+        selection(): string | null
+        undo(): boolean
+        modelsPending(): number
+        modelFront(id: string): [number, number, number] | null
+        deviceBodyCenter(id: string): [number, number, number] | null
+        floorAtM(x: number, z: number): number
+      }
+      const sent = await page.evaluate(() => {
+        const c = (window as unknown as { __creation: Hook2 }).__creation
+        return { design: c.design() as { rig: { instances: { instanceId: string; deviceId: string }[]; connections: unknown[] }; placements: { instanceId: string; deviceId: string; position_m: number[]; yawDeg: number; mount?: string }[] }, history: c.historySize() }
+      })
+      expect(sent.history).toBe(before.history + 1)
+      expect(sent.design.rig.instances.map((i) => i.instanceId)).toEqual(['midas-m32-1', 'qsc-k12-2-1'])
+      expect(sent.design.rig.connections).toEqual([{ a: { instance: 'midas-m32-1', port: 'out-main-l' }, b: { instance: 'qsc-k12-2-1', port: 'in-line-a' } }])
+      for (const d of drawn.devices) {
+        const p = sent.design.placements.find((x) => x.instanceId === d.id)!
+        expect(p.deviceId).toBe(d.deviceId)
+        expect(Math.abs(p.position_m[0]! - d.x), `${d.id} x`).toBeLessThan(1e-3)
+        expect(Math.abs(p.position_m[2]! - d.z), `${d.id} z`).toBeLessThan(1e-3)
+        expect(p.position_m[1]).toBe(0) // the blank floor
+        expect(p.yawDeg).toBe(d.rot)
+        expect(p.mount ?? 'floor').toBe('floor')
+      }
+      // « Voir la scène 3D »: the page closes on the 3D view with the first new device selected
+      await dialog.getByRole('button', { name: 'Voir la scène 3D' }).click()
+      await expect(dialog).toHaveCount(0)
+      await expect.poll(() => page.evaluate(() => (window as unknown as { __creation: Hook2 }).__creation.selection())).toBe('midas-m32-1')
+      // in the real scene: the models' bodies stand on the plan points and the speaker's declared front faces the plan's front (sin rot, cos rot)
+      await page.waitForFunction(() => (window as unknown as { __creation: Hook2 }).__creation.modelsPending() === 0, null, { timeout: 60_000 })
+      const seen = await page.evaluate(() => {
+        const c = (window as unknown as { __creation: Hook2 }).__creation
+        return { front: c.modelFront('qsc-k12-2-1'), m32: c.deviceBodyCenter('midas-m32-1'), k12: c.deviceBodyCenter('qsc-k12-2-1') }
+      })
+      expect(seen.front, 'the K12.2 declares a front').not.toBeNull()
+      const t = (drawn.devices[1]!.rot * Math.PI) / 180
+      expect(seen.front![0]).toBeCloseTo(Math.sin(t), 2)
+      expect(seen.front![2]).toBeCloseTo(Math.cos(t), 2)
+      for (const [id, c] of [['midas-m32-1', seen.m32], ['qsc-k12-2-1', seen.k12]] as const) {
+        const d = drawn.devices.find((x) => x.id === id)!
+        expect(c, `${id} body`).not.toBeNull()
+        expect(Math.hypot(c![0] - d.x, c![2] - d.z), `${id}: body centre on the plan point (m)`).toBeLessThan(0.05)
+      }
+      // one Ctrl+Z in the 3D view removes the whole send
+      await expect(page.locator('#renderCanvas')).toBeFocused()
+      await page.keyboard.press('Control+z')
+      await expect.poll(() => page.evaluate(() => (window as unknown as { __creation: Hook }).__creation.historySize())).toBe(before.history)
+      expect(await rig(page)).toEqual(before)
       expect(errors(), 'console errors').toEqual([])
     })
 
