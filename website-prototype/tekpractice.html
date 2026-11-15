@@ -49,7 +49,7 @@
     <div class="section-head">
       <p class="eyebrow">Version d'essai</p>
       <h2 id="creation">Mode Création : installez, câblez, écoutez</h2>
-      <p>TekPractice s'ouvre sur le Mode Création. Vous montez une sono dans un lieu, pas à pas, et vous voyez ce qui marche. Les niveaux sont prévus ensuite sous forme de missions.</p>
+      <p>TekPractice s'ouvre sur le Mode Création. Vous montez une sono dans un lieu, pas à pas, et vous voyez ce qui marche.</p>
     </div>
     <ol class="steps" style="--cable-text: var(--cable-tekpractice-text)">
       <li><span><strong>Choisissez un lieu.</strong> 36 lieux : 32 salles et espaces (studios, théâtres, églises, scènes en plein air…), 3 décors et une salle vide neutre. Tous s'ouvrent vides ; cinq salles s'ouvrent aussi avec leur matériel.</span></li>
@@ -58,123 +58,21 @@
       <li><span><strong>Écoutez.</strong> Quand le signal arrive aux enceintes, lancez le signal de test ou choisissez votre propre fichier audio (MP3, WAV ou OGG), depuis la Régie, le Premier rang ou le Fond de salle (selon le lieu). C'est une simulation simple : niveau, retard et placement gauche-droite d'après la géométrie, sans acoustique de salle. Votre fichier reste dans votre navigateur : il n'est ni envoyé ni enregistré. Aucun morceau n'est fourni.</span></li>
       <li><span><strong>Voyez la couverture.</strong> Des points de couleur montrent les niveaux relatifs dans la salle, le point le plus fort de la grille valant 0 dB. C'est une estimation pédagogique : les niveaux sont comparés entre eux, pas mesurés. Son direct seulement, sans les réflexions de la salle.</span></li>
     </ol>
-    <p class="note">Les anciens niveaux restent accessibles : <a href="tekpractice/jouer/?legacy=1">ouvrir les niveaux A1–D1</a>.</p>
   </div>
 </section>
 
 <section class="section section--sunken" aria-labelledby="controles">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="controles">Les contrôles</h2>
-      <p>Les touches suivent leur position sur le clavier : sur un clavier QWERTY, <kbd>Z</kbd> <kbd>Q</kbd> <kbd>A</kbd> deviennent <kbd>W</kbd> <kbd>A</kbd> <kbd>Q</kbd>. Les touches du clavier se changent dans Réglages → Touches, sauf <kbd>Échap</kbd>, <kbd>Tab</kbd> et <kbd>Entrée</kbd> ; les gestes de la souris ne se changent pas. Dans le jeu, <kbd>H</kbd> affiche cette aide.</p>
-      <p>Ces contrôles concernent les anciens niveaux. En Mode Création, ouvrez le menu Aide dans le jeu.</p>
-    </div>
-
-    <table class="board board--keys">
-      <caption>Vue Orbite : tourner autour du matériel. Ces gestes, dont <kbd>Alt</kbd> + <kbd>H</kbd> et le double-clic sur le sol, ne marchent qu'en Orbite.</caption>
-      <thead><tr><th scope="col">Touche ou geste</th><th scope="col">Action</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">Clic sur un appareil</th><td data-label="Action">Focus : la vue tourne autour de cet appareil</td></tr>
-        <tr><th scope="row">Clic gauche maintenu + glisser</th><td data-label="Action">Tourner autour du point de pivot</td></tr>
-        <tr><th scope="row">Clic droit maintenu + glisser, <kbd>Maj</kbd> + glisser ou <kbd>Ctrl</kbd> + glisser</th><td data-label="Action">Déplacer la vue (panoramique)</td></tr>
-        <tr><th scope="row">Molette</th><td data-label="Action">Avancer vers le curseur ou reculer</td></tr>
-        <tr><th scope="row">Double-clic sur le sol</th><td data-label="Action">Tourner autour de ce point du sol</td></tr>
-        <tr><th scope="row"><kbd>Alt</kbd> + <kbd>H</kbd> ou bouton « Vue d'ensemble »</th><td data-label="Action">Vue d'ensemble : revenir à la vue de toute la salle</td></tr>
-      </tbody>
-    </table>
-
-    <table class="board board--keys">
-      <caption>Vue Orbite : cube de vue et vues enregistrées. Touche <kbd>V</kbd> pour passer en Orbite. Chaque touche a aussi un bouton.</caption>
-      <thead><tr><th scope="col">Touche ou geste</th><th scope="col">Action</th></tr></thead>
-      <tbody>
-        <tr><th scope="row"><kbd>Numpad 1</kbd> ou face « Face »</th><td data-label="Action">Vue de face</td></tr>
-        <tr><th scope="row"><kbd>Ctrl</kbd> + <kbd>Numpad 1</kbd> ou face « Arrière »</th><td data-label="Action">Vue arrière</td></tr>
-        <tr><th scope="row"><kbd>Numpad 3</kbd> ou face « Droite »</th><td data-label="Action">Vue de droite</td></tr>
-        <tr><th scope="row"><kbd>Ctrl</kbd> + <kbd>Numpad 3</kbd> ou face « Gauche »</th><td data-label="Action">Vue de gauche</td></tr>
-        <tr><th scope="row"><kbd>Numpad 7</kbd> ou face « Dessus »</th><td data-label="Action">Vue de dessus</td></tr>
-        <tr><th scope="row">Face « Dessous » (sans touche)</th><td data-label="Action">Vue de dessous</td></tr>
-        <tr><th scope="row">Coins du cube (sans touche)</th><td data-label="Action">Vues de trois quarts</td></tr>
-        <tr><th scope="row"><kbd>Numpad 4</kbd> / <kbd>Numpad 6</kbd></th><td data-label="Action">Tourner de 90° à gauche ou à droite</td></tr>
-        <tr><th scope="row"><kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> (rangée du haut)</th><td data-label="Action">Aller à la vue 1, 2 ou 3</td></tr>
-        <tr><th scope="row">Clic droit ou appui long (bouton de souris maintenu) sur Vue 1, 2 ou 3, ou bouton « Enregistrer ici »</th><td data-label="Action">Enregistrer la vue 1, 2 ou 3</td></tr>
-      </tbody>
-    </table>
-
-    <table class="board board--keys">
-      <caption>Essais (bac à sable) : prédire, figer, comparer</caption>
-      <thead><tr><th scope="col">Touche ou geste</th><th scope="col">Action</th></tr></thead>
-      <tbody>
-        <tr><th scope="row"><kbd>G</kbd></th><td data-label="Action">Figer l'essai</td></tr>
-        <tr><th scope="row"><kbd>B</kbd></th><td data-label="Action">Comparer : alterner A et B</td></tr>
-        <tr><th scope="row"><kbd>↑</kbd> / <kbd>↓</kbd> dans le panneau</th><td data-label="Action">Parcourir les essais</td></tr>
-      </tbody>
-    </table>
-
-    <table class="board board--keys">
-      <caption>Vue Exploration : marcher dans la salle (touches d'un clavier AZERTY)</caption>
-      <thead><tr><th scope="col">Touche ou geste</th><th scope="col">Action</th></tr></thead>
-      <tbody>
-        <tr><th scope="row"><kbd>Z</kbd> / <kbd>S</kbd></th><td data-label="Action">Avancer / reculer</td></tr>
-        <tr><th scope="row"><kbd>Q</kbd> / <kbd>D</kbd></th><td data-label="Action">Pas à gauche / à droite</td></tr>
-        <tr><th scope="row"><kbd>A</kbd> / <kbd>E</kbd></th><td data-label="Action">Descendre / monter (s'accroupir)</td></tr>
-        <tr><th scope="row"><kbd>Maj</kbd></th><td data-label="Action">Marcher plus vite</td></tr>
-        <tr><th scope="row"><kbd>Espace</kbd></th><td data-label="Action">Ouvrir / fermer l'inventaire</td></tr>
-        <tr><th scope="row"><kbd>←</kbd> / <kbd>→</kbd></th><td data-label="Action">Tourner (accès clavier seul)</td></tr>
-        <tr><th scope="row"><kbd>Page ↑</kbd> / <kbd>Page ↓</kbd></th><td data-label="Action">Regarder en haut / en bas</td></tr>
-        <tr><th scope="row"><kbd>F</kbd></th><td data-label="Action">Focus sur l'appareil visé</td></tr>
-        <tr><th scope="row"><kbd>X</kbd></th><td data-label="Action">Ramasser l'appareil visé (bac à sable)</td></tr>
-        <tr><th scope="row"><kbd>R</kbd></th><td data-label="Action">Tourner l'objet à poser (90°)</td></tr>
-        <tr><th scope="row">Clic gauche maintenu + glisser</th><td data-label="Action">Regarder</td></tr>
-        <tr><th scope="row">Clic droit maintenu + glisser</th><td data-label="Action">Avancer, reculer, pas de côté</td></tr>
-        <tr><th scope="row">Clic gauche sans glisser</th><td data-label="Action">Focus d'un appareil, clic sur un port</td></tr>
-        <tr><th scope="row">Molette</th><td data-label="Action">Zoom</td></tr>
-      </tbody>
-    </table>
-
-    <table class="board board--keys">
-      <caption>Touches valables dans toutes les vues</caption>
-      <thead><tr><th scope="col">Touche ou geste</th><th scope="col">Action</th></tr></thead>
-      <tbody>
-        <tr><th scope="row"><kbd>V</kbd></th><td data-label="Action">Exploration ⇄ Orbite</td></tr>
-        <tr><th scope="row"><kbd>H</kbd></th><td data-label="Action">Aide des contrôles</td></tr>
-        <tr><th scope="row"><kbd>Échap</kbd></th><td data-label="Action">Revenir en arrière, une étape à la fois : libérer la souris, annuler la pose, fermer le panneau, lâcher le câble, quitter le focus, puis ouvrir la pause (en Exploration, si rien n'est ouvert)</td></tr>
-      </tbody>
-    </table>
-    <p class="note tp-table-note">Les touches ne fonctionnent pas quand vous écrivez dans un champ. Les panneaux se parcourent au clavier avec <kbd>Tab</kbd>, et un appareil se sélectionne avec <kbd>Tab</kbd> + <kbd>Entrée</kbd>.</p>
-  </div>
-</section>
-
-<section class="section" aria-labelledby="niveaux">
-  <div class="wrap">
-    <div class="products">
-      <div class="product">
-        <div class="product-preview preview-tekpractice" role="img" aria-label="Aperçu du visuel de TekPractice : studio blanc, matériel sombre, câble bleu.">
-          <span class="p-kicker">TekPractice · Niveau A1</span>
-          <span class="p-title">Première sono</span>
-          <span class="p-cable" aria-hidden="true"></span>
-          <span class="p-rig" aria-hidden="true"><i></i><i></i><i></i></span>
-        </div>
-        <p class="endorse">Proposition : TekPractice garderait son studio blanc et son bleu, avec la mention « TekPractice, par Tekonest ».</p>
-      </div>
-      <div>
-        <h2 id="niveaux" style="font-size: var(--text-2xl); margin-bottom: var(--space-5);">Ce qui existe déjà</h2>
-        <p>Quatre niveaux construits avec du matériel réel, toujours jouables depuis le lien « niveaux A1–D1 » ci-dessus :</p>
-        <ol class="steps" style="--cable-text: var(--cable-tekpractice-text)">
-          <li><span><strong>Première sono.</strong> Un plateau simple.</span></li>
-          <li><span><strong>Studio radio.</strong> Voyant <span lang="en">ON AIR</span> et coupure des écoutes.</span></li>
-          <li><span><strong>Duplex.</strong> Un reporter en retour N-1.</span></li>
-          <li><span><strong>Post-production.</strong> Horloge et fréquence d'échantillonnage.</span></li>
-        </ol>
-        <p style="margin-top: var(--space-5);">S'y ajoutent un bac à sable, un mode examen et un tableau qui montre votre préparation.</p>
-      </div>
+      <h2 id="controles">Les raccourcis</h2>
+      <p>Les raccourcis clavier du Mode Création sont dans le menu Aide, dans le jeu : Aide, puis Raccourcis clavier. Les touches ne fonctionnent pas quand vous écrivez dans un champ.</p>
     </div>
   </div>
 </section>
-
 <section class="section section--sunken" aria-labelledby="suite">
   <div class="wrap">
     <div class="cols">
-      <div class="col"><h2 id="suite">Ce qui se prépare</h2><ul><li>Une version publique stable en ligne.</li><li>Rendre la vue 3D utilisable entièrement au clavier.</li><li>Les conseils d'Oscar, à la place des textes provisoires.</li></ul></div>
+      <div class="col"><h2 id="suite">Ce qui se prépare</h2><ul><li>Une version publique stable en ligne.</li><li>Rendre la vue 3D utilisable entièrement au clavier.</li></ul></div>
       <div class="col"><h2>Ce qui reste à décider</h2><ul><li>Le modèle d'accès : gratuit, ou une partie payante.</li><li>Les licences des modèles 3D avant tout usage commercial.</li></ul></div>
       <div class="col"><h2>Pour qui</h2><ul><li>Les étudiantes et étudiants du BTS Son, en priorité.</li></ul></div>
     </div>
