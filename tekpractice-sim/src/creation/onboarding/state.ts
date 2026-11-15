@@ -13,6 +13,9 @@
  * Mission 1 (spec 3): an optional `goal` (the goal screens' answer: `{ id }`, the deepest chosen node of the goal tree, whose dotted id names its ancestors; or
  * null for « Passer »). A record written before it has no field and reads unchanged; a goal that is not well-formed drops the record like any corrupt field. The
  * `profile` stays: the answer derives it from the goal's level-1 id (goalTree.ts `profileForGoal`), so the panels and the drawer tab of profiles.ts keep working.
+ * Mission 1 (spec 4 and 5), two more optional fields: `plainTutorial` (the plain tutorial « Premiers pas »: the step it is at, 1 to 4, and whether it is over, finished or
+ * passed; a malformed one drops the record like any corrupt field) and `accountPrompt` (the card « Enregistrez votre travail » was dismissed; an unknown value is ignored,
+ * like `ownGear`). Records written before them read unchanged.
  */
 import type { StepId } from '../../design/packages'
 import type { GoalChoice } from './goalTree'
@@ -52,7 +55,22 @@ export interface OnboardingRecord {
    * record was written before the goals, or by the four profiles (a package that asks them).
    */
   goal?: GoalChoice | null
+  /**
+   * The plain tutorial (mission 1, spec 4; plainTutorial.ts): `step` is the current step (1 to 4), `done` that it is over (its four steps done, or « Passer le tutoriel »).
+   * Absent = never started.
+   */
+  plainTutorial?: PlainTutorialRecord
+  /** The card « Enregistrez votre travail » (accounts, spec 5) was dismissed: it is shown once and never again. Absent = not dismissed. */
+  accountPrompt?: 'dismissed'
 }
+
+/** The plain tutorial's part of the record. */
+export interface PlainTutorialRecord {
+  step: number
+  done: boolean
+}
+/** The plain tutorial's steps: 4 (plainTutorial.ts PLAIN_STEPS has the same count; a stored step outside 1..4 is corrupt). */
+export const PLAIN_STEP_COUNT = 4
 
 /** The slice of `Storage` the store needs (tests pass a fake). */
 export interface StorageLike {
@@ -87,6 +105,10 @@ export type OnboardingEvent =
   | { type: 'request'; kind?: RequestKind }
   /** The learner dismissed the entrepreneur's card (T6.4). */
   | { type: 'ownGear'; value: 'dismissed' }
+  /** The plain tutorial moved (a step done or passed, started again, finished, « Passer le tutoriel »). */
+  | { type: 'plainTutorial'; step: number; done: boolean }
+  /** The learner dismissed the card « Enregistrez votre travail » (accounts). */
+  | { type: 'accountPrompt'; value: 'dismissed' }
 
 const BASE: OnboardingRecord = { v: 1, profile: null, offer: null, request: 0, shown: [] }
 
@@ -107,6 +129,10 @@ export function reduce(rec: OnboardingRecord | null, ev: OnboardingEvent): Onboa
       return asking({ ...cur, request: cur.request + 1 }, ev.kind ?? 'start')
     case 'ownGear':
       return { ...cur, ownGear: ev.value }
+    case 'plainTutorial':
+      return { ...cur, plainTutorial: { step: ev.step, done: ev.done } }
+    case 'accountPrompt':
+      return { ...cur, accountPrompt: ev.value }
   }
 }
 
@@ -119,6 +145,13 @@ function parseGoal(v: unknown): GoalChoice | null | undefined {
   if (typeof v !== 'object' || Array.isArray(v)) return undefined
   const id = (v as Record<string, unknown>).id
   return typeof id === 'string' && GOAL_ID.test(id) ? { id } : undefined
+}
+
+/** A stored plain tutorial: `{ step, done }` with an integer step of 1 to 4 and a boolean (only those two keys are kept); undefined = not well-formed. */
+function parsePlain(v: unknown): PlainTutorialRecord | undefined {
+  if (typeof v !== 'object' || v === null || Array.isArray(v)) return undefined
+  const { step, done } = v as Record<string, unknown>
+  return typeof step === 'number' && Number.isInteger(step) && step >= 1 && step <= PLAIN_STEP_COUNT && typeof done === 'boolean' ? { step, done } : undefined
 }
 
 /** The record in `raw`, or null when it is missing or malformed in any field (a corrupt record is replaced, never repaired). */
@@ -142,8 +175,12 @@ export function parseRecord(raw: string | null): OnboardingRecord | null {
   if (r.goal !== undefined && goal === undefined) return null
   const base: OnboardingRecord = { v: 1, profile: r.profile as ProfileId | null, offer: r.offer as OfferAnswer | null, request: r.request, shown: r.shown as StepId[] }
   const withKind: OnboardingRecord = r.kind === undefined ? base : { ...base, kind: r.kind }
+  const plain = r.plainTutorial === undefined ? undefined : parsePlain(r.plainTutorial)
+  if (r.plainTutorial !== undefined && plain === undefined) return null
   const withGear: OnboardingRecord = r.ownGear === 'dismissed' ? { ...withKind, ownGear: 'dismissed' } : withKind
-  return goal === undefined ? withGear : { ...withGear, goal }
+  const withGoal: OnboardingRecord = goal === undefined ? withGear : { ...withGear, goal }
+  const withPlain: OnboardingRecord = plain === undefined ? withGoal : { ...withGoal, plainTutorial: plain }
+  return r.accountPrompt === 'dismissed' ? { ...withPlain, accountPrompt: 'dismissed' } : withPlain
 }
 
 export interface OnboardingStore {

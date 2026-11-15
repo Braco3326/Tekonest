@@ -311,3 +311,35 @@ describe('the goal (mission 1, spec 3): an optional field, old records read unch
     expect(createOnboardingStore(st).read()?.goal).toEqual(goal)
   })
 })
+
+describe('the plain tutorial and the account prompt (mission 1, spec 4 and 5): two optional fields, old records read unchanged', () => {
+  const old: OnboardingRecord = { v: 1, profile: 'decouvre', offer: 'taken', request: 1, shown: [] }
+  it('a plainTutorial event writes { step, done } and keeps the rest of the record', () => {
+    expect(reduce(old, { type: 'plainTutorial', step: 2, done: false })).toEqual({ ...old, plainTutorial: { step: 2, done: false } })
+    expect(reduce(null, { type: 'plainTutorial', step: 4, done: true })).toEqual({ ...fresh, plainTutorial: { step: 4, done: true } })
+  })
+  it('an accountPrompt event remembers the dismissal', () => {
+    expect(reduce(old, { type: 'accountPrompt', value: 'dismissed' })).toEqual({ ...old, accountPrompt: 'dismissed' })
+  })
+  it('parseRecord: a record without the fields reads unchanged (no field added); well-formed fields are kept', () => {
+    expect(parseRecord(JSON.stringify(old))).toEqual(old)
+    expect(parseRecord(JSON.stringify(old))).not.toHaveProperty('plainTutorial')
+    const both = { ...old, plainTutorial: { step: 3, done: false }, accountPrompt: 'dismissed' }
+    expect(parseRecord(JSON.stringify(both))).toEqual(both)
+  })
+  it('parseRecord: a malformed plainTutorial drops the record like any corrupt field; an unknown accountPrompt value is ignored', () => {
+    for (const bad of [{ step: 0, done: false }, { step: 5, done: false }, { step: 1.5, done: false }, { step: '2', done: false }, { step: 2 }, { step: 2, done: 'no' }, null, [], 'x'])
+      expect(parseRecord(JSON.stringify({ ...old, plainTutorial: bad })), JSON.stringify(bad)).toBeNull()
+    expect(parseRecord(JSON.stringify({ ...old, accountPrompt: 'later' }))).toEqual(old)
+  })
+  it('parseRecord keeps only step and done (an extra key is not carried along)', () => {
+    expect(parseRecord(JSON.stringify({ ...old, plainTutorial: { step: 2, done: true, extra: 1 } }))).toEqual({ ...old, plainTutorial: { step: 2, done: true } })
+  })
+  it('the store writes both and reads them back over a reload', () => {
+    const st = fakeStorage()
+    const a = createOnboardingStore(st)
+    a.dispatch({ type: 'plainTutorial', step: 3, done: false })
+    a.dispatch({ type: 'accountPrompt', value: 'dismissed' })
+    expect(createOnboardingStore(st).read()).toMatchObject({ plainTutorial: { step: 3, done: false }, accountPrompt: 'dismissed' })
+  })
+})
