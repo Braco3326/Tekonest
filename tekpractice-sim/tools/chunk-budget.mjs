@@ -68,6 +68,8 @@ export const FORBIDDEN_STATIC = [
   { id: 'accounts', why: 'the account dialogs and the provider SDK load only when the account UI opens (and only when the accounts switch is on)', match: (m) => m.startsWith('src/accounts/'), optional: true },
   // The 2D schema page (mission 2): its code loads on the first Vue > Schema 2D. `optional` as the accounts: with the switch off nothing imports src/plan2d/.
   { id: 'plan2d', why: 'the 2D schema page loads on its first open (and only when the plan2d switch is on)', match: (m) => m.startsWith('src/plan2d/'), optional: true },
+  // Mission 3 B stage 2: the scene part of the hand-drawn cables (grid, dots, preview, handles) loads on the first tracing or the first selection of a routed cable.
+  { id: 'cable tracer', why: 'the cable tracer (grid, preview, handles) loads on the first tracing or routed-cable selection', match: (m) => m === 'src/creation/cableTracer.ts', optional: true },
 ]
 
 /**
@@ -81,6 +83,9 @@ export const LAZY_CAPS = [
   { id: 'accounts adapter (provider SDK)', module: 'src/accounts/supabaseService.ts', maxBytes: 300_000 },
   // Mission 2: the 2D schema page (view, palette, rear panels, rules adapter, footprints). Measured on the build of 2026-11-15: 52 420 bytes (18.6 kB gzip); the cap leaves about 2x.
   { id: '2D schema page', module: 'src/plan2d/view.ts', maxBytes: 120_000 },
+  // Mission 3 B stage 2: the cable tracer (one module; Babylon comes from the shared vendor chunk). Measured on the e2e build of 2026-11-15: 3 625 bytes; the cap leaves room
+  // for about 2.5x.
+  { id: 'cable tracer', module: 'src/creation/cableTracer.ts', maxBytes: 10_000 },
 ]
 
 /** The manifest key of the chunk that holds `moduleId`: the key equal to its `src`, else the chunk whose module list has it. */

@@ -1411,7 +1411,8 @@ Les câbles tracés à la main (mission 3 B, étape 2, spec `docs/superpowers/sp
 | `cableRoute.statusSelected` | Câble sélectionné : {cable} | à valider (tekuxwriter) | Annonce ; {cable} = le câble comme au survol |
 | `cableRoute.statusDeselected` | Câble désélectionné. | à valider (tekuxwriter) | Annonce (Échap, ou une autre sélection) |
 | `cableRoute.bar` | Tracé du câble | à valider (tekuxwriter) | Nom de la barre de tracé (sous la barre de menus, jamais sur la vue 3D) |
-| `cableRoute.barTitle` | Tracé : {cable} | à valider (tekuxwriter) | Texte en tête de la barre ; {cable} = le câble |
+| `cableRoute.barTitle` | {cable} : tracé en cours | à valider (tekuxwriter) | Texte en tête de la barre ; {cable} = `cableRoute.cableName` (sans longueur : elle change pendant le tracé, la barre la donne à part) |
+| `cableRoute.cableName` | Câble {a} → {b} | à valider (tekuxwriter) | Nom court du câble, sortie d’abord : la barre de tracé et la sélection de la barre d’état (« Sélection : Câble ql1 out-main-l → k12-g in-line-a ») ; {a} / {b} = appareil et prise |
 | `cableRoute.snap` | Pas de la grille | à valider (tekuxwriter) | Choix du pas : 10 cm, 25 cm, 50 cm, 1 m (25 cm par défaut) |
 | `cableRoute.step10` | 10 cm | à valider (tekuxwriter) | Choix du pas |
 | `cableRoute.step25` | 25 cm | à valider (tekuxwriter) | Choix du pas (par défaut) |

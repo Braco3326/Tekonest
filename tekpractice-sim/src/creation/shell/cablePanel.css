@@ -85,6 +85,8 @@
 .cr-cable-facts dt { color: var(--cr-ink-muted); font-size: 12px; }
 .cr-cable-facts dd { margin: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 .cr-cable-actions { display: flex; flex-direction: column; align-items: stretch; gap: 6px; padding: 10px 0; border-top: 1px solid var(--cr-panel-line); }
+/* The panel's buttons wrap their words in a narrow Propriétés (a phone): never cut, never past the edge. */
+.cr .cr-cable-btn { white-space: normal; text-align: center; padding-top: 4px; padding-bottom: 4px; overflow-wrap: anywhere; }
 .cr-cable-actions .cr-props-hint { margin: 0; }
 .cr-cable-points { padding: 10px 0 0; border-top: 1px solid var(--cr-panel-line); }
 .cr-cable-points .cr-props-legend { margin: 0; }
@@ -107,8 +109,12 @@
   .cr .cr-trace-select { height: 44px; }
   .cr-cable-point-zone { min-height: 44px; display: flex; align-items: center; }
 }
-/* A phone: the title on its own line, the controls wrap under it. */
+/* A phone: the title on its own line, the controls wrap under it, the four actions in two even columns; the cable's facts stack (label over value). */
 @media (max-width: 759.98px) {
   .cr-trace-title { flex-basis: 100%; }
   .cr-trace-length { min-width: 0; }
+  .cr-trace-group:last-child { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .cr .cr-trace-group:last-child .cr-trace-btn { white-space: normal; }
+  .cr-cable-facts { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+  .cr-cable-facts dd { margin-bottom: 6px; }
 }

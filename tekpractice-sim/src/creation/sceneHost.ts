@@ -32,7 +32,7 @@ import type { DesignState, Placement } from '../trials/trial'
 import { DeviceSpawner, type DeviceInstance } from '../scene/DeviceSpawner'
 import { CableRenderer } from '../scene/CableRenderer'
 import { FLOOR_CLEARANCE, polylineLength, type P3 } from '../scene/cablePath'
-import { buildSupport, supportReport, type Support, type SupportReport } from '../scene/cableGravity'
+import { buildSupport, gravityPath, supportReport, type Support, type SupportReport, type XZ } from '../scene/cableGravity'
 import { toXZ } from '../scene/cableRoute'
 import { deviceSizeM, portFaceLocal, supportBoxes } from './cableSupport'
 import { CameraRig } from '../scene/CameraRig'
@@ -579,21 +579,65 @@ export class SceneHost {
     return r?.length && this.applied?.rig.connections.some((c) => cableKey(c.a, c.b) === key) ? r.map(([x, z]): [number, number] => [x, z]) : null
   }
 
-  /** The key of the cable drawn with the Papier stroke right now (tests). */
+  /** The key of the cable drawn with the Papier stroke right now (tests): the hovered one first, else the selected one (mission 3 B). */
   strokedCable(): string | null {
-    const m = this.cableStroke
-    return m && !m.isDisposed() && this.highlight?.hasMesh(m) ? m.name.slice('cable:'.length) : null
+    const live = (m: Mesh | null): string | null => (m && !m.isDisposed() && this.highlight?.hasMesh(m) ? m.name.slice('cable:'.length) : null)
+    return live(this.cableStroke) ?? live(this.selectedStroke)
   }
   private cableStroke: Mesh | null = null
+  /** Mission 3 B stage 2: the selected cable keeps the hover's Papier stroke while it is selected (view state, never in the store). */
+  private selectedCableKey: string | null = null
+  private selectedStroke: Mesh | null = null
+
+  /** Select a cable (its Papier stroke stays on; null clears). One frame is asked. */
+  setSelectedCable(key: string | null): void {
+    this.selectedCableKey = key
+    this.syncCableStroke()
+    this.scheduler.invalidate()
+  }
+
+  /** The cable drawn as selected (null = none). */
+  selectedCable(): string | null {
+    return this.selectedCableKey
+  }
 
   /**
-   * The cable within `CABLE_HIT_PX` of a canvas point (CSS px, canvas-relative): the cables' drawn points are projected
-   * with the camera's own matrices and the nearest polyline wins. Null in the walk view and for hidden cables.
+   * The cable within `tolPx` (default `CABLE_HIT_PX`) of a canvas point (CSS px, canvas-relative): the cables' drawn points are projected
+   * with the camera's own matrices and the nearest polyline wins. Null in the walk view and for hidden cables. A finger gets a wider tolerance (mission 3 B).
    */
-  cableAtPoint(x: number, y: number): string | null {
+  cableAtPoint(x: number, y: number, tolPx: number = CABLE_HIT_PX): string | null {
     if (this.walking) return null
     const lines = this.screenLines()
-    return lines.length ? nearestCable(lines, { x, y }, CABLE_HIT_PX) : null
+    return lines.length ? nearestCable(lines, { x, y }, tolPx) : null
+  }
+
+  /** A world point on the canvas (CSS px, canvas-relative) with the camera's own matrices; null behind the camera or before a scene (mission 3 B: the handles). */
+  projectToCanvas(p: { x: number; y: number; z: number }): Pt | null {
+    return this.canvasProjector()?.project(p) ?? null
+  }
+
+  /** The two ports of a cable of the design on screen, in world metres (port A = the stored `a`), or null. */
+  cableEnds(key: string): { a: P3; b: P3 } | null {
+    const c = this.applied?.rig.connections.find((k) => cableKey(k.a, k.b) === key)
+    const pa = c && this.portWorld(c.a)
+    const pb = c && this.portWorld(c.b)
+    return pa && pb ? { a: { x: pa.x, y: pa.y, z: pa.z }, b: { x: pb.x, y: pb.y, z: pb.z } } : null
+  }
+
+  /**
+   * Mission 3 B stage 2: the length (m) a cable WOULD have drawn along this route (plan points; [] = automatic), laid by the same gravity path as the renderer
+   * (rounded corners, drops at the ports, decks and devices climbed): the live length of the drawing bar equals the committed length. Null when not drawable.
+   */
+  previewCableLengthM(key: string, route: readonly XZ[]): number | null {
+    const c = this.applied?.rig.connections.find((k) => cableKey(k.a, k.b) === key)
+    const ends = this.cableEnds(key)
+    if (!c || !ends) return null
+    const path = gravityPath({ at: ends.a, out: this.portOutward(c.a) }, { at: ends.b, out: this.portOutward(c.b) }, this.supportSurface(), {
+      clearance: FLOOR_CLEARANCE,
+      ...(route.length ? { route } : {}),
+      round: true,
+    })
+    return polylineLength(path)
   }
 
   /**
@@ -664,17 +708,29 @@ export class SceneHost {
     this.scheduler.invalidate()
   }
 
-  /** The Papier stroke around the hovered cable (the device hover's own stroke colour); re-applied after `applyDecor` clears the layer. */
+  /**
+   * The Papier stroke around the hovered cable (the device hover's own stroke colour) and around the selected cable (mission 3 B); re-applied after
+   * `applyDecor` clears the layer and after a redraw of either cable (a new mesh).
+   */
   private syncCableStroke(): void {
     const hl = this.highlight
-    const prev = this.cableStroke
-    const key = this.cables?.highlighted ?? null
-    const next = key !== null ? this._scene?.getMeshByName(`cable:${key}`) : null
-    if (prev && prev !== next && !prev.isDisposed()) hl?.removeMesh(prev)
+    const mesh = (key: string | null): Mesh | null => {
+      const m = key !== null ? this._scene?.getMeshByName(`cable:${key}`) : null
+      return m instanceof Mesh ? m : null
+    }
+    const next = mesh(this.cables?.highlighted ?? null)
+    const sel = mesh(this.selectedCableKey)
+    for (const prev of [this.cableStroke, this.selectedStroke]) if (prev && prev !== next && prev !== sel && !prev.isDisposed()) hl?.removeMesh(prev)
     this.cableStroke = null
-    if (hl && next instanceof Mesh) {
+    this.selectedStroke = null
+    if (!hl) return
+    if (next) {
       hl.addMesh(next, HOVER)
       this.cableStroke = next
+    }
+    if (sel) {
+      if (sel !== next) hl.addMesh(sel, HOVER)
+      this.selectedStroke = sel
     }
   }
 
@@ -935,6 +991,7 @@ export class SceneHost {
     this.orbitInput = null
     this.spawner = null
     this.cableStroke = null // its mesh went with the scene
+    this.selectedStroke = null
     this.proxies = null // its observer and materials went with `controllers`
     this.cables = null
     this.screenCache = null // projected from the old scene's cables and camera
@@ -1326,7 +1383,7 @@ export class SceneHost {
       // Mission 3 B: the stored route (design data) is the plan the cable's run follows; none = the automatic shape.
       const route = this.applied?.routes?.[key]
       this.cables?.addCable(key, pa, pb, [a, b], route?.length ? toXZ(route) : undefined) // addCable replaces by key
-      if (this.cables?.highlighted === key) this.syncCableStroke() // a redrawn hovered cable is a new mesh
+      if (this.cables?.highlighted === key || this.selectedCableKey === key) this.syncCableStroke() // a redrawn hovered / selected cable is a new mesh
     }
   }
 

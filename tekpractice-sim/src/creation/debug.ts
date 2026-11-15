@@ -159,6 +159,14 @@ export interface CreationDebug {
   cablePoints(key: string): [number, number, number][] | null
   /** Mission 3 B (read-only): a cable's hand-drawn route as stored in the design and shown (plan points [x, z] m), or null for the automatic shape. */
   cableRoute(key: string): [number, number][] | null
+  /** Mission 3 B stage 2 (read-only): the route controller's state (selected cable, chosen point, the tracing, the handles' page px); null with the switch off. */
+  cableTrace(): import('./cableRouteController').CableRouteDebug | null
+  /** Mission 3 B stage 2: select a cable as its tree row does (null deselects); false when it cannot be selected or the switch is off. */
+  cableSelect(key: string | null): boolean
+  /** Mission 3 B stage 2 (tests): run a pending « add a point on the segment » now instead of after its double-click delay. */
+  cableTraceFlushAdd(): void
+  /** Mission 3 B stage 2: the cable the scene draws as selected (its Papier stroke), or null. */
+  cableSelectedStroke(): string | null
   /**
    * Mission 3 A (« gravity first »): how a drawn cable sits on its support surface (the floor, decks, the tops of the devices resting there), read-only:
    * the lowest and highest inner point relative to the surface plus the clearance, and every stretch off the surface with its plan length (a drop has

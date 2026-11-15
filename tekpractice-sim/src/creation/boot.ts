@@ -92,6 +92,7 @@ import { CREATION_TOKENS, injectCreationTokens } from '../design/creationTokens'
 import { applyDesignAttribute, defaultDesignFor, tutorialSteps } from '../design/packages'
 import { FEATURES } from '../features'
 import { wirePlan2d } from './plan2dWiring'
+import { CableRouteController } from './cableRouteController'
 import { nearestZone, ZONES, zoneAngles, zoneId, zoneLabel, type ZoneSigns } from '../camera/cubeZones'
 import { cubeSizePx } from './viewCubeGeometry'
 import {
@@ -167,6 +168,11 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   const registry = loadCatalog(catalogJson)
   const store = new CreationStore(registry, creationEvaluator(registry))
   const history = new History(store)
+  /**
+   * Mission 3 B stage 2: the hand-drawn cables (select a cable, trace its route, edit its points), only with the `cableTrace` switch. Created with the other pointer
+   * controllers below; declared here because the tree, the view-state subscriber and the key handlers above them name it (null until then, and with the switch off).
+   */
+  let routes: CableRouteController | null = null
   const viewState = new ViewState()
   // `host` is assigned right below; the hooks only run once the render loop does.
   let host: SceneHost
@@ -346,10 +352,19 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   })
   /** Snapping while a device is placed or dragged (false = grid, true = free with Alt); undefined = no snapping text. */
   let snapFree: boolean | undefined
+  /** « Câble ql1 out-main-l → k12-g in-line-a » (mission 3 B: the status bar's selection and the drawing bar's title; no length, which changes while tracing). */
+  const cableSelectionLabel = (key: string): string => {
+    const c = store.design().rig.connections.find((k) => cableKey(k.a, k.b) === key)
+    if (!c) return key
+    const portOf = portInfoOf(registry, store.design().rig.instances)
+    const [from, to] = portOf(c.a)?.dir !== 'out' && portOf(c.b)?.dir === 'out' ? [c.b, c.a] : [c.a, c.b]
+    return COPY.cableRoute!.cableName!.replace('{a}', `${from.instance} ${from.port}`).replace('{b}', `${to.instance} ${to.port}`)
+  }
   const refreshSignal = (): StatusView => {
     const sel = viewState.get().selection
     const v = statusView({
-      selectionLabel: sel === null ? null : deviceName(sel),
+      // mission 3 B: a selected cable is the selection the status bar names (« Sélection : Câble ql1 out-main-l → k12-g in-line-a »)
+      selectionLabel: sel !== null ? deviceName(sel) : routes?.selected ? cableSelectionLabel(routes.selected) : null,
       snapFree,
       events,
       lastRejection,
@@ -593,7 +608,9 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     nodes: treeNodes,
     selectedId: () => {
       const sel = viewState.get().selection
-      return sel ? `device:${sel}` : treeActive
+      if (sel) return `device:${sel}`
+      // Mission 3 B: a selected cable is the tree's selected row
+      return routes?.selected ? `cable:${routes.selected}` : treeActive
     },
     isHidden: (key) => viewState.get().hidden.includes(key),
     activate: (node) => {
@@ -604,16 +621,26 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
         leaveWalk() // framing a row is an orbit view
         if (!selection.flyToKey(node.id)) return
         treeActive = node.id
+        // Mission 3 B: the cable row also selects the cable (its panel in Propriétés); the framing is said first, the selection after it
+        if (node.kind === 'cable' && routes) {
+          announcer.say(COPY.tree!.statusFramed!.replace('{item}', node.label))
+          routes.select(node.target!.cableKey!)
+          tree.render()
+          return
+        }
+        routes?.select(null, { silent: true }) // a zone row is another selection
         tree.render()
         announcer.say(COPY.tree!.statusFramed!.replace('{item}', node.label))
       } else if (node.kind === 'point') {
         // A listening point (Task 20): leaves the walk, the camera stands there looking at the stage.
+        routes?.select(null, { silent: true }) // another selection (mission 3 B)
         treeActive = node.id // before the view-state change re-renders the tree
         if (!goToPoint(node.target!.pointId!)) treeActive = null
         tree.render()
       } else if (node.kind === 'lieu' && host.rig) {
         // The place row: back to the overview.
         leaveWalk()
+        routes?.select(null, { silent: true }) // another selection (mission 3 B)
         treeActive = null
         selection.select(null)
         host.rig.flyToEnsemble()
@@ -660,7 +687,10 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       // The listening points follow the ear height: a camera still standing on one moves with it.
       if (atPoint && !host.walking && cameraOn(atPoint.pose)) goToPoint(atPoint.id, { refly: true })
     }
-    if (v.selection !== null) treeActive = null
+    if (v.selection !== null) {
+      treeActive = null
+      routes?.select(null, { silent: true }) // a device selected: the cable is no longer the selection
+    }
     host.setSelected(v.selection)
     host.setHidden(v.hidden)
     tree.render()
@@ -1146,12 +1176,17 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   // A stepper burst still open (600 ms) closes first, so it is the entry undone.
   // Not while a drag is open (Task 25): the drag's entry is still open, and Ctrl+Z / Ctrl+Y must not touch the rig under it.
   keys.onAction('UNDO', () => {
-    if (placement.dragging) return true
+    if (placement.dragging || routes?.dragging) return true
+    // Mission 3 B: while a cable is traced nothing of it is in the history yet: Ctrl+Z takes back its last point, never something under the tracing
+    if (routes?.tracing) {
+      routes.removeLast()
+      return true
+    }
     props.flush()
     return history.undo()
   })
   keys.onAction('REDO', () => {
-    if (placement.dragging) return true
+    if (placement.dragging || routes?.dragging || routes?.tracing) return true
     props.flush()
     return history.redo()
   })
@@ -1515,7 +1550,10 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     const x = e.offsetX
     const y = e.offsetY
     // The device test is the body's; the port test is the patching's own (the enlarged proxies the click-to-patch takes, not only the marker).
+    // Mission 3 B: a double-click during a tracing is the tracing's (it finishes on the last point); one on a cable starts its tracing
+    if (routes?.ownsDblClick(e.timeStamp)) return
     if (pickDevice(scene, x, y) || host.portAtPoint(x, y, patch.pending !== null) || patch.wouldTake(x, y)) return
+    if (routes?.dblClickAt(x, y)) return
     const p = floorPointAt(scene, x, y, host.camera!)
     if (!p) return
     host.rig!.repivot(Vector3.FromArray(p))
@@ -1655,6 +1693,12 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     // pinned refusal and the selection are untouched, and the next Échap does the usual cascade. A pose goes before (above): no label is shown during one.
     if (portLabels.dismissHover()) return true
     if (patch.cancel()) return true // then a cable in hand, a pinned refusal or the « Débrancher » offer; the selection stays
+    // Mission 3 B: a selected cable (not traced: a tracing takes its own Échap first) is deselected from the 3D view or from its panel
+    if (routes?.selected && (e.target === canvas || e.target === document.body || (e.target instanceof Node && shell.props.contains(e.target)))) {
+      routes.select(null)
+      if (e.target !== canvas && e.target !== document.body) canvas.focus() // the panel went away under the focus
+      return true
+    }
     if (e.target !== canvas || viewState.get().selection === null) return false
     selection.select(null)
     return true
@@ -1662,7 +1706,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   // « Raccourcis clavier » (night 2 wave 5, P2-1): H and Aide › Raccourcis clavier. The list is built from the live key map; the modal keeps the focus in, Échap closes it and gives the focus back.
   // No status announcement: the shell is inert behind the dialog, and its name is announced when the focus lands in it.
   const openShortcuts = async (): Promise<void> => {
-    await openShortcutsDialog(keys.bindings)
+    await openShortcutsDialog(keys.bindings, { cables: FEATURES.cableTrace === true })
   }
   keys.onAction('TOGGLE_HELP', () => {
     void openShortcuts()
@@ -1783,7 +1827,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     shellBag,
     // A port is the cabling's (Task 26): a click on one is neither a selection nor a miss.
     // An open drag (a press on the selected device) owns its release: `onClickSelected` below decides port or select.
-    (x, y) => (placement.placing || placement.dragging || patch.wouldTake(x, y) ? null : pickDevice(host.scene, x, y)),
+    // Mission 3 B: while a cable is traced a click places a point (the route controller's), never a device selection.
+    (x, y) => (placement.placing || placement.dragging || routes?.tracing || routes?.dragging || patch.wouldTake(x, y) ? null : pickDevice(host.scene, x, y)),
     selection,
     (x, y, clicks) => missedClick(x, y, clicks)
   )
@@ -1815,7 +1860,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   }
   const patch = new PatchController(host, history, store, scheduler, shellBag, {
     ui: portLabels,
-    busy: () => placement.placing || placement.dragging || connectDialog.isOpen,
+    // Mission 3 B: a tracing or a handle drag owns the pointer (a click on a port there places a point, it does not patch).
+    busy: () => placement.placing || placement.dragging || connectDialog.isOpen || !!routes?.tracing || !!routes?.dragging,
     describe: describePort,
     portName,
     spokenName: spokenPortName,
@@ -1871,16 +1917,19 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   }
   shellBag.add(store.subscribe(refreshLegend))
   refreshLegend()
+  /** The cable as the hover says it (« ql1 out-main-l → k12-g in-line-a · Niveau ligne pro · 6,4 m »); null when it is not in the design. */
+  const describeCable = (key: string): string | null => {
+    const c = store.design().rig.connections.find((k) => cableKey(k.a, k.b) === key)
+    if (!c) return null
+    const deviceOf = (instance: string): string => store.design().rig.instances.find((i) => i.instanceId === instance)?.deviceId ?? ''
+    return cableText(portInfoNow(), c.a, c.b, host.cableLengthM(key), isUnverified(registry, deviceOf(c.a.instance)) || isUnverified(registry, deviceOf(c.b.instance)))
+  }
   const cableHover = new CableHoverController(host, shellBag, {
     ui: portLabels,
-    busy: () => placement.placing || placement.dragging,
+    // Mission 3 B: no cable hover while a cable is traced or a handle dragged (the grid and the preview are what the pointer shows)
+    busy: () => placement.placing || placement.dragging || !!routes?.tracing || !!routes?.dragging,
     deviceAt: (x, y) => pickDevice(host.scene, x, y) !== null,
-    describe: (key) => {
-      const c = store.design().rig.connections.find((k) => cableKey(k.a, k.b) === key)
-      if (!c) return null
-      const deviceOf = (instance: string): string => store.design().rig.instances.find((i) => i.instanceId === instance)?.deviceId ?? ''
-      return cableText(portInfoNow(), c.a, c.b, host.cableLengthM(key), isUnverified(registry, deviceOf(c.a.instance)) || isUnverified(registry, deviceOf(c.b.instance)))
-    },
+    describe: describeCable,
     subscribe: (fn) => store.subscribe(fn),
   })
 
@@ -1948,9 +1997,48 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   })
   keys.onAction('DELETE', (e) => {
     if (dragOpen() || e.repeat || placingBlocksEdit()) return true
+    if (routes?.deleteSelectedPoint()) return true // mission 3 B: a selected cable's chosen point (no device is selected then)
     edits.remove()
     return true
   })
+
+  // ── Hand-drawn cables (mission 3 B stage 2): after the picking, the patching, the placement and the edits (their capture-phase presses come first; a tracing makes
+  // them inert through the `busy` and pick predicates above). Only with the switch on: off, a cable is not selectable and nothing of this is in the page.
+  if (FEATURES.cableTrace === true) {
+    routes = new CableRouteController({
+      host,
+      bag: shellBag,
+      doc: document,
+      registry,
+      store,
+      history,
+      propsBody: shell.propsBody,
+      propsContent: props.element,
+      shellRoot: shell.root,
+      menubar: shell.menubar,
+      announce: (message) => announcer.say(message, true),
+      undoLabel,
+      deviceName,
+      describe: describeCable,
+      cableName: cableSelectionLabel,
+      locked: () => viewLocked() || host.walking,
+      busy: () => placement.placing || placement.dragging || connectDialog.isOpen,
+      clearDeviceSelection: () => {
+        if (viewState.get().selection !== null) viewState.set({ selection: null })
+      },
+      onSelectionChange: () => {
+        tree.render()
+        refreshSignal() // the status bar names the selected cable
+      },
+      floorPoint: (x, y) => {
+        const { scene, camera } = host
+        return scene && camera ? floorPointAt(scene, x, y, camera) : null
+      },
+      coarse: () => window.matchMedia?.('(pointer: coarse)').matches ?? false,
+      invalidate: () => scheduler.invalidate(),
+      beforeDispatch: () => props.flush(),
+    })
+  }
 
   // ── Missed clicks (Task 25, CA-12): a click on the empty floor, the sky or a hidden device says so and clears
   // the selection. Not while a device follows the pointer (that click drops it), in the walk view, under the
@@ -1958,6 +2046,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   const toast = mountToast(document, shell.viewport, shellBag)
   placeResets.push(
     () => cableHover.reset(), // a hovered cable belongs to the old scene
+    () => routes?.reset(), // a selected or traced cable, its marks and the drawing bar belong to the old scene
     () => patch.reset(), // a cable in hand, a pinned refusal or an offer belong to the old scene's ports
     () => connectDialog.close(), // a list of the old rig's ports
     () => toast.dismiss(), // a message about the previous place's view does not carry over
@@ -1978,12 +2067,17 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
    * picker, not on a port (the cabling's), not on a hovered cable. The ONE predicate the « missed click » and the coverage pin share.
    */
   const clickIsFree = (x: number, y: number): boolean =>
-    !(placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y) || cableHover.hovered !== null)
+    !(placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y) || cableHover.hovered !== null || !!routes?.tracing || !!routes?.dragging)
   const missedClick = (x: number, y: number, clicks: number): void => {
+    // Mission 3 B: a click during a tracing is its point (the route controller's own release handler); a click on a cable selects it (a touch has no hover,
+    // so the cable is looked for here, under the same priority as the hover: a port or a device body wins).
+    if (routes?.tracing) return
+    if (routes && !placement.placing && !placement.dragging && !patch.wouldTake(x, y) && routes.clickAt(x, y)) return
     // A click on something (a device being placed or dragged, a port, a hovered cable, a coverage dot) is no miss; nor is the walk view or the picker.
     if (!clickIsFree(x, y) || coverage?.wouldTake(x, y)) return
     // The second click of a double-click is no miss (the re-pivot follows).
     if (clicks >= 2) return
+    routes?.select(null, { silent: true }) // a click on the empty floor deselects a cable too (the toast speaks)
     const sel = viewState.get().selection
     // A miss with nothing selected keeps the record: when the two clicks of a double-click are counted as two misses (the OS
     // double-click time is over 500 ms, or the pointer jittered over 5 px), the second must not erase what the first cleared.
@@ -2491,6 +2585,10 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     cableLengthM: (key) => host.cableLengthM(key),
     cablePoints: (key) => host.cablePoints(key),
     cableRoute: (key) => host.cableRoute(key),
+    cableTrace: () => routes?.debug() ?? null,
+    cableSelect: (key) => routes?.select(key) ?? false,
+    cableTraceFlushAdd: () => routes?.flushPendingAdd(),
+    cableSelectedStroke: () => host.selectedCable(),
     cableSupportReport: (key) => host.cableSupportReport(key),
     floorAtM: (x, z) => host.floorHeight(x, z, 0),
     portDistanceM: (a, b) => {
