@@ -73,6 +73,6 @@ describe('accounts chunks in the chunk budget', () => {
   })
 
   it('the caps leave room over the measured sizes (26.7 kB dialogs, 231 kB adapter)', () => {
-    for (const c of LAZY_CAPS) expect(c.maxBytes).toBeGreaterThan(c.module.endsWith('accountUi.ts') ? 26_720 : 230_940)
+    for (const c of LAZY_CAPS.filter((x) => x.module.startsWith('src/accounts/'))) expect(c.maxBytes).toBeGreaterThan(c.module.endsWith('accountUi.ts') ? 26_720 : 230_940)
   })
 })

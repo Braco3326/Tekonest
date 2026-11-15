@@ -66,6 +66,8 @@ export const FORBIDDEN_STATIC = [
   // Accounts (mission 1, part B): the dialogs and the Supabase adapter load only when the learner opens the account UI. `optional`: while nothing imports
   // src/accounts/ the modules are in no chunk at all, which is not a stale rule.
   { id: 'accounts', why: 'the account dialogs and the provider SDK load only when the account UI opens (and only when the accounts switch is on)', match: (m) => m.startsWith('src/accounts/'), optional: true },
+  // The 2D schema page (mission 2): its code loads on the first Vue > Schema 2D. `optional` as the accounts: with the switch off nothing imports src/plan2d/.
+  { id: 'plan2d', why: 'the 2D schema page loads on its first open (and only when the plan2d switch is on)', match: (m) => m.startsWith('src/plan2d/'), optional: true },
 ]
 
 /**
@@ -77,6 +79,8 @@ export const FORBIDDEN_STATIC = [
 export const LAZY_CAPS = [
   { id: 'accounts dialogs', module: 'src/accounts/accountUi.ts', maxBytes: 60_000 },
   { id: 'accounts adapter (provider SDK)', module: 'src/accounts/supabaseService.ts', maxBytes: 300_000 },
+  // Mission 2: the 2D schema page (view, palette, rear panels, rules adapter, footprints). Measured on the build of 2026-11-15: 52 420 bytes (18.6 kB gzip); the cap leaves about 2x.
+  { id: '2D schema page', module: 'src/plan2d/view.ts', maxBytes: 120_000 },
 ]
 
 /** The manifest key of the chunk that holds `moduleId`: the key equal to its `src`, else the chunk whose module list has it. */
