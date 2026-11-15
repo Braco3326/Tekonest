@@ -167,7 +167,7 @@ test('the powered reference rig: three mains cables in the mains colour, and the
   expect(await items(page).nth(0).locator('line').getAttribute('stroke-dasharray')).toBeNull()
 })
 
-test('the legend lists the signal types present: a second type appears with its own colour, and goes with undo', async ({ page }) => {
+test('the legend lists the signal types present: a second type appears with its own name and its cable type’s colour, and goes with undo', async ({ page }) => {
   await boot(page)
   expect(await page.evaluate((k) => window.__creation!.cableColor(k), LINE_KEY)).toBeNull() // not drawn yet
   const r = await addLineCable(page)
@@ -176,7 +176,9 @@ test('the legend lists the signal types present: a second type appears with its 
   await expect(items(page).nth(0)).toHaveText('Niveau micro')
   await expect(items(page).nth(1)).toHaveText('Niveau ligne pro (+4 dBu)')
   expect(await page.evaluate((k) => window.__creation!.cableColor(k), LINE_KEY)).toBe(SIGNAL_STYLE['line-level-pro']!.color)
-  expect(SIGNAL_STYLE['line-level-pro']!.color).not.toBe(SIGNAL_STYLE['mic-level']!.color)
+  // mission 3 fixes, item 2: one palette with the 2D sheet: mic and line level are both « analogique symétrique », the sheet's one blue (the legend names them apart)
+  expect(SIGNAL_STYLE['line-level-pro']!.color).toBe(SIGNAL_STYLE['mic-level']!.color)
+  expect(SIGNAL_STYLE['line-level-pro']!.color).toBe('#2B7BC2')
   await page.evaluate(() => window.__creation!.undo())
   await expect(items(page)).toHaveCount(1)
   expect(await page.evaluate((k) => window.__creation!.cableColor(k), LINE_KEY)).toBeNull()
