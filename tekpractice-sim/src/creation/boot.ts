@@ -2488,6 +2488,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     patchClick: (ref) => patch.click(ref),
     cableLengthM: (key) => host.cableLengthM(key),
     cablePoints: (key) => host.cablePoints(key),
+    cableSupportReport: (key) => host.cableSupportReport(key),
     floorAtM: (x, z) => host.floorHeight(x, z, 0),
     portDistanceM: (a, b) => {
       const [pa, pb] = [host.portWorld(a), host.portWorld(b)]
@@ -2552,8 +2553,9 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     cableFreePoint: (key) => {
       // A page point on this cable where nothing else is under the pointer (no port, no device) and the cable is hit.
       const r = canvas.getBoundingClientRect()
+      // On the canvas only: a cable that drops off its edge (gravity first, mission 3 A) has samples projected outside it, under other page elements.
       for (const p of host.cableSamples(key) ?? [])
-        if (host.cableAtPoint(p.x, p.y) === key && !host.portAtPoint(p.x, p.y) && pickDevice(host.scene, p.x, p.y) === null) return { x: r.left + p.x, y: r.top + p.y }
+        if (p.x >= 2 && p.y >= 2 && p.x <= r.width - 2 && p.y <= r.height - 2 && host.cableAtPoint(p.x, p.y) === key && !host.portAtPoint(p.x, p.y) && pickDevice(host.scene, p.x, p.y) === null) return { x: r.left + p.x, y: r.top + p.y }
       return null
     },
     placing: () => placement.placing,

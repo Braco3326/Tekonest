@@ -696,9 +696,16 @@ describe('SceneHost cables (Task 27, C18): coloured by signal, hover, screen-spa
     withRect()
     const { host } = makeHost()
     await host.load(placeFromKey(ROOM), rig(ROOM))
+    // The middle of the cable ON SCREEN (half its projected length). Not the middle index: a cable laid by gravity (mission 3 A) has its points at the
+    // bends near the ports and few along its straight floor run, so the middle index can sit on the unmoved console's bend.
     const mid = (): { x: number; y: number } => {
       const pts = host.cableSamples(KEY)!
-      return pts[Math.floor(pts.length / 2)]!
+      const at = [0]
+      for (let i = 1; i < pts.length; i++) at.push(at[i - 1]! + Math.hypot(pts[i]!.x - pts[i - 1]!.x, pts[i]!.y - pts[i - 1]!.y))
+      const half = at.at(-1)! / 2
+      let best = 0
+      for (let i = 1; i < pts.length; i++) if (Math.abs(at[i]! - half) < Math.abs(at[best]! - half)) best = i
+      return pts[best]!
     }
     const old = mid()
     expect(host.cableAtPoint(old.x, old.y)).toBe(KEY) // the cache is filled by the old scene's polylines

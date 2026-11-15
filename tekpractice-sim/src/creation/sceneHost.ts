@@ -31,7 +31,9 @@ import type { RoomLayout } from '../explore/roomLayout'
 import type { DesignState, Placement } from '../trials/trial'
 import { DeviceSpawner, type DeviceInstance } from '../scene/DeviceSpawner'
 import { CableRenderer } from '../scene/CableRenderer'
-import { polylineLength } from '../scene/cablePath'
+import { FLOOR_CLEARANCE, polylineLength, type P3 } from '../scene/cablePath'
+import { buildSupport, supportReport, type Support, type SupportReport } from '../scene/cableGravity'
+import { deviceSizeM, portFaceLocal, supportBoxes } from './cableSupport'
 import { CameraRig } from '../scene/CameraRig'
 import {
   installDesignerOrbitInput,
@@ -530,6 +532,37 @@ export class SceneHost {
     return path ? polylineLength(path) : null
   }
 
+  /**
+   * Mission 3 A (« gravity first »): how a drawn cable sits on the support surface the cables are laid on (the floor, decks, the tops of the devices
+   * resting there), measured on its drawn points by `supportReport` (read-only; null when it is not drawn).
+   */
+  cableSupportReport(key: string): SupportReport | null {
+    const path = this.cables?.paths().find(([id]) => id === key)?.[1]
+    return path ? supportReport(path, this.supportSurface(), FLOOR_CLEARANCE) : null
+  }
+
+  /** The support surface of the design on screen (rebuilt with the placements; the floor alone before any design). */
+  private supportSurface(): Support {
+    return this.support ?? buildSupport((x, z) => this._layout?.floorAt(x, z) ?? 0)
+  }
+  private support: Support | null = null
+
+  /**
+   * The direction a cable leaves a port, in the world: the normal of the device face the port marker is on (cableSupport.portFaceLocal, from the
+   * device's size on its own sheet), turned with the device. Null (the cable hangs straight down) for a port on no side face or an unknown one.
+   */
+  portOutward(ref: PortRef): P3 | null {
+    const inst = this.instances.get(ref.instance)
+    const world = this.portWorld(ref)
+    if (!inst || !world) return null
+    const m = inst.root.getWorldMatrix()
+    const local = Vector3.TransformCoordinates(world, Matrix.Invert(m))
+    const face = portFaceLocal({ x: local.x, y: local.y, z: local.z }, deviceSizeM(inst.deviceId))
+    if (!face) return null
+    const d = Vector3.TransformNormal(new Vector3(face.x, face.y, face.z), m).normalize()
+    return { x: d.x, y: d.y, z: d.z }
+  }
+
   /** The points of a drawn cable in world metres, or null when it is not drawn: the oracle for « the cables rest on the floor ». */
   cablePoints(key: string): [number, number, number][] | null {
     const path = this.cables?.paths().find(([id]) => id === key)?.[1]
@@ -569,7 +602,7 @@ export class SceneHost {
   }
   private screenCache: { sig: string; lines: ReadonlyArray<readonly [string, ReadonlyArray<Pt | null>]> } | null = null
 
-  /** Points along a drawn cable in canvas CSS px (its path points and the middles between them), for tests; null when not drawn. */
+  /** Points along a drawn cable in canvas CSS px (its path points and points every ~20 px between them), for tests; null when not drawn. */
   cableSamples(key: string): Pt[] | null {
     const pts = this.screenLines().find(([id]) => id === key)?.[1]
     if (!pts) return null
@@ -578,7 +611,9 @@ export class SceneHost {
       const p = pts[i]
       const q = pts[i + 1]
       if (p) out.push(p)
-      if (p && q) out.push({ x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 })
+      // Every ~20 px along a segment (at least its middle): a cable laid by gravity has long straight runs drawn with two points.
+      const k = p && q ? Math.min(16, Math.max(2, Math.ceil(Math.hypot(q.x - p.x, q.y - p.y) / 20))) : 0
+      for (let j = 1; j < k; j++) out.push({ x: p!.x + ((q!.x - p!.x) * j) / k, y: p!.y + ((q!.y - p!.y) * j) / k })
     }
     return out
   }
@@ -896,6 +931,7 @@ export class SceneHost {
     this.bag = null
     this.controllers = null
     this.applied = null
+    this.support = null // the old place's devices and floor
     this.highlight = null // disposed with its scene
     this._cube = null // disposed by `bag`
     this.strokeColor.clear()
@@ -1015,6 +1051,9 @@ export class SceneHost {
       dashFor: (a, b) => cableDash(this.signalOf(a, b) ?? ''),
       // The cables lie ON the floor (the room's own, raised decks included; a set or the blank room is flat), never under it.
       floorAt: (x, z) => this._layout?.floorAt(x, z) ?? 0,
+      // Mission 3 A (« gravity first »): laid by gravity on the floor, the decks and the devices resting there; each cable leaves its port outward.
+      support: () => this.supportSurface(),
+      outwardFor: (ref) => this.portOutward(ref),
     })
     // L7 (Task 18): a recalled view lands exactly, even during an orbit flick.
     this._rig = new CameraRig(camera, { stopInertiaOnFlight: true })
@@ -1151,9 +1190,15 @@ export class SceneHost {
     }
     this.applied = structuredClone(design)
     for (const inst of this.instances.values()) this.syncControls(inst, this.applied)
-    for (const c of ops.cablesAdd) this.drawCable(c.key, c.a, c.b)
-    // Endpoints follow moved / respawned devices.
-    this.redrawCablesOf(touched)
+    // Gravity first: the cables lie on the devices too, so a device placed, moved or removed changes the surface under EVERY cable, not only its own.
+    const surfaceChanged = ops.spawn.length > 0 || ops.move.length > 0 || ops.remove.length > 0 || this.support === null
+    if (surfaceChanged) this.support = buildSupport((x, z) => this._layout?.floorAt(x, z) ?? 0, supportBoxes(this.applied.placements))
+    if (surfaceChanged) this.redrawCablesOf(new Set(this.instances.keys()))
+    else {
+      for (const c of ops.cablesAdd) this.drawCable(c.key, c.a, c.b)
+      // Endpoints follow moved / respawned devices.
+      this.redrawCablesOf(touched)
+    }
     this.proxies?.refresh() // new / moved devices: their port proxies are sized for the camera
     this.applyDecor() // invalidates
   }

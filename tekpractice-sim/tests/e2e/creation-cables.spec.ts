@@ -64,6 +64,83 @@ test('every cable rests on the floor, never under it, ends on the ports (founder
   }
 })
 
+/**
+ * Mission 3 A, founder 2026-11-15: « Gravity first: no cable may fly anywhere. A cable rests on the floor, on decks and on equipment, and hangs only where
+ * it physically must. » The oracle is `cableSupportReport` (the drawn points walked every centimetre against the floor, the decks and the devices resting
+ * there): no place under the surface, and every stretch off it short in plan (a connector bend, a vertical drop, a ramp onto a deck or a device, the loop
+ * of two close raised ports). The old parabola fails it by metres (tests/scene/cableGravity.test.ts, « the oracle can fail »).
+ */
+type Report = NonNullable<ReturnType<NonNullable<Window['__creation']>['cableSupportReport']>>
+/** Bend radius 5 cm (cableGravity BEND_R), loop span 40 cm (LOOP_M), ramp slope 5 (a 1.3 m stage gets 26 cm), plus a sample step. */
+const MAX_END_SPAN_M = 0.4 + 4 * 0.05
+const MAX_MID_SPAN_M = 0.4
+const expectGrounded = (key: string, r: Report | null): void => {
+  expect(r, `cable ${key} is drawn`).not.toBeNull()
+  expect(r!.minAboveM, `${key}: no place under its surface`).toBeGreaterThanOrEqual(-0.002)
+  expect(r!.longestMidSpanM, `${key}: off its surface between the ends only on a ramp (${JSON.stringify(r!.spans)})`).toBeLessThanOrEqual(MAX_MID_SPAN_M)
+  expect(r!.longestUnsupportedM, `${key}: no flying stretch (${JSON.stringify(r!.spans)})`).toBeLessThanOrEqual(MAX_END_SPAN_M)
+}
+const allKeys = (page: Page) => page.evaluate(() => window.__creation!.design().rig.connections.map((c) => [c.a, c.b] as const))
+const reportsOf = async (page: Page): Promise<[string, Report | null][]> => {
+  const out: [string, Report | null][] = []
+  for (const [a, b] of await allKeys(page)) {
+    const key = cableKey(a, b)
+    out.push([key, await page.evaluate((k) => window.__creation!.cableSupportReport(k), key)])
+  }
+  return out
+}
+
+for (const template of [/Concert simple/, /Premier son/]) {
+  test(`gravity first: on the reference rig « ${template.source} » no cable flies, none goes under its surface (founder, 2026-11-15)`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto('/')
+    await page.waitForFunction(() => !!window.__creation)
+    await page.getByTestId('template-grid').getByRole('option', { name: template }).click()
+    await page.waitForFunction(() => window.__creation!.design().rig.instances.length === 5 && window.__creation!.design().rig.connections.length > 0)
+    await page.waitForFunction(() => window.__creation!.modelsPending() === 0) // the .glb ports are where the cables start
+    const reports = await reportsOf(page)
+    expect(reports.length).toBeGreaterThanOrEqual(4)
+    for (const [key, r] of reports) expectGrounded(key, r)
+  })
+}
+
+test('gravity first: a console on a table (0.75 m) to a speaker on the floor: the cable drops from the console straight down, lies on the floor, and rises to the speaker', async ({ page }) => {
+  await boot(page)
+  await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+  const floorAt = (x: number, z: number) => page.evaluate(([px, pz]) => window.__creation!.floorAtM(px!, pz!), [x, z] as const)
+  const deskFloor = await floorAt(0, 6)
+  const spkFloor = await floorAt(3, 8.5)
+  await page.evaluate(
+    ([d, s]) => {
+      const c = window.__creation!
+      c.dispatch({ type: 'SET_POSE', instanceId: 'ql1', position: [0, d + 0.75, 6], yawDeg: 0, tiltDeg: 0, mount: 'stand' })
+      c.dispatch({ type: 'SET_POSE', instanceId: 'k12-g', position: [3, s, 8.5], yawDeg: 0, tiltDeg: 0, mount: 'floor' })
+    },
+    [deskFloor, spkFloor] as const
+  )
+  expect((await addLineCable(page)).ok).toBe(true)
+  await page.waitForFunction((k) => window.__creation!.cablePoints(k) !== null, LINE_KEY)
+  expectGrounded(LINE_KEY, await page.evaluate((k) => window.__creation!.cableSupportReport(k), LINE_KEY))
+  const pts = (await page.evaluate((k) => window.__creation!.cablePoints(k), LINE_KEY))!
+  const port = pts[0]!
+  expect(port[1], 'the console output is up on the table').toBeGreaterThan(deskFloor + 0.75)
+  // the drop: two consecutive points one above the other (same plan point), within 15 cm (plan) of the console's connector, falling most of the way
+  const drop = pts.findIndex((p, i) => i > 0 && i < pts.length - 1 && Math.hypot(pts[i + 1]![0] - p[0], pts[i + 1]![2] - p[2]) < 1e-6 && p[1] - pts[i + 1]![1] > 0.5)
+  expect(drop, `a vertical drop near the console (${JSON.stringify(pts.slice(0, 8))})`).toBeGreaterThan(0)
+  expect(Math.hypot(pts[drop]![0] - port[0], pts[drop]![2] - port[2])).toBeLessThanOrEqual(0.15)
+  // and between the drop and the speaker it lies on the floor: the middle of the run is at the floor plus the clearance
+  // (the speaker stands in front of the console, its rear panel toward it, as it would be cabled)
+  const mid = pts.filter((p) => Math.hypot(p[0] - 1.5, p[2] - 7.2) < 1.2)
+  for (const p of mid) expect(p[1] - (await floorAt(p[0], p[2]))).toBeLessThan(0.02)
+  // the length shown is the drawn one: drop + run + rise, at least the plan distance plus the drop
+  const len = (await page.evaluate((k) => window.__creation!.cableLengthM(k), LINE_KEY))!
+  expect(len).toBeGreaterThan(Math.hypot(3, 2.5) + 0.75 - 0.3)
+  // moving the speaker redraws the cable on its new floor, still grounded
+  await page.evaluate((s) => window.__creation!.dispatch({ type: 'SET_POSE', instanceId: 'k12-g', position: [-3, s, 8.5], yawDeg: 0, tiltDeg: 0, mount: 'floor' }), spkFloor)
+  await page.waitForFunction((k) => Math.abs(window.__creation!.cablePoints(k)!.at(-1)![0] + 3) < 0.6, LINE_KEY)
+  expectGrounded(LINE_KEY, await page.evaluate((k) => window.__creation!.cableSupportReport(k), LINE_KEY))
+})
+
 test('the template mic cable is drawn in the mic colour and the legend names it (only that signal)', async ({ page }) => {
   await boot(page)
   expect(await page.evaluate((k) => window.__creation!.cableColor(k), MIC_KEY)).toBe(SIGNAL_STYLE['mic-level']!.color)
@@ -183,7 +260,8 @@ test('hovering a cable highlights it and says what it joins; leaving clears both
   const drawn = (await page.evaluate((k) => window.__creation!.cableLengthM(k), MIC_KEY))!
   const straight = (await page.evaluate(([a, b]) => window.__creation!.portDistanceM(a, b), [SM58, MIC1] as const))!
   expect(drawn, 'the drawn cable is at least as long as the straight line between its connectors').toBeGreaterThanOrEqual(straight - 1e-6)
-  expect(drawn, 'and not much longer (a parabolic sag)').toBeLessThan(straight * 1.3 + 0.2)
+  // gravity first (mission 3 A): the cable drops from the mic to the stage, runs on it and down to the floor; still well under 1.3 x the straight line
+  expect(drawn, 'and not much longer (its drops and runs on the surface)').toBeLessThan(straight * 1.3 + 0.2)
   expect(Math.abs(shown - drawn), 'the hover shows the drawn length, rounded to 0.1 m').toBeLessThanOrEqual(0.05 + 1e-9)
   // the label sits at the pointer (a bubble above it, kept inside the 3D view)
   const label = (await hoverLabel(page).boundingBox())!

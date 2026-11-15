@@ -157,6 +157,12 @@ export interface CreationDebug {
   cableLengthM(key: string): number | null
   /** The points (world m) of a drawn cable, or null when it is not drawn: the cables must rest on the floor, never under it. */
   cablePoints(key: string): [number, number, number][] | null
+  /**
+   * Mission 3 A (« gravity first »): how a drawn cable sits on its support surface (the floor, decks, the tops of the devices resting there), read-only:
+   * the lowest and highest inner point relative to the surface plus the clearance, and every stretch off the surface with its plan length (a drop has
+   * none; a flying cable has its whole run). Null when the cable is not drawn.
+   */
+  cableSupportReport(key: string): { points: number; minAboveM: number; maxAboveM: number; longestUnsupportedM: number; longestMidSpanM: number; spans: { startM: number; endM: number; planM: number; maxAboveM: number; atEnd: boolean }[] } | null
   /** The height (m) of the floor under a point of the room (a raised deck included; 0 for a set or the blank room). */
   floorAtM(x: number, z: number): number
   /** Final review: the straight distance (m) between two ports in the world, or null when either is unknown. */

@@ -8,6 +8,7 @@
 import { Color3, Mesh, MeshBuilder, Scene, StandardMaterial, Vector3 } from '@babylonjs/core'
 import type { PortRef } from '../engine/types'
 import { CableBudget, catenaryPoints, FLOOR_CLEARANCE, pointAlong, SEGMENTS_FULL, type FloorRest, type P3 } from './cablePath'
+import { buildSupport, gravityPath, hangInHand, type Support, type XZ } from './cableGravity'
 import { motionEnabled, TOKENS } from '../design/tokens'
 import { DisposableBag } from '../util/disposable'
 
@@ -35,6 +36,14 @@ export interface CableOptions {
    * (founder, 2026-11-15). Absent (the legacy callers) = the cable keeps its old sag.
    */
   floorAt?: (x: number, z: number) => number
+  /**
+   * Mission 3 A (« gravity first »): the whole support surface (the floor and the tops of the devices resting on it), read at each draw. With it, or
+   * with `floorAt` alone (then the floor is the only support), a cable is laid by gravity (cableGravity.ts): it drops from a raised port, lies on
+   * the surface, goes over a device in its way, and hangs only as a small loop between two close raised ports. Absent both = the legacy sag.
+   */
+  support?: () => Support
+  /** The direction a cable leaves a port (world; null = it hangs straight down from the connector). Absent = every port hangs. */
+  outwardFor?: (ref: PortRef) => P3 | null
 }
 
 /** One counter for every renderer: a revision is never reused, so two renderers (a place reload) can never share a cache key. */
@@ -93,8 +102,13 @@ export class CableRenderer {
 
   updateDrag(to: Vector3, tint: DragTint): void {
     if (!this.drag) return
-    // Same point count every frame → cheap in-place tube update.
-    const path = catenaryPoints(this.drag.from, to, SEGMENTS_FULL, this.rest(TOKENS.focus.heldCableRadius)).map(toVec)
+    // Same point count every frame → cheap in-place tube update. With a surface the cable in hand hangs from the pointer and lies on the surface.
+    const support = this.supportNow()
+    const path = (
+      support
+        ? hangInHand(this.drag.from, to, SEGMENTS_FULL + 1, support, this.clearance(TOKENS.focus.heldCableRadius))
+        : catenaryPoints(this.drag.from, to, SEGMENTS_FULL, this.rest(TOKENS.focus.heldCableRadius))
+    ).map(toVec)
     this.drag.mesh = MeshBuilder.CreateTube('cable:drag', { path, instance: this.drag.mesh })
     this.drag.mesh.material = this.mats[tint]
   }
@@ -132,12 +146,11 @@ export class CableRenderer {
    * `ends` (Task 27) are the two ports the cable joins: `colorFor` / `dashFor` read them. Without them (every legacy
    * caller) the cable keeps the legacy committed colour and look.
    */
-  addCable(connectionId: string, a: Vector3, b: Vector3, ends?: readonly [PortRef, PortRef]): void {
+  addCable(connectionId: string, a: Vector3, b: Vector3, ends?: readonly [PortRef, PortRef], route?: readonly XZ[]): void {
     const wasHot = this._highlighted === connectionId
     this._revision = ++revisionSeq
     this.removeCable(connectionId)
-    const segments = this.budget.grant(connectionId) // straight line once over budget
-    const path = catenaryPoints(a, b, segments, this.rest())
+    const path = this.layOut(connectionId, a, b, ends, route)
     const color = ends && this.opts.colorFor ? this.opts.colorFor(ends[0], ends[1]) : null
     const dashed = !!ends && this.opts.dashFor?.(ends[0], ends[1]) === true
     const name = `cable:${connectionId}`
@@ -264,6 +277,38 @@ export class CableRenderer {
       this.pulseMaterial.emissiveColor = c.scale(0.8)
     }
     return this.pulseMaterial
+  }
+
+  /** The surface the cables lie on, or null for the legacy sag (no floor given). */
+  private supportNow(): Support | null {
+    if (this.opts.support) return this.opts.support()
+    return this.opts.floorAt ? buildSupport(this.opts.floorAt) : null
+  }
+
+  /** The cable's centre above the surface it rests on, for a cable of this radius (its radius plus the hair of FLOOR_CLEARANCE). */
+  private clearance(radius = CABLE_RADIUS): number {
+    return radius + (FLOOR_CLEARANCE - CABLE_RADIUS)
+  }
+
+  /**
+   * The drawn path of a committed cable, booked against the point budget. Legacy (no surface): the parabola, a straight line once over budget.
+   * Gravity: the full path while it fits, else its coarse shape (no bends, a 5 cm simplification, still on the surface): never a flying straight line.
+   */
+  private layOut(connectionId: string, a: Vector3, b: Vector3, ends?: readonly [PortRef, PortRef], route?: readonly XZ[]): P3[] {
+    const support = this.supportNow()
+    if (!support) return catenaryPoints(a, b, this.budget.grant(connectionId), this.rest()) // straight line once over budget
+    const out = (ref: PortRef | undefined): P3 | null => (ref && this.opts.outwardFor ? this.opts.outwardFor(ref) : null)
+    const ea = { at: { x: a.x, y: a.y, z: a.z }, out: out(ends?.[0]) }
+    const eb = { at: { x: b.x, y: b.y, z: b.z }, out: out(ends?.[1]) }
+    const opts = { clearance: this.clearance(), ...(route ? { route } : {}) }
+    const fine = gravityPath(ea, eb, support, opts)
+    if (this.budget.fits(connectionId, fine.length)) {
+      this.budget.take(connectionId, fine.length)
+      return fine
+    }
+    const coarse = gravityPath(ea, eb, support, { ...opts, arcs: false, tolM: 0.05 })
+    this.budget.take(connectionId, coarse.length)
+    return coarse
   }
 
   private buildTube(name: string, a: Vector3, b: Vector3, segments: number, radius = CABLE_RADIUS): Mesh {
