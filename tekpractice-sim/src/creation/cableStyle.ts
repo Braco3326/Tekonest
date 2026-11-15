@@ -2,9 +2,10 @@
  * Cable style by signal type (Task 27, C18). Keyed by the catalog's `signalTypes[].id` (content/catalog.json is the
  * source of truth: a new signal type is a new row here, and `tests/creation/cableStyle.test.ts` fails until it has one).
  *
- * - Colours are distinct pairwise (simple RGB distance >= 60), stay >= 30 apart under simulated protanopia, deuteranopia
- *   and tritanopia, and each reads at >= 3:1 on Nuit and on the panel (WCAG 1.4.11), all tested. They are kept >= 60 from
- *   Papier (the hover outline) and Ambre (the selection).
+ * - Colours (mission 3 fixes, item 2) are the shared cable palette's (src/design/cablePalette.ts): one colour per cable type, the
+ *   2D colour and symbol sheet's. Each reads at >= 3:1 on Nuit (WCAG 1.4.11) and stays >= 60 from Papier (the hover and selected
+ *   stroke) and Ambre (the selection); the sheet's weak pairs on the 3D side (its brown on the panel, colour-blind pairs) are pinned
+ *   in tests/creation/cableStyle.test.ts and reported, not fixed here.
  * - Cues other than colour, honestly: every legend entry carries the French name of the signal next to its stroke sample,
  *   and the hover text names it. `mains-power` is also DASHED, and since Task 32 that cue
  *   is REACHABLE FOR VERIFIED GEAR: the catalog's generic `multiprise-secteur` (out `mains-power`, flag `isMainsSource`) feeds
@@ -18,6 +19,7 @@
  * both read this module.
  */
 import type { PortRef } from '../engine/types'
+import { signalColour } from '../design/cablePalette'
 import { COPY } from './copy'
 
 export interface SignalStyle {
@@ -32,43 +34,41 @@ export interface SignalStyle {
 const label = (id: string): string => COPY.signal?.[id] ?? id
 
 /**
- * In the catalog's order: analog, digital, control, power.
+ * In the catalog's order: analog, digital, control, power (the legend reads in that order).
  *
- * The first 16 colours were FOUND, not picked: `node tools/cable-palette-search.mjs` (seed 27, 12 restarts of a seeded hill
- * climb) maximises the worst pairwise distance as seen through simulated protanopia, deuteranopia and tritanopia
- * (Machado 2009, severity 1.0) under these constraints: normal-vision distance >= 70, contrast >= 3:1 against Nuit AND the
- * panel colour, luminance <= 0.7, >= 60 from Papier and Ambre. Result: worst colour-blind pair 60.5 (test floor 30),
- * worst normal-vision pair 72.6 (floor 60), contrast >= 3.49 on Nuit and >= 3.23 on the panel. The script's output was
- * then assigned to the signals by family; the assignment is free, the set is what the tests hold.
+ * Mission 3 fixes, item 2: the colour is no longer a per-signal colour of the 3D view's own (Task 27's 19 searched colours, tools/cable-palette-search.mjs):
+ * it is the colour of the signal's CABLE TYPE in the shared palette (src/design/cablePalette.ts, the 2D colour and symbol sheet), so a cable has the same
+ * colour on the 2D page and in the 3D view, and the renderer, the hover tint (CableRenderer lightens this colour), the legend rows and the e2e checks all
+ * read it from there. Signals of one family share a colour; the legend and the hover text name the signal. Only the colour changed: mains stays dashed.
  */
-const COLORS: ReadonlyArray<readonly [id: string, color: string, dash?: true]> = [
-  ['mic-level', '#E9DC7D'],
-  ['line-level-pro', '#80BCFE'],
-  ['line-level-consumer', '#376ED3'],
-  ['instrument-hiz', '#BBB400'],
-  ['speaker-level', '#F38AC9'],
-  ['headphone-level', '#E70CFB'],
-  ['aes3', '#28F1F3'],
-  ['spdif', '#8EEDB7'],
-  ['madi', '#03BD89'],
-  ['aoip', '#B4EA30'],
-  ['aes50', '#F07800'],
-  ['wordclock', '#9F71A9'],
-  ['usb-audio', '#618569'],
-  ['gpio-tally', '#7CC953'],
-  ['dmx512', '#B616C4'],
-  ['ethernet-control', '#8D72FC'],
-  ['usb-control', '#48D8A0'],
-  ['phantom-48v', '#2D7B01'],
-  ['mains-power', '#F8093E', true],
+const ORDER: ReadonlyArray<readonly [id: string, dash?: true]> = [
+  ['mic-level'],
+  ['line-level-pro'],
+  ['line-level-consumer'],
+  ['instrument-hiz'],
+  ['speaker-level'],
+  ['headphone-level'],
+  ['aes3'],
+  ['spdif'],
+  ['madi'],
+  ['aoip'],
+  ['aes50'],
+  ['wordclock'],
+  ['usb-audio'],
+  ['gpio-tally'],
+  ['dmx512'],
+  ['ethernet-control'],
+  ['usb-control'],
+  ['phantom-48v'],
+  ['mains-power', true],
 ]
-
-export const SIGNAL_STYLE: Record<string, SignalStyle> = Object.fromEntries(
-  COLORS.map(([id, color, dash]) => [id, { color, label: label(id), ...(dash ? { dash: true } : {}) }])
-)
 
 /** A signal the palette does not know (a catalog newer than this table): neutral, never one of the signal colours. */
 export const FALLBACK_COLOR = '#A39B91'
+
+export const SIGNAL_STYLE: Record<string, SignalStyle> = Object.fromEntries(
+  ORDER.map(([id, dash]) => [id, { color: signalColour(id) ?? FALLBACK_COLOR, label: label(id), ...(dash ? { dash: true } : {}) }])
+)
 
 export function cableColor(signalId: string): string {
   return SIGNAL_STYLE[signalId]?.color ?? FALLBACK_COLOR

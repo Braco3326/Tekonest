@@ -5,6 +5,7 @@ import { COPY } from '../../src/creation/copy'
 import { CREATION_TOKENS, contrastRatio } from '../../src/design/creationTokens'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { SIGNAL_STYLE, cableColor, cableDash, cableText, connectionSignal, legendEntries, lengthText, portInfoOf, presentSignals } from '../../src/creation/cableStyle'
+import { CABLE_TYPE_COLOUR, SIGNAL_CABLE_TYPE } from '../../src/design/cablePalette'
 
 const catalogSignals: string[] = (catalogJson as { signalTypes: { id: string }[] }).signalTypes.map((s) => s.id)
 const rgb = (hex: string): [number, number, number] => {
@@ -45,27 +46,37 @@ describe('SIGNAL_STYLE', () => {
   it('every colour is a #RRGGBB', () => {
     for (const id of catalogSignals) expect(SIGNAL_STYLE[id]!.color, id).toMatch(/^#[0-9A-F]{6}$/)
   })
-  it('colours are distinct pairwise (simple RGB distance >= 60)', () => {
-    for (let i = 0; i < catalogSignals.length; i++)
-      for (let j = i + 1; j < catalogSignals.length; j++) {
-        const [a, b] = [catalogSignals[i]!, catalogSignals[j]!]
-        expect(distance(SIGNAL_STYLE[a]!.color, SIGNAL_STYLE[b]!.color), `${a} / ${b}`).toBeGreaterThanOrEqual(60)
+  // Mission 3 fixes, item 2: the 3D cables take the colour of their CABLE TYPE from the shared palette (src/design/cablePalette.ts, the 2D colour and symbol
+  // sheet), so the per-signal palette of Task 27 and its four structural pins below changed: signals of one family now share one colour (the mic cable is the
+  // sheet's blue in 3D as in 2D), and the sheet's own weak pairs are pinned and REPORTED (mission3-fixes-report.md), never fixed by changing the sheet here.
+  it('two signals share a colour exactly when their cable types share a colour on the sheet; the sheet colours themselves are distinct pairwise (simple RGB distance >= 60)', () => {
+    const colours = [...new Set(catalogSignals.map((id) => SIGNAL_STYLE[id]!.color))]
+    expect(colours).toHaveLength(6)
+    for (let i = 0; i < colours.length; i++)
+      for (let j = i + 1; j < colours.length; j++) expect(distance(colours[i]!, colours[j]!), `${colours[i]} / ${colours[j]}`).toBeGreaterThanOrEqual(60)
+    for (const a of catalogSignals)
+      for (const b of catalogSignals) {
+        const same = CABLE_TYPE_COLOUR[SIGNAL_CABLE_TYPE[a]!] === CABLE_TYPE_COLOUR[SIGNAL_CABLE_TYPE[b]!]
+        expect(SIGNAL_STYLE[a]!.color === SIGNAL_STYLE[b]!.color, `${a} / ${b}`).toBe(same)
       }
   })
   it('each colour reads on the Nuit background (>= 3:1, WCAG 1.4.11)', () => {
     for (const id of catalogSignals) expect(contrastRatio(SIGNAL_STYLE[id]!.color, CREATION_TOKENS.color.nuit), id).toBeGreaterThanOrEqual(3)
   })
-  it('each colour also reads on the panel colour (>= 3:1, the legend swatches sit on it)', () => {
-    for (const id of catalogSignals) expect(contrastRatio(SIGNAL_STYLE[id]!.color, CREATION_TOKENS.color.panel), id).toBeGreaterThanOrEqual(3)
+  it('each colour reads on the panel colour (>= 3:1, the legend swatches sit on it) except the sheet’s brown (mains, DC: 2.97 : 1), pinned and reported', () => {
+    const under = catalogSignals.filter((id) => contrastRatio(SIGNAL_STYLE[id]!.color, CREATION_TOKENS.color.panel) < 3)
+    expect(under).toEqual(['phantom-48v', 'mains-power'])
+    expect(contrastRatio(SIGNAL_STYLE['mains-power']!.color, CREATION_TOKENS.color.panel)).toBeGreaterThan(2.9)
   })
-  it('colours stay apart for colour-blind users: every pair is >= 30 apart (simple RGB distance) under simulated protanopia, deuteranopia and tritanopia', () => {
-    for (const [name, m] of Object.entries(MACHADO)) {
-      for (let i = 0; i < catalogSignals.length; i++)
-        for (let j = i + 1; j < catalogSignals.length; j++) {
-          const [a, b] = [catalogSignals[i]!, catalogSignals[j]!]
-          expect(distance(simulate(m, SIGNAL_STYLE[a]!.color), simulate(m, SIGNAL_STYLE[b]!.color)), `${name}: ${a} / ${b}`).toBeGreaterThanOrEqual(30)
-        }
-    }
+  it('colour-blind users: the sheet colours stay >= 30 apart (simple RGB distance, simulated protanopia, deuteranopia, tritanopia) except the pairs the sheet itself admits, pinned and reported', () => {
+    const colours = [...new Set(catalogSignals.map((id) => SIGNAL_STYLE[id]!.color))]
+    const weak: string[] = []
+    for (const [name, m] of Object.entries(MACHADO))
+      for (let i = 0; i < colours.length; i++)
+        for (let j = i + 1; j < colours.length; j++) if (distance(simulate(m, colours[i]!), simulate(m, colours[j]!)) < 30) weak.push(`${name} ${colours[i]} ${colours[j]}`)
+    // purple (digital) / grey (clock, control) and green (network) / grey, blue (analogue) / green: in 2D the line patterns and tags carry the difference; in
+    // 3D the legend and the hover text name the signal (only mains is dashed there)
+    expect(weak.sort()).toEqual(['deuteranopia #00946A #737A87', 'deuteranopia #B5659A #737A87', 'protanopia #B5659A #737A87', 'tritanopia #2B7BC2 #00946A'])
   })
   it('no signal colour is the selection Ambre or the hover Papier (a cable never reads as a selected device)', () => {
     for (const id of catalogSignals) {
