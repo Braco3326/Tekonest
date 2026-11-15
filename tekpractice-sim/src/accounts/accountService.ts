@@ -73,3 +73,19 @@ export function failureMessage(reason: AccountFailureReason): string {
 }
 
 export const NOT_CONFIGURED: Failure = { ok: false, reason: 'not-configured' }
+
+/** A service whose every call answers the same failure (nobody signed in). Used when the adapter is missing or cannot be loaded. */
+export function failingService(reason: AccountFailureReason): AccountService {
+  const f: Failure = { ok: false, reason }
+  return {
+    signUpEmail: async () => f,
+    signInEmail: async () => f,
+    signInGoogle: async () => f,
+    signOut: async () => f,
+    currentUser: async () => null,
+    saveProfile: async () => f,
+    loadProfile: async () => f,
+    deleteAccount: async () => f,
+    onAuthChange: () => () => undefined,
+  }
+}
