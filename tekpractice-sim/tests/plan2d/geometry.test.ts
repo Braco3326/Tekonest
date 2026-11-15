@@ -1,8 +1,43 @@
 import { describe, expect, it } from 'vitest'
 import {
-  DEFAULT_SNAP_M, MAX_SCALE, MIN_SCALE, SNAP_STEPS_M, fitView, footprintBounds, footprintCorners, gridLines, insideRoom, localToWorld, panBy, portAnchor,
+  DEFAULT_SNAP_M, MAX_SCALE, MIN_SCALE, SNAP_STEPS_M, fitView, footprintBounds, footprintCorners, footprintInsideRoom, gridLines, insideRoom, localToWorld, panBy, portAnchor,
   scaleBar, snap, toScreen, toWorld, zoomAt,
 } from '../../src/plan2d/geometry'
+
+describe('footprintInsideRoom (mission 3 fixes, item 1: the one « inside the room » test of the 2D page)', () => {
+  // a 4 m x 4 m floor, origin at its centre; an M32-sized footprint (0.891 m across, 0.612 m deep)
+  const room = { width: 4, length: 4 }
+  const m32 = { w: 0.891, d: 0.612 }
+  it('inside: a device in the middle of the floor', () => {
+    expect(footprintInsideRoom({ x: 0, z: 0, rot: 0 }, m32, room)).toBe(true)
+  })
+  it('outside: a device past a wall, its centre too', () => {
+    expect(footprintInsideRoom({ x: 3, z: 0, rot: 0 }, m32, room)).toBe(false)
+    expect(footprintInsideRoom({ x: 0, z: -2.5, rot: 0 }, m32, room)).toBe(false)
+  })
+  it('straddling a wall: the centre on the floor but an edge past the wall is outside', () => {
+    expect(footprintInsideRoom({ x: 1.8, z: 0, rot: 0 }, m32, room)).toBe(false)
+    expect(footprintInsideRoom({ x: 0, z: 1.9, rot: 0 }, m32, room)).toBe(false)
+  })
+  it('turned 45°: a pose that fits square-on reaches past the wall once turned (half-width 0.531 m against 0.446 m)', () => {
+    expect(footprintInsideRoom({ x: 1.5, z: 0, rot: 0 }, m32, room)).toBe(true)
+    expect(footprintInsideRoom({ x: 1.5, z: 0, rot: 45 }, m32, room)).toBe(false)
+  })
+  it('turned 90°: the depth now lies across, so a pose past the wall square-on fits once turned', () => {
+    expect(footprintInsideRoom({ x: 1.6, z: 0, rot: 0 }, m32, room)).toBe(false)
+    expect(footprintInsideRoom({ x: 1.6, z: 0, rot: 90 }, m32, room)).toBe(true)
+    expect(footprintInsideRoom({ x: 1.6, z: 0, rot: 270 }, m32, room)).toBe(true)
+  })
+  it('exactly on the wall is inside (square-on and turned 90°, every wall)', () => {
+    expect(footprintInsideRoom({ x: 2 - 0.891 / 2, z: 0, rot: 0 }, m32, room)).toBe(true)
+    expect(footprintInsideRoom({ x: -(2 - 0.891 / 2), z: 0, rot: 0 }, m32, room)).toBe(true)
+    expect(footprintInsideRoom({ x: 0, z: 2 - 0.612 / 2, rot: 0 }, m32, room)).toBe(true)
+    expect(footprintInsideRoom({ x: 0, z: -(2 - 0.891 / 2), rot: 90 }, m32, room)).toBe(true)
+    expect(footprintInsideRoom({ x: 2 - 0.612 / 2, z: 2 - 0.891 / 2, rot: 90 }, m32, room)).toBe(true)
+    // a tenth of a millimetre further is out
+    expect(footprintInsideRoom({ x: 2 - 0.891 / 2 + 1e-4, z: 0, rot: 0 }, m32, room)).toBe(false)
+  })
+})
 
 const close = (a: number, b: number): void => expect(Math.abs(a - b)).toBeLessThan(1e-9)
 

@@ -158,5 +158,44 @@ for (const build of BUILDS) {
       await expect(dialog).toHaveCount(0)
       expect(errors, 'console errors').toEqual([])
     })
+
+    test('mission 3 fixes, item 1: a finger drags a speaker past the wall: red hatched outline and « hors de la salle » while it is out, said politely; dragged back, all gone; never clamped', async ({ page }) => {
+      await enterDesign(page, 2)
+      const cdp = await page.context().newCDPSession(page)
+      const dialog = await openPlan(page, true)
+      await dialog.getByRole('searchbox', { name: 'Rechercher un appareil' }).tap()
+      await dialog.getByRole('searchbox', { name: 'Rechercher un appareil' }).fill('k12')
+      await dialog.getByRole('button', { name: 'Poser QSC K12.2 sur le plan' }).tap()
+      const k12 = dialog.locator('[data-dev="qsc-k12-2-1"]')
+      await expect(k12).toHaveCount(1)
+      const plan = dialog.getByTestId('plan2d-plan')
+      await plan.scrollIntoViewIfNeeded()
+      // the blank room is 24 m wide: the screen's left is world +x; drag the speaker 12.5 m to the left (its footprint past the +x wall at 12 m)
+      const scale = await plan.evaluate((svg) => {
+        const g = svg.querySelector('.p2d-grid line:nth-child(1)')!
+        const h = svg.querySelector('.p2d-grid line:nth-child(2)')!
+        return Math.abs(Number(h.getAttribute('x1')) - Number(g.getAttribute('x1')))
+      })
+      const from = await centre(k12.locator('.p2d-hit'))
+      const to = { x: from.x - 12.5 * scale, y: from.y }
+      await touch(cdp, 'touchStart', [from])
+      for (let i = 1; i <= 12; i++) await touch(cdp, 'touchMove', [{ x: from.x + ((to.x - from.x) * i) / 12, y: from.y }])
+      // still under the finger: the cue is there before anything is committed
+      await expect(k12).toHaveClass(/p2d-outside/)
+      await expect(k12.locator('.p2d-out-label')).toHaveText('hors de la salle')
+      await touch(cdp, 'touchEnd', [])
+      await expect(k12).toHaveClass(/p2d-outside/)
+      await expect(k12.locator('.p2d-out-edge')).toHaveCount(1)
+      await expect(k12).toHaveAttribute('aria-label', /, hors de la salle$/)
+      await expect(dialog.getByTestId('plan2d-live')).toHaveText('Appareils déplacés : 1. K12.2 (qsc-k12-2-1) : hors de la salle.')
+      const x = await page.evaluate(() => JSON.parse(localStorage.getItem(Object.keys(localStorage).find((k) => k.startsWith('audio-sim/plan2d.v1.'))!)!).devices[0].x as number)
+      expect(x, 'not clamped: it stays where the finger left it').toBeGreaterThan(12)
+      // and back in
+      const back = await centre(k12.locator('.p2d-hit'))
+      await drag(cdp, back, from)
+      await expect(k12).not.toHaveClass(/p2d-outside/)
+      await expect(k12.locator('.p2d-out-label')).toHaveCount(0)
+      await expect(dialog.getByTestId('plan2d-live')).toHaveText('Appareils déplacés : 1. K12.2 (qsc-k12-2-1) : de nouveau dans la salle.')
+    })
   })
 }

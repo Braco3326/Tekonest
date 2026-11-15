@@ -105,6 +105,12 @@
 .p2d-dev.p2d-lit .p2d-fp { stroke: var(--cr-select); stroke-width: 3; }
 .p2d-dev.p2d-lit .p2d-hit { stroke: var(--cr-select); stroke-width: 1.5; }
 .p2d-dev.p2d-dim { opacity: 0.45; }
+/* outside the room (mission 3 fixes, item 1): the footprint hatched and edged in the danger role (>= 3:1 on the plan's ground and on the footprint's fill in
+   every package, tests/plan2d/outsideCue.test.ts), and the words « hors de la salle » in it (>= 4.5:1 on the ground), so colour is never the only cue */
+.p2d-dev .p2d-out-hatch { stroke: none; pointer-events: none; }
+.p2d-out-hatch-line { stroke: var(--cr-danger); stroke-width: 1.5; }
+.p2d-dev .p2d-out-edge { fill: none; stroke: var(--cr-danger); stroke-width: 2; pointer-events: none; }
+.p2d-out-label { fill: var(--cr-danger); font-size: 11px; font-weight: 700; pointer-events: none; paint-order: stroke; stroke: var(--cr-nuit); stroke-width: 3px; stroke-linejoin: round; }
 
 .p2d-cable { cursor: pointer; outline: none; }
 .p2d-cable-hit { stroke: transparent; stroke-width: 14; fill: none; }

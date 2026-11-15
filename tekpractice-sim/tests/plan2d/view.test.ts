@@ -300,3 +300,90 @@ describe('review 2026-11-15: touch has every action on screen; a pinch is never 
     expect(dev('qsc-k12-2-1').getAttribute('aria-pressed')).toBe('false')
   })
 })
+
+describe('a device outside the room (mission 3 fixes, item 1): a cue on the plan, never a clamp', () => {
+  // the room is 24 m x 14 m (x in [-12, 12], z in [-7, 7]); a K12.2 is 0.356 m x 0.350 m, an M32 0.891 m x 0.612 m
+  const ptr = (target: Element, type: string, id: number, x = 10, y = 10): void => {
+    const ev = new MouseEvent(type, { bubbles: true, cancelable: true, clientX: x, clientY: y, button: 0 })
+    Object.defineProperty(ev, 'pointerId', { value: id })
+    target.dispatchEvent(ev)
+  }
+  const outside = (id: string): boolean => dev(id).classList.contains('p2d-outside')
+  const tagOf = (id: string): string | null => dev(id).querySelector('.p2d-out-label')?.textContent ?? null
+  const setPose = (id: string, x: number, z: number, rot?: number): void =>
+    void page!.history.do({ type: 'setPose', id, x, z, ...(rot === undefined ? {} : { rot }) }, 'test')
+
+  it('inside: no cue at all', () => {
+    open()
+    pick('qsc-k12-2')
+    expect(outside('qsc-k12-2-1')).toBe(false)
+    expect(tagOf('qsc-k12-2-1')).toBeNull()
+    expect(dev('qsc-k12-2-1').querySelector('.p2d-out-edge')).toBeNull()
+    expect(dev('qsc-k12-2-1').getAttribute('aria-label')).not.toContain('hors de la salle')
+  })
+
+  it('keyboard: one arrow step past the wall gives the red hatched outline, the words « hors de la salle » and their announcement; one step back clears all of it', () => {
+    open()
+    pick('qsc-k12-2')
+    setPose('qsc-k12-2-1', 11.75, 0)
+    expect(outside('qsc-k12-2-1')).toBe(false)
+    dev('qsc-k12-2-1').focus()
+    key(dev('qsc-k12-2-1'), 'ArrowLeft') // screen left = world +x: x 12, the footprint reaches 12.178
+    expect(page!.history.plan.devices[0]).toMatchObject({ x: 12, z: 0 }) // the device stays where it was put: no clamp, no refusal
+    expect(outside('qsc-k12-2-1')).toBe(true)
+    expect(tagOf('qsc-k12-2-1')).toBe('hors de la salle')
+    const g = dev('qsc-k12-2-1')
+    expect(g.querySelector('.p2d-out-edge'), 'a red edge round the footprint').not.toBeNull()
+    expect(g.querySelector('.p2d-out-hatch')?.getAttribute('fill')).toBe('url(#p2d-out-hatch)')
+    expect(q('#p2d-out-hatch'), 'the hatch pattern is defined').not.toBeNull()
+    expect(g.getAttribute('aria-label')).toMatch(/, hors de la salle$/)
+    expect(live()).toBe('Appareils déplacés : 1. K12.2 (qsc-k12-2-1) : hors de la salle.')
+    key(dev('qsc-k12-2-1'), 'ArrowRight')
+    expect(outside('qsc-k12-2-1')).toBe(false)
+    expect(tagOf('qsc-k12-2-1')).toBeNull()
+    expect(dev('qsc-k12-2-1').getAttribute('aria-label')).not.toContain('hors de la salle')
+    expect(live()).toBe('Appareils déplacés : 1. K12.2 (qsc-k12-2-1) : de nouveau dans la salle.')
+    // a move that keeps it inside says nothing about the room
+    key(dev('qsc-k12-2-1'), 'ArrowRight')
+    expect(live()).toBe('Appareils déplacés : 1.')
+  })
+
+  it('pointer (mouse or a finger): the cue shows WHILE the device is dragged past the wall, before anything is committed, and clears when it is dragged back', () => {
+    open()
+    pick('qsc-k12-2')
+    setPose('qsc-k12-2-1', 11.5, 0)
+    const scale = fitView({ width: 24, length: 14 }, 800, 520).scale
+    const hit = dev('qsc-k12-2-1').querySelector('.p2d-hit')!
+    const svg = q('[data-testid="plan2d-plan"]')!
+    ptr(hit, 'pointerdown', 3, 400, 260)
+    ptr(svg, 'pointermove', 3, 400 - 1 * scale, 260) // 1 m to the screen's left = +x: x 12.5
+    expect(page!.history.plan.devices[0]!.x, 'nothing committed yet').toBe(11.5)
+    expect(outside('qsc-k12-2-1')).toBe(true)
+    expect(tagOf('qsc-k12-2-1')).toBe('hors de la salle')
+    ptr(svg, 'pointermove', 3, 400, 260) // back where it was
+    expect(outside('qsc-k12-2-1')).toBe(false)
+    ptr(svg, 'pointermove', 3, 400 - 1 * scale, 260)
+    ptr(svg, 'pointerup', 3)
+    expect(page!.history.plan.devices[0]!.x, 'dropped past the wall, it stays there').toBe(12.5)
+    expect(outside('qsc-k12-2-1')).toBe(true)
+    expect(live()).toBe('Appareils déplacés : 1. K12.2 (qsc-k12-2-1) : hors de la salle.')
+    // undo brings it back inside, and says so
+    key(q('[data-testid="plan2d-plan"]')!, 'z', { ctrlKey: true })
+    expect(outside('qsc-k12-2-1')).toBe(false)
+    expect(live()).toBe('Annulé : Déplacer. K12.2 (qsc-k12-2-1) : de nouveau dans la salle.')
+  })
+
+  it('a rotation can take a device out: an M32 that fits square-on near the rear wall reaches past it once turned 90°', () => {
+    open()
+    pick('midas-m32')
+    setPose('midas-m32-1', 0, 6.6)
+    expect(outside('midas-m32-1')).toBe(false)
+    key(dev('midas-m32-1'), 'r')
+    expect(page!.history.plan.devices[0]).toMatchObject({ x: 0, z: 6.6, rot: 90 })
+    expect(outside('midas-m32-1')).toBe(true)
+    expect(live()).toBe('Appareils pivotés : 1. M32 (midas-m32-1) : hors de la salle.')
+    key(dev('midas-m32-1'), 'r')
+    expect(outside('midas-m32-1')).toBe(false)
+    expect(live()).toBe('Appareils pivotés : 1. M32 (midas-m32-1) : de nouveau dans la salle.')
+  })
+})

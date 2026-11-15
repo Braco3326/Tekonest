@@ -1419,6 +1419,13 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     actDuplicate: 'Dupliquer',
     actRemove: 'Supprimer',
     actDisconnect: 'Retirer le câble',
+    /**
+     * Mission 3 fixes, item 1: a device whose footprint reaches past the room's walls. The tag drawn on the plan beside its red hatched outline (colour is
+     * never the only cue), the end of its accessible name, and the polite announcements when it leaves or comes back. À valider (tekuxwriter, 2026-11-15).
+     */
+    outsideTag: 'hors de la salle',
+    outsideSay: '{devices} : hors de la salle.',
+    insideSay: '{devices} : de nouveau dans la salle.',
   },
   /**
    * Hand-drawn cables (mission 3 B stage 2, spec docs/superpowers/specs/2026-11-15-hand-drawn-cables-design.md §1): the cable panel in Propriétés, the drawing bar under the

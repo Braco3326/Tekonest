@@ -23,8 +23,8 @@ import { createLiveText } from '../creation/shell/liveText'
 import { shortName } from '../creation/shell/propertiesModel'
 import { CABLE_STYLES, arrowOf, cableTypeOf, styleOf, tagOf, type CableType } from './cableStyle2d'
 import {
-  DEFAULT_SNAP_M, SNAP_STEPS_M, deviceMatrix, fitView, footprintBounds, footprintCorners, gridLines, panBy, portAnchor, scaleBar, snap, toScreen, toWorld, zoomAt,
-  type View,
+  DEFAULT_SNAP_M, SNAP_STEPS_M, deviceMatrix, fitView, footprintBounds, footprintCorners, footprintInsideRoom, gridLines, panBy, portAnchor, scaleBar, snap, toScreen, toWorld,
+  zoomAt, type View,
 } from './geometry'
 import { PlanHistory } from './history'
 import { emptyPlan, selectToggle, type Plan2D, type PlanDevice, type PortEnd } from './model'
@@ -289,6 +289,26 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     return dv ? registry.deviceById.get(dv.deviceId)?.ports.find((q) => q.portId === e.port) : undefined
   }
 
+  // ── outside the room (mission 3 fixes, item 1): a cue, never a clamp nor a refusal; the send keeps its own rule (spawn3d.ts)
+  const isOutside = (dv: PlanDevice): boolean => !footprintInsideRoom(dv, footprintOf(dv.deviceId), room)
+  const outsideNow = (): Set<string> => new Set(history.plan.devices.filter(isOutside).map((x) => x.id))
+  /**
+   * `text`, then which devices this edit took out of the room or brought back (compared with `before`, the outside set before the edit); nothing is
+   * added when no device crossed a wall. One polite message, so the edit's own words and the room's are never two announcements racing.
+   */
+  const withRoomNote = (before: ReadonlySet<string>, text: string): string => {
+    const after = outsideNow()
+    const present = new Set(history.plan.devices.map((x) => x.id))
+    const out = [...after].filter((id) => !before.has(id))
+    const back = [...before].filter((id) => present.has(id) && !after.has(id))
+    const notes = [
+      ...(out.length ? [fill(P().outsideSay!, { devices: out.map(nameOf).join(', ') })] : []),
+      ...(back.length ? [fill(P().insideSay!, { devices: back.map(nameOf).join(', ') })] : []),
+    ]
+    if (!notes.length) return text
+    return `${/[.!?…]$/.test(text) ? text : `${text}.`} ${notes.join(' ')}`
+  }
+
   // ── plan edits (each is one undoable step)
   /**
    * Where a new device goes: the point asked for, or (when a device already stands there) the nearest free slot on rings around it. A slot is one
@@ -314,19 +334,23 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
   const place = (deviceId: string, x: number, z: number): void => {
     const { x: px, z: pz } = freeSpot(deviceId, x, z)
     const label = registry.deviceById.get(deviceId)?.label ?? deviceId
+    const before = outsideNow()
     const r = history.do({ type: 'place', deviceId, x: px, z: pz }, fill(P().entryPlace!, { device: label }))
     if (!r.ok) return
     selection = [...r.created]
     cableSel = null
     render()
-    say(fill(P().placed!, { device: label, x: fr(px), z: fr(pz) }))
+    say(withRoomNote(before, fill(P().placed!, { device: label, x: fr(px), z: fr(pz) })))
   }
   const moveBy = (ids: string[], dx: number, dz: number): void => {
     if (!ids.length || (dx === 0 && dz === 0)) return
-    if (history.do({ type: 'move', ids, dx, dz }, P().entryMove!).ok) say(fill(P().moved!, { n: String(ids.length) }))
+    const before = outsideNow()
+    if (history.do({ type: 'move', ids, dx, dz }, P().entryMove!).ok) say(withRoomNote(before, fill(P().moved!, { n: String(ids.length) })))
   }
   const rotate = (ids: string[], by: number): void => {
-    if (ids.length && history.do({ type: 'rotate', ids, by }, P().entryRotate!).ok) say(fill(P().rotated!, { n: String(ids.length) }))
+    if (!ids.length) return
+    const before = outsideNow()
+    if (history.do({ type: 'rotate', ids, by }, P().entryRotate!).ok) say(withRoomNote(before, fill(P().rotated!, { n: String(ids.length) })))
   }
   const remove = (ids: string[]): void => {
     if (!ids.length) return
@@ -339,11 +363,12 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
   }
   const duplicate = (ids: string[]): void => {
     if (!ids.length) return
+    const before = outsideNow()
     const r = history.do({ type: 'duplicate', ids, dx: -2 * snapStep, dz: 2 * snapStep }, P().entryDuplicate!)
     if (!r.ok) return
     selection = [...r.created]
     render()
-    say(fill(P().duplicated!, { n: String(ids.length) }))
+    say(withRoomNote(before, fill(P().duplicated!, { n: String(ids.length) })))
   }
   const cableText = (id: string): { a: string; b: string; type: CableType } | null => {
     const c = history.plan.cables.find((x) => x.id === id)
@@ -362,12 +387,14 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     }
   }
   const undo = (): void => {
+    const before = outsideNow()
     const l = history.undo()
-    say(l === null ? P().nothingUndo! : fill(P().undone!, { label: l }))
+    say(l === null ? P().nothingUndo! : withRoomNote(before, fill(P().undone!, { label: l })))
   }
   const redo = (): void => {
+    const before = outsideNow()
     const l = history.redo()
-    say(l === null ? P().nothingRedo! : fill(P().redone!, { label: l }))
+    say(l === null ? P().nothingRedo! : withRoomNote(before, fill(P().redone!, { label: l })))
   }
   const zoomBy = (f: number): void => {
     view = zoomAt(view, f, view.w / 2, view.h / 2)
@@ -585,6 +612,8 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     out.push('<defs>')
     for (const s of CABLE_STYLES)
       out.push(`<marker id="p2d-arrow-${s.type}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="${Math.max(6, 3 + s.width * 1.5)}" markerHeight="${Math.max(6, 3 + s.width * 1.5)}" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="${s.colour}"/></marker>`)
+    // the hatch of a device outside the room (its lines take the danger role, plan2d.css)
+    out.push('<pattern id="p2d-out-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="p2d-out-hatch-line" x1="0" y1="0" x2="0" y2="6"/></pattern>')
     out.push('</defs>')
     // the room (its picker plan, in metres, mirrored x): one matrix onto the screen
     out.push(`<g class="p2d-room" aria-hidden="true" transform="matrix(${n2(S)} 0 0 ${n2(S)} ${n2(w / 2 + S * view.cx)} ${n2(h / 2 - S * view.cz)})">${outlineInner}</g>`)
@@ -629,6 +658,18 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
       const b = footprintBounds(dv, fp)
       const c = toScreen(view, dv.x, dv.z)
       return { x: c.sx, y: c.sy + Math.max(((b.maxZ - b.minZ) / 2) * S, 8) + 12, text: shortName(registry, dv.deviceId) }
+    }
+    // « hors de la salle » first of all: that cue is always drawn (above the symbol), the other labels keep clear of it
+    const outTag = new Map<string, { x: number; y: number }>()
+    for (const raw of plan.devices) {
+      const dv = posOf(raw)
+      if (!isOutside(dv)) continue
+      const b = footprintBounds(dv, footprintOf(dv.deviceId))
+      const c = toScreen(view, dv.x, dv.z)
+      const at = { x: c.sx, y: c.sy - Math.max(((b.maxZ - b.minZ) / 2) * S, 8) - 7 }
+      const hw = (P().outsideTag!.length * 6.6) / 2 + 2
+      claim({ x0: at.x - hw, y0: at.y - 10, x1: at.x + hw, y1: at.y + 3 })
+      outTag.set(raw.id, at)
     }
     const showLabel = new Set<string>()
     for (const raw of [...plan.devices].sort((p, q) => Number(selection.includes(q.id)) - Number(selection.includes(p.id)))) {
@@ -696,11 +737,26 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
       let aria = fill(P().deviceLabel!, { device: label, id: dv.id, x: fr(dv.x), z: fr(dv.z), rot: fr(dv.rot) })
       if (!fp.known) aria += `, ${P().sizeUnknown}`
       if (held) aria += `, ${fill(P().lit!, { n: String(Math.max(0, lit)), total: String(ports.length) })}`
-      const cls = ['p2d-dev', sel ? 'p2d-sel' : '', held ? (lit > 0 ? 'p2d-lit' : 'p2d-dim') : '', fp.known ? '' : 'p2d-size-unknown'].filter(Boolean).join(' ')
+      const outAt = outTag.get(raw.id)
+      if (outAt) aria += `, ${P().outsideTag}`
+      const cls = ['p2d-dev', sel ? 'p2d-sel' : '', held ? (lit > 0 ? 'p2d-lit' : 'p2d-dim') : '', fp.known ? '' : 'p2d-size-unknown', outAt ? 'p2d-outside' : ''].filter(Boolean).join(' ')
+      const pts = corners.map((p) => `${n2(p.sx)},${n2(p.sy)}`).join(' ')
       out.push(`<g class="${cls}" data-dev="${esc(dv.id)}" data-family="${family}" role="button" tabindex="0" aria-pressed="${sel}" aria-label="${esc(aria)}">`)
       out.push(`<circle class="p2d-hit" cx="${n2(c.sx)}" cy="${n2(c.sy)}" r="14"/>`)
-      out.push(`<polygon class="p2d-fp" points="${corners.map((p) => `${n2(p.sx)},${n2(p.sy)}`).join(' ')}"/>`)
+      out.push(`<polygon class="p2d-fp" points="${pts}"/>`)
+      if (outAt) {
+        // the footprint hatched in the danger role, and a red edge 4 px outside it (the selection's own stroke on the footprint stays visible)
+        const edge = corners.map((p) => {
+          const vx = p.sx - c.sx
+          const vy = p.sy - c.sy
+          const len = Math.hypot(vx, vy) || 1
+          return `${n2(p.sx + (vx / len) * 4)},${n2(p.sy + (vy / len) * 4)}`
+        })
+        out.push(`<polygon class="p2d-out-hatch" points="${pts}" fill="url(#p2d-out-hatch)"/>`)
+        out.push(`<polygon class="p2d-out-edge" points="${edge.join(' ')}"/>`)
+      }
       out.push(`<path class="p2d-sym" d="${glyph.d}" transform="matrix(${m.map((v) => String(Math.round(v * 1e4) / 1e4)).join(' ')})" vector-effect="non-scaling-stroke"/>`)
+      if (outAt) out.push(`<text class="p2d-out-label" x="${n2(outAt.x)}" y="${n2(outAt.y)}" text-anchor="middle">${esc(P().outsideTag!)}</text>`)
       ports.forEach((q, i) => {
         const a = portAnchor(dv, fp, i, ports.length)
         const s = toScreen(view, a.x, a.z)

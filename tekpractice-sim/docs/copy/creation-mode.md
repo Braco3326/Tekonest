@@ -1379,6 +1379,9 @@ La page du schéma 2D (mission 2, spec `docs/superpowers/specs/2026-11-15-plan2d
 | `plan2d.actDuplicate` | Dupliquer | à valider (tekuxwriter) | Bouton : duplique la sélection (comme Ctrl+D) |
 | `plan2d.actRemove` | Supprimer | à valider (tekuxwriter) | Bouton : retire la sélection du plan (comme Suppr) |
 | `plan2d.actDisconnect` | Retirer le câble | à valider (tekuxwriter) | Bouton : retire le câble sélectionné (comme Suppr) |
+| `plan2d.outsideTag` | hors de la salle | à valider (tekuxwriter) | Sur le plan, à côté du contour hachuré rouge d’un appareil qui dépasse les murs (la couleur n’est jamais le seul indice) ; aussi à la fin de son nom accessible. Mission 3, correctifs |
+| `plan2d.outsideSay` | {devices} : hors de la salle. | à valider (tekuxwriter) | Annonce polie quand un appareil sort de la salle (glissé, flèches, rotation, annulation) ; {devices} = « K12.2 (qsc-k12-2-1) », séparés par des virgules |
+| `plan2d.insideSay` | {devices} : de nouveau dans la salle. | à valider (tekuxwriter) | Annonce polie quand il y revient |
 
 ## cableRoute
 

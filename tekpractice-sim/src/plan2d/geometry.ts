@@ -120,6 +120,14 @@ export const insideRoom = (b: Bounds, room: { width: number; length: number }): 
   b.minX >= -room.width / 2 - 1e-9 && b.maxX <= room.width / 2 + 1e-9 && b.minZ >= -room.length / 2 - 1e-9 && b.maxZ <= room.length / 2 + 1e-9
 
 /**
+ * The ONE « inside the room » test of the 2D page (mission 3 fixes, item 1): the whole footprint, turned by its yaw, lies on the floor. The floor is an
+ * axis-aligned rectangle, so the turned rectangle is inside exactly when its four corners are, i.e. when its bounds are; a corner exactly on a wall is
+ * inside. The page draws the « hors de la salle » cue from it. The send to 3D keeps its own, different rule (spawn3d.ts: the drop's `clampToRoom` on
+ * the CENTRE, the 3D page's rule), so it is not called there.
+ */
+export const footprintInsideRoom = (p: Pose, size: Size2, room: { width: number; length: number }): boolean => insideRoom(footprintBounds(p, size), room)
+
+/**
  * Where port `index` of `count` meets the outline: on the REAR edge (local -z, the side the rear panel faces), spread evenly in catalogue order
  * from local -x to +x (left to right for someone standing behind the device). A drawing aid: the real position on the panel is not read.
  */
