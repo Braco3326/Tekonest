@@ -14,7 +14,7 @@ export interface ShortcutRow {
   keys: string[]
 }
 export interface ShortcutGroup {
-  id: 'view' | 'devices' | 'project'
+  id: 'view' | 'devices' | 'cables' | 'project'
   title: string
   rows: ShortcutRow[]
 }
@@ -22,7 +22,7 @@ export interface ShortcutGroup {
 const S = (): Readonly<Record<string, string>> => COPY.shortcuts!
 
 /** A key that is not in the key map. */
-type Fixed = { fixed: 'arrows' | 'enter' }
+type Fixed = { fixed: 'arrows' | 'enter' | 'shiftArrows' | 'shiftEnter' | 'backspace' | 'escape' | 'delete' | 'pageDown' | 'pageUp' }
 type Source = CreationAction | Fixed
 
 interface RowSpec {
@@ -60,6 +60,22 @@ const groupSpecs = (): { id: ShortcutGroup['id']; title: string; rows: RowSpec[]
       { id: 'cancel', name: S().cancel!, from: ['CANCEL'] },
     ],
   },
+  // Mission 3 B stage 2 (only with the `cableTrace` switch): fixed keys, never in the key map; they act only while a cable is traced or in the points zone of a
+  // selected cable (src/creation/input/traceKeys.ts; tests/creation/traceKeys.test.ts pins that none clashes with the map).
+  {
+    id: 'cables',
+    title: S().groupCables!,
+    rows: [
+      { id: 'trace-cursor', name: S().traceCursor!, from: [{ fixed: 'arrows' }, { fixed: 'shiftArrows' }] },
+      { id: 'trace-place', name: S().tracePlace!, from: [{ fixed: 'enter' }] },
+      { id: 'trace-remove', name: S().traceRemove!, from: [{ fixed: 'backspace' }] },
+      { id: 'trace-finish', name: S().traceFinish!, from: [{ fixed: 'shiftEnter' }] },
+      { id: 'trace-cancel', name: S().traceCancel!, from: [{ fixed: 'escape' }] },
+      { id: 'point-move', name: S().pointMove!, from: [{ fixed: 'arrows' }] },
+      { id: 'point-next', name: S().pointNext!, from: [{ fixed: 'pageDown' }, { fixed: 'pageUp' }] },
+      { id: 'point-delete', name: S().pointDelete!, from: [{ fixed: 'delete' }] },
+    ],
+  },
   {
     id: 'project',
     title: S().groupProject!,
@@ -72,12 +88,23 @@ const groupSpecs = (): { id: ShortcutGroup['id']; title: string; rows: RowSpec[]
   },
 ]
 
-export function shortcutGroups(b: CreationBindings): ShortcutGroup[] {
-  const label = (s: Source): string => {
-    if (typeof s === 'string') return bindingLabel(b, s)
-    return s.fixed === 'arrows' ? S().keyArrows! : COPY.keys!.enter!
+/** `cables`: the hand-drawn cables are on (FEATURES.cableTrace): their group is listed. Off or absent: the list as it was. */
+export function shortcutGroups(b: CreationBindings, opts: { cables?: boolean } = {}): ShortcutGroup[] {
+  const K = COPY.keys!
+  const fixed: Record<Fixed['fixed'], () => string> = {
+    arrows: () => S().keyArrows!,
+    shiftArrows: () => S().keyShiftArrows!,
+    enter: () => K.enter!,
+    shiftEnter: () => `${K.shift}+${K.enter}`,
+    backspace: () => K.backspace!,
+    escape: () => K.escape!,
+    delete: () => K.delete!,
+    pageDown: () => K.pageDown!,
+    pageUp: () => K.pageUp!,
   }
+  const label = (s: Source): string => (typeof s === 'string' ? bindingLabel(b, s) : fixed[s.fixed]())
   return groupSpecs()
+    .filter((g) => g.id !== 'cables' || opts.cables === true)
     .map((g) => ({
       id: g.id,
       title: g.title,

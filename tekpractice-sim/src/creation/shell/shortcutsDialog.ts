@@ -7,7 +7,7 @@ import type { CreationBindings } from '../input/creationActions'
 import { modalButton, modalRow, openModal } from './modal'
 import { shortcutGroups } from './shortcutsModel'
 
-export function openShortcutsDialog(bindings: CreationBindings): Promise<void> {
+export function openShortcutsDialog(bindings: CreationBindings, opts: { cables?: boolean } = {}): Promise<void> {
   const S = COPY.shortcuts!
   return openModal<void>({
     id: 'cr-shortcuts-dialog',
@@ -21,7 +21,7 @@ export function openShortcutsDialog(bindings: CreationBindings): Promise<void> {
       list.tabIndex = 0
       list.setAttribute('role', 'group')
       list.setAttribute('aria-labelledby', 'cr-shortcuts-dialog-title')
-      for (const g of shortcutGroups(bindings)) {
+      for (const g of shortcutGroups(bindings, opts)) {
         const h = document.createElement('h3')
         h.className = 'cr-shortcuts-h'
         h.textContent = g.title

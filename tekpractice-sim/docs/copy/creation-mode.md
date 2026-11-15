@@ -53,6 +53,9 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `keys.enter` | Entrée | validé | Touche Entrée (cadrer depuis la vue 3D) |
 | `keys.shift` | Maj | validé | Modificateur Maj (« Maj+V », « Maj+R ») ; Ctrl et Alt restent tels quels |
 | `keys.numpad` | Pavé num. | validé | Préfixe d'une touche du pavé numérique (« Pavé num. 6 ») |
+| `keys.backspace` | Retour arrière | à valider (tekuxwriter) | Touche Retour arrière (retirer le dernier point d’un tracé) |
+| `keys.pageUp` | Page préc. | à valider (tekuxwriter) | Touche Page précédente (point précédent d’un tracé) |
+| `keys.pageDown` | Page suiv. | à valider (tekuxwriter) | Touche Page suivante (point suivant d’un tracé) |
 
 ## menu
 
@@ -131,6 +134,16 @@ Le dialogue « Raccourcis clavier » (menu Aide, touche H ; vague de nuit 2, vag
 | `shortcuts.redo` | Rétablir | validé | Ligne : Ctrl+Y |
 | `shortcuts.save` | Enregistrer le projet | validé | Ligne : Ctrl+S |
 | `shortcuts.help` | Afficher cette liste | validé | Ligne : H |
+| `shortcuts.groupCables` | Tracé d’un câble | à valider (tekuxwriter) | Titre du groupe des touches du tracé (mission 3 B) : elles n’agissent que pendant un tracé ou sur les points d’un câble sélectionné |
+| `shortcuts.keyShiftArrows` | Maj+Flèches | à valider (tekuxwriter) | Nom des flèches avec Maj (quatre pas) |
+| `shortcuts.traceCursor` | Pendant un tracé : déplacer le curseur d’un pas (Maj : quatre pas) | à valider (tekuxwriter) | Flèches, vue 3D au focus pendant un tracé |
+| `shortcuts.tracePlace` | Pendant un tracé : poser un point | à valider (tekuxwriter) | Entrée |
+| `shortcuts.traceRemove` | Pendant un tracé : retirer le dernier point | à valider (tekuxwriter) | Retour arrière |
+| `shortcuts.traceFinish` | Pendant un tracé : terminer | à valider (tekuxwriter) | Maj+Entrée |
+| `shortcuts.traceCancel` | Pendant un tracé : annuler | à valider (tekuxwriter) | Échap |
+| `shortcuts.pointMove` | Points du tracé (Propriétés) : déplacer le point choisi d’un pas | à valider (tekuxwriter) | Flèches, liste « Points du tracé » au focus |
+| `shortcuts.pointNext` | Points du tracé (Propriétés) : point suivant ou précédent | à valider (tekuxwriter) | Page suiv. / Page préc. |
+| `shortcuts.pointDelete` | Points du tracé (Propriétés) : supprimer le point choisi | à valider (tekuxwriter) | Suppr |
 
 ## tree
 
@@ -1366,6 +1379,75 @@ La page du schéma 2D (mission 2, spec `docs/superpowers/specs/2026-11-15-plan2d
 | `plan2d.actDuplicate` | Dupliquer | à valider (tekuxwriter) | Bouton : duplique la sélection (comme Ctrl+D) |
 | `plan2d.actRemove` | Supprimer | à valider (tekuxwriter) | Bouton : retire la sélection du plan (comme Suppr) |
 | `plan2d.actDisconnect` | Retirer le câble | à valider (tekuxwriter) | Bouton : retire le câble sélectionné (comme Suppr) |
+
+## cableRoute
+
+Les câbles tracés à la main (mission 3 B, étape 2, spec `docs/superpowers/specs/2026-11-15-hand-drawn-cables-design.md` §1) : le panneau du câble dans Propriétés, la barre de tracé sous la barre de menus, les annonces et les libellés d’annulation. Seulement avec le commutateur `cableTrace`. « vous », aucune première personne, aucune prétention de norme ; les longueurs sont celles du câble dessiné. Tout ce qui suit : à valider (tekuxwriter, 2026-11-15).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `cableRoute.panelTitle` | Câble | à valider (tekuxwriter) | Titre du panneau Propriétés quand un câble est sélectionné |
+| `cableRoute.joins` | Relie | à valider (tekuxwriter) | Ligne : les deux prises du câble |
+| `cableRoute.signal` | Signal | à valider (tekuxwriter) | Ligne : le type de signal (nom du catalogue en français) |
+| `cableRoute.connectors` | Connecteurs | à valider (tekuxwriter) | Ligne : les deux connecteurs, sortie puis entrée |
+| `cableRoute.length` | Longueur dessinée | à valider (tekuxwriter) | Ligne : la longueur du câble tel qu’il est dessiné (même chiffre que le survol) |
+| `cableRoute.lengthValue` | {m} m | à valider (tekuxwriter) | {m} = mètres, deux décimales, virgule française |
+| `cableRoute.lengthNone` | pas encore dessiné | à valider (tekuxwriter) | Le câble n’est pas encore dans la scène |
+| `cableRoute.shape` | Forme | à valider (tekuxwriter) | Ligne : automatique ou tracée à la main |
+| `cableRoute.shapeAuto` | automatique, posée entre ses deux prises | à valider (tekuxwriter) | Aucun tracé enregistré |
+| `cableRoute.shapeRoute` | tracée à la main : {n} points | à valider (tekuxwriter) | {n} = nombre de points du tracé (2 ou plus) |
+| `cableRoute.shapeRouteOne` | tracée à la main : 1 point | à valider (tekuxwriter) | Un seul point |
+| `cableRoute.trace` | Tracer le câble | à valider (tekuxwriter) | Bouton : commence le tracé (aussi : double-clic sur le câble) |
+| `cableRoute.traceHint` | Posez des points sur le sol entre les deux prises. Les deux bouts restent branchés. | à valider (tekuxwriter) | Sous le bouton (sa description) |
+| `cableRoute.reset` | Remettre le tracé automatique | à valider (tekuxwriter) | Bouton, seulement quand un tracé existe : enlève le tracé (une étape d’annulation) |
+| `cableRoute.points` | Points du tracé | à valider (tekuxwriter) | Titre de la section des poignées (seulement avec un tracé) |
+| `cableRoute.pointsHint` | Flèches : déplacer le point choisi. Page préc. et Page suiv. : changer de point. Suppr : supprimer le point. Dans la vue 3D, faites glisser une poignée, ou cliquez sur le câble pour ajouter un point. | à valider (tekuxwriter) | Description de la liste des points |
+| `cableRoute.pointGroup` | Point choisi du tracé | à valider (tekuxwriter) | Nom accessible de la zone qui reçoit les flèches |
+| `cableRoute.pointNow` | Point {i} sur {n} : x {x} m, z {z} m | à valider (tekuxwriter) | Texte de la zone ; x et z en mètres sur le sol |
+| `cableRoute.pointNone` | Aucun point choisi. | à valider (tekuxwriter) | Quand aucun point n’est choisi |
+| `cableRoute.prevPoint` | Point précédent | à valider (tekuxwriter) | Bouton |
+| `cableRoute.nextPoint` | Point suivant | à valider (tekuxwriter) | Bouton |
+| `cableRoute.deletePoint` | Supprimer le point | à valider (tekuxwriter) | Bouton (aussi : Suppr) |
+| `cableRoute.statusSelected` | Câble sélectionné : {cable} | à valider (tekuxwriter) | Annonce ; {cable} = le câble comme au survol |
+| `cableRoute.statusDeselected` | Câble désélectionné. | à valider (tekuxwriter) | Annonce (Échap, ou une autre sélection) |
+| `cableRoute.bar` | Tracé du câble | à valider (tekuxwriter) | Nom de la barre de tracé (sous la barre de menus, jamais sur la vue 3D) |
+| `cableRoute.barTitle` | Tracé : {cable} | à valider (tekuxwriter) | Texte en tête de la barre ; {cable} = le câble |
+| `cableRoute.snap` | Pas de la grille | à valider (tekuxwriter) | Choix du pas : 10 cm, 25 cm, 50 cm, 1 m (25 cm par défaut) |
+| `cableRoute.step10` | 10 cm | à valider (tekuxwriter) | Choix du pas |
+| `cableRoute.step25` | 25 cm | à valider (tekuxwriter) | Choix du pas (par défaut) |
+| `cableRoute.step50` | 50 cm | à valider (tekuxwriter) | Choix du pas |
+| `cableRoute.step100` | 1 m | à valider (tekuxwriter) | Choix du pas |
+| `cableRoute.rightAngles` | Angles droits | à valider (tekuxwriter) | Interrupteur : chaque nouveau segment suit un des deux axes de la salle |
+| `cableRoute.lengthLive` | Longueur : {m} m | à valider (tekuxwriter) | Longueur du tracé posé, d’une prise à l’autre, comme il sera dessiné |
+| `cableRoute.place` | Poser le point | à valider (tekuxwriter) | Bouton (aussi : clic sur le sol, Entrée) |
+| `cableRoute.removeLast` | Retirer le dernier point | à valider (tekuxwriter) | Bouton (aussi : Retour arrière) |
+| `cableRoute.finish` | Terminer | à valider (tekuxwriter) | Bouton (aussi : Maj+Entrée, double-clic sur le dernier point) ; inactif tant qu’aucun point n’est posé |
+| `cableRoute.cancel` | Annuler | à valider (tekuxwriter) | Bouton (aussi : Échap) ; le câble garde sa forme |
+| `cableRoute.barHint` | Cliquez ou touchez le sol pour poser un point. Clavier, vue 3D au focus : flèches, Entrée pour poser, Retour arrière pour retirer, Maj+Entrée pour terminer, Échap pour annuler. | à valider (tekuxwriter) | Description de la barre |
+| `cableRoute.canvasTracing` | Vue 3D, tracé du câble : flèches = déplacer le curseur, Entrée = poser un point, Retour arrière = retirer le dernier, Maj+Entrée = terminer, Échap = annuler | à valider (tekuxwriter) | Nom de la vue 3D pendant un tracé |
+| `cableRoute.sayStart` | Tracé du câble commencé, pas de la grille {step}. Posez des points sur le sol, puis Terminer. | à valider (tekuxwriter) | Annonce au début du tracé |
+| `cableRoute.sayCursor` | Curseur : x {x} m, z {z} m. | à valider (tekuxwriter) | Annonce après une flèche |
+| `cableRoute.sayPlaced` | Point {n} posé. Longueur : {m} m. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayRemoved` | Dernier point retiré. Longueur : {m} m. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayNothingToRemove` | Aucun point à retirer. | à valider (tekuxwriter) | Annonce (Retour arrière sans point) |
+| `cableRoute.sayFull` | Ce tracé a déjà le nombre de points le plus grand possible. | à valider (tekuxwriter) | Annonce (limite du magasin) |
+| `cableRoute.sayEmpty` | Posez au moins un point avant de terminer. | à valider (tekuxwriter) | Annonce (Maj+Entrée sans point) |
+| `cableRoute.sayFinished` | Tracé terminé : {m} m. {undo} pour revenir en arrière. | à valider (tekuxwriter) | Annonce ; {undo} = la touche Annuler |
+| `cableRoute.sayUnchanged` | Tracé terminé, sans changement. | à valider (tekuxwriter) | Annonce (mêmes points qu’avant : rien n’est enregistré) |
+| `cableRoute.sayCancelled` | Tracé annulé. Le câble garde sa forme. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayStep` | Pas de la grille : {step}. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayRightOn` | Angles droits activés. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayRightOff` | Angles droits désactivés. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayReset` | Tracé automatique remis. {undo} pour revenir en arrière. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayMoved` | Point {i} déplacé : x {x} m, z {z} m. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayAdded` | Point ajouté. Le tracé a {n} points. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayDeleted` | Point supprimé. Le tracé a {n} points. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayDeletedLast` | Dernier point supprimé : le câble reprend sa forme automatique. | à valider (tekuxwriter) | Annonce |
+| `cableRoute.sayRefused` | Ce tracé ne peut pas être enregistré ici : il est trop long pour ce lieu. | à valider (tekuxwriter) | Annonce (refus ROUTE_TOO_LONG du magasin) |
+| `cableRoute.sayRefusedOther` | Ce tracé ne peut pas être enregistré. | à valider (tekuxwriter) | Annonce (autre refus) |
+| `cableRoute.entryTrace` | Tracer le câble | à valider (tekuxwriter) | Libellé de l’étape d’annulation (un tracé entier = une étape) |
+| `cableRoute.entryEdit` | Modifier le tracé du câble | à valider (tekuxwriter) | Libellé de l’étape d’annulation (une poignée, un point ajouté ou supprimé) |
+| `cableRoute.entryReset` | Remettre le tracé automatique | à valider (tekuxwriter) | Libellé de l’étape d’annulation |
 
 ## Textes hors COPY (index.html)
 

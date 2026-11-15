@@ -1,0 +1,114 @@
+/*
+ * Hand-drawn cables (mission 3 B stage 2): the drawing bar under the menu bar and the cable panel in Propriétés. Role tokens only (--cr-*), square corners,
+ * no transitions; every control >= 44 px on a coarse pointer.
+ */
+
+/* The bar gets its own grid row under the menu bar, never over the 3D view (the tutorial row's pattern). */
+.cr[data-trace='on'] {
+  grid-template-rows: var(--cr-menubar-h) auto minmax(0, 1fr) var(--cr-status-h);
+  grid-template-areas:
+    'menu menu menu'
+    'trace trace trace'
+    'tree view props'
+    'status status status';
+}
+.cr[data-trace='on'][data-tutorial='on'] {
+  grid-template-rows: var(--cr-menubar-h) auto auto minmax(0, 1fr) var(--cr-status-h);
+  grid-template-areas:
+    'menu menu menu'
+    'trace trace trace'
+    'tutorial tutorial tutorial'
+    'tree view props'
+    'status status status';
+}
+
+.cr-trace-bar {
+  grid-area: trace;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  padding: 6px 12px;
+  background: var(--cr-panel);
+  border-bottom: 2px solid var(--cr-ambre);
+  color: var(--cr-papier);
+  min-width: 0;
+}
+.cr-trace-title {
+  flex: 1 1 220px;
+  min-width: 0;
+  font: 500 13px/1.3 var(--cr-font-ui);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cr-trace-group { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.cr-trace-field { display: flex; align-items: center; gap: 6px; }
+.cr-trace-label { color: var(--cr-papier); font-weight: 500; white-space: nowrap; }
+.cr .cr-trace-select { width: auto; flex: 0 0 auto; }
+.cr-trace-length { font-variant-numeric: tabular-nums; white-space: nowrap; min-width: 9em; }
+
+.cr .cr-trace-btn,
+.cr .cr-trace-switch,
+.cr .cr-cable-btn {
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--cr-ink-muted);
+  background: var(--cr-nuit);
+  color: var(--cr-papier);
+  font-size: 12px;
+  white-space: nowrap;
+  transition: none;
+}
+@media (hover: hover) {
+  .cr .cr-trace-btn:hover:not(:disabled),
+  .cr .cr-trace-switch:hover,
+  .cr .cr-cable-btn:hover:not(:disabled) { color: var(--cr-accent-text); border-color: var(--cr-select); }
+}
+.cr .cr-trace-btn-primary,
+.cr .cr-cable-btn-primary { background: var(--cr-accent); color: var(--cr-accent-ink); border-color: var(--cr-accent-edge); font-weight: 500; }
+@media (hover: hover) {
+  .cr .cr-trace-btn-primary:hover:not(:disabled),
+  .cr .cr-cable-btn-primary:hover:not(:disabled) { color: var(--cr-accent-ink); border-color: var(--cr-papier); }
+}
+.cr .cr-trace-btn:disabled,
+.cr .cr-cable-btn:disabled { background: transparent; color: var(--cr-ink-muted); border-color: var(--cr-panel-line); cursor: default; }
+/* The switch: a box that fills when on (shape, not colour alone). */
+.cr .cr-trace-switch { display: inline-flex; align-items: center; gap: 6px; }
+.cr .cr-trace-switch::before { content: ''; width: 12px; height: 12px; border: 1px solid var(--cr-papier); background: transparent; }
+.cr .cr-trace-switch[aria-checked='true'] { box-shadow: inset 3px 0 0 var(--cr-select); }
+.cr .cr-trace-switch[aria-checked='true']::before { background: var(--cr-ambre); border-color: var(--cr-ambre); }
+
+/* The cable panel (Propriétés). */
+.cr-cable-panel[hidden], .cr-props-content[hidden] { display: none; }
+.cr-cable-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 10px; margin: 0 0 10px; }
+.cr-cable-facts dt { color: var(--cr-ink-muted); font-size: 12px; }
+.cr-cable-facts dd { margin: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.cr-cable-actions { display: flex; flex-direction: column; align-items: stretch; gap: 6px; padding: 10px 0; border-top: 1px solid var(--cr-panel-line); }
+.cr-cable-actions .cr-props-hint { margin: 0; }
+.cr-cable-points { padding: 10px 0 0; border-top: 1px solid var(--cr-panel-line); }
+.cr-cable-points .cr-props-legend { margin: 0; }
+.cr-cable-point-zone {
+  padding: 6px 8px;
+  margin: 0 0 6px;
+  border: 1px solid var(--cr-ink-muted);
+  background: var(--cr-nuit);
+  font-variant-numeric: tabular-nums;
+}
+.cr .cr-cable-point-zone:focus-visible { outline-offset: 0; box-shadow: none; border-color: var(--cr-focus); }
+.cr-cable-point-btns { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+.cr-cable-points .cr-trace-field { justify-content: space-between; }
+
+@media (pointer: coarse) {
+  .cr-trace-bar { gap: 6px 10px; padding: 4px 8px; }
+  .cr .cr-trace-btn,
+  .cr .cr-trace-switch,
+  .cr .cr-cable-btn { min-height: 44px; min-width: 44px; font-size: 14px; }
+  .cr .cr-trace-select { height: 44px; }
+  .cr-cable-point-zone { min-height: 44px; display: flex; align-items: center; }
+}
+/* A phone: the title on its own line, the controls wrap under it. */
+@media (max-width: 759.98px) {
+  .cr-trace-title { flex-basis: 100%; }
+  .cr-trace-length { min-width: 0; }
+}
